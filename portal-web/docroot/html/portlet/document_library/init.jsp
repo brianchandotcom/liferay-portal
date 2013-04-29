@@ -145,6 +145,7 @@ String portletId = portletDisplay.getId();
 
 if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 	portletId = portletResource;
+	portletName = portletResource;
 }
 
 boolean showActions = PrefsParamUtil.getBoolean(preferences, request, "showActions");

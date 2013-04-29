@@ -66,8 +66,14 @@
 				margin: 0;
 
 				.lfr-portlet-item {
-					padding-bottom: 1px;
-					padding-top: 1px;
+					margin-left: 0;
+					padding-bottom: 3px;
+					padding-left: 30px;
+					padding-top: 3px;
+
+					&.lfr-archived-setup {
+						padding-left: 40px;
+					}
 
 					p {
 						padding-left: 2em;
@@ -76,6 +82,7 @@
 			}
 
 			.lfr-title-category {
+				border-top: 1px solid transparent;
 				padding: 7px 6px 6px 2em;
 			}
 		}
@@ -99,7 +106,7 @@
 	.content-item {
 		&:hover {
 			.add-content-item {
-				display: block;
+				display: inline;
 
 				&.lfr-portlet-used {
 					display: none;
@@ -114,8 +121,6 @@
 		.add-content-item {
 			cursor: pointer;
 			display: none;
-			font-size: 10px;
-			font-weight: bold;
 			padding: 7px 5px;
 			position: absolute;
 			right: 0;
@@ -126,7 +131,9 @@
 			cursor: move;
 
 			&.lfr-portlet-used {
-				cursor: default;
+				&, .taglib-text {
+					cursor: default;
+				}
 			}
 		}
 	}
@@ -182,6 +189,7 @@
 		}
 
 		.lfr-panel-titlebar {
+			border-top: 1px solid transparent;
 			cursor: pointer;
 			margin-bottom: 0;
 			padding: 7px 6px 6px;
@@ -241,12 +249,19 @@
 	margin-bottom: 8px;
 }
 
+.portal-add-content .portlet-msg-info {
+	margin-bottom: 0;
+	margin-top: 10px;
+}
 
-.portal-add-content {	
-	.portlet-msg-info {
-		color: #333;
-		margin-bottom: 0;
-		margin-top: 10px;
+.lfr-install-more {
+	border-top: 1px solid transparent;
+	margin: 10px 0 0;
+	padding-top: 10px;
+
+	a {
+		display: block;
+		padding-left: 20px;
 	}
 }
 
@@ -306,16 +321,12 @@
 	.add-application-tab {
 		.lfr-add-content {
 			.lfr-content-category {
-				background: url("@theme_image_path@/common/shadow_top_bg.png") repeat-x 0 0;
+				background: url(@theme_image_path@/common/shadow_top_bg.png) repeat-x 0 0;
 
 				.lfr-portlet-item {
 					background-position: 3px 50%;
 					color: #2D2D2D;
 					font-size: 12px;
-					margin-left: 0;
-					padding-bottom: 3px;
-					padding-left: 30px;
-					padding-top: 3px;
 
 					.taglib-text {
 						color: #2D2D2D;
@@ -325,7 +336,6 @@
 					&.lfr-portlet-used {
 						.taglib-text {
 							color: #CCC;
-							cursor: default;
 						}
 					}
 
@@ -336,7 +346,6 @@
 
 					&.lfr-archived-setup {
 						background-position: 22px 50%;
-						padding-left: 40px !important;
 					}
 
 					&.lfr-portlet-used:hover, &.lfr-portlet-used.over {
@@ -351,7 +360,7 @@
 			}
 
 			.lfr-title-category {
-				border-top: 1px solid #F0F1F2;
+				border-top-color: #F0F1F2;
 			}
 		}
 	}
@@ -360,6 +369,11 @@
 		background-image: url(@theme_image_path@/portlet/close.png);
 		background-repeat: no-repeat;
 		font-size: 0;
+	}
+
+	.content-item .add-content-item {
+		font-size: 10px;
+		font-weight: bold;
 	}
 
 	.search-panel {
@@ -418,7 +432,7 @@
 		border-color: #979798 #FAFAFB #FAFAFB #BDBDBE;
 
 		.lfr-panel-titlebar {
-			border-top: 1px solid #F0F1F2;
+			border-top-color: #F0F1F2;
 
 			.lfr-panel-title {
 				font-size: 13px;
@@ -460,21 +474,20 @@
 	}
 }
 
+.portal-add-content .portlet-msg-info {
+	color: #333;
+}
+
 .lfr-install-more {
-	border-top-color: #ccc;
-	border-top: 1px solid transparent;
-	margin: 10px 0 0;
-	padding-top: 10px;
+	border-top-color: #CCC;
 
 	a {
 		background: url(@theme_image_path@/common/install_more.png) no-repeat 0 50%;
-		display: block;
 		font-weight: bold;
-		padding-left: 20px;
 	}
 }
 
 .lfr-content-category.visible {
-	border-bottom-color: #ddd;
-	border-top-color: #ddd;
+	border-bottom-color: #DDD;
+	border-top-color: #DDD;
 }

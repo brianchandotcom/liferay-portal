@@ -29,7 +29,7 @@ AUI.add(
 
 		var AddContent = A.Component.create(
 			{
-				AUGMENTS: [Liferay.PortletBase],
+				AUGMENTS: [Dockbar.AddContentDragDrop, Dockbar.AddContentPreview, Dockbar.AddContentSearch, Liferay.PortletBase],
 
 				EXTENDS: A.Base,
 
@@ -43,7 +43,7 @@ AUI.add(
 
 						instance._addApplicationForm = instance.byId('addApplicationForm');
 						instance._addContentForm = instance.byId('addContentForm');
-						instance._addPanel = instance.byId('addPanelContainer');
+						instance._addPanelContainer = instance.byId('addPanelContainer');
 						instance._closePanel = instance.byId('closePanel');
 						instance._entriesContainer = instance.byId('entriesContainer');
 						instance._numItems = instance.byId('numItems');
@@ -51,24 +51,6 @@ AUI.add(
 						instance._styleButtonsList = instance.byId('styleButtons');
 
 						instance._styleButtons = instance._styleButtonsList.all(SELECTOR_BUTTON);
-
-						Liferay.on(
-							'AddContent:addPortlet',
-							function(event) {
-								instance._addPortlet(event.node, event.options);
-							}
-						);
-
-						Liferay.on(
-							'AddContent:refreshContentList',
-							function(event) {
-								instance._refreshContentList(event);
-							}
-						);
-
-						instance._dragdrop = new Dockbar.AddContentDragDrop(config);
-						instance._preview = new Dockbar.AddContentPreview(config);
-						instance._search = new Dockbar.AddContentSearch(config);
 
 						instance._bindUI();
 					},
@@ -139,8 +121,6 @@ AUI.add(
 						var instance = this;
 
 						instance._entriesContainer.setContent(event.currentTarget.get(STR_RESPONSE_DATA));
-
-						instance._preview._createToolTip();
 					},
 
 					_bindUI: function() {
@@ -150,7 +130,7 @@ AUI.add(
 
 						instance._closePanel.on(STR_CLICK, Dockbar.loadPanel, Dockbar);
 
-						instance._addPanel.delegate(STR_CLICK, instance._addApplication, '.add-content-item', instance);
+						instance._addPanelContainer.delegate(STR_CLICK, instance._addApplication, '.add-content-item', instance);
 
 						instance._styleButtonsList.delegate(STR_CLICK, instance._onChangeDisplayStyle, SELECTOR_BUTTON, instance);
 
@@ -261,7 +241,7 @@ AUI.add(
 					_onPortletClose: function(event) {
 						var instance = this;
 
-						var item = instance._addPanel.one('.lfr-portlet-item[data-plid=' + event.plid + '][data-portlet-id=' + event.portletId + '][data-instanceable=false]');
+						var item = instance._addPanelContainer.one('.lfr-portlet-item[data-plid=' + event.plid + '][data-portlet-id=' + event.portletId + '][data-instanceable=false]');
 
 						if (item && item.hasClass(CSS_LFR_PORTLET_USED)) {
 							var portletId = item.attr(DATA_PORTLET_ID);

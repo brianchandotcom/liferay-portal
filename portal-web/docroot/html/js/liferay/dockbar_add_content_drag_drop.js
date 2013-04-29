@@ -9,61 +9,78 @@ AUI.add(
 
 		var STR_NODE = 'node';
 
-		var AddContentDragDrop = A.Component.create(
-			{
-				AUGMENTS: [Liferay.PortletBase],
+		var AddContentDragDrop = function() {
+		};
 
-				EXTENDS: A.Base,
+		AddContentDragDrop.prototype = {
+			initializer: function() {
+				var instance = this;
 
-				NAME: 'addcontentdragdrop',
+				instance._bindUIDragDrop();
+			},
 
-				prototype: {
-					initializer: function(config) {
-						var instance = this;
+			_bindUIDragDrop: function() {
+				var instance = this;
 
-						instance._config = config;
-
-						instance._addPanel = instance.byId('addPanelContainer');
-
-						instance._bindUI();
+				var portletItemOptions = {
+					delegateConfig: {
+						container: instance._addPanelContainer,
+						dragConfig: {
+							clickPixelThresh: 0,
+							clickTimeThresh: 0
+						},
+						invalid: '.lfr-portlet-used',
+						target: false
 					},
-
-					_bindUI: function() {
-						var instance = this;
-
-						var portletItemOptions = {
-							delegateConfig: {
-								container: instance._addPanel,
-								dragConfig: {
-									clickPixelThresh: 0,
-									clickTimeThresh: 0
-								},
-								invalid: '.lfr-portlet-used',
-								target: false
-							},
-							dragNodes: '[data-draggable]',
-							dropContainer: function(dropNode) {
-								return dropNode.one(Layout.options.dropContainer);
-							},
-							on: Layout.DEFAULT_LAYOUT_OPTIONS.on
-						};
-
-						if (themeDisplay.isFreeformLayout()) {
-							instance._portletItem = new Dockbar.FreeFormPortletItem(portletItemOptions);
-						}
-						else {
-							instance._portletItem = new Dockbar.PortletItem(portletItemOptions);
-						}
-
-						Liferay.fire('initLayout');
+					dragNodes: '[data-draggable]',
+					dropContainer: function(dropNode) {
+						return dropNode.one(Layout.options.dropContainer);
 					}
+				};
+
+				var defaultLayoutOptions = Layout.DEFAULT_LAYOUT_OPTIONS;
+
+				if (defaultLayoutOptions) {
+					portletItemOptions.on = defaultLayoutOptions.on;
+				}
+
+				var portletItemClass = 'PortletItem';
+
+				if (themeDisplay.isFreeformLayout()) {
+					portletItemClass = 'FreeFormPortletItem';
+				}
+
+				var portletItem = new Dockbar[portletItemClass](portletItemOptions);
+
+				portletItem.on('drag:end', instance._onDragEnd, instance);
+
+				instance._portletItem = portletItem;
+
+				Liferay.fire('initLayout');
+			},
+
+			_onDragEnd: function(event) {
+				var instance = this;
+
+				var portletItem = event.currentTarget;
+
+				var appendNode = portletItem.appendNode;
+
+				if (appendNode && appendNode.inDoc()) {
+					var portletNode = event.target.get(STR_NODE);
+
+					instance._addPortlet(
+						portletNode,
+						{
+							item: appendNode
+						}
+					);
 				}
 			}
-		);
+		};
 
 		var PortletItem = A.Component.create(
 			{
-
 				ATTRS: {
 					lazyStart: {
 						value: true
@@ -89,43 +106,12 @@ AUI.add(
 						instance.on('placeholderAlign', instance._onPlaceholderAlign);
 					},
 
-					_addPortlet: function(portletNode, options) {
-						var instance = this;
-
-						Liferay.fire(
-							'AddContent:addPortlet',
-							{
-								node: portletNode,
-								options: options
-							}
-						);
-					},
-
 					_getAppendNode: function() {
 						var instance = this;
 
 						instance.appendNode = DDM.activeDrag.get(STR_NODE).clone();
 
 						return instance.appendNode;
-					},
-
-					_onDragEnd: function(event) {
-						var instance = this;
-
-						PortletItem.superclass._onDragEnd.apply(this, arguments);
-
-						var appendNode = instance.appendNode;
-
-						if (appendNode && appendNode.inDoc()) {
-							var portletNode = event.target.get(STR_NODE);
-
-							instance._addPortlet(
-								portletNode,
-								{
-									item: instance.appendNode
-								}
-							);
-						}
 					},
 
 					_onDragStart: function() {

@@ -121,7 +121,7 @@ body > .lfr-menu-list, body > .lfr-menu-list ul, button, input[type="button"], i
 
 .lfr-content-preview-popup .lfr-content-preview-popup-content {
 	@include border-radius(0);
-	@include box-shadow(8px 3px 7px rgba(0,0,0,0.5));
+	@include box-shadow(8px 3px 7px rgba(0, 0, 0, 0.25));
 }
 
 .lfr-hudcrumbs ul {

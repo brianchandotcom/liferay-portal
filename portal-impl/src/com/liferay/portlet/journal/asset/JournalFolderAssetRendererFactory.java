@@ -81,6 +81,6 @@ public class JournalFolderAssetRendererFactory
 
 	private static final boolean _CATEGORIZABLE = false;
 
-	private static final boolean _LINKABLE = true;
+	private static final boolean _LINKABLE = false;
 
 }

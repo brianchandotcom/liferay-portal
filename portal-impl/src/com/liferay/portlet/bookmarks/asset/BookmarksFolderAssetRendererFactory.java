@@ -30,7 +30,7 @@ import com.liferay.portlet.bookmarks.service.permission.BookmarksFolderPermissio
 public class BookmarksFolderAssetRendererFactory
 	extends BaseAssetRendererFactory {
 
-	public static final String TYPE = "bookmarks_folder";
+	public static final String TYPE = "folder";
 
 	public AssetRenderer getAssetRenderer(long classPK, int type)
 		throws PortalException, SystemException {
@@ -83,6 +83,6 @@ public class BookmarksFolderAssetRendererFactory
 
 	private static final boolean _CATEGORIZABLE = false;
 
-	private static final boolean _LINKABLE = true;
+	private static final boolean _LINKABLE = false;
 
 }

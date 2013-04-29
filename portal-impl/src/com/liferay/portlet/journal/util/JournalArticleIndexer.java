@@ -83,8 +83,6 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 	public static final String[] CLASS_NAMES = {JournalArticle.class.getName()};
 
-	public static final String DEFAULT_LANGUAGE_ID = "defaultLanguageId";
-
 	public static final String PORTLET_ID = PortletKeys.JOURNAL;
 
 	public JournalArticleIndexer() {
@@ -350,7 +348,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 			if (languageId.equals(articleDefaultLanguageId)) {
 				document.addText(Field.CONTENT, content);
-				document.addText(DEFAULT_LANGUAGE_ID, languageId);
+				document.addText("defaultLanguageId", languageId);
 				document.addText(Field.DESCRIPTION, description);
 				document.addText(Field.TITLE, title);
 			}
@@ -459,7 +457,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 		if (snippetLocale == null) {
 			snippetLocale = LocaleUtil.fromLanguageId(
-				document.get(DEFAULT_LANGUAGE_ID));
+				document.get("defaultLanguageId"));
 		}
 
 		return new Summary(snippetLocale, title, content, portletURL);

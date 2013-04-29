@@ -29,16 +29,9 @@ if ((classPK > 0) && (structureClassNameId == classNameId)) {
 	structure = DDMStructureServiceUtil.getStructure(classPK);
 }
 
-String title = StringPool.BLANK;
+DDMDisplay ddmDisplay = DDMDisplayRegistryUtil.getDDMDisplay(refererPortletName);
 
-if (!refererPortletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES)) {
-	if (structure != null) {
-		title = LanguageUtil.format(pageContext, (Validator.isNull(templateHeaderTitle) ? "templates-for-structure-x" : templateHeaderTitle), structure.getName(locale), false);
-	}
-	else {
-		title = "application-display-templates";
-	}
-}
+String title = ddmDisplay.getViewTemplatesTitle(structure, locale);
 %>
 
 <c:if test="<%= showToolbar %>">

@@ -14,15 +14,93 @@
 
 package com.liferay.portlet.dynamicdatamapping.util;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.template.TemplateHandler;
+import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+
+import java.util.Locale;
 
 /**
  * @author Eduardo Garcia
  */
 public class BaseDDMDisplay implements DDMDisplay {
 
+	public String getEditTemplateTitle(
+		DDMStructure structure, DDMTemplate template, Locale locale) {
+
+		String title = StringPool.BLANK;
+
+		if (structure != null) {
+			if (template != null) {
+				title =
+					template.getName(locale) + " (" +
+						structure.getName(locale) + ")";
+			}
+			else {
+				title = LanguageUtil.format(
+					locale, "new-template-for-structure-x",
+					structure.getName(locale), false);
+			}
+		}
+		else if (template != null) {
+			title = template.getName(locale);
+		}
+		else {
+			title = getDefaultEditTemplateTitle(locale);
+		}
+
+		return title;
+	}
+
+	public String getEditTemplateTitle(long classNameId, Locale locale) {
+		if (classNameId > 0) {
+			TemplateHandler templateHandler =
+				TemplateHandlerRegistryUtil.getTemplateHandler(classNameId);
+
+			if (templateHandler != null) {
+				return LanguageUtil.get(locale, "new") + StringPool.SPACE +
+					templateHandler.getName(locale);
+			}
+		}
+
+		return getDefaultEditTemplateTitle(locale);
+	}
+
 	public String getPortletId() {
 		return PortletKeys.DYNAMIC_DATA_MAPPING;
+	}
+
+	public String getViewTemplatesTitle(
+		DDMStructure structure, boolean isControlPanel, Locale locale) {
+
+		String title = StringPool.BLANK;
+
+		if (structure != null) {
+			title = LanguageUtil.format(
+				locale, "templates-for-structure-x", structure.getName(locale),
+				false);
+		}
+		else {
+			title = getDefaultViewTemplateTitle(locale);
+		}
+
+		return title;
+	}
+
+	public String getViewTemplatesTitle(DDMStructure structure, Locale locale) {
+		return getViewTemplatesTitle(structure, false, locale);
+	}
+
+	protected String getDefaultEditTemplateTitle(Locale locale) {
+		return LanguageUtil.get(locale, "new-template");
+	}
+
+	protected String getDefaultViewTemplateTitle(Locale locale) {
+		return LanguageUtil.get(locale, "templates");
 	}
 
 }

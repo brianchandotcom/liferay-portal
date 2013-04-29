@@ -1353,7 +1353,6 @@
 				ddmURL.setParameter('struts_action', '/dynamic_data_mapping/view');
 			}
 
-			ddmURL.setParameter('templateHeaderTitle', config.templateHeaderTitle);
 			ddmURL.setParameter('templateId', config.templateId);
 
 			ddmURL.setPortletId(166);

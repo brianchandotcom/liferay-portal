@@ -56,6 +56,8 @@ page import="com.liferay.portlet.dynamicdatamapping.service.permission.DDMPermis
 page import="com.liferay.portlet.dynamicdatamapping.service.permission.DDMStructurePermission" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.service.permission.DDMTemplatePermission" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.storage.StorageType" %><%@
+page import="com.liferay.portlet.dynamicdatamapping.util.DDMDisplay" %><%@
+page import="com.liferay.portlet.dynamicdatamapping.util.DDMDisplayRegistryUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.util.DDMTemplateHelperUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.util.DDMUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.util.DDMXSDUtil" %><%@
@@ -89,8 +91,6 @@ if (scopeStorageType.equals("expando")) {
 else if (scopeStorageType.equals("xml")) {
 	storageTypeValue = StorageType.XML.getValue();
 }
-
-String templateHeaderTitle = ParamUtil.getString(request, "templateHeaderTitle");
 
 String templateTypeValue = StringPool.BLANK;
 

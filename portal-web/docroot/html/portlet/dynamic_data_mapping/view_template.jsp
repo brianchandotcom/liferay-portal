@@ -40,19 +40,17 @@ portletURL.setParameter("backURL", backURL);
 portletURL.setParameter("classNameId", String.valueOf(classNameId));
 portletURL.setParameter("classPK", String.valueOf(classPK));
 
-String title = StringPool.BLANK;
+boolean isControlPanel = false;
 
-if (!refererPortletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES)) {
-	if (structure != null) {
-		title = LanguageUtil.format(pageContext, (Validator.isNull(templateHeaderTitle) ? "templates-for-structure-x" : templateHeaderTitle), structure.getName(locale), false);
-	}
-	else if (refererPortletName.equals(PortletKeys.JOURNAL)) {
-		title = "templates";
-	}
-	else {
-		title = "application-display-templates";
-	}
+if (layout != null) {
+	Group group = layout.getGroup();
+
+	isControlPanel = group.isControlPanel();
 }
+
+DDMDisplay ddmDisplay = DDMDisplayRegistryUtil.getDDMDisplay(refererPortletName);
+
+String title = ddmDisplay.getViewTemplatesTitle(structure, isControlPanel, locale);
 %>
 
 <liferay-ui:error exception="<%= RequiredTemplateException.class %>">
@@ -66,7 +64,7 @@ if (!refererPortletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES)) {
 </portlet:renderURL>
 
 <liferay-ui:header
-	backURL="<%= portletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES) ? backURL : viewRecordsURL %>"
+	backURL="<%= refererPortletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES) ? backURL : viewRecordsURL %>"
 	title="<%= title %>"
 />
 
@@ -181,7 +179,7 @@ if (!refererPortletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES)) {
 				<%
 				String value = null;
 
-				if (portletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES)) {
+				if (refererPortletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES)) {
 					TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(template.getClassNameId());
 
 					value = templateHandler.getName(locale);
@@ -198,7 +196,7 @@ if (!refererPortletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES)) {
 				/>
 			</c:if>
 
-			<c:if test="<%= !portletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES) %>">
+			<c:if test="<%= !refererPortletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES) %>">
 				<liferay-ui:search-container-column-text
 					href="<%= rowHREF %>"
 					name="mode"
@@ -206,7 +204,7 @@ if (!refererPortletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES)) {
 				/>
 			</c:if>
 
-			<c:if test="<%= !portletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES) %>">
+			<c:if test="<%= !refererPortletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES) %>">
 				<liferay-ui:search-container-column-text
 					href="<%= rowHREF %>"
 					name="language"

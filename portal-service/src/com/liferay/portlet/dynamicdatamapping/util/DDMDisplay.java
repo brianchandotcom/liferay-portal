@@ -14,11 +14,26 @@
 
 package com.liferay.portlet.dynamicdatamapping.util;
 
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+
+import java.util.Locale;
+
 /**
  * @author Eduardo Garcia
  */
 public interface DDMDisplay {
 
+	public String getEditTemplateTitle(
+		DDMStructure structure, DDMTemplate template, Locale locale);
+
+	public String getEditTemplateTitle(long classNameId, Locale locale);
+
 	public String getPortletId();
+
+	public String getViewTemplatesTitle(
+		DDMStructure structure, boolean isControlPanel, Locale locale);
+
+	public String getViewTemplatesTitle(DDMStructure structure, Locale locale);
 
 }

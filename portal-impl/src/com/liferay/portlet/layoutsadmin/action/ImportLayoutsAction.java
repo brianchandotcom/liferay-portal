@@ -61,8 +61,12 @@ import java.io.InputStream;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletContext;
+import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -188,6 +192,21 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 
 		return mapping.findForward(
 			getForward(renderRequest, "portlet.layouts_admin.export_layouts"));
+	}
+
+	@Override
+	public void serveResource(
+			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws Exception {
+
+		PortletContext portletContext = portletConfig.getPortletContext();
+
+		PortletRequestDispatcher portletRequestDispatcher =
+			portletContext.getRequestDispatcher(
+				"/html/portlet/layouts_admin/export_import_resources.jsp");
+
+		portletRequestDispatcher.include(resourceRequest, resourceResponse);
 	}
 
 	protected void addTempFileEntry(

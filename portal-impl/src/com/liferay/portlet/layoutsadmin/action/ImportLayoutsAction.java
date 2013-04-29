@@ -36,8 +36,10 @@ import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.LayoutServiceUtil;
@@ -335,10 +337,38 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 			throw new LARFileException("Import file does not exist");
 		}
 
-		LayoutServiceUtil.importLayouts(
-			groupId, privateLayout, actionRequest.getParameterMap(), file);
+		boolean successfulRename = false;
 
-		addSuccessMessage(actionRequest, actionResponse);
+		File newFile = null;
+
+		try {
+			String newFilePath = StringUtil.replace(
+				file.getPath(), file.getName(), fileEntry.getTitle());
+
+			newFile = new File(newFilePath);
+
+			successfulRename = file.renameTo(newFile);
+
+			if (!successfulRename) {
+				newFile = FileUtil.createTempFile(fileEntry.getExtension());
+
+				FileUtil.copyFile(file, newFile);
+			}
+
+			LayoutServiceUtil.importLayouts(
+				groupId, privateLayout, actionRequest.getParameterMap(),
+				newFile);
+
+			addSuccessMessage(actionRequest, actionResponse);
+		}
+		finally {
+			if (successfulRename) {
+				newFile.renameTo(file);
+			}
+			else {
+				FileUtil.delete(newFile);
+			}
+		}
 	}
 
 	private static final String _TEMP_FOLDER_NAME =

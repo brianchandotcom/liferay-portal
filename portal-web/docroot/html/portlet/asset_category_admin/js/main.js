@@ -391,7 +391,7 @@ AUI.add(
 						instance._categoriesContainer.empty();
 					},
 
-					_createAlertMessage: function(items, selectedItems, keyId) {
+					_createAlertMessage: function(items, selectedNames, keyId) {
 						var instance = this;
 
 						var itemNames = AArray.map(

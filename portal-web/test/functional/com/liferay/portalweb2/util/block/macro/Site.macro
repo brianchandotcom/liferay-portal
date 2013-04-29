@@ -101,14 +101,14 @@
 		<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_TYPE" value1="${siteType}" />
 
 		<if>
-			<equals arg1="${siteMember}" arg2="User" />
+			<equals arg1="${siteMember}" arg2="Organization" />
 			<then>
-				<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_MEMBERS_USERS" value1="1 ${siteMember}" />
+				<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_MEMBERS_ORGS" value1="1 ${siteMember}" />
 			</then>
 			<elseif>
-				<equals arg1="${siteMember}" arg2="Organization" />
+				<equals arg1="${siteMember}" arg2="User" />
 				<then>
-					<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_MEMBERS_ORGS" value1="1 ${siteMember}" />
+					<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_MEMBERS_USERS" value1="1 ${siteMember}" />
 				</then>
 			</elseif>
 			<else>

@@ -5,25 +5,17 @@
 		</execute>
 
 		<execute action="CPUsersandorganizations#type" locator-key1="SEARCH_FIELD" value1="${orgName}" />
-
 		<execute action="CPUsersandorganizations#click" locator-key1="SEARCH_BUTTON" />
-
 		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME_1" value1="${orgName}" />
-
 		<execute action="CPUsersandorganizations#click" locator-key1="ORGANIZATION_TABLE_ACTIONS_1" />
-
 		<execute action="CPUsersandorganizations#click" locator-key1="ORGANIZATION_MENULIST_ADD_REGULAR_ORGANIZATION" />
 
 		<execute action="CPUsersandorganizationsAddorganization#type" locator-key1="DETAILS_NAME_FIELD" value1="${suborgName}" />
-
 		<execute action="CPUsersandorganizationsAddorganization#select" locator-key1="DETAILS_TYPE_SELECT" value1="${suborgType}" />
-
 		<execute action="CPUsersandorganizationsAddorganization#click" locator-key1="SAVE_BUTTON" />
 
 		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
-
 		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="DETAILS_NAME_FIELD" value1="${suborgName}" />
-
 		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="DETAILS_TYPE" value1="Type ${suborgType}" />
 
 	</command>
@@ -38,11 +30,10 @@
 		<execute macro="Organization#cpView">
 			<var name="orgName" value="${suborgName}" />
 			<var name="orgType" value="${suborgType}" />
-			<var name="searchName" value="${suborgSearchName}" />
+			<var name="searchToken" value="${suborgSearchName}" />
 		</execute>
 
 		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="DETAILS_PARENT_ORGANIZATION_TABLE_NAME" value1="${orgName}" />
-
 		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="DETAILS_PARENT_ORGANIZATION_TABLE_TYPE" value1="${orgType}" />
 	</command>
 </definition>

@@ -55,7 +55,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute action="PGBlogs#assertElementNotPresent" locator-key1="ADD_ENTRY" />
+		<execute action="PGBlogs#assertElementNotPresent" locator-key1="ADD_ENTRY_BUTTON" />
 	</command>
 
 	<command name="pgEdit">

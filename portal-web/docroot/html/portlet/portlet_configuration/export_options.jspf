@@ -14,257 +14,266 @@
  */
 --%>
 
-<c:if test='<%= tabs2.equals("export") %>'>
-	<aui:input label="export-the-selected-data-to-the-given-lar-file-name" name="exportFileName" size="50" value='<%= StringUtil.replace(selPortlet.getDisplayName(), " ", "_") + "-" + Time.getShortTimestamp() + ".portlet.lar" %>' />
-</c:if>
+<div class="export-dialog-tree">
+	<c:if test='<%= tabs2.equals("export") %>'>
+		<aui:input label="export-the-selected-data-to-the-given-lar-file-name" name="exportFileName" size="50" value='<%= StringUtil.replace(selPortlet.getDisplayName(), " ", "_") + "-" + Time.getShortTimestamp() + ".portlet.lar" %>' />
+	</c:if>
 
-<ul class="lfr-tree lfr-component">
-	<c:if test="<%= supportsSetup %>">
-		<aui:fieldset cssClass="options-group" label="application">
-			<aui:input label="application" name="<%= PortletDataHandlerKeys.PORTLET_SETUP %>" type="checkbox" value="<%= true %>" />
-
-			<ul id="<portlet:namespace />showGlobalConfiguration">
+	<ul class="lfr-tree lfr-component">
+		<c:if test="<%= supportsSetup %>">
+			<aui:fieldset cssClass="options-group" label="application">
 				<li class="tree-item">
-					<div class="selected-labels" id="<portlet:namespace />selectedGlobalConfiguration">
-						<c:if test="<%= !PortletItemLocalServiceUtil.getPortletItems(layout.getGroupId(), selPortlet.getRootPortletId(), com.liferay.portal.model.PortletPreferences.class.getName()).isEmpty() %>">
-							<liferay-ui:message key="archived-setups"></liferay-ui:message>,
-						</c:if>
+					<aui:input label="application" name="<%= PortletDataHandlerKeys.PORTLET_SETUP %>" type="checkbox" value="<%= true %>" />
 
-						<liferay-ui:message key="user-preferences"></liferay-ui:message>
-					</div>
-
-					<aui:a cssClass="modify-link" href="javascript:;" id="globalConfigurationLink" label="change" method="get" />
-				</li>
-			</ul>
-
-			<aui:script>
-				Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_SETUP %>Checkbox', '<portlet:namespace />showGlobalConfiguration');
-			</aui:script>
-
-			<div class="aui-helper-hidden" id="<portlet:namespace />globalConfiguration">
-				<aui:fieldset cssClass="portlet-data-section" label="application">
-					<ul class="lfr-tree lfr-component">
+					<ul id="<portlet:namespace />showGlobalConfiguration">
 						<li class="tree-item">
-							<c:if test="<%= !PortletItemLocalServiceUtil.getPortletItems(layout.getGroupId(), selPortlet.getRootPortletId(), com.liferay.portal.model.PortletPreferences.class.getName()).isEmpty() %>">
-								<aui:input label="archived-setups" name="<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS %>" type="checkbox" value="<%= false %>" />
-							</c:if>
+							<div class="selected-labels" id="<portlet:namespace />selectedGlobalConfiguration">
+								<c:if test="<%= !PortletItemLocalServiceUtil.getPortletItems(layout.getGroupId(), selPortlet.getRootPortletId(), com.liferay.portal.model.PortletPreferences.class.getName()).isEmpty() %>">
+									<liferay-ui:message key="archived-setups"></liferay-ui:message>,
+								</c:if>
 
-							<aui:input helpMessage="import-user-preferences-help" label="user-preferences" name="<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES %>" type="checkbox" value="<%= true %>" />
+								<liferay-ui:message key="user-preferences"></liferay-ui:message>
+							</div>
+
+							<aui:a cssClass="modify-link" href="javascript:;" id="globalConfigurationLink" label="change" method="get" />
 						</li>
 					</ul>
-				</aui:fieldset>
-			</div>
-		</aui:fieldset>
-	</c:if>
 
-	<c:if test="<%= supportsLAR %>">
-		<aui:fieldset cssClass="options-group" label="content">
-			<aui:input name="<%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>" type="hidden" value="<%= false %>" />
+					<aui:script>
+						Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_SETUP %>Checkbox', '<portlet:namespace />showGlobalConfiguration');
+					</aui:script>
+				</li>
 
-			<%
-			PortletDataHandler portletDataHandler = selPortlet.getPortletDataHandlerInstance();
-			%>
+				<div class="aui-helper-hidden" id="<portlet:namespace />globalConfiguration">
+					<aui:fieldset cssClass="portlet-data-section" label="application">
+						<ul class="lfr-tree lfr-component">
+							<li class="tree-item">
+								<c:if test="<%= !PortletItemLocalServiceUtil.getPortletItems(layout.getGroupId(), selPortlet.getRootPortletId(), com.liferay.portal.model.PortletPreferences.class.getName()).isEmpty() %>">
+									<aui:input label="archived-setups" name="<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS %>" type="checkbox" value="<%= false %>" />
+								</c:if>
 
-			<aui:input label="content" name='<%= PortletDataHandlerKeys.PORTLET_DATA + "_" + selPortlet.getRootPortletId() %>' type="checkbox" value="<%= portletDataHandler.isPublishToLiveByDefault() %>" />
-
-			<div class="aui-helper-hidden" id="<portlet:namespace />content_<%= selPortlet.getRootPortletId() %>">
-				<ul class="lfr-tree lfr-component">
-
-					<%
-					String selectedContent = StringPool.BLANK;
-
-					try {
-						PortletDataHandlerControl[] controls = null;
-						PortletDataHandlerControl[] metadataControls = null;
-
-						controls = portletDataHandler.getExportControls();
-						metadataControls = portletDataHandler.getExportMetadataControls();
-
-						if (controls != null) {
-							request.setAttribute("render_controls.jsp-controls", controls);
-							request.setAttribute("render_controls.jsp-portletDisabled", !portletDataHandler.isPublishToLiveByDefault());
-
-							selectedContent += ArrayUtil.toString(controls, "controlName", StringPool.COMMA_AND_SPACE, locale);
-					%>
-
-					<aui:fieldset cssClass="portlet-data-section" label="content">
-						<aui:input data-name='<%= LanguageUtil.get(pageContext, "categories") %>' helpMessage="export-import-referenced-categories-help" label="categories" name="<%= PortletDataHandlerKeys.CATEGORIES %>" type="checkbox" value="<%= false %>" />
-
-						<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
+								<aui:input helpMessage="import-user-preferences-help" label="user-preferences" name="<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES %>" type="checkbox" value="<%= true %>" />
+							</li>
+						</ul>
 					</aui:fieldset>
+				</div>
+			</aui:fieldset>
+		</c:if>
 
-					<c:if test="<%= metadataControls.length > 0 %>">
+		<c:if test="<%= supportsLAR %>">
+			<aui:fieldset cssClass="options-group" label="content">
+				<aui:input name="<%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>" type="hidden" value="<%= false %>" />
 
-							<aui:fieldset cssClass="portlet-data-section" helpMessage="content-metadata-help" label="content-metadata">
+				<%
+				PortletDataHandler portletDataHandler = selPortlet.getPortletDataHandlerInstance();
+				%>
 
-								<ul class="metadata-controls <%= metadataControls.length > 1 ? "metadata-controls-multiple" : StringPool.BLANK %>" id="<portlet:namespace />portletMetaDataList">
+				<li class="tree-item">
+					<aui:input label="content" name='<%= PortletDataHandlerKeys.PORTLET_DATA + "_" + selPortlet.getRootPortletId() %>' type="checkbox" value="<%= portletDataHandler.isPublishToLiveByDefault() %>" />
 
-									<%
-									for (int i = 0; i < metadataControls.length; i++) {
-										PortletDataHandlerBoolean control = (PortletDataHandlerBoolean)metadataControls[i];
-
-										PortletDataHandlerControl[] childrenControls = control.getChildren();
-
-										if ((childrenControls != null) && (childrenControls.length > 0)) {
-											request.setAttribute("render_controls.jsp-controls", childrenControls);
-
-											selectedContent += (selectedContent.equals(StringPool.BLANK) ? "" : ", ") + ArrayUtil.toString(childrenControls, "controlName", StringPool.COMMA_AND_SPACE, locale);
-									%>
-
-											<c:choose>
-												<c:when test="<%= metadataControls.length > 1 %>">
-													<li class="tree-item">
-														<aui:fieldset cssClass="portlet-type-data-section" label="<%= metadataControls[i].getControlName() %>">
-															<ul id="<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA %>_<%= selPortlet.getRootPortletId() %>Controls">
-																<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
-															</ul>
-														</aui:fieldset>
-													</li>
-												</c:when>
-												<c:otherwise>
-													<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
-												</c:otherwise>
-											</c:choose>
-
-									<%
-										}
-									}
-									%>
-
-								</ul>
-							</aui:fieldset>
-					</c:if>
-
-					<%
-						}
-					}
-					catch (PortletDataException pde) {
-					%>
-
-						<li class="tree-item">
-							<div class="portlet-msg-error"><%= LanguageUtil.get(pageContext, "error-initializing-import-controls") %></div>
-						</li>
-
-					<%
-					}
-					%>
-
-					<li class="tree-item">
-						<aui:fieldset cssClass="portlet-data-section" label="range">
-							<aui:input data-name='<%= LanguageUtil.get(pageContext, "all") %>' id="rangeAll" label="all" name="range" type="radio" value="all" />
-
-							<aui:input checked="<%= true %>" data-name='<%= LanguageUtil.get(pageContext, "from-last-publish-date") %>' id="rangeLastPublish" label="from-last-publish-date" name="range" type="radio" value="fromLastPublishDate" />
-
-							<aui:input data-name='<%= LanguageUtil.get(pageContext, "date-range") %>' helpMessage="export-date-range-help" id="rangeDateRange" label="date-range" name="range" type="radio" value="dateRange" />
+					<div class="aui-helper-hidden" id="<portlet:namespace />content_<%= selPortlet.getRootPortletId() %>">
+						<ul class="lfr-tree lfr-component">
 
 							<%
-							Calendar today = CalendarFactoryUtil.getCalendar(timeZone, locale);
+							String selectedContent = StringPool.BLANK;
 
-							Calendar yesterday = CalendarFactoryUtil.getCalendar(timeZone, locale);
+							try {
+								PortletDataHandlerControl[] controls = null;
+								PortletDataHandlerControl[] metadataControls = null;
 
-							yesterday.add(Calendar.DATE, -1);
+								controls = portletDataHandler.getExportControls();
+								metadataControls = portletDataHandler.getExportMetadataControls();
+
+								if (controls != null) {
+									request.setAttribute("render_controls.jsp-controls", controls);
+									request.setAttribute("render_controls.jsp-portletDisabled", !portletDataHandler.isPublishToLiveByDefault());
+
+									selectedContent += ArrayUtil.toString(controls, "controlName", StringPool.COMMA_AND_SPACE, locale);
 							%>
 
-							<ul class="aui-helper-hidden date-range-options" id="<portlet:namespace />startEndDate">
+							<aui:fieldset cssClass="portlet-data-section" label="content">
+								<aui:input data-name='<%= LanguageUtil.get(pageContext, "categories") %>' helpMessage="export-import-referenced-categories-help" label="categories" name="<%= PortletDataHandlerKeys.CATEGORIES %>" type="checkbox" value="<%= false %>" />
+
+								<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
+							</aui:fieldset>
+
+							<c:if test="<%= metadataControls.length > 0 %>">
+								<aui:fieldset cssClass="portlet-data-section" helpMessage="content-metadata-help" label="content-metadata">
+
+									<ul class="metadata-controls <%= metadataControls.length > 1 ? "metadata-controls-multiple" : StringPool.BLANK %>" id="<portlet:namespace />portletMetaDataList">
+
+										<%
+										for (int i = 0; i < metadataControls.length; i++) {
+											PortletDataHandlerBoolean control = (PortletDataHandlerBoolean)metadataControls[i];
+
+											PortletDataHandlerControl[] childrenControls = control.getChildren();
+
+											if ((childrenControls != null) && (childrenControls.length > 0)) {
+												request.setAttribute("render_controls.jsp-controls", childrenControls);
+
+												selectedContent += (selectedContent.equals(StringPool.BLANK) ? "" : ", ") + ArrayUtil.toString(childrenControls, "controlName", StringPool.COMMA_AND_SPACE, locale);
+										%>
+
+												<c:choose>
+													<c:when test="<%= metadataControls.length > 1 %>">
+														<li class="tree-item">
+															<aui:fieldset cssClass="portlet-type-data-section" label="<%= metadataControls[i].getControlName() %>">
+																<ul id="<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA %>_<%= selPortlet.getRootPortletId() %>Controls">
+																	<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
+																</ul>
+															</aui:fieldset>
+														</li>
+													</c:when>
+													<c:otherwise>
+														<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
+													</c:otherwise>
+												</c:choose>
+
+										<%
+											}
+										}
+										%>
+
+									</ul>
+								</aui:fieldset>
+							</c:if>
+
+							<%
+								}
+							}
+							catch (PortletDataException pde) {
+							%>
+
 								<li>
-									<aui:field-wrapper label="start-date">
-										<liferay-ui:input-date
-											dayParam="startDateDay"
-											dayValue="<%= yesterday.get(Calendar.DATE) %>"
-											disabled="<%= false %>"
-											firstDayOfWeek="<%= yesterday.getFirstDayOfWeek() - 1 %>"
-											monthParam="startDateMonth"
-											monthValue="<%= yesterday.get(Calendar.MONTH) %>"
-											yearParam="startDateYear"
-											yearRangeEnd="<%= yesterday.get(Calendar.YEAR) %>"
-											yearRangeStart="<%= yesterday.get(Calendar.YEAR) - 100 %>"
-											yearValue="<%= yesterday.get(Calendar.YEAR) %>"
-										/>
-
-										&nbsp;
-
-										<liferay-ui:input-time
-											amPmParam='<%= "startDateAmPm" %>'
-											amPmValue="<%= yesterday.get(Calendar.AM_PM) %>"
-											disabled="<%= false %>"
-											hourParam='<%= "startDateHour" %>'
-											hourValue="<%= yesterday.get(Calendar.HOUR) %>"
-											minuteInterval="<%= 1 %>"
-											minuteParam='<%= "startDateMinute" %>'
-											minuteValue="<%= yesterday.get(Calendar.MINUTE) %>"
-										/>
-									</aui:field-wrapper>
+									<div class="portlet-msg-error"><%= LanguageUtil.get(pageContext, "error-initializing-import-controls") %></div>
 								</li>
 
-								<li>
-									<aui:field-wrapper label="end-date">
-										<liferay-ui:input-date
-											dayParam="endDateDay"
-											dayValue="<%= today.get(Calendar.DATE) %>"
-											disabled="<%= false %>"
-											firstDayOfWeek="<%= today.getFirstDayOfWeek() - 1 %>"
-											monthParam="endDateMonth"
-											monthValue="<%= today.get(Calendar.MONTH) %>"
-											yearParam="endDateYear"
-											yearRangeEnd="<%= today.get(Calendar.YEAR) %>"
-											yearRangeStart="<%= today.get(Calendar.YEAR) - 100 %>"
-											yearValue="<%= today.get(Calendar.YEAR) %>"
-										/>
+							<%
+							}
+							%>
 
-										&nbsp;
+							<li>
+								<aui:fieldset cssClass="portlet-data-section" label="range">
+									<aui:input data-name='<%= LanguageUtil.get(pageContext, "all") %>' id="rangeAll" label="all" name="range" type="radio" value="all" />
 
-										<liferay-ui:input-time
-											amPmParam='<%= "endDateAmPm" %>'
-											amPmValue="<%= today.get(Calendar.AM_PM) %>"
-											disabled="<%= false %>"
-											hourParam='<%= "endDateHour" %>'
-											hourValue="<%= today.get(Calendar.HOUR) %>"
-											minuteParam='<%= "endDateMinute" %>'
-											minuteValue="<%= today.get(Calendar.MINUTE) %>"
-										/>
-									</aui:field-wrapper>
-								</li>
-							</ul>
-						</aui:fieldset>
-					</li>
-				</ul>
-			</div>
+									<aui:input checked="<%= true %>" data-name='<%= LanguageUtil.get(pageContext, "from-last-publish-date") %>' id="rangeLastPublish" label="from-last-publish-date" name="range" type="radio" value="fromLastPublishDate" />
 
-			<ul id="<portlet:namespace />showChangeContent">
-				<li class="tree-item">
-					<div class="selected-labels" id="<portlet:namespace />selectedContent_<%= selPortlet.getRootPortletId() %>">
+									<aui:input data-name='<%= LanguageUtil.get(pageContext, "date-range") %>' helpMessage="export-date-range-help" id="rangeDateRange" label="date-range" name="range" type="radio" value="dateRange" />
 
-						<%= selectedContent %>,
+									<%
+									Calendar today = CalendarFactoryUtil.getCalendar(timeZone, locale);
 
-						<liferay-ui:message key="from-last-publish-date"></liferay-ui:message>
+									Calendar yesterday = CalendarFactoryUtil.getCalendar(timeZone, locale);
+
+									yesterday.add(Calendar.DATE, -1);
+									%>
+
+									<ul class="aui-helper-hidden date-range-options" id="<portlet:namespace />startEndDate">
+										<li>
+											<aui:field-wrapper label="start-date">
+												<liferay-ui:input-date
+													dayParam="startDateDay"
+													dayValue="<%= yesterday.get(Calendar.DATE) %>"
+													disabled="<%= false %>"
+													firstDayOfWeek="<%= yesterday.getFirstDayOfWeek() - 1 %>"
+													monthParam="startDateMonth"
+													monthValue="<%= yesterday.get(Calendar.MONTH) %>"
+													yearParam="startDateYear"
+													yearRangeEnd="<%= yesterday.get(Calendar.YEAR) %>"
+													yearRangeStart="<%= yesterday.get(Calendar.YEAR) - 100 %>"
+													yearValue="<%= yesterday.get(Calendar.YEAR) %>"
+												/>
+
+												&nbsp;
+
+												<liferay-ui:input-time
+													amPmParam='<%= "startDateAmPm" %>'
+													amPmValue="<%= yesterday.get(Calendar.AM_PM) %>"
+													disabled="<%= false %>"
+													hourParam='<%= "startDateHour" %>'
+													hourValue="<%= yesterday.get(Calendar.HOUR) %>"
+													minuteInterval="<%= 1 %>"
+													minuteParam='<%= "startDateMinute" %>'
+													minuteValue="<%= yesterday.get(Calendar.MINUTE) %>"
+												/>
+											</aui:field-wrapper>
+										</li>
+
+										<li>
+											<aui:field-wrapper label="end-date">
+												<liferay-ui:input-date
+													dayParam="endDateDay"
+													dayValue="<%= today.get(Calendar.DATE) %>"
+													disabled="<%= false %>"
+													firstDayOfWeek="<%= today.getFirstDayOfWeek() - 1 %>"
+													monthParam="endDateMonth"
+													monthValue="<%= today.get(Calendar.MONTH) %>"
+													yearParam="endDateYear"
+													yearRangeEnd="<%= today.get(Calendar.YEAR) %>"
+													yearRangeStart="<%= today.get(Calendar.YEAR) - 100 %>"
+													yearValue="<%= today.get(Calendar.YEAR) %>"
+												/>
+
+												&nbsp;
+
+												<liferay-ui:input-time
+													amPmParam='<%= "endDateAmPm" %>'
+													amPmValue="<%= today.get(Calendar.AM_PM) %>"
+													disabled="<%= false %>"
+													hourParam='<%= "endDateHour" %>'
+													hourValue="<%= today.get(Calendar.HOUR) %>"
+													minuteParam='<%= "endDateMinute" %>'
+													minuteValue="<%= today.get(Calendar.MINUTE) %>"
+												/>
+											</aui:field-wrapper>
+										</li>
+									</ul>
+								</aui:fieldset>
+							</li>
+						</ul>
 					</div>
 
-					<%
-					Map<String,Object> data = new HashMap<String,Object>();
+					<ul id="<portlet:namespace />showChangeContent">
+						<li>
+							<div class="selected-labels" id="<portlet:namespace />selectedContent_<%= selPortlet.getRootPortletId() %>">
 
-					data.put("portletid", selPortlet.getRootPortletId());
-					%>
+								<%= selectedContent %>,
 
-					<aui:a cssClass="modify-link content-link" data="<%= data %>" href="javascript:;" label="change" method="get" />
+								<liferay-ui:message key="from-last-publish-date"></liferay-ui:message>
+							</div>
+
+							<%
+							Map<String,Object> data = new HashMap<String,Object>();
+
+							data.put("portletid", selPortlet.getRootPortletId());
+							%>
+
+							<aui:a cssClass="modify-link content-link" data="<%= data %>" href="javascript:;" label="change" method="get" />
+						</li>
+					</ul>
+
+					<aui:script>
+						Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + selPortlet.getRootPortletId() %>Checkbox', '<portlet:namespace />showChangeContent');
+					</aui:script>
 				</li>
-			</ul>
+			</aui:fieldset>
 
-			<aui:script>
-				Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + selPortlet.getRootPortletId() %>Checkbox', '<portlet:namespace />showChangeContent');
-			</aui:script>
-		</aui:fieldset>
-
-		<aui:fieldset cssClass="options-group" label="permissions">
-			<aui:input helpMessage="export-import-portlet-permissions-help" label="permissions" name="<%= PortletDataHandlerKeys.PERMISSIONS %>" type="checkbox" />
-
-			<ul id="<portlet:namespace />permissionsUl">
-				<li class="tree-item">
-					<aui:input label="permissions-assigned-to-roles" name="permissionsAssignedToRoles" type="checkbox" value="<%= true %>" />
-				</li>
-			</ul>
-		</aui:fieldset>
-	</c:if>
-</ul>
+			<aui:fieldset cssClass="options-group" label="permissions">
+				<ul class="lfr-tree lfr-component">
+					<li class="tree-item">
+						<aui:input helpMessage="export-import-portlet-permissions-help" label="permissions" name="<%= PortletDataHandlerKeys.PERMISSIONS %>" type="checkbox" />
+		
+						<ul id="<portlet:namespace />permissionsUl">
+							<li>
+								<aui:input label="permissions-assigned-to-roles" name="permissionsAssignedToRoles" type="checkbox" value="<%= true %>" />
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</aui:fieldset>
+		</c:if>
+	</ul>
+</div>
 
 <aui:script use="liferay-export-import">
 	new Liferay.ExportImport(

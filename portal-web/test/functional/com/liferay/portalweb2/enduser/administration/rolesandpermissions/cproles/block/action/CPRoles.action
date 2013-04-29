@@ -9,25 +9,25 @@
 		<case locator-key1="ADD">
 			<execute function="Click#pauseTextClickAt" value1="Add" />
 		</case>
-		<case locator-key1="ADD_MENU_LIST_ORGANIZATION_ROLE">
+		<case locator-key1="ADD_MENULIST_ORGANIZATION_ROLE">
 			<execute function="Click#textClickAtAndWait" value1="Organization Role" />
 		</case>
-		<case locator-key1="ADD_MENU_LIST_REGULAR_ROLE">
+		<case locator-key1="ADD_MENULIST_REGULAR_ROLE">
 			<execute function="Click#textClickAtAndWait" value1="Regular Role" />
 		</case>
-		<case locator-key1="ADD_MENU_LIST_SITE_ROLE">
+		<case locator-key1="ADD_MENULIST_SITE_ROLE">
 			<execute function="Click#textClickAtAndWait" value1="Site Role" />
 		</case>
-		<case locator-key1="ROLE_MENU_LIST_ASSIGN_MEMBERS">
+		<case locator-key1="ROLE_MENULIST_ASSIGN_MEMBERS">
 			<execute function="Click#textClickAtAndWait" value1="Assign Members" />
 		</case>
-		<case locator-key1="ROLE_MENU_LIST_DEFINE_PERMISSIONS">
+		<case locator-key1="ROLE_MENULIST_DEFINE_PERMISSIONS">
 			<execute function="Click#textClickAtAndWait" value1="Define Permissions" />
 		</case>
-		<case locator-key1="ROLE_MENU_LIST_DELETE">
+		<case locator-key1="ROLE_MENULIST_DELETE">
 			<execute function="Click#textClickAtAndWait" value1="Delete" />
 		</case>
-		<case locator-key1="ROLE_MENU_LIST_EDIT">
+		<case locator-key1="ROLE_MENULIST_EDIT">
 			<execute function="Click#textClickAtAndWait" value1="Edit" />
 		</case>
 		<case comparator="startsWith" locator-key1="ROLE_TABLE_ACTIONS_">

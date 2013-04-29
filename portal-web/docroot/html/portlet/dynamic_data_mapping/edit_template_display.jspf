@@ -111,7 +111,7 @@ templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(classNa
 											else if (templateVariableDefinition.isCollection()) {
 												TemplateVariableDefinition itemTemplateVariableDefinition = templateVariableDefinition.getItemTemplateVariableDefinition();
 
-												String[] listCodeArray = _getListCodeArray(templateVariableDefinition.getName() + ".getSiblings()", itemTemplateVariableDefinition.getName(), language);
+												String[] listCodeArray = _getListCodeArray(templateVariableDefinition.getName(), itemTemplateVariableDefinition.getName(), language);
 
 												dataContent1 = listCodeArray[0];
 												dataContent2 = listCodeArray[1];
@@ -119,7 +119,7 @@ templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(classNa
 											else if (templateVariableDefinition.isRepeatable()) {
 												String itemName = "cur_" + templateVariableDefinition.getName();
 
-												String[] listCodeArray = _getListCodeArray(templateVariableDefinition.getName(), itemName, language);
+												String[] listCodeArray = _getListCodeArray(templateVariableDefinition.getName() + ".getSiblings()", itemName, language);
 
 												dataContent1 = listCodeArray[0];
 												dataContent2 = _getVariableCode(itemName + ".getData()", language);

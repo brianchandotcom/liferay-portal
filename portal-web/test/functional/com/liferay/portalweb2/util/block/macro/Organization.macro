@@ -41,16 +41,17 @@
 
 		<execute action="CPUsersandorganizationsAssignmembers#click" locator-key1="AVAILABLE" />
 		<execute macro="CPUsersandorganizationsAssignmembers#showBasicSearch" />
-		<execute action="CPUsersandorganizationsAssignmembers#type" locator-key1="BASIC_SEARCH_FIELD" value1="${screenName}" />
+		<execute action="CPUsersandorganizationsAssignmembers#type" locator-key1="BASIC_SEARCH_FIELD" value1="${userScreenName}" />
 		<execute action="CPUsersandorganizationsAssignmembers#click" locator-key1="BASIC_SEARCH_BUTTON" />
+		<execute action="CPUsersandorganizationsAssignmembers#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME_1" value1="${userScreenName}" />
 		<execute action="CPUsersandorganizationsAssignmembers#check" locator-key1="USER_TABLE_CHECKBOX_1" />
 		<execute action="CPUsersandorganizationsAssignmembers#click" locator-key1="UPDATE_ASSOCIATIONS_BUTTON" />
 		<execute action="CPUsersandorganizationsAssignmembers#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
 
 		<execute action="CPUsersandorganizationsAssignmembers#click" locator-key1="CURRENT" />
 		<execute action="CPUsersandorganizationsAssignmembers#assertChecked" locator-key1="USER_TABLE_CHECKBOX_1" />
-		<execute action="CPUsersandorganizationsAssignmembers#assertTextEquals" locator-key1="USER_TABLE_USER_NAME_1" value1="${firstName} ${lastName}" />
-		<execute action="CPUsersandorganizationsAssignmembers#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME_1" value1="${screenName}" />
+		<execute action="CPUsersandorganizationsAssignmembers#assertTextEquals" locator-key1="USER_TABLE_USER_NAME_1" value1="${userFirstName} ${userLastName}" />
+		<execute action="CPUsersandorganizationsAssignmembers#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME_1" value1="${userScreenName}" />
 	</command>
 
 	<command name="cpAddSite">
@@ -98,8 +99,9 @@
 
 		<execute action="CPUsersandorganizationsAssignmembers#click" locator-key1="AVAILABLE" />
 		<execute macro="CPUsersandorganizationsAssignmembers#showBasicSearch" />
-		<execute action="CPUsersandorganizationsAssignmembers#type" locator-key1="BASIC_SEARCH_FIELD" value1="${screenName}" />
+		<execute action="CPUsersandorganizationsAssignmembers#type" locator-key1="BASIC_SEARCH_FIELD" value1="${userScreenName}" />
 		<execute action="CPUsersandorganizationsAssignmembers#click" locator-key1="BASIC_SEARCH_BUTTON" />
+		<execute action="CPUsersandorganizationsAssignmembers#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME_1" value1="${userScreenName}" />
 		<execute action="CPUsersandorganizationsAssignmembers#uncheck" locator-key1="USER_TABLE_CHECKBOX_1" />
 		<execute action="CPUsersandorganizationsAssignmembers#click" locator-key1="UPDATE_ASSOCIATIONS_BUTTON" />
 		<execute action="CPUsersandorganizationsAssignmembers#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
@@ -113,7 +115,7 @@
 		<execute action="CPUsersandorganizations#click" locator-key1="SEARCH_BUTTON" />
 		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME_1" value1="${orgName}" />
 		<execute action="CPUsersandorganizations#click" locator-key1="ORGANIZATION_TABLE_NAME_1" value1="${orgName}" />
-		<execute action="CPUsersandorganizationsOrganization#assertTextNotPresent" value1="${firstName}" />
+		<execute action="CPUsersandorganizationsOrganization#assertTextNotPresent" value1="${userFirstName}" />
 	</command>
 
 	<command name="cpTearDown">
@@ -148,7 +150,7 @@
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
-		<execute action="CPUsersandorganizations#type" locator-key1="SEARCH_FIELD" value1="${searchName}" />
+		<execute action="CPUsersandorganizations#type" locator-key1="SEARCH_FIELD" value1="${searchToken}" />
 		<execute action="CPUsersandorganizations#click" locator-key1="SEARCH_BUTTON" />
 		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME_1" value1="${orgName}" />
 		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_TYPE_1" value1="${orgType}" />
@@ -166,13 +168,13 @@
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
-		<execute action="CPUsersandorganizations#type" locator-key1="SEARCH_FIELD" value1="${searchName}" />
+		<execute action="CPUsersandorganizations#type" locator-key1="SEARCH_FIELD" value1="${searchToken}" />
 		<execute action="CPUsersandorganizations#click" locator-key1="SEARCH_BUTTON" />
 		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME_1" value1="${orgName}" />
 		<execute action="CPUsersandorganizations#click" locator-key1="ORGANIZATION_TABLE_NAME_1" value1="${orgName}" />
 
-		<execute action="CPUsersandorganizationsOrganization#assertTextEquals" locator-key1="USER_TABLE_FIRST_NAME_1" value1="${firstName}" />
-		<execute action="CPUsersandorganizationsOrganization#assertTextEquals" locator-key1="USER_TABLE_LAST_NAME_1" value1="${lastName}" />
-		<execute action="CPUsersandorganizationsOrganization#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME_1" value1="${screenName}" />
+		<execute action="CPUsersandorganizationsOrganization#assertTextEquals" locator-key1="USER_TABLE_FIRST_NAME_1" value1="${userFirstName}" />
+		<execute action="CPUsersandorganizationsOrganization#assertTextEquals" locator-key1="USER_TABLE_LAST_NAME_1" value1="${userLastName}" />
+		<execute action="CPUsersandorganizationsOrganization#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME_1" value1="${userScreenName}" />
 	</command>
 </definition>

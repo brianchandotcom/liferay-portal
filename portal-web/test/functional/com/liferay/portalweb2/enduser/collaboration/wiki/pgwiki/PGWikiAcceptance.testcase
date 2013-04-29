@@ -41,7 +41,5 @@
 		<execute macro="WikiPage#cpTearDown" />
 
 		<execute macro="Page#pgTearDown" />
-
-		<execute macro="User#pgLogout" />
 	</tear-down>
 </definition>

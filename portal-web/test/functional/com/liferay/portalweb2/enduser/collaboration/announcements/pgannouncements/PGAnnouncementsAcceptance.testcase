@@ -26,7 +26,6 @@
 		<var name="entryURL" value="http://www.liferay.com" />
 
 		<execute macro="AnnouncementsEntry#pgAdd" />
-
 		<execute macro="AnnouncementsEntry#pgDelete" />
 	</command>
 
@@ -40,7 +39,6 @@
 		<var name="entryURLNew" value="http://www.alloyui.com" />
 
 		<execute macro="AnnouncementsEntry#pgAdd" />
-
 		<execute macro="AnnouncementsEntry#pgEdit" />
 	</command>
 
@@ -48,7 +46,5 @@
 		<execute macro="AnnouncementsEntry#pgTearDown" />
 
 		<execute macro="Page#pgTearDown" />
-
-		<execute macro="User#pgLogout" />
 	</tear-down>
 </definition>

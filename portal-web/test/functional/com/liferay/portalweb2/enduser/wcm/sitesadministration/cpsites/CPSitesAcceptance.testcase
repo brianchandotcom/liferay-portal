@@ -21,7 +21,5 @@
 
 	<tear-down>
 		<execute macro="Site#cpTearDown" />
-
-		<execute macro="User#pgLogout" />
 	</tear-down>
 </definition>

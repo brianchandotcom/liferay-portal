@@ -12,7 +12,5 @@
 
 	<tear-down>
 		<execute macro="BlogsEntry#cpTearDown" />
-
-		<execute macro="User#pgLogout" />
 	</tear-down>
 </definition>

@@ -64,13 +64,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--IDENTIFICATION-->
-<!--MISCELLANEOUS-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--DETAILS-->
 <tr>
 	<td>DETAILS_NAME_FIELD</td>
@@ -129,6 +122,13 @@
 	<td>//select[@id='_125_privateLayoutSetPrototypeId']</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--IDENTIFICATION-->
+<!--MISCELLANEOUS-->
 </tbody>
 </table>
 </body>

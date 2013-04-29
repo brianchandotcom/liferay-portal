@@ -110,7 +110,8 @@
 						%>
 
 					</ul>
-			</c:if>
+				</c:if>
+			</li>
 		</ul>
 	</aui:fieldset>
 

@@ -70,6 +70,7 @@ import com.liferay.portlet.documentlibrary.service.DLFolderServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryActionableDynamicQuery;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFolderActionableDynamicQuery;
+import com.liferay.portlet.dynamicdatamapping.StructureFieldException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
@@ -187,8 +188,12 @@ public class DLFileEntryIndexer extends BaseIndexer {
 					LocaleUtil.toLanguageId(searchContext.getLocale())),
 				StringPool.BLANK);
 
-			ddmStructureFieldValue = DDMUtil.getIndexedFieldValue(
-				ddmStructureFieldValue, structure.getFieldType(fieldName));
+			try {
+				ddmStructureFieldValue = DDMUtil.getIndexedFieldValue(
+					ddmStructureFieldValue, structure.getFieldType(fieldName));
+			}
+			catch (StructureFieldException sfe) {
+			}
 
 			contextQuery.addRequiredTerm(
 				ddmStructureFieldName,

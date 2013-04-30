@@ -18,11 +18,11 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.ServletInputStreamAdapter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProgressTracker;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsUtil;
 
 import java.io.IOException;
@@ -48,11 +48,8 @@ public class LiferayInputStream extends ServletInputStreamAdapter {
 		_totalSize = request.getContentLength();
 
 		if (_totalSize < 0) {
-			String contentLength = request.getHeader("content-length");
-
-			if (Validator.isNotNull(contentLength)) {
-				_totalSize = Long.parseLong(contentLength);
-			}
+			_totalSize = GetterUtil.getLong(
+				request.getHeader(HttpHeaders.CONTENT_LENGTH), _totalSize);
 		}
 	}
 

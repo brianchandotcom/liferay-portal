@@ -458,7 +458,7 @@
 		}
 	}
 
-.journal-article-instructions-container {
+	.journal-article-instructions-container {
 		display: normal;
 	}
 
@@ -639,6 +639,10 @@
 
 	.display-page-toolbar {
 		margin-top: 0.5em;
+	}
+
+	.wcm-image-preview img {
+		max-width: 600px;
 	}
 }
 

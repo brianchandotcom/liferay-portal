@@ -48,6 +48,8 @@ AUI.add(
 					initializer: function(config) {
 						var instance = this;
 
+						instance._dialogTitle = config.dialogTitle;
+
 						instance._bindUI();
 					},
 
@@ -86,35 +88,49 @@ AUI.add(
 							'.content-link'
 						);
 
-						instance.byId('globalConfigurationLink').on(
-							STR_CLICK,
-							function(event) {
-								var globalConfigurationDialog = instance._getGlobalConfigurationDialog();
+						var globalConfigurationLink = instance.byId('globalConfigurationLink');
 
-								globalConfigurationDialog.show();
-							}
-						);
+						if (globalConfigurationLink) {
+							globalConfigurationLink.on(
+								STR_CLICK,
+								function(event) {
+									var globalConfigurationDialog = instance._getGlobalConfigurationDialog();
 
-						instance.byId('globalContentLink').on(
-							STR_CLICK,
-							function(event) {
-								var globalContentDialog = instance._getGlobalContentDialog();
+									globalConfigurationDialog.show();
+								}
+							);
+						}
 
-								globalContentDialog.show();
-							}
-						);
+						var globalContentLink = instance.byId('globalContentLink');
 
-						instance.byId('pagesLink').on(
-							STR_CLICK,
-							function(event) {
-								var pagesDialog = instance._getPagesDialog();
+						if (globalContentLink) {
+							globalContentLink.on(
+								STR_CLICK,
+								function(event) {
+									var globalContentDialog = instance._getGlobalContentDialog();
 
-								pagesDialog.show();
-							}
-						);
+									globalContentDialog.show();
+								}
+							);
+						}
 
-						if (instance.byId('rangeLink')) {
-							instance.byId('rangeLink').on(
+						var pagesLink = instance.byId('pagesLink');
+
+						if (pagesLink) {
+							pagesLink.on(
+								STR_CLICK,
+								function(event) {
+									var pagesDialog = instance._getPagesDialog();
+
+									pagesDialog.show();
+								}
+							);
+						}
+
+						var rangeLink = instance.byId('rangeLink');
+
+						if (rangeLink) {
+							rangeLink.on(
 								STR_CLICK,
 								function(event) {
 									var rangeDialog = instance._getRangeDialog();
@@ -141,7 +157,7 @@ AUI.add(
 									bodyContent: contentNode,
 									centered: true,
 									modal: true,
-									title: Liferay.Language.get('content-to-export'),
+									title: instance._dialogTitle,
 									width: 400,
 									buttons: [
 										{
@@ -243,7 +259,7 @@ AUI.add(
 									bodyContent: globalContentNode,
 									centered: true,
 									modal: true,
-									title: Liferay.Language.get('content-to-export'),
+									title: instance._dialogTitle,
 									width: 400
 								}
 							).render(instance.rootNode);
@@ -328,7 +344,7 @@ AUI.add(
 									],
 									centered: true,
 									modal: true,
-									title: Liferay.Language.get('content-to-export'),
+									title: instance._dialogTitle,
 									width: 400
 								}
 							).render(instance.rootNode);

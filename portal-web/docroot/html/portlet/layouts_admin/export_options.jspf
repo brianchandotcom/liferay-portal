@@ -110,7 +110,8 @@
 						%>
 
 					</ul>
-			</c:if>
+				</c:if>
+			</li>
 		</ul>
 	</aui:fieldset>
 
@@ -398,6 +399,7 @@
 		{
 			archivedSetupsNode: '#<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS %>Checkbox',
 			categoriesNode: '#<%= PortletDataHandlerKeys.CATEGORIES %>Checkbox',
+			dialogTitle: '<%= UnicodeLanguageUtil.get(pageContext, "content-to-export") %>',
 			layoutSetSettingsNode: '#<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>Checkbox',
 			logoNode: '#<%= PortletDataHandlerKeys.LOGO %>Checkbox',
 			namespace: '<portlet:namespace />',

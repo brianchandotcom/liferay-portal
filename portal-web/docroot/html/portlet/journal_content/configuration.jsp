@@ -38,8 +38,10 @@ try {
 catch (NoSuchArticleException nsae) {
 }
 
-groupId = ParamUtil.getLong(request, "groupId", themeDisplay.getScopeGroupId());
-type = ParamUtil.getString(request, "type", type);
+if (article == null) {
+	groupId = ParamUtil.getLong(request, "groupId", themeDisplay.getScopeGroupId());
+	type = ParamUtil.getString(request, "type", type);
+}
 %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />

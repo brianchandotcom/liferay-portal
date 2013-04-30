@@ -38,7 +38,7 @@ if (Validator.isNotNull(className) && (classPK > 0)) {
 }
 %>
 
-<span <%= AUIUtil.buildData(data) %> class="aui-helper-hidden portlet-item" />
+<span <%= AUIUtil.buildData(data) %> class="aui-helper-hidden portlet-item"></span>
 
 <aui:script use="aui-base">
 	<c:if test="<%= Validator.isNotNull(className) && (classPK > 0) %>">

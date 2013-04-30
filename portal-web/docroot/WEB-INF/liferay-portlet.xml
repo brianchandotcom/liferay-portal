@@ -149,6 +149,7 @@
 		<staged-model-data-handler-class>com.liferay.portlet.journal.lar.JournalArticleStagedModelDataHandler</staged-model-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.portlet.journal.lar.JournalFeedStagedModelDataHandler</staged-model-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.portlet.journal.lar.JournalFolderStagedModelDataHandler</staged-model-data-handler-class>
+		<ddm-display>com.liferay.portlet.journal.ddm.JournalDDMDisplay</ddm-display>
 		<template-handler>com.liferay.portlet.journal.template.JournalTemplateHandler</template-handler>
 		<webdav-storage-token>journal</webdav-storage-token>
 		<webdav-storage-class>com.liferay.portlet.journal.webdav.JournalWebDAVStorageImpl</webdav-storage-class>

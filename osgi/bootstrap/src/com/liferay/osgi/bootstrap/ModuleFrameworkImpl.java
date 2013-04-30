@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.module.framework.ModuleFramework;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -488,7 +489,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			String.valueOf(PropsValues.MODULE_FRAMEWORK_AUTO_DEPLOY_INTERVAL));
 		properties.put(
 			FrameworkPropsKeys.FELIX_FILEINSTALL_TMPDIR,
-			System.getProperty("java.io.tmpdir"));
+			SystemProperties.get(SystemProperties.TMP_DIR));
 		properties.put(
 			Constants.FRAMEWORK_BEGINNING_STARTLEVEL,
 			String.valueOf(PropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL));

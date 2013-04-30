@@ -205,6 +205,8 @@ AUI.add(
 					initializer: function(config) {
 						var instance = this;
 
+						instance._ioCategory = {};
+
 						instance._originalConfig = config;
 
 						var categoriesContainer = A.one(instance._categoryContainerSelector);
@@ -2346,28 +2348,31 @@ AUI.add(
 						var vocabulary = instance._getVocabularyById(vocabularyId);
 
 						if (!exception) {
+							var errorVocabularies = {};
+
+							AObject.each(
+								result,
+								function(item, index, collection) {
+									errorVocabularies[toInt(item.categoryId)] = true;
+								}
+							);
+
 							var deletedRootCategories = AArray.filter(
 								categoryIds,
 								function(item, index, collection) {
 									var categoryId = item;
 
-									var isRoot = instance._vocabularyRootCategories[categoryId] === 1;
+									var rootVocabulary = (instance._vocabularyRootCategories[categoryId] === 1);
 
-									var isDeleted = !AArray.find(
-										result,
-										function(item, index, collection) {
-											return item.categoryId == categoryId;
-										}
-									);
+									var deletedVocabulary = !errorVocabularies[categoryId];
 
-									return (isRoot && isDeleted);
-								}
-							);
+									var deletedRootCategory = (rootVocabulary && deletedVocabulary);
 
-							AArray.each(
-								deletedRootCategories,
-								function(item, index, collection) {
-									instance._vocabularyRootCategories[item] = null;
+									if (deletedRootCategory) {
+										instance._vocabularyRootCategories[categoryId] = null;
+									}
+
+									return deletedRootCategory;
 								}
 							);
 
@@ -2875,7 +2880,6 @@ AUI.add(
 
 					_categoryItemSelectorFlat: '.category-item',
 					_categoryContainerSelector: '.vocabulary-categories',
-					_ioCategory: {},
 					_selectedCategories: null,
 					_selectedVocabularies: null,
 					_selectedVocabulary: null,

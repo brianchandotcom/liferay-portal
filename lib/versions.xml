@@ -2688,28 +2688,6 @@
 		</licenses>
 	</library>
 	<library>
-		<file-name>lib/portal/oauth.jar</file-name>
-		<version>20100601</version>
-		<project-name>OAuth Core</project-name>
-		<project-url>http://code.google.com/p/oauth</project-url>
-		<licenses>
-			<license>
-				<license-name>Apache License 2.0</license-name>
-			</license>
-		</licenses>
-	</library>
-	<library>
-		<file-name>lib/portal/oauth-provider.jar</file-name>
-		<version>20100601</version>
-		<project-name>OAuth Core: Provider</project-name>
-		<project-url>http://code.google.com/p/oauth</project-url>
-		<licenses>
-			<license>
-				<license-name>Apache License 2.0</license-name>
-			</license>
-		</licenses>
-	</library>
-	<library>
 		<file-name>lib/portal/odmg.jar</file-name>
 		<version></version>
 		<project-name>ODMG - Object Data Management Group Java Bindings</project-name>

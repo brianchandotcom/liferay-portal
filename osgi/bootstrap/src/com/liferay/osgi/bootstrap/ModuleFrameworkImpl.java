@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.module.framework.ModuleFramework;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -693,8 +692,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			sb.append(StringPool.COMMA);
 		}
 
-		List<URL> urls = new UniqueList<URL>();
-
 		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
 
 		try {
@@ -704,17 +701,14 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			while (enu.hasMoreElements()) {
 				URL url = enu.nextElement();
 
-				urls.add(url);
+				_processURL(
+					sb, url,
+					PropsValues.
+						MODULE_FRAMEWORK_SYSTEM_BUNDLE_IGNORED_FRAGMENTS);
 			}
 		}
 		catch (IOException ioe) {
 			_log.error(ioe, ioe);
-		}
-
-		for (URL url : urls) {
-			_processURL(
-				sb, url,
-				PropsValues.MODULE_FRAMEWORK_SYSTEM_BUNDLE_IGNORED_FRAGMENTS);
 		}
 
 		_extraPackageMap = Collections.unmodifiableMap(_extraPackageMap);

@@ -173,6 +173,7 @@ public class EditCategoryAction extends PortletAction {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		jsonObject.put("categoryId", category.getCategoryId());
+		jsonObject.put("parentCategoryId", category.getParentCategoryId());
 
 		return jsonObject;
 	}

@@ -38,7 +38,7 @@ import javax.servlet.http.HttpSession;
  */
 public class LiferayInputStream extends ServletInputStreamAdapter {
 
-	public static final long THRESHOLD_SIZE = GetterUtil.getInteger(
+	public static final long THRESHOLD_SIZE = GetterUtil.getLong(
 		PropsUtil.get(LiferayInputStream.class.getName() + ".threshold.size"));
 
 	public LiferayInputStream(HttpServletRequest request) throws IOException {

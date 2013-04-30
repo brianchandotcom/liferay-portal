@@ -147,9 +147,34 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--SITE_ACTIONS-->
+<!--SITE_MENULIST-->
 <tr>
-	<td>SITE_ACTIONS_DELETE</td>
+	<td>SITE_MENULIST_EDIT_SETTINGS</td>
+	<td>//a[@role='menuitem' and contains(.,'Edit Settings')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_MENULIST_MANAGE_PAGES</td>
+	<td>//a[@role='menuitem' and contains(.,'Manage Pages')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_MENULIST_MANAGE_MEMBERSHIPS</td>
+	<td>//a[@role='menuitem' and contains(.,'Manage Memberships')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_MENULIST_LEAVE</td>
+	<td>//a[@role='menuitem' and contains(.,'Leave')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_MENULIST_DEACTIVATE</td>
+	<td>//a[@role='menuitem' and contains(.,'Leave')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_MENULIST_DELETE</td>
 	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
 	<td></td>
 </tr>

@@ -19,7 +19,7 @@ AUI.add(
 			'<tpl for=".">',
 				'<tpl if="!values.error">',
 					'<li class="upload-file {[ values.temp ? "upload-complete pending-file selectable" : "" ]}" data-fileId="{id}" data-fileName="{name}" id="{id}">',
-						'<input class="{[ !values.temp ? "hide" : "" ]} select-file" data-fileName="{name}" id="{id}checkbox" name="{$ns}selectUploadedFileCheckbox" type="checkbox" value="{name}" />',
+						'<input class="{[ !values.temp ? "hide" : "" ]} select-file" data-fileName="{name}" id="{id}checkbox" name="{$ns}selectUploadedFileCheckbox" type="{[ this.multipleFiles ? "checkbox" : "hidden" ]}" value="{name}" />',
 						'<span class="file-title" title="{name}">{name}</span>',
 						'<span class="progress-bar">',
 							'<span class="progress" id="{id}progress"></span>',
@@ -738,7 +738,16 @@ AUI.add(
 
 						var position = filesTotal - filesQueued;
 
-						var currentListText = Lang.sub(Liferay.Language.get('uploading-file-x-of-x'), [position, filesTotal]);
+						var currentListText;
+
+						if (instance.get('multipleFiles')) {
+							currentListText = Lang.sub(Liferay.Language.get('uploading-file-x-of-x'), [position, filesTotal]);
+						}
+						else {
+							currentListText = Liferay.Language.get('uploading');
+
+							instance._fileListContent.all('.pending-file,.upload-error').remove(true);
+						}
 
 						var fileIdSelector = '#' + event.file.id;
 
@@ -775,6 +784,7 @@ AUI.add(
 							clearRecentUploadsText: Liferay.Language.get('clear-documents-already-saved'),
 							deleteFileText: Liferay.Language.get('delete-file'),
 							dropFileText: instance._dropFileText,
+							multipleFiles: instance.get('multipleFiles'),
 							orText: Liferay.Language.get('or'),
 							pendingFileText: strings['pendingFileText'],
 							selectFilesText: instance._selectFileText,

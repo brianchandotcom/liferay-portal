@@ -1,0 +1,5 @@
+<definition>
+	<command name="assertLocation">
+		<execute selenium="assertLocation" />
+	</command>
+</definition>

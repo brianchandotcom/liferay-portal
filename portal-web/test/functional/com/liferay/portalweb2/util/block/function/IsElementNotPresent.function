@@ -10,4 +10,8 @@
 			</else>
 		</if>
 	</command>
+
+	<command name="isNotVisible">
+		<execute selenium="isNotVisible" />
+	</command>
 </definition>

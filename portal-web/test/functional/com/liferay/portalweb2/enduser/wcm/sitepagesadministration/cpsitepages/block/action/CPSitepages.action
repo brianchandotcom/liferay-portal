@@ -1,0 +1,73 @@
+<definition>
+	<command name="assertElementPresent">
+		<case locator-key1="PAGE_TREE_PAGE_LINK_1">
+			<execute function="AssertElementPresent#assertElementPresent" />
+		</case>
+		<case locator-key1="PAGE_TREE_PAGE_LINK_2">
+			<execute function="AssertElementPresent#assertElementPresent" />
+		</case>
+		<case locator-key1="PAGE_TREE_PAGE_LINK_3">
+			<execute function="AssertElementPresent#assertElementPresent" />
+		</case>
+	</command>
+
+	<command name="assertTextEquals">
+		<case locator-key1="SUCCESS_MESSAGE">
+			<execute function="AssertTextEquals#assertText" value1="Your request completed successfully." />
+		</case>
+	</command>
+
+	<command name="click">
+		<case locator-key1="ADD_PAGE_BUTTON">
+			<execute function="Click#valueClickAtAndWait" value1="Add Page" />
+		</case>
+		<case locator-key1="NAVIGATION_PRIVATE_PAGES">
+			<execute function="Click#textClickAtAndWait" value1="Private Pages" />
+		</case>
+		<case locator-key1="NAVIGATION_PUBLIC_PAGES">
+			<execute function="Click#textClickAtAndWait" value1="Public Pages" />
+		</case>
+		<case locator-key1="SAVE_BUTTON">
+			<execute function="Click#valueClickAtAndWait" value1="Save" />
+		</case>
+		<case locator-key1="TOOLBAR_ADD_CHILD_PAGE">
+			<execute function="Click#textClickAt" value1="Add Child Page" />
+		</case>
+		<case locator-key1="TOOLBAR_ADD_PAGE">
+			<execute function="Click#textClickAt" value1="Add Page" />
+		</case>
+		<case locator-key1="TOOLBAR_DELETE">
+			<execute function="Click#textClickAt" value1="Delete" />
+		</case>
+		<case locator-key1="TOOLBAR_EXPORT">
+			<execute function="Click#textClickAt" value1="Export" />
+		</case>
+		<case locator-key1="TOOLBAR_IMPORT">
+			<execute function="Click#textClickAt" value1="Import" />
+		</case>
+	</command>
+
+	<command name="isElementNotPresent">
+		<case locator-key1="PAGE_TREE_PAGE_LINK_1">
+			<execute function="IsElementNotPresent#isNotVisible" />
+		</case>
+		<case locator-key1="PAGE_TREE_PAGE_LINK_2">
+			<execute function="IsElementNotPresent#isNotVisible" />
+		</case>
+		<case locator-key1="PAGE_TREE_PAGE_LINK_3">
+			<execute function="IsElementNotPresent#isNotVisible" />
+		</case>
+	</command>
+
+	<command name="isElementPresent">
+		<case locator-key1="PAGE_TREE_PAGE_LINK_1">
+			<execute function="IsElementPresent#isVisible" />
+		</case>
+		<case locator-key1="PAGE_TREE_PAGE_LINK_2">
+			<execute function="IsElementPresent#isVisible" />
+		</case>
+		<case locator-key1="PAGE_TREE_PAGE_LINK_3">
+			<execute function="IsElementPresent#isVisible" />
+		</case>
+	</command>
+</definition>

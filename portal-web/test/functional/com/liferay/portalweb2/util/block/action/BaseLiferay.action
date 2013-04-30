@@ -17,6 +17,12 @@
 		</default>
 	</command>
 
+	<command name="assertLocation">
+		<default>
+			<execute function="AssertLocation#assertLocation" />
+		</default>
+	</command>
+
 	<command name="assertNotChecked">
 		<default>
 			<execute function="AssertNotChecked#assertNotChecked" />

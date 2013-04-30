@@ -622,6 +622,9 @@ public class DDMImpl implements DDM {
 					if ((bytes != null) && (bytes.length > 0)) {
 						fieldValue = UnicodeFormatter.bytesToHex(bytes);
 					}
+					else {
+						fieldValue = "update-image";
+					}
 				}
 				catch (IOException ioe) {
 					return null;

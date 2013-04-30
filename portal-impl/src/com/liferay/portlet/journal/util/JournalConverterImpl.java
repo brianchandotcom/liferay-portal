@@ -129,6 +129,8 @@ public class JournalConverterImpl implements JournalConverter {
 					"dynamic-element");
 
 				dynamicElementElement.addAttribute("name", fieldName);
+				dynamicElementElement.addAttribute(
+					"repetition", String.valueOf(i));
 
 				updateContentDynamicElement(
 					dynamicElementElement, ddmStructure, ddmFields,
@@ -473,6 +475,8 @@ public class JournalConverterImpl implements JournalConverter {
 					dynamicElementElement.addElement("dynamic-element");
 
 				childDynamicElementElement.addAttribute("name", childFieldName);
+				childDynamicElementElement.addAttribute(
+					"repetition", String.valueOf(i));
 
 				updateContentDynamicElement(
 					childDynamicElementElement, ddmStructure, ddmFields,

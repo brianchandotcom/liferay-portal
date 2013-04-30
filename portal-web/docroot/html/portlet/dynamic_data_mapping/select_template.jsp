@@ -31,7 +31,7 @@ if ((classPK > 0) && (structureClassNameId == classNameId)) {
 
 String title = StringPool.BLANK;
 
-if (!portletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES)) {
+if (!refererPortletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES)) {
 	if (structure != null) {
 		title = LanguageUtil.format(pageContext, (Validator.isNull(templateHeaderTitle) ? "templates-for-structure-x" : templateHeaderTitle), structure.getName(locale), false);
 	}

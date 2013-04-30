@@ -132,41 +132,21 @@ Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
 		selectDDMTemplate.on(
 			'click',
 			function (event) {
-				Liferay.Util.openWindow(
+				Liferay.Util.openDDMPortlet(
 					{
+						classNameId: '<%= classNameId %>',
 						dialog: {
-							constrain: true,
 							width: 820
 						},
-						id: windowId,
-						title: '<%= UnicodeLanguageUtil.get(pageContext, "application-display-templates") %>',
-
-						<%
-						long controlPanelPlid = PortalUtil.getControlPanelPlid(company.getCompanyId());
-
-						LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(request, PortletKeys.PORTLET_DISPLAY_TEMPLATES, controlPanelPlid, PortletRequest.RENDER_PHASE);
-
-						liferayPortletURL.setDoAsGroupId(ddmTemplateGroupId);
-						liferayPortletURL.setParameter("struts_action", "/dynamic_data_mapping/view_template");
-						liferayPortletURL.setPortletMode(PortletMode.VIEW);
-						liferayPortletURL.setWindowState(LiferayWindowState.POP_UP);
-
-						String liferayPortletURLString = liferayPortletURL.toString();
-
-						liferayPortletURLString = HttpUtil.addParameter(liferayPortletURLString, "classNameId", classNameId);
-						%>
-
-						uri: '<%= liferayPortletURLString %>'
+						groupId: <%= ddmTemplateGroupId %>,
+						refererPortletName: '<%= PortletKeys.PORTLET_DISPLAY_TEMPLATES %>',
+						struts_action: '/dynamic_data_mapping/view_template',
+						title: '<%= UnicodeLanguageUtil.get(pageContext, "application-display-templates") %>'
 					},
-					function (ddmPortletWindow) {
-						ddmPortletWindow.once(
-							'visibleChange',
-							function(event) {
-								if (!event.newVal) {
-									submitForm(document.<portlet:namespace />fm, '<%= refreshURL %>');
-								}
-							}
-						);
+					function (event) {
+						if (!event.newVal) {
+							submitForm(document.<portlet:namespace />fm, '<%= refreshURL %>');
+						}
 					}
 				);
 			}

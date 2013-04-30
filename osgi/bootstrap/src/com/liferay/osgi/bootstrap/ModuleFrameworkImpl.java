@@ -55,6 +55,8 @@ import java.net.JarURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 
+import java.security.CodeSource;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Dictionary;
@@ -357,7 +359,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		FrameworkFactory frameworkFactory = frameworkFactories.get(0);
 
-		Map<String, String> properties = _buildFrameworkProperties();
+		Map<String, String> properties = _buildFrameworkProperties(
+			frameworkFactory.getClass());
 
 		_framework = frameworkFactory.newFramework(properties);
 
@@ -467,7 +470,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 	}
 
-	private Map<String, String> _buildFrameworkProperties() {
+	private Map<String, String> _buildFrameworkProperties(Class<?> clazz) {
 		Map<String, String> properties = new HashMap<String, String>();
 
 		properties.put(
@@ -496,6 +499,18 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		properties.put(
 			Constants.FRAMEWORK_STORAGE,
 			PropsValues.MODULE_FRAMEWORK_STATE_DIR);
+
+		CodeSource codeSource = clazz.getProtectionDomain().getCodeSource();
+
+		URL location = codeSource.getLocation();
+
+		properties.put(
+			FrameworkPropsKeys.OSGI_FRAMEWORK, location.toExternalForm());
+
+		File frameworkFile = new File(location.getFile());
+
+		properties.put(
+			FrameworkPropsKeys.OSGI_INSTALL_AREA, frameworkFile.getParent());
 
 		Properties extraProperties = PropsUtil.getProperties(
 			PropsKeys.MODULE_FRAMEWORK_PROPERTIES, true);

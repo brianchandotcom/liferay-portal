@@ -313,7 +313,7 @@ public class ConstantsBeanFactoryImplTest {
 
 		long startTime = System.currentTimeMillis();
 
-		while ((System.currentTimeMillis() - startTime) < 100) {
+		while ((System.currentTimeMillis() - startTime) < 1000) {
 			System.gc();
 
 			Thread.sleep(1);

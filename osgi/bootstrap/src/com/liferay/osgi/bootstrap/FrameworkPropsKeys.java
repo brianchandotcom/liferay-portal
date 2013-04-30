@@ -31,4 +31,8 @@ public interface FrameworkPropsKeys {
 	public static final String FELIX_FILEINSTALL_TMPDIR =
 		"felix.fileinstall.tmpdir";
 
+	public static final String OSGI_FRAMEWORK = "osgi.framework";
+
+	public static final String OSGI_INSTALL_AREA = "osgi.install.area";
+
 }

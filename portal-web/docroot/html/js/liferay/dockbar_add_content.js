@@ -1,19 +1,35 @@
 AUI.add(
 	'liferay-dockbar-add-content',
 	function(A) {
-		var Lang = A.Lang;
-		var LayoutConfiguration = Liferay.LayoutConfiguration;
 		var Dockbar = Liferay.Dockbar;
+		var Layout = Liferay.Layout;
+		var Portlet = Liferay.Portlet;
+
+		var CSS_LFR_PORTLET_USED = 'lfr-portlet-used';
+
+		var DATA_CLASS_NAME = 'data-class-name';
+
+		var DATA_CLASS_PK = 'data-class-pk';
+
+		var DATA_PORTLET_ID = 'data-portlet-id';
+
+		var DATA_STYLE = 'data-style';
+
+		var SELECTOR_BUTTON = '.button';
+
+		var STR_ACTION = 'action';
 
 		var STR_CLICK = 'click';
 
-		var TPL_ERROR = '<div class="portlet-msg-error">{0}</div>';
+		var STR_EMPTY = '';
+
+		var STR_RESPONSE_DATA = 'responseData';
 
 		var TPL_LOADING = '<div class="loading-animation" />';
 
 		var AddContent = A.Component.create(
 			{
-				AUGMENTS: [Liferay.PortletBase],
+				AUGMENTS: [Dockbar.AddContentDragDrop, Dockbar.AddContentPreview, Dockbar.AddContentSearch, Liferay.PortletBase],
 
 				EXTENDS: A.Base,
 
@@ -25,171 +41,169 @@ AUI.add(
 
 						instance._config = config;
 
+						instance._addApplicationForm = instance.byId('addApplicationForm');
 						instance._addContentForm = instance.byId('addContentForm');
+						instance._addPanelContainer = instance.byId('addPanelContainer');
 						instance._closePanel = instance.byId('closePanel');
 						instance._entriesContainer = instance.byId('entriesContainer');
 						instance._numItems = instance.byId('numItems');
-						instance._searchInput = instance.byId('searchInput');
+						instance._searchContentInput = instance.byId('searchContentInput');
 						instance._styleButtonsList = instance.byId('styleButtons');
 
-						instance._styleButtons = instance._styleButtonsList.all('.button');
-
-						var addContentSearch = new AddContentSearch(
-							{
-								inputNode: instance._searchInput,
-								minQueryLength: 0,
-								queryDelay: 300
-							}
-						);
-
-						instance._addContentSearch = addContentSearch;
-
-						instance._createToolTip();
-
-						instance._loadPreviewTask = A.debounce('_loadPreviewFn', 200, instance);
+						instance._styleButtons = instance._styleButtonsList.all(SELECTOR_BUTTON);
 
 						instance._bindUI();
-
-						LayoutConfiguration._loadContent();
 					},
 
-					_addPortlet: function(event) {
-						event.halt();
+					_addApplication: function(event) {
+						var instance = this;
 
-						var item = event.currentTarget;
+						var portlet = event.currentTarget;
 
-						var portletData = item.attr('data-class-pk') + ',' + item.attr('data-class-name');
+						instance._addPortlet(portlet);
+					},
 
-						Liferay.Portlet.add(
-							{
-								portletData: portletData,
-								portletId: item.attr('data-portlet-id')
+					_addPortlet: function(portlet, options) {
+						var instance = this;
+
+						var portletMetaData = instance._getPortletMetaData(portlet);
+
+						if (!portletMetaData.portletUsed) {
+							var portletId = portletMetaData.portletId;
+
+							if (!portletMetaData.instanceable) {
+								instance._disablePortletEntry(portletId);
 							}
-						);
-					},
 
-					_afterPreviewFailure: function(event) {
-						var instance = this;
+							var beforePortletLoaded = null;
+							var placeHolder = A.Node.create(TPL_LOADING);
 
-						var errorMsg = Lang.sub(
-							TPL_ERROR,
-							[Liferay.Language.get('unable-to-load-content')]
-						);
+							if (options) {
+								var item = options.item;
 
-						instance._tooltip.set('bodyContent', errorMsg);
-					},
+								item.placeAfter(placeHolder);
+								item.remove(true);
 
-					_afterPreviewSuccess: function(event) {
-						var instance = this;
+								beforePortletLoaded = options.beforePortletLoaded;
+							}
+							else {
+								var firstColumn = Layout.getActiveDropNodes().item(0);
 
-						var tooltip = instance._tooltip;
+								if (firstColumn) {
+									var dropColumn = firstColumn.one(Layout.options.dropContainer);
+									var referencePortlet = Layout.findReferencePortlet(dropColumn);
 
-						tooltip.set('bodyContent', event.currentTarget.get('responseData'));
+									if (referencePortlet) {
+										referencePortlet.placeBefore(placeHolder);
+									}
+									else {
+										if (dropColumn) {
+											dropColumn.append(placeHolder);
+										}
+									}
+								}
+							}
 
-						tooltip.get('boundingBox').one('.add-button-preview input').on(STR_CLICK, instance._addPortlet, instance);
+							Portlet.add(
+								{
+									beforePortletLoaded: beforePortletLoaded,
+									placeHolder: placeHolder,
+									plid: portletMetaData.plid,
+									portletData: portletMetaData.portletData,
+									portletId: portletId,
+									portletItemId: portletMetaData.portletItemId
+								}
+							);
+						}
 					},
 
 					_afterSuccess: function(event) {
 						var instance = this;
 
-						instance._entriesContainer.setContent(event.currentTarget.get('responseData'));
-
-						instance._createToolTip();
+						instance._entriesContainer.setContent(event.currentTarget.get(STR_RESPONSE_DATA));
 					},
 
 					_bindUI: function() {
 						var instance = this;
 
-						instance._closePanel.on(STR_CLICK, Dockbar.loadPanel, Dockbar);
-
 						instance._numItems.on('change', instance._onChangeNumItems, instance);
 
-						instance._entriesContainer.delegate(STR_CLICK, instance._addPortlet, '.content-shortcut');
+						instance._closePanel.on(STR_CLICK, Dockbar.loadPanel, Dockbar);
 
-						instance._styleButtonsList.delegate(STR_CLICK, instance._onChangeDisplayStyle, '.button', instance);
+						instance._addPanelContainer.delegate(STR_CLICK, instance._addApplication, '.add-content-item', instance);
 
-						instance._addContentSearch.after(
-							'query',
-							function(event) {
-								instance._restartSearch = true;
+						instance._styleButtonsList.delegate(STR_CLICK, instance._onChangeDisplayStyle, SELECTOR_BUTTON, instance);
 
-								instance._refreshContentList(event);
-							}
-						);
-
-						instance._searchInput.on('keydown', instance._onSearchInputKeyDown, instance);
+						Liferay.on('closePortlet', instance._onPortletClose, instance);
 
 						Liferay.on('showTab', instance._onShowTab, instance);
 					},
 
-					_createToolTip: function() {
+					_disablePortletEntry: function(portletId) {
 						var instance = this;
 
-						if (instance._tooltip) {
-							instance._tooltip.destroy();
-						}
-
-						instance._tooltip = new A.Tooltip(
-							{
-								align: {
-									points: ['lc', 'rc']
-								},
-								cssClass: 'lfr-content-preview-popup',
-								constrain: true,
-								hideOn: 'mouseleave',
-								on: {
-									show: A.bind('_onTooltipShow', instance),
-									hide: function() {
-										var currentNode = this.get('currentNode');
-
-										currentNode.removeClass('over');
-									}
-								},
-								showArrow: false,
-								showOn: 'mouseenter',
-								trigger: '.has-preview'
+						instance._eachPortletEntry(
+							portletId,
+							function(item, index) {
+								item.addClass(CSS_LFR_PORTLET_USED);
 							}
-						).render();
+						);
 					},
 
-					_getIOPreview: function() {
+					_eachPortletEntry: function(portletId, callback) {
 						var instance = this;
 
-						var ioPreview = instance._ioPreview;
+						var portlets = A.all('[data-portlet-id=' + portletId + ']');
 
-						if (!ioPreview) {
-							ioPreview = A.io.request(
-								instance._addContentForm.getAttribute('action'),
-								{
-									after: {
-										failure: A.bind('_afterPreviewFailure', instance),
-										success: A.bind('_afterPreviewSuccess', instance)
-									},
-									autoLoad: false,
-									data: {
-										viewEntries: false,
-										viewPreview: true
-									}
-								}
-							);
+						portlets.each(callback);
+					},
 
-							instance._ioPreview = ioPreview;
+					_enablePortletEntry: function(portletId) {
+						var instance = this;
+
+						instance._eachPortletEntry(
+							portletId,
+							function(item, index) {
+								item.removeClass(CSS_LFR_PORTLET_USED);
+							}
+						);
+					},
+
+					_getPortletMetaData: function(portlet) {
+						var instance = this;
+
+						var portletMetaData = portlet._LFR_portletMetaData;
+
+						if (!portletMetaData) {
+							var classPK = portlet.attr(DATA_CLASS_PK);
+							var className = portlet.attr(DATA_CLASS_NAME);
+
+							var instanceable = (portlet.attr('data-instanceable') == 'true');
+							var plid = portlet.attr('data-plid');
+
+							var portletData = STR_EMPTY;
+
+							if ((className != STR_EMPTY) && (classPK != STR_EMPTY)) {
+								portletData = classPK + ',' + className;
+							}
+
+							var portletId = portlet.attr(DATA_PORTLET_ID);
+							var portletItemId = portlet.attr('data-portlet-item-id');
+							var portletUsed = portlet.hasClass(CSS_LFR_PORTLET_USED);
+
+							portletMetaData = {
+								instanceable: instanceable,
+								plid: plid,
+								portletData: portletData,
+								portletId: portletId,
+								portletItemId: portletItemId,
+								portletUsed: portletUsed
+							};
+
+							portlet._LFR_portletMetaData = portletMetaData;
 						}
 
-						return ioPreview;
-					},
-
-					_loadPreviewFn: function(className, classPK) {
-						var instance = this;
-
-						var ioPreview = instance._getIOPreview();
-
-						ioPreview.stop();
-
-						ioPreview.set('data.classPK', classPK);
-						ioPreview.set('data.className', className);
-
-						ioPreview.start();
+						return portletMetaData;
 					},
 
 					_onChangeDisplayStyle: function(event) {
@@ -199,7 +213,7 @@ AUI.add(
 
 						currentTarget.radioClass('selected');
 
-						var displayStyle = currentTarget.attr('data-style');
+						var displayStyle = currentTarget.attr(DATA_STYLE);
 
 						Liferay.Store('liferay_addpanel_displaystyle', displayStyle);
 
@@ -214,12 +228,6 @@ AUI.add(
 						instance._refreshContentList(event);
 					},
 
-					_onSearchInputKeyDown: function(event) {
-						if (event.isKey('ENTER')) {
-							event.halt();
-						}
-					},
-
 					_onShowTab: function(event) {
 						var instance = this;
 
@@ -230,24 +238,16 @@ AUI.add(
 						}
 					},
 
-					_onTooltipShow: function(event) {
+					_onPortletClose: function(event) {
 						var instance = this;
 
-						var tooltip = instance._tooltip;
+						var item = instance._addPanelContainer.one('.lfr-portlet-item[data-plid=' + event.plid + '][data-portlet-id=' + event.portletId + '][data-instanceable=false]');
 
-						tooltip.set('bodyContent', TPL_LOADING);
+						if (item && item.hasClass(CSS_LFR_PORTLET_USED)) {
+							var portletId = item.attr(DATA_PORTLET_ID);
 
-						var currentNode = tooltip.get('currentNode');
-
-						if (instance._previousNode && (instance._previousNode != currentNode)) {
-							currentNode.addClass('over');
-
-							instance._previousNode.removeClass('over');
+							instance._enablePortletEntry(portletId);
 						}
-
-						instance._previousNode = currentNode;
-
-						instance._loadPreviewTask(currentNode.attr('data-class-name'), currentNode.attr('data-class-pk'));
 					},
 
 					_refreshContentList: function(event) {
@@ -255,7 +255,7 @@ AUI.add(
 
 						var styleButton = instance._styleButtonsList.one('.selected');
 
-						var displayStyle = styleButton.attr('data-style');
+						var displayStyle = styleButton.attr(DATA_STYLE);
 
 						A.io.request(
 							instance._addContentForm.getAttribute('action'),
@@ -266,7 +266,7 @@ AUI.add(
 								data: {
 									delta: instance._numItems.val(),
 									displayStyle: displayStyle,
-									keywords: instance._searchInput.val(),
+									keywords: instance._searchContentInput.val(),
 									viewEntries: true,
 									viewPreview: false
 								}
@@ -277,25 +277,10 @@ AUI.add(
 			}
 		);
 
-		var AddContentSearch = A.Component.create(
-			{
-				AUGMENTS: [A.AutoCompleteBase],
-				EXTENDS: A.Base,
-				NAME: 'addcontentsearch',
-				prototype: {
-					initializer: function() {
-						this._bindUIACBase();
-						this._syncUIACBase();
-					}
-				}
-			}
-		);
-
 		Dockbar.AddContent = AddContent;
-		Dockbar.AddContentSearch = AddContentSearch;
 	},
 	'',
 	{
-		requires: ['aui-dialog', 'aui-io-request', 'aui-tooltip', 'autocomplete-base', 'event-mouseenter', 'liferay-dockbar', 'liferay-layout-configuration', 'liferay-portlet-base']
+		requires: ['aui-io-request', 'liferay-dockbar', 'liferay-dockbar-add-content-drag-drop', 'liferay-dockbar-add-content-preview', 'liferay-dockbar-add-content-search']
 	}
 );

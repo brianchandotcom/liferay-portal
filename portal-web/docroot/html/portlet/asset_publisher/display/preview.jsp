@@ -76,6 +76,7 @@ AssetRenderer assetRenderer = (AssetRenderer)request.getAttribute("add_panel.jsp
 
 	data.put("class-name", assetEntry.getClassName());
 	data.put("class-pk", assetEntry.getClassPK());
+	data.put("instanceable", true);
 	data.put("portlet-id", assetRenderer.getAddToPagePortletId());
 	%>
 

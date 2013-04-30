@@ -250,11 +250,15 @@ public class ServiceContextFactory {
 
 		serviceContext.setAssetEntryVisible(assetEntryVisible);
 
-		long[] assetLinkEntryIds = StringUtil.split(
-			ParamUtil.getString(
-				request, "assetLinksSearchContainerPrimaryKeys"), 0L);
+		String assetLinkEntryIdsString = request.getParameter(
+			"assetLinksSearchContainerPrimaryKeys");
 
-		serviceContext.setAssetLinkEntryIds(assetLinkEntryIds);
+		if (assetLinkEntryIdsString != null) {
+			long[] assetLinkEntryIds = StringUtil.split(
+				assetLinkEntryIdsString, 0L);
+
+			serviceContext.setAssetLinkEntryIds(assetLinkEntryIds);
+		}
 
 		String assetTagNamesString = request.getParameter("assetTagNames");
 
@@ -448,11 +452,15 @@ public class ServiceContextFactory {
 
 		serviceContext.setAssetEntryVisible(assetEntryVisible);
 
-		long[] assetLinkEntryIds = StringUtil.split(
-			ParamUtil.getString(
-				portletRequest, "assetLinksSearchContainerPrimaryKeys"), 0L);
+		String assetLinkEntryIdsString = request.getParameter(
+			"assetLinksSearchContainerPrimaryKeys");
 
-		serviceContext.setAssetLinkEntryIds(assetLinkEntryIds);
+		if (assetLinkEntryIdsString != null) {
+			long[] assetLinkEntryIds = StringUtil.split(
+				assetLinkEntryIdsString, 0L);
+
+			serviceContext.setAssetLinkEntryIds(assetLinkEntryIds);
+		}
 
 		String assetTagNamesString = request.getParameter("assetTagNames");
 

@@ -780,6 +780,33 @@ public class DLAppHelperLocalServiceImpl
 		long fileEntryTypeId = getFileEntryTypeId(fileEntry);
 
 		if (addDraftAssetEntry) {
+			if (assetCategoryIds == null) {
+				assetCategoryIds = assetCategoryLocalService.getCategoryIds(
+					DLFileEntryConstants.getClassName(),
+					fileEntry.getFileEntryId());
+			}
+
+			if (assetTagNames == null) {
+				assetTagNames = assetTagLocalService.getTagNames(
+					DLFileEntryConstants.getClassName(),
+					fileEntry.getFileEntryId());
+			}
+
+			if (assetLinkEntryIds == null) {
+				AssetEntry previousAssetEntry = assetEntryLocalService.getEntry(
+					DLFileEntryConstants.getClassName(),
+					fileEntry.getFileEntryId());
+
+				List<AssetLink> assetLinks =
+					assetLinkLocalService.getDirectLinks(
+						previousAssetEntry.getEntryId(),
+						AssetLinkConstants.TYPE_RELATED);
+
+				assetLinkEntryIds = StringUtil.split(
+					ListUtil.toString(
+						assetLinks, AssetLink.ENTRY_ID2_ACCESSOR), 0L);
+			}
+
 			assetEntry = assetEntryLocalService.updateEntry(
 				userId, fileEntry.getGroupId(), fileEntry.getCreateDate(),
 				fileEntry.getModifiedDate(),

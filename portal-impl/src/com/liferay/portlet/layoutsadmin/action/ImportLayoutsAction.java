@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.TempFileUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -52,10 +51,10 @@ import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.documentlibrary.action.EditFileEntryAction;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
+import com.liferay.portlet.layoutsadmin.util.ExportImportUtil;
 import com.liferay.portlet.sites.action.ActionUtil;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 
 import javax.portlet.ActionRequest;
@@ -108,7 +107,7 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 		}
 		catch (Exception e) {
 			if (cmd.equals(Constants.ADD_TEMP) &&
-			    (e instanceof DuplicateFileException ||
+				(e instanceof DuplicateFileException ||
 				 e instanceof FileExtensionException ||
 				 e instanceof FileNameException ||
 				 e instanceof LARFileException ||
@@ -236,7 +235,7 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 
 			LayoutServiceUtil.addTempFileEntry(
 				themeDisplay.getScopeGroupId(), sourceFileName,
-				_TEMP_FOLDER_NAME, inputStream, contentType);
+				ExportImportUtil.TEMP_FOLDER_NAME, inputStream, contentType);
 		}
 		catch (Exception e) {
 			UploadException uploadException =
@@ -292,7 +291,8 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 			String fileName = ParamUtil.getString(actionRequest, "fileName");
 
 			LayoutServiceUtil.deleteTempFileEntry(
-				themeDisplay.getScopeGroupId(), fileName, _TEMP_FOLDER_NAME);
+				themeDisplay.getScopeGroupId(), fileName,
+				ExportImportUtil.TEMP_FOLDER_NAME);
 
 			jsonObject.put("deleted", Boolean.TRUE);
 		}
@@ -312,26 +312,12 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 		throws PortalException, SystemException {
 
 		String[] tempFileEntryNames = LayoutServiceUtil.getTempFileEntryNames(
-			groupId, _TEMP_FOLDER_NAME);
+			groupId, ExportImportUtil.TEMP_FOLDER_NAME);
 
 		for (String tempFileEntryName : tempFileEntryNames) {
 			LayoutServiceUtil.deleteTempFileEntry(
-				groupId, tempFileEntryName, _TEMP_FOLDER_NAME);
+				groupId, tempFileEntryName, ExportImportUtil.TEMP_FOLDER_NAME);
 		}
-	}
-
-	protected FileEntry getTempFileEntry(long groupId, long userId)
-		throws IOException, PortalException, SystemException {
-
-		String[] tempFileEntryNames = LayoutServiceUtil.getTempFileEntryNames(
-			groupId, _TEMP_FOLDER_NAME);
-
-		if (tempFileEntryNames.length == 0) {
-			return null;
-		}
-
-		return TempFileUtil.getTempFile(
-			groupId, userId, tempFileEntryNames[0], _TEMP_FOLDER_NAME);
 	}
 
 	protected void importLayouts(
@@ -345,7 +331,7 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 		boolean privateLayout = ParamUtil.getBoolean(
 			actionRequest, "privateLayout");
 
-		FileEntry fileEntry = getTempFileEntry(
+		FileEntry fileEntry = ExportImportUtil.getTempFileEntry(
 			groupId, themeDisplay.getUserId());
 
 		File file = DLFileEntryLocalServiceUtil.getFile(
@@ -389,9 +375,6 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 			}
 		}
 	}
-
-	private static final String _TEMP_FOLDER_NAME =
-		ImportLayoutsAction.class.getName();
 
 	private static Log _log = LogFactoryUtil.getLog(ImportLayoutsAction.class);
 

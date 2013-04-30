@@ -136,7 +136,7 @@ String[] uploadedFiles = LayoutServiceUtil.getTempFileEntryNames(groupId, Import
 										method: Liferay.Service.bind('/layout/get-temp-file-entry-names'),
 										params: {
 											groupId: <%= scopeGroupId %>,
-											tempFolderName: 'com.liferay.portlet.layoutsadmin.action.ImportLayoutsAction'
+											tempFolderName: '<%= ExportImportUtil.TEMP_FOLDER_NAME %>'
 										}
 									},
 									uploadFile: '<liferay-portlet:actionURL doAsUserId="<%= user.getUserId() %>"><portlet:param name="struts_action" value="/layouts_admin/import_layouts" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /></liferay-portlet:actionURL>&ticketKey=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= Group.class.getName() %>" />'

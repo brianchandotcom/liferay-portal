@@ -389,6 +389,17 @@
 		margin: 0.5em 0 1.5em;
 	}
 
+	.import-file-details {
+		margin: 1em 0;
+
+		dt {
+			clear: left;
+			float: left;
+			font-weight: bold;
+			margin-right: 1em;
+		}
+	}
+
 	.modify-link {
 		text-decoration: underline;
 	}

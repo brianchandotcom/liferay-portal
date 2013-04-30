@@ -15,6 +15,34 @@
 --%>
 
 <div class="export-dialog-tree">
+
+	<%
+	FileEntry fileEntry = ExportImportUtil.getTempFileEntry(groupId, themeDisplay.getUserId());
+	%>
+
+	<aui:fieldset cssClass="options-group" label="file">
+		<dl class="import-file-details">
+			<dt>
+				<liferay-ui:message key="name" />
+			</dt>
+			<dd>
+				<%= fileEntry.getTitle() %>
+			</dd>
+			<dt>
+				<liferay-ui:message key="size" />
+			</dt>
+			<dd>
+				<%= fileEntry.getSize()/1024 %>k
+			</dd>
+			<dt>
+				<liferay-ui:message key="author" />
+			</dt>
+			<dd>
+				<%= fileEntry.getUserName() %>
+			</dd>
+		</dl>
+	</aui:fieldset>
+
 	<c:if test="<%= !group.isLayoutPrototype() %>">
 		<aui:fieldset cssClass="options-group" label="pages">
 			<div class="selected-labels" id="<portlet:namespace />selectedPages">

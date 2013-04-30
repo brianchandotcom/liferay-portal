@@ -16,6 +16,7 @@ package com.liferay.portalweb.portlet.mediagallery.portlet;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portlet.mediagallery.portlet.addportletmg.AddPortletMGTests;
+import com.liferay.portalweb.portlet.mediagallery.portlet.configureportletmgdisplaytemplatecarousel.ConfigurePortletMGDisplayTemplateCarouselTests;
 import com.liferay.portalweb.portlet.mediagallery.portlet.configureportletmgshowactions.ConfigurePortletMGShowActionsTests;
 import com.liferay.portalweb.portlet.mediagallery.portlet.configureportletmgshowfoldermenu.ConfigurePortletMGShowFolderMenuTests;
 import com.liferay.portalweb.portlet.mediagallery.portlet.configureportletmgshownavigationlinks.ConfigurePortletMGShowNavigationLinksTests;
@@ -35,6 +36,7 @@ public class PortletTestPlan extends BaseTestSuite {
 
 		testSuite.addTest(AddPortletMGTests.suite());
 		testSuite.addTest(ConfigurePortletMGShowActionsTests.suite());
+		testSuite.addTest(ConfigurePortletMGDisplayTemplateCarouselTests.suite());
 		testSuite.addTest(ConfigurePortletMGShowFolderMenuTests.suite());
 		testSuite.addTest(ConfigurePortletMGShowNavigationLinksTests.suite());
 		testSuite.addTest(ConfigurePortletMGShowSearchTests.suite());

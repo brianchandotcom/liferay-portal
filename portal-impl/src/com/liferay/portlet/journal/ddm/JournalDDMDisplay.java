@@ -14,8 +14,11 @@
 
 package com.liferay.portlet.journal.ddm;
 
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatamapping.util.BaseDDMDisplay;
+
+import java.util.Set;
 
 /**
  * @author Eduardo Garcia
@@ -26,5 +29,13 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 	public String getPortletId() {
 		return PortletKeys.JOURNAL;
 	}
+
+	@Override
+	public Set<String> getViewTemplatesExcludedColumns() {
+		return _viewTemplateExcludedColumns;
+	}
+
+	private static Set<String> _viewTemplateExcludedColumns = SetUtil.fromArray(
+		new String[]{});
 
 }

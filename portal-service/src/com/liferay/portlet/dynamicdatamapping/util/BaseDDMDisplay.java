@@ -17,12 +17,14 @@ package com.liferay.portlet.dynamicdatamapping.util;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * @author Eduardo Garcia
@@ -74,6 +76,10 @@ public class BaseDDMDisplay implements DDMDisplay {
 		return PortletKeys.DYNAMIC_DATA_MAPPING;
 	}
 
+	public Set<String> getViewTemplatesExcludedColumns() {
+		return _viewTemplateExcludedColumns;
+	}
+
 	public String getViewTemplatesTitle(
 		DDMStructure structure, boolean isControlPanel, Locale locale) {
 
@@ -102,5 +108,8 @@ public class BaseDDMDisplay implements DDMDisplay {
 	protected String getDefaultViewTemplateTitle(Locale locale) {
 		return LanguageUtil.get(locale, "templates");
 	}
+
+	private static Set<String> _viewTemplateExcludedColumns = SetUtil.fromArray(
+		new String[] {"structure"});
 
 }

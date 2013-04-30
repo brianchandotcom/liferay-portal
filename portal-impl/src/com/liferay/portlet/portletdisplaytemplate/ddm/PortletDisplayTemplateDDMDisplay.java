@@ -15,12 +15,14 @@
 package com.liferay.portlet.portletdisplaytemplate.ddm;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.util.BaseDDMDisplay;
 
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * @author Eduardo Garcia
@@ -30,6 +32,11 @@ public class PortletDisplayTemplateDDMDisplay extends BaseDDMDisplay {
 	@Override
 	public String getPortletId() {
 		return PortletKeys.PORTLET_DISPLAY_TEMPLATES;
+	}
+
+	@Override
+	public Set<String> getViewTemplatesExcludedColumns() {
+		return _viewTemplateExcludedColumns;
 	}
 
 	@Override
@@ -52,5 +59,8 @@ public class PortletDisplayTemplateDDMDisplay extends BaseDDMDisplay {
 	protected String getDefaultViewTemplateTitle(Locale locale) {
 		return LanguageUtil.get(locale, "application-display-templates");
 	}
+
+	private static Set<String> _viewTemplateExcludedColumns = SetUtil.fromArray(
+		new String[] {"structure, mode, language"});
 
 }

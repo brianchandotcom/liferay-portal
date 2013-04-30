@@ -136,26 +136,34 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, isControlPanel, local
 				value="<%= rowHREF %>"
 			/>
 
-			<liferay-ui:search-container-column-text
-				href="<%= rowHREF %>"
-				name="id"
-				orderable="<%= true %>"
-				orderableProperty="id"
-				property="templateId"
-			/>
+			<%
+			Set excludedColumns = ddmDisplay.getViewTemplatesExcludedColumns();
+			%>
 
-			<liferay-ui:search-container-column-text
-				href="<%= rowHREF %>"
-				name="name"
-				value="<%= HtmlUtil.escape(LanguageUtil.get(pageContext, template.getName(locale))) %>"
-			/>
+			<c:if test='<%= !excludedColumns.contains("id") %>'>
+				<liferay-ui:search-container-column-text
+					href="<%= rowHREF %>"
+					name="id"
+					orderable="<%= true %>"
+					orderableProperty="id"
+					property="templateId"
+				/>
+			</c:if>
+
+			<c:if test='<%= !excludedColumns.contains("name") %>'>
+				<liferay-ui:search-container-column-text
+					href="<%= rowHREF %>"
+					name="name"
+					value="<%= HtmlUtil.escape(LanguageUtil.get(pageContext, template.getName(locale))) %>"
+				/>
+			</c:if>
 
 			<liferay-ui:search-container-column-jsp
 				name="description"
 				path="/html/portlet/dynamic_data_mapping/template_description.jsp"
 			/>
 
-			<c:if test="<%= structure == null %>">
+			<c:if test='<%= !excludedColumns.contains("structure") && (structure == null) %>'>
 
 				<%
 				String structureName = StringPool.BLANK;
@@ -174,7 +182,7 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, isControlPanel, local
 				/>
 			</c:if>
 
-			<c:if test="<%= Validator.isNull(templateTypeValue) && (classNameId == 0) %>">
+			<c:if test='<%= !excludedColumns.contains("type") && Validator.isNull(templateTypeValue) && (classNameId == 0) %>'>
 
 				<%
 				String value = null;
@@ -196,7 +204,7 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, isControlPanel, local
 				/>
 			</c:if>
 
-			<c:if test="<%= !refererPortletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES) %>">
+			<c:if test='<%= !excludedColumns.contains("mode") %>'>
 				<liferay-ui:search-container-column-text
 					href="<%= rowHREF %>"
 					name="mode"
@@ -204,7 +212,7 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, isControlPanel, local
 				/>
 			</c:if>
 
-			<c:if test="<%= !refererPortletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES) %>">
+			<c:if test='<%= !excludedColumns.contains("language") %>'>
 				<liferay-ui:search-container-column-text
 					href="<%= rowHREF %>"
 					name="language"
@@ -212,19 +220,21 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, isControlPanel, local
 				/>
 			</c:if>
 
-			<liferay-ui:search-container-column-text
-				buffer="buffer"
-				href="<%= rowHREF %>"
-				name="modified-date"
-				orderable="<%= true %>"
-				orderableProperty="modified-date"
-			>
+			<c:if test='<%= !excludedColumns.contains("modified-date") %>'>
+				<liferay-ui:search-container-column-text
+					buffer="buffer"
+					href="<%= rowHREF %>"
+					name="modified-date"
+					orderable="<%= true %>"
+					orderableProperty="modified-date"
+				>
 
-				<%
-				buffer.append(dateFormatDateTime.format(template.getModifiedDate()));
-				%>
+					<%
+					buffer.append(dateFormatDateTime.format(template.getModifiedDate()));
+					%>
 
-			</liferay-ui:search-container-column-text>
+				</liferay-ui:search-container-column-text>
+			</c:if>
 
 			<liferay-ui:search-container-column-jsp
 				align="right"

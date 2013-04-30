@@ -18,6 +18,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * @author Eduardo Garcia
@@ -30,6 +31,8 @@ public interface DDMDisplay {
 	public String getEditTemplateTitle(long classNameId, Locale locale);
 
 	public String getPortletId();
+
+	public Set<String> getViewTemplatesExcludedColumns();
 
 	public String getViewTemplatesTitle(
 		DDMStructure structure, boolean isControlPanel, Locale locale);

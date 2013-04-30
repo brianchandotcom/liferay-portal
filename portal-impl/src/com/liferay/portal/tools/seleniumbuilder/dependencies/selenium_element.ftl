@@ -9,6 +9,7 @@ liferaySelenium.${selenium}(
 <#if seleniumBuilderContext.getSeleniumParameterCount(selenium) gte 1>
 	<#if
 		(selenium = "assertConfirmation") ||
+		(selenium = "assertLocation") ||
 		(selenium = "assertTextNotPresent") ||
 		(selenium = "assertTextPresent") ||
 		(selenium = "waitForConfirmation") ||

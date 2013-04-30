@@ -120,7 +120,7 @@ for (int i = 0; i < locales.length; i++) {
 
 			String cssClassName = "taglib-language-list-text";
 
-			if ((i + 1) < locales.length) {
+			if ((i + 1) == locales.length) {
 				cssClassName += " last";
 			}
 
@@ -141,7 +141,7 @@ for (int i = 0; i < locales.length; i++) {
 							<span class="<%= cssClassName %>" lang="<%= LocaleUtil.toW3cLanguageId(locales[i]) %>"><%= localeDisplayName %></span>
 						</c:when>
 						<c:otherwise>
-							<aui:a class="<%= cssClassName %>" href="<%= HttpUtil.addParameter(formAction, name, LocaleUtil.toLanguageId(locales[i])) %>" lang="<%= LocaleUtil.toW3cLanguageId(locales[i]) %>"><%= localeDisplayName %></aui:a>
+							<aui:a cssClass="<%= cssClassName %>" href="<%= HttpUtil.addParameter(formAction, name, LocaleUtil.toLanguageId(locales[i])) %>" lang="<%= LocaleUtil.toW3cLanguageId(locales[i]) %>"><%= localeDisplayName %></aui:a>
 						</c:otherwise>
 					</c:choose>
 				</c:when>

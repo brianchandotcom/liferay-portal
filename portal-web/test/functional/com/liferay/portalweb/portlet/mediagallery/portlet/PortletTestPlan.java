@@ -36,7 +36,8 @@ public class PortletTestPlan extends BaseTestSuite {
 
 		testSuite.addTest(AddPortletMGTests.suite());
 		testSuite.addTest(ConfigurePortletMGShowActionsTests.suite());
-		testSuite.addTest(ConfigurePortletMGDisplayTemplateCarouselTests.suite());
+		testSuite.addTest(
+			ConfigurePortletMGDisplayTemplateCarouselTests.suite());
 		testSuite.addTest(ConfigurePortletMGShowFolderMenuTests.suite());
 		testSuite.addTest(ConfigurePortletMGShowNavigationLinksTests.suite());
 		testSuite.addTest(ConfigurePortletMGShowSearchTests.suite());

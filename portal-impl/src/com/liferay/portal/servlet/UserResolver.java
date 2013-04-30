@@ -37,10 +37,14 @@ public class UserResolver {
 
 		String remoteUser = request.getRemoteUser();
 
+		long userId = GetterUtil.getLong(remoteUser);
+
+		if (userId == 0) {
+			remoteUser = null;
+		}
+
 		if (remoteUser != null) {
 			PrincipalThreadLocal.setName(remoteUser);
-
-			long userId = GetterUtil.getLong(remoteUser);
 
 			_user = UserLocalServiceUtil.getUserById(userId);
 

@@ -76,6 +76,10 @@ public class BaseDDMDisplay implements DDMDisplay {
 		return PortletKeys.DYNAMIC_DATA_MAPPING;
 	}
 
+	public String getTemplateType(DDMTemplate template, Locale locale) {
+		return LanguageUtil.get(locale, template.getType());
+	}
+
 	public Set<String> getViewTemplatesExcludedColumns() {
 		return _viewTemplateExcludedColumns;
 	}

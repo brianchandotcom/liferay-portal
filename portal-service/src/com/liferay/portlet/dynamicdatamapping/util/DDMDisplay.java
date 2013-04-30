@@ -32,6 +32,8 @@ public interface DDMDisplay {
 
 	public String getPortletId();
 
+	public String getTemplateType(DDMTemplate template, Locale locale);
+
 	public Set<String> getViewTemplatesExcludedColumns();
 
 	public String getViewTemplatesTitle(

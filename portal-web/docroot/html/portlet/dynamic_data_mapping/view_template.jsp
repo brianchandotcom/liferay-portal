@@ -183,24 +183,10 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, isControlPanel, local
 			</c:if>
 
 			<c:if test='<%= !excludedColumns.contains("type") && Validator.isNull(templateTypeValue) && (classNameId == 0) %>'>
-
-				<%
-				String value = null;
-
-				if (refererPortletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES)) {
-					TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(template.getClassNameId());
-
-					value = templateHandler.getName(locale);
-				}
-				else if (Validator.isNull(templateTypeValue)) {
-					value = LanguageUtil.get(pageContext, template.getType());
-				}
-				%>
-
 				<liferay-ui:search-container-column-text
 					href="<%= rowHREF %>"
 					name="type"
-					value="<%= value %>"
+					value="<%= ddmDisplay.getTemplateType(template, locale) %>"
 				/>
 			</c:if>
 

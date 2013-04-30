@@ -2346,7 +2346,6 @@ AUI.add(
 						var vocabulary = instance._getVocabularyById(vocabularyId);
 
 						if (!exception) {
-
 							var deletedRootCategories = AArray.filter(
 								categoryIds,
 								function(item, index, collection) {

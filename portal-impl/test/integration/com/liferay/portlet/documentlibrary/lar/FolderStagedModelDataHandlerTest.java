@@ -15,16 +15,21 @@
 package com.liferay.portlet.documentlibrary.lar;
 
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
+import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
 
@@ -33,6 +38,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -46,6 +52,43 @@ import org.junit.runner.RunWith;
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class FolderStagedModelDataHandlerTest
 	extends BaseStagedModelDataHandlerTestCase {
+
+	@Test
+	@Transactional
+	public void testWithRepository() throws Exception {
+		initExport();
+
+		Map<String, List<StagedModel>> dependentStagedModelMap =
+			new HashMap<String, List<StagedModel>>();
+
+		Repository repository = DLAppTestUtil.addRepository(
+			stagingGroup.getGroupId());
+
+		addDependentStagedModel(
+			dependentStagedModelMap, Repository.class, repository);
+
+		Folder folder = DLAppLocalServiceUtil.getMountFolder(
+			repository.getRepositoryId());
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, folder);
+
+		validateExport(portletDataContext, folder, dependentStagedModelMap);
+
+		initImport();
+
+		Folder exportedFolder = (Folder)readExportedStagedModel(folder);
+
+		StagedModelDataHandlerUtil.importStagedModel(
+			portletDataContext, exportedFolder);
+
+		Repository importedRepository =
+			RepositoryLocalServiceUtil.getRepositoryByUuidAndGroupId(
+				repository.getUuid(), liveGroup.getGroupId());
+
+		DLAppLocalServiceUtil.getMountFolder(
+			importedRepository.getRepositoryId());
+	}
 
 	@Override
 	protected Map<String, List<StagedModel>> addDependentStagedModelsMap(
@@ -98,10 +141,15 @@ public class FolderStagedModelDataHandlerTest
 
 	@Override
 	protected String getStagedModelPath(long groupId, StagedModel stagedModel) {
-		Folder folder = (Folder)stagedModel;
+		if (stagedModel instanceof Folder) {
+			Folder folder = (Folder)stagedModel;
 
-		return ExportImportPathUtil.getModelPath(
-			groupId, Folder.class.getName(), folder.getFolderId());
+			return ExportImportPathUtil.getModelPath(
+				groupId, Folder.class.getName(), folder.getFolderId());
+		}
+		else {
+			return super.getStagedModelPath(groupId, stagedModel);
+		}
 	}
 
 	@Override

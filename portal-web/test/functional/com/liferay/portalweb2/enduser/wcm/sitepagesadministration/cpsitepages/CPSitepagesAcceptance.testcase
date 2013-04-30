@@ -1,0 +1,63 @@
+<definition>
+	<set-up>
+		<execute macro="User#pgFirstLogin" />
+	</set-up>
+
+	<command name="AddSitePrivatePage">
+		<var name="pageName" value="Site Page" />
+		<var name="siteName" value="Site Name" />
+		<var name="sitePageName" value="Site Page" />
+		<var name="sitePageURL" value="http://localhost:8080/group/site-name/site-page" />
+
+		<execute macro="Site#cpAddBlank" />
+
+		<execute macro="SitePage#cpAddPrivate" />
+		<execute macro="SitePage#pgViewPrivate" />
+	</command>
+
+	<command name="AddSitePrivatePagePortlet">
+		<var name="pageName" value="Blogs Page" />
+		<var name="portletName" value="Blogs" />
+		<var name="siteName" value="Site Name" />
+		<var name="sitePageName" value="Site Page" />
+
+		<execute macro="Site#cpAddBlank" />
+
+		<execute macro="SitePage#cpAddPrivate" />
+
+		<execute macro="Page#pgAddSitePrivate" />
+
+		<execute macro="Portlet#pgAddSitePrivate" />
+	</command>
+
+	<command name="AddSitePublicPage">
+		<var name="pageName" value="Site Page" />
+		<var name="siteName" value="Site Name" />
+		<var name="sitePageName" value="Site Page" />
+		<var name="sitePageURL" value="http://localhost:8080/web/site-name/site-page" />
+
+		<execute macro="Site#cpAddBlank" />
+
+		<execute macro="SitePage#cpAddPublic" />
+		<execute macro="SitePage#pgViewPublic" />
+	</command>
+
+	<command name="AddSitePublicPagePortlet">
+		<var name="pageName" value="Blogs Page" />
+		<var name="portletName" value="Blogs" />
+		<var name="siteName" value="Site Name" />
+		<var name="sitePageName" value="Site Page" />
+
+		<execute macro="Site#cpAddBlank" />
+
+		<execute macro="SitePage#cpAddPublic" />
+
+		<execute macro="Page#pgAddSitePublic" />
+
+		<execute macro="Portlet#pgAddSitePublic" />
+	</command>
+
+	<tear-down>
+		<execute macro="Site#cpTearDown" />
+	</tear-down>
+</definition>

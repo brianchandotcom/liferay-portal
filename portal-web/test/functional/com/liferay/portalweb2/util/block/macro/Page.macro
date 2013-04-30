@@ -34,8 +34,32 @@
 		<execute action="Home#click" locator1="link=${pageName}" />
 	</command>
 
+	<command name="pgGotoSitePrivate">
+		<execute action="Home#open" locator-key1="SITE_URL_PRIVATE" />
+		<execute action="Home#click" locator1="link=${pageName}" />
+	</command>
+
+	<command name="pgGotoSitePublic">
+		<execute action="Home#open" locator-key1="SITE_URL_PUBLIC" />
+		<execute action="Home#click" locator1="link=${pageName}" />
+	</command>
+
 	<command name="pgAdd">
-		<execute action="Home#open" locator-key1="HOME_URL" />
+		<if>
+			<equals arg1="${pageType}" arg2="Private" />
+			<then>
+				<execute action="Home#open" locator-key1="SITE_URL_PRIVATE" />
+			</then>
+			<elseif>
+				<equals arg1="${pageType}" arg2="Public" />
+				<then>
+					<execute action="Home#open" locator-key1="SITE_URL_PUBLIC" />
+				</then>
+			</elseif>
+			<else>
+				<execute action="Home#open" locator-key1="HOME_URL" />
+			</else>
+		</if>
 
 		<execute action="Dockbar#mouseOver" locator-key1="ADD" />
 		<execute action="Dockbar#click" locator-key1="ADD_PAGE" />
@@ -43,6 +67,20 @@
 		<execute action="Home#type" locator-key1="NEW_PAGE_FIELD" value1="${pageName}" />
 		<execute action="Home#click" locator-key1="NEW_PAGE_SAVE" />
 		<execute action="Home#click" locator1="link=${pageName}" />
+	</command>
+
+	<command name="pgAddSitePrivate">
+		<execute macro="Page#pgAdd">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Private" />
+		</execute>
+	</command>
+
+	<command name="pgAddSitePublic">
+		<execute macro="Page#pgAdd">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Public" />
+		</execute>
 	</command>
 
 	<command name="pgTearDown">

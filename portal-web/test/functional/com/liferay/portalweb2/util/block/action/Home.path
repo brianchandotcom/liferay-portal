@@ -24,6 +24,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SITE_URL_PRIVATE</td>
+	<td>/group/site-name/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_URL_PUBLIC</td>
+	<td>/web/site-name/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_NAME</td>
+	<td>//h1[@class='site-title']/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -62,6 +77,27 @@
 <tr>
 	<td>PAGE_DELETE_3</td>
 	<td>xPath=(//li[contains(@class,'lfr-nav-deletable')])[3]/span[@class='delete-tab']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--BREADCRUMB-->
+<tr>
+	<td>BREADCRUMB_1</td>
+	<td>xpath=(//nav[@id='breadcrumbs']/ul/li/span/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BREADCRUMB_2</td>
+	<td>xpath=(//nav[@id='breadcrumbs']/ul/li/span/a)[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BREADCRUMB_3</td>
+	<td>xpath=(//nav[@id='breadcrumbs']/ul/li/span/a)[3]</td>
 	<td></td>
 </tr>
 <tr>

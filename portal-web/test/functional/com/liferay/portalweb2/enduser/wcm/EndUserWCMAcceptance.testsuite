@@ -1,3 +1,5 @@
 <definition>
+	<execute test-case="CPSitepagesAcceptance" />
+
 	<execute test-case="CPSitesAcceptance" />
 </definition>

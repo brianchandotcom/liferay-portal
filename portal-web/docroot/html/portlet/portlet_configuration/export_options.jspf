@@ -27,10 +27,10 @@
 						<li class="tree-item">
 							<div class="selected-labels" id="<portlet:namespace />selectedGlobalConfiguration">
 								<c:if test="<%= !PortletItemLocalServiceUtil.getPortletItems(layout.getGroupId(), selPortlet.getRootPortletId(), com.liferay.portal.model.PortletPreferences.class.getName()).isEmpty() %>">
-									<liferay-ui:message key="archived-setups"></liferay-ui:message>,
+									<liferay-ui:message key="archived-setups" />,
 								</c:if>
 
-								<liferay-ui:message key="user-preferences"></liferay-ui:message>
+								<liferay-ui:message key="user-preferences" />
 							</div>
 
 							<aui:a cssClass="modify-link" href="javascript:;" id="globalConfigurationLink" label="change" method="get" />
@@ -237,7 +237,7 @@
 
 								<%= selectedContent %>,
 
-								<liferay-ui:message key="from-last-publish-date"></liferay-ui:message>
+								<liferay-ui:message key="from-last-publish-date" />
 							</div>
 
 							<%
@@ -277,7 +277,7 @@
 	new Liferay.ExportImport(
 		{
 			archivedSetupsNode: '#<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS %>Checkbox',
-			dialogTitle: 'content-to-export',
+			dialogTitle: '<%= UnicodeLanguageUtil.get(pageContext, "content-to-export") %>',
 			namespace: '<portlet:namespace />',
 			userPreferencesNode: '#<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES %>Checkbox'
 		}

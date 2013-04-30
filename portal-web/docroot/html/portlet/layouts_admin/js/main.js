@@ -48,7 +48,7 @@ AUI.add(
 					initializer: function(config) {
 						var instance = this;
 
-						instance._dialogTitle = Liferay.Language.get(config.dialogTitle);
+						instance._dialogTitle = config.dialogTitle;
 
 						instance._bindUI();
 					},
@@ -88,8 +88,10 @@ AUI.add(
 							'.content-link'
 						);
 
-						if (instance.byId('globalConfigurationLink')) {
-							instance.byId('globalConfigurationLink').on(
+						var globalConfigurationLink = instance.byId('globalConfigurationLink');
+
+						if (globalConfigurationLink) {
+							globalConfigurationLink.on(
 								STR_CLICK,
 								function(event) {
 									var globalConfigurationDialog = instance._getGlobalConfigurationDialog();
@@ -99,8 +101,10 @@ AUI.add(
 							);
 						}
 
-						if (instance.byId('globalContentLink')) {
-							instance.byId('globalContentLink').on(
+						var globalContentLink = instance.byId('globalContentLink');
+
+						if (globalContentLink) {
+							globalContentLink.on(
 								STR_CLICK,
 								function(event) {
 									var globalContentDialog = instance._getGlobalContentDialog();
@@ -110,8 +114,10 @@ AUI.add(
 							);
 						}
 
-						if (instance.byId('pagesLink')) {
-							instance.byId('pagesLink').on(
+						var pagesLink = instance.byId('pagesLink');
+
+						if (pagesLink) {
+							pagesLink.on(
 								STR_CLICK,
 								function(event) {
 									var pagesDialog = instance._getPagesDialog();
@@ -121,8 +127,10 @@ AUI.add(
 							);
 						}
 
-						if (instance.byId('rangeLink')) {
-							instance.byId('rangeLink').on(
+						var rangeLink = instance.byId('rangeLink');
+
+						if (rangeLink) {
+							rangeLink.on(
 								STR_CLICK,
 								function(event) {
 									var rangeDialog = instance._getRangeDialog();

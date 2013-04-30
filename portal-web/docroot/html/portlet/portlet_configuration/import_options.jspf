@@ -158,8 +158,8 @@
 
 											<%= selectedContent %>,
 
-											<liferay-ui:message key="mirror"></liferay-ui:message>,
-											<liferay-ui:message key="use-the-original-author"></liferay-ui:message>
+											<liferay-ui:message key="mirror" />,
+											<liferay-ui:message key="use-the-original-author" />
 										</div>
 
 										<%
@@ -183,7 +183,9 @@
 						%>
 
 							<li class="tree-item">
-								<div class="portlet-msg-error"><%= LanguageUtil.get(pageContext, "error-initializing-import-controls") %></div>
+								<div class="portlet-msg-error">
+									<%= LanguageUtil.get(pageContext, "error-initializing-import-controls") %>
+								</div>
 							</li>
 
 						<%
@@ -213,7 +215,7 @@
 	new Liferay.ExportImport(
 		{
 			archivedSetupsNode: '#<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS %>Checkbox',
-			dialogTitle: 'content-to-import',
+			dialogTitle: '<%= UnicodeLanguageUtil.get(pageContext, "content-to-import") %>',
 			namespace: '<portlet:namespace />',
 			userPreferencesNode: '#<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES %>Checkbox'
 		}

@@ -448,10 +448,17 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Children
 
-		List<WikiPage> children = wikiPagePersistence.findByN_H_P(
-			page.getNodeId(), true, page.getTitle());
+		List<WikiPage> children = wikiPagePersistence.findByN_P(
+			page.getNodeId(), page.getTitle());
 
 		for (WikiPage curPage : children) {
+			if (!curPage.isInTrash() && page.isInTrash() ||
+				!curPage.isApproved()) {
+					curPage.setParentTitle(StringPool.BLANK);
+					wikiPagePersistence.update(curPage);
+					continue;
+			}
+
 			deletePage(curPage);
 		}
 
@@ -1228,6 +1235,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		// Page
 
 		int oldStatus = page.getStatus();
+		String oldTitle = page.getTitle();
 
 		page = updateStatus(
 			userId, page, WorkflowConstants.STATUS_IN_TRASH,
@@ -1267,6 +1275,21 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		page.setTitle(trashTitle);
 
 		wikiPagePersistence.update(page);
+
+		// Children
+
+		List<WikiPage> children = wikiPagePersistence.findByN_P(
+			page.getNodeId(), oldTitle);
+
+		for (WikiPage curPage : children) {
+			curPage.setParentTitle(trashTitle);
+
+			wikiPagePersistence.update(curPage);
+
+			if (curPage.isApproved()) {
+				movePageToTrash(userId, curPage);
+			}
+		}
 
 		// Social
 
@@ -1317,6 +1340,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	public void restorePageFromTrash(long userId, WikiPage page)
 		throws PortalException, SystemException {
 
+		String oldTitle = page.getTitle();
+
 		String title = TrashUtil.getOriginalTitle(page.getTitle());
 
 		List<WikiPage> redirectPages = wikiPagePersistence.findByN_R(
@@ -1354,6 +1379,21 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		updateStatus(
 			userId, page, trashEntry.getStatus(), new ServiceContext());
+
+		// Children
+
+		List<WikiPage> children = wikiPagePersistence.findByN_P(
+				page.getNodeId(), oldTitle);
+
+		for (WikiPage curPage : children) {
+			curPage.setParentTitle(title);
+
+			wikiPagePersistence.update(curPage);
+
+			if (curPage.isInTrash()) {
+				restorePageFromTrash(userId, curPage);
+			}
+		}
 
 		// Social
 

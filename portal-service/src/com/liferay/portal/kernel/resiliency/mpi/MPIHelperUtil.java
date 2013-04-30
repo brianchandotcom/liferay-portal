@@ -385,10 +385,6 @@ public class MPIHelperUtil {
 				return true;
 			}
 
-			if (!(obj instanceof SPIKey)) {
-				return false;
-			}
-
 			SPIKey clusterNode = (SPIKey)obj;
 
 			if (Validator.equals(
@@ -403,9 +399,7 @@ public class MPIHelperUtil {
 
 		@Override
 		public int hashCode() {
-			String string = toString();
-
-			return string.hashCode();
+			return _spiProviderName.hashCode() * 11 + _spiId.hashCode();
 		}
 
 		@Override
@@ -413,8 +407,8 @@ public class MPIHelperUtil {
 			return _spiProviderName.concat(StringPool.POUND).concat(_spiId);
 		}
 
-		private String _spiId;
-		private String _spiProviderName;
+		private final String _spiId;
+		private final String _spiProviderName;
 
 	}
 

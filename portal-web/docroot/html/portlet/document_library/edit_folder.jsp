@@ -186,10 +186,10 @@ if (workflowEnabled) {
 					<c:if test="<%= !rootFolder %>">
 						<liferay-ui:search-container
 							headerNames="<%= headerNames %>"
+							total="<%= fileEntryTypes.size() %>"
 						>
 							<liferay-ui:search-container-results
 								results="<%= fileEntryTypes %>"
-								total="<%= fileEntryTypes.size() %>"
 							/>
 
 							<liferay-ui:search-container-row

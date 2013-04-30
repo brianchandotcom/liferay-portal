@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.ServletInputStreamAdapter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProgressTracker;
@@ -37,7 +38,7 @@ import javax.servlet.http.HttpSession;
  */
 public class LiferayInputStream extends ServletInputStreamAdapter {
 
-	public static final int THRESHOLD_SIZE = GetterUtil.getInteger(
+	public static final long THRESHOLD_SIZE = GetterUtil.getLong(
 		PropsUtil.get(LiferayInputStream.class.getName() + ".threshold.size"));
 
 	public LiferayInputStream(HttpServletRequest request) throws IOException {
@@ -45,6 +46,11 @@ public class LiferayInputStream extends ServletInputStreamAdapter {
 
 		_session = request.getSession();
 		_totalSize = request.getContentLength();
+
+		if (_totalSize < 0) {
+			_totalSize = GetterUtil.getLong(
+				request.getHeader(HttpHeaders.CONTENT_LENGTH), _totalSize);
+		}
 	}
 
 	public ServletInputStream getCachedInputStream() {
@@ -107,7 +113,7 @@ public class LiferayInputStream extends ServletInputStreamAdapter {
 	private UnsyncByteArrayOutputStream _cachedBytes =
 		new UnsyncByteArrayOutputStream();
 	private HttpSession _session;
-	private int _totalRead;
-	private int _totalSize;
+	private long _totalRead;
+	private long _totalSize;
 
 }

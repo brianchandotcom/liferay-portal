@@ -23,10 +23,6 @@ Object[] objArray = (Object[])row.getObject();
 
 Locale snippetLocale = ((Summary)objArray[2]).getLocale();
 
-if (snippetLocale == null) {
-	snippetLocale = LocaleUtil.getDefault();
-}
-
 String languageId = LocaleUtil.toLanguageId(snippetLocale);
 %>
 

@@ -640,7 +640,8 @@ public class SitesImpl implements Sites {
 	 * @param  layoutPrototype the page template being checked for failed merge
 	 *         attempts
 	 * @return the number of failed merge attempts for the layout prototype
-	 * @throws PortalException if a matching group could not be found
+	 * @throws PortalException if no page was associated with the layout
+	 *         prototype or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int getMergeFailCount(LayoutPrototype layoutPrototype)
@@ -668,7 +669,8 @@ public class SitesImpl implements Sites {
 	 * @param  layoutSetPrototype the site template being checked for failed
 	 *         merge attempts
 	 * @return the number of failed merge attempts for the layout set prototype
-	 * @throws PortalException if a matching group or site could not be found
+	 * @throws PortalException if no site was associated with the layout set
+	 *         prototype or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int getMergeFailCount(LayoutSetPrototype layoutSetPrototype)
@@ -810,8 +812,8 @@ public class SitesImpl implements Sites {
 	 *         merge into
 	 * @return <code>true</code> if the linked site template can be merged into
 	 *         the layout set; <code>false</code> otherwise
-	 * @throws PortalException if a matching site template, layout set, or group
-	 *         could not be found
+	 * @throws PortalException if no site template was associated with the
+	 *         layout set or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public boolean isLayoutSetMergeable(Group group, LayoutSet layoutSet)
@@ -1189,9 +1191,9 @@ public class SitesImpl implements Sites {
 	 * the layout is reset by calling {@link #doResetPrototype(Layout)}.
 	 *
 	 * @param  layout the page being checked for sufficient permissions
-	 * @throws PortalException if a group with the primary key could not be
-	 *         found, if a matching site could not be found, or if a portal
-	 *         exception occurred
+	 * @throws PortalException if no site was associated with the layout, if the
+	 *         user did not have permission to update the layout or the layout's
+	 *         site, or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void resetPrototype(Layout layout)
@@ -1208,8 +1210,8 @@ public class SitesImpl implements Sites {
 	 * #doResetPrototype(LayoutSet)}.
 	 *
 	 * @param  layoutSet the site being checked for sufficient permissions
-	 * @throws PortalException if a group with the primary key could not be
-	 *         found or if a portal exception occurred
+	 * @throws PortalException if the user did not have permission to update the
+	 *         site or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void resetPrototype(LayoutSet layoutSet)
@@ -1226,9 +1228,9 @@ public class SitesImpl implements Sites {
 	 *
 	 * @param  layoutPrototype the page template of the counter being updated
 	 * @param  newMergeFailCount the new value of the counter
-	 * @throws PortalException if a matching group could not be found, if a
-	 *         matching page could not be found, or if the user did not have
-	 *         permission to update the page
+	 * @throws PortalException if no page was associated with the layout
+	 *         prototype, if the user did not have permission to update the
+	 *         page, or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void setMergeFailCount(
@@ -1261,8 +1263,9 @@ public class SitesImpl implements Sites {
 	 *
 	 * @param  layoutSetPrototype the site template of the counter being updated
 	 * @param  newMergeFailCount the new value of the counter
-	 * @throws PortalException if a matching site or group could not be found,
-	 *         or if a portal exception occurred
+	 * @throws PortalException if no site was associated with the layout set
+	 *         prototype, if the user did not have permission to update the
+	 *         layout set prototype, or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void setMergeFailCount(
@@ -1353,16 +1356,15 @@ public class SitesImpl implements Sites {
 	}
 
 	/**
-	 * Checks the permissions necessary for resetting the layout or site in a
-	 * given group. If the permissions are not sufficient, a {@link
-	 * PrincipalException} is thrown.
+	 * Checks the permissions necessary for resetting the layout or site. If the
+	 * permissions are not sufficient, a {@link PortalException} is thrown.
 	 *
-	 * @param  group the group being checked for sufficient permissions
+	 * @param  group the site being checked for sufficient permissions
 	 * @param  layout the page being checked for sufficient permissions
 	 *         (optionally <code>null</code>). If <code>null</code>, the
-	 *         permissions are only checked for resetting the site in a given
-	 *         group.
-	 * @throws PortalException if a portal exception occurred
+	 *         permissions are only checked for resetting the site.
+	 * @throws PortalException if the user did not have permission to update the
+	 *         layout or site, or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	protected void checkResetPrototypePermissions(Group group, Layout layout)
@@ -1508,7 +1510,8 @@ public class SitesImpl implements Sites {
 	 * </p>
 	 *
 	 * @param  layout the page having its timestamp reset
-	 * @throws PortalException if a matching site could not be found
+	 * @throws PortalException if no site was associated with the layout or if a
+	 *         portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	protected void doResetPrototype(Layout layout)

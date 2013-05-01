@@ -5280,10 +5280,10 @@ public class JournalArticleLocalServiceImpl
 			if (elType.equals("image")) {
 				String elName = element.attributeValue(
 					"name", StringPool.BLANK);
-				String repetition = element.attributeValue(
-					"repetition", StringPool.BLANK);
+				String elIndex = element.attributeValue(
+					"index", StringPool.BLANK);
 
-				String name = elName + "_" + repetition;
+				String name = elName + "_" + elIndex;
 
 				formatImage(
 					groupId, articleId, version, incrementVersion, element,
@@ -5456,7 +5456,7 @@ public class JournalArticleLocalServiceImpl
 
 					imageLocalService.updateImage(imageId, bytes);
 				}
-				else if (dynamicContent.getText().equals("update-image")) {
+				else if (dynamicContent.getText().equals("update")) {
 					dynamicContent.setText(StringPool.BLANK);
 				}
 
@@ -5471,7 +5471,7 @@ public class JournalArticleLocalServiceImpl
 
 				continue;
 			}
-			else if (dynamicContent.getText().equals("update-image")) {
+			else if (dynamicContent.getText().equals("update")) {
 				dynamicContent.setText(StringPool.BLANK);
 
 				continue;

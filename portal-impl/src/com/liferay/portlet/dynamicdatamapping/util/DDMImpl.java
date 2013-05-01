@@ -623,7 +623,7 @@ public class DDMImpl implements DDM {
 						fieldValue = UnicodeFormatter.bytesToHex(bytes);
 					}
 					else {
-						fieldValue = "update-image";
+						fieldValue = "update";
 					}
 				}
 				catch (IOException ioe) {

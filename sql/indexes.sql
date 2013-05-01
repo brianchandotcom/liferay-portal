@@ -806,8 +806,12 @@ create index IX_B15863FA on SocialActivityLimit (classNameId, classPK);
 create unique index IX_F1C1A617 on SocialActivityLimit (groupId, userId, classNameId, classPK, activityType, activityCounterName);
 create index IX_6F9EDE9F on SocialActivityLimit (userId);
 
+create index IX_61B53D82 on SocialActivitySet (classNameId);
 create index IX_4460FA14 on SocialActivitySet (classNameId, classPK, type_);
+create index IX_9E13F2DE on SocialActivitySet (groupId);
+create index IX_49178D18 on SocialActivitySet (groupId, userId);
 create index IX_F71071BD on SocialActivitySet (groupId, userId, type_);
+create index IX_F80C4386 on SocialActivitySet (userId);
 create index IX_62AC101A on SocialActivitySet (userId, classNameId, classPK, type_);
 
 create index IX_8BE5F230 on SocialActivitySetting (groupId);

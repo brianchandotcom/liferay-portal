@@ -419,6 +419,7 @@
 	<bean id="com.liferay.portlet.social.service.persistence.SocialActivityLimitPersistence" class="com.liferay.portlet.social.service.persistence.SocialActivityLimitPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.social.service.SocialActivitySetLocalService" class="com.liferay.portlet.social.service.impl.SocialActivitySetLocalServiceImpl" />
 	<bean id="com.liferay.portlet.social.service.persistence.SocialActivitySetPersistence" class="com.liferay.portlet.social.service.persistence.SocialActivitySetPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portlet.social.service.persistence.SocialActivitySetFinder" class="com.liferay.portlet.social.service.persistence.SocialActivitySetFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.social.service.SocialActivitySettingLocalService" class="com.liferay.portlet.social.service.impl.SocialActivitySettingLocalServiceImpl" />
 	<bean id="com.liferay.portlet.social.service.SocialActivitySettingService" class="com.liferay.portlet.social.service.impl.SocialActivitySettingServiceImpl" />
 	<bean id="com.liferay.portlet.social.service.persistence.SocialActivitySettingPersistence" class="com.liferay.portlet.social.service.persistence.SocialActivitySettingPersistenceImpl" parent="basePersistence" />

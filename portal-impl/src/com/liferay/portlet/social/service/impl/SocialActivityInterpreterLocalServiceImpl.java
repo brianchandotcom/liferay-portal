@@ -277,6 +277,8 @@ public class SocialActivityInterpreterLocalServiceImpl
 
 				if (activityInterpreter.hasClassName(className)) {
 					activityInterpreter.updateActivitySet(activityId);
+
+					return;
 				}
 			}
 		}

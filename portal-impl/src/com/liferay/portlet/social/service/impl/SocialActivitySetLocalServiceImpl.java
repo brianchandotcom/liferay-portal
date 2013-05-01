@@ -113,6 +113,45 @@ public class SocialActivitySetLocalServiceImpl
 			new SocialActivitySetModifiedDateComparator());
 	}
 
+	public List<SocialActivitySet> getGroupActivitySets(
+			long groupId, int start, int end)
+		throws SystemException {
+
+		return socialActivitySetPersistence.findByGroupId(
+			groupId, start, end, new SocialActivitySetModifiedDateComparator());
+	}
+
+	public int getGroupActivitySetsCount(long groupId) throws SystemException {
+		return socialActivitySetPersistence.countByGroupId(groupId);
+	}
+
+	public List<SocialActivitySet> getRelationActivitySets(
+			long userId, int start, int end)
+		throws SystemException {
+
+		return socialActivitySetFinder.findByRelation(userId, start, end);
+	}
+
+	public List<SocialActivitySet> getRelationActivitySets(
+			long userId, int type, int start, int end)
+		throws SystemException {
+
+		return socialActivitySetFinder.findByRelationType(
+			userId, type, start, end);
+	}
+
+	public int getRelationActivitySetsCount(long userId)
+		throws SystemException {
+
+		return socialActivityFinder.countByRelation(userId);
+	}
+
+	public int getRelationActivitySetsCount(long userId, int type)
+		throws SystemException {
+
+		return socialActivityFinder.countByRelationType(userId, type);
+	}
+
 	public SocialActivitySet getUserActivitySet(
 			long groupId, long userId, int type)
 		throws SystemException {
@@ -120,6 +159,30 @@ public class SocialActivitySetLocalServiceImpl
 		return socialActivitySetPersistence.fetchByG_U_T_First(
 			groupId, userId, type,
 			new SocialActivitySetModifiedDateComparator());
+	}
+
+	public List<SocialActivitySet> getUserActivitySets(
+			long userId, int start, int end)
+		throws SystemException {
+
+		return socialActivitySetFinder.findByUser(userId, start, end);
+	}
+
+	public int getUserActivitySetsCount(long userId) throws SystemException {
+		return socialActivitySetFinder.countByUser(userId);
+	}
+
+	public List<SocialActivitySet> getUserGroupsActivitySets(
+			long userId, int start, int end)
+		throws SystemException {
+
+		return socialActivitySetFinder.findByUserGroups(userId, start, end);
+	}
+
+	public int getUserGroupsActivitySetsCount(long userId)
+		throws SystemException {
+
+		return socialActivitySetFinder.countByUserGroups(userId);
 	}
 
 	public void incrementActivityCount(long activitySetId, long activityId)

@@ -47,6 +47,7 @@ import com.liferay.portlet.social.service.persistence.SocialActivityCounterPersi
 import com.liferay.portlet.social.service.persistence.SocialActivityFinder;
 import com.liferay.portlet.social.service.persistence.SocialActivityLimitPersistence;
 import com.liferay.portlet.social.service.persistence.SocialActivityPersistence;
+import com.liferay.portlet.social.service.persistence.SocialActivitySetFinder;
 import com.liferay.portlet.social.service.persistence.SocialActivitySetPersistence;
 import com.liferay.portlet.social.service.persistence.SocialActivitySettingPersistence;
 import com.liferay.portlet.social.service.persistence.SocialRelationPersistence;
@@ -320,6 +321,25 @@ public abstract class SocialActivityInterpreterLocalServiceBaseImpl
 	public void setSocialActivitySetPersistence(
 		SocialActivitySetPersistence socialActivitySetPersistence) {
 		this.socialActivitySetPersistence = socialActivitySetPersistence;
+	}
+
+	/**
+	 * Returns the social activity set finder.
+	 *
+	 * @return the social activity set finder
+	 */
+	public SocialActivitySetFinder getSocialActivitySetFinder() {
+		return socialActivitySetFinder;
+	}
+
+	/**
+	 * Sets the social activity set finder.
+	 *
+	 * @param socialActivitySetFinder the social activity set finder
+	 */
+	public void setSocialActivitySetFinder(
+		SocialActivitySetFinder socialActivitySetFinder) {
+		this.socialActivitySetFinder = socialActivitySetFinder;
 	}
 
 	/**
@@ -671,6 +691,8 @@ public abstract class SocialActivityInterpreterLocalServiceBaseImpl
 	protected SocialActivitySetLocalService socialActivitySetLocalService;
 	@BeanReference(type = SocialActivitySetPersistence.class)
 	protected SocialActivitySetPersistence socialActivitySetPersistence;
+	@BeanReference(type = SocialActivitySetFinder.class)
+	protected SocialActivitySetFinder socialActivitySetFinder;
 	@BeanReference(type = SocialActivitySettingLocalService.class)
 	protected SocialActivitySettingLocalService socialActivitySettingLocalService;
 	@BeanReference(type = SocialActivitySettingService.class)

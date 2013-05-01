@@ -333,8 +333,9 @@ public class JournalArticleIndexer extends BaseIndexer {
 		String articleDefaultLanguageId = LocalizationUtil.getDefaultLocale(
 			article.getContent());
 
-		String defaultLanguageId = LocaleUtil.toLanguageId(
-			LocaleUtil.getDefault());
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
 		String[] languageIds = getLanguageIds(
 			defaultLanguageId, article.getContent());

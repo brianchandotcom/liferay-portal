@@ -427,6 +427,11 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 		Locale snippetLocale = getSnippetLocale(document, locale);
 
+		if (snippetLocale == null) {
+			snippetLocale = LocaleUtil.fromLanguageId(
+				document.get("defaultLanguageId"));
+		}
+
 		String prefix = Field.SNIPPET + StringPool.UNDERLINE;
 
 		String title = document.get(
@@ -436,11 +441,8 @@ public class JournalArticleIndexer extends BaseIndexer {
 			snippetLocale, prefix + Field.DESCRIPTION, prefix + Field.CONTENT);
 
 		if (Validator.isBlank(content)) {
-			content = document.get(locale, Field.DESCRIPTION, Field.CONTENT);
-
-			if (Validator.isBlank(content)) {
-				content = document.get(Field.DESCRIPTION, Field.CONTENT);
-			}
+			content = document.get(
+				snippetLocale, Field.DESCRIPTION, Field.CONTENT);
 		}
 
 		if (content.length() > 200) {

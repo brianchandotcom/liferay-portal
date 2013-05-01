@@ -59,6 +59,7 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ContextPathUtil;
+import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.DeterminateKeyGenerator;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -2799,17 +2800,109 @@ public class PortalImpl implements Portal {
 	}
 
 	public Locale getLocale(HttpServletRequest request) {
+
+		// Mimic ServicePreAction#initLocale
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay != null) {
 			return themeDisplay.getLocale();
 		}
-		else {
-			HttpSession session = request.getSession();
 
+		String i18nLanguageId = (String)request.getAttribute(
+			WebKeys.I18N_LANGUAGE_ID);
+
+		if (Validator.isNotNull(i18nLanguageId)) {
+			return LocaleUtil.fromLanguageId(i18nLanguageId);
+		}
+
+		String doAsUserLanguageId = ParamUtil.getString(
+			request, "doAsUserLanguageId");
+
+		if (Validator.isNotNull(doAsUserLanguageId)) {
+			return LocaleUtil.fromLanguageId(doAsUserLanguageId);
+		}
+
+		HttpSession session = request.getSession();
+
+		if (session.getAttribute(Globals.LOCALE_KEY) != null) {
 			return (Locale)session.getAttribute(Globals.LOCALE_KEY);
 		}
+
+		// Get locale from the user
+
+		User user = null;
+
+		try {
+			user = getUser(request);
+		}
+		catch (Exception e) {
+		}
+
+		if ((user != null) && !user.isDefaultUser()) {
+			Locale userLocale = getLocale(user.getLocale());
+
+			if (userLocale != null) {
+				return userLocale;
+			}
+		}
+
+		// Get locale from the cookie
+
+		String languageId = CookieKeys.getCookie(
+			request, CookieKeys.GUEST_LANGUAGE_ID, false);
+
+		if (Validator.isNotNull(languageId)) {
+			Locale cookieLocale = getLocale(
+				LocaleUtil.fromLanguageId(languageId));
+
+			if (cookieLocale != null) {
+				return cookieLocale;
+			}
+		}
+
+		// Get locale from the request
+
+		if (PropsValues.LOCALE_DEFAULT_REQUEST) {
+			Enumeration<Locale> locales = request.getLocales();
+
+			while (locales.hasMoreElements()) {
+				Locale requestLocale = getLocale(locales.nextElement());
+
+				if (requestLocale != null) {
+					return requestLocale;
+				}
+			}
+		}
+
+		// Get locale from the default user
+
+		Company company = null;
+
+		try {
+			company = getCompany(request);
+		}
+		catch (Exception e) {
+		}
+
+		if (company == null) {
+			return null;
+		}
+
+		User defaultUser = null;
+
+		try {
+			defaultUser = company.getDefaultUser();
+		}
+		catch (Exception e) {
+		}
+
+		if (defaultUser == null) {
+			return null;
+		}
+
+		return getLocale(defaultUser.getLocale());
 	}
 
 	public Locale getLocale(RenderRequest renderRequest) {
@@ -6263,6 +6356,21 @@ public class PortalImpl implements Portal {
 		sb.append(group.getFriendlyURL());
 
 		return sb.toString();
+	}
+
+	protected Locale getLocale(Locale locale) {
+		if (Validator.isNull(locale.getCountry())) {
+
+			// Locales must contain a country code
+
+			locale = LanguageUtil.getLocale(locale.getLanguage());
+		}
+
+		if (!LanguageUtil.isAvailableLocale(locale)) {
+			return null;
+		}
+
+		return locale;
 	}
 
 	protected String getPortletParam(HttpServletRequest request, String name) {

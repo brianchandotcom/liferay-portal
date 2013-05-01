@@ -349,6 +349,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 			if (languageId.equals(articleDefaultLanguageId)) {
 				document.addText(Field.CONTENT, content);
+				document.addText("defaultLanguageId", languageId);
 				document.addText(Field.DESCRIPTION, description);
 				document.addText(Field.TITLE, title);
 			}

@@ -1435,6 +1435,10 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			_customAttributesDisplayPortlets.put(portletId, portletModel);
 		}
 
+		portletModel.setDDMDisplayClass(
+			GetterUtil.getString(
+				portletElement.elementText("ddm-display"),
+				portletModel.getDDMDisplayClass()));
 		portletModel.setPermissionPropagatorClass(
 			GetterUtil.getString(
 				portletElement.elementText("permission-propagator"),

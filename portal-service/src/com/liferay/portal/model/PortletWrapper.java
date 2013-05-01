@@ -554,6 +554,15 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	}
 
 	/**
+	* Returns the name of the ddm display class of the portlet.
+	*
+	* @return the name of the ddm display class of the portlet
+	*/
+	public java.lang.String getDDMDisplayClass() {
+		return _portlet.getDDMDisplayClass();
+	}
+
+	/**
 	* Get the default plugin settings of the portlet.
 	*
 	* @return the plugin settings
@@ -2118,6 +2127,15 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	public void setCustomAttributesDisplayClasses(
 		java.util.List<java.lang.String> customAttributesDisplayClasses) {
 		_portlet.setCustomAttributesDisplayClasses(customAttributesDisplayClasses);
+	}
+
+	/**
+	* Sets the name of the ddm display class of the portlet.
+	*
+	* @param ddmDisplayClass the name of ddm display class of the portlet
+	*/
+	public void setDDMDisplayClass(java.lang.String ddmDisplayClass) {
+		_portlet.setDDMDisplayClass(ddmDisplayClass);
 	}
 
 	/**

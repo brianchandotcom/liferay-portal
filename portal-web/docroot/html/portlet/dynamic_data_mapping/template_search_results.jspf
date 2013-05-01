@@ -26,7 +26,7 @@ if (showGlobalScope) {
 long[] classNameIds = null;
 long searchClassPK = 0;
 
-if (portletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES) && (classNameId == 0)) {
+if (refererPortletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES) && (classNameId == 0)) {
 	classNameIds = TemplateHandlerRegistryUtil.getClassNameIds();
 	searchClassPK = -1;
 }

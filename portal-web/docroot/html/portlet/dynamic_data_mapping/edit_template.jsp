@@ -115,33 +115,15 @@ if (Validator.isNotNull(structureAvailableFields)) {
 	</liferay-ui:error>
 
 	<%
-	String title = null;
+	String title = StringPool.BLANK;
 
-	if (structure != null) {
-		if (template != null) {
-			title = template.getName(locale) + " (" + structure.getName(locale) + ")";
-		}
-		else {
-			title = LanguageUtil.format(pageContext, "new-template-for-structure-x", structure.getName(locale), false);
-		}
-	}
-	else if (template != null) {
-		title = template.getName(locale);
+	DDMDisplay ddmDisplay = DDMDisplayRegistryUtil.getDDMDisplay(refererPortletName);
+
+	if ((structure != null) || (template != null)) {
+		title = ddmDisplay.getEditTemplateTitle(structure, template, locale);
 	}
 	else {
-		if (classNameId > 0) {
-			TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(classNameId);
-
-			if (templateHandler != null) {
-				title = LanguageUtil.get(pageContext, "new") + StringPool.SPACE + templateHandler.getName(locale);
-			}
-			else if (refererPortletName.equals(PortletKeys.JOURNAL)) {
-				title = LanguageUtil.get(pageContext, "new-template");
-			}
-		}
-		else {
-			title = LanguageUtil.get(pageContext, "new-application-display-template");
-		}
+		title = ddmDisplay.getEditTemplateTitle(classNameId, locale);
 	}
 	%>
 
@@ -152,7 +134,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 	</portlet:renderURL>
 
 	<liferay-ui:header
-		backURL="<%= ((portletName.equals(PortletKeys.JOURNAL) || refererPortletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES) || Validator.isNotNull(portletResource)) && Validator.isNotNull(backURL)) ? backURL : viewTemplatesURL %>"
+		backURL="<%= ((refererPortletName.equals(PortletKeys.JOURNAL) || refererPortletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES) || Validator.isNotNull(portletResource)) && Validator.isNotNull(backURL)) ? backURL : viewTemplatesURL %>"
 		localizeTitle="<%= false %>"
 		title="<%= title %>"
 	/>
@@ -407,7 +389,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 	</c:otherwise>
 </c:choose>
 
-<c:if test="<%= (classPK < 0) && !portletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES) %>">
+<c:if test="<%= (classPK < 0) && !refererPortletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES) %>">
 	<aui:script>
 		function <portlet:namespace />openDDMStructureSelector() {
 			Liferay.Util.openDDMPortlet(

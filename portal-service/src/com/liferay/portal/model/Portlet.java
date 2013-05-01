@@ -268,6 +268,13 @@ public interface Portlet extends PortletModel, PersistedModel {
 	public java.util.List<com.liferay.portlet.expando.model.CustomAttributesDisplay> getCustomAttributesDisplayInstances();
 
 	/**
+	* Returns the name of the ddm display class of the portlet.
+	*
+	* @return the name of the ddm display class of the portlet
+	*/
+	public java.lang.String getDDMDisplayClass();
+
+	/**
 	* Get the default plugin settings of the portlet.
 	*
 	* @return the plugin settings
@@ -1521,6 +1528,13 @@ public interface Portlet extends PortletModel, PersistedModel {
 	*/
 	public void setCustomAttributesDisplayClasses(
 		java.util.List<java.lang.String> customAttributesDisplayClasses);
+
+	/**
+	* Sets the name of the ddm display class of the portlet.
+	*
+	* @param ddmDisplayClass the name of ddm display class of the portlet
+	*/
+	public void setDDMDisplayClass(java.lang.String ddmDisplayClass);
 
 	/**
 	* Sets the default plugin settings of the portlet.

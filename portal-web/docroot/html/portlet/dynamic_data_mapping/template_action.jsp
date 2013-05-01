@@ -56,7 +56,7 @@ DDMTemplate template = (DDMTemplate)row.getObject();
 	<%
 	ddmResourceActionId = ActionKeys.ADD_TEMPLATE;
 
-	if (portletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES)) {
+	if (refererPortletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES)) {
 		TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(template.getClassNameId());
 
 		ddmResource = templateHandler.getResourceName();

@@ -75,23 +75,11 @@ templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(classNa
 												siblingName = "cur_" + templateVariableDefinition.getName();
 											}
 
-											String[] dataContent = _getDataContent(templateVariableDefinition, siblingName, language, pageContext);
-
-											String dataContent1 = dataContent[0];
-											String dataContent2 = dataContent[1];
-											String dataContent3 = dataContent[2];
-
-											if (templateVariableDefinition.isRepeatable()) {
-												String[] listCodeArray = _getListCodeArray(templateVariableDefinition.getName() + ".getSiblings()", siblingName, language);
-
-												dataContent1 = listCodeArray[0];
-												dataContent2 = dataContent[0] + dataContent[1] + dataContent[2];
-												dataContent3 = listCodeArray[1];
-											}
+											String[] dataContentArray = _getDataContentArray(templateVariableDefinition, siblingName, language, pageContext);
 										%>
 
 											<li class="palette-item-container">
-												<span class="palette-item" data-content1="<%= HtmlUtil.escapeAttribute(dataContent1) %>" <c:if test="<%= Validator.isNotNull(dataContent2) %>">data-content2="<%= HtmlUtil.escapeAttribute(dataContent2) %>"</c:if> <c:if test="<%= Validator.isNotNull(dataContent3) %>">data-content3="<%= HtmlUtil.escapeAttribute(dataContent3) %>"</c:if> title="<%= HtmlUtil.escapeAttribute(_getPaletteItemTitle(pageContext, templateVariableDefinition)) %>">
+												<span class="palette-item" data-content1="<%= HtmlUtil.escapeAttribute(dataContentArray[0]) %>" <c:if test="<%= Validator.isNotNull(dataContentArray[1]) %>">data-content2="<%= HtmlUtil.escapeAttribute(dataContentArray[1]) %>"</c:if> <c:if test="<%= Validator.isNotNull(dataContentArray[2]) %>">data-content3="<%= HtmlUtil.escapeAttribute(dataContentArray[2]) %>"</c:if> title="<%= HtmlUtil.escapeAttribute(_getPaletteItemTitle(pageContext, templateVariableDefinition)) %>">
 													<liferay-ui:message key="<%= templateVariableDefinition.getLabel() %>" /> <c:if test="<%= templateVariableDefinition.isCollection() || templateVariableDefinition.isRepeatable() %>">*</c:if>
 												</span>
 											</li>
@@ -437,18 +425,6 @@ templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(classNa
 </aui:script>
 
 <%!
-private String _getAssignCode(String variableName, String code, String language) {
-
-	if (language.equalsIgnoreCase("ftl")) {
-		return "<#assign " + variableName + " = " + code + ")>";
-	}
-	else if (language.equalsIgnoreCase("vm")) {
-		return "#set ($" + variableName + " = " + code + ")";
-	}
-
-	return variableName;
-}
-
 private String[] _getBooleanCodeArray(String testClause, String language) {
 	String[] booleanCodeArray = new String[2];
 
@@ -464,64 +440,74 @@ private String[] _getBooleanCodeArray(String testClause, String language) {
 	return booleanCodeArray;
 }
 
-private String[] _getDataContent(TemplateVariableDefinition templateVariableDefinition, String siblingName, String language, PageContext pageContext) {
-	String[] dataContent = new String[3];
+private String[] _getDataContentArray(TemplateVariableDefinition templateVariableDefinition, String siblingName, String language, PageContext pageContext) {
+	String[] dataContentArray = new String[3];
 
-	dataContent[0] = StringPool.BLANK;
-	dataContent[1] = StringPool.BLANK;
-	dataContent[2] = StringPool.BLANK;
+	dataContentArray[0] = StringPool.BLANK;
+	dataContentArray[1] = StringPool.BLANK;
+	dataContentArray[2] = StringPool.BLANK;
 
 	String dataType = templateVariableDefinition.getDataType();
 
 	if (dataType.equals("boolean")) {
 		String[] booleanCodeArray = _getBooleanCodeArray(siblingName, language);
 
-		dataContent[0] = booleanCodeArray[0];
-		dataContent[1] = booleanCodeArray[1];
+		dataContentArray[0] = booleanCodeArray[0];
+		dataContentArray[1] = booleanCodeArray[1];
 	}
 	else if (dataType.equals("date")) {
 		String[] dateCodeArray = _getDateCodeArray(siblingName, language);
 
-		dataContent[0] = dateCodeArray[0];
-		dataContent[1] = dateCodeArray[1];
+		dataContentArray[0] = dateCodeArray[0];
+		dataContentArray[1] = dateCodeArray[1];
 	}
 	else if (dataType.equals("document-library") || dataType.equals("file-upload")) {
-		dataContent[0] = "<a href=\"" + _getVariableCode(siblingName + ".getData()", language) + "\">";
-		dataContent[1] = LanguageUtil.format(pageContext, "download-x", templateVariableDefinition.getLabel());
-		dataContent[2] = "</a>";
+		dataContentArray[0] = "<a href=\"" + _getVariableReferenceCode(siblingName + ".getData()", language) + "\">";
+		dataContentArray[1] = LanguageUtil.format(pageContext, "download-x", templateVariableDefinition.getLabel());
+		dataContentArray[2] = "</a>";
 	}
 	else if (dataType.equals("image")) {
-		dataContent[0] = "<img alt=\"" + templateVariableDefinition.getLabel() + "\" src=\"" + _getVariableCode(siblingName + ".getData()", language) + "\" />";
+		dataContentArray[0] = "<img alt=\"" + templateVariableDefinition.getLabel() + "\" src=\"" + _getVariableReferenceCode(siblingName + ".getData()", language) + "\" />";
 	}
 	else if (dataType.equals("link-to-page")) {
-		dataContent[0] = "<a href=\"" + _getVariableCode(siblingName + ".getFriendlyUrl()", language) + "\">";
-		dataContent[1] = templateVariableDefinition.getLabel();
-		dataContent[2] = "</a>";
+		dataContentArray[0] = "<a href=\"" + _getVariableReferenceCode(siblingName + ".getFriendlyUrl()", language) + "\">";
+		dataContentArray[1] = templateVariableDefinition.getLabel();
+		dataContentArray[2] = "</a>";
 	}
 	else if (dataType.equals("service-locator")) {
 		Class<?> templateVariableDefinitionClass = templateVariableDefinition.getClazz();
 
 		String variableName = templateVariableDefinitionClass.getSimpleName();
 
-		dataContent[0] = _getAssignCode(variableName, "serviceLocator.findService(\"" + siblingName + "\"", language);
-		dataContent[1] = _getVariableCode(variableName, language);
+		dataContentArray[0] = _getVariableAssignmentCode(variableName, "serviceLocator.findService(\"" + siblingName + "\"", language);
+		dataContentArray[1] = _getVariableReferenceCode(variableName, language);
 	}
 	else if (templateVariableDefinition.isCollection()) {
 		TemplateVariableDefinition itemTemplateVariableDefinition = templateVariableDefinition.getItemTemplateVariableDefinition();
 
 		String[] listCodeArray = _getListCodeArray(siblingName, itemTemplateVariableDefinition.getName(), language);
 
-		dataContent[0] = listCodeArray[0];
-		dataContent[1] = listCodeArray[1];
+		dataContentArray[0] = listCodeArray[0];
+		dataContentArray[1] = listCodeArray[1];
 	}
 	else if (Validator.isNotNull(dataType)) {
-		dataContent[0] = _getVariableCode(siblingName + ".getData()", language);
+		dataContentArray[0] = _getVariableReferenceCode(siblingName + ".getData()", language);
 	}
 	else {
-		dataContent[0] = _getVariableCode(siblingName, language);
+		dataContentArray[0] = _getVariableReferenceCode(siblingName, language);
 	}
 
-	return dataContent;
+	if (templateVariableDefinition.isRepeatable()) {
+		String[] listCodeArray = _getListCodeArray(templateVariableDefinition.getName() + ".getSiblings()", siblingName, language);
+
+		String tmpDataContent = dataContentArray[0];
+
+		dataContentArray[0] = listCodeArray[0];
+		dataContentArray[1] = tmpDataContent + dataContentArray[1] + dataContentArray[2];
+		dataContentArray[2] = listCodeArray[1];
+	}
+
+	return dataContentArray;
 }
 
 private String[] _getDateCodeArray(String variableName, String language) {
@@ -630,7 +616,18 @@ private String _getPaletteItemTitle(PageContext pageContext, TemplateVariableDef
 	return sb.toString();
 }
 
-private String _getVariableCode(String variableName, String language) {
+private String _getVariableAssignmentCode(String variableName, String variableValue, String language) {
+	if (language.equalsIgnoreCase("ftl")) {
+		return "<#assign " + variableName + " = " + variableValue + ")>";
+	}
+	else if (language.equalsIgnoreCase("vm")) {
+		return "#set ($" + variableName + " = " + variableValue + ")";
+	}
+
+	return variableName;
+}
+
+private String _getVariableReferenceCode(String variableName, String language) {
 	if (language.equalsIgnoreCase("ftl")) {
 		return "${" + variableName + "}";
 	}

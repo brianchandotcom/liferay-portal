@@ -287,6 +287,20 @@ public class EditGroupAction extends PortletAction {
 		return teams;
 	}
 
+	/**
+	 * Resets the number of failed merge attempts for the site template, which
+	 * is accessed by retrieving the layout set prototype ID. Once the counter
+	 * is reset, the modified site template is merged back into its linked site,
+	 * which is accessed by retrieving the group ID and private layout set.
+	 *
+	 * <p>
+	 * If the number of failed merge attempts is not equal to zero after the
+	 * merge, an error key is submitted to {@link SessionErrors}.
+	 * </p>
+	 *
+	 * @param  actionRequest the portlet request used to retrieve parameters
+	 * @throws Exception if an exception occurred
+	 */
 	protected void resetMergeFailCountAndMerge(ActionRequest actionRequest)
 		throws Exception {
 

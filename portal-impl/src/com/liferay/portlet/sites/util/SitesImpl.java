@@ -633,6 +633,17 @@ public class SitesImpl implements Sites {
 		return parameterMap;
 	}
 
+	/**
+	 * Returns the number of failed merge attempts for the layout prototype
+	 * since its last reset or update.
+	 *
+	 * @param  layoutPrototype the page template being checked for failed merge
+	 *         attempts
+	 * @return the number of failed merge attempts for the layout prototype
+	 * @throws PortalException if no page was associated with the layout
+	 *         prototype or if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public int getMergeFailCount(LayoutPrototype layoutPrototype)
 		throws PortalException, SystemException {
 
@@ -651,6 +662,17 @@ public class SitesImpl implements Sites {
 			prototypeTypeSettingsProperties.getProperty(MERGE_FAIL_COUNT));
 	}
 
+	/**
+	 * Returns the number of failed merge attempts for the layout set prototype
+	 * since its last reset or update.
+	 *
+	 * @param  layoutSetPrototype the site template being checked for failed
+	 *         merge attempts
+	 * @return the number of failed merge attempts for the layout set prototype
+	 * @throws PortalException if no site was associated with the layout set
+	 *         prototype or if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public int getMergeFailCount(LayoutSetPrototype layoutSetPrototype)
 		throws PortalException, SystemException {
 
@@ -778,6 +800,22 @@ public class SitesImpl implements Sites {
 		return false;
 	}
 
+	/**
+	 * Returns <code>true</code> if the linked site template can be merged into
+	 * the layout set. This method checks the current number of merge fail
+	 * attempts stored for the linked site template and, if greater than the
+	 * merge fail threshold, will return <code>false</code>.
+	 *
+	 * @param  group the site template's group, which is about to be merged into
+	 *         the layout set
+	 * @param  layoutSet the site in which the site template is attempting to
+	 *         merge into
+	 * @return <code>true</code> if the linked site template can be merged into
+	 *         the layout set; <code>false</code> otherwise
+	 * @throws PortalException if no site template was associated with the
+	 *         layout set or if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public boolean isLayoutSetMergeable(Group group, LayoutSet layoutSet)
 		throws PortalException, SystemException {
 
@@ -1148,6 +1186,16 @@ public class SitesImpl implements Sites {
 		mergeLayoutSetPrototypeLayouts(group, layoutSet);
 	}
 
+	/**
+	 * Checks the permissions necessary for resetting the layout. If sufficient,
+	 * the layout is reset by calling {@link #doResetPrototype(Layout)}.
+	 *
+	 * @param  layout the page being checked for sufficient permissions
+	 * @throws PortalException if no site was associated with the layout, if the
+	 *         user did not have permission to update the layout or the layout's
+	 *         site, or if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void resetPrototype(Layout layout)
 		throws PortalException, SystemException {
 
@@ -1156,6 +1204,16 @@ public class SitesImpl implements Sites {
 		doResetPrototype(layout);
 	}
 
+	/**
+	 * Checks the permissions necessary for resetting the layout set. If
+	 * sufficient, the layout set is reset by calling {@link
+	 * #doResetPrototype(LayoutSet)}.
+	 *
+	 * @param  layoutSet the site being checked for sufficient permissions
+	 * @throws PortalException if the user did not have permission to update the
+	 *         site or if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void resetPrototype(LayoutSet layoutSet)
 		throws PortalException, SystemException {
 
@@ -1164,6 +1222,17 @@ public class SitesImpl implements Sites {
 		doResetPrototype(layoutSet);
 	}
 
+	/**
+	 * Sets the number of failed merge attempts for the layout prototype to a
+	 * new value.
+	 *
+	 * @param  layoutPrototype the page template of the counter being updated
+	 * @param  newMergeFailCount the new value of the counter
+	 * @throws PortalException if no page was associated with the layout
+	 *         prototype, if the user did not have permission to update the
+	 *         page, or if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void setMergeFailCount(
 			LayoutPrototype layoutPrototype, int newMergeFailCount)
 		throws PortalException, SystemException {
@@ -1188,6 +1257,17 @@ public class SitesImpl implements Sites {
 			layoutPrototypeLayout.getTypeSettings());
 	}
 
+	/**
+	 * Sets the number of failed merge attempts for the layout set prototype to
+	 * a new value.
+	 *
+	 * @param  layoutSetPrototype the site template of the counter being updated
+	 * @param  newMergeFailCount the new value of the counter
+	 * @throws PortalException if no site was associated with the layout set
+	 *         prototype, if the user did not have permission to update the
+	 *         layout set prototype, or if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public void setMergeFailCount(
 			LayoutSetPrototype layoutSetPrototype, int newMergeFailCount)
 		throws PortalException, SystemException {
@@ -1275,6 +1355,18 @@ public class SitesImpl implements Sites {
 			publicLayoutSetPrototypeLinkEnabled);
 	}
 
+	/**
+	 * Checks the permissions necessary for resetting the layout or site. If the
+	 * permissions are not sufficient, a {@link PortalException} is thrown.
+	 *
+	 * @param  group the site being checked for sufficient permissions
+	 * @param  layout the page being checked for sufficient permissions
+	 *         (optionally <code>null</code>). If <code>null</code>, the
+	 *         permissions are only checked for resetting the site.
+	 * @throws PortalException if the user did not have permission to update the
+	 *         layout or site, or if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	protected void checkResetPrototypePermissions(Group group, Layout layout)
 		throws PortalException, SystemException {
 
@@ -1406,6 +1498,22 @@ public class SitesImpl implements Sites {
 		}
 	}
 
+	/**
+	 * Resets the modified timestamp on the layout, and then calls {@link
+	 * #doResetPrototype(LayoutSet)} to reset the modified timestamp on the
+	 * layout's site.
+	 *
+	 * <p>
+	 * After the timestamps are reset, the modified page template and site
+	 * template are merged into their linked layout and site when they are first
+	 * accessed.
+	 * </p>
+	 *
+	 * @param  layout the page having its timestamp reset
+	 * @throws PortalException if no site was associated with the layout or if a
+	 *         portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	protected void doResetPrototype(Layout layout)
 		throws PortalException, SystemException {
 
@@ -1418,6 +1526,17 @@ public class SitesImpl implements Sites {
 		doResetPrototype(layoutSet);
 	}
 
+	/**
+	 * Resets the modified timestamp on the layout set.
+	 *
+	 * <p>
+	 * After the timestamp is reset, the modified site template is merged into
+	 * its linked layout set when it is first accessed.
+	 * </p>
+	 *
+	 * @param  layoutSet the site having its timestamp reset
+	 * @throws SystemException if a system exception occurred
+	 */
 	protected void doResetPrototype(LayoutSet layoutSet)
 		throws SystemException {
 

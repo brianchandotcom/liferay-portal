@@ -109,6 +109,24 @@ public class ReflectionTest {
 	}
 
 	@Test
+	public void testPlugin6() throws Exception {
+		try {
+			Class<?> clazz = getClass();
+
+			Field field = clazz.getField("TEST_FIELD_1");
+
+			boolean accessible = field.isAccessible();
+
+			field.setAccessible(true);
+
+			field.setAccessible(accessible);
+		}
+		catch (SecurityException se) {
+			Assert.fail();
+		}
+	}
+
+	@Test
 	public void testPortal1() throws Exception {
 		try {
 			Class<?> clazz = PropsKeys.class;

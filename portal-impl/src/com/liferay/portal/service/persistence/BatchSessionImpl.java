@@ -34,7 +34,9 @@ public class BatchSessionImpl implements BatchSession {
 				model.getClass(), model.getPrimaryKeyObj());
 		}
 
-		session.delete(model);
+		if (model != null) {
+			session.delete(model);
+		}
 	}
 
 	public boolean isEnabled() {

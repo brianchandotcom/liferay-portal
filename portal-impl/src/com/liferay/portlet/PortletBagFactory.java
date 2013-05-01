@@ -156,12 +156,6 @@ public class PortletBagFactory {
 		List<StagedModelDataHandler<?>> stagedModelDataHandlerInstances =
 			newStagedModelDataHandler(portlet);
 
-		DDMDisplay ddmDisplayInstance = newDDMDisplay(portlet);
-
-		if (ddmDisplayInstance != null) {
-			DDMDisplayRegistryUtil.register(ddmDisplayInstance);
-		}
-
 		TemplateHandler templateHandlerInstance = newTemplateHandler(portlet);
 
 		if (templateHandlerInstance != null) {
@@ -246,6 +240,12 @@ public class PortletBagFactory {
 
 			customAttributesDisplayInstances.add(
 				customAttributesDisplayInstance);
+		}
+
+		DDMDisplay ddmDisplayInstance = newDDMDisplay(portlet);
+
+		if (ddmDisplayInstance != null) {
+			DDMDisplayRegistryUtil.register(ddmDisplayInstance);
 		}
 
 		PermissionPropagator permissionPropagatorInstance =

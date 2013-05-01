@@ -20,6 +20,7 @@ import com.liferay.portal.util.PortletKeys;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Eduardo Garcia
@@ -41,17 +42,9 @@ public class DDMDisplayRegistryImpl implements DDMDisplayRegistry {
 	}
 
 	public String[] getPortletIds() {
-		String[] portletIds = new String[_ddmDisplays.size()];
+		Set<String> portletIds = _ddmDisplays.keySet();
 
-		int i = 0;
-
-		for (Map.Entry<String, DDMDisplay> entry : _ddmDisplays.entrySet()) {
-			DDMDisplay ddmDisplay = entry.getValue();
-
-			portletIds[i++] = ddmDisplay.getPortletId();
-		}
-
-		return portletIds;
+		return portletIds.toArray(new String[portletIds.size()]);
 	}
 
 	public void register(DDMDisplay ddmDisplay) {

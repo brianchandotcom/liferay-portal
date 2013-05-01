@@ -36,6 +36,6 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 	}
 
 	private static Set<String> _viewTemplateExcludedColumns = SetUtil.fromArray(
-		new String[]{});
+		new String[] {"mode"});
 
 }

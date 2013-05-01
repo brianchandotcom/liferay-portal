@@ -149,7 +149,6 @@
 		<staged-model-data-handler-class>com.liferay.portlet.journal.lar.JournalArticleStagedModelDataHandler</staged-model-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.portlet.journal.lar.JournalFeedStagedModelDataHandler</staged-model-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.portlet.journal.lar.JournalFolderStagedModelDataHandler</staged-model-data-handler-class>
-		<ddm-display>com.liferay.portlet.journal.ddm.JournalDDMDisplay</ddm-display>
 		<template-handler>com.liferay.portlet.journal.template.JournalTemplateHandler</template-handler>
 		<webdav-storage-token>journal</webdav-storage-token>
 		<webdav-storage-class>com.liferay.portlet.journal.webdav.JournalWebDAVStorageImpl</webdav-storage-class>
@@ -158,6 +157,7 @@
 		<asset-renderer-factory>com.liferay.portlet.journal.asset.JournalArticleAssetRendererFactory</asset-renderer-factory>
 		<asset-renderer-factory>com.liferay.portlet.journal.asset.JournalFolderAssetRendererFactory</asset-renderer-factory>
 		<atom-collection-adapter>com.liferay.portlet.journal.atom.JournalArticleAtomCollectionProvider</atom-collection-adapter>
+		<ddm-display>com.liferay.portlet.journal.ddm.JournalDDMDisplay</ddm-display>
 		<trash-handler>com.liferay.portlet.journal.trash.JournalArticleTrashHandler</trash-handler>
 		<trash-handler>com.liferay.portlet.journal.trash.JournalFolderTrashHandler</trash-handler>
 		<workflow-handler>com.liferay.portlet.journal.workflow.JournalArticleWorkflowHandler</workflow-handler>
@@ -2039,11 +2039,11 @@
 		<parent-struts-path>dynamic_data_mapping</parent-struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<portlet-data-handler-class>com.liferay.portlet.portletdisplaytemplate.lar.PortletDisplayTemplatePortletDataHandler</portlet-data-handler-class>
-		<ddm-display>com.liferay.portlet.portletdisplaytemplate.ddm.PortletDisplayTemplateDDMDisplay</ddm-display>
 		<webdav-storage-token>application_display_template</webdav-storage-token>
 		<webdav-storage-class>com.liferay.portlet.portletdisplaytemplate.webdav.ApplicationDisplayTemplateWebDAVStorageImpl</webdav-storage-class>
 		<control-panel-entry-category>content</control-panel-entry-category>
 		<control-panel-entry-weight>25.0</control-panel-entry-weight>
+		<ddm-display>com.liferay.portlet.portletdisplaytemplate.ddm.PortletDisplayTemplateDDMDisplay</ddm-display>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
 		<private-request-attributes>false</private-request-attributes>

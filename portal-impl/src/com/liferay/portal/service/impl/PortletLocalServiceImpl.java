@@ -1334,10 +1334,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		portletModel.setStagedModelDataHandlerClasses(
 			stagedModelDataHandlerClasses);
 
-		portletModel.setDDMDisplayClass(
-			GetterUtil.getString(
-				portletElement.elementText("ddm-display"),
-				portletModel.getTemplateHandlerClass()));
 		portletModel.setTemplateHandlerClass(
 			GetterUtil.getString(
 				portletElement.elementText("template-handler"),
@@ -1439,6 +1435,10 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			_customAttributesDisplayPortlets.put(portletId, portletModel);
 		}
 
+		portletModel.setDDMDisplayClass(
+			GetterUtil.getString(
+				portletElement.elementText("ddm-display"),
+				portletModel.getDDMDisplayClass()));
 		portletModel.setPermissionPropagatorClass(
 			GetterUtil.getString(
 				portletElement.elementText("permission-propagator"),

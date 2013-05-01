@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -34,28 +35,27 @@ public class BaseDDMDisplay implements DDMDisplay {
 	public String getEditTemplateTitle(
 		DDMStructure structure, DDMTemplate template, Locale locale) {
 
-		String title = StringPool.BLANK;
+		if ((structure != null) && (template != null)) {
+			StringBundler sb = new StringBundler(5);
 
-		if (structure != null) {
-			if (template != null) {
-				title =
-					template.getName(locale) + " (" +
-						structure.getName(locale) + ")";
-			}
-			else {
-				title = LanguageUtil.format(
-					locale, "new-template-for-structure-x",
-					structure.getName(locale), false);
-			}
+			sb.append(template.getName(locale));
+			sb.append(StringPool.SPACE);
+			sb.append(StringPool.OPEN_PARENTHESIS);
+			sb.append(structure.getName(locale));
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+
+			return sb.toString();
+		}
+		else if (structure != null) {
+			return LanguageUtil.format(
+				locale, "new-template-for-structure-x",
+				structure.getName(locale), false);
 		}
 		else if (template != null) {
-			title = template.getName(locale);
-		}
-		else {
-			title = getDefaultEditTemplateTitle(locale);
+			return template.getName(locale);
 		}
 
-		return title;
+		return getDefaultEditTemplateTitle(locale);
 	}
 
 	public String getEditTemplateTitle(long classNameId, Locale locale) {
@@ -87,18 +87,13 @@ public class BaseDDMDisplay implements DDMDisplay {
 	public String getViewTemplatesTitle(
 		DDMStructure structure, boolean isControlPanel, Locale locale) {
 
-		String title = StringPool.BLANK;
-
 		if (structure != null) {
-			title = LanguageUtil.format(
+			return LanguageUtil.format(
 				locale, "templates-for-structure-x", structure.getName(locale),
 				false);
 		}
-		else {
-			title = getDefaultViewTemplateTitle(locale);
-		}
 
-		return title;
+		return getDefaultViewTemplateTitle(locale);
 	}
 
 	public String getViewTemplatesTitle(DDMStructure structure, Locale locale) {

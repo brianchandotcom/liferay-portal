@@ -137,7 +137,7 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, isControlPanel, local
 			/>
 
 			<%
-			Set excludedColumns = ddmDisplay.getViewTemplatesExcludedColumns();
+			Set<String> excludedColumns = ddmDisplay.getViewTemplatesExcludedColumns();
 			%>
 
 			<c:if test='<%= !excludedColumns.contains("id") %>'>

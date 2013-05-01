@@ -71,26 +71,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TOOLBAR_ADD_CHILD_PAGE</td>
-	<td>//div[@id='_156_layoutSetToolbar']/span/button[contains(.,'Add Child Page')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_PERMISSIONS</td>
-	<td>//div[@id='_156_layoutSetToolbar']/span/button[contains(.,'Permissions')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_DELETE</td>
-	<td>//div[@id='_156_layoutSetToolbar']/span/button[contains(.,'Delete')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_COPY_PORTLETS</td>
-	<td>//div[@id='_156_layoutSetToolbar']/span/button[contains(.,'Copy Portlets from Page')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>TOOLBAR_EXPORT</td>
 	<td>//div[@id='_156_layoutSetToolbar']/span/button[contains(.,'Export')]</td>
 	<td></td>
@@ -98,6 +78,26 @@
 <tr>
 	<td>TOOLBAR_IMPORT</td>
 	<td>//div[@id='_156_layoutSetToolbar']/span/button[contains(.,'Import')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_ADD_CHILD_PAGE</td>
+	<td>//div[@id='_156_layoutToolbar']/span/button[contains(.,'Add Child Page')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_PERMISSIONS</td>
+	<td>//div[@id='_156_layoutToolbar']/span/button[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_DELETE</td>
+	<td>//div[@id='_156_layoutToolbar']/span/button[contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_COPY_PORTLETS</td>
+	<td>//div[@id='_156_layoutToolbar']/span/button[contains(.,'Copy Portlets from Page')]</td>
 	<td></td>
 </tr>
 <tr>

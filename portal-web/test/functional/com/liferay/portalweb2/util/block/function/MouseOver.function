@@ -25,6 +25,14 @@
 		<execute function="MouseOver#textMouseOver" />
 	</command>
 
+	<command name="textMouseOverClickNavigation">
+		<execute selenium="clickAt" argument1="//nav[@id='navigation']" argument2="" />
+
+		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/aui/sortable/sortable-min.js')]" />
+
+		<execute function="MouseOver#textMouseOver" />
+	</command>
+
 	<command name="valueMouseOver">
 		<execute function="AssertTextEquals#assertValue" />
 

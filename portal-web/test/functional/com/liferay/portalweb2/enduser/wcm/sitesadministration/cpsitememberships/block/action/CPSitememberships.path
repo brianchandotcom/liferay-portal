@@ -54,7 +54,54 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--USER-->
+<!--ADD_MEMBERS_MENULIST-->
+<tr>
+	<td>ADD_MEMBERS_MENULIST_USER</td>
+	<td>//a[@role='menuitem' and contains(.,'User')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_MEMBERS_MENULIST_ORGANIZATION</td>
+	<td>//a[@role='menuitem' and contains(.,'Organization')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_MEMBERS_MENULIST_USER_GROUPS</td>
+	<td>//a[@role='menuitem' and contains(.,'User Group')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_SUMMARY</td>
+	<td>//span/a[contains(.,'Summary')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_USERS</td>
+	<td>//span/a[contains(.,'Users')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_ORGANIZATIONS</td>
+	<td>//span/a[contains(.,'Organizations')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_SITE_ROLES</td>
+	<td>//span/a[contains(.,'Site Roles and Teams ')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--USER_SEARCH-->
 <tr>
 	<td>USER_SEARCH_FIELD</td>
 	<td>//input[@id='_174_keywords_users']</td>
@@ -109,12 +156,6 @@
 	<td>//input[@id='_174_keywords_user_groups']/../../../following-sibling::span//input[@value='Search']</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--USER_GROUP_TABLE-->
 </tbody>
 </table>
 </body>

@@ -1,5 +1,14 @@
 <definition>
 	<command name="click">
+		<case locator-key1="PAGE_1_CHILD_PAGE_1">
+			<execute function="Click#textClickAtAndWait" />
+		</case>
+		<case locator-key1="PAGE_1_CHILD_PAGE_2">
+			<execute function="Click#textClickAtAndWait" />
+		</case>
+		<case locator-key1="PAGE_1_CHILD_PAGE_3">
+			<execute function="Click#textClickAtAndWait" />
+		</case>
 		<case comparator="startsWith" locator-key1="PAGE_DELETE">
 			<execute function="Click#textClick" value1="X" />
 		</case>
@@ -14,6 +23,18 @@
 	<command name="confirm">
 		<case locator-key1="PAGE_CONFIRM">
 			<execute function="Confirm#waitForConfirmation" />
+		</case>
+	</command>
+
+	<command name="mouseOver">
+		<case locator-key1="PAGE_1">
+			<execute function="MouseOver#textMouseOverClickNavigation" />
+		</case>
+		<case locator-key1="PAGE_2">
+			<execute function="MouseOver#textMouseOverClickNavigation" />
+		</case>
+		<case locator-key1="PAGE_3">
+			<execute function="MouseOver#textMouseOverClickNavigation" />
 		</case>
 	</command>
 

@@ -50,6 +50,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_1_CHILD_PAGE_1</td>
+	<td>xPath=(//li[contains(@class,'lfr-nav-deletable')])[1]/ul[@class='child-menu']/li/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_1_CHILD_PAGE_2</td>
+	<td>xPath=(//li[contains(@class,'lfr-nav-deletable')])[1]/ul[@class='child-menu']/li/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_1_CHILD_PAGE_3</td>
+	<td>xPath=(//li[contains(@class,'lfr-nav-deletable')])[1]/ul[@class='child-menu']/li/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_2</td>
 	<td>xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/a/span</td>
 	<td></td>

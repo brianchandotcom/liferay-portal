@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 
 /**
@@ -71,7 +72,9 @@ public class ScopeFacet extends MultiValueFacet {
 			searchContext.getAttribute("groupId"));
 
 		if (Validator.isNotNull(groupIdParam)) {
-			groupIds = new long[] {GetterUtil.getLong(groupIdParam)};
+			long groupId = GetterUtil.getLong(groupIdParam);
+
+			groupIds = addScopeGroup(groupId);
 		}
 
 		if ((groupIds == null) || (groupIds.length == 0) ||
@@ -148,6 +151,25 @@ public class ScopeFacet extends MultiValueFacet {
 
 		return BooleanClauseFactoryUtil.create(
 			searchContext, facetQuery, BooleanClauseOccur.MUST.getName());
+	}
+
+	private long[] addScopeGroup(long groupId) {
+		Layout layout = getSearchContext().getLayout();
+
+		try {
+			if ((layout != null) && (layout.getGroupId() == groupId) &&
+				layout.hasScopeGroup()) {
+
+				Group scopeGroup = layout.getScopeGroup();
+
+				return new long[] {groupId, scopeGroup.getGroupId()};
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return new long[] {groupId};
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(ScopeFacet.class);

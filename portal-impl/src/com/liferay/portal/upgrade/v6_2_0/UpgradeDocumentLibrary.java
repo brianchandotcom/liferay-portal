@@ -16,15 +16,10 @@ package com.liferay.portal.upgrade.v6_2_0;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.upgrade.util.DateUpgradeColumnImpl;
-import com.liferay.portal.kernel.upgrade.util.UpgradeColumn;
-import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
-import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.auth.FullNameGenerator;
 import com.liferay.portal.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.upgrade.v6_2_0.util.DLFileRankTable;
-import com.liferay.portal.upgrade.v6_2_0.util.DLSyncTable;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 
 import java.sql.Connection;
@@ -94,22 +89,6 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		}
 
 		updateFileRanks();
-
-		// DLSync
-
-		UpgradeColumn createDateColumn = new DateUpgradeColumnImpl(
-			"createDate");
-		UpgradeColumn modifiedDateColumn = new DateUpgradeColumnImpl(
-			"modifiedDate");
-
-		UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
-			DLSyncTable.TABLE_NAME, DLSyncTable.TABLE_COLUMNS, createDateColumn,
-			modifiedDateColumn);
-
-		upgradeTable.setCreateSQL(DLSyncTable.TABLE_SQL_CREATE);
-		upgradeTable.setIndexesSQL(DLSyncTable.TABLE_SQL_ADD_INDEXES);
-
-		upgradeTable.updateTable();
 
 		// Checksum directory
 

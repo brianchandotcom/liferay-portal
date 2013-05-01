@@ -12,9 +12,15 @@
 	</command>
 
 	<command name="clickAtApplicationSearch">
-		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]" />
+		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/autocomplete-filters/autocomplete-filters-min.js')]" />
 
 		<execute function="Click#clickAt" />
+	</command>
+
+	<command name="makeVisibleClickAt">
+		<execute selenium="makeVisible" />
+
+		<execute selenium="clickAt" />
 	</command>
 
 	<command name="partialTextClickAt">

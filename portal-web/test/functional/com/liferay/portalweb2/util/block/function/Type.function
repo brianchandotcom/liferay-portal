@@ -6,7 +6,7 @@
 	</command>
 
 	<command name="sendKeysApplicationSearch">
-		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]" />
+		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/autocomplete-filters/autocomplete-filters-min.js')]" />
 
 		<execute function="Type#sendKeys" />
 	</command>

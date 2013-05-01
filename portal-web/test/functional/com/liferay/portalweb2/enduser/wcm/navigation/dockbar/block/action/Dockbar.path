@@ -47,7 +47,7 @@
 </tr>
 <tr>
 	<td>ADD_CONTENT_SEARCH_FIELD</td>
-	<td>//input[@id='layout_configuration_content']</td>
+	<td>//input[@id='_145_searchContentInput']</td>
 	<td></td>
 </tr>
 <tr>
@@ -63,7 +63,7 @@
 </tr>
 <tr>
 	<td>ADD_APPLICATION_SEARCH_FIELD</td>
-	<td>//input[@id='layout_configuration_content']</td>
+	<td>//input[@id='_145_searchApplication']</td>
 	<td></td>
 </tr>
 <tr>

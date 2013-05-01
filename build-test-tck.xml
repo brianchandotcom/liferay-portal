@@ -8,7 +8,9 @@
 
 		<echo file="portal-impl/src/portal-ext.properties" append="true">
 
-tck.url=true</echo>
+tck.url=true
+
+portal.security.manager.strategy=none</echo>
 
 		<exec executable="cmd.exe">
 			<arg line="/c svn revert portal-web/docroot/WEB-INF/web.xml" />

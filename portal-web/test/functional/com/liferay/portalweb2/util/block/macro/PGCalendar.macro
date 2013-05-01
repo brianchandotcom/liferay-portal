@@ -1,0 +1,71 @@
+<definition>
+	<command name="addCalendarEvent">
+		<execute macro="Page#pgGoto" />
+
+		<execute action="PGCalendar#click" locator-key1="VIEW_DAY_BUTTON" />
+		<execute action="PGCalendar#click" locator-key1="VIEW_TODAY_BUTTON" />
+		<execute action="PGCalendar#click" locator-key1="CALENDAR_DAY" />
+		<execute action="PGCalendar#type" locator-key1="EVENT_SCHEDULER_TITLE_FIELD" value1="${eventTitle}" />
+		<execute action="PGCalendar#keyPress" locator-key1="EVENT_SCHEDULER_TITLE_FIELD" value1="\\13" />
+		<execute action="PGCalendar#assertElementPresent" locator-key1="EVENT_TITLE" />
+		<execute action="PGCalendar#assertTextEquals" locator-key1="EVENT_CONTENT" value1="${eventTitle}" />
+	</command>
+
+	<command name="deleteCalendarEvent">
+		<execute macro="Page#pgGoto" />
+
+		<execute action="PGCalendar#click" locator-key1="VIEW_DAY_BUTTON" />
+		<execute action="PGCalendar#click" locator-key1="VIEW_TODAY_BUTTON" />
+		<execute action="PGCalendar#assertElementPresent" locator-key1="EVENT_TITLE" />
+		<execute action="PGCalendar#click" locator-key1="EVENT_BODY" />
+		<execute action="PGCalendar#click" locator-key1="EVENT_EDITOR_DELETE_BUTTON" />
+		<execute action="PGCalendar#confirm" value1="Deleting this event will cancel the meeting with your guests. Would you like to delete?" />
+		<execute action="PGCalendar#assertElementNotPresent" locator-key1="EVENT_BODY" />
+	</command>
+
+	<command name="editCalendarEvent">
+		<execute macro="Page#pgGoto" />
+
+		<execute action="PGCalendar#click" locator-key1="VIEW_DAY_BUTTON" />
+		<execute action="PGCalendar#click" locator-key1="VIEW_TODAY_BUTTON" />
+		<execute action="PGCalendar#assertElementPresent" locator-key1="EVENT_TITLE" />
+		<execute action="PGCalendar#click" locator-key1="EVENT_BODY" />
+		<execute action="PGCalendar#assertElementPresent" locator-key1="EVENT_EDITOR_TITLE_FIELD" />
+		<execute action="PGCalendar#assertElementPresent" locator-key1="EVENT_EDITOR_EDIT_BUTTON" />
+		<execute action="PGCalendar#click" locator-key1="EVENT_EDITOR_EDIT_BUTTON" />
+		<execute action="PGCalendar#selectFrame" locator1="//iframe" />
+
+		<execute action="PGCalendarEditevent#assertElementPresent" locator-key1="TITLE_FIELD" />
+		<execute action="PGCalendarEditevent#type" locator-key1="TITLE_FIELD" value1="${eventTitleNew}" />
+		<execute action="PGCalendarEditevent#click" locator-key1="SAVE_BUTTON" />
+		<execute action="PGCalendarEditevent#assertElementPresent" locator-key1="SUCCESS_MESSAGE" />
+		<execute action="PGCalendarEditevent#click" locator-key1="CLOSE_BUTTON" />
+
+		<execute action="PGCalendar#selectWindow" locator1="relative=top" />
+		<execute action="PGCalendar#assertTextEquals" locator-key1="EVENT_CONTENT" value1="${eventTitleNew}" />
+	</command>
+
+	<command name="tearDown">
+		<execute macro="Page#pgGoto" />
+		
+		<execute action="PGCalendar#click" locator-key1="VIEW_DAY_BUTTON" />
+		<execute action="PGCalendar#click" locator-key1="VIEW_TODAY_BUTTON" />
+		<execute action="PGCalendar#click" locator-key1="VIEW_AGENDA_BUTTON" />
+		
+		<if>
+			<condition action="PGCalendar#isElementNotPresent" locator-key1="CALENDAR_AGENDA_NO_EVENTS" />
+			<then>
+				<while>
+					<condition action="PGCalendar#isElementNotPresent" locator-key1="CALENDAR_AGENDA_NO_EVENTS" />
+					<then>
+						<execute action="PGCalendar#click" locator-key1="CALENDAR_AGENDA_EVENT" />
+						<execute action="PGCalendar#click" locator-key1="EVENT_EDITOR_DELETE_BUTTON" />
+						<execute action="PGCalendar#confirm" value1="Deleting this event will cancel the meeting with your guests. Would you like to delete?" />
+					</then>
+				</while>
+				<execute action="PGCalendar#assertElementNotPresent" locator-key1="CALENDAR_AGENDA_EVENT" />
+				<execute action="PGCalendar#assertElementPresent" locator-key1="CALENDAR_AGENDA_NO_EVENTS" />
+			</then>
+		</if>
+	</command>
+</definition>

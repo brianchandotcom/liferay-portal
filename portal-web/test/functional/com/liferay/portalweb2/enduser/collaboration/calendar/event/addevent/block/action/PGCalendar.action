@@ -1,0 +1,7 @@
+<definition>
+	<command name="click">
+		<case locator-key1="CALENDAR_DAY">
+			<execute function="Click#clickAt" />
+		</case>
+	</command>
+</definition>

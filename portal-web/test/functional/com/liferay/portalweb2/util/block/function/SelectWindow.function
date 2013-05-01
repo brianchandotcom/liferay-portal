@@ -1,14 +1,4 @@
 <definition>
-	<command name="selectFrame">
-		<execute selenium="waitForVisible" />
-
-		<execute selenium="selectFrame" />
-	</command>
-
-	<command name="selectFrameTop">
-		<execute selenium="selectFrame" argument1="relative=top" />
-	</command>
-
 	<command name="selectWindow">
 		<execute selenium="pause" argument1="5000" />
 

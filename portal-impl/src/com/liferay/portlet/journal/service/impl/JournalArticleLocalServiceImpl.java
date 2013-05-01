@@ -5275,13 +5275,19 @@ public class JournalArticleLocalServiceImpl
 		for (Element element : root.elements()) {
 			String elInstanceId = element.attributeValue(
 				"instance-id", StringPool.BLANK);
-			String elName = element.attributeValue("name", StringPool.BLANK);
 			String elType = element.attributeValue("type", StringPool.BLANK);
 
 			if (elType.equals("image")) {
+				String elName = element.attributeValue(
+					"name", StringPool.BLANK);
+				String elIndex = element.attributeValue(
+					"index", StringPool.BLANK);
+
+				String name = elName + "_" + elIndex;
+
 				formatImage(
 					groupId, articleId, version, incrementVersion, element,
-					elInstanceId, elName, images);
+					elInstanceId, name, images);
 			}
 			else if (elType.equals("text_area") || elType.equals("text") ||
 					 elType.equals("text_box")) {
@@ -5450,6 +5456,9 @@ public class JournalArticleLocalServiceImpl
 
 					imageLocalService.updateImage(imageId, bytes);
 				}
+				else if (dynamicContent.getText().equals("update")) {
+					dynamicContent.setText(StringPool.BLANK);
+				}
 
 				continue;
 			}
@@ -5459,6 +5468,11 @@ public class JournalArticleLocalServiceImpl
 			if (image != null) {
 				dynamicContent.setText(elContent);
 				dynamicContent.addAttribute("id", String.valueOf(imageId));
+
+				continue;
+			}
+			else if (dynamicContent.getText().equals("update")) {
+				dynamicContent.setText(StringPool.BLANK);
 
 				continue;
 			}

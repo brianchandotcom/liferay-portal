@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeFormatter;
@@ -77,10 +78,12 @@ import com.liferay.portlet.journal.util.JournalConverterUtil;
 import com.liferay.portlet.journal.util.JournalUtil;
 
 import java.io.File;
+import java.io.Serializable;
 
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -441,11 +444,26 @@ public class EditArticleAction extends PortletAction {
 				continue;
 			}
 
-			String content = (String)field.getValue(locale);
+			List<Serializable> values = field.getValues(locale);
 
-			images.put(
-				"_" + name + "_" + LanguageUtil.getLanguageId(locale),
-				UnicodeFormatter.hexToBytes(content));
+			for (int i = 0; i < values.size(); i++) {
+				String content = (String)values.get(i);
+
+				if (content.equals("update-image")) {
+					continue;
+				}
+
+				StringBundler sb = new StringBundler(6);
+
+				sb.append(StringPool.UNDERLINE);
+				sb.append(name);
+				sb.append(StringPool.UNDERLINE);
+				sb.append(i);
+				sb.append(StringPool.UNDERLINE);
+				sb.append(LanguageUtil.getLanguageId(locale));
+
+				images.put(sb.toString(), UnicodeFormatter.hexToBytes(content));
+			}
 		}
 
 		return images;

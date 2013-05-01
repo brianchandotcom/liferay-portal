@@ -689,22 +689,6 @@ create table DLFolder (
 	statusDate DATE null
 );
 
-create table DLSync (
-	syncId LONG not null primary key,
-	companyId LONG,
-	createDate LONG,
-	modifiedDate LONG,
-	fileId LONG,
-	fileUuid VARCHAR(75) null,
-	repositoryId LONG,
-	parentFolderId LONG,
-	name VARCHAR(255) null,
-	description STRING null,
-	event VARCHAR(75) null,
-	type_ VARCHAR(75) null,
-	version VARCHAR(75) null
-);
-
 create table EmailAddress (
 	emailAddressId LONG not null primary key,
 	companyId LONG,

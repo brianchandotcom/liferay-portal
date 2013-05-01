@@ -81,8 +81,6 @@ import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionService;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFolderService;
-import com.liferay.portlet.documentlibrary.service.DLSyncLocalService;
-import com.liferay.portlet.documentlibrary.service.DLSyncService;
 import com.liferay.portlet.documentlibrary.service.persistence.DLContentPersistence;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryMetadataPersistence;
@@ -95,8 +93,6 @@ import com.liferay.portlet.documentlibrary.service.persistence.DLFileShortcutPer
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileVersionPersistence;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFolderPersistence;
-import com.liferay.portlet.documentlibrary.service.persistence.DLSyncFinder;
-import com.liferay.portlet.documentlibrary.service.persistence.DLSyncPersistence;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureService;
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureFinder;
@@ -863,78 +859,6 @@ public abstract class DLFileEntryLocalServiceBaseImpl
 	 */
 	public void setDLFolderFinder(DLFolderFinder dlFolderFinder) {
 		this.dlFolderFinder = dlFolderFinder;
-	}
-
-	/**
-	 * Returns the d l sync local service.
-	 *
-	 * @return the d l sync local service
-	 */
-	public DLSyncLocalService getDLSyncLocalService() {
-		return dlSyncLocalService;
-	}
-
-	/**
-	 * Sets the d l sync local service.
-	 *
-	 * @param dlSyncLocalService the d l sync local service
-	 */
-	public void setDLSyncLocalService(DLSyncLocalService dlSyncLocalService) {
-		this.dlSyncLocalService = dlSyncLocalService;
-	}
-
-	/**
-	 * Returns the d l sync remote service.
-	 *
-	 * @return the d l sync remote service
-	 */
-	public DLSyncService getDLSyncService() {
-		return dlSyncService;
-	}
-
-	/**
-	 * Sets the d l sync remote service.
-	 *
-	 * @param dlSyncService the d l sync remote service
-	 */
-	public void setDLSyncService(DLSyncService dlSyncService) {
-		this.dlSyncService = dlSyncService;
-	}
-
-	/**
-	 * Returns the d l sync persistence.
-	 *
-	 * @return the d l sync persistence
-	 */
-	public DLSyncPersistence getDLSyncPersistence() {
-		return dlSyncPersistence;
-	}
-
-	/**
-	 * Sets the d l sync persistence.
-	 *
-	 * @param dlSyncPersistence the d l sync persistence
-	 */
-	public void setDLSyncPersistence(DLSyncPersistence dlSyncPersistence) {
-		this.dlSyncPersistence = dlSyncPersistence;
-	}
-
-	/**
-	 * Returns the d l sync finder.
-	 *
-	 * @return the d l sync finder
-	 */
-	public DLSyncFinder getDLSyncFinder() {
-		return dlSyncFinder;
-	}
-
-	/**
-	 * Sets the d l sync finder.
-	 *
-	 * @param dlSyncFinder the d l sync finder
-	 */
-	public void setDLSyncFinder(DLSyncFinder dlSyncFinder) {
-		this.dlSyncFinder = dlSyncFinder;
 	}
 
 	/**
@@ -1937,14 +1861,6 @@ public abstract class DLFileEntryLocalServiceBaseImpl
 	protected DLFolderPersistence dlFolderPersistence;
 	@BeanReference(type = DLFolderFinder.class)
 	protected DLFolderFinder dlFolderFinder;
-	@BeanReference(type = DLSyncLocalService.class)
-	protected DLSyncLocalService dlSyncLocalService;
-	@BeanReference(type = DLSyncService.class)
-	protected DLSyncService dlSyncService;
-	@BeanReference(type = DLSyncPersistence.class)
-	protected DLSyncPersistence dlSyncPersistence;
-	@BeanReference(type = DLSyncFinder.class)
-	protected DLSyncFinder dlSyncFinder;
 	@BeanReference(type = CounterLocalService.class)
 	protected CounterLocalService counterLocalService;
 	@BeanReference(type = ImageLocalService.class)

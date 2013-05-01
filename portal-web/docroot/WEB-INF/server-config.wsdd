@@ -4615,20 +4615,6 @@
 		<parameter name="wsdlServicePort" value="Portlet_DL_DLFolderService" />
 		<parameter name="wsdlTargetNamespace" value="urn:http.service.documentlibrary.portlet.liferay.com" />
 	</service>
-	<service name="Portlet_DL_DLSyncService" provider="java:RPC" style="rpc" use="encoded">
-		<operation xmlns:operNS="urn:http.service.documentlibrary.portlet.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getDLSyncUpdate" qname="operNS:getDLSyncUpdate" returnQName="getDLSyncUpdateReturn" returnType="rtns:anyType" soapAction="">
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="repositoryId" type="tns:long"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="lastAccessDate" type="tns:dateTime"></parameter>
-		</operation>
-		<parameter name="allowedMethods" value="getDLSyncUpdate" />
-		<parameter name="className" value="com.liferay.portlet.documentlibrary.service.http.DLSyncServiceSoap" />
-		<parameter name="typeMappingVersion" value="1.2" />
-		<parameter name="wsdlPortType" value="DLSyncServiceSoap" />
-		<parameter name="wsdlServiceElement" value="DLSyncServiceSoapService" />
-		<parameter name="wsdlServicePort" value="Portlet_DL_DLSyncService" />
-		<parameter name="wsdlTargetNamespace" value="urn:http.service.documentlibrary.portlet.liferay.com" />
-	</service>
 	<service name="Portlet_Expando_ExpandoColumnService" provider="java:RPC" style="rpc" use="encoded">
 		<typeMapping xmlns:ns="http://model.expando.portlet.liferay.com" qname="ns:ExpandoColumnSoap" type="java:com.liferay.portlet.expando.model.ExpandoColumnSoap" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
 		<operation xmlns:operNS="urn:http.service.expando.portlet.liferay.com" xmlns:rtns="http://model.expando.portlet.liferay.com" name="addColumn" qname="operNS:addColumn" returnQName="addColumnReturn" returnType="rtns:ExpandoColumnSoap" soapAction="">

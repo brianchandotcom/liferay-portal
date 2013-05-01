@@ -266,10 +266,6 @@
 	<bean id="com.liferay.portlet.documentlibrary.service.DLFolderService" class="com.liferay.portlet.documentlibrary.service.impl.DLFolderServiceImpl" />
 	<bean id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderPersistence" class="com.liferay.portlet.documentlibrary.service.persistence.DLFolderPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder" class="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.documentlibrary.service.DLSyncLocalService" class="com.liferay.portlet.documentlibrary.service.impl.DLSyncLocalServiceImpl" />
-	<bean id="com.liferay.portlet.documentlibrary.service.DLSyncService" class="com.liferay.portlet.documentlibrary.service.impl.DLSyncServiceImpl" />
-	<bean id="com.liferay.portlet.documentlibrary.service.persistence.DLSyncPersistence" class="com.liferay.portlet.documentlibrary.service.persistence.DLSyncPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.documentlibrary.service.persistence.DLSyncFinder" class="com.liferay.portlet.documentlibrary.service.persistence.DLSyncFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalService" class="com.liferay.portlet.dynamicdatalists.service.impl.DDLRecordLocalServiceImpl" />
 	<bean id="com.liferay.portlet.dynamicdatalists.service.DDLRecordService" class="com.liferay.portlet.dynamicdatalists.service.impl.DDLRecordServiceImpl" />
 	<bean id="com.liferay.portlet.dynamicdatalists.service.persistence.DDLRecordPersistence" class="com.liferay.portlet.dynamicdatalists.service.persistence.DDLRecordPersistenceImpl" parent="basePersistence" />

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Layout;
 
 import java.io.Serializable;
 
@@ -109,6 +110,10 @@ public class SearchContext implements Serializable {
 
 	public long[] getGroupIds() {
 		return _groupIds;
+	}
+
+	public Layout getLayout() {
+		return _layout;
 	}
 
 	public String getKeywords() {
@@ -288,6 +293,10 @@ public class SearchContext implements Serializable {
 		_keywords = keywords;
 	}
 
+	public void setLayout(Layout layout) {
+		_layout = layout;
+	}
+
 	public void setLike(boolean like) {
 		_like = like;
 	}
@@ -358,6 +367,7 @@ public class SearchContext implements Serializable {
 	private boolean _includeLiveGroups = true;
 	private boolean _includeStagingGroups = true;
 	private String _keywords;
+	private Layout _layout;
 	private boolean _like;
 	private Locale _locale = LocaleUtil.getMostRelevantLocale();
 	private long[] _nodeIds;

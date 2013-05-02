@@ -23,7 +23,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 JournalArticle article = null;
 
-String type = StringPool.BLANK;
+String type = ParamUtil.getString(request, "type");
 
 try {
 	if (Validator.isNotNull(articleId)) {
@@ -36,11 +36,6 @@ try {
 	}
 }
 catch (NoSuchArticleException nsae) {
-}
-
-if (article == null) {
-	groupId = ParamUtil.getLong(request, "groupId", themeDisplay.getScopeGroupId());
-	type = ParamUtil.getString(request, "type", type);
 }
 %>
 

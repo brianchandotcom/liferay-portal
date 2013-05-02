@@ -14,7 +14,20 @@
 
 package com.liferay.portlet.passwordpoliciesadmin.lar;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
+import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.model.PasswordPolicy;
+import com.liferay.portal.service.PasswordPolicyLocalServiceUtil;
+import com.liferay.portal.service.persistence.PasswordPolicyActionableDynamicQuery;
+
+import java.util.List;
+
+import javax.portlet.PortletPreferences;
 
 /**
  * @author Daniela Zapata Riesco
@@ -22,5 +35,97 @@ import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 public class PasswordPolicyPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "password_policies_admin";
+
+	@Override
+	protected PortletPreferences doDeleteData(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		if (portletDataContext.addPrimaryKey(
+			PasswordPolicyPortletDataHandler.class, "deleteData")) {
+
+			return portletPreferences;
+		}
+
+		List<PasswordPolicy> passwordPolicies =
+			PasswordPolicyLocalServiceUtil.getPasswordPolicies(
+				portletDataContext.getCompanyId());
+
+		for (PasswordPolicy passwordPolicy : passwordPolicies) {
+			if (!passwordPolicy.isDefaultPolicy()) {
+				PasswordPolicyLocalServiceUtil.deletePasswordPolicy(
+					passwordPolicy);
+			}
+		}
+
+		return portletPreferences;
+	}
+
+	@Override
+	protected String doExportData(
+			final PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		portletDataContext.addPermissions(
+			"com.liferay.portlet.passwordpoliciesadmin",
+			portletDataContext.getScopeGroupId());
+
+		Element rootElement = addExportDataRootElement(portletDataContext);
+
+		rootElement.addAttribute(
+			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			new PasswordPolicyActionableDynamicQuery() {
+
+			@Override
+			protected void addCriteria(DynamicQuery dynamicQuery) {
+				portletDataContext.addDateRangeCriteria(
+					dynamicQuery, "modifiedDate");
+			}
+
+			@Override
+			protected void performAction(Object object) throws PortalException {
+				PasswordPolicy passwordPolicy = (PasswordPolicy)object;
+
+				StagedModelDataHandlerUtil.exportStagedModel(
+					portletDataContext, passwordPolicy);
+			}
+		};
+
+		actionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
+
+		actionableDynamicQuery.performActions();
+
+		return getExportDataRootElementString(rootElement);
+	}
+
+	@Override
+	protected PortletPreferences doImportData(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences, String data)
+		throws Exception {
+
+		portletDataContext.importPermissions(
+			"com.liferay.portlet.passwordpoliciesadmin",
+			portletDataContext.getSourceGroupId(),
+			portletDataContext.getScopeGroupId());
+
+		Element passwordPoliciesElement =
+			portletDataContext.getImportDataGroupElement(
+				PasswordPolicy.class);
+
+		List<Element> passwordPolicyElements =
+			passwordPoliciesElement.elements();
+
+		for (Element passwordPolicyElement : passwordPolicyElements) {
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, passwordPolicyElement);
+		}
+
+		return null;
+	}
 
 }

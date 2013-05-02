@@ -289,11 +289,19 @@ public class SeleniumBuilderContextTest {
 	}
 
 	@Test
-	public void testMacroConditionElement1010() throws Exception {
+	public void testMacroConditionElement1010_1() throws Exception {
 		test(
-			"MacroConditionElement1010.macro",
+			"MacroConditionElement1010_1.macro",
 			"Error 1010: Invalid locator-key PAGE_NAME_X at " + _DIR_NAME +
-				"/MacroConditionElement1010.macro:4");
+				"/MacroConditionElement1010_1.macro:4");
+	}
+
+	@Test
+	public void testMacroConditionElement1010_2() throws Exception {
+		test(
+			"MacroConditionElement1010_2.macro",
+			"Error 1010: Invalid locator-key ${page}_NAME_X at " + _DIR_NAME +
+				"/MacroConditionElement1010_2.macro:4");
 	}
 
 	@Test
@@ -361,11 +369,19 @@ public class SeleniumBuilderContextTest {
 	}
 
 	@Test
-	public void testMacroExecuteElement1010() throws Exception {
+	public void testMacroExecuteElement1010_1() throws Exception {
 		test(
-			"MacroExecuteElement1010.macro",
+			"MacroExecuteElement1010_1.macro",
 			"Error 1010: Invalid locator-key PAGE_NAME_X at " + _DIR_NAME +
-				"/MacroExecuteElement1010.macro:3");
+				"/MacroExecuteElement1010_1.macro:3");
+	}
+
+	@Test
+	public void testMacroExecuteElement1010_2() throws Exception {
+		test(
+			"MacroExecuteElement1010_2.macro",
+			"Error 1010: Invalid locator-key ${page}_NAME_X at " + _DIR_NAME +
+				"/MacroExecuteElement1010_2.macro:3");
 	}
 
 	@Test

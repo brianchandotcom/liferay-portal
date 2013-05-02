@@ -13,11 +13,11 @@
 		</execute>
 
 		<if>
-			<condition action="BaseLiferay#isElementPresent" />
+			<condition action="BaseLiferay#isElementPresent" locator-key1="PAGE_${name}E" />
 			<then>
 				<var name="name" value="value" />
 
-				<execute action="BaseLiferay#click" />
+				<execute action="BaseLiferay#click" locator-key1="PAGE_${name}E" />
 			</then>
 		</if>
 

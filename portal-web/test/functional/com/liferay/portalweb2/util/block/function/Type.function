@@ -22,4 +22,12 @@
 
 		<execute selenium="typeFrame" />
 	</command>
+
+	<command name="typeFrameWaitForCKEditor">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="waitForVisible" argument1="//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]" />
+
+		<execute selenium="typeFrame" />
+	</command>
 </definition>

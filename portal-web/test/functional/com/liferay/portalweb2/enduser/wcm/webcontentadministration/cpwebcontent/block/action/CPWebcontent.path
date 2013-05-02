@@ -1,0 +1,305 @@
+<html>
+<head>
+<title>CPWebcontent</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPWebcontent</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPWebcontent</td>
+</tr>
+<!---->
+<tr>
+	<td>REQUEST_SUCCESS_MESSAGE</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>MOVED_TO_RECYCLE_BIN_MESSAGE</td>
+	<td>//div[@class='portlet-msg-success taglib-trash-undo']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NO_WEBCONTENT_FOUND_MESSAGE</td>
+	<td>//div[@class='entries-empty portlet-msg-info']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPTIONS_MENULIST_WRENCH_ICON</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--OPTIONS_MENULIST-->
+<tr>
+	<td>OPTIONS_MENULIST_CONFIGURATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPTIONS_MENULIST_EXPORT_IMPORT</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TOOLBAR-->
+<tr>
+	<td>TOOLBAR_SELECT_ALL_CHECKBOX</td>
+	<td>//input[@id='_15_allRowIdsCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_ACTIONS</td>
+	<td>//input[@id='_15_actionsButtonContainer']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_ADD</td>
+	<td>//span[@title='Add']/ul/li/strong/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_MANAGE</td>
+	<td>//span[@title='Manage']/ul/li/strong/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_SEARCH_FIELD</td>
+	<td>//input[@id='_15_keywords']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_SEARCH_BUTTON</td>
+	<td>//input[@id='_15_search']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_ADVANCED_SEARCH_BUTTON</td>
+	<td>//input[@id='_15_showAdvancedSearch']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ACTION_MENULIST-->
+<tr>
+	<td>ACTION_MENULIST_MOVE_TO_THE_RECYCLE_BIN</td>
+	<td>//a[@id='_15_actionsButtonContainer_move-to-the-recycle-bin']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTION_MENULIST_EXPIRE</td>
+	<td>//a[@id='_15_actionsButtonContainer_expire']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTION_MENULIST_MOVE</td>
+	<td>//a[@id='_15_actionsButtonContainer_move']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ADD_MENULIST-->
+<tr>
+	<td>ADD_MENULIST_ADD_FOLDER</td>
+	<td>//a[@id='_15_tiym_menu_folder']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_MENULIST_ADD_BASIC_WEB_CONTENT</td>
+	<td>//a[@id='_15_tiym_menu_basic-web-content']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MANAGE_MENULIST-->
+<tr>
+	<td>MANAGE_MENULIST_STRUCTURES</td>
+	<td>//a[@id='_15_hjzj_menu_structures']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MANAGE_MENULIST_TEMPLATES</td>
+	<td>//a[@id='_15_hjzj_menu_templates']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MANAGE_MENULIST_FEEDS</td>
+	<td>//a[@id='_15_hjzj_menu_feeds']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION_FILTER-->
+<tr>
+	<td>NAVIGATION_FILTER_HOME</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_FILTER_HOME_MENULIST_ARROW</td>
+	<td>//a[@id='_15_kldx_menuButton']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_FILTER_RECENT</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_FILTER_MINE</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--HOME_MENULIST-->
+<tr>
+	<td>HOME_MENULIST_ADD_FOLDER</td>
+	<td>//a[@id='_15_kldx_menu_add-folder']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HOME_MENULIST_SUBSCRIBE</td>
+	<td>//a[@id='_15_kldx_menu_subscribe']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HOME_MENULIST_PERMISSIONS</td>
+	<td>//a[@id='_15_kldx_menu_permissions']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ENTRY_CONTAINER-->
+<tr>
+	<td>ENTRY_CONTAINER_ENTRY1</td>
+	<td>//div[@class='entry-thumbnail']/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_MENULIST_ARROW</td>
+	<td>//a[@id='_15_dhec_menuButton']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_CONTAINER_ENTRY_CHECKBOX</td>
+	<td>//input[@id='_15_rowIdsJournalArticleCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_CONTAINER_ENTRY_TITLE</td>
+	<td>//div[@id='_15_entriesContainer']/div/a/span/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ENTRY_MENULIST-->
+<tr>
+	<td>ENTRY_MENULIST_EDIT</td>
+	<td>//a[@id='_15_dhec_menu_edit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_MENULIST_MOVE</td>
+	<td>//a[@id='_15_dhec_menu_move']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_MENULIST_PERMISSIONS</td>
+	<td>//a[@id='_15_dhec_menu_permissions']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_MENULIST_VIEW</td>
+	<td>//a[@id='_15_dhec_menu_view']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_MENULIST_COPY</td>
+	<td>//a[@id='_15_dhec_menu_copy']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_MENULIST_EXPIRE</td>
+	<td>//a[@id='_15_dhec_menu_expire']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_MENULIST_MOVE_TO_THE_RECYCLE_BIN</td>
+	<td>//a[@id='_15_dhec_menu_move-to-the-recycle-bin']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PAGINATION-->
+<tr>
+	<td>PAGINATION_FIRST</td>
+	<td>//div[contains(@class, 'article-entries-paginator')]/a[@class='aui-paginator-link aui-paginator-first-link']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGINATION_PREVIOUS</td>
+	<td>//div[contains(@class, 'article-entries-paginator')]/a[@class='aui-paginator-link aui-paginator-prev-link']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGINATION_CURRENT_PAGE</td>
+	<td>//a[@class='aui-paginator-link aui-paginator-page-link aui-paginator-current-page']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGINATION_NEXT</td>
+	<td>//div[contains(@class, 'article-entries-paginator')]/a[@class='aui-paginator-link aui-paginator-next-link']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGINATION_LAST</td>
+	<td>//div[contains(@class, 'article-entries-paginator')]/a[@class='aui-paginator-link aui-paginator-last-link']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGINATION_ENTRIES_PER_PAGE_SELECT</td>
+	<td>//div[contains(@class, 'article-entries-paginator')]/select[@class='aui-paginator-rows-per-page']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

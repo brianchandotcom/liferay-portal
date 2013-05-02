@@ -39,22 +39,24 @@ public class N1_AddMessageBoardsContentTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//li[@id='_145_addContent']/a/span"));
 		selenium.mouseOver("//li[@id='_145_addContent']/a/span");
-		selenium.waitForVisible("//a[@id='_145_addApplication']");
-		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
-				"More"));
-		selenium.clickAt("//a[@id='_145_addApplication']",
-			RuntimeVariables.replace("More"));
+		selenium.waitForVisible("//li[contains(@class,'add-application')]/a");
+		assertEquals(RuntimeVariables.replace("Content and Applications"),
+			selenium.getText("//li[contains(@class,'add-application')]/a"));
+		selenium.clickAt("//li[contains(@class,'add-application')]/a",
+			RuntimeVariables.replace("Content and Applications"));
 		selenium.waitForElementPresent(
-			"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]");
-		selenium.waitForVisible("//input[@id='layout_configuration_content']");
-		selenium.type("//input[@id='layout_configuration_content']",
-			RuntimeVariables.replace("mes"));
-		selenium.keyDown("//input[@id='layout_configuration_content']",
-			RuntimeVariables.replace(" "));
-		selenium.keyUp("//input[@id='layout_configuration_content']",
-			RuntimeVariables.replace(" "));
-		selenium.waitForVisible("//li[@title='Message Boards']/p/a");
-		selenium.clickAt("//li[@title='Message Boards']/p/a",
+			"//script[contains(@src,'/autocomplete-filters/autocomplete-filters-min.js')]");
+		assertEquals(RuntimeVariables.replace("Applications"),
+			selenium.getText(
+				"//div[@id='_145_addPanelContainer']/ul/li/span/a[contains(.,'Applications')]"));
+		selenium.clickAt("//div[@id='_145_addPanelContainer']/ul/li/span/a[contains(.,'Applications')]",
+			RuntimeVariables.replace("Applications"));
+		selenium.waitForVisible("//input[@id='_145_searchApplication']");
+		selenium.sendKeys("//input[@id='_145_searchApplication']",
+			RuntimeVariables.replace("m"));
+		selenium.waitForElementPresent("//span[@data-title='Message Boards']");
+		selenium.makeVisible("//span[@data-title='Message Boards']");
+		selenium.clickAt("//span[@data-title='Message Boards']",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));

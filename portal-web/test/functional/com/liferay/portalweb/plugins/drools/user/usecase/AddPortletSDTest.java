@@ -32,8 +32,9 @@ public class AddPortletSDTest extends BaseTestCase {
 				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",
 			RuntimeVariables.replace("More"));
-		selenium.waitForElementPresent("//li[@title='Sample Drools']/p/a");
-		selenium.clickAt("//li[@title='Sample Drools']/p/a",
+		selenium.waitForElementPresent("//span[@data-title='Sample Drools']");
+		selenium.makeVisible("//span[@data-title='Sample Drools']");
+		selenium.clickAt("//span[@data-title='Sample Drools']",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));

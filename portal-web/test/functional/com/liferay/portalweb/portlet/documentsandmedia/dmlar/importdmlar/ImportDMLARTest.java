@@ -38,7 +38,7 @@ public class ImportDMLARTest extends BaseTestCase {
 		selenium.waitForElementPresent("//iframe[@id='manageContentDialog']");
 		selenium.selectFrame("//iframe[@id='manageContentDialog']");
 		selenium.waitForElementPresent(
-			"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]");
+			"//script[contains(@src,'/autocomplete-filters/autocomplete-filters-min.js')]");
 		selenium.waitForVisible("//ul[@class='category-portlets']/li[3]/a");
 		assertEquals(RuntimeVariables.replace("Documents and Media"),
 			selenium.getText("//ul[@class='category-portlets']/li[3]/a"));

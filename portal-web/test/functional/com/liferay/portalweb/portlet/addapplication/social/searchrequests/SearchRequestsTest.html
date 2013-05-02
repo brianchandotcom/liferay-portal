@@ -35,42 +35,52 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//a[@id='_145_addApplication']</td>
-	<td>More</td>
+	<td>//li[contains(@class,'add-application')]/a</td>
+	<td>Content and Applications</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
-	<td>//a[@id='_145_addApplication']</td>
-	<td>More</td>
+	<td>assertText</td>
+	<td>//li[contains(@class,'add-application')]/a</td>
+	<td>Content and Applications</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//a[@id='_145_addApplication']</td>
-	<td>More</td>
+	<td>//li[contains(@class,'add-application')]/a</td>
+	<td>Content and Applications</td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]</td>
+	<td>//script[contains(@src,'/autocomplete-filters/autocomplete-filters-min.js')]</td>
 	<td>AUI Live Search Min</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//div[@id='_145_addPanelContainer']/ul/li/span/a[contains(.,'Applications')]</td>
+	<td>Applications</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@id='_145_addPanelContainer']/ul/li/span/a[contains(.,'Applications')]</td>
+	<td>Applications</td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
-	<td>//input[@id='layout_configuration_content']</td>
+	<td>//input[@id='_145_searchApplication']</td>
 	<td>Search applications (searches as you type).</td>
 </tr>
 <tr>
 	<td>sendKeys</td>
-	<td>//input[@id='layout_configuration_content']</td>
+	<td>//input[@id='_145_searchApplication']</td>
 	<td>r</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//li[@title='Requests']</td>
+	<td>//div[@data-title='Requests']</td>
 	<td>Requests</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//li[@title='Requests']</td>
+	<td>//div[@data-title='Requests']</td>
 	<td>Requests</td>
 </tr>
 </tbody></table>

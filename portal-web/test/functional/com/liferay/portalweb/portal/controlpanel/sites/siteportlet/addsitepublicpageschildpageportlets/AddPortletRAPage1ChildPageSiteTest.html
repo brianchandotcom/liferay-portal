@@ -50,52 +50,42 @@ e<html>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]</td>
+	<td>//script[contains(@src,'/autocomplete-filters/autocomplete-filters-min.js')]</td>
 	<td>AUI Live Search Min</td>
 </tr>
 <tr>
-	<td>storeVisible</td>
-	<td>//input[@id='layout_configuration_content']</td>
-	<td>searchApplicationsNotVisible</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>${searchApplicationsNotVisible}</td>
-	<td>SearchApplicationsVisible</td>
-</tr>
-<tr>
 	<td>assertText</td>
-	<td>//div[@id='portal_add_panel']/ul/li/span/a[contains(.,'Applications')]</td>
+	<td>//div[@id='_145_addPanelContainer']/ul/li/span/a[contains(.,'Applications')]</td>
 	<td>Applications</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[@id='portal_add_panel']/ul/li/span/a[contains(.,'Applications')]</td>
+	<td>//div[@id='_145_addPanelContainer']/ul/li/span/a[contains(.,'Applications')]</td>
 	<td>Applications</td>
 </tr>
 <tr>
-	<td>label</td>
-	<td>SearchApplicationsVisible</td>
-	<td></td>
-</tr>
-<tr>
 	<td>waitForVisible</td>
-	<td>//input[@id='layout_configuration_content']</td>
+	<td>//input[@id='_145_searchApplication']</td>
 	<td>Search applications (searches as you type).</td>
 </tr>
 <tr>
 	<td>sendKeys</td>
-	<td>//input[@id='layout_configuration_content']</td>
+	<td>//input[@id='_145_searchApplication']</td>
 	<td>r</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//li[@title='Related Assets']/p/a</td>
+	<td>waitForElementPresent</td>
+	<td>//span[@data-title='Related Assets']</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>makeVisible</td>
+	<td>//span[@data-title='Related Assets']</td>
 	<td>Add</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//li[@title='Related Assets']/p/a</td>
+	<td>//span[@data-title='Related Assets']</td>
 	<td>Add</td>
 </tr>
 <tr>

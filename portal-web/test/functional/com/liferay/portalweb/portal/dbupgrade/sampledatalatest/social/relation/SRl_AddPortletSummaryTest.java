@@ -40,11 +40,11 @@ public class SRl_AddPortletSummaryTest extends BaseTestCase {
 				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",
 			RuntimeVariables.replace("More"));
-		selenium.waitForVisible("//input[@id='layout_configuration_content']");
-		selenium.typeKeys("//input[@id='layout_configuration_content']",
+		selenium.waitForVisible("//input[@id='_145_searchApplication']");
+		selenium.typeKeys("//input[@id='_145_searchApplication']",
 			RuntimeVariables.replace("s"));
-		selenium.waitForVisible("//div[@title='Summary']/p/a");
-		selenium.clickAt("//div[@title='Summary']/p/a",
+		selenium.waitForVisible("//div[@title='Summary']");
+		selenium.clickAt("//div[@title='Summary']",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));

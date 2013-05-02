@@ -40,11 +40,11 @@ public class SRq_AddPortletRequestsTest extends BaseTestCase {
 				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",
 			RuntimeVariables.replace("More"));
-		selenium.waitForVisible("//input[@id='layout_configuration_content']");
-		selenium.typeKeys("//input[@id='layout_configuration_content']",
+		selenium.waitForVisible("//input[@id='_145_searchApplication']");
+		selenium.typeKeys("//input[@id='_145_searchApplication']",
 			RuntimeVariables.replace("r"));
-		selenium.waitForVisible("//div[@title='Requests']/p/a");
-		selenium.clickAt("//div[@title='Requests']/p/a",
+		selenium.waitForVisible("//div[@title='Requests']");
+		selenium.clickAt("//div[@title='Requests']",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//div/div/div[1]/span[1]");
 	}

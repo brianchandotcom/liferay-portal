@@ -29,12 +29,32 @@ public class AddPortletPMTest extends BaseTestCase {
 		selenium.clickAt("link=Private Messaging Test Page",
 			RuntimeVariables.replace("Private Messaging Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
-				"More"));
-		selenium.clickAt("//a[@id='_145_addApplication']",
-			RuntimeVariables.replace("More"));
-		selenium.waitForElementPresent("//li[@title='Private Messaging']/p/a");
-		selenium.clickAt("//li[@title='Private Messaging']/p/a",
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//li[@id='_145_addContent']/a/span"));
+		selenium.mouseOver("//li[@id='_145_addContent']/a/span");
+		selenium.waitForVisible("//li[contains(@class,'add-application')]/a");
+		assertEquals(RuntimeVariables.replace("Content and Applications"),
+			selenium.getText("//li[contains(@class,'add-application')]/a"));
+		selenium.clickAt("//li[contains(@class,'add-application')]/a",
+			RuntimeVariables.replace("Content and Applications"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/autocomplete-filters/autocomplete-filters-min.js')]");
+		assertEquals(RuntimeVariables.replace("Applications"),
+			selenium.getText(
+				"//div[@id='_145_addPanelContainer']/ul/li/span/a[contains(.,'Applications')]"));
+		selenium.clickAt("//div[@id='_145_addPanelContainer']/ul/li/span/a[contains(.,'Applications')]",
+			RuntimeVariables.replace("Applications"));
+		selenium.waitForVisible("//input[@id='_145_searchApplication']");
+		selenium.sendKeys("//input[@id='_145_searchApplication']",
+			RuntimeVariables.replace("p"));
+		selenium.waitForElementPresent(
+			"//span[@data-title='Private Messaging']");
+		selenium.makeVisible("//span[@data-title='Private Messaging']");
+		selenium.clickAt("//span[@data-title='Private Messaging']",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));

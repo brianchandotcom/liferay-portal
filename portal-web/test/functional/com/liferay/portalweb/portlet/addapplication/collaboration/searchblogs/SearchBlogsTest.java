@@ -32,18 +32,23 @@ public class SearchBlogsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//li[@id='_145_addContent']/a/span"));
 		selenium.mouseOver("//li[@id='_145_addContent']/a/span");
-		selenium.waitForVisible("//a[@id='_145_addApplication']");
-		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
-				"More"));
-		selenium.clickAt("//a[@id='_145_addApplication']",
-			RuntimeVariables.replace("More"));
+		selenium.waitForVisible("//li[contains(@class,'add-application')]/a");
+		assertEquals(RuntimeVariables.replace("Content and Applications"),
+			selenium.getText("//li[contains(@class,'add-application')]/a"));
+		selenium.clickAt("//li[contains(@class,'add-application')]/a",
+			RuntimeVariables.replace("Content and Applications"));
 		selenium.waitForElementPresent(
-			"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]");
-		selenium.waitForVisible("//input[@id='layout_configuration_content']");
-		selenium.sendKeys("//input[@id='layout_configuration_content']",
+			"//script[contains(@src,'/autocomplete-filters/autocomplete-filters-min.js')]");
+		assertEquals(RuntimeVariables.replace("Applications"),
+			selenium.getText(
+				"//div[@id='_145_addPanelContainer']/ul/li/span/a[contains(.,'Applications')]"));
+		selenium.clickAt("//div[@id='_145_addPanelContainer']/ul/li/span/a[contains(.,'Applications')]",
+			RuntimeVariables.replace("Applications"));
+		selenium.waitForVisible("//input[@id='_145_searchApplication']");
+		selenium.sendKeys("//input[@id='_145_searchApplication']",
 			RuntimeVariables.replace("b"));
-		selenium.waitForVisible("//li[@title='Blogs']");
-		assertTrue(selenium.isVisible("//li[@title='Blogs']"));
+		selenium.waitForVisible("//div[@data-title='Blogs']");
+		assertTrue(selenium.isVisible("//div[@data-title='Blogs']"));
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
@@ -52,18 +57,23 @@ public class SearchBlogsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//li[@id='_145_addContent']/a/span"));
 		selenium.mouseOver("//li[@id='_145_addContent']/a/span");
-		selenium.waitForVisible("//a[@id='_145_addApplication']");
-		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
-				"More"));
-		selenium.clickAt("//a[@id='_145_addApplication']",
-			RuntimeVariables.replace("More"));
+		selenium.waitForVisible("//li[contains(@class,'add-application')]/a");
+		assertEquals(RuntimeVariables.replace("Content and Applications"),
+			selenium.getText("//li[contains(@class,'add-application')]/a"));
+		selenium.clickAt("//li[contains(@class,'add-application')]/a",
+			RuntimeVariables.replace("Content and Applications"));
 		selenium.waitForElementPresent(
-			"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]");
-		selenium.waitForVisible("//input[@id='layout_configuration_content']");
-		selenium.sendKeys("//input[@id='layout_configuration_content']",
+			"//script[contains(@src,'/autocomplete-filters/autocomplete-filters-min.js')]");
+		assertEquals(RuntimeVariables.replace("Applications"),
+			selenium.getText(
+				"//div[@id='_145_addPanelContainer']/ul/li/span/a[contains(.,'Applications')]"));
+		selenium.clickAt("//div[@id='_145_addPanelContainer']/ul/li/span/a[contains(.,'Applications')]",
+			RuntimeVariables.replace("Applications"));
+		selenium.waitForVisible("//input[@id='_145_searchApplication']");
+		selenium.sendKeys("//input[@id='_145_searchApplication']",
 			RuntimeVariables.replace("blo"));
-		selenium.waitForVisible("//li[@title='Blogs']");
-		assertTrue(selenium.isVisible("//li[@title='Blogs']"));
+		selenium.waitForVisible("//div[@data-title='Blogs']");
+		assertTrue(selenium.isVisible("//div[@data-title='Blogs']"));
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
@@ -72,18 +82,23 @@ public class SearchBlogsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//li[@id='_145_addContent']/a/span"));
 		selenium.mouseOver("//li[@id='_145_addContent']/a/span");
-		selenium.waitForVisible("//a[@id='_145_addApplication']");
-		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
-				"More"));
-		selenium.clickAt("//a[@id='_145_addApplication']",
-			RuntimeVariables.replace("More"));
+		selenium.waitForVisible("//li[contains(@class,'add-application')]/a");
+		assertEquals(RuntimeVariables.replace("Content and Applications"),
+			selenium.getText("//li[contains(@class,'add-application')]/a"));
+		selenium.clickAt("//li[contains(@class,'add-application')]/a",
+			RuntimeVariables.replace("Content and Applications"));
 		selenium.waitForElementPresent(
-			"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]");
-		selenium.waitForVisible("//input[@id='layout_configuration_content']");
-		selenium.sendKeys("//input[@id='layout_configuration_content']",
+			"//script[contains(@src,'/autocomplete-filters/autocomplete-filters-min.js')]");
+		assertEquals(RuntimeVariables.replace("Applications"),
+			selenium.getText(
+				"//div[@id='_145_addPanelContainer']/ul/li/span/a[contains(.,'Applications')]"));
+		selenium.clickAt("//div[@id='_145_addPanelContainer']/ul/li/span/a[contains(.,'Applications')]",
+			RuntimeVariables.replace("Applications"));
+		selenium.waitForVisible("//input[@id='_145_searchApplication']");
+		selenium.sendKeys("//input[@id='_145_searchApplication']",
 			RuntimeVariables.replace("blogs"));
-		selenium.waitForVisible("//li[@title='Blogs']");
-		assertTrue(selenium.isVisible("//li[@title='Blogs']"));
+		selenium.waitForVisible("//div[@data-title='Blogs']");
+		assertTrue(selenium.isVisible("//div[@data-title='Blogs']"));
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
@@ -92,18 +107,23 @@ public class SearchBlogsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//li[@id='_145_addContent']/a/span"));
 		selenium.mouseOver("//li[@id='_145_addContent']/a/span");
-		selenium.waitForVisible("//a[@id='_145_addApplication']");
-		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
-				"More"));
-		selenium.clickAt("//a[@id='_145_addApplication']",
-			RuntimeVariables.replace("More"));
+		selenium.waitForVisible("//li[contains(@class,'add-application')]/a");
+		assertEquals(RuntimeVariables.replace("Content and Applications"),
+			selenium.getText("//li[contains(@class,'add-application')]/a"));
+		selenium.clickAt("//li[contains(@class,'add-application')]/a",
+			RuntimeVariables.replace("Content and Applications"));
 		selenium.waitForElementPresent(
-			"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]");
-		selenium.waitForVisible("//input[@id='layout_configuration_content']");
-		selenium.sendKeys("//input[@id='layout_configuration_content']",
+			"//script[contains(@src,'/autocomplete-filters/autocomplete-filters-min.js')]");
+		assertEquals(RuntimeVariables.replace("Applications"),
+			selenium.getText(
+				"//div[@id='_145_addPanelContainer']/ul/li/span/a[contains(.,'Applications')]"));
+		selenium.clickAt("//div[@id='_145_addPanelContainer']/ul/li/span/a[contains(.,'Applications')]",
+			RuntimeVariables.replace("Applications"));
+		selenium.waitForVisible("//input[@id='_145_searchApplication']");
+		selenium.sendKeys("//input[@id='_145_searchApplication']",
 			RuntimeVariables.replace("c"));
-		selenium.waitForVisible("//li[@title='Blogs']");
-		assertTrue(selenium.isVisible("//li[@title='Blogs']"));
+		selenium.waitForVisible("//div[@data-title='Blogs']");
+		assertTrue(selenium.isVisible("//div[@data-title='Blogs']"));
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
@@ -112,18 +132,23 @@ public class SearchBlogsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//li[@id='_145_addContent']/a/span"));
 		selenium.mouseOver("//li[@id='_145_addContent']/a/span");
-		selenium.waitForVisible("//a[@id='_145_addApplication']");
-		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
-				"More"));
-		selenium.clickAt("//a[@id='_145_addApplication']",
-			RuntimeVariables.replace("More"));
+		selenium.waitForVisible("//li[contains(@class,'add-application')]/a");
+		assertEquals(RuntimeVariables.replace("Content and Applications"),
+			selenium.getText("//li[contains(@class,'add-application')]/a"));
+		selenium.clickAt("//li[contains(@class,'add-application')]/a",
+			RuntimeVariables.replace("Content and Applications"));
 		selenium.waitForElementPresent(
-			"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]");
-		selenium.waitForVisible("//input[@id='layout_configuration_content']");
-		selenium.sendKeys("//input[@id='layout_configuration_content']",
+			"//script[contains(@src,'/autocomplete-filters/autocomplete-filters-min.js')]");
+		assertEquals(RuntimeVariables.replace("Applications"),
+			selenium.getText(
+				"//div[@id='_145_addPanelContainer']/ul/li/span/a[contains(.,'Applications')]"));
+		selenium.clickAt("//div[@id='_145_addPanelContainer']/ul/li/span/a[contains(.,'Applications')]",
+			RuntimeVariables.replace("Applications"));
+		selenium.waitForVisible("//input[@id='_145_searchApplication']");
+		selenium.sendKeys("//input[@id='_145_searchApplication']",
 			RuntimeVariables.replace("col"));
-		selenium.waitForVisible("//li[@title='Blogs']");
-		assertTrue(selenium.isVisible("//li[@title='Blogs']"));
+		selenium.waitForVisible("//div[@data-title='Blogs']");
+		assertTrue(selenium.isVisible("//div[@data-title='Blogs']"));
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
@@ -132,17 +157,21 @@ public class SearchBlogsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//li[@id='_145_addContent']/a/span"));
 		selenium.mouseOver("//li[@id='_145_addContent']/a/span");
-		selenium.waitForVisible("//a[@id='_145_addApplication']");
-		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
-				"More"));
-		selenium.clickAt("//a[@id='_145_addApplication']",
-			RuntimeVariables.replace("More"));
+		selenium.waitForVisible("//li[contains(@class,'add-application')]/a");
+		assertEquals(RuntimeVariables.replace("Content and Applications"),
+			selenium.getText("//li[contains(@class,'add-application')]/a"));
+		selenium.clickAt("//li[contains(@class,'add-application')]/a",
+			RuntimeVariables.replace("Content and Applications"));
 		selenium.waitForElementPresent(
-			"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]");
-		selenium.waitForVisible("//input[@id='layout_configuration_content']");
-		selenium.sendKeys("//input[@id='layout_configuration_content']",
+			"//script[contains(@src,'/autocomplete-filters/autocomplete-filters-min.js')]");
+		assertEquals(RuntimeVariables.replace("Applications"),
+			selenium.getText(
+				"//div[@id='_145_addPanelContainer']/ul/li/span/a[contains(.,'Applications')]"));
+		selenium.clickAt("//div[@id='_145_addPanelContainer']/ul/li/span/a[contains(.,'Applications')]",
+			RuntimeVariables.replace("Applications"));
+		selenium.sendKeys("//input[@id='_145_searchApplication']",
 			RuntimeVariables.replace("collaboration"));
-		selenium.waitForVisible("//li[@title='Blogs']");
-		assertTrue(selenium.isVisible("//li[@title='Blogs']"));
+		selenium.waitForVisible("//div[@data-title='Blogs']");
+		assertTrue(selenium.isVisible("//div[@data-title='Blogs']"));
 	}
 }

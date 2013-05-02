@@ -41,11 +41,12 @@ public class AddPortletAnnouncementsEntryTest extends BaseTestCase {
 				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",
 			RuntimeVariables.replace("More"));
-		selenium.waitForVisible("//input[@id='layout_configuration_content']");
-		selenium.sendKeys("//input[@id='layout_configuration_content']",
+		selenium.waitForVisible("//input[@id='_145_searchApplication']");
+		selenium.sendKeys("//input[@id='_145_searchApplication']",
 			RuntimeVariables.replace("a"));
-		selenium.waitForVisible("//li[@title='Announcements']/p/a");
-		selenium.clickAt("//li[@title='Announcements']/p/a",
+		selenium.waitForElementPresent("//span[@data-title='Announcements']");
+		selenium.makeVisible("//span[@data-title='Announcements']");
+		selenium.clickAt("//span[@data-title='Announcements']",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));

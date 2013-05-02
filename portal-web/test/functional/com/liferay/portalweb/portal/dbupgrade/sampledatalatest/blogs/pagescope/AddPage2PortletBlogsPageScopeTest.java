@@ -35,18 +35,24 @@ public class AddPage2PortletBlogsPageScopeTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//li[@id='_145_addContent']/a/span"));
 		selenium.mouseOver("//li[@id='_145_addContent']/a/span");
-		selenium.waitForVisible("//a[@id='_145_addApplication']");
-		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
-				"More"));
-		selenium.clickAt("//a[@id='_145_addApplication']",
-			RuntimeVariables.replace("More"));
+		selenium.waitForVisible("//li[contains(@class,'add-application')]/a");
+		assertEquals(RuntimeVariables.replace("Content and Applications"),
+			selenium.getText("//li[contains(@class,'add-application')]/a"));
+		selenium.clickAt("//li[contains(@class,'add-application')]/a",
+			RuntimeVariables.replace("Content and Applications"));
 		selenium.waitForElementPresent(
-			"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]");
-		selenium.waitForVisible("//input[@id='layout_configuration_content']");
-		selenium.typeKeys("//input[@id='layout_configuration_content']",
+			"//script[contains(@src,'/autocomplete-filters/autocomplete-filters-min.js')]");
+		assertEquals(RuntimeVariables.replace("Applications"),
+			selenium.getText(
+				"//div[@id='_145_addPanelContainer']/ul/li/span/a[contains(.,'Applications')]"));
+		selenium.clickAt("//div[@id='_145_addPanelContainer']/ul/li/span/a[contains(.,'Applications')]",
+			RuntimeVariables.replace("Applications"));
+		selenium.waitForVisible("//input[@id='_145_searchApplication']");
+		selenium.sendKeys("//input[@id='_145_searchApplication']",
 			RuntimeVariables.replace("b"));
-		selenium.waitForVisible("//div[@title='Blogs']/p/a");
-		selenium.clickAt("//div[@title='Blogs']/p/a",
+		selenium.waitForElementPresent("//span[@data-title='Blogs']");
+		selenium.makeVisible("//span[@data-title='Blogs']");
+		selenium.clickAt("//span[@data-title='Blogs']",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));

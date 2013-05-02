@@ -40,11 +40,12 @@ public class AddPortletBookmarksEntryTest extends BaseTestCase {
 				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",
 			RuntimeVariables.replace("More"));
-		selenium.waitForVisible("//input[@id='layout_configuration_content']");
-		selenium.sendKeys("//input[@id='layout_configuration_content']",
+		selenium.waitForVisible("//input[@id='_145_searchApplication']");
+		selenium.sendKeys("//input[@id='_145_searchApplication']",
 			RuntimeVariables.replace("b"));
-		selenium.waitForVisible("//li[@title='Bookmarks']/p/a");
-		selenium.clickAt("//li[@title='Bookmarks']/p/a",
+		selenium.waitForElementPresent("//span[@data-title='Bookmarks']");
+		selenium.makeVisible("//span[@data-title='Bookmarks']");
+		selenium.clickAt("//span[@data-title='Bookmarks']",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));

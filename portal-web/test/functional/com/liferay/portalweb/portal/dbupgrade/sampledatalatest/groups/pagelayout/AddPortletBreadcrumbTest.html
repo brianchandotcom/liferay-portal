@@ -55,22 +55,27 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//input[@id='layout_configuration_content']</td>
+	<td>//input[@id='_145_searchApplication']</td>
 	<td>Search applications (searches as you type).</td>
 </tr>
 <tr>
 	<td>sendKeys</td>
-	<td>//input[@id='layout_configuration_content']</td>
+	<td>//input[@id='_145_searchApplication']</td>
 	<td>b</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//li[@title='Breadcrumb']/p/a</td>
+	<td>waitForElementPresent</td>
+	<td>//span[@data-title='Breadcrumb']</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>makeVisible</td>
+	<td>//span[@data-title='Breadcrumb']</td>
 	<td>Add</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//li[@title='Breadcrumb']/p/a</td>
+	<td>//span[@data-title='Breadcrumb']</td>
 	<td>Add</td>
 </tr>
 <tr>

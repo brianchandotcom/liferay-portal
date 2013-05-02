@@ -29,13 +29,33 @@ public class AddPortletBookingsTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"link=Sample Icefaces IPC Ajax Push Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
-				"More"));
-		selenium.clickAt("//a[@id='_145_addApplication']",
-			RuntimeVariables.replace("More"));
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
 		selenium.waitForElementPresent(
-			"//li[@title='Sample ICEfaces IPC - Bookings']/p/a");
-		selenium.clickAt("//li[@title='Sample ICEfaces IPC - Bookings']/p/a",
+			"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]");
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//li[@id='_145_addContent']/a/span"));
+		selenium.mouseOver("//li[@id='_145_addContent']/a/span");
+		selenium.waitForVisible("//li[contains(@class,'add-application')]/a");
+		assertEquals(RuntimeVariables.replace("Content and Applications"),
+			selenium.getText("//li[contains(@class,'add-application')]/a"));
+		selenium.clickAt("//li[contains(@class,'add-application')]/a",
+			RuntimeVariables.replace("Content and Applications"));
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/autocomplete-filters/autocomplete-filters-min.js')]");
+		assertEquals(RuntimeVariables.replace("Applications"),
+			selenium.getText(
+				"//div[@id='_145_addPanelContainer']/ul/li/span/a[contains(.,'Applications')]"));
+		selenium.clickAt("//div[@id='_145_addPanelContainer']/ul/li/span/a[contains(.,'Applications')]",
+			RuntimeVariables.replace("Applications"));
+		selenium.waitForVisible("//input[@id='_145_searchApplication']");
+		selenium.sendKeys("//input[@id='_145_searchApplication']",
+			RuntimeVariables.replace("i"));
+		selenium.waitForElementPresent(
+			"//span[@data-title='Sample ICEfaces IPC - Bookings']");
+		selenium.makeVisible(
+			"//span[@data-title='Sample ICEfaces IPC - Bookings']");
+		selenium.clickAt("//span[@data-title='Sample ICEfaces IPC - Bookings']",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));

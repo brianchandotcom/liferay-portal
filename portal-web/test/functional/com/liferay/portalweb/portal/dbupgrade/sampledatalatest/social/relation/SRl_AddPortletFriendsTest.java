@@ -40,11 +40,11 @@ public class SRl_AddPortletFriendsTest extends BaseTestCase {
 				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",
 			RuntimeVariables.replace("More"));
-		selenium.waitForVisible("//input[@id='layout_configuration_content']");
-		selenium.typeKeys("//input[@id='layout_configuration_content']",
+		selenium.waitForVisible("//input[@id='_145_searchApplication']");
+		selenium.typeKeys("//input[@id='_145_searchApplication']",
 			RuntimeVariables.replace("f"));
-		selenium.waitForVisible("//div[@title='Friends']/p/a");
-		selenium.clickAt("//div[@title='Friends']/p/a",
+		selenium.waitForVisible("//div[@title='Friends']");
+		selenium.clickAt("//div[@title='Friends']",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));

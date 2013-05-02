@@ -33,8 +33,9 @@ public class AddPortletTourDetailsTest extends BaseTestCase {
 				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",
 			RuntimeVariables.replace("More"));
-		selenium.waitForElementPresent("//li[@title='Tour Details']/p/a");
-		selenium.clickAt("//li[@title='Tour Details']/p/a",
+		selenium.waitForElementPresent("//span[@data-title='Tour Details']");
+		selenium.makeVisible("//span[@data-title='Tour Details']");
+		selenium.clickAt("//span[@data-title='Tour Details']",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible("//section");
 		assertTrue(selenium.isVisible("//section"));

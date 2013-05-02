@@ -438,6 +438,8 @@ AUI.add(
 						instance._updateManageUploadDisplay();
 						instance._updateMetadataContainer();
 						instance._updatePendingInfoContainer();
+
+						Liferay.fire('tempFileRemoved');
 					},
 
 					_handleDrop: function(event) {

@@ -1470,21 +1470,43 @@ public class LayoutTypePortletImpl
 
 		String[] portletIds = StringUtil.split(value);
 
-		String[] newPortletIds = new String[portletIds.length];
+		List<String> newPortletIds = new ArrayList<String>();
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
 
 		for (int i = 0; i < portletIds.length; i++) {
+			try {
+				String rootPortletId = PortletConstants.getRootPortletId(
+					portletIds[i]);
+
+				if (!PortletPermissionUtil.contains(
+						permissionChecker, rootPortletId,
+						ActionKeys.ADD_TO_PAGE)) {
+
+					continue;
+				}
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
+
+			String newPortletId = null;
+
 			if (PortletConstants.hasInstanceId(portletIds[i])) {
-				newPortletIds[i] = PortletConstants.assemblePortletId(
+				newPortletId = PortletConstants.assemblePortletId(
 					portletIds[i], _portalPreferences.getUserId(),
 					generateInstanceId());
 
 				copyPreferences(
 					_portalPreferences.getUserId(), portletIds[i],
-					newPortletIds[i]);
+					newPortletId);
 			}
 			else {
-				newPortletIds[i] = portletIds[i];
+				newPortletId = portletIds[i];
 			}
+
+			newPortletIds.add(newPortletId);
 		}
 
 		value = StringUtil.merge(newPortletIds);

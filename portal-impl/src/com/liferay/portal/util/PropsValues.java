@@ -671,7 +671,7 @@ public class PropsValues {
 	public static final boolean FACEBOOK_CONNECT_VERIFIED_ACCOUNT_REQUIRED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.FACEBOOK_CONNECT_VERIFIED_ACCOUNT_REQUIRED));
 
 	public static final String[] FIELD_EDITABLE_EXCEPTIONS = PropsUtil.getArray(PropsKeys.FIELD_EDITABLE_EXCEPTIONS);
-	
+
 	public static final String[] FIELD_EDITABLE_USER_TYPE_DEFAULT = PropsUtil.getArray(PropsKeys.FIELD_EDITABLE_USER_TYPE_DEFAULT);
 
 	public static final String[] FIELD_EDITABLE_USER_TYPE_EXCEPTIONS = PropsUtil.getArray(PropsKeys.FIELD_EDITABLE_USER_TYPE_EXCEPTIONS);

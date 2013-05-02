@@ -35,7 +35,7 @@ if (Validator.isNull(title)) {
 	title = assetRenderer.getTitle(locale);
 }
 
-PortletURL viewFullContentURL = renderResponse.createRenderURL();
+PortletURL viewFullContentURL = liferayPortletResponse.createLiferayPortletURL(plid, portletDisplay.getId(), PortletRequest.RENDER_PHASE, false);
 
 viewFullContentURL.setParameter("struts_action", "/asset_publisher/view_content");
 viewFullContentURL.setParameter("assetEntryId", String.valueOf(assetEntry.getEntryId()));

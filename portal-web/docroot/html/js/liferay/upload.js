@@ -692,7 +692,12 @@ AUI.add(
 						var data = Lang.trim(String(event.data));
 
 						if (data.indexOf('49') === 0) {
-							file.error = instance._errorMessages[data] || Liferay.Language.get('an-unexpected-error-occurred-while-uploading-your-file');
+							if (data.indexOf('.') != -1) {
+								file.error = data.substring(data.indexOf('.') + 1);
+							}
+							else {
+								file.error = instance._errorMessages[data] || Liferay.Language.get('an-unexpected-error-occurred-while-uploading-your-file');
+							}
 
 							var newLi = instance._fileListTPL.parse([file]);
 

@@ -27,14 +27,11 @@ import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.social.model.SocialActivityCounterConstants;
 import com.liferay.portlet.social.model.SocialActivityCounterDefinition;
@@ -283,6 +280,105 @@ public class UpgradeSocial extends UpgradeProcess {
 		}
 	}
 
+	protected long[] getAssetEntry(long assetEntryId) throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select groupId, companyId, userId, classNameId, classPK " +
+					"from AssetEntry where entryId = " + assetEntryId);
+
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				long groupId = rs.getLong("groupId");
+				long companyId = rs.getLong("companyId");
+				long userId = rs.getLong("userId");
+				long classNameId = rs.getLong("classNameId");
+				long classPK = rs.getLong("classPK");
+
+				return new long[] {
+					groupId, companyId, userId, classNameId, classPK
+				};
+			}
+
+			return null;
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected long[] getAssetEntry(String className, long classPK)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			long classNameId = PortalUtil.getClassNameId(className);
+
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("select groupId, companyId, userId from AssetEntry ");
+			sb.append("where classNameId = ");
+			sb.append(classNameId);
+			sb.append(" and classPK = ");
+			sb.append(classPK);
+
+			ps = con.prepareStatement(sb.toString());
+
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				long groupId = rs.getLong("groupId");
+				long companyId = rs.getLong("companyId");
+				long userId = rs.getLong("userId");
+
+				return new long[] {
+					groupId, companyId, userId, classNameId, classPK
+				};
+			}
+
+			return null;
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected long getThreadRootMessageId(long threadId) throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select rootMessageId from MBThread where threadId = " +
+					threadId);
+
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				return rs.getLong("rootMessageId");
+			}
+
+			return -1;
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
 	protected int getTotalValue(
 			long groupId, long classNameId, long classPK, String name,
 			int ownerType, int startPeriod)
@@ -400,8 +496,7 @@ public class UpgradeSocial extends UpgradeProcess {
 	protected void migrateEquityLog(ResultSet rs) throws Exception {
 		long assetEntryId = rs.getLong("assetEntryId");
 
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchAssetEntry(
-			assetEntryId);
+		long[] assetEntry = getAssetEntry(assetEntryId);
 
 		if (assetEntry == null) {
 			return;
@@ -410,18 +505,21 @@ public class UpgradeSocial extends UpgradeProcess {
 		String actionId = rs.getString("actionId");
 
 		if (actionId.equals(ActionKeys.SUBSCRIBE)) {
-			String className = assetEntry.getClassName();
+			long classNameId = assetEntry[3];
+
+			String className = PortalUtil.getClassName(classNameId);
 
 			if (className.equals(MBThread.class.getName())) {
-				MBThread mbThread = MBThreadLocalServiceUtil.fetchThread(
-					assetEntry.getClassPK());
+				long classPK = assetEntry[4];
 
-				if (mbThread == null) {
+				long threadRootMessageId = getThreadRootMessageId(classPK);
+
+				if (threadRootMessageId == -1) {
 					return;
 				}
 
-				assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-					MBMessage.class.getName(), mbThread.getRootMessageId());
+				assetEntry = getAssetEntry(
+					MBMessage.class.getName(), threadRootMessageId);
 
 				if (assetEntry == null) {
 					return;
@@ -450,17 +548,21 @@ public class UpgradeSocial extends UpgradeProcess {
 		int type = rs.getInt("type_");
 		int value = rs.getInt("value");
 
+		long groupId = assetEntry[0];
+		long companyId = assetEntry[1];
+
 		if (type == 1) {
 			name = SocialActivityCounterConstants.NAME_CONTRIBUTION;
 			ownerType = SocialActivityCounterConstants.TYPE_CREATOR;
 
-			updateActivityCounter(
-				increment(), assetEntry.getGroupId(), assetEntry.getCompanyId(),
-				classNameId, assetEntry.getUserId(), name, ownerType,
-				startPeriod, endPeriod, value);
+			long userId = assetEntry[2];
 
-			classNameId = assetEntry.getClassNameId();
-			classPK = assetEntry.getClassPK();
+			updateActivityCounter(
+				increment(), groupId, companyId, classNameId, userId, name,
+				ownerType, startPeriod, endPeriod, value);
+
+			classNameId = assetEntry[3];
+			classPK = assetEntry[4];
 			name = SocialActivityCounterConstants.NAME_POPULARITY;
 			ownerType = SocialActivityCounterConstants.TYPE_ASSET;
 		}
@@ -468,9 +570,8 @@ public class UpgradeSocial extends UpgradeProcess {
 		long equityLogId = rs.getLong("equityLogId");
 
 		updateActivityCounter(
-			equityLogId, assetEntry.getGroupId(), assetEntry.getCompanyId(),
-			classNameId, classPK, name, ownerType, startPeriod, endPeriod,
-			value);
+			equityLogId, groupId, companyId, classNameId, classPK, name,
+			ownerType, startPeriod, endPeriod, value);
 	}
 
 	protected void migrateEquityLogs() throws Exception {

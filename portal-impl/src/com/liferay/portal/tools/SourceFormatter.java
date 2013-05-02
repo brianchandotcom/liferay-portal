@@ -1485,6 +1485,8 @@ public class SourceFormatter {
 
 		Collection<String> fileNames = null;
 
+		Properties upgradeServiceUtilExclusions = null;
+
 		if (_portalSource) {
 			fileNames = _getPortalJavaFiles();
 
@@ -1492,6 +1494,8 @@ public class SourceFormatter {
 				"source_formatter_javaterm_sort_exclusions.properties");
 			_lineLengthExclusions = _getPortalExclusionsProperties(
 				"source_formatter_line_length_exclusions.properties");
+			upgradeServiceUtilExclusions = _getPortalExclusionsProperties(
+				"source_formatter_upgrade_service_util_exclusions.properties");
 		}
 		else {
 			portalJavaFiles = false;
@@ -1612,6 +1616,22 @@ public class SourceFormatter {
 
 			if (portalJavaFiles && !className.equals("BaseServiceImpl") &&
 				className.endsWith("ServiceImpl") &&
+				newContent.contains("ServiceUtil.")) {
+
+				_processErrorMessage(fileName, "ServiceUtil: " + fileName);
+			}
+
+			// LPS-34911
+
+			String excluded = null;
+
+			if (upgradeServiceUtilExclusions != null) {
+				excluded = upgradeServiceUtilExclusions.getProperty(fileName);
+			}
+
+			if ((excluded == null) && portalJavaFiles &&
+				fileName.contains("/portal/upgrade/") &&
+				!fileName.contains("/test/") &&
 				newContent.contains("ServiceUtil.")) {
 
 				_processErrorMessage(fileName, "ServiceUtil: " + fileName);

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.ResourceConstants;
-import com.liferay.portal.service.ResourceLocalServiceUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetTag;
@@ -331,11 +330,6 @@ public class UpgradeAsset extends UpgradeProcess {
 				copyProperties(
 					entryId, "AssetCategoryProperty", "categoryPropertyId",
 					"categoryId");
-
-				String resourceName = AssetCategory.class.getName();
-
-				ResourceLocalServiceUtil.addModelResources(
-					companyId, groupId, 0, resourceName, null, null, null);
 
 				updateCategoryResource(companyId, entryId);
 			}

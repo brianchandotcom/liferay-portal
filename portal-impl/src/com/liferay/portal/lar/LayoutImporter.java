@@ -155,6 +155,25 @@ public class LayoutImporter {
 		}
 	}
 
+	public void validateFile(
+			long userId, long groupId, boolean privateLayout,
+			Map<String, String[]> parameterMap, File file)
+		throws Exception {
+
+		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+			groupId, privateLayout);
+
+		long companyId = layoutSet.getCompanyId();
+
+		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
+
+		PortletDataContext portletDataContext = new PortletDataContextImpl(
+			companyId, groupId, parameterMap, new HashSet<String>(), null,
+			zipReader);
+
+		validateFile(portletDataContext, null, null, null, null);
+	}
+
 	protected String[] appendPortletIds(
 		String[] portletIds, String[] newPortletIds, String portletsMergeMode) {
 

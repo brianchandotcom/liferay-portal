@@ -1295,6 +1295,18 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		return layoutLocalService.updatePriority(plid, priority);
 	}
 
+	public void validateImportLayoutsFile(
+			long groupId, boolean privateLayout,
+			Map<String, String[]> parameterMap, File file)
+		throws PortalException, SystemException {
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
+
+		layoutLocalService.validateImportLayoutsFile(
+			getUserId(), groupId, privateLayout, parameterMap, file);
+	}
+
 	protected List<Layout> filterLayouts(List<Layout> layouts)
 		throws PortalException, SystemException {
 

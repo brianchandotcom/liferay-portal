@@ -15,6 +15,9 @@
 		<case locator-key1="ADD_APPLICATION_LINK">
 			<execute function="Click#clickAtApplicationSearch" />
 		</case>
+		<case comparator="startsWith" locator1="//span[@data-title='">
+			<execute function="Click#makeVisibleClickAt" />
+		</case>
 	</command>
 
 	<command name="mouseOver">

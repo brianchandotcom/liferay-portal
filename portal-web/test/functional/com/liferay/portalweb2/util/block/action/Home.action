@@ -28,13 +28,13 @@
 
 	<command name="mouseOver">
 		<case locator-key1="PAGE_1">
-			<execute function="MouseOver#textMouseOverClickNavigation" />
+			<execute function="MouseOver#mouseOverClickNavigation" />
 		</case>
 		<case locator-key1="PAGE_2">
-			<execute function="MouseOver#textMouseOverClickNavigation" />
+			<execute function="MouseOver#mouseOverClickNavigation" />
 		</case>
 		<case locator-key1="PAGE_3">
-			<execute function="MouseOver#textMouseOverClickNavigation" />
+			<execute function="MouseOver#mouseOverClickNavigation" />
 		</case>
 	</command>
 

@@ -17,7 +17,7 @@
 <c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) %>">
 
 	<%
-	if (DLUtil.isOfficeExtension(fileEntry.getExtension()) && portletDisplay.isWebDAVEnabled() && BrowserSnifferUtil.isIe(request)) {
+	if (DLUtil.isOfficeExtension(fileEntry.getExtension()) && portletDisplay.isWebDAVEnabled() && BrowserSnifferUtil.isIeOnWin32Bit(request)) {
 		String webDavUrl = DLUtil.getWebDavURL(themeDisplay, fileEntry.getFolder(), fileEntry, PropsValues.DL_FILE_ENTRY_OPEN_IN_MS_OFFICE_MANUAL_CHECK_IN_REQUIRED, true);
 
 		String taglibOnClick = "javascript:" + liferayPortletResponse.getNamespace() + "openDocument('" + webDavUrl + "');";

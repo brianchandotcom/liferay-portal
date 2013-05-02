@@ -832,7 +832,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 		['aui-base', 'selector-css3']
 	);
 
-	<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) && DLUtil.isOfficeExtension(extension) && portletDisplay.isWebDAVEnabled() && BrowserSnifferUtil.isIe(request) %>">
+	<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) && DLUtil.isOfficeExtension(extension) && portletDisplay.isWebDAVEnabled() && BrowserSnifferUtil.isIeOnWin32Bit(request) %>">
 		Liferay.provide(
 			window,
 			'<portlet:namespace />openDocument',
@@ -903,7 +903,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 			);
 
 			<%
-			if (DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) && DLUtil.isOfficeExtension(extension) && portletDisplay.isWebDAVEnabled() && BrowserSnifferUtil.isIe(request)) {
+			if (DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) && DLUtil.isOfficeExtension(extension) && portletDisplay.isWebDAVEnabled() && BrowserSnifferUtil.isIeOnWin32Bit(request)) {
 			%>
 
 				fileEntryToolbarChildren.push(

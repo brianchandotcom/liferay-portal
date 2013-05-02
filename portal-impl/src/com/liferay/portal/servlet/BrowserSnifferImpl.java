@@ -166,9 +166,27 @@ public class BrowserSnifferImpl implements BrowserSniffer {
 	}
 
 	public boolean isIe(HttpServletRequest request) {
+		return isIe(getUserAgent(request));
+	}
+
+	public boolean isIeOnWin32Bit(HttpServletRequest request) {
 		String userAgent = getUserAgent(request);
 
-		if (userAgent.contains("msie") && !userAgent.contains("opera")) {
+		if (isIe(userAgent) &&
+			!(userAgent.contains("wow64") || userAgent.contains("win64"))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isIeOnWin64Bit(HttpServletRequest request) {
+		String userAgent = getUserAgent(request);
+
+		if (isIe(userAgent) &&
+			(userAgent.contains("wow64") || userAgent.contains("win64"))) {
+
 			return true;
 		}
 
@@ -383,6 +401,14 @@ public class BrowserSnifferImpl implements BrowserSniffer {
 		request.setAttribute(HttpHeaders.USER_AGENT, userAgent);
 
 		return userAgent;
+	}
+
+	protected boolean isIe(String userAgent) {
+		if (userAgent.contains("msie") && !userAgent.contains("opera")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final String[] _FIREFOX_ALIASES = {

@@ -72,6 +72,14 @@ public class BrowserSnifferUtil {
 		return getBrowserSniffer().isIe(request);
 	}
 
+	public static boolean isIeOnWin32Bit(HttpServletRequest request) {
+		return getBrowserSniffer().isIeOnWin32Bit(request);
+	}
+
+	public static boolean isIeOnWin64Bit(HttpServletRequest request) {
+		return getBrowserSniffer().isIeOnWin64Bit(request);
+	}
+
 	public static boolean isIphone(HttpServletRequest request) {
 		return getBrowserSniffer().isIphone(request);
 	}

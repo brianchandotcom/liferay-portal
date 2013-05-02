@@ -168,10 +168,12 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 	}
 
 	protected String generateDynamic(PasswordPolicy passwordPolicy) {
-		int alphanumericMinLength = Math.max(
-			passwordPolicy.getMinAlphanumeric(),
+		int alphanumericActualMinLength =
 			passwordPolicy.getMinLowerCase() + passwordPolicy.getMinNumbers() +
-				passwordPolicy.getMinUpperCase());
+			passwordPolicy.getMinUpperCase();
+
+		int alphanumericMinLength = Math.max(
+			passwordPolicy.getMinAlphanumeric(), alphanumericActualMinLength);
 		int passwordMinLength = Math.max(
 			passwordPolicy.getMinLength(),
 			alphanumericMinLength + passwordPolicy.getMinSymbols());
@@ -202,9 +204,8 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 					passwordPolicy.getMinUpperCase(), _upperCaseCharsetArray));
 		}
 
-		if (alphanumericMinLength > passwordPolicy.getMinAlphanumeric()) {
-			int count =
-				alphanumericMinLength - passwordPolicy.getMinAlphanumeric();
+		if (alphanumericMinLength > alphanumericActualMinLength) {
+			int count = alphanumericMinLength - alphanumericActualMinLength;
 
 			sb.append(getRandomString(count, _alphanumericCharsetArray));
 		}
@@ -217,6 +218,13 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 					(alphanumericMinLength + passwordPolicy.getMinSymbols());
 
 			sb.append(PwdGenerator.getSecurePassword(_completeCharset, count));
+		}
+
+		if (sb.length() == 0) {
+
+			int count = PropsValues.PASSWORDS_DEFAULT_POLICY_MIN_LENGTH;
+
+			sb.append(PwdGenerator.getPassword(_completeCharset, count));
 		}
 
 		Randomizer randomizer = Randomizer.getInstance();

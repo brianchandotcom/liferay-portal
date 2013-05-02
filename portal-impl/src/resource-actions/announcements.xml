@@ -53,6 +53,7 @@
 	<model-resource>
 		<model-name>com.liferay.portlet.announcements.model.AnnouncementsEntry</model-name>
 		<portlet-ref>
+			<portlet-name>83</portlet-name>
 			<portlet-name>84</portlet-name>
 		</portlet-ref>
 		<permissions>

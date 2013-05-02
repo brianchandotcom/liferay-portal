@@ -56,7 +56,7 @@ int hiddenMessagesCount = total;
 </c:if>
 
 <%
-if (((hiddenMessagesCount == 0) && (visibleMessagesCount == 0)) && portletName.equals(PortletKeys.ALERTS) && !AnnouncementsEntryPermission.contains(permissionChecker, layout, PortletKeys.ANNOUNCEMENTS, ActionKeys.ADD_ENTRY)) {
+if (((hiddenMessagesCount == 0) && (visibleMessagesCount == 0)) && portletName.equals(PortletKeys.ALERTS) && !AnnouncementsEntryPermission.contains(permissionChecker, layout, PortletKeys.ALERTS, ActionKeys.ADD_ENTRY)) {
 	renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 }
 %>

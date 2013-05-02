@@ -224,7 +224,7 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 
 			int count = PropsValues.PASSWORDS_DEFAULT_POLICY_MIN_LENGTH;
 
-			sb.append(PwdGenerator.getPassword(_completeCharset, count));
+			sb.append(PwdGenerator.getSecurePassword(_completeCharset, count));
 		}
 
 		Randomizer randomizer = Randomizer.getInstance();

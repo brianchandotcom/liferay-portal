@@ -430,6 +430,10 @@
 	.date-range-options {
 		margin-bottom: 1em;
 	}
+
+	.error-message li {
+		list-style: disc inside;
+	}
 }
 
 .lfr-root-node {

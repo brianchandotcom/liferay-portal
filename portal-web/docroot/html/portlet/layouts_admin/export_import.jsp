@@ -110,8 +110,12 @@ String[] uploadedFiles = LayoutServiceUtil.getTempFileEntryNames(groupId, Import
 							<div class="lfr-upload-container" id="<portlet:namespace />fileUpload"></div>
 						</div>
 
+						<%
+						FileEntry fileEntry = ExportImportUtil.getTempFileEntry(groupId, themeDisplay.getUserId());
+						%>
+
 						<aui:button-row>
-							<aui:button type="submit" value="continue" />
+							<aui:button inputCssClass='<%= fileEntry == null ? "aui-helper-hidden" : StringPool.BLANK %>' name="continueButton" type="submit" value="continue" />
 						</aui:button-row>
 
 						<%
@@ -139,12 +143,39 @@ String[] uploadedFiles = LayoutServiceUtil.getTempFileEntryNames(groupId, Import
 											tempFolderName: '<%= ExportImportUtil.TEMP_FOLDER_NAME %>'
 										}
 									},
-									uploadFile: '<liferay-portlet:actionURL doAsUserId="<%= user.getUserId() %>"><portlet:param name="struts_action" value="/layouts_admin/import_layouts" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /></liferay-portlet:actionURL>&ticketKey=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= Group.class.getName() %>" />'
+									uploadFile: '<liferay-portlet:actionURL doAsUserId="<%= user.getUserId() %>"><portlet:param name="struts_action" value="/layouts_admin/import_layouts" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /><portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" /><portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" /></liferay-portlet:actionURL>&ticketKey=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= Group.class.getName() %>" />'
 								}
 							);
 
 							liferayUpload.set('strings.uploadsCompleteText', '<liferay-ui:message key="the-file-is-ready-to-be-imported" />');
 							liferayUpload.set('strings.pendingFileText', '<liferay-ui:message key="this-file-has-been-previously-uploaded-but-not-actually-imported" />');
+
+							var continueButton = A.one('#<portlet:namespace />continueButton');
+
+							liferayUpload._uploader.on(
+								'alluploadscomplete',
+								function(event) {
+									toggleContinueButton();
+								}
+							);
+
+							Liferay.on(
+								'tempFileRemoved',
+								function(event) {
+									toggleContinueButton();
+								}
+							);
+
+							function toggleContinueButton() {
+								var uploadedFiles = liferayUpload._fileListContent.all('.upload-file.upload-complete');
+
+								if (uploadedFiles.size() == 1) {
+									continueButton.show();
+								}
+								else {
+									continueButton.hide();
+								}
+							}
 						</aui:script>
 					</c:when>
 					<c:otherwise>

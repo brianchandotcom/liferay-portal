@@ -1501,25 +1501,6 @@
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
 	</model>
-	<model name="com.liferay.portlet.documentlibrary.model.DLSync">
-		<field name="syncId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="createDate" type="long" />
-		<field name="modifiedDate" type="long" />
-		<field name="fileId" type="long" />
-		<field name="fileUuid" type="String" />
-		<field name="repositoryId" type="long" />
-		<field name="parentFolderId" type="long" />
-		<field name="name" type="String">
-			<hint name="max-length">255</hint>
-		</field>
-		<field name="description" type="String">
-			<hint-collection name="TEXTAREA" />
-		</field>
-		<field name="event" type="String" />
-		<field name="type" type="String" />
-		<field name="version" type="String" />
-	</model>
 	<model name="com.liferay.portlet.dynamicdatalists.model.DDLRecord">
 		<field name="uuid" type="String" />
 		<field name="recordId" type="long" />

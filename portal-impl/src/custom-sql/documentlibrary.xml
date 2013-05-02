@@ -359,17 +359,4 @@
 					(DLFileEntry.fileEntryId = DLFileShortcut.toFileEntryId)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLSyncFinder.findByC_M_R_T">
-		<![CDATA[
-			SELECT
-				{DLSync.*}
-			FROM
-				DLSync
-			WHERE
-				(DLSync.companyId = ?) AND
-				(DLSync.modifiedDate > ?) AND
-				(DLSync.repositoryId = ?) AND
-				(DLSync.type_ = ?)
-		]]>
-	</sql>
 </custom-sql>

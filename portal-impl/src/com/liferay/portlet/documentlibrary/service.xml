@@ -569,57 +569,6 @@
 		<reference package-path="com.liferay.portlet.expando" entity="ExpandoValue" />
 		<reference package-path="com.liferay.portlet.trash" entity="TrashEntry" />
 	</entity>
-	<entity name="DLSync" local-service="true" remote-service="true">
-
-		<!-- PK fields -->
-
-		<column name="syncId" type="long" primary="true" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-		<column name="createDate" type="long" />
-		<column name="modifiedDate" type="long" />
-
-		<!-- Other fields -->
-
-		<column name="fileId" type="long" />
-		<column name="fileUuid" type="String" />
-		<column name="repositoryId" type="long" />
-		<column name="parentFolderId" type="long" />
-		<column name="name" type="String" />
-		<column name="description" type="String" />
-		<column name="event" type="String" />
-		<column name="type" type="String" />
-		<column name="version" type="String" />
-
-		<!-- Order -->
-
-		<order by="asc">
-			<order-column name="companyId" />
-			<order-column name="repositoryId" />
-			<order-column name="modifiedDate" />
-		</order>
-
-		<!-- Finder methods -->
-
-		<finder name="FileId" return-type="DLSync" unique="true">
-			<finder-column name="fileId" />
-		</finder>
-		<finder name="C_M_R" return-type="Collection">
-			<finder-column name="companyId" />
-			<finder-column name="modifiedDate" comparator="&gt;" />
-			<finder-column name="repositoryId" />
-		</finder>
-
-		<!-- References -->
-
-		<reference package-path="com.liferay.portal" entity="Repository" />
-
-		<!-- Transactions -->
-
-		<tx-required>getFileDeltaAsStream</tx-required>
-	</entity>
 	<exceptions>
 		<exception>DirectoryName</exception>
 		<exception>DuplicateDirectory</exception>

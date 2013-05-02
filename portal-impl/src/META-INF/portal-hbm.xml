@@ -98,7 +98,6 @@
 	<import class="com.liferay.portlet.documentlibrary.model.DLFileShortcut" />
 	<import class="com.liferay.portlet.documentlibrary.model.DLFileVersion" />
 	<import class="com.liferay.portlet.documentlibrary.model.DLFolder" />
-	<import class="com.liferay.portlet.documentlibrary.model.DLSync" />
 	<import class="com.liferay.portlet.dynamicdatalists.model.DDLRecord" />
 	<import class="com.liferay.portlet.dynamicdatalists.model.DDLRecordSet" />
 	<import class="com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion" />
@@ -1587,24 +1586,6 @@
 		<property name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="statusDate" type="org.hibernate.type.TimestampType" />
-	</class>
-	<class name="com.liferay.portlet.documentlibrary.model.impl.DLSyncImpl" table="DLSync">
-		<cache usage="read-write" />
-		<id name="syncId" type="long">
-			<generator class="assigned" />
-		</id>
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="createDate" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="modifiedDate" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="fileId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="fileUuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="repositoryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="parentFolderId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="event" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" column="type_" />
-		<property name="version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portlet.dynamicdatalists.model.impl.DDLRecordImpl" table="DDLRecord">
 		<cache usage="read-write" />

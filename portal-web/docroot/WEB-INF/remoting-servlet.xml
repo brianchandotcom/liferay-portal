@@ -697,18 +697,6 @@
 		<property name="service" ref="com.liferay.portlet.documentlibrary.service.DLFolderService" />
 		<property name="serviceInterface" value="com.liferay.portlet.documentlibrary.service.DLFolderService" />
 	</bean>
-	<bean name="/com_liferay_portlet_documentlibrary_service_spring_DLSyncService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.documentlibrary.service.DLSyncService" />
-		<property name="serviceInterface" value="com.liferay.portlet.documentlibrary.service.DLSyncService" />
-	</bean>
-	<bean name="/com_liferay_portlet_documentlibrary_service_spring_DLSyncService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
-		<property name="service" ref="com.liferay.portlet.documentlibrary.service.DLSyncService" />
-		<property name="serviceInterface" value="com.liferay.portlet.documentlibrary.service.DLSyncService" />
-	</bean>
-	<bean name="/com_liferay_portlet_documentlibrary_service_spring_DLSyncService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
-		<property name="service" ref="com.liferay.portlet.documentlibrary.service.DLSyncService" />
-		<property name="serviceInterface" value="com.liferay.portlet.documentlibrary.service.DLSyncService" />
-	</bean>
 	<bean name="/com_liferay_portlet_dynamicdatalists_service_spring_DDLRecordService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
 		<property name="service" ref="com.liferay.portlet.dynamicdatalists.service.DDLRecordService" />
 		<property name="serviceInterface" value="com.liferay.portlet.dynamicdatalists.service.DDLRecordService" />

@@ -83,14 +83,11 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
-import com.liferay.portlet.documentlibrary.model.DLSync;
-import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileVersionImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFolderImpl;
-import com.liferay.portlet.documentlibrary.model.impl.DLSyncImpl;
 import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordConstants;
@@ -1007,20 +1004,6 @@ public class DataFactory {
 		return dlFolder;
 	}
 
-	public DLSync newDLSync(DLFileEntry dlFileEntry) {
-		return newDLSync(
-			dlFileEntry.getFileEntryId(), dlFileEntry.getUuid(),
-			dlFileEntry.getRepositoryId(), dlFileEntry.getFolderId(),
-			dlFileEntry.getName(), DLSyncConstants.TYPE_FILE);
-	}
-
-	public DLSync newDLSync(DLFolder dLFolder) {
-		return newDLSync(
-			dLFolder.getFolderId(), dLFolder.getUuid(),
-			dLFolder.getRepositoryId(), dLFolder.getParentFolderId(),
-			dLFolder.getName(), DLSyncConstants.TYPE_FOLDER);
-	}
-
 	public Group newGroup(User user) throws Exception {
 		return newGroup(
 			_counter.get(), _classNamesMap.get(User.class.getName()),
@@ -1646,27 +1629,6 @@ public class DataFactory {
 		ddmStructureLink.setStructureId(structureId);
 
 		return ddmStructureLink;
-	}
-
-	protected DLSync newDLSync(
-		long fileId, String fileUuid, long repositoryId, long parentFolderId,
-		String name, String type) {
-
-		DLSync dlSync = new DLSyncImpl();
-
-		dlSync.setSyncId(_counter.get());
-		dlSync.setCompanyId(_companyId);
-		dlSync.setCreateDate(nextFutureDate().getTime());
-		dlSync.setModifiedDate(nextFutureDate().getTime());
-		dlSync.setFileId(fileId);
-		dlSync.setFileUuid(fileUuid);
-		dlSync.setRepositoryId(repositoryId);
-		dlSync.setParentFolderId(parentFolderId);
-		dlSync.setName(name);
-		dlSync.setEvent(DLSyncConstants.EVENT_ADD);
-		dlSync.setType(type);
-
-		return dlSync;
 	}
 
 	protected Group newGroup(

@@ -326,80 +326,17 @@ public class LayoutImporter {
 
 		// Zip
 
-		Element rootElement = null;
 		InputStream themeZip = null;
 
-		// Manifest
+		Element rootElement = null;
+		Element headerElement = null;
+		Element layoutsElement = null;
+		List<Element> layoutElements = null;
 
-		String xml = portletDataContext.getZipEntryAsString("/manifest.xml");
+		validateFile(
+			portletDataContext, rootElement, headerElement, layoutsElement,
+			layoutElements);
 
-		if (xml == null) {
-			throw new LARFileException("manifest.xml not found in the LAR");
-		}
-
-		try {
-			Document document = SAXReaderUtil.read(xml);
-
-			rootElement = document.getRootElement();
-		}
-		catch (Exception e) {
-			throw new LARFileException(e);
-		}
-
-		// Build compatibility
-
-		Element headerElement = rootElement.element("header");
-
-		int buildNumber = ReleaseInfo.getBuildNumber();
-
-		int importBuildNumber = GetterUtil.getInteger(
-			headerElement.attributeValue("build-number"));
-
-		if (buildNumber != importBuildNumber) {
-			throw new LayoutImportException(
-				"LAR build number " + importBuildNumber + " does not match " +
-					"portal build number " + buildNumber);
-		}
-
-		// Type
-
-		String larType = headerElement.attributeValue("type");
-
-		if (!larType.equals("layout-prototype") &&
-			!larType.equals("layout-set") &&
-			!larType.equals("layout-set-prototype")) {
-
-			throw new LARTypeException(larType);
-		}
-
-		// Available locales
-
-		Locale[] sourceAvailableLocales = LocaleUtil.fromLanguageIds(
-			StringUtil.split(
-				headerElement.attributeValue("available-locales")));
-
-		Locale[] targetAvailableLocales = LanguageUtil.getAvailableLocales();
-
-		for (Locale sourceAvailableLocale : sourceAvailableLocales) {
-			if (!ArrayUtil.contains(
-					targetAvailableLocales, sourceAvailableLocale)) {
-
-				LocaleException le = new LocaleException();
-
-				le.setSourceAvailableLocales(sourceAvailableLocales);
-				le.setTargetAvailableLocales(targetAvailableLocales);
-
-				throw le;
-			}
-		}
-
-		// Layout prototypes validity
-
-		Element layoutsElement = rootElement.element("layouts");
-
-		List<Element> layoutElements = layoutsElement.elements("layout");
-
-		validateLayoutPrototypes(companyId, layoutsElement, layoutElements);
 
 		// Company group id
 
@@ -419,6 +356,8 @@ public class LayoutImporter {
 
 		String layoutSetPrototypeUuid = layoutsElement.attributeValue(
 			"layout-set-prototype-uuid");
+
+		String larType = headerElement.attributeValue("type");
 
 		if (group.isLayoutPrototype() && larType.equals("layout-prototype")) {
 			deleteMissingLayouts = false;
@@ -1591,6 +1530,86 @@ public class LayoutImporter {
 		}
 
 		importedLayout.setTypeSettings(layout.getTypeSettings());
+	}
+
+	protected void validateFile(
+			PortletDataContext portletDataContext, Element rootElement,
+			Element headerElement, Element layoutsElement,
+			List<Element> layoutElements)
+		throws Exception {
+
+		// Manifest
+
+		String xml = portletDataContext.getZipEntryAsString("/manifest.xml");
+
+		if (xml == null) {
+			throw new LARFileException("manifest.xml not found in the LAR");
+		}
+
+		try {
+			Document document = SAXReaderUtil.read(xml);
+
+			rootElement = document.getRootElement();
+		}
+		catch (Exception e) {
+			throw new LARFileException(e);
+		}
+
+		// Build compatibility
+
+		headerElement = rootElement.element("header");
+
+		int buildNumber = ReleaseInfo.getBuildNumber();
+
+		int importBuildNumber = GetterUtil.getInteger(
+			headerElement.attributeValue("build-number"));
+
+		if (buildNumber != importBuildNumber) {
+			throw new LayoutImportException(
+				"LAR build number " + importBuildNumber + " does not match " +
+					"portal build number " + buildNumber);
+		}
+
+		// Type
+
+		String larType = headerElement.attributeValue("type");
+
+		if (!larType.equals("layout-prototype") &&
+			!larType.equals("layout-set") &&
+			!larType.equals("layout-set-prototype")) {
+
+			throw new LARTypeException(larType);
+		}
+
+		// Available locales
+
+		Locale[] sourceAvailableLocales = LocaleUtil.fromLanguageIds(
+			StringUtil.split(
+				headerElement.attributeValue("available-locales")));
+
+		Locale[] targetAvailableLocales = LanguageUtil.getAvailableLocales();
+
+		for (Locale sourceAvailableLocale : sourceAvailableLocales) {
+			if (!ArrayUtil.contains(
+					targetAvailableLocales, sourceAvailableLocale)) {
+
+				LocaleException le = new LocaleException();
+
+				le.setSourceAvailableLocales(sourceAvailableLocales);
+				le.setTargetAvailableLocales(targetAvailableLocales);
+
+				throw le;
+			}
+		}
+
+		// Layout prototypes validity
+
+		layoutsElement = rootElement.element("layouts");
+
+		layoutElements = layoutsElement.elements("layout");
+
+		validateLayoutPrototypes(
+			portletDataContext.getCompanyId(), layoutsElement, layoutElements);
 	}
 
 	protected void validateLayoutPrototypes(

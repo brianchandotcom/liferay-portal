@@ -369,8 +369,7 @@ public class LayoutImporter {
 			!larType.equals("layout-set") &&
 			!larType.equals("layout-set-prototype")) {
 
-			throw new LARTypeException(
-				"Invalid type of LAR file (" + larType + ")");
+			throw new LARTypeException(larType);
 		}
 
 		// Available locales

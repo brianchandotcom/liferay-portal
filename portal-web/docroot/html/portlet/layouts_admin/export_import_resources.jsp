@@ -47,7 +47,15 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 	<liferay-ui:message arguments="<%= PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE) / 1024 %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" />
 </liferay-ui:error>
 
-<liferay-ui:error exception="<%= LARTypeException.class %>" message="please-import-a-lar-file-of-the-correct-type" />
+<liferay-ui:error exception="<%= LARTypeException.class %>">
+
+	<%
+	LARTypeException lpe = (LARTypeException)errorException;
+	%>
+
+	<liferay-ui:message arguments="<%= lpe.getMessage() %>" key="please-import-a-lar-file-of-the-correct-type-x-is-not-valid" />
+</liferay-ui:error>
+
 <liferay-ui:error exception="<%= LayoutImportException.class %>" message="an-unexpected-error-occurred-while-importing-your-file" />
 
 <liferay-ui:error exception="<%= LayoutPrototypeException.class %>">

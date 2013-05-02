@@ -449,7 +449,7 @@ public class EditArticleAction extends PortletAction {
 			for (int i = 0; i < values.size(); i++) {
 				String content = (String)values.get(i);
 
-				if (content.equals("update-image")) {
+				if (content.equals("update")) {
 					continue;
 				}
 

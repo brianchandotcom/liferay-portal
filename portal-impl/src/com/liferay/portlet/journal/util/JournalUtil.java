@@ -1376,7 +1376,8 @@ public class JournalUtil {
 			if (curIndexTypeAttribute == null) {
 				curElement.addAttribute(
 					"index-type", newIndexTypeAttribute.getValue());
-			} else {
+			}
+			else {
 				curIndexTypeAttribute.setValue(
 					newIndexTypeAttribute.getValue());
 			}

@@ -175,15 +175,16 @@ AUI.add(
 
 							var maxFileSizeKB = Math.floor(instance.get('maxFileSize') / 1024);
 
-							instance._cancelUploadsText = Liferay.Language.get('cancel-all-uploads');
 							instance._cancelFileText = Liferay.Language.get('cancel-upload');
 
 							if (instance.get('multipleFiles')) {
+								instance._cancelUploadsText = Liferay.Language.get('cancel-all-uploads');
 								instance._selectFileText = Liferay.Language.get('select-files');
 								instance._dropFileText = Liferay.Language.get('drop-files-here-to-upload');
 
 							}
 							else {
+								instance._cancelUploadsText = Liferay.Language.get('cancel-upload');
 								instance._selectFileText = Liferay.Language.get('select-file');
 								instance._dropFileText = Liferay.Language.get('drop-file-here-to-upload');
 							}
@@ -529,9 +530,17 @@ AUI.add(
 
 						instance._cancelButton.hide();
 
-						instance._clearUploadsButton.toggle(!!instance._fileListContent.one('.file-saved,.upload-error'));
+						if (instance.get('multipleFiles')) {
+							instance._clearUploadsButton.toggle(!!instance._fileListContent.one('.file-saved,.upload-error'));
+						}
 
-						instance._updateList(0, strings['uploadsCompleteText']);
+						var uploadsCompleteText = ' ';
+
+						if (!!instance._fileListContent.one('.upload-file.upload-complete')) {
+							uploadsCompleteText = strings['uploadsCompleteText'];
+						}
+
+						instance._updateList(0, uploadsCompleteText);
 
 						Liferay.fire('allUploadsComplete');
 					},
@@ -921,7 +930,10 @@ AUI.add(
 							instance._allRowIdsCheckbox.toggle(hasUploadedFiles);
 						}
 
-						instance._clearUploadsButton.toggle(hasSavedFiles);
+						if (instance.get('multipleFiles')) {
+							instance._clearUploadsButton.toggle(hasSavedFiles);
+						}
+
 						instance._manageUploadTarget.toggle(hasUploadedFiles);
 
 						instance._listInfo.toggle(!!fileListContent.one('li'));

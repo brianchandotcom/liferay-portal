@@ -92,7 +92,9 @@
 					if (PortalUtil.isCompanyControlPanelVisible(themeDisplay)) {
 						Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(themeDisplay.getCompanyId());
 
-						manageableSites.add(0, companyGroup);
+						if (!manageableSites.contains(companyGroup)) {
+							manageableSites.add(0, companyGroup);
+						}
 					}
 				}
 
@@ -174,10 +176,6 @@
 								%>
 
 							</liferay-ui:icon-menu>
-
-							<c:if test="<%= curLiveGroup.isCompany() %>">
-								<liferay-ui:staging cssClass="manage-pages-branch-menu" extended="<%= true %>" groupId="<%= curLiveGroup.getGroupId() %>" icon="/common/tool.png" showManageBranches="<%= false %>" />
-							</c:if>
 						</c:when>
 						<c:otherwise>
 							<liferay-ui:icon

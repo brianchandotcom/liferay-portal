@@ -64,7 +64,11 @@ LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroup.get
 		<div class="staging-types" id="<portlet:namespace />stagingTypes">
 			<aui:field-wrapper label="staging-type">
 				<aui:input checked="<%= !liveGroup.isStaged() %>" id="none" label="none" name="stagingType" type="radio" value="<%= StagingConstants.TYPE_NOT_STAGED %>" />
-				<aui:input checked="<%= liveGroup.isStaged() && !liveGroup.isStagedRemotely() %>" helpMessage="staging-type-local" id="local" label="local-live" name="stagingType" type="radio" value="<%= StagingConstants.TYPE_LOCAL_STAGING %>" />
+
+				<c:if test="<%= !liveGroup.isCompany() %>">
+					<aui:input checked="<%= liveGroup.isStaged() && !liveGroup.isStagedRemotely() %>" helpMessage="staging-type-local" id="local" label="local-live" name="stagingType" type="radio" value="<%= StagingConstants.TYPE_LOCAL_STAGING %>" />
+				</c:if>
+
 				<aui:input checked="<%= liveGroup.isStaged() && liveGroup.isStagedRemotely() %>" helpMessage="staging-type-remote" id="remote" label="remote-live" name="stagingType" type="radio" value="<%= StagingConstants.TYPE_REMOTE_STAGING %>" />
 			</aui:field-wrapper>
 		</div>
@@ -144,11 +148,13 @@ LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroup.get
 		<div class="<%= (liveGroup.isStaged() ? StringPool.BLANK : "aui-helper-hidden") %> staging-section" id="<portlet:namespace />stagedPortlets">
 			<br />
 
-			<aui:fieldset helpMessage="page-versioning-help" label="page-versioning">
-				<aui:input label="enabled-on-public-pages" name="branchingPublic" type="checkbox" value='<%= GetterUtil.getBoolean(liveGroupTypeSettings.getProperty("branchingPublic")) %>' />
+			<c:if test="<%= !liveGroup.isCompany() %>">
+				<aui:fieldset helpMessage="page-versioning-help" label="page-versioning">
+					<aui:input label="enabled-on-public-pages" name="branchingPublic" type="checkbox" value='<%= GetterUtil.getBoolean(liveGroupTypeSettings.getProperty("branchingPublic")) %>' />
 
-				<aui:input label="enabled-on-private-pages" name="branchingPrivate" type="checkbox" value='<%= GetterUtil.getBoolean(liveGroupTypeSettings.getProperty("branchingPrivate")) %>' />
-			</aui:fieldset>
+					<aui:input label="enabled-on-private-pages" name="branchingPrivate" type="checkbox" value='<%= GetterUtil.getBoolean(liveGroupTypeSettings.getProperty("branchingPrivate")) %>' />
+				</aui:fieldset>
+			</c:if>
 
 			<aui:fieldset helpMessage="staged-portlets-help" label="staged-portlets">
 				<div class="portlet-msg-alert">

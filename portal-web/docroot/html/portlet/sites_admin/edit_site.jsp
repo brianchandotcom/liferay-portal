@@ -103,6 +103,18 @@ if (!trashEnabled && ArrayUtil.contains(advancedSections, "recycle-bin")) {
 	advancedSections = ArrayUtil.remove(advancedSections, "recycle-bin");
 }
 
+if (group.isCompany()) {
+	mainSections = ArrayUtil.remove(mainSections, "categorization");
+	mainSections = ArrayUtil.remove(mainSections, "site-url");
+	mainSections = ArrayUtil.remove(mainSections, "site-template");
+
+	seoSections = new String[0];
+
+	advancedSections = ArrayUtil.remove(advancedSections, "default-user-associations");
+	advancedSections = ArrayUtil.remove(advancedSections, "analytics");
+	advancedSections = ArrayUtil.remove(advancedSections, "content-sharing");
+}
+
 String[][] categorySections = {mainSections, seoSections, advancedSections, miscellaneousSections};
 %>
 

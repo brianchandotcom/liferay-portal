@@ -3401,6 +3401,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>onlyActions</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>privateLayout</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

@@ -170,7 +170,7 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 	protected String generateDynamic(PasswordPolicy passwordPolicy) {
 		int alphanumericActualMinLength =
 			passwordPolicy.getMinLowerCase() + passwordPolicy.getMinNumbers() +
-			passwordPolicy.getMinUpperCase();
+				passwordPolicy.getMinUpperCase();
 
 		int alphanumericMinLength = Math.max(
 			passwordPolicy.getMinAlphanumeric(), alphanumericActualMinLength);
@@ -220,11 +220,11 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 			sb.append(PwdGenerator.getSecurePassword(_completeCharset, count));
 		}
 
-		if (sb.length() == 0) {
-
-			int count = PropsValues.PASSWORDS_DEFAULT_POLICY_MIN_LENGTH;
-
-			sb.append(PwdGenerator.getSecurePassword(_completeCharset, count));
+		if (sb.index() == 0) {
+			sb.append(
+				PwdGenerator.getSecurePassword(
+					_completeCharset,
+					PropsValues.PASSWORDS_DEFAULT_POLICY_MIN_LENGTH));
 		}
 
 		Randomizer randomizer = Randomizer.getInstance();

@@ -82,6 +82,8 @@ public class SampleSQLBuilder {
 			arguments.get("sample.sql.max.blogs.entry.comment.count"));
 		_maxBlogsEntryCount = GetterUtil.getInteger(
 			arguments.get("sample.sql.max.blogs.entry.count"));
+		_maxDDLCustomFieldCount = GetterUtil.getInteger(
+			arguments.get("sample.sql.max.ddl.custom.field.count"));
 		_maxDDLRecordCount = GetterUtil.getInteger(
 			arguments.get("sample.sql.max.ddl.record.count"));
 		_maxDDLRecordSetCount = GetterUtil.getInteger(
@@ -128,9 +130,9 @@ public class SampleSQLBuilder {
 
 		_dataFactory = new DataFactory(
 			baseDir, _maxAssetCategoryCount, _maxBlogsEntryCount,
-			_maxGroupCount, _maxJournalArticleCount, _maxJournalArticleSize,
-			_maxMBCategoryCount, _maxMBThreadCount, _maxMBMessageCount,
-			_maxUserToGroupCount);
+			_maxDDLCustomFieldCount, _maxGroupCount, _maxJournalArticleCount,
+			_maxJournalArticleSize, _maxMBCategoryCount, _maxMBThreadCount,
+			_maxMBMessageCount, _maxUserToGroupCount);
 
 		_db = DBFactoryUtil.getDB(_dbType);
 
@@ -492,6 +494,7 @@ public class SampleSQLBuilder {
 	private int _maxAssetCategoryCount;
 	private int _maxBlogsEntryCommentCount;
 	private int _maxBlogsEntryCount;
+	private int _maxDDLCustomFieldCount;
 	private int _maxDDLRecordCount;
 	private int _maxDDLRecordSetCount;
 	private int _maxDLFileEntryCount;

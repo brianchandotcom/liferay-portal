@@ -245,7 +245,7 @@ public class JournalArticleAssetRenderer
 			}
 
 			String groupFriendlyURL = PortalUtil.getGroupFriendlyURL(
-				group, false, themeDisplay);
+				group, layout.isPrivateLayout(), themeDisplay);
 
 			return groupFriendlyURL.concat(
 				JournalArticleConstants.CANONICAL_URL_SEPARATOR).concat(

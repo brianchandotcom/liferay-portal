@@ -403,9 +403,7 @@ public class MPIHelperUtil {
 
 		@Override
 		public int hashCode() {
-			String string = toString();
-
-			return string.hashCode();
+			return _spiProviderName.hashCode() * 11 + _spiId.hashCode();
 		}
 
 		@Override

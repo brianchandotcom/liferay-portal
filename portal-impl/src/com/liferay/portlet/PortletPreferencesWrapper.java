@@ -42,12 +42,16 @@ public class PortletPreferencesWrapper
 
 	@Override
 	public boolean equals(Object obj) {
-		PortletPreferencesWrapper portletPreferencesWrapper =
-			(PortletPreferencesWrapper)obj;
-
-		if (this == portletPreferencesWrapper) {
+		if (this == obj) {
 			return true;
 		}
+
+		if (!(obj instanceof PortletPreferencesWrapper)) {
+			return false;
+		}
+
+		PortletPreferencesWrapper portletPreferencesWrapper =
+			(PortletPreferencesWrapper)obj;
 
 		if (getPortletPreferencesImpl().equals(
 				portletPreferencesWrapper.getPortletPreferencesImpl())) {

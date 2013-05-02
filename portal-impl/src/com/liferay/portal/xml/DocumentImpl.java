@@ -51,6 +51,14 @@ public class DocumentImpl extends BranchImpl implements Document {
 
 	@Override
 	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof DocumentImpl)) {
+			return false;
+		}
+
 		org.dom4j.Document document = ((DocumentImpl)obj).getWrappedDocument();
 
 		return _document.equals(document);

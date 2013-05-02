@@ -95,6 +95,14 @@ public class BranchImpl extends NodeImpl implements Branch {
 
 	@Override
 	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof BranchImpl)) {
+			return false;
+		}
+
 		org.dom4j.Branch branch = ((BranchImpl)obj).getWrappedBranch();
 
 		return _branch.equals(branch);

@@ -79,18 +79,15 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof Theme)) {
 			return false;
 		}
 
-		Theme theme = null;
-
-		try {
-			theme = (Theme)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		Theme theme = (Theme)obj;
 
 		String themeId = theme.getThemeId();
 

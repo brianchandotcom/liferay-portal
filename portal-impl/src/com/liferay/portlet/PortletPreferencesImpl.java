@@ -73,11 +73,15 @@ public class PortletPreferencesImpl
 
 	@Override
 	public boolean equals(Object obj) {
-		PortletPreferencesImpl portletPreferences = (PortletPreferencesImpl)obj;
-
-		if (this == portletPreferences) {
+		if (this == obj) {
 			return true;
 		}
+
+		if (!(obj instanceof PortletPreferencesImpl)) {
+			return false;
+		}
+
+		PortletPreferencesImpl portletPreferences = (PortletPreferencesImpl)obj;
 
 		if ((getCompanyId() == portletPreferences.getCompanyId()) &&
 			(getOwnerId() == portletPreferences.getOwnerId()) &&

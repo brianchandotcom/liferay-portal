@@ -51,7 +51,11 @@ public class ShoppingCartItemImpl implements ShoppingCartItem {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof ShoppingCartItem)) {
 			return false;
 		}
 

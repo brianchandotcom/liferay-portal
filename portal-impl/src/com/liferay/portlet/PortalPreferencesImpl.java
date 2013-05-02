@@ -61,15 +61,15 @@ public class PortalPreferencesImpl
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof PortalPreferencesImpl)) {
 			return false;
 		}
 
 		PortalPreferencesImpl portalPreferences = (PortalPreferencesImpl)obj;
-
-		if (this == portalPreferences) {
-			return true;
-		}
 
 		if ((getCompanyId() == portalPreferences.getCompanyId()) &&
 			(getOwnerId() == portalPreferences.getOwnerId()) &&

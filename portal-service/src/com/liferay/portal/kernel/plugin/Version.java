@@ -142,7 +142,11 @@ public class Version implements Comparable<Version>, Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if ((obj == null) || !(obj instanceof Version)) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof Version)) {
 			return false;
 		}
 

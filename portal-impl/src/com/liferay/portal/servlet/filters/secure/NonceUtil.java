@@ -104,14 +104,6 @@ public class NonceUtil {
 
 		@Override
 		public boolean equals(Object obj) {
-			if (this == obj) {
-				return true;
-			}
-
-			if (!(obj instanceof NonceDelayed)) {
-				return false;
-			}
-
 			NonceDelayed nonceDelayed = (NonceDelayed)obj;
 
 			if (_nonce.equals(nonceDelayed._nonce)) {

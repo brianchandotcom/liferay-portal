@@ -186,14 +186,6 @@ public class DoPrivilegedHandler
 
 		@Override
 		public boolean equals(Object obj) {
-			if (this == obj) {
-				return true;
-			}
-
-			if (!(obj instanceof MethodKey)) {
-				return false;
-			}
-
 			MethodKey methodKey = (MethodKey)obj;
 
 			// Note again that this check is not symmetrical. This method key's

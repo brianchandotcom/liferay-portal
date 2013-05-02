@@ -40,6 +40,14 @@ public class ProcessingInstructionImpl
 
 	@Override
 	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof ProcessingInstructionImpl)) {
+			return false;
+		}
+
 		org.dom4j.ProcessingInstruction processingInstruction =
 			((ProcessingInstructionImpl)obj).getWrappedProcessingInstruction();
 

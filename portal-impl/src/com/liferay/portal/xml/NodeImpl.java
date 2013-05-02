@@ -96,6 +96,14 @@ public class NodeImpl implements Node {
 
 	@Override
 	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof NodeImpl)) {
+			return false;
+		}
+
 		org.dom4j.Node node = ((NodeImpl)obj).getWrappedNode();
 
 		return _node.equals(node);

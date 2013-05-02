@@ -27,18 +27,15 @@ public class AddressImpl implements com.liferay.portal.kernel.cluster.Address {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof AddressImpl)) {
 			return false;
 		}
 
-		AddressImpl addressImpl = null;
-
-		try {
-			addressImpl = (AddressImpl)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		AddressImpl addressImpl = (AddressImpl)obj;
 
 		if (_address.equals(addressImpl._address)) {
 			return true;

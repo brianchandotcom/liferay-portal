@@ -51,18 +51,15 @@ public class ColorSchemeImpl implements ColorScheme {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof ColorScheme)) {
 			return false;
 		}
 
-		ColorScheme colorScheme = null;
-
-		try {
-			colorScheme = (ColorScheme)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		ColorScheme colorScheme = (ColorScheme)obj;
 
 		String colorSchemeId = colorScheme.getColorSchemeId();
 

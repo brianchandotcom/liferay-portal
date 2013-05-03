@@ -311,19 +311,34 @@ public class UserFinderImpl
 
 			params2.remove("usersRoles");
 
+			params3 = new LinkedHashMap<String, Object>(params1);
+
+			params3.remove("usersRoles");
+
+
 			List<Long> roleGroupIds = new ArrayList<Long>();
+			List<Long> userGroupIds = new ArrayList<Long>();
 
 			for (long roleId : roleIds) {
 				List<Group> groups = RoleUtil.getGroups(roleId);
 
 				for (Group group : groups) {
-					roleGroupIds.add(group.getGroupId());
+					if (group.isUserGroup()) {
+						userGroupIds.add(group.getClassPK());
+					}
+					else {
+						roleGroupIds.add(group.getGroupId());
+					}
 				}
 			}
 
 			params2.put(
 				"usersGroups",
 				roleGroupIds.toArray(new Long[roleGroupIds.size()]));
+
+			params3.put(
+				"usersUserGroups",
+				userGroupIds.toArray(new Long[userGroupIds.size()]));
 		}
 
 		Session session = null;
@@ -344,9 +359,7 @@ public class UserFinderImpl
 						session, companyId, firstNames, middleNames, lastNames,
 						screenNames, emailAddresses, status, params2,
 						andOperator));
-			}
 
-			if (doUnionOnGroup) {
 				userIds.addAll(
 					countByC_FN_MN_LN_SN_EA_S(
 						session, companyId, firstNames, middleNames, lastNames,
@@ -591,19 +604,33 @@ public class UserFinderImpl
 
 			params2.remove("usersRoles");
 
+			params3 = new LinkedHashMap<String, Object>(params1);
+
+			params3.remove("usersRoles");
+
 			List<Long> roleGroupIds = new ArrayList<Long>();
+			List<Long> userGroupIds = new ArrayList<Long>();
 
 			for (long roleId : roleIds) {
 				List<Group> groups = RoleUtil.getGroups(roleId);
 
 				for (Group group : groups) {
-					roleGroupIds.add(group.getGroupId());
+					if (group.isUserGroup()) {
+						userGroupIds.add(group.getClassPK());
+					}
+					else {
+						roleGroupIds.add(group.getGroupId());
+					}
 				}
 			}
 
 			params2.put(
 				"usersGroups",
 				roleGroupIds.toArray(new Long[roleGroupIds.size()]));
+
+			params3.put(
+				"usersUserGroups",
+				userGroupIds.toArray(new Long[userGroupIds.size()]));
 		}
 
 		Session session = null;
@@ -643,9 +670,7 @@ public class UserFinderImpl
 				sb.append(" UNION (");
 				sb.append(replaceJoinAndWhere(sql, params2));
 				sb.append(StringPool.CLOSE_PARENTHESIS);
-			}
 
-			if (doUnionOnGroup) {
 				sb.append(" UNION (");
 				sb.append(replaceJoinAndWhere(sql, params3));
 				sb.append(StringPool.CLOSE_PARENTHESIS);
@@ -694,9 +719,7 @@ public class UserFinderImpl
 				if (status != WorkflowConstants.STATUS_ANY) {
 					qPos.add(status);
 				}
-			}
 
-			if (doUnionOnGroup) {
 				setJoin(qPos, params3);
 
 				qPos.add(companyId);

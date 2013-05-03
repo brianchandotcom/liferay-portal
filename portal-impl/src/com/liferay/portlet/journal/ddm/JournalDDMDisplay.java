@@ -65,7 +65,6 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 
 		return super.getViewTemplatesBackURL(
 			liferayPortletRequest, liferayPortletResponse, classPK);
-
 	}
 
 	@Override

@@ -1,0 +1,121 @@
+<html>
+<head>
+<title>CPWebcontentAddwebcontent</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPWebcontentAddwebcontent</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>WCWebcontentAddwebcontent</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPTIONS_MENULIST_WRENCH_ICON</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_STRUCTURE</td>
+	<td>//a[@id='_15_umre']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE</td>
+	<td>//input[@id='_15_title_en_US']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CK_EDITOR</td>
+	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCHABLE_CHECKBOX</td>
+	<td>//input[@id='_15_indexableCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_AS_DRAFT_BUTTON</td>
+	<td>//input[@id='_15_saveButton']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLISH_BUTTON</td>
+	<td>//input[@id='_15_publishButton']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CANCEL_BUTTON</td>
+	<td>//input[@class='aui-button-input aui-button-input-cancel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--OPTIONS_MENULIST-->
+<tr>
+	<td>OPTIONS_MENULIST_CONFIGURATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPTIONS_MENULIST_EXPORT_IMPORT</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MENU-->
+<tr>
+	<td>MENU_ABSTRACT</td>
+	<td>//a[@id='_15_abstractLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_CATEGORIZATION</td>
+	<td>//a[@id='_15_categorizationLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_SCHEDULE</td>
+	<td>//a[@id='_15_scheduleLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_DISPLAY_PAGE</td>
+	<td>//a[@id='_15_displayPageLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_RELATED_ASSETS</td>
+	<td>//a[@id='_15_relatedAssetsLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU__PERMISSIONS</td>
+	<td>//a[@id='_15_permissionsLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_CUSTOM_FIELDS</td>
+	<td>//a[@id='_15_customFieldsLink']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

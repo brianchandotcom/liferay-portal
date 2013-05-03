@@ -1,0 +1,5 @@
+<definition>
+	<command name="selectFrameTop">
+		<execute selenium="selectFrame" argument1="relative=top" />
+	</command>
+</definition>

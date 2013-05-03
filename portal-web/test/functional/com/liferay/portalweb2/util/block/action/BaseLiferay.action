@@ -128,6 +128,12 @@
 		</default>
 	</command>
 
+	<command name="keyPress">
+		<default>
+			<execute function="KeyPress#keyPress" />
+		</default>
+	</command>
+
 	<command name="mouseOver">
 		<default>
 			<execute function="MouseOver#mouseOver" />
@@ -149,6 +155,18 @@
 	<command name="select">
 		<default>
 			<execute function="Select#select" />
+		</default>
+	</command>
+
+	<command name="selectFrame">
+		<default>
+			<execute function="SelectFrame#selectFrame" />
+		</default>
+	</command>
+
+	<command name="selectFrameTop">
+		<default>
+			<execute function="SelectFrameTop#selectFrameTop" />
 		</default>
 	</command>
 

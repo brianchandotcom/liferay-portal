@@ -1,0 +1,43 @@
+<definition>
+	<var name="pageName" value="Calendar Page" />
+	<var name="portletName" value="Calendar" />
+
+	<set-up>
+		<execute macro="User#pgFirstLogin" />
+
+		<execute macro="Page#pgAdd" />
+
+		<execute macro="Portlet#pgAdd" />
+	</set-up>
+
+	<command name="pgAdd">
+		<var name="eventTitle" value="Calendar Test Entry" />
+
+		<execute macro="Event#pgAdd" />
+	</command>
+
+	<command name="pgDelete">
+		<var name="eventTitle" value="Calendar Test Entry" />
+
+		<execute macro="Event#pgAdd" />
+
+		<execute macro="Event#pgDelete" />
+	</command>
+
+	<command name="pgEdit">
+		<var name="eventTitle" value="Calendar Test Entry" />
+		<var name="eventTitleNew" value="Calendar Test Entry New" />
+
+		<execute macro="Event#pgAdd" />
+
+		<execute macro="Event#pgEdit" />
+	</command>
+
+	<tear-down>
+		<execute macro="Event#pgTearDown" />
+
+		<execute macro="Page#pgTearDown" />
+
+		<execute macro="User#pgLogout" />
+	</tear-down>
+</definition>

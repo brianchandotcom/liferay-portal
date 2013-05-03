@@ -14,6 +14,16 @@
 	<td>PGCalendar</td>
 </tr>
 <!---->
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td>Deleting this event will cancel the meeting with your guests. Would you like to delete?</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--VIEW-->
 <tr>
 	<td>VIEW_TODAY_BUTTON</td>
@@ -40,52 +50,73 @@
 	<td>//div[@id='_1_WAR_calendarportlet_scheduler']/div/div/div/div[2]/div/button[.='Agenda']</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CALENDAR_DAY-->
+<tr>
+	<td>CALENDAR_DAY</td>
+	<td>//div[@class='yui3-widget aui-component aui-scheduler-view aui-scheduler-view-day']/div/div[2]/table/tbody/tr[2]/td/div[@class='aui-scheduler-view-day-table-col-shim']</td>
+	<td></td>
+</tr>
 <!---->
-<!--CALENDER_DAY-->
-<tr>
-	<td>CALENDER_DAY</td>
-	<td>//table[@class='aui-scheduler-view-day-table']/tbody/tr[2]/td[3]/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--CALENDER_WEEK-->
 <tr>
-	<td>CALENDER_WEEK_SUNDAY</td>
+	<td>CALENDAR_WEEK_TODAY</td>
+	<td>//td[contains(@class, 'aui-scheduler-today')]/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CALENDAR_WEEK_SUNDAY</td>
 	<td>//table[@class='aui-scheduler-view-day-table']/tbody/tr[2]/td[2]/div</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CALENDER_WEEK_MONDAY</td>
+	<td>CALENDAR_WEEK_MONDAY</td>
 	<td>//table[@class='aui-scheduler-view-day-table']/tbody/tr[2]/td[3]/div</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CALENDER_WEEK_TUESDAY</td>
+	<td>CALENDAR_WEEK_TUESDAY</td>
 	<td>//table[@class='aui-scheduler-view-day-table']/tbody/tr[2]/td[4]/div</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CALENDER_WEEK_WEDNESDAY</td>
+	<td>CALENDAR_WEEK_WEDNESDAY</td>
 	<td>//table[@class='aui-scheduler-view-day-table']/tbody/tr[2]/td[5]/div</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CALENDER_WEEK_THURSDAY</td>
+	<td>CALENDAR_WEEK_THURSDAY</td>
 	<td>//table[@class='aui-scheduler-view-day-table']/tbody/tr[2]/td[6]/div</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CALENDER_WEEK_FRIDAY</td>
+	<td>CALENDAR_WEEK_FRIDAY</td>
 	<td>//table[@class='aui-scheduler-view-day-table']/tbody/tr[2]/td[7]/div</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CALENDER_WEEK_SATURDAY</td>
+	<td>CALENDAR_WEEK_SATURDAY</td>
 	<td>//table[@class='aui-scheduler-view-day-table']/tbody/tr[2]/td[8]/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CALENDAR_AGENDA-->
+<tr>
+	<td>CALENDAR_AGENDA_EVENT</td>
+	<td>//div[contains(@data-clientid, 'scheduler-event_')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CALENDAR_AGENDA_NO_EVENTS</td>
+	<td>//div[@class='aui-scheduler-view-agenda-no-events']</td>
 	<td></td>
 </tr>
 <!---->
@@ -155,7 +186,7 @@
 <tr>
 	<td>EVENT_TITLE</td>
 	<td>//div[@class='aui-scheduler-event calendar-portlet-event-approved']/div[@class='aui-scheduler-event-title']</td>
-	<td>12 – 1</td>
+	<td></td>
 </tr>
 <tr>
 	<td>EVENT_CONTENT</td>

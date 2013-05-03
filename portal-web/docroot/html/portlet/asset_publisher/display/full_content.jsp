@@ -35,6 +35,13 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view.jsp-assetEntry");
 AssetRendererFactory assetRendererFactory = (AssetRendererFactory)request.getAttribute("view.jsp-assetRendererFactory");
 AssetRenderer assetRenderer = (AssetRenderer)request.getAttribute("view.jsp-assetRenderer");
 
+String assetClassName = assetEntry.getClassName();
+String ratingsType = "stars";
+
+if (assetClassName.contains("MBDiscussion") || assetClassName.contains("MBMessage")) {
+	ratingsType = "thumbs";
+}
+
 String title = (String)request.getAttribute("view.jsp-title");
 
 boolean show = ((Boolean)request.getAttribute("view.jsp-show")).booleanValue();
@@ -190,6 +197,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 				<liferay-ui:ratings
 					className="<%= assetEntry.getClassName() %>"
 					classPK="<%= assetEntry.getClassPK() %>"
+					type="<%= ratingsType %>"
 				/>
 			</div>
 		</c:if>

@@ -10,31 +10,31 @@
 		<execute macro="Portlet#pgAdd" />
 	</set-up>
 
-	<command name="AddCalendarEvent">
+	<command name="pgAdd">
 		<var name="eventTitle" value="Calendar Test Entry" />
 
-		<execute macro="PGCalendar#addCalendarEvent" />
+		<execute macro="Event#pgAdd" />
 	</command>
 
-	<command name="DeleteCalendarEvent">
+	<command name="pgDelete">
 		<var name="eventTitle" value="Calendar Test Entry" />
 
-		<execute macro="PGCalendar#addCalendarEvent" />
+		<execute macro="Event#pgAdd" />
 
-		<execute macro="PGCalendar#deleteCalendarEvent" />
+		<execute macro="Event#pgDelete" />
 	</command>
 
-	<command name="EditCalendarEvent">
+	<command name="pgEdit">
 		<var name="eventTitle" value="Calendar Test Entry" />
 		<var name="eventTitleNew" value="Calendar Test Entry New" />
 
-		<execute macro="PGCalendar#addCalendarEvent" />
+		<execute macro="Event#pgAdd" />
 
-		<execute macro="PGCalendar#editCalendarEvent" />
+		<execute macro="Event#pgEdit" />
 	</command>
 
 	<tear-down>
-		<execute macro="PGCalendar#tearDown" />
+		<execute macro="Event#pgTearDown" />
 
 		<execute macro="Page#pgTearDown" />
 

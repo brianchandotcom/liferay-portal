@@ -2062,8 +2062,9 @@ public class SourceFormatter {
 						fileName, "line break: " + fileName + " " + lineCount);
 				}
 
-				if (line.endsWith(StringPool.PERIOD) &&
-					line.contains(StringPool.EQUAL)) {
+				if (trimmedLine.startsWith(StringPool.PERIOD) ||
+					(line.endsWith(StringPool.PERIOD) &&
+					 line.contains(StringPool.EQUAL))) {
 
 					_processErrorMessage(
 						fileName, "line break: " + fileName + " " + lineCount);

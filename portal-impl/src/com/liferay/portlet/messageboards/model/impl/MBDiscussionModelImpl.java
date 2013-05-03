@@ -470,18 +470,15 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof MBDiscussion)) {
 			return false;
 		}
 
-		MBDiscussion mbDiscussion = null;
-
-		try {
-			mbDiscussion = (MBDiscussion)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		MBDiscussion mbDiscussion = (MBDiscussion)obj;
 
 		long primaryKey = mbDiscussion.getPrimaryKey();
 

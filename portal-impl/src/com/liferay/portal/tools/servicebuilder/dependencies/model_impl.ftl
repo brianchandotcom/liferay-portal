@@ -897,18 +897,15 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof ${entity.name})) {
 			return false;
 		}
 
-		${entity.name} ${entity.varName} = null;
-
-		try {
-			${entity.varName} = (${entity.name})obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		${entity.name} ${entity.varName} = (${entity.name})obj;
 
 		${entity.PKClassName} primaryKey = ${entity.varName}.getPrimaryKey();
 

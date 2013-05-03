@@ -706,18 +706,15 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof WikiNode)) {
 			return false;
 		}
 
-		WikiNode wikiNode = null;
-
-		try {
-			wikiNode = (WikiNode)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		WikiNode wikiNode = (WikiNode)obj;
 
 		long primaryKey = wikiNode.getPrimaryKey();
 

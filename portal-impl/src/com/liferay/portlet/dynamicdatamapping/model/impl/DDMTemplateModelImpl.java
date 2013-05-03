@@ -963,18 +963,15 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof DDMTemplate)) {
 			return false;
 		}
 
-		DDMTemplate ddmTemplate = null;
-
-		try {
-			ddmTemplate = (DDMTemplate)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		DDMTemplate ddmTemplate = (DDMTemplate)obj;
 
 		long primaryKey = ddmTemplate.getPrimaryKey();
 

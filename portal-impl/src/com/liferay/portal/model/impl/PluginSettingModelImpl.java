@@ -379,18 +379,15 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof PluginSetting)) {
 			return false;
 		}
 
-		PluginSetting pluginSetting = null;
-
-		try {
-			pluginSetting = (PluginSetting)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		PluginSetting pluginSetting = (PluginSetting)obj;
 
 		long primaryKey = pluginSetting.getPrimaryKey();
 

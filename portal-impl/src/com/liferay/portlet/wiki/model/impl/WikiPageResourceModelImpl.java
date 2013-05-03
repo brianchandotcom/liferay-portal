@@ -280,18 +280,15 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof WikiPageResource)) {
 			return false;
 		}
 
-		WikiPageResource wikiPageResource = null;
-
-		try {
-			wikiPageResource = (WikiPageResource)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		WikiPageResource wikiPageResource = (WikiPageResource)obj;
 
 		long primaryKey = wikiPageResource.getPrimaryKey();
 

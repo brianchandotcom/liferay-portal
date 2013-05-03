@@ -44,6 +44,14 @@ public class State {
 
 	@Override
 	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof State)) {
+			return false;
+		}
+
 		State state = (State)obj;
 
 		if ((getId() != null) && (state.getId() != null)) {

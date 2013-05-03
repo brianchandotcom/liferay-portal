@@ -99,18 +99,15 @@ public class ${entity.PKClassName} implements Comparable<${entity.PKClassName}>,
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof ${entity.PKClassName})) {
 			return false;
 		}
 
-		${entity.PKClassName} pk = null;
-
-		try {
-			pk = (${entity.PKClassName})obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		${entity.PKClassName} pk = (${entity.PKClassName})obj;
 
 		if (
 

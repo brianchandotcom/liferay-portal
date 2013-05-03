@@ -431,18 +431,15 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof PortletItem)) {
 			return false;
 		}
 
-		PortletItem portletItem = null;
-
-		try {
-			portletItem = (PortletItem)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		PortletItem portletItem = (PortletItem)obj;
 
 		long primaryKey = portletItem.getPrimaryKey();
 

@@ -28,6 +28,14 @@ public class QNameImpl implements QName {
 
 	@Override
 	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof QNameImpl)) {
+			return false;
+		}
+
 		org.dom4j.QName qName = ((QNameImpl)obj).getWrappedQName();
 
 		return _qName.equals(qName);

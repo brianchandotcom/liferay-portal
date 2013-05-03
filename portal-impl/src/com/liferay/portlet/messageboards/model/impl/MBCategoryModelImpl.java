@@ -807,18 +807,15 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof MBCategory)) {
 			return false;
 		}
 
-		MBCategory mbCategory = null;
-
-		try {
-			mbCategory = (MBCategory)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		MBCategory mbCategory = (MBCategory)obj;
 
 		long primaryKey = mbCategory.getPrimaryKey();
 

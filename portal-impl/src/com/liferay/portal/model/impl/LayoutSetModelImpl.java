@@ -630,18 +630,15 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof LayoutSet)) {
 			return false;
 		}
 
-		LayoutSet layoutSet = null;
-
-		try {
-			layoutSet = (LayoutSet)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		LayoutSet layoutSet = (LayoutSet)obj;
 
 		long primaryKey = layoutSet.getPrimaryKey();
 

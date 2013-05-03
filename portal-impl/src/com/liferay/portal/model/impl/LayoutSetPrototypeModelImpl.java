@@ -579,18 +579,15 @@ public class LayoutSetPrototypeModelImpl extends BaseModelImpl<LayoutSetPrototyp
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof LayoutSetPrototype)) {
 			return false;
 		}
 
-		LayoutSetPrototype layoutSetPrototype = null;
-
-		try {
-			layoutSetPrototype = (LayoutSetPrototype)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		LayoutSetPrototype layoutSetPrototype = (LayoutSetPrototype)obj;
 
 		long primaryKey = layoutSetPrototype.getPrimaryKey();
 

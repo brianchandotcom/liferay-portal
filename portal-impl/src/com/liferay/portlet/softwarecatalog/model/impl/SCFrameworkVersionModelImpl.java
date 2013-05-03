@@ -506,18 +506,15 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof SCFrameworkVersion)) {
 			return false;
 		}
 
-		SCFrameworkVersion scFrameworkVersion = null;
-
-		try {
-			scFrameworkVersion = (SCFrameworkVersion)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		SCFrameworkVersion scFrameworkVersion = (SCFrameworkVersion)obj;
 
 		long primaryKey = scFrameworkVersion.getPrimaryKey();
 

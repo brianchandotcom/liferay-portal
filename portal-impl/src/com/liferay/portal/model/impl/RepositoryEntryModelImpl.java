@@ -445,18 +445,15 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof RepositoryEntry)) {
 			return false;
 		}
 
-		RepositoryEntry repositoryEntry = null;
-
-		try {
-			repositoryEntry = (RepositoryEntry)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		RepositoryEntry repositoryEntry = (RepositoryEntry)obj;
 
 		long primaryKey = repositoryEntry.getPrimaryKey();
 

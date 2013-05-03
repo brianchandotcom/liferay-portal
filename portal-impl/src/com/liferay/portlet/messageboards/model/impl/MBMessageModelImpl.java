@@ -1014,18 +1014,15 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof MBMessage)) {
 			return false;
 		}
 
-		MBMessage mbMessage = null;
-
-		try {
-			mbMessage = (MBMessage)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		MBMessage mbMessage = (MBMessage)obj;
 
 		long primaryKey = mbMessage.getPrimaryKey();
 

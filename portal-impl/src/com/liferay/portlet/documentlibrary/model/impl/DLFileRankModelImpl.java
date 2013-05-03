@@ -441,18 +441,15 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof DLFileRank)) {
 			return false;
 		}
 
-		DLFileRank dlFileRank = null;
-
-		try {
-			dlFileRank = (DLFileRank)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		DLFileRank dlFileRank = (DLFileRank)obj;
 
 		long primaryKey = dlFileRank.getPrimaryKey();
 

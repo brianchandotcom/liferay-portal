@@ -383,18 +383,15 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof DLContent)) {
 			return false;
 		}
 
-		DLContent dlContent = null;
-
-		try {
-			dlContent = (DLContent)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		DLContent dlContent = (DLContent)obj;
 
 		long primaryKey = dlContent.getPrimaryKey();
 

@@ -708,18 +708,15 @@ public class MDRRuleModelImpl extends BaseModelImpl<MDRRule>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof MDRRule)) {
 			return false;
 		}
 
-		MDRRule mdrRule = null;
-
-		try {
-			mdrRule = (MDRRule)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		MDRRule mdrRule = (MDRRule)obj;
 
 		long primaryKey = mdrRule.getPrimaryKey();
 

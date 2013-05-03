@@ -413,18 +413,15 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof Subscription)) {
 			return false;
 		}
 
-		Subscription subscription = null;
-
-		try {
-			subscription = (Subscription)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		Subscription subscription = (Subscription)obj;
 
 		long primaryKey = subscription.getPrimaryKey();
 

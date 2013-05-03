@@ -280,18 +280,15 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof JournalArticleResource)) {
 			return false;
 		}
 
-		JournalArticleResource journalArticleResource = null;
-
-		try {
-			journalArticleResource = (JournalArticleResource)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		JournalArticleResource journalArticleResource = (JournalArticleResource)obj;
 
 		long primaryKey = journalArticleResource.getPrimaryKey();
 

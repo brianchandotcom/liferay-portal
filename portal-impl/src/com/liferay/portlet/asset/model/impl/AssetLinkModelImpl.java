@@ -385,18 +385,15 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof AssetLink)) {
 			return false;
 		}
 
-		AssetLink assetLink = null;
-
-		try {
-			assetLink = (AssetLink)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		AssetLink assetLink = (AssetLink)obj;
 
 		long primaryKey = assetLink.getPrimaryKey();
 

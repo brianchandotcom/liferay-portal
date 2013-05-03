@@ -255,18 +255,15 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof UserTrackerPath)) {
 			return false;
 		}
 
-		UserTrackerPath userTrackerPath = null;
-
-		try {
-			userTrackerPath = (UserTrackerPath)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		UserTrackerPath userTrackerPath = (UserTrackerPath)obj;
 
 		long primaryKey = userTrackerPath.getPrimaryKey();
 

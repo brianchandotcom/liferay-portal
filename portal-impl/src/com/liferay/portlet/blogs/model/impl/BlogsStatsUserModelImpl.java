@@ -412,18 +412,15 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof BlogsStatsUser)) {
 			return false;
 		}
 
-		BlogsStatsUser blogsStatsUser = null;
-
-		try {
-			blogsStatsUser = (BlogsStatsUser)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		BlogsStatsUser blogsStatsUser = (BlogsStatsUser)obj;
 
 		long primaryKey = blogsStatsUser.getPrimaryKey();
 

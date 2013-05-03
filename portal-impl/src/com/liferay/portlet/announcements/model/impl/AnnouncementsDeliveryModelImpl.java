@@ -398,18 +398,15 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof AnnouncementsDelivery)) {
 			return false;
 		}
 
-		AnnouncementsDelivery announcementsDelivery = null;
-
-		try {
-			announcementsDelivery = (AnnouncementsDelivery)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		AnnouncementsDelivery announcementsDelivery = (AnnouncementsDelivery)obj;
 
 		long primaryKey = announcementsDelivery.getPrimaryKey();
 

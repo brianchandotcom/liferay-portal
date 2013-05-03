@@ -665,18 +665,15 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof SCProductEntry)) {
 			return false;
 		}
 
-		SCProductEntry scProductEntry = null;
-
-		try {
-			scProductEntry = (SCProductEntry)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		SCProductEntry scProductEntry = (SCProductEntry)obj;
 
 		long primaryKey = scProductEntry.getPrimaryKey();
 

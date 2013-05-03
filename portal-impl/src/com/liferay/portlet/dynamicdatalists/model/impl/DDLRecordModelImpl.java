@@ -579,18 +579,15 @@ public class DDLRecordModelImpl extends BaseModelImpl<DDLRecord>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof DDLRecord)) {
 			return false;
 		}
 
-		DDLRecord ddlRecord = null;
-
-		try {
-			ddlRecord = (DDLRecord)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		DDLRecord ddlRecord = (DDLRecord)obj;
 
 		long primaryKey = ddlRecord.getPrimaryKey();
 

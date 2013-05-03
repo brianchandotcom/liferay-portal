@@ -444,18 +444,15 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof Team)) {
 			return false;
 		}
 
-		Team team = null;
-
-		try {
-			team = (Team)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		Team team = (Team)obj;
 
 		long primaryKey = team.getPrimaryKey();
 

@@ -52,6 +52,14 @@ public class DiffResult {
 
 	@Override
 	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof DiffResult)) {
+			return false;
+		}
+
 		DiffResult diffResult = (DiffResult)obj;
 
 		if ((diffResult.getLineNumber() == _lineNumber) &&

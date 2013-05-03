@@ -508,18 +508,15 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof SocialActivityCounter)) {
 			return false;
 		}
 
-		SocialActivityCounter socialActivityCounter = null;
-
-		try {
-			socialActivityCounter = (SocialActivityCounter)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		SocialActivityCounter socialActivityCounter = (SocialActivityCounter)obj;
 
 		long primaryKey = socialActivityCounter.getPrimaryKey();
 

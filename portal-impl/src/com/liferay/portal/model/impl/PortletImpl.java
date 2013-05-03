@@ -421,6 +421,14 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof Portlet)) {
+			return false;
+		}
+
 		Portlet portlet = (Portlet)obj;
 
 		String portletId = getPortletId();

@@ -789,18 +789,15 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof CalEvent)) {
 			return false;
 		}
 
-		CalEvent calEvent = null;
-
-		try {
-			calEvent = (CalEvent)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		CalEvent calEvent = (CalEvent)obj;
 
 		long primaryKey = calEvent.getPrimaryKey();
 

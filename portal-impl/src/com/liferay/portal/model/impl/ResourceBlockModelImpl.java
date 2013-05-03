@@ -383,18 +383,15 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof ResourceBlock)) {
 			return false;
 		}
 
-		ResourceBlock resourceBlock = null;
-
-		try {
-			resourceBlock = (ResourceBlock)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		ResourceBlock resourceBlock = (ResourceBlock)obj;
 
 		long primaryKey = resourceBlock.getPrimaryKey();
 

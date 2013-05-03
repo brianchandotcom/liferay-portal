@@ -263,18 +263,15 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof ResourceBlockPermission)) {
 			return false;
 		}
 
-		ResourceBlockPermission resourceBlockPermission = null;
-
-		try {
-			resourceBlockPermission = (ResourceBlockPermission)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		ResourceBlockPermission resourceBlockPermission = (ResourceBlockPermission)obj;
 
 		long primaryKey = resourceBlockPermission.getPrimaryKey();
 

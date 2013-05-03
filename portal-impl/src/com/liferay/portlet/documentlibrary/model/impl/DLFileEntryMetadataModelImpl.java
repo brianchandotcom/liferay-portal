@@ -354,18 +354,15 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof DLFileEntryMetadata)) {
 			return false;
 		}
 
-		DLFileEntryMetadata dlFileEntryMetadata = null;
-
-		try {
-			dlFileEntryMetadata = (DLFileEntryMetadata)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		DLFileEntryMetadata dlFileEntryMetadata = (DLFileEntryMetadata)obj;
 
 		long primaryKey = dlFileEntryMetadata.getPrimaryKey();
 

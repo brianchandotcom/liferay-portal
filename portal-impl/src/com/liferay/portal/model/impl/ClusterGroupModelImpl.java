@@ -243,18 +243,15 @@ public class ClusterGroupModelImpl extends BaseModelImpl<ClusterGroup>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof ClusterGroup)) {
 			return false;
 		}
 
-		ClusterGroup clusterGroup = null;
-
-		try {
-			clusterGroup = (ClusterGroup)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		ClusterGroup clusterGroup = (ClusterGroup)obj;
 
 		long primaryKey = clusterGroup.getPrimaryKey();
 

@@ -475,18 +475,15 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof MembershipRequest)) {
 			return false;
 		}
 
-		MembershipRequest membershipRequest = null;
-
-		try {
-			membershipRequest = (MembershipRequest)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		MembershipRequest membershipRequest = (MembershipRequest)obj;
 
 		long primaryKey = membershipRequest.getPrimaryKey();
 

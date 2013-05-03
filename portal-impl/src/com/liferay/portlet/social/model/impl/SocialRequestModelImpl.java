@@ -630,18 +630,15 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof SocialRequest)) {
 			return false;
 		}
 
-		SocialRequest socialRequest = null;
-
-		try {
-			socialRequest = (SocialRequest)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		SocialRequest socialRequest = (SocialRequest)obj;
 
 		long primaryKey = socialRequest.getPrimaryKey();
 

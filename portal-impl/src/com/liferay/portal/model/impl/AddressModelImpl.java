@@ -700,18 +700,15 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof Address)) {
 			return false;
 		}
 
-		Address address = null;
-
-		try {
-			address = (Address)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		Address address = (Address)obj;
 
 		long primaryKey = address.getPrimaryKey();
 

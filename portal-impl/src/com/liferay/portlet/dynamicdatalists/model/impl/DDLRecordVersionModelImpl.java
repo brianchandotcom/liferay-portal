@@ -585,18 +585,15 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof DDLRecordVersion)) {
 			return false;
 		}
 
-		DDLRecordVersion ddlRecordVersion = null;
-
-		try {
-			ddlRecordVersion = (DDLRecordVersion)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		DDLRecordVersion ddlRecordVersion = (DDLRecordVersion)obj;
 
 		long primaryKey = ddlRecordVersion.getPrimaryKey();
 

@@ -61,18 +61,15 @@ public class MessageListenerWrapper implements MessageListener {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof MessageListenerWrapper)) {
 			return false;
 		}
 
-		MessageListenerWrapper listener = null;
-
-		try {
-			listener = (MessageListenerWrapper)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		MessageListenerWrapper listener = (MessageListenerWrapper)obj;
 
 		String id = listener.getId();
 

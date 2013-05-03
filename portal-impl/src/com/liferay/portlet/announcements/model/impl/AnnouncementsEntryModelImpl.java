@@ -693,18 +693,15 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof AnnouncementsEntry)) {
 			return false;
 		}
 
-		AnnouncementsEntry announcementsEntry = null;
-
-		try {
-			announcementsEntry = (AnnouncementsEntry)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		AnnouncementsEntry announcementsEntry = (AnnouncementsEntry)obj;
 
 		long primaryKey = announcementsEntry.getPrimaryKey();
 

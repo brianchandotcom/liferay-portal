@@ -386,18 +386,15 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof PortletPreferences)) {
 			return false;
 		}
 
-		PortletPreferences portletPreferences = null;
-
-		try {
-			portletPreferences = (PortletPreferences)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		PortletPreferences portletPreferences = (PortletPreferences)obj;
 
 		long primaryKey = portletPreferences.getPrimaryKey();
 

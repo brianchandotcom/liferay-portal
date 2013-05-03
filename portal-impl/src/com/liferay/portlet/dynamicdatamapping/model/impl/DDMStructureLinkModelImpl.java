@@ -296,18 +296,15 @@ public class DDMStructureLinkModelImpl extends BaseModelImpl<DDMStructureLink>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof DDMStructureLink)) {
 			return false;
 		}
 
-		DDMStructureLink ddmStructureLink = null;
-
-		try {
-			ddmStructureLink = (DDMStructureLink)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		DDMStructureLink ddmStructureLink = (DDMStructureLink)obj;
 
 		long primaryKey = ddmStructureLink.getPrimaryKey();
 

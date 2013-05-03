@@ -505,18 +505,15 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof TrashEntry)) {
 			return false;
 		}
 
-		TrashEntry trashEntry = null;
-
-		try {
-			trashEntry = (TrashEntry)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		TrashEntry trashEntry = (TrashEntry)obj;
 
 		long primaryKey = trashEntry.getPrimaryKey();
 

@@ -434,18 +434,15 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof AssetTag)) {
 			return false;
 		}
 
-		AssetTag assetTag = null;
-
-		try {
-			assetTag = (AssetTag)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		AssetTag assetTag = (AssetTag)obj;
 
 		long primaryKey = assetTag.getPrimaryKey();
 

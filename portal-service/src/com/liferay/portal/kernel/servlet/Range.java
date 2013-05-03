@@ -35,7 +35,7 @@ public class Range {
 			return true;
 		}
 
-		if ((obj == null) || !(obj instanceof Range)) {
+		if (!(obj instanceof Range)) {
 			return false;
 		}
 

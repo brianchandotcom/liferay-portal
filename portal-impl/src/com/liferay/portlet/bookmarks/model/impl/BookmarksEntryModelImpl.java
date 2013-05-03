@@ -813,18 +813,15 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof BookmarksEntry)) {
 			return false;
 		}
 
-		BookmarksEntry bookmarksEntry = null;
-
-		try {
-			bookmarksEntry = (BookmarksEntry)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		BookmarksEntry bookmarksEntry = (BookmarksEntry)obj;
 
 		long primaryKey = bookmarksEntry.getPrimaryKey();
 

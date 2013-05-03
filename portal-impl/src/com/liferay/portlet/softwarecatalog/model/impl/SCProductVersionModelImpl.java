@@ -522,18 +522,15 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof SCProductVersion)) {
 			return false;
 		}
 
-		SCProductVersion scProductVersion = null;
-
-		try {
-			scProductVersion = (SCProductVersion)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		SCProductVersion scProductVersion = (SCProductVersion)obj;
 
 		long primaryKey = scProductVersion.getPrimaryKey();
 

@@ -1454,18 +1454,15 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof LayoutRevision)) {
 			return false;
 		}
 
-		LayoutRevision layoutRevision = null;
-
-		try {
-			layoutRevision = (LayoutRevision)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		LayoutRevision layoutRevision = (LayoutRevision)obj;
 
 		long primaryKey = layoutRevision.getPrimaryKey();
 

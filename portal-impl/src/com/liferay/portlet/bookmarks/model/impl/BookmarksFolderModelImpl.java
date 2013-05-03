@@ -759,18 +759,15 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof BookmarksFolder)) {
 			return false;
 		}
 
-		BookmarksFolder bookmarksFolder = null;
-
-		try {
-			bookmarksFolder = (BookmarksFolder)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		BookmarksFolder bookmarksFolder = (BookmarksFolder)obj;
 
 		long primaryKey = bookmarksFolder.getPrimaryKey();
 

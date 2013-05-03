@@ -93,6 +93,10 @@ public class Field implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
 		if (!(obj instanceof Field)) {
 			return false;
 		}

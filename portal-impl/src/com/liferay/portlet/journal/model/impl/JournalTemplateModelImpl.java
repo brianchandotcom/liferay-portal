@@ -846,18 +846,15 @@ public class JournalTemplateModelImpl extends BaseModelImpl<JournalTemplate>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof JournalTemplate)) {
 			return false;
 		}
 
-		JournalTemplate journalTemplate = null;
-
-		try {
-			journalTemplate = (JournalTemplate)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		JournalTemplate journalTemplate = (JournalTemplate)obj;
 
 		long primaryKey = journalTemplate.getPrimaryKey();
 

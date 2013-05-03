@@ -294,6 +294,10 @@ public class ElementImpl extends BranchImpl implements Element {
 
 	@Override
 	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
 		if (obj instanceof NodeImpl) {
 			NodeImpl nodeImpl = (NodeImpl)obj;
 
@@ -304,6 +308,9 @@ public class ElementImpl extends BranchImpl implements Element {
 			else {
 				return false;
 			}
+		}
+		else if (!(obj instanceof ElementImpl)) {
+			return false;
 		}
 
 		org.dom4j.Element element = ((ElementImpl)obj).getWrappedElement();

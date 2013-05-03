@@ -1102,14 +1102,6 @@ public class ClusterSchedulerEngineTest {
 
 		@Override
 		public boolean equals(Object obj) {
-			if (this == obj) {
-				return true;
-			}
-
-			if (!(obj instanceof MockAddress)) {
-				return false;
-			}
-
 			MockAddress mockAddress = (MockAddress)obj;
 
 			if (_timestamp == mockAddress.getTimestamp()) {

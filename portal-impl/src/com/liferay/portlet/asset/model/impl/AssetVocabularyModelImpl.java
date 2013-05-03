@@ -685,18 +685,15 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof AssetVocabulary)) {
 			return false;
 		}
 
-		AssetVocabulary assetVocabulary = null;
-
-		try {
-			assetVocabulary = (AssetVocabulary)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		AssetVocabulary assetVocabulary = (AssetVocabulary)obj;
 
 		long primaryKey = assetVocabulary.getPrimaryKey();
 

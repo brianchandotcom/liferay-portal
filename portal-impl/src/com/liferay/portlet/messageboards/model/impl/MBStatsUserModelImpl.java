@@ -318,18 +318,15 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof MBStatsUser)) {
 			return false;
 		}
 
-		MBStatsUser mbStatsUser = null;
-
-		try {
-			mbStatsUser = (MBStatsUser)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		MBStatsUser mbStatsUser = (MBStatsUser)obj;
 
 		long primaryKey = mbStatsUser.getPrimaryKey();
 

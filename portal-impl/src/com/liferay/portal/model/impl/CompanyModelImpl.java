@@ -491,18 +491,15 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof Company)) {
 			return false;
 		}
 
-		Company company = null;
-
-		try {
-			company = (Company)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		Company company = (Company)obj;
 
 		long primaryKey = company.getPrimaryKey();
 

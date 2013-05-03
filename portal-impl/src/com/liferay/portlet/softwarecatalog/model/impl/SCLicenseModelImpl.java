@@ -386,18 +386,15 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof SCLicense)) {
 			return false;
 		}
 
-		SCLicense scLicense = null;
-
-		try {
-			scLicense = (SCLicense)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		SCLicense scLicense = (SCLicense)obj;
 
 		long primaryKey = scLicense.getPrimaryKey();
 

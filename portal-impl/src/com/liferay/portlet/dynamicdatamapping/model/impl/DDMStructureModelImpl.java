@@ -870,18 +870,15 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof DDMStructure)) {
 			return false;
 		}
 
-		DDMStructure ddmStructure = null;
-
-		try {
-			ddmStructure = (DDMStructure)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		DDMStructure ddmStructure = (DDMStructure)obj;
 
 		long primaryKey = ddmStructure.getPrimaryKey();
 

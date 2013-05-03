@@ -339,18 +339,15 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof WebDAVProps)) {
 			return false;
 		}
 
-		WebDAVProps webDAVProps = null;
-
-		try {
-			webDAVProps = (WebDAVProps)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		WebDAVProps webDAVProps = (WebDAVProps)obj;
 
 		long primaryKey = webDAVProps.getPrimaryKey();
 

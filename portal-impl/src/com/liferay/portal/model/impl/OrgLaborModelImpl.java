@@ -568,18 +568,15 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof OrgLabor)) {
 			return false;
 		}
 
-		OrgLabor orgLabor = null;
-
-		try {
-			orgLabor = (OrgLabor)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		OrgLabor orgLabor = (OrgLabor)obj;
 
 		long primaryKey = orgLabor.getPrimaryKey();
 

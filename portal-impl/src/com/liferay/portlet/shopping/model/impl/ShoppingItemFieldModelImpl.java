@@ -296,18 +296,15 @@ public class ShoppingItemFieldModelImpl extends BaseModelImpl<ShoppingItemField>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof ShoppingItemField)) {
 			return false;
 		}
 
-		ShoppingItemField shoppingItemField = null;
-
-		try {
-			shoppingItemField = (ShoppingItemField)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		ShoppingItemField shoppingItemField = (ShoppingItemField)obj;
 
 		long primaryKey = shoppingItemField.getPrimaryKey();
 

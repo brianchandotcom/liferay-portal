@@ -891,18 +891,15 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof MBThread)) {
 			return false;
 		}
 
-		MBThread mbThread = null;
-
-		try {
-			mbThread = (MBThread)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		MBThread mbThread = (MBThread)obj;
 
 		long primaryKey = mbThread.getPrimaryKey();
 

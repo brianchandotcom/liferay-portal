@@ -430,18 +430,15 @@ public class WorkflowInstanceLinkModelImpl extends BaseModelImpl<WorkflowInstanc
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof WorkflowInstanceLink)) {
 			return false;
 		}
 
-		WorkflowInstanceLink workflowInstanceLink = null;
-
-		try {
-			workflowInstanceLink = (WorkflowInstanceLink)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		WorkflowInstanceLink workflowInstanceLink = (WorkflowInstanceLink)obj;
 
 		long primaryKey = workflowInstanceLink.getPrimaryKey();
 

@@ -177,18 +177,15 @@ public class CounterModelImpl extends BaseModelImpl<Counter>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof Counter)) {
 			return false;
 		}
 
-		Counter counter = null;
-
-		try {
-			counter = (Counter)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		Counter counter = (Counter)obj;
 
 		String primaryKey = counter.getPrimaryKey();
 

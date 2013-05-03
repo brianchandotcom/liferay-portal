@@ -978,18 +978,15 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof DLFileVersion)) {
 			return false;
 		}
 
-		DLFileVersion dlFileVersion = null;
-
-		try {
-			dlFileVersion = (DLFileVersion)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		DLFileVersion dlFileVersion = (DLFileVersion)obj;
 
 		long primaryKey = dlFileVersion.getPrimaryKey();
 

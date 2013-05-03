@@ -35,6 +35,14 @@ public class CommentImpl extends NodeImpl implements Comment {
 
 	@Override
 	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof CommentImpl)) {
+			return false;
+		}
+
 		org.dom4j.Comment comment = ((CommentImpl)obj).getWrappedComment();
 
 		return _comment.equals(comment);

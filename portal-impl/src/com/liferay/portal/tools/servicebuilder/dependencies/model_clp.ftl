@@ -670,18 +670,15 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof ${entity.name}Clp)) {
 			return false;
 		}
 
-		${entity.name}Clp ${entity.varName} = null;
-
-		try {
-			${entity.varName} = (${entity.name}Clp)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		${entity.name}Clp ${entity.varName} = (${entity.name}Clp)obj;
 
 		${entity.PKClassName} primaryKey = ${entity.varName}.getPrimaryKey();
 

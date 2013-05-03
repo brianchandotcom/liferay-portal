@@ -357,18 +357,15 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof Region)) {
 			return false;
 		}
 
-		Region region = null;
-
-		try {
-			region = (Region)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		Region region = (Region)obj;
 
 		long primaryKey = region.getPrimaryKey();
 

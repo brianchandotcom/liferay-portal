@@ -1143,18 +1143,15 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof AssetEntry)) {
 			return false;
 		}
 
-		AssetEntry assetEntry = null;
-
-		try {
-			assetEntry = (AssetEntry)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		AssetEntry assetEntry = (AssetEntry)obj;
 
 		long primaryKey = assetEntry.getPrimaryKey();
 

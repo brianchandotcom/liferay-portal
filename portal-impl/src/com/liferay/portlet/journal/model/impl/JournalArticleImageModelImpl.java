@@ -412,18 +412,15 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof JournalArticleImage)) {
 			return false;
 		}
 
-		JournalArticleImage journalArticleImage = null;
-
-		try {
-			journalArticleImage = (JournalArticleImage)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		JournalArticleImage journalArticleImage = (JournalArticleImage)obj;
 
 		long primaryKey = journalArticleImage.getPrimaryKey();
 

@@ -530,18 +530,15 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof EmailAddress)) {
 			return false;
 		}
 
-		EmailAddress emailAddress = null;
-
-		try {
-			emailAddress = (EmailAddress)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		EmailAddress emailAddress = (EmailAddress)obj;
 
 		long primaryKey = emailAddress.getPrimaryKey();
 

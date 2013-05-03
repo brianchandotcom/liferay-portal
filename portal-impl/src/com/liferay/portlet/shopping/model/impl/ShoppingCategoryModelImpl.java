@@ -469,18 +469,15 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof ShoppingCategory)) {
 			return false;
 		}
 
-		ShoppingCategory shoppingCategory = null;
-
-		try {
-			shoppingCategory = (ShoppingCategory)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		ShoppingCategory shoppingCategory = (ShoppingCategory)obj;
 
 		long primaryKey = shoppingCategory.getPrimaryKey();
 

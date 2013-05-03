@@ -358,18 +358,15 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof SocialActivityAchievement)) {
 			return false;
 		}
 
-		SocialActivityAchievement socialActivityAchievement = null;
-
-		try {
-			socialActivityAchievement = (SocialActivityAchievement)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		SocialActivityAchievement socialActivityAchievement = (SocialActivityAchievement)obj;
 
 		long primaryKey = socialActivityAchievement.getPrimaryKey();
 

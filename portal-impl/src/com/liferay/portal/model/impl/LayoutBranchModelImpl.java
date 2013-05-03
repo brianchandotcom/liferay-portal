@@ -480,18 +480,15 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof LayoutBranch)) {
 			return false;
 		}
 
-		LayoutBranch layoutBranch = null;
-
-		try {
-			layoutBranch = (LayoutBranch)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		LayoutBranch layoutBranch = (LayoutBranch)obj;
 
 		long primaryKey = layoutBranch.getPrimaryKey();
 

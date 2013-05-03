@@ -313,18 +313,15 @@ public class TrashVersionModelImpl extends BaseModelImpl<TrashVersion>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof TrashVersion)) {
 			return false;
 		}
 
-		TrashVersion trashVersion = null;
-
-		try {
-			trashVersion = (TrashVersion)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		TrashVersion trashVersion = (TrashVersion)obj;
 
 		long primaryKey = trashVersion.getPrimaryKey();
 

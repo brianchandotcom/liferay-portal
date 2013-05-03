@@ -272,18 +272,15 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof ListType)) {
 			return false;
 		}
 
-		ListType listType = null;
-
-		try {
-			listType = (ListType)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		ListType listType = (ListType)obj;
 
 		int primaryKey = listType.getPrimaryKey();
 

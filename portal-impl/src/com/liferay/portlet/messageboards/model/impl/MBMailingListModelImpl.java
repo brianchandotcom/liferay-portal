@@ -758,18 +758,15 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof MBMailingList)) {
 			return false;
 		}
 
-		MBMailingList mbMailingList = null;
-
-		try {
-			mbMailingList = (MBMailingList)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		MBMailingList mbMailingList = (MBMailingList)obj;
 
 		long primaryKey = mbMailingList.getPrimaryKey();
 

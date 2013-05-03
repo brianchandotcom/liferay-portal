@@ -438,18 +438,15 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof SocialActivityLimit)) {
 			return false;
 		}
 
-		SocialActivityLimit socialActivityLimit = null;
-
-		try {
-			socialActivityLimit = (SocialActivityLimit)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		SocialActivityLimit socialActivityLimit = (SocialActivityLimit)obj;
 
 		long primaryKey = socialActivityLimit.getPrimaryKey();
 

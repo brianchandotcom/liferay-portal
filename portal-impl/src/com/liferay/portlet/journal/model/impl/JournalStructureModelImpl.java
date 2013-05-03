@@ -720,18 +720,15 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof JournalStructure)) {
 			return false;
 		}
 
-		JournalStructure journalStructure = null;
-
-		try {
-			journalStructure = (JournalStructure)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		JournalStructure journalStructure = (JournalStructure)obj;
 
 		long primaryKey = journalStructure.getPrimaryKey();
 

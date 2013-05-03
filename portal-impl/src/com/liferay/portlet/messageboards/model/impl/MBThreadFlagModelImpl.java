@@ -404,18 +404,15 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof MBThreadFlag)) {
 			return false;
 		}
 
-		MBThreadFlag mbThreadFlag = null;
-
-		try {
-			mbThreadFlag = (MBThreadFlag)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		MBThreadFlag mbThreadFlag = (MBThreadFlag)obj;
 
 		long primaryKey = mbThreadFlag.getPrimaryKey();
 

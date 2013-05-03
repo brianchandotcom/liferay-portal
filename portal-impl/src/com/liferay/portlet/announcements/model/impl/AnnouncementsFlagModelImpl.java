@@ -373,18 +373,15 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof AnnouncementsFlag)) {
 			return false;
 		}
 
-		AnnouncementsFlag announcementsFlag = null;
-
-		try {
-			announcementsFlag = (AnnouncementsFlag)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		AnnouncementsFlag announcementsFlag = (AnnouncementsFlag)obj;
 
 		long primaryKey = announcementsFlag.getPrimaryKey();
 

@@ -449,18 +449,15 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof Lock)) {
 			return false;
 		}
 
-		Lock lock = null;
-
-		try {
-			lock = (Lock)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		Lock lock = (Lock)obj;
 
 		long primaryKey = lock.getPrimaryKey();
 

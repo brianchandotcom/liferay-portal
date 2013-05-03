@@ -363,18 +363,15 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof JournalContentSearch)) {
 			return false;
 		}
 
-		JournalContentSearch journalContentSearch = null;
-
-		try {
-			journalContentSearch = (JournalContentSearch)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		JournalContentSearch journalContentSearch = (JournalContentSearch)obj;
 
 		long primaryKey = journalContentSearch.getPrimaryKey();
 

@@ -504,18 +504,15 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof DLFileEntryType)) {
 			return false;
 		}
 
-		DLFileEntryType dlFileEntryType = null;
-
-		try {
-			dlFileEntryType = (DLFileEntryType)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		DLFileEntryType dlFileEntryType = (DLFileEntryType)obj;
 
 		long primaryKey = dlFileEntryType.getPrimaryKey();
 

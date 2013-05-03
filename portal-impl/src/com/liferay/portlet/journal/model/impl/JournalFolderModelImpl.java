@@ -733,18 +733,15 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof JournalFolder)) {
 			return false;
 		}
 
-		JournalFolder journalFolder = null;
-
-		try {
-			journalFolder = (JournalFolder)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		JournalFolder journalFolder = (JournalFolder)obj;
 
 		long primaryKey = journalFolder.getPrimaryKey();
 

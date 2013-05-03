@@ -511,18 +511,15 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof DDMContent)) {
 			return false;
 		}
 
-		DDMContent ddmContent = null;
-
-		try {
-			ddmContent = (DDMContent)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		DDMContent ddmContent = (DDMContent)obj;
 
 		long primaryKey = ddmContent.getPrimaryKey();
 

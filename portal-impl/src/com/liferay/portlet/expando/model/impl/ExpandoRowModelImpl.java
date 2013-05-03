@@ -264,18 +264,15 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof ExpandoRow)) {
 			return false;
 		}
 
-		ExpandoRow expandoRow = null;
-
-		try {
-			expandoRow = (ExpandoRow)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		ExpandoRow expandoRow = (ExpandoRow)obj;
 
 		long primaryKey = expandoRow.getPrimaryKey();
 

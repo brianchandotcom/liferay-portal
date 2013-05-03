@@ -297,18 +297,15 @@ public class ShardModelImpl extends BaseModelImpl<Shard> implements ShardModel {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof Shard)) {
 			return false;
 		}
 
-		Shard shard = null;
-
-		try {
-			shard = (Shard)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		Shard shard = (Shard)obj;
 
 		long primaryKey = shard.getPrimaryKey();
 

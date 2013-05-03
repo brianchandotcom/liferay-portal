@@ -628,18 +628,15 @@ public class MDRRuleGroupModelImpl extends BaseModelImpl<MDRRuleGroup>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof MDRRuleGroup)) {
 			return false;
 		}
 
-		MDRRuleGroup mdrRuleGroup = null;
-
-		try {
-			mdrRuleGroup = (MDRRuleGroup)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		MDRRuleGroup mdrRuleGroup = (MDRRuleGroup)obj;
 
 		long primaryKey = mdrRuleGroup.getPrimaryKey();
 

@@ -409,18 +409,15 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof UserNotificationEvent)) {
 			return false;
 		}
 
-		UserNotificationEvent userNotificationEvent = null;
-
-		try {
-			userNotificationEvent = (UserNotificationEvent)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		UserNotificationEvent userNotificationEvent = (UserNotificationEvent)obj;
 
 		long primaryKey = userNotificationEvent.getPrimaryKey();
 

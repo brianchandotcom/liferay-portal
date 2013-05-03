@@ -314,18 +314,15 @@ public class DDMStorageLinkModelImpl extends BaseModelImpl<DDMStorageLink>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof DDMStorageLink)) {
 			return false;
 		}
 
-		DDMStorageLink ddmStorageLink = null;
-
-		try {
-			ddmStorageLink = (DDMStorageLink)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		DDMStorageLink ddmStorageLink = (DDMStorageLink)obj;
 
 		long primaryKey = ddmStorageLink.getPrimaryKey();
 

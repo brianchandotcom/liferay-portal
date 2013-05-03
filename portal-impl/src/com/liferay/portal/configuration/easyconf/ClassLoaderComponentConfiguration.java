@@ -43,12 +43,12 @@ public class ClassLoaderComponentConfiguration extends ComponentConfiguration {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (!(obj instanceof ComponentConfiguration)) {
-			return false;
-		}
-
 		if (this == obj) {
 			return true;
+		}
+
+		if (!(obj instanceof ComponentConfiguration)) {
+			return false;
 		}
 
 		ComponentConfiguration componentConfiguration =

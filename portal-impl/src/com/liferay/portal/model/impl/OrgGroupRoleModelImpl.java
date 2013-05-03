@@ -222,18 +222,15 @@ public class OrgGroupRoleModelImpl extends BaseModelImpl<OrgGroupRole>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof OrgGroupRole)) {
 			return false;
 		}
 
-		OrgGroupRole orgGroupRole = null;
-
-		try {
-			orgGroupRole = (OrgGroupRole)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		OrgGroupRole orgGroupRole = (OrgGroupRole)obj;
 
 		OrgGroupRolePK primaryKey = orgGroupRole.getPrimaryKey();
 

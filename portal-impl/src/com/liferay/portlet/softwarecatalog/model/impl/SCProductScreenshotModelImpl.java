@@ -358,18 +358,15 @@ public class SCProductScreenshotModelImpl extends BaseModelImpl<SCProductScreens
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof SCProductScreenshot)) {
 			return false;
 		}
 
-		SCProductScreenshot scProductScreenshot = null;
-
-		try {
-			scProductScreenshot = (SCProductScreenshot)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		SCProductScreenshot scProductScreenshot = (SCProductScreenshot)obj;
 
 		long primaryKey = scProductScreenshot.getPrimaryKey();
 

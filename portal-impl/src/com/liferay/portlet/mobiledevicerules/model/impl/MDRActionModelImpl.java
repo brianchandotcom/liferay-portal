@@ -764,18 +764,15 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof MDRAction)) {
 			return false;
 		}
 
-		MDRAction mdrAction = null;
-
-		try {
-			mdrAction = (MDRAction)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		MDRAction mdrAction = (MDRAction)obj;
 
 		long primaryKey = mdrAction.getPrimaryKey();
 

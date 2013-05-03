@@ -365,18 +365,15 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof ExpandoColumn)) {
 			return false;
 		}
 
-		ExpandoColumn expandoColumn = null;
-
-		try {
-			expandoColumn = (ExpandoColumn)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		ExpandoColumn expandoColumn = (ExpandoColumn)obj;
 
 		long primaryKey = expandoColumn.getPrimaryKey();
 

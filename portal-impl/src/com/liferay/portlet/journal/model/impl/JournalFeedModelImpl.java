@@ -779,18 +779,15 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof JournalFeed)) {
 			return false;
 		}
 
-		JournalFeed journalFeed = null;
-
-		try {
-			journalFeed = (JournalFeed)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		JournalFeed journalFeed = (JournalFeed)obj;
 
 		long primaryKey = journalFeed.getPrimaryKey();
 

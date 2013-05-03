@@ -97,6 +97,14 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 
 	@Override
 	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof EntityColumn)) {
+			return false;
+		}
+
 		EntityColumn col = (EntityColumn)obj;
 
 		String name = col.getName();

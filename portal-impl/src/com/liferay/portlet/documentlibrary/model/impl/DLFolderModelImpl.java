@@ -912,18 +912,15 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof DLFolder)) {
 			return false;
 		}
 
-		DLFolder dlFolder = null;
-
-		try {
-			dlFolder = (DLFolder)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		DLFolder dlFolder = (DLFolder)obj;
 
 		long primaryKey = dlFolder.getPrimaryKey();
 

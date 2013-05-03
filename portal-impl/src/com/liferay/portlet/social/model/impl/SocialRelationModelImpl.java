@@ -354,18 +354,15 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof SocialRelation)) {
 			return false;
 		}
 
-		SocialRelation socialRelation = null;
-
-		try {
-			socialRelation = (SocialRelation)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		SocialRelation socialRelation = (SocialRelation)obj;
 
 		long primaryKey = socialRelation.getPrimaryKey();
 

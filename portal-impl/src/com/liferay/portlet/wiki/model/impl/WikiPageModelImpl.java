@@ -999,18 +999,15 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof WikiPage)) {
 			return false;
 		}
 
-		WikiPage wikiPage = null;
-
-		try {
-			wikiPage = (WikiPage)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		WikiPage wikiPage = (WikiPage)obj;
 
 		long primaryKey = wikiPage.getPrimaryKey();
 

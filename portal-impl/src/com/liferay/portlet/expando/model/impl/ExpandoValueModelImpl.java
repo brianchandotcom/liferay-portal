@@ -482,18 +482,15 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof ExpandoValue)) {
 			return false;
 		}
 
-		ExpandoValue expandoValue = null;
-
-		try {
-			expandoValue = (ExpandoValue)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		ExpandoValue expandoValue = (ExpandoValue)obj;
 
 		long primaryKey = expandoValue.getPrimaryKey();
 

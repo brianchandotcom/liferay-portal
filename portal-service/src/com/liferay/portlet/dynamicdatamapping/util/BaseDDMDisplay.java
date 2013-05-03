@@ -14,12 +14,19 @@
 
 package com.liferay.portlet.dynamicdatamapping.util;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
@@ -27,10 +34,30 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import java.util.Locale;
 import java.util.Set;
 
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
+
 /**
  * @author Eduardo Garcia
  */
 public class BaseDDMDisplay implements DDMDisplay {
+
+	public String getEditTemplateBackURL(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse, long classNameId,
+			long classPK, String portletResource)
+		throws Exception {
+
+		String backURL = ParamUtil.getString(liferayPortletRequest, "backURL");
+
+		if (Validator.isNull(backURL) || Validator.isNull(portletResource)) {
+			backURL = getViewTemplatesURL(
+				liferayPortletRequest, liferayPortletResponse, classNameId,
+				classPK);
+		}
+
+		return backURL;
+	}
 
 	public String getEditTemplateTitle(
 		DDMStructure structure, DDMTemplate template, Locale locale) {
@@ -80,6 +107,20 @@ public class BaseDDMDisplay implements DDMDisplay {
 		return LanguageUtil.get(locale, template.getType());
 	}
 
+	public String getViewTemplatesBackURL(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse, long classPK)
+		throws Exception {
+
+		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
+			getControlPanelPlid(liferayPortletRequest),
+			PortletKeys.DYNAMIC_DATA_MAPPING, PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter("struts_action", "/dynamic_data_mapping/view");
+
+		return portletURL.toString();
+	}
+
 	public Set<String> getViewTemplatesExcludedColumnNames() {
 		return _viewTemplateExcludedColumnNames;
 	}
@@ -104,12 +145,37 @@ public class BaseDDMDisplay implements DDMDisplay {
 		return false;
 	}
 
+	protected long getControlPanelPlid(
+			LiferayPortletRequest liferayPortletRequest)
+		throws PortalException, SystemException {
+
+		return PortalUtil.getControlPanelPlid(liferayPortletRequest);
+	}
+
 	protected String getDefaultEditTemplateTitle(Locale locale) {
 		return LanguageUtil.get(locale, "new-template");
 	}
 
 	protected String getDefaultViewTemplateTitle(Locale locale) {
 		return LanguageUtil.get(locale, "templates");
+	}
+
+	protected String getViewTemplatesURL(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse, long classNameId,
+			long classPK)
+		throws Exception {
+
+		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
+			getControlPanelPlid(liferayPortletRequest),
+			PortletKeys.DYNAMIC_DATA_MAPPING, PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter(
+			"struts_action", "/dynamic_data_mapping/view_template");
+		portletURL.setParameter("classNameId", String.valueOf(classNameId));
+		portletURL.setParameter("classPK", String.valueOf(classPK));
+
+		return portletURL.toString();
 	}
 
 	private static Set<String> _viewTemplateExcludedColumnNames =

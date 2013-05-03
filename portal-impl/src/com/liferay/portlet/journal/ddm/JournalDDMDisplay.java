@@ -14,7 +14,12 @@
 
 package com.liferay.portlet.journal.ddm;
 
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatamapping.util.BaseDDMDisplay;
 
@@ -26,8 +31,41 @@ import java.util.Set;
 public class JournalDDMDisplay extends BaseDDMDisplay {
 
 	@Override
+	public String getEditTemplateBackURL(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse, long classNameId,
+			long classPK, String portletResource)
+		throws Exception {
+
+		String backURL = ParamUtil.getString(liferayPortletRequest, "backURL");
+
+		if (Validator.isNull(backURL)) {
+			backURL = getViewTemplatesURL(
+				liferayPortletRequest, liferayPortletResponse, classNameId,
+				classPK);
+		}
+
+		return backURL;
+	}
+
+	@Override
 	public String getPortletId() {
 		return PortletKeys.JOURNAL;
+	}
+
+	@Override
+	public String getViewTemplatesBackURL(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse, long classPK)
+		throws Exception {
+
+		if (classPK < 0) {
+			return StringPool.BLANK;
+		}
+
+		return super.getViewTemplatesBackURL(
+			liferayPortletRequest, liferayPortletResponse, classPK);
+
 	}
 
 	@Override

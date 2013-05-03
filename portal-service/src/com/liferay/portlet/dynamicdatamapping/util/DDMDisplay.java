@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatamapping.util;
 
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 
@@ -25,6 +27,12 @@ import java.util.Set;
  */
 public interface DDMDisplay {
 
+	public String getEditTemplateBackURL(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse, long classNameId,
+			long classPK, String portletResource)
+		throws Exception;
+
 	public String getEditTemplateTitle(
 		DDMStructure structure, DDMTemplate template, Locale locale);
 
@@ -33,6 +41,11 @@ public interface DDMDisplay {
 	public String getPortletId();
 
 	public String getTemplateType(DDMTemplate template, Locale locale);
+
+	public String getViewTemplatesBackURL(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse, long classPK)
+		throws Exception;
 
 	public Set<String> getViewTemplatesExcludedColumnNames();
 

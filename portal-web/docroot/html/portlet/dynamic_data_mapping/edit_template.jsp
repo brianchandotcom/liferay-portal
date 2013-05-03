@@ -18,7 +18,6 @@
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
-String backURL = ParamUtil.getString(request, "backURL");
 
 String portletResource = ParamUtil.getString(request, "portletResource");
 
@@ -127,14 +126,8 @@ DDMDisplay ddmDisplay = DDMDisplayRegistryUtil.getDDMDisplay(refererPortletName)
 	}
 	%>
 
-	<portlet:renderURL var="viewTemplatesURL">
-		<portlet:param name="struts_action" value="/dynamic_data_mapping/view_template" />
-		<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
-		<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
-	</portlet:renderURL>
-
 	<liferay-ui:header
-		backURL="<%= ((refererPortletName.equals(PortletKeys.JOURNAL) || refererPortletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES) || Validator.isNotNull(portletResource)) && Validator.isNotNull(backURL)) ? backURL : viewTemplatesURL %>"
+		backURL="<%= ddmDisplay.getEditTemplateBackURL(liferayPortletRequest, liferayPortletResponse, classNameId, classPK, portletResource) %>"
 		localizeTitle="<%= false %>"
 		title="<%= title %>"
 	/>

@@ -90,7 +90,7 @@ public class CryptPasswordEncryptor
 	}
 
 	private static final String[] _SALT = ArrayUtil.toStringArray(
-		"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789./"
-			.toCharArray());
+		"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789./".
+			toCharArray());
 
 }

@@ -411,6 +411,8 @@ public class PortletAction extends Action {
 
 		ServletResponseUtil.write(response, json.toString());
 
+		response.flushBuffer();
+
 		setForward(portletRequest, ActionConstants.COMMON_NULL);
 	}
 
@@ -422,6 +424,8 @@ public class PortletAction extends Action {
 		mimeResponse.setContentType(ContentTypes.APPLICATION_JSON);
 
 		PortletResponseUtil.write(mimeResponse, json.toString());
+
+		mimeResponse.flushBuffer();
 	}
 
 	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = true;

@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.image.ImageToolUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -106,7 +105,6 @@ import com.liferay.portlet.sites.util.SitesUtil;
 import java.io.File;
 
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -124,7 +122,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.time.StopWatch;
-import org.apache.struts.Globals;
 
 /**
  * @author Brian Wing Shun Chan
@@ -135,101 +132,6 @@ public class ServicePreAction extends Action {
 
 	public ServicePreAction() {
 		initImportLARFiles();
-	}
-
-	public Locale initLocale(
-			HttpServletRequest request, HttpServletResponse response, User user)
-		throws Exception {
-
-		if (user == null) {
-			try {
-				user = initUser(request);
-			}
-			catch (NoSuchUserException nsue) {
-				return null;
-			}
-		}
-
-		HttpSession session = request.getSession();
-
-		Locale locale = (Locale)session.getAttribute(Globals.LOCALE_KEY);
-
-		String doAsUserLanguageId = ParamUtil.getString(
-			request, "doAsUserLanguageId");
-
-		if (Validator.isNotNull(doAsUserLanguageId)) {
-			locale = LocaleUtil.fromLanguageId(doAsUserLanguageId);
-		}
-
-		String i18nLanguageId = (String)request.getAttribute(
-			WebKeys.I18N_LANGUAGE_ID);
-
-		if (Validator.isNotNull(i18nLanguageId)) {
-			locale = LocaleUtil.fromLanguageId(i18nLanguageId);
-		}
-		else if (locale == null) {
-			if (!user.isDefaultUser()) {
-				locale = user.getLocale();
-			}
-			else {
-
-				// User previously set their preferred language
-
-				String languageId = CookieKeys.getCookie(
-					request, CookieKeys.GUEST_LANGUAGE_ID, false);
-
-				if (Validator.isNotNull(languageId)) {
-					locale = LocaleUtil.fromLanguageId(languageId);
-				}
-
-				// Get locale from the request
-
-				if ((locale == null) && PropsValues.LOCALE_DEFAULT_REQUEST) {
-					Enumeration<Locale> locales = request.getLocales();
-
-					while (locales.hasMoreElements()) {
-						Locale requestLocale = locales.nextElement();
-
-						if (Validator.isNull(requestLocale.getCountry())) {
-
-							// Locales must contain a country code
-
-							requestLocale = LanguageUtil.getLocale(
-								requestLocale.getLanguage());
-						}
-
-						if (LanguageUtil.isAvailableLocale(requestLocale)) {
-							locale = requestLocale;
-
-							break;
-						}
-					}
-				}
-
-				// Get locale from the default user
-
-				if (locale == null) {
-					locale = user.getLocale();
-				}
-
-				if (Validator.isNull(locale.getCountry())) {
-
-					// Locales must contain a country code
-
-					locale = LanguageUtil.getLocale(locale.getLanguage());
-				}
-
-				if (!LanguageUtil.isAvailableLocale(locale)) {
-					locale = user.getLocale();
-				}
-			}
-
-			session.setAttribute(Globals.LOCALE_KEY, locale);
-
-			LanguageUtil.updateCookie(request, response, locale);
-		}
-
-		return locale;
 	}
 
 	public ThemeDisplay initThemeDisplay(
@@ -337,7 +239,7 @@ public class ServicePreAction extends Action {
 		User user = null;
 
 		try {
-			user = initUser(request);
+			user = PortalUtil.initUser(request);
 		}
 		catch (NoSuchUserException nsue) {
 			return null;
@@ -395,7 +297,7 @@ public class ServicePreAction extends Action {
 		String i18nLanguageId = (String)request.getAttribute(
 			WebKeys.I18N_LANGUAGE_ID);
 
-		Locale locale = initLocale(request, response, user);
+		Locale locale = PortalUtil.getLocale(request, response, true);
 
 		// Cookie support
 
@@ -1821,35 +1723,6 @@ public class ServicePreAction extends Action {
 				}
 			}
 		}
-	}
-
-	protected User initUser(HttpServletRequest request) throws Exception {
-		try {
-			User user = PortalUtil.getUser(request);
-
-			if (user != null) {
-				return user;
-			}
-		}
-		catch (NoSuchUserException nsue) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(nsue.getMessage());
-			}
-
-			long userId = PortalUtil.getUserId(request);
-
-			if (userId > 0) {
-				HttpSession session = request.getSession();
-
-				session.invalidate();
-			}
-
-			throw nsue;
-		}
-
-		Company company = PortalUtil.getCompany(request);
-
-		return company.getDefaultUser();
 	}
 
 	protected boolean isLoginRequest(HttpServletRequest request) {

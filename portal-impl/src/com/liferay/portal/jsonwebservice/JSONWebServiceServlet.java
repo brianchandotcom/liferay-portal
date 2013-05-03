@@ -14,7 +14,6 @@
 
 package com.liferay.portal.jsonwebservice;
 
-import com.liferay.portal.events.ServicePreAction;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.PluginContextListener;
@@ -22,7 +21,6 @@ import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -79,19 +77,9 @@ public class JSONWebServiceServlet extends JSONServlet {
 			 !path.equals(StringPool.SLASH)) ||
 			(request.getParameter("discover") != null)) {
 
-			try {
-				ServicePreAction servicePreAction =
-					(ServicePreAction)InstancePool.get(
-						ServicePreAction.class.getName());
+			Locale locale = PortalUtil.getLocale(request, response, true);
 
-				Locale locale = servicePreAction.initLocale(
-					request, response, null);
-
-				LocaleThreadLocal.setThemeDisplayLocale(locale);
-			}
-			catch (Exception e) {
-				throw new ServletException(e);
-			}
+			LocaleThreadLocal.setThemeDisplayLocale(locale);
 
 			super.service(request, response);
 

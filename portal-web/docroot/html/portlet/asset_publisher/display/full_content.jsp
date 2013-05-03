@@ -38,7 +38,7 @@ AssetRenderer assetRenderer = (AssetRenderer)request.getAttribute("view.jsp-asse
 String assetClassName = assetEntry.getClassName();
 String ratingsType = "stars";
 
-if (assetClassName.contains("MBDiscussion") || assetClassName.contains("MBMessage")) {
+if (assetClassName.equals(MBDiscussion.class.getName()) || assetClassName.equals(MBMessage.class.getName())) {
 	ratingsType = "thumbs";
 }
 

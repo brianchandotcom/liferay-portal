@@ -95,6 +95,7 @@ public class FileChecker extends BaseChecker {
 			"${com.sun.aas.installRoot}",
 			"${file.separator}",
 			"${java.io.tmpdir}",
+			"${java.home}", // LPS-34711, add JAVA_HOME as a replaceable value
 			"${jboss.home.dir}",
 			"${jetty.home}",
 			"${jonas.base}",
@@ -132,6 +133,7 @@ public class FileChecker extends BaseChecker {
 			System.getProperty("com.sun.aas.installRoot"),
 			System.getProperty("file.separator"),
 			System.getProperty("java.io.tmpdir"),
+			System.getenv("JAVA_HOME"), // LPS-34711, add JAVA_HOME as a replaceable value.
 			System.getProperty("jboss.home.dir"),
 			System.getProperty("jetty.home"), System.getProperty("jonas.base"),
 			_portalDir, PropsValues.LIFERAY_HOME,
@@ -316,6 +318,31 @@ public class FileChecker extends BaseChecker {
 		String value = getProperty(key);
 
 		if (value != null) {
+			// Begin LPS-34711, allow ${env:ENV_VAR} as a replaceable value
+			int pos;
+			
+			// do this check in a loop in case we are grabbing multiple environment vars in a single value.
+			while ((pos = value.indexOf("${env:")) >= 0) {
+				// find where the ${env:...} ends
+				int end = value.indexOf('}', pos);
+				
+				// extract the string that is going to be replaced
+				String replacement = value.substring(pos, end + 1);
+				
+				// extract the environment variable that needs to be referenced
+				String envVar = value.substring(pos+6, end);
+				
+				// get the value from the system
+				String envValue = System.getenv(envVar.trim());
+				
+				// protect from NPEs...
+				if (envValue == null) envValue = "";
+				
+				// do the environment replacement...
+				value = StringUtil.replace(value, replacement, envValue);
+			}
+			// End LPS-34711, allow ${env:ENV_VAR} as a replaceable value
+			
 			value = StringUtil.replace(
 				value, _defaultReadPathsFromArray, _defaultReadPathsToArray);
 

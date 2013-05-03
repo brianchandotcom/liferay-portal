@@ -14,6 +14,7 @@
 			<arg value="sample.sql.max.asset.category.count=${sample.sql.max.asset.category.count}" />
 			<arg value="sample.sql.max.blogs.entry.comment.count=${sample.sql.max.blogs.entry.comment.count}" />
 			<arg value="sample.sql.max.blogs.entry.count=${sample.sql.max.blogs.entry.count}" />
+			<arg value="sample.sql.max.ddl.custom.field.count=${sample.sql.max.ddl.custom.field.count}" />
 			<arg value="sample.sql.max.ddl.record.count=${sample.sql.max.ddl.record.count}" />
 			<arg value="sample.sql.max.ddl.record.set.count=${sample.sql.max.ddl.record.set.count}" />
 			<arg value="sample.sql.max.dl.file.entry.count=${sample.sql.max.dl.file.entry.count}" />

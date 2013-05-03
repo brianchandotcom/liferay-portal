@@ -1096,9 +1096,10 @@ release was successful.</echo>
 		<mkdir dir="${app.server.parent.dir}/jetty-${app.server.jetty.version}/webapps" />
 
 		<copy
-			file="tools/servers/jetty/bin/run.bat"
-			tofile="${app.server.jetty.bin.dir}/run.bat"
-		/>
+			todir="${app.server.jetty.bin.dir}"
+		>
+			<fileset dir="tools/servers/jetty/bin" />
+		</copy>
 
 		<replace file="${app.server.jetty.bin.dir}/run.bat">
 			<replacetoken>set "JAVA_OPTS=-D</replacetoken>
@@ -1113,11 +1114,6 @@ release was successful.</echo>
 
 		<echo file="${app.server.jetty.bin.dir}/run.bat">${run.bat.content}</echo>
 
-		<copy
-			file="tools/servers/jetty/bin/run.sh"
-			tofile="${app.server.jetty.bin.dir}/run.sh"
-		/>
-
 		<replace file="${app.server.jetty.bin.dir}/run.sh">
 			<replacetoken>export JAVA_OPTS="-D</replacetoken>
 			<replacevalue>export JAVA_OPTS="-Dapp.server.jetty.version=${app.server.jetty.version} -Dapp.server.jetty.version.date=${app.server.jetty.version.date} -D</replacevalue>
@@ -1130,11 +1126,6 @@ release was successful.</echo>
 		</loadfile>
 
 		<echo file="${app.server.jetty.bin.dir}/run.sh">${run.sh.content}</echo>
-
-		<copy
-			file="tools/servers/jetty/bin/start.ini"
-			tofile="${app.server.jetty.bin.dir}/start.ini"
-		/>
 
 		<chmod perm="a+x">
 			<fileset dir="${app.server.jetty.bin.dir}">
@@ -1339,14 +1330,10 @@ release was successful.</echo>
 		</replace>
 
 		<copy
-			file="tools/servers/resin/bin/run.bat"
-			tofile="${app.server.resin.bin.dir}/run.bat"
-		/>
-
-		<copy
-			file="tools/servers/resin/bin/run.sh"
-			tofile="${app.server.resin.bin.dir}/run.sh"
-		/>
+			todir="${app.server.resin.bin.dir}"
+		>
+			<fileset dir="tools/servers/resin/bin" />
+		</copy>
 
 		<chmod perm="a+x">
 			<fileset dir="${app.server.resin.bin.dir}">

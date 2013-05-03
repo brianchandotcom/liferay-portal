@@ -135,6 +135,15 @@ AUI.add(
 
 						instance._styleButtonsList.delegate(STR_CLICK, instance._onChangeDisplayStyle, SELECTOR_BUTTON, instance);
 
+						Liferay.on(
+							'AddContent:addPortlet',
+							function(event) {
+								instance._addPortlet(event.node, event.options);
+							}
+						);
+
+						Liferay.on('AddContent:refreshContentList', instance._refreshContentList, instance);
+
 						Liferay.on('closePortlet', instance._onPortletClose, instance);
 
 						Liferay.once('dockbarAddContentDD:init', instance._onDockbarAddContentDDInit, instance);

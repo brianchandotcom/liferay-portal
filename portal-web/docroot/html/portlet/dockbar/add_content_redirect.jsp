@@ -50,6 +50,8 @@ if (Validator.isNotNull(className) && (classPK > 0)) {
 				node: A.one('.portlet-item')
 			}
 		);
+
+		Util.getOpener().Liferay.fire('AddContent:refreshContentList');
 	</c:if>
 
 	Liferay.fire(

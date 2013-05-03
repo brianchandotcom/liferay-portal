@@ -2048,7 +2048,7 @@
 		<use-default-template>false</use-default-template>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
-		<autopropagated-parameters>ddmResource,ddmResourceActionId,scopeAvailableFields,scopeStorageType,scopeStructureName,scopeStructureType,scopeTemplateMode,scopeTitle,scopeTemplateType,showGlobalScope,showManageTemplates,showToolbar,templateHeaderTitle</autopropagated-parameters>
+		<autopropagated-parameters>ddmResource,ddmResourceActionId,scopeAvailableFields,scopeStorageType,scopeStructureName,scopeStructureType,scopeTemplateMode,scopeTitle,scopeTemplateType,showGlobalScope,showManageTemplates,showToolbar</autopropagated-parameters>
 		<render-weight>50</render-weight>
 		<header-portlet-css>/html/portlet/dynamic_data_mapping/css/main.css</header-portlet-css>
 		<css-class-wrapper>portlet-dynamic-data-mapping</css-class-wrapper>

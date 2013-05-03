@@ -101,8 +101,6 @@ else if (scopeTemplateType.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM)) {
 	templateTypeValue = DDMTemplateConstants.TEMPLATE_TYPE_FORM;
 }
 
-String templateHeaderTitle = ParamUtil.getString(request, "templateHeaderTitle");
-
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
 

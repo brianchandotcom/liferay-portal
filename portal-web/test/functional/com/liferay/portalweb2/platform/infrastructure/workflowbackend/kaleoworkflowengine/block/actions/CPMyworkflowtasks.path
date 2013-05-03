@@ -1,0 +1,197 @@
+<html>
+<head>
+<title>CPMyworkflowtasks</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPMyworkflowtasks</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPMyworkflowtasks</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCESS_MESSAGE</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_PENDING</td>
+	<td>//span[@class='aui-tab-content']/a[contains(.,'Pending')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_COMPLETED</td>
+	<td>//span[@class='aui-tab-content']/a[contains(.,'Completed')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--BASIC_SEARCH-->
+<tr>
+	<td>BASIC_SEARCH_FIELD</td>
+	<td>//input[@id='_153_toggle_id_workflow_task_searchkeywords']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BASIC_SEARCH_BUTTON</td>
+	<td>xpath=(//input[@value='Search'])[1]</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ADVANCED_SEARCH-->
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ASSIGNED_TO_ME_TABLE-->
+<tr>
+	<td>ASSIGNED_TO_ME_TABLE_TASK</td>
+	<td>//div[@id='workflowMyTasksPanel']//tr/td[contains(@headers,'col-task')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGNED_TO_ME_TABLE_ASSET_TITLE</td>
+	<td>//div[@id='workflowMyTasksPanel']//tr/td[contains(@headers,'col-asset-title')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGNED_TO_ME_TABLE_ASSET_TYPE</td>
+	<td>//div[@id='workflowMyTasksPanel']//tr/td[contains(@headers,'col-asset-type')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGNED_TO_ME_TABLE_LAST_ACTIVITY_DATE</td>
+	<td>//div[@id='workflowMyTasksPanel']//tr/td[contains(@headers,'col-last-activity-date')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGNED_TO_ME_TABLE_DUE_DATE</td>
+	<td>//div[@id='workflowMyTasksPanel']//tr/td[contains(@headers,'col-due-date')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGNED_TO_ME_TABLE_ACTIONS</td>
+	<td>//div[@id='workflowMyTasksPanel']//tr/td/span[@title='Actions']//a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ASSIGNED_TO_ME_MENULIST-->
+<tr>
+	<td>ASSIGNED_TO_ME_MENULIST_APPROVE</td>
+	<td>//a[@role='menuitem' and contains(.,'Approve')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGNED_TO_ME_MENULIST_REJECT</td>
+	<td>//a[@role='menuitem' and contains(.,'Reject')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGNED_TO_ME_MENULIST_UPDATE_DUE_DATE</td>
+	<td>//a[@role='menuitem' and contains(.,'Update Due Date')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ASSIGNED_TO_MY_ROLES_TABLE-->
+<tr>
+	<td>ASSIGNED_TO_MY_ROLES_TABLE_TASK</td>
+	<td>//div[@id='workflowMyRolesTasksPanel']//tr/td[contains(@headers,'col-task')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TITLE</td>
+	<td>//div[@id='workflowMyRolesTasksPanel']//tr/td[contains(@headers,'col-asset-title')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TYPE</td>
+	<td>//div[@id='workflowMyRolesTasksPanel']//tr/td[contains(@headers,'col-asset-type')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGNED_TO_MY_ROLES_TABLE_LAST_ACTIVITY_DATE</td>
+	<td>//div[@id='workflowMyRolesTasksPanel']//tr/td[contains(@headers,'col-last-activity-date')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGNED_TO_MY_ROLES_TABLE_DUE_DATE</td>
+	<td>//div[@id='workflowMyRolesTasksPanel']//tr/td[contains(@headers,'col-due-date')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGNED_TO_MY_ROLES_TABLE_ACTIONS</td>
+	<td>//div[@id='workflowMyRolesTasksPanel']//tr/td/span[@title='Actions']//a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ASSIGNED_TO_MY_ROLES_MENULIST-->
+<tr>
+	<td>ASSIGNED_TO_MY_ROLES_MENULIST_ASSIGN_TO_ME</td>
+	<td>//a[@role='menuitem' and contains(.,'Assign to Me')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGNED_TO_MY_ROLES_MENULIST_UPDATE_DUE_DATE</td>
+	<td>//a[@role='menuitem' and contains(.,'Update Due Date')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PANEL-->
+<tr>
+	<td>PANEL_COMMENT_FIELD</td>
+	<td>//textarea[@id='_153_comment']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PANEL_OK_BUTTON</td>
+	<td>//button[.='OK']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PANEL_CANCEL_BUTTON</td>
+	<td>//button[.='Cancel']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

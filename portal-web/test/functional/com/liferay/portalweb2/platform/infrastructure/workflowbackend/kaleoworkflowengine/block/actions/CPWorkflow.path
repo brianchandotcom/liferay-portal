@@ -1,0 +1,87 @@
+<html>
+<head>
+<title>CPWorkflow</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPWorkflow</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPWorkflow</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_DEFINITIONS</td>
+	<td>//span[@class='aui-tab-content']/a[contains(.,'Definitions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_DEFAULT_CONFIGURATIONS</td>
+	<td>//span[@class='aui-tab-content']/a[contains(.,'Default Configurations')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_SUBMISSIONS</td>
+	<td>//span[@class='aui-tab-content']/a[contains(.,'Submissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DEFINITION_TABLE-->
+<tr>
+	<td>DEFINITION_TABLE_NAME</td>
+	<td>//div[@id='_151_workflowDefinitionsSearchContainer']//tr/td[contains(@id,'col-name')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFINITION_TABLE_TITLE</td>
+	<td>//div[@id='_151_workflowDefinitionsSearchContainer']//tr/td[contains(@id,'col-title')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFINITION_TABLE_VERSION</td>
+	<td>//div[@id='_151_workflowDefinitionsSearchContainer']//tr/td[contains(@id,'col-version')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFINITION_TABLE_ACTIVE</td>
+	<td>//div[@id='_151_workflowDefinitionsSearchContainer']//tr/td[contains(@id,'col-active')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFINITION_TABLE_ACTIONS</td>
+	<td>//div[@id='_151_workflowDefinitionsSearchContainer']//tr/td/span[@title='Actions']//a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DEFITION_MENULIST-->
+<tr>
+	<td>DEFITION_MENULIST_ADD_NEW_FILE</td>
+	<td>//a[@role='menuitem' and contains(.,'Add New File')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFITION_MENULIST_DEACTIVATE</td>
+	<td>//a[@role='menuitem' and contains(.,'Deactivate')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

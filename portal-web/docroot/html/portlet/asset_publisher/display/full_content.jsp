@@ -32,15 +32,17 @@ if (Validator.isNull(redirect) && results.isEmpty()) {
 int assetEntryIndex = ((Integer)request.getAttribute("view.jsp-assetEntryIndex")).intValue();
 
 AssetEntry assetEntry = (AssetEntry)request.getAttribute("view.jsp-assetEntry");
-AssetRendererFactory assetRendererFactory = (AssetRendererFactory)request.getAttribute("view.jsp-assetRendererFactory");
-AssetRenderer assetRenderer = (AssetRenderer)request.getAttribute("view.jsp-assetRenderer");
 
-String assetClassName = assetEntry.getClassName();
+String assetEntryClassName = assetEntry.getClassName();
+
 String ratingsType = "stars";
 
-if (assetClassName.equals(MBDiscussion.class.getName()) || assetClassName.equals(MBMessage.class.getName())) {
+if (assetEntryClassName.equals(MBDiscussion.class.getName()) || assetEntryClassName.equals(MBMessage.class.getName())) {
 	ratingsType = "thumbs";
 }
+
+AssetRendererFactory assetRendererFactory = (AssetRendererFactory)request.getAttribute("view.jsp-assetRendererFactory");
+AssetRenderer assetRenderer = (AssetRenderer)request.getAttribute("view.jsp-assetRenderer");
 
 String title = (String)request.getAttribute("view.jsp-title");
 

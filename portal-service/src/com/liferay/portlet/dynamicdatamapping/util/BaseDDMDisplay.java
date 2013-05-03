@@ -100,6 +100,10 @@ public class BaseDDMDisplay implements DDMDisplay {
 		return getViewTemplatesTitle(structure, false, locale);
 	}
 
+	public boolean showStructureSelector() {
+		return false;
+	}
+
 	protected String getDefaultEditTemplateTitle(Locale locale) {
 		return LanguageUtil.get(locale, "new-template");
 	}

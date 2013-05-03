@@ -35,6 +35,11 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 		return _viewTemplateExcludedColumnNames;
 	}
 
+	@Override
+	public boolean showStructureSelector() {
+		return true;
+	}
+
 	private static Set<String> _viewTemplateExcludedColumnNames =
 		SetUtil.fromArray(new String[] {"mode"});
 

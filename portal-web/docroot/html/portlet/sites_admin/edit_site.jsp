@@ -103,7 +103,7 @@ if (!trashEnabled && ArrayUtil.contains(advancedSections, "recycle-bin")) {
 	advancedSections = ArrayUtil.remove(advancedSections, "recycle-bin");
 }
 
-if (group.isCompany()) {
+if ((group != null) && group.isCompany()) {
 	mainSections = ArrayUtil.remove(mainSections, "categorization");
 	mainSections = ArrayUtil.remove(mainSections, "site-url");
 	mainSections = ArrayUtil.remove(mainSections, "site-template");

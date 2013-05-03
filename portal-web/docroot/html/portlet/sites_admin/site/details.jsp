@@ -127,7 +127,7 @@ if (showPrototypes && (group != null)) {
 
 	<aui:input name="description" />
 
-	<c:if test="<%= !group.isCompany() %>">
+	<c:if test="<%= (group == null) || !group.isCompany() %>">
 		<aui:select label="membership-type" name="type">
 			<aui:option label="open" value="<%= GroupConstants.TYPE_SITE_OPEN %>" />
 			<aui:option label="limited-to-parent-site-members" value="<%= GroupConstants.TYPE_SITE_LIMITED_TO_PARENT_SITE_MEMBERS %>" />
@@ -149,7 +149,7 @@ if (showPrototypes && (group != null)) {
 boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(permissionChecker, ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE);
 %>
 
-<c:if test="<%= !group.isCompany() %>">
+<c:if test="<%= (group == null) || !group.isCompany() %>">
 	<aui:fieldset>
 		<c:choose>
 			<c:when test="<%= showPrototypes && ((group != null) || (!layoutSetPrototypes.isEmpty() && (layoutSetPrototype == null))) %>">

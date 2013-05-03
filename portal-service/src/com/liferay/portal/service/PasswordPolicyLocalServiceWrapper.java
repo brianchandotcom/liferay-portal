@@ -303,6 +303,12 @@ public class PasswordPolicyLocalServiceWrapper
 		_passwordPolicyLocalService.checkDefaultPasswordPolicy(companyId);
 	}
 
+	public void deleteNonDefaultPasswordPolicies(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_passwordPolicyLocalService.deleteNonDefaultPasswordPolicies(companyId);
+	}
+
 	public com.liferay.portal.model.PasswordPolicy fetchPasswordPolicy(
 		long companyId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -321,6 +327,13 @@ public class PasswordPolicyLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _passwordPolicyLocalService.getDefaultPasswordPolicy(companyId);
+	}
+
+	public java.util.List<com.liferay.portal.model.PasswordPolicy> getPasswordPolicies(
+		long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _passwordPolicyLocalService.getPasswordPolicies(companyId);
 	}
 
 	/**

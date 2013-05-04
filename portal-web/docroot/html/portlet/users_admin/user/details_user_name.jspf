@@ -14,21 +14,21 @@
  */
 --%>
 
-<aui:select bean="<%= selContact %>" label="title[person]" listType="<%= ListTypeConstants.CONTACT_PREFIX %>" listTypeFieldName="prefixId" model="<%= Contact.class %>" name="prefixId" showEmptyOption="<%= true %>" />
+<aui:select bean="<%= selContact %>" disabled='<%= !UsersAdminUtil.hasUpdateFieldPermission(selUser, "prefix") %>' label="title[person]" listType="<%= ListTypeConstants.CONTACT_PREFIX %>" listTypeFieldName="prefixId" model="<%= Contact.class %>" name="prefixId" showEmptyOption="<%= true %>" />
 
 <liferay-ui:error exception="<%= ContactFirstNameException.class %>" message="please-enter-a-valid-first-name" />
 <liferay-ui:error exception="<%= ContactFullNameException.class %>" message="please-enter-a-valid-first-middle-and-last-name" />
 
-<aui:input name="firstName" />
+<aui:input disabled='<%= !UsersAdminUtil.hasUpdateFieldPermission(selUser, "firstName") %>' name="firstName" />
 
-<aui:input name="middleName" />
+<aui:input disabled='<%= !UsersAdminUtil.hasUpdateFieldPermission(selUser, "middleName") %>' name="middleName" />
 
 <liferay-ui:error exception="<%= ContactLastNameException.class %>" message="please-enter-a-valid-last-name" />
 
-<aui:input name="lastName">
+<aui:input disabled='<%= !UsersAdminUtil.hasUpdateFieldPermission(selUser, "lastName") %>' name="lastName">
 	<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_LAST_NAME_REQUIRED, PropsValues.USERS_LAST_NAME_REQUIRED) %>">
 		<aui:validator name="required" />
 	</c:if>
 </aui:input>
 
-<aui:select bean="<%= selContact %>" label="suffix" listType="<%= ListTypeConstants.CONTACT_SUFFIX %>" listTypeFieldName="suffixId" model="<%= Contact.class %>" name="suffixId" showEmptyOption="<%= true %>" />
+<aui:select bean="<%= selContact %>" disabled='<%= !UsersAdminUtil.hasUpdateFieldPermission(selUser, "suffix") %>' label="suffix" listType="<%= ListTypeConstants.CONTACT_SUFFIX %>" listTypeFieldName="suffixId" model="<%= Contact.class %>" name="suffixId" showEmptyOption="<%= true %>" />

@@ -777,6 +777,10 @@ public interface Portal {
 
 	public Locale getLocale(HttpServletRequest request);
 
+	public Locale getLocale(
+		HttpServletRequest request, HttpServletResponse response,
+		boolean initialize);
+
 	public Locale getLocale(RenderRequest renderRequest);
 
 	public String getMailId(String mx, String popPortletPrefix, Object... ids);
@@ -1072,6 +1076,8 @@ public interface Portal {
 		throws PortalException, SystemException;
 
 	public void initCustomSQL();
+
+	public User initUser(HttpServletRequest request) throws Exception;
 
 	public void invokeTaglibDiscussion(
 			PortletConfig portletConfig, ActionRequest actionRequest,

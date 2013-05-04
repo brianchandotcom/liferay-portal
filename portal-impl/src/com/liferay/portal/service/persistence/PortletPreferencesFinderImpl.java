@@ -48,8 +48,9 @@ public class PortletPreferencesFinderImpl
 		new FinderPath(
 			PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED,
-			PortletPreferencesImpl.class, PortletPreferencesPersistenceImpl
-				.FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			PortletPreferencesImpl.class,
+			PortletPreferencesPersistenceImpl.
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByC_G_O_O_P_P",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),

@@ -106,8 +106,8 @@ public class OrganizationStagedModelDataHandler
 
 		serviceContext.setUserId(userId);
 
-		Organization existingOrganization = OrganizationLocalServiceUtil
-			.fetchOrganizationByUuidAndCompanyId(
+		Organization existingOrganization =
+			OrganizationLocalServiceUtil.fetchOrganizationByUuidAndCompanyId(
 				organization.getUuid(), portletDataContext.getCompanyId());
 
 		if (existingOrganization == null) {

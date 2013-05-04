@@ -38,7 +38,7 @@
 					_entry = ddlRecord
 				/>
 
-				${writerDynamicDataListsCSV.write(layoutName + "," + portletId + "," + ddlRecordSet.recordSetId + "," + ddlRecord.recordId + "\n")}
+				${writerDynamicDataListsCSV.write(layoutName + "," + portletId + "," + ddlRecordSet.recordSetId + "," + ddlRecord.recordId + "," + ddlRecord.groupId + "\n")}
 			</#list>
 		</#if>
 

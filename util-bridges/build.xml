@@ -18,7 +18,7 @@
 		<path id="web-lib.classpath">
 			<pathelement path="${project.dir}/portal-service/classes" />
 			<pathelement path="${project.dir}/util-java/classes" />
-			<fileset dir="${project.dir}/lib/development" includes="groovy.jar,icefaces.jar,icefaces-comps.jar,jruby.jar,jsf-api.jar,jsf-impl.jar,myfaces-api.jar,myfaces-impl.jar,resin.jar" />
+			<fileset dir="${project.dir}/lib/development" includes="groovy.jar,jruby.jar,resin.jar" />
 			<fileset dir="${project.dir}/lib/portal" includes="bsf.jar,commons-logging.jar,liferay-rhino.jar,portals-bridges.jar,struts.jar" />
 		</path>
 

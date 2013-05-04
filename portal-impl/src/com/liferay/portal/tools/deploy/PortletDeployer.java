@@ -31,11 +31,8 @@ import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portal.xml.DocumentImpl;
 import com.liferay.util.bridges.alloy.AlloyPortlet;
 import com.liferay.util.bridges.mvc.MVCPortlet;
-import com.liferay.util.xml.XMLMerger;
-import com.liferay.util.xml.descriptor.FacesXMLDescriptor;
 
 import java.io.File;
 
@@ -48,19 +45,8 @@ import java.util.List;
  */
 public class PortletDeployer extends BaseDeployer {
 
-	public static final String JSF_MYFACES =
-		"org.apache.myfaces.portlet.MyFacesGenericPortlet";
-
 	public static final String JSF_STANDARD =
 		"javax.portlet.faces.GenericFacesPortlet";
-
-	public static final String JSF_SUN = "com.sun.faces.portlet.FacesPortlet";
-
-	public static final String LIFERAY_RENDER_KIT_FACTORY =
-		"com.liferay.util.jsf.sun.faces.renderkit.LiferayRenderKitFactoryImpl";
-
-	public static final String MYFACES_CONTEXT_FACTORY =
-		"com.liferay.util.bridges.jsf.myfaces.MyFacesContextFactoryImpl";
 
 	public static void main(String[] args) {
 		InitUtil.initWithSpring();
@@ -127,7 +113,6 @@ public class PortletDeployer extends BaseDeployer {
 			sb.append("</context-param>");
 		}
 
-		File facesXML = new File(srcFile + "/WEB-INF/faces-config.xml");
 		File portletXML = new File(
 			srcFile + "/WEB-INF/" + Portal.PORTLET_XML_FILE_NAME_STANDARD);
 		File webXML = new File(srcFile + "/WEB-INF/web.xml");
@@ -137,20 +122,6 @@ public class PortletDeployer extends BaseDeployer {
 		sb.append(getServletContent(portletXML, webXML));
 
 		setupAlloy(srcFile, portletXML);
-
-		setupJSF(facesXML, portletXML);
-
-		if (_sunFacesPortlet) {
-
-			// LiferayConfigureListener
-
-			sb.append("<listener>");
-			sb.append("<listener-class>");
-			sb.append("com.liferay.util.bridges.jsf.sun.");
-			sb.append("LiferayConfigureListener");
-			sb.append("</listener-class>");
-			sb.append("</listener>");
-		}
 
 		String extraContent = super.getExtraContent(
 			webXmlVersion, srcFile, displayName);
@@ -259,84 +230,6 @@ public class PortletDeployer extends BaseDeployer {
 		}
 	}
 
-	public void setupJSF(File facesXML, File portletXML) throws Exception {
-		_myFacesPortlet = false;
-		_sunFacesPortlet = false;
-
-		if (!facesXML.exists()) {
-			return;
-		}
-
-		// portlet.xml
-
-		Document document = SAXReaderUtil.read(portletXML, true);
-
-		Element rootElement = document.getRootElement();
-
-		List<Element> portletElements = rootElement.elements("portlet");
-
-		for (Element portletElement : portletElements) {
-			String portletClass = portletElement.elementText("portlet-class");
-
-			if (portletClass.equals(JSF_MYFACES)) {
-				_myFacesPortlet = true;
-
-				break;
-			}
-			else if (portletClass.equals(JSF_SUN)) {
-				_sunFacesPortlet = true;
-
-				break;
-			}
-		}
-
-		// faces-config.xml
-
-		document = SAXReaderUtil.read(facesXML, true);
-
-		rootElement = document.getRootElement();
-
-		Element factoryElement = rootElement.element("factory");
-
-		Element renderKitFactoryElement = null;
-		Element facesContextFactoryElement = null;
-
-		if (factoryElement == null) {
-			factoryElement = rootElement.addElement("factory");
-		}
-
-		renderKitFactoryElement = factoryElement.element("render-kit-factory");
-		facesContextFactoryElement = factoryElement.element(
-			"faces-context-factory");
-
-		if (appServerType.equals("orion") && _sunFacesPortlet &&
-			(renderKitFactoryElement == null)) {
-
-			renderKitFactoryElement = factoryElement.addElement(
-				"render-kit-factory");
-
-			renderKitFactoryElement.addText(LIFERAY_RENDER_KIT_FACTORY);
-		}
-		else if (_myFacesPortlet && (facesContextFactoryElement == null)) {
-			facesContextFactoryElement = factoryElement.addElement(
-				"faces-context-factory");
-
-			facesContextFactoryElement.addText(MYFACES_CONTEXT_FACTORY);
-		}
-
-		if (!appServerType.equals("orion") && _sunFacesPortlet) {
-			factoryElement.detach();
-		}
-
-		XMLMerger xmlMerger = new XMLMerger(new FacesXMLDescriptor());
-
-		DocumentImpl documentImpl = (DocumentImpl)document;
-
-		xmlMerger.organizeXML(documentImpl.getWrappedDocument());
-
-		FileUtil.write(facesXML, document.formattedString(), true);
-	}
-
 	@Override
 	public void updateDeployDirectory(File srcFile) throws Exception {
 		boolean customPortletXML = false;
@@ -391,8 +284,5 @@ public class PortletDeployer extends BaseDeployer {
 
 		FileUtil.write(portletXML, content);
 	}
-
-	private boolean _myFacesPortlet;
-	private boolean _sunFacesPortlet;
 
 }

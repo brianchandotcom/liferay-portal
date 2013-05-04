@@ -355,8 +355,6 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 			FileUtil.copyFile(
 				jarFullName, srcFile + "/WEB-INF/lib/" + jarName, false);
 		}
-
-		FileUtil.delete(srcFile + "/WEB-INF/lib/util-jsf.jar");
 	}
 
 	public void copyPortalDependencies(File srcFile) throws Exception {

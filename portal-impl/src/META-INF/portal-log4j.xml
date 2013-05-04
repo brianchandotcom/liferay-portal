@@ -1206,10 +1206,6 @@
 		<priority value="ERROR" />
 	</category>
 
-	<category name="org.apache.myfaces">
-		<priority value="ERROR" />
-	</category>
-
 	<category name="org.apache.pdfbox">
 		<priority value="ERROR" />
 	</category>

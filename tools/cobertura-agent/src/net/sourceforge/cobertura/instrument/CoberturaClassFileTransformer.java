@@ -17,10 +17,10 @@ package net.sourceforge.cobertura.instrument;
 import java.io.File;
 
 import java.lang.instrument.ClassFileTransformer;
-import java.lang.instrument.IllegalClassFormatException;
 
 import java.security.ProtectionDomain;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -114,66 +114,76 @@ public class CoberturaClassFileTransformer implements ClassFileTransformer {
 		return false;
 	}
 
+	@Override
 	public byte[] transform(
-			ClassLoader classLoader, String className, Class<?> refinedClass,
-			ProtectionDomain protectionDomain, byte[] classfileBuffer)
-		throws IllegalClassFormatException {
+		ClassLoader classLoader, String className, Class<?> refinedClass,
+		ProtectionDomain protectionDomain, byte[] classfileBuffer) {
 
-		if (matches(className)) {
-			InstrumentationAgent.recordInstrumentation(
-				classLoader, className, classfileBuffer);
+		try {
+			if (matches(className)) {
+				InstrumentationAgent.recordInstrumentation(
+					classLoader, className, classfileBuffer);
 
-			ProjectData projectData = _projectDatas.get(classLoader);
+				ProjectData projectData = _projectDatas.get(classLoader);
 
-			if (projectData == null) {
-				projectData = new ProjectData();
+				if (projectData == null) {
+					projectData = new ProjectData();
 
-				ProjectData previousProjectData = _projectDatas.putIfAbsent(
-					classLoader, projectData);
+					ProjectData previousProjectData = _projectDatas.putIfAbsent(
+						classLoader, projectData);
 
-				if (previousProjectData != null) {
-					projectData = previousProjectData;
+					if (previousProjectData != null) {
+						projectData = previousProjectData;
+					}
 				}
+
+				ClassWriter classWriter = new ClassWriter(
+					ClassWriter.COMPUTE_MAXS);
+
+				ClassVisitor classVisitor = classWriter;
+
+				if (!InstrumentationAgent.isStaticallyInstrumented()) {
+					classVisitor = new RemoveHasBeenInstrumentedClassVisitor(
+						classVisitor);
+				}
+
+				classVisitor = new ClassInstrumenter(
+					projectData, classVisitor, Collections.emptyList(),
+					Collections.emptyList());
+
+				ClassReader classReader = new ClassReader(classfileBuffer);
+
+				synchronized (projectData) {
+					classReader.accept(classVisitor, 0);
+				}
+
+				return classWriter.toByteArray();
 			}
 
-			ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+			// Modify TouchCollector's static initialization block by
+			// redirecting ProjectData#initialize to
+			// InstrumentationAgent#initialize
 
-			ClassVisitor classVisitor = classWriter;
+			if (className.equals(
+					"net/sourceforge/cobertura/coveragedata/TouchCollector")) {
 
-			if (!InstrumentationAgent.isStaticallyInstrumented()) {
-				classVisitor = new RemoveHasBeenInstrumentedClassVisitor(
-					classVisitor);
-			}
+				ClassWriter classWriter = new ClassWriter(
+					ClassWriter.COMPUTE_MAXS);
 
-			classVisitor = new ClassInstrumenter(
-				projectData, classVisitor, Collections.emptyList(),
-				Collections.emptyList());
+				ClassVisitor classVisitor = new TouchCollectorClassVisitor(
+					classWriter);
 
-			ClassReader classReader = new ClassReader(classfileBuffer);
+				ClassReader classReader = new ClassReader(classfileBuffer);
 
-			synchronized (projectData) {
 				classReader.accept(classVisitor, 0);
+
+				return classWriter.toByteArray();
 			}
-
-			return classWriter.toByteArray();
 		}
+		catch (Throwable t) {
+			t.printStackTrace();
 
-		// Modify TouchCollector's static initialization block by redirecting
-		// ProjectData#initialize to InstrumentationAgent#initialize
-
-		if (className.equals(
-				"net/sourceforge/cobertura/coveragedata/TouchCollector")) {
-
-			ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS);
-
-			ClassVisitor classVisitor = new TouchCollectorClassVisitor(
-				classWriter);
-
-			ClassReader classReader = new ClassReader(classfileBuffer);
-
-			classReader.accept(classVisitor, 0);
-
-			return classWriter.toByteArray();
+			throw new RuntimeException(t);
 		}
 
 		return null;
@@ -202,7 +212,8 @@ public class CoberturaClassFileTransformer implements ClassFileTransformer {
 			String superName, String[] interfaces) {
 
 			if ((access & Opcodes.ACC_SUPER) != 0) {
-				List<String> interfacesList = Arrays.asList(interfaces);
+				List<String> interfacesList = new ArrayList<String>(
+					Arrays.asList(interfaces));
 
 				if (interfacesList.remove(_HAS_BEEN_INSTRUMENTED_CLASS_NAME)) {
 					interfaces = interfacesList.toArray(

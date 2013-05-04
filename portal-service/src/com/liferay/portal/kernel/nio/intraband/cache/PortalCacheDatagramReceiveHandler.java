@@ -50,23 +50,25 @@ public class PortalCacheDatagramReceiveHandler
 		PortalCacheManager<Serializable, Serializable> portalCacheManager =
 			IntrabandPortalCacheManager.getPortalCacheManager();
 
-		if (portalCacheActionType == PortalCacheActionType.RECONFIGURE) {
-			portalCacheManager.reconfigureCaches(
-				new URL(deserializer.readString()));
-
-			return;
-		}
-
-		PortalCache<Serializable, Serializable> portalCache =
-			portalCacheManager.getCache(deserializer.readString());
-
 		switch (portalCacheActionType) {
+			case RECONFIGURE :
+				portalCacheManager.reconfigureCaches(
+					new URL(deserializer.readString()));
+
+				break;
+
 			case DESTROY :
+				PortalCache<Serializable, Serializable> portalCache =
+					portalCacheManager.getCache(deserializer.readString());
+
 				portalCache.destroy();
 
 				break;
 
 			case GET_BULK :
+				portalCache = portalCacheManager.getCache(
+					deserializer.readString());
+
 				Collection<Serializable> keys =
 					(Collection<Serializable>)deserializer.readObject();
 
@@ -78,6 +80,9 @@ public class PortalCacheDatagramReceiveHandler
 				break;
 
 			case GET :
+				portalCache = portalCacheManager.getCache(
+					deserializer.readString());
+
 				Serializable key = deserializer.readObject();
 
 				Serializable value = portalCache.get(key);
@@ -87,6 +92,9 @@ public class PortalCacheDatagramReceiveHandler
 				break;
 
 			case PUT :
+				portalCache = portalCacheManager.getCache(
+					deserializer.readString());
+
 				key = deserializer.readObject();
 				value = deserializer.readObject();
 
@@ -95,6 +103,9 @@ public class PortalCacheDatagramReceiveHandler
 				break;
 
 			case PUT_TTL :
+				portalCache = portalCacheManager.getCache(
+					deserializer.readString());
+
 				key = deserializer.readObject();
 				value = deserializer.readObject();
 				int ttl = deserializer.readInt();
@@ -104,6 +115,9 @@ public class PortalCacheDatagramReceiveHandler
 				break;
 
 			case REMOVE :
+				portalCache = portalCacheManager.getCache(
+					deserializer.readString());
+
 				key = deserializer.readObject();
 
 				portalCache.remove(key);
@@ -111,6 +125,9 @@ public class PortalCacheDatagramReceiveHandler
 				break;
 
 			case REMOVE_ALL :
+				portalCache = portalCacheManager.getCache(
+					deserializer.readString());
+
 				portalCache.removeAll();
 
 				break;

@@ -234,43 +234,6 @@
 		</comments>
 	</library>
 	<library>
-		<file-name>lib/development/icefaces-comps.jar</file-name>
-		<version>1.6.0</version>
-		<project-name>ICEfaces</project-name>
-		<project-url>http://www.icefaces.org</project-url>
-		<licenses>
-			<license>
-				<license-name>MPL 1.1</license-name>
-			</license>
-		</licenses>
-	</library>
-	<library>
-		<file-name>lib/development/icefaces-facelets.jar</file-name>
-		<version>1.6.0</version>
-		<project-name>ICEfaces</project-name>
-		<project-url>http://www.icefaces.org</project-url>
-		<licenses>
-			<license>
-				<license-name>MPL 1.1</license-name>
-			</license>
-			<license>
-				<bundled-project-name>Facelets</bundled-project-name>
-				<license-name>CDDL 1.0</license-name>
-			</license>
-		</licenses>
-	</library>
-	<library>
-		<file-name>lib/development/icefaces.jar</file-name>
-		<version>1.6.0</version>
-		<project-name>ICEfaces</project-name>
-		<project-url>http://www.icefaces.org</project-url>
-		<licenses>
-			<license>
-				<license-name>MPL 1.1</license-name>
-			</license>
-		</licenses>
-	</library>
-	<library>
 		<file-name>lib/development/interbase.jar</file-name>
 		<version>6.01</version>
 		<project-name>InterBase</project-name>
@@ -434,53 +397,6 @@
 		</licenses>
 	</library>
 	<library>
-		<file-name>lib/development/jsf-api.jar</file-name>
-		<version>1.1.01</version>
-		<project-name>JavaServer Faces</project-name>
-		<project-url>http://java.sun.com/javaee/javaserverfaces</project-url>
-		<licenses>
-			<license>
-				<license-name>JSF 1.1 API License</license-name>
-			</license>
-		</licenses>
-	</library>
-	<library>
-		<file-name>lib/development/jsf-facelets.jar</file-name>
-		<version>1.1.13</version>
-		<project-name>Facelets</project-name>
-		<project-url>http://facelets.dev.java.net</project-url>
-		<licenses>
-			<license>
-				<license-name>CDDL 1.0</license-name>
-			</license>
-		</licenses>
-	</library>
-	<library>
-		<file-name>lib/development/jsf-impl.jar</file-name>
-		<version>1.1.01</version>
-		<project-name>JavaServer Faces</project-name>
-		<project-url>http://java.sun.com/javaee/javaserverfaces</project-url>
-		<licenses>
-			<license>
-				<license-name>JSF 1.1 RI License</license-name>
-			</license>
-			<license>
-				<license-name>JSF 1.1 Third Party Licenses</license-name>
-			</license>
-		</licenses>
-	</library>
-	<library>
-		<file-name>lib/development/jsf-portlet.jar</file-name>
-		<version>1.1.5</version>
-		<project-name>JSF Portlet Bridge</project-name>
-		<project-url>http://jsfportletbridge.dev.java.net</project-url>
-		<licenses>
-			<license>
-				<license-name>CDDL 1.0</license-name>
-			</license>
-		</licenses>
-	</library>
-	<library>
 		<file-name>lib/development/jsp-api.jar</file-name>
 		<version>2.1</version>
 		<project-name>JavaServer Pages</project-name>
@@ -528,17 +444,6 @@
 		</licenses>
 	</library>
 	<library>
-		<file-name>lib/development/just-ice.jar</file-name>
-		<version>1.6.0</version>
-		<project-name>ICEfaces</project-name>
-		<project-url>http://www.icefaces.org</project-url>
-		<licenses>
-			<license>
-				<license-name>MPL 1.1</license-name>
-			</license>
-		</licenses>
-	</library>
-	<library>
 		<file-name>lib/development/jutf7.jar</file-name>
 		<version></version>
 		<project-name>jutf7</project-name>
@@ -579,30 +484,6 @@
 		<licenses>
 			<license>
 				<license-name>MIT License</license-name>
-			</license>
-		</licenses>
-	</library>
-	<library>
-		<file-name>lib/development/myfaces-api.jar</file-name>
-		<version>1.1.5</version>
-		<project-name>MyFaces</project-name>
-		<project-url>http://myfaces.apache.org</project-url>
-		<licenses>
-			<license>
-				<license-name>Apache License 2.0</license-name>
-				<copyright-notice>Copyright (c) 2004-2007 The Apache Software Foundation</copyright-notice>
-			</license>
-		</licenses>
-	</library>
-	<library>
-		<file-name>lib/development/myfaces-impl.jar</file-name>
-		<version>1.1.5</version>
-		<project-name>MyFaces</project-name>
-		<project-url>http://myfaces.apache.org</project-url>
-		<licenses>
-			<license>
-				<license-name>Apache License 2.0</license-name>
-				<copyright-notice>Copyright (c) 2004-2007 The Apache Software Foundation</copyright-notice>
 			</license>
 		</licenses>
 	</library>

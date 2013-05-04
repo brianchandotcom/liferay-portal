@@ -15,10 +15,14 @@
 package com.liferay.portlet.portletdisplaytemplate.ddm;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
@@ -33,6 +37,24 @@ import java.util.Set;
 public class PortletDisplayTemplateDDMDisplay extends BaseDDMDisplay {
 
 	@Override
+	public String getEditTemplateBackURL(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse, long classNameId,
+			long classPK, String portletResource)
+		throws Exception {
+
+		String backURL = ParamUtil.getString(liferayPortletRequest, "backURL");
+
+		if (Validator.isNull(backURL)) {
+			backURL = getViewTemplatesURL(
+				liferayPortletRequest, liferayPortletResponse, classNameId,
+				classPK);
+		}
+
+		return backURL;
+	}
+
+	@Override
 	public String getPortletId() {
 		return PortletKeys.PORTLET_DISPLAY_TEMPLATES;
 	}
@@ -44,6 +66,15 @@ public class PortletDisplayTemplateDDMDisplay extends BaseDDMDisplay {
 				template.getClassNameId());
 
 		return templateHandler.getName(locale);
+	}
+
+	@Override
+	public String getViewTemplatesBackURL(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse, long classPK)
+		throws Exception {
+
+		return StringPool.BLANK;
 	}
 
 	@Override

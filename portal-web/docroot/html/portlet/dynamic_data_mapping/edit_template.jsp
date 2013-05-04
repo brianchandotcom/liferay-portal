@@ -18,7 +18,6 @@
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
-String backURL = ParamUtil.getString(request, "backURL");
 
 String portletResource = ParamUtil.getString(request, "portletResource");
 
@@ -75,6 +74,8 @@ String structureAvailableFields = ParamUtil.getString(request, "structureAvailab
 if (Validator.isNotNull(structureAvailableFields)) {
 	scopeAvailableFields = structureAvailableFields;
 }
+
+DDMDisplay ddmDisplay = DDMDisplayRegistryUtil.getDDMDisplay(refererPortletName);
 %>
 
 <portlet:actionURL var="editTemplateURL">
@@ -117,8 +118,6 @@ if (Validator.isNotNull(structureAvailableFields)) {
 	<%
 	String title = StringPool.BLANK;
 
-	DDMDisplay ddmDisplay = DDMDisplayRegistryUtil.getDDMDisplay(refererPortletName);
-
 	if ((structure != null) || (template != null)) {
 		title = ddmDisplay.getEditTemplateTitle(structure, template, locale);
 	}
@@ -127,14 +126,8 @@ if (Validator.isNotNull(structureAvailableFields)) {
 	}
 	%>
 
-	<portlet:renderURL var="viewTemplatesURL">
-		<portlet:param name="struts_action" value="/dynamic_data_mapping/view_template" />
-		<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
-		<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
-	</portlet:renderURL>
-
 	<liferay-ui:header
-		backURL="<%= ((refererPortletName.equals(PortletKeys.JOURNAL) || refererPortletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES) || Validator.isNotNull(portletResource)) && Validator.isNotNull(backURL)) ? backURL : viewTemplatesURL %>"
+		backURL="<%= ddmDisplay.getEditTemplateBackURL(liferayPortletRequest, liferayPortletResponse, classNameId, classPK, portletResource) %>"
 		localizeTitle="<%= false %>"
 		title="<%= title %>"
 	/>
@@ -146,7 +139,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 
 		<liferay-ui:panel-container cssClass="lfr-structure-entry-details-container" extended="<%= false %>" id="templateDetailsPanelContainer" persistState="<%= true %>">
 			<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="templateDetailsSectionPanel" persistState="<%= true %>" title="details">
-				<c:if test="<%= refererPortletName.equals(PortletKeys.JOURNAL) %>">
+				<c:if test="<%= ddmDisplay.showStructureSelector() %>">
 					<aui:field-wrapper helpMessage="structure-help" label="structure">
 						<c:choose>
 							<c:when test="<%= classPK < 0 %>">
@@ -389,7 +382,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 	</c:otherwise>
 </c:choose>
 
-<c:if test="<%= (classPK < 0) && !refererPortletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES) %>">
+<c:if test="<%= ddmDisplay.showStructureSelector() && (classPK < 0) %>">
 	<aui:script>
 		function <portlet:namespace />openDDMStructureSelector() {
 			Liferay.Util.openDDMPortlet(

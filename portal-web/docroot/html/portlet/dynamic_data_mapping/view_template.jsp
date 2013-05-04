@@ -19,8 +19,6 @@
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1", "templates");
 
-String backURL = ParamUtil.getString(request, "backURL");
-
 long classNameId = ParamUtil.getLong(request, "classNameId");
 long classPK = ParamUtil.getLong(request, "classPK");
 
@@ -36,7 +34,6 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/dynamic_data_mapping/view_template");
 portletURL.setParameter("tabs1", tabs1);
-portletURL.setParameter("backURL", backURL);
 portletURL.setParameter("classNameId", String.valueOf(classNameId));
 portletURL.setParameter("classPK", String.valueOf(classPK));
 
@@ -59,12 +56,8 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, controlPanel, locale)
 	<liferay-ui:message key="they-are-referenced-by-web-contents" />
 </liferay-ui:error>
 
-<portlet:renderURL var="viewRecordsURL">
-	<portlet:param name="struts_action" value="/dynamic_data_lists/view" />
-</portlet:renderURL>
-
 <liferay-ui:header
-	backURL="<%= refererPortletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES) ? backURL : viewRecordsURL %>"
+	backURL="<%= ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, liferayPortletResponse, classPK) %>"
 	title="<%= title %>"
 />
 
@@ -121,7 +114,6 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, controlPanel, locale)
 
 			rowURL.setParameter("struts_action", "/dynamic_data_mapping/edit_template");
 			rowURL.setParameter("redirect", currentURL);
-			rowURL.setParameter("backURL", currentURL);
 			rowURL.setParameter("groupId", String.valueOf(template.getGroupId()));
 			rowURL.setParameter("templateId", String.valueOf(template.getTemplateId()));
 			rowURL.setParameter("classNameId", String.valueOf(classNameId));

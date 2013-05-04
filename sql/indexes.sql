@@ -603,6 +603,7 @@ create index IX_418E4522 on Organization_ (companyId, parentOrganizationId);
 create index IX_396D6B42 on Organization_ (uuid_);
 create index IX_A9D85BA6 on Organization_ (uuid_, companyId);
 
+create index IX_8FEE65F5 on PasswordPolicy (companyId);
 create index IX_2C1142E on PasswordPolicy (companyId, defaultPolicy);
 create unique index IX_3FBFA9F4 on PasswordPolicy (companyId, name);
 create index IX_51437A01 on PasswordPolicy (uuid_);

@@ -186,6 +186,22 @@ public class PasswordPolicyLocalServiceImpl
 		}
 	}
 
+	public void deleteNonDefaultPasswordPolicies(long companyId)
+		throws PortalException, SystemException {
+
+		List<PasswordPolicy> passwordPolicies = getPasswordPolicies(companyId);
+
+		long defaultUserId = userLocalService.getDefaultUserId(companyId);
+
+		for (PasswordPolicy passwordPolicy : passwordPolicies) {
+			if (!passwordPolicy.isDefaultPolicy() &&
+				(passwordPolicy.getUserId() != defaultUserId)) {
+
+				deletePasswordPolicy(passwordPolicy);
+			}
+		}
+	}
+
 	@Override
 	public PasswordPolicy deletePasswordPolicy(long passwordPolicyId)
 		throws PortalException, SystemException {
@@ -243,6 +259,16 @@ public class PasswordPolicyLocalServiceImpl
 		}
 
 		return passwordPolicyPersistence.findByC_DP(companyId, true);
+	}
+
+	public List<PasswordPolicy> getPasswordPolicies(long companyId)
+		throws PortalException, SystemException {
+
+		if (LDAPSettingsUtil.isPasswordPolicyEnabled(companyId)) {
+			return null;
+		}
+
+		return passwordPolicyPersistence.findByCompanyId(companyId);
 	}
 
 	/**

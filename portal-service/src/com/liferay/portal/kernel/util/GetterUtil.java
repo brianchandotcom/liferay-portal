@@ -644,6 +644,69 @@ public class GetterUtil {
 		return get(value, defaultValue);
 	}
 
+	public static int getIntegerStrict(String value) {
+		int length = value.length();
+
+		if (length <= 0) {
+			throw new NumberFormatException("Unable to parse " + value);
+		}
+
+		int pos = 0;
+		int limit = -Integer.MAX_VALUE;
+		boolean negative = false;
+
+		char c = value.charAt(0);
+
+		if (c < CharPool.NUMBER_0) {
+			if (c == CharPool.MINUS) {
+				limit = Integer.MIN_VALUE;
+				negative = true;
+			}
+			else if (c != CharPool.PLUS) {
+				throw new NumberFormatException("Unable to parse " + value);
+			}
+
+			if (length == 1) {
+				throw new NumberFormatException("Unable to parse " + value);
+			}
+
+			pos++;
+		}
+
+		int smallLimit = limit / 10;
+
+		int result = 0;
+
+		while (pos < length) {
+			if (result < smallLimit) {
+				throw new NumberFormatException("Unable to parse " + value);
+			}
+
+			c = value.charAt(pos++);
+
+			if ((c < CharPool.NUMBER_0) || (c > CharPool.NUMBER_9)) {
+				throw new NumberFormatException("Unable to parse " + value);
+			}
+
+			int number = c - CharPool.NUMBER_0;
+
+			result *= 10;
+
+			if (result < (limit + number)) {
+				throw new NumberFormatException("Unable to parse " + value);
+			}
+
+			result -= number;
+		}
+
+		if (negative) {
+			return result;
+		}
+		else {
+			return -result;
+		}
+	}
+
 	public static int[] getIntegerValues(Object value) {
 		return getIntegerValues(value, DEFAULT_INTEGER_VALUES);
 	}
@@ -697,6 +760,69 @@ public class GetterUtil {
 
 	public static long getLong(String value, long defaultValue) {
 		return get(value, defaultValue);
+	}
+
+	public static long getLongStrict(String value) {
+		int length = value.length();
+
+		if (length <= 0) {
+			throw new NumberFormatException("Unable to parse " + value);
+		}
+
+		int pos = 0;
+		long limit = -Long.MAX_VALUE;
+		boolean negative = false;
+
+		char c = value.charAt(0);
+
+		if (c < CharPool.NUMBER_0) {
+			if (c == CharPool.MINUS) {
+				limit = Long.MIN_VALUE;
+				negative = true;
+			}
+			else if (c != CharPool.PLUS) {
+				throw new NumberFormatException("Unable to parse " + value);
+			}
+
+			if (length == 1) {
+				throw new NumberFormatException("Unable to parse " + value);
+			}
+
+			pos++;
+		}
+
+		long smallLimit = limit / 10;
+
+		long result = 0;
+
+		while (pos < length) {
+			if (result < smallLimit) {
+				throw new NumberFormatException("Unable to parse " + value);
+			}
+
+			c = value.charAt(pos++);
+
+			if ((c < CharPool.NUMBER_0) || (c > CharPool.NUMBER_9)) {
+				throw new NumberFormatException("Unable to parse " + value);
+			}
+
+			int number = c - CharPool.NUMBER_0;
+
+			result *= 10;
+
+			if (result < (limit + number)) {
+				throw new NumberFormatException("Unable to parse " + value);
+			}
+
+			result -= number;
+		}
+
+		if (negative) {
+			return result;
+		}
+		else {
+			return -result;
+		}
 	}
 
 	public static long[] getLongValues(Object value) {
@@ -834,6 +960,17 @@ public class GetterUtil {
 
 	public static short getShort(String value, short defaultValue) {
 		return get(value, defaultValue);
+	}
+
+	public static short getShortStrict(String value) {
+		int i = getIntegerStrict(value);
+
+		if ((i < Short.MIN_VALUE) || (i > Short.MAX_VALUE)) {
+			throw new NumberFormatException(
+				"Value out of short range." + value);
+		}
+
+		return (short)i;
 	}
 
 	public static short[] getShortValues(Object value) {

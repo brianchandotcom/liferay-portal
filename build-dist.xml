@@ -1961,6 +1961,10 @@ plugins.includes=</echo>
 				dir="util-java"
 				includes="util-java.jar"
 			/>
+			<fileset
+				dir="util-taglib"
+				includes="util-taglib.jar"
+			/>
 		</copy>
 
 		<zip destfile="dist/liferay-portal-db-upgrade-${lp.version}.zip">

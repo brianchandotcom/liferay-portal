@@ -761,6 +761,12 @@ public class UserGroupLocalServiceWrapper implements UserGroupLocalService,
 		_userGroupLocalService.copyUserGroupLayouts(userGroupIds, userId);
 	}
 
+	public void deleteUserGroups(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_userGroupLocalService.deleteUserGroups(companyId);
+	}
+
 	public com.liferay.portal.model.UserGroup fetchUserGroup(long companyId,
 		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException {

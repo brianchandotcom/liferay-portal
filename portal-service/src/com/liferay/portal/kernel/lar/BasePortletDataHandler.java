@@ -171,6 +171,10 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		return _dataLocalized;
 	}
 
+	public boolean isDataPortalLevel() {
+		return _dataPortalLevel;
+	}
+
 	public boolean isPublishToLiveByDefault() {
 		return _publishToLiveByDefault;
 	}
@@ -240,6 +244,10 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		_dataLocalized = dataLocalized;
 	}
 
+	protected void setDataPortalLevel(boolean dataPortalLevel) {
+		_dataPortalLevel = dataPortalLevel;
+	}
+
 	protected void setDataPortletPreferences(String... dataPortletPreferences) {
 		_dataPortletPreferences = dataPortletPreferences;
 	}
@@ -282,6 +290,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	private boolean _alwaysExportable;
 	private boolean _alwaysStaged;
 	private boolean _dataLocalized;
+	private boolean _dataPortalLevel;
 	private String[] _dataPortletPreferences = new String[0];
 	private PortletDataHandlerControl[] _exportControls =
 		new PortletDataHandlerControl[0];

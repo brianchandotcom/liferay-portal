@@ -3291,7 +3291,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			PortletDataHandler portletDataHandler =
 				portlet.getPortletDataHandlerInstance();
 
-			if (portletDataHandler == null) {
+			if ((portletDataHandler == null) ||
+				portletDataHandler.isDataPortalLevel()) {
+
 				continue;
 			}
 

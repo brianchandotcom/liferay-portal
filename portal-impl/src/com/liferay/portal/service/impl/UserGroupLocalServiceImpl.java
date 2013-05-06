@@ -392,6 +392,17 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		return userGroup;
 	}
 
+	public void deleteUserGroups(long companyId)
+		throws PortalException, SystemException {
+
+		List<UserGroup> userGroups = userGroupPersistence.findByCompanyId(
+			companyId);
+
+		for (UserGroup userGroup : userGroups) {
+			deleteUserGroup(userGroup);
+		}
+	}
+
 	public UserGroup fetchUserGroup(long companyId, String name)
 		throws SystemException {
 

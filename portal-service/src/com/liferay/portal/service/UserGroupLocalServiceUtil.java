@@ -772,6 +772,12 @@ public class UserGroupLocalServiceUtil {
 		getService().copyUserGroupLayouts(userGroupIds, userId);
 	}
 
+	public static void deleteUserGroups(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteUserGroups(companyId);
+	}
+
 	public static com.liferay.portal.model.UserGroup fetchUserGroup(
 		long companyId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException {

@@ -152,6 +152,8 @@ public interface PortletDataHandler {
 
 	public boolean isDataLocalized();
 
+	public boolean isDataPortalLevel();
+
 	/**
 	 * Returns whether the data exported by this handler should be included by
 	 * default when publishing to live. This should only be <code>true</code>

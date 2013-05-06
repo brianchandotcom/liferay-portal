@@ -67,6 +67,13 @@ public interface PortletDataContext extends Serializable {
 	 */
 	public static final String ROOT_PATH_PORTLETS = "/portlets/";
 
+	public static final String TYPE_CHILD = "child";
+	public static final String TYPE_DEPENDENCY = "dependency";
+	public static final String TYPE_EMBEDDED = "embedded";
+	public static final String TYPE_PARENT = "parent";
+	public static final String TYPE_STRONG_REFERENCE = "strong";
+	public static final String TYPE_WEAK_REFERENCE = "weak";
+
 	public void addAssetCategories(Class<?> clazz, long classPK)
 		throws SystemException;
 
@@ -121,20 +128,20 @@ public interface PortletDataContext extends Serializable {
 
 	public Element addReferenceElement(
 		StagedModel referrerStagedModel, Element element,
-		ClassedModel classedModel, boolean missing);
+		ClassedModel classedModel, String type, boolean missing);
 
 	public Element addReferenceElement(
 		StagedModel referrerStagedModel, Element element,
-		ClassedModel classedModel, Class<?> clazz, boolean missing);
+		ClassedModel classedModel, Class<?> clazz, String type, boolean missing);
 
 	public Element addReferenceElement(
 		StagedModel referrerStagedModel, Element element,
-		ClassedModel classedModel, String binPath, boolean missing);
+		ClassedModel classedModel, String binPath, String type, boolean missing);
 
 	public Element addReferenceElement(
 		StagedModel referrerStagedModel, Element element,
 		ClassedModel classedModel, String className, String binPath,
-		boolean missing);
+		String type, boolean missing);
 
 	public boolean addScopedPrimaryKey(Class<?> clazz, String primaryKey);
 
@@ -255,7 +262,13 @@ public interface PortletDataContext extends Serializable {
 		Element parentElement, Class<?> clazz);
 
 	public List<Element> getReferenceDataElements(
+		Element parentElement, Class<?> clazz, String type);
+
+	public List<Element> getReferenceDataElements(
 		StagedModel parentStagedModel, Class<?> clazz);
+
+	public List<Element> getReferenceDataElements(
+		StagedModel parentStagedModel, Class<?> clazz, String type);
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link

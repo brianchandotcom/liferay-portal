@@ -14,38 +14,26 @@
 
 package com.liferay.portlet.wiki.lar;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
-import com.liferay.portal.kernel.lar.ExportImportPathUtil;
-import com.liferay.portal.kernel.lar.ExportImportUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.MimeTypesUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.wiki.NoSuchNodeException;
-import com.liferay.portlet.wiki.NoSuchPageException;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
-import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
-import com.liferay.portlet.wiki.service.persistence.WikiNodeUtil;
-import com.liferay.portlet.wiki.service.persistence.WikiPageUtil;
+import com.liferay.portlet.wiki.service.persistence.WikiNodeActionableDynamicQuery;
+import com.liferay.portlet.wiki.service.persistence.WikiPageActionableDynamicQuery;
 import com.liferay.portlet.wiki.util.WikiCacheThreadLocal;
 import com.liferay.portlet.wiki.util.WikiCacheUtil;
-import com.liferay.portlet.wiki.util.comparator.PageVersionComparator;
-
-import java.io.InputStream;
 
 import java.util.List;
 import java.util.Map;
@@ -57,6 +45,7 @@ import javax.portlet.PortletPreferences;
  * @author Jorge Ferrer
  * @author Marcellus Tavares
  * @author Juan Fernández
+ * @author Zsolt Berentey
  */
 public class WikiPortletDataHandler extends BasePortletDataHandler {
 
@@ -115,7 +104,7 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 
 	@Override
 	protected String doExportData(
-			PortletDataContext portletDataContext, String portletId,
+			final PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
 		throws Exception {
 
@@ -127,30 +116,58 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
-		Element nodesElement = rootElement.addElement("nodes");
-		Element pagesElement = rootElement.addElement("pages");
+		ActionableDynamicQuery nodeActionableDynamicQuery =
+			new WikiNodeActionableDynamicQuery() {
 
-		Element dlFileEntryTypesElement = pagesElement.addElement(
-			"dl-file-entry-types");
-		Element dlFoldersElement = pagesElement.addElement("dl-folders");
-		Element dlFileEntriesElement = pagesElement.addElement(
-			"dl-file-entries");
-		Element dlFileRanksElement = pagesElement.addElement("dl-file-ranks");
-		Element dlRepositoriesElement = pagesElement.addElement(
-			"dl-repositories");
-		Element dlRepositoryEntriesElement = pagesElement.addElement(
-			"dl-repository-entries");
+			@Override
+			protected void addCriteria(DynamicQuery dynamicQuery) {
+				portletDataContext.addDateRangeCriteria(
+					dynamicQuery, "modifiedDate");
+			}
 
-		List<WikiNode> nodes = WikiNodeUtil.findByGroupId(
+			@Override
+			protected void performAction(Object object) throws PortalException {
+				WikiNode node = (WikiNode)object;
+
+				StagedModelDataHandlerUtil.exportStagedModel(
+					portletDataContext, node);
+			}
+
+		};
+
+		nodeActionableDynamicQuery.setGroupId(
 			portletDataContext.getScopeGroupId());
 
-		for (WikiNode node : nodes) {
-			exportNode(
-				portletDataContext, nodesElement, pagesElement,
-				dlFileEntryTypesElement, dlFoldersElement, dlFileEntriesElement,
-				dlFileRanksElement, dlRepositoriesElement,
-				dlRepositoryEntriesElement, node);
-		}
+		nodeActionableDynamicQuery.performActions();
+
+		ActionableDynamicQuery pageActionableDynamicQuery =
+			new WikiPageActionableDynamicQuery() {
+
+			@Override
+			protected void addCriteria(DynamicQuery dynamicQuery) {
+				portletDataContext.addDateRangeCriteria(
+					dynamicQuery, "modifiedDate");
+
+				Property statusProperty = PropertyFactoryUtil.forName("status");
+
+				dynamicQuery.add(
+					statusProperty.ne(WorkflowConstants.STATUS_IN_TRASH));
+			}
+
+			@Override
+			protected void performAction(Object object) throws PortalException {
+				WikiPage page = (WikiPage)object;
+
+				StagedModelDataHandlerUtil.exportStagedModel(
+					portletDataContext, page);
+			}
+
+		};
+
+		pageActionableDynamicQuery.setGroupId(
+			portletDataContext.getScopeGroupId());
+
+		pageActionableDynamicQuery.performActions();
 
 		return getExportDataRootElementString(rootElement);
 	}
@@ -165,36 +182,24 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 			"com.liferay.portlet.wiki", portletDataContext.getSourceGroupId(),
 			portletDataContext.getScopeGroupId());
 
-		Element rootElement = portletDataContext.getImportDataRootElement();
+		Element nodesElement = portletDataContext.getImportDataGroupElement(
+			WikiNode.class);
 
-		Element nodesElement = rootElement.element("nodes");
+		List<Element> nodeElements = nodesElement.elements();
 
-		for (Element nodeElement : nodesElement.elements("node")) {
-			String path = nodeElement.attributeValue("path");
-
-			if (!portletDataContext.isPathNotProcessed(path)) {
-				continue;
-			}
-
-			WikiNode node = (WikiNode)portletDataContext.getZipEntryAsObject(
-				path);
-
-			importNode(portletDataContext, node);
+		for (Element nodeElement : nodeElements) {
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, nodeElement);
 		}
 
-		Element pagesElement = rootElement.element("pages");
+		Element pagesElement = portletDataContext.getImportDataGroupElement(
+			WikiPage.class);
 
-		for (Element pageElement : pagesElement.elements("page")) {
-			String path = pageElement.attributeValue("path");
+		List<Element> pageElements = pagesElement.elements();
 
-			if (!portletDataContext.isPathNotProcessed(path)) {
-				continue;
-			}
-
-			WikiPage page = (WikiPage)portletDataContext.getZipEntryAsObject(
-				path);
-
-			importPage(portletDataContext, pageElement, page);
+		for (Element pageElement : pageElements) {
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, pageElement);
 		}
 
 		Map<Long, Long> nodeIds =
@@ -205,7 +210,7 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 			WikiCacheUtil.clearCache(nodeId);
 		}
 
-		return null;
+		return portletPreferences;
 	}
 
 }

@@ -193,7 +193,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 											<portlet:param name="classTypeId" value="<%= String.valueOf(assetAvailableClassTypeId) %>" />
 										</portlet:renderURL>
 
-										<span class="asset-subtypefields-popup">
+										<span class="asset-subtypefields-popup" id="<portlet:namespace /><%= assetAvailableClassTypeId %>_<%= className %>PopUpButton">
 											<aui:button data-href="<%= selectStructureFieldURL.toString() %>" disabled="<%= !subtypeFieldsFilterEnabled %>" value="select" />
 										</span>
 									</span>
@@ -672,7 +672,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 						width: 600
 					},
 					eventName: '<portlet:namespace />selectDDMStructureField',
-					id: '<portlet:namespace />selectDDMStructure' + event.target.id,
+					id: '<portlet:namespace />selectDDMStructure' + event.currentTarget.attr('id'),
 					title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", "structure-field") %>',
 					uri: event.target.attr('data-href')
 				},

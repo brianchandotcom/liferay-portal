@@ -81,7 +81,7 @@ public class RepositoryStagedModelDataHandler
 				portletDataContext, repositoryEntry);
 
 			portletDataContext.addReferenceElement(
-				repository, repositoryElement, repositoryEntry, false);
+				repository, repositoryElement, repositoryEntry, PortletDataContext.TYPE_CHILD, false);
 		}
 	}
 

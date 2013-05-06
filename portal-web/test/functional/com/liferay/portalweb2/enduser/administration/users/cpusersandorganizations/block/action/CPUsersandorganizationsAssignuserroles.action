@@ -1,0 +1,7 @@
+<definition>
+	<command name="click">
+		<case comparator="startsWith" locator1="//tr[contains(.,'">
+			<execute function="Click#clickAtAndWait" />
+		</case>
+	</command>
+</definition>

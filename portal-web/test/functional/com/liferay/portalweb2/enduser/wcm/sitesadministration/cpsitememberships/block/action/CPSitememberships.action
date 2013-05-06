@@ -6,6 +6,12 @@
 	</command>
 
 	<command name="click">
+		<case locator-key1="ADD_SITE_ROLES_TO_MENULIST_USERS">
+			<execute function="Click#textClickAtAndWait" value1="Users" />
+		</case>
+		<case locator-key1="TOOLBAR_ADD_SITE_ROLES_TO">
+			<execute function="Click#textClickAt" value1="Add Site Roles to" />
+		</case>
 		<case locator-key1="TOOLBAR_VIEW_TEAMS">
 			<execute function="Click#textClickAtAndWait" value1="View Teams" />
 		</case>

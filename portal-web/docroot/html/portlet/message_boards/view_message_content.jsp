@@ -173,7 +173,7 @@ MBThreadFlag threadFlag = MBThreadFlagLocalServiceUtil.getThreadFlag(themeDispla
 				MBMessage rootMessage = message;
 
 				if (!rootMessage.isRoot()) {
-					 rootMessage = MBMessageLocalServiceUtil.getMessage(rootMessage.getRootMessageId());
+					rootMessage = MBMessageLocalServiceUtil.getMessage(rootMessage.getRootMessageId());
 				}
 				%>
 

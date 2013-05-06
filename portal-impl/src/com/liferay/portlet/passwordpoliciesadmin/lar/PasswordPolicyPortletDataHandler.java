@@ -36,6 +36,12 @@ public class PasswordPolicyPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "password_policies_admin";
 
+	public PasswordPolicyPortletDataHandler() {
+		super();
+
+		setDataPortalLevel(true);
+	}
+
 	@Override
 	protected PortletPreferences doDeleteData(
 			PortletDataContext portletDataContext, String portletId,
@@ -43,21 +49,13 @@ public class PasswordPolicyPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		if (portletDataContext.addPrimaryKey(
-			PasswordPolicyPortletDataHandler.class, "deleteData")) {
+				PasswordPolicyPortletDataHandler.class, "deleteData")) {
 
 			return portletPreferences;
 		}
 
-		List<PasswordPolicy> passwordPolicies =
-			PasswordPolicyLocalServiceUtil.getPasswordPolicies(
-				portletDataContext.getCompanyId());
-
-		for (PasswordPolicy passwordPolicy : passwordPolicies) {
-			if (!passwordPolicy.isDefaultPolicy()) {
-				PasswordPolicyLocalServiceUtil.deletePasswordPolicy(
-					passwordPolicy);
-			}
-		}
+		PasswordPolicyLocalServiceUtil.deleteNonDefaultPasswordPolicies(
+			portletDataContext.getCompanyId());
 
 		return portletPreferences;
 	}
@@ -69,8 +67,7 @@ public class PasswordPolicyPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		portletDataContext.addPermissions(
-			"com.liferay.portlet.passwordpoliciesadmin",
-			portletDataContext.getScopeGroupId());
+			_RESOURCE_NAME, portletDataContext.getScopeGroupId());
 
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
@@ -95,8 +92,6 @@ public class PasswordPolicyPortletDataHandler extends BasePortletDataHandler {
 			}
 		};
 
-		actionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
-
 		actionableDynamicQuery.performActions();
 
 		return getExportDataRootElementString(rootElement);
@@ -109,13 +104,11 @@ public class PasswordPolicyPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		portletDataContext.importPermissions(
-			"com.liferay.portlet.passwordpoliciesadmin",
-			portletDataContext.getSourceGroupId(),
+			_RESOURCE_NAME, portletDataContext.getSourceGroupId(),
 			portletDataContext.getScopeGroupId());
 
 		Element passwordPoliciesElement =
-			portletDataContext.getImportDataGroupElement(
-				PasswordPolicy.class);
+			portletDataContext.getImportDataGroupElement(PasswordPolicy.class);
 
 		List<Element> passwordPolicyElements =
 			passwordPoliciesElement.elements();
@@ -127,5 +120,8 @@ public class PasswordPolicyPortletDataHandler extends BasePortletDataHandler {
 
 		return null;
 	}
+
+	private static final String _RESOURCE_NAME =
+		"com.liferay.portlet.passwordpoliciesadmin";
 
 }

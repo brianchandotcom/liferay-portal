@@ -109,8 +109,8 @@
 <#macro getMetadataField
 	fieldName
 >
-	<#if stringUtil.split(metadataFields)?seq_contains(metadataFieldName)>
-		<span class="metadata-entry metadata-"${metadataFieldName}">
+	<#if stringUtil.split(metadataFields)?seq_contains(fieldName)>
+		<span class="metadata-entry metadata-"${fieldName}">
 			<#assign dateFormat = "dd MMM yyyy - HH:mm:ss" />
 
 			<#if fieldName == "author">
@@ -130,7 +130,7 @@
 			<#elseif fieldName == "priority">
 				${entry.getPriority()}
 			<#elseif fieldName == "publish-date">
-				${ddateUtil.getDate(entry.getPublishDate(), dateFormat, locale)}
+				${dateUtil.getDate(entry.getPublishDate(), dateFormat, locale)}
 			<#elseif fieldName == "tags">
 				<@liferay_ui["asset-tags-summary"]
 					className=entry.getClassName()

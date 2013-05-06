@@ -70,14 +70,14 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--DEFITION_MENULIST-->
+<!--DEFINITION_MENULIST-->
 <tr>
-	<td>DEFITION_MENULIST_ADD_NEW_FILE</td>
+	<td>DEFINITION_MENULIST_ADD_NEW_FILE</td>
 	<td>//a[@role='menuitem' and contains(.,'Add New File')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>DEFITION_MENULIST_DEACTIVATE</td>
+	<td>DEFINITION_MENULIST_DEACTIVATE</td>
 	<td>//a[@role='menuitem' and contains(.,'Deactivate')]</td>
 	<td></td>
 </tr>

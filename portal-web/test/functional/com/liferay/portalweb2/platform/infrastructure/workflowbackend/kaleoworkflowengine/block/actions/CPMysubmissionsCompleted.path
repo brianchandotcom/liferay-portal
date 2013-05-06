@@ -18,16 +18,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<tr>
-	<td>SUCESS_MESSAGE</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_PENDING</td>
@@ -73,11 +63,6 @@
 <tr>
 	<td>COMPLETED_TABLE_END_DATE</td>
 	<td>//div[@id='_158_workflowInstancesSearchContainer']//tr/td[contains(@headers,'col-end-date')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COMPLETED_TABLE_WITHDRAW_SUBMISSION</td>
-	<td>//div[@id='_158_workflowInstancesSearchContainer']//tr/td/span/a[contains(@id,'menu_withdraw-submission')]</td>
 	<td></td>
 </tr>
 </tbody>

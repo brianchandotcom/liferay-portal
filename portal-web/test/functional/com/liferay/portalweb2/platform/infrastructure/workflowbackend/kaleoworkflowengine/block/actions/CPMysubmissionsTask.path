@@ -19,9 +19,9 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SUCESS_MESSAGE</td>
+	<td>SUCCESS_MESSAGE</td>
 	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
+	<td></td>
 </tr>
 <tr>
 	<td>STATE</td>
@@ -84,6 +84,11 @@
 <tr>
 	<td>PREVIEW_CONTENT</td>
 	<td>//span[contains(.,'Preview of Blogs Entry')]/../../..</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIEW_AUTHOR</td>
+	<td>//span[contains(@class,'metadata-author')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -179,6 +184,11 @@
 <tr>
 	<td>COMMENTS</td>
 	<td>//div[@class='lfr-panel-title']/span[contains(.,'Comments')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_SUCCESS_MESSAGE</td>
+	<td>//div[@id='_158_discussion-status-messages']</td>
 	<td></td>
 </tr>
 <tr>

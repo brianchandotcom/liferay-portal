@@ -1,0 +1,19 @@
+<definition>
+	<command name="assertTextEquals">
+		<case locator-key1="SUCCESS_MESSAGE">
+			<execute function="AssertTextEquals#assertText" value1="Your request completed successfully." />
+		</case>
+	</command>
+
+	<command name="click">
+		<case locator-key1="NAVIGATION_COMPLETED">
+			<execute function="Click#textClickAtAndWait" value1="Completed" />
+		</case>
+		<case locator-key1="NAVIGATION_PENDING">
+			<execute function="Click#textClickAtAndWait" value1="Pending" />
+		</case>
+		<case locator-key1="PENDING_TABLE_WITHDRAW_SUBMISSION">
+			<execute function="Click#textClickAtAndWait" value1="Withdraw Submission" />
+		</case>
+	</command>
+</definition>

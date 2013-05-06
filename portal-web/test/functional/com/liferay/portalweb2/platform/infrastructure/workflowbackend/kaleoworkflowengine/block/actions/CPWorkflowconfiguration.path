@@ -19,29 +19,13 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SAVE_BUTTON</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--NAVIGATION-->
-<tr>
-	<td>NAVIGATION_DEFINITIONS</td>
-	<td>//span[@class='aui-tab-content']/a[contains(.,'Definitions')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_DEFAULT_CONFIGURATIONS</td>
-	<td>//span[@class='aui-tab-content']/a[contains(.,'Default Configurations')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_SUBMISSIONS</td>
-	<td>//span[@class='aui-tab-content']/a[contains(.,'Submissions')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -1,0 +1,22 @@
+<definition>
+	<command name="click">
+		<case locator-key1="DEFINITION_MENULIST_ADD_NEW_FILE">
+			<execute function="Click#textClickAtAndWait" value1="Add New File" />
+		</case>
+		<case locator-key1="DEFINITION_MENULIST_DEACTIVATE">
+			<execute function="Click#textClickAtAndWait" value1="Deactivate" />
+		</case>
+		<case locator-key1="DEFINITION_TABLE_ACTIONS">
+			<execute function="Click#textClickAt" value1="Actions" />
+		</case>
+		<case locator-key1="NAVIGATION_DEFINITIONS">
+			<execute function="Click#textClickAtAndWait" value1="Definitions" />
+		</case>
+		<case locator-key1="NAVIGATION_DEFAULT_CONFIGURATIONS">
+			<execute function="Click#textClickAtAndWait" value1="Default Configuration" />
+		</case>
+		<case locator-key1="NAVIGATION_SUBMISSIONS">
+			<execute function="Click#textClickAtAndWait" value1="Submissions" />
+		</case>
+	</command>
+</definition>

@@ -1,0 +1,70 @@
+<definition>
+	<command name="assertTextEquals">
+		<case locator-key1="ASSIGNED_TO">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+		<case locator-key1="COMMENTS_SUCCESS_MESSAGE">
+			<execute function="AssertTextEquals#assertText" value1="Your request processed successfully." />
+		</case>
+		<case locator-key1="CREATE_DATE">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+		<case locator-key1="DUE_DATE">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+		<case locator-key1="PREVIEW_CONTENT">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+		<case locator-key1="STATE">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+		<case locator-key1="SUCCESS_MESSAGE">
+			<execute function="AssertTextEquals#assertText" value1="Your request completed successfully." />
+		</case>
+	</command>
+
+	<command name="click">
+		<case locator-key1="ACTIVITIES">
+			<execute function="Click#textClickAt" value1="Activities" />
+		</case>
+		<case locator-key1="ASSIGN_TO_ME">
+			<execute function="Click#textClickAt" value1="Assign to Me" />
+		</case>
+		<case locator-key1="COMMENTS">
+			<execute function="Click#textClickAt" value1="Comments" />
+		</case>
+		<case locator-key1="COMMENTS_ADD_COMMENT">
+			<execute function="Click#textClickAt" value1="Add Comment" />
+		</case>
+		<case locator-key1="COMMENTS_BE_THE_FIRST">
+			<execute function="Click#textClickAt" value1="Be the first." />
+		</case>
+		<case locator-key1="COMMENTS_REPLY_BUTTON">
+			<execute function="Click#valueClickAt" value1="Reply" />
+		</case>
+		<case locator-key1="DUE_DATE_CHANGE">
+			<execute function="Click#textClickAt" value1="Change" />
+		</case>
+		<case locator-key1="MENU_APPROVE">
+			<execute function="Click#textClickAt" value1="Approve" />
+		</case>
+		<case locator-key1="MENU_ASSIGN_TO_ME">
+			<execute function="Click#textClickAt" value1="Assign to Me" />
+		</case>
+		<case locator-key1="MENU_REJECT">
+			<execute function="Click#textClickAt" value1="Reject" />
+		</case>
+		<case locator-key1="MENU_UPDATE_DUE_DATE">
+			<execute function="Click#textClickAt" value1="Update Due Date" />
+		</case>
+		<case locator-key1="PANEL_CANCEL_BUTTON">
+			<execute function="Click#textClickAt" value1="Cancel" />
+		</case>
+		<case locator-key1="PANEL_OK_BUTTON">
+			<execute function="Click#textClickAtAndWait" value1="OK" />
+		</case>
+		<case locator-key1="PREVIEW">
+			<execute function="Click#partialTextClickAt" value1="Preview" />
+		</case>
+	</command>
+</definition>

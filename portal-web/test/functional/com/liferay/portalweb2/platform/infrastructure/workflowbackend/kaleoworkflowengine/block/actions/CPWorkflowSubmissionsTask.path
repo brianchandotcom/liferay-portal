@@ -19,9 +19,9 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SUCESS_MESSAGE</td>
+	<td>SUCCESS_MESSAGE</td>
 	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
+	<td></td>
 </tr>
 <tr>
 	<td>STATE</td>
@@ -179,6 +179,11 @@
 <tr>
 	<td>COMMENTS</td>
 	<td>//div[@class='lfr-panel-title']/span[contains(.,'Comments')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_SUCCESS_MESSAGE</td>
+	<td>//div[@id='_151_discussion-status-messages']</td>
 	<td></td>
 </tr>
 <tr>

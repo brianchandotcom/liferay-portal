@@ -1,0 +1,10 @@
+<definition>
+	<command name="click">
+		<case locator-key1="NAVIGATION_COMPLETED">
+			<execute function="Click#textClickAtAndWait" value1="Completed" />
+		</case>
+		<case locator-key1="NAVIGATION_PENDING">
+			<execute function="Click#textClickAtAndWait" value1="Pending" />
+		</case>
+	</command>
+</definition>

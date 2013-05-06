@@ -444,7 +444,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 						</li>
 					</c:if>
 
-					<c:if test="<%= MBMessagePermission.contains(permissionChecker, message, ActionKeys.PERMISSIONS) && !thread.isLocked() %>">
+					<c:if test="<%= MBMessagePermission.contains(permissionChecker, message, ActionKeys.PERMISSIONS) && !thread.isLocked() && !message.isRoot() %>">
 						<li>
 							<liferay-security:permissionsURL
 								modelResource="<%= MBMessage.class.getName() %>"

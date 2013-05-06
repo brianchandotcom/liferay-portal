@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ORGANIZATION_URL</td>
+	<td>/web/organization-name/</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SITE_URL_PRIVATE</td>
 	<td>/group/site-name/</td>
 	<td></td>

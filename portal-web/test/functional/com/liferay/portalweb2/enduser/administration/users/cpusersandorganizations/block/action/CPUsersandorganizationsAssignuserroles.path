@@ -1,0 +1,56 @@
+<html>
+<head>
+<title>CPUsersandorganizationsAssignuserroles</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPUsersandorganizationsAssignuserroles</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPUsersandorganizaitonsAssignuserroles</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ROLES_SEARCH-->
+<tr>
+	<td>ROLES_SEARCH_FIELD</td>
+	<td>//input[@id='_125_keywords']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ROLES_SEARCH_BUTTON</td>
+	<td>//input[@value='Search']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ROLE_TABLE-->
+<tr>
+	<td>ROLE_TABLE_TITLE_1</td>
+	<td>xpath=(//div[@id='_125_ocerSearchContainer']//tr/td[1]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ROLE_TABLE_TYPE_1</td>
+	<td>xpath=(//div[@id='_125_ocerSearchContainer']//tr/td[2]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ROLE_TABLE_DESCRIPTION_1</td>
+	<td>xpath=(//div[@id='_125_ocerSearchContainer']//tr/td[3]/a)[1]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -75,6 +75,22 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--ADD_SITE_ROLES_TO_MENULIST-->
+<tr>
+	<td>ADD_SITE_ROLES_TO_MENULIST_USERS</td>
+	<td>//a[@role='menuitem' and contains(.,'Users')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_SITE_ROLES_TO_MENULIST_USER_GROUPS</td>
+	<td>//a[@role='menuitem' and contains(.,'User Groups')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_SUMMARY</td>

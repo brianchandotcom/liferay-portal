@@ -141,6 +141,8 @@ public class CharPool {
 
 	public static final char POUND = '#';
 
+	public static final char PRIME = '`';
+
 	public static final char QUESTION = '?';
 
 	public static final char QUOTE = '\"';

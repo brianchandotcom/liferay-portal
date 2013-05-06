@@ -29,10 +29,8 @@
 	String nodeId = ParamUtil.getString(request, "nodeId");
 	String title = ParamUtil.getString(request, "title");
 
-	WikiNode node = null;
-
 	if (Validator.isNull(nodeId) || nodeId.equals("0")) {
-		node = (WikiNode)request.getAttribute(WebKeys.WIKI_NODE);
+		WikiNode node = (WikiNode)request.getAttribute(WebKeys.WIKI_NODE);
 
 		if (node != null) {
 			nodeId = String.valueOf(node.getNodeId());
@@ -41,8 +39,8 @@
 
 	boolean hasDraftPage = false;
 
-	if (node != null) {
-		hasDraftPage = WikiPageLocalServiceUtil.hasDraftPage(node.getNodeId(), title);
+	if (Validator.isNotNull(nodeId) && !nodeId.equals("0")) {
+		hasDraftPage = WikiPageLocalServiceUtil.hasDraftPage(Long.valueOf(nodeId), title);
 	}
 
 	PortletURL searchURL = renderResponse.createRenderURL();
@@ -64,7 +62,7 @@
 		<c:when test="<%= hasDraftPage %>">
 
 			<%
-			WikiPage draftPage = WikiPageLocalServiceUtil.getDraftPage(node.getNodeId(), title);
+			WikiPage draftPage = WikiPageLocalServiceUtil.getDraftPage(Long.valueOf(nodeId), title);
 
 			boolean editableDraft = false;
 

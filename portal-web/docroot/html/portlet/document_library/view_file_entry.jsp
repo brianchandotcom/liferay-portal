@@ -831,34 +831,11 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 		},
 		['aui-base', 'selector-css3']
 	);
-
-	<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) && DLUtil.isOfficeExtension(extension) && portletDisplay.isWebDAVEnabled() && BrowserSnifferUtil.isIeOnWin32Bit(request) %>">
-		Liferay.provide(
-			window,
-			'<portlet:namespace />openDocument',
-			function(webDavUrl) {
-				var A = AUI();
-
-				Liferay.Util.openDocument(
-					webDavUrl,
-					null,
-					function(exception) {
-						var errorMessage = A.Lang.sub(
-							'<%= UnicodeLanguageUtil.get(pageContext, "cannot-open-the-requested-document-due-to-the-following-reason") %>',
-							[exception.message]
-						);
-
-						var openMSOfficeError = A.one('#<portlet:namespace />openMSOfficeError');
-
-						openMSOfficeError.html(errorMessage);
-						openMSOfficeError.show();
-					}
-				);
-			},
-			['aui-base']
-		);
-	</c:if>
 </aui:script>
+
+<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) && DLUtil.isOfficeExtension(extension) && portletDisplay.isWebDAVEnabled() && BrowserSnifferUtil.isIeOnWin32Bit(request) %>">
+	<%@ include file="/html/portlet/document_library/action/open_document_js.jspf" %>
+</c:if>
 
 <aui:script use="aui-base,aui-toolbar">
 	var showURLFile = A.one('.show-url-file');

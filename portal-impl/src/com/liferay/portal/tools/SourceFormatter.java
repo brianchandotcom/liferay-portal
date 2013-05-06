@@ -5223,6 +5223,6 @@ public class SourceFormatter {
 		Pattern.MULTILINE);
 	private static boolean _throwException;
 	private static Pattern _xssPattern = Pattern.compile(
-		"String\\s+([^\\s]+)\\s*=\\s*(Bean)?ParamUtil\\.getString\\(");
+		"\\s+([^\\s]+)\\s*=\\s*(Bean)?ParamUtil\\.getString\\(");
 
 }

@@ -23,7 +23,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 JournalArticle article = null;
 
-String type = StringPool.BLANK;
+String type = ParamUtil.getString(request, "type");
 
 try {
 	if (Validator.isNotNull(articleId)) {
@@ -37,9 +37,6 @@ try {
 }
 catch (NoSuchArticleException nsae) {
 }
-
-groupId = ParamUtil.getLong(request, "groupId", themeDisplay.getScopeGroupId());
-type = ParamUtil.getString(request, "type", type);
 %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />
@@ -167,7 +164,7 @@ type = ParamUtil.getString(request, "type", type);
 		searchContainer="<%= searchContainer %>"
 	>
 		<liferay-ui:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-		<liferay-ui:param name="type" value="<%= type %>" />
+		<liferay-ui:param name="type" value="<%= HtmlUtil.escape(type) %>" />
 	</liferay-ui:search-form>
 
 	<br />

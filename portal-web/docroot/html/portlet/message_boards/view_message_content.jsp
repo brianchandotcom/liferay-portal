@@ -170,10 +170,13 @@ MBThreadFlag threadFlag = MBThreadFlagLocalServiceUtil.getThreadFlag(themeDispla
 			<c:if test="<%= MBMessagePermission.contains(permissionChecker, message, ActionKeys.PERMISSIONS) && !thread.isLocked() %>">
 
 				<%
-				MBMessage rootMessage = message;
+				MBMessage rootMessage = null;
 
-				if (!rootMessage.isRoot()) {
-					rootMessage = MBMessageLocalServiceUtil.getMessage(rootMessage.getRootMessageId());
+				if (message.isRoot()) {
+					rootMessage = message;
+				}
+				else {
+					rootMessage = MBMessageLocalServiceUtil.getMessage(message.getRootMessageId());
 				}
 				%>
 

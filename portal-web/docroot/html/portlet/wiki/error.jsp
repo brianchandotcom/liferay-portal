@@ -26,35 +26,35 @@
 <c:if test="<%= SessionErrors.contains(renderRequest, NoSuchPageException.class.getName()) %>">
 
 	<%
-	String nodeId = ParamUtil.getString(request, "nodeId");
+	long nodeId = ParamUtil.getLong(request, "nodeId");
 	String title = ParamUtil.getString(request, "title");
 
-	if (Validator.isNull(nodeId) || nodeId.equals("0")) {
+	if (nodeId == 0) {
 		WikiNode node = (WikiNode)request.getAttribute(WebKeys.WIKI_NODE);
 
 		if (node != null) {
-			nodeId = String.valueOf(node.getNodeId());
+			nodeId = node.getNodeId();
 		}
 	}
 
 	boolean hasDraftPage = false;
 
-	if (Validator.isNotNull(nodeId) && !nodeId.equals("0")) {
-		hasDraftPage = WikiPageLocalServiceUtil.hasDraftPage(Long.valueOf(nodeId), title);
+	if (nodeId > 0) {
+		hasDraftPage = WikiPageLocalServiceUtil.hasDraftPage(nodeId, title);
 	}
 
 	PortletURL searchURL = renderResponse.createRenderURL();
 
 	searchURL.setParameter("struts_action", "/wiki/search");
 	searchURL.setParameter("redirect", currentURL);
-	searchURL.setParameter("nodeId", nodeId);
+	searchURL.setParameter("nodeId", String.valueOf(nodeId));
 	searchURL.setParameter("keywords", title);
 
 	PortletURL editPageURL = renderResponse.createRenderURL();
 
 	editPageURL.setParameter("struts_action", "/wiki/edit_page");
 	editPageURL.setParameter("redirect", currentURL);
-	editPageURL.setParameter("nodeId", nodeId);
+	editPageURL.setParameter("nodeId", String.valueOf(nodeId));
 	editPageURL.setParameter("title", title);
 	%>
 
@@ -62,7 +62,7 @@
 		<c:when test="<%= hasDraftPage %>">
 
 			<%
-			WikiPage draftPage = WikiPageLocalServiceUtil.getDraftPage(Long.valueOf(nodeId), title);
+			WikiPage draftPage = WikiPageLocalServiceUtil.getDraftPage(nodeId, title);
 
 			boolean editableDraft = false;
 

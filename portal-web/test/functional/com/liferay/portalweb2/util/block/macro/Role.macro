@@ -104,33 +104,7 @@
 		<execute action="CPRolesAssignmembersUsers#assertChecked" locator-key1="USER_TABLE_CHECKBOX_1" />
 	</command>
 
-	<command name="cpDefinePermissionBlogEntry">
-		<execute macro="Page#cpGoto">
-			<var name="portletName" value="Roles" />
-		</execute>
-
-		<if>
-			<equals arg1="${roleType}" arg2="Organization" />
-			<then>
-				<execute action="CPRoles#type" locator-key1="SEARCH_FIELD" value1="Orgrole" />
-			</then>
-			<elseif>
-				<equals arg1="${roleType}" arg2="Regular" />
-				<then>
-					<execute action="CPRoles#type" locator-key1="SEARCH_FIELD" value1="Regrole" />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${roleType}" arg2="Site" />
-				<then>
-					<execute action="CPRoles#type" locator-key1="SEARCH_FIELD" value1="Siterole" />
-				</then>
-			</elseif>
-			<else>
-				<fail message="Invalid var roleType. Must be (Organization|Regular|Site)." />
-			</else>
-		</if>
-
+	<command name="cpDefinePermissionBlogsEntryCmd">
 		<execute action="CPRoles#click" locator-key1="SEARCH_BUTTON" />
 		<execute action="CPRoles#assertTextEquals" locator-key1="ROLE_TABLE_TITLE_1" value1="${roleName}" />
 		<execute action="CPRoles#click" locator-key1="ROLE_TABLE_ACTIONS_1" />
@@ -138,40 +112,85 @@
 
 		<execute action="CPRolesDefinepermissions#select" locator-key1="ADD_PERMISSIONS_SELECT" value1="Blogs" />
 
-		<execute action="CPRolesPermissionsSitecontentBlogs#check" locator-key1="BLOGS_TABLE_ADD_ENTRY_CHECKBOX" />
-		<execute action="CPRolesPermissionsSitecontentBlogs#click" locator-key1="SAVE_BUTTON" />
+		<if>
+			<equals arg1="${rolePermission}" arg2="Add Entry" />
+			<then>
+				<var name="permissionResource" value="Blogs" />
+
+				<execute action="CPRolesPermissionsSitecontentBlogs#check" locator-key1="BLOGS_TABLE_ADD_ENTRY_CHECKBOX" />
+				<execute action="CPRolesPermissionsSitecontentBlogs#click" locator-key1="SAVE_BUTTON" />
+			</then>
+			<elseif>
+				<equals arg1="${rolePermission}" arg2="Delete" />
+				<then>
+					<var name="permissionResource" value="Blogs Entry" />
+
+					<execute action="CPRolesPermissionsSitecontentBlogs#check" locator-key1="BLOGS_ENTRY_TABLE_DELETE_CHECKBOX" />
+					<execute action="CPRolesPermissionsSitecontentBlogs#click" locator-key1="SAVE_BUTTON" />
+				</then>
+			</elseif>
+			<else>
+				<fail message="Invalid var rolePermission." />
+			</else>
+		</if>
 
 		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="The role permissions were updated." />
-		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="PERMISSION_TABLE_RESOURCE_SET_1" value1="Blogs" />
-		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="PERMISSION_TABLE_RESOURCE_1" value1="Blogs" />
-		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="PERMISSION_TABLE_ACTION_1" value1="Add Entry" />
-		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="PERMISSION_TABLE_DELETE_1" value1="Delete" />
+		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="${roleTypeKey}_PERMISSION_TABLE_RESOURCE_SET_1" value1="Blogs" />
+		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="${roleTypeKey}_PERMISSION_TABLE_RESOURCE_1" value1="${permissionResource}" />
+		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="${roleTypeKey}_PERMISSION_TABLE_ACTION_1" value1="${rolePermission}" />
+		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="${roleTypeKey}_PERMISSION_TABLE_DELETE_1" value1="Delete" />
 	</command>
 
-	<command name="cpRemovePermissionBlogEntry">
+	<command name="cpDefinePermissionBlogsEntryOrg">
 		<execute macro="Page#cpGoto">
 			<var name="portletName" value="Roles" />
 		</execute>
 
+		<execute action="CPRoles#type" locator-key1="SEARCH_FIELD" value1="Orgrole" />
+
+		<execute macro="Role#cpDefinePermissionBlogsEntryCmd">
+			<var name="roleTypeKey" value="ORG" />
+		</execute>
+	</command>
+
+	<command name="cpDefinePermissionBlogsEntryReg">
+		<execute macro="Page#cpGoto">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute action="CPRoles#type" locator-key1="SEARCH_FIELD" value1="Regrole" />
+
+		<execute macro="Role#cpDefinePermissionBlogsEntryCmd">
+			<var name="roleTypeKey" value="REG" />
+		</execute>
+	</command>
+
+	<command name="cpDefinePermissionBlogsEntrySite">
+		<execute macro="Page#cpGoto">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute action="CPRoles#type" locator-key1="SEARCH_FIELD" value1="Siterole" />
+
+		<execute macro="Role#cpDefinePermissionBlogsEntryCmd">
+			<var name="roleTypeKey" value="SITE" />
+		</execute>
+	</command>
+
+	<command name="cpRemovePermissionBlogsEntryCmd">
 		<if>
-			<equals arg1="${roleType}" arg2="Organization" />
+			<equals arg1="${rolePermission}" arg2="Add Entry" />
 			<then>
-				<execute action="CPRoles#type" locator-key1="SEARCH_FIELD" value1="Orgrole" />
+				<var name="permissionResource" value="Blogs" />
 			</then>
 			<elseif>
-				<equals arg1="${roleType}" arg2="Regular" />
+				<equals arg1="${rolePermission}" arg2="Delete" />
 				<then>
-					<execute action="CPRoles#type" locator-key1="SEARCH_FIELD" value1="Regrole" />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${roleType}" arg2="Site" />
-				<then>
-					<execute action="CPRoles#type" locator-key1="SEARCH_FIELD" value1="Siterole" />
+					<var name="permissionResource" value="Blogs Entry" />
 				</then>
 			</elseif>
 			<else>
-				<fail message="Invalid var roleType. Must be (Organization|Regular|Site)." />
+				<fail message="Invalid var rolePermission." />
 			</else>
 		</if>
 
@@ -180,14 +199,50 @@
 		<execute action="CPRoles#click" locator-key1="ROLE_TABLE_ACTIONS_1" />
 		<execute action="CPRoles#click" locator-key1="ROLE_MENULIST_DEFINE_PERMISSIONS" />
 
-		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="PERMISSION_TABLE_RESOURCE_SET_1" value1="Blogs" />
-		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="PERMISSION_TABLE_RESOURCE_1" value1="Blogs" />
-		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="PERMISSION_TABLE_ACTION_1" value1="Add Entry" />
-		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="PERMISSION_TABLE_DELETE_1" value1="Delete" />
-		<execute action="CPRolesDefinepermissions#click" locator-key1="PERMISSION_TABLE_DELETE_1" />
+		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="${roleTypeKey}_PERMISSION_TABLE_RESOURCE_SET_1" value1="Blogs" />
+		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="${roleTypeKey}_PERMISSION_TABLE_RESOURCE_1" value1="${permissionResource}" />
+		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="${roleTypeKey}_PERMISSION_TABLE_ACTION_1" value1="${rolePermission}" />
+		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="${roleTypeKey}_PERMISSION_TABLE_DELETE_1" value1="Delete" />
+		<execute action="CPRolesDefinepermissions#click" locator-key1="${roleTypeKey}_PERMISSION_TABLE_DELETE_1" />
 		<execute action="CPRolesDefinepermissions#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="The permission was deleted." />
 		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="INFO_MESSAGE" />
+	</command>
+
+	<command name="cpRemovePermissionBlogsEntryOrg">
+		<execute macro="Page#cpGoto">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute action="CPRoles#type" locator-key1="SEARCH_FIELD" value1="Orgrole" />
+
+		<execute macro="Role#cpRemovePermissionBlogsEntryCmd">
+			<var name="roleTypeKey" value="ORG" />
+		</execute>
+	</command>
+
+	<command name="cpRemovePermissionBlogsEntryReg">
+		<execute macro="Page#cpGoto">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute action="CPRoles#type" locator-key1="SEARCH_FIELD" value1="Regrole" />
+
+		<execute macro="Role#cpRemovePermissionBlogsEntryCmd">
+			<var name="roleTypeKey" value="REG" />
+		</execute>
+	</command>
+
+	<command name="cpRemovePermissionBlogsEntrySite">
+		<execute macro="Page#cpGoto">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute action="CPRoles#type" locator-key1="SEARCH_FIELD" value1="Siterole" />
+
+		<execute macro="Role#cpRemovePermissionBlogsEntryCmd">
+			<var name="roleTypeKey" value="SITE" />
+		</execute>
 	</command>
 
 	<command name="cpTearDown">

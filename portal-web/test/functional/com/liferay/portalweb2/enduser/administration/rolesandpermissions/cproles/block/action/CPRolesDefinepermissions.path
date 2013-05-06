@@ -43,30 +43,82 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--PERMISSION_TABLE-->
+<!--REG_PERMISSION_TABLE-->
 <tr>
-	<td>PERMISSION_TABLE_RESOURCE_SET_1</td>
+	<td>REG_PERMISSION_TABLE_RESOURCE_SET_1</td>
 	<td>xpath=(//div[@id='_128_ocerSearchContainer']//tr/td[1]/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PERMISSION_TABLE_RESOURCE_1</td>
+	<td>REG_PERMISSION_TABLE_RESOURCE_1</td>
 	<td>xpath=(//div[@id='_128_ocerSearchContainer']//tr/td[2])[1]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PERMISSION_TABLE_ACTION_1</td>
+	<td>REG_PERMISSION_TABLE_ACTION_1</td>
 	<td>xpath=(//div[@id='_128_ocerSearchContainer']//tr/td[3])[1]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PERMISSION_TABLE_SCOPE_1</td>
+	<td>REG_PERMISSION_TABLE_SCOPE_1</td>
 	<td>xpath=(//div[@id='_128_ocerSearchContainer']//tr/td[4])[1]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PERMISSION_TABLE_DELETE_1</td>
+	<td>REG_PERMISSION_TABLE_DELETE_1</td>
 	<td>xpath=(//div[@id='_128_ocerSearchContainer']//tr/td[5]/span/a/span)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ORG_PERMISSION_TABLE-->
+<tr>
+	<td>ORG_PERMISSION_TABLE_RESOURCE_SET_1</td>
+	<td>xpath=(//div[@id='_128_ocerSearchContainer']//tr/td[1]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORG_PERMISSION_TABLE_RESOURCE_1</td>
+	<td>xpath=(//div[@id='_128_ocerSearchContainer']//tr/td[2])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORG_PERMISSION_TABLE_ACTION_1</td>
+	<td>xpath=(//div[@id='_128_ocerSearchContainer']//tr/td[3])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORG_PERMISSION_TABLE_DELETE_1</td>
+	<td>xpath=(//div[@id='_128_ocerSearchContainer']//tr/td[4]/span/a/span)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SITE_PERMISSION_TABLE-->
+<tr>
+	<td>SITE_PERMISSION_TABLE_RESOURCE_SET_1</td>
+	<td>xpath=(//div[@id='_128_ocerSearchContainer']//tr/td[1]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_PERMISSION_TABLE_RESOURCE_1</td>
+	<td>xpath=(//div[@id='_128_ocerSearchContainer']//tr/td[2])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_PERMISSION_TABLE_ACTION_1</td>
+	<td>xpath=(//div[@id='_128_ocerSearchContainer']//tr/td[3])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_PERMISSION_TABLE_DELETE_1</td>
+	<td>xpath=(//div[@id='_128_ocerSearchContainer']//tr/td[4]/span/a/span)[1]</td>
 	<td></td>
 </tr>
 </tbody>

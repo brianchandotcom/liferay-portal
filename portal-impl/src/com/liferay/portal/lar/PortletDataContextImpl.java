@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -58,6 +57,7 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcedModel;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
+import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.Team;
 import com.liferay.portal.model.impl.LockImpl;
@@ -610,11 +610,28 @@ public class PortletDataContextImpl implements PortletDataContext {
 	public Element addReferenceElement(
 		Element element, ClassedModel classedModel) {
 
-		return addReferenceElement(element, classedModel, StringPool.BLANK);
+		return addReferenceElement(
+			element, classedModel, classedModel.getModelClassName(),
+			StringPool.BLANK);
+	}
+
+	public Element addReferenceElement(
+		Element element, ClassedModel classedModel, Class<?> clazz) {
+
+		return addReferenceElement(
+			element, classedModel, clazz.getName(), StringPool.BLANK);
 	}
 
 	public Element addReferenceElement(
 		Element element, ClassedModel classedModel, String binPath) {
+
+		return addReferenceElement(
+			element, classedModel, classedModel.getModelClassName(), binPath);
+	}
+
+	public Element addReferenceElement(
+		Element element, ClassedModel classedModel, String className,
+		String binPath) {
 
 		Element referencesElement = element.element("references");
 
@@ -624,16 +641,24 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		Element referenceElement = referencesElement.addElement("reference");
 
-		referenceElement.addAttribute(
-			"class-name", classedModel.getModelClassName());
-
-		Serializable primaryKeyObj = classedModel.getPrimaryKeyObj();
-
-		referenceElement.addAttribute(
-			"class-pk", String.valueOf(primaryKeyObj));
+		referenceElement.addAttribute("class-name", className);
 
 		if (Validator.isNotNull(binPath)) {
-			referenceElement.addAttribute("bin-path", binPath);
+			referenceElement.addAttribute("path", binPath);
+		}
+
+		if (classedModel instanceof StagedGroupedModel) {
+			StagedGroupedModel stagedGroupedModel =
+				(StagedGroupedModel)classedModel;
+
+			referenceElement.addAttribute(
+				"group-id", String.valueOf(stagedGroupedModel.getGroupId()));
+			referenceElement.addAttribute("uuid", stagedGroupedModel.getUuid());
+		}
+		else if (classedModel instanceof StagedModel) {
+			StagedModel stagedModel = (StagedModel)classedModel;
+
+			referenceElement.addAttribute("uuid", stagedModel.getUuid());
 		}
 
 		return referenceElement;
@@ -811,7 +836,11 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	public Element getExportDataElement(ClassedModel classedModel) {
-		Class<?> modelClass = classedModel.getModelClass();
+		return getExportDataElement(classedModel, classedModel.getModelClass());
+	}
+
+	public Element getExportDataElement(
+		ClassedModel classedModel, Class<?> modelClass) {
 
 		Element groupElement = getExportDataGroupElement(
 			modelClass.getSimpleName());
@@ -824,10 +853,26 @@ public class PortletDataContextImpl implements PortletDataContext {
 			String path = ExportImportPathUtil.getModelPath(stagedModel);
 
 			element = getDataElement(groupElement, "path", path);
+
+			if (element != null) {
+				return element;
+			}
 		}
 
-		if (element == null) {
-			element = groupElement.addElement("staged-model");
+		element = groupElement.addElement("staged-model");
+
+		if (classedModel instanceof StagedGroupedModel) {
+			StagedGroupedModel stagedGroupedModel =
+				(StagedGroupedModel)classedModel;
+
+			element.addAttribute(
+				"group-id",String.valueOf(stagedGroupedModel.getGroupId()));
+			element.addAttribute("uuid", stagedGroupedModel.getUuid());
+		}
+		else if (classedModel instanceof StagedModel) {
+			StagedModel stagedModel = (StagedModel)classedModel;
+
+			element.addAttribute("uuid", stagedModel.getUuid());
 		}
 
 		return element;
@@ -1687,24 +1732,27 @@ public class PortletDataContextImpl implements PortletDataContext {
 		for (Element referenceElement : referenceElements) {
 			Element referenceDataElement = null;
 
-			String binPath = referenceElement.attributeValue("bin-path");
+			String path = referenceElement.attributeValue("path");
 
-			if (Validator.isNotNull(binPath)) {
+			if (Validator.isNotNull(path)) {
 				referenceDataElement = getImportDataElement(
-					clazz.getSimpleName(), "path", binPath);
+					clazz.getSimpleName(), "path", path);
 			}
 			else {
-				long classPK = GetterUtil.getLong(
-					referenceElement.attributeValue("class-pk"));
+				String groupId = referenceElement.attributeValue("group-id");
+				String uuid = referenceElement.attributeValue("uuid");
 
-				StringBuilder sb = new StringBuilder(6);
+				StringBuilder sb = new StringBuilder(5);
 
-				sb.append("staged-model[contains(@path, '/");
-				sb.append(clazz.getName());
-				sb.append(StringPool.FORWARD_SLASH);
-				sb.append(classPK);
-				sb.append(".xml");
-				sb.append("')]");
+				sb.append("staged-model[@uuid='");
+				sb.append(uuid);
+
+				if (groupId != null) {
+					sb.append("' and @group-id='");
+					sb.append(groupId);
+				}
+
+				sb.append("']");
 
 				XPath xPath = SAXReaderUtil.createXPath(sb.toString());
 

@@ -66,10 +66,8 @@ public class FolderStagedModelDataHandler
 			PortletDataContext portletDataContext, Folder folder)
 		throws Exception {
 
-		Element folderGroupElement =
-			portletDataContext.getExportDataGroupElement(Folder.class);
-
-		Element folderElement = folderGroupElement.addElement("staged-model");
+		Element folderElement = portletDataContext.getExportDataElement(
+			folder, Folder.class);
 
 		String folderPath = ExportImportPathUtil.getModelPath(
 			folder.getGroupId(), Folder.class.getName(), folder.getFolderId());
@@ -123,33 +121,21 @@ public class FolderStagedModelDataHandler
 		Element folderElement = portletDataContext.getImportDataElement(
 			Folder.class.getSimpleName(), "path", path);
 
-		Element referencesElement = folderElement.element("references");
+		List<Element> referenceDataElements =
+			portletDataContext.getReferenceDataElements(
+				folderElement, Repository.class);
 
-		if (referencesElement != null) {
-			List<Element> referenceElements = referencesElement.elements();
+		for (Element referenceDataElement : referenceDataElements) {
+			String referencePath = referenceDataElement.attributeValue("path");
 
-			for (Element referenceElement : referenceElements) {
-				String className = referenceElement.attributeValue(
-					"class-name");
+			StagedModel referenceStagedModel =
+				(StagedModel)portletDataContext.getZipEntryAsObject(
+					referencePath);
 
-				if (!className.equals(Repository.class.getName())) {
-					continue;
-				}
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, referenceStagedModel);
 
-				String classPK = referenceElement.attributeValue("class-pk");
-
-				String referencePath = ExportImportPathUtil.getModelPath(
-					portletDataContext, className, GetterUtil.getLong(classPK));
-
-				StagedModel referenceStagedModel =
-					(StagedModel)portletDataContext.getZipEntryAsObject(
-						referencePath);
-
-				StagedModelDataHandlerUtil.importStagedModel(
-					portletDataContext, referenceStagedModel);
-
-				return;
-			}
+			return;
 		}
 
 		if (folder.getParentFolderId() !=
@@ -309,22 +295,12 @@ public class FolderStagedModelDataHandler
 
 		long defaultFileEntryTypeId = 0;
 
-		Element referencesElement = folderElement.element("references");
+		List<Element> referenceDataElements =
+			portletDataContext.getReferenceDataElements(
+				folderElement, DLFileEntryType.class);
 
-		if (referencesElement == null) {
-			return;
-		}
-
-		List<Element> referenceElements = referencesElement.elements();
-
-		for (Element referenceElement : referenceElements) {
-			String className = referenceElement.attributeValue("class-name");
-
-			if (!className.equals(DLFileEntryType.class.getSimpleName())) {
-				continue;
-			}
-
-			String referencePath = referenceElement.attributeValue("path");
+		for (Element referenceDataElement : referenceDataElements) {
+			String referencePath = referenceDataElement.attributeValue("path");
 
 			DLFileEntryType referenceDLFileEntryType =
 				(DLFileEntryType)portletDataContext.getZipEntryAsObject(

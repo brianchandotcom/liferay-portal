@@ -16,6 +16,7 @@ package com.liferay.portlet.blogs.lar;
 
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
+import com.liferay.portal.kernel.lar.ExportImportUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
@@ -30,8 +31,6 @@ import com.liferay.portal.service.persistence.ImageUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.service.persistence.BlogsEntryUtil;
-import com.liferay.portlet.dynamicdatamapping.lar.DDMPortletDataHandler;
-import com.liferay.portlet.journal.lar.JournalPortletDataHandler;
 
 import java.io.InputStream;
 
@@ -66,11 +65,9 @@ public class BlogsEntryStagedModelDataHandler
 				entry.getSmallImageId());
 
 			if (Validator.isNotNull(entry.getSmallImageURL())) {
-				String smallImageURL =
-					DDMPortletDataHandler.exportReferenceContent(
-						portletDataContext, null, null, null, null, null, null,
-						entryElement,
-						entry.getSmallImageURL().concat(StringPool.SPACE));
+				String smallImageURL = ExportImportUtil.exportContentReferences(
+					portletDataContext, entryElement,
+					entry.getSmallImageURL().concat(StringPool.SPACE));
 
 				entry.setSmallImageURL(smallImageURL);
 			}
@@ -88,9 +85,8 @@ public class BlogsEntryStagedModelDataHandler
 			}
 		}
 
-		String content = DDMPortletDataHandler.exportReferenceContent(
-			portletDataContext, null, null, null, null, null, null,
-			entryElement, entry.getContent());
+		String content = ExportImportUtil.exportContentReferences(
+			portletDataContext, entryElement, entry.getContent());
 
 		entry.setContent(content);
 
@@ -109,7 +105,7 @@ public class BlogsEntryStagedModelDataHandler
 		Element entryElement =
 			portletDataContext.getImportDataStagedModelElement(entry);
 
-		String content = JournalPortletDataHandler.importReferenceContent(
+		String content = ExportImportUtil.importContentReferences(
 			portletDataContext, entryElement, entry.getContent());
 
 		entry.setContent(content);
@@ -143,7 +139,7 @@ public class BlogsEntryStagedModelDataHandler
 
 				if (Validator.isNotNull(entry.getSmallImageURL())) {
 					String smallImageURL =
-						JournalPortletDataHandler.importReferenceContent(
+						ExportImportUtil.importContentReferences(
 							portletDataContext, entryElement,
 							entry.getSmallImageURL());
 

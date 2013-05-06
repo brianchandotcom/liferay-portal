@@ -101,7 +101,6 @@ import com.liferay.portal.theme.ThemeLoaderFactory;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.journal.lar.JournalPortletDataHandler;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
 import com.liferay.portlet.journalcontent.util.JournalContentUtil;
@@ -942,13 +941,6 @@ public class LayoutImporter {
 		if (Validator.isNull(articleId)) {
 			return;
 		}
-
-		Element rootElement = layoutElement.getParent();
-
-		portletDataContext.setImportDataRootElement(rootElement);
-
-		JournalPortletDataHandler.importReferenceData(
-			portletDataContext, rootElement);
 
 		List<Element> referenceDataElements =
 			portletDataContext.getReferenceDataElements(

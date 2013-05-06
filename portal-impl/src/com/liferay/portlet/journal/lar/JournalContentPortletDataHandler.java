@@ -231,11 +231,6 @@ public class JournalContentPortletDataHandler
 			portletDataContext.setScopeGroupId(portletDataContext.getGroupId());
 		}
 
-		Element rootElement = portletDataContext.getImportDataRootElement();
-
-		JournalPortletDataHandler.importReferenceData(
-			portletDataContext, rootElement);
-
 		Element ddmStructuresElement =
 			portletDataContext.getImportDataGroupElement(DDMStructure.class);
 

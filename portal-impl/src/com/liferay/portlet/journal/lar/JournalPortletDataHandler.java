@@ -25,30 +25,10 @@ import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.Repository;
-import com.liferay.portal.model.RepositoryEntry;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.persistence.LayoutUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
-import com.liferay.portlet.documentlibrary.model.DLFileRank;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
@@ -62,11 +42,8 @@ import com.liferay.portlet.journal.service.persistence.JournalArticleActionableD
 import com.liferay.portlet.journal.service.persistence.JournalFeedActionableDynamicQuery;
 import com.liferay.portlet.journal.service.persistence.JournalFolderActionableDynamicQuery;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.portlet.PortletPreferences;
 
@@ -105,75 +82,6 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "journal";
 
-	public static String importReferenceContent(
-			PortletDataContext portletDataContext, Element parentElement,
-			String content)
-		throws Exception {
-
-		content = importDLFileEntries(
-			portletDataContext, parentElement, content);
-		content = importLayoutFriendlyURLs(portletDataContext, content);
-		content = importLinksToLayout(portletDataContext, content);
-
-		return content;
-	}
-
-	public static void importReferenceData(
-			PortletDataContext portletDataContext, Element entityElement)
-		throws Exception {
-
-		Element dlRepositoriesElement =
-			portletDataContext.getImportDataGroupElement(Repository.class);
-
-		List<Element> dlRepositoryElements = dlRepositoriesElement.elements();
-
-		for (Element dlRepositoryElement : dlRepositoryElements) {
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, dlRepositoryElement);
-		}
-
-		Element dlRepositoryEntriesElement =
-			portletDataContext.getImportDataGroupElement(RepositoryEntry.class);
-
-		List<Element> dlRepositoryEntryElements =
-			dlRepositoryEntriesElement.elements();
-
-		for (Element dlRepositoryEntryElement : dlRepositoryEntryElements) {
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, dlRepositoryEntryElement);
-		}
-
-		Element dlFoldersElement = portletDataContext.getImportDataGroupElement(
-			Folder.class);
-
-		List<Element> dlFolderElements = dlFoldersElement.elements();
-
-		for (Element folderElement : dlFolderElements) {
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, folderElement);
-		}
-
-		Element dlFileEntriesElement =
-			portletDataContext.getImportDataGroupElement(FileEntry.class);
-
-		List<Element> dlFileEntryElements = dlFileEntriesElement.elements();
-
-		for (Element dlFileEntryElement : dlFileEntryElements) {
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, dlFileEntryElement);
-		}
-
-		Element dlFileRanksElement =
-			portletDataContext.getImportDataGroupElement(DLFileRank.class);
-
-		List<Element> dlFileRankElements = dlFileRanksElement.elements();
-
-		for (Element dlFileRankElement : dlFileRankElements) {
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, dlFileRankElement);
-		}
-	}
-
 	public JournalPortletDataHandler() {
 		setAlwaysExportable(true);
 		setDataLocalized(true);
@@ -198,227 +106,6 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 		setImportControls(getExportControls()[0], getExportControls()[1]);
 		setPublishToLiveByDefault(
 			PropsValues.JOURNAL_PUBLISH_TO_LIVE_BY_DEFAULT);
-	}
-
-	protected static String importDLFileEntries(
-			PortletDataContext portletDataContext, Element parentElement,
-			String content)
-		throws Exception {
-
-		List<Element> dlReferenceElements = parentElement.elements(
-			"dl-reference");
-
-		for (Element dlReferenceElement : dlReferenceElements) {
-			String dlReferencePath = dlReferenceElement.attributeValue("path");
-
-			String fileEntryUUID = null;
-			long fileEntryGroupId = 0;
-
-			try {
-				Object zipEntryObject = portletDataContext.getZipEntryAsObject(
-					dlReferencePath);
-
-				if (zipEntryObject == null) {
-					if (_log.isWarnEnabled()) {
-						_log.warn("Unable to reference " + dlReferencePath);
-					}
-
-					continue;
-				}
-
-				boolean defaultRepository = GetterUtil.getBoolean(
-					dlReferenceElement.attributeValue("default-repository"));
-
-				if (defaultRepository) {
-					FileEntry fileEntry = (FileEntry)zipEntryObject;
-
-					fileEntryUUID = fileEntry.getUuid();
-					fileEntryGroupId = fileEntry.getGroupId();
-				}
-				else {
-					RepositoryEntry repositoryEntry =
-						(RepositoryEntry)zipEntryObject;
-
-					fileEntryUUID = repositoryEntry.getUuid();
-					fileEntryGroupId = repositoryEntry.getGroupId();
-				}
-			}
-			catch (Exception e) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
-				}
-				else if (_log.isWarnEnabled()) {
-					_log.warn(e.getMessage());
-				}
-			}
-
-			if (fileEntryUUID == null) {
-				continue;
-			}
-
-			FileEntry fileEntry = null;
-
-			try {
-				long groupId = portletDataContext.getScopeGroupId();
-
-				if (fileEntryGroupId ==
-						portletDataContext.getSourceCompanyGroupId()) {
-
-					groupId = portletDataContext.getSourceCompanyGroupId();
-				}
-
-				fileEntry = DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
-					fileEntryUUID, groupId);
-			}
-			catch (NoSuchFileEntryException nsfee) {
-				continue;
-			}
-
-			String dlReference = "[$dl-reference=" + dlReferencePath + "$]";
-
-			String url = DLUtil.getPreviewURL(
-				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
-				false, false);
-
-			content = StringUtil.replace(content, dlReference, url);
-		}
-
-		return content;
-	}
-
-	protected static String importLayoutFriendlyURLs(
-			PortletDataContext portletDataContext, String content)
-		throws Exception {
-
-		String privateGroupServletMapping =
-			PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING;
-		String privateUserServletMapping =
-			PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING;
-		String publicServletMapping =
-			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING;
-
-		String portalContextPath = PortalUtil.getPathContext();
-
-		if (Validator.isNotNull(portalContextPath)) {
-			privateGroupServletMapping = portalContextPath.concat(
-				privateGroupServletMapping);
-			privateUserServletMapping = portalContextPath.concat(
-				privateUserServletMapping);
-			publicServletMapping = portalContextPath.concat(
-				publicServletMapping);
-		}
-
-		content = StringUtil.replace(
-			content, "@data_handler_private_group_servlet_mapping@",
-			privateGroupServletMapping);
-		content = StringUtil.replace(
-			content, "@data_handler_private_user_servlet_mapping@",
-			privateUserServletMapping);
-		content = StringUtil.replace(
-			content, "@data_handler_public_servlet_mapping@",
-			publicServletMapping);
-
-		Group group = GroupLocalServiceUtil.getGroup(
-			portletDataContext.getScopeGroupId());
-
-		content = StringUtil.replace(
-			content, "@data_handler_group_friendly_url@",
-			group.getFriendlyURL());
-
-		return content;
-	}
-
-	protected static String importLinksToLayout(
-			PortletDataContext portletDataContext, String content)
-		throws Exception {
-
-		List<String> oldLinksToLayout = new ArrayList<String>();
-		List<String> newLinksToLayout = new ArrayList<String>();
-
-		Matcher matcher = _importLinksToLayoutPattern.matcher(content);
-
-		while (matcher.find()) {
-			long oldLayoutId = GetterUtil.getLong(matcher.group(1));
-
-			long newLayoutId = oldLayoutId;
-
-			String type = matcher.group(2);
-
-			boolean privateLayout = type.startsWith("private");
-
-			String layoutUuid = matcher.group(3);
-
-			String friendlyURL = matcher.group(4);
-
-			try {
-				Layout layout = LayoutUtil.fetchByUUID_G_P(
-					layoutUuid, portletDataContext.getScopeGroupId(),
-					privateLayout);
-
-				if (layout == null) {
-					layout = LayoutUtil.fetchByG_P_F(
-						portletDataContext.getScopeGroupId(), privateLayout,
-						friendlyURL);
-				}
-
-				if (layout == null) {
-					layout = LayoutUtil.fetchByG_P_L(
-						portletDataContext.getScopeGroupId(), privateLayout,
-						oldLayoutId);
-				}
-
-				if (layout == null) {
-					if (_log.isWarnEnabled()) {
-						StringBundler sb = new StringBundler(9);
-
-						sb.append("Unable to get layout with UUID ");
-						sb.append(layoutUuid);
-						sb.append(", friendly URL ");
-						sb.append(friendlyURL);
-						sb.append(", or ");
-						sb.append("layoutId ");
-						sb.append(oldLayoutId);
-						sb.append(" in group ");
-						sb.append(portletDataContext.getScopeGroupId());
-
-						_log.warn(sb.toString());
-					}
-				}
-				else {
-					newLayoutId = layout.getLayoutId();
-				}
-			}
-			catch (SystemException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to get layout in group " +
-							portletDataContext.getScopeGroupId(), se);
-				}
-			}
-
-			String oldLinkToLayout = matcher.group(0);
-
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(StringPool.AT);
-			sb.append(layoutUuid);
-			sb.append(StringPool.AT);
-			sb.append(friendlyURL);
-
-			String newLinkToLayout = StringUtil.replace(
-				oldLinkToLayout,
-				new String[] {sb.toString(), String.valueOf(oldLayoutId)},
-				new String[] {StringPool.BLANK, String.valueOf(newLayoutId)});
-
-			oldLinksToLayout.add(oldLinkToLayout);
-			newLinksToLayout.add(newLinkToLayout);
-		}
-
-		content = StringUtil.replace(
-			content, ArrayUtil.toStringArray(oldLinksToLayout.toArray()),
-			ArrayUtil.toStringArray(newLinksToLayout.toArray()));
-
-		return content;
 	}
 
 	@Override
@@ -625,10 +312,6 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 			portletDataContext.getSourceGroupId(),
 			portletDataContext.getScopeGroupId());
 
-		Element rootElement = portletDataContext.getImportDataRootElement();
-
-		importReferenceData(portletDataContext, rootElement);
-
 		Element ddmStructuresElement =
 			portletDataContext.getImportDataGroupElement(DDMStructure.class);
 
@@ -685,12 +368,5 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 
 		return portletPreferences;
 	}
-
-	private static Log _log = LogFactoryUtil.getLog(
-		JournalPortletDataHandler.class);
-
-	private static Pattern _importLinksToLayoutPattern = Pattern.compile(
-		"\\[([0-9]+)@(public|private\\-[a-z]*)@(\\p{XDigit}{8}\\-" +
-		"(?:\\p{XDigit}{4}\\-){3}\\p{XDigit}{12})@([^\\]]*)\\]");
 
 }

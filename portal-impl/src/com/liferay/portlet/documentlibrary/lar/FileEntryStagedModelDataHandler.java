@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -106,11 +105,8 @@ public class FileEntryStagedModelDataHandler
 			PortletDataContext portletDataContext, FileEntry fileEntry)
 		throws Exception {
 
-		Element fileEntryGroupElement =
-			portletDataContext.getExportDataGroupElement(FileEntry.class);
-
-		Element fileEntryElement = fileEntryGroupElement.addElement(
-			"staged-model");
+		Element fileEntryElement = portletDataContext.getExportDataElement(
+			fileEntry, FileEntry.class);
 
 		String fileEntryPath = ExportImportPathUtil.getModelPath(
 			fileEntry.getGroupId(), FileEntry.class.getName(),
@@ -233,30 +229,19 @@ public class FileEntryStagedModelDataHandler
 			portletDataContext.getImportDataElement(
 				FileEntry.class.getSimpleName(), "path", path);
 
-		Element referencesElement = fileEntryElement.element("references");
+		List<Element> referenceDataElements =
+			portletDataContext.getReferenceDataElements(
+				fileEntryElement, Repository.class);
 
-		if (referencesElement != null) {
-			List<Element> referenceElements = referencesElement.elements();
+		for (Element referenceDataElement : referenceDataElements) {
+			String referencePath = referenceDataElement.attributeValue("path");
 
-			for (Element referenceElement : referenceElements) {
-				String className = referenceElement.attributeValue(
-					"class-name");
-				String classPK = referenceElement.attributeValue("class-pk");
+			StagedModel referenceStagedModel =
+				(StagedModel)portletDataContext.getZipEntryAsObject(
+					referencePath);
 
-				String referencePath = ExportImportPathUtil.getModelPath(
-					portletDataContext, className, GetterUtil.getLong(classPK));
-
-				StagedModel referenceStagedModel =
-					(StagedModel)portletDataContext.getZipEntryAsObject(
-						referencePath);
-
-				StagedModelDataHandlerUtil.importStagedModel(
-					portletDataContext, referenceStagedModel);
-
-				if (className.equals(Repository.class.getName())) {
-					return;
-				}
-			}
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, referenceStagedModel);
 		}
 
 		if ((fileEntry.getFolderId() !=

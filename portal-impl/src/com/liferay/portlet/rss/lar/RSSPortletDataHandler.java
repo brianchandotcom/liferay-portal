@@ -221,17 +221,14 @@ public class RSSPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences, String data)
 		throws Exception {
 
-		Element rootElement = portletDataContext.getImportDataRootElement();
-
-		JournalPortletDataHandler.importReferenceData(
-			portletDataContext, rootElement);
-
 		Map<String, String> articleIds =
 			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
 				JournalArticle.class + ".articleId");
 
 		Layout layout = LayoutLocalServiceUtil.getLayout(
 			portletDataContext.getPlid());
+
+		Element rootElement = portletDataContext.getImportDataRootElement();
 
 		Element footerArticleElement = rootElement.element("footer-article");
 

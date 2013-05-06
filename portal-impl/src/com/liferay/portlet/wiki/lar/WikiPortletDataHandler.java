@@ -17,6 +17,7 @@ package com.liferay.portlet.wiki.lar;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
+import com.liferay.portal.kernel.lar.ExportImportUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
@@ -32,8 +33,6 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.dynamicdatamapping.lar.DDMPortletDataHandler;
-import com.liferay.portlet.journal.lar.JournalPortletDataHandler;
 import com.liferay.portlet.wiki.NoSuchNodeException;
 import com.liferay.portlet.wiki.NoSuchPageException;
 import com.liferay.portlet.wiki.model.WikiNode;
@@ -178,7 +177,7 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 		long nodeId = MapUtil.getLong(
 			nodeIds, page.getNodeId(), page.getNodeId());
 
-		String content = JournalPortletDataHandler.importReferenceContent(
+		String content = ExportImportUtil.importContentReferences(
 			portletDataContext, pageElement, page.getContent());
 
 		page.setContent(content);
@@ -343,10 +342,8 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 				pageElement = pagesElement.addElement("page");
 			}
 
-			String content = DDMPortletDataHandler.exportReferenceContent(
-				portletDataContext, dlFileEntryTypesElement, dlFoldersElement,
-				dlFileEntriesElement, dlFileRanksElement, dlRepositoriesElement,
-				dlRepositoryEntriesElement, pageElement, page.getContent());
+			String content = ExportImportUtil.exportContentReferences(
+				portletDataContext, pageElement, page.getContent());
 
 			page.setContent(content);
 
@@ -563,9 +560,6 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 		}
 
 		Element pagesElement = rootElement.element("pages");
-
-		JournalPortletDataHandler.importReferenceData(
-			portletDataContext, pagesElement);
 
 		for (Element pageElement : pagesElement.elements("page")) {
 			String path = pageElement.attributeValue("path");

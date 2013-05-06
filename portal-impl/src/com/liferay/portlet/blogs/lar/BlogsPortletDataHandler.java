@@ -28,7 +28,6 @@ import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.service.BlogsStatsUserLocalServiceUtil;
 import com.liferay.portlet.blogs.service.persistence.BlogsEntryActionableDynamicQuery;
-import com.liferay.portlet.journal.lar.JournalPortletDataHandler;
 
 import java.util.List;
 
@@ -134,9 +133,6 @@ public class BlogsPortletDataHandler extends BasePortletDataHandler {
 
 		Element entriesElement = portletDataContext.getImportDataGroupElement(
 			BlogsEntry.class);
-
-		JournalPortletDataHandler.importReferenceData(
-			portletDataContext, entriesElement);
 
 		List<Element> entryElements = entriesElement.elements();
 

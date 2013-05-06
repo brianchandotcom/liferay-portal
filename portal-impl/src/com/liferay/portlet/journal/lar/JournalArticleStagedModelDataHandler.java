@@ -19,12 +19,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
+import com.liferay.portal.kernel.lar.ExportImportUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -37,17 +36,12 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Image;
-import com.liferay.portal.model.Repository;
-import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.persistence.ImageUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
-import com.liferay.portlet.documentlibrary.model.DLFileRank;
-import com.liferay.portlet.dynamicdatamapping.lar.DDMPortletDataHandler;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
@@ -151,30 +145,14 @@ public class JournalArticleStagedModelDataHandler
 			portletDataContext.addReferenceElement(articleElement, ddmTemplate);
 		}
 
-		Element dlFileEntryTypesElement =
-			portletDataContext.getExportDataGroupElement(DLFileEntryType.class);
-		Element dlFoldersElement = portletDataContext.getExportDataGroupElement(
-			Folder.class);
-		Element dlFileEntriesElement =
-			portletDataContext.getExportDataGroupElement(FileEntry.class);
-		Element dlFileRanksElement =
-			portletDataContext.getExportDataGroupElement(DLFileRank.class);
-		Element dlRepositoriesElement =
-			portletDataContext.getExportDataGroupElement(Repository.class);
-		Element dlRepositoryEntriesElement =
-			portletDataContext.getExportDataGroupElement(RepositoryEntry.class);
-
 		if (article.isSmallImage()) {
 			Image smallImage = ImageUtil.fetchByPrimaryKey(
 				article.getSmallImageId());
 
 			if (Validator.isNotNull(article.getSmallImageURL())) {
 				String smallImageURL =
-					DDMPortletDataHandler.exportReferenceContent(
-						portletDataContext, dlFileEntryTypesElement,
-						dlFoldersElement, dlFileEntriesElement,
-						dlFileRanksElement, dlRepositoriesElement,
-						dlRepositoryEntriesElement, articleElement,
+					ExportImportUtil.exportContentReferences(
+						portletDataContext, articleElement,
 						article.getSmallImageURL().concat(StringPool.SPACE));
 
 				article.setSmallImageURL(smallImageURL);
@@ -212,11 +190,8 @@ public class JournalArticleStagedModelDataHandler
 		if (portletDataContext.getBooleanParameter(
 				JournalPortletDataHandler.NAMESPACE, "embedded-assets")) {
 
-			String content = DDMPortletDataHandler.exportReferenceContent(
-				portletDataContext, dlFileEntryTypesElement, dlFoldersElement,
-				dlFileEntriesElement, dlFileRanksElement, dlRepositoriesElement,
-				dlRepositoryEntriesElement, articleElement,
-				article.getContent());
+			String content = ExportImportUtil.exportContentReferences(
+				portletDataContext, articleElement, article.getContent());
 
 			article.setContent(content);
 		}
@@ -301,7 +276,7 @@ public class JournalArticleStagedModelDataHandler
 		Element articleElement =
 			portletDataContext.getImportDataStagedModelElement(article);
 
-		content = JournalPortletDataHandler.importReferenceContent(
+		content = ExportImportUtil.importContentReferences(
 			portletDataContext, articleElement, content);
 
 		article.setContent(content);
@@ -522,7 +497,7 @@ public class JournalArticleStagedModelDataHandler
 
 			if (Validator.isNotNull(article.getSmallImageURL())) {
 				String smallImageURL =
-					JournalPortletDataHandler.importReferenceContent(
+					ExportImportUtil.importContentReferences(
 						portletDataContext, articleElement,
 						article.getSmallImageURL());
 

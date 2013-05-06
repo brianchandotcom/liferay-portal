@@ -601,6 +601,16 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 		<%= className %>SubtypeSelector.on(
 			'change',
 			function(event) {
+				setDDMFields('<%= className %>', '', '', '', '');
+
+				var subtypeFieldsFilterEnabled = A.one('#<portlet:namespace />subtypeFieldsFilterEnabled<%= className %>');
+
+				subtypeFieldsFilterEnabled.val(false);
+
+				var subtypeFieldsFilterEnabledCheckbox = A.one('#<portlet:namespace />subtypeFieldsFilterEnabled<%= className %>Checkbox');
+
+				subtypeFieldsFilterEnabledCheckbox.attr('checked', false);
+
 				sourcePanel.all('.asset-subtypefields').hide();
 
 				<%= className %>toggleSubclassesFields(true);
@@ -677,26 +687,30 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 					uri: event.target.attr('data-href')
 				},
 				function(event) {
-					var ddmStructureFieldName = A.one('#<portlet:namespace />ddmStructureFieldName');
-
-					ddmStructureFieldName.val(event.name);
-
-					var ddmStructureFieldvalue = A.one('#<portlet:namespace />ddmStructureFieldValue');
-
-					ddmStructureFieldvalue.val(event.value);
-
-					var ddmStructureDisplayFieldvalue = A.one('#<portlet:namespace />ddmStructureDisplayFieldValue');
-
-					ddmStructureDisplayFieldvalue.val(event.displayValue);
-
-					var ddmStructureFieldMessage = A.one('#<portlet:namespace />' + event.className + 'ddmStructureFieldMessage');
-
-					ddmStructureFieldMessage.html(event.label + ': ' + event.displayValue);
+					setDDMFields(event.className, event.name, event.value, event.displayValue, event.label + ': ' + event.displayValue);
 				}
 			);
 		},
 		'.asset-subtypefields-popup'
 	);
+
+	function setDDMFields(className, name, value, displayValue, message) {
+		var ddmStructureFieldName = A.one('#<portlet:namespace />ddmStructureFieldName');
+
+		ddmStructureFieldName.val(name);
+
+		var ddmStructureFieldvalue = A.one('#<portlet:namespace />ddmStructureFieldValue');
+
+		ddmStructureFieldvalue.val(value);
+
+		var ddmStructureDisplayFieldvalue = A.one('#<portlet:namespace />ddmStructureDisplayFieldValue');
+
+		ddmStructureDisplayFieldvalue.val(displayValue);
+
+		var ddmStructureFieldMessage = A.one('#<portlet:namespace />' + className + 'ddmStructureFieldMessage');
+
+		ddmStructureFieldMessage.html(message);
+	}
 </aui:script>
 
 <%!

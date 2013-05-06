@@ -154,19 +154,11 @@
 		<priority value="INFO" />
 	</category>
 
-	<category name="com.liferay.portal.deploy.hot.HotDeployImpl">
-		<priority value="INFO" />
-	</category>
-
 	<category name="com.liferay.portal.deploy.hot.PACLHotDeployListener">
 		<priority value="ERROR" />
 	</category>
 
 	<category name="com.liferay.portal.deploy.hot.PluginPackageHotDeployListener">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.portal.deploy.hot.PortletHotDeployListener">
 		<priority value="ERROR" />
 	</category>
 

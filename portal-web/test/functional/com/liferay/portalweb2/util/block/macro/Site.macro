@@ -79,6 +79,39 @@
 		<execute action="CPSitemembershipsAddmembers#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
 	</command>
 
+	<command name="cpAssignRole">
+		<execute macro="Page#cpGoto">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute action="CPSites#type" locator-key1="BASIC_SEARCH_FIELD" value1="${siteName}" />
+		<execute action="CPSites#click" locator-key1="BASIC_SEARCH_BUTTON" />
+		<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_NAME" value1="${siteName}" />
+		<execute action="CPSites#click" locator-key1="SITE_TABLE_ACTIONS" />
+		<execute action="CPSites#click" locator-key1="SITE_MENULIST_MANAGE_MEMBERSHIPS" />
+
+		<execute action="CPSitememberships#click" locator-key1="TOOLBAR_ADD_SITE_ROLES_TO" />
+		<execute action="CPSitememberships#click" locator-key1="ADD_SITE_ROLES_TO_MENULIST_USERS" />
+
+		<execute action="CPSitemembershipsAssignuserroles#type" locator-key1="ROLES_SEARCH_FIELD" value1="Siterole" />
+		<execute action="CPSitemembershipsAssignuserroles#click" locator-key1="ROLES_SEARCH_BUTTON" />
+		<execute action="CPSitemembershipsAssignuserroles#assertTextEquals" locator-key1="ROLE_TABLE_TITLE_1" value1="${roleName}" />
+		<execute action="CPSitemembershipsAssignuserroles#click" locator-key1="ROLE_TABLE_TITLE_1" value1="${roleName}" />
+
+		<execute action="CPSitemembershipsAssignuserrolesUser#click" locator-key1="AVAILABLE" />
+		<execute action="CPSitemembershipsAssignuserrolesUser#type" locator-key1="BASIC_SEARCH_FIELD" value1="${userScreenName}" />
+		<execute action="CPSitemembershipsAssignuserrolesUser#click" locator-key1="BASIC_SEARCH_BUTTON" />
+		<execute action="CPSitemembershipsAssignuserrolesUser#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME_1" value1="${userScreenName}" />
+		<execute action="CPSitemembershipsAssignuserrolesUser#check" locator-key1="USER_TABLE_CHECKBOX_1" />
+		<execute action="CPSitemembershipsAssignuserrolesUser#click" locator-key1="UPDATE_ASSOCIATIONS_BUTTON" />
+		<execute action="CPSitemembershipsAssignuserrolesUser#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
+
+		<execute action="CPSitemembershipsAssignuserrolesUser#click" locator-key1="CURRENT" />
+		<execute action="CPSitemembershipsAssignuserrolesUser#assertChecked" locator-key1="USER_TABLE_CHECKBOX_1" />
+		<execute action="CPSitemembershipsAssignuserrolesUser#assertTextEquals" locator-key1="USER_TABLE_USER_NAME_1" value1="${userFirstName} ${userLastName}" />
+		<execute action="CPSitemembershipsAssignuserrolesUser#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME_1" value1="${userScreenName}" />
+	</command>
+
 	<command name="cpDelete">
 		<execute macro="Page#cpGoto">
 			<var name="portletName" value="Sites" />

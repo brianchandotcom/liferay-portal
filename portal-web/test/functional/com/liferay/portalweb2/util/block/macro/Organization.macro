@@ -72,6 +72,34 @@
 		<execute action="CPUsersandorganizationsOrganizationEdit#assertChecked" locator-key1="ORGANIZATION_SITE_CREATE_SITE_CHECKBOX" />
 	</command>
 
+	<command name="cpAssignOrgRole">
+		<execute macro="Page#cpGoto">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute action="CPUsersandorganizations#type" locator-key1="SEARCH_FIELD" value1="${orgName}" />
+		<execute action="CPUsersandorganizations#click" locator-key1="SEARCH_BUTTON" />
+		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME_1" value1="${orgName}" />
+		<execute action="CPUsersandorganizations#click" locator-key1="ORGANIZATION_TABLE_ACTIONS_1" />
+		<execute action="CPUsersandorganizations#click" locator-key1="ORGANIZATION_MENULIST_ASSIGN_ORGANIZATION_ROLES" />
+
+		<execute action="CPUsersandorganizationsAssignuserroles#assertTextEquals" locator1="//tr[contains(.,'${roleName}')]/td[1]/a" value1="${roleName}" />
+		<execute action="CPUsersandorganizationsAssignuserroles#click" locator1="//tr[contains(.,'${roleName}')]/td[1]/a" value1="${roleName}" />
+
+		<execute action="CPUsersandorganizationsAssignuserrolesUser#click" locator-key1="AVAILABLE" />
+		<execute action="CPUsersandorganizationsAssignuserrolesUser#type" locator-key1="BASIC_SEARCH_FIELD" value1="${userScreenName}" />
+		<execute action="CPUsersandorganizationsAssignuserrolesUser#click" locator-key1="BASIC_SEARCH_BUTTON" />
+		<execute action="CPUsersandorganizationsAssignuserrolesUser#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME_1" value1="${userScreenName}" />
+		<execute action="CPUsersandorganizationsAssignuserrolesUser#check" locator-key1="USER_TABLE_CHECKBOX_1" />
+		<execute action="CPUsersandorganizationsAssignuserrolesUser#click" locator-key1="UPDATE_ASSOCIATIONS_BUTTON" />
+		<execute action="CPUsersandorganizationsAssignuserrolesUser#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
+
+		<execute action="CPUsersandorganizationsAssignuserrolesUser#click" locator-key1="CURRENT" />
+		<execute action="CPUsersandorganizationsAssignuserrolesUser#assertChecked" locator-key1="USER_TABLE_CHECKBOX_1" />
+		<execute action="CPUsersandorganizationsAssignuserrolesUser#assertTextEquals" locator-key1="USER_TABLE_USER_NAME_1" value1="${userFirstName} ${userLastName}" />
+		<execute action="CPUsersandorganizationsAssignuserrolesUser#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME_1" value1="${userScreenName}" />
+	</command>
+
 	<command name="cpDelete">
 		<execute macro="Page#cpGoto">
 			<var name="portletName" value="Users and Organizations" />

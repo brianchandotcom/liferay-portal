@@ -1,12 +1,20 @@
 <definition>
 	<command name="pgAdd">
 		<if>
-			<equals arg1="${pageType}" arg2="Private" />
+			<equals arg1="${pageType}" arg2="Organization" />
 			<then>
-				<execute macro="Page#pgGotoSitePrivate">
+				<execute macro="Page#pgGotoOrganization">
 					<var name="pageName" value="${pageName}" />
 				</execute>
 			</then>
+			<elseif>
+				<equals arg1="${pageType}" arg2="Private" />
+				<then>
+					<execute macro="Page#pgGotoSitePrivate">
+						<var name="pageName" value="${pageName}" />
+					</execute>
+				</then>
+			</elseif>
 			<elseif>
 				<equals arg1="${pageType}" arg2="Public" />
 				<then>
@@ -29,6 +37,14 @@
 		<execute action="Dockbar#click" locator1="//span[@data-title='${portletName}']" value1="Add" />
 
 		<execute action="Home#assertElementPresent" locator-key1="PORTLET_1" />
+	</command>
+
+	<command name="pgAddOrganization">
+		<execute macro="Portlet#pgAdd">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Organization" />
+			<var name="portletName" value="${portletName}" />
+		</execute>
 	</command>
 
 	<command name="pgAddSitePrivate">

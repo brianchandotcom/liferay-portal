@@ -21,7 +21,7 @@
 				</then>
 			</elseif>
 			<else>
-				<fail message="Invalid var sitePageType. Must be (Organization|User)." />
+				<fail message="Invalid var sitePageType. Must be (Private|Public)." />
 			</else>
 		</if>
 

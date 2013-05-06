@@ -39,6 +39,10 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
+		<execute macro="BlogsEntry#pgAddCmd" />
+	</command>
+
+	<command name="pgAddCmd">
 		<execute action="PGBlogs#click" locator-key1="ADD_ENTRY_BUTTON" />
 
 		<execute action="PGBlogsAdd#type" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
@@ -55,7 +59,103 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
+		<execute macro="BlogsEntry#pgAddNoPermissionCmd" />
+	</command>
+
+	<command name="pgAddNoPermissionCmd">
 		<execute action="PGBlogs#assertElementNotPresent" locator-key1="ADD_ENTRY_BUTTON" />
+	</command>
+
+	<command name="pgAddNoPermissionOrganization">
+		<execute macro="Page#pgGotoOrganization">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#pgAddNoPermissionCmd" />
+	</command>
+
+	<command name="pgAddNoPermissionSitePublic">
+		<execute macro="Page#pgGotoSitePublic">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#pgAddNoPermissionCmd" />
+	</command>
+
+	<command name="pgAddOrganization">
+		<execute macro="Page#pgGotoOrganization">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#pgAddCmd" />
+	</command>
+
+	<command name="pgAddSitePublic">
+		<execute macro="Page#pgGotoSitePublic">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#pgAddCmd" />
+	</command>
+
+	<command name="pgDelete">
+		<execute macro="Page#pgGoto">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#pgDeleteCmd" />
+	</command>
+
+	<command name="pgDeleteCmd">
+		<execute action="PGBlogs#click" locator-key1="ENTRY_RECYCLE_BIN_1" />
+
+		<execute action="PGBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" />
+		<execute action="PGBlogs#assertTextNotPresent" value1="${entryTitle}" />
+		<execute action="PGBlogs#assertTextNotPresent" value1="${entryContent}" />
+	</command>
+
+	<command name="pgDeleteNoPermission">
+		<execute macro="Page#pgGoto">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#pgDeleteNoPermissionCmd" />
+	</command>
+
+	<command name="pgDeleteNoPermissionCmd">
+		<execute action="PGBlogs#assertElementNotPresent" locator-key1="ENTRY_RECYCLE_BIN_1" />
+	</command>
+
+	<command name="pgDeleteNoPermissionOrganization">
+		<execute macro="Page#pgGotoOrganization">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#pgDeleteNoPermissionCmd" />
+	</command>
+
+	<command name="pgDeleteNoPermissionSitePublic">
+		<execute macro="Page#pgGotoSitePublic">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#pgDeleteNoPermissionCmd" />
+	</command>
+
+	<command name="pgDeleteOrganization">
+		<execute macro="Page#pgGotoOrganization">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#pgDeleteCmd" />
+	</command>
+
+	<command name="pgDeleteSitePublic">
+		<execute macro="Page#pgGotoSitePublic">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#pgDeleteCmd" />
 	</command>
 
 	<command name="pgEdit">
@@ -63,6 +163,10 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
+		<execute macro="BlogsEntry#pgEditCmd" />
+	</command>
+
+	<command name="pgEditCmd">
 		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE_1" value1="${entryTitle}" />
 		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT_1" value1="${entryContent}" />
 		<execute action="PGBlogs#click" locator-key1="ENTRY_EDIT_1" value1="${entryTitle}" />
@@ -81,6 +185,10 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
+		<execute macro="BlogsEntry#pgMoveToRecycleBinCmd" />
+	</command>
+
+	<command name="pgMoveToRecycleBinCmd">
 		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE_1" value1="${entryTitle}" />
 		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT_1" value1="${entryContent}" />
 		<execute action="PGBlogs#click" locator-key1="ENTRY_RECYCLE_BIN_1" />

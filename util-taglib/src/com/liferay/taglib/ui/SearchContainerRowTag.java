@@ -70,7 +70,9 @@ public class SearchContainerRowTag<R>
 
 	@Override
 	public int doAfterBody() {
-		if (!_headerNamesAssigned) {
+		if (!_headerNamesAssigned && (_headerNames != null) &&
+			!_headerNames.isEmpty()) {
+
 			SearchContainerTag<R> searchContainerTag =
 				(SearchContainerTag<R>)findAncestorWithClass(
 					this, SearchContainerTag.class);

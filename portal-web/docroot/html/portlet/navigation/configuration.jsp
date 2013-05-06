@@ -63,7 +63,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 							for (String bulletStyleOption : bulletStyleOptions) {
 							%>
 
-								<aui:option label="<%= LanguageUtil.get(pageContext, bulletStyleOption) %>" selected="<%= bulletStyle.equals(bulletStyleOption) %>" />
+								<aui:option label="<%= bulletStyleOption %>" selected="<%= bulletStyle.equals(bulletStyleOption) %>" />
 
 							<%
 							}

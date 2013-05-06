@@ -14,29 +14,28 @@
 
 package com.liferay.portlet.wiki.lar;
 
-import java.io.InputStream;
-import java.util.Map;
-
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.ExportImportUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.wiki.NoSuchPageException;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.portlet.wiki.service.persistence.WikiPageUtil;
+
+import java.io.InputStream;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Zsolt Berentey
@@ -53,84 +52,61 @@ public class WikiPageStagedModelDataHandler
 
 	@Override
 	protected void doExportStagedModel(
-		PortletDataContext portletDataContext, WikiPage page) throws Exception {
+			PortletDataContext portletDataContext, WikiPage page)
+		throws Exception {
 
-		if (!portletDataContext.isWithinDateRange(page.getModifiedDate())) {
-			return;
-		}
+		Element pageElement = portletDataContext.getExportDataElement(page);
 
-		String path = getPagePath(portletDataContext, page);
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, page.getNode());
 
-		// Clone this page to make sure changes to its content are never
-		// persisted
+		String content = ExportImportUtil.exportContentReferences(
+			portletDataContext, page, pageElement, page.getContent());
 
-		page = (WikiPage)page.clone();
+		page.setContent(content);
 
-		Element pageElement = (Element)pagesElement.selectSingleNode(
-			"//page[@path='".concat(path).concat("']"));
+		if (page.isHead() &&
+			portletDataContext.getBooleanParameter(
+				WikiPortletDataHandler.NAMESPACE, "attachments")) {
 
-		if (portletDataContext.isPathNotProcessed(path)) {
-			if (pageElement == null) {
-				pageElement = pagesElement.addElement("page");
+			for (FileEntry fileEntry : page.getAttachmentsFileEntries()) {
+				StagedModelDataHandlerUtil.exportStagedModel(
+					portletDataContext, fileEntry);
+
+				portletDataContext.addReferenceElement(
+					page, pageElement, fileEntry, FileEntry.class,
+					PortletDataContext.REFERENCE_TYPE_WEAK, false);
 			}
 
-			String content = ExportImportUtil.exportContentReferences(
-				portletDataContext, pageElement, page.getContent());
+			long folderId = page.getAttachmentsFolderId();
 
-			page.setContent(content);
-
-			String imagePath = getPageImagePath(portletDataContext, page);
-
-			pageElement.addAttribute("image-path", imagePath);
-
-			if (portletDataContext.getBooleanParameter(
-					NAMESPACE, "attachments") &&
-				page.isHead()) {
-
-				int i = 0;
-
-				for (FileEntry fileEntry : page.getAttachmentsFileEntries()) {
-					Element attachmentElement = pageElement.addElement(
-						"attachment");
-
-					attachmentElement.addAttribute(
-						"name", fileEntry.getTitle());
-
-					String binPath = getPageAttachementBinPath(
-						portletDataContext, page, i++);
-
-					attachmentElement.addAttribute("bin-path", binPath);
-
-					portletDataContext.addZipEntry(
-						binPath, fileEntry.getContentStream());
-				}
-
-				long folderId = page.getAttachmentsFolderId();
-
-				if (folderId != 0) {
-					page.setAttachmentsFolderId(folderId);
-				}
+			if (folderId != 0) {
+				page.setAttachmentsFolderId(folderId);
 			}
-
-			portletDataContext.addClassedModel(
-				pageElement, path, page, NAMESPACE);
 		}
 
-		exportNode(portletDataContext, nodesElement, page.getNodeId());
+		portletDataContext.addClassedModel(
+			pageElement, ExportImportPathUtil.getModelPath(page), page,
+			WikiPortletDataHandler.NAMESPACE);
 	}
 
 	@Override
 	protected void doImportStagedModel(
-		PortletDataContext portletDataContext, WikiPage page) throws Exception {
+			PortletDataContext portletDataContext, WikiPage page)
+		throws Exception {
 
 		long userId = portletDataContext.getUserId(page.getUserUuid());
 
-		Map<Long, Long> nodeIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				WikiNode.class);
+		String nodePath = ExportImportPathUtil.getModelPath(
+			portletDataContext, WikiNode.class.getName(), page.getNodeId());
 
-		long nodeId = MapUtil.getLong(
-			nodeIds, page.getNodeId(), page.getNodeId());
+		WikiNode node = (WikiNode)portletDataContext.getZipEntryAsObject(
+			nodePath);
+
+		StagedModelDataHandlerUtil.importStagedModel(portletDataContext, node);
+
+		Element pageElement =
+			portletDataContext.getImportDataStagedModelElement(page);
 
 		String content = ExportImportUtil.importContentReferences(
 			portletDataContext, pageElement, page.getContent());
@@ -138,12 +114,19 @@ public class WikiPageStagedModelDataHandler
 		page.setContent(content);
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			pageElement, page, NAMESPACE);
+			page, WikiPortletDataHandler.NAMESPACE);
 
 		if (page.getStatus() != WorkflowConstants.STATUS_APPROVED) {
 			serviceContext.setWorkflowAction(
 				WorkflowConstants.ACTION_SAVE_DRAFT);
 		}
+
+		Map<Long, Long> nodeIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				WikiNode.class);
+
+		long nodeId = MapUtil.getLong(
+			nodeIds, page.getNodeId(), page.getNodeId());
 
 		WikiPage importedPage = null;
 
@@ -175,14 +158,21 @@ public class WikiPageStagedModelDataHandler
 				page.getParentTitle(), page.getRedirectTitle(), serviceContext);
 		}
 
-		if (portletDataContext.getBooleanParameter(NAMESPACE, "attachments") &&
-			page.isHead()) {
+		if (page.isHead() &&
+			portletDataContext.getBooleanParameter(
+				WikiPortletDataHandler.NAMESPACE, "attachments")) {
 
-			for (Element attachmentElement :
-					pageElement.elements("attachment")) {
+			List<Element> attachmentElements =
+				portletDataContext.getReferenceDataElements(
+					pageElement, FileEntry.class,
+					PortletDataContext.REFERENCE_TYPE_WEAK);
 
-				String name = attachmentElement.attributeValue("name");
+			for (Element attachmentElement : attachmentElements) {
+				String path = attachmentElement.attributeValue("path");
 				String binPath = attachmentElement.attributeValue("bin-path");
+
+				FileEntry fileEntry =
+					(FileEntry)portletDataContext.getZipEntryAsObject(path);
 
 				InputStream inputStream = null;
 				String mimeType = null;
@@ -191,7 +181,8 @@ public class WikiPageStagedModelDataHandler
 					inputStream = portletDataContext.getZipEntryAsInputStream(
 						binPath);
 
-					mimeType = MimeTypesUtil.getContentType(inputStream, name);
+					mimeType = MimeTypesUtil.getContentType(
+						inputStream, fileEntry.getTitle());
 				}
 				finally {
 					StreamUtil.cleanUp(inputStream);
@@ -203,7 +194,8 @@ public class WikiPageStagedModelDataHandler
 
 					WikiPageLocalServiceUtil.addPageAttachment(
 						userId, importedPage.getNodeId(),
-						importedPage.getTitle(), name, inputStream, mimeType);
+						importedPage.getTitle(), fileEntry.getTitle(),
+						inputStream, mimeType);
 				}
 				finally {
 					StreamUtil.cleanUp(inputStream);
@@ -211,57 +203,8 @@ public class WikiPageStagedModelDataHandler
 			}
 		}
 
-		portletDataContext.importClassedModel(page, importedPage, NAMESPACE);
-	}
-
-	protected static String getPageAttachementBinPath(
-		PortletDataContext portletDataContext, WikiPage page, int count) {
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(
-			ExportImportPathUtil.getPortletPath(
-				portletDataContext, PortletKeys.WIKI));
-		sb.append("/bin/");
-		sb.append(page.getPageId());
-		sb.append(StringPool.SLASH);
-		sb.append("attachement");
-		sb.append(count);
-
-		return sb.toString();
-	}
-
-	protected static String getPageImagePath(
-			PortletDataContext portletDataContext, WikiPage page)
-		throws Exception {
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(
-			ExportImportPathUtil.getPortletPath(
-				portletDataContext, PortletKeys.WIKI));
-		sb.append("/page/");
-		sb.append(page.getUuid());
-		sb.append(StringPool.SLASH);
-		sb.append(page.getVersion());
-		sb.append(StringPool.SLASH);
-
-		return sb.toString();
-	}
-
-	protected static String getPagePath(
-		PortletDataContext portletDataContext, WikiPage page) {
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(
-			ExportImportPathUtil.getPortletPath(
-				portletDataContext, PortletKeys.WIKI));
-		sb.append("/pages/");
-		sb.append(page.getPageId());
-		sb.append(".xml");
-
-		return sb.toString();
+		portletDataContext.importClassedModel(
+			page, importedPage, WikiPortletDataHandler.NAMESPACE);
 	}
 
 }

@@ -14,15 +14,12 @@
 
 package com.liferay.portlet.wiki.lar;
 
+import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.wiki.NoSuchNodeException;
 import com.liferay.portlet.wiki.model.WikiNode;
@@ -47,21 +44,11 @@ public class WikiNodeStagedModelDataHandler
 			PortletDataContext portletDataContext, WikiNode node)
 		throws Exception {
 
-		if (!portletDataContext.hasDateRange()) {
-			return;
-		}
+		Element nodeElement = portletDataContext.getExportDataElement(node);
 
-		WikiNode node = WikiNodeUtil.findByPrimaryKey(nodeId);
-
-		String path = getNodePath(portletDataContext, node);
-
-		if (!portletDataContext.isPathNotProcessed(path)) {
-			return;
-		}
-
-		Element nodeElement = nodesElement.addElement("node");
-
-		portletDataContext.addClassedModel(nodeElement, path, node, NAMESPACE);
+		portletDataContext.addClassedModel(
+			nodeElement, ExportImportPathUtil.getModelPath(node), node,
+			WikiPortletDataHandler.NAMESPACE);
 	}
 
 	@Override
@@ -71,13 +58,8 @@ public class WikiNodeStagedModelDataHandler
 
 		long userId = portletDataContext.getUserId(node.getUserUuid());
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setCreateDate(node.getCreateDate());
-		serviceContext.setModifiedDate(node.getModifiedDate());
-		serviceContext.setScopeGroupId(portletDataContext.getScopeGroupId());
+		ServiceContext serviceContext = portletDataContext.createServiceContext(
+			node, WikiPortletDataHandler.NAMESPACE);
 
 		WikiNode importedNode = null;
 
@@ -123,17 +105,18 @@ public class WikiNodeStagedModelDataHandler
 				}
 			}
 
-			String nodeName = getNodeName(
+			String nodeName = _getNodeName(
 				portletDataContext, node, node.getName(), 2);
 
 			importedNode = WikiNodeLocalServiceUtil.addNode(
 				userId, nodeName, node.getDescription(), serviceContext);
 		}
 
-		portletDataContext.importClassedModel(node, importedNode, NAMESPACE);
+		portletDataContext.importClassedModel(
+			node, importedNode, WikiPortletDataHandler.NAMESPACE);
 	}
 
-	protected static String getNodeName(
+	private String _getNodeName(
 			PortletDataContext portletDataContext, WikiNode node, String name,
 			int count)
 		throws Exception {
@@ -147,25 +130,10 @@ public class WikiNodeStagedModelDataHandler
 
 		String nodeName = node.getName();
 
-		return getNodeName(
+		return _getNodeName(
 			portletDataContext, node,
 			nodeName.concat(StringPool.SPACE).concat(String.valueOf(count)),
 			++count);
-	}
-
-	protected static String getNodePath(
-		PortletDataContext portletDataContext, WikiNode node) {
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(
-			ExportImportPathUtil.getPortletPath(
-				portletDataContext, PortletKeys.WIKI));
-		sb.append("/nodes/");
-		sb.append(node.getNodeId());
-		sb.append(".xml");
-
-		return sb.toString();
 	}
 
 }

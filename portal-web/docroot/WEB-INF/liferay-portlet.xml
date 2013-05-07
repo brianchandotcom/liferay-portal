@@ -497,6 +497,8 @@
 		<friendly-url-mapping>wiki</friendly-url-mapping>
 		<friendly-url-routes>com/liferay/portlet/wiki/wiki-friendly-url-routes.xml</friendly-url-routes>
 		<portlet-data-handler-class>com.liferay.portlet.wiki.lar.WikiPortletDataHandler</portlet-data-handler-class>
+		<staged-model-data-handler-class>com.liferay.portlet.wiki.lar.WikiNodeStagedModelDataHandler</staged-model-data-handler-class>
+		<staged-model-data-handler-class>com.liferay.portlet.wiki.lar.WikiPageStagedModelDataHandler</staged-model-data-handler-class>
 		<template-handler>com.liferay.portlet.wiki.template.WikiPortletDisplayTemplateHandler</template-handler>
 		<social-activity-interpreter-class>com.liferay.portlet.wiki.social.WikiActivityInterpreter</social-activity-interpreter-class>
 		<asset-renderer-factory>com.liferay.portlet.wiki.asset.WikiPageAssetRendererFactory</asset-renderer-factory>

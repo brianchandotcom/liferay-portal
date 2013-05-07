@@ -14,13 +14,121 @@
 
 package com.liferay.portlet.usersadmin.lar;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
+import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
+import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.model.Organization;
+import com.liferay.portal.model.OrganizationConstants;
+import com.liferay.portal.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.service.persistence.OrganizationActionableDynamicQuery;
+
+import java.util.List;
+
+import javax.portlet.PortletPreferences;
 
 /**
  * @author Michael C. Han
+ * @author David Gonzalez
  */
 public class UsersAdminPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "users_admin";
+
+	public UsersAdminPortletDataHandler() {
+		super();
+
+		setDataPortalLevel(true);
+
+		setExportControls(
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "organizations", true, true));
+	}
+
+	@Override
+	protected PortletPreferences doDeleteData(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		List<Organization> organizations =
+			OrganizationLocalServiceUtil.getOrganizations(
+				portletDataContext.getCompanyId(),
+				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID);
+
+		for (Organization organization : organizations) {
+			OrganizationLocalServiceUtil.deleteOrganization(organization);
+		}
+
+		return portletPreferences;
+	}
+
+	@Override
+	protected String doExportData(
+			final PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		portletDataContext.addPermissions(
+			_RESOURCE_NAME, portletDataContext.getScopeGroupId());
+
+		Element rootElement = addExportDataRootElement(portletDataContext);
+
+		rootElement.addAttribute(
+			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
+
+		ActionableDynamicQuery organizationActionableDynamicQuery =
+			new OrganizationActionableDynamicQuery() {
+
+			@Override
+			protected void addCriteria(DynamicQuery dynamicQuery) {
+				portletDataContext.addDateRangeCriteria(
+					dynamicQuery, "modifiedDate");
+			}
+
+			@Override
+			protected void performAction(Object object) throws PortalException {
+				Organization organization = (Organization)object;
+
+				StagedModelDataHandlerUtil.exportStagedModel(
+					portletDataContext, organization);
+			}
+
+		};
+
+		organizationActionableDynamicQuery.performActions();
+
+		return getExportDataRootElementString(rootElement);
+	}
+
+	@Override
+	protected PortletPreferences doImportData(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences, String data)
+		throws Exception {
+
+		portletDataContext.importPermissions(
+			_RESOURCE_NAME, portletDataContext.getSourceGroupId(),
+			portletDataContext.getScopeGroupId());
+
+		Element organizationsElement =
+			portletDataContext.getImportDataGroupElement(Organization.class);
+
+		List<Element> organizationElements = organizationsElement.elements();
+
+		for (Element organizationElement : organizationElements) {
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, organizationElement);
+		}
+
+		return null;
+	}
+
+	private static final String _RESOURCE_NAME =
+		"com.liferay.portlet.usersadmin";
 
 }

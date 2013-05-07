@@ -1023,9 +1023,11 @@ public class WebDriverToSeleniumBridge
 			select.selectByIndex(index);
 		}
 		else {
-			webElement.sendKeys(label);
+			if (!label.equals(getSelectedLabel(selectLocator))) {
+				webElement.sendKeys(label);
 
-			keyPress(selectLocator, "\\13");
+				keyPress(selectLocator, "\\13");
+			}
 		}
 	}
 

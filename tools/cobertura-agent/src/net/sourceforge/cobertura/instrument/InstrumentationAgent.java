@@ -79,22 +79,27 @@ public class InstrumentationAgent {
 			}
 
 			try {
-				ClassDefinition[] classDefinitions =
-					new ClassDefinition[_originalClassDefinitions.size()];
+				List<ClassDefinition> classDefinitions =
+					new ArrayList<ClassDefinition>(
+						_originalClassDefinitions.size());
 
 				for (int i = 0; i < _originalClassDefinitions.size(); i++) {
 					OriginalClassDefinition originalClassDefinition =
 						_originalClassDefinitions.get(i);
 
-					classDefinitions[i] =
+					ClassDefinition classDefinition =
 						originalClassDefinition.toClassDefinition();
+
+					if (classDefinition != null) {
+						classDefinitions.add(classDefinition);
+					}
 				}
 
 				_originalClassDefinitions = null;
 
-				_instrumentation.redefineClasses(classDefinitions);
-
-				dataFile.delete();
+				_instrumentation.redefineClasses(
+					classDefinitions.toArray(
+						new ClassDefinition[classDefinitions.size()]));
 			}
 			catch (Exception e) {
 				throw new RuntimeException("Unable to uninstrument classes", e);
@@ -354,9 +359,14 @@ public class InstrumentationAgent {
 		public ClassDefinition toClassDefinition()
 			throws ClassNotFoundException {
 
-			Class<?> clazz = _classLoader.loadClass(_className);
+			try {
+				Class<?> clazz = Class.forName(_className, true, _classLoader);
 
-			return new ClassDefinition(clazz, _bytes);
+				return new ClassDefinition(clazz, _bytes);
+			}
+			catch (Throwable t) {
+				return null;
+			}
 		}
 
 		private final byte[] _bytes;

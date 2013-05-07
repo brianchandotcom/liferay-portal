@@ -40,7 +40,7 @@ public class BaseAsyncDatagramReceiveHandlerTest {
 
 	@AdviseWith(adviceClasses = {PortalExecutorManagerUtilAdvice.class})
 	@Test
-	public void testErroeDispatch() {
+	public void testErrorDispatch() {
 		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
 			BaseAsyncDatagramReceiveHandler.class.getName(), Level.SEVERE);
 

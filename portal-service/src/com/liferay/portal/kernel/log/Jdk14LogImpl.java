@@ -62,6 +62,10 @@ public class Jdk14LogImpl implements Log {
 		_log.log(Level.SEVERE, t.getMessage(), t);
 	}
 
+	public Logger getLog() {
+		return _log;
+	}
+
 	public void info(Object msg) {
 		_log.log(Level.INFO, msg.toString());
 	}

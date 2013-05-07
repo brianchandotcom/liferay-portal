@@ -14,8 +14,12 @@
 
 package com.liferay.portal.test;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.log.LogWrapper;
+import com.liferay.portal.log.Log4jLogImpl;
+
 import org.apache.log4j.Level;
-import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 /**
@@ -23,8 +27,21 @@ import org.apache.log4j.Logger;
  */
 public class Log4JLoggerTestUtil {
 
-	public static CaptureAppender configureJDKLogger(String name, Level level) {
-		Logger logger = LogManager.getLogger(name);
+	public static CaptureAppender configureLog4JLogger(
+		String name, Level level) {
+
+		LogWrapper logWrapper = (LogWrapper)LogFactoryUtil.getLog(name);
+
+		Log log = logWrapper.getLog();
+
+		if (!(log instanceof Log4jLogImpl)) {
+			throw new IllegalStateException(
+				"Log " + name + " is not a log4j logger");
+		}
+
+		Log4jLogImpl log4jLogImpl = (Log4jLogImpl)log;
+
+		Logger logger = log4jLogImpl.getLog();
 
 		CaptureAppender captureAppender = new CaptureAppender(logger);
 

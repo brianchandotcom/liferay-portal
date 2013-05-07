@@ -65,6 +65,10 @@ public class Log4jLogImpl implements Log {
 		_logger.log(_FQCN, Level.FATAL, null, t);
 	}
 
+	public Logger getLog() {
+		return _logger;
+	}
+
 	public void info(Object msg) {
 		_logger.log(_FQCN, Level.INFO, msg, null);
 	}

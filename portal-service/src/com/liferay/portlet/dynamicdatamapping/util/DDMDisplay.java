@@ -40,6 +40,8 @@ public interface DDMDisplay {
 
 	public String getPortletId();
 
+	public Set<String> getTemplateLanguageTypes();
+
 	public String getTemplateType(DDMTemplate template, Locale locale);
 
 	public String getViewTemplatesBackURL(

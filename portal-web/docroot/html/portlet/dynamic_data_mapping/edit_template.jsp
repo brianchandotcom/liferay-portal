@@ -43,17 +43,12 @@ String type = BeanParamUtil.getString(template, request, "type", DDMTemplateCons
 String mode = BeanParamUtil.getString(template, request, "mode", DDMTemplateConstants.TEMPLATE_MODE_CREATE);
 String language = BeanParamUtil.getString(template, request, "language", PropsValues.DYNAMIC_DATA_MAPPING_TEMPLATE_LANGUAGE_DEFAULT);
 String script = BeanParamUtil.getString(template, request, "script");
-Set<String> supportedLanguageTypes = TemplateManagerUtil.getTemplateManagerNames();
 
 if (Validator.isNull(script)) {
 	TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(classNameId);
 
 	if (templateHandler != null) {
 		script = ContentUtil.get(templateHandler.getTemplatesHelpPath(language));
-
-		String propertyNamePrefix = templateHandler.getTemplatesHelpPropertyKey();
-
-		supportedLanguageTypes = TemplateManagerUtil.getSupportedLanguageTypes(propertyNamePrefix);
 	}
 	else if ((structure != null) && Validator.equals(structure.getClassName(), JournalArticle.class.getName())) {
 		script = ContentUtil.get(PropsUtil.get(PropsKeys.JOURNAL_TEMPLATE_LANGUAGE_CONTENT, new Filter(language)));
@@ -160,7 +155,7 @@ DDMDisplay ddmDisplay = DDMDisplayRegistryUtil.getDDMDisplay(refererPortletName)
 				<aui:select helpMessage='<%= (template == null) ? StringPool.BLANK : "changing-the-language-will-not-automatically-translate-the-existing-template-script" %>' label="language" name="language">
 
 					<%
-					for (String curLangType : supportedLanguageTypes) {
+					for (String curLangType : ddmDisplay.getTemplateLanguageTypes()) {
 						StringBundler sb = new StringBundler(6);
 
 						sb.append(LanguageUtil.get(pageContext, curLangType + "[stands-for]"));

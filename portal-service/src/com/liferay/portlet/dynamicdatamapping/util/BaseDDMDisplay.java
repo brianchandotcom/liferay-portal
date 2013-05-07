@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -103,6 +104,10 @@ public class BaseDDMDisplay implements DDMDisplay {
 		return PortletKeys.DYNAMIC_DATA_MAPPING;
 	}
 
+	public Set<String> getTemplateLanguageTypes() {
+		return _templateLanguageTypes;
+	}
+
 	public String getTemplateType(DDMTemplate template, Locale locale) {
 		return LanguageUtil.get(locale, template.getType());
 	}
@@ -177,6 +182,10 @@ public class BaseDDMDisplay implements DDMDisplay {
 
 		return portletURL.toString();
 	}
+
+	private static Set<String> _templateLanguageTypes =
+		SetUtil.fromArray(new String[] {
+			TemplateConstants.LANG_TYPE_FTL, TemplateConstants.LANG_TYPE_VM});
 
 	private static Set<String> _viewTemplateExcludedColumnNames =
 		SetUtil.fromArray(new String[] {"structure"});

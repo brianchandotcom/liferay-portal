@@ -975,6 +975,17 @@ create table LayoutBranch (
 	master BOOLEAN
 );
 
+create table LayoutFriendlyURL (
+	uuid_ VARCHAR(75) null,
+	layoutFriendlyURLId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	plid LONG,
+	privateLayout BOOLEAN,
+	friendlyURL VARCHAR(75) null,
+	locale VARCHAR(75) null
+);
+
 create table LayoutPrototype (
 	uuid_ VARCHAR(75) null,
 	layoutPrototypeId LONG not null primary key,

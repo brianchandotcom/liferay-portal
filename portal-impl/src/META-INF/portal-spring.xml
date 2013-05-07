@@ -40,6 +40,8 @@
 	<bean id="com.liferay.portal.service.LayoutBranchLocalService" class="com.liferay.portal.service.impl.LayoutBranchLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.LayoutBranchService" class="com.liferay.portal.service.impl.LayoutBranchServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.LayoutBranchPersistence" class="com.liferay.portal.service.persistence.LayoutBranchPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portal.service.LayoutFriendlyURLLocalService" class="com.liferay.portal.service.impl.LayoutFriendlyURLLocalServiceImpl" />
+	<bean id="com.liferay.portal.service.persistence.LayoutFriendlyURLPersistence" class="com.liferay.portal.service.persistence.LayoutFriendlyURLPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.LayoutPrototypeLocalService" class="com.liferay.portal.service.impl.LayoutPrototypeLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.LayoutPrototypeService" class="com.liferay.portal.service.impl.LayoutPrototypeServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.LayoutPrototypePersistence" class="com.liferay.portal.service.persistence.LayoutPrototypePersistenceImpl" parent="basePersistence" />

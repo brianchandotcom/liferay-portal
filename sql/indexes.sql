@@ -444,6 +444,15 @@ create index IX_2C42603E on LayoutBranch (layoutSetBranchId, plid);
 create index IX_A705FF94 on LayoutBranch (layoutSetBranchId, plid, master);
 create unique index IX_FD57097D on LayoutBranch (layoutSetBranchId, plid, name);
 
+create index IX_EAB317C8 on LayoutFriendlyURL (companyId);
+create index IX_742EF04A on LayoutFriendlyURL (groupId);
+create unique index IX_88DBC6AF on LayoutFriendlyURL (groupId, privateLayout, friendlyURL, locale);
+create index IX_83AE56AB on LayoutFriendlyURL (plid);
+create unique index IX_A79EFEF9 on LayoutFriendlyURL (plid, locale);
+create index IX_9F80D54 on LayoutFriendlyURL (uuid_);
+create index IX_F4321A54 on LayoutFriendlyURL (uuid_, companyId);
+create unique index IX_326525D6 on LayoutFriendlyURL (uuid_, groupId);
+
 create index IX_30616AAA on LayoutPrototype (companyId);
 create index IX_557A639F on LayoutPrototype (companyId, active_);
 create index IX_CEF72136 on LayoutPrototype (uuid_);

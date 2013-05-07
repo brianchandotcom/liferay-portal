@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
@@ -103,6 +104,7 @@ import com.liferay.portlet.sites.util.SitesUtil;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -900,6 +902,11 @@ public class EditLayoutsAction extends PortletAction {
 		boolean hidden = ParamUtil.getBoolean(uploadPortletRequest, "hidden");
 		String friendlyURL = ParamUtil.getString(
 			uploadPortletRequest, "friendlyURL");
+
+		Map<Locale, String> friendlyURLMap = new HashMap<Locale, String>();
+
+		friendlyURLMap.put(LocaleUtil.getDefault(), friendlyURL);
+
 		boolean iconImage = ParamUtil.getBoolean(
 			uploadPortletRequest, "iconImage");
 		byte[] iconBytes = getIconBytes(uploadPortletRequest, "iconFileName");
@@ -928,7 +935,7 @@ public class EditLayoutsAction extends PortletAction {
 					groupId, privateLayout, parentLayoutId, nameMap, titleMap,
 					parentLayout.getDescriptionMap(),
 					parentLayout.getKeywordsMap(), parentLayout.getRobotsMap(),
-					parentLayout.getType(), hidden, friendlyURL,
+					parentLayout.getType(), hidden, friendlyURLMap,
 					serviceContext);
 
 				LayoutServiceUtil.updateLayout(
@@ -964,14 +971,14 @@ public class EditLayoutsAction extends PortletAction {
 				layout = LayoutServiceUtil.addLayout(
 					groupId, privateLayout, parentLayoutId, nameMap, titleMap,
 					descriptionMap, keywordsMap, robotsMap,
-					LayoutConstants.TYPE_PORTLET, hidden, friendlyURL,
+					LayoutConstants.TYPE_PORTLET, hidden, friendlyURLMap,
 					serviceContext);
 			}
 			else {
 				layout = LayoutServiceUtil.addLayout(
 					groupId, privateLayout, parentLayoutId, nameMap, titleMap,
 					descriptionMap, keywordsMap, robotsMap, type, hidden,
-					friendlyURL, serviceContext);
+					friendlyURLMap, serviceContext);
 			}
 
 			layoutTypeSettingsProperties = layout.getTypeSettingsProperties();
@@ -988,7 +995,7 @@ public class EditLayoutsAction extends PortletAction {
 			layout = LayoutServiceUtil.updateLayout(
 				groupId, privateLayout, layoutId, layout.getParentLayoutId(),
 				nameMap, titleMap, descriptionMap, keywordsMap, robotsMap, type,
-				hidden, friendlyURL, Boolean.valueOf(iconImage), iconBytes,
+				hidden, friendlyURLMap, Boolean.valueOf(iconImage), iconBytes,
 				serviceContext);
 
 			layoutTypeSettingsProperties = layout.getTypeSettingsProperties();

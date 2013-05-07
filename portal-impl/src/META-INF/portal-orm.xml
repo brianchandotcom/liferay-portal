@@ -355,6 +355,23 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="com.liferay.portal.model.impl.LayoutFriendlyURLModelImpl">
+		<attributes>
+			<id name="layoutFriendlyURLId" />
+			<basic name="uuid">
+				<column name="UUID_" />
+			</basic>
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="plid" />
+			<basic name="privateLayout" />
+			<basic name="friendlyURL" />
+			<basic name="locale" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
 	<mapped-superclass class="com.liferay.portal.model.impl.LayoutPrototypeModelImpl">
 		<attributes>
 			<id name="layoutPrototypeId" />
@@ -3901,6 +3918,10 @@
 	</entity>
 	<entity class="com.liferay.portal.model.impl.LayoutBranchImpl" name="LayoutBranch">
 		<table name="LayoutBranch" />
+		<attributes />
+	</entity>
+	<entity class="com.liferay.portal.model.impl.LayoutFriendlyURLImpl" name="LayoutFriendlyURL">
+		<table name="LayoutFriendlyURL" />
 		<attributes />
 	</entity>
 	<entity class="com.liferay.portal.model.impl.LayoutPrototypeImpl" name="LayoutPrototype">

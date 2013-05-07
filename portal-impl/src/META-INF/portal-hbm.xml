@@ -17,6 +17,7 @@
 	<import class="com.liferay.portal.model.Image" />
 	<import class="com.liferay.portal.model.Layout" />
 	<import class="com.liferay.portal.model.LayoutBranch" />
+	<import class="com.liferay.portal.model.LayoutFriendlyURL" />
 	<import class="com.liferay.portal.model.LayoutPrototype" />
 	<import class="com.liferay.portal.model.LayoutRevision" />
 	<import class="com.liferay.portal.model.LayoutSet" />
@@ -400,6 +401,19 @@
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="master" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+	</class>
+	<class name="com.liferay.portal.model.impl.LayoutFriendlyURLImpl" table="LayoutFriendlyURL">
+		<cache usage="read-write" />
+		<id name="layoutFriendlyURLId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="plid" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="privateLayout" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="friendlyURL" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="locale" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.LayoutPrototypeImpl" table="LayoutPrototype">
 		<cache usage="read-write" />

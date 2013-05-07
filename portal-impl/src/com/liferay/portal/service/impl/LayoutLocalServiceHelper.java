@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -39,7 +40,10 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.comparator.LayoutPriorityComparator;
 import com.liferay.portlet.sites.util.SitesUtil;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Raymond Augé
@@ -89,6 +93,36 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 
 	public String getFriendlyURL(String friendlyURL) {
 		return FriendlyURLNormalizerUtil.normalize(friendlyURL);
+	}
+
+	public Map<Locale, String> getFriendlyURLMap(
+			long groupId, boolean privateLayout, long layoutId, String name,
+			Map<Locale, String> friendlyURLMap)
+		throws PortalException, SystemException {
+
+		Map<Locale, String> newFriendlyURLMap = new HashMap<Locale, String>();
+
+		Locale[] locales = LanguageUtil.getAvailableLocales();
+
+		for (Locale locale : locales) {
+			String friendlyURL = friendlyURLMap.get(locale);
+
+			if (Validator.isNotNull(friendlyURL)) {
+				friendlyURL = getFriendlyURL(
+					groupId, privateLayout, layoutId, name, friendlyURL);
+
+				newFriendlyURLMap.put(locale, friendlyURL);
+			}
+		}
+
+		if (newFriendlyURLMap.isEmpty()) {
+			String friendlyURL = getFriendlyURL(
+				groupId, privateLayout, layoutId, name, StringPool.BLANK);
+
+			newFriendlyURLMap.put(LocaleUtil.getDefault(), friendlyURL);
+		}
+
+		return newFriendlyURLMap;
 	}
 
 	public int getNextPriority(

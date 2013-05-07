@@ -45,6 +45,7 @@ import com.liferay.portal.service.ImageLocalService;
 import com.liferay.portal.service.ImageService;
 import com.liferay.portal.service.LayoutBranchLocalService;
 import com.liferay.portal.service.LayoutBranchService;
+import com.liferay.portal.service.LayoutFriendlyURLLocalService;
 import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.service.LayoutPrototypeLocalService;
 import com.liferay.portal.service.LayoutPrototypeService;
@@ -139,6 +140,7 @@ import com.liferay.portal.service.persistence.GroupPersistence;
 import com.liferay.portal.service.persistence.ImagePersistence;
 import com.liferay.portal.service.persistence.LayoutBranchPersistence;
 import com.liferay.portal.service.persistence.LayoutFinder;
+import com.liferay.portal.service.persistence.LayoutFriendlyURLPersistence;
 import com.liferay.portal.service.persistence.LayoutPersistence;
 import com.liferay.portal.service.persistence.LayoutPrototypePersistence;
 import com.liferay.portal.service.persistence.LayoutRevisionPersistence;
@@ -935,6 +937,44 @@ public abstract class EmailAddressServiceBaseImpl extends BaseServiceImpl
 	public void setLayoutBranchPersistence(
 		LayoutBranchPersistence layoutBranchPersistence) {
 		this.layoutBranchPersistence = layoutBranchPersistence;
+	}
+
+	/**
+	 * Returns the layout friendly u r l local service.
+	 *
+	 * @return the layout friendly u r l local service
+	 */
+	public LayoutFriendlyURLLocalService getLayoutFriendlyURLLocalService() {
+		return layoutFriendlyURLLocalService;
+	}
+
+	/**
+	 * Sets the layout friendly u r l local service.
+	 *
+	 * @param layoutFriendlyURLLocalService the layout friendly u r l local service
+	 */
+	public void setLayoutFriendlyURLLocalService(
+		LayoutFriendlyURLLocalService layoutFriendlyURLLocalService) {
+		this.layoutFriendlyURLLocalService = layoutFriendlyURLLocalService;
+	}
+
+	/**
+	 * Returns the layout friendly u r l persistence.
+	 *
+	 * @return the layout friendly u r l persistence
+	 */
+	public LayoutFriendlyURLPersistence getLayoutFriendlyURLPersistence() {
+		return layoutFriendlyURLPersistence;
+	}
+
+	/**
+	 * Sets the layout friendly u r l persistence.
+	 *
+	 * @param layoutFriendlyURLPersistence the layout friendly u r l persistence
+	 */
+	public void setLayoutFriendlyURLPersistence(
+		LayoutFriendlyURLPersistence layoutFriendlyURLPersistence) {
+		this.layoutFriendlyURLPersistence = layoutFriendlyURLPersistence;
 	}
 
 	/**
@@ -3675,6 +3715,10 @@ public abstract class EmailAddressServiceBaseImpl extends BaseServiceImpl
 	protected LayoutBranchService layoutBranchService;
 	@BeanReference(type = LayoutBranchPersistence.class)
 	protected LayoutBranchPersistence layoutBranchPersistence;
+	@BeanReference(type = LayoutFriendlyURLLocalService.class)
+	protected LayoutFriendlyURLLocalService layoutFriendlyURLLocalService;
+	@BeanReference(type = LayoutFriendlyURLPersistence.class)
+	protected LayoutFriendlyURLPersistence layoutFriendlyURLPersistence;
 	@BeanReference(type = LayoutPrototypeLocalService.class)
 	protected LayoutPrototypeLocalService layoutPrototypeLocalService;
 	@BeanReference(type = LayoutPrototypeService.class)

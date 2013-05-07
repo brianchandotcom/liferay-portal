@@ -55,18 +55,18 @@ public class SPIConfiguration implements Serializable {
 		String javaExecutable = rootElement.elementText("javaExecutable");
 		String jvmArguments = rootElement.elementText("jvmArguments");
 		String spiAgentClassName = rootElement.elementText("spiAgentClassName");
-		int connectorPort = Integer.parseInt(
+		int connectorPort = GetterUtil.getIntegerStrict(
 			rootElement.elementText("connectorPort"));
 		String baseDir = rootElement.elementText("baseDir");
 		String[] portletIds = StringUtil.split(
 			rootElement.elementText("portletIds"));
 		String[] servletContextNames = StringUtil.split(
 			rootElement.elementText("servletContextNames"));
-		long pingInterval = GetterUtil.getLong(
+		long pingInterval = GetterUtil.getLongStrict(
 			rootElement.elementText("pingInterval"));
-		long registerTimeout = GetterUtil.getLong(
+		long registerTimeout = GetterUtil.getLongStrict(
 			rootElement.elementText("registerTimeout"));
-		long shutdownTimeout = GetterUtil.getLong(
+		long shutdownTimeout = GetterUtil.getLongStrict(
 			rootElement.elementText("shutdownTimeout"));
 
 		return new SPIConfiguration(

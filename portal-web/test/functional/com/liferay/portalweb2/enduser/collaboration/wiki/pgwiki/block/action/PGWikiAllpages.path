@@ -19,8 +19,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUCCESS_MESSAGE_RECYCLE_BIN</td>
 	<td>//div[@class='portlet-msg-success taglib-trash-undo']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_PAGE_BUTTON</td>
+	<td>//input[@value='Add Page']</td>
 	<td></td>
 </tr>
 <tr>
@@ -32,6 +42,11 @@
 <tr>
 	<td>WIKI_PAGE_TABLE_PAGE_1</td>
 	<td>xpath=(//tr/td[1]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_TABLE_PAGE_2</td>
+	<td>xpath=(//tr/td[1]/a)[2]</td>
 	<td></td>
 </tr>
 <tr>

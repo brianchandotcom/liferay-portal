@@ -1,0 +1,71 @@
+<html>
+<head>
+<title>PGSearchResults</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGSearchResults</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGSearchResults</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_FIELD</td>
+	<td>//input[@name='_3_keywords']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_ICON</td>
+	<td>//input[@type='image' and @title='search']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CLEAR_SEARCH_ICON</td>
+	<td>//input[@type='image' and @title='clear-search']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_RESULTS</td>
+	<td>//div[@class='search-results']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FACET-->
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ASSET_ENTRY_TABLE-->
+<tr>
+	<td>ASSET_ENTRY_TABLE_TITLE_1</td>
+	<td>//td[@id='_3_documentsSearchContainer_col-1_row-1']//span[@class='asset-entry-title']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_ENTRY_TABLE_TYPE_1</td>
+	<td>//td[@id='_3_documentsSearchContainer_col-1_row-1']//span[@class='asset-entry-type']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_ENTRY_TABLE_SUMMARY_1</td>
+	<td>//td[@id='_3_documentsSearchContainer_col-1_row-1']//span[@class='asset-entry-summary']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

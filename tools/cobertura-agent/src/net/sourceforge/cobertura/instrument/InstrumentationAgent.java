@@ -23,9 +23,12 @@ import java.lang.instrument.UnmodifiableClassException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.cobertura.coveragedata.ClassData;
+import net.sourceforge.cobertura.coveragedata.CoverageData;
 import net.sourceforge.cobertura.coveragedata.CoverageDataFileHandler;
+import net.sourceforge.cobertura.coveragedata.LineData;
 import net.sourceforge.cobertura.coveragedata.ProjectData;
 
 /**
@@ -40,9 +43,9 @@ public class InstrumentationAgent {
 			return;
 		}
 
-		try {
-			File dataFile = CoverageDataFileHandler.getDefaultDataFile();
+		File dataFile = CoverageDataFileHandler.getDefaultDataFile();
 
+		try {
 			ProjectData projectData = ProjectDataUtil.captureProjectData(
 				dataFile, _lockFile);
 
@@ -76,27 +79,22 @@ public class InstrumentationAgent {
 			}
 
 			try {
-				List<ClassDefinition> classDefinitions =
-					new ArrayList<ClassDefinition>(
-						_originalClassDefinitions.size());
+				ClassDefinition[] classDefinitions =
+					new ClassDefinition[_originalClassDefinitions.size()];
 
 				for (int i = 0; i < _originalClassDefinitions.size(); i++) {
 					OriginalClassDefinition originalClassDefinition =
 						_originalClassDefinitions.get(i);
 
-					ClassDefinition classDefinition =
+					classDefinitions[i] =
 						originalClassDefinition.toClassDefinition();
-
-					if (classDefinition != null) {
-						classDefinitions.add(classDefinition);
-					}
 				}
 
 				_originalClassDefinitions = null;
 
-				_instrumentation.redefineClasses(
-					classDefinitions.toArray(
-						new ClassDefinition[classDefinitions.size()]));
+				_instrumentation.redefineClasses(classDefinitions);
+
+				dataFile.delete();
 			}
 			catch (Exception e) {
 				throw new RuntimeException("Unable to uninstrument classes", e);
@@ -283,7 +281,21 @@ public class InstrumentationAgent {
 				classData.getName(), classData.getBranchCoverageRate(),
 				classData.getLineCoverageRate());
 
-			throw new RuntimeException(
+			Set<CoverageData> coverageDatas = classData.getLines();
+
+			for (CoverageData coverageData : coverageDatas) {
+				if (coverageData instanceof LineData) {
+					LineData lineData = (LineData)coverageData;
+
+					if (!lineData.isCovered()) {
+						System.out.printf(
+							"[Cobertura] %s line %d is not covered %n",
+							classData.getName(), lineData.getLineNumber());
+					}
+				}
+			}
+
+			throw new AssertionError(
 				classData.getName() + " is not fully covered");
 		}
 
@@ -338,14 +350,9 @@ public class InstrumentationAgent {
 		public ClassDefinition toClassDefinition()
 			throws ClassNotFoundException {
 
-			try {
-				Class<?> clazz = Class.forName(_className, true, _classLoader);
+			Class<?> clazz = _classLoader.loadClass(_className);
 
-				return new ClassDefinition(clazz, _bytes);
-			}
-			catch (NoClassDefFoundError ncdf) {
-				return null;
-			}
+			return new ClassDefinition(clazz, _bytes);
 		}
 
 		private final byte[] _bytes;

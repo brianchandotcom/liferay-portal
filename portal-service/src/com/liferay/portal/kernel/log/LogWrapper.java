@@ -104,6 +104,10 @@ public class LogWrapper implements Log {
 		}
 	}
 
+	public Log getLog() {
+		return _log;
+	}
+
 	public void info(Object msg) {
 		try {
 			_log.info(msg);

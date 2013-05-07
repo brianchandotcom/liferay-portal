@@ -1,0 +1,212 @@
+/**
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portal.kernel.resiliency.spi.agent;
+
+import com.liferay.portal.kernel.resiliency.spi.SPI;
+import com.liferay.portal.kernel.resiliency.spi.SPIConfiguration;
+import com.liferay.portal.kernel.test.CodeCoverageAssertor;
+import com.liferay.portal.kernel.util.ReflectionUtil;
+
+import java.lang.reflect.Field;
+
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Test;
+
+/**
+ * @author Shuyang Zhou
+ */
+public class SPIAgentFactoryUtilTest {
+
+	@ClassRule
+	public static CodeCoverageAssertor codeCoverageAssertor =
+		new CodeCoverageAssertor();
+
+	@Test
+	public void testCreateSPIAgent() {
+		SPIAgentFactoryUtil.registerSPIAgentClass(BadMockSPIAgent.class);
+		SPIAgentFactoryUtil.registerSPIAgentClass(MockSPIAgent.class);
+
+		// Null name
+
+		try {
+			SPIAgentFactoryUtil.createSPIAgent(
+				new SPIConfiguration(
+					"testId", null, 8081, "", new String[0], new String[0]),
+				null);
+
+			Assert.fail();
+		}
+		catch (NullPointerException npe) {
+		}
+
+		// Bad name
+
+		String badName = "badName";
+
+		try {
+			SPIAgentFactoryUtil.createSPIAgent(
+				new SPIConfiguration(
+					"testId", badName, 8081, "", new String[0], new String[0]),
+				null);
+
+			Assert.fail();
+		}
+		catch (IllegalArgumentException iae) {
+			Assert.assertEquals(
+				"Unkown SPI agent class name " + badName, iae.getMessage());
+		}
+
+		// Bad SPIAgent class
+
+		try {
+			SPIAgentFactoryUtil.createSPIAgent(
+				new SPIConfiguration(
+					"testId", BadMockSPIAgent.class.getName(), 8081, "",
+					new String[0], new String[0]),
+				null);
+
+			Assert.fail();
+		}
+		catch (RuntimeException re) {
+			Assert.assertEquals(
+				"Unable to instantiate " + BadMockSPIAgent.class,
+				re.getMessage());
+		}
+
+		// Success creation
+
+		SPIAgent spiAgent = SPIAgentFactoryUtil.createSPIAgent(
+			new SPIConfiguration(
+				"testId", MockSPIAgent.class.getName(), 8081, "", new String[0],
+				new String[0]),
+			null);
+
+		Assert.assertSame(MockSPIAgent.class, spiAgent.getClass());
+	}
+
+	@Test
+	public void testRegisteration() throws Exception {
+
+		// Spring registeration
+
+		SPIAgentFactoryUtil spiAgentFactoryUtil = new SPIAgentFactoryUtil();
+
+		Set<String> agentClassNames = new HashSet<String>();
+
+		agentClassNames.add(BadMockSPIAgent.class.getName());
+		agentClassNames.add(MockSPIAgent.class.getName());
+
+		spiAgentFactoryUtil.setSPIAgentClasses(agentClassNames);
+
+		Map<String, Class<? extends SPIAgent>> spiAgentClasses =
+			_getSpiAgentClasses();
+
+		Assert.assertEquals(2, spiAgentClasses.size());
+		Assert.assertSame(
+			BadMockSPIAgent.class,
+			spiAgentClasses.get(BadMockSPIAgent.class.getName()));
+		Assert.assertSame(
+			MockSPIAgent.class,
+			spiAgentClasses.get(MockSPIAgent.class.getName()));
+
+		// Get names
+
+		Set<String> spiAgentClassNames =
+			SPIAgentFactoryUtil.getSPIAgentClassNames();
+
+		Assert.assertEquals(2, spiAgentClassNames.size());
+		Assert.assertTrue(
+			spiAgentClassNames.contains(BadMockSPIAgent.class.getName()));
+		Assert.assertTrue(
+			spiAgentClassNames.contains(MockSPIAgent.class.getName()));
+
+		// Individual unregister/register
+
+		Assert.assertSame(
+			MockSPIAgent.class,
+			SPIAgentFactoryUtil.unregisterSPIAgentClass(
+				MockSPIAgent.class.getName()));
+		Assert.assertNull(
+			SPIAgentFactoryUtil.registerSPIAgentClass(MockSPIAgent.class));
+		Assert.assertSame(
+			BadMockSPIAgent.class,
+			SPIAgentFactoryUtil.unregisterSPIAgentClass(
+				BadMockSPIAgent.class.getName()));
+		Assert.assertSame(
+			MockSPIAgent.class,
+			SPIAgentFactoryUtil.unregisterSPIAgentClass(
+				MockSPIAgent.class.getName()));
+	}
+
+	private static Map<String, Class<? extends SPIAgent>>
+		_getSpiAgentClasses() throws Exception {
+
+		Field spiAgentClassesField = ReflectionUtil.getDeclaredField(
+			SPIAgentFactoryUtil.class, "_spiAgentClasses");
+
+		return (Map<String, Class<? extends SPIAgent>>)
+			spiAgentClassesField.get(null);
+	}
+
+	public static class BadMockSPIAgent implements SPIAgent {
+
+		@Override
+		public void destroy() {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void init(SPI spi) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public HttpServletRequest prepareRequest(HttpServletRequest request) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public HttpServletResponse prepareResponse(
+			HttpServletRequest request, HttpServletResponse response) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void service(
+			HttpServletRequest request, HttpServletResponse response) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void transferResponse(
+			HttpServletRequest request, HttpServletResponse response,
+			Exception e) {
+
+			throw new UnsupportedOperationException();
+		}
+
+	}
+
+}

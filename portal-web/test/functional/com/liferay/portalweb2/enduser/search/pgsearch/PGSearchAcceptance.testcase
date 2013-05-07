@@ -1,0 +1,98 @@
+<definition>
+	<var name="pageName" value="Search Page" />
+	<var name="portletName" value="Search" />
+
+	<set-up>
+		<execute macro="User#pgFirstLogin" />
+
+		<execute macro="Page#pgAdd" />
+
+		<execute macro="Portlet#pgAdd" />
+	</set-up>
+
+	<command name="SearchBlogsEntry">
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+
+		<execute macro="Page#pgAdd">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
+		<execute macro="Portlet#pgAdd">
+			<var name="pageName" value="Blogs Page" />
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#pgAdd">
+			<var name="pageName" value="Blogs Page" />
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="Search#pgBlogsEntry" />
+	</command>
+
+	<command name="SearchMessageBoardsThread">
+		<var name="threadSubject" value="MB Thread Message Subject" />
+		<var name="threadBody" value="MB Thread Message Body" />
+
+		<execute macro="Page#pgAdd">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="Portlet#pgAdd">
+			<var name="pageName" value="Message Boards Page" />
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute macro="MessageboardsThread#pgAdd">
+			<var name="pageName" value="Message Boards Page" />
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute macro="Search#pgMessageboardsThread" />
+	</command>
+
+	<command name="SearchUser">
+		<var name="userEmailAddress" value="userea@liferay.com" />
+		<var name="userFirstName" value="userfn" />
+		<var name="userLastName" value="userln" />
+		<var name="userScreenName" value="usersn" />
+
+		<execute macro="User#cpAdd" />
+
+		<execute macro="Search#pgUser" />
+	</command>
+
+	<command name="SearchWikiPage">
+		<var name="wikiPageContent" value="Wiki Page Content" />
+		<var name="wikiPageTitle" value="Wiki Page Title" />
+
+		<execute macro="Page#pgAdd">
+			<var name="pageName" value="Wiki Test Page" />
+		</execute>
+
+		<execute macro="Portlet#pgAdd">
+			<var name="pageName" value="Wiki Test Page" />
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<execute macro="WikiPage#pgAddPage">
+			<var name="pageName" value="Wiki Test Page" />
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<execute macro="Search#pgWikiPage" />
+	</command>
+
+	<tear-down>
+		<execute macro="BlogsEntry#cpTearDown" />
+
+		<execute macro="MessageboardsThread#cpTearDown" />
+
+		<execute macro="User#cpTearDown" />
+
+		<execute macro="WikiPage#cpTearDown" />
+
+		<execute macro="Page#pgTearDown" />
+	</tear-down>
+</definition>

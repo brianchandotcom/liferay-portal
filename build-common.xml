@@ -795,6 +795,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 
 		<ant target="test-cmd">
 			<property name="test.type" value="${test.type}" />
+			<property name="junit.forkmode" value="once" />
 		</ant>
 
 		<antcall target="report-test-coverage">
@@ -815,7 +816,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		<if>
 			<available file="test/${test.type}" type="dir" />
 			<then>
-				<junit dir="${project.dir}" fork="on" forkmode="once" haltonfailure="${junit.halt.on.failure}" outputtoformatters="false" printsummary="on" showoutput="true">
+				<junit dir="${project.dir}" fork="on" forkmode="${junit.forkmode}" haltonfailure="${junit.halt.on.failure}" outputtoformatters="false" printsummary="on" showoutput="true">
 					<sysproperty key="junit.aspectj.dump" file="woven-classes" />
 					<sysproperty key="junit.cobertura.agent" value="${junit.cobertura.agent}" />
 					<sysproperty key="junit.code.coverage" value="${junit.code.coverage}" />
@@ -855,12 +856,14 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		<ant target="test-cmd">
 			<property name="test.excludes" value="**/*PersistenceTest.class" />
 			<property name="test.type" value="integration" />
+			<property name="junit.forkmode" value="once" />
 		</ant>
 
 		<var name="class" value="*PersistenceTest" />
 
 		<ant target="test-cmd">
 			<property name="test.type" value="integration" />
+			<property name="junit.forkmode" value="once" />
 		</ant>
 
 		<antcall target="report-test-coverage">
@@ -894,6 +897,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 
 		<ant target="test-cmd">
 			<property name="test.type" value="unit" />
+			<property name="junit.forkmode" value="perTest" />
 		</ant>
 
 		<antcall target="report-test-coverage" >

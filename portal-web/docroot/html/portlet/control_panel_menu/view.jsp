@@ -154,7 +154,7 @@
 									String message = group.getDescriptiveName(locale);
 
 									if (group.isUser()) {
-										message = LanguageUtil.format(pageContext, "x-personal-site", HtmlUtil.escape(group.getDescriptiveName(locale)));
+										message = LanguageUtil.format(pageContext, "x-personal-site", group.getDescriptiveName(locale));
 									}
 
 									String url = null;

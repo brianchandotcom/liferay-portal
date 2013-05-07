@@ -149,6 +149,7 @@ String[] uploadedFiles = LayoutServiceUtil.getTempFileEntryNames(groupId, Import
 
 							liferayUpload.set('strings.uploadsCompleteText', '<liferay-ui:message key="the-file-is-ready-to-be-imported" />');
 							liferayUpload.set('strings.pendingFileText', '<liferay-ui:message key="this-file-has-been-previously-uploaded-but-not-actually-imported" />');
+							liferayUpload.set('strings.fileCanNotBeSavedText', '<liferay-ui:message key="the-file-can-not-be-imported" />');
 
 							var continueButton = A.one('#<portlet:namespace />continueButton');
 

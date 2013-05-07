@@ -140,6 +140,7 @@ AUI.add(
 							invalidFileExtensionText: Liferay.Language.get('document-names-must-end-with-one-of-the-following-extensions'),
 							invalidFileNameText: Liferay.Language.get('please-enter-a-file-with-a-valid-file-name'),
 							invalidFileSizeText: Liferay.Language.get('please-enter-a-file-with-a-valid-file-size-no-larger-than-x'),
+							fileCanNotBeSavedText: Liferay.Language.get('the-file-can-not-be-saved'),
 							noFilesSelectedText: Liferay.Language.get('no-files-selected'),
 							notAvailableText: Liferay.Language.get('multiple-file-uploading-is-not-available'),
 							orText: Liferay.Language.get('or'),
@@ -551,10 +552,13 @@ AUI.add(
 							instance._clearUploadsButton.toggle(!!instance._fileListContent.one('.file-saved,.upload-error'));
 						}
 
-						var uploadsCompleteText = ' ';
+						var uploadsCompleteText;
 
-						if (!!instance._fileListContent.one('.upload-file.upload-complete')) {
+						if (instance._fileListContent.one('.upload-file.upload-complete')) {
 							uploadsCompleteText = strings.uploadsCompleteText;
+						}
+						else {
+							uploadsCompleteText = strings.fileCanNotBeSavedText;
 						}
 
 						instance._updateList(0, uploadsCompleteText);

@@ -261,45 +261,10 @@ public class BaseIntrabandTest {
 
 		sequenceIdGenerator.set(Long.MAX_VALUE);
 
+		Assert.assertEquals(
+			Long.MAX_VALUE, _mockIntraband.generateSequenceId());
+		Assert.assertEquals(0, _mockIntraband.generateSequenceId());
 		Assert.assertEquals(1, _mockIntraband.generateSequenceId());
-		Assert.assertEquals(2, _mockIntraband.generateSequenceId());
-
-		// Concurrent resetting
-
-		List<Callable<Long>> getSequenceIdCallables =
-			new ArrayList<Callable<Long>>(2);
-
-		Callable<Long> getSequenceIdCallable = new Callable<Long>() {
-
-			public Long call() {
-				return _mockIntraband.generateSequenceId();
-			}
-
-		};
-
-		getSequenceIdCallables.add(getSequenceIdCallable);
-		getSequenceIdCallables.add(getSequenceIdCallable);
-
-		ExecutorService executorService = Executors.newFixedThreadPool(2);
-
-		for (int i = 0; i < 10240; i++) {
-			sequenceIdGenerator.set(Long.MAX_VALUE);
-
-			List<Future<Long>> getSequenceIdFutures = executorService.invokeAll(
-				getSequenceIdCallables);
-
-			Future<Long> sequenceIdFuture1 = getSequenceIdFutures.get(0);
-			Future<Long> sequenceIdFuture2 = getSequenceIdFutures.get(1);
-
-			long sequenceId1 = sequenceIdFuture1.get();
-			long sequenceId2 = sequenceIdFuture2.get();
-
-			Assert.assertTrue(
-				((sequenceId1 == 1) && (sequenceId2 == 2)) ||
-				((sequenceId1 == 2) && (sequenceId2 == 1)));
-		}
-
-		executorService.shutdownNow();
 	}
 
 	@Test

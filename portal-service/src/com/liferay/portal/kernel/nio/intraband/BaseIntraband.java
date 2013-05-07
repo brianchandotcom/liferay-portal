@@ -311,9 +311,9 @@ public abstract class BaseIntraband implements Intraband {
 	}
 
 	protected long generateSequenceId() {
-		long sequenceId = sequenceIdGenerator.incrementAndGet();
+		long sequenceId = sequenceIdGenerator.getAndIncrement();
 
-		if (sequenceId <= 0) {
+		if (sequenceId < 0) {
 
 			// We assume a long primitive type can hold enough numbers to keep a
 			// large window time between the earliest and the latest response
@@ -327,20 +327,7 @@ public abstract class BaseIntraband implements Intraband {
 			// themselves, we would need 2^65 byte or 32 EB (exbibyte) of
 			// memory, which is impossible in existing computer systems.
 
-			while (true) {
-				if (sequenceIdGenerator.compareAndSet(sequenceId, 1)) {
-					return 1;
-				}
-
-				sequenceId = sequenceIdGenerator.incrementAndGet();
-
-				// Another concurrent reset just happened
-
-				if (sequenceId > 0) {
-					return sequenceId;
-				}
-
-			}
+			sequenceId += Long.MIN_VALUE;
 		}
 
 		return sequenceId;

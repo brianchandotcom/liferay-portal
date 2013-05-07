@@ -89,7 +89,7 @@ long classPK = ParamUtil.getLong(request, "classPK");
 				if (!templateHandlers.isEmpty()) {
 				%>
 
-					<liferay-ui:icon-menu cssClass='<%= "lfr-toolbar-button add-button " + (toolbarItem.equals("add") ? "current" : StringPool.BLANK) %>' direction="down" extended="<%= false %>" icon='<%= themeDisplay.getPathThemeImages() + "/common/add.png" %>' message="add" showWhenSingleIcon="<%= true %>">
+					<aui:nav-item dropdown="<%= true %>" iconClass="icon-plus" label="add">
 
 						<liferay-portlet:renderURL varImpl="addPortletDisplayTemplateURL">
 							<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
@@ -107,18 +107,16 @@ long classPK = ParamUtil.getLong(request, "classPK");
 							addPortletDisplayTemplateURL.setParameter("ddmResource", templateHandler.getResourceName());
 						%>
 
-							<liferay-ui:icon
-								image="add_portlet_display_template"
-								message="<%= templateHandler.getName(locale) %>"
-								method="get"
-								url="<%= addPortletDisplayTemplateURL.toString() %>"
-							/>
+							<aui:nav-item 
+								href="<%= addPortletDisplayTemplateURL.toString() %>"
+								iconClass="icon-list-alt"
+								label="<%= templateHandler.getName(locale) %>" />
 
 						<%
 						}
 						%>
 
-					</liferay-ui:icon-menu>
+					</aui:nav-item>
 
 					<%
 					}

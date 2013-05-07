@@ -158,33 +158,42 @@ public class ProjectDataUtil {
 		FileInputStream fileInputStream = null;
 		ObjectInputStream objectInputStream = null;
 
-		try {
-			fileInputStream = new FileInputStream(dataFile);
+		for (int i = 0; i < _RETRY_TIMES; i++) {
+			try {
+				fileInputStream = new FileInputStream(dataFile);
 
-			objectInputStream = new ObjectInputStream(fileInputStream);
+				objectInputStream = new ObjectInputStream(fileInputStream);
 
-			return (ProjectData)objectInputStream.readObject();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-		finally {
-			if (objectInputStream != null) {
-				try {
-					objectInputStream.close();
+				return (ProjectData)objectInputStream.readObject();
+			}
+			catch (IOException ioe) {
+				continue;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+			finally {
+				if (objectInputStream != null) {
+					try {
+						objectInputStream.close();
+					}
+					catch (IOException ioe) {
+					}
 				}
-				catch (IOException ioe) {
+
+				if (fileInputStream != null) {
+					try {
+						fileInputStream.close();
+					}
+					catch (IOException ioe) {
+					}
 				}
 			}
-
-			if (fileInputStream != null) {
-				try {
-					fileInputStream.close();
-				}
-				catch (IOException ioe) {
-				}
-			}
 		}
+
+		throw new IllegalStateException(
+			"Unable to load project data after retry for " + _RETRY_TIMES +
+			" times");
 	}
 
 	private static void _unlockFile(FileLock fileLock) {
@@ -234,6 +243,8 @@ public class ProjectDataUtil {
 			}
 		}
 	}
+
+	private static final int _RETRY_TIMES = 10;
 
 	private static List<Runnable> _shutdownHooks =
 		new CopyOnWriteArrayList<Runnable>();

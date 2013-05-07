@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
@@ -103,6 +104,7 @@ import com.liferay.portlet.sites.util.SitesUtil;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -898,8 +900,13 @@ public class EditLayoutsAction extends PortletAction {
 			actionRequest, "robots");
 		String type = ParamUtil.getString(uploadPortletRequest, "type");
 		boolean hidden = ParamUtil.getBoolean(uploadPortletRequest, "hidden");
-		Map<Locale, String> friendlyURLMap =
-			LocalizationUtil.getLocalizationMap(actionRequest, "friendlyURL");
+		String friendlyURL = ParamUtil.getString(
+			uploadPortletRequest, "friendlyURL");
+
+		Map<Locale, String> friendlyURLMap = new HashMap<Locale, String>();
+
+		friendlyURLMap.put(LocaleUtil.getDefault(), friendlyURL);
+
 		boolean iconImage = ParamUtil.getBoolean(
 			uploadPortletRequest, "iconImage");
 		byte[] iconBytes = getIconBytes(uploadPortletRequest, "iconFileName");

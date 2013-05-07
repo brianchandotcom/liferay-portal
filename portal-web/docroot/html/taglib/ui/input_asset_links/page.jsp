@@ -26,7 +26,24 @@ List<AssetLink> assetLinks = new ArrayList<AssetLink>();
 String assetLinksSearchContainerPrimaryKeys = ParamUtil.getString(request, "assetLinksSearchContainerPrimaryKeys");
 
 if (Validator.isNull(assetLinksSearchContainerPrimaryKeys) && SessionErrors.isEmpty(portletRequest) && (assetEntryId > 0)) {
-	assetLinks = AssetLinkLocalServiceUtil.getDirectLinks(assetEntryId);
+	List<AssetLink> allAassetLinks = AssetLinkLocalServiceUtil.getDirectLinks(assetEntryId);
+
+	for (AssetLink assetLink : allAassetLinks) {
+		AssetEntry assetLinkEntry = null;
+
+		if ((assetEntryId > 0) || (assetLink.getEntryId1() == assetEntryId)) {
+			assetLinkEntry = AssetEntryLocalServiceUtil.getEntry(assetLink.getEntryId2());
+		}
+		else {
+			assetLinkEntry = AssetEntryLocalServiceUtil.getEntry(assetLink.getEntryId1());
+		}
+
+		AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(assetLinkEntry.getClassName());
+
+		if (assetRendererFactory.isActive(company.getCompanyId())) {
+			assetLinks.add(assetLink);
+		}
+	}
 }
 else {
 	String[] assetEntriesPrimaryKeys = StringUtil.split(assetLinksSearchContainerPrimaryKeys);
@@ -64,7 +81,7 @@ assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 <liferay-ui:icon-menu align="left" cssClass="select-existing-selector" icon='<%= themeDisplay.getPathThemeImages() + "/common/search.png" %>' id='<%= randomNamespace + "inputAssetLinks" %>' message="select" showWhenSingleIcon="<%= true %>">
 
 	<%
-	for (AssetRendererFactory assetRendererFactory : AssetRendererFactoryRegistryUtil.getAssetRendererFactories()) {
+	for (AssetRendererFactory assetRendererFactory : AssetRendererFactoryRegistryUtil.getAssetRendererFactories(company.getCompanyId())) {
 		if (assetRendererFactory.isLinkable() && assetRendererFactory.isSelectable()) {
 			if (assetEntryId > 0) {
 				assetBrowserURL.setParameter("refererAssetEntryId", String.valueOf(assetEntryId));

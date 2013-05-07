@@ -24,8 +24,8 @@ AUI.add(
 						'<span class="progress-bar">',
 							'<span class="progress" id="{id}progress"></span>',
 						'</span>',
-						'<a class="lfr-button cancel-button" href="javascript:;" id="{id}cancelButton">{[ this.cancelFileText ]}</a>',
-						'<a class="lfr-button delete-button" href="javascript:;" id="{id}deleteButton">{[ this.deleteFileText ]}</a>',
+						'<a class="lfr-button cancel-button" href="javascript:;" id="{id}cancelButton">{[ this.strings.cancelFileText ]}</a>',
+						'<a class="lfr-button delete-button" href="javascript:;" id="{id}deleteButton">{[ this.strings.deleteFileText ]}</a>',
 					'</li>',
 				'</tpl>',
 				'<tpl if="values.error">',
@@ -41,17 +41,17 @@ AUI.add(
 			'<div class="upload-target" id="{$ns}uploader">',
 				'<div class="drag-drop-area" id="{$ns}uploaderContent">',
 					'<tpl if="this.uploaderType == \'html5\'">',
-						'<h4 class="drop-file-text">{[ this.dropFileText ]}<span>{[ this.orText ]}</span></h4>',
+						'<h4 class="drop-file-text">{[ this.dropFileText ]}<span>{[ this.strings.orText ]}</span></h4>',
 					'</tpl>',
 					'<button class="btn" id="{$ns}selectFilesButton">{[ this.selectFilesText ]}</button>',
 				'</div>',
 			'</div>',
 
 			'<div class="hide upload-list-info" id="{$ns}listInfo">',
-				'<h4>{[ this.uploadsCompleteText ]}</h4>',
+				'<h4>{[ this.strings.uploadsCompleteText ]}</h4>',
 			'</div>',
 
-			'<div class="pending-files-info alert alert-block hide">{[ this.pendingFileText ]}</div>',
+			'<div class="pending-files-info alert alert-block hide">{[ this.strings.pendingFileText ]}</div>',
 
 			'<div class="hide float-container manage-upload-target" id="{$ns}manageUploadTarget">',
 				'<tpl if="multipleFiles">',
@@ -65,7 +65,7 @@ AUI.add(
 				'</tpl>',
 
 				'<a href="javascript:;" class="lfr-button cancel-uploads hide">{[ this.cancelUploadsText ]}</a>',
-				'<a href="javascript:;" class="lfr-button clear-uploads hide">{[ this.clearRecentUploadsText ]}</a>',
+				'<a href="javascript:;" class="lfr-button clear-uploads hide">{[ this.strings.clearRecentUploadsText ]}</a>',
 			'</div>',
 
 			'<div class="upload-list" id="{$ns}fileList">',
@@ -121,6 +121,7 @@ AUI.add(
 						value: null
 					},
 					multipleFiles: {
+						validator: Lang.isBoolean,
 						value: true
 					},
 					render: {
@@ -128,8 +129,31 @@ AUI.add(
 					},
 					strings: {
 						value: {
+							allFilesSelectedText: Liferay.Language.get('all-files-selected'),
+							cancelFileText: Liferay.Language.get('cancel-upload'),
+							cancelUploadsText: Liferay.Language.get('cancel-all-uploads'),
+							clearRecentUploadsText: Liferay.Language.get('clear-documents-already-saved'),
+							deleteFileText: Liferay.Language.get('delete-file'),
+							dropFilesText: Liferay.Language.get('drop-files-here-to-upload'),
+							dropFileText: Liferay.Language.get('drop-file-here-to-upload'),
+							duplicatedFileNameText: Liferay.Language.get('please-enter-a-unique-document-name'),
+							invalidFileExtensionText: Liferay.Language.get('document-names-must-end-with-one-of-the-following-extensions'),
+							invalidFileNameText: Liferay.Language.get('please-enter-a-file-with-a-valid-file-name'),
+							invalidFileSizeText: Liferay.Language.get('please-enter-a-file-with-a-valid-file-size-no-larger-than-x'),
+							noFilesSelectedText: Liferay.Language.get('no-files-selected'),
+							notAvailableText: Liferay.Language.get('multiple-file-uploading-is-not-available'),
+							orText: Liferay.Language.get('or'),
+							pendingFileText: Liferay.Language.get('these-files-have-been-previously-uploaded-but-not-actually-saved.-please-save-or-delete-them-before-they-are-removed'),
+							selectFilesText: Liferay.Language.get('select-files'),
+							selectFileText: Liferay.Language.get('select-file'),
+							unexpectedErrorOnDeleteText: Liferay.Language.get('an-unexpected-error-occurred-while-deleting-the-file'),
+							unexpectedErrorOnUploadText: Liferay.Language.get('an-unexpected-error-occurred-while-uploading-your-file'),
 							uploadsCompleteText: Liferay.Language.get('all-files-ready-to-be-saved'),
-							pendingFileText: Liferay.Language.get('these-files-have-been-previously-uploaded-but-not-actually-saved.-please-save-or-delete-them-before-they-are-removed')
+							uploadingFileXText: Liferay.Language.get('uploading-file-x-of-x'),
+							uploadingText: Liferay.Language.get('uploading'),
+							xFilesReadyText: Liferay.Language.get('x-files-ready-to-be-uploaded'),
+							xFilesSelectedText: Liferay.Language.get('x-files-selected'),
+							zeroByteSizeText: Liferay.Language.get('the-file-contains-no-data-and-cannot-be-uploaded.-please-use-the-classic-uploader')
 						}
 					},
 					tempFileURL: {
@@ -148,6 +172,8 @@ AUI.add(
 					initializer: function(config) {
 						var instance = this;
 
+						var strings = instance.get(STRINGS);
+
 						var fallback = instance.get('fallback');
 
 						var useFallback = (location.hash.indexOf(STR_PARAM_FALLBACK) > -1) && fallback;
@@ -160,7 +186,7 @@ AUI.add(
 								fallback.show();
 							}
 							else {
-								instance.one('#fileUpload').append(Lang.sub(TPL_ERROR_MESSAGE, [Liferay.Language.get('multiple-file-uploading-is-not-available')]));
+								instance.one('#fileUpload').append(Lang.sub(TPL_ERROR_MESSAGE, [strings.notAvailableText]));
 							}
 
 							instance._preventRenderHandle = instance.on(
@@ -175,27 +201,12 @@ AUI.add(
 
 							var maxFileSizeKB = Math.floor(instance.get('maxFileSize') / 1024);
 
-							instance._cancelFileText = Liferay.Language.get('cancel-upload');
-
-							if (instance.get('multipleFiles')) {
-								instance._cancelUploadsText = Liferay.Language.get('cancel-all-uploads');
-								instance._selectFileText = Liferay.Language.get('select-files');
-								instance._dropFileText = Liferay.Language.get('drop-files-here-to-upload');
-
-							}
-							else {
-								instance._cancelUploadsText = Liferay.Language.get('cancel-upload');
-								instance._selectFileText = Liferay.Language.get('select-file');
-								instance._dropFileText = Liferay.Language.get('drop-file-here-to-upload');
-							}
-
-							instance._invalidFileNameText = Liferay.Language.get('please-enter-a-file-with-a-valid-file-name');
-							instance._invalidFileSizeText = Lang.sub(Liferay.Language.get('please-enter-a-file-with-a-valid-file-size-no-larger-than-x'), [maxFileSizeKB]);
+							instance._invalidFileSizeText = Lang.sub(strings.invalidFileSizeText, [maxFileSizeKB]);
 
 							instance._errorMessages = {
-								'490': Liferay.Language.get('please-enter-a-unique-document-name'),
-								'491': Liferay.Language.get('document-names-must-end-with-one-of-the-following-extensions') + ' ' + allowedFileTypes,
-								'492': instance._invalidFileNameText,
+								'490': strings.duplicatedFileNameText,
+								'491': strings.invalidFileExtensionText + ' ' + allowedFileTypes,
+								'492': strings.invalidFileNameText,
 								'493': instance._invalidFileSizeText
 							};
 
@@ -297,6 +308,8 @@ AUI.add(
 					_cancelAllFiles: function() {
 						var instance = this;
 
+						var strings = instance.get(STRINGS);
+
 						var uploader = instance._uploader;
 
 						var queue = uploader.queue;
@@ -326,7 +339,9 @@ AUI.add(
 
 						instance._filesTotal = 0;
 
-						instance._updateList(0, instance._cancelUploadsText);
+						var cancelText = (instance.get('multipleFiles')) ? strings.cancelUploadsText : strings.cancelFileText;
+
+						instance._updateList(0, cancelText);
 					},
 
 					_clearUploads: function() {
@@ -373,9 +388,9 @@ AUI.add(
 					_getValidFiles: function(data) {
 						var instance = this;
 
-						var maxFileSize = instance.get('maxFileSize');
+						var strings = instance.get(STRINGS);
 
-						var zeroByteSizeText = Liferay.Language.get('the-file-contains-no-data-and-cannot-be-uploaded.-please-use-the-classic-uploader');
+						var maxFileSize = instance.get('maxFileSize');
 
 						return AArray.filter(
 							data,
@@ -389,10 +404,10 @@ AUI.add(
 								var file;
 
 								if (size === 0) {
-									error = zeroByteSizeText;
+									error = strings.zeroByteSizeText;
 								}
 								else if (name.length > 240) {
-									error = instance._invalidFileNameText;
+									error = strings.invalidFileNameText;
 								}
 								else if (maxFileSize > 0 && (size > maxFileSize)) {
 									error = instance._invalidFileSizeText;
@@ -539,7 +554,7 @@ AUI.add(
 						var uploadsCompleteText = ' ';
 
 						if (!!instance._fileListContent.one('.upload-file.upload-complete')) {
-							uploadsCompleteText = strings['uploadsCompleteText'];
+							uploadsCompleteText = strings.uploadsCompleteText;
 						}
 
 						instance._updateList(0, uploadsCompleteText);
@@ -570,7 +585,7 @@ AUI.add(
 								if (file) {
 									queue.cancelUpload(file);
 
-									instance._updateList(0, instance._cancelFileText);
+									instance._updateList(0, strings.cancelFileText);
 								}
 
 								if (queue.queuedFiles.length === 0 && queue.numberOfUploads <= 0) {
@@ -589,12 +604,14 @@ AUI.add(
 					_onDeleteFileClick: function(currentTarget) {
 						var instance = this;
 
+						var strings = instance.get(STRINGS);
+
 						var li = currentTarget.ancestor('li');
 
 						li.hide();
 
 						var failureResponse = {
-							errorMessage: Liferay.Language.get('an-unexpected-error-occurred-while-deleting-the-file')
+							errorMessage: strings.unexpectedErrorOnDeleteText
 						};
 
 						var deleteFile = instance.get('deleteFile');
@@ -696,7 +713,7 @@ AUI.add(
 								file.error = data.substring(data.indexOf('.') + 1);
 							}
 							else {
-								file.error = instance._errorMessages[data] || Liferay.Language.get('an-unexpected-error-occurred-while-uploading-your-file');
+								file.error = instance._errorMessages[data] || strings.unexpectedErrorOnUploadText;
 							}
 
 							var newLi = instance._fileListTPL.parse([file]);
@@ -744,6 +761,8 @@ AUI.add(
 					_onUploadStart: function(event) {
 						var instance = this;
 
+						var strings = instance.get(STRINGS);
+
 						var uploader = instance._uploader;
 
 						var queue = uploader.queue;
@@ -757,10 +776,10 @@ AUI.add(
 						var currentListText;
 
 						if (instance.get('multipleFiles')) {
-							currentListText = Lang.sub(Liferay.Language.get('uploading-file-x-of-x'), [position, filesTotal]);
+							currentListText = Lang.sub(strings.uploadingFileXText, [position, filesTotal]);
 						}
 						else {
-							currentListText = Liferay.Language.get('uploading');
+							currentListText = strings.uploadingText;
 
 							instance._fileListContent.all('.pending-file,.upload-error').remove(true);
 						}
@@ -795,16 +814,11 @@ AUI.add(
 
 						var templateConfig = {
 							$ns: instance.NS,
-							cancelFileText: instance._cancelFileText,
-							cancelUploadsText: instance._cancelUploadsText,
-							clearRecentUploadsText: Liferay.Language.get('clear-documents-already-saved'),
-							deleteFileText: Liferay.Language.get('delete-file'),
-							dropFileText: instance._dropFileText,
+							cancelUploadsText: (instance.get('multipleFiles')) ? strings.cancelUploadsText : strings.cancelFileText,
+							dropFileText: (instance.get('multipleFiles')) ? strings.dropFilesText : strings.dropFileText,
 							multipleFiles: instance.get('multipleFiles'),
-							orText: Liferay.Language.get('or'),
-							pendingFileText: strings['pendingFileText'],
-							selectFilesText: instance._selectFileText,
-							uploadsCompleteText: strings['uploadsCompleteText'],
+							selectFilesText: (instance.get('multipleFiles')) ? strings.selectFilesText : strings.selectFileText,
+							strings: strings,
 							uploaderType: UPLOADER_TYPE
 						};
 
@@ -916,10 +930,12 @@ AUI.add(
 					_updateList: function(listLength, message) {
 						var instance = this;
 
+						var strings = instance.get(STRINGS);
+
 						var infoTitle = instance._listInfo.one('h4');
 
 						if (infoTitle) {
-							var listText = message || Lang.sub(Liferay.Language.get('x-files-ready-to-be-uploaded'), [listLength]);
+							var listText = message || Lang.sub(strings.xFilesReadyText, [listLength]);
 
 							infoTitle.html(listText);
 						}
@@ -949,6 +965,8 @@ AUI.add(
 					_updateMetadataContainer: function() {
 						var instance = this;
 
+						var strings = instance.get(STRINGS);
+
 						var metadataContainer = instance._metadataContainer;
 						var metadataExplanationContainer = instance._metadataExplanationContainer;
 
@@ -972,17 +990,17 @@ AUI.add(
 							if (metadataContainer) {
 								metadataContainer.toggle(hasSelectedFiles);
 
-								var selectedFilesText = Liferay.Language.get('no-files-selected');
+								var selectedFilesText = strings.noFilesSelectedText;
 
 								if (hasSelectedFiles) {
 									if (selectedFilesCount == 1) {
 										selectedFilesText = selectedFileName;
 									}
 									else if (selectedFilesCount == totalFilesCount) {
-										selectedFilesText = Liferay.Language.get('all-files-selected');
+										selectedFilesText = strings.allFilesSelectedText;
 									}
 									else if (selectedFilesCount > 1) {
-										selectedFilesText = Lang.sub(Liferay.Language.get('x-files-selected'), [selectedFilesCount]);
+										selectedFilesText = Lang.sub(strings.xFilesSelectedText, [selectedFilesCount]);
 									}
 								}
 

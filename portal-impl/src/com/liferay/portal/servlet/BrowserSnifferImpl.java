@@ -169,11 +169,11 @@ public class BrowserSnifferImpl implements BrowserSniffer {
 		return isIe(getUserAgent(request));
 	}
 
-	public boolean isIe32(HttpServletRequest request) {
+	public boolean isIeOnWin32Bit(HttpServletRequest request) {
 		String userAgent = getUserAgent(request);
 
 		if (isIe(userAgent) &&
-			!(userAgent.contains("win64") || userAgent.contains("wow64"))) {
+			!(userAgent.contains("wow64") || userAgent.contains("win64"))) {
 
 			return true;
 		}
@@ -181,11 +181,11 @@ public class BrowserSnifferImpl implements BrowserSniffer {
 		return false;
 	}
 
-	public boolean isIe64(HttpServletRequest request) {
+	public boolean isIeOnWin64Bit(HttpServletRequest request) {
 		String userAgent = getUserAgent(request);
 
 		if (isIe(userAgent) &&
-			(userAgent.contains("win64") || userAgent.contains("wow64"))) {
+			(userAgent.contains("wow64") || userAgent.contains("win64"))) {
 
 			return true;
 		}

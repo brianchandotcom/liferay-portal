@@ -49,9 +49,9 @@ public interface BrowserSniffer {
 
 	public boolean isIe(HttpServletRequest request);
 
-	public boolean isIe32(HttpServletRequest request);
+	public boolean isIeOnWin32Bit(HttpServletRequest request);
 
-	public boolean isIe64(HttpServletRequest request);
+	public boolean isIeOnWin64Bit(HttpServletRequest request);
 
 	public boolean isIphone(HttpServletRequest request);
 

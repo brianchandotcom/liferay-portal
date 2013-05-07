@@ -1,0 +1,34 @@
+HTML reference with double quotes:
+
+<a href="[$SM_PRIVATE_GROUP$][$GROUP_FRIENDLY_URL$]/layout">Link</a>
+<a href="[$SM_PRIVATE_USER$][$GROUP_FRIENDLY_URL$]/layout">Link</a>
+<a href="[$SM_PUBLIC$][$GROUP_FRIENDLY_URL$]/layout">Link</a>
+<a href="[$SM_PUBLIC$][$GROUP_FRIENDLY_URL$]">Link</a>
+
+HTML reference with single quotes:
+
+<a href='[$SM_PRIVATE_GROUP$][$GROUP_FRIENDLY_URL$]/layout'>Link</a>
+<a href='[$SM_PRIVATE_USER$][$GROUP_FRIENDLY_URL$]/layout'>Link</a>
+<a href='[$SM_PUBLIC$][$GROUP_FRIENDLY_URL$]/layout'>Link</a>
+<a href='[$SM_PUBLIC$][$GROUP_FRIENDLY_URL$]'>Link</a>
+
+HTML reference with no quotes:
+
+<a href=[$SM_PRIVATE_GROUP$][$GROUP_FRIENDLY_URL$]/layout>Link</a>
+<a href=[$SM_PRIVATE_USER$][$GROUP_FRIENDLY_URL$]/layout>Link</a>
+<a href=[$SM_PUBLIC$][$GROUP_FRIENDLY_URL$]/layout>Link</a>
+<a href=[$SM_PUBLIC$][$GROUP_FRIENDLY_URL$]>Link</a>
+
+CREOLE link with text:
+
+[[[$SM_PRIVATE_GROUP$][$GROUP_FRIENDLY_URL$]/layout|Link]]
+[[[$SM_PRIVATE_USER$][$GROUP_FRIENDLY_URL$]/layout|Link]]
+[[[$SM_PUBLIC$][$GROUP_FRIENDLY_URL$]/layout|Link]]
+[[[$SM_PUBLIC$][$GROUP_FRIENDLY_URL$]|Link]]
+
+CREOLE link without text:
+
+[[[$SM_PRIVATE_GROUP$][$GROUP_FRIENDLY_URL$]/layout]]
+[[[$SM_PRIVATE_USER$][$GROUP_FRIENDLY_URL$]/layout]]
+[[[$SM_PUBLIC$][$GROUP_FRIENDLY_URL$]/layout]]
+[[[$SM_PUBLIC$][$GROUP_FRIENDLY_URL$]]]

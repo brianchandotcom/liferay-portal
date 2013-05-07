@@ -41,7 +41,8 @@ public class ExportImportUtil {
 	}
 
 	public static String exportLayoutReferences(
-		PortletDataContext portletDataContext, String content) {
+			PortletDataContext portletDataContext, String content)
+		throws Exception {
 
 		return getExportImport().exportLayoutReferences(
 			portletDataContext, content);

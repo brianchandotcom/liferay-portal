@@ -1,0 +1,59 @@
+HTML reference with double quotes:
+
+<a href="/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]?t=1366811139876">Link</a>
+<a href="/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]">Link</a>
+<a href="/c/document_library/get_file?uuid=[$UUID$]&groupId=[$GROUP_ID$]">Link</a>
+<a href="/image/image_gallery?uuid=[$UUID$]&groupId=[$GROUP_ID$]">Link</a>
+<a href="/image/image_gallery?image_id=[$IMAGE_ID$]">Link</a>
+<a href="/image/image_gallery?img_id=[$IMAGE_ID$]">Link</a>
+<a href="/image/image_gallery?i_id=[$IMAGE_ID$]">Link</a>
+
+HTML reference with single quotes:
+
+<a href='/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]?t=1366811139876'>Link</a>
+<a href='/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]'>Link</a>
+<a href='/c/document_library/get_file?uuid=[$UUID$]&groupId=[$GROUP_ID$]'>Link</a>
+<a href='/image/image_gallery?uuid=[$UUID$]&groupId=[$GROUP_ID$]'>Link</a>
+<a href='/image/image_gallery?image_id=[$IMAGE_ID$]'>Link</a>
+<a href='/image/image_gallery?img_id=[$IMAGE_ID$]'>Link</a>
+<a href='/image/image_gallery?i_id=[$IMAGE_ID$]'>Link</a>
+
+HTML reference with no quotes:
+
+<a href=/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]?t=1366811139876>Link</a>
+<a href=/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]>Link</a>
+<a href=/c/document_library/get_file?uuid=[$UUID$]&groupId=[$GROUP_ID$]>Link</a>
+<a href=/image/image_gallery?uuid=[$UUID$]&groupId=[$GROUP_ID$]>Link</a>
+<a href=/image/image_gallery?image_id=[$IMAGE_ID$]>Link</a>
+<a href=/image/image_gallery?img_id=[$IMAGE_ID$]>Link</a>
+<a href=/image/image_gallery?i_id=[$IMAGE_ID$]>Link</a>
+
+CREOLE image reference:
+
+{{/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]?t=1366811139876}}
+{{/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]}}
+{{/c/document_library/get_file?uuid=[$UUID$]&groupId=[$GROUP_ID$]}}
+{{/image/image_gallery?uuid=[$UUID$]&groupId=[$GROUP_ID$]}}
+{{/image/image_gallery?image_id=[$IMAGE_ID$]}}
+{{/image/image_gallery?img_id=[$IMAGE_ID$]}}
+{{/image/image_gallery?i_id=[$IMAGE_ID$]}}
+
+CREOLE link with text:
+
+[[/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]?t=1366811139876|Link]]
+[[/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]|Link]]
+[[/c/document_library/get_file?uuid=[$UUID$]&groupId=[$GROUP_ID$]|Link]]
+[[/image/image_gallery?uuid=[$UUID$]&groupId=[$GROUP_ID$]|Link]]
+[[/image/image_gallery?image_id=[$IMAGE_ID$]|Link]]
+[[/image/image_gallery?img_id=[$IMAGE_ID$]|Link]]
+[[/image/image_gallery?i_id=[$IMAGE_ID$]|Link]]
+
+CREOLE link without text:
+
+[[/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]?t=1366811139876]]
+[[/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]]]
+[[/c/document_library/get_file?uuid=[$UUID$]&groupId=[$GROUP_ID$]]]
+[[/image/image_gallery?uuid=[$UUID$]&groupId=[$GROUP_ID$]]]
+[[/image/image_gallery?image_id=[$IMAGE_ID$]]]
+[[/image/image_gallery?img_id=[$IMAGE_ID$]]]
+[[/image/image_gallery?i_id=[$IMAGE_ID$]]]

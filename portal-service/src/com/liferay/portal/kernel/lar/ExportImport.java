@@ -32,7 +32,8 @@ public interface ExportImport {
 		throws Exception;
 
 	public String exportLayoutReferences(
-		PortletDataContext portletDataContext, String content);
+			PortletDataContext portletDataContext, String content)
+		throws Exception;
 
 	public String exportLinksToLayouts(
 			PortletDataContext portletDataContext, String content)

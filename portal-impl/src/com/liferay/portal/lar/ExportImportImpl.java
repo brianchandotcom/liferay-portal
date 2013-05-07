@@ -40,7 +40,6 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.persistence.LayoutUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
@@ -105,210 +104,40 @@ public class ExportImportImpl implements ExportImport {
 
 		StringBuilder sb = new StringBuilder(content);
 
-		int beginPos = content.length();
-		int currentLocation = -1;
+		String contextPath = PortalUtil.getPathContext();
 
-		boolean legacyURL = true;
+		String[] dlRefs = new String[] {
+			contextPath.concat("/c/document_library/get_file?"),
+			contextPath.concat("/documents/"),
+			contextPath.concat("/image/image_gallery?")
+		};
+
+		int endPos = content.length();
+		int beginPos = -1;
 
 		while (true) {
-			String contextPath = PortalUtil.getPathContext();
+			beginPos = StringUtil.lastIndexOfAny(content, dlRefs, endPos);
 
-			currentLocation = content.lastIndexOf(
-				contextPath.concat("/c/document_library/get_file?"), beginPos);
-
-			if (currentLocation == -1) {
-				currentLocation = content.lastIndexOf(
-					contextPath.concat("/image/image_gallery?"), beginPos);
-			}
-
-			if (currentLocation == -1) {
-				currentLocation = content.lastIndexOf(
-					contextPath.concat("/documents/"), beginPos);
-
-				legacyURL = false;
-			}
-
-			if (currentLocation == -1) {
-				return sb.toString();
-			}
-
-			beginPos = currentLocation + contextPath.length();
-
-			int endPos1 = content.indexOf(CharPool.APOSTROPHE, beginPos);
-			int endPos2 = content.indexOf(CharPool.CLOSE_BRACKET, beginPos);
-			int endPos3 = content.indexOf(CharPool.CLOSE_CURLY_BRACE, beginPos);
-			int endPos4 = content.indexOf(CharPool.CLOSE_PARENTHESIS, beginPos);
-			int endPos5 = content.indexOf(CharPool.LESS_THAN, beginPos);
-			int endPos6 = content.indexOf(CharPool.QUESTION, beginPos);
-			int endPos7 = content.indexOf(CharPool.QUOTE, beginPos);
-			int endPos8 = content.indexOf(CharPool.SPACE, beginPos);
-
-			int endPos = endPos1;
-
-			if ((endPos == -1) || ((endPos2 != -1) && (endPos2 < endPos))) {
-				endPos = endPos2;
-			}
-
-			if ((endPos == -1) || ((endPos3 != -1) && (endPos3 < endPos))) {
-				endPos = endPos3;
-			}
-
-			if ((endPos == -1) || ((endPos4 != -1) && (endPos4 < endPos))) {
-				endPos = endPos4;
-			}
-
-			if ((endPos == -1) || ((endPos5 != -1) && (endPos5 < endPos))) {
-				endPos = endPos5;
-			}
-
-			if ((endPos == -1) ||
-				((endPos6 != -1) && (endPos6 < endPos) && !legacyURL)) {
-
-				endPos = endPos6;
-			}
-
-			if ((endPos == -1) || ((endPos7 != -1) && (endPos7 < endPos))) {
-				endPos = endPos7;
-			}
-
-			if ((endPos == -1) || ((endPos8 != -1) && (endPos8 < endPos))) {
-				endPos = endPos8;
-			}
-
-			if ((beginPos == -1) || (endPos == -1)) {
+			if (beginPos == -1) {
 				break;
 			}
 
+			Map<String, String[]> refParameters = getDLReferenceParameters(
+				portletDataContext, content, beginPos + contextPath.length(),
+				endPos);
+
+			FileEntry fileEntry = getFileEntry(
+				portletDataContext, refParameters);
+
+			if (fileEntry == null) {
+				endPos = beginPos - 1;
+
+				continue;
+			}
+
+			endPos = MapUtil.getInteger(refParameters, "endPos");
+
 			try {
-				String oldParameters = content.substring(beginPos, endPos);
-
-				while (oldParameters.contains(StringPool.AMPERSAND_ENCODED)) {
-					oldParameters = oldParameters.replace(
-						StringPool.AMPERSAND_ENCODED, StringPool.AMPERSAND);
-				}
-
-				Map<String, String[]> map = new HashMap<String, String[]>();
-
-				if (oldParameters.startsWith("/documents/")) {
-					String[] pathArray = oldParameters.split(StringPool.SLASH);
-
-					map.put("groupId", new String[] {pathArray[2]});
-
-					if (pathArray.length == 4) {
-						map.put("uuid", new String[] {pathArray[3]});
-					}
-					else if (pathArray.length == 5) {
-						map.put("folderId", new String[] {pathArray[3]});
-
-						String title = HttpUtil.decodeURL(pathArray[4]);
-
-						int pos = title.indexOf(StringPool.QUESTION);
-
-						if (pos != -1) {
-							title = title.substring(0, pos);
-						}
-
-						map.put("title", new String[] {title});
-					}
-					else if (pathArray.length > 5) {
-						String uuid = pathArray[5];
-
-						int pos = uuid.indexOf(StringPool.QUESTION);
-
-						if (pos != -1) {
-							uuid = uuid.substring(0, pos);
-						}
-
-						map.put("uuid", new String[] {uuid});
-					}
-				}
-				else {
-					oldParameters = oldParameters.substring(
-						oldParameters.indexOf(CharPool.QUESTION) + 1);
-
-					map = HttpUtil.parameterMapFromString(oldParameters);
-				}
-
-				FileEntry fileEntry = null;
-
-				String uuid = MapUtil.getString(map, "uuid");
-
-				if (Validator.isNotNull(uuid)) {
-					String groupIdString = MapUtil.getString(map, "groupId");
-
-					long groupId = GetterUtil.getLong(groupIdString);
-
-					if (groupIdString.equals("@group_id@")) {
-						groupId = portletDataContext.getScopeGroupId();
-					}
-
-					fileEntry =
-						DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
-							uuid, groupId);
-				}
-				else {
-					String folderIdString = MapUtil.getString(map, "folderId");
-
-					if (Validator.isNotNull(folderIdString)) {
-						long folderId = GetterUtil.getLong(folderIdString);
-						String name = MapUtil.getString(map, "name");
-						String title = MapUtil.getString(map, "title");
-
-						String groupIdString = MapUtil.getString(
-							map, "groupId");
-
-						long groupId = GetterUtil.getLong(groupIdString);
-
-						if (groupIdString.equals("@group_id@")) {
-							groupId = portletDataContext.getScopeGroupId();
-						}
-
-						if (Validator.isNotNull(title)) {
-							fileEntry = DLAppLocalServiceUtil.getFileEntry(
-								groupId, folderId, title);
-						}
-						else {
-							DLFileEntry dlFileEntry =
-								DLFileEntryLocalServiceUtil.getFileEntryByName(
-									groupId, folderId, name);
-
-							fileEntry = DLAppLocalServiceUtil.getFileEntry(
-								dlFileEntry.getFileEntryId());
-						}
-					}
-					else if (map.containsKey("image_id") ||
-							 map.containsKey("img_id") ||
-							 map.containsKey("i_id")) {
-
-						long imageId = MapUtil.getLong(map, "image_id");
-
-						if (imageId <= 0) {
-							imageId = MapUtil.getLong(map, "img_id");
-
-							if (imageId <= 0) {
-								imageId = MapUtil.getLong(map, "i_id");
-							}
-						}
-
-						DLFileEntry dlFileEntry =
-							DLFileEntryLocalServiceUtil.
-								fetchFileEntryByAnyImageId(imageId);
-
-						if (dlFileEntry != null) {
-							fileEntry = DLAppLocalServiceUtil.getFileEntry(
-								dlFileEntry.getFileEntryId());
-						}
-					}
-				}
-
-				if (fileEntry == null) {
-					beginPos--;
-
-					continue;
-				}
-
-				beginPos = currentLocation;
-
 				StagedModelDataHandlerUtil.exportStagedModel(
 					portletDataContext, fileEntry);
 
@@ -330,182 +159,109 @@ public class ExportImportImpl implements ExportImport {
 				}
 			}
 
-			beginPos--;
+			endPos = beginPos - 1;
 		}
 
 		return sb.toString();
 	}
 
 	public String exportLayoutReferences(
-		PortletDataContext portletDataContext, String content) {
+			PortletDataContext portletDataContext, String content)
+		throws Exception {
 
-		Group group = null;
-
-		try {
-			group = GroupLocalServiceUtil.getGroup(
-				portletDataContext.getScopeGroupId());
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e);
-			}
-
-			return content;
-		}
+		Group group = GroupLocalServiceUtil.getGroup(
+			portletDataContext.getScopeGroupId());
 
 		StringBuilder sb = new StringBuilder(content);
 
-		String privateGroupServletMapping = _PRIVATE_GROUP_SERVLET_MAPPING;
-		String privateUserServletMapping = _PRIVATE_USER_SERVLET_MAPPING;
-		String publicServletMapping = _PUBLIC_GROUP_SERVLET_MAPPING;
+		String[] patterns = new String[] {"href=", "[["};
 
-		String portalContextPath = PortalUtil.getPathContext();
-
-		if (Validator.isNotNull(portalContextPath)) {
-			privateGroupServletMapping = portalContextPath.concat(
-				privateGroupServletMapping);
-			privateUserServletMapping = portalContextPath.concat(
-				privateUserServletMapping);
-			publicServletMapping = portalContextPath.concat(
-				publicServletMapping);
-		}
-
-		String href = "href=";
-
-		int beginPos = content.length();
+		int beginPos = -1;
+		int endPos = content.length();
+		int offset = 0;
 
 		while (true) {
-			int hrefLength = href.length();
-
-			beginPos = content.lastIndexOf(href, beginPos);
+			beginPos = StringUtil.lastIndexOfAny(content, patterns, endPos);
 
 			if (beginPos == -1) {
 				break;
 			}
 
-			char c = content.charAt(beginPos + hrefLength);
+			if (content.startsWith("href=", beginPos)) {
+				offset = 5;
 
-			if ((c == CharPool.APOSTROPHE) || (c == CharPool.QUOTE)) {
-				hrefLength++;
+				char c = content.charAt(beginPos + offset);
+
+				if ((c == CharPool.APOSTROPHE) || (c == CharPool.QUOTE)) {
+					offset++;
+				}
+			}
+			else if (content.charAt(beginPos) == CharPool.OPEN_BRACKET) {
+				offset = 2;
 			}
 
-			int endPos1 = content.indexOf(
-				CharPool.APOSTROPHE, beginPos + hrefLength);
-			int endPos2 = content.indexOf(
-				CharPool.CLOSE_BRACKET, beginPos + hrefLength);
-			int endPos3 = content.indexOf(
-				CharPool.CLOSE_CURLY_BRACE, beginPos + hrefLength);
-			int endPos4 = content.indexOf(
-				CharPool.CLOSE_PARENTHESIS, beginPos + hrefLength);
-			int endPos5 = content.indexOf(
-				CharPool.LESS_THAN, beginPos + hrefLength);
-			int endPos6 = content.indexOf(
-				CharPool.QUESTION, beginPos + hrefLength);
-			int endPos7 = content.indexOf(
-				CharPool.QUOTE, beginPos + hrefLength);
-			int endPos8 = content.indexOf(
-				CharPool.SPACE, beginPos + hrefLength);
-
-			int endPos = endPos1;
-
-			if ((endPos == -1) || ((endPos2 != -1) && (endPos2 < endPos))) {
-				endPos = endPos2;
-			}
-
-			if ((endPos == -1) || ((endPos3 != -1) && (endPos3 < endPos))) {
-				endPos = endPos3;
-			}
-
-			if ((endPos == -1) || ((endPos4 != -1) && (endPos4 < endPos))) {
-				endPos = endPos4;
-			}
-
-			if ((endPos == -1) || ((endPos5 != -1) && (endPos5 < endPos))) {
-				endPos = endPos5;
-			}
-
-			if ((endPos == -1) || ((endPos6 != -1) && (endPos6 < endPos))) {
-				endPos = endPos6;
-			}
-
-			if ((endPos == -1) || ((endPos7 != -1) && (endPos7 < endPos))) {
-				endPos = endPos7;
-			}
-
-			if ((endPos == -1) || ((endPos8 != -1) && (endPos8 < endPos))) {
-				endPos = endPos8;
-			}
+			endPos = StringUtil.indexOfAny(
+				content, _LAYOUT_REF_STOP_CHARS, beginPos + offset, endPos);
 
 			if (endPos == -1) {
-				beginPos--;
+				endPos = beginPos - 1;
 
 				continue;
 			}
 
-			String url = content.substring(beginPos + hrefLength, endPos);
+			String url = content.substring(beginPos + offset, endPos);
 
-			if (!url.startsWith(privateGroupServletMapping) &&
-				!url.startsWith(privateUserServletMapping) &&
-				!url.startsWith(publicServletMapping)) {
+			String servletMapping;
+			String servletMappingParam;
 
-				beginPos--;
-
-				continue;
-			}
-
-			int contextLength = 0;
-
-			if (Validator.isNotNull(portalContextPath)) {
-				contextLength = portalContextPath.length();
-			}
-
-			int beginGroupPos = content.indexOf(
-				CharPool.SLASH, beginPos + hrefLength + contextLength + 1);
-
-			if (beginGroupPos == -1) {
-				beginPos--;
-
-				continue;
-			}
-
-			int endGroupPos = content.indexOf(
-				CharPool.SLASH, beginGroupPos + 1);
-
-			if (endGroupPos == -1) {
-				beginPos--;
-
-				continue;
-			}
-
-			String groupFriendlyURL = content.substring(
-				beginGroupPos, endGroupPos);
-
-			if (groupFriendlyURL.equals(group.getFriendlyURL())) {
-				sb.replace(
-					beginGroupPos, endGroupPos,
-					"@data_handler_group_friendly_url@");
-			}
-
-			String dataHandlerServletMapping = StringPool.BLANK;
-
-			if (url.startsWith(privateGroupServletMapping)) {
-				dataHandlerServletMapping =
+			if (url.startsWith(PortalUtil.getPathFriendlyURLPrivateGroup())) {
+				servletMapping = PortalUtil.getPathFriendlyURLPrivateGroup();
+				servletMappingParam =
 					"@data_handler_private_group_servlet_mapping@";
 			}
-			else if (url.startsWith(privateUserServletMapping)) {
-				dataHandlerServletMapping =
+			else if (url.startsWith(
+						PortalUtil.getPathFriendlyURLPrivateUser())) {
+
+				servletMapping = PortalUtil.getPathFriendlyURLPrivateUser();
+				servletMappingParam =
 					"@data_handler_private_user_servlet_mapping@";
 			}
+			else if (url.startsWith(PortalUtil.getPathFriendlyURLPublic())) {
+				servletMapping = PortalUtil.getPathFriendlyURLPublic();
+				servletMappingParam = "@data_handler_public_servlet_mapping@";
+			}
 			else {
-				dataHandlerServletMapping =
-					"@data_handler_public_servlet_mapping@";
+				endPos = beginPos - 1;
+
+				continue;
 			}
 
-			sb.replace(
-				beginPos + hrefLength, beginGroupPos,
-				dataHandlerServletMapping);
+			int beginGroupPos = beginPos + offset + servletMapping.length();
 
-			beginPos--;
+			if (content.charAt(beginGroupPos) == CharPool.SLASH) {
+				int endGroupPos = url.indexOf(
+					CharPool.SLASH, servletMapping.length() + 1);
+
+				if (endGroupPos == -1) {
+					endGroupPos = endPos;
+				}
+				else {
+					endGroupPos = endGroupPos + beginPos + offset;
+				}
+
+				String groupFriendlyURL = content.substring(
+					beginGroupPos, endGroupPos);
+
+				if (groupFriendlyURL.equals(group.getFriendlyURL())) {
+					sb.replace(
+						beginGroupPos, endGroupPos,
+						"@data_handler_group_friendly_url@");
+				}
+			}
+
+			sb.replace(beginPos + offset, beginGroupPos, servletMappingParam);
+
+			endPos = beginPos - 1;
 		}
 
 		return sb.toString();
@@ -648,30 +404,15 @@ public class ExportImportImpl implements ExportImport {
 			PortletDataContext portletDataContext, String content)
 		throws Exception {
 
-		String privateGroupServletMapping = _PRIVATE_GROUP_SERVLET_MAPPING;
-		String privateUserServletMapping = _PRIVATE_USER_SERVLET_MAPPING;
-		String publicServletMapping = _PUBLIC_GROUP_SERVLET_MAPPING;
-
-		String portalContextPath = PortalUtil.getPathContext();
-
-		if (Validator.isNotNull(portalContextPath)) {
-			privateGroupServletMapping = portalContextPath.concat(
-				privateGroupServletMapping);
-			privateUserServletMapping = portalContextPath.concat(
-				privateUserServletMapping);
-			publicServletMapping = portalContextPath.concat(
-				publicServletMapping);
-		}
-
 		content = StringUtil.replace(
 			content, "@data_handler_private_group_servlet_mapping@",
-			privateGroupServletMapping);
+			PortalUtil.getPathFriendlyURLPrivateGroup());
 		content = StringUtil.replace(
 			content, "@data_handler_private_user_servlet_mapping@",
-			privateUserServletMapping);
+			PortalUtil.getPathFriendlyURLPrivateUser());
 		content = StringUtil.replace(
 			content, "@data_handler_public_servlet_mapping@",
-			publicServletMapping);
+			PortalUtil.getPathFriendlyURLPublic());
 
 		Group group = GroupLocalServiceUtil.getGroup(
 			portletDataContext.getScopeGroupId());
@@ -776,16 +517,159 @@ public class ExportImportImpl implements ExportImport {
 		return content;
 	}
 
+	protected Map<String, String[]> getDLReferenceParameters(
+		PortletDataContext portletDataContext, String content, int beginPos,
+		int endPos) {
+
+		boolean legacyURL = true;
+		char[] stopChars = _DL_REF_STOP_CHARS_LEGACY;
+
+		if (content.startsWith("/documents/", beginPos)) {
+			legacyURL = false;
+			stopChars = _DL_REF_STOP_CHARS;
+		}
+
+		endPos = StringUtil.indexOfAny(content, stopChars, beginPos, endPos);
+
+		if (endPos == -1) {
+			return null;
+		}
+
+		Map<String, String[]> map = new HashMap<String, String[]>();
+
+		String dlReference = content.substring(beginPos, endPos);
+
+		while (dlReference.contains(StringPool.AMPERSAND_ENCODED)) {
+			dlReference = dlReference.replace(
+				StringPool.AMPERSAND_ENCODED, StringPool.AMPERSAND);
+		}
+
+		if (!legacyURL) {
+			String[] pathArray = dlReference.split(StringPool.SLASH);
+
+			map.put("groupId", new String[] {pathArray[2]});
+
+			if (pathArray.length == 4) {
+				map.put("uuid", new String[] {pathArray[3]});
+			}
+			else if (pathArray.length == 5) {
+				map.put("folderId", new String[] {pathArray[3]});
+				map.put(
+					"title", new String[] {HttpUtil.decodeURL(pathArray[4])});
+			}
+			else if (pathArray.length > 5) {
+				map.put("uuid", new String[] {pathArray[5]});
+			}
+		}
+		else {
+			dlReference = dlReference.substring(
+				dlReference.indexOf(CharPool.QUESTION) + 1);
+
+			map = HttpUtil.parameterMapFromString(dlReference);
+
+			if (map.containsKey("img_id")) {
+				map.put("image_id", map.get("img_id"));
+			}
+			else if (map.containsKey("i_id")) {
+				map.put("image_id", map.get("i_id"));
+			}
+		}
+
+		map.put("endPos", new String[] {String.valueOf(endPos)});
+
+		String groupIdString = MapUtil.getString(map, "groupId");
+
+		if (groupIdString.equals("@group_id@")) {
+			groupIdString = String.valueOf(
+				portletDataContext.getScopeGroupId());
+
+			map.put("groupId", new String[] {groupIdString});
+		}
+
+		return map;
+	}
+
+	protected FileEntry getFileEntry(
+		PortletDataContext portletDataContext, Map<String, String[]> args) {
+
+		if (args == null) {
+			return null;
+		}
+
+		FileEntry fileEntry = null;
+
+		try {
+			String uuid = MapUtil.getString(args, "uuid");
+			long groupId = MapUtil.getLong(args, "groupId");
+
+			if (Validator.isNotNull(uuid)) {
+				fileEntry =
+					DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
+						uuid, groupId);
+			}
+			else {
+				if (args.containsKey("folderId")) {
+					long folderId = MapUtil.getLong(args, "folderId");
+					String name = MapUtil.getString(args, "name");
+					String title = MapUtil.getString(args, "title");
+
+					if (Validator.isNotNull(title)) {
+						fileEntry = DLAppLocalServiceUtil.getFileEntry(
+							groupId, folderId, title);
+					}
+					else {
+						DLFileEntry dlFileEntry =
+							DLFileEntryLocalServiceUtil.fetchFileEntryByName(
+								groupId, folderId, name);
+
+						if (dlFileEntry != null) {
+							fileEntry = DLAppLocalServiceUtil.getFileEntry(
+								dlFileEntry.getFileEntryId());
+						}
+					}
+				}
+				else if (args.containsKey("image_id")) {
+					DLFileEntry dlFileEntry =
+						DLFileEntryLocalServiceUtil.fetchFileEntryByAnyImageId(
+							MapUtil.getLong(args, "image_id"));
+
+					if (dlFileEntry != null) {
+						fileEntry = DLAppLocalServiceUtil.getFileEntry(
+							dlFileEntry.getFileEntryId());
+					}
+				}
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(e.getMessage());
+			}
+		}
+
+		return fileEntry;
+	}
+
+	private static final char[] _DL_REF_STOP_CHARS = new char[] {
+		CharPool.APOSTROPHE, CharPool.CLOSE_BRACKET, CharPool.CLOSE_CURLY_BRACE,
+		CharPool.CLOSE_PARENTHESIS, CharPool.GREATER_THAN, CharPool.LESS_THAN,
+		CharPool.PIPE, CharPool.QUESTION, CharPool.QUOTE, CharPool.SPACE
+	};
+
+	private static final char[] _DL_REF_STOP_CHARS_LEGACY = new char[] {
+		CharPool.APOSTROPHE, CharPool.CLOSE_BRACKET, CharPool.CLOSE_CURLY_BRACE,
+		CharPool.CLOSE_PARENTHESIS, CharPool.GREATER_THAN, CharPool.LESS_THAN,
+		CharPool.PIPE, CharPool.QUOTE, CharPool.SPACE
+	};
+
+	private static final char[] _LAYOUT_REF_STOP_CHARS = new char[] {
+		CharPool.APOSTROPHE, CharPool.CLOSE_BRACKET, CharPool.CLOSE_CURLY_BRACE,
+		CharPool.CLOSE_PARENTHESIS, CharPool.GREATER_THAN, CharPool.LESS_THAN,
+		CharPool.PIPE, CharPool.QUESTION, CharPool.QUOTE, CharPool.SPACE
+	};
+
 	private static Log _log = LogFactoryUtil.getLog(ExportImportImpl.class);
-
-	private static String _PRIVATE_GROUP_SERVLET_MAPPING =
-		PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING;
-
-	private static String _PRIVATE_USER_SERVLET_MAPPING =
-		PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING;
-
-	private static String _PUBLIC_GROUP_SERVLET_MAPPING =
-		PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING;
 
 	private Pattern _exportLinksToLayoutPattern = Pattern.compile(
 		"\\[([0-9]+)@(public|private\\-[a-z]*)\\]");

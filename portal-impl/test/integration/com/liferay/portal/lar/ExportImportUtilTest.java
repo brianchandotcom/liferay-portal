@@ -1,0 +1,408 @@
+/**
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portal.lar;
+
+import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.lar.ExportImportUtil;
+import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.zip.ZipReader;
+import com.liferay.portal.kernel.zip.ZipWriter;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Layout;
+import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
+import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.MainServletExecutionTestListener;
+import com.liferay.portal.test.TransactionalExecutionTestListener;
+import com.liferay.portal.util.GroupTestUtil;
+import com.liferay.portal.util.LayoutTestUtil;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.testng.Assert;
+
+/**
+ * @author Zsolt Berentey
+ */
+@ExecutionTestListeners(
+	listeners = {
+		MainServletExecutionTestListener.class,
+		TransactionalExecutionTestListener.class
+	})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+@Transactional
+public class ExportImportUtilTest {
+
+	@Before
+	public void setUp() throws Exception {
+		FinderCacheUtil.clearCache();
+
+		_liveGroup = GroupTestUtil.addGroup();
+		_stagingGroup = GroupTestUtil.addGroup();
+
+		_fileEntry = DLAppTestUtil.addFileEntry(
+			_stagingGroup.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			ServiceTestUtil.randomString() + ".txt",
+			ServiceTestUtil.randomString(), true);
+
+		DLFileEntry dlFileEntry =
+			((LiferayFileEntry)_fileEntry).getDLFileEntry();
+
+		dlFileEntry.setLargeImageId(dlFileEntry.getFileEntryId());
+
+		DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry);
+
+		TestWriterReader testWriter = new TestWriterReader();
+
+		_portletDataContextExport = new PortletDataContextImpl(
+			_stagingGroup.getCompanyId(), _stagingGroup.getGroupId(),
+			new HashMap<String, String[]>(), new HashSet<String>(),
+			new Date(System.currentTimeMillis() - Time.HOUR), new Date(),
+			testWriter);
+
+		Element rootElement = SAXReaderUtil.createElement("root");
+
+		_portletDataContextExport.setExportDataRootElement(rootElement);
+
+		_portletDataContextImport = new PortletDataContextImpl(
+			_stagingGroup.getCompanyId(), _stagingGroup.getGroupId(),
+			new HashMap<String, String[]>(), new HashSet<String>(),
+			new CurrentUserIdStrategy(TestPropsValues.getUser()), testWriter);
+
+		_portletDataContextImport.setImportDataRootElement(rootElement);
+		_portletDataContextImport.setSourceGroupId(_stagingGroup.getGroupId());
+
+		rootElement.addElement("entry");
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		GroupLocalServiceUtil.deleteGroup(_liveGroup);
+		GroupLocalServiceUtil.deleteGroup(_stagingGroup);
+	}
+
+	@Test
+	public void testExportDLReferences() throws Exception {
+		String content = replaceParameters(
+			getContent("dl_references.txt"), _fileEntry);
+
+		List<String> urls = getUrls(content);
+
+		Element rootElement =
+			_portletDataContextExport.getExportDataRootElement();
+
+		content = ExportImportUtil.exportContentReferences(
+			_portletDataContextExport, rootElement.element("entry"), content);
+
+		for (String url : urls) {
+			Assert.assertFalse(content.contains(url));
+		}
+
+		TestWriterReader testWriter =
+			(TestWriterReader)_portletDataContextExport.getZipWriter();
+
+		List<String> binaryEntries = testWriter.getBinaryEntries();
+		List<String> entries = testWriter.getEntries();
+
+		Assert.assertEquals(entries.size(), 1);
+		Assert.assertEquals(binaryEntries.size(), entries.size());
+
+		for (String entry : testWriter.getEntries()) {
+			Assert.assertTrue(
+				content.contains("[$dl-reference=" + entry + "$]"));
+		};
+	}
+
+	@Test
+	public void testExportLayoutReferences() throws Exception {
+		String content = replaceParameters(
+			getContent("layout_references.txt"), _fileEntry);
+
+		Element rootElement =
+			_portletDataContextExport.getExportDataRootElement();
+
+		content = ExportImportUtil.exportContentReferences(
+			_portletDataContextExport, rootElement.element("entry"), content);
+
+		Assert.assertFalse(
+			content.contains(PortalUtil.getPathFriendlyURLPrivateGroup()));
+		Assert.assertFalse(
+			content.contains(PortalUtil.getPathFriendlyURLPrivateUser()));
+		Assert.assertFalse(
+			content.contains(PortalUtil.getPathFriendlyURLPublic()));
+		Assert.assertFalse(content.contains(_stagingGroup.getFriendlyURL()));
+	}
+
+	@Test
+	public void testExportLinksToLayouts() throws Exception {
+		String content = replaceParameters(
+			getContent("layout_links.txt"), _fileEntry);
+
+		Layout publicLayout = LayoutTestUtil.addLayout(
+			_stagingGroup.getGroupId(), ServiceTestUtil.randomString(), false);
+
+		Layout privateLayout = LayoutTestUtil.addLayout(
+			_stagingGroup.getGroupId(), ServiceTestUtil.randomString(), true);
+
+		Element rootElement =
+			_portletDataContextExport.getExportDataRootElement();
+
+		content = ExportImportUtil.exportContentReferences(
+			_portletDataContextExport, rootElement.element("entry"), content);
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("[1@public@");
+		sb.append(publicLayout.getUuid());
+		sb.append(StringPool.AT);
+		sb.append(publicLayout.getFriendlyURL());
+		sb.append(StringPool.CLOSE_BRACKET);
+
+		Assert.assertTrue(content.contains(sb.toString()));
+
+		sb.setStringAt("[1@private-group@", 0);
+		sb.setStringAt(privateLayout.getUuid(), 1);
+		sb.setStringAt(privateLayout.getFriendlyURL(), 3);
+
+		Assert.assertTrue(content.contains(sb.toString()));
+	}
+
+	@Test
+	public void testImportDLReferences() throws Exception {
+		String content = replaceParameters(
+			getContent("dl_references.txt"), _fileEntry);
+
+		Element rootElement =
+			_portletDataContextExport.getExportDataRootElement();
+
+		Element entryElement = rootElement.element("entry");
+
+		content = ExportImportUtil.exportContentReferences(
+			_portletDataContextExport, entryElement, content);
+
+		content = ExportImportUtil.importContentReferences(
+			_portletDataContextImport, entryElement, content);
+
+		Assert.assertFalse(content.contains("[$dl-reference="));
+	}
+
+	@Test
+	public void testImportLayoutReferences() throws Exception {
+		String content = replaceParameters(
+			getContent("layout_references.txt"), _fileEntry);
+
+		Element rootElement =
+			_portletDataContextExport.getExportDataRootElement();
+
+		Element entryElement = rootElement.element("entry");
+
+		content = ExportImportUtil.exportContentReferences(
+			_portletDataContextExport, entryElement, content);
+
+		content = ExportImportUtil.importContentReferences(
+			_portletDataContextExport, entryElement, content);
+
+		Assert.assertFalse(
+			content.contains("@data_handler_private_group_servlet_mapping@"));
+		Assert.assertFalse(
+			content.contains("@data_handler_private_user_servlet_mapping@"));
+		Assert.assertFalse(
+			content.contains("@data_handler_public_servlet_mapping@"));
+		Assert.assertFalse(
+			content.contains("@data_handler_group_friendly_url@"));
+	}
+
+	@Test
+	public void testImportLinksToLayouts() throws Exception {
+		String content = replaceParameters(
+			getContent("layout_links.txt"), _fileEntry);
+
+		LayoutTestUtil.addLayout(
+			_stagingGroup.getGroupId(), ServiceTestUtil.randomString(), false);
+
+		LayoutTestUtil.addLayout(
+			_stagingGroup.getGroupId(), ServiceTestUtil.randomString(), true);
+
+		Element rootElement =
+			_portletDataContextExport.getExportDataRootElement();
+
+		Element entryElement = rootElement.element("entry");
+
+		content = ExportImportUtil.exportContentReferences(
+			_portletDataContextExport, entryElement, content);
+
+		String importedContent = ExportImportUtil.exportContentReferences(
+			_portletDataContextExport, entryElement, content);
+
+		Assert.assertEquals(importedContent, content);
+	}
+
+	protected String getContent(String fileName) throws Exception {
+		Class<?> clazz = getClass();
+
+		InputStream inputStream = clazz.getResourceAsStream(
+			"dependencies/" + fileName);
+
+		Scanner scanner = new Scanner(inputStream);
+
+		scanner.useDelimiter("\\Z");
+
+		return scanner.next();
+	}
+
+	protected List<String> getUrls(String content) {
+		Pattern urlPatter = Pattern.compile(
+			"(?:href=|\\{|\\[)(.*?)" +
+				"(?:>|\\}|\\]|Link\\]\\])");
+
+		Matcher m = urlPatter.matcher(content);
+
+		List<String> urls = new ArrayList<String>();
+
+		while (m.find()) {
+			urls.add(m.group(1));
+		}
+
+		return urls;
+	}
+
+	protected String replaceParameters(String content, FileEntry fileEntry) {
+		String groupFriendlyURL = _stagingGroup.getFriendlyURL();
+		String groupId = String.valueOf(fileEntry.getGroupId());
+		String imageId = String.valueOf(fileEntry.getFileEntryId());
+		String smPrivateGroup = PortalUtil.getPathFriendlyURLPrivateGroup();
+		String smPrivateUser = PortalUtil.getPathFriendlyURLPrivateUser();
+		String smPublic = PortalUtil.getPathFriendlyURLPublic();
+		String title = fileEntry.getTitle();
+		String uuid = fileEntry.getUuid();
+
+		return StringUtil.replace(
+			content,
+			new String[] {
+				"[$GROUP_ID$]", "[$GROUP_FRIENDLY_URL$]", "[$IMAGE_ID$]",
+				"[$SM_PRIVATE_GROUP$]", "[$SM_PRIVATE_USER$]", "[$SM_PUBLIC$]",
+				"[$TITLE$]", "[$UUID$]"
+			},
+			new String[] {
+				groupId, groupFriendlyURL, imageId, smPrivateGroup,
+				smPrivateUser, smPublic, title, uuid
+			});
+	}
+
+	private FileEntry _fileEntry;
+	private Group _liveGroup;
+	private PortletDataContext _portletDataContextExport;
+	private PortletDataContext _portletDataContextImport;
+	private Group _stagingGroup;
+	private class TestWriterReader implements ZipReader, ZipWriter {
+
+		public void addEntry(String name, byte[] bytes) throws IOException {
+			_binaryEntries.add(name);
+		}
+
+		public void addEntry(String name, InputStream inputStream)
+			throws IOException {
+
+			_binaryEntries.add(name);
+		}
+
+		public void addEntry(String name, String s) throws IOException {
+			_entries.put(name, s);
+		}
+
+		public void addEntry(String name, StringBuilder sb) throws IOException {
+			_entries.put(name, sb.toString());
+		}
+
+		public void close() {
+		}
+
+		public byte[] finish() throws IOException {
+			return new byte[0];
+		}
+
+		public List<String> getBinaryEntries() {
+			return _binaryEntries;
+		}
+
+		public List<String> getEntries() {
+			return new ArrayList<String>(_entries.keySet());
+		}
+
+		public byte[] getEntryAsByteArray(String name) {
+			return null;
+		}
+
+		public InputStream getEntryAsInputStream(String name) {
+			return null;
+		}
+
+		public String getEntryAsString(String name) {
+			return _entries.get(name);
+		}
+
+		public List<String> getFolderEntries(String path) {
+			return null;
+		}
+
+		public File getFile() {
+			return null;
+		}
+
+		public String getPath() {
+			return StringPool.BLANK;
+		}
+
+		private List<String> _binaryEntries = new ArrayList<String>();
+		private Map<String, String> _entries = new HashMap<String, String>();
+
+	}
+
+
+}

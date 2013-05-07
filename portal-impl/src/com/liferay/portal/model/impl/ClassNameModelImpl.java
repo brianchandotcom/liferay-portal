@@ -285,15 +285,18 @@ public class ClassNameModelImpl extends BaseModelImpl<ClassName>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof ClassName)) {
+		if (obj == null) {
 			return false;
 		}
 
-		ClassName className = (ClassName)obj;
+		ClassName className = null;
+
+		try {
+			className = (ClassName)obj;
+		}
+		catch (ClassCastException cce) {
+			return false;
+		}
 
 		long primaryKey = className.getPrimaryKey();
 

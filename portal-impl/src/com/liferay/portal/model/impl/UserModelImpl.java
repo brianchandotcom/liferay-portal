@@ -1294,15 +1294,18 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof User)) {
+		if (obj == null) {
 			return false;
 		}
 
-		User user = (User)obj;
+		User user = null;
+
+		try {
+			user = (User)obj;
+		}
+		catch (ClassCastException cce) {
+			return false;
+		}
 
 		long primaryKey = user.getPrimaryKey();
 

@@ -241,15 +241,18 @@ public class BrowserTrackerModelImpl extends BaseModelImpl<BrowserTracker>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof BrowserTracker)) {
+		if (obj == null) {
 			return false;
 		}
 
-		BrowserTracker browserTracker = (BrowserTracker)obj;
+		BrowserTracker browserTracker = null;
+
+		try {
+			browserTracker = (BrowserTracker)obj;
+		}
+		catch (ClassCastException cce) {
+			return false;
+		}
 
 		long primaryKey = browserTracker.getPrimaryKey();
 

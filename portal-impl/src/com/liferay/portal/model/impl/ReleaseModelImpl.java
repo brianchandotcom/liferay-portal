@@ -347,15 +347,18 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof Release)) {
+		if (obj == null) {
 			return false;
 		}
 
-		Release release = (Release)obj;
+		Release release = null;
+
+		try {
+			release = (Release)obj;
+		}
+		catch (ClassCastException cce) {
+			return false;
+		}
 
 		long primaryKey = release.getPrimaryKey();
 

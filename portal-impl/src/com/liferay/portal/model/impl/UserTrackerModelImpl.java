@@ -372,15 +372,18 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof UserTracker)) {
+		if (obj == null) {
 			return false;
 		}
 
-		UserTracker userTracker = (UserTracker)obj;
+		UserTracker userTracker = null;
+
+		try {
+			userTracker = (UserTracker)obj;
+		}
+		catch (ClassCastException cce) {
+			return false;
+		}
 
 		long primaryKey = userTracker.getPrimaryKey();
 

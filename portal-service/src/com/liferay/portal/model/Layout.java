@@ -52,13 +52,13 @@ public interface Layout extends LayoutModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public java.util.List<com.liferay.portal.model.Layout> getChildren()
-		throws com.liferay.portal.kernel.exception.SystemException;
-
 	public java.util.List<com.liferay.portal.model.Layout> getChildren(
 		com.liferay.portal.security.permission.PermissionChecker permissionChecker)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<com.liferay.portal.model.Layout> getChildren()
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.ColorScheme getColorScheme()
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -67,6 +67,9 @@ public interface Layout extends LayoutModel, PersistedModel {
 	public java.lang.String getCssText()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	public java.lang.String getFriendlyURLsXML()
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.Group getGroup()
 		throws com.liferay.portal.kernel.exception.PortalException,

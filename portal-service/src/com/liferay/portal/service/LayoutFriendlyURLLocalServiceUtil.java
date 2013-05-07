@@ -268,6 +268,64 @@ public class LayoutFriendlyURLLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
+	public static com.liferay.portal.model.LayoutFriendlyURL addLayoutFriendlyURL(
+		long companyId, long groupId, long plid, boolean privateLayout,
+		java.lang.String friendlyURL, java.lang.String languageId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addLayoutFriendlyURL(companyId, groupId, plid,
+			privateLayout, friendlyURL, languageId, serviceContext);
+	}
+
+	public static java.util.List<com.liferay.portal.model.LayoutFriendlyURL> addLayoutFriendlyURLs(
+		long companyId, long groupId, long plid, boolean privateLayout,
+		java.util.Map<java.util.Locale, java.lang.String> friendlyURLMap,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addLayoutFriendlyURLs(companyId, groupId, plid,
+			privateLayout, friendlyURLMap, serviceContext);
+	}
+
+	public static void deleteLayoutFriendlyURL(long plid,
+		java.lang.String languageId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteLayoutFriendlyURL(plid, languageId);
+	}
+
+	public static void deleteLayoutFriendlyURLsByPlid(long plid)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteLayoutFriendlyURLsByPlid(plid);
+	}
+
+	public static java.util.List<com.liferay.portal.model.LayoutFriendlyURL> getLayoutFriendlyURLsByPlid(
+		long plid) throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getLayoutFriendlyURLsByPlid(plid);
+	}
+
+	public static com.liferay.portal.model.LayoutFriendlyURL updateLayoutFriendlyURL(
+		long companyId, long groupId, long plid, boolean privateLayout,
+		java.lang.String friendlyURL, java.lang.String languageId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateLayoutFriendlyURL(companyId, groupId, plid,
+			privateLayout, friendlyURL, languageId, serviceContext);
+	}
+
+	public static java.util.List<com.liferay.portal.model.LayoutFriendlyURL> updateLayoutFriendlyURLs(
+		long companyId, long groupId, long plid, boolean privateLayout,
+		java.util.Map<java.util.Locale, java.lang.String> friendlyURLMap,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateLayoutFriendlyURLs(companyId, groupId, plid,
+			privateLayout, friendlyURLMap, serviceContext);
+	}
+
 	public static LayoutFriendlyURLLocalService getService() {
 		if (_service == null) {
 			_service = (LayoutFriendlyURLLocalService)PortalBeanLocatorUtil.locate(LayoutFriendlyURLLocalService.class.getName());

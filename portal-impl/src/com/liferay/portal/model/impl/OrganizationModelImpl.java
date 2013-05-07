@@ -619,15 +619,18 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof Organization)) {
+		if (obj == null) {
 			return false;
 		}
 
-		Organization organization = (Organization)obj;
+		Organization organization = null;
+
+		try {
+			organization = (Organization)obj;
+		}
+		catch (ClassCastException cce) {
+			return false;
+		}
 
 		long primaryKey = organization.getPrimaryKey();
 

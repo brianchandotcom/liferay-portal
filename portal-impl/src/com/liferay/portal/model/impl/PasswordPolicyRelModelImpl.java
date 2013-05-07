@@ -295,15 +295,18 @@ public class PasswordPolicyRelModelImpl extends BaseModelImpl<PasswordPolicyRel>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof PasswordPolicyRel)) {
+		if (obj == null) {
 			return false;
 		}
 
-		PasswordPolicyRel passwordPolicyRel = (PasswordPolicyRel)obj;
+		PasswordPolicyRel passwordPolicyRel = null;
+
+		try {
+			passwordPolicyRel = (PasswordPolicyRel)obj;
+		}
+		catch (ClassCastException cce) {
+			return false;
+		}
 
 		long primaryKey = passwordPolicyRel.getPrimaryKey();
 

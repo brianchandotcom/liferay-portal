@@ -303,15 +303,18 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof ServiceComponent)) {
+		if (obj == null) {
 			return false;
 		}
 
-		ServiceComponent serviceComponent = (ServiceComponent)obj;
+		ServiceComponent serviceComponent = null;
+
+		try {
+			serviceComponent = (ServiceComponent)obj;
+		}
+		catch (ClassCastException cce) {
+			return false;
+		}
 
 		long primaryKey = serviceComponent.getPrimaryKey();
 

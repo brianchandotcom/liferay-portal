@@ -569,15 +569,18 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof Account)) {
+		if (obj == null) {
 			return false;
 		}
 
-		Account account = (Account)obj;
+		Account account = null;
+
+		try {
+			account = (Account)obj;
+		}
+		catch (ClassCastException cce) {
+			return false;
+		}
 
 		long primaryKey = account.getPrimaryKey();
 

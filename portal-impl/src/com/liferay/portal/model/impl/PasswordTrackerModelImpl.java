@@ -285,15 +285,18 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof PasswordTracker)) {
+		if (obj == null) {
 			return false;
 		}
 
-		PasswordTracker passwordTracker = (PasswordTracker)obj;
+		PasswordTracker passwordTracker = null;
+
+		try {
+			passwordTracker = (PasswordTracker)obj;
+		}
+		catch (ClassCastException cce) {
+			return false;
+		}
 
 		long primaryKey = passwordTracker.getPrimaryKey();
 

@@ -313,15 +313,18 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof UserIdMapper)) {
+		if (obj == null) {
 			return false;
 		}
 
-		UserIdMapper userIdMapper = (UserIdMapper)obj;
+		UserIdMapper userIdMapper = null;
+
+		try {
+			userIdMapper = (UserIdMapper)obj;
+		}
+		catch (ClassCastException cce) {
+			return false;
+		}
 
 		long primaryKey = userIdMapper.getPrimaryKey();
 

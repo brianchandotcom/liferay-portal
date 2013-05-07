@@ -267,15 +267,18 @@ public class PortalPreferencesModelImpl extends BaseModelImpl<PortalPreferences>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof PortalPreferences)) {
+		if (obj == null) {
 			return false;
 		}
 
-		PortalPreferences portalPreferences = (PortalPreferences)obj;
+		PortalPreferences portalPreferences = null;
+
+		try {
+			portalPreferences = (PortalPreferences)obj;
+		}
+		catch (ClassCastException cce) {
+			return false;
+		}
 
 		long primaryKey = portalPreferences.getPrimaryKey();
 

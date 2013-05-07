@@ -522,15 +522,18 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof UserGroup)) {
+		if (obj == null) {
 			return false;
 		}
 
-		UserGroup userGroup = (UserGroup)obj;
+		UserGroup userGroup = null;
+
+		try {
+			userGroup = (UserGroup)obj;
+		}
+		catch (ClassCastException cce) {
+			return false;
+		}
 
 		long primaryKey = userGroup.getPrimaryKey();
 

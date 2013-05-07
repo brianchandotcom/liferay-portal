@@ -1495,16 +1495,16 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 		return _layout.getAncestors();
 	}
 
-	public java.util.List<com.liferay.portal.model.Layout> getChildren()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _layout.getChildren();
-	}
-
 	public java.util.List<com.liferay.portal.model.Layout> getChildren(
 		com.liferay.portal.security.permission.PermissionChecker permissionChecker)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _layout.getChildren(permissionChecker);
+	}
+
+	public java.util.List<com.liferay.portal.model.Layout> getChildren()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _layout.getChildren();
 	}
 
 	public com.liferay.portal.model.ColorScheme getColorScheme()
@@ -1517,6 +1517,11 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _layout.getCssText();
+	}
+
+	public java.lang.String getFriendlyURLsXML()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _layout.getFriendlyURLsXML();
 	}
 
 	public com.liferay.portal.model.Group getGroup()

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.ThreadUtil;
 import com.liferay.portal.test.AdviseWith;
 import com.liferay.portal.test.AspectJMockingNewJVMJUnitTestRunner;
 
+import java.lang.Thread.UncaughtExceptionHandler;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 
@@ -132,9 +133,22 @@ public class MailboxUtilTest {
 
 		ReceiptStubAdvice._throwException = true;
 
+		RecorderUncaughtExceptionHandler recorderUncaughtExceptionHandler =
+			new RecorderUncaughtExceptionHandler();
+
+		reaperThread.setUncaughtExceptionHandler(
+			recorderUncaughtExceptionHandler);
+
 		overdueMailQueue.offer(createReceiptStub());
 
 		reaperThread.join(1000);
+
+		Assert.assertSame(
+			reaperThread, recorderUncaughtExceptionHandler._thread);
+
+		Throwable throwable = recorderUncaughtExceptionHandler._throwable;
+
+		Assert.assertSame(IllegalStateException.class, throwable.getClass());
 
 		Assert.assertFalse(reaperThread.isAlive());
 	}
@@ -284,6 +298,20 @@ public class MailboxUtilTest {
 			MailboxUtil.class, "_overdueMailQueue");
 
 		return (BlockingQueue<Object>)overdueMailQueueField.get(null);
+	}
+
+	private static class RecorderUncaughtExceptionHandler
+		implements UncaughtExceptionHandler {
+
+		@Override
+		public void uncaughtException(Thread thread, Throwable throwable) {
+			_thread = thread;
+			_throwable = throwable;
+		}
+
+		private static volatile Thread _thread;
+		private static volatile Throwable _throwable;
+
 	}
 
 }

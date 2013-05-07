@@ -1198,6 +1198,7 @@
 		<indexer-class>com.liferay.portlet.usersadmin.util.OrganizationIndexer</indexer-class>
 		<indexer-class>com.liferay.portlet.usersadmin.util.UserIndexer</indexer-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
+		<portlet-data-handler-class>com.liferay.portlet.usersadmin.lar.UsersAdminPortletDataHandler</portlet-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.portlet.usersadmin.lar.OrganizationStagedModelDataHandler</staged-model-data-handler-class>
 		<control-panel-entry-category>portal</control-panel-entry-category>
 		<control-panel-entry-weight>1.0</control-panel-entry-weight>

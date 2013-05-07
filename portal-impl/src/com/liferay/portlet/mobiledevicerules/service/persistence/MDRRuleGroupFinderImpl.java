@@ -99,7 +99,7 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 
 			String cacheKey = _buildCacheKey(COUNT_BY_G_N, params);
 
-			String sql = _countByG_NCache.get(cacheKey);
+			String sql = _countByG_NSQLCache.get(cacheKey);
 
 			if (sql == null) {
 				String countByG_N = CustomSQLUtil.get(COUNT_BY_G_N);
@@ -113,7 +113,7 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 
 				sql = sb.toString();
 
-				_countByG_NCache.put(cacheKey, sql);
+				_countByG_NSQLCache.put(cacheKey, sql);
 			}
 
 			sql = CustomSQLUtil.replaceKeywords(
@@ -208,7 +208,7 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 
 			String cacheKey = _buildCacheKey(FIND_BY_G_N, params);
 
-			String sql = _findByG_NCache.get(cacheKey);
+			String sql = _findByG_NSQLCache.get(cacheKey);
 
 			if (sql == null) {
 				String findByG_N = CustomSQLUtil.get(FIND_BY_G_N);
@@ -222,7 +222,7 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 
 				sql = sb.toString();
 
-				_findByG_NCache.put(cacheKey, sql);
+				_findByG_NSQLCache.put(cacheKey, sql);
 			}
 
 			sql = CustomSQLUtil.replaceKeywords(
@@ -343,11 +343,11 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 		return sb.toString();
 	}
 
-	private Map<String, String> _countByG_NCache =
+	private Map<String, String> _countByG_NSQLCache =
 		new ConcurrentHashMap<String, String>();
 	private LinkedHashMap<String, Object> _emptyLinkedHashMap =
 		new LinkedHashMap<String, Object>(0);
-	private Map<String, String> _findByG_NCache =
+	private Map<String, String> _findByG_NSQLCache =
 		new ConcurrentHashMap<String, String>();
 	private Map<String, String> _replaceWhereSQLCache =
 		new ConcurrentHashMap<String, String>();

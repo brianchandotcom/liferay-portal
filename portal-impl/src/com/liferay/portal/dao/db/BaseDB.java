@@ -269,7 +269,7 @@ public abstract class BaseDB implements DB {
 					s.executeUpdate(sql);
 				}
 				catch (SQLException sqle) {
-					throw sqle;
+					handleSQLException(sql, sqle);
 				}
 			}
 		}
@@ -785,6 +785,46 @@ public abstract class BaseDB implements DB {
 	}
 
 	protected abstract String[] getTemplate();
+
+	protected void handleSQLException(String sql, SQLException sqle)
+		throws SQLException {
+
+		if (_log.isDebugEnabled()) {
+			StringBundler sb = new StringBundler(18);
+
+			sb.append("\n------------[ SQLException details ]------------\n");
+			sb.append("Failing SQL:\n");
+
+			sb.append(sql);
+			sb.append(StringPool.NEW_LINE);
+			sb.append(StringPool.NEW_LINE);
+
+			sb.append("Standard SQLSTATE: ");
+			sb.append(sqle.getSQLState());
+			sb.append(StringPool.NEW_LINE);
+
+			sb.append("Vendor type: ");
+			sb.append(getType().toUpperCase());
+			sb.append(StringPool.NEW_LINE);
+
+			sb.append("Vendor error code: ");
+			sb.append(sqle.getErrorCode());
+			sb.append(StringPool.NEW_LINE);
+
+			sb.append("Vendor error message: ");
+			sb.append(sqle.getMessage());
+
+			if (!sqle.getMessage().endsWith(StringPool.NEW_LINE)) {
+				sb.append(StringPool.NEW_LINE);
+			}
+
+			sb.append("------------[ SQLException details ]------------");
+
+			_log.debug(sb.toString());
+		}
+
+		throw sqle;
+	}
 
 	protected String readFile(String fileName) throws IOException {
 		if (FileUtil.exists(fileName)) {

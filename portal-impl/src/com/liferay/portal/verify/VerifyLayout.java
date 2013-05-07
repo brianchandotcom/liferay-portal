@@ -59,17 +59,20 @@ public class VerifyLayout extends VerifyProcess {
 	}
 
 	protected void verifyUuid(String tableName) throws Exception {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(10);
 
 		sb.append("update ");
 		sb.append(tableName);
-		sb.append(" inner join Layout on ");
-		sb.append(tableName);
-		sb.append(".layoutUuid = Layout.uuid_ set ");
-		sb.append(tableName);
-		sb.append(".layoutUuid = Layout.sourcePrototypeLayoutUuid where ");
-		sb.append("Layout.sourcePrototypeLayoutUuid != '' and ");
-		sb.append("Layout.uuid_ != Layout.sourcePrototypeLayoutUuid");
+		sb.append(" target ");
+
+		sb.append("set layoutUuid = ");
+		sb.append("(select sourcePrototypeLayoutUuid from Layout where ");
+		sb.append("Layout.uuid_ = target.layoutUuid) ");
+
+		sb.append("where exists (select 1 from Layout where ");
+		sb.append("Layout.uuid_ = target.layoutUuid and ");
+		sb.append("Layout.uuid_ != Layout.sourcePrototypeLayoutUuid and ");
+		sb.append("Layout.sourcePrototypeLayoutUuid != '')");
 
 		runSQL(sb.toString());
 	}

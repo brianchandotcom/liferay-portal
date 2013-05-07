@@ -135,7 +135,8 @@ public class I18nFilter extends BasePortalFilter {
 			}
 		}
 		else if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 2) {
-			i18nLanguageId = guestLanguageId;
+			i18nLanguageId =
+				LocaleUtil.toLanguageId(PortalUtil.getLocale(request));
 		}
 
 		if (i18nLanguageId == null) {

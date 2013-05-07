@@ -34,10 +34,12 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.persistence.RepositoryUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -127,7 +129,12 @@ public class FileEntryStagedModelDataHandler
 				fileEntryElement, fileEntryPath, fileEntry,
 				DLPortletDataHandler.NAMESPACE);
 
-			return;
+			if (repository.getClassNameId() !=
+					PortalUtil.getClassNameId(
+						LiferayRepository.class.getName())) {
+
+				return;
+			}
 		}
 
 		FileVersion fileVersion = fileEntry.getFileVersion();
@@ -246,9 +253,8 @@ public class FileEntryStagedModelDataHandler
 				portletDataContext, referenceStagedModel);
 		}
 
-		if ((fileEntry.getFolderId() !=
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) &&
-			(fileEntry.getFolderId() == fileEntry.getFolderId())) {
+		if (fileEntry.getFolderId() !=
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
 			String folderPath = ExportImportPathUtil.getModelPath(
 				portletDataContext, Folder.class.getName(),

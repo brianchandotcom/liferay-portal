@@ -186,6 +186,19 @@ public class PasswordPolicyLocalServiceImpl
 		}
 	}
 
+	public void deleteNonDefaultPasswordPolicies(long companyId)
+		throws PortalException, SystemException {
+
+		List<PasswordPolicy> passwordPolicies =
+			passwordPolicyPersistence.findByCompanyId(companyId);
+
+		for (PasswordPolicy passwordPolicy : passwordPolicies) {
+			if (!passwordPolicy.isDefaultPolicy()) {
+				deletePasswordPolicy(passwordPolicy);
+			}
+		}
+	}
+
 	@Override
 	public PasswordPolicy deletePasswordPolicy(long passwordPolicyId)
 		throws PortalException, SystemException {

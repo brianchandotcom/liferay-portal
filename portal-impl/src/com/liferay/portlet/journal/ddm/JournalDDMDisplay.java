@@ -16,6 +16,7 @@ package com.liferay.portlet.journal.ddm;
 
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -54,6 +55,11 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 	}
 
 	@Override
+	public Set<String> getTemplateLanguageTypes() {
+		return _templateLanguageTypes;
+	}
+
+	@Override
 	public String getViewTemplatesBackURL(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse, long classPK)
@@ -76,6 +82,11 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 	public boolean isShowStructureSelector() {
 		return true;
 	}
+
+	private static Set<String> _templateLanguageTypes =
+		SetUtil.fromArray(new String[] {
+			TemplateConstants.LANG_TYPE_FTL, TemplateConstants.LANG_TYPE_VM,
+			TemplateConstants.LANG_TYPE_XSL});
 
 	private static Set<String> _viewTemplateExcludedColumnNames =
 		SetUtil.fromArray(new String[] {"mode"});

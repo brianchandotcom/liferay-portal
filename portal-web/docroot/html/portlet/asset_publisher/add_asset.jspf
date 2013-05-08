@@ -85,7 +85,7 @@ addPortletURLs = AssetUtil.getAddPortletURLs(liferayPortletRequest, liferayPortl
 						addPortletURLString = HttpUtil.addParameter(addPortletURLString, "layoutUuid", layout.getUuid());
 					}
 
-					String taglibEditURL = "javascript:Liferay.Util.openWindow({dialog: {align: Liferay.Util.Window.ALIGN_CENTER, width: 960}, id: '" + liferayPortletResponse.getNamespace() + "editAsset', title: '" + HtmlUtil.escapeJS(LanguageUtil.format(pageContext, "new-x", HtmlUtil.escape(message))) + "', uri: '" + HtmlUtil.escapeJS(addPortletURLString) + "'});";
+					String taglibEditURL = "javascript:Liferay.Util.openWindow({id: '" + liferayPortletResponse.getNamespace() + "editAsset', title: '" + HtmlUtil.escapeJS(LanguageUtil.format(pageContext, "new-x", HtmlUtil.escape(message))) + "', uri: '" + HtmlUtil.escapeJS(addPortletURLString) + "'});";
 				%>
 
 					<c:choose>

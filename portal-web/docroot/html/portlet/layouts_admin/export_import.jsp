@@ -187,7 +187,7 @@ String[] uploadedFiles = LayoutServiceUtil.getTempFileEntryNames(groupId, Import
 	</aui:form>
 </div>
 
-<aui:script use="aui-base,aui-loading-mask-deprecated,json-stringify,aui-io-plugin">
+<aui:script use="aui-base,aui-loading-mask-deprecated,json-stringify,aui-io-plugin-deprecated">
 	var form = A.one('#<portlet:namespace />fm1');
 
 	form.on(

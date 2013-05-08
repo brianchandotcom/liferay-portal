@@ -25,12 +25,7 @@
 </tr>
 <tr>
 	<td>ADD_ENTRY_BUTTON</td>
-	<td>//input[@value='Add Entry']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RESULTS</td>
-	<td>//div[@class='search-results']</td>
+	<td>//button[contains(.,'Add Entry')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -51,7 +46,7 @@
 </tr>
 <tr>
 	<td>ENTRY_TABLE_ACTIONS_1</td>
-	<td>xpath=(//td[6]/span[@title='Actions']/ul/li/strong/a/span)[1]</td>
+	<td>xpath=(//td[6]/div/a[@title='Actions'])[1]</td>
 	<td></td>
 </tr>
 </tbody>

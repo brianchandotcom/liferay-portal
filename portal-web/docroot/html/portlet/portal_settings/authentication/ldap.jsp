@@ -107,7 +107,7 @@ if (ldapAuthEnabled && (ldapServerIds.length <= 0) && Validator.isNull(PrefsProp
 <h3><liferay-ui:message key="ldap-servers" /></h3>
 
 <c:if test="<%= ldapAuthEnabled && (ldapServerIds.length <= 0) %>">
-	<div class="portlet-msg-info">
+	<div class="alert alert-info">
 		<liferay-ui:message key="default-ldap-server-settings-are-in-use-please-add-an-ldap-server-to-override-the-default-settings" />
 	</div>
 </c:if>
@@ -130,39 +130,37 @@ if (ldapAuthEnabled && (ldapServerIds.length <= 0) && Validator.isNull(PrefsProp
 	<c:if test="<%= ldapServerIds.length > 0 %>">
 		<br /><br />
 
-		<div class="results-grid ldap-servers">
-			<table class="taglib-search-iterator">
-			<tr class="results-header">
-				<th>
+		<div class="searchcontainer-content ldap-servers">
+			<table class="table table-bordered table-hover table-striped">
+			<thead class="table-columns">
+			<tr>
+				<td class="table-header">
 					<liferay-ui:message key="ldap-server-id" />
 				</th>
-				<th>
+				<td class="table-header">
 					<liferay-ui:message key="ldap-server-name" />
 				</th>
-				<th></th>
+				<td class="table-header"></th>
 			</tr>
+			</thead>
+
+			<tbody>
 
 			<%
 			for (int i = 0; i < ldapServerIds.length; i++) {
 				long ldapServerId = ldapServerIds[i];
 
 				String ldapServerName = PrefsPropsUtil.getString(company.getCompanyId(), "ldap.server.name." + ldapServerId);
-
-				String className = "portlet-section-body results-row";
-
-				if (MathUtil.isEven(i)) {
-					className = "portlet-section-alternate results-row alt";
-				}
 			%>
 
-				<tr class="<%= className %>" data-ldapServerId="<%= ldapServerId %>">
-					<td>
+				<tr data-ldapServerId="<%= ldapServerId %>">
+					<td class="table-cell">
 						<%= ldapServerId %>
 					</td>
-					<td>
+					<td class="table-cell">
 						<%= ldapServerName %>
 					</td>
-					<td align="right">
+					<td align="right" class="table-cell">
 						<div class="control">
 							<c:if test="<%= ldapServerIds.length > 1 %>">
 
@@ -214,6 +212,7 @@ if (ldapAuthEnabled && (ldapServerIds.length <= 0) && Validator.isNull(PrefsProp
 			}
 			%>
 
+			</tbody>
 			</table>
 		</div>
 	</c:if>
@@ -320,7 +319,7 @@ if (ldapAuthEnabled && (ldapServerIds.length <= 0) && Validator.isNull(PrefsProp
 
 			var ldapServerIds = [];
 
-			A.all('.ldap-servers .results-row').each(
+			A.all('.ldap-servers .table-data tr').each(
 				function(item, index, collection) {
 					ldapServerIds.push(item.getAttribute('data-ldapServerId'));
 				}

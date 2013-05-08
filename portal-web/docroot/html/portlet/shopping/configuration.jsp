@@ -66,13 +66,13 @@ else if (tabs3.equals("shipping-email")) {
 
 	<c:choose>
 		<c:when test='<%= tabs2.equals("payment-settings") %>'>
-			<div class="portlet-msg-info">
+			<div class="alert alert-info">
 				<liferay-ui:message key="enter-a-paypal-email-address-to-send-all-payments-to-paypal" />
 
 				<liferay-ui:message arguments='<%= "<strong>" + themeDisplay.getPortalURL() + themeDisplay.getPathMain() + "/shopping/notify</strong>" %>' key="go-to-paypal-and-set-up-ipn-to-post-to-x" translateArguments="<%= false %>" />
 			</div>
 
-			<div class="portlet-msg-info">
+			<div class="alert alert-info">
 				<liferay-ui:message key="enter-a-blank-paypal-email-address-to-disable-paypal" />
 			</div>
 
@@ -149,7 +149,7 @@ else if (tabs3.equals("shipping-email")) {
 			</aui:fieldset>
 		</c:when>
 		<c:when test='<%= tabs2.equals("shipping-calculation") %>'>
-			<div class="portlet-msg-info">
+			<div class="alert alert-info">
 				<liferay-ui:message key="calculate-a-flat-shipping-amount-based-on-the-total-amount-of-the-purchase" /> <span style="font-size: xx-small;">-- <%= LanguageUtil.get(pageContext, "or").toUpperCase() %> --</span> <liferay-ui:message key="calculate-the-shipping-based-on-a-percentage-of-the-total-amount-of-the-purchase" />
 			</div>
 
@@ -189,7 +189,7 @@ else if (tabs3.equals("shipping-email")) {
 			</aui:fieldset>
 		</c:when>
 		<c:when test='<%= tabs2.equals("insurance-calculation") %>'>
-			<div class="portlet-msg-info">
+			<div class="alert alert-info">
 				<liferay-ui:message key="calculate-a-flat-insurance-amount-based-on-the-total-amount-of-the-purchase" /> <span style="font-size: xx-small;">-- <%= LanguageUtil.get(pageContext, "or").toUpperCase() %> --</span> <liferay-ui:message key="calculate-the-insurance-based-on-a-percentage-of-the-total-amount-of-the-purchase" />
 			</div>
 

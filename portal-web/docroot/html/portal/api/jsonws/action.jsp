@@ -275,7 +275,7 @@ String signature = ParamUtil.getString(request, "signature");
 			}
 			%>
 
-			<div class="aui-helper-hidden lfr-api-results" id="serviceResults">
+			<div class="hide lfr-api-results" id="serviceResults">
 				<liferay-ui:tabs
 					names="result,javascript-example,curl-example,url-example"
 					refresh="<%= false %>"
@@ -349,7 +349,7 @@ String signature = ParamUtil.getString(request, "signature");
 
 							<aui:input id='<%= "fieldFalse" + i %>' inlineField="<%= true %>" label="false" name="<%= methodParameterName %>" type="radio" value="<%= false %>" />
 
-							<span class="aui-suffix"><%= methodParameterTypeClassName %></span>
+							<span class="suffix"><%= methodParameterTypeClassName %></span>
 						</aui:field-wrapper>
 
 					<%
@@ -392,7 +392,7 @@ String signature = ParamUtil.getString(request, "signature");
 			</aui:form>
 		</div>
 
-		<aui:script use="aui-io,aui-template,querystring-parse">
+		<aui:script use="aui-io,aui-template-deprecated,querystring-parse">
 			var REGEX_QUERY_STRING = new RegExp('([^?=&]+)(?:=([^&]*))?', 'g');
 
 			var form = A.one('#execute');
@@ -548,7 +548,7 @@ String signature = ParamUtil.getString(request, "signature");
 			);
 		</aui:script>
 
-<textarea class="aui-helper-hidden" id="scriptTpl">
+<textarea class="hide" id="scriptTpl">
 Liferay.Service(
   '<%= invocationPath %>',
   <tpl if="data.length">{
@@ -561,19 +561,19 @@ Liferay.Service(
 );
 </textarea>
 
-<textarea class="aui-helper-hidden" id="curlTpl">
+<textarea class="hide" id="curlTpl">
 curl <%= themeDisplay.getPortalURL() + jsonWSPath + invocationPath %> \\
   -u test@liferay.com:test <tpl if="data.length">\\
   <tpl for="data">-d {key}={[this.formatDataType(values.key, values.value)]} <tpl if="!$last">\\
   </tpl></tpl></tpl>
 </textarea>
 
-<textarea class="aui-helper-hidden" id="urlTpl">
+<textarea class="hide" id="urlTpl">
 <%= themeDisplay.getPortalURL() + jsonWSPath + invocationPath %><tpl if="data.length">/<tpl for="data">{key:this.toURIParam}<tpl if="value.length">/{value}</tpl><tpl if="!$last">/</tpl></tpl></tpl><tpl if="extraData.length">?<tpl for="extraData">{key:this.toURIParam}={value}<tpl if="!$last">&amp;</tpl></tpl></tpl>
 </textarea>
 	</c:when>
 	<c:otherwise>
-		<div class="portlet-msg-info">
+		<div class="alert alert-info">
 			<liferay-ui:message key="please-select-a-method-on-the-left" />
 		</div>
 	</c:otherwise>

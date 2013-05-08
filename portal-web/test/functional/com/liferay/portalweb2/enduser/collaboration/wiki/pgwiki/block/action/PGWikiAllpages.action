@@ -1,16 +1,25 @@
 <definition>
 	<command name="assertTextEquals">
+		<case locator-key1="SUCCESS_MESSAGE">
+			<execute function="AssertTextEquals#assertText" value1="Your request completed successfully." />
+		</case>
 		<case locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN">
 			<execute function="AssertTextEquals#assertText" value1="The selected item was moved to the Recycle Bin. Undo" />
 		</case>
 	</command>
 
 	<command name="click">
+		<case locator-key1="ADD_PAGE_BUTTON">
+			<execute function="Click#valueClickAtAndWait" value1="Add Page" />
+		</case>
 		<case locator-key1="WIKI_PAGE_MENULIST_RECYCLE_BIN">
 			<execute function="Click#textClickAtAndWait" value1="Move to the Recycle Bin" />
 		</case>
 		<case comparator="startsWith" locator-key1="WIKI_PAGE_TABLE_ACTIONS_">
 			<execute function="Click#pauseTextClickAt" value1="Actions" />
+		</case>
+		<case comparator="startsWith" locator-key1="WIKI_PAGE_TABLE_PAGE_">
+			<execute function="Click#clickAtAndWait" />
 		</case>
 	</command>
 </definition>

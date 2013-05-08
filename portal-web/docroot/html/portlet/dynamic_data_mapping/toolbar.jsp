@@ -22,25 +22,25 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
 %>
 
-<div class="lfr-portlet-toolbar">
-	<portlet:renderURL var="viewStructuresURL">
-		<portlet:param name="struts_action" value="/dynamic_data_mapping/view" />
-		<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-	</portlet:renderURL>
-
-	<span class="lfr-toolbar-button view-button <%= toolbarItem.equals("view-all") ? "current" : StringPool.BLANK %>">
-		<a href="<%= viewStructuresURL %>"><liferay-ui:message key="view-all" /></a>
-	</span>
-
-	<c:if test="<%= DDMPermission.contains(permissionChecker, scopeGroupId, ddmResource, ActionKeys.ADD_STRUCTURE) %>">
-		<portlet:renderURL var="addStructureURL">
-			<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_structure" />
-			<portlet:param name="redirect" value="<%= viewStructuresURL %>" />
+<aui:nav-bar>
+	<aui:nav>
+		<portlet:renderURL var="viewStructuresURL">
+			<portlet:param name="struts_action" value="/dynamic_data_mapping/view" />
 			<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 		</portlet:renderURL>
 
-		<span class="lfr-toolbar-button add-button <%= toolbarItem.equals("add") ? "current" : StringPool.BLANK %>">
-			<a href="<%= addStructureURL %>"><liferay-ui:message key="add" /></a>
-		</span>
-	</c:if>
-</div>
+		<aui:nav-item href="<%= viewStructuresURL %>" label="view-all" selected='<%= toolbarItem.equals("view-all") %>' />
+
+		<c:if test="<%= DDMPermission.contains(permissionChecker, scopeGroupId, ddmResource, ActionKeys.ADD_STRUCTURE) %>">
+			<portlet:renderURL var="addStructureURL">
+				<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_structure" />
+				<portlet:param name="redirect" value="<%= viewStructuresURL %>" />
+				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+			</portlet:renderURL>
+
+			<aui:nav-item href="<%= addStructureURL %>" iconClass="icon-plus" label="add" selected='<%= toolbarItem.equals("add") %>' />
+		</c:if>
+	</aui:nav>
+
+	<aui:nav-bar-search cssClass="pull-right" file="/html/portlet/dynamic_data_mapping/structure_search.jsp" />
+</aui:nav-bar>

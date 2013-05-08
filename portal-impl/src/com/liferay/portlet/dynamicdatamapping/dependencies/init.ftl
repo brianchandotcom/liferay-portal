@@ -9,7 +9,7 @@
 <#assign cssClass = "">
 
 <#if fieldStructure.width??>
-	<#assign cssClass = "aui-w" + fieldStructure.width>
+	<#assign cssClass = "w" + fieldStructure.width>
 </#if>
 
 <#-- Repeatable -->

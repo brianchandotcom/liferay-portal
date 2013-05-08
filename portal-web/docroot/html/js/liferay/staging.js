@@ -30,6 +30,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-dialog', 'aui-io-plugin']
+		requires: ['aui-io-plugin-deprecated', 'liferay-util-window']
 	}
 );

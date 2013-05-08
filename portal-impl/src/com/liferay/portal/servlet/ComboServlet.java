@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -42,6 +43,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -80,24 +82,28 @@ public class ComboServlet extends HttpServlet {
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		String contextPath = PortalUtil.getPathContext();
+		Set<String> modulePathsSet = new LinkedHashSet<String>();
 
-		String[] modulePaths = request.getParameterValues("m");
+		Enumeration<String> enu = request.getParameterNames();
 
-		if ((modulePaths == null) || (modulePaths.length == 0)) {
+		while (enu.hasMoreElements()) {
+			String name = enu.nextElement();
+
+			if (_protectedParameters.contains(name)) {
+				continue;
+			}
+
+			modulePathsSet.add(name);
+		}
+
+		if (modulePathsSet.size() == 0) {
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
 
 			return;
 		}
 
-		Set<String> modulePathsSet = new LinkedHashSet<String>(
-			modulePaths.length);
-
-		for (String path : modulePaths) {
-			modulePathsSet.add(path);
-		}
-
-		modulePaths = modulePathsSet.toArray(new String[modulePathsSet.size()]);
+		String[] modulePaths = modulePathsSet.toArray(
+			new String[modulePathsSet.size()]);
 
 		String modulePathsString = null;
 
@@ -117,8 +123,6 @@ public class ComboServlet extends HttpServlet {
 			ServletContext servletContext = getServletContext();
 
 			String rootPath = ServletContextUtil.getRootPath(servletContext);
-
-			String p = ParamUtil.getString(request, "p");
 
 			String minifierType = ParamUtil.getString(request, "minifierType");
 
@@ -152,7 +156,8 @@ public class ComboServlet extends HttpServlet {
 
 				if (Validator.isNotNull(modulePath)) {
 					modulePath = StringUtil.replaceFirst(
-						p.concat(modulePath), contextPath, StringPool.BLANK);
+						modulePath, PortalUtil.getPathContext(),
+						StringPool.BLANK);
 
 					URL url = getResourceURL(
 						servletContext, rootPath, modulePath);
@@ -343,6 +348,8 @@ public class ComboServlet extends HttpServlet {
 		SingleVMPoolUtil.getCache(ComboServlet.class.getName());
 	private PortalCache<String, FileContentBag> _fileContentBagPortalCache =
 		SingleVMPoolUtil.getCache(FileContentBag.class.getName());
+	private Set<String> _protectedParameters = SetUtil.fromArray(
+		new String[] {"b", "browserId", "minifierType", "languageId", "t"});
 
 	private static class FileContentBag implements Serializable {
 

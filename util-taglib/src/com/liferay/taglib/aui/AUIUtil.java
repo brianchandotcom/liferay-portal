@@ -25,67 +25,41 @@ import java.util.Map;
  */
 public class AUIUtil {
 
-	public static final String BUTTON_INPUT_PREFIX = "aui-button-input";
+	/**
+	 * @deprecated As of 6.2.0
+	 */
+	public static final String BUTTON_INPUT_PREFIX = "btn-input";
 
-	public static final String BUTTON_PREFIX = "aui-button";
+	public static final String BUTTON_PREFIX = "btn";
 
-	public static final String FIELD_PREFIX = "aui-field";
+	public static final String FIELD_PREFIX = "field";
 
-	public static final String INPUT_PREFIX = "aui-field-input";
+	/**
+	 * @deprecated As of 6.2.0
+	 */
+	public static final String INPUT_PREFIX = "field-input";
 
-	public static final String LABEL_CHOICE_PREFIX = "aui-choice-label";
+	/**
+	 * @deprecated As of 6.2.0
+	 */
+	public static final String LABEL_CHOICE_PREFIX = "choice-label";
 
-	public static final String LABEL_FIELD_PREFIX = "aui-field-label";
+	/**
+	 * @deprecated As of 6.2.0
+	 */
+	public static final String LABEL_FIELD_PREFIX = "field-label";
 
 	public static String buildCss(
-		String prefix, String baseTypeCss, boolean inlineField,
-		boolean disabled, boolean choiceField, boolean first, boolean last,
+		String prefix, boolean disabled, boolean first, boolean last,
 		String cssClass) {
 
 		StringBundler sb = new StringBundler();
 
 		sb.append(prefix);
 
-		if (choiceField) {
-			sb.append(StringPool.SPACE);
-			sb.append(prefix);
-			sb.append("-choice");
-		}
-		else if (baseTypeCss.equals("button")) {
-		}
-		else if (baseTypeCss.equals("password") ||
-				 baseTypeCss.equals("string") ||
-				 baseTypeCss.equals("textarea")) {
-
-			sb.append(StringPool.SPACE);
-			sb.append(prefix);
-			sb.append("-text");
-		}
-		else if (baseTypeCss.equals("select")) {
-			sb.append(StringPool.SPACE);
-			sb.append(prefix);
-			sb.append("-select");
-			sb.append(StringPool.SPACE);
-			sb.append(prefix);
-			sb.append("-menu");
-		}
-		else {
-			sb.append(StringPool.SPACE);
-			sb.append(prefix);
-			sb.append("-");
-			sb.append(baseTypeCss);
-		}
-
-		if (inlineField) {
-			sb.append(StringPool.SPACE);
-			sb.append(prefix);
-			sb.append("-inline");
-		}
-
 		if (disabled) {
 			sb.append(StringPool.SPACE);
-			sb.append(prefix);
-			sb.append("-disabled");
+			sb.append("disabled");
 		}
 
 		if (first) {
@@ -105,6 +79,17 @@ public class AUIUtil {
 		}
 
 		return sb.toString();
+	}
+
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #buildCss(String, boolean,
+	 *             boolean, boolean, String)}
+	 */
+	public static String buildCss(
+			String prefix, String baseTypeCss, boolean disabled, boolean first,
+			boolean last, String cssClass) {
+
+		return buildCss(prefix, disabled, first, last, cssClass);
 	}
 
 	public static String buildData(Map<String, Object> data) {
@@ -128,40 +113,45 @@ public class AUIUtil {
 		return sb.toString();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #buildLabel(String, boolean,
-	 *             String, boolean)}
-	 */
 	public static String buildLabel(
-		String inlineLabel, boolean showForLabel, String forLabel) {
+		String baseType, boolean inlineField, boolean showForLabel,
+		String forLabel) {
 
-		return buildLabel(inlineLabel, showForLabel, forLabel, false);
+		StringBundler sb = new StringBundler(4);
+
+		if (baseType.equals("boolean")) {
+			baseType = "checkbox";
+		}
+
+		if (baseType.equals("checkbox") || baseType.equals("radio")) {
+			sb.append("class=\"" + baseType);
+
+			if (inlineField) {
+				sb.append(" inline");
+			}
+
+			sb.append("\" ");
+		}
+		else {
+			sb.append("class=\"control-label\" ");
+		}
+
+		if (showForLabel) {
+			sb.append("for=\"" + forLabel + "\"");
+		}
+
+		return sb.toString();
 	}
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #buildLabel(String, boolean,
+	 *             String)}
+	 */
 	public static String buildLabel(
 		String inlineLabel, boolean showForLabel, String forLabel,
 		boolean choiceField) {
 
-		StringBundler sb = new StringBundler(4);
-
-		if (choiceField) {
-			sb.append("class=\"" + LABEL_CHOICE_PREFIX);
-		}
-		else {
-			sb.append("class=\"" + LABEL_FIELD_PREFIX);
-
-			if (Validator.isNotNull(inlineLabel)) {
-				sb.append("-inline-label");
-			}
-		}
-
-		sb.append("\"");
-
-		if (showForLabel) {
-			sb.append(" for=\"" + forLabel + "\"");
-		}
-
-		return sb.toString();
+		return buildLabel(StringPool.BLANK, false, showForLabel, forLabel);
 	}
 
 }

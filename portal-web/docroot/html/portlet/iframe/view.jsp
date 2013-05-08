@@ -51,7 +51,7 @@ if (windowState.equals(WindowState.MAXIMIZED)) {
 
 <c:choose>
 	<c:when test="<%= auth && Validator.isNull(userName) && !themeDisplay.isSignedIn() %>">
-		<div class="portlet-msg-info">
+		<div class="alert alert-info">
 			<a href="<%= themeDisplay.getURLSignIn() %>" target="_top"><liferay-ui:message key="please-sign-in-to-access-this-application" /></a>
 		</div>
 	</c:when>
@@ -167,12 +167,12 @@ if (windowState.equals(WindowState.MAXIMIZED)) {
 	<portlet:namespace />init();
 </aui:script>
 
-<aui:script use="aui-resize-iframe">
+<aui:script use="aui-autosize-iframe">
 	var iframe = A.one('#<portlet:namespace />iframe');
 
 	if (iframe) {
 		iframe.plug(
-			A.Plugin.ResizeIframe,
+			A.Plugin.AutosizeIframe,
 			{
 				monitorHeight: <%= resizeAutomatically %>
 			}
@@ -181,7 +181,7 @@ if (windowState.equals(WindowState.MAXIMIZED)) {
 		iframe.on(
 			'load',
 			function() {
-				var height = A.Plugin.ResizeIframe.getContentHeight(iframe);
+				var height = A.Plugin.AutosizeIframe.getContentHeight(iframe);
 
 				if (height == null) {
 					height = '<%= heightNormal %>';
@@ -192,7 +192,7 @@ if (windowState.equals(WindowState.MAXIMIZED)) {
 
 					iframe.setStyle('height', height);
 
-					iframe.resizeiframe.set('monitorHeight', false);
+					iframe.autosizeiframe.set('monitorHeight', false);
 				}
 			}
 		);

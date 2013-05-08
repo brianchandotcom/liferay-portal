@@ -20,7 +20,7 @@
 renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 %>
 
-<div class="portlet-configuration portlet-msg-info">
+<div class="alert alert-info portlet-configuration">
 	<a href="<%= portletDisplay.getURLConfiguration() %>" onClick="<%= portletDisplay.getURLConfigurationJS() %>">
 		<liferay-ui:message key="please-configure-this-portlet-to-make-it-visible-to-all-users" />
 	</a>

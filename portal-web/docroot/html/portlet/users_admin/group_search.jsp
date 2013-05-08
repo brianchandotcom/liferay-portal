@@ -18,7 +18,6 @@
 
 <%
 GroupSearch searchContainer = (GroupSearch)request.getAttribute("liferay-ui:search:searchContainer");
-boolean showAddButton = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:search:showAddButton"));
 
 GroupDisplayTerms displayTerms = (GroupDisplayTerms)searchContainer.getDisplayTerms();
 %>
@@ -34,22 +33,3 @@ GroupDisplayTerms displayTerms = (GroupDisplayTerms)searchContainer.getDisplayTe
 		<aui:input name="<%= displayTerms.DESCRIPTION %>" size="30" value="<%= displayTerms.getDescription() %>" />
 	</aui:fieldset>
 </liferay-ui:search-toggle>
-
-<br />
-
-<div>
-	<c:if test="<%= showAddButton && PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_COMMUNITY) %>">
-		<aui:button onClick='<%= renderResponse.getNamespace() + "addGroup();" %>' value="add-site" />
-	</c:if>
-</div>
-
-<aui:script>
-	function <portlet:namespace />addGroup() {
-		document.<portlet:namespace />fm.method = 'post';
-		submitForm(document.<portlet:namespace />fm, '<portlet:renderURL><portlet:param name="struts_action" value="/sites_admin/edit_site" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>');
-	}
-
-	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
-		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace /><%= displayTerms.NAME %>);
-	</c:if>
-</aui:script>

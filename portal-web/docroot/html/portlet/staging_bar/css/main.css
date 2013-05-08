@@ -10,7 +10,7 @@
 	.manage-layout-branches-tab {
 		margin-left: 1em;
 
-		&.aui-tab-label {
+		&.tab-label {
 			margin-left: 0;
 		}
 	}
@@ -21,7 +21,7 @@
 		font-size: 1.3em;
 		margin-bottom: 0;
 
-		.aui-tab, .aui-tab-content {
+		.tab, .tab-content {
 			background: none;
 			border-width: 0;
 			height: 28px;
@@ -29,10 +29,10 @@
 			text-align: center;
 		}
 
-		.aui-tab-active .aui-tab-content {
+		.tab-active .tab-content {
 			background-color: #333;
 
-			.aui-tab-label {
+			.tab-label {
 				text-shadow: -1px -1px 0 #000;
 			}
 		}
@@ -49,11 +49,11 @@
 		font-size: 1.2em;
 		margin-bottom: 0;
 
-		.aui-tab, .aui-tab-content {
+		.tab, .tab-content {
 			background: none;
 			border-width: 0;
 
-			.aui-tab-label {
+			.tab-label {
 				padding: 7px 10px;
 
 				a {
@@ -65,14 +65,6 @@
 						text-decoration: none;
 					}
 				}
-			}
-		}
-
-		.aui-tab-active .aui-tab-content {
-			.aui-tab-label {
-				color: #FFF;
-				font-weight: bold;
-				text-shadow: -1px -1px 0 #333;
 			}
 		}
 
@@ -92,15 +84,6 @@
 				}
 			}
 		}
-
-		.go-to-layout-set-branches-tab .lfr-trigger strong a {
-			background-image: url(@theme_image_path@/arrows/06_down.png);
-			text-decoration: none;
-
-			.taglib-text{
-				color: #EEE;
-			}
-		}
 	}
 
 	.staging-icon-menu-container {
@@ -115,49 +98,10 @@
 			float: right;
 			min-height: 15px;
 		}
-
-		.staging-icon-menu.lfr-actions .lfr-trigger strong {
-			min-width: 0;
-			padding: 0;
-
-			a {
-				background-image: url(@theme_image_path@/arrows/06_down.png);
-				background-position: 0 4px;
-
-				@include opacity(0.5);
-
-				padding: 0 5px;
-			}
-		}
-	}
-
-	.aui-tab-active {
-		.layoutset-branches-menu.lfr-actions {
-			li .taglib-text {
-				color: #FFF;
-			}
-
-			.lfr-trigger strong {
-				padding: 0;
-				text-shadow: 1px 1px #000;
-			}
-		}
-
-		.staging-icon-menu.lfr-actions .lfr-trigger strong a {
-			@include opacity(1);
-		}
 	}
 
 	.branch-results {
 		min-height: 300px;
-	}
-
-	.layoutset-branches-menu.lfr-actions {
-		float: none;
-
-		.lfr-trigger strong {
-			display: inline;
-		}
 	}
 
 	.staging-bar {
@@ -227,32 +171,6 @@
 
 					.layout-title-label {
 						float: left;
-					}
-
-					.layout-breadcrumb {
-						font-size: 1em;
-
-						.breadcrumbs a {
-							color: #EEE;
-						}
-
-						.breadcrumbs-horizontal {
-							margin-bottom: 0;
-							overflow: hidden;
-							padding-left: 0.5em;
-
-							li {
-								background-image: url(@theme_image_path@/arrows/09_right.png);
-
-								&.last {
-									background-image: none;
-									font-weight: bold;
-									position: relative;
-									text-decoration: none;
-									top: -0.2em;
-								}
-							}
-						}
 					}
 				}
 			}

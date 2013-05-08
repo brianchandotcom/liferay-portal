@@ -20,24 +20,22 @@
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 %>
 
-<div class="lfr-portlet-toolbar">
-	<portlet:renderURL var="viewEntriesURL">
-		<portlet:param name="struts_action" value="/blogs_admin/view" />
-	</portlet:renderURL>
-
-	<span class="lfr-toolbar-button view-button <%= toolbarItem.equals("view-all") ? "current" : StringPool.BLANK %>">
-		<a href="<%= viewEntriesURL %>"><liferay-ui:message key="view-all" /></a>
-	</span>
-
-	<c:if test="<%= BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ENTRY) %>">
-		<portlet:renderURL var="addEntryURL">
-			<portlet:param name="struts_action" value="/blogs_admin/edit_entry" />
-			<portlet:param name="redirect" value="<%= viewEntriesURL %>" />
-			<portlet:param name="backURL" value="<%= viewEntriesURL %>" />
+<aui:nav-bar>
+	<aui:nav>
+		<portlet:renderURL var="viewEntriesURL">
+			<portlet:param name="struts_action" value="/blogs_admin/view" />
 		</portlet:renderURL>
 
-		<span class="lfr-toolbar-button add-button <%= toolbarItem.equals("add") ? "current" : StringPool.BLANK %>">
-			<a href="<%= addEntryURL %>"><liferay-ui:message key="add" /></a>
-		</span>
-	</c:if>
-</div>
+		<aui:nav-item href="<%= viewEntriesURL %>" label="view-all" selected='<%= toolbarItem.equals("view-all") %>' />
+
+		<c:if test="<%= BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ENTRY) %>">
+			<portlet:renderURL var="addEntryURL">
+				<portlet:param name="struts_action" value="/blogs_admin/edit_entry" />
+				<portlet:param name="redirect" value="<%= viewEntriesURL %>" />
+				<portlet:param name="backURL" value="<%= viewEntriesURL %>" />
+			</portlet:renderURL>
+
+			<aui:nav-item href="<%= addEntryURL %>" iconClass="icon-plus" label="add" selected='<%= toolbarItem.equals("add") %>' />
+		</c:if>
+	</aui:nav>
+</aui:nav-bar>

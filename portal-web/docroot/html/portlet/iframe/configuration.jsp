@@ -51,7 +51,7 @@ String htmlAttributes =
 				<aui:input label="authenticate" name="preferences--auth--" type="checkbox" value="<%= auth %>" />
 
 				<div id="<portlet:namespace />authenticationOptions">
-					<div class="portlet-msg-info" id="<portlet:namespace />currentLoginMsg">
+					<div class="alert alert-info" id="<portlet:namespace />currentLoginMsg">
 						<c:choose>
 							<c:when test="<%= IFrameUtil.isPasswordTokenEnabled(renderRequest) %>">
 								<liferay-ui:message key="you-may-use-the-tokens-email-address-screen-name-userid-and-password" />

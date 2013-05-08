@@ -23,25 +23,25 @@ long classPK = ParamUtil.getLong(request, "classPK");
 String eventName = ParamUtil.getString(request, "eventName", "selectStructure");
 %>
 
-<div class="lfr-portlet-toolbar">
-	<portlet:renderURL var="viewStructureURL">
-		<portlet:param name="struts_action" value="/dynamic_data_mapping/select_structure" />
-		<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
-		<portlet:param name="eventName" value="<%= eventName %>" />
-	</portlet:renderURL>
-
-	<span class="lfr-toolbar-button view-button <%= toolbarItem.equals("view-all") ? "current" : StringPool.BLANK %>">
-		<a href="<%= viewStructureURL %>"><liferay-ui:message key="view-all" /></a>
-	</span>
-
-	<c:if test="<%= DDMPermission.contains(permissionChecker, scopeGroupId, ddmResource, ActionKeys.ADD_STRUCTURE) %>">
-		<portlet:renderURL var="addStructureURL">
-			<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_structure" />
-			<portlet:param name="redirect" value="<%= viewStructureURL %>" />
+<aui:nav-bar>
+	<aui:nav>
+		<portlet:renderURL var="viewStructureURL">
+			<portlet:param name="struts_action" value="/dynamic_data_mapping/select_structure" />
+			<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
+			<portlet:param name="eventName" value="<%= eventName %>" />
 		</portlet:renderURL>
 
-		<span class="lfr-toolbar-button add-button <%= toolbarItem.equals("add") ? "current" : StringPool.BLANK %>">
-			<a href="<%= addStructureURL %>"><liferay-ui:message key="add" /></a>
-		</span>
-	</c:if>
-</div>
+		<aui:nav-item href="<%= viewStructureURL %>" label="view-all" selected='<%= toolbarItem.equals("view-all") %>' />
+
+		<c:if test="<%= DDMPermission.contains(permissionChecker, scopeGroupId, ddmResource, ActionKeys.ADD_STRUCTURE) %>">
+			<portlet:renderURL var="addStructureURL">
+				<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_structure" />
+				<portlet:param name="redirect" value="<%= viewStructureURL %>" />
+			</portlet:renderURL>
+
+			<aui:nav-item href="<%= addStructureURL %>" iconClass="icon-plus" label="add" selected='<%= toolbarItem.equals("add") %>' />
+		</c:if>
+	</aui:nav>
+
+	<aui:nav-bar-search cssClass="pull-right" file="/html/portlet/dynamic_data_mapping/structure_search.jsp" />
+</aui:nav-bar>

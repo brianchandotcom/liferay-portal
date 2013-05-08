@@ -80,9 +80,15 @@
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
-				<name>inputCssClass</name>
+				<name>icon</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<name>iconAlign</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+				<defaultValue>left</defaultValue>
 			</attribute>
 			<attribute>
 				<name>name</name>
@@ -93,6 +99,12 @@
 				<name>onClick</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<name>primary</name>
+				<inputType>java.lang.Object</inputType>
+				<outputType>java.lang.Object</outputType>
+				<defaultValue>null</defaultValue>
 			</attribute>
 			<attribute>
 				<name>type</name>
@@ -118,6 +130,41 @@
 				<name>id</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
+			</attribute>
+		</attributes>
+	</component>
+	<component name="Col" bodyContent="true">
+		<attributes>
+			<attribute>
+				<name>cssClass</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<name>id</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<name>offset</name>
+				<inputType>int</inputType>
+				<outputType>int</outputType>
+			</attribute>
+			<attribute>
+				<name>offsetWidth</name>
+				<inputType>int</inputType>
+				<outputType>int</outputType>
+			</attribute>
+			<attribute>
+				<name>span</name>
+				<inputType>int</inputType>
+				<outputType>int</outputType>
+				<defaultValue>12</defaultValue>
+			</attribute>
+			<attribute>
+				<name>width</name>
+				<inputType>int</inputType>
+				<outputType>int</outputType>
 			</attribute>
 		</attributes>
 	</component>
@@ -202,6 +249,26 @@
 			</attribute>
 			<attribute>
 				<name>var</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+		</attributes>
+	</component>
+	<component name="Container" bodyContent="true">
+		<attributes>
+			<attribute>
+				<name>cssClass</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<name>fluid</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+				<defaultValue>true</defaultValue>
+			</attribute>
+			<attribute>
+				<name>id</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
@@ -436,11 +503,6 @@
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
-				<name>inputCssClass</name>
-				<inputType>java.lang.String</inputType>
-				<outputType>java.lang.String</outputType>
-			</attribute>
-			<attribute>
 				<name>label</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
@@ -558,6 +620,113 @@
 			</attribute>
 		</attributes>
 	</component>
+	<component name="Nav" bodyContent="true">
+		<attributes>
+			<attribute>
+				<name>cssClass</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<name>id</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+		</attributes>
+	</component>
+	<component name="NavBar" bodyContent="true">
+		<attributes>
+			<attribute>
+				<name>cssClass</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<name>id</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+		</attributes>
+	</component>
+	<component name="NavBarSearch" bodyContent="true">
+		<attributes>
+			<attribute>
+				<name>cssClass</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<name>id</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<name>file</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<name>searchContainer</name>
+				<inputType>com.liferay.portal.kernel.dao.search.SearchContainer</inputType>
+				<outputType>com.liferay.portal.kernel.dao.search.SearchContainer</outputType>
+			</attribute>
+		</attributes>
+	</component>
+	<component name="NavItem" bodyContent="true">
+		<attributes>
+			<attribute>
+				<name>anchorCssClass</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<name>anchorId</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<name>cssClass</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<name>dropdown</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+			</attribute>
+			<attribute>
+				<name>href</name>
+				<inputType>java.lang.Object</inputType>
+				<outputType>java.lang.String</outputType>
+				<defaultValue>javascript:void(0);</defaultValue>
+			</attribute>
+			<attribute>
+				<name>iconClass</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<name>id</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<name>label</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<name>selected</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+			</attribute>
+			<attribute>
+				<name>title</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+		</attributes>
+	</component>
 	<component name="Option" bodyContent="true">
 		<attributes>
 			<attribute>
@@ -622,6 +791,26 @@
 			</attribute>
 			<attribute>
 				<name>label</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+		</attributes>
+	</component>
+	<component name="Row" bodyContent="true">
+		<attributes>
+			<attribute>
+				<name>cssClass</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<name>fluid</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+				<defaultValue>true</defaultValue>
+			</attribute>
+			<attribute>
+				<name>id</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
@@ -701,11 +890,6 @@
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
-				<name>inputCssClass</name>
-				<inputType>java.lang.String</inputType>
-				<outputType>java.lang.String</outputType>
-			</attribute>
-			<attribute>
 				<name>label</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
@@ -771,25 +955,6 @@
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 				<defaultValue>true</defaultValue>
-			</attribute>
-		</attributes>
-	</component>
-	<component name="Tool" dynamicAttributes="false" parentClass="javax.servlet.jsp.tagext.TagSupport" writeJSP="false">
-		<attributes>
-			<attribute>
-				<name>handler</name>
-				<inputType>java.lang.String</inputType>
-				<outputType>java.lang.String</outputType>
-			</attribute>
-			<attribute>
-				<name>icon</name>
-				<inputType>java.lang.String</inputType>
-				<outputType>java.lang.String</outputType>
-			</attribute>
-			<attribute>
-				<name>id</name>
-				<inputType>java.lang.String</inputType>
-				<outputType>java.lang.String</outputType>
 			</attribute>
 		</attributes>
 	</component>

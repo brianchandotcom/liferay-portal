@@ -91,15 +91,13 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 
 	</c:when>
 	<c:otherwise>
-		<div class="layout-breadcrumb">
-			<liferay-ui:breadcrumb displayStyle="horizontal" showGuestGroup="<%= false %>" showLayout="<%= false %>" showParentGroups="<%= false %>" showPortletBreadcrumb="<%= true %>" />
-		</div>
+		<liferay-ui:breadcrumb showGuestGroup="<%= false %>" showLayout="<%= false %>" showParentGroups="<%= false %>" showPortletBreadcrumb="<%= true %>" />
 	</c:otherwise>
 </c:choose>
 
-<aui:layout cssClass="manage-view lfr-app-column-view">
+<aui:row cssClass="manage-view lfr-app-column-view">
 	<c:if test="<%= !group.isLayoutPrototype() %>">
-		<aui:column columnWidth="25" cssClass="manage-sitemap">
+		<aui:col cssClass="manage-sitemap" width="<%= 25 %>">
 			<div class="lfr-header-row">
 				<div class="lfr-header-row-content">
 					<c:if test="<%= stagingGroup != null %>">
@@ -134,7 +132,7 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 
 						<c:choose>
 							<c:when test="<%= layoutSetBranches.size() > 1 %>">
-								<liferay-ui:icon-menu align="left" cssClass="layoutset-branches-menu" direction="down" extended="<%= true %>" icon='<%= themeDisplay.getPathThemeImages() + "/common/staging.png" %>' message="<%= HtmlUtil.escape(layoutSetBranch.getName()) %>">
+								<liferay-ui:icon-menu cssClass="layoutset-branches-menu" direction="down" extended="<%= true %>" icon='<%= themeDisplay.getPathThemeImages() + "/common/staging.png" %>' message="<%= HtmlUtil.escape(layoutSetBranch.getName()) %>">
 
 									<%
 									for (int i = 0; i < layoutSetBranches.size(); i++) {
@@ -183,10 +181,10 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 			<liferay-util:include page="/html/portlet/layouts_admin/tree_js.jsp">
 				<liferay-util:param name="treeId" value="layoutsTree" />
 			</liferay-util:include>
-		</aui:column>
+		</aui:col>
 	</c:if>
 
-	<aui:column columnWidth="<%= group.isLayoutPrototype() ? 100 : 75 %>" cssClass="manage-layout">
+	<aui:col cssClass="manage-layout" width="<%= group.isLayoutPrototype() ? 100 : 75 %>">
 		<div id="<portlet:namespace />layoutsContainer">
 			<c:choose>
 				<c:when test="<%= selPlid > 0 %>">
@@ -197,11 +195,11 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 				</c:otherwise>
 			</c:choose>
 		</div>
-	</aui:column>
-</aui:layout>
+	</aui:col>
+</aui:row>
 
 <c:if test="<%= !group.isLayoutPrototype() %>">
-	<aui:script use="aui-io-plugin">
+	<aui:script use="aui-io-plugin-deprecated">
 		var layoutsContainer = A.one('#<portlet:namespace />layoutsContainer');
 
 		layoutsContainer.plug(
@@ -218,7 +216,7 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 
 				var link = event.currentTarget.one('a');
 
-				if (link && !event.target.hasClass('aui-tree-hitarea')) {
+				if (link && !event.target.hasClass('tree-hitarea')) {
 					var href = link.attr('href');
 
 					var hash = location.hash;
@@ -246,7 +244,7 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 					layoutsContainer.io.start();
 				}
 			},
-			'.aui-tree-node-content'
+			'.tree-node-content'
 		);
 	</aui:script>
 </c:if>

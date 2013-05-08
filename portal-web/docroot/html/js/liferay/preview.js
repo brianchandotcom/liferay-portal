@@ -21,13 +21,13 @@ AUI.add(
 
 		var TPL_LOADING_COUNT = '<span class="lfr-preview-file-loading-count"></span>';
 
-		var TPL_LOADING_INDICATOR = '<div class="lfr-preview-file-loading-indicator aui-helper-hidden">{0}&nbsp;</div>';
+		var TPL_LOADING_INDICATOR = '<div class="lfr-preview-file-loading-indicator hide">{0}&nbsp;</div>';
 
-		var TPL_MAX_ARROW_LEFT = '<a href="javascript:;" class="aui-image-viewer-arrow aui-image-viewer-arrow-left lfr-preview-file-arrow lfr-preview-file-arrow-left"></a>';
+		var TPL_MAX_ARROW_LEFT = '<a href="javascript:;" class="image-viewer-arrow image-viewer-arrow-left lfr-preview-file-arrow lfr-preview-file-arrow-left"></a>';
 
-		var TPL_MAX_ARROW_RIGHT = '<a href="javascript:;" class="aui-image-viewer-arrow aui-image-viewer-arrow-right lfr-preview-file-arrow lfr-preview-file-arrow-right"></a>';
+		var TPL_MAX_ARROW_RIGHT = '<a href="javascript:;" class="image-viewer-arrow image-viewer-arrow-right lfr-preview-file-arrow lfr-preview-file-arrow-right"></a>';
 
-		var TPL_MAX_CLOSE = '<a href="javascript:;" class="aui-image-viewer-close lfr-preview-file-close"></a>';
+		var TPL_MAX_CLOSE = '<a href="javascript:;" class="image-viewer-close lfr-preview-file-close"></a>';
 
 		var TPL_MAX_CONTROLS = '<span class="lfr-preview-file-image-overlay-controls"></span>';
 
@@ -147,7 +147,7 @@ AUI.add(
 						if (previewFileCountDown < maxIndex && imageListContentEl.scrollTop >= (imageListContentEl.scrollHeight - 700)) {
 							var loadingIndicator = instance._getLoadingIndicator();
 
-							if (loadingIndicator.hasClass('aui-helper-hidden')) {
+							if (loadingIndicator.hasClass('hide')) {
 								var end = Math.min(maxIndex, previewFileCountDown + 10);
 								var start = Math.max(0, previewFileCountDown + 1);
 
@@ -366,20 +366,28 @@ AUI.add(
 
 						instance._toolbar = new A.Toolbar(
 							{
-								contentBox: instance.get('toolbar'),
+								boundingBox: instance.get('toolbar'),
 								children: [
-									{
-										handler: A.bind('_updateIndex', instance, -1),
-										icon: 'arrow-1-l'
-									},
-									{
-										handler: A.bind('_maximizePreview', instance),
-										icon: 'zoomin'
-									},
-									{
-										handler: A.bind('_updateIndex', instance, 1),
-										icon: 'arrow-1-r'
-									}
+									[
+										{
+											icon: 'icon-circle-arrow-left',
+											on: {
+												click: A.bind('_updateIndex', instance, -1)
+											}
+										},
+										{
+											icon: 'icon-zoom-in',
+											on: {
+												click: A.bind('_maximizePreview', instance)
+											}
+										},
+										{
+											icon: 'icon-circle-arrow-right',
+											on: {
+												click: A.bind('_updateIndex', instance, 1)
+											}
+										}
+									]
 								]
 							}
 						).render();
@@ -446,6 +454,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-overlay-mask', 'aui-toolbar']
+		requires: ['aui-base', 'aui-overlay-mask-deprecated', 'aui-toolbar']
 	}
 );

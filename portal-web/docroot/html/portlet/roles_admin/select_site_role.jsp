@@ -61,7 +61,7 @@ if (step == 1) {
 				title="site-roles"
 			/>
 
-			<div class="portlet-msg-info">
+			<div class="alert alert-info">
 				<liferay-ui:message key="please-select-a-site-to-which-you-will-assign-a-site-role" />
 			</div>
 
@@ -132,7 +132,7 @@ if (step == 1) {
 
 						submitForm(document.<portlet:namespace />selectSiteRoleFm, "<%= portletURL.toString() %>");
 					},
-					'.group-selector-button input'
+					'.group-selector-button'
 				);
 			</aui:script>
 		</c:when>
@@ -251,9 +251,9 @@ if (step == 1) {
 
 						Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', result);
 
-						Util.getWindow().close();
+						Util.getWindow().hide();
 					},
-					'.selector-button input'
+					'.selector-button'
 				);
 			</aui:script>
 		</c:when>

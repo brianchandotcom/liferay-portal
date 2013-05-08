@@ -39,8 +39,8 @@ boolean showSyntaxHelp = ((toggleValue != null) && toggleValue.equals("block"));
 </div>
 
 <div>
-	<aui:layout>
-		<aui:column columnWidth="<%= showSyntaxHelp ? 70 : 100 %>" id="wikiEditorContainer">
+	<aui:row>
+		<aui:col id="wikiEditorContainer" width="<%= showSyntaxHelp ? 70 : 100 %>">
 
 		<%@ include file="/html/portlet/wiki/edit/editor_config.jspf" %>
 
@@ -67,9 +67,9 @@ boolean showSyntaxHelp = ((toggleValue != null) && toggleValue.equals("block"));
 		</c:choose>
 
 			<aui:input name="content" type="hidden" />
-		</aui:column>
+		</aui:col>
 
-		<aui:column columnWidth="30" cssClass="syntax-help" id="toggle_id_wiki_editor_help" style='<%= showSyntaxHelp ? StringPool.BLANK : "display: none" %>'>
+		<aui:col cssClass="syntax-help" id="toggle_id_wiki_editor_help" style='<%= showSyntaxHelp ? StringPool.BLANK : "display: none" %>' width="<%= 30 %>">
 			<h3>
 				<liferay-ui:message key="syntax-help" />
 			</h3>
@@ -77,8 +77,8 @@ boolean showSyntaxHelp = ((toggleValue != null) && toggleValue.equals("block"));
 			<liferay-util:include page="<%= WikiUtil.getHelpPage(format) %>" />
 
 			<aui:a href="<%= WikiUtil.getHelpURL(format) %>" target="_blank"><liferay-ui:message key="learn-more" /> &raquo;</aui:a>
-		</aui:column>
-	</aui:layout>
+		</aui:col>
+	</aui:row>
 </div>
 
 <aui:script>
@@ -88,9 +88,9 @@ boolean showSyntaxHelp = ((toggleValue != null) && toggleValue.equals("block"));
 </aui:script>
 
 <aui:script use="aui-base">
-	var CSS_EDITOR_WIDTH = 'aui-w70';
+	var CSS_EDITOR_WIDTH = 'span8';
 
-	var CSS_EDITOR_WIDTH_EXPANDED = 'aui-w100';
+	var CSS_EDITOR_WIDTH_EXPANDED = 'span12';
 
 	Liferay.on(
 		'toggle:stateChange',

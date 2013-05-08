@@ -22,7 +22,7 @@ UserGroupSearch searchContainer = (UserGroupSearch)request.getAttribute("liferay
 UserGroupDisplayTerms displayTerms = (UserGroupDisplayTerms)searchContainer.getDisplayTerms();
 %>
 
-<span class="aui-search-bar lfr-display-terms-search">
+<span class="form-search lfr-display-terms-search">
 	<aui:input inlineField="<%= true %>" label="" name="<%= displayTerms.KEYWORDS %>" size="30" type="text" />
 
 	<aui:button type="submit" value="search" />

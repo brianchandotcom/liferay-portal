@@ -44,8 +44,8 @@ long folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
 	title='<%= portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) ? "add-multiple-media" : "add-multiple-documents" %>'
 />
 
-<aui:layout>
-	<aui:column columnWidth="50">
+<aui:row>
+	<aui:col width="<%= 50 %>">
 		<aui:form name="fm1">
 			<div class="lfr-dynamic-uploader">
 				<div class="lfr-upload-container" id="<portlet:namespace />fileUpload"></div>
@@ -98,9 +98,9 @@ long folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
 				}
 			);
 		</aui:script>
-	</aui:column>
-	<aui:column columnWidth="50">
-		<div class="common-file-metadata-container aui-helper-hidden selected" id="<portlet:namespace />commonFileMetadataContainer">
+	</aui:col>
+	<aui:col width="<%= 50 %>">
+		<div class="common-file-metadata-container hide selected" id="<portlet:namespace />commonFileMetadataContainer">
 			<liferay-util:include page="/html/portlet/document_library/upload_multiple_file_entries_resources.jsp" />
 		</div>
 
@@ -215,5 +215,5 @@ long folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
 				['aui-base']
 			);
 		</aui:script>
-	</aui:column>
-</aui:layout>
+	</aui:col>
+</aui:row>

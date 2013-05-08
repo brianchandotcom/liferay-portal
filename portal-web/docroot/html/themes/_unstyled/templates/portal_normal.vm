@@ -20,7 +20,7 @@ $theme.include($body_top_include)
 	#dockbar()
 #end
 
-<div id="wrapper">
+<div class="container-fluid" id="wrapper">
 	<header id="banner" role="banner">
 		<div id="heading">
 			<h1 class="site-title">
@@ -50,13 +50,7 @@ $theme.include($body_top_include)
 	</header>
 
 	<div id="content">
-		<nav class="site-breadcrumbs" id="breadcrumbs">
-			<h1>
-				<span>#language ("breadcrumbs")</span>
-			</h1>
-
-			#breadcrumbs()
-		</nav>
+		<nav id="breadcrumbs">#breadcrumbs()</nav>
 
 		#if ($selectable)
 			$theme.include($content_include)

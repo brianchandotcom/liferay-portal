@@ -17,6 +17,7 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
+String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:my_sites:cssClass"));
 int max = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:my_sites:max"));
 
 if (max <= 0) {
@@ -27,7 +28,7 @@ List<Group> mySites = user.getMySites(true, max);
 %>
 
 <c:if test="<%= !mySites.isEmpty() %>">
-	<ul class="taglib-my-sites">
+	<ul class="taglib-my-sites <%= cssClass %>">
 
 		<%
 		PortletURL portletURL = new PortletURLImpl(request, PortletKeys.SITE_REDIRECTOR, plid, PortletRequest.ACTION_PHASE);
@@ -77,24 +78,28 @@ List<Group> mySites = user.getMySites(true, max);
 							}
 						}
 
-						String cssClass = StringPool.BLANK;
+						String itemCssClass = StringPool.BLANK;
 
 						if (firstSite) {
-							cssClass += " first";
+							itemCssClass += " first";
 						}
 
 						if (lastSite) {
-							cssClass += " last";
+							itemCssClass += " last";
 						}
+
+						String iconCssClass = "icon-spacer";
 						%>
 
 						<c:choose>
 							<c:when test="<%= mySite.isControlPanel() %>">
-								<li class="control-panel<%= cssClass %>">
+								<li class="control-panel<%= itemCssClass %>">
 									<a href="<%= themeDisplay.getURLControlPanel() %>">
 
 										<%
 										String siteName = mySite.getDescriptiveName(locale);
+
+										iconCssClass = "icon-wrench";
 										%>
 
 										<%@ include file="/html/taglib/ui/my_sites/page_site_name.jspf" %>
@@ -137,7 +142,7 @@ List<Group> mySites = user.getMySites(true, max);
 									}
 									%>
 
-									<li class="<%= (selectedSite && layout.isPublicLayout()) ? "current-site" : "public-site" %> <%= cssClass %>">
+									<li class="<%= (selectedSite && layout.isPublicLayout()) ? "current-site" : "public-site" %> <%= itemCssClass %>">
 										<a href="<%= HtmlUtil.escape(portletURL.toString()) %>" onclick="Liferay.Util.forcePost(this); return false;">
 
 											<%
@@ -164,12 +169,16 @@ List<Group> mySites = user.getMySites(true, max);
 
 												siteName = sb.toString();
 											}
+
+											if ((mySite.getPrivateLayoutsPageCount() > 0) || showPrivateSiteStaging) {
+												iconCssClass = "icon-eye-open";
+											}
 											%>
 
 											<%@ include file="/html/taglib/ui/my_sites/page_site_name.jspf" %>
 
 											<c:if test="<%= (mySite.getPrivateLayoutsPageCount() > 0) || showPrivateSiteStaging %>">
-												<span class="site-type"><liferay-ui:message key="public" /></span>
+												<span class="badge site-type"><liferay-ui:message key="public" /></span>
 											</c:if>
 										</a>
 									</li>
@@ -194,7 +203,7 @@ List<Group> mySites = user.getMySites(true, max);
 									}
 									%>
 
-									<li class="<%= (selectedSite && layout.isPrivateLayout()) ? "current-site" : "private-site" %> <%= cssClass %>">
+									<li class="<%= (selectedSite && layout.isPrivateLayout()) ? "current-site" : "private-site" %> <%= itemCssClass %>">
 										<a href="<%= HtmlUtil.escape(portletURL.toString()) %>" onclick="Liferay.Util.forcePost(this); return false;">
 
 											<%
@@ -221,12 +230,16 @@ List<Group> mySites = user.getMySites(true, max);
 
 												siteName = sb.toString();
 											}
+
+											if ((mySite.getPublicLayoutsPageCount() > 0) || showPublicSiteStaging) {
+												iconCssClass = "icon-eye-close";
+											}
 											%>
 
 											<%@ include file="/html/taglib/ui/my_sites/page_site_name.jspf" %>
 
 											<c:if test="<%= (mySite.getPublicLayoutsPageCount() > 0) || showPublicSiteStaging %>">
-												<span class="site-type"><liferay-ui:message key="private" /></span>
+												<span class="badge site-type"><liferay-ui:message key="private" /></span>
 											</c:if>
 										</a>
 									</li>

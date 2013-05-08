@@ -115,17 +115,17 @@ if (Validator.isNotNull(script)) {
 
 		<liferay-ui:panel-container cssClass="lfr-structure-entry-details-container" extended="<%= false %>" id="structureDetailsPanelContainer" persistState="<%= true %>">
 			<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="structureDetailsSectionPanel" persistState="<%= true %>" title='<%= LanguageUtil.get(pageContext, "details") %>'>
-				<aui:layout cssClass="lfr-ddm-types-form-column">
+				<aui:row cssClass="lfr-ddm-types-form-column">
 					<c:choose>
 						<c:when test="<%= scopeClassNameId == 0 %>">
-							<aui:column first="<%= true %>">
+							<aui:col width="<%= 50 %>">
 								<aui:field-wrapper>
 									<aui:select disabled="<%= structure != null %>" label="type" name="scopeClassNameId">
 										<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, DDLRecordSet.class.getName()) %>" value="<%= PortalUtil.getClassNameId(DDLRecordSet.class.getName()) %>" />
 										<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, DLFileEntryMetadata.class.getName()) %>" value="<%= PortalUtil.getClassNameId(DLFileEntryMetadata.class.getName()) %>" />
 									</aui:select>
 								</aui:field-wrapper>
-							</aui:column>
+							</aui:col>
 						</c:when>
 						<c:otherwise>
 							<aui:input name="scopeClassNameId" type="hidden" value="<%= scopeClassNameId %>" />
@@ -134,7 +134,7 @@ if (Validator.isNotNull(script)) {
 
 					<c:choose>
 						<c:when test="<%= Validator.isNull(storageTypeValue) %>">
-							<aui:column>
+							<aui:col width="<%= 50 %>">
 								<aui:field-wrapper>
 									<aui:select disabled="<%= structure != null %>" name="storageType">
 
@@ -150,13 +150,13 @@ if (Validator.isNotNull(script)) {
 
 									</aui:select>
 								</aui:field-wrapper>
-							</aui:column>
+							</aui:col>
 						</c:when>
 						<c:otherwise>
 							<aui:input name="storageType" type="hidden" value="<%= storageTypeValue %>" />
 						</c:otherwise>
 					</c:choose>
-				</aui:layout>
+				</aui:row>
 
 				<aui:input name="description" />
 
@@ -204,7 +204,7 @@ if (Validator.isNotNull(script)) {
 <%@ include file="/html/portlet/dynamic_data_mapping/form_builder.jspf" %>
 
 <aui:button-row>
-	<aui:button onClick='<%= renderResponse.getNamespace() + "saveStructure();" %>' value='<%= LanguageUtil.get(pageContext, "save") %>' />
+	<aui:button onClick='<%= renderResponse.getNamespace() + "saveStructure();" %>' primary="<%= true %>" value='<%= LanguageUtil.get(pageContext, "save") %>' />
 
 	<aui:button href="<%= redirect %>" type="cancel" />
 </aui:button-row>
@@ -217,7 +217,7 @@ if (Validator.isNotNull(script)) {
 				classPK: <%= (structure != null) ? structure.getPrimaryKey() : 0 %>,
 				ddmResource: '<%= ddmResource %>',
 				dialog: {
-					width: 820
+					destroyOnHide: true
 				},
 				eventName: '<portlet:namespace />selectParentStructure',
 				showGlobalScope: true,

@@ -67,7 +67,7 @@ WikiPage wikiPage = (WikiPage)request.getAttribute(WebKeys.WIKI_PAGE);
 		<div class="lfr-upload-container" id="<portlet:namespace />fileUpload"></div>
 	</div>
 
-	<div class="lfr-fallback aui-helper-hidden" id="<portlet:namespace />fallback">
+	<div class="lfr-fallback hide" id="<portlet:namespace />fallback">
 		<aui:fieldset label="upload-files">
 			<aui:input label='<%= LanguageUtil.get(pageContext, "file") + " 1" %>' name="file1" type="file" />
 
@@ -162,9 +162,9 @@ Ticket ticket = TicketLocalServiceUtil.addTicket(user.getCompanyId(), User.class
 
 	<span id="<portlet:namespace />selectedFileNameContainer"></span>
 
-	<div class="aui-helper-hidden" id="<portlet:namespace />metadataExplanationContainer"></div>
+	<div class="hide" id="<portlet:namespace />metadataExplanationContainer"></div>
 
-	<div class="aui-helper-hidden selected" id="<portlet:namespace />selectedFileNameMetadataContainer">
+	<div class="hide selected" id="<portlet:namespace />selectedFileNameMetadataContainer">
 		<aui:button type="submit" />
 	</div>
 </aui:form>

@@ -1,4 +1,4 @@
-.aui-document-library-file-entry-cell-editor-hidden, .aui-fileupload-cell-editor-hidden, .aui-password-cell-editor-hidden {
+.document-library-file-entry-cell-editor-hidden, .fileupload-cell-editor-hidden, .password-cell-editor-hidden {
 	display: none;
 }
 
@@ -6,7 +6,7 @@
 	.lfr-spreadsheet-add-rows-buttons {
 		padding: 5px;
 
-		.aui-field-label {
+		.field-label {
 			text-transform: lowercase;
 		}
 	}
@@ -49,7 +49,7 @@
 					background-color: #EDF5FF;
 				}
 
-				&.aui-datatable-cell-selected {
+				&.datatable-cell-selected {
 					background-color: #68E;
 				}
 			}
@@ -57,19 +57,19 @@
 	}
 }
 
-.aui-basecelleditor {
+.basecelleditor {
 	z-index: 999 !important;
 
-	.aui-buttonitem-content {
+	.buttonitem-content {
 		padding: 3px 3px 2px 1px;
 	}
 
-	[class~="aui-form-validator-message"] {
+	[class~="form-validator-message"] {
 		clip: rect(auto auto auto auto);
 		width: auto;
 	}
 }
 
-.webkit .aui-basecelleditor .aui-buttonitem-label-only {
+.webkit .basecelleditor .buttonitem-label-only {
 	padding-bottom: 2px;
 }

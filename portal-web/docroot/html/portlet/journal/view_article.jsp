@@ -50,7 +50,7 @@ try {
 
 		</c:when>
 		<c:otherwise>
-			<div class="portlet-msg-error">
+			<div class="alert alert-error">
 				<liferay-ui:message key="this-content-has-expired-or-you-do-not-have-the-required-permissions-to-access-it" />
 			</div>
 		</c:otherwise>
@@ -60,7 +60,7 @@ try {
 } catch (NoSuchArticleException nsae) {
 %>
 
-	<div class="portlet-msg-error">
+	<div class="alert alert-error">
 		<%= LanguageUtil.get(pageContext, "the-selected-web-content-no-longer-exists") %>
 	</div>
 

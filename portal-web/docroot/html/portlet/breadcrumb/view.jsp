@@ -17,7 +17,6 @@
 <%@ include file="/html/portlet/breadcrumb/init.jsp" %>
 
 <liferay-ui:breadcrumb
-	displayStyle="<%= displayStyle %>"
 	showCurrentGroup="<%= showCurrentGroup %>"
 	showCurrentPortlet="<%= showCurrentPortlet %>"
 	showGuestGroup="<%= showGuestGroup %>"

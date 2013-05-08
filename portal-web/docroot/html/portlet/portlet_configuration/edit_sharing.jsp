@@ -65,7 +65,7 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 				boolean widgetShowAddAppLink = GetterUtil.getBoolean(preferences.getValue("lfrWidgetShowAddAppLink", null), PropsValues.THEME_PORTLET_SHARING_DEFAULT);
 				%>
 
-				<div class="portlet-msg-info">
+				<div class="alert alert-info">
 					<liferay-ui:message key="share-this-application-on-any-website" />
 				</div>
 
@@ -93,7 +93,7 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 				}
 				%>
 
-				<div class="portlet-msg-info">
+				<div class="alert alert-info">
 					<aui:a href="http://www.facebook.com/developers/editapp.php?new" target="_blank"><liferay-ui:message key="get-the-api-key-and-canvas-page-url-from-facebook" /></aui:a>
 				</div>
 
@@ -104,7 +104,7 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 				<c:if test="<%= Validator.isNotNull(facebookCanvasPageURL) %>">
 					<br />
 
-					<div class="portlet-msg-info">
+					<div class="alert alert-info">
 						<liferay-ui:message key="copy-the-callback-url-and-specify-it-in-facebook" />
 
 						<c:choose>
@@ -130,7 +130,7 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 				boolean iGoogleShowAddAppLink = PrefsParamUtil.getBoolean(preferences, request, "lfrIgoogleShowAddAppLink");
 				%>
 
-				<div class="portlet-msg-info">
+				<div class="alert alert-info">
 					<liferay-ui:message key="use-the-opensocial-gadget-url-to-create-an-opensocial-gadget" />
 				</div>
 
@@ -146,7 +146,7 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 				boolean netvibesShowAddAppLink = PrefsParamUtil.getBoolean(preferences, request, "lfrNetvibesShowAddAppLink");
 				%>
 
-				<div class="portlet-msg-info">
+				<div class="alert alert-info">
 					<liferay-ui:message key="use-the-netvibes-widget-url-to-create-a-netvibes-widget" />
 				</div>
 

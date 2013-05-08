@@ -20,24 +20,22 @@
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 %>
 
-<div class="lfr-portlet-toolbar">
-	<portlet:renderURL var="viewLayoutSetPrototypesURL">
-		<portlet:param name="struts_action" value="/layout_set_prototypes/view" />
-	</portlet:renderURL>
-
-	<span class="lfr-toolbar-button view-button <%= toolbarItem.equals("view-all") ? "current" : StringPool.BLANK %>">
-		<a href="<%= viewLayoutSetPrototypesURL %>"><liferay-ui:message key="view-all" /></a>
-	</span>
-
-	<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_LAYOUT_SET_PROTOTYPE) %>">
-		<portlet:renderURL var="addLayoutSetPrototypeURL">
-			<portlet:param name="struts_action" value="/layout_set_prototypes/edit_layout_set_prototype" />
-			<portlet:param name="redirect" value="<%= viewLayoutSetPrototypesURL %>" />
-			<portlet:param name="backURL" value="<%= viewLayoutSetPrototypesURL %>" />
+<aui:nav-bar>
+	<aui:nav>
+		<portlet:renderURL var="viewLayoutSetPrototypesURL">
+			<portlet:param name="struts_action" value="/layout_set_prototypes/view" />
 		</portlet:renderURL>
 
-		<span class="lfr-toolbar-button add-button <%= toolbarItem.equals("add") ? "current" : StringPool.BLANK %>">
-			<a href="<%= addLayoutSetPrototypeURL %>"><liferay-ui:message key="add" /></a>
-		</span>
-	</c:if>
-</div>
+		<aui:nav-item href="<%= viewLayoutSetPrototypesURL %>" label="view-all" selected='<%= toolbarItem.equals("view-all") %>' />
+
+		<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_LAYOUT_SET_PROTOTYPE) %>">
+			<portlet:renderURL var="addLayoutSetPrototypeURL">
+				<portlet:param name="struts_action" value="/layout_set_prototypes/edit_layout_set_prototype" />
+				<portlet:param name="redirect" value="<%= viewLayoutSetPrototypesURL %>" />
+				<portlet:param name="backURL" value="<%= viewLayoutSetPrototypesURL %>" />
+			</portlet:renderURL>
+
+			<aui:nav-item href="<%= addLayoutSetPrototypeURL %>" iconClass="icon-plus" label="add" selected='<%= toolbarItem.equals("add") %>' />
+		</c:if>
+	</aui:nav>
+</aui:nav-bar>

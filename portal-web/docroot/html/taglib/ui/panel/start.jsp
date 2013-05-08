@@ -16,21 +16,15 @@
 
 <%@ include file="/html/taglib/ui/panel/init.jsp" %>
 
-<div class="lfr-panel <%= cssClass %>" id="<%= id %>">
-	<div class="lfr-panel-titlebar">
-		<div class="lfr-panel-title">
-			<span>
-				<liferay-ui:message key="<%= title %>" />
-			</span>
+<div class="accordion-group <%= cssClass %>" id="<%= id %>">
+	<div class="accordion-heading <%= headerCssClass %>" data-persist-id="<%= persistState ? id : StringPool.BLANK %>">
+		<div class="accordion-toggle">
+			<liferay-ui:message key="<%= title %>" />
 
 			<c:if test="<%= Validator.isNotNull(helpMessage) %>">
 				<liferay-ui:icon-help message="<%= helpMessage %>" />
 			</c:if>
 		</div>
-
-		<c:if test="<%= collapsible && extended %>">
-			<a class="lfr-panel-button" href="javascript:;" title="<liferay-ui:message key='<%= panelState.equals("open") ? "collapse" : "expand" %>' />"></a>
-		</c:if>
 	</div>
-
-	<div class="lfr-panel-content">
+	<div class="<%= contentCssClass %>" id="<%= id %>Content">
+		<div class="accordion-inner">

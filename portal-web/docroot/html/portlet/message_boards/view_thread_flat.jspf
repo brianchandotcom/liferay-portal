@@ -65,18 +65,9 @@ for (int i = 0; i < messages.size(); i++) {
 		continue;
 	}
 
-	String className = "portlet-section-alternate results-row alt";
-	String classHoverName = "portlet-section-alternate-hover results-row alt hover";
-
-	if (MathUtil.isOdd(i)) {
-		className = "portlet-section-body results-row";
-		classHoverName = "portlet-section-body-hover results-row hover";
-	}
-
 	viewableThread = true;
 
 	request.setAttribute("edit_message.jsp-category", category);
-	request.setAttribute("edit_message.jsp-className", className);
 	request.setAttribute("edit_message.jsp-depth", depth);
 	request.setAttribute("edit_message.jsp-editable", Boolean.TRUE);
 	request.setAttribute("edit_message.jsp-message", message);

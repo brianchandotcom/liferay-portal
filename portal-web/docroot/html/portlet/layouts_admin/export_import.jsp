@@ -193,7 +193,7 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 	</aui:script>
 </c:if>
 
-<aui:script use="aui-base,aui-loading-mask,json-stringify">
+<aui:script use="aui-base,aui-loading-mask-deprecated,json-stringify">
 	var form = A.one('#<portlet:namespace />fm1');
 
 	form.on(

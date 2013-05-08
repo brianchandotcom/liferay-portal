@@ -27,7 +27,7 @@
 
 			var STR_BLANK = '';
 
-			var TPL_BUTTON = '<div class="aui-field-labels-inline">' +
+			var TPL_BUTTON = '<div class="field-labels-inline">' +
 								'<input type="button" value="<%= UnicodeLanguageUtil.get(pageContext, "select") %>" />' +
 							'<div>';
 
@@ -39,7 +39,7 @@
 
 			var TPL_SEPARATOR = '<div class="separator"></div>';
 
-			var TPL_TEXT_HTML = '<textarea class="aui-form-builder-field-node lfr-ddm-text-html"></textarea>';
+			var TPL_TEXT_HTML = '<textarea class="form-builder-field-node lfr-ddm-text-html"></textarea>';
 
 			var TPL_WCM_IMAGE = '<div class="lfr-wcm-image"></div>';
 

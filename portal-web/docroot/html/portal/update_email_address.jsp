@@ -36,22 +36,22 @@ String emailAddress2 = ParamUtil.getString(request, "emailAddress2");
 
 	<c:choose>
 		<c:when test="<%= SessionErrors.contains(request, DuplicateUserEmailAddressException.class.getName()) %>">
-			<div class="portlet-msg-error">
+			<div class="alert alert-error">
 				<liferay-ui:message key="the-email-address-you-requested-is-already-taken" />
 			</div>
 		</c:when>
 		<c:when test="<%= SessionErrors.contains(request, ReservedUserEmailAddressException.class.getName()) %>">
-			<div class="portlet-msg-error">
+			<div class="alert alert-error">
 				<liferay-ui:message key="the-email-address-you-requested-is-reserved" />
 			</div>
 		</c:when>
 		<c:when test="<%= SessionErrors.contains(request, UserEmailAddressException.class.getName()) %>">
-			<div class="portlet-msg-error">
+			<div class="alert alert-error">
 				<liferay-ui:message key="please-enter-a-valid-email-address" />
 			</div>
 		</c:when>
 		<c:otherwise>
-			<div class="portlet-msg-info">
+			<div class="alert alert-info">
 				<liferay-ui:message key="please-enter-a-valid-email-address" />
 			</div>
 		</c:otherwise>

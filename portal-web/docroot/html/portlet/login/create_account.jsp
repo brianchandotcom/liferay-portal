@@ -113,15 +113,15 @@ birthdayCalendar.set(Calendar.YEAR, 1970);
 	<liferay-ui:error exception="<%= WebsiteURLException.class %>" message="please-enter-a-valid-url" />
 
 	<c:if test='<%= SessionMessages.contains(request, "missingOpenIdUserInformation") %>'>
-		<div class="portlet-msg-info">
+		<div class="alert alert-info">
 			<liferay-ui:message key="you-have-successfully-authenticated-please-provide-the-following-required-information-to-access-the-portal" />
 		</div>
 	</c:if>
 
 	<aui:model-context model="<%= Contact.class %>" />
 
-	<aui:fieldset>
-		<aui:column>
+	<aui:fieldset column="<%= true %>">
+		<aui:col width="<%= 50 %>">
 			<%@ include file="/html/portlet/login/create_account_user_name.jspf" %>
 
 			<c:if test="<%= !PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE) %>">
@@ -133,9 +133,9 @@ birthdayCalendar.set(Calendar.YEAR, 1970);
 					<aui:validator name="required" />
 				</c:if>
 			</aui:input>
-		</aui:column>
+		</aui:col>
 
-		<aui:column>
+		<aui:col width="<%= 50 %>">
 			<c:if test="<%= PropsValues.LOGIN_CREATE_ACCOUNT_ALLOW_CUSTOM_PASSWORD %>">
 				<aui:input label="password" name="password1" size="30" type="password" value="" />
 
@@ -171,7 +171,7 @@ birthdayCalendar.set(Calendar.YEAR, 1970);
 
 				<liferay-ui:captcha url="<%= captchaURL %>" />
 			</c:if>
-		</aui:column>
+		</aui:col>
 	</aui:fieldset>
 
 	<aui:button-row>

@@ -127,15 +127,17 @@ request.setAttribute("control_panel.jsp-ppid", ppid);
 		%>
 
 		<div id="content-wrapper">
-			<aui:layout cssClass="<%= panelCategory %>">
-				<aui:column columnWidth="<%= 25 %>" cssClass="panel-page-menu" first="<%= true %>">
-					<liferay-portlet:runtime portletName="160" />
-				</aui:column>
+			<aui:container cssClass="<%= panelCategory %>">
+				<aui:row>
+					<aui:col cssClass="panel-page-menu" width="<%= 25 %>">
+						<liferay-portlet:runtime portletName="160" />
+					</aui:col>
 
-				<aui:column columnWidth="<%= 75 %>" cssClass="<%= panelBodyCssClass %>" last="<%= true %>">
-					<%@ include file="/html/portal/layout/view/panel_content.jspf" %>
-				</aui:column>
-			</aui:layout>
+					<aui:col cssClass="<%= panelBodyCssClass %>" width="<%= 75 %>">
+						<%@ include file="/html/portal/layout/view/panel_content.jspf" %>
+					</aui:col>
+				</aui:row>
+			</aui:container>
 		</div>
 	</c:when>
 	<c:otherwise>

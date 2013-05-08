@@ -23,7 +23,7 @@
 		var tabSection = event.tabSection;
 
 		if (tabItem) {
-			tabItem.radioClass(['aui-selected', 'aui-state-active', 'aui-tab-active', 'current']);
+			tabItem.radioClass('active');
 		}
 
 		if (tabSection) {
@@ -155,6 +155,6 @@
 				cached.refreshAlign();
 			}
 		},
-		['aui-tooltip']
+		['aui-tooltip-deprecated']
 	);
 })(AUI(), Liferay);

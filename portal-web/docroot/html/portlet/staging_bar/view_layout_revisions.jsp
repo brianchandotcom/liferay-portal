@@ -60,7 +60,7 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 		for (LayoutRevision rootLayoutRevision : rootLayoutRevisions) {
 		%>
 
-			<div class="layout-variation-container <%= (recentLayoutRevision.getLayoutBranchId() == rootLayoutRevision.getLayoutBranchId()) ? StringPool.BLANK : "aui-helper-hidden" %>" id="<portlet:namespace/><%= rootLayoutRevision.getLayoutRevisionId() %>">
+			<div class="layout-variation-container <%= (recentLayoutRevision.getLayoutBranchId() == rootLayoutRevision.getLayoutBranchId()) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace/><%= rootLayoutRevision.getLayoutRevisionId() %>">
 				<c:if test="<%= rootLayoutRevisions.size() > 1 %>">
 
 					<%

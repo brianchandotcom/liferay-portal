@@ -112,7 +112,7 @@ Set<String> contextPaths = JSONWebServiceActionsManagerUtil.getContextPaths();
 
 </div>
 
-<div class="no-matches aui-helper-hidden" id="noMatches">
+<div class="hide no-matches" id="noMatches">
 	<liferay-ui:message key="there-are-no-services-matching-that-phrase" />
 </div>
 

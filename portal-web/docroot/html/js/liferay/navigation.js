@@ -82,7 +82,7 @@ AUI.add(
 				NAME: 'navigation',
 
 				prototype: {
-					TPL_DELETE_BUTTON: '<span class="delete-tab aui-helper-hidden">X</span>',
+					TPL_DELETE_BUTTON: '<span class="delete-tab hide">X</span>',
 
 					initializer: function(config) {
 						var instance = this;
@@ -141,7 +141,6 @@ AUI.add(
 						var instance = this;
 
 						if (!event.shiftKey) {
-							Dockbar.MenuManager.hideAll();
 							Dockbar.UnderlayManager.hideAll();
 						}
 
@@ -227,7 +226,7 @@ AUI.add(
 							}
 
 							if (instance.get('hasAddLayoutPermission')) {
-								var addPageButton = A.one('#addPage');
+								var addPageButton = A.one('#' + Dockbar._namespace + 'addPage');
 
 								if (addPageButton) {
 									addPageButton.on('click', instance._addPage, instance);
@@ -362,7 +361,7 @@ AUI.add(
 						var deleteTab = event.currentTarget.one('.delete-tab');
 
 						if (deleteTab) {
-							deleteTab[action]('aui-helper-hidden');
+							deleteTab[action]('hide');
 						}
 					},
 
@@ -512,7 +511,7 @@ AUI.add(
 				listItem._comboBox = comboBox;
 
 				overlayBoundingBox.setStyle('minWidth', listItem.get('offsetWidth') + 'px');
-				overlayContentBox.addClass('lfr-menu-list lfr-component lfr-page-templates');
+				overlayContentBox.addClass('lfr-menu-list lfr-page-templates');
 
 				comboContentBox.swallowEvent('click');
 				overlayContentBox.swallowEvent('click');
@@ -530,7 +529,7 @@ AUI.add(
 					instance.fire('editPage');
 				}
 			},
-			['aui-form-combobox', 'aui-overlay'],
+			['aui-form-combobox-deprecated', 'aui-overlay-deprecated'],
 			true
 		);
 
@@ -816,6 +815,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: []
+		requires: ['aui-component']
 	}
 );

@@ -60,7 +60,7 @@ boolean splitThread = true;
 	long breadcrumbsMessageId = message.getMessageId();
 	%>
 
-	<div class="portlet-msg-info">
+	<div class="alert alert-info">
 		<liferay-ui:message key="click-ok-to-create-a-new-thread-with-the-following-messages" />
 	</div>
 
@@ -102,7 +102,7 @@ boolean splitThread = true;
 		<aui:input disabled="<%= thread.isLocked() %>" helpMessage='<%= thread.isLocked() ? LanguageUtil.get(pageContext, "unlock-thread-to-add-an-explanation-post") : StringPool.BLANK %>' label="add-explanation-post-to-the-source-thread" name="addExplanationPost" onClick='<%= renderResponse.getNamespace() + "toggleExplanationPost();" %>' type="checkbox" />
 
 		<div id="<portlet:namespace />explanationPost" style="display: none;">
-			<div class="portlet-msg-info">
+			<div class="alert alert-info">
 				<liferay-ui:message key="the-following-post-will-be-added-in-place-of-the-moved-message" />
 			</div>
 

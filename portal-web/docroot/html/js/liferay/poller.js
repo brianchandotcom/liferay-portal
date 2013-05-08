@@ -151,7 +151,7 @@ AUI.add(
 						data: {
 							pollerRequest: requestStr
 						},
-						method: AUI.defaults.io.method,
+						method: A.config.io.method,
 						on: {
 							success: _processResponse
 						}
@@ -188,7 +188,7 @@ AUI.add(
 						data: {
 							pollerRequest: requestStr
 						},
-						method: AUI.defaults.io.method,
+						method: A.config.io.method,
 						on: {
 							complete: _sendComplete
 						}

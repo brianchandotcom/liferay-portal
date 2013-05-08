@@ -42,7 +42,7 @@ boolean mergeGuestPublicPages = PropertiesParamUtil.getBoolean(groupTypeSettings
 			<aui:input helpMessage="<%= taglibHelpMessage %>" label="<%= taglibLabel %>" name="mergeGuestPublicPages" type="checkbox" value="<%= mergeGuestPublicPages %>" />
 		</c:when>
 		<c:otherwise>
-			<div class="portlet-msg-info">
+			<div class="alert alert-info">
 				<liferay-ui:message key="there-are-no-available-advanced-settings-for-these-pages" />
 			</div>
 		</c:otherwise>

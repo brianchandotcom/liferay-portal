@@ -9,7 +9,7 @@ AUI().add(
 			'<tpl for=".">',
 				'<span class="lfr-token" data-fieldValues="{fieldValues}" data-clearFields="{clearFields}">',
 					'<span class="lfr-token-text">{text:this.getTokenText}</span>',
-					'<a class="aui-icon aui-icon-close lfr-token-close" href="javascript:;"></a>',
+					'<a class="icon icon-close lfr-token-close" href="javascript:;"></a>',
 				'</span>',
 			'</tpl>',
 			{
@@ -121,6 +121,6 @@ AUI().add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-template', 'escape']
+		requires: ['aui-base', 'aui-template-deprecated', 'escape']
 	}
 );

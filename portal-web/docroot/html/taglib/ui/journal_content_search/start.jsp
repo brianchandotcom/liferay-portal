@@ -52,7 +52,7 @@ portletURL.setPortletMode(PortletMode.VIEW);
 portletURL.setWindowState(WindowState.MAXIMIZED);
 %>
 
-<form action="<%= HtmlUtil.escape(portletURL.toString()) %>" class="aui-form" method="post" name="<%= namespace %>fm" onSubmit="submitForm(this); return false;">
+<form action="<%= HtmlUtil.escape(portletURL.toString()) %>" class="form" method="post" name="<%= namespace %>fm" onSubmit="submitForm(this); return false;">
 
 <%
 String taglibOnBlur = "if (this.value == '') { this.value = '" + unicodeDefaultKeywords + "'; }";

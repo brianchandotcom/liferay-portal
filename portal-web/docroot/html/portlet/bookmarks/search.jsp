@@ -195,7 +195,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<span class="aui-search-bar">
+		<span class="form-search">
 			<aui:input inlineField="<%= true %>" label="" name="keywords" size="30" title="search-bookmarks" type="text" value="<%= keywords %>" />
 
 			<aui:button type="submit" value="search" />

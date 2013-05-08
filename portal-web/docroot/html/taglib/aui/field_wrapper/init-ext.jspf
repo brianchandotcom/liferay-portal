@@ -22,4 +22,14 @@ if (Validator.isNotNull(name)) {
 
 	name = namespace + name;
 }
+
+String controlGroupCss = "control-group";
+
+if (inlineField) {
+	controlGroupCss = controlGroupCss.concat(" control-group-inline");
+}
+
+if (Validator.isNotNull(inlineLabel)) {
+	controlGroupCss = controlGroupCss.concat(" form-inline");
+}
 %>

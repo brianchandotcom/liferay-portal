@@ -16,7 +16,7 @@
 
 <%@ include file="/html/portal/layout/edit/init.jsp" %>
 
-<div class="aui-helper-hidden" id="<portlet:namespace />copyPortletsFromPage">
+<div class="hide" id="<portlet:namespace />copyPortletsFromPage">
 
 	<p>
 		<liferay-ui:message arguments="<%= HtmlUtil.escape(selLayout.getName(locale)) %>" key="the-portlets-in-page-x-will-be-replaced-with-the-portlets-in-the-page-you-select-below" />
@@ -76,46 +76,48 @@
 </div>
 
 <c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.UPDATE) %>">
-	<aui:script use="aui-button-item,aui-dialog">
+	<aui:script use="liferay-util-window">
 		var content = A.one('#<portlet:namespace />copyPortletsFromPage');
 
-		var button = new A.ButtonItem(
+		var button = new A.Button(
 			{
-				handler: function(event) {
-					var popUp = new A.Dialog(
-						{
-							align: Liferay.Util.Window.ALIGN_CENTER,
-							bodyContent: content.show(),
-							destroyOnClose: true,
-							modal: true,
-							title: '<%= UnicodeLanguageUtil.get(pageContext, "copy-portlets-from-page") %>',
-							width: 500
-						}
-					).render();
-
-					popUp.show();
-
-					var submitButton = popUp.get('contentBox').one('#<portlet:namespace />copySubmitButton');
-
-					if (submitButton) {
-						submitButton.on(
-							'click',
-							function(event) {
-								popUp.close();
-
-								var form = A.one('#<portlet:namespace />fm');
-
-								if (form) {
-									form.append(content);
-								}
-
-								<portlet:namespace />saveLayout();
+				icon: 'icon-list-alt',
+				label: '<%= UnicodeLanguageUtil.get(pageContext, "copy-portlets-from-page") %>',
+				on: {
+					click: function(event) {
+						var popUp = Liferay.Util.Window.getWindow(
+							{
+								dialog: {
+									bodyContent: content.show(),
+									destroyOnHide: true,
+								},
+								title: '<%= UnicodeLanguageUtil.get(pageContext, "copy-portlets-from-page") %>'
 							}
 						);
+
+						popUp.show();
+
+						var submitButton = popUp.get('contentBox').one('#<portlet:namespace />copySubmitButton');
+
+						if (submitButton) {
+							submitButton.on(
+								'click',
+								function(event) {
+									popUp.hide();
+
+									var form = A.one('#<portlet:namespace />fm');
+
+									if (form) {
+										form.append(content);
+									}
+
+									<portlet:namespace />saveLayout();
+								}
+							);
+						}
 					}
 				},
-				icon: 'copy',
-				label: '<%= UnicodeLanguageUtil.get(pageContext, "copy-portlets-from-page") %>'
+				render: true
 			}
 		);
 
@@ -127,14 +129,23 @@
 			var layoutToolbar = buttonRow.getData('layoutToolbar');
 
 			if (layoutToolbar) {
-				layoutToolbar.add(button);
+				var layoutToolbarChildren = layoutToolbar.get('children');
+
+				layoutToolbarChildren[0].push(button);
+
+				layoutToolbar.set('children', layoutToolbarChildren);
 			}
 		}
 
 		Liferay.on(
 			'<portlet:namespace />toggleLayoutTypeFields',
 			function(event) {
-				button.toggle(event.type == 'portlet');
+				if (event.type == 'portlet') {
+					button.show();
+				}
+				else {
+					button.hide();
+				}
 			}
 		);
 	</aui:script>

@@ -33,7 +33,7 @@ PortletURL redirectURL = ((PortletURL)request.getAttribute("edit_pages.jsp-redir
 List<LayoutPrototype> layoutPrototypes = LayoutPrototypeServiceUtil.search(company.getCompanyId(), Boolean.TRUE, null);
 %>
 
-<div class="aui-helper-hidden" id="<portlet:namespace />addLayout">
+<div class="hide" id="<portlet:namespace />addLayout">
 	<aui:model-context model="<%= Layout.class %>" />
 
 	<portlet:actionURL var="editPageURL">
@@ -98,7 +98,7 @@ List<LayoutPrototype> layoutPrototypes = LayoutPrototypeServiceUtil.search(compa
 
 			<aui:input id="addLayoutHidden" name="hidden" />
 
-			<div class="aui-helper-hidden" id="<portlet:namespace />layoutPrototypeLinkOptions">
+			<div class="hide" id="<portlet:namespace />layoutPrototypeLinkOptions">
 				<aui:input id="addLayoutLayoutPrototypeLinkEnabled" label="automatically-apply-changes-done-to-the-page-template" name="layoutPrototypeLinkEnabled" type="checkbox" value="<%= PropsValues.LAYOUT_PROTOTYPE_LINK_ENABLED_DEFAULT %>" />
 			</div>
 		</aui:fieldset>

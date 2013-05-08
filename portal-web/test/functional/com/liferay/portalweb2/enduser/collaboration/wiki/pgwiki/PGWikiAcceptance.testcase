@@ -25,9 +25,9 @@
 	</command>
 
 	<command name="AddWikiFrontPageChildPage">
-		<var name="wikiChildPageContent" value="Wiki Node Name" />
+		<var name="wikiChildPageContent" value="Wiki Front Page Child Page Content" />
 		<var name="wikiChildPageTitle" value="Wiki Front Page Child Page Title" />
-		<var name="wikiPageContent" value="Wiki Front Page Child Page Content" />
+		<var name="wikiPageContent" value="Wiki Front Page Content" />
 		<var name="wikiPageTitle" value="FrontPage" />
 
 		<execute macro="WikiPage#pgAddFrontPage" />

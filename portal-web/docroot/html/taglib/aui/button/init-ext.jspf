@@ -13,3 +13,38 @@
  * details.
  */
 --%>
+
+<%
+if (Validator.isNotNull(href)) {
+	String escapedHref = HtmlUtil.escapeJS(PortalUtil.escapeRedirect(href));
+
+	if (Validator.isNotNull(escapedHref)) {
+		onClick = "location.href = '" + escapedHref + "';";
+	}
+	else {
+		onClick = "location.href = location.href.replace(location.hash, '');";
+	}
+}
+else if (onClick.startsWith(Http.HTTP_WITH_SLASH) || onClick.startsWith(Http.HTTPS_WITH_SLASH) || onClick.startsWith(StringPool.SLASH)) {
+	onClick = "location.href = '" + HtmlUtil.escape(PortalUtil.escapeRedirect(onClick)) + "';";
+}
+else if (onClick.startsWith("wsrp_rewrite?")) {
+	onClick = "location.href = '" + HtmlUtil.escape(onClick) + "';";
+}
+
+if (primary == null) {
+	if (type.equals("submit")) {
+		primary = true;
+	}
+	else {
+		primary = false;
+	}
+}
+else {
+	primary = GetterUtil.getBoolean(String.valueOf(primary));
+}
+
+if (primary == Boolean.TRUE) {
+	cssClass += " btn-primary";
+}
+%>

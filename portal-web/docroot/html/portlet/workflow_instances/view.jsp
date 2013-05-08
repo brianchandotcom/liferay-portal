@@ -21,7 +21,7 @@
 		<%@ include file="/html/portlet/workflow_instances/view_workflow_instances.jspf" %>
 	</c:when>
 	<c:otherwise>
-		<div class="portlet-msg-info">
+		<div class="alert alert-info">
 			<liferay-ui:message key="no-workflow-engine-is-deployed" />
 		</div>
 	</c:otherwise>

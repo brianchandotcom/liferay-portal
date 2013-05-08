@@ -1,104 +1,4 @@
-/* ---------- Browser normalization ---------- */
-
-article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
-}
-
-body, blockquote, div, dl, dt, dd, fieldset, form, h1, h2, h3, h4, h5, h6, input, li, ol, p, pre, ul, td, textarea, th {
-}
-
-table {
-}
-
-fieldset, img {
-}
-
-address, caption, cite, code, dfn, th, var {
-}
-
-caption, th {
-}
-
-q:before, q:after {
-}
-
-abbr, acronym {
-}
-
-html {
-	&.aui-dialog-iframe-root-node {
-	}
-}
-
-body {
-	&.portal-popup {
-	}
-
-	&.aui-dialog-iframe-popup {
-	}
-
-	&.portal-iframe {
-	}
-}
-
-blockquote, dl, ol, ul {
-}
-
-dl, ol, ul {
-}
-
-ol {
-}
-
-ul {
-}
-
-ul ul {
-}
-
-ol ol {
-}
-
-dl dd {
-}
-
-th {
-}
-
-caption {
-}
-
-p {
-}
-
-/* ---------- Links ---------- */
-
-a {
-	&:hover {
-	}
-
-	&:visited {
-	}
-}
-
-/* ---------- Headers ---------- */
-
-h1 {
-}
-
-h2 {
-}
-
-h3 {
-}
-
-h1, h2, h3 {
-}
-
-h4, h5, h6 {
-}
-
-h1, h2, h3, h4, h5, h6, strong {
-}
+@import "compass";
 
 /* ---------- Logo ---------- */
 
@@ -112,6 +12,7 @@ body.html-editor {
 
 .html-editor.portlet-message-boards {
 	blockquote {
+
 		&:after {
 		}
 
@@ -125,39 +26,12 @@ body.html-editor {
 
 /* ---------- Text formatting ---------- */
 
-b, strong {
-}
-
-i, em {
-}
-
-code, pre {
-}
-
 .important {
 }
 
 /* ---------- Main content body ---------- */
 
 .portal-iframe #main-content {
-}
-
-/* ---------- Alerts and popups ---------- */
-
-.alert-background {
-}
-
-.popup-alert-notice {
-}
-
-.popup-alert-warning {
-}
-
-/* ---------- Portal add content ---------- */
-
-.portal-add-content {
-	a {
-	}
 }
 
 /* ---------- Loading animation ---------- */
@@ -167,7 +41,7 @@ code, pre {
 
 /* ---------- Separator ---------- */
 
-hr, .separator {
+.separator {
 }
 
 /* ---------- Update Manager ---------- */

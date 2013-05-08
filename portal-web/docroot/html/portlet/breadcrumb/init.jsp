@@ -25,7 +25,6 @@ if (Validator.isNotNull(portletResource)) {
 	preferences = PortletPreferencesFactoryUtil.getPortletSetup(request, portletResource);
 }
 
-String displayStyle = PrefsParamUtil.getString(preferences, renderRequest, "displayStyle", PropsValues.BREADCRUMB_DISPLAY_STYLE_DEFAULT);
 boolean showCurrentGroup = PrefsParamUtil.getBoolean(preferences, renderRequest, "showCurrentGroup", true);
 boolean showCurrentPortlet = PrefsParamUtil.getBoolean(preferences, renderRequest, "showCurrentPortlet", true);
 boolean showGuestGroup = PrefsParamUtil.getBoolean(preferences, renderRequest, "showGuestGroup", PropsValues.BREADCRUMB_SHOW_GUEST_GROUP);

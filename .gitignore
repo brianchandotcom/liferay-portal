@@ -133,7 +133,8 @@ cobertura.ser
 
 /portal-web/docroot/html/ALLOY_ZIP
 
-/portal-web/docroot/html/css/portal/aui.css
+/portal-web/docroot/html/css/portal/aui_deprecated.css
+/portal-web/docroot/html/css/portal/bootstrap.css
 
 /portal-web/docroot/html/icons/_sprite.*
 

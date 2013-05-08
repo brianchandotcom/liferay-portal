@@ -27,15 +27,15 @@
 
 /* ---------- Page template selector ---------- */
 
-.aui-form-options {
+.form-options {
 	input {
 	}
 }
 
-.aui-form-triggers {
+.form-triggers {
 }
 
-.aui-form-trigger {
+.form-trigger {
 	img {
 	}
 
@@ -43,13 +43,13 @@
 	}
 }
 
-.aui-trigger-selected {
+.trigger-selected {
 	&:focus, &:hover {
 	}
 }
 
-.aui-options-trigger img {
+.options-trigger img {
 }
 
-.aui-save-trigger img {
+.save-trigger img {
 }

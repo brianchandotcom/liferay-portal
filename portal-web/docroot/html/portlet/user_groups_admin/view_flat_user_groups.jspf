@@ -14,16 +14,37 @@
  */
 --%>
 
+<%
+UserGroupSearch userGroupSearch = new UserGroupSearch(renderRequest, portletURL);
+%>
+
 <liferay-ui:search-container
 	rowChecker="<%= new RowChecker(renderResponse) %>"
-	searchContainer="<%= new UserGroupSearch(renderRequest, portletURL) %>"
+	searchContainer="<%= userGroupSearch %>"
 >
 	<aui:input disabled="<%= true %>" name="userGroupsRedirect" type="hidden" value="<%= portletURL.toString() %>" />
 	<aui:input name="deleteUserGroupIds" type="hidden" />
 
-	<liferay-ui:search-form
-		page="/html/portlet/user_groups_admin/user_group_search.jsp"
-	/>
+	<aui:nav-bar>
+		<aui:nav>
+			<portlet:renderURL var="viewUserGroupsURL">
+				<portlet:param name="struts_action" value="/user_groups_admin/view" />
+			</portlet:renderURL>
+
+			<aui:nav-item href="<%= viewUserGroupsURL %>" label="view-all" selected="<%= true %>" />
+
+			<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_USER_GROUP) %>">
+				<portlet:renderURL var="addUsergroupURL">
+					<portlet:param name="struts_action" value="/user_groups_admin/edit_user_group" />
+					<portlet:param name="redirect" value="<%= viewUserGroupsURL %>" />
+				</portlet:renderURL>
+
+				<aui:nav-item href="<%= addUsergroupURL %>" iconClass="icon-plus" label="add" />
+			</c:if>
+		</aui:nav>
+
+		<aui:nav-bar-search cssClass="pull-right" file="/html/portlet/user_groups_admin/user_group_search.jsp" searchContainer="<%= userGroupSearch %>" />
+	</aui:nav-bar>
 
 	<%
 	UserGroupSearchTerms searchTerms = (UserGroupSearchTerms)searchContainer.getSearchTerms();

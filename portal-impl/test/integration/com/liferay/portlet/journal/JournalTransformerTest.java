@@ -249,8 +249,9 @@ public class JournalTransformerTest {
 			TestPropsValues.getGroupId(), null, null);
 
 		tokens.put(
+			"article_group_id", String.valueOf(TestPropsValues.getGroupId()));
+		tokens.put(
 			"company_id", String.valueOf(TestPropsValues.getCompanyId()));
-		tokens.put("group_id", String.valueOf(TestPropsValues.getGroupId()));
 
 		return tokens;
 	}

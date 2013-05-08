@@ -1608,7 +1608,12 @@ public class JournalArticleLocalServiceImpl
 				article.getCompanyId());
 
 			tokens.put(
+				"article_group_id", String.valueOf(article.getGroupId()));
+			tokens.put(
 				"company_group_id", String.valueOf(companyGroup.getGroupId()));
+
+			// Deprecated tokens
+
 			tokens.put("group_id", String.valueOf(article.getGroupId()));
 		}
 

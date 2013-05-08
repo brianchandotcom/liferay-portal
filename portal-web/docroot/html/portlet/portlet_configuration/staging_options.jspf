@@ -69,7 +69,7 @@
 
 									<aui:input id="portletMetaDataFilter" label="choose-metadata" name="<%= PortletDataHandlerKeys.PORTLET_METADATA_ALL %>" type="radio" value="false" />
 
-									<ul class="aui-helper-hidden metadata-controls <%= metadataControls.length > 1 ? "metadata-controls-multiple" : StringPool.BLANK %>" id="<portlet:namespace />portletMetaDataList">
+									<ul class="hide metadata-controls <%= metadataControls.length > 1 ? "metadata-controls-multiple" : StringPool.BLANK %>" id="<portlet:namespace />portletMetaDataList">
 
 										<%
 										for (int i = 0; i < metadataControls.length; i++) {
@@ -137,7 +137,7 @@
 						yesterday.add(Calendar.DATE, -1);
 						%>
 
-						<ul class="aui-helper-hidden date-range-options" id="<portlet:namespace />startEndDate">
+						<ul class="helper-hidden date-range-options" id="<portlet:namespace />startEndDate">
 							<li>
 								<aui:field-wrapper label="start-date">
 									<liferay-ui:input-date

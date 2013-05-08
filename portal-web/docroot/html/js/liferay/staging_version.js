@@ -35,22 +35,18 @@ AUI.add(
 
 					var layoutRevisionToolbar = new A.Toolbar(
 						{
-							activeState: false,
-							boundingBox: A.byIdNS(namespace, 'layoutRevisionToolbar'),
-							children: [
-								{
-									type: 'ToolbarSpacer'
-								}
-							]
+							boundingBox: A.byIdNS(namespace, 'layoutRevisionToolbar')
 						}
 					).render();
 
 					if (!event.hideHistory) {
 						layoutRevisionToolbar.add(
 							{
-								handler: A.bind('_onViewHistory', instance),
-								icon: 'clock',
-								label: Liferay.Language.get('history')
+								icon: 'icon-time',
+								label: Liferay.Language.get('history'),
+								on: {
+									click: A.bind('_onViewHistory', instance)
+								}
 							}
 						);
 					}
@@ -60,20 +56,24 @@ AUI.add(
 					var redoText = Liferay.Language.get('redo');
 					var undoText = Liferay.Language.get('undo');
 
-					StagingBar.redoButton = new A.ButtonItem(
+					StagingBar.redoButton = new A.Button(
 						{
-							handler: A.bind('_onRevisionChange', instance, 'redo'),
-							icon: 'arrowreturnthick-1-r',
+							icon: 'icon-forward',
 							label: redoText,
+							on: {
+								click: A.bind('_onRevisionChange', instance, 'redo')
+							},
 							title: redoText
 						}
 					);
 
-					StagingBar.undoButton = new A.ButtonItem(
+					StagingBar.undoButton = new A.Button(
 						{
-							handler: A.bind('_onRevisionChange', instance, 'undo'),
-							icon: 'arrowreturnthick-1-b',
+							icon: 'icon-backward',
 							label: undoText,
+							on: {
+								click: A.bind('_onRevisionChange', instance, 'undo')
+							},
 							title: undoText
 						}
 					);
@@ -145,16 +145,13 @@ AUI.add(
 					var graphDialog = instance._graphDialog;
 
 					if (!graphDialog) {
-						graphDialog = new A.Dialog(
-							{
-								align: Liferay.Util.Window.ALIGN_CENTER,
-								draggable: true,
-								height: 600,
-								modal: true,
-								title: Liferay.Language.get('history'),
-								width: 600
-							}
-						).plug(
+						graphDialog = Liferay.Util.Window.getWindow(
+						    {
+								title: Liferay.Language.get('history')
+						    }
+						);
+
+						graphDialog.plug(
 							A.Plugin.IO,
 							{
 								autoLoad: false,
@@ -166,9 +163,7 @@ AUI.add(
 								},
 								uri: themeDisplay.getPathMain() + '/staging_bar/view_layout_revisions'
 							}
-						).render();
-
-						graphDialog.move(graphDialog.get('x'), graphDialog.get('y') + 100);
+						);
 
 						graphDialog.bodyNode.delegate(
 							'click',
@@ -264,6 +259,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-button-item', 'liferay-staging']
+		requires: ['aui-button', 'liferay-staging']
 	}
 );

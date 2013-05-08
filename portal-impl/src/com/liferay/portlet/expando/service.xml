@@ -63,7 +63,7 @@
 			<finder-column name="classPK" />
 		</finder>
 	</entity>
-	<entity name="ExpandoTable" local-service="true" remote-service="false">
+	<entity name="ExpandoTable" local-service="true" remote-service="false" json-enabled="true">
 
 		<!-- PK fields -->
 

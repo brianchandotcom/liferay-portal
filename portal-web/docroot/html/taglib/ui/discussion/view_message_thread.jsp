@@ -24,18 +24,10 @@ MBCategory category = (MBCategory)request.getAttribute(WebKeys.MESSAGE_BOARDS_TR
 MBThread thread = (MBThread)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD);
 boolean lastNode = ((Boolean)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_LAST_NODE)).booleanValue();
 int depth = ((Integer)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DEPTH)).intValue();
-
-String className = "portlet-section-body results-row";
-String classHoverName = "portlet-section-body-hover results-row hover";
-
-if (treeWalker.isOdd()) {
-	className = "portlet-section-alternate results-row alt";
-	classHoverName = "portlet-section-alternate-hover results-row alt hover";
-}
 %>
 
-<tr class="<%= className %>" onmouseout="this.className = '<%= className %>';" onmouseover="this.className = '<%= classHoverName %>';">
-	<td style="padding-left: <%= depth * 10 %>px; width: 90%">
+<tr>
+	<td class="table-cell" style="padding-left: <%= depth * 10 %>px; width: 90%">
 		<c:if test="<%= !message.isRoot() %>">
 			<c:choose>
 				<c:when test="<%= !lastNode %>">
@@ -53,8 +45,8 @@ if (treeWalker.isOdd()) {
 
 		<a href="<%= rowHREF %>"><%= HtmlUtil.escape(StringUtil.shorten(message.getBody(), 50, StringPool.TRIPLE_PERIOD)) %></a>
 	</td>
-	<td></td>
-	<td nowrap="nowrap">
+	<td class="table-cell"></td>
+	<td class="table-cell" nowrap="nowrap">
 		<a href="<%= rowHREF %>">
 
 		<c:choose>
@@ -75,8 +67,8 @@ if (treeWalker.isOdd()) {
 
 		</a>
 	</td>
-	<td></td>
-	<td nowrap="nowrap">
+	<td class="table-cell"></td>
+	<td class="table-cell" nowrap="nowrap">
 		<a href="<%= rowHREF %>">
 		<%= dateFormatDateTime.format(message.getModifiedDate()) %>
 		</a>

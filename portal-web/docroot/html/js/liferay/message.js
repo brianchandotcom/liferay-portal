@@ -9,19 +9,31 @@ AUI.add(
 
 		var EVENT_HOVER = ['mouseenter', 'mouseleave'];
 
-		var	NAME = 'liferaymessage';
+		var NAME = 'liferaymessage';
 
 		var REGEX_CSS_TYPE = A.DOM._getRegExp('\\blfr-message-(alert|error|help|info|success)\\b', 'g');
 
-		var TPL_HIDE_NOTICES = '<div class="lfr-message-controls"><span class="aui-icon aui-icon-closethick lfr-message-close lfr-message-control" title="{0}"></span></div>';
-
-		var TPL_HIDE_NOTICES_ALL = '<span class="lfr-message-close-all lfr-message-control">{0}</span>';
+		var TPL_HIDE_NOTICES = '<button type="button" class="close">&#x00D7;</button>';
 
 		var Message = A.Component.create(
 			{
 				ATTRS: {
+					closeButton: {
+						valueFn: function() {
+							return A.Node.create(TPL_HIDE_NOTICES);
+						}
+					},
+
 					dismissible: {
 						value: true
+					},
+
+					hideAllNotices: {
+						valueFn: function() {
+							var instance = this;
+
+							return A.Node.create('<a href="javascript:;"><small>' + instance.get('strings.dismissAll') || Liferay.Language.get('disable-this-note-for-all-portlets') + '</small></a>');
+						}
 					},
 
 					persistenceCategory: {
@@ -39,6 +51,11 @@ AUI.add(
 					type: {
 						value: 'info'
 					}
+				},
+
+				HTML_PARSER: {
+					closeButton: '.close',
+					hideAllNotices: '.btn-link'
 				},
 
 				CSS_PREFIX: 'lfr-message',
@@ -66,33 +83,23 @@ AUI.add(
 						if (dismissible) {
 							var trigger = instance.get('trigger');
 
-							trigger.addClass('lfr-message-trigger');
-
 							instance._trigger = trigger;
 
-							var tplHideNotices = Lang.sub(TPL_HIDE_NOTICES, [Liferay.Language.get('hide-this-message')]);
-
-							var hideNoticesControl = A.Node.create(tplHideNotices);
+							var closeButton = instance.get('closeButton');
 
 							if (instance.get('persistenceCategory')) {
-								var dismissAllText = instance.get('strings.dismissAll') || '<a href="javascript:;">' + Liferay.Language.get('hide-all-messages-like-this') + '</a>';
+								var hideAllNotices = instance.get('hideAllNotices');
 
-								var tplHideNoticesAll = Lang.sub(TPL_HIDE_NOTICES_ALL, [dismissAllText]);
+								instance._contentBox.append(hideAllNotices);
 
-								var hideAllNotices = A.Node.create(tplHideNoticesAll);
-
-								instance._hideAllNoticesControl = hideAllNotices.one('a');
-
-								hideNoticesControl.append(hideAllNotices);
+								instance._contentBox.addClass('dismiss-all-notes');
 
 								instance._hideAllNotices = hideAllNotices;
 							}
 
-							instance._closeButton = hideNoticesControl.one('.lfr-message-close');
+							instance._closeButton = closeButton;
 
-							instance._contentBox.append(hideNoticesControl);
-
-							instance._hideNoticesControl = hideNoticesControl;
+							instance._contentBox.prepend(closeButton);
 						}
 
 						instance._dismissible = dismissible;
@@ -102,8 +109,6 @@ AUI.add(
 						var instance = this;
 
 						if (instance._dismissible) {
-							instance.on(EVENT_HOVER, instance._onBoxHover);
-
 							instance.after('visibleChange', instance._afterVisibleChange);
 
 							var closeButton = instance._closeButton;
@@ -118,12 +123,10 @@ AUI.add(
 								trigger.on('click', instance._onTriggerClick, instance);
 							}
 
-							if (instance._hideNoticesControl) {
-								instance._hideNoticesControl.on(EVENT_HOVER, instance._onCloseButtonHover, instance);
-							}
+							var hideAllNotices = instance._hideAllNotices;
 
-							if (instance._hideAllNoticesControl) {
-								instance._hideAllNoticesControl.on('click', instance._onHideAllClick, instance);
+							if (hideAllNotices) {
+								hideAllNotices.on('click', instance._onHideAllClick, instance);
 							}
 						}
 					},
@@ -145,19 +148,13 @@ AUI.add(
 							}
 
 							if (event.categoryVisible === false) {
-								sessionData[instance.get('persistenceCategory')] = false;
+								sessionData[instance.get('persistenceCategory')] = true;
 							}
 
 							sessionData[instance.get('id')] = messageVisible;
 
 							Liferay.Store(sessionData);
 						}
-					},
-
-					_onBoxHover: function(event) {
-						var instance = this;
-
-						instance._boundingBox.toggleClass('lfr-message-hover', (event.type.indexOf('mouseenter') > -1));
 					},
 
 					_onHideAllClick: function(event) {
@@ -170,12 +167,6 @@ AUI.add(
 						var instance = this;
 
 						instance.hide();
-					},
-
-					_onCloseButtonHover: function(event) {
-						var instance = this;
-
-						instance._hideNoticesControl.toggleClass('lfr-message-controls-hover', (event.type == 'mouseenter'));
 					},
 
 					_onTriggerClick: function(event) {

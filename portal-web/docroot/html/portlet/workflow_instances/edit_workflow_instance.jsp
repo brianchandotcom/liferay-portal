@@ -72,25 +72,25 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 	title="<%= headerTitle %>"
 />
 
-<aui:layout>
-	<aui:column columnWidth="<%= 75 %>" cssClass="lfr-asset-column lfr-asset-column-details" first="<%= true %>">
-		<aui:layout>
-			<aui:column columnWidth="60">
+<aui:row>
+	<aui:col cssClass="lfr-asset-column lfr-asset-column-details" width="<%= 75 %>">
+		<aui:row>
+			<aui:col width="<%= 60 %>">
 				<div class="lfr-asset-status">
 					<aui:field-wrapper label="state">
 						<%= LanguageUtil.get(pageContext, workflowInstance.getState()) %>
 					</aui:field-wrapper>
 				</div>
-			</aui:column>
+			</aui:col>
 
-			<aui:column>
+			<aui:col width="<%= 33 %>">
 				<div class="lfr-asset-date">
 					<aui:field-wrapper label="end-date">
 						<%= (workflowInstance.getEndDate() == null) ? LanguageUtil.get(pageContext, "never") : dateFormatDateTime.format(workflowInstance.getEndDate()) %>
 					</aui:field-wrapper>
 				</div>
-			</aui:column>
-		</aui:layout>
+			</aui:col>
+		</aui:row>
 
 		<liferay-ui:panel-container cssClass="task-panel-container" extended="<%= true %>" id="preview">
 
@@ -251,9 +251,9 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 				/>
 			</liferay-ui:panel>
 		</liferay-ui:panel-container>
-	</aui:column>
+	</aui:col>
 
-	<aui:column columnWidth="<%= 25 %>" cssClass="lfr-asset-column lfr-asset-column-actions" last="<%= true %>">
+	<aui:col cssClass="lfr-asset-column lfr-asset-column-actions" last="<%= true %>" width="<%= 25 %>">
 		<div class="lfr-asset-summary">
 			<liferay-ui:icon
 				cssClass="lfr-asset-avatar"
@@ -271,8 +271,8 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 		%>
 
 		<liferay-util:include page="/html/portlet/workflow_instances/workflow_instance_action.jsp" />
-	</aui:column>
-</aui:layout>
+	</aui:col>
+</aui:row>
 
 <%
 PortalUtil.addPortletBreadcrumbEntry(request, headerTitle, currentURL);

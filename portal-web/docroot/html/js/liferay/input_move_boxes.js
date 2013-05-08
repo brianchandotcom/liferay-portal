@@ -10,14 +10,16 @@ AUI.add(
 
 		var CONFIG_REORDER = {
 			children: [
-				{
-					cssClass: 'reorder-up',
-					icon: 'circle-arrow-t'
-				},
-				{
-					cssClass: 'reorder-down',
-					icon: 'circle-arrow-b'
-				}
+				[
+					{
+						cssClass: 'reorder-up',
+						icon: 'icon-circle-arrow-up'
+					},
+					{
+						cssClass: 'reorder-down',
+						icon: 'icon-circle-arrow-down'
+					}
+				]
 			]
 		};
 
@@ -72,16 +74,16 @@ AUI.add(
 						var leftReorderToolbar = instance._leftReorderToolbar;
 
 						if (leftReorderToolbar) {
-							leftReorderToolbar.after('buttonitem:click', A.rbind('_afterOrderClick', instance, instance._leftBox));
+							leftReorderToolbar.after('btn:click', A.rbind('_afterOrderClick', instance, instance._leftBox));
 						}
 
 						var rightReorderToolbar = instance._rightReorderToolbar;
 
 						if (rightReorderToolbar) {
-							rightReorderToolbar.after('buttonitem:click', A.rbind('_afterOrderClick', instance, instance._rightBox));
+							rightReorderToolbar.after('btn:click', A.rbind('_afterOrderClick', instance, instance._rightBox));
 						}
 
-						instance._moveToolbar.on('buttonitem:click', instance._afterMoveClick, instance);
+						instance._moveToolbar.on('btn:click', instance._afterMoveClick, instance);
 
 						instance._leftBox.on('focus', A.rbind('_onSelectFocus', instance, instance._rightBox));
 						instance._rightBox.on('focus', A.rbind('_onSelectFocus', instance, instance._leftBox));
@@ -158,18 +160,21 @@ AUI.add(
 							instance._moveToolbar = new A.Toolbar(
 								{
 									children: [
-										{
-											cssClass: 'move-left',
-											icon: 'circle-arrow-r',
-											title: strings.MOVE_LEFT
-										},
-										{
-											cssClass: 'move-right',
-											icon: 'circle-arrow-l',
-											title: strings.MOVE_RIGHT
-										}
-									],
-									orientation: 'vertical'
+										[
+											'normal',
+											'vertical',
+											{
+												cssClass: 'move-left',
+												icon: 'icon-circle-arrow-left',
+												title: strings.MOVE_LEFT
+											},
+											{
+												cssClass: 'move-right',
+												icon: 'icon-circle-arrow-right',
+												title: strings.MOVE_RIGHT
+											}
+										]
+									]
 								}
 							).render(moveButtonsColumn);
 						}
@@ -177,8 +182,8 @@ AUI.add(
 						if (instance.get('leftReorder')) {
 							var leftColumn = contentBox.one('.left-selector-column-content');
 
-							CONFIG_REORDER.children[0].title = strings.LEFT_MOVE_UP;
-							CONFIG_REORDER.children[1].title = strings.LEFT_MOVE_DOWN;
+							CONFIG_REORDER.children[0][0].title = strings.LEFT_MOVE_UP;
+							CONFIG_REORDER.children[0][1].title = strings.LEFT_MOVE_DOWN;
 
 							instance._leftReorderToolbar = new A.Toolbar(CONFIG_REORDER).render(leftColumn);
 						}
@@ -186,8 +191,8 @@ AUI.add(
 						if (instance.get('rightReorder')) {
 							var rightColumn = contentBox.one('.right-selector-column-content');
 
-							CONFIG_REORDER.children[0].title = strings.RIGHT_MOVE_UP;
-							CONFIG_REORDER.children[1].title = strings.RIGHT_MOVE_DOWN;
+							CONFIG_REORDER.children[0][0].title = strings.RIGHT_MOVE_UP;
+							CONFIG_REORDER.children[0][1].title = strings.RIGHT_MOVE_DOWN;
 
 							instance._rightReorderToolbar = new A.Toolbar(CONFIG_REORDER).render(rightColumn);
 						}

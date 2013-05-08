@@ -102,14 +102,6 @@ String[][] categorySections = {mainSections, identificationSections, miscellaneo
 	function <portlet:namespace />saveOrganization() {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (organization == null) ? Constants.ADD : Constants.UPDATE %>";
 
-		var redirect = "<portlet:renderURL><portlet:param name="struts_action" value="/users_admin/edit_organization" /><portlet:param name="backURL" value="<%= backURL %>"></portlet:param></portlet:renderURL>";
-
-		if (location.hash) {
-			redirect += location.hash.replace('#_LFR_FN_', '&<portlet:namespace />historyKey=');
-		}
-
-		document.<portlet:namespace />fm.<portlet:namespace />redirect.value = redirect;
-
 		submitForm(document.<portlet:namespace />fm);
 	}
 

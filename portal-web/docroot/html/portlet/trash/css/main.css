@@ -8,17 +8,17 @@
 		width: 100%;
 	}
 
-	.aui-search-bar {
+	.form-search {
 		display: block;
 		float: right;
 	}
 
 	.lfr-header-row {
-		.aui-icon-delete {
+		.icon-delete {
 			background-image: url(@theme_image_path@/common/delete.png);
 		}
 
-		.aui-icon-undo {
+		.icon-undo {
 			background-image: url(@theme_image_path@/common/undo.png);
 		}
 	}
@@ -30,18 +30,10 @@
 }
 
 .trash-restore-popup {
-	.aui-form {
+	.form {
 		fieldset {
 			margin-bottom: 0;
 			padding: 0 15px;
 		}
-
-		.new-file-name .aui-field-input {
-			width: 100%;
-		}
-	}
-
-	.portlet-msg-alert {
-		margin: 10px 0;
 	}
 }

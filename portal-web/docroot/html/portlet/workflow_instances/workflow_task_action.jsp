@@ -83,11 +83,11 @@ WorkflowTask workflowTask = (WorkflowTask)row.getObject();
 	</c:if>
 </liferay-ui:icon-menu>
 
-<div class="aui-helper-hidden" id="<%= randomId %>updateComments">
+<div class="hide" id="<%= randomId %>updateComments">
 	<aui:input cols="55" name="comment" rows="10" type="textarea" />
 </div>
 
-<aui:script use="aui-dialog">
+<aui:script use="aui-io-plugin-deprecated,liferay-util-window">
 	var showPopup = function(url, title) {
 		var form = A.Node.create('<form />');
 
@@ -102,29 +102,34 @@ WorkflowTask workflowTask = (WorkflowTask)row.getObject();
 			comments.show();
 		}
 
-		var dialog = new A.Dialog(
+		var dialog = Liferay.Util.Window.getWindow(
 			{
-				align: Liferay.Util.Window.ALIGN_CENTER,
-				bodyContent: form,
-				buttons: [
-					{
-						handler: function() {
-							submitForm(form);
-						},
-						label: '<%= UnicodeLanguageUtil.get(pageContext, "ok") %>'
-					},
-					{
-						handler: function() {
-							dialog.close();
-						},
-						label: '<%= UnicodeLanguageUtil.get(pageContext, "cancel") %>'
+				dialog: {
+					bodyContent: form,
+					toolbars: {
+						footer: [
+							{
+								label: '<%= UnicodeLanguageUtil.get(pageContext, "ok") %>',
+								on: {
+									click: function() {
+										submitForm(form);
+									}
+								}
+							},
+							{
+								label: '<%= UnicodeLanguageUtil.get(pageContext, "cancel") %>',
+								on: {
+									click: function() {
+										dialog.hide();
+									}
+								}
+							}
+						]
 					}
-				],
-				modal: true,
-				title: title,
-				width: 400
+				},
+				title: title
 			}
-		).render();
+		);
 	};
 
 	A.all('.workflow-task-<%= randomId %> a').on(

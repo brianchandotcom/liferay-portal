@@ -1,11 +1,11 @@
 .lfr-panel-content {
-	.aui-paginator-container {
+	.paginator-container {
 		border-bottom: 1px solid transparent;
 		border-top: 1px solid transparent;
 		overflow: hidden;
 		text-align: center;
 
-		.aui-paginator-page-container, .lfr-paginator-next, .lfr-paginator-prev {
+		.paginator-page-container, .lfr-paginator-next, .lfr-paginator-prev {
 			display: inline-block;
 		}
 
@@ -14,7 +14,7 @@
 		}
 	}
 
-	.aui-paginator-page-container .aui-paginator-page-link {
+	.paginator-page-container .paginator-page-link {
 		border: 1px solid transparent;
 		display: inline-block;
 		float: none;
@@ -27,17 +27,17 @@
 /* Skin */
 
 .lfr-panel-content {
-	.aui-paginator-container {
+	.paginator-container {
 		background: #cfd2d5;
 		border-bottom-color: #dcdee0;
 		border-top-color: #dcdee0;
 	}
 
-	.aui-paginator-page-container .aui-paginator-page-link {
+	.paginator-page-container .paginator-page-link {
 		background: none;
 		border-color: #CFD2D5;
 
-		&.aui-paginator-current-page {
+		&.paginator-current-page {
 			background: #99a7b3 url(@theme_image_path@/application/current_page_hover_bg.png) repeat-x 0 0;
 			border-color: #6b7785 #7c8994 #919fa9;
 			color: #fff;

@@ -159,7 +159,7 @@ groupId = ParamUtil.getLong(request, "groupId", groupId);
 				classPK: <%= (ddmStructure != null) ? ddmStructure.getPrimaryKey() : 0 %>,
 				ddmResource: '<%= ddmResource %>',
 				dialog: {
-					width: 820
+					destroyOnHide: true
 				},
 				eventName: '<portlet:namespace />selectStructure',
 				groupId: <%= groupId %>,

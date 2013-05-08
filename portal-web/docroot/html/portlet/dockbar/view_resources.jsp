@@ -35,7 +35,7 @@ boolean viewPreview = ParamUtil.getBoolean(request, "viewPreview");
 			}
 			%>
 
-			<liferay-ui:panel collapsible="<%= false %>" cssClass="lfr-component panel-page-category recent" extended="<%= true %>" id="manageRecentPanel" persistState="<%= true %>" title="<%= panelTitle %>">
+			<liferay-ui:panel collapsible="<%= false %>" cssClass="clearfix lfr-component panel-page-category recent" extended="<%= true %>" id="manageRecentPanel" persistState="<%= true %>" title="<%= panelTitle %>">
 
 				<%
 				int deltaDefault = GetterUtil.getInteger(SessionClicks.get(request, "liferay_addpanel_numitems", "10"));
@@ -46,7 +46,7 @@ boolean viewPreview = ParamUtil.getBoolean(request, "viewPreview");
 
 				long[] groupIds = new long[]{scopeGroupId};
 
-				long[] availableClassNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds(company.getCompanyId());
+				long[] availableClassNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds();
 
 				for (long classNameId : availableClassNameIds) {
 					AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(PortalUtil.getClassName(classNameId));

@@ -216,16 +216,12 @@ h3 {
 	color: #999;
 }
 
-.lfr-api-context .aui-field-input, .lfr-api-context .aui-field-element, .lfr-api-context .aui-field-content {
+.lfr-api-context .field-element, .lfr-api-context .field-content {
 	width: 100%;
 }
 
-.lfr-api-service-search .aui-field-content {
+.lfr-api-service-search .field-content {
 	margin-top: 2px;
-}
-
-.lfr-api-service-search .aui-field-input {
-	width: 100%;
 }
 
 .no-matches {
@@ -250,12 +246,12 @@ h3 {
 	padding: 0 0.5em 1em;
 }
 
-.aui-field-content, .aui-field-inline .aui-field-content {
+.field-content, .field-inline .field-content {
 	margin-bottom: 10px;
 	margin-top: 5px;
 }
 
-.aui-suffix {
+.suffix {
 	color: #777;
 	display: block;
 	font-size: 0.9em;
@@ -272,7 +268,7 @@ h3 {
 	padding: 3px;
 }
 
-.portlet-msg-alert .lfr-inline-code {
+.alert.alert-block .lfr-inline-code {
 	background-color: #EEB;
 	color: #333;
 }

@@ -145,13 +145,13 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 
 							Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', result);
 
-							Util.getWindow().close();
+							Util.getWindow().hide();
 						}
 					}
 				}
 			);
 		},
-		'.selector-button input'
+		'.selector-button'
 	);
 
 	A.one('#<portlet:namespace />tuplesSearchContainer').delegate(
@@ -159,7 +159,7 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 		function(event) {
 			var buttonId = event.target.attr('data-button-id');
 
-			Liferay.Util.toggleDisabled(selectDDMStructureFieldForm.all('.aui-button-input'), true);
+			Liferay.Util.toggleDisabled(selectDDMStructureFieldForm.all('.button-input'), true);
 
 			Liferay.Util.toggleDisabled('#' + buttonId, false);
 		},

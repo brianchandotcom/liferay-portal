@@ -39,7 +39,7 @@ boolean deletePortrait = ParamUtil.getBoolean(request, "deletePortrait");
 
 <h3><liferay-ui:message key="details" /></h3>
 
-<aui:fieldset column="<%= true %>" cssClass="aui-w50">
+<aui:fieldset cssClass="span6">
 	<liferay-ui:success key="verificationEmailSent" message="your-email-verification-code-has-been-sent-and-the-new-email-address-will-be-applied-to-your-account-once-it-has-been-verified" />
 
 	<liferay-ui:error exception="<%= DuplicateUserScreenNameException.class %>" message="the-screen-name-you-requested-is-already-taken" />
@@ -108,7 +108,7 @@ boolean deletePortrait = ParamUtil.getBoolean(request, "deletePortrait");
 	<%@ include file="/html/portlet/users_admin/user/details_user_name.jspf" %>
 </aui:fieldset>
 
-<aui:fieldset column="<%= true %>" cssClass="aui-w50">
+<aui:fieldset cssClass="span5">
 	<div>
 		<c:if test="<%= selUser != null %>">
 			<portlet:renderURL var="editUserPortraitURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">

@@ -251,7 +251,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		%>
 
 		<c:if test='<%= topLink.equals("recent-posts") && (groupThreadsUserId > 0) %>'>
-			<div class="portlet-msg-info">
+			<div class="alert alert-info">
 				<liferay-ui:message key="filter-by-user" />: <%= HtmlUtil.escape(PortalUtil.getUserName(groupThreadsUserId, StringPool.BLANK)) %>
 			</div>
 		</c:if>

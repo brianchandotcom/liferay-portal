@@ -143,7 +143,7 @@ AUI.add(
 					_setupNodeResize: function(node) {
 						var instance = this;
 
-						var resizable = node.hasClass('aui-resize');
+						var resizable = node.hasClass('resize');
 
 						if (!resizable) {
 							var resize = new A.Resize(
@@ -215,6 +215,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-resize', 'liferay-layout-column']
+		requires: ['aui-resize-deprecated', 'liferay-layout-column']
 	}
 );

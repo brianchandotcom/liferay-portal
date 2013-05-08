@@ -5,14 +5,7 @@
 		margin: 1em 0;
 	}
 
-	.lfr-change-logo {
-		display: inline;
-
-		&.show-background {
-			display: block;
-			line-height: 0;
-			padding: 10px;
-			text-align: center;
-		}
+	.lfr-change-logo.show-background {
+		padding: 10px;
 	}
 }

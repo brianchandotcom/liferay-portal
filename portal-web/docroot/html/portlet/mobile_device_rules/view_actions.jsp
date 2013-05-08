@@ -45,13 +45,11 @@ portletURL.setParameter("ruleGroupInstanceId", String.valueOf(ruleGroupInstanceI
 		<portlet:param name="ruleGroupInstanceId" value="<%= String.valueOf(ruleGroupInstanceId) %>" />
 	</liferay-portlet:renderURL>
 
-	<div class="lfr-portlet-toolbar">
-		<span class="add-button lfr-toolbar-button">
-			<a href="<%= addURL %>">
-				<liferay-ui:message key="add-action" />
-			</a>
-		</span>
-	</div>
+	<aui:nav-bar>
+		<aui:nav>
+			<aui:nav-item href="<%= addURL %>" iconClass="icon-plus" label="add-action" />
+		</aui:nav>
+	</aui:nav-bar>
 </c:if>
 
 <div class="separator"><!-- --></div>

@@ -3,17 +3,7 @@ body.orange, .orange .portlet {
 }
 
 .orange {
-	.logo .current-site {
-		background-color: #BFB8A7;
-	}
-
-	.aui-state-hover {
-		background-color: #DAC8BA;
-		background-image: url(@theme_image_path@/color_schemes/orange/application/state_hover_bg.png);
-		border-color: #837062;
-	}
-
-	.aui-icon {
+	.icon {
 		background-image: url(@theme_image_path@/color_schemes/orange/aui/icon_sprite.png);
 	}
 
@@ -29,61 +19,34 @@ body.orange, .orange .portlet {
 
 	/* ---------- Application styling ---------- */
 
-	.results-header {
-		background-color: #DDD9D2;
-	}
-
-	.results-row {
-		&.alt td {
-			background-color: #E7E4DE;
-		}
-
-		&.hover td {
-			background-color: #CDC7BD;
-		}
-	}
-
-	.drop-area {
-		background-color: #DED8D4;
-	}
-
-	.aui-resizable-proxy {
+	.resizable-proxy {
 		border-color: #968A83;
 	}
 
-	.aui-sortable-proxy {
+	.sortable-proxy {
 		background-color: #827972;
 	}
 
-	.aui-menugroup-content h4 {
+	.menugroup-content h4 {
 		background-color: #DFDCD3;
 		color: #7D745B;
 	}
 
-	.aui-menu-content li a, .lfr-menu-list ul li a {
+	.menu-content li a {
 		color: #34322C;
 	}
 
-	.my-sites-menu .current-site {
-		border-color: #81641D;
-
-		a {
-			background-color: #BB8F30;
-			color: #FFF;
-		}
-	}
-
-	.aui-menu-content li a.aui-focus, .lfr-menu-expanded li a:focus, .lfr-menu-list ul a.aui-focus {
+	.menu-content li a.focus, .lfr-menu-expanded li a:focus {
 		background-color: #7D745B;
 		color: #FFF;
 		text-shadow: -1px -1px #34322C;
 	}
 
-	.aui-tab {
+	.tab {
 		background: none;
 	}
 
-	.aui-tab-active {
+	.tab-active {
 		background-color: #333;
 
 		&, a {
@@ -147,30 +110,30 @@ body.orange, .orange .portlet {
 		}
 	}
 
-	.aui-portal-layout-drag-indicator {
+	.sortable-layout-drag-indicator {
 		background-color: #B6A63C;
 	}
 
-	.aui-autocomplete-results-content {
+	.autocomplete-results-content {
 		border-color: #F5D599;
 	}
 
-	.aui-autocomplete-selected {
+	.autocomplete-selected {
 		background-color: #F7F0E0;
 		border-color: #EAD8A4;
 	}
 
-	.aui-textboxlistentry {
+	.textboxlistentry {
 		background-color: #F4EACB;
 		border-color: #EAD8A4;
 	}
 
-	.aui-textboxlistentry-focused {
+	.textboxlistentry-focused {
 		background-color: #B6A63C;
 		border-color: #4F4534;
 	}
 
-	.aui-textboxlistentry-close-hover {
+	.textboxlistentry-close-hover {
 		background-color: #EAD8A4;
 	}
 
@@ -248,56 +211,34 @@ body.orange, .orange .portlet {
 		color: #968A83;
 	}
 
-	.lfr-actions .lfr-trigger li a:hover {
-		background-color: #968A83;
-	}
-
-	.lfr-tag-selector-popup .aui-textfield-content {
+	.lfr-tag-selector-popup .textfield-content {
 		background-color: #DED8D4;
 		border-color: #BDB4AF;
 	}
 
 	/* This CSS sets the default styles for forms. */
 
-	button, input[type="button"], input[type="reset"], input[type="submit"], .lfr-actions, .lfr-actions ul {
+	button, input[type="button"], input[type="reset"], input[type="submit"] {
 		color: #4F4534;
 	}
 
-	button:hover, input[type="button"]:hover, input[type="reset"]:hover, input[type="submit"]:hover, .lfr-actions:hover, .lfr-actions:hover ul {
+	button:hover, input[type="button"]:hover, input[type="reset"]:hover, input[type="submit"]:hover {
 		background-color: #DAC8BA;
 		background-image: url(@theme_image_path@/color_schemes/orange/application/state_hover_bg.png);
 		border-color: #837062;
 		color: #9A6F33;
 	}
 
-	button:focus, input[type="button"]:focus, input[type="reset"]:focus, input[type="submit"]:focus, .lfr-actions:focus, .lfr-actions:focus ul {
+	button:focus, input[type="button"]:focus, input[type="reset"]:focus, input[type="submit"]:focus {
 		background-color: #ECECEC;
 		background-image: url(@theme_image_path@/application/state_active_bg.png);
-	}
-
-	/* ---------- Site breadcrumbs ---------- */
-
-	.site-breadcrumbs li {
-		&.first a {
-			color: #9A6F33;
-		}
-
-		&.last a {
-			color: #67604B;
-		}
-	}
-
-	.lfr-hudcrumbs .breadcrumbs li {
-		a, span {
-			color: #FFF;
-		}
 	}
 }
 
 /* ---------- IE6 chokes on attribute selectors in a chain, so we separate them into their own rule ---------- */
 
 .ie6 .orange {
-	button, input.button, input.submit, .aui-button-disabled button, .aui-button-disabled input.button, .aui-button-disabled input.submit {
+	button, input.button, input.submit, .button-disabled button, .button-disabled input.button, .button-disabled input.submit {
 		color: #4F4534;
 	}
 }

@@ -2,7 +2,7 @@
 	float: right;
 	white-space: nowrap;
 
-	.aui-field-content, .aui-button {
+	.field-content, .button {
 		border-width: 0;
 		display: inline-block;
 		float: left;
@@ -20,7 +20,7 @@
 		margin-right: 0;
 	}
 
-	.aui-button-input {
+	.button-input {
 		padding: 4px;
 	}
 }

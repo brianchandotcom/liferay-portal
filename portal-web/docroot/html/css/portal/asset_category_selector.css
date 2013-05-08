@@ -82,7 +82,7 @@
 	}
 }
 
-.lfr-categories-selector-list .aui-tree-node-paginator {
+.lfr-categories-selector-list .tree-node-paginator {
 	margin-left: 29px;
 }
 
@@ -113,10 +113,6 @@
 /* Skin */
 
 .lfr-asset-category-container {
-	legend {
-		font-weight: bold;
-	}
-
 	.no-matches {
 		color: #999;
 	}

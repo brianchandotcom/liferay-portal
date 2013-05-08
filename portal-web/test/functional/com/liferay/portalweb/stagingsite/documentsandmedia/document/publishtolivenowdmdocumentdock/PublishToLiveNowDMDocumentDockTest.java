@@ -65,7 +65,7 @@ public class PublishToLiveNowDMDocumentDockTest extends BaseTestCase {
 					RuntimeVariables.replace("Documents and Media Test Page"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForElementPresent(
-					"//nav[@class='site-breadcrumbs aui-helper-hidden lfr-hudcrumbs']");
+					"//nav[@class='site-breadcrumbs aui-hide lfr-hudcrumbs']");
 				assertEquals(RuntimeVariables.replace("DM Document Title"),
 					selenium.getText(
 						"//a[@title='DM Document Title - DM Document Description']"));

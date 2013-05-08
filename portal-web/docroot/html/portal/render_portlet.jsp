@@ -1094,7 +1094,7 @@ if (themeDisplay.isStatePopUp()) {
 						var topA = refreshWindow.AUI();
 
 						topA.use(
-							'aui-loading-mask',
+							'aui-loading-mask-deprecated',
 							function(A) {
 								new A.LoadingMask(
 									{

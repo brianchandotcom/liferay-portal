@@ -431,8 +431,8 @@ else if (((folderId != rootFolderId) && (parentFolderId == 0)) || ((folderId == 
 		Liferay.fire(
 			'<portlet:namespace />pageLoaded',
 			{
-				paginator: {
-					name: 'folderPaginator',
+				pagination: {
+					name: 'folderPagination',
 					state: {
 						page: <%= folderEnd / (folderEnd - folderStart) %>,
 						rowsPerPage: <%= (folderEnd - folderStart) %>,

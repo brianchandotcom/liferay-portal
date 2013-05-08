@@ -32,11 +32,11 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "add");
 		<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 	</liferay-portlet:renderURL>
 
-	<div class="lfr-portlet-toolbar">
-		<span class="lfr-toolbar-button add-button <%= toolbarItem.equals("add") ? "current" : StringPool.BLANK %>">
-			<a href="<%= addRuleGroupURL %>">
-				<liferay-ui:message key="add-rule-group" />
-			</a>
-		</span>
-	</div>
+	<aui:nav-bar>
+		<aui:nav>
+			<aui:nav-item href="<%= addRuleGroupURL %>" iconClass="icon-plus" label="add-rule-group" selected='<%= toolbarItem.equals("add") %>' />
+		</aui:nav>
+
+		<aui:nav-bar-search cssClass="pull-right" file="/html/portlet/mobile_device_rules/rule_group_search.jsp" />
+	</aui:nav-bar>
 </c:if>

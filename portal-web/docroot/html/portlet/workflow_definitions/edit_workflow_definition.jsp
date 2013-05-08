@@ -63,7 +63,7 @@ portletURL.setParameter("struts_action", "/workflow_definitions/view");
 			</aui:field-wrapper>
 		</c:if>
 
-		<span class="aui-field-label">
+		<span>
 			<liferay-ui:message key="title" />
 		</span>
 

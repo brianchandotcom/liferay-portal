@@ -246,14 +246,14 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 			if (ShoppingUtil.isInStock(item, itemFields, fieldsArray, count)) {
 				sb.append(LanguageUtil.get(pageContext, "availability"));
 				sb.append(": ");
-				sb.append("<div class=\"portlet-msg-success\">");
+				sb.append("<div class=\"alert alert-success\">");
 				sb.append(LanguageUtil.get(pageContext, "in-stock"));
 				sb.append("</div>");
 			}
 			else {
 				sb.append(LanguageUtil.get(pageContext, "availability"));
 				sb.append(": ");
-				sb.append("<div class=\"portlet-msg-error\">");
+				sb.append("<div class=\"alert alert-error\">");
 				sb.append(LanguageUtil.get(pageContext, "out-of-stock"));
 				sb.append("</div>");
 
@@ -310,12 +310,12 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 				sb.append("<strike>");
 				sb.append(currencyFormat.format(itemPrice.getPrice()));
 				sb.append("</strike> ");
-				sb.append("<div class=\"portlet-msg-success\">");
+				sb.append("<div class=\"alert alert-success\">");
 				sb.append(currencyFormat.format(ShoppingUtil.calculateActualPrice(itemPrice)));
 				sb.append("</div> / ");
 				sb.append(LanguageUtil.get(pageContext, "you-save"));
 				sb.append(": ");
-				sb.append("<div class=\"portlet-msg-error\">");
+				sb.append("<div class=\"alert alert-error\">");
 				sb.append(currencyFormat.format(ShoppingUtil.calculateDiscountPrice(itemPrice)));
 				sb.append(" (");
 				sb.append(percentFormat.format(itemPrice.getDiscount()));
@@ -401,13 +401,13 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 			</c:if>
 
 			<c:if test="<%= subtotal != actualSubtotal %>">
-				<strike><%= currencyFormat.format(subtotal) %></strike> <div class="portlet-msg-success"><%= currencyFormat.format(actualSubtotal) %></div>
+				<strike><%= currencyFormat.format(subtotal) %></strike> <div class="alert alert-success"><%= currencyFormat.format(actualSubtotal) %></div>
 			</c:if>
 		</aui:field-wrapper>
 
 		<c:if test="<%= subtotal != actualSubtotal %>">
 			<aui:field-wrapper label="you-save">
-				<div class="portlet-msg-error">
+				<div class="alert alert-error">
 					<%= currencyFormat.format(discountSubtotal) %> (<%= percentFormat.format(ShoppingUtil.calculateDiscountPercent(items)) %>)
 				</div>
 			</aui:field-wrapper>
@@ -470,7 +470,7 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 			<aui:a href='<%= "javascript:" + taglibOpenCouponWindow %>' label='<%= "(" + LanguageUtil.get(pageContext, "description") + ")" %>' style="font-size: xx-small;" />
 
 			<aui:field-wrapper label="coupon-discount">
-				<div class="portlet-msg-error">
+				<div class="alert alert-error">
 					<%= currencyFormat.format(ShoppingUtil.calculateCouponDiscount(items, coupon)) %>
 				</div>
 			</aui:field-wrapper>

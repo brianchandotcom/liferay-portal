@@ -50,12 +50,6 @@ public class PanelTag extends IncludeTag {
 
 			parentId = panelContainerTag.getId();
 		}
-		else if (baseBodyTagSupport instanceof PanelFloatingContainerTag) {
-			PanelFloatingContainerTag panelFloatingContainerTag =
-				(PanelFloatingContainerTag)baseBodyTagSupport;
-
-			parentId = panelFloatingContainerTag.getId();
-		}
 
 		request.setAttribute("liferay-ui:panel:helpMessage", _helpMessage);
 		request.setAttribute("liferay-ui:panel:id", _id);

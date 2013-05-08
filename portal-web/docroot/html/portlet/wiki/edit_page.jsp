@@ -218,12 +218,12 @@ if (Validator.isNull(redirect)) {
 					/>
 				</c:if>
 
-				<div class="portlet-msg-info">
+				<div class="alert alert-info">
 					<liferay-ui:message key="this-page-does-not-exist-yet-use-the-form-below-to-create-it" />
 				</div>
 			</c:when>
 			<c:otherwise>
-				<div class="portlet-msg-error">
+				<div class="alert alert-error">
 					<liferay-ui:message key="this-page-does-not-exist-yet-and-the-title-is-not-valid" />
 				</div>
 
@@ -397,13 +397,13 @@ if (Validator.isNull(redirect)) {
 				%>
 
 				<c:if test="<%= !newPage && approved %>">
-					<div class="portlet-msg-info">
+					<div class="alert alert-info">
 						<liferay-ui:message key="a-new-version-will-be-created-automatically-if-this-content-is-modified" />
 					</div>
 				</c:if>
 
 				<c:if test="<%= pending %>">
-					<div class="portlet-msg-info">
+					<div class="alert alert-info">
 						<liferay-ui:message key="there-is-a-publication-workflow-in-process" />
 					</div>
 				</c:if>
@@ -424,7 +424,7 @@ if (Validator.isNull(redirect)) {
 					}
 					%>
 
-					<aui:button name="saveButton" type="submit" value="<%= saveButtonLabel %>" />
+					<aui:button name="saveButton" primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
 
 					<aui:button name="previewButton" onClick='<%= renderResponse.getNamespace() + "previewPage();" %>' value="preview" />
 
@@ -447,7 +447,7 @@ if (Validator.isNull(redirect)) {
 		</c:when>
 		<c:otherwise>
 			<c:if test="<%= (wikiPage != null) && !wikiPage.isApproved() %>">
-				<div class="portlet-msg-info">
+				<div class="alert alert-info">
 
 					<%
 					Format dateFormatDate = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);

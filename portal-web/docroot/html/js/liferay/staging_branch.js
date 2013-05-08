@@ -73,14 +73,14 @@ AUI.add(
 					if (!branchDialog) {
 						var namespace = instance._namespace;
 
-						branchDialog = new A.Dialog(
+						branchDialog = Liferay.Util.Window.getWindow(
 							{
-								align: Liferay.Util.Window.ALIGN_CENTER,
-								bodyContent: A.one('#' + namespace + 'addBranch').show(),
-								modal: true,
-								width: 530
+								dialog: {
+									bodyContent: A.one('#' + namespace + 'addBranch').show()
+								},
+								title: Liferay.Language.get('branch')
 							}
-						).render();
+						);
 
 						branchDialog.move(branchDialog.get('x'), branchDialog.get('y') + 10);
 
@@ -96,14 +96,13 @@ AUI.add(
 					var mergeDialog = instance._mergeDialog;
 
 					if (!mergeDialog) {
-						mergeDialog = new A.Dialog(
-							{
-								align: Liferay.Util.Window.ALIGN_CENTER,
-								draggable: true,
-								modal: true,
-								width: 530
-							}
-						).plug(
+						mergeDialog = Liferay.Util.Window.getWindow(
+						    {
+								title: Liferay.Language.get('merge')
+						    }
+						);
+
+						mergeDialog.plug(
 							A.Plugin.IO,
 							{
 								autoLoad: false,
@@ -113,7 +112,7 @@ AUI.add(
 									redirect: Liferay.currentURL
 								}
 							}
-						).render();
+						);
 
 						mergeDialog.move(mergeDialog.get('x'), mergeDialog.get('y') + 100);
 
@@ -136,14 +135,13 @@ AUI.add(
 				_getUpdateBranchDialog: function() {
 					var instance = this;
 
-					var	updateBranchDialog = new A.Dialog(
+					var	updateBranchDialog = Liferay.Util.Window.getWindow(
 						{
-							align: Liferay.Util.Window.ALIGN_CENTER,
-							draggable: true,
-							modal: true,
-							width: 530
+							title: Liferay.Language.get('branch')
 						}
-					).plug(
+					);
+
+					updateBranchDialog.plug(
 						A.Plugin.IO,
 						{
 							autoLoad: false,
@@ -152,9 +150,7 @@ AUI.add(
 								p_l_id: themeDisplay.getPlid()
 							}
 						}
-					).render();
-
-					updateBranchDialog.move(updateBranchDialog.get('x'), updateBranchDialog.get('y') + 100);
+					);
 
 					return updateBranchDialog;
 				},

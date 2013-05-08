@@ -36,7 +36,7 @@
 		<aui:form action="<%= portletURL %>" method="post" name="fm">
 			<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
 
-			<div class="portlet-msg-info">
+			<div class="alert alert-info">
 				<liferay-ui:message arguments="<%= InvitationUtil.getEmailMessageMaxRecipients() %>" key="enter-up-to-x-email-addresses-of-friends-you-would-like-to-invite" />
 			</div>
 
@@ -50,7 +50,7 @@
 			%>
 
 				<c:if test='<%= (invalidEmailAddresses != null) && invalidEmailAddresses.contains("emailAddress" + i) %>'>
-					<div class="portlet-msg-error">
+					<div class="alert alert-error">
 						<liferay-ui:message key="please-enter-a-valid-email-address" />
 					</div>
 				</c:if>

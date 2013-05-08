@@ -16,5 +16,5 @@
 
 <%@ include file="/html/taglib/aui/form/init.jsp" %>
 
-<form action="<%= HtmlUtil.escape(action) %>" class="aui-form <%= cssClass %> <%= inlineLabels ? "aui-field-labels-inline" : StringPool.BLANK %>" id="<%= namespace + name %>" method="<%= method %>" name="<%= namespace + name %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
+<form action="<%= HtmlUtil.escape(action) %>" class="form <%= cssClass %> <%= inlineLabels ? "field-labels-inline" : StringPool.BLANK %>" id="<%= namespace + name %>" method="<%= method %>" name="<%= namespace + name %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
 	<input name="<%= namespace %>formDate" type="hidden" value="<%= System.currentTimeMillis() %>" />

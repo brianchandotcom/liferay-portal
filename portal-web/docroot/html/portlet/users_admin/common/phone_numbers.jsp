@@ -65,7 +65,7 @@ else {
 
 <h3><liferay-ui:message key="phone-numbers" /></h3>
 
-<div class="portlet-msg-info">
+<div class="alert alert-info">
 	<liferay-ui:message key="phone-number-and-type-are-required-fields.-extension-must-be-numeric" />
 </div>
 
@@ -87,13 +87,13 @@ else {
 			<div class="row-fields">
 				<aui:input name='<%= "phoneId" + phonesIndex %>' type="hidden" value="<%= phone.getPhoneId() %>" />
 
-				<aui:input fieldParam='<%= "phoneNumber" + phonesIndex %>' id='<%= "phoneNumber" + phonesIndex %>' name="number" />
+				<aui:input fieldParam='<%= "phoneNumber" + phonesIndex %>' id='<%= "phoneNumber" + phonesIndex %>' inlineField="<%= true %>" name="number" />
 
-				<aui:input fieldParam='<%= "phoneExtension" + phonesIndex %>' id='<%= "phoneExtension" + phonesIndex %>' name="extension" />
+				<aui:input fieldParam='<%= "phoneExtension" + phonesIndex %>' id='<%= "phoneExtension" + phonesIndex %>' inlineField="<%= true %>" name="extension" />
 
-				<aui:select label="type" listType="<%= className + ListTypeConstants.PHONE %>" name='<%= "phoneTypeId" + phonesIndex %>' />
+				<aui:select inlineField="<%= true %>" label="type" listType="<%= className + ListTypeConstants.PHONE %>" name='<%= "phoneTypeId" + phonesIndex %>' />
 
-				<aui:input checked="<%= phone.isPrimary() %>" cssClass="primary-ctrl" id='<%= "phonePrimary" + phonesIndex %>' label="primary" name="phonePrimary" type="radio" value="<%= phonesIndex %>" />
+				<aui:input checked="<%= phone.isPrimary() %>" id='<%= "phonePrimary" + phonesIndex %>' inlineField="<%= true %>" label="primary" name="phonePrimary" type="radio" value="<%= phonesIndex %>" />
 			</div>
 		</div>
 

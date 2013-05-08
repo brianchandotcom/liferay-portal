@@ -105,10 +105,6 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		return _inlineLabel;
 	}
 
-	public java.lang.String getInputCssClass() {
-		return _inputCssClass;
-	}
-
 	public java.lang.String getLabel() {
 		return _label;
 	}
@@ -285,12 +281,6 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("inlineLabel", inlineLabel);
 	}
 
-	public void setInputCssClass(java.lang.String inputCssClass) {
-		_inputCssClass = inputCssClass;
-
-		setScopedAttribute("inputCssClass", inputCssClass);
-	}
-
 	public void setLabel(java.lang.String label) {
 		_label = label;
 
@@ -413,7 +403,6 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		_ignoreRequestValue = false;
 		_inlineField = false;
 		_inlineLabel = null;
-		_inputCssClass = null;
 		_label = null;
 		_languageId = null;
 		_last = false;
@@ -458,7 +447,6 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		setNamespacedAttribute(request, "ignoreRequestValue", _ignoreRequestValue);
 		setNamespacedAttribute(request, "inlineField", _inlineField);
 		setNamespacedAttribute(request, "inlineLabel", _inlineLabel);
-		setNamespacedAttribute(request, "inputCssClass", _inputCssClass);
 		setNamespacedAttribute(request, "label", _label);
 		setNamespacedAttribute(request, "languageId", _languageId);
 		setNamespacedAttribute(request, "last", _last);
@@ -501,7 +489,6 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 	private boolean _ignoreRequestValue = false;
 	private boolean _inlineField = false;
 	private java.lang.String _inlineLabel = null;
-	private java.lang.String _inputCssClass = null;
 	private java.lang.String _label = null;
 	private java.lang.String _languageId = null;
 	private boolean _last = false;

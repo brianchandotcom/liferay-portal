@@ -499,8 +499,7 @@ public abstract class BaseAssetSearchTestCase {
 	@Test
 	public void testClassName2() throws Exception {
 		long[] classNameIds =
-			AssetRendererFactoryRegistryUtil.getClassNameIds(
-				TestPropsValues.getCompanyId());
+			AssetRendererFactoryRegistryUtil.getClassNameIds();
 
 		classNameIds = ArrayUtil.remove(
 			classNameIds, PortalUtil.getClassNameId(getBaseModelClass()));

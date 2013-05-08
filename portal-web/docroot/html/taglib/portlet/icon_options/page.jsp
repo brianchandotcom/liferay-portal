@@ -17,13 +17,12 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <liferay-ui:icon-menu
-	align="auto"
 	cssClass="portlet-options"
 	direction="down"
 	extended="<%= false %>"
 	icon=""
 	message="options"
-	showArrow="<%= false %>"
+	showArrow="<%= true %>"
 	showWhenSingleIcon="<%= true %>"
 >
 	<liferay-portlet:icon-refresh />

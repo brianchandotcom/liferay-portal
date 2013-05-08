@@ -199,7 +199,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 %>
 
 <c:if test='<%= SessionMessages.contains(renderRequest, "requestProcessed") %>'>
-	<div class="portlet-msg-success">
+	<div class="alert alert-success">
 
 		<%
 		String successMessage = (String)SessionMessages.get(renderRequest, "requestProcessed");
@@ -217,16 +217,11 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 </c:if>
 
 <style type="text/css">
-	.aui-tree-node-content .incomplete-layout {
+	.tree-node-content .incomplete-layout {
 		color: #CCC;
 	}
 
-	#<portlet:namespace />pane th.col-3 {
-		text-align: left;
-		width: 74%;
-	}
-
-	#<portlet:namespace />pane td.col-1 {
+	#<portlet:namespace />pane td.first {
 		padding-top: 5px;
 	}
 
@@ -238,7 +233,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 		padding: 1em;
 	}
 
-	#<portlet:namespace />exportPagesFm .selected-pages-option .aui-field-content {
+	#<portlet:namespace />exportPagesFm .selected-pages-option .field-content {
 		display: inline;
 	}
 
@@ -254,7 +249,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 		font-size: 110%;
 	}
 
-	#<portlet:namespace />exportPagesFm .portlet-data-section .portlet-type-data-section .aui-legend {
+	#<portlet:namespace />exportPagesFm .portlet-data-section .portlet-type-data-section .legend {
 		border-width: 0;
 	}
 </style>
@@ -357,7 +352,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 
 	<c:choose>
 		<c:when test="<%= selectPages %>">
-			<div class="portlet-msg-info">
+			<div class="alert alert-info">
 				<liferay-ui:message key="note-that-selecting-no-pages-from-tree-reverts-to-implicit-selection-of-all-pages" />
 			</div>
 
@@ -373,7 +368,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 			<aui:button-row>
 
 				<%
-				String taglibOnClick = "AUI().DialogManager.refreshByChild('#" + renderResponse.getNamespace() + "exportPagesFm');";
+				String taglibOnClick = "Liferay.Util.Window.refreshByChild('#" + renderResponse.getNamespace() + "exportPagesFm');";
 				%>
 
 				<aui:button onClick="<%= taglibOnClick %>" value="select" />
@@ -381,17 +376,14 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 		</c:when>
 		<c:otherwise>
 			<c:if test="<%= schedule %>">
-				<div class="lfr-portlet-toolbar">
-					<span class="lfr-toolbar-button view-button">
-						<aui:a href="javascript:;" label="view-all" />
-					</span>
+				<aui:nav-bar>
+					<aui:nav>
+						<aui:nav-item label="view-all" />
+						<aui:nav-item label="add" />
+					</aui:nav>
+				</aui:nav-bar>
 
-					<span class="lfr-toolbar-button add-button current">
-						<aui:a href="javascript:;" label="add" />
-					</span>
-				</div>
-
-				<div class="aui-helper-hidden" id="<portlet:namespace />publishedEvents">
+				<div class="hide" id="<portlet:namespace />publishedEvents">
 					<liferay-ui:header
 						title="scheduled-events"
 					/>
@@ -497,7 +489,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 			var A = AUI();
 
 			if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-" + publishActionKey + "-these-pages") %>')) {
-				var dialog = A.DialogManager.findByChild('#<portlet:namespace />exportPagesFm');
+				var dialog = Liferay.Util.Window.getByChild('#<portlet:namespace />exportPagesFm');
 
 				if (dialog) {
 					dialog.io.set('uri', '<%= portletURL.toString() + "&etag=0&strip=0" %>');
@@ -513,12 +505,12 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 				}
 			}
 		},
-		['aui-dialog']
+		['liferay-util-window']
 	);
 </aui:script>
 
-<aui:script use="aui-base,aui-dialog">
-	var dialog = A.DialogManager.findByChild('#<portlet:namespace />exportPagesFm');
+<aui:script use="aui-base,aui-modal">
+	var dialog = Liferay.Util.Window.getByChild('#<portlet:namespace />exportPagesFm');
 
 	if (dialog) {
 		dialog.io.set('uri', '<%= selectURL %>');

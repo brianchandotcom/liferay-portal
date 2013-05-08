@@ -72,7 +72,7 @@ if (hidePortletWhenEmpty) {
 	renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 %>
 
-	<div class="portlet-msg-info">
+	<div class="alert alert-info">
 		<liferay-ui:message key="there-are-no-categories" />
 	</div>
 
@@ -99,7 +99,7 @@ if (categoryId > 0) {
 				}
 			).render();
 
-			var selected = assetCategoryList.one('.aui-tree-node .tag-selected');
+			var selected = assetCategoryList.one('.tree-node .tag-selected');
 
 			if (selected) {
 				var selectedChild = treeView.getNodeByChild(selected);
@@ -127,7 +127,7 @@ private void _buildCategoriesNavigation(List<AssetCategory> categories, long cat
 
 		List<AssetCategory> categoriesChildren = AssetCategoryServiceUtil.getChildCategories(category.getCategoryId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		sb.append("<li class=\"aui-tree-node\"><span>");
+		sb.append("<li class=\"tree-node\"><span>");
 
 		if (categoryId == category.getCategoryId()) {
 			portletURL.setParameter("categoryId", StringPool.BLANK);

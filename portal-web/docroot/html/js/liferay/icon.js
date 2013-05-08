@@ -13,8 +13,8 @@ AUI.add(
 
 				if (icon) {
 					if (srcHover) {
-						instance._onMouseOver = A.rbind(instance._onMouseHover, instance, srcHover);
-						instance._onMouseOut = A.rbind(instance._onMouseHover, instance, src);
+						instance._onMouseOver = A.rbind('_onMouseHover', instance, srcHover);
+						instance._onMouseOut = A.rbind('_onMouseHover', instance, src);
 
 						icon.hover(instance._onMouseOver, instance._onMouseOut);
 					}

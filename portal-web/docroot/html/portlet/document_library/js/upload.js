@@ -17,15 +17,11 @@ AUI.add(
 
 		var CSS_APP_VIEW_ENTRY = 'app-view-entry-taglib';
 
-		var CSS_COLUMN_CONTENT = '.aui-column-content';
+		var CSS_COLUMN_CONTENT = '.column-content';
 
 		var CSS_ENTRY_DISPLAY_STYLE = 'entry-display-style';
 
 		var CSS_ICON = 'icon';
-
-		var CSS_PORTLET_SECTION_BODY = 'portlet-section-body';
-
-		var CSS_PORTLET_SECTION_ALT = 'alt portlet-section-alternate';
 
 		var CSS_TAGLIB_ICON = 'taglib-icon';
 
@@ -57,7 +53,7 @@ AUI.add(
 
 		var SELECTOR_DISPLAY_ICON = '.display-icon';
 
-		var SELECTOR_DOCUMENT_ENTRIES_PAGINATOR = '.document-entries-paginator';
+		var SELECTOR_DOCUMENT_ENTRIES_PAGINATION = '.document-entries-pagination';
 
 		var SELECTOR_ENTRIES_EMPTY = '.entries-empty';
 
@@ -69,7 +65,7 @@ AUI.add(
 
 		var SELECTOR_IMAGE_ICON = 'img.icon';
 
-		var SELECTOR_SEARCH_CONTAINER = '.aui-searchcontainer';
+		var SELECTOR_SEARCH_CONTAINER = '.searchcontainer';
 
 		var SELECTOR_ENTRY_DISPLAY_STYLE = '.' + CSS_ENTRY_DISPLAY_STYLE;
 
@@ -119,8 +115,8 @@ AUI.add(
 		'</span>';
 
 		var TPL_ERROR_FOLDER = new A.Template(
-			'<span class="portlet-msg-success-label">{validFilesLength}</span>',
-			'<span class="portlet-msg-error-label">{invalidFilesLength}</span>',
+			'<span class="lfr-status-success-label">{validFilesLength}</span>',
+			'<span class="lfr-status-error-label">{invalidFilesLength}</span>',
 			'<ul class="lfr-component">',
 				'<tpl for="invalidFiles">',
 					'<li><b>{name}</b>: {errorMessage}</li>',
@@ -192,7 +188,7 @@ AUI.add(
 
 				var folderId = instance.ns('folderId');
 
-				A.getWin().on('beforeunload', instance._onBeforeUnload, instance);
+				A.getWin()._node.onbeforeunload = A.bind('_confirmUnload', instance);
 
 				Liferay.on(instance.ns('dataRequest'), instance._onDataRequest, instance);
 
@@ -256,12 +252,14 @@ AUI.add(
 
 							instance._getNavigationOverlays();
 
+							instance._getNavigationOverlays();
+
 							var uploader = instance._getUploader();
 
 							uploader.fire('fileselect', event);
 						}
 					},
-					'body, .document-container, .aui-overlaymask, .aui-progressbar, [data-folder="true"]'
+					'body, .document-container, .overlaymask, .progressbar, [data-folder="true"]'
 				);
 
 				entriesContainer.delegate(
@@ -309,6 +307,12 @@ AUI.add(
 						fileList.push(item);
 					}
 				);
+			},
+
+			_confirmUnload: function() {
+				var instance = this;
+
+				return instance._isUploading() ? Liferay.Language.get('uploads-are-in-progress-confirmation') : null;
 			},
 
 			_createEntryNode: function(name, size, displayStyle) {
@@ -388,14 +392,6 @@ AUI.add(
 				);
 
 				var row = searchContainer.addRow(columnValues, A.guid());
-
-				var rowCssClass = CSS_PORTLET_SECTION_ALT;
-
-				if (searchContainer._ids.length % 2) {
-					rowCssClass = CSS_PORTLET_SECTION_BODY;
-				}
-
-				row.addClass(rowCssClass);
 
 				row.attr('data-draggable', true);
 
@@ -678,7 +674,7 @@ AUI.add(
 
 				var folderEntry;
 
-				var overlayContentBox = target.hasClass('aui-overlay-content');
+				var overlayContentBox = target.hasClass('overlay-content');
 
 				if (overlayContentBox) {
 					var overlay = A.Widget.getByNode(target);
@@ -748,23 +744,21 @@ AUI.add(
 				var navigationOverlays = instance._navigationOverlays;
 
 				if (!navigationOverlays) {
-					var container = instance._entriesContainer;
+					navigationOverlays = [];
 
-					var columnContent = container.ancestor(CSS_COLUMN_CONTENT);
+					var createNavigationOverlay = function(target) {
+						if (target) {
+							var overlay = instance._createOverlay(target, STR_NAVIGATION_OVERLAY_BACKGROUND);
 
-					var documentEntriesPaginator = A.one(SELECTOR_DOCUMENT_ENTRIES_PAGINATOR);
+							navigationOverlays.push(overlay);
+						}
+					};
 
-					var documentEntriesPaginatorOverlay = instance._createOverlay(documentEntriesPaginator, STR_NAVIGATION_OVERLAY_BACKGROUND);
+					var entriesContainer = A.one('#_20_documentLibraryContainer');
 
-					var headerRow = columnContent.one(SELECTOR_HEADER_ROW);
-
-					var headerRowOverlay = instance._createOverlay(headerRow, STR_NAVIGATION_OVERLAY_BACKGROUND);
-
-					var navigationPane = instance.byId('listViewContainer');
-
-					var navigationPaneOverlay = instance._createOverlay(navigationPane, STR_NAVIGATION_OVERLAY_BACKGROUND);
-
-					navigationOverlays = [documentEntriesPaginatorOverlay, headerRowOverlay, navigationPaneOverlay];
+					createNavigationOverlay(entriesContainer.one(SELECTOR_DOCUMENT_ENTRIES_PAGINATION));
+					createNavigationOverlay(entriesContainer.one('.app-view-taglib.lfr-header-row'));
+					createNavigationOverlay(instance.byId('listViewContainer'));
 
 					instance._navigationOverlays = navigationOverlays;
 				}
@@ -831,7 +825,7 @@ AUI.add(
 
 							var emptyMessage = instance._getEmptyMessage();
 
-							if (emptyMessage && !emptyMessage.hasClass('aui-helper-hidden')) {
+							if (emptyMessage && !emptyMessage.hasClass('hide')) {
 								emptyMessage.hide(true);
 							}
 						}
@@ -929,22 +923,11 @@ AUI.add(
 			_isUploading: function() {
 				var instance = this;
 
-				var uploader = instance._getUploader();
+				var uploader = instance._uploader;
 
-				var queue = uploader.queue;
+				var queue = uploader && uploader.queue;
 
 				return !!(queue && (queue.queuedFiles.length > 0 || queue.numberOfUploads > 0 || !A.Object.isEmpty(queue.currentFiles)) && queue._currentState === UploaderQueue.UPLOADING);
-			},
-
-			_onBeforeUnload: function(event) {
-				var instance = this;
-
-				if (instance._isUploading()) {
-					event.preventDefault();
-				}
-				else {
-					instance.destructor();
-				}
 			},
 
 			_onDataRequest: function(event) {
@@ -1301,6 +1284,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-data-set', 'aui-overlay-manager', 'aui-overlay-mask', 'aui-progressbar', 'aui-template', 'aui-tooltip', 'liferay-app-view-folders', 'liferay-app-view-move', 'liferay-app-view-paginator', 'liferay-app-view-select', 'liferay-search-container', 'uploader']
+		requires: ['aui-data-set-deprecated', 'aui-overlay-manager-deprecated', 'aui-overlay-mask-deprecated', 'aui-progressbar', 'aui-template-deprecated', 'aui-tooltip-deprecated', 'liferay-app-view-folders', 'liferay-app-view-move', 'liferay-app-view-paginator', 'liferay-app-view-select', 'liferay-search-container', 'uploader']
 	}
 );

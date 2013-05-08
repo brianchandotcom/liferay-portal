@@ -9,7 +9,7 @@
 		margin-bottom: 0px;
 	}
 
-	.aui-field-choice {
+	.field-choice {
 		display: inline-block;
 	}
 
@@ -52,17 +52,17 @@
 }
 
 .social-activity-details {
-	.aui-settings-display .aui-settings-display-content {
+	.settings-display .settings-display-content {
 		background-color: #FFF;
 		border: 1px solid #CCC;
 		margin: 0px 15px 5px 0px;
 		padding: 0px 15px;
 
-		.aui-settings-field {
+		.settings-field {
 			font-weight: bold;
 			list-style: none;
 
-			.aui-settings-field-content {
+			.settings-field-content {
 				position: relative;
 
 				select {
@@ -106,7 +106,7 @@
 			}
 		}
 
-		.aui-button-row {
+		.button-row {
 			padding: 5px 0;
 		}
 
@@ -126,7 +126,6 @@
 			}
 
 			.settings-header-label {
-				font-weight: bold;
 				padding: 0 5px;
 			}
 
@@ -141,7 +140,6 @@
 		.settings-container-label {
 			border-bottom: 1px solid #ccc;
 			font-size: 1.2em;
-			font-weight: bold;
 			margin-top: 10px;
 			padding: 0 5px;
 		}

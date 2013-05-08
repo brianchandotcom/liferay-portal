@@ -101,7 +101,7 @@ String onClick = GetterUtil.getString((String)request.getAttribute("liferay-ui:t
 		<c:otherwise>
 			<input name="<%= namespace %><%= param %>TabsScroll" type="hidden" />
 
-			<ul class="aui-tabview-list">
+			<ul class="nav nav-tabs">
 		</c:otherwise>
 	</c:choose>
 
@@ -157,18 +157,10 @@ String onClick = GetterUtil.getString((String)request.getAttribute("liferay-ui:t
 
 		boolean selected = (values.length == 1) || value.equals(values[i]);
 
-		String cssClassName = "aui-tab aui-state-default";
+		String cssClassName = "tab";
 
 		if (selected) {
-			cssClassName += " current aui-tab-active aui-state-active";
-		}
-
-		if (i == 0) {
-			cssClassName += " first";
-		}
-
-		if (i == (values.length - 1)) {
-			cssClassName += " last";
+			cssClassName += " active";
 		}
 	%>
 
@@ -183,39 +175,9 @@ String onClick = GetterUtil.getString((String)request.getAttribute("liferay-ui:t
 			</c:when>
 			<c:otherwise>
 				<li class="<%= cssClassName %>" id="<%= namespace %><%= param %><%= StringUtil.toCharCode(values[i]) %>TabsId">
-					<span class="aui-tab-content">
-						<c:choose>
-							<c:when test="<%= Validator.isNotNull(curURL) %>">
-								<a class="aui-tab-label" href="<%= curURL %>"
-									<c:if test="<%= Validator.isNotNull(curOnClick) %>">
-										onClick="<%= curOnClick %>"
-									</c:if>
-								>
-							</c:when>
-							<c:otherwise>
-								<span class="aui-tab-label">
-							</c:otherwise>
-						</c:choose>
-
-						<c:if test="<%= selected %>">
-							<strong>
-						</c:if>
-
+					<a href="<%= Validator.isNotNull(curURL) ? curURL : "javascript:;" %>" onClick="<%= Validator.isNotNull(curOnClick) ? curOnClick : StringPool.BLANK %>">
 						<%= LanguageUtil.get(pageContext, names[i]) %>
-
-						<c:if test="<%= selected %>">
-							</strong>
-						</c:if>
-
-						<c:choose>
-							<c:when test="<%= Validator.isNotNull(curURL) %>">
-								</a>
-							</c:when>
-							<c:otherwise>
-								</span>
-							</c:otherwise>
-						</c:choose>
-					</span>
+					</a>
 				</li>
 			</c:otherwise>
 		</c:choose>
@@ -235,12 +197,8 @@ String onClick = GetterUtil.getString((String)request.getAttribute("liferay-ui:t
 				/>
 			</c:when>
 			<c:otherwise>
-				<li class="aui-tab aui-tab-back toggle last">
-					<span class="aui-tab-content aui-tab-back-content">
-						<span class="aui-tab-label">
-							<a href="<%= backURL %>" id="<%= namespace %><%= param %>TabsBack"><%= Validator.isNotNull(backLabel) ? backLabel : "&laquo;" + LanguageUtil.get(pageContext, "back") %></a>
-						</span>
-					</span>
+				<li>
+					<a class="tab" href="<%= backURL %>" id="<%= namespace %><%= param %>TabsBack"><%= Validator.isNotNull(backLabel) ? backLabel : "&laquo;" + LanguageUtil.get(pageContext, "back") %></a>
 				</li>
 			</c:otherwise>
 		</c:choose>

@@ -32,7 +32,7 @@ String ticketKey = ParamUtil.getString(request, "ticketKey");
 
 <c:choose>
 	<c:when test="<%= SessionErrors.contains(request, UserLockoutException.class.getName()) %>">
-		<div class="portlet-msg-error">
+		<div class="alert alert-error">
 			<liferay-ui:message key="this-account-has-been-locked" />
 		</div>
 	</c:when>
@@ -45,7 +45,7 @@ String ticketKey = ParamUtil.getString(request, "ticketKey");
 			<aui:input name="<%= WebKeys.REFERER %>" type="hidden" value="<%= referer %>" />
 			<aui:input name="ticketKey" type="hidden" value="<%= ticketKey %>" />
 
-			<div class="portlet-msg-info">
+			<div class="alert alert-info">
 				<liferay-ui:message key="please-set-a-new-password" />
 			</div>
 
@@ -55,7 +55,7 @@ String ticketKey = ParamUtil.getString(request, "ticketKey");
 				UserPasswordException upe = (UserPasswordException)SessionErrors.get(request, UserPasswordException.class.getName());
 				%>
 
-				<div class="portlet-msg-error">
+				<div class="alert alert-error">
 					<c:if test="<%= upe.getType() == UserPasswordException.PASSWORD_ALREADY_USED %>">
 						<liferay-ui:message key="that-password-has-already-been-used-please-enter-in-a-different-password" />
 					</c:if>

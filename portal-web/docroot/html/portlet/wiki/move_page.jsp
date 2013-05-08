@@ -48,7 +48,7 @@ String newTitle = ParamUtil.get(request, "newTitle", StringPool.BLANK);
 		refresh="<%= false %>"
 	>
 		<liferay-ui:section>
-			<div class="portlet-msg-info">
+			<div class="alert alert-info">
 				<liferay-ui:message key="use-the-form-below-to-rename-a-page,-moving-all-of-its-history-to-the-new-name" />
 			</div>
 
@@ -67,7 +67,7 @@ String newTitle = ParamUtil.get(request, "newTitle", StringPool.BLANK);
 			</aui:fieldset>
 		</liferay-ui:section>
 		<liferay-ui:section>
-			<div class="portlet-msg-info">
+			<div class="alert alert-info">
 				<liferay-ui:message key="use-the-form-below-to-move-a-page-and-all-of-its-history-to-be-the-child-of-a-new-parent-page" />
 			</div>
 

@@ -28,16 +28,16 @@ Layout curLayout = (Layout)row.getObject();
 	String taglibHref = "javascript:Liferay.LayoutExporter.details({toggle: '#" + renderResponse.getNamespace() + "_detail_" + curLayout.getPlid() + "_toggle img', detail: '#_detail_" + curLayout.getPlid() + "'});";
 	%>
 
-	<em class='<%= curLayout.getAncestors().isEmpty() ? "aui-helper-hidden" : StringPool.BLANK %>' id="<portlet:namespace /><%= curLayout.getPlid() %>includeAncestor"><liferay-ui:message key="include-ancestor-pages-if-necessary" /></em>
+	<em class='<%= curLayout.getAncestors().isEmpty() ? "hide" : StringPool.BLANK %>' id="<portlet:namespace /><%= curLayout.getPlid() %>includeAncestor"><liferay-ui:message key="include-ancestor-pages-if-necessary" /></em>
 
-	<em class="aui-helper-hidden" id="<portlet:namespace /><%= curLayout.getPlid() %>deleteLivePage"><liferay-ui:message key="delete-live-page" /></em>
+	<em class="hide" id="<portlet:namespace /><%= curLayout.getPlid() %>deleteLivePage"><liferay-ui:message key="delete-live-page" /></em>
 
-	<em class='<%= curLayout.getChildren().isEmpty() ? "aui-helper-hidden" : StringPool.BLANK %>' id="<portlet:namespace /><%= curLayout.getPlid() %>includeChildren"><liferay-ui:message key="include-all-descendent-pages" /></em>
+	<em class='<%= curLayout.getChildren().isEmpty() ? "hide" : StringPool.BLANK %>' id="<portlet:namespace /><%= curLayout.getPlid() %>includeChildren"><liferay-ui:message key="include-all-descendent-pages" /></em>
 
 	<liferay-ui:icon cssClass="nobr" id='<%= "_detail_" + curLayout.getPlid() + "_toggle" %>' image="../arrows/01_plus" label="<%= true %>" message="change" target="_self" toolTip="options" url="<%= taglibHref %>" />
 </div>
 
-<div class="aui-helper-hidden export-layout-detail" id="_detail_<%= curLayout.getPlid() %>" style="border-top: 1px solid #CCC; margin-top: 4px; padding-top: 4px; width: 95%;">
+<div class="hide export-layout-detail" id="_detail_<%= curLayout.getPlid() %>" style="border-top: 1px solid #CCC; margin-top: 4px; padding-top: 4px; width: 95%;">
 	<aui:input label="delete-live-page" name='<%= "delete_" + curLayout.getPlid() %>' type="radio" value="<%= true %>" />
 
 	<aui:input checked="<%= true %>" label="publish" name='<%= "delete_" + curLayout.getPlid() %>' type="radio" value="<%= false %>" />

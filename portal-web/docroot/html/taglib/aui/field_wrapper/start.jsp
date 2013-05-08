@@ -17,21 +17,20 @@
 <%@ include file="/html/taglib/aui/field_wrapper/init.jsp" %>
 
 <%
-String fieldCss = AUIUtil.buildCss(AUIUtil.FIELD_PREFIX, "wrapper", inlineField, false, false, first, last, cssClass);
+String fieldCss = AUIUtil.buildCss("field-wrapper", false, first, last, cssClass);
 %>
 
-<div class="<%= fieldCss %>" <%= AUIUtil.buildData(data) %>>
-	<div class="aui-field-wrapper-content">
-		<c:if test='<%= Validator.isNotNull(label) && !inlineLabel.equals("right") %>'>
-			<label <%= AUIUtil.buildLabel(inlineLabel, showForLabel, name, false) %>>
-				<liferay-ui:message key="<%= label %>" />
+<div class="<%= controlGroupCss %> <%= fieldCss %>" <%= AUIUtil.buildData(data) %>>
+	<c:if test='<%= Validator.isNotNull(label) && !inlineLabel.equals("right") %>'>
+		<label <%= AUIUtil.buildLabel("wrapper", inlineField, showForLabel, name) %>>
+			<liferay-ui:message key="<%= label %>" />
 
-				<c:if test="<%= required %>">
-					<span class="aui-label-required">(<liferay-ui:message key="required" />)</span>
-				</c:if>
+			<c:if test="<%= required %>">
+				<span class="label-required">(<liferay-ui:message key="required" />)</span>
+			</c:if>
 
-				<c:if test="<%= Validator.isNotNull(helpMessage) %>">
-					<liferay-ui:icon-help message="<%= helpMessage %>" />
-				</c:if>
-			</label>
-		</c:if>
+			<c:if test="<%= Validator.isNotNull(helpMessage) %>">
+				<liferay-ui:icon-help message="<%= helpMessage %>" />
+			</c:if>
+		</label>
+	</c:if>

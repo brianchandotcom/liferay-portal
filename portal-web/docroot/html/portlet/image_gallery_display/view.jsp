@@ -132,7 +132,7 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 				<liferay-util:include page="/html/portlet/image_gallery_display/view_images.jsp" />
 			</c:when>
 			<c:when test='<%= topLink.equals("home") %>'>
-				<aui:layout>
+				<aui:row>
 					<c:if test="<%= folder != null %>">
 						<liferay-ui:header
 							localizeTitle="<%= false %>"
@@ -162,7 +162,7 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 					request.setAttribute("view.jsp-searchContainer", searchContainer);
 					%>
 
-					<aui:column columnWidth="<%= showFolderMenu ? 75 : 100 %>" cssClass="lfr-asset-column lfr-asset-column-details" first="<%= true %>">
+					<aui:col cssClass="lfr-asset-column lfr-asset-column-details" width="<%= showFolderMenu ? 75 : 100 %>">
 						<div id="<portlet:namespace />imageGalleryAssetInfo">
 							<c:if test="<%= folder != null %>">
 								<div class="lfr-asset-description">
@@ -195,10 +195,10 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 
 							<liferay-util:include page="/html/portlet/image_gallery_display/view_images.jsp" />
 						</div>
-					</aui:column>
+					</aui:col>
 
 					<c:if test="<%= showFolderMenu %>">
-						<aui:column columnWidth="<%= 25 %>" cssClass="lfr-asset-column lfr-asset-column-actions" last="<%= true %>">
+						<aui:col cssClass="lfr-asset-column lfr-asset-column-actions" last="<%= true %>" width="<%= 25 %>">
 							<div class="lfr-asset-summary">
 								<liferay-ui:icon
 									cssClass="lfr-asset-avatar"
@@ -216,9 +216,9 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 							%>
 
 							<liferay-util:include page="/html/portlet/document_library/folder_action.jsp" />
-						</aui:column>
+						</aui:col>
 					</c:if>
-				</aui:layout>
+				</aui:row>
 
 				<%
 				if (folder != null) {
@@ -258,13 +258,13 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 				request.setAttribute("view.jsp-searchContainer", searchContainer);
 				%>
 
-				<aui:layout>
+				<aui:row>
 					<liferay-ui:header
 						title="<%= topLink %>"
 					/>
 
 					<liferay-util:include page="/html/portlet/image_gallery_display/view_images.jsp" />
-				</aui:layout>
+				</aui:row>
 
 				<%
 				PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, topLink), currentURL);

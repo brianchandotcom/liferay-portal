@@ -1,49 +1,48 @@
 .portlet-asset-tag-admin {
+	.lfr-app-column-view {
+		border: none;
+	}
+
+	.navbar-inner {
+		padding-left: 12px;
+
+		.search-query {
+			width: 260px;
+		}
+	}
+
 	.tags-admin-actions {
 		clear: none;
 		float: left;
 		margin: 0;
 	}
 
-	.tags-admin-container .results-header {
-		background: #F0F5F7;
-		font-weight: bold;
-		padding: 5px 10px;
-		position: relative;
-	}
+	.tags-admin-container {
+		.toolbar-container {
+			position: relative;
 
-	.tags-admin-toolbar {
-		background: #F6F8FB;
-		border-bottom: 1px solid #dedede;
-		overflow: hidden;
-		padding: 5px 0;
-	}
+			.tags-admin-toolbar {
+				background: #F6F8FB;
+				border-bottom: 1px solid #dedede;
+				overflow: hidden;
+				padding: 5px 0;
+			}
 
-	.tags-admin-search {
-		.aui-field-content {
-			display: inline-block;
-		}
-
-		.aui-field-input {
-			background-image: url(@theme_image_path@/common/search.png);
-			background-repeat: no-repeat;
-			background-position: 5px 50%;
-			padding-left: 25px;
-			width: 250px;
+			.tags-search-combobox {
+				position: absolute;
+				right: 5px;
+				top: 2px;
+			}
 		}
 	}
 
-	.tags-admin-content-wrapper {
-		position: relative;
-	}
-
-	.tags-admin-content-wrapper, .header-title, .aui-tree-node-content .aui-tree-label {
+	.header-title, .tree-node-content .tree-label {
 		word-wrap: break-word;
 	}
 
 	.tags-admin-edit-tag {
 		.tag-view-container {
-			padding: 0 0.5em 0 0.5em;
+			padding: 0 0.5em 0 0;
 		}
 
 		.tag-details {
@@ -59,34 +58,36 @@
 	}
 
 	.tag-item-actions-trigger {
-		 display: block;
-		 margin-top: -8px;
-		 position: absolute;
-		 top: 50%;
-	}
-
-	.tag-item-actions-trigger {
 		background-image: url(@theme_image_path@/common/edit.png);
 		background-repeat: no-repeat;
 		clip: rect(0pt, 0pt, 0pt, 0pt);
+		display: block;
 		height: 16px;
 		margin-top: -8px;
 		padding: 0;
-		right: 0;
+		position: absolute;
+		right: 5px;
+		top: 50%;
 		width: 16px;
 	}
 
 	.tag-item-check {
-		margin-left: 10px;
+		margin-right: 10px;
+		margin-top: 0;
 		position: static;
-		margin-top: 10px;
-		float: left;
 	}
 
 	.tags-admin-content {
+		.tag-item-container {
+			position: relative;
+
+			.tag-item-name {
+				margin-top: 2px;
+			}
+		}
+
 		li.tag-item-container, li.tag-item {
 			font-weight: bold;
-			list-style: none;
 		}
 	}
 
@@ -103,14 +104,13 @@
 	}
 
 	.tags-admin-list {
-		.selected {
-			a:hover {
-				color: #FFB683;
-			}
+		ul {
+			margin-left: 0;
+		}
 
-			a, .tags-admin-content-wrapper, .tags-admin-content-wrapper:hover {
-				background-color: #6F7D83;
-				color: #FFF;
+		.active {
+			a:hover {
+				color: #D9EDF7;
 			}
 		}
 
@@ -122,55 +122,45 @@
 				color: #90EE90;
 			}
 		}
-
-		.tags-admin-content-wrapper {
-			background-color: #F5F5F5;
-
-			&:hover {
-				background: #D3DADD;
-			}
-		}
 	}
 
 	.select-tags {
-		border-color: #5F5F5F;
-		float: left;
-		line-height: 0;
-		margin-right: 2px;
-		padding: 0;
-
-		.aui-field-element {
-			padding: 5px 4px 4px;
-			border: 1px solid #FFF;
-			border-color: #F0F1F2 #B2B2B2 #949494 #F0F1F1;
-
-			.aui-field-input-choice {
-				margin: 0;
-			}
-		}
+		margin-left: 12px;
+		margin-top: -5px;
 	}
 
 	.tags-admin-list-container {
+		.tags-header {
+			display: inline-block;
+			margin-left: 2px;
+		}
+
 		&:after {
 			clear: both;
 			content: "";
 			display: block;
 			height: 0;
 		}
+
 	}
 
-	.tags-admin-search-bar {
-		float: left;
+	.tags-admin-search {
+		background-image: url(@theme_image_path@/common/search.png);
+		background-position: 5px center;
+		background-repeat: no-repeat;
+		padding-left: 25px;
+	}
+
+	.tags-pagination {
+		margin: 10px 0;
+		text-align: center;
+
+		.pagination-content {
+			margin: 0;
+		}
 	}
 
 	.view-tag {
-		margin: 1em;
-
-		label {
-			display: block;
-			font-weight: bold;
-		}
-
 		.tag-field {
 			clear: left;
 			margin: 1em auto;
@@ -191,7 +181,7 @@
 }
 
 .portlet-asset-tag-admin-dialog {
-	.aui-fieldset {
+	.fieldset {
 		margin-bottom: 0;
 	}
 
@@ -200,7 +190,7 @@
 		border-width: 0;
 	}
 
-	.asset-tag-layer .aui-overlay {
+	.asset-tag-layer .overlay {
 		overflow: visible;
 		width: 230px;
 	}
@@ -209,7 +199,7 @@
 		.asset-tag-layer {
 			padding: 0 10px;
 
-			.aui-field-content {
+			.field-content {
 				margin-bottom: 10px;
 			}
 
@@ -218,7 +208,7 @@
 				font-weight: bold;
 			}
 
-			.aui-field {
+			.field {
 				input, select {
 					width: 200px;
 				}
@@ -234,12 +224,6 @@
 		.arrows-container {
 			top: 50%;
 			margin-top: -20px;
-		}
-
-		label {
-			color: #5C85AD;
-			display: inline-block;
-			margin-bottom: 0.5em;
 		}
 
 		.selected-tags-container, .target-tags-container {
@@ -288,17 +272,13 @@
 
 .ie6, .ie7 {
 	.portlet-asset-tag-admin {
-		.tags-admin-content-wrapper {
-			width: 100%;
-		}
-
 		.tag-item-actions-trigger, .tag-item-check {
 			cursor: pointer;
 		}
 	}
 
 	.portlet-asset-tag-admin-dialog {
-		.yui3-widget-bd .asset-tag-layer .aui-field {
+		.yui3-widget-bd .asset-tag-layer .field {
 			width: 200px;
 		}
 	}

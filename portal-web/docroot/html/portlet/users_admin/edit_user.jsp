@@ -229,7 +229,7 @@ String taglibOnSubmit = "event.preventDefault(); " + renderResponse.getNamespace
 	<liferay-util:buffer var="htmlBottom">
 		<c:if test="<%= (selUser != null) && (passwordPolicy != null) && selUser.getLockout() %>">
 			<aui:button-row>
-				<div class="portlet-msg-alert"><liferay-ui:message key="this-user-account-has-been-locked-due-to-excessive-failed-login-attempts" /></div>
+				<div class="alert alert-block"><liferay-ui:message key="this-user-account-has-been-locked-due-to-excessive-failed-login-attempts" /></div>
 
 				<%
 				String taglibOnClick = renderResponse.getNamespace() + "saveUser('unlock');";
@@ -263,12 +263,6 @@ if (selUser != null) {
 
 	function <portlet:namespace />saveUser(cmd) {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = cmd;
-
-		var redirect = "<portlet:renderURL><portlet:param name="struts_action" value="/users_admin/edit_user" /><portlet:param name="backURL" value="<%= backURL %>"></portlet:param></portlet:renderURL>";
-
-		redirect += Liferay.Util.getHistoryParam('<portlet:namespace />');
-
-		document.<portlet:namespace />fm.<portlet:namespace />redirect.value = redirect;
 
 		submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/users_admin/edit_user" /></portlet:actionURL>");
 	}

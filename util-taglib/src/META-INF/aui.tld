@@ -109,7 +109,7 @@
 		<attribute>
 			<description><![CDATA[css class added to hide the <code>boundingBox</code> when
 	<a href="Component.html#config_visible">visible</a> is set to
-	<code>false</code>.<!--{"event":false,"inputType":"java.lang.String","outputType":"java.lang.String","required":false,"defaultValue":"aui-helper-hidden"}-->]]></description>
+	<code>false</code>.<!--{"event":false,"inputType":"java.lang.String","outputType":"java.lang.String","required":false,"defaultValue":"aui-hide"}-->]]></description>
 			<name>hideClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -972,7 +972,13 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<name>inputCssClass</name>
+			<name>icon</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>iconAlign</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
@@ -988,6 +994,12 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>primary</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.Object</type>
 		</attribute>
 		<attribute>
 			<name>type</name>
@@ -1018,6 +1030,48 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
+		</attribute>
+		<dynamic-attributes>true</dynamic-attributes>
+	</tag>
+	<tag>
+		<name>col</name>
+		<tag-class>com.liferay.taglib.aui.ColTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>offset</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
+		</attribute>
+		<attribute>
+			<name>offsetWidth</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
+		</attribute>
+		<attribute>
+			<name>span</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
+		</attribute>
+		<attribute>
+			<name>width</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
 		</attribute>
 		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
@@ -1117,6 +1171,30 @@
 		</attribute>
 		<attribute>
 			<name>var</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<dynamic-attributes>true</dynamic-attributes>
+	</tag>
+	<tag>
+		<name>container</name>
+		<tag-class>com.liferay.taglib.aui.ContainerTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>fluid</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
@@ -1397,12 +1475,6 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<name>inputCssClass</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
 			<name>label</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1542,6 +1614,138 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>nav</name>
+		<tag-class>com.liferay.taglib.aui.NavTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<dynamic-attributes>true</dynamic-attributes>
+	</tag>
+	<tag>
+		<name>nav-bar</name>
+		<tag-class>com.liferay.taglib.aui.NavBarTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<dynamic-attributes>true</dynamic-attributes>
+	</tag>
+	<tag>
+		<name>nav-bar-search</name>
+		<tag-class>com.liferay.taglib.aui.NavBarSearchTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>file</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>searchContainer</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>com.liferay.portal.kernel.dao.search.SearchContainer</type>
+		</attribute>
+		<dynamic-attributes>true</dynamic-attributes>
+	</tag>
+	<tag>
+		<name>nav-item</name>
+		<tag-class>com.liferay.taglib.aui.NavItemTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>anchorCssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>anchorId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>dropdown</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<name>href</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.Object</type>
+		</attribute>
+		<attribute>
+			<name>iconClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>label</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>selected</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<dynamic-attributes>true</dynamic-attributes>
+	</tag>
+	<tag>
 		<name>option</name>
 		<tag-class>com.liferay.taglib.aui.OptionTag</tag-class>
 		<body-content>JSP</body-content>
@@ -1623,6 +1827,30 @@
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
+	</tag>
+	<tag>
+		<name>row</name>
+		<tag-class>com.liferay.taglib.aui.RowTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>fluid</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
 	<tag>
 		<name>script</name>
@@ -1712,12 +1940,6 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<name>inputCssClass</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
 			<name>label</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1796,29 +2018,6 @@
 			<type>boolean</type>
 		</attribute>
 		<dynamic-attributes>true</dynamic-attributes>
-	</tag>
-	<tag>
-		<name>tool</name>
-		<tag-class>com.liferay.taglib.aui.ToolTagImpl</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<name>handler</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<name>icon</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<name>id</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
-		</attribute>
 	</tag>
 	<tag>
 		<name>translation-manager</name>

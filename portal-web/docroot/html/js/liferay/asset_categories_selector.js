@@ -146,7 +146,7 @@ AUI.add(
 
 						instance._renderIcons();
 
-						instance.inputContainer.addClass('aui-helper-hidden-accessible');
+						instance.inputContainer.addClass('hide-accessible');
 
 						instance._applyARIARoles();
 					},
@@ -512,12 +512,11 @@ AUI.add(
 							{
 								children: [
 									{
-										handler: {
-											context: instance,
-											fn: instance._showSelectPopup
-										},
-										icon: 'search',
+										icon: 'icon-search',
 										label: Liferay.Language.get('select'),
+										on: {
+											click: A.bind('_showSelectPopup', instance)
+										},
 										title: instance.get('title')
 									}
 								]

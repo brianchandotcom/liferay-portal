@@ -125,7 +125,7 @@ String publishScheduleMessage = LanguageUtil.get(pageContext, publishScheduleDia
 		</c:when>
 		<c:otherwise>
 			<span class="staging-icon-menu-container">
-				<liferay-ui:icon-menu align="auto" cssClass="<%= cssClass %>" direction="down" extended="<%= extended %>" icon="<%= extended ? icon : StringPool.BLANK %>" message="<%= extended ? message : StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+				<liferay-ui:icon-menu cssClass="<%= cssClass %>" direction="down" extended="<%= extended %>" icon="<%= extended ? icon : StringPool.BLANK %>" message="<%= extended ? message : StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 					<%@ include file="/html/taglib/ui/staging/staging_actions.jspf" %>
 				</liferay-ui:icon-menu>
 			</span>

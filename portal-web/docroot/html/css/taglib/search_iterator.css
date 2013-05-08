@@ -32,11 +32,7 @@
 }
 
 .taglib-search-iterator-page-iterator-top {
-	padding-bottom: 5px;
-}
-
-.taglib-search-iterator-page-iterator-bottom {
-	padding-top: 5px;
+	margin-bottom: 15px;
 }
 
 .taglib-page-iterator {
@@ -45,104 +41,22 @@
 	overflow: hidden;
 	width: auto;
 
-	.search-results {
-		float: left;
-	}
-
-	.search-pages {
+	.lfr-pagination-buttons {
 		float: right;
-
-		.delta-selector, .page-selector, .page-links {
-			float: left;
-		}
-
-		.page-links {
-			a, span {
-				border-left: 1px solid transparent;
-				display: inline-block;
-				line-height: 1;
-				padding: 2px 15px;
-
-				&.first {
-					border-left-width: 0;
-				}
-
-				&.first, &.previous {
-					padding-right: 5px;
-				}
-
-				&.next, &.last {
-					padding-left: 5px;
-				}
-			}
-		}
-
-		.page-selector {
-			margin-left: 10px;
-			margin-right: 10px;
-			padding-left: 10px;
-			padding-right: 10px;
-		}
+		margin: 0;
 	}
-}
 
-.ie6 .taglib-page-iterator .search-pages {
-	.page-selector, .delta-selector {
-		.aui-field-content {
+	.lfr-pagination-config {
+		float: left;
+		line-height: 32px;
+
+		.lfr-pagination-delta-selector, .lfr-pagination-page-selector {
 			display: inline;
 		}
 	}
-}
 
-/* Skin */
-
-.taglib-search-iterator-highlighted {
-	font-weight: bold;
-}
-
-.taglib-page-iterator {
 	.search-results {
-		color: #555;
-	}
-
-	.search-pages .page-links {
-		a, span {
-			background: url() no-repeat 0 0;
-			border-left-color: #ccc;
-
-			&.first, &.previous, &.next, &.last {
-				background-repeat: no-repeat;
-			}
-
-			&.first {
-				background-image: url(@theme_image_path@/arrows/paging_first.png);
-			}
-
-			&.previous {
-				background-image: url(@theme_image_path@/arrows/paging_previous.png);
-			}
-
-			&.next {
-				background-image: url(@theme_image_path@/arrows/paging_next.png);
-			}
-
-			&.last {
-				background-image: url(@theme_image_path@/arrows/paging_last.png);
-			}
-
-			&.next, &.last {
-				background-position: 100% 0;
-			}
-		}
-
-		span {
-			&, &.first, &.previous {
-				background-position: 0 100%;
-			}
-
-			&.next, &.last {
-				background-position: 100% 100%;
-			}
-		}
+		line-height: 32px;
+		margin-left: 10px;
 	}
 }

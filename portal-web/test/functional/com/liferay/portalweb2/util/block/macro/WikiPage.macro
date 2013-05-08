@@ -32,6 +32,26 @@
 		<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_BODY" value1="${wikiPageContent}" />
 	</command>
 
+	<command name="pgAddPage">
+		<execute macro="Page#pgGoto">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute action="PGWiki#click" locator-key1="NAVIGATION_ALL_PAGES" />
+		<execute action="PGWikiAllpages#click" locator-key1="ADD_PAGE_BUTTON" />
+
+		<execute action="PGWikiAddpage#type" locator-key1="TITLE_FIELD" value1="${wikiPageTitle}" />
+		<execute action="PGWikiAddpage#type" locator-key1="BODY_FIELD" value1="${wikiPageContent}" />
+		<execute action="PGWikiAddpage#click" locator-key1="PUBLISH_BUTTON" />
+
+		<execute action="PGWikiAllpages#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
+		<execute action="PGWikiAllpages#assertTextEquals" locator-key1="WIKI_PAGE_TABLE_PAGE_2" value1="${wikiPageTitle}" />
+		<execute action="PGWikiAllpages#click" locator-key1="WIKI_PAGE_TABLE_PAGE_2" value1="${wikiPageTitle}" />
+
+		<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_TITLE" value1="${wikiPageTitle}" />
+		<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_BODY" value1="${wikiPageContent}" />
+	</command>
+
 	<command name="pgDeleteFrontPage">
 		<execute macro="Page#pgGoto">
 			<var name="pageName" value="${pageName}" />

@@ -469,7 +469,7 @@ AUI.add(
 								{
 									closeText: instance._extendText,
 									content: instance._warningText,
-									noticeClass: 'aui-helper-hidden',
+									noticeClass: 'hide',
 									onClose: function() {
 										instance._host.extend();
 									},
@@ -575,6 +575,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-io-request', 'aui-task-manager', 'cookie', 'liferay-notice']
+		requires: ['aui-io-request', 'aui-task-manager', 'aui-timer', 'cookie', 'liferay-notice']
 	}
 );

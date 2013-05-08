@@ -169,7 +169,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 			row.addText(currencyFormat.format(item.getPrice()), rowURL);
 		}
 		else {
-			row.addText("<div class=\"portlet-msg-success\">" + currencyFormat.format(ShoppingUtil.calculateActualPrice(item)) + "</div>", rowURL);
+			row.addText("<div class=\"alert alert-success\">" + currencyFormat.format(ShoppingUtil.calculateActualPrice(item)) + "</div>", rowURL);
 		}
 
 		// Action

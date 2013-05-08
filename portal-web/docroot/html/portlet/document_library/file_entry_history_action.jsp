@@ -27,7 +27,7 @@ FileEntry fileEntry = (FileEntry)objArray[0];
 FileVersion fileVersion = (FileVersion)objArray[1];
 %>
 
-<liferay-ui:icon-menu align='<%= "auto" %>' direction='<%= "down" %>' extended="<%= false %>" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
+<liferay-ui:icon-menu direction='<%= "down" %>' extended="<%= false %>" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<liferay-ui:icon
 		image="download"
 		url="<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>"

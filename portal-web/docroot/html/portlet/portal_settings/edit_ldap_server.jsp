@@ -395,15 +395,14 @@ for (int i = 0 ; i < groupMappingArray.length ; i++) {
 				data.<portlet:namespace />principal = document.<portlet:namespace />fm['<portlet:namespace />settings--<%= PropsKeys.LDAP_SECURITY_PRINCIPAL + postfix %>--'].value;
 				data.<portlet:namespace />credentials = document.<portlet:namespace />fm['<portlet:namespace />settings--<%= PropsKeys.LDAP_SECURITY_CREDENTIALS + postfix %>--'].value;
 
-				var dialog = new A.Dialog(
+				var dialog = Liferay.Util.Window.getWindow(
 					{
-						align: Liferay.Util.Window.ALIGN_CENTER,
-						destroyOnClose: true,
-						modal: true,
-						title: '<%= UnicodeLanguageUtil.get(pageContext, "ldap") %>',
-						width: 600
+						dialog: {
+							destroyOnHide: true
+						},
+						title: '<%= UnicodeLanguageUtil.get(pageContext, "ldap") %>'
 					}
-				).render();
+				);
 
 				dialog.plug(
 					A.Plugin.IO,
@@ -414,7 +413,7 @@ for (int i = 0 ; i < groupMappingArray.length ; i++) {
 				);
 			}
 		},
-		['aui-dialog', 'aui-io']
+		['aui-io-plugin-deprecated', 'aui-io', 'liferay-util-window']
 	);
 
 	Liferay.provide(

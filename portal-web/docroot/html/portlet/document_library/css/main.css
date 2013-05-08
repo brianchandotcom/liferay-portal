@@ -57,7 +57,7 @@
 		}
 	}
 
-	.document-container .search-results-container .aui-tabview-list {
+	.document-container .search-results-container .tabview-list {
 		margin-bottom: 0;
 	}
 
@@ -111,8 +111,17 @@
 		overflow: auto;
 	}
 
-	.document-container, .document-entries-paginator {
+	.document-container, .document-entries-pagination {
 		clear: both;
+	}
+
+	.document-entries-pagination {
+		text-align: center;
+		margin: 10px 0;
+
+		.pagination-content {
+			margin: 0;
+		}
 	}
 
 	.folder.error:hover {
@@ -142,21 +151,7 @@
 		left: -5px;
 	}
 
-	.lfr-menu-list ul {
-		background: #F0F0F0;
-		position: relative;
-
-		&:after {
-			border: 10px solid transparent;
-			border-bottom-color: #F0F0F0;
-			content: '';
-			position: absolute;
-			right: 5px;
-			top: -10px;
-		}
-	}
-
-	.aui-button-holder.toolbar {
+	.button-holder.toolbar {
 		display: inline;
 		margin: 0;
 	}
@@ -185,47 +180,47 @@
 			}
 		}
 
-		.aui-icon-delete, .aui-icon-download, .aui-icon-edit, .aui-icon-lock, .aui-icon-move, .aui-icon-permissions, .aui-icon-trash, .aui-icon-undo, .aui-icon-unlock {
+		.icon-delete, .icon-download, .icon-edit, .icon-lock, .icon-move, .icon-permissions, .icon-trash, .icon-undo, .icon-unlock {
 			background: url() no-repeat 0 0;
 		}
 
-		.aui-icon-delete {
+		.icon-delete {
 			background-image: url(@theme_image_path@/common/delete.png);
 		}
 
-		.aui-icon-download {
+		.icon-download {
 			background-image: url(@theme_image_path@/common/download.png);
 		}
 
-		.aui-icon-edit {
+		.icon-edit {
 			background-image: url(@theme_image_path@/common/edit.png);
 		}
 
-		.aui-icon-lock {
+		.icon-lock {
 			background-image: url(@theme_image_path@/common/lock.png);
 		}
 
-		.aui-icon-move {
+		.icon-move {
 			background-image: url(@theme_image_path@/common/submit.png);
 		}
 
-		.aui-icon-msoffice {
+		.icon-msoffice {
 			background-image: url(@theme_image_path@/document_library/msoffice.png);
 		}
 
-		.aui-icon-permissions {
+		.icon-permissions {
 			background-image: url(@theme_image_path@/common/permissions.png);
 		}
 
-		.aui-icon-trash {
+		.icon-trash {
 			background-image: url(@theme_image_path@/common/trash.png);
 		}
 
-		.aui-icon-undo {
+		.icon-undo {
 			background-image: url(@theme_image_path@/common/undo.png);
 		}
 
-		.aui-icon-unlock {
+		.icon-unlock {
 			background-image: url(@theme_image_path@/common/unlock.png);
 		}
 	}
@@ -235,11 +230,6 @@
 	}
 
 	.lfr-app-column-view {
-		.portlet-msg-info, .portlet-msg-success {
-			border-width: 0 0 1px;
-			margin: 0 auto;
-		}
-
 		.sync-notification {
 			border-top-width: 1px;
 		}
@@ -258,14 +248,14 @@
 		}
 	}
 
-	.taglib-search-iterator-page-iterator-top, .taglib-search-iterator-page-iterator-bottom, .aui-paginator-container, .document-library-breadcrumb {
+	.taglib-search-iterator-page-iterator-top, .taglib-search-iterator-page-iterator-bottom, .paginator-container, .document-library-breadcrumb {
 		background: #D9D9D9 url(@theme_image_path@/application/subheader_bg.png) 0 0 repeat-x;
 		clear: both;
 		padding: 5px;
 		position: relative;
 	}
 
-	.taglib-search-iterator-page-iterator-top, .taglib-search-iterator-page-iterator-bottom, .aui-paginator-container {
+	.taglib-search-iterator-page-iterator-top, .taglib-search-iterator-page-iterator-bottom, .paginator-container {
 		text-align: center;
 	}
 
@@ -350,7 +340,7 @@
 	.common-file-metadata-container {
 		padding: 1em;
 
-		.aui-field-element {
+		.field-element {
 			display: block;
 
 			textarea {
@@ -533,11 +523,11 @@
 			display: block;
 		}
 
-		.aui-rating-content, .aui-rating-label-element {
+		.rating-content, .rating-label-element {
 			display: inline;
 		}
 
-		.aui-rating-label-element {
+		.rating-label-element {
 			color: #555;
 			font-size: 0.9em;
 			margin-left: 0.5em;
@@ -545,20 +535,6 @@
 
 		.liferay-rating-score {
 			padding-left: 0;
-		}
-	}
-
-	.lfr-actions {
-		&.lfr-extended .lfr-trigger {
-			min-width: auto;
-
-			strong {
-				min-width: 10px;
-			}
-		}
-
-		&.show-arrow.direction-down .lfr-trigger strong a {
-			background: url(@theme_image_path@/arrows/08_down.png) 100% -5px no-repeat;
 		}
 	}
 }
@@ -611,14 +587,6 @@
 	}
 }
 
-.ie7 {
-	.portlet-document-library {
-		.lfr-actions .lfr-trigger strong {
-			min-width: 0px;
-		}
-	}
-}
-
 .ie6 {
 	.portlet-document-library {
 		.taglib-ratings.stars {
@@ -630,10 +598,6 @@
 
 			.lfr-header-row-content .lfr-search-combobox {
 				width: 250px;
-
-				.aui-field-input-text {
-					width: 95%;
-				}
 			}
 		}
 	}
@@ -641,7 +605,7 @@
 
 .firefox {
 	.portlet-document-library, .portlet-document-library-display {
-		.aui-audio-node {
+		.audio-node {
 			height: 28px;
 		}
 	}

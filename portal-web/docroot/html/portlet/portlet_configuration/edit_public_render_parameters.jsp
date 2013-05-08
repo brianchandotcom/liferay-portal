@@ -41,7 +41,7 @@ editPublicRenderParameterURL.setParameter("portletResource", portletResource);
 	<portlet:param name="struts_action" value="/portlet_configuration/edit_public_render_parameters" />
 </portlet:actionURL>
 
-<div class="portlet-msg-info">
+<div class="alert alert-info">
 	<liferay-ui:message arguments='<%= "http://www.liferay.com/community/wiki/-/wiki/Main/Portlet+Communication+Configuration" %>' key="set-up-the-communication-among-the-portlets-that-use-public-render-parameters" />
 </div>
 

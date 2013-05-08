@@ -65,7 +65,7 @@ if (step == 1) {
 				title="organization-roles"
 			/>
 
-			<div class="portlet-msg-info">
+			<div class="alert alert-info">
 				<liferay-ui:message key="please-select-an-organization-to-which-you-will-assign-an-organization-role" />
 			</div>
 
@@ -179,7 +179,7 @@ if (step == 1) {
 
 						submitForm(document.<portlet:namespace />selectOrganizationRoleFm, "<%= portletURL.toString() %>");
 					},
-					'.organization-selector-button input'
+					'.organization-selector-button'
 				);
 			</aui:script>
 		</c:when>
@@ -299,8 +299,8 @@ if (step == 1) {
 
 			Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', result);
 
-			Util.getWindow().close();
+			Util.getWindow().hide();
 		},
-		'.selector-button input'
+		'.selector-button'
 	);
 </aui:script>

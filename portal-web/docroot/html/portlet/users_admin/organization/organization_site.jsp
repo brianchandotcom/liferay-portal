@@ -106,7 +106,7 @@ if (organization != null) {
 
 						<c:choose>
 							<c:when test="<%= hasUnlinkLayoutSetPrototypePermission %>">
-								<div class="aui-helper-hidden" id="<portlet:namespace />publicLayoutSetPrototypeIdOptions">
+								<div class="hide" id="<portlet:namespace />publicLayoutSetPrototypeIdOptions">
 									<aui:input
 										helpMessage="enable-propagation-of-changes-from-the-site-template-help"
 										label="enable-propagation-of-changes-from-the-site-template"
@@ -168,7 +168,7 @@ if (organization != null) {
 
 						<c:choose>
 							<c:when test="<%= hasUnlinkLayoutSetPrototypePermission %>">
-								<div class="aui-helper-hidden" id="<portlet:namespace />privateLayoutSetPrototypeIdOptions">
+								<div class="hide" id="<portlet:namespace />privateLayoutSetPrototypeIdOptions">
 									<aui:input
 										helpMessage="enable-propagation-of-changes-from-the-site-template-help"
 										label="enable-propagation-of-changes-from-the-site-template"

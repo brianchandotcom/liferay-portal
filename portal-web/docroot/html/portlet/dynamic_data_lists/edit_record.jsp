@@ -187,9 +187,6 @@ if (translating) {
 								Liferay.Util.openWindow(
 									{
 										cache: false,
-										dialog: {
-											modal: true
-										},
 										id: event.newVal,
 										title: '<%= UnicodeLanguageUtil.get(pageContext, "web-content-translation") %>',
 										uri: uri
@@ -229,7 +226,7 @@ if (translating) {
 		%>
 
 		<c:if test="<%= pending %>">
-			<div class="portlet-msg-info">
+			<div class="alert alert-info">
 				<liferay-ui:message key="there-is-a-publication-workflow-in-process" />
 			</div>
 		</c:if>
@@ -257,7 +254,7 @@ if (translating) {
 					}
 					%>
 
-					<aui:button name="saveButton" onClick='<%= renderResponse.getNamespace() + "setWorkflowAction(true);" %>' type="submit" value="<%= saveButtonLabel %>" />
+					<aui:button name="saveButton" onClick='<%= renderResponse.getNamespace() + "setWorkflowAction(true);" %>' primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
 
 					<aui:button disabled="<%= pending %>" name="publishButton" onClick='<%= renderResponse.getNamespace() + "setWorkflowAction(false);" %>' type="submit" value="<%= publishButtonLabel %>" />
 

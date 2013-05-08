@@ -43,7 +43,6 @@ java.lang.String id = GetterUtil.getString((java.lang.String)request.getAttribut
 boolean ignoreRequestValue = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:select:ignoreRequestValue")));
 boolean inlineField = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:select:inlineField")));
 java.lang.String inlineLabel = GetterUtil.getString((java.lang.String)request.getAttribute("aui:select:inlineLabel"));
-java.lang.String inputCssClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:select:inputCssClass"));
 java.lang.String label = GetterUtil.getString((java.lang.String)request.getAttribute("aui:select:label"));
 boolean last = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:select:last")));
 java.lang.String listType = GetterUtil.getString((java.lang.String)request.getAttribute("aui:select:listType"));
@@ -69,7 +68,6 @@ _updateOptions(_options, "id", id);
 _updateOptions(_options, "ignoreRequestValue", ignoreRequestValue);
 _updateOptions(_options, "inlineField", inlineField);
 _updateOptions(_options, "inlineLabel", inlineLabel);
-_updateOptions(_options, "inputCssClass", inputCssClass);
 _updateOptions(_options, "label", label);
 _updateOptions(_options, "last", last);
 _updateOptions(_options, "listType", listType);

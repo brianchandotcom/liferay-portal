@@ -1,10 +1,10 @@
 <#include "../init.ftl">
 
 <#if fieldValue?? && fieldValue != "">
-	<div class="lfr-forms-field-wrapper aui-field-wrapper-content">
+	<div class="lfr-forms-field-wrapper field-wrapper-content">
 		<@aui.input name=namespacedFieldName type="hidden" value=fieldValue />
 
-		<label class="aui-field-label">
+		<label>
 			<@liferay_ui.message key=escape(label) />
 		</label>
 

@@ -36,7 +36,7 @@ Map<Locale, String> reminderQueriesMap = LocalizationUtil.getLocalizedParameter(
 
 <h3><liferay-ui:message key="reminder-queries" /></h3>
 
-<div class="portlet-msg-info">
+<div class="alert alert-info">
 	<liferay-ui:message key="specify-custom-reminder-queries-for-the-users-of-this-organization" />
 </div>
 

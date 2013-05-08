@@ -27,6 +27,13 @@ import javax.servlet.http.HttpServletRequest;
 public class ButtonTag extends BaseButtonTag {
 
 	@Override
+	public void setIconAlign(String iconAlign) {
+		if (iconAlign != null) {
+			super.setIconAlign(iconAlign.toLowerCase());
+		}
+	}
+
+	@Override
 	protected boolean isCleanUpSetAttributes() {
 		return _CLEAN_UP_SET_ATTRIBUTES;
 	}

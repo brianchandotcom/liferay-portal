@@ -299,7 +299,7 @@ portletURL.setParameter("categoryId", String.valueOf(categoryId));
 			}
 			else {
 				row.addText(
-					"<div class=\"portlet-msg-success\">" +
+					"<div class=\"alert alert-success\">" +
 						currencyFormat.format(ShoppingUtil.calculateActualPrice(item)) +
 							"</div>",
 					rowURL);

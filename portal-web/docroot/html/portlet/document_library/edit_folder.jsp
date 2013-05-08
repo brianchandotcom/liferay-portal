@@ -151,7 +151,7 @@ if (workflowEnabled) {
 
 				<div id="<portlet:namespace />overrideParentSettings">
 					<c:if test="<%= workflowEnabled %>">
-						<div class='<%= (rootFolder || fileEntryTypes.isEmpty()) ? StringPool.BLANK : "aui-helper-hidden" %>' id="<portlet:namespace />defaultWorkflow">
+						<div class='<%= (rootFolder || fileEntryTypes.isEmpty()) ? StringPool.BLANK : "hide" %>' id="<portlet:namespace />defaultWorkflow">
 							<aui:select label="default-workflow-for-all-document-types" name='<%= "workflowDefinition" + DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL %>'>
 
 								<aui:option label="no-workflow" value="" />
@@ -252,7 +252,7 @@ if (workflowEnabled) {
 							url='<%= "javascript:" + renderResponse.getNamespace() + "openFileEntryTypeSelector();" %>'
 						/>
 
-						<aui:select cssClass='<%= !fileEntryTypes.isEmpty() ? "default-document-type" : "default-document-type aui-helper-hidden" %>' helpMessage="default-document-type-help" label="default-document-type" name="defaultFileEntryTypeId">
+						<aui:select cssClass='<%= !fileEntryTypes.isEmpty() ? "default-document-type" : "default-document-type hide" %>' helpMessage="default-document-type-help" label="default-document-type" name="defaultFileEntryTypeId">
 
 							<%
 							for (DLFileEntryType fileEntryType : fileEntryTypes) {
@@ -311,9 +311,6 @@ if (workflowEnabled) {
 	function <portlet:namespace />openFileEntryTypeSelector() {
 		Liferay.Util.openWindow(
 			{
-				dialog: {
-					width: 680
-				},
 				id: '<portlet:namespace />fileEntryTypeSeclector',
 				title: '<%= UnicodeLanguageUtil.get(pageContext, "document-types") %>',
 				uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/document_library/select_file_entry_type" /><portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" /><portlet:param name="includeBasicFileEntryType" value="1" /></portlet:renderURL>'
@@ -381,7 +378,7 @@ if (workflowEnabled) {
 			select.append(option);
 
 			if (dialog) {
-				dialog.close();
+				dialog.hide();
 			}
 		},
 		['liferay-search-container']

@@ -80,7 +80,7 @@ long assetClassPK = 0;
 	<aui:input name="repositoryId" type="hidden" value="<%= String.valueOf(repositoryId) %>" />
 	<aui:input name="folderId" type="hidden" value="<%= String.valueOf(folderId) %>" />
 
-	<div class="no-files-selected-info portlet-msg-info aui-helper-hidden" id="<portlet:namespace />metadataExplanationContainer">
+	<div class="no-files-selected-info alert alert-info hide" id="<portlet:namespace />metadataExplanationContainer">
 		<liferay-ui:message key="select-documents-from-the-left-to-add-them-to-the-documents-and-media" />
 	</div>
 
@@ -100,7 +100,7 @@ long assetClassPK = 0;
 
 					<div class="document-type-selector">
 
-						<liferay-ui:icon-menu align="left" direction="down" icon='<%= themeDisplay.getPathThemeImages() + "/common/copy.png" %>' id="groupSelector" message='<%= (fileEntryTypeId > 0) ? HtmlUtil.escape(fileEntryType.getName()) : "basic-document" %>' showWhenSingleIcon="<%= true %>">
+						<liferay-ui:icon-menu direction="down" icon='<%= themeDisplay.getPathThemeImages() + "/common/copy.png" %>' id="groupSelector" message='<%= (fileEntryTypeId > 0) ? HtmlUtil.escape(fileEntryType.getName()) : "basic-document" %>' showWhenSingleIcon="<%= true %>">
 
 							<%
 							for (DLFileEntryType curFileEntryType : fileEntryTypes) {

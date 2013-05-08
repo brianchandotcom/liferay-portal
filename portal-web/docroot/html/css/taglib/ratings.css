@@ -12,7 +12,7 @@
 		}
 	}
 
-	.aui-rating-content {
+	.rating-content {
 		display: block;
 	}
 
@@ -24,22 +24,22 @@
 		float: left;
 		margin: 0;
 
-		.aui-thumbrating {
+		.thumbrating {
 			height: 20px;
 
-			.aui-rating-label-element {
+			.rating-label-element {
 				padding: 0 5px;
 			}
 		}
 	}
 }
 
-.js .taglib-ratings .liferay-rating-vote .aui-field {
+.js .taglib-ratings .liferay-rating-vote .field {
 	display: none;
 }
 
 .ie6 .taglib-ratings {
-	.aui-rating-content {
+	.rating-content {
 		display: inline;
 	}
 

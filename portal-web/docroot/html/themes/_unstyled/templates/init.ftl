@@ -339,7 +339,7 @@
 <#assign nav_css_class = "sort-pages modify-pages" />
 
 <#if !has_navigation>
-	<#assign nav_css_class = nav_css_class + " aui-helper-hidden" />
+	<#assign nav_css_class = nav_css_class + " hide" />
 </#if>
 
 <#-- ---------- Staging ---------- -->

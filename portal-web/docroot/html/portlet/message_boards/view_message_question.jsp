@@ -92,7 +92,7 @@ MBThread thread = messageDisplay.getThread();
 </c:choose>
 
 <c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, message.getCategoryId(), ActionKeys.REPLY_TO_MESSAGE) && !thread.isLocked() %>">
-	<div class="aui-helper-hidden" id="<portlet:namespace />addQuickReplyDiv">
+	<div class="hide" id="<portlet:namespace />addQuickReplyDiv">
 		<%@ include file="/html/portlet/message_boards/edit_message_quick.jspf" %>
 	</div>
 </c:if>

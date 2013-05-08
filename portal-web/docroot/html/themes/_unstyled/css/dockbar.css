@@ -128,18 +128,18 @@ html > .lfr-dockbar-pinned {
 
 /* ---------- Menus ---------- */
 
-.aui-dockbarmenu-hidden {
+.dockbarmenu-hidden {
 }
 
 .dockbar {
-	.aui-toolbar {
+	.toolbar {
 	}
 
 	.user-toolbar {
 	}
 }
 
-.aui-underlay {
+.underlay {
 	.portal-add-content {
 	}
 
@@ -170,17 +170,6 @@ html > .lfr-dockbar-pinned {
 	}
 
 	.control-panel a {
-	}
-
-	.current-site {
-		a {
-		}
-
-		.site-type {
-		}
-
-		a:hover .site-type, .current-site a:hover {
-		}
 	}
 
 	.site-name {
@@ -215,7 +204,7 @@ html > .lfr-dockbar-pinned {
 		}
 	}
 
-	.aui-menu-scroll {
+	.menu-scroll {
 	}
 }
 

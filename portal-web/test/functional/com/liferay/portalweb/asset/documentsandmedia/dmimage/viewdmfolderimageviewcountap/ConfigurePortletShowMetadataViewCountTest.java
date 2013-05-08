@@ -30,7 +30,7 @@ public class ConfigurePortletShowMetadataViewCountTest extends BaseTestCase {
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForElementPresent(
-			"//nav[@class='site-breadcrumbs aui-helper-hidden lfr-hudcrumbs']");
+			"//nav[@class='site-breadcrumbs aui-hide lfr-hudcrumbs']");
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//span[@title='Options']/ul/li/strong/a"));

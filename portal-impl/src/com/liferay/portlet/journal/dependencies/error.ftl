@@ -1,5 +1,5 @@
 <div class="journal-template-error">
-	<span class="portlet-msg-error">
+	<span class="alert alert-error">
 		<@liferay.language key="an-error-occurred-while-processing-the-template" />
 	</span>
 

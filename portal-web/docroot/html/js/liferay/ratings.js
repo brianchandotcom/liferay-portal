@@ -139,7 +139,7 @@ AUI.add(
 
 						var ratingScore = instance.ratingScore;
 
-						var firstImage = ratingScore.get('boundingBox').one('img.aui-rating-element');
+						var firstImage = ratingScore.get('boundingBox').one('img.rating-element');
 
 						if (firstImage) {
 							var averageRatingText = Lang.sub(

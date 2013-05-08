@@ -49,8 +49,12 @@ public class BaseButtonTag extends com.liferay.taglib.util.IncludeTag {
 		return _href;
 	}
 
-	public java.lang.String getInputCssClass() {
-		return _inputCssClass;
+	public java.lang.String getIcon() {
+		return _icon;
+	}
+
+	public java.lang.String getIconAlign() {
+		return _iconAlign;
 	}
 
 	public java.lang.String getName() {
@@ -59,6 +63,10 @@ public class BaseButtonTag extends com.liferay.taglib.util.IncludeTag {
 
 	public java.lang.String getOnClick() {
 		return _onClick;
+	}
+
+	public java.lang.Object getPrimary() {
+		return _primary;
 	}
 
 	public java.lang.String getType() {
@@ -93,10 +101,16 @@ public class BaseButtonTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("href", href);
 	}
 
-	public void setInputCssClass(java.lang.String inputCssClass) {
-		_inputCssClass = inputCssClass;
+	public void setIcon(java.lang.String icon) {
+		_icon = icon;
 
-		setScopedAttribute("inputCssClass", inputCssClass);
+		setScopedAttribute("icon", icon);
+	}
+
+	public void setIconAlign(java.lang.String iconAlign) {
+		_iconAlign = iconAlign;
+
+		setScopedAttribute("iconAlign", iconAlign);
 	}
 
 	public void setName(java.lang.String name) {
@@ -109,6 +123,12 @@ public class BaseButtonTag extends com.liferay.taglib.util.IncludeTag {
 		_onClick = onClick;
 
 		setScopedAttribute("onClick", onClick);
+	}
+
+	public void setPrimary(java.lang.Object primary) {
+		_primary = primary;
+
+		setScopedAttribute("primary", primary);
 	}
 
 	public void setType(java.lang.String type) {
@@ -129,9 +149,11 @@ public class BaseButtonTag extends com.liferay.taglib.util.IncludeTag {
 		_data = null;
 		_disabled = false;
 		_href = null;
-		_inputCssClass = null;
+		_icon = null;
+		_iconAlign = "left";
 		_name = null;
 		_onClick = null;
+		_primary = null;
 		_type = "button";
 		_value = null;
 	}
@@ -147,9 +169,11 @@ public class BaseButtonTag extends com.liferay.taglib.util.IncludeTag {
 		setNamespacedAttribute(request, "data", _data);
 		setNamespacedAttribute(request, "disabled", _disabled);
 		setNamespacedAttribute(request, "href", _href);
-		setNamespacedAttribute(request, "inputCssClass", _inputCssClass);
+		setNamespacedAttribute(request, "icon", _icon);
+		setNamespacedAttribute(request, "iconAlign", _iconAlign);
 		setNamespacedAttribute(request, "name", _name);
 		setNamespacedAttribute(request, "onClick", _onClick);
+		setNamespacedAttribute(request, "primary", _primary);
 		setNamespacedAttribute(request, "type", _type);
 		setNamespacedAttribute(request, "value", _value);
 	}
@@ -163,9 +187,11 @@ public class BaseButtonTag extends com.liferay.taglib.util.IncludeTag {
 	private java.lang.Object _data = null;
 	private boolean _disabled = false;
 	private java.lang.String _href = null;
-	private java.lang.String _inputCssClass = null;
+	private java.lang.String _icon = null;
+	private java.lang.String _iconAlign = "left";
 	private java.lang.String _name = null;
 	private java.lang.String _onClick = null;
+	private java.lang.Object _primary = null;
 	private java.lang.String _type = "button";
 	private java.lang.String _value = null;
 

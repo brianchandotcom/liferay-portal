@@ -1,7 +1,7 @@
 #set ($companyId = $getterUtil.getLong($companyId))
 
 <div class="dynamic-data-lists-template-error">
-	<span class="portlet-msg-error">
+	<span class="alert alert-error">
 		#language ("an-error-occurred-while-processing-the-template")
 	</span>
 

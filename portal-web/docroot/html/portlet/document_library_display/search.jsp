@@ -65,7 +65,7 @@ int mountFoldersCount = DLAppServiceUtil.getMountFoldersCount(scopeGroupId, DLFo
 		title="search"
 	/>
 
-	<span class="aui-search-bar">
+	<span class="form-search">
 		<aui:input inlineField="<%= true %>" label="" name="keywords" size="30" title="search-documents" type="text" value="<%= keywords %>" />
 
 		<aui:button type="submit" value="search" />
@@ -106,7 +106,7 @@ int mountFoldersCount = DLAppServiceUtil.getMountFoldersCount(scopeGroupId, DLFo
 		}
 		%>
 
-		<span class="portlet-msg-info">
+		<span class="alert alert-info">
 			<liferay-ui:message arguments="<%= sb.toString() %>" key="results-from-the-local-repository-search-in-x" />
 		</span>
 	</c:if>

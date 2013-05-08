@@ -11,13 +11,17 @@ AUI.add(
 
 		var ARIA_ATTR_ROLE = 'role';
 
-		var CSS_STATE_ACTIVE = 'aui-state-active';
+		var CSS_BTN_PRIMARY = 'btn-primary';
 
 		var CSS_EXTENDED = 'lfr-extended';
+
+		var CSS_OPEN = 'open';
 
 		var DEFAULT_ALIGN_POINTS = ['tl', 'bl'];
 
 		var EVENT_CLICK = 'click';
+
+		var PARENT_NODE = 'parentNode';
 
 		var STR_B = 'b';
 
@@ -65,10 +69,10 @@ AUI.add(
 
 		var STR_BLANK = '';
 
-		var TPL_MENU = '<div class="lfr-component lfr-menu-list" />';
+		var TPL_MENU = '<div class="open" />';
 
 		var TPL_SEARCH_BOX = '<div class="lfr-menu-list-search-container">' +
-				'<input autocomplete="off" aria-autocomplete="list" aria-expanded="true" aria-labelledby="{searchLabeledBy}" aria-owns="{searchOwns}" class="lfr-menu-list-search" id="{searchId}" role="combobox">' +
+				'<input autocomplete="off" aria-autocomplete="list" aria-expanded="true" aria-labelledby="{searchLabeledBy}" aria-owns="{searchOwns}" class="lfr-menu-list-search" id="{searchId}" role="combobox" type="text">' +
 			'</div>';
 
 		var Menu = function() {
@@ -102,7 +106,10 @@ AUI.add(
 					instance._activeTrigger = null;
 
 					if (trigger.hasClass(CSS_EXTENDED)) {
-						trigger.removeClass(CSS_STATE_ACTIVE);
+						trigger.removeClass(CSS_BTN_PRIMARY);
+					}
+					else {
+						trigger.get(PARENT_NODE).removeClass(CSS_OPEN);
 					}
 				}
 			},
@@ -144,7 +151,6 @@ AUI.add(
 								points: DEFAULT_ALIGN_POINTS
 							},
 							constrain: true,
-							cssClass: 'lfr-menu-list',
 							hideClass: false,
 							preventOverlap: true,
 							zIndex: Liferay.zIndex.MENU
@@ -152,8 +158,6 @@ AUI.add(
 					).render();
 
 					var boundingBox = overlay.get('boundingBox');
-
-					boundingBox.addClass('lfr-component');
 
 					instance._overlay = overlay;
 				}
@@ -174,7 +178,7 @@ AUI.add(
 				var listItems;
 
 				if (!menu || !listContainer) {
-					listContainer = trigger.one('ul');
+					listContainer = trigger.next('ul');
 
 					listItems = listContainer.all(SELECTOR_LIST_ITEM);
 
@@ -204,8 +208,6 @@ AUI.add(
 					menuHeight = instance._getMenuHeight(trigger, menu, listItems || listContainer.all(SELECTOR_LIST_ITEM));
 
 					trigger.setData('menuHeight', menuHeight);
-
-					listContainer.addClass('lfr-menu-list-overflow');
 
 					if (menuHeight != AUTO) {
 						listContainer.setStyle('maxHeight', menuHeight);
@@ -275,7 +277,10 @@ AUI.add(
 					}
 
 					if (cssClass.indexOf(CSS_EXTENDED) > -1) {
-						trigger.addClass(CSS_STATE_ACTIVE);
+						trigger.addClass(CSS_BTN_PRIMARY);
+					}
+					else {
+						trigger.get(PARENT_NODE).addClass(CSS_OPEN);
 					}
 
 					var focusManager = overlay.bodyNode.focusManager;
@@ -304,18 +309,14 @@ AUI.add(
 				listNode.setAttribute(ARIA_ATTR_ROLE, ariaListNodeAttr);
 				links.set(ARIA_ATTR_ROLE, ariaLinksAttr);
 
-				var anchor = trigger.one(SELECTOR_ANCHOR);
+				trigger.attr(
+					{
+						'aria-haspopup': true,
+						role: 'button'
+					}
+				);
 
-				if (anchor) {
-					anchor.attr(
-						{
-							'aria-haspopup': true,
-							role: 'button'
-						}
-					);
-
-					listNode.setAttribute('aria-labelledby', anchor.guid());
-				}
+				listNode.setAttribute('aria-labelledby', trigger.guid());
 			}
 		};
 
@@ -380,8 +381,8 @@ AUI.add(
 						A.Plugin.NodeFocusManager,
 						{
 							circular: true,
-							descendants: 'li:not(.aui-helper-hidden) a,input',
-							focusClass: 'aui-focus',
+							descendants: 'li:not(.hide) a,input',
+							focusClass: 'focus',
 							keys: {
 								next: 'down:40',
 								previous: 'down:38'
@@ -395,11 +396,9 @@ AUI.add(
 							var activeTrigger = instance._activeTrigger;
 
 							if (activeTrigger) {
-								var anchor = activeTrigger.one(SELECTOR_ANCHOR);
-
 								instance._closeActiveMenu();
 
-								anchor.focus();
+								activeTrigger.focus();
 							}
 						},
 						'down:27,9'
@@ -495,7 +494,7 @@ AUI.add(
 					MAP_LIVE_SEARCH[id] = liveSearch;
 				}
 			},
-			['aui-live-search'],
+			['aui-live-search-deprecated'],
 			true
 		);
 
@@ -512,7 +511,9 @@ AUI.add(
 				var activeTrigger = instance._activeTrigger;
 
 				if (activeTrigger && (activeTrigger != trigger)) {
-					activeTrigger.removeClass(CSS_STATE_ACTIVE);
+					activeTrigger.removeClass(CSS_BTN_PRIMARY);
+
+					activeTrigger.get(PARENT_NODE).removeClass(CSS_OPEN);
 				}
 
 				if (!trigger.hasClass('disabled')) {
@@ -539,13 +540,13 @@ AUI.add(
 					event.halt();
 				}
 			},
-			['aui-overlay']
+			['aui-overlay-deprecated']
 		);
 
 		Liferay.Menu = Menu;
 	},
 	'',
 	{
-		requires: ['aui-debounce', 'aui-node']
+		requires: ['array-invoke', 'aui-debounce', 'aui-node']
 	}
 );

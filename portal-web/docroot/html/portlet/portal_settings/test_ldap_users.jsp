@@ -204,7 +204,7 @@ if (counter == 0) {
 if (showMissingAttributeMessage) {
 %>
 
-	<div class="portlet-msg-info">
+	<div class="alert alert-info">
 		<liferay-ui:message key="the-above-results-include-users-which-are-missing-the-required-attributes-(screen-name,-password,-email-address,-first-name,-and-last-name).-these-users-will-not-be-imported-until-these-attributes-are-filled-in" />
 	</div>
 

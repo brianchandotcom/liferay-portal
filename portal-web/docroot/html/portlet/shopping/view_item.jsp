@@ -135,7 +135,7 @@ ShoppingItem[] prevAndNext = ShoppingItemServiceUtil.getItemsPrevAndNext(item.ge
 				</c:if>
 
 				<c:if test="<%= itemPrice.getDiscount() > 0 %>">
-					<strike><%= currencyFormat.format(itemPrice.getPrice()) %></strike> <div class="portlet-msg-success"><%= currencyFormat.format(ShoppingUtil.calculateActualPrice(itemPrice)) %></div> / <liferay-ui:message key="you-save" />: <div class="portlet-msg-error"><%= currencyFormat.format(ShoppingUtil.calculateDiscountPrice(itemPrice)) %> (<%= percentFormat.format(itemPrice.getDiscount()) %>)</div><br />
+					<strike><%= currencyFormat.format(itemPrice.getPrice()) %></strike> <div class="alert alert-success"><%= currencyFormat.format(ShoppingUtil.calculateActualPrice(itemPrice)) %></div> / <liferay-ui:message key="you-save" />: <div class="alert alert-error"><%= currencyFormat.format(ShoppingUtil.calculateDiscountPrice(itemPrice)) %> (<%= percentFormat.format(itemPrice.getDiscount()) %>)</div><br />
 				</c:if>
 
 			<%
@@ -147,10 +147,10 @@ ShoppingItem[] prevAndNext = ShoppingItemServiceUtil.getItemsPrevAndNext(item.ge
 			<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.SHOPPING_ITEM_SHOW_AVAILABILITY) %>">
 				<c:choose>
 					<c:when test="<%= ShoppingUtil.isInStock(item) %>">
-						<liferay-ui:message key="availability" />: <div class="portlet-msg-success"><liferay-ui:message key="in-stock" /></div><br />
+						<liferay-ui:message key="availability" />: <div class="alert alert-success"><liferay-ui:message key="in-stock" /></div><br />
 					</c:when>
 					<c:otherwise>
-						<liferay-ui:message key="availability" />: <div class="portlet-msg-error"><liferay-ui:message key="out-of-stock" /></div><br />
+						<liferay-ui:message key="availability" />: <div class="alert alert-error"><liferay-ui:message key="out-of-stock" /></div><br />
 					</c:otherwise>
 				</c:choose>
 

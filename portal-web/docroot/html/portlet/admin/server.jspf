@@ -97,7 +97,7 @@ serverURL.setParameter("tabs3", tabs3);
 						</aui:button-row>
 					</c:when>
 					<c:otherwise>
-						<span class="aui-search-bar">
+						<span class="form-search">
 							<aui:input inlineField="<%= true %>" label="" name="keywords" title="search-categories" type="text" value="<%= keywords %>" />
 
 							<aui:button type="submit" value="search" />
@@ -220,7 +220,7 @@ serverURL.setParameter("tabs3", tabs3);
 					portletURL="<%= serverURL %>"
 				/>
 
-				<span class="aui-search-bar">
+				<span class="form-search">
 					<aui:input inlineField="<%= true %>" label="" name="keywords" title="search-properties" type="text" value="<%= keywords %>" />
 
 					<aui:button type="submit" value="search" />
@@ -351,7 +351,7 @@ serverURL.setParameter("tabs3", tabs3);
 
 				<c:choose>
 					<c:when test="<%= convertProcesses.isEmpty() %>">
-						<div class="portlet-msg-info">
+						<div class="alert alert-info">
 							<liferay-ui:message key="no-data-migration-processes-are-available" />
 						</div>
 					</c:when>
@@ -578,7 +578,7 @@ serverURL.setParameter("tabs3", tabs3);
 						<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="adminXugglerPanel" persistState="<%= true %>" title="enabling-xuggler-provides-video-conversion-functionality">
 							<c:choose>
 								<c:when test="<%= XugglerUtil.isNativeLibraryInstalled() %>">
-									<div class="portlet-msg-info">
+									<div class="alert alert-info">
 										<liferay-ui:message key="xuggler-installed" />
 									</div>
 
@@ -624,7 +624,7 @@ serverURL.setParameter("tabs3", tabs3);
 									}
 									%>
 
-									<div class="portlet-msg-info">
+									<div class="alert alert-info">
 										<liferay-ui:message key="<%= xugglerHelp %>" />
 									</div>
 

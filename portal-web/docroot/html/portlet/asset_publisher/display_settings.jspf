@@ -89,7 +89,7 @@
 	<aui:input helpMessage="set-as-the-default-asset-publisher-for-this-page-help" label="set-as-the-default-asset-publisher-for-this-page" name="defaultAssetPublisher" type="checkbox" value="<%= defaultAssetPublisher %>" />
 
 	<aui:field-wrapper helpMessage='<%= !openOfficeServerEnabled ? "enabling-openoffice-integration-provides-document-conversion-functionality" : StringPool.BLANK %>' label="enable-conversion-to">
-		<div class="aui-field-row">
+		<div class="field-row">
 
 			<%
 			for (String conversion : conversions) {

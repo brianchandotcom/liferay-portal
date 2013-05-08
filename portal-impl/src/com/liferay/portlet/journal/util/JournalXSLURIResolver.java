@@ -102,14 +102,16 @@ public class JournalXSLURIResolver implements Externalizable, XSLURIResolver {
 			int templatePathIndex = href.indexOf(_PATH_GET_TEMPLATE);
 
 			if (templatePathIndex >= 0) {
+				long articleGroupId = GetterUtil.getLong(
+					_tokens.get("article_group_id"));
+
 				int templateIdIndex =
 					templatePathIndex + _PATH_GET_TEMPLATE.length();
 
-				long groupId = GetterUtil.getLong(_tokens.get("group_id"));
 				String templateId = href.substring(templateIdIndex);
 
 				content = JournalUtil.getTemplateScript(
-					groupId, templateId, _tokens, _languageId);
+					articleGroupId, templateId, _tokens, _languageId);
 			}
 			else {
 				content = HttpUtil.URLtoString(href);

@@ -7,7 +7,7 @@
 		}
 	}
 
-	.aui-form {
+	.form {
 		clear: both;
 
 		.text-input {
@@ -33,7 +33,7 @@
 		width: 20%;
 	}
 
-	.use-for-all-column .aui-field-row .aui-field-label {
+	.use-for-all-column .field-row .field-label {
 		width: 50px;
 	}
 
@@ -49,7 +49,7 @@
 		margin-top: 10px;
 	}
 
-	.aui-colorpicker-trigger {
+	.colorpicker-trigger {
 		margin-top: 0;
 		vertical-align: top;
 	}

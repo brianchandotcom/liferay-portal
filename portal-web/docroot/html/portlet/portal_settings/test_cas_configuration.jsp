@@ -35,7 +35,7 @@ String casServiceURL = ParamUtil.getString(request, "casServiceURL");
 		String casLoginURLCssClass = _getCssClass(casLoginURLResult);
 		%>
 
-		<span class="<%= casLoginURLCssClass %>"><liferay-ui:message key="<%= casLoginURLResult %>" /></span> <span class="aui-field-hint"><%= casLoginURL %></span>
+		<span class="<%= casLoginURLCssClass %>"><liferay-ui:message key="<%= casLoginURLResult %>" /></span> <span class="field-hint"><%= casLoginURL %></span>
 	</td>
 </tr>
 <tr>
@@ -49,7 +49,7 @@ String casServiceURL = ParamUtil.getString(request, "casServiceURL");
 		String casLogoutURLCssClass = _getCssClass(casLogoutURLResult);
 		%>
 
-		<span class="<%= casLogoutURLCssClass %>"><liferay-ui:message key="<%= casLogoutURLResult %>" /></span> <span class="aui-field-hint"><%= casLogoutURL %></span>
+		<span class="<%= casLogoutURLCssClass %>"><liferay-ui:message key="<%= casLogoutURLResult %>" /></span> <span class="field-hint"><%= casLogoutURL %></span>
 	</td>
 </tr>
 
@@ -65,7 +65,7 @@ String casServiceURL = ParamUtil.getString(request, "casServiceURL");
 			String casServerURLCssClass = _getCssClass(casServerURLResult);
 			%>
 
-			<span class="<%= casServerURLCssClass %>"><liferay-ui:message key="<%= casServerURLResult %>" /></span> <span class="aui-field-hint"><%= casServerURL %></span>
+			<span class="<%= casServerURLCssClass %>"><liferay-ui:message key="<%= casServerURLResult %>" /></span> <span class="field-hint"><%= casServerURL %></span>
 		</td>
 	</tr>
 </c:if>
@@ -82,7 +82,7 @@ String casServiceURL = ParamUtil.getString(request, "casServiceURL");
 			String casServiceURLCssClass = _getCssClass(casServiceURLResult);
 			%>
 
-			<span class="<%= casServiceURLCssClass %>"><liferay-ui:message key="<%= casServiceURLResult %>" /></span> <span class="aui-field-hint"><%= casServiceURL %></span>
+			<span class="<%= casServiceURLCssClass %>"><liferay-ui:message key="<%= casServiceURLResult %>" /></span> <span class="field-hint"><%= casServiceURL %></span>
 		</td>
 	</tr>
 </c:if>
@@ -91,7 +91,7 @@ String casServiceURL = ParamUtil.getString(request, "casServiceURL");
 
 <%!
 private String _getCssClass(String result) {
-	String cssClass = "portlet-msg-";
+	String cssClass = "alert alert-";
 
 	if (result.equals("pass")) {
 		cssClass += "success";

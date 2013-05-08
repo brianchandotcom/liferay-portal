@@ -22,100 +22,92 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "browse");
 String usersListView = ParamUtil.get(request, "usersListView", UserConstants.LIST_VIEW_TREE);
 %>
 
-<div class="lfr-portlet-toolbar">
-	<portlet:renderURL var="viewUsersTreeURL">
-		<portlet:param name="struts_action" value="/users_admin/view" />
-		<portlet:param name="toolbarItem" value="browse" />
-		<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_TREE %>" />
-		<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
-	</portlet:renderURL>
+<aui:nav-bar>
+	<aui:nav>
+		<portlet:renderURL var="viewUsersTreeURL">
+			<portlet:param name="struts_action" value="/users_admin/view" />
+			<portlet:param name="toolbarItem" value="browse" />
+			<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_TREE %>" />
+			<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
+		</portlet:renderURL>
 
-	<span class="lfr-toolbar-button view-button <%= toolbarItem.equals("browse") ? "current" : StringPool.BLANK %>">
-		<a href="<%= viewUsersTreeURL %>"><liferay-ui:message key="browse" /></a>
-	</span>
+		<aui:nav-item href="<%= viewUsersTreeURL %>" label="browse" selected='<%= toolbarItem.equals("browse") %>' />
 
-	<portlet:renderURL var="viewOrganizationsFlatURL">
-		<portlet:param name="struts_action" value="/users_admin/view" />
-		<portlet:param name="toolbarItem" value="view-all-organizations" />
-		<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS %>" />
-		<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
-	</portlet:renderURL>
+		<portlet:renderURL var="viewOrganizationsFlatURL">
+			<portlet:param name="struts_action" value="/users_admin/view" />
+			<portlet:param name="toolbarItem" value="view-all-organizations" />
+			<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS %>" />
+			<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
+		</portlet:renderURL>
 
-	<span class="lfr-toolbar-button view-button <%= toolbarItem.equals("view-all-organizations") ? "current" : StringPool.BLANK %>">
-		<a href="<%= viewOrganizationsFlatURL %>"><liferay-ui:message key="view-organizations" /></a>
-	</span>
+		<aui:nav-item href="<%= viewOrganizationsFlatURL %>" label="view-organizations" selected='<%= toolbarItem.equals("view-all-organizations") %>' />
 
-	<portlet:renderURL var="viewUsersFlatURL">
-		<portlet:param name="struts_action" value="/users_admin/view" />
-		<portlet:param name="toolbarItem" value="view-all-users" />
-		<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_USERS %>" />
-		<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
-	</portlet:renderURL>
+		<portlet:renderURL var="viewUsersFlatURL">
+			<portlet:param name="struts_action" value="/users_admin/view" />
+			<portlet:param name="toolbarItem" value="view-all-users" />
+			<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_USERS %>" />
+			<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
+		</portlet:renderURL>
 
-	<span class="lfr-toolbar-button view-button <%= toolbarItem.equals("view-all-users") ? "current" : StringPool.BLANK %>">
-		<a href="<%= viewUsersFlatURL %>"><liferay-ui:message key="view-users" /></a>
-	</span>
+		<aui:nav-item href="<%= viewUsersFlatURL %>" label="view-users" selected='<%= toolbarItem.equals("view-all-users") %>' />
 
-	<%
-	boolean hasAddOrganizationPermission = PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_ORGANIZATION);
-	boolean hasAddUserPermission = PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_USER);
-	%>
+		<%
+		boolean hasAddOrganizationPermission = PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_ORGANIZATION);
+		boolean hasAddUserPermission = PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_USER);
+		%>
 
-	<c:if test="<%= hasAddOrganizationPermission || hasAddUserPermission %>">
-		<liferay-ui:icon-menu align="left" cssClass='<%= "lfr-toolbar-button add-button " + (toolbarItem.equals("add") ? "current" : StringPool.BLANK) %>' direction="down" extended="<%= false %>" icon='<%= themeDisplay.getPathThemeImages() + "/common/add.png" %>' message="add" showWhenSingleIcon="<%= true %>">
-			<portlet:renderURL var="viewUsersURL">
-				<portlet:param name="struts_action" value="/users_admin/view" />
-				<portlet:param name="sitesListView" value="<%= usersListView %>" />
-			</portlet:renderURL>
-
-			<c:if test="<%= hasAddUserPermission %>">
-				<portlet:renderURL var="addUserURL">
-					<portlet:param name="struts_action" value="/users_admin/edit_user" />
-					<portlet:param name="redirect" value="<%= viewUsersURL %>" />
+		<c:if test="<%= hasAddOrganizationPermission || hasAddUserPermission %>">
+			<aui:nav-item dropdown="<%= true %>" iconClass="icon-plus" label="add" selected='<%= toolbarItem.equals("add") %>'>
+				<portlet:renderURL var="viewUsersURL">
+					<portlet:param name="struts_action" value="/users_admin/view" />
+					<portlet:param name="sitesListView" value="<%= usersListView %>" />
 				</portlet:renderURL>
 
-				<liferay-ui:icon
-					image="user_icon"
-					message="user"
-					url="<%= addUserURL %>"
-				/>
-			</c:if>
-
-			<c:if test="<%= hasAddOrganizationPermission %>">
-
-				<%
-				for (String organizationType : PropsValues.ORGANIZATIONS_TYPES) {
-				%>
-
-					<portlet:renderURL var="addOrganizationURL">
-						<portlet:param name="struts_action" value="/users_admin/edit_organization" />
+				<c:if test="<%= hasAddUserPermission %>">
+					<portlet:renderURL var="addUserURL">
+						<portlet:param name="struts_action" value="/users_admin/edit_user" />
 						<portlet:param name="redirect" value="<%= viewUsersURL %>" />
-						<portlet:param name="type" value="<%= organizationType %>" />
 					</portlet:renderURL>
 
-					<liferay-ui:icon
-						image="add_location"
-						message="<%= LanguageUtil.get(pageContext, organizationType) %>"
-						url="<%= addOrganizationURL %>"
-					/>
+					<aui:nav-item href="<%= addUserURL %>" iconClass="icon-user" label="user" />
+				</c:if>
 
-				<%
-				}
-				%>
+				<aui:nav-item cssClass="divider" />
 
-			</c:if>
-		</liferay-ui:icon-menu>
-	</c:if>
+				<aui:nav-item cssClass="nav-header" href="" label="organization" />
 
-	<c:choose>
-		<c:when test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.EXPORT_USER) %>">
-			<span class="lfr-toolbar-button export-button"><a href="javascript:<portlet:namespace />exportUsers();"><liferay-ui:message key="export-users" /></a></span>
-		</c:when>
-		<c:when test="<%= PortletPermissionUtil.contains(permissionChecker, PortletKeys.USERS_ADMIN, ActionKeys.EXPORT_USER) %>">
-			<span class="lfr-toolbar-button export-button"><a href="javascript:<portlet:namespace />exportUsers();"><liferay-ui:message key="export-organization-users" /></a></span>
-		</c:when>
-	</c:choose>
-</div>
+				<c:if test="<%= hasAddOrganizationPermission %>">
+
+					<%
+					for (String organizationType : PropsValues.ORGANIZATIONS_TYPES) {
+					%>
+
+						<portlet:renderURL var="addOrganizationURL">
+							<portlet:param name="struts_action" value="/users_admin/edit_organization" />
+							<portlet:param name="redirect" value="<%= viewUsersURL %>" />
+							<portlet:param name="type" value="<%= organizationType %>" />
+						</portlet:renderURL>
+
+						<aui:nav-item href="<%= addOrganizationURL %>" iconClass="icon-globe" label="<%= LanguageUtil.get(pageContext, organizationType) %>" />
+
+					<%
+					}
+					%>
+
+				</c:if>
+			</aui:nav-item>
+		</c:if>
+
+		<c:choose>
+			<c:when test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.EXPORT_USER) %>">
+				<aui:nav-item href='<%= "javascript:" + renderResponse.getNamespace() + "exportUsers();" %>' label="export-users" selected='<%= toolbarItem.equals("export-users") %>' />
+			</c:when>
+			<c:when test="<%= PortletPermissionUtil.contains(permissionChecker, PortletKeys.USERS_ADMIN, ActionKeys.EXPORT_USER) %>">
+				<aui:nav-item href='<%= "javascript:" + renderResponse.getNamespace() + "exportUsers();" %>' label="export-organization-users" selected='<%= toolbarItem.equals("export-organization-users") %>' />
+			</c:when>
+		</c:choose>
+	</aui:nav>
+</aui:nav-bar>
 
 <aui:script>
 	function <portlet:namespace />exportUsers() {

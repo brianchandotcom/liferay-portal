@@ -31,7 +31,7 @@
 			</aui:field-wrapper>
 		</div>
 
-		<div class="basic-configuration <%= (advancedConfiguration ? "aui-helper-hidden" : "") %>" id="<portlet:namespace />basicConfiguration">
+		<div class="basic-configuration <%= (advancedConfiguration ? "hide" : "") %>" id="<portlet:namespace />basicConfiguration">
 			<aui:input name="preferences--displayScopeFacet--" type="checkbox" value="<%= displayScopeFacet %>" />
 
 			<aui:input name="preferences--displayAssetTypeFacet--" type="checkbox" value="<%= displayAssetTypeFacet %>" />
@@ -47,13 +47,13 @@
 			<aui:input name="preferences--displayModifiedRangeFacet--" type="checkbox" value="<%= displayModifiedRangeFacet %>" />
 		</div>
 
-		<div class="advanced-configuration <%= (!advancedConfiguration ? "aui-helper-hidden" : "") %>" id="<portlet:namespace />advancedConfiguration">
+		<div class="advanced-configuration <%= (!advancedConfiguration ? "hide" : "") %>" id="<portlet:namespace />advancedConfiguration">
 
 			<%
 			JSONObject searchConfigurationJSONObject = JSONFactoryUtil.createJSONObject(searchConfiguration);
 			%>
 
-			<aui:input helpMessage="search-configuration-help" inputCssClass="search-configuration-text" name="preferences--searchConfiguration--" type="textarea" value="<%= searchConfigurationJSONObject.toString(4) %>" />
+			<aui:input cssClass="search-configuration-text" helpMessage="search-configuration-help" name="preferences--searchConfiguration--" type="textarea" value="<%= searchConfigurationJSONObject.toString(4) %>" />
 		</div>
 	</aui:fieldset>
 

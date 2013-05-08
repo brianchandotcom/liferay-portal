@@ -76,27 +76,31 @@ decimalFormat.setMinimumFractionDigits(2);
 
 <c:choose>
 	<c:when test="<%= windowState.equals(WindowState.NORMAL) %>">
-		<table border="1" cellpadding="3" cellspacing="0" width="100%">
-		<tr class="portlet-section-header results-header">
-			<td>
+		<table class="table table-bordered table-hover table-striped">
+		<thead class="table-columns">
+		<tr>
+			<th class="table-header">
 				<strong><liferay-ui:message key="currency" /></strong>
-			</td>
+			</th>
 
 			<%
 			for (int i = 0; i < symbols.length; i++) {
 				String symbol = symbols[i];
 			%>
 
-				<td class="lfr-top">
+				<th class="table-header">
 					<liferay-ui:message key='<%= "currency." + symbol %>' /><br />
 					(<%= symbol %>)
-				</td>
+				</th>
 
 			<%
 			}
 			%>
 
 		</tr>
+		</thead>
+
+		<tbody class="table-data">
 
 		<%
 		for (int i = 0; i < symbols.length; i++) {
@@ -104,7 +108,7 @@ decimalFormat.setMinimumFractionDigits(2);
 		%>
 
 			<tr>
-				<td class="portlet-section-header results-header">
+				<td class="table-cell">
 					<%= symbol %>
 				</td>
 
@@ -118,11 +122,11 @@ decimalFormat.setMinimumFractionDigits(2);
 		%>
 
 						<c:if test="<%= i != j %>">
-							<td class="portlet-section-body results-row"><%= currency.getRate() %></td>
+							<td class="table-cell"><%= currency.getRate() %></td>
 						</c:if>
 
 						<c:if test="<%= i == j %>">
-							<td class="portlet-section-body results-row">1</td>
+							<td class="table-cell">1</td>
 						</c:if>
 
 		<%
@@ -136,6 +140,7 @@ decimalFormat.setMinimumFractionDigits(2);
 		}
 		%>
 
+		</tbody>
 		</table>
 	</c:when>
 	<c:otherwise>

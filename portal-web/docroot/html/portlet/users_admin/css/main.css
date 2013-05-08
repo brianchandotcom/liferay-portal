@@ -1,29 +1,25 @@
 .portlet-users-admin {
-	.aui-form {
+	.form {
 		fieldset {
 			border-width: 0;
 			padding: 0;
 		}
 
-		.aui-fieldset {
+		.fieldset {
 			textarea {
 				width: 90%;
 			}
 
-			table.org-labor-table td .aui-field {
+			table.org-labor-table td .field {
 				margin-bottom: 0;
 				padding: 3px 1px;
 			}
 
-			label, .label {
-				font-weight: bold;
-
-				input {
-					vertical-align: middle;
-				}
+			.checkbox, .radio {
+				margin-bottom: 10px;
 			}
 
-			.aui-field {
+			.field {
 				margin-bottom: 10px;
 
 				&.mailing-ctrl {
@@ -37,11 +33,15 @@
 				&.localized-language-selector {
 					margin-bottom: 0;
 				}
-
-				&.action-ctrl, &.mailing-ctrl, &.primary-ctrl {
-					margin: 1.8em 0;
-				}
 			}
+
+			.email-field, .url-field {
+				width: 200px;
+			}
+		}
+
+		.user-table, .delete-organizations {
+			margin-bottom: 15px;
 		}
 	}
 
@@ -66,18 +66,6 @@
 		font-weight: 500;
 		margin: 0 0 10px;
 		padding: 7px 10px;
-	}
-
-	#details .avatar {
-		border: 1px solid #88C5D9;
-		clear: both;
-		margin: 0 auto;
-		width: 100px;
-	}
-
-	.lfr-change-logo img {
-		border-width: 0;
-		width: auto;
 	}
 
 	.company-logo {
@@ -171,22 +159,9 @@
 	}
 
 	.form-navigator {
-		.user-info, .organization-info, .company-info {
-			font-weight: bold;
-			margin-bottom: 15px;
-		}
-
-		.user-info .user-name, .organization-info .organization-name, .company-info .company-name {
-			color: #036;
-			display: block;
-			font-size: 14px;
-		}
-
 		.user-info, .organization-info {
 			.user-logo, .organization-logo {
-				float: left;
-				margin-right: 10px;
-				padding: 0;
+				margin-right: 5px;
 				width: 35px;
 			}
 		}
@@ -201,7 +176,7 @@
 			margin-top: 1.8em;
 		}
 
-		.aui-field {
+		.field {
 			float: left;
 		}
 	}
@@ -210,7 +185,7 @@
 		margin-bottom: 30px;
 	}
 
-	.addresses .aui-field {
+	.addresses .field {
 		float: none;
 		width: auto;
 	}
@@ -236,7 +211,7 @@
 	.view-all-link {
 		color: #666;
 		font-weight: normal;
-		margin-left: 0.5em;
+		margin-bottom: 15px;
 	}
 
 	.lfr-asset-column-details {
@@ -249,7 +224,7 @@
 }
 
 .lfr-floating-container {
-	.aui-field {
+	.field {
 		input, img {
 			vertical-align: top;
 		}

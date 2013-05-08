@@ -9,12 +9,12 @@ AUI.add(
 
 		var TPL_INPUT_HIDDEN = '<input name="{name}" type="hidden" />';
 
-		var TPL_ADD_BUTTON = '<button type="button" class="add-row aui-buttonitem-content aui-buttonitem aui-state-default aui-buttonitem-icon-only aui-toolbar-first aui-toolbar-item" title=""><span class="aui-buttonitem-icon aui-icon aui-icon-plus"></span></button>';
+		var TPL_ADD_BUTTON = '<button type="button" class="add-row btn-content btn btn-icon-only toolbar-first toolbar-item" title=""><span class="btn-icon icon icon-plus"></span></button>';
 
-		var TPL_DELETE_BUTTON = '<button type="button" class="delete-row aui-buttonitem-content aui-buttonitem aui-state-default aui-buttonitem-icon-only aui-toolbar-last aui-toolbar-item" title=""><span class="aui-buttonitem-icon aui-icon aui-icon-minus"></span></button>';
+		var TPL_DELETE_BUTTON = '<button type="button" class="delete-row btn-content btn btn-icon-only toolbar-last toolbar-item" title=""><span class="btn-icon icon icon-minus"></span></button>';
 
 		var TPL_AUTOROW_CONTROLS =
-			'<span class="lfr-autorow-controls aui-toolbar aui-toolbar-horizontal"><span class="aui-toolbar-content">' +
+			'<span class="lfr-autorow-controls toolbar toolbar-horizontal"><span class="toolbar-content">' +
 				TPL_ADD_BUTTON +
 				TPL_DELETE_BUTTON +
 			'</span></span>';
@@ -94,7 +94,7 @@ AUI.add(
 									instance.deleteRow(currentRow);
 								}
 							},
-							'.lfr-autorow-controls .aui-buttonitem'
+							'.lfr-autorow-controls .btn'
 						);
 
 						baseRows.each(
@@ -396,7 +396,7 @@ AUI.add(
 					_isHiddenRow: function(row) {
 						var instance = this;
 
-						return row.hasClass(row._hideClass || 'aui-helper-hidden');
+						return row.hasClass(row._hideClass || 'hide');
 					},
 
 					_makeSortable: function(sortableHandle) {
@@ -438,6 +438,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-data-set', 'aui-io-request', 'aui-parse-content', 'sortable', 'base', 'liferay-undo-manager']
+		requires: ['aui-base', 'aui-data-set-deprecated', 'aui-io-request', 'aui-parse-content', 'sortable', 'base', 'liferay-undo-manager']
 	}
 );

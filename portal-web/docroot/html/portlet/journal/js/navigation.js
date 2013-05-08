@@ -25,7 +25,7 @@ AUI.add(
 
 		var STR_KEYWORDS = 'keywords';
 
-		var STR_PAGINATOR_DATA = 'paginatorData';
+		var STR_PAGINATION_DATA = 'paginationData';
 
 		var STR_ROW_IDS_JOURNAL_FOLDER_CHECKBOX = 'rowIdsJournalFolderCheckbox';
 
@@ -57,7 +57,7 @@ AUI.add(
 
 		var SRC_SEARCH_END = 4;
 
-		var TPL_MESSAGE_SEARCHING = '<div class="portlet-msg-info">{0}</div><div class="loading-animation" />';
+		var TPL_MESSAGE_SEARCHING = '<div class="alert alert-info">{0}</div><div class="loading-animation" />';
 
 		var JournalNavigation = A.Component.create(
 			{
@@ -110,8 +110,8 @@ AUI.add(
 
 						var paginatorConfig = config.paginator;
 
-						paginatorConfig.entryPaginatorContainer = '.article-entries-paginator';
-						paginatorConfig.folderPaginatorContainer = '.folder-paginator';
+						paginatorConfig.entryPaginationContainer = '.article-entries-pagination';
+						paginatorConfig.folderPaginationContainer = '.folder-pagination';
 						paginatorConfig.namespace = namespace;
 
 						var appViewPaginator = new Liferay.AppViewPaginator(paginatorConfig);
@@ -173,7 +173,7 @@ AUI.add(
 						journalContainer.delegate(
 							STR_CLICK,
 							A.bind('_onOpenAdvancedSearch', instance),
-							'.article-advanced-search-icon'
+							'.article-advanced-search-button'
 						);
 
 						instance._config = config;
@@ -290,7 +290,7 @@ AUI.add(
 						var showAdvancedSearch = instance.byId('showAdvancedSearch');
 
 						var searchData = {
-							advancedSearch: showAdvancedSearch.hasClass('close-advanced-search'),
+							advancedSearch: !showAdvancedSearch.hasClass('hide'),
 							andOperator: instance._andOperatorNode.get('value'),
 							folderId: selectedFolder.id,
 							content: instance._contentNode.get('value'),
@@ -336,22 +336,25 @@ AUI.add(
 
 						var advancedSearch = instance.byId('advancedSearch');
 
-						var showAdvancedSearch = instance.byId('showAdvancedSearch');
+						var showAdvancedSearch = event.currentTarget;
 
-						var advancedSearchClosed = !showAdvancedSearch.hasClass('close-advanced-search');
+						var showAdvancedSearchIcon = showAdvancedSearch.one('i');
 
-						showAdvancedSearch.toggleClass('close-advanced-search', advancedSearchClosed);
+						var advancedSearchHidden = advancedSearch.hasClass('hide');
 
-						advancedSearch.toggle(advancedSearchClosed);
+						showAdvancedSearchIcon.toggleClass('icon-chevron-down', !advancedSearchHidden);
+						showAdvancedSearchIcon.toggleClass('icon-chevron-up', advancedSearchHidden);
+
+						advancedSearch.toggleClass('hide', !advancedSearchHidden);
 					},
 
 					_onPageLoaded: function(event) {
 						var instance = this;
 
-						var paginatorData = event.paginator;
+						var paginationData = event.pagination;
 
-						if (paginatorData) {
-							instance._appViewPaginator.set(STR_PAGINATOR_DATA, paginatorData);
+						if (paginationData) {
+							instance._appViewPaginator.set(STR_PAGINATION_DATA, paginationData);
 						}
 					},
 
@@ -399,7 +402,7 @@ AUI.add(
 							entriesContainer.html(searchingTPL);
 						}
 
-						instance._journalContainer.all('.article-entries-paginator').hide();
+						instance._journalContainer.all('.article-entries-pagination').hide();
 
 						var requestParams = {};
 
@@ -482,6 +485,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-loading-mask', 'aui-paginator', 'aui-parse-content', 'event-simulate', 'liferay-app-view-folders', 'liferay-app-view-move', 'liferay-app-view-paginator', 'liferay-app-view-select', 'liferay-history-manager', 'liferay-list-view', 'liferay-message', 'liferay-portlet-base', 'liferay-util-list-fields', 'querystring-parse-simple']
+		requires: ['aui-loading-mask-deprecated', 'aui-pagination', 'aui-parse-content', 'event-simulate', 'liferay-app-view-folders', 'liferay-app-view-move', 'liferay-app-view-paginator', 'liferay-app-view-select', 'liferay-history-manager', 'liferay-list-view', 'liferay-message', 'liferay-portlet-base', 'liferay-util-list-fields', 'querystring-parse-simple']
 	}
 );

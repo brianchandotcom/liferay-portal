@@ -1,79 +1,4 @@
-/* ---------- Main ---------- */
-
-.aui-state-default {
-}
-
-.aui-state-hover {
-}
-
-.aui-state-active {
-}
-
-.results-grid {
-}
-
-.context-pane-content .results-grid {
-}
-
-.results-header {
-	th {
-		&.sort-column {
-			.result-column-name {
-			}
-		}
-
-		&.first {
-		}
-
-		&.last {
-		}
-	}
-
-	td, th {
-	}
-
-	th.sort-desc .result-column-name {
-	}
-
-	a, span {
-	}
-
-	a {
-		&:hover {
-		}
-	}
-}
-
-.results-row {
-	td {
-		&.sort-column {
-		}
-	}
-
-	&.selected td, &.selected.hover td {
-		& a {
-		}
-	}
-
-	&.alt.selected td, &.alt.selected.hover td {
-	}
-
-	&.alt td {
-	}
-
-	&.hover td {
-	}
-}
-
-.taglib-search-iterator .results-row {
-	td, th {
-		&.first {
-		}
-
-		&.last {
-		}
-	}
-}
+@import "compass";
 
 /* ---------- Dragging/sorting indicators ---------- */
 
@@ -87,17 +12,20 @@
 }
 
 .portlet-boundary.yui3-dd-dragging {
+
 	.portlet {
 	}
 }
 
-.aui-portal-layout-proxy {
+.sortable-layout-proxy {
+
 	.portlet-topper {
 	}
 }
 
-.aui-proxy {
+.proxy {
 	&.generic-portlet {
+
 		.portlet-title {
 		}
 	}
@@ -106,53 +34,52 @@
 	}
 }
 
-.aui-resizable-proxy {
+.resizable-proxy {
 }
 
-.aui-sortable-proxy {
+.sortable-proxy {
 }
 
 .lfr-freeform-layout-drag-indicator {
 }
 
-.aui-portal-layout-drag-target-indicator {
+.sortable-layout-drag-target-indicator {
 }
 
 /* ---------- Portal tool tips ---------- */
 
-.aui-tooltip {
+.tooltip {
 }
 
 /* ---------- Tags ---------- */
 
-.aui-tagselector-content {
-	.aui-textboxlistentry-holder {
+.tagselector-content {
+
+	.textboxlistentry-holder {
 	}
 }
 
-.aui-tagselector {
+.tagselector {
 	.lfr-tag-selector-input {
 	}
 
-	.aui-field .aui-field-content {
+	.field .field-content {
 	}
 
-	.aui-toolbar {
-	}
-
-	.aui-textboxlist-input-container {
+	.textboxlist-input-container {
 	}
 }
 
-.aui-tagselector-focused .aui-textboxlistentry-holder {
+.tagselector-focused .textboxlistentry-holder {
 }
 
-.aui-categoriesselector-content .aui-textboxlistentry-holder {
+.categoriesselector-content .textboxlistentry-holder {
 }
 
 /* ---------- Tag cloud and tag list ---------- */
 
 .tag-items {
+
 	li {
 	}
 
@@ -164,18 +91,19 @@
 }
 
 .tag-cloud {
-	.tag-asset-count {
-	}
+
 
 	@for $i from 1 through 6 {
 		.tag-popularity-#{$i} {
+			/*font-size: $tag-popularity-font-size + ($i * 0.3);*/
 		}
 	}
 }
 
 /* ---------- Underlay ---------- */
 
-.aui-underlay {
+.underlay {
+
 	.yui3-widget-hd {
 	}
 
@@ -183,24 +111,24 @@
 	}
 }
 
-.aui-underlay-hidden {
+.underlay-hidden {
 }
 
-.aui-underlay-content {
+.underlay-content {
 }
 
-.aui-underlay-close {
+.underlay-close {
 }
 
 /* ---------- Tabs ---------- */
 
-.aui-tab-active strong {
+.tab-active strong {
 }
 
-.aui-tab-back {
+.tab-back {
 }
 
-.aui-tab-back-content {
+.tab-back-content {
 }
 
 /* ---------- Misc. ---------- */
@@ -214,13 +142,13 @@
 .lfr-panel-basic .lfr-panel-content {
 }
 
-.aui-dialog-bd {
+.dialog-bd {
 }
 
-.aui-dialog-content {
+.dialog-content {
 }
 
-.aui-panel-hd {
+.panel-hd {
 }
 
 .app-view-drop-active {
@@ -228,48 +156,43 @@
 
 /* ---------- Menus ---------- */
 
-.lfr-actions.portlet-options, .visible.portlet-options {
-	.lfr-trigger strong span {
-	}
-}
-
-.lfr-actions.portlet-options:hover {
-	&, ul {
-	}
-}
-
 .lfr-menu-list {
 }
 
 .lfr-page-templates li {
 	a {
+
 		label {
 		}
 	}
 }
 
-.aui-menu {
+.menu {
+
 	.notice-message {
 	}
 }
 
-.aui-menu-content {
+.menu-content {
+
 	li {
+
 		.disabled {
 		}
 	}
 }
 
-.aui-menu-content, .lfr-menu-list ul {
+.menu-content {
 }
 
-.aui-menugroup-content .aui-menu-label {
+.menugroup-content .menu-label {
 }
 
-.aui-menugroup-content ul, .lfr-menu-list ul ul {
+.menugroup-content ul {
 }
 
-.aui-menu-content li, .lfr-menu-list ul li {
+.menu-content li {
+
 	&.first {
 	}
 
@@ -277,45 +200,32 @@
 	}
 }
 
-.aui-menu-content li a, .lfr-menu-list ul li .taglib-icon, .aui-menu-content li .disabled {
+.menu-content li a, .menu-content li .disabled {
 }
 
-.lfr-menu-list ul li.disabled .taglib-icon {
-}
-
-.aui-menu-content li a.aui-focus, .lfr-menu-expanded li a:focus, .lfr-menu-list ul .taglib-icon.aui-focus {
-}
-
-.aui-menu-content a, .lfr-menu-list li .taglib-icon, .aui-menu-content .disabled, .lfr-actions .lfr-trigger, .lfr-actions .lfr-trigger strong {
-}
-
-/* ---------- Toolbar ---------- */
-
-.aui-toolbar li {
-}
-
-.aui-toolbar-separator {
+.menu-content li a.focus, .lfr-menu-expanded li a:focus {
 }
 
 /* ---------- Loading Mask ---------- */
 
-.aui-loadingmask-content {
+.loadingmask-content {
 }
 
-.aui-loadingmask-message {
+.loadingmask-message {
 }
 
 /* ---------- Tree View ---------- */
 
-.aui-tree-node-selected .aui-tree-label {
+.tree-node-selected .tree-label {
 }
 
 /* ---------- Page Customization ---------- */
 
-.aui-dragging .portlet-column.customizable {
+.dragging .portlet-column.customizable {
 }
 
 .customizable-layout-column-content {
+
 	&.yui3-widget-content-expanded {
 	}
 }
@@ -324,35 +234,37 @@
 }
 
 .layout-customizable-controls {
+
+
 }
 
 /* ---------- Pagination ---------- */
 
-.aui-paginator-link {
+.paginator-link {
 }
 
-.aui-paginator-page-link {
+.paginator-page-link {
 }
 
-.aui-paginator-current-page {
+.paginator-current-page {
 }
 
-.aui-paginator-first-link {
+.paginator-first-link {
 }
 
-.aui-paginator-prev-link {
+.paginator-prev-link {
 }
 
-.aui-paginator-last-link {
+.paginator-last-link {
 }
 
-.aui-paginator-next-link {
+.paginator-next-link {
 }
 
-.aui-paginator-current-page-report, .aui-paginator-total {
+.paginator-current-page-report, .paginator-total {
 }
 
-.aui-paginator-current-page-report {
+.paginator-current-page-report {
 }
 
 .taglib-page-iterator .search-pages .page-links {
@@ -361,13 +273,12 @@
 /* ---------- Application Column View ---------- */
 
 .lfr-app-column-view {
-	.aui-layout-content {
+
+	.column:before {
 	}
 
-	.aui-column:before {
-	}
+	.column-content {
 
-	.aui-column-content {
 		.lfr-message-response {
 		}
 	}
@@ -376,61 +287,49 @@
 /* ---------- Header row ---------- */
 
 .lfr-header-row {
-	.lfr-actions.show-arrow.direction-down .lfr-trigger strong a {
+}
+
+/* ---------- Inline editing ---------- */
+
+.lfr-editable {
+
+
+	&:after {
 	}
 
-	.aui-toolbar {
-		.aui-toolbar-content {
+	&:focus {
+		&:after {
 		}
 
-		.aui-toolbar-item {
+		&:hover {
 		}
+	}
 
-		.aui-toolbar-last {
+	&:hover {
+
+		&:after {
 		}
 	}
 }
 
+.lfr-editable-notice-close {
+}
+
 .ie {
-	.portlet-boundary.yui3-dd-dragging {
-	}
-
-	.aui-proxy {
-	}
-
-	.aui-proxy.not-intersecting .forbidden-action {
-	}
-
-	.layout-customizable-controls {
+	.proxy.not-intersecting .forbidden-action {
 	}
 }
 
 .ie7 {
-	.aui-tabview-list {
+	.menu-content li {
 	}
 
-	.aui-menu-content li {
+	.paginator-link {
 	}
 
-	.aui-paginator-link {
+	.paginator-page-link {
 	}
 
-	.aui-paginator-page-link {
-	}
-
-	.aui-paginator-current-page {
-	}
-}
-
-.ie6, .ie7 {
-	.aui-toolbar li {
-	}
-
-	.lfr-header-row .aui-buttonitem-content {
-		.aui-buttonitem-label {
-		}
-	}
-
-	.results-row.hover td {
+	.paginator-current-page {
 	}
 }

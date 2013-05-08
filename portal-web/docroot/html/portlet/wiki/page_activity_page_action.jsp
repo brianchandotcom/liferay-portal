@@ -58,7 +58,7 @@ WikiPage socialActivityPage = WikiPageLocalServiceUtil.getPage(wikiPage.getNodeI
 	</portlet:renderURL>
 
 	<%
-	String taglibURL = "javascript:Liferay.Util.openWindow({dialog: {width: 300}, id: '" + liferayPortletResponse.getNamespace() + "selectVersion', title: '" + LanguageUtil.get(pageContext, "select-version") + "', uri: '" + HtmlUtil.escapeURL(compareVersionsURL.toString()) + "'});";
+	String taglibURL = "javascript:Liferay.Util.openWindow(id: '" + liferayPortletResponse.getNamespace() + "selectVersion', title: '" + LanguageUtil.get(pageContext, "select-version") + "', uri:'" + HtmlUtil.escapeURL(compareVersionsURL.toString()) + "'});";
 	%>
 
 	<liferay-ui:icon

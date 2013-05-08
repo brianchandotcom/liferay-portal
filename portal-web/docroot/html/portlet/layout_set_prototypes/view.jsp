@@ -95,7 +95,7 @@ portletURL.setParameter("struts_action", "/layout_set_prototypes/view");
 	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script use="aui-base,aui-dialog">
+<aui:script use="aui-base,liferay-util-window">
 	A.getBody().delegate(
 		'click',
 		function(event) {
@@ -106,13 +106,6 @@ portletURL.setParameter("struts_action", "/layout_set_prototypes/view");
 
 			Liferay.Util.openWindow(
 				{
-					dialog:
-						{
-							centered: true,
-							constrain: true,
-							modal: true,
-							width: 600
-						},
 					id: '<portlet:namespace />' + title,
 					title: title,
 					uri: link.attr('href')

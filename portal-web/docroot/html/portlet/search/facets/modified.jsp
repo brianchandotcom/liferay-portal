@@ -102,7 +102,7 @@ if (fieldParamSelection.equals("0")) {
 				</c:if>
 			</li>
 
-			<div class="<%= !fieldParamSelection.equals(String.valueOf(index + 1)) ? "aui-helper-hidden" : StringPool.BLANK %> modified-custom-range" id="<%= randomNamespace %>custom-range">
+			<div class="<%= !fieldParamSelection.equals(String.valueOf(index + 1)) ? "hide" : StringPool.BLANK %> modified-custom-range" id="<%= randomNamespace %>custom-range">
 				<div id="<%= randomNamespace %>custom-range-from">
 					<aui:input label="from" name='<%= facet.getFieldName() + "from" %>' size="14" />
 				</div>
@@ -199,7 +199,7 @@ if (fieldParamSelection.equals("0")) {
 	);
 </aui:script>
 
-<aui:script use="aui-datepicker">
+<aui:script use="aui-datepicker-deprecated">
 	var fromDatepicker = new A.DatePicker(
 		{
 			calendar: {
@@ -271,7 +271,7 @@ if (fieldParamSelection.equals("0")) {
 <aui:script use="aui-form-validator">
 	var Util = Liferay.Util;
 
-	var DEFAULTS_FORM_VALIDATOR = AUI.defaults.FormValidator;
+	var DEFAULTS_FORM_VALIDATOR = A.config.FormValidator;
 
 	var REGEX_DATE = /^\d{4}(-)(0[1-9]|1[012])\1(0[1-9]|[12][0-9]|3[01])$/;
 

@@ -226,7 +226,7 @@ int secondReminder = BeanParamUtil.getInteger(event, request, "secondReminder", 
 
 			<liferay-ui:input-repeat event="<%= event %>" />
 
-			<aui:fieldset cssClass='<%= recurrenceType == Recurrence.NO_RECURRENCE ? "aui-helper-hidden" : StringPool.BLANK %>' id="repeatUntilOptions">
+			<aui:fieldset cssClass='<%= recurrenceType == Recurrence.NO_RECURRENCE ? "hide" : StringPool.BLANK %>' id="repeatUntilOptions">
 				<aui:field-wrapper cssClass="end-date-field" label="repeat-until" name="endDateType">
 					<aui:input checked="<%= endDateType == CalEventConstants.END_DATE_TYPE_NONE %>" cssClass="input-container" label="no-end-date" name="endDateType" type="radio" value="<%= CalEventConstants.END_DATE_TYPE_NONE %>" />
 
@@ -243,7 +243,7 @@ int secondReminder = BeanParamUtil.getInteger(event, request, "secondReminder", 
 
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="calendarRemindersPanel" persistState="<%= true %>" title="reminders">
 			<aui:fieldset>
-				<span class="aui-field-row">
+				<span class="field-row">
 					<aui:select inlineField="<%= true %>" inlineLabel="left" label="remind-me" name="firstReminder">
 
 						<%

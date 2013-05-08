@@ -25,10 +25,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
-import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
@@ -137,24 +135,6 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 		throws Exception {
 
 		return _PERMISSION;
-	}
-
-	public boolean isActive(long companyId) {
-		Portlet portlet = null;
-
-		try {
-			portlet = PortletLocalServiceUtil.getPortletById(
-				companyId, getPortletId());
-		}
-		catch (SystemException e) {
-			portlet = PortletLocalServiceUtil.getPortletById(getPortletId());
-		}
-
-		if (portlet == null) {
-			return false;
-		}
-
-		return portlet.isActive();
 	}
 
 	public boolean isCategorizable() {

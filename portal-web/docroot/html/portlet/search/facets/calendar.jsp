@@ -77,7 +77,7 @@ if (Validator.isNotNull(fieldParam)) {
 	<div class="date" id="<portlet:namespace /><%= facet.getFieldName() %>PlaceHolder"></div>
 </div>
 
-<aui:script use="aui-calendar">
+<aui:script use="aui-calendar-deprecated">
 	var now = new Date();
 
 	var checkDateRange = function(event) {

@@ -641,6 +641,108 @@ public class StringUtil {
 		return _highlight(s, pattern, highlight1, highlight2);
 	}
 
+	public static int indexOfAny(String s, char[] chars) {
+		if (s == null) {
+			return -1;
+		}
+
+		return indexOfAny(s, chars, 0, s.length());
+	}
+
+	public static int indexOfAny(String s, char[] chars, int fromIndex) {
+		if (s == null) {
+			return -1;
+		}
+
+		return indexOfAny(s, chars, fromIndex, s.length());
+	}
+
+	public static int indexOfAny(
+		String s, char[] chars, int fromIndex, int toIndex) {
+
+		if ((s == null) || (toIndex < fromIndex)) {
+			return -1;
+		}
+
+		if ((chars == null) || (chars.length == 0)) {
+			return -1;
+		}
+
+		if (fromIndex >= s.length()) {
+			return -1;
+		}
+
+		if (fromIndex < 0) {
+			fromIndex = 0;
+		}
+
+		if (toIndex > s.length()) {
+			toIndex = s.length();
+		}
+
+		for (int i = fromIndex; ((i < s.length()) && (i <= toIndex)); i++) {
+			char c = s.charAt(i);
+
+			for (int j = 0; j < chars.length; j++) {
+				if (c == chars[j]) {
+					return i;
+				}
+			}
+		}
+
+		return -1;
+	}
+
+	public static int indexOfAny(String s, String[] texts) {
+		if (s == null) {
+			return -1;
+		}
+
+		return indexOfAny(s, texts, 0, s.length());
+	}
+
+	public static int indexOfAny(String s, String[] texts, int fromIndex) {
+		if (s == null) {
+			return -1;
+		}
+
+		return indexOfAny(s, texts, fromIndex, s.length());
+	}
+
+	public static int indexOfAny(
+		String s, String[] texts, int fromIndex, int toIndex) {
+
+		if ((s == null) || (toIndex < fromIndex)) {
+			return -1;
+		}
+
+		if ((texts == null) || (texts.length == 0)) {
+			return -1;
+		}
+
+		if (fromIndex >= s.length()) {
+			return -1;
+		}
+
+		if (fromIndex < 0) {
+			fromIndex = 0;
+		}
+
+		if (toIndex > s.length()) {
+			toIndex = s.length();
+		}
+
+		for (int i = fromIndex; ((i < s.length()) && (i <= toIndex)); i++) {
+			for (int j = 0; j < texts.length; j++) {
+				if (s.startsWith(texts[j], i)) {
+					return i;
+				}
+			}
+		}
+
+		return -1;
+	}
+
 	/**
 	 * Inserts one string into the other at the specified offset index.
 	 *
@@ -670,6 +772,108 @@ public class StringUtil {
 
 			return prefix.concat(insert).concat(postfix);
 		}
+	}
+
+	public static int lastIndexOfAny(String s, char[] chars) {
+		if (s == null) {
+			return -1;
+		}
+
+		return lastIndexOfAny(s, chars, 0, s.length());
+	}
+
+	public static int lastIndexOfAny(String s, char[] chars, int toIndex) {
+		if (s == null) {
+			return -1;
+		}
+
+		return lastIndexOfAny(s, chars, 0, toIndex);
+	}
+
+	public static int lastIndexOfAny(
+		String s, char[] chars, int fromIndex, int toIndex) {
+
+		if ((s == null) || (toIndex < fromIndex)) {
+			return -1;
+		}
+
+		if ((chars == null) || (chars.length == 0)) {
+			return -1;
+		}
+
+		if (fromIndex >= s.length()) {
+			return -1;
+		}
+
+		if (fromIndex < 0) {
+			fromIndex = 0;
+		}
+
+		if (toIndex > s.length()) {
+			toIndex = s.length();
+		}
+
+		for (int i = toIndex; ((i >= 0) && (i >= fromIndex)); i--) {
+			char c = s.charAt(i);
+
+			for (int j = 0; j < chars.length; j++) {
+				if (c == chars[j]) {
+					return i;
+				}
+			}
+		}
+
+		return -1;
+	}
+
+	public static int lastIndexOfAny(String s, String[] texts) {
+		if (s == null) {
+			return -1;
+		}
+
+		return lastIndexOfAny(s, texts, 0, s.length());
+	}
+
+	public static int lastIndexOfAny(String s, String[] texts, int toIndex) {
+		if (s == null) {
+			return -1;
+		}
+
+		return lastIndexOfAny(s, texts, 0, toIndex);
+	}
+
+	public static int lastIndexOfAny(
+		String s, String[] texts, int fromIndex, int toIndex) {
+
+		if ((s == null) || (toIndex < fromIndex)) {
+			return -1;
+		}
+
+		if ((texts == null) || (texts.length == 0)) {
+			return -1;
+		}
+
+		if (fromIndex >= s.length()) {
+			return -1;
+		}
+
+		if (fromIndex < 0) {
+			fromIndex = 0;
+		}
+
+		if (toIndex > s.length()) {
+			toIndex = s.length();
+		}
+
+		for (int i = toIndex; ((i >= 0) && (i >= fromIndex)); i--) {
+			for (int j = 0; j < texts.length; j++) {
+				if (s.startsWith(texts[j], i)) {
+					return i;
+				}
+			}
+		}
+
+		return -1;
 	}
 
 	/**

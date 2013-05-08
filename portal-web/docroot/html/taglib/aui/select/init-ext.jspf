@@ -38,6 +38,15 @@ else if (Validator.isNotNull(title)) {
 	title = LanguageUtil.get(pageContext, title);
 }
 
-String fieldCss = AUIUtil.buildCss(AUIUtil.FIELD_PREFIX, "select", inlineField, disabled, false, first, last, cssClass);
-String inputCss = AUIUtil.buildCss(AUIUtil.INPUT_PREFIX, "select", false, false, false, false, false, inputCssClass);
+String controlGroupCss = "control-group";
+
+if (inlineField) {
+	controlGroupCss = controlGroupCss.concat(" aui-control-group-inline");
+}
+
+if (Validator.isNotNull(inlineLabel)) {
+	controlGroupCss = controlGroupCss.concat(" aui-form-inline");
+}
+
+String fieldCss = AUIUtil.buildCss("aui-field-select", disabled, first, last, cssClass);
 %>

@@ -84,10 +84,11 @@ public class PropertiesTransformerListener extends BaseTransformerListener {
 
 			newTokens.put("template_id", _GLOBAL_PROPERTIES);
 
-			long groupId = GetterUtil.getLong(tokens.get("group_id"));
+			long articleGroupId = GetterUtil.getLong(
+				tokens.get("article_group_id"));
 
 			String script = JournalUtil.getTemplateScript(
-				groupId, _GLOBAL_PROPERTIES, newTokens, languageId);
+				articleGroupId, _GLOBAL_PROPERTIES, newTokens, languageId);
 
 			PropertiesUtil.load(properties, script);
 		}

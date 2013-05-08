@@ -1,23 +1,23 @@
 .portlet-login {
-	.aui-form {
+	.form {
 		fieldset {
 			border-width: 0;
 			margin-bottom: 0;
 			padding: 0;
 		}
 
-		.aui-button-holder, .aui-form-column {
+		.button-holder, .form-column {
 			margin-bottom: 10px;
 		}
 	}
 
 	.facebook-login-button {
-		.aui-button-content {
+		.button-content {
 			background: url(@theme_image_path@/login/facebook_login_button.png) no-repeat scroll 0 50%;
 			padding: 5px 5px 5px 30px;
 		}
 
-		.aui-button-input {
+		.button-input {
 			background: transparent none;
 			border-width: 0;
 			color: #FFF;

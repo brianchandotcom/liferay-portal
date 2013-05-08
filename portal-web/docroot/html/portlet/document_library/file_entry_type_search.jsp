@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
 <div class="search-form">
-	<span class="aui-search-bar">
+	<span class="form-search">
 		<aui:input inlineField="<%= true %>" label="" name="keywords" size="30" title="search-entries" type="text" />
 
 		<aui:button type="submit" value="search" />

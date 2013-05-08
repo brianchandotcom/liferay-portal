@@ -14,7 +14,7 @@
  */
 --%>
 
-<div class="search-results">
+<small class="search-results">
 	<c:choose>
 		<c:when test='<%= type.equals("approximate") %>'>
 			<%= LanguageUtil.format(pageContext, "page-x-of-approximately-x-results", new Object[] {numberFormat.format(cur), numberFormat.format(total)}) %>
@@ -36,4 +36,4 @@
 			</c:choose>
 		</c:otherwise>
 	</c:choose>
-</div>
+</small>

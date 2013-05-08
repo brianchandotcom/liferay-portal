@@ -76,8 +76,8 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 		<li class="tree-item" id="<portlet:namespace />deleteDataOption" <%= (!selGroup.isStagingGroup() || !localPublishing) ? "style=\"display: none;\"" : "" %>>
 			<aui:input helpMessage="delete-portlet-data-help" label="delete-portlet-data-before-importing" name="<%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>" type="checkbox" />
 		</li>
-		<li class="aui-helper-hidden" id="<portlet:namespace />deletePortletDataWarning">
-			<div class="portlet-msg-alert">
+		<li class="hide" id="<portlet:namespace />deletePortletDataWarning">
+			<div class="alert alert-block">
 				<liferay-ui:message key="delete-portlet-data-warning" />
 			</div>
 		</li>
@@ -103,7 +103,7 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 						yesterday.add(Calendar.DATE, -1);
 						%>
 
-						<ul class="aui-helper-hidden date-range-options" id="<portlet:namespace />startEndDate">
+						<ul class="hide date-range-options" id="<portlet:namespace />startEndDate">
 							<li>
 								<aui:field-wrapper label="start-date">
 									<liferay-ui:input-date
@@ -236,7 +236,7 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 							%>
 
 								<li class="tree-item">
-									<div class="portlet-msg-error">
+									<div class="alert alert-error">
 										<%= PortalUtil.getPortletTitle(portlet, application, locale) %>: <%= LanguageUtil.get(pageContext, "error-initializing-import-controls") %>
 									</div>
 								</li>
@@ -255,7 +255,7 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 
 						<aui:input id="portletMetaDataFilter" label="choose-metadata" name="<%= PortletDataHandlerKeys.PORTLET_METADATA_ALL %>" type="radio" value="false" />
 
-						<ul class="aui-helper-hidden" id="<portlet:namespace />portletMetaDataList">
+						<ul class="hide" id="<portlet:namespace />portletMetaDataList">
 
 							<%
 							Set<String> displayedControls = new HashSet<String>();
@@ -312,7 +312,7 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 							%>
 
 									<li class="tree-item">
-										<div class="portlet-msg-error">
+										<div class="alert alert-error">
 											<%= PortalUtil.getPortletTitle(portlet, application, locale) %>: <%= LanguageUtil.get(pageContext, "error-initializing-import-controls") %>
 										</div>
 									</li>

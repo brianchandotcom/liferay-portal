@@ -32,14 +32,14 @@ for (int i = 0; i < activityCounters.size(); i++) {
 DecimalFormat decimalFormat = new DecimalFormat("##.00%");
 %>
 
-<aui:layout>
-	<aui:column columnWidth="<%= chartWidth %>" cssClass="chart-column">
+<aui:row>
+	<aui:col cssClass="chart-column" width="<%= chartWidth %>">
 		<div class="group-statistics-chart">
 			<div id="groupStatisticsChart<%= displayActivityCounterNameIndex %>"></div>
 		</div>
-	</aui:column>
+	</aui:col>
 
-	<aui:column columnWidth="<%= 100 - chartWidth %>" cssClass="info-column">
+	<aui:col cssClass="info-column" width="<%= 100 - chartWidth %>">
 		<div class="group-statistics-info">
 			<strong><liferay-ui:message key="activities-by-area" />:</strong>
 
@@ -80,8 +80,8 @@ DecimalFormat decimalFormat = new DecimalFormat("##.00%");
 
 			</table>
 		</div>
-	</aui:column>
-</aui:layout>
+	</aui:col>
+</aui:row>
 
 <aui:script use="charts">
 	var categories = [<%= StringUtil.merge(categories) %>];

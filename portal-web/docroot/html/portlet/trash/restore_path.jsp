@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/trash/init.jsp" %>
 
 <c:if test="<%= SessionMessages.contains(renderRequest, portletDisplay.getId() + SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA) %>">
-	<div class="portlet-msg-success">
+	<div class="alert alert-success">
 
 		<%
 		Map<String, List<String>> data = (HashMap<String, List<String>>)SessionMessages.get(renderRequest, portletDisplay.getId() + SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA);
@@ -64,7 +64,7 @@
 	<aui:input name="containerModelId" type="hidden" value="" />
 </aui:form>
 
-<aui:script use="aui-dialog-iframe,liferay-util-window">
+<aui:script use="aui-dialog-iframe-deprecated,liferay-util-window">
 	A.getBody().delegate(
 		'click',
 		function(event) {
@@ -81,12 +81,6 @@
 		function(uri) {
 			Liferay.Util.openWindow(
 				{
-					dialog: {
-						align: Liferay.Util.Window.ALIGN_CENTER,
-						cssClass: '',
-						modal: true,
-						width: 700
-					},
 					title: '<%= UnicodeLanguageUtil.get(pageContext, "warning") %>',
 					uri: uri
 				}

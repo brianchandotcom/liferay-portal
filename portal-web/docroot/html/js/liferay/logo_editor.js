@@ -77,7 +77,7 @@ AUI.add(
 						}
 
 						if (cssClass) {
-							messageNode.removeClass('portlet-msg-error').removeClass('portlet-msg-success');
+							messageNode.removeClass('alert-error').removeClass('alert-success');
 
 							messageNode.addClass(cssClass);
 						}
@@ -199,7 +199,7 @@ AUI.add(
 								message = Liferay.Language.get('please-enter-a-file-with-a-valid-file-type');
 							}
 
-							var messageNode = instance._getMessageNode(message, 'portlet-msg-error');
+							var messageNode = instance._getMessageNode(message, 'aui-alert aui-alert-error');
 
 							instance._formNode.prepend(messageNode);
 						}

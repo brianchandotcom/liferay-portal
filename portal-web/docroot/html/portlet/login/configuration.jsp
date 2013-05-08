@@ -65,7 +65,7 @@ String emailFromAddress = ParamUtil.getString(request, "emailFromAddress", Login
 
 			<c:choose>
 				<c:when test='<%= tabs2.equals("password-changed-notification") || tabs2.equals("password-reset-notification") %>'>
-					<div class="portlet-msg-info">
+					<div class="alert alert-info">
 						<liferay-ui:message key="enter-custom-values-or-leave-it-blank-to-use-the-default-portal-settings" />
 					</div>
 

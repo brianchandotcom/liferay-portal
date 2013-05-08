@@ -26,24 +26,7 @@ List<AssetLink> assetLinks = new ArrayList<AssetLink>();
 String assetLinksSearchContainerPrimaryKeys = ParamUtil.getString(request, "assetLinksSearchContainerPrimaryKeys");
 
 if (Validator.isNull(assetLinksSearchContainerPrimaryKeys) && SessionErrors.isEmpty(portletRequest) && (assetEntryId > 0)) {
-	List<AssetLink> directAssetLinks = AssetLinkLocalServiceUtil.getDirectLinks(assetEntryId);
-
-	for (AssetLink assetLink : directAssetLinks) {
-		AssetEntry assetLinkEntry = null;
-
-		if ((assetEntryId > 0) || (assetLink.getEntryId1() == assetEntryId)) {
-			assetLinkEntry = AssetEntryLocalServiceUtil.getEntry(assetLink.getEntryId2());
-		}
-		else {
-			assetLinkEntry = AssetEntryLocalServiceUtil.getEntry(assetLink.getEntryId1());
-		}
-
-		AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(assetLinkEntry.getClassName());
-
-		if (assetRendererFactory.isActive(company.getCompanyId())) {
-			assetLinks.add(assetLink);
-		}
-	}
+	assetLinks = AssetLinkLocalServiceUtil.getDirectLinks(assetEntryId);
 }
 else {
 	String[] assetEntriesPrimaryKeys = StringUtil.split(assetLinksSearchContainerPrimaryKeys);
@@ -78,10 +61,10 @@ assetBrowserURL.setPortletMode(PortletMode.VIEW);
 assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 %>
 
-<liferay-ui:icon-menu align="left" cssClass="select-existing-selector" icon='<%= themeDisplay.getPathThemeImages() + "/common/search.png" %>' id='<%= randomNamespace + "inputAssetLinks" %>' message="select" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu cssClass="select-existing-selector" icon='<%= themeDisplay.getPathThemeImages() + "/common/search.png" %>' id='<%= randomNamespace + "inputAssetLinks" %>' message="select" showWhenSingleIcon="<%= true %>">
 
 	<%
-	for (AssetRendererFactory assetRendererFactory : AssetRendererFactoryRegistryUtil.getAssetRendererFactories(company.getCompanyId())) {
+	for (AssetRendererFactory assetRendererFactory : AssetRendererFactoryRegistryUtil.getAssetRendererFactories()) {
 		if (assetRendererFactory.isLinkable() && assetRendererFactory.isSelectable()) {
 			if (assetEntryId > 0) {
 				assetBrowserURL.setParameter("refererAssetEntryId", String.valueOf(assetEntryId));
@@ -178,10 +161,6 @@ assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 	function <%= randomNamespace %>openAssetBrowser(url, title) {
 		Liferay.Util.openWindow(
 			{
-				dialog: {
-					constrain: true,
-					width: 820
-				},
 				id: '<portlet:namespace />assetBrowser',
 				title: title,
 				uri: url

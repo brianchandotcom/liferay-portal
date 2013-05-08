@@ -44,7 +44,7 @@ templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(classNa
 	<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="templateScriptSectionPanel" persistState="<%= true %>" title="script">
 		<div class="lfr-template-editor-container">
 			<c:if test="<%= !templateVariableGroups.isEmpty() %>">
-				<div class="lfr-template-palette-container<%= (language.equalsIgnoreCase("ftl") || language.equalsIgnoreCase("vm")) ? "" : " aui-helper-hidden" %>" id="<portlet:namespace />templatePaletteContainer">
+				<div class="lfr-template-palette-container<%= (language.equalsIgnoreCase("ftl") || language.equalsIgnoreCase("vm")) ? "" : " hide" %>" id="<portlet:namespace />templatePaletteContainer">
 					<div class="minimize-panels" id="<portlet:namespace />paletteToggler">
 						<a href="javascript:;">
 							<span><liferay-ui:message key="minimize-panels" /></span>
@@ -59,7 +59,7 @@ templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(classNa
 							%>
 
 								<div class="palette-section">
-									<div class="palette-item-header aui-toggler-header-expanded">
+									<div class="palette-item-header toggler-header-expanded">
 										<span class="palette-item-header-icon"></span>
 
 										<span><liferay-ui:message key="<%= templateVariableGroup.getLabel() %>" /></span>
@@ -117,7 +117,7 @@ templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(classNa
 	</liferay-ui:panel>
 </liferay-ui:panel-container>
 
-<aui:script use="aui-ace-autocomplete-freemarker,aui-ace-autocomplete-plugin,aui-ace-autocomplete-velocity,aui-toggler,aui-tooltip,event-mouseenter,transition">
+<aui:script use="aui-ace-autocomplete-freemarker,aui-ace-autocomplete-plugin,aui-ace-autocomplete-velocity,aui-toggler,aui-tooltip-deprecated,event-mouseenter,transition">
 	var ACPlugin = A.Plugin.AceAutoComplete;
 	var AObject = A.Object;
 	var Util = Liferay.Util;

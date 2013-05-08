@@ -61,7 +61,7 @@ else {
 		<%= HtmlUtil.escape(layout.getName(locale)) %>
 	</h2>
 
-	<div class="portlet-msg-info">
+	<div class="alert alert-info">
 		<%= HtmlUtil.escape(description) %>
 	</div>
 

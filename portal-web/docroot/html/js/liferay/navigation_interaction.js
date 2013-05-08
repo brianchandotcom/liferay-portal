@@ -48,6 +48,7 @@ AUI.add(
 								}
 
 								event.menu.toggleClass('hover', showMenu);
+								event.menu.toggleClass('open', showMenu);
 							}
 						);
 

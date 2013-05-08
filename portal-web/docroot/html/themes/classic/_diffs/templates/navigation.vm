@@ -1,0 +1,47 @@
+<nav class="$nav_css_class navbar site-navigation">
+	<div class="navbar-inner" id="navigation">
+		<a class="brand $logo_css_class" href="$site_default_url" title="#language ("go-to") $site_name">
+			<img alt="$logo_description" height="$site_logo_height" src="$site_logo" width="$site_logo_width" />
+		</a>
+
+		<ul class="nav nav-collapse">
+			#foreach ($nav_item in $nav_items)
+					#set($nav_item_attr_selected="")
+					#set($nav_item_caret="")
+					#set($nav_item_css_class="")
+					#set($nav_item_link_css_class="")
+
+				#if ($nav_item.isSelected())
+					#set($nav_item_attr_selected="aria-selected='true'")
+					#set($nav_item_css_class="selected active")
+				#end
+
+				#if ($nav_item.hasChildren())
+					#set($nav_item_caret='<b class="caret"></b>')
+					#set($nav_item_css_class="$nav_item_css_class dropdown")
+					#set($nav_item_link_css_class="dropdown-toggle")
+				#end
+
+				<li class="$nav_item_css_class" $nav_item_attr_selected>
+					<a class="$nav_item_link_css_class" href="$nav_item.getURL()" $nav_item.getTarget()>
+						$nav_item.icon() $nav_item.getName() $nav_item_caret
+					</a>
+
+					#if ($nav_item.hasChildren())
+						<ul class="dropdown-menu child-menu">
+							#foreach ($nav_child in $nav_item.getChildren())
+								#if ($nav_child.isSelected())
+									<li aria-selected="true" class="selected">
+								#else
+									<li>
+								#end
+									<a href="$nav_child.getURL()" $nav_child.getTarget()>$nav_child.getName()</a>
+								</li>
+							#end
+						</ul>
+					#end
+				</li>
+			#end
+		</ul>
+	</div>
+</nav>

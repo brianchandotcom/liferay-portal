@@ -19,28 +19,7 @@
 <%
 String randomNamespace = (String)request.getAttribute("liferay-ui:search-toggle:randomNamespace");
 
-String id = (String)request.getAttribute("liferay-ui:search-toggle:id");
-DisplayTerms displayTerms = (DisplayTerms)request.getAttribute("liferay-ui:search-toggle:displayTerms");
 String buttonLabel = (String)request.getAttribute("liferay-ui:search-toggle:buttonLabel");
-
-String clickValue = GetterUtil.getString(SessionClicks.get(request, id, null), "basic");
-
-String advancedFormCssClass = "taglib-search-toggle-advanced";
-String basicFormCssClass = "taglib-search-toggle-basic";
-String hiddenCssClass = " aui-helper-hidden";
-
-if (clickValue.equals("basic")) {
-	advancedFormCssClass += hiddenCssClass;
-
-	if (displayTerms.isAdvancedSearch()) {
-		displayTerms.setAdvancedSearch(false);
-	}
-}
-else {
-	basicFormCssClass += hiddenCssClass;
-
-	if (!displayTerms.isAdvancedSearch()) {
-		displayTerms.setAdvancedSearch(true);
-	}
-}
+DisplayTerms displayTerms = (DisplayTerms)request.getAttribute("liferay-ui:search-toggle:displayTerms");
+String id = (String)request.getAttribute("liferay-ui:search-toggle:id");
 %>

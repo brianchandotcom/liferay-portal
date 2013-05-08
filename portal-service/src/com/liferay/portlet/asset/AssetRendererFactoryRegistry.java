@@ -24,26 +24,14 @@ import java.util.List;
  */
 public interface AssetRendererFactoryRegistry {
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getAssetRendererFactories(
-	 *             long)}
-	 */
 	public List<AssetRendererFactory> getAssetRendererFactories();
-
-	public List<AssetRendererFactory> getAssetRendererFactories(long companyId);
 
 	public AssetRendererFactory getAssetRendererFactoryByClassName(
 		String className);
 
 	public AssetRendererFactory getAssetRendererFactoryByType(String type);
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getClassNameIds(
-	 *             long)}
-	 */
 	public long[] getClassNameIds();
-
-	public long[] getClassNameIds(long companyId);
 
 	public void register(AssetRendererFactory assetRendererFactory);
 

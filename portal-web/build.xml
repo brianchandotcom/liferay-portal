@@ -5,8 +5,6 @@
 
 	<property name="war.file" value="${ant.project.name}" />
 
-	<property name="alloy.file" value="alloy-1.7.0.zip" />
-
 	<!--
 	When upgrading CKEditor, make sure to delete
 	docroot/html/js/editor/ckeditor_diffs/ckeditor.js.
@@ -56,6 +54,10 @@
 	</path>
 
 	<target name="build-alloy">
+		<property name="alloy.version" value="2.0.0pr5" />
+
+		<property name="alloy.file" value="alloy-${alloy.version}.zip" />
+
 		<if>
 			<not>
 				<uptodate
@@ -68,80 +70,71 @@
 				<!-- Prepare -->
 
 				<delete dir="docroot/html/ALLOY_ZIP" />
-				<delete dir="docroot/html/css/portal/aui.css" />
+				<delete dir="docroot/html/css/portal/aui_deprecated.css" />
+				<delete dir="docroot/html/css/portal/bootstrap.css" />
 				<delete dir="docroot/html/js/aui" />
-				<delete dir="docroot/html/portal/aui" />
-				<delete dir="docroot/html/themes/_unstyled/images/aui/" />
+				<delete dir="docroot/html/themes/_unstyled/images/aui" />
 
 				<unzip src="third-party/${alloy.file}" dest="docroot/html/ALLOY_ZIP" />
 
-				<!-- JavaScript -->
-
-				<copy todir="docroot/html/js/aui" overwrite="true" preservelastmodified="true">
-					<fileset dir="docroot/html/ALLOY_ZIP/build/" />
-				</copy>
-
-				<replaceregexp match="[\n\s\t]+filter: 'raw'," replace="" flags="g" byline="false">
-					<fileset
-						dir="docroot/html/js/aui/aui-base/"
-						includes="aui-base.js"
-					/>
-				</replaceregexp>
-
-				<replaceregexp match="combine: ?false," replace="combine:Liferay.AUI.getCombine()," flags="g" byline="true">
-					<fileset
-						dir="docroot/html/js/aui/aui-base/"
-						includes="aui-base.js"
-					/>
-				</replaceregexp>
-
-				<replaceregexp match="skinnable:true" replace="skinnable:false" flags="g" byline="true">
-					<fileset
-						dir="docroot/html/js/aui/aui-base/"
-						includes="aui-base.js"
-					/>
-				</replaceregexp>
-
-				<replace file="docroot/html/js/aui/aui-base/aui-base.js">
-					<replacefilter token="var PATH_THEME_IMAGES = PATH_THEME_ROOT + '../images/';" value="var PATH_THEME_IMAGES = Liferay.ThemeDisplay.getPathThemeImages() + '/aui';" />
-				</replace>
-
 				<!-- CSS -->
 
-				<property name="alloy.core.css" value="aui-skin-base.css" />
+				<property name="alloy.build.dir" value="docroot/html/ALLOY_ZIP/alloy-${alloy.version}/build" />
+				<property name="alloy.temp.dir" value="docroot/html/ALLOY_ZIP/temp" />
 
-				<concat destfile="docroot/html/ALLOY_ZIP/build/aui-skins/tmp/alloy.css">
+				<concat destfile="${alloy.temp.dir}/bootstrap.css">
 					<filelist
-						dir="docroot/html/ALLOY_ZIP/build/aui-skin-base/css"
-						files="${alloy.core.css}"
+						dir="${alloy.build.dir}/aui-css/css"
+						files="bootstrap.css,bootstrap-responsive.css"
+					/>
+				</concat>
+
+				<replace file="${alloy.temp.dir}/bootstrap.css">
+					<replacetoken><![CDATA[url("../img/]]></replacetoken>
+					<replacevalue><![CDATA[url("@theme_image_path@/aui/]]></replacevalue>
+				</replace>
+
+				<copy
+					file="${alloy.temp.dir}/bootstrap.css"
+					tofile="docroot/html/css/portal/bootstrap.css"
+					overwrite="true"
+				/>
+
+				<concat destfile="${alloy.temp.dir}/aui_deprecated.css">
+					<filelist
+						dir="${alloy.build.dir}/aui-skin-deprecated"
+						files="aui-skin-deprecated.css"
 					/>
 				</concat>
 
 				<for param="dir">
 					<path>
 						<dirset
-							dir="docroot/html/ALLOY_ZIP/build/"
-							includes="aui-*/"
+							dir="${alloy.build.dir}"
+							includes="aui-*"
 						/>
 					</path>
 					<sequential>
 						<basename property="dir.name" file="@{dir}" />
 						<if>
-							<available file="docroot/html/js/aui/${dir.name}/assets/skins/sam/${dir.name}.css" />
+							<and>
+								<available file="docroot/html/js/aui/${dir.name}/assets/skins/sam/${dir.name}.css" />
+								<matches pattern="-deprecated" string="${dir.name}" />
+							</and>
 							<then>
-								<concat append="true" destfile="docroot/html/ALLOY_ZIP/build/aui-skins/tmp/alloy.css">
+								<concat append="true" destfile="${alloy.temp.dir}/aui_deprecated.css">
 									<filelist
-										dir="docroot/html/js/aui/${dir.name}/assets/skins/sam/"
+										dir="docroot/html/js/aui/${dir.name}/assets/skins/sam"
 										files="${dir.name}.css"
 									/>
 								</concat>
 							</then>
 						</if>
 						<if>
-							<available file="docroot/html/js/aui/${dir.name}/assets/skins/sam/" />
+							<available file="docroot/html/js/aui/${dir.name}/assets/skins/sam" />
 							<then>
-								<copy todir="docroot/html/themes/_unstyled/images/aui/">
-									<fileset dir="docroot/html/js/aui/${dir.name}/assets/skins/sam/" includes="**/*.png,**/*.jpg,**/*.gif" />
+								<copy todir="docroot/html/themes/_unstyled/images/aui">
+									<fileset dir="docroot/html/js/aui/${dir.name}/assets/skins/sam" includes="**/*.png,**/*.jpg,**/*.gif" />
 								</copy>
 							</then>
 						</if>
@@ -151,37 +144,47 @@
 
 				<replaceregexp match="url\(([^)]+)\)" replace="url(@theme_image_path@/aui/\1)" flags="g" byline="false">
 					<fileset
-						dir="docroot/html/ALLOY_ZIP/build/aui-skins/tmp/"
-						includes="alloy.css"
+						dir="${alloy.temp.dir}"
+						includes="aui_deprecated.css"
 					/>
 				</replaceregexp>
 
-				<replace file="docroot/html/ALLOY_ZIP/build/aui-skins/tmp/alloy.css">
+				<replace file="${alloy.temp.dir}/aui_deprecated.css">
 					<replacefilter token="../images/" value="" />
 				</replace>
 
-				<replace file="docroot/html/ALLOY_ZIP/build/aui-skins/tmp/alloy.css">
+				<replace file="${alloy.temp.dir}/aui_deprecated.css">
 					<replacefilter token="../../../../../build/aui-skin-base/images/" value="" />
 				</replace>
 
-				<replace file="docroot/html/ALLOY_ZIP/build/aui-skins/tmp/alloy.css">
+				<replace file="${alloy.temp.dir}/aui_deprecated.css">
 					<replacefilter token="../../../../../build/aui-skin-classic/images/" value="" />
 				</replace>
 
+				<replace file="${alloy.temp.dir}/aui_deprecated.css">
+					<replacefilter token="../../../../../build/aui-skin-deprecated/images/" value="" />
+				</replace>
+
 				<copy
-					file="docroot/html/ALLOY_ZIP/build/aui-skins/tmp/alloy.css"
-					tofile="docroot/html/css/portal/aui.css"
+					file="${alloy.temp.dir}/aui_deprecated.css"
+					tofile="docroot/html/css/portal/aui_deprecated.css"
 					overwrite="true"
 				/>
 
-				<!-- Images -->
+				<!-- JavaScript -->
 
-				<copy todir="docroot/html/themes/_unstyled/images/aui/">
-					<fileset dir="docroot/html/ALLOY_ZIP/build/aui-skin-base/images/" />
+				<copy todir="docroot/html/js/aui" overwrite="true" preservelastmodified="true">
+					<fileset dir="${alloy.build.dir}/" />
 				</copy>
 
-				<copy todir="docroot/html/themes/_unstyled/images/aui/">
-					<fileset dir="docroot/html/ALLOY_ZIP/build/aui-skin-classic/images/" />
+				<!-- Images -->
+
+				<copy todir="docroot/html/themes/_unstyled/images/aui">
+					<fileset dir="${alloy.build.dir}/aui-css/img" />
+				</copy>
+
+				<copy todir="docroot/html/themes/_unstyled/images/aui">
+					<fileset dir="${alloy.build.dir}/aui-skin-deprecated/images" />
 				</copy>
 
 				<!-- Clean up -->

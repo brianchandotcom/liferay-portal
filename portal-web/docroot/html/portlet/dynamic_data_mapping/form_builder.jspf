@@ -30,7 +30,7 @@ String defaultLanguageId = LocalizationUtil.getDefaultLocale(script);
 
 <div class="separator"><!-- --></div>
 
-<div class="aui-helper-hidden lfr-message-response portlet-msg-error" id="<portlet:namespace />messageContainer"></div>
+<div class="hide lfr-message-response alert alert-error" id="<portlet:namespace />messageContainer"></div>
 
 <liferay-ui:tabs
 	names='<%= LanguageUtil.get(pageContext, "view") + "," + LanguageUtil.get(pageContext, "source") %>'
@@ -47,44 +47,41 @@ String defaultLanguageId = LocalizationUtil.getDefaultLocale(script);
 				readOnly="<%= false %>"
 			/>
 
-			<div class="aui-diagram-builder" id="<portlet:namespace />formBuilder">
-				<div class="aui-diagram-builder-content aui-helper-clearfix" id="<portlet:namespace />formBuilderContent">
-					<div class="aui-diagram-builder-tabs">
-						<div class="aui-diagram-builder-tabs-content">
-							<ul class="aui-tabview-list aui-widget-hd">
-								<li class="aui-state-active aui-state-default aui-tab aui-tab-active">
-									<span class="aui-tab-content">
-										<a class="aui-tab-label" href="javascript:;">
-											<liferay-ui:message key="fields" />
-										</a>
-									</span>
+			<div class="diagram-builder form-builder" id="<portlet:namespace />formBuilder">
+				<div class="diagram-builder-content" id="<portlet:namespace />formBuilderContent">
+					<div class="tabbable">
+						<div class="tabbable-content">
+							<ul class="nav nav-tabs">
+								<li class="active">
+									<a href="javascript:;">
+										<liferay-ui:message key="fields" />
+									</a>
 								</li>
-								<li class="aui-state-default aui-tab">
-									<span class="aui-tab-content">
-										<a class="aui-tab-label" href="javascript:;">
-											<liferay-ui:message key="settings" />
-										</a>
-									</span>
+								<li>
+									<a href="javascript:;">
+										<liferay-ui:message key="settings" />
+									</a>
 								</li>
 							</ul>
-
-							<div class="aui-tabview-content aui-widget-bd">
-								<div class="aui-tabview-content-item"></div>
-
-								<div class="aui-helper-hidden aui-tabview-content-item"></div>
+							<div class="tab-content">
+								<div class="tab-pane"></div>
+								<div class="tab-pane"></div>
 							</div>
 						</div>
 					</div>
-
-					<div class="aui-diagram-builder-content-container"></div>
+					<div class="diagram-builder-content-container">
+						<div class="diagram-builder-canvas">
+							<div class="diagram-builder-drop-container"></div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</liferay-ui:section>
 
 	<liferay-ui:section>
-		<div class="aui-form-builder-source-wrapper" id="<portlet:namespace />formBuilderSourceWrapper">
-			<div class="aui-form-builder-source" id="<portlet:namespace />formBuilderEditor"></div>
+		<div class="form-builder-source-wrapper" id="<portlet:namespace />formBuilderSourceWrapper">
+			<div class="form-builder-source" id="<portlet:namespace />formBuilderEditor"></div>
 		</div>
 	</liferay-ui:section>
 </liferay-ui:tabs>
@@ -103,16 +100,16 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales()) {
 }
 %>
 
-<aui:script use="aui-datepicker,event-custom-base,json,liferay-portlet-dynamic-data-lists,liferay-portlet-dynamic-data-mapping,liferay-portlet-dynamic-data-mapping-custom-fields,aui-tabs,aui-ace-editor,aui-loading-mask,liferay-xml-formatter">
+<aui:script use="aui-datepicker-deprecated,event-custom-base,json,liferay-portlet-dynamic-data-lists,liferay-portlet-dynamic-data-mapping,liferay-portlet-dynamic-data-mapping-custom-fields,aui-tabview,aui-ace-editor,aui-loading-mask-deprecated,liferay-xml-formatter">
 	var Lang = A.Lang;
 
 	var MESSAGE_FAILURE = 0;
 
 	var MESSAGE_SUCCESS = 1;
 
-	var CSS_MESSAGE_ERROR = 'portlet-msg-error';
+	var CSS_MESSAGE_ERROR = 'alert alert-error';
 
-	var CSS_MESSAGE_SUCCESS = 'portlet-msg-success';
+	var CSS_MESSAGE_SUCCESS = 'alert alert-success';
 
 	var STR_VALUE = 'value';
 
@@ -188,7 +185,7 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales()) {
 	};
 
 	var isViewTabActive = function() {
-		return !A.one('#<portlet:namespace />formBuilderTab').ancestor().hasClass('aui-helper-hidden');
+		return !A.one('#<portlet:namespace />formBuilderTab').ancestor().hasClass('hide');
 	};
 
 	var reloadFormBuilderData = function(content) {

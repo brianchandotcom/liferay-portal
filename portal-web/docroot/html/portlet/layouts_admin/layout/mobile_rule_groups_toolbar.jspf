@@ -18,19 +18,17 @@
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "add");
 %>
 
-<div class="lfr-portlet-toolbar">
-	<c:if test="<%= MDRPermissionUtil.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP_INSTANCE) %>">
-		<span class="lfr-toolbar-button add-button">
-			<a href="javascript:;" id="<portlet:namespace />saveInstance"><liferay-ui:message key="select-rule-group" /></a>
-		</span>
+<aui:nav-bar>
+	<aui:nav>
+		<c:if test="<%= MDRPermissionUtil.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP_INSTANCE) %>">
+			<aui:nav-item anchorId="saveInstance" label="select-rule-group" />
 
-		<c:if test="<%= MDRRuleGroupInstanceServiceUtil.getRuleGroupInstancesCount(className, classPK) > 1 %>">
-			<span class="lfr-toolbar-button view-structures">
-				<a href="javascript:;" id="<portlet:namespace />managePriorities"><liferay-ui:message key="manage-rule-group-priorities" /></a>
-			</span>
+			<c:if test="<%= MDRRuleGroupInstanceServiceUtil.getRuleGroupInstancesCount(className, classPK) > 1 %>">
+				<aui:nav-item anchorId="managePriorities" label="manage-rule-group-priorities" />
+			</c:if>
 		</c:if>
-	</c:if>
-</div>
+	</aui:nav>
+</aui:nav-bar>
 
 <liferay-portlet:renderURL portletName="<%= PortletKeys.MOBILE_DEVICE_SITE_ADMIN %>" varImpl="selectRuleGroupURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<portlet:param name="struts_action" value="/mobile_device_rules/view" />
@@ -60,17 +58,15 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "add");
 					dialog.plug(A.LoadingMask).render();
 				}
 				else {
-					dialog.close();
+					dialog.hide();
 				}
 			}
 		},
-		['aui-loading-mask']
+		['aui-loading-mask-deprecated']
 	);
 
 	function <portlet:namespace />saveRuleGroupsPriorities(dialog) {
 		<portlet:namespace />processDialog(dialog);
-
-		location.href = '<%= redirect %>' + Liferay.Util.getHistoryParam('<portlet:namespace />');
 	}
 
 	Liferay.provide(
@@ -94,13 +90,10 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "add");
 							userId: themeDisplay.getUserId()
 						}
 					)
-				},
-				function(response, xhr) {
-					location.href = '<%= redirect %>' + Liferay.Util.getHistoryParam('<portlet:namespace />');
 				}
 			);
 		},
-		['aui-loading-mask']
+		['aui-loading-mask-deprecated']
 	);
 </aui:script>
 
@@ -135,7 +128,6 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "add");
 			'click',
 			function(event) {
 				config.dialog.title = '<%= UnicodeLanguageUtil.get(pageContext, "rule-group-priorities") %>';
-				config.dialog.width = 460;
 
 				config.id = '<portlet:namespace />ruleGroupsPriorities';
 				config.uri = '<%= managePrioritiesURL %>';

@@ -1148,7 +1148,7 @@ public class BaseButtonItemTag extends com.liferay.taglib.util.IncludeTag {
 		_focused = false;
 		_handler = null;
 		_height = null;
-		_hideClass = "aui-helper-hidden";
+		_hideClass = "aui-hide";
 		_hoverState = true;
 		_icon = null;
 		_iconNode = null;
@@ -1384,7 +1384,7 @@ public class BaseButtonItemTag extends com.liferay.taglib.util.IncludeTag {
 	private boolean _focused = false;
 	private java.lang.Object _handler = null;
 	private java.lang.Object _height = null;
-	private java.lang.String _hideClass = "aui-helper-hidden";
+	private java.lang.String _hideClass = "aui-hide";
 	private boolean _hoverState = true;
 	private java.lang.String _icon = null;
 	private java.lang.String _iconNode = null;

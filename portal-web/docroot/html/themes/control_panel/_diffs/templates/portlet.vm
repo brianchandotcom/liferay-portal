@@ -4,16 +4,16 @@
 #set ($portlet_title = $portlet_display.getTitle())
 #set ($portlet_title_icon_css_class = "")
 #set ($portlet_description = $portlet_display.getDescription())
-#set ($portlet_description_css_class = "portlet-description lfr-message-help")
+#set ($portlet_description_css_class = "alert alert-info lfr-control-panel-help-content lfr-message-content")
 #set ($portlet_back_url = $htmlUtil.escapeAttribute($portlet_display.getURLBack()))
 #set ($enable_portlet_descriptions = $sessionClicks.get($request, "enable-portlet-descriptions", "1"))
 #set ($show_portlet_description = $enable_portlet_descriptions == "1" && $sessionClicks.get($request, "show-portlet-description-$portlet_id", "1") == "1")
 #set ($valid_portlet_description = $validator.isNotNull($portlet_description) && $portlet_description.indexOf('javax.portlet.description') == -1)
 
 #if ($show_portlet_description)
-	#set ($portlet_title_icon_css_class = "aui-helper-hidden")
+	#set ($portlet_title_icon_css_class = "hide")
 #else
-	#set ($portlet_description_css_class = "${portlet_description_css_class} aui-helper-hidden")
+	#set ($portlet_description_css_class = "${portlet_description_css_class} hide")
 #end
 
 <section class="portlet" id="portlet_$portlet_id">
@@ -28,7 +28,13 @@
 
 		#if ($valid_portlet_description)
 			<div class="$portlet_description_css_class" data-portlet-id="$portlet_id" data-visible-panel="$show_portlet_description" id="cpContextPanelTemplate">
+				<button class="close" type="button">&#x00D7;</button>
+
 				$portlet_description
+
+				<a class="btn-link" href="javascript:;">
+					<small>#language ("disable-this-note-for-all-portlets")</small>
+				</a>
 			</div>
 		#end
 

@@ -95,14 +95,14 @@ if (filterManageableOrganizations) {
 			<c:if test="<%= !results.isEmpty() %>">
 				<div class="separator"><!-- --></div>
 
-				<aui:button onClick='<%= renderResponse.getNamespace() + "deleteOrganizations();" %>' value="delete" />
+				<aui:button cssClass="delete-organizations" onClick='<%= renderResponse.getNamespace() + "deleteOrganizations();" %>' value="delete" />
 			</c:if>
 
 			<liferay-ui:search-iterator />
 		</liferay-ui:search-container>
 	</c:when>
 	<c:otherwise>
-		<div class="portlet-msg-info">
+		<div class="alert alert-info">
 			<liferay-ui:message key="you-do-not-belong-to-an-organization-and-are-not-allowed-to-view-other-organizations" />
 		</div>
 	</c:otherwise>

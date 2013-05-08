@@ -228,13 +228,13 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 				%>
 
 				<c:if test="<%= approved %>">
-					<div class="portlet-msg-info">
+					<div class="alert alert-info">
 						<liferay-ui:message key="a-new-version-will-be-created-automatically-if-this-content-is-modified" />
 					</div>
 				</c:if>
 
 				<c:if test="<%= pending %>">
-					<div class="portlet-msg-info">
+					<div class="alert alert-info">
 						<liferay-ui:message key="there-is-a-publication-workflow-in-process" />
 					</div>
 				</c:if>
@@ -272,7 +272,7 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 						<c:when test="<%= Validator.isNull(toLanguageId) %>">
 							<c:if test="<%= hasSavePermission %>">
 								<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
-									<aui:button name="saveButton" onClick='<%= renderResponse.getNamespace() + "saveArticle()" %>' type="submit" value="<%= saveButtonLabel %>" />
+									<aui:button name="saveButton" onClick='<%= renderResponse.getNamespace() + "saveArticle()" %>' primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
 								</c:if>
 
 								<aui:button disabled="<%= pending %>" name="publishButton" onClick='<%= renderResponse.getNamespace() + "publishArticle()" %>' type="submit" value="<%= publishButtonLabel %>" />

@@ -34,10 +34,6 @@ portletURL.setParameter("chooseCallback", chooseCallback);
 	/>
 </c:if>
 
-<liferay-util:include page="/html/portlet/mobile_device_rules/toolbar.jsp">
-	<liferay-util:param name="toolbarItem" value="view" />
-</liferay-util:include>
-
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 
 	<%
@@ -47,9 +43,26 @@ portletURL.setParameter("chooseCallback", chooseCallback);
 	<liferay-ui:search-container
 		searchContainer="<%= ruleGroupSearch %>"
 	>
-		<liferay-ui:search-form
-			page="/html/portlet/mobile_device_rules/rule_group_search.jsp"
-		/>
+		<c:if test="<%= MDRPermissionUtil.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP) %>">
+			<portlet:renderURL var="viewRulesURL">
+				<portlet:param name="struts_action" value="/mobile_device_rules/view" />
+			</portlet:renderURL>
+
+			<liferay-portlet:renderURL var="addRuleGroupURL">
+				<portlet:param name="struts_action" value="/mobile_device_rules/edit_rule_group" />
+				<portlet:param name="redirect" value="<%= viewRulesURL %>" />
+				<portlet:param name="backURL" value="<%= viewRulesURL %>" />
+				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+			</liferay-portlet:renderURL>
+
+			<aui:nav-bar>
+				<aui:nav>
+					<aui:nav-item href="<%= addRuleGroupURL %>" iconClass="icon-plus" label="add-rule-group" />
+				</aui:nav>
+
+				<aui:nav-bar-search cssClass="pull-right" file="/html/portlet/mobile_device_rules/rule_group_search.jsp" searchContainer="<%= ruleGroupSearch %>" />
+			</aui:nav-bar>
+		</c:if>
 
 		<%
 		RuleGroupSearchTerms searchTerms = (RuleGroupSearchTerms)searchContainer.getSearchTerms();

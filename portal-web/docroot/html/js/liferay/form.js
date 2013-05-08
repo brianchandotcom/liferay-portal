@@ -1,7 +1,7 @@
 AUI.add(
 	'liferay-form',
 	function(A) {
-		var DEFAULTS_FORM_VALIDATOR = AUI.defaults.FormValidator;
+		var DEFAULTS_FORM_VALIDATOR = A.config.FormValidator;
 
 		var defaultAcceptFiles = DEFAULTS_FORM_VALIDATOR.RULES.acceptFiles;
 
@@ -88,10 +88,11 @@ AUI.add(
 								{
 									boundingBox: formNode,
 									fieldStrings: fieldStrings,
-									rules: rules
+									rules: rules,
+									validateOnBlur: false,
+									validateOnInput: true
 								}
 							);
-
 							instance.formValidator = formValidator;
 
 							instance._bindForm();
@@ -120,10 +121,10 @@ AUI.add(
 					_onFieldFocusChange: function(event) {
 						var instance = this;
 
-						var row = event.currentTarget.ancestor('.aui-field');
+						var row = event.currentTarget.ancestor('.field');
 
 						if (row) {
-							row.toggleClass('aui-field-focused', (event.type == 'focus'));
+							row.toggleClass('field-focused', (event.type == 'focus'));
 						}
 					},
 

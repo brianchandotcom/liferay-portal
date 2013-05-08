@@ -312,7 +312,7 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajaxRequest) {
 				%>
 
 				<c:if test="<%= searchResultsList.isEmpty() %>">
-					<div class="portlet-msg-info">
+					<div class="alert alert-info">
 						<%= LanguageUtil.format(pageContext, "no-documents-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>") %>
 					</div>
 				</c:if>
@@ -331,8 +331,8 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajaxRequest) {
 		Liferay.fire(
 			'<portlet:namespace />pageLoaded',
 			{
-				paginator: {
-					name: 'entryPaginator',
+				pagination: {
+					name: 'entryPagination',
 					state: {
 						page: <%= (total == 0) ? 0 : entryEnd / (entryEnd - entryStart) %>,
 						rowsPerPage: <%= (entryEnd - entryStart) %>,
@@ -374,7 +374,7 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajaxRequest) {
 										<%= searchResults %>
 									</c:when>
 									<c:otherwise>
-										<div class="portlet-msg-info">
+										<div class="alert alert-info">
 											<%= LanguageUtil.get(pageContext, "searching,-please-wait") %>
 										</div>
 										<div class="loading-animation"></div>
@@ -394,7 +394,7 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajaxRequest) {
 											<%= searchResults %>
 										</c:when>
 										<c:otherwise>
-											<div class="portlet-msg-info">
+											<div class="alert alert-info">
 												<%= LanguageUtil.get(pageContext, "searching,-please-wait") %>
 											</div>
 											<div class="loading-animation"></div>

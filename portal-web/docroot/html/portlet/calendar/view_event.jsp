@@ -63,8 +63,8 @@ request.setAttribute("view_event.jsp-event", event);
 	title="<%= event.getTitle() %>"
 />
 
-<aui:layout cssClass="event">
-	<aui:column columnWidth="<%= 75 %>" cssClass="folder-column folder-column-first" first="<%= true %>">
+<aui:row cssClass="event">
+	<aui:col cssClass="folder-column folder-column-first" width="<%= 75 %>">
 		<dl class="property-list">
 			<dt>
 				<liferay-ui:icon
@@ -244,9 +244,9 @@ request.setAttribute("view_event.jsp-event", event);
 				/>
 			</div>
 		</c:if>
-	</aui:column>
+	</aui:col>
 
-	<aui:column columnWidth="<%= 25 %>" cssClass="detail-column detail-column-last" last="<%= true %>">
+	<aui:col cssClass="detail-column detail-column-last" width="<%= 25 %>">
 		<div class="folder-icon">
 			<liferay-ui:icon
 				cssClass="folder-avatar"
@@ -264,8 +264,8 @@ request.setAttribute("view_event.jsp-event", event);
 		%>
 
 		<liferay-util:include page="/html/portlet/calendar/event_action.jsp" />
-	</aui:column>
-</aui:layout>
+	</aui:col>
+</aui:row>
 
 <c:if test="<%= enableComments %>">
 	<liferay-ui:panel-container extended="<%= false %>" id="calendarCommentsPanelContainer" persistState="<%= true %>">

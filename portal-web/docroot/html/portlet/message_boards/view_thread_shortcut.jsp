@@ -35,19 +35,11 @@ if (threadFlag != null) {
 
 	threadFlagModifiedTime = threadFlagModifiedDate.getTime();
 }
-
-String className = "portlet-section-alternate results-row alt";
-String classHoverName = "portlet-section-alternate-hover results-row alt hover";
-
-if (treeWalker.isOdd()) {
-	className = "portlet-section-body results-row";
-	classHoverName = "portlet-section-body-hover results-row hover";
-}
 %>
 
 <c:if test="<%= (message.getMessageId() != selMessage.getMessageId()) || MBUtil.isViewableMessage(themeDisplay, message) %>">
-	<tr class="<%= className %>" onMouseEnter="this.className = '<%= classHoverName %>';" onMouseLeave="this.className = '<%= className %>';">
-		<td style="padding-left: <%= depth > 0 ? depth * 10 : 5 %>px; width: 90%;" valign="middle">
+	<tr>
+		<td class="table-cell" style="padding-left: <%= depth > 0 ? depth * 10 : 5 %>px; width: 90%;" valign="middle">
 			<c:if test="<%= !message.isRoot() %>">
 				<c:choose>
 					<c:when test="<%= !lastNode %>">
@@ -97,7 +89,7 @@ if (treeWalker.isOdd()) {
 				</c:if>
 			</a>
 		</td>
-		<td style="white-space: nowrap;">
+		<td class="table-cell" style="white-space: nowrap;">
 			<a href="<%= rowHREF %>">
 				<c:if test="<%= !readThread %>">
 					<strong>
@@ -117,7 +109,7 @@ if (treeWalker.isOdd()) {
 				</c:if>
 			</a>
 		</td>
-		<td style="white-space: nowrap;">
+		<td class="table-cell" style="white-space: nowrap;">
 			<a href="<%= rowHREF %>"><%= dateFormatDateTime.format(message.getModifiedDate()) %></a>
 		</td>
 	</tr>

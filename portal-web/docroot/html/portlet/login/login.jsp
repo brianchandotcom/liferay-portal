@@ -60,7 +60,7 @@
 					String userPassword = (String)SessionMessages.get(request, "userAddedPassword");
 					%>
 
-					<div class="portlet-msg-success">
+					<div class="alert alert-success">
 						<c:choose>
 							<c:when test="<%= company.isStrangersVerify() || Validator.isNull(userPassword) %>">
 								<%= LanguageUtil.get(pageContext, "thank-you-for-creating-an-account") %>
@@ -85,7 +85,7 @@
 					String userEmailAddress = (String)SessionMessages.get(request, "userPending");
 					%>
 
-					<div class="portlet-msg-success">
+					<div class="alert alert-success">
 						<%= LanguageUtil.format(pageContext, "thank-you-for-creating-an-account.-you-will-be-notified-via-email-at-x-when-your-account-has-been-approved", userEmailAddress) %>
 					</div>
 				</c:when>

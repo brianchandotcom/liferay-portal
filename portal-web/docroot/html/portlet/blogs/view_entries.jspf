@@ -23,7 +23,7 @@ showSearch = showSearch && !results.isEmpty();
 
 <c:if test="<%= showAddEntryButton || showPermissionsButton || showSearch %>">
 	<div class="portlet-toolbar search-form">
-		<div class="aui-search-bar">
+		<div class="form-search">
 			<c:if test="<%= showSearch %>">
 				<aui:input inlineField="<%= true %>" label="" name="keywords" size="30" title="search-entries" type="text" />
 

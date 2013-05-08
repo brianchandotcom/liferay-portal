@@ -16,6 +16,6 @@
 
 <%@ include file="/html/portal/init.jsp" %>
 
-<div class="portlet-msg-info">
+<div class="alert alert-info">
 	<liferay-ui:message key="the-sign-in-process-is-temporarily-disabled-because-the-portal-is-undergoing-a-routine-maintenance-upgrade" />
 </div>

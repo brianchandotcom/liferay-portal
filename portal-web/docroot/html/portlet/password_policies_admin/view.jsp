@@ -32,7 +32,7 @@ boolean passwordPolicyEnabled = LDAPSettingsUtil.isPasswordPolicyEnabled(company
 	<liferay-portlet:renderURLParams varImpl="portletURL" />
 
 	<c:if test="<%= passwordPolicyEnabled %>">
-		<div class="portlet-msg-info">
+		<div class="alert alert-info">
 			<liferay-ui:message key="you-are-using-ldaps-password-policy" />
 		</div>
 	</c:if>

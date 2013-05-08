@@ -177,7 +177,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 
 								<c:choose>
 									<c:when test="<%= hasUnlinkLayoutSetPrototypePermission %>">
-										<div class="aui-helper-hidden" id="<portlet:namespace />publicLayoutSetPrototypeIdOptions">
+										<div class="hide" id="<portlet:namespace />publicLayoutSetPrototypeIdOptions">
 											<aui:input helpMessage="enable-propagation-of-changes-from-the-site-template-help" label="enable-propagation-of-changes-from-the-site-template" name="publicLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= publicLayoutSetPrototypeLinkEnabled %>" />
 										</div>
 									</c:when>
@@ -215,7 +215,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 											<c:when test="<%= (publicLayoutSetPrototype != null) && !liveGroup.isStaged() && hasUnlinkLayoutSetPrototypePermission %>">
 												<aui:input label='<%= LanguageUtil.format(pageContext, "enable-propagation-of-changes-from-the-site-template-x", HtmlUtil.escape(publicLayoutSetPrototype.getName(user.getLanguageId()))) %>' name="publicLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= publicLayoutSetPrototypeLinkEnabled %>" />
 
-												<div class='<%= publicLayoutSetPrototypeLinkEnabled ? "" : "aui-helper-hidden" %>' id="<portlet:namespace/>publicLayoutSetPrototypeMergeAlert">
+												<div class='<%= publicLayoutSetPrototypeLinkEnabled ? "" : "hide" %>' id="<portlet:namespace/>publicLayoutSetPrototypeMergeAlert">
 
 													<%
 													request.setAttribute("edit_layout_set_prototype.jsp-groupId", String.valueOf(group.getGroupId()));
@@ -260,7 +260,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 
 								<c:choose>
 									<c:when test="<%= hasUnlinkLayoutSetPrototypePermission %>">
-										<div class="aui-helper-hidden" id="<portlet:namespace />privateLayoutSetPrototypeIdOptions">
+										<div class="hide" id="<portlet:namespace />privateLayoutSetPrototypeIdOptions">
 											<aui:input helpMessage="enable-propagation-of-changes-from-the-site-template-help"  label="enable-propagation-of-changes-from-the-site-template" name="privateLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
 										</div>
 									</c:when>
@@ -298,7 +298,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 											<c:when test="<%= (privateLayoutSetPrototype != null) && !liveGroup.isStaged() && hasUnlinkLayoutSetPrototypePermission %>">
 												<aui:input label='<%= LanguageUtil.format(pageContext, "enable-propagation-of-changes-from-the-site-template-x", HtmlUtil.escape(privateLayoutSetPrototype.getName(user.getLanguageId()))) %>' name="privateLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
 
-												<div class='<%= privateLayoutSetPrototypeLinkEnabled ? "" : "aui-helper-hidden" %>' id="<portlet:namespace/>privateLayoutSetPrototypeMergeAlert">
+												<div class='<%= privateLayoutSetPrototypeLinkEnabled ? "" : "hide" %>' id="<portlet:namespace/>privateLayoutSetPrototypeMergeAlert">
 
 													<%
 													request.setAttribute("edit_layout_set_prototype.jsp-groupId", String.valueOf(group.getGroupId()));

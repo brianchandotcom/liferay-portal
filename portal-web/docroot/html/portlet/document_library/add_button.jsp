@@ -30,7 +30,7 @@ if ((folder == null) || folder.isSupportsMetadata()) {
 }
 %>
 
-<liferay-ui:icon-menu align="left" direction="down" icon="" message="add" showExpanded="<%= false %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu direction="down" extended="<%= true %>" icon="" message="add" showExpanded="<%= false %>" showWhenSingleIcon="<%= true %>">
 	<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_FOLDER) %>">
 		<portlet:renderURL var="addFolderURL">
 			<portlet:param name="struts_action" value="/document_library/edit_folder" />
@@ -71,7 +71,7 @@ if ((folder == null) || folder.isSupportsMetadata()) {
 			<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon cssClass="aui-helper-hidden upload-multiple-documents" image="../document_library/add_multiple_documents" message="multiple-documents" url="<%= editFileEntryURL %>" />
+		<liferay-ui:icon cssClass="hide upload-multiple-documents" image="../document_library/add_multiple_documents" message="multiple-documents" url="<%= editFileEntryURL %>" />
 	</c:if>
 
 	<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) %>">

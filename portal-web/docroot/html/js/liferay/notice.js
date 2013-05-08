@@ -25,7 +25,7 @@ AUI.add(
 
 			instance._node = options.node;
 			instance._noticeType = options.type || 'notice';
-			instance._noticeClass = 'popup-alert-notice';
+			instance._noticeClass = 'alert-block popup-alert-notice';
 			instance._useCloseButton = true;
 			instance._onClose = options.onClose;
 			instance._closeText = options.closeText;
@@ -48,7 +48,7 @@ AUI.add(
 			}
 
 			if (instance._noticeType == 'warning') {
-				instance._noticeClass = 'popup-alert-warning';
+				instance._noticeClass = 'alert-error popup-alert-warning';
 			}
 
 			if (options.noticeClass) {
@@ -101,7 +101,7 @@ AUI.add(
 				var content = instance._content;
 				var node = A.one(instance._node);
 
-				var notice = node || A.Node.create('<div dynamic="true"></div>');
+				var notice = node || A.Node.create('<div class="alert" dynamic="true"></div>');
 
 				if (content) {
 					notice.html(content);
@@ -133,7 +133,9 @@ AUI.add(
 				}
 
 				if (instance._useCloseButton) {
-					var html = '<input class="submit popup-alert-close" type="submit" value="' + instance._closeText + '" />';
+					var html =  '<button class="btn submit popup-alert-close">' +
+									instance._closeText
+								'</button>';
 
 					notice.append(html);
 

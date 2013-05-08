@@ -26,6 +26,6 @@ if (portletTitle == null) {
 }
 %>
 
-<div class="portlet-msg-info">
+<div class="alert alert-info">
 	<%= LanguageUtil.format(pageContext, "x-will-only-be-shown-after-you-refresh-the-page", portletTitle, false) %>
 </div>

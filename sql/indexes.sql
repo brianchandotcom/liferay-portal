@@ -702,6 +702,7 @@ create index IX_2D4CC782 on ResourceBlock (companyId, name);
 
 create index IX_4AB3756 on ResourceBlockPermission (resourceBlockId);
 create unique index IX_D63D20BB on ResourceBlockPermission (resourceBlockId, roleId);
+create index IX_20A2E3D9 on ResourceBlockPermission (roleId);
 
 create index IX_60B99860 on ResourcePermission (companyId, name, scope);
 create index IX_2200AA69 on ResourcePermission (companyId, name, scope, primKey);

@@ -1624,6 +1624,17 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		return userOrgsGroups;
 	}
 
+	public Group getUserPersonalSiteGroup(long companyId)
+		throws PortalException, SystemException {
+
+		long classNameId = PortalUtil.getClassNameId(UserPersonalSite.class);
+
+		long defaultUserId = userLocalService.getDefaultUserId(companyId);
+
+		return groupPersistence.findByC_C_C(
+			companyId, classNameId, defaultUserId);
+	}
+
 	/**
 	 * Returns <code>true</code> if the live group has a staging group.
 	 *

@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='portlet-msg-success']</td>
+	<td>//div[@class='alert alert-success']</td>
 	<td></td>
 </tr>
 <tr>
@@ -30,12 +30,12 @@
 </tr>
 <tr>
 	<td>ADD_ENTRY</td>
-	<td>//span[contains(@class,'add-button')]/a</td>
+	<td>//div[@class='navbar ']//li/a[contains(.,'Add')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECYCLE_BIN_BUTTON</td>
-	<td>//input[@value='Move to the Recycle Bin']</td>
+	<td>//button[contains(.,'Move to the Recycle Bin')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -61,7 +61,7 @@
 </tr>
 <tr>
 	<td>ENTRY_TABLE_ACTIONS_1</td>
-	<td>//td/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>//td/div/a[@title='Actions']</td>
 	<td></td>
 </tr>
 </tbody>

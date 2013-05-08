@@ -52,18 +52,18 @@ AUI.add(
 
 		var TPL_TAG_MERGE_BODY = '<div class="container-fluid tags-admin-merge-tag">' +
 			'<div class="row">' +
-				'<div class="column span6">' +
+				'<div class="span6">' +
 					'<div class="selected-tags-container">' +
 						'<label for="{namespace}selectedTagsList">' + Liferay.Language.get('tags-to-be-merged') + ':</label>' +
 						'<select id="{namespace}selectedTagsList" class="selected-tags-list" multiple>' +
 						'</select>' +
 					'</div>' +
+					'<div class="btn-group" id="{namespace}sortSelect">' +
+						'<button class="btn btn-mini tag-move-up" id="{namespace}tagMoveUp"><i class="icon-chevron-up"></i></button>' +
+						'<button class="btn btn-mini tag-move-down" id="{namespace}tagMoveDown"><i class="icon-chevron-down"></i></button>' +
+					'</div>' +
 				'</div>' +
-				'<div class="span1" id="{namespace}sortSelect">' +
-						'<button class="tag-move tag-move-up" id="{namespace}tagMoveUp"></button>' +
-						'<button class="tag-move tag-move-down" id="{namespace}tagMoveDown"></button>' +
-				'</div>' +
-				'<div class="column span6">' +
+				'<div class="span6">' +
 					'<div class="target-tags-container">' +
 						'<label class="tags-label" for="{namespace}targetTagsList">' + Liferay.Language.get('target-tag') + ':</label>' +
 						'<select id="{namespace}targetTagsList" class="target-tags-list">' +
@@ -75,16 +75,18 @@ AUI.add(
 
 		var TPL_TAG_MERGE_FOOTER =
 			'<div class="container-fluid tags-admin-merge-tag">' +
-				'<div class="row">' +
+				'<div class="row-fluid">' +
 					'<div class="span7">' +
-						'<div class="tag-options">' +
-							'<input id="{namespace}mergeOnlySelectedTags" type="checkbox">' +
-							'<label class="tags-merge-label" for="{namespace}mergeOnlySelectedTags">' + Liferay.Language.get('merge-only-selected-tags') + '</label>' + '<br>' +
-							'<input checked id="{namespace}overrideProperties" type="checkbox">' +
-							'<label class="tags-merge-label" for="{namespace}overrideProperties">' + Liferay.Language.get('override-tags-properties') + '</label>' +
+						'<div class="tag-options pull-left">' +
+							'<label class="checkbox">' +
+								'<input id="{namespace}mergeOnlySelectedTags" type="checkbox">' + Liferay.Language.get('merge-only-selected-tags') +
+							'</label>' +
+							'<label class="checkbox">' +
+								'<input checked id="{namespace}overrideProperties" type="checkbox">' + Liferay.Language.get('override-tags-properties') +
+							'</label>' +
 						'</div>' +
 					'</div>' +
-					'<div class="column span5">' +
+					'<div class="span5">' +
 						'<div id="{namespace}buttonsContainer"></div>' +
 					'</div>' +
 				'</div>' +

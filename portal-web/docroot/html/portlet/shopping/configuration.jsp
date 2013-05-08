@@ -276,13 +276,13 @@ else if (tabs3.equals("shipping-email")) {
 									[$FROM_ADDRESS$]
 								</dt>
 								<dd>
-									<%= emailFromAddress %>
+									<%= HtmlUtil.escape(emailFromAddress) %>
 								</dd>
 								<dt>
 									[$FROM_NAME$]
 								</dt>
 								<dd>
-									<%= emailFromName %>
+									<%= HtmlUtil.escape(emailFromName) %>
 								</dd>
 								<dt>
 									[$ORDER_BILLING_ADDRESS$]

@@ -77,7 +77,7 @@ AUI.add(
 			'<div class="container-fluid tags-admin-merge-tag">' +
 				'<div class="row-fluid">' +
 					'<div class="span7">' +
-						'<div class="tag-options pull-left">' +
+						'<div class="pull-left tag-options">' +
 							'<label class="checkbox">' +
 								'<input id="{namespace}mergeOnlySelectedTags" type="checkbox">' + Liferay.Language.get('merge-only-selected-tags') +
 							'</label>' +

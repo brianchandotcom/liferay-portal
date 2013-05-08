@@ -102,7 +102,7 @@
 
 				<concat destfile="${alloy.temp.dir}/aui_deprecated.css">
 					<filelist
-						dir="docroot/html/js/aui/aui-skin-deprecated"
+						dir="${alloy.build.dir}/aui-skin-deprecated"
 						files="aui-skin-deprecated.css"
 					/>
 				</concat>
@@ -149,7 +149,7 @@
 					/>
 				</replaceregexp>
 
-				<!--<replace file="${alloy.temp.dir}/aui_deprecated.css">
+				<replace file="${alloy.temp.dir}/aui_deprecated.css">
 					<replacefilter token="../images/" value="" />
 				</replace>
 
@@ -169,7 +169,7 @@
 					file="${alloy.temp.dir}/aui_deprecated.css"
 					tofile="docroot/html/css/portal/aui_deprecated.css"
 					overwrite="true"
-				/>-->
+				/>
 
 				<!-- JavaScript -->
 

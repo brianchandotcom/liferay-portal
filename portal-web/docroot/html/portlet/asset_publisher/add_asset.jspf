@@ -48,68 +48,60 @@ addPortletURLs = AssetUtil.getAddPortletURLs(liferayPortletRequest, liferayPortl
 	}
 	%>
 
-	<liferay-ui:icon-menu
-		direction="right"
-		icon='<%= themeDisplay.getPathThemeImages() + "/common/add.png" %>'
-		id="<%= taglibId %>"
-		message='<%= LanguageUtil.format(pageContext, (groupIds.length == 1) ? "add-new" : "add-new-in-x", new Object[] {HtmlUtil.escape((GroupLocalServiceUtil.getGroup(groupId)).getDescriptiveName(locale))}) %>'
-	>
+	<aui:nav-bar>
+		<aui:nav>
+			<aui:nav-item dropdown="<%= true %>" iconClass="icon-plus" label="add">
 
-		<%
-		for (Map.Entry<String, PortletURL> entry : addPortletURLs.entrySet()) {
-			String className = entry.getKey();
+				<%
+				for (Map.Entry<String, PortletURL> entry : addPortletURLs.entrySet()) {
+					String className = entry.getKey();
 
-			String message = null;
+					String message = null;
 
-			int pos = className.indexOf(AssetUtil.CLASSNAME_SEPARATOR);
+					int pos = className.indexOf(AssetUtil.CLASSNAME_SEPARATOR);
 
-			if (pos != -1) {
-				message = className.substring(pos + AssetUtil.CLASSNAME_SEPARATOR.length());
+					if (pos != -1) {
+						message = className.substring(pos + AssetUtil.CLASSNAME_SEPARATOR.length());
 
-				className = className.substring(0, pos);
-			}
+						className = className.substring(0, pos);
+					}
 
-			AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
+					AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
 
-			if (pos == -1) {
-				message = assetRendererFactory.getTypeName(locale, AssetUtil.hasSubtype(className, addPortletURLs));
-			}
+					if (pos == -1) {
+						message = assetRendererFactory.getTypeName(locale, AssetUtil.hasSubtype(className, addPortletURLs));
+					}
 
-			PortletURL addPortletURL = entry.getValue();
+					PortletURL addPortletURL = entry.getValue();
 
-			addPortletURL.setParameter("groupId", String.valueOf(groupId));
+					addPortletURL.setParameter("groupId", String.valueOf(groupId));
 
-			String addPortletURLString = addPortletURL.toString();
+					String addPortletURLString = addPortletURL.toString();
 
-			addPortletURLString = HttpUtil.addParameter(addPortletURLString, "doAsGroupId", groupId);
-			addPortletURLString = HttpUtil.addParameter(addPortletURLString, "refererPlid", plid);
+					addPortletURLString = HttpUtil.addParameter(addPortletURLString, "doAsGroupId", groupId);
+					addPortletURLString = HttpUtil.addParameter(addPortletURLString, "refererPlid", plid);
 
-			if (defaultAssetPublisher) {
-				addPortletURLString = HttpUtil.addParameter(addPortletURLString, "layoutUuid", layout.getUuid());
-			}
+					if (defaultAssetPublisher) {
+						addPortletURLString = HttpUtil.addParameter(addPortletURLString, "layoutUuid", layout.getUuid());
+					}
 
-			String taglibEditURL = "javascript:Liferay.Util.openWindow({dialog: {align: Liferay.Util.Window.ALIGN_CENTER, width: 960}, id: '" + liferayPortletResponse.getNamespace() + "editAsset', title: '" + HtmlUtil.escapeJS(LanguageUtil.format(pageContext, "new-x", HtmlUtil.escape(message))) + "', uri: '" + HtmlUtil.escapeJS(addPortletURLString) + "'});";
-		%>
+					String taglibEditURL = "javascript:Liferay.Util.openWindow({dialog: {align: Liferay.Util.Window.ALIGN_CENTER, width: 960}, id: '" + liferayPortletResponse.getNamespace() + "editAsset', title: '" + HtmlUtil.escapeJS(LanguageUtil.format(pageContext, "new-x", HtmlUtil.escape(message))) + "', uri: '" + HtmlUtil.escapeJS(addPortletURLString) + "'});";
+				%>
 
-			<c:choose>
-				<c:when test="<%= addPortletURLs.size() == 1 %>">
-					<aui:button
-						onClick="<%= taglibEditURL %>"
-						value='<%= LanguageUtil.format(pageContext, "add-x", HtmlUtil.escape(message)) %>'
-					/>
-				</c:when>
-				<c:otherwise>
-					<liferay-ui:icon
-						message="<%= HtmlUtil.escape(message) %>"
-						src="<%= assetRendererFactory.getIconPath(renderRequest) %>"
-						url="<%= taglibEditURL %>"
-					/>
-				</c:otherwise>
-			</c:choose>
+					<c:choose>
+						<c:when test="<%= addPortletURLs.size() == 1 %>">
+							<aui:nav-item href="<%= taglibEditURL %>" label='<%= LanguageUtil.format(pageContext, "add-x", HtmlUtil.escape(message)) %>' />
+						</c:when>
+						<c:otherwise>
+							<aui:nav-item href="<%= taglibEditURL %>" label="<%= HtmlUtil.escape(message) %>" />
+						</c:otherwise>
+					</c:choose>
 
-		<%
-		}
-		%>
+				<%
+				}
+				%>
 
-	</liferay-ui:icon-menu>
+			</aui:nav-item>
+		</aui:nav>
+	</aui:nav-bar>
 </c:if>

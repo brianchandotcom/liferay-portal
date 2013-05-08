@@ -54,8 +54,6 @@ int entryEnd = ParamUtil.getInteger(request, "entryEnd", entriesPerPage);
 int folderStart = ParamUtil.getInteger(request, "folderStart");
 int folderEnd = ParamUtil.getInteger(request, "folderEnd", SearchContainer.DEFAULT_DELTA);
 
-int folderRowsPerPage = folderEnd - folderStart;
-
 String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");
 
@@ -168,6 +166,9 @@ int foldersTotal = GetterUtil.getInteger((String)request.getAttribute("view_fold
 entryEnd = GetterUtil.getInteger(request.getAttribute("view_entries.jsp-entryEnd"), entryEnd);
 entryStart = GetterUtil.getInteger(request.getAttribute("view_entries.jsp-entryStart"), entryStart);
 
+folderEnd = GetterUtil.getInteger(request.getAttribute("view_folders.jsp-folderEnd"), folderEnd);
+folderStart = GetterUtil.getInteger(request.getAttribute("view_folders.jsp-folderStart"), folderStart);
+
 if (folder != null) {
 	if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY)) {
 		PortalUtil.setPageSubtitle(folder.getName(), request);
@@ -239,7 +240,7 @@ if (folder != null) {
 				entryStart: <%= entryStart %>,
 				folderEnd: <%= folderEnd %>,
 				folderId: <%= folderId %>,
-				folderRowsPerPage: <%= folderRowsPerPage %>,
+				folderRowsPerPage: <%= folderEnd - folderStart %>,
 				folderStart: <%= folderStart %>,
 				foldersTotal: <%= foldersTotal %>
 			},

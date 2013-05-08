@@ -46,10 +46,10 @@ if (folder != null) {
 
 	<liferay-ui:search-container
 		iteratorURL="<%= portletURL %>"
+		total="<%= DLAppServiceUtil.getFoldersCount(groupId, folderId) %>"
 	>
 		<liferay-ui:search-container-results
 			results="<%= DLAppServiceUtil.getFolders(groupId, folderId, searchContainer.getStart(), searchContainer.getEnd()) %>"
-			total="<%= DLAppServiceUtil.getFoldersCount(groupId, folderId) %>"
 		/>
 
 		<liferay-ui:search-container-row
@@ -126,10 +126,10 @@ if (folder != null) {
 
 	<liferay-ui:search-container
 		iteratorURL="<%= portletURL %>"
+		total="<%= DLAppServiceUtil.getFileEntriesCount(groupId, folderId) %>"
 	>
 		<liferay-ui:search-container-results
 			results="<%= DLAppServiceUtil.getFileEntries(groupId, folderId, searchContainer.getStart(), searchContainer.getEnd()) %>"
-			total="<%= DLAppServiceUtil.getFileEntriesCount(groupId, folderId) %>"
 		/>
 
 		<liferay-ui:search-container-row

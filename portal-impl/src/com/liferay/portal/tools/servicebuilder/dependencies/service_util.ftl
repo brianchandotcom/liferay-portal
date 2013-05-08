@@ -7,7 +7,12 @@ import com.liferay.portal.service.Invokable${sessionTypeName}Service;
 
 <#if sessionTypeName == "Local">
 /**
- * Provides the local service utility for the ${entity.humanName}. This utility wraps {@link ${packagePath}.service.impl.${entity.name}LocalServiceImpl} and is the primary access point for service operations in application layer code running on the local server. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
+ * Provides the local service utility for ${entity.name}. This utility wraps
+ * {@link ${packagePath}.service.impl.${entity.name}LocalServiceImpl} and is the
+ * primary access point for service operations in application layer code running
+ * on the local server. Methods of this service will not have security checks
+ * based on the propagated JAAS credentials because this service can only be
+ * accessed from within the same VM.
  *
  * @author ${author}
  * @see ${entity.name}LocalService
@@ -17,7 +22,12 @@ import com.liferay.portal.service.Invokable${sessionTypeName}Service;
  */
 <#else>
 /**
- * Provides the remote service utility for the ${entity.humanName}. This utility wraps {@link ${packagePath}.service.impl.${entity.name}ServiceImpl} and is the primary access point for service operations in application layer code running on a remote server. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
+ * Provides the remote service utility for ${entity.name}. This utility wraps
+ * {@link ${packagePath}.service.impl.${entity.name}ServiceImpl} and is the
+ * primary access point for service operations in application layer code running
+ * on a remote server. Methods of this service are expected to have security
+ * checks based on the propagated JAAS credentials because this service can be
+ * accessed remotely.
  *
  * @author ${author}
  * @see ${entity.name}Service

@@ -43,73 +43,70 @@ public class Logger {
 		window.setPosition(new Point(1000, 50));
 		window.setSize(new Dimension(600, 700));
 
-		StringBundler code = new StringBundler();
+		StringBundler sb = new StringBundler();
 
-		code.append("window.name = 'log window';");
-		code.append("window.document.body.innerHTML");
-		code.append(" = '<h3>Webdriver Log</h3><p>';");
+		sb.append("window.name = 'log window';");
+		sb.append("window.document.body.innerHTML");
+		sb.append(" = '<h3>Webdriver Log</h3><p>';");
 
 		JavascriptExecutor javascriptExecutor = (JavascriptExecutor)_webDriver;
 
-		javascriptExecutor.executeScript(code.toString());
+		javascriptExecutor.executeScript(sb.toString());
 	}
 
-	public void errorMessage(String message) {
-		log(message);
-		BaseTestCase.fail(message);
-	}
+	public void logCommand(String command, String[] params) {
+		StringBundler sb = new StringBundler();
 
-	public void errorMessage(String command, String[] params, Exception e) {
-		StringBundler message = new StringBundler();
-
-		message.append("<font color=red>");
-		message.append("Command <b>");
-		message.append(command);
-		message.append("</b> ");
+		sb.append("Running <b>");
+		sb.append(command);
+		sb.append("</b> using parameters(s) ");
 
 		for (String param : params) {
-			message.append("<b>");
-			message.append(param);
-			message.append("</b> ");
+			sb.append("<b>");
+			sb.append(param);
+			sb.append("</b> ");
 		}
 
-		message.append("failed:</font> ");
+		_log(sb.toString());
+	}
 
-		String stackTrace = getExceptionString(e);
+	public void logError(String command, String[] params, Exception e) {
+		StringBundler sb = new StringBundler();
 
-		String s = message.toString();
+		sb.append("<font color=red>");
+		sb.append("Command <b>");
+		sb.append(command);
+		sb.append("</b> ");
 
-		log(s + stackTrace);
+		for (String param : params) {
+			sb.append("<b>");
+			sb.append(param);
+			sb.append("</b> ");
+		}
 
-		String failMessage = s.replaceAll("\\<.*\\>", "");
+		sb.append("failed:</font> ");
+
+		String message = sb.toString();
+
+		_log(message + _getExceptionString(e));
+
+		String failMessage = message.replaceAll("\\<.*\\>", "");
 
 		BaseTestCase.fail(failMessage);
 	}
 
-	public void logCommand(String command, String[] params) {
-		StringBundler message = new StringBundler();
-
-		message.append("Running <b>");
-		message.append(command);
-		message.append("</b> using parameters(s) ");
-
-		for (String param : params) {
-			message.append("<b>");
-			message.append(param);
-			message.append("</b> ");
-		}
-
-		log(message.toString());
+	public void stop() {
+		_webDriver.quit();
 	}
 
-	private String getExceptionString(Exception e) {
-		StringWriter stackTrace = new StringWriter();
+	private String _getExceptionString(Exception e) {
+		StringWriter stringWriter = new StringWriter();
 
-		e.printStackTrace(new PrintWriter(stackTrace));
+		e.printStackTrace(new PrintWriter(stringWriter));
 
-		String s = stackTrace.toString();
+		String stackTrace = stringWriter.toString();
 
-		String[] lines = s.split("\n");
+		String[] lines = stackTrace.split("\n");
 
 		int count = 0;
 
@@ -123,32 +120,37 @@ public class Logger {
 
 		String failure = lines[0];
 
+		StringBundler sb = new StringBundler();
+
+		sb.append(failure);
+
 		String trace = lines[count - 1].substring(3);
 
 		try {
+			String testClass = trace.split("\\(")[1];
+
+			String testName = testClass.split(":")[0];
+
+			sb.append(" - ");
+			sb.append(testName);
+
+			String lineNumber = testClass.split(":")[1];
+
+			lineNumber = lineNumber.replace(")", "");
+			lineNumber = lineNumber.trim();
+
+			sb.append(", line number ");
+			sb.append(lineNumber);
+
 			String packagePath = trace.split("\\(")[0];
 
-			packagePath = packagePath.trim().replace("\n", "");
+			packagePath = packagePath.replace("\n", "");
+			packagePath = packagePath.trim();
 
 			int x = packagePath.lastIndexOf(".");
 
 			packagePath = packagePath.substring(0, x);
 
-			String testClass = trace.split("\\(")[1];
-
-			String lineNum = testClass.split(":")[1];
-
-			lineNum = lineNum.trim().replace(")", "");
-
-			String testName = testClass.split(":")[0];
-
-			StringBundler sb = new StringBundler();
-
-			sb.append(failure);
-			sb.append(" - ");
-			sb.append(testName);
-			sb.append(", line number ");
-			sb.append(lineNum);
 			sb.append(" - ");
 			sb.append(packagePath);
 
@@ -159,27 +161,27 @@ public class Logger {
 		}
 	}
 
-	private void log(String message) {
+	private void _log(String message) {
 		WebDriver.TargetLocator targetLocator = _webDriver.switchTo();
 
 		targetLocator.window("log window");
 
-		JavascriptExecutor javascriptExecutor = (JavascriptExecutor)_webDriver;
-
-		StringBundler code = new StringBundler();
+		StringBundler sb = new StringBundler();
 
 		String formattedMessage = StringEscapeUtils.escapeJava(message);
 
 		formattedMessage = formattedMessage.replace("'", "\\'");
 
-		code.append("window.document.body.innerHTML += '");
-		code.append(formattedMessage);
-		code.append("<br><hr>';");
-		code.append("window.scroll(0, document.body.scrollHeight);");
+		sb.append("window.document.body.innerHTML += '");
+		sb.append(formattedMessage);
+		sb.append("<br /><hr />';");
+		sb.append("window.scroll(0, document.body.scrollHeight);");
 
-		javascriptExecutor.executeScript(code.toString());
+		JavascriptExecutor javascriptExecutor = (JavascriptExecutor)_webDriver;
+
+		javascriptExecutor.executeScript(sb.toString());
 	}
 
-	private static WebDriver _webDriver;
+	private WebDriver _webDriver;
 
 }

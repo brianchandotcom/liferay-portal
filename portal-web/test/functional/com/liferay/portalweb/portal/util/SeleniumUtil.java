@@ -16,12 +16,12 @@ package com.liferay.portalweb.portal.util;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portalweb.portal.util.liferayselenium.BaseWebDriverLogging;
 import com.liferay.portalweb.portal.util.liferayselenium.ChromeWebDriverImpl;
 import com.liferay.portalweb.portal.util.liferayselenium.DefaultSeleniumImpl;
 import com.liferay.portalweb.portal.util.liferayselenium.FirefoxWebDriverImpl;
 import com.liferay.portalweb.portal.util.liferayselenium.InternetExplorerWebDriverImpl;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
+import com.liferay.portalweb.portal.util.liferayselenium.LoggerImpl;
 
 import com.thoughtworks.selenium.Selenium;
 
@@ -75,29 +75,38 @@ public class SeleniumUtil extends TestPropsValues {
 			0, absolutePath.length() - 1);
 
 		if (SELENIUM_IMPLEMENTATION.equals(Selenium.class.getName())) {
-			_selenium = new DefaultSeleniumImpl(projectDir, PORTAL_URL);
+			DefaultSeleniumImpl defaultSelenium = new DefaultSeleniumImpl(
+				projectDir, PORTAL_URL);
 
 			Class<?> clazz = getClass();
 
-			_selenium.setContext(clazz.getName());
+			defaultSelenium.setContext(clazz.getName());
+
+			_selenium = new LoggerImpl(defaultSelenium);
 		}
 		else if (SELENIUM_IMPLEMENTATION.equals(WebDriver.class.getName())) {
 			if (BROWSER_TYPE.equals("*chrome") ||
 				BROWSER_TYPE.equals("*firefox")) {
 
-				FirefoxWebDriverImpl firefoxDriver = new FirefoxWebDriverImpl(
-					projectDir, PORTAL_URL);
+				FirefoxWebDriverImpl firefoxWebDriver =
+					new FirefoxWebDriverImpl(projectDir, PORTAL_URL);
 
-				_selenium = new BaseWebDriverLogging(firefoxDriver);
+				_selenium = new LoggerImpl(firefoxWebDriver);
 			}
 			else if (BROWSER_TYPE.equals("*googlechrome")) {
-				_selenium = new ChromeWebDriverImpl(projectDir, PORTAL_URL);
+				ChromeWebDriverImpl chromeWebDriver = new ChromeWebDriverImpl(
+					projectDir, PORTAL_URL);
+
+				_selenium = new LoggerImpl(chromeWebDriver);
+
 			}
 			else if (BROWSER_TYPE.equals("*iehta") ||
 					 BROWSER_TYPE.equals("*iexplore")) {
 
-				_selenium = new InternetExplorerWebDriverImpl(
-					projectDir, PORTAL_URL);
+				InternetExplorerWebDriverImpl internetExplorerWebDriver =
+					new InternetExplorerWebDriverImpl(projectDir, PORTAL_URL);
+
+				_selenium = new LoggerImpl(internetExplorerWebDriver);
 			}
 			else {
 				throw new RuntimeException(

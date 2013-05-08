@@ -66,7 +66,7 @@ public class BlogsEntryStagedModelDataHandler
 
 			if (Validator.isNotNull(entry.getSmallImageURL())) {
 				String smallImageURL = ExportImportUtil.exportContentReferences(
-					portletDataContext, entryElement,
+					portletDataContext, entry, entryElement,
 					entry.getSmallImageURL().concat(StringPool.SPACE));
 
 				entry.setSmallImageURL(smallImageURL);
@@ -86,7 +86,7 @@ public class BlogsEntryStagedModelDataHandler
 		}
 
 		String content = ExportImportUtil.exportContentReferences(
-			portletDataContext, entryElement, entry.getContent());
+			portletDataContext, entry, entryElement, entry.getContent());
 
 		entry.setContent(content);
 

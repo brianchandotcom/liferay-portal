@@ -958,25 +958,6 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component name="Tool" dynamicAttributes="false" parentClass="javax.servlet.jsp.tagext.TagSupport" writeJSP="false">
-		<attributes>
-			<attribute>
-				<name>handler</name>
-				<inputType>java.lang.String</inputType>
-				<outputType>java.lang.String</outputType>
-			</attribute>
-			<attribute>
-				<name>icon</name>
-				<inputType>java.lang.String</inputType>
-				<outputType>java.lang.String</outputType>
-			</attribute>
-			<attribute>
-				<name>id</name>
-				<inputType>java.lang.String</inputType>
-				<outputType>java.lang.String</outputType>
-			</attribute>
-		</attributes>
-	</component>
 	<component name="TranslationManager" dynamicAttributes="false">
 		<attributes>
 			<attribute>

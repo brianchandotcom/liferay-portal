@@ -81,7 +81,6 @@ AUI.add(
 		 * OPTIONS
 		 *
 		 * Required
-		 * allowedFileTypes {string}: A comma-separated list of allowable filetypes.
 		 * container {string|object}: The container where the uploader will be placed.
 		 * deleteFile {string}: The URL that will handle the deleting of the pending files.
 		 * maxFileSize {number}: The maximum file size that can be uploaded.
@@ -98,9 +97,6 @@ AUI.add(
 		var Upload = A.Component.create(
 			{
 				ATTRS: {
-					allowedFileTypes: {
-						value: STR_BLANK
-					},
 					deleteFile: {
 						value: ''
 					},
@@ -136,8 +132,6 @@ AUI.add(
 							deleteFileText: Liferay.Language.get('delete-file'),
 							dropFilesText: Liferay.Language.get('drop-files-here-to-upload'),
 							dropFileText: Liferay.Language.get('drop-file-here-to-upload'),
-							duplicatedFileNameText: Liferay.Language.get('please-enter-a-unique-document-name'),
-							invalidFileExtensionText: Liferay.Language.get('document-names-must-end-with-one-of-the-following-extensions'),
 							invalidFileNameText: Liferay.Language.get('please-enter-a-file-with-a-valid-file-name'),
 							invalidFileSizeText: Liferay.Language.get('please-enter-a-file-with-a-valid-file-size-no-larger-than-x'),
 							fileCanNotBeSavedText: Liferay.Language.get('the-file-can-not-be-saved'),
@@ -198,18 +192,9 @@ AUI.add(
 							);
 						}
 						else {
-							var allowedFileTypes = instance.get('allowedFileTypes');
-
 							var maxFileSizeKB = Math.floor(instance.get('maxFileSize') / 1024);
 
 							instance._invalidFileSizeText = Lang.sub(strings.invalidFileSizeText, [maxFileSizeKB]);
-
-							instance._errorMessages = {
-								'490': strings.duplicatedFileNameText,
-								'491': strings.invalidFileExtensionText + ' ' + allowedFileTypes,
-								'492': strings.invalidFileNameText,
-								'493': instance._invalidFileSizeText
-							};
 
 							instance._metadataContainer = instance.get('metadataContainer');
 							instance._metadataExplanationContainer = instance.get('metadataExplanationContainer');
@@ -569,6 +554,8 @@ AUI.add(
 					_onCancelFileClick: function(currentTarget) {
 						var instance = this;
 
+						var strings = instance.get(STRINGS);
+
 						var uploader = instance._uploader;
 
 						var queue = uploader.queue;
@@ -704,21 +691,24 @@ AUI.add(
 					_onUploadComplete: function(event) {
 						var instance = this;
 
+						var strings = instance.get(STRINGS);
+
 						var file = event.file;
 
 						var fileId = file.id;
 
 						var li = A.one('#' + fileId);
 
-						var data = Lang.trim(String(event.data));
+						var data = event.data;
 
-						if (data.indexOf('49') === 0) {
-							if (data.indexOf('.') != -1) {
-								file.error = data.substring(data.indexOf('.') + 1);
-							}
-							else {
-								file.error = instance._errorMessages[data] || strings.unexpectedErrorOnUploadText;
-							}
+						try {
+							data = A.JSON.parse(data);
+						}
+						catch (err) {
+						}
+
+						if (data.status && (data.status >= 490 && data.status < 500)) {
+							file.error = data.message || strings.unexpectedErrorOnUploadText;
 
 							var newLi = instance._fileListTPL.parse([file]);
 

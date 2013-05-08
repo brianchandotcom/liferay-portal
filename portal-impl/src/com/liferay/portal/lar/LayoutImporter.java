@@ -356,7 +356,6 @@ public class LayoutImporter {
 			portletDataContext, rootElement, headerElement, layoutsElement,
 			layoutElements);
 
-
 		// Company group id
 
 		long sourceCompanyGroupId = GetterUtil.getLong(

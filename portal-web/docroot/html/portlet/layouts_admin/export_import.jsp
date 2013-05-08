@@ -127,7 +127,6 @@ String[] uploadedFiles = LayoutServiceUtil.getTempFileEntryNames(groupId, Import
 						<aui:script use="liferay-upload">
 							var liferayUpload = new Liferay.Upload(
 								{
-									allowedFileTypes: '.lar',
 									boundingBox: '#<portlet:namespace />fileUpload',
 									deleteFile: '<liferay-portlet:actionURL doAsUserId="<%= user.getUserId() %>"><portlet:param name="struts_action" value="/layouts_admin/import_layouts" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE_TEMP %>" /></liferay-portlet:actionURL>&ticketKey=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= Group.class.getName() %>" />',
 									fileDescription: '<%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA)) %>',

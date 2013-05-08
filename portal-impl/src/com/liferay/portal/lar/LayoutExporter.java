@@ -428,6 +428,12 @@ public class LayoutExporter {
 			}
 		}
 
+		Element missingReferencesElement = rootElement.addElement(
+			"missing-references");
+
+		portletDataContext.setMissingReferencesElement(
+			missingReferencesElement);
+
 		Element layoutsElement = rootElement.addElement("layouts");
 
 		String layoutSetPrototypeUuid = layoutSet.getLayoutSetPrototypeUuid();

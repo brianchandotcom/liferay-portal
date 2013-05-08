@@ -296,6 +296,12 @@ public class PortletImporter {
 			Document document = SAXReaderUtil.read(xml);
 
 			rootElement = document.getRootElement();
+
+			Element missingReferencesElement = rootElement.element(
+				"missing-references");
+
+			portletDataContext.setMissingReferencesElement(
+				missingReferencesElement);
 		}
 		catch (Exception e) {
 			throw new LARFileException("Unable to read /manifest.xml");

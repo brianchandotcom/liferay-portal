@@ -136,20 +136,20 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 </c:if>
 
 <div class="view">
-	<aui:layout>
-		<aui:column columnWidth="<%= 65 %>" cssClass="lfr-asset-column-details" first="<%= true %>">
+	<aui:row>
+		<aui:col cssClass="lfr-asset-column-details" width="<%= 70 %>">
 			<c:if test="<%= showActions %>">
 				<liferay-ui:app-view-toolbar>
 					<aui:button-row cssClass="edit-toolbar" id='<%= renderResponse.getNamespace() + "fileEntryToolbar" %>' />
 				</liferay-ui:app-view-toolbar>
 			</c:if>
 
-			<div class="portlet-msg-error aui-helper-hidden" id="<portlet:namespace />openMSOfficeError"></div>
+			<div class="alert alert-error hide" id="<portlet:namespace />openMSOfficeError"></div>
 
 			<c:if test="<%= (fileEntry.getLock() != null) && DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) %>">
 				<c:choose>
 					<c:when test="<%= fileEntry.hasLock() %>">
-						<div class="portlet-msg-lock portlet-msg-success">
+						<div class="alert alert-success">
 							<c:choose>
 								<c:when test="<%= lock.isNeverExpires() %>">
 									<liferay-ui:message key="you-now-have-an-indefinite-lock-on-this-document" />
@@ -166,7 +166,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 						</div>
 					</c:when>
 					<c:otherwise>
-						<div class="portlet-msg-error">
+						<div class="alert alert-error">
 							<%= LanguageUtil.format(pageContext, "you-cannot-modify-this-document-because-it-was-locked-by-x-on-x", new Object[] {HtmlUtil.escape(PortalUtil.getUserName(lock.getUserId(), String.valueOf(lock.getUserId()))), dateFormatDateTime.format(lock.getCreateDate())}, false) %>
 						</div>
 					</c:otherwise>
@@ -338,7 +338,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 						<c:choose>
 							<c:when test="<%= previewFileCount == 0 %>">
 								<c:if test="<%= AudioProcessorUtil.isAudioSupported(fileVersion) || ImageProcessorUtil.isImageSupported(fileVersion) || PDFProcessorUtil.isDocumentSupported(fileVersion) || VideoProcessorUtil.isVideoSupported(fileVersion) %>">
-									<div class="portlet-msg-info">
+									<div class="alert alert-info">
 										<liferay-ui:message key="generating-preview-will-take-a-few-minutes" />
 									</div>
 								</c:if>
@@ -381,7 +381,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 													<div class="lfr-preview-file-image-container">
 														<img class="lfr-preview-file-image-current" id="<portlet:namespace />previewFileImage" src="<%= previewFileURL + "1" %>" />
 													</div>
-													<span class="lfr-preview-file-actions aui-helper-hidden" id="<portlet:namespace />previewFileActions">
+													<span class="lfr-preview-file-actions hide" id="<portlet:namespace />previewFileActions">
 														<span class="lfr-preview-file-toolbar" id="<portlet:namespace />previewToolbar"></span>
 
 														<span class="lfr-preview-file-info">
@@ -396,7 +396,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 											</div>
 										</div>
 
-										<aui:script use="aui-base,liferay-preview">
+										<aui:script use="liferay-preview">
 											new Liferay.Preview(
 												{
 													actionContent: '#<portlet:namespace />previewFileActions',
@@ -437,9 +437,9 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 					</liferay-ui:panel>
 				</c:if>
 			</div>
-		</aui:column>
+		</aui:col>
 
-		<aui:column columnWidth="<%= 35 %>" cssClass="lfr-asset-column-details context-pane" last="<%= true %>">
+		<aui:col cssClass="lfr-asset-column-details context-pane" last="<%= true %>" width="<%= 30 %>">
 			<c:if test="<%= showActions %>">
 				<liferay-ui:app-view-toolbar>
 					<aui:button-row cssClass="edit-toolbar" id='<%= renderResponse.getNamespace() + "fileEntryToolbar" %>' />
@@ -516,7 +516,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 							</c:choose>
 						</span>
 
-						<div class="lfr-asset-field url-file-container aui-helper-hidden">
+						<div class="lfr-asset-field url-file-container hide">
 							<aui:field-wrapper name="url">
 								<liferay-ui:input-resource
 									id="url"
@@ -526,7 +526,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 						</div>
 
 						<c:if test="<%= portletDisplay.isWebDAVEnabled() && fileEntry.isSupportsSocial() %>">
-							<div class="lfr-asset-field webdav-url-file-container aui-helper-hidden">
+							<div class="lfr-asset-field webdav-url-file-container hide">
 
 								<%
 								String webDavHelpMessage = null;
@@ -755,8 +755,8 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 					</liferay-ui:panel-container>
 				</div>
 			</div>
-		</aui:column>
-	</aui:layout>
+		</aui:col>
+	</aui:row>
 </div>
 
 <aui:script>
@@ -847,7 +847,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 			function(event) {
 				var URLFileContainer = A.one('.url-file-container');
 
-				URLFileContainer.toggleClass('aui-helper-hidden');
+				URLFileContainer.toggleClass('hide');
 			}
 		);
 	}
@@ -858,7 +858,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 			function(event) {
 				var WebDavFileContainer = A.one('.webdav-url-file-container');
 
-				WebDavFileContainer.toggleClass('aui-helper-hidden');
+				WebDavFileContainer.toggleClass('hide');
 			}
 		);
 	}
@@ -866,16 +866,18 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 	<c:if test="<%= showActions %>">
 		var buttonRow = A.one('#<portlet:namespace />fileEntryToolbar');
 
-		var fileEntryToolbarChildren = [];
+		var fileEntryButtonGroup = [];
 
 		<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) %>">
-			fileEntryToolbarChildren.push(
+			fileEntryButtonGroup.push(
 				{
-					handler: function(event) {
-						location.href = '<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>';
-					},
-					icon: 'download',
-					label: '<%= UnicodeLanguageUtil.get(pageContext, "download") %>'
+					icon: 'icon-download',
+					label: '<%= UnicodeLanguageUtil.get(pageContext, "download") %>',
+					on: {
+						click: function(event) {
+							location.href = '<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>';
+						}
+					}
 				}
 			);
 
@@ -883,13 +885,14 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 			if (DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) && DLUtil.isOfficeExtension(extension) && portletDisplay.isWebDAVEnabled() && BrowserSnifferUtil.isIeOnWin32(request)) {
 			%>
 
-				fileEntryToolbarChildren.push(
+				fileEntryButtonGroup.push(
 					{
-						handler: function(event) {
-							<portlet:namespace />openDocument('<%= DLUtil.getWebDavURL(themeDisplay, fileEntry.getFolder(), fileEntry, PropsValues.DL_FILE_ENTRY_OPEN_IN_MS_OFFICE_MANUAL_CHECK_IN_REQUIRED) %>');
-						},
-						icon: 'msoffice',
-						label: '<%= UnicodeLanguageUtil.get(pageContext, "open-in-ms-office") %>'
+						label: '<%= UnicodeLanguageUtil.get(pageContext, "open-in-ms-office") %>',
+						on: {
+							click: function(event) {
+								<portlet:namespace />openDocument('<%= DLUtil.getWebDavURL(themeDisplay, fileEntry.getFolder(), fileEntry, PropsValues.DL_FILE_ENTRY_OPEN_IN_MS_OFFICE_MANUAL_CHECK_IN_REQUIRED) %>');
+							}
+						}
 					}
 				);
 
@@ -900,7 +903,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 		</c:if>
 
 		<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) && (!fileEntry.isCheckedOut() || fileEntry.hasLock()) %>">
-			fileEntryToolbarChildren.push(
+			fileEntryButtonGroup.push(
 				{
 
 					<portlet:renderURL var="editURL">
@@ -909,11 +912,13 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 						<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
 					</portlet:renderURL>
 
-					handler: function(event) {
-						location.href = '<%= editURL.toString() %>';
-					},
-					icon: 'edit',
-					label: '<%= UnicodeLanguageUtil.get(pageContext, "edit") %>'
+					icon: 'icon-pencil',
+					label: '<%= UnicodeLanguageUtil.get(pageContext, "edit") %>',
+					on: {
+						click: function(event) {
+							location.href = '<%= editURL.toString() %>';
+						}
+					}
 				},
 				{
 
@@ -923,54 +928,62 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 						<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
 					</portlet:renderURL>
 
-					handler: function(event) {
-						location.href = '<%= moveURL.toString() %>';
-					},
-					icon: 'move',
-					label: '<%= UnicodeLanguageUtil.get(pageContext, "move") %>'
+					icon: 'icon-move',
+					label: '<%= UnicodeLanguageUtil.get(pageContext, "move") %>',
+					on: {
+						click: function(event) {
+							location.href = '<%= moveURL.toString() %>';
+						}
+					}
 				}
 			);
 
 			<c:if test="<%= !fileEntry.isCheckedOut() %>">
-				fileEntryToolbarChildren.push(
+				fileEntryButtonGroup.push(
 					{
 
-						handler: function(event) {
-							document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.CHECKOUT %>';
-							submitForm(document.<portlet:namespace />fm);
-						},
-						icon: 'lock',
-						label: '<%= UnicodeLanguageUtil.get(pageContext, "checkout[document]") %>'
+						icon: 'icon-lock',
+						label: '<%= UnicodeLanguageUtil.get(pageContext, "checkout[document]") %>',
+						on: {
+							click: function(event) {
+								document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.CHECKOUT %>';
+								submitForm(document.<portlet:namespace />fm);
+							}
+						}
 					}
 				);
 			</c:if>
 
 			<c:if test="<%= fileEntry.isCheckedOut() && fileEntry.hasLock() %>">
-				fileEntryToolbarChildren.push(
+				fileEntryButtonGroup.push(
 					{
 
-						handler: function(event) {
-							document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.CANCEL_CHECKOUT %>';
-							submitForm(document.<portlet:namespace />fm);
-						},
-						icon: 'undo',
-						label: '<%= UnicodeLanguageUtil.get(pageContext, "cancel-checkout[document]") %>'
+						icon: 'icon-undo',
+						label: '<%= UnicodeLanguageUtil.get(pageContext, "cancel-checkout[document]") %>',
+						on: {
+							click: function(event) {
+								document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.CANCEL_CHECKOUT %>';
+								submitForm(document.<portlet:namespace />fm);
+							}
+						}
 					},
 					{
 
-						handler: function(event) {
-							document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.CHECKIN %>';
-							submitForm(document.<portlet:namespace />fm);
-						},
-						icon: 'unlock',
-						label: '<%= UnicodeLanguageUtil.get(pageContext, "checkin") %>'
+						icon: 'icon-unlock',
+						label: '<%= UnicodeLanguageUtil.get(pageContext, "checkin") %>',
+						on: {
+							click: function(event) {
+								document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.CHECKIN %>';
+								submitForm(document.<portlet:namespace />fm);
+							}
+						}
 					}
 				);
 			</c:if>
 		</c:if>
 
 		<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.PERMISSIONS) %>">
-			fileEntryToolbarChildren.push(
+			fileEntryButtonGroup.push(
 				{
 					<liferay-security:permissionsURL
 						modelResource="<%= DLFileEntryConstants.getClassName() %>"
@@ -979,60 +992,65 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 						var="permissionsURL"
 					/>
 
-					handler: function(event) {
-						location.href = '<%= permissionsURL.toString() %>';
-					},
-					icon: 'permissions',
-					label: '<%= UnicodeLanguageUtil.get(pageContext, "permissions") %>'
+					icon: 'icon-permissions',
+					label: '<%= UnicodeLanguageUtil.get(pageContext, "permissions") %>',
+					on: {
+						click: function(event) {
+							location.href = '<%= permissionsURL.toString() %>';
+						}
+					}
 				}
 			);
 		</c:if>
 
 		<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) && (fileEntry.getModel() instanceof DLFileEntry) && TrashUtil.isTrashEnabled(scopeGroupId) %>">
-			fileEntryToolbarChildren.push(
+			fileEntryButtonGroup.push(
 				{
 					<portlet:renderURL var="viewFolderURL">
 						<portlet:param name="struts_action" value="/document_library/view" />
 						<portlet:param name="folderId" value="<%= String.valueOf(fileEntry.getFolderId()) %>" />
 					</portlet:renderURL>
 
-					handler: function(event) {
-						document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.MOVE_TO_TRASH %>';
-						document.<portlet:namespace />fm.<portlet:namespace />redirect.value = '<%= viewFolderURL.toString() %>';
-						submitForm(document.<portlet:namespace />fm);
-					},
-					icon: 'trash',
-					label: '<%= UnicodeLanguageUtil.get(pageContext, "move-to-the-recycle-bin") %>'
+					icon: 'icon-trash',
+					label: '<%= UnicodeLanguageUtil.get(pageContext, "move-to-the-recycle-bin") %>',
+					on: {
+						click: function(event) {
+							document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.MOVE_TO_TRASH %>';
+							document.<portlet:namespace />fm.<portlet:namespace />redirect.value = '<%= viewFolderURL.toString() %>';
+							submitForm(document.<portlet:namespace />fm);
+						}
+					}
 				}
 			);
 		</c:if>
 
 		<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) && (!(fileEntry.getModel() instanceof DLFileEntry) || !TrashUtil.isTrashEnabled(scopeGroupId)) %>">
-			fileEntryToolbarChildren.push(
+			fileEntryButtonGroup.push(
 				{
 					<portlet:renderURL var="viewFolderURL">
 						<portlet:param name="struts_action" value="/document_library/view" />
 						<portlet:param name="folderId" value="<%= String.valueOf(fileEntry.getFolderId()) %>" />
 					</portlet:renderURL>
 
-					handler: function(event) {
-						if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-this") %>')) {
-							document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.DELETE %>';
-							document.<portlet:namespace />fm.<portlet:namespace />redirect.value = '<%= viewFolderURL.toString() %>';
-							submitForm(document.<portlet:namespace />fm);
+					icon: 'icon-delete',
+					label: '<%= UnicodeLanguageUtil.get(pageContext, "delete") %>',
+					on: {
+						click: function(event) {
+							if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-this") %>')) {
+								document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.DELETE %>';
+								document.<portlet:namespace />fm.<portlet:namespace />redirect.value = '<%= viewFolderURL.toString() %>';
+								submitForm(document.<portlet:namespace />fm);
+							}
 						}
-					},
-					icon: 'delete',
-					label: '<%= UnicodeLanguageUtil.get(pageContext, "delete") %>'
+					}
 				}
 			);
 		</c:if>
 
 		var fileEntryToolbar = new A.Toolbar(
 			{
-				activeState: false,
 				boundingBox: buttonRow,
-				children: fileEntryToolbarChildren
+				children: [fileEntryButtonGroup]
 			}
 		).render();
 

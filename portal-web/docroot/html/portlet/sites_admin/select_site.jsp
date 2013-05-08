@@ -53,6 +53,19 @@ portletURL.setParameter("target", target);
 			page="/html/portlet/users_admin/group_search.jsp"
 		/>
 
+		<div>
+			<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_COMMUNITY) %>">
+				<aui:button onClick='<%= renderResponse.getNamespace() + "addGroup();" %>' value="add-site" />
+			</c:if>
+		</div>
+
+		<aui:script>
+			function <portlet:namespace />addGroup() {
+				document.<portlet:namespace />fm.method = 'post';
+				submitForm(document.<portlet:namespace />fm, '<portlet:renderURL><portlet:param name="struts_action" value="/sites_admin/edit_site" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>');
+			}
+		</aui:script>
+
 		<%
 		GroupSearchTerms searchTerms = (GroupSearchTerms)searchContainer.getSearchTerms();
 
@@ -188,8 +201,8 @@ portletURL.setParameter("target", target);
 
 			Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', result);
 
-			Util.getWindow().close();
+			Util.getWindow().hide();
 		},
-		'.selector-button input'
+		'.selector-button'
 	);
 </aui:script>

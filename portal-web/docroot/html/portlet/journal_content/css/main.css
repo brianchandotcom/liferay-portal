@@ -20,7 +20,7 @@
 		margin-top: 1em;
 	}
 
-	.aui-tabview-list {
+	.tabview-list {
 		margin: 18px 0;
 	}
 
@@ -56,11 +56,11 @@
 			zoom: 1;
 		}
 
-		.icon-actions {
+		.lfr-icon-actions {
 			@include opacity(0.2);
 		}
 
-		&:hover .icon-actions {
+		&:hover .lfr-icon-actions {
 			@include opacity(1);
 		}
 	}
@@ -72,7 +72,7 @@
 			height: 1%;
 		}
 
-		.icon-actions {
+		.lfr-icon-actions {
 			@include opacity(0.9);
 		}
 	}

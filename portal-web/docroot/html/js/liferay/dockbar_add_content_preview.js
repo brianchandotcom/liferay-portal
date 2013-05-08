@@ -50,7 +50,7 @@ AUI.add(
 
 				tooltip.set(BODY_CONTENT, event.currentTarget.get('responseData'));
 
-				tooltip.get(STR_BOUNDING_BOX).one('.add-button-preview input').on('click', instance._addApplication, instance);
+				tooltip.get(STR_BOUNDING_BOX).one('.add-button-preview').on('click', instance._addApplication, instance);
 			},
 
 			_createToolTip: function() {
@@ -171,6 +171,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-tooltip', 'event-mouseenter', 'liferay-dockbar']
+		requires: ['aui-io-request', 'aui-tooltip-deprecated', 'event-mouseenter']
 	}
 );

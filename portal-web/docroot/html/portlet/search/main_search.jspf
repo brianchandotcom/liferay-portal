@@ -61,9 +61,9 @@ request.setAttribute("search.jsp-queryTerms", queryTerms);
 boolean showMenu = advancedConfiguration || displayScopeFacet || displayAssetTypeFacet || displayAssetTagsFacet || displayAssetCategoriesFacet || displayFolderFacet || displayUserFacet || displayModifiedRangeFacet;
 %>
 
-<aui:layout cssClass='<%= "search-layout" + (showMenu ? " menu-column" : StringPool.BLANK) %>'>
+<aui:row cssClass='<%= "search-layout" + (showMenu ? " menu-column" : StringPool.BLANK) %>'>
 	<c:if test="<%= showMenu %>">
-		<aui:column cssClass="menu" first="<%= true %>" id="facetNavigation">
+		<aui:col cssClass="menu" id="facetNavigation">
 
 			<%
 			Map<String, Facet> facets = searchContext.getFacets();
@@ -129,10 +129,10 @@ boolean showMenu = advancedConfiguration || displayScopeFacet || displayAssetTyp
 					);
 				}
 			</aui:script>
-		</aui:column>
+		</aui:col>
 	</c:if>
 
-	<aui:column cssClass="result" first="<%= !showMenu %>" last="<%= showMenu %>">
+	<aui:col cssClass="result" first="<%= !showMenu %>">
 		<liferay-ui:search-container
 			searchContainer="<%= mainSearchSearchContainer %>"
 		>
@@ -175,5 +175,5 @@ boolean showMenu = advancedConfiguration || displayScopeFacet || displayAssetTyp
 				</table>
 			</c:if>
 		</liferay-ui:search-container>
-	</aui:column>
-</aui:layout>
+	</aui:col>
+</aui:row>

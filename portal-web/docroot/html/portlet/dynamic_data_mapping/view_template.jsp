@@ -61,12 +61,6 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, controlPanel, locale)
 	title="<%= title %>"
 />
 
-<liferay-util:include page="/html/portlet/dynamic_data_mapping/template_toolbar.jsp">
-	<liferay-util:param name="redirect" value="<%= currentURL %>" />
-	<liferay-util:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
-	<liferay-util:param name="classPK" value="<%= String.valueOf(classPK) %>" />
-</liferay-util:include>
-
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
@@ -95,9 +89,12 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, controlPanel, locale)
 		rowChecker="<%= new RowChecker(renderResponse) %>"
 		searchContainer="<%= new TemplateSearch(renderRequest, portletURL) %>"
 	>
-		<liferay-ui:search-form
-			page="/html/portlet/dynamic_data_mapping/template_search.jsp"
-		/>
+
+		<liferay-util:include page="/html/portlet/dynamic_data_mapping/template_toolbar.jsp">
+			<liferay-util:param name="redirect" value="<%= currentURL %>" />
+			<liferay-util:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
+			<liferay-util:param name="classPK" value="<%= String.valueOf(classPK) %>" />
+		</liferay-util:include>
 
 		<liferay-ui:search-container-results>
 			<%@ include file="/html/portlet/dynamic_data_mapping/template_search_results.jspf" %>
@@ -236,11 +233,6 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, controlPanel, locale)
 	function <portlet:namespace />copyTemplate(uri) {
 		Liferay.Util.openWindow(
 			{
-				dialog: {
-					align: Liferay.Util.Window.ALIGN_CENTER,
-					constrain: true,
-					width: 600
-				},
 				id: '<portlet:namespace />copyTemplate',
 				refreshWindow: window,
 				title: '<%= UnicodeLanguageUtil.get(pageContext, "copy-template") %>',
@@ -271,7 +263,7 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, controlPanel, locale)
 	if (buttons.size()) {
 		var toggleDisabled = A.bind('toggleDisabled', Liferay.Util, ':button');
 
-		var resultsGrid = A.one('.results-grid');
+		var resultsGrid = A.one('.searchcontainer-content');
 
 		if (resultsGrid) {
 			resultsGrid.delegate(

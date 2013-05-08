@@ -2,11 +2,11 @@
 	.available-languages {
 		margin-top: 1em;
 
-		.aui-fieldset-legend {
+		.fieldset-legend {
 			font-size: 100%;
 		}
 
-		.aui-legend {
+		.legend {
 			border-bottom-width: 0;
 		}
 

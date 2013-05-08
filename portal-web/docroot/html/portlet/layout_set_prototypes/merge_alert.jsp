@@ -51,7 +51,7 @@ int mergeFailCount = SitesUtil.getMergeFailCount(layoutSetPrototype);
 	}
 	%>
 
-	<span class="portlet-msg-alert">
+	<span class="alert alert-block">
 		<liferay-ui:message arguments='<%= new Object[] {mergeFailCount, "site-template"} %>' key="the-propagation-of-changes-from-the-x-has-been-disabled-temporarily-after-x-errors" />
 
 		<liferay-ui:message arguments="site-template" key='<%= merge ? "click-reset-and-propagate-to-reset-the-failure-count-and-propagate-changes-from-the-x" : "click-reset-to-reset-the-failure-count-and-reenable-propagation" %>' />

@@ -55,12 +55,12 @@ for (int i = 0; i < activityCounters.size(); i++) {
 Format format = FastDateFormatFactoryUtil.getSimpleDateFormat("MMM d");
 %>
 
-<aui:layout>
-	<aui:column columnWidth="<%= chartWidth %>" cssClass="chart-column" first="<%= true %>">
+<aui:row>
+	<aui:col cssClass="chart-column" width="<%= chartWidth %>">
 		<div class="group-statistics-chart" id="groupStatisticsChart<%= displayActivityCounterNameIndex %>" style="height: <%= displayHeight - 2 %>px;"></div>
-	</aui:column>
+	</aui:col>
 
-	<aui:column columnWidth="<%= 100 - chartWidth %>" cssClass="info-column">
+	<aui:col cssClass="info-column" width="<%= 100 - chartWidth %>">
 		<div class="group-statistics-info">
 			<liferay-ui:message key="current-value" />: <%= currentValue %><br />
 
@@ -98,8 +98,8 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat("MMM d");
 
 			(<%= lowestActivityCounter.getCurrentValue() %>)<br />
 		</div>
-	</aui:column>
-</aui:layout>
+	</aui:col>
+</aui:row>
 
 <aui:script use="charts">
 	var categories = [<%= StringUtil.merge(categories) %>];

@@ -48,12 +48,12 @@ catch (NoSuchArticleException nsae) {
 
 	<liferay-ui:error exception="<%= NoSuchArticleException.class %>" message="the-web-content-could-not-be-found" />
 
-	<div class="portlet-msg-info">
-		<span class="displaying-help-message-holder <%= article == null ? StringPool.BLANK : "aui-helper-hidden" %>">
+	<div class="alert alert-info">
+		<span class="displaying-help-message-holder <%= article == null ? StringPool.BLANK : "hide" %>">
 			<liferay-ui:message key="please-select-a-web-content-from-the-list-below" />
 		</span>
 
-		<span class="displaying-article-id-holder <%= article == null ? "aui-helper-hidden" : StringPool.BLANK %>">
+		<span class="displaying-article-id-holder <%= article == null ? "hide" : StringPool.BLANK %>">
 			<liferay-ui:message key="displaying-content" />: <span class="displaying-article-id"><%= article != null ? article.getTitle(locale) : StringPool.BLANK %></span>
 		</span>
 	</div>
@@ -241,7 +241,7 @@ catch (NoSuchArticleException nsae) {
 	<aui:input name="preferences--articleId--" type="hidden" value="<%= articleId %>" />
 	<aui:input name="preferences--ddmTemplateKey--" type="hidden" value="<%= ddmTemplateKey %>" />
 
-	<aui:fieldset cssClass="aui-helper-hidden">
+	<aui:fieldset cssClass="hide">
 		<aui:field-wrapper label="portlet-id">
 			<%= portletResource %>
 		</aui:field-wrapper>

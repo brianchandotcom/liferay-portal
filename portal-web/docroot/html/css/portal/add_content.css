@@ -1,7 +1,7 @@
 @import "compass";
 
 .lfr-content-preview-popup {
-	&.aui-tooltip {
+	&.tooltip {
 		max-width: 250px;
 	}
 
@@ -53,7 +53,7 @@
 	top: 0;
 	width: 330px;
 
-	.aui-tabview-list {
+	.tabview-list {
 		margin: 5px;
 		padding-left: 5px;
 	}
@@ -86,12 +86,6 @@
 				padding: 7px 6px 6px 2em;
 			}
 		}
-
-		.search-panel .add-content-search .aui-field-input {
-			@include box-sizing(border-box);
-
-			width: 100%;
-		}
 	}
 
 	.close-add-panel {
@@ -121,7 +115,7 @@
 		.add-content-item {
 			cursor: pointer;
 			display: none;
-			padding: 7px 5px;
+			padding: 5px 10px;
 			position: absolute;
 			right: 0;
 			z-index: 1;
@@ -142,15 +136,6 @@
 		padding: 5px;
 		overflow: hidden;
 		white-space: nowrap;
-
-		.add-content-search .aui-field-input {
-			padding-left: 25px;
-			width: 150px;
-		}
-
-		.aui-field-content, .aui-field-element {
-			display: inherit;
-		}
 
 		.buttons {
 			float: left;
@@ -178,7 +163,12 @@
 	}
 
 	.add-content-tab .search-panel .add-content-search {
+		background-image: url(@theme_image_path@/common/search.png);
+		background-position: 5px center;
+		background-repeat: no-repeat;
 		float: left;
+		padding-left: 25px;
+		width: 160px;
 	}
 
 	.lfr-panel.lfr-extended {
@@ -321,7 +311,9 @@
 	.add-application-tab {
 		.lfr-add-content {
 			.lfr-content-category {
-				background: url(@theme_image_path@/common/shadow_top_bg.png) repeat-x 0 0;
+				.accordion-inner {
+					padding-right: 0;
+				}
 
 				.lfr-portlet-item {
 					background-position: 3px 50%;
@@ -354,6 +346,13 @@
 					}
 				}
 
+				.content-item {
+					&:hover, &.over {
+						background-color: #EBF0F5;
+						text-decoration: underline;
+					}
+				}
+
 				.lfr-portlet-used {
 					color: #999;
 				}
@@ -379,14 +378,25 @@
 	.search-panel {
 		background: #D3DBE4 url(@theme_image_path@/common/shadow_bottom_bg.png) repeat-x 0 100%;
 
-		.add-content-search .aui-field-input {
-			background-image: url(@theme_image_path@/common/search.png);
-			background-position: 5px 50%;
-			background-repeat: no-repeat;
+		.control-group {
+			margin-bottom: 0;
+
+			.field-select {
+				width: 40px;
+			}
+
+			.add-applications-search {
+				background-image: url(@theme_image_path@/common/search.png);
+				background-position: 5px center;
+				background-repeat: no-repeat;
+				padding-left: 25px;
+				width: 90%;
+			}
 		}
 
 		.buttons {
 			font-size: 0;
+			padding-top: 5px;
 
 			.button {
 				background: url(@theme_image_path@/add_content/layouts.png) no-repeat 0 0;
@@ -444,7 +454,7 @@
 			background: url(@theme_image_path@/common/shadow_top_bg.png) repeat-x 0 0;
 
 			.app-view-entry-taglib.entry-display-style {
-				&.aui-focus {
+				&.focus {
 					text-shadow: 0 0;
 				}
 

@@ -98,7 +98,7 @@ if (!rankingNamesList.isEmpty()) {
 		</div>
 	</c:if>
 
-	<aui:script use="aui-io-plugin">
+	<aui:script use="aui-io-plugin-deprecated">
 		var searchTopUsers = A.one('#<portlet:namespace />searchTopUsers');
 
 		if (searchTopUsers) {
@@ -130,7 +130,7 @@ if (!rankingNamesList.isEmpty()) {
 else {
 %>
 
-	<div class="portlet-configuration portlet-msg-info">
+	<div class="alert alert-info portlet-configuration">
 		<a href="<%= portletDisplay.getURLConfiguration() %>" onClick="<%= portletDisplay.getURLConfigurationJS() %>">
 			<liferay-ui:message key="please-configure-this-portlet-and-select-at-least-one-ranking-criteria" />
 		</a>

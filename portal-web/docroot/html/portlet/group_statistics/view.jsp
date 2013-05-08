@@ -97,7 +97,7 @@ for (int displayActivityCounterNameIndex : displayActivityCounterNameIndexes) {
 						</c:choose>
 					</c:when>
 					<c:otherwise>
-						<div class="portlet-configuration portlet-msg-info">
+						<div class="alert alert-info portlet-configuration">
 							<liferay-ui:message key="there-is-not-enough-data-to-display-for-this-counter" />
 						</div>
 					</c:otherwise>
@@ -111,7 +111,7 @@ for (int displayActivityCounterNameIndex : displayActivityCounterNameIndexes) {
 %>
 
 <c:if test="<%= Validator.isNull(displayActivityCounterNameIndexesParam) %>">
-	<div class="portlet-configuration portlet-msg-info">
+	<div class="alert alert-info portlet-configuration">
 		<a href="<%= portletDisplay.getURLConfiguration() %>" onClick="<%= portletDisplay.getURLConfigurationJS() %>">
 			<liferay-ui:message key="please-configure-this-portlet-and-select-at-least-one-activity-counter" />
 		</a>

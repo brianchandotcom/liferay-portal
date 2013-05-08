@@ -23,27 +23,27 @@
 	}
 
 	.article-toolbar {
-		.aui-icon-delete {
+		.icon-delete {
 			background-image: url(@theme_image_path@/common/delete.png);
 		}
 
-		.aui-icon-download {
+		.icon-download {
 			background-image: url(@theme_image_path@/common/download.png);
 		}
 
-		.aui-icon-expire {
+		.icon-expire {
 			background-image: url(@theme_image_path@/common/time.png);
 		}
 
-		.aui-icon-permissions {
+		.icon-permissions {
 			background-image: url(@theme_image_path@/common/permissions.png);
 		}
 
-		.aui-icon-preview {
+		.icon-preview {
 			background-image: url(@theme_image_path@/common/preview.png);
 		}
 
-		.aui-icon-history {
+		.icon-history {
 			background-image: url(@theme_image_path@/common/history.png);
 		}
 	}
@@ -65,10 +65,6 @@
 		margin: 0 auto;
 		padding: 0.5em;
 
-		label {
-			font-weight: bold;
-		}
-
 		.article-structure-toolbar, .article-template-toolbar {
 			display: inline;
 			margin-left: 0.5em;
@@ -87,10 +83,6 @@
 		display: block;
 		margin: 0 auto;
 		padding: 0.5em;
-
-		label {
-			font-weight: bold;
-		}
 
 		.add-translations-menu {
 			display: inline;
@@ -152,52 +144,14 @@
 		background-color: #FAFAFA;
 	}
 
-	.lfr-actions {
-		&.lfr-extended .lfr-trigger {
-			min-width: auto;
-
-			strong {
-				min-width: 10px;
-			}
-		}
-
-		&.show-arrow.direction-down .lfr-trigger strong a {
-			background: url(@theme_image_path@/arrows/08_down.png) 100% -5px no-repeat;
-		}
-	}
-
 	.lfr-search-combobox {
 		.advanced-search-column-content {
 			border-right: 0;
 		}
-
-		.article-advanced-search-icon {
-			background: #D4D4D4 url(@theme_image_path@/portlet/header_bg.png) repeat-x scroll 0 0;
-
-			&:hover {
-				background: #B9CED9 url(@theme_image_path@/application/state_hover_bg.png) repeat-x scroll 0 0;
-				border-color: #627782;
-				color: #369;
-			}
-
-			input {
-				background: url(@theme_image_path@/arrows/05_down.png) no-repeat scroll 9px 60% transparent;
-				width: 28px;
-
-				&.close-advanced-search {
-					background-image: url(@theme_image_path@/arrows/05_up.png);
-					background-position: 8px 50%;
-				}
-			}
-		}
-
-		.aui-button {
-			margin-left: 0;
-		}
 	}
 
 	.journal-article-container {
-		.lfr-ddm-container .aui-field-wrapper .aui-field-wrapper {
+		.lfr-ddm-container .field-wrapper .field-wrapper {
 			border: 1px solid #D0D0D0;
 			border-left-width: 10px;
 			margin: 7px 0 0 5px;
@@ -291,7 +245,7 @@
 			display: none;
 		}
 
-		.aui-tree-sub-placeholder {
+		.tree-sub-placeholder {
 			margin-top: 10px;
 		}
 
@@ -306,14 +260,6 @@
 
 		.folder-droppable {
 			clear: both;
-		}
-
-		.journal-article-field-label {
-			display: block;
-			font-weight: bold;
-			margin-left: 3px;
-			margin-top: 25px;
-			padding-bottom: 5px;
 		}
 
 		.journal-subfield input {
@@ -343,7 +289,7 @@
 		}
 	}
 
-	.component-group .aui-tree-placeholder {
+	.component-group .tree-placeholder {
 		display: none;
 	}
 
@@ -359,7 +305,7 @@
 	.journal-article-variable-name {
 		float: right;
 
-		.aui-field-label {
+		.field-label {
 			font-weight: normal;
 			margin-right: 5px;
 		}
@@ -415,8 +361,17 @@
 		}
 	}
 
-	.journal-container, .article-entries-paginator {
+	.journal-container, .article-entries-pagination {
 		clear: both;
+	}
+
+	.article-entries-pagination {
+		text-align: center;
+		margin: 10px 0;
+
+		.pagination-content {
+			margin: 0;
+		}
 	}
 
 	.lfr-journal-small-image-content img {
@@ -432,14 +387,14 @@
 		}
 	}
 
-	.taglib-search-iterator-page-iterator-top, .taglib-search-iterator-page-iterator-bottom, .aui-paginator-container, .journal-breadcrumb {
+	.taglib-search-iterator-page-iterator-top, .taglib-search-iterator-page-iterator-bottom, .paginator-container, .journal-breadcrumb {
 		background: #D9D9D9 url(@theme_image_path@/application/subheader_bg.png) 0 0 repeat-x;
 		clear: both;
 		padding: 5px;
 		position: relative;
 	}
 
-	.taglib-search-iterator-page-iterator-top, .taglib-search-iterator-page-iterator-bottom, .aui-paginator-container {
+	.taglib-search-iterator-page-iterator-top, .taglib-search-iterator-page-iterator-bottom, .paginator-container {
 		text-align: center;
 	}
 
@@ -495,10 +450,6 @@
 		margin: 5px 0 0 0;
 	}
 
-	.portlet-msg-info {
-		clear:both;
-	}
-
 	.structure-controls {
 		margin-top: 5px;
 	}
@@ -541,34 +492,6 @@
 
 	.lfr-textarea {
 		width: 350px;
-	}
-
-	.lfr-header-row-content .add-button {
-		float: left;
-	}
-
-	.lfr-menu-list ul {
-		background: #F0F0F0;
-		position: relative;
-
-		&:after {
-			border: 10px solid transparent;
-			border-bottom-color: #F0F0F0;
-			content: '';
-			position: absolute;
-			right: 5px;
-			top: -10px;
-		}
-	}
-
-	.lfr-template-editor {
-		.aui-field-element, .aui-field-content, .aui-field-input-text {
-			display: block;
-		}
-
-		.aui-field-input-text {
-			height: 400px;
-		}
 	}
 
 	.localization-disabled {
@@ -723,7 +646,7 @@
 			padding-top: 0;
 		}
 
-		.aui-placeholder, .aui-tree-placeholder, .aui-tree-sub-placeholder {
+		.placeholder, .tree-placeholder, .tree-sub-placeholder {
 			background: #fff;
 			border: 1px #cdcdcd dashed;
 			height: 100px;
@@ -783,7 +706,7 @@
 }
 
 .display-page-dialog {
-	.aui-tree-label {
+	.tree-label {
 		a {
 			color: black;
 		}
@@ -900,7 +823,7 @@
 	visibility: hidden;
 	width: 100px;
 
-	&.aui-draggable-dragging {
+	&.draggable-dragging {
 		font-size: 15px;
 	}
 
@@ -922,18 +845,18 @@
 }
 
 .journal-article-edit-field-wrapper {
-	&.aui-overlaycontextpanel {
+	&.overlaycontextpanel {
 		margin: 0 13px 0 0;
 		padding: 0;
 		position: relative;
 	}
 
-	&.aui-overlaycontextpanel-container, .aui-overlaycontextpanel-container {
+	&.overlaycontextpanel-container, .overlaycontextpanel-container {
 		background-color: #EBFFEE;
 		border-color: #C3E7CC;
 	}
 
-	&.aui-overlaycontextpanel-arrow-tl .aui-overlaycontextpanel-pointer-inner {
+	&.overlaycontextpanel-arrow-tl .overlaycontextpanel-pointer-inner {
 		border-bottom: 10px solid #EBFFEE;
 	}
 
@@ -948,7 +871,7 @@
 	width: 180px;
 	z-index: 420;
 
-	.aui-field {
+	.field {
 		padding: 0;
 
 		.textarea {
@@ -1048,12 +971,4 @@
 	background: #FFFFE0 url(@theme_image_path@/portlet/pop_up.png) no-repeat 10px 50%;
 	font-size: 1.2em;
 	padding: 0.3em 0.3em 0.3em 2em;
-}
-
-.ie7 {
-	.portlet-journal {
-		.lfr-actions .lfr-trigger strong {
-			min-width: 0px;
-		}
-	}
 }

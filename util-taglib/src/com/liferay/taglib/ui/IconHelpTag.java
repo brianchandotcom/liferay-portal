@@ -57,7 +57,7 @@ public class IconHelpTag extends IconTag {
 		jspWriter.write(themeDisplay.getPathThemeImages());
 		jspWriter.write("/portlet/help.png\" tabIndex=\"0\" ");
 		jspWriter.write("/><span ");
-		jspWriter.write("class=\"aui-helper-hidden-accessible tooltip-text\" ");
+		jspWriter.write("class=\"hide-accessible tooltip-text\" ");
 		jspWriter.write("id=\"");
 		jspWriter.write(id);
 		jspWriter.write("\" >");

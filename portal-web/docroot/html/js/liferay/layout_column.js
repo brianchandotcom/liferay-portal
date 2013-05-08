@@ -5,7 +5,7 @@ AUI.add(
 
 		var Layout = Liferay.Layout;
 
-		var CSS_DRAGGING = 'aui-dragging';
+		var CSS_DRAGGING = 'dragging';
 
 		Layout.getLastPortletNode = function(column) {
 			var instance = this;
@@ -149,7 +149,7 @@ AUI.add(
 
 				NAME: 'ColumnLayout',
 
-				EXTENDS: A.PortalLayout,
+				EXTENDS: A.SortableLayout,
 
 				prototype: {
 					dragItem: 0,
@@ -196,6 +196,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-portal-layout', 'dd']
+		requires: ['aui-sortable-layout', 'dd']
 	}
 );

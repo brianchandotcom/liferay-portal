@@ -240,7 +240,7 @@ if ((total == 0) && (portletDisplayDDMTemplateId == 0)) {
 	}
 %>
 
-	<div class="portlet-msg-info">
+	<div class="alert alert-info">
 		<c:choose>
 			<c:when test="<%= !portletName.equals(PortletKeys.RELATED_ASSETS) %>">
 				<liferay-ui:message key="there-are-no-results" />

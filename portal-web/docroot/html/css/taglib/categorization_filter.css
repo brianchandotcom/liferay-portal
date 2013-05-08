@@ -19,7 +19,7 @@
 		-webkit-border-radius: 14px;
 		border-radius: 14px;
 
-		&:hover .aui-icon-close {
+		&:hover .icon-close {
 			background-color: #CAD8F3;
 		}
 	}

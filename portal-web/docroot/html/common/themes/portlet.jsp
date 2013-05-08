@@ -130,7 +130,7 @@ boolean wsrp = ParamUtil.getBoolean(request, "wsrp");
 		<c:choose>
 			<c:when test="<%= portletDecorate %>">
 				<liferay-theme:wrap-portlet page="portlet.jsp">
-					<div class="<%= portletDisplay.isStateMin() ? "aui-helper-hidden" : "" %> portlet-content-container" <%= containerStyles %>>
+					<div class="<%= portletDisplay.isStateMin() ? "hide" : "" %> portlet-content-container" <%= containerStyles %>>
 						<%@ include file="/html/common/themes/portlet_content_wrapper.jspf" %>
 					</div>
 				</liferay-theme:wrap-portlet>

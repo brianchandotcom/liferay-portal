@@ -31,8 +31,8 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 
 <div class="lfr-search-combobox search-button-container" id="<portlet:namespace />articlesSearchContainer">
 	<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1" onSubmit="event.preventDefault();">
-		<aui:layout>
-			<aui:column>
+		<aui:row>
+			<aui:col width="<%= 33 %>">
 				<aui:input
 					cssClass="keywords lfr-search-combobox-item"
 					id="keywords"
@@ -41,25 +41,25 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 					type="text"
 					value="<%= keywords %>"
 				/>
-			</aui:column>
+			</aui:col>
 
-			<aui:column>
+			<aui:col width="<%= 33 %>">
 				<aui:button
 					cssClass="lfr-search-combobox-item search"
 					name="search"
 					type="submit"
 					value="search"
 				/>
-			</aui:column>
+			</aui:col>
 
-			<aui:column cssClass="advanced-search-column">
+			<aui:col cssClass="advanced-search-column" width="<%= 33 %>">
 				<aui:button
-					cssClass="article-advanced-search-icon lfr-search-combobox-item"
-					inputCssClass='<%= advancedSearch ? "close-advanced-search" : StringPool.BLANK %>'
+					cssClass="article-advanced-search-button lfr-search-combobox-item"
+					icon='<%= advancedSearch ? "icon-chevron-up" : "icon-chevron-down" %>'
 					name="showAdvancedSearch"
 					type="button"
 				/>
-			</aui:column>
-		</aui:layout>
+			</aui:col>
+		</aui:row>
 	</aui:form>
 </div>

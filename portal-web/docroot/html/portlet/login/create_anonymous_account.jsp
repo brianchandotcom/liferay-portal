@@ -47,8 +47,8 @@
 	<liferay-ui:error exception="<%= ReservedUserEmailAddressException.class %>" message="the-email-address-you-requested-is-reserved" />
 	<liferay-ui:error exception="<%= UserEmailAddressException.class %>" message="please-enter-a-valid-email-address" />
 
-	<aui:fieldset>
-		<aui:column>
+	<aui:fieldset column="<%= true %>">
+		<aui:col width="<%= 50 %>">
 			<aui:input model="<%= User.class %>" name="firstName" />
 
 			<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_LAST_NAME_REQUIRED, PropsValues.USERS_LAST_NAME_REQUIRED) %>">
@@ -62,9 +62,9 @@
 					<aui:validator name="required" />
 				</c:if>
 			</aui:input>
-		</aui:column>
+		</aui:col>
 
-		<aui:column>
+		<aui:col width="<%= 50 %>">
 			<c:if test="<%= PropsValues.CAPTCHA_CHECK_PORTAL_CREATE_ACCOUNT %>">
 				<portlet:resourceURL var="captchaURL">
 					<portlet:param name="struts_action" value="/login/captcha" />
@@ -72,7 +72,7 @@
 
 				<liferay-ui:captcha url="<%= captchaURL %>" />
 			</c:if>
-		</aui:column>
+		</aui:col>
 	</aui:fieldset>
 
 	<aui:button-row>

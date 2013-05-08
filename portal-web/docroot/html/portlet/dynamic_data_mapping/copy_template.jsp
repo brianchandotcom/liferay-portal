@@ -48,6 +48,6 @@ long templateId = BeanParamUtil.getLong(template, request, "templateId");
 	<aui:button-row>
 		<aui:button type="submit" value="copy" />
 
-		<aui:button onClick="Liferay.Util.getWindow().close();" value="close" />
+		<aui:button onClick="Liferay.Util.getWindow().hide();" value="close" />
 	</aui:button-row>
 </aui:form>

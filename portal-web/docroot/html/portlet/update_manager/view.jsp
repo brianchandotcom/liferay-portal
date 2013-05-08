@@ -238,7 +238,7 @@ List updatablePackageIds = new ArrayList();
 						}
 					%>
 
-						<div class="portlet-msg-error">
+						<div class="alert alert-error">
 							<liferay-ui:message key="an-error-occurred-while-retrieving-available-plugins" />
 						</div>
 

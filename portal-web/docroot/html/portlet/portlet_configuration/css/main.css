@@ -17,7 +17,7 @@
 		.assign-permissions {
 			float: left;
 
-			.aui-button-holder {
+			.button-holder {
 				position: relative;
 
 				.finished {
@@ -28,7 +28,7 @@
 		}
 	}
 
-	.portlet-type-data-section .aui-legend {
+	.portlet-type-data-section .legend {
 		border-width: 0;
 		font-size: 90%;
 	}

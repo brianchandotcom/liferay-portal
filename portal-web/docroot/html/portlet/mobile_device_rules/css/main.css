@@ -17,7 +17,7 @@
 	margin: 0;
 	padding: 2px;
 
-	.aui-field-content {
+	.field-content {
 		margin: 0;
 	}
 }
@@ -36,7 +36,7 @@
 		border-bottom: 1px solid #CCC;
 		font-size: 1.5em;
 
-		.aui-field-content {
+		.field-content {
 			display: inline-block;
 		}
 	}

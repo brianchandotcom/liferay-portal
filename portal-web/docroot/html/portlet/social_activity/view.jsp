@@ -39,8 +39,8 @@ portletURL.setParameter("struts_action", "/social_activity/view");
 		<liferay-ui:message key="enable-social-activity-for" />:
 	</h4>
 
-	<aui:layout cssClass="social-activity social-activity-settings" id='<%= renderResponse.getNamespace() + "settings" %>'>
-		<aui:column columnWidth="20" cssClass="social-activity-items">
+	<aui:row cssClass="social-activity social-activity-settings" id="settings">
+		<aui:col cssClass="social-activity-items" width="<%= 20 %>">
 
 			<%
 			for (String className : activitySettingsMap.keySet()) {
@@ -61,9 +61,9 @@ portletURL.setParameter("struts_action", "/social_activity/view");
 			}
 			%>
 
-		</aui:column>
-		<aui:column columnWidth="80" cssClass="social-activity-details" />
-	</aui:layout>
+		</aui:col>
+		<aui:col cssClass="social-activity-details" width="<%= 80 %>" />
+	</aui:row>
 
 	<%
 	List<String> activityDefinitionLanguageKeys = new ArrayList<String>();

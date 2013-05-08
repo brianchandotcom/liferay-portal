@@ -28,12 +28,6 @@ if (selLayout == null) {
 String selLayoutParam = (String)request.getAttribute("liferay-ui:breadcrumb:selLayoutParam");
 PortletURL portletURL = (PortletURL)request.getAttribute("liferay-ui:breadcrumb:portletURL");
 
-String displayStyle = GetterUtil.getString((String)request.getAttribute("liferay-ui:breadcrumb:displayStyle"), "horizontal");
-
-if (!ArrayUtil.contains(PropsValues.BREADCRUMB_DISPLAY_STYLE_OPTIONS, displayStyle)) {
-	displayStyle = "horizontal";
-}
-
 boolean showCurrentGroup = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:breadcrumb:showCurrentGroup"));
 boolean showCurrentPortlet = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:breadcrumb:showCurrentPortlet"));
 boolean showGuestGroup = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:breadcrumb:showGuestGroup"));
@@ -59,11 +53,12 @@ private void _buildGuestGroupBreadcrumb(ThemeDisplay themeDisplay, StringBundler
 			layoutSetFriendlyURL = PortalUtil.getURLWithSessionId(layoutSetFriendlyURL, themeDisplay.getSessionId());
 		}
 
-		sb.append("<li><span><a href=\"");
+		sb.append("<li><a href=\"");
 		sb.append(layoutSetFriendlyURL);
 		sb.append("\">");
 		sb.append(HtmlUtil.escape(themeDisplay.getAccount().getName()));
-		sb.append("</a></span></li>");
+		sb.append("</a><span class=\"divider\">/</span>");
+		sb.append("</li>");
 	}
 }
 
@@ -81,7 +76,7 @@ private void _buildLayoutBreadcrumb(Layout selLayout, String selLayoutParam, boo
 		layoutURL = HttpUtil.removeParameter(layoutURL, "controlPanelCategory");
 	}
 
-	breadcrumbSB.append("<li><span><a href=\"");
+	breadcrumbSB.append("<li><a href=\"");
 	breadcrumbSB.append(layoutURL);
 	breadcrumbSB.append("\" ");
 
@@ -99,10 +94,9 @@ private void _buildLayoutBreadcrumb(Layout selLayout, String selLayoutParam, boo
 	}
 
 	breadcrumbSB.append(">");
-
 	breadcrumbSB.append(HtmlUtil.escape(layoutName));
-
-	breadcrumbSB.append("</a></span></li>");
+	breadcrumbSB.append("</a><span class=\"divider\">/</span>");
+	breadcrumbSB.append("</li>");
 
 	if (selLayout.getParentLayoutId() != LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
 		Layout parentLayout = null;
@@ -177,11 +171,12 @@ private void _buildParentGroupsBreadcrumb(LayoutSet layoutSet, PortletURL portle
 			layoutSetFriendlyURL = PortalUtil.getURLWithSessionId(layoutSetFriendlyURL, themeDisplay.getSessionId());
 		}
 
-		sb.append("<li><span><a href=\"");
+		sb.append("<li><a href=\"");
 		sb.append(layoutSetFriendlyURL);
 		sb.append("\">");
 		sb.append(HtmlUtil.escape(group.getDescriptiveName()));
-		sb.append("</a></span></li>");
+		sb.append("</a><span class=\"divider\">/</span>");
+		sb.append("</li>");
 	}
 }
 
@@ -192,7 +187,11 @@ private void _buildPortletBreadcrumb(HttpServletRequest request, boolean showCur
 		return;
 	}
 
-	for (BreadcrumbEntry breadcrumbEntry : breadcrumbEntries) {
+	int breadcrumbEntriesSize = breadcrumbEntries.size();
+
+	for (int index = 0; index < breadcrumbEntriesSize; index++) {
+		BreadcrumbEntry breadcrumbEntry = breadcrumbEntries.get(index);
+
 		Map<String, Object> data = breadcrumbEntry.getData();
 
 		String breadcrumbTitle = breadcrumbEntry.getTitle();
@@ -222,9 +221,15 @@ private void _buildPortletBreadcrumb(HttpServletRequest request, boolean showCur
 			breadcrumbURL = PortalUtil.getURLWithSessionId(breadcrumbURL, session.getId());
 		}
 
-		sb.append("<li><span>");
+		sb.append("<li>");
 
-		if (Validator.isNotNull(breadcrumbURL)) {
+		boolean showAnchor = true;
+
+		if (index >= (breadcrumbEntriesSize - 1)) {
+			showAnchor = false;
+		}
+
+		if (showAnchor && Validator.isNotNull(breadcrumbURL)) {
 			sb.append("<a href=\"");
 			sb.append(HtmlUtil.escape(breadcrumbURL));
 			sb.append("\"");
@@ -234,11 +239,15 @@ private void _buildPortletBreadcrumb(HttpServletRequest request, boolean showCur
 
 		sb.append(HtmlUtil.escape(breadcrumbTitle));
 
-		if (Validator.isNotNull(breadcrumbURL)) {
+		if (showAnchor && Validator.isNotNull(breadcrumbURL)) {
 			sb.append("</a>");
 		}
 
-		sb.append("</span></li>");
+		if (showAnchor) {
+			sb.append("<span class=\"divider\">/</span>");
+		}
+
+		sb.append("</li>");
 	}
 }
 

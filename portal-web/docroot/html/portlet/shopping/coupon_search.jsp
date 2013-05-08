@@ -22,17 +22,17 @@ CouponSearch searchContainer = (CouponSearch)request.getAttribute("liferay-ui:se
 CouponDisplayTerms displayTerms = (CouponDisplayTerms)searchContainer.getDisplayTerms();
 %>
 
-<aui:fieldset>
-	<aui:column>
+<aui:fieldset column="<%= true %>">
+	<aui:col width="<%= 33 %>">
 		<aui:input name="<%= displayTerms.CODE %>" size="20" type="text" value="<%= displayTerms.getCode() %>" />
 
 		<aui:select label="" name="<%= displayTerms.AND_OPERATOR %>">
 			<aui:option label="and" selected="<%= displayTerms.isAndOperator() %>" value="1" />
 			<aui:option label="or" selected="<%= !displayTerms.isAndOperator() %>" value="0" />
 		</aui:select>
-	</aui:column>
+	</aui:col>
 
-	<aui:column>
+	<aui:col width="<%= 33 %>">
 		<aui:select name="<%= displayTerms.DISCOUNT_TYPE %>" showEmptyOption="<%= true %>">
 
 			<%
@@ -46,14 +46,14 @@ CouponDisplayTerms displayTerms = (CouponDisplayTerms)searchContainer.getDisplay
 			%>
 
 		</aui:select>
-	</aui:column>
+	</aui:col>
 
-	<aui:column>
+	<aui:col width="<%= 33 %>">
 		<aui:select name="<%= displayTerms.ACTIVE %>">
 			<aui:option label="yes" selected="<%= displayTerms.isActive() %>" value="1" />
 			<aui:option label="no" selected="<%= !displayTerms.isActive() %>" value="0" />
 		</aui:select>
-	</aui:column>
+	</aui:col>
 </aui:fieldset>
 
 <aui:button-row>

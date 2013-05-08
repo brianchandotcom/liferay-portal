@@ -17,7 +17,7 @@
 <div id="<portlet:namespace />saveStructureTemplateDialogWrapper" style="display: none;">
 	<aui:fieldset>
 		<div class="save-structure-template-dialog" id="<portlet:namespace />saveStructureTemplateDialog">
-			<div class="portlet-msg-success save-structure-message aui-helper-hidden" id="<portlet:namespace />saveStructureMessage">
+			<div class="alert alert-success save-structure-message hide" id="<portlet:namespace />saveStructureMessage">
 				<liferay-ui:message key="your-request-processed-successfully" />
 			</div>
 
@@ -29,7 +29,7 @@
 
 			<aui:a href="#" id="showStructureIdContainer"><liferay-ui:message key="change-structure-id" /> &raquo;</aui:a>
 
-			<div class="journal-structureid-field aui-helper-hidden" id="<portlet:namespace />structureIdContainer">
+			<div class="journal-structureid-field hide" id="<portlet:namespace />structureIdContainer">
 				<aui:field-wrapper label="structure-id">
 					<aui:input cssClas="lfr-input-text-container" label="" name="saveStructureStructureId" type="text" />
 
@@ -40,10 +40,10 @@
 	</aui:fieldset>
 </div>
 
-<div class="journal-article-edit-field-wrapper aui-helper-hidden" id="<portlet:namespace />journalArticleEditFieldWrapper">
+<div class="journal-article-edit-field-wrapper hide" id="<portlet:namespace />journalArticleEditFieldWrapper">
 	<aui:form method="post" name="fm3">
 		<div class="journal-article-edit-field" id="<portlet:namespace />journalArticleEditField">
-			<div class="portlet-msg-success journal-message aui-helper-hidden" id="<portlet:namespace />journalMessage">
+			<div class="alert alert-success hide journal-message" id="<portlet:namespace />journalMessage">
 				<liferay-ui:message key="your-request-processed-successfully" />
 			</div>
 
@@ -245,10 +245,10 @@
 	</aui:fieldset>
 </div>
 
-<div class="aui-html-template" id="<portlet:namespace />editButtonTemplate">
+<div class="html-template" id="<portlet:namespace />editButtonTemplate">
 	<aui:button cssClass="edit-button" value="edit-options" />
 </div>
 
-<div class="aui-html-template" id="<portlet:namespace />repeatableButtonTemplate">
-	<aui:button cssClass="repeatable-button aui-helper-hidden" value="repeat" />
+<div class="html-template" id="<portlet:namespace />repeatableButtonTemplate">
+	<aui:button cssClass="repeatable-button hide" value="repeat" />
 </div>

@@ -112,7 +112,7 @@ String iconMenuId = null;
 %>
 
 <liferay-util:buffer var="iconMenu">
-	<liferay-ui:icon-menu align='<%= showMinimalActionButtons ? "auto" : "right" %>' direction='<%= showMinimalActionButtons ? "down" : null %>' extended="<%= showMinimalActionButtons ? false : true %>" icon="<%= showMinimalActionButtons ? StringPool.BLANK : null %>" message='<%= showMinimalActionButtons ? StringPool.BLANK : "actions" %>' showExpanded="<%= view %>" showWhenSingleIcon="<%= showWhenSingleIcon %>">
+	<liferay-ui:icon-menu direction='<%= showMinimalActionButtons ? "down" : "left" %>' extended="<%= showMinimalActionButtons ? false : true %>" icon="<%= showMinimalActionButtons ? StringPool.BLANK : null %>" message='<%= showMinimalActionButtons ? StringPool.BLANK : "actions" %>' showExpanded="<%= view %>" showWhenSingleIcon="<%= showWhenSingleIcon %>">
 		<c:if test="<%= showActions %>">
 			<c:choose>
 				<c:when test="<%= folder != null %>">
@@ -311,11 +311,11 @@ String iconMenuId = null;
 					</portlet:renderURL>
 
 					<%
-					String taglibEditURL = "javascript:Liferay.Util.openWindow({dialog: {width: 420}, id: '" + renderResponse.getNamespace() + "selectFileEntryType', title: '" + UnicodeLanguageUtil.get(pageContext, "select-document-type") + "', uri: '" + editFileEntryURL.toString() + "'});";
+					String taglibEditURL = "javascript:Liferay.Util.openWindow({id: '" + renderResponse.getNamespace() + "selectFileEntryType', title: '" + UnicodeLanguageUtil.get(pageContext, "select-document-type") + "', uri:'" + editFileEntryURL.toString() + "'});";
 					%>
 
 					<liferay-ui:icon
-						cssClass="aui-helper-hidden upload-multiple-documents"
+						cssClass="hide upload-multiple-documents"
 						image="../document_library/add_multiple_documents"
 						message='<%= portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) ? "multiple-media" : "multiple-documents" %>'
 						url="<%= editFileEntryURL %>"
@@ -334,7 +334,7 @@ String iconMenuId = null;
 					</liferay-portlet:renderURL>
 
 					<%
-					taglibEditURL = "javascript:Liferay.Util.openWindow({dialog: {centered: true, modal: true, width: 420}, id: '" + renderResponse.getNamespace() + "selectFileEntryType', title: '" + UnicodeLanguageUtil.get(pageContext, portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) ? "select-media-type" : "select-document-type") + "', uri: '" + editFileEntryURL.toString() + "'});";
+					taglibEditURL = "javascript:Liferay.Util.openWindow({id: '" + renderResponse.getNamespace() + "selectFileEntryType', title: '" + UnicodeLanguageUtil.get(pageContext, portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) ? "select-media-type" : "select-document-type") + "', uri:'" + editFileEntryURL.toString() + "'});";
 					%>
 
 					<liferay-ui:icon
@@ -458,7 +458,7 @@ String iconMenuId = null;
 	<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 </portlet:renderURL>
 
-<aui:script use="aui-dialog,uploader">
+<aui:script use="uploader,liferay-util-window">
 	if (!A.UA.ios && (A.Uploader.TYPE != 'none')) {
 		var uploadMultipleDocumentsIcon = A.all('.upload-multiple-documents:hidden');
 
@@ -486,14 +486,13 @@ String iconMenuId = null;
 			function(event) {
 				event.preventDefault();
 
-				var webdavDialog = new A.Dialog(
+				var webdavDialog = Liferay.Util.Window.getWindow(
 					{
-						align: Liferay.Util.Window.ALIGN_CENTER,
-						bodyContent: A.one('#<%= randomNamespace %>webDav').html(),
-						destroyOnClose: true,
-						modal: true,
-						title: '<%= UnicodeLanguageUtil.get(pageContext, "access-from-desktop") %>',
-						width: 500
+						dialog: {
+							bodyContent: A.one('#<%= randomNamespace %>webDav').html(),
+							destroyOnHide: true
+						},
+						title: '<%= UnicodeLanguageUtil.get(pageContext, "access-from-desktop") %>'
 					}
 				);
 

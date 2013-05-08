@@ -33,7 +33,7 @@
 		vertical-align: top;
 	}
 
-	.portlet-msg-error, .portlet-msg-success {
+	.alert-error, .alert-success {
 		margin: 15px auto 5px;
 	}
 
@@ -82,7 +82,7 @@ dateFormatDateTime.setTimeZone(timeZone);
 <form method="post" name="license_fm" <%= (clusterNodes.size() > 1) ? "onsubmit=\"return validateForm();\"" : "" %>>
 
 <c:if test="<%= Validator.isNotNull(errorMessage) %>">
-	<div class="portlet-msg-error">
+	<div class="alert alert-error">
 		<%= errorMessage %>
 	</div>
 </c:if>
@@ -99,7 +99,7 @@ dateFormatDateTime.setTimeZone(timeZone);
 		%>
 
 		<c:if test="<%= Validator.isNotNull(successMessage) %>">
-			<div class="portlet-msg-success">
+			<div class="alert alert-success">
 				<%= successMessage %>
 			</div>
 		</c:if>
@@ -314,7 +314,7 @@ dateFormatDateTime.setTimeZone(timeZone);
 			<c:if test="<%= Validator.isNotNull(successMessage) %>">
 				<tr>
 					<td colspan="3">
-						<div class="portlet-msg-success">
+						<div class="alert alert-success">
 							<%= successMessage %>
 						</div>
 					</td>
@@ -324,7 +324,7 @@ dateFormatDateTime.setTimeZone(timeZone);
 			<c:if test="<%= Validator.isNotNull(curErrorMessage) %>">
 				<tr>
 					<td colspan="3">
-						<div class="portlet-msg-error">
+						<div class="alert alert-error">
 							<%= curErrorMessage %>
 						</div>
 					</td>
@@ -440,7 +440,7 @@ dateFormatDateTime.setTimeZone(timeZone);
 										errorMessage += ':' + port;
 									}
 
-									A.one('#' + clusterNodeId + '_' + cmd).html('<div class="portlet-msg-error">' + errorMessage + '</div>');
+									A.one('#' + clusterNodeId + '_' + cmd).html('<div class="alert alert-error">' + errorMessage + '</div>');
 								},
 								success: function(event, id, obj) {
 									var instance = this;

@@ -18,7 +18,7 @@
 
 </div>
 
-<aui:script use="anim,aui-panel">
+<aui:script use="anim,aui-panel-deprecated">
 	var container = new A.Panel(
 		{
 			bodyContent: A.one('#<%= id %>bodyContent'),

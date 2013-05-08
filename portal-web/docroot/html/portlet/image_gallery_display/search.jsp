@@ -117,7 +117,7 @@ boolean useAssetEntryQuery = false;
 	%>
 
 	<div id="<portlet:namespace />imageGalleryAssetInfo">
-			<span class="aui-search-bar">
+			<span class="form-search">
 				<aui:input inlineField="<%= true %>" label="" name="keywords" size="30" title="search-images" type="text" value="<%= keywords %>" />
 
 				<aui:button type="submit" value="search" />

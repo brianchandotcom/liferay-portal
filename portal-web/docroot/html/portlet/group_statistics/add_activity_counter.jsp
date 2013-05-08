@@ -35,8 +35,8 @@ activityCounterNames.add(SocialActivityCounterConstants.NAME_USER_ACTIVITIES);
 Collections.sort(activityCounterNames, new SocialActivityCounterNameComparator(locale));
 %>
 
-<div class="aui-field-row">
-	<span class="aui-field aui-field-inline inline-text">
+<div class="field-row">
+	<span class="field field-inline inline-text">
 		<liferay-ui:message key="group-statistics-add-counter-first-text" />
 	</span>
 
@@ -57,7 +57,7 @@ Collections.sort(activityCounterNames, new SocialActivityCounterNameComparator(l
 
 	</aui:select>
 
-	<span class="aui-field aui-field-inline inline-text">
+	<span class="field field-inline inline-text">
 		<liferay-ui:message key="group-statistics-add-counter-second-text" />
 	</span>
 
@@ -68,7 +68,7 @@ Collections.sort(activityCounterNames, new SocialActivityCounterNameComparator(l
 		<aui:option label="group-statistics-chart-type-tag-cloud" selected='<%= chartType.equals("tag-cloud") %>' value="tag-cloud" />
 	</aui:select>
 
-	<span class="aui-field aui-field-inline inline-text">
+	<span class="field field-inline inline-text">
 		<liferay-ui:message key="group-statistics-add-counter-third-text" />
 	</span>
 
@@ -78,8 +78,8 @@ Collections.sort(activityCounterNames, new SocialActivityCounterNameComparator(l
 	</aui:select>
 </div>
 
-<div class="aui-field-row">
-	<span class="aui-field aui-field-inline inline-text">
+<div class="field-row">
+	<span class="field field-inline inline-text">
 		<liferay-ui:message key="chart-width" />:
 	</span>
 

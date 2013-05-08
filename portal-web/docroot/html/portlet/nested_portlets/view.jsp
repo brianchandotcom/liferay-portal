@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/nested_portlets/init.jsp" %>
 
 <c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE) %>">
-	<div class="aui-helper-hidden portlet-msg-info" id="<portlet:namespace />nested-portlets-msg">
+	<div class="alert alert-info hide" id="<portlet:namespace />nested-portlets-msg">
 		<liferay-ui:message key="drag-portlets-below-to-nest-them" />
 	</div>
 

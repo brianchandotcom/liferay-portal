@@ -163,14 +163,14 @@ request.setAttribute("search.jsp-returnToFullPageURL", portletDisplay.getURLBack
 		);
 	}
 
-	var resultsGrid = A.one('.portlet-search .result .results-grid');
+	var resultsGrid = A.one('.portlet-search .result .searchcontainer-content');
 
 	if (resultsGrid) {
 		resultsGrid.delegate(
 			'click',
 			function(event) {
 				var handle = event.currentTarget;
-				var rowTD = handle.ancestor('.results-row td');
+				var rowTD = handle.ancestor('.table-cell');
 
 				var documentFields = rowTD.one('.asset-entry .asset-entry-fields');
 
@@ -183,7 +183,7 @@ request.setAttribute("search.jsp-returnToFullPageURL", portletDisplay.getURLBack
 					handle.text('[+]');
 				}
 			},
-			'.results-row td .asset-entry .toggle-details'
+			'.table-cell .asset-entry .toggle-details'
 		);
 	}
 

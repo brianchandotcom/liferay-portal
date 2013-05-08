@@ -215,7 +215,7 @@
 }
 
 .portlet-configuration {
-	.aui-form {
+	.form {
 		.queryRules fieldset {
 			padding: 0;
 
@@ -233,7 +233,7 @@
 				background-color: #DFFCCB;
 			}
 
-			.aui-field {
+			.field {
 				line-height: 2;
 
 				&.tags-selector, &.categories-selector {

@@ -64,7 +64,7 @@ if (filterManageableOrganizations) {
 		int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCompanyId(), (organization != null) ? organization.getOrganizationId() : OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID, null, null, null, null, organizationParams);
 		%>
 
-		<aui:layout>
+		<aui:row>
 			<c:choose>
 				<c:when test="<%= (organization != null) && (organization.getOrganizationId() != OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) %>">
 
@@ -95,7 +95,7 @@ if (filterManageableOrganizations) {
 					/>
 				</c:when>
 				<c:otherwise>
-					<span class="aui-search-bar">
+					<span class="form-search">
 						<aui:input inlineField="<%= true %>" label="" name="keywords" size="30" title="search-users-and-organizations" type="text" />
 
 						<aui:button onClick='<%= "javascript:" + renderResponse.getNamespace() + "search();" %>' value="search" />
@@ -103,7 +103,7 @@ if (filterManageableOrganizations) {
 				</c:otherwise>
 			</c:choose>
 
-			<aui:column columnWidth="<%= (organization != null) ? 75 : 100 %>" cssClass="lfr-asset-column lfr-asset-column-details" first="<%= true %>">
+			<aui:col cssClass="lfr-asset-column lfr-asset-column-details" width="<%= (organization != null) ? 75 : 100 %>">
 				<liferay-ui:panel-container extended="<%= false %>" id="usersAdminOrganizationPanelContainer" persistState="<%= true %>">
 					<c:if test="<%= organization != null %>">
 
@@ -256,6 +256,9 @@ if (filterManageableOrganizations) {
 
 							<%= organizationsTitle %>
 
+						</liferay-util:buffer>
+
+						<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="usersAdminOrganizationsPanel" persistState="<%= true %>" title="<%= organizationsPanelTitle %>">
 							<c:if test="<%= organization == null %>">
 								<portlet:renderURL var="viewOrgsURL">
 									<portlet:param name="struts_action" value="/users_admin/view" />
@@ -264,11 +267,8 @@ if (filterManageableOrganizations) {
 									<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
 								</portlet:renderURL>
 
-								<span class="view-all-link">(<a href="<%= viewOrgsURL %>" id="<portlet:namespace />allOrganizationsLink"><liferay-ui:message key="search-all-organizations" /></a>)</span>
+								<div class="view-all-link"><a href="<%= viewOrgsURL %>" id="<portlet:namespace />allOrganizationsLink"><liferay-ui:message key="search-all-organizations" /></a></div>
 							</c:if>
-						</liferay-util:buffer>
-
-						<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="usersAdminOrganizationsPanel" persistState="<%= true %>" title="<%= organizationsPanelTitle %>">
 
 							<%
 							SearchContainer organizationSearch = new OrganizationSearch(renderRequest, "cur1", currentURLObj);
@@ -304,7 +304,7 @@ if (filterManageableOrganizations) {
 										</liferay-ui:search-container-results>
 
 										<c:if test="<%= !results.isEmpty() %>">
-											<aui:button onClick='<%= renderResponse.getNamespace() + "deleteOrganizations();" %>' value="delete" />
+											<aui:button cssClass="delete-organizations" onClick='<%= renderResponse.getNamespace() + "deleteOrganizations();" %>' value="delete" />
 										</c:if>
 									</c:when>
 									<c:otherwise>
@@ -402,10 +402,6 @@ if (filterManageableOrganizations) {
 							%>
 
 							<%= usersTitle %>
-
-							<c:if test="<%= organization == null %>">
-								<span class="view-all-link">(<a href="<%= viewUsersURL %>" id="<portlet:namespace />allUsersLink"><liferay-ui:message key="search-all-users" /></a>)</span>
-							</c:if>
 						</liferay-util:buffer>
 
 						<c:choose>
@@ -424,16 +420,20 @@ if (filterManageableOrganizations) {
 								%>
 
 								<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="usersAdminUsersPanel" persistState="<%= true %>" title="<%= usersPanelTitle %>">
+									<c:if test="<%= organization == null %>">
+										<div class="view-all-link"><a href="<%= viewUsersURL %>" id="<portlet:namespace />allUsersLink"><liferay-ui:message key="search-all-users" /></a></div>
+									</c:if>
+
 									<%@ include file="/html/portlet/users_admin/view_flat_users.jspf" %>
 								</liferay-ui:panel>
 							</c:otherwise>
 						</c:choose>
 					</c:if>
 				</liferay-ui:panel-container>
-			</aui:column>
+			</aui:col>
 
 			<c:if test="<%= organization != null %>">
-				<aui:column columnWidth="<%= 25 %>" cssClass="lfr-asset-column lfr-asset-column-actions" last="<%= true %>">
+				<aui:col cssClass="lfr-asset-column lfr-asset-column-actions" last="<%= true %>" width="<%= 25 %>">
 					<div class="lfr-asset-summary">
 						<img alt="<%= HtmlUtil.escape(organization.getName()) %>" class="avatar" src='<%= (organization != null) ? themeDisplay.getPathImage() + "/organization_logo?img_id=" + organization.getLogoId() + "&t=" + WebServerServletTokenUtil.getToken(organization.getLogoId()) : "" %>' />
 
@@ -449,55 +449,17 @@ if (filterManageableOrganizations) {
 					%>
 
 					<liferay-util:include page="/html/portlet/users_admin/organization_action.jsp" />
-				</aui:column>
+				</aui:col>
 
 				<%
 				UsersAdminUtil.addPortletBreadcrumbEntries(organization, request, renderResponse);
 				%>
 
 			</c:if>
-		</aui:layout>
-
-		<c:if test="<%= organization == null %>">
-			<aui:script use="liferay-panel">
-				var panelContainer = Liferay.Panel.get('usersAdminOrganizationPanelContainer');
-
-				var organizationsTrigger = A.one('#<portlet:namespace />allOrganizationsLink');
-
-				if (panelContainer && organizationsTrigger) {
-					organizationsTrigger.on(
-						'click',
-						function(event) {
-							panelContainer.once(
-								'collapse',
-								function(event) {
-									event.preventDefault();
-								}
-							);
-						}
-					);
-				}
-
-				var usersTrigger = A.one('#<portlet:namespace />allUsersLink');
-
-				if (panelContainer && usersTrigger) {
-					usersTrigger.on(
-						'click',
-						function(event) {
-							panelContainer.once(
-								'collapse',
-								function(event) {
-									event.preventDefault();
-								}
-							);
-						}
-					);
-				}
-			</aui:script>
-		</c:if>
+		</aui:row>
 	</c:when>
 	<c:otherwise>
-		<div class="portlet-msg-info">
+		<div class="alert alert-info">
 			<liferay-ui:message key="you-do-not-belong-to-an-organization-and-are-not-allowed-to-view-other-organizations" />
 		</div>
 	</c:otherwise>

@@ -62,7 +62,7 @@ if (entry.getPriority() > 0) {
 	boolean showScopeName = false;
 	%>
 
-	<div class="<%= hiddenEntry ? "aui-helper-hidden" : "" %> entry-content entry-type-<%= entry.getType() %>">
+	<div class="<%= hiddenEntry ? "hide" : "" %> entry-content entry-type-<%= entry.getType() %>">
 		<%@ include file="/html/portlet/announcements/entry_scope.jspf" %>
 
 		<%= entry.getContent() %>

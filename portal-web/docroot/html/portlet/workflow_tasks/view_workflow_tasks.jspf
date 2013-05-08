@@ -33,14 +33,12 @@ try {
 %>
 
 	<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
+		<aui:nav-bar>
+			<aui:nav-bar-search cssClass="pull-right" file="/html/portlet/workflow_tasks/workflow_search_tasks.jsp" />
+		</aui:nav-bar>
+
 		<c:choose>
 			<c:when test='<%= portletName.equals(PortletKeys.MY_WORKFLOW_TASKS) && tabs1.equals("pending") %>'>
-				<liferay-ui:search-form
-					page="/html/portlet/workflow_tasks/workflow_search_tasks.jsp"
-				/>
-
-				<div class="separator"></div>
-
 				<liferay-ui:panel-container extended="<%= false %>" id="workflowTasksPanelContainer" persistState="<%= true %>">
 					<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="workflowMyTasksPanel" persistState="<%= true %>" title="assigned-to-me">
 
@@ -62,10 +60,6 @@ try {
 				</liferay-ui:panel-container>
 			</c:when>
 			<c:otherwise>
-				<liferay-ui:search-form
-					page="/html/portlet/workflow_tasks/workflow_search_tasks.jsp"
-				/>
-
 				<div class="separator"></div>
 
 				<%@ include file="/html/portlet/workflow_tasks/workflow_tasks.jspf" %>
@@ -81,7 +75,7 @@ catch (Exception e) {
 	}
 %>
 
-	<div class="portlet-msg-error">
+	<div class="alert alert-error">
 		<liferay-ui:message key="an-error-occurred-while-retrieving-the-list-of-tasks" />
 	</div>
 

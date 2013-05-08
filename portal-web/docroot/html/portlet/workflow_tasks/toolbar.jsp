@@ -20,31 +20,20 @@
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "assigned-to-me");
 %>
 
-<div class="lfr-portlet-toolbar">
-	<portlet:renderURL var="assignedToMeURL">
-		<portlet:param name="struts_action" value="/workflow_tasks/view" />
-		<portlet:param name="toolbarItem" value="assigned-to-me" />
-	</portlet:renderURL>
+<aui:nav-bar>
+	<aui:nav>
+		<portlet:renderURL var="assignedToMeURL">
+			<portlet:param name="struts_action" value="/workflow_tasks/view" />
+			<portlet:param name="toolbarItem" value="assigned-to-me" />
+		</portlet:renderURL>
 
-	<span class="lfr-toolbar-button assigned-to-me <%= toolbarItem.equals("assigned-to-me") ? "current" : StringPool.BLANK %>">
-		<a href="<%= assignedToMeURL %>"><liferay-ui:message key="assigned-to-me" /></a>
-	</span>
+		<aui:nav-item href="<%= assignedToMeURL %>" label="view-all" selected='<%= toolbarItem.equals("view-all") %>' />
 
-	<portlet:renderURL var="assignedToMyRolesURL">
-		<portlet:param name="struts_action" value="/workflow_tasks/view" />
-		<portlet:param name="toolbarItem" value="assigned-to-my-roles" />
-	</portlet:renderURL>
+		<portlet:renderURL var="completedURL">
+			<portlet:param name="struts_action" value="/workflow_tasks/view" />
+			<portlet:param name="toolbarItem" value="my-completed-tasks" />
+		</portlet:renderURL>
 
-	<span class="lfr-toolbar-button assigned-to-my-role <%= toolbarItem.equals("assigned-to-my-roles") ? "current" : StringPool.BLANK %>">
-		<a href="<%= assignedToMyRolesURL %>"><liferay-ui:message key="assigned-to-my-roles" /></a>
-	</span>
-
-	<portlet:renderURL var="completedURL">
-		<portlet:param name="struts_action" value="/workflow_tasks/view" />
-		<portlet:param name="toolbarItem" value="my-completed-tasks" />
-	</portlet:renderURL>
-
-	<span class="lfr-toolbar-button completed-button <%= toolbarItem.equals("my-completed-tasks") ? "current" : StringPool.BLANK %>">
-		<a href="<%= completedURL %>"><liferay-ui:message key="my-completed-tasks" /></a>
-	</span>
-</div>
+		<aui:nav-item href="<%= completedURL %>" iconClass="icon-plus" label="my-completed-tasks" selected='<%= toolbarItem.equals("my-completed-tasks") %>' />
+	</aui:nav>
+</aui:nav-bar>

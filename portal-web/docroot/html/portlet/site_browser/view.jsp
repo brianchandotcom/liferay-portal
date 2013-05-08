@@ -43,9 +43,22 @@ portletURL.setParameter("target", target);
 		searchContainer="<%= new GroupSearch(renderRequest, portletURL) %>"
 	>
 		<c:if test='<%= !type.equals("parentSites") %>'>
-			<liferay-ui:search-form
-				page="/html/portlet/users_admin/group_search.jsp"
-			/>
+			<aui:nav-bar>
+				<aui:nav-bar-search cssClass="pull-right" file="/html/portlet/directory/user_group_search.jsp" searchContainer="<%= searchContainer %>" />
+			</aui:nav-bar>
+
+			<div>
+				<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_COMMUNITY) %>">
+					<aui:button onClick='<%= renderResponse.getNamespace() + "addGroup();" %>' value="add-site" />
+				</c:if>
+			</div>
+
+			<aui:script>
+				function <portlet:namespace />addGroup() {
+					document.<portlet:namespace />fm.method = 'post';
+					submitForm(document.<portlet:namespace />fm, '<portlet:renderURL><portlet:param name="struts_action" value="/sites_admin/edit_site" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>');
+				}
+			</aui:script>
 		</c:if>
 
 		<%
@@ -163,7 +176,7 @@ portletURL.setParameter("target", target);
 				sb.append(AssetPublisherUtil.getScopeId(group, scopeGroupId));
 				sb.append("', '");
 				sb.append(target);
-				sb.append("'); Liferay.Util.getWindow().close();");
+				sb.append("'); Liferay.Util.getWindow().hide();");
 
 				rowHREF = sb.toString();
 			}

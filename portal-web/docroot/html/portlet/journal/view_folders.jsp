@@ -341,8 +341,8 @@ else {
 		Liferay.fire(
 			'<portlet:namespace />pageLoaded',
 			{
-				paginator: {
-					name: 'folderPaginator',
+				pagination: {
+					name: 'folderPagination',
 					state: {
 						page: <%= (total == 0) ? 0 : searchContainer.getCur() %>,
 						rowsPerPage: <%= searchContainer.getDelta() %>,

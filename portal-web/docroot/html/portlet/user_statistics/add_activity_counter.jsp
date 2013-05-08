@@ -30,7 +30,7 @@ activityCounterNames.add(SocialActivityCounterConstants.NAME_USER_ACHIEVEMENTS);
 Collections.sort(activityCounterNames, new SocialActivityCounterNameComparator(locale));
 %>
 
-<div class="aui-field-row query-row">
+<div class="field-row query-row">
 	<aui:select inlineField="<%= true %>" label="" name='<%= "preferences--displayActivityCounterName" + index + "--" %>'>
 
 		<%

@@ -115,12 +115,6 @@ else {
 
 						Liferay.Util.openWindow(
 							{
-								dialog:
-									{
-										align: Liferay.Util.Window.ALIGN_CENTER,
-										modal: true,
-										width: '90%'
-									},
 								id: '<portlet:namespace />workflowTasks',
 								title: '<%= UnicodeLanguageUtil.get(pageContext, "workflow") %>',
 								uri: '<%= portletURL.toString() %>'

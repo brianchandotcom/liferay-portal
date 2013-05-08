@@ -39,7 +39,7 @@ List<MDRRuleGroupInstance> ruleGroupInstances = MDRRuleGroupInstanceServiceUtil.
 	title="manage-rule-group-priorities"
 />
 
-<div class="portlet-msg-info">
+<div class="alert alert-info">
 	<liferay-ui:message key="to-manage-priorities,-drag-the-rule-group-to-the-desired-position" />
 </div>
 
@@ -64,7 +64,7 @@ List<MDRRuleGroupInstance> ruleGroupInstances = MDRRuleGroupInstanceServiceUtil.
 		%>
 
 			<div class="rule-group-instance <%= (i == 0) ? "rule-group-instance-first" : StringPool.BLANK %>" data-rule-group-instance-id="<%= ruleGroupInstance.getRuleGroupInstanceId() %>">
-				<span class="rule-group-instance-handle aui-icon aui-icon-grip-dotted-vertical"></span>
+				<span class="rule-group-instance-handle icon icon-grip-dotted-vertical"></span>
 
 				<span class="rule-group-instance-label"><%= ruleGroup.getName(locale) %></span>
 

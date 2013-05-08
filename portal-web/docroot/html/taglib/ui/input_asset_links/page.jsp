@@ -78,7 +78,7 @@ assetBrowserURL.setPortletMode(PortletMode.VIEW);
 assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 %>
 
-<liferay-ui:icon-menu align="left" cssClass="select-existing-selector" icon='<%= themeDisplay.getPathThemeImages() + "/common/search.png" %>' id='<%= randomNamespace + "inputAssetLinks" %>' message="select" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu cssClass="select-existing-selector" icon='<%= themeDisplay.getPathThemeImages() + "/common/search.png" %>' id='<%= randomNamespace + "inputAssetLinks" %>' message="select" showWhenSingleIcon="<%= true %>">
 
 	<%
 	for (AssetRendererFactory assetRendererFactory : AssetRendererFactoryRegistryUtil.getAssetRendererFactories(company.getCompanyId())) {
@@ -178,10 +178,6 @@ assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 	function <%= randomNamespace %>openAssetBrowser(url, title) {
 		Liferay.Util.openWindow(
 			{
-				dialog: {
-					constrain: true,
-					width: 820
-				},
 				id: '<portlet:namespace />assetBrowser',
 				title: title,
 				uri: url

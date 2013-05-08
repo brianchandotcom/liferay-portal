@@ -22,12 +22,6 @@ long classPK = ParamUtil.getLong(request, "classPK");
 String eventName = ParamUtil.getString(request, "eventName", "selectStructure");
 %>
 
-<c:if test="<%= showToolbar %>">
-	<liferay-util:include page="/html/portlet/dynamic_data_mapping/structure_toolbar.jsp">
-		<liferay-util:param name="toolbarItem" value="view-all" />
-	</liferay-util:include>
-</c:if>
-
 <liferay-portlet:renderURL varImpl="portletURL">
 	<portlet:param name="struts_action" value="/dynamic_data_mapping/select_structure" />
 	<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
@@ -42,9 +36,11 @@ String eventName = ParamUtil.getString(request, "eventName", "selectStructure");
 		/>
 	</c:if>
 
-	<liferay-ui:search-form
-		page="/html/portlet/dynamic_data_mapping/structure_search.jsp"
-	/>
+	<c:if test="<%= showToolbar %>">
+		<liferay-util:include page="/html/portlet/dynamic_data_mapping/structure_toolbar.jsp">
+			<liferay-util:param name="toolbarItem" value="view-all" />
+		</liferay-util:include>
+	</c:if>
 
 	<div class="separator"><!-- --></div>
 
@@ -115,8 +111,8 @@ String eventName = ParamUtil.getString(request, "eventName", "selectStructure");
 
 			Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', result);
 
-			Util.getWindow().close();
+			Util.getWindow().destroy();
 		},
-		'.selector-button input'
+		'.selector-button'
 	);
 </aui:script>

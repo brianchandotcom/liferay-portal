@@ -63,7 +63,7 @@
 					<aui:form action='<%= themeDisplay.getPathMain() + "/portal/setup_wizard" %>' method="post" name="fm" onSubmit="event.preventDefault();">
 						<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 
-						<aui:fieldset column="<%= true %>" cssClass="aui-w45" label="portal">
+						<aui:fieldset cssClass="span6" label="portal">
 							<aui:input label="portal-name" name="companyName" suffix='<%= LanguageUtil.format(pageContext, "for-example-x", "Liferay") %>' value="<%= PropsValues.COMPANY_DEFAULT_NAME %>" />
 
 							<aui:select inlineField="<%= true %>" label="default-language" name="companyLocale">
@@ -87,7 +87,7 @@
 							<aui:button cssClass="change-language" name="changeLanguageButton" value="change" />
 						</aui:fieldset>
 
-						<aui:fieldset column="<%= true %>" cssClass="aui-column-last aui-w50" label="administrator-user">
+						<aui:fieldset cssClass="column-last span6" label="administrator-user">
 							<aui:input label="first-name" name="adminFirstName" value="<%= PropsValues.DEFAULT_ADMIN_FIRST_NAME %>" />
 
 							<aui:input label="last-name" name="adminLastName" value="<%= PropsValues.DEFAULT_ADMIN_LAST_NAME %>" />
@@ -98,7 +98,7 @@
 							</aui:input>
 						</aui:fieldset>
 
-						<aui:fieldset column="<%= true %>" cssClass="aui-w100" label="database">
+						<aui:fieldset cssClass="span12" label="database">
 							<aui:input name="defaultDatabase" type="hidden" value="<%= defaultDatabase %>" />
 
 							<div id="defaultDatabaseOptions">
@@ -163,7 +163,7 @@
 								</c:if>
 							</div>
 
-							<div class="aui-helper-hidden" id="customDatabaseOptions">
+							<div class="hide" id="customDatabaseOptions">
 								<div class="connection-messages" id="connectionMessages"></div>
 
 								<a class="database-options" href="<%= HttpUtil.addParameter(themeDisplay.getPathMain() + "/portal/setup_wizard", "defaultDatabase", true) %>" id="defaultDatabaseOptionsLink">
@@ -214,7 +214,7 @@
 						</aui:button-row>
 					</aui:form>
 
-					<aui:script use="aui-base,aui-io-request,aui-loading-mask">
+					<aui:script use="aui-base,aui-io-request,aui-loading-mask-deprecated">
 						var customDatabaseOptions = A.one('#customDatabaseOptions');
 						var customDatabaseOptionsLink = A.one('#customDatabaseOptionsLink');
 						var databaseSelector = A.one('#databaseType');
@@ -285,7 +285,7 @@
 						);
 
 						var updateMessage = function(message, type) {
-							connectionMessages.html('<span class="portlet-msg-' + type + '">' + message + '</span>');
+							connectionMessages.html('<span class="alert alert-' + type + '">' + message + '</span>');
 						};
 
 						var startInstall = function() {
@@ -371,11 +371,11 @@
 								<aui:input name="password" type="hidden" value="<%= PropsValues.DEFAULT_ADMIN_PASSWORD %>" />
 
 								<p>
-									<span class="portlet-msg-success">
+									<span class="alert alert-success">
 										<liferay-ui:message key="your-configuration-was-saved-sucessfully" />
 									</span>
 
-									<span class="aui-field-hint">
+									<span class="field-hint">
 
 										<%
 										String taglibArguments = "<span class=\"lfr-inline-code\">" + PropsValues.LIFERAY_HOME + StringPool.SLASH + SetupWizardUtil.PROPERTIES_FILE_NAME + "</span>";
@@ -391,7 +391,7 @@
 
 								<c:if test="<%= !passwordUpdated %>">
 									<p>
-										<span class="aui-field-hint">
+										<span class="field-hint">
 											<liferay-ui:message arguments="<%= PropsValues.DEFAULT_ADMIN_PASSWORD %>" key="your-password-is-x.-you-will-be-required-to-change-your-password-the-next-time-you-log-into-the-portal" />
 										</span>
 									</p>
@@ -402,7 +402,7 @@
 						</c:when>
 						<c:otherwise>
 							<p>
-								<span class="portlet-msg-alert">
+								<span class="alert alert-block">
 
 									<%
 									String taglibArguments = "<span class=\"lfr-inline-code\">" + PropsValues.LIFERAY_HOME + "</span>";
@@ -412,7 +412,7 @@
 								</span>
 							</p>
 
-							<aui:input inputCssClass="properties-text" label="" name="portal-ext" type="textarea" value="<%= unicodeProperties.toSortedString() %>" wrap="soft" />
+							<aui:input cssClass="properties-text" label="" name="portal-ext" type="textarea" value="<%= unicodeProperties.toSortedString() %>" wrap="soft" />
 						</c:otherwise>
 					</c:choose>
 				</c:otherwise>

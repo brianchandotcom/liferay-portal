@@ -109,7 +109,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				sb.append(HtmlUtil.escapeJS(assetEntry.getTitle(locale)));
 				sb.append("', '");
 				sb.append(HtmlUtil.escapeJS(group.getDescriptiveName(locale)));
-				sb.append("');Liferay.Util.getWindow().close();");
+				sb.append("');Liferay.Util.getWindow().hide();");
 
 				rowHREF = sb.toString();
 			}

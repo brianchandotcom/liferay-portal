@@ -20,7 +20,7 @@
 Folder folder = (Folder)request.getAttribute("view.jsp-folder");
 %>
 
-<liferay-ui:icon-menu align="left" cssClass="actions-button aui-helper-hidden" direction="down" icon="" id="actionsButtonContainer" message="actions" showExpanded="<%= false %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu cssClass="actions-button hide" direction="down" icon="" id="actionsButtonContainer" message="actions" showExpanded="<%= false %>" showWhenSingleIcon="<%= true %>">
 
 	<%
 	Group scopeGroup = themeDisplay.getScopeGroup();
@@ -106,7 +106,7 @@ Folder folder = (Folder)request.getAttribute("view.jsp-folder");
 
 <span class="manage-button">
 	<c:if test="<%= !user.isDefaultUser() %>">
-		<liferay-ui:icon-menu align="left" direction="down" icon="" message="manage" showExpanded="<%= false %>" showWhenSingleIcon="<%= true %>">
+		<liferay-ui:icon-menu direction="down" icon="" message="manage" showExpanded="<%= false %>" showWhenSingleIcon="<%= true %>">
 
 			<%
 			String taglibURL = "javascript:" + renderResponse.getNamespace() + "openFileEntryTypeView()";
@@ -135,9 +135,6 @@ Folder folder = (Folder)request.getAttribute("view.jsp-folder");
 	function <portlet:namespace />openFileEntryTypeView() {
 		Liferay.Util.openWindow(
 			{
-				dialog: {
-					width: 820
-				},
 				id: '<portlet:namespace />openFileEntryTypeView',
 				title: '<%= UnicodeLanguageUtil.get(pageContext, "document-types") %>',
 				uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/document_library/view_file_entry_type" /><portlet:param name="redirect" value="<%= currentURL %>" /></liferay-portlet:renderURL>'
@@ -150,7 +147,7 @@ Folder folder = (Folder)request.getAttribute("view.jsp-folder");
 			{
 				ddmResource: '<%= ddmResource %>',
 				dialog: {
-					width: 820
+					destroyOnHide: true
 				},
 				showGlobalScope: 'true',
 				showManageTemplates: 'false',

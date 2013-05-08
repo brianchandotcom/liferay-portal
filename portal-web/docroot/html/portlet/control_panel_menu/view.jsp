@@ -22,7 +22,11 @@
 
 <div class="portal-add-content">
 	<div class="control-panel-tools">
-		<aui:input cssClass="search-panels" inputCssClass="search-panels-input" label="" name="searchPanel" />
+		<div class="search-panels">
+			<div class="search-panels-bar">
+				<aui:input cssClass="search-query span12 search-panels-input" label="" name="searchPanel" />
+			</div>
+		</div>
 	</div>
 
 	<liferay-ui:panel-container extended="<%= true %>" id="controlPanelMenuAddContentPanelContainer" persistState="<%= true %>">
@@ -145,7 +149,7 @@
 				<liferay-util:buffer var="groupSelectorIconMenu">
 					<c:choose>
 						<c:when test="<%= !manageableSites.isEmpty() %>">
-							<liferay-ui:icon-menu align="left" direction="down" icon="<%= curGroup.getIconURL(themeDisplay) %>" id="groupSelector" localizeMessage="<%= false %>" message="<%= HtmlUtil.escape(StringUtil.shorten(curGroupName, 25)) %>">
+							<liferay-ui:icon-menu direction="down" icon="<%= curGroup.getIconURL(themeDisplay) %>" id="groupSelector" localizeMessage="<%= false %>" message="<%= HtmlUtil.escape(StringUtil.shorten(curGroupName, 25)) %>">
 
 								<%
 								for (int i = 0; i < manageableSites.size(); i++) {
@@ -207,7 +211,7 @@
 			<liferay-util:buffer var="categoryPortletsContent">
 				<c:if test="<%= !scopeLayouts.isEmpty() && curCategory.equals(PortletCategoryKeys.CONTENT) %>">
 					<div class="nobr lfr-title-scope-selector">
-						<liferay-ui:icon-menu align="left" direction="down" icon="" message='<%= LanguageUtil.get(pageContext, "scope") + StringPool.COLON + StringPool.SPACE + curGroupLabel %>'>
+						<liferay-ui:icon-menu direction="down" icon="" message='<%= LanguageUtil.get(pageContext, "scope") + StringPool.COLON + StringPool.SPACE + curGroupLabel %>'>
 							<liferay-ui:icon
 								message="default"
 								src="<%= curGroup.getIconURL(themeDisplay) %>"
@@ -324,23 +328,3 @@
 
 	</liferay-ui:panel-container>
 </div>
-
-<aui:script use="liferay-panel">
-	var trigger = A.one('#<portlet:namespace />groupSelector a');
-
-	var panelContainer = Liferay.Panel.get('controlPanelMenuAddContentPanelContainer');
-
-	if (trigger && panelContainer) {
-		trigger.on(
-			'click',
-			function(event) {
-				panelContainer.once(
-					'collapse',
-					function(event) {
-						event.preventDefault();
-					}
-				);
-			}
-		);
-	}
-</aui:script>

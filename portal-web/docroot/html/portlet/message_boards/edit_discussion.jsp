@@ -98,7 +98,7 @@ if (message != null) {
 	</c:if>
 
 	<c:if test="<%= pending %>">
-		<div class="portlet-msg-info">
+		<div class="alert alert-info">
 			<liferay-ui:message key="there-is-a-publication-workflow-in-process" />
 		</div>
 	</c:if>
@@ -109,7 +109,7 @@ if (message != null) {
 		</c:if>
 
 		<c:if test="<%= (message != null) && message.isApproved() && WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(message.getCompanyId(), message.getGroupId(), MBMessage.class.getName()) %>">
-			<div class="portlet-msg-info">
+			<div class="alert alert-info">
 				<%= LanguageUtil.format(pageContext, "this-x-is-approved.-publishing-these-changes-will-cause-it-to-be-unpublished-and-go-through-the-approval-process-again", ResourceActionsUtil.getModelResource(locale, MBMessage.class.getName())) %>
 			</div>
 		</c:if>

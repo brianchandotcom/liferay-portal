@@ -37,14 +37,14 @@
 
 	<div id="content">
 		<div id="main-content">
-			<aui:layout>
-				<aui:column columnWidth="25" cssClass="lfr-api-navigation">
+			<aui:row>
+				<aui:col cssClass="lfr-api-navigation" width="<%= 25 %>">
 					<liferay-util:include page="/html/portal/api/jsonws/actions.jsp" />
-				</aui:column>
-				<aui:column columnWidth="75" cssClass="lfr-api-details">
+				</aui:col>
+				<aui:col cssClass="lfr-api-details" width="<%= 75 %>">
 					<liferay-util:include page="/html/portal/api/jsonws/action.jsp" />
-				</aui:column>
-			</aui:layout>
+				</aui:col>
+			</aui:row>
 		</div>
 	</div>
 

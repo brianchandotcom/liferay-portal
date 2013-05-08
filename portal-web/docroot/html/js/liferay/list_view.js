@@ -21,7 +21,7 @@ AUI.add(
 
 		var STR_TOP = 'top';
 
-		var TPL_DATA_CONTAINER = '<div class="' + CSS_DATA_CONTAINER + ' aui-helper-hidden"></div>';
+		var TPL_DATA_CONTAINER = '<div class="' + CSS_DATA_CONTAINER + ' hide"></div>';
 
 		var UI_SRC = A.Widget.UI_SRC;
 

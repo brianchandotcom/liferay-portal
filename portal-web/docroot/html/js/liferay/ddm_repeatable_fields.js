@@ -125,11 +125,11 @@ AUI.add(
 
 						var selector = ['>'];
 
-						if (container.hasClass('aui-field-wrapper')) {
-							selector.push(' .aui-field-wrapper-content >');
+						if (container.hasClass('field-wrapper')) {
+							selector.push(' .field-wrapper-content >');
 						}
 
-						selector.push(' .aui-field-wrapper');
+						selector.push(' .field-wrapper');
 
 						if (fieldName) {
 							selector.push('[data-fieldName="' + fieldName + '"]');
@@ -141,7 +141,7 @@ AUI.add(
 					getFieldParentNode: function(fieldNode) {
 						var instance = this;
 
-						var parentNode = fieldNode.ancestor('.aui-field-wrapper');
+						var parentNode = fieldNode.ancestor('.field-wrapper');
 
 						if (!parentNode) {
 							parentNode = instance.get('container');
@@ -230,7 +230,7 @@ AUI.add(
 
 						var currentTarget = event.currentTarget;
 
-						var fieldNode = currentTarget.ancestor('.aui-field-wrapper');
+						var fieldNode = currentTarget.ancestor('.field-wrapper');
 
 						if (currentTarget.hasClass('lfr-ddm-repeatable-add-button')) {
 							instance.insertField(fieldNode);
@@ -243,7 +243,7 @@ AUI.add(
 					_onHoverRepeatableButton: function(event) {
 						var instance = this;
 
-						var fieldNode = event.currentTarget.ancestor('.aui-field-wrapper');
+						var fieldNode = event.currentTarget.ancestor('.field-wrapper');
 
 						fieldNode.toggleClass('lfr-ddm-repeatable-active', (event.phase === 'over'));
 					}

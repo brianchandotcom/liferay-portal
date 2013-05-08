@@ -148,7 +148,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 						/>
 					</div>
 
-					<div class="answer <%= !message.isRoot() && message.isAnswer() ? "" : "aui-helper-hidden" %>" id="<portlet:namespace />deleteAnswerFlag_<%= message.getMessageId() %>">
+					<div class="answer <%= !message.isRoot() && message.isAnswer() ? "" : "hide" %>" id="<portlet:namespace />deleteAnswerFlag_<%= message.getMessageId() %>">
 						<liferay-ui:icon
 							image="checked"
 							label="<%= true %>"
@@ -207,7 +207,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 
 					<c:if test="<%= showAnswerFlag || hasReplyPermission %>">
 						<ul class="edit-controls lfr-component">
-							<li class="<%= showAnswerFlag ? "" : "aui-helper-hidden" %>" id="<portlet:namespace />addAnswerFlag_<%= message.getMessageId() %>">
+							<li class="<%= showAnswerFlag ? "" : "hide" %>" id="<portlet:namespace />addAnswerFlag_<%= message.getMessageId() %>">
 
 								<%
 								String taglibMarkAsAnswerURL = "javascript:" + renderResponse.getNamespace() + "addAnswerFlag('" + message.getMessageId() + "');";

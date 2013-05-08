@@ -22,4 +22,4 @@ String name = (String)request.getAttribute("liferay-ui:section:name");
 boolean selected = (Boolean)request.getAttribute("liferay-ui:section:selected");
 %>
 
-<div class='<%= selected ? StringPool.BLANK : "aui-helper-hidden" %>' id="<%= namespace %><%= param %><%= StringUtil.toCharCode(name) %>TabsSection">
+<div class='<%= selected ? StringPool.BLANK : "hide" %>' id="<%= namespace %><%= param %><%= StringUtil.toCharCode(name) %>TabsSection">

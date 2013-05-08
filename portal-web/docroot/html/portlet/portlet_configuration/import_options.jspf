@@ -35,7 +35,7 @@
 						Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_SETUP %>Checkbox', '<portlet:namespace />showChangeGlobalConfiguration');
 					</aui:script>
 
-					<div class="aui-helper-hidden" id="<portlet:namespace />globalConfiguration">
+					<div class="helper-hidden" id="<portlet:namespace />globalConfiguration">
 						<aui:fieldset cssClass="portlet-data-section" label="application">
 							<aui:input label="archived-setups" name="<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS %>" type="checkbox" value="<%= false %>" />
 
@@ -57,7 +57,7 @@
 
 					<aui:input label="content" name="<%= PortletDataHandlerKeys.PORTLET_DATA %>" type="checkbox" value="<%= portletDataHandler.isPublishToLiveByDefault() %>" />
 
-					<ul class="aui-helper-hidden" id="<portlet:namespace />portletDataControls">
+					<ul class="helper-hidden" id="<portlet:namespace />portletDataControls">
 
 						<%
 						try {
@@ -76,7 +76,7 @@
 								selectedContent += ArrayUtil.toString(controls, "controlName", StringPool.COMMA_AND_SPACE, locale);
 						%>
 
-								<div class="aui-helper-hidden" id="<portlet:namespace />content_<%= selPortlet.getRootPortletId() %>">
+								<div class="helper-hidden" id="<portlet:namespace />content_<%= selPortlet.getRootPortletId() %>">
 									<aui:fieldset cssClass="portlet-data-section" label="content">
 										<ul class="lfr-tree lfr-component">
 											<aui:input data-name='<%= LanguageUtil.get(locale, "delete-portlet-data") %>' label="delete-portlet-data-before-importing" name="<%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>" type="checkbox" />

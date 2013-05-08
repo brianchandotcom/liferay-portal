@@ -338,7 +338,7 @@ else if (tabs2.equals("message-updated-email")) {
 			</div>
 		</c:when>
 		<c:when test='<%= tabs2.equals("thread-priorities") %>'>
-			<div class="portlet-msg-info">
+			<div class="alert alert-info">
 				<liferay-ui:message key="enter-the-name,-image,-and-priority-level-in-descending-order" />
 			</div>
 
@@ -434,7 +434,7 @@ else if (tabs2.equals("message-updated-email")) {
 					</table>
 				</td>
 				<td>
-					<table class='<%= (currentLocale.equals(defaultLocale) ? "aui-helper-hidden" : "") + " lfr-table" %>' id="<portlet:namespace />localized-priorities-table">
+					<table class='<%= (currentLocale.equals(defaultLocale) ? "hide" : "") + " lfr-table" %>' id="<portlet:namespace />localized-priorities-table">
 					<tr>
 						<td class="lfr-label">
 							<liferay-ui:message key="name" />
@@ -595,7 +595,7 @@ else if (tabs2.equals("message-updated-email")) {
 			</aui:script>
 		</c:when>
 		<c:when test='<%= tabs2.equals("user-ranks") %>'>
-			<div class="portlet-msg-info">
+			<div class="alert alert-info">
 				<liferay-ui:message key="enter-rank-and-minimum-post-pairs-per-line" />
 			</div>
 

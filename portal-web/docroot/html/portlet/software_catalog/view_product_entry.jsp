@@ -195,7 +195,7 @@ viewProductEntryURL.setParameter("productEntryId", String.valueOf(productEntryId
 		<br />
 	</c:when>
 	<c:otherwise>
-		<div class="portlet-msg-error">
+		<div class="alert alert-error">
 			<liferay-ui:message key="this-product-does-not-have-any-released-versions" />
 		</div>
 	</c:otherwise>

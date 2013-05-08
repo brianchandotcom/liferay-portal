@@ -205,28 +205,28 @@ DDMDisplay ddmDisplay = DDMDisplayRegistryUtil.getDDMDisplay(refererPortletName)
 								<aui:input name="smallImage" />
 							</div>
 
-							<div class="lfr-ddm-small-image-content aui-toggler-content-collapsed">
-								<aui:layout>
+							<div class="lfr-ddm-small-image-content toggler-content-collapsed">
+								<aui:row>
 									<c:if test="<%= smallImage && (template != null) %>">
-										<aui:column>
+										<aui:col width="<%= 50 %>">
 											<img alt="<liferay-ui:message key="preview" />" class="lfr-ddm-small-image-preview" src="<%= Validator.isNotNull(template.getSmallImageURL()) ? template.getSmallImageURL() : themeDisplay.getPathImage() + "/template?img_id=" + template.getSmallImageId() + "&t=" + WebServerServletTokenUtil.getToken(template.getSmallImageId()) %>" />
-										</aui:column>
+										</aui:col>
 									</c:if>
 
-									<aui:column>
+									<aui:col width="<%= (smallImage && (template != null)) ? 50 : 100 %>">
 										<aui:fieldset>
-											<aui:input inlineField="<%= true %>" inputCssClass="lfr-ddm-small-image-type" label="small-image-url" name="type" type="radio" />
+											<aui:input cssClass="lfr-ddm-small-image-type" inlineField="<%= true %>" label="small-image-url" name="type" type="radio" />
 
-											<aui:input inlineField="<%= true %>" inputCssClass="lfr-ddm-small-image-value" label="" name="smallImageURL" />
+											<aui:input cssClass="lfr-ddm-small-image-value" inlineField="<%= true %>" label="" name="smallImageURL" />
 										</aui:fieldset>
 
 										<aui:fieldset>
-											<aui:input inlineField="<%= true %>" inputCssClass="lfr-ddm-small-image-type" label="small-image" name="type" type="radio" />
+											<aui:input cssClass="lfr-ddm-small-image-type" inlineField="<%= true %>" label="small-image" name="type" type="radio" />
 
-											<aui:input inlineField="<%= true %>" inputCssClass="lfr-ddm-small-image-value" label="" name="smallImageFile" type="file" />
+											<aui:input cssClass="lfr-ddm-small-image-value" inlineField="<%= true %>"  label="" name="smallImageFile" type="file" />
 										</aui:fieldset>
-									</aui:column>
-								</aui:layout>
+									</aui:col>
+								</aui:row>
 							</div>
 						</div>
 					</c:otherwise>
@@ -430,7 +430,7 @@ DDMDisplay ddmDisplay = DDMDisplayRegistryUtil.getDDMDisplay(refererPortletName)
 	String taglibOnClick = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "saveTemplate');";
 	%>
 
-	<aui:button onClick="<%= taglibOnClick %>" value='<%= LanguageUtil.get(pageContext, "save") %>' />
+	<aui:button onClick="<%= taglibOnClick %>" primary="<%= true %>" value='<%= LanguageUtil.get(pageContext, "save") %>' />
 
 	<aui:button onClick='<%= renderResponse.getNamespace() + "saveAndContinueTemplate();" %>' value='<%= LanguageUtil.get(pageContext, "save-and-continue") %>' />
 

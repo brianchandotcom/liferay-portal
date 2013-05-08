@@ -581,6 +581,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-color-picker', 'aui-io-request', 'aui-overlay-context']
+		requires: ['aui-color-picker-deprecated', 'aui-io-request', 'aui-overlay-context-deprecated']
 	}
 );

@@ -50,7 +50,6 @@ java.lang.String id = GetterUtil.getString((java.lang.String)request.getAttribut
 boolean ignoreRequestValue = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:ignoreRequestValue")));
 boolean inlineField = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:inlineField")));
 java.lang.String inlineLabel = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:inlineLabel"));
-java.lang.String inputCssClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:inputCssClass"));
 java.lang.String label = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:label"));
 java.lang.String languageId = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:languageId"));
 boolean last = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:last")));
@@ -87,7 +86,6 @@ _updateOptions(_options, "id", id);
 _updateOptions(_options, "ignoreRequestValue", ignoreRequestValue);
 _updateOptions(_options, "inlineField", inlineField);
 _updateOptions(_options, "inlineLabel", inlineLabel);
-_updateOptions(_options, "inputCssClass", inputCssClass);
 _updateOptions(_options, "label", label);
 _updateOptions(_options, "languageId", languageId);
 _updateOptions(_options, "last", last);

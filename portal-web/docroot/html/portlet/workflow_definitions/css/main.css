@@ -126,10 +126,6 @@
 	}
 }
 
-.lfr-portlet-toolbar .lfr-toolbar-button.upload-button a {
-	background-image: url(@theme_image_path@/common/post.png);
-}
-
 #workflowTasksPanelContainer {
 	border-width: 0;
 }

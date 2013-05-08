@@ -61,8 +61,8 @@ request.setAttribute("view_entry.jsp-entry", entry);
 	</c:otherwise>
 </c:choose>
 
-<aui:layout>
-	<aui:column columnWidth="<%= 75 %>" cssClass="lfr-asset-column lfr-asset-column-details" first="<%= true %>">
+<aui:row>
+	<aui:col cssClass="lfr-asset-column lfr-asset-column-details" width="<%= 75 %>">
 		<div class="lfr-asset-categories">
 			<liferay-ui:asset-categories-summary
 				className="<%= BookmarksEntry.class.getName() %>"
@@ -123,9 +123,9 @@ request.setAttribute("view_entry.jsp-entry", entry);
 				classPK="<%= entryId %>"
 			/>
 		</div>
-	</aui:column>
+	</aui:col>
 
-	<aui:column columnWidth="<%= 25 %>" cssClass="lfr-asset-column lfr-asset-column-actions" last="<%= true %>">
+	<aui:col cssClass="lfr-asset-column lfr-asset-column-actions" last="<%= true %>" width="<%= 25 %>">
 		<div class="lfr-asset-summary">
 			<liferay-ui:icon
 				cssClass="lfr-asset-avatar"
@@ -147,8 +147,8 @@ request.setAttribute("view_entry.jsp-entry", entry);
 		%>
 
 		<liferay-util:include page="/html/portlet/bookmarks/entry_action.jsp" />
-	</aui:column>
-</aui:layout>
+	</aui:col>
+</aui:row>
 
 <%
 BookmarksUtil.addPortletBreadcrumbEntries(entry, request, renderResponse);

@@ -163,14 +163,6 @@
 	line-height: 0;
 	margin-right: 2px;
 	padding: 0;
-
-	.aui-field-content {
-		padding: 5px 4px 4px;
-
-		.aui-field-input-choice {
-			margin: 0;
-		}
-	}
 }
 
 .lfr-upload-movie {

@@ -94,12 +94,12 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 	title="<%= headerTitle %>"
 />
 
-<aui:layout>
-	<aui:column columnWidth="<%= 75 %>" cssClass="lfr-asset-column lfr-asset-column-details" first="<%= true %>">
+<aui:row>
+	<aui:col cssClass="lfr-asset-column lfr-asset-column-details" width="<%= 75 %>">
 		<liferay-ui:error exception="<%= WorkflowTaskDueDateException.class %>" message="please-enter-a-valid-due-date" />
 
-		<aui:layout>
-			<aui:column columnWidth="60">
+		<aui:row>
+			<aui:col width="<%= 60 %>">
 				<div class="lfr-asset-assigned">
 					<aui:field-wrapper label="assigned-to">
 						<c:choose>
@@ -151,9 +151,9 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 						<%= LanguageUtil.get(pageContext, WorkflowInstanceLinkLocalServiceUtil.getState(companyId, groupId, className, classPK)) %>
 					</aui:field-wrapper>
 				</div>
-			</aui:column>
+			</aui:col>
 
-			<aui:column>
+			<aui:col>
 				<div class="lfr-asset-date">
 					<aui:field-wrapper label="create-date">
 						<%= dateFormatDateTime.format(workflowTask.getCreateDate()) %>
@@ -176,8 +176,8 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 						</c:if>
 					</aui:field-wrapper>
 				</div>
-			</aui:column>
-		</aui:layout>
+			</aui:col>
+		</aui:row>
 
 		<c:if test="<%= Validator.isNotNull(workflowTask.getDescription()) %>">
 			<div class="lfr-asset-field">
@@ -199,8 +199,8 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 							<c:if test="<%= editPortletURL != null %>">
 
 								<%
-								editPortletURL.setPortletMode(PortletMode.VIEW);
 								editPortletURL.setWindowState(LiferayWindowState.POP_UP);
+								editPortletURL.setPortletMode(PortletMode.VIEW);
 
 								String editPortletURLString = editPortletURL.toString();
 
@@ -214,7 +214,7 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 									<c:when test="<%= assetRenderer.hasEditPermission(permissionChecker) && showEditURL %>">
 
 										<%
-										String taglibEditURL = "javascript:Liferay.Util.openWindow({dialog: {width: 960}, id: '" + renderResponse.getNamespace() + "editAsset', title: '" + LanguageUtil.format(pageContext, "edit-x", HtmlUtil.escape(assetRenderer.getTitle(locale))) + "', uri: '" + HtmlUtil.escapeURL(editPortletURLString) + "'});";
+										String taglibEditURL = "javascript:Liferay.Util.openWindow({id: '" + renderResponse.getNamespace() + "editAsset', title: '" + LanguageUtil.format(pageContext, "edit-x", HtmlUtil.escape(assetRenderer.getTitle(locale))) + "', uri:'" + HtmlUtil.escapeURL(editPortletURLString) + "'});";
 										%>
 
 										<liferay-ui:icon image="edit" url="<%= taglibEditURL %>" />
@@ -293,9 +293,9 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 				/>
 			</liferay-ui:panel>
 		</liferay-ui:panel-container>
-	</aui:column>
+	</aui:col>
 
-	<aui:column columnWidth="<%= 25 %>" cssClass="lfr-asset-column lfr-asset-column-actions" last="<%= true %>">
+	<aui:col cssClass="lfr-asset-column lfr-asset-column-actions" last="<%= true %>" width="<%= 25 %>">
 		<div class="lfr-asset-summary">
 			<liferay-ui:icon
 				cssClass="lfr-asset-avatar"
@@ -313,8 +313,8 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 		%>
 
 		<liferay-util:include page="/html/portlet/workflow_tasks/workflow_task_action.jsp" />
-	</aui:column>
-</aui:layout>
+	</aui:col>
+</aui:row>
 
 <aui:script use="liferay-workflow-tasks">
 	var onTaskClickFn = A.rbind('onTaskClick', Liferay.WorkflowTasks, '');

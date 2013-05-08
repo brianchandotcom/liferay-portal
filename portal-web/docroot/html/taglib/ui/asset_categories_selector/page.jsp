@@ -80,8 +80,8 @@ if (Validator.isNotNull(className)) {
 		String[] categoryIdsTitles = _getCategoryIdsTitles(curCategoryIds, curCategoryNames, vocabulary.getVocabularyId(), themeDisplay);
 	%>
 
-		<span class="aui-field-content">
-			<label class="aui-field-label" id="<%= namespace %>assetCategoriesLabel_<%= vocabulary.getVocabularyId() %>">
+		<span class="field-content">
+			<label id="<%= namespace %>assetCategoriesLabel_<%= vocabulary.getVocabularyId() %>">
 				<%= vocabulary.getTitle(locale) %>
 
 				<c:if test="<%= vocabulary.getGroupId() == themeDisplay.getCompanyGroupId() %>">
@@ -89,7 +89,7 @@ if (Validator.isNotNull(className)) {
 				</c:if>
 
 				<c:if test="<%= vocabulary.isRequired(classNameId) %>">
-					<span class="aui-label-required">(<liferay-ui:message key="required" />)</span>
+					<span class="label-required">(<liferay-ui:message key="required" />)</span>
 				</c:if>
 			</label>
 

@@ -113,7 +113,7 @@ if (reminderAttempts == null) {
 					}
 					%>
 
-					<div class="portlet-msg-info">
+					<div class="alert alert-info">
 						<%= LanguageUtil.format(pageContext, "a-new-password-will-be-sent-to-x-if-you-can-correctly-answer-the-following-question", login) %>
 					</div>
 
@@ -122,7 +122,7 @@ if (reminderAttempts == null) {
 
 				<c:choose>
 					<c:when test="<%= PropsValues.USERS_REMINDER_QUERIES_REQUIRED && !user2.hasReminderQuery() %>">
-						<div class="portlet-msg-info">
+						<div class="alert alert-info">
 							<liferay-ui:message key="the-password-cannot-be-reset-because-you-have-not-configured-a-reminder-query" />
 						</div>
 					</c:when>
@@ -142,7 +142,7 @@ if (reminderAttempts == null) {
 				</c:choose>
 			</c:when>
 			<c:otherwise>
-				<div class="portlet-msg-alert">
+				<div class="alert alert-block">
 					<liferay-ui:message key="the-system-cannot-send-you-a-new-password-because-you-have-not-provided-an-email-address" />
 				</div>
 			</c:otherwise>

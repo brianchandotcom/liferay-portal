@@ -67,7 +67,7 @@ public class PublishToLiveNowDMDocumentNoDMDockTest extends BaseTestCase {
 						"The data of this portlet is not staged. Any data changes are immediately available to the Local Live site. The portlet's own workflow is still honored. Portlet setup is still managed from staging."),
 					selenium.getText("//div[@class='portlet-msg-alert']"));
 				selenium.waitForElementPresent(
-					"//nav[@class='site-breadcrumbs aui-helper-hidden lfr-hudcrumbs']");
+					"//nav[@class='site-breadcrumbs aui-hide lfr-hudcrumbs']");
 				assertEquals(RuntimeVariables.replace("DM Document Title"),
 					selenium.getText(
 						"//a[@title='DM Document Title - DM Document Description']"));

@@ -33,7 +33,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_user_group_roles.
 <aui:input name="addUserGroupIds" type="hidden" />
 <aui:input name="removeUserGroupIds" type="hidden" />
 
-<div class="portlet-section-body results-row" style="border: 1px solid; padding: 5px;">
+<div>
 	<%= LanguageUtil.format(pageContext, "step-x-of-x", new String[] {"2", "2"}) %>
 
 	<em>Current</em> signifies current user groups associated with the <em><%= HtmlUtil.escape(role.getTitle(locale)) %></em> role. <em>Available</em> signifies all user groups associated with the <em><%= HtmlUtil.escape(groupName) %></em> <%= (group.isOrganization()) ? "organization" : "site" %>.

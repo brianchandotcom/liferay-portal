@@ -334,7 +334,7 @@
 #set ($nav_css_class = "sort-pages modify-pages")
 
 #if (!$has_navigation)
-	#set ($nav_css_class = $nav_css_class + " aui-helper-hidden")
+	#set ($nav_css_class = $nav_css_class + " hide")
 #end
 
 ## ---------- Staging ---------- ##

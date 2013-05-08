@@ -28,7 +28,7 @@ if (layoutSetBranchId > 0) {
 }
 %>
 
-<div class='<%= (layoutSetBranch != null) ? StringPool.BLANK : "aui-helper-hidden" %>' data-namespace="<portlet:namespace />" id="<portlet:namespace /><%= layoutSetBranch != null ? "updateBranch" : "addBranch" %>">
+<div class='<%= (layoutSetBranch != null) ? StringPool.BLANK : "hide" %>' data-namespace="<portlet:namespace />" id="<portlet:namespace /><%= layoutSetBranch != null ? "updateBranch" : "addBranch" %>">
 	<aui:model-context bean="<%= layoutSetBranch %>" model="<%= LayoutSetBranch.class %>" />
 
 	<portlet:actionURL var="editLayoutSetBranchURL">

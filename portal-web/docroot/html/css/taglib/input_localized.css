@@ -1,3 +1,32 @@
-.lfr-language-selector input, .lfr-language-selector textarea {
-	width: 200px;
+@import "compass";
+
+.input-localized {
+	.palette-item {
+		border-width: 0;
+	}
+
+	.palette-item-inner {
+		height: 11px;
+		width: 16px;
+
+		img {
+			display: block;
+		}
+	}
+
+	.palette-item, .palette-item-inner, .palette-item-hover, .palette-item-hover .palette-item-inner {
+		border-color: transparent;
+	}
+
+	.lfr-input-localized-flag {
+		@include opacity(0.15);
+	}
+
+	.palette-item-selected .lfr-input-localized-flag, .palette-item-hover .lfr-input-localized-flag {
+		@include opacity(1);
+	}
+
+	.palette-container {
+		margin-bottom: 12px;
+	}
 }

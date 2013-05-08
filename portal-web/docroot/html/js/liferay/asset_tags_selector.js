@@ -152,12 +152,6 @@ AUI.add(
 				NAME: NAME,
 
 				prototype: {
-					destructor: function() {
-						var instance = this;
-
-						(new A.EventHandle(instance._entriesHandles)).detach();
-					},
-
 					renderUI: function() {
 						var instance = this;
 
@@ -181,16 +175,6 @@ AUI.add(
 
 						entries.after('add', instance._updateHiddenInput, instance);
 						entries.after('remove', instance._updateHiddenInput, instance);
-
-						instance._entriesHandles = [
-							entries.after(
-								['add', 'replace', 'remove'],
-								function(event) {
-									A.fire('formNavigator:trackChanges', instance.inputNode);
-								},
-								instance
-							)
-						];
 					},
 
 					addEntries: function() {
@@ -221,21 +205,14 @@ AUI.add(
 						var instance = this;
 
 						if (!instance._popup) {
-							var popup = new A.Dialog(
+							var popup = Liferay.Util.Window.getWindow(
 								{
-									bodyContent: TPL_LOADING,
-									constrain: true,
-									draggable: true,
-									hideClass: 'aui-helper-hidden-accessible',
-									preventOverlap: true,
-									stack: true,
-									title: '',
-									width: 320,
-									zIndex: 1000
+									dialog: {
+										cssClass: CSS_POPUP,
+										hideClass: 'hide-accessible'
+									}
 								}
-							).render();
-
-							popup.get('boundingBox').addClass(CSS_POPUP);
+							);
 
 							var bodyNode = popup.bodyNode;
 
@@ -359,7 +336,7 @@ AUI.add(
 
 										fieldsets.each(
 											function(item, index, collection) {
-												var visibleEntries = item.one('label:not(.aui-helper-hidden)');
+												var visibleEntries = item.one('label:not(.hide)');
 
 												var action = 'addClass';
 
@@ -449,39 +426,33 @@ AUI.add(
 
 						var contentBox = instance.get('contentBox');
 
-						var toolbar = [
+						var buttonGroup = [
 							{
-								handler: {
-									context: instance,
-									fn: instance._onAddEntryClick
-								},
-								icon: 'plus',
-								id: 'add',
+								icon: 'icon-plus',
 								label: Liferay.Language.get('add'),
+								on: {
+									click: A.bind('_onAddEntryClick', instance)
+								},
 								title: Liferay.Language.get('add-tags')
 							},
 							{
-								handler: {
-									context: instance,
-									fn: instance._showSelectPopup
-								},
-								icon: 'search',
-								id: 'select',
+								icon: 'icon-search',
 								label: Liferay.Language.get('select'),
+								on: {
+									click: A.bind('_showSelectPopup', instance)
+								},
 								title: Liferay.Language.get('select-tags')
 							}
 						];
 
 						if (instance.get('contentCallback')) {
-							toolbar.push(
+							buttonGroup.push(
 								{
-									handler: {
-										context: instance,
-										fn: instance._showSuggestionsPopup
-									},
-									icon: 'comment',
-									id: 'suggest',
+									icon: 'icon-comment',
 									label: Liferay.Language.get('suggestions'),
+									on: {
+										click: A.bind('_showSuggestionsPopup', instance)
+									},
 									title: Liferay.Language.get('suggestions')
 								}
 							);
@@ -489,7 +460,7 @@ AUI.add(
 
 						instance.icons = new A.Toolbar(
 							{
-								children: toolbar
+								children: [buttonGroup]
 							}
 						).render(contentBox);
 
@@ -529,24 +500,9 @@ AUI.add(
 
 						var popup = instance._getPopup();
 
-						if (event && event.currentTarget) {
-							var toolItem = event.currentTarget.get('boundingBox');
-
-							popup.align(toolItem, ['bl', 'tl']);
-						}
-
 						popup.entriesNode.html(TPL_LOADING);
 
 						popup.show();
-
-						if (popup.get('stack')) {
-							setTimeout(
-								function() {
-									A.DialogManager.bringToTop(popup);
-								},
-								0
-							);
-						}
 					},
 
 					_showSelectPopup: function(event) {
@@ -554,7 +510,7 @@ AUI.add(
 
 						instance._showPopup(event);
 
-						instance._popup.set('title', Liferay.Language.get('tags'));
+						instance._popup.titleNode.html(Liferay.Language.get('tags'));
 
 						instance._getEntries(
 							function(entries) {
@@ -568,7 +524,7 @@ AUI.add(
 
 						instance._showPopup(event);
 
-						instance._popup.set('title', Liferay.Language.get('suggestions'));
+						instance._popup.titleNode.html(Liferay.Language.get('suggestions'));
 
 						var contentCallback = instance.get('contentCallback');
 
@@ -700,6 +656,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['array-extras', 'async-queue', 'aui-autocomplete', 'aui-dialog', 'aui-form-textfield', 'aui-io-request', 'aui-live-search', 'aui-template', 'aui-textboxlist', 'datasource-cache', 'liferay-service-datasource']
+		requires: ['array-extras', 'async-queue', 'aui-autocomplete-deprecated', 'aui-form-textfield-deprecated', 'aui-io-plugin-deprecated', 'aui-io-request', 'aui-live-search-deprecated', 'aui-template-deprecated', 'aui-textboxlist', 'datasource-cache', 'liferay-service-datasource', 'liferay-util-window']
 	}
 );

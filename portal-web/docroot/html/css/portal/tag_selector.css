@@ -48,13 +48,9 @@
 		display: none;
 	}
 
-	.aui-textfield-content {
+	.textfield-content {
 		border-bottom: 1px solid transparent;
 		padding: 5px;
-	}
-
-	.aui-field-input-text {
-		width: 99%;
 	}
 
 	.no-matches {
@@ -77,7 +73,7 @@
 		border-bottom-color: #ccc;
 	}
 
-	.aui-textfield-content {
+	.textfield-content {
 		background-color: #D3DADD;
 		border-bottom-color: #AEB8BC;
 	}

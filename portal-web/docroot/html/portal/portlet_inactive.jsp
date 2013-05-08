@@ -16,6 +16,6 @@
 
 <%@ include file="/html/portal/init.jsp" %>
 
-<div class="portlet-msg-error">
+<div class="alert alert-error">
 	<liferay-ui:message key="this-portlet-is-inactive" />
 </div>

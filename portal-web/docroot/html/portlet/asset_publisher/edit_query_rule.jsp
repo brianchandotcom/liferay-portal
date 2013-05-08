@@ -43,7 +43,7 @@ if (queryLogicIndex >= 0) {
 }
 %>
 
-<div class="aui-field-row query-row">
+<div class="field-row query-row">
 	<aui:select inlineField="<%= true %>" label="" name='<%= "queryContains" + index %>'>
 		<aui:option label="contains" selected="<%= queryContains %>" value="true" />
 		<aui:option label="does-not-contain" selected="<%= !queryContains %>" value="false" />
@@ -59,7 +59,7 @@ if (queryLogicIndex >= 0) {
 		<aui:option label="categories" selected='<%= Validator.equals(queryName, "assetCategories") %>' value="assetCategories" />
 	</aui:select>
 
-	<div class="aui-field tags-selector <%= Validator.equals(queryName, "assetTags") ? StringPool.BLANK : "aui-helper-hidden" %>">
+	<div class="field tags-selector <%= Validator.equals(queryName, "assetTags") ? StringPool.BLANK : "hide" %>">
 		<liferay-ui:asset-tags-selector
 			curTags='<%= Validator.equals(queryName, "assetTags") ? queryValues : null %>'
 			focus="<%= false %>"
@@ -68,7 +68,7 @@ if (queryLogicIndex >= 0) {
 		/>
 	</div>
 
-	<div class="aui-field categories-selector <%= Validator.equals(queryName, "assetCategories") ? StringPool.BLANK : "aui-helper-hidden" %>">
+	<div class="field categories-selector <%= Validator.equals(queryName, "assetCategories") ? StringPool.BLANK : "hide" %>">
 		<liferay-ui:asset-categories-selector
 			curCategoryIds='<%= Validator.equals(queryName, "assetCategories") ? queryValues : null %>'
 			focus="<%= false %>"

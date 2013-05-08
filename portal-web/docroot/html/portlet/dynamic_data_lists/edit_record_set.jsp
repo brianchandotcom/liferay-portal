@@ -145,7 +145,7 @@ if (ddmStructureId > 0) {
 				classPK: <%= ddmStructureId %>,
 				ddmResource: '<%= ddmResource %>',
 				dialog: {
-					width: 820
+					destroyOnHide: true
 				},
 				eventName: '<portlet:namespace />selectDDMStructure',
 				groupId: <%= groupId %>,

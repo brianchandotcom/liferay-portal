@@ -14,16 +14,16 @@
  */
 --%>
 
-<aui:script use="aui-resize-iframe">
+<aui:script use="aui-autosize-iframe">
 	var iframe = A.one('#embeddedIframe');
 
 	if (iframe) {
-		iframe.plug(A.Plugin.ResizeIframe);
+		iframe.plug(A.Plugin.AutosizeIframe);
 
 		iframe.on(
 			'load',
 			function() {
-				var height = A.Plugin.ResizeIframe.getContentHeight(iframe);
+				var height = A.Plugin.AutosizeIframe.getContentHeight(iframe);
 
 				if (height == null) {
 					if (themeDisplay.isStateMaximized()) {
@@ -32,7 +32,7 @@
 					else {
 						height = 600;
 
-						iframe.resizeiframe.set('monitorHeight', false);
+						iframe.autosizeiframe.set('monitorHeight', false);
 					}
 				}
 

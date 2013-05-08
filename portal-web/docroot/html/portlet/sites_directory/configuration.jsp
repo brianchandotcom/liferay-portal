@@ -20,8 +20,8 @@
 String redirect = ParamUtil.getString(request, "redirect");
 %>
 
-<aui:layout>
-	<aui:column columnWidth="50">
+<aui:row>
+	<aui:col width="<%= 50 %>">
 		<liferay-portlet:actionURL portletConfiguration="true" var="configurationURL" />
 
 		<aui:form action="<%= configurationURL %>" method="post" name="fm">
@@ -47,15 +47,15 @@ String redirect = ParamUtil.getString(request, "redirect");
 				<aui:button type="submit" />
 			</aui:button-row>
 		</aui:form>
-	</aui:column>
-	<aui:column columnWidth="50">
+	</aui:col>
+	<aui:col width="<%= 50 %>">
 		<liferay-portlet:preview
 			portletName="<%= portletResource %>"
 			queryString="struts_action=/navigation/view"
 			showBorders="<%= true %>"
 		/>
-	</aui:column>
-</aui:layout>
+	</aui:col>
+</aui:row>
 
 <aui:script use="aui-base">
 	var selectDisplayStyle = A.one('#<portlet:namespace />displayStyle');

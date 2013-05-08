@@ -15,7 +15,7 @@
 --%>
 
 <aui:fieldset>
-	<aui:layout cssClass="lfr-page-layouts">
+	<aui:row cssClass="lfr-page-layouts">
 
 		<%
 		layoutTemplates = PluginUtil.restrictPlugins(layoutTemplates, user);
@@ -30,7 +30,7 @@
 			}
 		%>
 
-			<aui:column columnWidth="<%= 100 / _COLUMNS_COUNT %>" cssClass="lfr-layout-template-column">
+			<aui:col cssClass="lfr-layout-template-column" width="<%= 100 / _COLUMNS_COUNT %>">
 
 				<%
 				for (int k = 0; k < columnLayoutTemplatesCount; k++) {
@@ -48,13 +48,13 @@
 				}
 				%>
 
-			</aui:column>
+			</aui:col>
 
 		<%
 		}
 		%>
 
-	</aui:layout>
+	</aui:row>
 </aui:fieldset>
 
 <%!

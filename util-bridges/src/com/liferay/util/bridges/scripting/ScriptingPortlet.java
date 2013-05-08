@@ -276,7 +276,7 @@ public class ScriptingPortlet extends GenericPortlet {
 
 		StringBundler sb = new StringBundler(6);
 
-		sb.append("<div class=\"portlet-msg-error\">");
+		sb.append("<div class=\"alert alert-error\">");
 		sb.append(themeDisplay.translate("an-unexpected-error-occurred"));
 		sb.append("</div>");
 

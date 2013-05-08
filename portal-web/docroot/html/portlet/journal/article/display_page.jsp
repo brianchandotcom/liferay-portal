@@ -58,12 +58,12 @@ Group parentGroup = themeDisplay.getSiteGroup();
 <div id="<portlet:namespace />pagesContainer">
 	<aui:input id="pagesContainerInput" name="layoutUuid" type="hidden" value="<%= layoutUuid %>" />
 
-	<div class="display-page-item-container aui-helper-hidden" id="<portlet:namespace />displayPageItemContainer">
+	<div class="display-page-item-container hide" id="<portlet:namespace />displayPageItemContainer">
 		<span class="display-page-item">
 			<span>
 				<span id="<portlet:namespace />displayPageNameInput"><%= layoutBreadcrumb %></span>
 
-				<span class="display-page-item-remove aui-icon aui-icon-close" id="<portlet:namespace />displayPageItemRemove" tabindex="0"></span>
+				<span class="display-page-item-remove icon icon-close" id="<portlet:namespace />displayPageItemRemove" tabindex="0"></span>
 			</span>
 		</span>
 	</div>
@@ -87,7 +87,7 @@ Group parentGroup = themeDisplay.getSiteGroup();
 			'</div>';
 
 			var TPL_TAB_VIEW = '<div id="<portlet:namespace />{pagesTabViewId}"></div>' +
-				'<div class="selected-page-message portlet-msg-alert" id="<portlet:namespace />selectedPageMessage">' +
+				'<div class="alert alert-block selected-page-message" id="<portlet:namespace />selectedPageMessage">' +
 					'<%= UnicodeLanguageUtil.get(pageContext, "there-is-no-selected-page") %>' +
 				'</div>';
 
@@ -161,7 +161,7 @@ Group parentGroup = themeDisplay.getSiteGroup();
 				var cssClass = 'selected-page-message';
 
 				if (type) {
-					cssClass += ' portlet-msg-' + type;
+					cssClass += ' alert alert-' + type;
 				}
 
 				selectedNodeMessage.attr('className', cssClass);
@@ -200,33 +200,38 @@ Group parentGroup = themeDisplay.getSiteGroup();
 						}
 					);
 
-					dialog = new A.Dialog(
+					dialog = Liferay.Util.Window.getWindow(
 						{
-							align: {
-								node: A.one('#portlet_<%= portletDisplay.getId() %>'),
-								points: ['tc', 'tc']
-							},
-							buttons: [
-								{
-									disabled: true,
-									handler: setDisplayPage,
-									label: '<%= UnicodeLanguageUtil.get(pageContext, "ok") %>'
+							dialog: {
+								align: {
+									node: A.one('#portlet_<%= portletDisplay.getId() %>'),
+									points: ['tc', 'tc']
 								},
-								{
-									handler: function(event) {
-										dialog.hide();
-									},
-									label: '<%= UnicodeLanguageUtil.get(pageContext, "cancel") %>'
+								bodyContent: bodyContent,
+								cssClass: 'display-page-dialog',
+								toolbars: {
+									footer: [
+										{
+											disabled: true,
+											on: {
+												click: setDisplayPage
+											},
+											label: '<%= UnicodeLanguageUtil.get(pageContext, "ok") %>'
+										},
+										{
+											on: {
+												click: function () {
+													dialog.hide();
+												}
+											},
+											label: '<%= UnicodeLanguageUtil.get(pageContext, "cancel") %>'
+										}
+									]
 								}
-							],
-							bodyContent: bodyContent,
-							cssClass: 'display-page-dialog',
-							resizable: false,
-							title: '<%= UnicodeLanguageUtil.get(pageContext, "choose-a-display-page") %>',
-							visible: false,
-							width: 450
+							},
+							title: '<%= UnicodeLanguageUtil.get(pageContext, "choose-a-display-page") %>'
 						}
-					).render();
+					);
 
 					selectedNodeMessage = A.one('#<portlet:namespace />selectedPageMessage');
 
@@ -255,7 +260,7 @@ Group parentGroup = themeDisplay.getSiteGroup();
 					<c:if test="<%= parentGroup.getPrivateLayoutsPageCount() > 0 %>">
 						tabs.push(
 							{
-								label: '<%= UnicodeLanguageUtil.get(pageContext, "private-pages") %>',
+								label: '<%= UnicodeLanguageUtil.get(pageContext, "private-pages") %>sssssss',
 								content: Lang.sub(
 									TPL_TAB_CONTENT,
 									{
@@ -269,7 +274,7 @@ Group parentGroup = themeDisplay.getSiteGroup();
 
 					tabView = new A.TabView(
 						{
-							items: tabs,
+							children: tabs,
 							contentBox: '#<portlet:namespace />' + pagesTabViewId
 						}
 					);
@@ -514,10 +519,11 @@ Group parentGroup = themeDisplay.getSiteGroup();
 								disabled: true,
 							</c:if>
 
-							icon: 'search',
-							id: '<portlet:namespace />chooseDisplayPage',
-							handler: onSelectDisplayPage,
-							label: '<%= UnicodeLanguageUtil.get(pageContext, "select") %>'
+							icon: 'icon-search',
+							label: '<%= UnicodeLanguageUtil.get(pageContext, "select") %>',
+							on: {
+								click: onSelectDisplayPage
+							}
 						}
 					]
 				}
@@ -538,7 +544,7 @@ Group parentGroup = themeDisplay.getSiteGroup();
 				}
 			);
 		},
-		['aui-dialog', 'aui-io', 'aui-tabs', 'aui-tree']
+		['aui-io-plugin-deprecated', 'aui-io-request', 'aui-tabview', 'aui-tree', 'liferay-util-window']
 	);
 
 	<c:choose>

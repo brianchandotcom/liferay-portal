@@ -46,12 +46,12 @@ else if (group.isStagingGroup()) {
 <c:if test="<%= liveGroup.isStaged() && !liveGroup.isStagedPortlet(portlet.getRootPortletId()) %>">
 	<c:choose>
 		<c:when test="<%= !liveGroup.isStagedRemotely() && inStaging %>">
-			<div class="portlet-msg-alert">
+			<div class="alert alert-block">
 				<liferay-ui:message key="this-portlet-is-not-staged-local-alert" />
 			</div>
 		</c:when>
 		<c:when test="<%= liveGroup.isStagedRemotely() && themeDisplay.isSignedIn() %>">
-			<div class="portlet-msg-alert">
+			<div class="alert alert-block">
 				<liferay-ui:message key="this-portlet-is-not-staged-remote-alert" />
 			</div>
 		</c:when>
@@ -59,7 +59,7 @@ else if (group.isStagingGroup()) {
 </c:if>
 
 <c:if test='<%= SessionMessages.contains(renderRequest, "requestProcessed") && !SessionMessages.contains(renderRequest, portlet.getPortletId() + SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE) %>'>
-	<div class="portlet-msg-success">
+	<div class="alert alert-success">
 
 		<%
 		String successMessage = (String)SessionMessages.get(renderRequest, "requestProcessed");

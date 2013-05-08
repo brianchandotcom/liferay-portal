@@ -256,32 +256,23 @@
 
 		String javaScriptRootPath = themeDisplay.getPathContext() + "/html/js";
 
-		String alloyRootPath = javaScriptRootPath + "/aui/";
-
-		String alloyBaseURL = PortalUtil.getPortalURL(request, themeDisplay.isSecure()) + alloyRootPath;
-
 		String alloyComboPath = PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathContext() + "/combo/", "minifierType=", javaScriptLastModified);
 		%>
 
 		Liferay.AUI = {
-			getBaseURL: function() {
-				return '<%= alloyBaseURL %>';
+			getAvailableLangPath: function () {
+				return '<%= PortalUtil.getStaticResourceURL(request, "available_languages.jsp", javaScriptLastModified) %>';
 			},
 			getCombine: function() {
 				return <%= themeDisplay.isThemeJsFastLoad() %>;
 			},
 			getComboPath: function() {
-				return '<%= alloyComboPath %>&p=<%= javaScriptRootPath %>&';
+				return '<%= alloyComboPath %>&';
 			},
 			getFilter: function() {
 				<c:choose>
 					<c:when test="<%= themeDisplay.isThemeJsFastLoad() %>">
-						return {
-							replaceStr: function(match, fragment, string) {
-								return fragment + 'm=' + (match.split('<%= javaScriptRootPath %>')[1] || '');
-							},
-							searchExp: '(\\?|&)/([^&]+)'
-						};
+						return 'min';
 					</c:when>
 					<c:when test="<%= PropsValues.JAVASCRIPT_LOG_ENABLED %>">
 						return 'debug';
@@ -296,19 +287,7 @@
 			},
 			getLangPath: function () {
 				return '<%= PortalUtil.getStaticResourceURL(request, "aui_lang.jsp", javaScriptLastModified) %>';
-			},
-			getRootPath: function() {
-				return '<%= alloyRootPath %>';
 			}
-		};
-
-		window.YUI_config = {
-			base: Liferay.AUI.getBaseURL(),
-			comboBase: Liferay.AUI.getComboPath(),
-			fetchCSS: true,
-			filter: Liferay.AUI.getFilter(),
-			root: Liferay.AUI.getRootPath(),
-			useBrowserConsole: false
 		};
 
 		Liferay.authToken = '<%= AuthTokenUtil.getToken(request) %>';

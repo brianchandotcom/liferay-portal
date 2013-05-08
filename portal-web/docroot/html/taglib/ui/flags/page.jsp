@@ -41,24 +41,21 @@ long reportedUserId = GetterUtil.getLong((String)request.getAttribute("liferay-u
 <c:if test="<%= !TrashUtil.isInTrash(className, classPK) %>">
 	<c:choose>
 		<c:when test="<%= PropsValues.FLAGS_GUEST_USERS_ENABLED || themeDisplay.isSignedIn() %>">
-			<aui:script use="aui-dialog">
+			<aui:script use="aui-io-plugin-deprecated,aui-modal">
 				var icon = A.one('.<%= randomNamespace %>');
 
 				if (icon) {
 					icon.on(
 						'click',
 						function() {
-							var popup = new A.Dialog(
+							var popup = Liferay.Util.Window.getWindow(
 								{
-									align: Liferay.Util.Window.ALIGN_CENTER,
-									destroyOnClose: true,
-									draggable: true,
-									modal: true,
-									stack: true,
-									title: '<%= UnicodeLanguageUtil.get(pageContext, "report-inappropriate-content") %>',
-									width: 435
+									dialog: {
+										destroyOnHide: true
+									},
+									title: '<%= UnicodeLanguageUtil.get(pageContext, "report-inappropriate-content") %>'
 								}
-							).render();
+							);
 
 							popup.plug(
 								A.Plugin.IO, {
@@ -82,23 +79,22 @@ long reportedUserId = GetterUtil.getLong((String)request.getAttribute("liferay-u
 				<liferay-ui:message key="please-sign-in-to-flag-this-as-inappropriate" />
 			</div>
 
-			<aui:script use="aui-dialog">
+			<aui:script use="aui-modal">
 				var icon = A.one('.<%= randomNamespace %>');
 
 				if (icon) {
 					icon.on(
 						'click',
 						function(event) {
-							var popup = new A.Dialog(
+							var popup = Liferay.Util.Window.getWindow(
 								{
-									align: Liferay.Util.Window.ALIGN_CENTER,
-									bodyContent: A.one('#<%= randomNamespace %>signIn').html(),
-									destroyOnClose: true,
-									title: '<%= UnicodeLanguageUtil.get(pageContext, "report-inappropriate-content") %>',
-									modal: true,
-									width: 500
+									dialog: {
+										bodyContent: A.one('#<%= randomNamespace %>signIn').html(),
+										destroyOnHide: true
+									},
+									title: '<%= UnicodeLanguageUtil.get(pageContext, "report-inappropriate-content") %>'
 								}
-							).render();
+							);
 
 							event.preventDefault();
 						}

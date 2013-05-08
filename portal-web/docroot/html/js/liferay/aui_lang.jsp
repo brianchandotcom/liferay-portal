@@ -101,7 +101,7 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-calendar']
+		requires: ['aui-calendar-deprecated']
 	}
 );
 

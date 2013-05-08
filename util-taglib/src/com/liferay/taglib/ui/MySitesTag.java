@@ -23,12 +23,17 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class MySitesTag extends IncludeTag {
 
+	public void setCssClass(String cssClass) {
+		_cssClass = cssClass;
+	}
+
 	public void setMax(int max) {
 		_max = max;
 	}
 
 	@Override
 	protected void cleanUp() {
+		_cssClass = null;
 		_max = 0;
 	}
 
@@ -39,11 +44,14 @@ public class MySitesTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		request.setAttribute(
+			"liferay-ui:my_sites:cssClass", String.valueOf(_cssClass));
 		request.setAttribute("liferay-ui:my_sites:max", String.valueOf(_max));
 	}
 
 	private static final String _PAGE = "/html/taglib/ui/my_sites/page.jsp";
 
+	private String _cssClass;
 	private int _max;
 
 }

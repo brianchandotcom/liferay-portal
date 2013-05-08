@@ -42,7 +42,7 @@
 
 /* ---------- Page template selector ---------- */
 
-.aui-form-options {
+.form-options {
 	border: 1px solid #AAA;
 	display: inline-block;
 	vertical-align: middle;
@@ -54,11 +54,11 @@
 	}
 }
 
-.aui-form-triggers {
+.form-triggers {
 	float: left;
 }
 
-.aui-form-trigger {
+.form-trigger {
 	background: #C4C4C4 url(../images/application/button_bg.png) repeat-x 0 0;
 	border-left: 1px solid #BBB;
 	display: inline-block;
@@ -78,7 +78,7 @@
 	}
 }
 
-.aui-trigger-selected {
+.trigger-selected {
 	background-color: #EBEBEB;
 	background-image: url(../images/application/button_bg_selected.png);
 
@@ -88,10 +88,10 @@
 	}
 }
 
-.aui-options-trigger img {
+.options-trigger img {
 	background-image: url(../images/common/configuration.png);
 }
 
-.aui-save-trigger img {
+.save-trigger img {
 	background-image: url(../images/common/check.png);
 }

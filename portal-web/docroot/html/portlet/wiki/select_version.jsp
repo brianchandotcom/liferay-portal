@@ -101,6 +101,6 @@ double sourceVersion = ParamUtil.getDouble(request, "sourceVersion");
 
 			Liferay.Util.getOpener().location.href = portletURL.toString();
 		},
-		'.select-wiki-page-version input'
+		'.select-wiki-page-version'
 	);
 </aui:script>

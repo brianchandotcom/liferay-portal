@@ -20,24 +20,22 @@
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 %>
 
-<div class="lfr-portlet-toolbar">
-	<portlet:renderURL var="viewLayoutPrototypesURL">
-		<portlet:param name="struts_action" value="/layout_prototypes/view" />
-	</portlet:renderURL>
-
-	<span class="lfr-toolbar-button view-button <%= toolbarItem.equals("view-all") ? "current" : StringPool.BLANK %>">
-		<a href="<%= viewLayoutPrototypesURL %>"><liferay-ui:message key="view-all" /></a>
-	</span>
-
-	<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_LAYOUT_PROTOTYPE) %>">
-		<portlet:renderURL var="addLayoutPrototypeURL">
-			<portlet:param name="struts_action" value="/layout_prototypes/edit_layout_prototype" />
-			<portlet:param name="redirect" value="<%= viewLayoutPrototypesURL %>" />
-			<portlet:param name="backURL" value="<%= viewLayoutPrototypesURL %>" />
+<aui:nav-bar>
+	<aui:nav>
+		<portlet:renderURL var="viewLayoutPrototypesURL">
+			<portlet:param name="struts_action" value="/layout_prototypes/view" />
 		</portlet:renderURL>
 
-		<span class="lfr-toolbar-button add-button <%= toolbarItem.equals("add") ? "current" : StringPool.BLANK %>">
-			<a href="<%= addLayoutPrototypeURL %>"><liferay-ui:message key="add" /></a>
-		</span>
-	</c:if>
-</div>
+		<aui:nav-item href="<%= viewLayoutPrototypesURL %>" label="view-all" selected='<%= toolbarItem.equals("view-all") %>' />
+
+		<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_LAYOUT_PROTOTYPE) %>">
+			<portlet:renderURL var="addLayoutPrototypeURL">
+				<portlet:param name="struts_action" value="/layout_prototypes/edit_layout_prototype" />
+				<portlet:param name="redirect" value="<%= viewLayoutPrototypesURL %>" />
+				<portlet:param name="backURL" value="<%= viewLayoutPrototypesURL %>" />
+			</portlet:renderURL>
+
+			<aui:nav-item href="<%= addLayoutPrototypeURL %>" iconClass="icon-plus" label="add" selected='<%= toolbarItem.equals("add") %>' />
+		</c:if>
+	</aui:nav>
+</aui:nav-bar>

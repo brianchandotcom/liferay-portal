@@ -13,31 +13,6 @@
 		float: right;
 	}
 
-	.subscription-breadcrumbs {
-		color: #999;
-
-		li {
-			background: url(@theme_image_path@/arrows/10_right.png) no-repeat 100% 50%;
-			display: inline-block;
-			margin-right: 3px;
-			padding-right: 10px;
-
-			&.last {
-				background-image: none;
-				display: block;
-				font-size: 1.4em;
-			}
-
-			a {
-				text-decoration: none;
-
-				&:hover {
-					text-decoration: underline;
-				}
-			}
-		}
-	}
-
 	.code {
 		background: #FFF;
 		border: 1px solid #777;
@@ -175,11 +150,6 @@
 
 	.taglib-custom-attributes-list {
 		margin-bottom: 1em;
-
-		label {
-			display: block;
-			font-weight: bold;
-		}
 	}
 
 	.message-boards-panels {
@@ -342,10 +312,6 @@
 			.taglib-text {
 				display: none;
 			}
-
-			.lfr-actions .lfr-trigger strong {
-				min-width: 0;
-			}
 		}
 
 		.last-post {
@@ -397,11 +363,6 @@
 		}
 	}
 
-	.top-links .category-search {
-		float: right;
-		margin: 0 0 0.5em 0.5em;
-	}
-
 	.search-root-entry {
 		color: #999;
 		float: right;
@@ -429,18 +390,10 @@
 }
 
 .trash-restore-popup {
-	.aui-form {
+	.form {
 		fieldset {
 			margin-bottom: 0;
 			padding: 0 15px;
 		}
-
-		.new-file-name .aui-field-input {
-			width: 100%;
-		}
-	}
-
-	.portlet-msg-alert {
-		margin: 10px 0;
 	}
 }

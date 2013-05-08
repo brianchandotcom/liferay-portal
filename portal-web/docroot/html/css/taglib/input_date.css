@@ -1,0 +1,9 @@
+.lfr-input-date {
+	.datepicker-button-wrapper {
+		margin: 3px 5px 0 5px;
+	}
+
+	select {
+		width: auto;
+	}
+}

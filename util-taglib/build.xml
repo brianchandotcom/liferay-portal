@@ -29,7 +29,7 @@
 	</target>
 
 	<target name="compile">
-		<copy file="src/META-INF/aui.tld" tofile="src/META-INF/liferay-aui.tld" />
+		<copy file="src/META-INF/aui.tld" overwrite="true" tofile="src/META-INF/liferay-aui.tld" />
 
 		<replace file="src/META-INF/liferay-aui.tld">
 			<replacetoken><![CDATA[<uri>http://alloy.liferay.com/tld/aui</uri>]]></replacetoken>
@@ -70,7 +70,7 @@
 
 		<copy file="${jar.file}.jar" todir="${project.dir}/portal-web/docroot/WEB-INF/lib" />
 
-		<copy todir="${project.dir}/portal-web/docroot/WEB-INF/tld">
+		<copy overwrite="true" todir="${project.dir}/portal-web/docroot/WEB-INF/tld">
 			<fileset dir="classes/META-INF" includes="*.tld" />
 		</copy>
 	</target>

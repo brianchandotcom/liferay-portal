@@ -34,15 +34,15 @@ if ((article != null) && article.isDraft()) {
 
 <div class="article-toolbar" id="<portlet:namespace />articleToolbar"></div>
 
-<aui:script use="aui-toolbar,aui-dialog-iframe,liferay-util-window">
+<aui:script use="aui-toolbar,aui-dialog-iframe-deprecated,liferay-util-window">
 	var permissionPopUp = null;
 
-	var toolbarChildren = [];
+	var toolbarButtonGroup = [];
 
 	<c:if test="<%= (article != null) && Validator.isNotNull(structureId) && (classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) %>">
-		toolbarChildren.push(
+		toolbarButtonGroup.push(
 			{
-				icon: 'preview',
+				icon: 'icon-search',
 				id: '<portlet:namespace />previewArticleButton',
 				label: '<%= UnicodeLanguageUtil.get(pageContext, "preview") %>'
 			}
@@ -50,9 +50,9 @@ if ((article != null) && article.isDraft()) {
 	</c:if>
 
 	<c:if test="<%= (article != null) && Validator.isNotNull(structureId) %>">
-		toolbarChildren.push(
+		toolbarButtonGroup.push(
 			{
-				icon: 'download',
+				icon: 'icon-download',
 				id: '<portlet:namespace />downloadArticleContentButton',
 				label: '<%= UnicodeLanguageUtil.get(pageContext, "download") %>'
 			}
@@ -67,57 +67,61 @@ if ((article != null) && article.isDraft()) {
 			var="permissionsURL"
 		/>
 
-		toolbarChildren.push(
+		toolbarButtonGroup.push(
 			{
-				handler: function(event) {
-					if (!permissionPopUp) {
-						permissionPopUp = Liferay.Util.openWindow(
-							{
-								dialog: {
-									align: Liferay.Util.Window.ALIGN_CENTER,
-									cssClass: 'portlet-asset-categories-admin-dialog permissions-change',
-									width: 700
-								},
-								id: '<portlet:namespace />articlePermissions',
-								title: '<%= UnicodeLanguageUtil.get(pageContext, "permissions") %>',
-								uri: '<%= permissionsURL %>'
-							}
-						);
-					}
-					else {
-						permissionPopUp.iframe.node.get('contentWindow.location').reload(true);
-					}
+				icon: 'icon-lock',
+				label: '<%= UnicodeLanguageUtil.get(pageContext, "permissions") %>',
+				on: {
+					click: function(event) {
+						if (!permissionPopUp) {
+							permissionPopUp = Liferay.Util.openWindow(
+								{
+									dialog: {
+										cssClass: 'portlet-asset-categories-admin-dialog permissions-change'
+									},
+									id: '<portlet:namespace />articlePermissions',
+									title: '<%= UnicodeLanguageUtil.get(pageContext, "permissions") %>',
+									uri: '<%= permissionsURL %>'
+								}
+							);
+						}
+						else {
+							permissionPopUp.iframe.node.get('contentWindow.location').reload(true);
+						}
 
-					permissionPopUp.show();
-					permissionPopUp.centered();
+						permissionPopUp.show();
+						permissionPopUp.centered();
 
-				},
-				icon: 'permissions',
-				label: '<%= UnicodeLanguageUtil.get(pageContext, "permissions") %>'
+					}
+				}
 			}
 		);
 	</c:if>
 
 	<c:if test="<%= (article != null) && !article.isExpired() && JournalArticlePermission.contains(permissionChecker, article, ActionKeys.EXPIRE) && !article.isApproved() %>">
-		toolbarChildren.push(
+		toolbarButtonGroup.push(
 			{
-				handler: function() {
-					<portlet:namespace />expireArticle();
-				},
-				icon: 'expire',
-				label: '<%= UnicodeLanguageUtil.get(pageContext, "expire-this-version") %>'
+				icon: 'icon-calendar',
+				label: '<%= UnicodeLanguageUtil.get(pageContext, "expire-this-version") %>',
+				on: {
+					click: function() {
+						<portlet:namespace />expireArticle();
+					}
+				}
 			}
 		);
 	</c:if>
 
 	<c:if test="<%= (article != null) && JournalArticlePermission.contains(permissionChecker, article, ActionKeys.DELETE) && !article.isApproved() && !article.isDraft() %>">
-		toolbarChildren.push(
+		toolbarButtonGroup.push(
 			{
-				handler: function() {
-					<portlet:namespace />deleteArticle();
-				},
-				icon: 'delete',
-				label: '<liferay-ui:message key="<%= deleteButtonLabel %>" />'
+				icon: 'icon-trash',
+				label: '<liferay-ui:message key="<%= deleteButtonLabel %>" />',
+				on: {
+					click: function() {
+						<portlet:namespace />deleteArticle();
+					}
+				}
 			}
 		);
 	</c:if>
@@ -130,22 +134,23 @@ if ((article != null) && article.isDraft()) {
 			<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
 		</portlet:renderURL>
 
-		toolbarChildren.push(
+		toolbarButtonGroup.push(
 			{
-				handler: function (event) {
-					window.location = '<%= viewHistoryURL %>';
-				},
-				icon: 'history',
-				label: '<%= UnicodeLanguageUtil.get(pageContext, "view-history") %>'
+				icon: 'icon-time',
+				label: '<%= UnicodeLanguageUtil.get(pageContext, "view-history") %>',
+				on: {
+					click: function (event) {
+						window.location = '<%= viewHistoryURL %>';
+					}
+				}
 			}
 		);
 	</c:if>
 
 	new A.Toolbar(
 		{
-			activeState: false,
 			boundingBox: '#<portlet:namespace />articleToolbar',
-			children: toolbarChildren
+			children: [toolbarButtonGroup]
 		}
 	).render();
 </aui:script>

@@ -56,28 +56,28 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "det
 int count = 0;
 %>
 
-<table class="lfr-table page-info">
-<tr class="portlet-section-body<%= MathUtil.isOdd(count++) ? "-alternate" : "" %> results-row <%= MathUtil.isOdd(count) ? "alt" : "" %>">
-	<th>
+<table class="table table-bordered table-hover table-striped page-info">
+<tr>
+	<th class="table-header">
 		<liferay-ui:message key="title" />
 	</th>
-	<td>
+	<td class="table-cell">
 		<%= wikiPage.getTitle() %>
 	</td>
 </tr>
-<tr class="portlet-section-body<%= MathUtil.isOdd(count++) ? "-alternate" : "" %> results-row <%= MathUtil.isOdd(count) ? "alt" : "" %>">
-	<th>
+<tr>
+	<th class="table-header">
 		<liferay-ui:message key="format" />
 	</th>
-	<td>
+	<td class="table-cell">
 		<liferay-ui:message key='<%= "wiki.formats." + wikiPage.getFormat() %>'/>
 	</td>
 </tr>
-<tr class="portlet-section-body<%= MathUtil.isOdd(count++) ? "-alternate" : "" %> results-row <%= MathUtil.isOdd(count) ? "alt" : "" %>">
-	<th>
+<tr>
+	<th class="table-header">
 		<liferay-ui:message key="latest-version" />
 	</th>
-	<td>
+	<td class="table-cell">
 		<%= wikiPage.getVersion() %>
 
 		<c:if test="<%= wikiPage.isMinorEdit() %>">
@@ -85,27 +85,27 @@ int count = 0;
 		</c:if>
 	</td>
 </tr>
-<tr class="portlet-section-body<%= MathUtil.isOdd(count++) ? "-alternate" : "" %> results-row <%= MathUtil.isOdd(count) ? "alt" : "" %>">
-	<th>
+<tr>
+	<th class="table-header">
 		<liferay-ui:message key="created-by" />
 	</th>
-	<td>
+	<td class="table-cell">
 		<%= HtmlUtil.escape(initialPage.getUserName()) %> (<%= dateFormatDateTime.format(initialPage.getCreateDate()) %>)
 	</td>
 </tr>
-<tr class="portlet-section-body<%= MathUtil.isOdd(count++) ? "-alternate" : "" %> results-row <%= MathUtil.isOdd(count) ? "alt" : "" %>">
-	<th>
+<tr>
+	<th class="table-header">
 		<liferay-ui:message key="last-changed-by" />
 	</th>
-	<td>
+	<td class="table-cell">
 		<%= HtmlUtil.escape(wikiPage.getUserName()) %> (<%= dateFormatDateTime.format(wikiPage.getCreateDate()) %>)
 	</td>
 </tr>
-<tr class="portlet-section-body<%= MathUtil.isOdd(count++) ? "-alternate" : "" %> results-row <%= MathUtil.isOdd(count) ? "alt" : "" %>">
-	<th>
+<tr>
+	<th class="table-header">
 		<liferay-ui:message key="attachments" />
 	</th>
-	<td>
+	<td class="table-cell">
 		<%= (attachmentsFileEntries != null) ? attachmentsFileEntries.size() : 0 %>
 	</td>
 </tr>
@@ -125,11 +125,11 @@ int count = 0;
 	exportPageURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 	%>
 
-	<tr class="portlet-section-body<%= MathUtil.isOdd(count++) ? "-alternate" : "" %> results-row <%= MathUtil.isOdd(count) ? "alt" : "" %>">
-		<th>
+	<tr>
+		<th class="table-header">
 			<liferay-ui:message key="convert-to" />
 		</th>
-		<td>
+		<td class="table-cell">
 			<liferay-ui:icon-list>
 
 			<%
@@ -155,11 +155,11 @@ int count = 0;
 </c:if>
 
 <c:if test="<%= enableRSS %>">
-	<tr class="portlet-section-body<%= MathUtil.isOdd(count++) ? "-alternate" : "" %> results-row <%= MathUtil.isOdd(count) ? "alt" : "" %>">
-		<th>
+	<tr>
+		<th class="table-header">
 			<liferay-ui:message key="rss-subscription" />
 		</th>
-		<td>
+		<td class="table-cell">
 			<liferay-ui:rss
 				delta="<%= rssDelta %>"
 				displayStyle="<%= rssDisplayStyle %>"
@@ -171,8 +171,8 @@ int count = 0;
 </c:if>
 
 <c:if test="<%= (WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.SUBSCRIBE) || WikiNodePermission.contains(permissionChecker, node, ActionKeys.SUBSCRIBE)) && (WikiUtil.getEmailPageAddedEnabled(preferences) || WikiUtil.getEmailPageUpdatedEnabled(preferences)) %>">
-	<tr class="portlet-section-body<%= MathUtil.isOdd(count++) ? "-alternate" : "" %> results-row <%= MathUtil.isOdd(count) ? "alt" : "" %>">
-		<th>
+	<tr>
+		<th class="table-header">
 			<liferay-ui:message key="email-subscription" />
 		</th>
 		<td>
@@ -276,11 +276,11 @@ int count = 0;
 </c:if>
 
 <c:if test="<%= WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.PERMISSIONS) || (WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.UPDATE) && WikiNodePermission.contains(permissionChecker, wikiPage.getNodeId(), ActionKeys.ADD_PAGE)) || WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.DELETE) %>">
-	<tr class="portlet-section-body<%= MathUtil.isOdd(count++) ? "-alternate" : "" %> results-row <%= MathUtil.isOdd(count) ? "alt" : "" %>">
-		<th>
+	<tr>
+		<th class="table-header">
 			<liferay-ui:message key="advanced-actions" />
 		</th>
-		<td>
+		<td class="table-cell">
 			<liferay-ui:icon-list>
 				<c:if test="<%= WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.PERMISSIONS) %>">
 					<liferay-security:permissionsURL
@@ -360,5 +360,4 @@ int count = 0;
 		</td>
 	</tr>
 </c:if>
-
 </table>

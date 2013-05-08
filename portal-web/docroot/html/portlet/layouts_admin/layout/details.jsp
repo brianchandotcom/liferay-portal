@@ -144,7 +144,7 @@ StringBuilder friendlyURLBase = new StringBuilder();
 
 		<aui:input label='<%= LanguageUtil.format(pageContext, "automatically-apply-changes-done-to-the-page-template-x", HtmlUtil.escape(layoutPrototype.getName(user.getLocale()))) %>' name="layoutPrototypeLinkEnabled" type="checkbox" value="<%= selLayout.isLayoutPrototypeLinkEnabled() %>" />
 
-		<div class='<%= selLayout.isLayoutPrototypeLinkEnabled() ? "" : "aui-helper-hidden" %>' id="<portlet:namespace/>layoutPrototypeMergeAlert">
+		<div class='<%= selLayout.isLayoutPrototypeLinkEnabled() ? "" : "hide" %>' id="<portlet:namespace/>layoutPrototypeMergeAlert">
 
 			<%
 			request.setAttribute("edit_layout_prototype.jsp-layoutPrototype", layoutPrototype);
@@ -156,7 +156,7 @@ StringBuilder friendlyURLBase = new StringBuilder();
 		</div>
 	</c:if>
 
-	<div class="<%= selLayout.isLayoutPrototypeLinkEnabled() ? "aui-helper-hidden" : StringPool.BLANK %>" id="<portlet:namespace />typeOptions">
+	<div class="<%= selLayout.isLayoutPrototypeLinkEnabled() ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />typeOptions">
 		<aui:select name="type">
 
 			<%
@@ -185,7 +185,7 @@ StringBuilder friendlyURLBase = new StringBuilder();
 				}
 			%>
 
-				<div class="layout-type-form layout-type-form-<%= curLayoutType %> <%= selLayout.getType().equals(PropsValues.LAYOUT_TYPES[i]) ? "" : "aui-helper-hidden" %>">
+				<div class="layout-type-form layout-type-form-<%= curLayoutType %> <%= selLayout.getType().equals(PropsValues.LAYOUT_TYPES[i]) ? "" : "hide" %>">
 
 					<%
 					request.setAttribute(WebKeys.SEL_LAYOUT, selLayout);

@@ -31,7 +31,7 @@ User selUser = (User)request.getAttribute("user.selUser");
 		</aui:fieldset>
 	</c:when>
 	<c:otherwise>
-		<div class="portlet-msg-info">
+		<div class="alert alert-info">
 			<liferay-ui:message key="this-section-will-be-editable-after-creating-the-user" />
 		</div>
 	</c:otherwise>

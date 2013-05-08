@@ -69,12 +69,6 @@ request.setAttribute("websites.classPK", company.getAccountId());
 		document.<portlet:namespace />fm.method = "post";
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.UPDATE %>";
 
-		var redirect = "<portlet:renderURL><portlet:param name="struts_action" value="/portal_settings/edit_company" /></portlet:renderURL>";
-
-		redirect += Liferay.Util.getHistoryParam('<portlet:namespace />');
-
-		document.<portlet:namespace />fm.<portlet:namespace />redirect.value = redirect;
-
 		<portlet:namespace />saveEmails();
 		<portlet:namespace />saveLdap();
 		<portlet:namespace />saveLocales();

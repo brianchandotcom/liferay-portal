@@ -48,17 +48,17 @@ portletURL.setParameter("redirect", redirect);
 	title='<%= LanguageUtil.format(pageContext, "rules-for-x", ruleGroup.getName(locale), false) %>'
 />
 
-<div class="lfr-portlet-toolbar">
-	<liferay-portlet:renderURL var="addURL">
-		<portlet:param name="struts_action" value="/mobile_device_rules/edit_rule" />
-		<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
-		<portlet:param name="ruleGroupId" value="<%= String.valueOf(ruleGroupId) %>" />
-	</liferay-portlet:renderURL>
+<aui:nav-bar>
+	<aui:nav>
+		<liferay-portlet:renderURL var="addURL">
+			<portlet:param name="struts_action" value="/mobile_device_rules/edit_rule" />
+			<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
+			<portlet:param name="ruleGroupId" value="<%= String.valueOf(ruleGroupId) %>" />
+		</liferay-portlet:renderURL>
 
-	<span class="lfr-toolbar-button add-button">
-		<a href="<%= addURL %>"><liferay-ui:message key="add-rule" /></a>
-	</span>
-</div>
+		<aui:nav-item href="<%= addURL %>" iconClass="icon-plus" label="add-rule" />
+	</aui:nav>
+</aui:nav-bar>
 
 <div class="separator"><!-- --></div>
 

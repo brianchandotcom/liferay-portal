@@ -55,13 +55,7 @@ if (!denyAccess && (themeDisplay.isStatePopUp() || (layoutTypePortlet.hasStateMa
 	%>
 
 	<c:if test="<%= controlPanelCategory.equals(StringPool.BLANK) || controlPanelCategory.equals(StringPool.CONTENT) %>">
-		<div class="site-breadcrumbs" id="breadcrumbs">
-			<h1>
-				<span>
-					<liferay-ui:message key="breadcrumb" />
-				</span>
-			</h1>
-
+		<div id="breadcrumb">
 			<liferay-ui:breadcrumb />
 		</div>
 	</c:if>
@@ -74,12 +68,12 @@ if (!denyAccess && (themeDisplay.isStatePopUp() || (layoutTypePortlet.hasStateMa
 else {
 	String description = StringPool.BLANK;
 
-	String className = "portlet-msg-info";
+	String className = "alert alert-info";
 
 	if (denyAccess) {
 		description = LanguageUtil.get(pageContext, "you-do-not-have-the-required-permissions-to-access-this-application");
 
-		className = "portlet-msg-error";
+		className = "alert alert-error";
 	}
 
 	if (Validator.isNull(description)) {

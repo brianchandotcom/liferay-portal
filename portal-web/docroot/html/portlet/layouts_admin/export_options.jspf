@@ -31,7 +31,7 @@
 
 			<aui:a cssClass="modify-link" href="javascript:;" id="pagesLink" label="change" method="get" />
 
-			<div class="aui-helper-hidden" id="<portlet:namespace />pages">
+			<div class="hide" id="<portlet:namespace />pages">
 				<aui:fieldset cssClass="portlet-data-section" label="pages-to-export">
 					<liferay-util:include page="/html/portlet/layouts_admin/tree_js.jsp">
 						<liferay-util:param name="tabs1" value='<%= privateLayout ? "private-pages" : "public-pages" %>' />
@@ -61,7 +61,7 @@
 			<li class="tree-item">
 				<aui:input checked="<%= true %>" helpMessage="all-applications-export-help" id="allApplications" label="all-applications" name="<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>" type="radio" value="<%= true %>" />
 
-				<div class="aui-helper-hidden" id="<portlet:namespace />globalConfiguration">
+				<div class="hide" id="<portlet:namespace />globalConfiguration">
 					<aui:fieldset cssClass="portlet-data-section" label="all-applications">
 						<aui:input label="archived-setups" name="<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS %>" type="checkbox" value="<%= true %>" />
 
@@ -69,7 +69,7 @@
 					</aui:fieldset>
 				</div>
 
-				<ul class="aui-helper-hidden" id="<portlet:namespace />showChangeGlobalConfiguration">
+				<ul class="hide" id="<portlet:namespace />showChangeGlobalConfiguration">
 					<li class="tree-item">
 						<div class="selected-labels" id="<portlet:namespace />selectedGlobalConfiguration">
 							<liferay-ui:message key="archived-setups" />,
@@ -83,7 +83,7 @@
 				<aui:input helpMessage="choose-applications-help" id="chooseApplications" label="choose-applications" name="<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>" type="radio" value="<%= false %>" />
 
 				<c:if test="<%= !group.isLayoutPrototype() %>">
-					<ul class="aui-helper-hidden" id="<portlet:namespace />selectApplications">
+					<ul class="hide" id="<portlet:namespace />selectApplications">
 
 						<%
 						Set<String> portletDataHandlerClasses = new HashSet<String>();
@@ -120,13 +120,13 @@
 			<li class="tree-item">
 				<aui:input checked="<%= true %>" helpMessage="all-content-export-help" id="allContent" label="all-content" name="<%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>" type="radio" value="<%= true %>" />
 
-				<div class="aui-helper-hidden" id="<portlet:namespace />globalContent">
+				<div class="hide" id="<portlet:namespace />globalContent">
 					<aui:fieldset cssClass="portlet-data-section" label="all-content">
 						<aui:input helpMessage="export-import-categories-help" label="categories" name="<%= PortletDataHandlerKeys.CATEGORIES %>" type="checkbox" value="<%= false %>" />
 					</aui:fieldset>
 				</div>
 
-				<ul class="aui-helper-hidden" id="<portlet:namespace />showChangeGlobalContent">
+				<ul class="hide" id="<portlet:namespace />showChangeGlobalContent">
 					<li>
 						<div class="selected-labels" id="<portlet:namespace />selectedGlobalContent"></div>
 
@@ -136,9 +136,9 @@
 
 				<aui:input helpMessage="choose-content-help" id="chooseContent" label="choose-content" name="<%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>" type="radio" value="<%= false %>" />
 
-				<ul class="aui-helper-hidden" id="<portlet:namespace />selectContents">
+				<ul class="hide" id="<portlet:namespace />selectContents">
 					<li>
-						<div class="aui-helper-hidden" id="<portlet:namespace />range">
+						<div class="hide" id="<portlet:namespace />range">
 							<ul class="lfr-tree lfr-component">
 								<li class="tree-item">
 									<aui:fieldset cssClass="portlet-data-section" label="filter-to-export-by-date">
@@ -156,7 +156,7 @@
 										yesterday.add(Calendar.DATE, -1);
 										%>
 
-										<ul class="aui-helper-hidden" id="<portlet:namespace />startEndDate">
+										<ul class="hide" id="<portlet:namespace />startEndDate">
 											<li>
 												<aui:field-wrapper label="start-date">
 													<liferay-ui:input-date
@@ -279,7 +279,7 @@
 								String selectedContent = StringPool.BLANK;
 							%>
 
-								<div class="aui-helper-hidden" id="<portlet:namespace />content_<%= portlet.getPortletId() %>">
+								<div class="hide" id="<portlet:namespace />content_<%= portlet.getPortletId() %>">
 									<ul class="lfr-tree lfr-component">
 										<li class="tree-item">
 											<aui:fieldset cssClass="portlet-type-data-section" label="<%= portletTitle %>">
@@ -338,7 +338,7 @@
 									</ul>
 								</div>
 
-								<ul class="aui-helper-hidden" id="<portlet:namespace />showChangeContent_<%= portlet.getPortletId() %>">
+								<ul class="hide" id="<portlet:namespace />showChangeContent_<%= portlet.getPortletId() %>">
 									<li>
 										<div class="selected-labels" id="<portlet:namespace />selectedContent_<%= portlet.getPortletId() %>">
 

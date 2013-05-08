@@ -58,7 +58,7 @@ boolean nodeInGroup = false;
 				</aui:select>
 			</c:when>
 			<c:otherwise>
-				<div class="portlet-msg-info">
+				<div class="alert alert-info">
 					<liferay-ui:message key="there-are-no-available-nodes-for-selection" />
 				</div>
 			</c:otherwise>

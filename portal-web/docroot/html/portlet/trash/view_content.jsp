@@ -197,7 +197,7 @@
 				</c:if>
 
 				<c:if test="<%= (containerModelsCount + baseModelsCount) == 0 %>">
-					<div class="portlet-msg-info">
+					<div class="alert alert-info">
 						<liferay-ui:message arguments="<%= new String[] {ResourceActionsUtil.getModelResource(locale, className)} %>" key="this-x-does-not-contain-an-entry" />
 					</div>
 				</c:if>
@@ -262,7 +262,7 @@
 	<aui:script use="aui-base,aui-toolbar">
 		var buttonRow = A.one('#<portlet:namespace />entryToolbar');
 
-		var entryToolbarChildren = [];
+		var entryToolbarGroup = [];
 
 		<c:choose>
 			<c:when test="<%= entry != null %>">
@@ -273,13 +273,15 @@
 					<portlet:param name="trashEntryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 				</portlet:actionURL>
 
-				entryToolbarChildren.push(
+				entryToolbarGroup.push(
 					{
-						handler: function(event) {
-							Liferay.fire('<portlet:namespace />checkEntry', {trashEntryId: <%= entry.getEntryId() %>, uri: '<%= restoreEntryURL.toString() %>'});
-						},
-						icon: 'undo',
-						label: '<%= UnicodeLanguageUtil.get(pageContext, "restore") %>'
+						icon: 'icon-backward',
+						label: '<%= UnicodeLanguageUtil.get(pageContext, "restore") %>',
+						on: {
+							click: function(event) {
+								Liferay.fire('<portlet:namespace />checkEntry', {trashEntryId: <%= entry.getEntryId() %>, uri: '<%= restoreEntryURL.toString() %>'});
+							}
+						}
 					}
 				);
 
@@ -291,15 +293,17 @@
 						<portlet:param name="trashEntryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 					</portlet:actionURL>
 
-					entryToolbarChildren.push(
+					entryToolbarGroup.push(
 						{
-							handler: function(event) {
-								if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-this") %>')) {
-									submitForm(document.hrefFm, '<%= deleteEntryURL.toString() %>');
+							icon: 'icon-remove',
+							label: '<%= UnicodeLanguageUtil.get(pageContext, "delete") %>',
+							on: {
+								click: function(event) {
+									if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-this") %>')) {
+										submitForm(document.hrefFm, '<%= deleteEntryURL.toString() %>');
+									}
 								}
-							},
-							icon: 'delete',
-							label: '<%= UnicodeLanguageUtil.get(pageContext, "delete") %>'
+							}
 						}
 					);
 				</c:if>
@@ -314,13 +318,15 @@
 						<portlet:param name="containerModelClassName" value="<%= trashHandler.getContainerModelClassName() %>" />
 					</portlet:renderURL>
 
-					entryToolbarChildren.push(
+					entryToolbarGroup.push(
 						{
-							handler: function(event) {
-								<portlet:namespace />restoreDialog('<%= moveURL %>');
-							},
-							icon: 'undo',
-							label: '<%= UnicodeLanguageUtil.get(pageContext, "restore") %>'
+							icon: 'icon-backward',
+							label: '<%= UnicodeLanguageUtil.get(pageContext, "restore") %>',
+							on: {
+								click: function(event) {
+									<portlet:namespace />restoreDialog('<%= moveURL %>');
+								}
+							}
 						}
 					);
 				</c:if>
@@ -334,15 +340,17 @@
 						<portlet:param name="classPK" value="<%= String.valueOf(trashRenderer.getClassPK()) %>" />
 					</portlet:actionURL>
 
-					entryToolbarChildren.push(
+					entryToolbarGroup.push(
 						{
-							handler: function(event) {
-								if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-this") %>')) {
-									submitForm(document.hrefFm, '<%= deleteEntryURL.toString() %>');
+							icon: 'icon-remove',
+							label: '<%= UnicodeLanguageUtil.get(pageContext, "delete") %>',
+							on: {
+								click: function(event) {
+									if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-this") %>')) {
+										submitForm(document.hrefFm, '<%= deleteEntryURL.toString() %>');
+									}
 								}
-							},
-							icon: 'delete',
-							label: '<%= UnicodeLanguageUtil.get(pageContext, "delete") %>'
+							}
 						}
 					);
 				</c:if>
@@ -351,9 +359,8 @@
 
 		var entryToolbar = new A.Toolbar(
 			{
-				activeState: false,
 				boundingBox: buttonRow,
-				children: entryToolbarChildren
+				children: [entryToolbarGroup]
 			}
 		).render();
 

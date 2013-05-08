@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.JspException;
 
 /**
  * @author Julio Camarero
@@ -37,13 +36,6 @@ public class PanelTag extends BasePanelTag {
 		}
 
 		_toolTags.add(toolTag);
-	}
-
-	@Override
-	public int doEndTag() throws JspException {
-		setCalledSetAttributes(false);
-
-		return super.doEndTag();
 	}
 
 	public List<ToolTag> getToolTags() {

@@ -17,80 +17,62 @@
 <%@ include file="/html/portlet/asset_tag_admin/init.jsp" %>
 
 <aui:form name="fm">
+	<aui:nav-bar>
+		<aui:nav>
+			<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.ADD_TAG) %>">
+				<aui:nav-item id="addTagButton" label="add-tag" />
+			</c:if>
 
-<div class="tags-admin-container lfr-app-column-view">
-	<div class="lfr-header-row">
-		<div class="lfr-header-row-content">
-			<div class="toolbar">
-				<aui:input cssClass="select-tags aui-state-default" inline="<%= true %>" label="" name="checkAllTags" title='<%= LanguageUtil.get(pageContext, "check-all-tags") %>' type="checkbox" />
+			<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.PERMISSIONS) && GroupPermissionUtil.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.PERMISSIONS) %>">
+				<liferay-security:permissionsURL
+					modelResource="com.liferay.portlet.asset"
+					modelResourceDescription="<%= themeDisplay.getScopeGroupName() %>"
+					resourcePrimKey="<%= String.valueOf(themeDisplay.getSiteGroupId()) %>"
+					var="permissionsURL"
+					windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+				/>
 
-				<liferay-ui:icon-menu
-					align="left"
-					direction="down"
-					icon=""
-					message="actions"
-					showExpanded="<%= false %>"
-					showWhenSingleIcon="true"
-				>
-					<liferay-ui:icon
-						id="deleteSelectedTags"
-						image="delete"
-						url="javascript:;"
-					/>
+				<aui:nav-item data-url="<%= permissionsURL %>" id="tagsPermissionsButton" label="permissions" />
+			</c:if>
 
-					<liferay-ui:icon
-						id="mergeSelectedTags"
-						image="../common/all_pages"
-						message="merge"
-						url="javascript:;"
-					/>
-				</liferay-ui:icon-menu>
 
-				<aui:button-row cssClass="tags-admin-actions">
-					<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.ADD_TAG) %>">
-						<aui:button cssClass="add-tag-button" name="addTagButton" value="add-tag" />
-					</c:if>
+			<aui:nav-item dropdown="<%= true %>" label="actions">
+				<aui:nav-item iconCssClass="icon-trash" id="deleteSelectedTags" label="delete" />
 
-					<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.PERMISSIONS) && GroupPermissionUtil.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.PERMISSIONS) %>">
-						<liferay-security:permissionsURL
-							modelResource="com.liferay.portlet.asset"
-							modelResourceDescription="<%= themeDisplay.getScopeGroupName() %>"
-							resourcePrimKey="<%= String.valueOf(themeDisplay.getSiteGroupId()) %>"
-							var="permissionsURL"
-							windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-						/>
+				<aui:nav-item iconCssClass="icon-random" id="mergeSelectedTags" label="merge" />
+			</aui:nav-item>
 
-						<aui:button data-url="<%= permissionsURL %>" name="tagsPermissionsButton" value="permissions" />
-					</c:if>
-				</aui:button-row>
-			</div>
+		</aui:nav>
 
-			<div class="lfr-search-combobox search-button-container tags-search-combobox">
-				<aui:input cssClass="first keywords lfr-search-combobox-item tags-admin-search" label="" name="tagsAdminSearchInput" type="text" />
+		<div class="navbar-search pull-right">
+			<div class="form-search">
+				<input class="search-query span9" id="<portlet:namespace/>tagsAdminSearchInput" name="<portlet:namespace/>tagsAdminSearchInput" type="text" />
 			</div>
 		</div>
-	</div>
 
+	</aui:nav-bar>
+
+<div class="tags-admin-container lfr-app-column-view">
 	<div class="tags-admin-content-wrapper">
-		<aui:layout cssClass="tags-admin-content">
-			<aui:column columnWidth="35" cssClass="tags-admin-list-container">
-				<div class="results-header">
-					<liferay-ui:message key="tags" />
-				</div>
+		<aui:row cssClass="tags-admin-content">
+			<aui:col cssClass="tags-admin-list-container" width="<%= 35 %>">
+				<span>
+					<aui:input cssClass="select-tags" inline="<%= true %>" label="" name="checkAllTags" title='<%= LanguageUtil.get(pageContext, "check-all-tags") %>' type="checkbox" />
+				</span>
+
+				<h3 class="tags-header"><%= LanguageUtil.get(pageContext, "tags") %></h3>
 
 				<div class="tags-admin-list lfr-component"></div>
 
-				<div class="tags-paginator"></div>
-			</aui:column>
+				<div class="tags-pagination"></div>
+			</aui:col>
 
-			<aui:column columnWidth="65" cssClass="tags-admin-edit-tag">
-				<div class="results-header">
-					<liferay-ui:message key="tag-details" />
-				</div>
+			<aui:col cssClass="tags-admin-edit-tag" width="<%= 65 %>">
+				<h3><%= LanguageUtil.get(pageContext, "tag-details") %></h3>
 
 				<div class="tag-view-container"></div>
-			</aui:column>
-		</aui:layout>
+			</aui:col>
+		</aui:row>
 	</div>
 </div>
 
@@ -100,8 +82,7 @@
 	new Liferay.Portlet.AssetTagsAdmin(
 		{
 			portletId: '<%= portletDisplay.getId() %>',
-			tagsPerPage: <%= SearchContainer.DEFAULT_DELTA %>,
-			tagsPerPageOptions: [<%= StringUtil.merge(PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) %>]
+			tagsPerPage: <%= SearchContainer.DEFAULT_DELTA %>
 		}
 	);
 </aui:script>

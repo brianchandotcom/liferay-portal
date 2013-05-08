@@ -12,15 +12,14 @@ Liferay.provide(
 
 		portletURL.setParameter('netvibesURL', netvibesURL);
 
-		var dialog = new A.Dialog(
+		var dialog = Liferay.Util.Window.getWindow(
 			{
-				align: Liferay.Util.Window.ALIGN_CENTER,
-				destroyOnClose: true,
-				modal: true,
-				title: Liferay.Language.get('add-to-netvibes'),
-				width: 550
+				dialog: {
+					destroyOnHide: true
+				},
+				title: Liferay.Language.get('add-to-netvibes')
 			}
-		).render();
+		);
 
 		dialog.plug(
 			A.Plugin.IO,
@@ -29,7 +28,7 @@ Liferay.provide(
 			}
 		);
 	},
-	['aui-dialog', 'liferay-portlet-url']
+	['aui-io-plugin-deprecated', 'liferay-portlet-url', 'liferay-util-window']
 );
 
 Liferay.provide(
@@ -44,15 +43,14 @@ Liferay.provide(
 
 		portletURL.setParameter('widgetURL', widgetURL);
 
-		var dialog = new A.Dialog(
+		var dialog = Liferay.Util.Window.getWindow(
 			{
-				align: Liferay.Util.Window.ALIGN_CENTER,
-				destroyOnClose: true,
-				modal: true,
-				title: Liferay.Language.get('add-to-any-website'),
-				width: 550
+				dialog: {
+					destroyOnHide: true
+				},
+				title: Liferay.Language.get('add-to-any-website')
 			}
-		).render();
+		);
 
 		dialog.plug(
 			A.Plugin.IO,
@@ -61,5 +59,5 @@ Liferay.provide(
 			}
 		);
 	},
-	['aui-dialog', 'liferay-portlet-url']
+	['aui-io-plugin-deprecated', 'liferay-portlet-url', 'liferay-util-window']
 );

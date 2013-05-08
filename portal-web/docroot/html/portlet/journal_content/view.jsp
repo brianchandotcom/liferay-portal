@@ -38,12 +38,12 @@ boolean expired = true;
 				renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 				%>
 
-				<div class="portlet-msg-info">
+				<div class="alert alert-info">
 					<liferay-ui:message key="select-existing-web-content-or-add-some-web-content-to-be-displayed-in-this-portlet" />
 				</div>
 			</c:when>
 			<c:otherwise>
-				<div class="portlet-msg-error">
+				<div class="alert alert-error">
 					<%= LanguageUtil.get(pageContext, "the-selected-web-content-no-longer-exists") %>
 				</div>
 			</c:otherwise>
@@ -93,7 +93,7 @@ boolean expired = true;
 										<liferay-ui:icon
 											image="print"
 											label="<%= true %>"
-											message='<%= LanguageUtil.format(pageContext, "print-x-x", new Object[] {"aui-helper-hidden-accessible", articleDisplay.getTitle()}) %>'
+											message='<%= LanguageUtil.format(pageContext, "print-x-x", new Object[] {"hide-accessible", articleDisplay.getTitle()}) %>'
 											url="javascript:print();"
 										/>
 									</div>
@@ -118,7 +118,7 @@ boolean expired = true;
 										<liferay-ui:icon
 											image="print"
 											label="<%= true %>"
-											message='<%= LanguageUtil.format(pageContext, "print-x-x", new Object[] {"aui-helper-hidden-accessible", articleDisplay.getTitle()}) %>'
+											message='<%= LanguageUtil.format(pageContext, "print-x-x", new Object[] {"hide-accessible", articleDisplay.getTitle()}) %>'
 											url='<%= "javascript:" + renderResponse.getNamespace() + "printPage();" %>'
 										/>
 									</div>
@@ -154,7 +154,7 @@ boolean expired = true;
 										<liferay-ui:icon
 											image='<%= "../file_system/small/" + extension %>'
 											label="<%= true %>"
-											message='<%= LanguageUtil.format(pageContext, "x-convert-x-to-x", new Object[] {"aui-helper-hidden-accessible", articleDisplay.getTitle(), extension.toUpperCase()}) %>'
+											message='<%= LanguageUtil.format(pageContext, "x-convert-x-to-x", new Object[] {"hide-accessible", articleDisplay.getTitle(), extension.toUpperCase()}) %>'
 											method="get"
 											url="<%= exportArticleURL.toString() %>"
 										/>
@@ -223,7 +223,7 @@ boolean expired = true;
 							if (expired) {
 							%>
 
-								<div class="portlet-msg-alert">
+								<div class="alert alert-block">
 									<%= LanguageUtil.format(pageContext, "x-is-expired", title) %>
 								</div>
 
@@ -242,14 +242,14 @@ boolean expired = true;
 											<portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" />
 										</liferay-portlet:renderURL>
 
-										<div class="portlet-msg-alert">
+										<div class="alert alert-block">
 											<a href="<%= editURL %>">
 												<%= LanguageUtil.format(pageContext, "x-is-not-approved", HtmlUtil.escape(title)) %>
 											</a>
 										</div>
 									</c:when>
 									<c:otherwise>
-										<div class="portlet-msg-alert">
+										<div class="alert alert-block">
 											<%= LanguageUtil.format(pageContext, "x-is-not-approved", HtmlUtil.escape(title)) %>
 										</div>
 									</c:otherwise>
@@ -293,7 +293,7 @@ boolean showIconsActions = themeDisplay.isSignedIn() && !layout.isLayoutPrototyp
 
 <c:if test="<%= showIconsActions && !print && hasViewPermission %>">
 	<div class="lfr-meta-actions icons-container">
-		<div class="icon-actions">
+		<div class="lfr-icon-actions">
 			<c:if test="<%= showEditArticleIcon %>">
 				<liferay-portlet:renderURL portletName="<%= PortletKeys.JOURNAL %>" var="editURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 					<portlet:param name="struts_action" value="/journal/edit_article" />
@@ -304,7 +304,7 @@ boolean showIconsActions = themeDisplay.isSignedIn() && !layout.isLayoutPrototyp
 				</liferay-portlet:renderURL>
 
 				<liferay-ui:icon
-					cssClass="icon-action icon-action-edit"
+					cssClass="lfr-icon-action lfr-icon-action-edit"
 					image="edit"
 					label="<%= true %>"
 					message="edit"
@@ -321,7 +321,7 @@ boolean showIconsActions = themeDisplay.isSignedIn() && !layout.isLayoutPrototyp
 				</liferay-portlet:renderURL>
 
 				<liferay-ui:icon
-					cssClass="icon-action icon-action-edit-template"
+					cssClass="lfr-icon-action lfr-icon-action-edit-template"
 					image="../file_system/small/xml"
 					label="<%= true %>"
 					message="edit-template"
@@ -331,7 +331,7 @@ boolean showIconsActions = themeDisplay.isSignedIn() && !layout.isLayoutPrototyp
 
 			<c:if test="<%= showSelectArticleIcon %>">
 				<liferay-ui:icon
-					cssClass="icon-action icon-action-configuration"
+					cssClass="lfr-icon-action lfr-icon-action-configuration"
 					image="configuration"
 					label="<%= true %>"
 					message="select-web-content"
@@ -350,7 +350,7 @@ boolean showIconsActions = themeDisplay.isSignedIn() && !layout.isLayoutPrototyp
 				</liferay-portlet:renderURL>
 
 				<liferay-ui:icon
-					cssClass="icon-action icon-action-add"
+					cssClass="lfr-icon-action lfr-icon-action-add"
 					image="add_article"
 					label="<%= true %>"
 					message="add"

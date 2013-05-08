@@ -88,13 +88,17 @@ if (choiceName > 0) {
 
 		<aui:input label="polls-question" name="description" />
 
-		<aui:input disabled="<%= neverExpire %>" name="expirationDate" />
+		<aui:field-wrapper label="expiration-date">
 
-		<%
-		String taglibNeverExpireOnClick = renderResponse.getNamespace() + "disableInputDate('expirationDate', this.checked);";
-		%>
+			<%
+			String taglibNeverExpireOnClick = renderResponse.getNamespace() + "disableInputDate('expirationDate', this.checked);";
+			%>
 
-		<aui:input name="neverExpire" onClick="<%= taglibNeverExpireOnClick %>" type="checkbox" value="<%= neverExpire %>" />
+			<aui:input name="neverExpire" onClick="<%= taglibNeverExpireOnClick %>" type="checkbox" value="<%= neverExpire %>" />
+
+			<aui:input disabled="<%= neverExpire %>" label="" name="expirationDate" />
+
+		</aui:field-wrapper>
 
 		<aui:field-wrapper label="choices">
 

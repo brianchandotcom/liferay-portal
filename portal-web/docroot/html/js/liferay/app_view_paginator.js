@@ -8,11 +8,11 @@ AUI.add(
 
 		var owns = AObject.owns;
 
+		var ENTRY_ROWS_PER_PAGE = 'entryRowsPerPage';
+
+		var FOLDER_ROWS_PER_PAGE = 'folderRowsPerPage';
+
 		var PAIR_SEPARATOR = History.PAIR_SEPARATOR;
-
-		var VALUE_SEPARATOR = History.VALUE_SEPARATOR;
-
-		var ROWS_PER_PAGE = 'rowsPerPage';
 
 		var SEARCH_TYPE = 'searchType';
 
@@ -40,6 +40,8 @@ AUI.add(
 
 		var VIEW_FOLDERS = 'viewFolders';
 
+		var VALUE_SEPARATOR = History.VALUE_SEPARATOR;
+
 		var AppViewPaginator = A.Component.create(
 			{
 				ATTRS: {
@@ -56,12 +58,12 @@ AUI.add(
 						validator: Lang.isNumber
 					},
 
-					entryPaginator: {
-						getter: '_getEntryPaginator',
+					entryPagination: {
+						getter: '_getEntryPagination',
 						readOnly: true
 					},
 
-					entryPaginatorContainer: {
+					entryPaginationContainer: {
 						validator: Lang.isString
 					},
 
@@ -86,12 +88,12 @@ AUI.add(
 						validator: Lang.isNumber
 					},
 
-					folderPaginator: {
-						getter: '_getFolderPaginator',
+					folderPagination: {
+						getter: '_getFolderPagination',
 						readOnly: true
 					},
 
-					folderPaginatorContainer: {
+					folderPaginationContainer: {
 						validator: Lang.isString
 					},
 
@@ -116,7 +118,7 @@ AUI.add(
 						validator: Lang.isString
 					},
 
-					paginatorData: {
+					paginationData: {
 						validator: Lang.isObject
 					}
 				},
@@ -139,40 +141,31 @@ AUI.add(
 
 						var entriesTotal = instance.get('entriesTotal');
 
-						var entryRowsPerPage = instance.get('entryRowsPerPage');
+						var entryRowsPerPage = instance.get(ENTRY_ROWS_PER_PAGE);
 
 						if (entriesTotal > 0) {
 							entryPage = entryEnd / entryRowsPerPage;
 						}
 
-						var TPL = {
-							pageReportLabel: Lang.sub(Liferay.Language.get('x-of-x'), ['{page}', '{totalPages}']),
-							totalLabel: '(' + Liferay.Language.get('total') + ' {total})'
-						};
+						var totalEntryPages = instance._getTotalPages(entriesTotal, entryRowsPerPage);
 
-						var entryPaginator = new A.Paginator(
+						var entryPagination = new A.Pagination(
 							{
+								boundingBox: instance.get('entryPaginationContainer'),
 								circular: false,
-								containers: instance.get('entryPaginatorContainer'),
-								firstPageLinkLabel: '&lt;&lt;',
-								lastPageLinkLabel: '&gt;&gt;',
-								nextPageLinkLabel: '&gt;',
 								page: entryPage,
-								prevPageLinkLabel: '&lt;',
-								rowsPerPage: entryRowsPerPage,
-								rowsPerPageOptions: instance.get('entryRowsPerPageOptions'),
-								total: entriesTotal,
-								TPL: TPL
+								total: totalEntryPages,
+								visible: totalEntryPages > 1
 							}
 						).render();
 
-						entryPaginator.on(STR_CHANGE_REQUEST, instance._onEntryPaginatorChangeRequest, instance);
+						entryPagination.after(STR_CHANGE_REQUEST, instance._afterEntryPaginationChangeRequest, instance);
 
-						instance._entryPaginator = entryPaginator;
+						instance._entryPagination = entryPagination;
 
 						var folderPage = 0;
 
-						var folderRowsPerPage = instance.get('folderRowsPerPage');
+						var folderRowsPerPage = instance.get(FOLDER_ROWS_PER_PAGE);
 
 						var foldersTotal = instance.get('foldersTotal');
 
@@ -180,31 +173,26 @@ AUI.add(
 							folderPage = instance.get(STR_FOLDER_END) / folderRowsPerPage;
 						}
 
-						var folderPaginator = new A.Paginator(
+						var totalFolderPages = instance._getTotalPages(foldersTotal, folderRowsPerPage);
+
+						var folderPagination = new A.Pagination(
 							{
-								alwaysVisible: false,
+								boundingBox: instance.get('folderPaginationContainer'),
 								circular: false,
-								containers: instance.get('folderPaginatorContainer'),
-								firstPageLinkLabel: '&lt;&lt;',
-								lastPageLinkLabel: '&gt;&gt;',
-								nextPageLinkLabel: '&gt;',
 								page: folderPage,
-								prevPageLinkLabel: '&lt;',
-								rowsPerPage: folderRowsPerPage,
-								rowsPerPageOptions: instance.get('folderRowsPerPageOptions'),
-								total: foldersTotal,
-								TPL: TPL
+								total: totalFolderPages,
+								visible: totalFolderPages > 1
 							}
 						).render();
 
-						folderPaginator.on(STR_CHANGE_REQUEST, instance._onFolderPaginatorChangeRequest, instance);
+						folderPagination.after(STR_CHANGE_REQUEST, instance._afterFolderPaginationChangeRequest, instance);
 
-						instance._folderPaginator = folderPaginator;
+						instance._folderPagination = folderPagination;
 
 						instance._eventHandles = [
 							Liferay.on('liferay-app-view-folders:dataRequest', instance._onDataRequest, instance),
 							Liferay.on('liferay-app-view-folders:afterDataRequest', instance._afterDataRequest, instance),
-							instance.after('paginatorDataChange', instance._afterPaginatorDataChange, instance)
+							instance.after('paginationDataChange', instance._afterPaginationDataChange, instance)
 						];
 					},
 
@@ -213,8 +201,8 @@ AUI.add(
 
 						A.Array.invoke(instance._eventHandles, 'detach');
 
-						instance._entryPaginator.destroy();
-						instance._folderPaginator.destroy();
+						instance._entryPagination.destroy();
+						instance._folderPagination.destroy();
 					},
 
 					_afterDataRequest: function(event) {
@@ -223,28 +211,91 @@ AUI.add(
 						instance._lastDataRequest = event.data;
 					},
 
-					_afterPaginatorDataChange: function(event) {
+					_afterEntryPaginationChangeRequest: function(event) {
 						var instance = this;
 
-						var paginatorData = event.newVal;
+						var entryRowsPerPage = instance.get(ENTRY_ROWS_PER_PAGE);
 
-						var paginator = instance['_' + paginatorData.name];
+						var startEndParams = instance._getResultsStartEnd(instance._entryPagination, entryRowsPerPage);
 
-						if (A.instanceOf(paginator, A.Paginator)) {
-							paginator.setState(paginatorData.state);
+						var requestParams = instance._lastDataRequest || instance._getDefaultParams();
+
+						var customParams = {};
+
+						customParams[instance.ns(STR_ENTRY_START)] = startEndParams[0];
+						customParams[instance.ns(STR_ENTRY_END)] = startEndParams[1];
+						customParams[instance.ns(VIEW_ENTRIES)] = false;
+						customParams[instance.ns(VIEW_ENTRIES_PAGE)] = true;
+						customParams[instance.ns(VIEW_FOLDERS)] = false;
+
+						if (AObject.owns(requestParams, instance.ns(SEARCH_TYPE))) {
+							customParams[instance.ns(SEARCH_TYPE)] = SRC_SEARCH_FRAGMENT;
+						}
+
+						A.mix(requestParams, customParams, true);
+
+						Liferay.fire(
+							instance._eventDataRequest,
+							{
+								requestParams: requestParams,
+								src: SRC_ENTRIES_PAGINATOR
+							}
+						);
+					},
+
+					_afterFolderPaginationChangeRequest: function(event) {
+						var instance = this;
+
+						var folderRowsPerPage = instance.get(FOLDER_ROWS_PER_PAGE);
+
+						var startEndParams = instance._getResultsStartEnd(instance._folderPagination, folderRowsPerPage);
+
+						var requestParams = instance._lastDataRequest || {};
+
+						var customParams = {};
+
+						customParams[instance.ns(STR_FOLDER_START)] = startEndParams[0];
+						customParams[instance.ns(STR_FOLDER_END)] = startEndParams[1];
+						customParams[instance.ns(VIEW_ENTRIES)] = false;
+						customParams[instance.ns(VIEW_FOLDERS)] = true;
+
+						A.mix(requestParams, customParams, true);
+
+						Liferay.fire(
+							instance._eventDataRequest,
+							{
+								requestParams: requestParams
+							}
+						);
+					},
+
+					_afterPaginationDataChange: function(event) {
+						var instance = this;
+
+						var paginationData = event.newVal;
+
+						var pagination = instance['_' + paginationData.name];
+
+						if (A.instanceOf(pagination, A.Pagination)) {
+							var state = paginationData.state;
+
+							pagination.set('total', instance._getTotalPages(state.total, state.rowsPerPage));
+							pagination.set('visible', (state.total > state.rowsPerPage));
+
+							pagination.setState(state);
 						}
 					},
 
-					_getEntryPaginator: function() {
+					_getEntryPagination: function() {
 						var instance = this;
 
-						return instance._entryPaginator;
+						return instance._entryPagination;
 					},
 
-					_getFolderPaginator: function() {
+					_getFolderPagination: function() {
 						var instance = this;
 
-						return instance._folderPaginator;
+						return instance._folderPagination;
 					},
 
 					_getDefaultParams: function() {
@@ -273,21 +324,17 @@ AUI.add(
 						return params;
 					},
 
-					_getResultsStartEnd: function(paginator, page, rowsPerPage) {
+					_getResultsStartEnd: function(pagination, rowsPerPage, page) {
 						var instance = this;
 
 						if (!Lang.isValue(page)) {
 							page = 0;
 
-							var curPage = paginator.get('page') - 1;
+							var curPage = pagination.get('page') - 1;
 
 							if (curPage > 0) {
 								page = curPage;
 							}
-						}
-
-						if (!Lang.isValue(rowsPerPage)) {
-							rowsPerPage = paginator.get(ROWS_PER_PAGE);
 						}
 
 						var start = page * rowsPerPage;
@@ -296,15 +343,21 @@ AUI.add(
 						return [start, end];
 					},
 
+					_getTotalPages: function(totalRows, rowsPerPage) {
+						var instance = this;
+
+						return Math.ceil(totalRows / rowsPerPage);
+					},
+
 					_onDataRequest: function(event) {
 						var instance = this;
 
-						instance._updatePaginatorValues(event.requestParams, event.resetPaginator);
+						instance._updatePaginationValues(event.requestParams, event.resetPagination);
 
 						var src = event.src;
 
 						if (src === SRC_SEARCH) {
-							instance._entryPaginator.setState(
+							instance._entryPagination.setState(
 								{
 									page: 1
 								}
@@ -312,74 +365,24 @@ AUI.add(
 						}
 					},
 
-					_onEntryPaginatorChangeRequest: function(event) {
-						var instance = this;
-
-						var startEndParams = instance._getResultsStartEnd(instance._entryPaginator);
-
-						var requestParams = instance._lastDataRequest || instance._getDefaultParams();
-
-						var customParams = {};
-
-						customParams[instance.ns(STR_ENTRY_START)] = startEndParams[0];
-						customParams[instance.ns(STR_ENTRY_END)] = startEndParams[1];
-						customParams[instance.ns(VIEW_ENTRIES)] = false;
-						customParams[instance.ns(VIEW_ENTRIES_PAGE)] = true;
-						customParams[instance.ns(VIEW_FOLDERS)] = false;
-
-						if (AObject.owns(requestParams, instance.ns(SEARCH_TYPE))) {
-							customParams[instance.ns(SEARCH_TYPE)] = SRC_SEARCH_FRAGMENT;
-						}
-
-						A.mix(requestParams, customParams, true);
-
-						Liferay.fire(
-							instance._eventDataRequest,
-							{
-								requestParams: requestParams,
-								src: SRC_ENTRIES_PAGINATOR
-							}
-						);
-					},
-
-					_onFolderPaginatorChangeRequest: function(event) {
-						var instance = this;
-
-						var startEndParams = instance._getResultsStartEnd(instance._folderPaginator);
-
-						var requestParams = instance._lastDataRequest || {};
-
-						var customParams = {};
-
-						customParams[instance.ns(STR_FOLDER_START)] = startEndParams[0];
-						customParams[instance.ns(STR_FOLDER_END)] = startEndParams[1];
-						customParams[instance.ns(VIEW_ENTRIES)] = false;
-						customParams[instance.ns(VIEW_FOLDERS)] = true;
-
-						A.mix(requestParams, customParams, true);
-
-						Liferay.fire(
-							instance._eventDataRequest,
-							{
-								requestParams: requestParams
-							}
-						);
-					},
-
-					_updatePaginatorValues: function(requestParams, resetPaginator) {
+					_updatePaginationValues: function(requestParams, resetPagination) {
 						var instance = this;
 
 						var customParams = {};
 
-						if (resetPaginator) {
+						var entryRowsPerPage = instance.get(ENTRY_ROWS_PER_PAGE);
+
+						var folderRowsPerPage = instance.get(FOLDER_ROWS_PER_PAGE);
+
+						if (resetPagination) {
 							customParams[instance.ns(STR_ENTRY_START)] = 0;
-							customParams[instance.ns(STR_ENTRY_END)] = instance._entryPaginator.get(ROWS_PER_PAGE);
+							customParams[instance.ns(STR_ENTRY_END)] = entryRowsPerPage;
 							customParams[instance.ns(STR_FOLDER_START)] = 0;
-							customParams[instance.ns(STR_FOLDER_END)] = instance._folderPaginator.get(ROWS_PER_PAGE);
+							customParams[instance.ns(STR_FOLDER_END)] = folderRowsPerPage;
 						}
 						else {
-							var entryStartEndParams = instance._getResultsStartEnd(instance._entryPaginator);
-							var folderStartEndParams = instance._getResultsStartEnd(instance._folderPaginator);
+							var entryStartEndParams = instance._getResultsStartEnd(instance._entryPagination, entryRowsPerPage);
+							var folderStartEndParams = instance._getResultsStartEnd(instance._folderPagination, folderRowsPerPage);
 
 							if (!owns(requestParams, instance.ns(STR_ENTRY_START)) && !owns(requestParams, instance.ns(STR_ENTRY_END))) {
 								customParams[instance.ns(STR_ENTRY_START)] = entryStartEndParams[0];
@@ -408,6 +411,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-paginator', 'aui-parse-content', 'liferay-history-manager', 'liferay-portlet-base']
+		requires: ['aui-pagination', 'aui-parse-content', 'liferay-history-manager', 'liferay-portlet-base']
 	}
 );

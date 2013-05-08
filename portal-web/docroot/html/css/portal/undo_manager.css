@@ -1,4 +1,4 @@
-.aui-undomanager .lfr-undo-queue {
+.undomanager .lfr-undo-queue {
 	margin: 10px auto;
 }
 
@@ -10,6 +10,6 @@
 	float: right;
 }
 
-.aui-undomanager .lfr-queue-empty, .lfr-queue-single .lfr-action-clear {
+.undomanager .lfr-queue-empty, .lfr-queue-single .lfr-action-clear {
 	display: none;
 }

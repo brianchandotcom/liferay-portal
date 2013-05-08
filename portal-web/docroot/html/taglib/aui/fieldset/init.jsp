@@ -32,14 +32,14 @@ if ((dynamicAttributes != null) && !dynamicAttributes.isEmpty()) {
 	_options.putAll(dynamicAttributes);
 }
 
-boolean column = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:fieldset:column")));
 java.lang.String cssClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:fieldset:cssClass"));
+boolean column = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:fieldset:column")));
 java.lang.String helpMessage = GetterUtil.getString((java.lang.String)request.getAttribute("aui:fieldset:helpMessage"));
 java.lang.String id = GetterUtil.getString((java.lang.String)request.getAttribute("aui:fieldset:id"));
 java.lang.String label = GetterUtil.getString((java.lang.String)request.getAttribute("aui:fieldset:label"));
 
-_updateOptions(_options, "column", column);
 _updateOptions(_options, "cssClass", cssClass);
+_updateOptions(_options, "column", column);
 _updateOptions(_options, "helpMessage", helpMessage);
 _updateOptions(_options, "id", id);
 _updateOptions(_options, "label", label);

@@ -8,10 +8,6 @@ img {
 		border-width: 0;
 		float: absmiddle;
 	}
-
-	&.avatar {
-		border-width: 0;
-	}
 }
 
 label.hidden-label {

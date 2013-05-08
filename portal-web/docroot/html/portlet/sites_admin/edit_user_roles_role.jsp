@@ -25,7 +25,7 @@ int roleType = (Integer)request.getAttribute("edit_user_roles.jsp-roleType");
 PortletURL portletURL = (PortletURL)request.getAttribute("edit_user_roles.jsp-portletURL");
 %>
 
-<div class="portlet-section-body results-row" style="border: 1px solid; padding: 5px;">
+<div>
 	<%= LanguageUtil.format(pageContext, "step-x-of-x", new String[] {"1", "2"}) %>
 
 	<liferay-ui:message key="choose-a-role" />

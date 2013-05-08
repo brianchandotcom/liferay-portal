@@ -20,10 +20,10 @@ AUI.add(
 
 			OVER_NESTED_PORTLET: false,
 
-			PROXY_NODE: A.Node.create('<div class="lfr-portlet-proxy aui-portal-layout-proxy"></div>'),
+			PROXY_NODE: A.Node.create('<div class="lfr-portlet-proxy sortable-layout-proxy"></div>'),
 
 			PROXY_NODE_ITEM: A.Node.create(
-				'<div class="lfr-portlet-proxy aui-portal-layout-proxy">' +
+				'<div class="lfr-portlet-proxy sortable-layout-proxy">' +
 					'<div class="portlet-topper">' +
 						'<span class="portlet-title"></span>' +
 					'</div>' +

@@ -136,15 +136,16 @@ AUI.add(
 						var popup = instance._popup;
 
 						if (!popup) {
-							popup = new A.Dialog(
+							popup = Liferay.Util.Window.getWindow(
 								{
-									align: Liferay.Util.Window.ALIGN_CENTER,
-									cssClass: 'trash-restore-popup',
-									modal: true,
-									title: Liferay.Language.get('warning'),
-									width: 500
+									dialog: {
+										cssClass: 'trash-restore-popup'
+									},
+									title: Liferay.Language.get('warning')
 								}
-							).plug(
+							);
+
+							popup.plug(
 								A.Plugin.IO,
 								{
 									after: {
@@ -152,7 +153,7 @@ AUI.add(
 									},
 									autoLoad: false
 								}
-							).render();
+							);
 
 							instance._popup = popup;
 						}
@@ -167,7 +168,7 @@ AUI.add(
 
 						restoreTrashEntryFm.on('submit', instance._onRestoreTrashEntryFmSubmit, instance, restoreTrashEntryFm);
 
-						var closeButton = restoreTrashEntryFm.one('.aui-button-input-cancel');
+						var closeButton = restoreTrashEntryFm.one('.btn-cancel');
 
 						closeButton.on('click', instance._popup.hide, instance._popup);
 
@@ -235,6 +236,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-dialog', 'aui-io-request', 'liferay-portlet-base']
+		requires: ['aui-io-plugin-deprecated', 'aui-io-request', 'liferay-portlet-base', 'liferay-util-window']
 	}
 );

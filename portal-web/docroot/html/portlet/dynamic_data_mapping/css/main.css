@@ -1,25 +1,25 @@
 @import "compass";
 
-.aui-document-library-file-entry-cell-editor-hidden {
+.document-library-file-entry-cell-editor-hidden {
 	display: none;
 }
 
 .portlet-document-library, .portlet-dynamic-data-mapping {
-	.aui-diagram-builder-drop-container {
+	.diagram-builder-drop-container {
 		overflow: auto;
 	}
 
-	.aui-field-labels-inline {
+	.field-labels-inline {
 		clear: both;
 		display: block;
 
-		.aui-field-label {
+		.field-label {
 			margin-top: 0;
 		}
 	}
 
-	.aui-field {
-		.aui-field-content {
+	.field {
+		.field-content {
 			clear: both;
 		}
 	}
@@ -33,7 +33,7 @@
 	}
 
 	.lfr-ddm-link-icon {
-		background-image: url(@theme_image_path@/aui/hyperlink.png);
+		background-image: url(@theme_image_path@/dynamic_data_mapping/hyperlink.png);
 	}
 
 	.lfr-ddm-link-to-page a {
@@ -63,11 +63,6 @@
 			white-space: nowrap;
 			width: 1%;
 		}
-
-		.aui-field-input-text {
-			margin: 5px;
-			width: 350px;
-		}
 	}
 
 	.lfr-ddm-small-image-content img {
@@ -75,7 +70,7 @@
 	}
 
 	.lfr-ddm-text-html, .lfr-ddm-text-html-icon {
-		background-image: url(@theme_image_path@/aui/textarea.png);
+		background-image: url(@theme_image_path@/dynamic_data_mapping/textarea.png);
 	}
 
 	.lfr-ddm-text-html {
@@ -83,11 +78,11 @@
 		background-repeat: no-repeat;
 	}
 
-	.lfr-ddm-types-form-column .aui-column-content-first {
+	.lfr-ddm-types-form-column .column-content-first {
 		margin-right: 10px;
 	}
 
-	.lfr-ddm-search-form .aui-column {
+	.lfr-ddm-search-form .column {
 		margin-right: 10px;
 	}
 
@@ -128,11 +123,11 @@
 					}
 				}
 
-				.aui-toggler-header-collapsed .palette-item-header-icon {
+				.toggler-header-collapsed .palette-item-header-icon {
 					background-image: url(@theme_image_path@/arrows/05_right.png);
 				}
 
-				.aui-toggler-header-expanded .palette-item-header-icon {
+				.toggler-header-expanded .palette-item-header-icon {
 					background-image: url(@theme_image_path@/arrows/05_down.png);
 					vertical-align: middle;
 				}
@@ -172,18 +167,8 @@
 			position: relative;
 			margin-left: 200px;
 
-			.lfr-template-editor {
-				.aui-field-element, .aui-field-content, .aui-field-input-text {
-					display: block;
-				}
-
-				.aui-field-input-text {
-					height: 400px;
-				}
-
-				.lfr-rich-editor {
-					padding-left: 0.2em;
-				}
+			.lfr-template-editor .lfr-rich-editor {
+				padding-left: 0.2em;
 			}
 		}
 
@@ -197,7 +182,7 @@
 	}
 
 	.lfr-wcm-image {
-		background: url(@theme_image_path@/aui/image.png) no-repeat 0 20px;
+		background: url(@theme_image_path@/dynamic_data_mapping/image.png) no-repeat 0 20px;
 		padding-top: 35px;
 	}
 
@@ -206,11 +191,11 @@
 		padding: 0;
 	}
 
-	.aui-form-builder-source-wrapper {
+	.form-builder-source-wrapper {
 		height: 600px;
 		position: relative;
 
-		.aui-form-builder-source {
+		.form-builder-source {
 			position: relative;
 		}
 	}

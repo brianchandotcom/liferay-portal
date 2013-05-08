@@ -1,4 +1,5 @@
-@import url(portal/aui.css);
+@import url(portal/bootstrap.css);
+@import url(portal/aui_deprecated.css);
 
 @import url(portal_1.css);
 @import url(portal_2.css);

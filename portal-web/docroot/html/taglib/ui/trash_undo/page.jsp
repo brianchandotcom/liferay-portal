@@ -35,7 +35,7 @@ if (SessionMessages.contains(portletRequest, portletDisplay.getId() + SessionMes
 		}
 %>
 
-		<div class="portlet-msg-success taglib-trash-undo">
+		<div class="alert alert-success taglib-trash-undo">
 			<aui:form action="<%= portletURL %>" name="undoForm">
 				<liferay-ui:message arguments="<%= trashedEntriesCount %>" key='<%= trashedEntriesCount > 1 ? "x-items-were-moved-to-the-recycle-bin" : "the-selected-item-was-moved-to-the-recycle-bin" %>' />
 

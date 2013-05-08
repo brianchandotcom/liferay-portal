@@ -5,7 +5,7 @@ AUI.add(
 		var Lang = A.Lang;
 		var Node = A.Node;
 
-		var CSS_HELPER_HIDDEN = 'aui-helper-hidden';
+		var CSS_HELPER_HIDDEN = 'hide';
 
 		var CSS_ACTIONS = 'lfr-actions';
 
@@ -51,11 +51,11 @@ AUI.add(
 
 		var TPL_DEFAULT_LOCALE_LABEL_NODE = '<label>' + Liferay.Language.get('default-language') + ':</label>';
 
-		var TPL_DEFAULT_LOCALE_NODE = '<select class="' + [CSS_HELPER_HIDDEN, 'aui-field-input', 'aui-field-input-select', 'aui-field-input-menu'].join(STR_SPACE) + '"></select>';
+		var TPL_DEFAULT_LOCALE_NODE = '<select class="' + [CSS_HELPER_HIDDEN, 'field-input-menu'].join(STR_SPACE) + '"></select>';
 
 		var TPL_LOCALE_IMAGE = '<img src="' + themeDisplay.getPathThemeImages() + '/language/{locale}.png" />';
 
-		var TPL_AVAILABLE_TRANSLATION_LINK = '<span class="' + CSS_TRANSLATION + ' {cssClass}" locale="{locale}">' + TPL_LOCALE_IMAGE + '{displayName} <a class="' + CSS_DELETE_TRANSLATION + ' aui-icon aui-icon-close" href="javascript:;">x</a></span>';
+		var TPL_AVAILABLE_TRANSLATION_LINK = '<span class="' + CSS_TRANSLATION + ' {cssClass}" locale="{locale}">' + TPL_LOCALE_IMAGE + '{displayName} <a class="' + CSS_DELETE_TRANSLATION + ' icon icon-close" href="javascript:;">x</a></span>';
 
 		var TPL_AVAILABLE_TRANSLATIONS_LINKS_NODE = '<span class="' + CSS_AVAILABLE_TRANSLATIONS_LINKS + '"></span>';
 

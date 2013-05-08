@@ -179,9 +179,9 @@ AUI.add(
 
 						var output = instance._portletMessageContainer;
 
-						output.removeClass('portlet-msg-error').removeClass('portlet-msg-success');
+						output.removeClass('alert-error').removeClass('alert-success');
 
-						output.addClass('portlet-msg-' + type);
+						output.addClass('alert alert-' + type);
 
 						output.html(message);
 
@@ -365,7 +365,7 @@ AUI.add(
 							instance._eventDataRequest,
 							{
 								requestParams: requestParams,
-								resetPaginator: true
+								resetPagination: true
 							}
 						);
 					},
@@ -379,7 +379,7 @@ AUI.add(
 							'liferay-app-view-folders:dataRequest',
 							{
 								requestParams: event.requestParams,
-								resetPaginator: event.resetPaginator,
+								resetPagination: event.resetPagination,
 								src: event.src
 							}
 						);
@@ -429,7 +429,7 @@ AUI.add(
 							instance._eventDataRequest,
 							{
 								requestParams: requestParams,
-								resetPaginator: true
+								resetPagination: true
 							}
 						);
 					},
@@ -653,6 +653,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-parse-content', 'liferay-app-view-move', 'liferay-history-manager', 'liferay-list-view', 'liferay-portlet-base']
+		requires: ['aui-base', 'aui-parse-content', 'liferay-app-view-move', 'liferay-history-manager', 'liferay-list-view', 'liferay-node', 'liferay-portlet-base']
 	}
 );

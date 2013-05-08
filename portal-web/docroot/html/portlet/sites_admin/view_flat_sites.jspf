@@ -53,11 +53,7 @@
 
 	</liferay-ui:search-container-results>
 
-	<liferay-ui:search-form
-		page="/html/portlet/users_admin/group_search.jsp"
-		searchContainer="<%= searchContainer %>"
-		showAddButton="<%= false %>"
-	/>
+	<%@ include file="/html/portlet/sites_admin/toolbar.jspf" %>
 
 	<c:if test="<%= !results.isEmpty() %>">
 		<aui:button onClick='<%= renderResponse.getNamespace() + "deleteSites();" %>' value="delete" />

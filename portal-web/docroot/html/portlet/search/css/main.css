@@ -43,7 +43,7 @@
 				border-top: 1px solid #CCC;
 				padding: 8px 0;
 
-				.aui-field-wrapper-content {
+				.field-wrapper-content {
 					margin: 0 0 1em;
 				}
 
@@ -80,7 +80,7 @@
 					}
 				}
 
-				.date .aui-calendar {
+				.date .calendar {
 					margin: 0 auto;
 				}
 
@@ -92,11 +92,11 @@
 				.modified-custom-range {
 					padding-left: 10px;
 
-					.aui-field-content {
+					.field-content {
 						margin: 5px 0;
 					}
 
-					.aui-button {
+					.button {
 						margin-right: 5px;
 					}
 				}
@@ -249,7 +249,7 @@
 }
 
 .portlet-search.portlet-configuration {
-	.aui-fieldset-content {
+	.fieldset-content {
 		padding-top: 0.5em;
 	}
 

@@ -90,7 +90,7 @@ else {
 
 				<c:choose>
 					<c:when test="<%= parentCategoryId == 0 %>">
-						<aui:select inputCssClass="vocabulary-select-list" label="to-vocabulary" name="vocabularyId">
+						<aui:select cssClass="vocabulary-select-list" label="to-vocabulary" name="vocabularyId">
 
 							<%
 							for (AssetVocabulary vocabulary : vocabularies) {

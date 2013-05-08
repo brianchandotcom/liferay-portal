@@ -91,7 +91,7 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 	<liferay-ui:error exception="<%= NoSuchFileEntryException.class %>" message="the-document-could-not-be-found" />
 
 	<aui:fieldset>
-		<div class="portlet-msg-info">
+		<div class="alert alert-info">
 			<liferay-ui:message key="you-can-create-a-shortcut-to-any-document-that-you-have-read-access-for" />
 		</div>
 
@@ -180,7 +180,7 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 
 					if (button) {
 						button.set('disabled', false);
-						button.ancestor('.aui-button').removeClass('aui-button-disabled');
+						button.ancestor('.button').removeClass('button-disabled');
 					}
 				}
 			);

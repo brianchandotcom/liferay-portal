@@ -47,8 +47,6 @@ String searchURLString = searchURL.toString();
 	<aui:input name="redirect" type="hidden" value="<%= portletURLString %>" />
 	<aui:input name="toolbarItem" type="hidden" value="<%= toolbarItem %>" />
 
-	<liferay-util:include page="/html/portlet/sites_admin/toolbar.jsp" />
-
 	<liferay-ui:error exception="<%= NoSuchLayoutSetException.class %>">
 
 		<%

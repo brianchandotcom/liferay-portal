@@ -14,6 +14,8 @@
  */
 --%>
 
+<i class="<%= iconCssClass %>"></i>
+
 <span class="site-name">
 	<%= HtmlUtil.escape(siteName) %>
 </span>

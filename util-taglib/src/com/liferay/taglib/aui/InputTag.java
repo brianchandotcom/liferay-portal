@@ -225,11 +225,6 @@ public class InputTag extends BaseInputTag {
 			if (Validator.isNotNull(fieldParam)) {
 				_inputName = fieldParam;
 			}
-
-			if (ModelHintsUtil.isLocalized(model.getName(), field)) {
-				_forLabel += StringPool.UNDERLINE + defaultLanguageId;
-				_inputName += StringPool.UNDERLINE + defaultLanguageId;
-			}
 		}
 		else if (Validator.isNotNull(type)) {
 			if (Validator.equals(type, "checkbox") ||

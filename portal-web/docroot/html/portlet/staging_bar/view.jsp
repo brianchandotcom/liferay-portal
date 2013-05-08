@@ -83,12 +83,10 @@ if (layout != null) {
 	%>
 
 	<div class="staging-bar">
-		<ul class="aui-tabview-list staging-tabview-list">
+		<ul class="nav nav-tabs staging-tabview-list">
 			<c:if test="<%= !group.isStagedRemotely() && ((liveGroup != null) && layout.isPrivateLayout() ? (liveGroup.getPrivateLayoutsPageCount() > 0) : (liveGroup.getPublicLayoutsPageCount() > 0)) %>">
-				<li class="aui-state-default aui-tab first <%= (!group.isStagingGroup() ? " aui-state-active aui-tab-active" : StringPool.BLANK) %>">
-					<span class="aui-tab-content">
-						<aui:a cssClass="aui-tab-label" href="<%= !group.isStagingGroup() ? null : liveFriendlyURL %>" label="live" />
-					</span>
+				<li class="tab <%= (!group.isStagingGroup() ? " active" : StringPool.BLANK) %>">
+					<aui:a href="<%= !group.isStagingGroup() ? null : liveFriendlyURL %>" label="live" />
 				</li>
 			</c:if>
 
@@ -106,28 +104,24 @@ if (layout != null) {
 				String remoteURL = StagingUtil.buildRemoteURL(remoteAddress, remotePort, remotePathContext, secureConnection, remoteGroupId, layout.isPrivateLayout());
 				%>
 
-				<li class="aui-state-default aui-tab remote-live-link">
-					<span class="aui-tab-content">
-						<liferay-ui:icon cssClass="aui-tab-label" image="../arrows/05_right" label="<%= true %>" message="go-to-remote-live" target="_blank" url="<%= remoteURL %>" />
-					</span>
+				<li class="tab remote-live-link">
+					<liferay-ui:icon image="../arrows/05_right" label="<%= true %>" message="go-to-remote-live" target="_blank" url="<%= remoteURL %>" />
 				</li>
 			</c:if>
 
 			<c:if test="<%= stagingGroup != null %>">
-				<li class="aui-state-default aui-tab last <%= (layoutSetBranches != null) ? " aui-state-active aui-tab-active" : StringPool.BLANK %>">
-					<span class="aui-tab-content">
-						<aui:a cssClass="aui-tab-label" href="<%= (layoutSetBranches != null) ? null : stagingFriendlyURL %>" label="staging">
-							<c:if test="<%= (layoutSetBranches != null) && (layoutSetBranches.size() <= 1) %>">
-								<liferay-ui:staging extended="<%= false %>" showManageBranches="<%= branchingEnabled %>" />
-							</c:if>
-						</aui:a>
-					</span>
+				<li class="tab <%= (layoutSetBranches != null) ? " active" : StringPool.BLANK %>">
+					<aui:a href="<%= (layoutSetBranches != null) ? null : stagingFriendlyURL %>" label="staging">
+						<c:if test="<%= (layoutSetBranches != null) && (layoutSetBranches.size() <= 1) %>">
+							<liferay-ui:staging extended="<%= false %>" showManageBranches="<%= branchingEnabled %>" />
+						</c:if>
+					</aui:a>
 				</li>
 			</c:if>
 		</ul>
 
 		<c:if test="<%= (layoutSetBranches != null) && (layoutSetBranches.size() > 1) %>">
-			<ul class="aui-tabview-list site-variations-tabview-list">
+			<ul class="nav nav-tabs site-variations-nav-tabs">
 				<c:if test="<%= group.isStagingGroup() || layoutSetBranches.size() <= _MAX_INLINE_BRANCHES %>">
 
 					<%
@@ -141,17 +135,12 @@ if (layout != null) {
 							curLayoutSetBranch = layoutSetBranches.get(i);
 						}
 
-						boolean first = (i == 0);
 						boolean selected = (group.isStagingGroup() || group.isStagedRemotely()) && (curLayoutSetBranch.getLayoutSetBranchId() == layoutRevision.getLayoutSetBranchId());
 
-						String cssClass = "aui-state-default aui-tab";
-
-						if (first) {
-							cssClass += " first";
-						}
+						String cssClass = "tab";
 
 						if (selected) {
-							cssClass += " aui-state-active aui-tab-active";
+							cssClass += " active";
 						}
 					%>
 
@@ -165,13 +154,9 @@ if (layout != null) {
 						</portlet:actionURL>
 
 						<li class="<%= cssClass %>">
-							<span class="aui-tab-content">
-								<span class="aui-tab-label">
-									<aui:a href="<%= selected ? null : layoutSetBranchURL %>" label='<%= layoutSetBranches.size() == 1 ? "staging" : HtmlUtil.escape(curLayoutSetBranch.getName()) %>' />
+							<aui:a href="<%= selected ? null : layoutSetBranchURL %>" label='<%= layoutSetBranches.size() == 1 ? "staging" : HtmlUtil.escape(curLayoutSetBranch.getName()) %>' />
 
-									<liferay-ui:staging extended="<%= false %>" layoutSetBranchId="<%= curLayoutSetBranch.getLayoutSetBranchId() %>" />
-								</span>
-							</span>
+							<liferay-ui:staging extended="<%= false %>" layoutSetBranchId="<%= curLayoutSetBranch.getLayoutSetBranchId() %>" />
 						</li>
 
 					<%
@@ -184,39 +169,37 @@ if (layout != null) {
 				</c:if>
 
 				<c:if test="<%= layoutSetBranches.size() > _MAX_INLINE_BRANCHES %>">
-					<li class="aui-state-default aui-tab go-to-layout-set-branches-tab">
-						<span class="aui-tab-content">
-							<liferay-ui:icon-menu align="left" cssClass="aui-tab-label layoutset-branches-menu" direction="down" extended="<%= false %>" icon='<%= themeDisplay.getPathThemeImages() + "/common/staging.png" %>' message='<%= LanguageUtil.format(pageContext, "site-pages-variations-x", layoutSetBranches.size()) %>'>
+					<li class="tab go-to-layout-set-branches-tab">
+						<liferay-ui:icon-menu cssClass="layoutset-branches-menu" direction="down" extended="<%= false %>" icon='<%= themeDisplay.getPathThemeImages() + "/common/staging.png" %>' message='<%= LanguageUtil.format(pageContext, "site-pages-variations-x", layoutSetBranches.size()) %>'>
 
-								<%
-								for (int i = 0; i < layoutSetBranches.size(); i++) {
-									LayoutSetBranch curLayoutSetBranch = layoutSetBranches.get(i);
+							<%
+							for (int i = 0; i < layoutSetBranches.size(); i++) {
+								LayoutSetBranch curLayoutSetBranch = layoutSetBranches.get(i);
 
-									boolean selected = group.isStagingGroup() && (layoutRevision != null) && (curLayoutSetBranch.getLayoutSetBranchId() == layoutRevision.getLayoutSetBranchId());
-								%>
+								boolean selected = group.isStagingGroup() && (layoutRevision != null) && (curLayoutSetBranch.getLayoutSetBranchId() == layoutRevision.getLayoutSetBranchId());
+							%>
 
-									<portlet:actionURL var="layoutSetBranchURL">
-										<portlet:param name="struts_action" value="/dockbar/edit_layouts" />
-										<portlet:param name="<%= Constants.CMD %>" value="select_layout_set_branch" />
-										<portlet:param name="redirect" value="<%= stagingFriendlyURL %>" />
-										<portlet:param name="groupId" value="<%= String.valueOf(curLayoutSetBranch.getGroupId()) %>" />
-										<portlet:param name="privateLayout" value="<%= String.valueOf(layout.isPrivateLayout()) %>" />
-										<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(curLayoutSetBranch.getLayoutSetBranchId()) %>" />
-									</portlet:actionURL>
+								<portlet:actionURL var="layoutSetBranchURL">
+									<portlet:param name="struts_action" value="/dockbar/edit_layouts" />
+									<portlet:param name="<%= Constants.CMD %>" value="select_layout_set_branch" />
+									<portlet:param name="redirect" value="<%= stagingFriendlyURL %>" />
+									<portlet:param name="groupId" value="<%= String.valueOf(curLayoutSetBranch.getGroupId()) %>" />
+									<portlet:param name="privateLayout" value="<%= String.valueOf(layout.isPrivateLayout()) %>" />
+									<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(curLayoutSetBranch.getLayoutSetBranchId()) %>" />
+								</portlet:actionURL>
 
-									<liferay-ui:icon
-										cssClass='<%= selected ? "disabled" : StringPool.BLANK %>'
-										image='<%= selected ? "../arrows/01_right" : "copy"  %>'
-										message="<%= HtmlUtil.escape(curLayoutSetBranch.getName()) %>"
-										url="<%= selected ? null : layoutSetBranchURL %>"
-									/>
+								<liferay-ui:icon
+									cssClass='<%= selected ? "disabled" : StringPool.BLANK %>'
+									image='<%= selected ? "../arrows/01_right" : "copy"  %>'
+									message="<%= HtmlUtil.escape(curLayoutSetBranch.getName()) %>"
+									url="<%= selected ? null : layoutSetBranchURL %>"
+								/>
 
-								<%
-								}
-								%>
+							<%
+							}
+							%>
 
-							</liferay-ui:icon-menu>
-						</span>
+						</liferay-ui:icon-menu>
 					</li>
 				</c:if>
 
@@ -224,17 +207,15 @@ if (layout != null) {
 					<portlet:param name="struts_action" value="/staging_bar/view_layout_set_branches" />
 				</portlet:renderURL>
 
-				<li class="aui-state-default aui-tab last manage-layout-set-branches-tab">
-					<span class="aui-tab-content">
-						<liferay-ui:icon
-							cssClass="aui-tab-label manage-layout-set-branches"
-							id="manageLayoutSetBranches"
-							image="configuration"
-							label="<%= true %>"
-							message="manage-site-pages-variations"
-							url="<%= layoutSetBranchesURL %>"
-						/>
-					</span>
+				<li class="tab manage-layout-set-branches-tab">
+					<liferay-ui:icon
+						cssClass="manage-layout-set-branches"
+						id="manageLayoutSetBranches"
+						image="configuration"
+						label="<%= true %>"
+						message="manage-site-pages-variations"
+						url="<%= layoutSetBranchesURL %>"
+					/>
 				</li>
 
 				<aui:script use="aui-base">
@@ -250,10 +231,6 @@ if (layout != null) {
 
 								Liferay.Util.openWindow(
 									{
-										dialog:
-											{
-												width: 820
-											},
 										id: '<portlet:namespace />layoutSetBranches',
 										title: '<%= UnicodeLanguageUtil.get(pageContext, "manage-site-pages-variations") %>',
 										uri: event.currentTarget.attr('href')
@@ -271,7 +248,7 @@ if (layout != null) {
 		%>
 
 		<c:if test="<%= !group.isStagedRemotely() || branchingEnabled %>">
-			<div class="aui-tabview-content staging-tabview-content">
+			<div class="tab-pane staging-tabview-content">
 				<c:choose>
 					<c:when test="<%= (group.isStagingGroup() || group.isStagedRemotely()) && branchingEnabled %>">
 						<div class="layout-set-branch-info">
@@ -306,9 +283,7 @@ if (layout != null) {
 									<div class="layout-title">
 										<span class="layout-title-label"><liferay-ui:message key="current-page" />:</span>
 
-										<span class="layout-breadcrumb">
-											<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showParentGroups="<%= false %>" showPortletBreadcrumb="<%= false %>" />
-										</span>
+										<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showParentGroups="<%= false %>" showPortletBreadcrumb="<%= false %>" />
 									</div>
 
 									<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
@@ -318,7 +293,7 @@ if (layout != null) {
 									%>
 
 									<c:if test="<%= layoutRevisions.size() > 1 %>">
-										<ul class="aui-tabview-list variations-tabview-list">
+										<ul class="nav nav-tabs variations-tabview-list">
 
 											<%
 											for (int i = 0; i < layoutRevisions.size(); i ++) {
@@ -335,14 +310,10 @@ if (layout != null) {
 
 												boolean selected = (curLayoutBranch.getLayoutBranchId() == layoutRevision.getLayoutBranchId());
 
-												String cssClass = "aui-state-default aui-tab layout-set-branch";
-
-												if (i == 0) {
-													cssClass += " first";
-												}
+												String cssClass = "tab layout-set-branch";
 
 												if (selected) {
-													cssClass += " aui-state-active aui-tab-active";
+													cssClass += " active";
 												}
 											%>
 
@@ -356,9 +327,7 @@ if (layout != null) {
 												</portlet:actionURL>
 
 												<li class="<%= cssClass %>">
-													<span class="aui-tab-content">
-														<aui:a cssClass="aui-tab-label" href="<%= selected ? null : layoutBranchURL %>" label="<%= HtmlUtil.escape(curLayoutBranch.getName()) %>" />
-													</span>
+													<aui:a href="<%= selected ? null : layoutBranchURL %>" label="<%= HtmlUtil.escape(curLayoutBranch.getName()) %>" />
 												</li>
 
 											<%
@@ -369,60 +338,56 @@ if (layout != null) {
 											%>
 
 											<c:if test="<%= layoutRevisions.size() > _MAX_INLINE_BRANCHES %>">
-												<li class="aui-state-default aui-tab go-to-layout-branches-tab">
-													<span class="aui-tab-content">
-														<liferay-ui:icon-menu align="left" cssClass="aui-tab-label layoutset-branches-menu" direction="down" extended="<%= false %>" icon='<%= themeDisplay.getPathThemeImages() + "/common/signal_instance.png" %>' message="page-variations">
+												<li class="tab go-to-layout-branches-tab">
+													<liferay-ui:icon-menu cssClass="layoutset-branches-menu" direction="down" extended="<%= false %>" icon='<%= themeDisplay.getPathThemeImages() + "/common/signal_instance.png" %>' message="page-variations">
 
-															<%
-															for (int i = 0; i < layoutRevisions.size(); i ++) {
-																LayoutRevision rootLayoutRevision = layoutRevisions.get(i);
+														<%
+														for (int i = 0; i < layoutRevisions.size(); i ++) {
+															LayoutRevision rootLayoutRevision = layoutRevisions.get(i);
 
-																LayoutBranch curLayoutBranch = rootLayoutRevision.getLayoutBranch();
+															LayoutBranch curLayoutBranch = rootLayoutRevision.getLayoutBranch();
 
-																boolean selected = (rootLayoutRevision.getLayoutBranchId() == layoutRevision.getLayoutBranchId());
-															%>
+															boolean selected = (rootLayoutRevision.getLayoutBranchId() == layoutRevision.getLayoutBranchId());
+														%>
 
-																<portlet:actionURL var="rootLayoutRevisionURL">
-																	<portlet:param name="struts_action" value="/dockbar/edit_layouts" />
-																	<portlet:param name="<%= Constants.CMD %>" value="select_layout_branch" />
-																	<portlet:param name="redirect" value="<%= stagingFriendlyURL %>" />
-																	<portlet:param name="groupId" value="<%= String.valueOf(rootLayoutRevision.getGroupId()) %>" />
-																	<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(rootLayoutRevision.getLayoutSetBranchId()) %>" />
-																	<portlet:param name="layoutBranchId" value="<%= String.valueOf(rootLayoutRevision.getLayoutBranchId()) %>" />
-																</portlet:actionURL>
+															<portlet:actionURL var="rootLayoutRevisionURL">
+																<portlet:param name="struts_action" value="/dockbar/edit_layouts" />
+																<portlet:param name="<%= Constants.CMD %>" value="select_layout_branch" />
+																<portlet:param name="redirect" value="<%= stagingFriendlyURL %>" />
+																<portlet:param name="groupId" value="<%= String.valueOf(rootLayoutRevision.getGroupId()) %>" />
+																<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(rootLayoutRevision.getLayoutSetBranchId()) %>" />
+																<portlet:param name="layoutBranchId" value="<%= String.valueOf(rootLayoutRevision.getLayoutBranchId()) %>" />
+															</portlet:actionURL>
 
-																<liferay-ui:icon
-																	cssClass='<%= selected ? "disabled" : StringPool.BLANK %>'
-																	image='<%= selected ? "../arrows/01_right" : "copy"  %>'
-																	message="<%= HtmlUtil.escape(curLayoutBranch.getName()) %>"
-																	url="<%= selected ? null : rootLayoutRevisionURL %>"
-																/>
+															<liferay-ui:icon
+																cssClass='<%= selected ? "disabled" : StringPool.BLANK %>'
+																image='<%= selected ? "../arrows/01_right" : "copy"  %>'
+																message="<%= HtmlUtil.escape(curLayoutBranch.getName()) %>"
+																url="<%= selected ? null : rootLayoutRevisionURL %>"
+															/>
 
-															<%
-															}
-															%>
+														<%
+														}
+														%>
 
-														</liferay-ui:icon-menu>
-													</span>
+													</liferay-ui:icon-menu>
 												</li>
 											</c:if>
 
-											<li class="aui-state-default aui-tab last manage-page-variations-tab">
-												<span class="aui-tab-content">
-													<liferay-ui:icon
-														cssClass="aui-tab-label manage-layout-branches-tab"
-														id="manageLayoutRevisions"
-														image="configuration"
-														label="<%= true %>"
-														message="manage-page-variations"
-														url="<%= layoutBranchesURL %>"
-													/>
-												</span>
+											<li class="tab manage-page-variations-tab">
+												<liferay-ui:icon
+													cssClass="manage-layout-branches-tab"
+													id="manageLayoutRevisions"
+													image="configuration"
+													label="<%= true %>"
+													message="manage-page-variations"
+													url="<%= layoutBranchesURL %>"
+												/>
 											</li>
 										</ul>
 									</c:if>
 
-									<div class="aui-tabview-content variations-tabview-content">
+									<div class="tab-pane variations-tabview-content">
 										<c:if test="<%= Validator.isNotNull(layoutBranch.getDescription()) %>">
 											<div class="layout-branch-description">
 												<%= HtmlUtil.escape(layoutBranch.getDescription()) %>
@@ -466,10 +431,6 @@ if (layout != null) {
 
 										Liferay.Util.openWindow(
 											{
-												dialog:
-													{
-														width: 820
-													},
 												id: '<portlet:namespace />layoutRevisions',
 												title: '<%= UnicodeLanguageUtil.get(pageContext, "manage-page-variations") %>',
 												uri: event.currentTarget.attr('href')

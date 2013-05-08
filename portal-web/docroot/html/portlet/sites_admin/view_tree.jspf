@@ -51,8 +51,8 @@ if ((group != null) && !group.isRoot()) {
 	/>
 </c:if>
 
-<aui:layout>
-	<aui:column columnWidth="<%= (group != null) ? 75 : 100 %>" cssClass="lfr-asset-column lfr-asset-column-details" first="<%= true %>">
+<aui:row>
+	<aui:col cssClass="lfr-asset-column lfr-asset-column-details" width="<%= (group != null) ? 75 : 100 %>">
 		<c:if test="<%= group != null %>">
 			<%@ include file="/html/portlet/sites_admin/view_site_info.jspf" %>
 
@@ -119,11 +119,7 @@ if ((group != null) && !group.isRoot()) {
 			</liferay-ui:search-container-results>
 
 			<c:if test="<%= group == null %>">
-				<liferay-ui:search-form
-					page="/html/portlet/users_admin/group_search.jsp"
-					searchContainer="<%= searchContainer %>"
-					showAddButton="<%= false %>"
-				/>
+				<%@ include file="/html/portlet/sites_admin/toolbar.jspf" %>
 			</c:if>
 
 			<c:if test="<%= !results.isEmpty() %>">
@@ -158,7 +154,7 @@ if ((group != null) && !group.isRoot()) {
 
 		<aui:input disabled="<%= true %>" name="sitesRedirect" type="hidden" value="<%= portletURL.toString() %>" />
 		<aui:input name="deleteGroupIds" type="hidden" />
-	</aui:column>
+	</aui:col>
 
 	<c:if test="<%= group != null %>">
 
@@ -166,7 +162,7 @@ if ((group != null) && !group.isRoot()) {
 		LayoutSet layoutSet = group.getPublicLayoutSet();
 		%>
 
-		<aui:column columnWidth="<%= 25 %>" cssClass="lfr-asset-column lfr-asset-column-actions" last="<%= true %>">
+		<aui:col cssClass="lfr-asset-column lfr-asset-column-actions" last="<%= true %>" width="<%= 25 %>">
 			<div class="lfr-asset-summary">
 				<img alt="<%= HtmlUtil.escape(group.getDescriptiveName()) %>" class="avatar" src='<%= themeDisplay.getPathImage() + "/layout_set_logo?img_id=" + layoutSet.getLogoId() + "&t=" + WebServerServletTokenUtil.getToken(layoutSet.getLogoId()) %>' />
 
@@ -182,11 +178,11 @@ if ((group != null) && !group.isRoot()) {
 			%>
 
 			<liferay-util:include page="/html/portlet/sites_admin/site_action.jsp" />
-		</aui:column>
+		</aui:col>
 
 		<%
 		SitesUtil.addPortletBreadcrumbEntries(group, request, renderResponse);
 		%>
 
 	</c:if>
-</aui:layout>
+</aui:row>

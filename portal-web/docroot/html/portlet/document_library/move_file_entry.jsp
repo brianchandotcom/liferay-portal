@@ -50,7 +50,7 @@ portletURL.setParameter("fileEntryId", String.valueOf(fileEntryId));
 <c:if test="<%= fileEntry.isCheckedOut() %>">
 	<c:choose>
 		<c:when test="<%= fileEntry.hasLock() %>">
-			<div class="portlet-msg-success">
+			<div class="alert alert-success">
 				<c:choose>
 					<c:when test="<%= lock.isNeverExpires() %>">
 						<liferay-ui:message key="you-now-have-an-indefinite-lock-on-this-document" />
@@ -67,7 +67,7 @@ portletURL.setParameter("fileEntryId", String.valueOf(fileEntryId));
 			</div>
 		</c:when>
 		<c:otherwise>
-			<div class="portlet-msg-error">
+			<div class="alert alert-error">
 				<%= LanguageUtil.format(pageContext, "you-cannot-modify-this-document-because-it-was-checked-out-by-x-on-x", new Object[] {HtmlUtil.escape(PortalUtil.getUserName(lock.getUserId(), String.valueOf(lock.getUserId()))), dateFormatDateTime.format(lock.getCreateDate())}, false) %>
 			</div>
 		</c:otherwise>
@@ -75,7 +75,7 @@ portletURL.setParameter("fileEntryId", String.valueOf(fileEntryId));
 </c:if>
 
 <c:if test="<%= cmd.equals(Constants.MOVE_FROM_TRASH) %>">
-	<div class="portlet-msg-alert">
+	<div class="alert alert-block">
 		<liferay-ui:message arguments="<%= fileEntry.getTitle() %>" key="the-original-folder-does-not-exist-anymore" />
 	</div>
 </c:if>

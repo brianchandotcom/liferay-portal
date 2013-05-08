@@ -31,7 +31,7 @@ ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)searchContainer.getDispl
 boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, displayTerms.ADVANCED_SEARCH);
 %>
 
-<div class='taglib-search-toggle taglib-search-toggle-advanced <%= advancedSearch ? StringPool.BLANK : "aui-helper-hidden" %>' id="<portlet:namespace />advancedSearch">
+<div class='taglib-search-toggle taglib-search-toggle-advanced <%= advancedSearch ? StringPool.BLANK : "hide" %>' id="<portlet:namespace />advancedSearch">
 	<aui:form action="<%= portletURL.toString() %>" method="post" name="fmAdvancedSearch" onSubmit="event.preventDefault();">
 		<aui:input name="<%= displayTerms.ADVANCED_SEARCH %>" type="hidden" value="<%= true %>" />
 

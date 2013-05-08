@@ -270,39 +270,41 @@ if (hints != null) {
 			}
 			%>
 
-			<liferay-ui:input-date
-				cssClass="<%= cssClass %>"
-				dayNullable="<%= dayNullable %>"
-				dayParam='<%= fieldParam + "Day" %>'
-				dayValue="<%= day %>"
-				disabled="<%= disabled %>"
-				firstDayOfWeek="<%= firstDayOfWeek %>"
-				formName="<%= formName %>"
-				imageInputId='<%= fieldParam + "ImageInputId" %>'
-				monthNullable="<%= monthNullable %>"
-				monthParam='<%= fieldParam + "Month" %>'
-				monthValue="<%= month %>"
-				name="<%= fieldParam %>"
-				yearNullable="<%= yearNullable %>"
-				yearParam='<%= fieldParam + "Year" %>'
-				yearRangeEnd="<%= yearRangeEnd %>"
-				yearRangeStart="<%= yearRangeStart %>"
-				yearValue="<%= year %>"
-			/>
-
-			<c:if test="<%= showTime %>">
-				<liferay-ui:input-time
-					amPmParam='<%= fieldParam + "AmPm" %>'
-					amPmValue="<%= amPm %>"
+			<div class="clearfix">
+				<liferay-ui:input-date
 					cssClass="<%= cssClass %>"
+					dayNullable="<%= dayNullable %>"
+					dayParam='<%= fieldParam + "Day" %>'
+					dayValue="<%= day %>"
 					disabled="<%= disabled %>"
-					hourParam='<%= fieldParam + "Hour" %>'
-					hourValue="<%= hour %>"
-					minuteInterval="<%= 1 %>"
-					minuteParam='<%= fieldParam + "Minute" %>'
-					minuteValue="<%= minute %>"
+					firstDayOfWeek="<%= firstDayOfWeek %>"
+					formName="<%= formName %>"
+					imageInputId='<%= fieldParam + "ImageInputId" %>'
+					monthNullable="<%= monthNullable %>"
+					monthParam='<%= fieldParam + "Month" %>'
+					monthValue="<%= month %>"
+					name="<%= fieldParam %>"
+					yearNullable="<%= yearNullable %>"
+					yearParam='<%= fieldParam + "Year" %>'
+					yearRangeEnd="<%= yearRangeEnd %>"
+					yearRangeStart="<%= yearRangeStart %>"
+					yearValue="<%= year %>"
 				/>
-			</c:if>
+
+				<c:if test="<%= showTime %>">
+					<liferay-ui:input-time
+						amPmParam='<%= fieldParam + "AmPm" %>'
+						amPmValue="<%= amPm %>"
+						cssClass="<%= cssClass %>"
+						disabled="<%= disabled %>"
+						hourParam='<%= fieldParam + "Hour" %>'
+						hourValue="<%= hour %>"
+						minuteInterval="<%= 1 %>"
+						minuteParam='<%= fieldParam + "Minute" %>'
+						minuteValue="<%= minute %>"
+					/>
+				</c:if>
+			</div>
 		</c:when>
 		<c:when test='<%= type.equals("double") || type.equals("int") || type.equals("long") || type.equals("String") %>'>
 

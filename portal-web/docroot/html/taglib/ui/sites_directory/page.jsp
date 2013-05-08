@@ -50,7 +50,7 @@
 	<div class="sites-directory-taglib nav-menu">
 		<c:choose>
 			<c:when test="<%= hidden %>">
-				<div class="portlet-msg-info">
+				<div class="alert alert-info">
 					<liferay-ui:message key="no-sites-were-found" />
 				</div>
 			</c:when>
@@ -59,7 +59,7 @@
 					<c:when test='<%= displayStyle.equals("descriptive") || displayStyle.equals("icon") %>'>
 						<c:choose>
 							<c:when test="<%= Validator.isNull(portletDisplay.getId()) %>">
-								<div class="portlet-msg-info">
+								<div class="alert alert-info">
 									<liferay-ui:message arguments="<%= displayStyle %>" key="the-display-style-x-cannot-be-used-in-this-context" />
 								</div>
 							</c:when>
@@ -182,7 +182,7 @@ private void _buildSitesList(Group rootGroup, Group curGroup, List<Group> branch
 
 	if (childGroups.isEmpty()) {
 		if (sb.length() == 0) {
-			sb.append("<div class=\"portlet-msg-info\">");
+			sb.append("<div class=\"alert alert-info\">");
 			sb.append(LanguageUtil.get(themeDisplay.getLocale(), "no-sites-were-found"));
 			sb.append("</div>");
 		}

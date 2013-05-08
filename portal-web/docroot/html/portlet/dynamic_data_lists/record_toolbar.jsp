@@ -24,7 +24,7 @@ long formDDMTemplateId = ParamUtil.getLong(request, "formDDMTemplateId");
 
 <div class="record-toolbar" id="<portlet:namespace />recordToolbar"></div>
 
-<aui:script use="aui-toolbar,aui-dialog-iframe,liferay-util-window">
+<aui:script use="aui-toolbar,aui-dialog-iframe-deprecated,liferay-util-window">
 	var permissionPopUp = null;
 
 	var toolbarChildren = [
@@ -37,18 +37,19 @@ long formDDMTemplateId = ParamUtil.getLong(request, "formDDMTemplateId");
 			</portlet:renderURL>
 
 			{
-				handler: function (event) {
-					window.location = '<%= viewHistoryURL %>';
-				},
-				icon: 'clock',
-				label: '<%= UnicodeLanguageUtil.get(pageContext, "view-history") %>'
+				icon: 'icon-time',
+				label: '<%= UnicodeLanguageUtil.get(pageContext, "view-history") %>',
+				on: {
+					click: function (event) {
+						window.location = '<%= viewHistoryURL %>';
+					}
+				}
 			}
 		</c:if>
 	];
 
 	new A.Toolbar(
 		{
-			activeState: false,
 			boundingBox: '#<portlet:namespace />recordToolbar',
 			children: toolbarChildren
 		}

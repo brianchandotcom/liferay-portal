@@ -146,7 +146,7 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 				classPK: '<%= ddmStructureId %>',
 				ddmResource: '<%= ddmResource %>',
 				dialog: {
-					width:680
+					destroyOnHide: true
 				},
 				eventName: '<portlet:namespace />selectDDMStructure',
 				showGlobalScope: true,

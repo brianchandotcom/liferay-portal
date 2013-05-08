@@ -11,13 +11,13 @@ AUI.add(
 
 		var STR_PARAM_FALLBACK = 'uploader=fallback';
 
-		var TPL_ERROR_MESSAGE = '<div class="portlet-msg-error">{0}</div>';
+		var TPL_ERROR_MESSAGE = '<div class="alert alert-error">{0}</div>';
 
 		var TPL_FILE_LIST = [
 			'<tpl for=".">',
 				'<tpl if="!values.error">',
 					'<li class="upload-file {[ values.temp ? "upload-complete pending-file selectable" : "" ]}" data-fileId="{id}" data-fileName="{name}" id="{id}">',
-						'<input class="{[ !values.temp ? "aui-helper-hidden" : "" ]} select-file" data-fileName="{name}" id="{id}checkbox" name="{$ns}selectUploadedFileCheckbox" type="checkbox" value="{name}" />',
+						'<input class="{[ !values.temp ? "hide" : "" ]} select-file" data-fileName="{name}" id="{id}checkbox" name="{$ns}selectUploadedFileCheckbox" type="checkbox" value="{name}" />',
 						'<span class="file-title" title="{name}">{name}</span>',
 						'<span class="progress-bar">',
 							'<span class="progress" id="{id}progress"></span>',
@@ -41,31 +41,27 @@ AUI.add(
 					'<tpl if="this.uploaderType == \'html5\'">',
 						'<h4 class="drop-file-text">{[ this.dropFileText ]}<span>{[ this.orText ]}</span></h4>',
 					'</tpl>',
-					'<span class="aui-button" id="{$ns}selectFilesButton">',
-						'<span class="aui-button-content">',
-							'<input class="aui-button-input" type="button" value="{[ this.selectFilesText ]}" />',
-						'</span>',
-					'</span>',
+					'<button class="btn" id="{$ns}selectFilesButton">{[ this.selectFilesText ]}</button>',
 				'</div>',
 			'</div>',
 
-			'<div class="aui-helper-hidden upload-list-info" id="{$ns}listInfo">',
+			'<div class="hide upload-list-info" id="{$ns}listInfo">',
 				'<h4>{[ this.uploadsCompleteText ]}</h4>',
 			'</div>',
 
-			'<div class="pending-files-info portlet-msg-alert aui-helper-hidden">{[ this.pendingFileText ]}</div>',
+			'<div class="pending-files-info alert alert-block hide">{[ this.pendingFileText ]}</div>',
 
-			'<div class="aui-helper-hidden float-container manage-upload-target" id="{$ns}manageUploadTarget">',
-				'<span class="aui-field aui-field-choice select-files aui-state-default">',
-					'<span class="aui-field-content">',
-						'<span class="aui-field-element">',
+			'<div class="hide float-container manage-upload-target" id="{$ns}manageUploadTarget">',
+				'<span class="field field-choice select-files">',
+					'<span class="field-content">',
+						'<span class="field-element">',
 							'<input class="select-all-files" id="{$ns}allRowIdsCheckbox" name="{$ns}allRowIdsCheckbox" type="checkbox" />',
 						'</span>',
 					'</span>',
 				'</span>',
 
-				'<a href="javascript:;" class="lfr-button cancel-uploads aui-helper-hidden">{[ this.cancelUploadsText ]}</a>',
-				'<a href="javascript:;" class="lfr-button clear-uploads aui-helper-hidden">{[ this.clearRecentUploadsText ]}</a>',
+				'<a href="javascript:;" class="lfr-button cancel-uploads hide">{[ this.cancelUploadsText ]}</a>',
+				'<a href="javascript:;" class="lfr-button clear-uploads hide">{[ this.clearRecentUploadsText ]}</a>',
 			'</div>',
 
 			'<div class="upload-list" id="{$ns}fileList">',
@@ -957,6 +953,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-io-request', 'aui-template', 'collection', 'liferay-portlet-base', 'uploader']
+		requires: ['aui-io-request', 'aui-template-deprecated', 'collection', 'liferay-portlet-base', 'uploader']
 	}
 );

@@ -45,22 +45,6 @@ Map<String, String> requestParams = (Map<String, String>)request.getAttribute("l
 			config['<portlet:namespace />displayStyle'] = displayStyle;
 			config['<portlet:namespace />saveDisplayStyle'] = true;
 
-			updateDisplayStyle(config);
-		}
-
-		function updateDisplayStyle(config) {
-			var displayStyle = config['<portlet:namespace />displayStyle'];
-
-			<%
-			for (int i = 0; i < displayStyles.length; i++) {
-			%>
-
-				displayStyleToolbar.item(<%= i %>).StateInteraction.set('active', (displayStyle === '<%= displayStyles[i] %>'));
-
-			<%
-			}
-			%>
-
 			Liferay.fire(
 				'<portlet:namespace />dataRequest',
 				{
@@ -70,16 +54,18 @@ Map<String, String> requestParams = (Map<String, String>)request.getAttribute("l
 			);
 		}
 
-		var displayStyleToolbarChildren = [];
+		var displayStyleButtonGroup = ['radio'];
 
 		<%
 		for (int i = 0; i < displayStyles.length; i++) {
 		%>
 
-			displayStyleToolbarChildren.push(
+			displayStyleButtonGroup.push(
 				{
-					handler: A.bind(onButtonClick, null, '<%= displayStyles[i] %>'),
-					icon: 'display-<%= displayStyles[i] %>',
+					icon: 'aui-icon-<%= displayStyles[i] %>',
+					on: {
+						click: A.bind(onButtonClick, null, '<%= displayStyles[i] %>')
+					},
 					title: '<%= UnicodeLanguageUtil.get(pageContext, displayStyles[i] + "-view") %>'
 				}
 			);
@@ -91,16 +77,17 @@ Map<String, String> requestParams = (Map<String, String>)request.getAttribute("l
 		var displayStyleToolbar = buttonRow.getData('displayStyleToolbar');
 
 		if (displayStyleToolbar) {
-			displayStyleToolbar.removeAll();
+			displayStyleToolbar.clear();
 		}
 
 		displayStyleToolbar = new A.Toolbar(
 			{
-				activeState: true,
 				boundingBox: buttonRow,
-				children: displayStyleToolbarChildren
+				children: [displayStyleButtonGroup]
 			}
 		).render();
+
+		displayStyleButtonGroup = displayStyleToolbar.item(0);
 
 		var index = 0;
 
@@ -117,8 +104,9 @@ Map<String, String> requestParams = (Map<String, String>)request.getAttribute("l
 		}
 		%>
 
-		displayStyleToolbar.item(index).StateInteraction.set('active', true);
+		displayStyleButtonGroup.select(index);
 
 		buttonRow.setData('displayStyleToolbar', displayStyleToolbar);
+		buttonRow.setData('displayStyleButtonGroup', displayStyleButtonGroup);
 	</aui:script>
 </c:if>

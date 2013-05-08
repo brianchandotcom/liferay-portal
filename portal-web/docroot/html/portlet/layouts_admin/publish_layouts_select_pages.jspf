@@ -116,7 +116,7 @@ for (int i = 0; i < results.size(); i++) {
 		</div>
 	</c:when>
 	<c:otherwise>
-		<div class="portlet-msg-info">
+		<div class="alert alert-info">
 			<liferay-ui:message key="there-are-no-selected-pages-all-pages-will-therefore-be-exported" />
 		</div>
 	</c:otherwise>
@@ -127,7 +127,7 @@ for (int i = 0; i < results.size(); i++) {
 <aui:button-row>
 
 	<%
-	String taglibURL = "AUI().DialogManager.refreshByChild('#" + renderResponse.getNamespace() + "exportPagesFm');";
+	String taglibURL = "Liferay.Util.Window.refreshByChild('#" + renderResponse.getNamespace() + "exportPagesFm');";
 	%>
 
 	<aui:button onClick="<%= taglibURL %>" value='<%= results.isEmpty() ? "select-pages" : "change-selection" %>' />

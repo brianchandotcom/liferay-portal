@@ -157,7 +157,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("search.jsp-portletURL"
 		</div>
 	</c:if>
 
-	<table class="lfr-table asset-entry-fields aui-helper-hidden">
+	<table class="lfr-table asset-entry-fields hide">
 		<thead>
 			<tr>
 				<th class="key">

@@ -30,7 +30,7 @@ if (layoutBranchId > 0) {
 long layoutRevisionId = ParamUtil.getLong(request, "layoutRevisionId");
 %>
 
-<div class='<%= (layoutBranch != null) ? StringPool.BLANK : "aui-helper-hidden" %>' data-namespace="<portlet:namespace />" id="<portlet:namespace /><%= layoutBranch != null ? "updateBranch" : "addBranch" %>">
+<div class='<%= (layoutBranch != null) ? StringPool.BLANK : "hide" %>' data-namespace="<portlet:namespace />" id="<portlet:namespace /><%= layoutBranch != null ? "updateBranch" : "addBranch" %>">
 	<aui:model-context bean="<%= layoutBranch %>" model="<%= LayoutBranch.class %>" />
 
 	<portlet:actionURL var="editLayoutBranchURL">

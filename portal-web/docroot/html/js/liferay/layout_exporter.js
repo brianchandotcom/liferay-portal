@@ -40,7 +40,7 @@
 			if (detail && img) {
 				var icon = LayoutExporter.icons.plus;
 
-				if (detail.hasClass('aui-helper-hidden')) {
+				if (detail.hasClass('hide')) {
 					detail.show();
 					icon = LayoutExporter.icons.minus;
 				}
@@ -51,7 +51,7 @@
 				img.attr('src', icon);
 			}
 		},
-		['aui-dialog']
+		['aui-base']
 	);
 
 	Liferay.provide(
@@ -92,23 +92,16 @@
 					"</form>" +
 				"</div>";
 
-			new A.Dialog(
+			Liferay.Util.openWindow(
 				{
-					align: {
-						node: null,
-						points: ['tc', 'tc']
+					dialog: {
+						destroyOnHide: true
 					},
-					bodyContent: contents,
-					destroyOnClose: true,
-					modal: true,
-					title: title,
-					width: 350
+					title: contents
 				}
-			).render();
-
-			dialog.move(dialog.get('x'), dialog.get('y') + 100);
+			);
 		},
-		['aui-dialog']
+		['liferay-util-window']
 	);
 
 	Liferay.provide(
@@ -120,20 +113,14 @@
 			var url = options.url;
 			var title = options.title;
 
-			var dialog = new A.Dialog(
+			var dialog = Liferay.Util.Window.getWindow(
 				{
-					align: {
-						node: null,
-						points: ['tc', 'tc']
+					dialog: {
+						destroyOnHide: true
 					},
-					destroyOnClose: true,
-					modal: true,
-					title: title,
-					width: 600
+					title: title
 				}
-			).render();
-
-			dialog.move(dialog.get('x'), dialog.get('y') + 100);
+			);
 
 			dialog.plug(
 				A.Plugin.IO,
@@ -142,7 +129,7 @@
 				}
 			);
 		},
-		['aui-dialog', 'aui-io']
+		['aui-io-plugin-deprecated', 'liferay-util-window']
 	);
 
 	Liferay.provide(

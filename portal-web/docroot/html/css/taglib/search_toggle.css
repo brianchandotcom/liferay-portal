@@ -1,34 +1,3 @@
-@import "compass";
-
-.taglib-search-toggle {
-	.inline-control {
-		float: none;
-	}
-
-	.toggle-link {
-		clear: both;
-	}
-}
-
-.taglib-search-toggle-advanced .aui-fieldset {
-	margin-bottom: 0;
-
-	.aui-field {
-		display: inline-block;
-		width: 30%;
-	}
-
-	.aui-field-input {
-		@include box-sizing("border-box");
-	}
-
-	.aui-field-input, .aui-field-element, .aui-field-content {
-		width: 100%;
-	}
-}
-
-.ie6, .ie7 {
-	.taglib-search-toggle-advanced .aui-fieldset .aui-field-input {
-		width: 98%;
-	}
+.taglib-search-toggle .popover .arrow {
+	left: 70%;
 }

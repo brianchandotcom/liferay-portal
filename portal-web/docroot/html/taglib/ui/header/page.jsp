@@ -40,7 +40,7 @@ String headerTitle = (localizeTitle) ? LanguageUtil.get(pageContext, title) : ti
 		</span>
 	</c:if>
 
-	<h1 class="header-title">
+	<h3 class="header-title">
 		<span>
 			<c:choose>
 				<c:when test="<%= escapeXml %>">
@@ -51,5 +51,5 @@ String headerTitle = (localizeTitle) ? LanguageUtil.get(pageContext, title) : ti
 				</c:otherwise>
 			</c:choose>
 		</span>
-	</h1>
+	</h3>
 </div>

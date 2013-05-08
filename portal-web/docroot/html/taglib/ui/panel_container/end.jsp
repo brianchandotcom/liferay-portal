@@ -18,14 +18,4 @@
 
 </div>
 
-<aui:script use="liferay-panel">
-	var panel = new Liferay.Panel(
-		{
-			accordion: <%= accordion %>,
-			container: '#<%= id %>',
-			persistState: <%= persistState %>
-		}
-	);
-
-	Liferay.Panel.register('<%= id %>', panel);
-</aui:script>
+<%@ include file="/html/taglib/ui/panel_container/javascript.jspf" %>

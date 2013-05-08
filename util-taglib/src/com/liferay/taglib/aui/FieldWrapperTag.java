@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.taglib.aui.base.BaseFieldWrapperTag;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.JspException;
 
 /**
  * @author Julio Camarero
@@ -26,13 +25,6 @@ import javax.servlet.jsp.JspException;
  * @author Brian Wing Shun Chan
  */
 public class FieldWrapperTag extends BaseFieldWrapperTag {
-
-	@Override
-	public int doEndTag() throws JspException {
-		setCalledSetAttributes(false);
-
-		return super.doEndTag();
-	}
 
 	@Override
 	protected boolean isCleanUpSetAttributes() {

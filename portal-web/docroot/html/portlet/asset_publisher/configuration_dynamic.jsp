@@ -38,7 +38,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 		<liferay-ui:panel-container extended="<%= true %>" id="assetPublisherDynamicSelectionAssetSelectionPanelContainer" persistState="<%= true %>">
 			<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="assetPublisherSourcePanel" persistState="<%= true %>" title="source">
-				<aui:fieldset cssClass='<%= rootPortletId.equals(PortletKeys.RELATED_ASSETS) ? "aui-helper-hidden" : "" %>' label="scope">
+				<aui:fieldset cssClass='<%= rootPortletId.equals(PortletKeys.RELATED_ASSETS) ? "hide" : "" %>' label="scope">
 					<%= selectScope %>
 				</aui:fieldset>
 
@@ -94,7 +94,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 					typesRightList = ListUtil.sort(typesRightList, new KeyValuePairComparator(false, true));
 					%>
 
-					<div class="<%= anyAssetType ? "aui-helper-hidden" : "" %>" id="<portlet:namespace />classNamesBoxes">
+					<div class="<%= anyAssetType ? "hide" : "" %>" id="<portlet:namespace />classNamesBoxes">
 						<liferay-ui:input-move-boxes
 							leftBoxName="currentClassNameIds"
 							leftList="<%= typesLeftList %>"
@@ -141,7 +141,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 						boolean anyAssetSubtype = GetterUtil.getBoolean(preferences.getValue("anyClassType" + className, Boolean.TRUE.toString()));
 					%>
 
-						<div class='asset-subtype <%= (assetSelectedClassTypeIds.length < 1) ? StringPool.BLANK : "aui-helper-hidden" %>' id="<portlet:namespace /><%= className %>Options">
+						<div class='asset-subtype <%= (assetSelectedClassTypeIds.length < 1) ? StringPool.BLANK : "hide" %>' id="<portlet:namespace /><%= className %>Options">
 							<aui:select label='<%= LanguageUtil.format(pageContext, "x-subtype", ResourceActionsUtil.getModelResource(locale, assetRendererFactory.getClassName())) %>' name='<%= "preferences--anyClassType" + className + "--" %>'>
 								<aui:option label="any" selected="<%= anyAssetSubtype %>" value="<%= true %>" />
 								<aui:option label='<%= LanguageUtil.get(pageContext, "select-more-than-one") + StringPool.TRIPLE_PERIOD %>' selected="<%= !anyAssetSubtype && (assetSelectedClassTypeIds.length > 1) %>" value="<%= false %>" />
@@ -166,7 +166,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 							<aui:input name='<%= "preferences--classTypeIds" + className + "--" %>' type="hidden" />
 
-							<div class="asset-subtypefields-wrapper-enable aui-helper-hidden" id="<portlet:namespace /><%= className %>subtypeFieldsFilterEnableWrapper">
+							<div class="asset-subtypefields-wrapper-enable hide" id="<portlet:namespace /><%= className %>subtypeFieldsFilterEnableWrapper">
 								<aui:input checked="<%= subtypeFieldsFilterEnabled %>" label="filter-by-field" name='<%= "preferences--subtypeFieldsFilterEnabled" + className + "--" %>' type="checkbox" value="<%= subtypeFieldsFilterEnabled %>" />
 							</div>
 
@@ -176,7 +176,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 								</c:if>
 							</span>
 
-							<div class="asset-subtypefields-wrapper aui-helper-hidden" id="<portlet:namespace /><%= className %>subtypeFieldsWrapper">
+							<div class="asset-subtypefields-wrapper hide" id="<portlet:namespace /><%= className %>subtypeFieldsWrapper">
 
 								<%
 								for (long assetAvailableClassTypeId : assetAvailableClassTypeIds) {
@@ -185,7 +185,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 									}
 								%>
 
-									<span class="asset-subtypefields aui-helper-hidden" id="<portlet:namespace /><%= assetAvailableClassTypeId %>_<%= className %>Options">
+									<span class="asset-subtypefields hide" id="<portlet:namespace /><%= assetAvailableClassTypeId %>_<%= className %>Options">
 										<portlet:renderURL var="selectStructureFieldURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 											<portlet:param name="struts_action" value="/portlet_configuration/select_structure_field" />
 											<portlet:param name="portletResource" value="<%= portletResource %>" />
@@ -206,7 +206,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 							</div>
 
-							<div class="<%= assetSelectedClassTypeIds.length > 1 ? StringPool.BLANK : "aui-helper-hidden" %>" id="<portlet:namespace /><%= className %>Boxes">
+							<div class="<%= assetSelectedClassTypeIds.length > 1 ? StringPool.BLANK : "hide" %>" id="<portlet:namespace /><%= className %>Boxes">
 								<liferay-ui:input-move-boxes
 									leftBoxName='<%= className + "currentClassTypeIds" %>'
 									leftList="<%= subtypesLeftList %>"
@@ -223,7 +223,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 					}
 					%>
 
-					<div class="asset-subtypefield-selected <%= Validator.isNull(ddmStructureFieldName) ? "aui-helper-hidden" : StringPool.BLANK %>">
+					<div class="asset-subtypefield-selected <%= Validator.isNull(ddmStructureFieldName) ? "hide" : StringPool.BLANK %>">
 						<aui:input name='<%= "preferences--ddmStructureFieldName--" %>' type="hidden" value="<%= ddmStructureFieldName %>" />
 
 						<aui:input name='<%= "preferences--ddmStructureFieldValue--" %>' type="hidden" value="<%= ddmStructureFieldValue %>" />
@@ -317,7 +317,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 			<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="assetPublisherOrderingAndGroupingPanel" persistState="<%= true %>" title="ordering-and-grouping">
 				<aui:fieldset>
-					<span class="aui-field-row">
+					<span class="field-row">
 						<aui:select inlineField="<%= true %>" inlineLabel="left" label="order-by" name="preferences--orderByColumn1--">
 							<aui:option label="title" selected='<%= orderByColumn1.equals("title") %>' />
 							<aui:option label="create-date" selected='<%= orderByColumn1.equals("createDate") %>' value="createDate" />
@@ -335,7 +335,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 						</aui:select>
 					</span>
 
-					<span class="aui-field-row">
+					<span class="field-row">
 						<aui:select inlineField="<%= true %>" inlineLabel="left" label="and-then-by" name="preferences--orderByColumn2--">
 							<aui:option label="title" selected='<%= orderByColumn2.equals("title") %>' />
 							<aui:option label="create-date" selected='<%= orderByColumn2.equals("createDate") %>' value="createDate" />
@@ -353,7 +353,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 						</aui:select>
 					</span>
 
-					<span class="aui-field-row">
+					<span class="field-row">
 						<aui:select inlineField="<%= true %>" inlineLabel="left" label="group-by" name="preferences--assetVocabularyId--">
 							<aui:option value="" />
 							<aui:option label="asset-types" selected="<%= assetVocabularyId == -1 %>" value="-1" />
@@ -653,11 +653,11 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 	sourcePanel.delegate(
 		'click',
 		function(event) {
-			var assetSubtypeFieldsPopupNodes = A.all('.asset-subtypefields-popup .aui-button-input');
+			var assetSubtypeFieldsPopupNodes = A.all('.asset-subtypefields-popup .button-input');
 
 			Liferay.Util.toggleDisabled(assetSubtypeFieldsPopupNodes, !event.target.attr('checked'));
 		},
-		'.asset-subtypefields-wrapper-enable .aui-field-input'
+		'.asset-subtypefields-wrapper-enable .field-input'
 	);
 
 	Liferay.after(

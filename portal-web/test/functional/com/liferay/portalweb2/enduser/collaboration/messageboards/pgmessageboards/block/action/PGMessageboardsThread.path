@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>TITLE_HEADER</td>
-	<td>//h1[@class='header-title']</td>
+	<td>//h3[@class='header-title']</td>
 	<td></td>
 </tr>
 <tr>

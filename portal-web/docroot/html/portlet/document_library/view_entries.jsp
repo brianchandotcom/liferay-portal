@@ -329,24 +329,10 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(entryEnd));
 	<div class="entries-empty alert alert-info">
 		<c:choose>
 			<c:when test="<%= (fileEntryTypeId >= 0) %>">
-				<c:choose>
-					<c:when test="<%= total == 0 %>">
-						<liferay-ui:message arguments="<%= HtmlUtil.escape(dlFileEntryTypeName) %>" key="there-are-no-documents-or-media-files-of-type-x" />
-					</c:when>
-					<c:otherwise>
-						<liferay-ui:message arguments="<%= HtmlUtil.escape(dlFileEntryTypeName) %>" key="there-are-no-documents-or-media-files-of-type-x-on-this-page" />
-					</c:otherwise>
-				</c:choose>
+				<liferay-ui:message arguments="<%= HtmlUtil.escape(dlFileEntryTypeName) %>" key="there-are-no-documents-or-media-files-of-type-x" />
 			</c:when>
 			<c:otherwise>
-				<c:choose>
-					<c:when test="<%= total == 0 %>">
-						<liferay-ui:message key="there-are-no-documents-or-media-files-in-this-folder" />
-					</c:when>
-					<c:otherwise>
-						<liferay-ui:message key="there-are-no-documents-or-media-files-on-this-page" />
-					</c:otherwise>
-				</c:choose>
+				<liferay-ui:message key="there-are-no-documents-or-media-files-in-this-folder" />
 			</c:otherwise>
 		</c:choose>
 	</div>

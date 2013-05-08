@@ -64,8 +64,6 @@ public class JournalFolderPermission {
 			while (folderId !=
 						JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-				folder = JournalFolderLocalServiceUtil.getFolder(folderId);
-
 				folderId = folder.getParentFolderId();
 
 				if (!permissionChecker.hasOwnerPermission(
@@ -81,6 +79,13 @@ public class JournalFolderPermission {
 				if (!PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
 					break;
 				}
+
+				folder = JournalFolderLocalServiceUtil.fetchJournalFolder(
+					folderId);
+
+				if (folder == null) {
+					break;
+				}
 			}
 
 			return true;
@@ -88,8 +93,6 @@ public class JournalFolderPermission {
 		else {
 			while (folderId !=
 						JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-
-				folder = JournalFolderLocalServiceUtil.getFolder(folderId);
 
 				folderId = folder.getParentFolderId();
 
@@ -107,7 +110,10 @@ public class JournalFolderPermission {
 					return true;
 				}
 
-				if (actionId.equals(ActionKeys.VIEW)) {
+				folder = JournalFolderLocalServiceUtil.fetchJournalFolder(
+					folderId);
+
+				if (folder == null) {
 					break;
 				}
 			}

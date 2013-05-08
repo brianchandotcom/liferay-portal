@@ -139,6 +139,13 @@ public class ResourceBlockPermissionLocalServiceImpl
 			resourceBlockId, roleId);
 	}
 
+	public List<ResourceBlockPermission> getRoleResourceBlockPermissions(
+			long roleId)
+		throws SystemException {
+
+		return resourceBlockPermissionPersistence.findByRoleId(roleId);
+	}
+
 	public void updateResourceBlockPermission(
 			long resourceBlockId, long roleId, long actionIdsLong, int operator)
 		throws SystemException {

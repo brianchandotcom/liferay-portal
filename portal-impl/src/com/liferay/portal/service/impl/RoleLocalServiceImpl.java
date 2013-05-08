@@ -42,8 +42,10 @@ import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.ResourceAction;
+import com.liferay.portal.model.ResourceBlockPermission;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
+import com.liferay.portal.model.ResourceTypePermission;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.Shard;
@@ -416,6 +418,28 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		for (ResourcePermission resourcePermission : resourcePermissions) {
 			resourcePermissionLocalService.deleteResourcePermission(
 				resourcePermission);
+		}
+
+		List<ResourceTypePermission> resourceTypePermissions =
+			resourceTypePermissionLocalService.getRoleResourceTypePermissions(
+				role.getRoleId());
+
+		for (ResourceTypePermission resourceTypePermission :
+				resourceTypePermissions) {
+
+			resourceTypePermissionLocalService.deleteResourceTypePermission(
+				resourceTypePermission);
+		}
+
+		List<ResourceBlockPermission> resourceBlockPermissions =
+			resourceBlockPermissionLocalService.getRoleResourceBlockPermissions(
+				role.getRoleId());
+
+		for (ResourceBlockPermission resourceBlockPermission :
+				resourceBlockPermissions) {
+
+			resourceBlockPermissionLocalService.deleteResourceBlockPermission(
+				resourceBlockPermission);
 		}
 
 		String className = role.getClassName();

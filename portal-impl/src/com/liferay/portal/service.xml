@@ -1698,6 +1698,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="RoleId" return-type="Collection">
+			<finder-column name="roleId" />
+		</finder>
 		<finder name="R_R" return-type="ResourceBlockPermission" unique="true">
 			<finder-column name="resourceBlockId" />
 			<finder-column name="roleId" />

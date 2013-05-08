@@ -14,11 +14,7 @@ import com.liferay.portal.service.PersistedModelLocalService;
 
 <#if sessionTypeName == "Local">
 /**
- * The interface for the ${entity.humanName} local service.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
+ * Provides the local service interface for the ${entity.humanName}. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
  *
  * @author ${author}
  * @see ${entity.name}LocalServiceUtil
@@ -28,11 +24,7 @@ import com.liferay.portal.service.PersistedModelLocalService;
  */
 <#else>
 /**
- * The interface for the ${entity.humanName} remote service.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
+ * Provides the remote service interface for the ${entity.humanName}. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
  *
  * @author ${author}
  * @see ${entity.name}ServiceUtil

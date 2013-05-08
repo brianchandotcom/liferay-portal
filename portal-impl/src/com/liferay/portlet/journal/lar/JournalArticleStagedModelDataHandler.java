@@ -117,7 +117,7 @@ public class JournalArticleStagedModelDataHandler
 				portletDataContext, ddmStructure);
 
 			portletDataContext.addReferenceElement(
-				articleElement, ddmStructure);
+				article, articleElement, ddmStructure, false);
 
 			long parentStructureId = ddmStructure.getParentStructureId();
 
@@ -142,7 +142,8 @@ public class JournalArticleStagedModelDataHandler
 			StagedModelDataHandlerUtil.exportStagedModel(
 				portletDataContext, ddmTemplate);
 
-			portletDataContext.addReferenceElement(articleElement, ddmTemplate);
+			portletDataContext.addReferenceElement(
+				article, articleElement, ddmTemplate, false);
 		}
 
 		if (article.isSmallImage()) {
@@ -152,7 +153,7 @@ public class JournalArticleStagedModelDataHandler
 			if (Validator.isNotNull(article.getSmallImageURL())) {
 				String smallImageURL =
 					ExportImportUtil.exportContentReferences(
-						portletDataContext, articleElement,
+						portletDataContext, article, articleElement,
 						article.getSmallImageURL().concat(StringPool.SPACE));
 
 				article.setSmallImageURL(smallImageURL);
@@ -191,7 +192,8 @@ public class JournalArticleStagedModelDataHandler
 				JournalPortletDataHandler.NAMESPACE, "embedded-assets")) {
 
 			String content = ExportImportUtil.exportContentReferences(
-				portletDataContext, articleElement, article.getContent());
+				portletDataContext, article, articleElement,
+				article.getContent());
 
 			article.setContent(content);
 		}
@@ -697,7 +699,7 @@ public class JournalArticleStagedModelDataHandler
 		portletDataContext.addZipEntry(articleImagePath, image.getTextObj());
 
 		portletDataContext.addReferenceElement(
-			articleElement, image, articleImagePath);
+			article, articleElement, image, articleImagePath, false);
 	}
 
 	protected void prepareLanguagesForImport(JournalArticle article)

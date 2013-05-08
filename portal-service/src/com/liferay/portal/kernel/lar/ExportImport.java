@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.lar;
 
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.model.StagedModel;
 
 /**
  * @author Zsolt Berentey
@@ -22,13 +23,13 @@ import com.liferay.portal.kernel.xml.Element;
 public interface ExportImport {
 
 	public String exportContentReferences(
-			PortletDataContext portletDataContext, Element entityElement,
-			String content)
+			PortletDataContext portletDataContext, StagedModel entity,
+			Element entityElement, String content)
 		throws Exception;
 
 	public String exportDLReferences(
-			PortletDataContext portletDataContext, Element entityElement,
-			String content)
+			PortletDataContext portletDataContext, StagedModel entity,
+			Element entityElement, String content)
 		throws Exception;
 
 	public String exportLayoutReferences(

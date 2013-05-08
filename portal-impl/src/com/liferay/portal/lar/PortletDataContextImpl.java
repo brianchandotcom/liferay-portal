@@ -358,6 +358,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 			}
 		}
 
+		if (isPathProcessed(path)) {
+			return;
+		}
+
 		if (classedModel instanceof AuditedModel) {
 			AuditedModel auditedModel = (AuditedModel)classedModel;
 
@@ -714,6 +718,16 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return referenceElement;
 	}
 
+	public boolean addScopedPrimaryKey(Class<?> clazz, String primaryKey) {
+		boolean value = hasScopedPrimaryKey(clazz, primaryKey);
+
+		if (!value) {
+			_scopedPrimaryKeys.add(getPrimaryKeyString(clazz, primaryKey));
+		}
+
+		return value;
+	}
+
 	public void addZipEntry(String path, byte[] bytes) throws SystemException {
 		if (_portletDataContextListener != null) {
 			_portletDataContextListener.onAddZipEntry(path);
@@ -780,6 +794,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 		catch (IOException ioe) {
 			throw new SystemException(ioe);
 		}
+	}
+
+	public void clearScopedPrimaryKeys() {
+		_scopedPrimaryKeys.clear();
 	}
 
 	public ServiceContext createServiceContext(
@@ -1050,6 +1068,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return ExportImportPathUtil.getRootPath(this);
 	}
 
+	public Set<String> getScopedPrimaryKeys() {
+		return _scopedPrimaryKeys;
+	}
+
 	public long getScopeGroupId() {
 		return _scopeGroupId;
 	}
@@ -1186,6 +1208,11 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	public boolean hasPrimaryKey(Class<?> clazz, String primaryKey) {
 		return _primaryKeys.contains(getPrimaryKeyString(clazz, primaryKey));
+	}
+
+	public boolean hasScopedPrimaryKey(Class<?> clazz, String primaryKey) {
+		return _scopedPrimaryKeys.contains(
+			getPrimaryKeyString(clazz, primaryKey));
 	}
 
 	public void importClassedModel(
@@ -1497,11 +1524,21 @@ public class PortletDataContextImpl implements PortletDataContext {
 		}
 	}
 
+	public boolean isPathExportedInScope(String path) {
+		return addScopedPrimaryKey(String.class, path);
+	}
+
+	public boolean isPathNotExportedInScope(String path) {
+		return !isPathExportedInScope(path);
+	}
+
 	public boolean isPathNotProcessed(String path) {
 		return !isPathProcessed(path);
 	}
 
 	public boolean isPathProcessed(String path) {
+		addScopedPrimaryKey(String.class, path);
+
 		return addPrimaryKey(String.class, path);
 	}
 

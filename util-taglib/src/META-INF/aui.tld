@@ -972,12 +972,6 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<name>name</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
 			<name>icon</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -985,6 +979,12 @@
 		</attribute>
 		<attribute>
 			<name>iconAlign</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>name</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
@@ -1271,16 +1271,16 @@
 		<tag-class>com.liferay.taglib.aui.FieldsetTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<name>cssClass</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
 			<name>column</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
 			<name>helpMessage</name>
@@ -2018,29 +2018,6 @@
 			<type>boolean</type>
 		</attribute>
 		<dynamic-attributes>true</dynamic-attributes>
-	</tag>
-	<tag>
-		<name>tool</name>
-		<tag-class>com.liferay.taglib.aui.ToolTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<name>handler</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<name>icon</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<name>id</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
-		</attribute>
 	</tag>
 	<tag>
 		<name>translation-manager</name>

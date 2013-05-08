@@ -33,12 +33,12 @@ public class BaseFieldsetTag extends com.liferay.taglib.util.IncludeTag {
 		return super.doStartTag();
 	}
 
-	public java.lang.String getCssClass() {
-		return _cssClass;
-	}
-
 	public boolean getColumn() {
 		return _column;
+	}
+
+	public java.lang.String getCssClass() {
+		return _cssClass;
 	}
 
 	public java.lang.String getHelpMessage() {
@@ -53,16 +53,16 @@ public class BaseFieldsetTag extends com.liferay.taglib.util.IncludeTag {
 		return _label;
 	}
 
-	public void setCssClass(java.lang.String cssClass) {
-		_cssClass = cssClass;
-
-		setScopedAttribute("cssClass", cssClass);
-	}
-
 	public void setColumn(boolean column) {
 		_column = column;
 
 		setScopedAttribute("column", column);
+	}
+
+	public void setCssClass(java.lang.String cssClass) {
+		_cssClass = cssClass;
+
+		setScopedAttribute("cssClass", cssClass);
 	}
 
 	public void setHelpMessage(java.lang.String helpMessage) {
@@ -85,8 +85,8 @@ public class BaseFieldsetTag extends com.liferay.taglib.util.IncludeTag {
 
 	@Override
 	protected void cleanUp() {
-		_cssClass = null;
 		_column = false;
+		_cssClass = null;
 		_helpMessage = null;
 		_id = null;
 		_label = null;
@@ -104,8 +104,8 @@ public class BaseFieldsetTag extends com.liferay.taglib.util.IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		setNamespacedAttribute(request, "cssClass", _cssClass);
 		setNamespacedAttribute(request, "column", _column);
+		setNamespacedAttribute(request, "cssClass", _cssClass);
 		setNamespacedAttribute(request, "helpMessage", _helpMessage);
 		setNamespacedAttribute(request, "id", _id);
 		setNamespacedAttribute(request, "label", _label);
@@ -119,8 +119,8 @@ public class BaseFieldsetTag extends com.liferay.taglib.util.IncludeTag {
 	private static final String _START_PAGE =
 		"/html/taglib/aui/fieldset/start.jsp";
 
-	private java.lang.String _cssClass = null;
 	private boolean _column = false;
+	private java.lang.String _cssClass = null;
 	private java.lang.String _helpMessage = null;
 	private java.lang.String _id = null;
 	private java.lang.String _label = null;

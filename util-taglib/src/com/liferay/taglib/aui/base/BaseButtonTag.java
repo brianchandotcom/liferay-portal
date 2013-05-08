@@ -49,16 +49,16 @@ public class BaseButtonTag extends com.liferay.taglib.util.IncludeTag {
 		return _href;
 	}
 
-	public java.lang.String getName() {
-		return _name;
-	}
-
 	public java.lang.String getIcon() {
 		return _icon;
 	}
 
 	public java.lang.String getIconAlign() {
 		return _iconAlign;
+	}
+
+	public java.lang.String getName() {
+		return _name;
 	}
 
 	public java.lang.String getOnClick() {
@@ -101,12 +101,6 @@ public class BaseButtonTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("href", href);
 	}
 
-	public void setName(java.lang.String name) {
-		_name = name;
-
-		setScopedAttribute("name", name);
-	}
-
 	public void setIcon(java.lang.String icon) {
 		_icon = icon;
 
@@ -117,6 +111,12 @@ public class BaseButtonTag extends com.liferay.taglib.util.IncludeTag {
 		_iconAlign = iconAlign;
 
 		setScopedAttribute("iconAlign", iconAlign);
+	}
+
+	public void setName(java.lang.String name) {
+		_name = name;
+
+		setScopedAttribute("name", name);
 	}
 
 	public void setOnClick(java.lang.String onClick) {
@@ -149,9 +149,9 @@ public class BaseButtonTag extends com.liferay.taglib.util.IncludeTag {
 		_data = null;
 		_disabled = false;
 		_href = null;
-		_name = null;
 		_icon = null;
 		_iconAlign = "left";
+		_name = null;
 		_onClick = null;
 		_primary = null;
 		_type = "button";
@@ -169,9 +169,9 @@ public class BaseButtonTag extends com.liferay.taglib.util.IncludeTag {
 		setNamespacedAttribute(request, "data", _data);
 		setNamespacedAttribute(request, "disabled", _disabled);
 		setNamespacedAttribute(request, "href", _href);
-		setNamespacedAttribute(request, "name", _name);
 		setNamespacedAttribute(request, "icon", _icon);
 		setNamespacedAttribute(request, "iconAlign", _iconAlign);
+		setNamespacedAttribute(request, "name", _name);
 		setNamespacedAttribute(request, "onClick", _onClick);
 		setNamespacedAttribute(request, "primary", _primary);
 		setNamespacedAttribute(request, "type", _type);
@@ -187,9 +187,9 @@ public class BaseButtonTag extends com.liferay.taglib.util.IncludeTag {
 	private java.lang.Object _data = null;
 	private boolean _disabled = false;
 	private java.lang.String _href = null;
-	private java.lang.String _name = null;
 	private java.lang.String _icon = null;
 	private java.lang.String _iconAlign = "left";
+	private java.lang.String _name = null;
 	private java.lang.String _onClick = null;
 	private java.lang.Object _primary = null;
 	private java.lang.String _type = "button";

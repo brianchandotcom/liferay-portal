@@ -1,0 +1,51 @@
+<definition>
+	<set-up>
+		<execute macro="User#pgFirstLogin" />
+	</set-up>
+
+	<command name="ConfigureWorkflowBlogsEntry">
+		<execute macro="Kaleo#cpConfigureWorkflow">
+			<var name="resourceName" value="Blogs Entry" />
+			<var name="resourceWorkflow" value="Single Approver (Version 1)" />
+		</execute>
+	</command>
+
+	<command name="ConfigureWorkflowComments">
+		<execute macro="Kaleo#cpConfigureWorkflow">
+			<var name="resourceName" value="Comments" />
+			<var name="resourceWorkflow" value="Single Approver (Version 1)" />
+		</execute>
+	</command>
+
+	<command name="ConfigureWorkflowMBMessage">
+		<execute macro="Kaleo#cpConfigureWorkflow">
+			<var name="resourceName" value="Message Boards Message" />
+			<var name="resourceWorkflow" value="Single Approver (Version 1)" />
+		</execute>
+	</command>
+
+	<command name="ConfigureWorkflowPageRevision">
+		<execute macro="Kaleo#cpConfigureWorkflow">
+			<var name="resourceName" value="Page Revision" />
+			<var name="resourceWorkflow" value="Single Approver (Version 1)" />
+		</execute>
+	</command>
+
+	<command name="ConfigureWorkflowWebContent">
+		<execute macro="Kaleo#cpConfigureWorkflow">
+			<var name="resourceName" value="Web Content" />
+			<var name="resourceWorkflow" value="Single Approver (Version 1)" />
+		</execute>
+	</command>
+
+	<command name="ConfigureWorkflowWikiPage">
+		<execute macro="Kaleo#cpConfigureWorkflow">
+			<var name="resourceName" value="Wiki Page" />
+			<var name="resourceWorkflow" value="Single Approver (Version 1)" />
+		</execute>
+	</command>
+
+	<tear-down>
+		<execute macro="Kaleo#cpConfigureWorkflowTearDown" />
+	</tear-down>
+</definition>

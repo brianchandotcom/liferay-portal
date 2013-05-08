@@ -1,0 +1,65 @@
+<definition>
+	<command name="cpConfigureWorkflow">
+		<execute macro="Page#cpGoto">
+			<var name="portletName" value="Workflow Configuration" />
+		</execute>
+
+		<if>
+			<equals arg1="${resourceName}" arg2="Blogs Entry" />
+			<then>
+				<execute action="CPWorkflowconfiguration#select" locator-key1="RESOURCE_TABLE_BLOGS_ENTRY_SELECT" value1="${resourceWorkflow}" />
+			</then>
+			<elseif>
+				<equals arg1="${resourceName}" arg2="Comments" />
+				<then>
+					<execute action="CPWorkflowconfiguration#select" locator-key1="RESOURCE_TABLE_COMMENTS_SELECT" value1="${resourceWorkflow}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${resourceName}" arg2="Message Boards Message" />
+				<then>
+					<execute action="CPWorkflowconfiguration#select" locator-key1="RESOURCE_TABLE_MB_MESSAGE_SELECT" value1="${resourceWorkflow}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${resourceName}" arg2="Page Revision" />
+				<then>
+					<execute action="CPWorkflowconfiguration#select" locator-key1="RESOURCE_TABLE_PAGE_REVISION_SELECT" value1="${resourceWorkflow}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${resourceName}" arg2="Web Content" />
+				<then>
+					<execute action="CPWorkflowconfiguration#select" locator-key1="RESOURCE_TABLE_WEB_CONTENT_SELECT" value1="${resourceWorkflow}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${resourceName}" arg2="Wiki Page" />
+				<then>
+					<execute action="CPWorkflowconfiguration#select" locator-key1="RESOURCE_TABLE_WIKI_PAGE_SELECT" value1="${resourceWorkflow}" />
+				</then>
+			</elseif>
+			<else>
+				<fail message="Invalid var resourceName. Must be (Blogs Entry|Comments|Message Boards Message|Page Revision|Web Content|Wiki Page)." />
+			</else>
+		</if>
+
+		<execute action="CPWorkflowconfiguration#click" locator-key1="SAVE_BUTTON" />
+		<execute action="CPWorkflowconfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
+	</command>
+
+	<command name="cpConfigureWorkflowTearDown">
+		<execute macro="Page#cpGoto">
+			<var name="portletName" value="Workflow Configuration" />
+		</execute>
+
+		<execute action="CPWorkflowconfiguration#select" locator-key1="RESOURCE_TABLE_BLOGS_ENTRY_SELECT" value1="Default: No Workflow" />
+		<execute action="CPWorkflowconfiguration#select" locator-key1="RESOURCE_TABLE_COMMENTS_SELECT" value1="Default: No Workflow" />
+		<execute action="CPWorkflowconfiguration#select" locator-key1="RESOURCE_TABLE_MB_MESSAGE_SELECT" value1="Default: No Workflow" />
+		<execute action="CPWorkflowconfiguration#select" locator-key1="RESOURCE_TABLE_PAGE_REVISION_SELECT" value1="Default: No Workflow" />
+		<execute action="CPWorkflowconfiguration#select" locator-key1="RESOURCE_TABLE_WEB_CONTENT_SELECT" value1="Default: No Workflow" />
+		<execute action="CPWorkflowconfiguration#select" locator-key1="RESOURCE_TABLE_WIKI_PAGE_SELECT" value1="Default: No Workflow" />
+		<execute action="CPWorkflowconfiguration#click" locator-key1="SAVE_BUTTON" />
+		<execute action="CPWorkflowconfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
+	</command>
+</definition>

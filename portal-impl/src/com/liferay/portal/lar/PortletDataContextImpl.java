@@ -631,38 +631,56 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	public Element addReferenceElement(
-		Element element, ClassedModel classedModel) {
+		Element element, ClassedModel classedModel, boolean missing) {
 
 		return addReferenceElement(
 			element, classedModel, classedModel.getModelClassName(),
-			StringPool.BLANK);
+			StringPool.BLANK, missing);
 	}
 
 	public Element addReferenceElement(
-		Element element, ClassedModel classedModel, Class<?> clazz) {
+		Element element, ClassedModel classedModel, Class<?> clazz,
+		boolean missing) {
 
 		return addReferenceElement(
-			element, classedModel, clazz.getName(), StringPool.BLANK);
+			element, classedModel, clazz.getName(), StringPool.BLANK, missing);
 	}
 
 	public Element addReferenceElement(
-		Element element, ClassedModel classedModel, String binPath) {
+		Element element, ClassedModel classedModel, String binPath,
+		boolean missing) {
 
 		return addReferenceElement(
-			element, classedModel, classedModel.getModelClassName(), binPath);
+			element, classedModel, classedModel.getModelClassName(), binPath,
+			missing);
 	}
 
 	public Element addReferenceElement(
 		Element element, ClassedModel classedModel, String className,
-		String binPath) {
+		String binPath, boolean missing) {
 
-		Element referencesElement = element.element("references");
-
-		if (referencesElement == null) {
-			referencesElement = element.addElement("references");
+		if (missing) {
+			addReferenceElement(
+				element, classedModel, className, binPath, false);
 		}
 
-		Element referenceElement = referencesElement.addElement("reference");
+		Element referenceElement = null;
+
+		if (!missing) {
+			Element referencesElement = element.element("references");
+
+			if (referencesElement == null) {
+				referencesElement = element.addElement("references");
+			}
+
+			referenceElement = referencesElement.addElement("reference");
+		}
+		else {
+			Element referencesElement = _missingReferencesElement;
+
+			referenceElement = referencesElement.addElement(
+				"missing-reference");
+		}
 
 		referenceElement.addAttribute("class-name", className);
 
@@ -951,6 +969,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	public ManifestSummary getManifestSummary() {
 		return _manifestSummary;
+	}
+
+	public Element getMissingReferencesElement() {
+		return _missingReferencesElement;
 	}
 
 	public Map<?, ?> getNewPrimaryKeysMap(Class<?> clazz) {
@@ -1520,6 +1542,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 		_importDataRootElement = importDataRootElement;
 	}
 
+	public void setMissingReferencesElement(Element missingReferencesElement) {
+		_missingReferencesElement = missingReferencesElement;
+	}
+
 	public void setOldPlid(long oldPlid) {
 		_oldPlid = oldPlid;
 	}
@@ -1941,6 +1967,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private Element _importDataRootElement;
 	private Map<String, Lock> _locksMap = new HashMap<String, Lock>();
 	private ManifestSummary _manifestSummary = new ManifestSummary();
+	private Element _missingReferencesElement;
 	private Map<String, Map<?, ?>> _newPrimaryKeysMaps =
 		new HashMap<String, Map<?, ?>>();
 	private Set<String> _notUniquePerLayout = new HashSet<String>();
@@ -1954,6 +1981,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private boolean _privateLayout;
 	private Map<String, List<RatingsEntry>> _ratingsEntriesMap =
 		new HashMap<String, List<RatingsEntry>>();
+	private Set<String> _scopedPrimaryKeys = new HashSet<String>();
 	private long _scopeGroupId;
 	private String _scopeLayoutUuid;
 	private String _scopeType;

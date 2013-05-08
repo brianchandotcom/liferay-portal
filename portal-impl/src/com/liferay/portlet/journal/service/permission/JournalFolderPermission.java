@@ -20,12 +20,14 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.journal.NoSuchFolderException;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 
 /**
  * @author Juan Fernández
+ * @author Zsolt Berentey
  */
 public class JournalFolderPermission {
 
@@ -60,60 +62,68 @@ public class JournalFolderPermission {
 
 		long folderId = folder.getFolderId();
 
-		if (actionId.equals(ActionKeys.VIEW)) {
-			while (folderId !=
-						JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+		if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
+			long originalFolderId = folderId;
 
-				folder = JournalFolderLocalServiceUtil.getFolder(folderId);
+			try {
+				while (folderId !=
+							JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-				folderId = folder.getParentFolderId();
+					folder = JournalFolderLocalServiceUtil.getFolder(folderId);
 
-				if (!permissionChecker.hasOwnerPermission(
-						folder.getCompanyId(), JournalFolder.class.getName(),
-						folder.getFolderId(), folder.getUserId(), actionId) &&
-					!permissionChecker.hasPermission(
-						folder.getGroupId(), JournalFolder.class.getName(),
-						folder.getFolderId(), actionId)) {
+					if (!permissionChecker.hasOwnerPermission(
+							folder.getCompanyId(),
+							JournalFolder.class.getName(), folderId,
+							folder.getUserId(), ActionKeys.VIEW) &&
+						!permissionChecker.hasPermission(
+							folder.getGroupId(), JournalFolder.class.getName(),
+							folderId, ActionKeys.VIEW)) {
 
-					return false;
+						return false;
+					}
+
+					folderId = folder.getParentFolderId();
 				}
-
-				if (!PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
-					break;
+			}
+			catch (NoSuchFolderException nsfe) {
+				if (!folder.isInTrash()) {
+					throw nsfe;
 				}
 			}
 
-			return true;
+			if (actionId.equals(ActionKeys.VIEW)) {
+				return true;
+			}
+
+			folderId = originalFolderId;
 		}
-		else {
+
+		try {
 			while (folderId !=
 						JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
 				folder = JournalFolderLocalServiceUtil.getFolder(folderId);
-
-				folderId = folder.getParentFolderId();
 
 				if (permissionChecker.hasOwnerPermission(
 						folder.getCompanyId(), JournalFolder.class.getName(),
-						folder.getFolderId(), folder.getUserId(), actionId)) {
-
-					return true;
-				}
-
-				if (permissionChecker.hasPermission(
+						folderId, folder.getUserId(), actionId) ||
+					permissionChecker.hasPermission(
 						folder.getGroupId(), JournalFolder.class.getName(),
-						folder.getFolderId(), actionId)) {
+						folderId, actionId)) {
 
 					return true;
 				}
 
-				if (actionId.equals(ActionKeys.VIEW)) {
-					break;
-				}
+				folderId = folder.getParentFolderId();
 			}
-
-			return false;
 		}
+		catch (NoSuchFolderException nsfe) {
+			if (!folder.isInTrash()) {
+				throw nsfe;
+			}
+		}
+
+		return false;
 	}
 
 	public static boolean contains(

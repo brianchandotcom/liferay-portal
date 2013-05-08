@@ -38,7 +38,6 @@ import com.liferay.portal.util.TestPropsValues;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -180,8 +179,7 @@ public abstract class BaseStagedModelDataHandlerTestCase extends PowerMockito {
 
 		portletDataContext = new PortletDataContextImpl(
 			stagingGroup.getCompanyId(), stagingGroup.getGroupId(),
-			getParameterMap(), new HashSet<String>(), getStartDate(),
-			getEndDate(), zipWriter);
+			getParameterMap(), getStartDate(), getEndDate(), zipWriter);
 
 		rootElement = SAXReaderUtil.createElement("root");
 
@@ -194,7 +192,7 @@ public abstract class BaseStagedModelDataHandlerTestCase extends PowerMockito {
 
 		portletDataContext = new PortletDataContextImpl(
 			liveGroup.getCompanyId(), liveGroup.getGroupId(), getParameterMap(),
-			new HashSet<String>(), userIdStrategy, zipReader);
+			userIdStrategy, zipReader);
 
 		portletDataContext.setImportDataRootElement(rootElement);
 		portletDataContext.setSourceGroupId(stagingGroup.getGroupId());

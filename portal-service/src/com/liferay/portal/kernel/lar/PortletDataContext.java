@@ -119,19 +119,20 @@ public interface PortletDataContext extends Serializable {
 		String className, long classPK, List<RatingsEntry> ratingsEntries);
 
 	public Element addReferenceElement(
-		Element element, ClassedModel classedModel, boolean missing);
-
-	public Element addReferenceElement(
-		Element element, ClassedModel classedModel, Class<?> clazz,
+		StagedModel referrer, Element element, ClassedModel classedModel,
 		boolean missing);
 
 	public Element addReferenceElement(
-		Element element, ClassedModel classedModel, String binPath,
-		boolean missing);
+		StagedModel referrer, Element element, ClassedModel classedModel,
+		Class<?> clazz, boolean missing);
 
 	public Element addReferenceElement(
-		Element element, ClassedModel classedModel, String className,
+		StagedModel referrer, Element element, ClassedModel classedModel,
 		String binPath, boolean missing);
+
+	public Element addReferenceElement(
+		StagedModel referrer, Element element, ClassedModel classedModel,
+		String className, String binPath, boolean missing);
 
 	public void addZipEntry(String path, byte[] bytes) throws SystemException;
 

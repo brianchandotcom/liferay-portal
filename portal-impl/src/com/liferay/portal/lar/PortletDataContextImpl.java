@@ -631,37 +631,39 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	public Element addReferenceElement(
-		Element element, ClassedModel classedModel, boolean missing) {
+		StagedModel referrer, Element element, ClassedModel classedModel,
+		boolean missing) {
 
 		return addReferenceElement(
-			element, classedModel, classedModel.getModelClassName(),
+			referrer, element, classedModel, classedModel.getModelClassName(),
 			StringPool.BLANK, missing);
 	}
 
 	public Element addReferenceElement(
-		Element element, ClassedModel classedModel, Class<?> clazz,
-		boolean missing) {
+		StagedModel referrer, Element element, ClassedModel classedModel,
+		Class<?> clazz, boolean missing) {
 
 		return addReferenceElement(
-			element, classedModel, clazz.getName(), StringPool.BLANK, missing);
-	}
-
-	public Element addReferenceElement(
-		Element element, ClassedModel classedModel, String binPath,
-		boolean missing) {
-
-		return addReferenceElement(
-			element, classedModel, classedModel.getModelClassName(), binPath,
+			referrer, element, classedModel, clazz.getName(), StringPool.BLANK,
 			missing);
 	}
 
 	public Element addReferenceElement(
-		Element element, ClassedModel classedModel, String className,
+		StagedModel referrer, Element element, ClassedModel classedModel,
 		String binPath, boolean missing) {
+
+		return addReferenceElement(
+			referrer, element, classedModel, classedModel.getModelClassName(),
+			binPath, missing);
+	}
+
+	public Element addReferenceElement(
+		StagedModel referrer, Element element, ClassedModel classedModel,
+		String className, String binPath, boolean missing) {
 
 		if (missing) {
 			addReferenceElement(
-				element, classedModel, className, binPath, false);
+				referrer, element, classedModel, className, binPath, false);
 		}
 
 		Element referenceElement = null;
@@ -700,6 +702,11 @@ public class PortletDataContextImpl implements PortletDataContext {
 			StagedModel stagedModel = (StagedModel)classedModel;
 
 			referenceElement.addAttribute("uuid", stagedModel.getUuid());
+		}
+
+		if (missing) {
+			referenceElement.addAttribute(
+				"referrer", referrer.getModelClassName());
 		}
 
 		return referenceElement;

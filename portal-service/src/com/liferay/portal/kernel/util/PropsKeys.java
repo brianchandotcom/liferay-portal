@@ -2069,6 +2069,8 @@ public interface PropsKeys {
 
 	public static final String SESSION_COOKIE_DOMAIN = "session.cookie.domain";
 
+	public static final String SESSION_COOKIE_USE_FULL_HOSTNAME = "session.cookie.use.full.hostname";
+
 	public static final String SESSION_DISABLED = "session.disabled";
 
 	public static final String SESSION_ENABLE_PERSISTENT_COOKIES = "session.enable.persistent.cookies";

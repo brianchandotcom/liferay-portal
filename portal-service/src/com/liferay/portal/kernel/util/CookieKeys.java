@@ -153,6 +153,10 @@ public class CookieKeys {
 
 		String host = request.getServerName();
 
+		if (_SESSION_COOKIE_USE_FULL_HOSTNAME) {
+			return host;
+		}
+
 		return getDomain(host);
 	}
 
@@ -286,6 +290,10 @@ public class CookieKeys {
 
 	private static final String _SESSION_COOKIE_DOMAIN = PropsUtil.get(
 		PropsKeys.SESSION_COOKIE_DOMAIN);
+
+	private static final boolean _SESSION_COOKIE_USE_FULL_HOSTNAME =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.SESSION_COOKIE_USE_FULL_HOSTNAME));
 
 	private static final boolean _SESSION_ENABLE_PERSISTENT_COOKIES =
 		GetterUtil.getBoolean(

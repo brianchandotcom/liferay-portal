@@ -21,6 +21,8 @@ public interface ServletResponseConstants {
 
 	public static final int SC_DUPLICATE_FILE_EXCEPTION = 490;
 
+	public static final int SC_FILE_CUSTOM_EXCEPTION = 499;
+
 	public static final int SC_FILE_EXTENSION_EXCEPTION = 491;
 
 	public static final int SC_FILE_NAME_EXCEPTION = 492;

@@ -56,29 +56,11 @@ long folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
 		Date expirationDate = new Date(System.currentTimeMillis() + PropsValues.SESSION_TIMEOUT * Time.MINUTE);
 
 		Ticket ticket = TicketLocalServiceUtil.addTicket(user.getCompanyId(), User.class.getName(), user.getUserId(), TicketConstants.TYPE_IMPERSONATE, null, expirationDate, new ServiceContext());
-
-		String allowedFileExtensions = null;
-
-		if (portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY)) {
-			Set<String> extensions = new HashSet<String>();
-
-			String[] mimeTypes = DLUtil.getMediaGalleryMimeTypes(preferences, renderRequest);
-
-			for (String mimeType : mimeTypes) {
-				extensions.addAll(MimeTypesUtil.getExtensions(mimeType));
-			}
-
-			allowedFileExtensions = StringUtil.merge(extensions.toArray(new String[extensions.size()]));
-		}
-		else {
-			allowedFileExtensions = StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA));
-		}
 		%>
 
 		<aui:script use="liferay-upload">
 			new Liferay.Upload(
 				{
-					allowedFileTypes: '<%= allowedFileExtensions %>',
 					boundingBox: '#<portlet:namespace />fileUpload',
 					deleteFile: '<liferay-portlet:actionURL doAsUserId="<%= user.getUserId() %>"><portlet:param name="struts_action" value="/document_library/edit_file_entry" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE_TEMP %>" /><portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" /></liferay-portlet:actionURL>&ticketKey=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= DLFileEntryConstants.getClassName() %>" />',
 					fileDescription: '<%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA)) %>',

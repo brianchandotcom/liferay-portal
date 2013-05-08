@@ -15,7 +15,33 @@
 --%>
 
 <div class="export-dialog-tree">
-	<aui:input cssClass="file-selector" label="import-a-lar-file-to-overwrite-the-selected-data" name="importFileName" size="50" type="file" />
+
+	<%
+	FileEntry fileEntry = ExportImportUtil.getTempFileEntry(groupId, themeDisplay.getUserId());
+	%>
+
+	<aui:fieldset cssClass="options-group" label="file">
+		<dl class="import-file-details">
+			<dt>
+				<liferay-ui:message key="name" />
+			</dt>
+			<dd>
+				<%= fileEntry.getTitle() %>
+			</dd>
+			<dt>
+				<liferay-ui:message key="size" />
+			</dt>
+			<dd>
+				<%= fileEntry.getSize()/1024 %>k
+			</dd>
+			<dt>
+				<liferay-ui:message key="author" />
+			</dt>
+			<dd>
+				<%= fileEntry.getUserName() %>
+			</dd>
+		</dl>
+	</aui:fieldset>
 
 	<c:if test="<%= !group.isLayoutPrototype() %>">
 		<aui:fieldset cssClass="options-group" label="pages">

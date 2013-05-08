@@ -41,7 +41,7 @@ String portletNameSpace = PortalUtil.getPortletNamespace(portletResource);
 
 	<liferay-ui:panel-container extended="<%= true %>" id="documentLibrarySettingsPanelContainer" persistState="<%= true %>">
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="documentLibraryDisplay" persistState="<%= true %>" title="display-settings">
-			<aui:input label="show-actions" name="preferences--showActions--" type="checkbox" value="<%= showActions %>" />
+			<aui:input id="showActions" label="show-actions" name="preferences--showActions--" type="checkbox" value="<%= showActions %>" />
 
 			<aui:input label="show-folder-menu" name="preferences--showFolderMenu--" type="checkbox" value="<%= showFolderMenu %>" />
 
@@ -203,6 +203,42 @@ String portletNameSpace = PortalUtil.getPortletNamespace(portletResource);
 			);
 		}
 	);
+
+	A.one('#<portlet:namespace />showActionsCheckbox').after(
+		'change',
+		function(event) {
+			var showActionsInput = A.one('#<portlet:namespace />showActions');
+
+			var currentFolderColumns = A.one('#<portlet:namespace />currentFolderColumns');
+
+			var currentFileEntryColumns = A.one('#<portlet:namespace />currentFileEntryColumns');
+
+			var optAction = '<option label="Action" value="action" />';
+
+			if (showActionsInput.val() === 'false') {
+				currentFileEntryColumns.appendChild(optAction);
+				currentFolderColumns.appendChild(optAction);
+			}
+			else {
+				var availableFileEntryColumns = A.one('#<portlet:namespace />availableFileEntryColumns');
+				var availableFolderColumns = A.one('#<portlet:namespace />availableFolderColumns');
+
+				var nodes = [currentFolderColumns, currentFileEntryColumns, availableFileEntryColumns, availableFolderColumns]
+				removeActionOption (nodes);
+			}
+		}
+	);
+
+	function removeActionOption(nodes) {
+		for (var i = 0; i < nodes.length ; i++) {
+			var currentNode = nodes[i];
+			var actionsNode = currentNode.one('option[value="action"]');
+
+			if (actionsNode) {
+				actionsNode.remove();
+			}
+		}
+	}
 </aui:script>
 
 <aui:script>

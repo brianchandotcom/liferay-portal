@@ -20,17 +20,17 @@
 </tr>
 <tr>
 	<td>ADD_WIKI_BUTTON</td>
-	<td>//input[@value='Add Wiki']</td>
+	<td>//button[@id='_154_addNodeButton']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='portlet-msg-success']</td>
+	<td>//div[@class='alert alert-success']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE_RECYCLE_BIN</td>
-	<td>//div[@class='portlet-msg-success taglib-trash-undo']</td>
+	<td>//form[@id='_154_undoForm']</td>
 	<td></td>
 </tr>
 <tr>
@@ -61,12 +61,12 @@
 </tr>
 <tr>
 	<td>WIKI_NODE_TABLE_ACTIONS_1</td>
-	<td>xpath=(//tr/td[4]/span[@title='Actions']/ul/li/strong/a/span)[1]</td>
+	<td>xpath=(//tr/td[4]/div/a[@title='Actions'])[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>WIKI_NODE_TABLE_ACTIONS_2</td>
-	<td>xpath=(//tr/td[4]/span[@title='Actions']/ul/li/strong/a/span)[2]</td>
+	<td>xpath=(//tr/td[4]/div/a[@title='Actions'])[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -98,6 +98,11 @@
 <tr>
 	<td>WIKI_NODE_MENULIST_SUBSCRIBE</td>
 	<td>//a[@role='menuitem' and contains(.,'Subscribe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_NODE_MENULIST_UNSUBSCRIBE</td>
+	<td>//a[@role='menuitem' and contains(.,'Unsubscribe')]</td>
 	<td></td>
 </tr>
 <tr>

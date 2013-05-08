@@ -111,7 +111,6 @@ long classPK = ParamUtil.getLong(request, "classPK");
 						<%
 						}
 						%>
-
 					</aui:nav-item>
 
 					<%

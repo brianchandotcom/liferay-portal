@@ -47,7 +47,7 @@ public class IntrabandPortalCache
 		_name = name;
 		_registrationReference = registrationReference;
 
-		_intraBand = registrationReference.getIntraband();
+		_intraband = registrationReference.getIntraband();
 
 		SystemDataType systemDataType = SystemDataType.PORTAL_CACHE;
 
@@ -58,7 +58,7 @@ public class IntrabandPortalCache
 		Serializer serializer = _createSerializer(
 			PortalCacheActionType.DESTROY);
 
-		_intraBand.sendDatagram(
+		_intraband.sendDatagram(
 			_registrationReference,
 			Datagram.createRequestDatagram(
 				_portalCacheType, serializer.toByteBuffer()));
@@ -115,7 +115,7 @@ public class IntrabandPortalCache
 		serializer.writeObject(key);
 		serializer.writeObject(value);
 
-		_intraBand.sendDatagram(
+		_intraband.sendDatagram(
 			_registrationReference,
 			Datagram.createRequestDatagram(
 				_portalCacheType, serializer.toByteBuffer()));
@@ -129,7 +129,7 @@ public class IntrabandPortalCache
 		serializer.writeObject(value);
 		serializer.writeInt(timeToLive);
 
-		_intraBand.sendDatagram(
+		_intraband.sendDatagram(
 			_registrationReference,
 			Datagram.createRequestDatagram(
 				_portalCacheType, serializer.toByteBuffer()));
@@ -148,7 +148,7 @@ public class IntrabandPortalCache
 
 		serializer.writeObject(key);
 
-		_intraBand.sendDatagram(
+		_intraband.sendDatagram(
 			_registrationReference,
 			Datagram.createRequestDatagram(
 				_portalCacheType, serializer.toByteBuffer()));
@@ -158,7 +158,7 @@ public class IntrabandPortalCache
 		Serializer serializer = _createSerializer(
 			PortalCacheActionType.REMOVE_ALL);
 
-		_intraBand.sendDatagram(
+		_intraband.sendDatagram(
 			_registrationReference,
 			Datagram.createRequestDatagram(
 				_portalCacheType, serializer.toByteBuffer()));
@@ -184,7 +184,7 @@ public class IntrabandPortalCache
 	private <T extends Serializable> T _syncSend(ByteBuffer byteBuffer)
 		throws Exception {
 
-		Datagram responseDatagram = _intraBand.sendSyncDatagram(
+		Datagram responseDatagram = _intraband.sendSyncDatagram(
 			_registrationReference,
 			Datagram.createRequestDatagram(_portalCacheType, byteBuffer));
 
@@ -196,7 +196,7 @@ public class IntrabandPortalCache
 
 	private static Log _log = LogFactoryUtil.getLog(IntrabandPortalCache.class);
 
-	private final Intraband _intraBand;
+	private final Intraband _intraband;
 	private final String _name;
 	private final byte _portalCacheType;
 	private final RegistrationReference _registrationReference;

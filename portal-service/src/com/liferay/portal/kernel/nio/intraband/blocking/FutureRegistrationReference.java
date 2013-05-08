@@ -31,7 +31,7 @@ class FutureRegistrationReference implements RegistrationReference {
 	}
 
 	public Intraband getIntraband() {
-		return intraBand;
+		return intraband;
 	}
 
 	public boolean isValid() {
@@ -43,17 +43,17 @@ class FutureRegistrationReference implements RegistrationReference {
 	}
 
 	protected FutureRegistrationReference(
-		Intraband intraBand, ChannelContext channelContext,
+		Intraband intraband, ChannelContext channelContext,
 		Future<Void> readFuture, Future<Void> writeFuture) {
 
-		this.intraBand = intraBand;
+		this.intraband = intraband;
 		this.channelContext = channelContext;
 		this.readFuture = readFuture;
 		this.writeFuture = writeFuture;
 	}
 
 	protected final ChannelContext channelContext;
-	protected final Intraband intraBand;
+	protected final Intraband intraband;
 	protected final Future<Void> readFuture;
 	protected final Future<Void> writeFuture;
 

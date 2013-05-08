@@ -53,12 +53,12 @@ public class MailboxUtil {
 			RegistrationReference registrationReference, ByteBuffer byteBuffer)
 		throws MailboxException {
 
-		Intraband intraBand = registrationReference.getIntraband();
+		Intraband intraband = registrationReference.getIntraband();
 
 		try {
 			SystemDataType systemDataType = SystemDataType.MAILBOX;
 
-			Datagram responseDatagram = intraBand.sendSyncDatagram(
+			Datagram responseDatagram = intraband.sendSyncDatagram(
 				registrationReference,
 				Datagram.createRequestDatagram(
 					systemDataType.getValue(), byteBuffer));

@@ -53,15 +53,15 @@ public class IntrabandPortalCacheManagerTest {
 	@Test
 	public void testConstructor() throws Exception {
 		IntrabandPortalCacheManager<String, String>
-			intraBandPortalCacheManager =
+			intrabandPortalCacheManager =
 				new IntrabandPortalCacheManager<String, String>(
 					_mockRegistrationReference);
 
 		Assert.assertSame(
 			_mockRegistrationReference,
-			getRegistrationReference(intraBandPortalCacheManager));
+			getRegistrationReference(intrabandPortalCacheManager));
 		Assert.assertSame(
-			_mockIntraband, getIntraband(intraBandPortalCacheManager));
+			_mockIntraband, getIntraband(intrabandPortalCacheManager));
 	}
 
 	@Test
@@ -70,18 +70,18 @@ public class IntrabandPortalCacheManagerTest {
 		// Create on missing
 
 		IntrabandPortalCacheManager<String, String>
-			intraBandPortalCacheManager =
+			intrabandPortalCacheManager =
 				new IntrabandPortalCacheManager<String, String>(
 					_mockRegistrationReference);
 
 		Map<String, PortalCache<?, ?>> portalCaches = getPortalCaches(
-			intraBandPortalCacheManager);
+			intrabandPortalCacheManager);
 
 		Assert.assertTrue(portalCaches.isEmpty());
 
 		String portalCacheName = "portalCacheName";
 
-		PortalCache<?, ?> portalCache = intraBandPortalCacheManager.getCache(
+		PortalCache<?, ?> portalCache = intrabandPortalCacheManager.getCache(
 			portalCacheName);
 
 		Assert.assertNotNull(portalCache);
@@ -91,7 +91,7 @@ public class IntrabandPortalCacheManagerTest {
 
 		// Get existing
 
-		PortalCache<?, ?> portalCache2 = intraBandPortalCacheManager.getCache(
+		PortalCache<?, ?> portalCache2 = intrabandPortalCacheManager.getCache(
 			portalCacheName);
 
 		Assert.assertNotNull(portalCache2);
@@ -127,11 +127,11 @@ public class IntrabandPortalCacheManagerTest {
 		URL url = classLoader.getResource(resourcePath);
 
 		IntrabandPortalCacheManager<String, String>
-			intraBandPortalCacheManager =
+			intrabandPortalCacheManager =
 				new IntrabandPortalCacheManager<String, String>(
 					_mockRegistrationReference);
 
-		intraBandPortalCacheManager.reconfigureCaches(url);
+		intrabandPortalCacheManager.reconfigureCaches(url);
 
 		Datagram datagram = _mockIntraband.getDatagram();
 
@@ -152,67 +152,67 @@ public class IntrabandPortalCacheManagerTest {
 	@Test
 	public void testRemoveAndClear() throws Exception {
 		IntrabandPortalCacheManager<String, String>
-			intraBandPortalCacheManager =
+			intrabandPortalCacheManager =
 				new IntrabandPortalCacheManager<String, String>(
 					_mockRegistrationReference);
 
 		String portalCacheName1 = "portalCacheName1";
 
-		PortalCache<?, ?> portalCache1 = intraBandPortalCacheManager.getCache(
+		PortalCache<?, ?> portalCache1 = intrabandPortalCacheManager.getCache(
 			portalCacheName1);
 
 		String portalCacheName2 = "portalCacheName2";
 
-		PortalCache<?, ?> portalCache2 = intraBandPortalCacheManager.getCache(
+		PortalCache<?, ?> portalCache2 = intrabandPortalCacheManager.getCache(
 			portalCacheName2);
 
 		Map<String, PortalCache<?, ?>> portalCaches = getPortalCaches(
-			intraBandPortalCacheManager);
+			intrabandPortalCacheManager);
 
 		Assert.assertEquals(2, portalCaches.size());
 		Assert.assertSame(portalCache1, portalCaches.get(portalCacheName1));
 		Assert.assertSame(portalCache2, portalCaches.get(portalCacheName2));
 
-		intraBandPortalCacheManager.removeCache(portalCacheName1);
+		intrabandPortalCacheManager.removeCache(portalCacheName1);
 
 		Assert.assertEquals(1, portalCaches.size());
 		Assert.assertSame(portalCache2, portalCaches.get(portalCacheName2));
 
-		intraBandPortalCacheManager.clearAll();
+		intrabandPortalCacheManager.clearAll();
 
 		Assert.assertTrue(portalCaches.isEmpty());
 	}
 
 	private static MockIntraband getIntraband(
-			IntrabandPortalCacheManager<?, ?> intraBandPortalCacheManager)
+			IntrabandPortalCacheManager<?, ?> intrabandPortalCacheManager)
 		throws Exception {
 
-		Field intraBandField = ReflectionUtil.getDeclaredField(
-			IntrabandPortalCacheManager.class, "_intraBand");
+		Field intrabandField = ReflectionUtil.getDeclaredField(
+			IntrabandPortalCacheManager.class, "_intraband");
 
-		return (MockIntraband)intraBandField.get(intraBandPortalCacheManager);
+		return (MockIntraband)intrabandField.get(intrabandPortalCacheManager);
 	}
 
 	private static Map<String, PortalCache<?, ?>> getPortalCaches(
-			IntrabandPortalCacheManager<?, ?> intraBandPortalCacheManager)
+			IntrabandPortalCacheManager<?, ?> intrabandPortalCacheManager)
 		throws Exception {
 
-		Field intraBandField = ReflectionUtil.getDeclaredField(
+		Field intrabandField = ReflectionUtil.getDeclaredField(
 			IntrabandPortalCacheManager.class, "_portalCaches");
 
-		return (Map<String, PortalCache<?, ?>>)intraBandField.get(
-			intraBandPortalCacheManager);
+		return (Map<String, PortalCache<?, ?>>)intrabandField.get(
+			intrabandPortalCacheManager);
 	}
 
 	private static MockRegistrationReference getRegistrationReference(
-			IntrabandPortalCacheManager<?, ?> intraBandPortalCacheManager)
+			IntrabandPortalCacheManager<?, ?> intrabandPortalCacheManager)
 		throws Exception {
 
 		Field registrationReferenceField = ReflectionUtil.getDeclaredField(
 			IntrabandPortalCacheManager.class, "_registrationReference");
 
 		return (MockRegistrationReference)registrationReferenceField.get(
-			intraBandPortalCacheManager);
+			intrabandPortalCacheManager);
 	}
 
 	private MockIntraband _mockIntraband = new MockIntraband();

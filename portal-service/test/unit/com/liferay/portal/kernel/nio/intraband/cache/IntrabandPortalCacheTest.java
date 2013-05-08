@@ -58,36 +58,36 @@ public class IntrabandPortalCacheTest {
 
 	@Test
 	public void testCacheListener() {
-		IntrabandPortalCache<String, String> intraBandPortalCache =
+		IntrabandPortalCache<String, String> intrabandPortalCache =
 			new IntrabandPortalCache<String, String>(
 				_testName, _mockRegistrationReference);
 
-		intraBandPortalCache.registerCacheListener(null);
-		intraBandPortalCache.registerCacheListener(null, null);
-		intraBandPortalCache.unregisterCacheListener(null);
-		intraBandPortalCache.unregisterCacheListeners();
+		intrabandPortalCache.registerCacheListener(null);
+		intrabandPortalCache.registerCacheListener(null, null);
+		intrabandPortalCache.unregisterCacheListener(null);
+		intrabandPortalCache.unregisterCacheListeners();
 	}
 
 	@Test
 	public void testConstructor() throws Exception {
-		IntrabandPortalCache<String, String> intraBandPortalCache =
+		IntrabandPortalCache<String, String> intrabandPortalCache =
 			new IntrabandPortalCache<String, String>(
 				_testName, _mockRegistrationReference);
 
-		Assert.assertEquals(_testName, intraBandPortalCache.getName());
+		Assert.assertEquals(_testName, intrabandPortalCache.getName());
 		Assert.assertSame(
 			_mockRegistrationReference,
-			getRegistrationReference(intraBandPortalCache));
-		Assert.assertSame(_mockIntraband, getIntraband(intraBandPortalCache));
+			getRegistrationReference(intrabandPortalCache));
+		Assert.assertSame(_mockIntraband, getIntraband(intrabandPortalCache));
 	}
 
 	@Test
 	public void testDestroy() {
-		IntrabandPortalCache<String, String> intraBandPortalCache =
+		IntrabandPortalCache<String, String> intrabandPortalCache =
 			new IntrabandPortalCache<String, String>(
 				_testName, _mockRegistrationReference);
 
-		intraBandPortalCache.destroy();
+		intrabandPortalCache.destroy();
 
 		Datagram datagram = _mockIntraband.getDatagram();
 
@@ -161,11 +161,11 @@ public class IntrabandPortalCacheTest {
 
 		};
 
-		IntrabandPortalCache<String, String> intraBandPortalCache =
+		IntrabandPortalCache<String, String> intrabandPortalCache =
 			new IntrabandPortalCache<String, String>(
 				_testName, new MockRegistrationReference(mockIntraband));
 
-		Assert.assertEquals(testValue, intraBandPortalCache.get(testKey));
+		Assert.assertEquals(testValue, intrabandPortalCache.get(testKey));
 
 		// Unable to get, with log
 
@@ -176,7 +176,7 @@ public class IntrabandPortalCacheTest {
 
 		runtimeExceptionReference.set(runtimeException);
 
-		Assert.assertNull(intraBandPortalCache.get(testKey));
+		Assert.assertNull(intrabandPortalCache.get(testKey));
 		Assert.assertEquals(1, logRecords.size());
 
 		LogRecord logRecord = logRecords.get(0);
@@ -190,7 +190,7 @@ public class IntrabandPortalCacheTest {
 		logRecords = JDKLoggerTestUtil.configureJDKLogger(
 			IntrabandPortalCache.class.getName(), Level.OFF);
 
-		Assert.assertNull(intraBandPortalCache.get(testKey));
+		Assert.assertNull(intrabandPortalCache.get(testKey));
 		Assert.assertTrue(logRecords.isEmpty());
 	}
 
@@ -255,11 +255,11 @@ public class IntrabandPortalCacheTest {
 
 		};
 
-		IntrabandPortalCache<String, String> intraBandPortalCache =
+		IntrabandPortalCache<String, String> intrabandPortalCache =
 			new IntrabandPortalCache<String, String>(
 				_testName, new MockRegistrationReference(mockIntraband));
 
-		Assert.assertEquals(testValues, intraBandPortalCache.get(testKeys));
+		Assert.assertEquals(testValues, intrabandPortalCache.get(testKeys));
 
 		// Unable to bulk get, with log
 
@@ -272,7 +272,7 @@ public class IntrabandPortalCacheTest {
 
 		Assert.assertEquals(
 			Arrays.asList(null, null, null),
-			intraBandPortalCache.get(testKeys));
+			intrabandPortalCache.get(testKeys));
 		Assert.assertEquals(1, logRecords.size());
 
 		LogRecord logRecord = logRecords.get(0);
@@ -289,7 +289,7 @@ public class IntrabandPortalCacheTest {
 
 		Assert.assertEquals(
 			Arrays.asList(null, null, null),
-			intraBandPortalCache.get(testKeys));
+			intrabandPortalCache.get(testKeys));
 		Assert.assertTrue(logRecords.isEmpty());
 	}
 
@@ -298,7 +298,7 @@ public class IntrabandPortalCacheTest {
 		String testKey = "testKey";
 		String testValue = "testValue";
 
-		IntrabandPortalCache<String, String> intraBandPortalCache =
+		IntrabandPortalCache<String, String> intrabandPortalCache =
 			new IntrabandPortalCache<String, String>(
 				_testName, _mockRegistrationReference);
 
@@ -306,7 +306,7 @@ public class IntrabandPortalCacheTest {
 			IntrabandPortalCache.class, "put", Serializable.class,
 			Object.class);
 
-		bridgePutMethod.invoke(intraBandPortalCache, testKey, testValue);
+		bridgePutMethod.invoke(intrabandPortalCache, testKey, testValue);
 
 		Datagram datagram = _mockIntraband.getDatagram();
 
@@ -332,11 +332,11 @@ public class IntrabandPortalCacheTest {
 		String testValue = "testValue";
 		int testTTL = 100;
 
-		IntrabandPortalCache<String, String> intraBandPortalCache =
+		IntrabandPortalCache<String, String> intrabandPortalCache =
 			new IntrabandPortalCache<String, String>(
 				_testName, _mockRegistrationReference);
 
-		intraBandPortalCache.put(testKey, testValue, testTTL);
+		intrabandPortalCache.put(testKey, testValue, testTTL);
 
 		Datagram datagram = _mockIntraband.getDatagram();
 
@@ -361,11 +361,11 @@ public class IntrabandPortalCacheTest {
 	public void testRemove() throws Exception {
 		String testKey = "testKey";
 
-		IntrabandPortalCache<String, String> intraBandPortalCache =
+		IntrabandPortalCache<String, String> intrabandPortalCache =
 			new IntrabandPortalCache<String, String>(
 				_testName, _mockRegistrationReference);
 
-		intraBandPortalCache.remove(testKey);
+		intrabandPortalCache.remove(testKey);
 
 		Datagram datagram = _mockIntraband.getDatagram();
 
@@ -386,11 +386,11 @@ public class IntrabandPortalCacheTest {
 
 	@Test
 	public void testRemoveAll() {
-		IntrabandPortalCache<String, String> intraBandPortalCache =
+		IntrabandPortalCache<String, String> intrabandPortalCache =
 			new IntrabandPortalCache<String, String>(
 				_testName, _mockRegistrationReference);
 
-		intraBandPortalCache.removeAll();
+		intrabandPortalCache.removeAll();
 
 		Datagram datagram = _mockIntraband.getDatagram();
 
@@ -409,24 +409,24 @@ public class IntrabandPortalCacheTest {
 	}
 
 	private static MockIntraband getIntraband(
-			IntrabandPortalCache<?, ?> intraBandPortalCache)
+			IntrabandPortalCache<?, ?> intrabandPortalCache)
 		throws Exception {
 
-		Field intraBandField = ReflectionUtil.getDeclaredField(
-			IntrabandPortalCache.class, "_intraBand");
+		Field intrabandField = ReflectionUtil.getDeclaredField(
+			IntrabandPortalCache.class, "_intraband");
 
-		return (MockIntraband)intraBandField.get(intraBandPortalCache);
+		return (MockIntraband)intrabandField.get(intrabandPortalCache);
 	}
 
 	private static MockRegistrationReference getRegistrationReference(
-			IntrabandPortalCache<?, ?> intraBandPortalCache)
+			IntrabandPortalCache<?, ?> intrabandPortalCache)
 		throws Exception {
 
 		Field registrationReferenceField = ReflectionUtil.getDeclaredField(
 			IntrabandPortalCache.class, "_registrationReference");
 
 		return (MockRegistrationReference)registrationReferenceField.get(
-			intraBandPortalCache);
+			intrabandPortalCache);
 	}
 
 	private MockIntraband _mockIntraband = new MockIntraband();

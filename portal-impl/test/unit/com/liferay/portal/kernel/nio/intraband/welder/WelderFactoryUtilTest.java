@@ -167,7 +167,7 @@ public class WelderFactoryUtilTest {
 		public void destroy() {
 		}
 
-		public RegistrationReference weld(Intraband intraBand) {
+		public RegistrationReference weld(Intraband intraband) {
 			return null;
 		}
 
@@ -178,7 +178,7 @@ public class WelderFactoryUtilTest {
 		public void destroy() {
 		}
 
-		public RegistrationReference weld(Intraband intraBand) {
+		public RegistrationReference weld(Intraband intraband) {
 			return null;
 		}
 

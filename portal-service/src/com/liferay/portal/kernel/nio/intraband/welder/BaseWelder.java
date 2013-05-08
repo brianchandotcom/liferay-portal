@@ -49,7 +49,7 @@ public abstract class BaseWelder implements Welder {
 		state = State.DESTROYED;
 	}
 
-	public synchronized RegistrationReference weld(Intraband intraBand)
+	public synchronized RegistrationReference weld(Intraband intraband)
 		throws IOException {
 
 		if (state != State.CREATED) {
@@ -58,10 +58,10 @@ public abstract class BaseWelder implements Welder {
 		}
 
 		if (server) {
-			registrationReference = weldServer(intraBand);
+			registrationReference = weldServer(intraband);
 		}
 		else {
-			registrationReference = weldClient(intraBand);
+			registrationReference = weldClient(intraband);
 		}
 
 		state = State.WELDED;
@@ -71,10 +71,10 @@ public abstract class BaseWelder implements Welder {
 
 	protected abstract void doDestroy() throws IOException;
 
-	protected abstract RegistrationReference weldClient(Intraband intraBand)
+	protected abstract RegistrationReference weldClient(Intraband intraband)
 		throws IOException;
 
-	protected abstract RegistrationReference weldServer(Intraband intraBand)
+	protected abstract RegistrationReference weldServer(Intraband intraband)
 		throws IOException;
 
 	protected transient RegistrationReference registrationReference;

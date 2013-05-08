@@ -138,17 +138,17 @@ public class BaseWelderTest {
 		}
 
 		@Override
-		protected RegistrationReference weldClient(Intraband intraBand) {
+		protected RegistrationReference weldClient(Intraband intraband) {
 			_clientRegistrationReference = new MockRegistrationReference(
-				intraBand);
+				intraband);
 
 			return _clientRegistrationReference;
 		}
 
 		@Override
-		protected RegistrationReference weldServer(Intraband intraBand) {
+		protected RegistrationReference weldServer(Intraband intraband) {
 			_serverRegistrationReference = new MockRegistrationReference(
-				intraBand);
+				intraband);
 
 			return _serverRegistrationReference;
 		}

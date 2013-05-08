@@ -1425,7 +1425,7 @@ public class BaseIntrabandTest {
 		final IOException expectedIOException = new IOException(
 			"Force to fail");
 
-		Intraband intraBand = new MockIntraband(_DEFAULT_TIMEOUT) {
+		Intraband intraband = new MockIntraband(_DEFAULT_TIMEOUT) {
 
 			@Override
 			protected void doSendDatagram(
@@ -1441,7 +1441,7 @@ public class BaseIntrabandTest {
 		};
 
 		try {
-			intraBand.sendSyncDatagram(
+			intraband.sendSyncDatagram(
 				new MockRegistrationReference(_mockIntraband),
 				Datagram.createRequestDatagram(_type, _data));
 
@@ -1456,7 +1456,7 @@ public class BaseIntrabandTest {
 		final Datagram expectedDatagram = Datagram.createResponseDatagram(
 			requestDatagram, _data);
 
-		intraBand = new MockIntraband(_DEFAULT_TIMEOUT) {
+		intraband = new MockIntraband(_DEFAULT_TIMEOUT) {
 
 			@Override
 			protected void doSendDatagram(
@@ -1471,7 +1471,7 @@ public class BaseIntrabandTest {
 
 		};
 
-		Datagram responseDatagram = intraBand.sendSyncDatagram(
+		Datagram responseDatagram = intraband.sendSyncDatagram(
 			new MockRegistrationReference(_mockIntraband), requestDatagram);
 
 		Assert.assertSame(expectedDatagram, responseDatagram);

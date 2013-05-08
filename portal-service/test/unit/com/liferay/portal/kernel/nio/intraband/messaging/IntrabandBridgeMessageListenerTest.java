@@ -40,14 +40,14 @@ public class IntrabandBridgeMessageListenerTest {
 
 	@Test
 	public void testConstructor() throws Exception {
-		IntrabandBridgeMessageListener intraBandBridgeMessageListener =
+		IntrabandBridgeMessageListener intrabandBridgeMessageListener =
 			new IntrabandBridgeMessageListener(_mockRegistrationReference);
 
 		Assert.assertSame(
-			_mockIntraband, getIntraband(intraBandBridgeMessageListener));
+			_mockIntraband, getIntraband(intrabandBridgeMessageListener));
 		Assert.assertSame(
 			_mockRegistrationReference,
-			getRegistrationReference(intraBandBridgeMessageListener));
+			getRegistrationReference(intrabandBridgeMessageListener));
 	}
 
 	@Test
@@ -55,7 +55,7 @@ public class IntrabandBridgeMessageListenerTest {
 		PortalClassLoaderUtil.setClassLoader(
 			IntrabandBridgeMessageListenerTest.class.getClassLoader());
 
-		IntrabandBridgeMessageListener intraBandBridgeMessageListener =
+		IntrabandBridgeMessageListener intrabandBridgeMessageListener =
 			new IntrabandBridgeMessageListener(_mockRegistrationReference);
 
 		Message message = new Message();
@@ -64,7 +64,7 @@ public class IntrabandBridgeMessageListenerTest {
 
 		message.setPayload(payload);
 
-		intraBandBridgeMessageListener.receive(message);
+		intrabandBridgeMessageListener.receive(message);
 
 		Datagram datagram = _mockIntraband.getDatagram();
 
@@ -78,25 +78,25 @@ public class IntrabandBridgeMessageListenerTest {
 	}
 
 	private static MockIntraband getIntraband(
-			IntrabandBridgeMessageListener intraBandBridgeMessageListener)
+			IntrabandBridgeMessageListener intrabandBridgeMessageListener)
 		throws Exception {
 
-		Field intraBandField = ReflectionUtil.getDeclaredField(
-			IntrabandBridgeMessageListener.class, "_intraBand");
+		Field intrabandField = ReflectionUtil.getDeclaredField(
+			IntrabandBridgeMessageListener.class, "_intraband");
 
-		return (MockIntraband)intraBandField.get(
-			intraBandBridgeMessageListener);
+		return (MockIntraband)intrabandField.get(
+			intrabandBridgeMessageListener);
 	}
 
 	private static MockRegistrationReference getRegistrationReference(
-			IntrabandBridgeMessageListener intraBandBridgeMessageListener)
+			IntrabandBridgeMessageListener intrabandBridgeMessageListener)
 		throws Exception {
 
 		Field registrationReferenceField = ReflectionUtil.getDeclaredField(
 			IntrabandBridgeMessageListener.class, "_registrationReference");
 
 		return (MockRegistrationReference)registrationReferenceField.get(
-			intraBandBridgeMessageListener);
+			intrabandBridgeMessageListener);
 	}
 
 	private MockIntraband _mockIntraband = new MockIntraband();

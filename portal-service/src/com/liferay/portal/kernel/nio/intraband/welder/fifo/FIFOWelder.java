@@ -57,7 +57,7 @@ public class FIFOWelder extends BaseWelder {
 	}
 
 	@Override
-	protected RegistrationReference weldClient(Intraband intraBand)
+	protected RegistrationReference weldClient(Intraband intraband)
 		throws IOException {
 
 		// Write, then read
@@ -71,11 +71,11 @@ public class FIFOWelder extends BaseWelder {
 
 		readFileChannel = fileInputStream.getChannel();
 
-		return intraBand.registerChannel(readFileChannel, writeFileChannel);
+		return intraband.registerChannel(readFileChannel, writeFileChannel);
 	}
 
 	@Override
-	protected RegistrationReference weldServer(Intraband intraBand)
+	protected RegistrationReference weldServer(Intraband intraband)
 		throws IOException {
 
 		// Read, then write
@@ -90,7 +90,7 @@ public class FIFOWelder extends BaseWelder {
 
 		writeFileChannel = fileOutputStream.getChannel();
 
-		return intraBand.registerChannel(readFileChannel, writeFileChannel);
+		return intraband.registerChannel(readFileChannel, writeFileChannel);
 	}
 
 	protected static final AtomicLong idCounter = new AtomicLong(

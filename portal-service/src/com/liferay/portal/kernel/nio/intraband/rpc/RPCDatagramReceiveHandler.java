@@ -46,9 +46,9 @@ public class RPCDatagramReceiveHandler extends BaseAsyncDatagramReceiveHandler {
 
 		serializer.writeObject(result);
 
-		Intraband intraBand = registrationReference.getIntraband();
+		Intraband intraband = registrationReference.getIntraband();
 
-		intraBand.sendDatagram(
+		intraband.sendDatagram(
 			registrationReference,
 			Datagram.createResponseDatagram(
 				datagram, serializer.toByteBuffer()));

@@ -35,11 +35,11 @@ public class IntrabandFactoryUtil {
 	public static Intraband createIntraband() throws IOException {
 		if (Validator.isNotNull(_INTRABAND_IMPL)) {
 			try {
-				Class<? extends Intraband> intraBandClass =
+				Class<? extends Intraband> intrabandClass =
 					(Class<? extends Intraband>)Class.forName(_INTRABAND_IMPL);
 
 				Constructor<? extends Intraband> constructor =
-					intraBandClass.getConstructor(long.class);
+					intrabandClass.getConstructor(long.class);
 
 				return constructor.newInstance(_INTRABAND_TIMEOUT_DEFAULT);
 			}

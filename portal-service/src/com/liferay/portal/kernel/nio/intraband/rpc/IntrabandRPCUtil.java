@@ -36,7 +36,7 @@ public class IntrabandRPCUtil {
 			ProcessCallable<V> processCallable)
 		throws IntrabandRPCException {
 
-		Intraband intraBand = registrationReference.getIntraband();
+		Intraband intraband = registrationReference.getIntraband();
 
 		SystemDataType systemDataType = SystemDataType.RPC;
 
@@ -45,7 +45,7 @@ public class IntrabandRPCUtil {
 		serializer.writeObject(processCallable);
 
 		try {
-			Datagram responseDatagram = intraBand.sendSyncDatagram(
+			Datagram responseDatagram = intraband.sendSyncDatagram(
 				registrationReference,
 				Datagram.createRequestDatagram(
 					systemDataType.getValue(), serializer.toByteBuffer()));
@@ -65,7 +65,7 @@ public class IntrabandRPCUtil {
 			ProcessCallable<V> processCallable, long timeout, TimeUnit timeUnit)
 		throws IntrabandRPCException {
 
-		Intraband intraBand = registrationReference.getIntraband();
+		Intraband intraband = registrationReference.getIntraband();
 
 		SystemDataType systemDataType = SystemDataType.RPC;
 
@@ -74,7 +74,7 @@ public class IntrabandRPCUtil {
 		serializer.writeObject(processCallable);
 
 		try {
-			Datagram responseDatagram = intraBand.sendSyncDatagram(
+			Datagram responseDatagram = intraband.sendSyncDatagram(
 				registrationReference,
 				Datagram.createRequestDatagram(
 					systemDataType.getValue(), serializer.toByteBuffer()),

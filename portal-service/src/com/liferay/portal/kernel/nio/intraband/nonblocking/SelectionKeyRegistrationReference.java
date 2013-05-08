@@ -30,7 +30,7 @@ class SelectionKeyRegistrationReference implements RegistrationReference {
 	}
 
 	public Intraband getIntraband() {
-		return intraBand;
+		return intraband;
 	}
 
 	public boolean isValid() {
@@ -38,15 +38,15 @@ class SelectionKeyRegistrationReference implements RegistrationReference {
 	}
 
 	protected SelectionKeyRegistrationReference(
-		Intraband intraBand, SelectionKey readSelectionKey,
+		Intraband intraband, SelectionKey readSelectionKey,
 		SelectionKey writeSelectionKey) {
 
-		this.intraBand = intraBand;
+		this.intraband = intraband;
 		this.readSelectionKey = readSelectionKey;
 		this.writeSelectionKey = writeSelectionKey;
 	}
 
-	protected final Intraband intraBand;
+	protected final Intraband intraband;
 	protected final SelectionKey readSelectionKey;
 	protected final SelectionKey writeSelectionKey;
 

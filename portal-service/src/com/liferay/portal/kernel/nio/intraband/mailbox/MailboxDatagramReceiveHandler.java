@@ -38,9 +38,9 @@ public class MailboxDatagramReceiveHandler
 
 		BigEndianCodec.putLong(data, 0, receipt);
 
-		Intraband intraBand = registrationReference.getIntraband();
+		Intraband intraband = registrationReference.getIntraband();
 
-		intraBand.sendDatagram(
+		intraband.sendDatagram(
 			registrationReference,
 			Datagram.createResponseDatagram(datagram, ByteBuffer.wrap(data)));
 	}

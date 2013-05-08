@@ -70,7 +70,7 @@ public class SocketWelder extends BaseWelder {
 	}
 
 	@Override
-	protected RegistrationReference weldClient(Intraband intraBand)
+	protected RegistrationReference weldClient(Intraband intraband)
 		throws IOException {
 
 		socketChannel = SocketChannel.open();
@@ -81,11 +81,11 @@ public class SocketWelder extends BaseWelder {
 			new InetSocketAddress(
 				InetAddressUtil.getLoopbackInetAddress(), serverPort));
 
-		return intraBand.registerChannel(socketChannel);
+		return intraband.registerChannel(socketChannel);
 	}
 
 	@Override
-	protected RegistrationReference weldServer(Intraband intraBand)
+	protected RegistrationReference weldServer(Intraband intraband)
 		throws IOException {
 
 		socketChannel = serverSocketChannel.accept();
@@ -94,7 +94,7 @@ public class SocketWelder extends BaseWelder {
 
 		_configureSocket(socketChannel.socket());
 
-		return intraBand.registerChannel(socketChannel);
+		return intraband.registerChannel(socketChannel);
 	}
 
 	protected final int bufferSize;

@@ -42,66 +42,9 @@ headerNames.add(StringPool.BLANK);
 
 SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, permissionsSummaryURL, headerNames, "this-role-does-not-have-any-permissions");
 
-int[] scopes = new int[0];
+PermissionConverter permissionConverter = PermissionConverterUtil.getPermissionConverter();
 
-if (role.getType() == RoleConstants.TYPE_REGULAR) {
-	scopes = new int[] {ResourceConstants.SCOPE_COMPANY, ResourceConstants.SCOPE_GROUP};
-}
-else if ((role.getType() == RoleConstants.TYPE_ORGANIZATION) || (role.getType() == RoleConstants.TYPE_PROVIDER) || (role.getType() == RoleConstants.TYPE_SITE)) {
-	scopes = new int[] {ResourceConstants.SCOPE_GROUP_TEMPLATE};
-}
-
-List<Permission> permissions = null;
-
-permissions = new ArrayList<Permission>();
-
-List<ResourcePermission> resourcePermissions = ResourcePermissionLocalServiceUtil.getRoleResourcePermissions(role.getRoleId(), scopes, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-for (ResourcePermission resourcePermission : resourcePermissions) {
-	List<ResourceAction> resourceActions = ResourceActionLocalServiceUtil.getResourceActions(resourcePermission.getName());
-
-	for (ResourceAction resourceAction : resourceActions) {
-		if (ResourcePermissionLocalServiceUtil.hasActionId(resourcePermission, resourceAction)) {
-			Permission permission = new PermissionImpl();
-
-			permission.setName(resourcePermission.getName());
-			permission.setScope(resourcePermission.getScope());
-			permission.setPrimKey(resourcePermission.getPrimKey());
-			permission.setActionId(resourceAction.getActionId());
-
-			permissions.add(permission);
-		}
-	}
-}
-
-List<ResourceTypePermission> resourceTypePermissions = ResourceTypePermissionLocalServiceUtil.getRoleResourceTypePermissions(role.getRoleId());
-
-for (ResourceTypePermission resourceTypePermission : resourceTypePermissions) {
-	List<String> actionIds = ResourceBlockLocalServiceUtil.getActionIds(resourceTypePermission.getName(), resourceTypePermission.getActionIds());
-
-	for (String actionId : actionIds) {
-		Permission permission = new PermissionImpl();
-
-		permission.setName(resourceTypePermission.getName());
-
-		if (role.getType() == RoleConstants.TYPE_REGULAR) {
-			if (resourceTypePermission.isCompanyScope()) {
-				permission.setScope(ResourceConstants.SCOPE_COMPANY);
-			}
-			else {
-				permission.setScope(ResourceConstants.SCOPE_GROUP);
-			}
-		}
-		else {
-			permission.setScope(ResourceConstants.SCOPE_GROUP_TEMPLATE);
-		}
-
-		permission.setPrimKey(String.valueOf(resourceTypePermission.getGroupId()));
-		permission.setActionId(actionId);
-
-		permissions.add(permission);
-	}
-}
+List<Permission> permissions = permissionConverter.convertPermissions(role);
 
 List<PermissionDisplay> permissionDisplays = new ArrayList<PermissionDisplay>(permissions.size());
 

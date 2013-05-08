@@ -16,10 +16,12 @@ package com.liferay.portal.model.impl;
 
 import com.liferay.portal.model.Permission;
 
+import java.io.Serializable;
+
 /**
  * @author Brian Wing Shun Chan
  */
-public class PermissionImpl implements Permission {
+public class PermissionImpl implements Permission, Serializable {
 
 	public PermissionImpl() {
 	}

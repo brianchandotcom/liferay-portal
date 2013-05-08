@@ -44,23 +44,23 @@ public abstract class BaseWebDriverImpl
 		webDriver.get(browserURL);
 	}
 
-	public void assertAlert(String pattern) {
+	public void assertAlert(String pattern) throws Exception {
 		LiferaySeleniumHelper.assertAlert(this, pattern);
 	}
 
-	public void assertChecked(String locator) {
+	public void assertChecked(String locator) throws Exception {
 		LiferaySeleniumHelper.assertChecked(this, locator);
 	}
 
-	public void assertConfirmation(String pattern) {
+	public void assertConfirmation(String pattern) throws Exception {
 		LiferaySeleniumHelper.assertConfirmation(this, pattern);
 	}
 
-	public void assertElementNotPresent(String locator) {
+	public void assertElementNotPresent(String locator) throws Exception {
 		LiferaySeleniumHelper.assertElementNotPresent(this, locator);
 	}
 
-	public void assertElementPresent(String locator) {
+	public void assertElementPresent(String locator) throws Exception {
 		LiferaySeleniumHelper.assertElementPresent(this, locator);
 	}
 
@@ -72,7 +72,7 @@ public abstract class BaseWebDriverImpl
 		LiferaySeleniumHelper.assertNotAlert(this, pattern);
 	}
 
-	public void assertNotChecked(String locator) {
+	public void assertNotChecked(String locator) throws Exception {
 		LiferaySeleniumHelper.assertNotChecked(this, locator);
 	}
 
@@ -80,52 +80,62 @@ public abstract class BaseWebDriverImpl
 		LiferaySeleniumHelper.assertNotLocation(this, pattern);
 	}
 
-	public void assertNotPartialText(String locator, String pattern) {
+	public void assertNotPartialText(String locator, String pattern)
+		throws Exception {
+
 		LiferaySeleniumHelper.assertNotPartialText(this, locator, pattern);
 	}
 
-	public void assertNotSelectedLabel(String selectLocator, String pattern) {
+	public void assertNotSelectedLabel(String selectLocator, String pattern)
+		throws Exception {
+
 		LiferaySeleniumHelper.assertNotSelectedLabel(
 			this, selectLocator, pattern);
 	}
 
-	public void assertNotText(String locator, String pattern) {
+	public void assertNotText(String locator, String pattern) throws Exception {
 		LiferaySeleniumHelper.assertNotText(this, locator, pattern);
 	}
 
-	public void assertNotValue(String locator, String pattern) {
+	public void assertNotValue(String locator, String pattern)
+		throws Exception {
+
 		LiferaySeleniumHelper.assertNotValue(this, locator, pattern);
 	}
 
-	public void assertNotVisible(String locator) {
+	public void assertNotVisible(String locator) throws Exception {
 		LiferaySeleniumHelper.assertNotVisible(this, locator);
 	}
 
-	public void assertPartialText(String locator, String pattern) {
+	public void assertPartialText(String locator, String pattern)
+		throws Exception {
+
 		LiferaySeleniumHelper.assertPartialText(this, locator, pattern);
 	}
 
-	public void assertSelectedLabel(String selectLocator, String pattern) {
+	public void assertSelectedLabel(String selectLocator, String pattern)
+		throws Exception {
+
 		LiferaySeleniumHelper.assertSelectedLabel(this, selectLocator, pattern);
 	}
 
-	public void assertText(String locator, String pattern) {
+	public void assertText(String locator, String pattern) throws Exception {
 		LiferaySeleniumHelper.assertText(this, locator, pattern);
 	}
 
-	public void assertTextNotPresent(String pattern) {
+	public void assertTextNotPresent(String pattern) throws Exception {
 		LiferaySeleniumHelper.assertTextNotPresent(this, pattern);
 	}
 
-	public void assertTextPresent(String pattern) {
+	public void assertTextPresent(String pattern) throws Exception {
 		LiferaySeleniumHelper.assertTextPresent(this, pattern);
 	}
 
-	public void assertValue(String locator, String pattern) {
+	public void assertValue(String locator, String pattern) throws Exception {
 		LiferaySeleniumHelper.assertValue(this, locator, pattern);
 	}
 
-	public void assertVisible(String locator) {
+	public void assertVisible(String locator) throws Exception {
 		LiferaySeleniumHelper.assertVisible(this, locator);
 	}
 

@@ -21,47 +21,51 @@ import com.thoughtworks.selenium.Selenium;
  */
 public interface LiferaySelenium extends Selenium {
 
-	public void assertAlert(String pattern);
+	public void assertAlert(String pattern) throws Exception;
 
-	public void assertChecked(String pattern);
+	public void assertChecked(String pattern) throws Exception;
 
-	public void assertConfirmation(String pattern);
+	public void assertConfirmation(String pattern) throws Exception;
 
-	public void assertElementNotPresent(String locator);
+	public void assertElementNotPresent(String locator) throws Exception;
 
-	public void assertElementPresent(String locator);
+	public void assertElementPresent(String locator) throws Exception;
 
 	public void assertLocation(String pattern);
 
 	public void assertNotAlert(String pattern);
 
-	public void assertNotChecked(String locator);
+	public void assertNotChecked(String locator) throws Exception;
 
-	public void assertNotLocation(String pattern);
+	public void assertNotLocation(String pattern) throws Exception;
 
-	public void assertNotPartialText(String locator, String pattern);
+	public void assertNotPartialText(String locator, String pattern)
+		throws Exception;
 
-	public void assertNotSelectedLabel(String selectLocator, String pattern);
+	public void assertNotSelectedLabel(String selectLocator, String pattern)
+		throws Exception;
 
-	public void assertNotText(String locator, String pattern);
+	public void assertNotText(String locator, String pattern) throws Exception;
 
-	public void assertNotValue(String locator, String pattern);
+	public void assertNotValue(String locator, String pattern) throws Exception;
 
-	public void assertNotVisible(String locator);
+	public void assertNotVisible(String locator) throws Exception;
 
-	public void assertPartialText(String locator, String pattern);
+	public void assertPartialText(String locator, String pattern)
+		throws Exception;
 
-	public void assertSelectedLabel(String selectLocator, String pattern);
+	public void assertSelectedLabel(String selectLocator, String pattern)
+			throws Exception;
 
-	public void assertText(String locator, String pattern);
+	public void assertText(String locator, String pattern) throws Exception;
 
-	public void assertTextNotPresent(String pattern);
+	public void assertTextNotPresent(String pattern) throws Exception;
 
-	public void assertTextPresent(String pattern);
+	public void assertTextPresent(String pattern) throws Exception;
 
-	public void assertValue(String locator, String pattern);
+	public void assertValue(String locator, String pattern) throws Exception;
 
-	public void assertVisible(String locator);
+	public void assertVisible(String locator) throws Exception;
 
 	public void clickAndWait(String locator);
 

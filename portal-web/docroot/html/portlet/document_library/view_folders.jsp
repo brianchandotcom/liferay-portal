@@ -65,16 +65,22 @@ int entryEnd = ParamUtil.getInteger(request, "entryEnd", entriesPerPage);
 int folderStart = ParamUtil.getInteger(request, "folderStart");
 int folderEnd = ParamUtil.getInteger(request, "folderEnd", SearchContainer.DEFAULT_DELTA);
 
-List<Folder> folders = DLAppServiceUtil.getFolders(repositoryId, parentFolderId, false, folderStart, folderEnd);
-List<Folder> mountFolders = DLAppServiceUtil.getMountFolders(scopeGroupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, folderStart, folderEnd);
-
 int total = 0;
 
 if ((folderId != rootFolderId) || expandFolder) {
 	total = DLAppServiceUtil.getFoldersCount(repositoryId, parentFolderId, false);
 }
 
-request.setAttribute("view_folders.jsp-total", String.valueOf(total));
+PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+portletURL.setParameter("struts_action", "/document_library/view");
+
+SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, null, null, "cur2", folderEnd / (folderEnd - folderStart), (folderEnd - folderStart), portletURL, null, null);
+
+searchContainer.setTotal(total);
+
+List<Folder> folders = DLAppServiceUtil.getFolders(repositoryId, parentFolderId, false, searchContainer.getStart(), searchContainer.getEnd());
+List<Folder> mountFolders = DLAppServiceUtil.getMountFolders(scopeGroupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, searchContainer.getStart(), searchContainer.getEnd());
 
 String parentTitle = StringPool.BLANK;
 
@@ -427,6 +433,13 @@ else if (((folderId != rootFolderId) && (parentFolderId == 0)) || ((folderId == 
 		</c:choose>
 	</ul>
 
+	<%
+	request.setAttribute("view_folders.jsp-total", String.valueOf(total));
+
+	request.setAttribute("view_folders.jsp-folderEnd", searchContainer.getEnd());
+	request.setAttribute("view_folders.jsp-folderStart", searchContainer.getStart());
+	%>
+
 	<aui:script>
 		Liferay.fire(
 			'<portlet:namespace />pageLoaded',
@@ -434,8 +447,8 @@ else if (((folderId != rootFolderId) && (parentFolderId == 0)) || ((folderId == 
 				pagination: {
 					name: 'folderPagination',
 					state: {
-						page: <%= folderEnd / (folderEnd - folderStart) %>,
-						rowsPerPage: <%= (folderEnd - folderStart) %>,
+						page: <%= (total == 0) ? 0 : searchContainer.getCur() %>,
+						rowsPerPage: <%= searchContainer.getDelta() %>,
 						total: <%= total %>
 					}
 				}

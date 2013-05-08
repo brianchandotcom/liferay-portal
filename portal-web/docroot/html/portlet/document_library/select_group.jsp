@@ -29,10 +29,19 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 	PortletURL portletURL = renderResponse.createRenderURL();
 
 	portletURL.setParameter("struts_action", "/document_library/select_group");
+
+	List<Group> mySites = user.getMySites();
+
+	if (PortalUtil.isCompanyControlPanelPortlet(portletId, themeDisplay)) {
+		mySites = ListUtil.copy(mySites);
+
+		mySites.add(0, GroupLocalServiceUtil.getGroup(themeDisplay.getCompanyGroupId()));
+	}
 	%>
 
 	<liferay-ui:search-container
 		searchContainer="<%= new GroupSearch(renderRequest, portletURL) %>"
+		total="<%= mySites.size() %>"
 	>
 		<liferay-ui:search-form
 			page="/html/portlet/users_admin/group_search.jsp"
@@ -54,19 +63,8 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 
 		<div class="separator"><!-- --></div>
 
-		<%
-		List<Group> mySites = user.getMySites();
-
-		if (PortalUtil.isCompanyControlPanelPortlet(portletId, themeDisplay)) {
-			mySites = ListUtil.copy(mySites);
-
-			mySites.add(0, GroupLocalServiceUtil.getGroup(themeDisplay.getCompanyGroupId()));
-		}
-		%>
-
 		<liferay-ui:search-container-results
 			results="<%= mySites %>"
-			total="<%= mySites.size() %>"
 		/>
 
 		<liferay-ui:search-container-row

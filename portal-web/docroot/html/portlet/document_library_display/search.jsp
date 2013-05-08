@@ -148,12 +148,20 @@ int mountFoldersCount = DLAppServiceUtil.getMountFoldersCount(scopeGroupId, DLFo
 
 		Hits hits = DLAppServiceUtil.search(repositoryId, searchContext);
 
+		int total = hits.getLength();
+
+		if (searchContainer.recalculateCur(total)) {
+			searchContext.setEnd(searchContainer.getEnd());
+			searchContext.setStart(searchContainer.getStart());
+
+			hits = DLAppServiceUtil.search(repositoryId, searchContext);
+		}
+
 		PortletURL hitURL = renderResponse.createRenderURL();
 		%>
 
 		<liferay-ui:search-container-results
 			results="<%= SearchResultUtil.getSearchResults(hits, locale, hitURL) %>"
-			total="<%= hits.getLength() %>"
 		/>
 
 		<liferay-ui:search-container-row

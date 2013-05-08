@@ -115,7 +115,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -277,8 +276,8 @@ public class PortletImporter {
 		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
 
 		PortletDataContext portletDataContext = new PortletDataContextImpl(
-			layout.getCompanyId(), groupId, parameterMap, new HashSet<String>(),
-			userIdStrategy, zipReader);
+			layout.getCompanyId(), groupId, parameterMap, userIdStrategy,
+			zipReader);
 
 		portletDataContext.setPortetDataContextListener(
 			new PortletDataContextListenerImpl(portletDataContext));

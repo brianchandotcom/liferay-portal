@@ -17,9 +17,7 @@ package com.liferay.portlet.mobiledevicerules.service;
 import com.liferay.portal.service.ServiceWrapper;
 
 /**
- * <p>
- * This class is a wrapper for {@link MDRActionLocalService}.
- * </p>
+ * Provides a wrapper for {@link MDRActionLocalService}.
  *
  * @author    Edward C. Han
  * @see       MDRActionLocalService

@@ -17,9 +17,7 @@ package com.liferay.portlet.shopping.service;
 import com.liferay.portal.service.ServiceWrapper;
 
 /**
- * <p>
- * This class is a wrapper for {@link ShoppingOrderItemLocalService}.
- * </p>
+ * Provides a wrapper for {@link ShoppingOrderItemLocalService}.
  *
  * @author    Brian Wing Shun Chan
  * @see       ShoppingOrderItemLocalService

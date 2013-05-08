@@ -17,9 +17,7 @@ package com.liferay.portlet.ratings.service;
 import com.liferay.portal.service.ServiceWrapper;
 
 /**
- * <p>
- * This class is a wrapper for {@link RatingsEntryLocalService}.
- * </p>
+ * Provides a wrapper for {@link RatingsEntryLocalService}.
  *
  * @author    Brian Wing Shun Chan
  * @see       RatingsEntryLocalService

@@ -17,9 +17,7 @@ package com.liferay.counter.service;
 import com.liferay.portal.service.ServiceWrapper;
 
 /**
- * <p>
- * This class is a wrapper for {@link CounterLocalService}.
- * </p>
+ * Provides a wrapper for {@link CounterLocalService}.
  *
  * @author    Brian Wing Shun Chan
  * @see       CounterLocalService

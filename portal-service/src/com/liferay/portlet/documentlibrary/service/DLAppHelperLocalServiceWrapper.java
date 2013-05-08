@@ -17,9 +17,7 @@ package com.liferay.portlet.documentlibrary.service;
 import com.liferay.portal.service.ServiceWrapper;
 
 /**
- * <p>
- * This class is a wrapper for {@link DLAppHelperLocalService}.
- * </p>
+ * Provides a wrapper for {@link DLAppHelperLocalService}.
  *
  * @author    Brian Wing Shun Chan
  * @see       DLAppHelperLocalService

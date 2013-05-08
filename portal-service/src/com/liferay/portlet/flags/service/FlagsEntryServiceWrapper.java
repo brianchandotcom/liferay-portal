@@ -17,9 +17,7 @@ package com.liferay.portlet.flags.service;
 import com.liferay.portal.service.ServiceWrapper;
 
 /**
- * <p>
- * This class is a wrapper for {@link FlagsEntryService}.
- * </p>
+ * Provides a wrapper for {@link FlagsEntryService}.
  *
  * @author    Brian Wing Shun Chan
  * @see       FlagsEntryService

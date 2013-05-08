@@ -17,9 +17,7 @@ package com.liferay.portlet.documentlibrary.service;
 import com.liferay.portal.service.ServiceWrapper;
 
 /**
- * <p>
- * This class is a wrapper for {@link DLFileShortcutLocalService}.
- * </p>
+ * Provides a wrapper for {@link DLFileShortcutLocalService}.
  *
  * @author    Brian Wing Shun Chan
  * @see       DLFileShortcutLocalService

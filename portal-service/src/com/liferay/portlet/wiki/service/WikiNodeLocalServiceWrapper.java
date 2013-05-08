@@ -17,9 +17,7 @@ package com.liferay.portlet.wiki.service;
 import com.liferay.portal.service.ServiceWrapper;
 
 /**
- * <p>
- * This class is a wrapper for {@link WikiNodeLocalService}.
- * </p>
+ * Provides a wrapper for {@link WikiNodeLocalService}.
  *
  * @author    Brian Wing Shun Chan
  * @see       WikiNodeLocalService

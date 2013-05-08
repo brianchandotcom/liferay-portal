@@ -17,9 +17,7 @@ package com.liferay.portlet.dynamicdatalists.service;
 import com.liferay.portal.service.ServiceWrapper;
 
 /**
- * <p>
- * This class is a wrapper for {@link DDLRecordLocalService}.
- * </p>
+ * Provides a wrapper for {@link DDLRecordLocalService}.
  *
  * @author    Brian Wing Shun Chan
  * @see       DDLRecordLocalService

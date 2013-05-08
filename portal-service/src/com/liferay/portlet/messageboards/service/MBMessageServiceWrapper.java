@@ -17,9 +17,7 @@ package com.liferay.portlet.messageboards.service;
 import com.liferay.portal.service.ServiceWrapper;
 
 /**
- * <p>
- * This class is a wrapper for {@link MBMessageService}.
- * </p>
+ * Provides a wrapper for {@link MBMessageService}.
  *
  * @author    Brian Wing Shun Chan
  * @see       MBMessageService

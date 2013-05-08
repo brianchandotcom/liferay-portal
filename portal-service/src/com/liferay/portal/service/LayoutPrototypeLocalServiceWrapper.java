@@ -15,9 +15,7 @@
 package com.liferay.portal.service;
 
 /**
- * <p>
- * This class is a wrapper for {@link LayoutPrototypeLocalService}.
- * </p>
+ * Provides a wrapper for {@link LayoutPrototypeLocalService}.
  *
  * @author    Brian Wing Shun Chan
  * @see       LayoutPrototypeLocalService

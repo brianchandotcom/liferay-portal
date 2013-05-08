@@ -15,9 +15,7 @@
 package com.liferay.portal.service;
 
 /**
- * <p>
- * This class is a wrapper for {@link QuartzLocalService}.
- * </p>
+ * Provides a wrapper for {@link QuartzLocalService}.
  *
  * @author    Brian Wing Shun Chan
  * @see       QuartzLocalService

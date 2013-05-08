@@ -17,9 +17,7 @@ package com.liferay.portlet.documentlibrary.service;
 import com.liferay.portal.service.ServiceWrapper;
 
 /**
- * <p>
- * This class is a wrapper for {@link DLFileEntryService}.
- * </p>
+ * Provides a wrapper for {@link DLFileEntryService}.
  *
  * @author    Brian Wing Shun Chan
  * @see       DLFileEntryService

@@ -15,9 +15,7 @@
 package com.liferay.portal.service;
 
 /**
- * <p>
- * This class is a wrapper for {@link WebsiteLocalService}.
- * </p>
+ * Provides a wrapper for {@link WebsiteLocalService}.
  *
  * @author    Brian Wing Shun Chan
  * @see       WebsiteLocalService

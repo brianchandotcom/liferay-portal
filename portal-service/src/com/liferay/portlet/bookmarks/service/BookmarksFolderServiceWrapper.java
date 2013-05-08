@@ -17,9 +17,7 @@ package com.liferay.portlet.bookmarks.service;
 import com.liferay.portal.service.ServiceWrapper;
 
 /**
- * <p>
- * This class is a wrapper for {@link BookmarksFolderService}.
- * </p>
+ * Provides a wrapper for {@link BookmarksFolderService}.
  *
  * @author    Brian Wing Shun Chan
  * @see       BookmarksFolderService

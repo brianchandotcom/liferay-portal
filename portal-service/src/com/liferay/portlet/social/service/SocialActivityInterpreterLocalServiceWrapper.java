@@ -17,9 +17,7 @@ package com.liferay.portlet.social.service;
 import com.liferay.portal.service.ServiceWrapper;
 
 /**
- * <p>
- * This class is a wrapper for {@link SocialActivityInterpreterLocalService}.
- * </p>
+ * Provides a wrapper for {@link SocialActivityInterpreterLocalService}.
  *
  * @author    Brian Wing Shun Chan
  * @see       SocialActivityInterpreterLocalService

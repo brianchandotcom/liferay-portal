@@ -439,15 +439,18 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof Country)) {
+		if (obj == null) {
 			return false;
 		}
 
-		Country country = (Country)obj;
+		Country country = null;
+
+		try {
+			country = (Country)obj;
+		}
+		catch (ClassCastException cce) {
+			return false;
+		}
 
 		long primaryKey = country.getPrimaryKey();
 

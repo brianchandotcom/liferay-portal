@@ -284,15 +284,18 @@ public class UserGroupGroupRoleModelImpl extends BaseModelImpl<UserGroupGroupRol
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof UserGroupGroupRole)) {
+		if (obj == null) {
 			return false;
 		}
 
-		UserGroupGroupRole userGroupGroupRole = (UserGroupGroupRole)obj;
+		UserGroupGroupRole userGroupGroupRole = null;
+
+		try {
+			userGroupGroupRole = (UserGroupGroupRole)obj;
+		}
+		catch (ClassCastException cce) {
+			return false;
+		}
 
 		UserGroupGroupRolePK primaryKey = userGroupGroupRole.getPrimaryKey();
 

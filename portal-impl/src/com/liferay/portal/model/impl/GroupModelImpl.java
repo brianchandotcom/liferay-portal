@@ -759,15 +759,18 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof Group)) {
+		if (obj == null) {
 			return false;
 		}
 
-		Group group = (Group)obj;
+		Group group = null;
+
+		try {
+			group = (Group)obj;
+		}
+		catch (ClassCastException cce) {
+			return false;
+		}
 
 		long primaryKey = group.getPrimaryKey();
 

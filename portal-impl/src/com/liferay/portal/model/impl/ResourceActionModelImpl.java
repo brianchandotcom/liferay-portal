@@ -282,15 +282,18 @@ public class ResourceActionModelImpl extends BaseModelImpl<ResourceAction>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof ResourceAction)) {
+		if (obj == null) {
 			return false;
 		}
 
-		ResourceAction resourceAction = (ResourceAction)obj;
+		ResourceAction resourceAction = null;
+
+		try {
+			resourceAction = (ResourceAction)obj;
+		}
+		catch (ClassCastException cce) {
+			return false;
+		}
 
 		long primaryKey = resourceAction.getPrimaryKey();
 

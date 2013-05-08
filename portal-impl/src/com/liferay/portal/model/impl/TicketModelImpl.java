@@ -371,15 +371,18 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof Ticket)) {
+		if (obj == null) {
 			return false;
 		}
 
-		Ticket ticket = (Ticket)obj;
+		Ticket ticket = null;
+
+		try {
+			ticket = (Ticket)obj;
+		}
+		catch (ClassCastException cce) {
+			return false;
+		}
 
 		long primaryKey = ticket.getPrimaryKey();
 

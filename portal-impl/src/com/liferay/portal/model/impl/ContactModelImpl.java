@@ -1024,15 +1024,18 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof Contact)) {
+		if (obj == null) {
 			return false;
 		}
 
-		Contact contact = (Contact)obj;
+		Contact contact = null;
+
+		try {
+			contact = (Contact)obj;
+		}
+		catch (ClassCastException cce) {
+			return false;
+		}
 
 		long primaryKey = contact.getPrimaryKey();
 

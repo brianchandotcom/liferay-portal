@@ -115,15 +115,18 @@ public class UserGroupGroupRolePK implements Comparable<UserGroupGroupRolePK>,
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof UserGroupGroupRolePK)) {
+		if (obj == null) {
 			return false;
 		}
 
-		UserGroupGroupRolePK pk = (UserGroupGroupRolePK)obj;
+		UserGroupGroupRolePK pk = null;
+
+		try {
+			pk = (UserGroupGroupRolePK)obj;
+		}
+		catch (ClassCastException cce) {
+			return false;
+		}
 
 		if ((userGroupId == pk.userGroupId) && (groupId == pk.groupId) &&
 				(roleId == pk.roleId)) {

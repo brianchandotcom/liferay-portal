@@ -326,15 +326,18 @@ public class ResourceTypePermissionModelImpl extends BaseModelImpl<ResourceTypeP
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof ResourceTypePermission)) {
+		if (obj == null) {
 			return false;
 		}
 
-		ResourceTypePermission resourceTypePermission = (ResourceTypePermission)obj;
+		ResourceTypePermission resourceTypePermission = null;
+
+		try {
+			resourceTypePermission = (ResourceTypePermission)obj;
+		}
+		catch (ClassCastException cce) {
+			return false;
+		}
 
 		long primaryKey = resourceTypePermission.getPrimaryKey();
 

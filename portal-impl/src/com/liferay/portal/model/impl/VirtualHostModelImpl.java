@@ -278,15 +278,18 @@ public class VirtualHostModelImpl extends BaseModelImpl<VirtualHost>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof VirtualHost)) {
+		if (obj == null) {
 			return false;
 		}
 
-		VirtualHost virtualHost = (VirtualHost)obj;
+		VirtualHost virtualHost = null;
+
+		try {
+			virtualHost = (VirtualHost)obj;
+		}
+		catch (ClassCastException cce) {
+			return false;
+		}
 
 		long primaryKey = virtualHost.getPrimaryKey();
 

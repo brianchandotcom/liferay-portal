@@ -503,15 +503,18 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof WorkflowDefinitionLink)) {
+		if (obj == null) {
 			return false;
 		}
 
-		WorkflowDefinitionLink workflowDefinitionLink = (WorkflowDefinitionLink)obj;
+		WorkflowDefinitionLink workflowDefinitionLink = null;
+
+		try {
+			workflowDefinitionLink = (WorkflowDefinitionLink)obj;
+		}
+		catch (ClassCastException cce) {
+			return false;
+		}
 
 		long primaryKey = workflowDefinitionLink.getPrimaryKey();
 

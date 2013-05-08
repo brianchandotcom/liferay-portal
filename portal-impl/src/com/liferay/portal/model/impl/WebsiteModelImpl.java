@@ -530,15 +530,18 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof Website)) {
+		if (obj == null) {
 			return false;
 		}
 
-		Website website = (Website)obj;
+		Website website = null;
+
+		try {
+			website = (Website)obj;
+		}
+		catch (ClassCastException cce) {
+			return false;
+		}
 
 		long primaryKey = website.getPrimaryKey();
 

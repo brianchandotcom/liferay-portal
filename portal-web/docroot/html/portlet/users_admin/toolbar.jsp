@@ -72,8 +72,6 @@ String usersListView = ParamUtil.get(request, "usersListView", UserConstants.LIS
 					<aui:nav-item href="<%= addUserURL %>" iconClass="icon-user" label="user" />
 				</c:if>
 
-				<aui:nav-item cssClass="divider" />
-
 				<aui:nav-item cssClass="nav-header" href="" label="organization" />
 
 				<c:if test="<%= hasAddOrganizationPermission %>">

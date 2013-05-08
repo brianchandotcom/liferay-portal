@@ -112,18 +112,18 @@ public class Transformer {
 
 		long companyId = 0;
 		long companyGroupId = 0;
-		long groupId = 0;
+		long scopeGroupId = 0;
 
 		if (themeDisplay != null) {
 			companyId = themeDisplay.getCompanyId();
 			companyGroupId = themeDisplay.getCompanyGroupId();
-			groupId = themeDisplay.getScopeGroupId();
+			scopeGroupId = themeDisplay.getScopeGroupId();
 		}
 
 		String templateId = String.valueOf(contextObjects.get("template_id"));
 
 		templateId = getTemplateId(
-			templateId, companyId, companyGroupId, groupId);
+			templateId, companyId, companyGroupId, scopeGroupId);
 
 		Template template = getTemplate(templateId, script, langType);
 
@@ -139,9 +139,9 @@ public class Transformer {
 			template.put("company", getCompany(themeDisplay, companyId));
 			template.put("companyId", companyId);
 			template.put("device", getDevice(themeDisplay));
-			template.put("groupId", groupId);
+			template.put("scopeGroupId", scopeGroupId);
 
-			String templatesPath = getTemplatesPath(companyId, groupId);
+			String templatesPath = getTemplatesPath(companyId, scopeGroupId);
 
 			template.put("journalTemplatesPath", templatesPath);
 			template.put(
@@ -152,6 +152,10 @@ public class Transformer {
 				PwdGenerator.getPassword(PwdGenerator.KEY3, 4) +
 					StringPool.UNDERLINE);
 			template.put("templatesPath", templatesPath);
+
+			// Deprecated variables
+
+			template.put("groupId", scopeGroupId);
 
 			mergeTemplate(template, unsyncStringWriter);
 		}
@@ -256,24 +260,29 @@ public class Transformer {
 		else {
 			long companyId = 0;
 			long companyGroupId = 0;
-			long groupId = 0;
+			long articleGroupId = 0;
+			long scopeGroupId = 0;
+			long siteGroupId = 0;
+
+			if (tokens != null) {
+				companyId = GetterUtil.getLong(tokens.get("company_id"));
+				companyGroupId = GetterUtil.getLong(
+					tokens.get("company_group_id"));
+				articleGroupId = GetterUtil.getLong(
+					tokens.get("article_group_id"));
+			}
 
 			if (themeDisplay != null) {
 				companyId = themeDisplay.getCompanyId();
 				companyGroupId = themeDisplay.getCompanyGroupId();
-				groupId = themeDisplay.getScopeGroupId();
-			}
-			else if (tokens != null) {
-				companyId = GetterUtil.getLong(tokens.get("company_id"));
-				companyGroupId = GetterUtil.getLong(
-					tokens.get("company_group_id"));
-				groupId = GetterUtil.getLong(tokens.get("group_id"));
+				scopeGroupId = themeDisplay.getScopeGroupId();
+				siteGroupId = themeDisplay.getSiteGroupId();
 			}
 
 			String templateId = tokens.get("template_id");
 
 			templateId = getTemplateId(
-				templateId, companyId, companyGroupId, groupId);
+				templateId, companyId, companyGroupId, articleGroupId);
 
 			Template template = getTemplate(
 				templateId, tokens, languageId, xml, script, langType);
@@ -303,12 +312,15 @@ public class Transformer {
 					template.put("xmlRequest", requestElement.asXML());
 				}
 
+				template.put("articleGroupId", articleGroupId);
 				template.put("company", getCompany(themeDisplay, companyId));
 				template.put("companyId", companyId);
 				template.put("device", getDevice(themeDisplay));
-				template.put("groupId", groupId);
+				template.put("scopeGroupId", scopeGroupId);
+				template.put("siteGroupId", siteGroupId);
 
-				String templatesPath = getTemplatesPath(companyId, groupId);
+				String templatesPath = getTemplatesPath(
+					companyId, articleGroupId);
 
 				template.put("journalTemplatesPath", templatesPath);
 
@@ -325,6 +337,10 @@ public class Transformer {
 						StringPool.UNDERLINE);
 				template.put("templatesPath", templatesPath);
 				template.put("viewMode", viewMode);
+
+				// Deprecated variables
+
+				template.put("groupId", articleGroupId);
 
 				mergeTemplate(template, unsyncStringWriter);
 			}

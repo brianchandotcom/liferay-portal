@@ -251,6 +251,10 @@ public interface ResourceBlockPermissionLocalService extends BaseLocalService,
 	public int getResourceBlockPermissionsCount(long resourceBlockId,
 		long roleId) throws com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.ResourceBlockPermission> getRoleResourceBlockPermissions(
+		long roleId) throws com.liferay.portal.kernel.exception.SystemException;
+
 	public void updateResourceBlockPermission(long resourceBlockId,
 		long roleId, long actionIdsLong, int operator)
 		throws com.liferay.portal.kernel.exception.SystemException;

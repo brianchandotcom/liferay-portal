@@ -17,9 +17,7 @@ package com.liferay.portlet.polls.service;
 import com.liferay.portal.service.ServiceWrapper;
 
 /**
- * <p>
- * This class is a wrapper for {@link PollsChoiceService}.
- * </p>
+ * Provides a wrapper for {@link PollsChoiceService}.
  *
  * @author    Brian Wing Shun Chan
  * @see       PollsChoiceService

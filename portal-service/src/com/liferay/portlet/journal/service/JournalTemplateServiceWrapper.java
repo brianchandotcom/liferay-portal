@@ -17,9 +17,7 @@ package com.liferay.portlet.journal.service;
 import com.liferay.portal.service.ServiceWrapper;
 
 /**
- * <p>
- * This class is a wrapper for {@link JournalTemplateService}.
- * </p>
+ * Provides a wrapper for {@link JournalTemplateService}.
  *
  * @author    Brian Wing Shun Chan
  * @see       JournalTemplateService

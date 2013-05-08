@@ -17,9 +17,7 @@ package com.liferay.portlet.asset.service;
 import com.liferay.portal.service.ServiceWrapper;
 
 /**
- * <p>
- * This class is a wrapper for {@link AssetLinkLocalService}.
- * </p>
+ * Provides a wrapper for {@link AssetLinkLocalService}.
  *
  * @author    Brian Wing Shun Chan
  * @see       AssetLinkLocalService

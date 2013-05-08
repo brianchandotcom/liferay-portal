@@ -17,9 +17,7 @@ package com.liferay.portlet.wiki.service;
 import com.liferay.portal.service.ServiceWrapper;
 
 /**
- * <p>
- * This class is a wrapper for {@link WikiPageService}.
- * </p>
+ * Provides a wrapper for {@link WikiPageService}.
  *
  * @author    Brian Wing Shun Chan
  * @see       WikiPageService

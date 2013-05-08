@@ -17,9 +17,7 @@ package com.liferay.portlet.blogs.service;
 import com.liferay.portal.service.ServiceWrapper;
 
 /**
- * <p>
- * This class is a wrapper for {@link BlogsStatsUserLocalService}.
- * </p>
+ * Provides a wrapper for {@link BlogsStatsUserLocalService}.
  *
  * @author    Brian Wing Shun Chan
  * @see       BlogsStatsUserLocalService

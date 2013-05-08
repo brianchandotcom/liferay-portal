@@ -17,9 +17,7 @@ package com.liferay.portlet.calendar.service;
 import com.liferay.portal.service.ServiceWrapper;
 
 /**
- * <p>
- * This class is a wrapper for {@link CalEventLocalService}.
- * </p>
+ * Provides a wrapper for {@link CalEventLocalService}.
  *
  * @author    Brian Wing Shun Chan
  * @see       CalEventLocalService

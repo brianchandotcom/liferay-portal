@@ -3,9 +3,7 @@ package ${packagePath}.service;
 import com.liferay.portal.service.ServiceWrapper;
 
 /**
- * <p>
- * This class is a wrapper for {@link ${entity.name}${sessionTypeName}Service}.
- * </p>
+ * Provides a wrapper for {@link ${entity.name}${sessionTypeName}Service}.
  *
  * @author    ${author}
  * @see       ${entity.name}${sessionTypeName}Service

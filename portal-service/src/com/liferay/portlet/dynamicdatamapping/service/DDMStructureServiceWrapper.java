@@ -17,9 +17,7 @@ package com.liferay.portlet.dynamicdatamapping.service;
 import com.liferay.portal.service.ServiceWrapper;
 
 /**
- * <p>
- * This class is a wrapper for {@link DDMStructureService}.
- * </p>
+ * Provides a wrapper for {@link DDMStructureService}.
  *
  * @author    Brian Wing Shun Chan
  * @see       DDMStructureService

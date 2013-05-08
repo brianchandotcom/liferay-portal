@@ -17,9 +17,7 @@ package com.liferay.portlet.blogs.service;
 import com.liferay.portal.service.ServiceWrapper;
 
 /**
- * <p>
- * This class is a wrapper for {@link BlogsEntryService}.
- * </p>
+ * Provides a wrapper for {@link BlogsEntryService}.
  *
  * @author    Brian Wing Shun Chan
  * @see       BlogsEntryService

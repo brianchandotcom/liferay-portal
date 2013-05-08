@@ -17,9 +17,7 @@ package com.liferay.portlet.trash.service;
 import com.liferay.portal.service.ServiceWrapper;
 
 /**
- * <p>
- * This class is a wrapper for {@link TrashEntryService}.
- * </p>
+ * Provides a wrapper for {@link TrashEntryService}.
  *
  * @author    Brian Wing Shun Chan
  * @see       TrashEntryService

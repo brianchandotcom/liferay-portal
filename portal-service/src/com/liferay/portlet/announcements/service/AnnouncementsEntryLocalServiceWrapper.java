@@ -17,9 +17,7 @@ package com.liferay.portlet.announcements.service;
 import com.liferay.portal.service.ServiceWrapper;
 
 /**
- * <p>
- * This class is a wrapper for {@link AnnouncementsEntryLocalService}.
- * </p>
+ * Provides a wrapper for {@link AnnouncementsEntryLocalService}.
  *
  * @author    Brian Wing Shun Chan
  * @see       AnnouncementsEntryLocalService

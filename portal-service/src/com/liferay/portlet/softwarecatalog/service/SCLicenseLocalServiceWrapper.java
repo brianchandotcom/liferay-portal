@@ -17,9 +17,7 @@ package com.liferay.portlet.softwarecatalog.service;
 import com.liferay.portal.service.ServiceWrapper;
 
 /**
- * <p>
- * This class is a wrapper for {@link SCLicenseLocalService}.
- * </p>
+ * Provides a wrapper for {@link SCLicenseLocalService}.
  *
  * @author    Brian Wing Shun Chan
  * @see       SCLicenseLocalService

@@ -17,9 +17,7 @@ package com.liferay.portlet.expando.service;
 import com.liferay.portal.service.ServiceWrapper;
 
 /**
- * <p>
- * This class is a wrapper for {@link ExpandoColumnLocalService}.
- * </p>
+ * Provides a wrapper for {@link ExpandoColumnLocalService}.
  *
  * @author    Brian Wing Shun Chan
  * @see       ExpandoColumnLocalService

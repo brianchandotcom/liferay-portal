@@ -1023,6 +1023,8 @@ public class WebDriverToSeleniumBridge
 			select.selectByIndex(index);
 		}
 		else {
+			keyPress(selectLocator, "\\36");
+
 			if (!label.equals(getSelectedLabel(selectLocator))) {
 				webElement.sendKeys(label);
 

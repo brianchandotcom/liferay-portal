@@ -1,0 +1,164 @@
+<html>
+<head>
+<title>CPDynamicdatalistsDatadefinitionsAdd</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPDynamicdatalistsDatadefinitionsAdd</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td>//iframe[contains(@src,'dynamicdatalists')]</td>
+	<td>CPDynamicdatalistsDatadefinitionsAdd</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAME_FIELD</td>
+	<td>//input[@id='_166_name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DESCRIPTION_FIELD</td>
+	<td>//textarea[@id='_166_description']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CANCEL_BUTTON</td>
+	<td>//button[contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PARENT_DATA_DEFINTION-->
+<tr>
+	<td>PARENT_DATA_DEFINTION_SELECT_BUTTON</td>
+	<td>//button[contains(.,'Select')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PARENT_DATA_DEFINTION_REMOVE_BUTTON</td>
+	<td>//button[@id='_166_removeParentStructureButton']</td>
+	<td></td>
+</tr>
+<!---->
+<!--FIELDS-->
+<tr>
+	<td>FIELDS_BOOLEAN</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='Boolean']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELDS_DATE</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='Date']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELDS_DECIMAL</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='Decimal']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELDS_DOCUMENTS_AND_MEDIA</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='Documents and Media']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELDS_FILE_UPLOAD</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='File Upload']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELDS_HTML</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='HTML']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELDS_INTEGER</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='Integer']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELDS_LINK_TO_PAGE</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='Link to Page']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELDS_NUMBER</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='Number']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELDS_RADIO</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='Radio']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELDS_SELECT</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='Select']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELDS_TEXT</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='Text']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELDS_TEXT_BOX</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='Text Box']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SETTINGS-->
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FORM-->
+<tr>
+	<td>FORM_BUILDER</td>
+	<td>//div[@class='diagram-builder-drop-container']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_FIELD_1</td>
+	<td>xpath=(//div[contains(@class,'component form-builder-field')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_FIELD_SETTINGS_ICON_1</td>
+	<td>xpath=(//button/i[@class='icon-wrench'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_FIELD_DUPLICATE_ICON_1</td>
+	<td>xpath=(//button/i[@class='icon-plus'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_FIELD_DELETE_ICON</td>
+	<td>xpath=(//button/i[@class='icon-trash'])[1]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

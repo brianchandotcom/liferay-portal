@@ -135,6 +135,8 @@ public interface PortletDataContext extends Serializable {
 		ClassedModel classedModel, String className, String binPath,
 		boolean missing);
 
+	public boolean addScopedPrimaryKey(Class<?> clazz, String primaryKey);
+
 	public void addZipEntry(String path, byte[] bytes) throws SystemException;
 
 	public void addZipEntry(String path, InputStream is) throws SystemException;
@@ -145,6 +147,8 @@ public interface PortletDataContext extends Serializable {
 
 	public void addZipEntry(String name, StringBuilder sb)
 		throws SystemException;
+
+	public void clearScopedPrimaryKeys();
 
 	public ServiceContext createServiceContext(
 		Element element, ClassedModel classedModel, String namespace);
@@ -258,6 +262,8 @@ public interface PortletDataContext extends Serializable {
 	 */
 	public String getRootPath();
 
+	public Set<String> getScopedPrimaryKeys();
+
 	public long getScopeGroupId();
 
 	public String getScopeLayoutUuid();
@@ -320,6 +326,8 @@ public interface PortletDataContext extends Serializable {
 
 	public boolean hasPrimaryKey(Class<?> clazz, String primaryKey);
 
+	public boolean hasScopedPrimaryKey(Class<?> clazz, String primaryKey);
+
 	public void importClassedModel(
 			ClassedModel classedModel, ClassedModel newClassedModel,
 			String namespace)
@@ -346,6 +354,10 @@ public interface PortletDataContext extends Serializable {
 	public boolean isDataStrategyMirror();
 
 	public boolean isDataStrategyMirrorWithOverwriting();
+
+	public boolean isPathExportedInScope(String path);
+
+	public boolean isPathNotExportedInScope(String path);
 
 	public boolean isPathNotProcessed(String path);
 

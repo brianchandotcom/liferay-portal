@@ -67,8 +67,15 @@ public class ServletAggregateContext implements AggregateContext {
 		try {
 			String stackPath = _generatePathFromStack();
 
-			URL resourceURL = _servletContext.getResource(
-				stackPath.concat(path));
+			URL resourceURL = null;
+
+			if (Validator.isUrl(path)) {
+				resourceURL = new URL(path);
+			}
+			else {
+				resourceURL =
+					_servletContext.getResource(stackPath.concat(path));
+			}
 
 			if (resourceURL == null) {
 				return null;

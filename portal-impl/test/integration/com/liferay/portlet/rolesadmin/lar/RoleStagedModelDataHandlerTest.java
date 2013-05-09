@@ -20,6 +20,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
@@ -67,6 +68,24 @@ public class RoleStagedModelDataHandlerTest
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
 		return Role.class;
+	}
+
+	@Override
+	protected void initExport() throws Exception {
+		super.initExport();
+
+		Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
+			portletDataContext.getCompanyId());
+
+		rootElement.addAttribute(
+			"company-group-id", String.valueOf(companyGroup.getGroupId()));
+
+		Group userSiteGroup = GroupLocalServiceUtil.getUserPersonalSiteGroup(
+			portletDataContext.getCompanyId());
+
+		rootElement.addAttribute(
+			"user-personal-site-group-id",
+			String.valueOf(userSiteGroup.getGroupId()));
 	}
 
 }

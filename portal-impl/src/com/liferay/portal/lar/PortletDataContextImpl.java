@@ -1520,10 +1520,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 		_importDataRootElement = importDataRootElement;
 	}
 
-	public void setManifestSummary(ManifestSummary manifestSummary) {
-		_manifestSummary = manifestSummary;
-	}
-
 	public void setOldPlid(long oldPlid) {
 		_oldPlid = oldPlid;
 	}

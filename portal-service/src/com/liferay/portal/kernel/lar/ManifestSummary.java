@@ -14,15 +14,18 @@
 
 package com.liferay.portal.kernel.lar;
 
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.ClassedModel;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * @author Mate Thurzo
  */
-public class ManifestSummary {
+public class ManifestSummary implements Serializable {
 
 	public void addModelCount(
 		Class<? extends ClassedModel> clazz, long modelCount) {
@@ -64,6 +67,17 @@ public class ManifestSummary {
 		long modelCounter = _modelCounters.get(modelName);
 
 		_modelCounters.put(modelName, modelCounter + 1);
+	}
+
+	@Override
+	public String toString() {
+		StringBundler sb = new StringBundler(3);
+
+		sb.append("{_modelCounters=");
+		sb.append(MapUtil.toString(_modelCounters));
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	private Map<String, Long> _modelCounters = new HashMap<String, Long>();

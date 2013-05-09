@@ -165,7 +165,7 @@ public interface PortletDataHandler {
 	 */
 	public boolean isPublishToLiveByDefault();
 
-	public void prepareData(PortletDataContext portletDataContext)
+	public void prepareSummary(PortletDataContext portletDataContext)
 		throws PortletDataException;
 
 }

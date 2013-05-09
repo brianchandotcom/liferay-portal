@@ -45,7 +45,8 @@ public abstract class BaseActionableDynamicQuery
 		addDefaultCriteria(dynamicQuery);
 		addCriteria(dynamicQuery);
 
-		List<Object> objects = dynamicQuery(dynamicQuery);
+		List<Object> objects = (List<Object>)executeDynamicQuery(
+			dynamicQuery, _dynamicQueryMethod);
 
 		for (Object object : objects) {
 			performAction(object);
@@ -71,7 +72,8 @@ public abstract class BaseActionableDynamicQuery
 		addDefaultCriteria(dynamicQuery);
 		addCriteria(dynamicQuery);
 
-		List<Object[]> results = dynamicQuery(dynamicQuery);
+		List<Object[]> results = (List<Object[]>) executeDynamicQuery(
+			dynamicQuery, _dynamicQueryMethod);
 
 		Object[] minAndMaxPrimaryKeys = results.get(0);
 
@@ -102,7 +104,8 @@ public abstract class BaseActionableDynamicQuery
 		addDefaultCriteria(dynamicQuery);
 		addCriteria(dynamicQuery);
 
-		return dynamicQueryCount(dynamicQuery);
+		return (Long)executeDynamicQuery(
+			dynamicQuery, _dynamicQueryCountMethod);
 	}
 
 	public void setBaseLocalService(BaseLocalService baseLocalService)
@@ -115,6 +118,7 @@ public abstract class BaseActionableDynamicQuery
 		try {
 			_dynamicQueryMethod = clazz.getMethod(
 				"dynamicQuery", DynamicQuery.class);
+
 			_dynamicQueryCountMethod = clazz.getMethod(
 				"dynamicQueryCount", DynamicQuery.class);
 		}
@@ -165,37 +169,12 @@ public abstract class BaseActionableDynamicQuery
 	}
 
 	@SuppressWarnings("rawtypes")
-	protected List dynamicQuery(DynamicQuery dynamicQuery)
+	protected Object executeDynamicQuery(
+			DynamicQuery dynamicQuery, Method dynamicQueryMethod)
 		throws PortalException, SystemException {
 
 		try {
-			return (List)_dynamicQueryMethod.invoke(
-				_baseLocalService, dynamicQuery);
-		}
-		catch (InvocationTargetException ite) {
-			Throwable throwable = ite.getCause();
-
-			if (throwable instanceof PortalException) {
-				throw (PortalException)throwable;
-			}
-			else if (throwable instanceof SystemException) {
-				throw (SystemException)throwable;
-			}
-
-			throw new SystemException(ite);
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-	}
-
-	@SuppressWarnings("rawtypes")
-	protected long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws PortalException, SystemException {
-
-		try {
-			return (Long)_dynamicQueryCountMethod.invoke(
-				_baseLocalService, dynamicQuery);
+			return dynamicQueryMethod.invoke(_baseLocalService, dynamicQuery);
 		}
 		catch (InvocationTargetException ite) {
 			Throwable throwable = ite.getCause();

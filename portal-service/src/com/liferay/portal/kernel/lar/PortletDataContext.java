@@ -361,8 +361,6 @@ public interface PortletDataContext extends Serializable {
 
 	public void setImportDataRootElement(Element importDataRootElement);
 
-	public void setManifestSummary(ManifestSummary manifestSummary);
-
 	public void setOldPlid(long oldPlid);
 
 	public void setPlid(long plid);

@@ -146,9 +146,9 @@ public class RowChecker {
 			sb.append("\" type=\"checkbox\" ");
 			sb.append("onClick=\"Liferay.Util.checkAll(");
 			sb.append("AUI().one(this).ancestor('");
-			sb.append("table.taglib-search-iterator'), ");
+			sb.append(".table'), ");
 			sb.append(checkBoxRowIds);
-			sb.append(", this, '.results-row'");
+			sb.append(", this, 'tr:not(.lfr-template)'");
 			sb.append(");\">");
 
 			return sb.toString();
@@ -194,13 +194,13 @@ public class RowChecker {
 		if (Validator.isNotNull(_allRowIds)) {
 			sb.append("onClick=\"Liferay.Util.checkAllBox(");
 			sb.append("AUI().one(this).ancestor('");
-			sb.append("table.taglib-search-iterator'), ");
+			sb.append(".table'), ");
 			sb.append(checkBoxRowIds);
 			sb.append(", ");
 			sb.append(checkBoxAllRowIds);
 			sb.append(");");
-			sb.append("AUI().one(this).ancestor('.results-row').toggleClass('");
-			sb.append("selected');");
+			sb.append("AUI().one(this).ancestor('tr:not(.lfr-template)').toggleClass('");
+			sb.append("info');");
 
 			if (Validator.isNotNull(checkBoxPostOnClick)) {
 				sb.append(checkBoxPostOnClick);

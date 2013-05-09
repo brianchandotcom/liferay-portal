@@ -943,7 +943,7 @@
 			form.all(selector).set('checked', A.one(allBox).get('checked'));
 
 			if (selectClassName) {
-				form.all(selectClassName).toggleClass('selected', A.one(allBox).get('checked'));
+				form.all(selectClassName).toggleClass('info', A.one(allBox).get('checked'));
 			}
 		},
 		['aui-base']

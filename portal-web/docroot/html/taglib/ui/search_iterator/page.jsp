@@ -237,8 +237,10 @@ int sortColumnIndex = -1;
 
 			List entries = row.getEntries();
 
+			boolean rowIsChecked = false;
+
 			if (rowChecker != null) {
-				boolean rowIsChecked = rowChecker.isChecked(row.getObject());
+				rowIsChecked = rowChecker.isChecked(row.getObject());
 				boolean rowIsDisabled = rowChecker.isDisabled(row.getObject());
 
 				if (!rowIsChecked) {
@@ -261,7 +263,7 @@ int sortColumnIndex = -1;
 			Map<String, Object> data = row.getData();
 		%>
 
-			<tr <%= AUIUtil.buildData(data) %>>
+			<tr class="<%= rowIsChecked ? "info" : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %>>
 
 			<%
 			for (int j = 0; j < entries.size(); j++) {

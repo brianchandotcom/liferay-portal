@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -274,8 +273,7 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 			jsonObject.put("deleted", Boolean.TRUE);
 		}
 		catch (Exception e) {
-			String errorMessage = LanguageUtil.get(
-				themeDisplay.getLocale(),
+			String errorMessage = themeDisplay.translate(
 				"an-unexpected-error-occurred-while-deleting-the-file");
 
 			jsonObject.put("deleted", Boolean.FALSE);
@@ -328,16 +326,14 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 				errorType =
 					ServletResponseConstants.SC_DUPLICATE_FILE_EXCEPTION;
 
-				errorMessage = LanguageUtil.get(
-					themeDisplay.getLocale(),
+				errorMessage = themeDisplay.translate(
 					"please-enter-a-unique-document-name");
 			}
 			else if (e instanceof FileExtensionException) {
 				errorType =
 					ServletResponseConstants.SC_FILE_EXTENSION_EXCEPTION;
 
-				errorMessage = LanguageUtil.format(
-					themeDisplay.getLocale(),
+				errorMessage = themeDisplay.translate(
 					"document-names-must-end-with-one-of-the-following-" +
 						"extensions",
 					StringUtil.merge(
@@ -347,8 +343,7 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 			else if (e instanceof FileNameException) {
 				errorType = ServletResponseConstants.SC_FILE_NAME_EXCEPTION;
 
-				errorMessage = LanguageUtil.get(
-					themeDisplay.getLocale(),
+				errorMessage = themeDisplay.translate(
 					"please-enter-a-file-with-a-valid-file-name");
 			}
 			else if (e instanceof FileSizeException ||
@@ -366,8 +361,7 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 
 				fileMaxSize /= 1024;
 
-				errorMessage = LanguageUtil.format(
-					themeDisplay.getLocale(),
+				errorMessage = themeDisplay.translate(
 					"please-enter-a-file-with-a-valid-file-size-no-larger" +
 						"-than-x", fileMaxSize);
 			}
@@ -376,8 +370,7 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 
 				errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 
-				errorMessage = LanguageUtil.format(
-					themeDisplay.getLocale(),
+				errorMessage = themeDisplay.translate(
 					"please-import-a-lar-file-of-the-correct-type" +
 						"-x-is-not-valid",
 					lte.getMessage());
@@ -386,8 +379,7 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 			else if (e instanceof LARFileException) {
 				errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 
-				errorMessage = LanguageUtil.get(
-					themeDisplay.getLocale(),
+				errorMessage = themeDisplay.translate(
 					"please-specify-a-lar-file-to-import");
 			}
 			else if (e instanceof LocaleException) {
@@ -395,8 +387,7 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 
 				errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 
-				errorMessage = LanguageUtil.format(
-					themeDisplay.getLocale(),
+				errorMessage = themeDisplay.translate(
 					"the-available-languages-in-the-lar-file-x-do" +
 						"-not-match-the-portal's-available-languages-x",
 					new String[] {
@@ -419,8 +410,7 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 					3 + (10 * missingLayoutPrototypes.size()));
 
 				sb.append(
-					LanguageUtil.get(
-						themeDisplay.getLocale(),
+					themeDisplay.translate(
 						"the-lar-file-could-not-be-imported-because-it-" +
 							"requires-page-templates-or-site-templates-" +
 							"that-could-not-be-found.-please-import-the-" +

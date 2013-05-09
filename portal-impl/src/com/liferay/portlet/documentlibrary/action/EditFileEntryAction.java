@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -554,8 +553,7 @@ public class EditFileEntryAction extends PortletAction {
 			jsonObject.put("deleted", Boolean.TRUE);
 		}
 		catch (Exception e) {
-			String errorMessage = LanguageUtil.get(
-				themeDisplay.getLocale(),
+			String errorMessage = themeDisplay.translate(
 				"an-unexpected-error-occurred-while-deleting-the-file");
 
 			jsonObject.put("deleted", Boolean.FALSE);
@@ -584,55 +582,47 @@ public class EditFileEntryAction extends PortletAction {
 			}
 
 			if (ace.getType() == AssetCategoryException.AT_LEAST_ONE_CATEGORY) {
-				errorMessage = LanguageUtil.format(
-					themeDisplay.getLocale(),
+				errorMessage = themeDisplay.translate(
 					"please-select-at-least-one-category-for-x",
 					vocabularyTitle);
 			}
 			else if (ace.getType() ==
 						AssetCategoryException.TOO_MANY_CATEGORIES) {
 
-				errorMessage = LanguageUtil.format(
-					themeDisplay.getLocale(),
+				errorMessage = themeDisplay.translate(
 					"you-cannot-select-more-than-one-category-for-x",
 					vocabularyTitle);
 			}
 		}
 		else if (e instanceof DuplicateFileException) {
-			errorMessage = LanguageUtil.get(
-				themeDisplay.getLocale(),
+			errorMessage = themeDisplay.translate(
 				"the-folder-you-selected-already-has-an-entry-with-this-name." +
 					"-please-select-a-different-folder");
 		}
 		else if (e instanceof FileExtensionException) {
-			errorMessage = LanguageUtil.format(
-				themeDisplay.getLocale(),
+			errorMessage = themeDisplay.translate(
 				"please-enter-a-file-with-a-valid-extension-x",
 				StringUtil.merge(
 					PrefsPropsUtil.getStringArray(
 						PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA)));
 		}
 		else if (e instanceof FileNameException) {
-			errorMessage = LanguageUtil.get(
-				themeDisplay.getLocale(),
+			errorMessage = themeDisplay.translate(
 				"please-enter-a-file-with-a-valid-file-name");
 		}
 		else if (e instanceof FileSizeException) {
 			long maxSizeMB = PrefsPropsUtil.getLong(
 				PropsKeys.DL_FILE_MAX_SIZE) / 1024 / 1024;
 
-			errorMessage = LanguageUtil.format(
-				themeDisplay.getLocale(),
+			errorMessage = themeDisplay.translate(
 				"file-size-is-larger-than-x-megabytes", maxSizeMB);
 		}
 		else if (e instanceof InvalidFileEntryTypeException) {
-			errorMessage = LanguageUtil.get(
-				themeDisplay.getLocale(),
+			errorMessage = themeDisplay.translate(
 				"the-document-type-you-selected-is-not-valid-for-this-folder");
 		}
 		else {
-			errorMessage = LanguageUtil.get(
-				themeDisplay.getLocale(),
+			errorMessage = themeDisplay.translate(
 				"an-unexpected-error-occurred-while-saving-your-document");
 		}
 
@@ -759,16 +749,14 @@ public class EditFileEntryAction extends PortletAction {
 					errorType =
 						ServletResponseConstants.SC_DUPLICATE_FILE_EXCEPTION;
 
-					errorMessage = LanguageUtil.get(
-						themeDisplay.getLocale(),
+					errorMessage = themeDisplay.translate(
 						"please-enter-a-unique-document-name");
 				}
 				else if (e instanceof FileExtensionException) {
 					errorType =
 						ServletResponseConstants.SC_FILE_EXTENSION_EXCEPTION;
 
-					errorMessage = LanguageUtil.format(
-						themeDisplay.getLocale(),
+					errorMessage = themeDisplay.translate(
 						"document-names-must-end-with-one-of-the-following-" +
 							"extensions",
 						StringUtil.merge(
@@ -778,8 +766,7 @@ public class EditFileEntryAction extends PortletAction {
 				else if (e instanceof FileNameException) {
 					errorType = ServletResponseConstants.SC_FILE_NAME_EXCEPTION;
 
-					errorMessage = LanguageUtil.get(
-						themeDisplay.getLocale(),
+					errorMessage = themeDisplay.translate(
 						"please-enter-a-file-with-a-valid-file-name");
 				}
 				else if (e instanceof FileSizeException) {
@@ -795,8 +782,7 @@ public class EditFileEntryAction extends PortletAction {
 
 					fileMaxSize /= 1024;
 
-					errorMessage = LanguageUtil.format(
-						themeDisplay.getLocale(),
+					errorMessage = themeDisplay.translate(
 						"please-enter-a-file-with-a-valid-file-size-no-larger" +
 							"-than-x", fileMaxSize);
 				}

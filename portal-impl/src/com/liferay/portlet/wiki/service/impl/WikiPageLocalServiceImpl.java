@@ -462,7 +462,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			else {
 				deletePage(curPage);
 			}
-
 		}
 
 		wikiPagePersistence.removeByN_T(page.getNodeId(), page.getTitle());
@@ -1343,15 +1342,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	public void restorePageFromTrash(long userId, WikiPage page)
 		throws PortalException, SystemException {
 
-		String trashTitle = page.getTitle();
+		String title = page.getTitle();
 
-		String title = TrashUtil.getOriginalTitle(trashTitle);
+		String originalTitle = TrashUtil.getOriginalTitle(title);
 
 		List<WikiPage> redirectPages = wikiPagePersistence.findByN_R(
 			page.getNodeId(), page.getTitle());
 
 		for (WikiPage redirectPage : redirectPages) {
-			redirectPage.setRedirectTitle(title);
+			redirectPage.setRedirectTitle(originalTitle);
 
 			wikiPagePersistence.update(redirectPage);
 		}
@@ -1360,7 +1359,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			page.getResourcePrimKey(), page.getNodeId(), false);
 
 		for (WikiPage versionPage : versionPages) {
-			versionPage.setTitle(title);
+			versionPage.setTitle(originalTitle);
 
 			wikiPagePersistence.update(versionPage);
 		}
@@ -1369,11 +1368,11 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			wikiPageResourcePersistence.fetchByPrimaryKey(
 				page.getResourcePrimKey());
 
-		pageResource.setTitle(title);
+		pageResource.setTitle(originalTitle);
 
 		wikiPageResourcePersistence.update(pageResource);
 
-		page.setTitle(title);
+		page.setTitle(originalTitle);
 
 		wikiPagePersistence.update(page);
 
@@ -1386,10 +1385,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		// Children
 
 		List<WikiPage> children = wikiPagePersistence.findByN_P(
-			page.getNodeId(), trashTitle);
+			page.getNodeId(), title);
 
 		for (WikiPage curPage : children) {
-			curPage.setParentTitle(title);
+			curPage.setParentTitle(originalTitle);
 
 			wikiPagePersistence.update(curPage);
 

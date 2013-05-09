@@ -39,6 +39,7 @@ page import="com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil" %
 page import="com.liferay.portal.kernel.workflow.WorkflowEngineManagerUtil" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil" %><%@
 page import="com.liferay.portal.repository.util.RepositoryFactoryUtil" %><%@
+page import="com.liferay.portal.util.ScopeUtil" %><%@
 page import="com.liferay.portlet.asset.model.AssetEntry" %><%@
 page import="com.liferay.portlet.asset.model.AssetRenderer" %><%@
 page import="com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil" %><%@

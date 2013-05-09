@@ -238,14 +238,6 @@ public class LayoutStagedModelDataHandler
 			}
 		}
 
-		Portlet layoutConfigurationPortlet =
-			PortletLocalServiceUtil.getPortletById(
-				portletDataContext.getCompanyId(), PortletKeys.DOCKBAR);
-
-		_portletExporter.exportPortletData(
-			portletDataContext, layoutConfigurationPortlet, layout, null,
-			layoutElement);
-
 		// Layout permissions
 
 		boolean exportPermissions = MapUtil.getBoolean(

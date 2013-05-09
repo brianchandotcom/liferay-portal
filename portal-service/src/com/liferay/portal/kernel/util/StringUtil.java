@@ -646,7 +646,7 @@ public class StringUtil {
 			return -1;
 		}
 
-		return indexOfAny(s, chars, 0, s.length());
+		return indexOfAny(s, chars, 0, s.length() - 1);
 	}
 
 	public static int indexOfAny(String s, char[] chars, int fromIndex) {
@@ -654,7 +654,7 @@ public class StringUtil {
 			return -1;
 		}
 
-		return indexOfAny(s, chars, fromIndex, s.length());
+		return indexOfAny(s, chars, fromIndex, s.length() - 1);
 	}
 
 	public static int indexOfAny(
@@ -676,11 +676,11 @@ public class StringUtil {
 			fromIndex = 0;
 		}
 
-		if (toIndex > s.length()) {
-			toIndex = s.length();
+		if (toIndex >= s.length()) {
+			toIndex = s.length() - 1;
 		}
 
-		for (int i = fromIndex; ((i < s.length()) && (i <= toIndex)); i++) {
+		for (int i = fromIndex; i <= toIndex; i++) {
 			char c = s.charAt(i);
 
 			for (int j = 0; j < chars.length; j++) {
@@ -698,7 +698,7 @@ public class StringUtil {
 			return -1;
 		}
 
-		return indexOfAny(s, texts, 0, s.length());
+		return indexOfAny(s, texts, 0, s.length() - 1);
 	}
 
 	public static int indexOfAny(String s, String[] texts, int fromIndex) {
@@ -706,7 +706,7 @@ public class StringUtil {
 			return -1;
 		}
 
-		return indexOfAny(s, texts, fromIndex, s.length());
+		return indexOfAny(s, texts, fromIndex, s.length() - 1);
 	}
 
 	public static int indexOfAny(
@@ -728,13 +728,19 @@ public class StringUtil {
 			fromIndex = 0;
 		}
 
-		if (toIndex > s.length()) {
-			toIndex = s.length();
+		if (toIndex >= s.length()) {
+			toIndex = s.length() - 1;
 		}
 
-		for (int i = fromIndex; ((i < s.length()) && (i <= toIndex)); i++) {
+		for (int i = fromIndex; i <= toIndex; i++) {
 			for (int j = 0; j < texts.length; j++) {
-				if (s.startsWith(texts[j], i)) {
+				if (texts[j] == null) {
+					continue;
+				}
+
+				if ((i + texts[j].length() <= toIndex + 1) &&
+					s.startsWith(texts[j], i)) {
+
 					return i;
 				}
 			}
@@ -779,7 +785,7 @@ public class StringUtil {
 			return -1;
 		}
 
-		return lastIndexOfAny(s, chars, 0, s.length());
+		return lastIndexOfAny(s, chars, 0, s.length() - 1);
 	}
 
 	public static int lastIndexOfAny(String s, char[] chars, int toIndex) {
@@ -809,11 +815,11 @@ public class StringUtil {
 			fromIndex = 0;
 		}
 
-		if (toIndex > s.length()) {
-			toIndex = s.length();
+		if (toIndex >= s.length()) {
+			toIndex = s.length() - 1;
 		}
 
-		for (int i = toIndex; ((i >= 0) && (i >= fromIndex)); i--) {
+		for (int i = toIndex; i >= fromIndex; i--) {
 			char c = s.charAt(i);
 
 			for (int j = 0; j < chars.length; j++) {
@@ -831,7 +837,7 @@ public class StringUtil {
 			return -1;
 		}
 
-		return lastIndexOfAny(s, texts, 0, s.length());
+		return lastIndexOfAny(s, texts, 0, s.length() - 1);
 	}
 
 	public static int lastIndexOfAny(String s, String[] texts, int toIndex) {
@@ -861,13 +867,19 @@ public class StringUtil {
 			fromIndex = 0;
 		}
 
-		if (toIndex > s.length()) {
-			toIndex = s.length();
+		if (toIndex >= s.length()) {
+			toIndex = s.length() - 1;
 		}
 
-		for (int i = toIndex; ((i >= 0) && (i >= fromIndex)); i--) {
+		for (int i = toIndex; i >= fromIndex; i--) {
 			for (int j = 0; j < texts.length; j++) {
-				if (s.startsWith(texts[j], i)) {
+				if (texts[j] == null) {
+					continue;
+				}
+
+				if ((i + texts[j].length() <= toIndex + 1) &&
+					s.startsWith(texts[j], i)) {
+
 					return i;
 				}
 			}

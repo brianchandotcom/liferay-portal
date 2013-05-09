@@ -55,6 +55,74 @@ public class StringUtilTest extends TestCase {
 				"Hello World Liferay", new String[] {"Hello","Liferay"}));
 	}
 
+	public void testIndexOfAny() throws Exception {
+		char[] chars = {CharPool.COLON, CharPool.COMMA};
+
+		assertEquals(-1, StringUtil.indexOfAny(null, chars));
+		assertEquals(-1, StringUtil.indexOfAny(null, chars, 1));
+		assertEquals(-1, StringUtil.indexOfAny(null, chars, 1, 5));
+
+		assertEquals(4, StringUtil.indexOfAny("test,:test", chars));
+		assertEquals(5, StringUtil.indexOfAny("test,:test,:test", chars, 5));
+		assertEquals(
+			-1, StringUtil.indexOfAny("test,:test,:test", chars, 7, 9));
+		assertEquals(
+			10, StringUtil.indexOfAny("test,:test,:test", chars, 7, 12));
+
+		String[] strings = {null, "ab", "cd"};
+
+		assertEquals(-1, StringUtil.indexOfAny(null, strings));
+		assertEquals(-1, StringUtil.indexOfAny(null, strings, 1));
+		assertEquals(-1, StringUtil.indexOfAny(null, strings, 1, 5));
+
+		assertEquals(4, StringUtil.indexOfAny("1234cdab1234", strings));
+		assertEquals(6, StringUtil.indexOfAny("1234cdabcd1234", strings, 5));
+		assertEquals(
+			-1, StringUtil.indexOfAny("1234cdab1234abcd", strings, 7, 9));
+		assertEquals(
+			12, StringUtil.indexOfAny("1234cdab1234cdab", strings, 7, 15));
+
+		assertEquals(0, StringUtil.indexOfAny("1234", new String[] {""}));
+		assertEquals(2, StringUtil.indexOfAny("1234", new String[] {""}, 2));
+		assertEquals(2, StringUtil.indexOfAny("1234", new String[] {""}, 2, 4));
+	}
+
+	public void testLastIndexOfAny() throws Exception {
+		char[] chars = {CharPool.COLON, CharPool.COMMA};
+
+		assertEquals(-1, StringUtil.lastIndexOfAny(null, chars));
+		assertEquals(-1, StringUtil.lastIndexOfAny(null, chars, 1));
+		assertEquals(-1, StringUtil.lastIndexOfAny(null, chars, 1, 5));
+
+		assertEquals(5, StringUtil.lastIndexOfAny("test,:test", chars));
+		assertEquals(
+			5, StringUtil.lastIndexOfAny("test,:test,:test", chars, 7));
+		assertEquals(
+			-1, StringUtil.lastIndexOfAny("test,:test,:test", chars, 7, 9));
+		assertEquals(
+			11, StringUtil.lastIndexOfAny("test,:test,:test", chars, 7, 12));
+
+		String[] strings = {null, "ab", "cd"};
+
+		assertEquals(-1, StringUtil.lastIndexOfAny(null, strings));
+		assertEquals(-1, StringUtil.lastIndexOfAny(null, strings, 1));
+		assertEquals(-1, StringUtil.lastIndexOfAny(null, strings, 1, 5));
+
+		assertEquals(6, StringUtil.lastIndexOfAny("1234cdab1234", strings));
+		assertEquals(
+			4, StringUtil.lastIndexOfAny("1234cdabcd1234", strings, 5));
+		assertEquals(
+			-1, StringUtil.lastIndexOfAny("1234cdab1234abcd", strings, 7, 9));
+		assertEquals(
+			12, StringUtil.lastIndexOfAny("1234cdab1234cdab", strings, 7, 14));
+
+		assertEquals(3, StringUtil.lastIndexOfAny("1234", new String[] {""}));
+		assertEquals(
+			2, StringUtil.lastIndexOfAny("1234", new String[] {""}, 2));
+		assertEquals(
+			3, StringUtil.lastIndexOfAny("1234", new String[] {""}, 2, 3));
+	}
+
 	public void testReplaceChar() throws Exception {
 		assertEquals("127_0_0_1", StringUtil.replace("127.0.0.1", '.', '_'));
 	}

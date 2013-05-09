@@ -73,8 +73,8 @@ public class ServletAggregateContext implements AggregateContext {
 				resourceURL = new URL(path);
 			}
 			else {
-				resourceURL =
-					_servletContext.getResource(stackPath.concat(path));
+				resourceURL = _servletContext.getResource(
+					stackPath.concat(path));
 			}
 
 			if (resourceURL == null) {

@@ -42,7 +42,7 @@
 					</aui:script>
 				</li>
 
-				<div class="helper-hidden" id="<portlet:namespace />globalConfiguration">
+				<div class="hide" id="<portlet:namespace />globalConfiguration">
 					<aui:fieldset cssClass="portlet-data-section" label="application">
 						<ul class="lfr-tree lfr-component">
 							<li class="tree-item">
@@ -69,7 +69,7 @@
 				<li class="tree-item">
 					<aui:input label="content" name='<%= PortletDataHandlerKeys.PORTLET_DATA + "_" + selPortlet.getRootPortletId() %>' type="checkbox" value="<%= portletDataHandler.isPublishToLiveByDefault() %>" />
 
-					<div class="helper-hidden" id="<portlet:namespace />content_<%= selPortlet.getRootPortletId() %>">
+					<div class="hide" id="<portlet:namespace />content_<%= selPortlet.getRootPortletId() %>">
 						<ul class="lfr-tree lfr-component">
 
 							<%
@@ -166,7 +166,7 @@
 									yesterday.add(Calendar.DATE, -1);
 									%>
 
-									<ul class="helper-hidden date-range-options" id="<portlet:namespace />startEndDate">
+									<ul class="hide date-range-options" id="<portlet:namespace />startEndDate">
 										<li>
 											<aui:field-wrapper label="start-date">
 												<liferay-ui:input-date

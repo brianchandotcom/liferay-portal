@@ -28,7 +28,7 @@
 
 			<aui:a cssClass="modify-link" href="javascript:;" id="pagesLink" label="change" method="get" />
 
-			<div class="helper-hidden" id="<portlet:namespace />pages">
+			<div class="hide" id="<portlet:namespace />pages">
 				<aui:fieldset cssClass="portlet-data-section" label="pages">
 					<aui:input helpMessage="delete-missing-layouts-help" label="delete-missing-layouts" name="<%= PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS %>" type="checkbox" value="<%= false %>" />
 
@@ -64,7 +64,7 @@
 					Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>Checkbox', '<portlet:namespace />showGlobalConfiguration');
 				</aui:script>
 
-				<div class="helper-hidden" id="<portlet:namespace />globalConfiguration">
+				<div class="hide" id="<portlet:namespace />globalConfiguration">
 					<aui:fieldset cssClass="portlet-data-section" label="all-applications">
 						<aui:input label="archived-setups" name="<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS %>" type="checkbox" value="<%= true %>" />
 
@@ -95,7 +95,7 @@
 					Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>Checkbox', '<portlet:namespace />showChangeGlobalContent');
 				</aui:script>
 
-				<div class="helper-hidden" id="<portlet:namespace />globalContent">
+				<div class="hide" id="<portlet:namespace />globalContent">
 					<aui:fieldset cssClass="portlet-data-section" label="all-content">
 						<aui:input label="delete-portlet-data-before-importing" name="<%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>" type="checkbox" />
 

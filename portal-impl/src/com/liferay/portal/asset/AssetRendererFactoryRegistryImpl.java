@@ -29,8 +29,20 @@ import java.util.concurrent.ConcurrentHashMap;
 public class AssetRendererFactoryRegistryImpl
 	implements AssetRendererFactoryRegistry {
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #getAssetRendererFactories(
+	 *             long)}
+	 */
 	public List<AssetRendererFactory> getAssetRendererFactories() {
 		return ListUtil.fromMapValues(_assetRenderFactoriesMapByClassName);
+	}
+
+	public List<AssetRendererFactory> getAssetRendererFactories(
+		long companyId) {
+
+		return ListUtil.fromMapValues(
+			filterAssetRendererFactories(
+				companyId, _assetRenderFactoriesMapByClassName));
 	}
 
 	public AssetRendererFactory getAssetRendererFactoryByClassName(
@@ -43,14 +55,29 @@ public class AssetRendererFactoryRegistryImpl
 		return _assetRenderFactoriesMapByClassType.get(type);
 	}
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #getClassNameIds(
+	 *             long)}
+	 */
 	public long[] getClassNameIds() {
-		long[] classNameIds = new long[
-			_assetRenderFactoriesMapByClassName.size()];
+		return getClassNameIds(0);
+	}
+
+	public long[] getClassNameIds(long companyId) {
+		Map<String, AssetRendererFactory> assetRenderFactories =
+			_assetRenderFactoriesMapByClassName;
+
+		if (companyId > 0) {
+			assetRenderFactories = filterAssetRendererFactories(
+				companyId, _assetRenderFactoriesMapByClassName);
+		}
+
+		long[] classNameIds = new long[assetRenderFactories.size()];
 
 		int i = 0;
 
 		for (AssetRendererFactory assetRendererFactory :
-				_assetRenderFactoriesMapByClassName.values()) {
+				assetRenderFactories.values()) {
 
 			classNameIds[i] = assetRendererFactory.getClassNameId();
 
@@ -72,6 +99,26 @@ public class AssetRendererFactoryRegistryImpl
 			assetRendererFactory.getClassName());
 		_assetRenderFactoriesMapByClassType.remove(
 			assetRendererFactory.getType());
+	}
+
+	private Map<String, AssetRendererFactory> filterAssetRendererFactories(
+		long companyId,
+		Map<String, AssetRendererFactory> assetRendererFactories) {
+
+		Map<String, AssetRendererFactory> filteredAssetRendererFactories =
+			new ConcurrentHashMap<String, AssetRendererFactory>();
+
+		for (String className : assetRendererFactories.keySet()) {
+			AssetRendererFactory assetRendererFactory =
+				assetRendererFactories.get(className);
+
+			if (assetRendererFactory.isActive(companyId)) {
+				filteredAssetRendererFactories.put(
+					className, assetRendererFactory);
+			}
+		}
+
+		return filteredAssetRendererFactories;
 	}
 
 	private Map<String, AssetRendererFactory>

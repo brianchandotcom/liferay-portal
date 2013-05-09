@@ -631,39 +631,41 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	public Element addReferenceElement(
-		StagedModel referrer, Element element, ClassedModel classedModel,
-		boolean missing) {
+		StagedModel referrerStagedModel, Element element,
+		ClassedModel classedModel, boolean missing) {
 
 		return addReferenceElement(
-			referrer, element, classedModel, classedModel.getModelClassName(),
+			referrerStagedModel, element, classedModel,
+			classedModel.getModelClassName(), StringPool.BLANK, missing);
+	}
+
+	public Element addReferenceElement(
+		StagedModel referrerStagedModel, Element element,
+		ClassedModel classedModel, Class<?> clazz, boolean missing) {
+
+		return addReferenceElement(
+			referrerStagedModel, element, classedModel, clazz.getName(),
 			StringPool.BLANK, missing);
 	}
 
 	public Element addReferenceElement(
-		StagedModel referrer, Element element, ClassedModel classedModel,
-		Class<?> clazz, boolean missing) {
+		StagedModel referrerStagedModel, Element element,
+		ClassedModel classedModel, String binPath, boolean missing) {
 
 		return addReferenceElement(
-			referrer, element, classedModel, clazz.getName(), StringPool.BLANK,
-			missing);
+			referrerStagedModel, element, classedModel,
+			classedModel.getModelClassName(), binPath, missing);
 	}
 
 	public Element addReferenceElement(
-		StagedModel referrer, Element element, ClassedModel classedModel,
-		String binPath, boolean missing) {
-
-		return addReferenceElement(
-			referrer, element, classedModel, classedModel.getModelClassName(),
-			binPath, missing);
-	}
-
-	public Element addReferenceElement(
-		StagedModel referrer, Element element, ClassedModel classedModel,
-		String className, String binPath, boolean missing) {
+		StagedModel referrerStagedModel, Element element,
+		ClassedModel classedModel, String className, String binPath,
+		boolean missing) {
 
 		if (missing) {
 			addReferenceElement(
-				referrer, element, classedModel, className, binPath, false);
+				referrerStagedModel, element, classedModel, className, binPath,
+				false);
 		}
 
 		Element referenceElement = null;
@@ -706,7 +708,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		if (missing) {
 			referenceElement.addAttribute(
-				"referrer", referrer.getModelClassName());
+				"referrerClassName", referrerStagedModel.getModelClassName());
 		}
 
 		return referenceElement;

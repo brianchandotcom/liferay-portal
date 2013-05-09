@@ -365,7 +365,6 @@ public class ServiceBuilder {
 				_args = args;
 			}
 
-			@Override
 			public Void call() throws Exception {
 				main(_args);
 
@@ -818,6 +817,10 @@ public class ServiceBuilder {
 
 						if (entity.hasActionableDynamicQuery()) {
 							_createActionableDynamicQuery(entity);
+
+							if (entity.isStagedModel()) {
+								_createExportingActionableDynamicQuery(entity);
+							}
 						}
 
 						if (entity.hasColumns()) {
@@ -1950,6 +1953,27 @@ public class ServiceBuilder {
 				}
 			}
 		}
+	}
+
+	private void _createExportingActionableDynamicQuery(Entity entity)
+		throws Exception {
+
+		Map<String, Object> context = _getContext();
+
+		context.put("entity", entity);
+
+		// Content
+
+		String content = _processTemplate(
+			_tplExportingActionableDynamicQuery, context);
+
+		// Write file
+
+		File ejbFile = new File(
+			_serviceOutputPath + "/service/persistence/" +
+				entity.getName() + "ExportingActionableDynamicQuery.java");
+
+		writeFile(ejbFile, content, _author);
 	}
 
 	private void _createExtendedModel(Entity entity) throws Exception {
@@ -5058,6 +5082,8 @@ public class ServiceBuilder {
 	private String _tplBlobModel = _TPL_ROOT + "blob_model.ftl";
 	private String _tplEjbPk = _TPL_ROOT + "ejb_pk.ftl";
 	private String _tplException = _TPL_ROOT + "exception.ftl";
+	private String _tplExportingActionableDynamicQuery =
+		_TPL_ROOT + "exporting_actionable_dynamic_query.ftl";
 	private String _tplExtendedModel = _TPL_ROOT + "extended_model.ftl";
 	private String _tplExtendedModelBaseImpl =
 		_TPL_ROOT + "extended_model_base_impl.ftl";

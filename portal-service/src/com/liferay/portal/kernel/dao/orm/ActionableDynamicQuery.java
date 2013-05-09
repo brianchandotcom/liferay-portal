@@ -25,6 +25,8 @@ public interface ActionableDynamicQuery {
 
 	public void performActions() throws PortalException, SystemException;
 
+	public long performCount() throws PortalException, SystemException;
+
 	public void setBaseLocalService(BaseLocalService baseLocalService)
 		throws SystemException;
 

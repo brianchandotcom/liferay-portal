@@ -448,11 +448,20 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Children
 
-		List<WikiPage> children = wikiPagePersistence.findByN_H_P(
-			page.getNodeId(), true, page.getTitle());
+		List<WikiPage> children = wikiPagePersistence.findByN_P(
+			page.getNodeId(), page.getTitle());
 
 		for (WikiPage curPage : children) {
-			deletePage(curPage);
+			if ((!curPage.isInTrash() && page.isInTrash()) ||
+				!curPage.isApproved()) {
+
+				curPage.setParentTitle(StringPool.BLANK);
+
+				wikiPagePersistence.update(curPage);
+			}
+			else {
+				deletePage(curPage);
+			}
 		}
 
 		wikiPagePersistence.removeByN_T(page.getNodeId(), page.getTitle());
@@ -1228,6 +1237,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		// Page
 
 		int oldStatus = page.getStatus();
+		String oldTitle = page.getTitle();
 
 		page = updateStatus(
 			userId, page, WorkflowConstants.STATUS_IN_TRASH,
@@ -1267,6 +1277,21 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		page.setTitle(trashTitle);
 
 		wikiPagePersistence.update(page);
+
+		// Children
+
+		List<WikiPage> children = wikiPagePersistence.findByN_P(
+			page.getNodeId(), oldTitle);
+
+		for (WikiPage curPage : children) {
+			curPage.setParentTitle(trashTitle);
+
+			wikiPagePersistence.update(curPage);
+
+			if (curPage.isApproved()) {
+				movePageToTrash(userId, curPage);
+			}
+		}
 
 		// Social
 
@@ -1317,13 +1342,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	public void restorePageFromTrash(long userId, WikiPage page)
 		throws PortalException, SystemException {
 
-		String title = TrashUtil.getOriginalTitle(page.getTitle());
+		String title = page.getTitle();
+
+		String originalTitle = TrashUtil.getOriginalTitle(title);
 
 		List<WikiPage> redirectPages = wikiPagePersistence.findByN_R(
 			page.getNodeId(), page.getTitle());
 
 		for (WikiPage redirectPage : redirectPages) {
-			redirectPage.setRedirectTitle(title);
+			redirectPage.setRedirectTitle(originalTitle);
 
 			wikiPagePersistence.update(redirectPage);
 		}
@@ -1332,7 +1359,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			page.getResourcePrimKey(), page.getNodeId(), false);
 
 		for (WikiPage versionPage : versionPages) {
-			versionPage.setTitle(title);
+			versionPage.setTitle(originalTitle);
 
 			wikiPagePersistence.update(versionPage);
 		}
@@ -1341,11 +1368,11 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			wikiPageResourcePersistence.fetchByPrimaryKey(
 				page.getResourcePrimKey());
 
-		pageResource.setTitle(title);
+		pageResource.setTitle(originalTitle);
 
 		wikiPageResourcePersistence.update(pageResource);
 
-		page.setTitle(title);
+		page.setTitle(originalTitle);
 
 		wikiPagePersistence.update(page);
 
@@ -1354,6 +1381,21 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		updateStatus(
 			userId, page, trashEntry.getStatus(), new ServiceContext());
+
+		// Children
+
+		List<WikiPage> children = wikiPagePersistence.findByN_P(
+			page.getNodeId(), title);
+
+		for (WikiPage curPage : children) {
+			curPage.setParentTitle(originalTitle);
+
+			wikiPagePersistence.update(curPage);
+
+			if (curPage.isInTrash()) {
+				restorePageFromTrash(userId, curPage);
+			}
+		}
 
 		// Social
 

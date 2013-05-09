@@ -280,11 +280,15 @@ public interface PortletDataContext extends Serializable {
 	 */
 	public String getSourceRootPath();
 
+	public long getSourceUserPersonalSiteGroupId();
+
 	public Date getStartDate();
 
 	public long getUserId(String userUuid) throws SystemException;
 
 	public UserIdStrategy getUserIdStrategy();
+
+	public long getUserPersonalSiteGroupId();
 
 	public List<String> getZipEntries();
 
@@ -377,6 +381,9 @@ public interface PortletDataContext extends Serializable {
 	public void setSourceCompanyGroupId(long sourceCompanyGroupId);
 
 	public void setSourceGroupId(long sourceGroupId);
+
+	public void setSourceUserPersonalSiteGroupId(
+		long sourceUserPersonalSiteGroupId);
 
 	public void setStartDate(Date startDate);
 

@@ -1528,6 +1528,13 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 		return _groupLocalService.getUserOrganizationsGroups(userId, start, end);
 	}
 
+	public com.liferay.portal.model.Group getUserPersonalSiteGroup(
+		long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _groupLocalService.getUserPersonalSiteGroup(companyId);
+	}
+
 	/**
 	* Returns <code>true</code> if the live group has a staging group.
 	*

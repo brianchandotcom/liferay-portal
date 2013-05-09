@@ -361,6 +361,14 @@ public class LayoutImporter {
 
 		portletDataContext.setSourceGroupId(sourceGroupId);
 
+		// user personal site group id
+
+		long sourceUserPersonalSiteGroupId = GetterUtil.getLong(
+			headerElement.attributeValue("user-personal-site-group-id"));
+
+		portletDataContext.setSourceUserPersonalSiteGroupId(
+			sourceUserPersonalSiteGroupId);
+
 		// Layout and layout set prototype
 
 		String layoutSetPrototypeUuid = _layoutsElement.attributeValue(

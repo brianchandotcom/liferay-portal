@@ -343,7 +343,7 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 			}
 
 			String content = ExportImportUtil.exportContentReferences(
-				portletDataContext, pageElement, page.getContent());
+				portletDataContext, page, pageElement, page.getContent());
 
 			page.setContent(content);
 

@@ -1120,16 +1120,16 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return getZipReader().getEntryAsString(path);
 	}
 
+	public List<String> getZipFolderEntries() {
+		return getZipFolderEntries(StringPool.SLASH);
+	}
+
 	public List<String> getZipFolderEntries(String path) {
 		if (!Validator.isFilePath(path, false)) {
 			return null;
 		}
 
 		return getZipReader().getFolderEntries(path);
-	}
-
-	public List<String> getZipFolderEntries() {
-		return getZipFolderEntries(StringPool.SLASH);
 	}
 
 	public ZipReader getZipReader() {

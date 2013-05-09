@@ -300,9 +300,9 @@ public interface PortletDataContext extends Serializable {
 
 	public String getZipEntryAsString(String path);
 
-	public List<String> getZipFolderEntries(String path);
-
 	public List<String> getZipFolderEntries();
+
+	public List<String> getZipFolderEntries(String path);
 
 	public ZipReader getZipReader();
 

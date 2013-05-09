@@ -667,8 +667,8 @@
 			</attribute>
 			<attribute>
 				<name>searchContainer</name>
-				<inputType>com.liferay.portal.kernel.dao.search.SearchContainer</inputType>
-				<outputType>com.liferay.portal.kernel.dao.search.SearchContainer</outputType>
+				<inputType><![CDATA[com.liferay.portal.kernel.dao.search.SearchContainer<?>]]></inputType>
+				<outputType><![CDATA[com.liferay.portal.kernel.dao.search.SearchContainer<?>]]></outputType>
 			</attribute>
 		</attributes>
 	</component>

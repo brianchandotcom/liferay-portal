@@ -101,9 +101,9 @@ public class AssetUtil {
 		CharPool.COLON, CharPool.COMMA, CharPool.EQUAL, CharPool.GREATER_THAN,
 		CharPool.FORWARD_SLASH, CharPool.LESS_THAN, CharPool.NEW_LINE,
 		CharPool.OPEN_BRACKET, CharPool.OPEN_CURLY_BRACE, CharPool.PERCENT,
-		CharPool.PIPE, CharPool.PLUS, CharPool.POUND, CharPool.QUESTION,
-		CharPool.QUOTE, CharPool.RETURN, CharPool.SEMICOLON, CharPool.SLASH,
-		CharPool.STAR, CharPool.TILDE
+		CharPool.PIPE, CharPool.PLUS, CharPool.POUND, CharPool.PRIME,
+		CharPool.QUESTION, CharPool.QUOTE, CharPool.RETURN, CharPool.SEMICOLON,
+		CharPool.SLASH, CharPool.STAR, CharPool.TILDE
 	};
 
 	public static Set<String> addLayoutTags(

@@ -35,7 +35,7 @@ if ((dynamicAttributes != null) && !dynamicAttributes.isEmpty()) {
 java.lang.String cssClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:nav-bar-search:cssClass"));
 java.lang.String id = GetterUtil.getString((java.lang.String)request.getAttribute("aui:nav-bar-search:id"));
 java.lang.String file = GetterUtil.getString((java.lang.String)request.getAttribute("aui:nav-bar-search:file"));
-com.liferay.portal.kernel.dao.search.SearchContainer searchContainer = (com.liferay.portal.kernel.dao.search.SearchContainer)request.getAttribute("aui:nav-bar-search:searchContainer");
+com.liferay.portal.kernel.dao.search.SearchContainer<?> searchContainer = (com.liferay.portal.kernel.dao.search.SearchContainer<?>)request.getAttribute("aui:nav-bar-search:searchContainer");
 
 _updateOptions(_options, "cssClass", cssClass);
 _updateOptions(_options, "id", id);

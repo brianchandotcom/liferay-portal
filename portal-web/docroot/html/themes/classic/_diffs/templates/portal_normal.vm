@@ -18,21 +18,16 @@ $theme.include($body_top_include)
 
 #dockbar()
 
-<div id="wrapper">
+<div class="container-fluid" id="wrapper">
 	<header id="banner" role="banner">
+
 		#if ($has_navigation || $is_signed_in)
 			#parse ("$full_templates_path/navigation.vm")
 		#end
 	</header>
 
 	<div id="content">
-		<nav class="site-breadcrumbs" id="breadcrumbs">
-			<h1>
-				<span>#language ("breadcrumbs")</span>
-			</h1>
-
-			#breadcrumbs()
-		</nav>
+		<nav id="breadcrumbs">#breadcrumbs()</nav>
 
 		#if ($selectable)
 			$theme.include($content_include)
@@ -54,8 +49,8 @@ $theme.include($body_top_include)
 
 $theme.include($body_bottom_include)
 
-</body>
-
 $theme.include($bottom_include)
+
+</body>
 
 </html>

@@ -50,16 +50,11 @@ public class DirectRequestDispatcherFactoryImpl
 	public RequestDispatcher getRequestDispatcher(
 		ServletRequest servletRequest, String path) {
 
-		if (!PropsValues.DIRECT_SERVLET_CONTEXT_ENABLED) {
-			return servletRequest.getRequestDispatcher(path);
-		}
-
 		ServletContext servletContext =
 			(ServletContext)servletRequest.getAttribute(WebKeys.CTX);
 
 		if (servletContext == null) {
-			throw new IllegalStateException(
-				"Cannot find servlet context in request attributes");
+			return servletRequest.getRequestDispatcher(path);
 		}
 
 		return getRequestDispatcher(servletContext, path);

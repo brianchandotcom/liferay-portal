@@ -15,9 +15,6 @@
 package com.liferay.portlet.bookmarks.lar;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataContext;
@@ -30,8 +27,8 @@ import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.portlet.bookmarks.service.BookmarksEntryLocalServiceUtil;
 import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
-import com.liferay.portlet.bookmarks.service.persistence.BookmarksEntryActionableDynamicQuery;
-import com.liferay.portlet.bookmarks.service.persistence.BookmarksFolderActionableDynamicQuery;
+import com.liferay.portlet.bookmarks.service.persistence.BookmarksEntryExportingActionableDynamicQuery;
+import com.liferay.portlet.bookmarks.service.persistence.BookmarksFolderExportingActionableDynamicQuery;
 
 import java.util.List;
 
@@ -94,19 +91,24 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		portletDataContext.addPermissions(
-			"com.liferay.portlet.bookmarks",
-			portletDataContext.getScopeGroupId());
+			_RESOURCE_NAME, portletDataContext.getScopeGroupId());
 
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
-		initializeActionableDynamicQueries(portletDataContext);
+		ActionableDynamicQuery folderActionableDynamicQuery =
+			new BookmarksFolderExportingActionableDynamicQuery(
+				portletDataContext);
 
-		_folderActionableDynamicQuery.performActions();
+		ActionableDynamicQuery entryActionableDynamicQuery =
+			new BookmarksEntryExportingActionableDynamicQuery(
+				portletDataContext);
 
-		_entryActionableDynamicQuery.performActions();
+		folderActionableDynamicQuery.performActions();
+
+		entryActionableDynamicQuery.performActions();
 
 		return getExportDataRootElementString(rootElement);
 	}
@@ -118,8 +120,7 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		portletDataContext.importPermissions(
-			"com.liferay.portlet.bookmarks",
-			portletDataContext.getSourceGroupId(),
+			_RESOURCE_NAME, portletDataContext.getSourceGroupId(),
 			portletDataContext.getScopeGroupId());
 
 		Element foldersElement = portletDataContext.getImportDataGroupElement(
@@ -146,73 +147,30 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Override
-	protected void doPrepareData(PortletDataContext portletDataContext)
+	protected void doPrepareSummary(PortletDataContext portletDataContext)
 		throws Exception {
 
-		initializeActionableDynamicQueries(portletDataContext);
+		ActionableDynamicQuery folderActionableDynamicQuery =
+			new BookmarksFolderExportingActionableDynamicQuery(
+				portletDataContext);
 
 		ManifestSummary manifestSummary =
 			portletDataContext.getManifestSummary();
 
-		long folderCount = _folderActionableDynamicQuery.performCount();
+		long folderCount = folderActionableDynamicQuery.performCount();
 
 		manifestSummary.addModelCount(BookmarksFolder.class, folderCount);
 
-		long entryCount = _entryActionableDynamicQuery.performCount();
+		ActionableDynamicQuery entryActionableDynamicQuery =
+			new BookmarksEntryExportingActionableDynamicQuery(
+				portletDataContext);
+
+		long entryCount = entryActionableDynamicQuery.performCount();
 
 		manifestSummary.addModelCount(BookmarksEntry.class, entryCount);
 	}
 
-	private void initializeActionableDynamicQueries(
-			final PortletDataContext portletDataContext)
-		throws SystemException {
-
-		_folderActionableDynamicQuery =
-			new BookmarksFolderActionableDynamicQuery() {
-
-			@Override
-			protected void addCriteria(DynamicQuery dynamicQuery) {
-				portletDataContext.addDateRangeCriteria(
-					dynamicQuery, "modifiedDate");
-			}
-
-			@Override
-			protected void performAction(Object object) throws PortalException {
-				BookmarksFolder folder = (BookmarksFolder)object;
-
-				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext, folder);
-			}
-
-		};
-
-		_folderActionableDynamicQuery.setGroupId(
-			portletDataContext.getScopeGroupId());
-
-		_entryActionableDynamicQuery =
-			new BookmarksEntryActionableDynamicQuery() {
-
-			@Override
-			protected void addCriteria(DynamicQuery dynamicQuery) {
-				portletDataContext.addDateRangeCriteria(
-					dynamicQuery, "modifiedDate");
-			}
-
-			@Override
-			protected void performAction(Object object) throws PortalException {
-				BookmarksEntry entry = (BookmarksEntry)object;
-
-				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext, entry);
-			}
-
-		};
-
-		_entryActionableDynamicQuery.setGroupId(
-			portletDataContext.getScopeGroupId());
-	}
-
-	private ActionableDynamicQuery _entryActionableDynamicQuery;
-	private ActionableDynamicQuery _folderActionableDynamicQuery;
+	private static final String _RESOURCE_NAME =
+		"com.liferay.portlet.bookmarks";
 
 }

@@ -72,7 +72,7 @@ public abstract class BaseActionableDynamicQuery
 		addDefaultCriteria(dynamicQuery);
 		addCriteria(dynamicQuery);
 
-		List<Object[]> results = (List<Object[]>) executeDynamicQuery(
+		List<Object[]> results = (List<Object[]>)executeDynamicQuery(
 			dynamicQuery, _dynamicQueryMethod);
 
 		Object[] minAndMaxPrimaryKeys = results.get(0);

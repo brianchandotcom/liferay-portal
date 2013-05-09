@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.ClassedModel;
 
 import java.io.Serializable;
+
 import java.util.HashMap;
 import java.util.Map;
 

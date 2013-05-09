@@ -53,19 +53,7 @@ import java.util.Map;
  */
 public class PermissionImporter {
 
-	protected List<String> getActions(Element element) {
-		List<String> actions = new ArrayList<String>();
-
-		List<Element> actionKeyElements = element.elements("action-key");
-
-		for (Element actionKeyElement : actionKeyElements) {
-			actions.add(actionKeyElement.getText());
-		}
-
-		return actions;
-	}
-
-	protected void importLayoutPermissions(
+	public void importLayoutPermissions(
 			LayoutCache layoutCache, long companyId, long groupId, long userId,
 			Layout layout, Element layoutElement, Element parentElement)
 		throws Exception {
@@ -80,6 +68,18 @@ public class PermissionImporter {
 				layoutCache, companyId, groupId, userId, layout, resourceName,
 				resourcePrimKey, permissionsElement, false);
 		}
+	}
+
+	protected List<String> getActions(Element element) {
+		List<String> actions = new ArrayList<String>();
+
+		List<Element> actionKeyElements = element.elements("action-key");
+
+		for (Element actionKeyElement : actionKeyElements) {
+			actions.add(actionKeyElement.getText());
+		}
+
+		return actions;
 	}
 
 	protected void importPermissions(

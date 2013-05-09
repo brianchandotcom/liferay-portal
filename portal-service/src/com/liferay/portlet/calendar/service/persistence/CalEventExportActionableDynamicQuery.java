@@ -41,7 +41,8 @@ public class CalEventExportActionableDynamicQuery
 	}
 
 	@Override
-	protected void performAction(Object object) throws PortalException {
+	protected void performAction(Object object)
+		throws PortalException, SystemException {
 		CalEvent stagedModel = (CalEvent)object;
 
 		StagedModelDataHandlerUtil.exportStagedModel(_portletDataContext,

@@ -41,7 +41,8 @@ public class WikiPageExportActionableDynamicQuery
 	}
 
 	@Override
-	protected void performAction(Object object) throws PortalException {
+	protected void performAction(Object object)
+		throws PortalException, SystemException {
 		WikiPage stagedModel = (WikiPage)object;
 
 		StagedModelDataHandlerUtil.exportStagedModel(_portletDataContext,

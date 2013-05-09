@@ -41,7 +41,8 @@ public class MDRActionExportActionableDynamicQuery
 	}
 
 	@Override
-	protected void performAction(Object object) throws PortalException {
+	protected void performAction(Object object)
+		throws PortalException, SystemException {
 		MDRAction stagedModel = (MDRAction)object;
 
 		StagedModelDataHandlerUtil.exportStagedModel(_portletDataContext,

@@ -41,7 +41,8 @@ public class DLFileRankExportActionableDynamicQuery
 	}
 
 	@Override
-	protected void performAction(Object object) throws PortalException {
+	protected void performAction(Object object)
+		throws PortalException, SystemException {
 		DLFileRank stagedModel = (DLFileRank)object;
 
 		StagedModelDataHandlerUtil.exportStagedModel(_portletDataContext,

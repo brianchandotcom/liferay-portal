@@ -41,7 +41,8 @@ public class DDMContentExportActionableDynamicQuery
 	}
 
 	@Override
-	protected void performAction(Object object) throws PortalException {
+	protected void performAction(Object object)
+		throws PortalException, SystemException {
 		DDMContent stagedModel = (DDMContent)object;
 
 		StagedModelDataHandlerUtil.exportStagedModel(_portletDataContext,

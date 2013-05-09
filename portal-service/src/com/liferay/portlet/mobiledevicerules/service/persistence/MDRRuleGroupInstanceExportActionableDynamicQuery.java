@@ -41,7 +41,8 @@ public class MDRRuleGroupInstanceExportActionableDynamicQuery
 	}
 
 	@Override
-	protected void performAction(Object object) throws PortalException {
+	protected void performAction(Object object)
+		throws PortalException, SystemException {
 		MDRRuleGroupInstance stagedModel = (MDRRuleGroupInstance)object;
 
 		StagedModelDataHandlerUtil.exportStagedModel(_portletDataContext,

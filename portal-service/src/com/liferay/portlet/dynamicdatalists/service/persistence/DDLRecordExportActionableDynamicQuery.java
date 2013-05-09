@@ -41,7 +41,8 @@ public class DDLRecordExportActionableDynamicQuery
 	}
 
 	@Override
-	protected void performAction(Object object) throws PortalException {
+	protected void performAction(Object object)
+		throws PortalException, SystemException {
 		DDLRecord stagedModel = (DDLRecord)object;
 
 		StagedModelDataHandlerUtil.exportStagedModel(_portletDataContext,

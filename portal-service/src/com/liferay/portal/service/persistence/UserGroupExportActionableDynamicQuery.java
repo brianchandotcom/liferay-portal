@@ -40,7 +40,8 @@ public class UserGroupExportActionableDynamicQuery
 	}
 
 	@Override
-	protected void performAction(Object object) throws PortalException {
+	protected void performAction(Object object)
+		throws PortalException, SystemException {
 		UserGroup stagedModel = (UserGroup)object;
 
 		StagedModelDataHandlerUtil.exportStagedModel(_portletDataContext,

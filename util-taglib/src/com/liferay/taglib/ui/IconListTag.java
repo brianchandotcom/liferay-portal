@@ -83,7 +83,7 @@ public class IconListTag extends BaseBodyTagSupport implements BodyTag {
 						pageContext.getServletContext(), getStartPage())) {
 
 					jspWriter.write(
-						"<ul class=\"lfr-component taglib-icon-list\">");
+						"<ul class=\"lfr-component taglib-icon-list unstyled\">");
 				}
 				else {
 					PortalIncludeUtil.include(pageContext, _startPage);

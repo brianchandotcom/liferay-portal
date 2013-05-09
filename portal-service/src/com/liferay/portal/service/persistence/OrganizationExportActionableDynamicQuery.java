@@ -40,7 +40,8 @@ public class OrganizationExportActionableDynamicQuery
 	}
 
 	@Override
-	protected void performAction(Object object) throws PortalException {
+	protected void performAction(Object object)
+		throws PortalException, SystemException {
 		Organization stagedModel = (Organization)object;
 
 		StagedModelDataHandlerUtil.exportStagedModel(_portletDataContext,

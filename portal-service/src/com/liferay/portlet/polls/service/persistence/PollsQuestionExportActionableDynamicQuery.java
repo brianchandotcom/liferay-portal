@@ -41,7 +41,8 @@ public class PollsQuestionExportActionableDynamicQuery
 	}
 
 	@Override
-	protected void performAction(Object object) throws PortalException {
+	protected void performAction(Object object)
+		throws PortalException, SystemException {
 		PollsQuestion stagedModel = (PollsQuestion)object;
 
 		StagedModelDataHandlerUtil.exportStagedModel(_portletDataContext,

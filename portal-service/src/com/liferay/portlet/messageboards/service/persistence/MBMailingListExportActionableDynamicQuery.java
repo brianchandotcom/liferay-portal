@@ -41,7 +41,8 @@ public class MBMailingListExportActionableDynamicQuery
 	}
 
 	@Override
-	protected void performAction(Object object) throws PortalException {
+	protected void performAction(Object object)
+		throws PortalException, SystemException {
 		MBMailingList stagedModel = (MBMailingList)object;
 
 		StagedModelDataHandlerUtil.exportStagedModel(_portletDataContext,

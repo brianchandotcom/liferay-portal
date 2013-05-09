@@ -41,7 +41,8 @@ public class MBBanExportActionableDynamicQuery
 	}
 
 	@Override
-	protected void performAction(Object object) throws PortalException {
+	protected void performAction(Object object)
+		throws PortalException, SystemException {
 		MBBan stagedModel = (MBBan)object;
 
 		StagedModelDataHandlerUtil.exportStagedModel(_portletDataContext,

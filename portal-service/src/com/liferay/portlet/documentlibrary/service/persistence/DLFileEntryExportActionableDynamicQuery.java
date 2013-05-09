@@ -41,7 +41,8 @@ public class DLFileEntryExportActionableDynamicQuery
 	}
 
 	@Override
-	protected void performAction(Object object) throws PortalException {
+	protected void performAction(Object object)
+		throws PortalException, SystemException {
 		DLFileEntry stagedModel = (DLFileEntry)object;
 
 		StagedModelDataHandlerUtil.exportStagedModel(_portletDataContext,

@@ -41,7 +41,8 @@ public class AssetCategoryExportActionableDynamicQuery
 	}
 
 	@Override
-	protected void performAction(Object object) throws PortalException {
+	protected void performAction(Object object)
+		throws PortalException, SystemException {
 		AssetCategory stagedModel = (AssetCategory)object;
 
 		StagedModelDataHandlerUtil.exportStagedModel(_portletDataContext,

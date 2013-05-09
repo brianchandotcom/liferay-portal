@@ -1488,6 +1488,16 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 			layoutId, name, languageId);
 	}
 
+	public void validateImportLayoutsFile(long userId, long groupId,
+		boolean privateLayout,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_layoutLocalService.validateImportLayoutsFile(userId, groupId,
+			privateLayout, parameterMap, file);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

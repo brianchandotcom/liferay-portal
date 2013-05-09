@@ -180,6 +180,17 @@ public class LayoutServiceUtil {
 			title, description, type, hidden, friendlyURL, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.repository.model.FileEntry addTempFileEntry(
+		long groupId, java.lang.String fileName,
+		java.lang.String tempFolderName, java.io.InputStream inputStream,
+		java.lang.String mimeType)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addTempFileEntry(groupId, fileName, tempFolderName,
+			inputStream, mimeType);
+	}
+
 	/**
 	* Deletes the layout with the primary key, also deleting the layout's child
 	* layouts, and associated resources.
@@ -217,6 +228,13 @@ public class LayoutServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteLayout(plid, serviceContext);
+	}
+
+	public static void deleteTempFileEntry(long groupId,
+		java.lang.String fileName, java.lang.String tempFolderName)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteTempFileEntry(groupId, fileName, tempFolderName);
 	}
 
 	/**
@@ -494,6 +512,13 @@ public class LayoutServiceUtil {
 		return getService()
 				   .getLayouts(groupId, privateLayout, parentLayoutId,
 			incomplete, start, end);
+	}
+
+	public static java.lang.String[] getTempFileEntryNames(long groupId,
+		java.lang.String tempFolderName)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getTempFileEntryNames(groupId, tempFolderName);
 	}
 
 	/**
@@ -1017,6 +1042,17 @@ public class LayoutServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().updatePriority(plid, priority);
+	}
+
+	public static void validateImportLayoutsFile(long groupId,
+		boolean privateLayout,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.validateImportLayoutsFile(groupId, privateLayout, parameterMap,
+			file);
 	}
 
 	public static LayoutService getService() {

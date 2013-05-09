@@ -18,8 +18,9 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
+import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
@@ -30,8 +31,8 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
-import com.liferay.portlet.wiki.service.persistence.WikiNodeActionableDynamicQuery;
-import com.liferay.portlet.wiki.service.persistence.WikiPageActionableDynamicQuery;
+import com.liferay.portlet.wiki.service.persistence.WikiNodeExportActionableDynamicQuery;
+import com.liferay.portlet.wiki.service.persistence.WikiPageExportActionableDynamicQuery;
 import com.liferay.portlet.wiki.util.WikiCacheThreadLocal;
 import com.liferay.portlet.wiki.util.WikiCacheUtil;
 
@@ -46,6 +47,7 @@ import javax.portlet.PortletPreferences;
  * @author Marcellus Tavares
  * @author Juan Fernández
  * @author Zsolt Berentey
+ * @author Mate Thurzo
  */
 public class WikiPortletDataHandler extends BasePortletDataHandler {
 
@@ -117,55 +119,12 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
 		ActionableDynamicQuery nodeActionableDynamicQuery =
-			new WikiNodeActionableDynamicQuery() {
-
-			@Override
-			protected void addCriteria(DynamicQuery dynamicQuery) {
-				portletDataContext.addDateRangeCriteria(
-					dynamicQuery, "modifiedDate");
-			}
-
-			@Override
-			protected void performAction(Object object) throws PortalException {
-				WikiNode node = (WikiNode)object;
-
-				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext, node);
-			}
-
-		};
-
-		nodeActionableDynamicQuery.setGroupId(
-			portletDataContext.getScopeGroupId());
+			new WikiNodeExportActionableDynamicQuery(portletDataContext);
 
 		nodeActionableDynamicQuery.performActions();
 
 		ActionableDynamicQuery pageActionableDynamicQuery =
-			new WikiPageActionableDynamicQuery() {
-
-			@Override
-			protected void addCriteria(DynamicQuery dynamicQuery) {
-				portletDataContext.addDateRangeCriteria(
-					dynamicQuery, "modifiedDate");
-
-				Property statusProperty = PropertyFactoryUtil.forName("status");
-
-				dynamicQuery.add(
-					statusProperty.eq(WorkflowConstants.STATUS_APPROVED));
-			}
-
-			@Override
-			protected void performAction(Object object) throws PortalException {
-				WikiPage page = (WikiPage)object;
-
-				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext, page);
-			}
-
-		};
-
-		pageActionableDynamicQuery.setGroupId(
-			portletDataContext.getScopeGroupId());
+			getPageActionableDynamicQuery(portletDataContext);
 
 		pageActionableDynamicQuery.performActions();
 
@@ -211,6 +170,47 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 		}
 
 		return portletPreferences;
+	}
+
+	@Override
+	protected void doPrepareManifestSummary(
+			PortletDataContext portletDataContext)
+		throws Exception {
+
+		ManifestSummary manifestSummary =
+			portletDataContext.getManifestSummary();
+
+		ActionableDynamicQuery nodeActionableDynamicQuery =
+			new WikiNodeExportActionableDynamicQuery(portletDataContext);
+
+		manifestSummary.addModelCount(
+			WikiNode.class, nodeActionableDynamicQuery.performCount());
+
+		ActionableDynamicQuery pageExportActionableDynamicQuery =
+			getPageActionableDynamicQuery(portletDataContext);
+
+		manifestSummary.addModelCount(
+			WikiPage.class, pageExportActionableDynamicQuery.performCount());
+	}
+
+	protected ActionableDynamicQuery getPageActionableDynamicQuery(
+			final PortletDataContext portletDataContext)
+		throws SystemException {
+
+		return new WikiPageExportActionableDynamicQuery(portletDataContext) {
+
+			@Override
+			protected void addCriteria(DynamicQuery dynamicQuery) {
+				portletDataContext.addDateRangeCriteria(
+					dynamicQuery, "modifiedDate");
+
+				Property statusProperty = PropertyFactoryUtil.forName("status");
+
+				dynamicQuery.add(
+					statusProperty.eq(WorkflowConstants.STATUS_APPROVED));
+			}
+
+		};
 	}
 
 	protected static final String RESOURCE_NAME = "com.liferay.portlet.wiki";

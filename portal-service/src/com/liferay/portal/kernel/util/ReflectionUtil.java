@@ -58,7 +58,7 @@ public class ReflectionUtil {
 		bridge:
 		for (Method currentMethod : clazz.getMethods()) {
 			if (!currentMethod.isBridge() ||
-				name.equals(currentMethod.getName())) {
+				!name.equals(currentMethod.getName())) {
 
 				continue;
 			}

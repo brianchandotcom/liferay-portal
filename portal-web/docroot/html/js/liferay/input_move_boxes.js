@@ -1,12 +1,9 @@
 AUI.add(
 	'liferay-input-move-boxes',
 	function(A) {
-		var Lang = A.Lang;
 		var Util = Liferay.Util;
 
-		var getClassName = A.ClassNameManager.getClassName;
-
-		var	NAME = 'inputmoveboxes';
+		var NAME = 'inputmoveboxes';
 
 		var CONFIG_REORDER = {
 			children: [
@@ -22,8 +19,6 @@ AUI.add(
 				]
 			]
 		};
-
-		var	CSS_INPUTMOVEBOXES = getClassName(NAME);
 
 		var CSS_LEFT_REORDER = 'left-reorder';
 
@@ -74,16 +69,16 @@ AUI.add(
 						var leftReorderToolbar = instance._leftReorderToolbar;
 
 						if (leftReorderToolbar) {
-							leftReorderToolbar.after('btn:click', A.rbind('_afterOrderClick', instance, instance._leftBox));
+							leftReorderToolbar.after('click', A.rbind('_afterOrderClick', instance, instance._leftBox));
 						}
 
 						var rightReorderToolbar = instance._rightReorderToolbar;
 
 						if (rightReorderToolbar) {
-							rightReorderToolbar.after('btn:click', A.rbind('_afterOrderClick', instance, instance._rightBox));
+							rightReorderToolbar.after('click', A.rbind('_afterOrderClick', instance, instance._rightBox));
 						}
 
-						instance._moveToolbar.on('btn:click', instance._afterMoveClick, instance);
+						instance._moveToolbar.on('click', instance._afterMoveClick, instance);
 
 						instance._leftBox.on('focus', A.rbind('_onSelectFocus', instance, instance._rightBox));
 						instance._rightBox.on('focus', A.rbind('_onSelectFocus', instance, instance._leftBox));
@@ -92,19 +87,25 @@ AUI.add(
 					_afterMoveClick: function(event) {
 						var instance = this;
 
-						var cssClass = event.target.get('cssClass');
+						var cssClass;
+						var target = event.domEvent.target;
+						var targetBtn = target.ancestor('.btn', true);
+
+						if (targetBtn) {
+							cssClass = targetBtn.get('className');
+						}
 
 						var from = instance._leftBox;
 						var to = instance._rightBox;
 						var sort;
 
-						if (cssClass.indexOf('move-right') != -1) {
+						if (cssClass.indexOf('move-right') !== -1) {
 							from = instance._rightBox;
 							to = instance._leftBox;
-							sort = !instance.get('leftReorder');
+							sort = instance.get('rightReorder');
 						}
 						else {
-							sort = !instance.get('rightReorder');
+							sort = instance.get('leftReorder');
 						}
 
 						Util.moveItem(from, to, sort);
@@ -119,13 +120,17 @@ AUI.add(
 					},
 
 					_afterOrderClick: function(event, box) {
-						var instance = this;
+						var cssClass;
+						var target = event.domEvent.target;
+						var targetBtn = target.ancestor('.btn', true);
 
-						var cssClass = event.target.get('cssClass');
+						if (targetBtn) {
+							cssClass = targetBtn.get('className');
+						}
 
 						var direction = 1;
 
-						if (cssClass.indexOf('reorder-up') != -1) {
+						if (cssClass.indexOf('reorder-up') !== -1) {
 							direction = 0;
 						}
 
@@ -143,8 +148,8 @@ AUI.add(
 
 						var contentBox = instance.get('contentBox');
 
-						instance._leftBox = contentBox.one('.left-selector select');
-						instance._rightBox = contentBox.one('.right-selector select');
+						instance._leftBox = contentBox.one('.left-selector');
+						instance._rightBox = contentBox.one('.right-selector');
 					},
 
 					_renderButtons: function() {
@@ -152,7 +157,7 @@ AUI.add(
 
 						var contentBox = instance.get('contentBox');
 
-						var moveButtonsColumn = contentBox.one('.move-arrow-buttons-content');
+						var moveButtonsColumn = contentBox.one('.move-arrow-buttons');
 
 						var strings = instance.get('strings');
 
@@ -180,7 +185,7 @@ AUI.add(
 						}
 
 						if (instance.get('leftReorder')) {
-							var leftColumn = contentBox.one('.left-selector-column-content');
+							var leftColumn = contentBox.one('.left-selector-column');
 
 							CONFIG_REORDER.children[0][0].title = strings.LEFT_MOVE_UP;
 							CONFIG_REORDER.children[0][1].title = strings.LEFT_MOVE_DOWN;
@@ -189,7 +194,7 @@ AUI.add(
 						}
 
 						if (instance.get('rightReorder')) {
-							var rightColumn = contentBox.one('.right-selector-column-content');
+							var rightColumn = contentBox.one('.right-selector-column');
 
 							CONFIG_REORDER.children[0][0].title = strings.RIGHT_MOVE_UP;
 							CONFIG_REORDER.children[0][1].title = strings.RIGHT_MOVE_DOWN;

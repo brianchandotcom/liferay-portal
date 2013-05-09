@@ -1,6 +1,17 @@
 .taglib-move-boxes {
 	margin-bottom: 1em;
 
+	label {
+		border-bottom: 1px solid transparent;
+		display: block;
+		margin-bottom: 5px;
+		padding: 5px;
+	}
+
+	.toolbar {
+		text-align: center;
+	}
+
 	.arrow-button img {
 		border-width: 0;
 		height: 16px;
@@ -8,20 +19,11 @@
 	}
 
 	.choice-selector {
-		select {
-			min-width: 150px;
-		}
+		min-width: 150px;
+	}
 
-		label {
-			border-bottom: 1px solid transparent;
-			display: block;
-			margin-bottom: 5px;
-			padding: 5px;
-		}
-
-		.field-content {
-			margin-bottom: 0;
-		}
+	.field-content {
+		margin-bottom: 0;
 	}
 
 	.move-arrow-buttons {
@@ -31,10 +33,6 @@
 			display: block;
 		}
 	}
-}
-
-.ie .taglib-move-boxes .choice-selector select {
-	width: expression(this.currentStyle.getAttribute('minWidth') || 150 + 'px');
 }
 
 /* Skin */

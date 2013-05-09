@@ -140,6 +140,10 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 	}
 
 	public boolean isActive(long companyId) {
+		if (Validator.isNull(getPortletId())) {
+			return true;
+		}
+
 		Portlet portlet = null;
 
 		try {

@@ -151,7 +151,7 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 				Property statusProperty = PropertyFactoryUtil.forName("status");
 
 				dynamicQuery.add(
-					statusProperty.ne(WorkflowConstants.STATUS_IN_TRASH));
+					statusProperty.eq(WorkflowConstants.STATUS_APPROVED));
 			}
 
 			@Override

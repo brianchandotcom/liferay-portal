@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
-import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
@@ -54,7 +53,6 @@ import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.PortletItem;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletItemLocalServiceUtil;
@@ -284,13 +282,16 @@ public class PortletExporter {
 
 		headerElement.addAttribute("type", "portlet");
 
-		Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
-			layout.getCompanyId());
-
 		headerElement.addAttribute(
-			"company-group-id", String.valueOf(companyGroup.getGroupId()));
+			"company-group-id",
+			String.valueOf(portletDataContext.getCompanyGroupId()));
 
 		headerElement.addAttribute("group-id", String.valueOf(scopeGroupId));
+
+		headerElement.addAttribute(
+			"user-personal-site-group-id",
+			String.valueOf(portletDataContext.getUserPersonalSiteGroupId()));
+
 		headerElement.addAttribute(
 			"private-layout", String.valueOf(layout.isPrivateLayout()));
 		headerElement.addAttribute(
@@ -430,10 +431,9 @@ public class PortletExporter {
 		Element assetCategoryElement = assetCategoriesElement.addElement(
 			"category");
 
-		Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
-			assetCategory.getCompanyId());
+		if (assetCategory.getGroupId() ==
+				portletDataContext.getCompanyGroupId()) {
 
-		if (assetCategory.getGroupId() == companyGroup.getGroupId()) {
 			assetCategoryElement.addAttribute("global", "true");
 		}
 
@@ -600,10 +600,9 @@ public class PortletExporter {
 		Element assetVocabularyElement = assetVocabulariesElement.addElement(
 			"vocabulary");
 
-		Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
-			assetVocabulary.getCompanyId());
+		if (assetVocabulary.getGroupId() ==
+				portletDataContext.getCompanyGroupId()) {
 
-		if (assetVocabulary.getGroupId() == companyGroup.getGroupId()) {
 			assetVocabularyElement.addAttribute("global", "true");
 		}
 
@@ -1114,7 +1113,7 @@ public class PortletExporter {
 
 		if (rootPotletId.equals(PortletKeys.ASSET_PUBLISHER)) {
 			preferencesXML = updateAssetPublisherPortletPreferences(
-				preferencesXML, plid);
+				portletDataContext, preferencesXML, plid);
 		}
 		else if (rootPotletId.equals(PortletKeys.TAGS_CATEGORIES_NAVIGATION)) {
 			preferencesXML = updateAssetCategoriesNavigationPortletPreferences(
@@ -1492,7 +1491,7 @@ public class PortletExporter {
 	}
 
 	protected String updateAssetPublisherPortletPreferences(
-			String xml, long plid)
+			PortletDataContext portletDataContext, String xml, long plid)
 		throws Exception {
 
 		javax.portlet.PortletPreferences jxPreferences =
@@ -1534,7 +1533,8 @@ public class PortletExporter {
 					AssetCategory.class.getName());
 			}
 			else if (name.equals("scopeIds")) {
-				updateAssetPublisherScopeIds(jxPreferences, name, plid);
+				updateAssetPublisherScopeIds(
+					portletDataContext, jxPreferences, name, plid);
 			}
 		}
 
@@ -1542,6 +1542,7 @@ public class PortletExporter {
 	}
 
 	protected void updateAssetPublisherScopeIds(
+			PortletDataContext portletDataContext,
 			javax.portlet.PortletPreferences jxPreferences, String key,
 			long plid)
 		throws Exception {
@@ -1554,13 +1555,9 @@ public class PortletExporter {
 
 		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
 
-		Company company = CompanyLocalServiceUtil.getCompany(
-			layout.getCompanyId());
-
-		Group companyGroup = company.getGroup();
-
 		String companyGroupScopeId =
-			AssetPublisher.SCOPE_ID_GROUP_PREFIX + companyGroup.getGroupId();
+			AssetPublisher.SCOPE_ID_GROUP_PREFIX +
+				portletDataContext.getCompanyGroupId();
 
 		String[] newValues = new String[oldValues.length];
 

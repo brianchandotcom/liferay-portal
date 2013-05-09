@@ -1,10 +1,7 @@
 AUI.add(
 	'liferay-input-move-boxes',
 	function(A) {
-		var Lang = A.Lang;
 		var Util = Liferay.Util;
-
-		var getClassName = A.ClassNameManager.getClassName;
 
 		var NAME = 'inputmoveboxes';
 
@@ -22,8 +19,6 @@ AUI.add(
 				]
 			]
 		};
-
-		var CSS_INPUTMOVEBOXES = getClassName(NAME);
 
 		var CSS_LEFT_REORDER = 'left-reorder';
 
@@ -91,19 +86,20 @@ AUI.add(
 
 					_afterMoveClick: function(event) {
 						var instance = this;
+
 						var cssClass;
 						var target = event.domEvent.target;
-						var targetBtn = target.hasClass('btn') ? target : target.ancestor('.btn');
+						var targetBtn = target.ancestor('.btn', true);
 
 						if (targetBtn) {
-							cssClass = targetBtn.get('classList');
+							cssClass = targetBtn.get('className');
 						}
 
 						var from = instance._leftBox;
 						var to = instance._rightBox;
 						var sort;
 
-						if (cssClass && cssClass._nodes.indexOf('move-left') != -1) {
+						if (cssClass.indexOf('move-right') !== -1) {
 							from = instance._rightBox;
 							to = instance._leftBox;
 							sort = instance.get('rightReorder');
@@ -124,18 +120,17 @@ AUI.add(
 					},
 
 					_afterOrderClick: function(event, box) {
-						var instance = this;
 						var cssClass;
 						var target = event.domEvent.target;
-						var targetBtn = target.hasClass('btn') ? target : target.ancestor('.btn');
+						var targetBtn = target.ancestor('.btn', true);
 
 						if (targetBtn) {
-							cssClass = targetBtn.get('classList');
+							cssClass = targetBtn.get('className');
 						}
 
 						var direction = 1;
 
-						if (cssClass._nodes.indexOf('reorder-up') != -1) {
+						if (cssClass.indexOf('reorder-up') !== -1) {
 							direction = 0;
 						}
 
@@ -153,8 +148,8 @@ AUI.add(
 
 						var contentBox = instance.get('contentBox');
 
-						instance._leftBox = contentBox.one('select.left-selector');
-						instance._rightBox = contentBox.one('select.right-selector');
+						instance._leftBox = contentBox.one('.left-selector');
+						instance._rightBox = contentBox.one('.right-selector');
 					},
 
 					_renderButtons: function() {

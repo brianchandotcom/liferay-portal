@@ -84,6 +84,7 @@
 
 				<c:if test="<%= !group.isLayoutPrototype() %>">
 					<ul class="hide" id="<portlet:namespace />selectApplications">
+						<aui:input name="<%= PortletDataHandlerKeys.PORTLET_SETUP %>" type="hidden" value="<%= true %>" />
 
 						<%
 						Set<String> portletDataHandlerClasses = new HashSet<String>();
@@ -137,6 +138,10 @@
 				<aui:input helpMessage="choose-content-help" id="chooseContent" label="choose-content" name="<%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>" type="radio" value="<%= false %>" />
 
 				<ul class="hide" id="<portlet:namespace />selectContents">
+					<aui:input name="<%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>" type="hidden" value="<%= false %>" />
+
+					<aui:input name="<%= PortletDataHandlerKeys.PORTLET_DATA %>" type="hidden" value="<%= true %>" />
+
 					<li>
 						<div class="hide" id="<portlet:namespace />range">
 							<ul class="lfr-tree lfr-component">

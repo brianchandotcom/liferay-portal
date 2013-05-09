@@ -73,7 +73,7 @@ public class JavaTermComparator implements Comparator<JavaTerm> {
 		List<String> parameterTypes1 = javaTerm1.getParameterTypes();
 
 		if (parameterTypes1.isEmpty()) {
-			return 1;
+			return -1;
 		}
 
 		for (int i = 0; i < parameterTypes1.size(); i++) {

@@ -332,6 +332,10 @@ public class ServiceTestUtil {
 		return _random.nextBoolean();
 	}
 
+	public static Map<Locale, String> randomLocaleStringMap() throws Exception {
+		return randomLocaleStringMap(LocaleUtil.getDefault());
+	}
+
 	public static Map<Locale, String> randomLocaleStringMap(Locale locale)
 		throws Exception {
 
@@ -340,10 +344,6 @@ public class ServiceTestUtil {
 		map.put(LocaleUtil.getDefault(), randomString());
 
 		return map;
-	}
-
-	public static Map<Locale, String> randomLocaleStringMap() throws Exception {
-		return randomLocaleStringMap(LocaleUtil.getDefault());
 	}
 
 	public static long randomLong() throws Exception {

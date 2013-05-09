@@ -30,29 +30,6 @@ import java.util.List;
 public abstract class BaseActionableDynamicQuery
 	implements ActionableDynamicQuery {
 
-	public void performActions(long startPrimaryKey, long endPrimaryKey)
-		throws PortalException, SystemException {
-
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			_clazz, _classLoader);
-
-		Property property = PropertyFactoryUtil.forName(
-			_primaryKeyPropertyName);
-
-		dynamicQuery.add(property.ge(startPrimaryKey));
-		dynamicQuery.add(property.lt(endPrimaryKey));
-
-		addDefaultCriteria(dynamicQuery);
-		addCriteria(dynamicQuery);
-
-		List<Object> objects = (List<Object>)executeDynamicQuery(
-			dynamicQuery, _dynamicQueryMethod);
-
-		for (Object object : objects) {
-			performAction(object);
-		}
-	}
-
 	public void performActions() throws PortalException, SystemException {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 			_clazz, _classLoader);
@@ -94,6 +71,29 @@ public abstract class BaseActionableDynamicQuery
 
 			startPrimaryKey = endPrimaryKey;
 			endPrimaryKey += _interval;
+		}
+	}
+
+	public void performActions(long startPrimaryKey, long endPrimaryKey)
+		throws PortalException, SystemException {
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			_clazz, _classLoader);
+
+		Property property = PropertyFactoryUtil.forName(
+			_primaryKeyPropertyName);
+
+		dynamicQuery.add(property.ge(startPrimaryKey));
+		dynamicQuery.add(property.lt(endPrimaryKey));
+
+		addDefaultCriteria(dynamicQuery);
+		addCriteria(dynamicQuery);
+
+		List<Object> objects = (List<Object>)executeDynamicQuery(
+			dynamicQuery, _dynamicQueryMethod);
+
+		for (Object object : objects) {
+			performAction(object);
 		}
 	}
 

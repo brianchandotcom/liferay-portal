@@ -106,6 +106,10 @@ public class DDMStructureTestUtil {
 			TestPropsValues.getGroupId(), className, xsd, defaultLocale);
 	}
 
+	public static String getSampleStructuredContent() {
+		return getSampleStructuredContent("name", "title");
+	}
+
 	public static String getSampleStructuredContent(
 		String name, String keywords) {
 
@@ -129,8 +133,8 @@ public class DDMStructureTestUtil {
 		return document.asXML();
 	}
 
-	public static String getSampleStructuredContent() {
-		return getSampleStructuredContent("name", "title");
+	public static String getSampleStructureXSD() {
+		return getSampleStructureXSD("name");
 	}
 
 	public static String getSampleStructureXSD(String name) {
@@ -168,10 +172,6 @@ public class DDMStructureTestUtil {
 		repeatableElement.addCDATA("true");
 
 		return document.asXML();
-	}
-
-	public static String getSampleStructureXSD() {
-		return getSampleStructureXSD("name");
 	}
 
 	protected static Document createDocumentContent() {

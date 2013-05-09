@@ -1,9 +1,4 @@
 .portlet-asset-publisher {
-	.add-asset-selector {
-		margin-bottom: 1em;
-		overflow: auto;
-	}
-
 	.asset-abstract {
 		.asset-content p {
 			margin-bottom: 0;
@@ -69,12 +64,6 @@
 
 	.asset-more {
 		clear: left;
-	}
-
-	.asset-entries-group-label {
-		background-color: #DDD;
-		clear: both;
-		padding: 3px;
 	}
 
 	.asset-small-image {

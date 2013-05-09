@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
+import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataContextListener;
 import com.liferay.portal.kernel.lar.PortletDataException;
@@ -70,6 +71,7 @@ import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.TeamLocalServiceUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.NoSuchEntryException;
 import com.liferay.portlet.asset.model.AssetCategory;
@@ -141,6 +143,7 @@ import jodd.bean.BeanUtil;
  * @author Raymond Augé
  * @author Bruno Farache
  * @author Alexander Chow
+ * @author Mate Thurzo
  */
 public class PortletDataContextImpl implements PortletDataContext {
 
@@ -207,6 +210,26 @@ public class PortletDataContextImpl implements PortletDataContext {
 		_zipWriter = null;
 
 		initXStream();
+	}
+
+	public PortletDataContextImpl(
+			ThemeDisplay themeDisplay, Date startDate, Date endDate)
+		throws PortletDataException {
+
+		validateDateRange(startDate, endDate);
+
+		_companyId = themeDisplay.getCompanyId();
+		_groupId = themeDisplay.getScopeGroupId();
+		_scopeGroupId = themeDisplay.getScopeGroupId();
+		_startDate = startDate;
+		_endDate = endDate;
+
+		_parameterMap = null;
+		_primaryKeys = null;
+		_dataStrategy = null;
+		_userIdStrategy = null;
+		_zipReader = null;
+		_zipWriter = null;
 	}
 
 	public void addAssetCategories(Class<?> clazz, long classPK)
@@ -926,6 +949,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return _locksMap;
 	}
 
+	public ManifestSummary getManifestSummary() {
+		return _manifestSummary;
+	}
+
 	public Map<?, ?> getNewPrimaryKeysMap(Class<?> clazz) {
 		return getNewPrimaryKeysMap(clazz.getName());
 	}
@@ -1093,16 +1120,16 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return getZipReader().getEntryAsString(path);
 	}
 
-	public List<String> getZipFolderEntries() {
-		return getZipFolderEntries(StringPool.SLASH);
-	}
-
 	public List<String> getZipFolderEntries(String path) {
 		if (!Validator.isFilePath(path, false)) {
 			return null;
 		}
 
 		return getZipReader().getFolderEntries(path);
+	}
+
+	public List<String> getZipFolderEntries() {
+		return getZipFolderEntries(StringPool.SLASH);
 	}
 
 	public ZipReader getZipReader() {
@@ -1491,6 +1518,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	public void setImportDataRootElement(Element importDataRootElement) {
 		_importDataRootElement = importDataRootElement;
+	}
+
+	public void setManifestSummary(ManifestSummary manifestSummary) {
+		_manifestSummary = manifestSummary;
 	}
 
 	public void setOldPlid(long oldPlid) {
@@ -1913,6 +1944,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private long _groupId;
 	private Element _importDataRootElement;
 	private Map<String, Lock> _locksMap = new HashMap<String, Lock>();
+	private ManifestSummary _manifestSummary = new ManifestSummary();
 	private Map<String, Map<?, ?>> _newPrimaryKeysMaps =
 		new HashMap<String, Map<?, ?>>();
 	private Set<String> _notUniquePerLayout = new HashSet<String>();

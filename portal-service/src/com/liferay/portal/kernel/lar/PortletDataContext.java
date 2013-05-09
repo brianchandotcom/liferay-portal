@@ -215,6 +215,8 @@ public interface PortletDataContext extends Serializable {
 
 	public Map<String, Lock> getLocks();
 
+	public ManifestSummary getManifestSummary();
+
 	public Map<?, ?> getNewPrimaryKeysMap(Class<?> clazz);
 
 	public Map<?, ?> getNewPrimaryKeysMap(String className);
@@ -298,9 +300,9 @@ public interface PortletDataContext extends Serializable {
 
 	public String getZipEntryAsString(String path);
 
-	public List<String> getZipFolderEntries();
-
 	public List<String> getZipFolderEntries(String path);
+
+	public List<String> getZipFolderEntries();
 
 	public ZipReader getZipReader();
 
@@ -358,6 +360,8 @@ public interface PortletDataContext extends Serializable {
 	public void setGroupId(long groupId);
 
 	public void setImportDataRootElement(Element importDataRootElement);
+
+	public void setManifestSummary(ManifestSummary manifestSummary);
 
 	public void setOldPlid(long oldPlid);
 

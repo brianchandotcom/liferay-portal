@@ -46,7 +46,7 @@ double version = ParamUtil.getDouble(request, "version");
 
 	<aui:fieldset>
 		<aui:field-wrapper label="id">
-			<%= oldArticleId %>
+			<%= HtmlUtil.escape(oldArticleId) %>
 		</aui:field-wrapper>
 
 		<aui:field-wrapper label="new-id">

@@ -30,6 +30,28 @@ import java.util.List;
 public abstract class BaseActionableDynamicQuery
 	implements ActionableDynamicQuery {
 
+	public void performActions(long startPrimaryKey, long endPrimaryKey)
+		throws PortalException, SystemException {
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			_clazz, _classLoader);
+
+		Property property = PropertyFactoryUtil.forName(
+			_primaryKeyPropertyName);
+
+		dynamicQuery.add(property.ge(startPrimaryKey));
+		dynamicQuery.add(property.lt(endPrimaryKey));
+
+		addDefaultCriteria(dynamicQuery);
+		addCriteria(dynamicQuery);
+
+		List<Object> objects = dynamicQuery(dynamicQuery);
+
+		for (Object object : objects) {
+			performAction(object);
+		}
+	}
+
 	public void performActions() throws PortalException, SystemException {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 			_clazz, _classLoader);
@@ -73,26 +95,14 @@ public abstract class BaseActionableDynamicQuery
 		}
 	}
 
-	public void performActions(long startPrimaryKey, long endPrimaryKey)
-		throws PortalException, SystemException {
-
+	public long performCount() throws PortalException, SystemException {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 			_clazz, _classLoader);
-
-		Property property = PropertyFactoryUtil.forName(
-			_primaryKeyPropertyName);
-
-		dynamicQuery.add(property.ge(startPrimaryKey));
-		dynamicQuery.add(property.lt(endPrimaryKey));
 
 		addDefaultCriteria(dynamicQuery);
 		addCriteria(dynamicQuery);
 
-		List<Object> objects = dynamicQuery(dynamicQuery);
-
-		for (Object object : objects) {
-			performAction(object);
-		}
+		return dynamicQueryCount(dynamicQuery);
 	}
 
 	public void setBaseLocalService(BaseLocalService baseLocalService)
@@ -105,6 +115,8 @@ public abstract class BaseActionableDynamicQuery
 		try {
 			_dynamicQueryMethod = clazz.getMethod(
 				"dynamicQuery", DynamicQuery.class);
+			_dynamicQueryCountMethod = clazz.getMethod(
+				"dynamicQueryCount", DynamicQuery.class);
 		}
 		catch (NoSuchMethodException nsme) {
 			throw new SystemException(nsme);
@@ -177,6 +189,31 @@ public abstract class BaseActionableDynamicQuery
 		}
 	}
 
+	@SuppressWarnings("rawtypes")
+	protected long dynamicQueryCount(DynamicQuery dynamicQuery)
+		throws PortalException, SystemException {
+
+		try {
+			return (Long)_dynamicQueryCountMethod.invoke(
+				_baseLocalService, dynamicQuery);
+		}
+		catch (InvocationTargetException ite) {
+			Throwable throwable = ite.getCause();
+
+			if (throwable instanceof PortalException) {
+				throw (PortalException)throwable;
+			}
+			else if (throwable instanceof SystemException) {
+				throw (SystemException)throwable;
+			}
+
+			throw new SystemException(ite);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+	}
+
 	protected abstract void performAction(Object object)
 		throws PortalException, SystemException;
 
@@ -184,6 +221,7 @@ public abstract class BaseActionableDynamicQuery
 	private ClassLoader _classLoader;
 	private Class<?> _clazz;
 	private long _companyId;
+	private Method _dynamicQueryCountMethod;
 	private Method _dynamicQueryMethod;
 	private long _groupId;
 	private int _interval = Indexer.DEFAULT_INTERVAL;

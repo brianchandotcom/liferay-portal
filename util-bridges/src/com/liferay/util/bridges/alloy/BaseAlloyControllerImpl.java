@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.scheduler.CronTrigger;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.Trigger;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -693,6 +694,15 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 				portletRequest, portletURL, null, null);
 
 		SearchContext searchContext = SearchContextFactory.getInstance(request);
+
+		Class<?> indexerClass = Class.forName(indexerClassName);
+
+		try {
+			indexerClass.getField(Field.GROUP_ID);
+		}
+		catch (Exception e) {
+			searchContext.setGroupIds(null);
+		}
 
 		if ((attributes != null) && !attributes.isEmpty()) {
 			searchContext.setAttributes(attributes);

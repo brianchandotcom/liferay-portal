@@ -36,7 +36,7 @@ import java.util.Date;
 public class LayoutCacheModel implements CacheModel<Layout>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(59);
+		StringBundler sb = new StringBundler(63);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -46,6 +46,10 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable {
 		sb.append(groupId);
 		sb.append(", companyId=");
 		sb.append(companyId);
+		sb.append(", userId=");
+		sb.append(userId);
+		sb.append(", userName=");
+		sb.append(userName);
 		sb.append(", createDate=");
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
@@ -114,6 +118,14 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable {
 		layoutImpl.setPlid(plid);
 		layoutImpl.setGroupId(groupId);
 		layoutImpl.setCompanyId(companyId);
+		layoutImpl.setUserId(userId);
+
+		if (userName == null) {
+			layoutImpl.setUserName(StringPool.BLANK);
+		}
+		else {
+			layoutImpl.setUserName(userName);
+		}
 
 		if (createDate == Long.MIN_VALUE) {
 			layoutImpl.setCreateDate(null);
@@ -257,6 +269,8 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable {
 		plid = objectInput.readLong();
 		groupId = objectInput.readLong();
 		companyId = objectInput.readLong();
+		userId = objectInput.readLong();
+		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		privateLayout = objectInput.readBoolean();
@@ -296,6 +310,15 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable {
 		objectOutput.writeLong(plid);
 		objectOutput.writeLong(groupId);
 		objectOutput.writeLong(companyId);
+		objectOutput.writeLong(userId);
+
+		if (userName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(userName);
+		}
+
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 		objectOutput.writeBoolean(privateLayout);
@@ -421,6 +444,8 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable {
 	public long plid;
 	public long groupId;
 	public long companyId;
+	public long userId;
+	public String userName;
 	public long createDate;
 	public long modifiedDate;
 	public boolean privateLayout;

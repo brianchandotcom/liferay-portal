@@ -16,6 +16,7 @@ package com.liferay.portal.model.impl;
 
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -29,6 +30,7 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutModel;
 import com.liferay.portal.model.LayoutSoap;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.PortalUtil;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
@@ -71,6 +73,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 			{ "plid", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
+			{ "userId", Types.BIGINT },
+			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "privateLayout", Types.BOOLEAN },
@@ -97,7 +101,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 			{ "layoutPrototypeLinkEnabled", Types.BOOLEAN },
 			{ "sourcePrototypeLayoutUuid", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Layout (uuid_ VARCHAR(75) null,plid LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,layoutId LONG,parentLayoutId LONG,name STRING null,title STRING null,description STRING null,keywords STRING null,robots STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,hidden_ BOOLEAN,friendlyURL VARCHAR(255) null,iconImage BOOLEAN,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,wapThemeId VARCHAR(75) null,wapColorSchemeId VARCHAR(75) null,css TEXT null,priority INTEGER,layoutPrototypeUuid VARCHAR(75) null,layoutPrototypeLinkEnabled BOOLEAN,sourcePrototypeLayoutUuid VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table Layout (uuid_ VARCHAR(75) null,plid LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,layoutId LONG,parentLayoutId LONG,name STRING null,title STRING null,description STRING null,keywords STRING null,robots STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,hidden_ BOOLEAN,friendlyURL VARCHAR(255) null,iconImage BOOLEAN,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,wapThemeId VARCHAR(75) null,wapColorSchemeId VARCHAR(75) null,css TEXT null,priority INTEGER,layoutPrototypeUuid VARCHAR(75) null,layoutPrototypeLinkEnabled BOOLEAN,sourcePrototypeLayoutUuid VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table Layout";
 	public static final String ORDER_BY_JPQL = " ORDER BY layout.parentLayoutId ASC, layout.priority ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Layout.parentLayoutId ASC, Layout.priority ASC";
@@ -143,6 +147,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		model.setPlid(soapModel.getPlid());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
+		model.setUserId(soapModel.getUserId());
+		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setPrivateLayout(soapModel.getPrivateLayout());
@@ -230,6 +236,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		attributes.put("plid", getPlid());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
+		attributes.put("userId", getUserId());
+		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("privateLayout", getPrivateLayout());
@@ -285,6 +293,18 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 		if (companyId != null) {
 			setCompanyId(companyId);
+		}
+
+		Long userId = (Long)attributes.get("userId");
+
+		if (userId != null) {
+			setUserId(userId);
+		}
+
+		String userName = (String)attributes.get("userName");
+
+		if (userName != null) {
+			setUserName(userName);
 		}
 
 		Date createDate = (Date)attributes.get("createDate");
@@ -512,6 +532,37 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 	public long getOriginalCompanyId() {
 		return _originalCompanyId;
+	}
+
+	@JSON
+	public long getUserId() {
+		return _userId;
+	}
+
+	public void setUserId(long userId) {
+		_userId = userId;
+	}
+
+	public String getUserUuid() throws SystemException {
+		return PortalUtil.getUserValue(getUserId(), "uuid", _userUuid);
+	}
+
+	public void setUserUuid(String userUuid) {
+		_userUuid = userUuid;
+	}
+
+	@JSON
+	public String getUserName() {
+		if (_userName == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _userName;
+		}
+	}
+
+	public void setUserName(String userName) {
+		_userName = userName;
 	}
 
 	@JSON
@@ -1332,6 +1383,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		layoutImpl.setPlid(getPlid());
 		layoutImpl.setGroupId(getGroupId());
 		layoutImpl.setCompanyId(getCompanyId());
+		layoutImpl.setUserId(getUserId());
+		layoutImpl.setUserName(getUserName());
 		layoutImpl.setCreateDate(getCreateDate());
 		layoutImpl.setModifiedDate(getModifiedDate());
 		layoutImpl.setPrivateLayout(getPrivateLayout());
@@ -1482,6 +1535,16 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		layoutCacheModel.groupId = getGroupId();
 
 		layoutCacheModel.companyId = getCompanyId();
+
+		layoutCacheModel.userId = getUserId();
+
+		layoutCacheModel.userName = getUserName();
+
+		String userName = layoutCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			layoutCacheModel.userName = null;
+		}
 
 		Date createDate = getCreateDate();
 
@@ -1644,7 +1707,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(59);
+		StringBundler sb = new StringBundler(63);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1654,6 +1717,10 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		sb.append(getGroupId());
 		sb.append(", companyId=");
 		sb.append(getCompanyId());
+		sb.append(", userId=");
+		sb.append(getUserId());
+		sb.append(", userName=");
+		sb.append(getUserName());
 		sb.append(", createDate=");
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
@@ -1710,7 +1777,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(91);
+		StringBundler sb = new StringBundler(97);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.Layout");
@@ -1731,6 +1798,14 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		sb.append(
 			"<column><column-name>companyId</column-name><column-value><![CDATA[");
 		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>userId</column-name><column-value><![CDATA[");
+		sb.append(getUserId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>userName</column-name><column-value><![CDATA[");
+		sb.append(getUserName());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>createDate</column-name><column-value><![CDATA[");
@@ -1849,6 +1924,9 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	private long _companyId;
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;
+	private long _userId;
+	private String _userUuid;
+	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _privateLayout;

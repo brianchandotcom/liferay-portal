@@ -16,6 +16,7 @@ package com.liferay.portal.model;
 
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -39,7 +40,7 @@ import java.util.Map;
  * @see com.liferay.portal.model.impl.LayoutModelImpl
  * @generated
  */
-public interface LayoutModel extends BaseModel<Layout> {
+public interface LayoutModel extends BaseModel<Layout>, StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -116,6 +117,50 @@ public interface LayoutModel extends BaseModel<Layout> {
 	 * @param companyId the company ID of this layout
 	 */
 	public void setCompanyId(long companyId);
+
+	/**
+	 * Returns the user ID of this layout.
+	 *
+	 * @return the user ID of this layout
+	 */
+	public long getUserId();
+
+	/**
+	 * Sets the user ID of this layout.
+	 *
+	 * @param userId the user ID of this layout
+	 */
+	public void setUserId(long userId);
+
+	/**
+	 * Returns the user uuid of this layout.
+	 *
+	 * @return the user uuid of this layout
+	 * @throws SystemException if a system exception occurred
+	 */
+	public String getUserUuid() throws SystemException;
+
+	/**
+	 * Sets the user uuid of this layout.
+	 *
+	 * @param userUuid the user uuid of this layout
+	 */
+	public void setUserUuid(String userUuid);
+
+	/**
+	 * Returns the user name of this layout.
+	 *
+	 * @return the user name of this layout
+	 */
+	@AutoEscape
+	public String getUserName();
+
+	/**
+	 * Sets the user name of this layout.
+	 *
+	 * @param userName the user name of this layout
+	 */
+	public void setUserName(String userName);
 
 	/**
 	 * Returns the create date of this layout.

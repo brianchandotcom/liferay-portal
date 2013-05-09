@@ -220,6 +220,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layout.setUuid(serviceContext.getUuid());
 		layout.setGroupId(groupId);
 		layout.setCompanyId(user.getCompanyId());
+		layout.setUserId(user.getUserId());
+		layout.setUserName(user.getFullName());
 		layout.setCreateDate(serviceContext.getCreateDate(now));
 		layout.setModifiedDate(serviceContext.getModifiedDate(now));
 		layout.setPrivateLayout(privateLayout);

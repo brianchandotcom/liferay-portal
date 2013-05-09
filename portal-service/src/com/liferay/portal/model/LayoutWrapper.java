@@ -47,6 +47,8 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 		attributes.put("plid", getPlid());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
+		attributes.put("userId", getUserId());
+		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("privateLayout", getPrivateLayout());
@@ -101,6 +103,18 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 
 		if (companyId != null) {
 			setCompanyId(companyId);
+		}
+
+		Long userId = (Long)attributes.get("userId");
+
+		if (userId != null) {
+			setUserId(userId);
+		}
+
+		String userName = (String)attributes.get("userName");
+
+		if (userName != null) {
+			setUserName(userName);
 		}
 
 		Date createDate = (Date)attributes.get("createDate");
@@ -345,6 +359,62 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	*/
 	public void setCompanyId(long companyId) {
 		_layout.setCompanyId(companyId);
+	}
+
+	/**
+	* Returns the user ID of this layout.
+	*
+	* @return the user ID of this layout
+	*/
+	public long getUserId() {
+		return _layout.getUserId();
+	}
+
+	/**
+	* Sets the user ID of this layout.
+	*
+	* @param userId the user ID of this layout
+	*/
+	public void setUserId(long userId) {
+		_layout.setUserId(userId);
+	}
+
+	/**
+	* Returns the user uuid of this layout.
+	*
+	* @return the user uuid of this layout
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.lang.String getUserUuid()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _layout.getUserUuid();
+	}
+
+	/**
+	* Sets the user uuid of this layout.
+	*
+	* @param userUuid the user uuid of this layout
+	*/
+	public void setUserUuid(java.lang.String userUuid) {
+		_layout.setUserUuid(userUuid);
+	}
+
+	/**
+	* Returns the user name of this layout.
+	*
+	* @return the user name of this layout
+	*/
+	public java.lang.String getUserName() {
+		return _layout.getUserName();
+	}
+
+	/**
+	* Sets the user name of this layout.
+	*
+	* @param userName the user name of this layout
+	*/
+	public void setUserName(java.lang.String userName) {
+		_layout.setUserName(userName);
 	}
 
 	/**

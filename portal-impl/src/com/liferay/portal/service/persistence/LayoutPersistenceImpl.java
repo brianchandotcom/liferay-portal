@@ -8447,6 +8447,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		layoutImpl.setPlid(layout.getPlid());
 		layoutImpl.setGroupId(layout.getGroupId());
 		layoutImpl.setCompanyId(layout.getCompanyId());
+		layoutImpl.setUserId(layout.getUserId());
+		layoutImpl.setUserName(layout.getUserName());
 		layoutImpl.setCreateDate(layout.getCreateDate());
 		layoutImpl.setModifiedDate(layout.getModifiedDate());
 		layoutImpl.setPrivateLayout(layout.isPrivateLayout());

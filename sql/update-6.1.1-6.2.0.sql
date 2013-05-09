@@ -359,6 +359,9 @@ create table JournalFolder (
 	statusDate DATE null
 );
 
+alter table Layout add userId LONG;
+alter table Layout add userName VARCHAR(75) null;
+
 create table LayoutFriendlyURL (
 	uuid_ VARCHAR(75) null,
 	layoutFriendlyURLId LONG not null primary key,

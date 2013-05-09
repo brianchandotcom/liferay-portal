@@ -1,6 +1,13 @@
 .taglib-move-boxes {
 	margin-bottom: 1em;
 
+	label {
+		border-bottom: 1px solid transparent;
+		display: block;
+		margin-bottom: 5px;
+		padding: 5px;
+	}
+
 	.toolbar {
 		text-align: center;
 	}
@@ -15,13 +22,6 @@
 		min-width: 150px;
 	}
 
-		label {
-			border-bottom: 1px solid transparent;
-			display: block;
-			margin-bottom: 5px;
-			padding: 5px;
-		}
-
 	.field-content {
 		margin-bottom: 0;
 	}
@@ -33,10 +33,6 @@
 			display: block;
 		}
 	}
-}
-
-.ie .taglib-move-boxes .choice-selector select {
-	width: expression(this.currentStyle.getAttribute('minWidth') || 150 + 'px');
 }
 
 /* Skin */

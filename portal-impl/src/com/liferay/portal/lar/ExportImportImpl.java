@@ -61,8 +61,9 @@ import java.util.regex.Pattern;
 public class ExportImportImpl implements ExportImport {
 
 	public String exportContentReferences(
-			PortletDataContext portletDataContext, StagedModel entity,
-			Element entityElement, String content)
+			PortletDataContext portletDataContext,
+			StagedModel entityStagedModel, Element entityElement,
+			String content)
 		throws Exception {
 
 		content = ExportImportUtil.exportLayoutReferences(
@@ -71,7 +72,7 @@ public class ExportImportImpl implements ExportImport {
 			portletDataContext, content);
 
 		content = ExportImportUtil.exportDLReferences(
-			portletDataContext, entity, entityElement, content);
+			portletDataContext, entityStagedModel, entityElement, content);
 
 		Element groupElement = entityElement.getParent();
 
@@ -86,8 +87,9 @@ public class ExportImportImpl implements ExportImport {
 	}
 
 	public String exportDLReferences(
-			PortletDataContext portletDataContext, StagedModel entity,
-			Element entityElement, String content)
+			PortletDataContext portletDataContext,
+			StagedModel entityStagedModel, Element entityElement,
+			String content)
 		throws Exception {
 
 		Group group = GroupLocalServiceUtil.getGroup(
@@ -144,7 +146,8 @@ public class ExportImportImpl implements ExportImport {
 					portletDataContext, fileEntry);
 
 				portletDataContext.addReferenceElement(
-					entity, entityElement, fileEntry, FileEntry.class, false);
+					entityStagedModel, entityElement, fileEntry,
+					FileEntry.class, false);
 
 				String path = ExportImportPathUtil.getModelPath(
 					fileEntry.getGroupId(), FileEntry.class.getName(),

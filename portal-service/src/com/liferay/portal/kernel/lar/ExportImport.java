@@ -23,13 +23,15 @@ import com.liferay.portal.model.StagedModel;
 public interface ExportImport {
 
 	public String exportContentReferences(
-			PortletDataContext portletDataContext, StagedModel entity,
-			Element entityElement, String content)
+			PortletDataContext portletDataContext,
+			StagedModel entityStagedModel, Element entityElement,
+			String content)
 		throws Exception;
 
 	public String exportDLReferences(
-			PortletDataContext portletDataContext, StagedModel entity,
-			Element entityElement, String content)
+			PortletDataContext portletDataContext,
+			StagedModel entityStagedModel, Element entityElement,
+			String content)
 		throws Exception;
 
 	public String exportLayoutReferences(

@@ -24,21 +24,23 @@ import com.liferay.portal.model.StagedModel;
 public class ExportImportUtil {
 
 	public static String exportContentReferences(
-			PortletDataContext portletDataContext, StagedModel entity,
-			Element entityElement, String content)
+			PortletDataContext portletDataContext,
+			StagedModel entityStagedModel, Element entityElement,
+			String content)
 		throws Exception {
 
 		return getExportImport().exportContentReferences(
-			portletDataContext, entity, entityElement, content);
+			portletDataContext, entityStagedModel, entityElement, content);
 	}
 
 	public static String exportDLReferences(
-			PortletDataContext portletDataContext, StagedModel entity,
-			Element entityElement, String content)
+			PortletDataContext portletDataContext,
+			StagedModel entityStagedModel, Element entityElement,
+			String content)
 		throws Exception {
 
 		return getExportImport().exportDLReferences(
-			portletDataContext, entity, entityElement, content);
+			portletDataContext, entityStagedModel, entityElement, content);
 	}
 
 	public static String exportLayoutReferences(

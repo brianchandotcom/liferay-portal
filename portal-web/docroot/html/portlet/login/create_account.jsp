@@ -129,7 +129,7 @@ birthdayCalendar.set(Calendar.YEAR, 1970);
 			</c:if>
 
 			<aui:input model="<%= User.class %>" name="emailAddress">
-				<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_EMAIL_ADDRESS_REQUIRED, PropsValues.USERS_EMAIL_ADDRESS_REQUIRED) %>">
+				<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_EMAIL_ADDRESS_REQUIRED) %>">
 					<aui:validator name="required" />
 				</c:if>
 			</aui:input>

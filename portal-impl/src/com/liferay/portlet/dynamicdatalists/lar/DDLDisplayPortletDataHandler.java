@@ -67,8 +67,7 @@ public class DDLDisplayPortletDataHandler extends DDLPortletDataHandler {
 		throws Exception {
 
 		portletDataContext.addPermissions(
-			"com.liferay.portlet.dynamicdatalist",
-			portletDataContext.getScopeGroupId());
+			RESOURCE_NAME, portletDataContext.getScopeGroupId());
 
 		long recordSetId = GetterUtil.getLong(
 			portletPreferences.getValue("recordSetId", null), 0);
@@ -99,8 +98,7 @@ public class DDLDisplayPortletDataHandler extends DDLPortletDataHandler {
 		throws Exception {
 
 		portletDataContext.importPermissions(
-			"com.liferay.portlet.dynamicdatalist",
-			portletDataContext.getSourceGroupId(),
+			RESOURCE_NAME, portletDataContext.getSourceGroupId(),
 			portletDataContext.getScopeGroupId());
 
 		Element recordSetsElement =

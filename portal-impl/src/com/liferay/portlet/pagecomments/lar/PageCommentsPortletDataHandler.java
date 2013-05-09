@@ -56,8 +56,7 @@ public class PageCommentsPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		portletDataContext.addPermissions(
-			"com.liferay.portlet.pagecomments",
-			portletDataContext.getScopeGroupId());
+			RESOURCE_NAME, portletDataContext.getScopeGroupId());
 
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
@@ -81,8 +80,7 @@ public class PageCommentsPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		portletDataContext.importPermissions(
-			"com.liferay.portlet.pagecomments",
-			portletDataContext.getSourceGroupId(),
+			RESOURCE_NAME, portletDataContext.getSourceGroupId(),
 			portletDataContext.getScopeGroupId());
 
 		Element rootElement = portletDataContext.getImportDataRootElement();
@@ -95,5 +93,8 @@ public class PageCommentsPortletDataHandler extends BasePortletDataHandler {
 
 		return null;
 	}
+
+	protected static final String RESOURCE_NAME =
+		"com.liferay.portlet.pagecomments";
 
 }

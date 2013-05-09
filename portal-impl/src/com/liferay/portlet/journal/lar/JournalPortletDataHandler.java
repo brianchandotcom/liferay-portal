@@ -140,7 +140,7 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		portletDataContext.addPermissions(
-			_RESOURCE_NAME, portletDataContext.getScopeGroupId());
+			RESOURCE_NAME, portletDataContext.getScopeGroupId());
 
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
@@ -215,7 +215,7 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		portletDataContext.importPermissions(
-			_RESOURCE_NAME, portletDataContext.getSourceGroupId(),
+			RESOURCE_NAME, portletDataContext.getSourceGroupId(),
 			portletDataContext.getScopeGroupId());
 
 		Element ddmStructuresElement =
@@ -382,6 +382,6 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 		};
 	}
 
-	private static final String _RESOURCE_NAME = "com.liferay.portlet.journal";
+	protected static final String RESOURCE_NAME = "com.liferay.portlet.journal";
 
 }

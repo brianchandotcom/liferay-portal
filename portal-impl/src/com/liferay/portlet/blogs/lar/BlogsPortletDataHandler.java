@@ -87,7 +87,7 @@ public class BlogsPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		portletDataContext.addPermissions(
-			"com.liferay.portlet.blogs", portletDataContext.getScopeGroupId());
+			RESOURCE_NAME, portletDataContext.getScopeGroupId());
 
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
@@ -109,7 +109,7 @@ public class BlogsPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		portletDataContext.importPermissions(
-			"com.liferay.portlet.blogs", portletDataContext.getSourceGroupId(),
+			RESOURCE_NAME, portletDataContext.getSourceGroupId(),
 			portletDataContext.getScopeGroupId());
 
 		Element entriesElement = portletDataContext.getImportDataGroupElement(
@@ -139,5 +139,7 @@ public class BlogsPortletDataHandler extends BasePortletDataHandler {
 		manifestSummary.addModelCount(
 			BlogsEntry.class, entryActionableDynamicQuery.performCount());
 	}
+
+	protected static final String RESOURCE_NAME = "com.liferay.portlet.blogs";
 
 }

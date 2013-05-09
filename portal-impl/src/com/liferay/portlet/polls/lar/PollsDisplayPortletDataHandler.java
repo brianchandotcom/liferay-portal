@@ -91,7 +91,7 @@ public class PollsDisplayPortletDataHandler extends PollsPortletDataHandler {
 		}
 
 		portletDataContext.addPermissions(
-			"com.liferay.portlet.polls", portletDataContext.getScopeGroupId());
+			RESOURCE_NAME, portletDataContext.getScopeGroupId());
 
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
@@ -111,7 +111,7 @@ public class PollsDisplayPortletDataHandler extends PollsPortletDataHandler {
 		throws Exception {
 
 		portletDataContext.importPermissions(
-			"com.liferay.portlet.polls", portletDataContext.getSourceGroupId(),
+			RESOURCE_NAME, portletDataContext.getSourceGroupId(),
 			portletDataContext.getScopeGroupId());
 
 		Element questionsElement = portletDataContext.getImportDataGroupElement(

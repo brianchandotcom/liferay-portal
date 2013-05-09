@@ -92,8 +92,7 @@ public class CalendarPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		portletDataContext.addPermissions(
-			"com.liferay.portlet.calendar",
-			portletDataContext.getScopeGroupId());
+			RESOURCE_NAME, portletDataContext.getScopeGroupId());
 
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
@@ -117,8 +116,7 @@ public class CalendarPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		portletDataContext.importPermissions(
-			"com.liferay.portlet.calendar",
-			portletDataContext.getSourceGroupId(),
+			RESOURCE_NAME, portletDataContext.getSourceGroupId(),
 			portletDataContext.getScopeGroupId());
 
 		Element rootElement = portletDataContext.getImportDataRootElement();
@@ -271,5 +269,8 @@ public class CalendarPortletDataHandler extends BasePortletDataHandler {
 
 		portletDataContext.importClassedModel(event, importedEvent, NAMESPACE);
 	}
+
+	protected static final String RESOURCE_NAME =
+		"com.liferay.portlet.calendar";
 
 }

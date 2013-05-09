@@ -103,7 +103,7 @@ public class WikiDisplayPortletDataHandler extends WikiPortletDataHandler {
 		}
 
 		portletDataContext.addPermissions(
-			"com.liferay.portlet.wiki", portletDataContext.getScopeGroupId());
+			RESOURCE_NAME, portletDataContext.getScopeGroupId());
 
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
@@ -130,7 +130,7 @@ public class WikiDisplayPortletDataHandler extends WikiPortletDataHandler {
 		throws Exception {
 
 		portletDataContext.importPermissions(
-			"com.liferay.portlet.wiki", portletDataContext.getSourceGroupId(),
+			RESOURCE_NAME, portletDataContext.getSourceGroupId(),
 			portletDataContext.getScopeGroupId());
 
 		super.importData(

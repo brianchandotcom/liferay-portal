@@ -75,7 +75,7 @@ public class PollsPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		portletDataContext.addPermissions(
-			"com.liferay.portlet.polls", portletDataContext.getScopeGroupId());
+			RESOURCE_NAME, portletDataContext.getScopeGroupId());
 
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
@@ -111,7 +111,7 @@ public class PollsPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		portletDataContext.importPermissions(
-			"com.liferay.portlet.polls", portletDataContext.getSourceGroupId(),
+			RESOURCE_NAME, portletDataContext.getSourceGroupId(),
 			portletDataContext.getScopeGroupId());
 
 		Element questionsElement = portletDataContext.getImportDataGroupElement(
@@ -179,5 +179,7 @@ public class PollsPortletDataHandler extends BasePortletDataHandler {
 				PollsVote.class, voteActionableDynamicQuery.performCount());
 		}
 	}
+
+	protected static final String RESOURCE_NAME = "com.liferay.portlet.polls";
 
 }

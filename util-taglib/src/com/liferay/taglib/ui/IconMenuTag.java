@@ -310,7 +310,7 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 					if (Validator.isNotNull(_icon)) {
 						jspWriter.write("<img alt=\"\" src=\"");
 						jspWriter.write(_icon);
-						jspWriter.write("\" />");
+						jspWriter.write("\" />&nbsp;");
 					}
 
 					jspWriter.write(message);

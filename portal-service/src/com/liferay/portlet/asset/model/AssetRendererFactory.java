@@ -90,6 +90,8 @@ public interface AssetRendererFactory {
 			String actionId)
 		throws Exception;
 
+	public boolean isActive(long companyId);
+
 	public boolean isCategorizable();
 
 	public boolean isLinkable();

@@ -44,6 +44,8 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)} 
 	public void setUp() throws Exception {
 		selenium = SeleniumUtil.getSelenium();
 
+		selenium.startLogger();
+
 		commandScopeVariables = new HashMap<String, String>();
 
 		commandScopeVariables.putAll(definitionScopeVariables);

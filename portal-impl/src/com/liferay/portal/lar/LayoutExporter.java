@@ -88,7 +88,6 @@ import com.liferay.util.ContentUtil;
 import java.io.File;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -288,8 +287,7 @@ public class LayoutExporter {
 		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
 
 		PortletDataContext portletDataContext = new PortletDataContextImpl(
-			companyId, groupId, parameterMap, new HashSet<String>(), startDate,
-			endDate, zipWriter);
+			companyId, groupId, parameterMap, startDate, endDate, zipWriter);
 
 		portletDataContext.setPortetDataContextListener(
 			new PortletDataContextListenerImpl(portletDataContext));
@@ -427,6 +425,12 @@ public class LayoutExporter {
 					});
 			}
 		}
+
+		Element missingReferencesElement = rootElement.addElement(
+			"missing-references");
+
+		portletDataContext.setMissingReferencesElement(
+			missingReferencesElement);
 
 		Element layoutsElement = rootElement.addElement("layouts");
 
@@ -646,7 +650,8 @@ public class LayoutExporter {
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, article);
 
-		portletDataContext.addReferenceElement(layoutElement, article);
+		portletDataContext.addReferenceElement(
+			layout, layoutElement, article, false);
 	}
 
 	protected void exportLayout(

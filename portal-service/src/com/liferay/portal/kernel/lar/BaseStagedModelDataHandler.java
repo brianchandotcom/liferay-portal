@@ -29,7 +29,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 		String path = ExportImportPathUtil.getModelPath(stagedModel);
 
-		if (portletDataContext.isPathProcessed(path)) {
+		if (portletDataContext.isPathExportedInScope(path)) {
 			return;
 		}
 

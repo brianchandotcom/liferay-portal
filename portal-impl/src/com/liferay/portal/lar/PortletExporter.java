@@ -90,7 +90,6 @@ import java.io.IOException;
 
 import java.util.Date;
 import java.util.Enumeration;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -250,8 +249,8 @@ public class PortletExporter {
 		}
 
 		PortletDataContext portletDataContext = new PortletDataContextImpl(
-			layout.getCompanyId(), scopeGroupId, parameterMap,
-			new HashSet<String>(), startDate, endDate, zipWriter);
+			layout.getCompanyId(), scopeGroupId, parameterMap, startDate,
+			endDate, zipWriter);
 
 		portletDataContext.setPortetDataContextListener(
 			new PortletDataContextListenerImpl(portletDataContext));
@@ -296,6 +295,12 @@ public class PortletExporter {
 		headerElement.addAttribute(
 			"root-portlet-id", PortletConstants.getRootPortletId(portletId));
 
+		Element missingReferencesElement = rootElement.addElement(
+			"missing-references");
+
+		portletDataContext.setMissingReferencesElement(
+			missingReferencesElement);
+
 		exportPortlet(
 			portletDataContext, layoutCache, portletId, layout, rootElement,
 			defaultUserId, exportPermissions, exportPortletArchivedSetups,
@@ -322,6 +327,8 @@ public class PortletExporter {
 		if (_log.isInfoEnabled()) {
 			_log.info("Exporting portlet took " + stopWatch.getTime() + " ms");
 		}
+
+		portletDataContext.clearScopedPrimaryKeys();
 
 		try {
 			portletDataContext.addZipEntry(

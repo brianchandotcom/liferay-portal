@@ -452,14 +452,17 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			page.getNodeId(), page.getTitle());
 
 		for (WikiPage curPage : children) {
-			if (!curPage.isInTrash() && page.isInTrash() ||
+			if ((!curPage.isInTrash() && page.isInTrash()) ||
 				!curPage.isApproved()) {
-					curPage.setParentTitle(StringPool.BLANK);
-					wikiPagePersistence.update(curPage);
-					continue;
+
+				curPage.setParentTitle(StringPool.BLANK);
+
+				wikiPagePersistence.update(curPage);
+			}
+			else {
+				deletePage(curPage);
 			}
 
-			deletePage(curPage);
 		}
 
 		wikiPagePersistence.removeByN_T(page.getNodeId(), page.getTitle());
@@ -1340,9 +1343,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	public void restorePageFromTrash(long userId, WikiPage page)
 		throws PortalException, SystemException {
 
-		String oldTitle = page.getTitle();
+		String trashTitle = page.getTitle();
 
-		String title = TrashUtil.getOriginalTitle(page.getTitle());
+		String title = TrashUtil.getOriginalTitle(trashTitle);
 
 		List<WikiPage> redirectPages = wikiPagePersistence.findByN_R(
 			page.getNodeId(), page.getTitle());
@@ -1383,7 +1386,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		// Children
 
 		List<WikiPage> children = wikiPagePersistence.findByN_P(
-				page.getNodeId(), oldTitle);
+			page.getNodeId(), trashTitle);
 
 		for (WikiPage curPage : children) {
 			curPage.setParentTitle(title);

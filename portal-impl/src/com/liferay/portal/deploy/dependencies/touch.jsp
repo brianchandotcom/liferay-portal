@@ -19,6 +19,8 @@
 <%@ page import="com.liferay.portal.model.Portlet" %>
 <%@ page import="com.liferay.portal.service.PortletLocalServiceUtil" %>
 
+<%@ page import="java.util.Set" %>
+
 <%
 Portlet portlet = PortletLocalServiceUtil.getPortletById(portletDisplay.getId());
 

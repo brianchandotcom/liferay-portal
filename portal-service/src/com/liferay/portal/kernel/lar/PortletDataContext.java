@@ -49,6 +49,13 @@ import java.util.Set;
  */
 public interface PortletDataContext extends Serializable {
 
+	public static final String REFERENCE_TYPE_CHILD = "child";
+	public static final String REFERENCE_TYPE_DEPENDENCY = "dependency";
+	public static final String REFERENCE_TYPE_EMBEDDED = "embedded";
+	public static final String REFERENCE_TYPE_PARENT = "parent";
+	public static final String REFERENCE_TYPE_STRONG = "strong";
+	public static final String REFERENCE_TYPE_WEAK = "weak";
+
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             ExportImportPathUtil#_PATH_PREFIX_GROUP}
@@ -66,13 +73,6 @@ public interface PortletDataContext extends Serializable {
 	 *             ExportImportPathUtil#_PATH_PREFIX_PORTLET}
 	 */
 	public static final String ROOT_PATH_PORTLETS = "/portlets/";
-
-	public static final String TYPE_CHILD = "child";
-	public static final String TYPE_DEPENDENCY = "dependency";
-	public static final String TYPE_EMBEDDED = "embedded";
-	public static final String TYPE_PARENT = "parent";
-	public static final String TYPE_STRONG_REFERENCE = "strong";
-	public static final String TYPE_WEAK_REFERENCE = "weak";
 
 	public void addAssetCategories(Class<?> clazz, long classPK)
 		throws SystemException;
@@ -128,20 +128,22 @@ public interface PortletDataContext extends Serializable {
 
 	public Element addReferenceElement(
 		StagedModel referrerStagedModel, Element element,
-		ClassedModel classedModel, String type, boolean missing);
+		ClassedModel classedModel, Class<?> clazz, String referenceType,
+		boolean missing);
 
 	public Element addReferenceElement(
 		StagedModel referrerStagedModel, Element element,
-		ClassedModel classedModel, Class<?> clazz, String type, boolean missing);
+		ClassedModel classedModel, String referenceType, boolean missing);
 
 	public Element addReferenceElement(
 		StagedModel referrerStagedModel, Element element,
-		ClassedModel classedModel, String binPath, String type, boolean missing);
+		ClassedModel classedModel, String binPath, String referenceType,
+		boolean missing);
 
 	public Element addReferenceElement(
 		StagedModel referrerStagedModel, Element element,
 		ClassedModel classedModel, String className, String binPath,
-		String type, boolean missing);
+		String referenceType, boolean missing);
 
 	public boolean addScopedPrimaryKey(Class<?> clazz, String primaryKey);
 
@@ -262,13 +264,13 @@ public interface PortletDataContext extends Serializable {
 		Element parentElement, Class<?> clazz);
 
 	public List<Element> getReferenceDataElements(
-		Element parentElement, Class<?> clazz, String type);
+		Element parentElement, Class<?> clazz, String referenceType);
 
 	public List<Element> getReferenceDataElements(
 		StagedModel parentStagedModel, Class<?> clazz);
 
 	public List<Element> getReferenceDataElements(
-		StagedModel parentStagedModel, Class<?> clazz, String type);
+		StagedModel parentStagedModel, Class<?> clazz, String referenceType);
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link

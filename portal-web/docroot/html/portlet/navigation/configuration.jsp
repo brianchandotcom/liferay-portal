@@ -140,7 +140,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 	var selects = A.all('#<portlet:namespace />fm select');
 
-	var curPortletBoundaryId = '#p_p_id_<%= portletResource %>_';
+	var curPortletBoundaryId = '#p_p_id_<%= HtmlUtil.escapeJS(portletResource) %>_';
 
 	var toggleCustomFields = function() {
 		if (customDisplayOptions) {
@@ -153,17 +153,17 @@ String redirect = ParamUtil.getString(request, "redirect");
 			if (displayStyle == '[custom]') {
 				action = 'show';
 
-				data['_<%= portletResource %>_headerType'] = selectHeaderType.val();
-				data['_<%= portletResource %>_includedLayouts'] = selectIncludedLayouts.val();
-				data['_<%= portletResource %>_nestedChildren'] = selectNestedChildren.val();
-				data['_<%= portletResource %>_rootLayoutLevel'] = selectRootLayoutLevel.val();
-				data['_<%= portletResource %>_rootLayoutType'] = selectRootLayoutType.val();
+				data['_<%= HtmlUtil.escapeJS(portletResource) %>_headerType'] = selectHeaderType.val();
+				data['_<%= HtmlUtil.escapeJS(portletResource) %>_includedLayouts'] = selectIncludedLayouts.val();
+				data['_<%= HtmlUtil.escapeJS(portletResource) %>_nestedChildren'] = selectNestedChildren.val();
+				data['_<%= HtmlUtil.escapeJS(portletResource) %>_rootLayoutLevel'] = selectRootLayoutLevel.val();
+				data['_<%= HtmlUtil.escapeJS(portletResource) %>_rootLayoutType'] = selectRootLayoutType.val();
 			}
 
 			customDisplayOptions[action]();
 
-			data['_<%= portletResource %>_bulletStyle'] = selectBulletStyle.val();
-			data['_<%= portletResource %>_displayStyle'] = selectDisplayStyle.val();
+			data['_<%= HtmlUtil.escapeJS(portletResource) %>_bulletStyle'] = selectBulletStyle.val();
+			data['_<%= HtmlUtil.escapeJS(portletResource) %>_displayStyle'] = selectDisplayStyle.val();
 
 			Liferay.Portlet.refresh(curPortletBoundaryId, data);
 		}

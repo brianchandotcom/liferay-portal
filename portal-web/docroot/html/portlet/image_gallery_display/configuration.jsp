@@ -145,7 +145,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 						stack: true,
 						width: 680
 					},
-					id: '_<%= portletResource %>_selectFolder',
+					id: '_<%= HtmlUtil.escapeJS(portletResource) %>_selectFolder',
 					title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", "folder") %>',
 					uri: '<%= selectFolderURL.toString() %>'
 				},

@@ -369,6 +369,12 @@ public abstract class BaseWebDriverImpl
 	public void setDefaultTimeout() {
 	}
 
+	public void startLogger() {
+	}
+
+	public void stopLogger() {
+	}
+
 	public void typeFrame(String locator, String value) {
 		LiferaySeleniumHelper.typeFrame(this, locator, value);
 	}

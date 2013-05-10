@@ -47,7 +47,9 @@ AUI.add(
 
 					instance._bindDOMWinResizeIfNeeded();
 
-					modal.render(A.getBody());
+					var modalConfig = instance._getWindowConfig(config);
+
+					modal.render(modalConfig.render || A.getBody());
 
 					return modal;
 				},

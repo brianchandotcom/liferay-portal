@@ -36,6 +36,14 @@
 					<@insertMBMessage
 						_mbMessage = mbMessage
 					/>
+
+					<@insertResourcePermissions
+						_entry = mbMessage
+					/>
+
+					<@insertSocialActivity
+						_entry = mbMessage
+					/>
 				</#list>
 
 				${writerMessageBoardsCSV.write(mbCategory.categoryId + "," + mbThread.threadId + "," + mbThread.rootMessageId + "\n")}

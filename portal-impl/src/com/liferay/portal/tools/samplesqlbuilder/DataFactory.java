@@ -133,6 +133,7 @@ import com.liferay.portlet.messageboards.model.impl.MBMessageImpl;
 import com.liferay.portlet.messageboards.model.impl.MBStatsUserImpl;
 import com.liferay.portlet.messageboards.model.impl.MBThreadFlagImpl;
 import com.liferay.portlet.messageboards.model.impl.MBThreadImpl;
+import com.liferay.portlet.messageboards.social.MBActivityKeys;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.social.model.impl.SocialActivityImpl;
@@ -1489,6 +1490,14 @@ public class DataFactory {
 	}
 
 	public List<ResourcePermission> newResourcePermissions(
+		MBMessage mbMessage) {
+
+		return newResourcePermissions(
+			MBMessage.class.getName(),
+			StringUtil.valueOf(mbMessage.getMessageId()), _sampleUserId);
+	}
+
+	public List<ResourcePermission> newResourcePermissions(
 		PortletPreferences portletPreferences) {
 
 		String portletId = portletPreferences.getPortletId();
@@ -1538,18 +1547,36 @@ public class DataFactory {
 	}
 
 	public SocialActivity newSocialActivity(MBMessage mbMessage) {
-		StringBundler sb = new StringBundler(5);
+		long classNameId = mbMessage.getClassNameId();
+		long classPk = mbMessage.getClassPK();
 
-		sb.append("{\"title\":\"");
-		sb.append(mbMessage.getSubject());
-		sb.append("\", \"messageId\":");
-		sb.append(mbMessage.getMessageId());
-		sb.append("}");
+		int type = 0;
+		String extraData = null;
+
+		if (classNameId == 0) {
+			extraData = "{\"title\":\"" + mbMessage.getSubject() + "\"}";
+
+			type = MBActivityKeys.ADD_MESSAGE;
+
+			classNameId = _classNamesMap.get(MBMessage.class.getName());
+			classPk = mbMessage.getMessageId();
+		}
+		else {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("{\"title\":\"");
+			sb.append(mbMessage.getSubject());
+			sb.append("\", \"messageId\":");
+			sb.append(mbMessage.getMessageId());
+			sb.append("}");
+
+			extraData = sb.toString();
+
+			type = SocialActivityConstants.TYPE_ADD_COMMENT;
+		}
 
 		return newSocialActivity(
-			mbMessage.getGroupId(), mbMessage.getClassNameId(),
-			mbMessage.getClassPK(), SocialActivityConstants.TYPE_ADD_COMMENT,
-			sb.toString());
+			mbMessage.getGroupId(), classNameId, classPk, type, extraData);
 	}
 
 	public Subscription newSubscription(BlogsEntry blogsEntry) {

@@ -10,11 +10,21 @@ AUI.add(
 				[
 					{
 						cssClass: 'reorder-up',
-						icon: 'icon-circle-arrow-up'
+						icon: 'icon-circle-arrow-up',
+						on: {
+							click: function(event) {
+								event.domEvent.preventDefault();
+							}
+						}
 					},
 					{
 						cssClass: 'reorder-down',
-						icon: 'icon-circle-arrow-down'
+						icon: 'icon-circle-arrow-down',
+						on: {
+							click: function(event) {
+								event.domEvent.preventDefault();
+							}
+						}
 					}
 				]
 			]
@@ -171,12 +181,22 @@ AUI.add(
 											{
 												cssClass: 'move-left',
 												icon: 'icon-circle-arrow-left',
-												title: strings.MOVE_LEFT
+												title: strings.MOVE_LEFT,
+												on: {
+													click: function(event) {
+														event.domEvent.preventDefault();
+													}
+												}
 											},
 											{
 												cssClass: 'move-right',
 												icon: 'icon-circle-arrow-right',
-												title: strings.MOVE_RIGHT
+												title: strings.MOVE_RIGHT,
+												on: {
+													click: function(event) {
+														event.domEvent.preventDefault();
+													}
+												}
 											}
 										]
 									]

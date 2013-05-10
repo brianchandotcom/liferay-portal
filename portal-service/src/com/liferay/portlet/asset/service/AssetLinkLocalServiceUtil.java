@@ -417,6 +417,31 @@ public class AssetLinkLocalServiceUtil {
 	}
 
 	/**
+	* Updates a link of the asset entry given by entryIds
+	*
+	* @param userId the primary key of the user updating the link
+	* @param entryId1 the primary key of the source asset entry
+	* @param entryId2 the primary key of the target asset entry
+	* @param typeId the link type. Acceptable values include {@link
+	com.liferay.portlet.asset.model.AssetLinkConstants#TYPE_RELATED}
+	which is a bidirectional relationship and {@link
+	com.liferay.portlet.asset.model.AssetLinkConstants#TYPE_CHILD}
+	which is a unidirectional relationship. For more information see
+	{@link com.liferay.portlet.asset.model.AssetLinkConstants}
+	* @param weight the weight of the link
+	* @return the updated link
+	* @throws PortalException if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.asset.model.AssetLink updateLink(
+		long userId, long entryId1, long entryId2, int typeId, int weight)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateLink(userId, entryId1, entryId2, typeId, weight);
+	}
+
+	/**
 	* Updates all links of the asset entry, replacing them with links
 	* associating the asset entry with the asset entries of the given link
 	* entry IDs.

@@ -84,6 +84,7 @@ import com.liferay.portlet.asset.NoSuchTagException;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetCategoryConstants;
 import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.model.AssetLink;
 import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
@@ -1372,52 +1373,74 @@ public class PortletImporter {
 
 		Element rootElement = document.getRootElement();
 
-		List<Element> assetLinkElements = rootElement.elements("asset-link");
+		List<Element> assetLinkGroupElements = rootElement.elements(
+			"asset-link-group");
 
-		for (Element assetLinkElement : assetLinkElements) {
-			String sourceUuid = GetterUtil.getString(
-				assetLinkElement.attributeValue("source-uuid"));
-			String[] assetEntryUuidArray = StringUtil.split(
-				GetterUtil.getString(
-					assetLinkElement.attributeValue("target-uuids")));
-			int assetLinkType = GetterUtil.getInteger(
-				assetLinkElement.attributeValue("type"));
+		for (Element assetLinkGroupElement : assetLinkGroupElements) {
+			String sourceUuid = assetLinkGroupElement.attributeValue(
+				"source-uuid");
 
-			List<Long> assetEntryIds = new ArrayList<Long>();
-
-			for (String assetEntryUuid : assetEntryUuidArray) {
-				AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-					portletDataContext.getScopeGroupId(), assetEntryUuid);
-
-				if (assetEntry == null) {
-					assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-						portletDataContext.getCompanyGroupId(), assetEntryUuid);
-				}
-
-				if (assetEntry != null) {
-					assetEntryIds.add(assetEntry.getEntryId());
-				}
-			}
-
-			if (assetEntryIds.isEmpty()) {
-				continue;
-			}
-
-			long[] assetEntryIdsArray = ArrayUtil.toArray(
-				assetEntryIds.toArray(new Long[assetEntryIds.size()]));
-
-			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+			AssetEntry sourceAssetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 				portletDataContext.getScopeGroupId(), sourceUuid);
 
-			if (assetEntry == null) {
-				assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+			if (sourceAssetEntry == null) {
+				sourceAssetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 					portletDataContext.getCompanyGroupId(), sourceUuid);
 			}
 
-			if (assetEntry != null) {
-				AssetLinkLocalServiceUtil.updateLinks(
-					assetEntry.getUserId(), assetEntry.getEntryId(),
-					assetEntryIdsArray, assetLinkType);
+			if (sourceAssetEntry == null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to find asset entry with uuid " + sourceUuid);
+				}
+
+				continue;
+			}
+
+			List<Element> assetLinksElements = assetLinkGroupElement.elements(
+				"asset-link");
+
+			List<Long> entryIds = new ArrayList<Long>();
+
+			for (Element assetLinkElement : assetLinksElements) {
+				String path = assetLinkElement.attributeValue("path");
+
+				if (!portletDataContext.isPathNotProcessed(path)) {
+					continue;
+				}
+
+				String targetUuid = assetLinkElement.attributeValue(
+					"target-uuid");
+
+				AssetEntry targetAssetEntry =
+					AssetEntryLocalServiceUtil.fetchEntry(
+						portletDataContext.getScopeGroupId(), targetUuid);
+
+				if (targetAssetEntry == null) {
+					targetAssetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+						portletDataContext.getCompanyGroupId(), targetUuid);
+				}
+
+				if (targetAssetEntry == null) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to find asset entry with uuid " +
+								targetUuid);
+					}
+
+					continue;
+				}
+
+				AssetLink assetLink =
+					(AssetLink)portletDataContext.getZipEntryAsObject(path);
+
+				long userId = portletDataContext.getUserId(
+					assetLink.getUserUuid());
+
+				AssetLinkLocalServiceUtil.updateLink(
+					userId, sourceAssetEntry.getEntryId(),
+					targetAssetEntry.getEntryId(), assetLink.getType(),
+					assetLink.getWeight());
 			}
 		}
 	}

@@ -80,12 +80,17 @@ public class AssetPublisherExportImportTest
 			});
 
 		PortletPreferences portletPreferences = getImportedPortletPreferences(
-			layout, preferenceMap);
+			preferenceMap);
 
 		Assert.assertEquals(null, portletPreferences.getValue("scopeId", null));
 		Assert.assertTrue(
 			"The child group ID should have been filtered out on import",
 			Validator.isNull(portletPreferences.getValues("scopeIds", null)));
+	}
+
+	@Override
+	public void testExportImportAssetLinks() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
 	}
 
 	@Test
@@ -104,7 +109,7 @@ public class AssetPublisherExportImportTest
 			});
 
 		PortletPreferences portletPreferences = getImportedPortletPreferences(
-			layout, preferenceMap);
+			preferenceMap);
 
 		Assert.assertEquals(
 			AssetPublisher.SCOPE_ID_GROUP_PREFIX + companyGroup.getGroupId(),
@@ -125,7 +130,7 @@ public class AssetPublisherExportImportTest
 			});
 
 		PortletPreferences portletPreferences = getImportedPortletPreferences(
-			layout, preferenceMap);
+			preferenceMap);
 
 		Assert.assertEquals(
 			AssetPublisher.SCOPE_ID_LAYOUT_UUID_PREFIX +
@@ -146,7 +151,7 @@ public class AssetPublisherExportImportTest
 			});
 
 		PortletPreferences portletPreferences = getImportedPortletPreferences(
-			layout, preferenceMap);
+			preferenceMap);
 
 		Assert.assertEquals(
 			AssetPublisher.SCOPE_ID_LAYOUT_UUID_PREFIX +
@@ -182,7 +187,7 @@ public class AssetPublisherExportImportTest
 			});
 
 		PortletPreferences portletPreferences = getImportedPortletPreferences(
-			layout, preferenceMap);
+			preferenceMap);
 
 		Layout importedSecondLayout =
 			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
@@ -227,7 +232,7 @@ public class AssetPublisherExportImportTest
 			});
 
 		PortletPreferences portletPreferences = getImportedPortletPreferences(
-			layout, preferenceMap);
+			preferenceMap);
 
 		Layout importedSecondLayout =
 			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
@@ -259,16 +264,8 @@ public class AssetPublisherExportImportTest
 		testSortByAssetVocabulary(true);
 	}
 
-	protected PortletPreferences getImportedPortletPreferences(
-			Layout layout, Map<String, String[]> preferenceMap)
-		throws Exception {
-
-		// Export site LAR
-
-		String assetPublisherPortletId = LayoutTestUtil.addPortletToLayout(
-			TestPropsValues.getUserId(), this.layout,
-			PortletKeys.ASSET_PUBLISHER, "column-1", preferenceMap);
-
+	@Override
+	protected void doExportImportPortlet(String portletId) throws Exception {
 		Map<String, String[]> parameterMap =  new HashMap<String, String[]>();
 
 		parameterMap.put(
@@ -295,6 +292,19 @@ public class AssetPublisherExportImportTest
 			layout.isPrivateLayout());
 
 		Assert.assertNotNull(importedLayout);
+	}
+
+	protected PortletPreferences getImportedPortletPreferences(
+			Map<String, String[]> preferenceMap)
+		throws Exception {
+
+		// Export site LAR
+
+		String assetPublisherPortletId = LayoutTestUtil.addPortletToLayout(
+			TestPropsValues.getUserId(), this.layout,
+			PortletKeys.ASSET_PUBLISHER, "column-1", preferenceMap);
+
+		doExportImportPortlet(assetPublisherPortletId);
 
 		return LayoutTestUtil.getPortletPreferences(
 			importedLayout.getCompanyId(), importedLayout.getPlid(),
@@ -327,7 +337,7 @@ public class AssetPublisherExportImportTest
 			new String[] {String.valueOf(assetVocabulary.getVocabularyId())});
 
 		PortletPreferences portletPreferences = getImportedPortletPreferences(
-			layout, preferenceMap);
+			preferenceMap);
 
 		Assert.assertNotNull(
 			"Portlet preference \"assetVocabularyId\" is null",

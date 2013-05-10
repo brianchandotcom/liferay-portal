@@ -125,11 +125,13 @@ import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageConstants;
 import com.liferay.portlet.messageboards.model.MBStatsUser;
 import com.liferay.portlet.messageboards.model.MBThread;
+import com.liferay.portlet.messageboards.model.MBThreadFlag;
 import com.liferay.portlet.messageboards.model.impl.MBCategoryImpl;
 import com.liferay.portlet.messageboards.model.impl.MBDiscussionImpl;
 import com.liferay.portlet.messageboards.model.impl.MBMailingListImpl;
 import com.liferay.portlet.messageboards.model.impl.MBMessageImpl;
 import com.liferay.portlet.messageboards.model.impl.MBStatsUserImpl;
+import com.liferay.portlet.messageboards.model.impl.MBThreadFlagImpl;
 import com.liferay.portlet.messageboards.model.impl.MBThreadImpl;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityConstants;
@@ -683,6 +685,15 @@ public class DataFactory {
 			mbMessage.getModifiedDate(), classNameId, mbMessage.getMessageId(),
 			mbMessage.getUuid(), 0, visible, ContentTypes.TEXT_HTML,
 			mbMessage.getSubject());
+	}
+
+	public AssetEntry newAssetEntry(MBThread mbThread) {
+		return newAssetEntry(
+			mbThread.getGroupId(), mbThread.getCreateDate(),
+			mbThread.getModifiedDate(),
+			_classNamesMap.get(MBThread.class.getName()),
+			mbThread.getThreadId(), mbThread.getUuid(), 0, false,
+			StringPool.BLANK, String.valueOf(mbThread.getRootMessageId()));
 	}
 
 	public AssetEntry newAssetEntry(WikiPage wikiPage) {
@@ -1329,6 +1340,22 @@ public class DataFactory {
 			_counter.get(), _maxMBMessageCount);
 	}
 
+	public MBThreadFlag newMBThreadFlag(MBThread mbThread) {
+		MBThreadFlag mbThreadFlag = new MBThreadFlagImpl();
+
+		mbThreadFlag.setUuid(SequentialUUID.generate());
+		mbThreadFlag.setThreadFlagId(_counter.get());
+		mbThreadFlag.setGroupId(mbThread.getGroupId());
+		mbThreadFlag.setCompanyId(_companyId);
+		mbThreadFlag.setUserId(_sampleUserId);
+		mbThreadFlag.setUserName(_SAMPLE_USER_NAME);
+		mbThreadFlag.setCreateDate(new Date());
+		mbThreadFlag.setModifiedDate(new Date());
+		mbThreadFlag.setThreadId(mbThread.getThreadId());
+
+		return mbThreadFlag;
+	}
+
 	public List<PortletPreferences> newPortletPreferences(long plid) {
 		List<PortletPreferences> portletPreferencesList =
 			new ArrayList<PortletPreferences>(2);
@@ -1529,6 +1556,12 @@ public class DataFactory {
 		return newSubscription(
 			_classNamesMap.get(BlogsEntry.class.getName()),
 			blogsEntry.getEntryId());
+	}
+
+	public Subscription newSubscription(MBThread mbThread) {
+		return newSubscription(
+			_classNamesMap.get(MBThread.class.getName()),
+			mbThread.getThreadId());
 	}
 
 	public User newUser(int index) {

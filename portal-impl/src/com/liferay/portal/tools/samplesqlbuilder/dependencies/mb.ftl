@@ -18,6 +18,18 @@
 
 				insert into MBThread values ('${mbThread.uuid}', ${mbThread.threadId}, ${mbThread.groupId}, ${mbThread.companyId}, ${mbThread.userId}, '${mbThread.userName}', '${dataFactory.getDateString(mbThread.createDate)}', '${dataFactory.getDateString(mbThread.modifiedDate)}', ${mbThread.categoryId}, ${mbThread.rootMessageId}, ${mbThread.rootMessageUserId}, ${mbThread.messageCount}, ${mbThread.viewCount}, ${mbThread.lastPostByUserId}, '${dataFactory.getDateString(mbThread.lastPostDate)}', ${mbThread.priority}, ${mbThread.question?string}, ${mbThread.status}, ${mbThread.statusByUserId}, '${mbThread.statusByUserName}', '${dataFactory.getDateString(mbThread.statusDate)}');
 
+				<@insertSubscription
+					_entry = mbThread
+				/>
+
+				<@insertAssetEntry
+					_entry = mbThread
+				/>
+
+				<#assign mbThreadFlag = dataFactory.newMBThreadFlag(mbThread)>
+
+				insert into MBThreadFlag values ('${mbThreadFlag.uuid}', ${mbThreadFlag.threadFlagId}, ${mbThreadFlag.groupId}, ${mbThreadFlag.companyId}, ${mbThreadFlag.userId}, '${mbThreadFlag.userName}', '${dataFactory.getDateString(mbThreadFlag.createDate)}', '${dataFactory.getDateString(mbThreadFlag.modifiedDate)}', ${mbThreadFlag.threadId});
+
 				<#list 1..maxMBMessageCount as mbMessageCount>
 					<#assign mbMessage = dataFactory.newMBMessage(mbThread, mbMessageCount)>
 

@@ -910,14 +910,6 @@
 			<taglib-uri>http://struts.apache.org/tags-nested</taglib-uri>
 			<taglib-location>/WEB-INF/tld/struts-nested.tld</taglib-location>
 		</taglib>
-		<taglib>
-			<taglib-uri>http://struts.apache.org/tags-tiles</taglib-uri>
-			<taglib-location>/WEB-INF/tld/struts-tiles.tld</taglib-location>
-		</taglib>
-		<taglib>
-			<taglib-uri>http://struts.apache.org/tags-tiles-el</taglib-uri>
-			<taglib-location>/WEB-INF/tld/struts-tiles-el.tld</taglib-location>
-		</taglib>
 	</jsp-config>
 	<security-constraint>
 		<web-resource-collection>

@@ -39,8 +39,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic-el" prefix="logic-el" %>
 <%@ taglib uri="http://struts.apache.org/tags-nested" prefix="nested" %>
-<%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
-<%@ taglib uri="http://struts.apache.org/tags-tiles-el" prefix="tiles-el" %>
 
 <%@ page contentType="text/html; charset=UTF-8" %>
 
@@ -152,6 +150,7 @@ page import="com.liferay.portal.service.permission.LayoutSetPrototypePermissionU
 page import="com.liferay.portal.service.permission.PortalPermissionUtil" %><%@
 page import="com.liferay.portal.service.permission.PortletPermissionUtil" %><%@
 page import="com.liferay.portal.struts.StrutsUtil" %><%@
+page import="com.liferay.portal.struts.TilesAttributeUtil" %><%@
 page import="com.liferay.portal.theme.PortletDisplay" %><%@
 page import="com.liferay.portal.theme.ThemeDisplay" %><%@
 page import="com.liferay.portal.util.ClassLoaderUtil" %><%@

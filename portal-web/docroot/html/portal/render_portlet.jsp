@@ -938,9 +938,9 @@ if ((layout.isTypePanel() || layout.isTypeControlPanel()) && !portletDisplay.get
 				}
 		%>
 
-				<tiles:insert flush="false" template="<%= templatePath %>">
-					<tiles:put name="portlet_content" value="<%= portletContent %>" />
-				</tiles:insert>
+				<liferay-util:include page="<%= templatePath %>">
+					<liferay-util:param name="portlet_content" value="<%= portletContent %>" />
+				</liferay-util:include>
 
 		<%
 			}
@@ -949,9 +949,9 @@ if ((layout.isTypePanel() || layout.isTypeControlPanel()) && !portletDisplay.get
 					renderRequestImpl.setAttribute(WebKeys.PORTLET_CONTENT, bufferCacheServletResponse.getString());
 		%>
 
-					<tiles:insert flush="false" template='<%= StrutsUtil.TEXT_HTML_DIR + "/common/themes/portlet.jsp" %>'>
-						<tiles:put name="portlet_content" value="<%= StringPool.BLANK %>" />
-					</tiles:insert>
+					<liferay-util:include page='<%= StrutsUtil.TEXT_HTML_DIR + "/common/themes/portlet.jsp" %>'>
+						<liferay-util:param name="portlet_content" value="<%= StringPool.BLANK %>" />
+					</liferay-util:include>
 
 		<%
 				}
@@ -984,9 +984,9 @@ if ((layout.isTypePanel() || layout.isTypeControlPanel()) && !portletDisplay.get
 
 			<c:choose>
 				<c:when test="<%= useDefaultTemplate || portletException || addNotAjaxablePortlet %>">
-					<tiles:insert flush="false" template='<%= StrutsUtil.TEXT_HTML_DIR + "/common/themes/portlet.jsp" %>'>
-						<tiles:put name="portlet_content" value="<%= portletContent %>" />
-					</tiles:insert>
+					<liferay-util:include page='<%= StrutsUtil.TEXT_HTML_DIR + "/common/themes/portlet.jsp" %>'>
+						<liferay-util:param name="portlet_content" value="<%= portletContent %>" />
+					</liferay-util:include>
 				</c:when>
 				<c:otherwise>
 					<%= renderRequestImpl.getAttribute(WebKeys.PORTLET_CONTENT) %>

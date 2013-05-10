@@ -15,9 +15,8 @@
 package com.liferay.portlet.usersadmin.lar;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
+import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
@@ -25,7 +24,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.OrganizationConstants;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
-import com.liferay.portal.service.persistence.OrganizationActionableDynamicQuery;
+import com.liferay.portal.service.persistence.OrganizationExportActionableDynamicQuery;
 
 import java.util.List;
 
@@ -81,26 +80,10 @@ public class UsersAdminPortletDataHandler extends BasePortletDataHandler {
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
-		ActionableDynamicQuery organizationActionableDynamicQuery =
-			new OrganizationActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery =
+			new OrganizationExportActionableDynamicQuery(portletDataContext);
 
-			@Override
-			protected void addCriteria(DynamicQuery dynamicQuery) {
-				portletDataContext.addDateRangeCriteria(
-					dynamicQuery, "modifiedDate");
-			}
-
-			@Override
-			protected void performAction(Object object) throws PortalException {
-				Organization organization = (Organization)object;
-
-				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext, organization);
-			}
-
-		};
-
-		organizationActionableDynamicQuery.performActions();
+		actionableDynamicQuery.performActions();
 
 		return getExportDataRootElementString(rootElement);
 	}
@@ -126,6 +109,21 @@ public class UsersAdminPortletDataHandler extends BasePortletDataHandler {
 		}
 
 		return null;
+	}
+
+	@Override
+	protected void doPrepareManifestSummary(
+			PortletDataContext portletDataContext)
+		throws Exception {
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			new OrganizationExportActionableDynamicQuery(portletDataContext);
+
+		ManifestSummary manifestSummary =
+			portletDataContext.getManifestSummary();
+
+		manifestSummary.addModelCount(
+			Organization.class, actionableDynamicQuery.performCount());
 	}
 
 	private static final String _RESOURCE_NAME =

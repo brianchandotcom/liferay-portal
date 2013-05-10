@@ -15,9 +15,8 @@
 package com.liferay.portlet.dynamicdatamapping.lar;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
+import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
@@ -26,8 +25,8 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureActionableDynamicQuery;
-import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateActionableDynamicQuery;
+import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureExportActionableDynamicQuery;
+import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateExportActionableDynamicQuery;
 
 import java.util.List;
 
@@ -86,50 +85,12 @@ public class DDMPortletDataHandler extends BasePortletDataHandler {
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
 		ActionableDynamicQuery structureActionableDynamicQuery =
-			new DDMStructureActionableDynamicQuery() {
-
-			@Override
-			protected void addCriteria(DynamicQuery dynamicQuery) {
-				portletDataContext.addDateRangeCriteria(
-					dynamicQuery, "modifiedDate");
-			}
-
-			@Override
-			protected void performAction(Object object) throws PortalException {
-				DDMStructure structure = (DDMStructure)object;
-
-				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext, structure);
-			}
-
-		};
-
-		structureActionableDynamicQuery.setGroupId(
-			portletDataContext.getScopeGroupId());
+			new DDMStructureExportActionableDynamicQuery(portletDataContext);
 
 		structureActionableDynamicQuery.performActions();
 
 		ActionableDynamicQuery templateActionableDynamicQuery =
-			new DDMTemplateActionableDynamicQuery() {
-
-			@Override
-			protected void addCriteria(DynamicQuery dynamicQuery) {
-				portletDataContext.addDateRangeCriteria(
-					dynamicQuery, "modifiedDate");
-			}
-
-			@Override
-			protected void performAction(Object object) throws PortalException {
-				DDMTemplate template = (DDMTemplate)object;
-
-				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext, template);
-			}
-
-		};
-
-		templateActionableDynamicQuery.setGroupId(
-			portletDataContext.getScopeGroupId());
+			new DDMTemplateExportActionableDynamicQuery(portletDataContext);
 
 		templateActionableDynamicQuery.performActions();
 
@@ -170,6 +131,27 @@ public class DDMPortletDataHandler extends BasePortletDataHandler {
 		}
 
 		return portletPreferences;
+	}
+
+	@Override
+	protected void doPrepareManifestSummary(
+			PortletDataContext portletDataContext)
+		throws Exception {
+
+		ActionableDynamicQuery structureActionableDynamicQuery =
+			new DDMStructureExportActionableDynamicQuery(portletDataContext);
+
+		ManifestSummary manifestSummary =
+			portletDataContext.getManifestSummary();
+
+		manifestSummary.addModelCount(
+			DDMStructure.class, structureActionableDynamicQuery.performCount());
+
+		ActionableDynamicQuery templateActionableDynamicQuery =
+			new DDMTemplateExportActionableDynamicQuery(portletDataContext);
+
+		manifestSummary.addModelCount(
+			DDMTemplate.class, templateActionableDynamicQuery.performCount());
 	}
 
 }

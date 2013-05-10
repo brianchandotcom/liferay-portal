@@ -32,6 +32,7 @@ public class StringComparator implements Comparator<String>, Serializable {
 		_caseSensitive = caseSensitive;
 	}
 
+	@Override
 	public int compare(String s1, String s2) {
 		if (s1 == null) {
 			s1 = StringPool.BLANK;

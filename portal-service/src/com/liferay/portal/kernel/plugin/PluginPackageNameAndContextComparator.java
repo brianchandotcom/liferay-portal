@@ -22,6 +22,7 @@ import java.util.Comparator;
 public class PluginPackageNameAndContextComparator
 	implements Comparator<PluginPackage> {
 
+	@Override
 	public int compare(PluginPackage package1, PluginPackage package2) {
 		int result = package1.getName().compareTo(package2.getName());
 

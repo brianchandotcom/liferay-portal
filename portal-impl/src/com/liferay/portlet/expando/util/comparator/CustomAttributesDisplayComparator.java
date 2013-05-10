@@ -32,6 +32,7 @@ public class CustomAttributesDisplayComparator
 		_modelResourceComparator = new ModelResourceComparator(locale);
 	}
 
+	@Override
 	public int compare(
 		CustomAttributesDisplay customAttributesDisplay1,
 		CustomAttributesDisplay customAttributesDisplay2) {

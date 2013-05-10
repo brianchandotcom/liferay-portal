@@ -29,6 +29,7 @@ public class SocialActivityDefinitionNameComparator
 		_locale = locale;
 	}
 
+	@Override
 	public int compare(
 		SocialActivityDefinition activityDefinition1,
 		SocialActivityDefinition activityDefinition2) {

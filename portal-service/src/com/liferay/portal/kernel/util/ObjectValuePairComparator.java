@@ -35,6 +35,7 @@ public class ObjectValuePairComparator<K, V>
 		_ascending = ascending;
 	}
 
+	@Override
 	public int compare(ObjectValuePair<K, V> ovp1, ObjectValuePair<K, V> ovp2) {
 		if (_byKey) {
 			Comparable<K> key1 = (Comparable<K>)ovp1.getKey();

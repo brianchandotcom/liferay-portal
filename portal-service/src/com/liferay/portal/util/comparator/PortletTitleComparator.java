@@ -42,6 +42,7 @@ public class PortletTitleComparator
 		_locale = locale;
 	}
 
+	@Override
 	public int compare(Portlet portlet1, Portlet portlet2) {
 		String portletTitle1 = StringPool.BLANK;
 		String portletTitle2 = StringPool.BLANK;

@@ -144,6 +144,7 @@ import com.liferay.portlet.wiki.model.WikiPageResource;
 import com.liferay.portlet.wiki.model.impl.WikiNodeImpl;
 import com.liferay.portlet.wiki.model.impl.WikiPageImpl;
 import com.liferay.portlet.wiki.model.impl.WikiPageResourceImpl;
+import com.liferay.portlet.wiki.social.WikiActivityKeys;
 import com.liferay.util.SimpleCounter;
 
 import java.io.File;
@@ -1522,6 +1523,12 @@ public class DataFactory {
 			_sampleUserId);
 	}
 
+	public List<ResourcePermission> newResourcePermissions(WikiPage wikiPage) {
+		return newResourcePermissions(
+			WikiPage.class.getName(),
+			StringUtil.valueOf(wikiPage.getResourcePrimKey()), _sampleUserId);
+	}
+
 	public SocialActivity newSocialActivity(BlogsEntry blogsEntry) {
 		return newSocialActivity(
 			blogsEntry.getGroupId(),
@@ -1559,7 +1566,12 @@ public class DataFactory {
 		int type = 0;
 		String extraData = null;
 
-		if (classNameId == 0) {
+		if (classNameId == _classNamesMap.get(WikiPage.class.getName())) {
+			extraData = "{\"version\":1}";
+
+			type = WikiActivityKeys.ADD_PAGE;
+		}
+		else if (classNameId == 0) {
 			extraData = "{\"title\":\"" + mbMessage.getSubject() + "\"}";
 
 			type = MBActivityKeys.ADD_MESSAGE;
@@ -1595,6 +1607,12 @@ public class DataFactory {
 		return newSubscription(
 			_classNamesMap.get(MBThread.class.getName()),
 			mbThread.getThreadId());
+	}
+
+	public Subscription newSubscription(WikiPage wikiPage) {
+		return newSubscription(
+			_classNamesMap.get(WikiPage.class.getName()),
+			wikiPage.getResourcePrimKey());
 	}
 
 	public User newUser(int index) {

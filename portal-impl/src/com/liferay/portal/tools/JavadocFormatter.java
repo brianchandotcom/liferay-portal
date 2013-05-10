@@ -1313,8 +1313,8 @@ public class JavadocFormatter {
 		JavaClass javaClass, JavaMethod javaMethod,
 		Collection<JavaClass> ancestorJavaClasses) {
 
-		if (javaClass.isInterface() || javaMethod.isConstructor() ||
-			javaMethod.isPrivate() || javaMethod.isStatic()) {
+		if (javaMethod.isConstructor() || javaMethod.isPrivate() ||
+			javaMethod.isStatic()) {
 
 			return false;
 		}

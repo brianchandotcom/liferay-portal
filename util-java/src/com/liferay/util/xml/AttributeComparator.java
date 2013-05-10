@@ -23,6 +23,7 @@ import org.dom4j.Attribute;
  */
 public class AttributeComparator implements Comparator<Attribute> {
 
+	@Override
 	public int compare(Attribute attr1, Attribute attr2) {
 		String attr1Value = attr1.getValue();
 		String attr2Value = attr2.getValue();

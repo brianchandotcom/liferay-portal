@@ -23,6 +23,7 @@ import org.junit.runner.Description;
  */
 public class DescriptionComparator implements Comparator<Description> {
 
+	@Override
 	public int compare(Description description1, Description description2) {
 		String displayName1 = description1.getDisplayName();
 		String displayName2 = description2.getDisplayName();

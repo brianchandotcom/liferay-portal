@@ -27,6 +27,7 @@ import java.util.Comparator;
 public class PortletLuceneComparator
 	implements Comparator<Portlet>, Serializable {
 
+	@Override
 	public int compare(Portlet portlet1, Portlet portlet2) {
 		String portletId1 = portlet1.getPortletId();
 		String portletId2 = portlet2.getPortletId();

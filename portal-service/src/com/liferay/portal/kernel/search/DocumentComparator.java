@@ -49,6 +49,7 @@ public class DocumentComparator implements Comparator<Document> {
 		_columns.add(orderBy);
 	}
 
+	@Override
 	public int compare(Document doc1, Document doc2) {
 		for (DocumentComparatorOrderBy orderBy : _columns) {
 			String value1 = doc1.get(orderBy.getName());

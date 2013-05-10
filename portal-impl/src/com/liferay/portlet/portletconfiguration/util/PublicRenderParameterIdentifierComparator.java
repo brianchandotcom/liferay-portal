@@ -24,6 +24,7 @@ import java.util.Comparator;
 public class PublicRenderParameterIdentifierComparator
 	implements Comparator<PublicRenderParameter> {
 
+	@Override
 	public int compare(
 		PublicRenderParameter publicRenderParameter1,
 		PublicRenderParameter publicRenderParameter2) {

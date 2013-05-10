@@ -28,6 +28,7 @@ public class SocialActivityCounterNameComparator implements Comparator<String> {
 		_locale = locale;
 	}
 
+	@Override
 	public int compare(
 		String activityCounterName1, String activityCounterName2) {
 

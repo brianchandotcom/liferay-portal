@@ -31,6 +31,7 @@ public class GUserUserIdComparator implements Comparator<GUser> {
 		_ascending = ascending;
 	}
 
+	@Override
 	public int compare(GUser user1, GUser user2) {
 		long userId1 = user1.getUserId();
 		long userId2 = user2.getUserId();

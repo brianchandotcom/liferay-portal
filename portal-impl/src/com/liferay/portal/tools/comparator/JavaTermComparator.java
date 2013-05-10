@@ -25,6 +25,7 @@ import java.util.List;
  */
 public class JavaTermComparator implements Comparator<JavaTerm> {
 
+	@Override
 	public int compare(JavaTerm javaTerm1, JavaTerm javaTerm2) {
 		int type1 = javaTerm1.getType();
 		int type2 = javaTerm2.getType();

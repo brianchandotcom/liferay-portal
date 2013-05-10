@@ -27,6 +27,7 @@ import java.util.Comparator;
 public class MessageThreadComparator
 	implements Comparator<MBMessage>, Serializable {
 
+	@Override
 	public int compare(MBMessage msg1, MBMessage msg2) {
 		Long parentMessageId1 = new Long(msg1.getParentMessageId());
 		Long parentMessageId2 = new Long(msg2.getParentMessageId());

@@ -23,6 +23,7 @@ import java.util.Comparator;
  */
 public class JavaMethodComparator implements Comparator<JavaMethod> {
 
+	@Override
 	public int compare(JavaMethod method1, JavaMethod method2) {
 		return method1.getName().compareTo(method2.getName());
 	}

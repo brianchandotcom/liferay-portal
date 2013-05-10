@@ -32,6 +32,7 @@ public class AssetTagNameComparator implements Comparator<AssetTag> {
 		_caseSensitive = caseSensitive;
 	}
 
+	@Override
 	public int compare(AssetTag assetTag1, AssetTag assetTag2) {
 		String name1 = assetTag1.getName();
 		String name2 = assetTag2.getName();

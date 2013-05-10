@@ -30,6 +30,7 @@ public class ActionComparator implements Comparator<String>, Serializable {
 		_locale = locale;
 	}
 
+	@Override
 	public int compare(String action1, String action2) {
 		action1 = ResourceActionsUtil.getAction(_locale, action1);
 		action2 = ResourceActionsUtil.getAction(_locale, action2);

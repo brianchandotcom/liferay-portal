@@ -31,6 +31,7 @@ public class GGroupNameComparator implements Comparator<GGroup> {
 		_ascending = ascending;
 	}
 
+	@Override
 	public int compare(GGroup user1, GGroup user2) {
 		String name1 = user1.getName();
 		String name2 = user2.getName();

@@ -36,6 +36,7 @@ public class EventTimeComparator implements Comparator<CalEvent> {
 		_locale = locale;
 	}
 
+	@Override
 	public int compare(CalEvent event1, CalEvent event2) {
 		boolean allDay1 = CalUtil.isAllDay(event1, _timeZone, _locale);
 		boolean allDay2 = CalUtil.isAllDay(event2, _timeZone, _locale);

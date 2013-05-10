@@ -120,7 +120,7 @@ public class FileEntryStagedModelDataHandler
 				portletDataContext, repository);
 
 			portletDataContext.addReferenceElement(
-				fileEntryElement, repository);
+				fileEntry, fileEntryElement, repository, false);
 
 			portletDataContext.addClassedModel(
 				fileEntryElement, fileEntryPath, fileEntry,
@@ -196,7 +196,7 @@ public class FileEntryStagedModelDataHandler
 					portletDataContext, fileRank);
 
 				portletDataContext.addReferenceElement(
-					fileEntryElement, fileRank);
+					fileEntry, fileEntryElement, fileRank, false);
 			}
 		}
 

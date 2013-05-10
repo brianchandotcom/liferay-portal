@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.persistence.LayoutUtil;
@@ -60,7 +61,8 @@ import java.util.regex.Pattern;
 public class ExportImportImpl implements ExportImport {
 
 	public String exportContentReferences(
-			PortletDataContext portletDataContext, Element entityElement,
+			PortletDataContext portletDataContext,
+			StagedModel entityStagedModel, Element entityElement,
 			String content)
 		throws Exception {
 
@@ -70,7 +72,7 @@ public class ExportImportImpl implements ExportImport {
 			portletDataContext, content);
 
 		content = ExportImportUtil.exportDLReferences(
-			portletDataContext, entityElement, content);
+			portletDataContext, entityStagedModel, entityElement, content);
 
 		Element groupElement = entityElement.getParent();
 
@@ -85,7 +87,8 @@ public class ExportImportImpl implements ExportImport {
 	}
 
 	public String exportDLReferences(
-			PortletDataContext portletDataContext, Element entityElement,
+			PortletDataContext portletDataContext,
+			StagedModel entityStagedModel, Element entityElement,
 			String content)
 		throws Exception {
 
@@ -143,7 +146,8 @@ public class ExportImportImpl implements ExportImport {
 					portletDataContext, fileEntry);
 
 				portletDataContext.addReferenceElement(
-					entityElement, fileEntry, FileEntry.class);
+					entityStagedModel, entityElement, fileEntry,
+					FileEntry.class, false);
 
 				String path = ExportImportPathUtil.getModelPath(
 					fileEntry.getGroupId(), FileEntry.class.getName(),

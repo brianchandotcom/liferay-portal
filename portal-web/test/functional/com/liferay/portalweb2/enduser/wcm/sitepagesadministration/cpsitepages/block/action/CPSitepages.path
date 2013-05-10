@@ -20,22 +20,22 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='portlet-msg-success']</td>
+	<td>//div[@class='alert alert-success']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>HEADER</td>
-	<td>//h1[@class='header-title']/span</td>
+	<td>//h3[@class='header-title']/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SAVE_BUTTON</td>
-	<td>//input[@value='Save']</td>
+	<td>//button[contains(.,'Save')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CANCEL_BUTTON</td>
-	<td>//input[@value='Cancel']</td>
+	<td>//button[contains(.,'Cancel')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -46,12 +46,12 @@
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_PUBLIC_PAGES</td>
-	<td>//li[contains(@id,'_156_tabs')]/span/a[contains(.,'Public Pages')]</td>
+	<td>//li[contains(@id,'_156_tabs')]/a[contains(.,'Public Pages')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_PRIVATE_PAGES</td>
-	<td>//li[contains(@id,'_156_tabs')]/span/a[contains(.,'Private Pages')]</td>
+	<td>//li[contains(@id,'_156_tabs')]/a[contains(.,'Private Pages')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -62,42 +62,42 @@
 <!--TOOLBAR-->
 <tr>
 	<td>TOOLBAR_ADD_PAGE</td>
-	<td>//div[@id='_156_layoutSetToolbar']/span/button[contains(.,'Add Page')]</td>
+	<td>//div[@id='_156_layoutSetToolbar']/div/button[contains(.,'Add Page')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_VIEW_PAGES</td>
-	<td>//div[@id='_156_layoutSetToolbar']/span/button[contains(.,'View Pages')]</td>
+	<td>//div[@id='_156_layoutSetToolbar']/div/button[contains(.,'View Pages')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_EXPORT</td>
-	<td>//div[@id='_156_layoutSetToolbar']/span/button[contains(.,'Export')]</td>
+	<td>//div[@id='_156_layoutSetToolbar']/div/button[contains(.,'Export')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_IMPORT</td>
-	<td>//div[@id='_156_layoutSetToolbar']/span/button[contains(.,'Import')]</td>
+	<td>//div[@id='_156_layoutSetToolbar']/div/button[contains(.,'Import')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_ADD_CHILD_PAGE</td>
-	<td>//div[@id='_156_layoutToolbar']/span/button[contains(.,'Add Child Page')]</td>
+	<td>//div[@id='_156_layoutToolbar']/div/button[contains(.,'Add Child Page')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_PERMISSIONS</td>
-	<td>//div[@id='_156_layoutToolbar']/span/button[contains(.,'Permissions')]</td>
+	<td>//div[@id='_156_layoutToolbar']/div/button[contains(.,'Permissions')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_DELETE</td>
-	<td>//div[@id='_156_layoutToolbar']/span/button[contains(.,'Delete')]</td>
+	<td>//div[@id='_156_layoutToolbar']/div/button[contains(.,'Delete')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_COPY_PORTLETS</td>
-	<td>//div[@id='_156_layoutToolbar']/span/button[contains(.,'Copy Portlets from Page')]</td>
+	<td>//div[@id='_156_layoutToolbar']/div/button[contains(.,'Copy Portlets from Page')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -108,7 +108,7 @@
 <!--ADD_PAGE-->
 <tr>
 	<td>ADD_PAGE_NAME_FIELD</td>
-	<td>//input[@id='_156_addLayoutName_en_US']</td>
+	<td>//input[@id='_156_addLayoutName']</td>
 	<td></td>
 </tr>
 <tr>
@@ -133,7 +133,7 @@
 </tr>
 <tr>
 	<td>ADD_PAGE_BUTTON</td>
-	<td>//input[@value='Add Page']</td>
+	<td>//div[@id='_156_addLayout']//button[contains(.,'Add Page')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -149,7 +149,7 @@
 </tr>
 <tr>
 	<td>PAGE_TREE_ROOT_LINK</td>
-	<td>//li[contains(@id,'layoutsTree_layoutId_0_')]/div/div/a[@class='layout-tree']</td>
+	<td>//li[contains(@id,'layoutsTree_layoutId_0_')]/div/span/a[@class='layout-tree']</td>
 	<td></td>
 </tr>
 <tr>
@@ -190,12 +190,12 @@
 <!--DETAILS-->
 <tr>
 	<td>DETAILS_NAME_FIELD</td>
-	<td>//input[@id='_156_name_en_US']</td>
+	<td>//input[@id='_156_name']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DETAILS_HTML_TITLE_FIELD</td>
-	<td>//input[@id='_156_title_en_US']</td>
+	<td>//input[@id='_156_title']</td>
 	<td></td>
 </tr>
 <tr>
@@ -210,7 +210,7 @@
 </tr>
 <tr>
 	<td>DETAILS_TYPE_SELECT</td>
-	<td>//input[@id='_156_type']</td>
+	<td>//select[@id='_156_type']</td>
 	<td></td>
 </tr>
 <tr>

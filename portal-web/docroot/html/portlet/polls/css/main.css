@@ -3,4 +3,20 @@
 		clear: both;
 		display: block;
 	}
+
+	.last-choice {
+		button {
+			float: left;
+			margin-bottom: 10px;
+			margin-left: -2px;
+		}
+
+		input.language-value {
+			float: left;
+		}
+
+		.control-group {
+			margin-bottom: 0;
+		}
+	}
 }

@@ -278,7 +278,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				throw new IllegalArgumentException();
 			}
 		}
-		else if (!className.equals(Organization.class.getName()) &&
+		else if (!className.equals(Company.class.getName()) &&
+				 !className.equals(Organization.class.getName()) &&
 				 className.startsWith("com.liferay.portal.model.")) {
 
 			if (site) {
@@ -470,7 +471,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				defaultUserId, GroupConstants.DEFAULT_PARENT_GROUP_ID,
 				Company.class.getName(), companyId,
 				GroupConstants.DEFAULT_LIVE_GROUP_ID, GroupConstants.GLOBAL,
-				null, 0, GroupConstants.GLOBAL_FRIENDLY_URL, false, true, null);
+				null, 0, GroupConstants.GLOBAL_FRIENDLY_URL, true, true, null);
 		}
 	}
 

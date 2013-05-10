@@ -69,7 +69,7 @@ AUI.add(
 			'</div>',
 
 			'<div class="upload-list" id="{$ns}fileList">',
-				'<ul class="lfr-component" id="{$ns}fileListContent"></ul>',
+				'<ul class="unstyled" id="{$ns}fileListContent"></ul>',
 			'</div>'
 		];
 

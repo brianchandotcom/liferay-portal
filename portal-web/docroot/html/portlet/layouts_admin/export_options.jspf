@@ -57,7 +57,7 @@
 	</c:if>
 
 	<aui:fieldset cssClass="options-group" label="application-configuration">
-		<ul class="lfr-component lfr-tree">
+		<ul class="lfr-tree unstyled">
 			<li class="tree-item">
 				<aui:input checked="<%= true %>" helpMessage="all-applications-export-help" id="allApplications" label="all-applications" name="<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>" type="radio" value="<%= true %>" />
 
@@ -117,7 +117,7 @@
 	</aui:fieldset>
 
 	<aui:fieldset cssClass="options-group" label="content">
-		<ul class="lfr-tree lfr-component">
+		<ul class="lfr-tree unstyled">
 			<li class="tree-item">
 				<aui:input checked="<%= true %>" helpMessage="all-content-export-help" id="allContent" label="all-content" name="<%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>" type="radio" value="<%= true %>" />
 
@@ -144,7 +144,7 @@
 
 					<li>
 						<div class="hide" id="<portlet:namespace />range">
-							<ul class="lfr-tree lfr-component">
+							<ul class="lfr-tree unstyled">
 								<li class="tree-item">
 									<aui:fieldset cssClass="portlet-data-section" label="filter-to-export-by-date">
 										<aui:input checked="<%= true %>" id="rangeAll" label="all" name="range" type="radio" value="all" />
@@ -285,7 +285,7 @@
 							%>
 
 								<div class="hide" id="<portlet:namespace />content_<%= portlet.getPortletId() %>">
-									<ul class="lfr-tree lfr-component">
+									<ul class="lfr-tree unstyled">
 										<li class="tree-item">
 											<aui:fieldset cssClass="portlet-type-data-section" label="<%= portletTitle %>">
 
@@ -381,7 +381,7 @@
 	</aui:fieldset>
 
 	<aui:fieldset cssClass="options-group" label="permissions">
-		<ul class="lfr-tree lfr-component">
+		<ul class="lfr-tree unstyled">
 			<li class="tree-item">
 				<aui:input label="permissions" name="<%= PortletDataHandlerKeys.PERMISSIONS %>" type="checkbox" />
 

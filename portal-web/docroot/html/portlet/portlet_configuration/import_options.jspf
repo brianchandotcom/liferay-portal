@@ -17,7 +17,7 @@
 <div class="export-dialog-tree">
 	<aui:input label="import-a-lar-file-to-overwrite-the-selected-data" name="importFileName" size="50" type="file" />
 
-	<ul class="lfr-tree lfr-component">
+	<ul class="lfr-tree unstyled">
 		<c:if test="<%= supportsSetup %>">
 			<aui:fieldset cssClass="options-group" label="application">
 				<li class="tree-item">
@@ -78,7 +78,7 @@
 
 								<div class="hide" id="<portlet:namespace />content_<%= selPortlet.getRootPortletId() %>">
 									<aui:fieldset cssClass="portlet-data-section" label="content">
-										<ul class="lfr-tree lfr-component">
+										<ul class="lfr-tree unstyled">
 											<aui:input data-name='<%= LanguageUtil.get(locale, "delete-portlet-data") %>' label="delete-portlet-data-before-importing" name="<%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>" type="checkbox" />
 
 											<ul id="<portlet:namespace />showDeleteContentWarning">
@@ -101,7 +101,7 @@
 
 									<c:if test="<%= metadataControls.length > 0 %>">
 										<aui:fieldset cssClass="portlet-data-section" helpMessage="content-metadata-help" label="content-metadata">
-											<ul class="lfr-tree lfr-component" id="<portlet:namespace />portletMetaDataList">
+											<ul class="lfr-tree unstyled" id="<portlet:namespace />portletMetaDataList">
 
 												<%
 												for (int i = 0; i < metadataControls.length; i++) {
@@ -135,7 +135,7 @@
 										</aui:fieldset>
 									</c:if>
 
-									<ul class="lfr-tree lfr-component">
+									<ul class="lfr-tree unstyled">
 										<aui:fieldset label="update-data">
 											<aui:input checked="<%= true %>" data-name='<%= LanguageUtil.get(locale, "mirror") %>' helpMessage="import-data-strategy-mirror-help" id="mirror" label="mirror" name="<%= PortletDataHandlerKeys.DATA_STRATEGY %>" type="radio" value="<%= PortletDataHandlerKeys.DATA_STRATEGY_MIRROR %>" />
 

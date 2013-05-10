@@ -117,7 +117,7 @@ AUI.add(
 		var TPL_ERROR_FOLDER = new A.Template(
 			'<span class="lfr-status-success-label">{validFilesLength}</span>',
 			'<span class="lfr-status-error-label">{invalidFilesLength}</span>',
-			'<ul class="lfr-component">',
+			'<ul class="unstyled">',
 				'<tpl for="invalidFiles">',
 					'<li><b>{name}</b>: {errorMessage}</li>',
 				'</tpl>',

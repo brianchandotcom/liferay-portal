@@ -17,7 +17,7 @@
 <div class="export-dialog-tree">
 	<aui:input label="export-the-selected-data-to-the-given-lar-file-name" name="exportFileName" size="50" value='<%= StringUtil.replace(selPortlet.getDisplayName(), " ", "_") + "-" + Time.getShortTimestamp() + ".portlet.lar" %>' />
 
-	<ul class="lfr-tree lfr-component">
+	<ul class="lfr-tree unstyled">
 		<c:if test="<%= supportsSetup %>">
 			<aui:fieldset cssClass="options-group" label="application">
 				<li class="tree-item">
@@ -44,7 +44,7 @@
 
 				<div class="hide" id="<portlet:namespace />globalConfiguration">
 					<aui:fieldset cssClass="portlet-data-section" label="application">
-						<ul class="lfr-tree lfr-component">
+						<ul class="lfr-tree unstyled">
 							<li class="tree-item">
 								<c:if test="<%= !PortletItemLocalServiceUtil.getPortletItems(layout.getGroupId(), selPortlet.getRootPortletId(), com.liferay.portal.model.PortletPreferences.class.getName()).isEmpty() %>">
 									<aui:input label="archived-setups" name="<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS %>" type="checkbox" value="<%= false %>" />
@@ -70,7 +70,7 @@
 					<aui:input label="content" name='<%= PortletDataHandlerKeys.PORTLET_DATA + "_" + selPortlet.getRootPortletId() %>' type="checkbox" value="<%= portletDataHandler.isPublishToLiveByDefault() %>" />
 
 					<div class="hide" id="<portlet:namespace />content_<%= selPortlet.getRootPortletId() %>">
-						<ul class="lfr-tree lfr-component">
+						<ul class="lfr-tree unstyled">
 
 							<%
 							String selectedContent = StringPool.BLANK;
@@ -257,7 +257,7 @@
 			</aui:fieldset>
 
 			<aui:fieldset cssClass="options-group" label="permissions">
-				<ul class="lfr-tree lfr-component">
+				<ul class="lfr-tree unstyled">
 					<li class="tree-item">
 						<aui:input helpMessage="export-import-portlet-permissions-help" label="permissions" name="<%= PortletDataHandlerKeys.PERMISSIONS %>" type="checkbox" />
 

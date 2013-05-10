@@ -66,7 +66,7 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 %>
 
 <div>
-	<ul class="lfr-tree lfr-component">
+	<ul class="lfr-tree unstyled">
 		<li class="tree-item">
 			<aui:input label="setup" name="<%= PortletDataHandlerKeys.PORTLET_SETUP %>" type="checkbox" value="<%= true %>" />
 		</li>

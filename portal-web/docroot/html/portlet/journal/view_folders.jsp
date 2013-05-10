@@ -77,7 +77,7 @@ else {
 %>
 
 <liferay-ui:app-view-navigation title="<%= parentTitle %>">
-	<ul class="lfr-component">
+	<ul class="unstyled">
 		<c:choose>
 			<c:when test="<%= ((folderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) && !expandFolder) %>">
 

@@ -23,7 +23,7 @@
 	%>
 
 	<div class="taglib-social-bookmarks" id="<%= randomNamespace %>socialBookmarks">
-		<ul class="lfr-component">
+		<ul class="unstyled">
 
 			<%
 			for (int i = 0; i < typesArray.length; i++) {

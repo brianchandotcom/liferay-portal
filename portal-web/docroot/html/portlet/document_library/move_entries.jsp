@@ -113,7 +113,7 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 		</div>
 
 		<div class="move-list">
-			<ul class="lfr-component">
+			<ul class="unstyled">
 
 				<%
 				for (Folder folder : validMoveFolders) {
@@ -139,7 +139,7 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 		</div>
 
 		<div class="move-list">
-			<ul class="lfr-component">
+			<ul class="unstyled">
 
 				<%
 				for (Folder folder : invalidMoveFolders) {
@@ -178,7 +178,7 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 		</div>
 
 		<div class="move-list">
-			<ul class="lfr-component">
+			<ul class="unstyled">
 
 				<%
 				for (FileEntry validMoveFileEntry : validMoveFileEntries) {
@@ -204,7 +204,7 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 		</div>
 
 		<div class="move-list">
-			<ul class="lfr-component">
+			<ul class="unstyled">
 
 				<%
 				for (FileEntry invalidMoveFileEntry : invalidMoveFileEntries) {
@@ -244,7 +244,7 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 		</div>
 
 		<div class="move-list">
-			<ul class="lfr-component">
+			<ul class="unstyled">
 
 				<%
 				for (DLFileShortcut fileShortcut : validShortcutEntries) {
@@ -270,7 +270,7 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 		</div>
 
 		<div class="move-list">
-			<ul class="lfr-component">
+			<ul class="unstyled">
 
 				<%
 				for (DLFileShortcut fileShortcut : invalidShortcutEntries) {

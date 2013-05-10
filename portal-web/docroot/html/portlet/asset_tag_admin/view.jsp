@@ -60,7 +60,7 @@
 
 					<h3 class="tags-header"><%= LanguageUtil.get(pageContext, "tags") %></h3>
 
-					<div class="tags-admin-list lfr-component"></div>
+					<div class="tags-admin-list unstyled"></div>
 
 					<div class="tags-pagination"></div>
 				</aui:col>

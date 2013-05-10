@@ -71,7 +71,7 @@
 	</c:if>
 
 	<aui:fieldset cssClass="options-group" label="application-configuration">
-		<ul class="lfr-component lfr-tree">
+		<ul class="lfr-tree unstyled">
 			<li class="tree-item">
 				<aui:input checked="<%= true %>" helpMessage="all-applications-import-help" label="all-applications" name="<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>" type="checkbox" value="<%= true %>" />
 
@@ -102,7 +102,7 @@
 	</aui:fieldset>
 
 	<aui:fieldset cssClass="options-group" label="content">
-		<ul class="lfr-tree lfr-component">
+		<ul class="lfr-tree unstyled">
 			<li class="tree-item">
 				<aui:input checked="<%= true %>" helpMessage="all-content-import-help" label="all-content" name="<%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>" type="checkbox" value="<%= true %>" />
 
@@ -158,7 +158,7 @@
 	</aui:fieldset>
 
 	<aui:fieldset cssClass="options-group" label="permissions">
-		<ul class="lfr-tree lfr-component">
+		<ul class="lfr-tree unstyled">
 			<li class="tree-item">
 				<aui:input label="permissions" name="<%= PortletDataHandlerKeys.PERMISSIONS %>" type="checkbox" />
 

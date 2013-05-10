@@ -95,7 +95,7 @@ else if (((folderId != rootFolderId) && (parentFolderId == 0)) || ((folderId == 
 %>
 
 <liferay-ui:app-view-navigation title="<%= parentTitle %>">
-	<ul class="lfr-component">
+	<ul class="unstyled">
 		<c:choose>
 			<c:when test="<%= ((folderId == rootFolderId) && !expandFolder) || ((folder != null) && (folder.isRoot() && !folder.isDefaultRepository() && !expandFolder)) %>">
 

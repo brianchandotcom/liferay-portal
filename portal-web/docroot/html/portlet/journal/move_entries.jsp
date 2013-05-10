@@ -88,7 +88,7 @@ for (JournalArticle curArticle : articles) {
 		</div>
 
 		<div class="move-list">
-			<ul class="lfr-component">
+			<ul class="unstyled">
 
 				<%
 				for (JournalFolder folder : validMoveFolders) {
@@ -114,7 +114,7 @@ for (JournalArticle curArticle : articles) {
 		</div>
 
 		<div class="move-list">
-			<ul class="lfr-component">
+			<ul class="unstyled">
 
 				<%
 				for (JournalFolder folder : invalidMoveFolders) {
@@ -146,7 +146,7 @@ for (JournalArticle curArticle : articles) {
 		</div>
 
 		<div class="move-list">
-			<ul class="lfr-component">
+			<ul class="unstyled">
 
 				<%
 				for (JournalArticle validMoveArticle : validMoveArticles) {
@@ -172,7 +172,7 @@ for (JournalArticle curArticle : articles) {
 		</div>
 
 		<div class="move-list">
-			<ul class="lfr-component">
+			<ul class="unstyled">
 
 				<%
 				for (JournalArticle invalidMoveArticle : invalidMoveArticles) {

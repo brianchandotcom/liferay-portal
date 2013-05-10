@@ -15,7 +15,7 @@
 --%>
 
 <div>
-	<ul class="lfr-tree lfr-component">
+	<ul class="lfr-tree unstyled">
 		<li class="tree-item">
 			<aui:input helpMessage="export-import-permissions-help" label="permissions" name="<%= PortletDataHandlerKeys.PERMISSIONS %>" type="checkbox" />
 

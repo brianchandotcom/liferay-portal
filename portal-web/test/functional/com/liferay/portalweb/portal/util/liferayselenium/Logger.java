@@ -44,7 +44,7 @@ public class Logger {
 
 		JavascriptExecutor javascriptExecutor = (JavascriptExecutor)_webDriver;
 
-		javascriptExecutor.executeScript("window.name = 'log window';");
+		javascriptExecutor.executeScript("window.name = 'Log Window';");
 	}
 
 	public void logCommand(Method method, Object[] arguments) {
@@ -54,17 +54,19 @@ public class Logger {
 		sb.append(method.getName());
 		sb.append("</b>");
 
-		if (arguments.length == 1) {
-			sb.append(" with parameter ");
-		}
-		else if (arguments.length > 1) {
-			sb.append(" with parameters ");
-		}
+		if (arguments != null) {
+			if (arguments.length == 1) {
+				sb.append(" with parameter ");
+			}
+			else if (arguments.length > 1) {
+				sb.append(" with parameters ");
+			}
 
-		for (Object argument : arguments) {
-			sb.append("<b>");
-			sb.append(String.valueOf(argument));
-			sb.append("</b> ");
+			for (Object argument : arguments) {
+				sb.append("<b>");
+				sb.append(String.valueOf(argument));
+				sb.append("</b> ");
+			}
 		}
 
 		log(sb.toString());
@@ -78,17 +80,19 @@ public class Logger {
 		sb.append(method.getName());
 		sb.append("</b>");
 
-		if (arguments.length == 1) {
-			sb.append(" with parameter ");
-		}
-		else if (arguments.length > 1) {
-			sb.append(" with parameters ");
-		}
+		if (arguments != null) {
+			if (arguments.length == 1) {
+				sb.append(" with parameter ");
+			}
+			else if (arguments.length > 1) {
+				sb.append(" with parameters ");
+			}
 
-		for (Object argument : arguments) {
-			sb.append("<b>");
-			sb.append(String.valueOf(argument));
-			sb.append("</b> ");
+			for (Object argument : arguments) {
+				sb.append("<b>");
+				sb.append(String.valueOf(argument));
+				sb.append("</b> ");
+			}
 		}
 
 		log(sb.toString());
@@ -98,16 +102,18 @@ public class Logger {
 		sb.append("Command failure ");
 		sb.append(method.getName());
 
-		if (arguments.length == 1) {
-			sb.append(" with parameter ");
-		}
-		else if (arguments.length > 1) {
-			sb.append(" with parameters ");
-		}
+		if (arguments != null) {
+			if (arguments.length == 1) {
+				sb.append(" with parameter ");
+			}
+			else if (arguments.length > 1) {
+				sb.append(" with parameters ");
+			}
 
-		for (Object argument : arguments) {
-			sb.append(String.valueOf(argument));
-			sb.append(" ");
+			for (Object argument : arguments) {
+				sb.append(String.valueOf(argument));
+				sb.append(" ");
+			}
 		}
 
 		BaseTestCase.fail(sb.toString());

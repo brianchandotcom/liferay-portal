@@ -158,6 +158,10 @@
 			<@insertMBMessage
 				_mbMessage = mbMessage
 			/>
+
+			<@insertSocialActivity
+				_entry = mbMessage
+			/>
 		</#list>
 	</#if>
 
@@ -202,6 +206,14 @@
 	<#local socialActivity = dataFactory.newSocialActivity(_entry)>
 
 	insert into SocialActivity values (${socialActivity.activityId}, ${socialActivity.groupId}, ${socialActivity.companyId}, ${socialActivity.userId}, ${socialActivity.createDate}, ${socialActivity.activitySetId}, ${socialActivity.mirrorActivityId}, ${socialActivity.classNameId}, ${socialActivity.classPK}, ${socialActivity.type}, '${socialActivity.extraData}', ${socialActivity.receiverUserId});
+</#macro>
+
+<#macro insertSubscription
+	_entry
+>
+	<#local subscription = dataFactory.newSubscription(_entry)>
+
+	insert into Subscription values (${subscription.subscriptionId}, ${subscription.companyId}, ${subscription.userId}, '${subscription.userName}', '${dataFactory.getDateString(subscription.createDate)}', '${dataFactory.getDateString(subscription.modifiedDate)}', '${subscription.classNameId}', ${subscription.classPK}, '${subscription.frequency}');
 </#macro>
 
 <#macro insertUser

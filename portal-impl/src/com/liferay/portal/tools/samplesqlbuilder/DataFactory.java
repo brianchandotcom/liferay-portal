@@ -47,6 +47,8 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
+import com.liferay.portal.model.Subscription;
+import com.liferay.portal.model.SubscriptionConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.VirtualHost;
 import com.liferay.portal.model.impl.AccountImpl;
@@ -59,6 +61,7 @@ import com.liferay.portal.model.impl.LayoutSetImpl;
 import com.liferay.portal.model.impl.PortletPreferencesImpl;
 import com.liferay.portal.model.impl.ResourcePermissionImpl;
 import com.liferay.portal.model.impl.RoleImpl;
+import com.liferay.portal.model.impl.SubscriptionImpl;
 import com.liferay.portal.model.impl.UserImpl;
 import com.liferay.portal.model.impl.VirtualHostImpl;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
@@ -129,6 +132,7 @@ import com.liferay.portlet.messageboards.model.impl.MBMessageImpl;
 import com.liferay.portlet.messageboards.model.impl.MBStatsUserImpl;
 import com.liferay.portlet.messageboards.model.impl.MBThreadImpl;
 import com.liferay.portlet.social.model.SocialActivity;
+import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.social.model.impl.SocialActivityImpl;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
@@ -1473,14 +1477,14 @@ public class DataFactory {
 			blogsEntry.getGroupId(),
 			_classNamesMap.get(BlogsEntry.class.getName()),
 			blogsEntry.getEntryId(), BlogsActivityKeys.ADD_ENTRY,
-			blogsEntry.getTitle());
+			"{\"title\":\""+ blogsEntry.getTitle() +"\"}");
 	}
 
 	public SocialActivity newSocialActivity(DLFileEntry dlFileEntry) {
 		return newSocialActivity(
 			dlFileEntry.getGroupId(), getDLFileEntryClassNameId(),
 			dlFileEntry.getFileEntryId(), DLActivityKeys.ADD_FILE_ENTRY,
-			dlFileEntry.getTitle());
+			"{\"title\":\""+ dlFileEntry.getTitle() +"\"}");
 	}
 
 	public SocialActivity newSocialActivity(JournalArticle journalArticle) {
@@ -1495,7 +1499,28 @@ public class DataFactory {
 		return newSocialActivity(
 			journalArticle.getGroupId(), getJournalArticleClassNameId(),
 			journalArticle.getResourcePrimKey(), type,
-			journalArticle.getUrlTitle());
+			"{\"title\":\""+ journalArticle.getUrlTitle() +"\"}");
+	}
+
+	public SocialActivity newSocialActivity(MBMessage mbMessage) {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("{\"title\":\"");
+		sb.append(mbMessage.getSubject());
+		sb.append("\", \"messageId\":");
+		sb.append(mbMessage.getMessageId());
+		sb.append("}");
+
+		return newSocialActivity(
+			mbMessage.getGroupId(), mbMessage.getClassNameId(),
+			mbMessage.getClassPK(), SocialActivityConstants.TYPE_ADD_COMMENT,
+			sb.toString());
+	}
+
+	public Subscription newSubscription(BlogsEntry blogsEntry) {
+		return newSubscription(
+			_classNamesMap.get(BlogsEntry.class.getName()),
+			blogsEntry.getEntryId());
 	}
 
 	public User newUser(int index) {
@@ -1849,7 +1874,8 @@ public class DataFactory {
 	}
 
 	protected SocialActivity newSocialActivity(
-		long groupId, long classNameId, long classPK, int type, String title) {
+		long groupId, long classNameId, long classPK, int type,
+		String extraData) {
 
 		SocialActivity socialActivity = new SocialActivityImpl();
 
@@ -1861,9 +1887,25 @@ public class DataFactory {
 		socialActivity.setClassNameId(classNameId);
 		socialActivity.setClassPK(classPK);
 		socialActivity.setType(type);
-		socialActivity.setExtraData("{\"title\":\""+ title +"\"}");
+		socialActivity.setExtraData(extraData);
 
 		return socialActivity;
+	}
+
+	protected Subscription newSubscription(long classNameId, long classPK) {
+		Subscription subscription = new SubscriptionImpl();
+
+		subscription.setSubscriptionId(_counter.get());
+		subscription.setCompanyId(_companyId);
+		subscription.setUserId(_sampleUserId);
+		subscription.setUserName(_SAMPLE_USER_NAME);
+		subscription.setCreateDate(new Date());
+		subscription.setModifiedDate(new Date());
+		subscription.setClassNameId(classNameId);
+		subscription.setClassPK(classPK);
+		subscription.setFrequency(SubscriptionConstants.FREQUENCY_INSTANT);
+
+		return subscription;
 	}
 
 	protected User newUser(

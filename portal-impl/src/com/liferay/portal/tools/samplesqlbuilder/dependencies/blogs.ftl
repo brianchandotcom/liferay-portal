@@ -25,6 +25,10 @@
 			_mbThreadId = mbThreadId
 		/>
 
+		<@insertSubscription
+			_entry = blogsEntry
+		/>
+
 		<@insertSocialActivity
 			_entry = blogsEntry
 		/>

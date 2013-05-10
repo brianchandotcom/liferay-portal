@@ -19,7 +19,7 @@
 	}
 
 	.choice-selector {
-		min-width: 150px;
+		width: 100%;
 	}
 
 	.field-content {

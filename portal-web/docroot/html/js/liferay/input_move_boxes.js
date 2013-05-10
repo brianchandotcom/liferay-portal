@@ -10,11 +10,21 @@ AUI.add(
 				[
 					{
 						cssClass: 'reorder-up',
-						icon: 'icon-circle-arrow-up'
+						icon: 'icon-circle-arrow-up',
+						on: {
+							click: function(event) {
+								event.domEvent.preventDefault();
+							}
+						}
 					},
 					{
 						cssClass: 'reorder-down',
-						icon: 'icon-circle-arrow-down'
+						icon: 'icon-circle-arrow-down',
+						on: {
+							click: function(event) {
+								event.domEvent.preventDefault();
+							}
+						}
 					}
 				]
 			]
@@ -102,10 +112,10 @@ AUI.add(
 						if (cssClass.indexOf('move-right') !== -1) {
 							from = instance._rightBox;
 							to = instance._leftBox;
-							sort = instance.get('rightReorder');
+							sort = !instance.get('rightReorder');
 						}
 						else {
-							sort = instance.get('leftReorder');
+							sort = !instance.get('leftReorder');
 						}
 
 						Util.moveItem(from, to, sort);
@@ -170,13 +180,23 @@ AUI.add(
 											'vertical',
 											{
 												cssClass: 'move-left',
-												icon: 'icon-circle-arrow-left',
-												title: strings.MOVE_LEFT
+												icon: 'icon-circle-arrow-right',
+												title: strings.MOVE_LEFT,
+												on: {
+													click: function(event) {
+														event.domEvent.preventDefault();
+													}
+												}
 											},
 											{
 												cssClass: 'move-right',
-												icon: 'icon-circle-arrow-right',
-												title: strings.MOVE_RIGHT
+												icon: 'icon-circle-arrow-left',
+												title: strings.MOVE_RIGHT,
+												on: {
+													click: function(event) {
+														event.domEvent.preventDefault();
+													}
+												}
 											}
 										]
 									]

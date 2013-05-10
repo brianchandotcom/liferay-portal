@@ -752,11 +752,26 @@ public class JavadocFormatter {
 		return text;
 	}
 
-	private List<JavaClass> _getAncestorJavaClasses(JavaClass javaClass) {
-		List<JavaClass> ancestorJavaClasses = new ArrayList<JavaClass>();
+	private List<JavaClass> _addAncestorJavaClasses(
+		JavaClass javaClass, List<JavaClass> ancestorJavaClasses) {
 
-		while ((javaClass = javaClass.getSuperJavaClass()) != null) {
-			ancestorJavaClasses.add(javaClass);
+		JavaClass superJavaClass = javaClass.getSuperJavaClass();
+
+		if (superJavaClass != null) {
+			ancestorJavaClasses.add(superJavaClass);
+
+			ancestorJavaClasses = _addAncestorJavaClasses(
+				superJavaClass, ancestorJavaClasses);
+		}
+
+		JavaClass[] implementedInterfaces =
+			javaClass.getImplementedInterfaces();
+
+		for (JavaClass implementedInterface : implementedInterfaces) {
+			ancestorJavaClasses.add(implementedInterface);
+
+			ancestorJavaClasses = _addAncestorJavaClasses(
+				implementedInterface, ancestorJavaClasses);
 		}
 
 		return ancestorJavaClasses;
@@ -1497,8 +1512,10 @@ public class JavadocFormatter {
 
 		_updateLanguageProperties(document, javaClass.getName());
 
-		List<JavaClass> ancestorJavaClasses = _getAncestorJavaClasses(
-			javaClass);
+		List<JavaClass> ancestorJavaClasses = new ArrayList<JavaClass>();
+
+		ancestorJavaClasses = _addAncestorJavaClasses(
+			javaClass, ancestorJavaClasses);
 
 		Element rootElement = document.getRootElement();
 

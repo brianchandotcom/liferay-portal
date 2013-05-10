@@ -238,7 +238,7 @@ String editorContent = emailBody;
 									stack: true,
 									width: 600
 								},
-								id: '_<%= portletResource %>_selectFolder',
+								id: '_<%= HtmlUtil.escapeJS(portletResource) %>_selectFolder',
 								title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", "folder") %>',
 								uri: '<%= selectFolderURL.toString() %>'
 							},

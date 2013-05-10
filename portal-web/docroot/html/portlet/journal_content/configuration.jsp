@@ -243,7 +243,7 @@ catch (NoSuchArticleException nsae) {
 
 	<aui:fieldset cssClass="hide">
 		<aui:field-wrapper label="portlet-id">
-			<%= portletResource %>
+			<%= HtmlUtil.escape(portletResource) %>
 		</aui:field-wrapper>
 	</aui:fieldset>
 

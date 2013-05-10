@@ -63,7 +63,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 	var selects = A.all('#<portlet:namespace />fm select');
 
-	var curPortletBoundaryId = '#p_p_id_<%= portletResource %>_';
+	var curPortletBoundaryId = '#p_p_id_<%= HtmlUtil.escapeJS(portletResource) %>_';
 
 	var toggleCustomFields = function() {
 		var data = {};
@@ -71,8 +71,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 		var displayStyle = selectDisplayStyle.val();
 		var sites = selectSites.val();
 
-		data['_<%= portletResource %>_displayStyle'] = displayStyle;
-		data['_<%= portletResource %>_sites'] = sites;
+		data['_<%= HtmlUtil.escapeJS(portletResource) %>_displayStyle'] = displayStyle;
+		data['_<%= HtmlUtil.escapeJS(portletResource) %>_sites'] = sites;
 
 		Liferay.Portlet.refresh(curPortletBoundaryId, data);
 	}

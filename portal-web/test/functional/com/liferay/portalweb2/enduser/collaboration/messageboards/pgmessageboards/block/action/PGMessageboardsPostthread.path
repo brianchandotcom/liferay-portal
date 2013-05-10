@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>PUBLISH_BUTTON</td>
-	<td>//input[@value='Publish']</td>
+	<td>//button[@id='_19_publishButton']</td>
 	<td></td>
 </tr>
 </tbody>

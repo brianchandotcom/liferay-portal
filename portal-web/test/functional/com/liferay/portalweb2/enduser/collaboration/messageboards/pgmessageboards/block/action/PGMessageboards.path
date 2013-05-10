@@ -20,22 +20,22 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='portlet-msg-success']</td>
+	<td>//div[@class='alert alert-success']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE_RECYCLE_BIN</td>
-	<td>//div[@class='portlet-msg-success taglib-trash-undo']</td>
+	<td>//form[@id='_19_undoForm']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_CATEGORY_BUTTON</td>
-	<td>//input[@value='Add Category']</td>
+	<td>//button[contains(.,'Add Category')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>POST_NEW_THREAD_BUTTON</td>
-	<td>//input[@value='Post New Thread']</td>
+	<td>//button[contains(.,'Post New Thread')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -46,27 +46,27 @@
 <!--CATEGORY_TABLE-->
 <tr>
 	<td>CATEGORY_TABLE_CATEGORY_1</td>
-	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]/table/tbody/tr/td[1]/a)[1]</td>
+	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//tr/td[1]/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CATEGORY_TABLE_CATEGORIES_1</td>
-	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]/table/tbody/tr/td[2]/a)[1]</td>
+	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//tr/td[2]/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CATEGORY_TABLE_THREADS_1</td>
-	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]/table/tbody/tr/td[3]/a)[1]</td>
+	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//tr/td[3]/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CATEGORY_TABLE_POSTS_1</td>
-	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]/table/tbody/tr/td[4]/a)[1]</td>
+	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//tr/td[4]/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CATEGORY_TABLE_ACTIONS_1</td>
-	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]/table/tbody/tr/td/span[@title='Actions']/ul/li/strong/a/span)[1]</td>
+	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//tr/td/div/a[@title='Actions'])[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -118,27 +118,27 @@
 <!--THREAD_TABLE-->
 <tr>
 	<td>THREAD_TABLE_THREAD_1</td>
-	<td>xpath=(//div[contains(@id,'mbThreadsSearchContainer')]/table/tbody/tr/td[1]/a)[1]</td>
+	<td>xpath=(//div[contains(@id,'mbThreadsSearchContainer')]//tr/td[1]/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>THREAD_TABLE_STARTED_BY_1</td>
-	<td>xpath=(//div[contains(@id,'mbThreadsSearchContainer')]/table/tbody/tr/td[3]/a)[1]</td>
+	<td>xpath=(//div[contains(@id,'mbThreadsSearchContainer')]//tr/td[3]/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>THREAD_TABLE_POSTS_1</td>
-	<td>xpath=(//div[contains(@id,'mbThreadsSearchContainer')]/table/tbody/tr/td[4]/a)[1]</td>
+	<td>xpath=(//div[contains(@id,'mbThreadsSearchContainer')]//tr/td[4]/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>THREAD_TABLE_LAST_POST_1</td>
-	<td>xpath=(//div[contains(@id,'mbThreadsSearchContainer')]/table/tbody/tr/td[6]/a)[1]</td>
+	<td>xpath=(//div[contains(@id,'mbThreadsSearchContainer')]//tr/td[6]/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>THREAD_TABLE_ACTIONS_1</td>
-	<td>xpath=(//div[contains(@id,'mbThreadsSearchContainer')]/table/tbody/tr/td/span[@title='Actions']/ul/li/strong/a/span)[1]</td>
+	<td>xpath=(//div[contains(@id,'mbThreadsSearchContainer')]//tr/td/div/a[@title='Actions'])[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -173,13 +173,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>THREAD_MENULIST_UNSUBSCRIBE</td>
-	<td>//a[@role='menuitem' and contains(.,'Unsubscribe')]</td>
+	<td>THREAD_MENULIST_LOCK_THREAD</td>
+	<td>//a[@role='menuitem' and contains(.,'Lock Thread')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>THREAD_MENULIST_MOVE</td>
-	<td>//a[@role='menuitem' and contains(.,'Move')]</td>
+	<td>THREAD_MENULIST_UNLOCK_THREAD</td>
+	<td>//a[@role='menuitem' and contains(.,'Unlock Thread')]</td>
 	<td></td>
 </tr>
 <tr>

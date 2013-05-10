@@ -31,12 +31,12 @@
 <!--WIKI_PAGE_TABLE-->
 <tr>
 	<td>WIKI_PAGE_TABLE_PAGE_1</td>
-	<td>//tr[2]/td/a</td>
+	<td>//tr[1]/td/a</td>
 	<td>FrontPage</td>
 </tr>
 <tr>
 	<td>WIKI_PAGE_TABLE_ACTIONS_1</td>
-	<td>//tr[2]/td/span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>//tr[1]/td/div/a[@title='Actions']</td>
 	<td>FrontPage</td>
 </tr>
 <tr>

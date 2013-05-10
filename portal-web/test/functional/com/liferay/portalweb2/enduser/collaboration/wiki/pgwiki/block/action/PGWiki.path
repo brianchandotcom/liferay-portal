@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='portlet-msg-success']</td>
+	<td>//div[@class='alert alert-success']</td>
 	<td></td>
 </tr>
 <tr>
@@ -37,7 +37,7 @@
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_ALL_PAGES</td>
-	<td>//ul[@class='top-links-navigation']/li[contains(.,'All Pages')]/span/a/span</td>
+	<td>//div[@class='navbar ']//li/a[contains(.,'All Pages')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -48,7 +48,7 @@
 <!--WIKI_PAGE-->
 <tr>
 	<td>WIKI_PAGE_TITLE</td>
-	<td>//h1[@class='header-title']/span</td>
+	<td>//h3[@class='header-title']/span</td>
 	<td></td>
 </tr>
 <tr>

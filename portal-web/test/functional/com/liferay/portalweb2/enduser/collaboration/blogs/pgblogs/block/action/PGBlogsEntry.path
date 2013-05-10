@@ -21,7 +21,7 @@
 <!--COMMENTS-->
 <tr>
 	<td>COMMENTS_SUCCESS</td>
-	<td>//div[@class='lfr-message-response portlet-msg-success']</td>
+	<td>//div[@class='lfr-message-response alert alert-success']</td>
 	<td></td>
 </tr>
 <tr>
@@ -36,7 +36,7 @@
 </tr>
 <tr>
 	<td>COMMENTS_REPLY_BUTTON</td>
-	<td>//input[@value='Reply']</td>
+	<td>//button[@id='_33_kfit_postReplyButton0']</td>
 	<td></td>
 </tr>
 <tr>
@@ -47,17 +47,17 @@
 <!--COMMENT-->
 <tr>
 	<td>COMMENT_1</td>
-	<td>//div[@class='lfr-discussion-message']</td>
+	<td>xpath=(//div[@class='lfr-discussion-message'])[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>COMMENT_2</td>
-	<td>//div[@class='lfr-discussion-message']</td>
+	<td>xpath=(//div[@class='lfr-discussion-message'])[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>COMMENT_3</td>
-	<td>//div[@class='lfr-discussion-message']</td>
+	<td>xpath=(//div[@class='lfr-discussion-message'])[3]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -4,6 +4,10 @@
 
 		insert into MBCategory values ('${mbCategory.uuid}', ${mbCategory.categoryId}, ${mbCategory.groupId}, ${mbCategory.companyId}, ${mbCategory.userId}, '${mbCategory.userName}', '${dataFactory.getDateString(mbCategory.createDate)}', '${dataFactory.getDateString(mbCategory.modifiedDate)}', ${mbCategory.parentCategoryId}, '${mbCategory.name}', '${mbCategory.description}', '${mbCategory.displayStyle}', ${mbCategory.threadCount}, ${mbCategory.messageCount}, '${dataFactory.getDateString(mbCategory.lastPostDate)}', ${mbCategory.status}, ${mbCategory.statusByUserId}, '${mbCategory.statusByUserName}', '${dataFactory.getDateString(mbCategory.statusDate)}');
 
+		<@insertResourcePermissions
+			_entry = mbCategory
+		/>
+
 		<#assign mbMailingList = dataFactory.newMBMailingList(mbCategory)>
 
 		insert into MBMailingList values ('${mbMailingList.uuid}', ${mbMailingList.mailingListId}, ${mbMailingList.groupId}, ${mbMailingList.companyId}, ${mbMailingList.userId}, '${mbMailingList.userName}', '${dataFactory.getDateString(mbMailingList.createDate)}', '${dataFactory.getDateString(mbMailingList.modifiedDate)}', ${mbMailingList.categoryId}, '${mbMailingList.emailAddress}', '${mbMailingList.inProtocol}', '${mbMailingList.inServerName}', ${mbMailingList.inServerPort}, ${mbMailingList.inUseSSL?string}, '${mbMailingList.inUserName}', '${mbMailingList.inPassword}', ${mbMailingList.inReadInterval}, '${mbMailingList.outEmailAddress}', ${mbMailingList.outCustom?string}, '${mbMailingList.outServerName}', ${mbMailingList.outServerPort}, ${mbMailingList.outUseSSL?string}, '${mbMailingList.outUserName}', '${mbMailingList.outPassword}', ${mbMailingList.allowAnonymous?string}, ${mbMailingList.active?string});

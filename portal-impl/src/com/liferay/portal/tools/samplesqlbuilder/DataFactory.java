@@ -1454,6 +1454,14 @@ public class DataFactory {
 	}
 
 	public List<ResourcePermission> newResourcePermissions(
+		MBCategory mbCategory) {
+
+		return newResourcePermissions(
+			MBCategory.class.getName(),
+			StringUtil.valueOf(mbCategory.getCategoryId()), _sampleUserId);
+	}
+
+	public List<ResourcePermission> newResourcePermissions(
 		PortletPreferences portletPreferences) {
 
 		String portletId = portletPreferences.getPortletId();

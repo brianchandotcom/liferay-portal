@@ -31,8 +31,6 @@ import com.liferay.portlet.dynamicdatamapping.storage.FieldConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
 
-import java.io.Serializable;
-
 import java.util.List;
 import java.util.Map;
 
@@ -78,7 +76,6 @@ public class DDLCSVExporter extends BaseDDLExporter {
 				recordVersion.getDDMStorageId());
 
 			for (Map<String, String> fieldMap : fieldsMap.values()) {
-				String dataType = fieldMap.get(FieldConstants.DATA_TYPE);
 				String name = fieldMap.get(FieldConstants.NAME);
 				String value = StringPool.BLANK;
 
@@ -88,10 +85,7 @@ public class DDLCSVExporter extends BaseDDLExporter {
 					value = field.getRenderedValue(getLocale());
 				}
 
-				Serializable fieldValueSerializable =
-					FieldConstants.getSerializable(dataType, value);
-
-				sb.append(CSVUtil.encode(fieldValueSerializable));
+				sb.append(CSVUtil.encode(value));
 				sb.append(CharPool.COMMA);
 			}
 

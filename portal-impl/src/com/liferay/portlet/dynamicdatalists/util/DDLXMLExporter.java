@@ -86,8 +86,6 @@ public class DDLXMLExporter extends BaseDDLExporter {
 				recordVersion.getDDMStorageId());
 
 			for (Map<String, String> fieldMap : fieldsMap.values()) {
-				String dataType = fieldMap.get(FieldConstants.DATA_TYPE);
-
 				String label = fieldMap.get(FieldConstants.LABEL);
 				String name = fieldMap.get(FieldConstants.NAME);
 
@@ -99,10 +97,7 @@ public class DDLXMLExporter extends BaseDDLExporter {
 					value = field.getRenderedValue(getLocale());
 				}
 
-				Serializable fieldValueSerializable =
-					FieldConstants.getSerializable(dataType, value);
-
-				addFieldElement(fieldsElement, label, fieldValueSerializable);
+				addFieldElement(fieldsElement, label, value);
 			}
 		}
 

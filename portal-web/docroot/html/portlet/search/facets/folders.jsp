@@ -33,7 +33,7 @@ SearchContext searchContext = SearchContextFactory.getInstance(request);
 <div class="<%= cssClass %>" data-facetFieldName="<%= facet.getFieldName() %>" id="<%= randomNamespace %>facet">
 	<aui:input name="<%= facet.getFieldName() %>" type="hidden" value="<%= fieldParam %>" />
 
-	<ul class="unstyled folders">
+	<ul class="folders unstyled">
 		<li class="facet-value default <%= Validator.isNull(fieldParam) ? "current-term" : StringPool.BLANK %>">
 			<a data-value="" href="javascript:;"><img alt="" src='<%= themeDisplay.getPathThemeImages() + "/common/folder.png" %>' /><liferay-ui:message key="any" /> <liferay-ui:message key="<%= facetConfiguration.getLabel() %>" /></a>
 		</li>

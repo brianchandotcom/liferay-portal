@@ -28,7 +28,7 @@ JSONArray rangesJSONArray = dataJSONObject.getJSONArray("ranges");
 <div class="<%= cssClass %>" data-facetFieldName="<%= facet.getFieldName() %>" id="<%= randomNamespace %>facet">
 	<aui:input name="<%= facet.getFieldName() %>" type="hidden" value="<%= fieldParam %>" />
 
-	<ul class="unstyled range">
+	<ul class="range unstyled">
 		<li class="facet-value default <%= Validator.isNull(fieldParam) ? "current-term" : StringPool.BLANK %>">
 			<a data-value="" href="javascript:;"><liferay-ui:message key="any-range" /></a>
 		</li>

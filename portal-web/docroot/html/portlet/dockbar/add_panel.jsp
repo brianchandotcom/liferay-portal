@@ -148,7 +148,7 @@
 									%>
 
 									<div class="lfr-add-content">
-										<liferay-ui:panel collapsible="<%= layout.isTypePortlet() %>" cssClass="lfr-content-category unstyled panel-page-category" extended="<%= true %>" id="<%= panelId %>" persistState="<%= true %>" title='<%= LanguageUtil.get(pageContext, "highlighted") %>'>
+										<liferay-ui:panel collapsible="<%= layout.isTypePortlet() %>" cssClass="lfr-content-category panel-page-category unstyled" extended="<%= true %>" id="<%= panelId %>" persistState="<%= true %>" title='<%= LanguageUtil.get(pageContext, "highlighted") %>'>
 
 											<%
 											for (Portlet portlet : portlets) {

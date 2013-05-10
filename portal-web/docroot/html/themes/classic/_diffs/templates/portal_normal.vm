@@ -18,7 +18,7 @@ $theme.include($body_top_include)
 
 #dockbar()
 
-<div id="wrapper">
+<div class="container-fluid" id="wrapper">
 	<header id="banner" role="banner">
 		#if ($has_navigation || $is_signed_in)
 			#parse ("$full_templates_path/navigation.vm")

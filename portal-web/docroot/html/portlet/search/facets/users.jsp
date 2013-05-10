@@ -29,7 +29,7 @@ boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 <div class="<%= cssClass %>" data-facetFieldName="<%= facet.getFieldName() %>" id="<%= randomNamespace %>facet">
 	<aui:input name="<%= facet.getFieldName() %>" type="hidden" value="<%= fieldParam %>" />
 
-	<ul class="unstyled users">
+	<ul class="users unstyled">
 		<li class="facet-value default <%= Validator.isNull(fieldParam) ? "current-term" : StringPool.BLANK %>">
 			<a data-value="" href="javascript:;"><img alt="" src='<%= themeDisplay.getPathThemeImages() + "/common/user_icon.png" %>' /><liferay-ui:message key="any" /> <liferay-ui:message key="<%= facetConfiguration.getLabel() %>" /></a>
 		</li>

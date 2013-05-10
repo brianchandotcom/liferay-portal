@@ -77,7 +77,7 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 %>
 
 	<div class="lfr-add-content">
-		<liferay-ui:panel collapsible="<%= layout.isTypePortlet() %>" cssClass="lfr-content-category unstyled panel-page-category" defaultState="closed" extended="<%= true %>" id="<%= panelId %>" persistState="<%= true %>" title="<%= title %>">
+		<liferay-ui:panel collapsible="<%= layout.isTypePortlet() %>" cssClass="lfr-content-category panel-page-category unstyled" defaultState="closed" extended="<%= true %>" id="<%= panelId %>" persistState="<%= true %>" title="<%= title %>">
 
 			<%
 			for (PortletCategory category : categories) {

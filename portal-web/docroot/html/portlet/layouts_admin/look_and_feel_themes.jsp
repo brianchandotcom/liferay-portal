@@ -108,7 +108,7 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 					<c:if test="<%= !colorSchemes.isEmpty() %>">
 						<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id='<%= device + "layoutsAdminLookAndFeelColorsPanel" %>' persistState="<%= true %>" title='<%= LanguageUtil.format(pageContext, "color-schemes-x", colorSchemes.size()) %>'>
 							<aui:fieldset cssCclass="color-schemes">
-								<div class="unstyled lfr-theme-list">
+								<div class="lfr-theme-list unstyled">
 
 									<%
 									for (int i = 0; i < colorSchemes.size(); i++) {
@@ -216,7 +216,7 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 			</h3>
 
 			<c:if test="<%= themes.size() > 1 %>">
-				<ul class="unstyled lfr-theme-list">
+				<ul class="lfr-theme-list unstyled">
 
 					<%
 					for (int i = 0; i < themes.size(); i++) {

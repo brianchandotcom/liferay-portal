@@ -35,7 +35,7 @@ boolean viewPreview = ParamUtil.getBoolean(request, "viewPreview");
 			}
 			%>
 
-			<liferay-ui:panel collapsible="<%= false %>" cssClass="clearfix unstyled panel-page-category recent" extended="<%= true %>" id="manageRecentPanel" persistState="<%= true %>" title="<%= panelTitle %>">
+			<liferay-ui:panel collapsible="<%= false %>" cssClass="clearfix panel-page-category recent unstyled" extended="<%= true %>" id="manageRecentPanel" persistState="<%= true %>" title="<%= panelTitle %>">
 
 				<%
 				int deltaDefault = GetterUtil.getInteger(SessionClicks.get(request, "liferay_addpanel_numitems", "10"));

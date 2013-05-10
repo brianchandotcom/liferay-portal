@@ -92,7 +92,7 @@ ColorScheme selColorScheme = ThemeLocalServiceUtil.getColorScheme(company.getCom
 				<c:if test="<%= !colorSchemes.isEmpty() %>">
 					<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="mobileDeviceRulesColorSchemesPanel" persistState="<%= true %>" title='<%= LanguageUtil.format(pageContext, "color-schemes-x", colorSchemes.size()) %>'>
 						<aui:fieldset cssClass="color-schemes">
-							<div class="unstyled lfr-theme-list">
+							<div class="lfr-theme-list unstyled">
 
 								<%
 								for (int i = 0; i < colorSchemes.size(); i++) {
@@ -136,7 +136,7 @@ ColorScheme selColorScheme = ThemeLocalServiceUtil.getColorScheme(company.getCom
 		</h3>
 
 		<c:if test="<%= themes.size() > 1 %>">
-			<ul class="unstyled lfr-theme-list">
+			<ul class="lfr-theme-list unstyled">
 
 				<%
 				for (int i = 0; i < themes.size(); i++) {

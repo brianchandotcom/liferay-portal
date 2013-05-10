@@ -302,7 +302,7 @@
 			<c:choose>
 				<c:when test="<%= Validator.isNotNull(controlPanelCategory) %>">
 					<div class="lfr-panel-container" id="controlPanelMenuAddContentPanelContainer">
-						<div class="lfr-panel unstyled panel-page-category lfr-extended" id="panel-manage-content">
+						<div class="lfr-panel panel-page-category lfr-extended unstyled" id="panel-manage-content">
 							<div class="lfr-panel-content">
 
 								<%= categoryPortletsContent %>
@@ -313,7 +313,7 @@
 				</c:when>
 				<c:otherwise>
 					<c:if test="<%= !portlets.isEmpty() %>">
-						<liferay-ui:panel collapsible="<%= true %>" cssClass="unstyled panel-page-category" extended="<%= true %>" id='<%= "panel-manage-" + curCategory %>' persistState="<%= true %>" title="<%= title %>">
+						<liferay-ui:panel collapsible="<%= true %>" cssClass="panel-page-category unstyled" extended="<%= true %>" id='<%= "panel-manage-" + curCategory %>' persistState="<%= true %>" title="<%= title %>">
 
 							<%= categoryPortletsContent %>
 

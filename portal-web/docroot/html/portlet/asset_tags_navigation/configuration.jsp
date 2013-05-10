@@ -35,7 +35,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 			<li class="tree-item">
 				<aui:input name="preferences--showAssetCount--" type="checkbox" value="<%= showAssetCount %>" />
 
-				<ul class="lfr-tree unstyled hide" id="<portlet:namespace />assetCountOptions">
+				<ul class="lfr-tree hide unstyled" id="<portlet:namespace />assetCountOptions">
 					<li class="tree-item">
 						<aui:select helpMessage="asset-type-asset-count-help" label="asset-type" name="preferences--classNameId--">
 							<aui:option label="any" value="<%= classNameId == 0 %>" />

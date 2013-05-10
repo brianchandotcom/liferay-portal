@@ -57,7 +57,7 @@
 	</c:if>
 
 	<aui:fieldset cssClass="options-group" label="application-configuration">
-		<ul class="unstyled lfr-tree">
+		<ul class="lfr-tree unstyled">
 			<li class="tree-item">
 				<aui:input checked="<%= true %>" helpMessage="all-applications-export-help" id="allApplications" label="all-applications" name="<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>" type="radio" value="<%= true %>" />
 

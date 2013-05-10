@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='portlet-msg-success']</td>
+	<td>//div[@class='alert alert-success']</td>
 	<td></td>
 </tr>
 <tr>
@@ -31,22 +31,22 @@
 <!--TOOLBAR-->
 <tr>
 	<td>TOOLBAR_VIEW_MEMBERS</td>
-	<td>//div[@class='lfr-portlet-toolbar']//a[contains(.,'View Members')]</td>
+	<td>//div[@class='navbar ']//a[contains(.,'View Members')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_ADD_MEMBERS</td>
-	<td>//div[@class='lfr-portlet-toolbar']//a[contains(.,'Add Members')]</td>
+	<td>//div[@class='navbar ']//a[contains(.,'Add Members')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_ADD_SITE_ROLES_TO</td>
-	<td>//div[@class='lfr-portlet-toolbar']//a[contains(.,'Add Site Roles to')]</td>
+	<td>//div[@class='navbar ']//a[contains(.,'Add Site Roles to')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_VIEW_TEAMS</td>
-	<td>//div[@class='lfr-portlet-toolbar']//a[contains(.,'View Teams')]</td>
+	<td>//div[@class='navbar ']//a[contains(.,'View Teams')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -57,17 +57,17 @@
 <!--ADD_MEMBERS_MENULIST-->
 <tr>
 	<td>ADD_MEMBERS_MENULIST_USER</td>
-	<td>//a[@role='menuitem' and contains(.,'User')]</td>
+	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'User')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_MEMBERS_MENULIST_ORGANIZATION</td>
-	<td>//a[@role='menuitem' and contains(.,'Organization')]</td>
+	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Organization')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_MEMBERS_MENULIST_USER_GROUPS</td>
-	<td>//a[@role='menuitem' and contains(.,'User Group')]</td>
+	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'User Group')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -78,12 +78,12 @@
 <!--ADD_SITE_ROLES_TO_MENULIST-->
 <tr>
 	<td>ADD_SITE_ROLES_TO_MENULIST_USERS</td>
-	<td>//a[@role='menuitem' and contains(.,'Users')]</td>
+	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Users')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_SITE_ROLES_TO_MENULIST_USER_GROUPS</td>
-	<td>//a[@role='menuitem' and contains(.,'User Groups')]</td>
+	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'User Groups')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -94,22 +94,22 @@
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_SUMMARY</td>
-	<td>//span/a[contains(.,'Summary')]</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Summary')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_USERS</td>
-	<td>//span/a[contains(.,'Users')]</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Users')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_ORGANIZATIONS</td>
-	<td>//span/a[contains(.,'Organizations')]</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Organizations')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_SITE_ROLES</td>
-	<td>//span/a[contains(.,'Site Roles and Teams ')]</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'User Groups')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -125,7 +125,7 @@
 </tr>
 <tr>
 	<td>USER_SEARCH_BUTTON</td>
-	<td>//input[@id='_174_keywords_users']/../../../following-sibling::span//input[@value='Search']</td>
+	<td>//input[@id='_174_keywords_users']/../following-sibling::button[contains(.,'Search')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -147,7 +147,7 @@
 </tr>
 <tr>
 	<td>ORGANIZATION_SEARCH_BUTTON</td>
-	<td>//input[@id='_174_keywords_organizations']/../../../following-sibling::span//input[@value='Search']</td>
+	<td>//input[@id='_174_keywords_organizations']/../following-sibling::button[contains(.,'Search')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -169,7 +169,7 @@
 </tr>
 <tr>
 	<td>USER_GROUP_SEARCH_BUTTON</td>
-	<td>//input[@id='_174_keywords_user_groups']/../../../following-sibling::span//input[@value='Search']</td>
+	<td>//input[@id='_174_keywords_user_groups']/../following-sibling::button[contains(.,'Search')]</td>
 	<td></td>
 </tr>
 </tbody>

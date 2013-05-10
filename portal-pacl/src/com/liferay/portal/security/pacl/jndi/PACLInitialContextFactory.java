@@ -25,6 +25,7 @@ import java.util.Hashtable;
 
 import javax.naming.Context;
 import javax.naming.NamingException;
+import javax.naming.ldap.LdapContext;
 import javax.naming.spi.InitialContextFactory;
 import javax.naming.spi.InitialContextFactoryBuilder;
 
@@ -118,14 +119,19 @@ public class PACLInitialContextFactory implements InitialContextFactory {
 
 		Context context = initialContextFactory.getInitialContext(environment);
 
+		if (context instanceof LdapContext) {
+			return context;
+		}
+
+		context = new SchemeAwareContextWrapper(context);
+
 		PACLPolicy paclPolicy = PACLUtil.getPACLPolicy();
 
 		if (paclPolicy == null) {
 			return context;
 		}
 
-		context = DoPrivilegedFactory.wrap(
-			new SchemeAwareContextWrapper(context));
+		context = DoPrivilegedFactory.wrap(context);
 		paclPolicy = DoPrivilegedFactory.wrap(paclPolicy);
 
 		return new PACLContext(context, paclPolicy);

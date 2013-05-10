@@ -662,6 +662,15 @@ public class DataFactory {
 			dlFileEntry.getTitle());
 	}
 
+	public AssetEntry newAssetEntry(DLFolder dlFolder) {
+		return newAssetEntry(
+			dlFolder.getGroupId(), dlFolder.getCreateDate(),
+			dlFolder.getModifiedDate(),
+			_classNamesMap.get(DLFolder.class.getName()),
+			dlFolder.getFolderId(), dlFolder.getUuid(), 0, true, null,
+			dlFolder.getName());
+	}
+
 	public AssetEntry newAssetEntry(JournalArticle journalArticle) {
 		return newAssetEntry(
 			journalArticle.getGroupId(), journalArticle.getCreateDate(),
@@ -1465,6 +1474,12 @@ public class DataFactory {
 		return newResourcePermissions(
 			BlogsEntry.class.getName(),
 			StringUtil.valueOf(blogsEntry.getEntryId()), _sampleUserId);
+	}
+
+	public List<ResourcePermission> newResourcePermissions(DLFolder dlFolder) {
+		return newResourcePermissions(
+			DLFolder.class.getName(),
+			StringUtil.valueOf(dlFolder.getFolderId()), _sampleUserId);
 	}
 
 	public List<ResourcePermission> newResourcePermissions(

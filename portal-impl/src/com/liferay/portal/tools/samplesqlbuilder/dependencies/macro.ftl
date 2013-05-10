@@ -52,6 +52,14 @@
 
 			insert into DLFolder values ('${dlFolder.uuid}', ${dlFolder.folderId}, ${dlFolder.groupId}, ${dlFolder.companyId}, ${dlFolder.userId}, '${dlFolder.userName}', '${dataFactory.getDateString(dlFolder.createDate)}', '${dataFactory.getDateString(dlFolder.modifiedDate)}', ${dlFolder.repositoryId}, ${dlFolder.mountPoint?string}, ${dlFolder.parentFolderId}, '${dlFolder.name}', '${dlFolder.description}', '${dataFactory.getDateString(dlFolder.lastPostDate)}', ${dlFolder.defaultFileEntryTypeId}, ${dlFolder.hidden?string}, ${dlFolder.overrideFileEntryTypes?string}, ${dlFolder.status}, ${dlFolder.statusByUserId}, '${dlFolder.statusByUserName}', '${dataFactory.getDateString(dlFolder.statusDate)}');
 
+			<@insertResourcePermissions
+				_entry = dlFolder
+			/>
+
+			<@insertAssetEntry
+				_entry = dlFolder
+			/>
+
 			<#if (maxDLFileEntryCount > 0)>
 				<#list 1..maxDLFileEntryCount as dlFileEntryCount>
 					<#local dlFileEntry = dataFactory.newDlFileEntry(dlFolder, dlFileEntryCount)>

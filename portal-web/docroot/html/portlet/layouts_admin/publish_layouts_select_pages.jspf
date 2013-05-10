@@ -140,7 +140,7 @@ for (int i = 0; i < results.size(); i++) {
 
 	if (searchContainer) {
 		searchContainer.delegate(
-			'click',
+			'change',
 			function(event) {
 				var node = event.currentTarget;
 
@@ -151,7 +151,7 @@ for (int i = 0; i < results.size(); i++) {
 					{
 						data: {
 							cmd: cmd,
-							groupId: <%= themeDisplay.getParentGroupId() %>,
+							groupId: <%= themeDisplay.getSiteGroupId() %>,
 							plid: node.val(),
 							privateLayout: <%= privateLayout %>,
 							treeId: '<%= treeKey %>' + 'SelectedNode'
@@ -159,7 +159,7 @@ for (int i = 0; i < results.size(); i++) {
 					}
 				);
 			},
-			'td.col-rowChecker input'
+			'.col-rowChecker input'
 		);
 	}
 </aui:script>

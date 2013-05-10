@@ -1991,5 +1991,25 @@ public class JournalArticleServiceSoap {
 		}
 	}
 
+	/**
+	* Just an example!
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticleComposite[] getSiteArticlesAsJSON(
+		java.lang.String site, java.lang.String type, java.lang.String locale)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.portlet.journal.model.JournalArticleComposite> returnValue =
+				JournalArticleServiceUtil.getSiteArticlesAsJSON(site, type,
+					locale);
+
+			return returnValue.toArray(new com.liferay.portlet.journal.model.JournalArticleComposite[returnValue.size()]);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(JournalArticleServiceSoap.class);
 }

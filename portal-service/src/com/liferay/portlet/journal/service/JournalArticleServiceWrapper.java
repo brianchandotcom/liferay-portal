@@ -1899,6 +1899,15 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 	}
 
 	/**
+	* Just an example!
+	*/
+	public java.util.List<com.liferay.portlet.journal.model.JournalArticleComposite> getSiteArticlesAsJSON(
+		java.lang.String site, java.lang.String type, java.lang.String locale)
+		throws java.lang.Exception {
+		return _journalArticleService.getSiteArticlesAsJSON(site, type, locale);
+	}
+
+	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public JournalArticleService getWrappedJournalArticleService() {

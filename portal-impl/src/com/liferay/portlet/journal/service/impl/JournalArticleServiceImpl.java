@@ -19,26 +19,41 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.model.JournalArticleComposite;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.service.base.JournalArticleServiceBaseImpl;
 import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
 import com.liferay.portlet.journal.service.permission.JournalPermission;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Provides the remote service for accessing, adding, deleting, and updating web
@@ -2104,6 +2119,110 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		return journalArticleLocalService.updateStatus(
 			getUserId(), groupId, articleId, version, status, articleURL,
 			new HashMap<String, Serializable>(), serviceContext);
+	}
+
+	/**
+	 * Just an example!
+	 */
+	public List<JournalArticleComposite> getSiteArticlesAsJSON(
+			String site, String type, String locale) throws Exception {
+
+		List<JournalArticleComposite> articleArray =
+			new ArrayList<JournalArticleComposite>();
+
+		Group group = GroupLocalServiceUtil.getGroup(10153, site);
+
+		UserLocalServiceUtil.hasGroupUser(group.getGroupId(),
+			UserLocalServiceUtil.getDefaultUserId(10153));
+
+		List<JournalArticle> articles =
+			journalArticleLocalService.getStructureArticles(
+				group.getGroupId(), type);
+
+		PermissionChecker permissionChecker = PermissionCheckerFactoryUtil
+			.create(UserLocalServiceUtil.getDefaultUser(10153));
+
+		Set<String> structureIds = new HashSet<String>();
+
+		for (JournalArticle article : articles) {
+			structureIds.add(article.getArticleId());
+		}
+
+		for (String id : structureIds) {
+			JournalArticle latest = journalArticleLocalService.getLatestArticle(
+				group.getGroupId(), id, WorkflowConstants.STATUS_APPROVED);
+
+			if (!permissionChecker.hasPermission(group.getGroupId(),
+				JournalArticle.class.getName(), latest.getResourcePrimKey(),
+				"VIEW") || latest.isExpired() || latest.isDenied()
+				|| latest.isInactive()) {
+
+				continue;
+			}
+
+			articleArray.add(assetAsJSON(latest, locale));
+		}
+		return articleArray;
+	}
+
+	// builds composite object
+	private JournalArticleComposite assetAsJSON(
+		JournalArticle article, String locale) throws Exception {
+
+		JournalArticleComposite journalArticleComposite =
+			new JournalArticleComposite();
+
+		journalArticleComposite.setArticle(article);
+
+		List<String> availableLocales =
+			Arrays.asList(article.getAvailableLocales());
+
+		String content;
+
+		if (availableLocales.contains(locale)) {
+			content = article.getContentByLocale(locale);
+		}
+		else {
+			content = article.getContent();
+		}
+
+		// tofix missing static-text
+		// todo Move dynamic-element -> Map to utility class
+		org.w3c.dom.Document document = DocumentBuilderFactory
+			.newInstance()
+			.newDocumentBuilder()
+			.parse(new ByteArrayInputStream(content.getBytes()));
+
+		NodeList list = document.getElementsByTagName("dynamic-element");
+
+		int len = list.getLength();
+
+		for (int i = 0; i < len; i++) {
+			Element element = (Element)list.item(i);
+			String propertyName = element.getAttribute("name");
+			String propertyValue = null;
+
+			NodeList children = element.getChildNodes();
+			int childLen = children.getLength();
+			for (int n = 0; n < childLen; n++) {
+				Node child = children.item(n);
+				if (child.getNodeType() == Node.ELEMENT_NODE) {
+					Element childEl = (Element)child;
+					if ("dynamic-content".equals(childEl.getTagName())) {
+						propertyValue = childEl.getFirstChild()
+							.getTextContent();
+					}
+				}
+				if (propertyValue != null) break;
+			}
+			if (Validator.isNull(propertyValue)) {
+				continue;
+			}
+
+			journalArticleComposite.addContent(propertyName, propertyValue);
+		}
+
+		return journalArticleComposite;
 	}
 
 }

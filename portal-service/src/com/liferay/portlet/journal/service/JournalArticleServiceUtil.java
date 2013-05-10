@@ -1922,6 +1922,15 @@ public class JournalArticleServiceUtil {
 			articleURL, serviceContext);
 	}
 
+	/**
+	* Just an example!
+	*/
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticleComposite> getSiteArticlesAsJSON(
+		java.lang.String site, java.lang.String type, java.lang.String locale)
+		throws java.lang.Exception {
+		return getService().getSiteArticlesAsJSON(site, type, locale);
+	}
+
 	public static JournalArticleService getService() {
 		if (_service == null) {
 			_service = (JournalArticleService)PortalBeanLocatorUtil.locate(JournalArticleService.class.getName());

@@ -30,8 +30,6 @@ public class OrganizationExportActionableDynamicQuery
 	public OrganizationExportActionableDynamicQuery(
 		PortletDataContext portletDataContext) throws SystemException {
 		_portletDataContext = portletDataContext;
-
-		setGroupId(_portletDataContext.getScopeGroupId());
 	}
 
 	@Override

@@ -4,6 +4,10 @@
 
 		insert into WikiNode values ('${wikiNode.uuid}', ${wikiNode.nodeId}, ${wikiNode.groupId}, ${wikiNode.companyId}, ${wikiNode.userId}, '${wikiNode.userName}', '${dataFactory.getDateString(wikiNode.createDate)}', '${dataFactory.getDateString(wikiNode.modifiedDate)}', '${wikiNode.name}', '${wikiNode.description}', '${dataFactory.getDateString(wikiNode.lastPostDate)}', ${wikiNode.status}, ${wikiNode.statusByUserId}, '${wikiNode.statusByUserName}', '${dataFactory.getDateString(wikiNode.statusDate)}');
 
+		<@insertResourcePermissions
+			_entry = wikiNode
+		/>
+
 		<#if (maxWikiPageCount > 0)>
 			<#list 1..maxWikiPageCount as wikiPageCount>
 				<#assign wikiPage = dataFactory.newWikiPage(wikiNode, wikiPageCount)>

@@ -1516,6 +1516,12 @@ public class DataFactory {
 		return newResourcePermissions(name, primKey, 0);
 	}
 
+	public List<ResourcePermission> newResourcePermissions(WikiNode wikiNode) {
+		return newResourcePermissions(
+			WikiNode.class.getName(), StringUtil.valueOf(wikiNode.getNodeId()),
+			_sampleUserId);
+	}
+
 	public SocialActivity newSocialActivity(BlogsEntry blogsEntry) {
 		return newSocialActivity(
 			blogsEntry.getGroupId(),

@@ -1143,6 +1143,8 @@ public class DataFactory {
 		layout.setPlid(_counter.get());
 		layout.setGroupId(groupId);
 		layout.setCompanyId(_companyId);
+		layout.setUserId(_sampleUserId);
+		layout.setUserName(_SAMPLE_USER_NAME);
 		layout.setCreateDate(new Date());
 		layout.setModifiedDate(new Date());
 		layout.setLayoutId(simpleCounter.get());

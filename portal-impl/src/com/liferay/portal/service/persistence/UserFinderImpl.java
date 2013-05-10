@@ -329,11 +329,11 @@ public class UserFinderImpl
 				List<Group> groups = RoleUtil.getGroups(roleId);
 
 				for (Group group : groups) {
-					if (group.isUserGroup()) {
-						userGroupIds.add(group.getClassPK());
-					}
-					else if (group.isOrganization()) {
+					if (group.isOrganization()) {
 						organizationIds.add(group.getOrganizationId());
+					}
+					else if (group.isUserGroup()) {
+						userGroupIds.add(group.getClassPK());
 					}
 					else {
 						roleGroupIds.add(group.getGroupId());
@@ -643,11 +643,11 @@ public class UserFinderImpl
 				List<Group> groups = RoleUtil.getGroups(roleId);
 
 				for (Group group : groups) {
-					if (group.isUserGroup()) {
-						userGroupIds.add(group.getClassPK());
-					}
-					else if (group.isOrganization()) {
+					if (group.isOrganization()) {
 						organizationIds.add(group.getOrganizationId());
+					}
+					else if (group.isUserGroup()) {
+						userGroupIds.add(group.getClassPK());
 					}
 					else {
 						roleGroupIds.add(group.getGroupId());

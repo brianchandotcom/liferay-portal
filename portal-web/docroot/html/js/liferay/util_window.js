@@ -47,9 +47,9 @@ AUI.add(
 
 					instance._bindDOMWinResizeIfNeeded();
 
-					var modalConfig = instance._getWindowConfig(config);
+					var parentNode = config && config.dialog && config.dialog.render;
 
-					modal.render(modalConfig.render || A.getBody());
+					modal.render(parentNode);
 
 					return modal;
 				},

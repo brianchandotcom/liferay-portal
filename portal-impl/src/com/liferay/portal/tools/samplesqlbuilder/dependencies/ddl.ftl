@@ -3,6 +3,10 @@
 
 	insert into DDMStructure values ('${ddmStructure.uuid}', ${ddmStructure.structureId}, ${ddmStructure.groupId}, ${ddmStructure.companyId}, ${ddmStructure.userId}, '${ddmStructure.userName}', '${dataFactory.getDateString(ddmStructure.createDate)}', '${dataFactory.getDateString(ddmStructure.modifiedDate)}', ${ddmStructure.parentStructureId}, ${ddmStructure.classNameId}, '${ddmStructure.structureKey}', '${ddmStructure.name}', '${ddmStructure.description}', '${ddmStructure.xsd}', '${ddmStructure.storageType}', ${ddmStructure.type});
 
+	<@insertResourcePermissions
+		_entry = ddmStructure
+	/>
+
 	<#list 1..maxDDLRecordSetCount as ddlRecordSetCount>
 		<#assign layoutName = "dynamic_data_list_display_" + ddlRecordSetCount>
 		<#assign portletId = "169_INSTANCE_TEST" + ddlRecordSetCount>
@@ -18,6 +22,10 @@
 		insert into DDLRecordSet values ('${ddlRecordSet.uuid}', ${ddlRecordSet.recordSetId}, ${ddlRecordSet.groupId}, ${ddlRecordSet.companyId}, ${ddlRecordSet.userId}, '${ddlRecordSet.userName}', '${dataFactory.getDateString(ddlRecordSet.createDate)}', '${dataFactory.getDateString(ddlRecordSet.modifiedDate)}', ${ddlRecordSet.DDMStructureId}, '${ddlRecordSet.recordSetKey}', '${ddlRecordSet.name}', '${ddlRecordSet.description}', ${ddlRecordSet.minDisplayRows}, ${ddlRecordSet.scope});
 
 		<@insertDDMStructureLink
+			_entry = ddlRecordSet
+		/>
+
+		<@insertResourcePermissions
 			_entry = ddlRecordSet
 		/>
 

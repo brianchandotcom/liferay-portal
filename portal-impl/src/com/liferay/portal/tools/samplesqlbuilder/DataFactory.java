@@ -1477,6 +1477,36 @@ public class DataFactory {
 	}
 
 	public List<ResourcePermission> newResourcePermissions(
+		DDLRecordSet ddlRecordSet) {
+
+		List<ResourcePermission> resourcePermissions =
+			new ArrayList<ResourcePermission>(1);
+
+		resourcePermissions.add(
+			newResourcePermission(
+				DDLRecordSet.class.getName(),
+				StringUtil.valueOf(ddlRecordSet.getRecordSetId()),
+				_ownerRole.getRoleId(), _defaultUserId));
+
+		return resourcePermissions;
+	}
+
+	public List<ResourcePermission> newResourcePermissions(
+		DDMStructure ddmStructure) {
+
+		List<ResourcePermission> resourcePermissions =
+			new ArrayList<ResourcePermission>(1);
+
+		resourcePermissions.add(
+			newResourcePermission(
+				DDMStructure.class.getName(),
+				StringUtil.valueOf(ddmStructure.getStructureId()),
+				_ownerRole.getRoleId(), _defaultUserId));
+
+		return resourcePermissions;
+	}
+
+	public List<ResourcePermission> newResourcePermissions(
 		DLFileEntry dlFileEntry) {
 
 		return newResourcePermissions(

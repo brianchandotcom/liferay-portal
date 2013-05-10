@@ -651,7 +651,8 @@ public class LayoutExporter {
 			portletDataContext, article);
 
 		portletDataContext.addReferenceElement(
-			layout, layoutElement, article, PortletDataContext.TYPE_STRONG_REFERENCE, false);
+			layout, layoutElement, article,
+			PortletDataContext.REFERENCE_TYPE_STRONG, false);
 	}
 
 	protected void exportLayout(

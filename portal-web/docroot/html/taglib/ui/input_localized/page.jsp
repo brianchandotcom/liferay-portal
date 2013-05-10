@@ -74,14 +74,14 @@ if ((locales.length > 1) && !Validator.isNull(languageId)) {
 
 	<c:choose>
 		<c:when test='<%= type.equals("input") %>'>
-			<input class="language-value <%= cssClass %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<portlet:namespace /><%= id + fieldSuffix %>" name="<portlet:namespace /><%= name + fieldSuffix %>" type="text" value="<%= HtmlUtil.escape(mainLanguageValue) %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %> />
+			<input class="language-value <%= cssClass %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<portlet:namespace /><%= HtmlUtil.escapeAttribute(id + fieldSuffix) %>" name="<portlet:namespace /><%= HtmlUtil.escapeAttribute(name + fieldSuffix) %>" type="text" value="<%= HtmlUtil.escapeAttribute(mainLanguageValue) %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %> />
 		</c:when>
 		<c:when test='<%= type.equals("textarea") %>'>
-			<textarea class="language-value <%= cssClass %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<portlet:namespace /><%= id + fieldSuffix %>" name="<portlet:namespace /><%= name + fieldSuffix %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>><%= HtmlUtil.escape(mainLanguageValue) %></textarea>
+			<textarea class="language-value <%= cssClass %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<portlet:namespace /><%= HtmlUtil.escapeAttribute(id + fieldSuffix) %>" name="<portlet:namespace /><%= HtmlUtil.escapeAttribute(name + fieldSuffix) %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>><%= HtmlUtil.escape(mainLanguageValue) %></textarea>
 
 			<c:if test="<%= autoSize %>">
 				<aui:script use="aui-autosize-deprecated">
-					A.one('#<portlet:namespace /><%= id + fieldSuffix %>').plug(A.Plugin.Autosize);
+					A.one('#<portlet:namespace /><%= HtmlUtil.escapeJS(id + fieldSuffix) %>').plug(A.Plugin.Autosize);
 				</aui:script>
 			</c:if>
 		</c:when>
@@ -124,7 +124,7 @@ if ((locales.length > 1) && !Validator.isNull(languageId)) {
 			}
 		%>
 
-			<aui:input disabled="<%= disabled %>" id="<%= id + StringPool.UNDERLINE + curLanguageId %>" name="<%= name + StringPool.UNDERLINE + curLanguageId %>" type="hidden" value="<%= HtmlUtil.escape(languageValue) %>" />
+			<aui:input disabled="<%= disabled %>" id="<%= HtmlUtil.escapeAttribute(id + StringPool.UNDERLINE + curLanguageId) %>" name="<%= HtmlUtil.escapeAttribute(name + StringPool.UNDERLINE + curLanguageId) %>" type="hidden" value="<%= languageValue %>" />
 
 		<%
 		}
@@ -137,7 +137,7 @@ if ((locales.length > 1) && !Validator.isNull(languageId)) {
 	<aui:script use="aui-char-counter">
 		new A.CharCounter(
 			{
-				input: '#<portlet:namespace /><%= id + fieldSuffix %>',
+				input: '#<portlet:namespace /><%= HtmlUtil.escapeJS(id + fieldSuffix) %>',
 				maxLength: <%= maxLength %>
 			}
 		);
@@ -147,13 +147,13 @@ if ((locales.length > 1) && !Validator.isNull(languageId)) {
 <c:if test="<%= (locales.length > 1) && Validator.isNull(languageId) %>">
 	<aui:script use="liferay-input-localized">
 		Liferay.InputLocalized.register(
-			'<portlet:namespace /><%= id + fieldSuffix %>',
+			'<portlet:namespace /><%= HtmlUtil.escapeJS(id + fieldSuffix) %>',
 			{
 				boundingBox: '#<portlet:namespace /><%= id %>BoundingBox',
 				columns: 20,
 				contentBox: '#<portlet:namespace /><%= id %>ContentBox',
 				inputNamespace: '<portlet:namespace /><%= id + StringPool.UNDERLINE %>',
-				inputPlaceholder: '#<portlet:namespace /><%= id + fieldSuffix %>',
+				inputPlaceholder: '#<portlet:namespace /><%= HtmlUtil.escapeJS(id + fieldSuffix) %>',
 				toggleSelection: false
 			}
 		);

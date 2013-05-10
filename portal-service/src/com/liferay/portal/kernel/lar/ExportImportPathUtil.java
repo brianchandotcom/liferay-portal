@@ -28,13 +28,13 @@ import java.io.Serializable;
  */
 public class ExportImportPathUtil {
 
-	public static final String _PATH_PREFIX_COMPANY = "company";
+	public static final String PATH_PREFIX_COMPANY = "company";
 
-	public static final String _PATH_PREFIX_GROUP = "group";
+	public static final String PATH_PREFIX_GROUP = "group";
 
-	public static final String _PATH_PREFIX_LAYOUT = "layout";
+	public static final String PATH_PREFIX_LAYOUT = "layout";
 
-	public static final String _PATH_PREFIX_PORTLET = "portlet";
+	public static final String PATH_PREFIX_PORTLET = "portlet";
 
 	public static String getExpandoPath(String path) {
 		if (!Validator.isFilePath(path, false)) {
@@ -42,7 +42,7 @@ public class ExportImportPathUtil {
 				path + " is located outside of the LAR");
 		}
 
-		int pos = path.lastIndexOf(".xml");
+		int pos = path.lastIndexOf(_FILE_ENDING_XML);
 
 		if (pos == -1) {
 			throw new IllegalArgumentException(path + " is not an XML file");
@@ -53,15 +53,16 @@ public class ExportImportPathUtil {
 	}
 
 	public static String getLayoutPath(
-		PortletDataContext portletDataContext, long layoutId) {
+		PortletDataContext portletDataContext, long plid) {
 
 		StringBundler sb = new StringBundler(5);
 
 		sb.append(getRootPath(portletDataContext));
 		sb.append(StringPool.FORWARD_SLASH);
-		sb.append(_PATH_PREFIX_LAYOUT);
+		sb.append(PATH_PREFIX_LAYOUT);
 		sb.append(StringPool.FORWARD_SLASH);
-		sb.append(layoutId);
+		sb.append(plid);
+		sb.append(_FILE_ENDING_XML);
 
 		return sb.toString();
 	}
@@ -70,7 +71,7 @@ public class ExportImportPathUtil {
 		long groupId, String className, long classPK) {
 
 		return getModelPath(
-			_PATH_PREFIX_GROUP, groupId, className, classPK, null);
+			PATH_PREFIX_GROUP, groupId, className, classPK, null);
 	}
 
 	public static String getModelPath(
@@ -84,8 +85,8 @@ public class ExportImportPathUtil {
 		String dependentFileName) {
 
 		return getModelPath(
-			_PATH_PREFIX_GROUP, portletDataContext.getSourceGroupId(),
-			className, classPK, dependentFileName);
+			PATH_PREFIX_GROUP, portletDataContext.getSourceGroupId(), className,
+			classPK, dependentFileName);
 	}
 
 	public static String getModelPath(StagedModel stagedModel) {
@@ -100,13 +101,13 @@ public class ExportImportPathUtil {
 				(StagedGroupedModel)stagedModel;
 
 			return getModelPath(
-				_PATH_PREFIX_GROUP, stagedGroupedModel.getGroupId(),
+				PATH_PREFIX_GROUP, stagedGroupedModel.getGroupId(),
 				stagedModel.getModelClassName(), stagedModel.getPrimaryKeyObj(),
 				dependentFileName);
 		}
 		else {
 			return getModelPath(
-				_PATH_PREFIX_COMPANY, stagedModel.getCompanyId(),
+				PATH_PREFIX_COMPANY, stagedModel.getCompanyId(),
 				stagedModel.getModelClassName(), stagedModel.getPrimaryKeyObj(),
 				dependentFileName);
 		}
@@ -119,7 +120,7 @@ public class ExportImportPathUtil {
 
 		sb.append(getRootPath(portletDataContext));
 		sb.append(StringPool.FORWARD_SLASH);
-		sb.append(_PATH_PREFIX_PORTLET);
+		sb.append(PATH_PREFIX_PORTLET);
 		sb.append(StringPool.FORWARD_SLASH);
 		sb.append(portletId);
 
@@ -128,7 +129,7 @@ public class ExportImportPathUtil {
 
 	public static String getRootPath(PortletDataContext portletDataContext) {
 		return getRootPath(
-			_PATH_PREFIX_GROUP, portletDataContext.getScopeGroupId());
+			PATH_PREFIX_GROUP, portletDataContext.getScopeGroupId());
 	}
 
 	public static String getSourceLayoutPath(
@@ -138,7 +139,7 @@ public class ExportImportPathUtil {
 
 		sb.append(getSourceRootPath(portletDataContext));
 		sb.append(StringPool.FORWARD_SLASH);
-		sb.append(_PATH_PREFIX_LAYOUT);
+		sb.append(PATH_PREFIX_LAYOUT);
 		sb.append(StringPool.FORWARD_SLASH);
 		sb.append(layoutId);
 
@@ -152,7 +153,7 @@ public class ExportImportPathUtil {
 
 		sb.append(getSourceRootPath(portletDataContext));
 		sb.append(StringPool.FORWARD_SLASH);
-		sb.append(_PATH_PREFIX_PORTLET);
+		sb.append(PATH_PREFIX_PORTLET);
 		sb.append(StringPool.FORWARD_SLASH);
 		sb.append(portletId);
 
@@ -163,7 +164,7 @@ public class ExportImportPathUtil {
 		PortletDataContext portletDataContext) {
 
 		return getRootPath(
-			_PATH_PREFIX_GROUP, portletDataContext.getSourceGroupId());
+			PATH_PREFIX_GROUP, portletDataContext.getSourceGroupId());
 	}
 
 	protected static String getModelPath(
@@ -179,7 +180,7 @@ public class ExportImportPathUtil {
 		sb.append(primaryKeyObj.toString());
 
 		if (dependentFileName == null) {
-			sb.append(".xml");
+			sb.append(_FILE_ENDING_XML);
 		}
 		else {
 			sb.append(StringPool.FORWARD_SLASH);
@@ -201,5 +202,7 @@ public class ExportImportPathUtil {
 
 		return sb.toString();
 	}
+
+	private static final String _FILE_ENDING_XML = ".xml";
 
 }

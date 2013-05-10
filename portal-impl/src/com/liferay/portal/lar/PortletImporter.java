@@ -135,6 +135,70 @@ import org.apache.commons.lang.time.StopWatch;
  */
 public class PortletImporter {
 
+	public String importPortletData(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences, Element portletDataElement)
+		throws Exception {
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			portletDataContext.getCompanyId(), portletId);
+
+		if (portlet == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Do not import portlet data for " + portletId +
+						" because the portlet does not exist");
+			}
+
+			return null;
+		}
+
+		PortletDataHandler portletDataHandler =
+			portlet.getPortletDataHandlerInstance();
+
+		if (portletDataHandler == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Do not import portlet data for " + portletId +
+						" because the portlet does not have a " +
+							"PortletDataHandler");
+			}
+
+			return null;
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Importing data for " + portletId);
+		}
+
+		PortletPreferencesImpl portletPreferencesImpl = null;
+
+		if (portletPreferences != null) {
+			portletPreferencesImpl =
+				(PortletPreferencesImpl)
+					PortletPreferencesFactoryUtil.fromDefaultXML(
+						portletPreferences.getPreferences());
+		}
+
+		String portletData = portletDataContext.getZipEntryAsString(
+			portletDataElement.attributeValue("path"));
+
+		if (Validator.isNull(portletData)) {
+			return null;
+		}
+
+		portletPreferencesImpl =
+			(PortletPreferencesImpl)portletDataHandler.importData(
+				portletDataContext, portletId, portletPreferencesImpl,
+				portletData);
+
+		if (portletPreferencesImpl == null) {
+			return null;
+		}
+
+		return PortletPreferencesFactoryUtil.toXML(portletPreferencesImpl);
+	}
+
 	public void importPortletInfo(
 			long userId, long plid, long groupId, String portletId,
 			Map<String, String[]> parameterMap, File file)
@@ -1017,70 +1081,6 @@ public class PortletImporter {
 			PortletPreferencesLocalServiceUtil.updatePreferences(
 				ownerId, ownerType, plid, portletId, xml);
 		}
-	}
-
-	protected String importPortletData(
-			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences, Element portletDataElement)
-		throws Exception {
-
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			portletDataContext.getCompanyId(), portletId);
-
-		if (portlet == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Do not import portlet data for " + portletId +
-						" because the portlet does not exist");
-			}
-
-			return null;
-		}
-
-		PortletDataHandler portletDataHandler =
-			portlet.getPortletDataHandlerInstance();
-
-		if (portletDataHandler == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Do not import portlet data for " + portletId +
-						" because the portlet does not have a " +
-							"PortletDataHandler");
-			}
-
-			return null;
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Importing data for " + portletId);
-		}
-
-		PortletPreferencesImpl portletPreferencesImpl = null;
-
-		if (portletPreferences != null) {
-			portletPreferencesImpl =
-				(PortletPreferencesImpl)
-					PortletPreferencesFactoryUtil.fromDefaultXML(
-						portletPreferences.getPreferences());
-		}
-
-		String portletData = portletDataContext.getZipEntryAsString(
-			portletDataElement.attributeValue("path"));
-
-		if (Validator.isNull(portletData)) {
-			return null;
-		}
-
-		portletPreferencesImpl =
-			(PortletPreferencesImpl)portletDataHandler.importData(
-				portletDataContext, portletId, portletPreferencesImpl,
-				portletData);
-
-		if (portletPreferencesImpl == null) {
-			return null;
-		}
-
-		return PortletPreferencesFactoryUtil.toXML(portletPreferencesImpl);
 	}
 
 	protected void importPortletPreferences(

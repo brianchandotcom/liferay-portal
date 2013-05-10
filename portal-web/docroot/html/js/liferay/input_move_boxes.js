@@ -99,13 +99,13 @@ AUI.add(
 						var to = instance._rightBox;
 						var sort;
 
-						if (cssClass.indexOf('move-right') !== -1) {
+						if (cssClass.indexOf('move-left') !== -1) {
 							from = instance._rightBox;
 							to = instance._leftBox;
-							sort = instance.get('rightReorder');
+							sort = !instance.get('rightReorder');
 						}
 						else {
-							sort = instance.get('leftReorder');
+							sort = !instance.get('leftReorder');
 						}
 
 						Util.moveItem(from, to, sort);

@@ -34,10 +34,14 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.OrganizationConstants;
+import com.liferay.portal.model.PasswordPolicy;
+import com.liferay.portal.model.PasswordPolicyRel;
 import com.liferay.portal.service.AddressLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.service.PasswordPolicyLocalServiceUtil;
+import com.liferay.portal.service.PasswordPolicyRelLocalServiceUtil;
 import com.liferay.portal.service.PortalPreferencesLocalServiceUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsUtil;
@@ -217,6 +221,24 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 
 		return OrganizationLocalServiceUtil.getOrganization(
 			getParentOrganizationId());
+	}
+
+	public PasswordPolicy getPasswordPolicy()
+		throws PortalException, SystemException {
+
+		PasswordPolicyRel passwordPolicyRel =
+			PasswordPolicyRelLocalServiceUtil.fetchPasswordPolicyRel(
+				Organization.class.getName(), getOrganizationId());
+
+		if (passwordPolicyRel == null) {
+			return null;
+		}
+
+		PasswordPolicy passwordPolicy =
+			PasswordPolicyLocalServiceUtil.getPasswordPolicy(
+				passwordPolicyRel.getPasswordPolicyId());
+
+		return passwordPolicy;
 	}
 
 	public PortletPreferences getPreferences() throws SystemException {

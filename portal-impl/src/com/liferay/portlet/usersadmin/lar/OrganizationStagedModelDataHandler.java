@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.usersadmin.lar;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
@@ -26,6 +27,7 @@ import com.liferay.portal.model.EmailAddress;
 import com.liferay.portal.model.OrgLabor;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.OrganizationConstants;
+import com.liferay.portal.model.PasswordPolicy;
 import com.liferay.portal.model.Phone;
 import com.liferay.portal.model.Website;
 import com.liferay.portal.service.AddressLocalServiceUtil;
@@ -37,6 +39,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.WebsiteLocalServiceUtil;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -75,11 +78,17 @@ public class OrganizationStagedModelDataHandler
 			Element organizationElement =
 				portletDataContext.getExportDataElement(exportedOrganization);
 
-			exportAddresses(portletDataContext, exportedOrganization);
-			exportEmailAddresses(portletDataContext, exportedOrganization);
-			exportPhones(portletDataContext, exportedOrganization);
+			exportAddresses(
+				organizationElement, portletDataContext, exportedOrganization);
+			exportEmailAddresses(
+				organizationElement, portletDataContext, exportedOrganization);
 			exportOrgLabors(portletDataContext, exportedOrganization);
-			exportWebsites(portletDataContext, exportedOrganization);
+			exportPasswordPolicyRel(
+				organizationElement, portletDataContext, exportedOrganization);
+			exportPhones(
+				organizationElement, portletDataContext, exportedOrganization);
+			exportWebsites(
+				organizationElement, portletDataContext, exportedOrganization);
 
 			portletDataContext.addClassedModel(
 				organizationElement,
@@ -163,38 +172,14 @@ public class OrganizationStagedModelDataHandler
 					organization.getComments(), false, serviceContext);
 		}
 
-		List<Address> addresses = importAddresses(
-			portletDataContext, organization);
-
-		UsersAdminUtil.updateAddresses(
-			Organization.class.getName(),
-			importedOrganization.getOrganizationId(), addresses);
-
-		List<EmailAddress> emailAddresses = importEmailAddresses(
-			portletDataContext, organization);
-
-		UsersAdminUtil.updateEmailAddresses(
-			Organization.class.getName(),
-			importedOrganization.getOrganizationId(), emailAddresses);
-
-		List<OrgLabor> orgLabors = importOrgLabors(
-			portletDataContext, organization);
-
-		UsersAdminUtil.updateOrgLabors(
-			importedOrganization.getOrganizationId(), orgLabors);
-
-		List<Phone> phones = importPhones(portletDataContext, organization);
-
-		UsersAdminUtil.updatePhones(
-			Organization.class.getName(),
-			importedOrganization.getOrganizationId(), phones);
-
-		List<Website> websites = importWebsites(
-			portletDataContext, organization);
-
-		UsersAdminUtil.updateWebsites(
-			Organization.class.getName(),
-			importedOrganization.getOrganizationId(), websites);
+		importAddresses(portletDataContext, importedOrganization, organization);
+		importEmailAddresses(
+			portletDataContext, importedOrganization, organization);
+		importOrgLabors(portletDataContext, importedOrganization, organization);
+		importPasswordPolicyRel(
+			portletDataContext, importedOrganization, organization);
+		importPhones(portletDataContext, importedOrganization, organization);
+		importWebsites(portletDataContext, importedOrganization, organization);
 
 		portletDataContext.importClassedModel(
 			organization, importedOrganization,
@@ -202,121 +187,206 @@ public class OrganizationStagedModelDataHandler
 	}
 
 	protected void exportAddresses(
-			PortletDataContext portletDataContext, Organization organization)
-		throws SystemException {
-
-		String path = getDependentModelPath(organization, Address.class);
+			Element element, PortletDataContext portletDataContext,
+			Organization organization)
+		throws PortalException, SystemException {
 
 		List<Address> addresses = AddressLocalServiceUtil.getAddresses(
 			organization.getCompanyId(), organization.getModelClassName(),
 			organization.getOrganizationId());
 
-		String xml = portletDataContext.toXML(addresses);
+		for (Address address : addresses) {
 
-		portletDataContext.addZipEntry(path, xml);
+			portletDataContext.addReferenceElement(
+				organization, element, address,
+				PortletDataContext.REFERENCE_TYPE_EMBEDDED, false);
+
+			StagedModelDataHandlerUtil.exportStagedModel(
+				portletDataContext, address);
+		}
 	}
 
 	protected void exportEmailAddresses(
-			PortletDataContext portletDataContext, Organization organization)
-		throws SystemException {
-
-		String path = getDependentModelPath(organization, EmailAddress.class);
+			Element element, PortletDataContext portletDataContext,
+			Organization organization)
+		throws PortalException, SystemException {
 
 		List<EmailAddress> emailAddresses =
 			EmailAddressLocalServiceUtil.getEmailAddresses(
 				organization.getCompanyId(), organization.getModelClassName(),
 				organization.getOrganizationId());
 
-		String xml = portletDataContext.toXML(emailAddresses);
+		for (EmailAddress emailAddress : emailAddresses) {
 
-		portletDataContext.addZipEntry(path, xml);
+			portletDataContext.addReferenceElement(
+				organization, element, emailAddress,
+				PortletDataContext.REFERENCE_TYPE_EMBEDDED, false);
+
+			StagedModelDataHandlerUtil.exportStagedModel(
+				portletDataContext, emailAddress);
+		}
 	}
 
 	protected void exportOrgLabors(
 			PortletDataContext portletDataContext, Organization organization)
-		throws SystemException {
-
-		String path = getDependentModelPath(organization, OrgLabor.class);
+		throws PortalException, SystemException {
 
 		List<OrgLabor> orgLabors = OrgLaborLocalServiceUtil.getOrgLabors(
 			organization.getOrganizationId());
 
-		String xml = portletDataContext.toXML(orgLabors);
+		String path = ExportImportPathUtil.getModelPath(
+			organization, OrgLabor.class.getSimpleName());
 
-		portletDataContext.addZipEntry(path, xml);
+		portletDataContext.addZipEntry(path, orgLabors);
+	}
+
+	protected void exportPasswordPolicyRel(
+			Element organizationElement, PortletDataContext portletDataContext,
+			Organization organization)
+		throws PortalException, SystemException {
+
+		PasswordPolicy passwordPolicy = organization.getPasswordPolicy();
+
+		if (passwordPolicy == null) {
+			return;
+		}
+
+		portletDataContext.addReferenceElement(
+			organization, organizationElement, passwordPolicy,
+			PortletDataContext.REFERENCE_TYPE_STRONG, false);
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, passwordPolicy);
 	}
 
 	protected void exportPhones(
-			PortletDataContext portletDataContext, Organization organization)
-		throws SystemException {
-
-		String path = getDependentModelPath(organization, Phone.class);
+			Element organizationElement, PortletDataContext portletDataContext,
+			Organization organization)
+		throws PortalException, SystemException {
 
 		List<Phone> phones = PhoneLocalServiceUtil.getPhones(
 			organization.getCompanyId(), organization.getModelClassName(),
 			organization.getOrganizationId());
 
-		String xml = portletDataContext.toXML(phones);
+		for (Phone phone : phones) {
 
-		portletDataContext.addZipEntry(path, xml);
+			portletDataContext.addReferenceElement(
+				organization, organizationElement, phone,
+				PortletDataContext.REFERENCE_TYPE_EMBEDDED, false);
+
+			StagedModelDataHandlerUtil.exportStagedModel(
+				portletDataContext, phone);
+		}
 	}
 
 	protected void exportWebsites(
-			PortletDataContext portletDataContext, Organization organization)
-		throws SystemException {
-
-		String path = getDependentModelPath(organization, Website.class);
+			Element organizationElement, PortletDataContext portletDataContext,
+			Organization organization)
+		throws PortalException, SystemException {
 
 		List<Website> websites = WebsiteLocalServiceUtil.getWebsites(
 			organization.getCompanyId(), organization.getModelClassName(),
 			organization.getOrganizationId());
 
-		String xml = portletDataContext.toXML(websites);
+		for (Website website : websites) {
 
-		portletDataContext.addZipEntry(path, xml);
+			portletDataContext.addReferenceElement(
+				organization, organizationElement, website,
+				PortletDataContext.REFERENCE_TYPE_EMBEDDED, false);
+
+			StagedModelDataHandlerUtil.exportStagedModel(
+				portletDataContext, website);
+		}
 	}
 
-	protected String getDependentModelPath(
-		Organization organization, Class<?> modelClass) {
+	protected void importAddresses(
+			PortletDataContext portletDataContext,
+			Organization importedOrganization, Organization organization)
+		throws PortalException, SystemException {
 
-		return ExportImportPathUtil.getModelPath(
-			organization, modelClass.getSimpleName() + ".xml");
-	}
+		List<Element> addressElements =
+			portletDataContext.getReferenceDataElements(
+				organization, Address.class);
 
-	protected List<Address> importAddresses(
-		PortletDataContext portletDataContext, Organization organization) {
+		List<Address> addresses = new ArrayList<Address>(
+			addressElements.size());
 
-		String path = getDependentModelPath(organization, Address.class);
+		for (Element addressElement : addressElements) {
 
-		List<Address> rawEntries =
-			(List<Address>)portletDataContext.getZipEntryAsObject(path);
+			String path = addressElement.attributeValue("path");
 
-		for (Address address : rawEntries) {
-			address.setAddressId(0);
+			Address address = (Address)portletDataContext.getZipEntryAsObject(
+				path);
+
+			address.setClassPK(importedOrganization.getOrganizationId());
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, address);
+
+			Map<Long, Long> newPrimaryKeysMap =
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					Address.class);
+
+			long addressId = newPrimaryKeysMap.get(address.getPrimaryKey());
+
+			address.setPrimaryKey(addressId);
+
+			addresses.add(address);
 		}
 
-		return rawEntries;
+		UsersAdminUtil.updateAddresses(
+			Organization.class.getName(),
+			importedOrganization.getOrganizationId(), addresses);
 	}
 
-	protected List<EmailAddress> importEmailAddresses(
-		PortletDataContext portletDataContext, Organization organization) {
+	protected void importEmailAddresses(
+			PortletDataContext portletDataContext,
+			Organization importedOrganization, Organization organization)
+		throws PortalException, SystemException {
 
-		String path = getDependentModelPath(organization, EmailAddress.class);
+		List<Element> emailAddressElements =
+			portletDataContext.getReferenceDataElements(
+				organization, EmailAddress.class);
 
-		List<EmailAddress> emailAddresses =
-			(List<EmailAddress>)portletDataContext.getZipEntryAsObject(path);
+		List<EmailAddress> emailAddresses = new ArrayList<EmailAddress>(
+			emailAddressElements.size());
 
-		for (EmailAddress emailAddress : emailAddresses) {
-			emailAddress.setEmailAddressId(0);
+		for (Element emailAddressElement : emailAddressElements) {
+
+			String path = emailAddressElement.attributeValue("path");
+
+			EmailAddress emailAddress =
+				(EmailAddress)portletDataContext.getZipEntryAsObject(path);
+
+			emailAddress.setClassPK(importedOrganization.getOrganizationId());
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, emailAddress);
+
+			Map<Long, Long> newPrimaryKeysMap =
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					EmailAddress.class);
+
+			long emailAddressId = newPrimaryKeysMap.get(
+				emailAddress.getPrimaryKey());
+
+			emailAddress.setPrimaryKey(emailAddressId);
+
+			emailAddresses.add(emailAddress);
 		}
 
-		return emailAddresses;
+		UsersAdminUtil.updateEmailAddresses(
+			Organization.class.getName(),
+			importedOrganization.getOrganizationId(), emailAddresses);
 	}
 
-	protected List<OrgLabor> importOrgLabors(
-		PortletDataContext portletDataContext, Organization organization) {
+	protected void importOrgLabors(
+			PortletDataContext portletDataContext,
+			Organization importedOrganization, Organization organization)
+		throws PortalException, SystemException {
 
-		String path = getDependentModelPath(organization, OrgLabor.class);
+		String path = ExportImportPathUtil.getModelPath(
+			organization, OrgLabor.class.getSimpleName());
 
 		List<OrgLabor> orgLabors =
 			(List<OrgLabor>)portletDataContext.getZipEntryAsObject(path);
@@ -325,37 +395,119 @@ public class OrganizationStagedModelDataHandler
 			orgLabor.setOrgLaborId(0);
 		}
 
-		return orgLabors;
+		UsersAdminUtil.updateOrgLabors(
+			importedOrganization.getOrganizationId(), orgLabors);
 	}
 
-	protected List<Phone> importPhones(
-		PortletDataContext portletDataContext, Organization organization) {
+	protected void importPasswordPolicyRel(
+			PortletDataContext portletDataContext,
+			Organization importedOrganization, Organization organization)
+		throws PortalException, SystemException {
 
-		String path = getDependentModelPath(organization, Phone.class);
+		List<Element> passwordPolicyElements =
+			portletDataContext.getReferenceDataElements(
+				organization, PasswordPolicy.class);
 
-		List<Phone> phones =
-			(List<Phone>)portletDataContext.getZipEntryAsObject(path);
+		if (!passwordPolicyElements.isEmpty()) {
 
-		for (Phone phone : phones) {
-			phone.setPhoneId(0);
+			Element passwordPolicyElement = passwordPolicyElements.get(0);
+
+			String path = passwordPolicyElement.attributeValue("path");
+
+			PasswordPolicy passwordPolicy =
+				(PasswordPolicy)portletDataContext.getZipEntryAsObject(path);
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, passwordPolicy);
+
+			Map<Long, Long> newPrimaryKeysMap =
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					PasswordPolicy.class);
+
+			long passwordPolicyId = newPrimaryKeysMap.get(
+				passwordPolicy.getPrimaryKey());
+
+			OrganizationLocalServiceUtil.addPasswordPolicyOrganizations(
+				passwordPolicyId,
+				new long[] { importedOrganization.getOrganizationId() });
 		}
-
-		return phones;
 	}
 
-	protected List<Website> importWebsites(
-		PortletDataContext portletDataContext, Organization organization) {
+	protected void importPhones(
+			PortletDataContext portletDataContext,
+			Organization importedOrganization, Organization organization)
+		throws PortalException, SystemException {
 
-		String path = getDependentModelPath(organization, Website.class);
+		List<Element> phoneElements =
+			portletDataContext.getReferenceDataElements(
+				organization, Phone.class);
 
-		List<Website> websites =
-			(List<Website>)portletDataContext.getZipEntryAsObject(path);
+		List<Phone> phones = new ArrayList<Phone>(phoneElements.size());
 
-		for (Website website : websites) {
-			website.setWebsiteId(0);
+		for (Element phoneElement : phoneElements) {
+
+			String path = phoneElement.attributeValue("path");
+
+			Phone phone = (Phone)portletDataContext.getZipEntryAsObject(path);
+
+			phone.setClassPK(importedOrganization.getOrganizationId());
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, phone);
+
+			Map<Long, Long> newPrimaryKeysMap =
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					Phone.class);
+
+			long phoneId = newPrimaryKeysMap.get(phone.getPrimaryKey());
+
+			phone.setPrimaryKey(phoneId);
+
+			phones.add(phone);
 		}
 
-		return websites;
+		UsersAdminUtil.updatePhones(
+			Organization.class.getName(),
+			importedOrganization.getOrganizationId(), phones);
+	}
+
+	protected void importWebsites(
+			PortletDataContext portletDataContext,
+			Organization importedOrganization, Organization organization)
+		throws PortalException, SystemException {
+
+		List<Element> websiteElements =
+			portletDataContext.getReferenceDataElements(
+				organization, Website.class);
+
+		List<Website> websites = new ArrayList<Website>(websiteElements.size());
+
+		for (Element websiteElement : websiteElements) {
+
+			String path = websiteElement.attributeValue("path");
+
+			Website website = (Website)portletDataContext.getZipEntryAsObject(
+				path);
+
+			website.setClassPK(importedOrganization.getOrganizationId());
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, website);
+
+			Map<Long, Long> newPrimaryKeysMap =
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					Website.class);
+
+			long websiteId = newPrimaryKeysMap.get(website.getPrimaryKey());
+
+			website.setPrimaryKey(websiteId);
+
+			websites.add(website);
+		}
+
+		UsersAdminUtil.updateWebsites(
+			Organization.class.getName(),
+			importedOrganization.getOrganizationId(), websites);
 	}
 
 }

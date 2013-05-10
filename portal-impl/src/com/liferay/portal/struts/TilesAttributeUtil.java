@@ -14,6 +14,7 @@
 
 package com.liferay.portal.struts;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.jsp.PageContext;
 
 import org.apache.struts.taglib.tiles.ComponentConstants;
@@ -26,6 +27,14 @@ public class TilesAttributeUtil {
 
 	public static Object getTilesAttribute(
 		PageContext pageContext, String tilesAttributeName) {
+
+		ServletRequest servletRequest = pageContext.getRequest();
+
+		String parameter = servletRequest.getParameter(tilesAttributeName);
+
+		if (parameter != null) {
+			return parameter;
+		}
 
 		ComponentContext componentContext =
 			(ComponentContext)pageContext.getAttribute(

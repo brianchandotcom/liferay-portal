@@ -19,11 +19,24 @@
 	}
 
 	.choice-selector {
-		width: 100%;
+		min-width: 150px;
 	}
+<<<<<<< HEAD
 
 	.field-content {
 		margin-bottom: 0;
+=======
+
+	.field-content {
+		margin-bottom: 0;
+	}
+
+	label {
+		border-bottom: 1px solid transparent;
+		display: block;
+		margin-bottom: 5px;
+		padding: 5px;
+>>>>>>> LPS-34012 Fix input_move_boxes.js for alloy migration
 	}
 
 	.move-arrow-buttons {
@@ -32,6 +45,10 @@
 		.arrow-button {
 			display: block;
 		}
+	}
+
+	.toolbar {
+		text-align: center;
 	}
 }
 

@@ -18,6 +18,7 @@ import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
+import com.liferay.portal.kernel.lar.ExportImportUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
@@ -544,6 +545,9 @@ public class LayoutExporter {
 		if (exportTheme && !portletDataContext.isPerformDirectBinaryImport()) {
 			exportTheme(layoutSet, zipWriter);
 		}
+
+		ExportImportUtil.writeManifestSummary(
+			document, portletDataContext.getManifestSummary());
 
 		if (_log.isInfoEnabled()) {
 			if (stopWatch != null) {

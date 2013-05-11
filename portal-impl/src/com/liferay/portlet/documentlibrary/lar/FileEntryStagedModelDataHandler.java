@@ -80,6 +80,11 @@ public class FileEntryStagedModelDataHandler
 	};
 
 	@Override
+	public String getClassName(StagedModel stagedModel) {
+		return FileEntry.class.getName();
+	}
+
+	@Override
 	public String[] getClassNames() {
 		return CLASS_NAMES;
 	}

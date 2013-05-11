@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.lar;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.StagedModel;
 
@@ -70,6 +71,15 @@ public class ExportImportUtil {
 		return _exportImport;
 	}
 
+	public static ManifestSummary getManifestSummary(
+			long userId, long groupId, Map<String, String[]> parameterMap,
+			File file)
+		throws Exception {
+
+		return getExportImport().getManifestSummary(
+			userId, groupId, parameterMap, file);
+	}
+
 	public static String importContentReferences(
 			PortletDataContext portletDataContext, Element entityElement,
 			String content)
@@ -111,6 +121,12 @@ public class ExportImportUtil {
 
 		return getExportImport().validateMissingReferences(
 			userId, groupId, parameterMap, file);
+	}
+
+	public static void writeManifestSummary(
+		Document document, ManifestSummary manifestSummary) {
+
+		getExportImport().writeManifestSummary(document, manifestSummary);
 	}
 
 	public void setExportImport(ExportImport exportImport) {

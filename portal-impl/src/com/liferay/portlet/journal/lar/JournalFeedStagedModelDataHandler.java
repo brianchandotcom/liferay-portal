@@ -73,7 +73,8 @@ public class JournalFeedStagedModelDataHandler
 				portletDataContext, ddmStructure);
 
 			portletDataContext.addReferenceElement(
-				feed, feedElement, ddmStructure, false);
+				feed, feedElement, ddmStructure,
+				PortletDataContext.REFERENCE_TYPE_STRONG, false);
 		}
 		else {
 			if (_log.isWarnEnabled()) {
@@ -92,7 +93,8 @@ public class JournalFeedStagedModelDataHandler
 				portletDataContext, ddmTemplate);
 
 			portletDataContext.addReferenceElement(
-				feed, feedElement, ddmTemplate, false);
+				feed, feedElement, ddmTemplate,
+				PortletDataContext.REFERENCE_TYPE_STRONG, false);
 		}
 		else {
 			if (_log.isWarnEnabled()) {
@@ -114,7 +116,8 @@ public class JournalFeedStagedModelDataHandler
 
 			Element rendererDDMTemplateElement =
 				portletDataContext.addReferenceElement(
-					feed, feedElement, rendererDDMTemplate, false);
+					feed, feedElement, rendererDDMTemplate,
+					PortletDataContext.REFERENCE_TYPE_STRONG, false);
 
 			rendererDDMTemplateElement.addAttribute(
 				"rendererDDMTemplate", "true");

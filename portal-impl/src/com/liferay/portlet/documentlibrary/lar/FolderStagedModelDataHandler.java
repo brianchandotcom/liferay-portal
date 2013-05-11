@@ -28,10 +28,12 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.persistence.RepositoryUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
@@ -82,23 +84,30 @@ public class FolderStagedModelDataHandler
 		String folderPath = ExportImportPathUtil.getModelPath(
 			folder.getGroupId(), Folder.class.getName(), folder.getFolderId());
 
-		if (folder.isMountPoint()) {
-			Repository repository = RepositoryUtil.findByPrimaryKey(
+		Repository repository = null;
+
+		if (folder.isMountPoint() || !folder.isDefaultRepository()) {
+			repository = RepositoryUtil.findByPrimaryKey(
 				folder.getRepositoryId());
 
 			StagedModelDataHandlerUtil.exportStagedModel(
 				portletDataContext, repository);
 
 			portletDataContext.addReferenceElement(
-				folder, folderElement, repository, false);
+				folder, folderElement, repository,
+				PortletDataContext.REFERENCE_TYPE_STRONG, false);
 
 			portletDataContext.addClassedModel(
 				folderElement, folderPath, folder,
 				DLPortletDataHandler.NAMESPACE);
-
-			return;
 		}
-		else if (!folder.isDefaultRepository()) {
+
+		long liferayRepositoryClassNameId = PortalUtil.getClassNameId(
+			LiferayRepository.class.getName());
+
+		if (((repository != null) &&
+			 (repository.getClassNameId() != liferayRepositoryClassNameId)) ||
+			folder.isMountPoint()) {
 
 			// No need to export non-Liferay repository items since they would
 			// be exported as part of repository export
@@ -260,7 +269,8 @@ public class FolderStagedModelDataHandler
 					portletDataContext, dlFileEntryType);
 
 				portletDataContext.addReferenceElement(
-					folder, folderElement, dlFileEntryType, false);
+					folder, folderElement, dlFileEntryType,
+					PortletDataContext.REFERENCE_TYPE_STRONG, false);
 			}
 		}
 

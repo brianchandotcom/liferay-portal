@@ -210,7 +210,8 @@ public class RSSPortletDataHandler extends BasePortletDataHandler {
 				portletDataContext, article);
 
 			portletDataContext.addReferenceElement(
-				article, articleElement, article, false);
+				article, articleElement, article,
+				PortletDataContext.REFERENCE_TYPE_WEAK, false);
 		}
 
 		return getExportDataRootElementString(rootElement);

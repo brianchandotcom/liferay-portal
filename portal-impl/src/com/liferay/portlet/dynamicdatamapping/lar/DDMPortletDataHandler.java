@@ -76,8 +76,7 @@ public class DDMPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		portletDataContext.addPermissions(
-			"com.liferay.portlet.dynamicdatamapping",
-			portletDataContext.getScopeGroupId());
+			RESOURCE_NAME, portletDataContext.getScopeGroupId());
 
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
@@ -104,8 +103,7 @@ public class DDMPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		portletDataContext.importPermissions(
-			"com.liferay.portlet.dynamicdatamapping",
-			portletDataContext.getSourceGroupId(),
+			RESOURCE_NAME, portletDataContext.getSourceGroupId(),
 			portletDataContext.getScopeGroupId());
 
 		Element structuresElement =
@@ -153,5 +151,8 @@ public class DDMPortletDataHandler extends BasePortletDataHandler {
 		manifestSummary.addModelCount(
 			DDMTemplate.class, templateActionableDynamicQuery.performCount());
 	}
+
+	protected static final String RESOURCE_NAME =
+		"com.liferay.portlet.dynamicdatamapping";
 
 }

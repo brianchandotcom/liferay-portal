@@ -33,8 +33,10 @@ import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.UserService;
+import com.liferay.portal.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.service.persistence.UserFinder;
 import com.liferay.portal.service.persistence.UserPersistence;
+import com.liferay.portal.service.persistence.WorkflowDefinitionLinkPersistence;
 
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalService;
@@ -559,6 +561,44 @@ public abstract class DDLRecordSetLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the workflow definition link local service.
+	 *
+	 * @return the workflow definition link local service
+	 */
+	public WorkflowDefinitionLinkLocalService getWorkflowDefinitionLinkLocalService() {
+		return workflowDefinitionLinkLocalService;
+	}
+
+	/**
+	 * Sets the workflow definition link local service.
+	 *
+	 * @param workflowDefinitionLinkLocalService the workflow definition link local service
+	 */
+	public void setWorkflowDefinitionLinkLocalService(
+		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
+		this.workflowDefinitionLinkLocalService = workflowDefinitionLinkLocalService;
+	}
+
+	/**
+	 * Returns the workflow definition link persistence.
+	 *
+	 * @return the workflow definition link persistence
+	 */
+	public WorkflowDefinitionLinkPersistence getWorkflowDefinitionLinkPersistence() {
+		return workflowDefinitionLinkPersistence;
+	}
+
+	/**
+	 * Sets the workflow definition link persistence.
+	 *
+	 * @param workflowDefinitionLinkPersistence the workflow definition link persistence
+	 */
+	public void setWorkflowDefinitionLinkPersistence(
+		WorkflowDefinitionLinkPersistence workflowDefinitionLinkPersistence) {
+		this.workflowDefinitionLinkPersistence = workflowDefinitionLinkPersistence;
+	}
+
+	/**
 	 * Returns the d d m structure local service.
 	 *
 	 * @return the d d m structure local service
@@ -755,6 +795,10 @@ public abstract class DDLRecordSetLocalServiceBaseImpl
 	protected UserPersistence userPersistence;
 	@BeanReference(type = UserFinder.class)
 	protected UserFinder userFinder;
+	@BeanReference(type = WorkflowDefinitionLinkLocalService.class)
+	protected WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService;
+	@BeanReference(type = WorkflowDefinitionLinkPersistence.class)
+	protected WorkflowDefinitionLinkPersistence workflowDefinitionLinkPersistence;
 	@BeanReference(type = DDMStructureLocalService.class)
 	protected DDMStructureLocalService ddmStructureLocalService;
 	@BeanReference(type = DDMStructureService.class)

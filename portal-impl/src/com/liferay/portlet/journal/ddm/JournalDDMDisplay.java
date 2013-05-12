@@ -35,6 +35,33 @@ import java.util.Set;
  */
 public class JournalDDMDisplay extends BaseDDMDisplay {
 
+    @Override
+	public String getEditStructureDefaultValuesURL(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			DDMStructure structure, String redirectURL, String backURL)
+		throws Exception {
+
+		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
+			getControlPanelPlid(liferayPortletRequest), PortletKeys.JOURNAL,
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter("struts_action", "/journal/edit_article");
+		portletURL.setParameter("redirect", redirectURL);
+		portletURL.setParameter("backURL", backURL);
+		portletURL.setParameter(
+			"groupId", String.valueOf(structure.getGroupId()));
+		portletURL.setParameter(
+			"classNameId",
+			String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)));
+		portletURL.setParameter(
+			"classPK", String.valueOf(structure.getStructureId()));
+		portletURL.setParameter("structureId", structure.getStructureKey());
+		portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+		return portletURL.toString();
+	}
+
 	@Override
 	public String getEditTemplateBackURL(
 			LiferayPortletRequest liferayPortletRequest,

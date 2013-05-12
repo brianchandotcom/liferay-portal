@@ -32,6 +32,12 @@ public interface DDMDisplay {
 
 	public String getAddTemplateActionId();
 
+	public String getEditStructureDefaultValuesURL(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			DDMStructure structure, String redirectURL, String backURL)
+		throws Exception;
+
 	public String getEditTemplateBackURL(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse, long classNameId,

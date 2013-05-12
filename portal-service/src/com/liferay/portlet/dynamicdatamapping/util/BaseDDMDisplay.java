@@ -54,6 +54,16 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 		return ActionKeys.ADD_TEMPLATE;
 	}
 
+    @Override
+    public String getEditStructureDefaultValuesURL(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			DDMStructure structure, String redirectURL, String backURL)
+		throws Exception {
+
+		return null;
+	}
+
 	@Override
 	public String getEditTemplateBackURL(
 			LiferayPortletRequest liferayPortletRequest,

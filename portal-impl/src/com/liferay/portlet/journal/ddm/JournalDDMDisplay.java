@@ -95,6 +95,11 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 		return JournalPermission.RESOURCE_NAME;
 	}
 
+    @Override
+	public String getStorageType() {
+		return PropsValues.JOURNAL_ARTICLE_STORAGE_TYPE;
+	}
+
 	@Override
 	public long getTemplateHandlerClassNameId(DDMTemplate template) {
 		return PortalUtil.getClassNameId(JournalArticle.class);
@@ -139,3 +144,4 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 		SetUtil.fromArray(new String[] {"mode"});
 
 }
+	public String getStorageType() {

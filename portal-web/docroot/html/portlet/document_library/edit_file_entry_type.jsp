@@ -154,7 +154,6 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 				showGlobalScope: true,
 				showManageTemplates: false,
 				showToolbar: true,
-				storageType: 'xml',
 				structureName: '<%= UnicodeLanguageUtil.get(pageContext, "metadata-sets") %>',
 				structureType: 'com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata',
 				struts_action: '/dynamic_data_mapping/select_structure',

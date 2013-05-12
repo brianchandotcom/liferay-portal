@@ -59,7 +59,6 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 
 						refererPortletName: '<%= portlet.getPortletName() %>',
 						refererWebDAVToken: '<%= portlet.getWebDAVStorageToken() %>',
-						storageType: '<%= PropsValues.DYNAMIC_DATA_LISTS_STORAGE_TYPE %>',
 						structureName: 'data-definition',
 						structureType: 'com.liferay.portlet.dynamicdatalists.model.DDLRecordSet',
 						title: '<%= UnicodeLanguageUtil.get(pageContext, "data-definitions") %>'

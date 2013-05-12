@@ -194,6 +194,20 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 		return getViewTemplatesTitle(structure, false, locale);
 	}
 
+    @Override
+    public boolean isShowAddStructureButton(
+		PermissionChecker permissionChecker, long groupId) {
+
+		boolean showAddStructureButton = false;
+
+		if (!getPortletId().equals(PortletKeys.DYNAMIC_DATA_MAPPING)) {
+			showAddStructureButton = permissionChecker.hasPermission(
+				groupId, getDDMResource(), groupId, ActionKeys.ADD_STRUCTURE);
+		}
+
+		return showAddStructureButton;
+	}
+
 	@Override
 	public boolean isShowStructureSelector() {
 		return false;

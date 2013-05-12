@@ -128,6 +128,10 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 		return getResourceName();
 	}
 
+    public long[] getTemplateClassNameIds(long classNameId) {
+		return new long[] {classNameId};
+	}
+
 	@Override
 	public Set<String> getTemplateLanguageTypes() {
 		return _templateLanguageTypes;

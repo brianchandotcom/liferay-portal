@@ -22,10 +22,14 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import java.util.Locale;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Eduardo Garcia
  */
 public interface DDMDisplay {
+
+	public String getDDMResource();
 
 	public String getEditTemplateBackURL(
 			LiferayPortletRequest liferayPortletRequest,
@@ -39,6 +43,11 @@ public interface DDMDisplay {
 	public String getEditTemplateTitle(long classNameId, Locale locale);
 
 	public String getPortletId();
+
+	public String getTemplateDDMResource(
+		HttpServletRequest request, DDMTemplate template);
+
+	public String getTemplateDDMResourceActionId();
 
 	public Set<String> getTemplateLanguageTypes();
 

@@ -37,8 +37,6 @@ portletURL.setParameter("tabs1", tabs1);
 portletURL.setParameter("classNameId", String.valueOf(classNameId));
 portletURL.setParameter("classPK", String.valueOf(classPK));
 
-DDMDisplay ddmDisplay = DDMDisplayRegistryUtil.getDDMDisplay(refererPortletName);
-
 boolean controlPanel = false;
 
 if (layout != null) {

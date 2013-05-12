@@ -29,8 +29,6 @@ if ((classPK > 0) && (structureClassNameId == classNameId)) {
 	structure = DDMStructureServiceUtil.getStructure(classPK);
 }
 
-DDMDisplay ddmDisplay = DDMDisplayRegistryUtil.getDDMDisplay(refererPortletName);
-
 String title = ddmDisplay.getViewTemplatesTitle(structure, locale);
 %>
 

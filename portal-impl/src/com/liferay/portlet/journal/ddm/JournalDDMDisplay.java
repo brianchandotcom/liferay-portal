@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatamapping.util.BaseDDMDisplay;
 
@@ -30,6 +31,11 @@ import java.util.Set;
  * @author Eduardo Garcia
  */
 public class JournalDDMDisplay extends BaseDDMDisplay {
+
+	@Override
+	public String getDDMResource() {
+		return "com.liferay.portlet.journal";
+	}
 
 	@Override
 	public String getEditTemplateBackURL(
@@ -52,6 +58,11 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 	@Override
 	public String getPortletId() {
 		return PortletKeys.JOURNAL;
+	}
+
+	@Override
+	public String getTemplateDDMResourceActionId() {
+		return ActionKeys.ADD_TEMPLATE;
 	}
 
 	@Override

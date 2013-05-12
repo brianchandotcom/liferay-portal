@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.ddm;
 
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatamapping.util.BaseDDMDisplay;
 
@@ -23,8 +24,18 @@ import com.liferay.portlet.dynamicdatamapping.util.BaseDDMDisplay;
 public class DLDDMDisplay extends BaseDDMDisplay {
 
 	@Override
+	public String getDDMResource() {
+		return "com.liferay.portlet.documentlibrary";
+	}
+
+	@Override
 	public String getPortletId() {
 		return PortletKeys.DOCUMENT_LIBRARY;
 	}
-	
+
+	@Override
+	public String getTemplateDDMResourceActionId() {
+		return ActionKeys.ADD_TEMPLATE;
+	}
+
 }

@@ -118,8 +118,6 @@
 		Liferay.Util.openDDMPortlet(
 			{
 				availableFields: 'Liferay.FormBuilder.AVAILABLE_FIELDS.WCM_STRUCTURE',
-				ddmResource: '<%= ddmResource %>',
-				ddmResourceActionId: '<%= ActionKeys.ADD_TEMPLATE %>',
 				dialog: {
 					destroyOnHide: true
 				},
@@ -142,8 +140,6 @@
 				availableFields: 'Liferay.FormBuilder.AVAILABLE_FIELDS.WCM_STRUCTURE',
 				classNameId: '<%= PortalUtil.getClassNameId(DDMStructure.class) %>',
 				classPK: -1,
-				ddmResource: '<%= ddmResource %>',
-				ddmResourceActionId: '<%= ActionKeys.ADD_TEMPLATE %>',
 				dialog: {
 					width: 820
 				},

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -38,10 +39,16 @@ import java.util.Set;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Eduardo Garcia
  */
 public class BaseDDMDisplay implements DDMDisplay {
+
+	public String getDDMResource() {
+		return StringPool.BLANK;
+	}
 
 	public String getEditTemplateBackURL(
 			LiferayPortletRequest liferayPortletRequest,
@@ -102,6 +109,16 @@ public class BaseDDMDisplay implements DDMDisplay {
 
 	public String getPortletId() {
 		return PortletKeys.DYNAMIC_DATA_MAPPING;
+	}
+
+	public String getTemplateDDMResource(
+		HttpServletRequest request, DDMTemplate template) {
+
+		return getDDMResource();
+	}
+
+	public String getTemplateDDMResourceActionId() {
+		return ActionKeys.ADD_TEMPLATE;
 	}
 
 	public Set<String> getTemplateLanguageTypes() {

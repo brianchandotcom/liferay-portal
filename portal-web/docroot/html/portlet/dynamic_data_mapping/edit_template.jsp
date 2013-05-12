@@ -70,7 +70,8 @@ if (Validator.isNotNull(structureAvailableFields)) {
 	scopeAvailableFields = structureAvailableFields;
 }
 
-DDMDisplay ddmDisplay = DDMDisplayRegistryUtil.getDDMDisplay(refererPortletName);
+ddmResource = ddmDisplay.getTemplateDDMResource(request, template);
+String ddmResourceActionId = ddmDisplay.getTemplateDDMResourceActionId();
 %>
 
 <portlet:actionURL var="editTemplateURL">
@@ -88,6 +89,8 @@ DDMDisplay ddmDisplay = DDMDisplayRegistryUtil.getDDMDisplay(refererPortletName)
 	<aui:input name="type" type="hidden" value="<%= type %>" />
 	<aui:input name="structureAvailableFields" type="hidden" value="<%= structureAvailableFields %>" />
 	<aui:input name="saveAndContinue" type="hidden" value="<%= false %>" />
+	<aui:input name="ddmResource" type="hidden" value="<%= ddmResource %>" />
+	<aui:input name="ddmResourceActionId" type="hidden" value="<%= ddmResourceActionId %>" />
 
 	<liferay-ui:error exception="<%= TemplateNameException.class %>" message="please-enter-a-valid-name" />
 	<liferay-ui:error exception="<%= TemplateScriptException.class %>" message="please-enter-a-valid-script" />
@@ -385,13 +388,13 @@ DDMDisplay ddmDisplay = DDMDisplayRegistryUtil.getDDMDisplay(refererPortletName)
 					availableFields: 'Liferay.FormBuilder.AVAILABLE_FIELDS.WCM_STRUCTURE',
 					classNameId: '<%= PortalUtil.getClassNameId(DDMStructure.class) %>',
 					classPK: 0,
-					ddmResource: '<%= HtmlUtil.escapeJS(ddmResource) %>',
 					dialog: {
 						modal: true,
 						width: 820
 					},
 					eventName: '<portlet:namespace />selectStructure',
 					groupId: <%= groupId %>,
+					refererPortletName: '<%= PortletKeys.JOURNAL %>',
 					storageType: '<%= PropsValues.JOURNAL_ARTICLE_STORAGE_TYPE %>',
 					structureName: 'structure',
 					structureType: 'com.liferay.portlet.journal.model.JournalArticle',

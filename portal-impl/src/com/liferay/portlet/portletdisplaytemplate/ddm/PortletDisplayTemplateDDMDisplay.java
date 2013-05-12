@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
@@ -30,6 +31,8 @@ import com.liferay.portlet.dynamicdatamapping.util.BaseDDMDisplay;
 
 import java.util.Locale;
 import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Eduardo Garcia
@@ -57,6 +60,27 @@ public class PortletDisplayTemplateDDMDisplay extends BaseDDMDisplay {
 	@Override
 	public String getPortletId() {
 		return PortletKeys.PORTLET_DISPLAY_TEMPLATES;
+	}
+
+	@Override
+	public String getTemplateDDMResource(
+		HttpServletRequest request, DDMTemplate template) {
+
+		if (template != null) {
+			TemplateHandler templateHandler =
+				TemplateHandlerRegistryUtil.getTemplateHandler(
+					template.getClassNameId());
+
+			return templateHandler.getResourceName();
+		}
+		else {
+			return ParamUtil.getString(request, "ddmResource");
+		}
+	}
+
+	@Override
+	public String getTemplateDDMResourceActionId() {
+		return ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE;
 	}
 
 	@Override

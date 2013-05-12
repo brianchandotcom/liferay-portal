@@ -157,13 +157,13 @@ groupId = ParamUtil.getLong(request, "groupId", groupId);
 				availableFields: 'Liferay.FormBuilder.AVAILABLE_FIELDS.WCM_STRUCTURE',
 				classNameId: '<%= PortalUtil.getClassNameId(DDMStructure.class) %>',
 				classPK: <%= (ddmStructure != null) ? ddmStructure.getPrimaryKey() : 0 %>,
-				ddmResource: '<%= ddmResource %>',
 				dialog: {
 					destroyOnHide: true,
 					zIndex: (++Liferay.zIndex.WINDOW)
 				},
 				eventName: '<portlet:namespace />selectStructure',
 				groupId: <%= groupId %>,
+				refererPortletName: '<%= PortletKeys.JOURNAL %>',
 				storageType: '<%= PropsValues.JOURNAL_ARTICLE_STORAGE_TYPE %>',
 				structureName: 'structure',
 				structureType: 'com.liferay.portlet.journal.model.JournalArticle',

@@ -54,14 +54,8 @@ DDMTemplate template = (DDMTemplate)row.getObject();
 	</c:if>
 
 	<%
-	ddmResourceActionId = ActionKeys.ADD_TEMPLATE;
-
-	if (refererPortletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES)) {
-		TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(template.getClassNameId());
-
-		ddmResource = templateHandler.getResourceName();
-		ddmResourceActionId = ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE;
-	}
+	ddmResource = ddmDisplay.getTemplateDDMResource(request, template);
+	String ddmResourceActionId = ddmDisplay.getTemplateDDMResourceActionId();
 	%>
 
 	<c:if test="<%= DDMPermission.contains(permissionChecker, scopeGroupId, ddmResource, ddmResourceActionId) %>">

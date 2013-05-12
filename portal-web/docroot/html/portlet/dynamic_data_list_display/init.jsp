@@ -31,7 +31,9 @@ page import="com.liferay.portlet.dynamicdatamapping.model.DDMTemplate" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.service.permission.DDMPermission" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.service.permission.DDMTemplatePermission" %>
+page import="com.liferay.portlet.dynamicdatamapping.service.permission.DDMTemplatePermission" %><%@
+page import="com.liferay.portlet.dynamicdatamapping.util.DDMDisplay" %><%@
+page import="com.liferay.portlet.dynamicdatamapping.util.DDMDisplayRegistryUtil" %>
 
 <%
 PortletPreferences preferences = renderRequest.getPreferences();
@@ -51,7 +53,9 @@ boolean editable = DDLUtil.isEditable(preferences, portletDisplay.getId(), theme
 
 boolean spreadsheet = GetterUtil.getBoolean(preferences.getValue("spreadsheet", Boolean.FALSE.toString()));
 
-String ddmResource = portletConfig.getInitParameter("ddm-resource");
+DDMDisplay ddmDisplay = DDMDisplayRegistryUtil.getDDMDisplay(PortletKeys.DYNAMIC_DATA_LISTS);
+
+String ddmResource = ddmDisplay.getDDMResource();
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>

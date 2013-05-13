@@ -45,6 +45,7 @@ import org.quartz.Scheduler;
  */
 public class MessageSenderJob implements Job {
 
+	@Override
 	public void execute(JobExecutionContext jobExecutionContext) {
 		try {
 			doExecute(jobExecutionContext);

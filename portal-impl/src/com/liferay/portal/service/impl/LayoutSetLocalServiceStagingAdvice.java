@@ -52,6 +52,7 @@ import org.aopalliance.intercept.MethodInvocation;
 public class LayoutSetLocalServiceStagingAdvice
 	extends LayoutSetLocalServiceImpl implements MethodInterceptor {
 
+	@Override
 	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
 		if (!StagingAdvicesThreadLocal.isEnabled()) {
 			return methodInvocation.proceed();

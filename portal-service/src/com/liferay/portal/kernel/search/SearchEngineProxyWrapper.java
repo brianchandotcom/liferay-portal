@@ -30,22 +30,27 @@ public class SearchEngineProxyWrapper implements SearchEngine {
 		_searchEngine = searchEngine;
 	}
 
+	@Override
 	public BooleanClauseFactory getBooleanClauseFactory() {
 		return _searchEngine.getBooleanClauseFactory();
 	}
 
+	@Override
 	public BooleanQueryFactory getBooleanQueryFactory() {
 		return _searchEngine.getBooleanQueryFactory();
 	}
 
+	@Override
 	public Priority getClusteredWritePriority() {
 		return _searchEngine.getClusteredWritePriority();
 	}
 
+	@Override
 	public IndexSearcher getIndexSearcher() {
 		return _indexSearcher;
 	}
 
+	@Override
 	public IndexWriter getIndexWriter() {
 		return _indexWriter;
 	}
@@ -54,22 +59,27 @@ public class SearchEngineProxyWrapper implements SearchEngine {
 		return _searchEngine;
 	}
 
+	@Override
 	public TermQueryFactory getTermQueryFactory() {
 		return _searchEngine.getTermQueryFactory();
 	}
 
+	@Override
 	public TermRangeQueryFactory getTermRangeQueryFactory() {
 		return _searchEngine.getTermRangeQueryFactory();
 	}
 
+	@Override
 	public String getVendor() {
 		return _searchEngine.getVendor();
 	}
 
+	@Override
 	public boolean isClusteredWrite() {
 		return _searchEngine.isClusteredWrite();
 	}
 
+	@Override
 	public boolean isLuceneBased() {
 		return _searchEngine.isLuceneBased();
 	}

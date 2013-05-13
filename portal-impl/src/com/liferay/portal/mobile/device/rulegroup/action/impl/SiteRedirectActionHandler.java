@@ -47,10 +47,12 @@ public class SiteRedirectActionHandler extends BaseRedirectActionHandler {
 		return SiteRedirectActionHandler.class.getName();
 	}
 
+	@Override
 	public Collection<String> getPropertyNames() {
 		return _propertyNames;
 	}
 
+	@Override
 	public String getType() {
 		return getHandlerType();
 	}

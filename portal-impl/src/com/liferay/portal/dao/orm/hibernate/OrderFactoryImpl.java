@@ -24,10 +24,12 @@ import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 @DoPrivileged
 public class OrderFactoryImpl implements OrderFactory {
 
+	@Override
 	public Order asc(String propertyName) {
 		return new OrderImpl(org.hibernate.criterion.Order.asc(propertyName));
 	}
 
+	@Override
 	public Order desc(String propertyName) {
 		return new OrderImpl(org.hibernate.criterion.Order.desc(propertyName));
 	}

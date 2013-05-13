@@ -58,6 +58,7 @@ import sun.reflect.Reflection;
  */
 public class FileChecker extends BaseChecker {
 
+	@Override
 	public void afterPropertiesSet() {
 		try {
 			_rootDir = WebDirDetector.getRootDir(getClassLoader());
@@ -197,6 +198,7 @@ public class FileChecker extends BaseChecker {
 		return _rootDir;
 	}
 
+	@Override
 	public boolean implies(Permission permission) {
 		if (_permissions.implies(permission)) {
 			return true;

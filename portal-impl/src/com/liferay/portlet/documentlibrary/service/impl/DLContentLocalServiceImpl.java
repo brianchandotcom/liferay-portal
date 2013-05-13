@@ -36,6 +36,7 @@ import java.util.List;
  */
 public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 
+	@Override
 	public DLContent addContent(
 			long companyId, long repositoryId, String path, String version,
 			byte[] bytes)
@@ -65,6 +66,7 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 		return dlContent;
 	}
 
+	@Override
 	public DLContent addContent(
 			long companyId, long repositoryId, String path, String version,
 			InputStream inputStream, long size)
@@ -95,6 +97,7 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public void deleteContent(
 			long companyId, long repositoryId, String path, String version)
 		throws PortalException, SystemException {
@@ -103,12 +106,14 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 			companyId, repositoryId, path, version);
 	}
 
+	@Override
 	public void deleteContents(long companyId, long repositoryId, String path)
 		throws SystemException {
 
 		dlContentPersistence.removeByC_R_P(companyId, repositoryId, path);
 	}
 
+	@Override
 	public void deleteContentsByDirectory(
 			long companyId, long repositoryId, String dirName)
 		throws SystemException {
@@ -123,6 +128,7 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 			companyId, repositoryId, dirName);
 	}
 
+	@Override
 	public DLContent getContent(long companyId, long repositoryId, String path)
 		throws NoSuchContentException, SystemException {
 
@@ -138,6 +144,7 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 		return dlContents.get(0);
 	}
 
+	@Override
 	public DLContent getContent(
 			long companyId, long repositoryId, String path, String version)
 		throws NoSuchContentException, SystemException {
@@ -146,12 +153,14 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 			companyId, repositoryId, path, version);
 	}
 
+	@Override
 	public List<DLContent> getContents(long companyId, long repositoryId)
 		throws SystemException {
 
 		return dlContentPersistence.findByC_R(companyId, repositoryId);
 	}
 
+	@Override
 	public List<DLContent> getContents(
 			long companyId, long repositoryId, String path)
 		throws SystemException {
@@ -159,6 +168,7 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 		return dlContentPersistence.findByC_R_P(companyId, repositoryId, path);
 	}
 
+	@Override
 	public List<DLContent> getContentsByDirectory(
 			long companyId, long repositoryId, String dirName)
 		throws SystemException {
@@ -173,6 +183,7 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 			companyId, repositoryId, dirName);
 	}
 
+	@Override
 	public boolean hasContent(
 			long companyId, long repositoryId, String path, String version)
 		throws SystemException {
@@ -188,6 +199,7 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public void updateDLContent(
 			long companyId, long oldRepositoryId, long newRepositoryId,
 			String oldPath, String newPath)

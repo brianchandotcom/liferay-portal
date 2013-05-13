@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.InfrastructureUtil;
 public class TransactionInterceptorFactoryBean
 	implements FactoryBean<TransactionInterceptor> {
 
+	@Override
 	public TransactionInterceptor create() {
 		DynamicDataSourceTargetSource dynamicDataSourceTargetSource =
 			(DynamicDataSourceTargetSource)

@@ -68,6 +68,7 @@ public class ZipReaderImpl implements ZipReader {
 		_zipFile = new File(file);
 	}
 
+	@Override
 	public void close() {
 		try {
 			File.umount(_zipFile);
@@ -82,6 +83,7 @@ public class ZipReaderImpl implements ZipReader {
 		}
 	}
 
+	@Override
 	public List<String> getEntries() {
 		List<String> folderEntries = new ArrayList<String>();
 
@@ -99,6 +101,7 @@ public class ZipReaderImpl implements ZipReader {
 		return folderEntries;
 	}
 
+	@Override
 	public byte[] getEntryAsByteArray(String name) {
 		if (Validator.isNull(name)) {
 			return null;
@@ -120,6 +123,7 @@ public class ZipReaderImpl implements ZipReader {
 		return bytes;
 	}
 
+	@Override
 	public InputStream getEntryAsInputStream(String name) {
 		if (Validator.isNull(name)) {
 			return null;
@@ -147,6 +151,7 @@ public class ZipReaderImpl implements ZipReader {
 		return null;
 	}
 
+	@Override
 	public String getEntryAsString(String name) {
 		if (Validator.isNull(name)) {
 			return null;
@@ -161,6 +166,7 @@ public class ZipReaderImpl implements ZipReader {
 		return null;
 	}
 
+	@Override
 	public List<String> getFolderEntries(String path) {
 		if (Validator.isNull(path)) {
 			return Collections.emptyList();

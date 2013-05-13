@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 @DoPrivileged
 public class NotificationEventFactoryImpl implements NotificationEventFactory {
 
+	@Override
 	public NotificationEvent createNotificationEvent(
 		long timestamp, String type, JSONObject payloadJSONObject) {
 

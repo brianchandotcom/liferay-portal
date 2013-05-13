@@ -29,6 +29,7 @@ public class DialectImpl implements Dialect {
 		return _dialect;
 	}
 
+	@Override
 	public boolean supportsLimit() {
 		return _dialect.supportsLimit();
 	}

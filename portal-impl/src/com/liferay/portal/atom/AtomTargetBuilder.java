@@ -26,6 +26,7 @@ import org.apache.abdera.protocol.server.TargetType;
  */
 public class AtomTargetBuilder implements TargetBuilder {
 
+	@Override
 	public String urlFor(
 		RequestContext requestContext, Object key, Object param) {
 

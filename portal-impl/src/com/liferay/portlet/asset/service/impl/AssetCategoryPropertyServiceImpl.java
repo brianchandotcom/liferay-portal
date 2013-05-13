@@ -30,6 +30,7 @@ import java.util.List;
 public class AssetCategoryPropertyServiceImpl
 	extends AssetCategoryPropertyServiceBaseImpl {
 
+	@Override
 	public AssetCategoryProperty addCategoryProperty(
 			long entryId, String key, String value)
 		throws PortalException, SystemException {
@@ -41,6 +42,7 @@ public class AssetCategoryPropertyServiceImpl
 			getUserId(), entryId, key, value);
 	}
 
+	@Override
 	public void deleteCategoryProperty(long categoryPropertyId)
 		throws PortalException, SystemException {
 
@@ -56,12 +58,14 @@ public class AssetCategoryPropertyServiceImpl
 			categoryPropertyId);
 	}
 
+	@Override
 	public List<AssetCategoryProperty> getCategoryProperties(long entryId)
 		throws SystemException {
 
 		return assetCategoryPropertyLocalService.getCategoryProperties(entryId);
 	}
 
+	@Override
 	public List<AssetCategoryProperty> getCategoryPropertyValues(
 			long companyId, String key)
 		throws SystemException {
@@ -70,6 +74,7 @@ public class AssetCategoryPropertyServiceImpl
 			companyId, key);
 	}
 
+	@Override
 	public AssetCategoryProperty updateCategoryProperty(
 			long categoryPropertyId, String key, String value)
 		throws PortalException, SystemException {

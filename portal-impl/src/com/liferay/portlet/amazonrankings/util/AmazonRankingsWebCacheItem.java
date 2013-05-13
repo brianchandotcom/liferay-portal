@@ -48,6 +48,7 @@ public class AmazonRankingsWebCacheItem implements WebCacheItem {
 		_isbn = isbn;
 	}
 
+	@Override
 	public Object convert(String key) {
 		AmazonRankings amazonRankings = null;
 
@@ -61,6 +62,7 @@ public class AmazonRankingsWebCacheItem implements WebCacheItem {
 		return amazonRankings;
 	}
 
+	@Override
 	public long getRefreshTime() {
 		return _REFRESH_TIME;
 	}

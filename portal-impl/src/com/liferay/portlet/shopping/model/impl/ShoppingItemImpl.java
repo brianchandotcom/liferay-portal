@@ -41,6 +41,7 @@ public class ShoppingItemImpl extends ShoppingItemBaseImpl {
 		return new ItemNameComparator(true).compare(this, item);
 	}
 
+	@Override
 	public ShoppingCategory getCategory() {
 		ShoppingCategory category = null;
 
@@ -66,10 +67,12 @@ public class ShoppingItemImpl extends ShoppingItemBaseImpl {
 		return category;
 	}
 
+	@Override
 	public String[] getFieldsQuantitiesArray() {
 		return _fieldsQuantitiesArray;
 	}
 
+	@Override
 	public List<ShoppingItemPrice> getItemPrices()
 		throws PortalException, SystemException {
 
@@ -83,6 +86,7 @@ public class ShoppingItemImpl extends ShoppingItemBaseImpl {
 		super.setFieldsQuantities(fieldsQuantities);
 	}
 
+	@Override
 	public void setFieldsQuantitiesArray(String[] fieldsQuantitiesArray) {
 		_fieldsQuantitiesArray = fieldsQuantitiesArray;
 

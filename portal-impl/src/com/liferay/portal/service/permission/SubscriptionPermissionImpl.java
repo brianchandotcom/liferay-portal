@@ -43,6 +43,7 @@ import com.liferay.portlet.wiki.service.permission.WikiPagePermission;
  */
 public class SubscriptionPermissionImpl implements SubscriptionPermission {
 
+	@Override
 	public void check(
 			PermissionChecker permissionChecker, String className, long classPK)
 		throws PortalException, SystemException {
@@ -52,6 +53,7 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 		}
 	}
 
+	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, String className, long classPK)
 		throws PortalException, SystemException {

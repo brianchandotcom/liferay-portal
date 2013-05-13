@@ -66,6 +66,7 @@ public class ResourcePermissionFinderImpl
 				Long.class.getName(), Long.class.getName()
 			});
 
+	@Override
 	public int countByR_S(long roleId, int[] scopes) throws SystemException {
 		Session session = null;
 
@@ -105,6 +106,7 @@ public class ResourcePermissionFinderImpl
 		}
 	}
 
+	@Override
 	public int countByC_N_S_P_R_A(
 			long companyId, String name, int scope, String primKey,
 			long[] roleIds, long actionId)
@@ -176,6 +178,7 @@ public class ResourcePermissionFinderImpl
 		return count.intValue();
 	}
 
+	@Override
 	public List<ResourcePermission> findByResource(
 			long companyId, long groupId, String name, String primKey)
 		throws SystemException {
@@ -209,6 +212,7 @@ public class ResourcePermissionFinderImpl
 		}
 	}
 
+	@Override
 	public List<ResourcePermission> findByR_S(
 			long roleId, int[] scopes, int start, int end)
 		throws SystemException {

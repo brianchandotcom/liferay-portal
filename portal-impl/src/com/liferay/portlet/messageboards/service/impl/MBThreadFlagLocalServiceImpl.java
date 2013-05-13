@@ -34,6 +34,7 @@ import java.util.Date;
 public class MBThreadFlagLocalServiceImpl
 	extends MBThreadFlagLocalServiceBaseImpl {
 
+	@Override
 	public void addThreadFlag(
 			long userId, MBThread thread, ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -92,6 +93,7 @@ public class MBThreadFlagLocalServiceImpl
 		}
 	}
 
+	@Override
 	public void deleteThreadFlag(long threadFlagId)
 		throws PortalException, SystemException {
 
@@ -101,22 +103,26 @@ public class MBThreadFlagLocalServiceImpl
 		deleteThreadFlag(threadFlag);
 	}
 
+	@Override
 	public void deleteThreadFlag(MBThreadFlag threadFlag)
 		throws SystemException {
 
 		mbThreadFlagPersistence.remove(threadFlag);
 	}
 
+	@Override
 	public void deleteThreadFlagsByThreadId(long threadId)
 		throws SystemException {
 
 		mbThreadFlagPersistence.removeByThreadId(threadId);
 	}
 
+	@Override
 	public void deleteThreadFlagsByUserId(long userId) throws SystemException {
 		mbThreadFlagPersistence.removeByUserId(userId);
 	}
 
+	@Override
 	public MBThreadFlag getThreadFlag(long userId, MBThread thread)
 		throws PortalException, SystemException {
 
@@ -129,6 +135,7 @@ public class MBThreadFlagLocalServiceImpl
 		return mbThreadFlagPersistence.fetchByU_T(userId, thread.getThreadId());
 	}
 
+	@Override
 	public boolean hasThreadFlag(long userId, MBThread thread)
 		throws PortalException, SystemException {
 

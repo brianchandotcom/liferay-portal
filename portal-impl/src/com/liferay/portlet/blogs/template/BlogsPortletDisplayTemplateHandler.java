@@ -36,10 +36,12 @@ import java.util.Map;
 public class BlogsPortletDisplayTemplateHandler
 	extends BasePortletDisplayTemplateHandler {
 
+	@Override
 	public String getClassName() {
 		return BlogsEntry.class.getName();
 	}
 
+	@Override
 	public String getName(Locale locale) {
 		String portletTitle = PortalUtil.getPortletTitle(
 			PortletKeys.BLOGS, locale);
@@ -48,6 +50,7 @@ public class BlogsPortletDisplayTemplateHandler
 			LanguageUtil.get(locale, "template"));
 	}
 
+	@Override
 	public String getResourceName() {
 		return "com.liferay.portlet.blogs";
 	}

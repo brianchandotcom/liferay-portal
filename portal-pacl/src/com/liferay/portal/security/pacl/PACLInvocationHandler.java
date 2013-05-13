@@ -43,6 +43,7 @@ public class PACLInvocationHandler implements InvocationHandler {
 		_advisedSupport = advisedSupport;
 	}
 
+	@Override
 	public Object invoke(Object proxy, Method method, Object[] arguments)
 		throws Throwable {
 

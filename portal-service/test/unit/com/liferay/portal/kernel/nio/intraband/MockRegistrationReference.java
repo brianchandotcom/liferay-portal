@@ -34,6 +34,7 @@ public class MockRegistrationReference implements RegistrationReference {
 		_scatteringByteChannel = scatteringByteChannel;
 	}
 
+	@Override
 	public void cancelRegistration() {
 		_cancelled = true;
 	}
@@ -42,6 +43,7 @@ public class MockRegistrationReference implements RegistrationReference {
 		return _gatheringByteChannel;
 	}
 
+	@Override
 	public Intraband getIntraband() {
 		return _intraband;
 	}
@@ -50,6 +52,7 @@ public class MockRegistrationReference implements RegistrationReference {
 		return _scatteringByteChannel;
 	}
 
+	@Override
 	public boolean isValid() {
 		return !_cancelled;
 	}

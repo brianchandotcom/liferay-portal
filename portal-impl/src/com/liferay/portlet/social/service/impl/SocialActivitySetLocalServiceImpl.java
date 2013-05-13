@@ -29,6 +29,7 @@ import java.util.List;
 public class SocialActivitySetLocalServiceImpl
 	extends SocialActivitySetLocalServiceBaseImpl {
 
+	@Override
 	public SocialActivitySet addActivitySet(long activityId)
 		throws PortalException, SystemException {
 
@@ -63,6 +64,7 @@ public class SocialActivitySetLocalServiceImpl
 		return activitySet;
 	}
 
+	@Override
 	public void decrementActivityCount(long activitySetId)
 		throws PortalException, SystemException {
 
@@ -84,6 +86,7 @@ public class SocialActivitySetLocalServiceImpl
 		socialActivitySetPersistence.update(activitySet);
 	}
 
+	@Override
 	public void decrementActivityCount(long classNameId, long classPK)
 		throws PortalException, SystemException {
 
@@ -95,6 +98,7 @@ public class SocialActivitySetLocalServiceImpl
 		}
 	}
 
+	@Override
 	public SocialActivitySet getClassActivitySet(
 			long classNameId, long classPK, int type)
 		throws SystemException {
@@ -104,6 +108,7 @@ public class SocialActivitySetLocalServiceImpl
 			new SocialActivitySetModifiedDateComparator());
 	}
 
+	@Override
 	public SocialActivitySet getClassActivitySet(
 			long userId, long classNameId, long classPK, int type)
 		throws SystemException {
@@ -113,6 +118,7 @@ public class SocialActivitySetLocalServiceImpl
 			new SocialActivitySetModifiedDateComparator());
 	}
 
+	@Override
 	public List<SocialActivitySet> getGroupActivitySets(
 			long groupId, int start, int end)
 		throws SystemException {
@@ -121,10 +127,12 @@ public class SocialActivitySetLocalServiceImpl
 			groupId, start, end, new SocialActivitySetModifiedDateComparator());
 	}
 
+	@Override
 	public int getGroupActivitySetsCount(long groupId) throws SystemException {
 		return socialActivitySetPersistence.countByGroupId(groupId);
 	}
 
+	@Override
 	public List<SocialActivitySet> getRelationActivitySets(
 			long userId, int start, int end)
 		throws SystemException {
@@ -132,6 +140,7 @@ public class SocialActivitySetLocalServiceImpl
 		return socialActivitySetFinder.findByRelation(userId, start, end);
 	}
 
+	@Override
 	public List<SocialActivitySet> getRelationActivitySets(
 			long userId, int type, int start, int end)
 		throws SystemException {
@@ -140,18 +149,21 @@ public class SocialActivitySetLocalServiceImpl
 			userId, type, start, end);
 	}
 
+	@Override
 	public int getRelationActivitySetsCount(long userId)
 		throws SystemException {
 
 		return socialActivitySetFinder.countByRelation(userId);
 	}
 
+	@Override
 	public int getRelationActivitySetsCount(long userId, int type)
 		throws SystemException {
 
 		return socialActivitySetFinder.countByRelationType(userId, type);
 	}
 
+	@Override
 	public SocialActivitySet getUserActivitySet(
 			long groupId, long userId, int type)
 		throws SystemException {
@@ -161,6 +173,7 @@ public class SocialActivitySetLocalServiceImpl
 			new SocialActivitySetModifiedDateComparator());
 	}
 
+	@Override
 	public List<SocialActivitySet> getUserActivitySets(
 			long userId, int start, int end)
 		throws SystemException {
@@ -168,10 +181,12 @@ public class SocialActivitySetLocalServiceImpl
 		return socialActivitySetFinder.findByUser(userId, start, end);
 	}
 
+	@Override
 	public int getUserActivitySetsCount(long userId) throws SystemException {
 		return socialActivitySetFinder.countByUser(userId);
 	}
 
+	@Override
 	public List<SocialActivitySet> getUserGroupsActivitySets(
 			long userId, int start, int end)
 		throws SystemException {
@@ -179,12 +194,14 @@ public class SocialActivitySetLocalServiceImpl
 		return socialActivitySetFinder.findByUserGroups(userId, start, end);
 	}
 
+	@Override
 	public int getUserGroupsActivitySetsCount(long userId)
 		throws SystemException {
 
 		return socialActivitySetFinder.countByUserGroups(userId);
 	}
 
+	@Override
 	public void incrementActivityCount(long activitySetId, long activityId)
 		throws PortalException, SystemException {
 

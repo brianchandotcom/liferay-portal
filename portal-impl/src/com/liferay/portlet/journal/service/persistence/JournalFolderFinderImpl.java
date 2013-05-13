@@ -58,6 +58,7 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 	public static final String FIND_F_BY_G_F =
 		JournalFolderFinder.class.getName() + ".findF_ByG_F";
 
+	@Override
 	public int countF_A_ByG_F(
 			long groupId, long folderId, QueryDefinition queryDefinition)
 		throws SystemException {
@@ -65,6 +66,7 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 		return doCountF_A_ByG_F(groupId, folderId, queryDefinition, false);
 	}
 
+	@Override
 	public int filterCountF_A_ByG_F(
 			long groupId, long folderId, QueryDefinition queryDefinition)
 		throws SystemException {
@@ -72,6 +74,7 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 		return doCountF_A_ByG_F(groupId, folderId, queryDefinition, true);
 	}
 
+	@Override
 	public List<Object> filterFindF_A_ByG_F(
 			long groupId, long folderId, QueryDefinition queryDefinition)
 		throws SystemException {
@@ -79,6 +82,7 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 		return doFindF_A_ByG_F(groupId, folderId, queryDefinition, true);
 	}
 
+	@Override
 	public List<JournalFolder> findF_ByNoAssets() throws SystemException {
 		Session session = null;
 
@@ -101,6 +105,7 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 		}
 	}
 
+	@Override
 	public List<Object> findF_A_ByG_F(
 			long groupId, long folderId, QueryDefinition queryDefinition)
 		throws SystemException {

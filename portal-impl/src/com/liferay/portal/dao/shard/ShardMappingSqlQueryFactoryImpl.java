@@ -25,6 +25,7 @@ import javax.sql.DataSource;
  */
 public class ShardMappingSqlQueryFactoryImpl implements MappingSqlQueryFactory {
 
+	@Override
 	public <T> MappingSqlQuery<T> getMappingSqlQuery(
 		DataSource dataSource, String sql, int[] types,
 		RowMapper<T> rowMapper) {

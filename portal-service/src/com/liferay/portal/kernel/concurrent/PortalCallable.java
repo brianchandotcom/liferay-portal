@@ -27,6 +27,7 @@ public abstract class PortalCallable<V> implements Callable<V> {
 		_companyId = companyId;
 	}
 
+	@Override
 	public V call() throws Exception {
 		ShardUtil.pushCompanyService(_companyId);
 

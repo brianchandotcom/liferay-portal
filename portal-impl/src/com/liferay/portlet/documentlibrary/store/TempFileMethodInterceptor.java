@@ -30,6 +30,7 @@ import org.aopalliance.intercept.MethodInvocation;
  */
 public class TempFileMethodInterceptor implements MethodInterceptor {
 
+	@Override
 	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
 		Object result = methodInvocation.proceed();
 

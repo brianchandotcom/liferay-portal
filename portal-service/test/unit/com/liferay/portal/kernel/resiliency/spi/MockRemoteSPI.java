@@ -65,10 +65,12 @@ public class MockRemoteSPI extends RemoteSPI {
 		_failOnStop = failOnStop;
 	}
 
+	@Override
 	public void start() {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void stop() throws RemoteException {
 		if (_failOnStop) {
 			throw new RemoteException();

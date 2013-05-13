@@ -103,6 +103,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		}
 	}
 
+	@Override
 	public void delete(String groupName) throws SchedulerException {
 		if (!PropsValues.SCHEDULER_ENABLED) {
 			return;
@@ -129,6 +130,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		}
 	}
 
+	@Override
 	public void delete(String jobName, String groupName)
 		throws SchedulerException {
 
@@ -168,6 +170,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		}
 	}
 
+	@Override
 	public SchedulerResponse getScheduledJob(String jobName, String groupName)
 		throws SchedulerException {
 
@@ -194,6 +197,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		}
 	}
 
+	@Override
 	public List<SchedulerResponse> getScheduledJobs()
 		throws SchedulerException {
 
@@ -226,6 +230,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		}
 	}
 
+	@Override
 	public List<SchedulerResponse> getScheduledJobs(String groupName)
 		throws SchedulerException {
 
@@ -244,6 +249,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		}
 	}
 
+	@Override
 	public void pause(String groupName) throws SchedulerException {
 		if (!PropsValues.SCHEDULER_ENABLED) {
 			return;
@@ -270,6 +276,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		}
 	}
 
+	@Override
 	public void pause(String jobName, String groupName)
 		throws SchedulerException {
 
@@ -298,6 +305,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		}
 	}
 
+	@Override
 	public void resume(String groupName) throws SchedulerException {
 		if (!PropsValues.SCHEDULER_ENABLED) {
 			return;
@@ -324,6 +332,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		}
 	}
 
+	@Override
 	public void resume(String jobName, String groupName)
 		throws SchedulerException {
 
@@ -352,6 +361,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		}
 	}
 
+	@Override
 	public void schedule(
 			com.liferay.portal.kernel.scheduler.Trigger trigger,
 			String description, String destination, Message message)
@@ -406,6 +416,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		}
 	}
 
+	@Override
 	public void shutdown() throws SchedulerException {
 		if (!PropsValues.SCHEDULER_ENABLED) {
 			return;
@@ -425,6 +436,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		}
 	}
 
+	@Override
 	public void start() throws SchedulerException {
 		if (!PropsValues.SCHEDULER_ENABLED) {
 			return;
@@ -442,6 +454,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		}
 	}
 
+	@Override
 	public void suppressError(String jobName, String groupName)
 		throws SchedulerException {
 
@@ -468,6 +481,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		}
 	}
 
+	@Override
 	public void unschedule(String groupName) throws SchedulerException {
 		if (!PropsValues.SCHEDULER_ENABLED) {
 			return;
@@ -492,6 +506,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		}
 	}
 
+	@Override
 	public void unschedule(String jobName, String groupName)
 		throws SchedulerException {
 
@@ -518,6 +533,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		}
 	}
 
+	@Override
 	public void update(com.liferay.portal.kernel.scheduler.Trigger trigger)
 		throws SchedulerException {
 

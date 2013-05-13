@@ -49,6 +49,7 @@ public class GGroupManagerImpl
 			gAuthenticator.getDomain());
 	}
 
+	@Override
 	public void addGGroupMember(
 			String groupEmailAddress, String memberEmailAddress)
 		throws GoogleAppsException {
@@ -69,6 +70,7 @@ public class GGroupManagerImpl
 		submitAdd(sb.toString(), document);
 	}
 
+	@Override
 	public void addGGroupOwner(
 			String groupEmailAddress, String ownerEmailAddress)
 		throws GoogleAppsException {
@@ -89,10 +91,12 @@ public class GGroupManagerImpl
 		submitAdd(sb.toString(), document);
 	}
 
+	@Override
 	public void deleteGGroup(String emailAddress) throws GoogleAppsException {
 		submitDelete(getGroupURL(emailAddress));
 	}
 
+	@Override
 	public void deleteGGroupMember(
 			String groupEmailAddress, String memberEmailAddress)
 		throws GoogleAppsException {
@@ -108,6 +112,7 @@ public class GGroupManagerImpl
 		submitDelete(sb.toString());
 	}
 
+	@Override
 	public void deleteGGroupOwner(
 			String groupEmailAddress, String ownerEmailAddress)
 		throws GoogleAppsException {
@@ -123,6 +128,7 @@ public class GGroupManagerImpl
 		submitDelete(sb.toString());
 	}
 
+	@Override
 	public GGroup getGGroup(String emailAddress) throws GoogleAppsException {
 		Document document = getDocument(getGroupURL(emailAddress));
 
@@ -139,6 +145,7 @@ public class GGroupManagerImpl
 		return getGGroup(atomEntryElement);
 	}
 
+	@Override
 	public GGroupMember getGGroupMember(
 			String groupEmailAddress, String memberEmailAddress)
 		throws GoogleAppsException {
@@ -166,6 +173,7 @@ public class GGroupManagerImpl
 		return getGGroupMember(atomEntryElement);
 	}
 
+	@Override
 	public List<GGroupMember> getGGroupMembers(String emailAddress)
 		throws GoogleAppsException {
 
@@ -183,6 +191,7 @@ public class GGroupManagerImpl
 		return gGroupMembers;
 	}
 
+	@Override
 	public GGroupOwner getGGroupOwner(
 			String groupEmailAddress, String ownerEmailAddress)
 		throws GoogleAppsException {
@@ -210,6 +219,7 @@ public class GGroupManagerImpl
 		return getGGroupOwner(atomEntryElement);
 	}
 
+	@Override
 	public List<GGroupOwner> getGGroupOwners(String emailAddress)
 		throws GoogleAppsException {
 
@@ -227,6 +237,7 @@ public class GGroupManagerImpl
 		return gGroupOwners;
 	}
 
+	@Override
 	public List<GGroup> getGGroups() throws GoogleAppsException {
 		List<GGroup> gGroups = new ArrayList<GGroup>();
 
@@ -235,6 +246,7 @@ public class GGroupManagerImpl
 		return gGroups;
 	}
 
+	@Override
 	public List<GGroup> getGGroups(long userId, boolean directOnly)
 		throws GoogleAppsException {
 
@@ -253,6 +265,7 @@ public class GGroupManagerImpl
 		return gGroups;
 	}
 
+	@Override
 	public void updateDescription(String emailAddress, String description)
 		throws GoogleAppsException {
 

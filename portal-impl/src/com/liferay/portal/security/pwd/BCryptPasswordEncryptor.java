@@ -29,6 +29,7 @@ import jodd.util.BCrypt;
 public class BCryptPasswordEncryptor
 	extends BasePasswordEncryptor implements PasswordEncryptor {
 
+	@Override
 	public String[] getSupportedAlgorithmTypes() {
 		return new String[] {PasswordEncryptorUtil.TYPE_BCRYPT};
 	}

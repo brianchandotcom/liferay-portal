@@ -32,6 +32,7 @@ import java.util.Set;
 public class DirectSynchronousMessageSender
 	implements SynchronousMessageSender {
 
+	@Override
 	public Object send(String destinationName, Message message)
 		throws MessageBusException {
 
@@ -76,6 +77,7 @@ public class DirectSynchronousMessageSender
 		return message.getResponse();
 	}
 
+	@Override
 	public Object send(String destinationName, Message message, long timeout)
 		throws MessageBusException {
 

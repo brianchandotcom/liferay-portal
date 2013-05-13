@@ -52,6 +52,7 @@ public class ResourceTypePermissionFinderImpl
 	 *         type within the group
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public List<ResourceTypePermission> findByEitherScopeC_G_N(
 			long companyId, long groupId, String name)
 		throws SystemException {
@@ -98,6 +99,7 @@ public class ResourceTypePermissionFinderImpl
 	 *         apply to resources of the type
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public List<ResourceTypePermission> findByGroupScopeC_N_R(
 			long companyId, String name, long roleId)
 		throws SystemException {

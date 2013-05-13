@@ -75,6 +75,7 @@ public class URLTemplateResource implements TemplateResource {
 		return false;
 	}
 
+	@Override
 	public long getLastModified() {
 		URLConnection urlConnection = null;
 
@@ -117,6 +118,7 @@ public class URLTemplateResource implements TemplateResource {
 		}
 	}
 
+	@Override
 	public Reader getReader() throws IOException {
 		URLConnection urlConnection = _templateURL.openConnection();
 
@@ -124,6 +126,7 @@ public class URLTemplateResource implements TemplateResource {
 			urlConnection.getInputStream(), TemplateConstants.DEFAUT_ENCODING);
 	}
 
+	@Override
 	public String getTemplateId() {
 		return _templateId;
 	}
@@ -133,11 +136,13 @@ public class URLTemplateResource implements TemplateResource {
 		return _templateId.hashCode() * 11 + _templateURL.hashCode();
 	}
 
+	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		_templateId = objectInput.readUTF();
 		_templateURL = new URL(objectInput.readUTF());
 	}
 
+	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeUTF(_templateId);
 		objectOutput.writeUTF(_templateURL.toExternalForm());

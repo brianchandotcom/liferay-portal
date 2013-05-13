@@ -47,6 +47,7 @@ import org.jamwiki.parser.TableOfContents;
  */
 public class MediaWikiEngine implements WikiEngine {
 
+	@Override
 	public String convert(
 			WikiPage page, PortletURL viewPageURL, PortletURL editPageURL,
 			String attachmentURLPrefix)
@@ -57,6 +58,7 @@ public class MediaWikiEngine implements WikiEngine {
 			attachmentURLPrefix);
 	}
 
+	@Override
 	public Map<String, Boolean> getOutgoingLinks(WikiPage page)
 		throws PageContentException {
 
@@ -101,12 +103,15 @@ public class MediaWikiEngine implements WikiEngine {
 		return outgoingLinks;
 	}
 
+	@Override
 	public void setInterWikiConfiguration(String interWikiConfiguration) {
 	}
 
+	@Override
 	public void setMainConfiguration(String mainConfiguration) {
 	}
 
+	@Override
 	public boolean validate(long nodeId, String content) {
 		return true;
 	}

@@ -33,18 +33,21 @@ import java.util.List;
 public class DLFileVersionLocalServiceImpl
 	extends DLFileVersionLocalServiceBaseImpl {
 
+	@Override
 	public DLFileVersion getFileVersion(long fileVersionId)
 		throws PortalException, SystemException {
 
 		return dlFileVersionPersistence.findByPrimaryKey(fileVersionId);
 	}
 
+	@Override
 	public DLFileVersion getFileVersion(long fileEntryId, String version)
 		throws PortalException, SystemException {
 
 		return dlFileVersionPersistence.findByF_V(fileEntryId, version);
 	}
 
+	@Override
 	public DLFileVersion getFileVersionByUuidAndGroupId(
 			String uuid, long groupId)
 		throws SystemException {
@@ -52,6 +55,7 @@ public class DLFileVersionLocalServiceImpl
 		return dlFileVersionPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
+	@Override
 	public List<DLFileVersion> getFileVersions(long fileEntryId, int status)
 		throws SystemException {
 
@@ -73,12 +77,14 @@ public class DLFileVersionLocalServiceImpl
 		return dlFileVersions;
 	}
 
+	@Override
 	public int getFileVersionsCount(long fileEntryId, int status)
 		throws SystemException {
 
 		return dlFileVersionPersistence.countByF_S(fileEntryId, status);
 	}
 
+	@Override
 	public DLFileVersion getLatestFileVersion(
 			long fileEntryId, boolean excludeWorkingCopy)
 		throws PortalException, SystemException {
@@ -108,6 +114,7 @@ public class DLFileVersionLocalServiceImpl
 		return dlFileVersion;
 	}
 
+	@Override
 	public DLFileVersion getLatestFileVersion(long userId, long fileEntryId)
 		throws PortalException, SystemException {
 

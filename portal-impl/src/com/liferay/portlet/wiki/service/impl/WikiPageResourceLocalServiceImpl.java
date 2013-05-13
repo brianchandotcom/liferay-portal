@@ -26,6 +26,7 @@ import com.liferay.portlet.wiki.service.base.WikiPageResourceLocalServiceBaseImp
 public class WikiPageResourceLocalServiceImpl
 	extends WikiPageResourceLocalServiceBaseImpl {
 
+	@Override
 	public WikiPageResource addPageResource(long nodeId, String title)
 		throws SystemException {
 
@@ -42,18 +43,21 @@ public class WikiPageResourceLocalServiceImpl
 		return pageResource;
 	}
 
+	@Override
 	public void deletePageResource(long nodeId, String title)
 		throws PortalException, SystemException {
 
 		wikiPageResourcePersistence.removeByN_T(nodeId, title);
 	}
 
+	@Override
 	public WikiPageResource fetchPageResource(long nodeId, String title)
 		throws SystemException {
 
 		return wikiPageResourcePersistence.fetchByN_T(nodeId, title);
 	}
 
+	@Override
 	public WikiPageResource getPageResource(long pageResourcePrimKey)
 		throws PortalException, SystemException {
 
@@ -61,12 +65,14 @@ public class WikiPageResourceLocalServiceImpl
 			pageResourcePrimKey);
 	}
 
+	@Override
 	public WikiPageResource getPageResource(long nodeId, String title)
 		throws PortalException, SystemException {
 
 		return wikiPageResourcePersistence.findByN_T(nodeId, title);
 	}
 
+	@Override
 	public long getPageResourcePrimKey(long nodeId, String title)
 		throws SystemException {
 

@@ -51,10 +51,12 @@ public class AttributeImpl extends NodeImpl implements Attribute {
 		return _attribute.equals(attribute);
 	}
 
+	@Override
 	public Object getData() {
 		return _attribute.getData();
 	}
 
+	@Override
 	public Namespace getNamespace() {
 		org.dom4j.Namespace namespace = _attribute.getNamespace();
 
@@ -66,14 +68,17 @@ public class AttributeImpl extends NodeImpl implements Attribute {
 		}
 	}
 
+	@Override
 	public String getNamespacePrefix() {
 		return _attribute.getNamespacePrefix();
 	}
 
+	@Override
 	public String getNamespaceURI() {
 		return _attribute.getNamespaceURI();
 	}
 
+	@Override
 	public QName getQName() {
 		org.dom4j.QName qName = _attribute.getQName();
 
@@ -85,10 +90,12 @@ public class AttributeImpl extends NodeImpl implements Attribute {
 		}
 	}
 
+	@Override
 	public String getQualifiedName() {
 		return _attribute.getQualifiedName();
 	}
 
+	@Override
 	public String getValue() {
 		return _attribute.getValue();
 	}
@@ -102,16 +109,19 @@ public class AttributeImpl extends NodeImpl implements Attribute {
 		return _attribute.hashCode();
 	}
 
+	@Override
 	public void setData(Object data) {
 		_attribute.setData(data);
 	}
 
+	@Override
 	public void setNamespace(Namespace namespace) {
 		NamespaceImpl namespaceImpl = (NamespaceImpl)namespace;
 
 		_attribute.setNamespace(namespaceImpl.getWrappedNamespace());
 	}
 
+	@Override
 	public void setValue(String value) {
 		_attribute.setValue(value);
 	}

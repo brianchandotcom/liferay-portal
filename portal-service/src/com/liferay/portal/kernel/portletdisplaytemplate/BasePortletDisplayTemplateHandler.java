@@ -27,6 +27,7 @@ import java.util.Map;
 public abstract class BasePortletDisplayTemplateHandler
 	extends BaseTemplateHandler {
 
+	@Override
 	public Map<String, TemplateVariableGroup> getTemplateVariableGroups(
 			long classPK, String language, Locale locale)
 		throws Exception {

@@ -38,6 +38,7 @@ import org.junit.Assert;
 public class TestOrganizationMembershipPolicy
 	extends BaseOrganizationMembershipPolicy {
 
+	@Override
 	public void checkMembership(
 			long[] userIds, long[] addOrganizationIds,
 			long[] removeOrganizationIds)
@@ -128,6 +129,7 @@ public class TestOrganizationMembershipPolicy
 		}
 	}
 
+	@Override
 	public void propagateMembership(
 			long[] userIds, long[] addOrganizationIds,
 			long[] removeOrganizationIds) {
@@ -153,6 +155,7 @@ public class TestOrganizationMembershipPolicy
 		verifyPolicy();
 	}
 
+	@Override
 	public void verifyPolicy(
 			Organization organization, Organization oldOrganization,
 			List<AssetCategory> oldAssetCategories, List<AssetTag> oldAssetTags,

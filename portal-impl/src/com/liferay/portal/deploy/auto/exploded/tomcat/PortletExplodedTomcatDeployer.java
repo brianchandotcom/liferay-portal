@@ -27,6 +27,7 @@ import java.io.File;
 public class PortletExplodedTomcatDeployer
 	extends PortletAutoDeployer implements ExplodedTomcatDeployer {
 
+	@Override
 	public void explodedTomcatDeploy(
 			File contextFile, File webAppDir, PluginPackage pluginPackage)
 		throws AutoDeployException {

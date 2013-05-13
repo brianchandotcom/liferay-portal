@@ -31,6 +31,7 @@ import java.util.Map;
 public class CompositePasswordEncryptor
 	extends BasePasswordEncryptor implements PasswordEncryptor {
 
+	@Override
 	public String[] getSupportedAlgorithmTypes() {
 		throw new UnsupportedOperationException();
 	}

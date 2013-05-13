@@ -59,6 +59,7 @@ public class DiffHtmlImpl implements DiffHtml {
 	 *         differences with the target text
 	 * @throws Exception if an exception occurred
 	 */
+	@Override
 	public String diff(Reader source, Reader target) throws Exception {
 		InputSource oldSource = new InputSource(source);
 		InputSource newSource = new InputSource(target);

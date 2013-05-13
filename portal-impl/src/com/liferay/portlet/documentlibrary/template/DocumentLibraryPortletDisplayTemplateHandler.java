@@ -38,10 +38,12 @@ import java.util.Map;
 public class DocumentLibraryPortletDisplayTemplateHandler
 	extends BasePortletDisplayTemplateHandler {
 
+	@Override
 	public String getClassName() {
 		return FileEntry.class.getName();
 	}
 
+	@Override
 	public String getName(Locale locale) {
 		String portletTitle = PortalUtil.getPortletTitle(
 			PortletKeys.DOCUMENT_LIBRARY, locale);
@@ -50,6 +52,7 @@ public class DocumentLibraryPortletDisplayTemplateHandler
 			LanguageUtil.get(locale, "template"));
 	}
 
+	@Override
 	public String getResourceName() {
 		return "com.liferay.portlet.documentlibrary";
 	}

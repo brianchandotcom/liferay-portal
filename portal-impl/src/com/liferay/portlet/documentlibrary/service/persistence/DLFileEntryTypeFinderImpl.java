@@ -52,6 +52,7 @@ public class DLFileEntryTypeFinderImpl
 	public static final String JOIN_BY_FILE_ENTRY_TYPE =
 		DLFileEntryTypeFinder.class.getName() + ".joinByFileEntryType";
 
+	@Override
 	public int countByKeywords(
 			long companyId, long[] groupIds, String keywords,
 			boolean includeBasicFileEntryType)
@@ -74,6 +75,7 @@ public class DLFileEntryTypeFinderImpl
 			includeBasicFileEntryType, false);
 	}
 
+	@Override
 	public int filterCountByKeywords(
 			long companyId, long[] groupIds, String keywords,
 			boolean includeBasicFileEntryType)
@@ -96,6 +98,7 @@ public class DLFileEntryTypeFinderImpl
 			includeBasicFileEntryType, true);
 	}
 
+	@Override
 	public List<DLFileEntryType> filterFindByKeywords(
 			long companyId, long[] groupIds, String keywords,
 			boolean includeBasicFileEntryType, int start, int end,
@@ -119,6 +122,7 @@ public class DLFileEntryTypeFinderImpl
 			includeBasicFileEntryType, start, end, orderByComparator, true);
 	}
 
+	@Override
 	public List<DLFileEntryType> findByKeywords(
 			long companyId, long[] groupIds, String keywords,
 			boolean includeBasicFileEntryType, int start, int end,

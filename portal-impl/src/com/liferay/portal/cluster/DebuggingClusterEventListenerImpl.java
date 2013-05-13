@@ -30,6 +30,7 @@ import java.util.List;
  */
 public class DebuggingClusterEventListenerImpl implements ClusterEventListener {
 
+	@Override
 	public void processClusterEvent(ClusterEvent clusterEvent) {
 		if (!_log.isInfoEnabled()) {
 			return;

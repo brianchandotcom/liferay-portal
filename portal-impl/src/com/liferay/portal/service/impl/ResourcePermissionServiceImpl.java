@@ -78,6 +78,7 @@ public class ResourcePermissionServiceImpl
 	 *         and action ID could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void addResourcePermission(
 			long groupId, long companyId, String name, int scope,
 			String primKey, long roleId, String actionId)
@@ -114,6 +115,7 @@ public class ResourcePermissionServiceImpl
 	 *         resource action with the name and action ID could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void removeResourcePermission(
 			long groupId, long companyId, String name, int scope,
 			String primKey, long roleId, String actionId)
@@ -144,6 +146,7 @@ public class ResourcePermissionServiceImpl
 	 *         resource action with the name and action ID could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void removeResourcePermissions(
 			long groupId, long companyId, String name, int scope, long roleId,
 			String actionId)
@@ -184,6 +187,7 @@ public class ResourcePermissionServiceImpl
 	 *         resource action with the name and action ID could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void setIndividualResourcePermissions(
 			long groupId, long companyId, String name, String primKey,
 			long roleId, String[] actionIds)
@@ -223,6 +227,7 @@ public class ResourcePermissionServiceImpl
 	 *         resource action with the name and action ID could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void setIndividualResourcePermissions(
 			long groupId, long companyId, String name, String primKey,
 			Map<Long, String[]> roleIdsToActionIds)

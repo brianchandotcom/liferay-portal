@@ -33,10 +33,12 @@ public class AssetRendererFactoryRegistryImpl
 	 * @deprecated As of 6.2.0, replaced by {@link #getAssetRendererFactories(
 	 *             long)}
 	 */
+	@Override
 	public List<AssetRendererFactory> getAssetRendererFactories() {
 		return ListUtil.fromMapValues(_assetRenderFactoriesMapByClassName);
 	}
 
+	@Override
 	public List<AssetRendererFactory> getAssetRendererFactories(
 		long companyId) {
 
@@ -45,24 +47,27 @@ public class AssetRendererFactoryRegistryImpl
 				companyId, _assetRenderFactoriesMapByClassName));
 	}
 
+	@Override
 	public AssetRendererFactory getAssetRendererFactoryByClassName(
 		String className) {
 
 		return _assetRenderFactoriesMapByClassName.get(className);
 	}
 
+	@Override
 	public AssetRendererFactory getAssetRendererFactoryByType(String type) {
 		return _assetRenderFactoriesMapByClassType.get(type);
 	}
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getClassNameIds(
-	 *             long)}
+	 * @deprecated As of 6.2.0, replaced by {@link #getClassNameIds( long)}
 	 */
+	@Override
 	public long[] getClassNameIds() {
 		return getClassNameIds(0);
 	}
 
+	@Override
 	public long[] getClassNameIds(long companyId) {
 		Map<String, AssetRendererFactory> assetRenderFactories =
 			_assetRenderFactoriesMapByClassName;
@@ -87,6 +92,7 @@ public class AssetRendererFactoryRegistryImpl
 		return classNameIds;
 	}
 
+	@Override
 	public void register(AssetRendererFactory assetRendererFactory) {
 		_assetRenderFactoriesMapByClassName.put(
 			assetRendererFactory.getClassName(), assetRendererFactory);
@@ -94,6 +100,7 @@ public class AssetRendererFactoryRegistryImpl
 			assetRendererFactory.getType(), assetRendererFactory);
 	}
 
+	@Override
 	public void unregister(AssetRendererFactory assetRendererFactory) {
 		_assetRenderFactoriesMapByClassName.remove(
 			assetRendererFactory.getClassName());

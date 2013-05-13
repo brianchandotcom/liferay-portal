@@ -25,6 +25,7 @@ import com.liferay.portal.model.RoleConstants;
 @DoPrivileged
 public class RolesAdminImpl implements RolesAdmin {
 
+	@Override
 	public String getCssClassName(Role role) {
 		String cssClassName = StringPool.BLANK;
 

@@ -39,14 +39,17 @@ public class BoboFacetCollector implements FacetCollector {
 		}
 	}
 
+	@Override
 	public String getFieldName() {
 		return _fieldName;
 	}
 
+	@Override
 	public TermCollector getTermCollector(String term) {
 		return new BoboTermCollector(_facetAccessible.getFacet(term));
 	}
 
+	@Override
 	public List<TermCollector> getTermCollectors() {
 		return _termCollectors;
 	}

@@ -26,22 +26,27 @@ import javax.ccpp.ProfileDescription;
  */
 public class EmptyProfile implements Profile {
 
+	@Override
 	public Attribute getAttribute(String name) {
 		return null;
 	}
 
+	@Override
 	public Set<Attribute> getAttributes() {
 		return null;
 	}
 
+	@Override
 	public Component getComponent(String localtype) {
 		return null;
 	}
 
+	@Override
 	public Set<Component> getComponents() {
 		return null;
 	}
 
+	@Override
 	public ProfileDescription getDescription() {
 		return null;
 	}

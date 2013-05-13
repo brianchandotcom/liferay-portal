@@ -50,6 +50,7 @@ public class GNicknameManagerImpl
 		nicknameURL = sb.toString();
 	}
 
+	@Override
 	public void addGNickname(long userId, String nickname)
 		throws GoogleAppsException {
 
@@ -71,10 +72,12 @@ public class GNicknameManagerImpl
 		submitAdd(nicknameURL, document);
 	}
 
+	@Override
 	public void deleteGNickname(String nickname) throws GoogleAppsException {
 		submitDelete(getNicknameURL(nickname));
 	}
 
+	@Override
 	public GNickname getGNickname(String nickname) throws GoogleAppsException {
 		Document document = getDocument(getNicknameURL(nickname));
 
@@ -91,6 +94,7 @@ public class GNicknameManagerImpl
 		return getGNickname(atomEntryElement);
 	}
 
+	@Override
 	public List<GNickname> getGNicknames() throws GoogleAppsException {
 		List<GNickname> gNicknames = new ArrayList<GNickname>();
 

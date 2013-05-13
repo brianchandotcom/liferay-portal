@@ -53,10 +53,12 @@ public class MBMessageAssetRenderer
 		_message = message;
 	}
 
+	@Override
 	public String getClassName() {
 		return MBMessage.class.getName();
 	}
 
+	@Override
 	public long getClassPK() {
 		return _message.getMessageId();
 	}
@@ -66,10 +68,12 @@ public class MBMessageAssetRenderer
 		return _message.getModifiedDate();
 	}
 
+	@Override
 	public long getGroupId() {
 		return _message.getGroupId();
 	}
 
+	@Override
 	public String getPortletId() {
 		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
 
@@ -86,6 +90,7 @@ public class MBMessageAssetRenderer
 		return getSummary(locale);
 	}
 
+	@Override
 	public String getSummary(Locale locale) {
 		return HtmlUtil.extractText(_message.getBody());
 	}
@@ -101,10 +106,12 @@ public class MBMessageAssetRenderer
 			"/file_system/large/message.png";
 	}
 
+	@Override
 	public String getTitle(Locale locale) {
 		return _message.getSubject();
 	}
 
+	@Override
 	public String getType() {
 		return MBMessageAssetRendererFactory.TYPE;
 	}
@@ -157,14 +164,17 @@ public class MBMessageAssetRenderer
 			_message.getMessageId());
 	}
 
+	@Override
 	public long getUserId() {
 		return _message.getUserId();
 	}
 
+	@Override
 	public String getUserName() {
 		return _message.getUserName();
 	}
 
+	@Override
 	public String getUuid() {
 		return _message.getUuid();
 	}
@@ -208,6 +218,7 @@ public class MBMessageAssetRenderer
 		return true;
 	}
 
+	@Override
 	public String render(
 			RenderRequest renderRequest, RenderResponse renderResponse,
 			String template)

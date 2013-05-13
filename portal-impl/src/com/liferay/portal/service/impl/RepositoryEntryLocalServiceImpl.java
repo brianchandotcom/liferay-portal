@@ -31,6 +31,7 @@ import java.util.Date;
 public class RepositoryEntryLocalServiceImpl
 	extends RepositoryEntryLocalServiceBaseImpl {
 
+	@Override
 	public RepositoryEntry addRepositoryEntry(
 			long userId, long groupId, long repositoryId, String mappedId,
 			ServiceContext serviceContext)
@@ -59,6 +60,7 @@ public class RepositoryEntryLocalServiceImpl
 		return repositoryEntry;
 	}
 
+	@Override
 	public RepositoryEntry updateRepositoryEntry(
 			long repositoryEntryId, String mappedId)
 		throws PortalException, SystemException {

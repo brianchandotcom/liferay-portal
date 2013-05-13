@@ -95,6 +95,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		}
 	}
 
+	@Override
 	public void clearAll() {
 		_cacheManager.clearAll();
 	}
@@ -110,10 +111,12 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		}
 	}
 
+	@Override
 	public PortalCache<K, V> getCache(String name) {
 		return getCache(name, false);
 	}
 
+	@Override
 	public PortalCache<K, V> getCache(String name, boolean blocking) {
 		PortalCache<K, V> portalCache = _ehcachePortalCaches.get(name);
 
@@ -145,6 +148,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		return _cacheManager;
 	}
 
+	@Override
 	public void reconfigureCaches(URL configurationURL) {
 		Configuration configuration = EhcacheConfigurationUtil.getConfiguration(
 			configurationURL, _clusterAware, _usingDefault);
@@ -166,6 +170,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		}
 	}
 
+	@Override
 	public void removeCache(String name) {
 		_ehcachePortalCaches.remove(name);
 

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 @DoPrivileged
 public class ConfigurationFactoryImpl implements ConfigurationFactory {
 
+	@Override
 	public Configuration getConfiguration(
 		ClassLoader classLoader, String name) {
 

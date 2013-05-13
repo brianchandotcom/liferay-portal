@@ -31,6 +31,7 @@ import java.util.List;
  */
 public class SCProductEntryServiceImpl extends SCProductEntryServiceBaseImpl {
 
+	@Override
 	public SCProductEntry addProductEntry(
 			String name, String type, String tags, String shortDescription,
 			String longDescription, String pageURL, String author,
@@ -49,6 +50,7 @@ public class SCProductEntryServiceImpl extends SCProductEntryServiceBaseImpl {
 			thumbnails, fullImages, serviceContext);
 	}
 
+	@Override
 	public void deleteProductEntry(long productEntryId)
 		throws PortalException, SystemException {
 
@@ -58,6 +60,7 @@ public class SCProductEntryServiceImpl extends SCProductEntryServiceBaseImpl {
 		scProductEntryLocalService.deleteProductEntry(productEntryId);
 	}
 
+	@Override
 	public SCProductEntry getProductEntry(long productEntryId)
 		throws PortalException, SystemException {
 
@@ -67,6 +70,7 @@ public class SCProductEntryServiceImpl extends SCProductEntryServiceBaseImpl {
 		return scProductEntryLocalService.getProductEntry(productEntryId);
 	}
 
+	@Override
 	public SCProductEntry updateProductEntry(
 			long productEntryId, String name, String type, String tags,
 			String shortDescription, String longDescription, String pageURL,

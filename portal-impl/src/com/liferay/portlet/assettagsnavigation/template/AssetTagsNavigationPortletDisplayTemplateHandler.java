@@ -37,10 +37,12 @@ import java.util.Map;
 public class AssetTagsNavigationPortletDisplayTemplateHandler
 	extends BasePortletDisplayTemplateHandler {
 
+	@Override
 	public String getClassName() {
 		return AssetTag.class.getName();
 	}
 
+	@Override
 	public String getName(Locale locale) {
 		String portletTitle = PortalUtil.getPortletTitle(
 			PortletKeys.TAGS_ENTRIES_NAVIGATION, locale);
@@ -49,6 +51,7 @@ public class AssetTagsNavigationPortletDisplayTemplateHandler
 			LanguageUtil.get(locale, "template"));
 	}
 
+	@Override
 	public String getResourceName() {
 		return "com.liferay.portlet.assettagsnavigation";
 	}

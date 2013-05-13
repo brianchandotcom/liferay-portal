@@ -19,15 +19,19 @@ package com.liferay.portal.kernel.lock;
  */
 public abstract class BaseLockListener implements LockListener {
 
+	@Override
 	public void onAfterExpire(String key) {
 	}
 
+	@Override
 	public void onAfterRefresh(String key) {
 	}
 
+	@Override
 	public void onBeforeExpire(String key) {
 	}
 
+	@Override
 	public void onBeforeRefresh(String key) {
 	}
 

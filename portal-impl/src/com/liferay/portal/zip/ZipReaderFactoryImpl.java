@@ -27,6 +27,7 @@ import java.io.InputStream;
  */
 public class ZipReaderFactoryImpl implements ZipReaderFactory {
 
+	@Override
 	public ZipReader getZipReader(File file) {
 		ClassLoader portalClassLoader = ClassLoaderUtil.getPortalClassLoader();
 
@@ -47,6 +48,7 @@ public class ZipReaderFactoryImpl implements ZipReaderFactory {
 		}
 	}
 
+	@Override
 	public ZipReader getZipReader(InputStream inputStream) throws IOException {
 		ClassLoader portalClassLoader = ClassLoaderUtil.getPortalClassLoader();
 

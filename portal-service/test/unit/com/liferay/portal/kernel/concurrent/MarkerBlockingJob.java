@@ -50,6 +50,7 @@ public class MarkerBlockingJob implements Runnable {
 		return _started;
 	}
 
+	@Override
 	public void run() {
 		_runThread = Thread.currentThread();
 

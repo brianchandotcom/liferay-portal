@@ -29,22 +29,26 @@ public class AntivirusScannerWrapper implements AntivirusScanner {
 		_antivirusScanner = antivirusScanner;
 	}
 
+	@Override
 	public boolean isActive() {
 		return _antivirusScanner.isActive();
 	}
 
+	@Override
 	public void scan(byte[] bytes)
 		throws AntivirusScannerException, SystemException {
 
 		_antivirusScanner.scan(bytes);
 	}
 
+	@Override
 	public void scan(File file)
 		throws AntivirusScannerException, SystemException {
 
 		_antivirusScanner.scan(file);
 	}
 
+	@Override
 	public void scan(InputStream inputStream)
 		throws AntivirusScannerException, SystemException {
 

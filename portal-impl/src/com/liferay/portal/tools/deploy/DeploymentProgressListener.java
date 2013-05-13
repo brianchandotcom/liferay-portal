@@ -39,6 +39,7 @@ public class DeploymentProgressListener implements ProgressListener {
 		_deploymentManager = _deploymentHandler.getDeploymentManager();
 	}
 
+	@Override
 	public void handleProgressEvent(ProgressEvent progressEvent) {
 		DeploymentStatus deploymentStatus = progressEvent.getDeploymentStatus();
 

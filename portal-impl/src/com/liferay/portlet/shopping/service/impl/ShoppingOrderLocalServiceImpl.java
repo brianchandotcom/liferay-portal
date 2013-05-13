@@ -73,6 +73,7 @@ import java.util.Map;
 public class ShoppingOrderLocalServiceImpl
 	extends ShoppingOrderLocalServiceBaseImpl {
 
+	@Override
 	public ShoppingOrder addLatestOrder(long userId, long groupId)
 		throws PortalException, SystemException {
 
@@ -148,6 +149,7 @@ public class ShoppingOrderLocalServiceImpl
 		return order;
 	}
 
+	@Override
 	public void completeOrder(
 			String number, String ppTxnId, String ppPaymentStatus,
 			double ppPaymentGross, String ppReceiverEmail, String ppPayerEmail,
@@ -223,6 +225,7 @@ public class ShoppingOrderLocalServiceImpl
 		sendEmail(order, "confirmation", serviceContext);
 	}
 
+	@Override
 	public void deleteOrder(long orderId)
 		throws PortalException, SystemException {
 
@@ -232,6 +235,7 @@ public class ShoppingOrderLocalServiceImpl
 		deleteOrder(order);
 	}
 
+	@Override
 	public void deleteOrder(ShoppingOrder order)
 		throws PortalException, SystemException {
 
@@ -255,6 +259,7 @@ public class ShoppingOrderLocalServiceImpl
 			ShoppingOrder.class.getName(), order.getOrderId());
 	}
 
+	@Override
 	public void deleteOrders(long groupId)
 		throws PortalException, SystemException {
 
@@ -266,6 +271,7 @@ public class ShoppingOrderLocalServiceImpl
 		}
 	}
 
+	@Override
 	public ShoppingOrder getLatestOrder(long userId, long groupId)
 		throws PortalException, SystemException {
 
@@ -284,24 +290,28 @@ public class ShoppingOrderLocalServiceImpl
 		return order;
 	}
 
+	@Override
 	public ShoppingOrder getOrder(long orderId)
 		throws PortalException, SystemException {
 
 		return shoppingOrderPersistence.findByPrimaryKey(orderId);
 	}
 
+	@Override
 	public ShoppingOrder getOrder(String number)
 		throws PortalException, SystemException {
 
 		return shoppingOrderPersistence.findByNumber(number);
 	}
 
+	@Override
 	public ShoppingOrder getPayPalTxnIdOrder(String ppTxnId)
 		throws PortalException, SystemException {
 
 		return shoppingOrderPersistence.findByPPTxnId(ppTxnId);
 	}
 
+	@Override
 	public ShoppingOrder saveLatestOrder(ShoppingCart cart)
 		throws PortalException, SystemException {
 
@@ -377,6 +387,7 @@ public class ShoppingOrderLocalServiceImpl
 		return order;
 	}
 
+	@Override
 	public List<ShoppingOrder> search(
 			long groupId, long companyId, long userId, String number,
 			String billingFirstName, String billingLastName,
@@ -394,6 +405,7 @@ public class ShoppingOrderLocalServiceImpl
 			andOperator, start, end, obc);
 	}
 
+	@Override
 	public int searchCount(
 			long groupId, long companyId, long userId, String number,
 			String billingFirstName, String billingLastName,
@@ -409,6 +421,7 @@ public class ShoppingOrderLocalServiceImpl
 			andOperator);
 	}
 
+	@Override
 	public void sendEmail(
 			long orderId, String emailType, ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -419,6 +432,7 @@ public class ShoppingOrderLocalServiceImpl
 		sendEmail(order, emailType, serviceContext);
 	}
 
+	@Override
 	public void sendEmail(
 			ShoppingOrder order, String emailType,
 			ServiceContext serviceContext)
@@ -518,6 +532,7 @@ public class ShoppingOrderLocalServiceImpl
 		}
 	}
 
+	@Override
 	public ShoppingOrder updateLatestOrder(
 			long userId, long groupId, String billingFirstName,
 			String billingLastName, String billingEmailAddress,
@@ -544,6 +559,7 @@ public class ShoppingOrderLocalServiceImpl
 			ccType, ccNumber, ccExpMonth, ccExpYear, ccVerNumber, comments);
 	}
 
+	@Override
 	public ShoppingOrder updateOrder(
 			long orderId, String ppTxnId, String ppPaymentStatus,
 			double ppPaymentGross, String ppReceiverEmail, String ppPayerEmail)
@@ -564,6 +580,7 @@ public class ShoppingOrderLocalServiceImpl
 		return order;
 	}
 
+	@Override
 	public ShoppingOrder updateOrder(
 			long orderId, String billingFirstName, String billingLastName,
 			String billingEmailAddress, String billingCompany,

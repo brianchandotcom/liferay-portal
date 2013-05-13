@@ -33,6 +33,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class GetMethodImpl implements Method {
 
+	@Override
 	public int process(WebDAVRequest webDAVRequest) throws WebDAVException {
 		InputStream is = null;
 

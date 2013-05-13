@@ -36,12 +36,14 @@ public class DDLRecordSetImpl extends DDLRecordSetBaseImpl {
 	public DDLRecordSetImpl() {
 	}
 
+	@Override
 	public DDMStructure getDDMStructure()
 		throws PortalException, SystemException {
 
 		return DDMStructureLocalServiceUtil.getStructure(getDDMStructureId());
 	}
 
+	@Override
 	public DDMStructure getDDMStructure(long formDDMTemplateId)
 		throws PortalException, SystemException {
 
@@ -65,10 +67,12 @@ public class DDLRecordSetImpl extends DDLRecordSetBaseImpl {
 		return ddmStructure;
 	}
 
+	@Override
 	public List<DDLRecord> getRecords() throws SystemException {
 		return DDLRecordLocalServiceUtil.getRecords(getRecordSetId());
 	}
 
+	@Override
 	public List<Fields> getRecordsFieldsList()
 		throws PortalException, SystemException {
 

@@ -37,34 +37,40 @@ public class PACLContext implements Context {
 		_paclPolicy = paclPolicy;
 	}
 
+	@Override
 	public Object addToEnvironment(String propName, Object propVal)
 		throws NamingException {
 
 		return _context.addToEnvironment(propName, propVal);
 	}
 
+	@Override
 	public void bind(Name name, Object obj) throws NamingException {
 		checkPACLPolicy(name);
 
 		_context.bind(name, obj);
 	}
 
+	@Override
 	public void bind(String name, Object obj) throws NamingException {
 		checkPACLPolicy(name);
 
 		_context.bind(name, obj);
 	}
 
+	@Override
 	public void close() throws NamingException {
 		_context.close();
 	}
 
+	@Override
 	public Name composeName(Name name, Name prefix) throws NamingException {
 		checkPACLPolicy(name);
 
 		return _context.composeName(name, prefix);
 	}
 
+	@Override
 	public String composeName(String name, String prefix)
 		throws NamingException {
 
@@ -73,24 +79,28 @@ public class PACLContext implements Context {
 		return _context.composeName(name, prefix);
 	}
 
+	@Override
 	public Context createSubcontext(Name name) throws NamingException {
 		checkPACLPolicy(name);
 
 		return _context.createSubcontext(name);
 	}
 
+	@Override
 	public Context createSubcontext(String name) throws NamingException {
 		checkPACLPolicy(name);
 
 		return _context.createSubcontext(name);
 	}
 
+	@Override
 	public void destroySubcontext(Name name) throws NamingException {
 		checkPACLPolicy(name);
 
 		_context.destroySubcontext(name);
 	}
 
+	@Override
 	public void destroySubcontext(String name) throws NamingException {
 		checkPACLPolicy(name);
 
@@ -116,20 +126,24 @@ public class PACLContext implements Context {
 		return false;
 	}
 
+	@Override
 	public Hashtable<?, ?> getEnvironment() throws NamingException {
 		return _context.getEnvironment();
 	}
 
+	@Override
 	public String getNameInNamespace() throws NamingException {
 		return _context.getNameInNamespace();
 	}
 
+	@Override
 	public NameParser getNameParser(Name name) throws NamingException {
 		checkPACLPolicy(name);
 
 		return _context.getNameParser(name);
 	}
 
+	@Override
 	public NameParser getNameParser(String name) throws NamingException {
 		checkPACLPolicy(name);
 
@@ -141,6 +155,7 @@ public class PACLContext implements Context {
 		return _context.hashCode();
 	}
 
+	@Override
 	public NamingEnumeration<NameClassPair> list(Name name)
 		throws NamingException {
 
@@ -149,6 +164,7 @@ public class PACLContext implements Context {
 		return _context.list(name);
 	}
 
+	@Override
 	public NamingEnumeration<NameClassPair> list(String name)
 		throws NamingException {
 
@@ -157,6 +173,7 @@ public class PACLContext implements Context {
 		return _context.list(name);
 	}
 
+	@Override
 	public NamingEnumeration<Binding> listBindings(Name name)
 		throws NamingException {
 
@@ -165,6 +182,7 @@ public class PACLContext implements Context {
 		return _context.listBindings(name);
 	}
 
+	@Override
 	public NamingEnumeration<Binding> listBindings(String name)
 		throws NamingException {
 
@@ -173,48 +191,56 @@ public class PACLContext implements Context {
 		return _context.listBindings(name);
 	}
 
+	@Override
 	public Object lookup(Name name) throws NamingException {
 		checkPACLPolicy(name);
 
 		return _context.lookup(name);
 	}
 
+	@Override
 	public Object lookup(String name) throws NamingException {
 		checkPACLPolicy(name);
 
 		return _context.lookup(name);
 	}
 
+	@Override
 	public Object lookupLink(Name name) throws NamingException {
 		checkPACLPolicy(name);
 
 		return _context.lookupLink(name);
 	}
 
+	@Override
 	public Object lookupLink(String name) throws NamingException {
 		checkPACLPolicy(name);
 
 		return _context.lookupLink(name);
 	}
 
+	@Override
 	public void rebind(Name name, Object obj) throws NamingException {
 		checkPACLPolicy(name);
 
 		_context.rebind(name, obj);
 	}
 
+	@Override
 	public void rebind(String name, Object obj) throws NamingException {
 		checkPACLPolicy(name);
 
 		_context.rebind(name, obj);
 	}
 
+	@Override
 	public Object removeFromEnvironment(String propName)
 		throws NamingException {
 
 		return _context.removeFromEnvironment(propName);
 	}
 
+	@Override
 	public void rename(Name oldName, Name newName) throws NamingException {
 		checkPACLPolicy(oldName);
 		checkPACLPolicy(newName);
@@ -222,6 +248,7 @@ public class PACLContext implements Context {
 		_context.rename(oldName, newName);
 	}
 
+	@Override
 	public void rename(String oldName, String newName) throws NamingException {
 		checkPACLPolicy(oldName);
 		checkPACLPolicy(newName);
@@ -229,12 +256,14 @@ public class PACLContext implements Context {
 		_context.rename(oldName, newName);
 	}
 
+	@Override
 	public void unbind(Name name) throws NamingException {
 		checkPACLPolicy(name);
 
 		_context.unbind(name);
 	}
 
+	@Override
 	public void unbind(String name) throws NamingException {
 		checkPACLPolicy(name);
 

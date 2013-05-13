@@ -27,6 +27,7 @@ import java.net.URL;
  */
 public class BrowserLauncher implements Runnable {
 
+	@Override
 	public void run() {
 		if (Validator.isNull(PropsValues.BROWSER_LAUNCHER_URL)) {
 			return;

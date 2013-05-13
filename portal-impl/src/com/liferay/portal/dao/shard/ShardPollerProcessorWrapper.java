@@ -29,6 +29,7 @@ public class ShardPollerProcessorWrapper implements PollerProcessor {
 		_pollerProcessor = pollerProcessor;
 	}
 
+	@Override
 	public void receive(
 			PollerRequest pollerRequest, PollerResponse pollerResponse)
 		throws PollerException {
@@ -43,6 +44,7 @@ public class ShardPollerProcessorWrapper implements PollerProcessor {
 		}
 	}
 
+	@Override
 	public void send(PollerRequest pollerRequest) throws PollerException {
 		try {
 			ShardUtil.pushCompanyService(pollerRequest.getCompanyId());

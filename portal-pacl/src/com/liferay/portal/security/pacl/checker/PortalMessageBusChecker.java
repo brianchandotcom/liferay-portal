@@ -29,6 +29,7 @@ import java.util.TreeSet;
  */
 public class PortalMessageBusChecker extends BaseChecker {
 
+	@Override
 	public void afterPropertiesSet() {
 		initListenDestinationNames();
 		initSendDestinationNames();
@@ -71,6 +72,7 @@ public class PortalMessageBusChecker extends BaseChecker {
 		return authorizationProperty;
 	}
 
+	@Override
 	public boolean implies(Permission permission) {
 		PortalMessageBusPermission portalMessageBusPermission =
 			(PortalMessageBusPermission)permission;

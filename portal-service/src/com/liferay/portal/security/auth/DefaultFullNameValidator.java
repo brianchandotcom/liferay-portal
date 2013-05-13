@@ -19,6 +19,7 @@ package com.liferay.portal.security.auth;
  */
 public class DefaultFullNameValidator implements FullNameValidator {
 
+	@Override
 	public boolean validate(
 		long companyId, String firstName, String middleName, String lastName) {
 

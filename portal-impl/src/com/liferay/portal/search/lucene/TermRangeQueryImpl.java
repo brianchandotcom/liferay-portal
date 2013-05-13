@@ -31,10 +31,12 @@ public class TermRangeQueryImpl extends BaseQueryImpl
 			field, lowerTerm, upperTerm, includesLower, includesUpper);
 	}
 
+	@Override
 	public String getField() {
 		return _termRangeQuery.getField();
 	}
 
+	@Override
 	public String getLowerTerm() {
 		return _termRangeQuery.getLowerTerm();
 	}
@@ -43,6 +45,7 @@ public class TermRangeQueryImpl extends BaseQueryImpl
 		return _termRangeQuery;
 	}
 
+	@Override
 	public String getUpperTerm() {
 		return _termRangeQuery.getUpperTerm();
 	}
@@ -52,10 +55,12 @@ public class TermRangeQueryImpl extends BaseQueryImpl
 		return getTermRangeQuery();
 	}
 
+	@Override
 	public boolean includesLower() {
 		return _termRangeQuery.includesLower();
 	}
 
+	@Override
 	public boolean includesUpper() {
 		return _termRangeQuery.includesUpper();
 	}

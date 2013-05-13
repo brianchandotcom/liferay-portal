@@ -43,15 +43,18 @@ public class LayoutSetBranchImpl extends LayoutSetBranchBaseImpl {
 	public LayoutSetBranchImpl() {
 	}
 
+	@Override
 	public ColorScheme getColorScheme() throws SystemException {
 		return ThemeLocalServiceUtil.getColorScheme(
 			getCompanyId(), getTheme().getThemeId(), getColorSchemeId(), false);
 	}
 
+	@Override
 	public Group getGroup() throws PortalException, SystemException {
 		return GroupLocalServiceUtil.getGroup(getGroupId());
 	}
 
+	@Override
 	public LayoutSet getLayoutSet() {
 		if (_layoutSet != null) {
 			return _layoutSet;
@@ -80,6 +83,7 @@ public class LayoutSetBranchImpl extends LayoutSetBranchBaseImpl {
 		return _layoutSet;
 	}
 
+	@Override
 	public long getLiveLogoId() {
 		long logoId = getLayoutSet().getLogoId();
 
@@ -100,6 +104,7 @@ public class LayoutSetBranchImpl extends LayoutSetBranchBaseImpl {
 		}
 	}
 
+	@Override
 	public UnicodeProperties getSettingsProperties() {
 		if (_settingsProperties == null) {
 			_settingsProperties = new UnicodeProperties(true);
@@ -115,17 +120,20 @@ public class LayoutSetBranchImpl extends LayoutSetBranchBaseImpl {
 		return _settingsProperties;
 	}
 
+	@Override
 	public String getSettingsProperty(String key) {
 		UnicodeProperties settingsProperties = getSettingsProperties();
 
 		return settingsProperties.getProperty(key);
 	}
 
+	@Override
 	public Theme getTheme() throws SystemException {
 		return ThemeLocalServiceUtil.getTheme(
 			getCompanyId(), getThemeId(), false);
 	}
 
+	@Override
 	public String getThemeSetting(String key, String device)
 		throws SystemException {
 
@@ -170,17 +178,20 @@ public class LayoutSetBranchImpl extends LayoutSetBranchBaseImpl {
 		return value;
 	}
 
+	@Override
 	public ColorScheme getWapColorScheme() throws SystemException {
 		return ThemeLocalServiceUtil.getColorScheme(
 			getCompanyId(), getWapTheme().getThemeId(), getWapColorSchemeId(),
 			true);
 	}
 
+	@Override
 	public Theme getWapTheme() throws SystemException {
 		return ThemeLocalServiceUtil.getTheme(
 			getCompanyId(), getWapThemeId(), true);
 	}
 
+	@Override
 	public boolean isLayoutSetPrototypeLinkActive() {
 		if (isLayoutSetPrototypeLinkEnabled() &&
 			Validator.isNotNull(getLayoutSetPrototypeUuid())) {
@@ -198,6 +209,7 @@ public class LayoutSetBranchImpl extends LayoutSetBranchBaseImpl {
 		super.setSettings(settings);
 	}
 
+	@Override
 	public void setSettingsProperties(UnicodeProperties settingsProperties) {
 		_settingsProperties = settingsProperties;
 

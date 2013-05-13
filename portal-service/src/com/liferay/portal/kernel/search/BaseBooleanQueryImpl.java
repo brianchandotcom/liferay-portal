@@ -32,6 +32,7 @@ import java.util.regex.Pattern;
 public abstract class BaseBooleanQueryImpl
 	extends BaseQueryImpl implements BooleanQuery {
 
+	@Override
 	public void addTerms(String[] fields, String values) throws ParseException {
 		if (Validator.isNull(values)) {
 			return;
@@ -46,6 +47,7 @@ public abstract class BaseBooleanQueryImpl
 		}
 	}
 
+	@Override
 	public void addTerms(String[] fields, String value, boolean like)
 		throws ParseException {
 

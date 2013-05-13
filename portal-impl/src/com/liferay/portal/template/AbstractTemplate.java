@@ -70,6 +70,7 @@ public abstract class AbstractTemplate extends AbstractProcessingTemplate {
 		return _templateContextHelper;
 	}
 
+	@Override
 	public void prepare(HttpServletRequest request) {
 		_templateContextHelper.prepare(this, request);
 	}

@@ -22,6 +22,7 @@ public class LockImpl extends LockBaseImpl {
 	public LockImpl() {
 	}
 
+	@Override
 	public long getExpirationTime() {
 		if (isNeverExpires()) {
 			return 0;
@@ -31,6 +32,7 @@ public class LockImpl extends LockBaseImpl {
 		}
 	}
 
+	@Override
 	public boolean isExpired() {
 		if (isNeverExpires()) {
 			return false;
@@ -43,6 +45,7 @@ public class LockImpl extends LockBaseImpl {
 		}
 	}
 
+	@Override
 	public boolean isNeverExpires() {
 		if (getExpirationDate() == null) {
 			return true;

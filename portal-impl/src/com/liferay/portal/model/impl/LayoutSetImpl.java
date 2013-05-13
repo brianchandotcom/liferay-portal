@@ -46,15 +46,18 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 	public LayoutSetImpl() {
 	}
 
+	@Override
 	public ColorScheme getColorScheme() throws SystemException {
 		return ThemeLocalServiceUtil.getColorScheme(
 			getCompanyId(), getTheme().getThemeId(), getColorSchemeId(), false);
 	}
 
+	@Override
 	public Group getGroup() throws PortalException, SystemException {
 		return GroupLocalServiceUtil.getGroup(getGroupId());
 	}
 
+	@Override
 	public long getLayoutSetPrototypeId()
 		throws PortalException, SystemException {
 
@@ -72,6 +75,7 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 		return layoutSetPrototype.getLayoutSetPrototypeId();
 	}
 
+	@Override
 	public long getLiveLogoId() {
 		long logoId = 0;
 
@@ -112,6 +116,7 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 		}
 	}
 
+	@Override
 	public UnicodeProperties getSettingsProperties() {
 		if (_settingsProperties == null) {
 			_settingsProperties = new UnicodeProperties(true);
@@ -127,17 +132,20 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 		return _settingsProperties;
 	}
 
+	@Override
 	public String getSettingsProperty(String key) {
 		UnicodeProperties settingsProperties = getSettingsProperties();
 
 		return settingsProperties.getProperty(key);
 	}
 
+	@Override
 	public Theme getTheme() throws SystemException {
 		return ThemeLocalServiceUtil.getTheme(
 			getCompanyId(), getThemeId(), false);
 	}
 
+	@Override
 	public String getThemeSetting(String key, String device)
 		throws SystemException {
 
@@ -182,17 +190,20 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 		return _virtualHostname;
 	}
 
+	@Override
 	public ColorScheme getWapColorScheme() throws SystemException {
 		return ThemeLocalServiceUtil.getColorScheme(
 			getCompanyId(), getWapTheme().getThemeId(), getWapColorSchemeId(),
 			true);
 	}
 
+	@Override
 	public Theme getWapTheme() throws SystemException {
 		return ThemeLocalServiceUtil.getTheme(
 			getCompanyId(), getWapThemeId(), true);
 	}
 
+	@Override
 	public boolean isLayoutSetPrototypeLinkActive() {
 		if (isLayoutSetPrototypeLinkEnabled() &&
 			Validator.isNotNull(getLayoutSetPrototypeUuid())) {
@@ -210,6 +221,7 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 		super.setSettings(settings);
 	}
 
+	@Override
 	public void setSettingsProperties(UnicodeProperties settingsProperties) {
 		_settingsProperties = settingsProperties;
 

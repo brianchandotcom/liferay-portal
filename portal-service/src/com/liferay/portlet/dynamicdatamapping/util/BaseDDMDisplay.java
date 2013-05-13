@@ -43,6 +43,7 @@ import javax.portlet.PortletURL;
  */
 public class BaseDDMDisplay implements DDMDisplay {
 
+	@Override
 	public String getEditTemplateBackURL(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse, long classNameId,
@@ -60,6 +61,7 @@ public class BaseDDMDisplay implements DDMDisplay {
 		return backURL;
 	}
 
+	@Override
 	public String getEditTemplateTitle(
 		DDMStructure structure, DDMTemplate template, Locale locale) {
 
@@ -86,6 +88,7 @@ public class BaseDDMDisplay implements DDMDisplay {
 		return getDefaultEditTemplateTitle(locale);
 	}
 
+	@Override
 	public String getEditTemplateTitle(long classNameId, Locale locale) {
 		if (classNameId > 0) {
 			TemplateHandler templateHandler =
@@ -100,18 +103,22 @@ public class BaseDDMDisplay implements DDMDisplay {
 		return getDefaultEditTemplateTitle(locale);
 	}
 
+	@Override
 	public String getPortletId() {
 		return PortletKeys.DYNAMIC_DATA_MAPPING;
 	}
 
+	@Override
 	public Set<String> getTemplateLanguageTypes() {
 		return _templateLanguageTypes;
 	}
 
+	@Override
 	public String getTemplateType(DDMTemplate template, Locale locale) {
 		return LanguageUtil.get(locale, template.getType());
 	}
 
+	@Override
 	public String getViewTemplatesBackURL(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse, long classPK)
@@ -126,10 +133,12 @@ public class BaseDDMDisplay implements DDMDisplay {
 		return portletURL.toString();
 	}
 
+	@Override
 	public Set<String> getViewTemplatesExcludedColumnNames() {
 		return _viewTemplateExcludedColumnNames;
 	}
 
+	@Override
 	public String getViewTemplatesTitle(
 		DDMStructure structure, boolean controlPanel, Locale locale) {
 
@@ -142,10 +151,12 @@ public class BaseDDMDisplay implements DDMDisplay {
 		return getDefaultViewTemplateTitle(locale);
 	}
 
+	@Override
 	public String getViewTemplatesTitle(DDMStructure structure, Locale locale) {
 		return getViewTemplatesTitle(structure, false, locale);
 	}
 
+	@Override
 	public boolean isShowStructureSelector() {
 		return false;
 	}

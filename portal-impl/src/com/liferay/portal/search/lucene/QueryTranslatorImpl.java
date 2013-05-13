@@ -38,6 +38,7 @@ import org.apache.lucene.search.WildcardQuery;
 @DoPrivileged
 public class QueryTranslatorImpl implements QueryTranslator {
 
+	@Override
 	public Object translate(Query query) throws ParseException {
 		if (query instanceof BooleanQueryImpl) {
 			return ((BooleanQueryImpl)query).getBooleanQuery();
@@ -68,6 +69,7 @@ public class QueryTranslatorImpl implements QueryTranslator {
 		}
 	}
 
+	@Override
 	public Object translateForSolr(Query query) {
 		Object queryObject = query.getWrappedQuery();
 

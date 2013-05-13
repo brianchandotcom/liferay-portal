@@ -33,14 +33,17 @@ public class MemoryReportDesignRetriever implements ReportDesignRetriever {
 		_bytes = bytes;
 	}
 
+	@Override
 	public InputStream getInputStream() {
 		return new UnsyncByteArrayInputStream(_bytes);
 	}
 
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
 
+	@Override
 	public String getReportName() {
 		return _reportName;
 	}

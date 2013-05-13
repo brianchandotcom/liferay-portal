@@ -52,6 +52,7 @@ public class SocialRequestInterpreterLocalServiceImpl
 	 *
 	 * @param requestInterpreter the social request interpreter
 	 */
+	@Override
 	public void addRequestInterpreter(
 		SocialRequestInterpreter requestInterpreter) {
 
@@ -64,6 +65,7 @@ public class SocialRequestInterpreterLocalServiceImpl
 	 *
 	 * @param requestInterpreter the social request interpreter
 	 */
+	@Override
 	public void deleteRequestInterpreter(
 		SocialRequestInterpreter requestInterpreter) {
 
@@ -88,6 +90,7 @@ public class SocialRequestInterpreterLocalServiceImpl
 	 *         links and get localized text fragments
 	 * @return the social request feed entry
 	 */
+	@Override
 	public SocialRequestFeedEntry interpret(
 		SocialRequest request, ThemeDisplay themeDisplay) {
 
@@ -127,6 +130,7 @@ public class SocialRequestInterpreterLocalServiceImpl
 	 * @param themeDisplay the theme display needed by interpreters to create
 	 *        links and get localized text fragments
 	 */
+	@Override
 	public void processConfirmation(
 		SocialRequest request, ThemeDisplay themeDisplay) {
 
@@ -162,6 +166,7 @@ public class SocialRequestInterpreterLocalServiceImpl
 	 * @param themeDisplay the theme display needed by interpreters to create
 	 *        links and get localized text fragments
 	 */
+	@Override
 	public void processRejection(
 		SocialRequest request, ThemeDisplay themeDisplay) {
 

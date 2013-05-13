@@ -131,6 +131,7 @@ import net.fortuna.ical4j.model.property.Version;
  */
 public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 
+	@Override
 	@Indexable(type = IndexableType.REINDEX)
 	public CalEvent addEvent(
 			long userId, String title, String description, String location,
@@ -265,6 +266,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 	 *             boolean, String, boolean, TZSRecurrence, int, int, int,
 	 *             ServiceContext)}
 	 */
+	@Override
 	@Indexable(type = IndexableType.REINDEX)
 	public CalEvent addEvent(
 			long userId, String title, String description, String location,
@@ -285,6 +287,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 			serviceContext);
 	}
 
+	@Override
 	public void addEventResources(
 			CalEvent event, boolean addGroupPermissions,
 			boolean addGuestPermissions)
@@ -296,6 +299,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 			addGroupPermissions, addGuestPermissions);
 	}
 
+	@Override
 	public void addEventResources(
 			CalEvent event, String[] groupPermissions,
 			String[] guestPermissions)
@@ -307,6 +311,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 			guestPermissions);
 	}
 
+	@Override
 	public void addEventResources(
 			long eventId, boolean addGroupPermissions,
 			boolean addGuestPermissions)
@@ -317,6 +322,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		addEventResources(event, addGroupPermissions, addGuestPermissions);
 	}
 
+	@Override
 	public void addEventResources(
 			long eventId, String[] groupPermissions, String[] guestPermissions)
 		throws PortalException, SystemException {
@@ -326,6 +332,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		addEventResources(event, groupPermissions, guestPermissions);
 	}
 
+	@Override
 	public void checkEvents() throws PortalException, SystemException {
 		List<CalEvent> events = calEventFinder.findByFutureReminders();
 
@@ -395,6 +402,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	@Indexable(type = IndexableType.DELETE)
 	public CalEvent deleteEvent(CalEvent event)
 		throws PortalException, SystemException {
@@ -431,6 +439,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		return event;
 	}
 
+	@Override
 	@Indexable(type = IndexableType.DELETE)
 	public CalEvent deleteEvent(long eventId)
 		throws PortalException, SystemException {
@@ -442,6 +451,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		return event;
 	}
 
+	@Override
 	public void deleteEvents(long groupId)
 		throws PortalException, SystemException {
 
@@ -452,6 +462,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public File exportEvent(long userId, long eventId)
 		throws PortalException, SystemException {
 
@@ -464,6 +475,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		return exportEvents(userId, events, null);
 	}
 
+	@Override
 	public File exportEvents(
 			long userId, List<CalEvent> events, String fileName)
 		throws PortalException, SystemException {
@@ -471,6 +483,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		return exportICal4j(toICalCalendar(userId, events), fileName);
 	}
 
+	@Override
 	public File exportGroupEvents(long userId, long groupId, String fileName)
 		throws PortalException, SystemException {
 
@@ -479,34 +492,40 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		return exportICal4j(toICalCalendar(userId, events), fileName);
 	}
 
+	@Override
 	public List<CalEvent> getCompanyEvents(long companyId, int start, int end)
 		throws SystemException {
 
 		return calEventPersistence.findByCompanyId(companyId, start, end);
 	}
 
+	@Override
 	public int getCompanyEventsCount(long companyId) throws SystemException {
 		return calEventPersistence.countByCompanyId(companyId);
 	}
 
+	@Override
 	public CalEvent getEvent(long eventId)
 		throws PortalException, SystemException {
 
 		return calEventPersistence.findByPrimaryKey(eventId);
 	}
 
+	@Override
 	public List<CalEvent> getEvents(long groupId, Calendar cal)
 		throws SystemException {
 
 		return getEvents(groupId, cal, new String[0]);
 	}
 
+	@Override
 	public List<CalEvent> getEvents(long groupId, Calendar cal, String type)
 		throws SystemException {
 
 		return getEvents(groupId, cal, new String[] {type});
 	}
 
+	@Override
 	public List<CalEvent> getEvents(long groupId, Calendar cal, String[] types)
 		throws SystemException {
 
@@ -565,6 +584,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		return events;
 	}
 
+	@Override
 	public List<CalEvent> getEvents(
 			long groupId, String type, int start, int end)
 		throws SystemException {
@@ -572,6 +592,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		return getEvents(groupId, new String[] {type}, start, end);
 	}
 
+	@Override
 	public List<CalEvent> getEvents(
 			long groupId, String[] types, int start, int end)
 		throws SystemException {
@@ -586,12 +607,14 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public int getEventsCount(long groupId, String type)
 		throws SystemException {
 
 		return getEventsCount(groupId, new String[] {type});
 	}
 
+	@Override
 	public int getEventsCount(long groupId, String[] types)
 		throws SystemException {
 
@@ -605,16 +628,19 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public List<CalEvent> getNoAssetEvents() throws SystemException {
 		return calEventFinder.findByNoAssets();
 	}
 
+	@Override
 	public List<CalEvent> getRepeatingEvents(long groupId)
 		throws SystemException {
 
 		return getRepeatingEvents(groupId, null, null);
 	}
 
+	@Override
 	public List<CalEvent> getRepeatingEvents(
 			long groupId, Calendar cal, String[] types)
 		throws SystemException {
@@ -691,18 +717,21 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		return events;
 	}
 
+	@Override
 	public boolean hasEvents(long groupId, Calendar cal)
 		throws SystemException {
 
 		return hasEvents(groupId, cal, new String[0]);
 	}
 
+	@Override
 	public boolean hasEvents(long groupId, Calendar cal, String type)
 		throws SystemException {
 
 		return hasEvents(groupId, cal, new String[] {type});
 	}
 
+	@Override
 	public boolean hasEvents(long groupId, Calendar cal, String[] types)
 		throws SystemException {
 
@@ -716,6 +745,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public void importICal4j(long userId, long groupId, InputStream inputStream)
 		throws PortalException, SystemException {
 
@@ -739,6 +769,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public void updateAsset(
 			long userId, CalEvent event, long[] assetCategoryIds,
 			String[] assetTagNames, long[] assetLinkEntryIds)
@@ -757,6 +788,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 			AssetLinkConstants.TYPE_RELATED);
 	}
 
+	@Override
 	@Indexable(type = IndexableType.REINDEX)
 	public CalEvent updateEvent(
 			long userId, long eventId, String title, String description,
@@ -859,6 +891,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 	 *             boolean, boolean, String, boolean, TZSRecurrence, int, int,
 	 *             int, ServiceContext)}
 	 */
+	@Override
 	@Indexable(type = IndexableType.REINDEX)
 	public CalEvent updateEvent(
 			long userId, long eventId, String title, String description,

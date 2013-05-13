@@ -173,26 +173,32 @@ public class HttpImpl implements Http {
 		}
 	}
 
+	@Override
 	public String addParameter(String url, String name, boolean value) {
 		return addParameter(url, name, String.valueOf(value));
 	}
 
+	@Override
 	public String addParameter(String url, String name, double value) {
 		return addParameter(url, name, String.valueOf(value));
 	}
 
+	@Override
 	public String addParameter(String url, String name, int value) {
 		return addParameter(url, name, String.valueOf(value));
 	}
 
+	@Override
 	public String addParameter(String url, String name, long value) {
 		return addParameter(url, name, String.valueOf(value));
 	}
 
+	@Override
 	public String addParameter(String url, String name, short value) {
 		return addParameter(url, name, String.valueOf(value));
 	}
 
+	@Override
 	public String addParameter(String url, String name, String value) {
 		if (url == null) {
 			return null;
@@ -225,6 +231,7 @@ public class HttpImpl implements Http {
 		return sb.toString();
 	}
 
+	@Override
 	public String decodePath(String path) {
 		path = StringUtil.replace(path, StringPool.SLASH, _TEMP_SLASH);
 		path = decodeURL(path, true);
@@ -233,10 +240,12 @@ public class HttpImpl implements Http {
 		return path;
 	}
 
+	@Override
 	public String decodeURL(String url) {
 		return decodeURL(url, false);
 	}
 
+	@Override
 	public String decodeURL(String url, boolean unescapeSpaces) {
 		return URLCodec.decodeURL(url, StringPool.UTF8, unescapeSpaces);
 	}
@@ -245,6 +254,7 @@ public class HttpImpl implements Http {
 		MultiThreadedHttpConnectionManager.shutdownAll();
 	}
 
+	@Override
 	public String encodePath(String path) {
 		path = StringUtil.replace(path, StringPool.SLASH, _TEMP_SLASH);
 		path = encodeURL(path, true);
@@ -253,18 +263,22 @@ public class HttpImpl implements Http {
 		return path;
 	}
 
+	@Override
 	public String encodeURL(String url) {
 		return encodeURL(url, false);
 	}
 
+	@Override
 	public String encodeURL(String url, boolean escapeSpaces) {
 		return URLCodec.encodeURL(url, StringPool.UTF8, escapeSpaces);
 	}
 
+	@Override
 	public String fixPath(String path) {
 		return fixPath(path, true, true);
 	}
 
+	@Override
 	public String fixPath(String path, boolean leading, boolean trailing) {
 		if (path == null) {
 			return StringPool.BLANK;
@@ -318,6 +332,7 @@ public class HttpImpl implements Http {
 		}
 	}
 
+	@Override
 	public String getCompleteURL(HttpServletRequest request) {
 		StringBuffer sb = request.getRequestURL();
 
@@ -361,10 +376,12 @@ public class HttpImpl implements Http {
 		return completeURL;
 	}
 
+	@Override
 	public Cookie[] getCookies() {
 		return _cookies.get();
 	}
 
+	@Override
 	public String getDomain(String url) {
 		url = removeProtocol(url);
 
@@ -440,6 +457,7 @@ public class HttpImpl implements Http {
 		return hostConfiguration;
 	}
 
+	@Override
 	public String getIpAddress(String url) {
 		try {
 			URL urlObj = new URL(url);
@@ -453,10 +471,12 @@ public class HttpImpl implements Http {
 		}
 	}
 
+	@Override
 	public String getParameter(String url, String name) {
 		return getParameter(url, name, true);
 	}
 
+	@Override
 	public String getParameter(String url, String name, boolean escaped) {
 		if (Validator.isNull(url) || Validator.isNull(name)) {
 			return StringPool.BLANK;
@@ -486,10 +506,12 @@ public class HttpImpl implements Http {
 		return StringPool.BLANK;
 	}
 
+	@Override
 	public Map<String, String[]> getParameterMap(String queryString) {
 		return parameterMapFromString(queryString);
 	}
 
+	@Override
 	public String getPath(String url) {
 		if (Validator.isNull(url)) {
 			return url;
@@ -512,10 +534,12 @@ public class HttpImpl implements Http {
 		}
 	}
 
+	@Override
 	public String getProtocol(ActionRequest actionRequest) {
 		return getProtocol(actionRequest.isSecure());
 	}
 
+	@Override
 	public String getProtocol(boolean secure) {
 		if (!secure) {
 			return Http.HTTP;
@@ -525,14 +549,17 @@ public class HttpImpl implements Http {
 		}
 	}
 
+	@Override
 	public String getProtocol(HttpServletRequest request) {
 		return getProtocol(request.isSecure());
 	}
 
+	@Override
 	public String getProtocol(RenderRequest renderRequest) {
 		return getProtocol(renderRequest.isSecure());
 	}
 
+	@Override
 	public String getProtocol(String url) {
 		int pos = url.indexOf(Http.PROTOCOL_DELIMITER);
 
@@ -544,6 +571,7 @@ public class HttpImpl implements Http {
 		}
 	}
 
+	@Override
 	public String getQueryString(String url) {
 		if (Validator.isNull(url)) {
 			return url;
@@ -559,14 +587,17 @@ public class HttpImpl implements Http {
 		}
 	}
 
+	@Override
 	public String getRequestURL(HttpServletRequest request) {
 		return request.getRequestURL().toString();
 	}
 
+	@Override
 	public boolean hasDomain(String url) {
 		return Validator.isNotNull(getDomain(url));
 	}
 
+	@Override
 	public boolean hasProtocol(String url) {
 		int pos = url.indexOf(Http.PROTOCOL_DELIMITER);
 
@@ -578,6 +609,7 @@ public class HttpImpl implements Http {
 		}
 	}
 
+	@Override
 	public boolean hasProxyConfig() {
 		if (Validator.isNotNull(_PROXY_HOST) && (_PROXY_PORT > 0)) {
 			return true;
@@ -587,6 +619,7 @@ public class HttpImpl implements Http {
 		}
 	}
 
+	@Override
 	public boolean isNonProxyHost(String host) {
 		if (_nonProxyHostsPattern != null) {
 			Matcher matcher = _nonProxyHostsPattern.matcher(host);
@@ -599,6 +632,7 @@ public class HttpImpl implements Http {
 		return false;
 	}
 
+	@Override
 	public boolean isProxyHost(String host) {
 		if (hasProxyConfig() && !isNonProxyHost(host)) {
 			return true;
@@ -608,6 +642,7 @@ public class HttpImpl implements Http {
 		}
 	}
 
+	@Override
 	public Map<String, String[]> parameterMapFromString(String queryString) {
 		Map<String, String[]> parameterMap =
 			new LinkedHashMap<String, String[]>();
@@ -657,10 +692,12 @@ public class HttpImpl implements Http {
 		return parameterMap;
 	}
 
+	@Override
 	public String parameterMapToString(Map<String, String[]> parameterMap) {
 		return parameterMapToString(parameterMap, true);
 	}
 
+	@Override
 	public String parameterMapToString(
 		Map<String, String[]> parameterMap, boolean addQuestion) {
 
@@ -693,10 +730,12 @@ public class HttpImpl implements Http {
 		return sb.toString();
 	}
 
+	@Override
 	public String protocolize(String url, ActionRequest actionRequest) {
 		return protocolize(url, actionRequest.isSecure());
 	}
 
+	@Override
 	public String protocolize(String url, boolean secure) {
 		if (secure) {
 			if (url.startsWith(Http.HTTP_WITH_SLASH)) {
@@ -714,10 +753,12 @@ public class HttpImpl implements Http {
 		return url;
 	}
 
+	@Override
 	public String protocolize(String url, HttpServletRequest request) {
 		return protocolize(url, request.isSecure());
 	}
 
+	@Override
 	public String protocolize(String url, RenderRequest renderRequest) {
 		return protocolize(url, renderRequest.isSecure());
 	}
@@ -736,6 +777,7 @@ public class HttpImpl implements Http {
 		}
 	}
 
+	@Override
 	public String removeDomain(String url) {
 		url = removeProtocol(url);
 
@@ -749,6 +791,7 @@ public class HttpImpl implements Http {
 		}
 	}
 
+	@Override
 	public String removeParameter(String url, String name) {
 		int pos = url.indexOf(CharPool.QUESTION);
 
@@ -805,6 +848,7 @@ public class HttpImpl implements Http {
 		return url + anchor;
 	}
 
+	@Override
 	public String removeProtocol(String url) {
 		if (url.startsWith(Http.HTTP_WITH_SLASH)) {
 			return url.substring(Http.HTTP_WITH_SLASH.length());
@@ -817,26 +861,32 @@ public class HttpImpl implements Http {
 		}
 	}
 
+	@Override
 	public String setParameter(String url, String name, boolean value) {
 		return setParameter(url, name, String.valueOf(value));
 	}
 
+	@Override
 	public String setParameter(String url, String name, double value) {
 		return setParameter(url, name, String.valueOf(value));
 	}
 
+	@Override
 	public String setParameter(String url, String name, int value) {
 		return setParameter(url, name, String.valueOf(value));
 	}
 
+	@Override
 	public String setParameter(String url, String name, long value) {
 		return setParameter(url, name, String.valueOf(value));
 	}
 
+	@Override
 	public String setParameter(String url, String name, short value) {
 		return setParameter(url, name, String.valueOf(value));
 	}
 
+	@Override
 	public String setParameter(String url, String name, String value) {
 		if (url == null) {
 			return null;
@@ -847,6 +897,7 @@ public class HttpImpl implements Http {
 		return addParameter(url, name, value);
 	}
 
+	@Override
 	public byte[] URLtoByteArray(Http.Options options) throws IOException {
 		return URLtoByteArray(
 			options.getLocation(), options.getMethod(), options.getHeaders(),
@@ -855,6 +906,7 @@ public class HttpImpl implements Http {
 			options.isFollowRedirects());
 	}
 
+	@Override
 	public byte[] URLtoByteArray(String location) throws IOException {
 		Http.Options options = new Http.Options();
 
@@ -863,6 +915,7 @@ public class HttpImpl implements Http {
 		return URLtoByteArray(options);
 	}
 
+	@Override
 	public byte[] URLtoByteArray(String location, boolean post)
 		throws IOException {
 
@@ -874,14 +927,17 @@ public class HttpImpl implements Http {
 		return URLtoByteArray(options);
 	}
 
+	@Override
 	public String URLtoString(Http.Options options) throws IOException {
 		return new String(URLtoByteArray(options));
 	}
 
+	@Override
 	public String URLtoString(String location) throws IOException {
 		return new String(URLtoByteArray(location));
 	}
 
+	@Override
 	public String URLtoString(String location, boolean post)
 		throws IOException {
 
@@ -899,6 +955,7 @@ public class HttpImpl implements Http {
 	 *         object
 	 * @throws IOException if an IO exception occurred
 	 */
+	@Override
 	public String URLtoString(URL url) throws IOException {
 		String xml = null;
 

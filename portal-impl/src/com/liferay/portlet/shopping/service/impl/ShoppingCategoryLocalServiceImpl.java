@@ -37,6 +37,7 @@ import java.util.List;
 public class ShoppingCategoryLocalServiceImpl
 	extends ShoppingCategoryLocalServiceBaseImpl {
 
+	@Override
 	public ShoppingCategory addCategory(
 			long userId, long parentCategoryId, String name, String description,
 			ServiceContext serviceContext)
@@ -86,6 +87,7 @@ public class ShoppingCategoryLocalServiceImpl
 		return category;
 	}
 
+	@Override
 	public void addCategoryResources(
 			long categoryId, boolean addGroupPermissions,
 			boolean addGuestPermissions)
@@ -98,6 +100,7 @@ public class ShoppingCategoryLocalServiceImpl
 			category, addGroupPermissions, addGuestPermissions);
 	}
 
+	@Override
 	public void addCategoryResources(
 			long categoryId, String[] groupPermissions,
 			String[] guestPermissions)
@@ -109,6 +112,7 @@ public class ShoppingCategoryLocalServiceImpl
 		addCategoryResources(category, groupPermissions, guestPermissions);
 	}
 
+	@Override
 	public void addCategoryResources(
 			ShoppingCategory category, boolean addGroupPermissions,
 			boolean addGuestPermissions)
@@ -121,6 +125,7 @@ public class ShoppingCategoryLocalServiceImpl
 			addGuestPermissions);
 	}
 
+	@Override
 	public void addCategoryResources(
 			ShoppingCategory category, String[] groupPermissions,
 			String[] guestPermissions)
@@ -132,6 +137,7 @@ public class ShoppingCategoryLocalServiceImpl
 			category.getCategoryId(), groupPermissions, guestPermissions);
 	}
 
+	@Override
 	public void deleteCategories(long groupId)
 		throws PortalException, SystemException {
 
@@ -143,6 +149,7 @@ public class ShoppingCategoryLocalServiceImpl
 		}
 	}
 
+	@Override
 	public void deleteCategory(long categoryId)
 		throws PortalException, SystemException {
 
@@ -152,6 +159,7 @@ public class ShoppingCategoryLocalServiceImpl
 		deleteCategory(category);
 	}
 
+	@Override
 	public void deleteCategory(ShoppingCategory category)
 		throws PortalException, SystemException {
 
@@ -181,12 +189,14 @@ public class ShoppingCategoryLocalServiceImpl
 			category.getGroupId(), category.getCategoryId());
 	}
 
+	@Override
 	public List<ShoppingCategory> getCategories(long groupId)
 		throws SystemException {
 
 		return shoppingCategoryPersistence.findByGroupId(groupId);
 	}
 
+	@Override
 	public List<ShoppingCategory> getCategories(
 			long groupId, long parentCategoryId, int start, int end)
 		throws SystemException {
@@ -195,6 +205,7 @@ public class ShoppingCategoryLocalServiceImpl
 			groupId, parentCategoryId, start, end);
 	}
 
+	@Override
 	public int getCategoriesCount(long groupId, long parentCategoryId)
 		throws SystemException {
 
@@ -202,12 +213,14 @@ public class ShoppingCategoryLocalServiceImpl
 			groupId, parentCategoryId);
 	}
 
+	@Override
 	public ShoppingCategory getCategory(long categoryId)
 		throws PortalException, SystemException {
 
 		return shoppingCategoryPersistence.findByPrimaryKey(categoryId);
 	}
 
+	@Override
 	public List<ShoppingCategory> getParentCategories(long categoryId)
 		throws PortalException, SystemException {
 
@@ -215,6 +228,7 @@ public class ShoppingCategoryLocalServiceImpl
 			shoppingCategoryPersistence.findByPrimaryKey(categoryId));
 	}
 
+	@Override
 	public List<ShoppingCategory> getParentCategories(ShoppingCategory category)
 		throws PortalException, SystemException {
 
@@ -241,6 +255,7 @@ public class ShoppingCategoryLocalServiceImpl
 		return parentCategories;
 	}
 
+	@Override
 	public ShoppingCategory getParentCategory(ShoppingCategory category)
 		throws PortalException, SystemException {
 
@@ -251,6 +266,7 @@ public class ShoppingCategoryLocalServiceImpl
 		return parentCategory;
 	}
 
+	@Override
 	public void getSubcategoryIds(
 			List<Long> categoryIds, long groupId, long categoryId)
 		throws SystemException {
@@ -266,6 +282,7 @@ public class ShoppingCategoryLocalServiceImpl
 		}
 	}
 
+	@Override
 	public ShoppingCategory updateCategory(
 			long categoryId, long parentCategoryId, String name,
 			String description, boolean mergeWithParentCategory,

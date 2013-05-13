@@ -34,10 +34,12 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class DigestAuthenticationAuthVerifier implements AuthVerifier {
 
+	@Override
 	public String getAuthType() {
 		return HttpServletRequest.DIGEST_AUTH;
 	}
 
+	@Override
 	public AuthVerifierResult verify(
 			AccessControlContext accessControlContext, Properties configuration)
 		throws AuthException {

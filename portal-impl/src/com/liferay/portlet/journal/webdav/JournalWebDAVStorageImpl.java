@@ -46,6 +46,7 @@ public class JournalWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			PortalUtil.getClassNameId(JournalArticle.class));
 	}
 
+	@Override
 	public Resource getResource(WebDAVRequest webDAVRequest)
 		throws WebDAVException {
 
@@ -54,6 +55,7 @@ public class JournalWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			PortalUtil.getClassNameId(JournalArticle.class));
 	}
 
+	@Override
 	public List<Resource> getResources(WebDAVRequest webDAVRequest)
 		throws WebDAVException {
 

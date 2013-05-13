@@ -122,6 +122,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class SitesImpl implements Sites {
 
+	@Override
 	public void addPortletBreadcrumbEntries(
 			Group group, HttpServletRequest request,
 			RenderResponse renderResponse)
@@ -154,6 +155,7 @@ public class SitesImpl implements Sites {
 			portletURL.toString());
 	}
 
+	@Override
 	public void addPortletBreadcrumbEntries(
 			Group group, String pagesName, PortletURL redirectURL,
 			HttpServletRequest request, RenderResponse renderResponse)
@@ -197,6 +199,7 @@ public class SitesImpl implements Sites {
 		}
 	}
 
+	@Override
 	public void applyLayoutPrototype(
 			LayoutPrototype layoutPrototype, Layout targetLayout,
 			boolean linkEnabled)
@@ -250,6 +253,7 @@ public class SitesImpl implements Sites {
 		LayoutLocalServiceUtil.updateLayout(layoutPrototypeLayout);
 	}
 
+	@Override
 	public void copyLayout(
 			long userId, Layout sourceLayout, Layout targetLayout,
 			ServiceContext serviceContext)
@@ -276,6 +280,7 @@ public class SitesImpl implements Sites {
 		}
 	}
 
+	@Override
 	public void copyLookAndFeel(Layout targetLayout, Layout sourceLayout)
 		throws Exception {
 
@@ -290,6 +295,7 @@ public class SitesImpl implements Sites {
 			sourceLayout.getWapColorSchemeId(), sourceLayout.getCss(), true);
 	}
 
+	@Override
 	public void copyPortletPermissions(Layout targetLayout, Layout sourceLayout)
 		throws Exception {
 
@@ -340,6 +346,7 @@ public class SitesImpl implements Sites {
 		}
 	}
 
+	@Override
 	public void copyPortletSetups(Layout sourceLayout, Layout targetLayout)
 		throws Exception {
 
@@ -405,6 +412,7 @@ public class SitesImpl implements Sites {
 		}
 	}
 
+	@Override
 	public void copyTypeSettings(Group sourceGroup, Group targetGroup)
 		throws Exception {
 
@@ -412,6 +420,7 @@ public class SitesImpl implements Sites {
 			targetGroup.getGroupId(), sourceGroup.getTypeSettings());
 	}
 
+	@Override
 	public Object[] deleteLayout(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -424,6 +433,7 @@ public class SitesImpl implements Sites {
 		return deleteLayout(request, response);
 	}
 
+	@Override
 	public Object[] deleteLayout(
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
@@ -505,6 +515,7 @@ public class SitesImpl implements Sites {
 		return new Object[] {group, oldFriendlyURL, newPlid};
 	}
 
+	@Override
 	public void deleteLayout(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws Exception {
@@ -517,6 +528,7 @@ public class SitesImpl implements Sites {
 		deleteLayout(request, response);
 	}
 
+	@Override
 	public File exportLayoutSetPrototype(
 			LayoutSetPrototype layoutSetPrototype,
 			ServiceContext serviceContext)
@@ -532,6 +544,7 @@ public class SitesImpl implements Sites {
 			parameterMap, null, null);
 	}
 
+	@Override
 	public Long[] filterGroups(List<Group> groups, String[] names) {
 		List<Long> groupIds = new ArrayList<Long>();
 
@@ -544,6 +557,7 @@ public class SitesImpl implements Sites {
 		return ArrayUtil.toArray(ArrayUtil.toLongArray(groupIds));
 	}
 
+	@Override
 	public Layout getLayoutSetPrototypeLayout(Layout layout) {
 		try {
 			LayoutSet layoutSet = layout.getLayoutSet();
@@ -572,6 +586,7 @@ public class SitesImpl implements Sites {
 		return null;
 	}
 
+	@Override
 	public Map<String, String[]> getLayoutSetPrototypeParameters(
 		ServiceContext serviceContext) {
 
@@ -647,6 +662,7 @@ public class SitesImpl implements Sites {
 	 *         prototype or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public int getMergeFailCount(LayoutPrototype layoutPrototype)
 		throws PortalException, SystemException {
 
@@ -676,6 +692,7 @@ public class SitesImpl implements Sites {
 	 *         prototype or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public int getMergeFailCount(LayoutSetPrototype layoutSetPrototype)
 		throws PortalException, SystemException {
 
@@ -695,6 +712,7 @@ public class SitesImpl implements Sites {
 			layoutSetPrototypeSettingsProperties.getProperty(MERGE_FAIL_COUNT));
 	}
 
+	@Override
 	public void importLayoutSetPrototype(
 			LayoutSetPrototype layoutSetPrototype, InputStream inputStream,
 			ServiceContext serviceContext)
@@ -713,6 +731,7 @@ public class SitesImpl implements Sites {
 			inputStream);
 	}
 
+	@Override
 	public boolean isContentSharingWithChildrenEnabled(Group group)
 		throws SystemException {
 
@@ -747,6 +766,7 @@ public class SitesImpl implements Sites {
 		return false;
 	}
 
+	@Override
 	public boolean isLayoutDeleteable(Layout layout) {
 		try {
 			if (layout instanceof VirtualLayout) {
@@ -780,6 +800,7 @@ public class SitesImpl implements Sites {
 		return true;
 	}
 
+	@Override
 	public boolean isLayoutModifiedSinceLastMerge(Layout layout) {
 		if ((layout == null) ||
 			Validator.isNull(layout.getSourcePrototypeLayoutUuid()) ||
@@ -819,6 +840,7 @@ public class SitesImpl implements Sites {
 	 *         layout set or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public boolean isLayoutSetMergeable(Group group, LayoutSet layoutSet)
 		throws PortalException, SystemException {
 
@@ -877,6 +899,7 @@ public class SitesImpl implements Sites {
 		return true;
 	}
 
+	@Override
 	public boolean isLayoutSetPrototypeUpdateable(LayoutSet layoutSet) {
 		if (!layoutSet.isLayoutSetPrototypeLinkActive()) {
 			return true;
@@ -905,10 +928,12 @@ public class SitesImpl implements Sites {
 		return true;
 	}
 
+	@Override
 	public boolean isLayoutSortable(Layout layout) {
 		return isLayoutDeleteable(layout);
 	}
 
+	@Override
 	public boolean isLayoutUpdateable(Layout layout) {
 		try {
 			if (layout instanceof VirtualLayout) {
@@ -954,6 +979,7 @@ public class SitesImpl implements Sites {
 		return true;
 	}
 
+	@Override
 	public boolean isOrganizationUser(
 			long companyId, Group group, User user,
 			List<String> organizationNames)
@@ -988,6 +1014,7 @@ public class SitesImpl implements Sites {
 		return organizationUser;
 	}
 
+	@Override
 	public boolean isUserGroupLayoutSetViewable(
 			PermissionChecker permissionChecker, Group userGroupGroup)
 		throws PortalException, SystemException {
@@ -1016,6 +1043,7 @@ public class SitesImpl implements Sites {
 		}
 	}
 
+	@Override
 	public boolean isUserGroupUser(
 			long companyId, Group group, User user, List<String> userGroupNames)
 		throws Exception {
@@ -1044,6 +1072,7 @@ public class SitesImpl implements Sites {
 		return userGroupUser;
 	}
 
+	@Override
 	public void mergeLayoutPrototypeLayout(Group group, Layout layout)
 		throws Exception {
 
@@ -1073,12 +1102,14 @@ public class SitesImpl implements Sites {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #mergeLayoutPrototypeLayout(Group, Layout)}
 	 */
+	@Override
 	public void mergeLayoutProtypeLayout(Group group, Layout layout)
 		throws Exception {
 
 		mergeLayoutPrototypeLayout(group, layout);
 	}
 
+	@Override
 	public void mergeLayoutSetPrototypeLayouts(Group group, LayoutSet layoutSet)
 		throws Exception {
 
@@ -1183,6 +1214,7 @@ public class SitesImpl implements Sites {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #mergeLayoutSetPrototypeLayouts(Group, LayoutSet)}
 	 */
+	@Override
 	public void mergeLayoutSetProtypeLayouts(Group group, LayoutSet layoutSet)
 		throws Exception {
 
@@ -1199,6 +1231,7 @@ public class SitesImpl implements Sites {
 	 *         site, or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void resetPrototype(Layout layout)
 		throws PortalException, SystemException {
 
@@ -1217,6 +1250,7 @@ public class SitesImpl implements Sites {
 	 *         site or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void resetPrototype(LayoutSet layoutSet)
 		throws PortalException, SystemException {
 
@@ -1236,6 +1270,7 @@ public class SitesImpl implements Sites {
 	 *         page, or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void setMergeFailCount(
 			LayoutPrototype layoutPrototype, int newMergeFailCount)
 		throws PortalException, SystemException {
@@ -1271,6 +1306,7 @@ public class SitesImpl implements Sites {
 	 *         layout set prototype, or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void setMergeFailCount(
 			LayoutSetPrototype layoutSetPrototype, int newMergeFailCount)
 		throws PortalException, SystemException {
@@ -1295,6 +1331,7 @@ public class SitesImpl implements Sites {
 			layoutSetPrototypeLayoutSet.getSettings());
 	}
 
+	@Override
 	public void updateLayoutScopes(
 			long userId, Layout sourceLayout, Layout targetLayout,
 			PortletPreferences sourcePreferences,
@@ -1343,6 +1380,7 @@ public class SitesImpl implements Sites {
 		targetPreferences.store();
 	}
 
+	@Override
 	public void updateLayoutSetPrototypesLinks(
 			Group group, long publicLayoutSetPrototypeId,
 			long privateLayoutSetPrototypeId,

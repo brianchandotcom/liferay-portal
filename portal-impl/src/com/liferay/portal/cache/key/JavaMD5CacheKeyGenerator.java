@@ -55,6 +55,7 @@ public class JavaMD5CacheKeyGenerator extends BaseCacheKeyGenerator {
 		}
 	}
 
+	@Override
 	public String getCacheKey(String key) {
 		if ((_maxLength > -1) && (key.length() < _maxLength)) {
 			return key;
@@ -74,10 +75,12 @@ public class JavaMD5CacheKeyGenerator extends BaseCacheKeyGenerator {
 		}
 	}
 
+	@Override
 	public String getCacheKey(String[] keys) {
 		return getCacheKey(new StringBundler(keys));
 	}
 
+	@Override
 	public String getCacheKey(StringBundler sb) {
 		if ((_maxLength > -1) && (sb.length() < _maxLength)) {
 			return sb.toString();

@@ -46,6 +46,7 @@ public class AbsoluteRedirectsFilter
 	extends BasePortalFilter
 	implements TryFilter, WrapHttpServletResponseFilter {
 
+	@Override
 	public Object doFilterTry(
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
@@ -88,6 +89,7 @@ public class AbsoluteRedirectsFilter
 		return null;
 	}
 
+	@Override
 	public HttpServletResponse getWrappedHttpServletResponse(
 		HttpServletRequest request, HttpServletResponse response) {
 

@@ -63,6 +63,7 @@ import java.util.Properties;
 public class SCProductEntryLocalServiceImpl
 	extends SCProductEntryLocalServiceBaseImpl {
 
+	@Override
 	@Indexable(type = IndexableType.REINDEX)
 	public SCProductEntry addProductEntry(
 			long userId, String name, String type, String tags,
@@ -143,6 +144,7 @@ public class SCProductEntryLocalServiceImpl
 		return productEntry;
 	}
 
+	@Override
 	public void addProductEntryResources(
 			long productEntryId, boolean addGroupPermissions,
 			boolean addGuestPermissions)
@@ -155,6 +157,7 @@ public class SCProductEntryLocalServiceImpl
 			productEntry, addGroupPermissions, addGuestPermissions);
 	}
 
+	@Override
 	public void addProductEntryResources(
 			long productEntryId, String[] groupPermissions,
 			String[] guestPermissions)
@@ -167,6 +170,7 @@ public class SCProductEntryLocalServiceImpl
 			productEntry, groupPermissions, guestPermissions);
 	}
 
+	@Override
 	public void addProductEntryResources(
 			SCProductEntry productEntry, boolean addGroupPermissions,
 			boolean addGuestPermissions)
@@ -179,6 +183,7 @@ public class SCProductEntryLocalServiceImpl
 			addGuestPermissions);
 	}
 
+	@Override
 	public void addProductEntryResources(
 			SCProductEntry productEntry, String[] groupPermissions,
 			String[] guestPermissions)
@@ -191,6 +196,7 @@ public class SCProductEntryLocalServiceImpl
 			guestPermissions);
 	}
 
+	@Override
 	public void deleteProductEntries(long groupId)
 		throws PortalException, SystemException {
 
@@ -202,6 +208,7 @@ public class SCProductEntryLocalServiceImpl
 		}
 	}
 
+	@Override
 	@Indexable(type = IndexableType.DELETE)
 	public SCProductEntry deleteProductEntry(long productEntryId)
 		throws PortalException, SystemException {
@@ -212,6 +219,7 @@ public class SCProductEntryLocalServiceImpl
 		return deleteProductEntry(productEntry);
 	}
 
+	@Override
 	@Indexable(type = IndexableType.DELETE)
 	public SCProductEntry deleteProductEntry(SCProductEntry productEntry)
 		throws PortalException, SystemException {
@@ -256,6 +264,7 @@ public class SCProductEntryLocalServiceImpl
 		return productEntry;
 	}
 
+	@Override
 	public List<SCProductEntry> getCompanyProductEntries(
 			long companyId, int start, int end)
 		throws SystemException {
@@ -263,12 +272,14 @@ public class SCProductEntryLocalServiceImpl
 		return scProductEntryPersistence.findByCompanyId(companyId, start, end);
 	}
 
+	@Override
 	public int getCompanyProductEntriesCount(long companyId)
 		throws SystemException {
 
 		return scProductEntryPersistence.countByCompanyId(companyId);
 	}
 
+	@Override
 	public List<SCProductEntry> getProductEntries(
 			long groupId, int start, int end)
 		throws SystemException {
@@ -276,6 +287,7 @@ public class SCProductEntryLocalServiceImpl
 		return scProductEntryPersistence.findByGroupId(groupId, start, end);
 	}
 
+	@Override
 	public List<SCProductEntry> getProductEntries(
 			long groupId, int start, int end, OrderByComparator obc)
 		throws SystemException {
@@ -284,6 +296,7 @@ public class SCProductEntryLocalServiceImpl
 			groupId, start, end, obc);
 	}
 
+	@Override
 	public List<SCProductEntry> getProductEntries(
 			long groupId, long userId, int start, int end)
 		throws SystemException {
@@ -291,6 +304,7 @@ public class SCProductEntryLocalServiceImpl
 		return scProductEntryPersistence.findByG_U(groupId, userId, start, end);
 	}
 
+	@Override
 	public List<SCProductEntry> getProductEntries(
 			long groupId, long userId, int start, int end,
 			OrderByComparator obc)
@@ -300,22 +314,26 @@ public class SCProductEntryLocalServiceImpl
 			groupId, userId, start, end, obc);
 	}
 
+	@Override
 	public int getProductEntriesCount(long groupId) throws SystemException {
 		return scProductEntryPersistence.countByGroupId(groupId);
 	}
 
+	@Override
 	public int getProductEntriesCount(long groupId, long userId)
 		throws SystemException {
 
 		return scProductEntryPersistence.countByG_U(groupId, userId);
 	}
 
+	@Override
 	public SCProductEntry getProductEntry(long productEntryId)
 		throws PortalException, SystemException {
 
 		return scProductEntryPersistence.findByPrimaryKey(productEntryId);
 	}
 
+	@Override
 	public String getRepositoryXML(
 			long groupId, String baseImageURL, Date oldestDate,
 			int maxNumOfVersions, Properties repoSettings)
@@ -326,6 +344,7 @@ public class SCProductEntryLocalServiceImpl
 			repoSettings);
 	}
 
+	@Override
 	public String getRepositoryXML(
 			long groupId, String version, String baseImageURL, Date oldestDate,
 			int maxNumOfVersions, Properties repoSettings)
@@ -389,6 +408,7 @@ public class SCProductEntryLocalServiceImpl
 		return doc.asXML();
 	}
 
+	@Override
 	@Indexable(type = IndexableType.REINDEX)
 	public SCProductEntry updateProductEntry(
 			long productEntryId, String name, String type, String tags,

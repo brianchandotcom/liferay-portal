@@ -26,6 +26,7 @@ import com.liferay.portal.service.base.PluginSettingServiceBaseImpl;
  */
 public class PluginSettingServiceImpl extends PluginSettingServiceBaseImpl {
 
+	@Override
 	public PluginSetting updatePluginSetting(
 			long companyId, String pluginId, String pluginType, String roles,
 			boolean active)

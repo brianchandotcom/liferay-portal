@@ -24,6 +24,7 @@ import javax.sql.DataSource;
  */
 public class ShardSqlUpdateFactoryImpl implements SqlUpdateFactory {
 
+	@Override
 	public SqlUpdate getSqlUpdate(
 		DataSource dataSource, String sql, int[] types) {
 

@@ -55,12 +55,14 @@ public class BeanReferenceAnnotationBeanPostProcessor
 		_beans.clear();
 	}
 
+	@Override
 	public Object postProcessAfterInitialization(Object bean, String beanName)
 		throws BeansException {
 
 		return bean;
 	}
 
+	@Override
 	public Object postProcessBeforeInitialization(Object bean, String beanName)
 		throws BeansException {
 
@@ -83,6 +85,7 @@ public class BeanReferenceAnnotationBeanPostProcessor
 		return bean;
 	}
 
+	@Override
 	public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
 		_beanFactory = beanFactory;
 	}

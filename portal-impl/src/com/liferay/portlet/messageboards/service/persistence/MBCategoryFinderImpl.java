@@ -55,6 +55,7 @@ public class MBCategoryFinderImpl
 	public static final String FIND_BY_S_G_U_P =
 		MBCategoryFinder.class.getName() + ".findByS_G_U_P";
 
+	@Override
 	public int countByS_G_U_P(
 			long groupId, long userId, long[] parentCategoryIds,
 			QueryDefinition queryDefinition)
@@ -64,6 +65,7 @@ public class MBCategoryFinderImpl
 			groupId, userId, parentCategoryIds, queryDefinition, false);
 	}
 
+	@Override
 	public int filterCountByS_G_U_P(
 			long groupId, long userId, long[] parentCategoryIds,
 			QueryDefinition queryDefinition)
@@ -73,6 +75,7 @@ public class MBCategoryFinderImpl
 			groupId, userId, parentCategoryIds, queryDefinition, true);
 	}
 
+	@Override
 	public List<MBCategory> filterFindByS_G_U_P(
 			long groupId, long userId, long[] parentCategoryIds,
 			QueryDefinition queryDefinition)
@@ -82,6 +85,7 @@ public class MBCategoryFinderImpl
 			groupId, userId, parentCategoryIds, queryDefinition, true);
 	}
 
+	@Override
 	public List<MBCategory> findByS_G_U_P(
 			long groupId, long userId, long[] parentCategoryIds,
 			QueryDefinition queryDefinition)

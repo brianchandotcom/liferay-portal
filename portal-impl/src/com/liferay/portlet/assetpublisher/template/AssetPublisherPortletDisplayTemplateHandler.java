@@ -44,10 +44,12 @@ import java.util.Map;
 public class AssetPublisherPortletDisplayTemplateHandler
 	extends BasePortletDisplayTemplateHandler {
 
+	@Override
 	public String getClassName() {
 		return AssetEntry.class.getName();
 	}
 
+	@Override
 	public String getName(Locale locale) {
 		String portletTitle = PortalUtil.getPortletTitle(
 			PortletKeys.ASSET_PUBLISHER, locale);
@@ -56,6 +58,7 @@ public class AssetPublisherPortletDisplayTemplateHandler
 			LanguageUtil.get(locale, "template"));
 	}
 
+	@Override
 	public String getResourceName() {
 		return "com.liferay.portlet.assetpublisher";
 	}

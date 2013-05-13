@@ -32,6 +32,7 @@ public interface LiferayPortletConfig extends PortletConfig {
 
 	public Portlet getPortlet();
 
+	@Override
 	public PortletContext getPortletContext();
 
 	public String getPortletId();

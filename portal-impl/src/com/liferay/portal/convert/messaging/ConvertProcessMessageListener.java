@@ -27,6 +27,7 @@ import com.liferay.portal.util.ShutdownUtil;
  */
 public class ConvertProcessMessageListener implements MessageListener {
 
+	@Override
 	public void receive(Message message) {
 		try {
 			doReceive(message);

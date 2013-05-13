@@ -34,6 +34,7 @@ import java.util.List;
  */
 public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 
+	@Override
 	public void addUserGroupRoles(long userId, long groupId, long[] roleIds)
 		throws PortalException, SystemException {
 
@@ -82,6 +83,7 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public void addUserGroupRoles(long[] userIds, long groupId, long roleId)
 		throws PortalException, SystemException {
 
@@ -127,6 +129,7 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public void deleteUserGroupRoles(long userId, long groupId, long[] roleIds)
 		throws PortalException, SystemException {
 
@@ -195,6 +198,7 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public void deleteUserGroupRoles(long[] userIds, long groupId, long roleId)
 		throws PortalException, SystemException {
 

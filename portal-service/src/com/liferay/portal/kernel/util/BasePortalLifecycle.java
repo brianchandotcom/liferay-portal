@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
  */
 public abstract class BasePortalLifecycle implements PortalLifecycle {
 
+	@Override
 	public void portalDestroy() {
 		if (!_calledPortalDestroy) {
 			PortalLifecycleUtil.removeDestroy(this);
@@ -37,6 +38,7 @@ public abstract class BasePortalLifecycle implements PortalLifecycle {
 		}
 	}
 
+	@Override
 	public void portalInit() {
 		try {
 			doPortalInit();

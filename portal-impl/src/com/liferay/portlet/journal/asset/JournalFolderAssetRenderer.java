@@ -50,10 +50,12 @@ public class JournalFolderAssetRenderer
 		_folder = folder;
 	}
 
+	@Override
 	public String getClassName() {
 		return JournalFolder.class.getName();
 	}
 
+	@Override
 	public long getClassPK() {
 		return _folder.getFolderId();
 	}
@@ -63,6 +65,7 @@ public class JournalFolderAssetRenderer
 		return _folder.getModifiedDate();
 	}
 
+	@Override
 	public long getGroupId() {
 		return _folder.getGroupId();
 	}
@@ -84,12 +87,14 @@ public class JournalFolderAssetRenderer
 		return themeDisplay.getPathThemeImages() + "/common/folder_empty.png";
 	}
 
+	@Override
 	public String getPortletId() {
 		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
 
 		return assetRendererFactory.getPortletId();
 	}
 
+	@Override
 	public String getSummary(Locale locale) {
 		return HtmlUtil.stripHtml(_folder.getDescription());
 	}
@@ -115,10 +120,12 @@ public class JournalFolderAssetRenderer
 			"/file_system/large/folder_empty_article.png";
 	}
 
+	@Override
 	public String getTitle(Locale locale) {
 		return TrashUtil.getOriginalTitle(_folder.getName());
 	}
 
+	@Override
 	public String getType() {
 		return TYPE;
 	}
@@ -168,18 +175,22 @@ public class JournalFolderAssetRenderer
 			"folderId", _folder.getFolderId());
 	}
 
+	@Override
 	public long getUserId() {
 		return _folder.getUserId();
 	}
 
+	@Override
 	public String getUserName() {
 		return _folder.getUserName();
 	}
 
+	@Override
 	public String getUuid() {
 		return _folder.getUuid();
 	}
 
+	@Override
 	public String render(
 			RenderRequest renderRequest, RenderResponse renderResponse,
 			String template)

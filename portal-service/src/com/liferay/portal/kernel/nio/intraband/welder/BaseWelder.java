@@ -36,6 +36,7 @@ public abstract class BaseWelder implements Welder {
 		server = true;
 	}
 
+	@Override
 	public synchronized void destroy() throws IOException {
 		if (state != State.WELDED) {
 			throw new IllegalStateException(
@@ -49,6 +50,7 @@ public abstract class BaseWelder implements Welder {
 		state = State.DESTROYED;
 	}
 
+	@Override
 	public synchronized RegistrationReference weld(Intraband intraband)
 		throws IOException {
 

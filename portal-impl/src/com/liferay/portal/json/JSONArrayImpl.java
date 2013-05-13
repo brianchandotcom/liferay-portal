@@ -44,14 +44,17 @@ public class JSONArrayImpl implements JSONArray {
 		}
 	}
 
+	@Override
 	public boolean getBoolean(int index) {
 		return _jsonArray.optBoolean(index);
 	}
 
+	@Override
 	public double getDouble(int index) {
 		return _jsonArray.optDouble(index);
 	}
 
+	@Override
 	public int getInt(int index) {
 		return _jsonArray.optInt(index);
 	}
@@ -60,6 +63,7 @@ public class JSONArrayImpl implements JSONArray {
 		return _jsonArray;
 	}
 
+	@Override
 	public JSONArray getJSONArray(int index) {
 		org.json.JSONArray jsonArray = _jsonArray.optJSONArray(index);
 
@@ -70,6 +74,7 @@ public class JSONArrayImpl implements JSONArray {
 		return new JSONArrayImpl(jsonArray);
 	}
 
+	@Override
 	public JSONObject getJSONObject(int index) {
 		org.json.JSONObject jsonObj = _jsonArray.optJSONObject(index);
 
@@ -80,18 +85,22 @@ public class JSONArrayImpl implements JSONArray {
 		return new JSONObjectImpl(jsonObj);
 	}
 
+	@Override
 	public long getLong(int index) {
 		return _jsonArray.optLong(index);
 	}
 
+	@Override
 	public String getString(int index) {
 		return _jsonArray.optString(index);
 	}
 
+	@Override
 	public boolean isNull(int index) {
 		return _jsonArray.isNull(index);
 	}
 
+	@Override
 	public String join(String separator) throws JSONException {
 		try {
 			return _jsonArray.join(separator);
@@ -101,16 +110,19 @@ public class JSONArrayImpl implements JSONArray {
 		}
 	}
 
+	@Override
 	public int length() {
 		return _jsonArray.length();
 	}
 
+	@Override
 	public JSONArray put(boolean value) {
 		_jsonArray.put(value);
 
 		return this;
 	}
 
+	@Override
 	public JSONArray put(double value) {
 		try {
 			_jsonArray.put(value);
@@ -124,30 +136,35 @@ public class JSONArrayImpl implements JSONArray {
 		return this;
 	}
 
+	@Override
 	public JSONArray put(int value) {
 		_jsonArray.put(value);
 
 		return this;
 	}
 
+	@Override
 	public JSONArray put(JSONArray value) {
 		_jsonArray.put(((JSONArrayImpl)value).getJSONArray());
 
 		return this;
 	}
 
+	@Override
 	public JSONArray put(JSONObject value) {
 		_jsonArray.put(((JSONObjectImpl)value).getJSONObject());
 
 		return this;
 	}
 
+	@Override
 	public JSONArray put(long value) {
 		_jsonArray.put(value);
 
 		return this;
 	}
 
+	@Override
 	public JSONArray put(String value) {
 		_jsonArray.put(value);
 
@@ -159,6 +176,7 @@ public class JSONArrayImpl implements JSONArray {
 		return _jsonArray.toString();
 	}
 
+	@Override
 	public String toString(int indentFactor) throws JSONException {
 		try {
 			return _jsonArray.toString(indentFactor);
@@ -168,6 +186,7 @@ public class JSONArrayImpl implements JSONArray {
 		}
 	}
 
+	@Override
 	public Writer write(Writer writer) throws JSONException {
 		try {
 			return _jsonArray.write(writer);

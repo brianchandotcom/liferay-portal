@@ -22,6 +22,7 @@ import java.sql.SQLException;
  */
 public class CountRowMapper implements RowMapper<Integer> {
 
+	@Override
 	public Integer mapRow(ResultSet rs, int rowNumber) throws SQLException {
 		return new Integer(rs.getInt(_COUNT_VALUE));
 	}

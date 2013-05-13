@@ -27,10 +27,12 @@ public class BoboTermCollector implements TermCollector {
 		_browseFacet = browseFacet;
 	}
 
+	@Override
 	public int getFrequency() {
 		return _browseFacet.getFacetValueHitCount();
 	}
 
+	@Override
 	public String getTerm() {
 		return _browseFacet.getValue();
 	}

@@ -27,12 +27,14 @@ import com.liferay.portlet.announcements.service.base.AnnouncementsFlagServiceBa
 public class AnnouncementsFlagServiceImpl
 	extends AnnouncementsFlagServiceBaseImpl {
 
+	@Override
 	public void addFlag(long entryId, int value)
 		throws PortalException, SystemException {
 
 		announcementsFlagLocalService.addFlag(getUserId(), entryId, value);
 	}
 
+	@Override
 	public void deleteFlag(long flagId)
 		throws PortalException, SystemException {
 
@@ -46,6 +48,7 @@ public class AnnouncementsFlagServiceImpl
 		announcementsFlagLocalService.deleteFlag(flagId);
 	}
 
+	@Override
 	public AnnouncementsFlag getFlag(long entryId, int value)
 		throws PortalException, SystemException {
 

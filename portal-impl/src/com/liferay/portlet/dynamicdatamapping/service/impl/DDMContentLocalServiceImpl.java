@@ -37,6 +37,7 @@ import java.util.List;
  */
 public class DDMContentLocalServiceImpl extends DDMContentLocalServiceBaseImpl {
 
+	@Override
 	public DDMContent addContent(
 			long userId, long groupId, String name, String description,
 			String xml, ServiceContext serviceContext)
@@ -75,10 +76,12 @@ public class DDMContentLocalServiceImpl extends DDMContentLocalServiceBaseImpl {
 		return content;
 	}
 
+	@Override
 	public void deleteContent(DDMContent content) throws SystemException {
 		ddmContentPersistence.remove(content);
 	}
 
+	@Override
 	public void deleteContents(long groupId) throws SystemException {
 		List<DDMContent> contents = ddmContentPersistence.findByGroupId(
 			groupId);
@@ -88,30 +91,36 @@ public class DDMContentLocalServiceImpl extends DDMContentLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public DDMContent getContent(long contentId)
 		throws PortalException, SystemException {
 
 		return ddmContentPersistence.findByPrimaryKey(contentId);
 	}
 
+	@Override
 	public List<DDMContent> getContents() throws SystemException {
 		return ddmContentPersistence.findAll();
 	}
 
+	@Override
 	public List<DDMContent> getContents(long groupId) throws SystemException {
 		return ddmContentPersistence.findByGroupId(groupId);
 	}
 
+	@Override
 	public List<DDMContent> getContents(long groupId, int start, int end)
 		throws SystemException {
 
 		return ddmContentPersistence.findByGroupId(groupId, start, end);
 	}
 
+	@Override
 	public int getContentsCount(long groupId) throws SystemException {
 		return ddmContentPersistence.countByGroupId(groupId);
 	}
 
+	@Override
 	public DDMContent updateContent(
 			long contentId, String name, String description, String xml,
 			ServiceContext serviceContext)

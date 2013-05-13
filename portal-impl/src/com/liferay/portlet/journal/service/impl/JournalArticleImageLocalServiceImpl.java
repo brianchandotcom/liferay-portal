@@ -29,6 +29,7 @@ import java.util.List;
 public class JournalArticleImageLocalServiceImpl
 	extends JournalArticleImageLocalServiceBaseImpl {
 
+	@Override
 	public void addArticleImageId(
 			long articleImageId, long groupId, String articleId, double version,
 			String elInstanceId, String elName, String languageId)
@@ -63,6 +64,7 @@ public class JournalArticleImageLocalServiceImpl
 		}
 	}
 
+	@Override
 	public void deleteArticleImage(JournalArticleImage articleImage)
 		throws SystemException {
 
@@ -75,6 +77,7 @@ public class JournalArticleImageLocalServiceImpl
 		journalArticleImagePersistence.remove(articleImage);
 	}
 
+	@Override
 	public void deleteArticleImage(long articleImageId) throws SystemException {
 		try {
 			JournalArticleImage articleImage =
@@ -86,6 +89,7 @@ public class JournalArticleImageLocalServiceImpl
 		}
 	}
 
+	@Override
 	public void deleteArticleImage(
 			long groupId, String articleId, double version, String elInstanceId,
 			String elName, String languageId)
@@ -103,6 +107,7 @@ public class JournalArticleImageLocalServiceImpl
 		}
 	}
 
+	@Override
 	public void deleteImages(long groupId, String articleId, double version)
 		throws SystemException {
 
@@ -114,12 +119,14 @@ public class JournalArticleImageLocalServiceImpl
 		}
 	}
 
+	@Override
 	public JournalArticleImage getArticleImage(long articleImageId)
 		throws PortalException, SystemException {
 
 		return journalArticleImagePersistence.findByPrimaryKey(articleImageId);
 	}
 
+	@Override
 	public long getArticleImageId(
 			long groupId, String articleId, double version, String elInstanceId,
 			String elName, String languageId)
@@ -130,6 +137,7 @@ public class JournalArticleImageLocalServiceImpl
 			false);
 	}
 
+	@Override
 	public long getArticleImageId(
 			long groupId, String articleId, double version, String elInstanceId,
 			String elName, String languageId, boolean tempImage)
@@ -159,6 +167,7 @@ public class JournalArticleImageLocalServiceImpl
 		return articleImage.getArticleImageId();
 	}
 
+	@Override
 	public List<JournalArticleImage> getArticleImages(long groupId)
 		throws SystemException {
 

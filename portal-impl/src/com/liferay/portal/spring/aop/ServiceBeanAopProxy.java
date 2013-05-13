@@ -117,10 +117,12 @@ public class ServiceBeanAopProxy implements AopProxy, InvocationHandler {
 		_serviceBeanAopCacheManager = serviceBeanAopCacheManager;
 	}
 
+	@Override
 	public Object getProxy() {
 		return getProxy(ClassUtils.getDefaultClassLoader());
 	}
 
+	@Override
 	public Object getProxy(ClassLoader classLoader) {
 		Class<?>[] proxiedInterfaces = AopProxyUtils.completeProxiedInterfaces(
 			_advisedSupport);
@@ -132,6 +134,7 @@ public class ServiceBeanAopProxy implements AopProxy, InvocationHandler {
 			classLoader, proxiedInterfaces, invocationHandler);
 	}
 
+	@Override
 	public Object invoke(Object proxy, Method method, Object[] arguments)
 		throws Throwable {
 

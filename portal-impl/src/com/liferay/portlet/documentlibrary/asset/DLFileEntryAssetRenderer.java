@@ -64,10 +64,12 @@ public class DLFileEntryAssetRenderer
 		_type = type;
 	}
 
+	@Override
 	public String getClassName() {
 		return DLFileEntry.class.getName();
 	}
 
+	@Override
 	public long getClassPK() {
 		if (!_fileVersion.isApproved() && _fileVersion.isDraft() &&
 			!_fileVersion.isPending() &&
@@ -96,6 +98,7 @@ public class DLFileEntryAssetRenderer
 		return _fileEntry.getModifiedDate();
 	}
 
+	@Override
 	public long getGroupId() {
 		return _fileEntry.getGroupId();
 	}
@@ -106,12 +109,14 @@ public class DLFileEntryAssetRenderer
 			_fileEntry.getIcon() + ".png";
 	}
 
+	@Override
 	public String getPortletId() {
 		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
 
 		return assetRendererFactory.getPortletId();
 	}
 
+	@Override
 	public String getSummary(Locale locale) {
 		return HtmlUtil.stripHtml(_fileEntry.getDescription());
 	}
@@ -134,6 +139,7 @@ public class DLFileEntryAssetRenderer
 			"/file_system/large/document.png";
 	}
 
+	@Override
 	public String getTitle(Locale locale) {
 		String title = null;
 
@@ -147,6 +153,7 @@ public class DLFileEntryAssetRenderer
 		return TrashUtil.getOriginalTitle(title);
 	}
 
+	@Override
 	public String getType() {
 		return DLFileEntryAssetRendererFactory.TYPE;
 	}
@@ -215,14 +222,17 @@ public class DLFileEntryAssetRenderer
 			_fileEntry.getFileEntryId());
 	}
 
+	@Override
 	public long getUserId() {
 		return _fileEntry.getUserId();
 	}
 
+	@Override
 	public String getUserName() {
 		return _fileEntry.getUserName();
 	}
 
+	@Override
 	public String getUuid() {
 		return _fileEntry.getUuid();
 	}
@@ -260,6 +270,7 @@ public class DLFileEntryAssetRenderer
 		return false;
 	}
 
+	@Override
 	public String render(
 			RenderRequest renderRequest, RenderResponse renderResponse,
 			String template)

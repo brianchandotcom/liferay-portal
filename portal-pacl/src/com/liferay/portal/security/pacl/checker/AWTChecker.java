@@ -29,6 +29,7 @@ import java.util.Set;
  */
 public class AWTChecker extends BaseChecker {
 
+	@Override
 	public void afterPropertiesSet() {
 		initOperations();
 	}
@@ -54,6 +55,7 @@ public class AWTChecker extends BaseChecker {
 		return authorizationProperty;
 	}
 
+	@Override
 	public boolean implies(Permission permission) {
 		if (_permissions.implies(permission)) {
 			return true;

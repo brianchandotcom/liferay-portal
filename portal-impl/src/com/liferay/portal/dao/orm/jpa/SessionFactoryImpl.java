@@ -31,20 +31,24 @@ import javax.persistence.PersistenceUnit;
  */
 public class SessionFactoryImpl implements SessionFactory {
 
+	@Override
 	public void closeSession(Session session) throws ORMException {
 		if (session != null) {
 			session.close();
 		}
 	}
 
+	@Override
 	public Session getCurrentSession() {
 		return _session;
 	}
 
+	@Override
 	public Dialect getDialect() throws ORMException {
 		return new DialectImpl();
 	}
 
+	@Override
 	public Session openNewSession(Connection connection) throws ORMException {
 		EntityManager entityManager =
 			_entityManagerFactory.createEntityManager();
@@ -52,6 +56,7 @@ public class SessionFactoryImpl implements SessionFactory {
 		return new NewSessionImpl(entityManager);
 	}
 
+	@Override
 	public Session openSession() throws ORMException {
 		return _session;
 	}

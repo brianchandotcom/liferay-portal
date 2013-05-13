@@ -29,6 +29,7 @@ import javax.portlet.PortletURL;
  */
 public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 
+	@Override
 	public String getAssetViewURL(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse, AssetEntry assetEntry) {

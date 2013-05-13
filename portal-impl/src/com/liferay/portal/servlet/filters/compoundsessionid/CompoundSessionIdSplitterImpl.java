@@ -27,14 +27,17 @@ import com.liferay.portal.util.PropsValues;
 public class CompoundSessionIdSplitterImpl
 	implements CompoundSessionIdSplitter {
 
+	@Override
 	public String getSessionIdDelimiter() {
 		return _sessionIdDelimiter;
 	}
 
+	@Override
 	public boolean hasSessionDelimiter() {
 		return Validator.isNotNull(_sessionIdDelimiter);
 	}
 
+	@Override
 	public String parseSessionId(String sessionId) {
 		if (Validator.isNull(_sessionIdDelimiter)) {
 			return sessionId;

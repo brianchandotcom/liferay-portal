@@ -48,10 +48,12 @@ public class BookmarksEntryAssetRenderer
 		_entry = entry;
 	}
 
+	@Override
 	public String getClassName() {
 		return BookmarksEntry.class.getName();
 	}
 
+	@Override
 	public long getClassPK() {
 		return _entry.getEntryId();
 	}
@@ -61,6 +63,7 @@ public class BookmarksEntryAssetRenderer
 		return _entry.getModifiedDate();
 	}
 
+	@Override
 	public long getGroupId() {
 		return _entry.getGroupId();
 	}
@@ -70,12 +73,14 @@ public class BookmarksEntryAssetRenderer
 		return themeDisplay.getPathThemeImages() + "/ratings/star_hover.png";
 	}
 
+	@Override
 	public String getPortletId() {
 		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
 
 		return assetRendererFactory.getPortletId();
 	}
 
+	@Override
 	public String getSummary(Locale locale) {
 		return HtmlUtil.stripHtml(_entry.getDescription());
 	}
@@ -91,10 +96,12 @@ public class BookmarksEntryAssetRenderer
 			"/file_system/large/bookmark.png";
 	}
 
+	@Override
 	public String getTitle(Locale locale) {
 		return _entry.getName();
 	}
 
+	@Override
 	public String getType() {
 		return BookmarksEntryAssetRendererFactory.TYPE;
 	}
@@ -128,14 +135,17 @@ public class BookmarksEntryAssetRenderer
 			"entryId", _entry.getEntryId());
 	}
 
+	@Override
 	public long getUserId() {
 		return _entry.getUserId();
 	}
 
+	@Override
 	public String getUserName() {
 		return _entry.getUserName();
 	}
 
+	@Override
 	public String getUuid() {
 		return _entry.getUuid();
 	}
@@ -169,6 +179,7 @@ public class BookmarksEntryAssetRenderer
 		return true;
 	}
 
+	@Override
 	public String render(
 			RenderRequest renderRequest, RenderResponse renderResponse,
 			String template)

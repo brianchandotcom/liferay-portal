@@ -46,6 +46,7 @@ import org.apache.commons.lang.time.StopWatch;
 @DoPrivileged
 public class JournalContentImpl implements JournalContent {
 
+	@Override
 	public void clearCache() {
 		if (ExportImportThreadLocal.isImportInProcess()) {
 			return;
@@ -54,12 +55,14 @@ public class JournalContentImpl implements JournalContent {
 		portalCache.removeAll();
 	}
 
+	@Override
 	public void clearCache(
 		long groupId, String articleId, String ddmTemplateKey) {
 
 		clearCache();
 	}
 
+	@Override
 	public String getContent(
 		long groupId, String articleId, String viewMode, String languageId,
 		String xmlRequest) {
@@ -68,6 +71,7 @@ public class JournalContentImpl implements JournalContent {
 			groupId, articleId, null, viewMode, languageId, null, xmlRequest);
 	}
 
+	@Override
 	public String getContent(
 		long groupId, String articleId, String ddmTemplateKey, String viewMode,
 		String languageId, String xmlRequest) {
@@ -77,6 +81,7 @@ public class JournalContentImpl implements JournalContent {
 			xmlRequest);
 	}
 
+	@Override
 	public String getContent(
 		long groupId, String articleId, String ddmTemplateKey, String viewMode,
 		String languageId, ThemeDisplay themeDisplay) {
@@ -86,6 +91,7 @@ public class JournalContentImpl implements JournalContent {
 			themeDisplay, null);
 	}
 
+	@Override
 	public String getContent(
 		long groupId, String articleId, String ddmTemplateKey, String viewMode,
 		String languageId, ThemeDisplay themeDisplay, String xmlRequest) {
@@ -102,6 +108,7 @@ public class JournalContentImpl implements JournalContent {
 		}
 	}
 
+	@Override
 	public String getContent(
 		long groupId, String articleId, String viewMode, String languageId,
 		ThemeDisplay themeDisplay) {
@@ -110,6 +117,7 @@ public class JournalContentImpl implements JournalContent {
 			groupId, articleId, null, viewMode, languageId, themeDisplay);
 	}
 
+	@Override
 	public JournalArticleDisplay getDisplay(
 		long groupId, String articleId, double version, String ddmTemplateKey,
 		String viewMode, String languageId, ThemeDisplay themeDisplay, int page,
@@ -186,6 +194,7 @@ public class JournalContentImpl implements JournalContent {
 		return articleDisplay;
 	}
 
+	@Override
 	public JournalArticleDisplay getDisplay(
 		long groupId, String articleId, String viewMode, String languageId,
 		String xmlRequest) {
@@ -195,6 +204,7 @@ public class JournalContentImpl implements JournalContent {
 			xmlRequest);
 	}
 
+	@Override
 	public JournalArticleDisplay getDisplay(
 		long groupId, String articleId, String ddmTemplateKey, String viewMode,
 		String languageId, String xmlRequest) {
@@ -204,6 +214,7 @@ public class JournalContentImpl implements JournalContent {
 			xmlRequest);
 	}
 
+	@Override
 	public JournalArticleDisplay getDisplay(
 		long groupId, String articleId, String ddmTemplateKey, String viewMode,
 		String languageId, ThemeDisplay themeDisplay) {
@@ -213,6 +224,7 @@ public class JournalContentImpl implements JournalContent {
 			themeDisplay, 1, null);
 	}
 
+	@Override
 	public JournalArticleDisplay getDisplay(
 		long groupId, String articleId, String ddmTemplateKey, String viewMode,
 		String languageId, ThemeDisplay themeDisplay, int page,
@@ -223,6 +235,7 @@ public class JournalContentImpl implements JournalContent {
 			themeDisplay, 1, xmlRequest);
 	}
 
+	@Override
 	public JournalArticleDisplay getDisplay(
 		long groupId, String articleId, String viewMode, String languageId,
 		ThemeDisplay themeDisplay) {
@@ -231,6 +244,7 @@ public class JournalContentImpl implements JournalContent {
 			groupId, articleId, viewMode, languageId, themeDisplay, 1);
 	}
 
+	@Override
 	public JournalArticleDisplay getDisplay(
 		long groupId, String articleId, String viewMode, String languageId,
 		ThemeDisplay themeDisplay, int page) {

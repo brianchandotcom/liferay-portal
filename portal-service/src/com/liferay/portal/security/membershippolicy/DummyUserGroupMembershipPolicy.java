@@ -27,6 +27,7 @@ import java.util.Map;
 public class DummyUserGroupMembershipPolicy
 	extends BaseUserGroupMembershipPolicy {
 
+	@Override
 	public void checkMembership(
 		long[] userIds, long[] addUserGroupIds, long[] removeUserGroupIds) {
 	}
@@ -41,6 +42,7 @@ public class DummyUserGroupMembershipPolicy
 		return false;
 	}
 
+	@Override
 	public void propagateMembership(
 		long[] userIds, long[] addUserGroupIds, long[] removeUserGroupIds) {
 	}
@@ -49,6 +51,7 @@ public class DummyUserGroupMembershipPolicy
 	public void verifyPolicy(UserGroup userGroup) {
 	}
 
+	@Override
 	public void verifyPolicy(
 		UserGroup userGroup, UserGroup oldUserGroup,
 		Map<String, Serializable> oldExpandoAttributes) {

@@ -32,6 +32,7 @@ public class WebServerServletTokenImpl implements WebServerServletToken {
 			_CACHE_NAME);
 	}
 
+	@Override
 	public String getToken(long imageId) {
 		Long key = imageId;
 
@@ -46,6 +47,7 @@ public class WebServerServletTokenImpl implements WebServerServletToken {
 		return token;
 	}
 
+	@Override
 	public void resetToken(long imageId) {
 		_portalCache.remove(imageId);
 

@@ -34,6 +34,7 @@ public class TransactionalPersistenceAdvice implements MethodInterceptor {
 		return _basePersistences;
 	}
 
+	@Override
 	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
 		BaseModel<?> baseModel = (BaseModel<?>)methodInvocation.proceed();
 

@@ -26,6 +26,7 @@ public class ShoppingCouponImpl extends ShoppingCouponBaseImpl {
 	public ShoppingCouponImpl() {
 	}
 
+	@Override
 	public boolean hasValidDateRange() {
 		if (hasValidStartDate() && hasValidEndDate()) {
 			return true;
@@ -35,6 +36,7 @@ public class ShoppingCouponImpl extends ShoppingCouponBaseImpl {
 		}
 	}
 
+	@Override
 	public boolean hasValidEndDate() {
 		if (getEndDate() != null) {
 			Date now = new Date();
@@ -47,6 +49,7 @@ public class ShoppingCouponImpl extends ShoppingCouponBaseImpl {
 		return true;
 	}
 
+	@Override
 	public boolean hasValidStartDate() {
 		Date now = new Date();
 

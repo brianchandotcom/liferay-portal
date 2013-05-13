@@ -30,6 +30,7 @@ import java.util.List;
  */
 public class MoveDocumentMethodImpl extends BaseMethodImpl {
 
+	@Override
 	public String getMethodName() {
 		return _METHOD_NAME;
 	}

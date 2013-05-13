@@ -40,6 +40,7 @@ public class WhoisWebCacheItem implements WebCacheItem {
 		_domain = domain;
 	}
 
+	@Override
 	public Object convert(String key) throws WebCacheException {
 		Whois whois = null;
 
@@ -79,6 +80,7 @@ public class WhoisWebCacheItem implements WebCacheItem {
 		return whois;
 	}
 
+	@Override
 	public long getRefreshTime() {
 		return _REFRESH_TIME;
 	}

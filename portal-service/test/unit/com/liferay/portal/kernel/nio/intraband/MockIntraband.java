@@ -39,12 +39,14 @@ public class MockIntraband extends BaseIntraband {
 		return _registrationReference;
 	}
 
+	@Override
 	public RegistrationReference registerChannel(Channel duplexChannel) {
 		return new MockRegistrationReference(
 			(ScatteringByteChannel)duplexChannel,
 			(GatheringByteChannel)duplexChannel);
 	}
 
+	@Override
 	public RegistrationReference registerChannel(
 		ScatteringByteChannel scatteringByteChannel,
 		GatheringByteChannel gatheringByteChannel) {

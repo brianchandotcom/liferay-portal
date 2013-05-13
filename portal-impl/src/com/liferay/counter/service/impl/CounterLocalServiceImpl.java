@@ -30,40 +30,47 @@ import java.util.List;
 public class CounterLocalServiceImpl
 	extends CounterLocalServiceBaseImpl implements CounterLocalService {
 
+	@Override
 	public List<String> getNames() throws SystemException {
 		return counterFinder.getNames();
 	}
 
+	@Override
 	@Transactional(
 		isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW)
 	public long increment() throws SystemException {
 		return counterFinder.increment();
 	}
 
+	@Override
 	@Transactional(
 		isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW)
 	public long increment(String name) throws SystemException {
 		return counterFinder.increment(name);
 	}
 
+	@Override
 	@Transactional(
 		isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW)
 	public long increment(String name, int size) throws SystemException {
 		return counterFinder.increment(name, size);
 	}
 
+	@Override
 	@Transactional(
 		isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW)
 	public void rename(String oldName, String newName) throws SystemException {
 		counterFinder.rename(oldName, newName);
 	}
 
+	@Override
 	@Transactional(
 		isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW)
 	public void reset(String name) throws SystemException {
 		counterFinder.reset(name);
 	}
 
+	@Override
 	@Transactional(
 		isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW)
 	public void reset(String name, long size) throws SystemException {

@@ -29,15 +29,18 @@ public interface FileVersion extends RepositoryModel<FileVersion> {
 
 	public String getChangeLog();
 
+	@Override
 	public long getCompanyId();
 
 	public InputStream getContentStream(boolean incrementCounter)
 		throws PortalException, SystemException;
 
+	@Override
 	public Date getCreateDate();
 
 	public String getDescription();
 
+	@Override
 	public ExpandoBridge getExpandoBridge();
 
 	public String getExtension();
@@ -50,6 +53,7 @@ public interface FileVersion extends RepositoryModel<FileVersion> {
 
 	public long getFileVersionId();
 
+	@Override
 	public long getGroupId();
 
 	public String getIcon();
@@ -72,12 +76,16 @@ public interface FileVersion extends RepositoryModel<FileVersion> {
 
 	public String getTitle();
 
+	@Override
 	public long getUserId();
 
+	@Override
 	public String getUserName();
 
+	@Override
 	public String getUserUuid() throws SystemException;
 
+	@Override
 	public String getUuid();
 
 	public String getVersion();

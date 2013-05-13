@@ -29,6 +29,7 @@ import com.liferay.portal.service.permission.LayoutBranchPermissionUtil;
  */
 public class LayoutBranchServiceImpl extends LayoutBranchServiceBaseImpl {
 
+	@Override
 	public LayoutBranch addLayoutBranch(
 			long layoutRevisionId, String name, String description,
 			boolean master, ServiceContext serviceContext)
@@ -43,6 +44,7 @@ public class LayoutBranchServiceImpl extends LayoutBranchServiceBaseImpl {
 			layoutRevisionId, name, description, false, serviceContext);
 	}
 
+	@Override
 	public void deleteLayoutBranch(long layoutBranchId)
 		throws PortalException, SystemException {
 
@@ -52,6 +54,7 @@ public class LayoutBranchServiceImpl extends LayoutBranchServiceBaseImpl {
 		layoutBranchLocalService.deleteLayoutBranch(layoutBranchId);
 	}
 
+	@Override
 	public LayoutBranch updateLayoutBranch(
 			long layoutBranchId, String name, String description,
 			ServiceContext serviceContext)

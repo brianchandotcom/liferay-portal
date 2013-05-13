@@ -59,6 +59,7 @@ public class SocialActivitySetFinderImpl
 	public static final String FIND_BY_USER_GROUPS =
 		SocialActivitySetFinder.class.getName() + ".findByUserGroups";
 
+	@Override
 	public int countByRelation(long userId) throws SystemException {
 		Session session = null;
 
@@ -95,6 +96,7 @@ public class SocialActivitySetFinderImpl
 		}
 	}
 
+	@Override
 	public int countByRelationType(long userId, int type)
 		throws SystemException {
 
@@ -134,6 +136,7 @@ public class SocialActivitySetFinderImpl
 		}
 	}
 
+	@Override
 	public int countByUser(long userId) throws SystemException {
 		Session session = null;
 
@@ -174,6 +177,7 @@ public class SocialActivitySetFinderImpl
 		}
 	}
 
+	@Override
 	public int countByUserGroups(long userId) throws SystemException {
 		Session session = null;
 
@@ -212,6 +216,7 @@ public class SocialActivitySetFinderImpl
 		}
 	}
 
+	@Override
 	public List<SocialActivitySet> findByRelation(
 			long userId, int start, int end)
 		throws SystemException {
@@ -242,6 +247,7 @@ public class SocialActivitySetFinderImpl
 		}
 	}
 
+	@Override
 	public List<SocialActivitySet> findByRelationType(
 			long userId, int type, int start, int end)
 		throws SystemException {
@@ -273,6 +279,7 @@ public class SocialActivitySetFinderImpl
 		}
 	}
 
+	@Override
 	public List<SocialActivitySet> findByUser(long userId, int start, int end)
 		throws SystemException {
 
@@ -306,6 +313,7 @@ public class SocialActivitySetFinderImpl
 		}
 	}
 
+	@Override
 	public List<SocialActivitySet> findByUserGroups(
 			long userId, int start, int end)
 		throws SystemException {

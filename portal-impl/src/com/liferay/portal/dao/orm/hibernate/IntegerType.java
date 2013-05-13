@@ -33,20 +33,24 @@ public class IntegerType implements CompositeUserType, Serializable {
 
 	public static final Integer DEFAULT_VALUE = Integer.valueOf(0);
 
+	@Override
 	public Object assemble(
 		Serializable cached, SessionImplementor session, Object owner) {
 
 		return cached;
 	}
 
+	@Override
 	public Object deepCopy(Object obj) {
 		return obj;
 	}
 
+	@Override
 	public Serializable disassemble(Object value, SessionImplementor session) {
 		return (Serializable)value;
 	}
 
+	@Override
 	public boolean equals(Object x, Object y) {
 		if (x == y) {
 			return true;
@@ -59,26 +63,32 @@ public class IntegerType implements CompositeUserType, Serializable {
 		}
 	}
 
+	@Override
 	public String[] getPropertyNames() {
 		return new String[0];
 	}
 
+	@Override
 	public Type[] getPropertyTypes() {
 		return new Type[] {StandardBasicTypes.INTEGER};
 	}
 
+	@Override
 	public Object getPropertyValue(Object component, int property) {
 		return component;
 	}
 
+	@Override
 	public int hashCode(Object x) {
 		return x.hashCode();
 	}
 
+	@Override
 	public boolean isMutable() {
 		return false;
 	}
 
+	@Override
 	public Object nullSafeGet(
 		ResultSet rs, String[] names, SessionImplementor session,
 		Object owner) {
@@ -100,6 +110,7 @@ public class IntegerType implements CompositeUserType, Serializable {
 		}
 	}
 
+	@Override
 	public void nullSafeSet(
 			PreparedStatement ps, Object target, int index,
 			SessionImplementor session)
@@ -112,6 +123,7 @@ public class IntegerType implements CompositeUserType, Serializable {
 		ps.setInt(index, (Integer)target);
 	}
 
+	@Override
 	public Object replace(
 		Object original, Object target, SessionImplementor session,
 		Object owner) {
@@ -119,10 +131,12 @@ public class IntegerType implements CompositeUserType, Serializable {
 		return original;
 	}
 
+	@Override
 	public Class<Integer> returnedClass() {
 		return Integer.class;
 	}
 
+	@Override
 	public void setPropertyValue(Object component, int property, Object value) {
 	}
 

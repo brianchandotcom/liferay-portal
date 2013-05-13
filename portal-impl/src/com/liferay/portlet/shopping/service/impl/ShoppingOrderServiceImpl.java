@@ -28,6 +28,7 @@ import com.liferay.portlet.shopping.service.permission.ShoppingPermission;
  */
 public class ShoppingOrderServiceImpl extends ShoppingOrderServiceBaseImpl {
 
+	@Override
 	public void completeOrder(
 			long groupId, String number, String ppTxnId, String ppPaymentStatus,
 			double ppPaymentGross, String ppReceiverEmail, String ppPayerEmail,
@@ -45,6 +46,7 @@ public class ShoppingOrderServiceImpl extends ShoppingOrderServiceBaseImpl {
 			ppPayerEmail, false, serviceContext);
 	}
 
+	@Override
 	public void deleteOrder(long groupId, long orderId)
 		throws PortalException, SystemException {
 
@@ -54,6 +56,7 @@ public class ShoppingOrderServiceImpl extends ShoppingOrderServiceBaseImpl {
 		shoppingOrderLocalService.deleteOrder(orderId);
 	}
 
+	@Override
 	public ShoppingOrder getOrder(long groupId, long orderId)
 		throws PortalException, SystemException {
 
@@ -70,6 +73,7 @@ public class ShoppingOrderServiceImpl extends ShoppingOrderServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public void sendEmail(
 			long groupId, long orderId, String emailType,
 			ServiceContext serviceContext)
@@ -81,6 +85,7 @@ public class ShoppingOrderServiceImpl extends ShoppingOrderServiceBaseImpl {
 		shoppingOrderLocalService.sendEmail(orderId, emailType, serviceContext);
 	}
 
+	@Override
 	public ShoppingOrder updateOrder(
 			long groupId, long orderId, String ppTxnId, String ppPaymentStatus,
 			double ppPaymentGross, String ppReceiverEmail, String ppPayerEmail)
@@ -94,6 +99,7 @@ public class ShoppingOrderServiceImpl extends ShoppingOrderServiceBaseImpl {
 			ppPayerEmail);
 	}
 
+	@Override
 	public ShoppingOrder updateOrder(
 			long groupId, long orderId, String billingFirstName,
 			String billingLastName, String billingEmailAddress,

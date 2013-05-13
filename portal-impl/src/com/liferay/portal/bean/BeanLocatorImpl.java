@@ -51,16 +51,19 @@ public class BeanLocatorImpl implements BeanLocator {
 		return _applicationContext;
 	}
 
+	@Override
 	public ClassLoader getClassLoader() {
 		PortalRuntimePermission.checkGetClassLoader(_paclServletContextName);
 
 		return _classLoader;
 	}
 
+	@Override
 	public String[] getNames() {
 		return _applicationContext.getBeanDefinitionNames();
 	}
 
+	@Override
 	public Class<?> getType(String name) {
 		try {
 			return _applicationContext.getType(name);
@@ -70,6 +73,7 @@ public class BeanLocatorImpl implements BeanLocator {
 		}
 	}
 
+	@Override
 	public <T> Map<String, T> locate(Class<T> clazz)
 		throws BeanLocatorException {
 
@@ -84,6 +88,7 @@ public class BeanLocatorImpl implements BeanLocator {
 		}
 	}
 
+	@Override
 	public Object locate(String name) throws BeanLocatorException {
 		try {
 			return doLocate(name);

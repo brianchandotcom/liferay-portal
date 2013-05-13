@@ -25,15 +25,18 @@ import java.util.concurrent.Future;
  */
 class FutureRegistrationReference implements RegistrationReference {
 
+	@Override
 	public void cancelRegistration() {
 		readFuture.cancel(true);
 		writeFuture.cancel(true);
 	}
 
+	@Override
 	public Intraband getIntraband() {
 		return intraband;
 	}
 
+	@Override
 	public boolean isValid() {
 		if (!readFuture.isDone() && !writeFuture.isDone()) {
 			return true;

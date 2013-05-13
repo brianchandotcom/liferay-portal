@@ -36,9 +36,11 @@ public class TransactionalPortalCache<K extends Serializable, V>
 		_portalCache = portalCache;
 	}
 
+	@Override
 	public void destroy() {
 	}
 
+	@Override
 	public Collection<V> get(Collection<K> keys) {
 		List<V> values = new ArrayList<V>(keys.size());
 
@@ -67,6 +69,7 @@ public class TransactionalPortalCache<K extends Serializable, V>
 		return result;
 	}
 
+	@Override
 	public String getName() {
 		return _portalCache.getName();
 	}
@@ -101,10 +104,12 @@ public class TransactionalPortalCache<K extends Serializable, V>
 		}
 	}
 
+	@Override
 	public void registerCacheListener(CacheListener<K, V> cacheListener) {
 		_portalCache.registerCacheListener(cacheListener);
 	}
 
+	@Override
 	public void registerCacheListener(
 		CacheListener<K, V> cacheListener,
 		CacheListenerScope cacheListenerScope) {
@@ -120,6 +125,7 @@ public class TransactionalPortalCache<K extends Serializable, V>
 		_portalCache.remove(key);
 	}
 
+	@Override
 	public void removeAll() {
 		if (TransactionalPortalCacheHelper.isEnabled()) {
 			TransactionalPortalCacheHelper.removeAll(_portalCache);
@@ -128,10 +134,12 @@ public class TransactionalPortalCache<K extends Serializable, V>
 		_portalCache.removeAll();
 	}
 
+	@Override
 	public void unregisterCacheListener(CacheListener<K, V> cacheListener) {
 		_portalCache.unregisterCacheListener(cacheListener);
 	}
 
+	@Override
 	public void unregisterCacheListeners() {
 		_portalCache.unregisterCacheListeners();
 	}

@@ -101,10 +101,12 @@ public class WikiPageIndexer extends BaseIndexer {
 		document.addKeyword(Field.RELATED_ENTRY, true);
 	}
 
+	@Override
 	public String[] getClassNames() {
 		return CLASS_NAMES;
 	}
 
+	@Override
 	public String getPortletId() {
 		return PORTLET_ID;
 	}

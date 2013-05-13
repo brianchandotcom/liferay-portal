@@ -32,15 +32,18 @@ import java.util.Locale;
  */
 public abstract class BaseSharepointStorageImpl implements SharepointStorage {
 
+	@Override
 	public void addDocumentElements(
 			SharepointRequest sharepointRequest, Element element)
 		throws Exception {
 	}
 
+	@Override
 	public void createFolder(SharepointRequest sharepointRequest)
 		throws Exception {
 	}
 
+	@Override
 	public InputStream getDocumentInputStream(
 			SharepointRequest sharepointRequest)
 		throws Exception {
@@ -48,45 +51,53 @@ public abstract class BaseSharepointStorageImpl implements SharepointStorage {
 		return null;
 	}
 
+	@Override
 	public Tree getDocumentsTree(SharepointRequest sharepointRequest)
 		throws Exception {
 
 		return new Tree();
 	}
 
+	@Override
 	public Tree getDocumentTree(SharepointRequest sharepointRequest)
 		throws Exception {
 
 		return new Tree();
 	}
 
+	@Override
 	public Tree getFoldersTree(SharepointRequest sharepointRequest)
 		throws Exception {
 
 		return new Tree();
 	}
 
+	@Override
 	public Tree getFolderTree(SharepointRequest sharepointRequest)
 		throws Exception {
 
 		return new Tree();
 	}
 
+	@Override
 	public void getParentFolderIds(
 			long groupId, String path, List<Long> folderIds)
 		throws Exception {
 	}
 
+	@Override
 	public Tree[] moveDocument(SharepointRequest sharepointRequest)
 		throws Exception {
 
 		return null;
 	}
 
+	@Override
 	public void putDocument(SharepointRequest sharepointRequest)
 		throws Exception {
 	}
 
+	@Override
 	public Tree[] removeDocument(SharepointRequest sharepointRequest)
 		throws Exception {
 

@@ -31,6 +31,7 @@ public class FileAggregateContext implements AggregateContext {
 		_file = file.getParentFile();
 	}
 
+	@Override
 	public String getContent(String path) {
 		try {
 			File file = new File(_file, path);
@@ -44,18 +45,21 @@ public class FileAggregateContext implements AggregateContext {
 		return null;
 	}
 
+	@Override
 	public String getFullPath(String path) {
 		String absolutePath = _file.getAbsolutePath();
 
 		return absolutePath.concat(path);
 	}
 
+	@Override
 	public void popPath(String path) {
 		if (Validator.isNotNull(path)) {
 			_file = _file.getParentFile();
 		}
 	}
 
+	@Override
 	public void pushPath(String path) {
 		if (Validator.isNotNull(path)) {
 			_file = new File(_file, path);

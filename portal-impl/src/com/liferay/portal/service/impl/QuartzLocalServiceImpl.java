@@ -31,6 +31,7 @@ import java.sql.ResultSet;
  */
 public class QuartzLocalServiceImpl extends QuartzLocalServiceBaseImpl {
 
+	@Override
 	public void checkQuartzTables() throws SystemException {
 		Connection con = null;
 		PreparedStatement ps = null;

@@ -67,6 +67,7 @@ import java.util.Map;
  */
 public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
+	@Override
 	public void addPermissionFields(long companyId, Document document) {
 		try {
 			long groupId = GetterUtil.getLong(document.get(Field.GROUP_ID));
@@ -117,6 +118,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		}
 	}
 
+	@Override
 	public Query getPermissionQuery(
 		long companyId, long[] groupIds, long userId, String className,
 		Query query, SearchContext searchContext) {
@@ -132,6 +134,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		return query;
 	}
 
+	@Override
 	public void updatePermissionFields(
 		String resourceName, String resourceClassPK) {
 

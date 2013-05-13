@@ -25,10 +25,12 @@ import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 @DoPrivileged
 public class OrderFactoryImpl implements OrderFactory {
 
+	@Override
 	public Order asc(String propertyName) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public Order desc(String propertyName) {
 		throw new UnsupportedOperationException();
 	}

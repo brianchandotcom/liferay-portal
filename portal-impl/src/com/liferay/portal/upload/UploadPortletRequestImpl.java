@@ -50,10 +50,12 @@ public class UploadPortletRequestImpl
 		_namespace = namespace;
 	}
 
+	@Override
 	public void cleanUp() {
 		_uploadServletRequest.cleanUp();
 	}
 
+	@Override
 	public String getContentType(String name) {
 		String contentType = _uploadServletRequest.getContentType(
 			_namespace.concat(name));
@@ -71,10 +73,12 @@ public class UploadPortletRequestImpl
 		return contentType;
 	}
 
+	@Override
 	public File getFile(String name) {
 		return getFile(name, false);
 	}
 
+	@Override
 	public File getFile(String name, boolean forceCreate) {
 		File file = _uploadServletRequest.getFile(
 			_namespace.concat(name), forceCreate);
@@ -86,10 +90,12 @@ public class UploadPortletRequestImpl
 		return file;
 	}
 
+	@Override
 	public InputStream getFileAsStream(String name) throws IOException {
 		return getFileAsStream(name, true);
 	}
 
+	@Override
 	public InputStream getFileAsStream(String name, boolean deleteOnClose)
 		throws IOException {
 
@@ -104,6 +110,7 @@ public class UploadPortletRequestImpl
 		return inputStream;
 	}
 
+	@Override
 	public String getFileName(String name) {
 		String fileName = _uploadServletRequest.getFileName(
 			_namespace.concat(name));
@@ -115,6 +122,7 @@ public class UploadPortletRequestImpl
 		return fileName;
 	}
 
+	@Override
 	public String[] getFileNames(String name) {
 		String[] fileNames = _uploadServletRequest.getFileNames(
 			_namespace.concat(name));
@@ -126,6 +134,7 @@ public class UploadPortletRequestImpl
 		return fileNames;
 	}
 
+	@Override
 	public File[] getFiles(String name) {
 		File[] files = _uploadServletRequest.getFiles(_namespace.concat(name));
 
@@ -136,10 +145,12 @@ public class UploadPortletRequestImpl
 		return files;
 	}
 
+	@Override
 	public InputStream[] getFilesAsStream(String name) throws IOException {
 		return getFilesAsStream(name, true);
 	}
 
+	@Override
 	public InputStream[] getFilesAsStream(String name, boolean deleteOnClose)
 		throws IOException {
 
@@ -154,6 +165,7 @@ public class UploadPortletRequestImpl
 		return inputStreams;
 	}
 
+	@Override
 	public String getFullFileName(String name) {
 		String fullFileName = _uploadServletRequest.getFullFileName(
 			_namespace.concat(name));
@@ -165,6 +177,7 @@ public class UploadPortletRequestImpl
 		return fullFileName;
 	}
 
+	@Override
 	public Map<String, FileItem[]> getMultipartParameterMap() {
 		if (!(_uploadServletRequest instanceof UploadServletRequestImpl)) {
 			return Collections.emptyMap();
@@ -251,6 +264,7 @@ public class UploadPortletRequestImpl
 		return parameterValues;
 	}
 
+	@Override
 	public Map<String, List<String>> getRegularParameterMap() {
 		if (!(_uploadServletRequest instanceof UploadServletRequestImpl)) {
 			return Collections.emptyMap();
@@ -278,6 +292,7 @@ public class UploadPortletRequestImpl
 		return map;
 	}
 
+	@Override
 	public Long getSize(String name) {
 		Long size = _uploadServletRequest.getSize(_namespace.concat(name));
 
@@ -292,6 +307,7 @@ public class UploadPortletRequestImpl
 		return size;
 	}
 
+	@Override
 	public Boolean isFormField(String name) {
 		Boolean formField = _uploadServletRequest.isFormField(
 			_namespace.concat(name));

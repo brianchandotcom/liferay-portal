@@ -30,6 +30,7 @@ import java.util.List;
 public class SocialActivityAchievementLocalServiceImpl
 	extends SocialActivityAchievementLocalServiceBaseImpl {
 
+	@Override
 	public void addActivityAchievement(
 			long userId, long groupId, SocialAchievement achievement)
 		throws PortalException, SystemException {
@@ -69,6 +70,7 @@ public class SocialActivityAchievementLocalServiceImpl
 			userId, groupId);
 	}
 
+	@Override
 	public SocialActivityAchievement fetchUserAchievement(
 			long userId, long groupId, String name)
 		throws SystemException {
@@ -77,12 +79,14 @@ public class SocialActivityAchievementLocalServiceImpl
 			groupId, userId, name);
 	}
 
+	@Override
 	public List<SocialActivityAchievement> getGroupAchievements(long groupId)
 		throws SystemException {
 
 		return socialActivityAchievementPersistence.findByGroupId(groupId);
 	}
 
+	@Override
 	public List<SocialActivityAchievement> getGroupAchievements(
 			long groupId, String name)
 		throws SystemException {
@@ -90,16 +94,19 @@ public class SocialActivityAchievementLocalServiceImpl
 		return socialActivityAchievementPersistence.findByG_N(groupId, name);
 	}
 
+	@Override
 	public int getGroupAchievementsCount(long groupId) throws SystemException {
 		return socialActivityAchievementPersistence.countByGroupId(groupId);
 	}
 
+	@Override
 	public int getGroupAchievementsCount(long groupId, String name)
 		throws SystemException {
 
 		return socialActivityAchievementPersistence.countByG_N(groupId, name);
 	}
 
+	@Override
 	public List<SocialActivityAchievement> getGroupFirstAchievements(
 			long groupId)
 		throws SystemException {
@@ -107,12 +114,14 @@ public class SocialActivityAchievementLocalServiceImpl
 		return socialActivityAchievementPersistence.findByG_F(groupId, true);
 	}
 
+	@Override
 	public int getGroupFirstAchievementsCount(long groupId)
 		throws SystemException {
 
 		return socialActivityAchievementPersistence.countByG_F(groupId, true);
 	}
 
+	@Override
 	public int getUserAchievementCount(long userId, long groupId, String name)
 		throws SystemException {
 
@@ -120,6 +129,7 @@ public class SocialActivityAchievementLocalServiceImpl
 			groupId, userId, name);
 	}
 
+	@Override
 	public List<SocialActivityAchievement> getUserAchievements(
 			long userId, long groupId, String name)
 		throws SystemException {

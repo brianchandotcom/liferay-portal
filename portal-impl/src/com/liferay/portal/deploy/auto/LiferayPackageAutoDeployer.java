@@ -54,6 +54,7 @@ public class LiferayPackageAutoDeployer implements AutoDeployer {
 		}
 	}
 
+	@Override
 	public int autoDeploy(AutoDeploymentContext autoDeploymentContext)
 		throws AutoDeployException {
 
@@ -132,6 +133,7 @@ public class LiferayPackageAutoDeployer implements AutoDeployer {
 		}
 	}
 
+	@Override
 	public AutoDeployer cloneAutoDeployer() {
 		return new LiferayPackageAutoDeployer();
 	}

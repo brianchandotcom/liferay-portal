@@ -54,6 +54,7 @@ public class IntrabandPortalCache
 		_portalCacheType = systemDataType.getValue();
 	}
 
+	@Override
 	public void destroy() {
 		Serializer serializer = _createSerializer(
 			PortalCacheActionType.DESTROY);
@@ -64,6 +65,7 @@ public class IntrabandPortalCache
 				_portalCacheType, serializer.toByteBuffer()));
 	}
 
+	@Override
 	public Collection<V> get(Collection<K> keys) {
 		Serializer serializer = _createSerializer(
 			PortalCacheActionType.GET_BULK);
@@ -105,6 +107,7 @@ public class IntrabandPortalCache
 		}
 	}
 
+	@Override
 	public String getName() {
 		return _name;
 	}
@@ -135,9 +138,11 @@ public class IntrabandPortalCache
 				_portalCacheType, serializer.toByteBuffer()));
 	}
 
+	@Override
 	public void registerCacheListener(CacheListener<K, V> cacheListener) {
 	}
 
+	@Override
 	public void registerCacheListener(
 		CacheListener<K, V> cacheListener,
 		CacheListenerScope cacheListenerScope) {
@@ -154,6 +159,7 @@ public class IntrabandPortalCache
 				_portalCacheType, serializer.toByteBuffer()));
 	}
 
+	@Override
 	public void removeAll() {
 		Serializer serializer = _createSerializer(
 			PortalCacheActionType.REMOVE_ALL);
@@ -164,9 +170,11 @@ public class IntrabandPortalCache
 				_portalCacheType, serializer.toByteBuffer()));
 	}
 
+	@Override
 	public void unregisterCacheListener(CacheListener<K, V> cacheListener) {
 	}
 
+	@Override
 	public void unregisterCacheListeners() {
 	}
 

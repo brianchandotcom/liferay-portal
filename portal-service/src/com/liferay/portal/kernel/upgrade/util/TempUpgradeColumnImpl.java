@@ -33,6 +33,7 @@ public class TempUpgradeColumnImpl extends BaseUpgradeColumnImpl {
 		return getOldColumnType(defaultType);
 	}
 
+	@Override
 	public Object getNewValue(Object oldValue) throws Exception {
 		return oldValue;
 	}

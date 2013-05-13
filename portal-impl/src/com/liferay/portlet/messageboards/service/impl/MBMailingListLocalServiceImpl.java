@@ -46,6 +46,7 @@ import java.util.Date;
 public class MBMailingListLocalServiceImpl
 	extends MBMailingListLocalServiceBaseImpl {
 
+	@Override
 	public MBMailingList addMailingList(
 			long userId, long groupId, long categoryId, String emailAddress,
 			String inProtocol, String inServerName, int inServerPort,
@@ -107,6 +108,7 @@ public class MBMailingListLocalServiceImpl
 		return mailingList;
 	}
 
+	@Override
 	public void deleteCategoryMailingList(long groupId, long categoryId)
 		throws PortalException, SystemException {
 
@@ -116,6 +118,7 @@ public class MBMailingListLocalServiceImpl
 		deleteMailingList(mailingList);
 	}
 
+	@Override
 	public void deleteMailingList(long mailingListId)
 		throws PortalException, SystemException {
 
@@ -125,6 +128,7 @@ public class MBMailingListLocalServiceImpl
 		deleteMailingList(mailingList);
 	}
 
+	@Override
 	public void deleteMailingList(MBMailingList mailingList)
 		throws PortalException, SystemException {
 
@@ -133,12 +137,14 @@ public class MBMailingListLocalServiceImpl
 		mbMailingListPersistence.remove(mailingList);
 	}
 
+	@Override
 	public MBMailingList getCategoryMailingList(long groupId, long categoryId)
 		throws PortalException, SystemException {
 
 		return mbMailingListPersistence.findByG_C(groupId, categoryId);
 	}
 
+	@Override
 	public MBMailingList updateMailingList(
 			long mailingListId, String emailAddress, String inProtocol,
 			String inServerName, int inServerPort, boolean inUseSSL,

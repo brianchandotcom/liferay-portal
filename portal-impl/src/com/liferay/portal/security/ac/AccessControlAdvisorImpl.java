@@ -36,6 +36,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class AccessControlAdvisorImpl implements AccessControlAdvisor {
 
+	@Override
 	public void accept(Method method, AccessControlled accessControlled)
 		throws SecurityException {
 

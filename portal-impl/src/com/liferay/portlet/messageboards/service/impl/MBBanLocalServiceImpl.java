@@ -37,6 +37,7 @@ import java.util.List;
  */
 public class MBBanLocalServiceImpl extends MBBanLocalServiceBaseImpl {
 
+	@Override
 	public MBBan addBan(
 			long userId, long banUserId, ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -68,6 +69,7 @@ public class MBBanLocalServiceImpl extends MBBanLocalServiceBaseImpl {
 		return ban;
 	}
 
+	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void checkBan(long groupId, long banUserId)
 		throws PortalException, SystemException {
@@ -77,12 +79,14 @@ public class MBBanLocalServiceImpl extends MBBanLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public void deleteBan(long banId) throws PortalException, SystemException {
 		MBBan ban = mbBanPersistence.findByPrimaryKey(banId);
 
 		deleteBan(ban);
 	}
 
+	@Override
 	public void deleteBan(long banUserId, ServiceContext serviceContext)
 		throws SystemException {
 
@@ -97,10 +101,12 @@ public class MBBanLocalServiceImpl extends MBBanLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public void deleteBan(MBBan ban) throws SystemException {
 		mbBanPersistence.remove(ban);
 	}
 
+	@Override
 	public void deleteBansByBanUserId(long banUserId) throws SystemException {
 		List<MBBan> bans = mbBanPersistence.findByBanUserId(banUserId);
 
@@ -109,6 +115,7 @@ public class MBBanLocalServiceImpl extends MBBanLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public void deleteBansByGroupId(long groupId) throws SystemException {
 		List<MBBan> bans = mbBanPersistence.findByGroupId(groupId);
 
@@ -117,6 +124,7 @@ public class MBBanLocalServiceImpl extends MBBanLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public void expireBans() throws SystemException {
 		if (PropsValues.MESSAGE_BOARDS_EXPIRE_BAN_INTERVAL <= 0) {
 			return;
@@ -142,16 +150,19 @@ public class MBBanLocalServiceImpl extends MBBanLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public List<MBBan> getBans(long groupId, int start, int end)
 		throws SystemException {
 
 		return mbBanPersistence.findByGroupId(groupId, start, end);
 	}
 
+	@Override
 	public int getBansCount(long groupId) throws SystemException {
 		return mbBanPersistence.countByGroupId(groupId);
 	}
 
+	@Override
 	public boolean hasBan(long groupId, long banUserId) throws SystemException {
 		if (mbBanPersistence.fetchByG_B(groupId, banUserId) == null) {
 			return false;

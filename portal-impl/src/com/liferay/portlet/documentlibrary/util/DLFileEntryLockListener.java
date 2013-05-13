@@ -28,6 +28,7 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryServiceUtil;
  */
 public class DLFileEntryLockListener extends BaseLockListener {
 
+	@Override
 	public String getClassName() {
 		return DLFileEntryConstants.getClassName();
 	}

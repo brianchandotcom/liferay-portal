@@ -23,6 +23,7 @@ public class CacheModeImpl implements CacheMode {
 		_name = name;
 	}
 
+	@Override
 	public String getName() {
 		return _name;
 	}

@@ -23,6 +23,7 @@ public class LogWrapper implements Log {
 		_log = log;
 	}
 
+	@Override
 	public void debug(Object msg) {
 		try {
 			_log.debug(msg);
@@ -32,6 +33,7 @@ public class LogWrapper implements Log {
 		}
 	}
 
+	@Override
 	public void debug(Object msg, Throwable t) {
 		try {
 			_log.debug(msg, t);
@@ -41,6 +43,7 @@ public class LogWrapper implements Log {
 		}
 	}
 
+	@Override
 	public void debug(Throwable t) {
 		try {
 			_log.debug(t);
@@ -50,6 +53,7 @@ public class LogWrapper implements Log {
 		}
 	}
 
+	@Override
 	public void error(Object msg) {
 		try {
 			_log.error(msg);
@@ -59,6 +63,7 @@ public class LogWrapper implements Log {
 		}
 	}
 
+	@Override
 	public void error(Object msg, Throwable t) {
 		try {
 			_log.error(msg, t);
@@ -68,6 +73,7 @@ public class LogWrapper implements Log {
 		}
 	}
 
+	@Override
 	public void error(Throwable t) {
 		try {
 			_log.error(t);
@@ -77,6 +83,7 @@ public class LogWrapper implements Log {
 		}
 	}
 
+	@Override
 	public void fatal(Object msg) {
 		try {
 			_log.fatal(msg);
@@ -86,6 +93,7 @@ public class LogWrapper implements Log {
 		}
 	}
 
+	@Override
 	public void fatal(Object msg, Throwable t) {
 		try {
 			_log.fatal(msg, t);
@@ -95,6 +103,7 @@ public class LogWrapper implements Log {
 		}
 	}
 
+	@Override
 	public void fatal(Throwable t) {
 		try {
 			_log.fatal(t);
@@ -108,6 +117,7 @@ public class LogWrapper implements Log {
 		return _log;
 	}
 
+	@Override
 	public void info(Object msg) {
 		try {
 			_log.info(msg);
@@ -117,6 +127,7 @@ public class LogWrapper implements Log {
 		}
 	}
 
+	@Override
 	public void info(Object msg, Throwable t) {
 		try {
 			_log.info(msg, t);
@@ -126,6 +137,7 @@ public class LogWrapper implements Log {
 		}
 	}
 
+	@Override
 	public void info(Throwable t) {
 		try {
 			_log.info(t);
@@ -135,26 +147,32 @@ public class LogWrapper implements Log {
 		}
 	}
 
+	@Override
 	public boolean isDebugEnabled() {
 		return _log.isDebugEnabled();
 	}
 
+	@Override
 	public boolean isErrorEnabled() {
 		return _log.isErrorEnabled();
 	}
 
+	@Override
 	public boolean isFatalEnabled() {
 		return _log.isFatalEnabled();
 	}
 
+	@Override
 	public boolean isInfoEnabled() {
 		return _log.isInfoEnabled();
 	}
 
+	@Override
 	public boolean isTraceEnabled() {
 		return _log.isTraceEnabled();
 	}
 
+	@Override
 	public boolean isWarnEnabled() {
 		return _log.isWarnEnabled();
 	}
@@ -163,6 +181,7 @@ public class LogWrapper implements Log {
 		_log = log;
 	}
 
+	@Override
 	public void trace(Object msg) {
 		try {
 			_log.trace(msg);
@@ -172,6 +191,7 @@ public class LogWrapper implements Log {
 		}
 	}
 
+	@Override
 	public void trace(Object msg, Throwable t) {
 		try {
 			_log.trace(msg, t);
@@ -181,6 +201,7 @@ public class LogWrapper implements Log {
 		}
 	}
 
+	@Override
 	public void trace(Throwable t) {
 		try {
 			_log.trace(t);
@@ -190,6 +211,7 @@ public class LogWrapper implements Log {
 		}
 	}
 
+	@Override
 	public void warn(Object msg) {
 		try {
 			_log.warn(msg);
@@ -199,6 +221,7 @@ public class LogWrapper implements Log {
 		}
 	}
 
+	@Override
 	public void warn(Object msg, Throwable t) {
 		try {
 			_log.warn(msg, t);
@@ -208,6 +231,7 @@ public class LogWrapper implements Log {
 		}
 	}
 
+	@Override
 	public void warn(Throwable t) {
 		try {
 			_log.warn(t);

@@ -31,6 +31,7 @@ import java.io.InputStream;
  */
 public class DLHook extends BaseHook {
 
+	@Override
 	public void deleteImage(Image image)
 		throws PortalException, SystemException {
 
@@ -44,6 +45,7 @@ public class DLHook extends BaseHook {
 		}
 	}
 
+	@Override
 	public byte[] getImageAsBytes(Image image)
 		throws PortalException, SystemException {
 
@@ -64,6 +66,7 @@ public class DLHook extends BaseHook {
 		return bytes;
 	}
 
+	@Override
 	public InputStream getImageAsStream(Image image)
 		throws PortalException, SystemException {
 
@@ -73,6 +76,7 @@ public class DLHook extends BaseHook {
 			_COMPANY_ID, _REPOSITORY_ID, fileName);
 	}
 
+	@Override
 	public void updateImage(Image image, String type, byte[] bytes)
 		throws PortalException, SystemException {
 

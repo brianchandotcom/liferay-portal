@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.Validator;
  */
 public class DefaultEmailAddressValidator implements EmailAddressValidator {
 
+	@Override
 	public boolean validate(long companyId, String emailAddress) {
 		if (!Validator.isEmailAddress(emailAddress) ||
 			emailAddress.startsWith("postmaster@") ||

@@ -23,6 +23,7 @@ import flexjson.JSONContext;
  */
 public class JSONObjectJSONTransformer extends BaseJSONTransformer {
 
+	@Override
 	public void transform(Object object) {
 		JSONObject jsonObject = (JSONObject)object;
 

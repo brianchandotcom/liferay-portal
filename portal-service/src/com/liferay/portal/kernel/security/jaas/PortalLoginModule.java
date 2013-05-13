@@ -42,14 +42,17 @@ public class PortalLoginModule implements LoginModule {
 		}
 	}
 
+	@Override
 	public boolean abort() throws LoginException {
 		return _loginModule.abort();
 	}
 
+	@Override
 	public boolean commit() throws LoginException {
 		return _loginModule.commit();
 	}
 
+	@Override
 	public void initialize(
 		Subject subject, CallbackHandler callbackHandler,
 		Map<String, ?> sharedState, Map<String, ?> options) {
@@ -57,10 +60,12 @@ public class PortalLoginModule implements LoginModule {
 		_loginModule.initialize(subject, callbackHandler, sharedState, options);
 	}
 
+	@Override
 	public boolean login() throws LoginException {
 		return _loginModule.login();
 	}
 
+	@Override
 	public boolean logout() throws LoginException {
 		return _loginModule.logout();
 	}

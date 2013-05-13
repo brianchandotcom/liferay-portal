@@ -38,8 +38,7 @@ public interface AssetRendererFactoryRegistry {
 	public AssetRendererFactory getAssetRendererFactoryByType(String type);
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getClassNameIds(
-	 *             long)}
+	 * @deprecated As of 6.2.0, replaced by {@link #getClassNameIds( long)}
 	 */
 	public long[] getClassNameIds();
 

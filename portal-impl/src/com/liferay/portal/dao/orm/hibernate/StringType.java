@@ -33,20 +33,24 @@ import org.hibernate.usertype.CompositeUserType;
  */
 public class StringType implements CompositeUserType, Serializable {
 
+	@Override
 	public Object assemble(
 		Serializable cached, SessionImplementor session, Object owner) {
 
 		return cached;
 	}
 
+	@Override
 	public Object deepCopy(Object obj) {
 		return obj;
 	}
 
+	@Override
 	public Serializable disassemble(Object value, SessionImplementor session) {
 		return (Serializable)value;
 	}
 
+	@Override
 	public boolean equals(Object x, Object y) {
 		if (Validator.equals(x, y)) {
 			return true;
@@ -61,26 +65,32 @@ public class StringType implements CompositeUserType, Serializable {
 		}
 	}
 
+	@Override
 	public String[] getPropertyNames() {
 		return new String[0];
 	}
 
+	@Override
 	public Type[] getPropertyTypes() {
 		return new Type[] {StandardBasicTypes.STRING};
 	}
 
+	@Override
 	public Object getPropertyValue(Object component, int property) {
 		return component;
 	}
 
+	@Override
 	public int hashCode(Object x) {
 		return x.hashCode();
 	}
 
+	@Override
 	public boolean isMutable() {
 		return false;
 	}
 
+	@Override
 	public Object nullSafeGet(
 			ResultSet rs, String[] names, SessionImplementor session,
 			Object owner)
@@ -89,6 +99,7 @@ public class StringType implements CompositeUserType, Serializable {
 		return StandardBasicTypes.STRING.nullSafeGet(rs, names, session, owner);
 	}
 
+	@Override
 	public void nullSafeSet(
 			PreparedStatement ps, Object target, int index,
 			SessionImplementor session)
@@ -97,6 +108,7 @@ public class StringType implements CompositeUserType, Serializable {
 		StandardBasicTypes.STRING.nullSafeSet(ps, target, index, session);
 	}
 
+	@Override
 	public Object replace(
 		Object original, Object target, SessionImplementor session,
 		Object owner) {
@@ -104,10 +116,12 @@ public class StringType implements CompositeUserType, Serializable {
 		return original;
 	}
 
+	@Override
 	public Class<String> returnedClass() {
 		return String.class;
 	}
 
+	@Override
 	public void setPropertyValue(Object component, int property, Object value) {
 	}
 

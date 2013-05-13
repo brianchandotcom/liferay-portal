@@ -24,6 +24,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 public class LayoutPrototypePermissionImpl
 	implements LayoutPrototypePermission {
 
+	@Override
 	public void check(
 			PermissionChecker permissionChecker, long layoutPrototypeId,
 			String actionId)
@@ -34,6 +35,7 @@ public class LayoutPrototypePermissionImpl
 		}
 	}
 
+	@Override
 	public boolean contains(
 		PermissionChecker permissionChecker, long layoutPrototypeId,
 		String actionId) {

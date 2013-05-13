@@ -20,6 +20,7 @@ package com.liferay.portal.kernel.search;
  */
 public class StringQueryFactoryImpl implements StringQueryFactory {
 
+	@Override
 	public Query create(String query) {
 		return new StringQueryImpl(query);
 	}

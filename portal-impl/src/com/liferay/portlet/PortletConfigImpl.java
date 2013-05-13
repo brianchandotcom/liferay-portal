@@ -66,14 +66,17 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 			getInitParameter("copy-request-parameters"));
 	}
 
+	@Override
 	public Map<String, String[]> getContainerRuntimeOptions() {
 		return _portletApp.getContainerRuntimeOptions();
 	}
 
+	@Override
 	public String getDefaultNamespace() {
 		return _portletApp.getDefaultNamespace();
 	}
 
+	@Override
 	public String getInitParameter(String name) {
 		if (name == null) {
 			throw new IllegalArgumentException();
@@ -82,31 +85,38 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 		return _portlet.getInitParams().get(name);
 	}
 
+	@Override
 	public Enumeration<String> getInitParameterNames() {
 		return Collections.enumeration(_portlet.getInitParams().keySet());
 	}
 
+	@Override
 	public Portlet getPortlet() {
 		return _portlet;
 	}
 
+	@Override
 	public PortletContext getPortletContext() {
 		return _portletContext;
 	}
 
+	@Override
 	public String getPortletId() {
 		return _portlet.getPortletId();
 	}
 
+	@Override
 	public String getPortletName() {
 		return _portletName;
 	}
 
+	@Override
 	public Enumeration<QName> getProcessingEventQNames() {
 		return Collections.enumeration(
 			toJavaxQNames(_portlet.getProcessingEvents()));
 	}
 
+	@Override
 	public Enumeration<String> getPublicRenderParameterNames() {
 		List<String> publicRenderParameterNames = new ArrayList<String>();
 
@@ -120,11 +130,13 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 		return Collections.enumeration(publicRenderParameterNames);
 	}
 
+	@Override
 	public Enumeration<QName> getPublishingEventQNames() {
 		return Collections.enumeration(
 			toJavaxQNames(_portlet.getPublishingEvents()));
 	}
 
+	@Override
 	public ResourceBundle getResourceBundle(Locale locale) {
 		String resourceBundleClassName = _portlet.getResourceBundle();
 
@@ -181,6 +193,7 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 		}
 	}
 
+	@Override
 	public Enumeration<Locale> getSupportedLocales() {
 		List<Locale> supportedLocales = new ArrayList<Locale>();
 
@@ -191,10 +204,12 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 		return Collections.enumeration(supportedLocales);
 	}
 
+	@Override
 	public boolean isCopyRequestParameters() {
 		return _copyRequestParameters;
 	}
 
+	@Override
 	public boolean isWARFile() {
 		return _portletApp.isWARFile();
 	}

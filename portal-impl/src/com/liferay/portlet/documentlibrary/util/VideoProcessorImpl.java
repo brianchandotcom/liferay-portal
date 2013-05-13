@@ -70,6 +70,7 @@ import org.apache.commons.lang.time.StopWatch;
 public class VideoProcessorImpl
 	extends DLPreviewableProcessor implements VideoProcessor {
 
+	@Override
 	public void afterPropertiesSet() {
 		boolean valid = true;
 
@@ -102,6 +103,7 @@ public class VideoProcessorImpl
 		FileUtil.mkdirs(THUMBNAIL_TMP_PATH);
 	}
 
+	@Override
 	public void generateVideo(
 			FileVersion sourceFileVersion, FileVersion destinationFileVersion)
 		throws Exception {
@@ -109,34 +111,40 @@ public class VideoProcessorImpl
 		_generateVideo(sourceFileVersion, destinationFileVersion);
 	}
 
+	@Override
 	public InputStream getPreviewAsStream(FileVersion fileVersion, String type)
 		throws Exception {
 
 		return doGetPreviewAsStream(fileVersion, type);
 	}
 
+	@Override
 	public long getPreviewFileSize(FileVersion fileVersion, String type)
 		throws Exception {
 
 		return doGetPreviewFileSize(fileVersion, type);
 	}
 
+	@Override
 	public InputStream getThumbnailAsStream(FileVersion fileVersion, int index)
 		throws Exception {
 
 		return doGetThumbnailAsStream(fileVersion, index);
 	}
 
+	@Override
 	public long getThumbnailFileSize(FileVersion fileVersion, int index)
 		throws Exception {
 
 		return doGetThumbnailFileSize(fileVersion, index);
 	}
 
+	@Override
 	public Set<String> getVideoMimeTypes() {
 		return _videoMimeTypes;
 	}
 
+	@Override
 	public boolean hasVideo(FileVersion fileVersion) {
 		boolean hasVideo = false;
 
@@ -154,6 +162,7 @@ public class VideoProcessorImpl
 		return hasVideo;
 	}
 
+	@Override
 	public boolean isSupported(String mimeType) {
 		if (Validator.isNull(mimeType)) {
 			return false;
@@ -170,10 +179,12 @@ public class VideoProcessorImpl
 		return false;
 	}
 
+	@Override
 	public boolean isVideoSupported(FileVersion fileVersion) {
 		return isSupported(fileVersion);
 	}
 
+	@Override
 	public boolean isVideoSupported(String mimeType) {
 		return isSupported(mimeType);
 	}

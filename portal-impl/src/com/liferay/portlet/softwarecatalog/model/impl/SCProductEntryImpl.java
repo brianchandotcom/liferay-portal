@@ -32,6 +32,7 @@ public class SCProductEntryImpl extends SCProductEntryBaseImpl {
 	public SCProductEntryImpl() {
 	}
 
+	@Override
 	public SCProductVersion getLatestVersion() throws SystemException {
 		List<SCProductVersion> results =
 			SCProductVersionLocalServiceUtil.getProductVersions(
@@ -46,11 +47,13 @@ public class SCProductEntryImpl extends SCProductEntryBaseImpl {
 		return lastVersion;
 	}
 
+	@Override
 	public List<SCLicense> getLicenses() throws SystemException {
 		return SCLicenseLocalServiceUtil.getProductEntryLicenses(
 			getProductEntryId());
 	}
 
+	@Override
 	public List<SCProductScreenshot> getScreenshots() throws SystemException {
 		return SCProductScreenshotLocalServiceUtil.getProductScreenshots(
 			getProductEntryId());

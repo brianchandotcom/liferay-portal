@@ -89,15 +89,18 @@ public class UserImpl extends UserBaseImpl {
 	public UserImpl() {
 	}
 
+	@Override
 	public List<Address> getAddresses() throws SystemException {
 		return AddressLocalServiceUtil.getAddresses(
 			getCompanyId(), Contact.class.getName(), getContactId());
 	}
 
+	@Override
 	public Date getBirthday() throws PortalException, SystemException {
 		return getContact().getBirthday();
 	}
 
+	@Override
 	public String getCompanyMx() throws PortalException, SystemException {
 		Company company = CompanyLocalServiceUtil.getCompanyById(
 			getCompanyId());
@@ -105,6 +108,7 @@ public class UserImpl extends UserBaseImpl {
 		return company.getMx();
 	}
 
+	@Override
 	public Contact getContact() throws PortalException, SystemException {
 		try {
 			ShardUtil.pushCompanyService(getCompanyId());
@@ -127,6 +131,7 @@ public class UserImpl extends UserBaseImpl {
 		return digest;
 	}
 
+	@Override
 	public String getDigest(String password) {
 		if (Validator.isNull(getScreenName())) {
 			throw new IllegalStateException("Screen name cannot be null");
@@ -158,6 +163,7 @@ public class UserImpl extends UserBaseImpl {
 		return sb.toString();
 	}
 
+	@Override
 	public String getDisplayEmailAddress() {
 		String emailAddress = super.getEmailAddress();
 
@@ -171,12 +177,14 @@ public class UserImpl extends UserBaseImpl {
 		return emailAddress;
 	}
 
+	@Override
 	public String getDisplayURL(String portalURL, String mainPath)
 		throws PortalException, SystemException {
 
 		return getDisplayURL(portalURL, mainPath, false);
 	}
 
+	@Override
 	public String getDisplayURL(
 			String portalURL, String mainPath, boolean privateLayout)
 		throws PortalException, SystemException {
@@ -217,6 +225,7 @@ public class UserImpl extends UserBaseImpl {
 		return StringPool.BLANK;
 	}
 
+	@Override
 	public String getDisplayURL(ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
 
@@ -224,6 +233,7 @@ public class UserImpl extends UserBaseImpl {
 			themeDisplay.getPortalURL(), themeDisplay.getPathMain(), false);
 	}
 
+	@Override
 	public String getDisplayURL(
 			ThemeDisplay themeDisplay, boolean privateLayout)
 		throws PortalException, SystemException {
@@ -233,15 +243,18 @@ public class UserImpl extends UserBaseImpl {
 			privateLayout);
 	}
 
+	@Override
 	public List<EmailAddress> getEmailAddresses() throws SystemException {
 		return EmailAddressLocalServiceUtil.getEmailAddresses(
 			getCompanyId(), Contact.class.getName(), getContactId());
 	}
 
+	@Override
 	public boolean getFemale() throws PortalException, SystemException {
 		return !getMale();
 	}
 
+	@Override
 	@AutoEscape
 	public String getFullName() {
 		FullNameGenerator fullNameGenerator =
@@ -251,16 +264,19 @@ public class UserImpl extends UserBaseImpl {
 			getFirstName(), getMiddleName(), getLastName());
 	}
 
+	@Override
 	public Group getGroup() throws PortalException, SystemException {
 		return GroupLocalServiceUtil.getUserGroup(getCompanyId(), getUserId());
 	}
 
+	@Override
 	public long getGroupId() throws PortalException, SystemException {
 		Group group = getGroup();
 
 		return group.getGroupId();
 	}
 
+	@Override
 	public long[] getGroupIds() throws SystemException {
 		List<Group> groups = getGroups();
 
@@ -275,14 +291,17 @@ public class UserImpl extends UserBaseImpl {
 		return groupIds;
 	}
 
+	@Override
 	public List<Group> getGroups() throws SystemException {
 		return GroupLocalServiceUtil.getUserGroups(getUserId());
 	}
 
+	@Override
 	public Locale getLocale() {
 		return _locale;
 	}
 
+	@Override
 	public String getLogin() throws PortalException, SystemException {
 		String login = null;
 
@@ -302,26 +321,31 @@ public class UserImpl extends UserBaseImpl {
 		return login;
 	}
 
+	@Override
 	public boolean getMale() throws PortalException, SystemException {
 		return getContact().getMale();
 	}
 
+	@Override
 	public List<Group> getMySites() throws PortalException, SystemException {
 		return getMySites(null, false, QueryUtil.ALL_POS);
 	}
 
+	@Override
 	public List<Group> getMySites(boolean includeControlPanel, int max)
 		throws PortalException, SystemException {
 
 		return getMySites(null, includeControlPanel, max);
 	}
 
+	@Override
 	public List<Group> getMySites(int max)
 		throws PortalException, SystemException {
 
 		return getMySites(null, false, max);
 	}
 
+	@Override
 	public List<Group> getMySites(
 			String[] classNames, boolean includeControlPanel, int max)
 		throws PortalException, SystemException {
@@ -354,16 +378,19 @@ public class UserImpl extends UserBaseImpl {
 		return myPlaces;
 	}
 
+	@Override
 	public List<Group> getMySites(String[] classNames, int max)
 		throws PortalException, SystemException {
 
 		return getMySites(classNames, false, max);
 	}
 
+	@Override
 	public long[] getOrganizationIds() throws PortalException, SystemException {
 		return getOrganizationIds(false);
 	}
 
+	@Override
 	public long[] getOrganizationIds(boolean includeAdministrative)
 		throws PortalException, SystemException {
 
@@ -381,12 +408,14 @@ public class UserImpl extends UserBaseImpl {
 		return organizationIds;
 	}
 
+	@Override
 	public List<Organization> getOrganizations()
 		throws PortalException, SystemException {
 
 		return getOrganizations(false);
 	}
 
+	@Override
 	public List<Organization> getOrganizations(boolean includeAdministrative)
 		throws PortalException, SystemException {
 
@@ -394,10 +423,12 @@ public class UserImpl extends UserBaseImpl {
 			getUserId(), includeAdministrative);
 	}
 
+	@Override
 	public boolean getPasswordModified() {
 		return _passwordModified;
 	}
 
+	@Override
 	public PasswordPolicy getPasswordPolicy()
 		throws PortalException, SystemException {
 
@@ -410,15 +441,18 @@ public class UserImpl extends UserBaseImpl {
 		return _passwordPolicy;
 	}
 
+	@Override
 	public String getPasswordUnencrypted() {
 		return _passwordUnencrypted;
 	}
 
+	@Override
 	public List<Phone> getPhones() throws SystemException {
 		return PhoneLocalServiceUtil.getPhones(
 			getCompanyId(), Contact.class.getName(), getContactId());
 	}
 
+	@Override
 	public String getPortraitURL(ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
 
@@ -426,18 +460,21 @@ public class UserImpl extends UserBaseImpl {
 			themeDisplay.getPathImage(), isMale(), getPortraitId());
 	}
 
+	@Override
 	public int getPrivateLayoutsPageCount()
 		throws PortalException, SystemException {
 
 		return LayoutLocalServiceUtil.getLayoutsCount(this, true);
 	}
 
+	@Override
 	public int getPublicLayoutsPageCount()
 		throws PortalException, SystemException {
 
 		return LayoutLocalServiceUtil.getLayoutsCount(this, false);
 	}
 
+	@Override
 	public Set<String> getReminderQueryQuestions()
 		throws PortalException, SystemException {
 
@@ -479,6 +516,7 @@ public class UserImpl extends UserBaseImpl {
 		return questions;
 	}
 
+	@Override
 	public long[] getRoleIds() throws SystemException {
 		List<Role> roles = getRoles();
 
@@ -493,10 +531,12 @@ public class UserImpl extends UserBaseImpl {
 		return roleIds;
 	}
 
+	@Override
 	public List<Role> getRoles() throws SystemException {
 		return RoleLocalServiceUtil.getUserRoles(getUserId());
 	}
 
+	@Override
 	public long[] getTeamIds() throws SystemException {
 		List<Team> teams = getTeams();
 
@@ -511,14 +551,17 @@ public class UserImpl extends UserBaseImpl {
 		return teamIds;
 	}
 
+	@Override
 	public List<Team> getTeams() throws SystemException {
 		return TeamLocalServiceUtil.getUserTeams(getUserId());
 	}
 
+	@Override
 	public TimeZone getTimeZone() {
 		return _timeZone;
 	}
 
+	@Override
 	public long[] getUserGroupIds() throws SystemException {
 		List<UserGroup> userGroups = getUserGroups();
 
@@ -533,19 +576,23 @@ public class UserImpl extends UserBaseImpl {
 		return userGroupIds;
 	}
 
+	@Override
 	public List<UserGroup> getUserGroups() throws SystemException {
 		return UserGroupLocalServiceUtil.getUserUserGroups(getUserId());
 	}
 
+	@Override
 	public List<Website> getWebsites() throws SystemException {
 		return WebsiteLocalServiceUtil.getWebsites(
 			getCompanyId(), Contact.class.getName(), getContactId());
 	}
 
+	@Override
 	public boolean hasCompanyMx() throws PortalException, SystemException {
 		return hasCompanyMx(getEmailAddress());
 	}
 
+	@Override
 	public boolean hasCompanyMx(String emailAddress)
 		throws PortalException, SystemException {
 
@@ -559,6 +606,7 @@ public class UserImpl extends UserBaseImpl {
 		return company.hasCompanyMx(emailAddress);
 	}
 
+	@Override
 	public boolean hasMySites() throws PortalException, SystemException {
 		if (isDefaultUser()) {
 			return false;
@@ -579,20 +627,24 @@ public class UserImpl extends UserBaseImpl {
 		return !groups.isEmpty();
 	}
 
+	@Override
 	public boolean hasOrganization() throws PortalException, SystemException {
 		List<Organization> organizations = getOrganizations();
 
 		return !organizations.isEmpty();
 	}
 
+	@Override
 	public boolean hasPrivateLayouts() throws PortalException, SystemException {
 		return LayoutLocalServiceUtil.hasLayouts(this, true);
 	}
 
+	@Override
 	public boolean hasPublicLayouts() throws PortalException, SystemException {
 		return LayoutLocalServiceUtil.hasLayouts(this, false);
 	}
 
+	@Override
 	public boolean hasReminderQuery() {
 		if (Validator.isNotNull(getReminderQueryQuestion()) &&
 			Validator.isNotNull(getReminderQueryAnswer())) {
@@ -604,6 +656,7 @@ public class UserImpl extends UserBaseImpl {
 		}
 	}
 
+	@Override
 	public boolean isActive() {
 		if (getStatus() == WorkflowConstants.STATUS_APPROVED) {
 			return true;
@@ -613,14 +666,17 @@ public class UserImpl extends UserBaseImpl {
 		}
 	}
 
+	@Override
 	public boolean isFemale() throws PortalException, SystemException {
 		return getFemale();
 	}
 
+	@Override
 	public boolean isMale() throws PortalException, SystemException {
 		return getMale();
 	}
 
+	@Override
 	public boolean isPasswordModified() {
 		return _passwordModified;
 	}
@@ -632,10 +688,12 @@ public class UserImpl extends UserBaseImpl {
 		super.setLanguageId(LocaleUtil.toLanguageId(_locale));
 	}
 
+	@Override
 	public void setPasswordModified(boolean passwordModified) {
 		_passwordModified = passwordModified;
 	}
 
+	@Override
 	public void setPasswordUnencrypted(String passwordUnencrypted) {
 		_passwordUnencrypted = passwordUnencrypted;
 	}

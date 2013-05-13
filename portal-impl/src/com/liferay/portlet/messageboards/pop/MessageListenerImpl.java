@@ -63,6 +63,7 @@ import org.apache.commons.lang.time.StopWatch;
  */
 public class MessageListenerImpl implements MessageListener {
 
+	@Override
 	public boolean accept(String from, String recipient, Message message) {
 		try {
 			if (isAutoReply(message)) {
@@ -116,6 +117,7 @@ public class MessageListenerImpl implements MessageListener {
 		}
 	}
 
+	@Override
 	public void deliver(String from, String recipient, Message message)
 		throws MessageListenerException {
 
@@ -262,6 +264,7 @@ public class MessageListenerImpl implements MessageListener {
 		}
 	}
 
+	@Override
 	public String getId() {
 		return MessageListenerImpl.class.getName();
 	}

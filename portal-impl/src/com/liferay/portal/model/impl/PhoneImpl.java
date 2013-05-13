@@ -27,6 +27,7 @@ public class PhoneImpl extends PhoneBaseImpl {
 	public PhoneImpl() {
 	}
 
+	@Override
 	public ListType getType() throws PortalException, SystemException {
 		return ListTypeServiceUtil.getListType(getTypeId());
 	}

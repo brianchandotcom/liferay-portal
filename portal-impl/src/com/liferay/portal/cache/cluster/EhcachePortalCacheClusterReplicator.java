@@ -46,6 +46,7 @@ public class EhcachePortalCacheClusterReplicator implements CacheReplicator {
 		}
 	}
 
+	@Override
 	public boolean alive() {
 		return true;
 	}
@@ -55,23 +56,29 @@ public class EhcachePortalCacheClusterReplicator implements CacheReplicator {
 		return super.clone();
 	}
 
+	@Override
 	public void dispose() {
 	}
 
+	@Override
 	public boolean isReplicateUpdatesViaCopy() {
 		return false;
 	}
 
+	@Override
 	public boolean notAlive() {
 		return false;
 	}
 
+	@Override
 	public void notifyElementEvicted(Ehcache ehcache, Element element) {
 	}
 
+	@Override
 	public void notifyElementExpired(Ehcache ehcache, Element element) {
 	}
 
+	@Override
 	public void notifyElementPut(Ehcache ehcache, Element element)
 		throws CacheException {
 
@@ -91,6 +98,7 @@ public class EhcachePortalCacheClusterReplicator implements CacheReplicator {
 		PortalCacheClusterLinkUtil.sendEvent(portalCacheClusterEvent);
 	}
 
+	@Override
 	public void notifyElementRemoved(Ehcache ehcache, Element element)
 		throws CacheException {
 
@@ -106,6 +114,7 @@ public class EhcachePortalCacheClusterReplicator implements CacheReplicator {
 		PortalCacheClusterLinkUtil.sendEvent(portalCacheClusterEvent);
 	}
 
+	@Override
 	public void notifyElementUpdated(Ehcache ehcache, Element element)
 		throws CacheException {
 
@@ -125,6 +134,7 @@ public class EhcachePortalCacheClusterReplicator implements CacheReplicator {
 		PortalCacheClusterLinkUtil.sendEvent(portalCacheClusterEvent);
 	}
 
+	@Override
 	public void notifyRemoveAll(Ehcache ehcache) {
 		if (!_replicateRemovals) {
 			return;

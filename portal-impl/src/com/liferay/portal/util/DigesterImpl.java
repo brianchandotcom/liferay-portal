@@ -42,18 +42,22 @@ import org.apache.commons.codec.binary.Hex;
 @DoPrivileged
 public class DigesterImpl implements Digester {
 
+	@Override
 	public String digest(ByteBuffer byteBuffer) {
 		return digest(Digester.DEFAULT_ALGORITHM, byteBuffer);
 	}
 
+	@Override
 	public String digest(InputStream inputStream) {
 		return digest(Digester.DEFAULT_ALGORITHM, inputStream);
 	}
 
+	@Override
 	public String digest(String text) {
 		return digest(Digester.DEFAULT_ALGORITHM, text);
 	}
 
+	@Override
 	public String digest(String algorithm, ByteBuffer byteBuffer) {
 		if (_BASE_64) {
 			return digestBase64(algorithm, byteBuffer);
@@ -63,6 +67,7 @@ public class DigesterImpl implements Digester {
 		}
 	}
 
+	@Override
 	public String digest(String algorithm, InputStream inputStream) {
 		if (_BASE_64) {
 			return digestBase64(algorithm, inputStream);
@@ -81,24 +86,29 @@ public class DigesterImpl implements Digester {
 		}
 	}
 
+	@Override
 	public String digestBase64(ByteBuffer byteBuffer) {
 		return digestBase64(Digester.DEFAULT_ALGORITHM, byteBuffer);
 	}
 
+	@Override
 	public String digestBase64(InputStream inputStream) {
 		return digestBase64(Digester.DEFAULT_ALGORITHM, inputStream);
 	}
 
+	@Override
 	public String digestBase64(String text) {
 		return digestBase64(Digester.DEFAULT_ALGORITHM, text);
 	}
 
+	@Override
 	public String digestBase64(String algorithm, ByteBuffer byteBuffer) {
 		byte[] bytes = digestRaw(algorithm, byteBuffer);
 
 		return Base64.encode(bytes);
 	}
 
+	@Override
 	public String digestBase64(String algorithm, InputStream inputStream) {
 		byte[] bytes = digestRaw(algorithm, inputStream);
 
@@ -111,24 +121,29 @@ public class DigesterImpl implements Digester {
 		return Base64.encode(bytes);
 	}
 
+	@Override
 	public String digestHex(ByteBuffer byteBuffer) {
 		return digestHex(Digester.DEFAULT_ALGORITHM, byteBuffer);
 	}
 
+	@Override
 	public String digestHex(InputStream inputStream) {
 		return digestHex(Digester.DEFAULT_ALGORITHM, inputStream);
 	}
 
+	@Override
 	public String digestHex(String text) {
 		return digestHex(Digester.DEFAULT_ALGORITHM, text);
 	}
 
+	@Override
 	public String digestHex(String algorithm, ByteBuffer byteBuffer) {
 		byte[] bytes = digestRaw(algorithm, byteBuffer);
 
 		return Hex.encodeHexString(bytes);
 	}
 
+	@Override
 	public String digestHex(String algorithm, InputStream inputStream) {
 		byte[] bytes = digestRaw(algorithm, inputStream);
 
@@ -141,14 +156,17 @@ public class DigesterImpl implements Digester {
 		return Hex.encodeHexString(bytes);
 	}
 
+	@Override
 	public byte[] digestRaw(ByteBuffer byteBuffer) {
 		return digestRaw(Digester.DEFAULT_ALGORITHM, byteBuffer);
 	}
 
+	@Override
 	public byte[] digestRaw(String text) {
 		return digestRaw(Digester.DEFAULT_ALGORITHM, text);
 	}
 
+	@Override
 	public byte[] digestRaw(String algorithm, ByteBuffer byteBuffer) {
 		MessageDigest messageDigest = null;
 
@@ -164,6 +182,7 @@ public class DigesterImpl implements Digester {
 		return messageDigest.digest();
 	}
 
+	@Override
 	public byte[] digestRaw(String algorithm, InputStream inputStream) {
 		MessageDigest messageDigest = null;
 

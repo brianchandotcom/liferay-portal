@@ -32,6 +32,7 @@ public class GetAttributesAction extends BaseJMXManageAction<AttributeList> {
 		_mBean = mBean;
 	}
 
+	@Override
 	public AttributeList action() throws ManageActionException {
 		try {
 			ObjectName objectName = _mBean.getObjectName();

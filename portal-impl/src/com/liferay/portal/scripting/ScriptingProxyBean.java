@@ -31,12 +31,14 @@ import javax.portlet.PortletResponse;
  */
 public class ScriptingProxyBean extends BaseProxyBean implements Scripting {
 
+	@Override
 	public void addScriptingExecutor(
 		String language, ScriptingExecutor scriptingExecutor) {
 
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void clearCache(String language) {
 		throw new UnsupportedOperationException();
 	}
@@ -56,6 +58,7 @@ public class ScriptingProxyBean extends BaseProxyBean implements Scripting {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public Map<String, Object> getPortletObjects(
 		PortletConfig portletConfig, PortletContext portletContext,
 		PortletRequest portletRequest, PortletResponse portletResponse) {
@@ -63,10 +66,12 @@ public class ScriptingProxyBean extends BaseProxyBean implements Scripting {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public Set<String> getSupportedLanguages() {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void setScriptingExecutors(
 		Map<String, ScriptingExecutor> scriptingExecutors) {
 

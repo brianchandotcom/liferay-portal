@@ -30,6 +30,7 @@ import java.util.Date;
 public class MBDiscussionLocalServiceImpl
 	extends MBDiscussionLocalServiceBaseImpl {
 
+	@Override
 	public MBDiscussion addDiscussion(
 			long userId, long classNameId, long classPK, long threadId,
 			ServiceContext serviceContext)
@@ -59,12 +60,14 @@ public class MBDiscussionLocalServiceImpl
 		return discussion;
 	}
 
+	@Override
 	public MBDiscussion getDiscussion(long discussionId)
 		throws PortalException, SystemException {
 
 		return mbDiscussionPersistence.findByPrimaryKey(discussionId);
 	}
 
+	@Override
 	public MBDiscussion getDiscussion(String className, long classPK)
 		throws PortalException, SystemException {
 
@@ -73,6 +76,7 @@ public class MBDiscussionLocalServiceImpl
 		return mbDiscussionPersistence.findByC_C(classNameId, classPK);
 	}
 
+	@Override
 	public MBDiscussion getThreadDiscussion(long threadId)
 		throws PortalException, SystemException {
 

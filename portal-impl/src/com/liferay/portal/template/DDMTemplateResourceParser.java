@@ -36,6 +36,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUti
  */
 public class DDMTemplateResourceParser implements TemplateResourceParser {
 
+	@Override
 	@SuppressWarnings("deprecation")
 	public TemplateResource getTemplateResource(String templateId)
 		throws TemplateException {

@@ -32,16 +32,19 @@ import java.util.concurrent.ConcurrentHashMap;
 public class AtomCollectionAdapterRegistryImpl
 	implements AtomCollectionAdapterRegistry {
 
+	@Override
 	public AtomCollectionAdapter<?> getAtomCollectionAdapter(
 		String collectionName) {
 
 		return _atomCollectionAdapters.get(collectionName);
 	}
 
+	@Override
 	public List<AtomCollectionAdapter<?>> getAtomCollectionAdapters() {
 		return ListUtil.fromMapValues(_atomCollectionAdapters);
 	}
 
+	@Override
 	public void register(AtomCollectionAdapter<?> atomCollectionAdapter) {
 		if (_atomCollectionAdapters.containsKey(
 				atomCollectionAdapter.getCollectionName())) {
@@ -59,6 +62,7 @@ public class AtomCollectionAdapterRegistryImpl
 			atomCollectionAdapter.getCollectionName(), atomCollectionAdapter);
 	}
 
+	@Override
 	public void unregister(AtomCollectionAdapter<?> atomCollectionAdapter) {
 		_atomCollectionAdapters.remove(
 			atomCollectionAdapter.getCollectionName());

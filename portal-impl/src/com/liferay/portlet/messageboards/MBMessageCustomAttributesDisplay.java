@@ -24,6 +24,7 @@ import com.liferay.portlet.messageboards.model.MBMessage;
 public class MBMessageCustomAttributesDisplay
 	extends BaseCustomAttributesDisplay {
 
+	@Override
 	public String getClassName() {
 		return MBMessage.class.getName();
 	}

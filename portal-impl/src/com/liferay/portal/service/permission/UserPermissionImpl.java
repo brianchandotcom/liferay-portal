@@ -40,6 +40,7 @@ public class UserPermissionImpl implements UserPermission {
 	 * @deprecated As of 6.2.0, replaced by {@link #check(PermissionChecker,
 	 *             long, long[], String)}
 	 */
+	@Override
 	public void check(
 			PermissionChecker permissionChecker, long userId,
 			long organizationId, long locationId, String actionId)
@@ -50,6 +51,7 @@ public class UserPermissionImpl implements UserPermission {
 			actionId);
 	}
 
+	@Override
 	public void check(
 			PermissionChecker permissionChecker, long userId,
 			long[] organizationIds, String actionId)
@@ -60,6 +62,7 @@ public class UserPermissionImpl implements UserPermission {
 		}
 	}
 
+	@Override
 	public void check(
 			PermissionChecker permissionChecker, long userId, String actionId)
 		throws PrincipalException {
@@ -73,6 +76,7 @@ public class UserPermissionImpl implements UserPermission {
 	 * @deprecated As of 6.2.0, replaced by {@link #contains(PermissionChecker,
 	 *             long, long[], String)}
 	 */
+	@Override
 	public boolean contains(
 		PermissionChecker permissionChecker, long userId, long organizationId,
 		long locationId, String actionId) {
@@ -82,6 +86,7 @@ public class UserPermissionImpl implements UserPermission {
 			actionId);
 	}
 
+	@Override
 	public boolean contains(
 		PermissionChecker permissionChecker, long userId,
 		long[] organizationIds, String actionId) {
@@ -175,6 +180,7 @@ public class UserPermissionImpl implements UserPermission {
 		return false;
 	}
 
+	@Override
 	public boolean contains(
 		PermissionChecker permissionChecker, long userId, String actionId) {
 

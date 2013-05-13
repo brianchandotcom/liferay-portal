@@ -49,6 +49,7 @@ public class PortalClassLoaderServlet
 		PortalLifecycleUtil.register(this);
 	}
 
+	@Override
 	public void portalDestroy() {
 		if (!_calledPortalDestroy) {
 			PortalLifecycleUtil.removeDestroy(this);
@@ -59,6 +60,7 @@ public class PortalClassLoaderServlet
 		}
 	}
 
+	@Override
 	public void portalInit() {
 		Thread currentThread = Thread.currentThread();
 

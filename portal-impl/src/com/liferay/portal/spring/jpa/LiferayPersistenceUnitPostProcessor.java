@@ -33,6 +33,7 @@ import org.springframework.orm.jpa.persistenceunit.PersistenceUnitPostProcessor;
 public class LiferayPersistenceUnitPostProcessor
 	implements PersistenceUnitPostProcessor {
 
+	@Override
 	public void postProcessPersistenceUnitInfo(
 		MutablePersistenceUnitInfo mutablePersistenceUnitInfo) {
 

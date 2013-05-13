@@ -27,12 +27,14 @@ import javax.servlet.http.HttpSession;
  */
 public class SessionLayoutClone implements LayoutClone {
 
+	@Override
 	public String get(HttpServletRequest request, long plid) {
 		HttpSession session = getPortalSession(request);
 
 		return (String)session.getAttribute(encodeKey(plid));
 	}
 
+	@Override
 	public void update(
 		HttpServletRequest request, long plid, String typeSettings) {
 

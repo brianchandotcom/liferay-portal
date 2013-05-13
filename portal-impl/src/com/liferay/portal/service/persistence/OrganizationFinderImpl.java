@@ -85,6 +85,7 @@ public class OrganizationFinderImpl
 	public static final String JOIN_BY_USERS_ORGS =
 		OrganizationFinder.class.getName() + ".joinByUsersOrgs";
 
+	@Override
 	public int countByKeywords(
 			long companyId, long parentOrganizationId,
 			String parentOrganizationIdComparator, String keywords, String type,
@@ -114,6 +115,7 @@ public class OrganizationFinderImpl
 			andOperator);
 	}
 
+	@Override
 	public int countByO_U(long organizationId, long userId)
 		throws SystemException {
 
@@ -139,6 +141,7 @@ public class OrganizationFinderImpl
 		}
 	}
 
+	@Override
 	public int countByC_PO_N_T_S_C_Z_R_C(
 			long companyId, long parentOrganizationId,
 			String parentOrganizationIdComparator, String name, String type,
@@ -158,6 +161,7 @@ public class OrganizationFinderImpl
 			andOperator);
 	}
 
+	@Override
 	public int countByC_PO_N_T_S_C_Z_R_C(
 			long companyId, long parentOrganizationId,
 			String parentOrganizationIdComparator, String[] names, String type,
@@ -291,6 +295,7 @@ public class OrganizationFinderImpl
 		}
 	}
 
+	@Override
 	public List<Organization> findByCompanyId(
 			long companyId, LinkedHashMap<String, Object> params, int start,
 			int end, OrderByComparator obc)
@@ -356,6 +361,7 @@ public class OrganizationFinderImpl
 		}
 	}
 
+	@Override
 	public List<Organization> findByKeywords(
 			long companyId, long parentOrganizationId,
 			String parentOrganizationIdComparator, String keywords, String type,
@@ -385,6 +391,7 @@ public class OrganizationFinderImpl
 			andOperator, start, end, obc);
 	}
 
+	@Override
 	public List<Organization> findByC_PO_N_T_S_C_Z_R_C(
 			long companyId, long parentOrganizationId,
 			String parentOrganizationIdComparator, String name, String type,
@@ -404,6 +411,7 @@ public class OrganizationFinderImpl
 			andOperator, start, end, obc);
 	}
 
+	@Override
 	public List<Organization> findByC_PO_N_T_S_C_Z_R_C(
 			long companyId, long parentOrganizationId,
 			String parentOrganizationIdComparator, String[] names, String type,

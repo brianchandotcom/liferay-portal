@@ -35,9 +35,11 @@ import com.liferay.portlet.messageboards.util.MBMessageAttachmentsUtil;
  */
 public class MBMessageTrashHandler extends BaseTrashHandler {
 
+	@Override
 	public void deleteTrashEntry(long classPK) {
 	}
 
+	@Override
 	public String getClassName() {
 		return MBMessage.class.getName();
 	}
@@ -56,6 +58,7 @@ public class MBMessageTrashHandler extends BaseTrashHandler {
 		return false;
 	}
 
+	@Override
 	public boolean isInTrash(long classPK)
 		throws PortalException, SystemException {
 
@@ -90,6 +93,7 @@ public class MBMessageTrashHandler extends BaseTrashHandler {
 			message.getMessageId(), fileEntry.getTitle());
 	}
 
+	@Override
 	public void restoreTrashEntry(long userId, long classPK) {
 	}
 

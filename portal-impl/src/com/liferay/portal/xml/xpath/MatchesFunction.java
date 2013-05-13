@@ -105,6 +105,7 @@ public class MatchesFunction implements Function {
 		return matcher.find();
 	}
 
+	@Override
 	@SuppressWarnings("rawtypes")
 	public Object call(Context context, List arguments)
 		throws FunctionCallException {

@@ -43,10 +43,12 @@ public class DoPrivilegedHandler
 		_initNotPrivilegedMethods();
 	}
 
+	@Override
 	public Object getActualBean() {
 		return _bean;
 	}
 
+	@Override
 	public Object invoke(Object proxy, Method method, Object[] arguments)
 		throws Throwable {
 

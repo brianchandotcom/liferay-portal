@@ -81,6 +81,7 @@ public class PortletRequestDispatcherImpl
 		_portlet = _liferayPortletContext.getPortlet();
 	}
 
+	@Override
 	public void forward(
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws IllegalStateException, IOException, PortletException {
@@ -102,6 +103,7 @@ public class PortletRequestDispatcherImpl
 		}
 	}
 
+	@Override
 	public void include(
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws IOException, PortletException {
@@ -116,6 +118,7 @@ public class PortletRequestDispatcherImpl
 		}
 	}
 
+	@Override
 	public void include(
 			PortletRequest portletRequest, PortletResponse portletResponse,
 			boolean strutsURLEncoder)
@@ -131,6 +134,7 @@ public class PortletRequestDispatcherImpl
 		}
 	}
 
+	@Override
 	public void include(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {

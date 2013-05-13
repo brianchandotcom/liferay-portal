@@ -39,6 +39,7 @@ public class ApplicationDisplayTemplateWebDAVStorageImpl
 			webDAVRequest, getRootPath(), getToken(), 0);
 	}
 
+	@Override
 	public Resource getResource(WebDAVRequest webDAVRequest)
 		throws WebDAVException {
 
@@ -46,6 +47,7 @@ public class ApplicationDisplayTemplateWebDAVStorageImpl
 			webDAVRequest, getRootPath(), getToken(), 0);
 	}
 
+	@Override
 	public List<Resource> getResources(WebDAVRequest webDAVRequest)
 		throws WebDAVException {
 

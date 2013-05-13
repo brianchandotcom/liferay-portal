@@ -37,6 +37,7 @@ public class SessionImpl implements Session {
 		return _session;
 	}
 
+	@Override
 	public void setDefaultContext(
 		Set<String> filter, boolean includeAcls,
 		boolean includeAllowableActions, boolean includePolicies,

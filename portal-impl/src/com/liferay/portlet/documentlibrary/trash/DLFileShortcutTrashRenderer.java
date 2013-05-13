@@ -48,10 +48,12 @@ public class DLFileShortcutTrashRenderer extends BaseTrashRenderer {
 			fileShortcut.getToFileEntryId());
 	}
 
+	@Override
 	public String getClassName() {
 		return DLFileShortcut.class.getName();
 	}
 
+	@Override
 	public long getClassPK() {
 		return _fileShortcut.getPrimaryKey();
 	}
@@ -62,19 +64,23 @@ public class DLFileShortcutTrashRenderer extends BaseTrashRenderer {
 			_fileEntry.getIcon() + ".png";
 	}
 
+	@Override
 	public String getPortletId() {
 		return PortletKeys.DOCUMENT_LIBRARY;
 	}
 
+	@Override
 	public String getSummary(Locale locale) {
 		return HtmlUtil.stripHtml(_fileEntry.getDescription());
 	}
 
+	@Override
 	public String getTitle(Locale locale) {
 		return LanguageUtil.format(
 			locale, "shortcut-to-x", _fileShortcut.getToTitle());
 	}
 
+	@Override
 	public String getType() {
 		return TYPE;
 	}

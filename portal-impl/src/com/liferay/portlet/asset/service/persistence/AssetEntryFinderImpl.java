@@ -54,6 +54,7 @@ public class AssetEntryFinderImpl
 	public static final String FIND_BY_AND_TAG_IDS =
 		AssetEntryFinder.class.getName() + ".findByAndTagIds";
 
+	@Override
 	public int countEntries(AssetEntryQuery entryQuery) throws SystemException {
 		Session session = null;
 
@@ -82,6 +83,7 @@ public class AssetEntryFinderImpl
 		}
 	}
 
+	@Override
 	public List<AssetEntry> findEntries(AssetEntryQuery entryQuery)
 		throws SystemException {
 

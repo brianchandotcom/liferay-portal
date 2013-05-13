@@ -27,6 +27,7 @@ public class StringResourceRetriever implements ResourceRetriever {
 		_inputStream = new UnsyncByteArrayInputStream(resource.getBytes());
 	}
 
+	@Override
 	public InputStream getInputStream() {
 		return _inputStream;
 	}

@@ -31,6 +31,7 @@ public class AddressImpl extends AddressBaseImpl {
 	public AddressImpl() {
 	}
 
+	@Override
 	public Country getCountry() {
 		Country country = null;
 
@@ -46,6 +47,7 @@ public class AddressImpl extends AddressBaseImpl {
 		return country;
 	}
 
+	@Override
 	public Region getRegion() {
 		Region region = null;
 
@@ -61,6 +63,7 @@ public class AddressImpl extends AddressBaseImpl {
 		return region;
 	}
 
+	@Override
 	public ListType getType() {
 		ListType type = null;
 

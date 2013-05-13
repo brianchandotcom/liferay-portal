@@ -24,25 +24,30 @@ import javax.portlet.PortletURL;
  */
 public class BaseIndexerPostProcessor implements IndexerPostProcessor {
 
+	@Override
 	public void postProcessContextQuery(
 			BooleanQuery contextQuery, SearchContext searchContext)
 		throws Exception {
 	}
 
+	@Override
 	public void postProcessDocument(Document document, Object obj)
 		throws Exception {
 	}
 
+	@Override
 	public void postProcessFullQuery(
 			BooleanQuery fullQuery, SearchContext searchContext)
 		throws Exception {
 	}
 
+	@Override
 	public void postProcessSearchQuery(
 			BooleanQuery searchQuery, SearchContext searchContext)
 		throws Exception {
 	}
 
+	@Override
 	public void postProcessSummary(
 		Summary summary, Document document, Locale locale, String snippet,
 		PortletURL portletURL) {

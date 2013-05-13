@@ -43,6 +43,7 @@ import org.apache.tika.metadata.Metadata;
  */
 public class XugglerRawMetadataProcessor extends BaseRawMetadataProcessor {
 
+	@Override
 	public void exportGeneratedFiles(
 			PortletDataContext portletDataContext, FileEntry fileEntry,
 			Element fileEntryElement)
@@ -51,6 +52,7 @@ public class XugglerRawMetadataProcessor extends BaseRawMetadataProcessor {
 		return;
 	}
 
+	@Override
 	public void importGeneratedFiles(
 			PortletDataContext portletDataContext, FileEntry fileEntry,
 			FileEntry importedFileEntry, Element fileEntryElement)

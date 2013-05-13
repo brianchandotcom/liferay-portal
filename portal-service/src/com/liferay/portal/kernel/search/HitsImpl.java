@@ -30,6 +30,7 @@ public class HitsImpl implements Hits {
 	public HitsImpl() {
 	}
 
+	@Override
 	public void copy(Hits hits) {
 		setDocs(hits.getDocs());
 		setLength(hits.getLength());
@@ -43,29 +44,35 @@ public class HitsImpl implements Hits {
 		setStart(hits.getStart());
 	}
 
+	@Override
 	public Document doc(int n) {
 		return _docs[n];
 	}
 
+	@Override
 	@JSON
 	public String getCollatedSpellCheckResult() {
 		return _collatedSpellCheckResult;
 	}
 
+	@Override
 	@JSON
 	public Document[] getDocs() {
 		return _docs;
 	}
 
+	@Override
 	public int getLength() {
 		return _length;
 	}
 
+	@Override
 	@JSON(include = false)
 	public Query getQuery() {
 		return _query;
 	}
 
+	@Override
 	@JSON
 	public String[] getQuerySuggestions() {
 		if ((_querySuggestions == null) || (_querySuggestions.length == 0)) {
@@ -75,65 +82,80 @@ public class HitsImpl implements Hits {
 		return _querySuggestions;
 	}
 
+	@Override
 	@JSON
 	public String[] getQueryTerms() {
 		return _queryTerms;
 	}
 
+	@Override
 	@JSON
 	public float[] getScores() {
 		return _scores;
 	}
 
+	@Override
 	public float getSearchTime() {
 		return _searchTime;
 	}
 
+	@Override
 	@JSON
 	public String[] getSnippets() {
 		return _snippets;
 	}
 
+	@Override
 	public Map<String, List<String>> getSpellCheckResults() {
 		return _spellCheckResults;
 	}
 
+	@Override
 	public long getStart() {
 		return _start;
 	}
 
+	@Override
 	public float score(int n) {
 		return _scores[n];
 	}
 
+	@Override
 	public void setCollatedSpellCheckResult(String collatedSpellCheckResult) {
 		_collatedSpellCheckResult = collatedSpellCheckResult;
 	}
 
+	@Override
 	public void setDocs(Document[] docs) {
 		_docs = docs;
 	}
 
+	@Override
 	public void setLength(int length) {
 		_length = length;
 	}
 
+	@Override
 	public void setQuery(Query query) {
 		_query = query;
 	}
 
+	@Override
 	public void setQuerySuggestions(String[] querySuggestions) {
 		_querySuggestions = querySuggestions;
 	}
 
+	@Override
 	public void setQueryTerms(String[] queryTerms) {
 		_queryTerms = queryTerms;
 	}
 
+	@Override
 	public void setScores(float[] scores) {
 		_scores = scores;
 	}
 
+	@Override
 	public void setScores(Float[] scores) {
 		float[] primScores = new float[scores.length];
 
@@ -144,28 +166,34 @@ public class HitsImpl implements Hits {
 		setScores(primScores);
 	}
 
+	@Override
 	public void setSearchTime(float time) {
 		_searchTime = time;
 	}
 
+	@Override
 	public void setSnippets(String[] snippets) {
 		_snippets = snippets;
 	}
 
+	@Override
 	public void setSpellCheckResults(
 		Map<String, List<String>> spellCheckResults) {
 
 		_spellCheckResults = spellCheckResults;
 	}
 
+	@Override
 	public void setStart(long start) {
 		_start = start;
 	}
 
+	@Override
 	public String snippet(int n) {
 		return _snippets[n];
 	}
 
+	@Override
 	public List<Document> toList() {
 		List<Document> subset = new ArrayList<Document>(_docs.length);
 

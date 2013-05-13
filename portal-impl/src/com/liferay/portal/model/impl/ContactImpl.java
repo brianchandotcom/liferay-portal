@@ -27,6 +27,7 @@ public class ContactImpl extends ContactBaseImpl {
 	public ContactImpl() {
 	}
 
+	@Override
 	public String getFullName() {
 		FullNameGenerator fullNameGenerator =
 			FullNameGeneratorFactory.getInstance();
@@ -35,6 +36,7 @@ public class ContactImpl extends ContactBaseImpl {
 			getFirstName(), getMiddleName(), getLastName());
 	}
 
+	@Override
 	public boolean isUser() {
 		return hasClassName(User.class);
 	}

@@ -31,6 +31,7 @@ import java.util.List;
  */
 public class GroupWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
+	@Override
 	public Resource getResource(WebDAVRequest webDAVRequest)
 		throws WebDAVException {
 
@@ -41,6 +42,7 @@ public class GroupWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		return new BaseResourceImpl(path, StringPool.BLANK, StringPool.BLANK);
 	}
 
+	@Override
 	public List<Resource> getResources(WebDAVRequest webDAVRequest)
 		throws WebDAVException {
 

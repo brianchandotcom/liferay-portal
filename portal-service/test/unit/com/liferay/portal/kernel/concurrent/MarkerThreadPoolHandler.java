@@ -19,18 +19,22 @@ package com.liferay.portal.kernel.concurrent;
  */
 public class MarkerThreadPoolHandler implements ThreadPoolHandler {
 
+	@Override
 	public void afterExecute(Runnable runnable, Throwable throwable) {
 		_afterExecute = true;
 	}
 
+	@Override
 	public void beforeExecute(Thread thread, Runnable runnable) {
 		_beforeExecute = true;
 	}
 
+	@Override
 	public void beforeThreadEnd(Thread thread) {
 		_beforeThreadEnd = true;
 	}
 
+	@Override
 	public void beforeThreadStart(Thread thread) {
 		_beforeThreadStart = true;
 	}
@@ -55,6 +59,7 @@ public class MarkerThreadPoolHandler implements ThreadPoolHandler {
 		return _terminated;
 	}
 
+	@Override
 	public void terminated() {
 		_terminated = true;
 	}

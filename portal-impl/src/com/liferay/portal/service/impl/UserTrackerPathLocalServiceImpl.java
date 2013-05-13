@@ -26,6 +26,7 @@ import java.util.List;
 public class UserTrackerPathLocalServiceImpl
 	extends UserTrackerPathLocalServiceBaseImpl {
 
+	@Override
 	public List<UserTrackerPath> getUserTrackerPaths(
 			long userTrackerId, int start, int end)
 		throws SystemException {

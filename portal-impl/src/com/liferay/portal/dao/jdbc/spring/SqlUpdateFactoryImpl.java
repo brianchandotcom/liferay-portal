@@ -26,6 +26,7 @@ import javax.sql.DataSource;
 @DoPrivileged
 public class SqlUpdateFactoryImpl implements SqlUpdateFactory {
 
+	@Override
 	public SqlUpdate getSqlUpdate(
 		DataSource dataSource, String sql, int[] types) {
 

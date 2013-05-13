@@ -32,14 +32,17 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class LiferayURLConstructor implements URLConstructor {
 
+	@Override
 	public String getForwardPage(HttpServletRequest request) {
 		return "Wiki.jsp";
 	}
 
+	@Override
 	public void initialize(
 		com.ecyrd.jspwiki.WikiEngine engine, Properties props) {
 	}
 
+	@Override
 	public String makeURL(
 		String context, String name, boolean absolute, String parameters) {
 
@@ -98,6 +101,7 @@ public class LiferayURLConstructor implements URLConstructor {
 		return path + parameters;
 	}
 
+	@Override
 	public String parsePage(
 		String context, HttpServletRequest request, String encoding) {
 

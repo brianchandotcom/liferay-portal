@@ -28,12 +28,14 @@ import java.util.List;
 public class JournalArticleResourceLocalServiceImpl
 	extends JournalArticleResourceLocalServiceBaseImpl {
 
+	@Override
 	public void deleteArticleResource(long groupId, String articleId)
 		throws PortalException, SystemException {
 
 		journalArticleResourcePersistence.removeByG_A(groupId, articleId);
 	}
 
+	@Override
 	public JournalArticleResource fetchArticleResource(
 			long groupId, String articleId)
 		throws SystemException {
@@ -41,6 +43,7 @@ public class JournalArticleResourceLocalServiceImpl
 		return journalArticleResourcePersistence.fetchByG_A(groupId, articleId);
 	}
 
+	@Override
 	public JournalArticleResource fetchArticleResource(
 			String uuid, long groupId)
 		throws SystemException {
@@ -48,6 +51,7 @@ public class JournalArticleResourceLocalServiceImpl
 		return journalArticleResourcePersistence.fetchByUUID_G(uuid, groupId);
 	}
 
+	@Override
 	public JournalArticleResource getArticleResource(
 			long articleResourcePrimKey)
 		throws PortalException, SystemException {
@@ -56,12 +60,14 @@ public class JournalArticleResourceLocalServiceImpl
 			articleResourcePrimKey);
 	}
 
+	@Override
 	public long getArticleResourcePrimKey(long groupId, String articleId)
 		throws SystemException {
 
 		return getArticleResourcePrimKey(null, groupId, articleId);
 	}
 
+	@Override
 	public long getArticleResourcePrimKey(
 			String uuid, long groupId, String articleId)
 		throws SystemException {
@@ -97,6 +103,7 @@ public class JournalArticleResourceLocalServiceImpl
 		return articleResource.getResourcePrimKey();
 	}
 
+	@Override
 	public List<JournalArticleResource> getArticleResources(long groupId)
 		throws SystemException {
 

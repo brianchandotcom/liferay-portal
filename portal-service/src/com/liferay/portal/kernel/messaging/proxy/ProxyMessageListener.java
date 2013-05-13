@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.Validator;
  */
 public class ProxyMessageListener implements MessageListener {
 
+	@Override
 	public void receive(Message message) {
 		ProxyResponse proxyResponse = new ProxyResponse();
 

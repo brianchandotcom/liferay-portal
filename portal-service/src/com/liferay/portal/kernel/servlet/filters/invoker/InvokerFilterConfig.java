@@ -36,14 +36,17 @@ public class InvokerFilterConfig implements FilterConfig {
 		_initParameterMap = initParameterMap;
 	}
 
+	@Override
 	public String getFilterName() {
 		return _filterName;
 	}
 
+	@Override
 	public String getInitParameter(String key) {
 		return _initParameterMap.get(key);
 	}
 
+	@Override
 	public Enumeration<String> getInitParameterNames() {
 		return new Enumeration<String>() {
 
@@ -61,6 +64,7 @@ public class InvokerFilterConfig implements FilterConfig {
 		};
 	}
 
+	@Override
 	public ServletContext getServletContext() {
 		return _servletContext;
 	}

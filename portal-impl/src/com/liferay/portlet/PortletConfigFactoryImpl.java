@@ -36,6 +36,7 @@ public class PortletConfigFactoryImpl implements PortletConfigFactory {
 		_pool = new ConcurrentHashMap<String, Map<String, PortletConfig>>();
 	}
 
+	@Override
 	public PortletConfig create(
 		Portlet portlet, ServletContext servletContext) {
 
@@ -63,10 +64,12 @@ public class PortletConfigFactoryImpl implements PortletConfigFactory {
 		return DoPrivilegedUtil.wrap(portletConfig);
 	}
 
+	@Override
 	public void destroy(Portlet portlet) {
 		_pool.remove(portlet.getRootPortletId());
 	}
 
+	@Override
 	public PortletConfig update(Portlet portlet) {
 		Map<String, PortletConfig> portletConfigs = _pool.get(
 			portlet.getRootPortletId());

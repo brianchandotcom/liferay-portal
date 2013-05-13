@@ -15,9 +15,8 @@
 package com.liferay.portal.security.pwd;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Scott Lee
- *
+ * @author     Brian Wing Shun Chan
+ * @author     Scott Lee
  * @deprecated As of 6.2.0, replaced by {@link PasswordEncryptorUtil}
  */
 public class PwdEncryptor extends PasswordEncryptorUtil {

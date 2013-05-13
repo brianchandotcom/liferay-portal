@@ -23,6 +23,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
  */
 public class UserGroupPermissionImpl implements UserGroupPermission {
 
+	@Override
 	public void check(
 			PermissionChecker permissionChecker, long userGroupId,
 			String actionId)
@@ -33,6 +34,7 @@ public class UserGroupPermissionImpl implements UserGroupPermission {
 		}
 	}
 
+	@Override
 	public boolean contains(
 		PermissionChecker permissionChecker, long userGroupId,
 		String actionId) {

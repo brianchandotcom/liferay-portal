@@ -32,6 +32,7 @@ public class MemberResponseElement implements ResponseElement {
 		_siteAdmin = false;
 	}
 
+	@Override
 	public void addElement(Element rootEl) {
 		String user = "User";
 

@@ -43,6 +43,7 @@ import java.util.Date;
  */
 public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 
+	@Override
 	public Release addRelease(String servletContextName, int buildNumber)
 		throws SystemException {
 
@@ -77,6 +78,7 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 		return release;
 	}
 
+	@Override
 	public void createTablesAndPopulate() throws SystemException {
 		try {
 			if (_log.isInfoEnabled()) {
@@ -104,6 +106,7 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public Release fetchRelease(String servletContextName)
 		throws SystemException {
 
@@ -127,6 +130,7 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 		return release;
 	}
 
+	@Override
 	public int getBuildNumberOrCreate()
 		throws PortalException, SystemException {
 
@@ -197,6 +201,7 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public Release updateRelease(
 			long releaseId, int buildNumber, Date buildDate, boolean verified)
 		throws PortalException, SystemException {

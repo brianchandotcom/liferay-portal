@@ -29,6 +29,7 @@ import org.dom4j.Element;
  */
 public class StrictXMLDescriptor implements XMLDescriptor {
 
+	@Override
 	public boolean areEqual(Element el1, Element el2) {
 		if (_compare(el1, el2) == 0) {
 			return true;
@@ -38,18 +39,22 @@ public class StrictXMLDescriptor implements XMLDescriptor {
 		}
 	}
 
+	@Override
 	public boolean canHandleType(String doctype, Document root) {
 		return false;
 	}
 
+	@Override
 	public boolean canJoinChildren(Element element) {
 		return false;
 	}
 
+	@Override
 	public String[] getChildrenOrder(Element parentElement) {
 		return new String[0];
 	}
 
+	@Override
 	public String[] getRootChildrenOrder() {
 		return _ROOT_ORDERED_CHILDREN;
 	}

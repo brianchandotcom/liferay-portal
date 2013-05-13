@@ -30,6 +30,7 @@ import org.aopalliance.intercept.MethodInvocation;
  */
 public class ShardPortletAdvice implements MethodInterceptor {
 
+	@Override
 	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
 		Method method = methodInvocation.getMethod();
 		String methodName = method.getName();

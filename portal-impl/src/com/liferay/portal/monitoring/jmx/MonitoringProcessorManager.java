@@ -26,6 +26,7 @@ import java.util.Set;
 public class MonitoringProcessorManager
 	implements MonitoringProcessorManagerMBean {
 
+	@Override
 	public String getLevel(String namespace) {
 		Level level = _monitoringProcessor.getLevel(namespace);
 
@@ -36,12 +37,14 @@ public class MonitoringProcessorManager
 		return level.toString();
 	}
 
+	@Override
 	public String[] getNamespaces() {
 		Set<String> namespaces = _monitoringProcessor.getNamespaces();
 
 		return namespaces.toArray(new String[namespaces.size()]);
 	}
 
+	@Override
 	public void setLevel(String namespace, String levelName) {
 		Level level = Level.valueOf(levelName);
 

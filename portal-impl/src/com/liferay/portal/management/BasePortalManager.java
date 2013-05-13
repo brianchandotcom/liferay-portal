@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 @DoPrivileged
 public class BasePortalManager implements PortalManager {
 
+	@Override
 	public <T> T manage(ManageAction<T> manageAction)
 		throws ManageActionException {
 

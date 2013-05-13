@@ -24,30 +24,37 @@ import javax.servlet.http.HttpServletRequest;
  */
 public abstract class BaseCometRequest implements CometRequest {
 
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
 
+	@Override
 	public String getPathInfo() {
 		return _pathInfo;
 	}
 
+	@Override
 	public HttpServletRequest getRequest() {
 		return _request;
 	}
 
+	@Override
 	public long getTimestamp() {
 		return _timestamp;
 	}
 
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
 
+	@Override
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
 	}
 
+	@Override
 	public void setPathInfo(String pathInfo) {
 		_pathInfo = pathInfo;
 	}
@@ -58,10 +65,12 @@ public abstract class BaseCometRequest implements CometRequest {
 		setUserId(PortalUtil.getUserId(request));
 	}
 
+	@Override
 	public void setTimestamp(long timestamp) {
 		_timestamp = timestamp;
 	}
 
+	@Override
 	public void setUserId(long userId) {
 		_userId = userId;
 	}

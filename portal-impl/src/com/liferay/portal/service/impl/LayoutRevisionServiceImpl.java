@@ -29,6 +29,7 @@ import com.liferay.portal.service.permission.GroupPermissionUtil;
  */
 public class LayoutRevisionServiceImpl extends LayoutRevisionServiceBaseImpl {
 
+	@Override
 	public LayoutRevision addLayoutRevision(
 			long userId, long layoutSetBranchId, long layoutBranchId,
 			long parentLayoutRevisionId, boolean head, long plid,

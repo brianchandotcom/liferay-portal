@@ -82,14 +82,17 @@ public class XSLTemplateResource implements TemplateResource {
 		return false;
 	}
 
+	@Override
 	public long getLastModified() {
 		return _lastModified;
 	}
 
+	@Override
 	public Reader getReader() {
 		return new UnsyncStringReader(_xsl);
 	}
 
+	@Override
 	public String getTemplateId() {
 		return _templateId;
 	}
@@ -113,6 +116,7 @@ public class XSLTemplateResource implements TemplateResource {
 		return hashCode;
 	}
 
+	@Override
 	public void readExternal(ObjectInput objectInput)
 		throws ClassNotFoundException, IOException {
 
@@ -123,6 +127,7 @@ public class XSLTemplateResource implements TemplateResource {
 		_xml = objectInput.readUTF();
 	}
 
+	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeUTF(_templateId);
 		objectOutput.writeLong(_lastModified);

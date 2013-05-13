@@ -56,6 +56,7 @@ import javax.servlet.http.HttpServletRequest;
 public class PollerRequestHandlerImpl
 	implements PollerRequestHandler, MessageListener {
 
+	@Override
 	public PollerHeader getPollerHeader(String pollerRequestString) {
 		if (Validator.isNull(pollerRequestString)) {
 			return null;
@@ -67,6 +68,7 @@ public class PollerRequestHandlerImpl
 		return parsePollerRequestHeader(pollerRequestChunks);
 	}
 
+	@Override
 	public JSONObject processRequest(
 			HttpServletRequest request, String pollerRequestString)
 		throws Exception {
@@ -120,6 +122,7 @@ public class PollerRequestHandlerImpl
 		}
 	}
 
+	@Override
 	public void receive(Message message) {
 		Object messagePayload = message.getPayload();
 

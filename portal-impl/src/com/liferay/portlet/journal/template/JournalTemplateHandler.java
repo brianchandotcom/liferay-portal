@@ -36,10 +36,12 @@ import java.util.Map;
  */
 public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 
+	@Override
 	public String getClassName() {
 		return JournalArticle.class.getName();
 	}
 
+	@Override
 	public String getName(Locale locale) {
 		String portletTitle = PortalUtil.getPortletTitle(
 			PortletKeys.JOURNAL, locale);
@@ -48,6 +50,7 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 			LanguageUtil.get(locale, "template"));
 	}
 
+	@Override
 	public String getResourceName() {
 		return "com.liferay.portlet.journal";
 	}

@@ -51,10 +51,12 @@ public class BookmarksFolderAssetRenderer
 		_folder = folder;
 	}
 
+	@Override
 	public String getClassName() {
 		return BookmarksFolder.class.getName();
 	}
 
+	@Override
 	public long getClassPK() {
 		return _folder.getFolderId();
 	}
@@ -64,6 +66,7 @@ public class BookmarksFolderAssetRenderer
 		return _folder.getModifiedDate();
 	}
 
+	@Override
 	public long getGroupId() {
 		return _folder.getGroupId();
 	}
@@ -85,12 +88,14 @@ public class BookmarksFolderAssetRenderer
 		return themeDisplay.getPathThemeImages() + "/common/folder_empty.png";
 	}
 
+	@Override
 	public String getPortletId() {
 		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
 
 		return assetRendererFactory.getPortletId();
 	}
 
+	@Override
 	public String getSummary(Locale locale) {
 		return HtmlUtil.stripHtml(_folder.getDescription());
 	}
@@ -116,10 +121,12 @@ public class BookmarksFolderAssetRenderer
 			"/file_system/large/folder_empty_bookmark.png";
 	}
 
+	@Override
 	public String getTitle(Locale locale) {
 		return TrashUtil.getOriginalTitle(_folder.getName());
 	}
 
+	@Override
 	public String getType() {
 		return TYPE;
 	}
@@ -169,18 +176,22 @@ public class BookmarksFolderAssetRenderer
 			"/bookmarks/find_folder", "folderId", _folder.getFolderId());
 	}
 
+	@Override
 	public long getUserId() {
 		return _folder.getUserId();
 	}
 
+	@Override
 	public String getUserName() {
 		return _folder.getUserName();
 	}
 
+	@Override
 	public String getUuid() {
 		return _folder.getUuid();
 	}
 
+	@Override
 	public String render(
 			RenderRequest renderRequest, RenderResponse renderResponse,
 			String template)

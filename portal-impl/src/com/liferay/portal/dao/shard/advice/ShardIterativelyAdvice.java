@@ -35,6 +35,7 @@ public class ShardIterativelyAdvice implements MethodInterceptor {
 	 *
 	 * @see ShardGloballyAdvice
 	 */
+	@Override
 	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
 		Object returnValue = null;
 

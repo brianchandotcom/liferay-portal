@@ -36,6 +36,7 @@ import java.util.concurrent.Future;
  */
 public class SendmailHook implements Hook {
 
+	@Override
 	public void addForward(
 		long companyId, long userId, List<Filter> filters,
 		List<String> emailAddresses, boolean leaveCopy) {
@@ -69,6 +70,7 @@ public class SendmailHook implements Hook {
 		}
 	}
 
+	@Override
 	public void addUser(
 		long companyId, long userId, String password, String firstName,
 		String middleName, String lastName, String emailAddress) {
@@ -97,15 +99,18 @@ public class SendmailHook implements Hook {
 		updateEmailAddress(companyId, userId, emailAddress);
 	}
 
+	@Override
 	public void addVacationMessage(
 		long companyId, long userId, String emailAddress,
 		String vacationMessage) {
 	}
 
+	@Override
 	public void deleteEmailAddress(long companyId, long userId) {
 		updateEmailAddress(companyId, userId, "");
 	}
 
+	@Override
 	public void deleteUser(long companyId, long userId) {
 		deleteEmailAddress(companyId, userId);
 
@@ -130,6 +135,7 @@ public class SendmailHook implements Hook {
 		}
 	}
 
+	@Override
 	public void updateBlocked(
 		long companyId, long userId, List<String> blocked) {
 
@@ -171,6 +177,7 @@ public class SendmailHook implements Hook {
 		}
 	}
 
+	@Override
 	public void updateEmailAddress(
 		long companyId, long userId, String emailAddress) {
 
@@ -218,6 +225,7 @@ public class SendmailHook implements Hook {
 		}
 	}
 
+	@Override
 	public void updatePassword(long companyId, long userId, String password) {
 
 		// Get change password command

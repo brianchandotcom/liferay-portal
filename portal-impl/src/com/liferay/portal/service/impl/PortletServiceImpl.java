@@ -35,6 +35,7 @@ import java.util.List;
 @JSONWebService(mode = JSONWebServiceMode.MANUAL)
 public class PortletServiceImpl extends PortletServiceBaseImpl {
 
+	@Override
 	public JSONArray getWARPortlets() {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -57,6 +58,7 @@ public class PortletServiceImpl extends PortletServiceBaseImpl {
 		return jsonArray;
 	}
 
+	@Override
 	public Portlet updatePortlet(
 			long companyId, String portletId, String roles, boolean active)
 		throws PortalException, SystemException {

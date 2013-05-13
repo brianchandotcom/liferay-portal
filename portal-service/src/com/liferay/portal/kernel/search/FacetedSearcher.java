@@ -41,6 +41,7 @@ public class FacetedSearcher extends BaseIndexer {
 		return new FacetedSearcher();
 	}
 
+	@Override
 	public String[] getClassNames() {
 		return null;
 	}
@@ -50,6 +51,7 @@ public class FacetedSearcher extends BaseIndexer {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public String getPortletId() {
 		return null;
 	}

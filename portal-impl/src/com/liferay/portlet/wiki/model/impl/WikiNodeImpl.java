@@ -38,6 +38,7 @@ public class WikiNodeImpl extends WikiNodeBaseImpl {
 	public WikiNodeImpl() {
 	}
 
+	@Override
 	public Folder addAttachmentsFolder()
 		throws PortalException, SystemException {
 
@@ -66,6 +67,7 @@ public class WikiNodeImpl extends WikiNodeBaseImpl {
 		return folder;
 	}
 
+	@Override
 	public long getAttachmentsFolderId() throws SystemException {
 		if (_attachmentsFolderId !=
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
@@ -100,6 +102,7 @@ public class WikiNodeImpl extends WikiNodeBaseImpl {
 		return _attachmentsFolderId;
 	}
 
+	@Override
 	public List<FileEntry> getDeletedAttachmentsFiles() throws SystemException {
 		List<WikiPage> wikiPages = WikiPageLocalServiceUtil.getPages(
 			getNodeId(), true, QueryUtil.ALL_POS, QueryUtil.ALL_POS);

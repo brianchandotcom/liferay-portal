@@ -30,14 +30,17 @@ public class ServiceComponentImpl extends ServiceComponentBaseImpl {
 	public ServiceComponentImpl() {
 	}
 
+	@Override
 	public String getIndexesSQL() {
 		return _getData("indexes-sql");
 	}
 
+	@Override
 	public String getSequencesSQL() {
 		return _getData("sequences-sql");
 	}
 
+	@Override
 	public String getTablesSQL() {
 		return _getData("tables-sql");
 	}

@@ -31,6 +31,7 @@ public class NumberIncrement implements Increment<Number> {
 		return new NumberIncrement(subtract(delta));
 	}
 
+	@Override
 	public Number getValue() {
 		return _value;
 	}

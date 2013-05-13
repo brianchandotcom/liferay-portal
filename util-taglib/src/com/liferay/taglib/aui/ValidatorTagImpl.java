@@ -84,6 +84,7 @@ public class ValidatorTagImpl
 		return EVAL_BODY_BUFFERED;
 	}
 
+	@Override
 	public String getBody() {
 		if (Validator.isNull(_body)) {
 			return StringPool.DOUBLE_APOSTROPHE;
@@ -103,6 +104,7 @@ public class ValidatorTagImpl
 		return errorMessage;
 	}
 
+	@Override
 	public boolean isCustom() {
 		return _custom;
 	}

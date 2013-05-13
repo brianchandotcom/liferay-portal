@@ -24,18 +24,21 @@ import java.io.Serializable;
  */
 public abstract class BaseCacheKeyGenerator implements CacheKeyGenerator {
 
+	@Override
 	public CacheKeyGenerator append(String key) {
 		keyBundler.append(key);
 
 		return this;
 	}
 
+	@Override
 	public CacheKeyGenerator append(String[] keys) {
 		keyBundler.append(keys);
 
 		return this;
 	}
 
+	@Override
 	public CacheKeyGenerator append(StringBundler sb) {
 		keyBundler.append(sb);
 
@@ -45,6 +48,7 @@ public abstract class BaseCacheKeyGenerator implements CacheKeyGenerator {
 	@Override
 	public abstract CacheKeyGenerator clone();
 
+	@Override
 	public Serializable finish() {
 		Serializable cacheKey = getCacheKey(keyBundler);
 
@@ -53,6 +57,7 @@ public abstract class BaseCacheKeyGenerator implements CacheKeyGenerator {
 		return cacheKey;
 	}
 
+	@Override
 	public boolean isCallingGetCacheKeyThreadSafe() {
 		return _CALLING_GET_CACHE_KEY_THREAD_SAFE;
 	}

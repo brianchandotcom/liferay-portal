@@ -34,6 +34,7 @@ import java.util.List;
  */
 public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 
+	@Override
 	public JournalFolder addFolder(
 			long groupId, long parentFolderId, String name, String description,
 			ServiceContext serviceContext)
@@ -48,6 +49,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 			serviceContext);
 	}
 
+	@Override
 	public void deleteFolder(long folderId)
 		throws PortalException, SystemException {
 
@@ -59,6 +61,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 		journalFolderLocalService.deleteFolder(folderId);
 	}
 
+	@Override
 	public void deleteFolder(long folderId, boolean includeTrashedEntries)
 		throws PortalException, SystemException {
 
@@ -70,6 +73,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 		journalFolderLocalService.deleteFolder(folderId, includeTrashedEntries);
 	}
 
+	@Override
 	public JournalFolder getFolder(long folderId)
 		throws PortalException, SystemException {
 
@@ -81,6 +85,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 		return folder;
 	}
 
+	@Override
 	public List<Long> getFolderIds(long groupId, long folderId)
 			throws PortalException, SystemException {
 
@@ -94,10 +99,12 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 		return folderIds;
 	}
 
+	@Override
 	public List<JournalFolder> getFolders(long groupId) throws SystemException {
 		return journalFolderPersistence.filterFindByGroupId(groupId);
 	}
 
+	@Override
 	public List<JournalFolder> getFolders(long groupId, long parentFolderId)
 		throws SystemException {
 
@@ -105,6 +112,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 			groupId, parentFolderId, WorkflowConstants.STATUS_APPROVED);
 	}
 
+	@Override
 	public List<JournalFolder> getFolders(
 			long groupId, long parentFolderId, int status)
 		throws SystemException {
@@ -113,6 +121,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 			groupId, parentFolderId, status);
 	}
 
+	@Override
 	public List<JournalFolder> getFolders(
 			long groupId, long parentFolderId, int start, int end)
 		throws SystemException {
@@ -122,6 +131,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 			end);
 	}
 
+	@Override
 	public List<JournalFolder> getFolders(
 			long groupId, long parentFolderId, int status, int start, int end)
 		throws SystemException {
@@ -130,6 +140,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 			groupId, parentFolderId, status, start, end);
 	}
 
+	@Override
 	public List<Object> getFoldersAndArticles(
 			long groupId, long folderId, int start, int end,
 			OrderByComparator obc)
@@ -142,6 +153,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 			groupId, folderId, queryDefinition);
 	}
 
+	@Override
 	public int getFoldersAndArticlesCount(
 			long groupId, List<Long> folderIds, int status)
 		throws SystemException {
@@ -168,6 +180,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public int getFoldersAndArticlesCount(long groupId, long folderId)
 		throws SystemException {
 
@@ -175,6 +188,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 			groupId, folderId, WorkflowConstants.STATUS_ANY);
 	}
 
+	@Override
 	public int getFoldersAndArticlesCount(
 			long groupId, long folderId, int status)
 		throws SystemException {
@@ -183,6 +197,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 			groupId, folderId, new QueryDefinition(status));
 	}
 
+	@Override
 	public int getFoldersCount(long groupId, long parentFolderId)
 		throws SystemException {
 
@@ -190,6 +205,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 			groupId, parentFolderId, WorkflowConstants.STATUS_APPROVED);
 	}
 
+	@Override
 	public void getSubfolderIds(
 			List<Long> folderIds, long groupId, long folderId)
 		throws SystemException {
@@ -209,6 +225,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public List<Long> getSubfolderIds(
 			long groupId, long folderId, boolean recurse)
 		throws SystemException {
@@ -220,6 +237,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 		return folderIds;
 	}
 
+	@Override
 	public JournalFolder moveFolder(
 			long folderId, long parentFolderId, ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -233,6 +251,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 			folderId, parentFolderId, serviceContext);
 	}
 
+	@Override
 	public JournalFolder moveFolderFromTrash(
 			long folderId, long parentFolderId, ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -246,6 +265,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 			getUserId(), folderId, parentFolderId, serviceContext);
 	}
 
+	@Override
 	public void moveFolderToTrash(long folderId)
 		throws PortalException, SystemException {
 
@@ -257,6 +277,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 		journalFolderLocalService.moveFolderToTrash(getUserId(), folderId);
 	}
 
+	@Override
 	public void restoreFolderFromTrash(long folderId)
 			throws PortalException, SystemException {
 
@@ -268,6 +289,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 		journalFolderLocalService.restoreFolderFromTrash(getUserId(), folderId);
 	}
 
+	@Override
 	public JournalFolder updateFolder(
 			long folderId, long parentFolderId, String name, String description,
 			boolean mergeWithParentFolder, ServiceContext serviceContext)

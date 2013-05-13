@@ -41,14 +41,17 @@ public class QNameImpl implements QName {
 		return _qName.equals(qName);
 	}
 
+	@Override
 	public String getLocalPart() {
 		return getName();
 	}
 
+	@Override
 	public String getName() {
 		return _qName.getName();
 	}
 
+	@Override
 	public Namespace getNamespace() {
 		org.dom4j.Namespace namespace = _qName.getNamespace();
 
@@ -60,14 +63,17 @@ public class QNameImpl implements QName {
 		}
 	}
 
+	@Override
 	public String getNamespacePrefix() {
 		return _qName.getNamespacePrefix();
 	}
 
+	@Override
 	public String getNamespaceURI() {
 		return _qName.getNamespaceURI();
 	}
 
+	@Override
 	public String getQualifiedName() {
 		return _qName.getQualifiedName();
 	}

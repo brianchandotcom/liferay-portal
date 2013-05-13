@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.search.TermRangeQueryFactory;
  */
 public class TermRangeQueryFactoryImpl implements TermRangeQueryFactory {
 
+	@Override
 	public TermRangeQuery create(
 		String field, String lowerTerm, String upperTerm, boolean includesLower,
 		boolean includesUpper) {

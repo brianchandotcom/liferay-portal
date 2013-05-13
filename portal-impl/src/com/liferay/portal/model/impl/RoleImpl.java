@@ -33,6 +33,7 @@ public class RoleImpl extends RoleBaseImpl {
 	public RoleImpl() {
 	}
 
+	@Override
 	public String getDescriptiveName() throws PortalException, SystemException {
 		String name = getName();
 
@@ -77,10 +78,12 @@ public class RoleImpl extends RoleBaseImpl {
 		return value;
 	}
 
+	@Override
 	public String getTypeLabel() {
 		return RoleConstants.getTypeLabel(getType());
 	}
 
+	@Override
 	public boolean isTeam() {
 		return hasClassName(Team.class);
 	}

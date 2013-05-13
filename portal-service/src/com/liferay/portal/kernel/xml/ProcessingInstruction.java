@@ -23,6 +23,7 @@ public interface ProcessingInstruction extends Node {
 
 	public String getTarget();
 
+	@Override
 	public String getText();
 
 	public String getValue(String name);

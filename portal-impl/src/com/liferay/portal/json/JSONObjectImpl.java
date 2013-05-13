@@ -75,30 +75,37 @@ public class JSONObjectImpl implements JSONObject {
 		}
 	}
 
+	@Override
 	public boolean getBoolean(String key) {
 		return _jsonObject.optBoolean(key);
 	}
 
+	@Override
 	public boolean getBoolean(String key, boolean defaultValue) {
 		return _jsonObject.optBoolean(key, defaultValue);
 	}
 
+	@Override
 	public double getDouble(String key) {
 		return _jsonObject.optDouble(key);
 	}
 
+	@Override
 	public double getDouble(String key, double defaultValue) {
 		return _jsonObject.optDouble(key, defaultValue);
 	}
 
+	@Override
 	public int getInt(String key) {
 		return _jsonObject.optInt(key);
 	}
 
+	@Override
 	public int getInt(String key, int defaultValue) {
 		return _jsonObject.optInt(key, defaultValue);
 	}
 
+	@Override
 	public JSONArray getJSONArray(String key) {
 		org.json.JSONArray jsonArray = _jsonObject.optJSONArray(key);
 
@@ -113,6 +120,7 @@ public class JSONObjectImpl implements JSONObject {
 		return _jsonObject;
 	}
 
+	@Override
 	public JSONObject getJSONObject(String key) {
 		org.json.JSONObject jsonObject = _jsonObject.optJSONObject(key);
 
@@ -123,42 +131,52 @@ public class JSONObjectImpl implements JSONObject {
 		return new JSONObjectImpl(jsonObject);
 	}
 
+	@Override
 	public long getLong(String key) {
 		return _jsonObject.optLong(key);
 	}
 
+	@Override
 	public long getLong(String key, long defaultValue) {
 		return _jsonObject.optLong(key, defaultValue);
 	}
 
+	@Override
 	public String getString(String key) {
 		return _jsonObject.optString(key);
 	}
 
+	@Override
 	public String getString(String key, String defaultValue) {
 		return _jsonObject.optString(key, defaultValue);
 	}
 
+	@Override
 	public boolean has(String key) {
 		return _jsonObject.has(key);
 	}
 
+	@Override
 	public boolean isNull(String key) {
 		return _jsonObject.isNull(key);
 	}
 
+	@Override
 	public Iterator<String> keys() {
 		return _jsonObject.keys();
 	}
 
+	@Override
 	public int length() {
 		return _jsonObject.length();
 	}
 
+	@Override
 	public JSONArray names() {
 		return new JSONArrayImpl(_jsonObject.names());
 	}
 
+	@Override
 	public JSONObject put(String key, boolean value) {
 		try {
 			_jsonObject.put(key, value);
@@ -172,6 +190,7 @@ public class JSONObjectImpl implements JSONObject {
 		return this;
 	}
 
+	@Override
 	public JSONObject put(String key, Date value) {
 		try {
 			_jsonObject.put(key, value);
@@ -185,6 +204,7 @@ public class JSONObjectImpl implements JSONObject {
 		return this;
 	}
 
+	@Override
 	public JSONObject put(String key, double value) {
 		try {
 			_jsonObject.put(key, value);
@@ -198,6 +218,7 @@ public class JSONObjectImpl implements JSONObject {
 		return this;
 	}
 
+	@Override
 	public JSONObject put(String key, int value) {
 		try {
 			_jsonObject.put(key, value);
@@ -211,6 +232,7 @@ public class JSONObjectImpl implements JSONObject {
 		return this;
 	}
 
+	@Override
 	public JSONObject put(String key, JSONArray value) {
 		try {
 			_jsonObject.put(key, ((JSONArrayImpl)value).getJSONArray());
@@ -224,6 +246,7 @@ public class JSONObjectImpl implements JSONObject {
 		return this;
 	}
 
+	@Override
 	public JSONObject put(String key, JSONObject value) {
 		try {
 			_jsonObject.put(key, ((JSONObjectImpl)value).getJSONObject());
@@ -237,6 +260,7 @@ public class JSONObjectImpl implements JSONObject {
 		return this;
 	}
 
+	@Override
 	public JSONObject put(String key, long value) {
 		try {
 			_jsonObject.put(key, value);
@@ -250,6 +274,7 @@ public class JSONObjectImpl implements JSONObject {
 		return this;
 	}
 
+	@Override
 	public JSONObject put(String key, String value) {
 		try {
 			_jsonObject.put(key, value);
@@ -263,6 +288,7 @@ public class JSONObjectImpl implements JSONObject {
 		return this;
 	}
 
+	@Override
 	public JSONObject putException(Exception exception) {
 		try {
 			_jsonObject.put(
@@ -279,6 +305,7 @@ public class JSONObjectImpl implements JSONObject {
 		return this;
 	}
 
+	@Override
 	public Object remove(String key) {
 		return _jsonObject.remove(key);
 	}
@@ -288,6 +315,7 @@ public class JSONObjectImpl implements JSONObject {
 		return _jsonObject.toString();
 	}
 
+	@Override
 	public String toString(int indentFactor) throws JSONException {
 		try {
 			return _jsonObject.toString(indentFactor);
@@ -297,6 +325,7 @@ public class JSONObjectImpl implements JSONObject {
 		}
 	}
 
+	@Override
 	public Writer write(Writer writer) throws JSONException {
 		try {
 			return _jsonObject.write(writer);

@@ -19,6 +19,7 @@ package com.liferay.portal.kernel.search;
  */
 public class QuerySuggestionHitsProcessor implements HitsProcessor {
 
+	@Override
 	public boolean process(SearchContext searchContext, Hits hits)
 		throws SearchException {
 

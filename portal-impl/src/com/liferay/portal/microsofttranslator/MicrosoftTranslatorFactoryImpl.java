@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 public class MicrosoftTranslatorFactoryImpl
 	implements MicrosoftTranslatorFactory {
 
+	@Override
 	public MicrosoftTranslator getMicrosoftTranslator() {
 		if (_microsoftTranslator == null) {
 			_microsoftTranslator = new MicrosoftTranslatorImpl();
@@ -33,6 +34,7 @@ public class MicrosoftTranslatorFactoryImpl
 		return _microsoftTranslator;
 	}
 
+	@Override
 	public MicrosoftTranslator getMicrosoftTranslator(
 		String clientId, String clientSecret) {
 

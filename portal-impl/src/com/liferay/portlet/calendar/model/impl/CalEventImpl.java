@@ -26,6 +26,7 @@ public class CalEventImpl extends CalEventBaseImpl {
 	public CalEventImpl() {
 	}
 
+	@Override
 	public TZSRecurrence getRecurrenceObj() {
 		if (_recurrenceObj == null) {
 			String recurrence = getRecurrence();
@@ -46,6 +47,7 @@ public class CalEventImpl extends CalEventBaseImpl {
 		super.setRecurrence(recurrence);
 	}
 
+	@Override
 	public void setRecurrenceObj(TZSRecurrence recurrenceObj) {
 		_recurrenceObj = recurrenceObj;
 

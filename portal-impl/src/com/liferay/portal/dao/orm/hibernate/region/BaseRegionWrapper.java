@@ -46,10 +46,12 @@ public abstract class BaseRegionWrapper implements CacheRegistryItem, Region {
 		CacheRegistryUtil.register(this);
 	}
 
+	@Override
 	public boolean contains(Object object) {
 		return _ehcacheDataRegion.contains(object);
 	}
 
+	@Override
 	public void destroy() throws CacheException {
 		EhcacheDataRegion ehcacheDataRegion = getEhcacheDataRegion();
 
@@ -70,34 +72,42 @@ public abstract class BaseRegionWrapper implements CacheRegistryItem, Region {
 		}
 	}
 
+	@Override
 	public long getElementCountInMemory() {
 		return _ehcacheDataRegion.getElementCountInMemory();
 	}
 
+	@Override
 	public long getElementCountOnDisk() {
 		return _ehcacheDataRegion.getElementCountOnDisk();
 	}
 
+	@Override
 	public String getName() {
 		return _ehcacheDataRegion.getName();
 	}
 
+	@Override
 	public String getRegistryName() {
 		return getName();
 	}
 
+	@Override
 	public long getSizeInMemory() {
 		return _ehcacheDataRegion.getSizeInMemory();
 	}
 
+	@Override
 	public int getTimeout() {
 		return _ehcacheDataRegion.getTimeout();
 	}
 
+	@Override
 	public long nextTimestamp() {
 		return _ehcacheDataRegion.nextTimestamp();
 	}
 
+	@Override
 	@SuppressWarnings("rawtypes")
 	public Map toMap() {
 		return _ehcacheDataRegion.toMap();

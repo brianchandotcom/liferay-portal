@@ -26,6 +26,7 @@ import com.liferay.portal.service.base.UserGroupGroupRoleServiceBaseImpl;
 public class UserGroupGroupRoleServiceImpl
 	extends UserGroupGroupRoleServiceBaseImpl {
 
+	@Override
 	public void addUserGroupGroupRoles(
 			long userGroupId, long groupId, long[] roleIds)
 		throws PortalException, SystemException {
@@ -40,6 +41,7 @@ public class UserGroupGroupRoleServiceImpl
 			userGroupId, groupId, roleIds);
 	}
 
+	@Override
 	public void addUserGroupGroupRoles(
 			long[] userGroupIds, long groupId, long roleId)
 		throws PortalException, SystemException {
@@ -54,6 +56,7 @@ public class UserGroupGroupRoleServiceImpl
 			userGroupIds, groupId, roleId);
 	}
 
+	@Override
 	public void deleteUserGroupGroupRoles(
 			long userGroupId, long groupId, long[] roleIds)
 		throws PortalException, SystemException {
@@ -68,6 +71,7 @@ public class UserGroupGroupRoleServiceImpl
 			userGroupId, groupId, roleIds);
 	}
 
+	@Override
 	public void deleteUserGroupGroupRoles(
 			long[] userGroupIds, long groupId, long roleId)
 		throws PortalException, SystemException {

@@ -30,11 +30,13 @@ public class DLFileEntryTypeImpl extends DLFileEntryTypeBaseImpl {
 	public DLFileEntryTypeImpl() {
 	}
 
+	@Override
 	public List<DDMStructure> getDDMStructures() throws SystemException {
 		return DDMStructureLocalServiceUtil.getDLFileEntryTypeStructures(
 			getFileEntryTypeId());
 	}
 
+	@Override
 	public boolean isExportable() {
 		if (getFileEntryTypeId() ==
 				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) {

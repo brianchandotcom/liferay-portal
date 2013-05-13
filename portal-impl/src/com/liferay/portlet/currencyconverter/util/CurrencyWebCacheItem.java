@@ -33,6 +33,7 @@ public class CurrencyWebCacheItem implements WebCacheItem {
 		_symbol = symbol;
 	}
 
+	@Override
 	public Object convert(String key) throws WebCacheException {
 		String symbol = _symbol;
 		double rate = 0.0;
@@ -77,6 +78,7 @@ public class CurrencyWebCacheItem implements WebCacheItem {
 		return new Currency(symbol, rate);
 	}
 
+	@Override
 	public long getRefreshTime() {
 		return _REFRESH_TIME;
 	}

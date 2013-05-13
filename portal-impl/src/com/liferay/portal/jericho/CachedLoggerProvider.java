@@ -48,6 +48,7 @@ public class CachedLoggerProvider implements LoggerProvider {
 		_loggerProvider = loggerProvider;
 	}
 
+	@Override
 	public Logger getLogger(String name) {
 		Logger logger = _loggers.get(name);
 

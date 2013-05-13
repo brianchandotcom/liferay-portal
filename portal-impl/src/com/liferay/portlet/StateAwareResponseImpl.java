@@ -67,6 +67,7 @@ public abstract class StateAwareResponseImpl
 		return _layout;
 	}
 
+	@Override
 	public PortletMode getPortletMode() {
 		return _portletMode;
 	}
@@ -75,6 +76,7 @@ public abstract class StateAwareResponseImpl
 		return _redirectLocation;
 	}
 
+	@Override
 	public Map<String, String[]> getRenderParameterMap() {
 		return _params;
 	}
@@ -83,6 +85,7 @@ public abstract class StateAwareResponseImpl
 		return _user;
 	}
 
+	@Override
 	public WindowState getWindowState() {
 		return _windowState;
 	}
@@ -91,6 +94,7 @@ public abstract class StateAwareResponseImpl
 		return _calledSetRenderParameter;
 	}
 
+	@Override
 	public void removePublicRenderParameter(String name) {
 		if (name == null) {
 			throw new IllegalArgumentException();
@@ -115,6 +119,7 @@ public abstract class StateAwareResponseImpl
 		_publicRenderParameters.remove(key);
 	}
 
+	@Override
 	public void setEvent(QName name, Serializable value) {
 		if (name == null) {
 			throw new IllegalArgumentException();
@@ -123,6 +128,7 @@ public abstract class StateAwareResponseImpl
 		_events.add(new EventImpl(name.getLocalPart(), name, value));
 	}
 
+	@Override
 	public void setEvent(String name, Serializable value) {
 		if (name == null) {
 			throw new IllegalArgumentException();
@@ -131,6 +137,7 @@ public abstract class StateAwareResponseImpl
 		setEvent(new QName(getDefaultNamespace(), name), value);
 	}
 
+	@Override
 	public void setPortletMode(PortletMode portletMode)
 		throws PortletModeException {
 
@@ -160,6 +167,7 @@ public abstract class StateAwareResponseImpl
 		_redirectLocation = redirectLocation;
 	}
 
+	@Override
 	public void setRenderParameter(String name, String value) {
 		if (_redirectLocation != null) {
 			throw new IllegalStateException();
@@ -172,6 +180,7 @@ public abstract class StateAwareResponseImpl
 		setRenderParameter(name, new String[] {value});
 	}
 
+	@Override
 	public void setRenderParameter(String name, String[] values) {
 		if (_redirectLocation != null) {
 			throw new IllegalStateException();
@@ -194,6 +203,7 @@ public abstract class StateAwareResponseImpl
 		_calledSetRenderParameter = true;
 	}
 
+	@Override
 	public void setRenderParameters(Map<String, String[]> params) {
 		if (_redirectLocation != null) {
 			throw new IllegalStateException();
@@ -230,6 +240,7 @@ public abstract class StateAwareResponseImpl
 		_calledSetRenderParameter = true;
 	}
 
+	@Override
 	public void setWindowState(WindowState windowState)
 		throws WindowStateException {
 

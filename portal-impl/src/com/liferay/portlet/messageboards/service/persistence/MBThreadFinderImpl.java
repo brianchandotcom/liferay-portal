@@ -94,6 +94,7 @@ public class MBThreadFinderImpl
 	public static final String FIND_BY_S_G_U_C =
 		MBThreadFinder.class.getName() + ".findByS_G_U_C";
 
+	@Override
 	public int countByG_U(
 			long groupId, long userId, QueryDefinition queryDefinition)
 		throws SystemException {
@@ -140,6 +141,7 @@ public class MBThreadFinderImpl
 		}
 	}
 
+	@Override
 	public int countByG_C(
 			long groupId, long[] categoryIds, QueryDefinition queryDefinition)
 		throws SystemException {
@@ -147,6 +149,7 @@ public class MBThreadFinderImpl
 		return doCountByG_C(groupId, categoryIds, queryDefinition, false);
 	}
 
+	@Override
 	public int countByG_U_C(
 			long groupId, long userId, long[] categoryIds,
 			QueryDefinition queryDefinition)
@@ -206,6 +209,7 @@ public class MBThreadFinderImpl
 		}
 	}
 
+	@Override
 	public int countByG_U_LPD(
 			long groupId, long userId, long[] categoryIds, Date lastPostDate,
 			QueryDefinition queryDefinition)
@@ -271,6 +275,7 @@ public class MBThreadFinderImpl
 		}
 	}
 
+	@Override
 	public int countByG_U_A(
 			long groupId, long userId, boolean anonymous,
 			QueryDefinition queryDefinition)
@@ -319,6 +324,7 @@ public class MBThreadFinderImpl
 		}
 	}
 
+	@Override
 	public int countByS_G_U(
 			long groupId, long userId, QueryDefinition queryDefinition)
 		throws SystemException {
@@ -326,6 +332,7 @@ public class MBThreadFinderImpl
 		return doCountByS_G_U(groupId, userId, queryDefinition);
 	}
 
+	@Override
 	public int countByG_U_C_A(
 			long groupId, long userId, long[] categoryIds, boolean anonymous,
 			QueryDefinition queryDefinition)
@@ -386,6 +393,7 @@ public class MBThreadFinderImpl
 		}
 	}
 
+	@Override
 	public int countByS_G_U_C(
 			long groupId, long userId, long[] categoryIds,
 			QueryDefinition queryDefinition)
@@ -395,6 +403,7 @@ public class MBThreadFinderImpl
 			groupId, userId, categoryIds, queryDefinition, false);
 	}
 
+	@Override
 	public int filterCountByG_C(long groupId, long categoryId)
 		throws SystemException {
 
@@ -442,6 +451,7 @@ public class MBThreadFinderImpl
 		}
 	}
 
+	@Override
 	public int filterCountByG_C(
 			long groupId, long[] categoryIds, QueryDefinition queryDefinition)
 		throws SystemException {
@@ -449,6 +459,7 @@ public class MBThreadFinderImpl
 		return doCountByG_C(groupId, categoryIds, queryDefinition, true);
 	}
 
+	@Override
 	public int filterCountByS_G_U_C(
 			long groupId, long userId, long[] categoryIds,
 			QueryDefinition queryDefinition)
@@ -458,6 +469,7 @@ public class MBThreadFinderImpl
 			groupId, userId, categoryIds, queryDefinition, true);
 	}
 
+	@Override
 	public List<MBThread> filterFindByG_C(
 			long groupId, long categoryId, int start, int end)
 		throws SystemException {
@@ -496,6 +508,7 @@ public class MBThreadFinderImpl
 		}
 	}
 
+	@Override
 	public List<MBThread> filterFindByG_C(
 			long groupId, long[] categoryIds, QueryDefinition queryDefinition)
 		throws SystemException {
@@ -503,6 +516,7 @@ public class MBThreadFinderImpl
 		return doFindByG_C(groupId, categoryIds, queryDefinition, true);
 	}
 
+	@Override
 	public List<MBThread> filterFindByS_G_U_C(
 			long groupId, long userId, long[] categoryIds,
 			QueryDefinition queryDefinition)
@@ -512,6 +526,7 @@ public class MBThreadFinderImpl
 			groupId, userId, categoryIds, queryDefinition, true);
 	}
 
+	@Override
 	public List<MBThread> findByNoAssets() throws SystemException {
 		Session session = null;
 
@@ -534,6 +549,7 @@ public class MBThreadFinderImpl
 		}
 	}
 
+	@Override
 	public List<MBThread> findByG_U(
 			long groupId, long userId, QueryDefinition queryDefinition)
 		throws SystemException {
@@ -572,6 +588,7 @@ public class MBThreadFinderImpl
 		}
 	}
 
+	@Override
 	public List<MBThread> findByG_C(
 			long groupId, long[] categoryIds, QueryDefinition queryDefinition)
 		throws SystemException {
@@ -579,6 +596,7 @@ public class MBThreadFinderImpl
 		return doFindByG_C(groupId, categoryIds, queryDefinition, false);
 	}
 
+	@Override
 	public List<MBThread> findByG_U_C(
 			long groupId, long userId, long[] categoryIds,
 			QueryDefinition queryDefinition)
@@ -630,6 +648,7 @@ public class MBThreadFinderImpl
 		}
 	}
 
+	@Override
 	public List<MBThread> findByG_U_LPD(
 			long groupId, long userId, long[] categoryIds, Date lastPostDate,
 			QueryDefinition queryDefinition)
@@ -687,6 +706,7 @@ public class MBThreadFinderImpl
 		}
 	}
 
+	@Override
 	public List<MBThread> findByG_U_A(
 			long groupId, long userId, boolean anonymous,
 			QueryDefinition queryDefinition)
@@ -727,6 +747,7 @@ public class MBThreadFinderImpl
 		}
 	}
 
+	@Override
 	public List<MBThread> findByS_G_U(
 			long groupId, long userId, QueryDefinition queryDefinition)
 		throws SystemException {
@@ -766,6 +787,7 @@ public class MBThreadFinderImpl
 		}
 	}
 
+	@Override
 	public List<MBThread> findByG_U_C_A(
 			long groupId, long userId, long[] categoryIds, boolean anonymous,
 			QueryDefinition queryDefinition)
@@ -818,6 +840,7 @@ public class MBThreadFinderImpl
 		}
 	}
 
+	@Override
 	public List<MBThread> findByS_G_U_C(
 			long groupId, long userId, long[] categoryIds,
 			QueryDefinition queryDefinition)

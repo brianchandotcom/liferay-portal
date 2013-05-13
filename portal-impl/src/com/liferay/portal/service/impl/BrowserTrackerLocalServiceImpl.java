@@ -27,6 +27,7 @@ import com.liferay.portal.service.base.BrowserTrackerLocalServiceBaseImpl;
 public class BrowserTrackerLocalServiceImpl
 	extends BrowserTrackerLocalServiceBaseImpl {
 
+	@Override
 	public void deleteUserBrowserTracker(long userId) throws SystemException {
 		try {
 			browserTrackerPersistence.removeByUserId(userId);
@@ -35,6 +36,7 @@ public class BrowserTrackerLocalServiceImpl
 		}
 	}
 
+	@Override
 	public BrowserTracker getBrowserTracker(long userId, long browserKey)
 		throws SystemException {
 
@@ -49,6 +51,7 @@ public class BrowserTrackerLocalServiceImpl
 		return browserTracker;
 	}
 
+	@Override
 	public BrowserTracker updateBrowserTracker(long userId, long browserKey)
 		throws SystemException {
 

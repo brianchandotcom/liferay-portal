@@ -32,6 +32,7 @@ public class BookmarksFolderAssetRendererFactory
 
 	public static final String TYPE = "folder";
 
+	@Override
 	public AssetRenderer getAssetRenderer(long classPK, int type)
 		throws PortalException, SystemException {
 
@@ -46,10 +47,12 @@ public class BookmarksFolderAssetRendererFactory
 		return bookmarksFolderAssetRenderer;
 	}
 
+	@Override
 	public String getClassName() {
 		return BookmarksFolder.class.getName();
 	}
 
+	@Override
 	public String getType() {
 		return TYPE;
 	}

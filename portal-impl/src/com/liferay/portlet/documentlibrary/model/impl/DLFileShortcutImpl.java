@@ -34,6 +34,7 @@ public class DLFileShortcutImpl extends DLFileShortcutBaseImpl {
 	public DLFileShortcutImpl() {
 	}
 
+	@Override
 	public Folder getFolder() {
 		Folder folder = new LiferayFolder(new DLFolderImpl());
 
@@ -59,6 +60,7 @@ public class DLFileShortcutImpl extends DLFileShortcutBaseImpl {
 		return folder;
 	}
 
+	@Override
 	public String getToTitle() {
 		String toTitle = null;
 
@@ -75,6 +77,7 @@ public class DLFileShortcutImpl extends DLFileShortcutBaseImpl {
 		return toTitle;
 	}
 
+	@Override
 	public DLFolder getTrashContainer() {
 		Folder folder = getFolder();
 
@@ -87,6 +90,7 @@ public class DLFileShortcutImpl extends DLFileShortcutBaseImpl {
 		return dlFolder.getTrashContainer();
 	}
 
+	@Override
 	public boolean isInHiddenFolder() {
 		try {
 			long repositoryId = getRepositoryId();
@@ -106,6 +110,7 @@ public class DLFileShortcutImpl extends DLFileShortcutBaseImpl {
 		return false;
 	}
 
+	@Override
 	public boolean isInTrashContainer() {
 		if (getTrashContainer() != null) {
 			return true;

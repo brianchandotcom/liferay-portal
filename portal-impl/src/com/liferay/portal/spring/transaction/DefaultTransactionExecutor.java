@@ -34,6 +34,7 @@ import org.springframework.transaction.interceptor.TransactionAttribute;
  */
 public class DefaultTransactionExecutor extends BaseTransactionExecutor {
 
+	@Override
 	public Object execute(
 			PlatformTransactionManager platformTransactionManager,
 			TransactionAttribute transactionAttribute,

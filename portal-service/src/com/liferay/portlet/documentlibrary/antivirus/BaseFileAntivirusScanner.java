@@ -26,10 +26,12 @@ import java.io.InputStream;
  */
 public abstract class BaseFileAntivirusScanner implements AntivirusScanner {
 
+	@Override
 	public boolean isActive() {
 		return _ACTIVE;
 	}
 
+	@Override
 	public void scan(byte[] bytes)
 		throws AntivirusScannerException, SystemException {
 
@@ -52,6 +54,7 @@ public abstract class BaseFileAntivirusScanner implements AntivirusScanner {
 		}
 	}
 
+	@Override
 	public void scan(InputStream inputStream)
 		throws AntivirusScannerException, SystemException {
 

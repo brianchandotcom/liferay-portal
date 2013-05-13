@@ -36,32 +36,39 @@ import javax.servlet.http.HttpServletResponse;
 public abstract class MimeResponseImpl
 	extends PortletResponseImpl implements MimeResponse {
 
+	@Override
 	public void flushBuffer() throws IOException {
 		_response.flushBuffer();
 
 		_calledFlushBuffer = true;
 	}
 
+	@Override
 	public int getBufferSize() {
 		return _response.getBufferSize();
 	}
 
+	@Override
 	public CacheControl getCacheControl() {
 		return new CacheControlImpl(null, 0, false, false, this);
 	}
 
+	@Override
 	public String getCharacterEncoding() {
 		return _response.getCharacterEncoding();
 	}
 
+	@Override
 	public String getContentType() {
 		return _contentType;
 	}
 
+	@Override
 	public Locale getLocale() {
 		return _portletRequestImpl.getLocale();
 	}
 
+	@Override
 	public OutputStream getPortletOutputStream() throws IOException {
 		if (_calledGetWriter) {
 			throw new IllegalStateException(
@@ -77,6 +84,7 @@ public abstract class MimeResponseImpl
 		return _response.getOutputStream();
 	}
 
+	@Override
 	public PrintWriter getWriter() throws IOException {
 		if (_calledGetPortletOutputStream) {
 			throw new IllegalStateException(
@@ -104,10 +112,12 @@ public abstract class MimeResponseImpl
 		return _calledGetWriter;
 	}
 
+	@Override
 	public boolean isCommitted() {
 		return false;
 	}
 
+	@Override
 	public void reset() {
 		if (_calledFlushBuffer) {
 			throw new IllegalStateException(
@@ -115,6 +125,7 @@ public abstract class MimeResponseImpl
 		}
 	}
 
+	@Override
 	public void resetBuffer() {
 		if (_calledFlushBuffer) {
 			throw new IllegalStateException(
@@ -124,10 +135,12 @@ public abstract class MimeResponseImpl
 		_response.resetBuffer();
 	}
 
+	@Override
 	public void setBufferSize(int bufferSize) {
 		_response.setBufferSize(bufferSize);
 	}
 
+	@Override
 	public void setContentType(String contentType) {
 		if (Validator.isNull(contentType)) {
 			throw new IllegalArgumentException("Content type cannot be null");

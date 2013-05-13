@@ -86,12 +86,14 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 		}
 	}
 
+	@Override
 	public void deleteTrashEntry(long classPK)
 		throws PortalException, SystemException {
 
 		DLAppLocalServiceUtil.deleteFileEntry(classPK);
 	}
 
+	@Override
 	public String getClassName() {
 		return DLFileEntry.class.getName();
 	}
@@ -161,6 +163,7 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 			permissionChecker, groupId, classPK, trashActionId);
 	}
 
+	@Override
 	public boolean isInTrash(long classPK)
 		throws PortalException, SystemException {
 
@@ -227,6 +230,7 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 			serviceContext);
 	}
 
+	@Override
 	public void restoreTrashEntry(long userId, long classPK)
 		throws PortalException, SystemException {
 

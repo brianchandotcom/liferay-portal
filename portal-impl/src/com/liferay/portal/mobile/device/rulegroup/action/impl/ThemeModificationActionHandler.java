@@ -43,6 +43,7 @@ public class ThemeModificationActionHandler implements ActionHandler {
 		return ThemeModificationActionHandler.class.getName();
 	}
 
+	@Override
 	public void applyAction(
 		MDRAction mdrAction, HttpServletRequest request,
 		HttpServletResponse response) {
@@ -81,10 +82,12 @@ public class ThemeModificationActionHandler implements ActionHandler {
 		themeDisplay.setLookAndFeel(theme, colorScheme);
 	}
 
+	@Override
 	public Collection<String> getPropertyNames() {
 		return _propertyNames;
 	}
 
+	@Override
 	public String getType() {
 		return getHandlerType();
 	}

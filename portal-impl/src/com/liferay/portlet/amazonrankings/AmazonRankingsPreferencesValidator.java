@@ -32,6 +32,7 @@ import javax.portlet.ValidatorException;
 public class AmazonRankingsPreferencesValidator
 	implements PreferencesValidator {
 
+	@Override
 	public void validate(PortletPreferences preferences)
 		throws ValidatorException {
 

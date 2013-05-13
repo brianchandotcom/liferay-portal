@@ -1,0 +1,78 @@
+/**
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portlet.rolesadmin.lar;
+
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.model.ResourcePermission;
+import com.liferay.portal.model.ResourceTypePermission;
+import com.liferay.portal.model.Role;
+import com.liferay.portal.model.RoleConstants;
+import com.liferay.portal.security.permission.PermissionConversionFilter;
+import com.liferay.portal.service.GroupLocalServiceUtil;
+
+/**
+ * @author Michael C. Han
+ */
+public class ImportExportPermissionConversionFilter
+	implements PermissionConversionFilter {
+
+	public boolean accept(Role role, ResourcePermission resourcePermission)
+		throws SystemException {
+
+		int scope = resourcePermission.getScope();
+
+		if ((scope == ResourceConstants.SCOPE_COMPANY) ||
+			(scope == ResourceConstants.SCOPE_GROUP_TEMPLATE)) {
+
+			return true;
+		}
+		else if (resourcePermission.getScope() ==
+					ResourceConstants.SCOPE_GROUP) {
+
+			Group group = GroupLocalServiceUtil.fetchGroup(
+				Long.valueOf(resourcePermission.getPrimKey()));
+
+			return (group.isCompany() || group.isUserPersonalSite());
+		}
+
+		return false;
+	}
+
+	public boolean accept(
+			Role role, ResourceTypePermission resourceTypePermission)
+		throws SystemException {
+
+		if (role.getType() != RoleConstants.TYPE_REGULAR) {
+			return true;
+		}
+		else if (resourceTypePermission.isCompanyScope()) {
+			return true;
+		}
+
+		Group group = GroupLocalServiceUtil.fetchGroup(
+			resourceTypePermission.getGroupId());
+
+		if ((group != null) &&
+			(group.isCompany() || group.isUserPersonalSite())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+}

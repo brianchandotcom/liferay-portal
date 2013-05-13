@@ -644,6 +644,11 @@
 			<bean class="com.liferay.portal.security.permission.PermissionCheckerFactoryImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.security.permission.PermissionConverterUtil" class="com.liferay.portal.security.permission.PermissionConverterUtil">
+		<property name="permissionConverter">
+			<bean class="com.liferay.portal.security.permission.PermissionConverterImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.security.permission.ResourceActionsUtil" class="com.liferay.portal.security.permission.ResourceActionsUtil">
 		<property name="resourceActions">
 			<bean class="com.liferay.portal.security.permission.ResourceActionsImpl" />

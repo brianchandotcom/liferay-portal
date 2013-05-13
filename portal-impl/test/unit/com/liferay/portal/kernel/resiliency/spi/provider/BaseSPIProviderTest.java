@@ -77,11 +77,11 @@ public class BaseSPIProviderTest {
 		System.setProperty(
 			PropsKeys.LIFERAY_HOME, currentDir.getAbsolutePath());
 
-		MPIHelperUtil.registerSPIProvider(_testSPIProvider);
-
 		SPIAgentFactoryUtil.registerSPIAgentClass(MockSPIAgent.class);
 
 		_testSPIProvider = new TestSPIProvider();
+
+		MPIHelperUtil.registerSPIProvider(_testSPIProvider);
 
 		SPIRegistryUtil spiRegistryUtil = new SPIRegistryUtil();
 

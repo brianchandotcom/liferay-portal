@@ -1271,7 +1271,6 @@
 			var instance = this;
 
 			var defaultValues = {
-				availableFields: 'Liferay.FormBuilder.AVAILABLE_FIELDS.DDM_STRUCTURE',
 				eventName: 'selectStructure'
 			};
 
@@ -1296,7 +1295,6 @@
 				ddmURL.setParameter('refererWebDAVToken', config.refererWebDAVToken);
 			}
 
-			ddmURL.setParameter('scopeAvailableFields', config.availableFields);
 			ddmURL.setParameter('scopeTemplateMode', config.templateMode);
 			ddmURL.setParameter('scopeTitle', config.title);
 

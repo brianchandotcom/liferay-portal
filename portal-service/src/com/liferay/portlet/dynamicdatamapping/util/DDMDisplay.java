@@ -32,6 +32,8 @@ public interface DDMDisplay {
 
 	public String getAddTemplateActionId();
 
+    public String getAvailableFields();
+
 	public String getEditStructureDefaultValuesURL(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
@@ -88,4 +90,4 @@ public interface DDMDisplay {
 
 	public boolean isShowStructureSelector();
 
-}
+}	public String getAvailableFields();

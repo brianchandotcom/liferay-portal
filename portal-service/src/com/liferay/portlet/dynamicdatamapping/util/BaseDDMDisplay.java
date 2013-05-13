@@ -56,6 +56,10 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 		return ActionKeys.ADD_TEMPLATE;
 	}
 
+	public String getAvailableFields() {
+		return "Liferay.FormBuilder.AVAILABLE_FIELDS.DDM_STRUCTURE";
+	}
+
 	@Override
 	public String getEditStructureDefaultValuesURL(
 			LiferayPortletRequest liferayPortletRequest,

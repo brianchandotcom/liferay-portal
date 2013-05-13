@@ -154,7 +154,6 @@ groupId = ParamUtil.getLong(request, "groupId", groupId);
 	function <portlet:namespace />openStructureSelector() {
 		Liferay.Util.openDDMPortlet(
 			{
-				availableFields: 'Liferay.FormBuilder.AVAILABLE_FIELDS.WCM_STRUCTURE',
 				classPK: <%= (ddmStructure != null) ? ddmStructure.getPrimaryKey() : 0 %>,
 				dialog: {
 					destroyOnHide: true,

@@ -683,7 +683,6 @@ if (Validator.isNotNull(content)) {
 	function <portlet:namespace />openDDMStructureSelector() {
 		Liferay.Util.openDDMPortlet(
 			{
-				availableFields: 'Liferay.FormBuilder.AVAILABLE_FIELDS.WCM_STRUCTURE',
 				classPK: <%= (ddmStructure != null) ? ddmStructure.getPrimaryKey() : 0 %>,
 				dialog: {
 					destroyOnHide: true
@@ -708,7 +707,6 @@ if (Validator.isNotNull(content)) {
 	function <portlet:namespace />openDDMTemplateSelector(ddmStructureId) {
 		Liferay.Util.openDDMPortlet(
 			{
-				availableFields: 'Liferay.FormBuilder.AVAILABLE_FIELDS.WCM_STRUCTURE',
 				classNameId: '<%= PortalUtil.getClassNameId(DDMStructure.class) %>',
 				classPK: ddmStructureId,
 				dialog: {

@@ -60,6 +60,8 @@ public class FieldConstants {
 
 	public static final String PREDEFINED_VALUE = "predefinedValue";
 
+	public static final String PRIVATE = "private";
+
 	public static final String REQUIRED = "required";
 
 	public static final String SHORT = "short";

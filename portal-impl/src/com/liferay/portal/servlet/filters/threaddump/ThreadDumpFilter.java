@@ -33,6 +33,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ThreadDumpFilter
 	extends BasePortalFilter implements TryFinallyFilter {
 
+	@Override
 	public void doFilterFinally(
 		HttpServletRequest request, HttpServletResponse response,
 		Object object) {
@@ -42,6 +43,7 @@ public class ThreadDumpFilter
 		scheduledFuture.cancel(true);
 	}
 
+	@Override
 	public Object doFilterTry(
 		HttpServletRequest request, HttpServletResponse response) {
 

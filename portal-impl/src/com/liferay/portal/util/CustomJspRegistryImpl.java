@@ -34,6 +34,7 @@ public class CustomJspRegistryImpl implements CustomJspRegistry {
 		_servletContextNames = new ConcurrentHashMap<String, String>();
 	}
 
+	@Override
 	public String getCustomJspFileName(
 		String servletContextName, String fileName) {
 
@@ -54,20 +55,24 @@ public class CustomJspRegistryImpl implements CustomJspRegistry {
 		return sb.toString();
 	}
 
+	@Override
 	public String getDisplayName(String servletContextName) {
 		return _servletContextNames.get(servletContextName);
 	}
 
+	@Override
 	public Set<String> getServletContextNames() {
 		return _servletContextNames.keySet();
 	}
 
+	@Override
 	public void registerServletContextName(
 		String servletContextName, String displayName) {
 
 		_servletContextNames.put(servletContextName, displayName);
 	}
 
+	@Override
 	public void unregisterServletContextName(String servletContextName) {
 		_servletContextNames.remove(servletContextName);
 	}

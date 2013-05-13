@@ -45,14 +45,17 @@ public class LocaleSerializer extends AbstractSerializer {
 		return false;
 	}
 
+	@Override
 	public Class<?>[] getJSONClasses() {
 		return _JSON_CLASSES;
 	}
 
+	@Override
 	public Class<?>[] getSerializableClasses() {
 		return _SERIALIZABLE_CLASSES;
 	}
 
+	@Override
 	public Object marshall(
 			SerializerState serializerState, Object parentObject, Object object)
 		throws MarshallException {
@@ -99,6 +102,7 @@ public class LocaleSerializer extends AbstractSerializer {
 		return jsonObject;
 	}
 
+	@Override
 	public ObjectMatch tryUnmarshall(
 			SerializerState serializerState,
 			@SuppressWarnings("rawtypes") Class clazz, Object object)
@@ -117,6 +121,7 @@ public class LocaleSerializer extends AbstractSerializer {
 		return objectMatch;
 	}
 
+	@Override
 	public Object unmarshall(
 			SerializerState serializerState,
 			@SuppressWarnings("rawtypes") Class clazz, Object object)

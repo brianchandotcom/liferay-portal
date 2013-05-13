@@ -40,6 +40,7 @@ public class DestinationStatisticsManager
 		_destination = destination;
 	}
 
+	@Override
 	public int getActiveThreadCount() {
 		if (_autoRefresh) {
 			refresh();
@@ -48,6 +49,7 @@ public class DestinationStatisticsManager
 		return _destinationStatistics.getActiveThreadCount();
 	}
 
+	@Override
 	public int getCurrentThreadCount() {
 		if (_autoRefresh || (_destinationStatistics == null)) {
 			refresh();
@@ -56,6 +58,7 @@ public class DestinationStatisticsManager
 		return _destinationStatistics.getCurrentThreadCount();
 	}
 
+	@Override
 	public int getLargestThreadCount() {
 		if (_autoRefresh || (_destinationStatistics == null)) {
 			refresh();
@@ -64,10 +67,12 @@ public class DestinationStatisticsManager
 		return _destinationStatistics.getLargestThreadCount();
 	}
 
+	@Override
 	public String getLastRefresh() {
 		return String.valueOf(_lastRefresh);
 	}
 
+	@Override
 	public int getMaxThreadPoolSize() {
 		if (_autoRefresh || (_destinationStatistics == null)) {
 			refresh();
@@ -76,6 +81,7 @@ public class DestinationStatisticsManager
 		return _destinationStatistics.getMaxThreadPoolSize();
 	}
 
+	@Override
 	public int getMinThreadPoolSize() {
 		if (_autoRefresh || (_destinationStatistics == null)) {
 			refresh();
@@ -84,6 +90,7 @@ public class DestinationStatisticsManager
 		return _destinationStatistics.getMinThreadPoolSize();
 	}
 
+	@Override
 	public long getPendingMessageCount() {
 		if (_autoRefresh || (_destinationStatistics == null)) {
 			refresh();
@@ -92,6 +99,7 @@ public class DestinationStatisticsManager
 		return _destinationStatistics.getPendingMessageCount();
 	}
 
+	@Override
 	public long getSentMessageCount() {
 		if (_autoRefresh || (_destinationStatistics == null)) {
 			refresh();
@@ -100,10 +108,12 @@ public class DestinationStatisticsManager
 		return _destinationStatistics.getSentMessageCount();
 	}
 
+	@Override
 	public boolean isAutoRefresh() {
 		return _autoRefresh;
 	}
 
+	@Override
 	public void refresh() {
 		if (System.currentTimeMillis() > _lastRefresh) {
 			_lastRefresh = System.currentTimeMillis();
@@ -111,6 +121,7 @@ public class DestinationStatisticsManager
 		}
 	}
 
+	@Override
 	public void setAutoRefresh(boolean autoRefresh) {
 		_autoRefresh = autoRefresh;
 	}

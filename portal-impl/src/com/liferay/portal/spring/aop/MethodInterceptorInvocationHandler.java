@@ -54,6 +54,7 @@ public class MethodInterceptorInvocationHandler implements InvocationHandler {
 		_methodInterceptors = methodInterceptors;
 	}
 
+	@Override
 	public Object invoke(Object proxy, Method method, Object[] arguments)
 		throws Throwable {
 

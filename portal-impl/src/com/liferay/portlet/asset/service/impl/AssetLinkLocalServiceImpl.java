@@ -57,6 +57,7 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	 * @throws PortalException if the user could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public AssetLink addLink(
 			long userId, long entryId1, long entryId2, int type, int weight)
 		throws PortalException, SystemException {
@@ -105,6 +106,7 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	 * @param  link the asset link
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void deleteLink(AssetLink link) throws SystemException {
 		if (AssetLinkConstants.isTypeBi(link.getType())) {
 			try {
@@ -125,6 +127,7 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	 * @throws PortalException if the asset link could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void deleteLink(long linkId)
 		throws PortalException, SystemException {
 
@@ -139,6 +142,7 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	 * @param  entryId the primary key of the asset entry
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void deleteLinks(long entryId) throws SystemException {
 		for (AssetLink link : assetLinkPersistence.findByE1(entryId)) {
 			deleteLink(link);
@@ -156,6 +160,7 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	 * @param  entryId2 the primary key of the second asset entry
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void deleteLinks(long entryId1, long entryId2)
 		throws SystemException {
 
@@ -174,6 +179,7 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	 * @return the asset links whose first entry ID is the given entry ID
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public List<AssetLink> getDirectLinks(long entryId) throws SystemException {
 		return assetLinkFinder.findByE1_V(entryId, true);
 	}
@@ -193,6 +199,7 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	 *         the given entry ID
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public List<AssetLink> getDirectLinks(long entryId, int typeId)
 		throws SystemException {
 
@@ -208,6 +215,7 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	 *         ID
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public List<AssetLink> getLinks(long entryId) throws SystemException {
 		List<AssetLink> e1Links = assetLinkPersistence.findByE1(entryId);
 		List<AssetLink> e2Links = assetLinkPersistence.findByE2(entryId);
@@ -236,6 +244,7 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	 *         entry ID is the given entry ID
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public List<AssetLink> getLinks(long entryId, int typeId)
 		throws SystemException {
 
@@ -268,12 +277,14 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	 *         the given entry ID
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public List<AssetLink> getReverseLinks(long entryId, int typeId)
 		throws SystemException {
 
 		return assetLinkPersistence.findByE2_T(entryId, typeId);
 	}
 
+	@Override
 	public AssetLink updateLink(
 			long userId, long entryId1, long entryId2, int typeId, int weight)
 		throws PortalException, SystemException {
@@ -318,6 +329,7 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	 * @throws PortalException if the user could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void updateLinks(
 			long userId, long entryId, long[] linkEntryIds, int typeId)
 		throws PortalException, SystemException {

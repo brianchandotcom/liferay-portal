@@ -31,6 +31,7 @@ public class CMISSimpleExpression implements CMISCriterion {
 		_cmisSimpleExpressionOperator = cmisSimpleExpressionOperator;
 	}
 
+	@Override
 	public String toQueryFragment() {
 		StringBundler sb = new StringBundler(7);
 

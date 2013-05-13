@@ -38,6 +38,7 @@ import org.objectweb.asm.Type;
  */
 public class ConstantsBeanFactoryImpl implements ConstantsBeanFactory {
 
+	@Override
 	public Object getConstantsBean(Class<?> constantsClass) {
 		Reference<?> constantsBeanReference = constantsBeans.get(
 			new EqualityWeakReference<Class<?>>(constantsClass));

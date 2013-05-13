@@ -23,6 +23,7 @@ public class CMISContainsExpression implements CMISCriterion {
 		_content = content;
 	}
 
+	@Override
 	public String toQueryFragment() {
 		return "CONTAINS('".concat(_content).concat("')");
 	}

@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ValidHostNameFilter extends BasePortalFilter implements TryFilter {
 
+	@Override
 	public Object doFilterTry(
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {

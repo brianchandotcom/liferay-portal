@@ -47,18 +47,22 @@ public interface Folder extends RepositoryModel<Folder> {
 	public List<Folder> getAncestors()
 		throws PortalException, SystemException;
 
+	@Override
 	public long getCompanyId();
 
+	@Override
 	public Date getCreateDate();
 
 	public String getDescription();
 
 	public long getFolderId();
 
+	@Override
 	public long getGroupId();
 
 	public Date getLastPostDate();
 
+	@Override
 	public Date getModifiedDate();
 
 	public String getName();
@@ -69,12 +73,16 @@ public interface Folder extends RepositoryModel<Folder> {
 
 	public long getRepositoryId();
 
+	@Override
 	public long getUserId();
 
+	@Override
 	public String getUserName();
 
+	@Override
 	public String getUserUuid() throws SystemException;
 
+	@Override
 	public String getUuid();
 
 	public boolean hasInheritableLock();

@@ -34,6 +34,7 @@ public class PermissionCheckerFactoryImpl implements PermissionCheckerFactory {
 		_permissionChecker = clazz.newInstance();
 	}
 
+	@Override
 	public PermissionChecker create(User user) throws Exception {
 		PermissionChecker permissionChecker = _permissionChecker.clone();
 

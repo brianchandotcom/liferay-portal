@@ -36,6 +36,7 @@ public class BasicSpellCheckListener implements SpellCheckListener {
 		return _invalidWords;
 	}
 
+	@Override
 	public void spellingError(SpellCheckEvent event) {
 		List<String> suggestions = new ArrayList<String>();
 

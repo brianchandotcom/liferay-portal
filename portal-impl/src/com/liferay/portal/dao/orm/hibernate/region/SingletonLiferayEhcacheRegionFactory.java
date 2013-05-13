@@ -45,6 +45,7 @@ public class SingletonLiferayEhcacheRegionFactory implements RegionFactory {
 		}
 	}
 
+	@Override
 	public CollectionRegion buildCollectionRegion(
 			String regionName, Properties properties,
 			CacheDataDescription cacheDataDescription)
@@ -54,6 +55,7 @@ public class SingletonLiferayEhcacheRegionFactory implements RegionFactory {
 			regionName, properties, cacheDataDescription);
 	}
 
+	@Override
 	public EntityRegion buildEntityRegion(
 			String regionName, Properties properties,
 			CacheDataDescription cacheDataDescription)
@@ -63,6 +65,7 @@ public class SingletonLiferayEhcacheRegionFactory implements RegionFactory {
 			regionName, properties, cacheDataDescription);
 	}
 
+	@Override
 	public QueryResultsRegion buildQueryResultsRegion(
 			String regionName, Properties properties)
 		throws CacheException {
@@ -71,6 +74,7 @@ public class SingletonLiferayEhcacheRegionFactory implements RegionFactory {
 			regionName, properties);
 	}
 
+	@Override
 	public TimestampsRegion buildTimestampsRegion(
 			String regionName, Properties properties)
 		throws CacheException {
@@ -79,18 +83,22 @@ public class SingletonLiferayEhcacheRegionFactory implements RegionFactory {
 			regionName, properties);
 	}
 
+	@Override
 	public AccessType getDefaultAccessType() {
 		return _liferayEhcacheRegionFactory.getDefaultAccessType();
 	}
 
+	@Override
 	public boolean isMinimalPutsEnabledByDefault() {
 		return _liferayEhcacheRegionFactory.isMinimalPutsEnabledByDefault();
 	}
 
+	@Override
 	public long nextTimestamp() {
 		return _liferayEhcacheRegionFactory.nextTimestamp();
 	}
 
+	@Override
 	public synchronized void start(Settings settings, Properties properties)
 		throws CacheException {
 
@@ -99,6 +107,7 @@ public class SingletonLiferayEhcacheRegionFactory implements RegionFactory {
 		}
 	}
 
+	@Override
 	public synchronized void stop() {
 		if (_instanceCounter.decrementAndGet() == 0) {
 			_liferayEhcacheRegionFactory.stop();

@@ -30,10 +30,12 @@ public class BooleanClauseImpl implements BooleanClause {
 		_booleanClauseOccur = booleanClauseOccur;
 	}
 
+	@Override
 	public BooleanClauseOccur getBooleanClauseOccur() {
 		return _booleanClauseOccur;
 	}
 
+	@Override
 	public Query getQuery() {
 		return _query;
 	}

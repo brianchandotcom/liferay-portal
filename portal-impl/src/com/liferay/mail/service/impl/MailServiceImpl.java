@@ -49,6 +49,7 @@ import javax.mail.Session;
 @DoPrivileged
 public class MailServiceImpl implements MailService, IdentifiableBean {
 
+	@Override
 	public void addForward(
 		long companyId, long userId, List<Filter> filters,
 		List<String> emailAddresses, boolean leaveCopy) {
@@ -64,6 +65,7 @@ public class MailServiceImpl implements MailService, IdentifiableBean {
 		MessageBusUtil.sendMessage(DestinationNames.MAIL, methodHandler);
 	}
 
+	@Override
 	public void addUser(
 		long companyId, long userId, String password, String firstName,
 		String middleName, String lastName, String emailAddress) {
@@ -79,6 +81,7 @@ public class MailServiceImpl implements MailService, IdentifiableBean {
 		MessageBusUtil.sendMessage(DestinationNames.MAIL, methodHandler);
 	}
 
+	@Override
 	public void addVacationMessage(
 		long companyId, long userId, String emailAddress,
 		String vacationMessage) {
@@ -94,10 +97,12 @@ public class MailServiceImpl implements MailService, IdentifiableBean {
 		MessageBusUtil.sendMessage(DestinationNames.MAIL, methodHandler);
 	}
 
+	@Override
 	public void clearSession() {
 		_session = null;
 	}
 
+	@Override
 	public void deleteEmailAddress(long companyId, long userId) {
 		if (_log.isDebugEnabled()) {
 			_log.debug("deleteEmailAddress");
@@ -109,6 +114,7 @@ public class MailServiceImpl implements MailService, IdentifiableBean {
 		MessageBusUtil.sendMessage(DestinationNames.MAIL, methodHandler);
 	}
 
+	@Override
 	public void deleteUser(long companyId, long userId) {
 		if (_log.isDebugEnabled()) {
 			_log.debug("deleteUser");
@@ -120,10 +126,12 @@ public class MailServiceImpl implements MailService, IdentifiableBean {
 		MessageBusUtil.sendMessage(DestinationNames.MAIL, methodHandler);
 	}
 
+	@Override
 	public String getBeanIdentifier() {
 		return _beanIdentifier;
 	}
 
+	@Override
 	public Session getSession() throws SystemException {
 		if (_session != null) {
 			return _session;
@@ -242,6 +250,7 @@ public class MailServiceImpl implements MailService, IdentifiableBean {
 		return _session;
 	}
 
+	@Override
 	public void sendEmail(MailMessage mailMessage) {
 		if (_log.isDebugEnabled()) {
 			_log.debug("sendEmail");
@@ -250,10 +259,12 @@ public class MailServiceImpl implements MailService, IdentifiableBean {
 		MessageBusUtil.sendMessage(DestinationNames.MAIL, mailMessage);
 	}
 
+	@Override
 	public void setBeanIdentifier(String beanIdentifier) {
 		_beanIdentifier = beanIdentifier;
 	}
 
+	@Override
 	public void updateBlocked(
 		long companyId, long userId, List<String> blocked) {
 
@@ -267,6 +278,7 @@ public class MailServiceImpl implements MailService, IdentifiableBean {
 		MessageBusUtil.sendMessage(DestinationNames.MAIL, methodHandler);
 	}
 
+	@Override
 	public void updateEmailAddress(
 		long companyId, long userId, String emailAddress) {
 
@@ -280,6 +292,7 @@ public class MailServiceImpl implements MailService, IdentifiableBean {
 		MessageBusUtil.sendMessage(DestinationNames.MAIL, methodHandler);
 	}
 
+	@Override
 	public void updatePassword(long companyId, long userId, String password) {
 		if (_log.isDebugEnabled()) {
 			_log.debug("updatePassword");

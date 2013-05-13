@@ -63,6 +63,7 @@ public class LayoutStagingHandler implements InvocationHandler, Serializable {
 		return _layoutRevision;
 	}
 
+	@Override
 	public Object invoke(Object proxy, Method method, Object[] arguments)
 		throws Throwable {
 

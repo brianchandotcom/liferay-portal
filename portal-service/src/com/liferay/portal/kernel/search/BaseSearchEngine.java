@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 @DoPrivileged
 public class BaseSearchEngine implements SearchEngine {
 
+	@Override
 	public BooleanClauseFactory getBooleanClauseFactory() {
 		if (_booleanClauseFactory == null) {
 			ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
@@ -48,6 +49,7 @@ public class BaseSearchEngine implements SearchEngine {
 		return _booleanClauseFactory;
 	}
 
+	@Override
 	public BooleanQueryFactory getBooleanQueryFactory() {
 		if (_booleanQueryFactory == null) {
 			ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
@@ -74,18 +76,22 @@ public class BaseSearchEngine implements SearchEngine {
 		return _booleanQueryFactory;
 	}
 
+	@Override
 	public Priority getClusteredWritePriority() {
 		return _clusteredWritePriority;
 	}
 
+	@Override
 	public IndexSearcher getIndexSearcher() {
 		return _indexSearcher;
 	}
 
+	@Override
 	public IndexWriter getIndexWriter() {
 		return _indexWriter;
 	}
 
+	@Override
 	public TermQueryFactory getTermQueryFactory() {
 		if (_termQueryFactory == null) {
 			ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
@@ -112,6 +118,7 @@ public class BaseSearchEngine implements SearchEngine {
 		return _termQueryFactory;
 	}
 
+	@Override
 	public TermRangeQueryFactory getTermRangeQueryFactory() {
 		if (_termRangeQueryFactory == null) {
 			ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
@@ -139,14 +146,17 @@ public class BaseSearchEngine implements SearchEngine {
 		return _termRangeQueryFactory;
 	}
 
+	@Override
 	public String getVendor() {
 		return _vendor;
 	}
 
+	@Override
 	public boolean isClusteredWrite() {
 		return _clusteredWrite;
 	}
 
+	@Override
 	public boolean isLuceneBased() {
 		return _luceneBased;
 	}

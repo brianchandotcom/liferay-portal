@@ -29,10 +29,12 @@ import java.util.TimeZone;
 @DoPrivileged
 public class DateFormatFactoryImpl implements DateFormatFactory {
 
+	@Override
 	public DateFormat getDate(Locale locale) {
 		return getDate(locale, null);
 	}
 
+	@Override
 	public DateFormat getDate(Locale locale, TimeZone timeZone) {
 		DateFormat dateFormat = DateFormat.getDateInstance(
 			DateFormat.SHORT, locale);
@@ -44,14 +46,17 @@ public class DateFormatFactoryImpl implements DateFormatFactory {
 		return dateFormat;
 	}
 
+	@Override
 	public DateFormat getDate(TimeZone timeZone) {
 		return getDate(LocaleUtil.getDefault(), timeZone);
 	}
 
+	@Override
 	public DateFormat getDateTime(Locale locale) {
 		return getDateTime(locale, null);
 	}
 
+	@Override
 	public DateFormat getDateTime(Locale locale, TimeZone timeZone) {
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(
 			DateFormat.SHORT, DateFormat.SHORT, locale);
@@ -63,18 +68,22 @@ public class DateFormatFactoryImpl implements DateFormatFactory {
 		return dateFormat;
 	}
 
+	@Override
 	public DateFormat getDateTime(TimeZone timeZone) {
 		return getDateTime(LocaleUtil.getDefault(), timeZone);
 	}
 
+	@Override
 	public DateFormat getSimpleDateFormat(String pattern) {
 		return getSimpleDateFormat(pattern, LocaleUtil.getDefault(), null);
 	}
 
+	@Override
 	public DateFormat getSimpleDateFormat(String pattern, Locale locale) {
 		return getSimpleDateFormat(pattern, locale, null);
 	}
 
+	@Override
 	public DateFormat getSimpleDateFormat(
 		String pattern, Locale locale, TimeZone timeZone) {
 
@@ -87,14 +96,17 @@ public class DateFormatFactoryImpl implements DateFormatFactory {
 		return dateFormat;
 	}
 
+	@Override
 	public DateFormat getSimpleDateFormat(String pattern, TimeZone timeZone) {
 		return getSimpleDateFormat(pattern, LocaleUtil.getDefault(), timeZone);
 	}
 
+	@Override
 	public DateFormat getTime(Locale locale) {
 		return getTime(locale, null);
 	}
 
+	@Override
 	public DateFormat getTime(Locale locale, TimeZone timeZone) {
 		DateFormat dateFormat = DateFormat.getTimeInstance(
 			DateFormat.SHORT, locale);
@@ -106,6 +118,7 @@ public class DateFormatFactoryImpl implements DateFormatFactory {
 		return dateFormat;
 	}
 
+	@Override
 	public DateFormat getTime(TimeZone timeZone) {
 		return getTime(LocaleUtil.getDefault(), timeZone);
 	}

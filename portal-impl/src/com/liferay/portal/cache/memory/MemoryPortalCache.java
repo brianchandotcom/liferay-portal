@@ -41,6 +41,7 @@ public class MemoryPortalCache<K extends Serializable, V>
 		_map = new ConcurrentHashMap<K, V>(initialCapacity);
 	}
 
+	@Override
 	public void destroy() {
 		removeAll();
 
@@ -49,6 +50,7 @@ public class MemoryPortalCache<K extends Serializable, V>
 		_name = null;
 	}
 
+	@Override
 	public Collection<V> get(Collection<K> keys) {
 		List<V> values = new ArrayList<V>(keys.size());
 
@@ -63,6 +65,7 @@ public class MemoryPortalCache<K extends Serializable, V>
 		return _map.get(key);
 	}
 
+	@Override
 	public String getName() {
 		return _name;
 	}
@@ -79,10 +82,12 @@ public class MemoryPortalCache<K extends Serializable, V>
 		notifyPutEvents(key, value, oldValue != null);
 	}
 
+	@Override
 	public void registerCacheListener(CacheListener<K, V> cacheListener) {
 		_cacheListeners.add(cacheListener);
 	}
 
+	@Override
 	public void registerCacheListener(
 		CacheListener<K, V> cacheListener,
 		CacheListenerScope cacheListenerScope) {
@@ -98,6 +103,7 @@ public class MemoryPortalCache<K extends Serializable, V>
 		}
 	}
 
+	@Override
 	public void removeAll() {
 		_map.clear();
 
@@ -106,10 +112,12 @@ public class MemoryPortalCache<K extends Serializable, V>
 		}
 	}
 
+	@Override
 	public void unregisterCacheListener(CacheListener<K, V> cacheListener) {
 		_cacheListeners.remove(cacheListener);
 	}
 
+	@Override
 	public void unregisterCacheListeners() {
 		_cacheListeners.clear();
 	}

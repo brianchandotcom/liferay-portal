@@ -29,6 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ThreadLocalFilter
 	extends BasePortalFilter implements TryFinallyFilter {
 
+	@Override
 	public void doFilterFinally(
 		HttpServletRequest request, HttpServletResponse response,
 		Object ojbect) {
@@ -38,6 +39,7 @@ public class ThreadLocalFilter
 		CentralizedThreadLocal.clearShortLivedThreadLocals();
 	}
 
+	@Override
 	public Object doFilterTry(
 		HttpServletRequest request, HttpServletResponse response) {
 

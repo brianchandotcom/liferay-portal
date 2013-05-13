@@ -103,6 +103,7 @@ import org.apache.lucene.util.Version;
  */
 public class LuceneHelperImpl implements LuceneHelper {
 
+	@Override
 	public void addDocument(long companyId, Document document)
 		throws IOException {
 
@@ -111,12 +112,14 @@ public class LuceneHelperImpl implements LuceneHelper {
 		indexAccessor.addDocument(document);
 	}
 
+	@Override
 	public void addExactTerm(
 		BooleanQuery booleanQuery, String field, String value) {
 
 		addTerm(booleanQuery, field, value, false);
 	}
 
+	@Override
 	public void addNumericRangeTerm(
 		BooleanQuery booleanQuery, String field, String startValue,
 		String endValue) {
@@ -128,6 +131,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 		booleanQuery.add(numericRangeQuery, BooleanClause.Occur.SHOULD);
 	}
 
+	@Override
 	public void addRangeTerm(
 		BooleanQuery booleanQuery, String field, String startValue,
 		String endValue) {
@@ -150,12 +154,14 @@ public class LuceneHelperImpl implements LuceneHelper {
 		booleanQuery.add(termRangeQuery, BooleanClause.Occur.SHOULD);
 	}
 
+	@Override
 	public void addRequiredTerm(
 		BooleanQuery booleanQuery, String field, String value, boolean like) {
 
 		addRequiredTerm(booleanQuery, field, new String[] {value}, like);
 	}
 
+	@Override
 	public void addRequiredTerm(
 		BooleanQuery booleanQuery, String field, String[] values,
 		boolean like) {
@@ -173,12 +179,14 @@ public class LuceneHelperImpl implements LuceneHelper {
 		booleanQuery.add(query, BooleanClause.Occur.MUST);
 	}
 
+	@Override
 	public void addTerm(
 		BooleanQuery booleanQuery, String field, String value, boolean like) {
 
 		addTerm(booleanQuery, field, value, like, BooleanClauseOccur.SHOULD);
 	}
 
+	@Override
 	public void addTerm(
 		BooleanQuery booleanQuery, String field, String value, boolean like,
 		BooleanClauseOccur booleanClauseOccur) {
@@ -243,6 +251,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 		}
 	}
 
+	@Override
 	public void addTerm(
 		BooleanQuery booleanQuery, String field, String[] values,
 		boolean like) {
@@ -252,6 +261,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 		}
 	}
 
+	@Override
 	public int countScoredFieldNames(Query query, String[] filedNames) {
 		int count = 0;
 
@@ -269,6 +279,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 		return count;
 	}
 
+	@Override
 	public void delete(long companyId) {
 		IndexAccessor indexAccessor = _indexAccessors.get(companyId);
 
@@ -279,6 +290,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 		indexAccessor.delete();
 	}
 
+	@Override
 	public void deleteDocuments(long companyId, Term term) throws IOException {
 		IndexAccessor indexAccessor = _indexAccessors.get(companyId);
 
@@ -289,6 +301,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 		indexAccessor.deleteDocuments(term);
 	}
 
+	@Override
 	public void dumpIndex(long companyId, OutputStream outputStream)
 		throws IOException {
 
@@ -312,10 +325,12 @@ public class LuceneHelperImpl implements LuceneHelper {
 		indexAccessor.dumpIndex(outputStream);
 	}
 
+	@Override
 	public Analyzer getAnalyzer() {
 		return _analyzer;
 	}
 
+	@Override
 	public long getLastGeneration(long companyId) {
 		if (!isLoadIndexFromClusterEnabled()) {
 			return IndexAccessor.DEFAULT_LAST_GENERATION;
@@ -330,6 +345,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 		return indexAccessor.getLastGeneration();
 	}
 
+	@Override
 	public InputStream getLoadIndexesInputStreamFromCluster(
 			long companyId, Address bootupAddress)
 		throws SystemException {
@@ -369,6 +385,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 		}
 	}
 
+	@Override
 	public Set<String> getQueryTerms(Query query) {
 		String queryString = StringUtil.replace(
 			query.toString(), StringPool.STAR, StringPool.BLANK);
@@ -409,6 +426,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 		return queryTerms;
 	}
 
+	@Override
 	public IndexSearcher getSearcher(long companyId, boolean readOnly)
 		throws IOException {
 
@@ -425,6 +443,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 		return indexSearcher;
 	}
 
+	@Override
 	public String getSnippet(
 			Query query, String field, String s, int maxNumFragments,
 			int fragmentLength, String fragmentSuffix, Formatter formatter)
@@ -457,10 +476,12 @@ public class LuceneHelperImpl implements LuceneHelper {
 		}
 	}
 
+	@Override
 	public Version getVersion() {
 		return _version;
 	}
 
+	@Override
 	public boolean isLoadIndexFromClusterEnabled() {
 		if (PropsValues.CLUSTER_LINK_ENABLED &&
 			PropsValues.LUCENE_REPLICATE_WRITE) {
@@ -475,6 +496,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 		return false;
 	}
 
+	@Override
 	public void loadIndex(long companyId, InputStream inputStream)
 		throws IOException {
 
@@ -514,6 +536,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 		}
 	}
 
+	@Override
 	public void loadIndexesFromCluster(long companyId) throws SystemException {
 		if (!isLoadIndexFromClusterEnabled()) {
 			return;
@@ -538,6 +561,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 		_version = version;
 	}
 
+	@Override
 	public void shutdown() {
 		if (_luceneIndexThreadPoolExecutor != null) {
 			_luceneIndexThreadPoolExecutor.shutdownNow();
@@ -561,6 +585,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 		}
 	}
 
+	@Override
 	public void startup(long companyId) {
 		if (PropsValues.INDEX_ON_STARTUP) {
 			if (_log.isInfoEnabled()) {
@@ -589,6 +614,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 		}
 	}
 
+	@Override
 	public void updateDocument(long companyId, Term term, Document document)
 		throws IOException {
 

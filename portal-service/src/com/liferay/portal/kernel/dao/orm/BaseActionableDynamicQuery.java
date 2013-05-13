@@ -30,6 +30,7 @@ import java.util.List;
 public abstract class BaseActionableDynamicQuery
 	implements ActionableDynamicQuery {
 
+	@Override
 	public void performActions() throws PortalException, SystemException {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 			_clazz, _classLoader);
@@ -97,6 +98,7 @@ public abstract class BaseActionableDynamicQuery
 		}
 	}
 
+	@Override
 	public long performCount() throws PortalException, SystemException {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 			_clazz, _classLoader);
@@ -108,6 +110,7 @@ public abstract class BaseActionableDynamicQuery
 			dynamicQuery, _dynamicQueryCountMethod);
 	}
 
+	@Override
 	public void setBaseLocalService(BaseLocalService baseLocalService)
 		throws SystemException {
 
@@ -126,26 +129,32 @@ public abstract class BaseActionableDynamicQuery
 		}
 	}
 
+	@Override
 	public void setClass(Class<?> clazz) {
 		_clazz = clazz;
 	}
 
+	@Override
 	public void setClassLoader(ClassLoader classLoader) {
 		_classLoader = classLoader;
 	}
 
+	@Override
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
 	}
 
+	@Override
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
 	}
 
+	@Override
 	public void setInterval(int interval) {
 		_interval = interval;
 	}
 
+	@Override
 	public void setPrimaryKeyPropertyName(String primaryKeyPropertyName) {
 		_primaryKeyPropertyName = primaryKeyPropertyName;
 	}

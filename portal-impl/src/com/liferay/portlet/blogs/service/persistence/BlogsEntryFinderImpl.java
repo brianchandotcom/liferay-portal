@@ -56,6 +56,7 @@ public class BlogsEntryFinderImpl
 	public static final String FIND_BY_NO_ASSETS =
 		BlogsEntryFinder.class.getName() + ".findByNoAssets";
 
+	@Override
 	public int countByOrganizationId(
 			long organizationId, Date displayDate,
 			QueryDefinition queryDefinition)
@@ -69,6 +70,7 @@ public class BlogsEntryFinderImpl
 			organizationIds, displayDate, queryDefinition);
 	}
 
+	@Override
 	public int countByOrganizationIds(
 			List<Long> organizationIds, Date displayDate,
 			QueryDefinition queryDefinition)
@@ -136,6 +138,7 @@ public class BlogsEntryFinderImpl
 		}
 	}
 
+	@Override
 	public List<BlogsEntry> findByGroupIds(
 			long companyId, long groupId, Date displayDate,
 			QueryDefinition queryDefinition)
@@ -187,6 +190,7 @@ public class BlogsEntryFinderImpl
 		}
 	}
 
+	@Override
 	public List<BlogsEntry> findByOrganizationId(
 			long organizationId, Date displayDate,
 			QueryDefinition queryDefinition)
@@ -200,6 +204,7 @@ public class BlogsEntryFinderImpl
 			organizationIds, displayDate, queryDefinition);
 	}
 
+	@Override
 	public List<BlogsEntry> findByOrganizationIds(
 			List<Long> organizationIds, Date displayDate,
 			QueryDefinition queryDefinition)
@@ -261,6 +266,7 @@ public class BlogsEntryFinderImpl
 		}
 	}
 
+	@Override
 	public List<BlogsEntry> findByNoAssets() throws SystemException {
 		Session session = null;
 

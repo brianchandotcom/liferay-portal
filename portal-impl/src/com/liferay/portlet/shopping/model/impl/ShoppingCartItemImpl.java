@@ -71,6 +71,7 @@ public class ShoppingCartItemImpl implements ShoppingCartItem {
 		}
 	}
 
+	@Override
 	public String getCartItemId() {
 		long itemId = getItem().getItemId();
 
@@ -82,14 +83,17 @@ public class ShoppingCartItemImpl implements ShoppingCartItem {
 		}
 	}
 
+	@Override
 	public String getFields() {
 		return _fields;
 	}
 
+	@Override
 	public String[] getFieldsArray() {
 		return getFieldsArray(_fields);
 	}
 
+	@Override
 	public ShoppingItem getItem() {
 		return _item;
 	}

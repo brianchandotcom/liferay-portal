@@ -37,6 +37,7 @@ public class SimpleRuleHandler implements RuleHandler {
 		return SimpleRuleHandler.class.getName();
 	}
 
+	@Override
 	public boolean evaluateRule(MDRRule mdrRule, ThemeDisplay themeDisplay) {
 		Device device = themeDisplay.getDevice();
 
@@ -78,10 +79,12 @@ public class SimpleRuleHandler implements RuleHandler {
 		return result;
 	}
 
+	@Override
 	public Collection<String> getPropertyNames() {
 		return _propertyNames;
 	}
 
+	@Override
 	public String getType() {
 		return getHandlerType();
 	}

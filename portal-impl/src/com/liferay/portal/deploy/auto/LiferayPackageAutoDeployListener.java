@@ -32,6 +32,7 @@ public class LiferayPackageAutoDeployListener extends BaseAutoDeployListener {
 			new LiferayPackageAutoDeployer());
 	}
 
+	@Override
 	public void deploy(AutoDeploymentContext autoDeploymentContext)
 		throws AutoDeployException {
 

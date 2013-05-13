@@ -38,6 +38,7 @@ import javax.crypto.spec.PBEKeySpec;
 public class PBKDF2PasswordEncryptor
 	extends BasePasswordEncryptor implements PasswordEncryptor {
 
+	@Override
 	public String[] getSupportedAlgorithmTypes() {
 		return new String[] {PasswordEncryptorUtil.TYPE_PBKDF2};
 	}

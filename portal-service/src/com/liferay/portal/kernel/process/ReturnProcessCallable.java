@@ -26,6 +26,7 @@ public class ReturnProcessCallable<T extends Serializable>
 		_returnValue = returnValue;
 	}
 
+	@Override
 	public T call() {
 		return _returnValue;
 	}

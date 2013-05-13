@@ -24,6 +24,7 @@ import java.util.Set;
  */
 public class DefaultDeviceCapabilityFilter implements DeviceCapabilityFilter {
 
+	@Override
 	public boolean accept(String capabilityName) {
 		if (_acceptableCapabilityNames.isEmpty() ||
 			_acceptableCapabilityNames.contains(capabilityName)) {
@@ -34,6 +35,7 @@ public class DefaultDeviceCapabilityFilter implements DeviceCapabilityFilter {
 		return false;
 	}
 
+	@Override
 	public boolean accept(String capabilityName, String capabilityValue) {
 		if (Validator.isNull(capabilityValue)) {
 			return false;

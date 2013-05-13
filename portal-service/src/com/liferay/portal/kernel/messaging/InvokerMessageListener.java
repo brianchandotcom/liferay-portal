@@ -60,6 +60,7 @@ public class InvokerMessageListener implements MessageListener {
 		return _messageListener.hashCode();
 	}
 
+	@Override
 	public void receive(Message message) throws MessageListenerException {
 		Thread currentThread = Thread.currentThread();
 

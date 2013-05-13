@@ -30,6 +30,7 @@ import java.security.Permissions;
  */
 public class SocketChecker extends BaseChecker {
 
+	@Override
 	public void afterPropertiesSet() {
 		initAcceptHostsAndPorts();
 		initConnectHostsAndPorts();
@@ -92,6 +93,7 @@ public class SocketChecker extends BaseChecker {
 		return authorizationProperty;
 	}
 
+	@Override
 	public boolean implies(Permission permission) {
 		String actions = permission.getActions();
 		String name = permission.getName();

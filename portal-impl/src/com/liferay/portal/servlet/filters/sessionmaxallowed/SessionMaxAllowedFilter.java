@@ -29,6 +29,7 @@ import javax.servlet.http.HttpSession;
 public class SessionMaxAllowedFilter
 	extends BasePortalFilter implements TryFinallyFilter {
 
+	@Override
 	public void doFilterFinally(
 		HttpServletRequest request, HttpServletResponse response,
 		Object ojbect) {
@@ -45,6 +46,7 @@ public class SessionMaxAllowedFilter
 		}
 	}
 
+	@Override
 	public Object doFilterTry(
 		HttpServletRequest request, HttpServletResponse response) {
 

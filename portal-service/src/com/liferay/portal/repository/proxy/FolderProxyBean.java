@@ -61,6 +61,7 @@ public class FolderProxyBean
 		return folderProxyBean;
 	}
 
+	@Override
 	public boolean containsPermission(
 			PermissionChecker permissionChecker, String actionId)
 		throws PortalException, SystemException {
@@ -68,34 +69,41 @@ public class FolderProxyBean
 		return _folder.containsPermission(permissionChecker, actionId);
 	}
 
+	@Override
 	public List<Long> getAncestorFolderIds()
 		throws PortalException, SystemException {
 
 		return _folder.getAncestorFolderIds();
 	}
 
+	@Override
 	public List<Folder> getAncestors() throws PortalException, SystemException {
 		List<Folder> folders = _folder.getAncestors();
 
 		return toFolderProxyBeans(folders);
 	}
 
+	@Override
 	public Map<String, Serializable> getAttributes() {
 		return _folder.getAttributes();
 	}
 
+	@Override
 	public long getCompanyId() {
 		return _folder.getCompanyId();
 	}
 
+	@Override
 	public Date getCreateDate() {
 		return _folder.getCreateDate();
 	}
 
+	@Override
 	public String getDescription() {
 		return _folder.getDescription();
 	}
 
+	@Override
 	public ExpandoBridge getExpandoBridge() {
 		ExpandoBridge expandoBridge = _folder.getExpandoBridge();
 
@@ -103,170 +111,211 @@ public class FolderProxyBean
 			expandoBridge, ExpandoBridge.class);
 	}
 
+	@Override
 	public long getFolderId() {
 		return _folder.getFolderId();
 	}
 
+	@Override
 	public long getGroupId() {
 		return _folder.getGroupId();
 	}
 
+	@Override
 	public Date getLastPostDate() {
 		return _folder.getLastPostDate();
 	}
 
+	@Override
 	public Object getModel() {
 		return _folder.getModel();
 	}
 
+	@Override
 	public Class<?> getModelClass() {
 		return _folder.getModelClass();
 	}
 
+	@Override
 	public String getModelClassName() {
 		return _folder.getModelClassName();
 	}
 
+	@Override
 	public Date getModifiedDate() {
 		return _folder.getModifiedDate();
 	}
 
+	@Override
 	public String getName() {
 		return _folder.getName();
 	}
 
+	@Override
 	public Folder getParentFolder() throws PortalException, SystemException {
 		Folder folder = _folder.getParentFolder();
 
 		return newFolderProxyBean(folder);
 	}
 
+	@Override
 	public long getParentFolderId() {
 		return _folder.getParentFolderId();
 	}
 
+	@Override
 	public long getPrimaryKey() {
 		return _folder.getPrimaryKey();
 	}
 
+	@Override
 	public Serializable getPrimaryKeyObj() {
 		return _folder.getPrimaryKeyObj();
 	}
 
+	@Override
 	public long getRepositoryId() {
 		return _folder.getRepositoryId();
 	}
 
+	@Override
 	public long getUserId() {
 		return _folder.getUserId();
 	}
 
+	@Override
 	public String getUserName() {
 		return _folder.getUserName();
 	}
 
+	@Override
 	public String getUserUuid() throws SystemException {
 		return _folder.getUserUuid();
 	}
 
+	@Override
 	public String getUuid() {
 		return _folder.getUuid();
 	}
 
+	@Override
 	public boolean hasInheritableLock() {
 		return _folder.hasInheritableLock();
 	}
 
+	@Override
 	public boolean hasLock() {
 		return _folder.hasLock();
 	}
 
+	@Override
 	public boolean isDefaultRepository() {
 		return _folder.isDefaultRepository();
 	}
 
+	@Override
 	public boolean isEscapedModel() {
 		return _folder.isEscapedModel();
 	}
 
+	@Override
 	public boolean isLocked() {
 		return _folder.isLocked();
 	}
 
+	@Override
 	public boolean isMountPoint() {
 		return _folder.isMountPoint();
 	}
 
+	@Override
 	public boolean isRoot() {
 		return _folder.isRoot();
 	}
 
+	@Override
 	public boolean isSupportsLocking() {
 		return _folder.isSupportsLocking();
 	}
 
+	@Override
 	public boolean isSupportsMetadata() {
 		return _folder.isSupportsMetadata();
 	}
 
+	@Override
 	public boolean isSupportsMultipleUpload() {
 		return _folder.isSupportsMultipleUpload();
 	}
 
+	@Override
 	public boolean isSupportsShortcuts() {
 		return _folder.isSupportsShortcuts();
 	}
 
+	@Override
 	public boolean isSupportsSocial() {
 		return _folder.isSupportsSocial();
 	}
 
+	@Override
 	public boolean isSupportsSubscribing() {
 		return _folder.isSupportsSubscribing();
 	}
 
+	@Override
 	public void setCompanyId(long companyId) {
 		_folder.setCompanyId(companyId);
 	}
 
+	@Override
 	public void setCreateDate(Date date) {
 		_folder.setCreateDate(date);
 	}
 
+	@Override
 	public void setGroupId(long groupId) {
 		_folder.setGroupId(groupId);
 	}
 
+	@Override
 	public void setModifiedDate(Date date) {
 		_folder.setModifiedDate(date);
 	}
 
+	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_folder.setPrimaryKeyObj(primaryKeyObj);
 	}
 
+	@Override
 	public void setUserId(long userId) {
 		_folder.setUserId(userId);
 	}
 
+	@Override
 	public void setUserName(String userName) {
 		_folder.setUserName(userName);
 	}
 
+	@Override
 	public void setUserUuid(String userUuid) {
 		_folder.setUserUuid(userUuid);
 	}
 
+	@Override
 	public void setUuid(String uuid) {
 		_folder.setUuid(uuid);
 	}
 
+	@Override
 	public Folder toEscapedModel() {
 		Folder folder = _folder.toEscapedModel();
 
 		return newFolderProxyBean(folder);
 	}
 
+	@Override
 	public Folder toUnescapedModel() {
 		Folder folder = _folder.toUnescapedModel();
 

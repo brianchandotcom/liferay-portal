@@ -50,6 +50,7 @@ import org.apache.commons.httpclient.methods.GetMethod;
 public class SCProductVersionLocalServiceImpl
 	extends SCProductVersionLocalServiceBaseImpl {
 
+	@Override
 	public SCProductVersion addProductVersion(
 			long userId, long productEntryId, String version, String changeLog,
 			String downloadPageURL, String directDownloadURL,
@@ -109,6 +110,7 @@ public class SCProductVersionLocalServiceImpl
 		return productVersion;
 	}
 
+	@Override
 	public void deleteProductVersion(long productVersionId)
 		throws PortalException, SystemException {
 
@@ -118,12 +120,14 @@ public class SCProductVersionLocalServiceImpl
 		deleteProductVersion(productVersion);
 	}
 
+	@Override
 	public void deleteProductVersion(SCProductVersion productVersion)
 		throws SystemException {
 
 		scProductVersionPersistence.remove(productVersion);
 	}
 
+	@Override
 	public void deleteProductVersions(long productEntryId)
 		throws SystemException {
 
@@ -135,12 +139,14 @@ public class SCProductVersionLocalServiceImpl
 		}
 	}
 
+	@Override
 	public SCProductVersion getProductVersion(long productVersionId)
 		throws PortalException, SystemException {
 
 		return scProductVersionPersistence.findByPrimaryKey(productVersionId);
 	}
 
+	@Override
 	public SCProductVersion getProductVersionByDirectDownloadURL(
 			String directDownloadURL)
 		throws PortalException, SystemException {
@@ -149,6 +155,7 @@ public class SCProductVersionLocalServiceImpl
 			directDownloadURL);
 	}
 
+	@Override
 	public List<SCProductVersion> getProductVersions(
 			long productEntryId, int start, int end)
 		throws SystemException {
@@ -157,6 +164,7 @@ public class SCProductVersionLocalServiceImpl
 			productEntryId, start, end);
 	}
 
+	@Override
 	public int getProductVersionsCount(long productEntryId)
 		throws SystemException {
 
@@ -164,6 +172,7 @@ public class SCProductVersionLocalServiceImpl
 			productEntryId);
 	}
 
+	@Override
 	public SCProductVersion updateProductVersion(
 			long productVersionId, String version, String changeLog,
 			String downloadPageURL, String directDownloadURL,

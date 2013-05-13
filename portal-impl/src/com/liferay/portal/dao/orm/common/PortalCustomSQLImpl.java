@@ -24,6 +24,7 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 @DoPrivileged
 public class PortalCustomSQLImpl implements PortalCustomSQL {
 
+	@Override
 	public String get(String id) {
 		return CustomSQLUtil.get(id);
 	}

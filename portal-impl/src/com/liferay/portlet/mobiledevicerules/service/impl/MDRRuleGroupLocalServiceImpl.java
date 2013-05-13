@@ -39,6 +39,7 @@ import java.util.Map;
 public class MDRRuleGroupLocalServiceImpl
 	extends MDRRuleGroupLocalServiceBaseImpl {
 
+	@Override
 	public MDRRuleGroup addRuleGroup(
 			long groupId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
@@ -65,6 +66,7 @@ public class MDRRuleGroupLocalServiceImpl
 		return updateMDRRuleGroup(ruleGroup);
 	}
 
+	@Override
 	public MDRRuleGroup copyRuleGroup(
 			long ruleGroupId, long groupId, ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -75,6 +77,7 @@ public class MDRRuleGroupLocalServiceImpl
 		return copyRuleGroup(ruleGroup, groupId, serviceContext);
 	}
 
+	@Override
 	public MDRRuleGroup copyRuleGroup(
 			MDRRuleGroup ruleGroup, long groupId, ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -115,6 +118,7 @@ public class MDRRuleGroupLocalServiceImpl
 		return newRuleGroup;
 	}
 
+	@Override
 	public void deleteRuleGroup(long ruleGroupId) throws SystemException {
 		MDRRuleGroup ruleGroup = mdrRuleGroupPersistence.fetchByPrimaryKey(
 			ruleGroupId);
@@ -124,6 +128,7 @@ public class MDRRuleGroupLocalServiceImpl
 		}
 	}
 
+	@Override
 	public void deleteRuleGroup(MDRRuleGroup ruleGroup) throws SystemException {
 
 		// Rule group
@@ -140,6 +145,7 @@ public class MDRRuleGroupLocalServiceImpl
 			ruleGroup.getRuleGroupId());
 	}
 
+	@Override
 	public void deleteRuleGroups(long groupId) throws SystemException {
 		List<MDRRuleGroup> ruleGroups = mdrRuleGroupPersistence.findByGroupId(
 			groupId);
@@ -149,34 +155,40 @@ public class MDRRuleGroupLocalServiceImpl
 		}
 	}
 
+	@Override
 	public MDRRuleGroup fetchRuleGroup(long ruleGroupId)
 		throws SystemException {
 
 		return mdrRuleGroupPersistence.fetchByPrimaryKey(ruleGroupId);
 	}
 
+	@Override
 	public MDRRuleGroup getRuleGroup(long ruleGroupId)
 		throws PortalException, SystemException {
 
 		return mdrRuleGroupPersistence.findByPrimaryKey(ruleGroupId);
 	}
 
+	@Override
 	public List<MDRRuleGroup> getRuleGroups(long groupId)
 		throws SystemException {
 
 		return mdrRuleGroupPersistence.findByGroupId(groupId);
 	}
 
+	@Override
 	public List<MDRRuleGroup> getRuleGroups(long groupId, int start, int end)
 		throws SystemException {
 
 		return mdrRuleGroupPersistence.findByGroupId(groupId, start, end);
 	}
 
+	@Override
 	public int getRuleGroupsCount(long groupId) throws SystemException {
 		return mdrRuleGroupPersistence.countByGroupId(groupId);
 	}
 
+	@Override
 	public List<MDRRuleGroup> search(
 			long groupId, String name, boolean andOperator, int start, int end)
 		throws SystemException {
@@ -185,6 +197,7 @@ public class MDRRuleGroupLocalServiceImpl
 			groupId, name, andOperator, start, end);
 	}
 
+	@Override
 	public List<MDRRuleGroup> searchByKeywords(
 			long groupId, String keywords, boolean andOperator, int start,
 			int end)
@@ -193,6 +206,7 @@ public class MDRRuleGroupLocalServiceImpl
 		return mdrRuleGroupFinder.findByKeywords(groupId, keywords, start, end);
 	}
 
+	@Override
 	public int searchByKeywordsCount(
 			long groupId, String keywords, boolean andOperator)
 		throws SystemException {
@@ -200,12 +214,14 @@ public class MDRRuleGroupLocalServiceImpl
 		return mdrRuleGroupFinder.countByKeywords(groupId, keywords);
 	}
 
+	@Override
 	public int searchCount(long groupId, String name, boolean andOperator)
 		throws SystemException {
 
 		return mdrRuleGroupFinder.countByG_N(groupId, name, andOperator);
 	}
 
+	@Override
 	public MDRRuleGroup updateRuleGroup(
 			long ruleGroupId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, ServiceContext serviceContext)

@@ -56,14 +56,17 @@ public class IntrabandPortalCacheManager
 		_registrationReference = registrationReference;
 	}
 
+	@Override
 	public void clearAll() {
 		_portalCaches.clear();
 	}
 
+	@Override
 	public PortalCache<K, V> getCache(String name) {
 		return getCache(name, false);
 	}
 
+	@Override
 	public PortalCache<K, V> getCache(String name, boolean blocking) {
 		PortalCache<K, V> portalCache = _portalCaches.get(name);
 
@@ -77,6 +80,7 @@ public class IntrabandPortalCacheManager
 		return portalCache;
 	}
 
+	@Override
 	public void reconfigureCaches(URL configurationURL) {
 		Serializer serializer = new Serializer();
 
@@ -91,6 +95,7 @@ public class IntrabandPortalCacheManager
 				systemDataType.getValue(), serializer.toByteBuffer()));
 	}
 
+	@Override
 	public void removeCache(String name) {
 		_portalCaches.remove(name);
 	}

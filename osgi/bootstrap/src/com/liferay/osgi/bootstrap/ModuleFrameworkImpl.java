@@ -102,10 +102,12 @@ import org.springframework.context.ApplicationContext;
  */
 public class ModuleFrameworkImpl implements ModuleFramework {
 
+	@Override
 	public Object addBundle(String location) throws PortalException {
 		return addBundle(location, null);
 	}
 
+	@Override
 	public Object addBundle(String location, InputStream inputStream)
 		throws PortalException {
 
@@ -214,10 +216,12 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		return bundleContext.getBundle(bundleId);
 	}
 
+	@Override
 	public Map<String, List<URL>> getExtraPackageMap() {
 		return _extraPackageMap;
 	}
 
+	@Override
 	public List<URL> getExtraPackageURLs() {
 		if (_extraPackageURLs != null) {
 			return _extraPackageURLs;
@@ -241,10 +245,12 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		return _extraPackageURLs;
 	}
 
+	@Override
 	public Framework getFramework() {
 		return _framework;
 	}
 
+	@Override
 	public String getState(long bundleId) throws PortalException {
 		_checkPermission();
 
@@ -279,6 +285,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 	}
 
+	@Override
 	public void registerContext(Object context) {
 		if (context == null) {
 			return;
@@ -298,6 +305,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 	}
 
+	@Override
 	public void setBundleStartLevel(long bundleId, int startLevel)
 		throws PortalException {
 
@@ -333,10 +341,12 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 	}
 
+	@Override
 	public void startBundle(long bundleId) throws PortalException {
 		startBundle(bundleId, 0);
 	}
 
+	@Override
 	public void startBundle(long bundleId, int options) throws PortalException {
 		Bundle bundle = getBundle(bundleId);
 
@@ -347,6 +357,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		startBundle(bundle, 0, true);
 	}
 
+	@Override
 	public void startFramework() throws Exception {
 		ServiceLoaderCondition serviceLoaderCondition =
 			new ModuleFrameworkServiceLoaderCondition();
@@ -372,6 +383,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		_setupInitialBundles();
 	}
 
+	@Override
 	public void startRuntime() throws Exception {
 		if (_framework == null) {
 			return;
@@ -384,10 +396,12 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			PropsValues.MODULE_FRAMEWORK_RUNTIME_START_LEVEL);
 	}
 
+	@Override
 	public void stopBundle(long bundleId) throws PortalException {
 		stopBundle(bundleId, 0);
 	}
 
+	@Override
 	public void stopBundle(long bundleId, int options) throws PortalException {
 		_checkPermission();
 
@@ -407,6 +421,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 	}
 
+	@Override
 	public void stopFramework() throws Exception {
 		if (_framework == null) {
 			return;
@@ -415,6 +430,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		_framework.stop();
 	}
 
+	@Override
 	public void stopRuntime() throws Exception {
 		if (_framework == null) {
 			return;
@@ -427,6 +443,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			PropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL);
 	}
 
+	@Override
 	public void uninstallBundle(long bundleId) throws PortalException {
 		_checkPermission();
 
@@ -446,10 +463,12 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 	}
 
+	@Override
 	public void updateBundle(long bundleId) throws PortalException {
 		updateBundle(bundleId, null);
 	}
 
+	@Override
 	public void updateBundle(long bundleId, InputStream inputStream)
 		throws PortalException {
 

@@ -46,10 +46,12 @@ public class CalEventAssetRenderer extends BaseAssetRenderer {
 		_event = event;
 	}
 
+	@Override
 	public String getClassName() {
 		return CalEvent.class.getName();
 	}
 
+	@Override
 	public long getClassPK() {
 		return _event.getEventId();
 	}
@@ -69,10 +71,12 @@ public class CalEventAssetRenderer extends BaseAssetRenderer {
 		return _event.getModifiedDate();
 	}
 
+	@Override
 	public long getGroupId() {
 		return _event.getGroupId();
 	}
 
+	@Override
 	public String getSummary(Locale locale) {
 		return HtmlUtil.extractText(_event.getDescription());
 	}
@@ -88,6 +92,7 @@ public class CalEventAssetRenderer extends BaseAssetRenderer {
 			"/file_system/large/calendar.png";
 	}
 
+	@Override
 	public String getTitle(Locale locale) {
 		return _event.getTitle();
 	}
@@ -135,14 +140,17 @@ public class CalEventAssetRenderer extends BaseAssetRenderer {
 			"eventId", _event.getEventId());
 	}
 
+	@Override
 	public long getUserId() {
 		return _event.getUserId();
 	}
 
+	@Override
 	public String getUserName() {
 		return _event.getUserName();
 	}
 
+	@Override
 	public String getUuid() {
 		return _event.getUuid();
 	}
@@ -164,6 +172,7 @@ public class CalEventAssetRenderer extends BaseAssetRenderer {
 		return true;
 	}
 
+	@Override
 	public String render(
 			RenderRequest renderRequest, RenderResponse renderResponse,
 			String template)

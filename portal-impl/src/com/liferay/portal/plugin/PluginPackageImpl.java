@@ -88,30 +88,37 @@ public class PluginPackageImpl
 		return equalsBuilder.isEquals();
 	}
 
+	@Override
 	public String getArtifactId() {
 		return _moduleId.getArtifactId();
 	}
 
+	@Override
 	public String getArtifactURL() {
 		return getRepositoryURL() + _moduleId.getArtifactPath();
 	}
 
+	@Override
 	public String getAuthor() {
 		return _author;
 	}
 
+	@Override
 	public String getChangeLog() {
 		return _changeLog;
 	}
 
+	@Override
 	public String getContext() {
 		return _context;
 	}
 
+	@Override
 	public Properties getDeploymentSettings() {
 		return _deploymentSettings;
 	}
 
+	@Override
 	public String getDownloadURL() {
 		String useDownloadURL = getRepository().getSettings().getProperty(
 			RemotePluginPackageRepository.SETTING_USE_DOWNLOAD_URL);
@@ -127,42 +134,52 @@ public class PluginPackageImpl
 		return getArtifactURL();
 	}
 
+	@Override
 	public String getGroupId() {
 		return _moduleId.getGroupId();
 	}
 
+	@Override
 	public List<License> getLicenses() {
 		return _licenses;
 	}
 
+	@Override
 	public List<String> getLiferayVersions() {
 		return _liferayVersions;
 	}
 
+	@Override
 	public String getLongDescription() {
 		return _longDescription;
 	}
 
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
 
+	@Override
 	public String getModuleId() {
 		return _moduleId.toString();
 	}
 
+	@Override
 	public String getName() {
 		return _name;
 	}
 
+	@Override
 	public String getPackageId() {
 		return _moduleId.getPackageId();
 	}
 
+	@Override
 	public String getPageURL() {
 		return _pageURL;
 	}
 
+	@Override
 	public String getRecommendedDeploymentContext() {
 		String context = _recommendedDeploymentContext;
 
@@ -173,10 +190,12 @@ public class PluginPackageImpl
 		return context;
 	}
 
+	@Override
 	public RemotePluginPackageRepository getRepository() {
 		return _repository;
 	}
 
+	@Override
 	public String getRepositoryURL() {
 		if (_repository != null) {
 			return _repository.getRepositoryURL();
@@ -186,26 +205,32 @@ public class PluginPackageImpl
 		}
 	}
 
+	@Override
 	public List<String> getRequiredDeploymentContexts() {
 		return _requiredDeploymentContexts;
 	}
 
+	@Override
 	public List<Screenshot> getScreenshots() {
 		return _screenshots;
 	}
 
+	@Override
 	public String getShortDescription() {
 		return _shortDescription;
 	}
 
+	@Override
 	public List<String> getTags() {
 		return _tags;
 	}
 
+	@Override
 	public List<String> getTypes() {
 		return _types;
 	}
 
+	@Override
 	public String getVersion() {
 		return _moduleId.getVersion();
 	}
@@ -220,90 +245,111 @@ public class PluginPackageImpl
 		return hashCodeBuilder.hashCode();
 	}
 
+	@Override
 	public boolean isLaterVersionThan(PluginPackage pluginPackage) {
 		return _moduleId.isLaterVersionThan(pluginPackage.getVersion());
 	}
 
+	@Override
 	public boolean isPreviousVersionThan(PluginPackage pluginPackage) {
 		return _moduleId.isPreviousVersionThan(pluginPackage.getVersion());
 	}
 
+	@Override
 	public boolean isSameVersionAs(PluginPackage pluginPackage) {
 		return _moduleId.isSameVersionAs(pluginPackage.getVersion());
 	}
 
+	@Override
 	public void setAuthor(String author) {
 		_author = author;
 	}
 
+	@Override
 	public void setChangeLog(String changeLog) {
 		_changeLog = changeLog;
 	}
 
+	@Override
 	public void setContext(String context) {
 		_context = context;
 	}
 
+	@Override
 	public void setDeploymentSettings(Properties deploymentSettings) {
 		_deploymentSettings = deploymentSettings;
 	}
 
+	@Override
 	public void setDownloadURL(String downloadURL) {
 		_downloadURL = downloadURL;
 	}
 
+	@Override
 	public void setLicenses(List<License> licenses) {
 		_licenses = licenses;
 	}
 
+	@Override
 	public void setLiferayVersions(List<String> liferayVersions) {
 		_liferayVersions = liferayVersions;
 	}
 
+	@Override
 	public void setLongDescription(String longDescription) {
 		_longDescription = longDescription;
 	}
 
+	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
 	}
 
+	@Override
 	public void setName(String name) {
 		_name = name;
 	}
 
+	@Override
 	public void setPageURL(String pageURL) {
 		_pageURL = pageURL;
 	}
 
+	@Override
 	public void setRecommendedDeploymentContext(
 		String recommendedDeploymentContext) {
 
 		_recommendedDeploymentContext = recommendedDeploymentContext;
 	}
 
+	@Override
 	public void setRepository(RemotePluginPackageRepository repository) {
 		_repository = repository;
 	}
 
+	@Override
 	public void setRequiredDeploymentContexts(
 		List<String> requiredDeploymentContexts) {
 
 		_requiredDeploymentContexts = requiredDeploymentContexts;
 	}
 
+	@Override
 	public void setScreenshots(List<Screenshot> screenshots) {
 		_screenshots = screenshots;
 	}
 
+	@Override
 	public void setShortDescription(String shortDescription) {
 		_shortDescription = shortDescription;
 	}
 
+	@Override
 	public void setTags(List<String> tags) {
 		_tags = tags;
 	}
 
+	@Override
 	public void setTypes(List<String> types) {
 		_types = types;
 	}

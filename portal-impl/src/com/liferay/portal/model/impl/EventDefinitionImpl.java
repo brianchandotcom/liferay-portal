@@ -38,34 +38,42 @@ public class EventDefinitionImpl implements EventDefinition {
 		_qNames.add(_qName);
 	}
 
+	@Override
 	public void addAliasQName(QName aliasQName) {
 		_qNames.add(aliasQName);
 	}
 
+	@Override
 	public PortletApp getPortletApp() {
 		return _portletApp;
 	}
 
+	@Override
 	public QName getQName() {
 		return _qName;
 	}
 
+	@Override
 	public Set<QName> getQNames() {
 		return _qNames;
 	}
 
+	@Override
 	public String getValueType() {
 		return _valueType;
 	}
 
+	@Override
 	public void setPortletApp(PortletApp portletApp) {
 		_portletApp = portletApp;
 	}
 
+	@Override
 	public void setQName(QName qName) {
 		_qName = qName;
 	}
 
+	@Override
 	public void setValueType(String valueType) {
 		_valueType = valueType;
 	}

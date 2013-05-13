@@ -104,6 +104,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 *         domain was invalid
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public Company addCompany(
 			String webId, String virtualHostname, String mx, String shardName,
 			boolean system, int maxUsers, boolean active)
@@ -149,6 +150,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public Company checkCompany(String webId)
 		throws PortalException, SystemException {
 
@@ -172,6 +174,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public Company checkCompany(String webId, String mx, String shardName)
 		throws PortalException, SystemException {
 
@@ -413,6 +416,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 *         found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void checkCompanyKey(long companyId)
 		throws PortalException, SystemException {
 
@@ -440,6 +444,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 *         found or if the company's logo could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void deleteLogo(long companyId)
 		throws PortalException, SystemException {
 
@@ -464,6 +469,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 *         with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public Company fetchCompanyById(long companyId) throws SystemException {
 		return companyPersistence.fetchByPrimaryKey(companyId);
 	}
@@ -476,6 +482,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 *         company with the virtual host could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public Company fetchCompanyByVirtualHost(String virtualHostname)
 		throws SystemException {
 
@@ -497,6 +504,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 * @return the companies
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public List<Company> getCompanies() throws SystemException {
 		return companyPersistence.findAll();
 	}
@@ -509,6 +517,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 * @return the companies used by WSRP
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public List<Company> getCompanies(boolean system) throws SystemException {
 		return companyPersistence.findBySystem(system);
 	}
@@ -521,6 +530,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 * @return the number of companies used by WSRP
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public int getCompaniesCount(boolean system) throws SystemException {
 		return companyPersistence.countBySystem(system);
 	}
@@ -534,6 +544,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 *         found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public Company getCompanyById(long companyId)
 		throws PortalException, SystemException {
 
@@ -548,6 +559,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 * @throws PortalException if the company with the logo could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public Company getCompanyByLogoId(long logoId)
 		throws PortalException, SystemException {
 
@@ -563,6 +575,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 *         found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public Company getCompanyByMx(String mx)
 		throws PortalException, SystemException {
 
@@ -579,6 +592,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 *         company
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public Company getCompanyByVirtualHost(String virtualHostname)
 		throws PortalException, SystemException {
 
@@ -611,6 +625,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 *         found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public Company getCompanyByWebId(String webId)
 		throws PortalException, SystemException {
 
@@ -626,6 +641,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 *         otherwise
 	 * @throws Exception if a user with the primary key could not be found
 	 */
+	@Override
 	public long getCompanyIdByUserId(long userId) throws Exception {
 		long[] companyIds = PortalInstances.getCompanyIds();
 
@@ -662,6 +678,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 * @param  keys the company's preferences keys to be remove
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void removePreferences(long companyId, String[] keys)
 		throws SystemException {
 
@@ -698,6 +715,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 * @return the matching assets in the company
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public Hits search(
 			long companyId, long userId, String keywords, int start, int end)
 		throws SystemException {
@@ -724,6 +742,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 * @return the matching assets in the portlet within the company
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public Hits search(
 			long companyId, long userId, String portletId, long groupId,
 			String type, String keywords, int start, int end)
@@ -793,6 +812,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 *         or if the new information was invalid
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public Company updateCompany(
 			long companyId, String virtualHostname, String mx, int maxUsers,
 			boolean active)
@@ -855,6 +875,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 *         found or if the new information was invalid
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public Company updateCompany(
 			long companyId, String virtualHostname, String mx, String homeURL,
 			String name, String legalName, String legalId, String legalType,
@@ -901,6 +922,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 * @throws PortalException if the company's default user could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void updateDisplay(
 			long companyId, String languageId, String timeZoneId)
 		throws PortalException, SystemException {
@@ -923,6 +945,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 *         the logo's image was corrupted
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public Company updateLogo(long companyId, byte[] bytes)
 		throws PortalException, SystemException {
 
@@ -943,6 +966,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 *         the logo's image was corrupted
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public Company updateLogo(long companyId, File file)
 		throws PortalException, SystemException {
 
@@ -963,6 +987,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 *         the company's logo image was corrupted
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public Company updateLogo(long companyId, InputStream is)
 		throws PortalException, SystemException {
 
@@ -984,6 +1009,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 *         not supported
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void updatePreferences(long companyId, UnicodeProperties properties)
 		throws PortalException, SystemException {
 
@@ -1061,6 +1087,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 *         logo instead of the enterprise logo
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void updateSecurity(
 			long companyId, String authType, boolean autoLogin,
 			boolean sendPassword, boolean strangers, boolean strangersWithMx,

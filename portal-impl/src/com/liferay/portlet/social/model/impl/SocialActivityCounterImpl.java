@@ -22,6 +22,7 @@ import com.liferay.portlet.social.util.SocialCounterPeriodUtil;
  */
 public class SocialActivityCounterImpl extends SocialActivityCounterBaseImpl {
 
+	@Override
 	public boolean isActivePeriod(int periodLength) {
 		if (periodLength ==
 				SocialActivityCounterConstants.PERIOD_LENGTH_INFINITE) {

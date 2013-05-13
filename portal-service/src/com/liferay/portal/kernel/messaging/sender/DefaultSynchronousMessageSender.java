@@ -44,12 +44,14 @@ public class DefaultSynchronousMessageSender
 		_timeout = timeout;
 	}
 
+	@Override
 	public Object send(String destinationName, Message message)
 		throws MessageBusException {
 
 		return send(destinationName, message, _timeout);
 	}
 
+	@Override
 	public Object send(String destinationName, Message message, long timeout)
 		throws MessageBusException {
 

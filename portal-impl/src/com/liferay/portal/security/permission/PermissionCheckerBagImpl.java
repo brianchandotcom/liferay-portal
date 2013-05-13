@@ -53,10 +53,12 @@ public class PermissionCheckerBagImpl implements PermissionCheckerBag {
 		_roles = roles;
 	}
 
+	@Override
 	public List<Group> getGroups() {
 		return _groups;
 	}
 
+	@Override
 	public long[] getRoleIds() {
 		if (_roleIds == null) {
 			List<Role> roles = getRoles();
@@ -77,22 +79,27 @@ public class PermissionCheckerBagImpl implements PermissionCheckerBag {
 		return _roleIds;
 	}
 
+	@Override
 	public List<Role> getRoles() {
 		return _roles;
 	}
 
+	@Override
 	public List<Group> getUserGroups() {
 		return _userGroups;
 	}
 
+	@Override
 	public List<Group> getUserOrgGroups() {
 		return _userOrgGroups;
 	}
 
+	@Override
 	public List<Organization> getUserOrgs() {
 		return _userOrgs;
 	}
 
+	@Override
 	public List<Group> getUserUserGroupGroups() {
 		return _userUserGroupGroups;
 	}
@@ -101,6 +108,7 @@ public class PermissionCheckerBagImpl implements PermissionCheckerBag {
 	 * @deprecated As of 6.1, renamed to {@link #isGroupAdmin(PermissionChecker,
 	 *             Group)}
 	 */
+	@Override
 	public boolean isCommunityAdmin(
 			PermissionChecker permissionChecker, Group group)
 		throws Exception {
@@ -112,6 +120,7 @@ public class PermissionCheckerBagImpl implements PermissionCheckerBag {
 	 * @deprecated As of 6.1, renamed to {@link #isGroupOwner(PermissionChecker,
 	 *             Group)}
 	 */
+	@Override
 	public boolean isCommunityOwner(
 			PermissionChecker permissionChecker, Group group)
 		throws Exception {
@@ -119,6 +128,7 @@ public class PermissionCheckerBagImpl implements PermissionCheckerBag {
 		return isGroupOwner(permissionChecker, group);
 	}
 
+	@Override
 	public boolean isGroupAdmin(
 			PermissionChecker permissionChecker, Group group)
 		throws Exception {
@@ -134,6 +144,7 @@ public class PermissionCheckerBagImpl implements PermissionCheckerBag {
 		return value.booleanValue();
 	}
 
+	@Override
 	public boolean isGroupMember(
 			PermissionChecker permissionChecker, Group group)
 		throws Exception {
@@ -153,6 +164,7 @@ public class PermissionCheckerBagImpl implements PermissionCheckerBag {
 		return false;
 	}
 
+	@Override
 	public boolean isGroupOwner(
 			PermissionChecker permissionChecker, Group group)
 		throws Exception {
@@ -168,6 +180,7 @@ public class PermissionCheckerBagImpl implements PermissionCheckerBag {
 		return value.booleanValue();
 	}
 
+	@Override
 	public boolean isOrganizationAdmin(
 			PermissionChecker permissionChecker, Organization organization)
 		throws Exception {
@@ -185,6 +198,7 @@ public class PermissionCheckerBagImpl implements PermissionCheckerBag {
 		return value.booleanValue();
 	}
 
+	@Override
 	public boolean isOrganizationOwner(
 			PermissionChecker permissionChecker, Organization organization)
 		throws Exception {

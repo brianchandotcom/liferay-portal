@@ -45,6 +45,7 @@ public class DefaultLocalRepositoryImpl implements LocalRepository {
 		_repository = repository;
 	}
 
+	@Override
 	public FileEntry addFileEntry(
 		long userId, long folderId, String sourceFileName, String mimeType,
 		String title, String description, String changeLog, File file,
@@ -53,6 +54,7 @@ public class DefaultLocalRepositoryImpl implements LocalRepository {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public FileEntry addFileEntry(
 		long userId, long folderId, String sourceFileName, String mimeType,
 		String title, String description, String changeLog, InputStream is,
@@ -61,6 +63,7 @@ public class DefaultLocalRepositoryImpl implements LocalRepository {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public Folder addFolder(
 		long userId, long parentFolderId, String title, String description,
 		ServiceContext serviceContext) {
@@ -68,62 +71,73 @@ public class DefaultLocalRepositoryImpl implements LocalRepository {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void deleteAll() {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void deleteFileEntry(long fileEntryId)
 		throws PortalException, SystemException {
 
 		_repository.deleteFileEntry(fileEntryId);
 	}
 
+	@Override
 	public void deleteFolder(long folderId)
 		throws PortalException, SystemException {
 
 		_repository.deleteFolder(folderId);
 	}
 
+	@Override
 	public FileEntry getFileEntry(long fileEntryId)
 		throws PortalException, SystemException {
 
 		return _repository.getFileEntry(fileEntryId);
 	}
 
+	@Override
 	public FileEntry getFileEntry(long folderId, String title)
 		throws PortalException, SystemException {
 
 		return _repository.getFileEntry(folderId, title);
 	}
 
+	@Override
 	public FileEntry getFileEntryByUuid(String uuid)
 		throws PortalException, SystemException {
 
 		return _repository.getFileEntryByUuid(uuid);
 	}
 
+	@Override
 	public FileVersion getFileVersion(long fileVersionId)
 		throws PortalException, SystemException {
 
 		return _repository.getFileVersion(fileVersionId);
 	}
 
+	@Override
 	public Folder getFolder(long folderId)
 		throws PortalException, SystemException {
 
 		return _repository.getFolder(folderId);
 	}
 
+	@Override
 	public Folder getFolder(long parentFolderId, String title)
 		throws PortalException, SystemException {
 
 		return _repository.getFolder(parentFolderId, title);
 	}
 
+	@Override
 	public long getRepositoryId() {
 		return _repository.getRepositoryId();
 	}
 
+	@Override
 	public FileEntry moveFileEntry(
 		long userId, long fileEntryId, long newFolderId,
 		ServiceContext serviceContext) {
@@ -131,6 +145,7 @@ public class DefaultLocalRepositoryImpl implements LocalRepository {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void updateAsset(
 		long userId, FileEntry fileEntry, FileVersion fileVersion,
 		long[] assetCategoryIds, String[] assetTagNames,
@@ -139,6 +154,7 @@ public class DefaultLocalRepositoryImpl implements LocalRepository {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public FileEntry updateFileEntry(
 		long userId, long fileEntryId, String sourceFileName, String mimeType,
 		String title, String description, String changeLog,
@@ -147,6 +163,7 @@ public class DefaultLocalRepositoryImpl implements LocalRepository {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public FileEntry updateFileEntry(
 		long userId, long fileEntryId, String sourceFileName, String mimeType,
 		String title, String description, String changeLog,
@@ -156,6 +173,7 @@ public class DefaultLocalRepositoryImpl implements LocalRepository {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public Folder updateFolder(
 		long folderId, long parentFolderId, String title, String description,
 		ServiceContext serviceContext) {

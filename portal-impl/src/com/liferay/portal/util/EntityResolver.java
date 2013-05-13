@@ -30,6 +30,7 @@ import org.xml.sax.InputSource;
  */
 public class EntityResolver implements org.xml.sax.EntityResolver {
 
+	@Override
 	public InputSource resolveEntity(String publicId, String systemId) {
 		ClassLoader classLoader = getClass().getClassLoader();
 

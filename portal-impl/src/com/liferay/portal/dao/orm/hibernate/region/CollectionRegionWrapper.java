@@ -34,6 +34,7 @@ public class CollectionRegionWrapper
 		super(ehcacheCollectionRegion);
 	}
 
+	@Override
 	public CollectionRegionAccessStrategy buildAccessStrategy(
 			AccessType accessType)
 		throws CacheException {
@@ -44,6 +45,7 @@ public class CollectionRegionWrapper
 		return ehcacheCollectionRegion.buildAccessStrategy(accessType);
 	}
 
+	@Override
 	public CacheDataDescription getCacheDataDescription() {
 		EhcacheCollectionRegion ehcacheCollectionRegion =
 			getEhcacheCollectionRegion();
@@ -51,6 +53,7 @@ public class CollectionRegionWrapper
 		return ehcacheCollectionRegion.getCacheDataDescription();
 	}
 
+	@Override
 	public void invalidate() {
 		EhcacheCollectionRegion ehcacheCollectionRegion =
 			getEhcacheCollectionRegion();
@@ -58,6 +61,7 @@ public class CollectionRegionWrapper
 		ehcacheCollectionRegion.clear();
 	}
 
+	@Override
 	public boolean isTransactionAware() {
 		EhcacheCollectionRegion ehcacheCollectionRegion =
 			getEhcacheCollectionRegion();

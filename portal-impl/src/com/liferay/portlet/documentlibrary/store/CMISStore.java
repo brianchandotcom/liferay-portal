@@ -186,6 +186,7 @@ public class CMISStore extends BaseStore {
 		return document.getContentStream().getStream();
 	}
 
+	@Override
 	public String[] getFileNames(long companyId, long repositoryId) {
 		Folder folder = getRepositoryFolder(companyId, repositoryId);
 
@@ -341,6 +342,7 @@ public class CMISStore extends BaseStore {
 		oldVersioningFolderEntry.deleteTree(true, UnfileObject.DELETE, false);
 	}
 
+	@Override
 	public void updateFile(
 		long companyId, long repositoryId, String fileName,
 		String newFileName) {

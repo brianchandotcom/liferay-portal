@@ -49,18 +49,22 @@ public class DynamicFilterConfig implements FilterConfig {
 		_parameters.put(name, value);
 	}
 
+	@Override
 	public String getFilterName() {
 		return _filterName;
 	}
 
+	@Override
 	public String getInitParameter(String name) {
 		return _parameters.get(name);
 	}
 
+	@Override
 	public Enumeration<String> getInitParameterNames() {
 		return Collections.enumeration(_parameters.keySet());
 	}
 
+	@Override
 	public ServletContext getServletContext() {
 		return _servletContext;
 	}

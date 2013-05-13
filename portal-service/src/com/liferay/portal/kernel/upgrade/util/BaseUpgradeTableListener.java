@@ -27,12 +27,14 @@ import java.sql.SQLException;
  */
 public abstract class BaseUpgradeTableListener implements UpgradeTableListener {
 
+	@Override
 	public void onAfterUpdateTable(
 			ServiceComponent previousServiceComponent,
 			UpgradeTable upgradeTable)
 		throws Exception {
 	}
 
+	@Override
 	public void onBeforeUpdateTable(
 			ServiceComponent previousServiceComponent,
 			UpgradeTable upgradeTable)

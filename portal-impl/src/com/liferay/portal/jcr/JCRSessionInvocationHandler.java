@@ -44,6 +44,7 @@ public class JCRSessionInvocationHandler
 		}
 	}
 
+	@Override
 	public void doFinalize() {
 		for (Entry<String, Binary> entry : _binaries.entrySet()) {
 			Binary binary = entry.getValue();
@@ -54,6 +55,7 @@ public class JCRSessionInvocationHandler
 		_session.logout();
 	}
 
+	@Override
 	public Object invoke(Object proxy, Method method, Object[] arguments)
 		throws Throwable {
 

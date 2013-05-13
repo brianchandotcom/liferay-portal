@@ -34,6 +34,7 @@ import org.springframework.transaction.interceptor.TransactionAttribute;
 public class PortalTransactionAnnotationParser
 	implements TransactionAnnotationParser, Serializable {
 
+	@Override
 	public TransactionAttribute parseTransactionAnnotation(
 		AnnotatedElement annotatedElement) {
 

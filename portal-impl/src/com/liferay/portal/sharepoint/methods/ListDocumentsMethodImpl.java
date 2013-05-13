@@ -27,6 +27,7 @@ import java.util.List;
  */
 public class ListDocumentsMethodImpl extends BaseMethodImpl {
 
+	@Override
 	public String getMethodName() {
 		return _METHOD_NAME;
 	}

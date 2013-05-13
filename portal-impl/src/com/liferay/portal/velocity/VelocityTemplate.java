@@ -62,10 +62,12 @@ public class VelocityTemplate extends AbstractTemplate {
 		_velocityEngine = velocityEngine;
 	}
 
+	@Override
 	public Object get(String key) {
 		return _velocityContext.get(key);
 	}
 
+	@Override
 	public String[] getKeys() {
 		Context context = _velocityContext.getChainedContext();
 
@@ -73,6 +75,7 @@ public class VelocityTemplate extends AbstractTemplate {
 			(String[])_velocityContext.getKeys(), (String[])context.getKeys());
 	}
 
+	@Override
 	public void put(String key, Object value) {
 		if (value == null) {
 			return;

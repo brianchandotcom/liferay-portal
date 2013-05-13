@@ -43,6 +43,7 @@ public class PACLConnectionHandler implements InvocationHandler {
 		_paclPolicy = paclPolicy;
 	}
 
+	@Override
 	public Object invoke(Object proxy, Method method, Object[] arguments)
 		throws Throwable {
 

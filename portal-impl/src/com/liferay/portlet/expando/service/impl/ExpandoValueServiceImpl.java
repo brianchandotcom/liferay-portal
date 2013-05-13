@@ -36,6 +36,7 @@ import java.util.Map;
  */
 public class ExpandoValueServiceImpl extends ExpandoValueServiceBaseImpl {
 
+	@Override
 	public ExpandoValue addValue(
 			long companyId, String className, String tableName,
 			String columnName, long classPK, Object data)
@@ -51,6 +52,7 @@ public class ExpandoValueServiceImpl extends ExpandoValueServiceBaseImpl {
 			companyId, className, tableName, columnName, classPK, data);
 	}
 
+	@Override
 	public ExpandoValue addValue(
 			long companyId, String className, String tableName,
 			String columnName, long classPK, String data)
@@ -66,6 +68,7 @@ public class ExpandoValueServiceImpl extends ExpandoValueServiceBaseImpl {
 			companyId, className, tableName, columnName, classPK, data);
 	}
 
+	@Override
 	public void addValues(
 			long companyId, String className, String tableName, long classPK,
 			Map<String, Serializable> attributeValues)
@@ -80,6 +83,7 @@ public class ExpandoValueServiceImpl extends ExpandoValueServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public Map<String, Serializable> getData(
 			long companyId, String className, String tableName,
 			Collection<String> columnNames, long classPK)
@@ -103,6 +107,7 @@ public class ExpandoValueServiceImpl extends ExpandoValueServiceBaseImpl {
 		return attributeValues;
 	}
 
+	@Override
 	public Serializable getData(
 			long companyId, String className, String tableName,
 			String columnName, long classPK)
@@ -122,6 +127,7 @@ public class ExpandoValueServiceImpl extends ExpandoValueServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public JSONObject getJSONData(
 			long companyId, String className, String tableName,
 			String columnName, long classPK)

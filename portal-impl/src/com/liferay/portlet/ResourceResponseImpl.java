@@ -98,10 +98,12 @@ public class ResourceResponseImpl
 		return PortletRequest.RESOURCE_PHASE;
 	}
 
+	@Override
 	public void setCharacterEncoding(String charset) {
 		_response.setCharacterEncoding(charset);
 	}
 
+	@Override
 	public void setContentLength(int length) {
 		_response.setContentLength(length);
 	}
@@ -128,6 +130,7 @@ public class ResourceResponseImpl
 		_response.setIntHeader(name, value);
 	}
 
+	@Override
 	public void setLocale(Locale locale) {
 		_response.setLocale(locale);
 	}

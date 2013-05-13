@@ -34,6 +34,7 @@ import org.springframework.transaction.support.TransactionCallback;
 public class CallbackPreferringTransactionExecutor
 	extends BaseTransactionExecutor {
 
+	@Override
 	public Object execute(
 			PlatformTransactionManager platformTransactionManager,
 			TransactionAttribute transactionAttribute,

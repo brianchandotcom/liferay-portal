@@ -47,6 +47,7 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 	public WikiPageImpl() {
 	}
 
+	@Override
 	public Folder addAttachmentsFolder()
 		throws PortalException, SystemException {
 
@@ -78,10 +79,12 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 		return folder;
 	}
 
+	@Override
 	public List<FileEntry> getAttachmentsFileEntries() throws SystemException {
 		return getAttachmentsFileEntries(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
+	@Override
 	public List<FileEntry> getAttachmentsFileEntries(int start, int end)
 		throws SystemException {
 
@@ -98,6 +101,7 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 		return fileEntries;
 	}
 
+	@Override
 	public int getAttachmentsFileEntriesCount() throws SystemException {
 		int attachmentsFileEntriesCount = 0;
 
@@ -113,6 +117,7 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 		return attachmentsFileEntriesCount;
 	}
 
+	@Override
 	public long getAttachmentsFolderId() throws SystemException {
 		if (_attachmentsFolderId !=
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
@@ -152,6 +157,7 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 		return _attachmentsFolderId;
 	}
 
+	@Override
 	public List<WikiPage> getChildPages() {
 		try {
 			return WikiPageLocalServiceUtil.getChildren(
@@ -164,6 +170,7 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 		}
 	}
 
+	@Override
 	public List<FileEntry> getDeletedAttachmentsFileEntries()
 		throws SystemException {
 
@@ -171,6 +178,7 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
+	@Override
 	public List<FileEntry> getDeletedAttachmentsFileEntries(int start, int end)
 		throws SystemException {
 
@@ -187,6 +195,7 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 		return fileEntries;
 	}
 
+	@Override
 	public int getDeletedAttachmentsFileEntriesCount() throws SystemException {
 		int deletedAttachmentsFileEntriesCount = 0;
 
@@ -201,6 +210,7 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 		return deletedAttachmentsFileEntriesCount;
 	}
 
+	@Override
 	public WikiNode getNode() {
 		try {
 			return WikiNodeLocalServiceUtil.getNode(getNodeId());
@@ -212,12 +222,14 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 		}
 	}
 
+	@Override
 	public long getNodeAttachmentsFolderId() throws SystemException {
 		WikiNode node = getNode();
 
 		return node.getAttachmentsFolderId();
 	}
 
+	@Override
 	public WikiPage getParentPage() {
 		if (Validator.isNull(getParentTitle())) {
 			return null;
@@ -234,6 +246,7 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 		}
 	}
 
+	@Override
 	public List<WikiPage> getParentPages() {
 		List<WikiPage> parentPages = new ArrayList<WikiPage>();
 
@@ -247,6 +260,7 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 		return parentPages;
 	}
 
+	@Override
 	public WikiPage getRedirectPage() {
 		if (Validator.isNull(getRedirectTitle())) {
 			return null;
@@ -263,6 +277,7 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 		}
 	}
 
+	@Override
 	public WikiNode getTrashContainer() {
 		WikiNode node = getNode();
 
@@ -273,6 +288,7 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 		return null;
 	}
 
+	@Override
 	public List<WikiPage> getViewableChildPages() {
 		try {
 			return WikiPageServiceUtil.getChildren(
@@ -285,6 +301,7 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 		}
 	}
 
+	@Override
 	public WikiPage getViewableParentPage() {
 		if (Validator.isNull(getParentTitle())) {
 			return null;
@@ -301,6 +318,7 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 		}
 	}
 
+	@Override
 	public List<WikiPage> getViewableParentPages() {
 		List<WikiPage> pages = new ArrayList<WikiPage>();
 
@@ -314,6 +332,7 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 		return pages;
 	}
 
+	@Override
 	public boolean isInTrashContainer() {
 		WikiNode node = getNode();
 
@@ -329,6 +348,7 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 		return isHead();
 	}
 
+	@Override
 	public void setAttachmentsFolderId(long attachmentsFolderId) {
 		_attachmentsFolderId = attachmentsFolderId;
 	}

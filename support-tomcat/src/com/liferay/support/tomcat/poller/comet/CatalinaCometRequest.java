@@ -35,14 +35,17 @@ public class CatalinaCometRequest extends BaseCometRequest {
 		setRequest(_request);
 	}
 
+	@Override
 	public String getParameter(String name) {
 		return _request.getParameter(name);
 	}
 
+	@Override
 	public Map<String, String[]> getParameterMap() {
 		return _request.getParameterMap();
 	}
 
+	@Override
 	public Enumeration<String> getParameterNames() {
 		return _request.getParameterNames();
 	}

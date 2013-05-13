@@ -44,17 +44,20 @@ import com.liferay.portal.util.PropsValues;
 @JSONWebService(mode = JSONWebServiceMode.MANUAL)
 public class PortalServiceImpl extends PortalServiceBaseImpl {
 
+	@Override
 	public String getAutoDeployDirectory() throws SystemException {
 		return PrefsPropsUtil.getString(
 			PropsKeys.AUTO_DEPLOY_DEPLOY_DIR,
 			PropsValues.AUTO_DEPLOY_DEPLOY_DIR);
 	}
 
+	@Override
 	@JSONWebService
 	public int getBuildNumber() {
 		return ReleaseInfo.getBuildNumber();
 	}
 
+	@Override
 	public void testAddClassName_Rollback(String classNameValue)
 		throws SystemException {
 
@@ -63,12 +66,14 @@ public class PortalServiceImpl extends PortalServiceBaseImpl {
 		throw new SystemException();
 	}
 
+	@Override
 	public void testAddClassName_Success(String classNameValue)
 		throws SystemException {
 
 		addClassName(classNameValue);
 	}
 
+	@Override
 	public void testAddClassNameAndTestTransactionPortletBar_PortalRollback(
 			String transactionPortletBarText)
 		throws SystemException {
@@ -80,6 +85,7 @@ public class PortalServiceImpl extends PortalServiceBaseImpl {
 		throw new SystemException();
 	}
 
+	@Override
 	public void testAddClassNameAndTestTransactionPortletBar_PortletRollback(
 			String transactionPortletBarText)
 		throws SystemException {
@@ -89,6 +95,7 @@ public class PortalServiceImpl extends PortalServiceBaseImpl {
 		addTransactionPortletBar(transactionPortletBarText, true);
 	}
 
+	@Override
 	public void testAddClassNameAndTestTransactionPortletBar_Success(
 			String transactionPortletBarText)
 		throws SystemException {
@@ -98,6 +105,7 @@ public class PortalServiceImpl extends PortalServiceBaseImpl {
 		addTransactionPortletBar(transactionPortletBarText, false);
 	}
 
+	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void testAutoSyncHibernateSessionStateOnTxCreation()
 		throws SystemException {
@@ -169,6 +177,7 @@ public class PortalServiceImpl extends PortalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public void testCounterIncrement_Rollback() throws SystemException {
 		int counterIncrement = PropsValues.COUNTER_INCREMENT;
 
@@ -179,14 +188,17 @@ public class PortalServiceImpl extends PortalServiceBaseImpl {
 		throw new SystemException();
 	}
 
+	@Override
 	public void testDeleteClassName() throws PortalException, SystemException {
 		classNamePersistence.removeByValue(PortalService.class.getName());
 	}
 
+	@Override
 	public int testGetBuildNumber() {
 		return portalService.getBuildNumber();
 	}
 
+	@Override
 	public void testGetUserId() {
 		long userId = 0;
 
@@ -202,6 +214,7 @@ public class PortalServiceImpl extends PortalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public boolean testHasClassName() throws SystemException {
 		int count = classNamePersistence.countByValue(
 			PortalService.class.getName());

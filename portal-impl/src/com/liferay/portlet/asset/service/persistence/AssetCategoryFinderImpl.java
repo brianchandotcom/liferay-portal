@@ -68,6 +68,7 @@ public class AssetCategoryFinderImpl
 		AssetCategoryPersistenceImpl.FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 		"findByG_L", new String[] {Long.class.getName()});
 
+	@Override
 	public int countByG_C_N(long groupId, long classNameId, String name)
 		throws SystemException {
 
@@ -109,6 +110,7 @@ public class AssetCategoryFinderImpl
 		}
 	}
 
+	@Override
 	public int countByG_N_P(
 			long groupId, String name, String[] categoryProperties)
 		throws SystemException {
@@ -152,6 +154,7 @@ public class AssetCategoryFinderImpl
 		}
 	}
 
+	@Override
 	public List<Long> findByG_L(Long parentCategoryId) throws SystemException {
 		Object[] finderArgs = new Object[] {parentCategoryId};
 
@@ -207,6 +210,7 @@ public class AssetCategoryFinderImpl
 		return list;
 	}
 
+	@Override
 	public AssetCategory findByG_N(long groupId, String name)
 		throws NoSuchCategoryException, SystemException {
 
@@ -253,6 +257,7 @@ public class AssetCategoryFinderImpl
 		throw new NoSuchCategoryException(sb.toString());
 	}
 
+	@Override
 	public List<AssetCategory> findByG_N_P(
 			long groupId, String name, String[] categoryProperties)
 		throws SystemException {
@@ -262,6 +267,7 @@ public class AssetCategoryFinderImpl
 			QueryUtil.ALL_POS);
 	}
 
+	@Override
 	public List<AssetCategory> findByG_N_P(
 			long groupId, String name, String[] categoryProperties, int start,
 			int end)

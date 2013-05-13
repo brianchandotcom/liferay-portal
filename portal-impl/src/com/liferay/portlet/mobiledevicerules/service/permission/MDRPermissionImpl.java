@@ -23,6 +23,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
  */
 public class MDRPermissionImpl implements MDRPermission {
 
+	@Override
 	public void check(
 			PermissionChecker permissionChecker, long groupId, String actionId)
 		throws PortalException {
@@ -32,6 +33,7 @@ public class MDRPermissionImpl implements MDRPermission {
 		}
 	}
 
+	@Override
 	public boolean contains(
 		PermissionChecker permissionChecker, long groupId, String actionId) {
 

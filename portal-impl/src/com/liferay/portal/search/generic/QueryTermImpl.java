@@ -26,10 +26,12 @@ public class QueryTermImpl implements QueryTerm {
 		_value = value;
 	}
 
+	@Override
 	public String getField() {
 		return _field;
 	}
 
+	@Override
 	public String getValue() {
 		return _value;
 	}

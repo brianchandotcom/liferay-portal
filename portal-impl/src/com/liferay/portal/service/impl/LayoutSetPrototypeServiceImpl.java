@@ -38,6 +38,7 @@ import java.util.Map;
 public class LayoutSetPrototypeServiceImpl
 	extends LayoutSetPrototypeServiceBaseImpl {
 
+	@Override
 	public LayoutSetPrototype addLayoutSetPrototype(
 			Map<Locale, String> nameMap, String description, boolean active,
 			boolean layoutsUpdateable, ServiceContext serviceContext)
@@ -53,6 +54,7 @@ public class LayoutSetPrototypeServiceImpl
 			layoutsUpdateable, serviceContext);
 	}
 
+	@Override
 	public void deleteLayoutSetPrototype(long layoutSetPrototypeId)
 		throws PortalException, SystemException {
 
@@ -63,6 +65,7 @@ public class LayoutSetPrototypeServiceImpl
 			layoutSetPrototypeId);
 	}
 
+	@Override
 	public LayoutSetPrototype getLayoutSetPrototype(long layoutSetPrototypeId)
 		throws PortalException, SystemException {
 
@@ -73,6 +76,7 @@ public class LayoutSetPrototypeServiceImpl
 			layoutSetPrototypeId);
 	}
 
+	@Override
 	public List<LayoutSetPrototype> search(
 			long companyId, Boolean active, OrderByComparator obc)
 		throws PortalException, SystemException {
@@ -97,6 +101,7 @@ public class LayoutSetPrototypeServiceImpl
 		return filteredLayoutSetPrototypes;
 	}
 
+	@Override
 	public LayoutSetPrototype updateLayoutSetPrototype(
 			long layoutSetPrototypeId, Map<Locale, String> nameMap,
 			String description, boolean active, boolean layoutsUpdateable,
@@ -111,6 +116,7 @@ public class LayoutSetPrototypeServiceImpl
 			layoutsUpdateable, serviceContext);
 	}
 
+	@Override
 	public LayoutSetPrototype updateLayoutSetPrototype(
 			long layoutSetPrototypeId, String settings)
 		throws PortalException, SystemException {

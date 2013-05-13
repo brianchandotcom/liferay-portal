@@ -49,10 +49,12 @@ public class CalIndexer extends BaseIndexer {
 		setPermissionAware(true);
 	}
 
+	@Override
 	public String[] getClassNames() {
 		return CLASS_NAMES;
 	}
 
+	@Override
 	public String getPortletId() {
 		return PORTLET_ID;
 	}

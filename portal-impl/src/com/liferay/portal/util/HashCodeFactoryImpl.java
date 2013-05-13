@@ -24,10 +24,12 @@ import com.liferay.portal.kernel.util.HashCodeFactory;
 @DoPrivileged
 public class HashCodeFactoryImpl implements HashCodeFactory {
 
+	@Override
 	public HashCode getHashCode() {
 		return new HashCodeImpl();
 	}
 
+	@Override
 	public HashCode getHashCode(
 		int initialNonZeroOddNumber, int multiplierNonZeroOddNumber) {
 

@@ -41,6 +41,7 @@ import javax.servlet.http.HttpServletResponse;
 public class FreeMarkerTemplateTaglibSupportProvider
 	implements TemplateTaglibSupportProvider {
 
+	@Override
 	public void addTaglibSupport(
 			Template template, String servletContextName,
 			PortletRequest portletRequest, PortletResponse portletResponse)

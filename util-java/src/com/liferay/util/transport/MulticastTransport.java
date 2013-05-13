@@ -43,6 +43,7 @@ public class MulticastTransport extends Thread implements Transport {
 		_port = port;
 	}
 
+	@Override
 	public synchronized void connect() throws IOException {
 		if (_socket == null) {
 			_socket = new MulticastSocket(_port);
@@ -60,6 +61,7 @@ public class MulticastTransport extends Thread implements Transport {
 		start();
 	}
 
+	@Override
 	public synchronized void disconnect() {
 
 		// Interrupt all processing
@@ -81,6 +83,7 @@ public class MulticastTransport extends Thread implements Transport {
 		_socket.close();
 	}
 
+	@Override
 	public boolean isConnected() {
 		return _connected;
 	}
@@ -112,6 +115,7 @@ public class MulticastTransport extends Thread implements Transport {
 		_socket.send(_outboundPacket);
 	}
 
+	@Override
 	public synchronized void sendMessage(String message) throws IOException {
 		sendMessage(message.getBytes());
 	}

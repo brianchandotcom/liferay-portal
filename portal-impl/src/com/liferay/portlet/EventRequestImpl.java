@@ -24,6 +24,7 @@ import javax.portlet.PortletRequest;
 public class EventRequestImpl
 	extends PortletRequestImpl implements EventRequest {
 
+	@Override
 	public Event getEvent() {
 		return _event;
 	}

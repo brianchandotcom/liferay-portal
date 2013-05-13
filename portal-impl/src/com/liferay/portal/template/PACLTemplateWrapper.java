@@ -30,20 +30,25 @@ public class PACLTemplateWrapper implements Template {
 		return template;
 	}
 
+	@Override
 	public Object get(String key) {
 		return null;
 	}
 
+	@Override
 	public String[] getKeys() {
 		return null;
 	}
 
+	@Override
 	public void prepare(HttpServletRequest request) {
 	}
 
+	@Override
 	public void processTemplate(Writer writer) {
 	}
 
+	@Override
 	public void put(String key, Object value) {
 	}
 

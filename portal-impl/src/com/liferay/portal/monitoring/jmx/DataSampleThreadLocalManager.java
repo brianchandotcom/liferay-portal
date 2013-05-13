@@ -29,10 +29,12 @@ public class DataSampleThreadLocalManager
 			PropsValues.MONITORING_DATA_SAMPLE_THREAD_LOCAL);
 	}
 
+	@Override
 	public boolean isMonitoringDataSampleThreadLocal() {
 		return DataSampleThreadLocal.isMonitoringDataSampleThreadLocal();
 	}
 
+	@Override
 	public void setMonitoringDataSampleThreadLocal(
 		boolean monitoringDataSampleThreadLocal) {
 

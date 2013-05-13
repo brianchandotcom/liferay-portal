@@ -27,6 +27,7 @@ public class DiscardOldestPolicy implements RejectedExecutionHandler {
 	 * @see java.util.concurrent.ThreadPoolExecutor.DiscardOldestPolicy#rejectedExecution(
 	 *      Runnable, java.util.concurrent.ThreadPoolExecutor)
 	 */
+	@Override
 	public void rejectedExecution(
 		Runnable runnable, ThreadPoolExecutor threadPoolExecutor) {
 

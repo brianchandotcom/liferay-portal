@@ -29,6 +29,7 @@ import java.util.Date;
  */
 public class TicketLocalServiceImpl extends TicketLocalServiceBaseImpl {
 
+	@Override
 	public Ticket addTicket(
 			long companyId, String className, long classPK, int type,
 			String extraInfo, Date expirationDate,
@@ -56,10 +57,12 @@ public class TicketLocalServiceImpl extends TicketLocalServiceBaseImpl {
 		return ticket;
 	}
 
+	@Override
 	public Ticket fetchTicket(String key) throws SystemException {
 		return ticketPersistence.fetchByKey(key);
 	}
 
+	@Override
 	public Ticket getTicket(String key)
 		throws PortalException, SystemException {
 

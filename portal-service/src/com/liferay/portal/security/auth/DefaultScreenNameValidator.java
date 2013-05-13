@@ -26,6 +26,7 @@ public class DefaultScreenNameValidator implements ScreenNameValidator {
 
 	public static final String POSTFIX = "postfix";
 
+	@Override
 	public boolean validate(long companyId, String screenName) {
 		if (Validator.isEmailAddress(screenName) ||
 			screenName.equalsIgnoreCase(CYRUS) ||

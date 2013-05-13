@@ -45,6 +45,7 @@ public class JournalFeedFinderImpl
 	public static final String FIND_BY_C_G_F_N_D =
 		JournalFeedFinder.class.getName() + ".findByC_G_F_N_D";
 
+	@Override
 	public int countByKeywords(long companyId, long groupId, String keywords)
 		throws SystemException {
 
@@ -66,6 +67,7 @@ public class JournalFeedFinderImpl
 			companyId, groupId, feedIds, names, descriptions, andOperator);
 	}
 
+	@Override
 	public int countByC_G_F_N_D(
 			long companyId, long groupId, String feedId, String name,
 			String description, boolean andOperator)
@@ -79,6 +81,7 @@ public class JournalFeedFinderImpl
 			companyId, groupId, feedIds, names, descriptions, andOperator);
 	}
 
+	@Override
 	public int countByC_G_F_N_D(
 			long companyId, long groupId, String[] feedIds, String[] names,
 			String[] descriptions, boolean andOperator)
@@ -145,6 +148,7 @@ public class JournalFeedFinderImpl
 		}
 	}
 
+	@Override
 	public List<JournalFeed> findByKeywords(
 			long companyId, long groupId, String keywords, int start, int end,
 			OrderByComparator obc)
@@ -169,6 +173,7 @@ public class JournalFeedFinderImpl
 			start, end, obc);
 	}
 
+	@Override
 	public List<JournalFeed> findByC_G_F_N_D(
 			long companyId, long groupId, String feedId, String name,
 			String description, boolean andOperator, int start, int end,
@@ -184,6 +189,7 @@ public class JournalFeedFinderImpl
 			start, end, obc);
 	}
 
+	@Override
 	public List<JournalFeed> findByC_G_F_N_D(
 			long companyId, long groupId, String[] feedIds, String[] names,
 			String[] descriptions, boolean andOperator, int start, int end,

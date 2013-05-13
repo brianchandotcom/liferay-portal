@@ -50,6 +50,7 @@ public class JournalTemplateFinderImpl
 	public static final String FIND_BY_C_G_T_S_N_D =
 		JournalTemplateFinder.class.getName() + ".findByC_G_T_S_N_D";
 
+	@Override
 	public int countByKeywords(
 			long companyId, long[] groupIds, String keywords,
 			String structureId, String structureIdComparator)
@@ -74,6 +75,7 @@ public class JournalTemplateFinderImpl
 			structureIdComparator, names, descriptions, andOperator, false);
 	}
 
+	@Override
 	public int countByC_G_T_S_N_D(
 			long companyId, long[] groupIds, String templateId,
 			String structureId, String structureIdComparator, String name,
@@ -89,6 +91,7 @@ public class JournalTemplateFinderImpl
 			structureIdComparator, names, descriptions, andOperator, false);
 	}
 
+	@Override
 	public int filterCountByKeywords(
 			long companyId, long[] groupIds, String keywords,
 			String structureId, String structureIdComparator)
@@ -113,6 +116,7 @@ public class JournalTemplateFinderImpl
 			structureIdComparator, names, descriptions, andOperator, true);
 	}
 
+	@Override
 	public int filterCountByC_G_T_S_N_D(
 			long companyId, long[] groupIds, String templateId,
 			String structureId, String structureIdComparator, String name,
@@ -128,6 +132,7 @@ public class JournalTemplateFinderImpl
 			structureIdComparator, names, descriptions, andOperator, true);
 	}
 
+	@Override
 	public List<JournalTemplate> filterFindByKeywords(
 			long companyId, long[] groupIds, String keywords,
 			String structureId, String structureIdComparator, int start,
@@ -154,6 +159,7 @@ public class JournalTemplateFinderImpl
 			obc, true);
 	}
 
+	@Override
 	public List<JournalTemplate> filterFindByC_G_T_S_N_D(
 			long companyId, long[] groupIds, String templateId,
 			String structureId, String structureIdComparator, String name,
@@ -171,6 +177,7 @@ public class JournalTemplateFinderImpl
 			obc, true);
 	}
 
+	@Override
 	public List<JournalTemplate> findByKeywords(
 			long companyId, long[] groupIds, String keywords,
 			String structureId, String structureIdComparator, int start,
@@ -197,6 +204,7 @@ public class JournalTemplateFinderImpl
 			obc, false);
 	}
 
+	@Override
 	public List<JournalTemplate> findByC_G_T_S_N_D(
 			long companyId, long[] groupIds, String templateId,
 			String structureId, String structureIdComparator, String name,

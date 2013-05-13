@@ -46,6 +46,7 @@ import java.util.List;
  */
 public class LayoutLocalServiceHelper implements IdentifiableBean {
 
+	@Override
 	public String getBeanIdentifier() {
 		return _beanIdentifier;
 	}
@@ -162,6 +163,7 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 		return false;
 	}
 
+	@Override
 	public void setBeanIdentifier(String beanIdentifier) {
 		_beanIdentifier = beanIdentifier;
 	}

@@ -21,10 +21,12 @@ import javax.naming.directory.Attributes;
  */
 public class DefaultAttributesTransformer implements AttributesTransformer {
 
+	@Override
 	public Attributes transformGroup(Attributes attributes) {
 		return attributes;
 	}
 
+	@Override
 	public Attributes transformUser(Attributes attributes) {
 		return attributes;
 	}

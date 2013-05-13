@@ -34,6 +34,7 @@ import javax.servlet.http.HttpSessionBindingEvent;
 public class SerializableSessionAttributeListener
 	extends BasePortalLifecycle implements HttpSessionAttributeListener {
 
+	@Override
 	public void attributeAdded(
 		HttpSessionBindingEvent httpSessionBindingEvent) {
 
@@ -71,10 +72,12 @@ public class SerializableSessionAttributeListener
 		}
 	}
 
+	@Override
 	public void attributeRemoved(
 		HttpSessionBindingEvent httpSessionBindingEvent) {
 	}
 
+	@Override
 	public void attributeReplaced(
 		HttpSessionBindingEvent httpSessionBindingEvent) {
 

@@ -53,12 +53,14 @@ public class LiferayPageProvider implements WikiPageProvider {
 		return jspWikiPage;
 	}
 
+	@Override
 	public void deletePage(String name) {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Invoking deletePage(" + name + ")");
 		}
 	}
 
+	@Override
 	public void deleteVersion(String title, int version) {
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -66,6 +68,7 @@ public class LiferayPageProvider implements WikiPageProvider {
 		}
 	}
 
+	@Override
 	public Collection<WikiPage> findPages(QueryItem[] query) {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Invoking findPages(" + Arrays.toString(query) + ")");
@@ -74,6 +77,7 @@ public class LiferayPageProvider implements WikiPageProvider {
 		return Collections.emptyList();
 	}
 
+	@Override
 	public Collection<WikiPage> getAllChangedSince(Date date) {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Invoking getAllChangedSince(" + date + ")");
@@ -89,6 +93,7 @@ public class LiferayPageProvider implements WikiPageProvider {
 		}
 	}
 
+	@Override
 	public Collection<WikiPage> getAllPages() throws ProviderException {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Invoking getAllPages()");
@@ -113,6 +118,7 @@ public class LiferayPageProvider implements WikiPageProvider {
 		return jspWikiPages;
 	}
 
+	@Override
 	public int getPageCount() throws ProviderException {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Invoking getPageCount()");
@@ -126,6 +132,7 @@ public class LiferayPageProvider implements WikiPageProvider {
 		}
 	}
 
+	@Override
 	public com.ecyrd.jspwiki.WikiPage getPageInfo(String title, int version)
 		throws ProviderException {
 
@@ -147,6 +154,7 @@ public class LiferayPageProvider implements WikiPageProvider {
 		}
 	}
 
+	@Override
 	public String getPageText(String title, int version)
 		throws ProviderException {
 
@@ -165,6 +173,7 @@ public class LiferayPageProvider implements WikiPageProvider {
 		}
 	}
 
+	@Override
 	public String getProviderInfo() {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Invoking getProviderInfo()");
@@ -173,6 +182,7 @@ public class LiferayPageProvider implements WikiPageProvider {
 		return LiferayPageProvider.class.getName();
 	}
 
+	@Override
 	public List<WikiPage> getVersionHistory(String title) {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Invoking getVersionHistory(" + title + ")");
@@ -181,6 +191,7 @@ public class LiferayPageProvider implements WikiPageProvider {
 		return Collections.emptyList();
 	}
 
+	@Override
 	public void initialize(WikiEngine engine, Properties props) {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Invoking initialize(" + engine + ", " + props + ")");
@@ -190,12 +201,14 @@ public class LiferayPageProvider implements WikiPageProvider {
 		_nodeId = GetterUtil.getLong(props.getProperty("nodeId"));
 	}
 
+	@Override
 	public void movePage(String from, String to) {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Invoking movePage(" + from + ", " + to + ")");
 		}
 	}
 
+	@Override
 	public boolean pageExists(String title) {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Invoking pageExists(" + title + ")");
@@ -219,6 +232,7 @@ public class LiferayPageProvider implements WikiPageProvider {
 		return false;
 	}
 
+	@Override
 	public void putPageText(com.ecyrd.jspwiki.WikiPage page, String text) {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Invoking putPageText(" + page + ", " + text + ")");

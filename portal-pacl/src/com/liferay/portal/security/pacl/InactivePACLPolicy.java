@@ -32,6 +32,7 @@ public class InactivePACLPolicy extends BasePACLPolicy {
 		super(servletContextName, classLoader, properties);
 	}
 
+	@Override
 	public boolean hasJNDI(String name) {
 		return true;
 	}
@@ -42,14 +43,17 @@ public class InactivePACLPolicy extends BasePACLPolicy {
 		return true;
 	}
 
+	@Override
 	public boolean hasSQL(String sql) {
 		return true;
 	}
 
+	@Override
 	public boolean implies(Permission permission) {
 		return true;
 	}
 
+	@Override
 	public boolean isActive() {
 		return false;
 	}

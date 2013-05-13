@@ -29,6 +29,7 @@ public class RecordUncaughtExceptionHandler
 		return _uncaughtMap;
 	}
 
+	@Override
 	public void uncaughtException(Thread thread, Throwable throwable) {
 		_uncaughtMap.put(thread, throwable);
 	}

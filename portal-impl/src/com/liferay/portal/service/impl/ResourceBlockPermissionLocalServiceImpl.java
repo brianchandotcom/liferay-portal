@@ -41,6 +41,7 @@ import java.util.Set;
 public class ResourceBlockPermissionLocalServiceImpl
 	extends ResourceBlockPermissionLocalServiceBaseImpl {
 
+	@Override
 	public void addResourceBlockPermissions(
 			long resourceBlockId,
 			ResourceBlockPermissionsContainer resourceBlockPermissionsContainer)
@@ -64,6 +65,7 @@ public class ResourceBlockPermissionLocalServiceImpl
 		}
 	}
 
+	@Override
 	public void deleteResourceBlockPermissions(long resourceBlockId)
 		throws SystemException {
 
@@ -71,6 +73,7 @@ public class ResourceBlockPermissionLocalServiceImpl
 			resourceBlockId);
 	}
 
+	@Override
 	public Map<Long, Set<String>> getAvailableResourceBlockPermissionActionIds(
 			long[] roleIds, String name, long primKey, List<String> actionIds)
 		throws PortalException, SystemException {
@@ -109,6 +112,7 @@ public class ResourceBlockPermissionLocalServiceImpl
 		return roleIdsToActionIds;
 	}
 
+	@Override
 	public ResourceBlockPermissionsContainer
 			getResourceBlockPermissionsContainer(long resourceBlockId)
 		throws SystemException {
@@ -131,6 +135,7 @@ public class ResourceBlockPermissionLocalServiceImpl
 		return resourceBlockPermissionContainer;
 	}
 
+	@Override
 	public int getResourceBlockPermissionsCount(
 			long resourceBlockId, long roleId)
 		throws SystemException {
@@ -139,6 +144,7 @@ public class ResourceBlockPermissionLocalServiceImpl
 			resourceBlockId, roleId);
 	}
 
+	@Override
 	public void updateResourceBlockPermission(
 			long resourceBlockId, long roleId, long actionIdsLong, int operator)
 		throws SystemException {

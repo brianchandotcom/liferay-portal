@@ -36,6 +36,7 @@ import java.util.List;
 public class LayoutBranchLocalServiceImpl
 	extends LayoutBranchLocalServiceBaseImpl {
 
+	@Override
 	public LayoutBranch addLayoutBranch(
 			long layoutSetBranchId, long plid, String name, String description,
 			boolean master, ServiceContext serviceContext)
@@ -68,6 +69,7 @@ public class LayoutBranchLocalServiceImpl
 		return layoutBranch;
 	}
 
+	@Override
 	public LayoutBranch addLayoutBranch(
 			long layoutRevisionId, String name, String description,
 			boolean master, ServiceContext serviceContext)
@@ -111,6 +113,7 @@ public class LayoutBranchLocalServiceImpl
 		return layoutBranchLocalService.deleteLayoutBranch(layoutBranch);
 	}
 
+	@Override
 	public void deleteLayoutSetBranchLayoutBranches(long layoutSetBranchId)
 		throws PortalException, SystemException {
 
@@ -122,6 +125,7 @@ public class LayoutBranchLocalServiceImpl
 		}
 	}
 
+	@Override
 	public List<LayoutBranch> getLayoutBranches(
 			long layoutSetBranchId, long plid, int start, int end,
 			OrderByComparator orderByComparator)
@@ -131,6 +135,7 @@ public class LayoutBranchLocalServiceImpl
 			layoutSetBranchId, plid, start, end, orderByComparator);
 	}
 
+	@Override
 	public List<LayoutBranch> getLayoutSetBranchLayoutBranches(
 			long layoutSetBranchId)
 		throws SystemException {
@@ -139,6 +144,7 @@ public class LayoutBranchLocalServiceImpl
 			layoutSetBranchId);
 	}
 
+	@Override
 	public LayoutBranch getMasterLayoutBranch(long layoutSetBranchId, long plid)
 		throws PortalException, SystemException {
 
@@ -146,6 +152,7 @@ public class LayoutBranchLocalServiceImpl
 			layoutSetBranchId, plid, true);
 	}
 
+	@Override
 	public LayoutBranch updateLayoutBranch(
 			long layoutBranchId, String name, String description,
 			ServiceContext serviceContext)

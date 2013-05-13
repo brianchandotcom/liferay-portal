@@ -116,6 +116,7 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 		deleteLayout(layoutLocalService, layout, true, serviceContext);
 	}
 
+	@Override
 	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
 		if (!StagingAdvicesThreadLocal.isEnabled()) {
 			return methodInvocation.proceed();

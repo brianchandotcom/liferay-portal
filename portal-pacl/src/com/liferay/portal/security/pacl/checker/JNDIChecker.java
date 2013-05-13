@@ -31,6 +31,7 @@ import java.util.regex.Pattern;
  */
 public class JNDIChecker extends BaseChecker {
 
+	@Override
 	public void afterPropertiesSet() {
 		initNames();
 	}
@@ -66,6 +67,7 @@ public class JNDIChecker extends BaseChecker {
 		return false;
 	}
 
+	@Override
 	public boolean implies(Permission permission) {
 		throw new UnsupportedOperationException();
 	}

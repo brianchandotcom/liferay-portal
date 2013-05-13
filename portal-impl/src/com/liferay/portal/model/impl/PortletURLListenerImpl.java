@@ -27,18 +27,22 @@ public class PortletURLListenerImpl implements PortletURLListener {
 		_portletApp = portletApp;
 	}
 
+	@Override
 	public String getListenerClass() {
 		return _listenerClass;
 	}
 
+	@Override
 	public PortletApp getPortletApp() {
 		return _portletApp;
 	}
 
+	@Override
 	public void setListenerClass(String listenerClass) {
 		_listenerClass = listenerClass;
 	}
 
+	@Override
 	public void setPortletApp(PortletApp portletApp) {
 		_portletApp = portletApp;
 	}

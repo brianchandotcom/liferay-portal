@@ -34,6 +34,7 @@ public class UserGroupRoleFinderImpl
 	public static final String FIND_BY_USER_USER_GROUP_GROUP_ROLE =
 		UserGroupRoleFinder.class.getName() + ".findByUserUserGroupGroupRole";
 
+	@Override
 	public List<UserGroupRole> findByUserUserGroupGroupRole(
 			long userId, long groupId)
 		throws SystemException {

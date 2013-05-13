@@ -63,10 +63,12 @@ public class BaseSocialAchievement implements SocialAchievement {
 		return _counterThreshold;
 	}
 
+	@Override
 	public String getDescriptionKey() {
 		return _ACHIEVEMENT_DESCRIPTION_PREFIX.concat(_name);
 	}
 
+	@Override
 	public String getIcon() {
 		if (_icon == null) {
 			return _name.concat(_ICON_SUFFIX);
@@ -75,14 +77,17 @@ public class BaseSocialAchievement implements SocialAchievement {
 		return _icon;
 	}
 
+	@Override
 	public String getName() {
 		return _name;
 	}
 
+	@Override
 	public String getNameKey() {
 		return _ACHIEVEMENT_NAME_PREFIX.concat(_name);
 	}
 
+	@Override
 	public void initialize(SocialActivityDefinition activityDefinition) {
 		SocialActivityCounterDefinition activityCounterDefinition =
 			activityDefinition.getActivityCounterDefinition(_counterName);
@@ -106,6 +111,7 @@ public class BaseSocialAchievement implements SocialAchievement {
 		activityDefinition.addCounter(activityCounterDefinition);
 	}
 
+	@Override
 	public void processActivity(SocialActivity activity) {
 		try {
 			doProcessActivity(activity);
@@ -147,10 +153,12 @@ public class BaseSocialAchievement implements SocialAchievement {
 		_counterThreshold = counterThreshold;
 	}
 
+	@Override
 	public void setIcon(String icon) {
 		_icon = icon;
 	}
 
+	@Override
 	public void setName(String name) {
 		name = StringUtil.replace(name, StringPool.SPACE, StringPool.UNDERLINE);
 		name = name.toLowerCase();
@@ -158,6 +166,7 @@ public class BaseSocialAchievement implements SocialAchievement {
 		_name = StringUtil.extract(name, _NAME_SUPPORTED_CHARS);
 	}
 
+	@Override
 	public void setProperty(String name, String value) {
 		if (name.equals("counterIncrement") ||
 			name.equals("counterPeriodLength") ||

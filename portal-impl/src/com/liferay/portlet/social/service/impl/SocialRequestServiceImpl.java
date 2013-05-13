@@ -29,6 +29,7 @@ import com.liferay.portlet.social.service.permission.SocialRequestPermission;
  */
 public class SocialRequestServiceImpl extends SocialRequestServiceBaseImpl {
 
+	@Override
 	public SocialRequest updateRequest(
 			long requestId, int status, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {

@@ -57,6 +57,7 @@ import java.util.Set;
  */
 public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
+	@Override
 	public MBThread addThread(
 			long categoryId, MBMessage message, ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -119,6 +120,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		return thread;
 	}
 
+	@Override
 	public void deleteThread(long threadId)
 		throws PortalException, SystemException {
 
@@ -127,6 +129,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		deleteThread(thread);
 	}
 
+	@Override
 	public void deleteThread(MBThread thread)
 		throws PortalException, SystemException {
 
@@ -237,12 +240,14 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		mbThreadPersistence.remove(thread);
 	}
 
+	@Override
 	public void deleteThreads(long groupId, long categoryId)
 		throws PortalException, SystemException {
 
 		deleteThreads(groupId, categoryId, true);
 	}
 
+	@Override
 	public void deleteThreads(
 			long groupId, long categoryId, boolean includeTrashedEntries)
 		throws PortalException, SystemException {
@@ -262,10 +267,12 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public MBThread fetchThread(long threadId) throws SystemException {
 		return mbThreadPersistence.fetchByPrimaryKey(threadId);
 	}
 
+	@Override
 	public int getCategoryThreadsCount(
 			long groupId, long categoryId, int status)
 		throws SystemException {
@@ -283,6 +290,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #getGroupThreads(long,
 	 *             QueryDefinition)}
 	 */
+	@Override
 	public List<MBThread> getGroupThreads(
 			long groupId, int status, int start, int end)
 		throws SystemException {
@@ -293,6 +301,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		return getGroupThreads(groupId, queryDefinition);
 	}
 
+	@Override
 	public List<MBThread> getGroupThreads(
 			long groupId, long userId, boolean subscribed,
 			boolean includeAnonymous, QueryDefinition queryDefinition)
@@ -319,6 +328,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public List<MBThread> getGroupThreads(
 			long groupId, long userId, boolean subscribed,
 			QueryDefinition queryDefinition)
@@ -332,6 +342,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #getGroupThreads(long, long,
 	 *             boolean, boolean, QueryDefinition)}
 	 */
+	@Override
 	public List<MBThread> getGroupThreads(
 			long groupId, long userId, int status, boolean subscribed,
 			boolean includeAnonymous, int start, int end)
@@ -348,6 +359,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #getGroupThreads(long, long,
 	 *             boolean, QueryDefinition)}
 	 */
+	@Override
 	public List<MBThread> getGroupThreads(
 			long groupId, long userId, int status, boolean subscribed,
 			int start, int end)
@@ -363,6 +375,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #getGroupThreads(long, long,
 	 *             QueryDefinition)}
 	 */
+	@Override
 	public List<MBThread> getGroupThreads(
 			long groupId, long userId, int status, int start, int end)
 		throws SystemException {
@@ -373,6 +386,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		return getGroupThreads(groupId, userId, false, queryDefinition);
 	}
 
+	@Override
 	public List<MBThread> getGroupThreads(
 			long groupId, long userId, QueryDefinition queryDefinition)
 		throws SystemException {
@@ -380,6 +394,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		return getGroupThreads(groupId, userId, false, queryDefinition);
 	}
 
+	@Override
 	public List<MBThread> getGroupThreads(
 			long groupId, QueryDefinition queryDefinition)
 		throws SystemException {
@@ -402,6 +417,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #getGroupThreadsCount(long,
 	 *             QueryDefinition)}
 	 */
+	@Override
 	public int getGroupThreadsCount(long groupId, int status)
 			throws SystemException {
 
@@ -410,6 +426,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		return getGroupThreadsCount(groupId, queryDefinition);
 	}
 
+	@Override
 	public int getGroupThreadsCount(
 			long groupId, long userId, boolean subscribed,
 			boolean includeAnonymous, QueryDefinition queryDefinition)
@@ -436,6 +453,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public int getGroupThreadsCount(
 			long groupId, long userId, boolean subscribed,
 			QueryDefinition queryDefinition)
@@ -449,6 +467,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #getGroupThreadsCount(long,
 	 *             long, QueryDefinition)}
 	 */
+	@Override
 	public int getGroupThreadsCount(long groupId, long userId, int status)
 		throws SystemException {
 
@@ -461,6 +480,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #getGroupThreadsCount(long,
 	 *             long, boolean, QueryDefinition)}
 	 */
+	@Override
 	public int getGroupThreadsCount(
 			long groupId, long userId, int status, boolean subscribed)
 		throws SystemException {
@@ -475,6 +495,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #getGroupThreadsCount(long,
 	 *             long, boolean, boolean, QueryDefinition)}
 	 */
+	@Override
 	public int getGroupThreadsCount(
 			long groupId, long userId, int status, boolean subscribed,
 			boolean includeAnonymous)
@@ -486,6 +507,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			groupId, userId, subscribed, includeAnonymous, queryDefinition);
 	}
 
+	@Override
 	public int getGroupThreadsCount(
 			long groupId, long userId, QueryDefinition queryDefinition)
 		throws SystemException {
@@ -493,6 +515,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		return getGroupThreadsCount(groupId, userId, false, queryDefinition);
 	}
 
+	@Override
 	public int getGroupThreadsCount(
 			long groupId, QueryDefinition queryDefinition)
 		throws SystemException {
@@ -509,16 +532,19 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public List<MBThread> getNoAssetThreads() throws SystemException {
 		return mbThreadFinder.findByNoAssets();
 	}
 
+	@Override
 	public List<MBThread> getPriorityThreads(long categoryId, double priority)
 		throws PortalException, SystemException {
 
 		return getPriorityThreads(categoryId, priority, false);
 	}
 
+	@Override
 	public List<MBThread> getPriorityThreads(
 			long categoryId, double priority, boolean inherit)
 		throws PortalException, SystemException {
@@ -544,12 +570,14 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		return threads;
 	}
 
+	@Override
 	public MBThread getThread(long threadId)
 		throws PortalException, SystemException {
 
 		return mbThreadPersistence.findByPrimaryKey(threadId);
 	}
 
+	@Override
 	public List<MBThread> getThreads(
 			long groupId, long categoryId, int status, int start, int end)
 		throws SystemException {
@@ -564,6 +592,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public int getThreadsCount(long groupId, long categoryId, int status)
 		throws SystemException {
 
@@ -576,6 +605,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public boolean hasAnswerMessage(long threadId) throws SystemException {
 		int count = mbMessagePersistence.countByT_A(threadId, true);
 
@@ -587,6 +617,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	@BufferedIncrement(
 		configuration = "MBThread", incrementClass = NumberIncrement.class)
 	public MBThread incrementViewCounter(long threadId, int increment)
@@ -601,6 +632,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		return thread;
 	}
 
+	@Override
 	public MBThread moveThread(long groupId, long categoryId, long threadId)
 		throws PortalException, SystemException {
 
@@ -662,6 +694,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		return thread;
 	}
 
+	@Override
 	public MBThread moveThreadFromTrash(
 			long userId, long categoryId, long threadId)
 		throws PortalException, SystemException {
@@ -680,6 +713,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		return moveThread(thread.getGroupId(), categoryId, threadId);
 	}
 
+	@Override
 	public void moveThreadsToTrash(long groupId, long userId)
 		throws PortalException, SystemException {
 
@@ -690,6 +724,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public MBThread moveThreadToTrash(long userId, long entryId)
 		throws PortalException, SystemException {
 
@@ -698,6 +733,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		return moveThreadToTrash(userId, thread);
 	}
 
+	@Override
 	public MBThread moveThreadToTrash(long userId, MBThread thread)
 		throws PortalException, SystemException {
 
@@ -712,6 +748,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			WorkflowConstants.STATUS_ANY);
 	}
 
+	@Override
 	public void restoreThreadFromTrash(long userId, long threadId)
 		throws PortalException, SystemException {
 
@@ -731,6 +768,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			WorkflowConstants.STATUS_ANY);
 	}
 
+	@Override
 	public MBThread splitThread(
 			long messageId, String subject, ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -839,6 +877,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		return thread;
 	}
 
+	@Override
 	public void updateQuestion(long threadId, boolean question)
 		throws PortalException, SystemException {
 
@@ -860,6 +899,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public MBThread updateStatus(
 			long userId, long threadId, int status, int categoryStatus)
 		throws PortalException, SystemException {
@@ -952,6 +992,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #incrementViewCounter(long,
 	 *             int)}
 	 */
+	@Override
 	public MBThread updateThread(long threadId, int viewCount)
 		throws PortalException, SystemException {
 

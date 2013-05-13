@@ -71,14 +71,17 @@ public class ServiceBeanMethodInvocation
 		return false;
 	}
 
+	@Override
 	public Object[] getArguments() {
 		return _arguments;
 	}
 
+	@Override
 	public Method getMethod() {
 		return _method;
 	}
 
+	@Override
 	public AccessibleObject getStaticPart() {
 		return _method;
 	}
@@ -87,6 +90,7 @@ public class ServiceBeanMethodInvocation
 		return _targetClass;
 	}
 
+	@Override
 	public Object getThis() {
 		return _target;
 	}
@@ -100,6 +104,7 @@ public class ServiceBeanMethodInvocation
 		return _hashCode;
 	}
 
+	@Override
 	public Object proceed() throws Throwable {
 		if (_index < _methodInterceptors.size()) {
 			MethodInterceptor methodInterceptor = _methodInterceptors.get(

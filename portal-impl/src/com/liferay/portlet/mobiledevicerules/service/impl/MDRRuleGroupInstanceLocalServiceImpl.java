@@ -35,6 +35,7 @@ import java.util.List;
 public class MDRRuleGroupInstanceLocalServiceImpl
 	extends MDRRuleGroupInstanceLocalServiceBaseImpl {
 
+	@Override
 	public MDRRuleGroupInstance addRuleGroupInstance(
 			long groupId, String className, long classPK, long ruleGroupId,
 			int priority, ServiceContext serviceContext)
@@ -68,6 +69,7 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 		return updateMDRRuleGroupInstance(ruleGroupInstance);
 	}
 
+	@Override
 	public MDRRuleGroupInstance addRuleGroupInstance(
 			long groupId, String className, long classPK, long ruleGroupId,
 			ServiceContext serviceContext)
@@ -90,6 +92,7 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 			groupId, className, classPK, ruleGroupId, priority, serviceContext);
 	}
 
+	@Override
 	public void deleteGroupRuleGroupInstances(long groupId)
 		throws SystemException {
 
@@ -101,6 +104,7 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 		}
 	}
 
+	@Override
 	public void deleteRuleGroupInstance(long ruleGroupInstanceId)
 		throws SystemException {
 
@@ -111,6 +115,7 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 		deleteRuleGroupInstance(ruleGroupInstance);
 	}
 
+	@Override
 	public void deleteRuleGroupInstance(MDRRuleGroupInstance ruleGroupInstance)
 		throws SystemException {
 
@@ -124,6 +129,7 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 			ruleGroupInstance.getRuleGroupInstanceId());
 	}
 
+	@Override
 	public void deleteRuleGroupInstances(long ruleGroupId)
 		throws SystemException {
 
@@ -135,6 +141,7 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 		}
 	}
 
+	@Override
 	public MDRRuleGroupInstance fetchRuleGroupInstance(long ruleGroupInstanceId)
 		throws SystemException {
 
@@ -142,6 +149,7 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 			ruleGroupInstanceId);
 	}
 
+	@Override
 	public MDRRuleGroupInstance fetchRuleGroupInstance(
 			String className, long classPK, long ruleGroupId)
 		throws SystemException {
@@ -152,6 +160,7 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 			classNameId, classPK, ruleGroupId);
 	}
 
+	@Override
 	public MDRRuleGroupInstance getRuleGroupInstance(long ruleGroupInstanceId)
 		throws PortalException, SystemException {
 
@@ -159,6 +168,7 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 			ruleGroupInstanceId);
 	}
 
+	@Override
 	public MDRRuleGroupInstance getRuleGroupInstance(
 			String className, long classPK, long ruleGroupId)
 		throws PortalException, SystemException {
@@ -169,12 +179,14 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 			classNameId, classPK, ruleGroupId);
 	}
 
+	@Override
 	public List<MDRRuleGroupInstance> getRuleGroupInstances(long ruleGroupId)
 		throws SystemException {
 
 		return mdrRuleGroupInstancePersistence.findByRuleGroupId(ruleGroupId);
 	}
 
+	@Override
 	public List<MDRRuleGroupInstance> getRuleGroupInstances(
 			long ruleGroupId, int start, int end)
 		throws SystemException {
@@ -183,6 +195,7 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 			ruleGroupId, start, end);
 	}
 
+	@Override
 	public List<MDRRuleGroupInstance> getRuleGroupInstances(
 			String className, long classPK)
 		throws SystemException {
@@ -192,6 +205,7 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 		return mdrRuleGroupInstancePersistence.findByC_C(classNameId, classPK);
 	}
 
+	@Override
 	public List<MDRRuleGroupInstance> getRuleGroupInstances(
 			String className, long classPK, int start, int end,
 			OrderByComparator orderByComparator)
@@ -203,12 +217,14 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 			classNameId, classPK, start, end, orderByComparator);
 	}
 
+	@Override
 	public int getRuleGroupInstancesCount(long ruleGroupId)
 		throws SystemException {
 
 		return mdrRuleGroupInstancePersistence.countByRuleGroupId(ruleGroupId);
 	}
 
+	@Override
 	public int getRuleGroupInstancesCount(String className, long classPK)
 		throws SystemException {
 
@@ -217,6 +233,7 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 		return mdrRuleGroupInstancePersistence.countByC_C(classNameId, classPK);
 	}
 
+	@Override
 	public MDRRuleGroupInstance updateRuleGroupInstance(
 			long ruleGroupInstanceId, int priority)
 		throws PortalException, SystemException {

@@ -26,6 +26,7 @@ import java.util.List;
 public class ShoppingOrderItemLocalServiceImpl
 	extends ShoppingOrderItemLocalServiceBaseImpl {
 
+	@Override
 	public List<ShoppingOrderItem> getOrderItems(long orderId)
 		throws SystemException {
 

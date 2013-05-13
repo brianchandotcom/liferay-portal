@@ -19,10 +19,12 @@ package com.liferay.portal.kernel.messaging;
  */
 public class DummyDispatcherDestination extends BaseDestination {
 
+	@Override
 	public DestinationStatistics getDestinationStatistics() {
 		return new DestinationStatistics();
 	}
 
+	@Override
 	public void send(Message message) {
 	}
 

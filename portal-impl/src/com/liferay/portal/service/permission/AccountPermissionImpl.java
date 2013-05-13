@@ -26,6 +26,7 @@ import com.liferay.portal.service.AccountLocalServiceUtil;
  */
 public class AccountPermissionImpl implements AccountPermission {
 
+	@Override
 	public void check(
 			PermissionChecker permissionChecker, Account account,
 			String actionId)
@@ -36,6 +37,7 @@ public class AccountPermissionImpl implements AccountPermission {
 		}
 	}
 
+	@Override
 	public void check(
 			PermissionChecker permissionChecker, long accountId,
 			String actionId)
@@ -46,6 +48,7 @@ public class AccountPermissionImpl implements AccountPermission {
 		}
 	}
 
+	@Override
 	public boolean contains(
 		PermissionChecker permissionChecker, Account account, String actionId) {
 
@@ -56,6 +59,7 @@ public class AccountPermissionImpl implements AccountPermission {
 			groupId, Account.class.getName(), account.getAccountId(), actionId);
 	}
 
+	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, long accountId,
 			String actionId)

@@ -56,6 +56,7 @@ import java.util.Set;
 @DoPrivileged
 public class SitemapImpl implements Sitemap {
 
+	@Override
 	public String encodeXML(String input) {
 		return StringUtil.replace(
 			input,
@@ -63,6 +64,7 @@ public class SitemapImpl implements Sitemap {
 			new String[] {"&amp;", "&lt;", "&gt;", "&apos;", "&quot;"});
 	}
 
+	@Override
 	public String getSitemap(
 			long groupId, boolean privateLayout, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {

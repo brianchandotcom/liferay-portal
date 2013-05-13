@@ -34,6 +34,7 @@ import sun.reflect.Reflection;
  */
 public class RuntimeChecker extends BaseChecker {
 
+	@Override
 	public void afterPropertiesSet() {
 		initEnvironmentVariables();
 	}
@@ -80,6 +81,7 @@ public class RuntimeChecker extends BaseChecker {
 		return authorizationProperty;
 	}
 
+	@Override
 	public boolean implies(Permission permission) {
 		String name = permission.getName();
 

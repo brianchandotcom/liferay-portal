@@ -29,6 +29,7 @@ public class DateUpgradeColumnImpl extends BaseUpgradeColumnImpl {
 		super(name, Types.TIMESTAMP);
 	}
 
+	@Override
 	public Object getNewValue(Object oldValue) throws Exception {
 		if (StringPool.NULL.equals(oldValue)) {
 			return 0;

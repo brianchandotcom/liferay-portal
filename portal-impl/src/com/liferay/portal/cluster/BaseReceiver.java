@@ -30,9 +30,11 @@ import org.jgroups.View;
  */
 public class BaseReceiver implements Receiver {
 
+	@Override
 	public void block() {
 	}
 
+	@Override
 	public void getState(OutputStream outputStream) throws Exception {
 	}
 
@@ -40,18 +42,23 @@ public class BaseReceiver implements Receiver {
 		return view;
 	}
 
+	@Override
 	public void receive(Message message) {
 	}
 
+	@Override
 	public void setState(InputStream inputStream) throws Exception {
 	}
 
+	@Override
 	public void suspect(Address address) {
 	}
 
+	@Override
 	public void unblock() {
 	}
 
+	@Override
 	public void viewAccepted(View view) {
 		if (_log.isInfoEnabled()) {
 			_log.info("Accepted view " + view);

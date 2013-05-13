@@ -81,6 +81,7 @@ public class MediaWikiImporter implements WikiImporter {
 
 	public static final String SHARED_IMAGES_TITLE = "SharedImages";
 
+	@Override
 	public void importPages(
 			long userId, WikiNode node, InputStream[] inputStreams,
 			Map<String, String[]> options)

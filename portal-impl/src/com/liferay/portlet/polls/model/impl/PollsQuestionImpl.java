@@ -31,14 +31,17 @@ public class PollsQuestionImpl extends PollsQuestionBaseImpl {
 	public PollsQuestionImpl() {
 	}
 
+	@Override
 	public List<PollsChoice> getChoices() throws SystemException {
 		return PollsChoiceLocalServiceUtil.getChoices(getQuestionId());
 	}
 
+	@Override
 	public int getVotesCount() throws SystemException {
 		return PollsVoteLocalServiceUtil.getQuestionVotesCount(getQuestionId());
 	}
 
+	@Override
 	public boolean isExpired() {
 		Date expirationDate = getExpirationDate();
 
@@ -50,6 +53,7 @@ public class PollsQuestionImpl extends PollsQuestionBaseImpl {
 		}
 	}
 
+	@Override
 	public boolean isExpired(
 		ServiceContext serviceContext, Date defaultCreateDate) {
 

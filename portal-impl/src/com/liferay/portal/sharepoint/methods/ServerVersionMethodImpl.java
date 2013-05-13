@@ -43,6 +43,7 @@ public class ServerVersionMethodImpl extends BaseMethodImpl {
 		_elements.add(new Property("source control", "1"));
 	}
 
+	@Override
 	public String getMethodName() {
 		return _METHOD_NAME;
 	}

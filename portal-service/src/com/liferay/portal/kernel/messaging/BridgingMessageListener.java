@@ -33,6 +33,7 @@ public class BridgingMessageListener implements MessageListener {
 		_singleDestinationMessageSender = singleDestinationMessageSender;
 	}
 
+	@Override
 	public void receive(Message message) {
 		_singleDestinationMessageSender.send(message);
 	}

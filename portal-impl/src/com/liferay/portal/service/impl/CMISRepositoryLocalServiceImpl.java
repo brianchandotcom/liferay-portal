@@ -35,6 +35,7 @@ import org.apache.chemistry.opencmis.client.api.Document;
 public class CMISRepositoryLocalServiceImpl
 	extends CMISRepositoryLocalServiceBaseImpl {
 
+	@Override
 	public Object getSession(long repositoryId)
 		throws PortalException, SystemException {
 
@@ -43,6 +44,7 @@ public class CMISRepositoryLocalServiceImpl
 		return cmisRepository.getSession();
 	}
 
+	@Override
 	public FileEntry toFileEntry(long repositoryId, Object object)
 		throws PortalException, SystemException {
 
@@ -53,6 +55,7 @@ public class CMISRepositoryLocalServiceImpl
 		return cmisRepository.toFileEntry(document);
 	}
 
+	@Override
 	public FileVersion toFileVersion(long repositoryId, Object object)
 		throws PortalException, SystemException {
 
@@ -63,6 +66,7 @@ public class CMISRepositoryLocalServiceImpl
 		return cmisRepository.toFileVersion(document);
 	}
 
+	@Override
 	public Folder toFolder(long repositoryId, Object object)
 		throws PortalException, SystemException {
 

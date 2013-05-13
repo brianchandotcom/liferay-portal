@@ -69,6 +69,7 @@ public class SocialRelationLocalServiceImpl
 	 *         default user
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public SocialRelation addRelation(long userId1, long userId2, int type)
 		throws PortalException, SystemException {
 
@@ -131,6 +132,7 @@ public class SocialRelationLocalServiceImpl
 	 * @throws PortalException if the relation could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void deleteRelation(long relationId)
 		throws PortalException, SystemException {
 
@@ -151,6 +153,7 @@ public class SocialRelationLocalServiceImpl
 	 *         applicable) could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void deleteRelation(long userId1, long userId2, int type)
 		throws PortalException, SystemException {
 
@@ -169,6 +172,7 @@ public class SocialRelationLocalServiceImpl
 	 *         relation could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void deleteRelation(SocialRelation relation)
 		throws PortalException, SystemException {
 
@@ -189,6 +193,7 @@ public class SocialRelationLocalServiceImpl
 	 * @param  userId the primary key of the user
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void deleteRelations(long userId) throws SystemException {
 		socialRelationPersistence.removeByUserId1(userId);
 		socialRelationPersistence.removeByUserId2(userId);
@@ -202,6 +207,7 @@ public class SocialRelationLocalServiceImpl
 	 * @throws PortalException if the inverse relation could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void deleteRelations(long userId1, long userId2)
 		throws PortalException, SystemException {
 
@@ -234,6 +240,7 @@ public class SocialRelationLocalServiceImpl
 	 * @return the range of matching relations
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public List<SocialRelation> getInverseRelations(
 			long userId, int type, int start, int end)
 		throws SystemException {
@@ -250,6 +257,7 @@ public class SocialRelationLocalServiceImpl
 	 * @return the number of matching relations
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public int getInverseRelationsCount(long userId, int type)
 		throws SystemException {
 
@@ -264,6 +272,7 @@ public class SocialRelationLocalServiceImpl
 	 * @throws PortalException if the relation could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public SocialRelation getRelation(long relationId)
 		throws PortalException, SystemException {
 
@@ -280,6 +289,7 @@ public class SocialRelationLocalServiceImpl
 	 * @throws PortalException if the relation could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public SocialRelation getRelation(long userId1, long userId2, int type)
 		throws PortalException, SystemException {
 
@@ -307,6 +317,7 @@ public class SocialRelationLocalServiceImpl
 	 * @return the range of relations
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public List<SocialRelation> getRelations(
 			long userId, int type, int start, int end)
 		throws SystemException {
@@ -334,6 +345,7 @@ public class SocialRelationLocalServiceImpl
 	 * @return the range of relations
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public List<SocialRelation> getRelations(
 			long userId1, long userId2, int start, int end)
 		throws SystemException {
@@ -351,6 +363,7 @@ public class SocialRelationLocalServiceImpl
 	 * @return the number of relations
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public int getRelationsCount(long userId, int type) throws SystemException {
 		return socialRelationPersistence.countByU1_T(userId, type);
 	}
@@ -363,6 +376,7 @@ public class SocialRelationLocalServiceImpl
 	 * @return the number of relations
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public int getRelationsCount(long userId1, long userId2)
 		throws SystemException {
 
@@ -382,6 +396,7 @@ public class SocialRelationLocalServiceImpl
 	 *         otherwise
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public boolean hasRelation(long userId1, long userId2, int type)
 		throws SystemException {
 
@@ -415,6 +430,7 @@ public class SocialRelationLocalServiceImpl
 	 *         the given type; <code>false</code> otherwise
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public boolean isRelatable(long userId1, long userId2, int type)
 		throws SystemException {
 

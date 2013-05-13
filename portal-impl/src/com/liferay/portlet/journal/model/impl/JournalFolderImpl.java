@@ -31,6 +31,7 @@ public class JournalFolderImpl extends JournalFolderBaseImpl {
 	public JournalFolderImpl() {
 	}
 
+	@Override
 	public List<JournalFolder> getAncestors()
 		throws PortalException, SystemException {
 
@@ -47,6 +48,7 @@ public class JournalFolderImpl extends JournalFolderBaseImpl {
 		return ancestors;
 	}
 
+	@Override
 	public JournalFolder getParentFolder()
 		throws PortalException, SystemException {
 
@@ -59,6 +61,7 @@ public class JournalFolderImpl extends JournalFolderBaseImpl {
 		return JournalFolderLocalServiceUtil.getFolder(getParentFolderId());
 	}
 
+	@Override
 	public JournalFolder getTrashContainer() {
 		JournalFolder folder = null;
 
@@ -85,6 +88,7 @@ public class JournalFolderImpl extends JournalFolderBaseImpl {
 		return null;
 	}
 
+	@Override
 	public boolean isInTrashContainer() {
 		if (getTrashContainer() != null) {
 			return true;
@@ -94,6 +98,7 @@ public class JournalFolderImpl extends JournalFolderBaseImpl {
 		}
 	}
 
+	@Override
 	public boolean isRoot() {
 		if (getParentFolderId() ==
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {

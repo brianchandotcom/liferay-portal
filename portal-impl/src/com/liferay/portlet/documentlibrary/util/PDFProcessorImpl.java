@@ -66,11 +66,13 @@ import org.apache.pdfbox.pdmodel.PDPage;
 public class PDFProcessorImpl
 	extends DLPreviewableProcessor implements PDFProcessor {
 
+	@Override
 	public void afterPropertiesSet() throws Exception {
 		FileUtil.mkdirs(PREVIEW_TMP_PATH);
 		FileUtil.mkdirs(THUMBNAIL_TMP_PATH);
 	}
 
+	@Override
 	public void generateImages(
 			FileVersion sourceFileVersion, FileVersion destinationFileVersion)
 		throws Exception {
@@ -78,12 +80,14 @@ public class PDFProcessorImpl
 		_generateImages(sourceFileVersion, destinationFileVersion);
 	}
 
+	@Override
 	public InputStream getPreviewAsStream(FileVersion fileVersion, int index)
 		throws Exception {
 
 		return doGetPreviewAsStream(fileVersion, index, PREVIEW_TYPE);
 	}
 
+	@Override
 	public int getPreviewFileCount(FileVersion fileVersion) {
 		try {
 			return doGetPreviewFileCount(fileVersion);
@@ -95,24 +99,28 @@ public class PDFProcessorImpl
 		return 0;
 	}
 
+	@Override
 	public long getPreviewFileSize(FileVersion fileVersion, int index)
 		throws Exception {
 
 		return doGetPreviewFileSize(fileVersion, index);
 	}
 
+	@Override
 	public InputStream getThumbnailAsStream(FileVersion fileVersion, int index)
 		throws Exception {
 
 		return doGetThumbnailAsStream(fileVersion, index);
 	}
 
+	@Override
 	public long getThumbnailFileSize(FileVersion fileVersion, int index)
 		throws Exception {
 
 		return doGetThumbnailFileSize(fileVersion, index);
 	}
 
+	@Override
 	public boolean hasImages(FileVersion fileVersion) {
 		boolean hasImages = false;
 
@@ -130,14 +138,17 @@ public class PDFProcessorImpl
 		return hasImages;
 	}
 
+	@Override
 	public boolean isDocumentSupported(FileVersion fileVersion) {
 		return isSupported(fileVersion);
 	}
 
+	@Override
 	public boolean isDocumentSupported(String mimeType) {
 		return isSupported(mimeType);
 	}
 
+	@Override
 	public boolean isSupported(String mimeType) {
 		if (Validator.isNull(mimeType)) {
 			return false;

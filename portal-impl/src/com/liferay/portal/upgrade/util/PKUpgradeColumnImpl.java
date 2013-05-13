@@ -48,6 +48,7 @@ public class PKUpgradeColumnImpl extends BaseUpgradeColumnImpl {
 		return _newColumnType;
 	}
 
+	@Override
 	public Object getNewValue(Object oldValue) throws Exception {
 		Long newValue = new Long(increment());
 

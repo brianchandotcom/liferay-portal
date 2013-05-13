@@ -19,16 +19,20 @@ package com.liferay.portal.kernel.messaging;
  */
 public class BaseDestinationEventListener implements DestinationEventListener {
 
+	@Override
 	public void destinationAdded(Destination destination) {
 	}
 
+	@Override
 	public void destinationRemoved(Destination destination) {
 	}
 
+	@Override
 	public void messageListenerRegistered(
 		String destinationName, MessageListener messageListener) {
 	}
 
+	@Override
 	public void messageListenerUnregistered(
 		String destinationName, MessageListener messageListener) {
 	}

@@ -35,6 +35,7 @@ public class CyrusVirtualPersistenceImpl
 	public static final String FIND_BY_USER_ID =
 		"SELECT cyrusVirtual FROM CyrusVirtual cyrusVirtual WHERE userId = ?";
 
+	@Override
 	public CyrusVirtual findByPrimaryKey(String emailAddress)
 		throws NoSuchCyrusVirtualException, SystemException {
 
@@ -56,6 +57,7 @@ public class CyrusVirtualPersistenceImpl
 		}
 	}
 
+	@Override
 	public List<CyrusVirtual> findByUserId(long userId) throws SystemException {
 		Session session = null;
 
@@ -76,6 +78,7 @@ public class CyrusVirtualPersistenceImpl
 		}
 	}
 
+	@Override
 	public void remove(String emailAddress)
 		throws NoSuchCyrusVirtualException, SystemException {
 
@@ -102,6 +105,7 @@ public class CyrusVirtualPersistenceImpl
 		}
 	}
 
+	@Override
 	public void removeByUserId(long userId) throws SystemException {
 		Session session = null;
 
@@ -130,6 +134,7 @@ public class CyrusVirtualPersistenceImpl
 		}
 	}
 
+	@Override
 	public void update(CyrusVirtual virtual) throws SystemException {
 		Session session = null;
 

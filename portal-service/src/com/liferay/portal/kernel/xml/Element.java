@@ -110,10 +110,13 @@ public interface Element extends Branch {
 
 	public String elementTextTrim(String name);
 
+	@Override
 	public String formattedString() throws IOException;
 
+	@Override
 	public String formattedString(String indent) throws IOException;
 
+	@Override
 	public String formattedString(String indent, boolean expandEmptyElements)
 		throws IOException;
 
@@ -137,8 +140,10 @@ public interface Element extends Branch {
 
 	public String getQualifiedName();
 
+	@Override
 	public String getStringValue();
 
+	@Override
 	public String getText();
 
 	public String getTextTrim();

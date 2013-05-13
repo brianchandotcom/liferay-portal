@@ -24,6 +24,7 @@ import com.liferay.portlet.journal.model.JournalArticle;
 public class JournalArticleCustomAttributesDisplay
 	extends BaseCustomAttributesDisplay {
 
+	@Override
 	public String getClassName() {
 		return JournalArticle.class.getName();
 	}

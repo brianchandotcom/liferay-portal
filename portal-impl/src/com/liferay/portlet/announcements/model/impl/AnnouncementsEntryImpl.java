@@ -30,6 +30,7 @@ public class AnnouncementsEntryImpl extends AnnouncementsEntryBaseImpl {
 	public AnnouncementsEntryImpl() {
 	}
 
+	@Override
 	public long getGroupId() throws PortalException, SystemException {
 		long groupId = 0;
 

@@ -44,6 +44,7 @@ import java.util.List;
 public class RatingsEntryLocalServiceImpl
 	extends RatingsEntryLocalServiceBaseImpl {
 
+	@Override
 	public void deleteEntry(long userId, String className, long classPK)
 		throws PortalException, SystemException {
 
@@ -82,6 +83,7 @@ public class RatingsEntryLocalServiceImpl
 		ratingsStatsPersistence.update(stats);
 	}
 
+	@Override
 	public RatingsEntry fetchEntry(long userId, String className, long classPK)
 		throws SystemException {
 
@@ -91,6 +93,7 @@ public class RatingsEntryLocalServiceImpl
 			userId, classNameId, classPK);
 	}
 
+	@Override
 	public List<RatingsEntry> getEntries(
 			long userId, String className, List<Long> classPKs)
 		throws SystemException {
@@ -100,6 +103,7 @@ public class RatingsEntryLocalServiceImpl
 		return ratingsEntryFinder.findByU_C_C(userId, classNameId, classPKs);
 	}
 
+	@Override
 	public List<RatingsEntry> getEntries(String className, long classPK)
 		throws SystemException {
 
@@ -108,6 +112,7 @@ public class RatingsEntryLocalServiceImpl
 		return ratingsEntryPersistence.findByC_C(classNameId, classPK);
 	}
 
+	@Override
 	public List<RatingsEntry> getEntries(
 			String className, long classPK, double score)
 		throws SystemException {
@@ -117,6 +122,7 @@ public class RatingsEntryLocalServiceImpl
 		return ratingsEntryPersistence.findByC_C_S(classNameId, classPK, score);
 	}
 
+	@Override
 	public int getEntriesCount(String className, long classPK, double score)
 		throws SystemException {
 
@@ -126,6 +132,7 @@ public class RatingsEntryLocalServiceImpl
 			classNameId, classPK, score);
 	}
 
+	@Override
 	public RatingsEntry getEntry(long userId, String className, long classPK)
 		throws PortalException, SystemException {
 
@@ -135,6 +142,7 @@ public class RatingsEntryLocalServiceImpl
 			userId, classNameId, classPK);
 	}
 
+	@Override
 	public RatingsEntry updateEntry(
 			long userId, String className, long classPK, double score,
 			ServiceContext serviceContext)

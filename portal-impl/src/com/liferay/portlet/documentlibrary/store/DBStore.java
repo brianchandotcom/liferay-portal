@@ -213,6 +213,7 @@ public class DBStore extends BaseStore {
 		}
 	}
 
+	@Override
 	public String[] getFileNames(long companyId, long repositoryId)
 		throws SystemException {
 
@@ -291,6 +292,7 @@ public class DBStore extends BaseStore {
 			companyId, repositoryId, newRepositoryId, fileName, fileName);
 	}
 
+	@Override
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String newFileName)

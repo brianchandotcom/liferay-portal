@@ -24,6 +24,7 @@ public class ShoppingCategoryImpl extends ShoppingCategoryBaseImpl {
 	public ShoppingCategoryImpl() {
 	}
 
+	@Override
 	public boolean isRoot() {
 		if (getParentCategoryId() ==
 				ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {

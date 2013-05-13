@@ -53,6 +53,7 @@ public class ProtectedPrincipal implements Principal, Serializable {
 		}
 	}
 
+	@Override
 	public String getName() {
 		return _name;
 	}

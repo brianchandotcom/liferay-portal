@@ -36,22 +36,27 @@ public abstract class BaseTrigger implements Serializable, Trigger {
 		_endDate = endDate;
 	}
 
+	@Override
 	public Date getEndDate() {
 		return _endDate;
 	}
 
+	@Override
 	public String getGroupName() {
 		return _groupName;
 	}
 
+	@Override
 	public String getJobName() {
 		return _jobName;
 	}
 
+	@Override
 	public Date getStartDate() {
 		return _startDate;
 	}
 
+	@Override
 	public TriggerType getTriggerType() {
 		return _triggerType;
 	}

@@ -30,6 +30,7 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 @DoPrivileged
 public class CurrentConnectionImpl implements CurrentConnection {
 
+	@Override
 	public Connection getConnection(DataSource dataSource) {
 		ConnectionHolder connectionHolder =
 			(ConnectionHolder)TransactionSynchronizationManager.getResource(

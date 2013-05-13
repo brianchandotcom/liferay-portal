@@ -50,6 +50,7 @@ public class TrashIndexer extends BaseIndexer {
 		setPermissionAware(true);
 	}
 
+	@Override
 	public String[] getClassNames() {
 		return CLASS_NAMES;
 	}
@@ -102,6 +103,7 @@ public class TrashIndexer extends BaseIndexer {
 		}
 	}
 
+	@Override
 	public String getPortletId() {
 		return PORTLET_ID;
 	}

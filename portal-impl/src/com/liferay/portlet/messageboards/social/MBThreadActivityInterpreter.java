@@ -33,6 +33,7 @@ import com.liferay.portlet.social.model.SocialActivityConstants;
  */
 public class MBThreadActivityInterpreter extends BaseSocialActivityInterpreter {
 
+	@Override
 	public String[] getClassNames() {
 		return _CLASS_NAMES;
 	}

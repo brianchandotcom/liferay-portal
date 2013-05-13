@@ -42,6 +42,7 @@ public class CronTrigger extends BaseTrigger {
 		this(jobName, groupName, null, null, cronText);
 	}
 
+	@Override
 	public String getTriggerContent() {
 		return _cronText;
 	}

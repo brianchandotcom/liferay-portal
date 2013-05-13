@@ -169,6 +169,7 @@ public class UploadServletRequestImpl
 		}
 	}
 
+	@Override
 	public void cleanUp() {
 		if ((_fileParams != null) && !_fileParams.isEmpty()) {
 			for (FileItem[] liferayFileItems : _fileParams.values()) {
@@ -179,6 +180,7 @@ public class UploadServletRequestImpl
 		}
 	}
 
+	@Override
 	public String getContentType(String name) {
 		FileItem[] liferayFileItems = _fileParams.get(name);
 
@@ -191,10 +193,12 @@ public class UploadServletRequestImpl
 		return null;
 	}
 
+	@Override
 	public File getFile(String name) {
 		return getFile(name, false);
 	}
 
+	@Override
 	public File getFile(String name, boolean forceCreate) {
 		if (getFileName(name) == null) {
 			return null;
@@ -233,10 +237,12 @@ public class UploadServletRequestImpl
 		return file;
 	}
 
+	@Override
 	public InputStream getFileAsStream(String name) throws IOException {
 		return getFileAsStream(name, true);
 	}
 
+	@Override
 	public InputStream getFileAsStream(String name, boolean deleteOnClose)
 		throws IOException {
 
@@ -257,6 +263,7 @@ public class UploadServletRequestImpl
 		return inputStream;
 	}
 
+	@Override
 	public String getFileName(String name) {
 		FileItem[] liferayFileItems = _fileParams.get(name);
 
@@ -269,6 +276,7 @@ public class UploadServletRequestImpl
 		return null;
 	}
 
+	@Override
 	public String[] getFileNames(String name) {
 		FileItem[] liferayFileItems = _fileParams.get(name);
 
@@ -287,6 +295,7 @@ public class UploadServletRequestImpl
 		return null;
 	}
 
+	@Override
 	public File[] getFiles(String name) {
 		String[] fileNames = getFileNames(name);
 
@@ -313,10 +322,12 @@ public class UploadServletRequestImpl
 		return null;
 	}
 
+	@Override
 	public InputStream[] getFilesAsStream(String name) throws IOException {
 		return getFilesAsStream(name, true);
 	}
 
+	@Override
 	public InputStream[] getFilesAsStream(String name, boolean deleteOnClose)
 		throws IOException {
 
@@ -346,6 +357,7 @@ public class UploadServletRequestImpl
 		return inputStreams;
 	}
 
+	@Override
 	public String getFullFileName(String name) {
 		FileItem[] liferayFileItems = _fileParams.get(name);
 
@@ -363,6 +375,7 @@ public class UploadServletRequestImpl
 		return _liferayServletRequest.getInputStream();
 	}
 
+	@Override
 	public Map<String, FileItem[]> getMultipartParameterMap() {
 		return _fileParams;
 	}
@@ -431,10 +444,12 @@ public class UploadServletRequestImpl
 		return ArrayUtil.append(parameterValues, parentParameterValues);
 	}
 
+	@Override
 	public Map<String, List<String>> getRegularParameterMap() {
 		return _regularParams;
 	}
 
+	@Override
 	public Long getSize(String name) {
 		FileItem[] liferayFileItems = _fileParams.get(name);
 
@@ -447,6 +462,7 @@ public class UploadServletRequestImpl
 		return null;
 	}
 
+	@Override
 	public Boolean isFormField(String name) {
 		FileItem[] liferayFileItems = _fileParams.get(name);
 

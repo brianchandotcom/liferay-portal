@@ -29,6 +29,7 @@ public class ContextClassLoaderResourceRetriever implements ResourceRetriever {
 		_inputStream = contextClassLoader.getResourceAsStream(fileName);
 	}
 
+	@Override
 	public InputStream getInputStream() {
 		return _inputStream;
 	}

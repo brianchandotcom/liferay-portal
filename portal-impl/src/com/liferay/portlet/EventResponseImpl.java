@@ -36,6 +36,7 @@ public class EventResponseImpl
 		return PortletRequest.EVENT_PHASE;
 	}
 
+	@Override
 	public void setRenderParameters(EventRequest eventRequest) {
 	}
 

@@ -32,10 +32,12 @@ import java.util.List;
 public class PasswordTrackerLocalServiceImpl
 	extends PasswordTrackerLocalServiceBaseImpl {
 
+	@Override
 	public void deletePasswordTrackers(long userId) throws SystemException {
 		passwordTrackerPersistence.removeByUserId(userId);
 	}
 
+	@Override
 	public boolean isSameAsCurrentPassword(long userId, String newClearTextPwd)
 		throws PortalException, SystemException {
 
@@ -64,6 +66,7 @@ public class PasswordTrackerLocalServiceImpl
 		}
 	}
 
+	@Override
 	public boolean isValidPassword(long userId, String newClearTextPwd)
 		throws PortalException, SystemException {
 
@@ -100,6 +103,7 @@ public class PasswordTrackerLocalServiceImpl
 		return true;
 	}
 
+	@Override
 	public void trackPassword(long userId, String encPassword)
 		throws PortalException, SystemException {
 

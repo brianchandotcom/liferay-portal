@@ -36,6 +36,7 @@ public class ExpandoColumnImpl extends ExpandoColumnBaseImpl {
 	public ExpandoColumnImpl() {
 	}
 
+	@Override
 	public Serializable getDefaultValue() {
 		try {
 			ExpandoValue value = new ExpandoValueImpl();
@@ -111,6 +112,7 @@ public class ExpandoColumnImpl extends ExpandoColumnBaseImpl {
 		}
 	}
 
+	@Override
 	public String getDisplayName(Locale locale) {
 		String name = getName();
 
@@ -133,6 +135,7 @@ public class ExpandoColumnImpl extends ExpandoColumnBaseImpl {
 		}
 	}
 
+	@Override
 	public UnicodeProperties getTypeSettingsProperties() {
 		if (_typeSettingsProperties == null) {
 			_typeSettingsProperties = new UnicodeProperties(true);
@@ -155,6 +158,7 @@ public class ExpandoColumnImpl extends ExpandoColumnBaseImpl {
 		super.setTypeSettings(typeSettings);
 	}
 
+	@Override
 	public void setTypeSettingsProperties(
 		UnicodeProperties typeSettingsProperties) {
 

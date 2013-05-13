@@ -45,6 +45,7 @@ public class ShoppingOrderFinderImpl
 	public static final String FIND_BY_G_C_U_N_PPPS =
 		ShoppingOrderFinder.class.getName() + ".findByG_C_U_N_PPPS";
 
+	@Override
 	public int countByG_C_U_N_PPPS(
 			long groupId, long companyId, long userId, String number,
 			String billingFirstName, String billingLastName,
@@ -124,6 +125,7 @@ public class ShoppingOrderFinderImpl
 		}
 	}
 
+	@Override
 	public List<ShoppingOrder> findByG_C_U_N_PPPS(
 			long groupId, long companyId, long userId, String number,
 			String billingFirstName, String billingLastName,

@@ -59,6 +59,7 @@ import javax.servlet.http.HttpServletResponse;
 @DoPrivileged
 public class RendererImpl implements Renderer {
 
+	@Override
 	public String renderBean(
 			HttpServletRequest request, HttpServletResponse response,
 			Object bean)
@@ -67,6 +68,7 @@ public class RendererImpl implements Renderer {
 		return renderBean(request, response, null, bean, null);
 	}
 
+	@Override
 	public String renderBean(
 			HttpServletRequest request, HttpServletResponse response,
 			Object bean, String varientSuffix)
@@ -75,6 +77,7 @@ public class RendererImpl implements Renderer {
 		return renderBean(request, response, null, bean, varientSuffix);
 	}
 
+	@Override
 	public String renderBean(
 			HttpServletRequest request, HttpServletResponse response,
 			String servletContextName, Object bean)
@@ -83,6 +86,7 @@ public class RendererImpl implements Renderer {
 		return renderBean(request, response, servletContextName, bean, null);
 	}
 
+	@Override
 	public String renderBean(
 			HttpServletRequest request, HttpServletResponse response,
 			String servletContextName, Object bean, String varientSuffix)
@@ -178,6 +182,7 @@ public class RendererImpl implements Renderer {
 		}
 	}
 
+	@Override
 	public String renderBean(
 			PortletRequest portletRequest, PortletResponse portletResponse,
 			Object bean)
@@ -186,6 +191,7 @@ public class RendererImpl implements Renderer {
 		return renderBean(portletRequest, portletResponse, null, bean, null);
 	}
 
+	@Override
 	public String renderBean(
 			PortletRequest portletRequest, PortletResponse portletResponse,
 			Object bean, String varientSuffix)
@@ -195,6 +201,7 @@ public class RendererImpl implements Renderer {
 			portletRequest, portletResponse, null, bean, varientSuffix);
 	}
 
+	@Override
 	public String renderBean(
 			PortletRequest portletRequest, PortletResponse portletResponse,
 			String servletContextName, Object bean)
@@ -204,6 +211,7 @@ public class RendererImpl implements Renderer {
 			portletRequest, portletResponse, servletContextName, bean, null);
 	}
 
+	@Override
 	public String renderBean(
 			PortletRequest portletRequest, PortletResponse portletResponse,
 			String servletContextName, Object bean, String varientSuffix)
@@ -218,6 +226,7 @@ public class RendererImpl implements Renderer {
 			request, response, servletContextName, bean, varientSuffix);
 	}
 
+	@Override
 	public String renderEntity(
 			HttpServletRequest request, HttpServletResponse response,
 			String className, Object classPK)
@@ -226,6 +235,7 @@ public class RendererImpl implements Renderer {
 		return renderEntity(request, response, null, className, classPK, null);
 	}
 
+	@Override
 	public String renderEntity(
 			HttpServletRequest request, HttpServletResponse response,
 			String className, Object classPK, String varientSuffix)
@@ -235,6 +245,7 @@ public class RendererImpl implements Renderer {
 			request, response, null, className, classPK, varientSuffix);
 	}
 
+	@Override
 	public String renderEntity(
 			HttpServletRequest request, HttpServletResponse response,
 			String servletContextName, String className, Object classPK)
@@ -244,6 +255,7 @@ public class RendererImpl implements Renderer {
 			request, response, servletContextName, className, classPK, null);
 	}
 
+	@Override
 	public String renderEntity(
 			HttpServletRequest request, HttpServletResponse response,
 			String servletContextName, String className, Object classPK,
@@ -320,6 +332,7 @@ public class RendererImpl implements Renderer {
 			request, response, servletContextName, bean, varientSuffix);
 	}
 
+	@Override
 	public String renderEntity(
 			PortletRequest portletRequest, PortletResponse portletResponse,
 			String className, Object classPK)
@@ -329,6 +342,7 @@ public class RendererImpl implements Renderer {
 			portletRequest, portletResponse, null, className, classPK, null);
 	}
 
+	@Override
 	public String renderEntity(
 			PortletRequest portletRequest, PortletResponse portletResponse,
 			String className, Object classPK, String varientSuffix)
@@ -339,6 +353,7 @@ public class RendererImpl implements Renderer {
 			varientSuffix);
 	}
 
+	@Override
 	public String renderEntity(
 			PortletRequest portletRequest, PortletResponse portletResponse,
 			String servletContextName, String className, Object classPK)
@@ -349,6 +364,7 @@ public class RendererImpl implements Renderer {
 			classPK, null);
 	}
 
+	@Override
 	public String renderEntity(
 			PortletRequest portletRequest, PortletResponse portletResponse,
 			String servletContextName, String className, Object classPK,

@@ -57,6 +57,7 @@ import java.util.Locale;
 public class LayoutSetBranchLocalServiceImpl
 	extends LayoutSetBranchLocalServiceBaseImpl {
 
+	@Override
 	public LayoutSetBranch addLayoutSetBranch(
 			long userId, long groupId, boolean privateLayout, String name,
 			String description, boolean master, long copyLayoutSetBranchId,
@@ -258,6 +259,7 @@ public class LayoutSetBranchLocalServiceImpl
 		return deleteLayoutSetBranch(layoutSetBranch, false);
 	}
 
+	@Override
 	public LayoutSetBranch deleteLayoutSetBranch(
 			LayoutSetBranch layoutSetBranch, boolean includeMaster)
 		throws PortalException, SystemException {
@@ -300,12 +302,14 @@ public class LayoutSetBranchLocalServiceImpl
 		return deleteLayoutSetBranch(layoutSetBranch, false);
 	}
 
+	@Override
 	public void deleteLayoutSetBranches(long groupId, boolean privateLayout)
 		throws PortalException, SystemException {
 
 		deleteLayoutSetBranches(groupId, privateLayout, false);
 	}
 
+	@Override
 	public void deleteLayoutSetBranches(
 			long groupId, boolean privateLayout, boolean includeMaster)
 		throws PortalException, SystemException {
@@ -318,6 +322,7 @@ public class LayoutSetBranchLocalServiceImpl
 		}
 	}
 
+	@Override
 	public LayoutSetBranch getLayoutSetBranch(
 			long groupId, boolean privateLayout, String name)
 		throws PortalException, SystemException {
@@ -326,6 +331,7 @@ public class LayoutSetBranchLocalServiceImpl
 			groupId, privateLayout, name);
 	}
 
+	@Override
 	public List<LayoutSetBranch> getLayoutSetBranches(
 			long groupId, boolean privateLayout)
 		throws SystemException {
@@ -335,6 +341,7 @@ public class LayoutSetBranchLocalServiceImpl
 			new LayoutSetBranchCreateDateComparator(true));
 	}
 
+	@Override
 	public LayoutSetBranch getMasterLayoutSetBranch(
 			long groupId, boolean privateLayout)
 		throws PortalException, SystemException {
@@ -346,6 +353,7 @@ public class LayoutSetBranchLocalServiceImpl
 	 * @deprecated As of 6.2.0, replaced by {@link #getUserLayoutSetBranch(long,
 	 *             long, boolean, long, long)}
 	 */
+	@Override
 	public LayoutSetBranch getUserLayoutSetBranch(
 			long userId, long groupId, boolean privateLayout,
 			long layoutSetBranchId)
@@ -355,6 +363,7 @@ public class LayoutSetBranchLocalServiceImpl
 			userId, groupId, privateLayout, 0, layoutSetBranchId);
 	}
 
+	@Override
 	public LayoutSetBranch getUserLayoutSetBranch(
 			long userId, long groupId, boolean privateLayout, long layoutSetId,
 			long layoutSetBranchId)
@@ -385,6 +394,7 @@ public class LayoutSetBranchLocalServiceImpl
 		return getMasterLayoutSetBranch(groupId, privateLayout);
 	}
 
+	@Override
 	public LayoutSetBranch mergeLayoutSetBranch(
 			long layoutSetBranchId, long mergeLayoutSetBranchId,
 			ServiceContext serviceContext)
@@ -450,6 +460,7 @@ public class LayoutSetBranchLocalServiceImpl
 		return layoutSetBranch;
 	}
 
+	@Override
 	public LayoutSetBranch updateLayoutSetBranch(
 			long layoutSetBranchId, String name, String description,
 			ServiceContext serviceContext)

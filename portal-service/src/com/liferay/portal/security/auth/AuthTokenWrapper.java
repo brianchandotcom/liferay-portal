@@ -28,14 +28,17 @@ public class AuthTokenWrapper implements AuthToken {
 		_originalAuthToken = authToken;
 	}
 
+	@Override
 	public void check(HttpServletRequest request) throws PortalException {
 		_authToken.check(request);
 	}
 
+	@Override
 	public String getToken(HttpServletRequest request) {
 		return _authToken.getToken(request);
 	}
 
+	@Override
 	public String getToken(
 		HttpServletRequest request, long plid, String portletId) {
 

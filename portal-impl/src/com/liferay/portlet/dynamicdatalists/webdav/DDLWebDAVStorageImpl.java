@@ -44,6 +44,7 @@ public class DDLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			PortalUtil.getClassNameId(DDLRecordSet.class));
 	}
 
+	@Override
 	public Resource getResource(WebDAVRequest webDAVRequest)
 		throws WebDAVException {
 
@@ -52,6 +53,7 @@ public class DDLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			PortalUtil.getClassNameId(DDLRecordSet.class));
 	}
 
+	@Override
 	public List<Resource> getResources(WebDAVRequest webDAVRequest)
 		throws WebDAVException {
 

@@ -43,6 +43,7 @@ import java.util.Map;
  */
 public class DefaultSiteMembershipPolicy extends BaseSiteMembershipPolicy {
 
+	@Override
 	public void checkMembership(
 			long[] userIds, long[] addGroupIds, long[] removeGroupIds)
 		throws PortalException, SystemException {
@@ -72,6 +73,7 @@ public class DefaultSiteMembershipPolicy extends BaseSiteMembershipPolicy {
 		return true;
 	}
 
+	@Override
 	public void propagateMembership(
 			long[] userIds, long[] addGroupIds, long[] removeGroupIds)
 		throws PortalException, SystemException {
@@ -92,6 +94,7 @@ public class DefaultSiteMembershipPolicy extends BaseSiteMembershipPolicy {
 		}
 	}
 
+	@Override
 	public void verifyPolicy(
 			Group group, Group oldGroup, List<AssetCategory> oldAssetCategories,
 			List<AssetTag> oldAssetTags,

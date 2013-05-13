@@ -44,6 +44,7 @@ public class SessionFactoryImpl implements SessionFactory {
 		return portletSessionFactories;
 	}
 
+	@Override
 	public void closeSession(Session session) throws ORMException {
 		if ((session != null) &&
 			!PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED) {
@@ -57,10 +58,12 @@ public class SessionFactoryImpl implements SessionFactory {
 		portletSessionFactories.clear();
 	}
 
+	@Override
 	public Session getCurrentSession() throws ORMException {
 		return wrapSession(_sessionFactoryImplementor.getCurrentSession());
 	}
 
+	@Override
 	public Dialect getDialect() throws ORMException {
 		return new DialectImpl(_sessionFactoryImplementor.getDialect());
 	}
@@ -73,10 +76,12 @@ public class SessionFactoryImpl implements SessionFactory {
 		return _sessionFactoryImplementor;
 	}
 
+	@Override
 	public Session openNewSession(Connection connection) throws ORMException {
 		return wrapSession(_sessionFactoryImplementor.openSession(connection));
 	}
 
+	@Override
 	public Session openSession() throws ORMException {
 		org.hibernate.Session session = null;
 

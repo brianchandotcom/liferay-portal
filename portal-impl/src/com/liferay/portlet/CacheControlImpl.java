@@ -34,24 +34,29 @@ public class CacheControlImpl implements CacheControl {
 		_mimeResponseImpl = mimeResponseImpl;
 	}
 
+	@Override
 	public String getETag() {
 		return _eTag;
 	}
 
+	@Override
 	public int getExpirationTime() {
 		return _expirationTime;
 	}
 
+	@Override
 	public boolean isPublicScope() {
 		return _publicScope;
 	}
 
+	@Override
 	public void setETag(String eTag) {
 		_eTag = eTag;
 
 		_mimeResponseImpl.setProperty(MimeResponse.ETAG, eTag);
 	}
 
+	@Override
 	public void setExpirationTime(int expirationTime) {
 		_expirationTime = expirationTime;
 
@@ -59,6 +64,7 @@ public class CacheControlImpl implements CacheControl {
 			MimeResponse.EXPIRATION_CACHE, String.valueOf(expirationTime));
 	}
 
+	@Override
 	public void setPublicScope(boolean publicScope) {
 		_publicScope = publicScope;
 
@@ -66,6 +72,7 @@ public class CacheControlImpl implements CacheControl {
 			MimeResponse.PUBLIC_SCOPE, String.valueOf(publicScope));
 	}
 
+	@Override
 	public void setUseCachedContent(boolean useCachedContent) {
 		_useCachedContent = useCachedContent;
 
@@ -73,6 +80,7 @@ public class CacheControlImpl implements CacheControl {
 			MimeResponse.USE_CACHED_CONTENT, String.valueOf(useCachedContent));
 	}
 
+	@Override
 	public boolean useCachedContent() {
 		return _useCachedContent;
 	}

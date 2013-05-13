@@ -24,6 +24,7 @@ import java.util.Map;
  */
 public class RoundRobinShardSelector implements ShardSelector {
 
+	@Override
 	public String getShardName(
 		String scope, String shardName, Map<String, String> params) {
 

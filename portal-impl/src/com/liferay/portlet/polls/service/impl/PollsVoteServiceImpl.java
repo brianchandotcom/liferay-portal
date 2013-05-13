@@ -28,6 +28,7 @@ import com.liferay.portlet.polls.service.permission.PollsQuestionPermission;
  */
 public class PollsVoteServiceImpl extends PollsVoteServiceBaseImpl {
 
+	@Override
 	public PollsVote addVote(
 			long questionId, long choiceId, ServiceContext serviceContext)
 		throws PortalException, SystemException {

@@ -33,6 +33,7 @@ import javax.portlet.ActionRequest;
  */
 public class WikiPermissionPropagatorImpl extends BasePermissionPropagator {
 
+	@Override
 	public void propagateRolePermissions(
 			ActionRequest actionRequest, String className, String primKey,
 			long[] roleIds)

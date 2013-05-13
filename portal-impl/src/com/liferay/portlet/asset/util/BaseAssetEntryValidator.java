@@ -42,6 +42,7 @@ import java.util.List;
  */
 public class BaseAssetEntryValidator implements AssetEntryValidator {
 
+	@Override
 	public void validate(
 			long groupId, String className, long[] categoryIds,
 			String[] entryNames)

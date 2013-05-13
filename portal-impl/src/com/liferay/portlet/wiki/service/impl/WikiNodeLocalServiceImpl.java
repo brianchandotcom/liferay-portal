@@ -65,6 +65,7 @@ import java.util.Map;
  */
 public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 
+	@Override
 	public WikiNode addDefaultNode(long userId, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
@@ -73,6 +74,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 			serviceContext);
 	}
 
+	@Override
 	public WikiNode addNode(
 			long userId, String name, String description,
 			ServiceContext serviceContext)
@@ -137,6 +139,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		return node;
 	}
 
+	@Override
 	public void addNodeResources(
 			long nodeId, boolean addGroupPermissions,
 			boolean addGuestPermissions)
@@ -147,6 +150,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		addNodeResources(node, addGroupPermissions, addGuestPermissions);
 	}
 
+	@Override
 	public void addNodeResources(
 			long nodeId, String[] groupPermissions, String[] guestPermissions)
 		throws PortalException, SystemException {
@@ -156,6 +160,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		addNodeResources(node, groupPermissions, guestPermissions);
 	}
 
+	@Override
 	public void addNodeResources(
 			WikiNode node, boolean addGroupPermissions,
 			boolean addGuestPermissions)
@@ -167,6 +172,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 			addGroupPermissions, addGuestPermissions);
 	}
 
+	@Override
 	public void addNodeResources(
 			WikiNode node, String[] groupPermissions, String[] guestPermissions)
 		throws PortalException, SystemException {
@@ -177,6 +183,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 			guestPermissions);
 	}
 
+	@Override
 	public void deleteNode(long nodeId)
 		throws PortalException, SystemException {
 
@@ -185,6 +192,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		deleteNode(node);
 	}
 
+	@Override
 	public void deleteNode(WikiNode node)
 		throws PortalException, SystemException {
 
@@ -239,6 +247,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		wikiPageIndexer.delete(node);
 	}
 
+	@Override
 	public void deleteNodes(long groupId)
 		throws PortalException, SystemException {
 
@@ -252,12 +261,14 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 			groupId, PortletKeys.WIKI);
 	}
 
+	@Override
 	public WikiNode fetchWikiNode(long groupId, String name)
 		throws SystemException {
 
 		return wikiNodePersistence.fetchByG_N(groupId, name);
 	}
 
+	@Override
 	public List<WikiNode> getCompanyNodes(long companyId, int start, int end)
 		throws SystemException {
 
@@ -265,6 +276,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 			companyId, WorkflowConstants.STATUS_APPROVED, start, end);
 	}
 
+	@Override
 	public List<WikiNode> getCompanyNodes(
 			long companyId, int status, int start, int end)
 		throws SystemException {
@@ -272,35 +284,41 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		return wikiNodePersistence.findByC_S(companyId, status, start, end);
 	}
 
+	@Override
 	public int getCompanyNodesCount(long companyId) throws SystemException {
 		return wikiNodePersistence.countByC_S(
 			companyId, WorkflowConstants.STATUS_APPROVED);
 	}
 
+	@Override
 	public int getCompanyNodesCount(long companyId, int status)
 		throws SystemException {
 
 		return wikiNodePersistence.countByC_S(companyId, status);
 	}
 
+	@Override
 	public WikiNode getNode(long nodeId)
 		throws PortalException, SystemException {
 
 		return wikiNodePersistence.findByPrimaryKey(nodeId);
 	}
 
+	@Override
 	public WikiNode getNode(long groupId, String nodeName)
 		throws PortalException, SystemException {
 
 		return wikiNodePersistence.findByG_N(groupId, nodeName);
 	}
 
+	@Override
 	public List<WikiNode> getNodes(long groupId)
 		throws PortalException, SystemException {
 
 		return getNodes(groupId, WorkflowConstants.STATUS_APPROVED);
 	}
 
+	@Override
 	public List<WikiNode> getNodes(long groupId, int status)
 		throws PortalException, SystemException {
 
@@ -313,12 +331,14 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		return nodes;
 	}
 
+	@Override
 	public List<WikiNode> getNodes(long groupId, int start, int end)
 		throws PortalException, SystemException {
 
 		return getNodes(groupId, WorkflowConstants.STATUS_APPROVED, start, end);
 	}
 
+	@Override
 	public List<WikiNode> getNodes(long groupId, int status, int start, int end)
 		throws PortalException, SystemException {
 
@@ -332,15 +352,18 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		return nodes;
 	}
 
+	@Override
 	public int getNodesCount(long groupId) throws SystemException {
 		return wikiNodePersistence.countByG_S(
 			groupId, WorkflowConstants.STATUS_APPROVED);
 	}
 
+	@Override
 	public int getNodesCount(long groupId, int status) throws SystemException {
 		return wikiNodePersistence.countByG_S(groupId, status);
 	}
 
+	@Override
 	public void importPages(
 			long userId, long nodeId, String importer,
 			InputStream[] inputStreams, Map<String, String[]> options)
@@ -353,6 +376,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		wikiImporter.importPages(userId, node, inputStreams, options);
 	}
 
+	@Override
 	public WikiNode moveNodeToTrash(long userId, long nodeId)
 		throws PortalException, SystemException {
 
@@ -361,6 +385,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		return moveNodeToTrash(userId, node);
 	}
 
+	@Override
 	public WikiNode moveNodeToTrash(long userId, WikiNode node)
 		throws PortalException, SystemException {
 
@@ -378,6 +403,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		return wikiNodePersistence.update(node);
 	}
 
+	@Override
 	public void restoreNodeFromTrash(long userId, WikiNode node)
 		throws PortalException, SystemException {
 
@@ -394,6 +420,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 			userId, node, trashEntry.getStatus(), new ServiceContext());
 	}
 
+	@Override
 	public void subscribeNode(long userId, long nodeId)
 		throws PortalException, SystemException {
 
@@ -403,6 +430,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 			userId, node.getGroupId(), WikiNode.class.getName(), nodeId);
 	}
 
+	@Override
 	public void unsubscribeNode(long userId, long nodeId)
 		throws PortalException, SystemException {
 
@@ -410,6 +438,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 			userId, WikiNode.class.getName(), nodeId);
 	}
 
+	@Override
 	public WikiNode updateNode(
 			long nodeId, String name, String description,
 			ServiceContext serviceContext)
@@ -428,6 +457,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		return node;
 	}
 
+	@Override
 	public WikiNode updateStatus(
 			long userId, WikiNode node, int status,
 			ServiceContext serviceContext)

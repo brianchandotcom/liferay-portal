@@ -78,12 +78,14 @@ public class WikiNodeTrashHandler extends BaseTrashHandler {
 		}
 	}
 
+	@Override
 	public void deleteTrashEntry(long classPK)
 		throws PortalException, SystemException {
 
 		WikiNodeLocalServiceUtil.deleteNode(classPK);
 	}
 
+	@Override
 	public String getClassName() {
 		return WikiNode.class.getName();
 	}
@@ -171,6 +173,7 @@ public class WikiNodeTrashHandler extends BaseTrashHandler {
 		return true;
 	}
 
+	@Override
 	public boolean isInTrash(long classPK)
 		throws PortalException, SystemException {
 
@@ -179,6 +182,7 @@ public class WikiNodeTrashHandler extends BaseTrashHandler {
 		return node.isInTrash();
 	}
 
+	@Override
 	public void restoreTrashEntry(long userId, long classPK)
 		throws PortalException, SystemException {
 

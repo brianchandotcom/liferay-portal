@@ -32,6 +32,7 @@ import java.util.Map;
  */
 public class DummySanitizerImpl implements Sanitizer {
 
+	@Override
 	public byte[] sanitize(
 		long companyId, long groupId, long userId, String className,
 		long classPK, String contentType, String[] modes, byte[] bytes,
@@ -44,6 +45,7 @@ public class DummySanitizerImpl implements Sanitizer {
 		return bytes;
 	}
 
+	@Override
 	public void sanitize(
 			long companyId, long groupId, long userId, String className,
 			long classPK, String contentType, String[] modes,
@@ -63,6 +65,7 @@ public class DummySanitizerImpl implements Sanitizer {
 		}
 	}
 
+	@Override
 	public String sanitize(
 		long companyId, long groupId, long userId, String className,
 		long classPK, String contentType, String[] modes, String s,

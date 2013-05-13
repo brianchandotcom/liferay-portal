@@ -27,56 +27,69 @@ import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 @DoPrivileged
 public class ProjectionFactoryImpl implements ProjectionFactory {
 
+	@Override
 	public Projection alias(Projection projection, String alias) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public Projection avg(String propertyName) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public Projection count(String propertyName) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public Projection countDistinct(String propertyName) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public Projection distinct(Projection projection) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public Projection groupProperty(String propertyName) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public Projection max(String propertyName) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public Projection min(String propertyName) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public ProjectionList projectionList() {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public Projection property(String propertyName) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public Projection rowCount() {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public Projection sqlProjection(
 		String sql, String[] columnAliases, Type[] types) {
 
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public Projection sum(String propertyName) {
 		throw new UnsupportedOperationException();
 	}

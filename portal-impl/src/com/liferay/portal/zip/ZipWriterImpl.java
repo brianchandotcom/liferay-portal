@@ -67,6 +67,7 @@ public class ZipWriterImpl implements ZipWriter {
 		_file.mkdir();
 	}
 
+	@Override
 	public void addEntry(String name, byte[] bytes) throws IOException {
 		UnsyncByteArrayInputStream unsyncByteArrayInputStream =
 			new UnsyncByteArrayInputStream(bytes);
@@ -79,6 +80,7 @@ public class ZipWriterImpl implements ZipWriter {
 		}
 	}
 
+	@Override
 	public void addEntry(String name, InputStream inputStream)
 		throws IOException {
 
@@ -107,14 +109,17 @@ public class ZipWriterImpl implements ZipWriter {
 		}
 	}
 
+	@Override
 	public void addEntry(String name, String s) throws IOException {
 		addEntry(name, s.getBytes(StringPool.UTF8));
 	}
 
+	@Override
 	public void addEntry(String name, StringBuilder sb) throws IOException {
 		addEntry(name, sb.toString());
 	}
 
+	@Override
 	public byte[] finish() throws IOException {
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
@@ -132,6 +137,7 @@ public class ZipWriterImpl implements ZipWriter {
 		return unsyncByteArrayOutputStream.toByteArray();
 	}
 
+	@Override
 	public java.io.File getFile() {
 		try {
 			File.umount(_file);
@@ -143,6 +149,7 @@ public class ZipWriterImpl implements ZipWriter {
 		return _file.getDelegate();
 	}
 
+	@Override
 	public String getPath() {
 		return _file.getPath();
 	}

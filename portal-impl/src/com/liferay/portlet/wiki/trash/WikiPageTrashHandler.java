@@ -94,6 +94,7 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 		}
 	}
 
+	@Override
 	public void deleteTrashEntry(long classPK)
 		throws PortalException, SystemException {
 
@@ -102,6 +103,7 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 		WikiPageLocalServiceUtil.deletePage(page.getNodeId(), page.getTitle());
 	}
 
+	@Override
 	public String getClassName() {
 		return WikiPage.class.getName();
 	}
@@ -213,6 +215,7 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 			permissionChecker, groupId, classPK, trashActionId);
 	}
 
+	@Override
 	public boolean isInTrash(long classPK)
 		throws PortalException, SystemException {
 
@@ -248,6 +251,7 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 
 	}
 
+	@Override
 	public void restoreTrashEntry(long userId, long classPK)
 		throws PortalException, SystemException {
 

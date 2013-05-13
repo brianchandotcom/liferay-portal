@@ -19,10 +19,12 @@ package com.liferay.portal.kernel.util;
  */
 public class URLStringEncoder implements StringEncoder {
 
+	@Override
 	public String decode(String s) {
 		return HttpUtil.decodeURL(s);
 	}
 
+	@Override
 	public String encode(String s) {
 		return HttpUtil.encodeURL(s);
 	}

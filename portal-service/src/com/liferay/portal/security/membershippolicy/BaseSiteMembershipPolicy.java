@@ -43,6 +43,7 @@ import java.util.Map;
  */
 public abstract class BaseSiteMembershipPolicy implements SiteMembershipPolicy {
 
+	@Override
 	@SuppressWarnings("unused")
 	public void checkRoles(
 			List<UserGroupRole> addUserGroupRoles,
@@ -50,6 +51,7 @@ public abstract class BaseSiteMembershipPolicy implements SiteMembershipPolicy {
 		throws PortalException, SystemException {
 	}
 
+	@Override
 	@SuppressWarnings("unused")
 	public boolean isMembershipAllowed(long userId, long groupId)
 		throws PortalException, SystemException {
@@ -64,6 +66,7 @@ public abstract class BaseSiteMembershipPolicy implements SiteMembershipPolicy {
 		return true;
 	}
 
+	@Override
 	public boolean isMembershipProtected(
 			PermissionChecker permissionChecker, long userId, long groupId)
 		throws PortalException, SystemException {
@@ -93,6 +96,7 @@ public abstract class BaseSiteMembershipPolicy implements SiteMembershipPolicy {
 		return false;
 	}
 
+	@Override
 	@SuppressWarnings("unused")
 	public boolean isMembershipRequired(long userId, long groupId)
 		throws PortalException, SystemException {
@@ -107,6 +111,7 @@ public abstract class BaseSiteMembershipPolicy implements SiteMembershipPolicy {
 		return false;
 	}
 
+	@Override
 	@SuppressWarnings("unused")
 	public boolean isRoleAllowed(long userId, long groupId, long roleId)
 		throws PortalException, SystemException {
@@ -131,6 +136,7 @@ public abstract class BaseSiteMembershipPolicy implements SiteMembershipPolicy {
 		return true;
 	}
 
+	@Override
 	public boolean isRoleProtected(
 			PermissionChecker permissionChecker, long userId, long groupId,
 			long roleId)
@@ -159,6 +165,7 @@ public abstract class BaseSiteMembershipPolicy implements SiteMembershipPolicy {
 		return false;
 	}
 
+	@Override
 	public boolean isRoleRequired(long userId, long groupId, long roleId) {
 		List<UserGroupRole> userGroupRoles = new ArrayList<UserGroupRole>();
 
@@ -180,6 +187,7 @@ public abstract class BaseSiteMembershipPolicy implements SiteMembershipPolicy {
 		return false;
 	}
 
+	@Override
 	@SuppressWarnings("unused")
 	public void propagateRoles(
 			List<UserGroupRole> addUserGroupRoles,
@@ -187,6 +195,7 @@ public abstract class BaseSiteMembershipPolicy implements SiteMembershipPolicy {
 		throws PortalException, SystemException {
 	}
 
+	@Override
 	public void verifyPolicy() throws PortalException, SystemException {
 		ActionableDynamicQuery groupActionableDynamicQuery =
 			new GroupActionableDynamicQuery() {
@@ -231,15 +240,18 @@ public abstract class BaseSiteMembershipPolicy implements SiteMembershipPolicy {
 		groupActionableDynamicQuery.performActions();
 	}
 
+	@Override
 	public void verifyPolicy(Group group)
 		throws PortalException, SystemException {
 
 		verifyPolicy(group, null, null, null, null, null);
 	}
 
+	@Override
 	public void verifyPolicy(Role role) {
 	}
 
+	@Override
 	public void verifyPolicy(
 		Role role, Role oldRole,
 		Map<String, Serializable> oldExpandoAttributes) {

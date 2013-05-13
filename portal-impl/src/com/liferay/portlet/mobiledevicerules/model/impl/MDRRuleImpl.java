@@ -24,6 +24,7 @@ public class MDRRuleImpl extends MDRRuleBaseImpl {
 	public MDRRuleImpl() {
 	}
 
+	@Override
 	public UnicodeProperties getTypeSettingsProperties() {
 		if (_typeSettingsProperties == null) {
 			_typeSettingsProperties = new UnicodeProperties(true);
@@ -41,6 +42,7 @@ public class MDRRuleImpl extends MDRRuleBaseImpl {
 		_typeSettingsProperties = null;
 	}
 
+	@Override
 	public void setTypeSettingsProperties(
 		UnicodeProperties typeSettingsProperties) {
 

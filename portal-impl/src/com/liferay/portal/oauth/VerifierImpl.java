@@ -25,6 +25,7 @@ public class VerifierImpl implements Verifier {
 		_verifier = verifier;
 	}
 
+	@Override
 	public Object getWrappedVerifier() {
 		return _verifier;
 	}

@@ -37,6 +37,7 @@ public class PollerCometHandler extends BaseCometHandler {
 		return new PollerCometHandler();
 	}
 
+	@Override
 	public void receiveData(String data) {
 	}
 

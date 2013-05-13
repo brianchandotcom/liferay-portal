@@ -46,6 +46,7 @@ import java.util.Map;
 @DoPrivileged
 public class JavadocManagerImpl implements JavadocManager {
 
+	@Override
 	public void load(String servletContextName, ClassLoader classLoader) {
 		if (!PropsValues.JAVADOC_MANAGER_ENABLED) {
 			return;
@@ -68,10 +69,12 @@ public class JavadocManagerImpl implements JavadocManager {
 		}
 	}
 
+	@Override
 	public JavadocClass lookupJavadocClass(Class<?> clazz) {
 		return _javadocClasses.get(clazz);
 	}
 
+	@Override
 	public JavadocMethod lookupJavadocMethod(Method method) {
 		JavadocMethod javadocMethod = _javadocMethods.get(method);
 
@@ -125,6 +128,7 @@ public class JavadocManagerImpl implements JavadocManager {
 		return null;
 	}
 
+	@Override
 	public void unload(String servletContextName) {
 		if (_log.isInfoEnabled()) {
 			_log.info("Unloading Javadocs for \"" + servletContextName + '\"');

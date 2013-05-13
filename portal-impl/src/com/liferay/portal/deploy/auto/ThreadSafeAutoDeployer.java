@@ -26,6 +26,7 @@ public class ThreadSafeAutoDeployer implements AutoDeployer {
 		_autoDeployer = autoDeployer;
 	}
 
+	@Override
 	public int autoDeploy(AutoDeploymentContext autoDeploymentContext)
 		throws AutoDeployException {
 
@@ -34,6 +35,7 @@ public class ThreadSafeAutoDeployer implements AutoDeployer {
 		return cloneAutoDeployer.autoDeploy(autoDeploymentContext);
 	}
 
+	@Override
 	public AutoDeployer cloneAutoDeployer() {
 		throw new UnsupportedOperationException();
 	}

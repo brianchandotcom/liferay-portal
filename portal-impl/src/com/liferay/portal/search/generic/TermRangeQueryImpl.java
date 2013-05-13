@@ -36,14 +36,17 @@ public class TermRangeQueryImpl extends BaseQueryImpl
 		_includesUpper = includesUpper;
 	}
 
+	@Override
 	public String getField() {
 		return _field;
 	}
 
+	@Override
 	public String getLowerTerm() {
 		return _lowerTerm;
 	}
 
+	@Override
 	public String getUpperTerm() {
 		return _upperTerm;
 	}
@@ -53,10 +56,12 @@ public class TermRangeQueryImpl extends BaseQueryImpl
 		return this;
 	}
 
+	@Override
 	public boolean includesLower() {
 		return _includesLower;
 	}
 
+	@Override
 	public boolean includesUpper() {
 		return _includesUpper;
 	}

@@ -39,6 +39,7 @@ public class MBThreadImpl extends MBThreadBaseImpl {
 	public MBThreadImpl() {
 	}
 
+	@Override
 	public Folder addAttachmentsFolder()
 		throws PortalException, SystemException {
 
@@ -70,6 +71,7 @@ public class MBThreadImpl extends MBThreadBaseImpl {
 		return folder;
 	}
 
+	@Override
 	public long getAttachmentsFolderId() throws SystemException {
 		if (_attachmentsFolderId !=
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
@@ -104,6 +106,7 @@ public class MBThreadImpl extends MBThreadBaseImpl {
 		return _attachmentsFolderId;
 	}
 
+	@Override
 	public Lock getLock() {
 		try {
 			return LockLocalServiceUtil.getLock(
@@ -115,6 +118,7 @@ public class MBThreadImpl extends MBThreadBaseImpl {
 		return null;
 	}
 
+	@Override
 	public MBCategory getTrashContainer() {
 		try {
 			MBCategory category = MBCategoryLocalServiceUtil.getCategory(
@@ -131,6 +135,7 @@ public class MBThreadImpl extends MBThreadBaseImpl {
 		}
 	}
 
+	@Override
 	public boolean hasLock(long userId) {
 		try {
 			return LockLocalServiceUtil.hasLock(
@@ -142,6 +147,7 @@ public class MBThreadImpl extends MBThreadBaseImpl {
 		return false;
 	}
 
+	@Override
 	public boolean isInTrashContainer() {
 		if (getTrashContainer() != null) {
 			return true;
@@ -151,6 +157,7 @@ public class MBThreadImpl extends MBThreadBaseImpl {
 		}
 	}
 
+	@Override
 	public boolean isLocked() {
 		try {
 			if (isInTrash() || isInTrashContainer()) {

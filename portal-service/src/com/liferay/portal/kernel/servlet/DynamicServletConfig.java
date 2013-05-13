@@ -33,18 +33,22 @@ public class DynamicServletConfig implements ServletConfig {
 		_params = params;
 	}
 
+	@Override
 	public String getInitParameter(String name) {
 		return _params.get(name);
 	}
 
+	@Override
 	public Enumeration<String> getInitParameterNames() {
 		return Collections.enumeration(_params.keySet());
 	}
 
+	@Override
 	public ServletContext getServletContext() {
 		return _servletConfig.getServletContext();
 	}
 
+	@Override
 	public String getServletName() {
 		return _servletConfig.getServletName();
 	}

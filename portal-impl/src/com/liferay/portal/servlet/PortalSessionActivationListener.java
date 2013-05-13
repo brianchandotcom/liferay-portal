@@ -58,10 +58,12 @@ public class PortalSessionActivationListener
 			PortalSessionActivationListener.class.getName(), transientValue);
 	}
 
+	@Override
 	public void sessionDidActivate(HttpSessionEvent httpSessionEvent) {
 		new PortalSessionCreator(httpSessionEvent);
 	}
 
+	@Override
 	public void sessionWillPassivate(HttpSessionEvent httpSessionEvent) {
 	}
 

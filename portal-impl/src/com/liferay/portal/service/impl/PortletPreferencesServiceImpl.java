@@ -41,6 +41,7 @@ import javax.portlet.ValidatorException;
 public class PortletPreferencesServiceImpl
 	extends PortletPreferencesServiceBaseImpl {
 
+	@Override
 	public void deleteArchivedPreferences(long portletItemId)
 		throws PortalException, SystemException {
 
@@ -62,6 +63,7 @@ public class PortletPreferencesServiceImpl
 		portletItemLocalService.deletePortletItem(portletItemId);
 	}
 
+	@Override
 	public void restoreArchivedPreferences(
 			long groupId, Layout layout, String portletId, long portletItemId,
 			javax.portlet.PortletPreferences preferences)
@@ -74,6 +76,7 @@ public class PortletPreferencesServiceImpl
 			groupId, layout, portletId, portletItem, preferences);
 	}
 
+	@Override
 	public void restoreArchivedPreferences(
 			long groupId, Layout layout, String portletId,
 			PortletItem portletItem,
@@ -96,6 +99,7 @@ public class PortletPreferencesServiceImpl
 		copyPreferences(archivedPreferences, preferences);
 	}
 
+	@Override
 	public void restoreArchivedPreferences(
 			long groupId, String name, Layout layout, String portletId,
 			javax.portlet.PortletPreferences preferences)
@@ -108,6 +112,7 @@ public class PortletPreferencesServiceImpl
 			groupId, layout, portletId, portletItem, preferences);
 	}
 
+	@Override
 	public void updateArchivePreferences(
 			long userId, long groupId, String name, String portletId,
 			javax.portlet.PortletPreferences preferences)

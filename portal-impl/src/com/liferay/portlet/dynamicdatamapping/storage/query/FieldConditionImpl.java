@@ -27,18 +27,22 @@ public class FieldConditionImpl implements FieldCondition {
 		_comparisonOperator = comparisonOperator;
 	}
 
+	@Override
 	public ComparisonOperator getComparisonOperator() {
 		return _comparisonOperator;
 	}
 
+	@Override
 	public String getName() {
 		return _name;
 	}
 
+	@Override
 	public Object getValue() {
 		return _value;
 	}
 
+	@Override
 	public boolean isJunction() {
 		return _JUNCTION;
 	}

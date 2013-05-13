@@ -46,9 +46,11 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 			_cacheListener, _portalCache);
 	}
 
+	@Override
 	public void dispose() {
 	}
 
+	@Override
 	public void notifyElementEvicted(Ehcache ehcache, Element element) {
 		K key = (K)element.getKey();
 		V value = (V)element.getObjectValue();
@@ -60,6 +62,7 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 		}
 	}
 
+	@Override
 	public void notifyElementExpired(Ehcache ehcache, Element element) {
 		K key = (K)element.getKey();
 		V value = (V)element.getObjectValue();
@@ -71,6 +74,7 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 		}
 	}
 
+	@Override
 	public void notifyElementPut(Ehcache ehcache, Element element)
 		throws CacheException {
 
@@ -84,6 +88,7 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 		}
 	}
 
+	@Override
 	public void notifyElementRemoved(Ehcache ehcache, Element element)
 		throws CacheException {
 
@@ -97,6 +102,7 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 		}
 	}
 
+	@Override
 	public void notifyElementUpdated(Ehcache ehcache, Element element)
 		throws CacheException {
 
@@ -110,6 +116,7 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 		}
 	}
 
+	@Override
 	public void notifyRemoveAll(Ehcache ehcache) {
 		_cacheListener.notifyRemoveAll(_portalCache);
 

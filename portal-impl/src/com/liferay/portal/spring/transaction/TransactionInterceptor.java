@@ -29,6 +29,7 @@ import org.springframework.transaction.support.CallbackPreferringPlatformTransac
  */
 public class TransactionInterceptor implements MethodInterceptor {
 
+	@Override
 	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
 		Method method = methodInvocation.getMethod();
 

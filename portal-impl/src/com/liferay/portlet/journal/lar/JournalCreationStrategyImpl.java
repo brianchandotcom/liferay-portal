@@ -32,6 +32,7 @@ import com.liferay.portlet.journal.model.JournalArticle;
  */
 public class JournalCreationStrategyImpl implements JournalCreationStrategy {
 
+	@Override
 	public boolean addGroupPermissions(
 			PortletDataContext context, Object journalObj)
 		throws Exception {
@@ -39,6 +40,7 @@ public class JournalCreationStrategyImpl implements JournalCreationStrategy {
 		return true;
 	}
 
+	@Override
 	public boolean addGuestPermissions(
 			PortletDataContext context, Object journalObj)
 		throws Exception {
@@ -46,12 +48,14 @@ public class JournalCreationStrategyImpl implements JournalCreationStrategy {
 		return true;
 	}
 
+	@Override
 	public long getAuthorUserId(PortletDataContext context, Object journalObj)
 		throws Exception {
 
 		return JournalCreationStrategy.USE_DEFAULT_USER_ID_STRATEGY;
 	}
 
+	@Override
 	public String getTransformedContent(
 			PortletDataContext context, JournalArticle newArticle)
 		throws Exception {

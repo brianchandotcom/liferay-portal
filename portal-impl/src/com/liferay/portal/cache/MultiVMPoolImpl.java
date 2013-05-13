@@ -28,22 +28,26 @@ import java.io.Serializable;
 @DoPrivileged
 public class MultiVMPoolImpl implements MultiVMPool {
 
+	@Override
 	public void clear() {
 		_portalCacheManager.clearAll();
 	}
 
+	@Override
 	public PortalCache<? extends Serializable, ? extends Serializable> getCache(
 		String name) {
 
 		return _portalCacheManager.getCache(name);
 	}
 
+	@Override
 	public PortalCache<? extends Serializable, ? extends Serializable> getCache(
 		String name, boolean blocking) {
 
 		return _portalCacheManager.getCache(name, blocking);
 	}
 
+	@Override
 	public void removeCache(String name) {
 		_portalCacheManager.removeCache(name);
 	}

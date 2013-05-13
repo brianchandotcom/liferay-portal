@@ -38,6 +38,7 @@ public abstract class CMISJunction implements CMISCriterion {
 		return _cmisCriterions;
 	}
 
+	@Override
 	public abstract String toQueryFragment();
 
 	private List<CMISCriterion> _cmisCriterions;

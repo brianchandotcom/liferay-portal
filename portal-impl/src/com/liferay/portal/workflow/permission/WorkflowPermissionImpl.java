@@ -34,6 +34,7 @@ import com.liferay.portal.service.WorkflowInstanceLinkLocalServiceUtil;
 @DoPrivileged
 public class WorkflowPermissionImpl implements WorkflowPermission {
 
+	@Override
 	public Boolean hasPermission(
 		PermissionChecker permissionChecker, long groupId, String className,
 		long classPK, String actionId) {

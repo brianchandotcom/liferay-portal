@@ -34,6 +34,7 @@ public class CatalinaCometSession extends BaseCometSession {
 		_cometEvent = cometEvent;
 	}
 
+	@Override
 	public Object getAttribute(String name) {
 		HttpServletRequest request = _cometEvent.getHttpServletRequest();
 
@@ -42,6 +43,7 @@ public class CatalinaCometSession extends BaseCometSession {
 		return session.getAttribute(name);
 	}
 
+	@Override
 	public void setAttribute(String name, Object object) {
 		HttpServletRequest request = _cometEvent.getHttpServletRequest();
 

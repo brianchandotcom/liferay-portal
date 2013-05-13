@@ -37,6 +37,7 @@ import javax.servlet.http.HttpSession;
  */
 public class SessionAuthToken implements AuthToken {
 
+	@Override
 	public void check(HttpServletRequest request) throws PrincipalException {
 		if (isIgnoreAction(request) || isIgnorePortlet(request)) {
 			return;
@@ -62,10 +63,12 @@ public class SessionAuthToken implements AuthToken {
 		}
 	}
 
+	@Override
 	public String getToken(HttpServletRequest request) {
 		return getSessionAuthenticationToken(request, _PORTAL);
 	}
 
+	@Override
 	public String getToken(
 		HttpServletRequest request, long plid, String portletId) {
 

@@ -38,6 +38,7 @@ public class Property implements ResponseElement {
 		_newLine = newLine;
 	}
 
+	@Override
 	public String parse() {
 		StringBundler sb = new StringBundler(5);
 

@@ -36,6 +36,7 @@ public class UpgradeOptimizedPreparedStatementHandler
 		_preparedStatement = preparedStatement;
 	}
 
+	@Override
 	public Object invoke(Object proxy, Method method, Object[] arguments)
 		throws Throwable {
 

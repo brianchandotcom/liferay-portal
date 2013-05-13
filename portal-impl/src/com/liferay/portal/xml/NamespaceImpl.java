@@ -49,14 +49,17 @@ public class NamespaceImpl extends NodeImpl implements Namespace {
 		return _namespace.equals(namespace);
 	}
 
+	@Override
 	public short getNodeType() {
 		return _namespace.getNodeType();
 	}
 
+	@Override
 	public String getPrefix() {
 		return _namespace.getPrefix();
 	}
 
+	@Override
 	public String getURI() {
 		return _namespace.getURI();
 	}
@@ -65,6 +68,7 @@ public class NamespaceImpl extends NodeImpl implements Namespace {
 		return _namespace;
 	}
 
+	@Override
 	public String getXPathNameStep() {
 		return _namespace.getXPathNameStep();
 	}

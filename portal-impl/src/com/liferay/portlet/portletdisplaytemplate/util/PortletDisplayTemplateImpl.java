@@ -72,6 +72,7 @@ import javax.servlet.jsp.PageContext;
 @DoPrivileged
 public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 
+	@Override
 	public DDMTemplate fetchDDMTemplate(long groupId, String displayStyle) {
 		try {
 			Group group = GroupLocalServiceUtil.getGroup(groupId);
@@ -114,6 +115,7 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 		return null;
 	}
 
+	@Override
 	public long getDDMTemplateGroupId(ThemeDisplay themeDisplay) {
 		try {
 			Group scopeGroup = themeDisplay.getScopeGroup();
@@ -143,6 +145,7 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 		return themeDisplay.getScopeGroupId();
 	}
 
+	@Override
 	public long getPortletDisplayTemplateDDMTemplateId(
 		ThemeDisplay themeDisplay, String displayStyle) {
 
@@ -164,6 +167,7 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 		return portletDisplayDDMTemplateId;
 	}
 
+	@Override
 	public Map<String, TemplateVariableGroup> getTemplateVariableGroups(
 		String language) {
 
@@ -227,6 +231,7 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 		return templateVariableGroups;
 	}
 
+	@Override
 	public String renderDDMTemplate(
 			PageContext pageContext, long ddmTemplateId, List<?> entries)
 		throws Exception {
@@ -237,6 +242,7 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 			pageContext, ddmTemplateId, entries, contextObjects);
 	}
 
+	@Override
 	public String renderDDMTemplate(
 			PageContext pageContext, long ddmTemplateId, List<?> entries,
 			Map<String, Object> contextObjects)

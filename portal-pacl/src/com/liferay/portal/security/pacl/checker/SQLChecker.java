@@ -46,6 +46,7 @@ import net.sf.jsqlparser.util.TablesNamesFinder;
  */
 public class SQLChecker extends BaseChecker {
 
+	@Override
 	public void afterPropertiesSet() {
 		initTableNames();
 	}
@@ -244,6 +245,7 @@ public class SQLChecker extends BaseChecker {
 		return false;
 	}
 
+	@Override
 	public boolean implies(Permission permission) {
 		throw new UnsupportedOperationException();
 	}

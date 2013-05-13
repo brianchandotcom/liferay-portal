@@ -29,6 +29,7 @@ import java.util.List;
  */
 public class PhoneServiceImpl extends PhoneServiceBaseImpl {
 
+	@Override
 	public Phone addPhone(
 			String className, long classPK, String number, String extension,
 			int typeId, boolean primary)
@@ -42,6 +43,7 @@ public class PhoneServiceImpl extends PhoneServiceBaseImpl {
 			primary);
 	}
 
+	@Override
 	public void deletePhone(long phoneId)
 		throws PortalException, SystemException {
 
@@ -54,6 +56,7 @@ public class PhoneServiceImpl extends PhoneServiceBaseImpl {
 		phoneLocalService.deletePhone(phoneId);
 	}
 
+	@Override
 	public Phone getPhone(long phoneId)
 		throws PortalException, SystemException {
 
@@ -66,6 +69,7 @@ public class PhoneServiceImpl extends PhoneServiceBaseImpl {
 		return phone;
 	}
 
+	@Override
 	public List<Phone> getPhones(String className, long classPK)
 		throws PortalException, SystemException {
 
@@ -78,6 +82,7 @@ public class PhoneServiceImpl extends PhoneServiceBaseImpl {
 			user.getCompanyId(), className, classPK);
 	}
 
+	@Override
 	public Phone updatePhone(
 			long phoneId, String number, String extension, int typeId,
 			boolean primary)

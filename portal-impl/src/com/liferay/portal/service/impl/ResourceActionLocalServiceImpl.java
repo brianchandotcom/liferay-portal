@@ -41,6 +41,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ResourceActionLocalServiceImpl
 	extends ResourceActionLocalServiceBaseImpl {
 
+	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void checkResourceActions() throws SystemException {
 		List<ResourceAction> resourceActions =
@@ -54,12 +55,14 @@ public class ResourceActionLocalServiceImpl
 		}
 	}
 
+	@Override
 	public void checkResourceActions(String name, List<String> actionIds)
 		throws SystemException {
 
 		checkResourceActions(name, actionIds, false);
 	}
 
+	@Override
 	public void checkResourceActions(
 			String name, List<String> actionIds, boolean addDefaultActions)
 		throws SystemException {
@@ -170,6 +173,7 @@ public class ResourceActionLocalServiceImpl
 		}
 	}
 
+	@Override
 	@Skip
 	public ResourceAction fetchResourceAction(String name, String actionId) {
 		String key = encodeKey(name, actionId);
@@ -177,6 +181,7 @@ public class ResourceActionLocalServiceImpl
 		return _resourceActions.get(key);
 	}
 
+	@Override
 	@Skip
 	public ResourceAction getResourceAction(String name, String actionId)
 		throws PortalException {
@@ -192,6 +197,7 @@ public class ResourceActionLocalServiceImpl
 		return resourceAction;
 	}
 
+	@Override
 	public List<ResourceAction> getResourceActions(String name)
 		throws SystemException {
 

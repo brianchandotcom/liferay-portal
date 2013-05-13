@@ -45,6 +45,7 @@ public class BooleanClauseOccurImpl implements BooleanClauseOccur {
 		}
 	}
 
+	@Override
 	public String getName() {
 		return _name;
 	}

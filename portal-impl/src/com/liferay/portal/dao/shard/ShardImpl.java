@@ -28,6 +28,7 @@ import javax.sql.DataSource;
 @DoPrivileged
 public class ShardImpl implements Shard {
 
+	@Override
 	public String[] getAvailableShardNames() {
 		ShardDataSourceTargetSource shardDataSourceTargetSource =
 			(ShardDataSourceTargetSource)
@@ -40,18 +41,22 @@ public class ShardImpl implements Shard {
 		return null;
 	}
 
+	@Override
 	public String getCurrentShardName() {
 		return _shardAdvice.getCurrentShardName();
 	}
 
+	@Override
 	public DataSource getDataSource() {
 		return _shardAdvice.getDataSource();
 	}
 
+	@Override
 	public String getDefaultShardName() {
 		return PropsValues.SHARD_DEFAULT_NAME;
 	}
 
+	@Override
 	public boolean isEnabled() {
 		if (_shardAdvice != null) {
 			return true;
@@ -61,6 +66,7 @@ public class ShardImpl implements Shard {
 		}
 	}
 
+	@Override
 	public String popCompanyService() {
 		String value = null;
 
@@ -71,12 +77,14 @@ public class ShardImpl implements Shard {
 		return value;
 	}
 
+	@Override
 	public void pushCompanyService(long companyId) {
 		if (_shardAdvice != null) {
 			_shardAdvice.pushCompanyService(companyId);
 		}
 	}
 
+	@Override
 	public void pushCompanyService(String shardName) {
 		if (_shardAdvice != null) {
 			_shardAdvice.pushCompanyService(shardName);
@@ -87,6 +95,7 @@ public class ShardImpl implements Shard {
 		_shardAdvice = shardAdvice;
 	}
 
+	@Override
 	public String setTargetSource(String shardName) {
 		if (_shardAdvice == null) {
 			return null;

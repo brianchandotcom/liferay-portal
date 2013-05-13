@@ -26,6 +26,7 @@ public class AlwaysCurrentUserIdStrategy implements UserIdStrategy {
 		_user = user;
 	}
 
+	@Override
 	public long getUserId(String userUuid) {
 		return _user.getUserId();
 	}

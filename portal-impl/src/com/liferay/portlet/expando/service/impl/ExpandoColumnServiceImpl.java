@@ -28,6 +28,7 @@ import com.liferay.portlet.expando.service.permission.ExpandoColumnPermissionUti
  */
 public class ExpandoColumnServiceImpl extends ExpandoColumnServiceBaseImpl {
 
+	@Override
 	public ExpandoColumn addColumn(long tableId, String name, int type)
 		throws PortalException, SystemException {
 
@@ -38,6 +39,7 @@ public class ExpandoColumnServiceImpl extends ExpandoColumnServiceBaseImpl {
 		return expandoColumnLocalService.addColumn(tableId, name, type);
 	}
 
+	@Override
 	public ExpandoColumn addColumn(
 			long tableId, String name, int type, Object defaultData)
 		throws PortalException, SystemException {
@@ -50,6 +52,7 @@ public class ExpandoColumnServiceImpl extends ExpandoColumnServiceBaseImpl {
 			tableId, name, type, defaultData);
 	}
 
+	@Override
 	public void deleteColumn(long columnId)
 		throws PortalException, SystemException {
 
@@ -59,6 +62,7 @@ public class ExpandoColumnServiceImpl extends ExpandoColumnServiceBaseImpl {
 		expandoColumnLocalService.deleteColumn(columnId);
 	}
 
+	@Override
 	public ExpandoColumn updateColumn(long columnId, String name, int type)
 		throws PortalException, SystemException {
 
@@ -68,6 +72,7 @@ public class ExpandoColumnServiceImpl extends ExpandoColumnServiceBaseImpl {
 		return expandoColumnLocalService.updateColumn(columnId, name, type);
 	}
 
+	@Override
 	public ExpandoColumn updateColumn(
 			long columnId, String name, int type, Object defaultData)
 		throws PortalException, SystemException {
@@ -79,6 +84,7 @@ public class ExpandoColumnServiceImpl extends ExpandoColumnServiceBaseImpl {
 			columnId, name, type, defaultData);
 	}
 
+	@Override
 	public ExpandoColumn updateTypeSettings(long columnId, String typeSettings)
 		throws PortalException, SystemException {
 

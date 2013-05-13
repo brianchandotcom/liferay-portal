@@ -35,6 +35,7 @@ public class DirectServletPathRegisterDispatcher implements RequestDispatcher {
 		_requestDispatcher = requestDispatcher;
 	}
 
+	@Override
 	public void forward(
 			ServletRequest servletRequest, ServletResponse servletResponse)
 		throws IOException, ServletException {
@@ -44,6 +45,7 @@ public class DirectServletPathRegisterDispatcher implements RequestDispatcher {
 		_requestDispatcher.forward(servletRequest, servletResponse);
 	}
 
+	@Override
 	public void include(
 			ServletRequest servletRequest, ServletResponse servletResponse)
 		throws IOException, ServletException {

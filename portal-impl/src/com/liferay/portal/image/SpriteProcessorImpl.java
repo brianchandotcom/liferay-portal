@@ -73,6 +73,7 @@ import org.geotools.image.ImageWorker;
 @DoPrivileged
 public class SpriteProcessorImpl implements SpriteProcessor {
 
+	@Override
 	public Properties generate(
 			ServletContext servletContext, List<URL> imageURLs,
 			String spriteRootDirName, String spriteFileName,

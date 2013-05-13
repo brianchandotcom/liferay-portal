@@ -46,6 +46,7 @@ public class TransactionStatusClp implements TransactionStatus {
 		}
 	}
 
+	@Override
 	public Object createSavepoint() throws TransactionException {
 		try {
 			Method method = _remoteMethods.get("createSavepoint");
@@ -59,6 +60,7 @@ public class TransactionStatusClp implements TransactionStatus {
 		}
 	}
 
+	@Override
 	public void flush() {
 		try {
 			Method method = _remoteMethods.get("flush");
@@ -76,6 +78,7 @@ public class TransactionStatusClp implements TransactionStatus {
 		return _remoteTransactionStatus;
 	}
 
+	@Override
 	public boolean hasSavepoint() {
 		try {
 			Method method = _remoteMethods.get("hasSavepoint");
@@ -89,6 +92,7 @@ public class TransactionStatusClp implements TransactionStatus {
 		}
 	}
 
+	@Override
 	public boolean isCompleted() {
 		try {
 			Method method = _remoteMethods.get("isCompleted");
@@ -102,6 +106,7 @@ public class TransactionStatusClp implements TransactionStatus {
 		}
 	}
 
+	@Override
 	public boolean isNewTransaction() {
 		try {
 			Method method = _remoteMethods.get("isNewTransaction");
@@ -115,6 +120,7 @@ public class TransactionStatusClp implements TransactionStatus {
 		}
 	}
 
+	@Override
 	public boolean isRollbackOnly() {
 		try {
 			Method method = _remoteMethods.get("isRollbackOnly");
@@ -128,6 +134,7 @@ public class TransactionStatusClp implements TransactionStatus {
 		}
 	}
 
+	@Override
 	public void releaseSavepoint(Object savepoint) throws TransactionException {
 		try {
 			Method method = _remoteMethods.get("releaseSavepoint");
@@ -141,6 +148,7 @@ public class TransactionStatusClp implements TransactionStatus {
 		}
 	}
 
+	@Override
 	public void rollbackToSavepoint(Object savepoint)
 		throws TransactionException {
 
@@ -156,6 +164,7 @@ public class TransactionStatusClp implements TransactionStatus {
 		}
 	}
 
+	@Override
 	public void setRollbackOnly() {
 		try {
 			Method method = _remoteMethods.get("setRollbackOnly");

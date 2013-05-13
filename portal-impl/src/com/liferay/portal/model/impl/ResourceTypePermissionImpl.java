@@ -78,6 +78,7 @@ package com.liferay.portal.model.impl;
  */
 public class ResourceTypePermissionImpl extends ResourceTypePermissionBaseImpl {
 
+	@Override
 	public boolean isCompanyScope() {
 		if (getGroupId() == 0) {
 			return true;
@@ -87,6 +88,7 @@ public class ResourceTypePermissionImpl extends ResourceTypePermissionBaseImpl {
 		}
 	}
 
+	@Override
 	public boolean isGroupScope() {
 		return !isCompanyScope();
 	}

@@ -31,6 +31,7 @@ public class SwapUpgradeColumnImpl extends BaseUpgradeColumnImpl {
 		this(name, null, valueMapper);
 	}
 
+	@Override
 	public Object getNewValue(Object oldValue) throws Exception {
 		return _valueMapper.getNewValue(oldValue);
 	}

@@ -53,20 +53,24 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 		return _sqlChecker;
 	}
 
+	@Override
 	public boolean hasJNDI(String name) {
 		return _jndiChecker.hasJNDI(name);
 	}
 
+	@Override
 	public boolean hasSQL(String sql) {
 		return _sqlChecker.hasSQL(sql);
 	}
 
+	@Override
 	public boolean implies(Permission permission) {
 		Checker checker = getChecker(permission.getClass());
 
 		return checker.implies(permission);
 	}
 
+	@Override
 	public boolean isActive() {
 		return true;
 	}

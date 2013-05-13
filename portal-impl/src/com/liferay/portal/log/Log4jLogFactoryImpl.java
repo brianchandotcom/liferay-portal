@@ -27,14 +27,17 @@ import org.apache.log4j.LogManager;
 @DoPrivileged
 public class Log4jLogFactoryImpl implements LogFactory {
 
+	@Override
 	public Log getLog(Class<?> c) {
 		return getLog(c.getName());
 	}
 
+	@Override
 	public Log getLog(String name) {
 		return new Log4jLogImpl(LogManager.getLogger(name));
 	}
 
+	@Override
 	public void setLevel(String name, String priority, boolean custom) {
 		Log4JUtil.setLevel(name, priority, custom);
 	}

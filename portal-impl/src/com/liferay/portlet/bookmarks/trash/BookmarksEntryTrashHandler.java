@@ -36,12 +36,14 @@ import javax.portlet.PortletRequest;
  */
 public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {
 
+	@Override
 	public void deleteTrashEntry(long classPK)
 		throws PortalException, SystemException {
 
 		BookmarksEntryLocalServiceUtil.deleteEntry(classPK);
 	}
 
+	@Override
 	public String getClassName() {
 		return BookmarksEntry.class.getName();
 	}
@@ -104,6 +106,7 @@ public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {
 			permissionChecker, groupId, classPK, trashActionId);
 	}
 
+	@Override
 	public boolean isInTrash(long classPK)
 		throws PortalException, SystemException {
 
@@ -149,6 +152,7 @@ public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {
 			userId, classPK, containerId);
 	}
 
+	@Override
 	public void restoreTrashEntry(long userId, long classPK)
 		throws PortalException, SystemException {
 

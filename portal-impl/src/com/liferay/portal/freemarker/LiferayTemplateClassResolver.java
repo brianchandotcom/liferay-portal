@@ -29,6 +29,7 @@ import freemarker.template.utility.ObjectConstructor;
  */
 public class LiferayTemplateClassResolver implements TemplateClassResolver {
 
+	@Override
 	public Class<?> resolve(
 			String className, Environment environment, Template template)
 		throws TemplateException {

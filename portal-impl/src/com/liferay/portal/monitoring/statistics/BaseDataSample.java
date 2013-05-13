@@ -51,26 +51,32 @@ public class BaseDataSample implements DataSample, Serializable {
 		return _attributes;
 	}
 
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
 
+	@Override
 	public String getDescription() {
 		return _description;
 	}
 
+	@Override
 	public long getDuration() {
 		return _duration;
 	}
 
+	@Override
 	public String getName() {
 		return _name;
 	}
 
+	@Override
 	public String getNamespace() {
 		return _namespace;
 	}
 
+	@Override
 	public RequestStatus getRequestStatus() {
 		return _requestStatus;
 	}
@@ -79,6 +85,7 @@ public class BaseDataSample implements DataSample, Serializable {
 		return _timeout;
 	}
 
+	@Override
 	public String getUser() {
 		return _user;
 	}

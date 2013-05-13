@@ -41,6 +41,7 @@ import javax.portlet.PortletPreferences;
 public class PortalPreferencesLocalServiceImpl
 	extends PortalPreferencesLocalServiceBaseImpl {
 
+	@Override
 	public PortalPreferences addPortalPreferences(
 			long companyId, long ownerId, int ownerType,
 			String defaultPreferences)
@@ -81,6 +82,7 @@ public class PortalPreferencesLocalServiceImpl
 		return portalPreferences;
 	}
 
+	@Override
 	public PortletPreferences getPreferences(
 			long companyId, long ownerId, int ownerType)
 		throws SystemException {
@@ -88,6 +90,7 @@ public class PortalPreferencesLocalServiceImpl
 		return getPreferences(companyId, ownerId, ownerType, null);
 	}
 
+	@Override
 	public PortletPreferences getPreferences(
 			long companyId, long ownerId, int ownerType,
 			String defaultPreferences)
@@ -127,6 +130,7 @@ public class PortalPreferencesLocalServiceImpl
 		}
 	}
 
+	@Override
 	public PortalPreferences updatePreferences(
 			long ownerId, int ownerType,
 			com.liferay.portlet.PortalPreferences portalPreferences)
@@ -137,6 +141,7 @@ public class PortalPreferencesLocalServiceImpl
 		return updatePreferences(ownerId, ownerType, xml);
 	}
 
+	@Override
 	public PortalPreferences updatePreferences(
 			long ownerId, int ownerType, String xml)
 		throws SystemException {

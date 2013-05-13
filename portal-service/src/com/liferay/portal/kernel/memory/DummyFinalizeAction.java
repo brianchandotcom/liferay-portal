@@ -19,6 +19,7 @@ package com.liferay.portal.kernel.memory;
  */
 public class DummyFinalizeAction implements FinalizeAction {
 
+	@Override
 	public void doFinalize() {
 	}
 

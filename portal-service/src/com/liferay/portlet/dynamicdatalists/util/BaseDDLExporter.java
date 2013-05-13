@@ -27,23 +27,27 @@ import java.util.Locale;
  */
 public abstract class BaseDDLExporter implements DDLExporter {
 
+	@Override
 	public byte[] export(long recordSetId) throws Exception {
 		return doExport(
 			recordSetId, WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
+	@Override
 	public byte[] export(long recordSetId, int status) throws Exception {
 		return doExport(
 			recordSetId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
+	@Override
 	public byte[] export(long recordSetId, int status, int start, int end)
 		throws Exception {
 
 		return doExport(recordSetId, status, start, end, null);
 	}
 
+	@Override
 	public byte[] export(
 			long recordSetId, int status, int start, int end,
 			OrderByComparator orderByComparator)
@@ -52,6 +56,7 @@ public abstract class BaseDDLExporter implements DDLExporter {
 		return doExport(recordSetId, status, start, end, orderByComparator);
 	}
 
+	@Override
 	public Locale getLocale() {
 		if (_locale == null) {
 			_locale = LocaleUtil.getDefault();
@@ -60,6 +65,7 @@ public abstract class BaseDDLExporter implements DDLExporter {
 		return _locale;
 	}
 
+	@Override
 	public void setLocale(Locale locale) {
 		_locale = locale;
 	}

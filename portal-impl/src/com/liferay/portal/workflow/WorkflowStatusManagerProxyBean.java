@@ -27,6 +27,7 @@ import java.util.Map;
 public class WorkflowStatusManagerProxyBean
 	extends BaseProxyBean implements WorkflowStatusManager {
 
+	@Override
 	public void updateStatus(
 		int status, Map<String, Serializable> workflowContext) {
 

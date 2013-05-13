@@ -29,6 +29,7 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 @DoPrivileged
 public class StagingPermissionImpl implements StagingPermission {
 
+	@Override
 	public Boolean hasPermission(
 		PermissionChecker permissionChecker, Group group, String className,
 		long classPK, String portletId, String actionId) {
@@ -45,6 +46,7 @@ public class StagingPermissionImpl implements StagingPermission {
 		return null;
 	}
 
+	@Override
 	public Boolean hasPermission(
 		PermissionChecker permissionChecker, long groupId, String className,
 		long classPK, String portletId, String actionId) {

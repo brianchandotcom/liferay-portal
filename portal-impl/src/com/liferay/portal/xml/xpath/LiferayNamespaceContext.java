@@ -27,6 +27,7 @@ public class LiferayNamespaceContext implements NamespaceContext {
 		_namespaceContextMap = namespaceContextMap;
 	}
 
+	@Override
 	public String translateNamespacePrefixToUri(String prefix) {
 		if (_namespaceContextMap == null) {
 			return null;

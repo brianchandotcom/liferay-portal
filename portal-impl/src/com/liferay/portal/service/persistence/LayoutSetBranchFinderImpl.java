@@ -37,6 +37,7 @@ public class LayoutSetBranchFinderImpl
 	public static final String FIND_BY_MASTER =
 		LayoutSetBranchFinder.class.getName() + ".findByMaster";
 
+	@Override
 	public LayoutSetBranch findByMaster(long groupId, boolean privateLayout)
 		throws NoSuchLayoutSetBranchException, SystemException {
 

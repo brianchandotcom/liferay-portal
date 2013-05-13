@@ -38,6 +38,7 @@ import java.util.List;
  */
 public class UserAtomCollectionAdapter extends BaseAtomCollectionAdapter<User> {
 
+	@Override
 	public String getCollectionName() {
 		return _COLLECTION_NAME;
 	}
@@ -98,6 +99,7 @@ public class UserAtomCollectionAdapter extends BaseAtomCollectionAdapter<User> {
 		return user.getModifiedDate();
 	}
 
+	@Override
 	public String getFeedTitle(AtomRequestContext atomRequestContext) {
 		return AtomUtil.createFeedTitleFromPortletName(
 			atomRequestContext, PortletKeys.USERS_ADMIN);

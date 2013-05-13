@@ -20,6 +20,7 @@ package com.liferay.portal.kernel.messaging;
  */
 public abstract class BaseMessageListener implements MessageListener {
 
+	@Override
 	public void receive(Message message) throws MessageListenerException {
 		try {
 			doReceive(message);

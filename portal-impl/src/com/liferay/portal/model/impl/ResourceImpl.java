@@ -24,50 +24,62 @@ public class ResourceImpl implements Resource {
 	public ResourceImpl() {
 	}
 
+	@Override
 	public long getCodeId() {
 		return _codeId;
 	}
 
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
 
+	@Override
 	public String getName() {
 		return _name;
 	}
 
+	@Override
 	public String getPrimKey() {
 		return _primKey;
 	}
 
+	@Override
 	public long getResourceId() {
 		return _resourceId;
 	}
 
+	@Override
 	public int getScope() {
 		return _scope;
 	}
 
+	@Override
 	public void setCodeId(long codeId) {
 		_codeId = codeId;
 	}
 
+	@Override
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
 	}
 
+	@Override
 	public void setName(String name) {
 		_name = name;
 	}
 
+	@Override
 	public void setPrimKey(String primKey) {
 		_primKey = primKey;
 	}
 
+	@Override
 	public void setResourceId(long resourceId) {
 		_resourceId = resourceId;
 	}
 
+	@Override
 	public void setScope(int scope) {
 		_scope = scope;
 	}

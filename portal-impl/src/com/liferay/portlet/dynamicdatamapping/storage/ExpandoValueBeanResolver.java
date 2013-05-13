@@ -46,6 +46,7 @@ public class ExpandoValueBeanResolver implements BeanResolver {
 		}
 	}
 
+	@Override
 	public Object resolve(EvaluationContext context, String beanName) {
 		return _expandoValues.get(beanName);
 	}

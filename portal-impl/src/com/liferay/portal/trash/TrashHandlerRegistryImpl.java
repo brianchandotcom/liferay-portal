@@ -29,18 +29,22 @@ import java.util.TreeMap;
 @DoPrivileged
 public class TrashHandlerRegistryImpl implements TrashHandlerRegistry {
 
+	@Override
 	public TrashHandler getTrashHandler(String className) {
 		return _trashHandlers.get(className);
 	}
 
+	@Override
 	public List<TrashHandler> getTrashHandlers() {
 		return ListUtil.fromMapValues(_trashHandlers);
 	}
 
+	@Override
 	public void register(TrashHandler trashHandler) {
 		_trashHandlers.put(trashHandler.getClassName(), trashHandler);
 	}
 
+	@Override
 	public void unregister(TrashHandler trashHandler) {
 		_trashHandlers.remove(trashHandler.getClassName());
 	}

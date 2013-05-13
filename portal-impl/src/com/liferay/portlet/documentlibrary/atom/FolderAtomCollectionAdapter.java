@@ -36,6 +36,7 @@ import java.util.List;
 public class FolderAtomCollectionAdapter
 	extends BaseAtomCollectionAdapter<Folder> {
 
+	@Override
 	public String getCollectionName() {
 		return _COLLECTION_NAME;
 	}
@@ -80,6 +81,7 @@ public class FolderAtomCollectionAdapter
 		return folder.getModifiedDate();
 	}
 
+	@Override
 	public String getFeedTitle(AtomRequestContext atomRequestContext) {
 		return AtomUtil.createFeedTitleFromPortletName(
 			atomRequestContext, PortletKeys.DOCUMENT_LIBRARY) + " folders";

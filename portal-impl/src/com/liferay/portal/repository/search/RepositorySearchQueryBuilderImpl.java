@@ -52,6 +52,7 @@ import org.apache.lucene.queryParser.QueryParser;
 public class RepositorySearchQueryBuilderImpl
 	implements RepositorySearchQueryBuilder {
 
+	@Override
 	public BooleanQuery getFullQuery(SearchContext searchContext)
 		throws SearchException {
 

@@ -30,6 +30,7 @@ public class SanitizerWrapper implements Sanitizer {
 		_sanitizer = sanitizer;
 	}
 
+	@Override
 	public byte[] sanitize(
 			long companyId, long groupId, long userId, String className,
 			long classPK, String contentType, String[] modes, byte[] bytes,
@@ -41,6 +42,7 @@ public class SanitizerWrapper implements Sanitizer {
 			bytes, options);
 	}
 
+	@Override
 	public void sanitize(
 			long companyId, long groupId, long userId, String className,
 			long classPK, String contentType, String[] modes,
@@ -53,6 +55,7 @@ public class SanitizerWrapper implements Sanitizer {
 			inputStream, outputStream, options);
 	}
 
+	@Override
 	public String sanitize(
 			long companyId, long groupId, long userId, String className,
 			long classPK, String contentType, String[] modes, String s,

@@ -30,6 +30,7 @@ public class LoadMBeanInfoAction extends BaseJMXManageAction<MBean> {
 		_mBean = mBean;
 	}
 
+	@Override
 	public MBean action() throws ManageActionException {
 		try {
 			ObjectName objectName = _mBean.getObjectName();

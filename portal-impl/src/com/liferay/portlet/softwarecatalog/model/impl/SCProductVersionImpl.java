@@ -32,6 +32,7 @@ public class SCProductVersionImpl extends SCProductVersionBaseImpl {
 	public SCProductVersionImpl() {
 	}
 
+	@Override
 	public List<SCFrameworkVersion> getFrameworkVersions()
 		throws SystemException {
 
@@ -39,6 +40,7 @@ public class SCProductVersionImpl extends SCProductVersionBaseImpl {
 			getProductVersionFrameworkVersions(getProductVersionId());
 	}
 
+	@Override
 	public SCProductEntry getProductEntry() {
 		SCProductEntry productEntry = null;
 

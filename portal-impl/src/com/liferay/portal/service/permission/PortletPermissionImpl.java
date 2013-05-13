@@ -51,6 +51,7 @@ public class PortletPermissionImpl implements PortletPermission {
 
 	public static final boolean DEFAULT_STRICT = false;
 
+	@Override
 	public void check(
 			PermissionChecker permissionChecker, Layout layout,
 			String portletId, String actionId)
@@ -64,6 +65,7 @@ public class PortletPermissionImpl implements PortletPermission {
 		}
 	}
 
+	@Override
 	public void check(
 			PermissionChecker permissionChecker, Layout layout,
 			String portletId, String actionId, boolean strict)
@@ -76,6 +78,7 @@ public class PortletPermissionImpl implements PortletPermission {
 		}
 	}
 
+	@Override
 	public void check(
 			PermissionChecker permissionChecker, long groupId, Layout layout,
 			String portletId, String actionId)
@@ -89,6 +92,7 @@ public class PortletPermissionImpl implements PortletPermission {
 		}
 	}
 
+	@Override
 	public void check(
 			PermissionChecker permissionChecker, long groupId, Layout layout,
 			String portletId, String actionId, boolean strict)
@@ -102,6 +106,7 @@ public class PortletPermissionImpl implements PortletPermission {
 		}
 	}
 
+	@Override
 	public void check(
 			PermissionChecker permissionChecker, long groupId, long plid,
 			String portletId, String actionId)
@@ -112,6 +117,7 @@ public class PortletPermissionImpl implements PortletPermission {
 			DEFAULT_STRICT);
 	}
 
+	@Override
 	public void check(
 			PermissionChecker permissionChecker, long groupId, long plid,
 			String portletId, String actionId, boolean strict)
@@ -125,6 +131,7 @@ public class PortletPermissionImpl implements PortletPermission {
 		}
 	}
 
+	@Override
 	public void check(
 			PermissionChecker permissionChecker, long plid, String portletId,
 			String actionId)
@@ -133,6 +140,7 @@ public class PortletPermissionImpl implements PortletPermission {
 		check(permissionChecker, plid, portletId, actionId, DEFAULT_STRICT);
 	}
 
+	@Override
 	public void check(
 			PermissionChecker permissionChecker, long plid, String portletId,
 			String actionId, boolean strict)
@@ -143,6 +151,7 @@ public class PortletPermissionImpl implements PortletPermission {
 		}
 	}
 
+	@Override
 	public void check(
 			PermissionChecker permissionChecker, String portletId,
 			String actionId)
@@ -153,6 +162,7 @@ public class PortletPermissionImpl implements PortletPermission {
 		}
 	}
 
+	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, Layout layout, Portlet portlet,
 			String actionId)
@@ -162,6 +172,7 @@ public class PortletPermissionImpl implements PortletPermission {
 			permissionChecker, layout, portlet, actionId, DEFAULT_STRICT);
 	}
 
+	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, Layout layout, Portlet portlet,
 			String actionId, boolean strict)
@@ -171,6 +182,7 @@ public class PortletPermissionImpl implements PortletPermission {
 			permissionChecker, 0, layout, portlet, actionId, strict);
 	}
 
+	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, Layout layout,
 			String portletId, String actionId)
@@ -180,6 +192,7 @@ public class PortletPermissionImpl implements PortletPermission {
 			permissionChecker, layout, portletId, actionId, DEFAULT_STRICT);
 	}
 
+	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, Layout layout,
 			String portletId, String actionId, boolean strict)
@@ -189,6 +202,7 @@ public class PortletPermissionImpl implements PortletPermission {
 			permissionChecker, 0, layout, portletId, actionId, strict);
 	}
 
+	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, long groupId, Layout layout,
 			Portlet portlet, String actionId)
@@ -199,6 +213,7 @@ public class PortletPermissionImpl implements PortletPermission {
 			DEFAULT_STRICT);
 	}
 
+	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, long groupId, Layout layout,
 			Portlet portlet, String actionId, boolean strict)
@@ -217,6 +232,7 @@ public class PortletPermissionImpl implements PortletPermission {
 			actionId, strict);
 	}
 
+	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, long groupId, Layout layout,
 			String portletId, String actionId)
@@ -227,6 +243,7 @@ public class PortletPermissionImpl implements PortletPermission {
 			DEFAULT_STRICT);
 	}
 
+	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, long groupId, Layout layout,
 			String portletId, String actionId, boolean strict)
@@ -304,6 +321,7 @@ public class PortletPermissionImpl implements PortletPermission {
 			DEFAULT_STRICT);
 	}
 
+	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, long groupId, long plid,
 			Portlet portlet, String actionId, boolean strict)
@@ -327,6 +345,7 @@ public class PortletPermissionImpl implements PortletPermission {
 			DEFAULT_STRICT);
 	}
 
+	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, long groupId, long plid,
 			String portletId, String actionId, boolean strict)
@@ -338,6 +357,7 @@ public class PortletPermissionImpl implements PortletPermission {
 			permissionChecker, groupId, layout, portletId, actionId, strict);
 	}
 
+	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, long plid, Portlet portlet,
 			String actionId)
@@ -349,6 +369,7 @@ public class PortletPermissionImpl implements PortletPermission {
 			permissionChecker, layout, portlet, actionId, DEFAULT_STRICT);
 	}
 
+	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, long plid, Portlet portlet,
 			String actionId, boolean strict)
@@ -360,6 +381,7 @@ public class PortletPermissionImpl implements PortletPermission {
 			permissionChecker, 0, layout, portlet, actionId, strict);
 	}
 
+	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, long plid, String portletId,
 			String actionId)
@@ -371,6 +393,7 @@ public class PortletPermissionImpl implements PortletPermission {
 			permissionChecker, layout, portletId, actionId, DEFAULT_STRICT);
 	}
 
+	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, long plid, String portletId,
 			String actionId, boolean strict)
@@ -382,6 +405,7 @@ public class PortletPermissionImpl implements PortletPermission {
 			permissionChecker, 0, layout, portletId, actionId, strict);
 	}
 
+	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, String portletId,
 			String actionId)
@@ -390,11 +414,13 @@ public class PortletPermissionImpl implements PortletPermission {
 		return contains(permissionChecker, 0, portletId, actionId);
 	}
 
+	@Override
 	public String getPrimaryKey(long plid, String portletId) {
 		return String.valueOf(plid).concat(
 			PortletConstants.LAYOUT_SEPARATOR).concat(portletId);
 	}
 
+	@Override
 	public boolean hasAccessPermission(
 			PermissionChecker permissionChecker, long scopeGroupId,
 			Layout layout, Portlet portlet, PortletMode portletMode)
@@ -422,6 +448,7 @@ public class PortletPermissionImpl implements PortletPermission {
 		return access;
 	}
 
+	@Override
 	public boolean hasControlPanelAccessPermission(
 			PermissionChecker permissionChecker, long groupId,
 			Collection<Portlet> portlets)
@@ -438,6 +465,7 @@ public class PortletPermissionImpl implements PortletPermission {
 		return false;
 	}
 
+	@Override
 	public boolean hasControlPanelAccessPermission(
 			PermissionChecker permissionChecker, long scopeGroupId,
 			Portlet portlet)
@@ -459,6 +487,7 @@ public class PortletPermissionImpl implements PortletPermission {
 		}
 	}
 
+	@Override
 	public boolean hasControlPanelAccessPermission(
 			PermissionChecker permissionChecker, long scopeGroupId,
 			String portletId)
@@ -470,6 +499,7 @@ public class PortletPermissionImpl implements PortletPermission {
 			permissionChecker, scopeGroupId, portlet);
 	}
 
+	@Override
 	public boolean hasLayoutManagerPermission(
 		String portletId, String actionId) {
 

@@ -47,6 +47,7 @@ public class SQLQueryImpl extends QueryImpl implements SQLQuery {
 		sqlQuery = true;
 	}
 
+	@Override
 	public SQLQuery addEntity(String alias, Class<?> entityClass) {
 		String columnAliases = null;
 
@@ -90,6 +91,7 @@ public class SQLQueryImpl extends QueryImpl implements SQLQuery {
 		return this;
 	}
 
+	@Override
 	public SQLQuery addScalar(String columnAlias, Type type) {
 		columnAlias = columnAlias.toLowerCase();
 

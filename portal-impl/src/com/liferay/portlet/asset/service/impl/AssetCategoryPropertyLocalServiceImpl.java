@@ -33,6 +33,7 @@ import java.util.List;
 public class AssetCategoryPropertyLocalServiceImpl
 	extends AssetCategoryPropertyLocalServiceBaseImpl {
 
+	@Override
 	public AssetCategoryProperty addCategoryProperty(
 			long userId, long categoryId, String key, String value)
 		throws PortalException, SystemException {
@@ -61,6 +62,7 @@ public class AssetCategoryPropertyLocalServiceImpl
 		return categoryProperty;
 	}
 
+	@Override
 	public void deleteCategoryProperties(long entryId) throws SystemException {
 		List<AssetCategoryProperty> categoryProperties =
 			assetCategoryPropertyPersistence.findByCategoryId(entryId);
@@ -70,12 +72,14 @@ public class AssetCategoryPropertyLocalServiceImpl
 		}
 	}
 
+	@Override
 	public void deleteCategoryProperty(AssetCategoryProperty categoryProperty)
 		throws SystemException {
 
 		assetCategoryPropertyPersistence.remove(categoryProperty);
 	}
 
+	@Override
 	public void deleteCategoryProperty(long categoryPropertyId)
 		throws PortalException, SystemException {
 
@@ -86,18 +90,21 @@ public class AssetCategoryPropertyLocalServiceImpl
 		deleteCategoryProperty(categoryProperty);
 	}
 
+	@Override
 	public List<AssetCategoryProperty> getCategoryProperties()
 		throws SystemException {
 
 		return assetCategoryPropertyPersistence.findAll();
 	}
 
+	@Override
 	public List<AssetCategoryProperty> getCategoryProperties(long entryId)
 		throws SystemException {
 
 		return assetCategoryPropertyPersistence.findByCategoryId(entryId);
 	}
 
+	@Override
 	public AssetCategoryProperty getCategoryProperty(long categoryPropertyId)
 		throws PortalException, SystemException {
 
@@ -105,6 +112,7 @@ public class AssetCategoryPropertyLocalServiceImpl
 			categoryPropertyId);
 	}
 
+	@Override
 	public AssetCategoryProperty getCategoryProperty(
 			long categoryId, String key)
 		throws PortalException, SystemException {
@@ -112,6 +120,7 @@ public class AssetCategoryPropertyLocalServiceImpl
 		return assetCategoryPropertyPersistence.findByCA_K(categoryId, key);
 	}
 
+	@Override
 	public List<AssetCategoryProperty> getCategoryPropertyValues(
 			long groupId, String key)
 		throws SystemException {
@@ -119,6 +128,7 @@ public class AssetCategoryPropertyLocalServiceImpl
 		return assetCategoryPropertyFinder.findByG_K(groupId, key);
 	}
 
+	@Override
 	public AssetCategoryProperty updateCategoryProperty(
 			long categoryPropertyId, String key, String value)
 		throws PortalException, SystemException {

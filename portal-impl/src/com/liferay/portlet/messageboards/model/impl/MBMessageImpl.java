@@ -48,6 +48,7 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 	public MBMessageImpl() {
 	}
 
+	@Override
 	public Folder addAttachmentsFolder()
 		throws PortalException, SystemException {
 
@@ -80,17 +81,20 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 		return folder;
 	}
 
+	@Override
 	public String[] getAssetTagNames() throws SystemException {
 		return AssetTagLocalServiceUtil.getTagNames(
 			MBMessage.class.getName(), getMessageId());
 	}
 
+	@Override
 	public List<FileEntry> getAttachmentsFileEntries()
 		throws PortalException, SystemException {
 
 		return getAttachmentsFileEntries(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
+	@Override
 	public List<FileEntry> getAttachmentsFileEntries(int start, int end)
 		throws PortalException, SystemException {
 
@@ -107,6 +111,7 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 		return fileEntries;
 	}
 
+	@Override
 	public int getAttachmentsFileEntriesCount()
 		throws PortalException, SystemException {
 
@@ -124,6 +129,7 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 		return attachmentsFileEntriesCount;
 	}
 
+	@Override
 	public long getAttachmentsFolderId()
 		throws PortalException, SystemException {
 
@@ -165,6 +171,7 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 		return _attachmentsFolderId;
 	}
 
+	@Override
 	public String getBody(boolean translate) {
 		String body = null;
 
@@ -178,10 +185,12 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 		return body;
 	}
 
+	@Override
 	public MBCategory getCategory() throws PortalException, SystemException {
 		return MBCategoryLocalServiceUtil.getCategory(getCategoryId());
 	}
 
+	@Override
 	public List<FileEntry> getDeletedAttachmentsFileEntries()
 		throws PortalException, SystemException {
 
@@ -189,6 +198,7 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
+	@Override
 	public List<FileEntry> getDeletedAttachmentsFileEntries(int start, int end)
 		throws PortalException, SystemException {
 
@@ -205,6 +215,7 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 		return fileEntries;
 	}
 
+	@Override
 	public int getDeletedAttachmentsFileEntriesCount()
 		throws PortalException, SystemException {
 
@@ -222,16 +233,19 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 		return deletedAttachmentsFileEntriesCount;
 	}
 
+	@Override
 	public MBThread getThread() throws PortalException, SystemException {
 		return MBThreadLocalServiceUtil.getThread(getThreadId());
 	}
 
+	@Override
 	public long getThreadAttachmentsFolderId()
 		throws PortalException, SystemException {
 
 		return getThread().getAttachmentsFolderId();
 	}
 
+	@Override
 	public ContainerModel getTrashContainer()
 		throws PortalException, SystemException {
 
@@ -244,6 +258,7 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 		return thread.getTrashContainer();
 	}
 
+	@Override
 	public String getWorkflowClassName() {
 		if (isDiscussion()) {
 			return MBDiscussion.class.getName();
@@ -253,6 +268,7 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 		}
 	}
 
+	@Override
 	public boolean isDiscussion() {
 		if (getCategoryId() == MBCategoryConstants.DISCUSSION_CATEGORY_ID) {
 			return true;
@@ -262,6 +278,7 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 		}
 	}
 
+	@Override
 	public boolean isFormatBBCode() {
 		String format = getFormat();
 
@@ -273,6 +290,7 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 		}
 	}
 
+	@Override
 	public boolean isInTrashThread() throws PortalException, SystemException {
 		MBThread thread = getThread();
 
@@ -284,10 +302,12 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 		}
 	}
 
+	@Override
 	public boolean isReply() {
 		return !isRoot();
 	}
 
+	@Override
 	public boolean isRoot() {
 		if (getParentMessageId() ==
 				MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID) {
@@ -299,6 +319,7 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 		}
 	}
 
+	@Override
 	public void setAttachmentsFolderId(long attachmentsFolderId) {
 		_attachmentsFolderId = attachmentsFolderId;
 	}

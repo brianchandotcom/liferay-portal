@@ -47,6 +47,7 @@ import javax.portlet.RenderResponse;
  */
 public abstract class BaseWorkflowHandler implements WorkflowHandler {
 
+	@Override
 	public AssetRenderer getAssetRenderer(long classPK)
 		throws PortalException, SystemException {
 
@@ -61,11 +62,13 @@ public abstract class BaseWorkflowHandler implements WorkflowHandler {
 		}
 	}
 
+	@Override
 	public AssetRendererFactory getAssetRendererFactory() {
 		return AssetRendererFactoryRegistryUtil.
 			getAssetRendererFactoryByClassName(getClassName());
 	}
 
+	@Override
 	public String getIconPath(LiferayPortletRequest liferayPortletRequest) {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)liferayPortletRequest.getAttribute(
@@ -74,6 +77,7 @@ public abstract class BaseWorkflowHandler implements WorkflowHandler {
 		return getIconPath(themeDisplay);
 	}
 
+	@Override
 	public String getSummary(long classPK, Locale locale) {
 		try {
 			AssetRenderer assetRenderer = getAssetRenderer(classPK);
@@ -91,6 +95,7 @@ public abstract class BaseWorkflowHandler implements WorkflowHandler {
 		return null;
 	}
 
+	@Override
 	public String getTitle(long classPK, Locale locale) {
 		try {
 			AssetRenderer assetRenderer = getAssetRenderer(classPK);
@@ -108,6 +113,7 @@ public abstract class BaseWorkflowHandler implements WorkflowHandler {
 		return null;
 	}
 
+	@Override
 	public PortletURL getURLEdit(
 		long classPK, LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
@@ -129,6 +135,7 @@ public abstract class BaseWorkflowHandler implements WorkflowHandler {
 		return null;
 	}
 
+	@Override
 	public String getURLViewInContext(
 		long classPK, LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
@@ -152,6 +159,7 @@ public abstract class BaseWorkflowHandler implements WorkflowHandler {
 		return null;
 	}
 
+	@Override
 	public WorkflowDefinitionLink getWorkflowDefinitionLink(
 			long companyId, long groupId, long classPK)
 		throws PortalException, SystemException {
@@ -160,18 +168,22 @@ public abstract class BaseWorkflowHandler implements WorkflowHandler {
 			companyId, groupId, getClassName(), 0, 0);
 	}
 
+	@Override
 	public boolean isAssetTypeSearchable() {
 		return _ASSET_TYPE_SEARCHABLE;
 	}
 
+	@Override
 	public boolean isScopeable() {
 		return _SCOPEABLE;
 	}
 
+	@Override
 	public boolean isVisible() {
 		return _VISIBLE;
 	}
 
+	@Override
 	public String render(
 		long classPK, RenderRequest renderRequest,
 		RenderResponse renderResponse, String template) {
@@ -193,6 +205,7 @@ public abstract class BaseWorkflowHandler implements WorkflowHandler {
 		return null;
 	}
 
+	@Override
 	public void startWorkflowInstance(
 			long companyId, long groupId, long userId, long classPK,
 			Object model, Map<String, Serializable> workflowContext)

@@ -27,6 +27,7 @@ import java.io.File;
 public class LayoutTemplateExplodedTomcatDeployer
 	extends LayoutTemplateAutoDeployer implements ExplodedTomcatDeployer {
 
+	@Override
 	public void explodedTomcatDeploy(
 			File contextFile, File webAppDir, PluginPackage pluginPackage)
 		throws AutoDeployException {

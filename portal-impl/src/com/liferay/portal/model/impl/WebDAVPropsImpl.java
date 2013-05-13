@@ -36,6 +36,7 @@ public class WebDAVPropsImpl extends WebDAVPropsBaseImpl {
 	public WebDAVPropsImpl() {
 	}
 
+	@Override
 	public void addProp(String name, String prefix, String uri)
 		throws Exception {
 
@@ -48,6 +49,7 @@ public class WebDAVPropsImpl extends WebDAVPropsBaseImpl {
 		root.addElement(qname);
 	}
 
+	@Override
 	public void addProp(String name, String prefix, String uri, String text)
 		throws Exception {
 
@@ -72,6 +74,7 @@ public class WebDAVPropsImpl extends WebDAVPropsBaseImpl {
 		}
 	}
 
+	@Override
 	public Set<QName> getPropsSet() throws Exception {
 		Set<QName> propsSet = new HashSet<QName>();
 
@@ -91,6 +94,7 @@ public class WebDAVPropsImpl extends WebDAVPropsBaseImpl {
 		return propsSet;
 	}
 
+	@Override
 	public String getText(String name, String prefix, String uri)
 		throws Exception {
 
@@ -107,6 +111,7 @@ public class WebDAVPropsImpl extends WebDAVPropsBaseImpl {
 		return prop.getText();
 	}
 
+	@Override
 	public void removeProp(String name, String prefix, String uri)
 		throws Exception {
 
@@ -117,6 +122,7 @@ public class WebDAVPropsImpl extends WebDAVPropsBaseImpl {
 		_removeExisting(qname);
 	}
 
+	@Override
 	public void store() throws Exception {
 		if (_document != null) {
 			String xml = _document.formattedString(StringPool.FOUR_SPACES);

@@ -46,6 +46,7 @@ public class DLSearcher extends BaseIndexer {
 		setPermissionAware(true);
 	}
 
+	@Override
 	public String[] getClassNames() {
 		return CLASS_NAMES;
 	}
@@ -55,6 +56,7 @@ public class DLSearcher extends BaseIndexer {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public String getPortletId() {
 		return null;
 	}

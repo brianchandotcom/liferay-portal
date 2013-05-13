@@ -26,10 +26,12 @@ public class DocumentTypeImpl implements DocumentType {
 		_documentType = documentType;
 	}
 
+	@Override
 	public String getName() {
 		return _documentType.getName();
 	}
 
+	@Override
 	public String getPublicId() {
 		if (_documentType == null) {
 			return null;
@@ -38,6 +40,7 @@ public class DocumentTypeImpl implements DocumentType {
 		return _documentType.getPublicID();
 	}
 
+	@Override
 	public String getSystemId() {
 		if (_documentType == null) {
 			return null;

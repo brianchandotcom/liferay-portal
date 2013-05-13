@@ -31,14 +31,17 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class IndexerRegistryImpl implements IndexerRegistry {
 
+	@Override
 	public Indexer getIndexer(String className) {
 		return _indexers.get(className);
 	}
 
+	@Override
 	public List<Indexer> getIndexers() {
 		return ListUtil.fromMapValues(_indexers);
 	}
 
+	@Override
 	public Indexer nullSafeGetIndexer(String className) {
 		Indexer indexer = _indexers.get(className);
 
@@ -53,12 +56,14 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 		return _dummyIndexer;
 	}
 
+	@Override
 	public void register(String className, Indexer indexerInstance) {
 		_indexers.put(className, indexerInstance);
 
 		ServiceBeanAopCacheManagerUtil.reset();
 	}
 
+	@Override
 	public void unregister(String className) {
 		_indexers.remove(className);
 	}

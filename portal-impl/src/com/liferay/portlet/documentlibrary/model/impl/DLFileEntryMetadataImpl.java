@@ -31,12 +31,14 @@ public class DLFileEntryMetadataImpl extends DLFileEntryMetadataBaseImpl {
 	public DLFileEntryMetadataImpl() {
 	}
 
+	@Override
 	public DDMStructure getDDMStructure()
 		throws PortalException, SystemException {
 
 		return DDMStructureLocalServiceUtil.getStructure(getDDMStructureId());
 	}
 
+	@Override
 	public DLFileEntryType getFileEntryType()
 		throws PortalException, SystemException {
 
@@ -44,6 +46,7 @@ public class DLFileEntryMetadataImpl extends DLFileEntryMetadataBaseImpl {
 			getFileEntryTypeId());
 	}
 
+	@Override
 	public DLFileVersion getFileVersion()
 		throws PortalException, SystemException {
 

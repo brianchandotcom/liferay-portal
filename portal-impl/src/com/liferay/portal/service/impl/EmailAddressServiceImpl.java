@@ -30,6 +30,7 @@ import java.util.List;
  */
 public class EmailAddressServiceImpl extends EmailAddressServiceBaseImpl {
 
+	@Override
 	public EmailAddress addEmailAddress(
 			String className, long classPK, String address, int typeId,
 			boolean primary)
@@ -42,6 +43,7 @@ public class EmailAddressServiceImpl extends EmailAddressServiceBaseImpl {
 			getUserId(), className, classPK, address, typeId, primary);
 	}
 
+	@Override
 	public void deleteEmailAddress(long emailAddressId)
 		throws PortalException, SystemException {
 
@@ -55,6 +57,7 @@ public class EmailAddressServiceImpl extends EmailAddressServiceBaseImpl {
 		emailAddressLocalService.deleteEmailAddress(emailAddressId);
 	}
 
+	@Override
 	public EmailAddress getEmailAddress(long emailAddressId)
 		throws PortalException, SystemException {
 
@@ -68,6 +71,7 @@ public class EmailAddressServiceImpl extends EmailAddressServiceBaseImpl {
 		return emailAddress;
 	}
 
+	@Override
 	public List<EmailAddress> getEmailAddresses(String className, long classPK)
 		throws PortalException, SystemException {
 
@@ -80,6 +84,7 @@ public class EmailAddressServiceImpl extends EmailAddressServiceBaseImpl {
 			user.getCompanyId(), className, classPK);
 	}
 
+	@Override
 	public EmailAddress updateEmailAddress(
 			long emailAddressId, String address, int typeId, boolean primary)
 		throws PortalException, SystemException {

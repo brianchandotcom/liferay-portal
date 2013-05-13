@@ -55,6 +55,7 @@ public class JSPWikiEngine implements WikiEngine {
 			jspWikiName, _JSP_WIKI_NAME_2, _JSP_WIKI_NAME_1);
 	}
 
+	@Override
 	public String convert(
 			com.liferay.portlet.wiki.model.WikiPage page,
 			PortletURL viewPageURL, PortletURL editPageURL,
@@ -69,6 +70,7 @@ public class JSPWikiEngine implements WikiEngine {
 		}
 	}
 
+	@Override
 	public Map<String, Boolean> getOutgoingLinks(
 			com.liferay.portlet.wiki.model.WikiPage page)
 		throws PageContentException {
@@ -129,13 +131,16 @@ public class JSPWikiEngine implements WikiEngine {
 		}
 	}
 
+	@Override
 	public void setInterWikiConfiguration(String interWikiConfiguration) {
 	}
 
+	@Override
 	public void setMainConfiguration(String mainConfiguration) {
 		setProperties(mainConfiguration);
 	}
 
+	@Override
 	public boolean validate(long nodeId, String newContent) {
 		return true;
 	}

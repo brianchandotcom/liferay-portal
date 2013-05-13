@@ -41,11 +41,13 @@ public class FuseMailHook implements Hook {
 		_client = new HttpClient();
 	}
 
+	@Override
 	public void addForward(
 		long companyId, long userId, List<Filter> filters,
 		List<String> emailAddresses, boolean leaveCopy) {
 	}
 
+	@Override
 	public void addUser(
 		long companyId, long userId, String password, String firstName,
 		String middleName, String lastName, String emailAddress) {
@@ -71,11 +73,13 @@ public class FuseMailHook implements Hook {
 		}
 	}
 
+	@Override
 	public void addVacationMessage(
 		long companyId, long userId, String emailAddress,
 		String vacationMessage) {
 	}
 
+	@Override
 	public void deleteEmailAddress(long companyId, long userId) {
 		try {
 			User user = UserLocalServiceUtil.getUserById(userId);
@@ -95,6 +99,7 @@ public class FuseMailHook implements Hook {
 		}
 	}
 
+	@Override
 	public void deleteUser(long companyId, long userId) {
 		try {
 			String mailUserId = getMailUserId(companyId, userId);
@@ -111,10 +116,12 @@ public class FuseMailHook implements Hook {
 		}
 	}
 
+	@Override
 	public void updateBlocked(
 		long companyId, long userId, List<String> blocked) {
 	}
 
+	@Override
 	public void updateEmailAddress(
 		long companyId, long userId, String emailAddress) {
 
@@ -136,6 +143,7 @@ public class FuseMailHook implements Hook {
 		}
 	}
 
+	@Override
 	public void updatePassword(long companyId, long userId, String password) {
 		try {
 			String mailUserId = getMailUserId(companyId, userId);

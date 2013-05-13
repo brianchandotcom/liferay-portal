@@ -34,6 +34,7 @@ public class PasswordPolicyServiceImpl extends PasswordPolicyServiceBaseImpl {
 	 *             int, int, int, int, String, boolean, int, boolean, long,
 	 *             long, int, boolean, int, long, long, long, ServiceContext)}
 	 */
+	@Override
 	public PasswordPolicy addPasswordPolicy(
 			String name, String description, boolean changeable,
 			boolean changeRequired, long minAge, boolean checkSyntax,
@@ -57,6 +58,7 @@ public class PasswordPolicyServiceImpl extends PasswordPolicyServiceBaseImpl {
 			resetTicketMaxAge);
 	}
 
+	@Override
 	public PasswordPolicy addPasswordPolicy(
 			String name, String description, boolean changeable,
 			boolean changeRequired, long minAge, boolean checkSyntax,
@@ -80,6 +82,7 @@ public class PasswordPolicyServiceImpl extends PasswordPolicyServiceBaseImpl {
 			resetTicketMaxAge, serviceContext);
 	}
 
+	@Override
 	public void deletePasswordPolicy(long passwordPolicyId)
 		throws PortalException, SystemException {
 
@@ -96,6 +99,7 @@ public class PasswordPolicyServiceImpl extends PasswordPolicyServiceBaseImpl {
 	 *             long, long, int, boolean, int, long, long, long,
 	 *             ServiceContext)}
 	 */
+	@Override
 	public PasswordPolicy updatePasswordPolicy(
 			long passwordPolicyId, String name, String description,
 			boolean changeable, boolean changeRequired, long minAge,
@@ -120,6 +124,7 @@ public class PasswordPolicyServiceImpl extends PasswordPolicyServiceBaseImpl {
 			resetTicketMaxAge);
 	}
 
+	@Override
 	public PasswordPolicy updatePasswordPolicy(
 			long passwordPolicyId, String name, String description,
 			boolean changeable, boolean changeRequired, long minAge,

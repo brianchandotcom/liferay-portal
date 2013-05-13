@@ -46,10 +46,12 @@ import java.util.Map;
  */
 public class DLFileEntryWorkflowHandler extends BaseWorkflowHandler {
 
+	@Override
 	public String getClassName() {
 		return DLFileEntry.class.getName();
 	}
 
+	@Override
 	public String getType(Locale locale) {
 		return ResourceActionsUtil.getModelResource(locale, getClassName());
 	}
@@ -93,6 +95,7 @@ public class DLFileEntryWorkflowHandler extends BaseWorkflowHandler {
 		return _VISIBLE;
 	}
 
+	@Override
 	public DLFileEntry updateStatus(
 			int status, Map<String, Serializable> workflowContext)
 		throws PortalException, SystemException {

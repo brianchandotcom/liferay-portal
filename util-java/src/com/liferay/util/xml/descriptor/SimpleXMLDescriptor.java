@@ -26,6 +26,7 @@ import org.dom4j.Element;
  */
 public abstract class SimpleXMLDescriptor implements XMLDescriptor {
 
+	@Override
 	public boolean areEqual(Element el1, Element el2) {
 		String name1 = el1.getName();
 		String name2 = el2.getName();
@@ -78,12 +79,15 @@ public abstract class SimpleXMLDescriptor implements XMLDescriptor {
 		}
 	}
 
+	@Override
 	public abstract boolean canHandleType(String doctype, Document root);
 
+	@Override
 	public boolean canJoinChildren(Element element) {
 		return ArrayUtil.contains(getJoinableElements(), element.getName());
 	}
 
+	@Override
 	public String[] getChildrenOrder(Element parentElement) {
 		return new String[0];
 	}
@@ -100,6 +104,7 @@ public abstract class SimpleXMLDescriptor implements XMLDescriptor {
 		return new String[0];
 	}
 
+	@Override
 	public String[] getRootChildrenOrder() {
 		return new String[0];
 	}

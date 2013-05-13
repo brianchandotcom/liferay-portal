@@ -38,6 +38,7 @@ import org.junit.Assert;
  */
 public class TestSiteMembershipPolicy extends BaseSiteMembershipPolicy {
 
+	@Override
 	public void checkMembership(
 			long[] userIds, long[] addGroupIds, long[] removeGroupIds)
 		throws PortalException {
@@ -119,6 +120,7 @@ public class TestSiteMembershipPolicy extends BaseSiteMembershipPolicy {
 		}
 	}
 
+	@Override
 	public void propagateMembership(
 		long[] userIds, long[] addGroupIds, long[] removeGroupIds) {
 
@@ -143,6 +145,7 @@ public class TestSiteMembershipPolicy extends BaseSiteMembershipPolicy {
 		verifyPolicy();
 	}
 
+	@Override
 	public void verifyPolicy(
 		Group group, Group oldGroup, List<AssetCategory> oldAssetCategories,
 		List<AssetTag> oldAssetTags,

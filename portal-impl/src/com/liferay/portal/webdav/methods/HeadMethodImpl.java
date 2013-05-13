@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class HeadMethodImpl implements Method {
 
+	@Override
 	public int process(WebDAVRequest webDAVRequest) throws WebDAVException {
 		try {
 			WebDAVStorage storage = webDAVRequest.getWebDAVStorage();

@@ -87,14 +87,17 @@ public class JSONWebServiceActionConfig
 		return false;
 	}
 
+	@Override
 	public Class<?> getActionClass() {
 		return _actionClass;
 	}
 
+	@Override
 	public Method getActionMethod() {
 		return _actionMethod;
 	}
 
+	@Override
 	public String getContextPath() {
 		return _contextPath;
 	}
@@ -103,18 +106,22 @@ public class JSONWebServiceActionConfig
 		return _fullPath;
 	}
 
+	@Override
 	public String getMethod() {
 		return _method;
 	}
 
+	@Override
 	public MethodParameter[] getMethodParameters() {
 		return _methodParameters;
 	}
 
+	@Override
 	public String getPath() {
 		return _path;
 	}
 
+	@Override
 	public String getSignature() {
 		return _signature;
 	}

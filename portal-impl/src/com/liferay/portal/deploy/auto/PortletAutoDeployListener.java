@@ -35,6 +35,7 @@ public class PortletAutoDeployListener extends BaseAutoDeployListener {
 		_autoDeployer = new PortletAutoDeployer();
 	}
 
+	@Override
 	public void deploy(AutoDeploymentContext autoDeploymentContext)
 		throws AutoDeployException {
 

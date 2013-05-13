@@ -27,16 +27,19 @@ public class SimpleCacheKeyGenerator extends BaseCacheKeyGenerator {
 		return new SimpleCacheKeyGenerator();
 	}
 
+	@Override
 	public String getCacheKey(String key) {
 		return key;
 	}
 
+	@Override
 	public String getCacheKey(String[] keys) {
 		StringBundler sb = new StringBundler(keys);
 
 		return sb.toString();
 	}
 
+	@Override
 	public String getCacheKey(StringBundler sb) {
 		return sb.toString();
 	}

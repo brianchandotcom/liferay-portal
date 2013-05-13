@@ -27,20 +27,25 @@ import java.util.Properties;
  */
 public class LiferaySearchProvider implements SearchProvider {
 
+	@Override
 	public Collection<WikiPage> findPages(String query) {
 		return Collections.emptyList();
 	}
 
+	@Override
 	public String getProviderInfo() {
 		return LiferaySearchProvider.class.getName();
 	}
 
+	@Override
 	public void initialize(WikiEngine engine, Properties props) {
 	}
 
+	@Override
 	public void pageRemoved(WikiPage page) {
 	}
 
+	@Override
 	public void reindexPage(WikiPage page) {
 	}
 

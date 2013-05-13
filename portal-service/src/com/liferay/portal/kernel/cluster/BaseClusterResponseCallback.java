@@ -23,16 +23,20 @@ import java.util.concurrent.TimeoutException;
 public abstract class BaseClusterResponseCallback
 	implements ClusterResponseCallback {
 
+	@Override
 	public void callback(BlockingQueue<ClusterNodeResponse> blockingQueue) {
 	}
 
+	@Override
 	public void callback(ClusterNodeResponses clusterNodeResponses) {
 	}
 
+	@Override
 	public void processInterruptedException(
 		InterruptedException interruptedException) {
 	}
 
+	@Override
 	public void processTimeoutException(TimeoutException timeoutException) {
 	}
 

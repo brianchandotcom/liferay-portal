@@ -24,6 +24,7 @@ import com.liferay.portlet.wiki.model.WikiPage;
 public class WikiPageCustomAttributesDisplay
 	extends BaseCustomAttributesDisplay {
 
+	@Override
 	public String getClassName() {
 		return WikiPage.class.getName();
 	}

@@ -31,20 +31,24 @@ public class JSONDeserializerImpl<T> implements JSONDeserializer<T> {
 		_jsonDeserializer.use(Object.class, _portalBeanObjectFactory);
 	}
 
+	@Override
 	public T deserialize(Reader input) {
 		return _jsonDeserializer.deserialize(input);
 	}
 
+	@Override
 	public T deserialize(String input) {
 		return _jsonDeserializer.deserialize(input);
 	}
 
+	@Override
 	public JSONDeserializer<T> safeMode(boolean safeMode) {
 		_portalBeanObjectFactory.setSafeMode(safeMode);
 
 		return this;
 	}
 
+	@Override
 	public JSONDeserializer<T> use(String path, Class<?> clazz) {
 		_jsonDeserializer.use(path, clazz);
 

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.search.SearchContext;
  */
 public class BaseFacetValueValidator implements FacetValueValidator {
 
+	@Override
 	public boolean check(SearchContext searchContext, String primKey) {
 		return true;
 	}

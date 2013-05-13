@@ -28,6 +28,7 @@ import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 public class CyrusUserPersistenceImpl
 	extends BasePersistenceImpl<Dummy> implements CyrusUserPersistence {
 
+	@Override
 	public CyrusUser findByPrimaryKey(long userId)
 		throws NoSuchCyrusUserException, SystemException {
 
@@ -50,6 +51,7 @@ public class CyrusUserPersistenceImpl
 		}
 	}
 
+	@Override
 	public void remove(long userId)
 		throws NoSuchCyrusUserException, SystemException {
 
@@ -76,6 +78,7 @@ public class CyrusUserPersistenceImpl
 		}
 	}
 
+	@Override
 	public void update(CyrusUser user) throws SystemException {
 		Session session = null;
 

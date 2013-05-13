@@ -53,6 +53,7 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	 *         assign group members
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void addGroupUserGroups(long groupId, long[] userGroupIds)
 		throws PortalException, SystemException {
 
@@ -72,6 +73,7 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	 *         assign team members
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void addTeamUserGroups(long teamId, long[] userGroupIds)
 		throws PortalException, SystemException {
 
@@ -98,6 +100,7 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #addUserGroup(String, String,
 	 *             serviceContext)}
 	 */
+	@Override
 	public UserGroup addUserGroup(String name, String description)
 		throws PortalException, SystemException {
 
@@ -122,6 +125,7 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	 *         the user did not have permission to add the user group
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public UserGroup addUserGroup(
 			String name, String description, ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -149,6 +153,7 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	 *         group, or if the user group had a workflow in approved status
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void deleteUserGroup(long userGroupId)
 		throws PortalException, SystemException {
 
@@ -168,6 +173,7 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	 *         group
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public UserGroup getUserGroup(long userGroupId)
 		throws PortalException, SystemException {
 
@@ -186,6 +192,7 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	 *         or if the user did not have permission to view the user group
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public UserGroup getUserGroup(String name)
 		throws PortalException, SystemException {
 
@@ -211,6 +218,7 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	 *         view the user or any one of the user group members
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public List<UserGroup> getUserUserGroups(long userId)
 		throws PortalException, SystemException {
 
@@ -232,6 +240,7 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	 *         group members
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void unsetGroupUserGroups(long groupId, long[] userGroupIds)
 		throws PortalException, SystemException {
 
@@ -250,6 +259,7 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	 *         team members
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void unsetTeamUserGroups(long teamId, long[] userGroupIds)
 		throws PortalException, SystemException {
 
@@ -273,6 +283,7 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #updateUserGroup(long,
 	 *             String, String, serviceContext)}
 	 */
+	@Override
 	public UserGroup updateUserGroup(
 			long userGroupId, String name, String description)
 		throws PortalException, SystemException {
@@ -309,6 +320,7 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	 *         have permission to update the user group information
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public UserGroup updateUserGroup(
 			long userGroupId, String name, String description,
 			ServiceContext serviceContext)

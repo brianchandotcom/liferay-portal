@@ -28,6 +28,7 @@ public class ActionResponseImpl
 		return PortletRequest.ACTION_PHASE;
 	}
 
+	@Override
 	public void sendRedirect(String location) {
 		if ((location == null) ||
 			(!location.startsWith("/") && !location.contains("://") &&
@@ -52,6 +53,7 @@ public class ActionResponseImpl
 		setRedirectLocation(location);
 	}
 
+	@Override
 	public void sendRedirect(String location, String renderUrlParamName) {
 	}
 

@@ -28,6 +28,7 @@ import com.liferay.portal.model.UserConstants;
  */
 public class DefaultFullNameGenerator implements FullNameGenerator {
 
+	@Override
 	public String getFullName(
 		String firstName, String middleName, String lastName) {
 
@@ -58,6 +59,7 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 		return fullName.substring(0, UserConstants.FULL_NAME_MAX_LENGTH);
 	}
 
+	@Override
 	public String[] splitFullName(String fullName) {
 		String firstName = StringPool.BLANK;
 		String middleName = StringPool.BLANK;

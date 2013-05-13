@@ -45,6 +45,7 @@ public class AtomProvider extends AbstractWorkspaceProvider {
 			new AtomCollectionAdapterWrapper<E>(atomCollectionAdapter));
 	}
 
+	@Override
 	public CollectionAdapter getCollectionAdapter(RequestContext request) {
 		String path = request.getTargetPath();
 

@@ -41,6 +41,7 @@ public class FolderSearcher extends BaseIndexer {
 		setPermissionAware(true);
 	}
 
+	@Override
 	public String[] getClassNames() {
 		return CLASS_NAMES;
 	}
@@ -50,6 +51,7 @@ public class FolderSearcher extends BaseIndexer {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public String getPortletId() {
 		return null;
 	}

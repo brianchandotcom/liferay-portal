@@ -27,6 +27,7 @@ import java.util.Map;
  */
 public abstract class BaseSanitizer implements Sanitizer {
 
+	@Override
 	public byte[] sanitize(
 			long companyId, long groupId, long userId, String className,
 			long classPK, String contentType, String[] modes, byte[] bytes,
@@ -43,6 +44,7 @@ public abstract class BaseSanitizer implements Sanitizer {
 		return byteArrayOutputStream.toByteArray();
 	}
 
+	@Override
 	public abstract void sanitize(
 			long companyId, long groupId, long userId, String className,
 			long classPK, String contentType, String[] modes,
@@ -50,6 +52,7 @@ public abstract class BaseSanitizer implements Sanitizer {
 			Map<String, Object> options)
 		throws SanitizerException;
 
+	@Override
 	public String sanitize(
 			long companyId, long groupId, long userId, String className,
 			long classPK, String contentType, String[] modes, String s,

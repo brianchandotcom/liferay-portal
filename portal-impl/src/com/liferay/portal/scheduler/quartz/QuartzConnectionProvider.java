@@ -30,6 +30,7 @@ import org.quartz.utils.ConnectionProvider;
  */
 public class QuartzConnectionProvider implements ConnectionProvider {
 
+	@Override
 	public Connection getConnection() {
 		Connection con = null;
 
@@ -53,6 +54,7 @@ public class QuartzConnectionProvider implements ConnectionProvider {
 		return con;
 	}
 
+	@Override
 	public void shutdown() {
 	}
 

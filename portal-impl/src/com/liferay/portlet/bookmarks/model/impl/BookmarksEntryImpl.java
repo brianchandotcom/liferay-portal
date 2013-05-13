@@ -27,6 +27,7 @@ public class BookmarksEntryImpl extends BookmarksEntryBaseImpl {
 	public BookmarksEntryImpl() {
 	}
 
+	@Override
 	public BookmarksFolder getFolder() {
 		BookmarksFolder folder = null;
 
@@ -48,6 +49,7 @@ public class BookmarksEntryImpl extends BookmarksEntryBaseImpl {
 		return folder;
 	}
 
+	@Override
 	public BookmarksFolder getTrashContainer() {
 		BookmarksFolder folder = getFolder();
 
@@ -58,6 +60,7 @@ public class BookmarksEntryImpl extends BookmarksEntryBaseImpl {
 		return folder.getTrashContainer();
 	}
 
+	@Override
 	public boolean isInTrashContainer() {
 		if (getTrashContainer() != null) {
 			return true;

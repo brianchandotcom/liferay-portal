@@ -28,50 +28,62 @@ public class UnknownDevice extends AbstractDevice {
 		return _instance;
 	}
 
+	@Override
 	public String getBrand() {
 		return VersionableName.UNKNOWN.getName();
 	}
 
+	@Override
 	public String getBrowser() {
 		return VersionableName.UNKNOWN.getName();
 	}
 
+	@Override
 	public String getBrowserVersion() {
 		return VersionableName.UNKNOWN.getName();
 	}
 
+	@Override
 	public Map<String, Capability> getCapabilities() {
 		return Collections.emptyMap();
 	}
 
+	@Override
 	public String getCapability(String name) {
 		return null;
 	}
 
+	@Override
 	public String getModel() {
 		return VersionableName.UNKNOWN.getName();
 	}
 
+	@Override
 	public String getOS() {
 		return VersionableName.UNKNOWN.getName();
 	}
 
+	@Override
 	public String getOSVersion() {
 		return VersionableName.UNKNOWN.getName();
 	}
 
+	@Override
 	public String getPointingMethod() {
 		return VersionableName.UNKNOWN.getName();
 	}
 
+	@Override
 	public Dimensions getScreenSize() {
 		return Dimensions.UNKNOWN;
 	}
 
+	@Override
 	public boolean hasQwertyKeyboard() {
 		return true;
 	}
 
+	@Override
 	public boolean isTablet() {
 		return false;
 	}

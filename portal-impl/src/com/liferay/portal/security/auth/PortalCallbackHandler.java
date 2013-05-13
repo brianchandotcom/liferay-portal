@@ -31,6 +31,7 @@ public class PortalCallbackHandler implements CallbackHandler, Serializable {
 		_password = password;
 	}
 
+	@Override
 	public void handle(Callback[] callbacks) {
 		for (int i = 0; i < callbacks.length; i++) {
 			if (callbacks[i] instanceof NameCallback) {

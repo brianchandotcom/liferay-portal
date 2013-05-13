@@ -50,6 +50,7 @@ import java.util.List;
 public class ShoppingCouponLocalServiceImpl
 	extends ShoppingCouponLocalServiceBaseImpl {
 
+	@Override
 	public ShoppingCoupon addCoupon(
 			long userId, String code, boolean autoCode, String name,
 			String description, int startDateMonth, int startDateDay,
@@ -120,6 +121,7 @@ public class ShoppingCouponLocalServiceImpl
 		return coupon;
 	}
 
+	@Override
 	public void deleteCoupon(long couponId)
 		throws PortalException, SystemException {
 
@@ -129,10 +131,12 @@ public class ShoppingCouponLocalServiceImpl
 		deleteCoupon(coupon);
 	}
 
+	@Override
 	public void deleteCoupon(ShoppingCoupon coupon) throws SystemException {
 		shoppingCouponPersistence.remove(coupon);
 	}
 
+	@Override
 	public void deleteCoupons(long groupId) throws SystemException {
 		List<ShoppingCoupon> coupons = shoppingCouponPersistence.findByGroupId(
 			groupId);
@@ -142,12 +146,14 @@ public class ShoppingCouponLocalServiceImpl
 		}
 	}
 
+	@Override
 	public ShoppingCoupon getCoupon(long couponId)
 		throws PortalException, SystemException {
 
 		return shoppingCouponPersistence.findByPrimaryKey(couponId);
 	}
 
+	@Override
 	public ShoppingCoupon getCoupon(String code)
 		throws PortalException, SystemException {
 
@@ -156,6 +162,7 @@ public class ShoppingCouponLocalServiceImpl
 		return shoppingCouponPersistence.findByCode(code);
 	}
 
+	@Override
 	public List<ShoppingCoupon> search(
 			long groupId, long companyId, String code, boolean active,
 			String discountType, boolean andOperator, int start, int end)
@@ -166,6 +173,7 @@ public class ShoppingCouponLocalServiceImpl
 			end);
 	}
 
+	@Override
 	public int searchCount(
 			long groupId, long companyId, String code, boolean active,
 			String discountType, boolean andOperator)
@@ -175,6 +183,7 @@ public class ShoppingCouponLocalServiceImpl
 			groupId, companyId, code, active, discountType, andOperator);
 	}
 
+	@Override
 	public ShoppingCoupon updateCoupon(
 			long userId, long couponId, String name, String description,
 			int startDateMonth, int startDateDay, int startDateYear,

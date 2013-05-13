@@ -39,14 +39,17 @@ public class PortletQNameImpl implements PortletQName {
 		_identifiers = new ConcurrentHashMap<String, String>();
 	}
 
+	@Override
 	public String getKey(QName qName) {
 		return getKey(qName.getNamespaceURI(), qName.getLocalPart());
 	}
 
+	@Override
 	public String getKey(String uri, String localPart) {
 		return uri.concat(_KEY_SEPARATOR).concat(localPart);
 	}
 
+	@Override
 	public String getPublicRenderParameterIdentifier(
 		String publicRenderParameterName) {
 
@@ -61,6 +64,7 @@ public class PortletQNameImpl implements PortletQName {
 		return _identifiers.get(publicRenderParameterName);
 	}
 
+	@Override
 	public String getPublicRenderParameterName(QName qName) {
 		StringBundler sb = new StringBundler(4);
 
@@ -78,6 +82,7 @@ public class PortletQNameImpl implements PortletQName {
 		return publicRenderParameterName;
 	}
 
+	@Override
 	public QName getQName(
 		Element qNameEl, Element nameEl, String defaultNamespace) {
 
@@ -123,6 +128,7 @@ public class PortletQNameImpl implements PortletQName {
 		return SAXReaderUtil.createQName(localPart, namespace);
 	}
 
+	@Override
 	public QName getQName(String publicRenderParameterName) {
 		if (!publicRenderParameterName.startsWith(
 				PUBLIC_RENDER_PARAMETER_NAMESPACE) &&
@@ -135,6 +141,7 @@ public class PortletQNameImpl implements PortletQName {
 		return _qNames.get(publicRenderParameterName);
 	}
 
+	@Override
 	public String getRemovePublicRenderParameterName(QName qName) {
 		StringBundler sb = new StringBundler(4);
 
@@ -152,6 +159,7 @@ public class PortletQNameImpl implements PortletQName {
 		return removePublicRenderParameterName;
 	}
 
+	@Override
 	public void setPublicRenderParameterIdentifier(
 		String publicRenderParameterName, String identifier) {
 

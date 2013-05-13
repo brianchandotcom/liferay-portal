@@ -44,6 +44,7 @@ import org.antlr.runtime.RecognitionException;
  */
 public class CreoleWikiEngine implements WikiEngine {
 
+	@Override
 	public String convert(
 		WikiPage page, PortletURL viewPageURL, PortletURL editPageURL,
 		String attachmentURLPrefix) {
@@ -55,6 +56,7 @@ public class CreoleWikiEngine implements WikiEngine {
 			parse(page.getContent()));
 	}
 
+	@Override
 	public Map<String, Boolean> getOutgoingLinks(WikiPage page)
 		throws PageContentException {
 
@@ -94,12 +96,15 @@ public class CreoleWikiEngine implements WikiEngine {
 		return outgoingLinks;
 	}
 
+	@Override
 	public void setInterWikiConfiguration(String interWikiConfiguration) {
 	}
 
+	@Override
 	public void setMainConfiguration(String mainConfiguration) {
 	}
 
+	@Override
 	public boolean validate(long nodeId, String content) {
 		return true;
 	}

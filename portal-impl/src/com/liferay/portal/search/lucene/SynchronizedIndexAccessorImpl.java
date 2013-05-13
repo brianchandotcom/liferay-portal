@@ -40,6 +40,7 @@ public class SynchronizedIndexAccessorImpl implements IndexAccessor {
 		_writeLock = readWriteLock.writeLock();
 	}
 
+	@Override
 	public void addDocument(Document document) throws IOException {
 		_readLock.lock();
 
@@ -51,6 +52,7 @@ public class SynchronizedIndexAccessorImpl implements IndexAccessor {
 		}
 	}
 
+	@Override
 	public void close() {
 		_readLock.lock();
 
@@ -62,6 +64,7 @@ public class SynchronizedIndexAccessorImpl implements IndexAccessor {
 		}
 	}
 
+	@Override
 	public void delete() {
 		_writeLock.lock();
 
@@ -73,6 +76,7 @@ public class SynchronizedIndexAccessorImpl implements IndexAccessor {
 		}
 	}
 
+	@Override
 	public void deleteDocuments(Term term) throws IOException {
 		_readLock.lock();
 
@@ -84,6 +88,7 @@ public class SynchronizedIndexAccessorImpl implements IndexAccessor {
 		}
 	}
 
+	@Override
 	public void dumpIndex(OutputStream outputStream) throws IOException {
 		_readLock.lock();
 
@@ -95,18 +100,22 @@ public class SynchronizedIndexAccessorImpl implements IndexAccessor {
 		}
 	}
 
+	@Override
 	public long getCompanyId() {
 		return _indexAccessor.getCompanyId();
 	}
 
+	@Override
 	public long getLastGeneration() {
 		return _indexAccessor.getLastGeneration();
 	}
 
+	@Override
 	public Directory getLuceneDir() {
 		return _indexAccessor.getLuceneDir();
 	}
 
+	@Override
 	public void loadIndex(InputStream inputStream) throws IOException {
 		_writeLock.lock();
 
@@ -118,6 +127,7 @@ public class SynchronizedIndexAccessorImpl implements IndexAccessor {
 		}
 	}
 
+	@Override
 	public void updateDocument(Term term, Document document)
 		throws IOException {
 

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
  */
 public class DummyMessageListener implements MessageListener {
 
+	@Override
 	public void receive(Message message) {
 		if (_log.isInfoEnabled()) {
 			_log.info("Received " + message);

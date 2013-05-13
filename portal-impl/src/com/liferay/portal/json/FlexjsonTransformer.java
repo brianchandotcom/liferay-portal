@@ -27,6 +27,7 @@ public class FlexjsonTransformer implements Transformer {
 		_jsonTransformer = jsonTransformer;
 	}
 
+	@Override
 	public void transform(Object object) {
 		_jsonTransformer.transform(object);
 	}

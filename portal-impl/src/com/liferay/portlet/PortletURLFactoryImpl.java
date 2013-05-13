@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 @DoPrivileged
 public class PortletURLFactoryImpl implements PortletURLFactory {
 
+	@Override
 	public LiferayPortletURL create(
 		HttpServletRequest request, String portletId, long plid,
 		String lifecycle) {
@@ -34,6 +35,7 @@ public class PortletURLFactoryImpl implements PortletURLFactory {
 		return new PortletURLImpl(request, portletId, plid, lifecycle);
 	}
 
+	@Override
 	public LiferayPortletURL create(
 		PortletRequest portletRequest, String portletId, long plid,
 		String lifecycle) {

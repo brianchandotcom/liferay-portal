@@ -30,6 +30,7 @@ import java.util.Map;
 public class DummyOrganizationMembershipPolicy
 	extends BaseOrganizationMembershipPolicy {
 
+	@Override
 	public void checkMembership(
 		long[] userIds, long[] addOrganizationIds,
 		long[] removeOrganizationIds) {
@@ -55,6 +56,7 @@ public class DummyOrganizationMembershipPolicy
 		return false;
 	}
 
+	@Override
 	public void propagateMembership(
 		long[] userIds, long[] addOrganizationIds,
 		long[] removeOrganizationIds) {
@@ -64,6 +66,7 @@ public class DummyOrganizationMembershipPolicy
 	public void verifyPolicy(Organization organization) {
 	}
 
+	@Override
 	public void verifyPolicy(
 		Organization organization, Organization oldOrganization,
 		List<AssetCategory> oldAssetCategories, List<AssetTag> oldAssetTags,

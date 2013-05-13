@@ -36,6 +36,7 @@ import jodd.util.StringPool;
  */
 public class GhostscriptImpl implements Ghostscript {
 
+	@Override
 	public Future<?> execute(List<String> commandArguments) throws Exception {
 		if (!isEnabled()) {
 			StringBundler sb = new StringBundler(5);
@@ -75,10 +76,12 @@ public class GhostscriptImpl implements Ghostscript {
 			ProcessUtil.LOGGING_OUTPUT_PROCESSOR, arguments);
 	}
 
+	@Override
 	public boolean isEnabled() {
 		return ImageMagickUtil.isEnabled();
 	}
 
+	@Override
 	public void reset() {
 		if (isEnabled()) {
 			try {

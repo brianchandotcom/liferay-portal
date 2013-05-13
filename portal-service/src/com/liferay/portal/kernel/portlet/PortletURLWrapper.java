@@ -35,52 +35,64 @@ public class PortletURLWrapper implements PortletURL {
 		_portletURL = portletURL;
 	}
 
+	@Override
 	public void addProperty(String key, String value) {
 		_portletURL.addProperty(key, value);
 	}
 
+	@Override
 	public Map<String, String[]> getParameterMap() {
 		return _portletURL.getParameterMap();
 	}
 
+	@Override
 	public PortletMode getPortletMode() {
 		return _portletURL.getPortletMode();
 	}
 
+	@Override
 	public WindowState getWindowState() {
 		return _portletURL.getWindowState();
 	}
 
+	@Override
 	public void removePublicRenderParameter(String name) {
 		_portletURL.removePublicRenderParameter(name);
 	}
 
+	@Override
 	public void setParameter(String name, String value) {
 		_portletURL.setParameter(name, value);
 	}
 
+	@Override
 	public void setParameter(String name, String[] values) {
 		_portletURL.setParameter(name, values);
 	}
 
+	@Override
 	public void setParameters(Map<String, String[]> parameters) {
 		_portletURL.setParameters(parameters);
 	}
 
+	@Override
 	public void setPortletMode(PortletMode portletMode)
 		throws PortletModeException {
 
 		_portletURL.setPortletMode(portletMode);
 	}
 
+	@Override
 	public void setProperty(String key, String value) {
 		_portletURL.setProperty(key, value);
 	}
 
+	@Override
 	public void setSecure(boolean secure) throws PortletSecurityException {
 		_portletURL.setSecure(secure);
 	}
 
+	@Override
 	public void setWindowState(WindowState windowState)
 		throws WindowStateException {
 
@@ -92,10 +104,12 @@ public class PortletURLWrapper implements PortletURL {
 		return _portletURL.toString();
 	}
 
+	@Override
 	public void write(Writer writer) throws IOException {
 		_portletURL.write(writer);
 	}
 
+	@Override
 	public void write(Writer writer, boolean escapeXML) throws IOException {
 		_portletURL.write(writer, escapeXML);
 	}

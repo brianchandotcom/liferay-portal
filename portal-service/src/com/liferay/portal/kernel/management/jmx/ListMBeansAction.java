@@ -33,6 +33,7 @@ public class ListMBeansAction extends BaseJMXManageAction<Set<MBean>> {
 		_domainName = domainName;
 	}
 
+	@Override
 	public Set<MBean> action() throws ManageActionException {
 		try {
 			MBeanServer mBeanServer = getMBeanServer();

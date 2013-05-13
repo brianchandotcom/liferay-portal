@@ -33,6 +33,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 
 import java.util.Locale;
 import java.util.Set;
@@ -175,6 +176,11 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 	@Override
 	public Set<String> getTemplateLanguageTypes() {
 		return _templateLanguageTypes;
+	}
+
+	@Override
+    public String getTemplateType() {
+		return DDMTemplateConstants.TEMPLATE_TYPE_FORM;
 	}
 
 	@Override

@@ -27,6 +27,7 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.util.BaseDDMDisplay;
 
 import java.util.Locale;
@@ -68,6 +69,11 @@ public class PortletDisplayTemplateDDMDisplay extends BaseDDMDisplay {
 	@Override
 	public String getResourceName() {
 		return StringPool.BLANK;
+	}
+
+	@Override
+	public String getTemplateType() {
+		return DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY;
 	}
 
 	@Override

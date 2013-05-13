@@ -110,7 +110,6 @@ String strutsAction = ParamUtil.getString(request, "struts_action");
 				refererWebDAVToken: '<%= portlet.getWebDAVStorageToken() %>',
 				showGlobalScope: 'false',
 				showManageTemplates: 'true',
-				templateType: '<%= DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY %>',
 				title: '<%= UnicodeLanguageUtil.get(pageContext, "structures") %>'
 			}
 		);
@@ -129,7 +128,6 @@ String strutsAction = ParamUtil.getString(request, "struts_action");
 				refererPortletName: '<%= PortletKeys.JOURNAL %>',
 				refererWebDAVToken: '<%= portlet.getWebDAVStorageToken() %>',
 				struts_action: '/dynamic_data_mapping/view_template',
-				templateType: '<%= DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY %>',
 				title: '<%= UnicodeLanguageUtil.get(pageContext, "templates") %>'
 			}
 		);

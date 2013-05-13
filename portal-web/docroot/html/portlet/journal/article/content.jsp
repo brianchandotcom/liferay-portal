@@ -718,7 +718,6 @@ if (Validator.isNotNull(content)) {
 				groupId: <%= groupId %>,
 				refererPortletName: '<%= PortletKeys.JOURNAL %>',
 				struts_action: '/dynamic_data_mapping/select_template',
-				templateType: '<%= DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY %>',
 				title: '<%= UnicodeLanguageUtil.get(pageContext, "templates") %>'
 			},
 			function(event) {

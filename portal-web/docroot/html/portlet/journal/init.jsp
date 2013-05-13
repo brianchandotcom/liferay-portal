@@ -45,7 +45,6 @@ page import="com.liferay.portlet.dynamicdatamapping.NoSuchStructureException" %>
 page import="com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.model.DDMStructure" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.model.DDMTemplate" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil" %><%@

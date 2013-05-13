@@ -1298,7 +1298,6 @@
 
 			ddmURL.setParameter('scopeAvailableFields', config.availableFields);
 			ddmURL.setParameter('scopeTemplateMode', config.templateMode);
-			ddmURL.setParameter('scopeTemplateType', config.templateType);
 			ddmURL.setParameter('scopeTitle', config.title);
 
 			if ('showGlobalScope' in config) {

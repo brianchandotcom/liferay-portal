@@ -691,7 +691,6 @@ if (Validator.isNotNull(content)) {
 				eventName: '<portlet:namespace />selectStructure',
 				groupId: <%= groupId %>,
 				refererPortletName: '<%= PortletKeys.JOURNAL %>',
-				structureName: 'structure',
 				struts_action: '/dynamic_data_mapping/select_structure',
 				title: '<%= UnicodeLanguageUtil.get(pageContext, "structures") %>'
 			},
@@ -718,7 +717,6 @@ if (Validator.isNotNull(content)) {
 				eventName: '<portlet:namespace />selectTemplate',
 				groupId: <%= groupId %>,
 				refererPortletName: '<%= PortletKeys.JOURNAL %>',
-				structureName: 'structure',
 				struts_action: '/dynamic_data_mapping/select_template',
 				templateType: '<%= DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY %>',
 				title: '<%= UnicodeLanguageUtil.get(pageContext, "templates") %>'

@@ -1272,8 +1272,7 @@
 
 			var defaultValues = {
 				availableFields: 'Liferay.FormBuilder.AVAILABLE_FIELDS.DDM_STRUCTURE',
-				eventName: 'selectStructure',
-				structureName: 'structures'
+				eventName: 'selectStructure'
 			};
 
 			config = A.merge(defaultValues,	config);
@@ -1298,7 +1297,6 @@
 			}
 
 			ddmURL.setParameter('scopeAvailableFields', config.availableFields);
-			ddmURL.setParameter('scopeStructureName', config.structureName);
 			ddmURL.setParameter('scopeTemplateMode', config.templateMode);
 			ddmURL.setParameter('scopeTemplateType', config.templateType);
 			ddmURL.setParameter('scopeTitle', config.title);

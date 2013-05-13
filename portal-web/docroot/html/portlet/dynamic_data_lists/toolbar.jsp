@@ -59,7 +59,6 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 
 						refererPortletName: '<%= portlet.getPortletName() %>',
 						refererWebDAVToken: '<%= portlet.getWebDAVStorageToken() %>',
-						structureName: 'data-definition',
 						title: '<%= UnicodeLanguageUtil.get(pageContext, "data-definitions") %>'
 					}
 				);

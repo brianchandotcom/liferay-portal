@@ -154,7 +154,6 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 				showGlobalScope: true,
 				showManageTemplates: false,
 				showToolbar: true,
-				structureName: '<%= UnicodeLanguageUtil.get(pageContext, "metadata-sets") %>',
 				struts_action: '/dynamic_data_mapping/select_structure',
 				title: '<%= UnicodeLanguageUtil.get(pageContext, "metadata-sets") %>'
 			},

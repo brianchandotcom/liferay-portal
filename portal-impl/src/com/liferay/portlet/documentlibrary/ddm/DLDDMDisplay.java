@@ -39,6 +39,10 @@ public class DLDDMDisplay extends BaseDDMDisplay {
 		return "xml";
 	}
 
+	public String getStructureName(Locale locale) {
+		return LanguageUtil.get(locale, "metadata-set");
+	}
+
 	@Override
 	public String getStructureType() {
 		return DLFileEntryMetadata.class.getName();

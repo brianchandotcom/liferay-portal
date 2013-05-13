@@ -149,6 +149,10 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 		return StringPool.BLANK;
 	}
 
+    public String getStructureName(Locale locale) {
+		return LanguageUtil.get(locale, "structure");
+	}
+
 	@Override
 	public long[] getTemplateClassNameIds(long classNameId) {
 		if (classNameId > 0) {

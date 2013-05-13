@@ -147,7 +147,6 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 				refererPortletName: '<%= PortletKeys.DOCUMENT_LIBRARY %>',
 				showGlobalScope: 'true',
 				showManageTemplates: 'false',
-				structureName: 'metadata-set',
 				title: '<%= UnicodeLanguageUtil.get(pageContext, "metadata-sets") %>'
 			}
 		);

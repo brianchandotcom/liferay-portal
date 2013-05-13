@@ -390,7 +390,6 @@ if (Validator.isNotNull(structureAvailableFields)) {
 					eventName: '<portlet:namespace />selectStructure',
 					groupId: <%= groupId %>,
 					refererPortletName: '<%= PortletKeys.JOURNAL %>',
-					structureName: 'structure',
 					struts_action: '/dynamic_data_mapping/select_structure',
 					title: '<%= UnicodeLanguageUtil.get(pageContext, "structures") %>'
 				},

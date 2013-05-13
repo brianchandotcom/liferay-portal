@@ -52,6 +52,14 @@
 
 			insert into DLFolder values ('${dlFolder.uuid}', ${dlFolder.folderId}, ${dlFolder.groupId}, ${dlFolder.companyId}, ${dlFolder.userId}, '${dlFolder.userName}', '${dataFactory.getDateString(dlFolder.createDate)}', '${dataFactory.getDateString(dlFolder.modifiedDate)}', ${dlFolder.repositoryId}, ${dlFolder.mountPoint?string}, ${dlFolder.parentFolderId}, '${dlFolder.name}', '${dlFolder.description}', '${dataFactory.getDateString(dlFolder.lastPostDate)}', ${dlFolder.defaultFileEntryTypeId}, ${dlFolder.hidden?string}, ${dlFolder.overrideFileEntryTypes?string}, ${dlFolder.status}, ${dlFolder.statusByUserId}, '${dlFolder.statusByUserName}', '${dataFactory.getDateString(dlFolder.statusDate)}');
 
+			<@insertResourcePermissions
+				_entry = dlFolder
+			/>
+
+			<@insertAssetEntry
+				_entry = dlFolder
+			/>
+
 			<#if (maxDLFileEntryCount > 0)>
 				<#list 1..maxDLFileEntryCount as dlFileEntryCount>
 					<#local dlFileEntry = dataFactory.newDlFileEntry(dlFolder, dlFileEntryCount)>
@@ -61,6 +69,10 @@
 					<#local dlFileVersion = dataFactory.newDLFileVersion(dlFileEntry)>
 
 					insert into DLFileVersion values ('${dlFileVersion.uuid}', ${dlFileVersion.fileVersionId}, ${dlFileVersion.groupId}, ${dlFileVersion.companyId}, ${dlFileVersion.userId}, '${dlFileVersion.userName}', '${dataFactory.getDateString(dlFileVersion.createDate)}', '${dataFactory.getDateString(dlFileVersion.modifiedDate)}', ${dlFileVersion.repositoryId}, ${dlFileVersion.folderId}, ${dlFileVersion.fileEntryId}, '${dlFileVersion.extension}', '${dlFileVersion.mimeType}', '${dlFileVersion.title}','${dlFileVersion.description}', '${dlFileVersion.changeLog}', '${dlFileVersion.extraSettings}', ${dlFileVersion.fileEntryTypeId}, '${dlFileVersion.version}', ${dlFileVersion.size}, '${dlFileVersion.checksum}', ${dlFileVersion.status}, ${dlFileVersion.statusByUserId}, '${dlFileVersion.statusByUserName}', ${dlFileVersion.statusDate!'null'});
+
+					<@insertResourcePermissions
+						_entry = dlFileEntry
+					/>
 
 					<@insertAssetEntry
 						_entry = dlFileEntry
@@ -158,6 +170,10 @@
 			<@insertMBMessage
 				_mbMessage = mbMessage
 			/>
+
+			<@insertSocialActivity
+				_entry = mbMessage
+			/>
 		</#list>
 	</#if>
 
@@ -202,6 +218,14 @@
 	<#local socialActivity = dataFactory.newSocialActivity(_entry)>
 
 	insert into SocialActivity values (${socialActivity.activityId}, ${socialActivity.groupId}, ${socialActivity.companyId}, ${socialActivity.userId}, ${socialActivity.createDate}, ${socialActivity.activitySetId}, ${socialActivity.mirrorActivityId}, ${socialActivity.classNameId}, ${socialActivity.classPK}, ${socialActivity.type}, '${socialActivity.extraData}', ${socialActivity.receiverUserId});
+</#macro>
+
+<#macro insertSubscription
+	_entry
+>
+	<#local subscription = dataFactory.newSubscription(_entry)>
+
+	insert into Subscription values (${subscription.subscriptionId}, ${subscription.companyId}, ${subscription.userId}, '${subscription.userName}', '${dataFactory.getDateString(subscription.createDate)}', '${dataFactory.getDateString(subscription.modifiedDate)}', '${subscription.classNameId}', ${subscription.classPK}, '${subscription.frequency}');
 </#macro>
 
 <#macro insertUser

@@ -67,7 +67,6 @@ PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPre
 
 String refererPortletName = ParamUtil.getString(request, "refererPortletName", portletName);
 String refererWebDAVToken = ParamUtil.getString(request, "refererWebDAVToken", portletConfig.getInitParameter("refererWebDAVToken"));
-String scopeTemplateMode = ParamUtil.getString(request, "scopeTemplateMode");
 String scopeTitle = ParamUtil.getString(request, "scopeTitle");
 boolean showGlobalScope = ParamUtil.getBoolean(request, "showGlobalScope");
 boolean showManageTemplates = ParamUtil.getBoolean(request, "showManageTemplates", true);
@@ -77,6 +76,7 @@ DDMDisplay ddmDisplay = DDMDisplayRegistryUtil.getDDMDisplay(refererPortletName)
 
 String scopeAvailableFields = ddmDisplay.getAvailableFields();
 String scopeStructureName = ddmDisplay.getStructureName(locale);
+String scopeTemplateMode = ddmDisplay.getTemplateMode();
 String scopeTemplateType = ddmDisplay.getTemplateType();
 
 long scopeClassNameId = PortalUtil.getClassNameId(ddmDisplay.getStructureType());

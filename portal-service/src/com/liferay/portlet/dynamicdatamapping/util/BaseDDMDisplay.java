@@ -184,6 +184,11 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 	}
 
 	@Override
+	public String getTemplateMode() {
+		return StringPool.BLANK;
+	}
+
+	@Override
 	public String getTemplateType() {
 		return DDMTemplateConstants.TEMPLATE_TYPE_FORM;
 	}

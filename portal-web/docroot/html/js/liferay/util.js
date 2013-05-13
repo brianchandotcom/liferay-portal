@@ -1295,7 +1295,6 @@
 				ddmURL.setParameter('refererWebDAVToken', config.refererWebDAVToken);
 			}
 
-			ddmURL.setParameter('scopeTemplateMode', config.templateMode);
 			ddmURL.setParameter('scopeTitle', config.title);
 
 			if ('showGlobalScope' in config) {

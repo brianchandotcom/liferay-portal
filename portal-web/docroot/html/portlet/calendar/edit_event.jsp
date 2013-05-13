@@ -204,7 +204,7 @@ int secondReminder = BeanParamUtil.getInteger(event, request, "secondReminder", 
 	<br />
 
 	<liferay-ui:panel-container cssClass="calendar-event-details" extended="<%= true %>" id="calendarEventDetailsPanelContainer" persistState="<%= true %>">
-		<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= false %>" id="calendarEventCateogrizationPanel" persistState="<%= true %>" title="categorization">
+		<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= false %>" id="calendarEventCategorizationPanel" persistState="<%= true %>" title="categorization">
 			<aui:fieldset>
 				<aui:input name="categories" type="assetCategories" />
 

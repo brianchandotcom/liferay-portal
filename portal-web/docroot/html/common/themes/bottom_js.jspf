@@ -109,53 +109,53 @@ if (layout != null) {
 	</c:if>
 
 	<aui:script use="liferay-navigation">
-		Liferay.once(
-			'initNavigation',
-			function() {
-				new Liferay.Navigation(
-					{
-						hasAddLayoutPermission: <%= GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_LAYOUT) %>,
-						layoutIds: [
+		if (!A.UA.touch) {
+			Liferay.once(
+				'initNavigation',
+				function() {
+					new Liferay.Navigation(
+						{
+							hasAddLayoutPermission: <%= GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_LAYOUT) %>,
+							layoutIds: [
 
-							<%
-							for (int i = 0; (layouts != null) && (i < layouts.size()); i++) {
-								Layout curLayout = (Layout)layouts.get(i);
-							%>
+								<%
+								for (int i = 0; (layouts != null) && (i < layouts.size()); i++) {
+									Layout curLayout = (Layout)layouts.get(i);
+								%>
 
-								{
-									deletable: <%= LayoutPermissionUtil.contains(themeDisplay.getPermissionChecker(), curLayout, ActionKeys.DELETE) %>,
-									id: <%= curLayout.getLayoutId() %>,
-									sortable: <%= GroupPermissionUtil.contains(themeDisplay.getPermissionChecker(), scopeGroupId, ActionKeys.MANAGE_LAYOUTS) && SitesUtil.isLayoutSortable(curLayout) %>,
-									updateable: <%= LayoutPermissionUtil.contains(themeDisplay.getPermissionChecker(), curLayout, ActionKeys.UPDATE) %>
-								},
+									{
+										deletable: <%= LayoutPermissionUtil.contains(themeDisplay.getPermissionChecker(), curLayout, ActionKeys.DELETE) %>,
+										id: <%= curLayout.getLayoutId() %>,
+										sortable: <%= GroupPermissionUtil.contains(themeDisplay.getPermissionChecker(), scopeGroupId, ActionKeys.MANAGE_LAYOUTS) && SitesUtil.isLayoutSortable(curLayout) %>,
+										updateable: <%= LayoutPermissionUtil.contains(themeDisplay.getPermissionChecker(), curLayout, ActionKeys.UPDATE) %>
+									},
 
-							<%
-							}
-							%>
+								<%
+								}
+								%>
 
-							],
+								],
 
-						<c:if test="<%= layoutRevision != null %>">
-							layoutSetBranchId: '<%= layoutRevision.getLayoutSetBranchId() %>',
-						</c:if>
+							<c:if test="<%= layoutRevision != null %>">
+								layoutSetBranchId: '<%= layoutRevision.getLayoutSetBranchId() %>',
+							</c:if>
 
-						navBlock: navBlock
+							navBlock: navBlock
+						}
+					);
+				}
+			);
+
+			var navBlock = A.one('#navigation');
+
+			if (navBlock) {
+				navBlock.once(
+					'mousemove',
+					function() {
+						Liferay.fire('initNavigation');
 					}
 				);
 			}
-		);
-
-		var navBlock = A.one('#navigation');
-
-		if (navBlock) {
-			var handle = navBlock.on(
-				['mousemove', 'touchstart'],
-				function() {
-					handle.detach();
-
-					Liferay.fire('initNavigation');
-				}
-			);
 		}
 	</aui:script>
 </c:if>

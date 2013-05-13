@@ -7,13 +7,7 @@ AUI.add(
 
 		var DIRECTION_RIGHT = 1;
 
-		var MAP_HOVER = {};
-
 		var NAME = 'liferaynavigationinteraction';
-
-		var hideMenu = function() {
-			Liferay.fire('hideNavigationMenu', MAP_HOVER);
-		};
 
 		var NavigationInteraction = A.Component.create(
 			{
@@ -24,27 +18,31 @@ AUI.add(
 				NS: NAME,
 
 				prototype: {
+					MAP_HOVER: {},
+
 					initializer: function(config) {
 						var instance = this;
 
 						var host = instance.get('host');
+
 						var navigation = host.one('> ul');
 
 						var hostULId = '#' + navigation.guid();
 
-						instance._directLiChild = hostULId + '> li';
-
+						instance._directChildLi = hostULId + '> li';
 						instance._hostULId = hostULId;
 
 						Liferay.on(
-							['showNavigationMenu', 'hideNavigationMenu'],
+							['hideNavigationMenu', 'showNavigationMenu'],
 							function(event) {
-								var showMenu = event.type == 'showNavigationMenu';
+								var showMenu = (event.type == 'showNavigationMenu');
+
+								var menu = event.menu;
 
 								instance._lastShownMenu = null;
 
 								if (showMenu) {
-									instance._lastShownMenu = event.menu;
+									instance._lastShownMenu = menu;
 								}
 
 								event.menu.toggleClass('hover', showMenu);
@@ -52,31 +50,9 @@ AUI.add(
 							}
 						);
 
-						if (navigation) {
-							navigation.delegate('mouseenter', instance._onMouseToggle, '> li', instance);
-							navigation.delegate('mouseleave', instance._onMouseToggle, '> li', instance);
+						instance._initChildMenuHandlers(navigation);
 
-							navigation.delegate('keydown', instance._handleKeyDown, 'a', instance);
-						}
-
-						host.plug(
-							A.Plugin.NodeFocusManager,
-							{
-								descendants: 'a',
-								focusClass: 'active',
-								keys: {
-									next: 'down:40',
-									previous: 'down:38'
-								}
-							}
-						);
-
-						var focusManager = host.focusManager;
-
-						focusManager.after('activeDescendantChange', instance._showMenu, instance);
-						focusManager.after('focusedChange', instance._showMenu, instance);
-
-						instance._focusManager = focusManager;
+						instance._initNodeFocusManager();
 					},
 
 					_handleExit: function(event) {
@@ -88,25 +64,23 @@ AUI.add(
 							focusManager.set(ACTIVE_DESCENDANT, 0);
 
 							focusManager.blur();
+						}
 
-							hideMenu();
-						}
-						else {
-							setTimeout(hideMenu, 0);
-						}
+						instance._hideMenu();
 					},
 
 					_handleKey: function(event, direction) {
 						var instance = this;
 
-						var target = event.target;
-
-						var parent = target.ancestors(instance._directLiChild).item(0);
-
-						var fallbackFirst = true;
 						var item;
 
-						if (direction === DIRECTION_LEFT) {
+						var target = event.target;
+
+						var parent = target.ancestors(instance._directChildLi).item(0);
+
+						var fallbackFirst = true;
+
+						if (direction == DIRECTION_LEFT) {
 							item = parent.previous();
 
 							fallbackFirst = false;
@@ -161,19 +135,66 @@ AUI.add(
 						instance._handleKey(event, DIRECTION_RIGHT);
 					},
 
+					_hideMenu: function() {
+						var instance = this;
+
+						var mapHover = instance.MAP_HOVER;
+
+						if (mapHover.menu) {
+							Liferay.fire('hideNavigationMenu', mapHover);
+
+							instance.MAP_HOVER = {};
+						}
+					},
+
+					_initChildMenuHandlers: function(navigation) {
+						var instance = this;
+
+						if (navigation) {
+							navigation.delegate(['mouseenter', 'mouseleave'], instance._onMouseToggle, '> li', instance);
+
+							navigation.delegate('keydown', instance._handleKeyDown, 'a', instance);
+						}
+					},
+
+					_initNodeFocusManager: function() {
+						var instance = this;
+
+						var host = instance.get('host');
+
+						host.plug(
+							A.Plugin.NodeFocusManager,
+							{
+								descendants: 'a',
+								focusClass: 'active',
+								keys: {
+									next: 'down:40',
+									previous: 'down:38'
+								}
+							}
+						);
+
+						var focusManager = host.focusManager;
+
+						focusManager.after(['activeDescendantChange', 'focusedChange'], instance._showMenu, instance);
+
+						instance._focusManager = focusManager;
+					},
+
 					_onMouseToggle: function(event) {
 						var instance = this;
 
-						var showMenu = event.type == 'mouseenter';
+						var mapHover = instance.MAP_HOVER;
+
 						var eventType = 'hideNavigationMenu';
 
-						if (showMenu) {
+						if (event.type == 'mouseenter') {
 							eventType = 'showNavigationMenu';
 						}
 
-						MAP_HOVER.menu = event.currentTarget;
+						mapHover.menu = event.currentTarget;
 
-						Liferay.fire(eventType, MAP_HOVER);
+						Liferay.fire(eventType, mapHover);
 					},
 
 					_showMenu: function(event) {
@@ -181,19 +202,50 @@ AUI.add(
 
 						event.halt();
 
-						var focusManager = instance._focusManager;
+						var mapHover = instance.MAP_HOVER;
 
-						var activeDescendant = focusManager.get(ACTIVE_DESCENDANT);
-						var descendants = focusManager.get('descendants');
+						var menuOld = mapHover.menu;
+
+						var newMenuIndex = event.newVal;
+
+						var handleMenuToggle = (newMenuIndex || (newMenuIndex === 0));
+
+						if (handleMenuToggle) {
+							var focusManager = instance._focusManager;
+
+							var activeDescendant = focusManager.get(ACTIVE_DESCENDANT);
+							var descendants = focusManager.get('descendants');
+
+							var menuLink = descendants.item(activeDescendant);
+
+							var menuNew = menuLink.ancestor(instance._directChildLi);
+
+							instance._handleShowNavigationMenu(menuNew, menuOld)
+						}
+						else if (menuOld) {
+							Liferay.fire('hideNavigationMenu', mapHover);
+
+							instance.MAP_HOVER = {};
+						}
+					},
+
+					_handleShowNavigationMenu: function(menuNew, menuOld) {
+						var instance = this;
+
+						var mapHover = instance.MAP_HOVER;
 
 						if (!(instance._lastShownMenu && (event.type.indexOf('focusedChange') !== -1))) {
-							if (MAP_HOVER.menu) {
-								Liferay.fire('hideNavigationMenu', MAP_HOVER);
+							var updateMenu = (menuOld && (menuOld != menuNew));
+
+							if (updateMenu) {
+								Liferay.fire('hideNavigationMenu', mapHover);
 							}
 
-							MAP_HOVER.menu = descendants.item(activeDescendant).ancestors(instance._directLiChild);
+							if (!menuOld || updateMenu) {
+								mapHover.menu = menuNew;
 
-							Liferay.fire('showNavigationMenu', MAP_HOVER);
+								Liferay.fire('showNavigationMenu', mapHover);
+							}
 						}
 					}
 				}

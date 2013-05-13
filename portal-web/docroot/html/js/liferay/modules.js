@@ -342,9 +342,27 @@ window.YUI_config = {
 				},
 				'liferay-navigation-interaction': {
 					path: 'navigation_interaction.js',
+					plugins: {
+						'liferay-navigation-interaction-touch': {
+							condition: {
+								name: 'liferay-navigation-interaction-touch',
+								test: function(A) {
+									return A.UA.touch;
+								},
+								trigger: 'liferay-navigation-interaction'
+							}
+						}
+					},
 					requires: [
 						'node-focusmanager',
 						'plugin'
+					]
+				},
+				'liferay-navigation-interaction-touch': {
+					path: 'navigation_interaction_touch.js',
+					requires: [
+						'event-touch',
+						'liferay-navigation-interaction'
 					]
 				},
 				'liferay-navigation-touch': {

@@ -48,4 +48,8 @@ public class TilesAttributeUtil {
 		return componentContext.getAttribute(tilesAttributeName);
 	}
 
+	public static void removeComponentContext(PageContext pageContext) {
+		pageContext.removeAttribute(ComponentConstants.COMPONENT_CONTEXT);
+	}
+
 }

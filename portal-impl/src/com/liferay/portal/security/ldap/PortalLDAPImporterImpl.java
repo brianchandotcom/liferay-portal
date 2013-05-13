@@ -761,6 +761,10 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			UserGroup userGroup = importUserGroup(
 				companyId, groupAttributes, groupMappings);
 
+			if (userGroup == null) {
+				return newUserGroupIds;
+			}
+
 			userGroupId = userGroup.getUserGroupId();
 
 			if (PropsValues.LDAP_IMPORT_GROUP_CACHE_ENABLED) {
@@ -768,14 +772,12 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			}
 		}
 
-		if (userGroupId != null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Adding " + user.getUserId() + " to group " + userGroupId);
-			}
-
-			newUserGroupIds.add(userGroupId);
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Adding " + user.getUserId() + " to group " + userGroupId);
 		}
+
+		newUserGroupIds.add(userGroupId);
 
 		return newUserGroupIds;
 	}

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.messaging.async.Async;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -84,7 +85,8 @@ public class SocialActivityLocalServiceImpl
 	 * activities.
 	 * </p>
 	 *
-	 * @param  userId the primary key of the acting user
+	 * @param  userId the primary key of the acting user (optionally
+	 *         <code>0</code>)
 	 * @param  groupId the primary key of the group
 	 * @param  createDate the activity's date
 	 * @param  className the target asset's class name
@@ -105,8 +107,8 @@ public class SocialActivityLocalServiceImpl
 			return;
 		}
 
-		User user = userPersistence.findByPrimaryKey(userId);
 		long classNameId = PortalUtil.getClassNameId(className);
+		long companyId = 0;
 
 		if (groupId > 0) {
 			Group group = groupLocalService.getGroup(groupId);
@@ -117,13 +119,29 @@ public class SocialActivityLocalServiceImpl
 
 				groupId = layout.getGroupId();
 			}
+
+			companyId = group.getCompanyId();
+		}
+
+		if (userId == 0) {
+			userId = PrincipalThreadLocal.getUserId();
+		}
+
+		if (companyId == 0) {
+			if (userId == 0) {
+				throw new IllegalArgumentException();
+			}
+
+			User user = userPersistence.findByPrimaryKey(userId);
+
+			companyId = user.getCompanyId();
 		}
 
 		SocialActivity activity = socialActivityPersistence.create(0);
 
 		activity.setGroupId(groupId);
-		activity.setCompanyId(user.getCompanyId());
-		activity.setUserId(user.getUserId());
+		activity.setCompanyId(companyId);
+		activity.setUserId(userId);
 		activity.setCreateDate(createDate.getTime());
 		activity.setMirrorActivityId(0);
 		activity.setClassNameId(classNameId);
@@ -153,7 +171,7 @@ public class SocialActivityLocalServiceImpl
 			mirrorActivity = socialActivityPersistence.create(0);
 
 			mirrorActivity.setGroupId(groupId);
-			mirrorActivity.setCompanyId(user.getCompanyId());
+			mirrorActivity.setCompanyId(companyId);
 			mirrorActivity.setUserId(receiverUserId);
 			mirrorActivity.setCreateDate(createDate.getTime());
 			mirrorActivity.setClassNameId(classNameId);
@@ -168,7 +186,7 @@ public class SocialActivityLocalServiceImpl
 
 			mirrorActivity.setType(type);
 			mirrorActivity.setExtraData(extraData);
-			mirrorActivity.setReceiverUserId(user.getUserId());
+			mirrorActivity.setReceiverUserId(userId);
 			mirrorActivity.setAssetEntry(assetEntry);
 		}
 
@@ -179,7 +197,8 @@ public class SocialActivityLocalServiceImpl
 	 * Records an activity in the database, using a time based on the current
 	 * time in an attempt to make the activity's time unique.
 	 *
-	 * @param  userId the primary key of the acting user
+	 * @param  userId the primary key of the acting user (optionally
+	 *         <code>0</code>)
 	 * @param  groupId the primary key of the group
 	 * @param  className the target asset's class name
 	 * @param  classPK the primary key of the target asset
@@ -264,7 +283,9 @@ public class SocialActivityLocalServiceImpl
 			}
 		}
 
-		socialActivityCounterLocalService.addActivityCounters(activity);
+		if (activity.getUserId() > 0) {
+			socialActivityCounterLocalService.addActivityCounters(activity);
+		}
 	}
 
 	/**
@@ -276,7 +297,8 @@ public class SocialActivityLocalServiceImpl
 	 * String, long, int, String, long)}
 	 * </p>
 	 *
-	 * @param  userId the primary key of the acting user
+	 * @param  userId the primary key of the acting user (optionally
+	 *         <code>0</code>)
 	 * @param  groupId the primary key of the group
 	 * @param  createDate the activity's date
 	 * @param  className the target asset's class name
@@ -318,7 +340,8 @@ public class SocialActivityLocalServiceImpl
 	 * String, long, int, String, long)}
 	 * </p>
 	 *
-	 * @param  userId the primary key of the acting user
+	 * @param  userId the primary key of the acting user (optionally
+	 *         <code>0</code>)
 	 * @param  groupId the primary key of the group
 	 * @param  className the target asset's class name
 	 * @param  classPK the primary key of the target asset
@@ -363,11 +386,9 @@ public class SocialActivityLocalServiceImpl
 
 	@Override
 	public void deleteActivities(long groupId) throws SystemException {
-		if (PropsValues.SOCIAL_ACTIVITY_SETS_ENABLED) {
-			socialActivitySetPersistence.removeByGroupId(groupId);
-		}
-
 		socialActivityPersistence.removeByGroupId(groupId);
+
+		socialActivitySetPersistence.removeByGroupId(groupId);
 
 		socialActivityCounterPersistence.removeByGroupId(groupId);
 

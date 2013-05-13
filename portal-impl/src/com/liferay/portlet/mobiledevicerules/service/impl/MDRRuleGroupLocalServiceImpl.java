@@ -16,6 +16,8 @@ package com.liferay.portlet.mobiledevicerules.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -27,6 +29,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.mobiledevicerules.model.MDRRule;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
 import com.liferay.portlet.mobiledevicerules.service.base.MDRRuleGroupLocalServiceBaseImpl;
+import com.liferay.portlet.social.model.SocialActivityConstants;
 
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -121,7 +124,9 @@ public class MDRRuleGroupLocalServiceImpl
 	}
 
 	@Override
-	public void deleteRuleGroup(long ruleGroupId) throws SystemException {
+	public void deleteRuleGroup(long ruleGroupId)
+		throws PortalException, SystemException {
+
 		MDRRuleGroup ruleGroup = mdrRuleGroupPersistence.fetchByPrimaryKey(
 			ruleGroupId);
 
@@ -131,7 +136,8 @@ public class MDRRuleGroupLocalServiceImpl
 	}
 
 	@Override
-	public void deleteRuleGroup(MDRRuleGroup ruleGroup) throws SystemException {
+	public void deleteRuleGroup(MDRRuleGroup ruleGroup)
+		throws PortalException, SystemException {
 
 		// Rule group
 
@@ -145,10 +151,23 @@ public class MDRRuleGroupLocalServiceImpl
 
 		mdrRuleGroupInstanceLocalService.deleteRuleGroupInstances(
 			ruleGroup.getRuleGroupId());
+
+		// Social
+
+		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
+
+		extraDataJSONObject.put("uuid", ruleGroup.getUuid());
+
+		socialActivityLocalService.addUniqueActivity(
+			0, ruleGroup.getGroupId(), MDRRuleGroup.class.getName(),
+			ruleGroup.getRuleGroupId(), SocialActivityConstants.TYPE_DELETE,
+			extraDataJSONObject.toString(), 0);
 	}
 
 	@Override
-	public void deleteRuleGroups(long groupId) throws SystemException {
+	public void deleteRuleGroups(long groupId)
+		throws PortalException, SystemException {
+
 		List<MDRRuleGroup> ruleGroups = mdrRuleGroupPersistence.findByGroupId(
 			groupId);
 

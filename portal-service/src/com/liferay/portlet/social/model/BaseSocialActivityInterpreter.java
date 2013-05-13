@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.trash.TrashHandler;
@@ -397,8 +398,11 @@ public abstract class BaseSocialActivityInterpreter
 
 	protected String getUserName(long userId, ServiceContext serviceContext) {
 		try {
-			if (userId <= 0) {
+			if (userId < 0) {
 				return StringPool.BLANK;
+			}
+			else if (userId == 0) {
+				return LanguageUtil.get(serviceContext.getLocale(), "system");
 			}
 
 			User user = UserLocalServiceUtil.getUserById(userId);

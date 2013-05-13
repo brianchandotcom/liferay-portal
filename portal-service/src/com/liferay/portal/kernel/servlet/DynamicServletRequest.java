@@ -35,6 +35,8 @@ import javax.servlet.http.HttpServletRequestWrapper;
  */
 public class DynamicServletRequest extends HttpServletRequestWrapper {
 
+	public static final String DYNAMIC_QUERY_STRING = "DYNAMIC_QUERY_STRING";
+
 	public static HttpServletRequest addQueryString(
 		HttpServletRequest request, String queryString) {
 
@@ -80,6 +82,8 @@ public class DynamicServletRequest extends HttpServletRequestWrapper {
 		}
 
 		request = new DynamicServletRequest(request, parameterMap, inherit);
+
+		request.setAttribute(DYNAMIC_QUERY_STRING, queryString);
 
 		return request;
 	}

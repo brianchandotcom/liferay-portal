@@ -375,11 +375,7 @@ public class EditLayoutsAction extends PortletAction {
 
 		PortletRequestDispatcher portletRequestDispatcher = null;
 
-		if (cmd.equals(ActionKeys.PUBLISH_STAGING)) {
-			portletRequestDispatcher = portletContext.getRequestDispatcher(
-				"/html/portlet/layouts_admin/scheduled_publishing_events.jsp");
-		}
-		else if (cmd.equals(ActionKeys.VIEW_TREE)) {
+		if (cmd.equals(ActionKeys.VIEW_TREE)) {
 			getGroup(resourceRequest);
 
 			portletRequestDispatcher = portletContext.getRequestDispatcher(

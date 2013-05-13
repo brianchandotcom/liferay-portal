@@ -25,6 +25,7 @@ AUI.add(
 					currentUserIdNode: defaultConfig,
 					deleteMissingLayoutsNode: defaultConfig,
 					deletePortletDataNode: defaultConfig,
+					form: defaultConfig,
 					layoutSetSettingsNode: defaultConfig,
 					logoNode: defaultConfig,
 					mirrorNode: defaultConfig,
@@ -33,6 +34,12 @@ AUI.add(
 					rangeDateRangeNode: defaultConfig,
 					rangeLastNode: defaultConfig,
 					rangeLastPublishNode: defaultConfig,
+					remoteAddressNode: defaultConfig,
+					remoteDeletePortletDataNode: defaultConfig,
+					remotePortNode: defaultConfig,
+					remotePathContextNode: defaultConfig,
+					remoteGroupIdNode: defaultConfig,
+					secureConnectionNode: defaultConfig,
 					themeNode: defaultConfig,
 					themeReferenceNode: defaultConfig,
 					userPreferencesNode: defaultConfig
@@ -71,12 +78,20 @@ AUI.add(
 						if (instance._rangeDialog) {
 							instance._rangeDialog.destroy();
 						}
+
+						if (instance._remoteDialog) {
+							instance._remoteDialog.destroy();
+						}
+
+						if (instance._scheduledPublishingEventsDialog) {
+							instance._scheduledPublishingEventsDialog.destroy();
+						}
 					},
 
 					_bindUI: function() {
 						var instance = this;
 
-						instance.byId('fm1').delegate(
+						instance.get('form').delegate(
 							STR_CLICK,
 							function(event) {
 								var portletId = event.currentTarget.attr('data-portletid');
@@ -139,6 +154,32 @@ AUI.add(
 								}
 							);
 						}
+
+						var remoteLink = instance.byId('remoteLink');
+
+						if (remoteLink) {
+							remoteLink.on(
+								STR_CLICK,
+								function(event) {
+									var remoteDialog = instance._getRemoteDialog();
+
+									remoteDialog.show();
+								}
+							);
+						}
+
+						var scheduledPublishingEventsLink = instance.byId('scheduledPublishingEventsLink');
+
+						if (scheduledPublishingEventsLink) {
+							scheduledPublishingEventsLink.on(
+								STR_CLICK,
+								function(event) {
+									var scheduledPublishingEventsDialog = instance._getScheduledPublishingEventsDialog();
+
+									scheduledPublishingEventsDialog.show();
+								}
+							);
+						}
 					},
 
 					_getContentDialog: function(portletId) {
@@ -158,6 +199,7 @@ AUI.add(
 										centered: true,
 										height: 300,
 										modal: true,
+										render: instance.rootNode,
 										toolbars: {
 											footer: [
 												{
@@ -184,7 +226,7 @@ AUI.add(
 									},
 									title: instance._dialogTitle
 								}
-							).render(instance.rootNode);
+							);
 
 							contentNode.setData('contentDialog', contentDialog);
 						}
@@ -209,6 +251,7 @@ AUI.add(
 										centered: true,
 										height: 300,
 										modal: true,
+										render: instance.rootNode,
 										toolbars: {
 											footer: [
 												{
@@ -235,7 +278,7 @@ AUI.add(
 									},
 									title: Liferay.Language.get('application-configuration')
 								}
-							).render(instance.rootNode);
+							);
 
 							instance._globalConfigurationDialog = globalConfigurationDialog;
 						}
@@ -260,6 +303,7 @@ AUI.add(
 										centered: true,
 										height: 300,
 										modal: true,
+										render: instance.rootNode,
 										toolbars: {
 											footer: [
 												{
@@ -286,7 +330,7 @@ AUI.add(
 									},
 									title: instance._dialogTitle
 								}
-							).render(instance.rootNode);
+							);
 
 							instance._globalContentDialog = globalContentDialog;
 						}
@@ -310,6 +354,7 @@ AUI.add(
 										bodyContent: pagesNode,
 										height: 300,
 										modal: true,
+										render: instance.rootNode,
 										toolbars: {
 											footer: [
 												{
@@ -336,7 +381,7 @@ AUI.add(
 									},
 									title: Liferay.Language.get('pages')
 								}
-							).render(instance.rootNode);
+							);
 
 							instance._pagesDialog = pagesDialog;
 						}
@@ -361,6 +406,7 @@ AUI.add(
 										centered: true,
 										height: 300,
 										modal: true,
+										render: instance.rootNode,
 										toolbars: {
 											footer: [
 												{
@@ -387,12 +433,120 @@ AUI.add(
 									},
 									title: instance._dialogTitle
 								}
-							).render(instance.rootNode);
+							);
 
 							instance._rangeDialog = rangeDialog;
 						}
 
 						return rangeDialog;
+					},
+
+					_getRemoteDialog: function() {
+						var instance = this;
+
+						var remoteDialog = instance._remoteDialog;
+
+						if (!remoteDialog) {
+							var remoteNode = instance.byId('remote');
+
+							remoteNode.show();
+
+							remoteDialog = Liferay.Util.Window.getWindow(
+								{
+									dialog: {
+										bodyContent: remoteNode,
+										centered: true,
+										height: 300,
+										modal: true,
+										render: instance.rootNode,
+										toolbars: {
+											footer: [
+												{
+													on: {
+														click: function() {
+															instance._handleRemote();
+
+															remoteDialog.hide();
+														}
+													},
+													label: Liferay.Language.get('ok')
+												},
+												{
+													on: {
+														click: function() {
+															remoteDialog.hide();
+														},
+														label: Liferay.Language.get('cancel')
+													}
+												}
+											]
+										},
+										width: 400
+									},
+									title: instance._dialogTitle
+								}
+							);
+
+							instance._remoteDialog = remoteDialog;
+						}
+
+						return remoteDialog;
+					},
+
+					_getScheduledPublishingEventsDialog: function() {
+						var instance = this;
+
+						var scheduledPublishingEventsDialog = instance._scheduledPublishingEventsDialog;
+
+						if (!scheduledPublishingEventsDialog) {
+							var scheduledPublishingEventsNode = instance.byId('scheduledPublishingEvents');
+
+							scheduledPublishingEventsNode.show();
+
+							scheduledPublishingEventsDialog = Liferay.Util.Window.getWindow(
+								{
+									dialog: {
+										bodyContent: scheduledPublishingEventsNode,
+										centered: true,
+										height: 300,
+										modal: true,
+										render: instance.rootNode,
+										toolbars: {
+											footer: [
+												{
+													on: {
+														click: function() {
+															scheduledPublishingEventsDialog.hide();
+														}
+													},
+													label: Liferay.Language.get('close')
+												}
+											]
+										},
+										width: 400
+									},
+									title: Liferay.Language.get('scheduled-events')
+								}
+							);
+
+							instance._scheduledPublishingEventsDialog = scheduledPublishingEventsDialog;
+						}
+
+						return scheduledPublishingEventsDialog;
+					},
+
+					_getValue: function(nodeName) {
+						var instance = this;
+
+						var value = STR_EMPTY;
+
+						var node = instance.get(nodeName);
+
+						if (node) {
+							value = node.val();
+						}
+
+						return value;
 					},
 
 					_handleContent: function(portletId) {
@@ -561,6 +715,46 @@ AUI.add(
 						instance._refreshSelectedLabel('selectedRange', selectedRange);
 					},
 
+					_handleRemote: function() {
+						var instance = this;
+
+						var selectedRemote = [];
+
+						var remoteAddressValue = instance._getValue('remoteAddressNode');
+
+						if (remoteAddressValue !== STR_EMPTY) {
+							selectedRemote.push(remoteAddressValue);
+						}
+
+						var remotePortValue = instance._getValue('remotePortNode');
+
+						if (remotePortValue !== STR_EMPTY) {
+							selectedRemote.push(remotePortValue);
+						}
+
+						var remotePathContextValue = instance._getValue('remotePathContextNode');
+
+						if (remotePathContextValue !== STR_EMPTY) {
+							selectedRemote.push(remotePathContextValue);
+						}
+
+						var remoteGroupIdValue = instance._getValue('remoteGroupIdNode');
+
+						if (remoteGroupIdValue !== STR_EMPTY) {
+							selectedRemote.push(remoteGroupIdValue);
+						}
+
+						if (instance._isChecked('secureConnectionNode')) {
+							selectedRemote.push(Liferay.Language.get('use-a-secure-network-connection'));
+						}
+
+						if (instance._isChecked('remoteDeletePortletDataNode')) {
+							selectedRemote.push(Liferay.Language.get('delete-portlet-data-before-importing'));
+						}
+
+						instance._refreshSelectedLabel('selectedRemote', selectedRemote.join(', '));
+					},
+
 					_isChecked: function(nodeName) {
 						var instance = this;
 
@@ -584,6 +778,9 @@ AUI.add(
 
 						if (Lang.isString(val)) {
 							val = instance.one(val);
+						}
+						else {
+							val = A.one(val);
 						}
 
 						return val;

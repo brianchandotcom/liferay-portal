@@ -126,8 +126,9 @@
 						<aui:input label="delete-portlet-data-before-importing" name="<%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>" type="checkbox" />
 
 						<ul id="<portlet:namespace />showDeleteContentWarning">
-							<div class="portlet-msg-alert">
+							<div class="alert alert-block">
 								<liferay-ui:message key="delete-content-before-importing-warning" />
+
 								<liferay-ui:message key="delete-content-before-importing-suggestion" />
 							</div>
 						</ul>
@@ -187,6 +188,7 @@
 			deleteMissingLayoutsNode: '#<%= PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS %>Checkbox',
 			deletePortletDataNode: '#<%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>Checkbox',
 			dialogTitle: '<%= UnicodeLanguageUtil.get(pageContext, "content-to-import") %>',
+			form: document.<portlet:namespace />fm1,
 			layoutSetSettingsNode: '#<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>Checkbox',
 			logoNode: '#<%= PortletDataHandlerKeys.LOGO %>Checkbox',
 			mirrorNode: '#mirror',

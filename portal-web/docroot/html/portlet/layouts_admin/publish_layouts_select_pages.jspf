@@ -35,105 +35,160 @@ rowChecker.setFormName("exportPagesFm");
 rowChecker.setValign("top");
 
 searchContainer.setRowChecker(rowChecker);
-
-List resultRows = searchContainer.getResultRows();
-
-for (int i = 0; i < results.size(); i++) {
-	Layout curLayout = (Layout)results.get(i);
-
-	ResultRow row = new ResultRow(curLayout, curLayout.getPrimaryKey(), i);
-
-	if (LayoutStagingUtil.isBranchingLayout(curLayout) && !curLayout.isTypeURL()) {
 %>
 
-		<liferay-util:buffer var="layoutDetails">
+<div class="selected-labels" id="<portlet:namespace />selectedPages">
+	<liferay-ui:message key='<%= results.size() > 0 ? "selected-pages" : "all-pages" %>' />,
+	<liferay-ui:message key="site-pages-settings" />,
+	<liferay-ui:message key="theme" />,
+	<liferay-ui:message key="theme-settings" />,
+	<liferay-ui:message key="logo" />
+</div>
 
-			<%
-			LayoutRevision layoutRevision = null;
+<aui:a cssClass="modify-link" href="javascript:;" id="pagesLink" label="change" method="get" />
 
-			String layoutBranchName = null;
+<div class="hide" id="<portlet:namespace />pages">
+	<aui:fieldset cssClass="portlet-data-section" label="pages-to-publish">
 
-			if (layoutSetBranchId > 0) {
-				try {
-					layoutRevision = LayoutRevisionLocalServiceUtil.getLayoutRevision(layoutSetBranchId, curLayout.getPlid(), true);
-				}
-				catch (NoSuchLayoutRevisionException nslre) {
-				}
+		<%
+		List resultRows = searchContainer.getResultRows();
 
-				if (layoutRevision != null) {
-					List<LayoutBranch> layoutBranches = LayoutBranchLocalServiceUtil.getLayoutBranches(layoutSetBranchId, curLayout.getPlid(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		for (int i = 0; i < results.size(); i++) {
+			Layout curLayout = (Layout)results.get(i);
 
-					if (layoutBranches.size() > 1) {
-						LayoutBranch layoutBranch = layoutRevision.getLayoutBranch();
+			ResultRow row = new ResultRow(curLayout, curLayout.getPrimaryKey(), i);
 
-						layoutBranchName = layoutBranch.getName();
+			if (LayoutStagingUtil.isBranchingLayout(curLayout) && !curLayout.isTypeURL()) {
+		%>
+
+				<liferay-util:buffer var="layoutDetails">
+
+					<%
+					LayoutRevision layoutRevision = null;
+
+					String layoutBranchName = null;
+
+					if (layoutSetBranchId > 0) {
+						try {
+							layoutRevision = LayoutRevisionLocalServiceUtil.getLayoutRevision(layoutSetBranchId, curLayout.getPlid(), true);
+						}
+						catch (NoSuchLayoutRevisionException nslre) {
+						}
+
+						if (layoutRevision != null) {
+							List<LayoutBranch> layoutBranches = LayoutBranchLocalServiceUtil.getLayoutBranches(layoutSetBranchId, curLayout.getPlid(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+							if (layoutBranches.size() > 1) {
+								LayoutBranch layoutBranch = layoutRevision.getLayoutBranch();
+
+								layoutBranchName = layoutBranch.getName();
+							}
+						}
 					}
-				}
-			}
-			%>
+					%>
 
-			<span class="nobr <%= layoutRevision == null ? "page-not-exportable" : StringPool.BLANK %>">
-				<%= HtmlUtil.escape(curLayout.getName(locale)) %>
+					<span class="nobr <%= layoutRevision == null ? "page-not-exportable" : StringPool.BLANK %>">
+						<%= HtmlUtil.escape(curLayout.getName(locale)) %>
 
-				<c:if test="<%= Validator.isNotNull(layoutBranchName) %>">
-					<span class="layout-variation-name">
-						[<liferay-ui:message key="<%= HtmlUtil.escape(layoutBranchName) %>" />]
+						<c:if test="<%= Validator.isNotNull(layoutBranchName) %>">
+							<span class="layout-variation-name">
+								[<liferay-ui:message key="<%= HtmlUtil.escape(layoutBranchName) %>" />]
+							</span>
+						</c:if>
+
+						<c:if test="<%= layoutRevision == null %>">
+							<liferay-ui:icon-help message="there-is-not-a-version-of-this-page-marked-as-ready-for-publication" />
+						</c:if>
 					</span>
+				</liferay-util:buffer>
+
+		<%
+				row.addText("left", "top", layoutDetails);
+			}
+			else {
+				row.addText("left", "top", HtmlUtil.escape(curLayout.getName(locale)));
+			}
+
+			JSPSearchEntry jspSearchEntry = new JSPSearchEntry();
+
+			jspSearchEntry.setAlign("left");
+			jspSearchEntry.setColspan(1);
+			jspSearchEntry.setPath("/html/portlet/layouts_admin/publish_layout_options.jsp");
+			jspSearchEntry.setValign("top");
+
+			row.addSearchEntry(jspSearchEntry);
+
+			row.addText("left", "top", LanguageUtil.get(pageContext, StringUtil.replace(curLayout.getType(), "_", "-")));
+
+			resultRows.add(row);
+		}
+		%>
+
+		<c:choose>
+			<c:when test="<%= !results.isEmpty() %>">
+				<div class="selected-pages" id="<portlet:namespace />pane">
+					<liferay-ui:search-iterator paginate="<%= false %>" searchContainer="<%= searchContainer %>" />
+				</div>
+			</c:when>
+			<c:otherwise>
+				<div class="alert alert-info">
+					<liferay-ui:message key="there-are-no-selected-pages-all-pages-will-therefore-be-exported" />
+				</div>
+			</c:otherwise>
+		</c:choose>
+
+		<aui:input name="scope" type="hidden" value='<%= (results.isEmpty() ? "all-pages" : "selected-pages") %>' />
+
+		<aui:button-row>
+			<aui:button href="<%= selectURL.toString() %>" value='<%= results.isEmpty() ? "select-pages" : "change-selection" %>' />
+		</aui:button-row>
+
+		<c:choose>
+			<c:when test="<%= layoutSetBranchId > 0 %>">
+				<aui:input name="layoutSetBranchId" type="hidden" value="<%= layoutSetBranchId %>" />
+			</c:when>
+			<c:otherwise>
+				<c:if test="<%= LayoutStagingUtil.isBranchingLayoutSet(selGroup, privateLayout) %>">
+
+					<%
+					List<LayoutSetBranch> layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(stagingGroup.getGroupId(), privateLayout);
+					%>
+
+					<aui:select label="site-pages-variation" name="layoutSetBranchId">
+
+						<%
+						for (LayoutSetBranch layoutSetBranch : layoutSetBranches) {
+							boolean selected = false;
+
+							if (layoutSetBranch.isMaster()) {
+								selected = true;
+							}
+						%>
+
+							<aui:option label="<%= HtmlUtil.escape(layoutSetBranch.getName()) %>" selected="<%= selected %>" value="<%= layoutSetBranch.getLayoutSetBranchId() %>" />
+
+						<%
+						}
+						%>
+
+					</aui:select>
 				</c:if>
+			</c:otherwise>
+		</c:choose>
 
-				<c:if test="<%= layoutRevision == null %>">
-					<liferay-ui:icon-help message="there-is-not-a-version-of-this-page-marked-as-ready-for-publication" />
-				</c:if>
-			</span>
-		</liferay-util:buffer>
+		<aui:input helpMessage="delete-missing-layouts-staging-help" label="delete-missing-layouts" name="<%= PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS %>" type="checkbox" />
 
-<%
-		row.addText("left", "top", layoutDetails);
-	}
-	else {
-		row.addText("left", "top", HtmlUtil.escape(curLayout.getName(locale)));
-	}
+		<aui:input inlineLabel="right" label="site-pages-settings" name="<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>" type="checkbox" value="<%= true %>" />
+	</aui:fieldset>
 
-	JSPSearchEntry jspSearchEntry = new JSPSearchEntry();
+	<aui:fieldset cssClass="portlet-data-section" label="look-and-feel">
+		<aui:input helpMessage="export-import-theme-help" label="theme" name="<%= PortletDataHandlerKeys.THEME %>" type="checkbox" value="<%= true %>" />
 
-	jspSearchEntry.setAlign("left");
-	jspSearchEntry.setColspan(1);
-	jspSearchEntry.setPath("/html/portlet/layouts_admin/publish_layout_options.jsp");
-	jspSearchEntry.setValign("top");
+		<aui:input helpMessage="export-import-theme-settings-help" label="theme-settings" name="<%= PortletDataHandlerKeys.THEME_REFERENCE %>" type="checkbox" value="<%= true %>" />
 
-	row.addSearchEntry(jspSearchEntry);
-
-	row.addText("left", "top", LanguageUtil.get(pageContext, StringUtil.replace(curLayout.getType(), "_", "-")));
-
-	resultRows.add(row);
-}
-%>
-
-<c:choose>
-	<c:when test="<%= !results.isEmpty() %>">
-		<div id="<portlet:namespace />pane">
-			<liferay-ui:search-iterator paginate="<%= false %>" searchContainer="<%= searchContainer %>" />
-		</div>
-	</c:when>
-	<c:otherwise>
-		<div class="alert alert-info">
-			<liferay-ui:message key="there-are-no-selected-pages-all-pages-will-therefore-be-exported" />
-		</div>
-	</c:otherwise>
-</c:choose>
-
-<aui:input name="scope" type="hidden" value='<%= (results.isEmpty() ? "all-pages" : "selected-pages") %>' />
-
-<aui:button-row>
-
-	<%
-	String taglibURL = "Liferay.Util.Window.refreshByChild('#" + renderResponse.getNamespace() + "exportPagesFm');";
-	%>
-
-	<aui:button onClick="<%= taglibURL %>" value='<%= results.isEmpty() ? "select-pages" : "change-selection" %>' />
-</aui:button-row>
-
-<aui:input helpMessage="delete-missing-layouts-staging-help" label="delete-missing-layouts" name="<%= PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS %>" type="checkbox" />
+		<aui:input inlineLabel="right" label="logo" name="<%= PortletDataHandlerKeys.LOGO %>" type="checkbox" value="<%= true %>" />
+	</aui:fieldset>
+</div>
 
 <aui:script use="aui-io-request">
 	var searchContainer = A.one('#<portlet:namespace /><%= searchContainer.getId(request, renderResponse.getNamespace()) %>');

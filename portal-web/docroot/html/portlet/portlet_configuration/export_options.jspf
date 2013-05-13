@@ -143,7 +143,7 @@
 							%>
 
 								<li>
-									<div class="portlet-msg-error"><%= LanguageUtil.get(pageContext, "error-initializing-import-controls") %></div>
+									<div class="alert alert-error"><%= LanguageUtil.get(pageContext, "error-initializing-import-controls") %></div>
 								</li>
 
 							<%
@@ -278,6 +278,7 @@
 		{
 			archivedSetupsNode: '#<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS %>Checkbox',
 			dialogTitle: '<%= UnicodeLanguageUtil.get(pageContext, "content-to-export") %>',
+			form: document.<portlet:namespace />fm1,
 			namespace: '<portlet:namespace />',
 			userPreferencesNode: '#<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES %>Checkbox'
 		}

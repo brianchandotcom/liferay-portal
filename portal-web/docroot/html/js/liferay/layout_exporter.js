@@ -12,10 +12,8 @@
 		function(options) {
 			options = options || {};
 
-			var namespace = options.namespace;
 			var obj = options.obj;
 			var pane = options.pane;
-			var publish = options.publish;
 
 			if (obj && obj.checked) {
 				pane = A.one(pane);
@@ -60,14 +58,12 @@
 		function(options) {
 			options = options || {};
 
-			var url = options.url;
 			var namespace = options.namespace;
 			var reviewers = options.reviewers;
-			var title = options.title;
 
 			var contents =
 				"<div>" +
-					"<form action='" + url + "' method='post'>";
+					"<form action='" + options.url + "' method='post'>";
 
 			if (reviewers.length > 0) {
 				contents +=
@@ -110,26 +106,19 @@
 		function(options) {
 			options = options || {};
 
-			var url = options.url;
-			var title = options.title;
-
-			var dialog = Liferay.Util.Window.getWindow(
+			Liferay.Util.openWindow(
 				{
 					dialog: {
-						destroyOnHide: true
+						align: Liferay.Util.Window.ALIGN_CENTER,
+						constrain: true,
+						modal: true,
+						width: 600
 					},
-					title: title
+					title: options.title,
+					uri: options.url
 				}
 			);
-
-			dialog.plug(
-				A.Plugin.IO,
-				{
-					uri: url
-				}
-			);
-		},
-		['aui-io-plugin-deprecated', 'liferay-util-window']
+		}
 	);
 
 	Liferay.provide(
@@ -138,10 +127,8 @@
 		function(options) {
 			options = options || {};
 
-			var namespace = options.namespace;
 			var obj = options.obj;
 			var pane = options.pane;
-			var publish = options.publish;
 
 			if (obj && obj.checked) {
 				pane = A.one(pane);

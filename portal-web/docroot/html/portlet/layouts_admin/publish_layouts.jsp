@@ -21,7 +21,7 @@ String cmd = ParamUtil.getString(request, "cmd", "publish_to_live");
 
 String tabs1 = ParamUtil.getString(request, "tabs1", "public-pages");
 
-String pagesRedirect = ParamUtil.getString(request, "pagesRedirect");
+String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 
 boolean selectPages = ParamUtil.getBoolean(request, "selectPages");
 boolean schedule = ParamUtil.getBoolean(request, "schedule");
@@ -170,7 +170,7 @@ if (selGroup.isStaged() && selGroup.isStagedRemotely()) {
 }
 
 portletURL.setParameter("struts_action", "/layouts_admin/edit_layouts");
-portletURL.setParameter("pagesRedirect", currentURL);
+portletURL.setParameter("closeRedirect", closeRedirect);
 portletURL.setParameter("groupId", String.valueOf(liveGroupId));
 portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
 
@@ -178,14 +178,14 @@ PortletURL selectURL = renderResponse.createRenderURL();
 
 selectURL.setParameter("struts_action", "/layouts_admin/publish_layouts");
 selectURL.setParameter(Constants.CMD, cmd);
-selectURL.setParameter("pagesRedirect", pagesRedirect);
+selectURL.setParameter("closeRedirect", closeRedirect);
 selectURL.setParameter("groupId", String.valueOf(stagingGroupId));
 selectURL.setParameter("selPlid", String.valueOf(selPlid));
 selectURL.setParameter("privateLayout", String.valueOf(privateLayout));
 selectURL.setParameter("layoutSetBranchId", String.valueOf(layoutSetBranchId));
 selectURL.setParameter("selectPages", String.valueOf(!selectPages));
 selectURL.setParameter("schedule", String.valueOf(schedule));
-selectURL.setWindowState(LiferayWindowState.EXCLUSIVE);
+selectURL.setWindowState(LiferayWindowState.POP_UP);
 
 request.setAttribute("edit_pages.jsp-groupId", new Long(stagingGroupId));
 request.setAttribute("edit_pages.jsp-selPlid", new Long(selPlid));
@@ -199,62 +199,19 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 %>
 
 <c:if test='<%= SessionMessages.contains(renderRequest, "requestProcessed") %>'>
-	<div class="alert alert-success">
 
-		<%
-		String successMessage = (String)SessionMessages.get(renderRequest, "requestProcessed");
-		%>
+	<%
+	String successMessage = (String)SessionMessages.get(renderRequest, "requestProcessed");
+	%>
 
-		<c:choose>
-			<c:when test='<%= Validator.isNotNull(successMessage) && !successMessage.equals("request_processed") %>'>
-				<%= HtmlUtil.escape(successMessage) %>
-			</c:when>
-			<c:otherwise>
-				<liferay-ui:message key="your-request-completed-successfully" />
-			</c:otherwise>
-		</c:choose>
-	</div>
+	<c:if test='<%= Validator.isNotNull(successMessage) && !successMessage.equals("request_processed") %>'>
+		<div class="alert alert-success">
+			<%= HtmlUtil.escape(successMessage) %>
+		</div>
+	</c:if>
 </c:if>
 
-<style type="text/css">
-	.tree-node-content .incomplete-layout {
-		color: #CCC;
-	}
-
-	#<portlet:namespace />pane td.first {
-		padding-top: 5px;
-	}
-
-	#<portlet:namespace />exportPagesFm .export-pages-panel-container {
-		margin: 1em 0;
-	}
-
-	#<portlet:namespace />exportPagesFm .export-pages-panel-container .lfr-panel-content{
-		padding: 1em;
-	}
-
-	#<portlet:namespace />exportPagesFm .selected-pages-option .field-content {
-		display: inline;
-	}
-
-	#<portlet:namespace />exportPagesFm .layout-variation-name {
-		color: #999;
-	}
-
-	#<portlet:namespace />exportPagesFm .page-not-exportable {
-		color: #933;
-	}
-
-	#<portlet:namespace />exportPagesFm .portlet-data-section legend {
-		font-size: 110%;
-	}
-
-	#<portlet:namespace />exportPagesFm .portlet-data-section .portlet-type-data-section .legend {
-		border-width: 0;
-	}
-</style>
-
-<aui:form action='<%= portletURL.toString() + "&etag=0&strip=0" %>' method="post" name="exportPagesFm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "refreshDialog();" %>' >
+<aui:form action='<%= portletURL.toString() + "&etag=0&strip=0" %>' method="post" name="exportPagesFm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "publishPages();" %>' >
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= cmd %>" />
 	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
@@ -356,7 +313,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 				<liferay-ui:message key="note-that-selecting-no-pages-from-tree-reverts-to-implicit-selection-of-all-pages" />
 			</div>
 
-			<div id="<portlet:namespace />pane">
+			<div class="selected-pages" id="<portlet:namespace />pane">
 				<liferay-util:include page="/html/portlet/layouts_admin/tree_js.jsp">
 					<liferay-util:param name="selectableTree" value="1" />
 					<liferay-util:param name="treeId" value="<%= treeKey %>" />
@@ -368,106 +325,56 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 			<aui:button-row>
 
 				<%
-				String taglibOnClick = "Liferay.Util.Window.refreshByChild('#" + renderResponse.getNamespace() + "exportPagesFm');";
+				String selectPagesURL = HttpUtil.setParameter(currentURL, "selectPages", false);
 				%>
 
-				<aui:button onClick="<%= taglibOnClick %>" value="select" />
+				<aui:button href="<%= selectPagesURL %>" value="select" />
 			</aui:button-row>
 		</c:when>
 		<c:otherwise>
-			<c:if test="<%= schedule %>">
-				<aui:nav-bar>
-					<aui:nav>
-						<aui:nav-item label="view-all" />
-						<aui:nav-item label="add" />
-					</aui:nav>
-				</aui:nav-bar>
-
-				<div class="hide" id="<portlet:namespace />publishedEvents">
-					<liferay-ui:header
-						title="scheduled-events"
-					/>
-
-					<div id="<portlet:namespace />scheduledPublishEventsDiv"></div>
-				</div>
-			</c:if>
-
 			<div id="<portlet:namespace />publishOptions">
-				<c:if test="<%= schedule %>">
-					<liferay-ui:header
-						title="new-event"
-					/>
-
+				<div class="export-dialog-tree">
 					<aui:input label="title" name="description" type="text" />
-				</c:if>
 
-				<c:choose>
-					<c:when test="<%= layoutSetBranchId > 0 %>">
-						<aui:input name="layoutSetBranchId" type="hidden" value="<%= layoutSetBranchId %>" />
-					</c:when>
-					<c:otherwise>
-						<c:if test="<%= LayoutStagingUtil.isBranchingLayoutSet(selGroup, privateLayout) %>">
-
-							<%
-							List<LayoutSetBranch> layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(stagingGroup.getGroupId(), privateLayout);
-							%>
-
-							<aui:select label="site-pages-variation" name="layoutSetBranchId">
-
-								<%
-								for (LayoutSetBranch layoutSetBranch : layoutSetBranches) {
-									boolean selected = false;
-
-									if (layoutSetBranch.isMaster()) {
-										selected = true;
-									}
-								%>
-
-									<aui:option label="<%= HtmlUtil.escape(layoutSetBranch.getName()) %>" selected="<%= selected %>" value="<%= layoutSetBranch.getLayoutSetBranchId() %>" />
-
-								<%
-								}
-								%>
-
-							</aui:select>
-						</c:if>
-					</c:otherwise>
-				</c:choose>
-
-				<liferay-ui:panel-container cssClass="export-pages-panel-container" extended="<%= true %>" id="layoutsAdminExportPagesPanelContainer" persistState="<%= true %>">
-					<c:if test="<%= !selGroup.isCompany() %>">
-						<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="layoutsAdminExportPagesPagesPanel" persistState="<%= true %>" title="pages">
-							<%@ include file="/html/portlet/layouts_admin/publish_layouts_select_pages.jspf" %>
-						</liferay-ui:panel>
+					<c:if test="<%= schedule %>">
+						<aui:fieldset cssClass="options-group" label="schedule">
+							<%@ include file="/html/portlet/layouts_admin/publish_layouts_scheduler.jspf" %>
+						</aui:fieldset>
 					</c:if>
 
-					<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= true %>" id="layoutsAdminExportPagesPortletsPanel" persistState="<%= true %>" title="applications">
-						<%@ include file="/html/portlet/layouts_admin/publish_layouts_portlets.jspf" %>
-					</liferay-ui:panel>
+					<c:if test="<%= !selGroup.isCompany() %>">
+						<aui:fieldset cssClass="options-group" label="pages">
+							<%@ include file="/html/portlet/layouts_admin/publish_layouts_select_pages.jspf" %>
+						</aui:fieldset>
+					</c:if>
+
+					<%@ include file="/html/portlet/layouts_admin/publish_layouts_portlets.jspf" %>
+
+					<aui:fieldset cssClass="options-group" label="application-configuration">
+						<%@ include file="/html/portlet/layouts_admin/publish_layouts_portlets_setup.jspf" %>
+					</aui:fieldset>
+
+					<aui:fieldset cssClass="options-group" label="content">
+						<%@ include file="/html/portlet/layouts_admin/publish_layouts_portlets_data.jspf" %>
+					</aui:fieldset>
 
 					<c:if test="<%= !selGroup.isCompany() %>">
-						<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= true %>" id="layoutsAdminExportPagesOptionsPanel" persistState="<%= true %>" title="other">
-							<%@ include file="/html/portlet/layouts_admin/publish_layouts_other.jspf" %>
-						</liferay-ui:panel>
+						<aui:fieldset cssClass="options-group" label="permissions">
+							<%@ include file="/html/portlet/layouts_admin/publish_layouts_permissions.jspf" %>
+						</aui:fieldset>
 					</c:if>
 
 					<c:if test="<%= !localPublishing %>">
-						<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= true %>" id="layoutsAdminExportPagesConnectionPanel" persistState="<%= true %>" title="remote-live-connection-settings">
+						<aui:fieldset cssClass="options-group" label="remote-live-connection-settings">
 							<%@ include file="/html/portlet/layouts_admin/publish_layouts_remote_options.jspf" %>
-						</liferay-ui:panel>
+						</aui:fieldset>
 					</c:if>
-
-					<c:if test="<%= schedule %>">
-						<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="layoutsAdminExportPagesSchedulePanel" persistState="<%= true %>" title="schedule">
-							<%@ include file="/html/portlet/layouts_admin/publish_layouts_scheduler.jspf" %>
-						</liferay-ui:panel>
-					</c:if>
-				</liferay-ui:panel-container>
+				</div>
 
 				<c:choose>
 					<c:when test="<%= schedule %>">
 						<aui:button-row>
-							<aui:button name="addButton" value="add-event" />
+							<aui:button name="addButton" onClick='<%= renderResponse.getNamespace() + "schedulePublishEvent();" %>' value="add-event" />
 						</aui:button-row>
 					</c:when>
 					<c:otherwise>
@@ -484,79 +391,52 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 <aui:script>
 	Liferay.provide(
 		window,
-		'<portlet:namespace />refreshDialog',
+		'<portlet:namespace />publishPages',
 		function() {
-			var A = AUI();
-
 			if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-" + publishActionKey + "-these-pages") %>')) {
-				var dialog = Liferay.Util.Window.getByChild('#<portlet:namespace />exportPagesFm');
-
-				if (dialog) {
-					dialog.io.set('uri', '<%= portletURL.toString() + "&etag=0&strip=0" %>');
-
-					dialog.io.set(
-						'form',
-						{
-							id: '<portlet:namespace />exportPagesFm'
-						}
-					);
-
-					dialog.io.start();
-				}
+				submitForm(document.<portlet:namespace />exportPagesFm);
 			}
-		},
-		['liferay-util-window']
+		}
 	);
 </aui:script>
 
-<aui:script use="aui-base,aui-modal">
-	var dialog = Liferay.Util.Window.getByChild('#<portlet:namespace />exportPagesFm');
+<aui:script use="liferay-export-import">
+	new Liferay.ExportImport(
+		{
+			categoriesNode: '#<%= PortletDataHandlerKeys.CATEGORIES %>Checkbox',
+			deleteMissingLayoutsNode: '#<%= PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS %>Checkbox',
+			deletePortletDataNode: '#<%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>Checkbox',
+			dialogTitle: '<%= UnicodeLanguageUtil.get(pageContext, "content-to-publish") %>',
+			form: document.<portlet:namespace />exportPagesFm,
+			layoutSetSettingsNode: '#<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>Checkbox',
+			logoNode: '#<%= PortletDataHandlerKeys.LOGO %>Checkbox',
+			namespace: '<portlet:namespace />',
+			rangeAllNode: '#rangeAll',
+			rangeDateRangeNode: '#rangeDateRange',
+			rangeLastNode: '#rangeLast',
+			rangeLastPublishNode: '#rangeLastPublish',
+			remoteAddressNode: '#<portlet:namespace />remoteAddress',
+			remoteDeletePortletDataNode: '#remoteDeletePortletDataCheckbox',
+			remotePortNode: '#<portlet:namespace />remotePort',
+			remotePathContextNode: '#<portlet:namespace />remotePathContext',
+			remoteGroupIdNode: '#<portlet:namespace />remoteGroupId',
+			secureConnectionNode: '#secureConnectionCheckbox',
+			themeNode: '#<%= PortletDataHandlerKeys.THEME %>Checkbox',
+			themeReferenceNode: '#<%= PortletDataHandlerKeys.THEME_REFERENCE %>Checkbox',
+			userPreferencesNode: '#<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES %>Checkbox'
+		}
+	);
+</aui:script>
 
-	if (dialog) {
-		dialog.io.set('uri', '<%= selectURL %>');
+<aui:script>
+	Liferay.Util.toggleRadio('<portlet:namespace />chooseApplications', '<portlet:namespace />selectApplications', ['<portlet:namespace />showChangeGlobalConfiguration']);
+	Liferay.Util.toggleRadio('<portlet:namespace />allApplications', '<portlet:namespace />showChangeGlobalConfiguration', ['<portlet:namespace />selectApplications']);
 
-		<c:if test="<%= schedule %>">
-			var toolbarViewButton = A.one('#<portlet:namespace />exportPagesFm .view-button');
-			var toolbarAddButton = A.one('#<portlet:namespace />exportPagesFm .add-button');
-			var addEventButton = A.one('#<portlet:namespace />addButton');
+	Liferay.Util.toggleRadio('<portlet:namespace />rangeDateRange','<portlet:namespace />startEndDate');
+	Liferay.Util.toggleRadio('<portlet:namespace />rangeAll','', ['<portlet:namespace />startEndDate']);
+	Liferay.Util.toggleRadio('<portlet:namespace />rangeLastPublish','', ['<portlet:namespace />startEndDate']);
+	Liferay.Util.toggleRadio('<portlet:namespace />rangeLast','', ['<portlet:namespace />startEndDate']);
 
-			var allEvents = A.one('#<portlet:namespace />publishedEvents');
-			var publishOptions = A.one('#<portlet:namespace />publishOptions');
-
-			var viewEvents = function() {
-				toolbarAddButton.removeClass('current');
-				toolbarViewButton.addClass('current');
-
-				allEvents.show();
-				publishOptions.hide();
-			};
-
-			addEventButton.on(
-				'click',
-				function(event) {
-					<portlet:namespace />schedulePublishEvent();
-
-					viewEvents();
-				}
-			);
-
-			toolbarAddButton.one('a').on(
-				'click',
-				function(event) {
-					toolbarAddButton.addClass('current');
-					toolbarViewButton.removeClass('current');
-
-					allEvents.hide();
-					publishOptions.show();
-				}
-			);
-
-			toolbarViewButton.one('a').on(
-				'click',
-				function(event) {
-					viewEvents();
-				}
-			);
-		</c:if>
-	}
+	Liferay.Util.toggleRadio('<portlet:namespace />chooseContent', '<portlet:namespace />selectContents', ['<portlet:namespace />showChangeGlobalContent']);
+	Liferay.Util.toggleRadio('<portlet:namespace />allContent', '<portlet:namespace />showChangeGlobalContent', ['<portlet:namespace />selectContents']);
 </aui:script>

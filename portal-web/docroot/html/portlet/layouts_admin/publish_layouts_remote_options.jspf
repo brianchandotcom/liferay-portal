@@ -14,24 +14,57 @@
  */
 --%>
 
-<div class="alert alert-info">
-	<liferay-ui:message key="export-the-selected-data-to-the-site-of-a-remote-portal-or-to-another-site-in-the-same-portal" />
+<div class="selected-labels" id="<portlet:namespace />selectedRemote">
+
+	<%
+	List<String> selectedRemote = new ArrayList<String>();
+
+	if (Validator.isNotNull(liveGroupTypeSettings.getProperty("remoteAddress"))) {
+		selectedRemote.add(liveGroupTypeSettings.getProperty("remoteAddress"));
+	}
+
+	if (Validator.isNotNull(liveGroupTypeSettings.getProperty("remotePort"))) {
+		selectedRemote.add(liveGroupTypeSettings.getProperty("remotePort"));
+	}
+
+	if (Validator.isNotNull(liveGroupTypeSettings.getProperty("remotePathContext"))) {
+		selectedRemote.add(liveGroupTypeSettings.getProperty("remotePathContext"));
+	}
+
+	if (Validator.isNotNull(liveGroupTypeSettings.getProperty("remoteGroupId"))) {
+		selectedRemote.add(liveGroupTypeSettings.getProperty("remoteGroupId"));
+	}
+
+	if (Validator.isNotNull(liveGroupTypeSettings.getProperty("secureConnection")) && liveGroupTypeSettings.getProperty("secureConnection").equals(Boolean.TRUE.toString())) {
+		selectedRemote.add(LanguageUtil.get(pageContext, "use-a-secure-network-connection"));
+	}
+	%>
+
+	<liferay-ui:message key="<%= StringUtil.merge(selectedRemote, StringPool.COMMA_AND_SPACE) %>" />
 </div>
 
-<aui:fieldset>
-	<aui:input label="remote-host-ip" name="remoteAddress" size="20" type="text" value='<%= liveGroupTypeSettings.getProperty("remoteAddress") %>' />
+<aui:a cssClass="modify-link" href="javascript:;" id="remoteLink" label="change" method="get" />
 
-	<aui:input label="remote-port" name="remotePort" size="10" type="text" value='<%= liveGroupTypeSettings.getProperty("remotePort") %>' />
+<div class="hide" id="<portlet:namespace />remote">
+	<div class="alert alert-info">
+		<liferay-ui:message key="export-the-selected-data-to-the-site-of-a-remote-portal-or-to-another-site-in-the-same-portal" />
+	</div>
 
-	<aui:input label="remote-path-context" name="remotePathContext" size="10" type="text" value='<%= liveGroupTypeSettings.getProperty("remotePathContext") %>' />
+	<aui:fieldset>
+		<aui:input label="remote-host-ip" name="remoteAddress" size="20" type="text" value='<%= liveGroupTypeSettings.getProperty("remoteAddress") %>' />
 
-	<aui:input label='<%= LanguageUtil.get(pageContext, "remote-site-id" ) %>' name="remoteGroupId" size="10" type="text" value='<%= liveGroupTypeSettings.getProperty("remoteGroupId") %>' />
+		<aui:input label="remote-port" name="remotePort" size="10" type="text" value='<%= liveGroupTypeSettings.getProperty("remotePort") %>' />
 
-	<aui:input name="remotePrivateLayout" type="hidden" value="<%= privateLayout %>" />
-</aui:fieldset>
+		<aui:input label="remote-path-context" name="remotePathContext" size="10" type="text" value='<%= liveGroupTypeSettings.getProperty("remotePathContext") %>' />
 
-<aui:fieldset>
-	<aui:input label="use-a-secure-network-connection" name="secureConnection" type="checkbox" value='<%= liveGroupTypeSettings.getProperty("secureConnection") %>' />
+		<aui:input label='<%= LanguageUtil.get(pageContext, "remote-site-id" ) %>' name="remoteGroupId" size="10" type="text" value='<%= liveGroupTypeSettings.getProperty("remoteGroupId") %>' />
 
-	<aui:input helpMessage="delete-portlet-data-help" label="delete-portlet-data-before-importing" name="<%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>" type="checkbox" />
-</aui:fieldset>
+		<aui:input name="remotePrivateLayout" type="hidden" value="<%= privateLayout %>" />
+	</aui:fieldset>
+
+	<aui:fieldset>
+		<aui:input label="use-a-secure-network-connection" name="secureConnection" type="checkbox" value='<%= liveGroupTypeSettings.getProperty("secureConnection") %>' />
+
+		<aui:input helpMessage="delete-portlet-data-help" id="remoteDeletePortletData" label="delete-portlet-data-before-importing" name="<%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>" type="checkbox" />
+	</aui:fieldset>
+</div>

@@ -82,7 +82,7 @@
 											<aui:input data-name='<%= LanguageUtil.get(locale, "delete-portlet-data") %>' label="delete-portlet-data-before-importing" name="<%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>" type="checkbox" />
 
 											<ul id="<portlet:namespace />showDeleteContentWarning">
-												<div class="portlet-msg-alert">
+												<div class="alert alert-block">
 													<liferay-ui:message key="delete-content-before-importing-warning" />
 
 													<liferay-ui:message key="delete-content-before-importing-suggestion" />
@@ -183,7 +183,7 @@
 						%>
 
 							<li class="tree-item">
-								<div class="portlet-msg-error">
+								<div class="alert alert-error">
 									<%= LanguageUtil.get(pageContext, "error-initializing-import-controls") %>
 								</div>
 							</li>
@@ -216,6 +216,7 @@
 		{
 			archivedSetupsNode: '#<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS %>Checkbox',
 			dialogTitle: '<%= UnicodeLanguageUtil.get(pageContext, "content-to-import") %>',
+			form: document.<portlet:namespace />fm1,
 			namespace: '<portlet:namespace />',
 			userPreferencesNode: '#<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES %>Checkbox'
 		}

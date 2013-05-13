@@ -1,0 +1,89 @@
+<%--
+/**
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<ul class="lfr-tree unstyled">
+	<li class="tree-item">
+		<aui:input checked="<%= true %>" helpMessage="all-applications-publish-help" id="allApplications" label="all-applications" name="<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>" type="radio" value="<%= true %>" />
+
+		<div class="hide" id="<portlet:namespace />globalConfiguration">
+			<aui:fieldset cssClass="portlet-data-section" label="all-applications">
+				<aui:input helpMessage="import-user-preferences-help" label="user-preferences" name="<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES %>" type="checkbox" value="<%= true %>" />
+			</aui:fieldset>
+		</div>
+
+		<ul class="hide" id="<portlet:namespace />showChangeGlobalConfiguration">
+			<li class="tree-item">
+				<div class="selected-labels" id="<portlet:namespace />selectedGlobalConfiguration">
+					<liferay-ui:message key="user-preferences" />
+				</div>
+
+				<aui:a cssClass="modify-link" href="javascript:;" id="globalConfigurationLink" label="change" method="get" />
+			</li>
+		</ul>
+
+		<aui:input helpMessage="choose-applications-publish-help" id="chooseApplications" label="choose-applications" name="<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>" type="radio" value="<%= false %>" />
+
+		<ul class="hide" id="<portlet:namespace />selectApplications">
+			<aui:input name="<%= PortletDataHandlerKeys.PORTLET_SETUP %>" type="hidden" value="<%= true %>" />
+
+			<%
+			Set<String> portletDataHandlerClasses = new HashSet<String>();
+
+			for (Portlet portlet : portletsList) {
+				String portletDataHandlerClass = portlet.getPortletDataHandlerClass();
+
+				if (!portletDataHandlerClasses.contains(portletDataHandlerClass)) {
+					portletDataHandlerClasses.add(portletDataHandlerClass);
+				}
+				else {
+					continue;
+				}
+
+				PortletDataHandler portletDataHandler = portlet.getPortletDataHandlerInstance();
+
+				try {
+					PortletDataHandlerControl[] controls = portletDataHandler.getExportControls();
+
+					if (controls != null) {
+						String rootPortletId = portlet.getRootPortletId();
+
+						boolean checked = GetterUtil.getBoolean(liveGroupTypeSettings.getProperty(StagingConstants.STAGED_PORTLET + portlet.getRootPortletId()), portletDataHandler.isPublishToLiveByDefault());
+			%>
+
+						<li class="tree-item">
+							<aui:input label="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>" name="<%= PortletDataHandlerKeys.PORTLET_SETUP + StringPool.UNDERLINE + rootPortletId %>" type="checkbox" value="<%= checked %>" />
+						</li>
+
+			<%
+					}
+				}
+				catch (PortletDataException pde) {
+				%>
+
+					<li class="tree-item">
+						<div class="alert alert-error">
+							<%= PortalUtil.getPortletTitle(portlet, application, locale) %>: <%= LanguageUtil.get(pageContext, "error-initializing-import-controls") %>
+						</div>
+					</li>
+
+			<%
+				}
+			}
+			%>
+
+		</ul>
+	</li>
+</ul>

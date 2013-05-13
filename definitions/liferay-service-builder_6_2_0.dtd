@@ -153,6 +153,12 @@ compound key will be created.
 See com.liferay.portal.service.persistence.LayoutPK for an example of a compound
 primary key.
 
+The mapping-key attribute is no longer supported.
+See http://issues.liferay.com/browse/LPS-32250 for detail.
+The one to many queries are already generated on the many side. The persistence
+on many side can query a list of many side entities by using one side entity's
+id.
+
 If the entity and mapping-table attributes are specified, then the Service
 Builder will assume you are specifying a many to many relationship.
 

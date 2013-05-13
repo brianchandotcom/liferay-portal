@@ -184,7 +184,7 @@ public class DataFactory {
 		_maxUserToGroupCount = maxUserToGroupCount;
 
 		_counter = new SimpleCounter(_maxGroupsCount + 1);
-		_dateCounter = new SimpleCounter();
+		_timeCounter = new SimpleCounter();
 		_futureDateCounter = new SimpleCounter();
 		_resourcePermissionCounter = new SimpleCounter();
 		_socialActivityCounter = new SimpleCounter();
@@ -1303,8 +1303,8 @@ public class DataFactory {
 		if (index == 0) {
 			messageId = mbThread.getRootMessageId();
 			parentMessageId = MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID;
-			subject = StringUtil.valueOf(classPK);
-			body = StringUtil.valueOf(classPK);
+			subject = String.valueOf(classPK);
+			body = String.valueOf(classPK);
 		}
 		else {
 			messageId = _counter.get();
@@ -1443,7 +1443,7 @@ public class DataFactory {
 
 		return newResourcePermissions(
 			AssetCategory.class.getName(),
-			StringUtil.valueOf(assetCategory.getCategoryId()), _sampleUserId);
+			String.valueOf(assetCategory.getCategoryId()), _sampleUserId);
 	}
 
 	public List<ResourcePermission> newResourcePermissions(
@@ -1456,7 +1456,7 @@ public class DataFactory {
 			resourcePermissions.add(
 				newResourcePermission(
 					AssetVocabulary.class.getName(),
-					StringUtil.valueOf(assetVocabulary.getVocabularyId()),
+					String.valueOf(assetVocabulary.getVocabularyId()),
 					_ownerRole.getRoleId(), _defaultUserId));
 
 			return resourcePermissions;
@@ -1464,16 +1464,15 @@ public class DataFactory {
 
 		return newResourcePermissions(
 			AssetVocabulary.class.getName(),
-			StringUtil.valueOf(assetVocabulary.getVocabularyId()),
-			_sampleUserId);
+			String.valueOf(assetVocabulary.getVocabularyId()), _sampleUserId);
 	}
 
 	public List<ResourcePermission> newResourcePermissions(
 		BlogsEntry blogsEntry) {
 
 		return newResourcePermissions(
-			BlogsEntry.class.getName(),
-			StringUtil.valueOf(blogsEntry.getEntryId()), _sampleUserId);
+			BlogsEntry.class.getName(), String.valueOf(blogsEntry.getEntryId()),
+			_sampleUserId);
 	}
 
 	public List<ResourcePermission> newResourcePermissions(
@@ -1485,7 +1484,7 @@ public class DataFactory {
 		resourcePermissions.add(
 			newResourcePermission(
 				DDLRecordSet.class.getName(),
-				StringUtil.valueOf(ddlRecordSet.getRecordSetId()),
+				String.valueOf(ddlRecordSet.getRecordSetId()),
 				_ownerRole.getRoleId(), _defaultUserId));
 
 		return resourcePermissions;
@@ -1500,7 +1499,7 @@ public class DataFactory {
 		resourcePermissions.add(
 			newResourcePermission(
 				DDMStructure.class.getName(),
-				StringUtil.valueOf(ddmStructure.getStructureId()),
+				String.valueOf(ddmStructure.getStructureId()),
 				_ownerRole.getRoleId(), _defaultUserId));
 
 		return resourcePermissions;
@@ -1511,13 +1510,13 @@ public class DataFactory {
 
 		return newResourcePermissions(
 			DLFileEntry.class.getName(),
-			StringUtil.valueOf(dlFileEntry.getFileEntryId()), _sampleUserId);
+			String.valueOf(dlFileEntry.getFileEntryId()), _sampleUserId);
 	}
 
 	public List<ResourcePermission> newResourcePermissions(DLFolder dlFolder) {
 		return newResourcePermissions(
-			DLFolder.class.getName(),
-			StringUtil.valueOf(dlFolder.getFolderId()), _sampleUserId);
+			DLFolder.class.getName(), String.valueOf(dlFolder.getFolderId()),
+			_sampleUserId);
 	}
 
 	public List<ResourcePermission> newResourcePermissions(
@@ -1525,13 +1524,13 @@ public class DataFactory {
 
 		return newResourcePermissions(
 			JournalArticle.class.getName(),
-			StringUtil.valueOf(journalArticleResource.getResourcePrimKey()),
+			String.valueOf(journalArticleResource.getResourcePrimKey()),
 			_sampleUserId);
 	}
 
 	public List<ResourcePermission> newResourcePermissions(Layout layout) {
 		return newResourcePermissions(
-			Layout.class.getName(), StringUtil.valueOf(layout.getPlid()),
+			Layout.class.getName(), String.valueOf(layout.getPlid()),
 			_sampleUserId);
 	}
 
@@ -1540,15 +1539,15 @@ public class DataFactory {
 
 		return newResourcePermissions(
 			MBCategory.class.getName(),
-			StringUtil.valueOf(mbCategory.getCategoryId()), _sampleUserId);
+			String.valueOf(mbCategory.getCategoryId()), _sampleUserId);
 	}
 
 	public List<ResourcePermission> newResourcePermissions(
 		MBMessage mbMessage) {
 
 		return newResourcePermissions(
-			MBMessage.class.getName(),
-			StringUtil.valueOf(mbMessage.getMessageId()), _sampleUserId);
+			MBMessage.class.getName(), String.valueOf(mbMessage.getMessageId()),
+			_sampleUserId);
 	}
 
 	public List<ResourcePermission> newResourcePermissions(
@@ -1572,14 +1571,14 @@ public class DataFactory {
 
 	public List<ResourcePermission> newResourcePermissions(WikiNode wikiNode) {
 		return newResourcePermissions(
-			WikiNode.class.getName(), StringUtil.valueOf(wikiNode.getNodeId()),
+			WikiNode.class.getName(), String.valueOf(wikiNode.getNodeId()),
 			_sampleUserId);
 	}
 
 	public List<ResourcePermission> newResourcePermissions(WikiPage wikiPage) {
 		return newResourcePermissions(
 			WikiPage.class.getName(),
-			StringUtil.valueOf(wikiPage.getResourcePrimKey()), _sampleUserId);
+			String.valueOf(wikiPage.getResourcePrimKey()), _sampleUserId);
 	}
 
 	public SocialActivity newSocialActivity(BlogsEntry blogsEntry) {
@@ -2028,7 +2027,7 @@ public class DataFactory {
 		socialActivity.setGroupId(groupId);
 		socialActivity.setCompanyId(_companyId);
 		socialActivity.setUserId(_sampleUserId);
-		socialActivity.setCreateDate(_CURRENT_TIME + _dateCounter.get());
+		socialActivity.setCreateDate(_CURRENT_TIME + _timeCounter.get());
 		socialActivity.setClassNameId(classNameId);
 		socialActivity.setClassPK(classPK);
 		socialActivity.setType(type);
@@ -2130,7 +2129,6 @@ public class DataFactory {
 	private Company _company;
 	private long _companyId;
 	private SimpleCounter _counter;
-	private SimpleCounter _dateCounter;
 	private DDMStructure _defaultDLDDMStructure;
 	private DLFileEntryType _defaultDLFileEntryType;
 	private User _defaultUser;
@@ -2169,6 +2167,7 @@ public class DataFactory {
 		FastDateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private Role _siteMemberRole;
 	private SimpleCounter _socialActivityCounter;
+	private SimpleCounter _timeCounter;
 	private Role _userRole;
 	private SimpleCounter _userScreenNameCounter;
 	private VirtualHost _virtualHost;

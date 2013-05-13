@@ -30,6 +30,8 @@ public class LayoutPrototypeExportActionableDynamicQuery
 	public LayoutPrototypeExportActionableDynamicQuery(
 		PortletDataContext portletDataContext) throws SystemException {
 		_portletDataContext = portletDataContext;
+
+		setGroupId(_portletDataContext.getScopeGroupId());
 	}
 
 	@Override

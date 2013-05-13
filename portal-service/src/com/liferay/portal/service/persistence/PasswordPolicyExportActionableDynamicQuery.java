@@ -30,6 +30,8 @@ public class PasswordPolicyExportActionableDynamicQuery
 	public PasswordPolicyExportActionableDynamicQuery(
 		PortletDataContext portletDataContext) throws SystemException {
 		_portletDataContext = portletDataContext;
+
+		setGroupId(_portletDataContext.getScopeGroupId());
 	}
 
 	@Override

@@ -447,6 +447,7 @@ create unique index IX_FD57097D on LayoutBranch (layoutSetBranchId, plid, name);
 create index IX_EAB317C8 on LayoutFriendlyURL (companyId);
 create index IX_742EF04A on LayoutFriendlyURL (groupId);
 create unique index IX_A6FC2B28 on LayoutFriendlyURL (groupId, privateLayout, friendlyURL, languageId);
+create index IX_83AE56AB on LayoutFriendlyURL (plid);
 create unique index IX_C5762E72 on LayoutFriendlyURL (plid, languageId);
 create index IX_9F80D54 on LayoutFriendlyURL (uuid_);
 create index IX_F4321A54 on LayoutFriendlyURL (uuid_, companyId);

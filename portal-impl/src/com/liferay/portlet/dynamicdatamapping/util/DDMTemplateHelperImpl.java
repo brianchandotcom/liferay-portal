@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
-import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
@@ -66,7 +65,8 @@ public class DDMTemplateHelperImpl implements DDMTemplateHelper {
 		return null;
 	}
 
-	public String getAutocompleteJSON(HttpServletRequest request)
+	public String getAutocompleteJSON(
+			HttpServletRequest request, String language)
 		throws Exception {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -75,7 +75,7 @@ public class DDMTemplateHelperImpl implements DDMTemplateHelper {
 		JSONObject variablesJSONObject = JSONFactoryUtil.createJSONObject();
 
 		for (TemplateVariableDefinition templateVariableDefinition :
-				getAutocompleteTemplateVariableDefinitions(request)) {
+				getAutocompleteTemplateVariableDefinitions(request, language)) {
 
 			Class<?> clazz = templateVariableDefinition.getClazz();
 
@@ -138,7 +138,7 @@ public class DDMTemplateHelperImpl implements DDMTemplateHelper {
 
 	protected List<TemplateVariableDefinition>
 			getAutocompleteTemplateVariableDefinitions(
-				HttpServletRequest request)
+				HttpServletRequest request, String language)
 		throws Exception {
 
 		List<TemplateVariableDefinition> templateVariableDefinitions =
@@ -168,7 +168,7 @@ public class DDMTemplateHelperImpl implements DDMTemplateHelper {
 
 		Map<String, TemplateVariableGroup> templateVariableGroups =
 			TemplateContextHelper.getTemplateVariableGroups(
-				classNameId, classPK, themeDisplay.getLocale());
+				classNameId, classPK, language, themeDisplay.getLocale());
 
 		for (TemplateVariableGroup templateVariableGroup :
 				templateVariableGroups.values()) {
@@ -187,10 +187,7 @@ public class DDMTemplateHelperImpl implements DDMTemplateHelper {
 			_TEMPLATE_ID, _TEMPLATE_CONTENT);
 
 		Template template = TemplateManagerUtil.getTemplate(
-			TemplateConstants.LANG_TYPE_FTL, templateResource,
-			TemplateContextType.STANDARD);
-
-		template.prepare(request);
+			language, templateResource, TemplateContextType.STANDARD);
 
 		for (String key : template.getKeys()) {
 			Object value = template.get(key);

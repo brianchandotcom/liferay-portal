@@ -35,7 +35,7 @@ else if (template != null) {
 	classNameId = template.getClassNameId();
 }
 
-templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(classNameId, classPK, locale);
+templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(classNameId, classPK, language, locale);
 %>
 
 <aui:input name="scriptContent" type="hidden" value="<%= script %>" />
@@ -312,7 +312,7 @@ templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(classNa
 		if (AutoComplete) {
 			var processor = new AutoComplete(
 				{
-					variables: <%= DDMTemplateHelperUtil.getAutocompleteJSON(request) %>
+					variables: <%= DDMTemplateHelperUtil.getAutocompleteJSON(request, language) %>
 				}
 			);
 

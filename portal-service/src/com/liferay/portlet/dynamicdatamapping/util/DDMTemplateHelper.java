@@ -26,7 +26,8 @@ public interface DDMTemplateHelper {
 
 	public DDMStructure fetchStructure(DDMTemplate template);
 
-	public String getAutocompleteJSON(HttpServletRequest request)
+	public String getAutocompleteJSON(
+			HttpServletRequest request, String language)
 		throws Exception;
 
 }

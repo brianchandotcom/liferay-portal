@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.template.AbstractTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.TemplateResourceThreadLocal;
@@ -65,7 +66,15 @@ public class VelocityTemplate extends AbstractTemplate {
 	}
 
 	public String[] getKeys() {
-		return (String[])_velocityContext.getKeys();
+		Object[] keyObjects = _velocityContext.getKeys();
+		Object[] innerKeyObjects =
+			_velocityContext.getChainedContext().getKeys();
+
+		String[] keys = new String[keyObjects.length + innerKeyObjects.length];
+
+		ArrayUtil.combine(keyObjects, innerKeyObjects, keys);
+
+		return keys;
 	}
 
 	public void put(String key, Object value) {

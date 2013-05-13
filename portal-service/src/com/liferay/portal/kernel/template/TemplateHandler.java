@@ -79,7 +79,7 @@ public interface TemplateHandler {
 	public String getTemplatesHelpPropertyKey();
 
 	public Map<String, TemplateVariableGroup> getTemplateVariableGroups(
-			long classPK, Locale locale)
+			long classPK, String language, Locale locale)
 		throws Exception;
 
 }

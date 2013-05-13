@@ -139,7 +139,7 @@ public class NavItem implements Serializable {
 	public void icon() throws Exception {
 		Object velocityTaglib = _template.get("theme");
 
-		Method method = (Method)_template.get("velocityTaglib#layoutIcon");
+		Method method = (Method)_template.get("velocityTaglib_layoutIcon");
 
 		method.invoke(velocityTaglib, _layout);
 	}

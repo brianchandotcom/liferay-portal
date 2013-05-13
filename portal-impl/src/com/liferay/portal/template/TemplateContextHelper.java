@@ -121,7 +121,7 @@ import org.apache.struts.tiles.ComponentContext;
 public class TemplateContextHelper {
 
 	public static Map<String, TemplateVariableGroup> getTemplateVariableGroups(
-			long classNameId, long classPK, Locale locale)
+			long classNameId, long classPK, String language, Locale locale)
 		throws Exception {
 
 		TemplateHandler templateHandler =
@@ -132,13 +132,8 @@ public class TemplateContextHelper {
 		}
 
 		Map<String, TemplateVariableGroup> templateVariableGroups =
-			templateHandler.getTemplateVariableGroups(classPK, locale);
-
-		TemplateVariableGroup utilTemplateVariableGroup =
-			templateVariableGroups.get("util");
-
-		utilTemplateVariableGroup.addVariable(
-			"http-request", HttpServletRequest.class, "request");
+			templateHandler.getTemplateVariableGroups(
+				classPK, language, locale);
 
 		TemplateVariableGroup portalServicesTemplateVariableGroup =
 			new TemplateVariableGroup("portal-services");
@@ -677,7 +672,7 @@ public class TemplateContextHelper {
 			Method method = clazz.getMethod(
 				"layoutIcon", new Class[] {Layout.class});
 
-			variables.put("velocityTaglib#layoutIcon", method);
+			variables.put("velocityTaglib_layoutIcon", method);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

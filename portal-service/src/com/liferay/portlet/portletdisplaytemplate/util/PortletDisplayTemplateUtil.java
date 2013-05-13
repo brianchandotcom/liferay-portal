@@ -56,9 +56,9 @@ public class PortletDisplayTemplateUtil {
 	}
 
 	public static Map<String, TemplateVariableGroup>
-		getTemplateVariableGroups() {
+		getTemplateVariableGroups(String language) {
 
-		return getPortletDisplayTemplate().getTemplateVariableGroups();
+		return getPortletDisplayTemplate().getTemplateVariableGroups(language);
 	}
 
 	public static String renderDDMTemplate(

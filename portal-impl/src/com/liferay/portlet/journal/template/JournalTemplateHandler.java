@@ -54,11 +54,11 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 
 	@Override
 	public Map<String, TemplateVariableGroup> getTemplateVariableGroups(
-			long classPK, Locale locale)
+			long classPK, String language, Locale locale)
 		throws Exception {
 
 		Map<String, TemplateVariableGroup> templateVariableGroups =
-			super.getTemplateVariableGroups(classPK, locale);
+			super.getTemplateVariableGroups(classPK, language, locale);
 
 		TemplateVariableGroup journalServicesTemplateVariableGroup =
 			new TemplateVariableGroup("web-content-services");
@@ -75,6 +75,17 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 			journalServicesTemplateVariableGroup);
 
 		return templateVariableGroups;
+	}
+
+	@Override
+	protected TemplateVariableGroup getUtilTemplateVariableGroup() {
+		TemplateVariableGroup utilTemplateVariableGroup =
+			super.getUtilTemplateVariableGroup();
+
+		utilTemplateVariableGroup.addVariable(
+			"xml-request", String.class, "xmlRequest");
+
+		return utilTemplateVariableGroup;
 	}
 
 }

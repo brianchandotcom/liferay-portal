@@ -28,10 +28,10 @@ public abstract class BasePortletDisplayTemplateHandler
 	extends BaseTemplateHandler {
 
 	public Map<String, TemplateVariableGroup> getTemplateVariableGroups(
-			long classPK, Locale locale)
+			long classPK, String language, Locale locale)
 		throws Exception {
 
-		return PortletDisplayTemplateUtil.getTemplateVariableGroups();
+		return PortletDisplayTemplateUtil.getTemplateVariableGroups(language);
 	}
 
 }

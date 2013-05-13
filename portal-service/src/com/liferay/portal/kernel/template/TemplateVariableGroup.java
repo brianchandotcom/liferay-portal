@@ -107,7 +107,7 @@ public class TemplateVariableGroup {
 		_autocompleteEnabled = autocompleteEnabled;
 	}
 
-	private boolean _autocompleteEnabled;
+	private boolean _autocompleteEnabled = true;
 	private String _label;
 	private Collection<TemplateVariableDefinition>
 		_templateVariableDefinitions =

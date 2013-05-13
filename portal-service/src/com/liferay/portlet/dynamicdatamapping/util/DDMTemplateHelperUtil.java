@@ -29,10 +29,11 @@ public class DDMTemplateHelperUtil {
 		return getDDMTemplateHelper().fetchStructure(ddmTemplate);
 	}
 
-	public static String getAutocompleteJSON(HttpServletRequest request)
+	public static String getAutocompleteJSON(
+			HttpServletRequest request, String language)
 		throws Exception {
 
-		return getDDMTemplateHelper().getAutocompleteJSON(request);
+		return getDDMTemplateHelper().getAutocompleteJSON(request, language);
 	}
 
 	public static DDMTemplateHelper getDDMTemplateHelper() {

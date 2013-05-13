@@ -164,7 +164,9 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 		return portletDisplayDDMTemplateId;
 	}
 
-	public Map<String, TemplateVariableGroup> getTemplateVariableGroups() {
+	public Map<String, TemplateVariableGroup> getTemplateVariableGroups(
+			String language) {
+
 		Map<String, TemplateVariableGroup> templateVariableGroups =
 			new LinkedHashMap<String, TemplateVariableGroup>();
 
@@ -207,14 +209,17 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 			"http-request", HttpServletRequest.class,
 			PortletDisplayTemplateConstants.REQUEST);
 		utilTemplateVariableGroup.addVariable(
-			"liferay-taglib", VelocityTaglib.class,
-			PortletDisplayTemplateConstants.TAGLIB_LIFERAY);
-		utilTemplateVariableGroup.addVariable(
 			"render-request", RenderRequest.class,
 			PortletDisplayTemplateConstants.RENDER_REQUEST);
 		utilTemplateVariableGroup.addVariable(
 			"render-response", RenderResponse.class,
 			PortletDisplayTemplateConstants.RENDER_RESPONSE);
+
+		if (language.equals(TemplateConstants.LANG_TYPE_VM)) {
+			utilTemplateVariableGroup.addVariable(
+				"liferay-taglib", VelocityTaglib.class,
+				PortletDisplayTemplateConstants.TAGLIB_LIFERAY);
+		}
 
 		templateVariableGroups.put("util", utilTemplateVariableGroup);
 

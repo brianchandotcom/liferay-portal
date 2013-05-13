@@ -57,6 +57,8 @@ public interface DDMDisplay {
 
 	public String getStorageType();
 
+	public String getStructureType();
+
 	public long[] getTemplateClassNameIds(long classNameId);
 
 	public long getTemplateHandlerClassNameId(DDMTemplate template);
@@ -82,4 +84,5 @@ public interface DDMDisplay {
 
 	public boolean isShowStructureSelector();
 
-}
+}	public String getStructureType();
+

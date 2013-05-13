@@ -391,7 +391,6 @@ if (Validator.isNotNull(structureAvailableFields)) {
 					groupId: <%= groupId %>,
 					refererPortletName: '<%= PortletKeys.JOURNAL %>',
 					structureName: 'structure',
-					structureType: 'com.liferay.portlet.journal.model.JournalArticle',
 					struts_action: '/dynamic_data_mapping/select_structure',
 					title: '<%= UnicodeLanguageUtil.get(pageContext, "structures") %>'
 				},

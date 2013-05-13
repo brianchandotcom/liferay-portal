@@ -148,7 +148,6 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 				showGlobalScope: 'true',
 				showManageTemplates: 'false',
 				structureName: 'metadata-set',
-				structureType: 'com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata',
 				title: '<%= UnicodeLanguageUtil.get(pageContext, "metadata-sets") %>'
 			}
 		);

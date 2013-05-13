@@ -223,7 +223,6 @@ if (Validator.isNotNull(script)) {
 				showGlobalScope: true,
 				showManageTemplates: false,
 				structureName: '<%= HtmlUtil.escapeJS(scopeStructureName) %>',
-				structureType: '<%= HtmlUtil.escapeJS(scopeStructureType) %>',
 				struts_action: '/dynamic_data_mapping/select_structure',
 				title: '<%= HtmlUtil.escapeJS(scopeTitle) %>'
 			},

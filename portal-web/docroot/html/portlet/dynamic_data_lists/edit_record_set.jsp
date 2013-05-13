@@ -155,7 +155,6 @@ if (ddmStructureId > 0) {
 				refererPortletName: '<%= portlet.getPortletName() %>',
 				refererWebDAVToken: '<%= portlet.getWebDAVStorageToken() %>',
 				structureName: 'data-definition',
-				structureType: 'com.liferay.portlet.dynamicdatalists.model.DDLRecordSet',
 				struts_action: '/dynamic_data_mapping/select_structure',
 				title: '<%= UnicodeLanguageUtil.get(pageContext, "data-definitions") %>'
 			},

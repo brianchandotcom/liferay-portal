@@ -102,6 +102,11 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 	}
 
 	@Override
+	public String getStructureType() {
+		return JournalArticle.class.getName();
+	}
+
+	@Override
 	public long getTemplateHandlerClassNameId(DDMTemplate template) {
 		return PortalUtil.getClassNameId(JournalArticle.class);
 	}

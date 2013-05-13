@@ -43,6 +43,11 @@ public class DDLDDMDisplay extends BaseDDMDisplay {
 	}
 
 	@Override
+	public String getStructureType() {
+		return DDLRecordSet.class.getName();
+	}
+
+	@Override
 	public long getTemplateHandlerClassNameId(DDMTemplate template) {
 		return PortalUtil.getClassNameId(DDLRecordSet.class);
 	}

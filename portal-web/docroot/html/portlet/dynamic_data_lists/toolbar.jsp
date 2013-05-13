@@ -60,7 +60,6 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 						refererPortletName: '<%= portlet.getPortletName() %>',
 						refererWebDAVToken: '<%= portlet.getWebDAVStorageToken() %>',
 						structureName: 'data-definition',
-						structureType: 'com.liferay.portlet.dynamicdatalists.model.DDLRecordSet',
 						title: '<%= UnicodeLanguageUtil.get(pageContext, "data-definitions") %>'
 					}
 				);

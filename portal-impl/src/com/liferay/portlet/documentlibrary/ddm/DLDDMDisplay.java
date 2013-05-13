@@ -38,4 +38,9 @@ public class DLDDMDisplay extends BaseDDMDisplay {
 		return "xml";
 	}
 
+    @Override
+	public String getStructureType() {
+		return DLFileEntryMetadata.class.getName();
+	}
+
 }

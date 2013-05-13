@@ -1299,7 +1299,6 @@
 
 			ddmURL.setParameter('scopeAvailableFields', config.availableFields);
 			ddmURL.setParameter('scopeStructureName', config.structureName);
-			ddmURL.setParameter('scopeStructureType', config.structureType);
 			ddmURL.setParameter('scopeTemplateMode', config.templateMode);
 			ddmURL.setParameter('scopeTemplateType', config.templateType);
 			ddmURL.setParameter('scopeTitle', config.title);

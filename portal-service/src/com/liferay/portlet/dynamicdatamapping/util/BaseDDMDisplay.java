@@ -144,6 +144,10 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 		return StringPool.BLANK;
 	}
 
+	public String getStructureType() {
+		return StringPool.BLANK;
+	}
+
 	@Override
 	public long[] getTemplateClassNameIds(long classNameId) {
 		if (classNameId > 0) {

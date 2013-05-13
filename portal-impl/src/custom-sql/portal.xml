@@ -68,7 +68,7 @@
 	<sql id="com.liferay.portal.service.impl.ResourcePermissionLocalServiceImpl.findMissingResourcePermissions">
 		<![CDATA[
 			SELECT
-				TEMP_TABLE.companyId, TEMP_TABLE.name, TEMP_TABLE.scope, TEMP_TABLE.primKey, Role_.roleId
+				TEMP_TABLE.companyId AS companyId, TEMP_TABLE.name AS name, TEMP_TABLE.scope AS scope, TEMP_TABLE.primKey AS primKey, Role_.roleId AS roleId
 			FROM (
 				SELECT
 					DISTINCT ResourcePermission.companyId, ResourcePermission.name, ResourcePermission.scope, ResourcePermission.primKey

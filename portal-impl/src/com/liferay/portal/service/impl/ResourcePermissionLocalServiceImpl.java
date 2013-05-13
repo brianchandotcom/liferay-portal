@@ -206,11 +206,11 @@ public class ResourcePermissionLocalServiceImpl
 
 			sqlQuery = session.createSQLQuery(sql);
 
-			sqlQuery.addScalar("TEMP_TABLE.companyId", Type.LONG);
-			sqlQuery.addScalar("TEMP_TABLE.name", Type.STRING);
-			sqlQuery.addScalar("TEMP_TABLE.scope", Type.INTEGER);
-			sqlQuery.addScalar("TEMP_TABLE.primKey", Type.STRING);
-			sqlQuery.addScalar("Role_.roleId", Type.LONG);
+			sqlQuery.addScalar("companyId", Type.LONG);
+			sqlQuery.addScalar("name", Type.STRING);
+			sqlQuery.addScalar("scope", Type.INTEGER);
+			sqlQuery.addScalar("primKey", Type.STRING);
+			sqlQuery.addScalar("roleId", Type.LONG);
 
 			qPos = QueryPos.getInstance(sqlQuery);
 

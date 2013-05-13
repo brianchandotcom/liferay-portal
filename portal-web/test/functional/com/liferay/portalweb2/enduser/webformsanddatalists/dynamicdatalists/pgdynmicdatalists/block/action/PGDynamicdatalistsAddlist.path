@@ -1,17 +1,17 @@
 <html>
 <head>
-<title>CPDynamicdatalistsAddlist</title>
+<title>PGDynamicdatalistsAddlist</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">CPDynamicdatalistsAddlist</td></tr>
+<tr><td rowspan="1" colspan="3">PGDynamicdatalistsAddlist</td></tr>
 </thead>
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>CPDynamicdatalistsAddlist</td>
+	<td>PGDynamicdatalistsAddlist</td>
 </tr>
 <tr>
 	<td></td>

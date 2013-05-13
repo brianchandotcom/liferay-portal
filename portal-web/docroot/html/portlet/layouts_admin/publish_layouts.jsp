@@ -24,7 +24,6 @@ String tabs1 = ParamUtil.getString(request, "tabs1", "public-pages");
 String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 
 boolean selectPages = ParamUtil.getBoolean(request, "selectPages");
-boolean schedule = ParamUtil.getBoolean(request, "schedule");
 
 Group selGroup = (Group)request.getAttribute(WebKeys.GROUP);
 
@@ -184,7 +183,6 @@ selectURL.setParameter("selPlid", String.valueOf(selPlid));
 selectURL.setParameter("privateLayout", String.valueOf(privateLayout));
 selectURL.setParameter("layoutSetBranchId", String.valueOf(layoutSetBranchId));
 selectURL.setParameter("selectPages", String.valueOf(!selectPages));
-selectURL.setParameter("schedule", String.valueOf(schedule));
 selectURL.setWindowState(LiferayWindowState.POP_UP);
 
 request.setAttribute("edit_pages.jsp-groupId", new Long(stagingGroupId));
@@ -334,13 +332,9 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 		<c:otherwise>
 			<div id="<portlet:namespace />publishOptions">
 				<div class="export-dialog-tree">
-					<aui:input label="title" name="description" type="text" />
-
-					<c:if test="<%= schedule %>">
-						<aui:fieldset cssClass="options-group" label="schedule">
-							<%@ include file="/html/portlet/layouts_admin/publish_layouts_scheduler.jspf" %>
-						</aui:fieldset>
-					</c:if>
+					<aui:fieldset cssClass="options-group" label="date">
+						<%@ include file="/html/portlet/layouts_admin/publish_layouts_scheduler.jspf" %>
+					</aui:fieldset>
 
 					<c:if test="<%= !selGroup.isCompany() %>">
 						<aui:fieldset cssClass="options-group" label="pages">
@@ -371,18 +365,10 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 					</c:if>
 				</div>
 
-				<c:choose>
-					<c:when test="<%= schedule %>">
-						<aui:button-row>
-							<aui:button name="addButton" onClick='<%= renderResponse.getNamespace() + "schedulePublishEvent();" %>' value="add-event" />
-						</aui:button-row>
-					</c:when>
-					<c:otherwise>
-						<aui:button-row>
-							<aui:button name="publishButton" type="submit" value="<%= publishActionKey %>" />
-						</aui:button-row>
-					</c:otherwise>
-				</c:choose>
+				<aui:button-row>
+					<aui:button id="addButton" name="addButton" onClick='<%= renderResponse.getNamespace() + "schedulePublishEvent();" %>' value="add-event" />
+					<aui:button id="publishButton" name="publishButton" type="submit" value="<%= publishActionKey %>" />
+				</aui:button-row>
 			</div>
 		</c:otherwise>
 	</c:choose>
@@ -398,6 +384,20 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 			}
 		}
 	);
+
+	Liferay.Util.toggleRadio('<portlet:namespace />chooseApplications', '<portlet:namespace />selectApplications', ['<portlet:namespace />showChangeGlobalConfiguration']);
+	Liferay.Util.toggleRadio('<portlet:namespace />allApplications', '<portlet:namespace />showChangeGlobalConfiguration', ['<portlet:namespace />selectApplications']);
+
+	Liferay.Util.toggleRadio('<portlet:namespace />rangeDateRange','<portlet:namespace />startEndDate');
+	Liferay.Util.toggleRadio('<portlet:namespace />rangeAll','', ['<portlet:namespace />startEndDate']);
+	Liferay.Util.toggleRadio('<portlet:namespace />rangeLastPublish','', ['<portlet:namespace />startEndDate']);
+	Liferay.Util.toggleRadio('<portlet:namespace />rangeLast','', ['<portlet:namespace />startEndDate']);
+
+	Liferay.Util.toggleRadio('<portlet:namespace />chooseContent', '<portlet:namespace />selectContents', ['<portlet:namespace />showChangeGlobalContent']);
+	Liferay.Util.toggleRadio('<portlet:namespace />allContent', '<portlet:namespace />showChangeGlobalContent', ['<portlet:namespace />selectContents']);
+
+	Liferay.Util.toggleRadio('<portlet:namespace />publishingEventNow', '<portlet:namespace />publishButton', ['<portlet:namespace />selectSchedule', '<portlet:namespace />addButton']);
+	Liferay.Util.toggleRadio('<portlet:namespace />publishingEventSchedule', ['<portlet:namespace />selectSchedule', '<portlet:namespace />addButton'], '<portlet:namespace />publishButton');
 </aui:script>
 
 <aui:script use="liferay-export-import">
@@ -426,17 +426,4 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 			userPreferencesNode: '#<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES %>Checkbox'
 		}
 	);
-</aui:script>
-
-<aui:script>
-	Liferay.Util.toggleRadio('<portlet:namespace />chooseApplications', '<portlet:namespace />selectApplications', ['<portlet:namespace />showChangeGlobalConfiguration']);
-	Liferay.Util.toggleRadio('<portlet:namespace />allApplications', '<portlet:namespace />showChangeGlobalConfiguration', ['<portlet:namespace />selectApplications']);
-
-	Liferay.Util.toggleRadio('<portlet:namespace />rangeDateRange','<portlet:namespace />startEndDate');
-	Liferay.Util.toggleRadio('<portlet:namespace />rangeAll','', ['<portlet:namespace />startEndDate']);
-	Liferay.Util.toggleRadio('<portlet:namespace />rangeLastPublish','', ['<portlet:namespace />startEndDate']);
-	Liferay.Util.toggleRadio('<portlet:namespace />rangeLast','', ['<portlet:namespace />startEndDate']);
-
-	Liferay.Util.toggleRadio('<portlet:namespace />chooseContent', '<portlet:namespace />selectContents', ['<portlet:namespace />showChangeGlobalContent']);
-	Liferay.Util.toggleRadio('<portlet:namespace />allContent', '<portlet:namespace />showChangeGlobalContent', ['<portlet:namespace />selectContents']);
 </aui:script>

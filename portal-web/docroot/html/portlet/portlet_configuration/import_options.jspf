@@ -117,7 +117,7 @@
 
 														<c:choose>
 															<c:when test="<%= metadataControls.length > 1 %>">
-																<ul id="<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA %>_<%= selPortlet.getRootPortletId() %>Controls">
+																<ul class="lfr-tree unstyled" id="<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA %>_<%= selPortlet.getRootPortletId() %>Controls">
 																	<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
 																</ul>
 															</c:when>

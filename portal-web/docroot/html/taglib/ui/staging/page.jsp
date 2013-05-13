@@ -48,8 +48,7 @@ else {
 	}
 }
 
-String publishNowDialogTitle = null;
-String publishScheduleDialogTitle = null;
+String publishDialogTitle = null;
 
 Group liveGroup = null;
 Group stagingGroup = null;
@@ -77,36 +76,30 @@ if (groupId <= 0) {
 }
 
 if (group.isCompany()) {
-	publishNowDialogTitle = "publish-to-remote-live-now";
-	publishScheduleDialogTitle = "schedule-publication-to-remote-live";
+	publishDialogTitle = "publish-to-remote-live";
 }
 else {
 	layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(stagingGroup.getGroupId(), privateLayout);
 
 	if (group.isStaged() && group.isStagedRemotely()) {
 		if ((layoutSetBranchId > 0) && (layoutSetBranches.size() > 1)) {
-			publishNowDialogTitle = "publish-x-to-remote-live-now";
-			publishScheduleDialogTitle = "schedule-publication-of-x-to-remote-live";
+			publishDialogTitle = "publish-x-to-remote-live";
 		}
 		else {
-			publishNowDialogTitle = "publish-to-remote-live-now";
-			publishScheduleDialogTitle = "schedule-publication-to-remote-live";
+			publishDialogTitle = "publish-to-remote-live";
 		}
 	}
 	else {
 		if ((layoutSetBranchId > 0) && (layoutSetBranches.size() > 1)) {
-			publishNowDialogTitle = "publish-x-to-live-now";
-			publishScheduleDialogTitle = "schedule-publication-of-x-to-live";
+			publishDialogTitle = "publish-x-to-live";
 		}
 		else {
-			publishNowDialogTitle = "publish-to-live-now";
-			publishScheduleDialogTitle = "schedule-publication-to-live";
+			publishDialogTitle = "publish-to-live";
 		}
 	}
 }
 
-String publishNowMessage = LanguageUtil.get(pageContext, publishNowDialogTitle);
-String publishScheduleMessage = LanguageUtil.get(pageContext, publishScheduleDialogTitle);
+String publishMessage = LanguageUtil.get(pageContext, publishDialogTitle);
 %>
 
 <liferay-portlet:renderURL plid="<%= plid %>" portletMode="<%= PortletMode.VIEW.toString() %>" portletName="<%= PortletKeys.LAYOUTS_ADMIN %>" varImpl="publishRenderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">

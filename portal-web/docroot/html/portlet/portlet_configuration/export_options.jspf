@@ -116,7 +116,7 @@
 													<c:when test="<%= metadataControls.length > 1 %>">
 														<li class="tree-item">
 															<aui:fieldset cssClass="portlet-type-data-section" label="<%= metadataControls[i].getControlName() %>">
-																<ul id="<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA %>_<%= selPortlet.getRootPortletId() %>Controls">
+																<ul class="lfr-tree unstyled" id="<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA %>_<%= selPortlet.getRootPortletId() %>Controls">
 																	<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
 																</ul>
 															</aui:fieldset>

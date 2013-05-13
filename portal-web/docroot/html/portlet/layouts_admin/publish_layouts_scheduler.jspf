@@ -40,21 +40,29 @@ if (scheduleCMD.equals("schedule_copy_from_live")) {
 
 <ul class="lfr-tree unstyled">
 	<li class="tree-item">
-		<aui:input name="jobName" type="hidden" />
+		<aui:input checked="<%= true %>" id="publishingEventNow" label="now" name="schedule" type="radio" value="<%= false %>" />
 
-		<aui:a cssClass="modify-link" href="javascript:;" id="scheduledPublishingEventsLink" label="see-all-scheduled-publishing-events" method="get" />
+		<aui:input id="publishingEventSchedule" label="schedule" name="schedule" type="radio" value="<%= true %>" />
 
-		<div class="hide" id="<portlet:namespace />scheduledPublishingEvents">
-			<aui:fieldset label="scheduled-events">
-				<liferay-util:include page="/html/portlet/layouts_admin/scheduled_publishing_events.jsp">
-					<liferay-util:param name="groupId" value="<%= String.valueOf(targetGroupId) %>" />
-					<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-					<liferay-util:param name="destinationName" value="<%= localPublishing ? DestinationNames.LAYOUTS_LOCAL_PUBLISHER : DestinationNames.LAYOUTS_REMOTE_PUBLISHER %>" />
-				</liferay-util:include>
-			</aui:fieldset>
-		</div>
+		<ul class="hide" id="<portlet:namespace />selectSchedule">
+			<li>
+				<aui:input name="jobName" type="hidden" />
 
-		<liferay-ui:input-scheduler />
+				<aui:a cssClass="modify-link" href="javascript:;" id="scheduledPublishingEventsLink" label="see-all-scheduled-publishing-events" method="get" />
+
+				<div class="hide" id="<portlet:namespace />scheduledPublishingEvents">
+					<liferay-util:include page="/html/portlet/layouts_admin/scheduled_publishing_events.jsp">
+						<liferay-util:param name="groupId" value="<%= String.valueOf(targetGroupId) %>" />
+						<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+						<liferay-util:param name="destinationName" value="<%= localPublishing ? DestinationNames.LAYOUTS_LOCAL_PUBLISHER : DestinationNames.LAYOUTS_REMOTE_PUBLISHER %>" />
+					</liferay-util:include>
+				</div>
+
+				<aui:input label="title" name="description" type="text" />
+
+				<liferay-ui:input-scheduler />
+			</li>
+		</ul>
 	</li>
 </ul>
 

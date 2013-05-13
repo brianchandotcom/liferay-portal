@@ -447,6 +447,10 @@
 	.selected-pages-option .field-content {
 		display: inline;
 	}
+
+	ul.unstyled ul {
+		list-style: none;
+	}
 }
 
 .lfr-export-dialog {

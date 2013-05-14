@@ -38,6 +38,7 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.social.service.SocialActivityLocalServiceUtil;
 import com.liferay.portlet.social.service.SocialActivitySetLocalServiceUtil;
+import com.liferay.portlet.social.service.permission.SocialActivityPermission;
 import com.liferay.portlet.social.service.persistence.SocialActivityUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
@@ -479,7 +480,12 @@ public abstract class BaseSocialActivityInterpreter
 			String actionId, ServiceContext serviceContext)
 		throws Exception {
 
-		return false;
+		SocialActivitySet activitySet =
+			SocialActivitySetLocalServiceUtil.fetchAssetActivitySet(
+				activity.getClassNameId(), activity.getClassPK());
+
+		return SocialActivityPermission.contains(
+			permissionChecker, activitySet, actionId);
 	}
 
 	protected String wrapLink(String link, String title) {

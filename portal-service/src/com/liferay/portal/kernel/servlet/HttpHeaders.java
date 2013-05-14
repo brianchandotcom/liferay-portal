@@ -100,6 +100,10 @@ public interface HttpHeaders {
 	 */
 	public static final String CLOSE = CONNECTION_CLOSE_VALUE;
 
+	public static final String CONTENT_DISPOSITION_ATTACHMENT = "attachment";
+
+	public static final String CONTENT_DISPOSITION_INLINE = "inline";
+
 	public static final String EXPIRES_DEFAULT_VALUE = "315360000";
 
 	public static final String PRAGMA_NO_CACHE_VALUE = "no-cache";

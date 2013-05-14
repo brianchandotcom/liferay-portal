@@ -39,6 +39,7 @@ import com.liferay.portlet.trash.util.TrashUtil;
 public class DLFileEntryActivityInterpreter
 	extends BaseSocialActivityInterpreter {
 
+	@Override
 	public String[] getClassNames() {
 		return _CLASS_NAMES;
 	}

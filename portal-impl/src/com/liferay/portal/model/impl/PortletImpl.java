@@ -293,6 +293,7 @@ public class PortletImpl extends PortletBaseImpl {
 	/**
 	 * Adds a supported processing event.
 	 */
+	@Override
 	public void addProcessingEvent(QName processingEvent) {
 		_processingEvents.add(processingEvent);
 		_processingEventsByQName.put(
@@ -304,6 +305,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @param publicRenderParameter a supported public render parameter
 	 */
+	@Override
 	public void addPublicRenderParameter(
 		PublicRenderParameter publicRenderParameter) {
 
@@ -329,6 +331,7 @@ public class PortletImpl extends PortletBaseImpl {
 	/**
 	 * Adds a supported publishing event.
 	 */
+	@Override
 	public void addPublishingEvent(QName publishingEvent) {
 		_publishingEvents.add(publishingEvent);
 	}
@@ -336,6 +339,7 @@ public class PortletImpl extends PortletBaseImpl {
 	/**
 	 * Adds a scheduler entry.
 	 */
+	@Override
 	public void addSchedulerEntry(SchedulerEntry schedulerEntry) {
 		_schedulerEntries.add(schedulerEntry);
 	}
@@ -441,6 +445,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the action timeout of the portlet
 	 */
+	@Override
 	public int getActionTimeout() {
 		return _actionTimeout;
 	}
@@ -452,6 +457,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return <code>true</code> if an action URL for this portlet should cause
 	 *         an auto redirect
 	 */
+	@Override
 	public boolean getActionURLRedirect() {
 		return _actionURLRedirect;
 	}
@@ -463,6 +469,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return <code>true</code> if default resources for the portlet are added
 	 *         to a page
 	 */
+	@Override
 	public boolean getAddDefaultResource() {
 		return _addDefaultResource;
 	}
@@ -472,6 +479,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return <code>true</code> if the portlet can be displayed via Ajax
 	 */
+	@Override
 	public boolean getAjaxable() {
 		return _ajaxable;
 	}
@@ -481,6 +489,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return a list of all portlet modes supported by the portlet
 	 */
+	@Override
 	public Set<String> getAllPortletModes() {
 		Set<String> allPortletModes = new TreeSet<String>();
 
@@ -500,6 +509,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return a list of all window states supported by the portlet
 	 */
+	@Override
 	public Set<String> getAllWindowStates() {
 		Set<String> allWindowStates = new TreeSet<String>();
 
@@ -521,6 +531,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return the names of the classes that represent asset types associated
 	 *         with the portlet
 	 */
+	@Override
 	public List<String> getAssetRendererFactoryClasses() {
 		return _assetRendererFactoryClasses;
 	}
@@ -530,6 +541,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the asset type instances of the portlet
 	 */
+	@Override
 	public List<AssetRendererFactory> getAssetRendererFactoryInstances() {
 		if (_assetRendererFactoryClasses.isEmpty()) {
 			return null;
@@ -547,6 +559,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return the names of the classes that represent atom collection adapters
 	 *         associated with the portlet
 	 */
+	@Override
 	public List<String> getAtomCollectionAdapterClasses() {
 		return _atomCollectionAdapterClasses;
 	}
@@ -556,6 +569,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the atom collection adapter instances of the portlet
 	 */
+	@Override
 	public List<AtomCollectionAdapter<?>> getAtomCollectionAdapterInstances() {
 		if (_atomCollectionAdapterClasses.isEmpty()) {
 			return null;
@@ -573,6 +587,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return the names of the parameters that will be automatically propagated
 	 *         through the portlet
 	 */
+	@Override
 	public Set<String> getAutopropagatedParameters() {
 		return _autopropagatedParameters;
 	}
@@ -583,6 +598,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param  portletId the cloned instance portlet ID
 	 * @return a cloned instance of the portlet
 	 */
+	@Override
 	public Portlet getClonedInstance(String portletId) {
 		Portlet portlet = (Portlet)clone();
 
@@ -596,6 +612,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the configuration action class of the portlet
 	 */
+	@Override
 	public String getConfigurationActionClass() {
 		return _configurationActionClass;
 	}
@@ -605,6 +622,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the configuration action instance of the portlet
 	 */
+	@Override
 	public ConfigurationAction getConfigurationActionInstance() {
 		if (Validator.isNull(getConfigurationActionClass())) {
 			return null;
@@ -620,6 +638,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the servlet context path of the portlet
 	 */
+	@Override
 	public String getContextPath() {
 		if (!_portletApp.isWARFile()) {
 			return PortalUtil.getPathContext();
@@ -644,6 +663,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return the name of the category of the Control Panel where the portlet
 	 *         will be shown
 	 */
+	@Override
 	public String getControlPanelEntryCategory() {
 		return _controlPanelEntryCategory;
 	}
@@ -655,6 +675,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return the name of the class that will control when the portlet will be
 	 *         shown in the Control Panel
 	 */
+	@Override
 	public String getControlPanelEntryClass() {
 		return _controlPanelEntryClass;
 	}
@@ -666,6 +687,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return the instance of the class that will control when the portlet will
 	 *         be shown in the Control Panel
 	 */
+	@Override
 	public ControlPanelEntry getControlPanelEntryInstance() {
 		if (Validator.isNull(getControlPanelEntryClass())) {
 			return DefaultControlPanelEntryFactory.getInstance();
@@ -683,6 +705,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return the relative weight of the portlet with respect to the other
 	 *         portlets in the same category of the Control Panel
 	 */
+	@Override
 	public double getControlPanelEntryWeight() {
 		return _controlPanelEntryWeight;
 	}
@@ -694,6 +717,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return the name of the CSS class that will be injected in the DIV that
 	 *         wraps this portlet
 	 */
+	@Override
 	public String getCssClassWrapper() {
 		return _cssClassWrapper;
 	}
@@ -705,6 +729,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return the names of the classes that represent asset types associated
 	 *         with the portlet
 	 */
+	@Override
 	public List<String> getCustomAttributesDisplayClasses() {
 		return _customAttributesDisplayClasses;
 	}
@@ -714,6 +739,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the custom attribute display instances of the portlet
 	 */
+	@Override
 	public List<CustomAttributesDisplay> getCustomAttributesDisplayInstances() {
 		if (_customAttributesDisplayClasses.isEmpty()) {
 			return null;
@@ -730,6 +756,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the name of the dynamic data mapping display class of the portlet
 	 */
+	@Override
 	public String getDDMDisplayClass() {
 		return _ddmDisplayClass;
 	}
@@ -739,6 +766,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the plugin settings
 	 */
+	@Override
 	public PluginSetting getDefaultPluginSetting() {
 		return _defaultPluginSetting;
 	}
@@ -748,6 +776,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the default preferences of the portlet
 	 */
+	@Override
 	public String getDefaultPreferences() {
 		if (Validator.isNull(_defaultPreferences)) {
 			return PortletConstants.DEFAULT_PREFERENCES;
@@ -762,6 +791,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the display name of the portlet
 	 */
+	@Override
 	public String getDisplayName() {
 		return _displayName;
 	}
@@ -771,6 +801,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return expiration cache of the portlet
 	 */
+	@Override
 	public Integer getExpCache() {
 		return _expCache;
 	}
@@ -780,6 +811,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the Facebook integration method of the portlet
 	 */
+	@Override
 	public String getFacebookIntegration() {
 		return _facebookIntegration;
 	}
@@ -791,6 +823,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return a list of CSS files that will be referenced from the page's
 	 *         footer relative to the portal's context path
 	 */
+	@Override
 	public List<String> getFooterPortalCss() {
 		return _footerPortalCss;
 	}
@@ -802,6 +835,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return a list of JavaScript files that will be referenced from the
 	 *         page's footer relative to the portal's context path
 	 */
+	@Override
 	public List<String> getFooterPortalJavaScript() {
 		return _footerPortalJavaScript;
 	}
@@ -813,6 +847,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return a list of CSS files that will be referenced from the page's
 	 *         footer relative to the portlet's context path
 	 */
+	@Override
 	public List<String> getFooterPortletCss() {
 		return _footerPortletCss;
 	}
@@ -824,6 +859,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return a list of JavaScript files that will be referenced from the
 	 *         page's footer relative to the portlet's context path
 	 */
+	@Override
 	public List<String> getFooterPortletJavaScript() {
 		return _footerPortletJavaScript;
 	}
@@ -833,6 +869,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the name of the friendly URL mapper class of the portlet
 	 */
+	@Override
 	public String getFriendlyURLMapperClass() {
 		return _friendlyURLMapperClass;
 	}
@@ -842,6 +879,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the friendly URL mapper instance of the portlet
 	 */
+	@Override
 	public FriendlyURLMapper getFriendlyURLMapperInstance() {
 		if (Validator.isNull(getFriendlyURLMapperClass())) {
 			return null;
@@ -857,6 +895,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the name of the friendly URL mapping of the portlet
 	 */
+	@Override
 	public String getFriendlyURLMapping() {
 		return _friendlyURLMapping;
 	}
@@ -868,6 +907,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return the class loader resource path to the friendly URL routes of the
 	 *         portlet
 	 */
+	@Override
 	public String getFriendlyURLRoutes() {
 		return _friendlyURLRoutes;
 	}
@@ -879,6 +919,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return a list of CSS files that will be referenced from the page's
 	 *         header relative to the portal's context path
 	 */
+	@Override
 	public List<String> getHeaderPortalCss() {
 		return _headerPortalCss;
 	}
@@ -890,6 +931,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return a list of JavaScript files that will be referenced from the
 	 *         page's header relative to the portal's context path
 	 */
+	@Override
 	public List<String> getHeaderPortalJavaScript() {
 		return _headerPortalJavaScript;
 	}
@@ -901,6 +943,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return a list of CSS files that will be referenced from the page's
 	 *         header relative to the portlet's context path
 	 */
+	@Override
 	public List<String> getHeaderPortletCss() {
 		return _headerPortletCss;
 	}
@@ -912,6 +955,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return a list of JavaScript files that will be referenced from the
 	 *         page's header relative to the portlet's context path
 	 */
+	@Override
 	public List<String> getHeaderPortletJavaScript() {
 		return _headerPortletJavaScript;
 	}
@@ -921,6 +965,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the icon of the portlet
 	 */
+	@Override
 	public String getIcon() {
 		return _icon;
 	}
@@ -932,6 +977,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return <code>true</code> to include the portlet and make it available to
 	 *         be made active
 	 */
+	@Override
 	public boolean getInclude() {
 		return _include;
 	}
@@ -943,6 +989,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return the names of the classes that represent indexers associated with
 	 *         the portlet
 	 */
+	@Override
 	public List<String> getIndexerClasses() {
 		return _indexerClasses;
 	}
@@ -952,6 +999,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the indexer instances of the portlet
 	 */
+	@Override
 	public List<Indexer> getIndexerInstances() {
 		if (_indexerClasses.isEmpty() &&
 			!_portletClass.equals(AlloyPortlet.class.getName())) {
@@ -969,6 +1017,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return init parameters of the portlet
 	 */
+	@Override
 	public Map<String, String> getInitParams() {
 		return _initParams;
 	}
@@ -980,6 +1029,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return <code>true</code> if the portlet can be added multiple times to a
 	 *         layout
 	 */
+	@Override
 	public boolean getInstanceable() {
 		return _instanceable;
 	}
@@ -989,6 +1039,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the instance ID of the portlet
 	 */
+	@Override
 	public String getInstanceId() {
 		return PortletConstants.getInstanceId(getPortletId());
 	}
@@ -999,6 +1050,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return <code>true</code> if the portlet can be cached within the layout
 	 */
+	@Override
 	public boolean getLayoutCacheable() {
 		return _layoutCacheable;
 	}
@@ -1010,6 +1062,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return <code>true</code> if the portlet goes into the maximized state
 	 *         when the user goes into the edit mode
 	 */
+	@Override
 	public boolean getMaximizeEdit() {
 		return _maximizeEdit;
 	}
@@ -1021,6 +1074,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return <code>true</code> if the portlet goes into the maximized state
 	 *         when the user goes into the help mode
 	 */
+	@Override
 	public boolean getMaximizeHelp() {
 		return _maximizeHelp;
 	}
@@ -1030,6 +1084,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the name of the open search class of the portlet
 	 */
+	@Override
 	public String getOpenSearchClass() {
 		return _openSearchClass;
 	}
@@ -1039,6 +1094,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the indexer instance of the portlet
 	 */
+	@Override
 	public OpenSearch getOpenSearchInstance() {
 		if (Validator.isNull(getOpenSearchClass())) {
 			return null;
@@ -1054,6 +1110,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the parent struts path of the portlet.
 	 */
+	@Override
 	public String getParentStrutsPath() {
 		return _parentStrutsPath;
 	}
@@ -1063,6 +1120,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the name of the permission propagator class of the portlet
 	 */
+	@Override
 	public String getPermissionPropagatorClass() {
 		return _permissionPropagatorClass;
 	}
@@ -1072,6 +1130,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the permission propagator instance of the portlet
 	 */
+	@Override
 	public PermissionPropagator getPermissionPropagatorInstance() {
 		if (Validator.isNull(getPermissionPropagatorClass())) {
 			return null;
@@ -1087,6 +1146,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the plugin ID of the portlet
 	 */
+	@Override
 	public String getPluginId() {
 		return getRootPortletId();
 	}
@@ -1096,6 +1156,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return this portlet's plugin package
 	 */
+	@Override
 	public PluginPackage getPluginPackage() {
 		return _pluginPackage;
 	}
@@ -1105,6 +1166,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the plugin type of the portlet
 	 */
+	@Override
 	public String getPluginType() {
 		return Plugin.TYPE_PORTLET;
 	}
@@ -1114,6 +1176,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the name of the poller processor class of the portlet
 	 */
+	@Override
 	public String getPollerProcessorClass() {
 		return _pollerProcessorClass;
 	}
@@ -1123,6 +1186,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the poller processor instance of the portlet
 	 */
+	@Override
 	public PollerProcessor getPollerProcessorInstance() {
 		if (Validator.isNull(getPollerProcessorClass())) {
 			return null;
@@ -1138,6 +1202,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the name of the POP message listener class of the portlet
 	 */
+	@Override
 	public String getPopMessageListenerClass() {
 		return _popMessageListenerClass;
 	}
@@ -1147,6 +1212,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the POP message listener instance of the portlet
 	 */
+	@Override
 	public MessageListener getPopMessageListenerInstance() {
 		if (Validator.isNull(getPopMessageListenerClass())) {
 			return null;
@@ -1164,6 +1230,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return <code>true</code> if the portlet goes into the pop up state when
 	 *         the user goes into the print mode
 	 */
+	@Override
 	public boolean getPopUpPrint() {
 		return _popUpPrint;
 	}
@@ -1173,6 +1240,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return this portlet's application
 	 */
+	@Override
 	public PortletApp getPortletApp() {
 		return _portletApp;
 	}
@@ -1182,6 +1250,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the name of the portlet class of the portlet
 	 */
+	@Override
 	public String getPortletClass() {
 		return _portletClass;
 	}
@@ -1191,6 +1260,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the name of the portlet data handler class of the portlet
 	 */
+	@Override
 	public String getPortletDataHandlerClass() {
 		return _portletDataHandlerClass;
 	}
@@ -1200,6 +1270,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the portlet data handler instance of the portlet
 	 */
+	@Override
 	public PortletDataHandler getPortletDataHandlerInstance() {
 		if (Validator.isNull(getPortletDataHandlerClass())) {
 			return null;
@@ -1215,6 +1286,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return filters of the portlet
 	 */
+	@Override
 	public Map<String, PortletFilter> getPortletFilters() {
 		return _portletFilters;
 	}
@@ -1224,6 +1296,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return portlet info of the portlet
 	 */
+	@Override
 	public PortletInfo getPortletInfo() {
 		return _portletInfo;
 	}
@@ -1233,6 +1306,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the name of the portlet layout listener class of the portlet
 	 */
+	@Override
 	public String getPortletLayoutListenerClass() {
 		return _portletLayoutListenerClass;
 	}
@@ -1242,6 +1316,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the portlet layout listener instance of the portlet
 	 */
+	@Override
 	public PortletLayoutListener getPortletLayoutListenerInstance() {
 		if (Validator.isNull(getPortletLayoutListenerClass())) {
 			return null;
@@ -1257,6 +1332,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return portlet modes of the portlet
 	 */
+	@Override
 	public Map<String, Set<String>> getPortletModes() {
 		return _portletModes;
 	}
@@ -1266,6 +1342,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the display name of the portlet
 	 */
+	@Override
 	public String getPortletName() {
 		return _portletName;
 	}
@@ -1275,6 +1352,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the name of the portlet URL class of the portlet
 	 */
+	@Override
 	public String getPortletURLClass() {
 		return _portletURLClass;
 	}
@@ -1286,6 +1364,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return <code>true</code> if preferences are shared across the entire
 	 *         company
 	 */
+	@Override
 	public boolean getPreferencesCompanyWide() {
 		return _preferencesCompanyWide;
 	}
@@ -1299,6 +1378,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *         portlet is shown in a group layout; <code>false</code> if
 	 *         preferences are owned by the user at all times.
 	 */
+	@Override
 	public boolean getPreferencesOwnedByGroup() {
 		return _preferencesOwnedByGroup;
 	}
@@ -1308,6 +1388,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return <code>true</code> if preferences are unique per layout
 	 */
+	@Override
 	public boolean getPreferencesUniquePerLayout() {
 		return _preferencesUniquePerLayout;
 	}
@@ -1317,6 +1398,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the name of the preferences validator class of the portlet
 	 */
+	@Override
 	public String getPreferencesValidator() {
 		return _preferencesValidator;
 	}
@@ -1328,6 +1410,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return <code>true</code> if the portlet does not share request
 	 *         attributes with the portal or portlets from another WAR
 	 */
+	@Override
 	public boolean getPrivateRequestAttributes() {
 		return _privateRequestAttributes;
 	}
@@ -1339,6 +1422,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return <code>true</code> if the portlet does not share session
 	 *         attributes with the portal
 	 */
+	@Override
 	public boolean getPrivateSessionAttributes() {
 		return _privateSessionAttributes;
 	}
@@ -1352,6 +1436,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return the supported processing event from a namespace URI and a local
 	 *         part
 	 */
+	@Override
 	public QName getProcessingEvent(String uri, String localPart) {
 		return _processingEventsByQName.get(
 			PortletQNameUtil.getKey(uri, localPart));
@@ -1362,6 +1447,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return supported processing events of the portlet
 	 */
+	@Override
 	public Set<QName> getProcessingEvents() {
 		return _processingEvents;
 	}
@@ -1372,6 +1458,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param  identifier the identifier
 	 * @return the supported public render parameter from an identifier
 	 */
+	@Override
 	public PublicRenderParameter getPublicRenderParameter(String identifier) {
 		return _publicRenderParametersByIdentifier.get(identifier);
 	}
@@ -1385,6 +1472,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return the supported public render parameter from a namespace URI and a
 	 *         local part
 	 */
+	@Override
 	public PublicRenderParameter getPublicRenderParameter(
 		String uri, String localPart) {
 
@@ -1397,6 +1485,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the supported public render parameters of the portlet
 	 */
+	@Override
 	public Set<PublicRenderParameter> getPublicRenderParameters() {
 		return _publicRenderParameters;
 	}
@@ -1406,6 +1495,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return supported publishing events of the portlet
 	 */
+	@Override
 	public Set<QName> getPublishingEvents() {
 		return _publishingEvents;
 	}
@@ -1415,6 +1505,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return <code>true</code> if the portlet is ready to be used
 	 */
+	@Override
 	public boolean getReady() {
 		return isReady();
 	}
@@ -1424,6 +1515,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return <code>true</code> if the portlet supports remoting
 	 */
+	@Override
 	public boolean getRemoteable() {
 		return _remoteable;
 	}
@@ -1433,6 +1525,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the render timeout of the portlet
 	 */
+	@Override
 	public int getRenderTimeout() {
 		return _renderTimeout;
 	}
@@ -1442,6 +1535,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the render weight of the portlet
 	 */
+	@Override
 	public int getRenderWeight() {
 		return _renderWeight;
 	}
@@ -1451,6 +1545,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return resource bundle of the portlet
 	 */
+	@Override
 	public String getResourceBundle() {
 		return _resourceBundle;
 	}
@@ -1462,6 +1557,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return <code>true</code> if the portlet restores to the current view
 	 *         from the maximized state
 	 */
+	@Override
 	public boolean getRestoreCurrentView() {
 		return _restoreCurrentView;
 	}
@@ -1471,6 +1567,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return role mappers of the portlet
 	 */
+	@Override
 	public Map<String, String> getRoleMappers() {
 		return _roleMappers;
 	}
@@ -1480,6 +1577,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return an array of required roles of the portlet
 	 */
+	@Override
 	public String[] getRolesArray() {
 		return _rolesArray;
 	}
@@ -1489,6 +1587,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the root portlet of this portlet instance
 	 */
+	@Override
 	public Portlet getRootPortlet() {
 		return _rootPortlet;
 	}
@@ -1498,6 +1597,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the root portlet ID of the portlet
 	 */
+	@Override
 	public String getRootPortletId() {
 		return PortletConstants.getRootPortletId(getPortletId());
 	}
@@ -1507,6 +1607,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the scheduler entries of the portlet
 	 */
+	@Override
 	public List<SchedulerEntry> getSchedulerEntries() {
 		return _schedulerEntries;
 	}
@@ -1516,6 +1617,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return <code>true</code> if the portlet supports scoping of data
 	 */
+	@Override
 	public boolean getScopeable() {
 		return _scopeable;
 	}
@@ -1527,6 +1629,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return <code>true</code> if users are shown that they do not have access
 	 *         to the portlet
 	 */
+	@Override
 	public boolean getShowPortletAccessDenied() {
 		return _showPortletAccessDenied;
 	}
@@ -1537,6 +1640,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return <code>true</code> if users are shown that the portlet is inactive
 	 */
+	@Override
 	public boolean getShowPortletInactive() {
 		return _showPortletInactive;
 	}
@@ -1548,6 +1652,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return the names of the classes that represent social activity
 	 *         interpreters associated with the portlet
 	 */
+	@Override
 	public List<String> getSocialActivityInterpreterClasses() {
 		return _socialActivityInterpreterClasses;
 	}
@@ -1557,6 +1662,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the social activity interpreter instances of the portlet
 	 */
+	@Override
 	public List<SocialActivityInterpreter>
 		getSocialActivityInterpreterInstances() {
 
@@ -1574,6 +1680,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the name of the social request interpreter class of the portlet
 	 */
+	@Override
 	public String getSocialRequestInterpreterClass() {
 		return _socialRequestInterpreterClass;
 	}
@@ -1585,6 +1692,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return the name of the social request interpreter instance of the
 	 *         portlet
 	 */
+	@Override
 	public SocialRequestInterpreter getSocialRequestInterpreterInstance() {
 		if (Validator.isNull(getSocialRequestInterpreterClass())) {
 			return null;
@@ -1602,6 +1710,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return the names of the classes that represent staged model data
 	 *         handlers associated with the portlet
 	 */
+	@Override
 	public List<String> getStagedModelDataHandlerClasses() {
 		return _stagedModelDataHandlerClasses;
 	}
@@ -1611,6 +1720,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the staged model data handler instances of the portlet
 	 */
+	@Override
 	public List<StagedModelDataHandler<?>>
 		getStagedModelDataHandlerInstances() {
 
@@ -1630,6 +1740,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return <code>true</code> if the portlet is a static portlet that is
 	 *         cannot be moved
 	 */
+	@Override
 	public boolean getStatic() {
 		return _staticPortlet;
 	}
@@ -1641,6 +1752,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return <code>true</code> if the portlet is a static portlet at the end
 	 *         of a list of portlets
 	 */
+	@Override
 	public boolean getStaticEnd() {
 		return !_staticPortletStart;
 	}
@@ -1650,6 +1762,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the path for static resources served by this portlet
 	 */
+	@Override
 	public String getStaticResourcePath() {
 		String proxyPath = PortalUtil.getPathProxy();
 
@@ -1675,6 +1788,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return <code>true</code> if the portlet is a static portlet at the start
 	 *         of a list of portlets
 	 */
+	@Override
 	public boolean getStaticStart() {
 		return _staticPortletStart;
 	}
@@ -1684,6 +1798,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the struts path of the portlet
 	 */
+	@Override
 	public String getStrutsPath() {
 		return _strutsPath;
 	}
@@ -1693,6 +1808,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return supported locales of the portlet
 	 */
+	@Override
 	public Set<String> getSupportedLocales() {
 		return _supportedLocales;
 	}
@@ -1704,6 +1820,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return <code>true</code> if the portlet is a system portlet that a user
 	 *         cannot manually add to their page
 	 */
+	@Override
 	public boolean getSystem() {
 		return _system;
 	}
@@ -1713,6 +1830,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the name of the template handler class of the portlet
 	 */
+	@Override
 	public String getTemplateHandlerClass() {
 		return _templateHandlerClass;
 	}
@@ -1722,6 +1840,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the template handler instance of the portlet
 	 */
+	@Override
 	public TemplateHandler getTemplateHandlerInstance() {
 		if (Validator.isNull(getTemplateHandlerClass())) {
 			return null;
@@ -1737,6 +1856,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the timestamp of the portlet
 	 */
+	@Override
 	public long getTimestamp() {
 		return _timestamp;
 	}
@@ -1748,6 +1868,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return the names of the classes that represent trash handlers associated
 	 *         with the portlet
 	 */
+	@Override
 	public List<String> getTrashHandlerClasses() {
 		return _trashHandlerClasses;
 	}
@@ -1757,6 +1878,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the trash handler instances of the portlet
 	 */
+	@Override
 	public List<TrashHandler> getTrashHandlerInstances() {
 		if (_trashHandlerClasses.isEmpty()) {
 			return null;
@@ -1773,6 +1895,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return <code>true</code> if the portlet is a placeholder of an
 	 *         undeployed portlet
 	 */
+	@Override
 	public boolean getUndeployedPortlet() {
 		return _undeployedPortlet;
 	}
@@ -1782,6 +1905,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return unlinked roles of the portlet
 	 */
+	@Override
 	public Set<String> getUnlinkedRoles() {
 		return _unlinkedRoles;
 	}
@@ -1791,6 +1915,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the name of the URL encoder class of the portlet
 	 */
+	@Override
 	public String getURLEncoderClass() {
 		return _urlEncoderClass;
 	}
@@ -1800,6 +1925,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the URL encoder instance of the portlet
 	 */
+	@Override
 	public URLEncoder getURLEncoderInstance() {
 		if (Validator.isNull(getURLEncoderClass())) {
 			return null;
@@ -1815,6 +1941,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return <code>true</code> if the portlet uses the default template
 	 */
+	@Override
 	public boolean getUseDefaultTemplate() {
 		return _useDefaultTemplate;
 	}
@@ -1825,6 +1952,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the user ID of the portlet
 	 */
+	@Override
 	public long getUserId() {
 		return PortletConstants.getUserId(getPortletId());
 	}
@@ -1834,6 +1962,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the user principal strategy of the portlet
 	 */
+	@Override
 	public String getUserPrincipalStrategy() {
 		return _userPrincipalStrategy;
 	}
@@ -1843,6 +1972,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the virtual path of the portlet
 	 */
+	@Override
 	public String getVirtualPath() {
 		return _virtualPath;
 	}
@@ -1852,6 +1982,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the name of the WebDAV storage class of the portlet
 	 */
+	@Override
 	public String getWebDAVStorageClass() {
 		return _webDAVStorageClass;
 	}
@@ -1861,6 +1992,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the name of the WebDAV storage instance of the portlet
 	 */
+	@Override
 	public WebDAVStorage getWebDAVStorageInstance() {
 		if (Validator.isNull(getWebDAVStorageClass())) {
 			return null;
@@ -1876,6 +2008,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the name of the WebDAV storage token of the portlet
 	 */
+	@Override
 	public String getWebDAVStorageToken() {
 		return _webDAVStorageToken;
 	}
@@ -1885,6 +2018,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return window states of the portlet
 	 */
+	@Override
 	public Map<String, Set<String>> getWindowStates() {
 		return _windowStates;
 	}
@@ -1896,6 +2030,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return the names of the classes that represent workflow handlers
 	 *         associated with the portlet
 	 */
+	@Override
 	public List<String> getWorkflowHandlerClasses() {
 		return _workflowHandlerClasses;
 	}
@@ -1905,6 +2040,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the workflow handler instances of the portlet
 	 */
+	@Override
 	public List<WorkflowHandler> getWorkflowHandlerInstances() {
 		if (_workflowHandlerClasses.isEmpty()) {
 			return null;
@@ -1920,6 +2056,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the name of the XML-RPC method class of the portlet
 	 */
+	@Override
 	public String getXmlRpcMethodClass() {
 		return _xmlRpcMethodClass;
 	}
@@ -1929,6 +2066,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the name of the XML-RPC method instance of the portlet
 	 */
+	@Override
 	public Method getXmlRpcMethodInstance() {
 		if (Validator.isNull(getXmlRpcMethodClass())) {
 			return null;
@@ -1947,6 +2085,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return <code>true</code> if the user has the permission to add the
 	 *         portlet to a layout
 	 */
+	@Override
 	public boolean hasAddPortletPermission(long userId) {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -1980,6 +2119,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return <code>true</code> if the portlet supports more than one mime type
 	 */
+	@Override
 	public boolean hasMultipleMimeTypes() {
 		if (_portletModes.size() > 1) {
 			return true;
@@ -1998,6 +2138,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return <code>true</code> if the portlet supports the specified mime type
 	 *         and portlet mode
 	 */
+	@Override
 	public boolean hasPortletMode(String mimeType, PortletMode portletMode) {
 		if (mimeType == null) {
 			mimeType = ContentTypes.TEXT_HTML;
@@ -2025,6 +2166,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return <code>true</code> if the portlet has a role with the specified
 	 *         name
 	 */
+	@Override
 	public boolean hasRoleWithName(String roleName) {
 		if ((_rolesArray == null) || (_rolesArray.length == 0)) {
 			return false;
@@ -2048,6 +2190,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return <code>true</code> if the portlet supports the specified mime type
 	 *         and window state
 	 */
+	@Override
 	public boolean hasWindowState(String mimeType, WindowState windowState) {
 		if (mimeType == null) {
 			mimeType = ContentTypes.TEXT_HTML;
@@ -2074,6 +2217,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return <code>true</code> if an action URL for this portlet should cause
 	 *         an auto redirect
 	 */
+	@Override
 	public boolean isActionURLRedirect() {
 		return _actionURLRedirect;
 	}
@@ -2085,6 +2229,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return <code>true</code> if default resources for the portlet are added
 	 *         to a page
 	 */
+	@Override
 	public boolean isAddDefaultResource() {
 		return _addDefaultResource;
 	}
@@ -2094,6 +2239,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return <code>true</code> if the portlet can be displayed via Ajax
 	 */
+	@Override
 	public boolean isAjaxable() {
 		return _ajaxable;
 	}
@@ -2105,6 +2251,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return <code>true</code> to include the portlet and make it available to
 	 *         be made active
 	 */
+	@Override
 	public boolean isInclude() {
 		return _include;
 	}
@@ -2116,6 +2263,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return <code>true</code> if the portlet can be added multiple times to a
 	 *         layout
 	 */
+	@Override
 	public boolean isInstanceable() {
 		return _instanceable;
 	}
@@ -2126,6 +2274,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return <code>true</code> if the portlet can be cached within the layout
 	 */
+	@Override
 	public boolean isLayoutCacheable() {
 		return _layoutCacheable;
 	}
@@ -2137,6 +2286,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return <code>true</code> if the portlet goes into the maximized state
 	 *         when the user goes into the edit mode
 	 */
+	@Override
 	public boolean isMaximizeEdit() {
 		return _maximizeEdit;
 	}
@@ -2148,6 +2298,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return <code>true</code> if the portlet goes into the maximized state
 	 *         when the user goes into the help mode
 	 */
+	@Override
 	public boolean isMaximizeHelp() {
 		return _maximizeHelp;
 	}
@@ -2159,6 +2310,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return <code>true</code> if the portlet goes into the pop up state when
 	 *         the user goes into the print mode
 	 */
+	@Override
 	public boolean isPopUpPrint() {
 		return _popUpPrint;
 	}
@@ -2170,6 +2322,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return <code>true</code> if preferences are shared across the entire
 	 *         company
 	 */
+	@Override
 	public boolean isPreferencesCompanyWide() {
 		return _preferencesCompanyWide;
 	}
@@ -2183,6 +2336,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *         portlet is shown in a group layout; <code>false</code> if
 	 *         preferences are owned by the user at all times.
 	 */
+	@Override
 	public boolean isPreferencesOwnedByGroup() {
 		return _preferencesOwnedByGroup;
 	}
@@ -2192,6 +2346,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return <code>true</code> if preferences are unique per layout
 	 */
+	@Override
 	public boolean isPreferencesUniquePerLayout() {
 		return _preferencesUniquePerLayout;
 	}
@@ -2203,6 +2358,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return <code>true</code> if the portlet does not share request
 	 *         attributes with the portal or portlets from another WAR
 	 */
+	@Override
 	public boolean isPrivateRequestAttributes() {
 		return _privateRequestAttributes;
 	}
@@ -2214,6 +2370,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return <code>true</code> if the portlet does not share session
 	 *         attributes with the portal
 	 */
+	@Override
 	public boolean isPrivateSessionAttributes() {
 		return _privateSessionAttributes;
 	}
@@ -2223,6 +2380,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return <code>true</code> if the portlet is ready to be used
 	 */
+	@Override
 	public boolean isReady() {
 		Boolean ready = _readyMap.get(getRootPortletId());
 
@@ -2239,6 +2397,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return <code>true</code> if the portlet supports remoting
 	 */
+	@Override
 	public boolean isRemoteable() {
 		return _remoteable;
 	}
@@ -2250,6 +2409,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return <code>true</code> if the portlet restores to the current view
 	 *         from the maximized state
 	 */
+	@Override
 	public boolean isRestoreCurrentView() {
 		return _restoreCurrentView;
 	}
@@ -2259,6 +2419,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return <code>true</code> if the portlet supports scoping of data
 	 */
+	@Override
 	public boolean isScopeable() {
 		return _scopeable;
 	}
@@ -2270,6 +2431,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return <code>true</code> if users are shown that they do not have access
 	 *         to the portlet
 	 */
+	@Override
 	public boolean isShowPortletAccessDenied() {
 		return _showPortletAccessDenied;
 	}
@@ -2280,6 +2442,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return <code>true</code> if users are shown that the portlet is inactive
 	 */
+	@Override
 	public boolean isShowPortletInactive() {
 		return _showPortletInactive;
 	}
@@ -2291,6 +2454,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return <code>true</code> if the portlet is a static portlet that is
 	 *         cannot be moved
 	 */
+	@Override
 	public boolean isStatic() {
 		return _staticPortlet;
 	}
@@ -2302,6 +2466,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return <code>true</code> if the portlet is a static portlet at the end
 	 *         of a list of portlets
 	 */
+	@Override
 	public boolean isStaticEnd() {
 		return !_staticPortletStart;
 	}
@@ -2313,6 +2478,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return <code>true</code> if the portlet is a static portlet at the start
 	 *         of a list of portlets
 	 */
+	@Override
 	public boolean isStaticStart() {
 		return _staticPortletStart;
 	}
@@ -2324,6 +2490,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return <code>true</code> if the portlet is a system portlet that a user
 	 *         cannot manually add to their page
 	 */
+	@Override
 	public boolean isSystem() {
 		return _system;
 	}
@@ -2334,6 +2501,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return <code>true</code> if the portlet is a placeholder of an
 	 *         undeployed portlet
 	 */
+	@Override
 	public boolean isUndeployedPortlet() {
 		return _undeployedPortlet;
 	}
@@ -2343,6 +2511,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return <code>true</code> if the portlet uses the default template
 	 */
+	@Override
 	public boolean isUseDefaultTemplate() {
 		return _useDefaultTemplate;
 	}
@@ -2351,6 +2520,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * Link the role names set in portlet.xml with the Liferay roles set in
 	 * liferay-portlet.xml.
 	 */
+	@Override
 	public void linkRoles() {
 		List<String> linkedRoles = new ArrayList<String>();
 
@@ -2387,6 +2557,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @param actionTimeout the action timeout of the portlet
 	 */
+	@Override
 	public void setActionTimeout(int actionTimeout) {
 		_actionTimeout = actionTimeout;
 	}
@@ -2398,6 +2569,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param actionURLRedirect boolean value for whether an action URL for this
 	 *        portlet should cause an auto redirect
 	 */
+	@Override
 	public void setActionURLRedirect(boolean actionURLRedirect) {
 		_actionURLRedirect = actionURLRedirect;
 	}
@@ -2409,6 +2581,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param addDefaultResource boolean value for whether or not default
 	 *        resources for the portlet are added to a page
 	 */
+	@Override
 	public void setAddDefaultResource(boolean addDefaultResource) {
 		_addDefaultResource = addDefaultResource;
 	}
@@ -2419,6 +2592,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param ajaxable boolean value for whether the portlet can be displayed
 	 *        via Ajax
 	 */
+	@Override
 	public void setAjaxable(boolean ajaxable) {
 		_ajaxable = ajaxable;
 	}
@@ -2430,6 +2604,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param assetRendererFactoryClasses the names of the classes that
 	 *        represent asset types associated with the portlet
 	 */
+	@Override
 	public void setAssetRendererFactoryClasses(
 		List<String> assetRendererFactoryClasses) {
 
@@ -2443,6 +2618,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param atomCollectionAdapterClasses the names of the classes that
 	 *        represent atom collection adapters associated with the portlet
 	 */
+	@Override
 	public void setAtomCollectionAdapterClasses(
 		List<String> atomCollectionAdapterClasses) {
 
@@ -2456,6 +2632,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param autopropagatedParameters the names of the parameters that will be
 	 *        automatically propagated through the portlet
 	 */
+	@Override
 	public void setAutopropagatedParameters(
 		Set<String> autopropagatedParameters) {
 
@@ -2468,6 +2645,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param configurationActionClass the configuration action class of the
 	 *        portlet
 	 */
+	@Override
 	public void setConfigurationActionClass(String configurationActionClass) {
 		_configurationActionClass = configurationActionClass;
 	}
@@ -2479,6 +2657,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param controlPanelEntryCategory the name of the category of the Control
 	 *        Panel where the portlet will be shown
 	 */
+	@Override
 	public void setControlPanelEntryCategory(String controlPanelEntryCategory) {
 		_controlPanelEntryCategory = controlPanelEntryCategory;
 	}
@@ -2490,6 +2669,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param controlPanelEntryClass the name of the class that will control
 	 *        when the portlet will be shown in the Control Panel
 	 */
+	@Override
 	public void setControlPanelEntryClass(String controlPanelEntryClass) {
 		_controlPanelEntryClass = controlPanelEntryClass;
 	}
@@ -2502,6 +2682,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *        respect to the other portlets in the same category of the Control
 	 *        Panel
 	 */
+	@Override
 	public void setControlPanelEntryWeight(double controlPanelEntryWeight) {
 		_controlPanelEntryWeight = controlPanelEntryWeight;
 	}
@@ -2513,6 +2694,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param cssClassWrapper the name of the CSS class that will be injected in
 	 *        the DIV that wraps this portlet
 	 */
+	@Override
 	public void setCssClassWrapper(String cssClassWrapper) {
 		_cssClassWrapper = cssClassWrapper;
 	}
@@ -2524,6 +2706,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param customAttributesDisplayClasses the names of the classes that
 	 *        represent custom attribute displays associated with the portlet
 	 */
+	@Override
 	public void setCustomAttributesDisplayClasses(
 		List<String> customAttributesDisplayClasses) {
 
@@ -2534,8 +2717,9 @@ public class PortletImpl extends PortletBaseImpl {
 	 * Sets the name of the dynamic data mapping display class of the portlet.
 	 *
 	 * @param ddmDisplayClass the name of dynamic data mapping display class of
-	 * the portlet
+	 *        the portlet
 	 */
+	@Override
 	public void setDDMDisplayClass(String ddmDisplayClass) {
 		_ddmDisplayClass = ddmDisplayClass;
 	}
@@ -2545,6 +2729,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @param pluginSetting the plugin setting
 	 */
+	@Override
 	public void setDefaultPluginSetting(PluginSetting pluginSetting) {
 		_defaultPluginSetting = pluginSetting;
 	}
@@ -2554,6 +2739,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @param defaultPreferences the default preferences of the portlet
 	 */
+	@Override
 	public void setDefaultPreferences(String defaultPreferences) {
 		_defaultPreferences = defaultPreferences;
 	}
@@ -2563,6 +2749,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @param displayName the display name of the portlet
 	 */
+	@Override
 	public void setDisplayName(String displayName) {
 		_displayName = displayName;
 	}
@@ -2572,6 +2759,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @param expCache expiration cache of the portlet
 	 */
+	@Override
 	public void setExpCache(Integer expCache) {
 		_expCache = expCache;
 	}
@@ -2581,6 +2769,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @param facebookIntegration the Facebook integration method of the portlet
 	 */
+	@Override
 	public void setFacebookIntegration(String facebookIntegration) {
 		if (Validator.isNotNull(facebookIntegration)) {
 			_facebookIntegration = facebookIntegration;
@@ -2594,6 +2783,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param footerPortalCss a list of CSS files that will be referenced from
 	 *        the page's footer relative to the portal's context path
 	 */
+	@Override
 	public void setFooterPortalCss(List<String> footerPortalCss) {
 		_footerPortalCss = footerPortalCss;
 	}
@@ -2606,6 +2796,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *        referenced from the page's footer relative to the portal's context
 	 *        path
 	 */
+	@Override
 	public void setFooterPortalJavaScript(List<String> footerPortalJavaScript) {
 		_footerPortalJavaScript = footerPortalJavaScript;
 	}
@@ -2617,6 +2808,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param footerPortletCss a list of CSS files that will be referenced from
 	 *        the page's footer relative to the portlet's context path
 	 */
+	@Override
 	public void setFooterPortletCss(List<String> footerPortletCss) {
 		_footerPortletCss = footerPortletCss;
 	}
@@ -2629,6 +2821,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *        referenced from the page's footer relative to the portlet's
 	 *        context path
 	 */
+	@Override
 	public void setFooterPortletJavaScript(
 		List<String> footerPortletJavaScript) {
 
@@ -2641,6 +2834,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param friendlyURLMapperClass the name of the friendly URL mapper class
 	 *        of the portlet
 	 */
+	@Override
 	public void setFriendlyURLMapperClass(String friendlyURLMapperClass) {
 		_friendlyURLMapperClass = friendlyURLMapperClass;
 	}
@@ -2651,6 +2845,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param friendlyURLMapping the name of the friendly URL mapping of the
 	 *        portlet
 	 */
+	@Override
 	public void setFriendlyURLMapping(String friendlyURLMapping) {
 		_friendlyURLMapping = friendlyURLMapping;
 	}
@@ -2662,6 +2857,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param friendlyURLRoutes the class loader resource path to the friendly
 	 *        URL routes of the portlet
 	 */
+	@Override
 	public void setFriendlyURLRoutes(String friendlyURLRoutes) {
 		_friendlyURLRoutes = friendlyURLRoutes;
 	}
@@ -2673,6 +2869,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param headerPortalCss a list of CSS files that will be referenced from
 	 *        the page's header relative to the portal's context path
 	 */
+	@Override
 	public void setHeaderPortalCss(List<String> headerPortalCss) {
 		_headerPortalCss = headerPortalCss;
 	}
@@ -2685,6 +2882,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *        referenced from the page's header relative to the portal's context
 	 *        path
 	 */
+	@Override
 	public void setHeaderPortalJavaScript(List<String> headerPortalJavaScript) {
 		_headerPortalJavaScript = headerPortalJavaScript;
 	}
@@ -2696,6 +2894,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param headerPortletCss a list of CSS files that will be referenced from
 	 *        the page's header relative to the portlet's context path
 	 */
+	@Override
 	public void setHeaderPortletCss(List<String> headerPortletCss) {
 		_headerPortletCss = headerPortletCss;
 	}
@@ -2708,6 +2907,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *        referenced from the page's header relative to the portlet's
 	 *        context path
 	 */
+	@Override
 	public void setHeaderPortletJavaScript(
 		List<String> headerPortletJavaScript) {
 
@@ -2719,6 +2919,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @param icon the icon of the portlet
 	 */
+	@Override
 	public void setIcon(String icon) {
 		_icon = icon;
 	}
@@ -2730,6 +2931,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param include boolean value for whether to include the portlet and make
 	 *        it available to be made active
 	 */
+	@Override
 	public void setInclude(boolean include) {
 		_include = include;
 	}
@@ -2741,6 +2943,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param indexerClasses the names of the classes that represent indexers
 	 *        associated with the portlet
 	 */
+	@Override
 	public void setIndexerClasses(List<String> indexerClasses) {
 		_indexerClasses = indexerClasses;
 	}
@@ -2750,6 +2953,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @param initParams the init parameters of the portlet
 	 */
+	@Override
 	public void setInitParams(Map<String, String> initParams) {
 		_initParams = initParams;
 	}
@@ -2761,6 +2965,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param instanceable boolean value for whether the portlet can be added
 	 *        multiple times to a layout
 	 */
+	@Override
 	public void setInstanceable(boolean instanceable) {
 		_instanceable = instanceable;
 	}
@@ -2772,6 +2977,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param layoutCacheable boolean value for whether the portlet can be
 	 *        cached within the layout
 	 */
+	@Override
 	public void setLayoutCacheable(boolean layoutCacheable) {
 		_layoutCacheable = layoutCacheable;
 	}
@@ -2783,6 +2989,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param maximizeEdit boolean value for whether the portlet goes into the
 	 *        maximized state when the user goes into the edit mode
 	 */
+	@Override
 	public void setMaximizeEdit(boolean maximizeEdit) {
 		_maximizeEdit = maximizeEdit;
 	}
@@ -2794,6 +3001,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param maximizeHelp boolean value for whether the portlet goes into the
 	 *        maximized state when the user goes into the help mode
 	 */
+	@Override
 	public void setMaximizeHelp(boolean maximizeHelp) {
 		_maximizeHelp = maximizeHelp;
 	}
@@ -2803,6 +3011,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @param openSearchClass the name of the open search class of the portlet
 	 */
+	@Override
 	public void setOpenSearchClass(String openSearchClass) {
 		_openSearchClass = openSearchClass;
 	}
@@ -2812,6 +3021,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @param parentStrutsPath the parent struts path of the portlet
 	 */
+	@Override
 	public void setParentStrutsPath(String parentStrutsPath) {
 		_parentStrutsPath = parentStrutsPath;
 	}
@@ -2819,6 +3029,7 @@ public class PortletImpl extends PortletBaseImpl {
 	/**
 	 * Sets the name of the permission propagator class of the portlet.
 	 */
+	@Override
 	public void setPermissionPropagatorClass(String permissionPropagatorClass) {
 		_permissionPropagatorClass = permissionPropagatorClass;
 	}
@@ -2828,6 +3039,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @param pluginPackage this portlet's plugin package
 	 */
+	@Override
 	public void setPluginPackage(PluginPackage pluginPackage) {
 		_pluginPackage = pluginPackage;
 	}
@@ -2838,6 +3050,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param pollerProcessorClass the name of the poller processor class of the
 	 *        portlet
 	 */
+	@Override
 	public void setPollerProcessorClass(String pollerProcessorClass) {
 		_pollerProcessorClass = pollerProcessorClass;
 	}
@@ -2848,6 +3061,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param popMessageListenerClass the name of the POP message listener class
 	 *        of the portlet
 	 */
+	@Override
 	public void setPopMessageListenerClass(String popMessageListenerClass) {
 		_popMessageListenerClass = popMessageListenerClass;
 	}
@@ -2859,6 +3073,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param popUpPrint boolean value for whether the portlet goes into the pop
 	 *        up state when the user goes into the print mode
 	 */
+	@Override
 	public void setPopUpPrint(boolean popUpPrint) {
 		_popUpPrint = popUpPrint;
 	}
@@ -2868,6 +3083,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @param portletApp this portlet's application
 	 */
+	@Override
 	public void setPortletApp(PortletApp portletApp) {
 		_portletApp = portletApp;
 
@@ -2879,6 +3095,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @param portletClass the name of the portlet class of the portlet
 	 */
+	@Override
 	public void setPortletClass(String portletClass) {
 		_portletClass = portletClass;
 	}
@@ -2889,6 +3106,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param portletDataHandlerClass the name of portlet data handler class of
 	 *        the portlet
 	 */
+	@Override
 	public void setPortletDataHandlerClass(String portletDataHandlerClass) {
 		_portletDataHandlerClass = portletDataHandlerClass;
 	}
@@ -2898,6 +3116,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @param portletFilters the filters of the portlet
 	 */
+	@Override
 	public void setPortletFilters(Map<String, PortletFilter> portletFilters) {
 		_portletFilters = portletFilters;
 	}
@@ -2907,6 +3126,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @param portletInfo the portlet info of the portlet
 	 */
+	@Override
 	public void setPortletInfo(PortletInfo portletInfo) {
 		_portletInfo = portletInfo;
 	}
@@ -2917,6 +3137,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param portletLayoutListenerClass the name of the portlet layout listener
 	 *        class of the portlet
 	 */
+	@Override
 	public void setPortletLayoutListenerClass(
 		String portletLayoutListenerClass) {
 
@@ -2928,6 +3149,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @param portletModes the portlet modes of the portlet
 	 */
+	@Override
 	public void setPortletModes(Map<String, Set<String>> portletModes) {
 		_portletModes = portletModes;
 	}
@@ -2937,6 +3159,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @param portletName the name of the portlet
 	 */
+	@Override
 	public void setPortletName(String portletName) {
 		_portletName = portletName;
 	}
@@ -2946,6 +3169,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @param portletURLClass the name of the portlet URL class of the portlet
 	 */
+	@Override
 	public void setPortletURLClass(String portletURLClass) {
 		_portletURLClass = portletURLClass;
 	}
@@ -2957,6 +3181,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param preferencesCompanyWide boolean value for whether preferences are
 	 *        shared across the entire company
 	 */
+	@Override
 	public void setPreferencesCompanyWide(boolean preferencesCompanyWide) {
 		_preferencesCompanyWide = preferencesCompanyWide;
 	}
@@ -2970,6 +3195,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *        owned by the group when the portlet is shown in a group layout or
 	 *        preferences are owned by the user at all times
 	 */
+	@Override
 	public void setPreferencesOwnedByGroup(boolean preferencesOwnedByGroup) {
 		_preferencesOwnedByGroup = preferencesOwnedByGroup;
 	}
@@ -2980,6 +3206,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param preferencesUniquePerLayout boolean value for whether preferences
 	 *        are unique per layout
 	 */
+	@Override
 	public void setPreferencesUniquePerLayout(
 		boolean preferencesUniquePerLayout) {
 
@@ -2992,6 +3219,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param preferencesValidator the name of the preferences validator class
 	 *        of the portlet
 	 */
+	@Override
 	public void setPreferencesValidator(String preferencesValidator) {
 		if (preferencesValidator != null) {
 
@@ -3013,6 +3241,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *        shares request attributes with the portal or portlets from another
 	 *        WAR
 	 */
+	@Override
 	public void setPrivateRequestAttributes(boolean privateRequestAttributes) {
 		_privateRequestAttributes = privateRequestAttributes;
 	}
@@ -3024,6 +3253,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param privateSessionAttributes boolean value for whether the portlet
 	 *        shares session attributes with the portal
 	 */
+	@Override
 	public void setPrivateSessionAttributes(boolean privateSessionAttributes) {
 		_privateSessionAttributes = privateSessionAttributes;
 	}
@@ -3033,6 +3263,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @param processingEvents the supported processing events of the portlet
 	 */
+	@Override
 	public void setProcessingEvents(Set<QName> processingEvents) {
 		for (QName processingEvent : processingEvents) {
 			addProcessingEvent(processingEvent);
@@ -3045,6 +3276,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param publicRenderParameters the supported public render parameters of
 	 *        the portlet
 	 */
+	@Override
 	public void setPublicRenderParameters(
 		Set<PublicRenderParameter> publicRenderParameters) {
 
@@ -3060,6 +3292,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @param publishingEvents the supported publishing events of the portlet
 	 */
+	@Override
 	public void setPublishingEvents(Set<QName> publishingEvents) {
 		for (QName publishingEvent : publishingEvents) {
 			addPublishingEvent(publishingEvent);
@@ -3071,6 +3304,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @param ready whether the portlet is ready to be used
 	 */
+	@Override
 	public void setReady(boolean ready) {
 		_readyMap.put(getRootPortletId(), ready);
 	}
@@ -3081,6 +3315,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param remoteable boolean value for whether or not the the portlet
 	 *        supports remoting
 	 */
+	@Override
 	public void setRemoteable(boolean remoteable) {
 		_remoteable = remoteable;
 	}
@@ -3090,6 +3325,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @param renderTimeout the render timeout of the portlet
 	 */
+	@Override
 	public void setRenderTimeout(int renderTimeout) {
 		_renderTimeout = renderTimeout;
 	}
@@ -3099,6 +3335,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @param renderWeight int value for the render weight of the portlet
 	 */
+	@Override
 	public void setRenderWeight(int renderWeight) {
 		_renderWeight = renderWeight;
 	}
@@ -3108,6 +3345,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @param resourceBundle the resource bundle of the portlet
 	 */
+	@Override
 	public void setResourceBundle(String resourceBundle) {
 		_resourceBundle = resourceBundle;
 	}
@@ -3119,6 +3357,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param restoreCurrentView boolean value for whether the portlet restores
 	 *        to the current view from the maximized state
 	 */
+	@Override
 	public void setRestoreCurrentView(boolean restoreCurrentView) {
 		_restoreCurrentView = restoreCurrentView;
 	}
@@ -3128,6 +3367,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @param roleMappers the role mappers of the portlet
 	 */
+	@Override
 	public void setRoleMappers(Map<String, String> roleMappers) {
 		_roleMappers = roleMappers;
 	}
@@ -3149,6 +3389,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @param rolesArray an array of required roles of the portlet
 	 */
+	@Override
 	public void setRolesArray(String[] rolesArray) {
 		_rolesArray = rolesArray;
 
@@ -3160,6 +3401,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @param schedulerEntries the scheduler entries of the portlet
 	 */
+	@Override
 	public void setSchedulerEntries(List<SchedulerEntry> schedulerEntries) {
 		for (SchedulerEntry schedulerEntry : schedulerEntries) {
 			addSchedulerEntry(schedulerEntry);
@@ -3172,6 +3414,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param scopeable boolean value for whether or not the the portlet
 	 *        supports scoping of data
 	 */
+	@Override
 	public void setScopeable(boolean scopeable) {
 		_scopeable = scopeable;
 	}
@@ -3183,6 +3426,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param showPortletAccessDenied boolean value for whether users are shown
 	 *        that they do not have access to the portlet
 	 */
+	@Override
 	public void setShowPortletAccessDenied(boolean showPortletAccessDenied) {
 		_showPortletAccessDenied = showPortletAccessDenied;
 	}
@@ -3193,6 +3437,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param showPortletInactive boolean value for whether users are shown that
 	 *        the portlet is inactive
 	 */
+	@Override
 	public void setShowPortletInactive(boolean showPortletInactive) {
 		_showPortletInactive = showPortletInactive;
 	}
@@ -3204,6 +3449,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param socialActivityInterpreterClasses the names of the classes that
 	 *        represent social activity interpreters associated with the portlet
 	 */
+	@Override
 	public void setSocialActivityInterpreterClasses(
 		List<String> socialActivityInterpreterClasses) {
 
@@ -3216,6 +3462,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param socialRequestInterpreterClass the name of the request interpreter
 	 *        class of the portlet
 	 */
+	@Override
 	public void setSocialRequestInterpreterClass(
 		String socialRequestInterpreterClass) {
 
@@ -3235,6 +3482,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param stagedModelDataHandlerClasses the names of the classes that
 	 *        represent staged model data handlers associated with the portlet
 	 */
+	@Override
 	public void setStagedModelDataHandlerClasses(
 		List<String> stagedModelDataHandlerClasses) {
 
@@ -3248,6 +3496,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param staticPortlet boolean value for whether the portlet is a static
 	 *        portlet that cannot be moved
 	 */
+	@Override
 	public void setStatic(boolean staticPortlet) {
 		_staticPortlet = staticPortlet;
 	}
@@ -3259,6 +3508,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param staticPortletStart boolean value for whether the portlet is a
 	 *        static portlet at the start of a list of portlets
 	 */
+	@Override
 	public void setStaticStart(boolean staticPortletStart) {
 		_staticPortletStart = staticPortletStart;
 	}
@@ -3268,6 +3518,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @param strutsPath the struts path of the portlet
 	 */
+	@Override
 	public void setStrutsPath(String strutsPath) {
 		_strutsPath = strutsPath;
 	}
@@ -3277,6 +3528,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @param supportedLocales the supported locales of the portlet
 	 */
+	@Override
 	public void setSupportedLocales(Set<String> supportedLocales) {
 		_supportedLocales = supportedLocales;
 	}
@@ -3288,6 +3540,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param system boolean value for whether the portlet is a system portlet
 	 *        that a user cannot manually add to their page
 	 */
+	@Override
 	public void setSystem(boolean system) {
 		_system = system;
 	}
@@ -3296,8 +3549,9 @@ public class PortletImpl extends PortletBaseImpl {
 	 * Sets the name of the template handler class of the portlet.
 	 *
 	 * @param templateHandlerClass the name of template handler class of the
-	 * portlet
+	 *        portlet
 	 */
+	@Override
 	public void setTemplateHandlerClass(String templateHandlerClass) {
 		_templateHandlerClass = templateHandlerClass;
 	}
@@ -3307,6 +3561,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @param timestamp the timestamp of the portlet
 	 */
+	@Override
 	public void setTimestamp(long timestamp) {
 		_timestamp = timestamp;
 	}
@@ -3318,6 +3573,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param trashHandlerClasses the names of the classes that represent trash
 	 *        handlers associated with the portlet
 	 */
+	@Override
 	public void setTrashHandlerClasses(List<String> trashHandlerClasses) {
 		_trashHandlerClasses = trashHandlerClasses;
 	}
@@ -3328,6 +3584,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param undeployedPortlet boolean value for whether the portlet is an
 	 *        undeployed portlet
 	 */
+	@Override
 	public void setUndeployedPortlet(boolean undeployedPortlet) {
 		_undeployedPortlet = undeployedPortlet;
 	}
@@ -3337,6 +3594,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @param unlinkedRoles the unlinked roles of the portlet
 	 */
+	@Override
 	public void setUnlinkedRoles(Set<String> unlinkedRoles) {
 		_unlinkedRoles = unlinkedRoles;
 	}
@@ -3346,6 +3604,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @param urlEncoderClass the name of the URL encoder class of the portlet
 	 */
+	@Override
 	public void setURLEncoderClass(String urlEncoderClass) {
 		_urlEncoderClass = urlEncoderClass;
 	}
@@ -3356,6 +3615,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param useDefaultTemplate boolean value for whether the portlet uses the
 	 *        default template
 	 */
+	@Override
 	public void setUseDefaultTemplate(boolean useDefaultTemplate) {
 		_useDefaultTemplate = useDefaultTemplate;
 	}
@@ -3365,6 +3625,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @param userPrincipalStrategy the user principal strategy of the portlet
 	 */
+	@Override
 	public void setUserPrincipalStrategy(String userPrincipalStrategy) {
 		if (Validator.isNotNull(userPrincipalStrategy)) {
 			_userPrincipalStrategy = userPrincipalStrategy;
@@ -3376,6 +3637,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @param virtualPath the virtual path of the portlet
 	 */
+	@Override
 	public void setVirtualPath(String virtualPath) {
 		if (_portletApp.isWARFile() && Validator.isNull(virtualPath)) {
 			virtualPath = PropsValues.PORTLET_VIRTUAL_PATH;
@@ -3390,6 +3652,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param webDAVStorageClass the name of the WebDAV storage class of the
 	 *        portlet
 	 */
+	@Override
 	public void setWebDAVStorageClass(String webDAVStorageClass) {
 		_webDAVStorageClass = webDAVStorageClass;
 	}
@@ -3400,6 +3663,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param webDAVStorageToken the name of the WebDAV storage token of the
 	 *        portlet
 	 */
+	@Override
 	public void setWebDAVStorageToken(String webDAVStorageToken) {
 		_webDAVStorageToken = webDAVStorageToken;
 	}
@@ -3409,6 +3673,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @param windowStates the window states of the portlet
 	 */
+	@Override
 	public void setWindowStates(Map<String, Set<String>> windowStates) {
 		_windowStates = windowStates;
 	}
@@ -3420,6 +3685,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param workflowHandlerClasses the names of the classes that represent
 	 *        workflow handlers associated with the portlet
 	 */
+	@Override
 	public void setWorkflowHandlerClasses(List<String> workflowHandlerClasses) {
 		_workflowHandlerClasses = workflowHandlerClasses;
 	}
@@ -3430,6 +3696,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param xmlRpcMethodClass the name of the XML-RPC method class of the
 	 *        portlet
 	 */
+	@Override
 	public void setXmlRpcMethodClass(String xmlRpcMethodClass) {
 		_xmlRpcMethodClass = xmlRpcMethodClass;
 	}

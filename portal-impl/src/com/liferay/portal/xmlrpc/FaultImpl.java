@@ -29,10 +29,12 @@ public class FaultImpl implements Fault {
 		_description = description;
 	}
 
+	@Override
 	public int getCode() {
 		return _code;
 	}
 
+	@Override
 	public String getDescription() {
 		return _description;
 	}
@@ -42,6 +44,7 @@ public class FaultImpl implements Fault {
 		return "XML-RPC fault " + _code + " " + _description;
 	}
 
+	@Override
 	public String toXml() throws XmlRpcException {
 		StringBundler sb = new StringBundler(17);
 

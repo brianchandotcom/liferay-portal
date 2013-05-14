@@ -34,10 +34,12 @@ import java.util.Set;
 @DoPrivileged
 public class SpringFactoryImpl implements SpringFactory {
 
+	@Override
 	public Object newBean(String className) throws SpringFactoryException {
 		return newBean(className, null);
 	}
 
+	@Override
 	public Object newBean(String className, Map<String, Object> properties)
 		throws SpringFactoryException {
 

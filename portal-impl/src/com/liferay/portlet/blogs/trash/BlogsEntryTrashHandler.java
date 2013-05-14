@@ -38,12 +38,14 @@ import javax.portlet.PortletURL;
  */
 public class BlogsEntryTrashHandler extends BaseTrashHandler {
 
+	@Override
 	public void deleteTrashEntry(long classPK)
 		throws PortalException, SystemException {
 
 		BlogsEntryLocalServiceUtil.deleteEntry(classPK);
 	}
 
+	@Override
 	public String getClassName() {
 		return BlogsEntry.class.getName();
 	}
@@ -81,6 +83,7 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 		return themeDisplay.translate("blogs");
 	}
 
+	@Override
 	public boolean isInTrash(long classPK)
 		throws PortalException, SystemException {
 
@@ -89,6 +92,7 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 		return entry.isInTrash();
 	}
 
+	@Override
 	public void restoreTrashEntry(long userId, long classPK)
 		throws PortalException, SystemException {
 

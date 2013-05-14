@@ -31,6 +31,7 @@ import java.util.Map;
  */
 public class JSONIncludesManagerImpl implements JSONIncludesManager {
 
+	@Override
 	public String[] lookupExcludes(Class<?> type) {
 		String[] excludes = _excludesMap.get(type);
 
@@ -62,6 +63,7 @@ public class JSONIncludesManagerImpl implements JSONIncludesManager {
 		return excludes;
 	}
 
+	@Override
 	public String[] lookupIncludes(Class<?> type) {
 		String[] includes = _includesMap.get(type);
 

@@ -41,12 +41,14 @@ public class FileSystemHook extends BaseHook {
 		}
 	}
 
+	@Override
 	public void deleteImage(Image image) {
 		File file = getFile(image.getImageId(), image.getType());
 
 		FileUtil.delete(file);
 	}
 
+	@Override
 	public byte[] getImageAsBytes(Image image)
 		throws PortalException, SystemException {
 
@@ -64,6 +66,7 @@ public class FileSystemHook extends BaseHook {
 		}
 	}
 
+	@Override
 	public InputStream getImageAsStream(Image image)
 		throws PortalException, SystemException {
 
@@ -81,6 +84,7 @@ public class FileSystemHook extends BaseHook {
 		}
 	}
 
+	@Override
 	public void updateImage(Image image, String type, byte[] bytes)
 		throws SystemException {
 

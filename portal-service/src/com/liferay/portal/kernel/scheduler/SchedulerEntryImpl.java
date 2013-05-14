@@ -25,26 +25,32 @@ import com.liferay.portal.kernel.util.Time;
  */
 public class SchedulerEntryImpl implements SchedulerEntry {
 
+	@Override
 	public String getDescription() {
 		return _description;
 	}
 
+	@Override
 	public MessageListener getEventListener() {
 		return _eventListener;
 	}
 
+	@Override
 	public String getEventListenerClass() {
 		return _eventListenerClass;
 	}
 
+	@Override
 	public String getPropertyKey() {
 		return _propertyKey;
 	}
 
+	@Override
 	public TimeUnit getTimeUnit() {
 		return _timeUnit;
 	}
 
+	@Override
 	public Trigger getTrigger() throws SchedulerException {
 		if (_trigger != null) {
 			return _trigger;
@@ -84,46 +90,57 @@ public class SchedulerEntryImpl implements SchedulerEntry {
 		return _trigger;
 	}
 
+	@Override
 	public TriggerType getTriggerType() {
 		return _triggerType;
 	}
 
+	@Override
 	public String getTriggerValue() {
 		return _triggerValue;
 	}
 
+	@Override
 	public void setDescription(String description) {
 		_description = description;
 	}
 
+	@Override
 	public void setEventListener(MessageListener eventListener) {
 		_eventListener = eventListener;
 	}
 
+	@Override
 	public void setEventListenerClass(String eventListenerClass) {
 		_eventListenerClass = eventListenerClass;
 	}
 
+	@Override
 	public void setPropertyKey(String propertyKey) {
 		_propertyKey = propertyKey;
 	}
 
+	@Override
 	public void setTimeUnit(TimeUnit timeUnit) {
 		_timeUnit = timeUnit;
 	}
 
+	@Override
 	public void setTriggerType(TriggerType triggerType) {
 		_triggerType = triggerType;
 	}
 
+	@Override
 	public void setTriggerValue(int triggerValue) {
 		_triggerValue = String.valueOf(triggerValue);
 	}
 
+	@Override
 	public void setTriggerValue(long triggerValue) {
 		_triggerValue = String.valueOf(triggerValue);
 	}
 
+	@Override
 	public void setTriggerValue(String triggerValue) {
 		_triggerValue = triggerValue;
 	}

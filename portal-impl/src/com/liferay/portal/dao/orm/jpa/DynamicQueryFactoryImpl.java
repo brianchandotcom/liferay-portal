@@ -25,18 +25,22 @@ import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 @DoPrivileged
 public class DynamicQueryFactoryImpl implements DynamicQueryFactory {
 
+	@Override
 	public DynamicQuery forClass(Class<?> clazz) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public DynamicQuery forClass(Class<?> clazz, ClassLoader classLoader) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public DynamicQuery forClass(Class<?> clazz, String alias) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public DynamicQuery forClass(
 		Class<?> clazz, String alias, ClassLoader classLoader) {
 

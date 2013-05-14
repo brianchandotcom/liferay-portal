@@ -23,6 +23,7 @@ import nl.captcha.text.producer.TextProducer;
  */
 public class DictionaryWordTextProducer implements TextProducer {
 
+	@Override
 	public String getText() {
 		return WordsUtil.getRandomWord();
 	}

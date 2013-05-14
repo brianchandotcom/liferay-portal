@@ -26,6 +26,7 @@ public class ReturnArgumentCalledAnswer<T> implements Answer<T> {
 		_position = position;
 	}
 
+	@Override
 	public T answer(InvocationOnMock invocationOnMock) {
 		return (T)invocationOnMock.getArguments()[_position];
 	}

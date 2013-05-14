@@ -35,6 +35,7 @@ import java.util.List;
  */
 public class ShoppingItemServiceImpl extends ShoppingItemServiceBaseImpl {
 
+	@Override
 	public void addBookItems(long groupId, long categoryId, String[] isbns)
 		throws PortalException, SystemException {
 
@@ -45,6 +46,7 @@ public class ShoppingItemServiceImpl extends ShoppingItemServiceBaseImpl {
 			getUserId(), groupId, categoryId, isbns);
 	}
 
+	@Override
 	public ShoppingItem addItem(
 			long groupId, long categoryId, String sku, String name,
 			String description, String properties, String fieldsQuantities,
@@ -67,6 +69,7 @@ public class ShoppingItemServiceImpl extends ShoppingItemServiceBaseImpl {
 			itemFields, itemPrices, serviceContext);
 	}
 
+	@Override
 	public void deleteItem(long itemId)
 		throws PortalException, SystemException {
 
@@ -76,12 +79,14 @@ public class ShoppingItemServiceImpl extends ShoppingItemServiceBaseImpl {
 		shoppingItemLocalService.deleteItem(itemId);
 	}
 
+	@Override
 	public int getCategoriesItemsCount(long groupId, List<Long> categoryIds)
 		throws SystemException {
 
 		return shoppingItemFinder.filterCountByG_C(groupId, categoryIds);
 	}
 
+	@Override
 	public ShoppingItem getItem(long itemId)
 		throws PortalException, SystemException {
 
@@ -91,12 +96,14 @@ public class ShoppingItemServiceImpl extends ShoppingItemServiceBaseImpl {
 		return shoppingItemLocalService.getItem(itemId);
 	}
 
+	@Override
 	public List<ShoppingItem> getItems(long groupId, long categoryId)
 		throws SystemException {
 
 		return shoppingItemPersistence.filterFindByG_C(groupId, categoryId);
 	}
 
+	@Override
 	public List<ShoppingItem> getItems(
 			long groupId, long categoryId, int start, int end,
 			OrderByComparator obc)
@@ -106,12 +113,14 @@ public class ShoppingItemServiceImpl extends ShoppingItemServiceBaseImpl {
 			groupId, categoryId, start, end, obc);
 	}
 
+	@Override
 	public int getItemsCount(long groupId, long categoryId)
 		throws SystemException {
 
 		return shoppingItemPersistence.filterCountByG_C(groupId, categoryId);
 	}
 
+	@Override
 	public ShoppingItem[] getItemsPrevAndNext(
 			long itemId, OrderByComparator obc)
 		throws PortalException, SystemException {
@@ -122,6 +131,7 @@ public class ShoppingItemServiceImpl extends ShoppingItemServiceBaseImpl {
 			item.getItemId(), item.getGroupId(), item.getCategoryId(), obc);
 	}
 
+	@Override
 	public ShoppingItem updateItem(
 			long itemId, long groupId, long categoryId, String sku, String name,
 			String description, String properties, String fieldsQuantities,

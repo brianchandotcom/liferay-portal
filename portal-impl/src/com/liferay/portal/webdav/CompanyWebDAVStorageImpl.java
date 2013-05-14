@@ -33,12 +33,14 @@ import java.util.List;
  */
 public class CompanyWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
+	@Override
 	public Resource getResource(WebDAVRequest webDAVRequest) {
 		String path = getRootPath() + webDAVRequest.getPath();
 
 		return new BaseResourceImpl(path, StringPool.BLANK, StringPool.BLANK);
 	}
 
+	@Override
 	public List<Resource> getResources(WebDAVRequest webDAVRequest)
 		throws WebDAVException {
 

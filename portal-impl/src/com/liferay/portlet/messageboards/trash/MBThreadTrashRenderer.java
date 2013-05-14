@@ -51,10 +51,12 @@ public class MBThreadTrashRenderer extends BaseTrashRenderer {
 			thread.getRootMessageId());
 	}
 
+	@Override
 	public String getClassName() {
 		return MBThread.class.getName();
 	}
 
+	@Override
 	public long getClassPK() {
 		return _thread.getPrimaryKey();
 	}
@@ -64,18 +66,22 @@ public class MBThreadTrashRenderer extends BaseTrashRenderer {
 		return themeDisplay.getPathThemeImages() + "/common/conversation.png";
 	}
 
+	@Override
 	public String getPortletId() {
 		return PortletKeys.MESSAGE_BOARDS;
 	}
 
+	@Override
 	public String getSummary(Locale locale) {
 		return null;
 	}
 
+	@Override
 	public String getTitle(Locale locale) {
 		return HtmlUtil.stripHtml(_rootMessage.getSubject());
 	}
 
+	@Override
 	public String getType() {
 		return TYPE;
 	}

@@ -25,6 +25,7 @@ import com.liferay.portal.model.impl.LayoutTypePortletImpl;
 @DoPrivileged
 public class LayoutTypePortletFactoryImpl implements LayoutTypePortletFactory {
 
+	@Override
 	public LayoutTypePortlet create(Layout layout) {
 		return new LayoutTypePortletImpl(layout);
 	}

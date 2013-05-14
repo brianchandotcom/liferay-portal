@@ -52,6 +52,7 @@ public class FinderCacheImpl implements CacheRegistryItem, FinderCache {
 		CacheRegistryUtil.register(this);
 	}
 
+	@Override
 	public void clearCache() {
 		clearLocalCache();
 
@@ -60,6 +61,7 @@ public class FinderCacheImpl implements CacheRegistryItem, FinderCache {
 		}
 	}
 
+	@Override
 	public void clearCache(String className) {
 		clearLocalCache();
 
@@ -70,16 +72,19 @@ public class FinderCacheImpl implements CacheRegistryItem, FinderCache {
 		}
 	}
 
+	@Override
 	public void clearLocalCache() {
 		if (_localCacheAvailable) {
 			_localCache.remove();
 		}
 	}
 
+	@Override
 	public String getRegistryName() {
 		return CACHE_NAME;
 	}
 
+	@Override
 	public Object getResult(
 		FinderPath finderPath, Object[] args, SessionFactory sessionFactory) {
 
@@ -127,10 +132,12 @@ public class FinderCacheImpl implements CacheRegistryItem, FinderCache {
 		}
 	}
 
+	@Override
 	public void invalidate() {
 		clearCache();
 	}
 
+	@Override
 	public void putResult(FinderPath finderPath, Object[] args, Object result) {
 		if (!PropsValues.VALUE_OBJECT_FINDER_CACHE_ENABLED ||
 			!finderPath.isFinderCacheEnabled() ||
@@ -158,6 +165,7 @@ public class FinderCacheImpl implements CacheRegistryItem, FinderCache {
 		portalCache.put(cacheKey, primaryKey);
 	}
 
+	@Override
 	public void removeCache(String className) {
 		_portalCaches.remove(className);
 
@@ -166,6 +174,7 @@ public class FinderCacheImpl implements CacheRegistryItem, FinderCache {
 		_multiVMPool.removeCache(groupKey);
 	}
 
+	@Override
 	public void removeResult(FinderPath finderPath, Object[] args) {
 		if (!PropsValues.VALUE_OBJECT_FINDER_CACHE_ENABLED ||
 			!finderPath.isFinderCacheEnabled() ||

@@ -43,6 +43,7 @@ public class RoleMembershipPolicyFactoryImpl
 		_roleMembershipPolicy = _originalRoleMembershipPolicy;
 	}
 
+	@Override
 	public RoleMembershipPolicy getRoleMembershipPolicy() {
 		return _roleMembershipPolicy;
 	}

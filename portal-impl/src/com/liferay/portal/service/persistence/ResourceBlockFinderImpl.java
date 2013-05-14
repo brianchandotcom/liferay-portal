@@ -37,6 +37,7 @@ public class ResourceBlockFinderImpl
 	public static final String FIND_BY_C_G_N_R =
 		ResourceBlockFinder.class.getName() + ".findByC_G_N_R";
 
+	@Override
 	public ResourceBlockIdsBag findByC_G_N_R(
 			long companyId, long groupId, String name, long[] roleIds)
 		throws SystemException {

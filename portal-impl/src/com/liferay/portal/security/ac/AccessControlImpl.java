@@ -38,6 +38,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class AccessControlImpl implements AccessControl {
 
+	@Override
 	public void initAccessControlContext(
 		HttpServletRequest request, HttpServletResponse response,
 		Map<String, Object> settings) {
@@ -63,6 +64,7 @@ public class AccessControlImpl implements AccessControl {
 		AccessControlUtil.setAccessControlContext(accessControlContext);
 	}
 
+	@Override
 	public void initContextUser(long userId) throws AuthException {
 		try {
 			User user = UserLocalServiceUtil.getUser(userId);
@@ -83,6 +85,7 @@ public class AccessControlImpl implements AccessControl {
 		}
 	}
 
+	@Override
 	public AuthVerifierResult.State verifyRequest()
 		throws PortalException, SystemException {
 

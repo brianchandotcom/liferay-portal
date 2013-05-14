@@ -27,28 +27,34 @@ public class LayoutTypeImpl implements LayoutType {
 		setLayout(layout);
 	}
 
+	@Override
 	public Layout getLayout() {
 		return _layout;
 	}
 
+	@Override
 	public UnicodeProperties getTypeSettingsProperties() {
 		return _layout.getTypeSettingsProperties();
 	}
 
+	@Override
 	public String getTypeSettingsProperty(String key) {
 		return getTypeSettingsProperty(key, null);
 	}
 
+	@Override
 	public String getTypeSettingsProperty(String key, String defaultValue) {
 		UnicodeProperties typeSettingsProperties = getTypeSettingsProperties();
 
 		return typeSettingsProperties.getProperty(key, defaultValue);
 	}
 
+	@Override
 	public void setLayout(Layout layout) {
 		_layout = layout;
 	}
 
+	@Override
 	public void setTypeSettingsProperty(String key, String value) {
 		UnicodeProperties typeSettingsProperties = getTypeSettingsProperties();
 

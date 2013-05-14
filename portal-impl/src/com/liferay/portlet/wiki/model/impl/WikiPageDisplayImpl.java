@@ -40,80 +40,99 @@ public class WikiPageDisplayImpl implements WikiPageDisplay {
 		_attachmentsFileEntries = attachmentsFileEntries;
 	}
 
+	@Override
 	public List<FileEntry> getAttachmentsFileEntries() {
 		return _attachmentsFileEntries;
 	}
 
+	@Override
 	public String getContent() {
 		return _content;
 	}
 
+	@Override
 	public String getFormat() {
 		return _format;
 	}
 
+	@Override
 	public String getFormattedContent() {
 		return _formattedContent;
 	}
 
+	@Override
 	public boolean getHead() {
 		return _head;
 	}
 
+	@Override
 	public long getNodeId() {
 		return _nodeId;
 	}
 
+	@Override
 	public String getTitle() {
 		return _title;
 	}
 
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
 
+	@Override
 	public double getVersion() {
 		return _version;
 	}
 
+	@Override
 	public boolean isHead() {
 		return _head;
 	}
 
+	@Override
 	public void setAttachmentsFileEntries(
 		List<FileEntry> attachmentsFileEntries) {
 
 		_attachmentsFileEntries = attachmentsFileEntries;
 	}
 
+	@Override
 	public void setContent(String content) {
 		_content = content;
 	}
 
+	@Override
 	public void setFormat(String format) {
 		_format = format;
 	}
 
+	@Override
 	public void setFormattedContent(String formattedContent) {
 		_formattedContent = formattedContent;
 	}
 
+	@Override
 	public void setHead(boolean head) {
 		_head = head;
 	}
 
+	@Override
 	public void setNodeId(long nodeId) {
 		_nodeId = nodeId;
 	}
 
+	@Override
 	public void setTitle(String title) {
 		_title = title;
 	}
 
+	@Override
 	public void setUserId(long userId) {
 		_userId = userId;
 	}
 
+	@Override
 	public void setVersion(double version) {
 		_version = version;
 	}

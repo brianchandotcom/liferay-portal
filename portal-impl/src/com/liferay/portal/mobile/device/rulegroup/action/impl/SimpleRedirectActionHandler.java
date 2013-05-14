@@ -34,10 +34,12 @@ public class SimpleRedirectActionHandler extends BaseRedirectActionHandler {
 		return SimpleRedirectActionHandler.class.getName();
 	}
 
+	@Override
 	public Collection<String> getPropertyNames() {
 		return _propertyNames;
 	}
 
+	@Override
 	public String getType() {
 		return getHandlerType();
 	}

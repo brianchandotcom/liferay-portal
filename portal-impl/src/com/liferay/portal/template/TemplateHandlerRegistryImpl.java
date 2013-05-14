@@ -30,6 +30,7 @@ import java.util.Map;
 @DoPrivileged
 public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 
+	@Override
 	public long[] getClassNameIds() {
 		long[] classNameIds = new long[_templateHandlers.size()];
 
@@ -47,24 +48,29 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 		return classNameIds;
 	}
 
+	@Override
 	public TemplateHandler getTemplateHandler(long classNameId) {
 		String className = PortalUtil.getClassName(classNameId);
 
 		return _templateHandlers.get(className);
 	}
 
+	@Override
 	public TemplateHandler getTemplateHandler(String className) {
 		return _templateHandlers.get(className);
 	}
 
+	@Override
 	public List<TemplateHandler> getTemplateHandlers() {
 		return ListUtil.fromMapValues(_templateHandlers);
 	}
 
+	@Override
 	public void register(TemplateHandler templateHandler) {
 		_templateHandlers.put(templateHandler.getClassName(), templateHandler);
 	}
 
+	@Override
 	public void unregister(TemplateHandler templateHandler) {
 		_templateHandlers.remove(templateHandler.getClassName());
 	}

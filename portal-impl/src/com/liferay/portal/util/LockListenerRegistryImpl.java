@@ -49,14 +49,17 @@ public class LockListenerRegistryImpl implements LockListenerRegistry {
 		}
 	}
 
+	@Override
 	public LockListener getLockListener(String className) {
 		return _lockListeners.get(className);
 	}
 
+	@Override
 	public void register(LockListener lockListener) {
 		_lockListeners.put(lockListener.getClassName(), lockListener);
 	}
 
+	@Override
 	public void unregister(LockListener lockListener) {
 		_lockListeners.remove(lockListener.getClassName());
 	}

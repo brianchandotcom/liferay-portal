@@ -43,6 +43,7 @@ public class PasswordPolicyFinderImpl
 	public static final String FIND_BY_C_N =
 		PasswordPolicyFinder.class.getName() + ".findByC_N";
 
+	@Override
 	public int countByC_N(long companyId, String name) throws SystemException {
 		name = StringUtil.lowerCase(name);
 
@@ -83,6 +84,7 @@ public class PasswordPolicyFinderImpl
 		}
 	}
 
+	@Override
 	public List<PasswordPolicy> findByC_N(
 			long companyId, String name, int start, int end,
 			OrderByComparator obc)

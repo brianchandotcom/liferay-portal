@@ -43,10 +43,12 @@ public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 		_pool = new ConcurrentHashMap<String, Map<String, InvokerPortlet>>();
 	}
 
+	@Override
 	public void clear(Portlet portlet) {
 		clear(portlet, true);
 	}
 
+	@Override
 	public void clear(Portlet portlet, boolean resetRemotePortletBag) {
 		String rootPortletId = portlet.getRootPortletId();
 
@@ -71,6 +73,7 @@ public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 		}
 	}
 
+	@Override
 	public InvokerPortlet create(Portlet portlet, ServletContext servletContext)
 		throws PortletException {
 
@@ -178,6 +181,7 @@ public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 		return instanceInvokerPortletInstance;
 	}
 
+	@Override
 	public void delete(Portlet portlet) {
 		if (PortletConstants.hasInstanceId(portlet.getPortletId())) {
 			Map<String, InvokerPortlet> portletInstances = _pool.get(
@@ -195,6 +199,7 @@ public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 
 	}
 
+	@Override
 	public void destroy(Portlet portlet) {
 		clear(portlet);
 

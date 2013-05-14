@@ -31,6 +31,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class UnlockMethodImpl implements Method {
 
+	@Override
 	public int process(WebDAVRequest webDAVRequest) throws WebDAVException {
 		WebDAVStorage storage = webDAVRequest.getWebDAVStorage();
 

@@ -104,10 +104,12 @@ public class MBMessageIndexer extends BaseIndexer {
 		document.addKeyword("threadId", message.getThreadId());
 	}
 
+	@Override
 	public String[] getClassNames() {
 		return CLASS_NAMES;
 	}
 
+	@Override
 	public String getPortletId() {
 		return PORTLET_ID;
 	}

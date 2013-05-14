@@ -43,6 +43,7 @@ public class OrganizationMembershipPolicyFactoryImpl
 		_organizationMembershipPolicy = _originalOrganizationMembershipPolicy;
 	}
 
+	@Override
 	public OrganizationMembershipPolicy getOrganizationMembershipPolicy() {
 		return _organizationMembershipPolicy;
 	}

@@ -28,42 +28,52 @@ import java.util.List;
 public class SchedulerEngineProxyBean
 	extends BaseProxyBean implements SchedulerEngine {
 
+	@Override
 	public void delete(String groupName) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void delete(String jobName, String groupName) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public SchedulerResponse getScheduledJob(String jobName, String groupName) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public List<SchedulerResponse> getScheduledJobs() {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public List<SchedulerResponse> getScheduledJobs(String groupName) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void pause(String groupName) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void pause(String jobName, String groupName) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void resume(String groupName) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void resume(String jobName, String groupName) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void schedule(
 		Trigger trigger, String description, String destinationName,
 		Message message) {
@@ -71,26 +81,32 @@ public class SchedulerEngineProxyBean
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void shutdown() {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void start() {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void suppressError(String jobName, String groupName) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void unschedule(String groupName) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void unschedule(String jobName, String groupName) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void update(Trigger trigger) {
 		throw new UnsupportedOperationException();
 	}

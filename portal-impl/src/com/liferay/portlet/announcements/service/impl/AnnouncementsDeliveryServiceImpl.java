@@ -29,6 +29,7 @@ import com.liferay.portlet.announcements.service.base.AnnouncementsDeliveryServi
 public class AnnouncementsDeliveryServiceImpl
 	extends AnnouncementsDeliveryServiceBaseImpl {
 
+	@Override
 	public AnnouncementsDelivery updateDelivery(
 			long userId, String type, boolean email, boolean sms,
 			boolean website)

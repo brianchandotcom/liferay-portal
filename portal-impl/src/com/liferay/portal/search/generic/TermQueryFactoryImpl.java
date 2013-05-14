@@ -22,10 +22,12 @@ import com.liferay.portal.kernel.search.TermQueryFactory;
  */
 public class TermQueryFactoryImpl implements TermQueryFactory {
 
+	@Override
 	public TermQuery create(String field, long value) {
 		return create(field, String.valueOf(value));
 	}
 
+	@Override
 	public TermQuery create(String field, String value) {
 		return new TermQueryImpl(new QueryTermImpl(field, value));
 	}

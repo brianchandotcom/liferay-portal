@@ -41,14 +41,17 @@ public class JSONWebServiceClassVisitorImpl
 		_classReader = new ClassReader(inputStream);
 	}
 
+	@Override
 	public void accept() throws Exception {
 		_classReader.accept(this, 0);
 	}
 
+	@Override
 	public String getClassName() {
 		return _className;
 	}
 
+	@Override
 	public void visit(
 		int version, int access, String name, String signature,
 		String superName, String[] interfaces) {
@@ -56,18 +59,22 @@ public class JSONWebServiceClassVisitorImpl
 		_className = StringUtil.replace(name, CharPool.SLASH, CharPool.PERIOD);
 	}
 
+	@Override
 	public AnnotationVisitor visitAnnotation(
 		String description, boolean visible) {
 
 		return null;
 	}
 
+	@Override
 	public void visitAttribute(Attribute attribute) {
 	}
 
+	@Override
 	public void visitEnd() {
 	}
 
+	@Override
 	public FieldVisitor visitField(
 		int access, String name, String description, String signature,
 		Object value) {
@@ -75,10 +82,12 @@ public class JSONWebServiceClassVisitorImpl
 		return null;
 	}
 
+	@Override
 	public void visitInnerClass(
 		String name, String outerName, String innerName, int access) {
 	}
 
+	@Override
 	public MethodVisitor visitMethod(
 		int access, String name, String description, String signature,
 		String[] exceptions) {
@@ -86,9 +95,11 @@ public class JSONWebServiceClassVisitorImpl
 		return null;
 	}
 
+	@Override
 	public void visitOuterClass(String owner, String name, String desc) {
 	}
 
+	@Override
 	public void visitSource(String source, String debug) {
 	}
 

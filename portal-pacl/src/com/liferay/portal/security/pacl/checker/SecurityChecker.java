@@ -26,9 +26,11 @@ import sun.reflect.Reflection;
  */
 public class SecurityChecker extends BaseChecker {
 
+	@Override
 	public void afterPropertiesSet() {
 	}
 
+	@Override
 	public boolean implies(Permission permission) {
 		String name = permission.getName();
 

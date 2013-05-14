@@ -29,6 +29,7 @@ import java.util.List;
  */
 public class RemoveDocumentsMethodImpl extends BaseMethodImpl {
 
+	@Override
 	public String getMethodName() {
 		return _METHOD_NAME;
 	}

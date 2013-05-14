@@ -58,6 +58,7 @@ public class HtmlEngine implements WikiEngine {
 		_router = friendlyURLMapper.getRouter();
 	}
 
+	@Override
 	public String convert(
 		WikiPage page, PortletURL viewPageURL, PortletURL editPageURL,
 		String attachmentURLPrefix) {
@@ -65,6 +66,7 @@ public class HtmlEngine implements WikiEngine {
 		return page.getContent();
 	}
 
+	@Override
 	public Map<String, Boolean> getOutgoingLinks(WikiPage page)
 		throws PageContentException {
 
@@ -76,12 +78,15 @@ public class HtmlEngine implements WikiEngine {
 		}
 	}
 
+	@Override
 	public void setInterWikiConfiguration(String interWikiConfiguration) {
 	}
 
+	@Override
 	public void setMainConfiguration(String mainConfiguration) {
 	}
 
+	@Override
 	public boolean validate(long nodeId, String newContent) {
 		return true;
 	}

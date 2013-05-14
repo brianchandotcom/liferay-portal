@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 @DoPrivileged
 public class OAuthFactoryImpl implements OAuthFactory {
 
+	@Override
 	public OAuthManager createOAuthManager(
 			String key, String secret, String accessURL, String requestURL,
 			String callbackURL, String scope)
@@ -43,6 +44,7 @@ public class OAuthFactoryImpl implements OAuthFactory {
 		}
 	}
 
+	@Override
 	public OAuthRequest createOAuthRequest(Verb verb, String url)
 		throws OAuthException {
 
@@ -56,6 +58,7 @@ public class OAuthFactoryImpl implements OAuthFactory {
 		}
 	}
 
+	@Override
 	public Token createToken(String token, String secret)
 		throws OAuthException {
 
@@ -67,6 +70,7 @@ public class OAuthFactoryImpl implements OAuthFactory {
 		}
 	}
 
+	@Override
 	public Verifier createVerifier(String verifier) throws OAuthException {
 		try {
 			return new VerifierImpl(new org.scribe.model.Verifier(verifier));

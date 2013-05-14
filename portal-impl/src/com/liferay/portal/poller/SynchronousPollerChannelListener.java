@@ -39,6 +39,7 @@ public class SynchronousPollerChannelListener implements ChannelListener {
 		_pollerResponseHeaderJSONObject = pollerResponseHeaderJSONObject;
 	}
 
+	@Override
 	public synchronized void channelListenerRemoved(long channelId) {
 		_complete = true;
 
@@ -77,6 +78,7 @@ public class SynchronousPollerChannelListener implements ChannelListener {
 		return jsonArray.toString();
 	}
 
+	@Override
 	public synchronized void notificationEventsAvailable(long channelId) {
 		_complete = true;
 

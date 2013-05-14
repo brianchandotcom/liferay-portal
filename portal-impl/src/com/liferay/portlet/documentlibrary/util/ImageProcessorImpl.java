@@ -55,6 +55,7 @@ import java.util.concurrent.Future;
 public class ImageProcessorImpl
 	extends DLPreviewableProcessor implements ImageProcessor {
 
+	@Override
 	public void afterPropertiesSet() {
 	}
 
@@ -70,6 +71,7 @@ public class ImageProcessorImpl
 		deleteFiles(fileVersion, type);
 	}
 
+	@Override
 	public void generateImages(
 			FileVersion sourceFileVersion, FileVersion destinationFileVersion)
 		throws Exception {
@@ -77,10 +79,12 @@ public class ImageProcessorImpl
 		_generateImages(sourceFileVersion, destinationFileVersion);
 	}
 
+	@Override
 	public Set<String> getImageMimeTypes() {
 		return _imageMimeTypes;
 	}
 
+	@Override
 	public InputStream getPreviewAsStream(FileVersion fileVersion)
 		throws Exception {
 
@@ -93,6 +97,7 @@ public class ImageProcessorImpl
 		return fileVersion.getContentStream(false);
 	}
 
+	@Override
 	public long getPreviewFileSize(FileVersion fileVersion) throws Exception {
 		if (_previewGenerationRequired(fileVersion)) {
 			String type = getPreviewType(fileVersion);
@@ -108,12 +113,14 @@ public class ImageProcessorImpl
 		return _getType(fileVersion);
 	}
 
+	@Override
 	public InputStream getThumbnailAsStream(FileVersion fileVersion, int index)
 		throws Exception {
 
 		return doGetThumbnailAsStream(fileVersion, index);
 	}
 
+	@Override
 	public long getThumbnailFileSize(FileVersion fileVersion, int index)
 		throws Exception {
 
@@ -125,6 +132,7 @@ public class ImageProcessorImpl
 		return _getType(fileVersion);
 	}
 
+	@Override
 	public boolean hasImages(FileVersion fileVersion) {
 		if (!PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED &&
 			!PropsValues.DL_FILE_ENTRY_THUMBNAIL_ENABLED) {
@@ -151,14 +159,17 @@ public class ImageProcessorImpl
 		return hasImages;
 	}
 
+	@Override
 	public boolean isImageSupported(FileVersion fileVersion) {
 		return isSupported(fileVersion);
 	}
 
+	@Override
 	public boolean isImageSupported(String mimeType) {
 		return isSupported(mimeType);
 	}
 
+	@Override
 	public boolean isSupported(String mimeType) {
 		if (Validator.isNull(mimeType)) {
 			return false;
@@ -167,6 +178,7 @@ public class ImageProcessorImpl
 		return _imageMimeTypes.contains(mimeType);
 	}
 
+	@Override
 	public void storeThumbnail(
 			long companyId, long groupId, long fileEntryId, long fileVersionId,
 			long custom1ImageId, long custom2ImageId, InputStream is,

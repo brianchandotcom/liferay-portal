@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.search.BooleanQueryFactory;
  */
 public class BooleanQueryFactoryImpl implements BooleanQueryFactory {
 
+	@Override
 	public BooleanQuery create() {
 		return new BooleanQueryImpl();
 	}

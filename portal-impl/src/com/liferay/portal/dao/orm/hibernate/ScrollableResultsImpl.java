@@ -28,6 +28,7 @@ public class ScrollableResultsImpl implements ScrollableResults {
 		_scrollableResults = scrollableResults;
 	}
 
+	@Override
 	public boolean first() throws ORMException {
 		try {
 			return _scrollableResults.first();
@@ -37,6 +38,7 @@ public class ScrollableResultsImpl implements ScrollableResults {
 		}
 	}
 
+	@Override
 	public Object[] get() throws ORMException {
 		try {
 			return _scrollableResults.get();
@@ -46,6 +48,7 @@ public class ScrollableResultsImpl implements ScrollableResults {
 		}
 	}
 
+	@Override
 	public Object get(int i) throws ORMException {
 		try {
 			return _scrollableResults.get(i);
@@ -55,6 +58,7 @@ public class ScrollableResultsImpl implements ScrollableResults {
 		}
 	}
 
+	@Override
 	public boolean last() throws ORMException {
 		try {
 			return _scrollableResults.last();
@@ -64,6 +68,7 @@ public class ScrollableResultsImpl implements ScrollableResults {
 		}
 	}
 
+	@Override
 	public boolean next() throws ORMException {
 		try {
 			return _scrollableResults.next();
@@ -73,6 +78,7 @@ public class ScrollableResultsImpl implements ScrollableResults {
 		}
 	}
 
+	@Override
 	public boolean previous() throws ORMException {
 		try {
 			return _scrollableResults.previous();
@@ -82,6 +88,7 @@ public class ScrollableResultsImpl implements ScrollableResults {
 		}
 	}
 
+	@Override
 	public boolean scroll(int i) throws ORMException {
 		try {
 			return _scrollableResults.scroll(i);

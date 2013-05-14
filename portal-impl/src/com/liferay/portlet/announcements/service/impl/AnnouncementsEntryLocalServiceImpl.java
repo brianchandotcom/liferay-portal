@@ -61,6 +61,7 @@ import java.util.List;
 public class AnnouncementsEntryLocalServiceImpl
 	extends AnnouncementsEntryLocalServiceBaseImpl {
 
+	@Override
 	public AnnouncementsEntry addEntry(
 			long userId, long classNameId, long classPK, String title,
 			String content, String url, String type, int displayDateMonth,
@@ -131,6 +132,7 @@ public class AnnouncementsEntryLocalServiceImpl
 	 *             String, String, String, String, int, int, int, int, int,
 	 *             boolean, int, int, int, int, int, int, boolean)}
 	 */
+	@Override
 	public AnnouncementsEntry addEntry(
 			long userId, long classNameId, long classPK, String title,
 			String content, String url, String type, int displayDateMonth,
@@ -149,6 +151,7 @@ public class AnnouncementsEntryLocalServiceImpl
 			priority, alert);
 	}
 
+	@Override
 	public void checkEntries() throws PortalException, SystemException {
 		Date now = new Date();
 
@@ -171,6 +174,7 @@ public class AnnouncementsEntryLocalServiceImpl
 		_previousCheckDate = now;
 	}
 
+	@Override
 	public void deleteEntry(AnnouncementsEntry entry)
 		throws PortalException, SystemException {
 
@@ -189,6 +193,7 @@ public class AnnouncementsEntryLocalServiceImpl
 		announcementsFlagLocalService.deleteFlags(entry.getEntryId());
 	}
 
+	@Override
 	public void deleteEntry(long entryId)
 		throws PortalException, SystemException {
 
@@ -198,6 +203,7 @@ public class AnnouncementsEntryLocalServiceImpl
 		deleteEntry(entry);
 	}
 
+	@Override
 	public List<AnnouncementsEntry> getEntries(
 			long userId, LinkedHashMap<Long, long[]> scopes, boolean alert,
 			int flagValue, int start, int end)
@@ -208,6 +214,7 @@ public class AnnouncementsEntryLocalServiceImpl
 			start, end);
 	}
 
+	@Override
 	public List<AnnouncementsEntry> getEntries(
 			long userId, LinkedHashMap<Long, long[]> scopes,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
@@ -224,6 +231,7 @@ public class AnnouncementsEntryLocalServiceImpl
 			expirationDateMinute, alert, flagValue, start, end);
 	}
 
+	@Override
 	public List<AnnouncementsEntry> getEntries(
 			long classNameId, long classPK, boolean alert, int start, int end)
 		throws SystemException {
@@ -232,6 +240,7 @@ public class AnnouncementsEntryLocalServiceImpl
 			classNameId, classPK, alert, start, end);
 	}
 
+	@Override
 	public List<AnnouncementsEntry> getEntries(
 			long userId, long classNameId, long[] classPKs,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
@@ -249,6 +258,7 @@ public class AnnouncementsEntryLocalServiceImpl
 			end);
 	}
 
+	@Override
 	public int getEntriesCount(
 			long userId, LinkedHashMap<Long, long[]> scopes, boolean alert,
 			int flagValue)
@@ -258,6 +268,7 @@ public class AnnouncementsEntryLocalServiceImpl
 			userId, scopes, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, alert, flagValue);
 	}
 
+	@Override
 	public int getEntriesCount(
 			long userId, LinkedHashMap<Long, long[]> scopes,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
@@ -274,6 +285,7 @@ public class AnnouncementsEntryLocalServiceImpl
 			expirationDateMinute, alert, flagValue);
 	}
 
+	@Override
 	public int getEntriesCount(long classNameId, long classPK, boolean alert)
 		throws SystemException {
 
@@ -281,6 +293,7 @@ public class AnnouncementsEntryLocalServiceImpl
 			classNameId, classPK, alert);
 	}
 
+	@Override
 	public int getEntriesCount(
 			long userId, long classNameId, long[] classPKs, boolean alert,
 			int flagValue)
@@ -291,6 +304,7 @@ public class AnnouncementsEntryLocalServiceImpl
 			flagValue);
 	}
 
+	@Override
 	public int getEntriesCount(
 			long userId, long classNameId, long[] classPKs,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
@@ -307,12 +321,14 @@ public class AnnouncementsEntryLocalServiceImpl
 			expirationDateHour, expirationDateMinute, alert, flagValue);
 	}
 
+	@Override
 	public AnnouncementsEntry getEntry(long entryId)
 		throws PortalException, SystemException {
 
 		return announcementsEntryPersistence.findByPrimaryKey(entryId);
 	}
 
+	@Override
 	public List<AnnouncementsEntry> getUserEntries(
 			long userId, int start, int end)
 		throws SystemException {
@@ -320,10 +336,12 @@ public class AnnouncementsEntryLocalServiceImpl
 		return announcementsEntryPersistence.findByUserId(userId, start, end);
 	}
 
+	@Override
 	public int getUserEntriesCount(long userId) throws SystemException {
 		return announcementsEntryPersistence.countByUserId(userId);
 	}
 
+	@Override
 	public AnnouncementsEntry updateEntry(
 			long userId, long entryId, String title, String content, String url,
 			String type, int displayDateMonth, int displayDateDay,

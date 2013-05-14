@@ -36,6 +36,7 @@ import java.util.List;
  */
 public class PollsVoteLocalServiceImpl extends PollsVoteLocalServiceBaseImpl {
 
+	@Override
 	public PollsVote addVote(
 			long userId, long questionId, long choiceId,
 			ServiceContext serviceContext)
@@ -104,26 +105,31 @@ public class PollsVoteLocalServiceImpl extends PollsVoteLocalServiceBaseImpl {
 		return vote;
 	}
 
+	@Override
 	public List<PollsVote> getChoiceVotes(long choiceId, int start, int end)
 		throws SystemException {
 
 		return pollsVotePersistence.findByChoiceId(choiceId, start, end);
 	}
 
+	@Override
 	public int getChoiceVotesCount(long choiceId) throws SystemException {
 		return pollsVotePersistence.countByChoiceId(choiceId);
 	}
 
+	@Override
 	public List<PollsVote> getQuestionVotes(long questionId, int start, int end)
 		throws SystemException {
 
 		return pollsVotePersistence.findByQuestionId(questionId, start, end);
 	}
 
+	@Override
 	public int getQuestionVotesCount(long questionId) throws SystemException {
 		return pollsVotePersistence.countByQuestionId(questionId);
 	}
 
+	@Override
 	public PollsVote getVote(long questionId, long userId)
 		throws PortalException, SystemException {
 

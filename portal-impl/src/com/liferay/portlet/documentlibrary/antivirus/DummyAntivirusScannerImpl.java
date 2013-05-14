@@ -22,16 +22,20 @@ import java.io.InputStream;
  */
 public class DummyAntivirusScannerImpl implements AntivirusScanner {
 
+	@Override
 	public boolean isActive() {
 		return _ACTIVE;
 	}
 
+	@Override
 	public void scan(byte[] bytes) {
 	}
 
+	@Override
 	public void scan(File file) {
 	}
 
+	@Override
 	public void scan(InputStream inputStream) {
 	}
 

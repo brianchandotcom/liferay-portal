@@ -32,6 +32,7 @@ import java.util.List;
 public class SCFrameworkVersionServiceImpl
 	extends SCFrameworkVersionServiceBaseImpl {
 
+	@Override
 	public SCFrameworkVersion addFrameworkVersion(
 			String name, String url, boolean active, int priority,
 			ServiceContext serviceContext)
@@ -45,6 +46,7 @@ public class SCFrameworkVersionServiceImpl
 			getUserId(), name, url, active, priority, serviceContext);
 	}
 
+	@Override
 	public void deleteFrameworkVersion(long frameworkVersionId)
 		throws PortalException, SystemException {
 
@@ -55,6 +57,7 @@ public class SCFrameworkVersionServiceImpl
 			frameworkVersionId);
 	}
 
+	@Override
 	public SCFrameworkVersion getFrameworkVersion(long frameworkVersionId)
 		throws PortalException, SystemException {
 
@@ -62,6 +65,7 @@ public class SCFrameworkVersionServiceImpl
 			frameworkVersionId);
 	}
 
+	@Override
 	public List<SCFrameworkVersion> getFrameworkVersions(
 			long groupId, boolean active)
 		throws SystemException {
@@ -70,6 +74,7 @@ public class SCFrameworkVersionServiceImpl
 			groupId, active);
 	}
 
+	@Override
 	public List<SCFrameworkVersion> getFrameworkVersions(
 			long groupId, boolean active, int start, int end)
 		throws SystemException {
@@ -78,6 +83,7 @@ public class SCFrameworkVersionServiceImpl
 			groupId, active, start, end);
 	}
 
+	@Override
 	public SCFrameworkVersion updateFrameworkVersion(
 			long frameworkVersionId, String name, String url, boolean active,
 			int priority)

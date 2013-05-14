@@ -35,12 +35,14 @@ public class ShoppingCartImpl extends ShoppingCartBaseImpl {
 	public ShoppingCartImpl() {
 	}
 
+	@Override
 	public void addItemId(long itemId, String fields) {
 		setItemIds(
 			StringUtil.add(
 				getItemIds(), itemId + fields, StringPool.COMMA, true));
 	}
 
+	@Override
 	public ShoppingCoupon getCoupon() throws PortalException, SystemException {
 		ShoppingCoupon coupon = null;
 
@@ -57,11 +59,13 @@ public class ShoppingCartImpl extends ShoppingCartBaseImpl {
 		return coupon;
 	}
 
+	@Override
 	public Map<ShoppingCartItem, Integer> getItems() throws SystemException {
 		return ShoppingCartLocalServiceUtil.getItems(
 			getGroupId(), getItemIds());
 	}
 
+	@Override
 	public int getItemsSize() {
 		return StringUtil.split(getItemIds()).length;
 	}

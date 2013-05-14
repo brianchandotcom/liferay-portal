@@ -49,6 +49,7 @@ public class PasswordPolicyLocalServiceImpl
 	 *             boolean, long, long, int, boolean, int, long, long, long,
 	 *             ServiceContext)}
 	 */
+	@Override
 	public PasswordPolicy addPasswordPolicy(
 			long userId, boolean defaultPolicy, String name, String description,
 			boolean changeable, boolean changeRequired, long minAge,
@@ -70,6 +71,7 @@ public class PasswordPolicyLocalServiceImpl
 			resetFailureCount, resetTicketMaxAge, new ServiceContext());
 	}
 
+	@Override
 	public PasswordPolicy addPasswordPolicy(
 			long userId, boolean defaultPolicy, String name, String description,
 			boolean changeable, boolean changeRequired, long minAge,
@@ -143,6 +145,7 @@ public class PasswordPolicyLocalServiceImpl
 		return passwordPolicy;
 	}
 
+	@Override
 	public void checkDefaultPasswordPolicy(long companyId)
 		throws PortalException, SystemException {
 
@@ -186,6 +189,7 @@ public class PasswordPolicyLocalServiceImpl
 		}
 	}
 
+	@Override
 	public void deleteNondefaultPasswordPolicies(long companyId)
 		throws PortalException, SystemException {
 
@@ -234,12 +238,14 @@ public class PasswordPolicyLocalServiceImpl
 		return passwordPolicyPersistence.remove(passwordPolicy);
 	}
 
+	@Override
 	public PasswordPolicy fetchPasswordPolicy(long companyId, String name)
 		throws SystemException {
 
 		return passwordPolicyPersistence.fetchByC_N(companyId, name);
 	}
 
+	@Override
 	public PasswordPolicy fetchPasswordPolicyByUuidAndCompanyId(
 			String uuid, long companyId)
 		throws SystemException {
@@ -248,6 +254,7 @@ public class PasswordPolicyLocalServiceImpl
 			uuid, companyId, null);
 	}
 
+	@Override
 	public PasswordPolicy getDefaultPasswordPolicy(long companyId)
 		throws PortalException, SystemException {
 
@@ -261,6 +268,7 @@ public class PasswordPolicyLocalServiceImpl
 	/**
 	 * @deprecated As of 6.1.0
 	 */
+	@Override
 	public PasswordPolicy getPasswordPolicy(
 			long companyId, long organizationId, long locationId)
 		throws PortalException, SystemException {
@@ -269,6 +277,7 @@ public class PasswordPolicyLocalServiceImpl
 			companyId, new long[] {organizationId, locationId});
 	}
 
+	@Override
 	public PasswordPolicy getPasswordPolicy(
 			long companyId, long[] organizationIds)
 		throws PortalException, SystemException {
@@ -301,6 +310,7 @@ public class PasswordPolicyLocalServiceImpl
 		return getDefaultPasswordPolicy(companyId);
 	}
 
+	@Override
 	@ThreadLocalCachable
 	public PasswordPolicy getPasswordPolicyByUserId(long userId)
 		throws PortalException, SystemException {
@@ -341,6 +351,7 @@ public class PasswordPolicyLocalServiceImpl
 		}
 	}
 
+	@Override
 	public List<PasswordPolicy> search(
 			long companyId, String name, int start, int end,
 			OrderByComparator obc)
@@ -349,6 +360,7 @@ public class PasswordPolicyLocalServiceImpl
 		return passwordPolicyFinder.findByC_N(companyId, name, start, end, obc);
 	}
 
+	@Override
 	public int searchCount(long companyId, String name) throws SystemException {
 		return passwordPolicyFinder.countByC_N(companyId, name);
 	}
@@ -360,6 +372,7 @@ public class PasswordPolicyLocalServiceImpl
 	 *             long, long, int, boolean, int, long, long, long,
 	 *             ServiceContext)}
 	 */
+	@Override
 	public PasswordPolicy updatePasswordPolicy(
 			long passwordPolicyId, String name, String description,
 			boolean changeable, boolean changeRequired, long minAge,
@@ -381,6 +394,7 @@ public class PasswordPolicyLocalServiceImpl
 			resetTicketMaxAge, new ServiceContext());
 	}
 
+	@Override
 	public PasswordPolicy updatePasswordPolicy(
 			long passwordPolicyId, String name, String description,
 			boolean changeable, boolean changeRequired, long minAge,

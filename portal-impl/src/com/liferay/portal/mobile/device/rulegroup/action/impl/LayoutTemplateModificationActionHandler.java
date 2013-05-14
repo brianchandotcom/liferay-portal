@@ -39,6 +39,7 @@ public class LayoutTemplateModificationActionHandler implements ActionHandler {
 		return LayoutTemplateModificationActionHandler.class.getName();
 	}
 
+	@Override
 	public void applyAction(
 		MDRAction mdrAction, HttpServletRequest request,
 		HttpServletResponse response) {
@@ -62,10 +63,12 @@ public class LayoutTemplateModificationActionHandler implements ActionHandler {
 		}
 	}
 
+	@Override
 	public Collection<String> getPropertyNames() {
 		return _propertyNames;
 	}
 
+	@Override
 	public String getType() {
 		return getHandlerType();
 	}

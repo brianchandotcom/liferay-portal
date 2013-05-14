@@ -42,10 +42,12 @@ import javax.security.auth.spi.LoginModule;
  */
 public class BasicLoginModule implements LoginModule {
 
+	@Override
 	public boolean abort() {
 		return true;
 	}
 
+	@Override
 	@SuppressWarnings("unused")
 	public boolean commit() throws LoginException {
 		Principal principal = getPrincipal();
@@ -64,6 +66,7 @@ public class BasicLoginModule implements LoginModule {
 		}
 	}
 
+	@Override
 	public void initialize(
 		Subject subject, CallbackHandler callbackHandler,
 		Map<String, ?> sharedState, Map<String, ?> options) {
@@ -72,6 +75,7 @@ public class BasicLoginModule implements LoginModule {
 		_callbackHandler = callbackHandler;
 	}
 
+	@Override
 	public boolean login() throws LoginException {
 		String[] credentials = null;
 
@@ -95,6 +99,7 @@ public class BasicLoginModule implements LoginModule {
 		}
 	}
 
+	@Override
 	public boolean logout() {
 		Subject subject = getSubject();
 

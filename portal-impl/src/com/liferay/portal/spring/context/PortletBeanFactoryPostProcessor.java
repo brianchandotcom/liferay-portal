@@ -27,6 +27,7 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 public class PortletBeanFactoryPostProcessor
 	implements BeanFactoryPostProcessor {
 
+	@Override
 	public void postProcessBeanFactory(
 		ConfigurableListableBeanFactory configurableListableBeanFactory) {
 

@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public abstract class BaseAutoLogin implements AutoLogin {
 
+	@Override
 	public String[] handleException(
 			HttpServletRequest request, HttpServletResponse response,
 			Exception e)
@@ -33,6 +34,7 @@ public abstract class BaseAutoLogin implements AutoLogin {
 		return doHandleException(request, response, e);
 	}
 
+	@Override
 	public String[] login(
 			HttpServletRequest request, HttpServletResponse response)
 		throws AutoLoginException {

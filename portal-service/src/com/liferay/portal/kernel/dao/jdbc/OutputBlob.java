@@ -41,6 +41,7 @@ public class OutputBlob implements Blob {
 		_length = length;
 	}
 
+	@Override
 	public void free() throws SQLException {
 		try {
 			_inputStream.close();
@@ -52,10 +53,12 @@ public class OutputBlob implements Blob {
 		_inputStream = null;
 	}
 
+	@Override
 	public InputStream getBinaryStream() {
 		return _inputStream;
 	}
 
+	@Override
 	public InputStream getBinaryStream(long pos, long length)
 		throws SQLException {
 
@@ -77,6 +80,7 @@ public class OutputBlob implements Blob {
 		}
 	}
 
+	@Override
 	public byte[] getBytes(long pos, int length) throws SQLException {
 		if (pos < 1) {
 			throw new SQLException("Position is less than 1");
@@ -115,30 +119,37 @@ public class OutputBlob implements Blob {
 		return bytes;
 	}
 
+	@Override
 	public long length() {
 		return _length;
 	}
 
+	@Override
 	public long position(Blob pattern, long start) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public long position(byte[] pattern, long start) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public OutputStream setBinaryStream(long pos) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public int setBytes(long pos, byte[] bytes) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public int setBytes(long pos, byte[] bytes, int offset, int length) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void truncate(long length) {
 		throw new UnsupportedOperationException();
 	}

@@ -42,10 +42,12 @@ public class ByteArrayReportResultContainer
 		_initialCapacity = initialCapacity;
 	}
 
+	@Override
 	public ReportResultContainer clone(String reportName) {
 		return new ByteArrayReportResultContainer(reportName, _initialCapacity);
 	}
 
+	@Override
 	public OutputStream getOutputStream() {
 		if (_unsyncByteArrayOutputStream == null) {
 			_unsyncByteArrayOutputStream = new UnsyncByteArrayOutputStream(
@@ -55,18 +57,22 @@ public class ByteArrayReportResultContainer
 		return _unsyncByteArrayOutputStream;
 	}
 
+	@Override
 	public ReportGenerationException getReportGenerationException() {
 		return _reportGenerationException;
 	}
 
+	@Override
 	public String getReportName() {
 		return _reportName;
 	}
 
+	@Override
 	public byte[] getResults() {
 		return _unsyncByteArrayOutputStream.toByteArray();
 	}
 
+	@Override
 	public boolean hasError() {
 		if (_reportGenerationException != null) {
 			return true;
@@ -76,6 +82,7 @@ public class ByteArrayReportResultContainer
 		}
 	}
 
+	@Override
 	public void setReportGenerationException(
 		ReportGenerationException reportGenerationException) {
 

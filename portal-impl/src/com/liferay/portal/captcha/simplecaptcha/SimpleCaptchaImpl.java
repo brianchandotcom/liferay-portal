@@ -60,6 +60,7 @@ public class SimpleCaptchaImpl implements Captcha {
 		initWordRenderers();
 	}
 
+	@Override
 	public void check(HttpServletRequest request) throws CaptchaException {
 		if (!isEnabled(request)) {
 			return;
@@ -78,6 +79,7 @@ public class SimpleCaptchaImpl implements Captcha {
 		}
 	}
 
+	@Override
 	public void check(PortletRequest portletRequest) throws CaptchaException {
 		if (!isEnabled(portletRequest)) {
 			return;
@@ -96,10 +98,12 @@ public class SimpleCaptchaImpl implements Captcha {
 		}
 	}
 
+	@Override
 	public String getTaglibPath() {
 		return _TAGLIB_PATH;
 	}
 
+	@Override
 	public boolean isEnabled(HttpServletRequest request)
 		throws CaptchaException {
 
@@ -113,6 +117,7 @@ public class SimpleCaptchaImpl implements Captcha {
 		}
 	}
 
+	@Override
 	public boolean isEnabled(PortletRequest portletRequest)
 		throws CaptchaException {
 
@@ -126,6 +131,7 @@ public class SimpleCaptchaImpl implements Captcha {
 		}
 	}
 
+	@Override
 	public void serveImage(
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
@@ -142,6 +148,7 @@ public class SimpleCaptchaImpl implements Captcha {
 			response.getOutputStream(), simpleCaptcha.getImage());
 	}
 
+	@Override
 	public void serveImage(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException {

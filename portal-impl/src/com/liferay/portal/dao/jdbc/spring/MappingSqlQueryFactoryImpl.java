@@ -27,6 +27,7 @@ import javax.sql.DataSource;
 @DoPrivileged
 public class MappingSqlQueryFactoryImpl implements MappingSqlQueryFactory {
 
+	@Override
 	public <T> MappingSqlQuery<T> getMappingSqlQuery(
 		DataSource dataSource, String sql, int[] types,
 		RowMapper<T> rowMapper) {

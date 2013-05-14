@@ -31,6 +31,7 @@ public class ReadOnlyBeanHandler implements InvocationHandler {
 		return _bean;
 	}
 
+	@Override
 	public Object invoke(Object proxy, Method method, Object[] arguments)
 		throws Throwable {
 

@@ -24,6 +24,7 @@ import java.util.Map;
  */
 public abstract class BaseTransformerListener implements TransformerListener {
 
+	@Override
 	public String onOutput(
 		String output, String languageId, Map<String, String> tokens) {
 
@@ -34,6 +35,7 @@ public abstract class BaseTransformerListener implements TransformerListener {
 		return output;
 	}
 
+	@Override
 	public String onScript(
 		String script, String xml, String languageId,
 		Map<String, String> tokens) {
@@ -45,6 +47,7 @@ public abstract class BaseTransformerListener implements TransformerListener {
 		return script;
 	}
 
+	@Override
 	public String onXml(
 		String xml, String languageId, Map<String, String> tokens) {
 

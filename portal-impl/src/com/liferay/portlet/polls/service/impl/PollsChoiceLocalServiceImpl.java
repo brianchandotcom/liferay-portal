@@ -32,6 +32,7 @@ import java.util.List;
 public class PollsChoiceLocalServiceImpl
 	extends PollsChoiceLocalServiceBaseImpl {
 
+	@Override
 	public PollsChoice addChoice(
 			long userId, long questionId, String name, String description,
 			ServiceContext serviceContext)
@@ -62,22 +63,26 @@ public class PollsChoiceLocalServiceImpl
 		return choice;
 	}
 
+	@Override
 	public PollsChoice getChoice(long choiceId)
 		throws PortalException, SystemException {
 
 		return pollsChoicePersistence.findByPrimaryKey(choiceId);
 	}
 
+	@Override
 	public List<PollsChoice> getChoices(long questionId)
 		throws SystemException {
 
 		return pollsChoicePersistence.findByQuestionId(questionId);
 	}
 
+	@Override
 	public int getChoicesCount(long questionId) throws SystemException {
 		return pollsChoicePersistence.countByQuestionId(questionId);
 	}
 
+	@Override
 	public PollsChoice updateChoice(
 			long choiceId, long questionId, String name, String description,
 			ServiceContext serviceContext)

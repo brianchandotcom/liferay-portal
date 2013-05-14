@@ -37,10 +37,12 @@ public class DefaultSingleDestinationSynchronousMessageSender
 		_synchronousMessageSender = synchronousMessageSender;
 	}
 
+	@Override
 	public Object send(Message message) throws MessageBusException {
 		return _synchronousMessageSender.send(_destinationName, message);
 	}
 
+	@Override
 	public Object send(Message message, long timeout)
 		throws MessageBusException {
 
@@ -48,6 +50,7 @@ public class DefaultSingleDestinationSynchronousMessageSender
 			_destinationName, message, timeout);
 	}
 
+	@Override
 	public Object send(Object payload) throws MessageBusException {
 		Message message = new Message();
 
@@ -56,6 +59,7 @@ public class DefaultSingleDestinationSynchronousMessageSender
 		return send(message);
 	}
 
+	@Override
 	public Object send(Object payload, long timeout)
 		throws MessageBusException {
 

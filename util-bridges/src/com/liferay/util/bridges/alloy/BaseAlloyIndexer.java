@@ -40,10 +40,12 @@ public abstract class BaseAlloyIndexer extends BaseIndexer {
 		return alloyServiceInvoker;
 	}
 
+	@Override
 	public String[] getClassNames() {
 		return classNames;
 	}
 
+	@Override
 	public String getPortletId() {
 		return portletId;
 	}

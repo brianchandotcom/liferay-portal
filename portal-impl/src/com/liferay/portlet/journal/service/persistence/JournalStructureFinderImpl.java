@@ -48,6 +48,7 @@ public class JournalStructureFinderImpl
 	public static final String FIND_BY_C_G_S_N_D =
 		JournalStructureFinder.class.getName() + ".findByC_G_S_N_D";
 
+	@Override
 	public int countByKeywords(long companyId, long[] groupIds, String keywords)
 		throws SystemException {
 
@@ -70,6 +71,7 @@ public class JournalStructureFinderImpl
 			andOperator);
 	}
 
+	@Override
 	public int countByC_G_S_N_D(
 			long companyId, long[] groupIds, String structureId, String name,
 			String description, boolean andOperator)
@@ -84,6 +86,7 @@ public class JournalStructureFinderImpl
 			andOperator);
 	}
 
+	@Override
 	public int countByC_G_S_N_D(
 			long companyId, long[] groupIds, String[] structureIds,
 			String[] names, String[] descriptions, boolean andOperator)
@@ -94,6 +97,7 @@ public class JournalStructureFinderImpl
 			false);
 	}
 
+	@Override
 	public int filterCountByKeywords(
 			long companyId, long[] groupIds, String keywords)
 		throws SystemException {
@@ -117,6 +121,7 @@ public class JournalStructureFinderImpl
 			andOperator);
 	}
 
+	@Override
 	public int filterCountByC_G_S_N_D(
 			long companyId, long[] groupIds, String structureId, String name,
 			String description, boolean andOperator)
@@ -131,6 +136,7 @@ public class JournalStructureFinderImpl
 			andOperator);
 	}
 
+	@Override
 	public int filterCountByC_G_S_N_D(
 			long companyId, long[] groupIds, String[] structureIds,
 			String[] names, String[] descriptions, boolean andOperator)
@@ -141,6 +147,7 @@ public class JournalStructureFinderImpl
 			true);
 	}
 
+	@Override
 	public List<JournalStructure> filterFindByKeywords(
 			long companyId, long[] groupIds, String keywords, int start,
 			int end, OrderByComparator obc)
@@ -165,6 +172,7 @@ public class JournalStructureFinderImpl
 			start, end, obc);
 	}
 
+	@Override
 	public List<JournalStructure> filterFindByC_G_S_N_D(
 			long companyId, long[] groupIds, String structureId, String name,
 			String description, boolean andOperator, int start, int end,
@@ -180,6 +188,7 @@ public class JournalStructureFinderImpl
 			start, end, obc);
 	}
 
+	@Override
 	public List<JournalStructure> filterFindByC_G_S_N_D(
 			long companyId, long[] groupIds, String[] structureIds,
 			String[] names, String[] descriptions, boolean andOperator,
@@ -191,6 +200,7 @@ public class JournalStructureFinderImpl
 			start, end, obc, true);
 	}
 
+	@Override
 	public List<JournalStructure> findByKeywords(
 			long companyId, long[] groupIds, String keywords, int start,
 			int end, OrderByComparator obc)
@@ -215,6 +225,7 @@ public class JournalStructureFinderImpl
 			start, end, obc);
 	}
 
+	@Override
 	public List<JournalStructure> findByC_G_S_N_D(
 			long companyId, long[] groupIds, String structureId, String name,
 			String description, boolean andOperator, int start, int end,
@@ -230,6 +241,7 @@ public class JournalStructureFinderImpl
 			start, end, obc);
 	}
 
+	@Override
 	public List<JournalStructure> findByC_G_S_N_D(
 			long companyId, long[] groupIds, String[] structureIds,
 			String[] names, String[] descriptions, boolean andOperator,

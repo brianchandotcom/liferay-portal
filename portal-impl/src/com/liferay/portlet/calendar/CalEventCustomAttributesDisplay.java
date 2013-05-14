@@ -24,6 +24,7 @@ import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
 public class CalEventCustomAttributesDisplay
 	extends BaseCustomAttributesDisplay {
 
+	@Override
 	public String getClassName() {
 		return CalEvent.class.getName();
 	}

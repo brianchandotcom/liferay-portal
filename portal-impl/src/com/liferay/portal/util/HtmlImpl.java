@@ -51,6 +51,7 @@ public class HtmlImpl implements Html {
 
 	public static final int ESCAPE_MODE_URL = 5;
 
+	@Override
 	public String escape(String text) {
 		if (text == null) {
 			return null;
@@ -142,6 +143,7 @@ public class HtmlImpl implements Html {
 		}
 	}
 
+	@Override
 	public String escape(String text, int type) {
 		if (text == null) {
 			return null;
@@ -203,14 +205,17 @@ public class HtmlImpl implements Html {
 		}
 	}
 
+	@Override
 	public String escapeAttribute(String attribute) {
 		return escape(attribute, ESCAPE_MODE_ATTRIBUTE);
 	}
 
+	@Override
 	public String escapeCSS(String css) {
 		return escape(css, ESCAPE_MODE_CSS);
 	}
 
+	@Override
 	public String escapeHREF(String href) {
 		if (href == null) {
 			return null;
@@ -231,14 +236,17 @@ public class HtmlImpl implements Html {
 		return escapeAttribute(href);
 	}
 
+	@Override
 	public String escapeJS(String js) {
 		return escape(js, ESCAPE_MODE_JS);
 	}
 
+	@Override
 	public String escapeURL(String url) {
 		return escape(url, ESCAPE_MODE_URL);
 	}
 
+	@Override
 	public String escapeXPath(String xPath) {
 		if (Validator.isNull(xPath)) {
 			return xPath;
@@ -270,6 +278,7 @@ public class HtmlImpl implements Html {
 		return sb.toString();
 	}
 
+	@Override
 	public String escapeXPathAttribute(String xPathAttribute) {
 		boolean hasApostrophe = xPathAttribute.contains(StringPool.APOSTROPHE);
 		boolean hasQuote = xPathAttribute.contains(StringPool.QUOTE);
@@ -289,6 +298,7 @@ public class HtmlImpl implements Html {
 		return StringPool.QUOTE.concat(xPathAttribute).concat(StringPool.QUOTE);
 	}
 
+	@Override
 	public String extractText(String html) {
 		if (html == null) {
 			return null;
@@ -301,10 +311,12 @@ public class HtmlImpl implements Html {
 		return textExtractor.toString();
 	}
 
+	@Override
 	public String fromInputSafe(String text) {
 		return StringUtil.replace(text, "&amp;", "&");
 	}
 
+	@Override
 	public String render(String html) {
 		if (html == null) {
 			return null;
@@ -317,18 +329,22 @@ public class HtmlImpl implements Html {
 		return renderer.toString();
 	}
 
+	@Override
 	public String replaceMsWordCharacters(String text) {
 		return StringUtil.replace(text, _MS_WORD_UNICODE, _MS_WORD_HTML);
 	}
 
+	@Override
 	public String stripBetween(String text, String tag) {
 		return StringUtil.stripBetween(text, "<" + tag, "</" + tag + ">");
 	}
 
+	@Override
 	public String stripComments(String text) {
 		return StringUtil.stripBetween(text, "<!--", "-->");
 	}
 
+	@Override
 	public String stripHtml(String text) {
 		if (text == null) {
 			return null;
@@ -379,6 +395,7 @@ public class HtmlImpl implements Html {
 		return sb.toString();
 	}
 
+	@Override
 	public String toInputSafe(String text) {
 		return StringUtil.replace(
 			text,
@@ -386,6 +403,7 @@ public class HtmlImpl implements Html {
 			new String[] {"&amp;", "&quot;"});
 	}
 
+	@Override
 	public String unescape(String text) {
 		if (text == null) {
 			return null;
@@ -415,6 +433,7 @@ public class HtmlImpl implements Html {
 		return text;
 	}
 
+	@Override
 	public String unescapeCDATA(String text) {
 		if (text == null) {
 			return null;
@@ -430,6 +449,7 @@ public class HtmlImpl implements Html {
 		return text;
 	}
 
+	@Override
 	public String wordBreak(String text, int columns) {
 		StringBundler sb = new StringBundler();
 

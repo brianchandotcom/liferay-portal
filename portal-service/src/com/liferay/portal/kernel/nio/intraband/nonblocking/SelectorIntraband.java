@@ -63,6 +63,7 @@ public class SelectorIntraband extends BaseIntraband {
 		super.close();
 	}
 
+	@Override
 	public RegistrationReference registerChannel(Channel channel)
 		throws IOException {
 
@@ -117,6 +118,7 @@ public class SelectorIntraband extends BaseIntraband {
 		}
 	}
 
+	@Override
 	public RegistrationReference registerChannel(
 			ScatteringByteChannel scatteringByteChannel,
 			GatheringByteChannel gatheringByteChannel)

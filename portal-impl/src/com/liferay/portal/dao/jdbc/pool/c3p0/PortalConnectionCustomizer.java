@@ -28,6 +28,7 @@ import java.sql.Connection;
  */
 public class PortalConnectionCustomizer implements ConnectionCustomizer {
 
+	@Override
 	public void onAcquire(
 			Connection connection, String parentDataSourceIdentityToken)
 		throws Exception {
@@ -49,14 +50,17 @@ public class PortalConnectionCustomizer implements ConnectionCustomizer {
 		}
 	}
 
+	@Override
 	public void onCheckIn(
 		Connection connection, String parentDataSourceIdentityToken) {
 	}
 
+	@Override
 	public void onCheckOut(
 		Connection connection, String parentDataSourceIdentityToken) {
 	}
 
+	@Override
 	public void onDestroy(
 		Connection connection, String parentDataSourceIdentityToken) {
 	}

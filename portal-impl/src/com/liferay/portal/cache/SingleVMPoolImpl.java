@@ -28,20 +28,24 @@ import java.io.Serializable;
 @DoPrivileged
 public class SingleVMPoolImpl implements SingleVMPool {
 
+	@Override
 	public void clear() {
 		_portalCacheManager.clearAll();
 	}
 
+	@Override
 	public PortalCache<? extends Serializable, ?> getCache(String name) {
 		return _portalCacheManager.getCache(name);
 	}
 
+	@Override
 	public PortalCache<? extends Serializable, ?> getCache(
 		String name, boolean blocking) {
 
 		return _portalCacheManager.getCache(name, blocking);
 	}
 
+	@Override
 	public void removeCache(String name) {
 		_portalCacheManager.removeCache(name);
 	}

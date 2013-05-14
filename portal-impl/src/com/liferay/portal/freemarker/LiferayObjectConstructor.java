@@ -28,6 +28,7 @@ import java.util.List;
  */
 public class LiferayObjectConstructor implements TemplateMethodModelEx {
 
+	@Override
 	public Object exec(@SuppressWarnings("rawtypes") List arguments)
 		throws TemplateModelException {
 

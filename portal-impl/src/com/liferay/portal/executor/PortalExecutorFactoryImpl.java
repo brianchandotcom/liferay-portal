@@ -68,6 +68,7 @@ public class PortalExecutorFactoryImpl implements PortalExecutorFactory {
 		}
 	}
 
+	@Override
 	public ThreadPoolExecutor createPortalExecutor(String executorName) {
 		ThreadFactory threadFactory = new NamedThreadFactory(
 			executorName, Thread.NORM_PRIORITY,

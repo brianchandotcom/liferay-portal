@@ -39,6 +39,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 public class ModuleFrameworkServlet extends HttpServlet
 	implements ServiceTrackerCustomizer<HttpServlet, HttpServlet> {
 
+	@Override
 	public HttpServlet addingService(
 		ServiceReference<HttpServlet> serviceReference) {
 

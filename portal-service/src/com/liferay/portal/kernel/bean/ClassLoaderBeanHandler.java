@@ -36,6 +36,7 @@ public class ClassLoaderBeanHandler implements InvocationHandler {
 		return _classLoader;
 	}
 
+	@Override
 	public Object invoke(Object proxy, Method method, Object[] arguments)
 		throws Throwable {
 

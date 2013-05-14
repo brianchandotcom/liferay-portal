@@ -36,6 +36,7 @@ import com.liferay.portal.service.UserLocalServiceUtil;
  */
 public class DefaultScreenNameGenerator implements ScreenNameGenerator {
 
+	@Override
 	public String generate(long companyId, long userId, String emailAddress)
 		throws Exception {
 

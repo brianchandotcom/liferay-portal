@@ -51,6 +51,7 @@ public class QueryImpl implements Query {
 		this.strictName = strictName;
 	}
 
+	@Override
 	public int executeUpdate() throws ORMException {
 		try {
 			return sessionImpl.executeUpdate(
@@ -63,10 +64,12 @@ public class QueryImpl implements Query {
 		}
 	}
 
+	@Override
 	public Iterator<?> iterate() throws ORMException {
 		return iterate(true);
 	}
 
+	@Override
 	public Iterator<?> iterate(boolean unmodifiable) throws ORMException {
 		try {
 			return list(unmodifiable).iterator();
@@ -76,6 +79,7 @@ public class QueryImpl implements Query {
 		}
 	}
 
+	@Override
 	public Object iterateNext() throws ORMException {
 		Iterator<?> iterator = iterate(false);
 
@@ -86,14 +90,17 @@ public class QueryImpl implements Query {
 		return null;
 	}
 
+	@Override
 	public List<?> list() throws ORMException {
 		return list(false, false);
 	}
 
+	@Override
 	public List<?> list(boolean unmodifiable) throws ORMException {
 		return list(true, unmodifiable);
 	}
 
+	@Override
 	public List<?> list(boolean copy, boolean unmodifiable)
 		throws ORMException {
 
@@ -117,6 +124,7 @@ public class QueryImpl implements Query {
 		}
 	}
 
+	@Override
 	public ScrollableResults scroll() throws ORMException {
 		try {
 			return new ScrollableResultsImpl(list());
@@ -126,54 +134,64 @@ public class QueryImpl implements Query {
 		}
 	}
 
+	@Override
 	public Query setBoolean(int pos, boolean value) {
 		positionalParameterMap.put(pos, value);
 
 		return this;
 	}
 
+	@Override
 	public Query setBoolean(String name, boolean value) {
 		namedParameterMap.put(name, value);
 
 		return this;
 	}
 
+	@Override
 	public Query setCacheable(boolean cacheable) {
 		return this;
 	}
 
+	@Override
 	public Query setCacheMode(CacheMode cacheMode) {
 		return this;
 	}
 
+	@Override
 	public Query setCacheRegion(String cacheRegion) {
 		return this;
 	}
 
+	@Override
 	public Query setDouble(int pos, double value) {
 		positionalParameterMap.put(pos, Double.valueOf(value));
 
 		return this;
 	}
 
+	@Override
 	public Query setDouble(String name, double value) {
 		namedParameterMap.put(name, Double.valueOf(value));
 
 		return this;
 	}
 
+	@Override
 	public Query setFirstResult(int firstResult) {
 		this.firstResult = firstResult;
 
 		return this;
 	}
 
+	@Override
 	public Query setFloat(int pos, float value) {
 		positionalParameterMap.put(pos, Float.valueOf(value));
 
 		return this;
 	}
 
+	@Override
 	public Query setFloat(String name, float value) {
 		namedParameterMap.put(name, Float.valueOf(value));
 
@@ -186,78 +204,91 @@ public class QueryImpl implements Query {
 		return this;
 	}
 
+	@Override
 	public Query setInteger(int pos, int value) {
 		positionalParameterMap.put(pos, Integer.valueOf(value));
 
 		return this;
 	}
 
+	@Override
 	public Query setInteger(String name, int value) {
 		namedParameterMap.put(name, Integer.valueOf(value));
 
 		return this;
 	}
 
+	@Override
 	public Query setLockMode(String alias, LockMode lockMode) {
 		lockModeType = LockModeTranslator.translate(lockMode);
 
 		return this;
 	}
 
+	@Override
 	public Query setLong(int pos, long value) {
 		positionalParameterMap.put(pos, Long.valueOf(value));
 
 		return this;
 	}
 
+	@Override
 	public Query setLong(String name, long value) {
 		namedParameterMap.put(name, Long.valueOf(value));
 
 		return this;
 	}
 
+	@Override
 	public Query setMaxResults(int maxResults) {
 		this.maxResults = maxResults;
 
 		return this;
 	}
 
+	@Override
 	public Query setSerializable(int pos, Serializable value) {
 		positionalParameterMap.put(pos, value);
 
 		return this;
 	}
 
+	@Override
 	public Query setSerializable(String name, Serializable value) {
 		namedParameterMap.put(name, value);
 
 		return this;
 	}
 
+	@Override
 	public Query setShort(int pos, short value) {
 		positionalParameterMap.put(pos, Short.valueOf(value));
 
 		return this;
 	}
 
+	@Override
 	public Query setShort(String name, short value) {
 		namedParameterMap.put(name, Short.valueOf(value));
 
 		return this;
 	}
 
+	@Override
 	public Query setString(int pos, String value) {
 		positionalParameterMap.put(pos, value);
 
 		return this;
 	}
 
+	@Override
 	public Query setString(String name, String value) {
 		namedParameterMap.put(name, value);
 
 		return this;
 	}
 
+	@Override
 	public Query setTimestamp(int pos, Timestamp value) {
 		Date date = null;
 
@@ -270,6 +301,7 @@ public class QueryImpl implements Query {
 		return this;
 	}
 
+	@Override
 	public Query setTimestamp(String name, Timestamp value) {
 		Date date = null;
 
@@ -282,6 +314,7 @@ public class QueryImpl implements Query {
 		return this;
 	}
 
+	@Override
 	public Object uniqueResult() throws ORMException {
 		try {
 			return sessionImpl.uniqueResult(

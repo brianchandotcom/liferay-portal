@@ -33,10 +33,12 @@ public class BooleanClauseImpl implements BooleanClause {
 		return _booleanClause;
 	}
 
+	@Override
 	public BooleanClauseOccur getBooleanClauseOccur() {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public Query getQuery() {
 		throw new UnsupportedOperationException();
 	}

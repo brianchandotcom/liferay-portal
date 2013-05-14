@@ -43,6 +43,7 @@ import com.liferay.portlet.wiki.service.permission.WikiPagePermission;
  */
 public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 
+	@Override
 	public String[] getClassNames() {
 		return _CLASS_NAMES;
 	}

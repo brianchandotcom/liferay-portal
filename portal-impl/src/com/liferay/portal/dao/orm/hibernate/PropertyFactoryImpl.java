@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 @DoPrivileged
 public class PropertyFactoryImpl implements PropertyFactory {
 
+	@Override
 	public Property forName(String propertyName) {
 		return new PropertyImpl(
 			org.hibernate.criterion.Property.forName(propertyName));

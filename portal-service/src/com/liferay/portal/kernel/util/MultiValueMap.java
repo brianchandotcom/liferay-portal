@@ -27,10 +27,12 @@ import java.util.Set;
 public abstract class MultiValueMap
 	<K extends Serializable, V extends Serializable> implements Map<K, V> {
 
+	@Override
 	public Set<Map.Entry<K, V>> entrySet() {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public V get(Object key) {
 		throw new UnsupportedOperationException();
 	}
@@ -39,6 +41,7 @@ public abstract class MultiValueMap
 
 	public abstract Set<V> putAll(K key, Collection<? extends V> values);
 
+	@Override
 	public void putAll(Map<? extends K, ? extends V> map) {
 		MultiValueMap<? extends K, ? extends V> multiValueMap = null;
 
@@ -56,6 +59,7 @@ public abstract class MultiValueMap
 		}
 	}
 
+	@Override
 	public int size() {
 		int size = 0;
 
@@ -78,6 +82,7 @@ public abstract class MultiValueMap
 		return size;
 	}
 
+	@Override
 	public Collection<V> values() {
 		Set<V> values = new HashSet<V>();
 

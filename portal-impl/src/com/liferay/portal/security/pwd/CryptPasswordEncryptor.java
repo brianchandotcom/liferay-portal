@@ -32,6 +32,7 @@ import org.vps.crypt.Crypt;
 public class CryptPasswordEncryptor
 	extends BasePasswordEncryptor implements PasswordEncryptor {
 
+	@Override
 	@SuppressWarnings("deprecation")
 	public String[] getSupportedAlgorithmTypes() {
 		return new String[] {

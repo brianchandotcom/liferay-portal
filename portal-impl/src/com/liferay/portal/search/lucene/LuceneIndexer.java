@@ -68,6 +68,7 @@ public class LuceneIndexer implements Runnable {
 		}
 	}
 
+	@Override
 	public void run() {
 		reindex(PropsValues.INDEX_ON_STARTUP_DELAY);
 	}

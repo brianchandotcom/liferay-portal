@@ -35,19 +35,23 @@ import org.apache.commons.pool.PoolableObjectFactory;
 public class MemcachedClientPoolableObjectFactory
 	implements PoolableObjectFactory {
 
+	@Override
 	public void activateObject(Object obj) throws Exception {
 	}
 
+	@Override
 	public void destroyObject(Object obj) {
 		MemcachedClientIF memcachedClient = (MemcachedClientIF)obj;
 
 		memcachedClient.shutdown();
 	}
 
+	@Override
 	public Object makeObject() throws Exception {
 		return new MemcachedClient(_connectionFactory, _inetSocketAddresses);
 	}
 
+	@Override
 	public void passivateObject(Object obj) throws Exception {
 	}
 
@@ -74,6 +78,7 @@ public class MemcachedClientPoolableObjectFactory
 		_connectionFactory = connectionFactory;
 	}
 
+	@Override
 	public boolean validateObject(Object obj) {
 		return true;
 	}

@@ -42,6 +42,7 @@ public class AssetTagPropertyFinderImpl
 	public static final String FIND_BY_G_K =
 		AssetTagPropertyFinder.class.getName() + ".findByG_K";
 
+	@Override
 	public int countByG_K(long groupId, String key) throws SystemException {
 		Session session = null;
 
@@ -79,12 +80,14 @@ public class AssetTagPropertyFinderImpl
 		}
 	}
 
+	@Override
 	public List<AssetTagProperty> findByG_K(long groupId, String key)
 		throws SystemException {
 
 		return findByG_K(groupId, key, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
+	@Override
 	public List<AssetTagProperty> findByG_K(
 			long groupId, String key, int start, int end)
 		throws SystemException {

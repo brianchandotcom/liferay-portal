@@ -23,6 +23,7 @@ import flexjson.JSONContext;
  */
 public class RepositoryModelJSONTransformer extends BaseJSONTransformer {
 
+	@Override
 	public void transform(Object object) {
 		RepositoryModel<?> repositoryModel = (RepositoryModel<?>)object;
 

@@ -31,6 +31,7 @@ public class ExtAutoDeployListener extends BaseAutoDeployListener {
 		_autoDeployer = new ThreadSafeAutoDeployer(new ExtAutoDeployer());
 	}
 
+	@Override
 	public void deploy(AutoDeploymentContext autoDeploymentContext)
 		throws AutoDeployException {
 

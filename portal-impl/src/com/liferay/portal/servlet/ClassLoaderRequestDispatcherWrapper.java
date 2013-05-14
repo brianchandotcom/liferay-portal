@@ -37,6 +37,7 @@ public class ClassLoaderRequestDispatcherWrapper implements RequestDispatcher {
 		_requestDispatcher = requestDispatcher;
 	}
 
+	@Override
 	public void forward(
 			ServletRequest servletRequest, ServletResponse servletResponse)
 		throws IOException, ServletException {
@@ -44,6 +45,7 @@ public class ClassLoaderRequestDispatcherWrapper implements RequestDispatcher {
 		doDispatch(servletRequest, servletResponse, false);
 	}
 
+	@Override
 	public void include(
 			ServletRequest servletRequest, ServletResponse servletResponse)
 		throws IOException, ServletException {

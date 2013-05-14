@@ -24,14 +24,17 @@ import com.liferay.portal.util.PropsValues;
  */
 public class InternationalPhoneNumberFormatImpl implements PhoneNumberFormat {
 
+	@Override
 	public String format(String phoneNumber) {
 		return phoneNumber;
 	}
 
+	@Override
 	public String strip(String phoneNumber) {
 		return phoneNumber;
 	}
 
+	@Override
 	public boolean validate(String phoneNumber) {
 		if (Validator.isNull(phoneNumber)) {
 			return false;

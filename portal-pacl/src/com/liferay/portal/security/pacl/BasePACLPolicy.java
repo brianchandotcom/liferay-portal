@@ -74,38 +74,47 @@ public abstract class BasePACLPolicy implements PACLPolicy {
 		}
 	}
 
+	@Override
 	public ClassLoader getClassLoader() {
 		return _classLoader;
 	}
 
+	@Override
 	public Policy getPolicy() {
 		return _policy;
 	}
 
+	@Override
 	public Properties getProperties() {
 		return _properties;
 	}
 
+	@Override
 	public String getProperty(String key) {
 		return _properties.getProperty(key);
 	}
 
+	@Override
 	public String[] getPropertyArray(String key) {
 		return StringUtil.split(getProperty(key));
 	}
 
+	@Override
 	public boolean getPropertyBoolean(String key) {
 		return GetterUtil.getBoolean(getProperty(key));
 	}
 
+	@Override
 	public Set<String> getPropertySet(String key) {
 		return new TreeSet<String>(SetUtil.fromArray(getPropertyArray(key)));
 	}
 
+	@Override
 	public String getServletContextName() {
 		return _servletContextName;
 	}
 
+	@Override
 	public boolean isCheckablePermission(Permission permission) {
 		Class<?> clazz = permission.getClass();
 

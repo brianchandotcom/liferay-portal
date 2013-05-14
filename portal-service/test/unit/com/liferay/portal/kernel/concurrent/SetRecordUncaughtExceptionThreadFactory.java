@@ -26,6 +26,7 @@ public class SetRecordUncaughtExceptionThreadFactory implements ThreadFactory {
 		return recordUncaughtExceptionHandler;
 	}
 
+	@Override
 	public Thread newThread(Runnable runnable) {
 		Thread thread = _threadFactory.newThread(runnable);
 

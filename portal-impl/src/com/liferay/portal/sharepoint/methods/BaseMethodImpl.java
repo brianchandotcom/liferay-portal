@@ -32,10 +32,12 @@ import java.util.List;
  */
 public abstract class BaseMethodImpl implements Method {
 
+	@Override
 	public String getRootPath(SharepointRequest sharepointRequest) {
 		return StringPool.BLANK;
 	}
 
+	@Override
 	public void process(SharepointRequest sharepointRequest)
 		throws SharepointException {
 

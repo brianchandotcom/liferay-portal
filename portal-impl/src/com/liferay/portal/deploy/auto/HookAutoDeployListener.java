@@ -31,6 +31,7 @@ public class HookAutoDeployListener extends BaseAutoDeployListener {
 		_autoDeployer = new ThreadSafeAutoDeployer(new HookAutoDeployer());
 	}
 
+	@Override
 	public void deploy(AutoDeploymentContext autoDeploymentContext)
 		throws AutoDeployException {
 

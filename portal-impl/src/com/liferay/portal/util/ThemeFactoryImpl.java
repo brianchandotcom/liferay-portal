@@ -27,12 +27,14 @@ import com.liferay.portal.model.impl.ThemeImpl;
  */
 public class ThemeFactoryImpl implements ThemeFactory {
 
+	@Override
 	public Theme getDefaultRegularTheme(long companyId) throws SystemException {
 		return new ThemeImpl(
 			ThemeFactoryUtil.getDefaultRegularThemeId(companyId),
 			StringPool.BLANK);
 	}
 
+	@Override
 	public String getDefaultRegularThemeId(long companyId)
 		throws SystemException {
 
@@ -42,11 +44,13 @@ public class ThemeFactoryImpl implements ThemeFactory {
 		return PortalUtil.getJsSafePortletId(defaultRegularThemeId);
 	}
 
+	@Override
 	public Theme getDefaultWapTheme(long companyId) throws SystemException {
 		return new ThemeImpl(
 			ThemeFactoryUtil.getDefaultWapThemeId(companyId), StringPool.BLANK);
 	}
 
+	@Override
 	public String getDefaultWapThemeId(long companyId) throws SystemException {
 		String defaultWapThemeId = PrefsPropsUtil.getString(
 			companyId, PropsKeys.DEFAULT_WAP_THEME_ID);
@@ -54,14 +58,17 @@ public class ThemeFactoryImpl implements ThemeFactory {
 		return PortalUtil.getJsSafePortletId(defaultWapThemeId);
 	}
 
+	@Override
 	public Theme getTheme() {
 		return new ThemeImpl();
 	}
 
+	@Override
 	public Theme getTheme(String themeId) {
 		return new ThemeImpl(themeId);
 	}
 
+	@Override
 	public Theme getTheme(String themeId, String name) {
 		return new ThemeImpl(themeId, name);
 	}

@@ -29,6 +29,7 @@ public class ConjunctionImpl extends CriterionImpl implements Conjunction {
 		_conjunction = conjunction;
 	}
 
+	@Override
 	public Junction add(Criterion criterion) {
 		CriterionImpl criterionImpl = (CriterionImpl)criterion;
 

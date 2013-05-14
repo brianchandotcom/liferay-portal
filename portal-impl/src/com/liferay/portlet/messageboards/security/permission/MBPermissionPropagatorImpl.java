@@ -41,6 +41,7 @@ import javax.portlet.ActionRequest;
  */
 public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 
+	@Override
 	public void propagateRolePermissions(
 			ActionRequest actionRequest, String className, String primKey,
 			long[] roleIds)

@@ -33,6 +33,7 @@ import com.xuggle.xuggler.IContainer;
  */
 public class XugglerImpl implements Xuggler {
 
+	@Override
 	public void installNativeLibraries(
 			String name, ProgressTracker progressTracker)
 		throws Exception {
@@ -49,10 +50,12 @@ public class XugglerImpl implements Xuggler {
 		}
 	}
 
+	@Override
 	public boolean isEnabled() {
 		return isEnabled(true);
 	}
 
+	@Override
 	public boolean isEnabled(boolean checkNativeLibraries) {
 		boolean enabled = false;
 
@@ -77,6 +80,7 @@ public class XugglerImpl implements Xuggler {
 		return false;
 	}
 
+	@Override
 	public boolean isNativeLibraryInstalled() {
 		if (_nativeLibraryInstalled) {
 			return _nativeLibraryInstalled;

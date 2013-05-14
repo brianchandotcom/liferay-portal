@@ -68,6 +68,7 @@ public class SubscriptionLocalServiceImpl
 	 * @throws PortalException if a matching user or group could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public Subscription addSubscription(
 			long userId, long groupId, String className, long classPK)
 		throws PortalException, SystemException {
@@ -100,6 +101,7 @@ public class SubscriptionLocalServiceImpl
 	 * @throws PortalException if a matching user or group could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public Subscription addSubscription(
 			long userId, long groupId, String className, long classPK,
 			String frequency)
@@ -206,6 +208,7 @@ public class SubscriptionLocalServiceImpl
 	 *         found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void deleteSubscription(long userId, String className, long classPK)
 		throws PortalException, SystemException {
 
@@ -260,6 +263,7 @@ public class SubscriptionLocalServiceImpl
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void deleteSubscriptions(long userId)
 		throws PortalException, SystemException {
 
@@ -280,6 +284,7 @@ public class SubscriptionLocalServiceImpl
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void deleteSubscriptions(
 			long companyId, String className, long classPK)
 		throws PortalException, SystemException {
@@ -305,6 +310,7 @@ public class SubscriptionLocalServiceImpl
 	 * @throws PortalException if a matching subscription could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public Subscription getSubscription(
 			long companyId, long userId, String className, long classPK)
 		throws PortalException, SystemException {
@@ -325,6 +331,7 @@ public class SubscriptionLocalServiceImpl
 	 * @return the subscriptions of the user to the entities
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public List<Subscription> getSubscriptions(
 			long companyId, long userId, String className, long[] classPKs)
 		throws SystemException {
@@ -344,6 +351,7 @@ public class SubscriptionLocalServiceImpl
 	 * @return the subscriptions to the entity
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public List<Subscription> getSubscriptions(
 			long companyId, String className, long classPK)
 		throws SystemException {
@@ -363,6 +371,7 @@ public class SubscriptionLocalServiceImpl
 	 * @return the range of subscriptions of the user
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public List<Subscription> getUserSubscriptions(
 			long userId, int start, int end,
 			OrderByComparator orderByComparator)
@@ -381,6 +390,7 @@ public class SubscriptionLocalServiceImpl
 	 * @return the subscriptions of the user to the entities with the class name
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public List<Subscription> getUserSubscriptions(
 			long userId, String className)
 		throws SystemException {
@@ -397,6 +407,7 @@ public class SubscriptionLocalServiceImpl
 	 * @return the number of subscriptions of the user
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public int getUserSubscriptionsCount(long userId) throws SystemException {
 		return subscriptionPersistence.countByUserId(userId);
 	}
@@ -412,6 +423,7 @@ public class SubscriptionLocalServiceImpl
 	 *         <code>false</code> otherwise
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public boolean isSubscribed(
 			long companyId, long userId, String className, long classPK)
 		throws SystemException {
@@ -441,6 +453,7 @@ public class SubscriptionLocalServiceImpl
 	 *         entities; <code>false</code> otherwise
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public boolean isSubscribed(
 			long companyId, long userId, String className, long[] classPKs)
 		throws SystemException {

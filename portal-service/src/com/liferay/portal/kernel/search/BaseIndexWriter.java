@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 public abstract class BaseIndexWriter
 	implements IndexWriter, SpellCheckIndexWriter {
 
+	@Override
 	public void indexDictionaries(SearchContext searchContext)
 		throws SearchException {
 
@@ -35,6 +36,7 @@ public abstract class BaseIndexWriter
 		_spellCheckIndexWriter.indexDictionaries(searchContext);
 	}
 
+	@Override
 	public void indexDictionary(SearchContext searchContext)
 		throws SearchException {
 

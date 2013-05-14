@@ -41,6 +41,7 @@ import org.aopalliance.intercept.MethodInvocation;
  */
 public class ShardPersistenceAdvice implements MethodInterceptor {
 
+	@Override
 	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
 		ShardDataSourceTargetSource shardDataSourceTargetSource =
 			_shardAdvice.getShardDataSourceTargetSource();

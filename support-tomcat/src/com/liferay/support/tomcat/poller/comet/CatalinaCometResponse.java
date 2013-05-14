@@ -35,16 +35,19 @@ public class CatalinaCometResponse implements CometResponse {
 		_response = cometEvent.getHttpServletResponse();
 	}
 
+	@Override
 	public void close() {
 		synchronized (this) {
 			_open = false;
 		}
 	}
 
+	@Override
 	public boolean isOpen() {
 		return _open;
 	}
 
+	@Override
 	public void writeData(byte[] data) throws CometException {
 		synchronized (this) {
 			if (!_open) {
@@ -64,6 +67,7 @@ public class CatalinaCometResponse implements CometResponse {
 		}
 	}
 
+	@Override
 	public void writeData(String data) throws CometException {
 		synchronized (this) {
 			if (!_open) {

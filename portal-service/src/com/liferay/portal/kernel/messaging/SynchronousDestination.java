@@ -24,6 +24,7 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class SynchronousDestination extends BaseDestination {
 
+	@Override
 	public DestinationStatistics getDestinationStatistics() {
 		DestinationStatistics destinationStatistics =
 			new DestinationStatistics();
@@ -33,6 +34,7 @@ public class SynchronousDestination extends BaseDestination {
 		return destinationStatistics;
 	}
 
+	@Override
 	public void send(Message message) {
 		for (MessageListener messageListener : messageListeners) {
 			try {

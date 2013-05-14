@@ -32,6 +32,7 @@ import java.util.Map;
  */
 public class MDRRuleGroupServiceImpl extends MDRRuleGroupServiceBaseImpl {
 
+	@Override
 	public MDRRuleGroup addRuleGroup(
 			long groupId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
@@ -44,6 +45,7 @@ public class MDRRuleGroupServiceImpl extends MDRRuleGroupServiceBaseImpl {
 			groupId, nameMap, descriptionMap, serviceContext);
 	}
 
+	@Override
 	public MDRRuleGroup copyRuleGroup(
 			long ruleGroupId, long groupId, ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -62,6 +64,7 @@ public class MDRRuleGroupServiceImpl extends MDRRuleGroupServiceBaseImpl {
 			ruleGroup, groupId, serviceContext);
 	}
 
+	@Override
 	public void deleteRuleGroup(long ruleGroupId)
 		throws PortalException, SystemException {
 
@@ -74,6 +77,7 @@ public class MDRRuleGroupServiceImpl extends MDRRuleGroupServiceBaseImpl {
 		mdrRuleGroupLocalService.deleteRuleGroup(ruleGroup);
 	}
 
+	@Override
 	public MDRRuleGroup fetchRuleGroup(long ruleGroupId)
 		throws PortalException, SystemException {
 
@@ -88,6 +92,7 @@ public class MDRRuleGroupServiceImpl extends MDRRuleGroupServiceBaseImpl {
 		return ruleGroup;
 	}
 
+	@Override
 	public MDRRuleGroup getRuleGroup(long ruleGroupId)
 		throws PortalException, SystemException {
 
@@ -100,6 +105,7 @@ public class MDRRuleGroupServiceImpl extends MDRRuleGroupServiceBaseImpl {
 		return ruleGroup;
 	}
 
+	@Override
 	public MDRRuleGroup updateRuleGroup(
 			long ruleGroupId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, ServiceContext serviceContext)

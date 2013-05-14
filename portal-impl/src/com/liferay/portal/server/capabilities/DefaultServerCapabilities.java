@@ -22,9 +22,11 @@ import javax.servlet.ServletContext;
  */
 public class DefaultServerCapabilities implements ServerCapabilities {
 
+	@Override
 	public void determine(ServletContext servletContext) {
 	}
 
+	@Override
 	public boolean isSupportsHotDeploy() {
 		return _SUPPORTS_HOT_DEPLOY;
 	}

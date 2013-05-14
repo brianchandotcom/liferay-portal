@@ -36,14 +36,17 @@ import com.liferay.portal.util.PropsValues;
  */
 public class XmlRpcImpl implements XmlRpc {
 
+	@Override
 	public Fault createFault(int code, String description) {
 		return new FaultImpl(code, description);
 	}
 
+	@Override
 	public Success createSuccess(String description) {
 		return new SuccessImpl(description);
 	}
 
+	@Override
 	public Response executeMethod(
 			String url, String methodName, Object[] arguments)
 		throws XmlRpcException {

@@ -37,14 +37,17 @@ import java.util.Map;
  */
 public class MBMessageWorkflowHandler extends BaseWorkflowHandler {
 
+	@Override
 	public String getClassName() {
 		return MBMessage.class.getName();
 	}
 
+	@Override
 	public String getType(Locale locale) {
 		return ResourceActionsUtil.getModelResource(locale, getClassName());
 	}
 
+	@Override
 	public Object updateStatus(
 			int status, Map<String, Serializable> workflowContext)
 		throws PortalException, SystemException {

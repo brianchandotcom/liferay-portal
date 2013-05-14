@@ -64,6 +64,7 @@ public class SocialActivityInterpreterLocalServiceImpl
 	 *
 	 * @param activityInterpreter the activity interpreter
 	 */
+	@Override
 	public void addActivityInterpreter(
 		SocialActivityInterpreter activityInterpreter) {
 
@@ -85,6 +86,7 @@ public class SocialActivityInterpreterLocalServiceImpl
 	 *
 	 * @param activityInterpreter the activity interpreter
 	 */
+	@Override
 	public void deleteActivityInterpreter(
 		SocialActivityInterpreter activityInterpreter) {
 
@@ -98,6 +100,7 @@ public class SocialActivityInterpreterLocalServiceImpl
 		activityInterpreters.remove(activityInterpreter);
 	}
 
+	@Override
 	public Map<String, List<SocialActivityInterpreter>>
 		getActivityInterpreters() {
 
@@ -108,6 +111,7 @@ public class SocialActivityInterpreterLocalServiceImpl
 	 * @deprecated As of 6.2.0, replaced by {@link #interpret(String,
 	 *             SocialActivity, ServiceContext)}
 	 */
+	@Override
 	public SocialActivityFeedEntry interpret(
 		SocialActivity activity, ThemeDisplay themeDisplay) {
 
@@ -139,6 +143,7 @@ public class SocialActivityInterpreterLocalServiceImpl
 	 *         record or <code>null</code> if a compatible interpreter is not
 	 *         found
 	 */
+	@Override
 	public SocialActivityFeedEntry interpret(
 		String selector, SocialActivity activity,
 		ServiceContext serviceContext) {
@@ -205,6 +210,7 @@ public class SocialActivityInterpreterLocalServiceImpl
 		return null;
 	}
 
+	@Override
 	public SocialActivityFeedEntry interpret(
 		String selector, SocialActivitySet activitySet,
 		ServiceContext serviceContext) {
@@ -257,6 +263,7 @@ public class SocialActivityInterpreterLocalServiceImpl
 		return null;
 	}
 
+	@Override
 	public void updateActivitySet(long activityId)
 		throws PortalException, SystemException {
 

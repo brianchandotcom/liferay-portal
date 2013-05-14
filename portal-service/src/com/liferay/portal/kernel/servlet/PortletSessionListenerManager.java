@@ -88,6 +88,7 @@ public class PortletSessionListenerManager
 		_httpSessionListeners.remove(httpSessionListener);
 	}
 
+	@Override
 	public void attributeAdded(
 		HttpSessionBindingEvent httpSessionBindingEvent) {
 
@@ -102,6 +103,7 @@ public class PortletSessionListenerManager
 		}
 	}
 
+	@Override
 	public void attributeRemoved(
 		HttpSessionBindingEvent httpSessionBindingEvent) {
 
@@ -116,6 +118,7 @@ public class PortletSessionListenerManager
 		}
 	}
 
+	@Override
 	public void attributeReplaced(
 		HttpSessionBindingEvent httpSessionBindingEvent) {
 
@@ -130,6 +133,7 @@ public class PortletSessionListenerManager
 		}
 	}
 
+	@Override
 	public void sessionCreated(HttpSessionEvent httpSessionEvent) {
 		httpSessionEvent = getHttpSessionEvent(httpSessionEvent);
 
@@ -155,6 +159,7 @@ public class PortletSessionListenerManager
 		}
 	}
 
+	@Override
 	public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
 		httpSessionEvent = getHttpSessionEvent(httpSessionEvent);
 
@@ -163,6 +168,7 @@ public class PortletSessionListenerManager
 		}
 	}
 
+	@Override
 	public void sessionDidActivate(HttpSessionEvent httpSessionEvent) {
 		httpSessionEvent = getHttpSessionEvent(httpSessionEvent);
 
@@ -173,6 +179,7 @@ public class PortletSessionListenerManager
 		}
 	}
 
+	@Override
 	public void sessionWillPassivate(HttpSessionEvent httpSessionEvent) {
 		httpSessionEvent = getHttpSessionEvent(httpSessionEvent);
 
@@ -184,6 +191,7 @@ public class PortletSessionListenerManager
 		}
 	}
 
+	@Override
 	public void valueBound(HttpSessionBindingEvent httpSessionBindingEvent) {
 		httpSessionBindingEvent = getHttpSessionBindingEvent(
 			httpSessionBindingEvent);
@@ -195,6 +203,7 @@ public class PortletSessionListenerManager
 		}
 	}
 
+	@Override
 	public void valueUnbound(HttpSessionBindingEvent httpSessionBindingEvent) {
 		httpSessionBindingEvent = getHttpSessionBindingEvent(
 			httpSessionBindingEvent);

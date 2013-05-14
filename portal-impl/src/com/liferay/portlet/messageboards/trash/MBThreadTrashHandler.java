@@ -46,12 +46,14 @@ import javax.portlet.PortletURL;
  */
 public class MBThreadTrashHandler extends BaseTrashHandler {
 
+	@Override
 	public void deleteTrashEntry(long classPK)
 		throws PortalException, SystemException {
 
 		MBThreadLocalServiceUtil.deleteThread(classPK);
 	}
 
+	@Override
 	public String getClassName() {
 		return MBThread.class.getName();
 	}
@@ -159,6 +161,7 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 		return new MBThreadTrashRenderer(thread);
 	}
 
+	@Override
 	public boolean isInTrash(long classPK)
 		throws PortalException, SystemException {
 
@@ -200,6 +203,7 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 			userId, containerModelId, classPK);
 	}
 
+	@Override
 	public void restoreTrashEntry(long userId, long classPK)
 		throws PortalException, SystemException {
 

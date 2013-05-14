@@ -36,9 +36,11 @@ public class PollerCometChannelListener implements ChannelListener {
 		_pollerResponseHeaderJSONObject = pollerResponseHeaderJSONObject;
 	}
 
+	@Override
 	public void channelListenerRemoved(long channelId) {
 	}
 
+	@Override
 	public void notificationEventsAvailable(long channelId) {
 		sendProcessMessage();
 	}

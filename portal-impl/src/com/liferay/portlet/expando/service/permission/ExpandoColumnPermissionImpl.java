@@ -26,6 +26,7 @@ import com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil;
  */
 public class ExpandoColumnPermissionImpl implements ExpandoColumnPermission {
 
+	@Override
 	public void check(
 			PermissionChecker permissionChecker, ExpandoColumn column,
 			String actionId)
@@ -36,6 +37,7 @@ public class ExpandoColumnPermissionImpl implements ExpandoColumnPermission {
 		}
 	}
 
+	@Override
 	public void check(
 			PermissionChecker permissionChecker, long columnId, String actionId)
 		throws PortalException, SystemException {
@@ -45,6 +47,7 @@ public class ExpandoColumnPermissionImpl implements ExpandoColumnPermission {
 		}
 	}
 
+	@Override
 	public void check(
 			PermissionChecker permissionChecker, long companyId,
 			String className, String tableName, String columnName,
@@ -59,6 +62,7 @@ public class ExpandoColumnPermissionImpl implements ExpandoColumnPermission {
 		}
 	}
 
+	@Override
 	public boolean contains(
 		PermissionChecker permissionChecker, ExpandoColumn column,
 		String actionId) {
@@ -67,6 +71,7 @@ public class ExpandoColumnPermissionImpl implements ExpandoColumnPermission {
 			0, ExpandoColumn.class.getName(), column.getColumnId(), actionId);
 	}
 
+	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, long columnId, String actionId)
 		throws PortalException, SystemException {
@@ -77,6 +82,7 @@ public class ExpandoColumnPermissionImpl implements ExpandoColumnPermission {
 		return contains(permissionChecker, column, actionId);
 	}
 
+	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, long companyId,
 			String className, String tableName, String columnName,

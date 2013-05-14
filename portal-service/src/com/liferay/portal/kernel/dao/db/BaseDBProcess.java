@@ -29,18 +29,21 @@ public abstract class BaseDBProcess implements DBProcess {
 	public BaseDBProcess() {
 	}
 
+	@Override
 	public void runSQL(String template) throws IOException, SQLException {
 		DB db = DBFactoryUtil.getDB();
 
 		db.runSQL(template);
 	}
 
+	@Override
 	public void runSQL(String[] templates) throws IOException, SQLException {
 		DB db = DBFactoryUtil.getDB();
 
 		db.runSQL(templates);
 	}
 
+	@Override
 	public void runSQLTemplate(String path)
 		throws IOException, NamingException, SQLException {
 
@@ -49,6 +52,7 @@ public abstract class BaseDBProcess implements DBProcess {
 		db.runSQLTemplate(path);
 	}
 
+	@Override
 	public void runSQLTemplate(String path, boolean failOnError)
 		throws IOException, NamingException, SQLException {
 

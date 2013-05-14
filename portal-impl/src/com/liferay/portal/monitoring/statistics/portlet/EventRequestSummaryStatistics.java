@@ -25,6 +25,7 @@ import java.util.Set;
  */
 public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 
+	@Override
 	public long getAverageTime() {
 		long averageTime = 0;
 
@@ -45,6 +46,7 @@ public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 		return averageTime / count;
 	}
 
+	@Override
 	public long getAverageTimeByCompany(long companyId)
 		throws MonitoringException {
 
@@ -54,6 +56,7 @@ public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 		return getAverageTimeByCompany(companyStatistics);
 	}
 
+	@Override
 	public long getAverageTimeByCompany(String webId)
 		throws MonitoringException {
 
@@ -63,6 +66,7 @@ public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 		return getAverageTimeByCompany(companyStatistics);
 	}
 
+	@Override
 	public long getAverageTimeByPortlet(String portletId)
 		throws MonitoringException {
 
@@ -81,6 +85,7 @@ public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 		return averageTime / companyStatisticsSet.size();
 	}
 
+	@Override
 	public long getAverageTimeByPortlet(String portletId, long companyId)
 		throws MonitoringException {
 
@@ -93,6 +98,7 @@ public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 		return requestStatistics.getAverageTime();
 	}
 
+	@Override
 	public long getAverageTimeByPortlet(String portletId, String webId)
 		throws MonitoringException {
 
@@ -105,6 +111,7 @@ public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 		return requestStatistics.getAverageTime();
 	}
 
+	@Override
 	public long getErrorCount() {
 		long errorCount = 0;
 
@@ -117,6 +124,7 @@ public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 		return errorCount;
 	}
 
+	@Override
 	public long getErrorCountByCompany(long companyId)
 		throws MonitoringException {
 
@@ -126,6 +134,7 @@ public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 		return getErrorCountByCompany(companyStatistics);
 	}
 
+	@Override
 	public long getErrorCountByCompany(String webId)
 		throws MonitoringException {
 
@@ -135,6 +144,7 @@ public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 		return getErrorCountByCompany(companyStatistics);
 	}
 
+	@Override
 	public long getErrorCountByPortlet(String portletId)
 		throws MonitoringException {
 
@@ -149,6 +159,7 @@ public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 		return errorCount;
 	}
 
+	@Override
 	public long getErrorCountByPortlet(String portletId, long companyId)
 		throws MonitoringException {
 
@@ -158,6 +169,7 @@ public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 		return getErrorCountByPortlet(portletId, companyStatistics);
 	}
 
+	@Override
 	public long getErrorCountByPortlet(String portletId, String webId)
 		throws MonitoringException {
 
@@ -167,6 +179,7 @@ public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 		return getErrorCountByPortlet(portletId, companyStatistics);
 	}
 
+	@Override
 	public long getMaxTime() {
 		long maxTime = 0;
 
@@ -185,6 +198,7 @@ public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 		return maxTime;
 	}
 
+	@Override
 	public long getMaxTimeByCompany(long companyId) throws MonitoringException {
 		CompanyStatistics companyStatistics =
 			_serverStatistics.getCompanyStatistics(companyId);
@@ -192,6 +206,7 @@ public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 		return companyStatistics.getMaxTime();
 	}
 
+	@Override
 	public long getMaxTimeByCompany(String webId) throws MonitoringException {
 		CompanyStatistics companyStatistics =
 			_serverStatistics.getCompanyStatistics(webId);
@@ -199,6 +214,7 @@ public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 		return companyStatistics.getMaxTime();
 	}
 
+	@Override
 	public long getMaxTimeByPortlet(String portletId)
 		throws MonitoringException {
 
@@ -217,6 +233,7 @@ public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 		return maxTime;
 	}
 
+	@Override
 	public long getMaxTimeByPortlet(String portletId, long companyId)
 		throws MonitoringException {
 
@@ -226,6 +243,7 @@ public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 		return getMaxTimeByPortlet(portletId, companyStatistics);
 	}
 
+	@Override
 	public long getMaxTimeByPortlet(String portletId, String webId)
 		throws MonitoringException {
 
@@ -235,6 +253,7 @@ public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 		return getMaxTimeByPortlet(portletId, companyStatistics);
 	}
 
+	@Override
 	public long getMinTime() {
 		long minTime = 0;
 
@@ -253,6 +272,7 @@ public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 		return minTime;
 	}
 
+	@Override
 	public long getMinTimeByCompany(long companyId) throws MonitoringException {
 		CompanyStatistics companyStatistics =
 			_serverStatistics.getCompanyStatistics(companyId);
@@ -260,6 +280,7 @@ public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 		return companyStatistics.getMinTime();
 	}
 
+	@Override
 	public long getMinTimeByCompany(String webId) throws MonitoringException {
 		CompanyStatistics companyStatistics =
 			_serverStatistics.getCompanyStatistics(webId);
@@ -267,6 +288,7 @@ public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 		return companyStatistics.getMinTime();
 	}
 
+	@Override
 	public long getMinTimeByPortlet(String portletId)
 		throws MonitoringException {
 
@@ -285,6 +307,7 @@ public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 		return minTime;
 	}
 
+	@Override
 	public long getMinTimeByPortlet(String portletId, long companyId)
 		throws MonitoringException {
 
@@ -294,6 +317,7 @@ public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 		return getMinTimeByPortlet(portletId, companyStatistics);
 	}
 
+	@Override
 	public long getMinTimeByPortlet(String portletId, String webId)
 		throws MonitoringException {
 
@@ -303,6 +327,7 @@ public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 		return getMinTimeByPortlet(portletId, companyStatistics);
 	}
 
+	@Override
 	public long getRequestCount() {
 		long requestCount = 0;
 
@@ -315,6 +340,7 @@ public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 		return requestCount;
 	}
 
+	@Override
 	public long getRequestCountByCompany(long companyId)
 		throws MonitoringException {
 
@@ -324,6 +350,7 @@ public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 		return getRequestCountByCompany(companyStatistics);
 	}
 
+	@Override
 	public long getRequestCountByCompany(String webId)
 		throws MonitoringException {
 
@@ -333,6 +360,7 @@ public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 		return getRequestCountByCompany(companyStatistics);
 	}
 
+	@Override
 	public long getRequestCountByPortlet(String portletId)
 		throws MonitoringException {
 
@@ -348,6 +376,7 @@ public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 		return requestCount;
 	}
 
+	@Override
 	public long getRequestCountByPortlet(String portletId, long companyId)
 		throws MonitoringException {
 
@@ -357,6 +386,7 @@ public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 		return getRequestCountByPortlet(portletId, companyStatistics);
 	}
 
+	@Override
 	public long getRequestCountByPortlet(String portletId, String webId)
 		throws MonitoringException {
 
@@ -366,6 +396,7 @@ public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 		return getRequestCountByPortlet(portletId, companyStatistics);
 	}
 
+	@Override
 	public long getSuccessCount() {
 		long successCount = 0;
 
@@ -378,6 +409,7 @@ public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 		return successCount;
 	}
 
+	@Override
 	public long getSuccessCountByCompany(long companyId)
 		throws MonitoringException {
 
@@ -387,6 +419,7 @@ public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 		return getSuccessCountByCompany(companyStatistics);
 	}
 
+	@Override
 	public long getSuccessCountByCompany(String webId)
 		throws MonitoringException {
 
@@ -396,6 +429,7 @@ public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 		return getSuccessCountByCompany(companyStatistics);
 	}
 
+	@Override
 	public long getSuccessCountByPortlet(String portletId)
 		throws MonitoringException {
 
@@ -411,6 +445,7 @@ public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 		return successCount;
 	}
 
+	@Override
 	public long getSuccessCountByPortlet(String portletId, long companyId)
 		throws MonitoringException {
 
@@ -420,6 +455,7 @@ public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 		return getSuccessCountByPortlet(portletId, companyStatistics);
 	}
 
+	@Override
 	public long getSuccessCountByPortlet(String portletId, String webId)
 		throws MonitoringException {
 
@@ -429,6 +465,7 @@ public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 		return getSuccessCountByPortlet(portletId, companyStatistics);
 	}
 
+	@Override
 	public long getTimeoutCount() {
 		long timeoutCount = 0;
 
@@ -441,6 +478,7 @@ public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 		return timeoutCount;
 	}
 
+	@Override
 	public long getTimeoutCountByCompany(long companyId)
 		throws MonitoringException {
 
@@ -450,6 +488,7 @@ public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 		return getTimeoutCountByCompany(companyStatistics);
 	}
 
+	@Override
 	public long getTimeoutCountByCompany(String webId)
 		throws MonitoringException {
 
@@ -459,6 +498,7 @@ public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 		return getTimeoutCountByCompany(companyStatistics);
 	}
 
+	@Override
 	public long getTimeoutCountByPortlet(String portletId)
 		throws MonitoringException {
 
@@ -474,6 +514,7 @@ public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 		return timeoutCount;
 	}
 
+	@Override
 	public long getTimeoutCountByPortlet(String portletId, long companyId)
 		throws MonitoringException {
 
@@ -483,6 +524,7 @@ public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 		return getTimeoutCountByPortlet(portletId, companyStatistics);
 	}
 
+	@Override
 	public long getTimeoutCountByPortlet(String portletId, String webId)
 		throws MonitoringException {
 

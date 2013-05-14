@@ -38,6 +38,7 @@ import javax.servlet.http.HttpSession;
  */
 public class EventsProcessorImpl implements EventsProcessor {
 
+	@Override
 	public void process(
 			String key, String[] classes, String[] ids,
 			HttpServletRequest request, HttpServletResponse response,
@@ -69,6 +70,7 @@ public class EventsProcessorImpl implements EventsProcessor {
 		}
 	}
 
+	@Override
 	public void processEvent(
 			Object event, String[] ids, HttpServletRequest request,
 			HttpServletResponse response, HttpSession session)
@@ -107,12 +109,14 @@ public class EventsProcessorImpl implements EventsProcessor {
 		}
 	}
 
+	@Override
 	public void registerEvent(String key, Object event) {
 		List<Object> events = _getEvents(key);
 
 		events.add(event);
 	}
 
+	@Override
 	public void unregisterEvent(String key, Object event) {
 		List<Object> events = _getEvents(key);
 

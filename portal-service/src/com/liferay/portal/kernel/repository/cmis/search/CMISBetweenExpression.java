@@ -32,6 +32,7 @@ public class CMISBetweenExpression implements CMISCriterion {
 		_includesUpper = includesUpper;
 	}
 
+	@Override
 	public String toQueryFragment() {
 		StringBundler sb = new StringBundler(7);
 

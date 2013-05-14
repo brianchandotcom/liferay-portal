@@ -35,10 +35,12 @@ public class DefaultSingleDestinationMessageSender
 		_messageSender = messageSender;
 	}
 
+	@Override
 	public void send(Message message) {
 		_messageSender.send(_destinationName, message);
 	}
 
+	@Override
 	public void send(Object payload) {
 		Message message = new Message();
 

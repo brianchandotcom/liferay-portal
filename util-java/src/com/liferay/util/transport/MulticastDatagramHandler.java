@@ -38,10 +38,12 @@ public class MulticastDatagramHandler implements DatagramHandler {
 		_shortData = shortData;
 	}
 
+	@Override
 	public void errorReceived(Throwable t) {
 		_log.error(t, t);
 	}
 
+	@Override
 	public void process(DatagramPacket packet) {
 		byte[] bytes = packet.getData();
 

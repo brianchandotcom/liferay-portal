@@ -60,18 +60,22 @@ public class WeakValueConcurrentHashMap<K, V>
 		putAll(map);
 	}
 
+	@Override
 	public void clear() {
 		_map.clear();
 	}
 
+	@Override
 	public boolean containsKey(Object key) {
 		return _map.containsKey(key);
 	}
 
+	@Override
 	public boolean containsValue(Object value) {
 		return _map.containsValue(new EqualityWeakReference<V>((V)value));
 	}
 
+	@Override
 	public Set<Entry<K, V>> entrySet() {
 		if (_entrySet == null) {
 			_entrySet = new UnwrapEntrySet();
@@ -80,6 +84,7 @@ public class WeakValueConcurrentHashMap<K, V>
 		return _entrySet;
 	}
 
+	@Override
 	public V get(Object key) {
 		Reference<V> valueReference = _map.get(key);
 
@@ -90,10 +95,12 @@ public class WeakValueConcurrentHashMap<K, V>
 		return null;
 	}
 
+	@Override
 	public boolean isEmpty() {
 		return _map.isEmpty();
 	}
 
+	@Override
 	public Set<K> keySet() {
 		return _map.keySet();
 	}
@@ -110,6 +117,7 @@ public class WeakValueConcurrentHashMap<K, V>
 		return null;
 	}
 
+	@Override
 	public final void putAll(Map<? extends K, ? extends V> map) {
 		for (Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
 			K key = entry.getKey();
@@ -133,6 +141,7 @@ public class WeakValueConcurrentHashMap<K, V>
 		return null;
 	}
 
+	@Override
 	public V remove(Object key) {
 		Reference<V> valueReference = _map.remove(key);
 
@@ -143,6 +152,7 @@ public class WeakValueConcurrentHashMap<K, V>
 		return null;
 	}
 
+	@Override
 	public boolean remove(Object key, Object value) {
 		Reference<V> valueReference = wrapValue(key, value);
 
@@ -168,10 +178,12 @@ public class WeakValueConcurrentHashMap<K, V>
 		return _map.replace(key, oldValueReference, newValueReference);
 	}
 
+	@Override
 	public int size() {
 		return _map.size();
 	}
 
+	@Override
 	public Collection<V> values() {
 		if (_values == null) {
 			_values = new UnwrapValues();

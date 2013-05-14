@@ -72,6 +72,7 @@ public class JournalXSLURIResolver implements Externalizable, XSLURIResolver {
 		return false;
 	}
 
+	@Override
 	public String getLanguageId() {
 		return _languageId;
 	}
@@ -83,6 +84,7 @@ public class JournalXSLURIResolver implements Externalizable, XSLURIResolver {
 		return HashUtil.hash(hashCode, _tokens);
 	}
 
+	@Override
 	public void readExternal(ObjectInput objectInput)
 		throws ClassNotFoundException, IOException {
 
@@ -95,6 +97,7 @@ public class JournalXSLURIResolver implements Externalizable, XSLURIResolver {
 		_tokens = (Map<String, String>)objectInput.readObject();
 	}
 
+	@Override
 	public Source resolve(String href, String base) {
 		try {
 			String content = null;
@@ -126,6 +129,7 @@ public class JournalXSLURIResolver implements Externalizable, XSLURIResolver {
 		}
 	}
 
+	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		if (_languageId == null) {
 			objectOutput.writeUTF(StringPool.BLANK);

@@ -55,6 +55,7 @@ public class JCRFactoryImpl implements JCRFactory {
 	public static final String REPOSITORY_ROOT = PropsUtil.get(
 		PropsKeys.JCR_JACKRABBIT_REPOSITORY_ROOT);
 
+	@Override
 	public Session createSession(String workspaceName)
 		throws RepositoryException {
 
@@ -75,6 +76,7 @@ public class JCRFactoryImpl implements JCRFactory {
 		return session;
 	}
 
+	@Override
 	public void initialize() throws RepositoryException {
 		Session session = null;
 
@@ -95,6 +97,7 @@ public class JCRFactoryImpl implements JCRFactory {
 		_initialized = true;
 	}
 
+	@Override
 	public void prepare() throws RepositoryException {
 		try {
 			File repositoryRoot = new File(JCRFactoryImpl.REPOSITORY_ROOT);
@@ -136,6 +139,7 @@ public class JCRFactoryImpl implements JCRFactory {
 		}
 	}
 
+	@Override
 	public void shutdown() {
 		if (_initialized) {
 			_transientRepository.shutdown();

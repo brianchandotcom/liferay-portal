@@ -56,16 +56,20 @@ public class PortletSessionTracker
 		_instance._invalidate(sessionId);
 	}
 
+	@Override
 	public void sessionCreated(HttpSessionEvent httpSessionEvent) {
 	}
 
+	@Override
 	public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
 		_invalidate(httpSessionEvent.getSession().getId());
 	}
 
+	@Override
 	public void valueBound(HttpSessionBindingEvent event) {
 	}
 
+	@Override
 	public void valueUnbound(HttpSessionBindingEvent event) {
 		invalidate(event.getSession().getId());
 	}

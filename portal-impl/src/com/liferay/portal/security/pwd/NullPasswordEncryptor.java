@@ -21,6 +21,7 @@ package com.liferay.portal.security.pwd;
 public class NullPasswordEncryptor
 	extends BasePasswordEncryptor implements PasswordEncryptor {
 
+	@Override
 	public String[] getSupportedAlgorithmTypes() {
 		return new String[] {PasswordEncryptorUtil.TYPE_NONE};
 	}

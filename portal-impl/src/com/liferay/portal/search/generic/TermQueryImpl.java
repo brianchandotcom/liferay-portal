@@ -27,6 +27,7 @@ public class TermQueryImpl extends BaseQueryImpl implements TermQuery {
 		_queryTerm = queryTerm;
 	}
 
+	@Override
 	public QueryTerm getQueryTerm() {
 		return _queryTerm;
 	}

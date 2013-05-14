@@ -40,11 +40,13 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 	public LayoutRevisionImpl() {
 	}
 
+	@Override
 	public List<LayoutRevision> getChildren() throws SystemException {
 		return LayoutRevisionLocalServiceUtil.getChildLayoutRevisions(
 			getLayoutSetBranchId(), getLayoutRevisionId(), getPlid());
 	}
 
+	@Override
 	public ColorScheme getColorScheme()
 		throws PortalException, SystemException {
 
@@ -58,6 +60,7 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 		}
 	}
 
+	@Override
 	public String getCssText() throws PortalException, SystemException {
 		if (isInheritLookAndFeel()) {
 			return getLayoutSet().getCss();
@@ -67,12 +70,14 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 		}
 	}
 
+	@Override
 	public String getHTMLTitle(Locale locale) {
 		String localeLanguageId = LocaleUtil.toLanguageId(locale);
 
 		return getHTMLTitle(localeLanguageId);
 	}
 
+	@Override
 	public String getHTMLTitle(String localeLanguageId) {
 		String htmlTitle = getTitle(localeLanguageId);
 
@@ -83,6 +88,7 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 		return htmlTitle;
 	}
 
+	@Override
 	public LayoutBranch getLayoutBranch()
 		throws PortalException, SystemException {
 
@@ -90,11 +96,13 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 			getLayoutBranchId());
 	}
 
+	@Override
 	public LayoutSet getLayoutSet() throws PortalException, SystemException {
 		return LayoutSetLocalServiceUtil.getLayoutSet(
 			getGroupId(), isPrivateLayout());
 	}
 
+	@Override
 	public Theme getTheme() throws PortalException, SystemException {
 		if (isInheritLookAndFeel()) {
 			return getLayoutSet().getTheme();
@@ -115,6 +123,7 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 		}
 	}
 
+	@Override
 	public UnicodeProperties getTypeSettingsProperties() {
 		if (_typeSettingsProperties == null) {
 			_typeSettingsProperties = new UnicodeProperties(true);
@@ -125,6 +134,7 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 		return _typeSettingsProperties;
 	}
 
+	@Override
 	public ColorScheme getWapColorScheme()
 		throws PortalException, SystemException {
 
@@ -138,6 +148,7 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 		}
 	}
 
+	@Override
 	public Theme getWapTheme() throws PortalException, SystemException {
 		if (isInheritWapLookAndFeel()) {
 			return getLayoutSet().getWapTheme();
@@ -148,6 +159,7 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 		}
 	}
 
+	@Override
 	public boolean hasChildren() throws SystemException {
 		if (!getChildren().isEmpty()) {
 			return true;
@@ -156,6 +168,7 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 		return false;
 	}
 
+	@Override
 	public boolean isInheritLookAndFeel() {
 		if (Validator.isNull(getThemeId()) ||
 			Validator.isNull(getColorSchemeId())) {
@@ -167,6 +180,7 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 		}
 	}
 
+	@Override
 	public boolean isInheritWapLookAndFeel() {
 		if (Validator.isNull(getWapThemeId()) ||
 			Validator.isNull(getWapColorSchemeId())) {
@@ -185,6 +199,7 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 		super.setTypeSettings(typeSettings);
 	}
 
+	@Override
 	public void setTypeSettingsProperties(
 		UnicodeProperties typeSettingsProperties) {
 

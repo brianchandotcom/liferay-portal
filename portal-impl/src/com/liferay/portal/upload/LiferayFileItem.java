@@ -49,10 +49,12 @@ public class LiferayFileItem extends DiskFileItem implements FileItem {
 		_repository = repository;
 	}
 
+	@Override
 	public String getEncodedString() {
 		return _encodedString;
 	}
 
+	@Override
 	public String getFileName() {
 		if (_fileName == null) {
 			return null;
@@ -72,14 +74,17 @@ public class LiferayFileItem extends DiskFileItem implements FileItem {
 		}
 	}
 
+	@Override
 	public String getFileNameExtension() {
 		return FileUtil.getExtension(_fileName);
 	}
 
+	@Override
 	public String getFullFileName() {
 		return _fileName;
 	}
 
+	@Override
 	public int getSizeThreshold() {
 		return _sizeThreshold;
 	}
@@ -101,6 +106,7 @@ public class LiferayFileItem extends DiskFileItem implements FileItem {
 		}
 	}
 
+	@Override
 	public void setString(String encode) {
 		try {
 			_encodedString = getString(encode);

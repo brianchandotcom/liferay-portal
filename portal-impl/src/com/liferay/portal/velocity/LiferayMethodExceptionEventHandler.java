@@ -25,6 +25,7 @@ import org.apache.velocity.app.event.MethodExceptionEventHandler;
 public class LiferayMethodExceptionEventHandler
 	implements MethodExceptionEventHandler {
 
+	@Override
 	public Object methodException(
 			@SuppressWarnings("rawtypes") Class clazz, String method,
 			Exception e)

@@ -31,14 +31,17 @@ public class EventImpl implements Event, Serializable {
 		_value = value;
 	}
 
+	@Override
 	public String getName() {
 		return _name;
 	}
 
+	@Override
 	public QName getQName() {
 		return _qName;
 	}
 
+	@Override
 	public Serializable getValue() {
 		return _value;
 	}

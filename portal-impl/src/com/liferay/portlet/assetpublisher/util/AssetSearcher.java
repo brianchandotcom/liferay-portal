@@ -52,6 +52,7 @@ public class AssetSearcher extends BaseIndexer {
 		setPermissionAware(true);
 	}
 
+	@Override
 	public String[] getClassNames() {
 		long[] classNameIds = _assetEntryQuery.getClassNameIds();
 
@@ -71,6 +72,7 @@ public class AssetSearcher extends BaseIndexer {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public String getPortletId() {
 		return null;
 	}

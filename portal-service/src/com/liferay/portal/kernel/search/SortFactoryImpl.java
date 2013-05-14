@@ -25,18 +25,22 @@ import java.util.List;
  */
 public class SortFactoryImpl implements SortFactory {
 
+	@Override
 	public Sort create(String fieldName, boolean reverse) {
 		return new Sort(fieldName, reverse);
 	}
 
+	@Override
 	public Sort create(String fieldName, int type, boolean reverse) {
 		return new Sort(fieldName, type, reverse);
 	}
 
+	@Override
 	public Sort[] getDefaultSorts() {
 		return _DEFAULT_SORTS;
 	}
 
+	@Override
 	public Sort getSort(Class<?> clazz, String orderByCol, String orderByType) {
 		Indexer indexer = IndexerRegistryUtil.getIndexer(clazz);
 
@@ -50,6 +54,7 @@ public class SortFactoryImpl implements SortFactory {
 			sortField, Sort.STRING_TYPE, !orderByType.equalsIgnoreCase("asc"));
 	}
 
+	@Override
 	public Sort[] toArray(List<Sort> sorts) {
 		if ((sorts == null) || sorts.isEmpty()) {
 			return new Sort[0];

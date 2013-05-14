@@ -35,6 +35,7 @@ public class LoggingProcessCallable implements ProcessCallable<String> {
 		_error = error;
 	}
 
+	@Override
 	public String call() {
 		try {
 			if (_error) {

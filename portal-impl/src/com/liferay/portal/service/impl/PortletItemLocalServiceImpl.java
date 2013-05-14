@@ -34,6 +34,7 @@ import java.util.List;
 public class PortletItemLocalServiceImpl
 	extends PortletItemLocalServiceBaseImpl {
 
+	@Override
 	public PortletItem addPortletItem(
 			long userId, long groupId, String name, String portletId,
 			String className)
@@ -64,6 +65,7 @@ public class PortletItemLocalServiceImpl
 		return portletItem;
 	}
 
+	@Override
 	public PortletItem getPortletItem(
 			long groupId, String name, String portletId, String className)
 		throws PortalException, SystemException {
@@ -74,6 +76,7 @@ public class PortletItemLocalServiceImpl
 			groupId, name, portletId, classNameId);
 	}
 
+	@Override
 	public List<PortletItem> getPortletItems(long groupId, String className)
 		throws SystemException {
 
@@ -82,6 +85,7 @@ public class PortletItemLocalServiceImpl
 		return portletItemPersistence.findByG_C(groupId, classNameId);
 	}
 
+	@Override
 	public List<PortletItem> getPortletItems(
 			long groupId, String portletId, String className)
 		throws SystemException {
@@ -92,6 +96,7 @@ public class PortletItemLocalServiceImpl
 			groupId, portletId, classNameId);
 	}
 
+	@Override
 	public PortletItem updatePortletItem(
 			long userId, long groupId, String name, String portletId,
 			String className)

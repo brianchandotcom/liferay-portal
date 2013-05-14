@@ -37,6 +37,7 @@ public class DefaultCustomUserAttributes implements CustomUserAttributes {
 		return new DefaultCustomUserAttributes();
 	}
 
+	@Override
 	public String getValue(String name, Map<String, String> userInfo) {
 		if (name == null) {
 			return null;

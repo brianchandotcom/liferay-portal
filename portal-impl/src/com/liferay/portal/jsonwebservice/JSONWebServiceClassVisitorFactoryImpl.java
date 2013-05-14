@@ -28,6 +28,7 @@ import java.io.InputStream;
 public class JSONWebServiceClassVisitorFactoryImpl
 	implements JSONWebServiceClassVisitorFactory {
 
+	@Override
 	public JSONWebServiceClassVisitor create(InputStream inputStream)
 		throws IOException {
 

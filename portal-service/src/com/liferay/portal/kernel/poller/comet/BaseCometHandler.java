@@ -23,6 +23,7 @@ public abstract class BaseCometHandler implements CometHandler {
 	@Override
 	public abstract CometHandler clone();
 
+	@Override
 	public void destroy() throws CometException {
 		_cometState = CometState.STATE_CLOSED;
 
@@ -37,14 +38,17 @@ public abstract class BaseCometHandler implements CometHandler {
 		}
 	}
 
+	@Override
 	public CometSession getCometSession() {
 		return _cometSession;
 	}
 
+	@Override
 	public CometState getCometState() {
 		return _cometState;
 	}
 
+	@Override
 	public void init(CometSession cometSession) throws CometException {
 		_cometSession = cometSession;
 		_cometState = CometState.STATE_READY;
@@ -60,6 +64,7 @@ public abstract class BaseCometHandler implements CometHandler {
 		}
 	}
 
+	@Override
 	public void receiveData(char[] data) throws CometException {
 		receiveData(new String(data));
 	}

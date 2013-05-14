@@ -29,6 +29,7 @@ public class CountryImpl extends CountryBaseImpl {
 	public CountryImpl() {
 	}
 
+	@Override
 	public String getName(Locale locale) {
 		String name = LanguageUtil.get(
 			locale, CountryConstants.NAME_PREFIX + getName());
@@ -40,10 +41,12 @@ public class CountryImpl extends CountryBaseImpl {
 		return getName();
 	}
 
+	@Override
 	public String getNameCurrentLanguageId() {
 		return _nameCurrentLanguageId;
 	}
 
+	@Override
 	@JSON
 	public String getNameCurrentValue() {
 		Locale locale = getLocale(_nameCurrentLanguageId);
@@ -51,6 +54,7 @@ public class CountryImpl extends CountryBaseImpl {
 		return getName(locale);
 	}
 
+	@Override
 	public void setNameCurrentLanguageId(String languageId) {
 		_nameCurrentLanguageId = languageId;
 	}

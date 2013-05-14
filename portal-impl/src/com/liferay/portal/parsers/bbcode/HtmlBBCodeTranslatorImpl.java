@@ -86,22 +86,27 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 		}
 	}
 
+	@Override
 	public String[] getEmoticonDescriptions() {
 		return _emoticonDescriptions;
 	}
 
+	@Override
 	public String[] getEmoticonFiles() {
 		return _emoticonFiles;
 	}
 
+	@Override
 	public String[][] getEmoticons() {
 		return _EMOTICONS;
 	}
 
+	@Override
 	public String[] getEmoticonSymbols() {
 		return _emoticonSymbols;
 	}
 
+	@Override
 	public String getHTML(String bbcode) {
 		try {
 			bbcode = parse(bbcode);
@@ -115,6 +120,7 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 		return bbcode;
 	}
 
+	@Override
 	public String parse(String text) {
 		StringBundler sb = new StringBundler();
 

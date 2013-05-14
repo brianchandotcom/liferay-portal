@@ -32,9 +32,11 @@ public class BlockingPortalCache<K extends Serializable, V>
 		_portalCache = portalCache;
 	}
 
+	@Override
 	public void destroy() {
 	}
 
+	@Override
 	public Collection<V> get(Collection<K> keys) {
 		return _portalCache.get(keys);
 	}
@@ -84,6 +86,7 @@ public class BlockingPortalCache<K extends Serializable, V>
 		return value;
 	}
 
+	@Override
 	public String getName() {
 		return _portalCache.getName();
 	}
@@ -132,10 +135,12 @@ public class BlockingPortalCache<K extends Serializable, V>
 		_competeLatchMap.remove(key);
 	}
 
+	@Override
 	public void registerCacheListener(CacheListener<K, V> cacheListener) {
 		_portalCache.registerCacheListener(cacheListener);
 	}
 
+	@Override
 	public void registerCacheListener(
 		CacheListener<K, V> cacheListener,
 		CacheListenerScope cacheListenerScope) {
@@ -153,15 +158,18 @@ public class BlockingPortalCache<K extends Serializable, V>
 		}
 	}
 
+	@Override
 	public void removeAll() {
 		_portalCache.removeAll();
 		_competeLatchMap.clear();
 	}
 
+	@Override
 	public void unregisterCacheListener(CacheListener<K, V> cacheListener) {
 		_portalCache.unregisterCacheListener(cacheListener);
 	}
 
+	@Override
 	public void unregisterCacheListeners() {
 		_portalCache.unregisterCacheListeners();
 	}

@@ -33,6 +33,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public abstract class BaseRedirectActionHandler implements ActionHandler {
 
+	@Override
 	public void applyAction(
 			MDRAction mdrAction, HttpServletRequest request,
 			HttpServletResponse response)

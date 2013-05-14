@@ -35,6 +35,7 @@ public class ParamAndPropertyAncestorTagImpl
 	extends BaseBodyTagSupport
 	implements ParamAncestorTag, PropertyAncestorTag {
 
+	@Override
 	public void addParam(String name, String value) {
 		if (_dynamicServletRequest == null) {
 			_dynamicServletRequest = new DynamicServletRequest(request);
@@ -77,6 +78,7 @@ public class ParamAndPropertyAncestorTagImpl
 		params.put(name, values);
 	}
 
+	@Override
 	public void addProperty(String name, String value) {
 		if (_properties == null) {
 			_properties = new LinkedHashMap<String, String[]>();

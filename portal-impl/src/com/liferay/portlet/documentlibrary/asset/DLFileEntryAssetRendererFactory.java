@@ -63,6 +63,7 @@ public class DLFileEntryAssetRendererFactory extends BaseAssetRendererFactory {
 
 	public static final String TYPE = "document";
 
+	@Override
 	public AssetRenderer getAssetRenderer(long classPK, int type)
 		throws PortalException, SystemException {
 
@@ -83,6 +84,7 @@ public class DLFileEntryAssetRendererFactory extends BaseAssetRendererFactory {
 		return new DLFileEntryAssetRenderer(fileEntry, fileVersion, type);
 	}
 
+	@Override
 	public String getClassName() {
 		return DLFileEntry.class.getName();
 	}
@@ -149,6 +151,7 @@ public class DLFileEntryAssetRendererFactory extends BaseAssetRendererFactory {
 		return classTypes;
 	}
 
+	@Override
 	public String getType() {
 		return TYPE;
 	}

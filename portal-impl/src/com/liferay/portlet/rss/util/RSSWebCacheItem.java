@@ -40,6 +40,7 @@ public class RSSWebCacheItem implements WebCacheItem {
 		_url = url;
 	}
 
+	@Override
 	public Object convert(String key) throws WebCacheException {
 		SyndFeed feed = null;
 
@@ -104,6 +105,7 @@ public class RSSWebCacheItem implements WebCacheItem {
 		return feed;
 	}
 
+	@Override
 	public long getRefreshTime() {
 		return _REFRESH_TIME;
 	}

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.search.TermQueryFactory;
  */
 public class BooleanClauseFactoryImpl implements BooleanClauseFactory {
 
+	@Override
 	public BooleanClause create(
 		SearchContext searchContext, Query query, String occur) {
 
@@ -38,6 +39,7 @@ public class BooleanClauseFactoryImpl implements BooleanClauseFactory {
 		return new BooleanClauseImpl(query, booleanClauseOccur);
 	}
 
+	@Override
 	public BooleanClause create(
 		SearchContext searchContext, String field, String value, String occur) {
 

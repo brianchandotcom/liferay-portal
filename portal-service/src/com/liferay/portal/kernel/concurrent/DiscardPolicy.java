@@ -27,6 +27,7 @@ public class DiscardPolicy implements RejectedExecutionHandler {
 	 * @see java.util.concurrent.ThreadPoolExecutor.DiscardPolicy#rejectedExecution(
 	 *      Runnable, java.util.concurrent.ThreadPoolExecutor)
 	 */
+	@Override
 	public void rejectedExecution(
 		Runnable runnable, ThreadPoolExecutor threadPoolExecutor) {
 	}

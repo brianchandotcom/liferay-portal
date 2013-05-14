@@ -32,6 +32,7 @@ import java.util.Map;
  */
 public class DefaultWorkflowTask implements Serializable, WorkflowTask {
 
+	@Override
 	public long getAssigneeUserId() {
 		if (!isAssignedToSingleUser()) {
 			return -1;
@@ -43,46 +44,57 @@ public class DefaultWorkflowTask implements Serializable, WorkflowTask {
 		return workflowTaskAssignee.getAssigneeClassPK();
 	}
 
+	@Override
 	public Date getCompletionDate() {
 		return _completionDate;
 	}
 
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
 
+	@Override
 	public String getDescription() {
 		return _description;
 	}
 
+	@Override
 	public Date getDueDate() {
 		return _dueDate;
 	}
 
+	@Override
 	public String getName() {
 		return _name;
 	}
 
+	@Override
 	public Map<String, Serializable> getOptionalAttributes() {
 		return _optionalAttributes;
 	}
 
+	@Override
 	public long getWorkflowDefinitionId() {
 		return _workflowDefinitionId;
 	}
 
+	@Override
 	public String getWorkflowDefinitionName() {
 		return _workflowDefinitionName;
 	}
 
+	@Override
 	public int getWorkflowDefinitionVersion() {
 		return _workflowDefinitionVersion;
 	}
 
+	@Override
 	public long getWorkflowInstanceId() {
 		return _workflowInstanceId;
 	}
 
+	@Override
 	public List<WorkflowTaskAssignee> getWorkflowTaskAssignees() {
 		if (_workflowTaskAssignees == null) {
 			return Collections.emptyList();
@@ -91,10 +103,12 @@ public class DefaultWorkflowTask implements Serializable, WorkflowTask {
 		return _workflowTaskAssignees;
 	}
 
+	@Override
 	public long getWorkflowTaskId() {
 		return _workflowTaskId;
 	}
 
+	@Override
 	public boolean isAssignedToSingleUser() {
 		if (_workflowTaskAssignees == null) {
 			return false;
@@ -117,10 +131,12 @@ public class DefaultWorkflowTask implements Serializable, WorkflowTask {
 		}
 	}
 
+	@Override
 	public boolean isAsynchronous() {
 		return _asynchronous;
 	}
 
+	@Override
 	public boolean isCompleted() {
 		if (_completionDate != null) {
 			return true;

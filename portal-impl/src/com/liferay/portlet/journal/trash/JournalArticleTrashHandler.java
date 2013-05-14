@@ -77,6 +77,7 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 		}
 	}
 
+	@Override
 	public void deleteTrashEntry(long classPK)
 		throws PortalException, SystemException {
 
@@ -87,6 +88,7 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 			article.getGroupId(), article.getArticleId(), null);
 	}
 
+	@Override
 	public String getClassName() {
 		return JournalArticle.class.getName();
 	}
@@ -149,6 +151,7 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 		return new JournalArticleAssetRenderer(article);
 	}
 
+	@Override
 	public boolean isInTrash(long classPK)
 		throws PortalException, SystemException {
 
@@ -204,6 +207,7 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 			userId, article.getGroupId(), article, containerId, serviceContext);
 	}
 
+	@Override
 	public void restoreTrashEntry(long userId, long classPK)
 		throws PortalException, SystemException {
 

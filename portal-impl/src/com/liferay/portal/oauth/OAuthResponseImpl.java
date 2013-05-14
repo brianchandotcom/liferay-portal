@@ -27,14 +27,17 @@ public class OAuthResponseImpl implements OAuthResponse {
 		_response = response;
 	}
 
+	@Override
 	public String getBody() {
 		return _response.getBody();
 	}
 
+	@Override
 	public int getStatus() {
 		return _response.getCode();
 	}
 
+	@Override
 	public Object getWrappedOAuthResponse() {
 		return _response;
 	}

@@ -139,6 +139,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	 *         with the model or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void addModelResources(
 			AuditedModel auditedModel, ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -188,6 +189,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	 *         with the model or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void addModelResources(
 			long companyId, long groupId, long userId, String name,
 			long primKey, String[] groupPermissions, String[] guestPermissions)
@@ -216,6 +218,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	 *         with the model or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void addModelResources(
 			long companyId, long groupId, long userId, String name,
 			String primKey, String[] groupPermissions,
@@ -248,6 +251,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	 *         with the resource or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void addResources(
 			long companyId, long groupId, long userId, String name,
 			long primKey, boolean portletActions, boolean addGroupPermissions,
@@ -280,6 +284,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	 *         with the resource or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void addResources(
 			long companyId, long groupId, long userId, String name,
 			String primKey, boolean portletActions, boolean addGroupPermissions,
@@ -305,6 +310,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	 *         with the resource or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void addResources(
 			long companyId, long groupId, String name, boolean portletActions)
 		throws PortalException, SystemException {
@@ -322,6 +328,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void deleteResource(AuditedModel auditedModel, int scope)
 		throws PortalException, SystemException {
 
@@ -343,6 +350,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void deleteResource(
 			long companyId, String name, int scope, long primKey)
 		throws PortalException, SystemException {
@@ -362,6 +370,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void deleteResource(
 			long companyId, String name, int scope, String primKey)
 		throws PortalException, SystemException {
@@ -380,6 +389,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	 * @param  primKey the primary key string of the resource
 	 * @return the new resource
 	 */
+	@Override
 	public Resource getResource(
 		long companyId, String name, int scope, String primKey) {
 
@@ -413,6 +423,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	 *         could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public boolean hasUserPermissions(
 			long userId, long resourceId, List<Resource> resources,
 			String actionId, long[] roleIds)
@@ -447,6 +458,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void updateModelResources(
 			AuditedModel auditedModel, ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -474,6 +486,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void updateResources(
 			long companyId, long groupId, String name, long primKey,
 			String[] groupPermissions, String[] guestPermissions)
@@ -498,6 +511,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void updateResources(
 			long companyId, long groupId, String name, String primKey,
 			String[] groupPermissions, String[] guestPermissions)
@@ -522,6 +536,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	 * @param  newPrimKey the new primary key string of the resource
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void updateResources(
 			long companyId, String name, int scope, String primKey,
 			String newPrimKey)

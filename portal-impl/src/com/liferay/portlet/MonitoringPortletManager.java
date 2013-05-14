@@ -19,22 +19,27 @@ package com.liferay.portlet;
  */
 public class MonitoringPortletManager implements MonitoringPortletManagerMBean {
 
+	@Override
 	public boolean isMonitoringPortletActionRequest() {
 		return MonitoringPortlet.isMonitoringPortletActionRequest();
 	}
 
+	@Override
 	public boolean isMonitoringPortletEventRequest() {
 		return MonitoringPortlet.isMonitoringPortletEventRequest();
 	}
 
+	@Override
 	public boolean isMonitoringPortletRenderRequest() {
 		return MonitoringPortlet.isMonitoringPortletRenderRequest();
 	}
 
+	@Override
 	public boolean isMonitoringPortletResourceRequest() {
 		return MonitoringPortlet.isMonitoringPortletResourceRequest();
 	}
 
+	@Override
 	public void setMonitoringPortletActionRequest(
 		boolean monitoringPortletActionRequest) {
 
@@ -42,6 +47,7 @@ public class MonitoringPortletManager implements MonitoringPortletManagerMBean {
 			monitoringPortletActionRequest);
 	}
 
+	@Override
 	public void setMonitoringPortletEventRequest(
 		boolean monitoringPortletEventRequest) {
 
@@ -49,6 +55,7 @@ public class MonitoringPortletManager implements MonitoringPortletManagerMBean {
 			monitoringPortletEventRequest);
 	}
 
+	@Override
 	public void setMonitoringPortletRenderRequest(
 		boolean monitoringPortletRenderRequest) {
 
@@ -56,6 +63,7 @@ public class MonitoringPortletManager implements MonitoringPortletManagerMBean {
 			monitoringPortletRenderRequest);
 	}
 
+	@Override
 	public void setMonitoringPortletResourceRequest(
 		boolean monitoringPortletResourceRequest) {
 

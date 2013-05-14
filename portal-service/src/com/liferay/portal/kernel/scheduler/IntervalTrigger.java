@@ -42,6 +42,7 @@ public class IntervalTrigger extends BaseTrigger {
 		this(jobName, groupName, null, null, interval);
 	}
 
+	@Override
 	public Long getTriggerContent() {
 		return _interval;
 	}

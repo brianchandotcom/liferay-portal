@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.DigesterUtil;
 public class DefaultPasswordEncryptor
 	extends BasePasswordEncryptor implements PasswordEncryptor {
 
+	@Override
 	public String[] getSupportedAlgorithmTypes() {
 		return new String[0];
 	}

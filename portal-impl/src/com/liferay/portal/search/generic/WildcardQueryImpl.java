@@ -27,6 +27,7 @@ public class WildcardQueryImpl extends BaseQueryImpl implements WildcardQuery {
 		_queryTerm = queryTerm;
 	}
 
+	@Override
 	public QueryTerm getQueryTerm() {
 		return _queryTerm;
 	}

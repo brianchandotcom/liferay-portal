@@ -44,6 +44,7 @@ import javax.persistence.TemporalType;
  */
 public class SessionImpl implements Session {
 
+	@Override
 	public void clear() throws ORMException {
 		try {
 			entityManager.clear();
@@ -53,10 +54,12 @@ public class SessionImpl implements Session {
 		}
 	}
 
+	@Override
 	public Connection close() throws ORMException {
 		return null;
 	}
 
+	@Override
 	public boolean contains(Object object) throws ORMException {
 		try {
 			return entityManager.contains(object);
@@ -66,26 +69,31 @@ public class SessionImpl implements Session {
 		}
 	}
 
+	@Override
 	public Query createQuery(String queryString) throws ORMException {
 		return createQuery(queryString, true);
 	}
 
+	@Override
 	public Query createQuery(String queryString, boolean strictName)
 		throws ORMException {
 
 		return new QueryImpl(this, queryString, strictName);
 	}
 
+	@Override
 	public SQLQuery createSQLQuery(String queryString) throws ORMException {
 		return createSQLQuery(queryString, true);
 	}
 
+	@Override
 	public SQLQuery createSQLQuery(String queryString, boolean strictName)
 		throws ORMException {
 
 		return new SQLQueryImpl(this, queryString, strictName);
 	}
 
+	@Override
 	public void delete(Object object) throws ORMException {
 		try {
 			entityManager.remove(entityManager.merge(object));
@@ -95,9 +103,11 @@ public class SessionImpl implements Session {
 		}
 	}
 
+	@Override
 	public void evict(Object object) throws ORMException {
 	}
 
+	@Override
 	public void flush() throws ORMException {
 		try {
 			entityManager.flush();
@@ -107,6 +117,7 @@ public class SessionImpl implements Session {
 		}
 	}
 
+	@Override
 	public Object get(Class<?> clazz, Serializable id) throws ORMException {
 		try {
 			return entityManager.find(clazz, id);
@@ -116,6 +127,7 @@ public class SessionImpl implements Session {
 		}
 	}
 
+	@Override
 	public Object get(Class<?> clazz, Serializable id, LockMode lockMode)
 		throws ORMException {
 
@@ -136,10 +148,12 @@ public class SessionImpl implements Session {
 		}
 	}
 
+	@Override
 	public Object getWrappedSession() throws ORMException {
 		return entityManager;
 	}
 
+	@Override
 	public Object load(Class<?> clazz, Serializable id) throws ORMException {
 		try {
 			return entityManager.getReference(clazz, id);
@@ -149,6 +163,7 @@ public class SessionImpl implements Session {
 		}
 	}
 
+	@Override
 	public Object merge(Object object) throws ORMException {
 		try {
 			return entityManager.merge(object);
@@ -158,6 +173,7 @@ public class SessionImpl implements Session {
 		}
 	}
 
+	@Override
 	public Serializable save(Object object) throws ORMException {
 		try {
 			entityManager.persist(object);
@@ -171,6 +187,7 @@ public class SessionImpl implements Session {
 		}
 	}
 
+	@Override
 	public void saveOrUpdate(Object object) throws ORMException {
 		try {
 			entityManager.merge(object);

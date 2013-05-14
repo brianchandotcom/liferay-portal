@@ -55,12 +55,14 @@ public class RestrictPortletContainerWrapper implements PortletContainer {
 		_portletContainer = portletContainer;
 	}
 
+	@Override
 	public void preparePortlet(HttpServletRequest request, Portlet portlet)
 		throws PortletContainerException {
 
 		_portletContainer.preparePortlet(request, portlet);
 	}
 
+	@Override
 	public ActionResult processAction(
 			HttpServletRequest request, HttpServletResponse response,
 			Portlet portlet)
@@ -77,6 +79,7 @@ public class RestrictPortletContainerWrapper implements PortletContainer {
 		}
 	}
 
+	@Override
 	public List<Event> processEvent(
 			HttpServletRequest request, HttpServletResponse response,
 			Portlet portlet, Layout layout, Event event)
@@ -94,6 +97,7 @@ public class RestrictPortletContainerWrapper implements PortletContainer {
 		}
 	}
 
+	@Override
 	public void render(
 			HttpServletRequest request, HttpServletResponse response,
 			Portlet portlet)
@@ -149,6 +153,7 @@ public class RestrictPortletContainerWrapper implements PortletContainer {
 		}
 	}
 
+	@Override
 	public void serveResource(
 			HttpServletRequest request, HttpServletResponse response,
 			Portlet portlet)

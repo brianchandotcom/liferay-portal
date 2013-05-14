@@ -21,6 +21,7 @@ import javax.management.MBeanServer;
  */
 public class ListDomainsAction extends BaseJMXManageAction<String[]> {
 
+	@Override
 	public String[] action() {
 		MBeanServer mBeanServer = getMBeanServer();
 

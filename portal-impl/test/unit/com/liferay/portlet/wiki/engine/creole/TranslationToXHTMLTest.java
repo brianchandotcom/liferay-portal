@@ -47,6 +47,10 @@ import org.powermock.modules.junit4.PowerMockRunner;
  * @author Manuel de la Peña
  */
 
+/**
+ * @author Miguel Pastor
+ * @author Manuel de la Peña
+ */
 @PrepareForTest(HtmlUtil.class)
 @RunWith(PowerMockRunner.class)
 public class TranslationToXHTMLTest extends PowerMockito {

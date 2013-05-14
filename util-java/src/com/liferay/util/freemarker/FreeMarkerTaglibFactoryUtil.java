@@ -44,10 +44,12 @@ public class FreeMarkerTaglibFactoryUtil implements CacheRegistryItem {
 		return new TaglibFactoryCacheWrapper(servletContext);
 	}
 
+	@Override
 	public String getRegistryName() {
 		return _registryName;
 	}
 
+	@Override
 	public void invalidate() {
 		_templateModels.clear();
 	}

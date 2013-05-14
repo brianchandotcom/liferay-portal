@@ -59,6 +59,7 @@ public class PortletPreferencesFinderImpl
 			}
 		);
 
+	@Override
 	public List<PortletPreferences> findByPortletId(String portletId)
 		throws SystemException {
 
@@ -87,6 +88,7 @@ public class PortletPreferencesFinderImpl
 		}
 	}
 
+	@Override
 	public List<PortletPreferences> findByC_G_O_O_P_P(
 			long companyId, long groupId, long ownerId, int ownerType,
 			String portletId, boolean privateLayout)

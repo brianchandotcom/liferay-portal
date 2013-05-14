@@ -30,6 +30,7 @@ import java.util.Date;
 public class WebDAVPropsLocalServiceImpl
 	extends WebDAVPropsLocalServiceBaseImpl {
 
+	@Override
 	public void deleteWebDAVProps(String className, long classPK)
 		throws SystemException {
 
@@ -42,6 +43,7 @@ public class WebDAVPropsLocalServiceImpl
 		}
 	}
 
+	@Override
 	public WebDAVProps getWebDAVProps(
 			long companyId, String className, long classPK)
 		throws SystemException {
@@ -69,6 +71,7 @@ public class WebDAVPropsLocalServiceImpl
 		return webDavProps;
 	}
 
+	@Override
 	public void storeWebDAVProps(WebDAVProps webDavProps)
 		throws PortalException, SystemException {
 

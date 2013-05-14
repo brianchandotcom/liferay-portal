@@ -34,10 +34,12 @@ public class LiferayLoggerAdapter
 		_log = log;
 	}
 
+	@Override
 	public void debug(String message) {
 		_log.debug(message);
 	}
 
+	@Override
 	public void debug(String format, Object argument) {
 		if (isDebugEnabled()) {
 			FormattingTuple formattingTuple = MessageFormatter.format(
@@ -48,6 +50,7 @@ public class LiferayLoggerAdapter
 		}
 	}
 
+	@Override
 	public void debug(String format, Object... arguments) {
 		if (isDebugEnabled()) {
 			FormattingTuple formattingTuple = MessageFormatter.arrayFormat(
@@ -58,6 +61,7 @@ public class LiferayLoggerAdapter
 		}
 	}
 
+	@Override
 	public void debug(String format, Object argument1, Object argument2) {
 		if (isDebugEnabled()) {
 			FormattingTuple formattingTuple = MessageFormatter.format(
@@ -68,14 +72,17 @@ public class LiferayLoggerAdapter
 		}
 	}
 
+	@Override
 	public void debug(String message, Throwable t) {
 		_log.debug(message, t);
 	}
 
+	@Override
 	public void error(String message) {
 		_log.error(message);
 	}
 
+	@Override
 	public void error(String format, Object argument) {
 		if (isErrorEnabled()) {
 			FormattingTuple formattingTuple = MessageFormatter.format(
@@ -86,6 +93,7 @@ public class LiferayLoggerAdapter
 		}
 	}
 
+	@Override
 	public void error(String format, Object... arguments) {
 		if (isErrorEnabled()) {
 			FormattingTuple formattingTuple = MessageFormatter.arrayFormat(
@@ -96,6 +104,7 @@ public class LiferayLoggerAdapter
 		}
 	}
 
+	@Override
 	public void error(String format, Object argument1, Object argument2) {
 		if (isErrorEnabled()) {
 			FormattingTuple formattingTuple = MessageFormatter.format(
@@ -106,14 +115,17 @@ public class LiferayLoggerAdapter
 		}
 	}
 
+	@Override
 	public void error(String message, Throwable t) {
 		_log.error(message, t);
 	}
 
+	@Override
 	public void info(String message) {
 		_log.info(message);
 	}
 
+	@Override
 	public void info(String format, Object argument) {
 		if (isInfoEnabled()) {
 			FormattingTuple formattingTuple = MessageFormatter.format(
@@ -124,6 +136,7 @@ public class LiferayLoggerAdapter
 		}
 	}
 
+	@Override
 	public void info(String format, Object... arguments) {
 		if (isInfoEnabled()) {
 			FormattingTuple formattingTuple = MessageFormatter.arrayFormat(
@@ -134,6 +147,7 @@ public class LiferayLoggerAdapter
 		}
 	}
 
+	@Override
 	public void info(String format, Object argument1, Object argument2) {
 		if (isInfoEnabled()) {
 			FormattingTuple formattingTuple = MessageFormatter.format(
@@ -144,30 +158,37 @@ public class LiferayLoggerAdapter
 		}
 	}
 
+	@Override
 	public void info(String message, Throwable t) {
 		_log.info(message, t);
 	}
 
+	@Override
 	public boolean isDebugEnabled() {
 		return _log.isDebugEnabled();
 	}
 
+	@Override
 	public boolean isErrorEnabled() {
 		return _log.isErrorEnabled();
 	}
 
+	@Override
 	public boolean isInfoEnabled() {
 		return _log.isInfoEnabled();
 	}
 
+	@Override
 	public boolean isTraceEnabled() {
 		return _log.isTraceEnabled();
 	}
 
+	@Override
 	public boolean isWarnEnabled() {
 		return _log.isWarnEnabled();
 	}
 
+	@Override
 	public void log(
 		Marker marker, String fqcn, int level, String message,
 		Object[] arguments, Throwable t) {
@@ -206,10 +227,12 @@ public class LiferayLoggerAdapter
 		}
 	}
 
+	@Override
 	public void trace(String message) {
 		_log.trace(message);
 	}
 
+	@Override
 	public void trace(String format, Object argument) {
 		if (isTraceEnabled()) {
 			FormattingTuple formattingTuple = MessageFormatter.format(
@@ -220,6 +243,7 @@ public class LiferayLoggerAdapter
 		}
 	}
 
+	@Override
 	public void trace(String format, Object... arguments) {
 		if (isTraceEnabled()) {
 			FormattingTuple formattingTuple = MessageFormatter.arrayFormat(
@@ -230,6 +254,7 @@ public class LiferayLoggerAdapter
 		}
 	}
 
+	@Override
 	public void trace(String format, Object argument1, Object argument2) {
 		if (isTraceEnabled()) {
 			FormattingTuple formattingTuple = MessageFormatter.format(
@@ -240,14 +265,17 @@ public class LiferayLoggerAdapter
 		}
 	}
 
+	@Override
 	public void trace(String message, Throwable t) {
 		_log.trace(message, t);
 	}
 
+	@Override
 	public void warn(String message) {
 		_log.warn(message);
 	}
 
+	@Override
 	public void warn(String format, Object argument) {
 		if (isWarnEnabled()) {
 			FormattingTuple formattingTuple = MessageFormatter.format(
@@ -258,6 +286,7 @@ public class LiferayLoggerAdapter
 		}
 	}
 
+	@Override
 	public void warn(String format, Object... arguments) {
 		if (isWarnEnabled()) {
 			FormattingTuple formattingTuple = MessageFormatter.arrayFormat(
@@ -268,6 +297,7 @@ public class LiferayLoggerAdapter
 		}
 	}
 
+	@Override
 	public void warn(String format, Object argument1, Object argument2) {
 		if (isWarnEnabled()) {
 			FormattingTuple formattingTuple = MessageFormatter.format(
@@ -278,6 +308,7 @@ public class LiferayLoggerAdapter
 		}
 	}
 
+	@Override
 	public void warn(String message, Throwable t) {
 		_log.warn(message, t);
 	}

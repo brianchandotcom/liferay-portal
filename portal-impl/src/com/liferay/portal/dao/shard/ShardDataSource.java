@@ -34,20 +34,24 @@ public class ShardDataSource implements DataSource {
 		return _instance;
 	}
 
+	@Override
 	public Connection getConnection() throws SQLException {
 		return getDataSource().getConnection();
 	}
 
+	@Override
 	public Connection getConnection(String username, String password)
 		throws SQLException {
 
 		return getDataSource().getConnection(username, password);
 	}
 
+	@Override
 	public int getLoginTimeout() throws SQLException {
 		return getDataSource().getLoginTimeout();
 	}
 
+	@Override
 	public PrintWriter getLogWriter() throws SQLException {
 		return getDataSource().getLogWriter();
 	}
@@ -59,6 +63,7 @@ public class ShardDataSource implements DataSource {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public boolean isWrapperFor(Class<?> clazz) {
 
 		// Directly implement this method for JDK 5 compatibility. Logic is
@@ -67,14 +72,17 @@ public class ShardDataSource implements DataSource {
 		return DataSource.class.equals(clazz);
 	}
 
+	@Override
 	public void setLoginTimeout(int seconds) throws SQLException {
 		getDataSource().setLoginTimeout(seconds);
 	}
 
+	@Override
 	public void setLogWriter(PrintWriter printWriter) throws SQLException {
 		getDataSource().setLogWriter(printWriter);
 	}
 
+	@Override
 	public <T> T unwrap(Class<T> clazz) throws SQLException {
 
 		// Directly implement this method for JDK 5 compatibility. Logic is

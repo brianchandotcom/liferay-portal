@@ -34,6 +34,7 @@ public class TermQueryImpl extends BaseQueryImpl implements TermQuery {
 			new Term(field, value));
 	}
 
+	@Override
 	public QueryTerm getQueryTerm() {
 		throw new UnsupportedOperationException();
 	}

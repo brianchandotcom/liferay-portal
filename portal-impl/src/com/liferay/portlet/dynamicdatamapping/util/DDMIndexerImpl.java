@@ -40,6 +40,7 @@ import java.util.Locale;
  */
 public class DDMIndexerImpl implements DDMIndexer {
 
+	@Override
 	public void addAttributes(
 		Document document, DDMStructure ddmStructure, Fields fields) {
 
@@ -137,10 +138,12 @@ public class DDMIndexerImpl implements DDMIndexer {
 		}
 	}
 
+	@Override
 	public String encodeName(long ddmStructureId, String fieldName) {
 		return encodeName(ddmStructureId, fieldName, null);
 	}
 
+	@Override
 	public String encodeName(
 		long ddmStructureId, String fieldName, Locale locale) {
 

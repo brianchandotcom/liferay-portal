@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 @DoPrivileged
 public class PortletListerFactoryImpl implements PortletListerFactory {
 
+	@Override
 	public PortletLister getPortletLister() {
 		return new PortletListerImpl();
 	}

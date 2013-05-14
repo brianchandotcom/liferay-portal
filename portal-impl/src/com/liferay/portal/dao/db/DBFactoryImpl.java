@@ -51,6 +51,7 @@ import org.hibernate.dialect.SybaseDialect;
 @SuppressWarnings("deprecation")
 public class DBFactoryImpl implements DBFactory {
 
+	@Override
 	public DB getDB() {
 		if (_db == null) {
 			try {
@@ -71,6 +72,7 @@ public class DBFactoryImpl implements DBFactory {
 		return _db;
 	}
 
+	@Override
 	public DB getDB(Object dialect) {
 		DB db = null;
 
@@ -136,6 +138,7 @@ public class DBFactoryImpl implements DBFactory {
 		return db;
 	}
 
+	@Override
 	public DB getDB(String type) {
 		DB db = null;
 
@@ -185,6 +188,7 @@ public class DBFactoryImpl implements DBFactory {
 		return db;
 	}
 
+	@Override
 	public void setDB(Object dialect) {
 		_db = getDB(dialect);
 
@@ -205,6 +209,7 @@ public class DBFactoryImpl implements DBFactory {
 		}
 	}
 
+	@Override
 	public void setDB(String type) {
 		if (_db != null) {
 			return;

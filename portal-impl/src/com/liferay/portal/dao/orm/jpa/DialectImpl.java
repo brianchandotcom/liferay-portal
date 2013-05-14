@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.orm.Dialect;
  */
 public class DialectImpl implements Dialect {
 
+	@Override
 	public boolean supportsLimit() {
 		return true;
 	}

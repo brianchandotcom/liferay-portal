@@ -36,12 +36,14 @@ import java.util.List;
 public class BlogsStatsUserLocalServiceImpl
 	extends BlogsStatsUserLocalServiceBaseImpl {
 
+	@Override
 	public void deleteStatsUser(BlogsStatsUser statsUsers)
 		throws SystemException {
 
 		blogsStatsUserPersistence.remove(statsUsers);
 	}
 
+	@Override
 	public void deleteStatsUser(long statsUserId)
 		throws PortalException, SystemException {
 
@@ -51,6 +53,7 @@ public class BlogsStatsUserLocalServiceImpl
 		deleteStatsUser(statsUsers);
 	}
 
+	@Override
 	public void deleteStatsUserByGroupId(long groupId) throws SystemException {
 		List<BlogsStatsUser> statsUsers =
 			blogsStatsUserPersistence.findByGroupId(groupId);
@@ -60,6 +63,7 @@ public class BlogsStatsUserLocalServiceImpl
 		}
 	}
 
+	@Override
 	public void deleteStatsUserByUserId(long userId) throws SystemException {
 		List<BlogsStatsUser> statsUsers =
 			blogsStatsUserPersistence.findByUserId(userId);
@@ -69,6 +73,7 @@ public class BlogsStatsUserLocalServiceImpl
 		}
 	}
 
+	@Override
 	public List<BlogsStatsUser> getCompanyStatsUsers(
 			long companyId, int start, int end)
 		throws SystemException {
@@ -77,6 +82,7 @@ public class BlogsStatsUserLocalServiceImpl
 			companyId, 0, start, end, new StatsUserLastPostDateComparator());
 	}
 
+	@Override
 	public List<BlogsStatsUser> getCompanyStatsUsers(
 			long companyId, int start, int end, OrderByComparator obc)
 		throws SystemException {
@@ -85,12 +91,14 @@ public class BlogsStatsUserLocalServiceImpl
 			companyId, 0, start, end, obc);
 	}
 
+	@Override
 	public int getCompanyStatsUsersCount(long companyId)
 		throws SystemException {
 
 		return blogsStatsUserPersistence.countByC_NotE(companyId, 0);
 	}
 
+	@Override
 	public List<BlogsStatsUser> getGroupsStatsUsers(
 			long companyId, long groupId, int start, int end)
 		throws SystemException {
@@ -99,6 +107,7 @@ public class BlogsStatsUserLocalServiceImpl
 			companyId, groupId, start, end);
 	}
 
+	@Override
 	public List<BlogsStatsUser> getGroupStatsUsers(
 			long groupId, int start, int end)
 		throws SystemException {
@@ -107,6 +116,7 @@ public class BlogsStatsUserLocalServiceImpl
 			groupId, 0, start, end, new StatsUserLastPostDateComparator());
 	}
 
+	@Override
 	public List<BlogsStatsUser> getGroupStatsUsers(
 			long groupId, int start, int end, OrderByComparator obc)
 		throws SystemException {
@@ -115,10 +125,12 @@ public class BlogsStatsUserLocalServiceImpl
 			groupId, 0, start, end, obc);
 	}
 
+	@Override
 	public int getGroupStatsUsersCount(long groupId) throws SystemException {
 		return blogsStatsUserPersistence.countByG_NotE(groupId, 0);
 	}
 
+	@Override
 	public List<BlogsStatsUser> getOrganizationStatsUsers(
 			long organizationId, int start, int end)
 		throws SystemException {
@@ -127,6 +139,7 @@ public class BlogsStatsUserLocalServiceImpl
 			organizationId, start, end, new StatsUserLastPostDateComparator());
 	}
 
+	@Override
 	public List<BlogsStatsUser> getOrganizationStatsUsers(
 			long organizationId, int start, int end, OrderByComparator obc)
 		throws SystemException {
@@ -135,12 +148,14 @@ public class BlogsStatsUserLocalServiceImpl
 			organizationId, start, end, obc);
 	}
 
+	@Override
 	public int getOrganizationStatsUsersCount(long organizationId)
 		throws SystemException {
 
 		return blogsStatsUserFinder.countByOrganizationId(organizationId);
 	}
 
+	@Override
 	public BlogsStatsUser getStatsUser(long groupId, long userId)
 		throws PortalException, SystemException {
 
@@ -164,12 +179,14 @@ public class BlogsStatsUserLocalServiceImpl
 		return statsUser;
 	}
 
+	@Override
 	public void updateStatsUser(long groupId, long userId)
 		throws PortalException, SystemException {
 
 		updateStatsUser(groupId, userId, null);
 	}
 
+	@Override
 	public void updateStatsUser(long groupId, long userId, Date displayDate)
 		throws PortalException, SystemException {
 

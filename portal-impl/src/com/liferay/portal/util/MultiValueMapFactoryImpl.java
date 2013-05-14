@@ -29,6 +29,7 @@ import java.io.Serializable;
 @DoPrivileged
 public class MultiValueMapFactoryImpl implements MultiValueMapFactory {
 
+	@Override
 	public MultiValueMap<?, ?> getMultiValueMap(int type) {
 		if (type == MultiValueMapFactory.FILE) {
 			return new FileMultiValueMap<Serializable, Serializable>();
@@ -38,6 +39,7 @@ public class MultiValueMapFactoryImpl implements MultiValueMapFactory {
 		}
 	}
 
+	@Override
 	public MultiValueMap<?, ?> getMultiValueMap(String propertyKey) {
 		int type = GetterUtil.getInteger(PropsUtil.get(propertyKey));
 

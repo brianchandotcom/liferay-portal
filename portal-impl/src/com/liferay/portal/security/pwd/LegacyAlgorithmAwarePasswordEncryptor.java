@@ -30,6 +30,7 @@ import com.liferay.portal.util.PropsValues;
 public class LegacyAlgorithmAwarePasswordEncryptor
 	extends BasePasswordEncryptor {
 
+	@Override
 	public String[] getSupportedAlgorithmTypes() {
 		return _parentPasswordEncryptor.getSupportedAlgorithmTypes();
 	}

@@ -82,6 +82,7 @@ public class TemplateResourceCacheListener
 		}
 	}
 
+	@Override
 	public void notifyRemoveAll(
 			PortalCache<String, TemplateResource> portalCache)
 		throws PortalCacheException {

@@ -62,6 +62,7 @@ public class SocialActivityCounterFinderImpl
 	public static final String FIND_U_BY_G_C_N_S_E =
 		SocialActivityCounterFinder.class.getName() + ".findU_ByG_C_N_S_E";
 
+	@Override
 	public int countU_ByG_N(long groupId, String[] names)
 		throws SystemException {
 
@@ -108,6 +109,7 @@ public class SocialActivityCounterFinderImpl
 		}
 	}
 
+	@Override
 	public List<SocialActivityCounter> findAC_ByG_N_S_E_1(
 			long groupId, String name, int startPeriod, int endPeriod,
 			int periodLength)
@@ -194,6 +196,7 @@ public class SocialActivityCounterFinderImpl
 		return activityCounters;
 	}
 
+	@Override
 	public List<SocialActivityCounter> findAC_ByG_N_S_E_2(
 			long groupId, String counterName, int startPeriod, int endPeriod,
 			int periodLength)
@@ -246,6 +249,7 @@ public class SocialActivityCounterFinderImpl
 		}
 	}
 
+	@Override
 	public List<SocialActivityCounter> findAC_By_G_C_C_N_S_E(
 			long groupId, List<Long> userIds, String[] names, int start,
 			int end)
@@ -289,6 +293,7 @@ public class SocialActivityCounterFinderImpl
 		}
 	}
 
+	@Override
 	public List<Long> findU_ByG_N(
 			long groupId, String[] names, int start, int end)
 		throws SystemException {

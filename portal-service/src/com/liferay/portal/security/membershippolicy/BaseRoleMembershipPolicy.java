@@ -26,6 +26,7 @@ import com.liferay.portal.service.persistence.RoleActionableDynamicQuery;
  */
 public abstract class BaseRoleMembershipPolicy implements RoleMembershipPolicy {
 
+	@Override
 	@SuppressWarnings("unused")
 	public boolean isRoleAllowed(long userId, long roleId)
 		throws PortalException, SystemException {
@@ -40,6 +41,7 @@ public abstract class BaseRoleMembershipPolicy implements RoleMembershipPolicy {
 		return true;
 	}
 
+	@Override
 	@SuppressWarnings("unused")
 	public boolean isRoleRequired(long userId, long roleId)
 		throws PortalException, SystemException {
@@ -54,6 +56,7 @@ public abstract class BaseRoleMembershipPolicy implements RoleMembershipPolicy {
 		return false;
 	}
 
+	@Override
 	public void verifyPolicy() throws PortalException, SystemException {
 		ActionableDynamicQuery actionableDynamicQuery =
 			new RoleActionableDynamicQuery() {
@@ -72,6 +75,7 @@ public abstract class BaseRoleMembershipPolicy implements RoleMembershipPolicy {
 		actionableDynamicQuery.performActions();
 	}
 
+	@Override
 	public void verifyPolicy(Role role)
 		throws PortalException, SystemException {
 

@@ -30,6 +30,7 @@ public class ScrollableResultsImpl implements ScrollableResults {
 		_last = _results.size();
 	}
 
+	@Override
 	public boolean first() throws ORMException {
 		if (_results.isEmpty()) {
 			return false;
@@ -40,6 +41,7 @@ public class ScrollableResultsImpl implements ScrollableResults {
 		return true;
 	}
 
+	@Override
 	public Object[] get() throws ORMException {
 		Object[] result = null;
 
@@ -55,6 +57,7 @@ public class ScrollableResultsImpl implements ScrollableResults {
 		return result;
 	}
 
+	@Override
 	public Object get(int i) throws ORMException {
 		Object result = null;
 
@@ -70,6 +73,7 @@ public class ScrollableResultsImpl implements ScrollableResults {
 		return result;
 	}
 
+	@Override
 	public boolean last() throws ORMException {
 		if (_results.isEmpty()) {
 			return false;
@@ -80,6 +84,7 @@ public class ScrollableResultsImpl implements ScrollableResults {
 		return true;
 	}
 
+	@Override
 	public boolean next() throws ORMException {
 		if (_current == _last) {
 			return false;
@@ -90,6 +95,7 @@ public class ScrollableResultsImpl implements ScrollableResults {
 		return true;
 	}
 
+	@Override
 	public boolean previous() throws ORMException {
 		if (_current == 1) {
 			return false;
@@ -100,6 +106,7 @@ public class ScrollableResultsImpl implements ScrollableResults {
 		return true;
 	}
 
+	@Override
 	public boolean scroll(int i) throws ORMException {
 		if (((_current + i) < 1) || ((_current + i) > _last)) {
 			return false;

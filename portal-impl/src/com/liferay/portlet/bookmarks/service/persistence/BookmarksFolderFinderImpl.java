@@ -71,6 +71,7 @@ public class BookmarksFolderFinderImpl
 	public static final String FIND_E_BY_G_F_S =
 		BookmarksFolderFinder.class.getName() + ".findE_ByG_F_S";
 
+	@Override
 	public int countF_E_ByG_F(
 			long groupId, long folderId, QueryDefinition queryDefinition)
 		throws SystemException {
@@ -78,6 +79,7 @@ public class BookmarksFolderFinderImpl
 		return doCountF_E_ByG_F(groupId, folderId, queryDefinition, false);
 	}
 
+	@Override
 	public int filterCountF_E_ByG_F(
 			long groupId, long folderId, QueryDefinition queryDefinition)
 		throws SystemException {
@@ -85,6 +87,7 @@ public class BookmarksFolderFinderImpl
 		return doCountF_E_ByG_F(groupId, folderId, queryDefinition, true);
 	}
 
+	@Override
 	public List<Object> filterFindBF_E_ByG_F(
 			long groupId, long folderId, QueryDefinition queryDefinition)
 		throws SystemException {
@@ -92,6 +95,7 @@ public class BookmarksFolderFinderImpl
 		return doFindF_E_ByG_F(groupId, folderId, queryDefinition, true);
 	}
 
+	@Override
 	public List<BookmarksFolder> findByNoAssets() throws SystemException {
 		Session session = null;
 
@@ -114,6 +118,7 @@ public class BookmarksFolderFinderImpl
 		}
 	}
 
+	@Override
 	public List<Object> findF_E_ByG_F(
 			long groupId, long folderId, QueryDefinition queryDefinition)
 		throws SystemException {

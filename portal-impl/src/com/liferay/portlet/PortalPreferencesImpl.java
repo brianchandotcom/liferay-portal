@@ -83,6 +83,7 @@ public class PortalPreferencesImpl
 		}
 	}
 
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
@@ -92,16 +93,19 @@ public class PortalPreferencesImpl
 		return getValue(namespace, key, null);
 	}
 
+	@Override
 	public String getValue(String namespace, String key, String defaultValue) {
 		key = _encodeKey(namespace, key);
 
 		return super.getValue(key, defaultValue);
 	}
 
+	@Override
 	public String[] getValues(String namespace, String key) {
 		return getValues(namespace, key, null);
 	}
 
+	@Override
 	public String[] getValues(
 		String namespace, String key, String[] defaultValue) {
 
@@ -122,6 +126,7 @@ public class PortalPreferencesImpl
 		return hashCode.toHashCode();
 	}
 
+	@Override
 	public boolean isSignedIn() {
 		return _signedIn;
 	}
@@ -137,6 +142,7 @@ public class PortalPreferencesImpl
 		modifiedPreferences.remove(key);
 	}
 
+	@Override
 	public void resetValues(String namespace) {
 		try {
 			Map<String, Preference> preferences = getPreferences();
@@ -156,14 +162,17 @@ public class PortalPreferencesImpl
 		}
 	}
 
+	@Override
 	public void setSignedIn(boolean signedIn) {
 		_signedIn = signedIn;
 	}
 
+	@Override
 	public void setUserId(long userId) {
 		_userId = userId;
 	}
 
+	@Override
 	public void setValue(String namespace, String key, String value) {
 		if (Validator.isNull(key) || key.equals(_RANDOM_KEY)) {
 			return;
@@ -188,6 +197,7 @@ public class PortalPreferencesImpl
 		}
 	}
 
+	@Override
 	public void setValues(String namespace, String key, String[] values) {
 		if (Validator.isNull(key) || key.equals(_RANDOM_KEY)) {
 			return;

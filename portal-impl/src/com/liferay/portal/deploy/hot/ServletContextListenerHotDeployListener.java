@@ -29,6 +29,7 @@ import javax.servlet.ServletContext;
 public class ServletContextListenerHotDeployListener
 	extends BaseHotDeployListener {
 
+	@Override
 	public void invokeDeploy(HotDeployEvent hotDeployEvent)
 		throws HotDeployException {
 
@@ -42,6 +43,7 @@ public class ServletContextListenerHotDeployListener
 		}
 	}
 
+	@Override
 	public void invokeUndeploy(HotDeployEvent hotDeployEvent)
 		throws HotDeployException {
 

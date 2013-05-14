@@ -80,12 +80,14 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 		}
 	}
 
+	@Override
 	public void deleteTrashEntry(long classPK)
 		throws PortalException, SystemException {
 
 		DLFolderLocalServiceUtil.deleteFolder(classPK, false);
 	}
 
+	@Override
 	public String getClassName() {
 		return DLFolder.class.getName();
 	}
@@ -173,6 +175,7 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 		return true;
 	}
 
+	@Override
 	public boolean isInTrash(long classPK)
 		throws PortalException, SystemException {
 
@@ -237,6 +240,7 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 			serviceContext);
 	}
 
+	@Override
 	public void restoreTrashEntry(long userId, long classPK)
 		throws PortalException, SystemException {
 

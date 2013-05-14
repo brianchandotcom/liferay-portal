@@ -26,14 +26,17 @@ import java.util.Set;
 public class DefaultAuthenticatedUserUUIDStoreImpl
 	implements AuthenticatedUserUUIDStore {
 
+	@Override
 	public boolean exists(String userUUID) {
 		return _userUUIDStore.contains(userUUID);
 	}
 
+	@Override
 	public boolean register(String userUUID) {
 		return _userUUIDStore.add(userUUID);
 	}
 
+	@Override
 	public boolean unregister(String userUUID) {
 		return _userUUIDStore.remove(userUUID);
 	}

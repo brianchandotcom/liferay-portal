@@ -40,6 +40,7 @@ public class SocialRequestInterpreterImpl implements SocialRequestInterpreter {
 		}
 	}
 
+	@Override
 	public String[] getClassNames() {
 		return _requestInterpreter.getClassNames();
 	}
@@ -57,18 +58,21 @@ public class SocialRequestInterpreterImpl implements SocialRequestInterpreter {
 		}
 	}
 
+	@Override
 	public SocialRequestFeedEntry interpret(
 		SocialRequest request, ThemeDisplay themeDisplay) {
 
 		return _requestInterpreter.interpret(request, themeDisplay);
 	}
 
+	@Override
 	public boolean processConfirmation(
 		SocialRequest request, ThemeDisplay themeDisplay) {
 
 		return _requestInterpreter.processConfirmation(request, themeDisplay);
 	}
 
+	@Override
 	public boolean processRejection(
 		SocialRequest request, ThemeDisplay themeDisplay) {
 

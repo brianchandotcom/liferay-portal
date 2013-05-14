@@ -30,6 +30,7 @@ public class PHPPortletExplodedTomcatDeployer
 		super();
 	}
 
+	@Override
 	public void explodedTomcatDeploy(
 			File contextFile, File webAppDir, PluginPackage pluginPackage)
 		throws AutoDeployException {

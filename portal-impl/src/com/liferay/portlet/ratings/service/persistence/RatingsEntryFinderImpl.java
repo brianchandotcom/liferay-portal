@@ -48,6 +48,7 @@ public class RatingsEntryFinderImpl
 			Long.class.getName(), Long.class.getName(), List.class.getName()
 		});
 
+	@Override
 	public List<RatingsEntry> findByU_C_C(
 			long userId, long classNameId, List<Long> classPKs)
 		throws SystemException {

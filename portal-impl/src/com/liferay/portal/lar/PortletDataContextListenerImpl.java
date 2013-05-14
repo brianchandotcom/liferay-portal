@@ -29,12 +29,14 @@ public class PortletDataContextListenerImpl
 		PortletDataContext portletDataContext) {
 	}
 
+	@Override
 	public void onAddZipEntry(String path) {
 		if (_log.isInfoEnabled()) {
 			_log.info("Export " + path);
 		}
 	}
 
+	@Override
 	public void onGetZipEntry(String path) {
 		if (_log.isInfoEnabled()) {
 			_log.info("Import " + path);

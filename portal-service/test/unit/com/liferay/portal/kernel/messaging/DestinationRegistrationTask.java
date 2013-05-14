@@ -33,6 +33,7 @@ public class DestinationRegistrationTask implements Callable<Object> {
 		_register = register;
 	}
 
+	@Override
 	public Object call() {
 		Random random = new Random();
 

@@ -27,6 +27,7 @@ public class TeamImpl extends TeamBaseImpl {
 	public TeamImpl() {
 	}
 
+	@Override
 	public Role getRole() throws PortalException, SystemException {
 		return RoleLocalServiceUtil.getTeamRole(getCompanyId(), getTeamId());
 	}

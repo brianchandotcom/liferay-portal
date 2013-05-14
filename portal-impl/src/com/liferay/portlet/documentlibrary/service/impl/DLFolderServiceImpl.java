@@ -40,6 +40,7 @@ import java.util.List;
  */
 public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 
+	@Override
 	public DLFolder addFolder(
 			long groupId, long repositoryId, boolean mountPoint,
 			long parentFolderId, String name, String description,
@@ -55,12 +56,14 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			name, description, false, serviceContext);
 	}
 
+	@Override
 	public void deleteFolder(long folderId)
 		throws PortalException, SystemException {
 
 		deleteFolder(folderId, true);
 	}
 
+	@Override
 	public void deleteFolder(long folderId, boolean includeTrashedEntries)
 		throws PortalException, SystemException {
 
@@ -73,6 +76,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			getUserId(), folderId, includeTrashedEntries);
 	}
 
+	@Override
 	public void deleteFolder(long groupId, long parentFolderId, String name)
 		throws PortalException, SystemException {
 
@@ -81,6 +85,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 		deleteFolder(dlFolder.getFolderId());
 	}
 
+	@Override
 	public List<Object> getFileEntriesAndFileShortcuts(
 			long groupId, long folderId, int status, int start, int end)
 		throws PortalException, SystemException {
@@ -95,6 +100,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			groupId, folderId, queryDefinition);
 	}
 
+	@Override
 	public int getFileEntriesAndFileShortcutsCount(
 			long groupId, long folderId, int status)
 		throws SystemException {
@@ -105,6 +111,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			groupId, folderId, queryDefinition);
 	}
 
+	@Override
 	public int getFileEntriesAndFileShortcutsCount(
 			long groupId, long folderId, int status, String[] mimeTypes)
 		throws SystemException {
@@ -115,6 +122,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			groupId, folderId, mimeTypes, queryDefinition);
 	}
 
+	@Override
 	public DLFolder getFolder(long folderId)
 		throws PortalException, SystemException {
 
@@ -126,6 +134,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 		return dlFolder;
 	}
 
+	@Override
 	public DLFolder getFolder(long groupId, long parentFolderId, String name)
 		throws PortalException, SystemException {
 
@@ -138,6 +147,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 		return dlFolder;
 	}
 
+	@Override
 	public List<Long> getFolderIds(long groupId, long folderId)
 		throws PortalException, SystemException {
 
@@ -151,6 +161,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 		return folderIds;
 	}
 
+	@Override
 	public List<DLFolder> getFolders(
 			long groupId, long parentFolderId, int status,
 			boolean includeMountfolders, int start, int end,
@@ -170,6 +181,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public List<DLFolder> getFolders(
 			long groupId, long parentFolderId, int start, int end,
 			OrderByComparator obc)
@@ -180,6 +192,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			start, end, obc);
 	}
 
+	@Override
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 			long groupId, long folderId, int status,
 			boolean includeMountFolders, int start, int end,
@@ -196,6 +209,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			groupId, folderId, null, includeMountFolders, queryDefinition);
 	}
 
+	@Override
 	public int getFoldersAndFileEntriesAndFileShortcuts(
 			long groupId, long folderId, int status, String[] mimeTypes,
 			boolean includeMountFolders)
@@ -210,6 +224,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			groupId, folderId, mimeTypes, includeMountFolders, queryDefinition);
 	}
 
+	@Override
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 			long groupId, long folderId, int status, String[] mimeTypes,
 			boolean includeMountFolders, int start, int end,
@@ -226,6 +241,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			groupId, folderId, mimeTypes, includeMountFolders, queryDefinition);
 	}
 
+	@Override
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
 			long groupId, long folderId, int status,
 			boolean includeMountFolders)
@@ -237,6 +253,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			groupId, folderId, null, includeMountFolders, queryDefinition);
 	}
 
+	@Override
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
 			long groupId, long folderId, int status, String[] mimeTypes,
 			boolean includeMountFolders)
@@ -248,6 +265,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			groupId, folderId, mimeTypes, includeMountFolders, queryDefinition);
 	}
 
+	@Override
 	public int getFoldersCount(long groupId, long parentFolderId)
 		throws SystemException {
 
@@ -255,6 +273,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			groupId, parentFolderId, WorkflowConstants.STATUS_APPROVED, true);
 	}
 
+	@Override
 	public int getFoldersCount(
 			long groupId, long parentFolderId, int status,
 			boolean includeMountfolders)
@@ -270,6 +289,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public List<DLFolder> getMountFolders(
 			long groupId, long parentFolderId, int start, int end,
 			OrderByComparator obc)
@@ -282,6 +302,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			groupId, true, parentFolderId, false, start, end, obc);
 	}
 
+	@Override
 	public int getMountFoldersCount(long groupId, long parentFolderId)
 		throws SystemException {
 
@@ -289,6 +310,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			groupId, true, parentFolderId, false);
 	}
 
+	@Override
 	public void getSubfolderIds(
 			List<Long> folderIds, long groupId, long folderId)
 		throws PortalException, SystemException {
@@ -311,6 +333,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public List<Long> getSubfolderIds(
 			long groupId, long folderId, boolean recurse)
 		throws PortalException, SystemException {
@@ -322,6 +345,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 		return folderIds;
 	}
 
+	@Override
 	public boolean hasFolderLock(long folderId)
 		throws PortalException, SystemException {
 
@@ -329,6 +353,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			getUserId(), DLFolder.class.getName(), folderId);
 	}
 
+	@Override
 	public boolean hasInheritableLock(long folderId)
 		throws PortalException, SystemException {
 
@@ -348,10 +373,12 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 		return inheritable;
 	}
 
+	@Override
 	public boolean isFolderLocked(long folderId) throws SystemException {
 		return lockLocalService.isLocked(DLFolder.class.getName(), folderId);
 	}
 
+	@Override
 	public Lock lockFolder(long folderId)
 		throws PortalException, SystemException {
 
@@ -359,6 +386,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			folderId, null, false, DLFolderImpl.LOCK_EXPIRATION_TIME);
 	}
 
+	@Override
 	public Lock lockFolder(
 			long folderId, String owner, boolean inheritable,
 			long expirationTime)
@@ -373,6 +401,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			getUserId(), folderId, owner, inheritable, expirationTime);
 	}
 
+	@Override
 	public DLFolder moveFolder(
 			long folderId, long parentFolderId, ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -392,6 +421,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			getUserId(), folderId, parentFolderId, serviceContext);
 	}
 
+	@Override
 	public Lock refreshFolderLock(
 			String lockUuid, long companyId, long expirationTime)
 		throws PortalException, SystemException {
@@ -399,6 +429,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 		return lockLocalService.refresh(lockUuid, companyId, expirationTime);
 	}
 
+	@Override
 	public void unlockFolder(
 			long groupId, long parentFolderId, String name, String lockUuid)
 		throws PortalException, SystemException {
@@ -408,6 +439,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 		unlockFolder(dlFolder.getFolderId(), lockUuid);
 	}
 
+	@Override
 	public void unlockFolder(long folderId, String lockUuid)
 		throws PortalException, SystemException {
 
@@ -423,6 +455,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 		dlFolderLocalService.unlockFolder(folderId, lockUuid);
 	}
 
+	@Override
 	public DLFolder updateFolder(
 			long folderId, String name, String description,
 			long defaultFileEntryTypeId, List<Long> fileEntryTypeIds,
@@ -438,6 +471,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			fileEntryTypeIds, overrideFileEntryTypes, serviceContext);
 	}
 
+	@Override
 	public boolean verifyInheritableLock(long folderId, String lockUuid)
 		throws PortalException, SystemException {
 

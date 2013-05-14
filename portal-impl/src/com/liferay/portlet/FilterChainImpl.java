@@ -56,6 +56,7 @@ public class FilterChainImpl implements FilterChain {
 		}
 	}
 
+	@Override
 	public void doFilter(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws IOException, PortletException {
@@ -71,6 +72,7 @@ public class FilterChainImpl implements FilterChain {
 		}
 	}
 
+	@Override
 	public void doFilter(EventRequest eventRequest, EventResponse eventResponse)
 		throws IOException, PortletException {
 
@@ -86,6 +88,7 @@ public class FilterChainImpl implements FilterChain {
 		}
 	}
 
+	@Override
 	public void doFilter(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
@@ -101,6 +104,7 @@ public class FilterChainImpl implements FilterChain {
 		}
 	}
 
+	@Override
 	public void doFilter(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException, PortletException {

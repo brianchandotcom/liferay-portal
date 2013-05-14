@@ -38,10 +38,12 @@ import java.util.List;
  */
 public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 
+	@Override
 	public void add(Query query, BooleanClauseOccur booleanClauseOccur) {
 		_booleanClauses.add(new BooleanClauseImpl(query, booleanClauseOccur));
 	}
 
+	@Override
 	public void add(Query query, String occur) {
 		BooleanClauseOccur booleanClauseOccur = new BooleanClauseOccurImpl(
 			occur);
@@ -49,46 +51,57 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 		add(query, booleanClauseOccur);
 	}
 
+	@Override
 	public void addExactTerm(String field, boolean value) {
 		addExactTerm(field, String.valueOf(value));
 	}
 
+	@Override
 	public void addExactTerm(String field, Boolean value) {
 		addExactTerm(field, String.valueOf(value));
 	}
 
+	@Override
 	public void addExactTerm(String field, double value) {
 		addExactTerm(field, String.valueOf(value));
 	}
 
+	@Override
 	public void addExactTerm(String field, Double value) {
 		addExactTerm(field, String.valueOf(value));
 	}
 
+	@Override
 	public void addExactTerm(String field, int value) {
 		addExactTerm(field, String.valueOf(value));
 	}
 
+	@Override
 	public void addExactTerm(String field, Integer value) {
 		addExactTerm(field, String.valueOf(value));
 	}
 
+	@Override
 	public void addExactTerm(String field, long value) {
 		addExactTerm(field, String.valueOf(value));
 	}
 
+	@Override
 	public void addExactTerm(String field, Long value) {
 		addExactTerm(field, String.valueOf(value));
 	}
 
+	@Override
 	public void addExactTerm(String field, short value) {
 		addExactTerm(field, String.valueOf(value));
 	}
 
+	@Override
 	public void addExactTerm(String field, Short value) {
 		addExactTerm(field, String.valueOf(value));
 	}
 
+	@Override
 	public void addExactTerm(String field, String value) {
 		TermQueryImpl termQuery = new TermQueryImpl(
 			new QueryTermImpl(field, String.valueOf(value)));
@@ -96,6 +109,7 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 		add(termQuery, BooleanClauseOccur.SHOULD);
 	}
 
+	@Override
 	public void addNumericRangeTerm(
 		String field, int startValue, int endValue) {
 
@@ -104,12 +118,14 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 		}
 	}
 
+	@Override
 	public void addNumericRangeTerm(
 		String field, Integer startValue, Integer endValue) {
 
 		addNumericRangeTerm(field, startValue.intValue(), endValue.intValue());
 	}
 
+	@Override
 	public void addNumericRangeTerm(
 		String field, long startValue, long endValue) {
 
@@ -118,6 +134,7 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 		}
 	}
 
+	@Override
 	public void addNumericRangeTerm(
 		String field, Long startValue, Long endValue) {
 
@@ -125,6 +142,7 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 			field, startValue.longValue(), endValue.longValue());
 	}
 
+	@Override
 	public void addNumericRangeTerm(
 		String field, short startValue, short endValue) {
 
@@ -133,6 +151,7 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 		}
 	}
 
+	@Override
 	public void addNumericRangeTerm(
 		String field, Short startValue, Short endValue) {
 
@@ -140,6 +159,7 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 			field, startValue.shortValue(), endValue.shortValue());
 	}
 
+	@Override
 	public void addRangeTerm(String field, int startValue, int endValue) {
 		TermRangeQuery termRangeQuery = new TermRangeQueryImpl(
 			field, String.valueOf(startValue), String.valueOf(endValue), true,
@@ -148,12 +168,14 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 		add(termRangeQuery, BooleanClauseOccur.SHOULD);
 	}
 
+	@Override
 	public void addRangeTerm(
 		String field, Integer startValue, Integer endValue) {
 
 		addRangeTerm(field, startValue.intValue(), endValue.intValue());
 	}
 
+	@Override
 	public void addRangeTerm(String field, long startValue, long endValue) {
 		TermRangeQuery termRangeQuery = new TermRangeQueryImpl(
 			field, String.valueOf(startValue), String.valueOf(endValue), true,
@@ -162,10 +184,12 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 		add(termRangeQuery, BooleanClauseOccur.SHOULD);
 	}
 
+	@Override
 	public void addRangeTerm(String field, Long startValue, Long endValue) {
 		addRangeTerm(field, startValue.longValue(), endValue.longValue());
 	}
 
+	@Override
 	public void addRangeTerm(String field, short startValue, short endValue) {
 		TermRangeQuery termRangeQuery = new TermRangeQueryImpl(
 			field, String.valueOf(startValue), String.valueOf(endValue), true,
@@ -174,10 +198,12 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 		add(termRangeQuery, BooleanClauseOccur.SHOULD);
 	}
 
+	@Override
 	public void addRangeTerm(String field, Short startValue, Short endValue) {
 		addRangeTerm(field, startValue.shortValue(), endValue.shortValue());
 	}
 
+	@Override
 	public void addRangeTerm(String field, String startValue, String endValue) {
 		TermRangeQuery termRangeQuery = new TermRangeQueryImpl(
 			field, startValue, endValue, true, true);
@@ -185,50 +211,62 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 		add(termRangeQuery, BooleanClauseOccur.SHOULD);
 	}
 
+	@Override
 	public void addRequiredTerm(String field, boolean value) {
 		addRequiredTerm(field, String.valueOf(value), false);
 	}
 
+	@Override
 	public void addRequiredTerm(String field, Boolean value) {
 		addRequiredTerm(field, String.valueOf(value), false);
 	}
 
+	@Override
 	public void addRequiredTerm(String field, double value) {
 		addRequiredTerm(field, String.valueOf(value), false);
 	}
 
+	@Override
 	public void addRequiredTerm(String field, Double value) {
 		addRequiredTerm(field, String.valueOf(value), false);
 	}
 
+	@Override
 	public void addRequiredTerm(String field, int value) {
 		addRequiredTerm(field, String.valueOf(value), false);
 	}
 
+	@Override
 	public void addRequiredTerm(String field, Integer value) {
 		addRequiredTerm(field, String.valueOf(value), false);
 	}
 
+	@Override
 	public void addRequiredTerm(String field, long value) {
 		addRequiredTerm(field, String.valueOf(value), false);
 	}
 
+	@Override
 	public void addRequiredTerm(String field, Long value) {
 		addRequiredTerm(field, String.valueOf(value), false);
 	}
 
+	@Override
 	public void addRequiredTerm(String field, short value) {
 		addRequiredTerm(field, String.valueOf(value), false);
 	}
 
+	@Override
 	public void addRequiredTerm(String field, Short value) {
 		addRequiredTerm(field, String.valueOf(value), false);
 	}
 
+	@Override
 	public void addRequiredTerm(String field, String value) {
 		addRequiredTerm(field, value, false);
 	}
 
+	@Override
 	public void addRequiredTerm(String field, String value, boolean like) {
 		addRequiredTerm(field, value, like, false);
 	}
@@ -278,14 +316,17 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 		add(booleanQuery, BooleanClauseOccur.MUST);
 	}
 
+	@Override
 	public void addTerm(String field, long value) {
 		addTerm(field, String.valueOf(value), false);
 	}
 
+	@Override
 	public void addTerm(String field, String value) {
 		addTerm(field, value, false);
 	}
 
+	@Override
 	public void addTerm(String field, String value, boolean like) {
 		addTerm(field, value, like, BooleanClauseOccur.SHOULD);
 	}
@@ -310,6 +351,7 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 		}
 	}
 
+	@Override
 	public void addTerm(
 		String field, String value, boolean like,
 		BooleanClauseOccur booleanClauseOccur) {
@@ -328,6 +370,7 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 		add(query, booleanClauseOccur);
 	}
 
+	@Override
 	public List<BooleanClause> clauses() {
 		return Collections.unmodifiableList(_booleanClauses);
 	}
@@ -337,6 +380,7 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 		return this;
 	}
 
+	@Override
 	public boolean hasClauses() {
 		return !_booleanClauses.isEmpty();
 	}

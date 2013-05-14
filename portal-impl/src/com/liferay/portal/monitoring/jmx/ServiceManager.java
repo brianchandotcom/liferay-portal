@@ -24,10 +24,12 @@ import java.util.Set;
  */
 public class ServiceManager implements ServiceManagerMBean {
 
+	@Override
 	public void addMonitoredClass(String className) {
 		_serviceMonitorAdvice.addMonitoredClass(className);
 	}
 
+	@Override
 	public void addMonitoredMethod(
 		String className, String methodName, String[] parameterTypes) {
 
@@ -35,6 +37,7 @@ public class ServiceManager implements ServiceManagerMBean {
 			className, methodName, parameterTypes);
 	}
 
+	@Override
 	public long getErrorCount(
 		String className, String methodName, String[] parameterTypes) {
 
@@ -42,6 +45,7 @@ public class ServiceManager implements ServiceManagerMBean {
 			className, methodName, parameterTypes);
 	}
 
+	@Override
 	public long getMaxTime(
 		String className, String methodName, String[] parameterTypes) {
 
@@ -49,6 +53,7 @@ public class ServiceManager implements ServiceManagerMBean {
 			className, methodName, parameterTypes);
 	}
 
+	@Override
 	public long getMinTime(
 		String className, String methodName, String[] parameterTypes) {
 
@@ -56,14 +61,17 @@ public class ServiceManager implements ServiceManagerMBean {
 			className, methodName, parameterTypes);
 	}
 
+	@Override
 	public Set<String> getMonitoredClasses() {
 		return _serviceMonitorAdvice.getMonitoredClasses();
 	}
 
+	@Override
 	public Set<MethodSignature> getMonitoredMethods() {
 		return _serviceMonitorAdvice.getMonitoredMethods();
 	}
 
+	@Override
 	public long getRequestCount(
 		String className, String methodName, String[] parameterTypes) {
 
@@ -71,18 +79,22 @@ public class ServiceManager implements ServiceManagerMBean {
 			className, methodName, parameterTypes);
 	}
 
+	@Override
 	public boolean isActive() {
 		return _serviceMonitorAdvice.isActive();
 	}
 
+	@Override
 	public boolean isPermissiveMode() {
 		return _serviceMonitorAdvice.isPermissiveMode();
 	}
 
+	@Override
 	public void setActive(boolean active) {
 		_serviceMonitorAdvice.setActive(active);
 	}
 
+	@Override
 	public void setPermissiveMode(boolean permissiveMode) {
 		_serviceMonitorAdvice.setPermissiveMode(permissiveMode);
 	}

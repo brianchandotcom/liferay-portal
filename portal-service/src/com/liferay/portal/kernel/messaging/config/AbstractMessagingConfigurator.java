@@ -93,6 +93,7 @@ public abstract class AbstractMessagingConfigurator
 		}
 	}
 
+	@Override
 	public void destroy() {
 		MessageBus messageBus = getMessageBus();
 
@@ -139,10 +140,12 @@ public abstract class AbstractMessagingConfigurator
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #afterPropertiesSet}
 	 */
+	@Override
 	public void init() {
 		afterPropertiesSet();
 	}
 
+	@Override
 	public void setDestinations(List<Destination> destinations) {
 		for (Destination destination : destinations) {
 			try {
@@ -160,12 +163,14 @@ public abstract class AbstractMessagingConfigurator
 		}
 	}
 
+	@Override
 	public void setGlobalDestinationEventListeners(
 		List<DestinationEventListener> globalDestinationEventListeners) {
 
 		_globalDestinationEventListeners = globalDestinationEventListeners;
 	}
 
+	@Override
 	public void setMessageListeners(
 		Map<String, List<MessageListener>> messageListeners) {
 
@@ -207,12 +212,14 @@ public abstract class AbstractMessagingConfigurator
 		}
 	}
 
+	@Override
 	public void setReplacementDestinations(
 		List<Destination> replacementDestinations) {
 
 		_replacementDestinations = replacementDestinations;
 	}
 
+	@Override
 	public void setSpecificDestinationEventListener(
 		Map<String, List<DestinationEventListener>>
 			specificDestinationEventListeners) {

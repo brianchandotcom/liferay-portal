@@ -44,6 +44,7 @@ public class MicrosoftTranslatorImpl implements MicrosoftTranslator {
 		return _microsoftTranslatorAuthenticator;
 	}
 
+	@Override
 	public String translate(
 			String fromLanguageId, String toLanguageId, String fromText)
 		throws MicrosoftTranslatorException {

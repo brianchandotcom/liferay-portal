@@ -26,9 +26,11 @@ import sun.reflect.Reflection;
  */
 public class ReflectChecker extends BaseChecker {
 
+	@Override
 	public void afterPropertiesSet() {
 	}
 
+	@Override
 	public boolean implies(Permission permission) {
 		int stackIndex = getStackIndex(10, 9);
 

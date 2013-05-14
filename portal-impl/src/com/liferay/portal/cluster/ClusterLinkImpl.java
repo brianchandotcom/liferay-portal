@@ -49,6 +49,7 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 		}
 	}
 
+	@Override
 	public List<Address> getLocalTransportAddresses() {
 		if (!isEnabled()) {
 			return Collections.emptyList();
@@ -64,6 +65,7 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 		return addresses;
 	}
 
+	@Override
 	public List<Address> getTransportAddresses(Priority priority) {
 		if (!isEnabled()) {
 			return Collections.emptyList();
@@ -74,6 +76,7 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 		return getAddresses(jChannel);
 	}
 
+	@Override
 	public void sendMulticastMessage(Message message, Priority priority) {
 		if (!isEnabled()) {
 			return;
@@ -89,6 +92,7 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 		}
 	}
 
+	@Override
 	public void sendUnicastMessage(
 		Address address, Message message, Priority priority) {
 

@@ -26,34 +26,42 @@ public class PermissionImpl implements Permission, Serializable {
 	public PermissionImpl() {
 	}
 
+	@Override
 	public String getActionId() {
 		return _actionId;
 	}
 
+	@Override
 	public String getName() {
 		return _name;
 	}
 
+	@Override
 	public String getPrimKey() {
 		return _primKey;
 	}
 
+	@Override
 	public int getScope() {
 		return _scope;
 	}
 
+	@Override
 	public void setActionId(String actionId) {
 		_actionId = actionId;
 	}
 
+	@Override
 	public void setName(String name) {
 		_name = name;
 	}
 
+	@Override
 	public void setPrimKey(String primKey) {
 		_primKey = primKey;
 	}
 
+	@Override
 	public void setScope(int scope) {
 		_scope = scope;
 	}

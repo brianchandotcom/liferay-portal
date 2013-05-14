@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class GetFoldersCommand implements Command {
 
+	@Override
 	public void execute(
 		CommandArgument commandArgument, HttpServletRequest request,
 		HttpServletResponse response) {

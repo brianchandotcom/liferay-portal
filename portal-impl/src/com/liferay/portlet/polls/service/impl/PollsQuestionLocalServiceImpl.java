@@ -42,6 +42,7 @@ import java.util.Map;
 public class PollsQuestionLocalServiceImpl
 	extends PollsQuestionLocalServiceBaseImpl {
 
+	@Override
 	public PollsQuestion addQuestion(
 			long userId, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap, int expirationDateMonth,
@@ -114,6 +115,7 @@ public class PollsQuestionLocalServiceImpl
 		return question;
 	}
 
+	@Override
 	public void addQuestionResources(
 			long questionId, boolean addGroupPermissions,
 			boolean addGuestPermissions)
@@ -126,6 +128,7 @@ public class PollsQuestionLocalServiceImpl
 			question, addGroupPermissions, addGuestPermissions);
 	}
 
+	@Override
 	public void addQuestionResources(
 			long questionId, String[] groupPermissions,
 			String[] guestPermissions)
@@ -137,6 +140,7 @@ public class PollsQuestionLocalServiceImpl
 		addQuestionResources(question, groupPermissions, guestPermissions);
 	}
 
+	@Override
 	public void addQuestionResources(
 			PollsQuestion question, boolean addGroupPermissions,
 			boolean addGuestPermissions)
@@ -149,6 +153,7 @@ public class PollsQuestionLocalServiceImpl
 			addGuestPermissions);
 	}
 
+	@Override
 	public void addQuestionResources(
 			PollsQuestion question, String[] groupPermissions,
 			String[] guestPermissions)
@@ -160,6 +165,7 @@ public class PollsQuestionLocalServiceImpl
 			question.getQuestionId(), groupPermissions, guestPermissions);
 	}
 
+	@Override
 	public void deleteQuestion(long questionId)
 		throws PortalException, SystemException {
 
@@ -169,6 +175,7 @@ public class PollsQuestionLocalServiceImpl
 		deleteQuestion(question);
 	}
 
+	@Override
 	public void deleteQuestion(PollsQuestion question)
 		throws PortalException, SystemException {
 
@@ -191,6 +198,7 @@ public class PollsQuestionLocalServiceImpl
 		pollsVotePersistence.removeByQuestionId(question.getQuestionId());
 	}
 
+	@Override
 	public void deleteQuestions(long groupId)
 		throws PortalException, SystemException {
 
@@ -201,28 +209,33 @@ public class PollsQuestionLocalServiceImpl
 		}
 	}
 
+	@Override
 	public PollsQuestion getQuestion(long questionId)
 		throws PortalException, SystemException {
 
 		return pollsQuestionPersistence.findByPrimaryKey(questionId);
 	}
 
+	@Override
 	public List<PollsQuestion> getQuestions(long groupId)
 		throws SystemException {
 
 		return pollsQuestionPersistence.findByGroupId(groupId);
 	}
 
+	@Override
 	public List<PollsQuestion> getQuestions(long groupId, int start, int end)
 		throws SystemException {
 
 		return pollsQuestionPersistence.findByGroupId(groupId, start, end);
 	}
 
+	@Override
 	public int getQuestionsCount(long groupId) throws SystemException {
 		return pollsQuestionPersistence.countByGroupId(groupId);
 	}
 
+	@Override
 	public PollsQuestion updateQuestion(
 			long userId, long questionId, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap, int expirationDateMonth,

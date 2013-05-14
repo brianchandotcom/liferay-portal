@@ -71,14 +71,17 @@ public class ColorSchemeImpl implements ColorScheme {
 		}
 	}
 
+	@Override
 	public String getColorSchemeId() {
 		return _colorSchemeId;
 	}
 
+	@Override
 	public String getColorSchemeImagesPath() {
 		return _colorSchemeImagesPath;
 	}
 
+	@Override
 	public String getColorSchemeThumbnailPath() {
 
 		// LEP-5270
@@ -103,14 +106,17 @@ public class ColorSchemeImpl implements ColorScheme {
 		return _colorSchemeImagesPath;
 	}
 
+	@Override
 	public String getCssClass() {
 		return _cssClass;
 	}
 
+	@Override
 	public boolean getDefaultCs() {
 		return _defaultCs;
 	}
 
+	@Override
 	public String getName() {
 		if (Validator.isNull(_name)) {
 			return _colorSchemeId;
@@ -120,6 +126,7 @@ public class ColorSchemeImpl implements ColorScheme {
 		}
 	}
 
+	@Override
 	public String getSetting(String key) {
 		//return _settingsProperties.getProperty(key);
 
@@ -133,10 +140,12 @@ public class ColorSchemeImpl implements ColorScheme {
 		}
 	}
 
+	@Override
 	public String getSettings() {
 		return PropertiesUtil.toString(_settingsProperties);
 	}
 
+	@Override
 	public Properties getSettingsProperties() {
 		return _settingsProperties;
 	}
@@ -146,26 +155,32 @@ public class ColorSchemeImpl implements ColorScheme {
 		return _colorSchemeId.hashCode();
 	}
 
+	@Override
 	public boolean isDefaultCs() {
 		return _defaultCs;
 	}
 
+	@Override
 	public void setColorSchemeImagesPath(String colorSchemeImagesPath) {
 		_colorSchemeImagesPath = colorSchemeImagesPath;
 	}
 
+	@Override
 	public void setCssClass(String cssClass) {
 		_cssClass = cssClass;
 	}
 
+	@Override
 	public void setDefaultCs(boolean defaultCs) {
 		_defaultCs = defaultCs;
 	}
 
+	@Override
 	public void setName(String name) {
 		_name = name;
 	}
 
+	@Override
 	public void setSettings(String settings) {
 		_settingsProperties.clear();
 
@@ -178,6 +193,7 @@ public class ColorSchemeImpl implements ColorScheme {
 		}
 	}
 
+	@Override
 	public void setSettingsProperties(Properties settingsProperties) {
 		_settingsProperties = settingsProperties;
 	}

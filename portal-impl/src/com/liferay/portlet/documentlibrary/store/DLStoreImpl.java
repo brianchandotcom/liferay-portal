@@ -62,6 +62,7 @@ import java.io.InputStream;
  */
 public class DLStoreImpl implements DLStore {
 
+	@Override
 	public void addDirectory(long companyId, long repositoryId, String dirName)
 		throws PortalException, SystemException {
 
@@ -72,6 +73,7 @@ public class DLStoreImpl implements DLStore {
 		store.addDirectory(companyId, repositoryId, dirName);
 	}
 
+	@Override
 	public void addFile(
 			long companyId, long repositoryId, String fileName,
 			boolean validateFileExtension, byte[] bytes)
@@ -86,6 +88,7 @@ public class DLStoreImpl implements DLStore {
 		store.addFile(companyId, repositoryId, fileName, bytes);
 	}
 
+	@Override
 	public void addFile(
 			long companyId, long repositoryId, String fileName,
 			boolean validateFileExtension, File file)
@@ -100,6 +103,7 @@ public class DLStoreImpl implements DLStore {
 		store.addFile(companyId, repositoryId, fileName, file);
 	}
 
+	@Override
 	public void addFile(
 			long companyId, long repositoryId, String fileName,
 			boolean validateFileExtension, InputStream is)
@@ -159,6 +163,7 @@ public class DLStoreImpl implements DLStore {
 		}
 	}
 
+	@Override
 	public void addFile(
 			long companyId, long repositoryId, String fileName, byte[] bytes)
 		throws PortalException, SystemException {
@@ -166,6 +171,7 @@ public class DLStoreImpl implements DLStore {
 		addFile(companyId, repositoryId, fileName, true, bytes);
 	}
 
+	@Override
 	public void addFile(
 			long companyId, long repositoryId, String fileName, File file)
 		throws PortalException, SystemException {
@@ -173,6 +179,7 @@ public class DLStoreImpl implements DLStore {
 		addFile(companyId, repositoryId, fileName, true, file);
 	}
 
+	@Override
 	public void addFile(
 			long companyId, long repositoryId, String fileName, InputStream is)
 		throws PortalException, SystemException {
@@ -180,10 +187,12 @@ public class DLStoreImpl implements DLStore {
 		addFile(companyId, repositoryId, fileName, true, is);
 	}
 
+	@Override
 	public void checkRoot(long companyId) throws SystemException {
 		store.checkRoot(companyId);
 	}
 
+	@Override
 	public void copyFileVersion(
 			long companyId, long repositoryId, String fileName,
 			String fromVersionLabel, String toVersionLabel)
@@ -194,6 +203,7 @@ public class DLStoreImpl implements DLStore {
 			toVersionLabel);
 	}
 
+	@Override
 	public void deleteDirectory(
 			long companyId, long repositoryId, String dirName)
 		throws PortalException, SystemException {
@@ -201,6 +211,7 @@ public class DLStoreImpl implements DLStore {
 		store.deleteDirectory(companyId, repositoryId, dirName);
 	}
 
+	@Override
 	public void deleteFile(long companyId, long repositoryId, String fileName)
 		throws PortalException, SystemException {
 
@@ -209,6 +220,7 @@ public class DLStoreImpl implements DLStore {
 		store.deleteFile(companyId, repositoryId, fileName);
 	}
 
+	@Override
 	public void deleteFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
@@ -219,6 +231,7 @@ public class DLStoreImpl implements DLStore {
 		store.deleteFile(companyId, repositoryId, fileName, versionLabel);
 	}
 
+	@Override
 	public File getFile(long companyId, long repositoryId, String fileName)
 		throws PortalException, SystemException {
 
@@ -227,6 +240,7 @@ public class DLStoreImpl implements DLStore {
 		return store.getFile(companyId, repositoryId, fileName);
 	}
 
+	@Override
 	public File getFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
@@ -237,6 +251,7 @@ public class DLStoreImpl implements DLStore {
 		return store.getFile(companyId, repositoryId, fileName, versionLabel);
 	}
 
+	@Override
 	public byte[] getFileAsBytes(
 			long companyId, long repositoryId, String fileName)
 		throws PortalException, SystemException {
@@ -246,6 +261,7 @@ public class DLStoreImpl implements DLStore {
 		return store.getFileAsBytes(companyId, repositoryId, fileName);
 	}
 
+	@Override
 	public byte[] getFileAsBytes(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
@@ -257,6 +273,7 @@ public class DLStoreImpl implements DLStore {
 			companyId, repositoryId, fileName, versionLabel);
 	}
 
+	@Override
 	public InputStream getFileAsStream(
 			long companyId, long repositoryId, String fileName)
 		throws PortalException, SystemException {
@@ -266,6 +283,7 @@ public class DLStoreImpl implements DLStore {
 		return store.getFileAsStream(companyId, repositoryId, fileName);
 	}
 
+	@Override
 	public InputStream getFileAsStream(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
@@ -277,6 +295,7 @@ public class DLStoreImpl implements DLStore {
 			companyId, repositoryId, fileName, versionLabel);
 	}
 
+	@Override
 	public String[] getFileNames(
 			long companyId, long repositoryId, String dirName)
 		throws PortalException, SystemException {
@@ -288,6 +307,7 @@ public class DLStoreImpl implements DLStore {
 		return store.getFileNames(companyId, repositoryId, dirName);
 	}
 
+	@Override
 	public long getFileSize(long companyId, long repositoryId, String fileName)
 		throws PortalException, SystemException {
 
@@ -296,6 +316,7 @@ public class DLStoreImpl implements DLStore {
 		return store.getFileSize(companyId, repositoryId, fileName);
 	}
 
+	@Override
 	public boolean hasDirectory(
 			long companyId, long repositoryId, String dirName)
 		throws PortalException, SystemException {
@@ -307,6 +328,7 @@ public class DLStoreImpl implements DLStore {
 		return store.hasDirectory(companyId, repositoryId, dirName);
 	}
 
+	@Override
 	public boolean hasFile(long companyId, long repositoryId, String fileName)
 		throws PortalException, SystemException {
 
@@ -315,6 +337,7 @@ public class DLStoreImpl implements DLStore {
 		return store.hasFile(companyId, repositoryId, fileName);
 	}
 
+	@Override
 	public boolean hasFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
@@ -325,6 +348,7 @@ public class DLStoreImpl implements DLStore {
 		return store.hasFile(companyId, repositoryId, fileName, versionLabel);
 	}
 
+	@Override
 	public void move(String srcDir, String destDir) throws SystemException {
 		store.move(srcDir, destDir);
 	}
@@ -423,6 +447,7 @@ public class DLStoreImpl implements DLStore {
 		}
 	}
 
+	@Override
 	public void updateFile(
 			long companyId, long repositoryId, long newRepositoryId,
 			String fileName)
@@ -431,6 +456,7 @@ public class DLStoreImpl implements DLStore {
 		store.updateFile(companyId, repositoryId, newRepositoryId, fileName);
 	}
 
+	@Override
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String newFileName)
@@ -439,6 +465,7 @@ public class DLStoreImpl implements DLStore {
 		store.updateFile(companyId, repositoryId, fileName, newFileName);
 	}
 
+	@Override
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String fileExtension, boolean validateFileExtension,
@@ -456,6 +483,7 @@ public class DLStoreImpl implements DLStore {
 		store.updateFile(companyId, repositoryId, fileName, versionLabel, file);
 	}
 
+	@Override
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String fileExtension, boolean validateFileExtension,
@@ -522,6 +550,7 @@ public class DLStoreImpl implements DLStore {
 		}
 	}
 
+	@Override
 	public void updateFileVersion(
 			long companyId, long repositoryId, String fileName,
 			String fromVersionLabel, String toVersionLabel)
@@ -532,6 +561,7 @@ public class DLStoreImpl implements DLStore {
 			toVersionLabel);
 	}
 
+	@Override
 	public void validate(String fileName, boolean validateFileExtension)
 		throws PortalException, SystemException {
 
@@ -561,6 +591,7 @@ public class DLStoreImpl implements DLStore {
 		}
 	}
 
+	@Override
 	public void validate(
 			String fileName, boolean validateFileExtension, byte[] bytes)
 		throws PortalException, SystemException {
@@ -576,6 +607,7 @@ public class DLStoreImpl implements DLStore {
 		}
 	}
 
+	@Override
 	public void validate(
 			String fileName, boolean validateFileExtension, File file)
 		throws PortalException, SystemException {
@@ -591,6 +623,7 @@ public class DLStoreImpl implements DLStore {
 		}
 	}
 
+	@Override
 	public void validate(
 			String fileName, boolean validateFileExtension, InputStream is)
 		throws PortalException, SystemException {
@@ -613,6 +646,7 @@ public class DLStoreImpl implements DLStore {
 		}
 	}
 
+	@Override
 	public void validate(
 			String fileName, String fileExtension, String sourceFileName,
 			boolean validateFileExtension, File file)
@@ -630,6 +664,7 @@ public class DLStoreImpl implements DLStore {
 		}
 	}
 
+	@Override
 	public void validate(
 			String fileName, String fileExtension, String sourceFileName,
 			boolean validateFileExtension, InputStream is)

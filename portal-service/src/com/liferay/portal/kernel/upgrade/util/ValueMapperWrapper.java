@@ -25,10 +25,12 @@ public class ValueMapperWrapper implements ValueMapper {
 		_valueMapper = valueMapper;
 	}
 
+	@Override
 	public void appendException(Object exception) {
 		_valueMapper.appendException(exception);
 	}
 
+	@Override
 	public Object getNewValue(Object oldValue) throws Exception {
 		return _valueMapper.getNewValue(oldValue);
 	}
@@ -37,14 +39,17 @@ public class ValueMapperWrapper implements ValueMapper {
 		return _valueMapper;
 	}
 
+	@Override
 	public Iterator<Object> iterator() throws Exception {
 		return _valueMapper.iterator();
 	}
 
+	@Override
 	public void mapValue(Object oldValue, Object newValue) throws Exception {
 		_valueMapper.mapValue(oldValue, newValue);
 	}
 
+	@Override
 	public int size() throws Exception {
 		return _valueMapper.size();
 	}

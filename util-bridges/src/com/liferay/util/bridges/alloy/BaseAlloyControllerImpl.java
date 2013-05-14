@@ -110,6 +110,7 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 	public static final String TOUCH =
 		BaseAlloyControllerImpl.class.getName() + "#TOUCH#";
 
+	@Override
 	public void afterPropertiesSet() {
 		initClass();
 		initServletVariables();
@@ -121,6 +122,7 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		initScheduler();
 	}
 
+	@Override
 	public void execute() throws Exception {
 		Method method = getMethod(actionPath);
 
@@ -148,26 +150,32 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		}
 	}
 
+	@Override
 	public Portlet getPortlet() {
 		return portlet;
 	}
 
+	@Override
 	public HttpServletRequest getRequest() {
 		return request;
 	}
 
+	@Override
 	public ThemeDisplay getThemeDisplay() {
 		return themeDisplay;
 	}
 
+	@Override
 	public long increment() throws Exception {
 		return CounterLocalServiceUtil.increment();
 	}
 
+	@Override
 	public void setPageContext(PageContext pageContext) {
 		this.pageContext = pageContext;
 	}
 
+	@Override
 	public void updateModel(BaseModel<?> baseModel) throws Exception {
 		BeanPropertiesUtil.setProperties(baseModel, request);
 

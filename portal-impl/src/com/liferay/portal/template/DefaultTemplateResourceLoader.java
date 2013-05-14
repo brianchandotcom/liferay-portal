@@ -90,24 +90,29 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 			cacheListener, CacheListenerScope.ALL);
 	}
 
+	@Override
 	public void clearCache() {
 		_portalCache.removeAll();
 	}
 
+	@Override
 	public void clearCache(String templateId) {
 		_portalCache.remove(templateId);
 	}
 
+	@Override
 	public void destroy() {
 		_portalCache.destroy();
 
 		_templateResourceParsers.clear();
 	}
 
+	@Override
 	public String getName() {
 		return _name;
 	}
 
+	@Override
 	public TemplateResource getTemplateResource(String templateId) {
 		TemplateResource templateResource = _loadFromCache(templateId);
 
@@ -133,6 +138,7 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 		return templateResource;
 	}
 
+	@Override
 	public boolean hasTemplateResource(String templateId) {
 		TemplateResource templateResource = getTemplateResource(templateId);
 

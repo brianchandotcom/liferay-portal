@@ -31,6 +31,7 @@ import java.util.Map;
  */
 public class MDRActionServiceImpl extends MDRActionServiceBaseImpl {
 
+	@Override
 	public MDRAction addAction(
 			long ruleGroupInstanceId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String type,
@@ -45,6 +46,7 @@ public class MDRActionServiceImpl extends MDRActionServiceBaseImpl {
 			serviceContext);
 	}
 
+	@Override
 	public MDRAction addAction(
 			long ruleGroupInstanceId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String type,
@@ -60,6 +62,7 @@ public class MDRActionServiceImpl extends MDRActionServiceBaseImpl {
 			typeSettingsProperties, serviceContext);
 	}
 
+	@Override
 	public void deleteAction(long actionId)
 		throws PortalException, SystemException {
 
@@ -72,6 +75,7 @@ public class MDRActionServiceImpl extends MDRActionServiceBaseImpl {
 		mdrActionLocalService.deleteAction(action);
 	}
 
+	@Override
 	public MDRAction fetchAction(long actionId)
 		throws PortalException, SystemException {
 
@@ -86,6 +90,7 @@ public class MDRActionServiceImpl extends MDRActionServiceBaseImpl {
 		return action;
 	}
 
+	@Override
 	public MDRAction getAction(long actionId)
 		throws PortalException, SystemException {
 
@@ -98,6 +103,7 @@ public class MDRActionServiceImpl extends MDRActionServiceBaseImpl {
 		return action;
 	}
 
+	@Override
 	public MDRAction updateAction(
 			long actionId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String type,
@@ -115,6 +121,7 @@ public class MDRActionServiceImpl extends MDRActionServiceBaseImpl {
 			serviceContext);
 	}
 
+	@Override
 	public MDRAction updateAction(
 			long actionId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String type,

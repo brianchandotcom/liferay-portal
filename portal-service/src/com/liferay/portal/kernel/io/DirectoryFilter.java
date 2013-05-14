@@ -33,6 +33,7 @@ public class DirectoryFilter implements FileFilter {
 		_pattern = Pattern.compile(regex);
 	}
 
+	@Override
 	public boolean accept(File file) {
 		if (file.isDirectory()) {
 			if (_pattern == null) {

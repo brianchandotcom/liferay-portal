@@ -39,10 +39,12 @@ import java.util.Map;
  */
 public class DDLRecordWorkflowHandler extends BaseWorkflowHandler {
 
+	@Override
 	public String getClassName() {
 		return DDLRecord.class.getName();
 	}
 
+	@Override
 	public String getType(Locale locale) {
 		return ResourceActionsUtil.getModelResource(locale, getClassName());
 	}
@@ -67,6 +69,7 @@ public class DDLRecordWorkflowHandler extends BaseWorkflowHandler {
 		return false;
 	}
 
+	@Override
 	public DDLRecord updateStatus(
 			int status, Map<String, Serializable> workflowContext)
 		throws PortalException, SystemException {

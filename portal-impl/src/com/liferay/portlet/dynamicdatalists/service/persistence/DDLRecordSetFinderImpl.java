@@ -46,6 +46,7 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 	public static final String FIND_BY_C_G_N_D_S =
 		DDLRecordSetFinder.class.getName() + ".findByC_G_N_D_S";
 
+	@Override
 	public int countByKeywords(
 			long companyId, long groupId, String keywords, int scope)
 		throws SystemException {
@@ -66,6 +67,7 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 			companyId, groupId, names, descriptions, scope, andOperator);
 	}
 
+	@Override
 	public int countByC_G_N_D_S(
 			long companyId, long groupId, String name, String description,
 			int scope, boolean andOperator)
@@ -78,6 +80,7 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 			companyId, groupId, names, descriptions, scope, andOperator);
 	}
 
+	@Override
 	public List<DDLRecordSet> findByKeywords(
 			long companyId, long groupId, String keywords, int scope, int start,
 			int end, OrderByComparator orderByComparator)
@@ -100,6 +103,7 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 			end, orderByComparator);
 	}
 
+	@Override
 	public List<DDLRecordSet> findByC_G_N_D_S(
 			long companyId, long groupId, String name, String description,
 			int scope, boolean andOperator, int start, int end,
@@ -114,6 +118,7 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 			end, orderByComparator);
 	}
 
+	@Override
 	public List<DDLRecordSet> findByC_G_N_D_S(
 			long companyId, long groupId, String[] names, String[] descriptions,
 			int scope, boolean andOperator, int start, int end,

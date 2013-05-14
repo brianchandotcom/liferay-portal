@@ -40,14 +40,17 @@ import java.util.Map;
  */
 public class JournalArticleWorkflowHandler extends BaseWorkflowHandler {
 
+	@Override
 	public String getClassName() {
 		return JournalArticle.class.getName();
 	}
 
+	@Override
 	public String getType(Locale locale) {
 		return ResourceActionsUtil.getModelResource(locale, getClassName());
 	}
 
+	@Override
 	public JournalArticle updateStatus(
 			int status, Map<String, Serializable> workflowContext)
 		throws PortalException, SystemException {

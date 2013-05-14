@@ -27,6 +27,7 @@ public class CallerRunsPolicy implements RejectedExecutionHandler {
 	 * @see java.util.concurrent.ThreadPoolExecutor.CallerRunsPolicy#rejectedExecution(
 	 *      Runnable, java.util.concurrent.ThreadPoolExecutor)
 	 */
+	@Override
 	public void rejectedExecution(
 		Runnable runnable, ThreadPoolExecutor threadPoolExecutor) {
 

@@ -27,6 +27,7 @@ import java.util.Set;
  */
 public class DDMDisplayRegistryImpl implements DDMDisplayRegistry {
 
+	@Override
 	public DDMDisplay getDDMDisplay(String portletId) {
 		DDMDisplay ddmDisplay = _ddmDisplays.get(portletId);
 
@@ -37,20 +38,24 @@ public class DDMDisplayRegistryImpl implements DDMDisplayRegistry {
 		return ddmDisplay;
 	}
 
+	@Override
 	public List<DDMDisplay> getDDMDisplays() {
 		return ListUtil.fromMapValues(_ddmDisplays);
 	}
 
+	@Override
 	public String[] getPortletIds() {
 		Set<String> portletIds = _ddmDisplays.keySet();
 
 		return portletIds.toArray(new String[portletIds.size()]);
 	}
 
+	@Override
 	public void register(DDMDisplay ddmDisplay) {
 		_ddmDisplays.put(ddmDisplay.getPortletId(), ddmDisplay);
 	}
 
+	@Override
 	public void unregister(DDMDisplay ddmDisplay) {
 		_ddmDisplays.remove(ddmDisplay.getPortletId());
 	}

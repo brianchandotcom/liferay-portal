@@ -48,10 +48,12 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class InvokerFilter extends BasePortalLifecycle implements Filter {
 
+	@Override
 	public void destroy() {
 		portalDestroy();
 	}
 
+	@Override
 	public void doFilter(
 			ServletRequest servletRequest, ServletResponse servletResponse,
 			FilterChain filterChain)
@@ -83,6 +85,7 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 		}
 	}
 
+	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 		_filterConfig = filterConfig;
 

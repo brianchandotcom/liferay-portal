@@ -38,15 +38,18 @@ public class ServletContextReportDesignRetriever
 		_postfix = postfix;
 	}
 
+	@Override
 	public InputStream getInputStream() {
 		return _servletContext.getResourceAsStream(
 			_prefix + _reportName + _postfix);
 	}
 
+	@Override
 	public Date getModifiedDate() {
 		return new Date();
 	}
 
+	@Override
 	public String getReportName() {
 		return _reportName;
 	}

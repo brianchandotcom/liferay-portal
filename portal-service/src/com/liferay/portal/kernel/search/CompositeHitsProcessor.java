@@ -23,6 +23,7 @@ import java.util.List;
  */
 public class CompositeHitsProcessor implements HitsProcessor {
 
+	@Override
 	public boolean process(SearchContext searchContext, Hits hits)
 		throws SearchException {
 

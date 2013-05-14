@@ -32,6 +32,7 @@ public class PooledMemcachePortalCacheManager<V>
 	public void afterPropertiesSet() {
 	}
 
+	@Override
 	public void clearAll() {
 		_portalCaches.clear();
 	}
@@ -42,10 +43,12 @@ public class PooledMemcachePortalCacheManager<V>
 		}
 	}
 
+	@Override
 	public PortalCache<String, V> getCache(String name) {
 		return getCache(name, false);
 	}
 
+	@Override
 	public PortalCache<String, V> getCache(String name, boolean blocking) {
 		PortalCache<String, V> portalCache = _portalCaches.get(name);
 
@@ -59,9 +62,11 @@ public class PooledMemcachePortalCacheManager<V>
 		return portalCache;
 	}
 
+	@Override
 	public void reconfigureCaches(URL configurationURL) {
 	}
 
+	@Override
 	public void removeCache(String name) {
 		_portalCaches.remove(name);
 	}

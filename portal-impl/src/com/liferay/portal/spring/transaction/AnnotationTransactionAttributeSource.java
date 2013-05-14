@@ -33,6 +33,7 @@ import org.springframework.transaction.interceptor.TransactionAttributeSource;
 public class AnnotationTransactionAttributeSource
 	implements TransactionAttributeSource {
 
+	@Override
 	public TransactionAttribute getTransactionAttribute(
 		Method method, Class<?> targetClass) {
 

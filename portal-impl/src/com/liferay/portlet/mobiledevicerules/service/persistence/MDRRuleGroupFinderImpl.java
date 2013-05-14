@@ -43,6 +43,7 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 	public static final String FIND_BY_G_N =
 		MDRRuleGroupFinder.class.getName() + ".findByG_N";
 
+	@Override
 	public int countByKeywords(long groupId, String keywords)
 		throws SystemException {
 
@@ -59,6 +60,7 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 		return countByG_N(groupId, names, andOperator);
 	}
 
+	@Override
 	public int countByG_N(long groupId, String name, boolean andOperator)
 		throws SystemException {
 
@@ -67,6 +69,7 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 		return countByG_N(groupId, names, andOperator);
 	}
 
+	@Override
 	public int countByG_N(long groupId, String[] names, boolean andOperator)
 		throws SystemException {
 
@@ -112,6 +115,7 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 		}
 	}
 
+	@Override
 	public List<MDRRuleGroup> findByKeywords(
 			long groupId, String keywords, int start, int end)
 		throws SystemException {
@@ -129,6 +133,7 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 		return findByG_N(groupId, names, andOperator, start, end);
 	}
 
+	@Override
 	public List<MDRRuleGroup> findByG_N(
 			long groupId, String name, boolean andOperator)
 		throws SystemException {
@@ -137,6 +142,7 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 			groupId, name, andOperator, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
+	@Override
 	public List<MDRRuleGroup> findByG_N(
 			long groupId, String name, boolean andOperator, int start, int end)
 		throws SystemException {
@@ -146,6 +152,7 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 		return findByG_N(groupId, names, andOperator, start, end);
 	}
 
+	@Override
 	public List<MDRRuleGroup> findByG_N(
 			long groupId, String[] names, boolean andOperator, int start,
 			int end)

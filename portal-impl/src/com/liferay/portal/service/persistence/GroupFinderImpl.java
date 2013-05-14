@@ -133,6 +133,7 @@ public class GroupFinderImpl
 	public static final String JOIN_BY_USERS_GROUPS =
 		GroupFinder.class.getName() + ".joinByUsersGroups";
 
+	@Override
 	public int countByKeywords(
 			long companyId, long parentGroupId, String parentGroupIdComparator,
 			String keywords, LinkedHashMap<String, Object> params)
@@ -158,6 +159,7 @@ public class GroupFinderImpl
 			andOperator);
 	}
 
+	@Override
 	public int countByKeywords(
 			long companyId, long[] classNameIds, long parentGroupId,
 			String parentGroupIdComparator, String keywords,
@@ -183,6 +185,7 @@ public class GroupFinderImpl
 			names, realNames, descriptions, params, andOperator);
 	}
 
+	@Override
 	public int countByKeywords(
 			long companyId, long[] classNameIds, String keywords,
 			LinkedHashMap<String, Object> params)
@@ -208,6 +211,7 @@ public class GroupFinderImpl
 			andOperator);
 	}
 
+	@Override
 	public int countByKeywords(
 			long companyId, String keywords,
 			LinkedHashMap<String, Object> params)
@@ -233,6 +237,7 @@ public class GroupFinderImpl
 			realNames, descriptions, params, andOperator);
 	}
 
+	@Override
 	public int countByLayouts(long companyId, long parentGroupId, boolean site)
 		throws SystemException {
 
@@ -273,6 +278,7 @@ public class GroupFinderImpl
 		}
 	}
 
+	@Override
 	public int countByG_U(long groupId, long userId, boolean inherit)
 		throws SystemException {
 
@@ -319,6 +325,7 @@ public class GroupFinderImpl
 		}
 	}
 
+	@Override
 	public int countByC_N_D(
 			long companyId, String name, String realName, String description,
 			LinkedHashMap<String, Object> params, boolean andOperator)
@@ -337,6 +344,7 @@ public class GroupFinderImpl
 			realNames, descriptions, params, andOperator);
 	}
 
+	@Override
 	public int countByC_N_D(
 			long companyId, String[] names, String[] realNames,
 			String[] descriptions, LinkedHashMap<String, Object> params,
@@ -349,6 +357,7 @@ public class GroupFinderImpl
 			realNames, descriptions, params, andOperator);
 	}
 
+	@Override
 	public int countByC_C_N_D(
 			long companyId, long[] classNameIds, String name, String realName,
 			String description, LinkedHashMap<String, Object> params,
@@ -365,6 +374,7 @@ public class GroupFinderImpl
 			andOperator);
 	}
 
+	@Override
 	public int countByC_PG_N_D(
 			long companyId, long parentGroupId, String parentGroupIdComparator,
 			String name, String realName, String description,
@@ -384,6 +394,7 @@ public class GroupFinderImpl
 			andOperator);
 	}
 
+	@Override
 	public int countByC_PG_N_D(
 			long companyId, long parentGroupId, String parentGroupIdComparator,
 			String[] names, String[] realNames, String[] descriptions,
@@ -396,6 +407,7 @@ public class GroupFinderImpl
 			andOperator);
 	}
 
+	@Override
 	public int countByC_C_PG_N_D(
 			long companyId, long[] classNameIds, long parentGroupId,
 			String parentGroupIdComparator, String name, String realName,
@@ -412,6 +424,7 @@ public class GroupFinderImpl
 			names, realNames, descriptions, params, andOperator);
 	}
 
+	@Override
 	public int countByC_C_PG_N_D(
 			long companyId, long[] classNameIds, long parentGroupId,
 			String parentGroupIdComparator, String[] names, String[] realNames,
@@ -499,6 +512,7 @@ public class GroupFinderImpl
 		}
 	}
 
+	@Override
 	public List<Group> findByKeywords(
 			long companyId, long parentGroupId, String parentGroupIdComparator,
 			String keywords, LinkedHashMap<String, Object> params, int start,
@@ -525,6 +539,7 @@ public class GroupFinderImpl
 			andOperator, start, end, obc);
 	}
 
+	@Override
 	public List<Group> findByKeywords(
 			long companyId, long[] classNameIds, long parentGroupId,
 			String parentGroupIdComparator, String keywords,
@@ -552,6 +567,7 @@ public class GroupFinderImpl
 			obc);
 	}
 
+	@Override
 	public List<Group> findByKeywords(
 			long companyId, long[] classNameIds, String keywords,
 			LinkedHashMap<String, Object> params, int start, int end,
@@ -578,6 +594,7 @@ public class GroupFinderImpl
 			andOperator, start, end, obc);
 	}
 
+	@Override
 	public List<Group> findByKeywords(
 			long companyId, String keywords,
 			LinkedHashMap<String, Object> params, int start, int end,
@@ -604,6 +621,7 @@ public class GroupFinderImpl
 			realNames, descriptions, params, andOperator, start, end, obc);
 	}
 
+	@Override
 	public List<Group> findByLayouts(
 			long companyId, long parentGroupId, boolean site, int start,
 			int end)
@@ -636,6 +654,7 @@ public class GroupFinderImpl
 		}
 	}
 
+	@Override
 	public List<Group> findByLiveGroups() throws SystemException {
 		Session session = null;
 
@@ -658,6 +677,7 @@ public class GroupFinderImpl
 		}
 	}
 
+	@Override
 	public List<Group> findByNoLayouts(
 			long classNameId, boolean privateLayout, int start, int end)
 		throws SystemException {
@@ -688,6 +708,7 @@ public class GroupFinderImpl
 		}
 	}
 
+	@Override
 	public List<Group> findByNullFriendlyURL() throws SystemException {
 		Session session = null;
 
@@ -710,6 +731,7 @@ public class GroupFinderImpl
 		}
 	}
 
+	@Override
 	public List<Group> findBySystem(long companyId) throws SystemException {
 		Session session = null;
 
@@ -736,6 +758,7 @@ public class GroupFinderImpl
 		}
 	}
 
+	@Override
 	public List<Group> findByCompanyId(
 			long companyId, LinkedHashMap<String, Object> params, int start,
 			int end, OrderByComparator obc)
@@ -875,6 +898,7 @@ public class GroupFinderImpl
 		}
 	}
 
+	@Override
 	public Group findByC_N(long companyId, String name)
 		throws NoSuchGroupException, SystemException {
 
@@ -920,6 +944,7 @@ public class GroupFinderImpl
 		throw new NoSuchGroupException(sb.toString());
 	}
 
+	@Override
 	public List<Group> findByC_N_D(
 			long companyId, String name, String realName, String description,
 			LinkedHashMap<String, Object> params, boolean andOperator,
@@ -939,6 +964,7 @@ public class GroupFinderImpl
 			realNames, descriptions, params, andOperator, start, end, obc);
 	}
 
+	@Override
 	public List<Group> findByC_N_D(
 			long companyId, String[] names, String[] realNames,
 			String[] descriptions, LinkedHashMap<String, Object> params,
@@ -951,6 +977,7 @@ public class GroupFinderImpl
 			realNames, descriptions, params, andOperator, start, end, obc);
 	}
 
+	@Override
 	public List<Group> findByC_C_N_D(
 			long companyId, long[] classNameIds, String name, String realName,
 			String description, LinkedHashMap<String, Object> params,
@@ -967,6 +994,7 @@ public class GroupFinderImpl
 			andOperator, start, end, obc);
 	}
 
+	@Override
 	public List<Group> findByC_PG_N_D(
 			long companyId, long parentGroupId, String parentGroupIdComparator,
 			String name, String realName, String description,
@@ -987,6 +1015,7 @@ public class GroupFinderImpl
 			andOperator, start, end, obc);
 	}
 
+	@Override
 	public List<Group> findByC_PG_N_D(
 			long companyId, long parentGroupId, String parentGroupIdComparator,
 			String[] names, String[] realNames, String[] descriptions,
@@ -1000,6 +1029,7 @@ public class GroupFinderImpl
 			andOperator, start, end, obc);
 	}
 
+	@Override
 	public List<Group> findByC_C_PG_N_D(
 			long companyId, long[] classNameIds, long parentGroupId,
 			String parentGroupIdComparator, String name, String realName,
@@ -1017,6 +1047,7 @@ public class GroupFinderImpl
 			obc);
 	}
 
+	@Override
 	public List<Group> findByC_C_PG_N_D(
 			long companyId, long[] classNameIds, long parentGroupId,
 			String parentGroupIdComparator, String[] names, String[] realNames,

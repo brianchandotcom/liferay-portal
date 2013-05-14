@@ -31,6 +31,7 @@ import java.util.List;
  */
 public abstract class BaseTemplateHandler implements TemplateHandler {
 
+	@Override
 	public List<Element> getDefaultTemplateElements() throws Exception {
 		String templatesConfigPath = getTemplatesConfigPath();
 
@@ -50,11 +51,13 @@ public abstract class BaseTemplateHandler implements TemplateHandler {
 		return rootElement.elements("template");
 	}
 
+	@Override
 	public String getTemplatesHelpPath(String language) {
 		return PropsUtil.get(
 			getTemplatesHelpPropertyKey(), new Filter(language));
 	}
 
+	@Override
 	public String getTemplatesHelpPropertyKey() {
 		return PropsKeys.PORTLET_DISPLAY_TEMPLATES_HELP;
 	}

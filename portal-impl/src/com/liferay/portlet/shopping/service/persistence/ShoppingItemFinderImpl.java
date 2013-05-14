@@ -41,12 +41,14 @@ public class ShoppingItemFinderImpl
 	public static final String COUNT_BY_G_C =
 		ShoppingItemFinder.class.getName() + ".countByG_C";
 
+	@Override
 	public int countByG_C(long groupId, List<Long> categoryIds)
 		throws SystemException {
 
 		return doCountByG_C(groupId, categoryIds, false);
 	}
 
+	@Override
 	public int countByFeatured(long groupId, long[] categoryIds)
 		throws SystemException {
 
@@ -113,6 +115,7 @@ public class ShoppingItemFinderImpl
 		}
 	}
 
+	@Override
 	public int countByKeywords(
 			long groupId, long[] categoryIds, String keywords)
 		throws SystemException {
@@ -184,6 +187,7 @@ public class ShoppingItemFinderImpl
 		}
 	}
 
+	@Override
 	public int countBySale(long groupId, long[] categoryIds)
 		throws SystemException {
 
@@ -250,12 +254,14 @@ public class ShoppingItemFinderImpl
 		}
 	}
 
+	@Override
 	public int filterCountByG_C(long groupId, List<Long> categoryIds)
 		throws SystemException {
 
 		return doCountByG_C(groupId, categoryIds, true);
 	}
 
+	@Override
 	public List<ShoppingItem> findByFeatured(
 			long groupId, long[] categoryIds, int numOfItems)
 		throws SystemException {
@@ -316,6 +322,7 @@ public class ShoppingItemFinderImpl
 		}
 	}
 
+	@Override
 	public List<ShoppingItem> findByKeywords(
 			long groupId, long[] categoryIds, String keywords, int start,
 			int end)
@@ -379,6 +386,7 @@ public class ShoppingItemFinderImpl
 		}
 	}
 
+	@Override
 	public List<ShoppingItem> findBySale(
 			long groupId, long[] categoryIds, int numOfItems)
 		throws SystemException {

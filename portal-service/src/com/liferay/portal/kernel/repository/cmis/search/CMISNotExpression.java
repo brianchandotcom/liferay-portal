@@ -23,6 +23,7 @@ public class CMISNotExpression implements CMISCriterion {
 		_cmisCriterion = cmisCriterion;
 	}
 
+	@Override
 	public String toQueryFragment() {
 		return "NOT(".concat(_cmisCriterion.toQueryFragment().concat(")"));
 	}

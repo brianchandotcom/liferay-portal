@@ -36,16 +36,19 @@ import java.util.Map;
 public class StagedModelDataHandlerRegistryImpl
 	implements StagedModelDataHandlerRegistry {
 
+	@Override
 	public StagedModelDataHandler<?> getStagedModelDataHandler(
 		String className) {
 
 		return _stagedModelDataHandlers.get(className);
 	}
 
+	@Override
 	public List<StagedModelDataHandler<?>> getStagedModelDataHandlers() {
 		return ListUtil.fromMapValues(_stagedModelDataHandlers);
 	}
 
+	@Override
 	public void register(StagedModelDataHandler<?> stagedModelDataHandler) {
 		for (String className : stagedModelDataHandler.getClassNames()) {
 			if (_stagedModelDataHandlers.containsKey(className)) {
@@ -60,6 +63,7 @@ public class StagedModelDataHandlerRegistryImpl
 		}
 	}
 
+	@Override
 	public void unregister(StagedModelDataHandler<?> stagedModelDataHandler) {
 		for (String className : stagedModelDataHandler.getClassNames()) {
 			_stagedModelDataHandlers.remove(className);

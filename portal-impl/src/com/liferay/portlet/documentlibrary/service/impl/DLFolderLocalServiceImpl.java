@@ -66,6 +66,7 @@ import java.util.Map;
  */
 public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
+	@Override
 	public DLFolder addFolder(
 			long userId, long groupId, long repositoryId, boolean mountPoint,
 			long parentFolderId, String name, String description,
@@ -147,6 +148,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	 *             long, long, boolean, long, String, String, boolean,
 	 *             ServiceContext)}
 	 */
+	@Override
 	public DLFolder addFolder(
 			long userId, long groupId, long repositoryId, boolean mountPoint,
 			long parentFolderId, String name, String description,
@@ -158,6 +160,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			description, false, serviceContext);
 	}
 
+	@Override
 	public void deleteAll(long groupId)
 		throws PortalException, SystemException {
 
@@ -187,6 +190,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	@Indexable(type = IndexableType.DELETE)
 	public DLFolder deleteFolder(DLFolder dlFolder)
 		throws PortalException, SystemException {
@@ -194,6 +198,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		return deleteFolder(dlFolder, true);
 	}
 
+	@Override
 	@Indexable(type = IndexableType.DELETE)
 	public DLFolder deleteFolder(
 			DLFolder dlFolder, boolean includeTrashedEntries)
@@ -268,6 +273,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		return dlFolder;
 	}
 
+	@Override
 	@Indexable(type = IndexableType.DELETE)
 	public DLFolder deleteFolder(long folderId)
 		throws PortalException, SystemException {
@@ -275,6 +281,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		return deleteFolder(folderId, true);
 	}
 
+	@Override
 	@Indexable(type = IndexableType.DELETE)
 	public DLFolder deleteFolder(long folderId, boolean includeTrashedEntries)
 		throws PortalException, SystemException {
@@ -284,6 +291,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		return deleteFolder(dlFolder, includeTrashedEntries);
 	}
 
+	@Override
 	@Indexable(type = IndexableType.DELETE)
 	public DLFolder deleteFolder(
 			long userId, long folderId, boolean includeTrashedEntries)
@@ -316,18 +324,21 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 	}
 
+	@Override
 	public DLFolder fetchFolder(long groupId, long parentFolderId, String name)
 		throws SystemException {
 
 		return dlFolderPersistence.fetchByG_P_N(groupId, parentFolderId, name);
 	}
 
+	@Override
 	public List<DLFolder> getCompanyFolders(long companyId, int start, int end)
 		throws SystemException {
 
 		return dlFolderPersistence.findByCompanyId(companyId, start, end);
 	}
 
+	@Override
 	public int getCompanyFoldersCount(long companyId) throws SystemException {
 		return dlFolderPersistence.countByCompanyId(companyId);
 	}
@@ -336,6 +347,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #getFileEntriesAndFileShortcuts(long, long, QueryDefinition)}
 	 */
+	@Override
 	public List<Object> getFileEntriesAndFileShortcuts(
 			long groupId, long folderId, int status, int start, int end)
 		throws SystemException {
@@ -347,6 +359,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			groupId, folderId, queryDefinition);
 	}
 
+	@Override
 	public List<Object> getFileEntriesAndFileShortcuts(
 			long groupId, long folderId, QueryDefinition queryDefinition)
 		throws SystemException {
@@ -360,6 +373,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	 *             #getFileEntriesAndFileShortcutsCount(long, long,
 	 *             QueryDefinition)}
 	 */
+	@Override
 	public int getFileEntriesAndFileShortcutsCount(
 			long groupId, long folderId, int status)
 		throws SystemException {
@@ -370,6 +384,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			groupId, folderId, queryDefinition);
 	}
 
+	@Override
 	public int getFileEntriesAndFileShortcutsCount(
 			long groupId, long folderId, QueryDefinition queryDefinition)
 		throws SystemException {
@@ -378,18 +393,21 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			groupId, folderId, queryDefinition);
 	}
 
+	@Override
 	public DLFolder getFolder(long folderId)
 		throws PortalException, SystemException {
 
 		return dlFolderPersistence.findByPrimaryKey(folderId);
 	}
 
+	@Override
 	public DLFolder getFolder(long groupId, long parentFolderId, String name)
 		throws PortalException, SystemException {
 
 		return dlFolderPersistence.findByG_P_N(groupId, parentFolderId, name);
 	}
 
+	@Override
 	public long getFolderId(long companyId, long folderId)
 		throws SystemException {
 
@@ -407,12 +425,14 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		return folderId;
 	}
 
+	@Override
 	public List<DLFolder> getFolders(long groupId, long parentFolderId)
 		throws SystemException {
 
 		return getFolders(groupId, parentFolderId, true);
 	}
 
+	@Override
 	public List<DLFolder> getFolders(
 			long groupId, long parentFolderId, boolean includeMountfolders)
 		throws SystemException {
@@ -426,6 +446,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public List<DLFolder> getFolders(
 			long groupId, long parentFolderId, boolean includeMountfolders,
 			int start, int end, OrderByComparator obc)
@@ -441,6 +462,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public List<DLFolder> getFolders(
 			long groupId, long parentFolderId, int start, int end,
 			OrderByComparator obc)
@@ -454,6 +476,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	 *             #getFoldersAndFileEntriesAndFileShortcuts(long, long,
 	 *             String[], boolean, QueryDefinition)}
 	 */
+	@Override
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 			long groupId, long folderId, int status,
 			boolean includeMountFolders, int start, int end,
@@ -472,6 +495,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	 *             #getFoldersAndFileEntriesAndFileShortcutsCount(long, long,
 	 *             String[], boolean, QueryDefinition)}
 	 */
+	@Override
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 			long groupId, long folderId, int status, String[] mimeTypes,
 			boolean includeMountFolders, int start, int end,
@@ -485,6 +509,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			groupId, folderId, mimeTypes, includeMountFolders, queryDefinition);
 	}
 
+	@Override
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 			long groupId, long folderId, String[] mimeTypes,
 			boolean includeMountFolders, QueryDefinition queryDefinition)
@@ -499,6 +524,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	 *             #getFoldersAndFileEntriesAndFileShortcutsCount(long, long,
 	 *             String[], boolean, QueryDefinition)}
 	 */
+	@Override
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
 			long groupId, long folderId, int status,
 			boolean includeMountFolders)
@@ -515,6 +541,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	 *             #getFoldersAndFileEntriesAndFileShortcutsCount(long, long,
 	 *             String[], boolean, QueryDefinition)}
 	 */
+	@Override
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
 			long groupId, long folderId, int status, String[] mimeTypes,
 			boolean includeMountFolders)
@@ -526,6 +553,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			groupId, folderId, mimeTypes, includeMountFolders, queryDefinition);
 	}
 
+	@Override
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
 			long groupId, long folderId, String[] mimeTypes,
 			boolean includeMountFolders, QueryDefinition queryDefinition)
@@ -535,12 +563,14 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			groupId, folderId, mimeTypes, includeMountFolders, queryDefinition);
 	}
 
+	@Override
 	public int getFoldersCount(long groupId, long parentFolderId)
 		throws SystemException {
 
 		return getFoldersCount(groupId, parentFolderId, true);
 	}
 
+	@Override
 	public int getFoldersCount(
 			long groupId, long parentFolderId, boolean includeMountfolders)
 		throws SystemException {
@@ -554,12 +584,14 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public DLFolder getMountFolder(long repositoryId)
 		throws PortalException, SystemException {
 
 		return dlFolderPersistence.findByRepositoryId(repositoryId);
 	}
 
+	@Override
 	public List<DLFolder> getMountFolders(
 			long groupId, long parentFolderId, int start, int end,
 			OrderByComparator obc)
@@ -569,6 +601,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			groupId, true, parentFolderId, false, start, end, obc);
 	}
 
+	@Override
 	public int getMountFoldersCount(long groupId, long parentFolderId)
 		throws SystemException {
 
@@ -576,10 +609,12 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			groupId, true, parentFolderId, false);
 	}
 
+	@Override
 	public List<DLFolder> getNoAssetFolders() throws SystemException {
 		return dlFolderFinder.findF_ByNoAssets();
 	}
 
+	@Override
 	public void getSubfolderIds(
 			List<Long> folderIds, long groupId, long folderId)
 		throws SystemException {
@@ -595,6 +630,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public boolean hasFolderLock(long userId, long folderId)
 		throws SystemException {
 
@@ -602,6 +638,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			userId, DLFolder.class.getName(), folderId);
 	}
 
+	@Override
 	public Lock lockFolder(long userId, long folderId)
 		throws PortalException, SystemException {
 
@@ -609,6 +646,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			userId, folderId, null, false, DLFolderImpl.LOCK_EXPIRATION_TIME);
 	}
 
+	@Override
 	public Lock lockFolder(
 			long userId, long folderId, String owner, boolean inheritable,
 			long expirationTime)
@@ -625,6 +663,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			expirationTime);
 	}
 
+	@Override
 	@Indexable(type = IndexableType.REINDEX)
 	public DLFolder moveFolder(
 			long userId, long folderId, long parentFolderId,
@@ -671,6 +710,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public void unlockFolder(
 			long groupId, long parentFolderId, String name, String lockUuid)
 		throws PortalException, SystemException {
@@ -680,6 +720,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		unlockFolder(dlFolder.getFolderId(), lockUuid);
 	}
 
+	@Override
 	public void unlockFolder(long folderId, String lockUuid)
 		throws PortalException, SystemException {
 
@@ -705,6 +746,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		lockLocalService.unlock(DLFolder.class.getName(), folderId);
 	}
 
+	@Override
 	@Indexable(type = IndexableType.REINDEX)
 	public DLFolder updateFolder(
 			long folderId, long parentFolderId, String name, String description,
@@ -783,6 +825,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	@Indexable(type = IndexableType.REINDEX)
 	public DLFolder updateFolder(
 			long folderId, String name, String description,
@@ -795,6 +838,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			fileEntryTypeIds, overrideFileEntryTypes, serviceContext);
 	}
 
+	@Override
 	public DLFolder updateFolderAndFileEntryTypes(
 			long userId, long folderId, long parentFolderId, String name,
 			String description, long defaultFileEntryTypeId,
@@ -868,6 +912,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Override
 	public void updateLastPostDate(long folderId, Date lastPostDate)
 		throws PortalException, SystemException {
 
@@ -878,6 +923,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		dlFolderPersistence.update(dlFolder);
 	}
 
+	@Override
 	public DLFolder updateStatus(
 			long userId, long folderId, int status,
 			Map<String, Serializable> workflowContext,

@@ -52,10 +52,12 @@ import javax.portlet.PortletURL;
 public abstract class BaseSocialActivityInterpreter
 	implements SocialActivityInterpreter {
 
+	@Override
 	public String getSelector() {
 		return StringPool.BLANK;
 	}
 
+	@Override
 	public SocialActivityFeedEntry interpret(
 		SocialActivity activity, ServiceContext serviceContext) {
 
@@ -69,6 +71,7 @@ public abstract class BaseSocialActivityInterpreter
 		return null;
 	}
 
+	@Override
 	public SocialActivityFeedEntry interpret(
 		SocialActivitySet activitySet, ServiceContext serviceContext) {
 
@@ -90,6 +93,7 @@ public abstract class BaseSocialActivityInterpreter
 		return null;
 	}
 
+	@Override
 	public void updateActivitySet(long activityId)
 		throws PortalException, SystemException {
 

@@ -66,6 +66,7 @@ public class JSONRPCResponse implements JSONSerializable {
 		}
 	}
 
+	@Override
 	public String toJSONString() {
 		Map<String, Object> response = new HashMap<String, Object>();
 

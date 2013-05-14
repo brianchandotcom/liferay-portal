@@ -56,6 +56,7 @@ public class ExecutorIntraband extends BaseIntraband {
 		super.close();
 	}
 
+	@Override
 	public RegistrationReference registerChannel(Channel channel) {
 		if (channel == null) {
 			throw new NullPointerException("Channel is null");
@@ -87,6 +88,7 @@ public class ExecutorIntraband extends BaseIntraband {
 			(ScatteringByteChannel)channel, (GatheringByteChannel)channel);
 	}
 
+	@Override
 	public RegistrationReference registerChannel(
 		ScatteringByteChannel scatteringByteChannel,
 		GatheringByteChannel gatheringByteChannel) {

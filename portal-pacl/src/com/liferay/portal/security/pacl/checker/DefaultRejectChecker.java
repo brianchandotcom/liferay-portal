@@ -25,9 +25,11 @@ import java.security.Permission;
  */
 public class DefaultRejectChecker extends BaseChecker {
 
+	@Override
 	public void afterPropertiesSet() {
 	}
 
+	@Override
 	public boolean implies(Permission permission) {
 		if (_log.isDebugEnabled()) {
 			Thread.dumpStack();

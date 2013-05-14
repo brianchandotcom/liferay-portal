@@ -23,6 +23,7 @@ public class CMISInFolderExpression implements CMISCriterion {
 		_objectId = objectId;
 	}
 
+	@Override
 	public String toQueryFragment() {
 		return "IN_FOLDER('".concat(_objectId).concat("')");
 	}

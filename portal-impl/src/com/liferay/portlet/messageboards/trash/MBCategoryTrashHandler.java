@@ -50,6 +50,7 @@ import javax.portlet.PortletURL;
  */
 public class MBCategoryTrashHandler extends BaseTrashHandler {
 
+	@Override
 	public void deleteTrashEntry(long classPK)
 		throws PortalException, SystemException {
 
@@ -58,6 +59,7 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 		MBCategoryLocalServiceUtil.deleteCategory(category, false);
 	}
 
+	@Override
 	public String getClassName() {
 		return MBCategory.class.getName();
 	}
@@ -309,6 +311,7 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 		return true;
 	}
 
+	@Override
 	public boolean isInTrash(long classPK)
 		throws PortalException, SystemException {
 
@@ -360,6 +363,7 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 			userId, classPK, containerModelId);
 	}
 
+	@Override
 	public void restoreTrashEntry(long userId, long classPK)
 		throws PortalException, SystemException {
 

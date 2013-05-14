@@ -36,6 +36,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class LiferayServletContextProvider implements ServletContextProvider {
 
+	@Override
 	public HttpServletRequest getHttpServletRequest(
 		GenericPortlet portlet, PortletRequest portletRequest) {
 
@@ -45,12 +46,14 @@ public class LiferayServletContextProvider implements ServletContextProvider {
 		return new LiferayStrutsRequestImpl(request);
 	}
 
+	@Override
 	public HttpServletResponse getHttpServletResponse(
 		GenericPortlet portlet, PortletResponse portletResponse) {
 
 		return PortalUtil.getHttpServletResponse(portletResponse);
 	}
 
+	@Override
 	public ServletContext getServletContext(GenericPortlet portlet) {
 		PortletContext portletContext = portlet.getPortletContext();
 
@@ -68,6 +71,7 @@ public class LiferayServletContextProvider implements ServletContextProvider {
 		return getServletContext(servletContext);
 	}
 
+	@Override
 	public ServletContext getServletContext(ServletContext servletContext) {
 		return new LiferayServletContext(servletContext);
 	}

@@ -66,6 +66,7 @@ import java.util.Set;
 public class JournalStructureLocalServiceImpl
 	extends JournalStructureLocalServiceBaseImpl {
 
+	@Override
 	public JournalStructure addStructure(
 			long userId, long groupId, String structureId,
 			boolean autoStructureId, String parentStructureId,
@@ -133,6 +134,7 @@ public class JournalStructureLocalServiceImpl
 		return structure;
 	}
 
+	@Override
 	public void addStructureResources(
 			JournalStructure structure, boolean addGroupPermissions,
 			boolean addGuestPermissions)
@@ -144,6 +146,7 @@ public class JournalStructureLocalServiceImpl
 			structure.getId(), false, addGroupPermissions, addGuestPermissions);
 	}
 
+	@Override
 	public void addStructureResources(
 			JournalStructure structure, String[] groupPermissions,
 			String[] guestPermissions)
@@ -155,6 +158,7 @@ public class JournalStructureLocalServiceImpl
 			structure.getId(), groupPermissions, guestPermissions);
 	}
 
+	@Override
 	public void addStructureResources(
 			long groupId, String structureId, boolean addGroupPermissions,
 			boolean addGuestPermissions)
@@ -167,6 +171,7 @@ public class JournalStructureLocalServiceImpl
 			structure, addGroupPermissions, addGuestPermissions);
 	}
 
+	@Override
 	public void addStructureResources(
 			long groupId, String structureId, String[] groupPermissions,
 			String[] guestPermissions)
@@ -178,6 +183,7 @@ public class JournalStructureLocalServiceImpl
 		addStructureResources(structure, groupPermissions, guestPermissions);
 	}
 
+	@Override
 	public void checkNewLine(long groupId, String structureId)
 		throws PortalException, SystemException {
 
@@ -196,6 +202,7 @@ public class JournalStructureLocalServiceImpl
 		}
 	}
 
+	@Override
 	public JournalStructure copyStructure(
 			long userId, long groupId, String oldStructureId,
 			String newStructureId, boolean autoStructureId)
@@ -250,6 +257,7 @@ public class JournalStructureLocalServiceImpl
 		return newStructure;
 	}
 
+	@Override
 	public void deleteStructure(JournalStructure structure)
 		throws PortalException, SystemException {
 
@@ -341,6 +349,7 @@ public class JournalStructureLocalServiceImpl
 		journalStructurePersistence.remove(structure);
 	}
 
+	@Override
 	public void deleteStructure(long groupId, String structureId)
 		throws PortalException, SystemException {
 
@@ -352,6 +361,7 @@ public class JournalStructureLocalServiceImpl
 		deleteStructure(structure);
 	}
 
+	@Override
 	public void deleteStructures(long groupId)
 		throws PortalException, SystemException {
 
@@ -365,18 +375,21 @@ public class JournalStructureLocalServiceImpl
 		}
 	}
 
+	@Override
 	public JournalStructure getStructure(long id)
 		throws PortalException, SystemException {
 
 		return journalStructurePersistence.findByPrimaryKey(id);
 	}
 
+	@Override
 	public JournalStructure getStructure(long groupId, String structureId)
 		throws PortalException, SystemException {
 
 		return getStructure(groupId, structureId, false);
 	}
 
+	@Override
 	public JournalStructure getStructure(
 			long groupId, String structureId, boolean includeGlobalStructures)
 		throws PortalException, SystemException {
@@ -423,16 +436,19 @@ public class JournalStructureLocalServiceImpl
 			companyGroup.getGroupId(), structureId);
 	}
 
+	@Override
 	public List<JournalStructure> getStructures() throws SystemException {
 		return journalStructurePersistence.findAll();
 	}
 
+	@Override
 	public List<JournalStructure> getStructures(long groupId)
 		throws SystemException {
 
 		return journalStructurePersistence.findByGroupId(groupId);
 	}
 
+	@Override
 	public List<JournalStructure> getStructures(
 			long groupId, int start, int end)
 		throws SystemException {
@@ -440,10 +456,12 @@ public class JournalStructureLocalServiceImpl
 		return journalStructurePersistence.findByGroupId(groupId, start, end);
 	}
 
+	@Override
 	public int getStructuresCount(long groupId) throws SystemException {
 		return journalStructurePersistence.countByGroupId(groupId);
 	}
 
+	@Override
 	public List<JournalStructure> search(
 			long companyId, long[] groupIds, String keywords, int start,
 			int end, OrderByComparator obc)
@@ -453,6 +471,7 @@ public class JournalStructureLocalServiceImpl
 			companyId, groupIds, keywords, start, end, obc);
 	}
 
+	@Override
 	public List<JournalStructure> search(
 			long companyId, long[] groupIds, String structureId, String name,
 			String description, boolean andOperator, int start, int end,
@@ -464,6 +483,7 @@ public class JournalStructureLocalServiceImpl
 			start, end, obc);
 	}
 
+	@Override
 	public int searchCount(long companyId, long[] groupIds, String keywords)
 		throws SystemException {
 
@@ -471,6 +491,7 @@ public class JournalStructureLocalServiceImpl
 			companyId, groupIds, keywords);
 	}
 
+	@Override
 	public int searchCount(
 			long companyId, long[] groupIds, String structureId, String name,
 			String description, boolean andOperator)
@@ -480,6 +501,7 @@ public class JournalStructureLocalServiceImpl
 			companyId, groupIds, structureId, name, description, andOperator);
 	}
 
+	@Override
 	public JournalStructure updateStructure(
 			long groupId, String structureId, String parentStructureId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,

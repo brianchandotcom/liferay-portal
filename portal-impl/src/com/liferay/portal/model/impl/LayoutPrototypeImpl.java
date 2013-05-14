@@ -32,17 +32,20 @@ public class LayoutPrototypeImpl extends LayoutPrototypeBaseImpl {
 	public LayoutPrototypeImpl() {
 	}
 
+	@Override
 	public Group getGroup() throws PortalException, SystemException {
 		return GroupLocalServiceUtil.getLayoutPrototypeGroup(
 			getCompanyId(), getLayoutPrototypeId());
 	}
 
+	@Override
 	public long getGroupId() throws PortalException, SystemException {
 		Group group = getGroup();
 
 		return group.getGroupId();
 	}
 
+	@Override
 	public Layout getLayout() throws PortalException, SystemException {
 		Group group = getGroup();
 

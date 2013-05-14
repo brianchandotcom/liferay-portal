@@ -59,6 +59,7 @@ import org.springframework.core.annotation.Order;
 public class LayoutLocalServiceVirtualLayoutsAdvice
 	implements MethodInterceptor {
 
+	@Override
 	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
 		if (MergeLayoutPrototypesThreadLocal.isInProgress()) {
 			return methodInvocation.proceed();

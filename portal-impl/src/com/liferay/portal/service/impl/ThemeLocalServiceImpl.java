@@ -68,6 +68,7 @@ import javax.servlet.ServletContext;
  */
 public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 
+	@Override
 	public ColorScheme fetchColorScheme(
 		long companyId, String themeId, String colorSchemeId) {
 
@@ -84,6 +85,7 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 		return colorSchemesMap.get(colorSchemeId);
 	}
 
+	@Override
 	public Theme fetchTheme(long companyId, String themeId) {
 		themeId = GetterUtil.getString(themeId);
 
@@ -92,6 +94,7 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 		return themes.get(themeId);
 	}
 
+	@Override
 	public ColorScheme getColorScheme(
 			long companyId, String themeId, String colorSchemeId,
 			boolean wapTheme)
@@ -132,6 +135,7 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 		return colorScheme;
 	}
 
+	@Override
 	public Theme getTheme(long companyId, String themeId, boolean wapTheme)
 		throws SystemException {
 
@@ -181,6 +185,7 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 		return theme;
 	}
 
+	@Override
 	public List<Theme> getThemes(long companyId) {
 		Map<String, Theme> themes = _getThemes(companyId);
 
@@ -189,6 +194,7 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 		return ListUtil.sort(themesList);
 	}
 
+	@Override
 	public List<Theme> getThemes(
 			long companyId, long groupId, long userId, boolean wapTheme)
 		throws SystemException {
@@ -213,6 +219,7 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 		return themes;
 	}
 
+	@Override
 	public List<Theme> getWARThemes() {
 		List<Theme> themes = ListUtil.fromMapValues(_themes);
 
@@ -229,6 +236,7 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 		return themes;
 	}
 
+	@Override
 	public List<String> init(
 		ServletContext servletContext, String themesPath,
 		boolean loadFromServletContext, String[] xmls,
@@ -239,6 +247,7 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 			pluginPackage);
 	}
 
+	@Override
 	public List<String> init(
 		String servletContextName, ServletContext servletContext,
 		String themesPath, boolean loadFromServletContext, String[] xmls,
@@ -268,6 +277,7 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 		return themeIdsList;
 	}
 
+	@Override
 	public void uninstallThemes(List<String> themeIds) {
 		for (int i = 0; i < themeIds.size(); i++) {
 			String themeId = themeIds.get(i);

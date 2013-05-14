@@ -37,6 +37,7 @@ public class RulesEngineProxyBean extends BaseProxyBean implements RulesEngine {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public boolean containsRuleDomain(String domainName) {
 		throw new UnsupportedOperationException();
 	}
@@ -69,6 +70,7 @@ public class RulesEngineProxyBean extends BaseProxyBean implements RulesEngine {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void remove(String domainName) {
 		throw new UnsupportedOperationException();
 	}

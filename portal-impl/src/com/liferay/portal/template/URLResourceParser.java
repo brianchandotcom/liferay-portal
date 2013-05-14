@@ -27,6 +27,7 @@ import java.net.URL;
  */
 public abstract class URLResourceParser implements TemplateResourceParser {
 
+	@Override
 	public TemplateResource getTemplateResource(String templateId)
 		throws TemplateException {
 

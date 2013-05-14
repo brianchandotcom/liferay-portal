@@ -35,6 +35,7 @@ import java.util.List;
  */
 public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 
+	@Override
 	public MBCategory addCategory(
 			long userId, long parentCategoryId, String name, String description,
 			ServiceContext serviceContext)
@@ -48,6 +49,7 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 			userId, parentCategoryId, name, description, serviceContext);
 	}
 
+	@Override
 	public MBCategory addCategory(
 			long parentCategoryId, String name, String description,
 			String displayStyle, String emailAddress, String inProtocol,
@@ -71,6 +73,7 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 			mailingListActive, allowAnonymousEmail, serviceContext);
 	}
 
+	@Override
 	public void deleteCategory(long categoryId, boolean includeTrashedEntries)
 		throws PortalException, SystemException {
 
@@ -83,6 +86,7 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 		mbCategoryLocalService.deleteCategory(category, includeTrashedEntries);
 	}
 
+	@Override
 	public void deleteCategory(long groupId, long categoryId)
 		throws PortalException, SystemException {
 
@@ -92,16 +96,19 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 		mbCategoryLocalService.deleteCategory(categoryId);
 	}
 
+	@Override
 	public List<MBCategory> getCategories(long groupId) throws SystemException {
 		return mbCategoryPersistence.filterFindByGroupId(groupId);
 	}
 
+	@Override
 	public List<MBCategory> getCategories(long groupId, int status)
 		throws SystemException {
 
 		return mbCategoryPersistence.filterFindByG_S(groupId, status);
 	}
 
+	@Override
 	public List<MBCategory> getCategories(
 			long groupId, long parentCategoryId, int start, int end)
 		throws SystemException {
@@ -110,6 +117,7 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 			groupId, parentCategoryId, start, end);
 	}
 
+	@Override
 	public List<MBCategory> getCategories(
 			long groupId, long parentCategoryId, int status, int start, int end)
 		throws SystemException {
@@ -123,6 +131,7 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 			groupId, parentCategoryId, status, start, end);
 	}
 
+	@Override
 	public List<MBCategory> getCategories(
 			long groupId, long[] parentCategoryIds, int start, int end)
 		throws SystemException {
@@ -131,6 +140,7 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 			groupId, parentCategoryIds, start, end);
 	}
 
+	@Override
 	public List<MBCategory> getCategories(
 			long groupId, long[] parentCategoryIds, int status, int start,
 			int end)
@@ -145,6 +155,7 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 			groupId, parentCategoryIds, status, start, end);
 	}
 
+	@Override
 	public int getCategoriesCount(long groupId, long parentCategoryId)
 		throws SystemException {
 
@@ -152,6 +163,7 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 			groupId, parentCategoryId);
 	}
 
+	@Override
 	public int getCategoriesCount(
 			long groupId, long parentCategoryId, int status)
 		throws SystemException {
@@ -165,6 +177,7 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 			groupId, parentCategoryId, status);
 	}
 
+	@Override
 	public int getCategoriesCount(long groupId, long[] parentCategoryIds)
 		throws SystemException {
 
@@ -172,6 +185,7 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 			groupId, parentCategoryIds);
 	}
 
+	@Override
 	public int getCategoriesCount(
 			long groupId, long[] parentCategoryIds, int status)
 		throws SystemException {
@@ -185,6 +199,7 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 			groupId, parentCategoryIds, status);
 	}
 
+	@Override
 	public MBCategory getCategory(long categoryId)
 		throws PortalException, SystemException {
 
@@ -197,6 +212,7 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 		return category;
 	}
 
+	@Override
 	public long[] getCategoryIds(long groupId, long categoryId)
 		throws SystemException {
 
@@ -210,6 +226,7 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 			categoryIds.toArray(new Long[categoryIds.size()]));
 	}
 
+	@Override
 	public List<Long> getSubcategoryIds(
 			List<Long> categoryIds, long groupId, long categoryId)
 		throws SystemException {
@@ -231,6 +248,7 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 		return categoryIds;
 	}
 
+	@Override
 	public List<MBCategory> getSubscribedCategories(
 			long groupId, long userId, int start, int end)
 		throws SystemException {
@@ -250,6 +268,7 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public int getSubscribedCategoriesCount(long groupId, long userId)
 		throws SystemException {
 
@@ -268,6 +287,7 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public MBCategory moveCategory(
 			long categoryId, long parentCategoryId,
 			boolean mergeWithParentCategory)
@@ -283,6 +303,7 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 			categoryId, parentCategoryId, mergeWithParentCategory);
 	}
 
+	@Override
 	public MBCategory moveCategoryFromTrash(long categoryId, long newCategoryId)
 		throws PortalException, SystemException {
 
@@ -296,6 +317,7 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 			getUserId(), categoryId, newCategoryId);
 	}
 
+	@Override
 	public MBCategory moveCategoryToTrash(long categoryId)
 		throws PortalException, SystemException {
 
@@ -309,6 +331,7 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 			getUserId(), categoryId);
 	}
 
+	@Override
 	public void restoreCategoryFromTrash(long categoryId)
 		throws PortalException, SystemException {
 
@@ -322,6 +345,7 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 			getUserId(), categoryId);
 	}
 
+	@Override
 	public void subscribeCategory(long groupId, long categoryId)
 		throws PortalException, SystemException {
 
@@ -332,6 +356,7 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 			getUserId(), groupId, categoryId);
 	}
 
+	@Override
 	public void unsubscribeCategory(long groupId, long categoryId)
 		throws PortalException, SystemException {
 
@@ -342,6 +367,7 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 			getUserId(), groupId, categoryId);
 	}
 
+	@Override
 	public MBCategory updateCategory(
 			long categoryId, long parentCategoryId, String name,
 			String description, String displayStyle, String emailAddress,

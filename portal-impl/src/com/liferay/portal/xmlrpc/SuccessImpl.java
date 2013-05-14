@@ -28,6 +28,7 @@ public class SuccessImpl implements Success {
 		_description = description;
 	}
 
+	@Override
 	public String getDescription() {
 		return _description;
 	}
@@ -37,6 +38,7 @@ public class SuccessImpl implements Success {
 		return "XML-RPC success " + _description;
 	}
 
+	@Override
 	public String toXml() throws XmlRpcException {
 		StringBundler sb = new StringBundler(8);
 

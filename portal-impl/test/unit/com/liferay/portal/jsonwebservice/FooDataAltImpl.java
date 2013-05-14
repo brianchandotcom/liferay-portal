@@ -37,6 +37,7 @@ public class FooDataAltImpl implements FooData {
 		return _name;
 	}
 
+	@Override
 	public String getValue() {
 		return _value;
 	}
@@ -49,6 +50,7 @@ public class FooDataAltImpl implements FooData {
 		_height = height;
 	}
 
+	@Override
 	public void setId(int id) {
 		_id = id;
 	}

@@ -27,6 +27,7 @@ import com.liferay.portal.service.persistence.UserGroupActionableDynamicQuery;
 public abstract class BaseUserGroupMembershipPolicy
 	implements UserGroupMembershipPolicy {
 
+	@Override
 	@SuppressWarnings("unused")
 	public boolean isMembershipAllowed(long userId, long userGroupId)
 		throws PortalException, SystemException {
@@ -42,6 +43,7 @@ public abstract class BaseUserGroupMembershipPolicy
 		return true;
 	}
 
+	@Override
 	@SuppressWarnings("unused")
 	public boolean isMembershipRequired(long userId, long userGroupId)
 		throws PortalException, SystemException {
@@ -57,6 +59,7 @@ public abstract class BaseUserGroupMembershipPolicy
 		return false;
 	}
 
+	@Override
 	public void verifyPolicy() throws PortalException, SystemException {
 		ActionableDynamicQuery actionableDynamicQuery =
 			new UserGroupActionableDynamicQuery() {
@@ -75,6 +78,7 @@ public abstract class BaseUserGroupMembershipPolicy
 		actionableDynamicQuery.performActions();
 	}
 
+	@Override
 	public void verifyPolicy(UserGroup userGroup)
 		throws PortalException, SystemException {
 

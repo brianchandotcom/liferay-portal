@@ -23,10 +23,12 @@ import com.liferay.portal.model.UserConstants;
  */
 public class DefaultEmailAddressGenerator implements EmailAddressGenerator {
 
+	@Override
 	public String generate(long companyId, long userId) {
 		return userId + UserConstants.USERS_EMAIL_ADDRESS_AUTO_SUFFIX;
 	}
 
+	@Override
 	public boolean isFake(String emailAddress) {
 		if (Validator.isNull(emailAddress) ||
 			StringUtil.endsWith(
@@ -39,6 +41,7 @@ public class DefaultEmailAddressGenerator implements EmailAddressGenerator {
 		}
 	}
 
+	@Override
 	public boolean isGenerated(String emailAddress) {
 		return isFake(emailAddress);
 	}

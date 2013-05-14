@@ -39,6 +39,7 @@ public class DDMTemplateImpl extends DDMTemplateBaseImpl {
 	public DDMTemplateImpl() {
 	}
 
+	@Override
 	public String getDefaultLanguageId() {
 		Document document = null;
 
@@ -59,6 +60,7 @@ public class DDMTemplateImpl extends DDMTemplateBaseImpl {
 		return locale.toString();
 	}
 
+	@Override
 	public String getSmallImageType() throws PortalException, SystemException {
 		if ((_smallImageType == null) && isSmallImage()) {
 			Image smallImage = ImageLocalServiceUtil.getImage(
@@ -79,6 +81,7 @@ public class DDMTemplateImpl extends DDMTemplateBaseImpl {
 	 * @param  webDAVToken the WebDAV token for the URL
 	 * @return the WebDAV URL
 	 */
+	@Override
 	public String getWebDavURL(ThemeDisplay themeDisplay, String webDAVToken) {
 		StringBundler sb = new StringBundler(11);
 
@@ -113,6 +116,7 @@ public class DDMTemplateImpl extends DDMTemplateBaseImpl {
 		return sb.toString();
 	}
 
+	@Override
 	public void setSmallImageType(String smallImageType) {
 		_smallImageType = smallImageType;
 	}

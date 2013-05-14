@@ -30,6 +30,7 @@ import java.util.List;
  */
 public class SCLicenseLocalServiceImpl extends SCLicenseLocalServiceBaseImpl {
 
+	@Override
 	public SCLicense addLicense(
 			String name, String url, boolean openSource, boolean active,
 			boolean recommended)
@@ -52,6 +53,7 @@ public class SCLicenseLocalServiceImpl extends SCLicenseLocalServiceBaseImpl {
 		return license;
 	}
 
+	@Override
 	public void deleteLicense(long licenseId)
 		throws PortalException, SystemException {
 
@@ -64,26 +66,31 @@ public class SCLicenseLocalServiceImpl extends SCLicenseLocalServiceBaseImpl {
 		deleteLicense(license);
 	}
 
+	@Override
 	public void deleteLicense(SCLicense license) throws SystemException {
 		scLicensePersistence.remove(license);
 	}
 
+	@Override
 	public SCLicense getLicense(long licenseId)
 		throws PortalException, SystemException {
 
 		return scLicensePersistence.findByPrimaryKey(licenseId);
 	}
 
+	@Override
 	public List<SCLicense> getLicenses() throws SystemException {
 		return scLicensePersistence.findAll();
 	}
 
+	@Override
 	public List<SCLicense> getLicenses(boolean active, boolean recommended)
 		throws SystemException {
 
 		return scLicensePersistence.findByA_R(active, recommended);
 	}
 
+	@Override
 	public List<SCLicense> getLicenses(
 			boolean active, boolean recommended, int start, int end)
 		throws SystemException {
@@ -91,28 +98,33 @@ public class SCLicenseLocalServiceImpl extends SCLicenseLocalServiceBaseImpl {
 		return scLicensePersistence.findByA_R(active, recommended, start, end);
 	}
 
+	@Override
 	public List<SCLicense> getLicenses(int start, int end)
 		throws SystemException {
 
 		return scLicensePersistence.findAll(start, end);
 	}
 
+	@Override
 	public int getLicensesCount() throws SystemException {
 		return scLicensePersistence.countAll();
 	}
 
+	@Override
 	public int getLicensesCount(boolean active, boolean recommended)
 		throws SystemException {
 
 		return scLicensePersistence.countByA_R(active, recommended);
 	}
 
+	@Override
 	public List<SCLicense> getProductEntryLicenses(long productEntryId)
 		throws SystemException {
 
 		return scProductEntryPersistence.getSCLicenses(productEntryId);
 	}
 
+	@Override
 	public SCLicense updateLicense(
 			long licenseId, String name, String url, boolean openSource,
 			boolean active, boolean recommended)

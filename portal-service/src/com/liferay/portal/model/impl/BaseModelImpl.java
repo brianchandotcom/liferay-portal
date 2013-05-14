@@ -38,33 +38,41 @@ public abstract class BaseModelImpl<T> implements BaseModel<T> {
 	@Override
 	public abstract Object clone();
 
+	@Override
 	public ExpandoBridge getExpandoBridge() {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public Map<String, Object> getModelAttributes() {
 		return Collections.emptyMap();
 	}
 
+	@Override
 	public boolean isCachedModel() {
 		return _cachedModel;
 	}
 
+	@Override
 	public boolean isEscapedModel() {
 		return _ESCAPED_MODEL;
 	}
 
+	@Override
 	public boolean isNew() {
 		return _new;
 	}
 
+	@Override
 	public void resetOriginalValues() {
 	}
 
+	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_cachedModel = cachedModel;
 	}
 
+	@Override
 	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
 		ExpandoBridge thisExpandoBridge = getExpandoBridge();
 
@@ -73,31 +81,38 @@ public abstract class BaseModelImpl<T> implements BaseModel<T> {
 		thisExpandoBridge.setAttributes(baseModelExpandoBridge.getAttributes());
 	}
 
+	@Override
 	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
 		ExpandoBridge thisExpandoBridge = getExpandoBridge();
 
 		thisExpandoBridge.setAttributes(expandoBridge.getAttributes());
 	}
 
+	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
 	}
 
+	@Override
 	public void setNew(boolean n) {
 		_new = n;
 	}
 
+	@Override
 	public CacheModel<T> toCacheModel() {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public T toEscapedModel() {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public T toUnescapedModel() {
 		return (T)this;
 	}

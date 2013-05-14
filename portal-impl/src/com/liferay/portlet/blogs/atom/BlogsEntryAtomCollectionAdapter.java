@@ -48,6 +48,7 @@ import java.util.List;
 public class BlogsEntryAtomCollectionAdapter
 	extends BaseAtomCollectionAdapter<BlogsEntry> {
 
+	@Override
 	public String getCollectionName() {
 		return _COLLECTION_NAME;
 	}
@@ -82,6 +83,7 @@ public class BlogsEntryAtomCollectionAdapter
 		return blogsEntry.getModifiedDate();
 	}
 
+	@Override
 	public String getFeedTitle(AtomRequestContext atomRequestContext) {
 		return AtomUtil.createFeedTitleFromPortletName(
 			atomRequestContext, PortletKeys.BLOGS);

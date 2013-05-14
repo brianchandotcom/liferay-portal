@@ -39,10 +39,12 @@ import javax.servlet.http.HttpServletResponse;
 public class PortalClassLoaderFilter
 	extends BasePortalLifecycle implements LiferayFilter {
 
+	@Override
 	public void destroy() {
 		portalDestroy();
 	}
 
+	@Override
 	public void doFilter(
 			ServletRequest servletRequest, ServletResponse servletResponse,
 			FilterChain filterChain)
@@ -74,12 +76,14 @@ public class PortalClassLoaderFilter
 		}
 	}
 
+	@Override
 	public void init(FilterConfig filterConfig) {
 		_filterConfig = filterConfig;
 
 		registerPortalLifecycle();
 	}
 
+	@Override
 	public boolean isFilterEnabled() {
 		if (_liferayFilter != null) {
 			return _liferayFilter.isFilterEnabled();
@@ -88,6 +92,7 @@ public class PortalClassLoaderFilter
 		return true;
 	}
 
+	@Override
 	public boolean isFilterEnabled(
 		HttpServletRequest request, HttpServletResponse response) {
 
@@ -98,6 +103,7 @@ public class PortalClassLoaderFilter
 		return true;
 	}
 
+	@Override
 	public void setFilterEnabled(boolean filterEnabled) {
 		if (_liferayFilter != null) {
 			_liferayFilter.setFilterEnabled(filterEnabled);

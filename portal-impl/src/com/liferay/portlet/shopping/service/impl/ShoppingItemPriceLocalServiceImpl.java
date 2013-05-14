@@ -30,6 +30,7 @@ import java.util.List;
 public class ShoppingItemPriceLocalServiceImpl
 	extends ShoppingItemPriceLocalServiceBaseImpl {
 
+	@Override
 	public List<ShoppingItemPrice> getItemPrices(long itemId)
 		throws PortalException, SystemException {
 

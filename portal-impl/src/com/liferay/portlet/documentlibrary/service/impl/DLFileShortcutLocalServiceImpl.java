@@ -36,6 +36,7 @@ import java.util.List;
 public class DLFileShortcutLocalServiceImpl
 	extends DLFileShortcutLocalServiceBaseImpl {
 
+	@Override
 	public DLFileShortcut addFileShortcut(
 			long userId, long groupId, long folderId, long toFileEntryId,
 			ServiceContext serviceContext)
@@ -109,6 +110,7 @@ public class DLFileShortcutLocalServiceImpl
 		return fileShortcut;
 	}
 
+	@Override
 	public void addFileShortcutResources(
 			DLFileShortcut fileShortcut, boolean addGroupPermissions,
 			boolean addGuestPermissions)
@@ -121,6 +123,7 @@ public class DLFileShortcutLocalServiceImpl
 			addGuestPermissions);
 	}
 
+	@Override
 	public void addFileShortcutResources(
 			DLFileShortcut fileShortcut, String[] groupPermissions,
 			String[] guestPermissions)
@@ -133,6 +136,7 @@ public class DLFileShortcutLocalServiceImpl
 			guestPermissions);
 	}
 
+	@Override
 	public void addFileShortcutResources(
 			long fileShortcutId, boolean addGroupPermissions,
 			boolean addGuestPermissions)
@@ -145,6 +149,7 @@ public class DLFileShortcutLocalServiceImpl
 			fileShortcut, addGroupPermissions, addGuestPermissions);
 	}
 
+	@Override
 	public void addFileShortcutResources(
 			long fileShortcutId, String[] groupPermissions,
 			String[] guestPermissions)
@@ -157,6 +162,7 @@ public class DLFileShortcutLocalServiceImpl
 			fileShortcut, groupPermissions, guestPermissions);
 	}
 
+	@Override
 	public void deleteFileShortcut(DLFileShortcut fileShortcut)
 		throws PortalException, SystemException {
 
@@ -182,6 +188,7 @@ public class DLFileShortcutLocalServiceImpl
 			DLFileShortcut.class.getName(), fileShortcut.getFileShortcutId());
 	}
 
+	@Override
 	public void deleteFileShortcut(long fileShortcutId)
 		throws PortalException, SystemException {
 
@@ -191,6 +198,7 @@ public class DLFileShortcutLocalServiceImpl
 		deleteFileShortcut(fileShortcut);
 	}
 
+	@Override
 	public void deleteFileShortcuts(long toFileEntryId)
 		throws PortalException, SystemException {
 
@@ -202,12 +210,14 @@ public class DLFileShortcutLocalServiceImpl
 		}
 	}
 
+	@Override
 	public void deleteFileShortcuts(long groupId, long folderId)
 		throws PortalException, SystemException {
 
 		deleteFileShortcuts(groupId, folderId, true);
 	}
 
+	@Override
 	public void deleteFileShortcuts(
 			long groupId, long folderId, boolean includeTrashedEntries)
 		throws PortalException, SystemException {
@@ -222,6 +232,7 @@ public class DLFileShortcutLocalServiceImpl
 		}
 	}
 
+	@Override
 	public void disableFileShortcuts(long toFileEntryId)
 		throws SystemException {
 
@@ -235,6 +246,7 @@ public class DLFileShortcutLocalServiceImpl
 		}
 	}
 
+	@Override
 	public void enableFileShortcuts(long toFileEntryId) throws SystemException {
 		List<DLFileShortcut> fileShortcuts =
 			dlFileShortcutPersistence.findByToFileEntryId(toFileEntryId);
@@ -246,12 +258,14 @@ public class DLFileShortcutLocalServiceImpl
 		}
 	}
 
+	@Override
 	public DLFileShortcut getFileShortcut(long fileShortcutId)
 		throws PortalException, SystemException {
 
 		return dlFileShortcutPersistence.findByPrimaryKey(fileShortcutId);
 	}
 
+	@Override
 	public List<DLFileShortcut> getFileShortcuts(
 			long groupId, long folderId, boolean active, int status, int start,
 			int end)
@@ -261,6 +275,7 @@ public class DLFileShortcutLocalServiceImpl
 			groupId, folderId, active, status, start, end);
 	}
 
+	@Override
 	public int getFileShortcutsCount(
 			long groupId, long folderId, boolean active, int status)
 		throws SystemException {
@@ -269,6 +284,7 @@ public class DLFileShortcutLocalServiceImpl
 			groupId, folderId, active, status);
 	}
 
+	@Override
 	public void updateAsset(
 			long userId, DLFileShortcut fileShortcut, long[] assetCategoryIds,
 			String[] assetTagNames)
@@ -286,6 +302,7 @@ public class DLFileShortcutLocalServiceImpl
 			fileEntry.getDescription(), null, null, null, 0, 0, null, false);
 	}
 
+	@Override
 	public DLFileShortcut updateFileShortcut(
 			long userId, long fileShortcutId, long folderId, long toFileEntryId,
 			ServiceContext serviceContext)
@@ -330,6 +347,7 @@ public class DLFileShortcutLocalServiceImpl
 		return fileShortcut;
 	}
 
+	@Override
 	public void updateFileShortcuts(
 			long oldToFileEntryId, long newToFileEntryId)
 		throws SystemException {
@@ -344,6 +362,7 @@ public class DLFileShortcutLocalServiceImpl
 		}
 	}
 
+	@Override
 	public void updateStatus(
 			long userId, long fileShortcutId, int status,
 			ServiceContext serviceContext)

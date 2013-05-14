@@ -33,6 +33,7 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 		_className = className;
 	}
 
+	@Override
 	public BaseRepository getInstance() throws Exception {
 		if (_classLoader == null) {
 			return (BaseRepository)InstanceFactory.newInstance(_className);

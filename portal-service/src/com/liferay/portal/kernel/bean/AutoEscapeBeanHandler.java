@@ -47,6 +47,7 @@ public class AutoEscapeBeanHandler implements InvocationHandler, Serializable {
 		return _bean;
 	}
 
+	@Override
 	public Object invoke(Object proxy, Method method, Object[] arguments)
 		throws Throwable {
 

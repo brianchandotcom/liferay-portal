@@ -39,6 +39,7 @@ public class IntrabandBridgeMessageListener implements MessageListener {
 		_messageType = systemDataType.getValue();
 	}
 
+	@Override
 	public void receive(Message message) {
 		Serializer serializer = new Serializer();
 

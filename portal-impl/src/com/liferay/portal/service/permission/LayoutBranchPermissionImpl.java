@@ -26,6 +26,7 @@ import com.liferay.portal.service.LayoutBranchLocalServiceUtil;
  */
 public class LayoutBranchPermissionImpl implements LayoutBranchPermission {
 
+	@Override
 	public void check(
 			PermissionChecker permissionChecker, LayoutBranch layoutBranch,
 			String actionId)
@@ -36,6 +37,7 @@ public class LayoutBranchPermissionImpl implements LayoutBranchPermission {
 		}
 	}
 
+	@Override
 	public void check(
 			PermissionChecker permissionChecker, long layoutBranchId,
 			String actionId)
@@ -46,6 +48,7 @@ public class LayoutBranchPermissionImpl implements LayoutBranchPermission {
 		}
 	}
 
+	@Override
 	public boolean contains(
 		PermissionChecker permissionChecker, LayoutBranch layoutBranch,
 		String actionId) {
@@ -55,6 +58,7 @@ public class LayoutBranchPermissionImpl implements LayoutBranchPermission {
 			layoutBranch.getLayoutBranchId(), actionId);
 	}
 
+	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, long layoutBranchId,
 			String actionId)

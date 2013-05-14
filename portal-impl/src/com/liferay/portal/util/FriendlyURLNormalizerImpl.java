@@ -33,10 +33,12 @@ import java.util.Arrays;
 @DoPrivileged
 public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 
+	@Override
 	public String normalize(String friendlyURL) {
 		return normalize(friendlyURL, null);
 	}
 
+	@Override
 	public String normalize(String friendlyURL, char[] replaceChars) {
 		if (Validator.isNull(friendlyURL)) {
 			return friendlyURL;

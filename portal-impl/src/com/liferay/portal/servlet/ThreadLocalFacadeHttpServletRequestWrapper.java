@@ -54,6 +54,7 @@ public class ThreadLocalFacadeHttpServletRequestWrapper
 		}
 	}
 
+	@Override
 	public void close() {
 		if (_servletRequestWrapper != null) {
 			HttpServletRequest nextHttpServletRequest =

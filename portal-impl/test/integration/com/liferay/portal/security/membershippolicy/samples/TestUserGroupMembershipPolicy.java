@@ -33,6 +33,7 @@ import org.junit.Assert;
 public class TestUserGroupMembershipPolicy
 	extends BaseUserGroupMembershipPolicy {
 
+	@Override
 	public void checkMembership(
 			long[] userIds, long[] addUserGroupIds, long[] removeUserGroupIds)
 		throws PortalException {
@@ -67,6 +68,7 @@ public class TestUserGroupMembershipPolicy
 		}
 	}
 
+	@Override
 	public void propagateMembership(
 		long[] userIds, long[] addUserGroupIds, long[] removeUserGroupIds) {
 
@@ -83,6 +85,7 @@ public class TestUserGroupMembershipPolicy
 		verifyPolicy();
 	}
 
+	@Override
 	public void verifyPolicy(
 		UserGroup userGroup, UserGroup oldUserGroup,
 		Map<String, Serializable> oldExpandoAttributes) {

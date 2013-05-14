@@ -157,6 +157,7 @@ public class ImageToolImpl implements ImageTool {
 		}
 	}
 
+	@Override
 	public Future<RenderedImage> convertCMYKtoRGB(byte[] bytes, String type) {
 		ImageMagick imageMagick = getImageMagick();
 
@@ -207,6 +208,7 @@ public class ImageToolImpl implements ImageTool {
 		return null;
 	}
 
+	@Override
 	public BufferedImage convertImageType(BufferedImage sourceImage, int type) {
 		BufferedImage targetImage = new BufferedImage(
 			sourceImage.getWidth(), sourceImage.getHeight(), type);
@@ -220,6 +222,7 @@ public class ImageToolImpl implements ImageTool {
 		return targetImage;
 	}
 
+	@Override
 	public void encodeGIF(RenderedImage renderedImage, OutputStream os)
 		throws IOException {
 
@@ -240,6 +243,7 @@ public class ImageToolImpl implements ImageTool {
 		}
 	}
 
+	@Override
 	public void encodeWBMP(RenderedImage renderedImage, OutputStream os)
 		throws IOException {
 
@@ -284,6 +288,7 @@ public class ImageToolImpl implements ImageTool {
 		}
 	}
 
+	@Override
 	public BufferedImage getBufferedImage(RenderedImage renderedImage) {
 		if (renderedImage instanceof BufferedImage) {
 			return (BufferedImage)renderedImage;
@@ -296,6 +301,7 @@ public class ImageToolImpl implements ImageTool {
 		}
 	}
 
+	@Override
 	public byte[] getBytes(RenderedImage renderedImage, String contentType)
 		throws IOException {
 
@@ -306,26 +312,32 @@ public class ImageToolImpl implements ImageTool {
 		return baos.toByteArray();
 	}
 
+	@Override
 	public Image getDefaultCompanyLogo() {
 		return _defaultCompanyLogo;
 	}
 
+	@Override
 	public Image getDefaultOrganizationLogo() {
 		return _defaultOrganizationLogo;
 	}
 
+	@Override
 	public Image getDefaultSpacer() {
 		return _defaultSpacer;
 	}
 
+	@Override
 	public Image getDefaultUserFemalePortrait() {
 		return _defaultUserFemalePortrait;
 	}
 
+	@Override
 	public Image getDefaultUserMalePortrait() {
 		return _defaultUserMalePortrait;
 	}
 
+	@Override
 	public Image getImage(byte[] bytes) throws IOException {
 		if (bytes == null) {
 			return null;
@@ -356,18 +368,21 @@ public class ImageToolImpl implements ImageTool {
 		return image;
 	}
 
+	@Override
 	public Image getImage(File file) throws IOException {
 		byte[] bytes = _fileUtil.getBytes(file);
 
 		return getImage(bytes);
 	}
 
+	@Override
 	public Image getImage(InputStream is) throws IOException {
 		byte[] bytes = _fileUtil.getBytes(is, -1, true);
 
 		return getImage(bytes);
 	}
 
+	@Override
 	public Image getImage(InputStream is, boolean cleanUpStream)
 		throws IOException {
 
@@ -376,6 +391,7 @@ public class ImageToolImpl implements ImageTool {
 		return getImage(bytes);
 	}
 
+	@Override
 	public boolean isNullOrDefaultSpacer(byte[] bytes) {
 		if ((bytes == null) || (bytes.length == 0) ||
 			Arrays.equals(bytes, getDefaultSpacer().getTextObj())) {
@@ -387,6 +403,7 @@ public class ImageToolImpl implements ImageTool {
 		}
 	}
 
+	@Override
 	public ImageBag read(byte[] bytes) {
 		RenderedImage renderedImage = null;
 		String type = TYPE_NOT_AVAILABLE;
@@ -412,14 +429,17 @@ public class ImageToolImpl implements ImageTool {
 		return new ImageBag(renderedImage, type);
 	}
 
+	@Override
 	public ImageBag read(File file) throws IOException {
 		return read(_fileUtil.getBytes(file));
 	}
 
+	@Override
 	public ImageBag read(InputStream inputStream) throws IOException {
 		return read(_fileUtil.getBytes(inputStream));
 	}
 
+	@Override
 	public RenderedImage scale(RenderedImage renderedImage, int width) {
 		if (width <= 0) {
 			return renderedImage;
@@ -454,6 +474,7 @@ public class ImageToolImpl implements ImageTool {
 		return scaledBufferedImage;
 	}
 
+	@Override
 	public RenderedImage scale(
 		RenderedImage renderedImage, int maxHeight, int maxWidth) {
 
@@ -537,6 +558,7 @@ public class ImageToolImpl implements ImageTool {
 		return scaledBufferedImage;
 	}
 
+	@Override
 	public void write(
 			RenderedImage renderedImage, String contentType, OutputStream os)
 		throws IOException {

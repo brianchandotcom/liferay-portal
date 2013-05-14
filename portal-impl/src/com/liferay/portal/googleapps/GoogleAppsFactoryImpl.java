@@ -30,18 +30,22 @@ import java.util.concurrent.ConcurrentHashMap;
 @DoPrivileged
 public class GoogleAppsFactoryImpl implements GoogleAppsFactory {
 
+	@Override
 	public GEmailSettingsManager getGEmailSettingsManager(long companyId) {
 		return getGoogleApps(companyId).getGEmailSettingsManager();
 	}
 
+	@Override
 	public GGroupManager getGGroupManager(long companyId) {
 		return getGoogleApps(companyId).getGGroupManager();
 	}
 
+	@Override
 	public GNicknameManager getGNicknameManager(long companyId) {
 		return getGoogleApps(companyId).getGNicknameManager();
 	}
 
+	@Override
 	public GUserManager getGUserManager(long companyId) {
 		return getGoogleApps(companyId).getGUserManager();
 	}

@@ -24,6 +24,7 @@ public class ShoppingItemFieldImpl extends ShoppingItemFieldBaseImpl {
 	public ShoppingItemFieldImpl() {
 	}
 
+	@Override
 	public String[] getValuesArray() {
 		return _valuesArray;
 	}
@@ -35,6 +36,7 @@ public class ShoppingItemFieldImpl extends ShoppingItemFieldBaseImpl {
 		super.setValues(values);
 	}
 
+	@Override
 	public void setValuesArray(String[] valuesArray) {
 		_valuesArray = valuesArray;
 

@@ -41,18 +41,22 @@ public class ShardSessionFactoryTargetSource implements TargetSource {
 		return _sessionFactory.get();
 	}
 
+	@Override
 	public Object getTarget() throws Exception {
 		return getSessionFactory();
 	}
 
+	@Override
 	public Class<?> getTargetClass() {
 		return _sessionFactories.get(PropsValues.SHARD_DEFAULT_NAME).getClass();
 	}
 
+	@Override
 	public boolean isStatic() {
 		return false;
 	}
 
+	@Override
 	public void releaseTarget(Object target) throws Exception {
 	}
 

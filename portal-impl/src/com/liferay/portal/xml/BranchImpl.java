@@ -35,24 +35,28 @@ public class BranchImpl extends NodeImpl implements Branch {
 		_branch = branch;
 	}
 
+	@Override
 	public void add(Comment comment) {
 		CommentImpl commentImpl = (CommentImpl)comment;
 
 		_branch.add(commentImpl.getWrappedComment());
 	}
 
+	@Override
 	public void add(Element element) {
 		ElementImpl elementImpl = (ElementImpl)element;
 
 		_branch.add(elementImpl.getWrappedElement());
 	}
 
+	@Override
 	public void add(Node node) {
 		NodeImpl nodeImpl = (NodeImpl)node;
 
 		_branch.add(nodeImpl.getWrappedNode());
 	}
 
+	@Override
 	public void add(ProcessingInstruction processingInstruction) {
 		ProcessingInstructionImpl processingInstructionImpl =
 			(ProcessingInstructionImpl)processingInstruction;
@@ -61,34 +65,41 @@ public class BranchImpl extends NodeImpl implements Branch {
 			processingInstructionImpl.getWrappedProcessingInstruction());
 	}
 
+	@Override
 	public Element addElement(QName qName) {
 		QNameImpl qNameImpl = (QNameImpl)qName;
 
 		return new ElementImpl(_branch.addElement(qNameImpl.getWrappedQName()));
 	}
 
+	@Override
 	public Element addElement(String name) {
 		return new ElementImpl(_branch.addElement(name));
 	}
 
+	@Override
 	public Element addElement(String qualifiedName, String namespaceURI) {
 		return new ElementImpl(_branch.addElement(qualifiedName, namespaceURI));
 	}
 
+	@Override
 	public void appendContent(Branch branch) {
 		BranchImpl branchImpl = (BranchImpl)branch;
 
 		_branch.appendContent(branchImpl.getWrappedBranch());
 	}
 
+	@Override
 	public void clearContent() {
 		_branch.clearContent();
 	}
 
+	@Override
 	public List<Node> content() {
 		return SAXReaderImpl.toNewNodes(_branch.content());
 	}
 
+	@Override
 	public Element elementByID(String elementID) {
 		return new ElementImpl(_branch.elementByID(elementID));
 	}
@@ -117,12 +128,14 @@ public class BranchImpl extends NodeImpl implements Branch {
 		return _branch.hashCode();
 	}
 
+	@Override
 	public int indexOf(Node node) {
 		NodeImpl nodeImpl = (NodeImpl)node;
 
 		return _branch.indexOf(nodeImpl.getWrappedNode());
 	}
 
+	@Override
 	public Node node(int index) {
 		org.dom4j.Node node = _branch.node(index);
 
@@ -154,18 +167,22 @@ public class BranchImpl extends NodeImpl implements Branch {
 		}
 	}
 
+	@Override
 	public int nodeCount() {
 		return _branch.nodeCount();
 	}
 
+	@Override
 	public Iterator<Node> nodeIterator() {
 		return content().iterator();
 	}
 
+	@Override
 	public void normalize() {
 		_branch.normalize();
 	}
 
+	@Override
 	public ProcessingInstruction processingInstruction(String target) {
 		org.dom4j.ProcessingInstruction processingInstruction =
 			_branch.processingInstruction(target);
@@ -178,34 +195,40 @@ public class BranchImpl extends NodeImpl implements Branch {
 		}
 	}
 
+	@Override
 	public List<ProcessingInstruction> processingInstructions() {
 		return SAXReaderImpl.toNewProcessingInstructions(
 			_branch.processingInstructions());
 	}
 
+	@Override
 	public List<ProcessingInstruction> processingInstructions(String target) {
 		return SAXReaderImpl.toNewProcessingInstructions(
 			_branch.processingInstructions(target));
 	}
 
+	@Override
 	public boolean remove(Comment comment) {
 		CommentImpl commentImpl = (CommentImpl)comment;
 
 		return _branch.remove(commentImpl.getWrappedComment());
 	}
 
+	@Override
 	public boolean remove(Element element) {
 		ElementImpl elementImpl = (ElementImpl)element;
 
 		return _branch.remove(elementImpl.getWrappedElement());
 	}
 
+	@Override
 	public boolean remove(Node node) {
 		NodeImpl nodeImpl = (NodeImpl)node;
 
 		return _branch.remove(nodeImpl.getWrappedNode());
 	}
 
+	@Override
 	public boolean remove(ProcessingInstruction processingInstruction) {
 		ProcessingInstructionImpl processingInstructionImpl =
 			(ProcessingInstructionImpl)processingInstruction;
@@ -214,14 +237,17 @@ public class BranchImpl extends NodeImpl implements Branch {
 			processingInstructionImpl.getWrappedProcessingInstruction());
 	}
 
+	@Override
 	public boolean removeProcessingInstruction(String target) {
 		return _branch.removeProcessingInstruction(target);
 	}
 
+	@Override
 	public void setContent(List<Node> content) {
 		_branch.setContent(SAXReaderImpl.toOldNodes(content));
 	}
 
+	@Override
 	public void setProcessingInstructions(
 		List<ProcessingInstruction> processingInstructions) {
 

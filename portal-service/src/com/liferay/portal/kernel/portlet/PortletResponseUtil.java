@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalUtil;
 
@@ -34,14 +34,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
 import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
 
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletRequest;
 import javax.portlet.ResourceResponse;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -115,7 +113,19 @@ public class PortletResponseUtil {
 			String fileName, byte[] bytes, String contentType)
 		throws IOException {
 
-		setHeaders(portletRequest, mimeResponse, fileName, contentType);
+		sendFile(
+			portletRequest, mimeResponse, fileName, bytes, contentType, null);
+	}
+
+	public static void sendFile(
+			PortletRequest portletRequest, MimeResponse mimeResponse,
+			String fileName, byte[] bytes, String contentType,
+			String contentDispositionType)
+		throws IOException {
+
+		setHeaders(
+			portletRequest, mimeResponse, fileName, contentType,
+			contentDispositionType);
 
 		write(mimeResponse, bytes);
 	}
@@ -134,7 +144,19 @@ public class PortletResponseUtil {
 			String contentType)
 		throws IOException {
 
-		setHeaders(portletRequest, mimeResponse, fileName, contentType);
+		sendFile(
+			portletRequest, mimeResponse, fileName, is, 0, contentType, null);
+	}
+
+	public static void sendFile(
+			PortletRequest portletRequest, MimeResponse mimeResponse,
+			String fileName, InputStream is, int contentLength,
+			String contentType, String contentDispositionType)
+		throws IOException {
+
+		setHeaders(
+			portletRequest, mimeResponse, fileName, contentType,
+			contentDispositionType);
 
 		write(mimeResponse, is, contentLength);
 	}
@@ -271,7 +293,7 @@ public class PortletResponseUtil {
 
 	protected static void setHeaders(
 		PortletRequest portletRequest, MimeResponse mimeResponse,
-		String fileName, String contentType) {
+		String fileName, String contentType, String contentDispositionType) {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Sending file of type " + contentType);
@@ -287,8 +309,7 @@ public class PortletResponseUtil {
 			HttpHeaders.CACHE_CONTROL, HttpHeaders.CACHE_CONTROL_PRIVATE_VALUE);
 
 		if (Validator.isNotNull(fileName)) {
-			String contentDisposition =
-				"attachment; filename=\"" + fileName + "\"";
+			String contentDispositionFilename = "filename=\"" + fileName + "\"";
 
 			// If necessary for non-ASCII characters, encode based on RFC 2184.
 			// However, not all browsers support RFC 2184. See LEP-3127.
@@ -311,12 +332,12 @@ public class PortletResponseUtil {
 						PortalUtil.getHttpServletRequest(portletRequest);
 
 					if (BrowserSnifferUtil.isIe(request)) {
-						contentDisposition =
-							"attachment; filename=\"" + encodedFileName + "\"";
+						contentDispositionFilename =
+							"filename=\"" + encodedFileName + "\"";
 					}
 					else {
-						contentDisposition =
-							"attachment; filename*=UTF-8''" + encodedFileName;
+						contentDispositionFilename =
+							"filename*=UTF-8''" + encodedFileName;
 					}
 				}
 			}
@@ -326,28 +347,41 @@ public class PortletResponseUtil {
 				}
 			}
 
-			String extension = GetterUtil.getString(
-				FileUtil.getExtension(fileName)).toLowerCase();
+			if (Validator.isNull(contentDispositionType)) {
+				String extension = GetterUtil.getString(
+					FileUtil.getExtension(fileName)).toLowerCase();
 
-			String[] mimeTypesContentDispositionInline = null;
+				String[] mimeTypesContentDispositionInline = null;
 
-			try {
-				mimeTypesContentDispositionInline = PropsUtil.getArray(
-					"mime.types.content.disposition.inline");
+				try {
+					mimeTypesContentDispositionInline = PropsUtil.getArray(
+						"mime.types.content.disposition.inline");
+				}
+				catch (Exception e) {
+					mimeTypesContentDispositionInline = new String[0];
+				}
+
+				if (ArrayUtil.contains(
+						mimeTypesContentDispositionInline, extension)) {
+
+					contentDispositionType =
+						HttpHeaders.CONTENT_DISPOSITION_INLINE;
+				}
+				else {
+					contentDispositionType =
+						HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT;
+				}
 			}
-			catch (Exception e) {
-				mimeTypesContentDispositionInline = new String[0];
-			}
 
-			if (ArrayUtil.contains(
-					mimeTypesContentDispositionInline, extension)) {
+			StringBundler sb = new StringBundler(4);
 
-				contentDisposition = StringUtil.replace(
-					contentDisposition, "attachment; ", "inline; ");
-			}
+			sb.append(contentDispositionType);
+			sb.append(StringPool.SEMICOLON);
+			sb.append(StringPool.SPACE);
+			sb.append(contentDispositionFilename);
 
 			mimeResponse.setProperty(
-				HttpHeaders.CONTENT_DISPOSITION, contentDisposition);
+				HttpHeaders.CONTENT_DISPOSITION, sb.toString());
 		}
 	}
 

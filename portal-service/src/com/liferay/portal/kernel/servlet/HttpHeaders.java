@@ -95,6 +95,10 @@ public interface HttpHeaders {
 
 	public static final String CACHE_CONTROL_PUBLIC_VALUE = "public";
 
+	public static final String CONTENT_DISPOSITION_ATTACHMENT = "attachment";
+
+	public static final String CONTENT_DISPOSITION_INLINE = "inline";
+
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #CONNECTION_CLOSE_VALUE}
 	 */

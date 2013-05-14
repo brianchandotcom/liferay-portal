@@ -43,12 +43,12 @@ public class TearDownDLDocumentTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[5]/a");
 		assertEquals(RuntimeVariables.replace("Delete"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[5]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[5]/a"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete the selected entries[\\s\\S]$"));

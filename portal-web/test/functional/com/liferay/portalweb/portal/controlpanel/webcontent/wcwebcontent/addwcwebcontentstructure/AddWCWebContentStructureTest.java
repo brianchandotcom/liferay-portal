@@ -49,21 +49,21 @@ public class AddWCWebContentStructureTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Add"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Web Content')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Basic Web Content')]");
 				assertEquals(RuntimeVariables.replace("Basic Web Content"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Web Content')]"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Web Content')]",
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Basic Web Content')]"));
+				selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Basic Web Content')]",
 					RuntimeVariables.replace("Basic Web Content"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForElementPresent(
 					"//script[contains(@src,'/html/js/editor/ckeditor/plugins/restore/plugin.js')]");
 				selenium.waitForVisible(
-					"//fieldset[@class='aui-fieldset article-structure-toolbar ']/div/div/span[2]/a");
+					"//fieldset[@class='fieldset article-structure-toolbar ']/div/div/span[2]/a");
 				assertEquals(RuntimeVariables.replace("Select"),
 					selenium.getText(
-						"//fieldset[@class='aui-fieldset article-structure-toolbar ']/div/div/span[2]/a"));
-				selenium.clickAt("//fieldset[@class='aui-fieldset article-structure-toolbar ']/div/div/span[2]/a",
+						"//fieldset[@class='fieldset article-structure-toolbar ']/div/div/span[2]/a"));
+				selenium.clickAt("//fieldset[@class='fieldset article-structure-toolbar ']/div/div/span[2]/a",
 					RuntimeVariables.replace("Select"));
 				selenium.waitForVisible(
 					"//iframe[contains(@src,'_15_selectStructure')]");
@@ -123,11 +123,11 @@ public class AddWCWebContentStructureTest extends BaseTestCase {
 						"//input[contains(@id,'_15_boolean') and @type='checkbox']"));
 				selenium.clickAt("//div[contains(@class,'aui-datepicker-button')]/button",
 					RuntimeVariables.replace("Datepicker Button"));
-				selenium.select("//select[@class='aui-datepicker-month']",
+				selenium.select("//select[@class='datepicker-month']",
 					RuntimeVariables.replace("value=0"));
-				selenium.select("//select[@class='aui-datepicker-day']",
+				selenium.select("//select[@class='datepicker-day']",
 					RuntimeVariables.replace("value=1"));
-				selenium.select("//select[@class='aui-datepicker-year']",
+				selenium.select("//select[@class='datepicker-year']",
 					RuntimeVariables.replace("value=2020"));
 				assertEquals(RuntimeVariables.replace("Decimal"),
 					selenium.getText("//label[contains(@for,'_15_decimal')]"));

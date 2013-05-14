@@ -41,12 +41,12 @@ public class AddOrganizationStagingOrganizationWCDTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Regular Organization')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Regular Organization')]/a");
 		assertEquals(RuntimeVariables.replace("Regular Organization"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Regular Organization')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Regular Organization')]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Regular Organization')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Regular Organization')]/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_125_name']",
 			RuntimeVariables.replace(
@@ -100,12 +100,12 @@ public class AddOrganizationStagingOrganizationWCDTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Site')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Manage Site')]/a");
 		assertEquals(RuntimeVariables.replace("Manage Site"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Site')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Manage Site')]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Site')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Manage Site')]/a"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isPartialText("//a[@id='_165_siteUrlLink']",
 				"Site URL"));

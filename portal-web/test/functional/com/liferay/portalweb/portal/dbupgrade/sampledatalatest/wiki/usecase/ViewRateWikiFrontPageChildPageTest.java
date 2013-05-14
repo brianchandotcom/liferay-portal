@@ -35,21 +35,18 @@ public class ViewRateWikiFrontPageChildPageTest extends BaseTestCase {
 			RuntimeVariables.replace("Wiki FrontPage ChildPage Title"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Average (1 Vote)"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[2]"));
+			selenium.getText("xPath=(//div[@class='rating-label-element'])[2]"));
 		assertTrue(selenium.isElementPresent(
-				"xPath=(//a[@class='aui-rating-element aui-rating-element-on'])[1]"));
+				"xPath=(//a[@class='rating-element rating-element-on'])[1]"));
 		assertTrue(selenium.isElementPresent(
-				"xPath=(//a[@class='aui-rating-element aui-rating-element-on'])[2]"));
+				"xPath=(//a[@class='rating-element rating-element-on'])[2]"));
 		assertTrue(selenium.isElementPresent(
-				"xPath=(//a[@class='aui-rating-element aui-rating-element-on'])[3]"));
+				"xPath=(//a[@class='rating-element rating-element-on'])[3]"));
 		assertTrue(selenium.isElementPresent(
-				"xPath=(//a[@class='aui-rating-element aui-rating-element-on'])[4]"));
-		assertTrue(selenium.isElementPresent(
-				"//a[@class='aui-rating-element ']"));
+				"xPath=(//a[@class='rating-element rating-element-on'])[4]"));
+		assertTrue(selenium.isElementPresent("//a[@class='rating-element ']"));
 		assertEquals(RuntimeVariables.replace("Average (1 Vote)"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[2]"));
+			selenium.getText("xPath=(//div[@class='rating-label-element'])[2]"));
 		assertTrue(selenium.isVisible(
 				"xPath=(//img[contains(@class,'aui-rating-element aui-rating-element-on')])[4]"));
 		assertTrue(selenium.isElementNotPresent(

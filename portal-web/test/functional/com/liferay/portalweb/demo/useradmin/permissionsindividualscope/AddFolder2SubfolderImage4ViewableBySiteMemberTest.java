@@ -61,11 +61,11 @@ public class AddFolder2SubfolderImage4ViewableBySiteMemberTest
 				selenium.clickAt("//span[@title='Add']/ul/li/strong/a",
 					RuntimeVariables.replace("Add"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a");
+					"//div[@class='lfr-menu-list unstyled']/ul/li[4]/a");
 				assertEquals(RuntimeVariables.replace("Basic Document"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a",
+						"//div[@class='lfr-menu-list unstyled']/ul/li[4]/a"));
+				selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li[4]/a",
 					RuntimeVariables.replace("Basic Document"));
 				selenium.waitForPageToLoad("30000");
 				selenium.uploadCommonFile("//input[@id='_20_file']",

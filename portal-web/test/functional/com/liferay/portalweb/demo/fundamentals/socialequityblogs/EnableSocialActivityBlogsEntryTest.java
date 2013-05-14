@@ -42,18 +42,18 @@ public class EnableSocialActivityBlogsEntryTest extends BaseTestCase {
 		selenium.clickAt("link=Blogs Entry",
 			RuntimeVariables.replace("Blogs Entry"));
 		selenium.waitForVisible(
-			"//div[@class='aui-settings-display-content']/ul/li[2]/div/span");
+			"//div[@class='settings-display-content']/ul/li[2]/div/span");
 		assertEquals(RuntimeVariables.replace("Adds a Comment"),
 			selenium.getText(
-				"//div[@class='aui-settings-display-content']/ul/li[2]/div/span"));
+				"//div[@class='settings-display-content']/ul/li[2]/div/span"));
 		selenium.select("//select[@id='ADD_COMMENT_participationIncrement']",
 			RuntimeVariables.replace("2"));
 		selenium.select("//select[@id='ADD_COMMENT_contributionIncrement']",
 			RuntimeVariables.replace("2"));
 		assertEquals(RuntimeVariables.replace("Limit"),
 			selenium.getText(
-				"//div[@class='aui-settings-display-content']/ul/li[2]/div/div/div[2]/a[1]/span"));
-		selenium.clickAt("//div[@class='aui-settings-display-content']/ul/li[2]/div/div/div[2]/a[1]/span",
+				"//div[@class='settings-display-content']/ul/li[2]/div/div/div[2]/a[1]/span"));
+		selenium.clickAt("//div[@class='settings-display-content']/ul/li[2]/div/div/div[2]/a[1]/span",
 			RuntimeVariables.replace("Limit"));
 		selenium.waitForVisible(
 			"//select[@id='ADD_COMMENT_contributionLimitValue']");
@@ -61,8 +61,8 @@ public class EnableSocialActivityBlogsEntryTest extends BaseTestCase {
 			RuntimeVariables.replace("2"));
 		assertEquals(RuntimeVariables.replace("Reads a Blog"),
 			selenium.getText(
-				"//div[@class='aui-settings-display-content']/ul/li[3]/div/span"));
-		selenium.clickAt("//div[@class='aui-settings-display-content']/ul/li[3]/div/div/div[2]/a[2]/span",
+				"//div[@class='settings-display-content']/ul/li[3]/div/span"));
+		selenium.clickAt("//div[@class='settings-display-content']/ul/li[3]/div/div/div[2]/a[2]/span",
 			RuntimeVariables.replace("Close"));
 		selenium.waitForVisible(
 			"//ul[@class='settings-actions']/li[2]/div/span");
@@ -70,8 +70,8 @@ public class EnableSocialActivityBlogsEntryTest extends BaseTestCase {
 			selenium.getText("//ul[@class='settings-actions']/li[2]/div/span"));
 		assertEquals(RuntimeVariables.replace("Subscribes to a Blog"),
 			selenium.getText(
-				"//div[@class='aui-settings-display-content']/ul/li[3]/div/span"));
-		selenium.clickAt("//div[@class='aui-settings-display-content']/ul/li[3]/div/div/div[2]/a[2]/span",
+				"//div[@class='settings-display-content']/ul/li[3]/div/span"));
+		selenium.clickAt("//div[@class='settings-display-content']/ul/li[3]/div/div/div[2]/a[2]/span",
 			RuntimeVariables.replace("Close"));
 		selenium.waitForText("//ul[@class='settings-actions']/li[3]/div/span",
 			"Subscribes to a Blog");

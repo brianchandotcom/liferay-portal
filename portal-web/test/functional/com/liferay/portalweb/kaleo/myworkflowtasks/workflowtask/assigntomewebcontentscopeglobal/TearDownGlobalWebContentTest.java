@@ -45,12 +45,12 @@ public class TearDownGlobalWebContentTest extends BaseTestCase {
 				selenium.clickAt("//a[@id='_160_groupSelectorButton']/span",
 					RuntimeVariables.replace("Scope Selector"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a");
 				assertEquals(RuntimeVariables.replace("Global"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForText("//a[@id='_160_groupSelectorButton']/span",
 					"Global");
@@ -83,11 +83,11 @@ public class TearDownGlobalWebContentTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Move to the Recycle Bin')]");
 				assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]",
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Move to the Recycle Bin')]"));
+				selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Move to the Recycle Bin')]",
 					RuntimeVariables.replace("Move to the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForVisible(
@@ -117,12 +117,12 @@ public class TearDownGlobalWebContentTest extends BaseTestCase {
 				selenium.clickAt("//a[@id='_160_groupSelectorButton']/span",
 					RuntimeVariables.replace("Scope Selector"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a");
 				assertEquals(RuntimeVariables.replace("Global"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForText("//a[@id='_160_groupSelectorButton']/span",
 					"Global");

@@ -47,12 +47,12 @@ public class AddPageStagingCommunityQuartzTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[2]/a");
 		assertEquals(RuntimeVariables.replace("Manage Pages"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[2]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[2]/a"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Add Page"),
 			selenium.getText("//div[2]/span/button"));

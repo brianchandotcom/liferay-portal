@@ -51,7 +51,7 @@ public class AddDMFolderDocument1DMDTest extends BaseTestCase {
 			RuntimeVariables.replace("Basic Document"));
 		selenium.waitForPageToLoad("30000");
 		selenium.selectFrame("relative=top");
-		selenium.uploadCommonFile("//span[@class='aui-field aui-field-text']/span/span/input[contains(@id,'_file')]",
+		selenium.uploadCommonFile("//span[@class='field field-text']/span/span/input[contains(@id,'_file')]",
 			RuntimeVariables.replace("Document_1.txt"));
 		selenium.type("//input[contains(@id,'_title')]",
 			RuntimeVariables.replace("DM Folder Document1 Title"));

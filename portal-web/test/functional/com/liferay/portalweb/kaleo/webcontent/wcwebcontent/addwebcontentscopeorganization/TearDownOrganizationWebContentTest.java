@@ -46,11 +46,11 @@ public class TearDownOrganizationWebContentTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Liferay']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Scope Selector"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization Name')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Organization Name')]");
 				assertEquals(RuntimeVariables.replace("Organization Name"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization Name')]"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization Name')]",
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Organization Name')]"));
+				selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Organization Name')]",
 					RuntimeVariables.replace("Organization Name"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForText("//span[@title='Organization Name']/ul/li/strong/a/span",
@@ -85,11 +85,11 @@ public class TearDownOrganizationWebContentTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Move to the Recycle Bin')]");
 				assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]",
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Move to the Recycle Bin')]"));
+				selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Move to the Recycle Bin')]",
 					RuntimeVariables.replace("Move to the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
 
@@ -115,11 +115,11 @@ public class TearDownOrganizationWebContentTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Liferay']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Scope Selector"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization Name')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Organization Name')]");
 				assertEquals(RuntimeVariables.replace("Organization Name"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization Name')]"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization Name')]",
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Organization Name')]"));
+				selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Organization Name')]",
 					RuntimeVariables.replace("Organization Name"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForText("//span[@title='Organization Name']/ul/li/strong/a/span",

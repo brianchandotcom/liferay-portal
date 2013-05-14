@@ -45,12 +45,12 @@ public class AddWCWebContentTitleEscapeCharacterTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Web Content')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Basic Web Content')]");
 		assertEquals(RuntimeVariables.replace("Basic Web Content"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Web Content')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Basic Web Content')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Web Content')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Basic Web Content')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/html/js/editor/ckeditor/plugins/restore/plugin.js')]");

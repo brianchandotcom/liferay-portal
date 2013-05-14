@@ -48,12 +48,12 @@ public class AddPageStagingOrganizationWCDTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Site')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Manage Site')]/a");
 		assertEquals(RuntimeVariables.replace("Manage Site"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Site')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Manage Site')]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Site')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Manage Site')]/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Site Pages",
 			RuntimeVariables.replace("Site Pages"));
@@ -72,7 +72,6 @@ public class AddPageStagingOrganizationWCDTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace(
 				"Page Staging Organization Web Content Display"),
-			selenium.getText(
-				"//ul[@class='aui-tree-container']/li/div/div[3]/a"));
+			selenium.getText("//ul[@class='tree-container']/li/div/div[3]/a"));
 	}
 }

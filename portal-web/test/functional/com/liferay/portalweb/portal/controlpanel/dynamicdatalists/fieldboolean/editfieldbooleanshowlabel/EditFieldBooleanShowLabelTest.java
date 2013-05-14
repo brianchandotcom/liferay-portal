@@ -51,20 +51,20 @@ public class EditFieldBooleanShowLabelTest extends BaseTestCase {
 		selenium.clickAt("//tr[contains(.,'Data Definition')]//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Edit')]/a");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Edit')]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Edit')]/a"));
 		selenium.waitForPageToLoad("30000");
 		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Boolean"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[1]/div/label"));
+				"//div[@class='diagram-builder-drop-container']/div[1]/div/label"));
 		assertTrue(selenium.isVisible(
-				"//div[@class='aui-diagram-builder-drop-container']/div[1]/div/label"));
-		selenium.doubleClickAt("//div[@class='aui-diagram-builder-drop-container']/div[1]",
+				"//div[@class='diagram-builder-drop-container']/div[1]/div/label"));
+		selenium.doubleClickAt("//div[@class='diagram-builder-drop-container']/div[1]",
 			RuntimeVariables.replace("Boolean"));
 		selenium.waitForVisible("//div[@class='yui3-datatable-x-scroller']");
 		assertEquals(RuntimeVariables.replace("Show Label"),
@@ -72,15 +72,15 @@ public class EditFieldBooleanShowLabelTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Yes"),
 			selenium.getText("//tr[3]/td[2]"));
 		selenium.doubleClickAt("//tr[3]/td[2]", RuntimeVariables.replace("Yes"));
-		selenium.waitForVisible("//div[@class='aui-celleditor-element']");
-		selenium.clickAt("//div[@class='aui-celleditor-element']/label[2]/input",
+		selenium.waitForVisible("//div[@class='celleditor-element']");
+		selenium.clickAt("//div[@class='celleditor-element']/label[2]/input",
 			RuntimeVariables.replace("No"));
 		selenium.clickAt("//button[@type='submit']",
 			RuntimeVariables.replace("Save"));
 		assertEquals(RuntimeVariables.replace("No"),
 			selenium.getText("//tr[3]/td[2]"));
 		assertFalse(selenium.isVisible(
-				"//div[@class='aui-diagram-builder-drop-container']/div[1]/div/label"));
+				"//div[@class='diagram-builder-drop-container']/div[1]/div/label"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

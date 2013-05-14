@@ -51,18 +51,18 @@ public class ViewEditFieldBooleanTipTest extends BaseTestCase {
 		selenium.clickAt("//tr[contains(.,'Data Definition')]//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Edit')]/a");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Edit')]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Edit')]/a"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isVisible("//a[@class='aui-form-builder-icon-tip']"));
-		selenium.mouseOver("//a[@class='aui-form-builder-icon-tip']");
+		assertTrue(selenium.isVisible("//a[@class='form-builder-icon-tip']"));
+		selenium.mouseOver("//a[@class='form-builder-icon-tip']");
 		assertEquals(RuntimeVariables.replace("Boolean Field Tip Edited"),
 			selenium.getText(
-				"//div[@class='yui3-widget aui-component aui-overlay aui-overlaycontext aui-overlaycontextpanel aui-tooltip yui3-widget-positioned yui3-widget-stacked']"));
+				"//div[@class='yui3-widget component overlay overlaycontext overlaycontextpanel tooltip yui3-widget-positioned yui3-widget-stacked']"));
 		selenium.selectFrame("relative=top");
 	}
 }

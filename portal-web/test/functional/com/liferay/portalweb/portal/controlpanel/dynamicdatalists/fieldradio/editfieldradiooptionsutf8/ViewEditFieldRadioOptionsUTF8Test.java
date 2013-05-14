@@ -51,23 +51,23 @@ public class ViewEditFieldRadioOptionsUTF8Test extends BaseTestCase {
 		selenium.clickAt("//tr[contains(.,'Data Definition')]//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Edit')]/a");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Edit')]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Edit')]/a"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("\u308a\u3093\u3054"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[8]/div/div/div[1]/label"));
+				"//div[@class='diagram-builder-drop-container']/div[8]/div/div/div[1]/label"));
 		assertEquals(RuntimeVariables.replace("\u30d0\u30ca\u30ca"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[8]/div/div/div[2]/label"));
+				"//div[@class='diagram-builder-drop-container']/div[8]/div/div/div[2]/label"));
 		assertEquals(RuntimeVariables.replace(
 				"\u30af\u30e9\u30f3\u30d9\u30ea\u30fc"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[8]/div/div/div[3]/label"));
+				"//div[@class='diagram-builder-drop-container']/div[8]/div/div/div[3]/label"));
 		selenium.selectFrame("relative=top");
 	}
 }

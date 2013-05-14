@@ -33,11 +33,11 @@ public class ViewSchedulerEventStagingCommunityQuartzTest extends BaseTestCase {
 		selenium.clickAt("//span[@class='staging-icon-menu-container']/span/ul/li[1]/strong/a",
 			RuntimeVariables.replace("Staging"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[2]/a");
 		assertEquals(RuntimeVariables.replace("Schedule Publication to Live"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+				"//div[@class='lfr-menu-list unstyled']/ul/li[2]/a"));
+		selenium.click("//div[@class='lfr-menu-list unstyled']/ul/li[2]/a");
 		Thread.sleep(5000);
 		selenium.waitForText("//span[1]/a", "View All");
 		assertEquals(RuntimeVariables.replace("View All"),

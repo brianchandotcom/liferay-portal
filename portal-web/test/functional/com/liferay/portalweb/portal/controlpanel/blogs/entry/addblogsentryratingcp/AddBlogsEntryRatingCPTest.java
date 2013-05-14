@@ -44,14 +44,14 @@ public class AddBlogsEntryRatingCPTest extends BaseTestCase {
 			RuntimeVariables.replace("Blogs Entry Title"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isPartialText(
-				"xPath=(//div[@class='aui-rating-label-element'])[2]", "0 Votes"));
+				"xPath=(//div[@class='rating-label-element'])[2]", "0 Votes"));
 		selenium.waitForVisible(
 			"//div[@class='taglib-ratings stars']/div/div/a[5]");
 		selenium.clickAt("//div[@class='taglib-ratings stars']/div/div/a[5]",
 			RuntimeVariables.replace("Rate 5 Stars"));
-		selenium.waitForPartialText("xPath=(//div[@class='aui-rating-label-element'])[2]",
+		selenium.waitForPartialText("xPath=(//div[@class='rating-label-element'])[2]",
 			"1 Vote");
 		assertTrue(selenium.isPartialText(
-				"xPath=(//div[@class='aui-rating-label-element'])[2]", "1 Vote"));
+				"xPath=(//div[@class='rating-label-element'])[2]", "1 Vote"));
 	}
 }

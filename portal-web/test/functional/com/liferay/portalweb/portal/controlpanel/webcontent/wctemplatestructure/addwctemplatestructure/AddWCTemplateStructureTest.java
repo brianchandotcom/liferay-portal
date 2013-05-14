@@ -44,11 +44,11 @@ public class AddWCTemplateStructureTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Manage']/ul/li/strong/a",
 			RuntimeVariables.replace("Manage"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Structures')]");
 		assertEquals(RuntimeVariables.replace("Structures"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Structures')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Structures')]",
 			RuntimeVariables.replace("Structures"));
 		selenium.waitForVisible("//iframe[contains(@src,'Structures')]");
 		selenium.selectFrame("//iframe[contains(@src,'Structures')]");
@@ -67,15 +67,15 @@ public class AddWCTemplateStructureTest extends BaseTestCase {
 			RuntimeVariables.replace("WC Structure Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForVisible(
-			"//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_boolean')]");
+			"//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_boolean')]");
 		assertEquals(RuntimeVariables.replace("Boolean"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_boolean')]/div/label"));
-		selenium.clickAt("//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_boolean')]",
+				"//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_boolean')]/div/label"));
+		selenium.clickAt("//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_boolean')]",
 			RuntimeVariables.replace("Boolean Field"));
 		selenium.waitForVisible(
-			"//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_boolean')]/div[3]/span/span/button[@title='Edit']");
-		selenium.clickAt("//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_boolean')]/div[3]/span/span/button[@title='Edit']",
+			"//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_boolean')]/div[3]/span/span/button[@title='Edit']");
+		selenium.clickAt("//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_boolean')]/div[3]/span/span/button[@title='Edit']",
 			RuntimeVariables.replace("Edit Boolean Settings"));
 		assertEquals(RuntimeVariables.replace("Name"),
 			selenium.getText(
@@ -90,12 +90,12 @@ public class AddWCTemplateStructureTest extends BaseTestCase {
 			RuntimeVariables.replace("Save"));
 		assertEquals(RuntimeVariables.replace("Date"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_date')]/div/label"));
-		selenium.clickAt("//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_date')]",
+				"//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_date')]/div/label"));
+		selenium.clickAt("//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_date')]",
 			RuntimeVariables.replace("Date Field"));
 		selenium.waitForVisible(
-			"//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_date')]/div[3]/span/span/button[@title='Edit']");
-		selenium.clickAt("//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_date')]/div[3]/span/span/button[@title='Edit']",
+			"//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_date')]/div[3]/span/span/button[@title='Edit']");
+		selenium.clickAt("//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_date')]/div[3]/span/span/button[@title='Edit']",
 			RuntimeVariables.replace("Edit Date Settings"));
 		assertEquals(RuntimeVariables.replace("Name"),
 			selenium.getText(
@@ -110,12 +110,12 @@ public class AddWCTemplateStructureTest extends BaseTestCase {
 			RuntimeVariables.replace("Save"));
 		assertEquals(RuntimeVariables.replace("Decimal"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_decimal')]/div/label"));
-		selenium.clickAt("//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_decimal')]",
+				"//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_decimal')]/div/label"));
+		selenium.clickAt("//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_decimal')]",
 			RuntimeVariables.replace("Decimal Field"));
 		selenium.waitForVisible(
-			"//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_decimal')]/div[3]/span/span/button[@title='Edit']");
-		selenium.clickAt("//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_decimal')]/div[3]/span/span/button[@title='Edit']",
+			"//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_decimal')]/div[3]/span/span/button[@title='Edit']");
+		selenium.clickAt("//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_decimal')]/div[3]/span/span/button[@title='Edit']",
 			RuntimeVariables.replace("Edit Decimal Settings"));
 		assertEquals(RuntimeVariables.replace("Name"),
 			selenium.getText(
@@ -130,12 +130,12 @@ public class AddWCTemplateStructureTest extends BaseTestCase {
 			RuntimeVariables.replace("Save"));
 		assertEquals(RuntimeVariables.replace("Documents and Media"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_documents_and_media')]/div/label"));
-		selenium.clickAt("//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_documents_and_media')]",
+				"//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_documents_and_media')]/div/label"));
+		selenium.clickAt("//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_documents_and_media')]",
 			RuntimeVariables.replace("Documents and Media Field"));
 		selenium.waitForVisible(
-			"//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_documents_and_media')]/div[3]/span/span/button[@title='Edit']");
-		selenium.clickAt("//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_documents_and_media')]/div[3]/span/span/button[@title='Edit']",
+			"//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_documents_and_media')]/div[3]/span/span/button[@title='Edit']");
+		selenium.clickAt("//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_documents_and_media')]/div[3]/span/span/button[@title='Edit']",
 			RuntimeVariables.replace("Edit Documents and Media Settings"));
 		assertEquals(RuntimeVariables.replace("Name"),
 			selenium.getText(
@@ -150,12 +150,12 @@ public class AddWCTemplateStructureTest extends BaseTestCase {
 			RuntimeVariables.replace("Save"));
 		assertEquals(RuntimeVariables.replace("File Upload"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_file_upload')]/div/label"));
-		selenium.clickAt("//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_file_upload')]",
+				"//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_file_upload')]/div/label"));
+		selenium.clickAt("//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_file_upload')]",
 			RuntimeVariables.replace("File Upload Field"));
 		selenium.waitForVisible(
-			"//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_file_upload')]/div[3]/span/span/button[@title='Edit']");
-		selenium.clickAt("//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_file_upload')]/div[3]/span/span/button[@title='Edit']",
+			"//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_file_upload')]/div[3]/span/span/button[@title='Edit']");
+		selenium.clickAt("//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_file_upload')]/div[3]/span/span/button[@title='Edit']",
 			RuntimeVariables.replace("Edit File Upload Settings"));
 		assertEquals(RuntimeVariables.replace("Name"),
 			selenium.getText(
@@ -170,12 +170,12 @@ public class AddWCTemplateStructureTest extends BaseTestCase {
 			RuntimeVariables.replace("Save"));
 		assertEquals(RuntimeVariables.replace("HTML"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_html')]/div/label"));
-		selenium.clickAt("//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_html')]",
+				"//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_html')]/div/label"));
+		selenium.clickAt("//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_html')]",
 			RuntimeVariables.replace("HTML Field"));
 		selenium.waitForVisible(
-			"//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_html')]/div[3]/span/span/button[@title='Edit']");
-		selenium.clickAt("//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_html')]/div[3]/span/span/button[@title='Edit']",
+			"//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_html')]/div[3]/span/span/button[@title='Edit']");
+		selenium.clickAt("//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_html')]/div[3]/span/span/button[@title='Edit']",
 			RuntimeVariables.replace("Edit HTML Settings"));
 		assertEquals(RuntimeVariables.replace("Name"),
 			selenium.getText(
@@ -190,12 +190,12 @@ public class AddWCTemplateStructureTest extends BaseTestCase {
 			RuntimeVariables.replace("Save"));
 		assertEquals(RuntimeVariables.replace("Image"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'image')]/div/label"));
-		selenium.clickAt("//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'image')]",
+				"//div[@class='diagram-builder-drop-container']/div[contains(@id,'image')]/div/label"));
+		selenium.clickAt("//div[@class='diagram-builder-drop-container']/div[contains(@id,'image')]",
 			RuntimeVariables.replace("Edit Image Settings"));
 		selenium.waitForVisible(
-			"//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'image')]/div[3]/span/span/button[@title='Edit']");
-		selenium.clickAt("//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'image')]/div[3]/span/span/button[@title='Edit']",
+			"//div[@class='diagram-builder-drop-container']/div[contains(@id,'image')]/div[3]/span/span/button[@title='Edit']");
+		selenium.clickAt("//div[@class='diagram-builder-drop-container']/div[contains(@id,'image')]/div[3]/span/span/button[@title='Edit']",
 			RuntimeVariables.replace("Edit Image Settings"));
 		assertEquals(RuntimeVariables.replace("Name"),
 			selenium.getText(
@@ -210,12 +210,12 @@ public class AddWCTemplateStructureTest extends BaseTestCase {
 			RuntimeVariables.replace("Save"));
 		assertEquals(RuntimeVariables.replace("Integer"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_integer')]/div/label"));
-		selenium.clickAt("//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_integer')]",
+				"//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_integer')]/div/label"));
+		selenium.clickAt("//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_integer')]",
 			RuntimeVariables.replace("Edit Integer Settings"));
 		selenium.waitForVisible(
-			"//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_integer')]/div[3]/span/span/button[@title='Edit']");
-		selenium.clickAt("//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_integer')]/div[3]/span/span/button[@title='Edit']",
+			"//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_integer')]/div[3]/span/span/button[@title='Edit']");
+		selenium.clickAt("//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_integer')]/div[3]/span/span/button[@title='Edit']",
 			RuntimeVariables.replace("Edit Integer Settings"));
 		assertEquals(RuntimeVariables.replace("Name"),
 			selenium.getText(
@@ -230,12 +230,12 @@ public class AddWCTemplateStructureTest extends BaseTestCase {
 			RuntimeVariables.replace("Save"));
 		assertEquals(RuntimeVariables.replace("Link to Page"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_link_to_page')]/div/label"));
-		selenium.clickAt("//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_link_to_page')]",
+				"//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_link_to_page')]/div/label"));
+		selenium.clickAt("//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_link_to_page')]",
 			RuntimeVariables.replace("Link to Page Field"));
 		selenium.waitForVisible(
-			"//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_link_to_page')]/div[3]/span/span/button[@title='Edit']");
-		selenium.clickAt("//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_link_to_page')]/div[3]/span/span/button[@title='Edit']",
+			"//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_link_to_page')]/div[3]/span/span/button[@title='Edit']");
+		selenium.clickAt("//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_link_to_page')]/div[3]/span/span/button[@title='Edit']",
 			RuntimeVariables.replace("Edit Link to Page Settings"));
 		assertEquals(RuntimeVariables.replace("Name"),
 			selenium.getText(
@@ -250,12 +250,12 @@ public class AddWCTemplateStructureTest extends BaseTestCase {
 			RuntimeVariables.replace("Save"));
 		assertEquals(RuntimeVariables.replace("Number"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_number')]/div/label"));
-		selenium.clickAt("//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_number')]",
+				"//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_number')]/div/label"));
+		selenium.clickAt("//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_number')]",
 			RuntimeVariables.replace("Number Field"));
 		selenium.waitForVisible(
-			"//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_number')]/div[3]/span/span/button[@title='Edit']");
-		selenium.clickAt("//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_number')]/div[3]/span/span/button[@title='Edit']",
+			"//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_number')]/div[3]/span/span/button[@title='Edit']");
+		selenium.clickAt("//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_number')]/div[3]/span/span/button[@title='Edit']",
 			RuntimeVariables.replace("Edit Number Settings"));
 		assertEquals(RuntimeVariables.replace("Name"),
 			selenium.getText(
@@ -270,12 +270,12 @@ public class AddWCTemplateStructureTest extends BaseTestCase {
 			RuntimeVariables.replace("Save"));
 		assertEquals(RuntimeVariables.replace("Radio"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_radio')]/div/label"));
-		selenium.clickAt("//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_radio')]",
+				"//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_radio')]/div/label"));
+		selenium.clickAt("//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_radio')]",
 			RuntimeVariables.replace("Radio Field"));
 		selenium.waitForVisible(
-			"//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_radio')]/div[2]/span/span/button[@title='Edit']");
-		selenium.clickAt("//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_radio')]/div[2]/span/span/button[@title='Edit']",
+			"//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_radio')]/div[2]/span/span/button[@title='Edit']");
+		selenium.clickAt("//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_radio')]/div[2]/span/span/button[@title='Edit']",
 			RuntimeVariables.replace("Edit Radio Settings"));
 		assertEquals(RuntimeVariables.replace("Name"),
 			selenium.getText(
@@ -290,12 +290,12 @@ public class AddWCTemplateStructureTest extends BaseTestCase {
 			RuntimeVariables.replace("Save"));
 		assertEquals(RuntimeVariables.replace("Select"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_select')]/div/label"));
-		selenium.clickAt("//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_select')]",
+				"//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_select')]/div/label"));
+		selenium.clickAt("//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_select')]",
 			RuntimeVariables.replace("Select Field"));
 		selenium.waitForVisible(
-			"//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_select')]/div[2]/span/span/button[@title='Edit']");
-		selenium.clickAt("//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_select')]/div[2]/span/span/button[@title='Edit']",
+			"//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_select')]/div[2]/span/span/button[@title='Edit']");
+		selenium.clickAt("//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_select')]/div[2]/span/span/button[@title='Edit']",
 			RuntimeVariables.replace("Edit Select Settings"));
 		assertEquals(RuntimeVariables.replace("Name"),
 			selenium.getText(
@@ -310,12 +310,12 @@ public class AddWCTemplateStructureTest extends BaseTestCase {
 			RuntimeVariables.replace("Save"));
 		assertEquals(RuntimeVariables.replace("Text"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_text')]/div/label"));
-		selenium.clickAt("//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_text')]",
+				"//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_text')]/div/label"));
+		selenium.clickAt("//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_text')]",
 			RuntimeVariables.replace("Text Field"));
 		selenium.waitForVisible(
-			"//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_text')]/div[3]/span/span/button[@title='Edit']");
-		selenium.clickAt("//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_text')]/div[3]/span/span/button[@title='Edit']",
+			"//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_text')]/div[3]/span/span/button[@title='Edit']");
+		selenium.clickAt("//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_text')]/div[3]/span/span/button[@title='Edit']",
 			RuntimeVariables.replace("Edit Text Settings"));
 		assertEquals(RuntimeVariables.replace("Name"),
 			selenium.getText(
@@ -330,12 +330,12 @@ public class AddWCTemplateStructureTest extends BaseTestCase {
 			RuntimeVariables.replace("Save"));
 		assertEquals(RuntimeVariables.replace("Text Box"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_text_box')]/div/label"));
-		selenium.clickAt("//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_text_box')]",
+				"//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_text_box')]/div/label"));
+		selenium.clickAt("//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_text_box')]",
 			RuntimeVariables.replace("Text Box Field"));
 		selenium.waitForVisible(
-			"//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_text_box')]/div[3]/span/span/button[@title='Edit']");
-		selenium.clickAt("//div[@class='aui-diagram-builder-drop-container']/div[contains(@id,'field_text_box')]/div[3]/span/span/button[@title='Edit']",
+			"//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_text_box')]/div[3]/span/span/button[@title='Edit']");
+		selenium.clickAt("//div[@class='diagram-builder-drop-container']/div[contains(@id,'field_text_box')]/div[3]/span/span/button[@title='Edit']",
 			RuntimeVariables.replace("Edit Text Box Settings"));
 		assertEquals(RuntimeVariables.replace("Name"),
 			selenium.getText(
@@ -372,11 +372,11 @@ public class AddWCTemplateStructureTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Manage']/ul/li/strong/a",
 			RuntimeVariables.replace("Manage"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Structures')]");
 		assertEquals(RuntimeVariables.replace("Structures"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Structures')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Structures')]",
 			RuntimeVariables.replace("Structures"));
 		selenium.waitForVisible("//iframe[contains(@src,'Structures')]");
 		selenium.selectFrame("//iframe[contains(@src,'Structures')]");
@@ -398,11 +398,11 @@ public class AddWCTemplateStructureTest extends BaseTestCase {
 		selenium.clickAt("//tr[contains(.,'WC Structure Name')]/td[6]/span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Manage Templates')]");
 		assertEquals(RuntimeVariables.replace("Manage Templates"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Manage Templates')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Manage Templates')]",
 			RuntimeVariables.replace("Manage Templates"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Add"),

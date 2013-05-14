@@ -59,12 +59,12 @@ public class AssignMembersOrganization06Test extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Users')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Assign Users')]");
 				assertEquals(RuntimeVariables.replace("Assign Users"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Users')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Assign Users')]"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Users')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Assign Users')]"));
 				selenium.waitForPageToLoad("30000");
 				selenium.clickAt("link=Available",
 					RuntimeVariables.replace("Available"));

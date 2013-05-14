@@ -49,12 +49,10 @@ public class AddCalendarEventCommentSiteTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"No comments yet. Be the first. Subscribe to Comments"),
-			selenium.getText(
-				"//fieldset[@class='aui-fieldset add-comment ']/div"));
+			selenium.getText("//fieldset[@class='fieldset add-comment ']/div"));
 		assertEquals(RuntimeVariables.replace("Be the first."),
-			selenium.getText(
-				"//fieldset[@class='aui-fieldset add-comment ']/div/a"));
-		selenium.clickAt("//fieldset[@class='aui-fieldset add-comment ']/div/a",
+			selenium.getText("//fieldset[@class='fieldset add-comment ']/div/a"));
+		selenium.clickAt("//fieldset[@class='fieldset add-comment ']/div/a",
 			RuntimeVariables.replace("Be the first."));
 		assertEquals(RuntimeVariables.replace("Subscribe to Comments"),
 			selenium.getText("//span[@class='subscribe-link']/a/span"));

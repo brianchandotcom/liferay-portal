@@ -50,12 +50,12 @@ public class ImportLARTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 					RuntimeVariables.replace("Options"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Export / Import')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Export / Import')]");
 				assertEquals(RuntimeVariables.replace("Export / Import"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Export / Import')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Export / Import')]"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Export / Import')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Export / Import')]"));
 				selenium.waitForPageToLoad("30000");
 				selenium.clickAt("link=Import",
 					RuntimeVariables.replace("Import"));

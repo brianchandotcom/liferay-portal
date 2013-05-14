@@ -41,12 +41,12 @@ public class TearDownGlobalWorkflowConfigurationTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Liferay']/ul/li/strong/a",
 			RuntimeVariables.replace("Scope Selector"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Global')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Global')]");
 		assertEquals(RuntimeVariables.replace("Global"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Global')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Global')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Global')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Global')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForText("//span[@title='Global']/ul/li/strong/a/span",
 			"Global");

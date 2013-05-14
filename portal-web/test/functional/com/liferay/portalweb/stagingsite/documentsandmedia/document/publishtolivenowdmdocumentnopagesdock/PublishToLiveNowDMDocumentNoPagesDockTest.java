@@ -66,23 +66,23 @@ public class PublishToLiveNowDMDocumentNoPagesDockTest extends BaseTestCase {
 					RuntimeVariables.replace("Documents and Media Test Page"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForElementPresent(
-					"//nav[@class='site-breadcrumbs aui-hide lfr-hudcrumbs']");
+					"//nav[@class='site-breadcrumbs hide lfr-hudcrumbs']");
 				assertEquals(RuntimeVariables.replace("DM Document Title"),
 					selenium.getText(
 						"//a[@title='DM Document Title - DM Document Description']"));
 				selenium.clickAt("//strong/a",
 					RuntimeVariables.replace("Staging"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Publish to Live Now')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Publish to Live Now')]");
 				assertEquals(RuntimeVariables.replace("Publish to Live Now"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Publish to Live Now')]"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Publish to Live Now')]",
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Publish to Live Now')]"));
+				selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Publish to Live Now')]",
 					RuntimeVariables.replace("Publish to Live Now"));
 				selenium.waitForElementPresent(
 					"//script[contains(@src,'/liferay/panel.js')]");
 				selenium.waitForElementPresent(
-					"//div[@class='yui3-widget-bd aui-panel-bd aui-dialog-bd']");
+					"//div[@class='yui3-widget-bd panel-bd dialog-bd']");
 				selenium.waitForVisible("//div[@class='portlet-msg-info']");
 				assertEquals(RuntimeVariables.replace(
 						"There are no selected pages. All pages will therefore be exported."),

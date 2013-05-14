@@ -50,18 +50,16 @@ public class RatePage2DLFolder2Document2Test extends BaseTestCase {
 		selenium.clickAt("xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]",
 			RuntimeVariables.replace("DL Folder2 Document2 Title.xls"));
 		selenium.waitForVisible(
-			"xPath=(//div[@class='aui-rating-label-element'])[2]");
+			"xPath=(//div[@class='rating-label-element'])[2]");
 		assertEquals(RuntimeVariables.replace("Average (0 Votes)"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[2]"));
+			selenium.getText("xPath=(//div[@class='rating-label-element'])[2]"));
 		Thread.sleep(5000);
 		selenium.clickAt("//div[contains(@class,'liferay-rating-vote')]/div/a[4]",
 			RuntimeVariables.replace(""));
-		selenium.waitForText("xPath=(//div[@class='aui-rating-label-element'])[2]",
+		selenium.waitForText("xPath=(//div[@class='rating-label-element'])[2]",
 			"Average (1 Vote)");
 		assertEquals(RuntimeVariables.replace("Average (1 Vote)"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[2]"));
+			selenium.getText("xPath=(//div[@class='rating-label-element'])[2]"));
 		assertTrue(selenium.isElementPresent(
 				"//img[@alt='The average rating is 4 stars out of 5.']"));
 	}

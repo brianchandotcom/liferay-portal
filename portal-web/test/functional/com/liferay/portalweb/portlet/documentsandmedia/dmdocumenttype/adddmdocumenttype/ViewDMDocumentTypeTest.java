@@ -34,10 +34,10 @@ public class ViewDMDocumentTypeTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'DM DocumentType Name')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'DM DocumentType Name')]");
 		assertEquals(RuntimeVariables.replace("DM DocumentType Name"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'DM DocumentType Name')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'DM DocumentType Name')]"));
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
@@ -48,11 +48,11 @@ public class ViewDMDocumentTypeTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Manage']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Manage"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Document Types')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Document Types')]");
 		assertEquals(RuntimeVariables.replace("Document Types"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Document Types')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Document Types')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Document Types')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Document Types')]",
 			RuntimeVariables.replace("Document Types"));
 		selenium.waitForVisible("//iframe[@id='_20_openFileEntryTypeView']");
 		selenium.selectFrame("//iframe[@id='_20_openFileEntryTypeView']");

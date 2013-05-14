@@ -51,12 +51,12 @@ public class ViewWSRPClickToInvokeResourceServingPhaseDPTest
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[5]/a");
 		assertEquals(RuntimeVariables.replace("Basic Document"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[5]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[5]/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.uploadTempFile("//input[@id='_20_file']",
 			RuntimeVariables.replace("logo.png"));

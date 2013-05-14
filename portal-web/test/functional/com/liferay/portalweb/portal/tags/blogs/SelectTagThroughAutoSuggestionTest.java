@@ -51,7 +51,7 @@ public class SelectTagThroughAutoSuggestionTest extends BaseTestCase {
 					"//iframe[contains(@title,'Rich Text Editor')]");
 
 				boolean tagsVisible = selenium.isVisible(
-						"//input[@class='lfr-tag-selector-input aui-field-input-text']");
+						"//input[@class='lfr-tag-selector-input field-input-text']");
 
 				if (tagsVisible) {
 					label = 2;
@@ -65,14 +65,14 @@ public class SelectTagThroughAutoSuggestionTest extends BaseTestCase {
 				selenium.clickAt("xPath=(//div[@class='lfr-panel-title'])[2]/span",
 					RuntimeVariables.replace("Categorization"));
 				selenium.waitForVisible(
-					"//input[@class='lfr-tag-selector-input aui-field-input-text']");
+					"//input[@class='lfr-tag-selector-input field-input-text']");
 				assertTrue(selenium.isVisible(
-						"//input[@class='lfr-tag-selector-input aui-field-input-text']"));
+						"//input[@class='lfr-tag-selector-input field-input-text']"));
 
 			case 2:
-				selenium.type("//input[@class='lfr-tag-selector-input aui-field-input-text']",
+				selenium.type("//input[@class='lfr-tag-selector-input field-input-text']",
 					RuntimeVariables.replace(""));
-				selenium.sendKeys("//input[@class='lfr-tag-selector-input aui-field-input-text']",
+				selenium.sendKeys("//input[@class='lfr-tag-selector-input field-input-text']",
 					RuntimeVariables.replace("selenium3*"));
 				selenium.waitForText("//li[contains(@class,'aui-autocomplete-list-item')]",
 					"selenium3 liferay3");
@@ -81,11 +81,11 @@ public class SelectTagThroughAutoSuggestionTest extends BaseTestCase {
 						"//li[contains(@class,'aui-autocomplete-list-item')]"));
 				selenium.clickAt("//li[contains(@class,'aui-autocomplete-list-item')]",
 					RuntimeVariables.replace("selenium3 liferay3"));
-				selenium.waitForText("xPath=(//span[@class='aui-textboxlistentry-text'])[2]",
+				selenium.waitForText("xPath=(//span[@class='textboxlistentry-text'])[2]",
 					"selenium3 liferay3");
 				assertEquals(RuntimeVariables.replace("selenium3 liferay3"),
 					selenium.getText(
-						"xPath=(//span[@class='aui-textboxlistentry-text'])[2]"));
+						"xPath=(//span[@class='textboxlistentry-text'])[2]"));
 				selenium.clickAt("//input[@value='Publish']",
 					RuntimeVariables.replace("Publish"));
 				selenium.waitForPageToLoad("30000");

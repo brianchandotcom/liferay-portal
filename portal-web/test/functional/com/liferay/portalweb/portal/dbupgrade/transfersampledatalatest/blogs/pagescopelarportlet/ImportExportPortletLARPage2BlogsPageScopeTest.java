@@ -39,12 +39,12 @@ public class ImportExportPortletLARPage2BlogsPageScopeTest extends BaseTestCase 
 			selenium.getText("//strong/a"));
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[3]/a");
 		assertEquals(RuntimeVariables.replace("Export / Import"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[3]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[3]/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Import", RuntimeVariables.replace("Import"));
 		selenium.waitForPageToLoad("30000");

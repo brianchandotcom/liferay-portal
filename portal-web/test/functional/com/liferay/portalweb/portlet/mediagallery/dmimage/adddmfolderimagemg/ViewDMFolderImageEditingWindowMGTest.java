@@ -38,7 +38,7 @@ public class ViewDMFolderImageEditingWindowMGTest extends BaseTestCase {
 			selenium.getText("//span[@class='image-title']"));
 		selenium.clickAt("//span[@class='image-title']",
 			RuntimeVariables.replace("DM Folder Image Title"));
-		selenium.waitForVisible("//a[@class='aui-image-viewer-close']");
+		selenium.waitForVisible("//a[@class='image-viewer-close']");
 		selenium.waitForVisible("//img");
 		assertTrue(selenium.isVisible("//img"));
 		selenium.waitForVisible("//img[@alt='Download (13k)']");
@@ -47,6 +47,6 @@ public class ViewDMFolderImageEditingWindowMGTest extends BaseTestCase {
 		assertTrue(selenium.isVisible("//img[@alt='Edit']"));
 		assertTrue(selenium.isVisible("//img[@alt='Permissions']"));
 		assertTrue(selenium.isVisible("//img[@alt='Move to the Recycle Bin']"));
-		selenium.click("//a[@class='aui-image-viewer-close']");
+		selenium.click("//a[@class='image-viewer-close']");
 	}
 }

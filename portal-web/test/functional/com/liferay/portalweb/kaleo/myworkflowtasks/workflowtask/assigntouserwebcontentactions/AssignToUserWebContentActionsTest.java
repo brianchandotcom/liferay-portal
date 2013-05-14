@@ -55,11 +55,11 @@ public class AssignToUserWebContentActionsTest extends BaseTestCase {
 		selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[2]/a");
 		assertEquals(RuntimeVariables.replace("Assign to..."),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+				"//div[@class='lfr-menu-list unstyled']/ul/li[2]/a"));
+		selenium.click("//div[@class='lfr-menu-list unstyled']/ul/li[2]/a");
 		selenium.waitForVisible("//select[@id='_153_assigneeUserId']");
 		selenium.select("//select[@id='_153_assigneeUserId']",
 			RuntimeVariables.replace("label=userfn userln"));

@@ -36,12 +36,12 @@ public class MoveDMDocument1NewFolderFolder1ActionsTest extends BaseTestCase {
 		selenium.clickAt("//div[@data-title='DM Document1 Title']/span[2]/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Move')]");
 		assertEquals(RuntimeVariables.replace("Move"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Move')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Move')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//input[@value='Select']",
 			RuntimeVariables.replace("Select"));

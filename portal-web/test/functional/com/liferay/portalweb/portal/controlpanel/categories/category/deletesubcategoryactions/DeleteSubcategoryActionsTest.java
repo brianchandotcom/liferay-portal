@@ -39,8 +39,8 @@ public class DeleteSubcategoryActionsTest extends BaseTestCase {
 		selenium.clickAt("link=Categories",
 			RuntimeVariables.replace("Categories"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible("//div[@class='aui-tree-hitarea']");
-		selenium.clickAt("//div[@class='aui-tree-hitarea']",
+		selenium.waitForVisible("//div[@class='tree-hitarea']");
+		selenium.clickAt("//div[@class='tree-hitarea']",
 			RuntimeVariables.replace("Drop Down Arrow"));
 		selenium.waitForVisible(
 			"//div[@class='vocabulary-categories']/div/ul/li/ul/li/div/div[3][contains(.,'Subcategory Name')]");
@@ -48,23 +48,23 @@ public class DeleteSubcategoryActionsTest extends BaseTestCase {
 			selenium.getText(
 				"//div[@class='vocabulary-categories']/div/ul/li/ul/li/div/div[3][contains(.,'Subcategory Name')]"));
 		selenium.waitForVisible(
-			"xPath=(//div[@class='aui-tree-node-checkbox-container'])[2]");
+			"xPath=(//div[@class='tree-node-checkbox-container'])[2]");
 		assertTrue(selenium.isElementNotPresent(
-				"//li/ul/li/div[contains(@class,'aui-tree-node-checked')]/div[@class='aui-tree-node-checkbox-container']"));
-		selenium.clickAt("xPath=(//div[@class='aui-tree-node-checkbox-container'])[2]",
+				"//li/ul/li/div[contains(@class,'aui-tree-node-checked')]/div[@class='tree-node-checkbox-container']"));
+		selenium.clickAt("xPath=(//div[@class='tree-node-checkbox-container'])[2]",
 			RuntimeVariables.replace("Entry Check Box"));
 		assertTrue(selenium.isVisible(
-				"//li/ul/li/div[contains(@class,'aui-tree-node-checked')]/div[@class='aui-tree-node-checkbox-container']"));
+				"//li/ul/li/div[contains(@class,'aui-tree-node-checked')]/div[@class='tree-node-checkbox-container']"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
-		selenium.waitForText("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a",
+		selenium.waitForText("//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Delete')]/a",
 			"Delete");
 		assertEquals(RuntimeVariables.replace("Delete"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a",
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Delete')]/a"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Delete')]/a",
 			RuntimeVariables.replace("Delete"));
 		selenium.waitForConfirmation(
 			"Are you sure you want to delete the selected categories?");

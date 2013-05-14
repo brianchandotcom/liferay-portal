@@ -33,13 +33,13 @@ public class ViewAddCategoryNameDoubleForwardSlashTest extends BaseTestCase {
 			RuntimeVariables.replace("Categories"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Categories"),
-			selenium.getText("//ul[@class='aui-tabview-list']/li[1]"));
+			selenium.getText("//ul[@class='tabview-list']/li[1]"));
 		assertEquals(RuntimeVariables.replace("Cart"),
-			selenium.getText("//ul[@class='aui-tabview-list']/li[2]"));
+			selenium.getText("//ul[@class='tabview-list']/li[2]"));
 		assertEquals(RuntimeVariables.replace("Orders"),
-			selenium.getText("//ul[@class='aui-tabview-list']/li[3]"));
+			selenium.getText("//ul[@class='tabview-list']/li[3]"));
 		assertEquals(RuntimeVariables.replace("Coupons"),
-			selenium.getText("//ul[@class='aui-tabview-list']/li[4]"));
+			selenium.getText("//ul[@class='tabview-list']/li[4]"));
 		assertEquals(RuntimeVariables.replace("Categories"),
 			selenium.getText("//div[@class='breadcrumbs']"));
 		assertEquals(RuntimeVariables.replace("Categories"),

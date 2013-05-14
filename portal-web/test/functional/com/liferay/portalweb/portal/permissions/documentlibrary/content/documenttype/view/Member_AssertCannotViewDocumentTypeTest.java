@@ -37,11 +37,11 @@ public class Member_AssertCannotViewDocumentTypeTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Manage']/ul/li/strong/a",
 			RuntimeVariables.replace("Manage"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[1]/a");
 		assertEquals(RuntimeVariables.replace("Document Types"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+				"//div[@class='lfr-menu-list unstyled']/ul/li[1]/a"));
+		selenium.click("//div[@class='lfr-menu-list unstyled']/ul/li[1]/a");
 		Thread.sleep(5000);
 		assertFalse(selenium.isTextPresent("Document Type Name"));
 	}

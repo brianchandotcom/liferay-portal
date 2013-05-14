@@ -49,26 +49,26 @@ public class User_RenameMainSPVariationSeasonTest extends BaseTestCase {
 		selenium.clickAt("//strong/a",
 			RuntimeVariables.replace("Staging dropdown"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[3]/a");
 		assertEquals(RuntimeVariables.replace("Manage Site Pages Variations"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a",
+				"//div[@class='lfr-menu-list unstyled']/ul/li[3]/a"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li[3]/a",
 			RuntimeVariables.replace("Manage Site Pages Variations"));
 		selenium.waitForVisible("//span[@title='Actions']/ul/li/strong/a/span");
 		Thread.sleep(5000);
 		selenium.selectFrame(
-			"//div[@class='yui3-widget-bd aui-panel-bd aui-dialog-bd aui-dialog-iframe-bd']/iframe");
+			"//div[@class='yui3-widget-bd panel-bd dialog-bd dialog-iframe-bd']/iframe");
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
-		selenium.waitForText("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a[contains(.,'Edit')]",
+		selenium.waitForText("//div[@class='lfr-menu-list unstyled']/ul/li[1]/a[contains(.,'Edit')]",
 			"Edit");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a[contains(.,'Edit')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a[contains(.,'Edit')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li[1]/a[contains(.,'Edit')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li[1]/a[contains(.,'Edit')]",
 			RuntimeVariables.replace("Edit"));
 		selenium.waitForVisible("//input[@id='_170_name']");
 		selenium.type("//input[@id='_170_name']",

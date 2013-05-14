@@ -40,11 +40,11 @@ public class DeletePermissionsUserBlogsViewUPSTest extends BaseTestCase {
 		selenium.clickAt("//tr[13]/td[4]/span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[2]/a");
 		assertEquals(RuntimeVariables.replace("Define Permissions"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+				"//div[@class='lfr-menu-list unstyled']/ul/li[2]/a"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li[2]/a",
 			RuntimeVariables.replace("Define Permissions"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Blogs"),

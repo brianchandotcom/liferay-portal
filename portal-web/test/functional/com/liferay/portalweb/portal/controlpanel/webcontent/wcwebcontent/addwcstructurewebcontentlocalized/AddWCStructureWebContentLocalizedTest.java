@@ -41,11 +41,11 @@ public class AddWCStructureWebContentLocalizedTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'WC Structure Name')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'WC Structure Name')]");
 		assertEquals(RuntimeVariables.replace("WC Structure Name"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'WC Structure Name')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'WC Structure Name')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'WC Structure Name')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'WC Structure Name')]",
 			RuntimeVariables.replace("WC Structure Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_15_title_en_US']",
@@ -82,11 +82,11 @@ public class AddWCStructureWebContentLocalizedTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Add Translation']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add Translation"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Chinese (China)')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Chinese (China)')]");
 		assertEquals(RuntimeVariables.replace("Chinese (China)"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Chinese (China)')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Chinese (China)')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Chinese (China)')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Chinese (China)')]",
 			RuntimeVariables.replace("Chinese (China)"));
 		selenium.waitForVisible("//iframe[@id='_15_zh_CN']");
 		selenium.selectFrame("//iframe[@id='_15_zh_CN']");

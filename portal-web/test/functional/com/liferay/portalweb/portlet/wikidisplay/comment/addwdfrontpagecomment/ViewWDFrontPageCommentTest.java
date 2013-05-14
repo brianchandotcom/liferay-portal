@@ -44,7 +44,7 @@ public class ViewWDFrontPageCommentTest extends BaseTestCase {
 			selenium.getText(
 				"//ul[@class='top-links-navigation']/li/span[contains(.,'Draft Pages')]"));
 		assertTrue(selenium.isVisible(
-				"//span[@class='aui-search-bar']/span/span/span/input"));
+				"//span[@class='search-bar']/span/span/span/input"));
 		assertTrue(selenium.isVisible("//input[@title='Search Pages']"));
 		assertEquals(RuntimeVariables.replace("FrontPage"),
 			selenium.getText("//h1[@class='header-title']"));
@@ -74,8 +74,7 @@ public class ViewWDFrontPageCommentTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Comments"),
 			selenium.getText("//div[@id='wikiCommentsPanel']/div/div/span"));
 		assertTrue(selenium.isPartialText(
-				"//fieldset[@class='aui-fieldset add-comment ']/div",
-				"Add Comment"));
+				"//fieldset[@class='fieldset add-comment ']/div", "Add Comment"));
 		assertEquals(RuntimeVariables.replace("Unsubscribe from Comments"),
 			selenium.getText("//span[@class='subscribe-link']/a/span"));
 		assertTrue(selenium.isVisible("//span[@class='user-profile-image']/img"));

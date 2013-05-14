@@ -35,16 +35,16 @@ public class Member_AssertUpdateDocumentTest extends BaseTestCase {
 		selenium.clickAt("//span[2]/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[2]/a");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[2]/a"));
 		assertEquals(RuntimeVariables.replace("Move"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[3]/a"));
 		assertEquals(RuntimeVariables.replace("Checkout"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[4]/a"));
 		assertEquals(RuntimeVariables.replace("TestDocument.txt"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));

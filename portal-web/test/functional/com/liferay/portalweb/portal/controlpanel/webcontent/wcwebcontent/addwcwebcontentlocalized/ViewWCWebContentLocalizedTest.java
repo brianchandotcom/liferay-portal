@@ -47,28 +47,28 @@ public class ViewWCWebContentLocalizedTest extends BaseTestCase {
 		selenium.clickAt("//a[@id='_15_dhec_menuButton']",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit')]");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit')]"));
 		assertEquals(RuntimeVariables.replace("Move"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Move')]"));
 		assertEquals(RuntimeVariables.replace("Permissions"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Permissions')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Permissions')]"));
 		assertEquals(RuntimeVariables.replace("View (Opens New Window)"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'View (Opens New Window)')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'View (Opens New Window)')]"));
 		assertEquals(RuntimeVariables.replace("Copy"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Copy')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Copy')]"));
 		assertEquals(RuntimeVariables.replace("Expire"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Expire')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Expire')]"));
 		assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Move to the Recycle Bin')]"));
 		selenium.clickAt("//a[@class='entry-link']/span[contains(.,'WC WebContent Title')]",
 			RuntimeVariables.replace("WC WebContent Title"));
 		selenium.waitForPageToLoad("30000");

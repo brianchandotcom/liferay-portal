@@ -37,8 +37,8 @@ public class AddWCWebContentStructureFieldDecimalWCDTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Select"),
 			selenium.getText(
-				"//div[@class='aui-column-content article-structure-content ']/fieldset/div/div/span[2]/a"));
-		selenium.clickAt("//div[@class='aui-column-content article-structure-content ']/fieldset/div/div/span[2]/a",
+				"//div[@class='column-content article-structure-content ']/fieldset/div/div/span[2]/a"));
+		selenium.clickAt("//div[@class='column-content article-structure-content ']/fieldset/div/div/span[2]/a",
 			RuntimeVariables.replace("Select"));
 		selenium.waitForVisible(
 			"//iframe[contains(@src,'_15_selectStructure')]");
@@ -80,11 +80,11 @@ public class AddWCWebContentStructureFieldDecimalWCDTest extends BaseTestCase {
 			RuntimeVariables.replace("WC WebContent Structure Decimal Title"));
 		assertEquals(RuntimeVariables.replace("Decimal"),
 			selenium.getText("//label[contains(@for,'_15_decimal')]"));
-		selenium.select("//select[@class='aui-datepicker-month']",
+		selenium.select("//select[@class='datepicker-month']",
 			RuntimeVariables.replace("value=0"));
-		selenium.select("//select[@class='aui-datepicker-day']",
+		selenium.select("//select[@class='datepicker-day']",
 			RuntimeVariables.replace("value=1"));
-		selenium.select("//select[@class='aui-datepicker-year']",
+		selenium.select("//select[@class='datepicker-year']",
 			RuntimeVariables.replace("value=2020"));
 		selenium.type("//input[contains(@id,'_15_decimal')]",
 			RuntimeVariables.replace("0.888"));

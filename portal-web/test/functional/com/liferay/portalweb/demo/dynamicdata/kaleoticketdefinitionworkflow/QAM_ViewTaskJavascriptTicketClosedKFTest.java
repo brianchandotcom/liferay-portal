@@ -63,12 +63,12 @@ public class QAM_ViewTaskJavascriptTicketClosedKFTest extends BaseTestCase {
 		selenium.clickAt("//a[@id='_1_WAR_kaleoformsportlet_oktaskChangeStatusLink']",
 			RuntimeVariables.replace("OK"));
 		selenium.waitForVisible(
-			"//div[@class='aui-panel-content aui-dialog-content yui3-widget-stdmod']");
+			"//div[@class='panel-content dialog-content yui3-widget-stdmod']");
 		assertEquals(RuntimeVariables.replace("OK"),
 			selenium.getText(
-				"//div[@class='aui-panel-content aui-dialog-content yui3-widget-stdmod']/div[3]/span/span/button[1]"));
+				"//div[@class='panel-content dialog-content yui3-widget-stdmod']/div[3]/span/span/button[1]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='aui-panel-content aui-dialog-content yui3-widget-stdmod']/div[3]/span/span/button[1]"));
+				"//div[@class='panel-content dialog-content yui3-widget-stdmod']/div[3]/span/span/button[1]"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),

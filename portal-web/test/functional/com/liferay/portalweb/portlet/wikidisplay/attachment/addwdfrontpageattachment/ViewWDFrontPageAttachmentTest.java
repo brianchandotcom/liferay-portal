@@ -49,7 +49,7 @@ public class ViewWDFrontPageAttachmentTest extends BaseTestCase {
 			selenium.getText(
 				"//ul[@class='top-links-navigation']/li/span[contains(.,'Draft Pages')]"));
 		assertTrue(selenium.isVisible(
-				"//span[@class='aui-search-bar']/span/span/span/input"));
+				"//span[@class='search-bar']/span/span/span/input"));
 		assertTrue(selenium.isVisible("//input[@title='Search Pages']"));
 		assertEquals(RuntimeVariables.replace("FrontPage"),
 			selenium.getText("//h1[@class='header-title']/span"));

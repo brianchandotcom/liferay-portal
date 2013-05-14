@@ -46,13 +46,13 @@ public class PublishBlogsEntryDraftCPTest extends BaseTestCase {
 			RuntimeVariables.replace("Actions"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
-		selenium.waitForText("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]",
+		selenium.waitForText("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit')]",
 			"Edit");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit')]"));
 		selenium.waitForPageToLoad("30000");
 		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Publish']",

@@ -36,12 +36,12 @@ public class Gmail_SubscribeMBCategoryTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Subscribe')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Subscribe')]");
 		assertEquals(RuntimeVariables.replace("Subscribe"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Subscribe')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Subscribe')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Subscribe')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Subscribe')]"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
@@ -51,9 +51,9 @@ public class Gmail_SubscribeMBCategoryTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Unsubscribe')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Unsubscribe')]");
 		assertEquals(RuntimeVariables.replace("Unsubscribe"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Unsubscribe')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Unsubscribe')]"));
 	}
 }

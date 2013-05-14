@@ -42,22 +42,22 @@ public class ViewDMFolderDocumentSiteActivitiesTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Download"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[contains(.,'Download')]/span[2]"));
+				"//span[@class='toolbar-content']/button[contains(.,'Download')]/span[2]"));
 		assertEquals(RuntimeVariables.replace("Checkout"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[contains(.,'Checkout')]/span[2]"));
+				"//span[@class='toolbar-content']/button[contains(.,'Checkout')]/span[2]"));
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[contains(.,'Edit')]/span[2]"));
+				"//span[@class='toolbar-content']/button[contains(.,'Edit')]/span[2]"));
 		assertEquals(RuntimeVariables.replace("Move"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[contains(.,'Move')]/span[2]"));
+				"//span[@class='toolbar-content']/button[contains(.,'Move')]/span[2]"));
 		assertEquals(RuntimeVariables.replace("Permissions"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[contains(.,'Permissions')]/span[2]"));
+				"//span[@class='toolbar-content']/button[contains(.,'Permissions')]/span[2]"));
 		assertEquals(RuntimeVariables.replace("Delete"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[contains(.,'Delete')]/span[2]"));
+				"//span[@class='toolbar-content']/button[contains(.,'Delete')]/span[2]"));
 		assertEquals(RuntimeVariables.replace("DM Document Title"),
 			selenium.getText("//span[@class='document-title']"));
 		assertTrue(selenium.isVisible("//span[@class='document-thumbnail']/img"));
@@ -76,11 +76,9 @@ public class ViewDMFolderDocumentSiteActivitiesTest extends BaseTestCase {
 			selenium.getText("//span[@class='size']"));
 		assertEquals(RuntimeVariables.replace(
 				"No comments yet. Be the first. Subscribe to Comments"),
-			selenium.getText(
-				"//fieldset[@class='aui-fieldset add-comment ']/div"));
+			selenium.getText("//fieldset[@class='fieldset add-comment ']/div"));
 		assertEquals(RuntimeVariables.replace("Be the first."),
-			selenium.getText(
-				"//fieldset[@class='aui-fieldset add-comment ']/div/a"));
+			selenium.getText("//fieldset[@class='fieldset add-comment ']/div/a"));
 		assertEquals(RuntimeVariables.replace("Subscribe to Comments"),
 			selenium.getText("//span[@class='subscribe-link']/a/span"));
 		assertEquals(RuntimeVariables.replace("Version 1.0"),
@@ -140,22 +138,22 @@ public class ViewDMFolderDocumentSiteActivitiesTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Download"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[contains(.,'Download')]/span[2]"));
+				"//span[@class='toolbar-content']/button[contains(.,'Download')]/span[2]"));
 		assertEquals(RuntimeVariables.replace("Checkout"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[contains(.,'Checkout')]/span[2]"));
+				"//span[@class='toolbar-content']/button[contains(.,'Checkout')]/span[2]"));
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[contains(.,'Edit')]/span[2]"));
+				"//span[@class='toolbar-content']/button[contains(.,'Edit')]/span[2]"));
 		assertEquals(RuntimeVariables.replace("Move"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[contains(.,'Move')]/span[2]"));
+				"//span[@class='toolbar-content']/button[contains(.,'Move')]/span[2]"));
 		assertEquals(RuntimeVariables.replace("Permissions"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[contains(.,'Permissions')]/span[2]"));
+				"//span[@class='toolbar-content']/button[contains(.,'Permissions')]/span[2]"));
 		assertEquals(RuntimeVariables.replace("Delete"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[contains(.,'Delete')]/span[2]"));
+				"//span[@class='toolbar-content']/button[contains(.,'Delete')]/span[2]"));
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
 			selenium.getText("//span[@class='document-title']"));
 		assertTrue(selenium.isVisible("//span[@class='document-thumbnail']/img"));
@@ -174,11 +172,9 @@ public class ViewDMFolderDocumentSiteActivitiesTest extends BaseTestCase {
 			selenium.getText("//span[@class='size']"));
 		assertEquals(RuntimeVariables.replace(
 				"No comments yet. Be the first. Subscribe to Comments"),
-			selenium.getText(
-				"//fieldset[@class='aui-fieldset add-comment ']/div"));
+			selenium.getText("//fieldset[@class='fieldset add-comment ']/div"));
 		assertEquals(RuntimeVariables.replace("Be the first."),
-			selenium.getText(
-				"//fieldset[@class='aui-fieldset add-comment ']/div/a"));
+			selenium.getText("//fieldset[@class='fieldset add-comment ']/div/a"));
 		assertEquals(RuntimeVariables.replace("Subscribe to Comments"),
 			selenium.getText("//span[@class='subscribe-link']/a/span"));
 		assertEquals(RuntimeVariables.replace("Version 1.0"),

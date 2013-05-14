@@ -46,12 +46,12 @@ public class EditDMFolderMusicSubfolderDefaultWorkflowSingleApproverTest
 		selenium.clickAt("//span[@class='overlay document-action']/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit')]");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit')]"));
 		selenium.waitForPageToLoad("30000");
 		assertFalse(selenium.isVisible(
 				"//select[@id='_20_workflowDefinition-1']"));
@@ -108,12 +108,12 @@ public class EditDMFolderMusicSubfolderDefaultWorkflowSingleApproverTest
 		selenium.clickAt("//span[@class='overlay document-action']/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit')]");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit')]"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Music"),
 			selenium.getText("//select[@id='_20_defaultFileEntryTypeId']"));

@@ -51,7 +51,7 @@ public class RemoveTagThroughSelectTagTest extends BaseTestCase {
 					"//iframe[contains(@title,'Rich Text Editor')]");
 
 				boolean tagsVisible = selenium.isVisible(
-						"//input[@class='lfr-tag-selector-input aui-field-input-text']");
+						"//input[@class='lfr-tag-selector-input field-input-text']");
 
 				if (tagsVisible) {
 					label = 2;
@@ -65,14 +65,14 @@ public class RemoveTagThroughSelectTagTest extends BaseTestCase {
 				selenium.clickAt("xPath=(//div[@class='lfr-panel-title'])[2]/span",
 					RuntimeVariables.replace("Categorization"));
 				selenium.waitForVisible(
-					"//input[@class='lfr-tag-selector-input aui-field-input-text']");
+					"//input[@class='lfr-tag-selector-input field-input-text']");
 				assertTrue(selenium.isVisible(
-						"//input[@class='lfr-tag-selector-input aui-field-input-text']"));
+						"//input[@class='lfr-tag-selector-input field-input-text']"));
 
 			case 2:
 				assertEquals(RuntimeVariables.replace("selenium1 liferay1"),
 					selenium.getText(
-						"xPath=(//span[@class='aui-textboxlistentry-text'])[1]"));
+						"xPath=(//span[@class='textboxlistentry-text'])[1]"));
 				selenium.clickAt("//button[@id='select']",
 					RuntimeVariables.replace("Select"));
 				Thread.sleep(5000);
@@ -82,11 +82,11 @@ public class RemoveTagThroughSelectTagTest extends BaseTestCase {
 					RuntimeVariables.replace("selenium1 liferay1"));
 				selenium.clickAt("//button[@title='Close dialog']",
 					RuntimeVariables.replace("Close"));
-				selenium.waitForNotText("xPath=(//span[@class='aui-textboxlistentry-text'])[1]",
+				selenium.waitForNotText("xPath=(//span[@class='textboxlistentry-text'])[1]",
 					"selenium1 liferay1");
 				assertNotEquals(RuntimeVariables.replace("selenium1 liferay1"),
 					selenium.getText(
-						"xPath=(//span[@class='aui-textboxlistentry-text'])[1]"));
+						"xPath=(//span[@class='textboxlistentry-text'])[1]"));
 				selenium.clickAt("//input[@value='Publish']",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");

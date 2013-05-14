@@ -47,12 +47,12 @@ public class DeleteVocabularyActionsTest extends BaseTestCase {
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
-		selenium.waitForText("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a",
+		selenium.waitForText("//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Delete')]/a",
 			"Delete");
 		assertEquals(RuntimeVariables.replace("Delete"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a",
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Delete')]/a"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Delete')]/a",
 			RuntimeVariables.replace("Delete"));
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete the selected vocabularies[\\s\\S]$"));

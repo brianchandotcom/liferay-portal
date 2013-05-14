@@ -43,12 +43,12 @@ public class AddOrgRole2Test extends BaseTestCase {
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization Role')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Organization Role')]");
 		assertEquals(RuntimeVariables.replace("Organization Role"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization Role')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Organization Role')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization Role')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Organization Role')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_128_name']",
 			RuntimeVariables.replace("Roles Orgrole2 Name"));

@@ -44,11 +44,11 @@ public class MoveWCWebContentToFolderTest extends BaseTestCase {
 		selenium.clickAt("//div[@data-title='WC WebContent Title']/span[@class='entry-action overlay']/span/ul/li/strong/a",
 			RuntimeVariables.replace("WC WebContent Title Menu"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Move')]");
 		assertEquals(RuntimeVariables.replace("Move"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Move')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Move')]",
 			RuntimeVariables.replace("Move"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//input[@value='Select']",

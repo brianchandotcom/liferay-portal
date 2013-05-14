@@ -40,12 +40,12 @@ public class AddWebContentExpandoTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Basic Web Content')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Basic Web Content')]/a");
 		assertEquals(RuntimeVariables.replace("Basic Web Content"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Basic Web Content')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Basic Web Content')]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Basic Web Content')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Basic Web Content')]/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_15_title_en_US']",
 			RuntimeVariables.replace("Expando Web Content Test"));

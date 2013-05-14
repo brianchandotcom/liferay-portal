@@ -44,13 +44,13 @@ public class EditBlogsEntryContentCPTest extends BaseTestCase {
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
-		selenium.waitForText("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]",
+		selenium.waitForText("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit')]",
 			"Edit");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForVisible(
 			"//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]");

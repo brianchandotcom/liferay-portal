@@ -58,11 +58,11 @@ public class UpdateDueDateWebContentAssignedMyRolesActionsTest
 		selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[2]/a");
 		assertEquals(RuntimeVariables.replace("Update Due Date"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+				"//div[@class='lfr-menu-list unstyled']/ul/li[2]/a"));
+		selenium.click("//div[@class='lfr-menu-list unstyled']/ul/li[2]/a");
 		selenium.waitForVisible("//select[@id='_153_dueDateMonth']");
 		selenium.select("//select[@id='_153_dueDateMonth']",
 			RuntimeVariables.replace("label=December"));

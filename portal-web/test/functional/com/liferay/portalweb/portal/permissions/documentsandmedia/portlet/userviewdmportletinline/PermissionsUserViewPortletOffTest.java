@@ -35,12 +35,12 @@ public class PermissionsUserViewPortletOffTest extends BaseTestCase {
 		selenium.clickAt("//span/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[1]/a");
 		assertEquals(RuntimeVariables.replace("Permissions"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[1]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[1]/a"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("RegularRole Name"),
 			selenium.getText("//tr[6]/td[1]/a"));

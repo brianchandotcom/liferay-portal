@@ -43,11 +43,11 @@ public class AddCommunitySiteTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Community Site')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Community Site')]");
 		assertEquals(RuntimeVariables.replace("Community Site"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Community Site')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Community Site')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Community Site')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Community Site')]",
 			RuntimeVariables.replace("Community Site"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_134_name']",

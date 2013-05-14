@@ -77,12 +77,12 @@ public class User_AddEventThreeMinutesSPChristmasBlogsSPTLTest
 				selenium.clickAt("//strong/a",
 					RuntimeVariables.replace("Christmas Staging"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+					"//div[@class='lfr-menu-list unstyled']/ul/li[2]/a");
 				assertEquals(RuntimeVariables.replace(
 						"Schedule publication of Christmas to Live."),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+						"//div[@class='lfr-menu-list unstyled']/ul/li[2]/a"));
+				selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li[2]/a",
 					RuntimeVariables.replace(
 						"Schedule publication of Christmas to Live."));
 				selenium.waitForVisible("//div[4]/div[1]/a");

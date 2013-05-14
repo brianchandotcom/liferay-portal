@@ -61,48 +61,48 @@ public class ViewDataDefinitionTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit')]");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit')]"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Data Definition"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Boolean"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[1]/div/label"));
+				"//div[@class='diagram-builder-drop-container']/div[1]/div/label"));
 		assertEquals(RuntimeVariables.replace("Date"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[2]/div/label"));
+				"//div[@class='diagram-builder-drop-container']/div[2]/div/label"));
 		assertEquals(RuntimeVariables.replace("Decimal"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[3]/div/label"));
+				"//div[@class='diagram-builder-drop-container']/div[3]/div/label"));
 		assertEquals(RuntimeVariables.replace("Documents and Media"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[4]/div/label"));
+				"//div[@class='diagram-builder-drop-container']/div[4]/div/label"));
 		assertEquals(RuntimeVariables.replace("File Upload"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[5]/div/label"));
+				"//div[@class='diagram-builder-drop-container']/div[5]/div/label"));
 		assertEquals(RuntimeVariables.replace("HTML"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[6]/div/label"));
+				"//div[@class='diagram-builder-drop-container']/div[6]/div/label"));
 		assertEquals(RuntimeVariables.replace("Integer"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[7]/div/label"));
+				"//div[@class='diagram-builder-drop-container']/div[7]/div/label"));
 		assertEquals(RuntimeVariables.replace("Link to Page"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[8]/div/label"));
+				"//div[@class='diagram-builder-drop-container']/div[8]/div/label"));
 		assertEquals(RuntimeVariables.replace("Number"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[9]/div/label"));
+				"//div[@class='diagram-builder-drop-container']/div[9]/div/label"));
 		assertEquals(RuntimeVariables.replace("Radio"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[10]/div/label"));
+				"//div[@class='diagram-builder-drop-container']/div[10]/div/label"));
 		assertEquals(RuntimeVariables.replace("Select"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[11]/div/label"));
+				"//div[@class='diagram-builder-drop-container']/div[11]/div/label"));
 		selenium.selectFrame("relative=top");
 	}
 }

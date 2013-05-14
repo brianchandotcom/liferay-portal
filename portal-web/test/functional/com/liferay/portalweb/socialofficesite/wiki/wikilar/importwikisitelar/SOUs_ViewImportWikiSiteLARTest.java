@@ -51,8 +51,7 @@ public class SOUs_ViewImportWikiSiteLARTest extends BaseTestCase {
 		assertTrue(selenium.isElementPresent(
 				"//img[@alt='The average rating is 4.0 stars out of 5.']"));
 		assertEquals(RuntimeVariables.replace("Average (1 Vote)"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[2]"));
+			selenium.getText("xPath=(//div[@class='rating-label-element'])[2]"));
 		assertTrue(selenium.isElementNotPresent(
 				"//div[@class='child-pages']/ul/li/a"));
 		assertFalse(selenium.isTextPresent("Wiki Front Page Child Page Title"));

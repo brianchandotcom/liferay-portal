@@ -43,11 +43,11 @@ public class AddDMFolderDocumentNullTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Document')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Basic Document')]");
 		assertEquals(RuntimeVariables.replace("Basic Document"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Document')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Document')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Basic Document')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Basic Document')]",
 			RuntimeVariables.replace("Basic Document"));
 		selenium.waitForPageToLoad("30000");
 		selenium.uploadFile("//input[@id='_20_file']",
@@ -56,10 +56,9 @@ public class AddDMFolderDocumentNullTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForVisible(
-			"//label[@class='aui-form-validator-stack-error']/div");
+			"//label[@class='form-validator-stack-error']/div");
 		assertEquals(RuntimeVariables.replace(
 				"You must specify a file or a title."),
-			selenium.getText(
-				"//label[@class='aui-form-validator-stack-error']/div"));
+			selenium.getText("//label[@class='form-validator-stack-error']/div"));
 	}
 }

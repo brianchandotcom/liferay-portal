@@ -35,12 +35,12 @@ public class ConfigurePortletShowActionsTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Configuration')]/a");
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Configuration')]/a"));
 		selenium.click(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Configuration')]/a");
 		Thread.sleep(5000);
 		selenium.waitForVisible("//input[@id='_86_showActionsCheckbox']");
 		assertFalse(selenium.isChecked("//input[@id='_86_showActionsCheckbox']"));

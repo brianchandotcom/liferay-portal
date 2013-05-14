@@ -36,8 +36,7 @@ public class ViewRateWikiFrontPageChildPageComment1Test extends BaseTestCase {
 			RuntimeVariables.replace("Wiki FrontPage ChildPage Title"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("+1 (1 Vote)"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[3]"));
+			selenium.getText("xPath=(//div[@class='rating-label-element'])[3]"));
 		assertTrue(selenium.isVisible(
 				"//a[contains(@class,'aui-rating-thumb-up') and contains(@class,'aui-rating-element-on')]"));
 	}

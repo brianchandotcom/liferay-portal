@@ -35,11 +35,11 @@ public class ConfigurePortletInsurancePercentageTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Configuration')]");
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Configuration')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Configuration')]",
 			RuntimeVariables.replace("Configuration"));
 		selenium.waitForElementPresent(
 			"//iframe[contains(@id,'configurationIframeDialog')]");
@@ -77,7 +77,7 @@ public class ConfigurePortletInsurancePercentageTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Insurance"),
 			selenium.getText(
-				"//fieldset[@class='aui-fieldset ']/div/span[1]/span/label"));
+				"//fieldset[@class='fieldset ']/div/span[1]/span/label"));
 		assertEquals(RuntimeVariables.replace("None $1.00"),
 			selenium.getText("//select[@id='_34_insure']"));
 	}

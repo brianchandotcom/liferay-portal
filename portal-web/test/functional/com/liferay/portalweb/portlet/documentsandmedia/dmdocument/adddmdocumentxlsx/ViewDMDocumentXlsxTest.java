@@ -47,22 +47,22 @@ public class ViewDMDocumentXlsxTest extends BaseTestCase {
 			selenium.getText("//span[@class='header-back-to']/a"));
 		assertEquals(RuntimeVariables.replace("Download"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[1]/span[2]"));
+				"//span[@class='toolbar-content']/button[1]/span[2]"));
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[2]/span[2]"));
+				"//span[@class='toolbar-content']/button[2]/span[2]"));
 		assertEquals(RuntimeVariables.replace("Move"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[3]/span[2]"));
+				"//span[@class='toolbar-content']/button[3]/span[2]"));
 		assertEquals(RuntimeVariables.replace("Checkout"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[4]/span[2]"));
+				"//span[@class='toolbar-content']/button[4]/span[2]"));
 		assertEquals(RuntimeVariables.replace("Permissions"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[5]/span[2]"));
+				"//span[@class='toolbar-content']/button[5]/span[2]"));
 		assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[6]/span[2]"));
+				"//span[@class='toolbar-content']/button[6]/span[2]"));
 		assertEquals(RuntimeVariables.replace("DM Document Title"),
 			selenium.getText("//h2[@class='document-title']"));
 		assertTrue(selenium.isVisible("//span[@class='document-thumbnail']/img"));
@@ -71,11 +71,9 @@ public class ViewDMDocumentXlsxTest extends BaseTestCase {
 		assertTrue(selenium.isVisible("//span[@class='lfr-asset-ratings']"));
 		assertEquals(RuntimeVariables.replace(
 				"No comments yet. Be the first. Subscribe to Comments"),
-			selenium.getText(
-				"//fieldset[@class='aui-fieldset add-comment ']/div"));
+			selenium.getText("//fieldset[@class='fieldset add-comment ']/div"));
 		assertEquals(RuntimeVariables.replace("Be the first."),
-			selenium.getText(
-				"//fieldset[@class='aui-fieldset add-comment ']/div/a"));
+			selenium.getText("//fieldset[@class='fieldset add-comment ']/div/a"));
 		assertEquals(RuntimeVariables.replace("Subscribe to Comments"),
 			selenium.getText("//span[@class='subscribe-link']/a/span"));
 		assertEquals(RuntimeVariables.replace("Version 1.0"),

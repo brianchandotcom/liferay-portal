@@ -53,9 +53,9 @@ public class AddDataDefinitionRadioTest extends BaseTestCase {
 			RuntimeVariables.replace("Data Definition Radio"));
 		assertEquals(RuntimeVariables.replace("Radio"),
 			selenium.getText(
-				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[8]/div"));
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[8]/div",
-			"//div[@class='aui-tabview-content aui-widget-bd']");
+				"//div[@class='tabview-content widget-bd']/div/ul/li[8]/div"));
+		selenium.dragAndDropToObject("//div[@class='tabview-content widget-bd']/div/ul/li[8]/div",
+			"//div[@class='tabview-content widget-bd']");
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

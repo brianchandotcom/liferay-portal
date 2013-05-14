@@ -103,12 +103,12 @@ public class ViewPage2BlogsEntry2Comment2Test extends BaseTestCase {
 		selenium.clickAt("//div/span/ul/li/strong/a/span",
 			RuntimeVariables.replace("Scope: Default"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[2]/a");
 		assertEquals(RuntimeVariables.replace("Blogs Test Page2"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[2]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[2]/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForText("//div/span/ul/li/strong/a/span",
 			"Scope: Blogs Test Page2");

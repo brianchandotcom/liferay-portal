@@ -51,11 +51,11 @@ public class ApproveWikiPageActionsTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Approve')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Approve')]/a");
 		assertEquals(RuntimeVariables.replace("Approve"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Approve')]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Approve')]/a",
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Approve')]/a"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Approve')]/a",
 			RuntimeVariables.replace("Approve"));
 		selenium.waitForVisible("//div[3]/span/span/button");
 		assertEquals(RuntimeVariables.replace("OK"),

@@ -40,12 +40,12 @@ public class Member_AddSubfolderTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertTrue(selenium.isVisible("link=Add"));
 		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
-		selenium.waitForVisible("//div[@class='lfr-component lfr-menu-list']");
+		selenium.waitForVisible("//div[@class='lfr-menu-list unstyled']");
 		assertEquals(RuntimeVariables.replace("Subfolder"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[1]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[1]/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_20_name']",
 			RuntimeVariables.replace("Subfolder Name"));

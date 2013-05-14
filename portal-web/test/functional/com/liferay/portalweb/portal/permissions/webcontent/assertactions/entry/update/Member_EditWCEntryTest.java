@@ -44,11 +44,11 @@ public class Member_EditWCEntryTest extends BaseTestCase {
 		selenium.clickAt("//div[@data-title='WC WebContent Title']/span[@class='entry-action overlay']/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit')]");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit')]",
 			RuntimeVariables.replace("Edit"));
 		Thread.sleep(5000);
 		selenium.waitForVisible("//input[@id='_15_title_en_US']");

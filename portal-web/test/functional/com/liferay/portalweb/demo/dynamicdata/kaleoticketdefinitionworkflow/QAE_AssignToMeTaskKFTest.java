@@ -36,18 +36,18 @@ public class QAE_AssignToMeTaskKFTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[1]/a");
 		assertEquals(RuntimeVariables.replace("Assign to Me"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+				"//div[@class='lfr-menu-list unstyled']/ul/li[1]/a"));
+		selenium.click("//div[@class='lfr-menu-list unstyled']/ul/li[1]/a");
 		selenium.waitForVisible(
-			"//div[@class='aui-panel-content aui-dialog-content yui3-widget-stdmod']");
+			"//div[@class='panel-content dialog-content yui3-widget-stdmod']");
 		assertEquals(RuntimeVariables.replace("OK"),
 			selenium.getText(
-				"//div[@class='aui-panel-content aui-dialog-content yui3-widget-stdmod']/div[3]/span/span/button[1]"));
+				"//div[@class='panel-content dialog-content yui3-widget-stdmod']/div[3]/span/span/button[1]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='aui-panel-content aui-dialog-content yui3-widget-stdmod']/div[3]/span/span/button[1]"));
+				"//div[@class='panel-content dialog-content yui3-widget-stdmod']/div[3]/span/span/button[1]"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),

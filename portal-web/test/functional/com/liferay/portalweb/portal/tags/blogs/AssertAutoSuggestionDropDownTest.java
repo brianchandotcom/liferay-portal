@@ -51,7 +51,7 @@ public class AssertAutoSuggestionDropDownTest extends BaseTestCase {
 					"//iframe[contains(@title,'Rich Text Editor')]");
 
 				boolean tagsVisible = selenium.isVisible(
-						"//input[@class='lfr-tag-selector-input aui-field-input-text']");
+						"//input[@class='lfr-tag-selector-input field-input-text']");
 
 				if (tagsVisible) {
 					label = 2;
@@ -65,14 +65,14 @@ public class AssertAutoSuggestionDropDownTest extends BaseTestCase {
 				selenium.clickAt("xPath=(//div[@class='lfr-panel-title'])[2]/span",
 					RuntimeVariables.replace("Categorization"));
 				selenium.waitForVisible(
-					"//input[@class='lfr-tag-selector-input aui-field-input-text']");
+					"//input[@class='lfr-tag-selector-input field-input-text']");
 				assertTrue(selenium.isVisible(
-						"//input[@class='lfr-tag-selector-input aui-field-input-text']"));
+						"//input[@class='lfr-tag-selector-input field-input-text']"));
 
 			case 2:
-				selenium.type("//input[@class='lfr-tag-selector-input aui-field-input-text']",
+				selenium.type("//input[@class='lfr-tag-selector-input field-input-text']",
 					RuntimeVariables.replace(""));
-				selenium.sendKeys("//input[@class='lfr-tag-selector-input aui-field-input-text']",
+				selenium.sendKeys("//input[@class='lfr-tag-selector-input field-input-text']",
 					RuntimeVariables.replace("selenium"));
 				selenium.waitForText("//li[contains(@class,'aui-autocomplete-list-item')]",
 					"selenium1 liferay1");
@@ -81,13 +81,13 @@ public class AssertAutoSuggestionDropDownTest extends BaseTestCase {
 						"//li[contains(@class,'aui-autocomplete-list-item')]"));
 				assertEquals(RuntimeVariables.replace("selenium2 liferay2"),
 					selenium.getText(
-						"xPath=(//li[@class='aui-autocomplete-list-item'])[1]"));
+						"xPath=(//li[@class='autocomplete-list-item'])[1]"));
 				assertEquals(RuntimeVariables.replace("selenium3 liferay3"),
 					selenium.getText(
-						"xPath=(//li[@class='aui-autocomplete-list-item'])[2]"));
+						"xPath=(//li[@class='autocomplete-list-item'])[2]"));
 				assertEquals(RuntimeVariables.replace("selenium4 liferay4"),
 					selenium.getText(
-						"xPath=(//li[@class='aui-autocomplete-list-item'])[3]"));
+						"xPath=(//li[@class='autocomplete-list-item'])[3]"));
 				selenium.sendKeys("//input[@title='Add Tags']",
 					RuntimeVariables.replace("2*"));
 				selenium.waitForText("//li[contains(@class,'aui-autocomplete-list-item')]",
@@ -96,11 +96,11 @@ public class AssertAutoSuggestionDropDownTest extends BaseTestCase {
 					selenium.getText(
 						"//li[contains(@class,'aui-autocomplete-list-item')]"));
 				assertTrue(selenium.isElementNotPresent(
-						"xPath=(//li[@class='aui-autocomplete-list-item'])[1]"));
+						"xPath=(//li[@class='autocomplete-list-item'])[1]"));
 				assertTrue(selenium.isElementNotPresent(
-						"xPath=(//li[@class='aui-autocomplete-list-item'])[2]"));
+						"xPath=(//li[@class='autocomplete-list-item'])[2]"));
 				assertTrue(selenium.isElementNotPresent(
-						"xPath=(//li[@class='aui-autocomplete-list-item'])[3]"));
+						"xPath=(//li[@class='autocomplete-list-item'])[3]"));
 
 			case 100:
 				label = -1;

@@ -47,7 +47,7 @@ public class ViewWCWebContentDisabledExpireTest extends BaseTestCase {
 		assertFalse(selenium.isVisible(
 				"//span[@title='Actions']/ul/li/strong/a/span"));
 		assertTrue(selenium.isElementNotPresent(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Expire')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Expire')]"));
 		selenium.clickAt("//input[@id='_15_rowIdsJournalArticleCheckbox']",
 			RuntimeVariables.replace("WC WebContent Title CheckBox"));
 		assertTrue(selenium.isChecked(
@@ -57,10 +57,10 @@ public class ViewWCWebContentDisabledExpireTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Expire')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Expire')]");
 		assertEquals(RuntimeVariables.replace("Expire"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Expire')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Expire')]"));
 		assertTrue(selenium.isChecked(
 				"//input[@id='_15_rowIdsJournalArticleCheckbox']"));
 		selenium.clickAt("//input[@id='_15_rowIdsJournalArticleCheckbox']",
@@ -80,10 +80,10 @@ public class ViewWCWebContentDisabledExpireTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Expire')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Expire')]");
 		assertEquals(RuntimeVariables.replace("Expire"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Expire')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Expire')]"));
 		assertTrue(selenium.isChecked(
 				"//input[@id='_15_rowIdsJournalArticleCheckbox']"));
 		selenium.clickAt("//input[@id='_15_rowIdsJournalArticleCheckbox']",

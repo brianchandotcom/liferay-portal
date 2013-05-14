@@ -49,11 +49,11 @@ public class SearchWCStructureTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Manage']/ul/li/strong/a",
 					RuntimeVariables.replace("Manage"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Structures')]");
 				assertEquals(RuntimeVariables.replace("Structures"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]",
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Structures')]"));
+				selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Structures')]",
 					RuntimeVariables.replace("Structures"));
 				selenium.waitForVisible("//iframe[contains(@src,'Structures')]");
 				selenium.selectFrame("//iframe[contains(@src,'Structures')]");

@@ -43,11 +43,11 @@ public class MoveMBCategoryThreadToCategoryExplanationTest extends BaseTestCase 
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Move')]");
 		assertEquals(RuntimeVariables.replace("Move"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Move')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Move')]",
 			RuntimeVariables.replace("Move"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("MB Category1 Name"),

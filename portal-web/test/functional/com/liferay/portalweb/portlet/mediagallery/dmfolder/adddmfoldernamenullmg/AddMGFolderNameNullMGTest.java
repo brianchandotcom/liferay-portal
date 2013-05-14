@@ -40,7 +40,6 @@ public class AddMGFolderNameNullMGTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		assertEquals(RuntimeVariables.replace("This field is required."),
-			selenium.getText(
-				"//div[@class='aui-form-validator-message required']"));
+			selenium.getText("//div[@class='form-validator-message required']"));
 	}
 }

@@ -71,12 +71,12 @@ public class User_AddSPVariationChristmasCopyFromSeasonTest extends BaseTestCase
 				selenium.clickAt("//strong/a",
 					RuntimeVariables.replace("Staging dropdown"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a");
+					"//div[@class='lfr-menu-list unstyled']/ul/li[3]/a");
 				assertEquals(RuntimeVariables.replace(
 						"Manage Site Pages Variations"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a",
+						"//div[@class='lfr-menu-list unstyled']/ul/li[3]/a"));
+				selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li[3]/a",
 					RuntimeVariables.replace("Manage Site Pages Variations"));
 				Thread.sleep(5000);
 				selenium.waitForVisible("//input[@id='_170_addBranchButton']");

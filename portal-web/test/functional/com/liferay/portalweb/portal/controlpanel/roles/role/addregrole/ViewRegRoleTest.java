@@ -52,11 +52,11 @@ public class ViewRegRoleTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit')]");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit')]",
 			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Roles Regrole Name"),
@@ -65,10 +65,10 @@ public class ViewRegRoleTest extends BaseTestCase {
 			selenium.getText("//a[@id='_128_TabsBack']"));
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[contains(.,'Edit')]/ul[@class='aui-tabview-list']/li[1]/span/a"));
+				"//div[contains(.,'Edit')]/ul[@class='tabview-list']/li[1]/span/a"));
 		assertEquals(RuntimeVariables.replace("Define Permissions"),
 			selenium.getText(
-				"//div[contains(.,'Define Permissions')]/ul[@class='aui-tabview-list']/li[2]/span/a"));
+				"//div[contains(.,'Define Permissions')]/ul[@class='tabview-list']/li[2]/span/a"));
 		assertEquals(RuntimeVariables.replace("Type"),
 			selenium.getText("//div[contains(.,'Type')]/label"));
 		assertTrue(selenium.isPartialText(

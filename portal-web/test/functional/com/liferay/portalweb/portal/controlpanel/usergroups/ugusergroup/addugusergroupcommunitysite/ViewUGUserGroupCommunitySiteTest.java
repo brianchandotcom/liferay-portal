@@ -66,14 +66,14 @@ public class ViewUGUserGroupCommunitySiteTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("\u00ab Back"),
 			selenium.getText("//a[@id='_127_TabsBack']"));
 		assertEquals(RuntimeVariables.replace("Old Name UG UserGroup Name"),
-			selenium.getText("//div[@class='aui-field-wrapper-content']"));
+			selenium.getText("//div[@class='field-wrapper-content']"));
 		assertEquals(RuntimeVariables.replace("New Name (Required)"),
-			selenium.getText("//span[@class='aui-field-content']/label"));
+			selenium.getText("//span[@class='field-content']/label"));
 		assertTrue(selenium.isVisible("//input[@id='_127_name']"));
 		assertEquals("UG UserGroup Name",
 			selenium.getValue("//input[@id='_127_name']"));
 		assertTrue(selenium.isVisible("//textarea[@id='_127_description']"));
-		assertTrue(selenium.isPartialText("//span[@class='aui-legend']",
+		assertTrue(selenium.isPartialText("//span[@class='legend']",
 				"User Group Site"));
 		assertEquals(RuntimeVariables.replace("Public Pages"),
 			selenium.getText("//label[contains(.,'Public Pages')]"));

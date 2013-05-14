@@ -41,11 +41,11 @@ public class ViewWCWebContentScopeLiferayTest extends BaseTestCase {
 		selenium.clickAt("//a[@id='_160_groupSelectorButton']",
 			RuntimeVariables.replace("Liferay"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Global')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Global')]");
 		assertEquals(RuntimeVariables.replace("Global"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Global')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Global')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Global')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Global')]",
 			RuntimeVariables.replace("Global"));
 		selenium.waitForText("//a[@id='_160_groupSelectorButton']", "Global");
 		selenium.clickAt("link=Web Content",
@@ -70,11 +70,11 @@ public class ViewWCWebContentScopeLiferayTest extends BaseTestCase {
 		selenium.clickAt("//a[@id='_160_groupSelectorButton']",
 			RuntimeVariables.replace("Liferay"));
 		selenium.waitForVisible(
-			"xPath=(//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Liferay')])[2]");
+			"xPath=(//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Liferay')])[2]");
 		assertEquals(RuntimeVariables.replace("Liferay"),
 			selenium.getText(
-				"xPath=(//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Liferay')])[2]"));
-		selenium.clickAt("xPath=(//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Liferay')])[2]",
+				"xPath=(//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Liferay')])[2]"));
+		selenium.clickAt("xPath=(//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Liferay')])[2]",
 			RuntimeVariables.replace("Liferay"));
 		selenium.waitForText("//a[@id='_160_groupSelectorButton']", "Liferay");
 		selenium.clickAt("link=Web Content",

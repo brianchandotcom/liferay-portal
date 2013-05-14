@@ -57,12 +57,12 @@ public class MergeOrganizationPageTest extends BaseTestCase {
 				selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a/span)[3]",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Pages')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Manage Pages')]");
 				assertEquals(RuntimeVariables.replace("Manage Pages"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Pages')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Manage Pages')]"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Pages')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Manage Pages')]"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForVisible("//a[@id='_156_advancedLink']");
 				selenium.clickAt("//a[@id='_156_advancedLink']",

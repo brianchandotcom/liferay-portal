@@ -41,7 +41,7 @@ public class AddFrontPageTagTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 
 				boolean tagsVisible = selenium.isVisible(
-						"//input[@class='lfr-tag-selector-input aui-field-input-text']");
+						"//input[@class='lfr-tag-selector-input field-input-text']");
 
 				if (tagsVisible) {
 					label = 2;
@@ -55,12 +55,12 @@ public class AddFrontPageTagTest extends BaseTestCase {
 				selenium.clickAt("//div[@id='wikiPageCategorizationPanel']/div/div/span",
 					RuntimeVariables.replace("Categorization"));
 				selenium.waitForVisible(
-					"//input[@class='lfr-tag-selector-input aui-field-input-text']");
+					"//input[@class='lfr-tag-selector-input field-input-text']");
 				assertTrue(selenium.isVisible(
-						"//input[@class='lfr-tag-selector-input aui-field-input-text']"));
+						"//input[@class='lfr-tag-selector-input field-input-text']"));
 
 			case 2:
-				selenium.type("//input[@class='lfr-tag-selector-input aui-field-input-text']",
+				selenium.type("//input[@class='lfr-tag-selector-input field-input-text']",
 					RuntimeVariables.replace("wiki tag1"));
 				selenium.clickAt("//input[@value='Publish']",
 					RuntimeVariables.replace("Publish"));

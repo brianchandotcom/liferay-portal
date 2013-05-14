@@ -35,11 +35,11 @@ public class AddFolder1Test extends BaseTestCase {
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[1]/a");
 		assertEquals(RuntimeVariables.replace("Folder"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
+				"//div[@class='lfr-menu-list unstyled']/ul/li[1]/a"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li[1]/a",
 			RuntimeVariables.replace("Folder"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_20_name']",

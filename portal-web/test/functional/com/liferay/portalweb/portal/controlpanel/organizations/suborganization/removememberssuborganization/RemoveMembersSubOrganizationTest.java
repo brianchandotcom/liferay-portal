@@ -61,17 +61,17 @@ public class RemoveMembersSubOrganizationTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Users')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Assign Users')]");
 				assertEquals(RuntimeVariables.replace("Assign Users"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Users')]"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Users')]",
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Assign Users')]"));
+				selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Assign Users')]",
 					RuntimeVariables.replace("Assign Users"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Available"),
 					selenium.getText(
-						"//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Available')]"));
-				selenium.clickAt("//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Available')]",
+						"//ul[@class='tabview-list']/li/span/a[contains(.,'Available')]"));
+				selenium.clickAt("//ul[@class='tabview-list']/li/span/a[contains(.,'Available')]",
 					RuntimeVariables.replace("Available"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForElementPresent("//a[.='\u00ab Basic']");
@@ -117,7 +117,7 @@ public class RemoveMembersSubOrganizationTest extends BaseTestCase {
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				assertFalse(selenium.isChecked("//input[@name='_125_rowIds']"));
-				selenium.clickAt("//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Current')]",
+				selenium.clickAt("//ul[@class='tabview-list']/li/span/a[contains(.,'Current')]",
 					RuntimeVariables.replace("Current"));
 				selenium.waitForPageToLoad("30000");
 				assertFalse(selenium.isTextPresent("userfn"));

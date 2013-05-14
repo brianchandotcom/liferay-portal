@@ -45,12 +45,12 @@ public class AddDocumentTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Basic Document')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Basic Document')]/a");
 		assertEquals(RuntimeVariables.replace("Basic Document"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Basic Document')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Basic Document')]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Basic Document')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Basic Document')]/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForVisible("//input[@id='_20_file']");
 		selenium.type("//input[@id='_20_file']",

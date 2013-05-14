@@ -34,23 +34,22 @@ public class AddDMFolderNameSpaceTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Folder')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Folder')]");
 		assertEquals(RuntimeVariables.replace("Folder"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Folder')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Folder')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Folder')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Folder')]",
 			RuntimeVariables.replace("Folder"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_20_name']", RuntimeVariables.replace(" "));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForVisible(
-			"//div[@class='aui-form-validator-message required']");
+			"//div[@class='form-validator-message required']");
 		assertTrue(selenium.isVisible(
-				"//div[@class='aui-form-validator-message required']"));
+				"//div[@class='form-validator-message required']"));
 		assertEquals(RuntimeVariables.replace("This field is required."),
-			selenium.getText(
-				"//div[@class='aui-form-validator-message required']"));
+			selenium.getText("//div[@class='form-validator-message required']"));
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));

@@ -28,97 +28,97 @@ public class RateWCWebContentCommentAPTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForText("//div[@class='aui-rating-label-element']",
+		selenium.waitForText("//div[@class='rating-label-element']",
 			"0 (0 Votes)");
 		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
-			selenium.getText("//div[@class='aui-rating-label-element']"));
+			selenium.getText("//div[@class='rating-label-element']"));
 		assertTrue(selenium.isVisible(
-				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']"));
+				"//a[@class='rating-element rating-element-off rating-thumb-up']"));
 		selenium.click(
-			"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']");
-		selenium.waitForText("//div[@class='aui-rating-label-element']",
+			"//a[@class='rating-element rating-element-off rating-thumb-up']");
+		selenium.waitForText("//div[@class='rating-label-element']",
 			"+1 (1 Vote)");
 		assertEquals(RuntimeVariables.replace("+1 (1 Vote)"),
-			selenium.getText("//div[@class='aui-rating-label-element']"));
+			selenium.getText("//div[@class='rating-label-element']"));
 		assertTrue(selenium.isVisible(
-				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up aui-rating-element-on']"));
+				"//a[@class='rating-element rating-element-off rating-thumb-up rating-element-on']"));
 		selenium.click(
-			"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up aui-rating-element-on']");
-		selenium.waitForText("//div[@class='aui-rating-label-element']",
+			"//a[@class='rating-element rating-element-off rating-thumb-up rating-element-on']");
+		selenium.waitForText("//div[@class='rating-label-element']",
 			"0 (0 Votes)");
 		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
-			selenium.getText("//div[@class='aui-rating-label-element']"));
+			selenium.getText("//div[@class='rating-label-element']"));
 		assertTrue(selenium.isVisible(
-				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down']"));
+				"//a[@class='rating-element rating-element-off rating-thumb-down']"));
 		selenium.click(
-			"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down']");
-		selenium.waitForText("//div[@class='aui-rating-label-element']",
+			"//a[@class='rating-element rating-element-off rating-thumb-down']");
+		selenium.waitForText("//div[@class='rating-label-element']",
 			"-1 (1 Vote)");
 		assertEquals(RuntimeVariables.replace("-1 (1 Vote)"),
-			selenium.getText("//div[@class='aui-rating-label-element']"));
+			selenium.getText("//div[@class='rating-label-element']"));
 		assertTrue(selenium.isVisible(
-				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down aui-rating-element-on']"));
+				"//a[@class='rating-element rating-element-off rating-thumb-down rating-element-on']"));
 		selenium.click(
-			"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down aui-rating-element-on']");
-		selenium.waitForText("//div[@class='aui-rating-label-element']",
+			"//a[@class='rating-element rating-element-off rating-thumb-down rating-element-on']");
+		selenium.waitForText("//div[@class='rating-label-element']",
 			"0 (0 Votes)");
 		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
-			selenium.getText("//div[@class='aui-rating-label-element']"));
+			selenium.getText("//div[@class='rating-label-element']"));
 		assertTrue(selenium.isVisible(
-				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']"));
+				"//a[@class='rating-element rating-element-off rating-thumb-up']"));
 		selenium.click(
-			"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']");
-		selenium.waitForText("//div[@class='aui-rating-label-element']",
+			"//a[@class='rating-element rating-element-off rating-thumb-up']");
+		selenium.waitForText("//div[@class='rating-label-element']",
 			"+1 (1 Vote)");
 		assertEquals(RuntimeVariables.replace("+1 (1 Vote)"),
-			selenium.getText("//div[@class='aui-rating-label-element']"));
+			selenium.getText("//div[@class='rating-label-element']"));
 		assertTrue(selenium.isVisible(
-				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down']"));
+				"//a[@class='rating-element rating-element-off rating-thumb-down']"));
 		selenium.click(
-			"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down']");
-		selenium.waitForText("//div[@class='aui-rating-label-element']",
+			"//a[@class='rating-element rating-element-off rating-thumb-down']");
+		selenium.waitForText("//div[@class='rating-label-element']",
 			"-1 (1 Vote)");
 		assertEquals(RuntimeVariables.replace("-1 (1 Vote)"),
-			selenium.getText("//div[@class='aui-rating-label-element']"));
+			selenium.getText("//div[@class='rating-label-element']"));
 		assertTrue(selenium.isVisible(
-				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down aui-rating-element-on']"));
+				"//a[@class='rating-element rating-element-off rating-thumb-down rating-element-on']"));
 		selenium.click(
-			"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down aui-rating-element-on']");
-		selenium.waitForText("//div[@class='aui-rating-label-element']",
+			"//a[@class='rating-element rating-element-off rating-thumb-down rating-element-on']");
+		selenium.waitForText("//div[@class='rating-label-element']",
 			"0 (0 Votes)");
 		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
-			selenium.getText("//div[@class='aui-rating-label-element']"));
+			selenium.getText("//div[@class='rating-label-element']"));
 		assertTrue(selenium.isVisible(
-				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down']"));
+				"//a[@class='rating-element rating-element-off rating-thumb-down']"));
 		selenium.click(
-			"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down']");
-		selenium.waitForText("//div[@class='aui-rating-label-element']",
+			"//a[@class='rating-element rating-element-off rating-thumb-down']");
+		selenium.waitForText("//div[@class='rating-label-element']",
 			"-1 (1 Vote)");
 		assertEquals(RuntimeVariables.replace("-1 (1 Vote)"),
-			selenium.getText("//div[@class='aui-rating-label-element']"));
+			selenium.getText("//div[@class='rating-label-element']"));
 		assertTrue(selenium.isVisible(
-				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']"));
+				"//a[@class='rating-element rating-element-off rating-thumb-up']"));
 		selenium.click(
-			"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']");
-		selenium.waitForText("//div[@class='aui-rating-label-element']",
+			"//a[@class='rating-element rating-element-off rating-thumb-up']");
+		selenium.waitForText("//div[@class='rating-label-element']",
 			"+1 (1 Vote)");
 		assertEquals(RuntimeVariables.replace("+1 (1 Vote)"),
-			selenium.getText("//div[@class='aui-rating-label-element']"));
+			selenium.getText("//div[@class='rating-label-element']"));
 		assertTrue(selenium.isVisible(
-				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up aui-rating-element-on']"));
+				"//a[@class='rating-element rating-element-off rating-thumb-up rating-element-on']"));
 		selenium.click(
-			"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up aui-rating-element-on']");
-		selenium.waitForText("//div[@class='aui-rating-label-element']",
+			"//a[@class='rating-element rating-element-off rating-thumb-up rating-element-on']");
+		selenium.waitForText("//div[@class='rating-label-element']",
 			"0 (0 Votes)");
 		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
-			selenium.getText("//div[@class='aui-rating-label-element']"));
+			selenium.getText("//div[@class='rating-label-element']"));
 		assertTrue(selenium.isVisible(
-				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']"));
+				"//a[@class='rating-element rating-element-off rating-thumb-up']"));
 		assertTrue(selenium.isVisible(
-				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down']"));
+				"//a[@class='rating-element rating-element-off rating-thumb-down']"));
 		assertTrue(selenium.isElementPresent(
-				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']"));
+				"//a[@class='rating-element rating-element-off rating-thumb-up']"));
 		assertTrue(selenium.isElementPresent(
-				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down']"));
+				"//a[@class='rating-element rating-element-off rating-thumb-down']"));
 	}
 }

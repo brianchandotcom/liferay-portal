@@ -62,11 +62,11 @@ public class RevertVersionDMFolderDocumentTitle10Test extends BaseTestCase {
 		selenium.clickAt("//tr[4]/td[6]/span/ul[contains(@class,'lfr-component lfr-actions')]/li/strong/a",
 			RuntimeVariables.replace("Version 1.0 Drop Down"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Revert')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Revert')]/a");
 		assertEquals(RuntimeVariables.replace("Revert"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Revert')]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Revert')]/a",
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Revert')]/a"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Revert')]/a",
 			RuntimeVariables.replace("Revert"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForVisible("//div[@class='portlet-msg-success']");

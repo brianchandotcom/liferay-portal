@@ -60,69 +60,69 @@ public class AddDataDefinitionTest extends BaseTestCase {
 			RuntimeVariables.replace("Data Definition"));
 		assertEquals(RuntimeVariables.replace("Boolean"),
 			selenium.getText(
-				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[1]/div"));
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[1]/div",
-			"//div[@class='aui-tabview-content aui-widget-bd']");
+				"//div[@class='tabview-content widget-bd']/div/ul/li[1]/div"));
+		selenium.dragAndDropToObject("//div[@class='tabview-content widget-bd']/div/ul/li[1]/div",
+			"//div[@class='tabview-content widget-bd']");
 		assertEquals(RuntimeVariables.replace("Date"),
 			selenium.getText(
-				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[2]/div"));
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[2]/div",
-			"//div[@class='aui-tabview-content aui-widget-bd']");
+				"//div[@class='tabview-content widget-bd']/div/ul/li[2]/div"));
+		selenium.dragAndDropToObject("//div[@class='tabview-content widget-bd']/div/ul/li[2]/div",
+			"//div[@class='tabview-content widget-bd']");
 		assertEquals(RuntimeVariables.replace("Decimal"),
 			selenium.getText(
-				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[3]/div"));
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[3]/div",
-			"//div[@class='aui-tabview-content aui-widget-bd']");
+				"//div[@class='tabview-content widget-bd']/div/ul/li[3]/div"));
+		selenium.dragAndDropToObject("//div[@class='tabview-content widget-bd']/div/ul/li[3]/div",
+			"//div[@class='tabview-content widget-bd']");
 		assertEquals(RuntimeVariables.replace("Documents and Media"),
 			selenium.getText(
-				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[4]/div"));
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[4]/div",
-			"//div[@class='aui-tabview-content aui-widget-bd']");
+				"//div[@class='tabview-content widget-bd']/div/ul/li[4]/div"));
+		selenium.dragAndDropToObject("//div[@class='tabview-content widget-bd']/div/ul/li[4]/div",
+			"//div[@class='tabview-content widget-bd']");
 		assertEquals(RuntimeVariables.replace("File Upload"),
 			selenium.getText(
-				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[5]/div"));
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[5]/div",
-			"//div[@class='aui-tabview-content aui-widget-bd']");
+				"//div[@class='tabview-content widget-bd']/div/ul/li[5]/div"));
+		selenium.dragAndDropToObject("//div[@class='tabview-content widget-bd']/div/ul/li[5]/div",
+			"//div[@class='tabview-content widget-bd']");
 		assertEquals(RuntimeVariables.replace("HTML"),
 			selenium.getText(
-				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[6]/div"));
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[6]/div",
-			"//div[@class='aui-tabview-content aui-widget-bd']");
+				"//div[@class='tabview-content widget-bd']/div/ul/li[6]/div"));
+		selenium.dragAndDropToObject("//div[@class='tabview-content widget-bd']/div/ul/li[6]/div",
+			"//div[@class='tabview-content widget-bd']");
 		assertEquals(RuntimeVariables.replace("Integer"),
 			selenium.getText(
-				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[7]/div"));
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[7]/div",
-			"//div[@class='aui-tabview-content aui-widget-bd']");
+				"//div[@class='tabview-content widget-bd']/div/ul/li[7]/div"));
+		selenium.dragAndDropToObject("//div[@class='tabview-content widget-bd']/div/ul/li[7]/div",
+			"//div[@class='tabview-content widget-bd']");
 		assertEquals(RuntimeVariables.replace("Link to Page"),
 			selenium.getText(
-				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[8]/div"));
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[8]/div",
-			"//div[@class='aui-tabview-content aui-widget-bd']");
+				"//div[@class='tabview-content widget-bd']/div/ul/li[8]/div"));
+		selenium.dragAndDropToObject("//div[@class='tabview-content widget-bd']/div/ul/li[8]/div",
+			"//div[@class='tabview-content widget-bd']");
 		assertEquals(RuntimeVariables.replace("Number"),
 			selenium.getText(
-				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[9]/div"));
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[9]/div",
-			"//div[@class='aui-tabview-content aui-widget-bd']");
+				"//div[@class='tabview-content widget-bd']/div/ul/li[9]/div"));
+		selenium.dragAndDropToObject("//div[@class='tabview-content widget-bd']/div/ul/li[9]/div",
+			"//div[@class='tabview-content widget-bd']");
 		assertEquals(RuntimeVariables.replace("Radio"),
 			selenium.getText(
-				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[10]/div"));
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[10]/div",
-			"//div[@class='aui-tabview-content aui-widget-bd']");
+				"//div[@class='tabview-content widget-bd']/div/ul/li[10]/div"));
+		selenium.dragAndDropToObject("//div[@class='tabview-content widget-bd']/div/ul/li[10]/div",
+			"//div[@class='tabview-content widget-bd']");
 		assertEquals(RuntimeVariables.replace("Select"),
 			selenium.getText(
-				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[11]/div"));
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[11]/div",
-			"//div[@class='aui-tabview-content aui-widget-bd']");
+				"//div[@class='tabview-content widget-bd']/div/ul/li[11]/div"));
+		selenium.dragAndDropToObject("//div[@class='tabview-content widget-bd']/div/ul/li[11]/div",
+			"//div[@class='tabview-content widget-bd']");
 		assertEquals(RuntimeVariables.replace("Text"),
 			selenium.getText(
-				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[12]/div"));
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[12]/div",
-			"//div[@class='aui-tabview-content aui-widget-bd']");
+				"//div[@class='tabview-content widget-bd']/div/ul/li[12]/div"));
+		selenium.dragAndDropToObject("//div[@class='tabview-content widget-bd']/div/ul/li[12]/div",
+			"//div[@class='tabview-content widget-bd']");
 		assertEquals(RuntimeVariables.replace("Text Box"),
 			selenium.getText(
-				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[13]/div"));
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[13]/div",
-			"//div[@class='aui-tabview-content aui-widget-bd']");
+				"//div[@class='tabview-content widget-bd']/div/ul/li[13]/div"));
+		selenium.dragAndDropToObject("//div[@class='tabview-content widget-bd']/div/ul/li[13]/div",
+			"//div[@class='tabview-content widget-bd']");
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

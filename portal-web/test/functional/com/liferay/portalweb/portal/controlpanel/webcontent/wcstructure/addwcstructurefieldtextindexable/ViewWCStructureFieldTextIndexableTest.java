@@ -45,11 +45,11 @@ public class ViewWCStructureFieldTextIndexableTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Manage']/ul/li/strong/a",
 			RuntimeVariables.replace("Manage"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Structures')]");
 		assertEquals(RuntimeVariables.replace("Structures"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Structures')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Structures')]",
 			RuntimeVariables.replace("Structures"));
 		selenium.waitForVisible("//iframe[contains(@src,'Structures')]");
 		selenium.selectFrame("//iframe[contains(@src,'Structures')]");
@@ -102,11 +102,11 @@ public class ViewWCStructureFieldTextIndexableTest extends BaseTestCase {
 		assertTrue(selenium.isVisible(
 				"//div[@id='structureDetailsSectionPanel']/div[2]/div[4]/div/input"));
 		selenium.waitForVisible(
-			"//div[@class='aui-diagram-builder-drop-container']/div[1]");
+			"//div[@class='diagram-builder-drop-container']/div[1]");
 		assertEquals(RuntimeVariables.replace("Text"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[1]/div/label"));
-		selenium.clickAt("//div[@class='aui-diagram-builder-drop-container']/div[1]",
+				"//div[@class='diagram-builder-drop-container']/div[1]/div/label"));
+		selenium.clickAt("//div[@class='diagram-builder-drop-container']/div[1]",
 			RuntimeVariables.replace("Text Field"));
 		selenium.waitForVisible("//button[@id='editEvent']");
 		assertTrue(selenium.isVisible("//button[@id='duplicateEvent']"));
@@ -183,7 +183,7 @@ public class ViewWCStructureFieldTextIndexableTest extends BaseTestCase {
 				"//tbody[@class='yui3-datatable-data']/tr[10]/td[2]"));
 		assertEquals(RuntimeVariables.replace("Cancel"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[contains(.,'Cancel')]"));
+				"//span[@class='toolbar-content']/button[contains(.,'Cancel')]"));
 		assertTrue(selenium.isVisible("//input[@value='Save']"));
 		assertTrue(selenium.isVisible("//input[@value='Cancel']"));
 		selenium.selectFrame("relative=top");

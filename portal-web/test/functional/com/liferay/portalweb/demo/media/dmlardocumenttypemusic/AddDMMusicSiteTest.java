@@ -34,11 +34,11 @@ public class AddDMMusicSiteTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Music')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Music')]");
 		assertEquals(RuntimeVariables.replace("Music"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Music')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Music')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Music')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Music')]",
 			RuntimeVariables.replace("Music"));
 		selenium.waitForPageToLoad("30000");
 		selenium.uploadCommonFile("//input[@id='_20_file']",

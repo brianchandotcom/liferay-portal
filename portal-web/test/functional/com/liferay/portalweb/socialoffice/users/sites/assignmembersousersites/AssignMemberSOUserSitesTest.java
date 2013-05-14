@@ -52,12 +52,12 @@ public class AssignMemberSOUserSitesTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Memberships')]/a");
+					"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Manage Memberships')]/a");
 				assertEquals(RuntimeVariables.replace("Manage Memberships"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Memberships')]/a"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Manage Memberships')]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Memberships')]/a"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Manage Memberships')]/a"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Add Members"),
 					selenium.getText(
@@ -65,12 +65,12 @@ public class AssignMemberSOUserSitesTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Add Members']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Add Members"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'User')]/a");
+					"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'User')]/a");
 				assertEquals(RuntimeVariables.replace("User"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'User')]/a"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'User')]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'User')]/a"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'User')]/a"));
 				selenium.waitForPageToLoad("30000");
 
 				boolean basicVisible = selenium.isVisible("link=\u00ab Basic");

@@ -30,12 +30,12 @@ public class N2_UpdateMessageBoardsContentTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Edit')]/a");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Edit')]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Edit')]/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForVisible("//input[@id='_19_name']");
 		selenium.type("//input[@id='_19_name']",

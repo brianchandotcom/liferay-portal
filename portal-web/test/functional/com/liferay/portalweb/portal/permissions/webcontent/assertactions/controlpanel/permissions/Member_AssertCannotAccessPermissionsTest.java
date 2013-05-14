@@ -44,7 +44,7 @@ public class Member_AssertCannotAccessPermissionsTest extends BaseTestCase {
 		assertTrue(selenium.isElementNotPresent(
 				"//li[@class='app-view-navigation-entry folder selected']/span/span/ul/li/strong/a"));
 		assertTrue(selenium.isElementNotPresent(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Permissions')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Permissions')]"));
 		assertFalse(selenium.isTextPresent("Permissions"));
 	}
 }

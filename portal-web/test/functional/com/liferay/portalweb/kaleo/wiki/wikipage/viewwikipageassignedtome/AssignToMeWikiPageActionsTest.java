@@ -51,11 +51,11 @@ public class AssignToMeWikiPageActionsTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Assign to Me')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Assign to Me')]/a");
 		assertEquals(RuntimeVariables.replace("Assign to Me"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Assign to Me')]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Assign to Me')]/a",
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Assign to Me')]/a"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Assign to Me')]/a",
 			RuntimeVariables.replace("Assign to Me"));
 		selenium.waitForVisible("//div[3]/span/span/button");
 		assertEquals(RuntimeVariables.replace("OK"),

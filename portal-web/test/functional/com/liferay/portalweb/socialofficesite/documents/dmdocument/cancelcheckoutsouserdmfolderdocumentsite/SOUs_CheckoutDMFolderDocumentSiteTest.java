@@ -71,8 +71,8 @@ public class SOUs_CheckoutDMFolderDocumentSiteTest extends BaseTestCase {
 			selenium.getText("//span[@class='header-back-to']/a"));
 		assertEquals(RuntimeVariables.replace("Checkout"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[contains(.,'Checkout')]/span[2]"));
-		selenium.clickAt("//span[@class='aui-toolbar-content']/button[contains(.,'Checkout')]/span[2]",
+				"//span[@class='toolbar-content']/button[contains(.,'Checkout')]/span[2]"));
+		selenium.clickAt("//span[@class='toolbar-content']/button[contains(.,'Checkout')]/span[2]",
 			RuntimeVariables.replace("Checkout"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(

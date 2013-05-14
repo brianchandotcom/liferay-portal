@@ -44,11 +44,11 @@ public class AddWCStructureFieldNumberTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Manage']/ul/li/strong/a",
 			RuntimeVariables.replace("Manage"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Structures')]");
 		assertEquals(RuntimeVariables.replace("Structures"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Structures')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Structures')]",
 			RuntimeVariables.replace("Structures"));
 		selenium.waitForVisible("//iframe[contains(@src,'Structures')]");
 		selenium.selectFrame("//iframe[contains(@src,'Structures')]");
@@ -66,12 +66,12 @@ public class AddWCStructureFieldNumberTest extends BaseTestCase {
 		selenium.type("//textarea[@id='_166_description_en_US']",
 			RuntimeVariables.replace("WC Structure Number Description"));
 		selenium.waitForVisible(
-			"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[@title=\"Number\"]/span");
+			"//div[@class='tabview-content widget-bd']/div/ul/li[@title=\"Number\"]/span");
 		assertEquals(RuntimeVariables.replace("Number"),
 			selenium.getText(
-				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[@title=\"Number\"]/div"));
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[@title=\"Number\"]/div",
-			"//div[@class='aui-tabview-content aui-widget-bd']");
+				"//div[@class='tabview-content widget-bd']/div/ul/li[@title=\"Number\"]/div"));
+		selenium.dragAndDropToObject("//div[@class='tabview-content widget-bd']/div/ul/li[@title=\"Number\"]/div",
+			"//div[@class='tabview-content widget-bd']");
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

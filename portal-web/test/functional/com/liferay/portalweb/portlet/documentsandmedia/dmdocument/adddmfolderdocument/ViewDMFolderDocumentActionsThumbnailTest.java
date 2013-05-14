@@ -47,24 +47,24 @@ public class ViewDMFolderDocumentActionsThumbnailTest extends BaseTestCase {
 		selenium.clickAt("xPath=(//span[@class='entry-action overlay']/span/ul/li/strong/a)[2]",
 			RuntimeVariables.replace("Actions Arrow Drop Down"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[1]/a");
 		assertEquals(RuntimeVariables.replace("Download (0k)"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[1]/a"));
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[2]/a"));
 		assertEquals(RuntimeVariables.replace("Move"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[3]/a"));
 		assertEquals(RuntimeVariables.replace("Checkout"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[4]/a"));
 		assertEquals(RuntimeVariables.replace("Permissions"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[5]/a"));
 		assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[6]/a"));
 	}
 }

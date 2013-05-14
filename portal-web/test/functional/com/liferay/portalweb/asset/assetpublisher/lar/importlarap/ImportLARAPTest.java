@@ -34,11 +34,11 @@ public class ImportLARAPTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Export / Import')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Export / Import')]");
 		assertEquals(RuntimeVariables.replace("Export / Import"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Export / Import')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Export / Import')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Export / Import')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Export / Import')]",
 			RuntimeVariables.replace("Export / Import"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Import"),

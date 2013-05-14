@@ -55,17 +55,17 @@ public class RemoveMembersOrganizationTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Users')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Assign Users')]");
 				assertEquals(RuntimeVariables.replace("Assign Users"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Users')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Assign Users')]"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Users')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Assign Users')]"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Available"),
 					selenium.getText(
-						"//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Available')]"));
-				selenium.clickAt("//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Available')]",
+						"//ul[@class='tabview-list']/li/span/a[contains(.,'Available')]"));
+				selenium.clickAt("//ul[@class='tabview-list']/li/span/a[contains(.,'Available')]",
 					RuntimeVariables.replace("Available"));
 				selenium.waitForPageToLoad("30000");
 				selenium.type("//input[@name='_125_keywords']",

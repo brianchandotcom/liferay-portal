@@ -56,12 +56,12 @@ public class AssignMembersSiteAdminRoleUserTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Memberships')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Manage Memberships')]");
 				assertEquals(RuntimeVariables.replace("Manage Memberships"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Memberships')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Manage Memberships')]"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Memberships')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Manage Memberships')]"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Site Name"),
 					selenium.getText("//h1[@class='header-title']/span"));
@@ -71,11 +71,11 @@ public class AssignMembersSiteAdminRoleUserTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Add Site Roles to']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Add Site Roles to"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Users')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Users')]");
 				assertEquals(RuntimeVariables.replace("Users"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Users')]"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Users')]",
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Users')]"));
+				selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Users')]",
 					RuntimeVariables.replace("Users"));
 				selenium.waitForPageToLoad("30000");
 				selenium.type("//input[@id='_174_keywords']",
@@ -94,8 +94,8 @@ public class AssignMembersSiteAdminRoleUserTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Available"),
 					selenium.getText(
-						"//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Available')]"));
-				selenium.clickAt("//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Available')]",
+						"//ul[@class='tabview-list']/li/span/a[contains(.,'Available')]"));
+				selenium.clickAt("//ul[@class='tabview-list']/li/span/a[contains(.,'Available')]",
 					RuntimeVariables.replace("Available"));
 				selenium.waitForPageToLoad("30000");
 				selenium.type("//input[@name='_174_keywords']",

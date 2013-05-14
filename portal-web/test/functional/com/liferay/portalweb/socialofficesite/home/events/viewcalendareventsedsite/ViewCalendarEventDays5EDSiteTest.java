@@ -80,18 +80,14 @@ public class ViewCalendarEventDays5EDSiteTest extends BaseTestCase {
 			selenium.getText(
 				"//p[contains(.,'Calendar Future Day4 Event Description')]"));
 		assertEquals(RuntimeVariables.replace("Your Rating"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[1]"));
+			selenium.getText("xPath=(//div[@class='rating-label-element'])[1]"));
 		assertEquals(RuntimeVariables.replace("Average (0 Votes)"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[2]"));
+			selenium.getText("xPath=(//div[@class='rating-label-element'])[2]"));
 		assertEquals(RuntimeVariables.replace(
 				"No comments yet. Be the first. Subscribe to Comments"),
-			selenium.getText(
-				"//fieldset[@class='aui-fieldset add-comment ']/div"));
+			selenium.getText("//fieldset[@class='fieldset add-comment ']/div"));
 		assertEquals(RuntimeVariables.replace("Be the first."),
-			selenium.getText(
-				"//fieldset[@class='aui-fieldset add-comment ']/div/a"));
+			selenium.getText("//fieldset[@class='fieldset add-comment ']/div/a"));
 		assertEquals(RuntimeVariables.replace("Subscribe to Comments"),
 			selenium.getText("//span[@class='subscribe-link']/a/span"));
 	}

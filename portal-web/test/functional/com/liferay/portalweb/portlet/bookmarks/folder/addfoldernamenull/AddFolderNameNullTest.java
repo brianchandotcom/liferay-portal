@@ -38,9 +38,8 @@ public class AddFolderNameNullTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForVisible(
-			"//div[@class='aui-form-validator-message required']");
+			"//div[@class='form-validator-message required']");
 		assertEquals(RuntimeVariables.replace("This field is required."),
-			selenium.getText(
-				"//div[@class='aui-form-validator-message required']"));
+			selenium.getText("//div[@class='form-validator-message required']"));
 	}
 }

@@ -43,12 +43,12 @@ public class DiscardDraftWikiPageDraftPagesActionsTest extends BaseTestCase {
 		selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[6]/a");
 		assertEquals(RuntimeVariables.replace("Discard Draft"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[6]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[6]/a"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),

@@ -45,8 +45,8 @@ public class AddWCWebContentTagWCDTest extends BaseTestCase {
 		selenium.clickAt("//a[@id='_15_categorizationLink']",
 			RuntimeVariables.replace("Categorization"));
 		selenium.waitForVisible(
-			"//input[@class='lfr-tag-selector-input aui-field-input-text']");
-		selenium.type("//input[@class='lfr-tag-selector-input aui-field-input-text']",
+			"//input[@class='lfr-tag-selector-input field-input-text']");
+		selenium.type("//input[@class='lfr-tag-selector-input field-input-text']",
 			RuntimeVariables.replace("tag"));
 		selenium.clickAt("//button[@id='add']", RuntimeVariables.replace("Add"));
 		selenium.clickAt("//input[@value='Publish']",

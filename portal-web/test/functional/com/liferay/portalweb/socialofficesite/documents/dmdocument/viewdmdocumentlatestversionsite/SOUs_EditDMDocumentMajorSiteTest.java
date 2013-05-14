@@ -94,10 +94,10 @@ public class SOUs_EditDMDocumentMajorSiteTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"No comments yet. Be the first. Subscribe to Comments"),
 			selenium.getText(
-				"xPath=(//fieldset[@class='aui-fieldset add-comment ']/div)[1]"));
+				"xPath=(//fieldset[@class='fieldset add-comment ']/div)[1]"));
 		assertEquals(RuntimeVariables.replace("Be the first."),
 			selenium.getText(
-				"xPath=(//fieldset[@class='aui-fieldset add-comment ']/div/a)[1]"));
+				"xPath=(//fieldset[@class='fieldset add-comment ']/div/a)[1]"));
 		assertEquals(RuntimeVariables.replace("Subscribe to Comments"),
 			selenium.getText(
 				"xPath=(//span[@class='subscribe-link']/a/span)[1]"));
@@ -113,10 +113,10 @@ public class SOUs_EditDMDocumentMajorSiteTest extends BaseTestCase {
 			selenium.getText("xPath=(//div[@class='changelog'])[2]"));
 		assertEquals(RuntimeVariables.replace("Add Comment"),
 			selenium.getText(
-				"xPath=(//fieldset[@class='aui-fieldset add-comment ']/div/span[1])[2]"));
+				"xPath=(//fieldset[@class='fieldset add-comment ']/div/span[1])[2]"));
 		assertEquals(RuntimeVariables.replace("Unsubscribe from Comments"),
 			selenium.getText(
-				"xPath=(//fieldset[@class='aui-fieldset add-comment ']/div/span[2])[1]"));
+				"xPath=(//fieldset[@class='fieldset add-comment ']/div/span[2])[1]"));
 		assertEquals(RuntimeVariables.replace("Social01 Office01 User01"),
 			selenium.getText("xPath=(//span[@class='user-name'])[3]"));
 		assertEquals(RuntimeVariables.replace("DM Document Comment2"),
@@ -132,10 +132,10 @@ public class SOUs_EditDMDocumentMajorSiteTest extends BaseTestCase {
 			selenium.getText("xPath=(//span[@class='size'])[3]"));
 		assertEquals(RuntimeVariables.replace("Add Comment"),
 			selenium.getText(
-				"xPath=(//fieldset[@class='aui-fieldset add-comment ']/div/span[1])[3]"));
+				"xPath=(//fieldset[@class='fieldset add-comment ']/div/span[1])[3]"));
 		assertEquals(RuntimeVariables.replace("Subscribe to Comments"),
 			selenium.getText(
-				"xPath=(//fieldset[@class='aui-fieldset add-comment ']/div/span[2])[2]"));
+				"xPath=(//fieldset[@class='fieldset add-comment ']/div/span[2])[2]"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("xPath=(//span[@class='user-name'])[6]"));
 		assertEquals(RuntimeVariables.replace("DM Document Comment1"),

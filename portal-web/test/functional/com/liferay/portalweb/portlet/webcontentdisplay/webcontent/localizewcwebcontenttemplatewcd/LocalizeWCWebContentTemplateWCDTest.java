@@ -45,11 +45,11 @@ public class LocalizeWCWebContentTemplateWCDTest extends BaseTestCase {
 		selenium.clickAt("//strong/a/span",
 			RuntimeVariables.replace("Add Translation"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Chinese (China)')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Chinese (China)')]");
 		assertEquals(RuntimeVariables.replace("Chinese (China)"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Chinese (China)')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Chinese (China)')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Chinese (China)')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Chinese (China)')]",
 			RuntimeVariables.replace("Chinese (China)"));
 		selenium.waitForElementPresent("//iframe[@id='_15_zh_CN']");
 		selenium.selectFrame("//iframe[@id='_15_zh_CN']");

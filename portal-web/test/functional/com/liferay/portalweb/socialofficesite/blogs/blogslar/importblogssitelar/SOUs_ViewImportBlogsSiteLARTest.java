@@ -83,12 +83,10 @@ public class SOUs_ViewImportBlogsSiteLARTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("1 Comment"),
 			selenium.getText("//span[@class='comments']"));
 		assertEquals(RuntimeVariables.replace("Your Rating"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[1]"));
+			selenium.getText("xPath=(//div[@class='rating-label-element'])[1]"));
 		selenium.mouseOver("//div[contains(@id,'ratingStarContent')]");
 		assertEquals(RuntimeVariables.replace("Average (1 Vote)"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[2]"));
+			selenium.getText("xPath=(//div[@class='rating-label-element'])[2]"));
 		assertTrue(selenium.isElementPresent(
 				"//img[@alt='The average rating is 4.0 stars out of 5.']"));
 		assertEquals(RuntimeVariables.replace("Comments"),

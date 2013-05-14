@@ -45,12 +45,12 @@ public class EditQuestionTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit')]");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_25_title_en_US']",
 			RuntimeVariables.replace("Edited Test Question 2"));
@@ -75,6 +75,6 @@ public class EditQuestionTest extends BaseTestCase {
 			RuntimeVariables.replace("Edited Test Question 2"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("d. NEW Test Choice D"),
-			selenium.getText("xPath=(//label[@class='aui-choice-label'])[4]"));
+			selenium.getText("xPath=(//label[@class='choice-label'])[4]"));
 	}
 }

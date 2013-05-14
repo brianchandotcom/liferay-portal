@@ -45,11 +45,11 @@ public class AddWCStructureFieldTextRepeatableTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Manage']/ul/li/strong/a",
 			RuntimeVariables.replace("Manage"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Structures')]");
 		assertEquals(RuntimeVariables.replace("Structures"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Structures')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Structures')]",
 			RuntimeVariables.replace("Structures"));
 		selenium.waitForVisible("//iframe[contains(@src,'Structures')]");
 		selenium.selectFrame("//iframe[contains(@src,'Structures')]");
@@ -67,13 +67,13 @@ public class AddWCStructureFieldTextRepeatableTest extends BaseTestCase {
 		selenium.type("//textarea[@id='_166_description_en_US']",
 			RuntimeVariables.replace("WC Structure Text Repeatable Description"));
 		selenium.waitForVisible(
-			"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[@title=\"Text\"]/span");
+			"//div[@class='tabview-content widget-bd']/div/ul/li[@title=\"Text\"]/span");
 		assertEquals(RuntimeVariables.replace("Text"),
 			selenium.getText(
-				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[@title=\"Text\"]/div"));
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[@title=\"Text\"]/div",
-			"//div[@class='aui-tabview-content aui-widget-bd']");
-		selenium.clickAt("//div[@class='aui-diagram-builder-drop-container']/div[1]",
+				"//div[@class='tabview-content widget-bd']/div/ul/li[@title=\"Text\"]/div"));
+		selenium.dragAndDropToObject("//div[@class='tabview-content widget-bd']/div/ul/li[@title=\"Text\"]/div",
+			"//div[@class='tabview-content widget-bd']");
+		selenium.clickAt("//div[@class='diagram-builder-drop-container']/div[1]",
 			RuntimeVariables.replace("Edit Event"));
 		selenium.waitForVisible("//button[@id='editEvent']");
 		selenium.clickAt("//button[@id='editEvent']",

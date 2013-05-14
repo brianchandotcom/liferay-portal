@@ -65,7 +65,7 @@ public class AddPrivatePageAccommodationsSiteBWCTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
-				selenium.clickAt("//div[@class='aui-tree-hitarea']",
+				selenium.clickAt("//div[@class='tree-hitarea']",
 					RuntimeVariables.replace("Drop Down Arrow"));
 				selenium.waitForElementPresent(
 					"xPath=(//a[@class='layout-tree'])[2]");
@@ -79,7 +79,7 @@ public class AddPrivatePageAccommodationsSiteBWCTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//div[@class='aui-tree-hitarea']",
+				selenium.clickAt("//div[@class='tree-hitarea']",
 					RuntimeVariables.replace("Drop Down Arrow"));
 
 			case 2:

@@ -43,12 +43,12 @@ public class ViewOrganizationTest extends BaseTestCase {
 		selenium.clickAt("//td[4]/span/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[3]/a");
 		assertEquals(RuntimeVariables.replace("Assign Users"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[3]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[3]/a"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText(

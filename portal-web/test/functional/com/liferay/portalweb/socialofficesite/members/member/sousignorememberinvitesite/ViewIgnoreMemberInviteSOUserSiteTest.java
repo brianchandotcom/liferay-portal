@@ -46,7 +46,7 @@ public class ViewIgnoreMemberInviteSOUserSiteTest extends BaseTestCase {
 			RuntimeVariables.replace("Members"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("View all 1 users."),
-			selenium.getText("//div[@class='aui-layout contacts-count all']"));
+			selenium.getText("//div[@class='layout contacts-count all']"));
 		selenium.type("//input[@id='_4_WAR_contactsportlet_name']",
 			RuntimeVariables.replace("socialoffice01@liferay.com"));
 		selenium.waitForText("//div[@class='empty']", "There are no results.");

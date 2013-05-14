@@ -65,11 +65,11 @@ public class ViewKBAArticleTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'View')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'View')]/a");
 		assertEquals(RuntimeVariables.replace("View"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'View')]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'View')]/a",
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'View')]/a"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'View')]/a",
 			RuntimeVariables.replace("View"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(

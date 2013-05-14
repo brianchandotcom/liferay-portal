@@ -62,12 +62,12 @@ public class ExpireWCWebContentActionsTest extends BaseTestCase {
 		selenium.clickAt("//tr[contains(.,'WC WebContent Title')]/td[8]/span/span/ul/li/strong/a",
 			RuntimeVariables.replace("Menu Button"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Expire')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Expire')]");
 		assertEquals(RuntimeVariables.replace("Expire"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Expire')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Expire')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Expire')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Expire')]"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),

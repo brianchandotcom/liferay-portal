@@ -44,11 +44,11 @@ public class AddStructureLocalizedTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Manage']/ul/li/strong/a",
 			RuntimeVariables.replace("Manage"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Structures')]");
 		assertEquals(RuntimeVariables.replace("Structures"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Structures')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Structures')]",
 			RuntimeVariables.replace("Structures"));
 		selenium.waitForVisible("//iframe[contains(@src,'Structures')]");
 		selenium.selectFrame("//iframe[contains(@src,'Structures')]");
@@ -61,23 +61,23 @@ public class AddStructureLocalizedTest extends BaseTestCase {
 			RuntimeVariables.replace("Add"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForVisible(
-			"//div[@class='aui-fieldset-content ']/span/span/label[contains(.,'Name (Required)')]");
-		selenium.type("//span[@class='aui-field-content']/span/span/input",
+			"//div[@class='fieldset-content ']/span/span/label[contains(.,'Name (Required)')]");
+		selenium.type("//span[@class='field-content']/span/span/input",
 			RuntimeVariables.replace("WC Structure Name"));
 		selenium.type("//textarea[@id='_166_description_en_US']",
 			RuntimeVariables.replace("WC Structure Description"));
 		selenium.waitForVisible(
-			"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[@title=\"Text\"]/div");
+			"//div[@class='tabview-content widget-bd']/div/ul/li[@title=\"Text\"]/div");
 		assertEquals(RuntimeVariables.replace("Text"),
 			selenium.getText(
-				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[@title=\"Text\"]/div"));
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[@title=\"Text\"]/div",
-			"//div[@class='aui-tabview-content aui-widget-bd']");
+				"//div[@class='tabview-content widget-bd']/div/ul/li[@title=\"Text\"]/div"));
+		selenium.dragAndDropToObject("//div[@class='tabview-content widget-bd']/div/ul/li[@title=\"Text\"]/div",
+			"//div[@class='tabview-content widget-bd']");
 		assertEquals(RuntimeVariables.replace("Text"),
 			selenium.getText(
-				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[@title=\"Text\"]/div"));
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[@title=\"Text\"]/div",
-			"//div[@class='aui-tabview-content aui-widget-bd']");
+				"//div[@class='tabview-content widget-bd']/div/ul/li[@title=\"Text\"]/div"));
+		selenium.dragAndDropToObject("//div[@class='tabview-content widget-bd']/div/ul/li[@title=\"Text\"]/div",
+			"//div[@class='tabview-content widget-bd']");
 		selenium.waitForVisible("//label[contains(.,'Text')]");
 		selenium.clickAt("//button[@id='editEvent']",
 			RuntimeVariables.replace("Edit Event"));
@@ -112,7 +112,7 @@ public class AddStructureLocalizedTest extends BaseTestCase {
 		selenium.waitForVisible("//label[contains(.,'Text')]");
 		assertTrue(selenium.isVisible("//button[@id='duplicateEvent']"));
 		assertTrue(selenium.isVisible("//button[@id='deleteEvent']"));
-		selenium.clickAt("//div[@class='aui-diagram-builder-drop-container']/div[2]/div[3]/span/span/button[contains(@id,'editEvent')]",
+		selenium.clickAt("//div[@class='diagram-builder-drop-container']/div[2]/div[3]/span/span/button[contains(@id,'editEvent')]",
 			RuntimeVariables.replace("Edit Event"));
 		selenium.waitForElementPresent(
 			"//li[contains(@class,'aui-state-active aui-tab-active')]/span/a[contains(.,'Settings')]");

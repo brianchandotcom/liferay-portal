@@ -52,12 +52,12 @@ public class ErrorAddUserScreenNameNumberSiteIdTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit Settings')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit Settings')]");
 		assertEquals(RuntimeVariables.replace("Edit Settings"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit Settings')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit Settings')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit Settings')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit Settings')]"));
 		selenium.waitForPageToLoad("30000");
 
 		String SiteID = selenium.getFirstNumber("//fieldset/div/div[1]/div");
@@ -82,12 +82,12 @@ public class ErrorAddUserScreenNameNumberSiteIdTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'User')]");
 		assertEquals(RuntimeVariables.replace("User"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'User')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'User')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_125_screenName']",
 			RuntimeVariables.replace(RuntimeVariables.getValue("SiteID")));

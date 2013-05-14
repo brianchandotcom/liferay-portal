@@ -32,11 +32,9 @@ public class ViewConfigurePortletDirectionsAddressTest extends BaseTestCase {
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace(
 				"From 1220 Brea Canyon Road, Diamond Bar, CA, 91789"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-field-wrapper-content'])[1]"));
+			selenium.getText("xPath=(//div[@class='field-wrapper-content'])[1]"));
 		assertEquals(RuntimeVariables.replace(
 				"To 205 W. Wacker Dr, Suite 513 Chicago, IL, 60606"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-field-wrapper-content'])[2]"));
+			selenium.getText("xPath=(//div[@class='field-wrapper-content'])[2]"));
 	}
 }

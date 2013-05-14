@@ -51,11 +51,11 @@ public class AddSitePagesVariationTest extends BaseTestCase {
 		selenium.clickAt("//strong/a",
 			RuntimeVariables.replace("Staging dropdown"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Site Pages Variations')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Manage Site Pages Variations')]/a");
 		assertEquals(RuntimeVariables.replace("Manage Site Pages Variations"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Site Pages Variations')]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Site Pages Variations')]/a",
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Manage Site Pages Variations')]/a"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Manage Site Pages Variations')]/a",
 			RuntimeVariables.replace("Manage Site Pages Variations"));
 		selenium.waitForVisible("//iframe[contains(@id,'layoutSetBranches')]");
 		selenium.selectFrame("//iframe[contains(@id,'layoutSetBranches')]");
@@ -97,10 +97,10 @@ public class AddSitePagesVariationTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Main Variation"),
 			selenium.getText(
-				"//ul[@class='aui-tabview-list site-variations-tabview-list']/li[contains(.,'Main Variation')]/span/span/span"));
+				"//ul[@class='tabview-list site-variations-tabview-list']/li[contains(.,'Main Variation')]/span/span/span"));
 		assertEquals(RuntimeVariables.replace("Site Pages Variation Name"),
 			selenium.getText(
-				"//ul[@class='aui-tabview-list site-variations-tabview-list']/li[contains(.,'Site Pages Variation Name')]/span/span/a"));
+				"//ul[@class='tabview-list site-variations-tabview-list']/li[contains(.,'Site Pages Variation Name')]/span/span/a"));
 		assertEquals(RuntimeVariables.replace("Manage Site Pages Variations"),
 			selenium.getText("//a[@id='_170_manageLayoutSetBranches']"));
 	}

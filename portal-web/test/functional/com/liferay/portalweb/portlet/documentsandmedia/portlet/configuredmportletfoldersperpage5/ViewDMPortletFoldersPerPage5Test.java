@@ -45,7 +45,7 @@ public class ViewDMPortletFoldersPerPage5Test extends BaseTestCase {
 				"xPath=(//a[contains(@class,'entry-link')]/span[@class='entry-title'])[5]"));
 		assertFalse(selenium.isTextPresent("DM Folder6 Name"));
 		Thread.sleep(1000);
-		selenium.clickAt("xPath=(//a[@class='aui-paginator-link aui-paginator-next-link'])[2]",
+		selenium.clickAt("xPath=(//a[@class='paginator-link paginator-next-link'])[2]",
 			RuntimeVariables.replace("Next"));
 		selenium.waitForText("xPath=(//a[contains(@class,'entry-link')]/span[@class='entry-title'])[1]",
 			"DM Folder6 Name");
@@ -57,7 +57,7 @@ public class ViewDMPortletFoldersPerPage5Test extends BaseTestCase {
 		assertFalse(selenium.isTextPresent("DM Folder3 Name"));
 		assertFalse(selenium.isTextPresent("DM Folder4 Name"));
 		assertFalse(selenium.isTextPresent("DM Folder5 Name"));
-		selenium.clickAt("xPath=(//a[@class='aui-paginator-link aui-paginator-prev-link'])[2]",
+		selenium.clickAt("xPath=(//a[@class='paginator-link paginator-prev-link'])[2]",
 			RuntimeVariables.replace("Previous"));
 		selenium.waitForText("xPath=(//a[contains(@class,'entry-link')]/span[@class='entry-title'])[1]",
 			"DM Folder1 Name");
@@ -77,7 +77,7 @@ public class ViewDMPortletFoldersPerPage5Test extends BaseTestCase {
 			selenium.getText(
 				"xPath=(//a[contains(@class,'entry-link')]/span[@class='entry-title'])[5]"));
 		assertFalse(selenium.isTextPresent("DM Folder6 Name"));
-		selenium.clickAt("xPath=(//a[@class='aui-paginator-link aui-paginator-last-link'])[2]",
+		selenium.clickAt("xPath=(//a[@class='paginator-link paginator-last-link'])[2]",
 			RuntimeVariables.replace("Last"));
 		selenium.waitForText("xPath=(//a[contains(@class,'entry-link')]/span[@class='entry-title'])[1]",
 			"DM Folder6 Name");
@@ -89,7 +89,7 @@ public class ViewDMPortletFoldersPerPage5Test extends BaseTestCase {
 		assertFalse(selenium.isTextPresent("DM Folder3 Name"));
 		assertFalse(selenium.isTextPresent("DM Folder4 Name"));
 		assertFalse(selenium.isTextPresent("DM Folder5 Name"));
-		selenium.clickAt("xPath=(//a[@class='aui-paginator-link aui-paginator-first-link'])[2]",
+		selenium.clickAt("xPath=(//a[@class='paginator-link paginator-first-link'])[2]",
 			RuntimeVariables.replace("First"));
 		selenium.waitForText("xPath=(//a[contains(@class,'entry-link')]/span[@class='entry-title'])[1]",
 			"DM Folder1 Name");

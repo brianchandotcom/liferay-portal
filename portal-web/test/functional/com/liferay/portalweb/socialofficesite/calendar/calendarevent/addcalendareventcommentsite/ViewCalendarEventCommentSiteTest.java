@@ -68,15 +68,12 @@ public class ViewCalendarEventCommentSiteTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Calendar Event Description"),
 			selenium.getText("//p[contains(.,'Calendar Event Description')]"));
 		assertEquals(RuntimeVariables.replace("Your Rating"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[1]"));
+			selenium.getText("xPath=(//div[@class='rating-label-element'])[1]"));
 		assertEquals(RuntimeVariables.replace("Average (0 Votes)"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[2]"));
+			selenium.getText("xPath=(//div[@class='rating-label-element'])[2]"));
 		assertEquals(RuntimeVariables.replace(
 				"Add Comment Unsubscribe from Comments"),
-			selenium.getText(
-				"//fieldset[@class='aui-fieldset add-comment ']/div"));
+			selenium.getText("//fieldset[@class='fieldset add-comment ']/div"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("//span[@class='user-name']"));
 		assertEquals(RuntimeVariables.replace("Calendar Event Comment Body"),

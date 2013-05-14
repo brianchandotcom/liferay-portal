@@ -42,11 +42,11 @@ public class AddDMSubfolderNameImageNameTest extends BaseTestCase {
 		selenium.clickAt("//span[3]/span/span/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Subfolder')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Subfolder')]");
 		assertEquals(RuntimeVariables.replace("Subfolder"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Subfolder')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Subfolder')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Subfolder')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Subfolder')]",
 			RuntimeVariables.replace("Subfolder"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_20_name']",

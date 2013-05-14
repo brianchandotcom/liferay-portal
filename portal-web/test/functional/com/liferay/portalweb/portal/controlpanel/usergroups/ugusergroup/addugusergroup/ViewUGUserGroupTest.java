@@ -74,16 +74,16 @@ public class ViewUGUserGroupTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("\u00ab Back"),
 			selenium.getText("//a[@id='_127_TabsBack']"));
 		assertEquals(RuntimeVariables.replace("Old Name UG UserGroup Name"),
-			selenium.getText("//div[@class='aui-field-wrapper-content']"));
+			selenium.getText("//div[@class='field-wrapper-content']"));
 		assertEquals(RuntimeVariables.replace("New Name (Required)"),
-			selenium.getText("//span[@class='aui-field-content']/label"));
+			selenium.getText("//span[@class='field-content']/label"));
 		assertTrue(selenium.isVisible("//input[@id='_127_name']"));
 		assertEquals("UG UserGroup Name",
 			selenium.getValue("//input[@id='_127_name']"));
 		assertTrue(selenium.isVisible("//textarea[@id='_127_description']"));
 		assertEquals(RuntimeVariables.replace(
 				"User Group Site The site of a user group cannot be accessed directly by end users. The pages of a user group will be shown automatically as part of the public or private pages of the personal site of each user who belongs to the user group. To allow users to make changes, enable the customization options of each page."),
-			selenium.getText("//span[@class='aui-legend']"));
+			selenium.getText("//span[@class='legend']"));
 		assertEquals(RuntimeVariables.replace("Public Pages"),
 			selenium.getText("//fieldset[2]/div/span[1]/span/label"));
 		assertTrue(selenium.isVisible(

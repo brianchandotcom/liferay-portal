@@ -77,17 +77,14 @@ public class SOUs_ViewImportCalendarSiteLARTest extends BaseTestCase {
 			selenium.getText(
 				"//p[contains(.,'Calendar Event1 Description Edit')]"));
 		assertEquals(RuntimeVariables.replace("Your Rating"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[1]"));
+			selenium.getText("xPath=(//div[@class='rating-label-element'])[1]"));
 		assertEquals(RuntimeVariables.replace("Average (1 Vote)"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[2]"));
+			selenium.getText("xPath=(//div[@class='rating-label-element'])[2]"));
 		assertTrue(selenium.isElementPresent(
 				"//img[@alt='The average rating is 4.0 stars out of 5.']"));
 		assertEquals(RuntimeVariables.replace(
 				"Add Comment Subscribe to Comments"),
-			selenium.getText(
-				"//fieldset[@class='aui-fieldset add-comment ']/div"));
+			selenium.getText("//fieldset[@class='fieldset add-comment ']/div"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("xPath=(//span[@class='user-name'])[1]"));
 		assertEquals(RuntimeVariables.replace("Calendar Event1 Comment1 Body"),

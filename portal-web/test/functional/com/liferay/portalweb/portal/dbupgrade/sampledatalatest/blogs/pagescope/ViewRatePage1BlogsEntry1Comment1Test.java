@@ -43,8 +43,7 @@ public class ViewRatePage1BlogsEntry1Comment1Test extends BaseTestCase {
 			selenium.getText(
 				"xPath=(//div[@class='lfr-discussion-message'])[1]"));
 		assertEquals(RuntimeVariables.replace("+1 (1 Vote)"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[3]"));
+			selenium.getText("xPath=(//div[@class='rating-label-element'])[3]"));
 		selenium.open("/web/blogs-page-scope-community/");
 		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
@@ -79,7 +78,6 @@ public class ViewRatePage1BlogsEntry1Comment1Test extends BaseTestCase {
 			selenium.getText(
 				"xPath=(//div[@class='lfr-discussion-message'])[1]"));
 		assertEquals(RuntimeVariables.replace("+1 (1 Vote)"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[3]"));
+			selenium.getText("xPath=(//div[@class='rating-label-element'])[3]"));
 	}
 }

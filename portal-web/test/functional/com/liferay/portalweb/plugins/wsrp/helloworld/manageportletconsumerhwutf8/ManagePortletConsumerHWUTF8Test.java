@@ -42,12 +42,12 @@ public class ManagePortletConsumerHWUTF8Test extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Portlets')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Manage Portlets')]");
 		assertEquals(RuntimeVariables.replace("Manage Portlets"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Portlets')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Manage Portlets')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Portlets')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Manage Portlets')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//input[@value='Add Portlet']",
 			RuntimeVariables.replace("Add Portlet"));

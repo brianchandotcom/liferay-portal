@@ -34,15 +34,13 @@ public class RateBlogsEntryDetailsTest extends BaseTestCase {
 			RuntimeVariables.replace("Blogs Entry Title"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForVisible(
-			"xPath=(//div[@class='aui-rating-label-element'])[2]");
+			"xPath=(//div[@class='rating-label-element'])[2]");
 		assertEquals(RuntimeVariables.replace("Average (0 Votes)"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[2]"));
+			selenium.getText("xPath=(//div[@class='rating-label-element'])[2]"));
 		selenium.clickAt("//a[5]", RuntimeVariables.replace("5 Stars"));
-		selenium.waitForText("xPath=(//div[@class='aui-rating-label-element'])[2]",
+		selenium.waitForText("xPath=(//div[@class='rating-label-element'])[2]",
 			"Average (1 Vote)");
 		assertEquals(RuntimeVariables.replace("Average (1 Vote)"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[2]"));
+			selenium.getText("xPath=(//div[@class='rating-label-element'])[2]"));
 	}
 }

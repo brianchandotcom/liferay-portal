@@ -42,12 +42,12 @@ public class ConfigureWebContentSingleApproverTest extends BaseTestCase {
 		selenium.clickAt("//ul[@id='_160_groupSelector']/li/strong/a",
 			RuntimeVariables.replace("Liferay"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Site Name')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Site Name')]");
 		assertEquals(RuntimeVariables.replace("Site Name"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Site Name')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Site Name')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Site Name')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Site Name')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Workflow Configuration",
 			RuntimeVariables.replace("Workflow Configuration"));

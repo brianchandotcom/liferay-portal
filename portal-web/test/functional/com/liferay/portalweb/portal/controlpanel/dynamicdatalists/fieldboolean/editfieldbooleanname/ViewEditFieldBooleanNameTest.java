@@ -51,12 +51,12 @@ public class ViewEditFieldBooleanNameTest extends BaseTestCase {
 		selenium.clickAt("//tr[contains(.,'Data Definition')]//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Edit')]/a");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Edit')]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Edit')]/a"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isVisible("//input[@name='booleannameedited']"));
 		selenium.selectFrame("relative=top");

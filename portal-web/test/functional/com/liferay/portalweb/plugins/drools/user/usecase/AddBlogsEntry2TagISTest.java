@@ -41,7 +41,7 @@ public class AddBlogsEntry2TagISTest extends BaseTestCase {
 		selenium.clickAt("//div[@id='blogsEntryCategorizationPanel']/div/div/span",
 			RuntimeVariables.replace(""));
 		Thread.sleep(5000);
-		selenium.type("//input[@class='lfr-tag-selector-input aui-field-input-text']",
+		selenium.type("//input[@class='lfr-tag-selector-input field-input-text']",
 			RuntimeVariables.replace("Indian Symposium"));
 		selenium.clickAt("//button[@id='add']", RuntimeVariables.replace(""));
 		selenium.clickAt("//input[@value='Publish']",

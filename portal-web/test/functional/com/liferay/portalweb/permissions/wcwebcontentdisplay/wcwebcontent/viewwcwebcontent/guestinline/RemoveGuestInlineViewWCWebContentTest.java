@@ -44,8 +44,8 @@ public class RemoveGuestInlineViewWCWebContentTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Permissions"),
 					selenium.getText(
-						"//span[@class='aui-toolbar-content']/button[contains(.,'Permissions')]"));
-				selenium.clickAt("//span[@class='aui-toolbar-content']/button[contains(.,'Permissions')]",
+						"//span[@class='toolbar-content']/button[contains(.,'Permissions')]"));
+				selenium.clickAt("//span[@class='toolbar-content']/button[contains(.,'Permissions')]",
 					RuntimeVariables.replace("Permissions"));
 				selenium.waitForVisible(
 					"//iframe[contains(@id,'articlePermissions')]");

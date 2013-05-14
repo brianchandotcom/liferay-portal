@@ -92,7 +92,7 @@ public class ViewUGUserGroupsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("UG UserGroup1 Name"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Old Name UG UserGroup1 Name"),
-			selenium.getText("//div[@class='aui-field-wrapper-content']"));
+			selenium.getText("//div[@class='field-wrapper-content']"));
 		assertEquals("UG UserGroup1 Name",
 			selenium.getValue("//input[@id='_127_name']"));
 		selenium.open("/web/guest/home/");
@@ -120,7 +120,7 @@ public class ViewUGUserGroupsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("UG UserGroup2 Name"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Old Name UG UserGroup2 Name"),
-			selenium.getText("//div[@class='aui-field-wrapper-content']"));
+			selenium.getText("//div[@class='field-wrapper-content']"));
 		assertEquals("UG UserGroup2 Name",
 			selenium.getValue("//input[@id='_127_name']"));
 		selenium.open("/web/guest/home/");
@@ -148,7 +148,7 @@ public class ViewUGUserGroupsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("UG UserGroup3 Name"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Old Name UG UserGroup3 Name"),
-			selenium.getText("//div[@class='aui-field-wrapper-content']"));
+			selenium.getText("//div[@class='field-wrapper-content']"));
 		assertEquals("UG UserGroup3 Name",
 			selenium.getValue("//input[@id='_127_name']"));
 	}

@@ -56,11 +56,11 @@ public class PCR_ApproveStagedBlogsEntryActionsTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[1]/a");
 		assertEquals(RuntimeVariables.replace("Approve"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
+				"//div[@class='lfr-menu-list unstyled']/ul/li[1]/a"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li[1]/a",
 			RuntimeVariables.replace("Approve"));
 		selenium.waitForVisible("//div[3]/span/span/button");
 		assertEquals(RuntimeVariables.replace("OK"),

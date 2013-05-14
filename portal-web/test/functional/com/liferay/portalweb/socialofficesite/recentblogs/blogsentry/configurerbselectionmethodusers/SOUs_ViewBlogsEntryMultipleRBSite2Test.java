@@ -63,11 +63,9 @@ public class SOUs_ViewBlogsEntryMultipleRBSite2Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("0 Comments"),
 			selenium.getText("//span[@class='comments']"));
 		assertEquals(RuntimeVariables.replace("Your Rating"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[1]"));
+			selenium.getText("xPath=(//div[@class='rating-label-element'])[1]"));
 		assertEquals(RuntimeVariables.replace("Average (0 Votes)"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[2]"));
+			selenium.getText("xPath=(//div[@class='rating-label-element'])[2]"));
 		assertEquals(RuntimeVariables.replace("Comments"),
 			selenium.getText("//div[@class='lfr-panel-title']/span"));
 		selenium.open("/user/socialoffice01/so/dashboard/");
@@ -108,11 +106,9 @@ public class SOUs_ViewBlogsEntryMultipleRBSite2Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("0 Comments"),
 			selenium.getText("//span[@class='comments']"));
 		assertEquals(RuntimeVariables.replace("Your Rating"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[1]"));
+			selenium.getText("xPath=(//div[@class='rating-label-element'])[1]"));
 		assertEquals(RuntimeVariables.replace("Average (0 Votes)"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[2]"));
+			selenium.getText("xPath=(//div[@class='rating-label-element'])[2]"));
 		assertEquals(RuntimeVariables.replace("Comments"),
 			selenium.getText("//div[@class='lfr-panel-title']/span"));
 	}

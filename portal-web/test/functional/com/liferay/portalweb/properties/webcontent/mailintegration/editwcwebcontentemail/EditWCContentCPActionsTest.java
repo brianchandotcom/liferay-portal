@@ -41,11 +41,11 @@ public class EditWCContentCPActionsTest extends BaseTestCase {
 		selenium.clickAt("//a[@id='_160_groupSelectorButton']/span",
 			RuntimeVariables.replace("Site Name"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Site Name')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Site Name')]");
 		assertEquals(RuntimeVariables.replace("Site Name"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Site Name')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Site Name')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Site Name')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Site Name')]",
 			RuntimeVariables.replace("Site Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Web Content",
@@ -59,12 +59,12 @@ public class EditWCContentCPActionsTest extends BaseTestCase {
 		selenium.clickAt("//div[@data-title='WC WebContent Title']/span/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit')]");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_15_title_en_US']",
 			RuntimeVariables.replace("WC WebContent Title Edit"));

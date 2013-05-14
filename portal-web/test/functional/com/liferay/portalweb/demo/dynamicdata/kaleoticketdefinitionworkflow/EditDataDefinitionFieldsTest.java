@@ -58,9 +58,9 @@ public class EditDataDefinitionFieldsTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace(""));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
-		selenium.waitForVisible("//div[@class='aui-diagram-builder-canvas']");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[1]/a");
+		selenium.click("//div[@class='lfr-menu-list unstyled']/ul/li[1]/a");
+		selenium.waitForVisible("//div[@class='diagram-builder-canvas']");
 		selenium.clickAt("xPath=(//button[@id='editEvent'])[2]",
 			RuntimeVariables.replace("Edit"));
 		selenium.clickAt("xPath=(//button[@id='editEvent'])[3]",

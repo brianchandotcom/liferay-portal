@@ -49,11 +49,11 @@ public class ImportWikiSiteTemplateLARTest extends BaseTestCase {
 		selenium.clickAt("//tr[contains(.,'Default Social Office Site')]/td[contains(.,'Actions')]/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Import')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Import')]");
 		assertEquals(RuntimeVariables.replace("Import"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Import')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Import')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Import')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Import')]",
 			RuntimeVariables.replace("Import"));
 		selenium.waitForVisible("//iframe[contains(@id,'Import')]");
 		selenium.selectFrame("//iframe[contains(@id,'Import')]");

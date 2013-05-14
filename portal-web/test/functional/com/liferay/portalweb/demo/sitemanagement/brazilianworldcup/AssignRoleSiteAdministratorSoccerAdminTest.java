@@ -51,11 +51,11 @@ public class AssignRoleSiteAdministratorSoccerAdminTest extends BaseTestCase {
 		selenium.clickAt("//span[contains(.,'Add Site Roles to')]/ul/li/strong/a",
 			RuntimeVariables.replace("Add Site Roles to"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Users')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Users')]/a");
 		assertEquals(RuntimeVariables.replace("Users"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Users')]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Users')]/a",
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Users')]/a"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Users')]/a",
 			RuntimeVariables.replace("Users"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isVisible("//input[@name='_174_keywords']"));

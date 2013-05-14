@@ -33,11 +33,11 @@ public class ConfigureViewPermissionFolder2Test extends BaseTestCase {
 		selenium.clickAt("//div[2]/span[2]/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Permissions')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Permissions')]/a");
 		assertEquals(RuntimeVariables.replace("Permissions"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Permissions')]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Permissions')]/a",
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Permissions')]/a"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Permissions')]/a",
 			RuntimeVariables.replace("Permissions"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));

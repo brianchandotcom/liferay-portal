@@ -54,11 +54,11 @@ public class ViewEditBookmarksEntrySiteTest extends BaseTestCase {
 		selenium.clickAt("xPath=(//td[contains(.,'Actions')]/span/ul/li/strong/a)[1]",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[1]/a");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
+				"//div[@class='lfr-menu-list unstyled']/ul/li[1]/a"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li[1]/a",
 			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals("Bookmarks Entry Name Edit",

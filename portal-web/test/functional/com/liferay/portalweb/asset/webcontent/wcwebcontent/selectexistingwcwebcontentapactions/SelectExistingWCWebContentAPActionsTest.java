@@ -35,11 +35,11 @@ public class SelectExistingWCWebContentAPActionsTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Configuration')]");
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Configuration')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Configuration')]",
 			RuntimeVariables.replace("Configuration"));
 		selenium.waitForVisible(
 			"//iframe[contains(@id,'configurationIframeDialog')]");
@@ -53,11 +53,11 @@ public class SelectExistingWCWebContentAPActionsTest extends BaseTestCase {
 		selenium.clickAt("//a[@id='_86_tiym_menuButton']/span",
 			RuntimeVariables.replace("Select"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Web Content')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Web Content')]");
 		assertEquals(RuntimeVariables.replace("Web Content"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Web Content')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Web Content')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Web Content')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Web Content')]",
 			RuntimeVariables.replace("Web Content"));
 		selenium.selectFrame("relative=top");
 		selenium.waitForVisible("//iframe[@id='_86_selectAsset']");

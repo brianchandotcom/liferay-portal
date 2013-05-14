@@ -33,9 +33,9 @@ public class ViewDeleteDMDocumentTypeTest extends BaseTestCase {
 			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
-		selenium.waitForVisible("//div[@class='lfr-component lfr-menu-list']");
+		selenium.waitForVisible("//div[@class='lfr-menu-list unstyled']");
 		assertTrue(selenium.isElementNotPresent(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Document Type Name')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Document Type Name')]"));
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
@@ -46,11 +46,11 @@ public class ViewDeleteDMDocumentTypeTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Manage']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Manage"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Document Types')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Document Types')]");
 		assertEquals(RuntimeVariables.replace("Document Types"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Document Types')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Document Types')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Document Types')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Document Types')]",
 			RuntimeVariables.replace("Document Types"));
 		selenium.waitForVisible("//iframe[@id='_20_openFileEntryTypeView']");
 		selenium.selectFrame("//iframe[@id='_20_openFileEntryTypeView']");
@@ -59,7 +59,7 @@ public class ViewDeleteDMDocumentTypeTest extends BaseTestCase {
 		selenium.waitForVisible("//input[@title='Search Entries']");
 		selenium.type("//input[@title='Search Entries']",
 			RuntimeVariables.replace("Name"));
-		selenium.clickAt("//input[@class='aui-button-input aui-button-input-submit']",
+		selenium.clickAt("//input[@class='button-input button-input-submit']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		assertFalse(selenium.isTextPresent("DM DocumentType Name"));

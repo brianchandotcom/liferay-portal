@@ -97,37 +97,37 @@ public class ViewRecordTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'View')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'View')]/a");
 		assertEquals(RuntimeVariables.replace("View"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'View')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'View')]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'View')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'View')]/a"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Boolean true"),
-			selenium.getText("//div[@class='aui-fieldset-content ']/div[1]"));
+			selenium.getText("//div[@class='fieldset-content ']/div[1]"));
 		assertEquals(RuntimeVariables.replace("Date 1/2/03"),
-			selenium.getText("//div[@class='aui-fieldset-content ']/div[2]"));
+			selenium.getText("//div[@class='fieldset-content ']/div[2]"));
 		assertEquals(RuntimeVariables.replace("Decimal 1.23"),
-			selenium.getText("//div[@class='aui-fieldset-content ']/div[3]"));
+			selenium.getText("//div[@class='fieldset-content ']/div[3]"));
 		assertEquals(RuntimeVariables.replace(
 				"Documents and Media Document_1.txt"),
-			selenium.getText("//div[@class='aui-fieldset-content ']/div[4]"));
+			selenium.getText("//div[@class='fieldset-content ']/div[4]"));
 		assertTrue(selenium.isPartialText(
-				"//div[@class='aui-fieldset-content ']/div[5]",
+				"//div[@class='fieldset-content ']/div[5]",
 				"File Upload Document_2.txt"));
 		assertEquals(RuntimeVariables.replace("Integer 123"),
-			selenium.getText("//div[@class='aui-fieldset-content ']/div[6]"));
+			selenium.getText("//div[@class='fieldset-content ']/div[6]"));
 		assertEquals(RuntimeVariables.replace("Number 456"),
-			selenium.getText("//div[@class='aui-fieldset-content ']/div[7]"));
+			selenium.getText("//div[@class='fieldset-content ']/div[7]"));
 		assertEquals(RuntimeVariables.replace("Radio option 2"),
-			selenium.getText("//div[@class='aui-fieldset-content ']/div[8]"));
+			selenium.getText("//div[@class='fieldset-content ']/div[8]"));
 		assertEquals(RuntimeVariables.replace("Select option 3"),
-			selenium.getText("//div[@class='aui-fieldset-content ']/div[9]"));
+			selenium.getText("//div[@class='fieldset-content ']/div[9]"));
 		assertEquals(RuntimeVariables.replace("Text Text Field"),
-			selenium.getText("//div[@class='aui-fieldset-content ']/div[10]"));
+			selenium.getText("//div[@class='fieldset-content ']/div[10]"));
 		assertEquals(RuntimeVariables.replace("Text Box Text Box"),
-			selenium.getText("//div[@class='aui-fieldset-content ']/div[11]"));
+			selenium.getText("//div[@class='fieldset-content ']/div[11]"));
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
@@ -155,12 +155,12 @@ public class ViewRecordTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Spreadsheet View')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Spreadsheet View')]/a");
 		assertEquals(RuntimeVariables.replace("Spreadsheet View"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Spreadsheet View')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Spreadsheet View')]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Spreadsheet View')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Spreadsheet View')]/a"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("True"),
 			selenium.getText("//td[1]/div"));

@@ -51,17 +51,17 @@ public class EditFieldSelectOptionsUTF8Test extends BaseTestCase {
 		selenium.clickAt("//tr[contains(.,'Data Definition')]//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Edit')]/a");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Edit')]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Edit')]/a"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Select"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[9]/div/label"));
-		selenium.doubleClickAt("//div[@class='aui-diagram-builder-drop-container']/div[9]",
+				"//div[@class='diagram-builder-drop-container']/div[9]/div/label"));
+		selenium.doubleClickAt("//div[@class='diagram-builder-drop-container']/div[9]",
 			RuntimeVariables.replace("Select"));
 		selenium.waitForVisible("//div[@class='yui3-datatable-x-scroller']");
 		assertEquals(RuntimeVariables.replace("Options"),
@@ -70,9 +70,9 @@ public class EditFieldSelectOptionsUTF8Test extends BaseTestCase {
 			selenium.getText("//tr[10]/td[2]"));
 		selenium.doubleClickAt("//tr[10]/td[2]",
 			RuntimeVariables.replace("option 1, option 2, option 3"));
-		selenium.waitForVisible("//div[@class='aui-celleditor-edit-label']");
+		selenium.waitForVisible("//div[@class='celleditor-edit-label']");
 		assertEquals(RuntimeVariables.replace("Edit option(s)"),
-			selenium.getText("//div[@class='aui-celleditor-edit-label']"));
+			selenium.getText("//div[@class='celleditor-edit-label']"));
 		selenium.type("//input[@value='option 1']",
 			RuntimeVariables.replace("\u308a\u3093\u3054"));
 		selenium.type("//input[@value='option 2']",

@@ -43,11 +43,11 @@ public class EditBookmarksEntrySiteTest extends BaseTestCase {
 		selenium.clickAt("//td[contains(.,'Actions')]/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[1]/a");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
+				"//div[@class='lfr-menu-list unstyled']/ul/li[1]/a"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li[1]/a",
 			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_28_name']",

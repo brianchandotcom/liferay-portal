@@ -34,9 +34,9 @@ public class Portlet_AssertConfigurePortletTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(@id,'configuration')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(@id,'configuration')]");
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(@id,'configuration')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(@id,'configuration')]"));
 	}
 }

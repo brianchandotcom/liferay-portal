@@ -29,87 +29,87 @@ public class RateCommentTest extends BaseTestCase {
 			RuntimeVariables.replace("Page Comments Test Page"));
 		selenium.waitForPageToLoad("30000");
 		Thread.sleep(1000);
-		selenium.waitForText("//div[@class='aui-rating-label-element']",
+		selenium.waitForText("//div[@class='rating-label-element']",
 			"0 (0 Votes)");
 		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
-			selenium.getText("//div[@class='aui-rating-label-element']"));
+			selenium.getText("//div[@class='rating-label-element']"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='taglib-ratings thumbs']/div/div/a"));
 		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a",
 			RuntimeVariables.replace("Rate this as good."));
-		selenium.waitForText("//div[@class='aui-rating-label-element']",
+		selenium.waitForText("//div[@class='rating-label-element']",
 			"+1 (1 Vote)");
 		assertEquals(RuntimeVariables.replace("+1 (1 Vote)"),
-			selenium.getText("//div[@class='aui-rating-label-element']"));
+			selenium.getText("//div[@class='rating-label-element']"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='taglib-ratings thumbs']/div/div/a"));
 		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a",
 			RuntimeVariables.replace("Rate this as good."));
-		selenium.waitForText("//div[@class='aui-rating-label-element']",
+		selenium.waitForText("//div[@class='rating-label-element']",
 			"0 (0 Votes)");
 		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
-			selenium.getText("//div[@class='aui-rating-label-element']"));
+			selenium.getText("//div[@class='rating-label-element']"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='taglib-ratings thumbs']/div/div/a[2]"));
 		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a[2]",
 			RuntimeVariables.replace("Rate this as bad."));
-		selenium.waitForText("//div[@class='aui-rating-label-element']",
+		selenium.waitForText("//div[@class='rating-label-element']",
 			"-1 (1 Vote)");
 		assertEquals(RuntimeVariables.replace("-1 (1 Vote)"),
-			selenium.getText("//div[@class='aui-rating-label-element']"));
+			selenium.getText("//div[@class='rating-label-element']"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='taglib-ratings thumbs']/div/div/a[2]"));
 		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a[2]",
 			RuntimeVariables.replace("Rate this as bad."));
-		selenium.waitForText("//div[@class='aui-rating-label-element']",
+		selenium.waitForText("//div[@class='rating-label-element']",
 			"0 (0 Votes)");
 		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
-			selenium.getText("//div[@class='aui-rating-label-element']"));
+			selenium.getText("//div[@class='rating-label-element']"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='taglib-ratings thumbs']/div/div/a"));
 		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a",
 			RuntimeVariables.replace("Rate this as good."));
-		selenium.waitForText("//div[@class='aui-rating-label-element']",
+		selenium.waitForText("//div[@class='rating-label-element']",
 			"+1 (1 Vote)");
 		assertEquals(RuntimeVariables.replace("+1 (1 Vote)"),
-			selenium.getText("//div[@class='aui-rating-label-element']"));
+			selenium.getText("//div[@class='rating-label-element']"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='taglib-ratings thumbs']/div/div/a[2]"));
 		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a[2]",
 			RuntimeVariables.replace("Rate this as bad."));
-		selenium.waitForText("//div[@class='aui-rating-label-element']",
+		selenium.waitForText("//div[@class='rating-label-element']",
 			"-1 (1 Vote)");
 		assertEquals(RuntimeVariables.replace("-1 (1 Vote)"),
-			selenium.getText("//div[@class='aui-rating-label-element']"));
+			selenium.getText("//div[@class='rating-label-element']"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='taglib-ratings thumbs']/div/div/a[2]"));
 		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a[2]",
 			RuntimeVariables.replace("Rate this as bad."));
-		selenium.waitForText("//div[@class='aui-rating-label-element']",
+		selenium.waitForText("//div[@class='rating-label-element']",
 			"0 (0 Votes)");
 		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
-			selenium.getText("//div[@class='aui-rating-label-element']"));
+			selenium.getText("//div[@class='rating-label-element']"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='taglib-ratings thumbs']/div/div/a[2]"));
 		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a[2]",
 			RuntimeVariables.replace("Rate this as bad."));
-		selenium.waitForText("//div[@class='aui-rating-label-element']",
+		selenium.waitForText("//div[@class='rating-label-element']",
 			"-1 (1 Vote)");
 		assertEquals(RuntimeVariables.replace("-1 (1 Vote)"),
-			selenium.getText("//div[@class='aui-rating-label-element']"));
+			selenium.getText("//div[@class='rating-label-element']"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='taglib-ratings thumbs']/div/div/a"));
 		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a",
 			RuntimeVariables.replace("Rate this as good."));
-		selenium.waitForText("//div[@class='aui-rating-label-element']",
+		selenium.waitForText("//div[@class='rating-label-element']",
 			"+1 (1 Vote)");
 		assertEquals(RuntimeVariables.replace("+1 (1 Vote)"),
-			selenium.getText("//div[@class='aui-rating-label-element']"));
+			selenium.getText("//div[@class='rating-label-element']"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='taglib-ratings thumbs']/div/div/a"));
 		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a",
 			RuntimeVariables.replace("Rate this as good."));
-		selenium.waitForText("//div[@class='aui-rating-label-element']",
+		selenium.waitForText("//div[@class='rating-label-element']",
 			"0 (0 Votes)");
 	}
 }

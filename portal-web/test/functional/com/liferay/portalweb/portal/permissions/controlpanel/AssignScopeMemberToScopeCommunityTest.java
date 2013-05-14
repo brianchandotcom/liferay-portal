@@ -35,9 +35,9 @@ public class AssignScopeMemberToScopeCommunityTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//strong", RuntimeVariables.replace(""));
 		selenium.waitForElementPresent(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[5]/a");
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[5]/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForVisible("link=Available");
 		selenium.clickAt("link=Available", RuntimeVariables.replace(""));

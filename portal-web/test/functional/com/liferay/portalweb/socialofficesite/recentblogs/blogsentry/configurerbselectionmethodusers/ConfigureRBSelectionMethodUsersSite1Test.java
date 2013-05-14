@@ -74,11 +74,11 @@ public class ConfigureRBSelectionMethodUsersSite1Test extends BaseTestCase {
 				selenium.clickAt("//section[@class='portlet']/header[contains(.,'Recent Blogs')]/menu/span/ul/li/strong/a",
 					RuntimeVariables.replace("Recent Blogs Configuration"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Configuration')]");
 				assertEquals(RuntimeVariables.replace("Configuration"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Configuration')]"));
+				selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Configuration')]",
 					RuntimeVariables.replace("Configuration"));
 				selenium.waitForVisible(
 					"//iframe[contains(@id,'configurationIframeDialog')]");

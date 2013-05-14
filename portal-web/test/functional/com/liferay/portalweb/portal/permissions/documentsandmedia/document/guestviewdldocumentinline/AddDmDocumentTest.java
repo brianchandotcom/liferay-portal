@@ -35,12 +35,12 @@ public class AddDmDocumentTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[5]/a");
 		assertEquals(RuntimeVariables.replace("Basic Document"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[5]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[5]/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_20_file']",
 			RuntimeVariables.replace(
@@ -61,20 +61,20 @@ public class AddDmDocumentTest extends BaseTestCase {
 		selenium.clickAt("//a[@class='document-link']/span[@class='entry-title']",
 			RuntimeVariables.replace("DM Document Title"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForText("//span[@class='aui-toolbar-content']/button[1]",
+		selenium.waitForText("//span[@class='toolbar-content']/button[1]",
 			"Download");
 		assertEquals(RuntimeVariables.replace("Download"),
-			selenium.getText("//span[@class='aui-toolbar-content']/button[1]"));
+			selenium.getText("//span[@class='toolbar-content']/button[1]"));
 		assertEquals(RuntimeVariables.replace("Edit"),
-			selenium.getText("//span[@class='aui-toolbar-content']/button[2]"));
+			selenium.getText("//span[@class='toolbar-content']/button[2]"));
 		assertEquals(RuntimeVariables.replace("Move"),
-			selenium.getText("//span[@class='aui-toolbar-content']/button[3]"));
+			selenium.getText("//span[@class='toolbar-content']/button[3]"));
 		assertEquals(RuntimeVariables.replace("Checkout"),
-			selenium.getText("//span[@class='aui-toolbar-content']/button[4]"));
+			selenium.getText("//span[@class='toolbar-content']/button[4]"));
 		assertEquals(RuntimeVariables.replace("Permissions"),
-			selenium.getText("//span[@class='aui-toolbar-content']/button[5]"));
+			selenium.getText("//span[@class='toolbar-content']/button[5]"));
 		assertEquals(RuntimeVariables.replace("Delete"),
-			selenium.getText("//span[@class='aui-toolbar-content']/button[6]"));
+			selenium.getText("//span[@class='toolbar-content']/button[6]"));
 		assertEquals(RuntimeVariables.replace("DM Document Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertTrue(selenium.isPartialText(

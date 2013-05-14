@@ -42,12 +42,11 @@ public class ConfigureWebContentSingleApproverScopeGlobalTest
 		selenium.clickAt("//strong/a/span",
 			RuntimeVariables.replace("Scope Selector"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a");
 		assertEquals(RuntimeVariables.replace("Global"),
-			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+			selenium.getText("//div[@class='lfr-menu-list unstyled']/ul/li/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForText("//strong/a/span", "Global");
 		assertEquals(RuntimeVariables.replace("Global"),

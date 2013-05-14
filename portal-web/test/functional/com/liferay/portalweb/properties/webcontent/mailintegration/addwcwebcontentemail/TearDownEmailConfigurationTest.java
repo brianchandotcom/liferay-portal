@@ -46,11 +46,11 @@ public class TearDownEmailConfigurationTest extends BaseTestCase {
 				selenium.clickAt("//a[@id='_160_groupSelectorButton']/span",
 					RuntimeVariables.replace("Liferay"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Site Name')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Site Name')]");
 				assertEquals(RuntimeVariables.replace("Site Name"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Site Name')]"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Site Name')]",
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Site Name')]"));
+				selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Site Name')]",
 					RuntimeVariables.replace("Site Name"));
 				selenium.waitForPageToLoad("30000");
 				selenium.clickAt("link=Web Content",
@@ -62,12 +62,12 @@ public class TearDownEmailConfigurationTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 					RuntimeVariables.replace("Options"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Configuration')]");
 				assertEquals(RuntimeVariables.replace("Configuration"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Configuration')]"));
 				selenium.click(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Configuration')]");
 				selenium.waitForVisible(
 					"//iframe[@id='_15_configurationIframeDialog']");
 				selenium.selectFrame(

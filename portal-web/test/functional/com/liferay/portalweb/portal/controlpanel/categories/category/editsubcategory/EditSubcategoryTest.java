@@ -44,8 +44,8 @@ public class EditSubcategoryTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Category Name"),
 			selenium.getText(
 				"//div[@class='vocabulary-categories']/div/ul/li/div[contains(.,'Category Name')]"));
-		selenium.waitForVisible("//div[@class='aui-tree-hitarea']");
-		selenium.clickAt("//div[@class='aui-tree-hitarea']",
+		selenium.waitForVisible("//div[@class='tree-hitarea']");
+		selenium.clickAt("//div[@class='tree-hitarea']",
 			RuntimeVariables.replace("Drop Down Arrow"));
 		selenium.waitForVisible(
 			"//div[@class='vocabulary-categories']/div/ul/li/ul/li/div/div[3][contains(.,'Subcategory Name')]");
@@ -73,8 +73,8 @@ public class EditSubcategoryTest extends BaseTestCase {
 				"Your request processed successfully."),
 			selenium.getText(
 				"//div[@class='lfr-message-response portlet-msg-success']"));
-		selenium.waitForVisible("//div[@class='aui-tree-hitarea']");
-		selenium.clickAt("//div[@class='aui-tree-hitarea']",
+		selenium.waitForVisible("//div[@class='tree-hitarea']");
+		selenium.clickAt("//div[@class='tree-hitarea']",
 			RuntimeVariables.replace("Drop Down Arrow"));
 		selenium.waitForVisible(
 			"//div[@class='vocabulary-categories']/div/ul/li/ul/li/div/div[3][contains(.,'Subcategory Name Edit')]");

@@ -35,12 +35,12 @@ public class RateWikiFrontPageChildPageTest extends BaseTestCase {
 			RuntimeVariables.replace("Wiki FrontPage ChildPage Title"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isPartialText(
-				"xPath=(//div[@class='aui-rating-label-element'])[2]", "0 Votes"));
+				"xPath=(//div[@class='rating-label-element'])[2]", "0 Votes"));
 		selenium.clickAt("//a[4]", RuntimeVariables.replace("Rating"));
-		selenium.waitForPartialText("xPath=(//div[@class='aui-rating-label-element'])[2]",
+		selenium.waitForPartialText("xPath=(//div[@class='rating-label-element'])[2]",
 			"1 Vote");
 		assertTrue(selenium.isPartialText(
-				"xPath=(//div[@class='aui-rating-label-element'])[2]", "1 Vote"));
+				"xPath=(//div[@class='rating-label-element'])[2]", "1 Vote"));
 		assertTrue(selenium.isVisible(
 				"xPath=(//a[contains(@class,'aui-rating-element-on')])[1]"));
 		assertTrue(selenium.isVisible(

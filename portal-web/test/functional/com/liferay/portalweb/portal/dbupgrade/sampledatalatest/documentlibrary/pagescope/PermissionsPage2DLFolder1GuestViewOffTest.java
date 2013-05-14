@@ -41,12 +41,12 @@ public class PermissionsPage2DLFolder1GuestViewOffTest extends BaseTestCase {
 		selenium.clickAt("//span[2]/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions Arrow"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[3]/a");
 		assertEquals(RuntimeVariables.replace("Permissions"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[3]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[3]/a"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("DL Folder1 Name"),
 			selenium.getText("//h1[@class='header-title']/span"));

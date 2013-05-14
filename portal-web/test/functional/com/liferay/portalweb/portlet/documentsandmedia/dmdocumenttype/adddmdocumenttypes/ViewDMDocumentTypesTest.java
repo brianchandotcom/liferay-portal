@@ -34,16 +34,16 @@ public class ViewDMDocumentTypesTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'DM DocumentType1 Name')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'DM DocumentType1 Name')]");
 		assertEquals(RuntimeVariables.replace("DM DocumentType1 Name"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'DM DocumentType1 Name')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'DM DocumentType1 Name')]"));
 		assertEquals(RuntimeVariables.replace("DM DocumentType2 Name"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'DM DocumentType2 Name')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'DM DocumentType2 Name')]"));
 		assertEquals(RuntimeVariables.replace("DM DocumentType3 Name"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'DM DocumentType3 Name')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'DM DocumentType3 Name')]"));
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
@@ -54,11 +54,11 @@ public class ViewDMDocumentTypesTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Manage']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Manage"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Document Types')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Document Types')]");
 		assertEquals(RuntimeVariables.replace("Document Types"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Document Types')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Document Types')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Document Types')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Document Types')]",
 			RuntimeVariables.replace("Document Types"));
 		selenium.waitForVisible("//iframe[@id='_20_openFileEntryTypeView']");
 		selenium.selectFrame("//iframe[@id='_20_openFileEntryTypeView']");

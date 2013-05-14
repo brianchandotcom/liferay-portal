@@ -34,11 +34,11 @@ public class RestoreArchiveSetupTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Configuration')]");
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Configuration')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Configuration')]",
 			RuntimeVariables.replace("Configuration"));
 		selenium.waitForElementPresent(
 			"//iframe[contains(@id,'configurationIframeDialog')]");
@@ -63,11 +63,11 @@ public class RestoreArchiveSetupTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Restore')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Restore')]");
 		assertEquals(RuntimeVariables.replace("Restore"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Restore')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Restore')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Restore')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Restore')]",
 			RuntimeVariables.replace("Restore"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(

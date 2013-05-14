@@ -51,21 +51,21 @@ public class AddFieldBooleanTest extends BaseTestCase {
 		selenium.clickAt("//tr[contains(.,'Data Definition')]//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Edit')]/a");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Edit')]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Edit')]/a"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Boolean"),
 			selenium.getText(
-				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[1]/div"));
+				"//div[@class='tabview-content widget-bd']/div/ul/li[1]/div"));
 		assertTrue(selenium.isVisible("xPath=(//label[.='Boolean'])[1]"));
 		assertTrue(selenium.isElementNotPresent(
 				"xPath=(//label[.='Boolean'])[2]"));
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[1]/div",
-			"//div[@class='aui-tabview-content aui-widget-bd']");
+		selenium.dragAndDropToObject("//div[@class='tabview-content widget-bd']/div/ul/li[1]/div",
+			"//div[@class='tabview-content widget-bd']");
 		assertTrue(selenium.isVisible("xPath=(//label[.='Boolean'])[2]"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));

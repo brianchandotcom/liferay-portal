@@ -67,24 +67,24 @@ public class PublishToLiveNowDMDocumentNoDMDockTest extends BaseTestCase {
 						"The data of this portlet is not staged. Any data changes are immediately available to the Local Live site. The portlet's own workflow is still honored. Portlet setup is still managed from staging."),
 					selenium.getText("//div[@class='portlet-msg-alert']"));
 				selenium.waitForElementPresent(
-					"//nav[@class='site-breadcrumbs aui-hide lfr-hudcrumbs']");
+					"//nav[@class='site-breadcrumbs hide lfr-hudcrumbs']");
 				assertEquals(RuntimeVariables.replace("DM Document Title"),
 					selenium.getText(
 						"//a[@title='DM Document Title - DM Document Description']"));
 				selenium.clickAt("//strong/a",
 					RuntimeVariables.replace("Staging"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Publish to Live Now')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Publish to Live Now')]");
 				assertEquals(RuntimeVariables.replace("Publish to Live Now"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Publish to Live Now')]"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Publish to Live Now')]",
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Publish to Live Now')]"));
+				selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Publish to Live Now')]",
 					RuntimeVariables.replace("Publish to Live Now"));
 				selenium.waitForVisible("//div[2]/div[1]/a");
 				selenium.waitForElementPresent(
 					"//script[contains(@src,'/liferay/panel.js')]");
 				selenium.waitForElementPresent(
-					"//div[@class='yui3-widget-bd aui-panel-bd aui-dialog-bd']");
+					"//div[@class='yui3-widget-bd panel-bd dialog-bd']");
 				assertEquals(RuntimeVariables.replace(
 						"There are no selected pages. All pages will therefore be exported."),
 					selenium.getText("//div[@class='portlet-msg-info']"));

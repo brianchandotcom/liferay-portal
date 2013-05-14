@@ -58,12 +58,12 @@ public class AddEventRepeatYearlySPTLTest extends BaseTestCase {
 				selenium.clickAt("//span[@class='staging-icon-menu-container']/span/ul/li/strong/a",
 					RuntimeVariables.replace("Staging Drop Down"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Schedule Publication to Live')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Schedule Publication to Live')]");
 				assertEquals(RuntimeVariables.replace(
 						"Schedule Publication to Live"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Schedule Publication to Live')]"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Schedule Publication to Live')]",
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Schedule Publication to Live')]"));
+				selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Schedule Publication to Live')]",
 					RuntimeVariables.replace("Schedule Publication to Live"));
 				selenium.waitForVisible("//div[2]/div[1]/a");
 

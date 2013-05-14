@@ -165,70 +165,70 @@ public class ViewCompletedTaskJavascriptTicketKFTest extends BaseTestCase {
 						"xPath=(//div[@class='task-activity-message'])[16]"));
 				assertEquals(RuntimeVariables.replace("Developer"),
 					selenium.getText(
-						"//div[@class='results-grid aui-searchcontainer-content']/table/tbody/tr[3]/td[1]"));
+						"//div[@class='results-grid searchcontainer-content']/table/tbody/tr[3]/td[1]"));
 				assertEquals(RuntimeVariables.replace("Yes"),
 					selenium.getText(
-						"//div[@class='results-grid aui-searchcontainer-content']/table/tbody/tr[3]/td[3]"));
+						"//div[@class='results-grid searchcontainer-content']/table/tbody/tr[3]/td[3]"));
 				assertEquals(RuntimeVariables.replace("Code Review"),
 					selenium.getText(
-						"//div[@class='results-grid aui-searchcontainer-content']/table/tbody/tr[4]/td[1]"));
+						"//div[@class='results-grid searchcontainer-content']/table/tbody/tr[4]/td[1]"));
 				assertEquals(RuntimeVariables.replace("Yes"),
 					selenium.getText(
-						"//div[@class='results-grid aui-searchcontainer-content']/table/tbody/tr[4]/td[3]"));
+						"//div[@class='results-grid searchcontainer-content']/table/tbody/tr[4]/td[3]"));
 				assertEquals(RuntimeVariables.replace("Developer"),
 					selenium.getText(
-						"//div[@class='results-grid aui-searchcontainer-content']/table/tbody/tr[5]/td[1]"));
+						"//div[@class='results-grid searchcontainer-content']/table/tbody/tr[5]/td[1]"));
 				assertEquals(RuntimeVariables.replace("Yes"),
 					selenium.getText(
-						"//div[@class='results-grid aui-searchcontainer-content']/table/tbody/tr[5]/td[3]"));
+						"//div[@class='results-grid searchcontainer-content']/table/tbody/tr[5]/td[3]"));
 				assertEquals(RuntimeVariables.replace("Code Review"),
 					selenium.getText(
-						"//div[@class='results-grid aui-searchcontainer-content']/table/tbody/tr[6]/td[1]"));
+						"//div[@class='results-grid searchcontainer-content']/table/tbody/tr[6]/td[1]"));
 				assertEquals(RuntimeVariables.replace("Yes"),
 					selenium.getText(
-						"//div[@class='results-grid aui-searchcontainer-content']/table/tbody/tr[6]/td[3]"));
+						"//div[@class='results-grid searchcontainer-content']/table/tbody/tr[6]/td[3]"));
 				assertEquals(RuntimeVariables.replace("QA"),
 					selenium.getText(
-						"//div[@class='results-grid aui-searchcontainer-content']/table/tbody/tr[7]/td[1]"));
+						"//div[@class='results-grid searchcontainer-content']/table/tbody/tr[7]/td[1]"));
 				assertEquals(RuntimeVariables.replace("Yes"),
 					selenium.getText(
-						"//div[@class='results-grid aui-searchcontainer-content']/table/tbody/tr[7]/td[3]"));
+						"//div[@class='results-grid searchcontainer-content']/table/tbody/tr[7]/td[3]"));
 				assertEquals(RuntimeVariables.replace("QA Management"),
 					selenium.getText(
-						"//div[@class='results-grid aui-searchcontainer-content']/table/tbody/tr[8]/td[1]"));
+						"//div[@class='results-grid searchcontainer-content']/table/tbody/tr[8]/td[1]"));
 				assertEquals(RuntimeVariables.replace("Yes"),
 					selenium.getText(
-						"//div[@class='results-grid aui-searchcontainer-content']/table/tbody/tr[8]/td[3]"));
+						"//div[@class='results-grid searchcontainer-content']/table/tbody/tr[8]/td[3]"));
 				assertEquals(RuntimeVariables.replace("Developer"),
 					selenium.getText(
-						"//div[@class='results-grid aui-searchcontainer-content']/table/tbody/tr[9]/td[1]"));
+						"//div[@class='results-grid searchcontainer-content']/table/tbody/tr[9]/td[1]"));
 				assertEquals(RuntimeVariables.replace("Yes"),
 					selenium.getText(
-						"//div[@class='results-grid aui-searchcontainer-content']/table/tbody/tr[9]/td[3]"));
+						"//div[@class='results-grid searchcontainer-content']/table/tbody/tr[9]/td[3]"));
 				assertEquals(RuntimeVariables.replace("Code Review"),
 					selenium.getText(
-						"//div[@class='results-grid aui-searchcontainer-content']/table/tbody/tr[10]/td[1]"));
+						"//div[@class='results-grid searchcontainer-content']/table/tbody/tr[10]/td[1]"));
 				assertEquals(RuntimeVariables.replace("Yes"),
 					selenium.getText(
-						"//div[@class='results-grid aui-searchcontainer-content']/table/tbody/tr[10]/td[3]"));
+						"//div[@class='results-grid searchcontainer-content']/table/tbody/tr[10]/td[3]"));
 				assertEquals(RuntimeVariables.replace("QA"),
 					selenium.getText(
-						"//div[@class='results-grid aui-searchcontainer-content']/table/tbody/tr[11]/td[1]"));
+						"//div[@class='results-grid searchcontainer-content']/table/tbody/tr[11]/td[1]"));
 				assertEquals(RuntimeVariables.replace("Yes"),
 					selenium.getText(
-						"//div[@class='results-grid aui-searchcontainer-content']/table/tbody/tr[11]/td[3]"));
+						"//div[@class='results-grid searchcontainer-content']/table/tbody/tr[11]/td[3]"));
 				assertEquals(RuntimeVariables.replace("QA Management"),
 					selenium.getText(
-						"//div[@class='results-grid aui-searchcontainer-content']/table/tbody/tr[12]/td[1]"));
+						"//div[@class='results-grid searchcontainer-content']/table/tbody/tr[12]/td[1]"));
 				assertEquals(RuntimeVariables.replace("Yes"),
 					selenium.getText(
-						"//div[@class='results-grid aui-searchcontainer-content']/table/tbody/tr[12]/td[3]"));
+						"//div[@class='results-grid searchcontainer-content']/table/tbody/tr[12]/td[3]"));
 				assertEquals(RuntimeVariables.replace("Project Manager Review"),
 					selenium.getText(
-						"//div[@class='results-grid aui-searchcontainer-content']/table/tbody/tr[13]/td[1]"));
+						"//div[@class='results-grid searchcontainer-content']/table/tbody/tr[13]/td[1]"));
 				assertEquals(RuntimeVariables.replace("Yes"),
 					selenium.getText(
-						"//div[@class='results-grid aui-searchcontainer-content']/table/tbody/tr[13]/td[3]"));
+						"//div[@class='results-grid searchcontainer-content']/table/tbody/tr[13]/td[3]"));
 
 			case 100:
 				label = -1;

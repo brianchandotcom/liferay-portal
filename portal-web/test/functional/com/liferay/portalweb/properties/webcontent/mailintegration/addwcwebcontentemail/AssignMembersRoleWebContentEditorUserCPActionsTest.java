@@ -50,12 +50,12 @@ public class AssignMembersRoleWebContentEditorUserCPActionsTest
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Members')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Assign Members')]");
 		assertEquals(RuntimeVariables.replace("Assign Members"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Members')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Assign Members')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Members')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Assign Members')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Available", RuntimeVariables.replace("Available"));
 		selenium.waitForPageToLoad("30000");

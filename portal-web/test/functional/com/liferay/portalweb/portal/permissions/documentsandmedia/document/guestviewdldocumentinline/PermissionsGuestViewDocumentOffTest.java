@@ -41,12 +41,12 @@ public class PermissionsGuestViewDocumentOffTest extends BaseTestCase {
 				selenium.clickAt("xPath=(//span[contains(@class,'document-action')])[2]/span/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a");
+					"//div[@class='lfr-menu-list unstyled']/ul/li[5]/a");
 				assertEquals(RuntimeVariables.replace("Permissions"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li[5]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li[5]/a"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Guest"),
 					selenium.getText("//tr[3]/td[1]/a"));

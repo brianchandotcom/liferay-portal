@@ -75,7 +75,7 @@ public class User_RenameMainPageVariationRegularSPSeasonTest
 					RuntimeVariables.replace("Manage Page Variations"));
 				Thread.sleep(5000);
 				selenium.selectFrame(
-					"//div[@class='yui3-widget-bd aui-panel-bd aui-dialog-bd aui-dialog-iframe-bd']/iframe");
+					"//div[@class='yui3-widget-bd panel-bd dialog-bd dialog-iframe-bd']/iframe");
 				assertTrue(selenium.isPartialText("//td[1]/strong",
 						"Main Variation"));
 				assertEquals(RuntimeVariables.replace("Edit"),
@@ -128,7 +128,7 @@ public class User_RenameMainPageVariationRegularSPSeasonTest
 					RuntimeVariables.replace("Manage Page Variations"));
 				Thread.sleep(5000);
 				selenium.selectFrame(
-					"//div[@class='yui3-widget-bd aui-panel-bd aui-dialog-bd aui-dialog-iframe-bd']/iframe");
+					"//div[@class='yui3-widget-bd panel-bd dialog-bd dialog-iframe-bd']/iframe");
 				assertTrue(selenium.isPartialText("//td[1]/strong", "Regular"));
 				selenium.selectFrame("relative=top");
 

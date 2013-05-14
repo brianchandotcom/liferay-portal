@@ -54,11 +54,11 @@ public class ImportLARTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Pages')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Manage Pages')]");
 				assertEquals(RuntimeVariables.replace("Manage Pages"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Pages')]"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Pages')]",
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Manage Pages')]"));
+				selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Manage Pages')]",
 					RuntimeVariables.replace("Manage Pages"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Import"),

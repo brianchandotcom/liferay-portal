@@ -33,11 +33,11 @@ public class AddSchedulerEventStagingCommunityQuartzTest extends BaseTestCase {
 		selenium.clickAt("//strong/a",
 			RuntimeVariables.replace("Staging Drop Down"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[2]/a");
 		assertEquals(RuntimeVariables.replace("Schedule Publication to Live"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+				"//div[@class='lfr-menu-list unstyled']/ul/li[2]/a"));
+		selenium.click("//div[@class='lfr-menu-list unstyled']/ul/li[2]/a");
 		selenium.waitForVisible("//input[@name='_88_description']");
 		selenium.type("//input[@name='_88_description']",
 			RuntimeVariables.replace("Quartz Scheduler Event"));

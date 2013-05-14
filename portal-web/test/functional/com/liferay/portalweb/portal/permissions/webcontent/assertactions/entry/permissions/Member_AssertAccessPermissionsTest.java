@@ -44,10 +44,10 @@ public class Member_AssertAccessPermissionsTest extends BaseTestCase {
 		selenium.clickAt("//span[@class='entry-action overlay']/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Permissions')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Permissions')]");
 		assertEquals(RuntimeVariables.replace("Permissions"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Permissions')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Permissions')]"));
 		selenium.clickAt("//a[@class='entry-link']/span",
 			RuntimeVariables.replace("WC WebContent Title"));
 		selenium.waitForPageToLoad("30000");

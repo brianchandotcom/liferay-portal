@@ -54,11 +54,11 @@ public class OA_PublishToLiveStagedPageOrganizationSiteTest extends BaseTestCase
 				selenium.clickAt("//strong/a",
 					RuntimeVariables.replace("Staging"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Publish to Live Now')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Publish to Live Now')]");
 				assertEquals(RuntimeVariables.replace("Publish to Live Now"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Publish to Live Now')]"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Publish to Live Now')]",
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Publish to Live Now')]"));
+				selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Publish to Live Now')]",
 					RuntimeVariables.replace("Publish to Live Now"));
 				Thread.sleep(5000);
 				selenium.waitForVisible("//div[2]/div[1]/a");

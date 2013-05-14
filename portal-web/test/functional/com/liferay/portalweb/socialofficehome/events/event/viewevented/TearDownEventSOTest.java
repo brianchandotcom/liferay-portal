@@ -52,12 +52,12 @@ public class TearDownEventSOTest extends BaseTestCase {
 				selenium.clickAt("//td[6]/span/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a");
+					"//div[@class='lfr-menu-list unstyled']/ul/li[4]/a");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li[4]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li[4]/a"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
@@ -78,12 +78,12 @@ public class TearDownEventSOTest extends BaseTestCase {
 				selenium.clickAt("//td[6]/span/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a");
+					"//div[@class='lfr-menu-list unstyled']/ul/li[4]/a");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li[4]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li[4]/a"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
@@ -104,12 +104,12 @@ public class TearDownEventSOTest extends BaseTestCase {
 				selenium.clickAt("//td[6]/span/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a");
+					"//div[@class='lfr-menu-list unstyled']/ul/li[4]/a");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li[4]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li[4]/a"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
@@ -130,12 +130,12 @@ public class TearDownEventSOTest extends BaseTestCase {
 				selenium.clickAt("//td[6]/span/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a");
+					"//div[@class='lfr-menu-list unstyled']/ul/li[4]/a");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li[4]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li[4]/a"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
@@ -156,12 +156,12 @@ public class TearDownEventSOTest extends BaseTestCase {
 				selenium.clickAt("//td[6]/span/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a");
+					"//div[@class='lfr-menu-list unstyled']/ul/li[4]/a");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li[4]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li[4]/a"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));

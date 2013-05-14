@@ -44,11 +44,11 @@ public class AddUserScreenNameNumberTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'User')]");
 		assertEquals(RuntimeVariables.replace("User"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'User')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'User')]",
 			RuntimeVariables.replace("User"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_125_screenName']",

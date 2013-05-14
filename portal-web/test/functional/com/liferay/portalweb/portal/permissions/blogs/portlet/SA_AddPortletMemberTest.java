@@ -44,12 +44,12 @@ public class SA_AddPortletMemberTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(@id,'user')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(@id,'user')]");
 		assertEquals(RuntimeVariables.replace("User"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(@id,'user')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(@id,'user')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(@id,'user')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(@id,'user')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select[@id='_125_prefixId']",
 			RuntimeVariables.replace("label=Mrs."));

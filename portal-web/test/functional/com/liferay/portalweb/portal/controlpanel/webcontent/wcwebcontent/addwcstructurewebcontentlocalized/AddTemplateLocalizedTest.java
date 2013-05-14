@@ -44,11 +44,11 @@ public class AddTemplateLocalizedTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Manage']/ul/li/strong/a",
 			RuntimeVariables.replace("Manage"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Structures')]");
 		assertEquals(RuntimeVariables.replace("Structures"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Structures')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Structures')]",
 			RuntimeVariables.replace("Structures"));
 		selenium.waitForVisible("//iframe[contains(@src,'Structures')]");
 		selenium.selectFrame("//iframe[contains(@src,'Structures')]");
@@ -69,8 +69,8 @@ public class AddTemplateLocalizedTest extends BaseTestCase {
 		selenium.clickAt("//tr[contains(.,'WC Structure Name')]/td[6]/span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]");
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Templates')]",
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Manage Templates')]");
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Manage Templates')]",
 			RuntimeVariables.replace("Manage Templates"));
 		selenium.waitForVisible(
 			"//span[@class='lfr-toolbar-button add-template ']/a");
@@ -85,11 +85,11 @@ public class AddTemplateLocalizedTest extends BaseTestCase {
 			RuntimeVariables.replace("WC Template Name"));
 		selenium.type("//textarea[@id='_166_description_en_US']",
 			RuntimeVariables.replace("WC Template Description"));
-		selenium.waitForText("//span[@class='aui-field aui-field-text']/span/label[contains(.,'Script File')]",
+		selenium.waitForText("//span[@class='field field-text']/span/label[contains(.,'Script File')]",
 			"Script File");
 		assertEquals(RuntimeVariables.replace("Script File"),
 			selenium.getText(
-				"//span[@class='aui-field aui-field-text']/span/label[contains(.,'Script File')]"));
+				"//span[@class='field field-text']/span/label[contains(.,'Script File')]"));
 		selenium.type("//input[@id='_166_script']",
 			RuntimeVariables.replace(
 				"L:\\portal\\build\\portal-web\\test\\functional\\com\\liferay\\portalweb\\portal\\controlpanel\\webcontent\\dependencies\\vm_script_localized.xml\"))"));

@@ -44,12 +44,12 @@ public class AddWCWebContentLocalizedTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Web Content')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Basic Web Content')]");
 		assertEquals(RuntimeVariables.replace("Basic Web Content"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Web Content')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Basic Web Content')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Web Content')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Basic Web Content')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/html/js/editor/ckeditor/plugins/restore/plugin.js')]");
@@ -94,11 +94,11 @@ public class AddWCWebContentLocalizedTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Add Translation']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add Translation"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Chinese (China)')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Chinese (China)')]");
 		assertEquals(RuntimeVariables.replace("Chinese (China)"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Chinese (China)')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Chinese (China)')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Chinese (China)')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Chinese (China)')]",
 			RuntimeVariables.replace("Chinese (China)"));
 		selenium.waitForVisible("//iframe[@id='_15_zh_CN']");
 		selenium.selectFrame("//iframe[@id='_15_zh_CN']");

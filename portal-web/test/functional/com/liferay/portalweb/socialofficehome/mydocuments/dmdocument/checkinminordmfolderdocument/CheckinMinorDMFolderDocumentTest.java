@@ -57,8 +57,8 @@ public class CheckinMinorDMFolderDocumentTest extends BaseTestCase {
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Checkin"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[contains(.,'Checkin')]/span[2]"));
-		selenium.clickAt("//span[@class='aui-toolbar-content']/button[contains(.,'Checkin')]/span[2]",
+				"//span[@class='toolbar-content']/button[contains(.,'Checkin')]/span[2]"));
+		selenium.clickAt("//span[@class='toolbar-content']/button[contains(.,'Checkin')]/span[2]",
 			RuntimeVariables.replace("Checkin"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//span[contains(.,'Minor Revision')]/span/input",

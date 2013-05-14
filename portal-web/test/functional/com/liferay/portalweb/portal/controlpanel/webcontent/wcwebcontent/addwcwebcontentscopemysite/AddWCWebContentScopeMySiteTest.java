@@ -41,11 +41,11 @@ public class AddWCWebContentScopeMySiteTest extends BaseTestCase {
 		selenium.clickAt("//a[@id='_160_groupSelectorButton']",
 			RuntimeVariables.replace("Liferay"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Personal Site')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Personal Site')]");
 		assertEquals(RuntimeVariables.replace("Joe Bloggs's Personal Site"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Personal Site')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Personal Site')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Personal Site')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Personal Site')]",
 			RuntimeVariables.replace("Joe Bloggs's Personal Site"));
 		selenium.waitForText("//a[@id='_160_groupSelectorButton']",
 			"Joe Bloggs's Personal...");
@@ -57,12 +57,12 @@ public class AddWCWebContentScopeMySiteTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Web Content')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Basic Web Content')]");
 		assertEquals(RuntimeVariables.replace("Basic Web Content"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Web Content')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Basic Web Content')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Web Content')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Basic Web Content')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/html/js/editor/ckeditor/plugins/restore/plugin.js')]");

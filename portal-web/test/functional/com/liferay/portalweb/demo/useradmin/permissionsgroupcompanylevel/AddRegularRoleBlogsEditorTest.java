@@ -35,12 +35,11 @@ public class AddRegularRoleBlogsEditorTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a");
 		assertEquals(RuntimeVariables.replace("Regular Role"),
-			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+			selenium.getText("//div[@class='lfr-menu-list unstyled']/ul/li/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_128_name']",
 			RuntimeVariables.replace("Blogs Editor"));

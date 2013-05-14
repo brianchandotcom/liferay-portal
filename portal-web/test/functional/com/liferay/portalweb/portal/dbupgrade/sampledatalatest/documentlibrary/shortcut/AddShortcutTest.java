@@ -46,12 +46,12 @@ public class AddShortcutTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Shortcut')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Shortcut')]/a");
 		assertEquals(RuntimeVariables.replace("Shortcut"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Shortcut')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Shortcut')]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Shortcut')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Shortcut')]/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//div/span[2]/span/input",
 			RuntimeVariables.replace("Select Site"));

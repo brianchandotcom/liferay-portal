@@ -74,22 +74,22 @@ public class SOUs_ViewDMDocumentOriginalSiteTest extends BaseTestCase {
 			selenium.getText("//span[@class='header-back-to']/a"));
 		assertEquals(RuntimeVariables.replace("Download"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[contains(.,'Download')]/span[2]"));
+				"//span[@class='toolbar-content']/button[contains(.,'Download')]/span[2]"));
 		assertEquals(RuntimeVariables.replace("Checkout"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[contains(.,'Checkout')]/span[2]"));
+				"//span[@class='toolbar-content']/button[contains(.,'Checkout')]/span[2]"));
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[contains(.,'Edit')]/span[2]"));
+				"//span[@class='toolbar-content']/button[contains(.,'Edit')]/span[2]"));
 		assertEquals(RuntimeVariables.replace("Move"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[contains(.,'Move')]/span[2]"));
+				"//span[@class='toolbar-content']/button[contains(.,'Move')]/span[2]"));
 		assertEquals(RuntimeVariables.replace("Permissions"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[contains(.,'Permissions')]/span[2]"));
+				"//span[@class='toolbar-content']/button[contains(.,'Permissions')]/span[2]"));
 		assertEquals(RuntimeVariables.replace("Delete"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[contains(.,'Delete')]/span[2]"));
+				"//span[@class='toolbar-content']/button[contains(.,'Delete')]/span[2]"));
 		assertEquals(RuntimeVariables.replace("DM Document Title (Version 1.0)"),
 			selenium.getText("//span[@class='document-title']"));
 		assertTrue(selenium.isVisible("//span[@class='document-thumbnail']/img"));
@@ -110,10 +110,10 @@ public class SOUs_ViewDMDocumentOriginalSiteTest extends BaseTestCase {
 			selenium.getText("//span[@class='size']"));
 		assertEquals(RuntimeVariables.replace("Add Comment"),
 			selenium.getText(
-				"//fieldset[@class='aui-fieldset add-comment ']/div/span[1]"));
+				"//fieldset[@class='fieldset add-comment ']/div/span[1]"));
 		assertEquals(RuntimeVariables.replace("Subscribe to Comments"),
 			selenium.getText(
-				"//fieldset[@class='aui-fieldset add-comment ']/div/span[2]"));
+				"//fieldset[@class='fieldset add-comment ']/div/span[2]"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("xPath=(//span[@class='user-name'])[2]"));
 		assertEquals(RuntimeVariables.replace("DM Document Comment1"),

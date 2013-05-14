@@ -49,11 +49,11 @@ public class AssignMembersRolePortalContentReviewerTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Members')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Assign Members')]");
 		assertEquals(RuntimeVariables.replace("Assign Members"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Members')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Members')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Assign Members')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Assign Members')]",
 			RuntimeVariables.replace("Assign Members"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Available", RuntimeVariables.replace("Available"));

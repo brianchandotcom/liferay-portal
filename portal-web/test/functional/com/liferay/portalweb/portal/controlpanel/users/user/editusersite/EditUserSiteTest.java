@@ -85,8 +85,8 @@ public class EditUserSiteTest extends BaseTestCase {
 				Thread.sleep(5000);
 				selenium.selectWindow("title=Users and Organizations");
 				selenium.waitForVisible(
-					"//span[@class='aui-search-bar']/span/span/span/input");
-				selenium.type("//span[@class='aui-search-bar']/span/span/span/input",
+					"//span[@class='search-bar']/span/span/span/input");
+				selenium.type("//span[@class='search-bar']/span/span/span/input",
 					RuntimeVariables.replace("Site"));
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));

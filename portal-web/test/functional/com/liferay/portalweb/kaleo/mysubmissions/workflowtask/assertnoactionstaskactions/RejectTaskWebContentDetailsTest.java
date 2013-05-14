@@ -78,15 +78,15 @@ public class RejectTaskWebContentDetailsTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Reject')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Reject')]");
 				assertEquals(RuntimeVariables.replace("Reject"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Reject')]"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Reject')]",
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Reject')]"));
+				selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Reject')]",
 					RuntimeVariables.replace("Reject"));
 				selenium.waitForVisible(
-					"//span[@class='aui-toolbar-content']/button[contains(.,'OK')]");
-				selenium.clickAt("//span[@class='aui-toolbar-content']/button[contains(.,'OK')]",
+					"//span[@class='toolbar-content']/button[contains(.,'OK')]");
+				selenium.clickAt("//span[@class='toolbar-content']/button[contains(.,'OK')]",
 					RuntimeVariables.replace("OK"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForText("//div[@class='portlet-msg-success']",

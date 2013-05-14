@@ -60,11 +60,11 @@ public class RejectWebContentVersion2ActionsTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Reject')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Reject')]");
 		assertEquals(RuntimeVariables.replace("Reject"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Reject')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Reject')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Reject')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Reject')]",
 			RuntimeVariables.replace("Reject"));
 		selenium.waitForVisible("//button[.='OK']");
 		assertEquals(RuntimeVariables.replace("OK"),

@@ -37,8 +37,8 @@ public class AddWCWebContentStructureFieldTextBoxWCDTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Select"),
 			selenium.getText(
-				"//div[@class='aui-column-content article-structure-content ']/fieldset/div/div/span[2]/a"));
-		selenium.clickAt("//div[@class='aui-column-content article-structure-content ']/fieldset/div/div/span[2]/a",
+				"//div[@class='column-content article-structure-content ']/fieldset/div/div/span[2]/a"));
+		selenium.clickAt("//div[@class='column-content article-structure-content ']/fieldset/div/div/span[2]/a",
 			RuntimeVariables.replace("Select"));
 		selenium.waitForVisible(
 			"//iframe[contains(@src,'_15_selectStructure')]");

@@ -63,11 +63,9 @@ public class SOUs_ViewBlogsEntry1RBSite1Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("0 Comments"),
 			selenium.getText("//span[@class='comments']"));
 		assertEquals(RuntimeVariables.replace("Your Rating"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[1]"));
+			selenium.getText("xPath=(//div[@class='rating-label-element'])[1]"));
 		assertEquals(RuntimeVariables.replace("Average (0 Votes)"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[2]"));
+			selenium.getText("xPath=(//div[@class='rating-label-element'])[2]"));
 		assertEquals(RuntimeVariables.replace("Previous"),
 			selenium.getText("//span[@class='previous']"));
 		assertEquals(RuntimeVariables.replace("Next"),

@@ -39,12 +39,12 @@ public class AddCustomSiteWikiUseCaseTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[1]/a");
 		assertEquals(RuntimeVariables.replace("Blank Site"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[1]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[1]/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_134_name']",
 			RuntimeVariables.replace("Wiki Use Case Community"));

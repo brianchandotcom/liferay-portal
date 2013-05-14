@@ -33,12 +33,12 @@ public class EditPreferencesTest extends BaseTestCase {
 			selenium.getText("//strong/a"));
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[3]/a");
 		assertEquals(RuntimeVariables.replace("Preferences"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[3]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[3]/a"));
 		selenium.waitForPageToLoad("30000");
 		Thread.sleep(5000);
 		selenium.type("//section[@id='portlet_1_WAR_stocksportlet']/div/div/div/form/textarea",

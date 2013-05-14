@@ -48,12 +48,12 @@ public class AddPageMBSiteTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Pages')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Manage Pages')]");
 		assertEquals(RuntimeVariables.replace("Manage Pages"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Pages')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Manage Pages')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Pages')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Manage Pages')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Public Pages",
 			RuntimeVariables.replace("Public Pages"));
@@ -73,9 +73,9 @@ public class AddPageMBSiteTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.waitForVisible(
-			"//ul[@class='aui-tree-container']/li/div/div/a[contains(.,'Message Boards Test Page')]");
+			"//ul[@class='tree-container']/li/div/div/a[contains(.,'Message Boards Test Page')]");
 		assertEquals(RuntimeVariables.replace("Message Boards Test Page"),
 			selenium.getText(
-				"//ul[@class='aui-tree-container']/li/div/div/a[contains(.,'Message Boards Test Page')]"));
+				"//ul[@class='tree-container']/li/div/div/a[contains(.,'Message Boards Test Page')]"));
 	}
 }

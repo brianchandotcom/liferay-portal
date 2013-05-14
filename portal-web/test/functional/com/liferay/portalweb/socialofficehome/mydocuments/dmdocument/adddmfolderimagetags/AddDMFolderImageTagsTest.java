@@ -51,11 +51,11 @@ public class AddDMFolderImageTagsTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Add"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Document')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Basic Document')]");
 				assertEquals(RuntimeVariables.replace("Basic Document"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Document')]"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Document')]",
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Basic Document')]"));
+				selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Basic Document')]",
 					RuntimeVariables.replace("Basic Document"));
 				selenium.waitForPageToLoad("30000");
 				selenium.uploadCommonFile("//input[@id='_20_file']",
@@ -85,19 +85,19 @@ public class AddDMFolderImageTagsTest extends BaseTestCase {
 				selenium.clickAt("//button[@id='add']",
 					RuntimeVariables.replace("Add"));
 				selenium.waitForVisible(
-					"xPath=(//span[@class='aui-textboxlistentry-text'])[1]");
+					"xPath=(//span[@class='textboxlistentry-text'])[1]");
 				assertEquals(RuntimeVariables.replace("tag1"),
 					selenium.getText(
-						"xPath=(//span[@class='aui-textboxlistentry-text'])[1]"));
+						"xPath=(//span[@class='textboxlistentry-text'])[1]"));
 				selenium.type("//input[@title='Add Tags']",
 					RuntimeVariables.replace("tag2"));
 				selenium.clickAt("//button[@id='add']",
 					RuntimeVariables.replace("Add"));
 				selenium.waitForVisible(
-					"xPath=(//span[@class='aui-textboxlistentry-text'])[2]");
+					"xPath=(//span[@class='textboxlistentry-text'])[2]");
 				assertEquals(RuntimeVariables.replace("tag2"),
 					selenium.getText(
-						"xPath=(//span[@class='aui-textboxlistentry-text'])[2]"));
+						"xPath=(//span[@class='textboxlistentry-text'])[2]"));
 				selenium.clickAt("//input[@value='Publish']",
 					RuntimeVariables.replace("Publish"));
 				selenium.waitForPageToLoad("30000");

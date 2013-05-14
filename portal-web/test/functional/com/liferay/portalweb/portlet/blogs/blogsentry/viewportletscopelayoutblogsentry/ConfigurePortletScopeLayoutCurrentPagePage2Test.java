@@ -36,11 +36,11 @@ public class ConfigurePortletScopeLayoutCurrentPagePage2Test
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Configuration')]");
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Configuration')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Configuration')]",
 			RuntimeVariables.replace("Configuration"));
 		selenium.waitForVisible("//iframe[@id='_33_configurationIframeDialog']");
 		selenium.selectFrame("//iframe[@id='_33_configurationIframeDialog']");
@@ -87,12 +87,12 @@ public class ConfigurePortletScopeLayoutCurrentPagePage2Test
 		selenium.clickAt("//div[@id='panel-manage-content']/div[2]/div/span/ul/li/strong/a",
 			RuntimeVariables.replace("Scope: Default"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[1]/a");
 		assertEquals(RuntimeVariables.replace("Default"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[1]/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Test Page2"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[2]/a"));
 	}
 }

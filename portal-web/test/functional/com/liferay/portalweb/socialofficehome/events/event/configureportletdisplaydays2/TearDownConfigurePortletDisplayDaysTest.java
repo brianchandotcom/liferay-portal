@@ -37,16 +37,16 @@ public class TearDownConfigurePortletDisplayDaysTest extends BaseTestCase {
 		selenium.clickAt("//div[2]/div/div[2]/div/section/header/menu/span/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[2]/a");
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+				"//div[@class='lfr-menu-list unstyled']/ul/li[2]/a"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li[2]/a",
 			RuntimeVariables.replace("Configuration"));
 		selenium.waitForVisible(
-			"//div[@class='yui3-widget-bd aui-panel-bd aui-dialog-bd aui-dialog-iframe-bd']/iframe");
+			"//div[@class='yui3-widget-bd panel-bd dialog-bd dialog-iframe-bd']/iframe");
 		selenium.selectFrame(
-			"//div[@class='yui3-widget-bd aui-panel-bd aui-dialog-bd aui-dialog-iframe-bd']/iframe");
+			"//div[@class='yui3-widget-bd panel-bd dialog-bd dialog-iframe-bd']/iframe");
 		selenium.waitForVisible("//label[contains(@for,'maxDaysDisplayed')]");
 		assertEquals(RuntimeVariables.replace("How many days to display?"),
 			selenium.getText("//label[contains(@for,'maxDaysDisplayed')]"));

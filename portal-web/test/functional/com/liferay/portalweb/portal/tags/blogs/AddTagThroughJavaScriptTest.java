@@ -51,7 +51,7 @@ public class AddTagThroughJavaScriptTest extends BaseTestCase {
 					"//iframe[contains(@title,'Rich Text Editor')]");
 
 				boolean tagsVisible = selenium.isVisible(
-						"//input[@class='lfr-tag-selector-input aui-field-input-text']");
+						"//input[@class='lfr-tag-selector-input field-input-text']");
 
 				if (tagsVisible) {
 					label = 2;
@@ -65,20 +65,20 @@ public class AddTagThroughJavaScriptTest extends BaseTestCase {
 				selenium.clickAt("xPath=(//div[@class='lfr-panel-title'])[2]/span",
 					RuntimeVariables.replace("Categorization"));
 				selenium.waitForVisible(
-					"//input[@class='lfr-tag-selector-input aui-field-input-text']");
+					"//input[@class='lfr-tag-selector-input field-input-text']");
 				assertTrue(selenium.isVisible(
-						"//input[@class='lfr-tag-selector-input aui-field-input-text']"));
+						"//input[@class='lfr-tag-selector-input field-input-text']"));
 
 			case 2:
-				selenium.sendKeys("//input[@class='lfr-tag-selector-input aui-field-input-text']",
+				selenium.sendKeys("//input[@class='lfr-tag-selector-input field-input-text']",
 					RuntimeVariables.replace("selenium2 liferay2"));
 				selenium.clickAt("//button[@id='add']",
 					RuntimeVariables.replace("Add"));
-				selenium.waitForText("xPath=(//span[@class='aui-textboxlistentry-text'])[3]",
+				selenium.waitForText("xPath=(//span[@class='textboxlistentry-text'])[3]",
 					"selenium2 liferay2");
 				assertEquals(RuntimeVariables.replace("selenium2 liferay2"),
 					selenium.getText(
-						"xPath=(//span[@class='aui-textboxlistentry-text'])[3]"));
+						"xPath=(//span[@class='textboxlistentry-text'])[3]"));
 				selenium.clickAt("//input[@value='Publish']",
 					RuntimeVariables.replace("Publish"));
 				selenium.waitForPageToLoad("30000");

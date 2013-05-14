@@ -73,12 +73,12 @@ public class ViewEditUserRolesOrgOwnerOrg2Test extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit')]");
 				assertEquals(RuntimeVariables.replace("Edit"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit')]"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit')]"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.isPartialText("//a[@id='_125_rolesLink']",
 						"Roles"));

@@ -45,11 +45,11 @@ public class EditWCSubstructure2DefaultValuesTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Manage']/ul/li/strong/a",
 			RuntimeVariables.replace("Manage"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Structures')]");
 		assertEquals(RuntimeVariables.replace("Structures"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Structures')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Structures')]",
 			RuntimeVariables.replace("Structures"));
 		selenium.waitForVisible("//iframe[contains(@src,'Structures')]");
 		selenium.selectFrame("//iframe[contains(@src,'Structures')]");
@@ -79,22 +79,22 @@ public class EditWCSubstructure2DefaultValuesTest extends BaseTestCase {
 		selenium.clickAt("//tr[contains(.,'WC Substructure2 Name')]/td[6]/span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit')]");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit')]",
 			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForVisible("//input[@id='_166_name_en_US']");
 		assertEquals("WC Substructure2 Name",
 			selenium.getValue("//input[@id='_166_name_en_US']"));
 		selenium.waitForVisible(
-			"//div[@class='aui-diagram-builder-drop-container']/div[1]");
+			"//div[@class='diagram-builder-drop-container']/div[1]");
 		assertEquals(RuntimeVariables.replace("Text"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[1]/div/label"));
-		selenium.clickAt("//div[@class='aui-diagram-builder-drop-container']/div[1]",
+				"//div[@class='diagram-builder-drop-container']/div[1]/div/label"));
+		selenium.clickAt("//div[@class='diagram-builder-drop-container']/div[1]",
 			RuntimeVariables.replace("Text Field"));
 		selenium.waitForVisible("//button[@id='editEvent']");
 		assertTrue(selenium.isVisible("//button[@id='duplicateEvent']"));

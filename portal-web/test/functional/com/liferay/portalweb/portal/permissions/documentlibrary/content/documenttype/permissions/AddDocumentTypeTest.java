@@ -38,12 +38,12 @@ public class AddDocumentTypeTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Manage']/ul/li/strong/a",
 			RuntimeVariables.replace("Manage"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Document Types')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Document Types')]/a");
 		assertEquals(RuntimeVariables.replace("Document Types"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Document Types')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Document Types')]/a"));
 		selenium.click(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Document Types')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Document Types')]/a");
 		selenium.waitForVisible("//iframe");
 		selenium.selectFrame("//iframe");
 		selenium.waitForVisible("//span[contains(@class, 'add-button')]/a");
@@ -53,9 +53,9 @@ public class AddDocumentTypeTest extends BaseTestCase {
 		selenium.type("//input[@id='_20_name']",
 			RuntimeVariables.replace("Document Type Name"));
 		selenium.waitForVisible(
-			"xPath=(//div[@class='aui-diagram-builder-field-label'])[11]");
-		selenium.dragAndDropToObject("xPath=(//div[@class='aui-diagram-builder-field-label'])[11]",
-			"xPath=(//div[@class='aui-diagram-builder-field-label'])[11]");
+			"xPath=(//div[@class='diagram-builder-field-label'])[11]");
+		selenium.dragAndDropToObject("xPath=(//div[@class='diagram-builder-field-label'])[11]",
+			"xPath=(//div[@class='diagram-builder-field-label'])[11]");
 		selenium.waitForVisible(
 			"//div[contains(@class,'aui-form-builder-text-field-content')]/label");
 		assertEquals(RuntimeVariables.replace("Text Box"),

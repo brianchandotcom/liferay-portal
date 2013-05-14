@@ -720,6 +720,7 @@ AUI.add(
 
 						if (data.status && (data.status >= 490 && data.status < 500)) {
 							file.error = data.message || strings.unexpectedErrorOnUploadText;
+
 							file.messageListItems = data.messageListItems;
 
 							var newLi = instance._fileListTPL.parse([file]);

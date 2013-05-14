@@ -27,6 +27,7 @@ import java.util.Map;
  */
 public class DummyRoleMembershipPolicy extends BaseRoleMembershipPolicy {
 
+	@Override
 	public void checkRoles(
 		long[] userIds, long[] addRoleIds, long[] removeRoleIds) {
 	}
@@ -41,6 +42,7 @@ public class DummyRoleMembershipPolicy extends BaseRoleMembershipPolicy {
 		return false;
 	}
 
+	@Override
 	public void propagateRoles(
 		long[] userIds, long[] addRoleIds, long[] removeRoleIds) {
 	}
@@ -49,6 +51,7 @@ public class DummyRoleMembershipPolicy extends BaseRoleMembershipPolicy {
 	public void verifyPolicy(Role role) {
 	}
 
+	@Override
 	public void verifyPolicy(
 		Role role, Role oldRole,
 		Map<String, Serializable> oldExpandoAttributes) {

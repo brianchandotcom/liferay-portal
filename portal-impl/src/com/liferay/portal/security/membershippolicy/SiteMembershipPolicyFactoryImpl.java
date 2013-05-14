@@ -43,6 +43,7 @@ public class SiteMembershipPolicyFactoryImpl
 		_siteMembershipPolicy = _originalSiteMembershipPolicy;
 	}
 
+	@Override
 	public SiteMembershipPolicy getSiteMembershipPolicy() {
 		return _siteMembershipPolicy;
 	}

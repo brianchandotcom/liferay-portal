@@ -20,6 +20,7 @@ package com.liferay.portal.kernel.poller.comet;
  */
 public abstract class BaseCometSession implements CometSession {
 
+	@Override
 	public void close() throws CometException {
 		try {
 			doClose();
@@ -34,26 +35,32 @@ public abstract class BaseCometSession implements CometSession {
 		}
 	}
 
+	@Override
 	public CometRequest getCometRequest() {
 		return _cometRequest;
 	}
 
+	@Override
 	public CometResponse getCometResponse() {
 		return _cometResponse;
 	}
 
+	@Override
 	public String getSessionId() {
 		return _sessionId;
 	}
 
+	@Override
 	public void setCometRequest(CometRequest cometRequest) {
 		_cometRequest = cometRequest;
 	}
 
+	@Override
 	public void setCometResponse(CometResponse cometResponse) {
 		_cometResponse = cometResponse;
 	}
 
+	@Override
 	public void setSessionId(String sessionId) {
 		_sessionId = sessionId;
 	}

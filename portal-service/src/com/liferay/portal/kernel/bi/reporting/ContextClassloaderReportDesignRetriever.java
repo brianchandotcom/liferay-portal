@@ -29,6 +29,7 @@ public class ContextClassloaderReportDesignRetriever
 		_reportName = reportName;
 	}
 
+	@Override
 	public InputStream getInputStream() {
 		Thread currentThread = Thread.currentThread();
 
@@ -37,10 +38,12 @@ public class ContextClassloaderReportDesignRetriever
 		return contextClassLoader.getResourceAsStream(_reportName);
 	}
 
+	@Override
 	public Date getModifiedDate() {
 		return new Date();
 	}
 
+	@Override
 	public String getReportName() {
 		return _reportName;
 	}

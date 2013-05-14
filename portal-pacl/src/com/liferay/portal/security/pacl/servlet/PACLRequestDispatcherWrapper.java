@@ -40,6 +40,7 @@ public class PACLRequestDispatcherWrapper implements RequestDispatcher {
 		_requestDispatcher = requestDispatcher;
 	}
 
+	@Override
 	public void forward(
 			ServletRequest servletRequest, ServletResponse servletResponse)
 		throws IOException, ServletException {
@@ -47,6 +48,7 @@ public class PACLRequestDispatcherWrapper implements RequestDispatcher {
 		doDispatch(servletRequest, servletResponse, false);
 	}
 
+	@Override
 	public void include(
 			ServletRequest servletRequest, ServletResponse servletResponse)
 		throws IOException, ServletException {

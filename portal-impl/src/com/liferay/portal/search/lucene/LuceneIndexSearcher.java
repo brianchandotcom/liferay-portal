@@ -87,6 +87,7 @@ import org.apache.lucene.search.highlight.TokenGroup;
  */
 public class LuceneIndexSearcher extends BaseIndexSearcher {
 
+	@Override
 	public Hits search(SearchContext searchContext, Query query)
 		throws SearchException {
 
@@ -316,6 +317,7 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 		return hits;
 	}
 
+	@Override
 	public Hits search(
 			String searchEngineId, long companyId, Query query, Sort[] sorts,
 			int start, int end)

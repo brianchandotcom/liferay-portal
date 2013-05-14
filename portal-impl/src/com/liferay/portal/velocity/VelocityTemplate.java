@@ -62,10 +62,12 @@ public class VelocityTemplate extends AbstractTemplate {
 		_velocityEngine = velocityEngine;
 	}
 
+	@Override
 	public Object get(String key) {
 		return _velocityContext.get(key);
 	}
 
+	@Override
 	public String[] getKeys() {
 		Object[] keyObjects = _velocityContext.getKeys();
 
@@ -80,6 +82,7 @@ public class VelocityTemplate extends AbstractTemplate {
 		return keys;
 	}
 
+	@Override
 	public void put(String key, Object value) {
 		if (value == null) {
 			return;

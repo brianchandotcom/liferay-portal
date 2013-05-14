@@ -33,6 +33,7 @@ public class JettyHttpSessionWrapper
 		_session = session;
 	}
 
+	@Override
 	public AbstractSession getSession() {
 		HttpSessionWrapper sessionWrapper = (HttpSessionWrapper)_session;
 

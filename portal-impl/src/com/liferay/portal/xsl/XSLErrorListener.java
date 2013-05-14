@@ -39,6 +39,7 @@ public class XSLErrorListener implements ErrorListener {
 		_locale = locale;
 	}
 
+	@Override
 	public void error(TransformerException exception)
 		throws TransformerException {
 
@@ -47,6 +48,7 @@ public class XSLErrorListener implements ErrorListener {
 		throw exception;
 	}
 
+	@Override
 	public void fatalError(TransformerException exception)
 		throws TransformerException {
 
@@ -133,6 +135,7 @@ public class XSLErrorListener implements ErrorListener {
 		}
 	}
 
+	@Override
 	public void warning(TransformerException exception)
 		throws TransformerException {
 

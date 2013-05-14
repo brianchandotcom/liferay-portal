@@ -25,6 +25,7 @@ import javax.portlet.PortletResponse;
  */
 public abstract class BaseActionCommand implements ActionCommand {
 
+	@Override
 	public boolean processCommand(
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws PortletException {

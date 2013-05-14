@@ -42,14 +42,17 @@ public class Jdk14LogFactoryImpl implements LogFactory {
 		}
 	}
 
+	@Override
 	public Log getLog(Class<?> c) {
 		return getLog(c.getName());
 	}
 
+	@Override
 	public Log getLog(String name) {
 		return new Jdk14LogImpl(Logger.getLogger(name));
 	}
 
+	@Override
 	public void setLevel(String name, String priority, boolean custom) {
 	}
 

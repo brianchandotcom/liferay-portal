@@ -26,6 +26,7 @@ import java.util.List;
  */
 public class CheckoutMethodImpl extends BaseMethodImpl {
 
+	@Override
 	public String getMethodName() {
 		return _METHOD_NAME;
 	}

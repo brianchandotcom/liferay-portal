@@ -21,10 +21,12 @@ import com.liferay.portal.servlet.filters.monitoring.MonitoringFilter;
  */
 public class MonitoringFilterManager implements MonitoringFilterManagerMBean {
 
+	@Override
 	public boolean isMonitoringPortalRequest() {
 		return MonitoringFilter.isMonitoringPortalRequest();
 	}
 
+	@Override
 	public void setMonitoringPortalRequest(boolean monitoringPortalRequest) {
 		MonitoringFilter.setMonitoringPortalRequest(monitoringPortalRequest);
 	}

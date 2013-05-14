@@ -35,6 +35,7 @@ import java.util.List;
 public class MDRRuleGroupInstanceServiceImpl
 	extends MDRRuleGroupInstanceServiceBaseImpl {
 
+	@Override
 	public MDRRuleGroupInstance addRuleGroupInstance(
 			long groupId, String className, long classPK, long ruleGroupId,
 			int priority, ServiceContext serviceContext)
@@ -48,6 +49,7 @@ public class MDRRuleGroupInstanceServiceImpl
 			groupId, className, classPK, ruleGroupId, priority, serviceContext);
 	}
 
+	@Override
 	public MDRRuleGroupInstance addRuleGroupInstance(
 			long groupId, String className, long classPK, long ruleGroupId,
 			ServiceContext serviceContext)
@@ -61,6 +63,7 @@ public class MDRRuleGroupInstanceServiceImpl
 			groupId, className, classPK, ruleGroupId, serviceContext);
 	}
 
+	@Override
 	public void deleteRuleGroupInstance(long ruleGroupInstanceId)
 		throws PortalException, SystemException {
 
@@ -75,6 +78,7 @@ public class MDRRuleGroupInstanceServiceImpl
 			ruleGroupInstance);
 	}
 
+	@Override
 	public List<MDRRuleGroupInstance> getRuleGroupInstances(
 			String className, long classPK, int start, int end,
 			OrderByComparator orderByComparator)
@@ -87,6 +91,7 @@ public class MDRRuleGroupInstanceServiceImpl
 			groupId, classNameId, classPK, start, end, orderByComparator);
 	}
 
+	@Override
 	public int getRuleGroupInstancesCount(String className, long classPK)
 		throws SystemException {
 
@@ -97,6 +102,7 @@ public class MDRRuleGroupInstanceServiceImpl
 			groupId, classNameId, classPK);
 	}
 
+	@Override
 	public MDRRuleGroupInstance updateRuleGroupInstance(
 			long ruleGroupInstanceId, int priority)
 		throws PortalException, SystemException {

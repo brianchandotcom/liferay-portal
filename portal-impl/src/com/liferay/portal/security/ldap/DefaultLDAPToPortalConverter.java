@@ -58,6 +58,7 @@ import javax.naming.directory.Attributes;
  */
 public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 
+	@Override
 	public LDAPGroup importLDAPGroup(
 			long companyId, Attributes attributes, Properties groupMappings)
 		throws Exception {
@@ -80,6 +81,7 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 		return ldapGroup;
 	}
 
+	@Override
 	public LDAPUser importLDAPUser(
 			long companyId, Attributes attributes, Properties userMappings,
 			Properties userExpandoMappings, Properties contactMappings,

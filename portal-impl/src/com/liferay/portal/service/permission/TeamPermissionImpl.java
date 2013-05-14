@@ -27,6 +27,7 @@ import com.liferay.portal.service.TeamLocalServiceUtil;
  */
 public class TeamPermissionImpl implements TeamPermission {
 
+	@Override
 	public void check(
 			PermissionChecker permissionChecker, long teamId, String actionId)
 		throws PortalException, SystemException {
@@ -36,6 +37,7 @@ public class TeamPermissionImpl implements TeamPermission {
 		}
 	}
 
+	@Override
 	public void check(
 			PermissionChecker permissionChecker, Team team, String actionId)
 		throws PortalException, SystemException {
@@ -45,6 +47,7 @@ public class TeamPermissionImpl implements TeamPermission {
 		}
 	}
 
+	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, long teamId, String actionId)
 		throws PortalException, SystemException {
@@ -54,6 +57,7 @@ public class TeamPermissionImpl implements TeamPermission {
 		return contains(permissionChecker, team, actionId);
 	}
 
+	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, Team team, String actionId)
 		throws PortalException, SystemException {

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.upgrade.util.ValueMapperFactory;
 @DoPrivileged
 public class MemoryValueMapperFactoryImpl implements ValueMapperFactory {
 
+	@Override
 	public ValueMapper getValueMapper() {
 		return new MemoryValueMapper();
 	}

@@ -37,6 +37,7 @@ import sun.reflect.Reflection;
  */
 public class PortalServiceChecker extends BaseChecker {
 
+	@Override
 	public void afterPropertiesSet() {
 		initServices();
 	}
@@ -75,6 +76,7 @@ public class PortalServiceChecker extends BaseChecker {
 		return authorizationProperty;
 	}
 
+	@Override
 	public boolean implies(Permission permission) {
 		PortalServicePermission portalServicePermission =
 			(PortalServicePermission)permission;

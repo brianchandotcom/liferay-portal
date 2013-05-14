@@ -33,6 +33,7 @@ import java.util.Map;
 public class LayoutFriendlyURLLocalServiceImpl
 	extends LayoutFriendlyURLLocalServiceBaseImpl {
 
+	@Override
 	public LayoutFriendlyURL addLayoutFriendlyURL(
 			long companyId, long groupId, long plid, boolean privateLayout,
 			String friendlyURL, String languageId,
@@ -55,6 +56,7 @@ public class LayoutFriendlyURLLocalServiceImpl
 		return layoutFriendlyURLPersistence.update(layoutFriendlyURL);
 	}
 
+	@Override
 	public List<LayoutFriendlyURL> addLayoutFriendlyURLs(
 			long companyId, long groupId, long plid, boolean privateLayout,
 			Map<Locale, String> friendlyURLMap, ServiceContext serviceContext)
@@ -90,6 +92,7 @@ public class LayoutFriendlyURLLocalServiceImpl
 		return layoutFriendlyURLPersistence.remove(layoutFriendlyURL);
 	}
 
+	@Override
 	public void deleteLayoutFriendlyURL(long plid, String languageId)
 		throws SystemException {
 
@@ -101,6 +104,7 @@ public class LayoutFriendlyURLLocalServiceImpl
 		}
 	}
 
+	@Override
 	public void deleteLayoutFriendlyURLs(long plid) throws SystemException {
 		List<LayoutFriendlyURL> layoutFriendlyURLs =
 			layoutFriendlyURLPersistence.findByPlid(plid);
@@ -110,12 +114,14 @@ public class LayoutFriendlyURLLocalServiceImpl
 		}
 	}
 
+	@Override
 	public List<LayoutFriendlyURL> getLayoutFriendlyURLs(long plid)
 		throws SystemException {
 
 		return layoutFriendlyURLPersistence.findByPlid(plid);
 	}
 
+	@Override
 	public LayoutFriendlyURL updateLayoutFriendlyURL(
 			long companyId, long groupId, long plid, boolean privateLayout,
 			String friendlyURL, String languageId,
@@ -136,6 +142,7 @@ public class LayoutFriendlyURLLocalServiceImpl
 		return layoutFriendlyURLPersistence.update(layoutFriendlyURL);
 	}
 
+	@Override
 	public List<LayoutFriendlyURL> updateLayoutFriendlyURLs(
 			long companyId, long groupId, long plid, boolean privateLayout,
 			Map<Locale, String> friendlyURLMap, ServiceContext serviceContext)

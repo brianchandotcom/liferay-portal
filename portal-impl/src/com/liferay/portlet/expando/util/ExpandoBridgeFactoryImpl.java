@@ -25,11 +25,13 @@ import com.liferay.portlet.expando.model.impl.ExpandoBridgeImpl;
 @DoPrivileged
 public class ExpandoBridgeFactoryImpl implements ExpandoBridgeFactory {
 
+	@Override
 	public ExpandoBridge getExpandoBridge(long companyId, String className) {
 		return DoPrivilegedUtil.wrap(
 			new ExpandoBridgeImpl(companyId, className));
 	}
 
+	@Override
 	public ExpandoBridge getExpandoBridge(
 		long companyId, String className, long classPK) {
 

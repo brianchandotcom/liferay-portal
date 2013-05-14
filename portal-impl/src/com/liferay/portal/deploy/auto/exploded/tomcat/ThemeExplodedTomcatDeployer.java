@@ -27,6 +27,7 @@ import java.io.File;
 public class ThemeExplodedTomcatDeployer
 	extends ThemeAutoDeployer implements ExplodedTomcatDeployer {
 
+	@Override
 	public void explodedTomcatDeploy(
 			File contextFile, File webAppDir, PluginPackage pluginPackage)
 		throws AutoDeployException {

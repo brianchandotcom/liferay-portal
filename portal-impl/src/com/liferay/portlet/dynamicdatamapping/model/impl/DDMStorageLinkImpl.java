@@ -27,12 +27,14 @@ public class DDMStorageLinkImpl extends DDMStorageLinkBaseImpl {
 	public DDMStorageLinkImpl() {
 	}
 
+	@Override
 	public String getStorageType() throws PortalException, SystemException {
 		DDMStructure structure = getStructure();
 
 		return structure.getStorageType();
 	}
 
+	@Override
 	public DDMStructure getStructure() throws PortalException, SystemException {
 		return DDMStructureLocalServiceUtil.getStructure(getStructureId());
 	}

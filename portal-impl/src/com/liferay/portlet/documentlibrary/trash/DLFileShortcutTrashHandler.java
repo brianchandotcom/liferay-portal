@@ -43,12 +43,14 @@ import javax.portlet.PortletRequest;
  */
 public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 
+	@Override
 	public void deleteTrashEntry(long classPK)
 		throws PortalException, SystemException {
 
 		DLAppLocalServiceUtil.deleteFileShortcut(classPK);
 	}
 
+	@Override
 	public String getClassName() {
 		return DLFileShortcut.class.getName();
 	}
@@ -122,6 +124,7 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 			permissionChecker, groupId, classPK, trashActionId);
 	}
 
+	@Override
 	public boolean isInTrash(long classPK)
 		throws PortalException, SystemException {
 
@@ -172,6 +175,7 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 			serviceContext);
 	}
 
+	@Override
 	public void restoreTrashEntry(long userId, long classPK)
 		throws PortalException, SystemException {
 

@@ -25,15 +25,18 @@ import org.jamwiki.model.Topic;
  */
 public class LiferaySearchEngine implements SearchEngine {
 
+	@Override
 	public void addToIndex(Topic arg0) {
 	}
 
 	public void addToIndex(Topic topic, List<String> links) {
 	}
 
+	@Override
 	public void commit(String arg0) {
 	}
 
+	@Override
 	public void deleteFromIndex(Topic topic) {
 	}
 
@@ -43,21 +46,26 @@ public class LiferaySearchEngine implements SearchEngine {
 		return null;
 	}
 
+	@Override
 	public List<SearchResultEntry> findResults(
 		String virtualWiki, String text) {
 
 		return null;
 	}
 
+	@Override
 	public void refreshIndex() {
 	}
 
+	@Override
 	public void setAutoCommit(boolean autoCommit) {
 	}
 
+	@Override
 	public void shutdown() {
 	}
 
+	@Override
 	public void updateInIndex(Topic topic) {
 	}
 

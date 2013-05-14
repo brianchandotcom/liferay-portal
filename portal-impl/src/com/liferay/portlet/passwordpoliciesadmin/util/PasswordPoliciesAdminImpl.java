@@ -25,6 +25,7 @@ import com.liferay.portal.util.comparator.PasswordPolicyNameComparator;
 @DoPrivileged
 public class PasswordPoliciesAdminImpl implements PasswordPoliciesAdmin {
 
+	@Override
 	public OrderByComparator getPasswordPolicyOrderByComparator(
 		String orderByCol, String orderByType) {
 

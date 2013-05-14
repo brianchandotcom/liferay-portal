@@ -25,6 +25,7 @@ public class DeleteFileFinalizeAction implements FinalizeAction {
 		_fileName = fileName;
 	}
 
+	@Override
 	public void doFinalize() {
 		File file = new File(_fileName);
 

@@ -30,6 +30,7 @@ import com.liferay.portal.service.OrganizationLocalServiceUtil;
  */
 public class OrganizationPermissionImpl implements OrganizationPermission {
 
+	@Override
 	public void check(
 			PermissionChecker permissionChecker, long organizationId,
 			String actionId)
@@ -40,6 +41,7 @@ public class OrganizationPermissionImpl implements OrganizationPermission {
 		}
 	}
 
+	@Override
 	public void check(
 			PermissionChecker permissionChecker, Organization organization,
 			String actionId)
@@ -50,6 +52,7 @@ public class OrganizationPermissionImpl implements OrganizationPermission {
 		}
 	}
 
+	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, long organizationId,
 			String actionId)
@@ -66,6 +69,7 @@ public class OrganizationPermissionImpl implements OrganizationPermission {
 		}
 	}
 
+	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, long[] organizationIds,
 			String actionId)
@@ -82,6 +86,7 @@ public class OrganizationPermissionImpl implements OrganizationPermission {
 		return true;
 	}
 
+	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, Organization organization,
 			String actionId)

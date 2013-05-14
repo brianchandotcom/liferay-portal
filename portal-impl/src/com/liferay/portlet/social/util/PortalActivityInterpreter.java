@@ -24,6 +24,7 @@ import com.liferay.portlet.social.model.SocialActivityFeedEntry;
  */
 public class PortalActivityInterpreter extends BaseSocialActivityInterpreter {
 
+	@Override
 	public String[] getClassNames() {
 		return _CLASS_NAMES;
 	}

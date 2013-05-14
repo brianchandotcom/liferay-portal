@@ -73,12 +73,14 @@ public class SharedSessionWrapper implements HttpSession {
 		return false;
 	}
 
+	@Override
 	public Object getAttribute(String name) {
 		HttpSession session = getSessionDelegate(name);
 
 		return session.getAttribute(name);
 	}
 
+	@Override
 	public Enumeration<String> getAttributeNames() {
 		HttpSession session = getSessionDelegate();
 
@@ -104,30 +106,35 @@ public class SharedSessionWrapper implements HttpSession {
 		return namesEnu;
 	}
 
+	@Override
 	public long getCreationTime() {
 		HttpSession session = getSessionDelegate();
 
 		return session.getCreationTime();
 	}
 
+	@Override
 	public String getId() {
 		HttpSession session = getSessionDelegate();
 
 		return session.getId();
 	}
 
+	@Override
 	public long getLastAccessedTime() {
 		HttpSession session = getSessionDelegate();
 
 		return session.getLastAccessedTime();
 	}
 
+	@Override
 	public int getMaxInactiveInterval() {
 		HttpSession session = getSessionDelegate();
 
 		return session.getMaxInactiveInterval();
 	}
 
+	@Override
 	public ServletContext getServletContext() {
 		HttpSession session = getSessionDelegate();
 
@@ -137,16 +144,19 @@ public class SharedSessionWrapper implements HttpSession {
 	/**
 	 * @deprecated As of 6.1.0
 	 */
+	@Override
 	public javax.servlet.http.HttpSessionContext getSessionContext() {
 		HttpSession session = getSessionDelegate();
 
 		return session.getSessionContext();
 	}
 
+	@Override
 	public Object getValue(String name) {
 		return getAttribute(name);
 	}
 
+	@Override
 	public String[] getValueNames() {
 		List<String> names = ListUtil.fromEnumeration(getAttributeNames());
 
@@ -158,38 +168,45 @@ public class SharedSessionWrapper implements HttpSession {
 		return _portalSession.hashCode() ^ _portletSession.hashCode();
 	}
 
+	@Override
 	public void invalidate() {
 		HttpSession session = getSessionDelegate();
 
 		session.invalidate();
 	}
 
+	@Override
 	public boolean isNew() {
 		HttpSession session = getSessionDelegate();
 
 		return session.isNew();
 	}
 
+	@Override
 	public void putValue(String name, Object value) {
 		setAttribute(name, value);
 	}
 
+	@Override
 	public void removeAttribute(String name) {
 		HttpSession session = getSessionDelegate(name);
 
 		session.removeAttribute(name);
 	}
 
+	@Override
 	public void removeValue(String name) {
 		removeAttribute(name);
 	}
 
+	@Override
 	public void setAttribute(String name, Object value) {
 		HttpSession session = getSessionDelegate(name);
 
 		session.setAttribute(name, value);
 	}
 
+	@Override
 	public void setMaxInactiveInterval(int maxInactiveInterval) {
 		HttpSession session = getSessionDelegate();
 

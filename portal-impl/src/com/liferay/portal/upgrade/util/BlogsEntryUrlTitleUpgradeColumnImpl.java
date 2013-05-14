@@ -38,6 +38,7 @@ public class BlogsEntryUrlTitleUpgradeColumnImpl extends BaseUpgradeColumnImpl {
 		_urlTitles = new HashSet<String>();
 	}
 
+	@Override
 	public Object getNewValue(Object oldValue) throws Exception {
 		//String oldUrlTitle = (String)oldValue;
 		String oldUrlTitle = StringPool.BLANK;

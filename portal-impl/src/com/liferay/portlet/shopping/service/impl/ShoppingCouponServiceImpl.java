@@ -29,6 +29,7 @@ import java.util.List;
  */
 public class ShoppingCouponServiceImpl extends ShoppingCouponServiceBaseImpl {
 
+	@Override
 	public ShoppingCoupon addCoupon(
 			String code, boolean autoCode, String name, String description,
 			int startDateMonth, int startDateDay, int startDateYear,
@@ -51,6 +52,7 @@ public class ShoppingCouponServiceImpl extends ShoppingCouponServiceBaseImpl {
 			discountType, serviceContext);
 	}
 
+	@Override
 	public void deleteCoupon(long groupId, long couponId)
 		throws PortalException, SystemException {
 
@@ -60,6 +62,7 @@ public class ShoppingCouponServiceImpl extends ShoppingCouponServiceBaseImpl {
 		shoppingCouponLocalService.deleteCoupon(couponId);
 	}
 
+	@Override
 	public ShoppingCoupon getCoupon(long groupId, long couponId)
 		throws PortalException, SystemException {
 
@@ -69,6 +72,7 @@ public class ShoppingCouponServiceImpl extends ShoppingCouponServiceBaseImpl {
 		return shoppingCouponLocalService.getCoupon(couponId);
 	}
 
+	@Override
 	public List<ShoppingCoupon> search(
 			long groupId, long companyId, String code, boolean active,
 			String discountType, boolean andOperator, int start, int end)
@@ -82,6 +86,7 @@ public class ShoppingCouponServiceImpl extends ShoppingCouponServiceBaseImpl {
 			end);
 	}
 
+	@Override
 	public ShoppingCoupon updateCoupon(
 			long couponId, String name, String description, int startDateMonth,
 			int startDateDay, int startDateYear, int startDateHour,

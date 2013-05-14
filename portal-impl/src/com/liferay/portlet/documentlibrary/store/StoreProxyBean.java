@@ -25,34 +25,40 @@ import java.io.InputStream;
  */
 public class StoreProxyBean extends BaseProxyBean implements Store {
 
+	@Override
 	public void addDirectory(
 		long companyId, long repositoryId, String dirName) {
 
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void addFile(
 		long companyId, long repositoryId, String fileName, byte[] bytes) {
 
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void addFile(
 		long companyId, long repositoryId, String fileName, File file) {
 
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void addFile(
 		long companyId, long repositoryId, String fileName, InputStream is) {
 
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void checkRoot(long companyId) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void copyFileVersion(
 		long companyId, long repositoryId, String fileName,
 		String fromVersionLabel, String toVersionLabel) {
@@ -60,16 +66,19 @@ public class StoreProxyBean extends BaseProxyBean implements Store {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void deleteDirectory(
 		long companyId, long repositoryId, String dirName) {
 
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void deleteFile(long companyId, long repositoryId, String fileName) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void deleteFile(
 		long companyId, long repositoryId, String fileName,
 		String versionLabel) {
@@ -77,10 +86,12 @@ public class StoreProxyBean extends BaseProxyBean implements Store {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public File getFile(long companyId, long repositoryId, String fileName) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public File getFile(
 		long companyId, long repositoryId, String fileName,
 		String versionLabel) {
@@ -88,12 +99,14 @@ public class StoreProxyBean extends BaseProxyBean implements Store {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public byte[] getFileAsBytes(
 		long companyId, long repositoryId, String fileName) {
 
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public byte[] getFileAsBytes(
 		long companyId, long repositoryId, String fileName,
 		String versionLabel) {
@@ -101,12 +114,14 @@ public class StoreProxyBean extends BaseProxyBean implements Store {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public InputStream getFileAsStream(
 		long companyId, long repositoryId, String fileName) {
 
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public InputStream getFileAsStream(
 		long companyId, long repositoryId, String fileName,
 		String versionLabel) {
@@ -114,32 +129,38 @@ public class StoreProxyBean extends BaseProxyBean implements Store {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public String[] getFileNames(long companyId, long repositoryId) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public String[] getFileNames(
 		long companyId, long repositoryId, String dirName) {
 
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public long getFileSize(
 		long companyId, long repositoryId, String fileName) {
 
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public boolean hasDirectory(
 		long companyId, long repositoryId, String dirName) {
 
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public boolean hasFile(long companyId, long repositoryId, String fileName) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public boolean hasFile(
 		long companyId, long repositoryId, String fileName,
 		String versionLabel) {
@@ -147,6 +168,7 @@ public class StoreProxyBean extends BaseProxyBean implements Store {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void move(String srcDir, String destDir) {
 		throw new UnsupportedOperationException();
 	}
@@ -155,6 +177,7 @@ public class StoreProxyBean extends BaseProxyBean implements Store {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void updateFile(
 		long companyId, long repositoryId, long newRepositoryId,
 		String fileName) {
@@ -162,6 +185,7 @@ public class StoreProxyBean extends BaseProxyBean implements Store {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void updateFile(
 		long companyId, long repositoryId, String fileName,
 		String newFileName) {
@@ -169,6 +193,7 @@ public class StoreProxyBean extends BaseProxyBean implements Store {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void updateFile(
 		long companyId, long repositoryId, String fileName, String versionLabel,
 		byte[] bytes) {
@@ -176,6 +201,7 @@ public class StoreProxyBean extends BaseProxyBean implements Store {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void updateFile(
 		long companyId, long repositoryId, String fileName, String versionLabel,
 		File file) {
@@ -183,6 +209,7 @@ public class StoreProxyBean extends BaseProxyBean implements Store {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void updateFile(
 		long companyId, long repositoryId, String fileName, String versionLabel,
 		InputStream is) {
@@ -190,6 +217,7 @@ public class StoreProxyBean extends BaseProxyBean implements Store {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void updateFileVersion(
 		long companyId, long repositoryId, String fileName,
 		String fromVersionLabel, String toVersionLabel) {

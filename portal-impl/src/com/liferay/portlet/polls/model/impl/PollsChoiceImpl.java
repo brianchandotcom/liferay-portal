@@ -25,6 +25,7 @@ public class PollsChoiceImpl extends PollsChoiceBaseImpl {
 	public PollsChoiceImpl() {
 	}
 
+	@Override
 	public int getVotesCount() throws SystemException {
 		return PollsVoteLocalServiceUtil.getChoiceVotesCount(getChoiceId());
 	}

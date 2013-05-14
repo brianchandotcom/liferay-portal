@@ -43,6 +43,7 @@ public interface BaseModel<T>
 	 *
 	 * @return the expando bridge for this model instance
 	 */
+	@Override
 	public ExpandoBridge getExpandoBridge();
 
 	public Map<String, Object> getModelAttributes();
@@ -52,6 +53,7 @@ public interface BaseModel<T>
 	 *
 	 * @return the primary key of this model instance
 	 */
+	@Override
 	public Serializable getPrimaryKeyObj();
 
 	/**
@@ -123,6 +125,7 @@ public interface BaseModel<T>
 	 *
 	 * @param primaryKeyObj the primary key of this model instance
 	 */
+	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj);
 
 	/**

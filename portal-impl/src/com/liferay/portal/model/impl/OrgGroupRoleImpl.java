@@ -27,6 +27,7 @@ public class OrgGroupRoleImpl extends OrgGroupRoleBaseImpl {
 	public OrgGroupRoleImpl() {
 	}
 
+	@Override
 	public boolean containsGroup(List<Group> groups) {
 		if (groups == null) {
 			return false;
@@ -42,6 +43,7 @@ public class OrgGroupRoleImpl extends OrgGroupRoleBaseImpl {
 		return false;
 	}
 
+	@Override
 	public boolean containsOrganization(List<Organization> organizations) {
 		if (organizations == null) {
 			return false;

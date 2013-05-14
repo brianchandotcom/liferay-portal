@@ -29,6 +29,7 @@ public class DisjunctionImpl extends CriterionImpl implements Disjunction {
 		_disjunction = disjunction;
 	}
 
+	@Override
 	public Junction add(Criterion criterion) {
 		CriterionImpl criterionImpl = (CriterionImpl)criterion;
 

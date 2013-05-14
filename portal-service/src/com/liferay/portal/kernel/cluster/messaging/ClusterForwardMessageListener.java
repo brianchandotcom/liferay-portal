@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.Validator;
  */
 public class ClusterForwardMessageListener implements ClusterMessageListener {
 
+	@Override
 	public void receive(Message message) {
 		String destinationName = message.getDestinationName();
 

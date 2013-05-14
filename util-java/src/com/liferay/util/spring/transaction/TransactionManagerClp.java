@@ -47,6 +47,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
  */
 public class TransactionManagerClp implements PlatformTransactionManager {
 
+	@Override
 	public void commit(TransactionStatus transactionStatus)
 		throws TransactionException {
 
@@ -64,6 +65,7 @@ public class TransactionManagerClp implements PlatformTransactionManager {
 		}
 	}
 
+	@Override
 	public TransactionStatus getTransaction(
 			TransactionDefinition transactionDefinition)
 		throws TransactionException {
@@ -98,6 +100,7 @@ public class TransactionManagerClp implements PlatformTransactionManager {
 		initTransactionManagerMethods();
 	}
 
+	@Override
 	public void rollback(TransactionStatus transactionStatus)
 		throws TransactionException {
 

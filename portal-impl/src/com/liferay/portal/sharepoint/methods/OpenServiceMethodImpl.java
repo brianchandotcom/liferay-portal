@@ -60,6 +60,7 @@ public class OpenServiceMethodImpl extends BaseMethodImpl {
 		_elements.add(serviceProperty);
 	}
 
+	@Override
 	public String getMethodName() {
 		return _METHOD_NAME;
 	}

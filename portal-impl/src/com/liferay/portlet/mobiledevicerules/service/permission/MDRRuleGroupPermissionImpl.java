@@ -26,6 +26,7 @@ import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupLocalServiceUti
  */
 public class MDRRuleGroupPermissionImpl implements MDRRuleGroupPermission {
 
+	@Override
 	public void check(
 			PermissionChecker permissionChecker, long ruleGroupId,
 			String actionId)
@@ -36,6 +37,7 @@ public class MDRRuleGroupPermissionImpl implements MDRRuleGroupPermission {
 		}
 	}
 
+	@Override
 	public void check(
 			PermissionChecker permissionChecker, MDRRuleGroup ruleGroup,
 			String actionId)
@@ -46,6 +48,7 @@ public class MDRRuleGroupPermissionImpl implements MDRRuleGroupPermission {
 		}
 	}
 
+	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, long ruleGroupId,
 			String actionId)
@@ -57,6 +60,7 @@ public class MDRRuleGroupPermissionImpl implements MDRRuleGroupPermission {
 		return contains(permissionChecker, ruleGroup, actionId);
 	}
 
+	@Override
 	public boolean contains(
 		PermissionChecker permissionChecker, MDRRuleGroup ruleGroup,
 		String actionId) {

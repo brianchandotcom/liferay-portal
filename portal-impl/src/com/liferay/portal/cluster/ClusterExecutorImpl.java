@@ -71,6 +71,7 @@ public class ClusterExecutorImpl
 	public static final String CLUSTER_EXECUTOR_CALLBACK_THREAD_POOL =
 		"CLUSTER_EXECUTOR_CALLBACK_THREAD_POOL";
 
+	@Override
 	public void addClusterEventListener(
 		ClusterEventListener clusterEventListener) {
 
@@ -115,6 +116,7 @@ public class ClusterExecutorImpl
 		_localClusterNode = null;
 	}
 
+	@Override
 	public FutureClusterResponses execute(ClusterRequest clusterRequest)
 		throws SystemException {
 
@@ -166,6 +168,7 @@ public class ClusterExecutorImpl
 		return futureClusterResponses;
 	}
 
+	@Override
 	public void execute(
 			ClusterRequest clusterRequest,
 			ClusterResponseCallback clusterResponseCallback)
@@ -180,6 +183,7 @@ public class ClusterExecutorImpl
 		_executorService.execute(clusterResponseCallbackJob);
 	}
 
+	@Override
 	public void execute(
 			ClusterRequest clusterRequest,
 			ClusterResponseCallback clusterResponseCallback, long timeout,
@@ -196,6 +200,7 @@ public class ClusterExecutorImpl
 		_executorService.execute(clusterResponseCallbackJob);
 	}
 
+	@Override
 	public List<ClusterEventListener> getClusterEventListeners() {
 		if (!isEnabled()) {
 			return Collections.emptyList();
@@ -204,6 +209,7 @@ public class ClusterExecutorImpl
 		return Collections.unmodifiableList(_clusterEventListeners);
 	}
 
+	@Override
 	public List<Address> getClusterNodeAddresses() {
 		if (!isEnabled()) {
 			return Collections.emptyList();
@@ -212,6 +218,7 @@ public class ClusterExecutorImpl
 		return getAddresses(_controlJChannel);
 	}
 
+	@Override
 	public List<ClusterNode> getClusterNodes() {
 		if (!isEnabled()) {
 			return Collections.emptyList();
@@ -220,6 +227,7 @@ public class ClusterExecutorImpl
 		return new ArrayList<ClusterNode>(_liveInstances.values());
 	}
 
+	@Override
 	public ClusterNode getLocalClusterNode() {
 		if (!isEnabled()) {
 			return null;
@@ -228,6 +236,7 @@ public class ClusterExecutorImpl
 		return _localClusterNode;
 	}
 
+	@Override
 	public Address getLocalClusterNodeAddress() {
 		if (!isEnabled()) {
 			return null;
@@ -236,6 +245,7 @@ public class ClusterExecutorImpl
 		return _localAddress;
 	}
 
+	@Override
 	public void initialize() {
 		if (!isEnabled()) {
 			return;
@@ -265,6 +275,7 @@ public class ClusterExecutorImpl
 		clusterRequestReceiver.openLatch();
 	}
 
+	@Override
 	public boolean isClusterNodeAlive(Address address) {
 		if (!isEnabled()) {
 			return false;
@@ -275,6 +286,7 @@ public class ClusterExecutorImpl
 		return addresses.contains(address);
 	}
 
+	@Override
 	public boolean isClusterNodeAlive(String clusterNodeId) {
 		if (!isEnabled()) {
 			return false;
@@ -283,6 +295,7 @@ public class ClusterExecutorImpl
 		return _clusterNodeAddresses.containsKey(clusterNodeId);
 	}
 
+	@Override
 	public void portalPortConfigured(int port) {
 		if (!isEnabled() ||
 			(_localClusterNode.getPort() ==
@@ -306,6 +319,7 @@ public class ClusterExecutorImpl
 		}
 	}
 
+	@Override
 	public void removeClusterEventListener(
 		ClusterEventListener clusterEventListener) {
 

@@ -27,6 +27,7 @@ import javax.portlet.PortletURL;
  */
 public class TextEngine implements WikiEngine {
 
+	@Override
 	public String convert(
 		WikiPage page, PortletURL viewPageURL, PortletURL editPageURL,
 		String attachmentURLPrefix) {
@@ -39,16 +40,20 @@ public class TextEngine implements WikiEngine {
 		}
 	}
 
+	@Override
 	public Map<String, Boolean> getOutgoingLinks(WikiPage page) {
 		return Collections.emptyMap();
 	}
 
+	@Override
 	public void setInterWikiConfiguration(String interWikiConfiguration) {
 	}
 
+	@Override
 	public void setMainConfiguration(String mainConfiguration) {
 	}
 
+	@Override
 	public boolean validate(long nodeId, String newContent) {
 		return true;
 	}

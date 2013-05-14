@@ -77,6 +77,7 @@ public class BeanShellExecutor extends BaseScriptingExecutor {
 		}
 	}
 
+	@Override
 	public String getLanguage() {
 		return LANGUAGE;
 	}

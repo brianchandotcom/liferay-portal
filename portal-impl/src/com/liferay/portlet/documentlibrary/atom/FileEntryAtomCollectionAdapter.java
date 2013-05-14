@@ -45,6 +45,7 @@ import java.util.List;
 public class FileEntryAtomCollectionAdapter
 	extends BaseMediaAtomCollectionAdapter<FileEntry> {
 
+	@Override
 	public String getCollectionName() {
 		return COLLECTION_NAME;
 	}
@@ -90,6 +91,7 @@ public class FileEntryAtomCollectionAdapter
 		return fileEntry.getModifiedDate();
 	}
 
+	@Override
 	public String getFeedTitle(AtomRequestContext atomRequestContext) {
 		return AtomUtil.createFeedTitleFromPortletName(
 			atomRequestContext, PortletKeys.DOCUMENT_LIBRARY) + " files";

@@ -45,10 +45,12 @@ public class AddressImpl implements com.liferay.portal.kernel.cluster.Address {
 		}
 	}
 
+	@Override
 	public String getDescription() {
 		return _address.toString();
 	}
 
+	@Override
 	public Address getRealAddress() {
 		return _address;
 	}

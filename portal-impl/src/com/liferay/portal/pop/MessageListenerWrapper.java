@@ -30,6 +30,7 @@ public class MessageListenerWrapper implements MessageListener {
 		_listener = listener;
 	}
 
+	@Override
 	public boolean accept(String from, String recipient, Message message) {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Listener " + _listener.getClass().getName());
@@ -46,6 +47,7 @@ public class MessageListenerWrapper implements MessageListener {
 		return value;
 	}
 
+	@Override
 	public void deliver(String from, String recipient, Message message)
 		throws MessageListenerException {
 
@@ -76,6 +78,7 @@ public class MessageListenerWrapper implements MessageListener {
 		return getId().equals(id);
 	}
 
+	@Override
 	public String getId() {
 		return _listener.getId();
 	}

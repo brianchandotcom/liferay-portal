@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.Validator;
  */
 public abstract class BasePasswordEncryptor implements PasswordEncryptor {
 
+	@Override
 	public String encrypt(
 			String algorithm, String plainTextPassword,
 			String encryptedPassword)

@@ -32,6 +32,7 @@ public class DDLRecordAssetRendererFactory extends BaseAssetRendererFactory {
 
 	public static final String TYPE = "record";
 
+	@Override
 	public AssetRenderer getAssetRenderer(long classPK, int type)
 		throws PortalException, SystemException {
 
@@ -57,10 +58,12 @@ public class DDLRecordAssetRendererFactory extends BaseAssetRendererFactory {
 		return ddlRecordAssetRenderer;
 	}
 
+	@Override
 	public String getClassName() {
 		return DDLRecord.class.getName();
 	}
 
+	@Override
 	public String getType() {
 		return TYPE;
 	}

@@ -86,67 +86,83 @@ public class BaseResourceImpl implements Resource {
 		_size = size;
 	}
 
+	@Override
 	public String getClassName() {
 		return _className;
 	}
 
+	@Override
 	@SuppressWarnings("unused")
 	public InputStream getContentAsStream() throws WebDAVException {
 		return null;
 	}
 
+	@Override
 	public String getContentType() {
 		return ContentTypes.HTTPD_UNIX_DIRECTORY;
 	}
 
+	@Override
 	public String getCreateDate() {
 		return _createDateFormatter.format(_createDate);
 	}
 
+	@Override
 	public String getDisplayName() {
 		return _displayName;
 	}
 
+	@Override
 	public String getHREF() {
 		return _href;
 	}
 
+	@Override
 	public Lock getLock() {
 		return null;
 	}
 
+	@Override
 	public Object getModel() {
 		return _model;
 	}
 
+	@Override
 	public String getModifiedDate() {
 		return _modifiedDateFormatter.format(_modifiedDate);
 	}
 
+	@Override
 	public long getPrimaryKey() {
 		return _primaryKey;
 	}
 
+	@Override
 	public long getSize() {
 		return _size;
 	}
 
+	@Override
 	public boolean isCollection() {
 		return true;
 	}
 
+	@Override
 	public boolean isLocked() {
 		return false;
 	}
 
+	@Override
 	public void setClassName(String className) {
 		_className = className;
 	}
 
+	@Override
 	public void setModel(Object model) {
 		_model = model;
 	}
 
+	@Override
 	public void setPrimaryKey(long primaryKey) {
 		_primaryKey = primaryKey;
 	}

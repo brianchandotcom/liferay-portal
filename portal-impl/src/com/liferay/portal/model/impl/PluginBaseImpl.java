@@ -26,18 +26,22 @@ import java.util.Map;
  */
 public abstract class PluginBaseImpl implements Plugin {
 
+	@Override
 	public PluginPackage getPluginPackage() {
 		return _pluginPackage;
 	}
 
+	@Override
 	public void setPluginPackage(PluginPackage pluginPackage) {
 		_pluginPackage = pluginPackage;
 	}
 
+	@Override
 	public PluginSetting getDefaultPluginSetting() {
 		return _defaultPluginSetting;
 	}
 
+	@Override
 	public PluginSetting getDefaultPluginSetting(long companyId) {
 		PluginSetting setting = _defaultPluginSettings.get(companyId);
 
@@ -52,6 +56,7 @@ public abstract class PluginBaseImpl implements Plugin {
 		return setting;
 	}
 
+	@Override
 	public void setDefaultPluginSetting(PluginSetting pluginSetting) {
 		_defaultPluginSetting = pluginSetting;
 	}

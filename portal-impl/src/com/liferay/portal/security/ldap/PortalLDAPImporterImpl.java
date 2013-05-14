@@ -94,6 +94,7 @@ import javax.naming.ldap.LdapContext;
 @DoPrivileged
 public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 
+	@Override
 	public void importFromLDAP() throws Exception {
 		List<Company> companies = CompanyLocalServiceUtil.getCompanies(false);
 
@@ -102,6 +103,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 		}
 	}
 
+	@Override
 	public void importFromLDAP(long companyId) throws Exception {
 		if (!LDAPSettingsUtil.isImportEnabled(companyId)) {
 			return;
@@ -163,6 +165,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 		}
 	}
 
+	@Override
 	public void importFromLDAP(long ldapServerId, long companyId)
 		throws Exception {
 
@@ -217,6 +220,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 		}
 	}
 
+	@Override
 	public User importLDAPUser(
 			long ldapServerId, long companyId, LdapContext ldapContext,
 			Attributes attributes, String password)
@@ -246,6 +250,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 		return user;
 	}
 
+	@Override
 	public User importLDAPUser(
 			long ldapServerId, long companyId, String emailAddress,
 			String screenName)
@@ -346,6 +351,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 		}
 	}
 
+	@Override
 	public User importLDAPUser(
 			long companyId, String emailAddress, String screenName)
 		throws Exception {
@@ -396,6 +402,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 		return null;
 	}
 
+	@Override
 	public User importLDAPUserByScreenName(long companyId, String screenName)
 		throws Exception {
 

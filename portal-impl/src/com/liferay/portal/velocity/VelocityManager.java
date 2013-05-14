@@ -42,6 +42,7 @@ import org.apache.velocity.util.introspection.SecureUberspector;
 @DoPrivileged
 public class VelocityManager extends BaseTemplateManager {
 
+	@Override
 	public void destroy() {
 		if (_velocityEngine == null) {
 			return;
@@ -54,14 +55,17 @@ public class VelocityManager extends BaseTemplateManager {
 		_templateContextHelper = null;
 	}
 
+	@Override
 	public void destroy(ClassLoader classLoader) {
 		_templateContextHelper.removeHelperUtilities(classLoader);
 	}
 
+	@Override
 	public String getName() {
 		return TemplateConstants.LANG_TYPE_VM;
 	}
 
+	@Override
 	public void init() throws TemplateException {
 		if (_velocityEngine != null) {
 			return;

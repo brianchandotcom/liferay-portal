@@ -84,6 +84,7 @@ public class LayoutRevisionAssetRendererFactory
 		return assetEntry;
 	}
 
+	@Override
 	public AssetRenderer getAssetRenderer(long layoutRevisionId, int type)
 		throws PortalException, SystemException {
 
@@ -98,10 +99,12 @@ public class LayoutRevisionAssetRendererFactory
 		return layoutRevisionAssetRenderer;
 	}
 
+	@Override
 	public String getClassName() {
 		return LayoutRevision.class.getName();
 	}
 
+	@Override
 	public String getType() {
 		return TYPE;
 	}

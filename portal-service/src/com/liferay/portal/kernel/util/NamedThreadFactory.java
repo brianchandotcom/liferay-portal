@@ -42,6 +42,7 @@ public class NamedThreadFactory implements ThreadFactory {
 		_contextClassLoader = contextClassLoader;
 	}
 
+	@Override
 	public Thread newThread(Runnable runnable) {
 		Thread thread = new Thread(
 			_group, runnable,

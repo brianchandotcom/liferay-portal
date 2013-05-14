@@ -73,6 +73,7 @@ import javax.servlet.http.HttpServletRequest;
 @DoPrivileged
 public class TrashImpl implements Trash {
 
+	@Override
 	public void addBaseModelBreadcrumbEntries(
 			HttpServletRequest request, String className, long classPK,
 			PortletURL containerModelURL)
@@ -82,6 +83,7 @@ public class TrashImpl implements Trash {
 			request, className, classPK, "classPK", containerModelURL);
 	}
 
+	@Override
 	public void addContainerModelBreadcrumbEntries(
 			HttpServletRequest request, String className, long classPK,
 			PortletURL containerModelURL)
@@ -112,6 +114,7 @@ public class TrashImpl implements Trash {
 			request, className, classPK, "containerModelId", containerModelURL);
 	}
 
+	@Override
 	public void deleteEntriesAttachments(
 			long companyId, long repositoryId, Date date,
 			String[] attachmentFileNames)
@@ -130,6 +133,7 @@ public class TrashImpl implements Trash {
 		}
 	}
 
+	@Override
 	public List<TrashEntry> getEntries(Hits hits) {
 		List<TrashEntry> entries = new ArrayList<TrashEntry>();
 
@@ -185,6 +189,7 @@ public class TrashImpl implements Trash {
 		return entries;
 	}
 
+	@Override
 	public OrderByComparator getEntryOrderByComparator(
 		String orderByCol, String orderByType) {
 
@@ -209,6 +214,7 @@ public class TrashImpl implements Trash {
 		return orderByComparator;
 	}
 
+	@Override
 	public int getMaxAge(Group group) throws PortalException, SystemException {
 		if (group.isLayout()) {
 			group = group.getParentGroup();
@@ -226,6 +232,7 @@ public class TrashImpl implements Trash {
 			trashEntriesMaxAge);
 	}
 
+	@Override
 	public String getNewName(ThemeDisplay themeDisplay, String oldName) {
 		Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
 			themeDisplay.getLocale(), themeDisplay.getTimeZone());
@@ -244,10 +251,12 @@ public class TrashImpl implements Trash {
 		return sb.toString();
 	}
 
+	@Override
 	public String getOriginalTitle(String title) {
 		return getOriginalTitle(title, StringPool.SLASH);
 	}
 
+	@Override
 	public String getTrashTime(String title, String separator) {
 		int index = title.lastIndexOf(separator);
 
@@ -258,10 +267,12 @@ public class TrashImpl implements Trash {
 		return title.substring(index + 1, title.length());
 	}
 
+	@Override
 	public String getTrashTitle(long trashEntryId) {
 		return getTrashTitle(trashEntryId, StringPool.SLASH);
 	}
 
+	@Override
 	public PortletURL getViewContentURL(
 			HttpServletRequest request, String className, long classPK)
 		throws PortalException, SystemException {
@@ -326,6 +337,7 @@ public class TrashImpl implements Trash {
 		return portletURL;
 	}
 
+	@Override
 	public boolean isInTrash(String className, long classPK)
 		throws PortalException, SystemException {
 
@@ -345,6 +357,7 @@ public class TrashImpl implements Trash {
 		return false;
 	}
 
+	@Override
 	public boolean isTrashEnabled(long groupId)
 		throws PortalException, SystemException {
 

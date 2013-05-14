@@ -51,6 +51,7 @@ public class CatalinaCometProcessor
 		}
 	}
 
+	@Override
 	public void event(CometEvent cometEvent) throws ServletException {
 		try {
 			doEvent(cometEvent);

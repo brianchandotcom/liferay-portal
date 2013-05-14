@@ -45,6 +45,7 @@ import java.util.List;
 public class SocialActivitySettingLocalServiceImpl
 	extends SocialActivitySettingLocalServiceBaseImpl {
 
+	@Override
 	public void deleteActivitySetting(
 			long groupId, String className, long classPK)
 		throws SystemException {
@@ -60,10 +61,12 @@ public class SocialActivitySettingLocalServiceImpl
 		}
 	}
 
+	@Override
 	public void deleteActivitySettings(long groupId) throws SystemException {
 		socialActivitySettingPersistence.removeByGroupId(groupId);
 	}
 
+	@Override
 	public SocialActivityDefinition getActivityDefinition(
 			long groupId, String className, int activityType)
 		throws SystemException {
@@ -93,6 +96,7 @@ public class SocialActivitySettingLocalServiceImpl
 		return activityDefinition;
 	}
 
+	@Override
 	public List<SocialActivityDefinition> getActivityDefinitions(
 			long groupId, String className)
 		throws SystemException {
@@ -116,12 +120,14 @@ public class SocialActivitySettingLocalServiceImpl
 		return activityDefinitions;
 	}
 
+	@Override
 	public List<SocialActivitySetting> getActivitySettings(long groupId)
 		throws SystemException {
 
 		return socialActivitySettingPersistence.findByG_A(groupId, 0);
 	}
 
+	@Override
 	public boolean isEnabled(long groupId, long classNameId)
 		throws SystemException {
 
@@ -137,6 +143,7 @@ public class SocialActivitySettingLocalServiceImpl
 		return GetterUtil.getBoolean(activitySetting.getValue());
 	}
 
+	@Override
 	public boolean isEnabled(long groupId, long classNameId, long classPK)
 		throws SystemException {
 
@@ -165,6 +172,7 @@ public class SocialActivitySettingLocalServiceImpl
 		}
 	}
 
+	@Override
 	public void updateActivitySetting(
 			long groupId, String className, boolean enabled)
 		throws PortalException, SystemException {
@@ -196,6 +204,7 @@ public class SocialActivitySettingLocalServiceImpl
 		socialActivitySettingPersistence.update(activitySetting);
 	}
 
+	@Override
 	public void updateActivitySetting(
 			long groupId, String className, int activityType,
 			SocialActivityCounterDefinition activityCounterDefinition)
@@ -253,6 +262,7 @@ public class SocialActivitySettingLocalServiceImpl
 		_activityDefinitions.remove(key);
 	}
 
+	@Override
 	public void updateActivitySetting(
 			long groupId, String className, long classPK, boolean enabled)
 		throws PortalException, SystemException {
@@ -287,6 +297,7 @@ public class SocialActivitySettingLocalServiceImpl
 		socialActivitySettingPersistence.update(activitySetting);
 	}
 
+	@Override
 	public void updateActivitySettings(
 			long groupId, String className, int activityType,
 			List<SocialActivityCounterDefinition> activityCounterDefinitions)

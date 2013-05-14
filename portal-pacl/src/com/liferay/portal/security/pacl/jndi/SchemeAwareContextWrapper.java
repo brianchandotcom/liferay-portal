@@ -36,56 +36,66 @@ public class SchemeAwareContextWrapper implements Context {
 		_context = context;
 	}
 
+	@Override
 	public Object addToEnvironment(String propName, Object propVal)
 		throws NamingException {
 
 		return _context.addToEnvironment(propName, propVal);
 	}
 
+	@Override
 	public void bind(Name name, Object obj) throws NamingException {
 		Context context = getContext(name);
 
 		context.bind(name, obj);
 	}
 
+	@Override
 	public void bind(String name, Object obj) throws NamingException {
 		Context context = getContext(name);
 
 		context.bind(name, obj);
 	}
 
+	@Override
 	public void close() throws NamingException {
 		_context.close();
 	}
 
+	@Override
 	public Name composeName(Name name, Name prefix) throws NamingException {
 		return _context.composeName(name, prefix);
 	}
 
+	@Override
 	public String composeName(String name, String prefix)
 		throws NamingException {
 
 		return _context.composeName(name, prefix);
 	}
 
+	@Override
 	public Context createSubcontext(Name name) throws NamingException {
 		Context context = getContext(name);
 
 		return context.createSubcontext(name);
 	}
 
+	@Override
 	public Context createSubcontext(String name) throws NamingException {
 		Context context = getContext(name);
 
 		return context.createSubcontext(name);
 	}
 
+	@Override
 	public void destroySubcontext(Name name) throws NamingException {
 		Context context = getContext(name);
 
 		context.destroySubcontext(name);
 	}
 
+	@Override
 	public void destroySubcontext(String name) throws NamingException {
 		Context context = getContext(name);
 
@@ -111,20 +121,24 @@ public class SchemeAwareContextWrapper implements Context {
 		return false;
 	}
 
+	@Override
 	public Hashtable<?, ?> getEnvironment() throws NamingException {
 		return _context.getEnvironment();
 	}
 
+	@Override
 	public String getNameInNamespace() throws NamingException {
 		return _context.getNameInNamespace();
 	}
 
+	@Override
 	public NameParser getNameParser(Name name) throws NamingException {
 		Context context = getContext(name);
 
 		return context.getNameParser(name);
 	}
 
+	@Override
 	public NameParser getNameParser(String name) throws NamingException {
 		Context context = getContext(name);
 
@@ -136,6 +150,7 @@ public class SchemeAwareContextWrapper implements Context {
 		return _context.hashCode();
 	}
 
+	@Override
 	public NamingEnumeration<NameClassPair> list(Name name)
 		throws NamingException {
 
@@ -144,6 +159,7 @@ public class SchemeAwareContextWrapper implements Context {
 		return context.list(name);
 	}
 
+	@Override
 	public NamingEnumeration<NameClassPair> list(String name)
 		throws NamingException {
 
@@ -152,6 +168,7 @@ public class SchemeAwareContextWrapper implements Context {
 		return context.list(name);
 	}
 
+	@Override
 	public NamingEnumeration<Binding> listBindings(Name name)
 		throws NamingException {
 
@@ -160,6 +177,7 @@ public class SchemeAwareContextWrapper implements Context {
 		return context.listBindings(name);
 	}
 
+	@Override
 	public NamingEnumeration<Binding> listBindings(String name)
 		throws NamingException {
 
@@ -168,66 +186,77 @@ public class SchemeAwareContextWrapper implements Context {
 		return context.listBindings(name);
 	}
 
+	@Override
 	public Object lookup(Name name) throws NamingException {
 		Context context = getContext(name);
 
 		return context.lookup(name);
 	}
 
+	@Override
 	public Object lookup(String name) throws NamingException {
 		Context context = getContext(name);
 
 		return context.lookup(name);
 	}
 
+	@Override
 	public Object lookupLink(Name name) throws NamingException {
 		Context context = getContext(name);
 
 		return context.lookupLink(name);
 	}
 
+	@Override
 	public Object lookupLink(String name) throws NamingException {
 		Context context = getContext(name);
 
 		return context.lookupLink(name);
 	}
 
+	@Override
 	public void rebind(Name name, Object obj) throws NamingException {
 		Context context = getContext(name);
 
 		context.rebind(name, obj);
 	}
 
+	@Override
 	public void rebind(String name, Object obj) throws NamingException {
 		Context context = getContext(name);
 
 		context.rebind(name, obj);
 	}
 
+	@Override
 	public Object removeFromEnvironment(String propName)
 		throws NamingException {
 
 		return _context.removeFromEnvironment(propName);
 	}
 
+	@Override
 	public void rename(Name oldName, Name newName) throws NamingException {
 		Context context = getContext(oldName);
 
 		context.rename(oldName, newName);
 	}
 
+	@Override
 	public void rename(String oldName, String newName) throws NamingException {
 		Context context = getContext(oldName);
 
 		context.rename(oldName, newName);
 	}
 
+	@Override
 	public void unbind(Name name) throws NamingException {
 		Context context = getContext(name);
 
 		context.unbind(name);
 	}
 
+	@Override
 	public void unbind(String name) throws NamingException {
 		Context context = getContext(name);
 

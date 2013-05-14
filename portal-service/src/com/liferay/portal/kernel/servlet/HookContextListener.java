@@ -23,9 +23,11 @@ import javax.servlet.ServletContextListener;
  */
 public class HookContextListener implements ServletContextListener {
 
+	@Override
 	public void contextDestroyed(ServletContextEvent servletContextEvent) {
 	}
 
+	@Override
 	public void contextInitialized(ServletContextEvent servletContextEvent) {
 	}
 

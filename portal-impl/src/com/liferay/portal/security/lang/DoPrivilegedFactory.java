@@ -40,6 +40,7 @@ public class DoPrivilegedFactory implements BeanPostProcessor {
 	public DoPrivilegedFactory() {
 	}
 
+	@Override
 	public Object postProcessAfterInitialization(Object bean, String beanName)
 		throws BeansException {
 
@@ -62,6 +63,7 @@ public class DoPrivilegedFactory implements BeanPostProcessor {
 		return wrap(bean);
 	}
 
+	@Override
 	public Object postProcessBeforeInitialization(Object bean, String beanName)
 		throws BeansException {
 

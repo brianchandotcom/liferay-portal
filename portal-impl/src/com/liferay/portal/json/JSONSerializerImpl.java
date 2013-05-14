@@ -42,10 +42,12 @@ public class JSONSerializerImpl implements JSONSerializer {
 		return this;
 	}
 
+	@Override
 	public String serialize(Object target) {
 		return _jsonSerializer.serialize(target);
 	}
 
+	@Override
 	public String serializeDeep(Object target) {
 		return _jsonSerializer.deepSerialize(target);
 	}

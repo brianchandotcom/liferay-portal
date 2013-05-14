@@ -86,6 +86,7 @@ public class JournalArticleFinderImpl
 		JournalArticleFinder.class.getName() +
 			".findByC_G_F_C_A_V_T_D_C_T_S_T_D_R";
 
+	@Override
 	public int countByKeywords(
 			long companyId, long groupId, List<Long> folderIds,
 			long classNameId, String keywords, Double version, String type,
@@ -122,6 +123,7 @@ public class JournalArticleFinderImpl
 			andOperator, queryDefinition, false);
 	}
 
+	@Override
 	public int countByG_F(
 			long groupId, List<Long> folderIds, QueryDefinition queryDefinition)
 		throws SystemException {
@@ -129,6 +131,7 @@ public class JournalArticleFinderImpl
 		return doCountByG_F(groupId, folderIds, queryDefinition, false);
 	}
 
+	@Override
 	public int countByG_C_S(
 			long groupId, long classNameId, String ddmStructureKey,
 			QueryDefinition queryDefinition)
@@ -138,6 +141,7 @@ public class JournalArticleFinderImpl
 			groupId, classNameId, ddmStructureKey, queryDefinition, false);
 	}
 
+	@Override
 	public int countByG_U_F_C(
 			long groupId, long userId, List<Long> folderIds, long classNameId,
 			QueryDefinition queryDefinition)
@@ -147,6 +151,7 @@ public class JournalArticleFinderImpl
 			groupId, userId, folderIds, classNameId, queryDefinition, false);
 	}
 
+	@Override
 	public int countByC_G_F_C_A_V_T_D_C_T_S_T_D_R(
 			long companyId, long groupId, List<Long> folderIds,
 			long classNameId, String articleId, Double version, String title,
@@ -168,6 +173,7 @@ public class JournalArticleFinderImpl
 			andOperator, queryDefinition);
 	}
 
+	@Override
 	public int countByC_G_F_C_A_V_T_D_C_T_S_T_D_R(
 			long companyId, long groupId, List<Long> folderIds,
 			long classNameId, String articleId, Double version, String title,
@@ -189,6 +195,7 @@ public class JournalArticleFinderImpl
 			andOperator, queryDefinition);
 	}
 
+	@Override
 	public int countByC_G_F_C_A_V_T_D_C_T_S_T_D_R(
 			long companyId, long groupId, List<Long> folderIds,
 			long classNameId, String[] articleIds, Double version,
@@ -205,6 +212,7 @@ public class JournalArticleFinderImpl
 			andOperator, queryDefinition, false);
 	}
 
+	@Override
 	public int filterCountByKeywords(
 			long companyId, long groupId, List<Long> folderIds,
 			long classNameId, String keywords, Double version, String type,
@@ -241,6 +249,7 @@ public class JournalArticleFinderImpl
 			andOperator, queryDefinition, true);
 	}
 
+	@Override
 	public int filterCountByG_F(
 			long groupId, List<Long> folderIds, QueryDefinition queryDefinition)
 		throws SystemException {
@@ -248,6 +257,7 @@ public class JournalArticleFinderImpl
 		return doCountByG_F(groupId, folderIds, queryDefinition, true);
 	}
 
+	@Override
 	public int filterCountByG_C_S(
 			long groupId, long classNameId, String ddmStructureKey,
 			QueryDefinition queryDefinition)
@@ -257,6 +267,7 @@ public class JournalArticleFinderImpl
 			groupId, classNameId, ddmStructureKey, queryDefinition, true);
 	}
 
+	@Override
 	public int filterCountByG_U_F_C(
 			long groupId, long userId, List<Long> folderIds, long classNameId,
 			QueryDefinition queryDefinition)
@@ -266,6 +277,7 @@ public class JournalArticleFinderImpl
 			groupId, userId, folderIds, classNameId, queryDefinition, true);
 	}
 
+	@Override
 	public int filterCountByC_G_F_C_A_V_T_D_C_T_S_T_D_R(
 			long companyId, long groupId, List<Long> folderIds,
 			long classNameId, String articleId, Double version, String title,
@@ -287,6 +299,7 @@ public class JournalArticleFinderImpl
 			andOperator, queryDefinition);
 	}
 
+	@Override
 	public int filterCountByC_G_F_C_A_V_T_D_C_T_S_T_D_R(
 			long companyId, long groupId, List<Long> folderIds,
 			long classNameId, String articleId, Double version, String title,
@@ -308,6 +321,7 @@ public class JournalArticleFinderImpl
 			andOperator, queryDefinition);
 	}
 
+	@Override
 	public int filterCountByC_G_F_C_A_V_T_D_C_T_S_T_D_R(
 			long companyId, long groupId, List<Long> folderIds,
 			long classNameId, String[] articleIds, Double version,
@@ -324,6 +338,7 @@ public class JournalArticleFinderImpl
 			andOperator, queryDefinition, true);
 	}
 
+	@Override
 	public List<JournalArticle> filterFindByKeywords(
 			long companyId, long groupId, List<Long> folderIds,
 			long classNameId, String keywords, Double version, String type,
@@ -362,6 +377,7 @@ public class JournalArticleFinderImpl
 			andOperator, queryDefinition, true);
 	}
 
+	@Override
 	public List<JournalArticle> filterFindByG_F(
 			long groupId, List<Long> folderIds, QueryDefinition queryDefinition)
 		throws SystemException {
@@ -369,6 +385,7 @@ public class JournalArticleFinderImpl
 		return doFindByG_F(groupId, folderIds, queryDefinition, true);
 	}
 
+	@Override
 	public List<JournalArticle> filterFindByG_C_S(
 			long groupId, long classNameId, String ddmStructureKey,
 			QueryDefinition queryDefinition)
@@ -378,6 +395,7 @@ public class JournalArticleFinderImpl
 			groupId, classNameId, ddmStructureKey, queryDefinition, true);
 	}
 
+	@Override
 	public List<JournalArticle> filterFindByG_U_F_C(
 			long groupId, long userId, List<Long> folderIds, long classNameId,
 			QueryDefinition queryDefinition)
@@ -387,6 +405,7 @@ public class JournalArticleFinderImpl
 			groupId, userId, folderIds, classNameId, queryDefinition, true);
 	}
 
+	@Override
 	public List<JournalArticle> filterFindByC_G_F_C_A_V_T_D_C_T_S_T_D_R(
 			long companyId, long groupId, List<Long> folderIds,
 			long classNameId, String articleId, Double version, String title,
@@ -408,6 +427,7 @@ public class JournalArticleFinderImpl
 			andOperator, queryDefinition);
 	}
 
+	@Override
 	public List<JournalArticle> filterFindByC_G_F_C_A_V_T_D_C_T_S_T_D_R(
 			long companyId, long groupId, List<Long> folderIds,
 			long classNameId, String articleId, Double version, String title,
@@ -429,6 +449,7 @@ public class JournalArticleFinderImpl
 			andOperator, queryDefinition);
 	}
 
+	@Override
 	public List<JournalArticle> filterFindByC_G_F_C_A_V_T_D_C_T_S_T_D_R(
 			long companyId, long groupId, List<Long> folderIds,
 			long classNameId, String[] articleIds, Double version,
@@ -445,6 +466,7 @@ public class JournalArticleFinderImpl
 			andOperator, queryDefinition, true);
 	}
 
+	@Override
 	public List<JournalArticle> findByExpirationDate(
 			long classNameId, Date expirationDateLT,
 			QueryDefinition queryDefinition)
@@ -482,6 +504,7 @@ public class JournalArticleFinderImpl
 		}
 	}
 
+	@Override
 	public List<JournalArticle> findByKeywords(
 			long companyId, long groupId, List<Long> folderIds,
 			long classNameId, String keywords, Double version, String type,
@@ -520,6 +543,7 @@ public class JournalArticleFinderImpl
 			andOperator, queryDefinition);
 	}
 
+	@Override
 	public List<JournalArticle> findByReviewDate(
 			long classNameId, Date reviewDateLT, Date reviewDateGT)
 		throws SystemException {
@@ -554,6 +578,7 @@ public class JournalArticleFinderImpl
 		}
 	}
 
+	@Override
 	public JournalArticle findByR_D(long resourcePrimKey, Date displayDate)
 		throws NoSuchArticleException, SystemException {
 
@@ -601,6 +626,7 @@ public class JournalArticleFinderImpl
 		throw new NoSuchArticleException(sb.toString());
 	}
 
+	@Override
 	public List<JournalArticle> findByG_F(
 			long groupId, List<Long> folderIds, QueryDefinition queryDefinition)
 		throws SystemException {
@@ -608,6 +634,7 @@ public class JournalArticleFinderImpl
 		return doFindByG_F(groupId, folderIds, queryDefinition, false);
 	}
 
+	@Override
 	public List<JournalArticle> findByG_C_S(
 			long groupId, long classNameId, String ddmStructureKey,
 			QueryDefinition queryDefinition)
@@ -617,6 +644,7 @@ public class JournalArticleFinderImpl
 			groupId, classNameId, ddmStructureKey, queryDefinition, false);
 	}
 
+	@Override
 	public List<JournalArticle> findByG_U_F_C(
 			long groupId, long userId, List<Long> folderIds, long classNameId,
 			QueryDefinition queryDefinition)
@@ -626,6 +654,7 @@ public class JournalArticleFinderImpl
 			groupId, userId, folderIds, classNameId, queryDefinition, false);
 	}
 
+	@Override
 	public List<JournalArticle> findByC_G_F_C_A_V_T_D_C_T_S_T_D_R(
 			long companyId, long groupId, List<Long> folderIds,
 			long classNameId, String articleId, Double version, String title,
@@ -651,6 +680,7 @@ public class JournalArticleFinderImpl
 			andOperator, queryDefinition);
 	}
 
+	@Override
 	public List<JournalArticle> findByC_G_F_C_A_V_T_D_C_T_S_T_D_R(
 			long companyId, long groupId, List<Long> folderIds,
 			long classNameId, String articleId, Double version, String title,
@@ -672,6 +702,7 @@ public class JournalArticleFinderImpl
 			andOperator, queryDefinition);
 	}
 
+	@Override
 	public List<JournalArticle> findByC_G_F_C_A_V_T_D_C_T_S_T_D_R(
 			long companyId, long groupId, List<Long> folderIds,
 			long classNameId, String[] articleIds, Double version,

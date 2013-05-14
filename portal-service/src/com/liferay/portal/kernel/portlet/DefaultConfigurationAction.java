@@ -73,6 +73,7 @@ public class DefaultConfigurationAction
 		return ParamUtil.getString(portletRequest, name);
 	}
 
+	@Override
 	public void processAction(
 			PortletConfig portletConfig, ActionRequest actionRequest,
 			ActionResponse actionResponse)
@@ -150,6 +151,7 @@ public class DefaultConfigurationAction
 		}
 	}
 
+	@Override
 	public String render(
 			PortletConfig portletConfig, RenderRequest renderRequest,
 			RenderResponse renderResponse)
@@ -173,6 +175,7 @@ public class DefaultConfigurationAction
 		return "/configuration.jsp";
 	}
 
+	@Override
 	public void serveResource(
 			PortletConfig portletConfig, ResourceRequest resourceRequest,
 			ResourceResponse resourceResponse)

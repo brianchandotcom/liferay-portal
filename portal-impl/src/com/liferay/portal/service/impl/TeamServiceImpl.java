@@ -32,6 +32,7 @@ import java.util.List;
  */
 public class TeamServiceImpl extends TeamServiceBaseImpl {
 
+	@Override
 	public Team addTeam(long groupId, String name, String description)
 		throws PortalException, SystemException {
 
@@ -42,6 +43,7 @@ public class TeamServiceImpl extends TeamServiceBaseImpl {
 			getUserId(), groupId, name, description);
 	}
 
+	@Override
 	public void deleteTeam(long teamId)
 		throws PortalException, SystemException {
 
@@ -51,6 +53,7 @@ public class TeamServiceImpl extends TeamServiceBaseImpl {
 		teamLocalService.deleteTeam(teamId);
 	}
 
+	@Override
 	public List<Team> getGroupTeams(long groupId)
 		throws PortalException, SystemException {
 
@@ -61,6 +64,7 @@ public class TeamServiceImpl extends TeamServiceBaseImpl {
 
 	}
 
+	@Override
 	public Team getTeam(long teamId) throws PortalException, SystemException {
 		TeamPermissionUtil.check(
 			getPermissionChecker(), teamId, ActionKeys.VIEW);
@@ -68,6 +72,7 @@ public class TeamServiceImpl extends TeamServiceBaseImpl {
 		return teamLocalService.getTeam(teamId);
 	}
 
+	@Override
 	public Team getTeam(long groupId, String name)
 		throws PortalException, SystemException {
 
@@ -78,6 +83,7 @@ public class TeamServiceImpl extends TeamServiceBaseImpl {
 		return team;
 	}
 
+	@Override
 	public List<Team> getUserTeams(long userId)
 		throws PortalException, SystemException {
 
@@ -87,6 +93,7 @@ public class TeamServiceImpl extends TeamServiceBaseImpl {
 		return teamLocalService.getUserTeams(userId);
 	}
 
+	@Override
 	public List<Team> getUserTeams(long userId, long groupId)
 		throws PortalException, SystemException {
 
@@ -96,6 +103,7 @@ public class TeamServiceImpl extends TeamServiceBaseImpl {
 		return teamLocalService.getUserTeams(userId, groupId);
 	}
 
+	@Override
 	public boolean hasUserTeam(long userId, long teamId)
 		throws PortalException, SystemException {
 
@@ -115,6 +123,7 @@ public class TeamServiceImpl extends TeamServiceBaseImpl {
 		return userPersistence.containsTeam(userId, teamId);
 	}
 
+	@Override
 	public Team updateTeam(long teamId, String name, String description)
 		throws PortalException, SystemException {
 

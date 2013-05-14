@@ -46,6 +46,7 @@ import java.util.List;
  */
 public class LayoutPermissionImpl implements LayoutPermission {
 
+	@Override
 	public void check(
 			PermissionChecker permissionChecker, Layout layout, String actionId)
 		throws PortalException, SystemException {
@@ -55,6 +56,7 @@ public class LayoutPermissionImpl implements LayoutPermission {
 		}
 	}
 
+	@Override
 	public void check(
 			PermissionChecker permissionChecker, long groupId,
 			boolean privateLayout, long layoutId, String actionId)
@@ -68,6 +70,7 @@ public class LayoutPermissionImpl implements LayoutPermission {
 		}
 	}
 
+	@Override
 	public void check(
 			PermissionChecker permissionChecker, long plid, String actionId)
 		throws PortalException, SystemException {
@@ -77,6 +80,7 @@ public class LayoutPermissionImpl implements LayoutPermission {
 		}
 	}
 
+	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, Layout layout,
 			boolean checkViewableGroup, String actionId)
@@ -86,6 +90,7 @@ public class LayoutPermissionImpl implements LayoutPermission {
 			permissionChecker, layout, null, checkViewableGroup, actionId);
 	}
 
+	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, Layout layout, String actionId)
 		throws PortalException, SystemException {
@@ -93,6 +98,7 @@ public class LayoutPermissionImpl implements LayoutPermission {
 		return contains(permissionChecker, layout, null, actionId);
 	}
 
+	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, Layout layout,
 			String controlPanelCategory, boolean checkViewableGroup,
@@ -104,6 +110,7 @@ public class LayoutPermissionImpl implements LayoutPermission {
 			actionId);
 	}
 
+	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, Layout layout,
 			String controlPanelCategory, String actionId)
@@ -113,6 +120,7 @@ public class LayoutPermissionImpl implements LayoutPermission {
 			permissionChecker, layout, controlPanelCategory, false, actionId);
 	}
 
+	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, long groupId,
 			boolean privateLayout, long layoutId, String actionId)
@@ -123,6 +131,7 @@ public class LayoutPermissionImpl implements LayoutPermission {
 			actionId);
 	}
 
+	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, long groupId,
 			boolean privateLayout, long layoutId, String controlPanelCategory,
@@ -140,6 +149,7 @@ public class LayoutPermissionImpl implements LayoutPermission {
 			permissionChecker, layout, controlPanelCategory, actionId);
 	}
 
+	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, long plid, String actionId)
 		throws PortalException, SystemException {
@@ -149,6 +159,7 @@ public class LayoutPermissionImpl implements LayoutPermission {
 		return contains(permissionChecker, layout, actionId);
 	}
 
+	@Override
 	public boolean containsWithoutViewableGroup(
 			PermissionChecker permissionChecker, Layout layout,
 			String controlPanelCategory, boolean checkLayoutUpdateable,
@@ -296,6 +307,7 @@ public class LayoutPermissionImpl implements LayoutPermission {
 			actionId);
 	}
 
+	@Override
 	public boolean containsWithoutViewableGroup(
 			PermissionChecker permissionChecker, Layout layout,
 			String controlPanelCategory, String actionId)

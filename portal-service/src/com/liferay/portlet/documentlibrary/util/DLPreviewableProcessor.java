@@ -99,14 +99,17 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		}
 	}
 
+	@Override
 	public void cleanUp(FileEntry fileEntry) {
 		deleteFiles(fileEntry, getThumbnailType());
 	}
 
+	@Override
 	public void cleanUp(FileVersion fileVersion) {
 		deleteFiles(fileVersion, getThumbnailType());
 	}
 
+	@Override
 	public void copy(
 		FileVersion sourceFileVersion, FileVersion destinationFileVersion) {
 
@@ -133,6 +136,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 			thumbnailType);
 	}
 
+	@Override
 	public void exportGeneratedFiles(
 			PortletDataContext portletDataContext, FileEntry fileEntry,
 			Element fileEntryElement)
@@ -141,6 +145,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		doExportGeneratedFiles(portletDataContext, fileEntry, fileEntryElement);
 	}
 
+	@Override
 	public void importGeneratedFiles(
 			PortletDataContext portletDataContext, FileEntry fileEntry,
 			FileEntry importedFileEntry, Element fileEntryElement)
@@ -152,6 +157,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 			portletDataContext, fileEntry, importedFileEntry, fileEntryElement);
 	}
 
+	@Override
 	public boolean isSupported(FileVersion fileVersion) {
 		if (fileVersion == null) {
 			return false;
@@ -160,6 +166,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		return isSupported(fileVersion.getMimeType());
 	}
 
+	@Override
 	public void trigger(
 		FileVersion sourceFileVersion, FileVersion destinationFileVersion) {
 

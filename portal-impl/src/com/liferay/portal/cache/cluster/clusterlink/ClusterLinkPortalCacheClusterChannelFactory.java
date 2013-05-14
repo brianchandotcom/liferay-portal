@@ -29,6 +29,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class ClusterLinkPortalCacheClusterChannelFactory
 	implements PortalCacheClusterChannelFactory {
 
+	@Override
 	public PortalCacheClusterChannel createPortalCacheClusterChannel()
 		throws PortalCacheClusterException {
 

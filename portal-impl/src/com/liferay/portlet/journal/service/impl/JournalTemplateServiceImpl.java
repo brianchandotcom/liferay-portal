@@ -36,6 +36,7 @@ import java.util.Map;
  */
 public class JournalTemplateServiceImpl extends JournalTemplateServiceBaseImpl {
 
+	@Override
 	public JournalTemplate addTemplate(
 			long groupId, String templateId, boolean autoTemplateId,
 			String structureId, Map<Locale, String> nameMap,
@@ -53,6 +54,7 @@ public class JournalTemplateServiceImpl extends JournalTemplateServiceBaseImpl {
 			smallImage, smallImageURL, smallFile, serviceContext);
 	}
 
+	@Override
 	public JournalTemplate addTemplate(
 			long groupId, String templateId, boolean autoTemplateId,
 			String structureId, Map<Locale, String> nameMap,
@@ -69,6 +71,7 @@ public class JournalTemplateServiceImpl extends JournalTemplateServiceBaseImpl {
 			null, null, serviceContext);
 	}
 
+	@Override
 	public JournalTemplate copyTemplate(
 			long groupId, String oldTemplateId, String newTemplateId,
 			boolean autoTemplateId)
@@ -81,6 +84,7 @@ public class JournalTemplateServiceImpl extends JournalTemplateServiceBaseImpl {
 			getUserId(), groupId, oldTemplateId, newTemplateId, autoTemplateId);
 	}
 
+	@Override
 	public void deleteTemplate(long groupId, String templateId)
 		throws PortalException, SystemException {
 
@@ -90,6 +94,7 @@ public class JournalTemplateServiceImpl extends JournalTemplateServiceBaseImpl {
 		journalTemplateLocalService.deleteTemplate(groupId, templateId);
 	}
 
+	@Override
 	public List<JournalTemplate> getStructureTemplates(
 			long groupId, String structureId)
 		throws SystemException {
@@ -97,6 +102,7 @@ public class JournalTemplateServiceImpl extends JournalTemplateServiceBaseImpl {
 		return journalTemplatePersistence.filterFindByG_S(groupId, structureId);
 	}
 
+	@Override
 	public JournalTemplate getTemplate(long groupId, String templateId)
 		throws PortalException, SystemException {
 
@@ -106,6 +112,7 @@ public class JournalTemplateServiceImpl extends JournalTemplateServiceBaseImpl {
 		return journalTemplateLocalService.getTemplate(groupId, templateId);
 	}
 
+	@Override
 	public JournalTemplate getTemplate(
 			long groupId, String templateId, boolean includeGlobalTemplates)
 		throws PortalException, SystemException {
@@ -117,6 +124,7 @@ public class JournalTemplateServiceImpl extends JournalTemplateServiceBaseImpl {
 			groupId, templateId, includeGlobalTemplates);
 	}
 
+	@Override
 	public List<JournalTemplate> search(
 			long companyId, long[] groupIds, String keywords,
 			String structureId, String structureIdComparator, int start,
@@ -128,6 +136,7 @@ public class JournalTemplateServiceImpl extends JournalTemplateServiceBaseImpl {
 			start, end, obc);
 	}
 
+	@Override
 	public List<JournalTemplate> search(
 			long companyId, long[] groupIds, String templateId,
 			String structureId, String structureIdComparator, String name,
@@ -140,6 +149,7 @@ public class JournalTemplateServiceImpl extends JournalTemplateServiceBaseImpl {
 			name, description, andOperator, start, end, obc);
 	}
 
+	@Override
 	public int searchCount(
 			long companyId, long[] groupIds, String keywords,
 			String structureId, String structureIdComparator)
@@ -149,6 +159,7 @@ public class JournalTemplateServiceImpl extends JournalTemplateServiceBaseImpl {
 			companyId, groupIds, keywords, structureId, structureIdComparator);
 	}
 
+	@Override
 	public int searchCount(
 			long companyId, long[] groupIds, String templateId,
 			String structureId, String structureIdComparator, String name,
@@ -160,6 +171,7 @@ public class JournalTemplateServiceImpl extends JournalTemplateServiceBaseImpl {
 			name, description, andOperator);
 	}
 
+	@Override
 	public JournalTemplate updateTemplate(
 			long groupId, String templateId, String structureId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
@@ -177,6 +189,7 @@ public class JournalTemplateServiceImpl extends JournalTemplateServiceBaseImpl {
 			smallFile, serviceContext);
 	}
 
+	@Override
 	public JournalTemplate updateTemplate(
 			long groupId, String templateId, String structureId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,

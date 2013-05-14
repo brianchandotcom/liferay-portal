@@ -92,6 +92,7 @@ public class SocialActivityFinderImpl
 	public static final String FIND_BY_USER_ORGANIZATIONS =
 		SocialActivityFinder.class.getName() + ".findByUserOrganizations";
 
+	@Override
 	public int countByGroupId(long groupId) throws SystemException {
 		Session session = null;
 
@@ -128,6 +129,7 @@ public class SocialActivityFinderImpl
 		}
 	}
 
+	@Override
 	public int countByGroupUsers(long groupId) throws SystemException {
 		Session session = null;
 
@@ -164,6 +166,7 @@ public class SocialActivityFinderImpl
 		}
 	}
 
+	@Override
 	public int countByOrganizationId(long organizationId)
 		throws SystemException {
 
@@ -202,6 +205,7 @@ public class SocialActivityFinderImpl
 		}
 	}
 
+	@Override
 	public int countByOrganizationUsers(long organizationId)
 		throws SystemException {
 
@@ -240,6 +244,7 @@ public class SocialActivityFinderImpl
 		}
 	}
 
+	@Override
 	public int countByRelation(long userId) throws SystemException {
 		Session session = null;
 
@@ -276,6 +281,7 @@ public class SocialActivityFinderImpl
 		}
 	}
 
+	@Override
 	public int countByRelationType(long userId, int type)
 		throws SystemException {
 
@@ -315,6 +321,7 @@ public class SocialActivityFinderImpl
 		}
 	}
 
+	@Override
 	public int countByUserGroups(long userId) throws SystemException {
 		Session session = null;
 
@@ -353,6 +360,7 @@ public class SocialActivityFinderImpl
 		}
 	}
 
+	@Override
 	public int countByUserGroupsAndOrganizations(long userId)
 		throws SystemException {
 
@@ -395,6 +403,7 @@ public class SocialActivityFinderImpl
 		}
 	}
 
+	@Override
 	public int countByUserOrganizations(long userId) throws SystemException {
 		Session session = null;
 
@@ -431,6 +440,7 @@ public class SocialActivityFinderImpl
 		}
 	}
 
+	@Override
 	public List<SocialActivity> findByGroupId(long groupId, int start, int end)
 		throws SystemException {
 
@@ -460,6 +470,7 @@ public class SocialActivityFinderImpl
 		}
 	}
 
+	@Override
 	public List<SocialActivity> findByGroupUsers(
 			long groupId, int start, int end)
 		throws SystemException {
@@ -490,6 +501,7 @@ public class SocialActivityFinderImpl
 		}
 	}
 
+	@Override
 	public List<SocialActivity> findByOrganizationId(
 			long organizationId, int start, int end)
 		throws SystemException {
@@ -520,6 +532,7 @@ public class SocialActivityFinderImpl
 		}
 	}
 
+	@Override
 	public List<SocialActivity> findByOrganizationUsers(
 			long organizationId, int start, int end)
 		throws SystemException {
@@ -550,6 +563,7 @@ public class SocialActivityFinderImpl
 		}
 	}
 
+	@Override
 	public List<SocialActivity> findByRelation(long userId, int start, int end)
 		throws SystemException {
 
@@ -579,6 +593,7 @@ public class SocialActivityFinderImpl
 		}
 	}
 
+	@Override
 	public List<SocialActivity> findByRelationType(
 			long userId, int type, int start, int end)
 		throws SystemException {
@@ -610,6 +625,7 @@ public class SocialActivityFinderImpl
 		}
 	}
 
+	@Override
 	public List<SocialActivity> findByUserGroups(
 			long userId, int start, int end)
 		throws SystemException {
@@ -642,6 +658,7 @@ public class SocialActivityFinderImpl
 		}
 	}
 
+	@Override
 	public List<SocialActivity> findByUserGroupsAndOrganizations(
 			long userId, int start, int end)
 		throws SystemException {
@@ -688,6 +705,7 @@ public class SocialActivityFinderImpl
 		}
 	}
 
+	@Override
 	public List<SocialActivity> findByUserOrganizations(
 			long userId, int start, int end)
 		throws SystemException {

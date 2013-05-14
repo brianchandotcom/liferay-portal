@@ -42,6 +42,7 @@ import java.util.Map;
  */
 public class DefaultRuleGroupProcessorImpl implements RuleGroupProcessor {
 
+	@Override
 	public MDRRuleGroupInstance evaluateRuleGroups(ThemeDisplay themeDisplay)
 		throws SystemException {
 
@@ -63,18 +64,22 @@ public class DefaultRuleGroupProcessorImpl implements RuleGroupProcessor {
 		return mdrRuleGroupInstance;
 	}
 
+	@Override
 	public RuleHandler getRuleHandler(String ruleType) {
 		return _ruleHandlers.get(ruleType);
 	}
 
+	@Override
 	public Collection<RuleHandler> getRuleHandlers() {
 		return Collections.unmodifiableCollection(_ruleHandlers.values());
 	}
 
+	@Override
 	public Collection<String> getRuleHandlerTypes() {
 		return _ruleHandlers.keySet();
 	}
 
+	@Override
 	public void registerRuleHandler(RuleHandler ruleHandler) {
 		RuleHandler oldRuleHandler = _ruleHandlers.put(
 			ruleHandler.getType(), ruleHandler);
@@ -104,6 +109,7 @@ public class DefaultRuleGroupProcessorImpl implements RuleGroupProcessor {
 		}
 	}
 
+	@Override
 	public RuleHandler unregisterRuleHandler(String ruleType) {
 		return _ruleHandlers.remove(ruleType);
 	}

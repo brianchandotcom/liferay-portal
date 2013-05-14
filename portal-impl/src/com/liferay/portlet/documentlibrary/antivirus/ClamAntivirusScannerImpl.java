@@ -24,6 +24,7 @@ import java.io.IOException;
  */
 public class ClamAntivirusScannerImpl extends BaseFileAntivirusScanner {
 
+	@Override
 	public void scan(File file)
 		throws AntivirusScannerException, SystemException {
 

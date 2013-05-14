@@ -95,6 +95,7 @@ public class FileUploadManagedBean implements Renderable {
 		return _percent;
 	}
 
+	@Override
 	public PersistentFacesState getState() {
 		return _state;
 	}
@@ -116,6 +117,7 @@ public class FileUploadManagedBean implements Renderable {
 		_renderManager.requestRender(this);
 	}
 
+	@Override
 	public void renderingException(RenderingException renderingException) {
 		_log.error(renderingException.getMessage());
 	}

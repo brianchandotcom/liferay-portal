@@ -47,6 +47,7 @@ import java.util.TreeMap;
 public class ShoppingCartLocalServiceImpl
 	extends ShoppingCartLocalServiceBaseImpl {
 
+	@Override
 	public void deleteGroupCarts(long groupId) throws SystemException {
 		List<ShoppingCart> carts = shoppingCartPersistence.findByGroupId(
 			groupId);
@@ -56,6 +57,7 @@ public class ShoppingCartLocalServiceImpl
 		}
 	}
 
+	@Override
 	public void deleteUserCarts(long userId) throws SystemException {
 		List<ShoppingCart> shoppingCarts = shoppingCartPersistence.findByUserId(
 			userId);
@@ -65,12 +67,14 @@ public class ShoppingCartLocalServiceImpl
 		}
 	}
 
+	@Override
 	public ShoppingCart getCart(long userId, long groupId)
 		throws PortalException, SystemException {
 
 		return shoppingCartPersistence.findByG_U(groupId, userId);
 	}
 
+	@Override
 	public Map<ShoppingCartItem, Integer> getItems(long groupId, String itemIds)
 		throws SystemException {
 
@@ -110,6 +114,7 @@ public class ShoppingCartLocalServiceImpl
 		return items;
 	}
 
+	@Override
 	public ShoppingCart updateCart(
 			long userId, long groupId, String itemIds, String couponCodes,
 			int altShipping, boolean insure)

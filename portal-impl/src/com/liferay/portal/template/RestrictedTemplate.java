@@ -35,22 +35,27 @@ public class RestrictedTemplate implements Template {
 		_restrictedVariables = restrictedVariables;
 	}
 
+	@Override
 	public Object get(String key) {
 		return _template.get(key);
 	}
 
+	@Override
 	public String[] getKeys() {
 		return _template.getKeys();
 	}
 
+	@Override
 	public void prepare(HttpServletRequest request) {
 		_template.prepare(request);
 	}
 
+	@Override
 	public void processTemplate(Writer writer) throws TemplateException {
 		_template.processTemplate(writer);
 	}
 
+	@Override
 	public void put(String key, Object value) {
 		if (_restrictedVariables.contains(key)) {
 			return;

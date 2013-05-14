@@ -27,10 +27,12 @@ import java.util.List;
  */
 public class ThemeServiceImpl extends ThemeServiceBaseImpl {
 
+	@Override
 	public List<Theme> getThemes(long companyId) {
 		return themeLocalService.getThemes(companyId);
 	}
 
+	@Override
 	public JSONArray getWARThemes() {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 

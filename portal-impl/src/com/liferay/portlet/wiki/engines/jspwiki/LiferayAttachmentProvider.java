@@ -40,20 +40,25 @@ import java.util.Properties;
  */
 public class LiferayAttachmentProvider implements WikiAttachmentProvider {
 
+	@Override
 	public void deleteAttachment(Attachment attachment) {
 	}
 
+	@Override
 	public void deleteVersion(Attachment attachment) {
 	}
 
+	@Override
 	public Collection<Attachment> findAttachments(QueryItem[] query) {
 		return Collections.emptyList();
 	}
 
+	@Override
 	public InputStream getAttachmentData(Attachment attachment) {
 		return _EMPTY_STREAM;
 	}
 
+	@Override
 	public Attachment getAttachmentInfo(WikiPage page, String name, int version)
 		throws ProviderException {
 
@@ -78,10 +83,12 @@ public class LiferayAttachmentProvider implements WikiAttachmentProvider {
 		}
 	}
 
+	@Override
 	public String getProviderInfo() {
 		return LiferayAttachmentProvider.class.getName();
 	}
 
+	@Override
 	public List<Attachment> getVersionHistory(Attachment attachment) {
 		List<Attachment> history = new ArrayList<Attachment>();
 
@@ -90,22 +97,27 @@ public class LiferayAttachmentProvider implements WikiAttachmentProvider {
 		return history;
 	}
 
+	@Override
 	public void initialize(WikiEngine engine, Properties props) {
 		_engine = engine;
 		_nodeId = GetterUtil.getLong(props.getProperty("nodeId"));
 	}
 
+	@Override
 	public List<Attachment> listAllChanged(Date timestamp) {
 		return Collections.emptyList();
 	}
 
+	@Override
 	public Collection<Attachment> listAttachments(WikiPage page) {
 		return Collections.emptyList();
 	}
 
+	@Override
 	public void moveAttachmentsForPage(String oldParent, String newParent) {
 	}
 
+	@Override
 	public void putAttachmentData(Attachment attachment, InputStream data) {
 	}
 

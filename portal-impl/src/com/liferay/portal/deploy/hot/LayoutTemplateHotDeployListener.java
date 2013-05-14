@@ -36,6 +36,7 @@ import javax.servlet.ServletContext;
  */
 public class LayoutTemplateHotDeployListener extends BaseHotDeployListener {
 
+	@Override
 	public void invokeDeploy(HotDeployEvent hotDeployEvent)
 		throws HotDeployException {
 
@@ -48,6 +49,7 @@ public class LayoutTemplateHotDeployListener extends BaseHotDeployListener {
 		}
 	}
 
+	@Override
 	public void invokeUndeploy(HotDeployEvent hotDeployEvent)
 		throws HotDeployException {
 

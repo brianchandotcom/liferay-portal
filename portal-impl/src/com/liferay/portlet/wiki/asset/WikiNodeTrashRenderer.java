@@ -34,10 +34,12 @@ public class WikiNodeTrashRenderer extends BaseTrashRenderer {
 		_node = node;
 	}
 
+	@Override
 	public String getClassName() {
 		return WikiNode.class.getName();
 	}
 
+	@Override
 	public long getClassPK() {
 		return _node.getPrimaryKey();
 	}
@@ -47,14 +49,17 @@ public class WikiNodeTrashRenderer extends BaseTrashRenderer {
 		return themeDisplay.getPathThemeImages() + "/common/all_pages.png";
 	}
 
+	@Override
 	public String getPortletId() {
 		return PortletKeys.WIKI;
 	}
 
+	@Override
 	public String getSummary(Locale locale) {
 		return HtmlUtil.stripHtml(_node.getDescription());
 	}
 
+	@Override
 	public String getTitle(Locale locale) {
 		if (!_node.isInTrash()) {
 			return _node.getName();
@@ -63,6 +68,7 @@ public class WikiNodeTrashRenderer extends BaseTrashRenderer {
 		return TrashUtil.getOriginalTitle(_node.getName());
 	}
 
+	@Override
 	public String getType() {
 		return TYPE;
 	}

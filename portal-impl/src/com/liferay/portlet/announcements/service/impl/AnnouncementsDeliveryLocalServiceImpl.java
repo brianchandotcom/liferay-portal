@@ -33,6 +33,7 @@ import java.util.List;
 public class AnnouncementsDeliveryLocalServiceImpl
 	extends AnnouncementsDeliveryLocalServiceBaseImpl {
 
+	@Override
 	public AnnouncementsDelivery addUserDelivery(long userId, String type)
 		throws PortalException, SystemException {
 
@@ -71,6 +72,7 @@ public class AnnouncementsDeliveryLocalServiceImpl
 		return delivery;
 	}
 
+	@Override
 	public void deleteDeliveries(long userId) throws SystemException {
 		List<AnnouncementsDelivery> deliveries =
 			announcementsDeliveryPersistence.findByUserId(userId);
@@ -80,12 +82,14 @@ public class AnnouncementsDeliveryLocalServiceImpl
 		}
 	}
 
+	@Override
 	public void deleteDelivery(AnnouncementsDelivery delivery)
 		throws SystemException {
 
 		announcementsDeliveryPersistence.remove(delivery);
 	}
 
+	@Override
 	public void deleteDelivery(long deliveryId)
 		throws PortalException, SystemException {
 
@@ -95,6 +99,7 @@ public class AnnouncementsDeliveryLocalServiceImpl
 		deleteDelivery(delivery);
 	}
 
+	@Override
 	public void deleteDelivery(long userId, String type)
 		throws SystemException {
 
@@ -108,12 +113,14 @@ public class AnnouncementsDeliveryLocalServiceImpl
 		}
 	}
 
+	@Override
 	public AnnouncementsDelivery getDelivery(long deliveryId)
 		throws PortalException, SystemException {
 
 		return announcementsDeliveryPersistence.findByPrimaryKey(deliveryId);
 	}
 
+	@Override
 	public List<AnnouncementsDelivery> getUserDeliveries(long userId)
 		throws PortalException, SystemException {
 
@@ -128,6 +135,7 @@ public class AnnouncementsDeliveryLocalServiceImpl
 		return deliveries;
 	}
 
+	@Override
 	public AnnouncementsDelivery getUserDelivery(long userId, String type)
 		throws PortalException, SystemException {
 
@@ -142,6 +150,7 @@ public class AnnouncementsDeliveryLocalServiceImpl
 		return delivery;
 	}
 
+	@Override
 	public AnnouncementsDelivery updateDelivery(
 			long userId, String type, boolean email, boolean sms,
 			boolean website)

@@ -44,6 +44,7 @@ public class SocialActivityInterpreterImpl
 		}
 	}
 
+	@Override
 	public String[] getClassNames() {
 		return _activityInterpreter.getClassNames();
 	}
@@ -52,6 +53,7 @@ public class SocialActivityInterpreterImpl
 		return _portletId;
 	}
 
+	@Override
 	public String getSelector() {
 		return _activityInterpreter.getSelector();
 	}
@@ -65,18 +67,21 @@ public class SocialActivityInterpreterImpl
 		}
 	}
 
+	@Override
 	public SocialActivityFeedEntry interpret(
 		SocialActivity activity, ServiceContext serviceContext) {
 
 		return _activityInterpreter.interpret(activity, serviceContext);
 	}
 
+	@Override
 	public SocialActivityFeedEntry interpret(
 		SocialActivitySet activitySet, ServiceContext serviceContext) {
 
 		return _activityInterpreter.interpret(activitySet, serviceContext);
 	}
 
+	@Override
 	public void updateActivitySet(long activityId)
 		throws PortalException, SystemException {
 

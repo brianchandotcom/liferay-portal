@@ -25,6 +25,7 @@ import java.util.Map;
  */
 public class ShutdownHook implements Runnable {
 
+	@Override
 	public void run() {
 		if (GetterUtil.getBoolean(
 				System.getProperty("shutdown.hook.print.full.thread.dump"))) {

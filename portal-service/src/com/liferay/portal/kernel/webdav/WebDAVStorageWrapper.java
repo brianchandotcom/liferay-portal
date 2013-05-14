@@ -27,6 +27,7 @@ public class WebDAVStorageWrapper implements WebDAVStorage {
 		_webDAVStorage = webDAVStorage;
 	}
 
+	@Override
 	public int copyCollectionResource(
 			WebDAVRequest webDAVRequest, Resource resource, String destination,
 			boolean overwrite, long depth)
@@ -36,6 +37,7 @@ public class WebDAVStorageWrapper implements WebDAVStorage {
 			webDAVRequest, resource, destination, overwrite, depth);
 	}
 
+	@Override
 	public int copySimpleResource(
 			WebDAVRequest webDAVRequest, Resource resource, String destination,
 			boolean overwrite)
@@ -45,28 +47,33 @@ public class WebDAVStorageWrapper implements WebDAVStorage {
 			webDAVRequest, resource, destination, overwrite);
 	}
 
+	@Override
 	public int deleteResource(WebDAVRequest webDAVRequest)
 		throws WebDAVException {
 
 		return _webDAVStorage.deleteResource(webDAVRequest);
 	}
 
+	@Override
 	public Resource getResource(WebDAVRequest webDAVRequest)
 		throws WebDAVException {
 
 		return _webDAVStorage.getResource(webDAVRequest);
 	}
 
+	@Override
 	public List<Resource> getResources(WebDAVRequest webDAVRequest)
 		throws WebDAVException {
 
 		return _webDAVStorage.getResources(webDAVRequest);
 	}
 
+	@Override
 	public String getRootPath() {
 		return _webDAVStorage.getRootPath();
 	}
 
+	@Override
 	public String getToken() {
 		return _webDAVStorage.getToken();
 	}
@@ -75,16 +82,19 @@ public class WebDAVStorageWrapper implements WebDAVStorage {
 		return _webDAVStorage;
 	}
 
+	@Override
 	public boolean isAvailable(WebDAVRequest webDAVRequest)
 		throws WebDAVException {
 
 		return _webDAVStorage.isAvailable(webDAVRequest);
 	}
 
+	@Override
 	public boolean isSupportsClassTwo() {
 		return _webDAVStorage.isSupportsClassTwo();
 	}
 
+	@Override
 	public Status lockResource(
 			WebDAVRequest webDAVRequest, String owner, long timeout)
 		throws WebDAVException {
@@ -92,12 +102,14 @@ public class WebDAVStorageWrapper implements WebDAVStorage {
 		return _webDAVStorage.lockResource(webDAVRequest, owner, timeout);
 	}
 
+	@Override
 	public Status makeCollection(WebDAVRequest webDAVRequest)
 		throws WebDAVException {
 
 		return _webDAVStorage.makeCollection(webDAVRequest);
 	}
 
+	@Override
 	public int moveCollectionResource(
 			WebDAVRequest webDAVRequest, Resource resource, String destination,
 			boolean overwrite)
@@ -107,6 +119,7 @@ public class WebDAVStorageWrapper implements WebDAVStorage {
 			webDAVRequest, resource, destination, overwrite);
 	}
 
+	@Override
 	public int moveSimpleResource(
 			WebDAVRequest webDAVRequest, Resource resource, String destination,
 			boolean overwrite)
@@ -116,10 +129,12 @@ public class WebDAVStorageWrapper implements WebDAVStorage {
 			webDAVRequest, resource, destination, overwrite);
 	}
 
+	@Override
 	public int putResource(WebDAVRequest webDAVRequest) throws WebDAVException {
 		return _webDAVStorage.putResource(webDAVRequest);
 	}
 
+	@Override
 	public Lock refreshResourceLock(
 			WebDAVRequest webDAVRequest, String uuid, long timeout)
 		throws WebDAVException {
@@ -127,14 +142,17 @@ public class WebDAVStorageWrapper implements WebDAVStorage {
 		return _webDAVStorage.refreshResourceLock(webDAVRequest, uuid, timeout);
 	}
 
+	@Override
 	public void setRootPath(String rootPath) {
 		_webDAVStorage.setRootPath(rootPath);
 	}
 
+	@Override
 	public void setToken(String token) {
 		_webDAVStorage.setToken(token);
 	}
 
+	@Override
 	public boolean unlockResource(WebDAVRequest webDAVRequest, String token)
 		throws WebDAVException {
 

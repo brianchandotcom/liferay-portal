@@ -33,6 +33,7 @@ import com.liferay.portal.util.PortalUtil;
 public class PluginSettingLocalServiceImpl
 	extends PluginSettingLocalServiceBaseImpl {
 
+	@Override
 	public void checkPermission(long userId, String pluginId, String pluginType)
 		throws PortalException {
 
@@ -41,6 +42,7 @@ public class PluginSettingLocalServiceImpl
 		}
 	}
 
+	@Override
 	public PluginSetting getDefaultPluginSetting() {
 		PluginSettingImpl pluginSetting = new PluginSettingImpl();
 
@@ -50,6 +52,7 @@ public class PluginSettingLocalServiceImpl
 		return pluginSetting;
 	}
 
+	@Override
 	public PluginSetting getPluginSetting(
 			long companyId, String pluginId, String pluginType)
 		throws SystemException {
@@ -86,6 +89,7 @@ public class PluginSettingLocalServiceImpl
 		return pluginSetting;
 	}
 
+	@Override
 	public boolean hasPermission(
 		long userId, String pluginId, String pluginType) {
 
@@ -111,6 +115,7 @@ public class PluginSettingLocalServiceImpl
 		}
 	}
 
+	@Override
 	public PluginSetting updatePluginSetting(
 			long companyId, String pluginId, String pluginType, String roles,
 			boolean active)

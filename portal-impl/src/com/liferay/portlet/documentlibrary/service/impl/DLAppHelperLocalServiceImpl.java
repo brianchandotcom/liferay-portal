@@ -90,6 +90,7 @@ import javax.portlet.PortletPreferences;
 public class DLAppHelperLocalServiceImpl
 	extends DLAppHelperLocalServiceBaseImpl {
 
+	@Override
 	public void addFileEntry(
 			long userId, FileEntry fileEntry, FileVersion fileVersion,
 			ServiceContext serviceContext)
@@ -145,6 +146,7 @@ public class DLAppHelperLocalServiceImpl
 		}
 	}
 
+	@Override
 	public void addFolder(
 			long userId, Folder folder, ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -165,6 +167,7 @@ public class DLAppHelperLocalServiceImpl
 		}
 	}
 
+	@Override
 	public void cancelCheckOut(
 			long userId, FileEntry fileEntry, FileVersion sourceFileVersion,
 			FileVersion destinationFileVersion, FileVersion draftFileVersion,
@@ -192,6 +195,7 @@ public class DLAppHelperLocalServiceImpl
 		}
 	}
 
+	@Override
 	public void checkAssetEntry(
 			long userId, FileEntry fileEntry, FileVersion fileVersion)
 		throws PortalException, SystemException {
@@ -253,6 +257,7 @@ public class DLAppHelperLocalServiceImpl
 		}
 	}
 
+	@Override
 	public void deleteFileEntry(FileEntry fileEntry)
 		throws PortalException, SystemException {
 
@@ -314,6 +319,7 @@ public class DLAppHelperLocalServiceImpl
 		}
 	}
 
+	@Override
 	public void deleteFolder(Folder folder)
 		throws PortalException, SystemException {
 
@@ -342,6 +348,7 @@ public class DLAppHelperLocalServiceImpl
 		}
 	}
 
+	@Override
 	public void getFileAsStream(
 			long userId, FileEntry fileEntry, boolean incrementCounter)
 		throws PortalException, SystemException {
@@ -375,6 +382,7 @@ public class DLAppHelperLocalServiceImpl
 		}
 	}
 
+	@Override
 	public List<DLFileShortcut> getFileShortcuts(
 			long groupId, long folderId, boolean active, int status)
 		throws SystemException {
@@ -387,6 +395,7 @@ public class DLAppHelperLocalServiceImpl
 	 * @deprecated As of 6.2.0, replaced by {@link #getFileShortcuts(long, long,
 	 *             boolean, int)}
 	 */
+	@Override
 	public List<DLFileShortcut> getFileShortcuts(
 			long groupId, long folderId, int status)
 		throws SystemException {
@@ -394,6 +403,7 @@ public class DLAppHelperLocalServiceImpl
 		return getFileShortcuts(groupId, folderId, true, status);
 	}
 
+	@Override
 	public int getFileShortcutsCount(
 			long groupId, long folderId, boolean active, int status)
 		throws SystemException {
@@ -406,16 +416,19 @@ public class DLAppHelperLocalServiceImpl
 	 * @deprecated As of 6.2.0, replaced by {@link #getFileShortcutsCount(long,
 	 *             long, boolean, int)}
 	 */
+	@Override
 	public int getFileShortcutsCount(long groupId, long folderId, int status)
 		throws SystemException {
 
 		return getFileShortcutsCount(groupId, folderId, true, status);
 	}
 
+	@Override
 	public List<FileEntry> getNoAssetFileEntries() {
 		return null;
 	}
 
+	@Override
 	public void moveFileEntry(FileEntry fileEntry)
 		throws PortalException, SystemException {
 
@@ -426,6 +439,7 @@ public class DLAppHelperLocalServiceImpl
 		}
 	}
 
+	@Override
 	public FileEntry moveFileEntryFromTrash(
 			long userId, FileEntry fileEntry, long newFolderId,
 			ServiceContext serviceContext)
@@ -460,6 +474,7 @@ public class DLAppHelperLocalServiceImpl
 	 * @throws PortalException if a user with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public FileEntry moveFileEntryToTrash(long userId, FileEntry fileEntry)
 		throws PortalException, SystemException {
 
@@ -482,6 +497,7 @@ public class DLAppHelperLocalServiceImpl
 		}
 	}
 
+	@Override
 	public DLFileShortcut moveFileShortcutFromTrash(
 			long userId, DLFileShortcut dlFileShortcut, long newFolderId,
 			ServiceContext serviceContext)
@@ -505,6 +521,7 @@ public class DLAppHelperLocalServiceImpl
 	 * @throws PortalException if a user with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public DLFileShortcut moveFileShortcutToTrash(
 			long userId, DLFileShortcut dlFileShortcut)
 		throws PortalException, SystemException {
@@ -533,6 +550,7 @@ public class DLAppHelperLocalServiceImpl
 		return dlFileShortcut;
 	}
 
+	@Override
 	public void moveFolder(Folder folder) {
 		if (!isStagingGroup(folder.getGroupId())) {
 			registerDLSyncCallback(
@@ -541,6 +559,7 @@ public class DLAppHelperLocalServiceImpl
 		}
 	}
 
+	@Override
 	public Folder moveFolderFromTrash(
 			long userId, Folder folder, long parentFolderId,
 			ServiceContext serviceContext)
@@ -577,6 +596,7 @@ public class DLAppHelperLocalServiceImpl
 	 * @throws PortalException if a user with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public Folder moveFolderToTrash(long userId, Folder folder)
 		throws PortalException, SystemException {
 
@@ -601,6 +621,7 @@ public class DLAppHelperLocalServiceImpl
 		}
 	}
 
+	@Override
 	public void restoreFileEntryFromTrash(long userId, FileEntry fileEntry)
 		throws PortalException, SystemException {
 
@@ -658,6 +679,7 @@ public class DLAppHelperLocalServiceImpl
 			0);
 	}
 
+	@Override
 	public void restoreFileShortcutFromTrash(
 			long userId, DLFileShortcut dlFileShortcut)
 		throws PortalException, SystemException {
@@ -687,6 +709,7 @@ public class DLAppHelperLocalServiceImpl
 		trashEntryLocalService.deleteEntry(trashEntry.getEntryId());
 	}
 
+	@Override
 	public void restoreFolderFromTrash(long userId, Folder folder)
 		throws PortalException, SystemException {
 
@@ -718,6 +741,7 @@ public class DLAppHelperLocalServiceImpl
 			0);
 	}
 
+	@Override
 	public AssetEntry updateAsset(
 			long userId, FileEntry fileEntry, FileVersion fileVersion,
 			long assetClassPk)
@@ -742,6 +766,7 @@ public class DLAppHelperLocalServiceImpl
 			assetLinkIds);
 	}
 
+	@Override
 	public AssetEntry updateAsset(
 			long userId, FileEntry fileEntry, FileVersion fileVersion,
 			long[] assetCategoryIds, String[] assetTagNames,
@@ -849,6 +874,7 @@ public class DLAppHelperLocalServiceImpl
 		return assetEntry;
 	}
 
+	@Override
 	public AssetEntry updateAsset(
 			long userId, Folder folder, long[] assetCategoryIds,
 			String[] assetTagNames, long[] assetLinkEntryIds)
@@ -885,6 +911,7 @@ public class DLAppHelperLocalServiceImpl
 		return assetEntry;
 	}
 
+	@Override
 	public void updateDependentStatus(
 			User user, List<Object> dlFileEntriesAndDLFolders, int status)
 		throws PortalException, SystemException {
@@ -1041,6 +1068,7 @@ public class DLAppHelperLocalServiceImpl
 		}
 	}
 
+	@Override
 	public void updateFileEntry(
 			long userId, FileEntry fileEntry, FileVersion sourceFileVersion,
 			FileVersion destinationFileVersion, long assetClassPk)
@@ -1067,6 +1095,7 @@ public class DLAppHelperLocalServiceImpl
 		registerDLProcessorCallback(fileEntry, sourceFileVersion);
 	}
 
+	@Override
 	public void updateFileEntry(
 			long userId, FileEntry fileEntry, FileVersion sourceFileVersion,
 			FileVersion destinationFileVersion, ServiceContext serviceContext)
@@ -1085,6 +1114,7 @@ public class DLAppHelperLocalServiceImpl
 		registerDLProcessorCallback(fileEntry, sourceFileVersion);
 	}
 
+	@Override
 	public void updateFolder(
 			long userId, Folder folder, ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -1101,6 +1131,7 @@ public class DLAppHelperLocalServiceImpl
 		}
 	}
 
+	@Override
 	public void updateStatus(
 			long userId, FileEntry fileEntry, FileVersion latestFileVersion,
 			int oldStatus, int newStatus,

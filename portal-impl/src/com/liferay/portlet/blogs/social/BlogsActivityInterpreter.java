@@ -36,6 +36,7 @@ import java.text.Format;
  */
 public class BlogsActivityInterpreter extends BaseSocialActivityInterpreter {
 
+	@Override
 	public String[] getClassNames() {
 		return _CLASS_NAMES;
 	}

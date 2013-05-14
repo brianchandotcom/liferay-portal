@@ -27,6 +27,7 @@ import java.util.Set;
  */
 public abstract class BaseDestination implements Destination {
 
+	@Override
 	public void addDestinationEventListener(
 		DestinationEventListener destinationEventListener) {
 
@@ -41,13 +42,16 @@ public abstract class BaseDestination implements Destination {
 		open();
 	}
 
+	@Override
 	public void close() {
 		close(false);
 	}
 
+	@Override
 	public void close(boolean force) {
 	}
 
+	@Override
 	public void copyDestinationEventListeners(Destination destination) {
 		for (DestinationEventListener destinationEventListener :
 				_destinationEventListeners) {
@@ -56,6 +60,7 @@ public abstract class BaseDestination implements Destination {
 		}
 	}
 
+	@Override
 	public void copyMessageListeners(Destination destination) {
 		for (MessageListener messageListener : messageListeners) {
 			InvokerMessageListener invokerMessageListener =
@@ -67,18 +72,22 @@ public abstract class BaseDestination implements Destination {
 		}
 	}
 
+	@Override
 	public int getMessageListenerCount() {
 		return messageListeners.size();
 	}
 
+	@Override
 	public Set<MessageListener> getMessageListeners() {
 		return Collections.unmodifiableSet(messageListeners);
 	}
 
+	@Override
 	public String getName() {
 		return name;
 	}
 
+	@Override
 	public boolean isRegistered() {
 		if (getMessageListenerCount() > 0) {
 			return true;
@@ -88,9 +97,11 @@ public abstract class BaseDestination implements Destination {
 		}
 	}
 
+	@Override
 	public void open() {
 	}
 
+	@Override
 	public boolean register(MessageListener messageListener) {
 		InvokerMessageListener invokerMessageListener =
 			new InvokerMessageListener(messageListener);
@@ -98,6 +109,7 @@ public abstract class BaseDestination implements Destination {
 		return registerMessageListener(invokerMessageListener);
 	}
 
+	@Override
 	public boolean register(
 		MessageListener messageListener, ClassLoader classloader) {
 
@@ -107,12 +119,14 @@ public abstract class BaseDestination implements Destination {
 		return registerMessageListener(invokerMessageListener);
 	}
 
+	@Override
 	public void removeDestinationEventListener(
 		DestinationEventListener destinationEventListener) {
 
 		_destinationEventListeners.remove(destinationEventListener);
 	}
 
+	@Override
 	public void removeDestinationEventListeners() {
 		_destinationEventListeners.clear();
 	}
@@ -121,6 +135,7 @@ public abstract class BaseDestination implements Destination {
 		this.name = name;
 	}
 
+	@Override
 	public boolean unregister(MessageListener messageListener) {
 		InvokerMessageListener invokerMessageListener =
 			new InvokerMessageListener(messageListener);
@@ -137,6 +152,7 @@ public abstract class BaseDestination implements Destination {
 		return unregisterMessageListener(invokerMessageListener);
 	}
 
+	@Override
 	public void unregisterMessageListeners() {
 		for (MessageListener messageListener : messageListeners) {
 			unregisterMessageListener((InvokerMessageListener)messageListener);

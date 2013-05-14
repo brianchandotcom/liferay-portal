@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
  */
 public abstract class BasePollerProcessor implements PollerProcessor {
 
+	@Override
 	public void receive(
 			PollerRequest pollerRequest, PollerResponse pollerResponse)
 		throws PollerException {
@@ -33,6 +34,7 @@ public abstract class BasePollerProcessor implements PollerProcessor {
 		}
 	}
 
+	@Override
 	public void send(PollerRequest pollerRequest) throws PollerException {
 		try {
 			doSend(pollerRequest);

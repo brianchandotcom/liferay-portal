@@ -34,6 +34,7 @@ public class PortletSessionListenerLoader implements ServletContextListener {
 		_httpSessionListener = httpSessionListener;
 	}
 
+	@Override
 	public void contextDestroyed(ServletContextEvent servletContextEvent) {
 		PortletSessionListenerManager.removeHttpSessionListener(
 			_httpSessionListener);
@@ -41,6 +42,7 @@ public class PortletSessionListenerLoader implements ServletContextListener {
 		_httpSessionListener = null;
 	}
 
+	@Override
 	public void contextInitialized(ServletContextEvent servletContextEvent) {
 		PortletSessionListenerManager.addHttpSessionListener(
 			_httpSessionListener);

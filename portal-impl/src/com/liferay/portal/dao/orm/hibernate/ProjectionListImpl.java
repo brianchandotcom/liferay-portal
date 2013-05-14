@@ -31,6 +31,7 @@ public class ProjectionListImpl
 		_projectionList = projectionList;
 	}
 
+	@Override
 	public ProjectionList add(Projection projection) {
 		ProjectionImpl projectionImpl = (ProjectionImpl)projection;
 
@@ -39,6 +40,7 @@ public class ProjectionListImpl
 		return this;
 	}
 
+	@Override
 	public ProjectionList add(Projection projection, String alias) {
 		ProjectionImpl projectionImpl = (ProjectionImpl)projection;
 

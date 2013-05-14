@@ -23,14 +23,17 @@ import com.liferay.portal.service.base.ClassNameServiceBaseImpl;
  */
 public class ClassNameServiceImpl extends ClassNameServiceBaseImpl {
 
+	@Override
 	public ClassName fetchClassName(String value) throws SystemException {
 		return classNameLocalService.fetchClassName(value);
 	}
 
+	@Override
 	public long fetchClassNameId(Class<?> clazz) {
 		return classNameLocalService.fetchClassNameId(clazz);
 	}
 
+	@Override
 	public long fetchClassNameId(String value) {
 		return classNameLocalService.fetchClassNameId(value);
 	}

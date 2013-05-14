@@ -26,6 +26,7 @@ import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermiss
  */
 public class DLFileVersionServiceImpl extends DLFileVersionServiceBaseImpl {
 
+	@Override
 	public DLFileVersion getFileVersion(long fileVersionId)
 		throws PortalException, SystemException {
 
@@ -39,6 +40,7 @@ public class DLFileVersionServiceImpl extends DLFileVersionServiceBaseImpl {
 		return fileVersion;
 	}
 
+	@Override
 	public DLFileVersion getLatestFileVersion(long fileEntryId)
 		throws PortalException, SystemException {
 

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.messaging.MessageBus;
  */
 public class DefaultMessageSender implements MessageSender {
 
+	@Override
 	public void send(String destinationName, Message message) {
 		_messageBus.sendMessage(destinationName, message);
 	}

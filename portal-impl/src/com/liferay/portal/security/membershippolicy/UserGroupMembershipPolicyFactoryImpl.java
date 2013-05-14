@@ -43,6 +43,7 @@ public class UserGroupMembershipPolicyFactoryImpl
 		_userGroupMembershipPolicy = _originalUserGroupMembershipPolicy;
 	}
 
+	@Override
 	public UserGroupMembershipPolicy getUserGroupMembershipPolicy() {
 		return _userGroupMembershipPolicy;
 	}

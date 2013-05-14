@@ -31,6 +31,7 @@ public class JournalStructureImpl extends JournalStructureBaseImpl {
 	public JournalStructureImpl() {
 	}
 
+	@Override
 	public String getMergedXsd() {
 		String parentStructureId = getParentStructureId();
 

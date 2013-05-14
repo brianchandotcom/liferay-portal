@@ -27,6 +27,7 @@ import com.liferay.portal.util.PropsValues;
  */
 public class ShardLocalServiceImpl extends ShardLocalServiceBaseImpl {
 
+	@Override
 	public Shard addShard(String className, long classPK, String name)
 		throws SystemException {
 
@@ -49,6 +50,7 @@ public class ShardLocalServiceImpl extends ShardLocalServiceBaseImpl {
 		return shard;
 	}
 
+	@Override
 	public Shard getShard(String className, long classPK)
 		throws PortalException, SystemException {
 

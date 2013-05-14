@@ -56,6 +56,7 @@ public class CalEventFinderImpl
 	public static final String FIND_BY_G_SD_T =
 		CalEventFinder.class.getName() + ".findByG_SD_T";
 
+	@Override
 	public int countByG_SD_T(
 			long groupId, Date startDateGT, Date startDateLT,
 			boolean timeZoneSensitive, String[] types)
@@ -113,6 +114,7 @@ public class CalEventFinderImpl
 		}
 	}
 
+	@Override
 	public List<CalEvent> findByFutureReminders() throws SystemException {
 		Calendar calendar = Calendar.getInstance();
 
@@ -147,6 +149,7 @@ public class CalEventFinderImpl
 		}
 	}
 
+	@Override
 	public List<CalEvent> findByNoAssets() throws SystemException {
 		Session session = null;
 
@@ -169,6 +172,7 @@ public class CalEventFinderImpl
 		}
 	}
 
+	@Override
 	public List<CalEvent> findByG_SD_T(
 			long groupId, Date startDateGT, Date startDateLT,
 			boolean timeZoneSensitive, String[] types)
@@ -179,6 +183,7 @@ public class CalEventFinderImpl
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
+	@Override
 	public List<CalEvent> findByG_SD_T(
 			long groupId, Date startDateGT, Date startDateLT,
 			boolean timeZoneSensitive, String[] types, int start, int end)

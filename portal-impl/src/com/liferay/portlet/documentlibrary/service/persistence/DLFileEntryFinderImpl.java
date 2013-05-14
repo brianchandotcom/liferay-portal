@@ -77,6 +77,7 @@ public class DLFileEntryFinderImpl
 	public static final String FIND_BY_G_U_F =
 		DLFileEntryFinder.class.getName() + ".findByG_U_F";
 
+	@Override
 	public int countByExtraSettings() throws SystemException {
 		Session session = null;
 
@@ -109,6 +110,7 @@ public class DLFileEntryFinderImpl
 		}
 	}
 
+	@Override
 	public int countByG_F(
 			long groupId, List<Long> folderIds, QueryDefinition queryDefinition)
 		throws SystemException {
@@ -117,6 +119,7 @@ public class DLFileEntryFinderImpl
 			groupId, 0, folderIds, null, queryDefinition, false);
 	}
 
+	@Override
 	public int countByG_U_F_M(
 			long groupId, long userId, List<Long> folderIds, String[] mimeTypes,
 			QueryDefinition queryDefinition)
@@ -126,6 +129,7 @@ public class DLFileEntryFinderImpl
 			groupId, userId, folderIds, mimeTypes, queryDefinition, false);
 	}
 
+	@Override
 	public DLFileEntry fetchByAnyImageId(long imageId) throws SystemException {
 		Session session = null;
 
@@ -161,6 +165,7 @@ public class DLFileEntryFinderImpl
 		}
 	}
 
+	@Override
 	public int filterCountByG_F(
 			long groupId, List<Long> folderIds, QueryDefinition queryDefinition)
 		throws SystemException {
@@ -169,6 +174,7 @@ public class DLFileEntryFinderImpl
 			groupId, 0, folderIds, null, queryDefinition, true);
 	}
 
+	@Override
 	public List<DLFileEntry> filterFindByG_F(
 			long groupId, List<Long> folderIds, QueryDefinition queryDefinition)
 		throws SystemException {
@@ -177,6 +183,7 @@ public class DLFileEntryFinderImpl
 			groupId, 0, folderIds, null, queryDefinition, true);
 	}
 
+	@Override
 	public DLFileEntry findByAnyImageId(long imageId)
 		throws NoSuchFileEntryException, SystemException {
 
@@ -190,6 +197,7 @@ public class DLFileEntryFinderImpl
 			"No DLFileEntry exists with the imageId " + imageId);
 	}
 
+	@Override
 	public List<DLFileEntry> findByDDMStructureIds(
 			long[] ddmStructureIds, int start, int end)
 		throws SystemException {
@@ -228,6 +236,7 @@ public class DLFileEntryFinderImpl
 		}
 	}
 
+	@Override
 	public List<DLFileEntry> findByExtraSettings(int start, int end)
 		throws SystemException {
 
@@ -253,6 +262,7 @@ public class DLFileEntryFinderImpl
 		}
 	}
 
+	@Override
 	public List<DLFileEntry> findByMisversioned() throws SystemException {
 		Session session = null;
 
@@ -275,6 +285,7 @@ public class DLFileEntryFinderImpl
 		}
 	}
 
+	@Override
 	public List<DLFileEntry> findByNoAssets() throws SystemException {
 		Session session = null;
 
@@ -297,6 +308,7 @@ public class DLFileEntryFinderImpl
 		}
 	}
 
+	@Override
 	public List<DLFileEntry> findByOrphanedFileEntries()
 		throws SystemException {
 
@@ -321,6 +333,7 @@ public class DLFileEntryFinderImpl
 		}
 	}
 
+	@Override
 	public List<DLFileEntry> findByG_F(
 			long groupId, List<Long> folderIds, QueryDefinition queryDefinition)
 		throws SystemException {
@@ -329,6 +342,7 @@ public class DLFileEntryFinderImpl
 			groupId, 0, folderIds, null, queryDefinition, false);
 	}
 
+	@Override
 	public List<DLFileEntry> findByG_U_F_M(
 			long groupId, long userId, List<Long> folderIds, String[] mimeTypes,
 			QueryDefinition queryDefinition)

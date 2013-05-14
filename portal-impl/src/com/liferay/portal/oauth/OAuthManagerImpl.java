@@ -55,6 +55,7 @@ public class OAuthManagerImpl implements OAuthManager {
 		_oAuthService = api.createService(key, secret, callbackURL, scope);
 	}
 
+	@Override
 	public Token getAccessToken(Token requestToken, Verifier verifier)
 		throws OAuthException {
 
@@ -69,6 +70,7 @@ public class OAuthManagerImpl implements OAuthManager {
 		}
 	}
 
+	@Override
 	public Token getRequestToken() throws OAuthException {
 		try {
 			return new TokenImpl(_oAuthService.getRequestToken());
@@ -78,6 +80,7 @@ public class OAuthManagerImpl implements OAuthManager {
 		}
 	}
 
+	@Override
 	public String getVersion() throws OAuthException {
 		try {
 			return _oAuthService.getVersion();
@@ -87,6 +90,7 @@ public class OAuthManagerImpl implements OAuthManager {
 		}
 	}
 
+	@Override
 	public void signRequest(Token accessToken, OAuthRequest oAuthRequest)
 		throws OAuthException {
 

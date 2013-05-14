@@ -29,6 +29,7 @@ import java.util.List;
 public class AnnouncementsFlagLocalServiceImpl
 	extends AnnouncementsFlagLocalServiceBaseImpl {
 
+	@Override
 	public AnnouncementsFlag addFlag(long userId, long entryId, int value)
 		throws SystemException {
 
@@ -46,10 +47,12 @@ public class AnnouncementsFlagLocalServiceImpl
 		return flag;
 	}
 
+	@Override
 	public void deleteFlag(AnnouncementsFlag flag) throws SystemException {
 		announcementsFlagPersistence.remove(flag);
 	}
 
+	@Override
 	public void deleteFlag(long flagId)
 		throws PortalException, SystemException {
 
@@ -59,6 +62,7 @@ public class AnnouncementsFlagLocalServiceImpl
 		deleteFlag(flag);
 	}
 
+	@Override
 	public void deleteFlags(long entryId) throws SystemException {
 		List<AnnouncementsFlag> flags =
 			announcementsFlagPersistence.findByEntryId(entryId);
@@ -68,6 +72,7 @@ public class AnnouncementsFlagLocalServiceImpl
 		}
 	}
 
+	@Override
 	public AnnouncementsFlag getFlag(long userId, long entryId, int value)
 		throws PortalException, SystemException {
 

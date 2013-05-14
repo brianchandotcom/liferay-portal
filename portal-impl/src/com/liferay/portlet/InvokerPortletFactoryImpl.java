@@ -24,6 +24,7 @@ import javax.portlet.PortletException;
  */
 public class InvokerPortletFactoryImpl implements InvokerPortletFactory {
 
+	@Override
 	public InvokerPortlet create(
 			com.liferay.portal.model.Portlet portletModel, Portlet portlet,
 			PortletConfig portletConfig, PortletContext portletContext,
@@ -45,6 +46,7 @@ public class InvokerPortletFactoryImpl implements InvokerPortletFactory {
 		}
 	}
 
+	@Override
 	public InvokerPortlet create(
 			com.liferay.portal.model.Portlet portletModel, Portlet portlet,
 			PortletContext portletContext)

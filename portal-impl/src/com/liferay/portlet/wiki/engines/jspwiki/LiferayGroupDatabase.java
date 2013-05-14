@@ -27,19 +27,24 @@ import java.util.Properties;
  */
 public class LiferayGroupDatabase implements GroupDatabase {
 
+	@Override
 	public void commit() {
 	}
 
+	@Override
 	public void delete(Group group) {
 	}
 
+	@Override
 	public Group[] groups() {
 		return new Group[0];
 	}
 
+	@Override
 	public void initialize(WikiEngine engine, Properties props) {
 	}
 
+	@Override
 	public void save(Group group, Principal modifier) {
 	}
 

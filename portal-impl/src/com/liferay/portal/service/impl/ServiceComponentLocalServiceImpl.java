@@ -61,6 +61,7 @@ import javax.servlet.ServletContext;
 public class ServiceComponentLocalServiceImpl
 	extends ServiceComponentLocalServiceBaseImpl {
 
+	@Override
 	public void destroyServiceComponent(
 			ServletContext servletContext, ClassLoader classLoader)
 		throws SystemException {
@@ -73,6 +74,7 @@ public class ServiceComponentLocalServiceImpl
 		}
 	}
 
+	@Override
 	public ServiceComponent initServiceComponent(
 			ServletContext servletContext, ClassLoader classLoader,
 			String buildNamespace, long buildNumber, long buildDate,
@@ -184,6 +186,7 @@ public class ServiceComponentLocalServiceImpl
 		}
 	}
 
+	@Override
 	public void upgradeDB(
 			final ClassLoader classLoader, final String buildNamespace,
 			final long buildNumber, final boolean buildAutoUpgrade,
@@ -215,6 +218,7 @@ public class ServiceComponentLocalServiceImpl
 		);
 	}
 
+	@Override
 	public void verifyDB() throws SystemException {
 		List<ServiceComponent> serviceComponents =
 			serviceComponentPersistence.findAll();

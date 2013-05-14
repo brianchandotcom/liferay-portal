@@ -24,10 +24,12 @@ import javax.servlet.ServletContext;
  */
 public class TomcatServerCapabilities implements ServerCapabilities {
 
+	@Override
 	public void determine(ServletContext servletContext) throws Exception {
 		determineSupportsHotDeploy(servletContext);
 	}
 
+	@Override
 	public boolean isSupportsHotDeploy() {
 		return _supportsHotDeploy;
 	}

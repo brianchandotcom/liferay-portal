@@ -30,6 +30,7 @@ import java.util.Map;
  */
 public class DummySiteMembershipPolicy extends BaseSiteMembershipPolicy {
 
+	@Override
 	public void checkMembership(
 		long[] userIds, long[] addGroupIds, long[] removeGroupIds) {
 	}
@@ -54,6 +55,7 @@ public class DummySiteMembershipPolicy extends BaseSiteMembershipPolicy {
 		return false;
 	}
 
+	@Override
 	public void propagateMembership(
 		long[] userIds, long[] addGroupIds, long[] removeGroupIds) {
 	}
@@ -62,6 +64,7 @@ public class DummySiteMembershipPolicy extends BaseSiteMembershipPolicy {
 	public void verifyPolicy(Group group) {
 	}
 
+	@Override
 	public void verifyPolicy(
 		Group group, Group oldGroup, List<AssetCategory> oldAssetCategories,
 		List<AssetTag> oldAssetTags,

@@ -47,6 +47,7 @@ public class FutureClusterResponses implements Future<ClusterNodeResponses> {
 		_expectedReplyAddress.add(address);
 	}
 
+	@Override
 	public boolean cancel(boolean mayInterruptIfRunning) {
 		if (_cancelled || isDone()) {
 			return false;
@@ -61,6 +62,7 @@ public class FutureClusterResponses implements Future<ClusterNodeResponses> {
 		return _expectedReplyAddress.contains(address);
 	}
 
+	@Override
 	public ClusterNodeResponses get() throws InterruptedException {
 		if (_cancelled) {
 			throw new CancellationException();
@@ -71,6 +73,7 @@ public class FutureClusterResponses implements Future<ClusterNodeResponses> {
 		return _clusterNodeResponses;
 	}
 
+	@Override
 	public ClusterNodeResponses get(long timeout, TimeUnit timeUnit)
 		throws InterruptedException, TimeoutException {
 
@@ -90,10 +93,12 @@ public class FutureClusterResponses implements Future<ClusterNodeResponses> {
 		return _clusterNodeResponses.getClusterResponses();
 	}
 
+	@Override
 	public boolean isCancelled() {
 		return _cancelled;
 	}
 
+	@Override
 	public boolean isDone() {
 		if ((_countDownLatch.getCount() == 0) || _cancelled) {
 			return true;

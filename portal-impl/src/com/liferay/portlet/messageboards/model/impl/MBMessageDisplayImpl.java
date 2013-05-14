@@ -49,34 +49,42 @@ public class MBMessageDisplayImpl implements MBMessageDisplay {
 		_threadView = threadView;
 	}
 
+	@Override
 	public MBCategory getCategory() {
 		return _category;
 	}
 
+	@Override
 	public MBMessage getMessage() {
 		return _message;
 	}
 
+	@Override
 	public MBThread getNextThread() {
 		return _nextThread;
 	}
 
+	@Override
 	public MBMessage getParentMessage() {
 		return _parentMessage;
 	}
 
+	@Override
 	public MBThread getPreviousThread() {
 		return _previousThread;
 	}
 
+	@Override
 	public MBThread getThread() {
 		return _thread;
 	}
 
+	@Override
 	public String getThreadView() {
 		return _threadView;
 	}
 
+	@Override
 	public MBTreeWalker getTreeWalker() {
 		return _treeWalker;
 	}

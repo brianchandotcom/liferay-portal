@@ -33,6 +33,7 @@ import org.springframework.web.context.ContextLoaderListener;
  */
 public class SpringHotDeployListener extends BaseHotDeployListener {
 
+	@Override
 	public void invokeDeploy(HotDeployEvent hotDeployEvent)
 		throws HotDeployException {
 
@@ -45,6 +46,7 @@ public class SpringHotDeployListener extends BaseHotDeployListener {
 		}
 	}
 
+	@Override
 	public void invokeUndeploy(HotDeployEvent hotDeployEvent)
 		throws HotDeployException {
 

@@ -31,6 +31,7 @@ import java.util.TimerTask;
 public class PollerCometDelayedJobImpl
 	extends BaseMessageListener implements PollerCometDelayedJob {
 
+	@Override
 	public void addPollerCometDelayedTask(
 		PollerCometDelayedTask pollerCometDelayedTask) {
 

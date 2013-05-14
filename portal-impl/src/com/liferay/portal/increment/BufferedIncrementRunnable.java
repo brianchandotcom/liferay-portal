@@ -48,6 +48,7 @@ public class BufferedIncrementRunnable implements Runnable {
 		_companyId = CompanyThreadLocal.getCompanyId();
 	}
 
+	@Override
 	@SuppressWarnings("rawtypes")
 	public void run() {
 		CompanyThreadLocal.setCompanyId(_companyId);

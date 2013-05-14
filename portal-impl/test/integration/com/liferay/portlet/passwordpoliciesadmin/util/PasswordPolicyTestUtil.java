@@ -20,8 +20,8 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 
 /**
-* @author Daniela Zapata Riesco
-*/
+ * @author Daniela Zapata Riesco
+ */
 public class PasswordPolicyTestUtil {
 
 	public static PasswordPolicy addPasswordPolicy(

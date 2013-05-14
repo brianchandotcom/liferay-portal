@@ -38,6 +38,7 @@ public class AssetLinkFinderImpl
 	public static final String FIND_BY_E1_T_V =
 		AssetLinkFinder.class.getName() + ".findByE1_T_V";
 
+	@Override
 	public List<AssetLink> findByE1_V(long entryId1, boolean visible)
 		throws SystemException {
 
@@ -68,6 +69,7 @@ public class AssetLinkFinderImpl
 		}
 	}
 
+	@Override
 	public List<AssetLink> findByE1_T_V(
 			long entryId1, int type, boolean visible)
 		throws SystemException {

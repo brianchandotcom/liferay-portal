@@ -26,6 +26,7 @@ import java.util.concurrent.Callable;
 public class TransactionCommitCallbackRegistryImpl
 	implements TransactionCommitCallbackRegistry {
 
+	@Override
 	public void registerCallback(Callable<?> callable) {
 		TransactionCommitCallbackUtil.registerCallback(callable);
 	}

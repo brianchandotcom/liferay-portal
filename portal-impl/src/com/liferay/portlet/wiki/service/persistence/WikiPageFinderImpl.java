@@ -55,6 +55,7 @@ public class WikiPageFinderImpl
 	public static final String FIND_BY_NO_ASSETS =
 		WikiPageFinder.class.getName() + ".findByNoAssets";
 
+	@Override
 	public int countByCreateDate(
 			long groupId, long nodeId, Date createDate, boolean before)
 		throws SystemException {
@@ -63,6 +64,7 @@ public class WikiPageFinderImpl
 			groupId, nodeId, new Timestamp(createDate.getTime()), before);
 	}
 
+	@Override
 	public int countByCreateDate(
 			long groupId, long nodeId, Timestamp createDate, boolean before)
 		throws SystemException {
@@ -70,6 +72,7 @@ public class WikiPageFinderImpl
 		return doCountByCreateDate(groupId, nodeId, createDate, before, false);
 	}
 
+	@Override
 	public int filterCountByCreateDate(
 			long groupId, long nodeId, Date createDate, boolean before)
 		throws SystemException {
@@ -78,6 +81,7 @@ public class WikiPageFinderImpl
 			groupId, nodeId, new Timestamp(createDate.getTime()), before, true);
 	}
 
+	@Override
 	public int filterCountByCreateDate(
 			long groupId, long nodeId, Timestamp createDate, boolean before)
 		throws SystemException {
@@ -85,6 +89,7 @@ public class WikiPageFinderImpl
 		return doCountByCreateDate(groupId, nodeId, createDate, before, true);
 	}
 
+	@Override
 	public List<WikiPage> filterFindByCreateDate(
 			long groupId, long nodeId, Date createDate, boolean before,
 			int start, int end)
@@ -95,6 +100,7 @@ public class WikiPageFinderImpl
 			end, true);
 	}
 
+	@Override
 	public List<WikiPage> filterFindByCreateDate(
 			long groupId, long nodeId, Timestamp createDate, boolean before,
 			int start, int end)
@@ -104,6 +110,7 @@ public class WikiPageFinderImpl
 			groupId, nodeId, createDate, before, start, end, true);
 	}
 
+	@Override
 	public WikiPage findByResourcePrimKey(long resourcePrimKey)
 		throws NoSuchPageException, SystemException {
 
@@ -144,6 +151,7 @@ public class WikiPageFinderImpl
 		throw new NoSuchPageException(sb.toString());
 	}
 
+	@Override
 	public List<WikiPage> findByCreateDate(
 			long groupId, long nodeId, Date createDate, boolean before,
 			int start, int end)
@@ -154,6 +162,7 @@ public class WikiPageFinderImpl
 			end, false);
 	}
 
+	@Override
 	public List<WikiPage> findByCreateDate(
 			long groupId, long nodeId, Timestamp createDate, boolean before,
 			int start, int end)
@@ -163,6 +172,7 @@ public class WikiPageFinderImpl
 			groupId, nodeId, createDate, before, start, end, false);
 	}
 
+	@Override
 	public List<WikiPage> findByNoAssets() throws SystemException {
 		Session session = null;
 

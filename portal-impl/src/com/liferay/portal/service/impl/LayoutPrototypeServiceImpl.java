@@ -41,6 +41,7 @@ public class LayoutPrototypeServiceImpl extends LayoutPrototypeServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #addLayoutPrototype(long,
 	 *             Map, String, boolean, ServiceContext)}
 	 */
+	@Override
 	public LayoutPrototype addLayoutPrototype(
 			Map<Locale, String> nameMap, String description, boolean active)
 		throws PortalException, SystemException {
@@ -55,6 +56,7 @@ public class LayoutPrototypeServiceImpl extends LayoutPrototypeServiceBaseImpl {
 			active);
 	}
 
+	@Override
 	public LayoutPrototype addLayoutPrototype(
 			Map<Locale, String> nameMap, String description, boolean active,
 			ServiceContext serviceContext)
@@ -70,6 +72,7 @@ public class LayoutPrototypeServiceImpl extends LayoutPrototypeServiceBaseImpl {
 			serviceContext);
 	}
 
+	@Override
 	public void deleteLayoutPrototype(long layoutPrototypeId)
 		throws PortalException, SystemException {
 
@@ -79,6 +82,7 @@ public class LayoutPrototypeServiceImpl extends LayoutPrototypeServiceBaseImpl {
 		layoutPrototypeLocalService.deleteLayoutPrototype(layoutPrototypeId);
 	}
 
+	@Override
 	public LayoutPrototype getLayoutPrototype(long layoutPrototypeId)
 		throws PortalException, SystemException {
 
@@ -89,6 +93,7 @@ public class LayoutPrototypeServiceImpl extends LayoutPrototypeServiceBaseImpl {
 			layoutPrototypeId);
 	}
 
+	@Override
 	public List<LayoutPrototype> search(
 			long companyId, Boolean active, OrderByComparator obc)
 		throws PortalException, SystemException {
@@ -116,6 +121,7 @@ public class LayoutPrototypeServiceImpl extends LayoutPrototypeServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #updateLayoutPrototype(long,
 	 *             Map, String, boolean, ServiceContext)}
 	 */
+	@Override
 	public LayoutPrototype updateLayoutPrototype(
 			long layoutPrototypeId, Map<Locale, String> nameMap,
 			String description, boolean active)
@@ -128,6 +134,7 @@ public class LayoutPrototypeServiceImpl extends LayoutPrototypeServiceBaseImpl {
 			layoutPrototypeId, nameMap, description, active);
 	}
 
+	@Override
 	public LayoutPrototype updateLayoutPrototype(
 			long layoutPrototypeId, Map<Locale, String> nameMap,
 			String description, boolean active, ServiceContext serviceContext)

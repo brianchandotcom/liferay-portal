@@ -34,6 +34,7 @@ import java.util.Map;
  */
 public class PollsQuestionServiceImpl extends PollsQuestionServiceBaseImpl {
 
+	@Override
 	public PollsQuestion addQuestion(
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			int expirationDateMonth, int expirationDateDay,
@@ -52,6 +53,7 @@ public class PollsQuestionServiceImpl extends PollsQuestionServiceBaseImpl {
 			expirationDateMinute, neverExpire, choices, serviceContext);
 	}
 
+	@Override
 	public void deleteQuestion(long questionId)
 		throws PortalException, SystemException {
 
@@ -61,6 +63,7 @@ public class PollsQuestionServiceImpl extends PollsQuestionServiceBaseImpl {
 		pollsQuestionLocalService.deleteQuestion(questionId);
 	}
 
+	@Override
 	public PollsQuestion getQuestion(long questionId)
 		throws PortalException, SystemException {
 
@@ -70,6 +73,7 @@ public class PollsQuestionServiceImpl extends PollsQuestionServiceBaseImpl {
 		return pollsQuestionLocalService.getQuestion(questionId);
 	}
 
+	@Override
 	public PollsQuestion updateQuestion(
 			long questionId, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap, int expirationDateMonth,

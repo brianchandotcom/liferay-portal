@@ -23,8 +23,8 @@ import com.liferay.portal.service.PasswordPolicyLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 
 /**
-* @author Daniela Zapata Riesco
-*/
+ * @author Daniela Zapata Riesco
+ */
 public class PasswordPolicyStagedModelDataHandler
 	extends BaseStagedModelDataHandler<PasswordPolicy> {
 

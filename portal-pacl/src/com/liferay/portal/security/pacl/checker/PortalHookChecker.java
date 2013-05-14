@@ -31,6 +31,7 @@ import java.util.TreeSet;
  */
 public class PortalHookChecker extends BaseChecker {
 
+	@Override
 	public void afterPropertiesSet() {
 		initCustomJspDir();
 		initIndexers();
@@ -106,6 +107,7 @@ public class PortalHookChecker extends BaseChecker {
 		return authorizationProperty;
 	}
 
+	@Override
 	public boolean implies(Permission permission) {
 		PortalHookPermission portalHookPermission =
 			(PortalHookPermission)permission;

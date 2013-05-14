@@ -65,10 +65,12 @@ public class PortalContextImpl implements PortalContext {
 		return windowStates.contains(windowState);
 	}
 
+	@Override
 	public String getPortalInfo() {
 		return ReleaseInfo.getReleaseInfo();
 	}
 
+	@Override
 	public String getProperty(String name) {
 		if (name == null) {
 			throw new IllegalArgumentException();
@@ -77,14 +79,17 @@ public class PortalContextImpl implements PortalContext {
 		return properties.getProperty(name);
 	}
 
+	@Override
 	public Enumeration<String> getPropertyNames() {
 		return (Enumeration<String>)properties.propertyNames();
 	}
 
+	@Override
 	public Enumeration<PortletMode> getSupportedPortletModes() {
 		return Collections.enumeration(portletModes);
 	}
 
+	@Override
 	public Enumeration<WindowState> getSupportedWindowStates() {
 		return Collections.enumeration(windowStates);
 	}

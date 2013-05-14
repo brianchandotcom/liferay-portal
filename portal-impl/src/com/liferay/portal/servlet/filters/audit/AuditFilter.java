@@ -29,6 +29,7 @@ import javax.servlet.http.HttpSession;
  */
 public class AuditFilter extends BasePortalFilter implements TryFilter {
 
+	@Override
 	public Object doFilterTry(
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {

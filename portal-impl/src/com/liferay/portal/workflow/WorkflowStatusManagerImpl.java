@@ -29,6 +29,7 @@ import java.util.Map;
 @DoPrivileged
 public class WorkflowStatusManagerImpl implements WorkflowStatusManager {
 
+	@Override
 	public void updateStatus(
 			int status, Map<String, Serializable> workflowContext)
 		throws WorkflowException {

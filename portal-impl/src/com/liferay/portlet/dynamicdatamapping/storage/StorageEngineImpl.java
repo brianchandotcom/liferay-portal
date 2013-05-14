@@ -32,6 +32,7 @@ import java.util.Map;
  */
 public class StorageEngineImpl implements StorageEngine {
 
+	@Override
 	public long create(
 			long companyId, long ddmStructureId, Fields fields,
 			ServiceContext serviceContext)
@@ -44,12 +45,14 @@ public class StorageEngineImpl implements StorageEngine {
 			companyId, ddmStructureId, fields, serviceContext);
 	}
 
+	@Override
 	public void deleteByClass(long classPK) throws StorageException {
 		StorageAdapter storageAdapter = getClassStorageAdapter(classPK);
 
 		storageAdapter.deleteByClass(classPK);
 	}
 
+	@Override
 	public void deleteByDDMStructure(long ddmStructureId)
 		throws StorageException {
 
@@ -59,10 +62,12 @@ public class StorageEngineImpl implements StorageEngine {
 		storageAdapter.deleteByDDMStructure(ddmStructureId);
 	}
 
+	@Override
 	public Fields getFields(long classPK) throws StorageException {
 		return getFields(classPK, null);
 	}
 
+	@Override
 	public Fields getFields(long classPK, List<String> fieldNames)
 		throws StorageException {
 
@@ -71,6 +76,7 @@ public class StorageEngineImpl implements StorageEngine {
 		return storageAdapter.getFields(classPK, fieldNames);
 	}
 
+	@Override
 	public List<Fields> getFieldsList(
 			long ddmStructureId, List<String> fieldNames)
 		throws StorageException {
@@ -81,6 +87,7 @@ public class StorageEngineImpl implements StorageEngine {
 		return storageAdapter.getFieldsList(ddmStructureId, fieldNames);
 	}
 
+	@Override
 	public List<Fields> getFieldsList(
 			long ddmStructureId, List<String> fieldNames,
 			OrderByComparator orderByComparator)
@@ -93,6 +100,7 @@ public class StorageEngineImpl implements StorageEngine {
 			ddmStructureId, fieldNames, orderByComparator);
 	}
 
+	@Override
 	public List<Fields> getFieldsList(
 			long ddmStructureId, long[] classPKs, List<String> fieldNames,
 			OrderByComparator orderByComparator)
@@ -105,6 +113,7 @@ public class StorageEngineImpl implements StorageEngine {
 			ddmStructureId, classPKs, fieldNames, orderByComparator);
 	}
 
+	@Override
 	public List<Fields> getFieldsList(
 			long ddmStructureId, long[] classPKs,
 			OrderByComparator orderByComparator)
@@ -117,6 +126,7 @@ public class StorageEngineImpl implements StorageEngine {
 			ddmStructureId, classPKs, orderByComparator);
 	}
 
+	@Override
 	public Map<Long, Fields> getFieldsMap(long ddmStructureId, long[] classPKs)
 		throws StorageException {
 
@@ -126,6 +136,7 @@ public class StorageEngineImpl implements StorageEngine {
 		return storageAdapter.getFieldsMap(ddmStructureId, classPKs);
 	}
 
+	@Override
 	public Map<Long, Fields> getFieldsMap(
 			long ddmStructureId, long[] classPKs, List<String> fieldNames)
 		throws StorageException {
@@ -137,6 +148,7 @@ public class StorageEngineImpl implements StorageEngine {
 			ddmStructureId, classPKs, fieldNames);
 	}
 
+	@Override
 	public List<Fields> query(
 			long ddmStructureId, List<String> fieldNames, Condition condition,
 			OrderByComparator orderByComparator)
@@ -149,6 +161,7 @@ public class StorageEngineImpl implements StorageEngine {
 			ddmStructureId, fieldNames, condition, orderByComparator);
 	}
 
+	@Override
 	public int queryCount(long ddmStructureId, Condition condition)
 		throws StorageException {
 
@@ -168,6 +181,7 @@ public class StorageEngineImpl implements StorageEngine {
 		_storageAdapters = storageAdapters;
 	}
 
+	@Override
 	public void update(
 			long classPK, Fields fields, boolean mergeFields,
 			ServiceContext serviceContext)
@@ -178,6 +192,7 @@ public class StorageEngineImpl implements StorageEngine {
 		storageAdapter.update(classPK, fields, mergeFields, serviceContext);
 	}
 
+	@Override
 	public void update(
 			long classPK, Fields fields, ServiceContext serviceContext)
 		throws StorageException {

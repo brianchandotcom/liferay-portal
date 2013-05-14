@@ -34,10 +34,12 @@ public class MBCategoryTrashRenderer extends BaseTrashRenderer {
 		_category = category;
 	}
 
+	@Override
 	public String getClassName() {
 		return MBCategory.class.getName();
 	}
 
+	@Override
 	public long getClassPK() {
 		return _category.getPrimaryKey();
 	}
@@ -47,6 +49,7 @@ public class MBCategoryTrashRenderer extends BaseTrashRenderer {
 		return themeDisplay.getPathThemeImages() + "/common/category.png";
 	}
 
+	@Override
 	public String getPortletId() {
 		AssetRendererFactory assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
@@ -55,14 +58,17 @@ public class MBCategoryTrashRenderer extends BaseTrashRenderer {
 		return assetRendererFactory.getPortletId();
 	}
 
+	@Override
 	public String getSummary(Locale locale) {
 		return HtmlUtil.stripHtml(_category.getDescription());
 	}
 
+	@Override
 	public String getTitle(Locale locale) {
 		return _category.getName();
 	}
 
+	@Override
 	public String getType() {
 		return TYPE;
 	}

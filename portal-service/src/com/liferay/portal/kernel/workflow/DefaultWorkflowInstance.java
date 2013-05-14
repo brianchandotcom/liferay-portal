@@ -27,28 +27,34 @@ import java.util.Map;
  */
 public class DefaultWorkflowInstance implements Serializable, WorkflowInstance {
 
+	@Override
 	public void addChildWorkflowInstance(
 		WorkflowInstance childWorkflowInstance) {
 
 		_childrenWorkflowInstances.add(childWorkflowInstance);
 	}
 
+	@Override
 	public int getChildrenWorkflowInstanceCount() {
 		return _childrenWorkflowInstances.size();
 	}
 
+	@Override
 	public List<WorkflowInstance> getChildrenWorkflowInstances() {
 		return _childrenWorkflowInstances;
 	}
 
+	@Override
 	public Date getEndDate() {
 		return _endDate;
 	}
 
+	@Override
 	public WorkflowInstance getParentWorkflowInstance() {
 		return _parentWorkflowInstance;
 	}
 
+	@Override
 	public long getParentWorkflowInstanceId() {
 		if (_parentWorkflowInstance != null) {
 			return _parentWorkflowInstance.getWorkflowInstanceId();
@@ -58,30 +64,37 @@ public class DefaultWorkflowInstance implements Serializable, WorkflowInstance {
 		}
 	}
 
+	@Override
 	public Date getStartDate() {
 		return _startDate;
 	}
 
+	@Override
 	public String getState() {
 		return _state;
 	}
 
+	@Override
 	public Map<String, Serializable> getWorkflowContext() {
 		return _workflowContext;
 	}
 
+	@Override
 	public String getWorkflowDefinitionName() {
 		return _workflowDefinitionName;
 	}
 
+	@Override
 	public int getWorkflowDefinitionVersion() {
 		return _workflowDefinitionVersion;
 	}
 
+	@Override
 	public long getWorkflowInstanceId() {
 		return _workflowInstanceId;
 	}
 
+	@Override
 	public boolean isComplete() {
 		if (getEndDate() != null) {
 			return true;
@@ -101,6 +114,7 @@ public class DefaultWorkflowInstance implements Serializable, WorkflowInstance {
 		_endDate = endDate;
 	}
 
+	@Override
 	public void setParentWorkflowInstance(
 		WorkflowInstance parentWorkflowInstance) {
 

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 @DoPrivileged
 public class PropertyFactoryImpl implements PropertyFactory {
 
+	@Override
 	public Property forName(String propertyName) {
 		throw new UnsupportedOperationException();
 	}

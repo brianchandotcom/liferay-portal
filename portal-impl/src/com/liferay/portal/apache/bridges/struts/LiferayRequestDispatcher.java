@@ -55,6 +55,7 @@ public class LiferayRequestDispatcher implements RequestDispatcher {
 		_path = path;
 	}
 
+	@Override
 	public void forward(
 			ServletRequest servletRequest, ServletResponse servletResponse)
 		throws IOException, ServletException {
@@ -83,6 +84,7 @@ public class LiferayRequestDispatcher implements RequestDispatcher {
 		forward(servletRequest, servletResponse);
 	}
 
+	@Override
 	public void include(
 			ServletRequest servletRequest, ServletResponse servletResponse)
 		throws IOException, ServletException {

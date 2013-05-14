@@ -54,10 +54,12 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 		_discover = StringUtil.split(discover);
 	}
 
+	@Override
 	public JSONWebServiceActionMapping getJSONWebServiceActionMapping() {
 		return null;
 	}
 
+	@Override
 	public Object invoke() throws Exception {
 		Map<String, Object> resultsMap = new LinkedHashMap<String, Object>();
 

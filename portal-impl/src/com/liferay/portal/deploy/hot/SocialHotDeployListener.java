@@ -38,6 +38,7 @@ import javax.servlet.ServletContext;
  */
 public class SocialHotDeployListener extends BaseHotDeployListener {
 
+	@Override
 	public void invokeDeploy(HotDeployEvent hotDeployEvent)
 		throws HotDeployException {
 
@@ -50,6 +51,7 @@ public class SocialHotDeployListener extends BaseHotDeployListener {
 		}
 	}
 
+	@Override
 	public void invokeUndeploy(HotDeployEvent hotDeployEvent)
 		throws HotDeployException {
 

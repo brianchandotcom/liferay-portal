@@ -32,6 +32,7 @@ public class DNSLookupWebCacheItem implements WebCacheItem {
 		_domain = domain;
 	}
 
+	@Override
 	public Object convert(String key) throws WebCacheException {
 		DNSLookup dnsLookup = null;
 
@@ -80,6 +81,7 @@ public class DNSLookupWebCacheItem implements WebCacheItem {
 		return dnsLookup;
 	}
 
+	@Override
 	public long getRefreshTime() {
 		return _REFRESH_TIME;
 	}

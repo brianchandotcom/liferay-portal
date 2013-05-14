@@ -28,6 +28,7 @@ import com.liferay.portlet.journal.service.permission.JournalPermission;
  */
 public class JournalFeedServiceImpl extends JournalFeedServiceBaseImpl {
 
+	@Override
 	public JournalFeed addFeed(
 			long groupId, String feedId, boolean autoFeedId, String name,
 			String description, String type, String structureId,
@@ -48,6 +49,7 @@ public class JournalFeedServiceImpl extends JournalFeedServiceBaseImpl {
 			feedType, feedVersion, serviceContext);
 	}
 
+	@Override
 	public void deleteFeed(long groupId, long feedId)
 		throws PortalException, SystemException {
 
@@ -57,6 +59,7 @@ public class JournalFeedServiceImpl extends JournalFeedServiceBaseImpl {
 		journalFeedLocalService.deleteFeed(feedId);
 	}
 
+	@Override
 	public void deleteFeed(long groupId, String feedId)
 		throws PortalException, SystemException {
 
@@ -66,6 +69,7 @@ public class JournalFeedServiceImpl extends JournalFeedServiceBaseImpl {
 		journalFeedLocalService.deleteFeed(groupId, feedId);
 	}
 
+	@Override
 	public JournalFeed getFeed(long groupId, long feedId)
 		throws PortalException, SystemException {
 
@@ -75,6 +79,7 @@ public class JournalFeedServiceImpl extends JournalFeedServiceBaseImpl {
 		return journalFeedLocalService.getFeed(feedId);
 	}
 
+	@Override
 	public JournalFeed getFeed(long groupId, String feedId)
 		throws PortalException, SystemException {
 
@@ -84,6 +89,7 @@ public class JournalFeedServiceImpl extends JournalFeedServiceBaseImpl {
 		return journalFeedLocalService.getFeed(groupId, feedId);
 	}
 
+	@Override
 	public JournalFeed updateFeed(
 			long groupId, String feedId, String name, String description,
 			String type, String structureId, String templateId,

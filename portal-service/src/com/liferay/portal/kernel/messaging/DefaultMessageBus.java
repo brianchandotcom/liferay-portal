@@ -28,18 +28,21 @@ import java.util.Set;
  */
 public class DefaultMessageBus implements MessageBus {
 
+	@Override
 	public synchronized void addDestination(Destination destination) {
 		_destinations.put(destination.getName(), destination);
 
 		fireDestinationAddedEvent(destination);
 	}
 
+	@Override
 	public void addDestinationEventListener(
 		DestinationEventListener destinationEventListener) {
 
 		_destinationEventListeners.add(destinationEventListener);
 	}
 
+	@Override
 	public void addDestinationEventListener(
 		String destinationName,
 		DestinationEventListener destinationEventListener) {
@@ -55,26 +58,32 @@ public class DefaultMessageBus implements MessageBus {
 		shutdown(true);
 	}
 
+	@Override
 	public Destination getDestination(String destinationName) {
 		return _destinations.get(destinationName);
 	}
 
+	@Override
 	public int getDestinationCount() {
 		return _destinations.size();
 	}
 
+	@Override
 	public Collection<String> getDestinationNames() {
 		return _destinations.keySet();
 	}
 
+	@Override
 	public Collection<Destination> getDestinations() {
 		return _destinations.values();
 	}
 
+	@Override
 	public boolean hasDestination(String destinationName) {
 		return _destinations.containsKey(destinationName);
 	}
 
+	@Override
 	public boolean hasMessageListener(String destinationName) {
 		Destination destination = _destinations.get(destinationName);
 
@@ -86,6 +95,7 @@ public class DefaultMessageBus implements MessageBus {
 		}
 	}
 
+	@Override
 	public synchronized boolean registerMessageListener(
 		String destinationName, MessageListener messageListener) {
 
@@ -105,6 +115,7 @@ public class DefaultMessageBus implements MessageBus {
 		return registered;
 	}
 
+	@Override
 	public synchronized Destination removeDestination(String destinationName) {
 		Destination destinationModel = _destinations.remove(destinationName);
 
@@ -118,12 +129,14 @@ public class DefaultMessageBus implements MessageBus {
 		return destinationModel;
 	}
 
+	@Override
 	public void removeDestinationEventListener(
 		DestinationEventListener destinationEventListener) {
 
 		_destinationEventListeners.remove(destinationEventListener);
 	}
 
+	@Override
 	public void removeDestinationEventListener(
 		String destinationName,
 		DestinationEventListener destinationEventListener) {
@@ -136,6 +149,7 @@ public class DefaultMessageBus implements MessageBus {
 		}
 	}
 
+	@Override
 	public void replace(Destination destination) {
 		Destination oldDestination = _destinations.get(destination.getName());
 
@@ -147,6 +161,7 @@ public class DefaultMessageBus implements MessageBus {
 		addDestination(destination);
 	}
 
+	@Override
 	public void sendMessage(String destinationName, Message message) {
 		Destination destination = _destinations.get(destinationName);
 
@@ -164,16 +179,19 @@ public class DefaultMessageBus implements MessageBus {
 		destination.send(message);
 	}
 
+	@Override
 	public void shutdown() {
 		shutdown(false);
 	}
 
+	@Override
 	public synchronized void shutdown(boolean force) {
 		for (Destination destination : _destinations.values()) {
 			destination.close(force);
 		}
 	}
 
+	@Override
 	public synchronized boolean unregisterMessageListener(
 		String destinationName, MessageListener messageListener) {
 

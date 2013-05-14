@@ -23,6 +23,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
  */
 public class RolePermissionImpl implements RolePermission {
 
+	@Override
 	public void check(
 			PermissionChecker permissionChecker, long roleId, String actionId)
 		throws PrincipalException {
@@ -32,6 +33,7 @@ public class RolePermissionImpl implements RolePermission {
 		}
 	}
 
+	@Override
 	public boolean contains(
 		PermissionChecker permissionChecker, long groupId, long roleId,
 		String actionId) {
@@ -40,6 +42,7 @@ public class RolePermissionImpl implements RolePermission {
 			groupId, Role.class.getName(), roleId, actionId);
 	}
 
+	@Override
 	public boolean contains(
 		PermissionChecker permissionChecker, long roleId, String actionId) {
 

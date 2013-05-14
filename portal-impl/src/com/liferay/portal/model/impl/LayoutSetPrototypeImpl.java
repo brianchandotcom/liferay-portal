@@ -35,16 +35,19 @@ public class LayoutSetPrototypeImpl extends LayoutSetPrototypeBaseImpl {
 	public LayoutSetPrototypeImpl() {
 	}
 
+	@Override
 	public Group getGroup() throws PortalException, SystemException {
 		return GroupLocalServiceUtil.getLayoutSetPrototypeGroup(
 			getCompanyId(), getLayoutSetPrototypeId());
 	}
 
+	@Override
 	public LayoutSet getLayoutSet() throws PortalException, SystemException {
 		return LayoutSetLocalServiceUtil.getLayoutSet(
 			getGroup().getGroupId(), true);
 	}
 
+	@Override
 	public UnicodeProperties getSettingsProperties() {
 		if (_settingsProperties == null) {
 			_settingsProperties = new UnicodeProperties(true);
@@ -60,6 +63,7 @@ public class LayoutSetPrototypeImpl extends LayoutSetPrototypeBaseImpl {
 		return _settingsProperties;
 	}
 
+	@Override
 	public String getSettingsProperty(String key) {
 		UnicodeProperties settingsProperties = getSettingsProperties();
 
@@ -73,6 +77,7 @@ public class LayoutSetPrototypeImpl extends LayoutSetPrototypeBaseImpl {
 		super.setSettings(settings);
 	}
 
+	@Override
 	public void setSettingsProperties(UnicodeProperties settingsProperties) {
 		_settingsProperties = settingsProperties;
 

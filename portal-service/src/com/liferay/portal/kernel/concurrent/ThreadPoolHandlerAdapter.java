@@ -19,18 +19,23 @@ package com.liferay.portal.kernel.concurrent;
  */
 public class ThreadPoolHandlerAdapter implements ThreadPoolHandler {
 
+	@Override
 	public void afterExecute(Runnable runnable, Throwable throwable) {
 	}
 
+	@Override
 	public void beforeExecute(Thread thread, Runnable runnable) {
 	}
 
+	@Override
 	public void beforeThreadEnd(Thread thread) {
 	}
 
+	@Override
 	public void beforeThreadStart(Thread thread) {
 	}
 
+	@Override
 	public void terminated() {
 	}
 

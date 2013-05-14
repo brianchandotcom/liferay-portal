@@ -31,6 +31,7 @@ import java.util.Map;
  */
 public class MDRRuleServiceImpl extends MDRRuleServiceBaseImpl {
 
+	@Override
 	public MDRRule addRule(
 			long ruleGroupId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String type,
@@ -45,6 +46,7 @@ public class MDRRuleServiceImpl extends MDRRuleServiceBaseImpl {
 			serviceContext);
 	}
 
+	@Override
 	public MDRRule addRule(
 			long ruleGroupId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String type,
@@ -59,6 +61,7 @@ public class MDRRuleServiceImpl extends MDRRuleServiceBaseImpl {
 			serviceContext);
 	}
 
+	@Override
 	public void deleteRule(long ruleId)
 		throws PortalException, SystemException {
 
@@ -70,6 +73,7 @@ public class MDRRuleServiceImpl extends MDRRuleServiceBaseImpl {
 		mdrRuleLocalService.deleteRule(rule);
 	}
 
+	@Override
 	public MDRRule fetchRule(long ruleId)
 		throws PortalException, SystemException {
 
@@ -83,6 +87,7 @@ public class MDRRuleServiceImpl extends MDRRuleServiceBaseImpl {
 		return rule;
 	}
 
+	@Override
 	public MDRRule getRule(long ruleId)
 		throws PortalException, SystemException {
 
@@ -94,6 +99,7 @@ public class MDRRuleServiceImpl extends MDRRuleServiceBaseImpl {
 		return rule;
 	}
 
+	@Override
 	public MDRRule updateRule(
 			long ruleId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String type,
@@ -110,6 +116,7 @@ public class MDRRuleServiceImpl extends MDRRuleServiceBaseImpl {
 			serviceContext);
 	}
 
+	@Override
 	public MDRRule updateRule(
 			long ruleId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String type,

@@ -28,6 +28,7 @@ import javax.portlet.ValidatorException;
  */
 public class RSSPreferencesValidator implements PreferencesValidator {
 
+	@Override
 	public void validate(PortletPreferences preferences)
 		throws ValidatorException {
 

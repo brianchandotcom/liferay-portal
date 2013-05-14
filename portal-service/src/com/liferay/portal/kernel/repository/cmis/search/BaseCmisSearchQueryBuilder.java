@@ -47,6 +47,7 @@ import java.util.Set;
  */
 public class BaseCmisSearchQueryBuilder implements CMISSearchQueryBuilder {
 
+	@Override
 	public String buildQuery(SearchContext searchContext, Query query)
 		throws SearchException {
 

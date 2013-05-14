@@ -28,6 +28,7 @@ public class RoleResponseElement implements ResponseElement {
 		_type = role.getTypeLabel();
 	}
 
+	@Override
 	public void addElement(Element rootEl) {
 		Element el = rootEl.addElement("Role");
 

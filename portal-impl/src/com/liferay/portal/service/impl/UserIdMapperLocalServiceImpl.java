@@ -27,16 +27,19 @@ import java.util.List;
 public class UserIdMapperLocalServiceImpl
 	extends UserIdMapperLocalServiceBaseImpl {
 
+	@Override
 	public void deleteUserIdMappers(long userId) throws SystemException {
 		userIdMapperPersistence.removeByUserId(userId);
 	}
 
+	@Override
 	public UserIdMapper getUserIdMapper(long userId, String type)
 		throws PortalException, SystemException {
 
 		return userIdMapperPersistence.findByU_T(userId, type);
 	}
 
+	@Override
 	public UserIdMapper getUserIdMapperByExternalUserId(
 			String type, String externalUserId)
 		throws PortalException, SystemException {
@@ -44,12 +47,14 @@ public class UserIdMapperLocalServiceImpl
 		return userIdMapperPersistence.findByT_E(type, externalUserId);
 	}
 
+	@Override
 	public List<UserIdMapper> getUserIdMappers(long userId)
 		throws SystemException {
 
 		return userIdMapperPersistence.findByUserId(userId);
 	}
 
+	@Override
 	public UserIdMapper updateUserIdMapper(
 			long userId, String type, String description, String externalUserId)
 		throws SystemException {

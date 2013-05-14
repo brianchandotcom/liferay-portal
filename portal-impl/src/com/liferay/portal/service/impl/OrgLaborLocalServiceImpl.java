@@ -27,6 +27,7 @@ import java.util.List;
  */
 public class OrgLaborLocalServiceImpl extends OrgLaborLocalServiceBaseImpl {
 
+	@Override
 	public OrgLabor addOrgLabor(
 			long organizationId, int typeId, int sunOpen, int sunClose,
 			int monOpen, int monClose, int tueOpen, int tueClose, int wedOpen,
@@ -62,12 +63,14 @@ public class OrgLaborLocalServiceImpl extends OrgLaborLocalServiceBaseImpl {
 		return orgLabor;
 	}
 
+	@Override
 	public List<OrgLabor> getOrgLabors(long organizationId)
 		throws SystemException {
 
 		return orgLaborPersistence.findByOrganizationId(organizationId);
 	}
 
+	@Override
 	public OrgLabor updateOrgLabor(
 			long orgLaborId, int typeId, int sunOpen, int sunClose, int monOpen,
 			int monClose, int tueOpen, int tueClose, int wedOpen, int wedClose,

@@ -31,6 +31,7 @@ import java.util.List;
 public class SCProductVersionServiceImpl
 	extends SCProductVersionServiceBaseImpl {
 
+	@Override
 	public SCProductVersion addProductVersion(
 			long productEntryId, String version, String changeLog,
 			String downloadPageURL, String directDownloadURL,
@@ -47,6 +48,7 @@ public class SCProductVersionServiceImpl
 			frameworkVersionIds, serviceContext);
 	}
 
+	@Override
 	public void deleteProductVersion(long productVersionId)
 		throws PortalException, SystemException {
 
@@ -60,6 +62,7 @@ public class SCProductVersionServiceImpl
 		scProductVersionLocalService.deleteProductVersion(productVersionId);
 	}
 
+	@Override
 	public SCProductVersion getProductVersion(long productVersionId)
 		throws PortalException, SystemException {
 
@@ -73,6 +76,7 @@ public class SCProductVersionServiceImpl
 		return productVersion;
 	}
 
+	@Override
 	public List<SCProductVersion> getProductVersions(
 			long productEntryId, int start, int end)
 		throws PortalException, SystemException {
@@ -84,6 +88,7 @@ public class SCProductVersionServiceImpl
 			productEntryId, start, end);
 	}
 
+	@Override
 	public int getProductVersionsCount(long productEntryId)
 		throws PortalException, SystemException {
 
@@ -94,6 +99,7 @@ public class SCProductVersionServiceImpl
 			productEntryId);
 	}
 
+	@Override
 	public SCProductVersion updateProductVersion(
 			long productVersionId, String version, String changeLog,
 			String downloadPageURL, String directDownloadURL,

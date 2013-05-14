@@ -102,6 +102,7 @@ public class SocialActivityCounterLocalServiceImpl
 	 *         could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public SocialActivityCounter addActivityCounter(
 			long groupId, long classNameId, long classPK, String name,
 			int ownerType, int currentValue, int totalValue, int startPeriod,
@@ -151,6 +152,7 @@ public class SocialActivityCounterLocalServiceImpl
 	 *         could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public SocialActivityCounter addActivityCounter(
 			long groupId, long classNameId, long classPK, String name,
 			int ownerType, int currentValue, int totalValue, int startPeriod,
@@ -269,6 +271,7 @@ public class SocialActivityCounterLocalServiceImpl
 	 *         activity counters could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void addActivityCounters(SocialActivity activity)
 		throws PortalException, SystemException {
 
@@ -375,6 +378,7 @@ public class SocialActivityCounterLocalServiceImpl
 	 * @deprecated As of 6.2.0, replaced by {@link #createActivityCounter(long,
 	 *             long, long, String, int, int, int, int, int, long, int)}
 	 */
+	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public SocialActivityCounter createActivityCounter(
 			long groupId, long classNameId, long classPK, String name,
@@ -424,6 +428,7 @@ public class SocialActivityCounterLocalServiceImpl
 	 *         could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public SocialActivityCounter createActivityCounter(
 			long groupId, long classNameId, long classPK, String name,
@@ -496,6 +501,7 @@ public class SocialActivityCounterLocalServiceImpl
 	 *         created
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void deleteActivityCounters(AssetEntry assetEntry)
 		throws PortalException, SystemException {
 
@@ -528,6 +534,7 @@ public class SocialActivityCounterLocalServiceImpl
 	 *         contribution counter could not be updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void deleteActivityCounters(long classNameId, long classPK)
 		throws PortalException, SystemException {
 
@@ -558,6 +565,7 @@ public class SocialActivityCounterLocalServiceImpl
 	 *         contribution counter could not be updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void deleteActivityCounters(String className, long classPK)
 		throws PortalException, SystemException {
 
@@ -593,6 +601,7 @@ public class SocialActivityCounterLocalServiceImpl
 	 *         not be updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void disableActivityCounters(long classNameId, long classPK)
 		throws PortalException, SystemException {
 
@@ -616,6 +625,7 @@ public class SocialActivityCounterLocalServiceImpl
 	 *         not be updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void disableActivityCounters(String className, long classPK)
 		throws PortalException, SystemException {
 
@@ -658,6 +668,7 @@ public class SocialActivityCounterLocalServiceImpl
 	 *         not be updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void enableActivityCounters(long classNameId, long classPK)
 		throws PortalException, SystemException {
 
@@ -681,6 +692,7 @@ public class SocialActivityCounterLocalServiceImpl
 	 *         not be updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void enableActivityCounters(String className, long classPK)
 		throws PortalException, SystemException {
 
@@ -721,6 +733,7 @@ public class SocialActivityCounterLocalServiceImpl
 	 * @return the matching activity counter
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public SocialActivityCounter fetchActivityCounterByEndPeriod(
 			long groupId, long classNameId, long classPK, String name,
 			int ownerType, int endPeriod)
@@ -743,6 +756,7 @@ public class SocialActivityCounterLocalServiceImpl
 	 * @return the matching activity counter
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public SocialActivityCounter fetchActivityCounterByStartPeriod(
 			long groupId, long classNameId, long classPK, String name,
 			int ownerType, int startPeriod)
@@ -764,6 +778,7 @@ public class SocialActivityCounterLocalServiceImpl
 	 * @return the matching activity counter
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public SocialActivityCounter fetchLatestActivityCounter(
 			long groupId, long classNameId, long classPK, String name,
 			int ownerType)
@@ -789,6 +804,7 @@ public class SocialActivityCounterLocalServiceImpl
 	 * @return the matching activity counters
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public List<SocialActivityCounter> getOffsetActivityCounters(
 			long groupId, String name, int startOffset, int endOffset)
 		throws SystemException {
@@ -817,6 +833,7 @@ public class SocialActivityCounterLocalServiceImpl
 	 * @return the distribution of matching activity counters
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public List<SocialActivityCounter> getOffsetDistributionActivityCounters(
 			long groupId, String name, int startOffset, int endOffset)
 		throws SystemException {
@@ -844,6 +861,7 @@ public class SocialActivityCounterLocalServiceImpl
 	 * @return the matching activity counters
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public List<SocialActivityCounter> getPeriodActivityCounters(
 			long groupId, String name, int startPeriod, int endPeriod)
 		throws SystemException {
@@ -878,6 +896,7 @@ public class SocialActivityCounterLocalServiceImpl
 	 * @return the distribution of matching activity counters
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public List<SocialActivityCounter> getPeriodDistributionActivityCounters(
 			long groupId, String name, int startPeriod, int endPeriod)
 		throws SystemException {
@@ -919,6 +938,7 @@ public class SocialActivityCounterLocalServiceImpl
 	 * @return the range of matching tuples
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public List<Tuple> getUserActivityCounters(
 			long groupId, String[] rankingNames, String[] selectedNames,
 			int start, int end)
@@ -975,6 +995,7 @@ public class SocialActivityCounterLocalServiceImpl
 	 * @return the number of matching users
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public int getUserActivityCountersCount(long groupId, String[] rankingNames)
 		throws SystemException {
 
@@ -995,6 +1016,7 @@ public class SocialActivityCounterLocalServiceImpl
 	 *         counter could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void incrementUserAchievementCounter(long userId, long groupId)
 		throws PortalException, SystemException {
 

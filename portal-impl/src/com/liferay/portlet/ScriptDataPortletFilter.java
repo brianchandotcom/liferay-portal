@@ -42,9 +42,11 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ScriptDataPortletFilter implements RenderFilter, ResourceFilter {
 
+	@Override
 	public void destroy() {
 	}
 
+	@Override
 	public void doFilter(
 			RenderRequest renderRequest, RenderResponse renderResponse,
 			FilterChain filterChain)
@@ -71,6 +73,7 @@ public class ScriptDataPortletFilter implements RenderFilter, ResourceFilter {
 		}
 	}
 
+	@Override
 	public void doFilter(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
 			FilterChain filterChain)
@@ -92,6 +95,7 @@ public class ScriptDataPortletFilter implements RenderFilter, ResourceFilter {
 			request, scriptData, (MimeResponseImpl)resourceResponse);
 	}
 
+	@Override
 	public void init(FilterConfig filterConfig) {
 	}
 

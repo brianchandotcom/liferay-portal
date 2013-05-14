@@ -36,6 +36,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class DefaultActionHandlerManagerImpl implements ActionHandlerManager {
 
+	@Override
 	public void applyActions(
 			List<MDRAction> mdrActions, HttpServletRequest request,
 			HttpServletResponse response)
@@ -46,19 +47,23 @@ public class DefaultActionHandlerManagerImpl implements ActionHandlerManager {
 		}
 	}
 
+	@Override
 	public ActionHandler getActionHandler(String actionType) {
 		return _deviceActionHandlers.get(actionType);
 	}
 
+	@Override
 	public Collection<ActionHandler> getActionHandlers() {
 		return Collections.unmodifiableCollection(
 			_deviceActionHandlers.values());
 	}
 
+	@Override
 	public Collection<String> getActionHandlerTypes() {
 		return _deviceActionHandlers.keySet();
 	}
 
+	@Override
 	public void registerActionHandler(ActionHandler actionHandler) {
 		ActionHandler oldActionHandler = _deviceActionHandlers.put(
 			actionHandler.getType(), actionHandler);
@@ -76,6 +81,7 @@ public class DefaultActionHandlerManagerImpl implements ActionHandlerManager {
 		}
 	}
 
+	@Override
 	public ActionHandler unregisterActionHandler(String actionType) {
 		return _deviceActionHandlers.remove(actionType);
 	}

@@ -32,6 +32,7 @@ import java.util.List;
  */
 public class LiveUsersClusterEventListenerImpl implements ClusterEventListener {
 
+	@Override
 	public void processClusterEvent(ClusterEvent clusterEvent) {
 		List<ClusterNode> clusterNodes = clusterEvent.getClusterNodes();
 

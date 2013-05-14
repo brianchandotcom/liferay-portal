@@ -61,6 +61,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 *         if the XSD was not well-formed, or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public DDMStructure addStructure(
 			long userId, long groupId, long classNameId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
@@ -106,6 +107,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 *         exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public DDMStructure addStructure(
 			long groupId, long parentStructureId, long classNameId,
 			String structureKey, Map<Locale, String> nameMap,
@@ -154,6 +156,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 *         if the XSD was not well-formed, or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public DDMStructure addStructure(
 			long userId, long groupId, String parentStructureKey,
 			long classNameId, String structureKey, Map<Locale, String> nameMap,
@@ -189,6 +192,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 *         structure or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public DDMStructure copyStructure(
 			long structureId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
@@ -204,6 +208,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			getUserId(), structureId, nameMap, descriptionMap, serviceContext);
 	}
 
+	@Override
 	public DDMStructure copyStructure(
 			long structureId, ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -231,6 +236,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 *         structure or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void deleteStructure(long structureId)
 		throws PortalException, SystemException {
 
@@ -254,6 +260,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 *         structure or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public DDMStructure fetchStructure(
 			long groupId, long classNameId, String structureKey)
 		throws PortalException, SystemException {
@@ -278,6 +285,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 *         structure or if a structure with the ID could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public DDMStructure getStructure(long structureId)
 		throws PortalException, SystemException {
 
@@ -300,6 +308,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 *         structure or if a matching structure could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public DDMStructure getStructure(
 			long groupId, long classNameId, String structureKey)
 		throws PortalException, SystemException {
@@ -333,6 +342,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 *         structure or if a matching structure could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public DDMStructure getStructure(
 			long groupId, long classNameId, String structureKey,
 			boolean includeGlobalStructures)
@@ -354,6 +364,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 * @return the structures in the group that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public List<DDMStructure> getStructures(long groupId)
 		throws SystemException {
 
@@ -368,6 +379,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 * @return the structures in the groups that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public List<DDMStructure> getStructures(long[] groupIds)
 		throws SystemException {
 
@@ -403,6 +415,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 * @return the range of matching structures ordered by the comparator
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public List<DDMStructure> search(
 			long companyId, long[] groupIds, long[] classNameIds,
 			String keywords, int start, int end,
@@ -449,6 +462,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 * @return the range of matching structures ordered by the comparator
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public List<DDMStructure> search(
 			long companyId, long[] groupIds, long[] classNameIds, String name,
 			String description, String storageType, int type,
@@ -474,6 +488,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 * @return the number of matching structures
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public int searchCount(
 			long companyId, long[] groupIds, long[] classNameIds,
 			String keywords)
@@ -503,6 +518,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 * @return the number of matching structures
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public int searchCount(
 			long companyId, long[] groupIds, long[] classNameIds, String name,
 			String description, String storageType, int type,
@@ -535,6 +551,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 *         structure or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public DDMStructure updateStructure(
 			long groupId, long parentStructureId, long classNameId,
 			String structureKey, Map<Locale, String> nameMap,
@@ -568,6 +585,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 *         structure or if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public DDMStructure updateStructure(
 			long structureId, long parentStructureId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,

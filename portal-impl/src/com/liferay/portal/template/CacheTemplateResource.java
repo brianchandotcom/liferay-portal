@@ -65,10 +65,12 @@ public class CacheTemplateResource implements TemplateResource {
 		return false;
 	}
 
+	@Override
 	public long getLastModified() {
 		return _lastModified;
 	}
 
+	@Override
 	public Reader getReader() throws IOException {
 		String templateContent = _templateContent.get();
 
@@ -105,6 +107,7 @@ public class CacheTemplateResource implements TemplateResource {
 		return new UnsyncStringReader(templateContent);
 	}
 
+	@Override
 	public String getTemplateId() {
 		return _templateResource.getTemplateId();
 	}
@@ -114,6 +117,7 @@ public class CacheTemplateResource implements TemplateResource {
 		return _templateResource.hashCode();
 	}
 
+	@Override
 	public void readExternal(ObjectInput objectInput)
 		throws ClassNotFoundException, IOException {
 
@@ -121,6 +125,7 @@ public class CacheTemplateResource implements TemplateResource {
 		_templateResource = (TemplateResource)objectInput.readObject();
 	}
 
+	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(_lastModified);
 		objectOutput.writeObject(_templateResource);

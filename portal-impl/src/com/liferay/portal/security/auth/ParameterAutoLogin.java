@@ -35,10 +35,12 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ParameterAutoLogin extends BaseAutoLogin implements AuthVerifier {
 
+	@Override
 	public String getAuthType() {
 		return ParameterAutoLogin.class.getSimpleName();
 	}
 
+	@Override
 	public AuthVerifierResult verify(
 			AccessControlContext accessControlContext, Properties properties)
 		throws AuthException {

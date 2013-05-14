@@ -45,6 +45,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class LockMethodImpl implements Method {
 
+	@Override
 	public int process(WebDAVRequest webDAVRequest) throws WebDAVException {
 		try {
 			return doProcess(webDAVRequest);

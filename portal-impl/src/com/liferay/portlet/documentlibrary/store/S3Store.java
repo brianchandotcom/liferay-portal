@@ -213,6 +213,7 @@ public class S3Store extends BaseStore {
 		}
 	}
 
+	@Override
 	public String[] getFileNames(long companyId, long repositoryId)
 		throws SystemException {
 
@@ -349,6 +350,7 @@ public class S3Store extends BaseStore {
 		}
 	}
 
+	@Override
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String newFileName)

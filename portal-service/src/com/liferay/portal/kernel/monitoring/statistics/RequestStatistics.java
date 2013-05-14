@@ -31,6 +31,7 @@ public class RequestStatistics implements Statistics {
 		return _successStatistics.getAverageTime();
 	}
 
+	@Override
 	public String getDescription() {
 		return _description;
 	}
@@ -47,6 +48,7 @@ public class RequestStatistics implements Statistics {
 		return _successStatistics.getMinTime();
 	}
 
+	@Override
 	public String getName() {
 		return _name;
 	}
@@ -75,12 +77,14 @@ public class RequestStatistics implements Statistics {
 		_timeoutStatistics.incrementCount();
 	}
 
+	@Override
 	public void reset() {
 		_errorStatistics.reset();
 		_successStatistics.reset();
 		_timeoutStatistics.reset();
 	}
 
+	@Override
 	public void setDescription(String description) {
 		_description = description;
 	}

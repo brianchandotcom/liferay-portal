@@ -36,42 +36,52 @@ public class PortletFilterImpl implements PortletFilter {
 		_portletApp = portletApp;
 	}
 
+	@Override
 	public String getFilterClass() {
 		return _filterClass;
 	}
 
+	@Override
 	public String getFilterName() {
 		return _filterName;
 	}
 
+	@Override
 	public Map<String, String> getInitParams() {
 		return _initParams;
 	}
 
+	@Override
 	public Set<String> getLifecycles() {
 		return _lifecycles;
 	}
 
+	@Override
 	public PortletApp getPortletApp() {
 		return _portletApp;
 	}
 
+	@Override
 	public void setFilterClass(String filterClass) {
 		_filterClass = filterClass;
 	}
 
+	@Override
 	public void setFilterName(String filterName) {
 		_filterName = filterName;
 	}
 
+	@Override
 	public void setInitParams(Map<String, String> initParams) {
 		_initParams = initParams;
 	}
 
+	@Override
 	public void setLifecycles(Set<String> lifecycles) {
 		_lifecycles = lifecycles;
 	}
 
+	@Override
 	public void setPortletApp(PortletApp portletApp) {
 		_portletApp = portletApp;
 	}

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.upgrade.util.ValueMapperFactory;
 @DoPrivileged
 public class DatabaseValueMapperFactoryImpl implements ValueMapperFactory {
 
+	@Override
 	public ValueMapper getValueMapper() {
 		return new DatabaseValueMapper();
 	}

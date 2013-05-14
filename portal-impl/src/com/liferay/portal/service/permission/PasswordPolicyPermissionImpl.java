@@ -23,6 +23,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
  */
 public class PasswordPolicyPermissionImpl implements PasswordPolicyPermission {
 
+	@Override
 	public void check(
 			PermissionChecker permissionChecker, long passwordPolicyId,
 			String actionId)
@@ -33,6 +34,7 @@ public class PasswordPolicyPermissionImpl implements PasswordPolicyPermission {
 		}
 	}
 
+	@Override
 	public boolean contains(
 		PermissionChecker permissionChecker, long passwordPolicyId,
 		String actionId) {

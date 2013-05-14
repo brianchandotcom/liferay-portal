@@ -30,6 +30,7 @@ public class JavaScriptClassVisibilityChecker
 		super(allowedClasses);
 	}
 
+	@Override
 	public boolean visibleToScripts(String className) {
 		return isVisible(className);
 	}

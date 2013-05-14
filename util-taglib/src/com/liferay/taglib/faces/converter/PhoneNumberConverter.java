@@ -39,6 +39,7 @@ import javax.faces.convert.ConverterException;
  */
 public class PhoneNumberConverter implements Converter, StateHolder {
 
+	@Override
 	public Object getAsObject(
 		FacesContext facesContext, UIComponent uiComponent, String value) {
 
@@ -101,6 +102,7 @@ public class PhoneNumberConverter implements Converter, StateHolder {
 		return value;
 	}
 
+	@Override
 	public String getAsString(
 			FacesContext facesContext, UIComponent uiComponent, Object value)
 		throws ConverterException {
@@ -114,16 +116,19 @@ public class PhoneNumberConverter implements Converter, StateHolder {
 		return _unitedStatesFormat;
 	}
 
+	@Override
 	public boolean isTransient() {
 		return _transient;
 	}
 
+	@Override
 	public void restoreState(FacesContext facesContext, Object obj) {
 		Object[] values = (Object[])obj;
 
 		_unitedStatesFormat = (String)values[0];
 	}
 
+	@Override
 	public Object saveState(FacesContext facesContext) {
 		Object[] values = new Object[1];
 
@@ -132,6 +137,7 @@ public class PhoneNumberConverter implements Converter, StateHolder {
 		return values;
 	}
 
+	@Override
 	public void setTransient(boolean value) {
 		_transient = value;
 	}

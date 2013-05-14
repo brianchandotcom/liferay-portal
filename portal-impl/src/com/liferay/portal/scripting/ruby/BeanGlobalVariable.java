@@ -37,10 +37,12 @@ class BeanGlobalVariable implements IAccessor {
 		}
 	}
 
+	@Override
 	public IRubyObject getValue() {
 		return _bean;
 	}
 
+	@Override
 	public IRubyObject setValue(IRubyObject bean) {
 		_bean = bean;
 

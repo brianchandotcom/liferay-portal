@@ -58,6 +58,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	public JournalArticleImpl() {
 	}
 
+	@Override
 	public String getArticleImageURL(ThemeDisplay themeDisplay) {
 		if (!isSmallImage()) {
 			return null;
@@ -73,6 +74,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 					WebServerServletTokenUtil.getToken(getSmallImageId());
 	}
 
+	@Override
 	public JournalArticleResource getArticleResource()
 		throws PortalException, SystemException {
 
@@ -80,6 +82,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 			getResourcePrimKey());
 	}
 
+	@Override
 	public String getArticleResourceUuid()
 		throws PortalException, SystemException {
 
@@ -88,6 +91,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		return articleResource.getUuid();
 	}
 
+	@Override
 	public String[] getAvailableLocales() {
 		Set<String> availableLocales = new TreeSet<String>();
 
@@ -129,10 +133,12 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		return availableLocales.toArray(new String[availableLocales.size()]);
 	}
 
+	@Override
 	public String getContentByLocale(String languageId) {
 		return getContentByLocale(getContent(), isTemplateDriven(), languageId);
 	}
 
+	@Override
 	public String getDefaultLocale() {
 		String xml = getContent();
 
@@ -150,6 +156,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		return defaultLanguageId;
 	}
 
+	@Override
 	public JournalFolder getFolder() {
 		JournalFolder folder = null;
 
@@ -170,6 +177,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		return folder;
 	}
 
+	@Override
 	public String getSmallImageType() throws PortalException, SystemException {
 		if ((_smallImageType == null) && isSmallImage()) {
 			Image smallImage = ImageLocalServiceUtil.getImage(
@@ -198,6 +206,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		}
 	}
 
+	@Override
 	public JournalFolder getTrashContainer() {
 		JournalFolder folder = getFolder();
 
@@ -208,6 +217,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		return folder.getTrashContainer();
 	}
 
+	@Override
 	public boolean isInTrashContainer() {
 		if (getTrashContainer() != null) {
 			return true;
@@ -217,6 +227,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		}
 	}
 
+	@Override
 	public boolean isTemplateDriven() {
 		if (Validator.isNull(getStructureId())) {
 			return false;
@@ -232,6 +243,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		throws LocaleException {
 	}
 
+	@Override
 	public void setSmallImageType(String smallImageType) {
 		_smallImageType = smallImageType;
 	}

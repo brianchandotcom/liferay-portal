@@ -32,6 +32,7 @@ public abstract class BaseIndexSearcher
 		_querySuggester = querySuggester;
 	}
 
+	@Override
 	public String spellCheckKeywords(SearchContext searchContext)
 		throws SearchException {
 
@@ -46,6 +47,7 @@ public abstract class BaseIndexSearcher
 		return _querySuggester.spellCheckKeywords(searchContext);
 	}
 
+	@Override
 	public Map<String, List<String>> spellCheckKeywords(
 			SearchContext searchContext, int max)
 		throws SearchException {
@@ -61,6 +63,7 @@ public abstract class BaseIndexSearcher
 		return _querySuggester.spellCheckKeywords(searchContext, max);
 	}
 
+	@Override
 	public String[] suggestKeywordQueries(SearchContext searchContext, int max)
 		throws SearchException {
 

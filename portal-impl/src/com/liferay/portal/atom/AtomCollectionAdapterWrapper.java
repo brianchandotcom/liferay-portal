@@ -184,6 +184,7 @@ public class AtomCollectionAdapterWrapper<E>
 		return _atomCollectionAdapter.getEntryTitle(entry);
 	}
 
+	@Override
 	public String getTitle(RequestContext requestContext) {
 		return _atomCollectionAdapter.getFeedTitle(
 			new AtomRequestContextImpl(requestContext));

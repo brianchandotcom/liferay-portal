@@ -64,6 +64,7 @@ import java.util.List;
  */
 public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 
+	@Override
 	public BlogsEntry addEntry(
 			String title, String description, String content,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
@@ -85,6 +86,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			serviceContext);
 	}
 
+	@Override
 	public void deleteEntry(long entryId)
 		throws PortalException, SystemException {
 
@@ -94,6 +96,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		blogsEntryLocalService.deleteEntry(entryId);
 	}
 
+	@Override
 	public List<BlogsEntry> getCompanyEntries(
 			long companyId, Date displayDate, int status, int max)
 		throws PortalException, SystemException {
@@ -136,6 +139,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		return entries;
 	}
 
+	@Override
 	public String getCompanyEntriesRSS(
 			long companyId, Date displayDate, int status, int max, String type,
 			double version, String displayStyle, String feedURL,
@@ -153,6 +157,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			blogsEntries, themeDisplay);
 	}
 
+	@Override
 	public BlogsEntry getEntry(long entryId)
 		throws PortalException, SystemException {
 
@@ -162,6 +167,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		return blogsEntryLocalService.getEntry(entryId);
 	}
 
+	@Override
 	public BlogsEntry getEntry(long groupId, String urlTitle)
 		throws PortalException, SystemException {
 
@@ -173,6 +179,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		return entry;
 	}
 
+	@Override
 	public List<BlogsEntry> getGroupEntries(
 			long groupId, Date displayDate, int status, int max)
 		throws SystemException {
@@ -180,6 +187,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		return getGroupEntries(groupId, displayDate, status, 0, max);
 	}
 
+	@Override
 	public List<BlogsEntry> getGroupEntries(
 			long groupId, Date displayDate, int status, int start, int end)
 		throws SystemException {
@@ -195,12 +203,14 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public List<BlogsEntry> getGroupEntries(long groupId, int status, int max)
 		throws SystemException {
 
 		return getGroupEntries(groupId, status, 0, max);
 	}
 
+	@Override
 	public List<BlogsEntry> getGroupEntries(
 			long groupId, int status, int start, int end)
 		throws SystemException {
@@ -215,6 +225,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public int getGroupEntriesCount(long groupId, Date displayDate, int status)
 		throws SystemException {
 
@@ -228,6 +239,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public int getGroupEntriesCount(long groupId, int status)
 		throws SystemException {
 
@@ -240,6 +252,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public String getGroupEntriesRSS(
 			long groupId, Date displayDate, int status, int max, String type,
 			double version, String displayStyle, String feedURL,
@@ -257,6 +270,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			blogsEntries, themeDisplay);
 	}
 
+	@Override
 	public List<BlogsEntry> getGroupsEntries(
 			long companyId, long groupId, Date displayDate, int status, int max)
 		throws PortalException, SystemException {
@@ -299,6 +313,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		return entries;
 	}
 
+	@Override
 	public List<BlogsEntry> getOrganizationEntries(
 			long organizationId, Date displayDate, int status, int max)
 		throws PortalException, SystemException {
@@ -340,6 +355,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		return entries;
 	}
 
+	@Override
 	public String getOrganizationEntriesRSS(
 			long organizationId, Date displayDate, int status, int max,
 			String type, double version, String displayStyle, String feedURL,
@@ -358,6 +374,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			blogsEntries, themeDisplay);
 	}
 
+	@Override
 	public void moveEntryToTrash(long entryId)
 		throws PortalException, SystemException {
 
@@ -367,6 +384,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		blogsEntryLocalService.moveEntryToTrash(getUserId(), entryId);
 	}
 
+	@Override
 	public void restoreEntryFromTrash(long entryId)
 		throws PortalException, SystemException {
 
@@ -376,6 +394,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		blogsEntryLocalService.restoreEntryFromTrash(getUserId(), entryId);
 	}
 
+	@Override
 	public void subscribe(long groupId)
 		throws PortalException, SystemException {
 
@@ -385,6 +404,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		blogsEntryLocalService.subscribe(getUserId(), groupId);
 	}
 
+	@Override
 	public void unsubscribe(long groupId)
 		throws PortalException, SystemException {
 
@@ -394,6 +414,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		blogsEntryLocalService.unsubscribe(getUserId(), groupId);
 	}
 
+	@Override
 	public BlogsEntry updateEntry(
 			long entryId, String title, String description, String content,
 			int displayDateMonth, int displayDateDay, int displayDateYear,

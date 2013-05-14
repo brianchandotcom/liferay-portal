@@ -55,6 +55,7 @@ import java.util.List;
  */
 public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
+	@Override
 	public LayoutSet addLayoutSet(long groupId, boolean privateLayout)
 		throws PortalException, SystemException {
 
@@ -127,6 +128,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		return layoutSet;
 	}
 
+	@Override
 	public void deleteLayoutSet(
 			long groupId, boolean privateLayout, ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -197,6 +199,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public LayoutSet fetchLayoutSet(String virtualHostname)
 		throws SystemException {
 
@@ -213,12 +216,14 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			virtualHost.getLayoutSetId());
 	}
 
+	@Override
 	public LayoutSet getLayoutSet(long groupId, boolean privateLayout)
 		throws PortalException, SystemException {
 
 		return layoutSetPersistence.findByG_P(groupId, privateLayout);
 	}
 
+	@Override
 	public LayoutSet getLayoutSet(String virtualHostname)
 		throws PortalException, SystemException {
 
@@ -237,6 +242,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			virtualHost.getLayoutSetId());
 	}
 
+	@Override
 	public List<LayoutSet> getLayoutSetsByLayoutSetPrototypeUuid(
 			String layoutSetPrototypeUuid)
 		throws SystemException {
@@ -268,6 +274,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 	 *             #updateLayoutSetPrototypeLinkEnabled(long, boolean, boolean,
 	 *             String)}
 	 */
+	@Override
 	public void updateLayoutSetPrototypeLinkEnabled(
 			long groupId, boolean privateLayout,
 			boolean layoutSetPrototypeLinkEnabled)
@@ -289,6 +296,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public void updateLayoutSetPrototypeLinkEnabled(
 			long groupId, boolean privateLayout,
 			boolean layoutSetPrototypeLinkEnabled,
@@ -313,6 +321,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		layoutSetPersistence.update(layoutSet);
 	}
 
+	@Override
 	public LayoutSet updateLogo(
 			long groupId, boolean privateLayout, boolean logo, byte[] bytes)
 		throws PortalException, SystemException {
@@ -326,6 +335,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		return updateLogo(groupId, privateLayout, logo, is);
 	}
 
+	@Override
 	public LayoutSet updateLogo(
 			long groupId, boolean privateLayout, boolean logo, File file)
 		throws PortalException, SystemException {
@@ -344,6 +354,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		return updateLogo(groupId, privateLayout, logo, is);
 	}
 
+	@Override
 	public LayoutSet updateLogo(
 			long groupId, boolean privateLayout, boolean logo, InputStream is)
 		throws PortalException, SystemException {
@@ -351,6 +362,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		return updateLogo(groupId, privateLayout, logo, is, true);
 	}
 
+	@Override
 	public LayoutSet updateLogo(
 			long groupId, boolean privateLayout, boolean logo, InputStream is,
 			boolean cleanUpStream)
@@ -386,6 +398,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		return layoutSetPersistence.update(layoutSet);
 	}
 
+	@Override
 	public LayoutSet updateLookAndFeel(
 			long groupId, boolean privateLayout, String themeId,
 			String colorSchemeId, String css, boolean wapTheme)
@@ -440,6 +453,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		return layoutSet;
 	}
 
+	@Override
 	public void updateLookAndFeel(
 			long groupId, String themeId, String colorSchemeId, String css,
 			boolean wapTheme)
@@ -450,6 +464,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		updateLookAndFeel(groupId, true, themeId, colorSchemeId, css, wapTheme);
 	}
 
+	@Override
 	public LayoutSet updatePageCount(long groupId, boolean privateLayout)
 		throws PortalException, SystemException {
 
@@ -466,6 +481,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		return layoutSet;
 	}
 
+	@Override
 	public LayoutSet updateSettings(
 			long groupId, boolean privateLayout, String settings)
 		throws PortalException, SystemException {
@@ -481,6 +497,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		return layoutSet;
 	}
 
+	@Override
 	public LayoutSet updateVirtualHost(
 			long groupId, boolean privateLayout, String virtualHostname)
 		throws PortalException, SystemException {

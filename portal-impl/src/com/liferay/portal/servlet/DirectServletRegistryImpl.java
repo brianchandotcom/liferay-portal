@@ -41,10 +41,12 @@ import javax.servlet.ServletContext;
 @DoPrivileged
 public class DirectServletRegistryImpl implements DirectServletRegistry {
 
+	@Override
 	public void clearServlets() {
 		_servletInfos.clear();
 	}
 
+	@Override
 	public Servlet getServlet(String path) {
 		ServletInfo servletInfo = _servletInfos.get(path);
 
@@ -76,6 +78,7 @@ public class DirectServletRegistryImpl implements DirectServletRegistry {
 		return servlet;
 	}
 
+	@Override
 	public void putServlet(String path, Servlet servlet) {
 		if (_servletInfos.containsKey(path)) {
 			return;

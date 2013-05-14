@@ -51,6 +51,7 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 		}
 	}
 
+	@Override
 	public void cleanUp(FileEntry fileEntry) {
 		if (!DLProcessorThreadLocal.isEnabled()) {
 			return;
@@ -63,6 +64,7 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 		}
 	}
 
+	@Override
 	public void cleanUp(FileVersion fileVersion) {
 		if (!DLProcessorThreadLocal.isEnabled()) {
 			return;
@@ -75,6 +77,7 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 		}
 	}
 
+	@Override
 	public void exportGeneratedFiles(
 			PortletDataContext portletDataContext, FileEntry fileEntry,
 			Element fileEntryElement)
@@ -98,10 +101,12 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 		}
 	}
 
+	@Override
 	public DLProcessor getDLProcessor(String dlProcessorType) {
 		return _dlProcessors.get(dlProcessorType);
 	}
 
+	@Override
 	public void importGeneratedFiles(
 			PortletDataContext portletDataContext, FileEntry fileEntry,
 			FileEntry importedFileEntry, Element fileEntryElement)
@@ -126,16 +131,19 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 		}
 	}
 
+	@Override
 	public void register(DLProcessor dlProcessor) {
 		String type = _getType(dlProcessor);
 
 		_dlProcessors.put(type, dlProcessor);
 	}
 
+	@Override
 	public void trigger(FileEntry fileEntry, FileVersion fileVersion) {
 		trigger(fileEntry, fileVersion, false);
 	}
 
+	@Override
 	public void trigger(
 		FileEntry fileEntry, FileVersion fileVersion, boolean trusted) {
 
@@ -161,6 +169,7 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 		}
 	}
 
+	@Override
 	public void unregister(DLProcessor dlProcessor) {
 		String type = _getType(dlProcessor);
 

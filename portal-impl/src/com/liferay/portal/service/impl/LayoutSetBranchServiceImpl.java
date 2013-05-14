@@ -31,6 +31,7 @@ import java.util.List;
  */
 public class LayoutSetBranchServiceImpl extends LayoutSetBranchServiceBaseImpl {
 
+	@Override
 	public LayoutSetBranch addLayoutSetBranch(
 			long groupId, boolean privateLayout, String name,
 			String description, boolean master, long copyLayoutSetBranchId,
@@ -45,6 +46,7 @@ public class LayoutSetBranchServiceImpl extends LayoutSetBranchServiceBaseImpl {
 			copyLayoutSetBranchId, serviceContext);
 	}
 
+	@Override
 	public void deleteLayoutSetBranch(long layoutSetBranchId)
 		throws PortalException, SystemException {
 
@@ -54,6 +56,7 @@ public class LayoutSetBranchServiceImpl extends LayoutSetBranchServiceBaseImpl {
 		layoutSetBranchLocalService.deleteLayoutSetBranch(layoutSetBranchId);
 	}
 
+	@Override
 	public List<LayoutSetBranch> getLayoutSetBranches(
 			long groupId, boolean privateLayout)
 		throws SystemException {
@@ -62,6 +65,7 @@ public class LayoutSetBranchServiceImpl extends LayoutSetBranchServiceBaseImpl {
 			groupId, privateLayout);
 	}
 
+	@Override
 	public LayoutSetBranch mergeLayoutSetBranch(
 			long layoutSetBranchId, long mergeLayoutSetBranchId,
 			ServiceContext serviceContext)
@@ -74,6 +78,7 @@ public class LayoutSetBranchServiceImpl extends LayoutSetBranchServiceBaseImpl {
 			layoutSetBranchId, mergeLayoutSetBranchId, serviceContext);
 	}
 
+	@Override
 	public LayoutSetBranch updateLayoutSetBranch(
 			long groupId, long layoutSetBranchId, String name,
 			String description, ServiceContext serviceContext)

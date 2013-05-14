@@ -45,6 +45,7 @@ public class PortletSessionImpl implements LiferayPortletSession {
 		_portletScope = _getPortletScope(portletName, plid);
 	}
 
+	@Override
 	public Object getAttribute(String name) {
 		if (name == null) {
 			throw new IllegalArgumentException();
@@ -55,6 +56,7 @@ public class PortletSessionImpl implements LiferayPortletSession {
 		return _session.getAttribute(scopeName);
 	}
 
+	@Override
 	public Object getAttribute(String name, int scope) {
 		if (name == null) {
 			throw new IllegalArgumentException();
@@ -67,10 +69,12 @@ public class PortletSessionImpl implements LiferayPortletSession {
 		return _session.getAttribute(name);
 	}
 
+	@Override
 	public Map<String, Object> getAttributeMap() {
 		return getAttributeMap(PortletSession.PORTLET_SCOPE);
 	}
 
+	@Override
 	public Map<String, Object> getAttributeMap(int scope) {
 		Map<String, Object> map = new HashMap<String, Object>();
 
@@ -99,14 +103,17 @@ public class PortletSessionImpl implements LiferayPortletSession {
 		return map;
 	}
 
+	@Override
 	public Enumeration<String> getAttributeNames() {
 		return _getAttributeNames(PortletSession.PORTLET_SCOPE, true);
 	}
 
+	@Override
 	public Enumeration<String> getAttributeNames(int scope) {
 		return _getAttributeNames(scope, true);
 	}
 
+	@Override
 	public long getCreationTime() {
 		return _session.getCreationTime();
 	}
@@ -115,30 +122,37 @@ public class PortletSessionImpl implements LiferayPortletSession {
 		return _session;
 	}
 
+	@Override
 	public String getId() {
 		return _session.getId();
 	}
 
+	@Override
 	public long getLastAccessedTime() {
 		return _session.getLastAccessedTime();
 	}
 
+	@Override
 	public int getMaxInactiveInterval() {
 		return _session.getMaxInactiveInterval();
 	}
 
+	@Override
 	public PortletContext getPortletContext() {
 		return _portletContext;
 	}
 
+	@Override
 	public void invalidate() {
 		_session.invalidate();
 	}
 
+	@Override
 	public boolean isNew() {
 		return _session.isNew();
 	}
 
+	@Override
 	public void removeAttribute(String name) {
 		if (name == null) {
 			throw new IllegalArgumentException();
@@ -149,6 +163,7 @@ public class PortletSessionImpl implements LiferayPortletSession {
 		_session.removeAttribute(scopeName);
 	}
 
+	@Override
 	public void removeAttribute(String name, int scope) {
 		if (name == null) {
 			throw new IllegalArgumentException();
@@ -161,6 +176,7 @@ public class PortletSessionImpl implements LiferayPortletSession {
 		_session.removeAttribute(name);
 	}
 
+	@Override
 	public void setAttribute(String name, Object value) {
 		if (name == null) {
 			throw new IllegalArgumentException();
@@ -171,6 +187,7 @@ public class PortletSessionImpl implements LiferayPortletSession {
 		_session.setAttribute(scopeName, value);
 	}
 
+	@Override
 	public void setAttribute(String name, Object value, int scope) {
 		if (name == null) {
 			throw new IllegalArgumentException();
@@ -183,10 +200,12 @@ public class PortletSessionImpl implements LiferayPortletSession {
 		_session.setAttribute(name, value);
 	}
 
+	@Override
 	public void setHttpSession(HttpSession session) {
 		_session = session;
 	}
 
+	@Override
 	public void setMaxInactiveInterval(int interval) {
 		_session.setMaxInactiveInterval(interval);
 	}

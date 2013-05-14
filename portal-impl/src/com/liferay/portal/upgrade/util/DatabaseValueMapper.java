@@ -31,12 +31,14 @@ public class DatabaseValueMapper implements ValueMapper {
 
 	}
 
+	@Override
 	public void appendException(Object exception) {
 
 		// Exceptions
 
 	}
 
+	@Override
 	public Object getNewValue(Object oldValue) throws Exception {
 
 		// Select
@@ -44,16 +46,19 @@ public class DatabaseValueMapper implements ValueMapper {
 		return null;
 	}
 
+	@Override
 	public Iterator<Object> iterator() throws Exception {
 		return Collections.emptyList().iterator();
 	}
 
+	@Override
 	public void mapValue(Object oldValue, Object newValue) throws Exception {
 
 		// Insert
 
 	}
 
+	@Override
 	public int size() throws Exception {
 		return 0;
 	}

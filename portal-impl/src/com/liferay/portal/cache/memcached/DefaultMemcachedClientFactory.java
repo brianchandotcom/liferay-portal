@@ -32,28 +32,35 @@ import net.spy.memcached.MemcachedClientIF;
  */
 public class DefaultMemcachedClientFactory implements MemcachedClientFactory {
 
+	@Override
 	public void clear() {
 	}
 
+	@Override
 	public void close() {
 	}
 
+	@Override
 	public MemcachedClientIF getMemcachedClient() throws Exception {
 		return new MemcachedClient(_connectionFactory, _inetSocketAddresses);
 	}
 
+	@Override
 	public int getNumActive() {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public int getNumIdle() {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void invalidateMemcachedClient(MemcachedClientIF memcachedClient) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void returnMemcachedObject(MemcachedClientIF memcachedClient) {
 		throw new UnsupportedOperationException();
 	}

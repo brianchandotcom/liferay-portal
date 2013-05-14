@@ -69,12 +69,14 @@ public class JournalFolderTrashHandler extends JournalBaseTrashHandler {
 		}
 	}
 
+	@Override
 	public void deleteTrashEntry(long classPK)
 		throws PortalException, SystemException {
 
 		JournalFolderLocalServiceUtil.deleteFolder(classPK, false);
 	}
 
+	@Override
 	public String getClassName() {
 		return JournalFolder.class.getName();
 	}
@@ -157,6 +159,7 @@ public class JournalFolderTrashHandler extends JournalBaseTrashHandler {
 		return true;
 	}
 
+	@Override
 	public boolean isInTrash(long classPK)
 		throws PortalException, SystemException {
 
@@ -203,6 +206,7 @@ public class JournalFolderTrashHandler extends JournalBaseTrashHandler {
 			userId, classPK, containerModelId, serviceContext);
 	}
 
+	@Override
 	public void restoreTrashEntry(long userId, long classPK)
 		throws PortalException, SystemException {
 

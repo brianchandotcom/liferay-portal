@@ -36,6 +36,7 @@ public class GEmailSettingsManagerImpl
 			"/emailsettings/2.0/").concat(gAuthenticator.getDomain());
 	}
 
+	@Override
 	public void addSendAs(long userId, String fullName, String emailAddress)
 		throws GoogleAppsException {
 

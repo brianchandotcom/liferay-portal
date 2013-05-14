@@ -39,12 +39,14 @@ import java.util.List;
  */
 public class PermissionConverterImpl implements PermissionConverter {
 
+	@Override
 	public List<Permission> convertPermissions(long roleId)
 		throws PortalException, SystemException {
 
 		return convertPermissions(roleId, null);
 	}
 
+	@Override
 	public List<Permission> convertPermissions(
 			long roleId, PermissionConversionFilter permissionConversionFilter)
 		throws PortalException, SystemException {
@@ -54,12 +56,14 @@ public class PermissionConverterImpl implements PermissionConverter {
 		return convertPermissions(role, permissionConversionFilter);
 	}
 
+	@Override
 	public List<Permission> convertPermissions(Role role)
 		throws SystemException {
 
 		return convertPermissions(role, null);
 	}
 
+	@Override
 	public List<Permission> convertPermissions(
 			Role role, PermissionConversionFilter permissionConversionFilter)
 		throws SystemException {

@@ -24,35 +24,42 @@ import com.liferay.portal.model.impl.ColorSchemeImpl;
  */
 public class ColorSchemeFactoryImpl implements ColorSchemeFactory {
 
+	@Override
 	public ColorScheme getColorScheme() {
 		return new ColorSchemeImpl();
 	}
 
+	@Override
 	public ColorScheme getColorScheme(String colorSchemeId) {
 		return new ColorSchemeImpl(colorSchemeId);
 	}
 
+	@Override
 	public ColorScheme getColorScheme(
 		String colorSchemeId, String name, String cssClass) {
 
 		return new ColorSchemeImpl(colorSchemeId, name, cssClass);
 	}
 
+	@Override
 	public ColorScheme getDefaultRegularColorScheme() {
 		return new ColorSchemeImpl(
 			getDefaultRegularColorSchemeId(), StringPool.BLANK,
 			StringPool.BLANK);
 	}
 
+	@Override
 	public String getDefaultRegularColorSchemeId() {
 		return PropsValues.DEFAULT_REGULAR_COLOR_SCHEME_ID;
 	}
 
+	@Override
 	public ColorScheme getDefaultWapColorScheme() {
 		return new ColorSchemeImpl(
 			getDefaultWapColorSchemeId(), StringPool.BLANK, StringPool.BLANK);
 	}
 
+	@Override
 	public String getDefaultWapColorSchemeId() {
 		return PropsValues.DEFAULT_WAP_COLOR_SCHEME_ID;
 	}

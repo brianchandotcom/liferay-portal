@@ -20,15 +20,19 @@ package com.liferay.portal.kernel.test;
 public abstract class AbstractExecutionTestListener
 	implements ExecutionTestListener {
 
+	@Override
 	public void runAfterClass(TestContext testContext) {
 	}
 
+	@Override
 	public void runAfterTest(TestContext testContext) {
 	}
 
+	@Override
 	public void runBeforeClass(TestContext testContext) {
 	}
 
+	@Override
 	public void runBeforeTest(TestContext testContext) {
 	}
 

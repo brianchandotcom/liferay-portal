@@ -38,6 +38,7 @@ public class DestinationManager implements DestinationManagerMBean {
 		_destination = destination;
 	}
 
+	@Override
 	public int getListenerCount() {
 		return _destination.getMessageListenerCount();
 	}

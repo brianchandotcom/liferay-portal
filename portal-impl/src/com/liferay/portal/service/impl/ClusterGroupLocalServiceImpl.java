@@ -28,6 +28,7 @@ import java.util.List;
 public class ClusterGroupLocalServiceImpl
 	extends ClusterGroupLocalServiceBaseImpl {
 
+	@Override
 	public ClusterGroup addClusterGroup(
 			String name, List<String> clusterNodeIds)
 		throws SystemException {
@@ -43,6 +44,7 @@ public class ClusterGroupLocalServiceImpl
 		return clusterGroupPersistence.update(clusterGroup);
 	}
 
+	@Override
 	public ClusterGroup addWholeClusterGroup(String name)
 		throws SystemException {
 

@@ -28,6 +28,7 @@ import org.apache.struts.action.Action;
  */
 public class StrutsActionRegistryImpl implements StrutsActionRegistry {
 
+	@Override
 	public Action getAction(String path) {
 		Action action = _actions.get(path);
 
@@ -44,22 +45,26 @@ public class StrutsActionRegistryImpl implements StrutsActionRegistry {
 		return null;
 	}
 
+	@Override
 	public Map<String, Action> getActions() {
 		return _actions;
 	}
 
+	@Override
 	public void register(String path, StrutsAction strutsAction) {
 		Action action = new ActionAdapter(strutsAction);
 
 		_actions.put(path, action);
 	}
 
+	@Override
 	public void register(String path, StrutsPortletAction strutsPortletAction) {
 		Action action = new PortletActionAdapter(strutsPortletAction);
 
 		_actions.put(path, action);
 	}
 
+	@Override
 	public void unregister(String path) {
 		_actions.remove(path);
 	}

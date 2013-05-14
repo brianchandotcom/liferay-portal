@@ -26,6 +26,7 @@ import com.liferay.portal.service.base.ImageServiceBaseImpl;
  */
 public class ImageServiceImpl extends ImageServiceBaseImpl {
 
+	@Override
 	public Image getImage(long imageId)
 		throws PortalException, SystemException {
 

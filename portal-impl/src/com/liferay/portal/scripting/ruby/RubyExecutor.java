@@ -130,6 +130,7 @@ public class RubyExecutor extends BaseScriptingExecutor {
 			classLoaders);
 	}
 
+	@Override
 	public String getLanguage() {
 		return LANGUAGE;
 	}

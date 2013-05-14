@@ -29,6 +29,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @DoPrivileged
 public class CacheRegistryImpl implements CacheRegistry {
 
+	@Override
 	public void clear() {
 		for (Map.Entry<String, CacheRegistryItem> entry :
 				_cacheRegistryItems.entrySet()) {
@@ -44,6 +45,7 @@ public class CacheRegistryImpl implements CacheRegistry {
 		}
 	}
 
+	@Override
 	public void clear(String name) {
 		CacheRegistryItem cacheRegistryItem = _cacheRegistryItems.get(name);
 
@@ -59,10 +61,12 @@ public class CacheRegistryImpl implements CacheRegistry {
 		}
 	}
 
+	@Override
 	public boolean isActive() {
 		return _active;
 	}
 
+	@Override
 	public void register(CacheRegistryItem cacheRegistryItem) {
 		String name = cacheRegistryItem.getRegistryName();
 
@@ -80,6 +84,7 @@ public class CacheRegistryImpl implements CacheRegistry {
 		}
 	}
 
+	@Override
 	public void setActive(boolean active) {
 		_active = active;
 
@@ -88,6 +93,7 @@ public class CacheRegistryImpl implements CacheRegistry {
 		}
 	}
 
+	@Override
 	public void unregister(String name) {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Unregistering " + name);

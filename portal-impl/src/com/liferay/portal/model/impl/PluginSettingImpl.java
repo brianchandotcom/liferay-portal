@@ -43,6 +43,7 @@ public class PluginSettingImpl extends PluginSettingBaseImpl {
 	/**
 	 * Adds a role to the list of roles.
 	 */
+	@Override
 	public void addRole(String role) {
 		setRolesArray(ArrayUtil.append(_rolesArray, role));
 	}
@@ -52,6 +53,7 @@ public class PluginSettingImpl extends PluginSettingBaseImpl {
 	 *
 	 * @return an array of required roles of the plugin
 	 */
+	@Override
 	public String[] getRolesArray() {
 		return _rolesArray;
 	}
@@ -62,6 +64,7 @@ public class PluginSettingImpl extends PluginSettingBaseImpl {
 	 * @param  userId the primary key of the user
 	 * @return <code>true</code> if the user has permission to use this plugin
 	 */
+	@Override
 	public boolean hasPermission(long userId) {
 		try {
 			if (_rolesArray.length == 0) {
@@ -103,6 +106,7 @@ public class PluginSettingImpl extends PluginSettingBaseImpl {
 	 * @return <code>true</code> if the plugin has a role with the specified
 	 *         name
 	 */
+	@Override
 	public boolean hasRoleWithName(String roleName) {
 		for (int i = 0; i < _rolesArray.length; i++) {
 			if (_rolesArray[i].equalsIgnoreCase(roleName)) {
@@ -126,6 +130,7 @@ public class PluginSettingImpl extends PluginSettingBaseImpl {
 	/**
 	 * Sets an array of required roles of the plugin.
 	 */
+	@Override
 	public void setRolesArray(String[] rolesArray) {
 		_rolesArray = rolesArray;
 

@@ -37,35 +37,43 @@ import java.util.Set;
 public class DefaultLicenseManagerImpl
 	implements com.liferay.portal.license.util.LicenseManager {
 
+	@Override
 	public void checkLicense(String productId) {
 	}
 
+	@Override
 	public List<Map<String, String>> getClusterLicenseProperties(
 		String clusterNodeId) {
 
 		return null;
 	}
 
+	@Override
 	public String getHostName() {
 		return LicenseUtil.getHostName();
 	}
 
+	@Override
 	public Set<String> getIpAddresses() {
 		return LicenseUtil.getIpAddresses();
 	}
 
+	@Override
 	public LicenseInfo getLicenseInfo(String productId) {
 		return null;
 	}
 
+	@Override
 	public List<Map<String, String>> getLicenseProperties() {
 		return null;
 	}
 
+	@Override
 	public Map<String, String> getLicenseProperties(String productId) {
 		return null;
 	}
 
+	@Override
 	public int getLicenseState(Map<String, String> licenseProperties) {
 		String productId = licenseProperties.get("productId");
 
@@ -127,6 +135,7 @@ public class DefaultLicenseManagerImpl
 		return 0;
 	}
 
+	@Override
 	public int getLicenseState(String productId) {
 		Map<String, String> licenseProperties = new HashMap<String, String>();
 
@@ -135,10 +144,12 @@ public class DefaultLicenseManagerImpl
 		return getLicenseState(licenseProperties);
 	}
 
+	@Override
 	public Set<String> getMacAddresses() {
 		return LicenseUtil.getMacAddresses();
 	}
 
+	@Override
 	public void registerLicense(JSONObject jsonObject) throws Exception {
 		String serverId = jsonObject.getString("serverId");
 

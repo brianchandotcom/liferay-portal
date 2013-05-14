@@ -24,6 +24,7 @@ import com.liferay.portal.service.base.AccountLocalServiceBaseImpl;
  */
 public class AccountLocalServiceImpl extends AccountLocalServiceBaseImpl {
 
+	@Override
 	public Account getAccount(long companyId, long accountId)
 		throws PortalException, SystemException {
 

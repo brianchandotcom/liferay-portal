@@ -25,14 +25,17 @@ public class TokenImpl implements Token {
 		_token = token;
 	}
 
+	@Override
 	public String getSecret() {
 		return _token.getSecret();
 	}
 
+	@Override
 	public String getToken() {
 		return _token.getToken();
 	}
 
+	@Override
 	public Object getWrappedToken() {
 		return _token;
 	}

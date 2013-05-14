@@ -42,12 +42,14 @@ import javax.portlet.PortletRequest;
  */
 public abstract class BaseTrashHandler implements TrashHandler {
 
+	@Override
 	@SuppressWarnings("unused")
 	public void checkDuplicateTrashEntry(
 			TrashEntry trashEntry, long containerModelId, String newName)
 		throws PortalException, SystemException {
 	}
 
+	@Override
 	@SuppressWarnings("unused")
 	public ContainerModel getContainerModel(long containerModelId)
 		throws PortalException, SystemException {
@@ -55,14 +57,17 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		return null;
 	}
 
+	@Override
 	public String getContainerModelClassName() {
 		return StringPool.BLANK;
 	}
 
+	@Override
 	public String getContainerModelName() {
 		return StringPool.BLANK;
 	}
 
+	@Override
 	@SuppressWarnings("unused")
 	public List<ContainerModel> getContainerModels(
 			long classPK, long containerModelId, int start, int end)
@@ -71,6 +76,7 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		return Collections.emptyList();
 	}
 
+	@Override
 	@SuppressWarnings("unused")
 	public int getContainerModelsCount(long classPK, long containerModelId)
 		throws PortalException, SystemException {
@@ -78,10 +84,12 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		return 0;
 	}
 
+	@Override
 	public String getDeleteMessage() {
 		return "deleted-in-x";
 	}
 
+	@Override
 	@SuppressWarnings("unused")
 	public ContainerModel getParentContainerModel(long classPK)
 		throws PortalException, SystemException {
@@ -89,6 +97,7 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		return null;
 	}
 
+	@Override
 	@SuppressWarnings("unused")
 	public List<ContainerModel> getParentContainerModels(long classPK)
 		throws PortalException, SystemException {
@@ -96,6 +105,7 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		return Collections.emptyList();
 	}
 
+	@Override
 	@SuppressWarnings("unused")
 	public String getRestoreLink(PortletRequest portletRequest, long classPK)
 		throws PortalException, SystemException {
@@ -103,6 +113,7 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		return StringPool.BLANK;
 	}
 
+	@Override
 	@SuppressWarnings("unused")
 	public String getRestoreMessage(PortletRequest portletRequest, long classPK)
 		throws PortalException, SystemException {
@@ -110,18 +121,22 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		return StringPool.BLANK;
 	}
 
+	@Override
 	public String getRootContainerModelName() {
 		return StringPool.BLANK;
 	}
 
+	@Override
 	public String getSubcontainerModelName() {
 		return StringPool.BLANK;
 	}
 
+	@Override
 	public String getTrashContainedModelName() {
 		return StringPool.BLANK;
 	}
 
+	@Override
 	@SuppressWarnings("unused")
 	public int getTrashContainedModelsCount(long classPK)
 		throws PortalException, SystemException {
@@ -129,6 +144,7 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		return 0;
 	}
 
+	@Override
 	@SuppressWarnings("unused")
 	public List<TrashRenderer> getTrashContainedModelTrashRenderers(
 			long classPK, int start, int end)
@@ -137,6 +153,7 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		return Collections.emptyList();
 	}
 
+	@Override
 	@SuppressWarnings("unused")
 	public ContainerModel getTrashContainer(long classPK)
 		throws PortalException, SystemException {
@@ -144,10 +161,12 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		return null;
 	}
 
+	@Override
 	public String getTrashContainerModelName() {
 		return StringPool.BLANK;
 	}
 
+	@Override
 	@SuppressWarnings("unused")
 	public int getTrashContainerModelsCount(long classPK)
 		throws PortalException, SystemException {
@@ -155,6 +174,7 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		return 0;
 	}
 
+	@Override
 	@SuppressWarnings("unused")
 	public List<TrashRenderer> getTrashContainerModelTrashRenderers(
 			long classPK, int start, int end)
@@ -163,6 +183,7 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		return Collections.emptyList();
 	}
 
+	@Override
 	public TrashRenderer getTrashRenderer(long classPK)
 		throws PortalException, SystemException {
 
@@ -180,6 +201,7 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		return null;
 	}
 
+	@Override
 	public boolean hasTrashPermission(
 			PermissionChecker permissionChecker, long groupId, long classPK,
 			String trashActionId)
@@ -206,14 +228,17 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		return hasPermission(permissionChecker, classPK, actionId);
 	}
 
+	@Override
 	public boolean isContainerModel() {
 		return false;
 	}
 
+	@Override
 	public boolean isDeletable() {
 		return true;
 	}
 
+	@Override
 	@SuppressWarnings("unused")
 	public boolean isInTrashContainer(long classPK)
 		throws PortalException, SystemException {
@@ -221,10 +246,12 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		return false;
 	}
 
+	@Override
 	public boolean isMovable() {
 		return false;
 	}
 
+	@Override
 	@SuppressWarnings("unused")
 	public boolean isRestorable(long classPK)
 		throws PortalException, SystemException {
@@ -232,6 +259,7 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		return true;
 	}
 
+	@Override
 	@SuppressWarnings("unused")
 	public void moveEntry(
 			long userId, long classPK, long containerModelId,
@@ -239,6 +267,7 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		throws PortalException, SystemException {
 	}
 
+	@Override
 	public void moveTrashEntry(
 			long userId, long classPK, long containerModelId,
 			ServiceContext serviceContext)
@@ -254,11 +283,13 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		throw new SystemException();
 	}
 
+	@Override
 	@SuppressWarnings("unused")
 	public void restoreRelatedTrashEntry(String className, long classPK)
 		throws PortalException, SystemException {
 	}
 
+	@Override
 	@SuppressWarnings("unused")
 	public void updateTitle(long classPK, String title)
 		throws PortalException, SystemException {

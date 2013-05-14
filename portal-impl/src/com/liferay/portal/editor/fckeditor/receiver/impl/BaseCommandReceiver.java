@@ -80,6 +80,7 @@ import org.w3c.dom.Node;
  */
 public abstract class BaseCommandReceiver implements CommandReceiver {
 
+	@Override
 	public void createFolder(
 		CommandArgument commandArgument, HttpServletRequest request,
 		HttpServletResponse response) {
@@ -129,6 +130,7 @@ public abstract class BaseCommandReceiver implements CommandReceiver {
 		_writeDocument(document, response);
 	}
 
+	@Override
 	public void fileUpload(
 		CommandArgument commandArgument, HttpServletRequest request,
 		HttpServletResponse response) {
@@ -251,6 +253,7 @@ public abstract class BaseCommandReceiver implements CommandReceiver {
 		_writeUploadResponse(returnValue, response);
 	}
 
+	@Override
 	public void getFolders(
 		CommandArgument commandArgument, HttpServletRequest request,
 		HttpServletResponse response) {
@@ -266,6 +269,7 @@ public abstract class BaseCommandReceiver implements CommandReceiver {
 		_writeDocument(document, response);
 	}
 
+	@Override
 	public void getFoldersAndFiles(
 		CommandArgument commandArgument, HttpServletRequest request,
 		HttpServletResponse response) {

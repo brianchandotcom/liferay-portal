@@ -31,6 +31,7 @@ public class WebAutoDeployListener extends BaseAutoDeployListener {
 		_autoDeployer = new ThreadSafeAutoDeployer(new WebAutoDeployer());
 	}
 
+	@Override
 	public void deploy(AutoDeploymentContext autoDeploymentContext)
 		throws AutoDeployException {
 

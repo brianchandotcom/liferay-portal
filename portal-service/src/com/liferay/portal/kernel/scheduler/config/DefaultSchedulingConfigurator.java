@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.PortalLifecycle;
 public class DefaultSchedulingConfigurator
 	extends AbstractSchedulingConfigurator {
 
+	@Override
 	public void configure() {
 		if (schedulerEntries.isEmpty()) {
 			return;

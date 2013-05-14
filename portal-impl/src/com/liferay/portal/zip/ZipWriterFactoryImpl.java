@@ -25,6 +25,7 @@ import java.io.File;
  */
 public class ZipWriterFactoryImpl implements ZipWriterFactory {
 
+	@Override
 	public ZipWriter getZipWriter() {
 		ClassLoader portalClassLoader = ClassLoaderUtil.getPortalClassLoader();
 
@@ -45,6 +46,7 @@ public class ZipWriterFactoryImpl implements ZipWriterFactory {
 		}
 	}
 
+	@Override
 	public ZipWriter getZipWriter(File file) {
 		ClassLoader portalClassLoader = ClassLoaderUtil.getPortalClassLoader();
 

@@ -37,6 +37,7 @@ import org.aopalliance.intercept.MethodInterceptor;
 public class ServiceBeanMethodInvocationFactoryImpl
 	implements ServiceBeanMethodInvocationFactory {
 
+	@Override
 	public void proceed(
 			Object target, Class<?> targetClass, Method method,
 			Object[] arguments, String[] methodInterceptorBeanIds)

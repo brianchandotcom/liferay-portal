@@ -36,6 +36,7 @@ import org.apache.commons.lang.time.FastDateFormat;
 @DoPrivileged
 public class FastDateFormatFactoryImpl implements FastDateFormatFactory {
 
+	@Override
 	public Format getDate(int style, Locale locale, TimeZone timeZone) {
 		String key = getKey(style, locale, timeZone);
 
@@ -50,18 +51,22 @@ public class FastDateFormatFactoryImpl implements FastDateFormatFactory {
 		return format;
 	}
 
+	@Override
 	public Format getDate(Locale locale) {
 		return getDate(locale, null);
 	}
 
+	@Override
 	public Format getDate(Locale locale, TimeZone timeZone) {
 		return getDate(FastDateFormatConstants.SHORT, locale, timeZone);
 	}
 
+	@Override
 	public Format getDate(TimeZone timeZone) {
 		return getDate(LocaleUtil.getDefault(), timeZone);
 	}
 
+	@Override
 	public Format getDateTime(
 		int dateStyle, int timeStyle, Locale locale, TimeZone timeZone) {
 
@@ -79,28 +84,34 @@ public class FastDateFormatFactoryImpl implements FastDateFormatFactory {
 		return format;
 	}
 
+	@Override
 	public Format getDateTime(Locale locale) {
 		return getDateTime(locale, null);
 	}
 
+	@Override
 	public Format getDateTime(Locale locale, TimeZone timeZone) {
 		return getDateTime(
 			FastDateFormatConstants.SHORT, FastDateFormatConstants.SHORT,
 			locale, timeZone);
 	}
 
+	@Override
 	public Format getDateTime(TimeZone timeZone) {
 		return getDateTime(LocaleUtil.getDefault(), timeZone);
 	}
 
+	@Override
 	public Format getSimpleDateFormat(String pattern) {
 		return getSimpleDateFormat(pattern, LocaleUtil.getDefault(), null);
 	}
 
+	@Override
 	public Format getSimpleDateFormat(String pattern, Locale locale) {
 		return getSimpleDateFormat(pattern, locale, null);
 	}
 
+	@Override
 	public Format getSimpleDateFormat(
 		String pattern, Locale locale, TimeZone timeZone) {
 
@@ -117,10 +128,12 @@ public class FastDateFormatFactoryImpl implements FastDateFormatFactory {
 		return format;
 	}
 
+	@Override
 	public Format getSimpleDateFormat(String pattern, TimeZone timeZone) {
 		return getSimpleDateFormat(pattern, LocaleUtil.getDefault(), timeZone);
 	}
 
+	@Override
 	public Format getTime(int style, Locale locale, TimeZone timeZone) {
 		String key = getKey(style, locale, timeZone);
 
@@ -135,14 +148,17 @@ public class FastDateFormatFactoryImpl implements FastDateFormatFactory {
 		return format;
 	}
 
+	@Override
 	public Format getTime(Locale locale) {
 		return getTime(locale, null);
 	}
 
+	@Override
 	public Format getTime(Locale locale, TimeZone timeZone) {
 		return getTime(FastDateFormatConstants.SHORT, locale, timeZone);
 	}
 
+	@Override
 	public Format getTime(TimeZone timeZone) {
 		return getTime(LocaleUtil.getDefault(), timeZone);
 	}

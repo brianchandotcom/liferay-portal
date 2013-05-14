@@ -28,16 +28,19 @@ import java.util.Date;
 @DoPrivileged
 public class AuditMessageFactoryImpl implements AuditMessageFactory {
 
+	@Override
 	public AuditMessage getAuditMessage(String message) throws JSONException {
 		return new AuditMessage(message);
 	}
 
+	@Override
 	public AuditMessage getAuditMessage(
 		String eventType, long companyId, long userId, String userName) {
 
 		return new AuditMessage(eventType, companyId, userId, userName);
 	}
 
+	@Override
 	public AuditMessage getAuditMessage(
 		String eventType, long companyId, long userId, String userName,
 		String className, String classPK) {
@@ -46,6 +49,7 @@ public class AuditMessageFactoryImpl implements AuditMessageFactory {
 			eventType, companyId, userId, userName, className, classPK);
 	}
 
+	@Override
 	public AuditMessage getAuditMessage(
 		String eventType, long companyId, long userId, String userName,
 		String className, String classPK, String message) {
@@ -55,6 +59,7 @@ public class AuditMessageFactoryImpl implements AuditMessageFactory {
 			message);
 	}
 
+	@Override
 	public AuditMessage getAuditMessage(
 		String eventType, long companyId, long userId, String userName,
 		String className, String classPK, String message, Date timestamp,
@@ -65,6 +70,7 @@ public class AuditMessageFactoryImpl implements AuditMessageFactory {
 			timestamp, additionalInfo);
 	}
 
+	@Override
 	public AuditMessage getAuditMessage(
 		String eventType, long companyId, long userId, String userName,
 		String className, String classPK, String message,

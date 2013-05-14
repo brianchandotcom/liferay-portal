@@ -22,6 +22,7 @@ import java.io.InputStream;
  */
 public class ConsumerOutputProcessor implements OutputProcessor<Void, Void> {
 
+	@Override
 	public Void processStdErr(InputStream stdErrInputStream)
 		throws ProcessException {
 
@@ -30,6 +31,7 @@ public class ConsumerOutputProcessor implements OutputProcessor<Void, Void> {
 		return null;
 	}
 
+	@Override
 	public Void processStdOut(InputStream stdOutInputStream)
 		throws ProcessException {
 

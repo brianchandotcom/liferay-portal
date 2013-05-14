@@ -23,6 +23,7 @@ public class CMISInTreeExpression implements CMISCriterion {
 		_objectId = objectId;
 	}
 
+	@Override
 	public String toQueryFragment() {
 		return "IN_TREE('".concat(_objectId).concat("')");
 	}

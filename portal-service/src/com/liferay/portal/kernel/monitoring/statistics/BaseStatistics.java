@@ -25,6 +25,7 @@ public class BaseStatistics implements Statistics {
 		_startTime = System.currentTimeMillis();
 	}
 
+	@Override
 	public String getDescription() {
 		return _description;
 	}
@@ -49,6 +50,7 @@ public class BaseStatistics implements Statistics {
 		return _minTime;
 	}
 
+	@Override
 	public String getName() {
 		return _name;
 	}
@@ -65,6 +67,7 @@ public class BaseStatistics implements Statistics {
 		return System.currentTimeMillis() - _startTime;
 	}
 
+	@Override
 	public void reset() {
 		_maxTime = 0;
 		_minTime = 0;
@@ -73,6 +76,7 @@ public class BaseStatistics implements Statistics {
 		_lastSampleTime = _startTime;
 	}
 
+	@Override
 	public void setDescription(String description) {
 		_description = description;
 	}

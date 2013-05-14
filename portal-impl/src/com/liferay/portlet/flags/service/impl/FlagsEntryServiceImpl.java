@@ -25,6 +25,7 @@ import com.liferay.portlet.flags.service.base.FlagsEntryServiceBaseImpl;
  */
 public class FlagsEntryServiceImpl extends FlagsEntryServiceBaseImpl {
 
+	@Override
 	public void addEntry(
 		String className, long classPK, String reporterEmailAddress,
 		long reportedUserId, String contentTitle, String contentURL,

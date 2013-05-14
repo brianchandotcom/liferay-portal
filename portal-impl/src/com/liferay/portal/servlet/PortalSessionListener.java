@@ -34,6 +34,7 @@ import javax.servlet.http.HttpSessionListener;
  */
 public class PortalSessionListener implements HttpSessionListener {
 
+	@Override
 	public void sessionCreated(HttpSessionEvent httpSessionEvent) {
 		if (CompoundSessionIdSplitterUtil.hasSessionDelimiter()) {
 			CompoundSessionIdHttpSession compoundSessionIdHttpSession =
@@ -61,6 +62,7 @@ public class PortalSessionListener implements HttpSessionListener {
 		}
 	}
 
+	@Override
 	public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
 		if (CompoundSessionIdSplitterUtil.hasSessionDelimiter()) {
 			CompoundSessionIdHttpSession compoundSessionIdHttpSession =

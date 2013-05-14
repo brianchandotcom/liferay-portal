@@ -31,6 +31,7 @@ import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission
  */
 public class DLFileShortcutServiceImpl extends DLFileShortcutServiceBaseImpl {
 
+	@Override
 	public DLFileShortcut addFileShortcut(
 			long groupId, long folderId, long toFileEntryId,
 			ServiceContext serviceContext)
@@ -51,6 +52,7 @@ public class DLFileShortcutServiceImpl extends DLFileShortcutServiceBaseImpl {
 			getUserId(), groupId, folderId, toFileEntryId, serviceContext);
 	}
 
+	@Override
 	public void deleteFileShortcut(long fileShortcutId)
 		throws PortalException, SystemException {
 
@@ -60,6 +62,7 @@ public class DLFileShortcutServiceImpl extends DLFileShortcutServiceBaseImpl {
 		dlFileShortcutLocalService.deleteFileShortcut(fileShortcutId);
 	}
 
+	@Override
 	public DLFileShortcut getFileShortcut(long fileShortcutId)
 		throws PortalException, SystemException {
 
@@ -69,6 +72,7 @@ public class DLFileShortcutServiceImpl extends DLFileShortcutServiceBaseImpl {
 		return dlFileShortcutLocalService.getFileShortcut(fileShortcutId);
 	}
 
+	@Override
 	public DLFileShortcut updateFileShortcut(
 			long fileShortcutId, long folderId, long toFileEntryId,
 			ServiceContext serviceContext)

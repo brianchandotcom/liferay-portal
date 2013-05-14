@@ -73,18 +73,21 @@ public class DDMTemplateResource implements TemplateResource {
 		return false;
 	}
 
+	@Override
 	public long getLastModified() {
 		Date modifiedDate = _ddmTemplate.getModifiedDate();
 
 		return modifiedDate.getTime();
 	}
 
+	@Override
 	public Reader getReader() {
 		String script = _ddmTemplate.getScript();
 
 		return new UnsyncStringReader(script);
 	}
 
+	@Override
 	public String getTemplateId() {
 		return _ddmTemplateKey;
 	}
@@ -94,6 +97,7 @@ public class DDMTemplateResource implements TemplateResource {
 		return _ddmTemplateKey.hashCode() * 11 + _ddmTemplate.hashCode();
 	}
 
+	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		long ddmTemplateId = objectInput.readLong();
 
@@ -109,6 +113,7 @@ public class DDMTemplateResource implements TemplateResource {
 		_ddmTemplateKey = objectInput.readUTF();
 	}
 
+	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(_ddmTemplate.getTemplateId());
 		objectOutput.writeUTF(_ddmTemplateKey);

@@ -27,9 +27,11 @@ import javax.management.MBeanTrustPermission;
  */
 public class MBeanChecker extends BaseChecker {
 
+	@Override
 	public void afterPropertiesSet() {
 	}
 
+	@Override
 	public boolean implies(Permission permission) {
 		String name = permission.getName();
 		String actions = permission.getActions();

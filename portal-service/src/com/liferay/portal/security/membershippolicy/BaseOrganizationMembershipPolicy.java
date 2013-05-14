@@ -43,6 +43,7 @@ import java.util.Map;
 public abstract class BaseOrganizationMembershipPolicy
 	implements OrganizationMembershipPolicy {
 
+	@Override
 	@SuppressWarnings("unused")
 	public void checkRoles(
 			List<UserGroupRole> addUserGroupRoles,
@@ -50,6 +51,7 @@ public abstract class BaseOrganizationMembershipPolicy
 		throws PortalException, SystemException {
 	}
 
+	@Override
 	@SuppressWarnings("unused")
 	public boolean isMembershipAllowed(long userId, long organizationId)
 		throws PortalException, SystemException {
@@ -65,6 +67,7 @@ public abstract class BaseOrganizationMembershipPolicy
 		return true;
 	}
 
+	@Override
 	public boolean isMembershipProtected(
 			PermissionChecker permissionChecker, long userId,
 			long organizationId)
@@ -103,6 +106,7 @@ public abstract class BaseOrganizationMembershipPolicy
 		return false;
 	}
 
+	@Override
 	@SuppressWarnings("unused")
 	public boolean isMembershipRequired(long userId, long organizationId)
 		throws PortalException, SystemException {
@@ -118,6 +122,7 @@ public abstract class BaseOrganizationMembershipPolicy
 		return false;
 	}
 
+	@Override
 	public boolean isRoleAllowed(long userId, long organizationId, long roleId)
 		throws PortalException, SystemException {
 
@@ -144,6 +149,7 @@ public abstract class BaseOrganizationMembershipPolicy
 		return true;
 	}
 
+	@Override
 	public boolean isRoleProtected(
 			PermissionChecker permissionChecker, long userId,
 			long organizationId, long roleId)
@@ -177,6 +183,7 @@ public abstract class BaseOrganizationMembershipPolicy
 		return false;
 	}
 
+	@Override
 	public boolean isRoleRequired(long userId, long organizationId, long roleId)
 		throws PortalException, SystemException {
 
@@ -203,11 +210,13 @@ public abstract class BaseOrganizationMembershipPolicy
 		return false;
 	}
 
+	@Override
 	public void propagateRoles(
 		List<UserGroupRole> addUserGroupRoles,
 		List<UserGroupRole> removeUserGroupRoles) {
 	}
 
+	@Override
 	public void verifyPolicy() throws PortalException, SystemException {
 		ActionableDynamicQuery organizationActionableDynamicQuery =
 			new OrganizationActionableDynamicQuery() {
@@ -245,15 +254,18 @@ public abstract class BaseOrganizationMembershipPolicy
 		organizationActionableDynamicQuery.performActions();
 	}
 
+	@Override
 	public void verifyPolicy(Organization organization)
 		throws PortalException, SystemException {
 
 		verifyPolicy(organization, null, null, null, null);
 	}
 
+	@Override
 	public void verifyPolicy(Role role) {
 	}
 
+	@Override
 	public void verifyPolicy(
 		Role role, Role oldRole,
 		Map<String, Serializable> oldExpandoAttributes) {

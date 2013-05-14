@@ -23,10 +23,12 @@ import java.util.concurrent.atomic.AtomicLong;
 public class UniformPortalCacheClusterChannelSelector
 	implements PortalCacheClusterChannelSelector {
 
+	@Override
 	public long getSelectedNumber() {
 		return _eventCounter.get();
 	}
 
+	@Override
 	public PortalCacheClusterChannel select(
 		List<PortalCacheClusterChannel> portalCacheClusterChannels,
 		PortalCacheClusterEvent portalCacheClusterEvent) {

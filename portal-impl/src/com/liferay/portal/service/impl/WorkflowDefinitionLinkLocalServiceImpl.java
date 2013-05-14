@@ -44,6 +44,7 @@ import java.util.List;
 public class WorkflowDefinitionLinkLocalServiceImpl
 	extends WorkflowDefinitionLinkLocalServiceBaseImpl {
 
+	@Override
 	public WorkflowDefinitionLink addWorkflowDefinitionLink(
 			long userId, long companyId, long groupId, String className,
 			long classPK, long typePK, String workflowDefinitionName,
@@ -78,6 +79,7 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 		return workflowDefinitionLink;
 	}
 
+	@Override
 	public void deleteWorkflowDefinitionLink(
 			long companyId, long groupId, String className, long classPK,
 			long typePK)
@@ -94,6 +96,7 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 		}
 	}
 
+	@Override
 	public WorkflowDefinitionLink getDefaultWorkflowDefinitionLink(
 			long companyId, String className, long classPK, long typePK)
 		throws PortalException, SystemException {
@@ -109,6 +112,7 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 			typePK);
 	}
 
+	@Override
 	public WorkflowDefinitionLink getWorkflowDefinitionLink(
 			long companyId, long groupId, String className, long classPK,
 			long typePK)
@@ -118,6 +122,7 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 			companyId, groupId, className, classPK, typePK, false);
 	}
 
+	@Override
 	public WorkflowDefinitionLink getWorkflowDefinitionLink(
 			long companyId, long groupId, String className, long classPK,
 			long typePK, boolean strict)
@@ -155,6 +160,7 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 		return workflowDefinitionLink;
 	}
 
+	@Override
 	public int getWorkflowDefinitionLinksCount(
 			long companyId, String workflowDefinitionName,
 			int workflowDefinitionVersion)
@@ -168,6 +174,7 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 			companyId, workflowDefinitionName, workflowDefinitionVersion);
 	}
 
+	@Override
 	@Skip
 	public boolean hasWorkflowDefinitionLink(
 			long companyId, long groupId, String className)
@@ -176,6 +183,7 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 		return hasWorkflowDefinitionLink(companyId, groupId, className, 0);
 	}
 
+	@Override
 	@Skip
 	public boolean hasWorkflowDefinitionLink(
 			long companyId, long groupId, String className, long classPK)
@@ -185,6 +193,7 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 			companyId, groupId, className, classPK, 0);
 	}
 
+	@Override
 	@Skip
 	public boolean hasWorkflowDefinitionLink(
 			long companyId, long groupId, String className, long classPK,
@@ -206,6 +215,7 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 		}
 	}
 
+	@Override
 	public void updateWorkflowDefinitionLink(
 			long userId, long companyId, long groupId, String className,
 			long classPK, long typePK, String workflowDefinition)
@@ -229,6 +239,7 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 		}
 	}
 
+	@Override
 	public WorkflowDefinitionLink updateWorkflowDefinitionLink(
 			long userId, long companyId, long groupId, String className,
 			long classPK, long typePK, String workflowDefinitionName,
@@ -267,6 +278,7 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 		return workflowDefinitionLink;
 	}
 
+	@Override
 	public void updateWorkflowDefinitionLinks(
 			long userId, long companyId, long groupId, String className,
 			long classPK,

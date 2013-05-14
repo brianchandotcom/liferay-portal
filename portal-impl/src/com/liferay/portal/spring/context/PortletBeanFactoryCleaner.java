@@ -95,6 +95,7 @@ public class PortletBeanFactoryCleaner implements BeanFactoryAware {
 		_aspectJExpressionPointcuts.clear();
 	}
 
+	@Override
 	public void setBeanFactory(BeanFactory beanFactory) {
 		_beanFactory = beanFactory;
 	}

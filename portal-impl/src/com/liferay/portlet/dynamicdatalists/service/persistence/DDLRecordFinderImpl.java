@@ -51,6 +51,7 @@ public class DDLRecordFinderImpl extends BasePersistenceImpl<DDLRecord>
 	public static final String FIND_BY_C_S_S =
 		DDLRecordFinder.class.getName() + ".findByC_S_S";
 
+	@Override
 	public int countByR_S(long recordSetId, int status) throws SystemException {
 		Session session = null;
 
@@ -96,6 +97,7 @@ public class DDLRecordFinderImpl extends BasePersistenceImpl<DDLRecord>
 		}
 	}
 
+	@Override
 	public int countByC_S_S(long companyId, int status, int scope)
 		throws SystemException {
 
@@ -144,6 +146,7 @@ public class DDLRecordFinderImpl extends BasePersistenceImpl<DDLRecord>
 		}
 	}
 
+	@Override
 	public List<DDLRecord> findByR_S(
 			long recordSetId, int status, int start, int end,
 			OrderByComparator orderByComparator)
@@ -185,6 +188,7 @@ public class DDLRecordFinderImpl extends BasePersistenceImpl<DDLRecord>
 		}
 	}
 
+	@Override
 	public List<DDLRecord> findByC_S_S(
 			long companyId, int status, int scope, int start, int end,
 			OrderByComparator orderByComparator)
@@ -227,6 +231,7 @@ public class DDLRecordFinderImpl extends BasePersistenceImpl<DDLRecord>
 		}
 	}
 
+	@Override
 	public Long[] findByC_S_S_MinAndMax(long companyId, int status, int scope)
 		throws SystemException {
 
@@ -277,6 +282,7 @@ public class DDLRecordFinderImpl extends BasePersistenceImpl<DDLRecord>
 		}
 	}
 
+	@Override
 	public List<DDLRecord> findByC_S_S_MinAndMax(
 			long companyId, int status, int scope, long minRecordId,
 			long maxRecordId)

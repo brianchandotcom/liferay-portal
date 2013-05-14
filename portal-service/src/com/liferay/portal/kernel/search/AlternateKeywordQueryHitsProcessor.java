@@ -22,6 +22,7 @@ import java.util.Map;
  */
 public class AlternateKeywordQueryHitsProcessor implements HitsProcessor {
 
+	@Override
 	public boolean process(SearchContext searchContext, Hits hits)
 		throws SearchException {
 

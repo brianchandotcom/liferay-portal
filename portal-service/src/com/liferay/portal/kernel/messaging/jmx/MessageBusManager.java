@@ -38,6 +38,7 @@ public class MessageBusManager implements MessageBusManagerMBean {
 		_messageBus = messageBus;
 	}
 
+	@Override
 	public int getDestinationCount() {
 		return _messageBus.getDestinationCount();
 	}

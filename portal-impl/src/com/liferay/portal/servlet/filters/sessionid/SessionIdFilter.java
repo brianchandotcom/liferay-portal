@@ -31,6 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 public class SessionIdFilter
 	extends BasePortalFilter implements WrapHttpServletRequestFilter {
 
+	@Override
 	public HttpServletRequest getWrappedHttpServletRequest(
 		HttpServletRequest request, HttpServletResponse response) {
 

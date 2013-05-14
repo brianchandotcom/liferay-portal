@@ -27,12 +27,14 @@ import javax.portlet.ResourceResponse;
  */
 public class BaseStrutsPortletAction implements StrutsPortletAction {
 
+	@Override
 	public void processAction(
 			PortletConfig portletConfig, ActionRequest actionRequest,
 			ActionResponse actionResponse)
 		throws Exception {
 	}
 
+	@Override
 	public void processAction(
 			StrutsPortletAction originalStrutsPortletAction,
 			PortletConfig portletConfig, ActionRequest actionRequest,
@@ -42,6 +44,7 @@ public class BaseStrutsPortletAction implements StrutsPortletAction {
 		processAction(portletConfig, actionRequest, actionResponse);
 	}
 
+	@Override
 	public String render(
 			PortletConfig portletConfig, RenderRequest renderRequest,
 			RenderResponse renderResponse)
@@ -50,6 +53,7 @@ public class BaseStrutsPortletAction implements StrutsPortletAction {
 		return null;
 	}
 
+	@Override
 	public String render(
 			StrutsPortletAction originalStrutsPortletAction,
 			PortletConfig portletConfig, RenderRequest renderRequest,
@@ -59,12 +63,14 @@ public class BaseStrutsPortletAction implements StrutsPortletAction {
 		return render(portletConfig, renderRequest, renderResponse);
 	}
 
+	@Override
 	public void serveResource(
 			PortletConfig portletConfig, ResourceRequest resourceRequest,
 			ResourceResponse resourceResponse)
 		throws Exception {
 	}
 
+	@Override
 	public void serveResource(
 			StrutsPortletAction originalStrutsPortletAction,
 			PortletConfig portletConfig, ResourceRequest resourceRequest,

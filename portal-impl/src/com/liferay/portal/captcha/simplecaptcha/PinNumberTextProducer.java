@@ -23,6 +23,7 @@ import nl.captcha.text.producer.TextProducer;
  */
 public class PinNumberTextProducer implements TextProducer {
 
+	@Override
 	public String getText() {
 		return PwdGenerator.getPinNumber();
 	}

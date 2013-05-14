@@ -32,6 +32,7 @@ public class ThemeAutoDeployListener extends BaseAutoDeployListener {
 		_autoDeployer = new ThreadSafeAutoDeployer(new ThemeAutoDeployer());
 	}
 
+	@Override
 	public void deploy(AutoDeploymentContext autoDeploymentContext)
 		throws AutoDeployException {
 

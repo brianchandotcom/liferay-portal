@@ -33,6 +33,7 @@ import com.liferay.portal.util.PortalUtil;
  */
 public class CommonPermissionImpl implements CommonPermission {
 
+	@Override
 	public void check(
 			PermissionChecker permissionChecker, long classNameId, long classPK,
 			String actionId)
@@ -43,6 +44,7 @@ public class CommonPermissionImpl implements CommonPermission {
 		check(permissionChecker, className, classPK, actionId);
 	}
 
+	@Override
 	public void check(
 			PermissionChecker permissionChecker, String className, long classPK,
 			String actionId)

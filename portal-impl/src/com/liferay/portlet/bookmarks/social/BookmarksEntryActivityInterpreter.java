@@ -31,6 +31,7 @@ import com.liferay.portlet.social.model.SocialActivityConstants;
 public class BookmarksEntryActivityInterpreter
 	extends BaseSocialActivityInterpreter {
 
+	@Override
 	public String[] getClassNames() {
 		return _CLASS_NAMES;
 	}

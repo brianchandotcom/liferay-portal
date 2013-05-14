@@ -43,18 +43,22 @@ public class ShardDataSourceTargetSource implements TargetSource {
 		return _dataSources;
 	}
 
+	@Override
 	public Object getTarget() throws Exception {
 		return getDataSource();
 	}
 
+	@Override
 	public Class<DataSource> getTargetClass() {
 		return DataSource.class;
 	}
 
+	@Override
 	public boolean isStatic() {
 		return false;
 	}
 
+	@Override
 	public void releaseTarget(Object target) throws Exception {
 	}
 

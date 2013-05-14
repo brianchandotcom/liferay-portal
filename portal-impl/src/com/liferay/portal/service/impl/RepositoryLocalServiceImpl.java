@@ -56,6 +56,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 
+	@Override
 	public Repository addRepository(
 			long userId, long groupId, long classNameId, long parentFolderId,
 			String name, String description, String portletId,
@@ -110,6 +111,7 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 	 *             long, long, String, String, String, UnicodeProperties,
 	 *             boolean, ServiceContext)}
 	 */
+	@Override
 	public Repository addRepository(
 			long userId, long groupId, long classNameId, long parentFolderId,
 			String name, String description, String portletId,
@@ -122,6 +124,7 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 			portletId, typeSettingsProperties, false, serviceContext);
 	}
 
+	@Override
 	public void checkRepository(long repositoryId) throws SystemException {
 		Group group = groupPersistence.fetchByPrimaryKey(repositoryId);
 
@@ -137,6 +140,7 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public void deleteRepositories(long groupId)
 		throws PortalException, SystemException {
 
@@ -175,12 +179,14 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 		return repository;
 	}
 
+	@Override
 	public Repository fetchRepository(long groupId, String portletId)
 		throws SystemException {
 
 		return fetchRepository(groupId, portletId, portletId);
 	}
 
+	@Override
 	public Repository fetchRepository(
 			long groupId, String name, String portletId)
 		throws SystemException {
@@ -188,6 +194,7 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 		return repositoryPersistence.fetchByG_N_P(groupId, name, portletId);
 	}
 
+	@Override
 	public LocalRepository getLocalRepositoryImpl(long repositoryId)
 		throws PortalException, SystemException {
 
@@ -223,6 +230,7 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 		return localRepositoryImpl;
 	}
 
+	@Override
 	public LocalRepository getLocalRepositoryImpl(
 			long folderId, long fileEntryId, long fileVersionId)
 		throws PortalException, SystemException {
@@ -264,18 +272,21 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 		return localRepositoryImpl;
 	}
 
+	@Override
 	public Repository getRepository(long groupId, String portletId)
 		throws PortalException, SystemException {
 
 		return getRepository(groupId, portletId, portletId);
 	}
 
+	@Override
 	public Repository getRepository(long groupId, String name, String portletId)
 		throws PortalException, SystemException {
 
 		return repositoryPersistence.findByG_N_P(groupId, name, portletId);
 	}
 
+	@Override
 	public com.liferay.portal.kernel.repository.Repository getRepositoryImpl(
 			long repositoryId)
 		throws PortalException, SystemException {
@@ -311,6 +322,7 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 		return repositoryImpl;
 	}
 
+	@Override
 	public com.liferay.portal.kernel.repository.Repository getRepositoryImpl(
 			long folderId, long fileEntryId, long fileVersionId)
 		throws PortalException, SystemException {
@@ -348,6 +360,7 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 		return repositoryImpl;
 	}
 
+	@Override
 	public UnicodeProperties getTypeSettingsProperties(long repositoryId)
 		throws PortalException, SystemException {
 
@@ -357,6 +370,7 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 		return repository.getTypeSettingsProperties();
 	}
 
+	@Override
 	public void updateRepository(
 			long repositoryId, String name, String description)
 		throws PortalException, SystemException {

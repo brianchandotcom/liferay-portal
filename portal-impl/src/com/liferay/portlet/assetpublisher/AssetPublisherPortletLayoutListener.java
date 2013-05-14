@@ -26,12 +26,15 @@ import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 public class AssetPublisherPortletLayoutListener
 	implements PortletLayoutListener {
 
+	@Override
 	public void onAddToLayout(String portletId, long plid) {
 	}
 
+	@Override
 	public void onMoveInLayout(String portletId, long plid) {
 	}
 
+	@Override
 	public void onRemoveFromLayout(String portletId, long plid)
 		throws PortletLayoutListenerException {
 

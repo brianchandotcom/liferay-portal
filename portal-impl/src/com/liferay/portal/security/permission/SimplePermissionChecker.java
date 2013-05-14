@@ -24,6 +24,7 @@ public class SimplePermissionChecker extends BasePermissionChecker {
 		return new SimplePermissionChecker();
 	}
 
+	@Override
 	public boolean hasOwnerPermission(
 		long companyId, String name, String primKey, long ownerId,
 		String actionId) {
@@ -31,12 +32,14 @@ public class SimplePermissionChecker extends BasePermissionChecker {
 		return hasPermission(actionId);
 	}
 
+	@Override
 	public boolean hasPermission(
 		long groupId, String name, String primKey, String actionId) {
 
 		return hasPermission(actionId);
 	}
 
+	@Override
 	public boolean hasUserPermission(
 		long groupId, String name, String primKey, String actionId,
 		boolean checkAdmin) {
@@ -44,30 +47,37 @@ public class SimplePermissionChecker extends BasePermissionChecker {
 		return hasPermission(actionId);
 	}
 
+	@Override
 	public boolean isCompanyAdmin() {
 		return signedIn;
 	}
 
+	@Override
 	public boolean isCompanyAdmin(long companyId) {
 		return signedIn;
 	}
 
+	@Override
 	public boolean isGroupAdmin(long groupId) {
 		return signedIn;
 	}
 
+	@Override
 	public boolean isGroupMember(long groupId) {
 		return signedIn;
 	}
 
+	@Override
 	public boolean isGroupOwner(long groupId) {
 		return signedIn;
 	}
 
+	@Override
 	public boolean isOrganizationAdmin(long organizationId) {
 		return signedIn;
 	}
 
+	@Override
 	public boolean isOrganizationOwner(long organizationId) {
 		return signedIn;
 	}

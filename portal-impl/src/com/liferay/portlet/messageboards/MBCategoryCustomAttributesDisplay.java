@@ -24,6 +24,7 @@ import com.liferay.portlet.messageboards.model.MBCategory;
 public class MBCategoryCustomAttributesDisplay
 	extends BaseCustomAttributesDisplay {
 
+	@Override
 	public String getClassName() {
 		return MBCategory.class.getName();
 	}

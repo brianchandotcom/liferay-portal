@@ -101,6 +101,7 @@ public class RoleFinderImpl
 	public static final String JOIN_BY_USERS_ROLES =
 		RoleFinder.class.getName() + ".joinByUsersRoles";
 
+	@Override
 	public int countByR_U(long roleId, long userId) throws SystemException {
 		Session session = null;
 
@@ -126,6 +127,7 @@ public class RoleFinderImpl
 		}
 	}
 
+	@Override
 	public int countByU_G_R(long userId, long groupId, long roleId)
 		throws SystemException {
 
@@ -166,6 +168,7 @@ public class RoleFinderImpl
 		}
 	}
 
+	@Override
 	public int countByC_N_D_T(
 			long companyId, String name, String description, Integer[] types,
 			LinkedHashMap<String, Object> params, boolean andOperator)
@@ -178,6 +181,7 @@ public class RoleFinderImpl
 			companyId, names, descriptions, types, params, andOperator);
 	}
 
+	@Override
 	public int countByC_N_D_T(
 			long companyId, String[] names, String[] descriptions,
 			Integer[] types, LinkedHashMap<String, Object> params,
@@ -241,6 +245,7 @@ public class RoleFinderImpl
 		}
 	}
 
+	@Override
 	public int countByKeywords(long companyId, String keywords, Integer[] types)
 		throws SystemException {
 
@@ -248,6 +253,7 @@ public class RoleFinderImpl
 			companyId, keywords, types, new LinkedHashMap<String, Object>());
 	}
 
+	@Override
 	public int countByKeywords(
 			long companyId, String keywords, Integer[] types,
 			LinkedHashMap<String, Object> params)
@@ -269,6 +275,7 @@ public class RoleFinderImpl
 			companyId, names, descriptions, types, params, andOperator);
 	}
 
+	@Override
 	public List<Role> findBySystem(long companyId) throws SystemException {
 		Session session = null;
 
@@ -295,6 +302,7 @@ public class RoleFinderImpl
 		}
 	}
 
+	@Override
 	public List<Role> findByUserGroupGroupRole(long userId, long groupId)
 		throws SystemException {
 
@@ -324,6 +332,7 @@ public class RoleFinderImpl
 		}
 	}
 
+	@Override
 	public List<Role> findByUserGroupRole(long userId, long groupId)
 		throws SystemException {
 
@@ -353,6 +362,7 @@ public class RoleFinderImpl
 		}
 	}
 
+	@Override
 	public Role findByC_N(long companyId, String name)
 		throws NoSuchRoleException, SystemException {
 
@@ -398,6 +408,7 @@ public class RoleFinderImpl
 		throw new NoSuchRoleException(sb.toString());
 	}
 
+	@Override
 	public List<Role> findByU_G(long userId, List<Group> groups)
 		throws SystemException {
 
@@ -412,12 +423,14 @@ public class RoleFinderImpl
 		return findByU_G(userId, groupIds);
 	}
 
+	@Override
 	public List<Role> findByU_G(long userId, long groupId)
 		throws SystemException {
 
 		return findByU_G(userId, new long[] {groupId});
 	}
 
+	@Override
 	public List<Role> findByU_G(long userId, long[] groupIds)
 		throws SystemException {
 
@@ -450,6 +463,7 @@ public class RoleFinderImpl
 		}
 	}
 
+	@Override
 	public List<Role> findByR_N_A(
 			long resourceBlockId, String className, String actionId)
 		throws SystemException {
@@ -481,6 +495,7 @@ public class RoleFinderImpl
 		}
 	}
 
+	@Override
 	public List<Role> findByC_N_D_T(
 			long companyId, String name, String description, Integer[] types,
 			LinkedHashMap<String, Object> params, boolean andOperator,
@@ -495,6 +510,7 @@ public class RoleFinderImpl
 			end, obc);
 	}
 
+	@Override
 	public List<Role> findByC_N_D_T(
 			long companyId, String[] names, String[] descriptions,
 			Integer[] types, LinkedHashMap<String, Object> params,
@@ -549,6 +565,7 @@ public class RoleFinderImpl
 		}
 	}
 
+	@Override
 	public Map<String, List<String>> findByC_N_S_P(
 			long companyId, String name, int scope, String primKey)
 		throws SystemException {
@@ -604,6 +621,7 @@ public class RoleFinderImpl
 		}
 	}
 
+	@Override
 	public List<Role> findByC_N_S_P_A(
 			long companyId, String name, int scope, String primKey,
 			String actionId)
@@ -638,6 +656,7 @@ public class RoleFinderImpl
 		}
 	}
 
+	@Override
 	public List<Role> findByKeywords(
 			long companyId, String keywords, Integer[] types, int start,
 			int end, OrderByComparator obc)
@@ -648,6 +667,7 @@ public class RoleFinderImpl
 			start, end, obc);
 	}
 
+	@Override
 	public List<Role> findByKeywords(
 			long companyId, String keywords, Integer[] types,
 			LinkedHashMap<String, Object> params, int start, int end,

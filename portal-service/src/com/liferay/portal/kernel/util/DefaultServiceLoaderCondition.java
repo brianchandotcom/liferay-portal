@@ -22,6 +22,7 @@ import java.net.URL;
  */
 public class DefaultServiceLoaderCondition implements ServiceLoaderCondition {
 
+	@Override
 	public boolean isLoad(URL url) {
 		return _LOAD;
 	}

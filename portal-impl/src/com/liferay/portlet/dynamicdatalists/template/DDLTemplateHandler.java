@@ -38,10 +38,12 @@ import java.util.Map;
  */
 public class DDLTemplateHandler extends BaseDDMTemplateHandler {
 
+	@Override
 	public String getClassName() {
 		return DDLRecordSet.class.getName();
 	}
 
+	@Override
 	public String getName(Locale locale) {
 		String portletTitle = PortalUtil.getPortletTitle(
 			PortletKeys.DYNAMIC_DATA_LISTS, locale);
@@ -50,6 +52,7 @@ public class DDLTemplateHandler extends BaseDDMTemplateHandler {
 			LanguageUtil.get(locale, "template"));
 	}
 
+	@Override
 	public String getResourceName() {
 		return "com.liferay.portlet.dynamicdatalists";
 	}

@@ -35,6 +35,7 @@ public class LockFinderImpl
 	public static final String FIND_BY_C_K =
 		LockFinder.class.getName() + ".findByC_K";
 
+	@Override
 	public Lock fetchByC_K(String className, String key, LockMode lockMode)
 		throws SystemException {
 

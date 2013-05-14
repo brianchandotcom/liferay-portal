@@ -216,6 +216,7 @@ public class FileSystemStore extends BaseStore {
 		}
 	}
 
+	@Override
 	public String[] getFileNames(long companyId, long repositoryId) {
 		File repositoryDir = getRepositoryDir(companyId, repositoryId);
 
@@ -320,6 +321,7 @@ public class FileSystemStore extends BaseStore {
 		deleteEmptyAncestors(companyId, repositoryId, parentFile);
 	}
 
+	@Override
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String newFileName)

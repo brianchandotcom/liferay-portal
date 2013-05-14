@@ -37,6 +37,7 @@ import javax.servlet.ServletRequest;
 public class DirectRequestDispatcherFactoryImpl
 	implements DirectRequestDispatcherFactory {
 
+	@Override
 	public RequestDispatcher getRequestDispatcher(
 		ServletContext servletContext, String path) {
 
@@ -47,6 +48,7 @@ public class DirectRequestDispatcherFactoryImpl
 			servletContext, requestDispatcher);
 	}
 
+	@Override
 	public RequestDispatcher getRequestDispatcher(
 		ServletRequest servletRequest, String path) {
 

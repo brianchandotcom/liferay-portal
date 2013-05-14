@@ -27,6 +27,7 @@ import com.liferay.portal.util.PropsValues;
  */
 public class USAPhoneNumberFormatImpl implements PhoneNumberFormat {
 
+	@Override
 	public String format(String phoneNumber) {
 		if (Validator.isNull(phoneNumber)) {
 			return StringPool.BLANK;
@@ -66,10 +67,12 @@ public class USAPhoneNumberFormatImpl implements PhoneNumberFormat {
 		return phoneNumber;
 	}
 
+	@Override
 	public String strip(String phoneNumber) {
 		return StringUtil.extractDigits(phoneNumber);
 	}
 
+	@Override
 	public boolean validate(String phoneNumber) {
 		if (Validator.isNull(phoneNumber)) {
 			return false;

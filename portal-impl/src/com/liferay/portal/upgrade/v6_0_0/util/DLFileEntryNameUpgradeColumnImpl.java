@@ -36,6 +36,7 @@ public class DLFileEntryNameUpgradeColumnImpl extends BaseUpgradeColumnImpl {
 		super(name);
 	}
 
+	@Override
 	public Object getNewValue(Object oldValue) throws Exception {
 		String name = (String)oldValue;
 

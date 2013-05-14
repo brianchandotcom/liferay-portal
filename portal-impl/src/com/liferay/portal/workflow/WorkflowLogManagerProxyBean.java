@@ -29,18 +29,21 @@ import java.util.List;
 public class WorkflowLogManagerProxyBean
 	extends BaseProxyBean implements WorkflowLogManager {
 
+	@Override
 	public int getWorkflowLogCountByWorkflowInstance(
 		long companyId, long workflowInstanceId, List<Integer> logTypes) {
 
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public int getWorkflowLogCountByWorkflowTask(
 		long companyId, long workflowTaskId, List<Integer> logTypes) {
 
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public List<WorkflowLog> getWorkflowLogsByWorkflowInstance(
 		long companyId, long workflowInstanceId, List<Integer> logTypes,
 		int start, int end, OrderByComparator orderByComparator) {
@@ -48,6 +51,7 @@ public class WorkflowLogManagerProxyBean
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public List<WorkflowLog> getWorkflowLogsByWorkflowTask(
 		long companyId, long workflowTaskId, List<Integer> logTypes, int start,
 		int end, OrderByComparator orderByComparator) {

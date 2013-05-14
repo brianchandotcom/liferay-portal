@@ -84,6 +84,7 @@ public abstract class BaseSocialRequestInterpreter
 		}
 	}
 
+	@Override
 	public SocialRequestFeedEntry interpret(
 		SocialRequest request, ThemeDisplay themeDisplay) {
 
@@ -97,6 +98,7 @@ public abstract class BaseSocialRequestInterpreter
 		return null;
 	}
 
+	@Override
 	public boolean processConfirmation(
 		SocialRequest request, ThemeDisplay themeDisplay) {
 
@@ -144,6 +146,7 @@ public abstract class BaseSocialRequestInterpreter
 		}
 	}
 
+	@Override
 	public boolean processRejection(
 		SocialRequest request, ThemeDisplay themeDisplay) {
 

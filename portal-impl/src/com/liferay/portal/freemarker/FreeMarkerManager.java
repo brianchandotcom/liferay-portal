@@ -42,6 +42,7 @@ import java.util.Map;
 @DoPrivileged
 public class FreeMarkerManager extends BaseTemplateManager {
 
+	@Override
 	public void destroy() {
 		if (_configuration == null) {
 			return;
@@ -58,14 +59,17 @@ public class FreeMarkerManager extends BaseTemplateManager {
 		_templateContextHelper = null;
 	}
 
+	@Override
 	public void destroy(ClassLoader classLoader) {
 		_templateContextHelper.removeHelperUtilities(classLoader);
 	}
 
+	@Override
 	public String getName() {
 		return TemplateConstants.LANG_TYPE_FTL;
 	}
 
+	@Override
 	public void init() throws TemplateException {
 		if (_configuration != null) {
 			return;

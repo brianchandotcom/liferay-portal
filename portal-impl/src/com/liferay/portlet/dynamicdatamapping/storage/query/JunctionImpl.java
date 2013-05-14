@@ -27,20 +27,24 @@ public class JunctionImpl implements Junction {
 		_logicalOperator = logicalOperator;
 	}
 
+	@Override
 	public Junction add(Condition condition) {
 		_conditions.add(condition);
 
 		return this;
 	}
 
+	@Override
 	public LogicalOperator getLogicalOperator() {
 		return _logicalOperator;
 	}
 
+	@Override
 	public boolean isJunction() {
 		return _JUNCTION;
 	}
 
+	@Override
 	public Iterator<Condition> iterator() {
 		return _conditions.iterator();
 	}

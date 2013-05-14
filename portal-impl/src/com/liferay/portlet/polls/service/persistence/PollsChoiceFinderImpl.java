@@ -36,6 +36,7 @@ public class PollsChoiceFinderImpl
 	public static final String FIND_BY_UUID_G =
 		PollsChoiceFinder.class.getName() + ".findByUUID_G";
 
+	@Override
 	public PollsChoice fetchByUUID_G(String uuid, long groupId)
 		throws SystemException {
 
@@ -71,6 +72,7 @@ public class PollsChoiceFinderImpl
 		}
 	}
 
+	@Override
 	public PollsChoice findByUUID_G(String uuid, long groupId)
 		throws NoSuchChoiceException, SystemException {
 

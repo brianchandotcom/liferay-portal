@@ -74,10 +74,12 @@ public class XSLTemplate extends AbstractProcessingTemplate {
 		}
 	}
 
+	@Override
 	public Object get(String key) {
 		return _context.get(key);
 	}
 
+	@Override
 	public String[] getKeys() {
 		Set<String> keys = _context.keySet();
 
@@ -89,10 +91,12 @@ public class XSLTemplate extends AbstractProcessingTemplate {
 		return _templateContextHelper;
 	}
 
+	@Override
 	public void prepare(HttpServletRequest request) {
 		_templateContextHelper.prepare(this, request);
 	}
 
+	@Override
 	public void put(String key, Object value) {
 		if (value == null) {
 			return;

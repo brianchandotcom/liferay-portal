@@ -31,6 +31,7 @@ public class JettySharedSessionWrapper
 		super(portalSession, portletSession);
 	}
 
+	@Override
 	public AbstractSession getSession() {
 		return (AbstractSession)getSessionDelegate();
 	}

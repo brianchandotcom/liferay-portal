@@ -31,26 +31,32 @@ public class PublicRenderParameterImpl implements PublicRenderParameter {
 		_portletApp = portletApp;
 	}
 
+	@Override
 	public String getIdentifier() {
 		return _identifier;
 	}
 
+	@Override
 	public PortletApp getPortletApp() {
 		return _portletApp;
 	}
 
+	@Override
 	public QName getQName() {
 		return _qName;
 	}
 
+	@Override
 	public void setIdentifier(String identifier) {
 		_identifier = identifier;
 	}
 
+	@Override
 	public void setPortletApp(PortletApp portletApp) {
 		_portletApp = portletApp;
 	}
 
+	@Override
 	public void setQName(QName qName) {
 		_qName = qName;
 	}

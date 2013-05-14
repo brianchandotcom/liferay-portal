@@ -32,6 +32,7 @@ import jodd.paramo.Paramo;
  */
 public class MethodParametersResolverImpl implements MethodParametersResolver {
 
+	@Override
 	public MethodParameter[] resolveMethodParameters(Method method) {
 		MethodParameter[] methodParameters = _methodParameters.get(method);
 

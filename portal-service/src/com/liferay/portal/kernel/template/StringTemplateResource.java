@@ -73,14 +73,17 @@ public class StringTemplateResource implements TemplateResource {
 		return _templateContent;
 	}
 
+	@Override
 	public long getLastModified() {
 		return _lastModified;
 	}
 
+	@Override
 	public Reader getReader() {
 		return new UnsyncStringReader(_templateContent);
 	}
 
+	@Override
 	public String getTemplateId() {
 		return _templateId;
 	}
@@ -90,12 +93,14 @@ public class StringTemplateResource implements TemplateResource {
 		return _templateId.hashCode() * 11 + _templateContent.hashCode();
 	}
 
+	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		_lastModified = objectInput.readLong();
 		_templateContent = objectInput.readUTF();
 		_templateId = objectInput.readUTF();
 	}
 
+	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(_lastModified);
 		objectOutput.writeUTF(_templateContent);

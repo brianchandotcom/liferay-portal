@@ -28,6 +28,7 @@ import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
  */
 public class SocialActivityImpl extends SocialActivityBaseImpl {
 
+	@Override
 	public AssetEntry getAssetEntry() throws SystemException {
 		if ((_assetEntry == null) && Validator.isNotNull(getClassName()) &&
 			(getClassPK() > 0)) {
@@ -39,6 +40,7 @@ public class SocialActivityImpl extends SocialActivityBaseImpl {
 		return _assetEntry;
 	}
 
+	@Override
 	public String getExtraDataValue(String key) throws JSONException {
 		if (_extraDataJSONObject == null) {
 			_extraDataJSONObject = JSONFactoryUtil.createJSONObject(
@@ -48,6 +50,7 @@ public class SocialActivityImpl extends SocialActivityBaseImpl {
 		return _extraDataJSONObject.getString(key);
 	}
 
+	@Override
 	public boolean isClassName(String className) {
 		if (className == null) {
 			return false;
@@ -56,6 +59,7 @@ public class SocialActivityImpl extends SocialActivityBaseImpl {
 		return className.equals(getClassName());
 	}
 
+	@Override
 	public void setAssetEntry(AssetEntry assetEntry) {
 		_assetEntry = assetEntry;
 	}

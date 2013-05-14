@@ -54,6 +54,7 @@ import java.util.List;
  */
 public abstract class BaseRepositoryImpl implements BaseRepository {
 
+	@Override
 	public FileEntry addFileEntry(
 			long folderId, String sourceFileName, String mimeType, String title,
 			String description, String changeLog, File file,
@@ -89,12 +90,14 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 	 * @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long,
 	 *             String, ServiceContext)}
 	 */
+	@Override
 	public void checkInFileEntry(long fileEntryId, String lockUuid)
 		throws PortalException, SystemException {
 
 		checkInFileEntry(fileEntryId, lockUuid, new ServiceContext());
 	}
 
+	@Override
 	public void deleteFileEntry(long folderId, String title)
 		throws PortalException, SystemException {
 
@@ -103,10 +106,12 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 		deleteFileEntry(fileEntry.getFileEntryId());
 	}
 
+	@Override
 	public void deleteFileVersion(long fileEntryId, String version) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void deleteFolder(long parentFolderId, String title)
 		throws PortalException, SystemException {
 
@@ -119,6 +124,7 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 		return _companyId;
 	}
 
+	@Override
 	public List<Object> getFileEntriesAndFileShortcuts(
 			long folderId, int status, int start, int end)
 		throws PortalException, SystemException {
@@ -127,12 +133,14 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 			getFileEntries(folderId, start, end, null));
 	}
 
+	@Override
 	public int getFileEntriesAndFileShortcutsCount(long folderId, int status)
 		throws SystemException {
 
 		return getFileEntriesCount(folderId);
 	}
 
+	@Override
 	public int getFileEntriesAndFileShortcutsCount(
 			long folderId, int status, String[] mimeTypes)
 		throws PortalException, SystemException {
@@ -140,6 +148,7 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 		return getFileEntriesCount(folderId, mimeTypes);
 	}
 
+	@Override
 	public List<Folder> getFolders(
 			long parentFolderId, int status, boolean includeMountfolders,
 			int start, int end, OrderByComparator obc)
@@ -157,6 +166,7 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 			OrderByComparator obc)
 		throws PortalException, SystemException;
 
+	@Override
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 			long folderId, int status, boolean includeMountFolders, int start,
 			int end, OrderByComparator obc)
@@ -165,6 +175,7 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 		return getFoldersAndFileEntries(folderId, start, end, obc);
 	}
 
+	@Override
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 			long folderId, int status, String[] mimeTypes,
 			boolean includeMountFolders, int start, int end,
@@ -174,6 +185,7 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 		return getFoldersAndFileEntries(folderId, mimeTypes, start, end, obc);
 	}
 
+	@Override
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
 			long folderId, int status, boolean includeMountFolders)
 		throws SystemException {
@@ -181,6 +193,7 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 		return getFoldersAndFileEntriesCount(folderId);
 	}
 
+	@Override
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
 			long folderId, int status, String[] mimeTypes,
 			boolean includeMountFolders)
@@ -196,6 +209,7 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 			long folderId, String[] mimeTypes)
 		throws PortalException, SystemException;
 
+	@Override
 	public int getFoldersCount(
 			long parentFolderId, int status, boolean includeMountfolders)
 		throws PortalException, SystemException {
@@ -207,6 +221,7 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 		return _groupId;
 	}
 
+	@Override
 	public LocalRepository getLocalRepository() {
 		return _localRepository;
 	}
@@ -239,6 +254,7 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 		};
 	}
 
+	@Override
 	public List<FileEntry> getRepositoryFileEntries(
 			long userId, long rootFolderId, int start, int end,
 			OrderByComparator obc)
@@ -247,6 +263,7 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 		return getFileEntries(rootFolderId, start, end, obc);
 	}
 
+	@Override
 	public List<FileEntry> getRepositoryFileEntries(
 			long userId, long rootFolderId, String[] mimeTypes, int status,
 			int start, int end, OrderByComparator obc)
@@ -255,12 +272,14 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 		return getFileEntries(rootFolderId, mimeTypes, start, end, obc);
 	}
 
+	@Override
 	public int getRepositoryFileEntriesCount(long userId, long rootFolderId)
 		throws SystemException {
 
 		return getFileEntriesCount(rootFolderId);
 	}
 
+	@Override
 	public int getRepositoryFileEntriesCount(
 			long userId, long rootFolderId, String[] mimeTypes, int status)
 		throws PortalException, SystemException {
@@ -268,6 +287,7 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 		return getFileEntriesCount(rootFolderId, mimeTypes);
 	}
 
+	@Override
 	public long getRepositoryId() {
 		return _repositoryId;
 	}
@@ -276,6 +296,7 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 		return _typeSettingsProperties;
 	}
 
+	@Override
 	public abstract void initRepository()
 		throws PortalException, SystemException;
 
@@ -283,6 +304,7 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 	 * @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long,
 	 *             ServiceContext)}
 	 */
+	@Override
 	public Lock lockFileEntry(long fileEntryId)
 		throws PortalException, SystemException {
 
@@ -297,6 +319,7 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 	 * @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long,
 	 *             String, long, ServiceContext)}
 	 */
+	@Override
 	public Lock lockFileEntry(
 			long fileEntryId, String owner, long expirationTime)
 		throws PortalException, SystemException {
@@ -307,6 +330,7 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 		return fileEntry.getLock();
 	}
 
+	@Override
 	public Hits search(SearchContext searchContext) throws SearchException {
 		searchContext.setSearchEngineId(SearchEngineUtil.GENERIC_ENGINE_ID);
 
@@ -316,52 +340,62 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 		return search(searchContext, fullQuery);
 	}
 
+	@Override
 	public void setAssetEntryLocalService(
 		AssetEntryLocalService assetEntryLocalService) {
 
 		this.assetEntryLocalService = assetEntryLocalService;
 	}
 
+	@Override
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
 	}
 
+	@Override
 	public void setCompanyLocalService(
 		CompanyLocalService companyLocalService) {
 
 		this.companyLocalService = companyLocalService;
 	}
 
+	@Override
 	public void setCounterLocalService(
 		CounterLocalService counterLocalService) {
 
 		this.counterLocalService = counterLocalService;
 	}
 
+	@Override
 	public void setDLAppHelperLocalService(
 		DLAppHelperLocalService dlAppHelperLocalService) {
 
 		this.dlAppHelperLocalService = dlAppHelperLocalService;
 	}
 
+	@Override
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
 	}
 
+	@Override
 	public void setRepositoryId(long repositoryId) {
 		_repositoryId = repositoryId;
 	}
 
+	@Override
 	public void setTypeSettingsProperties(
 		UnicodeProperties typeSettingsProperties) {
 
 		_typeSettingsProperties = typeSettingsProperties;
 	}
 
+	@Override
 	public void setUserLocalService(UserLocalService userLocalService) {
 		this.userLocalService = userLocalService;
 	}
 
+	@Override
 	public void unlockFolder(long parentFolderId, String title, String lockUuid)
 		throws PortalException, SystemException {
 
@@ -370,6 +404,7 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 		unlockFolder(folder.getFolderId(), lockUuid);
 	}
 
+	@Override
 	public FileEntry updateFileEntry(
 			long fileEntryId, String sourceFileName, String mimeType,
 			String title, String description, String changeLog,
@@ -401,6 +436,7 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 		}
 	}
 
+	@Override
 	public boolean verifyFileEntryLock(long fileEntryId, String lockUuid) {
 		throw new UnsupportedOperationException();
 	}

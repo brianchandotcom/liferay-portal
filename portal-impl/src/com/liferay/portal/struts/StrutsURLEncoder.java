@@ -101,6 +101,7 @@ public class StrutsURLEncoder implements URLEncoder {
 		_portletMode = liferayPortletURL.getPortletMode();
 	}
 
+	@Override
 	public String encodeURL(HttpServletResponse response, String path) {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Path " + path);

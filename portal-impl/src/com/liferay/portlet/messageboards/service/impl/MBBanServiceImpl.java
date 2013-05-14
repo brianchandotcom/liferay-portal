@@ -31,6 +31,7 @@ import com.liferay.portlet.messageboards.service.permission.MBPermission;
  */
 public class MBBanServiceImpl extends MBBanServiceBaseImpl {
 
+	@Override
 	public MBBan addBan(long banUserId, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
@@ -59,6 +60,7 @@ public class MBBanServiceImpl extends MBBanServiceBaseImpl {
 		return mbBanLocalService.addBan(getUserId(), banUserId, serviceContext);
 	}
 
+	@Override
 	public void deleteBan(long banUserId, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 

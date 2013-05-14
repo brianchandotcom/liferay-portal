@@ -43,6 +43,7 @@ public class DiscardWithCancelPolicy implements RejectedExecutionHandler {
 	 * @param runnable the task
 	 * @param threadPoolExecutor the executor
 	 */
+	@Override
 	public void rejectedExecution(
 		Runnable runnable, ThreadPoolExecutor threadPoolExecutor) {
 

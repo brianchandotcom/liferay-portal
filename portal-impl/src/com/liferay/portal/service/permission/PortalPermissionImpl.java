@@ -23,6 +23,7 @@ import com.liferay.portal.util.PortletKeys;
  */
 public class PortalPermissionImpl implements PortalPermission {
 
+	@Override
 	public void check(PermissionChecker permissionChecker, String actionId)
 		throws PrincipalException {
 
@@ -31,6 +32,7 @@ public class PortalPermissionImpl implements PortalPermission {
 		}
 	}
 
+	@Override
 	public boolean contains(
 		PermissionChecker permissionChecker, String actionId) {
 

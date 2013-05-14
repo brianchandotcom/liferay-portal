@@ -35,6 +35,7 @@ import java.util.Map;
  */
 public class DDLRecordSetServiceImpl extends DDLRecordSetServiceBaseImpl {
 
+	@Override
 	public DDLRecordSet addRecordSet(
 			long groupId, long ddmStructureId, String recordSetKey,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
@@ -49,6 +50,7 @@ public class DDLRecordSetServiceImpl extends DDLRecordSetServiceBaseImpl {
 			descriptionMap, minDisplayRows, scope, serviceContext);
 	}
 
+	@Override
 	public void deleteRecordSet(long recordSetId)
 		throws PortalException, SystemException {
 
@@ -58,6 +60,7 @@ public class DDLRecordSetServiceImpl extends DDLRecordSetServiceBaseImpl {
 		ddlRecordSetLocalService.deleteRecordSet(recordSetId);
 	}
 
+	@Override
 	public DDLRecordSet getRecordSet(long recordSetId)
 		throws PortalException, SystemException {
 
@@ -67,6 +70,7 @@ public class DDLRecordSetServiceImpl extends DDLRecordSetServiceBaseImpl {
 		return ddlRecordSetLocalService.getRecordSet(recordSetId);
 	}
 
+	@Override
 	public DDLRecordSet updateMinDisplayRows(
 			long recordSetId, int minDisplayRows, ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -78,6 +82,7 @@ public class DDLRecordSetServiceImpl extends DDLRecordSetServiceBaseImpl {
 			recordSetId, minDisplayRows, serviceContext);
 	}
 
+	@Override
 	public DDLRecordSet updateRecordSet(
 			long recordSetId, long ddmStructureId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, int minDisplayRows,
@@ -92,6 +97,7 @@ public class DDLRecordSetServiceImpl extends DDLRecordSetServiceBaseImpl {
 			minDisplayRows, serviceContext);
 	}
 
+	@Override
 	public DDLRecordSet updateRecordSet(
 			long groupId, long ddmStructureId, String recordSetKey,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,

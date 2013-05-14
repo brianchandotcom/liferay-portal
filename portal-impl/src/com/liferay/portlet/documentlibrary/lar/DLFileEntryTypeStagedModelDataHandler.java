@@ -38,7 +38,6 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *
  * @author Mate Thurzo
  */
 public class DLFileEntryTypeStagedModelDataHandler

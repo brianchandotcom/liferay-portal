@@ -38,6 +38,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ResourceRequestImpl
 	extends ClientDataRequestImpl implements ResourceRequest {
 
+	@Override
 	public String getCacheability() {
 		return _cacheablity;
 	}
@@ -52,10 +53,12 @@ public class ResourceRequestImpl
 		return PortletRequest.RESOURCE_PHASE;
 	}
 
+	@Override
 	public Map<String, String[]> getPrivateRenderParameterMap() {
 		return null;
 	}
 
+	@Override
 	public String getResourceID() {
 		return _resourceID;
 	}

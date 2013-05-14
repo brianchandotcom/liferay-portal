@@ -36,6 +36,7 @@ import java.util.concurrent.Future;
  */
 public class CyrusHook implements Hook {
 
+	@Override
 	public void addForward(
 		long companyId, long userId, List<Filter> filters,
 		List<String> emailAddresses, boolean leaveCopy) {
@@ -96,6 +97,7 @@ public class CyrusHook implements Hook {
 		}
 	}
 
+	@Override
 	public void addUser(
 		long companyId, long userId, String password, String firstName,
 		String middleName, String lastName, String emailAddress) {
@@ -121,6 +123,7 @@ public class CyrusHook implements Hook {
 		}
 	}
 
+	@Override
 	public void addVacationMessage(
 		long companyId, long userId, String emailAddress,
 		String vacationMessage) {
@@ -148,6 +151,7 @@ public class CyrusHook implements Hook {
 		}
 	}
 
+	@Override
 	public void deleteEmailAddress(long companyId, long userId) {
 		try {
 			CyrusServiceUtil.deleteEmailAddress(companyId, userId);
@@ -157,6 +161,7 @@ public class CyrusHook implements Hook {
 		}
 	}
 
+	@Override
 	public void deleteUser(long companyId, long userId) {
 		try {
 			CyrusServiceUtil.deleteUser(userId);
@@ -207,6 +212,7 @@ public class CyrusHook implements Hook {
 		}
 	}
 
+	@Override
 	public void updateBlocked(
 		long companyId, long userId, List<String> blocked) {
 
@@ -244,6 +250,7 @@ public class CyrusHook implements Hook {
 		}
 	}
 
+	@Override
 	public void updateEmailAddress(
 		long companyId, long userId, String emailAddress) {
 
@@ -256,6 +263,7 @@ public class CyrusHook implements Hook {
 		}
 	}
 
+	@Override
 	public void updatePassword(long companyId, long userId, String password) {
 		try {
 			CyrusServiceUtil.updatePassword(companyId, userId, password);

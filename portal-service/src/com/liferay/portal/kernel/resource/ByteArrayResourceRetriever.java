@@ -27,6 +27,7 @@ public class ByteArrayResourceRetriever implements ResourceRetriever {
 		_inputStream = new UnsyncByteArrayInputStream(bytes);
 	}
 
+	@Override
 	public InputStream getInputStream() {
 		return _inputStream;
 	}

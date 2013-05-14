@@ -34,6 +34,7 @@ import org.hibernate.criterion.DetachedCriteria;
  */
 public class DynamicQueryFactoryImpl implements DynamicQueryFactory {
 
+	@Override
 	public DynamicQuery forClass(Class<?> clazz) {
 		clazz = getImplClass(clazz, null);
 
@@ -41,6 +42,7 @@ public class DynamicQueryFactoryImpl implements DynamicQueryFactory {
 			new DynamicQueryPrivilegedAction(clazz, null));
 	}
 
+	@Override
 	public DynamicQuery forClass(Class<?> clazz, ClassLoader classLoader) {
 		clazz = getImplClass(clazz, classLoader);
 
@@ -48,6 +50,7 @@ public class DynamicQueryFactoryImpl implements DynamicQueryFactory {
 			new DynamicQueryPrivilegedAction(clazz, null));
 	}
 
+	@Override
 	public DynamicQuery forClass(Class<?> clazz, String alias) {
 		clazz = getImplClass(clazz, null);
 
@@ -55,6 +58,7 @@ public class DynamicQueryFactoryImpl implements DynamicQueryFactory {
 			new DynamicQueryPrivilegedAction(clazz, alias));
 	}
 
+	@Override
 	public DynamicQuery forClass(
 		Class<?> clazz, String alias, ClassLoader classLoader) {
 

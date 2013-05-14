@@ -28,6 +28,7 @@ import java.util.List;
  */
 public class CreateURLDirectoriesMethodImpl extends BaseMethodImpl {
 
+	@Override
 	public String getMethodName() {
 		return _METHOD_NAME;
 	}

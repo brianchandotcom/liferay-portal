@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 public class PluginSchedulingConfigurator
 	extends AbstractSchedulingConfigurator {
 
+	@Override
 	public void configure() {
 		Thread currentThread = Thread.currentThread();
 

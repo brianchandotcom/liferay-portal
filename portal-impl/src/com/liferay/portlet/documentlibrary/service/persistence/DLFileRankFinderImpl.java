@@ -38,6 +38,7 @@ public class DLFileRankFinderImpl
 	public static final String FIND_BY_FOLDER_ID =
 		DLFileRankFinder.class.getName() + ".findByFolderId";
 
+	@Override
 	public List<Object[]> findByStaleRanks(int count) throws SystemException {
 		Session session = null;
 
@@ -65,6 +66,7 @@ public class DLFileRankFinderImpl
 		}
 	}
 
+	@Override
 	public List<DLFileRank> findByFolderId(long folderId)
 		throws SystemException {
 

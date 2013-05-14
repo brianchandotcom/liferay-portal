@@ -30,6 +30,7 @@ public class DLFileEntryVersionUpgradeColumnImpl extends BaseUpgradeColumnImpl {
 		super(name);
 	}
 
+	@Override
 	public Object getNewValue(Object oldValue) throws Exception {
 		double version = GetterUtil.getDouble(String.valueOf(oldValue));
 

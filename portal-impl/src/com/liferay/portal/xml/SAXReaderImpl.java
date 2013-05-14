@@ -183,6 +183,7 @@ public class SAXReaderImpl implements SAXReader {
 		return oldProcessingInstructions;
 	}
 
+	@Override
 	public Attribute createAttribute(
 		Element element, QName qName, String value) {
 
@@ -197,6 +198,7 @@ public class SAXReaderImpl implements SAXReader {
 				value));
 	}
 
+	@Override
 	public Attribute createAttribute(
 		Element element, String name, String value) {
 
@@ -209,10 +211,12 @@ public class SAXReaderImpl implements SAXReader {
 				elementImpl.getWrappedElement(), name, value));
 	}
 
+	@Override
 	public Document createDocument() {
 		return new DocumentImpl(DocumentHelper.createDocument());
 	}
 
+	@Override
 	public Document createDocument(Element rootElement) {
 		ElementImpl rootElementImpl = (ElementImpl)rootElement;
 
@@ -220,12 +224,14 @@ public class SAXReaderImpl implements SAXReader {
 			DocumentHelper.createDocument(rootElementImpl.getWrappedElement()));
 	}
 
+	@Override
 	public Document createDocument(String encoding) {
 		DocumentFactory documentFactory = DocumentFactory.getInstance();
 
 		return new DocumentImpl(documentFactory.createDocument(encoding));
 	}
 
+	@Override
 	public Element createElement(QName qName) {
 		QNameImpl qNameImpl = (QNameImpl)qName;
 
@@ -233,22 +239,27 @@ public class SAXReaderImpl implements SAXReader {
 			DocumentHelper.createElement(qNameImpl.getWrappedQName()));
 	}
 
+	@Override
 	public Element createElement(String name) {
 		return new ElementImpl(DocumentHelper.createElement(name));
 	}
 
+	@Override
 	public Entity createEntity(String name, String text) {
 		return new EntityImpl(DocumentHelper.createEntity(name, text));
 	}
 
+	@Override
 	public Namespace createNamespace(String uri) {
 		return new NamespaceImpl(org.dom4j.Namespace.get(uri));
 	}
 
+	@Override
 	public Namespace createNamespace(String prefix, String uri) {
 		return new NamespaceImpl(DocumentHelper.createNamespace(prefix, uri));
 	}
 
+	@Override
 	public ProcessingInstruction createProcessingInstruction(
 		String target, Map<String, String> data) {
 
@@ -263,6 +274,7 @@ public class SAXReaderImpl implements SAXReader {
 		}
 	}
 
+	@Override
 	public ProcessingInstruction createProcessingInstruction(
 		String target, String data) {
 
@@ -277,10 +289,12 @@ public class SAXReaderImpl implements SAXReader {
 		}
 	}
 
+	@Override
 	public QName createQName(String localName) {
 		return new QNameImpl(DocumentHelper.createQName(localName));
 	}
 
+	@Override
 	public QName createQName(String localName, Namespace namespace) {
 		NamespaceImpl namespaceImpl = (NamespaceImpl)namespace;
 
@@ -289,14 +303,17 @@ public class SAXReaderImpl implements SAXReader {
 				localName, namespaceImpl.getWrappedNamespace()));
 	}
 
+	@Override
 	public Text createText(String text) {
 		return new TextImpl(DocumentHelper.createText(text));
 	}
 
+	@Override
 	public XPath createXPath(String xPathExpression) {
 		return createXPath(xPathExpression, null);
 	}
 
+	@Override
 	public XPath createXPath(
 		String xPathExpression, Map<String, String> namespaceContextMap) {
 
@@ -304,6 +321,7 @@ public class SAXReaderImpl implements SAXReader {
 			DocumentHelper.createXPath(xPathExpression), namespaceContextMap);
 	}
 
+	@Override
 	public XPath createXPath(
 		String xPathExpression, String prefix, String namespace) {
 
@@ -314,10 +332,12 @@ public class SAXReaderImpl implements SAXReader {
 		return createXPath(xPathExpression, namespaceContextMap);
 	}
 
+	@Override
 	public Document read(File file) throws DocumentException {
 		return read(file, false);
 	}
 
+	@Override
 	public Document read(File file, boolean validate) throws DocumentException {
 		ClassLoader classLoader = getClass().getClassLoader();
 
@@ -343,10 +363,12 @@ public class SAXReaderImpl implements SAXReader {
 		}
 	}
 
+	@Override
 	public Document read(InputStream is) throws DocumentException {
 		return read(is, false);
 	}
 
+	@Override
 	public Document read(InputStream is, boolean validate)
 		throws DocumentException {
 
@@ -374,10 +396,12 @@ public class SAXReaderImpl implements SAXReader {
 		}
 	}
 
+	@Override
 	public Document read(Reader reader) throws DocumentException {
 		return read(reader, false);
 	}
 
+	@Override
 	public Document read(Reader reader, boolean validate)
 		throws DocumentException {
 
@@ -405,20 +429,24 @@ public class SAXReaderImpl implements SAXReader {
 		}
 	}
 
+	@Override
 	public Document read(String xml) throws DocumentException {
 		return read(new XMLSafeReader(xml));
 	}
 
+	@Override
 	public Document read(String xml, boolean validate)
 		throws DocumentException {
 
 		return read(new XMLSafeReader(xml), validate);
 	}
 
+	@Override
 	public Document read(URL url) throws DocumentException {
 		return read(url, false);
 	}
 
+	@Override
 	public Document read(URL url, boolean validate) throws DocumentException {
 		ClassLoader classLoader = getClass().getClassLoader();
 
@@ -444,18 +472,21 @@ public class SAXReaderImpl implements SAXReader {
 		}
 	}
 
+	@Override
 	public Document readURL(String url)
 		throws DocumentException, MalformedURLException {
 
 		return read(new URL(url), false);
 	}
 
+	@Override
 	public Document readURL(String url, boolean validate)
 		throws DocumentException, MalformedURLException {
 
 		return read(new URL(url), validate);
 	}
 
+	@Override
 	public List<Node> selectNodes(
 		String xPathFilterExpression, List<Node> nodes) {
 
@@ -464,6 +495,7 @@ public class SAXReaderImpl implements SAXReader {
 				xPathFilterExpression, toOldNodes(nodes)));
 	}
 
+	@Override
 	public List<Node> selectNodes(String xPathFilterExpression, Node node) {
 		NodeImpl nodeImpl = (NodeImpl)node;
 
@@ -472,10 +504,12 @@ public class SAXReaderImpl implements SAXReader {
 				xPathFilterExpression, nodeImpl.getWrappedNode()));
 	}
 
+	@Override
 	public void sort(List<Node> nodes, String xPathExpression) {
 		DocumentHelper.sort(toOldNodes(nodes), xPathExpression);
 	}
 
+	@Override
 	public void sort(
 		List<Node> nodes, String xPathExpression, boolean distinct) {
 

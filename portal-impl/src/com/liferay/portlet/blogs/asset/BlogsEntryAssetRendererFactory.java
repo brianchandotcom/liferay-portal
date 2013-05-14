@@ -45,6 +45,7 @@ public class BlogsEntryAssetRendererFactory extends BaseAssetRendererFactory {
 
 	public static final String TYPE = "blog";
 
+	@Override
 	public AssetRenderer getAssetRenderer(long classPK, int type)
 		throws PortalException, SystemException {
 
@@ -67,10 +68,12 @@ public class BlogsEntryAssetRendererFactory extends BaseAssetRendererFactory {
 		return new BlogsEntryAssetRenderer(entry);
 	}
 
+	@Override
 	public String getClassName() {
 		return BlogsEntry.class.getName();
 	}
 
+	@Override
 	public String getType() {
 		return TYPE;
 	}

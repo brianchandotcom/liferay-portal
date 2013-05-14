@@ -40,6 +40,7 @@ public class SynchronousMessageListener implements MessageListener {
 		return _results;
 	}
 
+	@Override
 	public void receive(Message message) {
 		if (!message.getResponseId().equals(_responseId)) {
 			return;

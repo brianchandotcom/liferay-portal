@@ -32,24 +32,29 @@ public class DataSourceWrapper implements DataSource {
 		_dataSource = dataSource;
 	}
 
+	@Override
 	public Connection getConnection() throws SQLException {
 		return _dataSource.getConnection();
 	}
 
+	@Override
 	public Connection getConnection(String username, String password)
 		throws SQLException {
 
 		return _dataSource.getConnection(username, password);
 	}
 
+	@Override
 	public int getLoginTimeout() throws SQLException {
 		return _dataSource.getLoginTimeout();
 	}
 
+	@Override
 	public PrintWriter getLogWriter() throws SQLException {
 		return _dataSource.getLogWriter();
 	}
 
+	@Override
 	public Logger getParentLogger() {
 
 		// JDK 7
@@ -61,6 +66,7 @@ public class DataSourceWrapper implements DataSource {
 		return _dataSource;
 	}
 
+	@Override
 	public boolean isWrapperFor(Class<?> clazz) {
 
 		// JDK 6
@@ -68,10 +74,12 @@ public class DataSourceWrapper implements DataSource {
 		return DataSource.class.equals(clazz);
 	}
 
+	@Override
 	public void setLoginTimeout(int seconds) throws SQLException {
 		_dataSource.setLoginTimeout(seconds);
 	}
 
+	@Override
 	public void setLogWriter(PrintWriter out) throws SQLException {
 		_dataSource.setLogWriter(out);
 	}
@@ -80,6 +88,7 @@ public class DataSourceWrapper implements DataSource {
 		_dataSource = wrappedDataSource;
 	}
 
+	@Override
 	public <T> T unwrap(Class<T> clazz) throws SQLException {
 
 		// JDK 6

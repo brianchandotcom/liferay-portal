@@ -50,14 +50,17 @@ public class RenderResponseImpl
 		return _useDefaultTemplate;
 	}
 
+	@Override
 	public void setNextPossiblePortletModes(
 		Collection<PortletMode> portletModes) {
 	}
 
+	@Override
 	public void setResourceName(String resourceName) {
 		_resourceName = resourceName;
 	}
 
+	@Override
 	public void setTitle(String title) {
 		_title = title;
 

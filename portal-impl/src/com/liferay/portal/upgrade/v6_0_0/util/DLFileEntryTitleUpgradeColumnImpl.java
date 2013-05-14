@@ -33,6 +33,7 @@ public class DLFileEntryTitleUpgradeColumnImpl extends BaseUpgradeColumnImpl {
 		_nameColumn = nameColumn;
 	}
 
+	@Override
 	public Object getNewValue(Object oldValue) throws Exception {
 		String title = (String)oldValue;
 

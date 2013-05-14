@@ -270,10 +270,12 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		AccessController.checkPermission(permission);
 	}
 
+	@Override
 	public Policy getPolicy() {
 		return _policy;
 	}
 
+	@Override
 	public boolean isActive() {
 		return PACLPolicyManager.isActive();
 	}

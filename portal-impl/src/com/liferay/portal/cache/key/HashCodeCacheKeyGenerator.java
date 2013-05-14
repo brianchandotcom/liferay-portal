@@ -28,6 +28,7 @@ public class HashCodeCacheKeyGenerator extends BaseCacheKeyGenerator {
 		return new HashCodeCacheKeyGenerator();
 	}
 
+	@Override
 	public Long getCacheKey(String key) {
 		long hashCode = 0;
 
@@ -38,6 +39,7 @@ public class HashCodeCacheKeyGenerator extends BaseCacheKeyGenerator {
 		return hashCode;
 	}
 
+	@Override
 	public Long getCacheKey(String[] keys) {
 		long hashCode = 0;
 
@@ -54,6 +56,7 @@ public class HashCodeCacheKeyGenerator extends BaseCacheKeyGenerator {
 		return hashCode;
 	}
 
+	@Override
 	public Long getCacheKey(StringBundler sb) {
 		long hashCode = 0;
 

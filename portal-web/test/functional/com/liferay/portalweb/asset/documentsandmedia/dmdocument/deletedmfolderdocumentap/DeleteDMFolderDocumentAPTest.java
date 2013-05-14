@@ -28,7 +28,7 @@ public class DeleteDMFolderDocumentAPTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
@@ -46,15 +46,17 @@ public class DeleteDMFolderDocumentAPTest extends BaseTestCase {
 			"//iframe[contains(@id,'configurationIframeDialog')]");
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
-		selenium.waitForVisible("//td[1]/a");
-		assertEquals(RuntimeVariables.replace("Documents and Media Document"),
-			selenium.getText("//td[1]/a"));
+		selenium.waitForVisible("xPath=(//table/tbody/tr[2]/td[2])[2]");
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
-			selenium.getText("//td[2]/a"));
-		selenium.click(RuntimeVariables.replace("//img[@alt='Delete']"));
+			selenium.getText("xPath=(//table/tbody/tr[2]/td)[4]"));
+		assertEquals(RuntimeVariables.replace("Document"),
+			selenium.getText("xPath=(//table/tbody/tr[2]/td[2])[2]"));
+		assertTrue(selenium.isVisible("//td[4]/span/a/img[@alt='Delete']"));
+		selenium.click(RuntimeVariables.replace(
+				"//td[4]/span/a/img[@alt='Delete']"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
+		selenium.waitForConfirmation(
+			"Are you sure you want to delete this? It will be deleted immediately.");
 		selenium.waitForVisible("//div[@class='portlet-msg-success']");
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),

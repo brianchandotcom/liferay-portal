@@ -28,7 +28,7 @@ public class AddNewDMFolderImageAPActionsTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Add New"),
 			selenium.getText("//span[@title='Add New']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Add New']/ul/li/strong/a",
@@ -47,11 +47,14 @@ public class AddNewDMFolderImageAPActionsTest extends BaseTestCase {
 		selenium.waitForVisible("//input[@value='Select']");
 		selenium.clickAt("//input[@value='Select']",
 			RuntimeVariables.replace("Select"));
-		Thread.sleep(5000);
-		selenium.selectWindow("title=Documents and Media");
+		selenium.selectFrame("relative=top");
+		selenium.waitForVisible("//iframe[@name='_20_selectFolder']");
+		selenium.selectFrame("//iframe[@name='_20_selectFolder']");
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'/liferay/search_container.js')]");
 		selenium.waitForVisible("//input[@value='Choose']");
-		selenium.click("//input[@value='Choose']");
-		selenium.selectWindow("null");
+		selenium.clickAt("//input[@value='Choose']",
+			RuntimeVariables.replace("Choose"));
 		selenium.selectFrame("relative=top");
 		selenium.waitForVisible("//iframe[contains(@id,'editAsset')]");
 		selenium.selectFrame("//iframe[contains(@id,'editAsset')]");
@@ -76,7 +79,6 @@ public class AddNewDMFolderImageAPActionsTest extends BaseTestCase {
 			"DM Folder Image Title");
 		assertEquals(RuntimeVariables.replace("DM Folder Image Title"),
 			selenium.getText("//h3[@class='asset-title']/a"));
-		assertTrue(selenium.isVisible(
-				"//div[@class='asset-resource-info']/div/img"));
+		assertTrue(selenium.isVisible("//h3/a/img"));
 	}
 }

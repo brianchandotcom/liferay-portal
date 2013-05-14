@@ -20,8 +20,18 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//h3[@class='asset-title']/a</td>
+	<td>//span[@title='Add New']/ul/li/strong/a</td>
+	<td>Add New</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//h3[@class='asset-title']/a)[1]</td>
 	<td>DM Folder Document Title</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//div[@class='lfr-meta-actions asset-actions']/span/a/span</td>
+	<td>Edit</td>
 </tr>
 <tr>
 	<td>assertPartialText</td>
@@ -32,6 +42,91 @@
 	<td>assertPartialText</td>
 	<td>//div[@class='asset-resource-info']/span/a/span</td>
 	<td>(0k)</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>xPath=(//div[@class='asset-more']/a)[1]</td>
+	<td>Read More</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//h3[@class='asset-title']/a)[2]</td>
+	<td>DM Folder Name</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>xPath=(//div[@class='asset-more']/a)[2]</td>
+	<td>Read More</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>xPath=(//div[@class='asset-more']/a)[1]</td>
+	<td>Read More</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1[@class='header-title']/span</td>
+	<td>DM Folder Document Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='header-back-to']/a</td>
+	<td>« Back</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//div[@class='lfr-meta-actions asset-actions']/span/a/span</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-panel-title']/span</td>
+	<td>Automatically Extracted Metadata</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-panel-content']/div/div[contains(.,'Content Encoding')]</td>
+	<td>Content Encoding ISO-8859-1</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-panel-content']/div/div[contains(.,'Content Type')]</td>
+	<td>Content Type text/plain; charset=ISO-8859-1</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//li[@class='taglib-social-bookmark-twitter']</td>
+	<td>Twitter</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//li[@class='taglib-social-bookmark-facebook']</td>
+	<td>Facebook</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//li[@class='taglib-social-bookmark-plusone']</td>
+	<td>Google+</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='asset-more']/a</td>
+	<td>View in Context »</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//span[@class='header-back-to']/a</td>
+	<td>« Back</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>xPath=(//div[@class='asset-more']/a)[2]</td>
+	<td>Read More</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1[@class='header-title']/span</td>
+	<td>DM Folder Name</td>
 </tr>
 </tbody></table>
 </body>

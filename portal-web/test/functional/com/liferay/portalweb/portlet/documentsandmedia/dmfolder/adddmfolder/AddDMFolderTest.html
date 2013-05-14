@@ -25,27 +25,27 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@title='Add']/ul/li/strong/a/span</td>
+	<td>//span[@class='add-button']/div/a</td>
 	<td>Add</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[@title='Add']/ul/li/strong/a/span</td>
+	<td>//span[@class='add-button']/div/a</td>
 	<td>Add</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Folder')]</td>
+	<td>//ul[@class='dropdown-menu lfr-menu-list direction-down']/li/a[contains(.,'Folder')]</td>
 	<td>Folder</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Folder')]</td>
+	<td>//ul[@class='dropdown-menu lfr-menu-list direction-down']/li/a[contains(.,'Folder')]</td>
 	<td>Folder</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Folder')]</td>
+	<td>//ul[@class='dropdown-menu lfr-menu-list direction-down']/li/a[contains(.,'Folder')]</td>
 	<td>Folder</td>
 </tr>
 <tr>
@@ -55,12 +55,12 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//input[@value='Save']</td>
+	<td>//button[@type='submit']</td>
 	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='portlet-msg-success']</td>
+	<td>//div[@class='alert alert-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>

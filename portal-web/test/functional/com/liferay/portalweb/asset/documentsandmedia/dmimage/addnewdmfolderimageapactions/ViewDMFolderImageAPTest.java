@@ -28,19 +28,71 @@ public class ViewDMFolderImageAPTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Add New"),
+			selenium.getText("//span[@title='Add New']/ul/li/strong/a"));
+		assertTrue(selenium.isVisible("//h3[@class='asset-title']/a/img"));
 		assertEquals(RuntimeVariables.replace("DM Folder Image Title"),
 			selenium.getText("//h3[@class='asset-title']/a"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='asset-resource-info']/div/img"));
+		assertTrue(selenium.isPartialText(
+				"xPath=(//div[@class='asset-more']/a)[1]", "Read More"));
+		assertEquals(RuntimeVariables.replace("DM Folder Name"),
+			selenium.getText("xPath=(//h3[@class='asset-title']/a)[2]"));
+		assertTrue(selenium.isPartialText(
+				"xPath=(//div[@class='asset-more']/a)[2]", "Read More"));
+		selenium.clickAt("xPath=(//div[@class='asset-more']/a)[1]",
+			RuntimeVariables.replace("Read More"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("DM Folder Image Title"),
+			selenium.getText("//h1[@class='header-title']/span"));
+		assertEquals(RuntimeVariables.replace("\u00ab Back"),
+			selenium.getText("//span[@class='header-back-to']/a"));
+		assertTrue(selenium.isVisible(
+				"//div[@class='lfr-preview-file-image-container']/img"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='lfr-meta-actions asset-actions']/span/a/span",
+				"Edit"));
+		assertEquals(RuntimeVariables.replace(
+				"Automatically Extracted Metadata"),
+			selenium.getText("//div[@class='lfr-panel-title']/span"));
+		assertEquals(RuntimeVariables.replace("Content Type image/jpeg"),
+			selenium.getText(
+				"//div[@class='lfr-panel-content']/div/div[contains(.,'Content Type')]"));
+		assertEquals(RuntimeVariables.replace("Bits Per Sample 8"),
+			selenium.getText(
+				"//div[@class='lfr-panel-content']/div/div[contains(.,'Bits Per Sample')]"));
+		assertEquals(RuntimeVariables.replace("Image Length 92"),
+			selenium.getText(
+				"//div[@class='lfr-panel-content']/div/div[contains(.,'Image Length')]"));
+		assertEquals(RuntimeVariables.replace("Image Width 394"),
+			selenium.getText(
+				"//div[@class='lfr-panel-content']/div/div[contains(.,'Image Width')]"));
+		assertTrue(selenium.isVisible(
+				"//li[@class='taglib-social-bookmark-twitter']"));
+		assertTrue(selenium.isVisible(
+				"//li[@class='taglib-social-bookmark-facebook']"));
+		assertTrue(selenium.isVisible(
+				"//li[@class='taglib-social-bookmark-plusone']"));
+		assertEquals(RuntimeVariables.replace("View in Context \u00bb"),
+			selenium.getText("//div[@class='asset-more']/a"));
+		selenium.clickAt("//span[@class='header-back-to']/a",
+			RuntimeVariables.replace("\u00ab Back"));
+		selenium.waitForPageToLoad("30000");
+		selenium.clickAt("xPath=(//div[@class='asset-more']/a)[2]",
+			RuntimeVariables.replace("Read More"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("DM Folder Name"),
+			selenium.getText("//h1[@class='header-title']/span"));
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		selenium.waitForVisible("//button[@title='Icon View']");
 		selenium.clickAt("//button[@title='Icon View']",
 			RuntimeVariables.replace("Icon View"));
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		selenium.waitForVisible(
 			"//button[contains(@class,'aui-state-active') and @title='Icon View']");
 		assertTrue(selenium.isVisible(
@@ -68,10 +120,16 @@ public class ViewDMFolderImageAPTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Download (13k)"),
 			selenium.getText("//span[1]/span/a/span"));
 		assertTrue(selenium.isPartialText(
-				"//div[2]/div[2]/div/div[1]/div[2]/div[1]", "image/jpeg"));
-		assertTrue(selenium.isPartialText("//div[2]/div/div[1]/div[2]/div[2]",
+				"//div[@id='documentLibraryAssetMetadataPanel']/div/div/div[contains(.,'Content Type')]",
+				"image/jpeg"));
+		assertTrue(selenium.isPartialText(
+				"//div[@id='documentLibraryAssetMetadataPanel']/div/div/div[contains(.,'Bits Per Sample')]",
 				"8"));
-		assertTrue(selenium.isPartialText("//div[2]/div/div/div[2]/div[3]", "92"));
-		assertTrue(selenium.isPartialText("//div[2]/div[4]", "394"));
+		assertTrue(selenium.isPartialText(
+				"//div[@id='documentLibraryAssetMetadataPanel']/div/div/div[contains(.,'Image Length')]",
+				"92"));
+		assertTrue(selenium.isPartialText(
+				"//div[@id='documentLibraryAssetMetadataPanel']/div/div/div[contains(.,'Image Width')]",
+				"394"));
 	}
 }

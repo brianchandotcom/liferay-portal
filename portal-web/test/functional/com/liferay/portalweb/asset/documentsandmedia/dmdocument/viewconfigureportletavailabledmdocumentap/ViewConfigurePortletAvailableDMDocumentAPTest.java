@@ -29,6 +29,12 @@ public class ViewConfigurePortletAvailableDMDocumentAPTest extends BaseTestCase 
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Add New"),
+			selenium.getText("//span[@title='Add New']/ul/li/strong/a"));
+		assertEquals(RuntimeVariables.replace("DM Folder Name"),
+			selenium.getText("//h3[@class='asset-title']/a"));
+		assertTrue(selenium.isPartialText("//div[@class='asset-more']/a",
+				"Read More"));
 		assertFalse(selenium.isTextPresent("DM Folder Document Title"));
 	}
 }

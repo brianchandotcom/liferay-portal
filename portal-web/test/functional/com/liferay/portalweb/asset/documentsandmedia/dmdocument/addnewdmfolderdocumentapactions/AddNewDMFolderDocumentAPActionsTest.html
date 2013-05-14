@@ -20,32 +20,32 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@title='Add New']/ul/li/strong/a</td>
-	<td>Add New</td>
+	<td>//div[@class='lfr-meta-actions add-asset-selector']/div/div/div/ul/li/a</td>
+	<td>Add</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//span[@title='Add New']/ul/li/strong/a</td>
-	<td>Add New</td>
+	<td>click</td>
+	<td>//div[@class='lfr-meta-actions add-asset-selector']/div/div/div/ul/li/a</td>
+	<td>Add</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Basic Document')]</td>
+	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Basic Document')]</td>
 	<td>Basic Document</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Basic Document')]</td>
+	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Basic Document')]</td>
 	<td>Basic Document</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Basic Document')]</td>
+	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Basic Document')]</td>
 	<td>Basic Document</td>
 </tr>
 <tr>
@@ -65,23 +65,33 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//input[@value='Select']</td>
+	<td>//button[contains(@id,'selectFolderButton')]</td>
 	<td>Select</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@value='Select']</td>
+	<td>//button[contains(@id,'selectFolderButton')]</td>
 	<td>Select</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 <tr>
-	<td>selectWindow</td>
-	<td>title=Documents and Media</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>//iframe[@name='_20_selectFolder']</td>
+	<td>Select Folder</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[@name='_20_selectFolder']</td>
+	<td>Select Folder</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/search_container.js')]</td>
+	<td>Search Container</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -89,14 +99,14 @@
 	<td>Choose</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>clickAt</td>
 	<td>//input[@value='Choose']</td>
 	<td>Choose</td>
 </tr>
 <tr>
-	<td>selectWindow</td>
-	<td>null</td>
-	<td></td>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -134,6 +144,11 @@
 	<td>DM Folder Document Title</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//input[@value='Publish']</td>
+	<td>Publish</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Publish']</td>
 	<td>Publish</td>
@@ -162,16 +177,6 @@
 	<td>assertText</td>
 	<td>//h3[@class='asset-title']/a</td>
 	<td>DM Folder Document Title</td>
-</tr>
-<tr>
-	<td>assertPartialText</td>
-	<td>//div[@class='asset-resource-info']/span/a/span</td>
-	<td>Download</td>
-</tr>
-<tr>
-	<td>assertPartialText</td>
-	<td>//div[@class='asset-resource-info']/span/a/span</td>
-	<td>(0k)</td>
 </tr>
 </tbody></table>
 </body>

@@ -29,13 +29,49 @@ public class ViewConfigurePortletFullContentDMImageAPTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Add New"),
+			selenium.getText("//span[@title='Add New']/ul/li/strong/a"));
 		assertEquals(RuntimeVariables.replace("DM Folder Image Title"),
-			selenium.getText("//h1[@class='header-title']/span"));
+			selenium.getText("xPath=(//h1[@class='header-title']/span)[1]"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='lfr-preview-file-image-container']/img"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='lfr-meta-actions asset-actions']/span/a/span",
+				"Edit"));
+		assertEquals(RuntimeVariables.replace(
+				"Automatically Extracted Metadata"),
+			selenium.getText("//div[@class='lfr-panel-title']/span"));
+		assertEquals(RuntimeVariables.replace("Content Type image/jpeg"),
+			selenium.getText(
+				"//div[@class='lfr-panel-content']/div/div[contains(.,'Content Type')]"));
+		assertEquals(RuntimeVariables.replace("Bits Per Sample 8"),
+			selenium.getText(
+				"//div[@class='lfr-panel-content']/div/div[contains(.,'Bits Per Sample')]"));
+		assertEquals(RuntimeVariables.replace("Image Length 92"),
+			selenium.getText(
+				"//div[@class='lfr-panel-content']/div/div[contains(.,'Image Length')]"));
+		assertEquals(RuntimeVariables.replace("Image Width 394"),
+			selenium.getText(
+				"//div[@class='lfr-panel-content']/div/div[contains(.,'Image Width')]"));
+		assertTrue(selenium.isVisible(
+				"xPath=(//li[@class='taglib-social-bookmark-twitter'])[1]"));
+		assertTrue(selenium.isVisible(
+				"xPath=(//li[@class='taglib-social-bookmark-facebook'])[1]"));
+		assertTrue(selenium.isVisible(
+				"xPath=(//li[@class='taglib-social-bookmark-plusone'])[1]"));
 		assertEquals(RuntimeVariables.replace("View in Context \u00bb"),
-			selenium.getText("//div[@class='asset-more']/a"));
-		selenium.clickAt("//div[@class='asset-more']/a",
+			selenium.getText("xPath=(//div[@class='asset-more']/a)[1]"));
+		assertEquals(RuntimeVariables.replace("DM Folder Name"),
+			selenium.getText("xPath=(//h1[@class='header-title']/span)[2]"));
+		assertTrue(selenium.isVisible(
+				"xPath=(//li[@class='taglib-social-bookmark-twitter'])[2]"));
+		assertTrue(selenium.isVisible(
+				"xPath=(//li[@class='taglib-social-bookmark-facebook'])[2]"));
+		assertTrue(selenium.isVisible(
+				"xPath=(//li[@class='taglib-social-bookmark-plusone'])[2]"));
+		assertEquals(RuntimeVariables.replace("View in Context \u00bb"),
+			selenium.getText("xPath=(//div[@class='asset-more']/a)[2]"));
+		selenium.clickAt("xPath=(//div[@class='asset-more']/a)[1]",
 			RuntimeVariables.replace("View in Context \u00bb"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("DM Folder Image Title"),

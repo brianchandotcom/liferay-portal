@@ -30,25 +30,25 @@ public class AddDMFolderTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Add"),
-			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
-		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
+			selenium.getText("//span[@class='add-button']/div/a"));
+		selenium.clickAt("//span[@class='add-button']/div/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Folder')]");
+			"//ul[@class='dropdown-menu lfr-menu-list direction-down']/li/a[contains(.,'Folder')]");
 		assertEquals(RuntimeVariables.replace("Folder"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Folder')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Folder')]",
+				"//ul[@class='dropdown-menu lfr-menu-list direction-down']/li/a[contains(.,'Folder')]"));
+		selenium.clickAt("//ul[@class='dropdown-menu lfr-menu-list direction-down']/li/a[contains(.,'Folder')]",
 			RuntimeVariables.replace("Folder"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_20_name']",
 			RuntimeVariables.replace("DM Folder Name"));
-		selenium.clickAt("//input[@value='Save']",
+		selenium.clickAt("//button[@type='submit']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
+			selenium.getText("//div[@class='alert alert-success']"));
 		assertEquals(RuntimeVariables.replace("DM Folder Name"),
 			selenium.getText(
 				"//a[contains(@class,'entry-link')]/span[@class='entry-title']"));

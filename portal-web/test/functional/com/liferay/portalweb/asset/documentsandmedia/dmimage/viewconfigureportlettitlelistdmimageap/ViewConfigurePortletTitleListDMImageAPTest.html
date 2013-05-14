@@ -14,23 +14,38 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Asset Publisher Test Page</td>
-	<td>Asset Publisher Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Asset Publisher Test Page</td>
 	<td>Asset Publisher Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//ul[@class='title-list']/li/span/a/span</td>
+	<td>//span[@title='Add New']/ul/li/strong/a</td>
+	<td>Add New</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//li[@class='title-list document']/span/a/img</td>
 	<td>DM Folder Image Title</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//li[@class='title-list document']/span/a/span</td>
+	<td>DM Folder Image Title</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='lfr-meta-actions asset-actions']/span/a/img</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//li[@class='title-list folder']/span/a/img</td>
+	<td>DM Folder Name</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
-	<td>//ul[@class='title-list']/li/span/a/span</td>
+	<td>//li[@class='title-list document']/span/a/span</td>
 	<td>DM Folder Image Title</td>
 </tr>
 <tr>
@@ -39,9 +54,59 @@
 	<td>DM Folder Image Title</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//span[@class='header-back-to']/a</td>
+	<td>« Back</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//div[@class='lfr-meta-actions asset-actions']/span/a/span</td>
+	<td>Edit</td>
+</tr>
+<tr>
 	<td>assertVisible</td>
 	<td>//div[@class='lfr-preview-file-image-container']/img</td>
 	<td>DM Folder Image Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-panel-title']/span</td>
+	<td>Automatically Extracted Metadata</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-panel-content']/div/div[contains(.,'Content Type')]</td>
+	<td>Content Type image/jpeg</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-panel-content']/div/div[contains(.,'Bits Per Sample')]</td>
+	<td>Bits Per Sample 8</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-panel-content']/div/div[contains(.,'Image Length')]</td>
+	<td>Image Length 92</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-panel-content']/div/div[contains(.,'Image Width')]</td>
+	<td>Image Width 394</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//li[@class='taglib-social-bookmark-twitter']</td>
+	<td>Twitter</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//li[@class='taglib-social-bookmark-facebook']</td>
+	<td>Facebook</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//li[@class='taglib-social-bookmark-plusone']</td>
+	<td>Google+</td>
 </tr>
 <tr>
 	<td>assertText</td>

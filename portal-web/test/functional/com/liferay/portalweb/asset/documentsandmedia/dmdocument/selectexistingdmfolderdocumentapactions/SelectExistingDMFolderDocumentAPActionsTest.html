@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
@@ -65,18 +65,18 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//span[@title='Select Existing']/ul/li/strong/a/span</td>
-	<td>Select Existing</td>
+	<td>xPath=(//span[@title='Select']/ul/li/strong/a/span)[2]</td>
+	<td>Select</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@title='Select Existing']/ul/li/strong/a/span</td>
-	<td>Select Existing</td>
+	<td>xPath=(//span[@title='Select']/ul/li/strong/a/span)[2]</td>
+	<td>Select</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[@title='Select Existing']/ul/li/strong/a/span</td>
-	<td>Select Existing</td>
+	<td>xPath=(//span[@title='Select']/ul/li/strong/a/span)[2]</td>
+	<td>Select</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -95,13 +95,33 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
+	<td>//tr[contains(.,'DM Folder Document Title')]/td[1]/a</td>
 	<td>DM Folder Document Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//td[1]/a</td>
+	<td>//tr[contains(.,'DM Folder Document Title')]/td[1]/a</td>
 	<td>DM Folder Document Title</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>Asset Publisher - Configuration</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>Asset Publisher - Configuration</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>You have successfully updated the setup.</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -110,13 +130,13 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[1]/a</td>
-	<td>Documents and Media Document</td>
+	<td>//tr[contains(.,'DM Folder Document Title')]/td</td>
+	<td>DM Folder Document Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
-	<td>DM Folder Document Title</td>
+	<td>//tr[contains(.,'DM Folder Document Title')]/td[2]</td>
+	<td>Document</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
@@ -134,19 +154,14 @@
 	<td>Asset Publisher Test Page</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>waitForText</td>
 	<td>//h3[@class='asset-title']/a</td>
 	<td>DM Folder Document Title</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
-	<td>//div[@class='asset-resource-info']/span/a/span</td>
-	<td>Download</td>
-</tr>
-<tr>
-	<td>assertPartialText</td>
-	<td>//div[@class='asset-resource-info']/span/a/span</td>
-	<td>(0k)</td>
+	<td>assertText</td>
+	<td>//h3[@class='asset-title']/a</td>
+	<td>DM Folder Document Title</td>
 </tr>
 </tbody></table>
 </body>

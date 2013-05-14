@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>5000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
@@ -74,14 +74,24 @@
 	<td>Select</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 <tr>
-	<td>selectWindow</td>
-	<td>title=Documents and Media</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>//iframe[@name='_20_selectFolder']</td>
+	<td>Select Folder</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[@name='_20_selectFolder']</td>
+	<td>Select Folder</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/search_container.js')]</td>
+	<td>Search Container</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -89,14 +99,9 @@
 	<td>Choose</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>clickAt</td>
 	<td>//input[@value='Choose']</td>
 	<td>Choose</td>
-</tr>
-<tr>
-	<td>selectWindow</td>
-	<td>null</td>
-	<td></td>
 </tr>
 <tr>
 	<td>selectFrame</td>
@@ -170,7 +175,7 @@
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//div[@class='asset-resource-info']/div/img</td>
+	<td>//h3/a/img</td>
 	<td>DM Folder Image Title</td>
 </tr>
 </tbody></table>

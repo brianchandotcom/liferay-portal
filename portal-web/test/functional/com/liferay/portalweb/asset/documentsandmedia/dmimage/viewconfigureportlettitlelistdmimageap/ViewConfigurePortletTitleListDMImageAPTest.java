@@ -26,19 +26,52 @@ public class ViewConfigurePortletTitleListDMImageAPTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		selenium.waitForVisible("link=Asset Publisher Test Page");
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Add New"),
+			selenium.getText("//span[@title='Add New']/ul/li/strong/a"));
+		assertTrue(selenium.isVisible(
+				"//li[@class='title-list document']/span/a/img"));
 		assertEquals(RuntimeVariables.replace("DM Folder Image Title"),
-			selenium.getText("//ul[@class='title-list']/li/span/a/span"));
-		selenium.clickAt("//ul[@class='title-list']/li/span/a/span",
+			selenium.getText("//li[@class='title-list document']/span/a/span"));
+		assertTrue(selenium.isVisible(
+				"//div[@class='lfr-meta-actions asset-actions']/span/a/img"));
+		assertTrue(selenium.isVisible(
+				"//li[@class='title-list folder']/span/a/img"));
+		selenium.clickAt("//li[@class='title-list document']/span/a/span",
 			RuntimeVariables.replace("DM Folder Image Title"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("DM Folder Image Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
+		assertEquals(RuntimeVariables.replace("\u00ab Back"),
+			selenium.getText("//span[@class='header-back-to']/a"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='lfr-meta-actions asset-actions']/span/a/span",
+				"Edit"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='lfr-preview-file-image-container']/img"));
+		assertEquals(RuntimeVariables.replace(
+				"Automatically Extracted Metadata"),
+			selenium.getText("//div[@class='lfr-panel-title']/span"));
+		assertEquals(RuntimeVariables.replace("Content Type image/jpeg"),
+			selenium.getText(
+				"//div[@class='lfr-panel-content']/div/div[contains(.,'Content Type')]"));
+		assertEquals(RuntimeVariables.replace("Bits Per Sample 8"),
+			selenium.getText(
+				"//div[@class='lfr-panel-content']/div/div[contains(.,'Bits Per Sample')]"));
+		assertEquals(RuntimeVariables.replace("Image Length 92"),
+			selenium.getText(
+				"//div[@class='lfr-panel-content']/div/div[contains(.,'Image Length')]"));
+		assertEquals(RuntimeVariables.replace("Image Width 394"),
+			selenium.getText(
+				"//div[@class='lfr-panel-content']/div/div[contains(.,'Image Width')]"));
+		assertTrue(selenium.isVisible(
+				"//li[@class='taglib-social-bookmark-twitter']"));
+		assertTrue(selenium.isVisible(
+				"//li[@class='taglib-social-bookmark-facebook']"));
+		assertTrue(selenium.isVisible(
+				"//li[@class='taglib-social-bookmark-plusone']"));
 		assertEquals(RuntimeVariables.replace("View in Context \u00bb"),
 			selenium.getText("//div[@class='asset-more']/a"));
 		selenium.clickAt("//div[@class='asset-more']/a",

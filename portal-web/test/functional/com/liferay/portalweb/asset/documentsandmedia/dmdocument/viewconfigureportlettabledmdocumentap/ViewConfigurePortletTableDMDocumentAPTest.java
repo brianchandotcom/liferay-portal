@@ -29,21 +29,48 @@ public class ViewConfigurePortletTableDMDocumentAPTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Add New"),
+			selenium.getText("//span[@title='Add New']/ul/li/strong/a"));
 		assertEquals(RuntimeVariables.replace("Title"),
 			selenium.getText("//th[1]"));
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
-			selenium.getText("//td[1]/a"));
-		selenium.clickAt("//td[1]/a",
+			selenium.getText("//tr[2]/td/a"));
+		assertTrue(selenium.isVisible(
+				"//div[@class='lfr-meta-actions asset-actions']/span/a/img"));
+		assertEquals(RuntimeVariables.replace("DM Folder Name"),
+			selenium.getText("//tr[3]/td/a"));
+		selenium.clickAt("//tr[2]/td/a",
 			RuntimeVariables.replace("DM Folder Document Title"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
+		assertEquals(RuntimeVariables.replace("\u00ab Back"),
+			selenium.getText("//span[@class='header-back-to']/a"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='lfr-meta-actions asset-actions']/span/a/span",
+				"Edit"));
+		assertEquals(RuntimeVariables.replace(
+				"Automatically Extracted Metadata"),
+			selenium.getText("//div[@class='lfr-panel-title']/span"));
+		assertEquals(RuntimeVariables.replace("Content Encoding ISO-8859-1"),
+			selenium.getText(
+				"//div[@class='lfr-panel-content']/div/div[contains(.,'Content Encoding')]"));
+		assertEquals(RuntimeVariables.replace(
+				"Content Type text/plain; charset=ISO-8859-1"),
+			selenium.getText(
+				"//div[@class='lfr-panel-content']/div/div[contains(.,'Content Type')]"));
+		assertTrue(selenium.isVisible(
+				"//li[@class='taglib-social-bookmark-twitter']"));
+		assertTrue(selenium.isVisible(
+				"//li[@class='taglib-social-bookmark-facebook']"));
+		assertTrue(selenium.isVisible(
+				"//li[@class='taglib-social-bookmark-plusone']"));
 		assertEquals(RuntimeVariables.replace("View in Context \u00bb"),
 			selenium.getText("//div[@class='asset-more']/a"));
 		selenium.clickAt("//div[@class='asset-more']/a",
 			RuntimeVariables.replace("View in Context \u00bb"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
-			selenium.getText("//h1[@class='header-title']/span"));
+			selenium.getText("//div[3]/div/h2[@class='document-title']"));
 	}
 }

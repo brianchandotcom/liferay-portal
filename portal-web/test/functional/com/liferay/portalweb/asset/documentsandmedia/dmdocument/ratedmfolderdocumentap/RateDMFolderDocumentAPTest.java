@@ -28,13 +28,14 @@ public class RateDMFolderDocumentAPTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 
 		String voteCount = selenium.getFirstNumberIncrement(
 				"xPath=(//div[@class='aui-rating-label-element'])[2]");
 		RuntimeVariables.setValue("voteCount", voteCount);
-		selenium.waitForVisible("//a[5]");
-		selenium.clickAt("//a[5]", RuntimeVariables.replace("5 Stars"));
+		selenium.waitForVisible("//a[contains(@class,'aui-rating-element')][5]");
+		selenium.clickAt("//a[contains(@class,'aui-rating-element')][5]",
+			RuntimeVariables.replace("Rate this 5 stars out of 5."));
 		selenium.waitForPartialText("xPath=(//div[@class='aui-rating-label-element'])[2]",
 			RuntimeVariables.getValue("voteCount"));
 		assertTrue(selenium.isPartialText(

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -42,7 +43,9 @@ import com.liferay.portlet.dynamicdatamapping.TemplateSmallImageNameException;
 import com.liferay.portlet.dynamicdatamapping.TemplateSmallImageSizeException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.service.base.DDMTemplateLocalServiceBaseImpl;
+import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.service.persistence.JournalArticleUtil;
 
@@ -172,6 +175,17 @@ public class DDMTemplateLocalServiceImpl
 		}
 		else {
 			templateKey = templateKey.trim().toUpperCase();
+		}
+
+		if (type.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM) ||
+			language.equals(TemplateConstants.LANG_TYPE_XSL)) {
+
+			try {
+				script = DDMXMLUtil.formatXML(script);
+			}
+			catch (Exception e) {
+				throw new TemplateScriptException();
+			}
 		}
 
 		byte[] smallImageBytes = null;

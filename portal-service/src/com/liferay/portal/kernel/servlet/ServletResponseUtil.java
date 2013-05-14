@@ -698,8 +698,7 @@ public class ServletResponseUtil {
 					"Setting content disposition header " + sb.toString());
 			}
 
-			response.setHeader(
-				HttpHeaders.CONTENT_DISPOSITION, sb.toString());
+			response.setHeader(HttpHeaders.CONTENT_DISPOSITION, sb.toString());
 		}
 	}
 

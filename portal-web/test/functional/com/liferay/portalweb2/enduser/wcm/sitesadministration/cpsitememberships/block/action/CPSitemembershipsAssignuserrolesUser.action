@@ -12,12 +12,6 @@
 		<case locator-key1="AVAILABLE">
 			<execute function="Click#textClickAtAndWait" value1="Available" />
 		</case>
-		<case locator-key1="ADVANCED_SEARCH_BASIC">
-			<execute function="Click#partialTextClickAt" value1="Basic" />
-		</case>
-		<case locator-key1="ADVANCED_SEARCH_BUTTON">
-			<execute function="Click#valueClickAtAndWait" value1="Search" />
-		</case>
 		<case locator-key1="BASIC_SEARCH_ADVANCED">
 			<execute function="Click#partialTextClickAt" value1="Advanced" />
 		</case>
@@ -29,15 +23,6 @@
 		</case>
 		<case locator-key1="UPDATE_ASSOCIATIONS_BUTTON">
 			<execute function="Click#valueClickAtAndWait" value1="Update Associations" />
-		</case>
-	</command>
-
-	<command name="isElementPresent">
-		<case locator-key1="ADVANCED_SEARCH_BASIC">
-			<execute function="IsElementPresent#isVisible" />
-		</case>
-		<case locator-key1="BASIC_SEARCH_ADVANCED">
-			<execute function="IsElementPresent#isVisible" />
 		</case>
 	</command>
 </definition>

@@ -20,12 +20,12 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='portlet-msg-success']</td>
+	<td>//div[@class='alert alert-success']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD</td>
-	<td>//span[@title='Add']/ul/li/strong/a/span</td>
+	<td>//div[@class='navbar ']//li/a[contains(.,'Add')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>INFO_MESSAGE</td>
-	<td>//div[@class='portlet-msg-info']</td>
+	<td>//div[@class='alert alert-info']</td>
 	<td></td>
 </tr>
 <tr>
@@ -46,17 +46,17 @@
 <!--ADD-->
 <tr>
 	<td>ADD_BLANK_SITE</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Blank Site')]</td>
+	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Blank Site')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_COMMUNITY_SITE</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Community Site')]</td>
+	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Community Site')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_INTRANET_SITE</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Intranet Site')]</td>
+	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Intranet Site')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -67,12 +67,12 @@
 <!--BASIC_SEARCH-->
 <tr>
 	<td>BASIC_SEARCH_FIELD</td>
-	<td>//input[@id='_134_toggle_id_users_admin_group_searchkeywords']</td>
+	<td>//input[@id='toggle_id_users_admin_group_searchkeywords']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BASIC_SEARCH_BUTTON</td>
-	<td>xpath=(//input[@value='Search'])[1]</td>
+	<td>//button[contains(.,'Search')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -83,7 +83,7 @@
 <!--SITE_BUTTON-->
 <tr>
 	<td>SITE_BUTTON_DELETE</td>
-	<td>//input[@value='Delete']</td>
+	<td>//button[contains(.,'Delete')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -139,7 +139,7 @@
 </tr>
 <tr>
 	<td>SITE_TABLE_ACTIONS</td>
-	<td>//table[@data-searchcontainerid='_134_groupsSearchContainer']//tr/td/span[@title='Actions']/ul/li/strong/a</td>
+	<td>//table[@data-searchcontainerid='_134_groupsSearchContainer']//tr/td/div/a[@title='Actions']</td>
 	<td></td>
 </tr>
 <tr>
@@ -170,7 +170,7 @@
 </tr>
 <tr>
 	<td>SITE_MENULIST_DEACTIVATE</td>
-	<td>//a[@role='menuitem' and contains(.,'Leave')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Deactivate')]</td>
 	<td></td>
 </tr>
 <tr>

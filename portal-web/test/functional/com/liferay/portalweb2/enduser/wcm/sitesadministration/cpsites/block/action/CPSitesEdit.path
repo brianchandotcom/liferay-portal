@@ -20,12 +20,12 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='portlet-msg-success']</td>
+	<td>//div[@class='alert alert-success']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>HEADER</td>
-	<td>//h1[@class='header-title']/span</td>
+	<td>//h3[@class='header-title']/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -36,7 +36,7 @@
 <!--DETAILS-->
 <tr>
 	<td>DETAILS_NAME</td>
-	<td>//input[@id='_134_name']</td>
+	<td>//input[@id='_165_name']</td>
 	<td></td>
 </tr>
 <tr>
@@ -47,7 +47,7 @@
 <!--MENU-->
 <tr>
 	<td>MENU_SAVE</td>
-	<td>//input[@value='Save']</td>
+	<td>//button[contains(.,'Save')]</td>
 	<td></td>
 </tr>
 </tbody>

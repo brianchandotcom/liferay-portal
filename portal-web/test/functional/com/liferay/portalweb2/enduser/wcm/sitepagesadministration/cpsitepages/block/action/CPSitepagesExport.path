@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
-	<td>//iframe[@id='_156_exportDialog']</td>
+	<td>//iframe[@id='_156_exportDialog_iframe_']</td>
 	<td>CPSitepagesExport</td>
 </tr>
 <tr>
@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>EXPORT_BUTTON</td>
-	<td>//input[@value='Export']</td>
+	<td>//div[@id='_156_exportImportOptions']//button[contains(.,'Export')]</td>
 	<td></td>
 </tr>
 </tbody>

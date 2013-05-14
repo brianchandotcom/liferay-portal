@@ -31,7 +31,7 @@ else if (displayStyle.equals("vertical")) {
 	<script src="<%= HttpUtil.getProtocol(request) %>://connect.facebook.net/<%= locale.getLanguage() %>_<%= locale.getCountry() %>/all.js#xfbml=1"></script>
 </liferay-util:html-bottom>
 
-<div id="fb-root" />
+<div id="fb-root"></div>
 
 <div class="fb-like"
 	data-font=""
@@ -40,4 +40,5 @@ else if (displayStyle.equals("vertical")) {
 	data-layout="<%= facebookDisplayStyle %>"
 	data-send="false"
 	data-show_faces="true"
-/>
+>
+</div>

@@ -1242,6 +1242,7 @@
 		<icon>/html/icons/roles_admin.png</icon>
 		<struts-path>roles_admin</struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
+		<portlet-data-handler-class>com.liferay.portlet.rolesadmin.lar.RolesAdminPortletDataHandler</portlet-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.portlet.rolesadmin.lar.RoleStagedModelDataHandler</staged-model-data-handler-class>
 		<control-panel-entry-category>portal</control-panel-entry-category>
 		<control-panel-entry-weight>5.0</control-panel-entry-weight>

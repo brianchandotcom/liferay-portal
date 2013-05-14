@@ -304,12 +304,16 @@ public class LayoutExporter {
 				"end-date", String.valueOf(portletDataContext.getEndDate()));
 		}
 
-		Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(companyId);
-
 		headerElement.addAttribute(
-			"company-group-id", String.valueOf(companyGroup.getGroupId()));
+			"company-group-id",
+			String.valueOf(portletDataContext.getCompanyGroupId()));
 
 		headerElement.addAttribute("group-id", String.valueOf(groupId));
+
+		headerElement.addAttribute(
+			"user-personal-site-group-id",
+			String.valueOf(portletDataContext.getUserPersonalSiteGroupId()));
+
 		headerElement.addAttribute(
 			"private-layout", String.valueOf(privateLayout));
 

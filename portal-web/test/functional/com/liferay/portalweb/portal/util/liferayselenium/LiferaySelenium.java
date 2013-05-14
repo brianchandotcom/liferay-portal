@@ -79,6 +79,8 @@ public interface LiferaySelenium extends Selenium {
 
 	public void fail(String message);
 
+	public String getClassName();
+
 	public String getCurrentDay();
 
 	public String getCurrentMonth();

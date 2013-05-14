@@ -3476,6 +3476,79 @@ svn --username ${svn.username} --password ${svn.password} update -r ${svn.info.r
 		</if>
 	</target>
 
+	<target name="prepare-properties-test-class">
+		<if>
+			<available file="portal-web/test/functional" type="dir" />
+			<then>
+				<resourcecount property="test.functional.count">
+					<fileset id="test.functional.fileset-id" dir="portal-web/test/functional" includes="**/${test.class}.java" />
+				</resourcecount>
+			</then>
+		</if>
+
+		<if>
+			<available file="portal-web/test/functional-generated" type="dir" />
+			<then>
+				<resourcecount property="test.functional-generated.count">
+					<fileset id="test.functional-generated.fileset-id" dir="portal-web/test/functional-generated" includes="**/${test.class}.java" />
+				</resourcecount>
+			</then>
+		</if>
+
+		<if>
+			<and>
+				<isset property="test.functional.count" />
+				<not>
+					<equals arg1="${test.functional.count}" arg2="0" />
+				</not>
+			</and>
+			<then>
+				<path id="test.class.path-id">
+					<fileset refid="test.functional.fileset-id" />
+				</path>
+			</then>
+			<elseif>
+				<and>
+					<isset property="test.functional-generated.count"/>
+					<not>
+						<equals arg1="${test.functional-generated.count}" arg2="0" />
+					</not>
+				</and>
+				<then>
+					<path id="test.class.path-id">
+						<fileset refid="test.functional-generated.fileset-id" />
+					</path>
+				</then>
+			</elseif>
+			<else>
+				<fail>Could not find ${test.class}.</fail>
+			</else>
+		</if>
+
+		<property name="test.class.path" value="${toString:test.class.path-id}" />
+
+		<script classpathref="project.classpath" language="beanshell">
+			import com.liferay.portal.kernel.util.StringUtil;
+
+			String testClassPath = project.getProperty("test.class.path");
+
+			int x = testClassPath.indexOf("\\com\\");
+
+			String fullTestClassName = testClassPath.substring(x + 1);
+
+			fullTestClassName = StringUtil.replace(fullTestClassName, ".java", "");
+			fullTestClassName = StringUtil.replace(fullTestClassName, "\\", ".");
+
+			project.setProperty("full.test.class.name", fullTestClassName);
+		</script>
+
+		<replace
+			file="portal-web/test/test-portal-web.properties"
+			token="#test.class="
+			value="test.class=${full.test.class.name}"
+		/>
+	</target>
+
 	<target name="prepare-root-xml">
 		<echo file="${app.server.tomcat.dir}/conf/Catalina/localhost/ROOT.xml"><![CDATA[<Context path="" crossContext="true">
 
@@ -4042,6 +4115,10 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 		</if>
 
 		<antcall target="generate-tests" inheritAll="false">
+			<param name="test.class" value="${test.class}" />
+		</antcall>
+
+		<antcall target="prepare-properties-test-class" inheritAll="false">
 			<param name="test.class" value="${test.class}" />
 		</antcall>
 

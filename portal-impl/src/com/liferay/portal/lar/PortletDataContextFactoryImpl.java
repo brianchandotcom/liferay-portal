@@ -51,6 +51,12 @@ public class PortletDataContextFactoryImpl
 				companyId);
 
 			portletDataContext.setCompanyGroupId(companyGroup.getGroupId());
+
+			Group userPersonalSiteGroup =
+				GroupLocalServiceUtil.getUserPersonalSiteGroup(companyId);
+
+			portletDataContext.setUserPersonalSiteGroupId(
+				userPersonalSiteGroup.getGroupId());
 		}
 		catch (Exception e) {
 			throw new IllegalStateException(e);

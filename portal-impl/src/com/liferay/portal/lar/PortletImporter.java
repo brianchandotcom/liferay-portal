@@ -455,6 +455,14 @@ public class PortletImporter {
 
 		portletDataContext.setSourceGroupId(sourceGroupId);
 
+		// user personal site group id
+
+		long sourceUserPersonalSiteGroupId = GetterUtil.getLong(
+			headerElement.attributeValue("user-personal-site-group-id"));
+
+		portletDataContext.setSourceUserPersonalSiteGroupId(
+			sourceUserPersonalSiteGroupId);
+
 		// Read asset categories, asset tags, comments, locks, and ratings
 		// entries to make them available to the data handlers through the
 		// context

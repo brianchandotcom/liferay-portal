@@ -14,13 +14,154 @@
 
 package com.liferay.portlet.rolesadmin.lar;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
+import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
+import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.model.Role;
+import com.liferay.portal.model.Team;
+import com.liferay.portal.service.RoleLocalServiceUtil;
+import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.persistence.RoleExportActionableDynamicQuery;
+import com.liferay.portal.util.PortalUtil;
+
+import java.util.List;
+
+import javax.portlet.PortletPreferences;
 
 /**
  * @author Michael C. Han
+ * @author David Mendez Gonzalez
  */
 public class RolesAdminPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "roles_admin";
+
+	public RolesAdminPortletDataHandler() {
+		super();
+
+		setDataPortalLevel(true);
+
+		setExportControls(
+			new PortletDataHandlerBoolean(
+				NAMESPACE, _SYSTEM_ROLES_PARAMETER, true, false));
+	}
+
+	@Override
+	protected PortletPreferences doDeleteData(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		if (portletDataContext.addPrimaryKey(
+				RolesAdminPortletDataHandler.class, "deleteData")) {
+
+			return portletPreferences;
+		}
+
+		List<Role> roles = RoleLocalServiceUtil.getRoles(
+			portletDataContext.getCompanyId());
+
+		for (Role role : roles) {
+			if (!PortalUtil.isSystemRole(role.getName())) {
+				RoleLocalServiceUtil.deleteRole(role);
+			}
+		}
+
+		return portletPreferences;
+	}
+
+	@Override
+	protected String doExportData(
+			final PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		portletDataContext.addPermissions(
+			_RESOURCE_NAME, portletDataContext.getScopeGroupId());
+
+		Element rootElement = addExportDataRootElement(portletDataContext);
+
+		rootElement.addAttribute(
+			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
+
+		final boolean exportSystemRoles =
+			portletDataContext.getBooleanParameter(
+				NAMESPACE, _SYSTEM_ROLES_PARAMETER);
+
+		final long defaultUserId = UserLocalServiceUtil.getDefaultUserId(
+			portletDataContext.getCompanyId());
+
+		ActionableDynamicQuery roleActionableDynamicQuery =
+			new RoleExportActionableDynamicQuery(portletDataContext) {
+
+				@Override
+				protected void addCriteria(DynamicQuery dynamicQuery) {
+					super.addCriteria(dynamicQuery);
+
+					long classNameId = PortalUtil.getClassNameId(Team.class);
+
+					Property classNameIdProperty = PropertyFactoryUtil.forName(
+						"classNameId");
+
+					dynamicQuery.add(classNameIdProperty.ne(classNameId));
+				}
+
+				@Override
+				protected void performAction(Object object)
+					throws PortalException, SystemException {
+
+					Role role = (Role)object;
+
+					if (!exportSystemRoles &&
+						(role.getUserId() == defaultUserId)) {
+
+						return;
+					}
+
+					super.performAction(object);
+				}
+
+			};
+
+		roleActionableDynamicQuery.performActions();
+
+		return getExportDataRootElementString(rootElement);
+	}
+
+	@Override
+	protected PortletPreferences doImportData(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences, String data)
+		throws Exception {
+
+		portletDataContext.importPermissions(
+			_RESOURCE_NAME, portletDataContext.getSourceGroupId(),
+			portletDataContext.getScopeGroupId());
+
+		Element rolesElement = portletDataContext.getImportDataGroupElement(
+			Role.class);
+
+		List<Element> roleElements = rolesElement.elements();
+
+		for (Element roleElement : roleElements) {
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, roleElement);
+		}
+
+		return null;
+	}
+
+	private static final String _RESOURCE_NAME =
+		"com.liferay.portlet.rolesadmin";
+
+	private static final String _SYSTEM_ROLES_PARAMETER = "system-roles";
 
 }

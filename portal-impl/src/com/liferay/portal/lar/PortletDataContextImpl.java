@@ -1102,6 +1102,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return ExportImportPathUtil.getSourceRootPath(this);
 	}
 
+	public long getSourceUserPersonalSiteGroupId() {
+		return _sourceUserPersonalSiteGroupId;
+	}
+
 	public Date getStartDate() {
 		return _startDate;
 	}
@@ -1112,6 +1116,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	public UserIdStrategy getUserIdStrategy() {
 		return _userIdStrategy;
+	}
+
+	public long getUserPersonalSiteGroupId() {
+		return _userPersonalSiteGroupId;
 	}
 
 	public List<String> getZipEntries() {
@@ -1652,12 +1660,22 @@ public class PortletDataContextImpl implements PortletDataContext {
 		_sourceGroupId = sourceGroupId;
 	}
 
+	public void setSourceUserPersonalSiteGroupId(
+		long sourceUserPersonalSiteGroupId) {
+
+		_sourceUserPersonalSiteGroupId = sourceUserPersonalSiteGroupId;
+	}
+
 	public void setStartDate(Date startDate) {
 		_startDate = startDate;
 	}
 
 	public void setUserIdStrategy(UserIdStrategy userIdStrategy) {
 		_userIdStrategy = userIdStrategy;
+	}
+
+	public void setUserPersonalSiteGroupId(long userPersonalSiteGroupId) {
+		_userPersonalSiteGroupId = userPersonalSiteGroupId;
 	}
 
 	public void setZipReader(ZipReader zipReader) {
@@ -2064,8 +2082,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private String _scopeType;
 	private long _sourceCompanyGroupId;
 	private long _sourceGroupId;
+	private long _sourceUserPersonalSiteGroupId;
 	private Date _startDate;
 	private UserIdStrategy _userIdStrategy;
+	private long _userPersonalSiteGroupId;
 	private XStream _xStream;
 	private ZipReader _zipReader;
 	private ZipWriter _zipWriter;

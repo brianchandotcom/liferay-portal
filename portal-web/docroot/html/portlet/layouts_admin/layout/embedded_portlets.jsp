@@ -41,7 +41,7 @@ rowChecker.setRowIds("removeEmbeddedPortletIds");
 	</c:when>
 	<c:otherwise>
 		<div class="alert alert-block">
-			<liferay-ui:message key="warning-selected-portlets-will-be-removed" />
+			<liferay-ui:message key="warning-preferences-of-selected-portlets-will-be-reset-or-deleted" />
 		</div>
 	</c:otherwise>
 </c:choose>

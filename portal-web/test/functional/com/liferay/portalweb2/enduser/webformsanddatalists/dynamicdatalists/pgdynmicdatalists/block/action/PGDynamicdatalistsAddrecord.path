@@ -1,0 +1,39 @@
+<html>
+<head>
+<title>PGDynamicdatalistsAddrecord</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGDynamicdatalistsAddrecord</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGDynamicdatalistsAddrecord</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_AS_DRAFT_BUTTON</td>
+	<td>//button[contains(@id,'saveButton')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLISH_BUTTON</td>
+	<td>//button[contains(@id,'publishButton')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CANCEL_BUTTON</td>
+	<td>//button[contains(@id,'cancelButton')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

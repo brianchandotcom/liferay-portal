@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.log.Log;
@@ -50,7 +51,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.zip.ZipWriter;
-import com.liferay.portal.lar.PortletDataContextImpl;
 import com.liferay.portal.model.Account;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
@@ -3299,10 +3299,11 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				continue;
 			}
 
-			PortletDataContext portletDataContext = new PortletDataContextImpl(
-				group.getCompanyId(), group.getGroupId(),
-				(Map<String, String[]>)null, (Date)null, (Date)null,
-				(ZipWriter)null);
+			PortletDataContext portletDataContext =
+				PortletDataContextFactoryUtil.createExportPortletDataContext(
+					group.getCompanyId(), group.getGroupId(),
+					(Map<String, String[]>)null, (Date)null, (Date)null,
+					(ZipWriter)null);
 
 			// For now, we are going to throw an exception if one portlet data
 			// handler has an exception to ensure that the transaction is rolled

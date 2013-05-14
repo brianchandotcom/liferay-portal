@@ -17,6 +17,7 @@ package com.liferay.portal.lar;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.UserIdStrategy;
@@ -177,9 +178,10 @@ public abstract class BaseStagedModelDataHandlerTestCase extends PowerMockito {
 	protected void initExport() throws Exception {
 		zipWriter = ZipWriterFactoryUtil.getZipWriter();
 
-		portletDataContext = new PortletDataContextImpl(
-			stagingGroup.getCompanyId(), stagingGroup.getGroupId(),
-			getParameterMap(), getStartDate(), getEndDate(), zipWriter);
+		portletDataContext =
+			PortletDataContextFactoryUtil.createExportPortletDataContext(
+				stagingGroup.getCompanyId(), stagingGroup.getGroupId(),
+				getParameterMap(), getStartDate(), getEndDate(), zipWriter);
 
 		rootElement = SAXReaderUtil.createElement("root");
 
@@ -190,9 +192,10 @@ public abstract class BaseStagedModelDataHandlerTestCase extends PowerMockito {
 		userIdStrategy = new CurrentUserIdStrategy(TestPropsValues.getUser());
 		zipReader = ZipReaderFactoryUtil.getZipReader(zipWriter.getFile());
 
-		portletDataContext = new PortletDataContextImpl(
-			liveGroup.getCompanyId(), liveGroup.getGroupId(), getParameterMap(),
-			userIdStrategy, zipReader);
+		portletDataContext =
+			PortletDataContextFactoryUtil.createImportPortletDataContext(
+				liveGroup.getCompanyId(), liveGroup.getGroupId(),
+				getParameterMap(), userIdStrategy, zipReader);
 
 		portletDataContext.setImportDataRootElement(rootElement);
 		portletDataContext.setSourceGroupId(stagingGroup.getGroupId());

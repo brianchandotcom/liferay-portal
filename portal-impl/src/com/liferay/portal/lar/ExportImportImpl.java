@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.lar.ExportImportUtil;
 import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.MissingReference;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerRegistryUtil;
@@ -364,9 +365,10 @@ public class ExportImportImpl implements ExportImport {
 			parameterMap, PortletDataHandlerKeys.USER_ID_STRATEGY);
 		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
 
-		PortletDataContext portletDataContext = new PortletDataContextImpl(
-			group.getCompanyId(), groupId, parameterMap,
-			getUserIdStrategy(userId, userIdStrategy), zipReader);
+		PortletDataContext portletDataContext =
+			PortletDataContextFactoryUtil.createImportPortletDataContext(
+				group.getCompanyId(), groupId, parameterMap,
+				getUserIdStrategy(userId, userIdStrategy), zipReader);
 
 		final ManifestSummary manifestSummary = new ManifestSummary();
 
@@ -610,9 +612,10 @@ public class ExportImportImpl implements ExportImport {
 			parameterMap, PortletDataHandlerKeys.USER_ID_STRATEGY);
 		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
 
-		PortletDataContext portletDataContext = new PortletDataContextImpl(
-			group.getCompanyId(), groupId, new HashMap<String, String[]>(),
-			getUserIdStrategy(userId, userIdStrategy), zipReader);
+		PortletDataContext portletDataContext =
+			PortletDataContextFactoryUtil.createImportPortletDataContext(
+				group.getCompanyId(), groupId, new HashMap<String, String[]>(),
+				getUserIdStrategy(userId, userIdStrategy), zipReader);
 
 		SAXParser saxParser = new SAXParser();
 

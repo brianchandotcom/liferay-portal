@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.model.ClassedModel;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceContext;
@@ -242,6 +243,8 @@ public interface PortletDataContext extends Serializable {
 
 	public Element getMissingReferencesElement();
 
+	public List<Layout> getNewLayouts();
+
 	public Map<?, ?> getNewPrimaryKeysMap(Class<?> clazz);
 
 	public Map<?, ?> getNewPrimaryKeysMap(String className);
@@ -264,6 +267,20 @@ public interface PortletDataContext extends Serializable {
 	public Set<String> getPrimaryKeys();
 
 	public Map<String, List<RatingsEntry>> getRatingsEntries();
+
+	public Element getReferenceDataElement(
+		Element parentElement, Class<?> clazz, long groupId, long classPk);
+
+	public Element getReferenceDataElement(
+		Element parentElement, Class<?> clazz, long groupId, String uuid);
+
+	public Element getReferenceDataElement(
+		StagedModel parentStagedModel, Class<?> clazz, long groupId,
+		long classPk);
+
+	public Element getReferenceDataElement(
+		StagedModel parentStagedModel, Class<?> clazz, long groupId,
+		String uuid);
 
 	public List<Element> getReferenceDataElements(
 		Element parentElement, Class<?> clazz);
@@ -394,6 +411,14 @@ public interface PortletDataContext extends Serializable {
 
 	public void setClassLoader(ClassLoader classLoader);
 
+	public void setCompanyGroupId(long companyGroupId);
+
+	public void setCompanyId(long companyId);
+
+	public void setDataStrategy(String dataStrategy);
+
+	public void setEndDate(Date endDate);
+
 	public void setExportDataRootElement(Element exportDataRootElement);
 
 	public void setGroupId(long groupId);
@@ -402,7 +427,11 @@ public interface PortletDataContext extends Serializable {
 
 	public void setMissingReferencesElement(Element missingReferencesElement);
 
+	public void setNewLayouts(List<Layout> newLayouts);
+
 	public void setOldPlid(long oldPlid);
+
+	public void setParameterMap(Map<String, String[]> parameterMap);
 
 	public void setPlid(long plid);
 
@@ -422,6 +451,12 @@ public interface PortletDataContext extends Serializable {
 	public void setSourceGroupId(long sourceGroupId);
 
 	public void setStartDate(Date startDate);
+
+	public void setUserIdStrategy(UserIdStrategy userIdStrategy);
+
+	public void setZipReader(ZipReader zipReader);
+
+	public void setZipWriter(ZipWriter zipWriter);
 
 	public String toXML(Object object);
 

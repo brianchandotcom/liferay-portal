@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.lar.ExportImportUtil;
 import com.liferay.portal.kernel.lar.MissingReference;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -103,21 +104,23 @@ public class ExportImportUtilTest {
 
 		TestReaderWriter testReaderWriter = new TestReaderWriter();
 
-		_portletDataContextExport = new PortletDataContextImpl(
-			_stagingGroup.getCompanyId(), _stagingGroup.getGroupId(),
-			new HashMap<String, String[]>(),
-			new Date(System.currentTimeMillis() - Time.HOUR), new Date(),
-			testReaderWriter);
+		_portletDataContextExport =
+			PortletDataContextFactoryUtil.createExportPortletDataContext(
+				_stagingGroup.getCompanyId(), _stagingGroup.getGroupId(),
+				new HashMap<String, String[]>(),
+				new Date(System.currentTimeMillis() - Time.HOUR), new Date(),
+				testReaderWriter);
 
 		Element rootElement = SAXReaderUtil.createElement("root");
 
 		_portletDataContextExport.setExportDataRootElement(rootElement);
 
-		_portletDataContextImport = new PortletDataContextImpl(
-			_stagingGroup.getCompanyId(), _stagingGroup.getGroupId(),
-			new HashMap<String, String[]>(),
-			new CurrentUserIdStrategy(TestPropsValues.getUser()),
-			testReaderWriter);
+		_portletDataContextImport =
+			PortletDataContextFactoryUtil.createImportPortletDataContext(
+				_stagingGroup.getCompanyId(), _stagingGroup.getGroupId(),
+				new HashMap<String, String[]>(),
+				new CurrentUserIdStrategy(TestPropsValues.getUser()),
+				testReaderWriter);
 
 		_portletDataContextImport.setImportDataRootElement(rootElement);
 		_portletDataContextImport.setSourceGroupId(_stagingGroup.getGroupId());

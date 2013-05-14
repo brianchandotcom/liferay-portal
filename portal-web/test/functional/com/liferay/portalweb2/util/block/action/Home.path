@@ -51,7 +51,7 @@
 <!--PAGE-->
 <tr>
 	<td>PAGE_1</td>
-	<td>xpath=(//li[contains(@class,'lfr-nav-deletable')])[1]/a/span</td>
+	<td>xpath=(//li[contains(@class,'lfr-nav-deletable')])[1]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -71,12 +71,12 @@
 </tr>
 <tr>
 	<td>PAGE_2</td>
-	<td>xpath=(//li[contains(@class,'lfr-nav-deletable')])[2]/a/span</td>
+	<td>xpath=(//li[contains(@class,'lfr-nav-deletable')])[2]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_3</td>
-	<td>xpath=(//li[contains(@class,'lfr-nav-deletable')])[3]/a/span</td>
+	<td>xpath=(//li[contains(@class,'lfr-nav-deletable')])[3]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -107,17 +107,17 @@
 <!--BREADCRUMB-->
 <tr>
 	<td>BREADCRUMB_1</td>
-	<td>xpath=(//nav[@id='breadcrumbs']/ul/li/span/a)[1]</td>
+	<td>xpath=(//nav[@id='breadcrumbs']/ul/li/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BREADCRUMB_2</td>
-	<td>xpath=(//nav[@id='breadcrumbs']/ul/li/span/a)[2]</td>
+	<td>xpath=(//nav[@id='breadcrumbs']/ul/li/a)[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BREADCRUMB_3</td>
-	<td>xpath=(//nav[@id='breadcrumbs']/ul/li/span/a)[3]</td>
+	<td>xpath=(//nav[@id='breadcrumbs']/ul/li/a)[3]</td>
 	<td></td>
 </tr>
 <tr>

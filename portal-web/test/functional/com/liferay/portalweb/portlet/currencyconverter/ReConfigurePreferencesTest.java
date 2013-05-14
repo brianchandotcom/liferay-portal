@@ -33,11 +33,11 @@ public class ReConfigurePreferencesTest extends BaseTestCase {
 		selenium.waitForElementPresent("//strong/a");
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[4]/a");
 		assertEquals(RuntimeVariables.replace("Preferences"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a",
+				"//div[@class='lfr-menu-list unstyled']/ul/li[4]/a"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li[4]/a",
 			RuntimeVariables.replace("Preferences"));
 		selenium.waitForVisible("//select[@id='_16_current_actions']");
 		selenium.addSelection("//select[@id='_16_current_actions']",

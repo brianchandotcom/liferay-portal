@@ -58,13 +58,11 @@ public class ViewBlogsEntryScopeCurrentPageTest extends BaseTestCase {
 		assertTrue(selenium.isVisible(
 				"//div[@class='entry-footer']/div[6]/div[1]"));
 		assertEquals(RuntimeVariables.replace("Your Rating"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[1]"));
+			selenium.getText("xPath=(//div[@class='rating-label-element'])[1]"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='entry-footer']/div[6]/div[2]"));
 		assertEquals(RuntimeVariables.replace("Average (0 Votes)"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[2]"));
+			selenium.getText("xPath=(//div[@class='rating-label-element'])[2]"));
 		assertEquals(RuntimeVariables.replace("RSS (Opens New Window)"),
 			selenium.getText("//div[@class='subscribe']/span[1]"));
 		assertEquals(RuntimeVariables.replace("Subscribe"),

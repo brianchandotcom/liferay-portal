@@ -51,12 +51,12 @@ public class AssignMembersOrganizationTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Assign Users')]/a");
+					"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Assign Users')]/a");
 				assertEquals(RuntimeVariables.replace("Assign Users"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Assign Users')]/a"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Assign Users')]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Assign Users')]/a"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Assign Users')]/a"));
 				selenium.waitForPageToLoad("30000");
 
 				boolean basicPresent = selenium.isVisible("link=\u00ab Basic");

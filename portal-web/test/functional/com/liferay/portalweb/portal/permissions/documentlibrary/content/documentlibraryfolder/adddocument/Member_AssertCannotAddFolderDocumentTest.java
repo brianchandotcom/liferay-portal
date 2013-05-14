@@ -37,8 +37,8 @@ public class Member_AssertCannotAddFolderDocumentTest extends BaseTestCase {
 			RuntimeVariables.replace("Folder Name"));
 		selenium.waitForVisible("//div[@class='portlet-msg-info']");
 		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
-		selenium.waitForVisible("//div[@class='lfr-component lfr-menu-list']");
+		selenium.waitForVisible("//div[@class='lfr-menu-list unstyled']");
 		assertFalse(selenium.isPartialText(
-				"//div[@class='lfr-component lfr-menu-list']", "Document"));
+				"//div[@class='lfr-menu-list unstyled']", "Document"));
 	}
 }

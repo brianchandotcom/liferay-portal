@@ -36,19 +36,17 @@ public class RateWikiFrontPageChildPageComment1Test extends BaseTestCase {
 			RuntimeVariables.replace("Wiki FrontPage ChildPage Title"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForVisible(
-			"xPath=(//div[@class='aui-rating-label-element'])[3]");
+			"xPath=(//div[@class='rating-label-element'])[3]");
 		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[3]"));
+			selenium.getText("xPath=(//div[@class='rating-label-element'])[3]"));
 		assertTrue(selenium.isElementNotPresent(
 				"//a[contains(@class,'aui-rating-element-off aui-rating-thumb-up aui-rating-element-on')]"));
 		selenium.clickAt("//a[contains(@class,'aui-rating-element-off aui-rating-thumb-up')]",
 			RuntimeVariables.replace("Thumbs Up"));
-		selenium.waitForText("xPath=(//div[@class='aui-rating-label-element'])[3]",
+		selenium.waitForText("xPath=(//div[@class='rating-label-element'])[3]",
 			"+1 (1 Vote)");
 		assertEquals(RuntimeVariables.replace("+1 (1 Vote)"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[3]"));
+			selenium.getText("xPath=(//div[@class='rating-label-element'])[3]"));
 		assertTrue(selenium.isVisible(
 				"//a[contains(@class,'aui-rating-element-off aui-rating-thumb-up aui-rating-element-on')]"));
 	}

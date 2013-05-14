@@ -31,7 +31,7 @@ public class ViewLinkContactsCenterTest extends BaseTestCase {
 			RuntimeVariables.replace("Contacts Center"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementPresent(
-				"//div[@class='aui-layout contacts-result']"));
+				"//div[@class='layout contacts-result']"));
 		assertTrue(selenium.isVisible("//div[@class='lfr-contact-checkbox']"));
 		assertEquals(RuntimeVariables.replace("Contacts Center"),
 			selenium.getText("//h1[@class='header-title']/span"));

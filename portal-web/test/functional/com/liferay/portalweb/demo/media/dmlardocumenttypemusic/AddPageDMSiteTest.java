@@ -54,12 +54,12 @@ public class AddPageDMSiteTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Pages')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Manage Pages')]");
 				assertEquals(RuntimeVariables.replace("Manage Pages"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Pages')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Manage Pages')]"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Pages')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Manage Pages')]"));
 				selenium.waitForPageToLoad("30000");
 
 				boolean collapsed1Present = selenium.isElementPresent(
@@ -71,7 +71,7 @@ public class AddPageDMSiteTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//div[@class='aui-tree-hitarea']",
+				selenium.clickAt("//div[@class='tree-hitarea']",
 					RuntimeVariables.replace("Drop Down Arrow"));
 
 			case 2:

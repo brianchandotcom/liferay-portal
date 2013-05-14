@@ -62,11 +62,11 @@ public class DeleteVersionDMFolderDocumentTitle11Test extends BaseTestCase {
 		selenium.clickAt("//tr[3]/td[6]/span/ul[contains(@class,'lfr-component lfr-actions')]/li/strong/a",
 			RuntimeVariables.replace("Version 1.1 Drop Down"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete Version')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Delete Version')]/a");
 		assertEquals(RuntimeVariables.replace("Delete Version"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete Version')]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete Version')]/a",
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Delete Version')]/a"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Delete Version')]/a",
 			RuntimeVariables.replace("Delete Version"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.getConfirmation()

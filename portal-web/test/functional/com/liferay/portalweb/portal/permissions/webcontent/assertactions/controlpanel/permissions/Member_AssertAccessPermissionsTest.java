@@ -45,11 +45,11 @@ public class Member_AssertAccessPermissionsTest extends BaseTestCase {
 		selenium.waitForElementNotPresent(
 			"//div[contains(@class,'aui-overlay-hidden')]");
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Permissions')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Permissions')]");
 		assertEquals(RuntimeVariables.replace("Permissions"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Permissions')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Permissions')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Permissions')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Permissions')]",
 			RuntimeVariables.replace("Permissions"));
 		selenium.waitForText("//h1[@class='header-title']/span", "Liferay");
 		assertEquals(RuntimeVariables.replace("Liferay"),

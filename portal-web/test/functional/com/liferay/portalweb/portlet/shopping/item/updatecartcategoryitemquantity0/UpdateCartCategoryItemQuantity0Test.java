@@ -58,6 +58,6 @@ public class UpdateCartCategoryItemQuantity0Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Your cart is empty."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertEquals(RuntimeVariables.replace("Subtotal $0.00"),
-			selenium.getText("//div[@class='aui-fieldset-content ']/div[1]/div"));
+			selenium.getText("//div[@class='fieldset-content ']/div[1]/div"));
 	}
 }

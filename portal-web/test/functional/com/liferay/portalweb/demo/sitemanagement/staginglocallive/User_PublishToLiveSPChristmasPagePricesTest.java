@@ -80,12 +80,12 @@ public class User_PublishToLiveSPChristmasPagePricesTest extends BaseTestCase {
 				selenium.clickAt("//span[2]/span/ul/li/strong/a",
 					RuntimeVariables.replace(""));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+					"//div[@class='lfr-menu-list unstyled']/ul/li[1]/a");
 				assertEquals(RuntimeVariables.replace(
 						"Publish Christmas to Live now."),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
+						"//div[@class='lfr-menu-list unstyled']/ul/li[1]/a"));
+				selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li[1]/a",
 					RuntimeVariables.replace("Publish Christmas to Live now."));
 				selenium.waitForVisible("//div[2]/div[1]/a");
 				Thread.sleep(5000);

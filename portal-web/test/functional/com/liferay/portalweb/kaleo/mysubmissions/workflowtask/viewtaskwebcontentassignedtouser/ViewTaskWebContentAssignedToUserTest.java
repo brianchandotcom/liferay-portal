@@ -97,7 +97,7 @@ public class ViewTaskWebContentAssignedToUserTest extends BaseTestCase {
 						"//div[@class='task-activity task-type-1'][2]/div[2]"));
 				assertEquals(RuntimeVariables.replace("Be the first."),
 					selenium.getText(
-						"//fieldset[@class='aui-fieldset add-comment ']/div/a[contains(.,'Be the first.')]"));
+						"//fieldset[@class='fieldset add-comment ']/div/a[contains(.,'Be the first.')]"));
 
 			case 100:
 				label = -1;

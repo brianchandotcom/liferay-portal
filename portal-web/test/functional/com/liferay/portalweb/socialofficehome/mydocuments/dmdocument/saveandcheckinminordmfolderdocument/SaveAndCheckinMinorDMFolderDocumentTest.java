@@ -58,8 +58,8 @@ public class SaveAndCheckinMinorDMFolderDocumentTest extends BaseTestCase {
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[contains(.,'Edit')]/span[2]"));
-		selenium.clickAt("//span[@class='aui-toolbar-content']/button[contains(.,'Edit')]/span[2]",
+				"//span[@class='toolbar-content']/button[contains(.,'Edit')]/span[2]"));
+		selenium.clickAt("//span[@class='toolbar-content']/button[contains(.,'Edit')]/span[2]",
 			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_20_title']",

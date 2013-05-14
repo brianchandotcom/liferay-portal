@@ -34,12 +34,12 @@ public class AddMemberTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'User')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'User')]/a");
 		assertEquals(RuntimeVariables.replace("User"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'User')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'User')]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'User')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'User')]/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select[@id='_125_prefixId']",
 			RuntimeVariables.replace("label=Mr."));

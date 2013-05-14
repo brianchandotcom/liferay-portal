@@ -143,11 +143,9 @@ public class ViewImportBlogsSiteLARTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Vocabulary Name: Category Name"),
 			selenium.getText("//span[@class='taglib-asset-categories-summary']"));
 		assertEquals(RuntimeVariables.replace("Your Rating"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[1]"));
+			selenium.getText("xPath=(//div[@class='rating-label-element'])[1]"));
 		assertEquals(RuntimeVariables.replace("Average (0 Votes)"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[2]"));
+			selenium.getText("xPath=(//div[@class='rating-label-element'])[2]"));
 		assertEquals(RuntimeVariables.replace("Comments"),
 			selenium.getText("//div[@class='lfr-panel-title']/span"));
 		assertEquals(RuntimeVariables.replace(
@@ -191,12 +189,10 @@ public class ViewImportBlogsSiteLARTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("1 Comment"),
 			selenium.getText("//span[@class='comments']"));
 		assertEquals(RuntimeVariables.replace("Your Rating"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[1]"));
+			selenium.getText("xPath=(//div[@class='rating-label-element'])[1]"));
 		selenium.mouseOver("//div[contains(@id,'ratingStarContent')]");
 		assertEquals(RuntimeVariables.replace("Average (1 Vote)"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[2]"));
+			selenium.getText("xPath=(//div[@class='rating-label-element'])[2]"));
 		assertTrue(selenium.isElementPresent(
 				"//img[@alt='The average rating is 4.0 stars out of 5.']"));
 		assertEquals(RuntimeVariables.replace("Comments"),

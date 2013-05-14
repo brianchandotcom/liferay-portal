@@ -91,9 +91,9 @@ public class AddPageVariationTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Main Variation"),
 			selenium.getText(
-				"//ul[@class='aui-tabview-list variations-tabview-list']/li[contains(.,'Main Variation')]/span/span"));
+				"//ul[@class='tabview-list variations-tabview-list']/li[contains(.,'Main Variation')]/span/span"));
 		assertEquals(RuntimeVariables.replace("Page Variation Name"),
 			selenium.getText(
-				"//ul[@class='aui-tabview-list variations-tabview-list']/li[contains(.,'Page Variation Name')]/span/a"));
+				"//ul[@class='tabview-list variations-tabview-list']/li[contains(.,'Page Variation Name')]/span/a"));
 	}
 }

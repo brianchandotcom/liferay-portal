@@ -60,17 +60,17 @@ public class ViewPendingDMFolderDocumentTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("\u00ab Back"),
 			selenium.getText("//span[@class='header-back-to']/a"));
 		assertEquals(RuntimeVariables.replace("Download"),
-			selenium.getText("//span[@class='aui-toolbar-content']/button[1]"));
+			selenium.getText("//span[@class='toolbar-content']/button[1]"));
 		assertEquals(RuntimeVariables.replace("Edit"),
-			selenium.getText("//span[@class='aui-toolbar-content']/button[2]"));
+			selenium.getText("//span[@class='toolbar-content']/button[2]"));
 		assertEquals(RuntimeVariables.replace("Move"),
-			selenium.getText("//span[@class='aui-toolbar-content']/button[3]"));
+			selenium.getText("//span[@class='toolbar-content']/button[3]"));
 		assertEquals(RuntimeVariables.replace("Checkout"),
-			selenium.getText("//span[@class='aui-toolbar-content']/button[4]"));
+			selenium.getText("//span[@class='toolbar-content']/button[4]"));
 		assertEquals(RuntimeVariables.replace("Permissions"),
-			selenium.getText("//span[@class='aui-toolbar-content']/button[5]"));
+			selenium.getText("//span[@class='toolbar-content']/button[5]"));
 		assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
-			selenium.getText("//span[@class='aui-toolbar-content']/button[6]"));
+			selenium.getText("//span[@class='toolbar-content']/button[6]"));
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
 			selenium.getText("//h2[@class='document-title']"));
 		assertTrue(selenium.isPartialText(

@@ -46,9 +46,8 @@ public class AddFolderEntryURLInvalidTest extends BaseTestCase {
 			RuntimeVariables.replace("www.liferay.com"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
-		selenium.waitForVisible(
-			"//div[@class='aui-form-validator-message url']");
+		selenium.waitForVisible("//div[@class='form-validator-message url']");
 		assertEquals(RuntimeVariables.replace("Please enter a valid URL."),
-			selenium.getText("//div[@class='aui-form-validator-message url']"));
+			selenium.getText("//div[@class='form-validator-message url']"));
 	}
 }

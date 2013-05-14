@@ -66,7 +66,7 @@ public class ViewPMMessageReplyAttachmentTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Between Social01 Office01 User01 And you"),
 			selenium.getText(
-				"//div[@class='aui-layout-content thread-info-content ']"));
+				"//div[@class='layout-content thread-info-content ']"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText(
 				"xPath=(//span[@class='name'])[contains(.,'Joe Bloggs')]"));

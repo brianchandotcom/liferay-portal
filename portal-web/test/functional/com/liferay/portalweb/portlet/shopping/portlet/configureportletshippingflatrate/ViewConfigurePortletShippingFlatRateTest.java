@@ -35,11 +35,11 @@ public class ViewConfigurePortletShippingFlatRateTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Configuration')]");
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Configuration')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Configuration')]",
 			RuntimeVariables.replace("Configuration"));
 		selenium.waitForElementPresent(
 			"//iframe[contains(@id,'configurationIframeDialog')]");
@@ -114,14 +114,14 @@ public class ViewConfigurePortletShippingFlatRateTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Showing 1 result."),
 			selenium.getText("//div[@class='search-results']"));
 		assertEquals(RuntimeVariables.replace("Subtotal $9.99"),
-			selenium.getText("//div[@class='aui-fieldset-content ']/div[1]/div"));
+			selenium.getText("//div[@class='fieldset-content ']/div[1]/div"));
 		assertEquals(RuntimeVariables.replace("Shipping $2.49"),
-			selenium.getText("//div[@class='aui-fieldset-content ']/div[2]/div"));
+			selenium.getText("//div[@class='fieldset-content ']/div[2]/div"));
 		assertEquals(RuntimeVariables.replace("Coupon Code"),
 			selenium.getText(
-				"//fieldset[@class='aui-fieldset ']/div/span/span/label"));
+				"//fieldset[@class='fieldset ']/div/span/span/label"));
 		assertTrue(selenium.isVisible(
-				"//fieldset[@class='aui-fieldset ']/div/span/span/span/input"));
+				"//fieldset[@class='fieldset ']/div/span/span/span/input"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='portlet-body']/form/img[@alt='visa']"));
 		assertTrue(selenium.isVisible(
@@ -131,10 +131,10 @@ public class ViewConfigurePortletShippingFlatRateTest extends BaseTestCase {
 		assertTrue(selenium.isVisible(
 				"//div[@class='portlet-body']/form/img[@alt='amex']"));
 		assertTrue(selenium.isVisible(
-				"//div[@class='aui-button-holder ']/span[1]/span/input"));
+				"//div[@class='button-holder ']/span[1]/span/input"));
 		assertTrue(selenium.isVisible(
-				"//div[@class='aui-button-holder ']/span[2]/span/input"));
+				"//div[@class='button-holder ']/span[2]/span/input"));
 		assertTrue(selenium.isVisible(
-				"//div[@class='aui-button-holder ']/span[3]/span/input"));
+				"//div[@class='button-holder ']/span[3]/span/input"));
 	}
 }

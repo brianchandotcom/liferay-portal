@@ -53,7 +53,7 @@ public class AssertCannotAddDataDefinitionFieldNullTest extends BaseTestCase {
 		selenium.type("//input[@id='_166_name_en_US']",
 			RuntimeVariables.replace("Data Definition Full"));
 		assertTrue(selenium.isElementNotPresent(
-				"//div[@class='aui-diagram-builder-drop-container']/div/div/label"));
+				"//div[@class='diagram-builder-drop-container']/div/div/label"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

@@ -50,11 +50,10 @@ public class WCA_ApproveTaskMainVariationActionsSiteStagingTest
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a");
 		assertEquals(RuntimeVariables.replace("Approve"),
-			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li/a");
+			selenium.getText("//div[@class='lfr-menu-list unstyled']/ul/li/a"));
+		selenium.click("//div[@class='lfr-menu-list unstyled']/ul/li/a");
 		assertEquals(RuntimeVariables.replace("OK"),
 			selenium.getText("//div[3]/span/span/button"));
 		selenium.clickAt("//div[3]/span/span/button",

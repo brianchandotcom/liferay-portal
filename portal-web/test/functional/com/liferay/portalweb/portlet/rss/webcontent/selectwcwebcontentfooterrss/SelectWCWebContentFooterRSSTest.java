@@ -34,11 +34,11 @@ public class SelectWCWebContentFooterRSSTest extends BaseTestCase {
 			selenium.getText("//strong/a"));
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[3]/a");
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a");
+				"//div[@class='lfr-menu-list unstyled']/ul/li[3]/a"));
+		selenium.click("//div[@class='lfr-menu-list unstyled']/ul/li[3]/a");
 		selenium.waitForVisible("xPath=(//input[@id='_86_selectButton'])[2]");
 		Thread.sleep(5000);
 		selenium.clickAt("xPath=(//input[@id='_86_selectButton'])[2]",

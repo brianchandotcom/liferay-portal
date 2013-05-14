@@ -48,16 +48,15 @@ public class RatePage1BlogsEntry1Comment1Test extends BaseTestCase {
 			selenium.getText(
 				"xPath=(//div[@class='lfr-discussion-message'])[1]"));
 		assertTrue(selenium.isPartialText(
-				"xPath=(//div[@class='aui-rating-label-element'])[3]", "0 Votes"));
+				"xPath=(//div[@class='rating-label-element'])[3]", "0 Votes"));
 		assertTrue(selenium.isVisible(
 				"//a[contains(@class,'aui-rating-thumb-up')]"));
 		assertTrue(selenium.isVisible(
 				"//a[contains(@class,'aui-rating-thumb-down')]"));
 		selenium.click("//a[contains(@class,'aui-rating-thumb-up')]");
-		selenium.waitForText("xPath=(//div[@class='aui-rating-label-element'])[3]",
+		selenium.waitForText("xPath=(//div[@class='rating-label-element'])[3]",
 			"+1 (1 Vote)");
 		assertEquals(RuntimeVariables.replace("+1 (1 Vote)"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[3]"));
+			selenium.getText("xPath=(//div[@class='rating-label-element'])[3]"));
 	}
 }

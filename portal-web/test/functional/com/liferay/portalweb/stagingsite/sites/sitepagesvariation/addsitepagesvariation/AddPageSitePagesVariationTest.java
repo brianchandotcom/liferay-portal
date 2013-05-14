@@ -46,16 +46,16 @@ public class AddPageSitePagesVariationTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Main Variation"),
 			selenium.getText(
-				"//ul[@class='aui-tabview-list site-variations-tabview-list']/li[contains(.,'Main Variation')]/span/span/span"));
+				"//ul[@class='tabview-list site-variations-tabview-list']/li[contains(.,'Main Variation')]/span/span/span"));
 		assertEquals(RuntimeVariables.replace("Site Pages Variation Name"),
 			selenium.getText(
-				"//ul[@class='aui-tabview-list site-variations-tabview-list']/li[contains(.,'Site Pages Variation Name')]/span/span/a"));
-		selenium.clickAt("//ul[@class='aui-tabview-list site-variations-tabview-list']/li[contains(.,'Site Pages Variation Name')]/span/span/a",
+				"//ul[@class='tabview-list site-variations-tabview-list']/li[contains(.,'Site Pages Variation Name')]/span/span/a"));
+		selenium.clickAt("//ul[@class='tabview-list site-variations-tabview-list']/li[contains(.,'Site Pages Variation Name')]/span/span/a",
 			RuntimeVariables.replace("Site Pages Variation Name"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Site Pages Variation Name"),
 			selenium.getText(
-				"//ul[@class='aui-tabview-list site-variations-tabview-list']/li[contains(.,'Site Pages Variation Name')]/span/span/span"));
+				"//ul[@class='tabview-list site-variations-tabview-list']/li[contains(.,'Site Pages Variation Name')]/span/span/span"));
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 		selenium.waitForElementPresent(

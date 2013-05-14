@@ -45,15 +45,15 @@ public class ViewAssignMembersUGUserGroupUserTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Assign Members')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Assign Members')]/a");
 		assertEquals(RuntimeVariables.replace("Assign Members"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Assign Members')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Assign Members')]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Assign Members')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Assign Members')]/a"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Current"),
-			selenium.getText("//ul[@class='aui-tabview-list']/li/span/a/strong"));
+			selenium.getText("//ul[@class='tabview-list']/li/span/a/strong"));
 		assertTrue(selenium.isChecked("//input[@name='_127_allRowIds']"));
 		assertTrue(selenium.isChecked("//input[@name='_127_rowIds']"));
 		assertEquals(RuntimeVariables.replace("userfn userln"),
@@ -61,8 +61,8 @@ public class ViewAssignMembersUGUserGroupUserTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("usersn"),
 			selenium.getText("//tr[3]/td[3]"));
 		assertEquals(RuntimeVariables.replace("Available"),
-			selenium.getText("//ul[@class='aui-tabview-list']/li[2]/span/a"));
-		selenium.clickAt("//ul[@class='aui-tabview-list']/li[2]/span/a",
+			selenium.getText("//ul[@class='tabview-list']/li[2]/span/a"));
+		selenium.clickAt("//ul[@class='tabview-list']/li[2]/span/a",
 			RuntimeVariables.replace("Available"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@name='_127_keywords']",

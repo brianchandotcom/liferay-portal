@@ -43,13 +43,13 @@ public class ViewMBPublishToLiveByDefaultTest extends BaseTestCase {
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
-		selenium.waitForText("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit Settings')]/a",
+		selenium.waitForText("//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Edit Settings')]/a",
 			"Edit Settings");
 		assertEquals(RuntimeVariables.replace("Edit Settings"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit Settings')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Edit Settings')]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit Settings')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Edit Settings')]/a"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Staging (Modified)"),
 			selenium.getText("//a[@id='_165_stagingLink']"));

@@ -51,27 +51,27 @@ public class DeleteFieldBooleanTest extends BaseTestCase {
 		selenium.clickAt("//tr[contains(.,'Data Definition')]//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Edit')]/a");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Edit')]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Edit')]/a"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Boolean"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[1]/div/label"));
-		selenium.clickAt("//div[@class='aui-diagram-builder-drop-container']/div",
+				"//div[@class='diagram-builder-drop-container']/div[1]/div/label"));
+		selenium.clickAt("//div[@class='diagram-builder-drop-container']/div",
 			RuntimeVariables.replace("field"));
 		assertTrue(selenium.isVisible(
-				"//div[@class='aui-diagram-builder-drop-container']/div/div[3]/span/span/button[3]"));
+				"//div[@class='diagram-builder-drop-container']/div/div[3]/span/span/button[3]"));
 		selenium.click(
-			"//div[@class='aui-diagram-builder-drop-container']/div/div[3]/span/span/button[3]");
+			"//div[@class='diagram-builder-drop-container']/div/div[3]/span/span/button[3]");
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete the selected entries[\\s\\S] They will be deleted immediately.$"));
 		assertNotEquals(RuntimeVariables.replace("Boolean"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[1]/div/label"));
+				"//div[@class='diagram-builder-drop-container']/div[1]/div/label"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

@@ -54,11 +54,11 @@ public class AddSubOrganization2Test extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Add Regular Organization')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Add Regular Organization')]");
 		assertEquals(RuntimeVariables.replace("Add Regular Organization"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Add Regular Organization')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Add Regular Organization')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Add Regular Organization')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Add Regular Organization')]",
 			RuntimeVariables.replace("Add Regular Organization"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_125_name']",

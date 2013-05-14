@@ -45,9 +45,9 @@ public class Member_AssertCannotAccessPermissionsTest extends BaseTestCase {
 		selenium.clickAt("//span[@class='entry-action overlay']/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'View')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'View')]/a");
 		assertTrue(selenium.isElementNotPresent(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Permissions')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Permissions')]/a"));
 		selenium.clickAt("//a[@class='entry-link']/span",
 			RuntimeVariables.replace("WC WebContent Title"));
 		selenium.waitForPageToLoad("30000");

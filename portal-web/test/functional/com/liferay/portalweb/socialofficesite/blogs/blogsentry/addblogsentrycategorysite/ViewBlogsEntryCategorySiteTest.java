@@ -62,11 +62,9 @@ public class ViewBlogsEntryCategorySiteTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Vocabulary Name: Category Name"),
 			selenium.getText("//span[@class='taglib-asset-categories-summary']"));
 		assertEquals(RuntimeVariables.replace("Your Rating"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[1]"));
+			selenium.getText("xPath=(//div[@class='rating-label-element'])[1]"));
 		assertEquals(RuntimeVariables.replace("Average (0 Votes)"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[2]"));
+			selenium.getText("xPath=(//div[@class='rating-label-element'])[2]"));
 		assertEquals(RuntimeVariables.replace("Previous"),
 			selenium.getText("//span[@class='previous']"));
 		assertEquals(RuntimeVariables.replace("Next"),

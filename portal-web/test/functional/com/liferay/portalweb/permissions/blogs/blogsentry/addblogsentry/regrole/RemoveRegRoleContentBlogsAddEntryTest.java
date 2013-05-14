@@ -55,8 +55,8 @@ public class RemoveRegRoleContentBlogsAddEntryTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Define Permissions"),
 			selenium.getText(
-				"//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Define Permissions')]"));
-		selenium.clickAt("//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Define Permissions')]",
+				"//ul[@class='tabview-list']/li/span/a[contains(.,'Define Permissions')]"));
+		selenium.clickAt("//ul[@class='tabview-list']/li/span/a[contains(.,'Define Permissions')]",
 			RuntimeVariables.replace("Define Permissions"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Roles Regrole Name"),

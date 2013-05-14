@@ -44,17 +44,21 @@ public class Select1Test extends BaseTestCase {
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'User')]");
 		assertEquals(RuntimeVariables.replace("User"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'User')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'User')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select[@id='_125_birthdaymonth']",
 			RuntimeVariables.replace("September"));
 		assertEquals("September",
 			selenium.getSelectedLabel("//select[@id='_125_birthdaymonth']"));
+		selenium.select("//select[@id='_125_birthdayday']",
+			RuntimeVariables.replace("1"));
+		assertEquals("1",
+			selenium.getSelectedLabel("//select[@id='_125_birthdayday']"));
 		selenium.select("//select[@id='_125_birthdayday']",
 			RuntimeVariables.replace("2"));
 		assertEquals("2",

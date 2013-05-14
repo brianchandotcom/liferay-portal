@@ -41,11 +41,10 @@ public class AssignUser1RolesTest extends BaseTestCase {
 		selenium.clickAt("xpath=(//span[@title='Actions']/ul/li/strong/a)[2]",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a");
 		assertEquals(RuntimeVariables.replace("Edit"),
-			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a",
+			selenium.getText("//div[@class='lfr-menu-list unstyled']/ul/li/a"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a",
 			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isPartialText("//a[@id='_125_rolesLink']", "Roles"));

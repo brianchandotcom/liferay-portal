@@ -44,8 +44,7 @@ public class AddVoteTest extends BaseTestCase {
 			RuntimeVariables.replace("Test Poll Question"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("a. Test Choice A"),
-			selenium.getText(
-				"//span[@class='aui-field aui-field-choice']/span/label"));
+			selenium.getText("//span[@class='field field-choice']/span/label"));
 		selenium.clickAt("//input[@name='_25_choiceId']",
 			RuntimeVariables.replace("Test Choice A"));
 		assertTrue(selenium.isChecked("//input[@name='_25_choiceId']"));

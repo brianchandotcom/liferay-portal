@@ -67,7 +67,7 @@ public class AddPublicPageArenasChildPagePernambucoSiteBWCTest
 					continue;
 				}
 
-				selenium.clickAt("//div[@class='aui-tree-hitarea']",
+				selenium.clickAt("//div[@class='tree-hitarea']",
 					RuntimeVariables.replace("Drop Down Arrow"));
 
 			case 2:
@@ -108,7 +108,7 @@ public class AddPublicPageArenasChildPagePernambucoSiteBWCTest
 					continue;
 				}
 
-				selenium.clickAt("//div[@class='aui-tree-hitarea']",
+				selenium.clickAt("//div[@class='tree-hitarea']",
 					RuntimeVariables.replace("Drop Down Arrow"));
 
 			case 3:

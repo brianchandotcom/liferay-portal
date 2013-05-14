@@ -43,12 +43,11 @@ public class SA_AddMemberRoleTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a");
 		assertEquals(RuntimeVariables.replace("Regular Role"),
-			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+			selenium.getText("//div[@class='lfr-menu-list unstyled']/ul/li/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_128_name']",
 			RuntimeVariables.replace("Member"));

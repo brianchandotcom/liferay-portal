@@ -71,11 +71,10 @@ public class ViewWikiFrontPageDisplayTemplateSocialTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Average (0 Votes)"),
 			selenium.getText("//div[contains(@id,'ratingScoreContent')]"));
 		assertTrue(selenium.isPartialText(
-				"//fieldset[@class='aui-fieldset add-comment ']/div",
+				"//fieldset[@class='fieldset add-comment ']/div",
 				"No comments yet."));
 		assertEquals(RuntimeVariables.replace("Be the first."),
-			selenium.getText(
-				"//fieldset[@class='aui-fieldset add-comment ']/div/a"));
+			selenium.getText("//fieldset[@class='fieldset add-comment ']/div/a"));
 		assertEquals(RuntimeVariables.replace("Subscribe to Comments"),
 			selenium.getText("//span[@class='subscribe-link']/a/span"));
 	}

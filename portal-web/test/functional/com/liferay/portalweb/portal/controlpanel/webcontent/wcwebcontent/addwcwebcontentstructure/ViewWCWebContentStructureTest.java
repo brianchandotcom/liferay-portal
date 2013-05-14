@@ -120,28 +120,28 @@ public class ViewWCWebContentStructureTest extends BaseTestCase {
 			selenium.getText("//span[@class='taglib-icon-help']/span"));
 		assertEquals(RuntimeVariables.replace("Preview"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[contains(.,'Preview')]"));
+				"//span[@class='toolbar-content']/button[contains(.,'Preview')]"));
 		assertEquals(RuntimeVariables.replace("Download"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[contains(.,'Download')]"));
+				"//span[@class='toolbar-content']/button[contains(.,'Download')]"));
 		assertEquals(RuntimeVariables.replace("Permissions"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[contains(.,'Permissions')]"));
+				"//span[@class='toolbar-content']/button[contains(.,'Permissions')]"));
 		assertEquals(RuntimeVariables.replace("View History"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[contains(.,'View History')]"));
+				"//span[@class='toolbar-content']/button[contains(.,'View History')]"));
 		assertEquals(RuntimeVariables.replace("Structure:"),
 			selenium.getText(
-				"//div[@class='aui-column-content article-structure-content ']/label"));
+				"//div[@class='column-content article-structure-content ']/label"));
 		assertEquals(RuntimeVariables.replace("WC Structure Name"),
 			selenium.getText(
-				"//div[@class='aui-column-content article-structure-content ']/fieldset/div/div/span"));
+				"//div[@class='column-content article-structure-content ']/fieldset/div/div/span"));
 		assertEquals(RuntimeVariables.replace("Template:"),
 			selenium.getText(
-				"//div[@class='aui-column-content article-template-content ']/label"));
+				"//div[@class='column-content article-template-content ']/label"));
 		assertEquals(RuntimeVariables.replace("WC Template Structure Name"),
 			selenium.getText(
-				"//div[@class='aui-column-content article-template-content ']/fieldset/div/div/span"));
+				"//div[@class='column-content article-template-content ']/fieldset/div/div/span"));
 		assertEquals(RuntimeVariables.replace("Default Language"),
 			selenium.getText("//label[@for='_15_defaultLanguageId']"));
 		assertEquals(RuntimeVariables.replace("English (United States)"),
@@ -158,11 +158,10 @@ public class ViewWCWebContentStructureTest extends BaseTestCase {
 		selenium.clickAt("//div[contains(@class,'aui-datepicker-button')]/button",
 			RuntimeVariables.replace("Datepicker Button"));
 		assertEquals("0",
-			selenium.getValue("//select[@class='aui-datepicker-month']"));
-		assertEquals("1",
-			selenium.getValue("//select[@class='aui-datepicker-day']"));
+			selenium.getValue("//select[@class='datepicker-month']"));
+		assertEquals("1", selenium.getValue("//select[@class='datepicker-day']"));
 		assertEquals("2020",
-			selenium.getValue("//select[@class='aui-datepicker-year']"));
+			selenium.getValue("//select[@class='datepicker-year']"));
 		assertEquals(RuntimeVariables.replace("Decimal"),
 			selenium.getText("//label[contains(@for,'_15_decimal')]"));
 		assertEquals("0.888",

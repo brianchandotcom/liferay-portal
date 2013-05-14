@@ -55,12 +55,12 @@ public class AddSitePublicPage1ChildPageCPTest extends BaseTestCase {
 						"//span[@title='Actions']/ul/li/strong/a/span"));
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
-				selenium.waitForText("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Pages')]",
+				selenium.waitForText("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Manage Pages')]",
 					"Manage Pages");
 				assertEquals(RuntimeVariables.replace("Manage Pages"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Pages')]"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Pages')]",
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Manage Pages')]"));
+				selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Manage Pages')]",
 					RuntimeVariables.replace("Manage Pages"));
 				selenium.waitForVisible("//li/ul/li/div/div[2]/a");
 				assertEquals(RuntimeVariables.replace("Public Page1"),
@@ -88,7 +88,7 @@ public class AddSitePublicPage1ChildPageCPTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
-				selenium.clickAt("//div[@class='aui-tree-hitarea']",
+				selenium.clickAt("//div[@class='tree-hitarea']",
 					RuntimeVariables.replace("Drop Down Arrow"));
 				selenium.waitForElementPresent(
 					"xPath=(//a[@class='layout-tree'])[2]");
@@ -102,7 +102,7 @@ public class AddSitePublicPage1ChildPageCPTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//div[@class='aui-tree-hitarea']",
+				selenium.clickAt("//div[@class='tree-hitarea']",
 					RuntimeVariables.replace("Drop Down Arrow"));
 
 			case 2:

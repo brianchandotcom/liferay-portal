@@ -45,11 +45,11 @@ public class ViewEditWCSubstucture3DefaultValueTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Manage']/ul/li/strong/a",
 			RuntimeVariables.replace("Manage"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Structures')]");
 		assertEquals(RuntimeVariables.replace("Structures"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Structures')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Structures')]",
 			RuntimeVariables.replace("Structures"));
 		selenium.waitForVisible("//iframe[contains(@src,'Structures')]");
 		selenium.selectFrame("//iframe[contains(@src,'Structures')]");
@@ -79,23 +79,23 @@ public class ViewEditWCSubstucture3DefaultValueTest extends BaseTestCase {
 		selenium.clickAt("//tr[contains(.,'WC Substructure3 Name')]/td[6]/span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit')]");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit')]",
 			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForVisible("//input[@id='_166_name_en_US']");
 		assertEquals("WC Substructure3 Name",
 			selenium.getValue("//input[@id='_166_name_en_US']"));
 		selenium.waitForVisible(
-			"//div[@class='aui-diagram-builder-drop-container']/div[1]");
+			"//div[@class='diagram-builder-drop-container']/div[1]");
 		assertEquals(RuntimeVariables.replace("Text Edited"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[1]/div/label"));
+				"//div[@class='diagram-builder-drop-container']/div[1]/div/label"));
 		selenium.mouseOver(
-			"//div[@class='aui-diagram-builder-drop-container']/div[1]/div/a[contains(@class,'icon-tip')]");
+			"//div[@class='diagram-builder-drop-container']/div[1]/div/a[contains(@class,'icon-tip')]");
 		selenium.waitForVisible(
 			"//div[@role='dialog' and @aria-hidden='false']/div/div[contains(.,'Tip Edited')]");
 		assertEquals(RuntimeVariables.replace("Tip Edited"),
@@ -103,6 +103,6 @@ public class ViewEditWCSubstucture3DefaultValueTest extends BaseTestCase {
 				"//div[@role='dialog' and @aria-hidden='false']/div/div[contains(.,'Tip Edited')]"));
 		assertEquals("Predefined Value Edited",
 			selenium.getValue(
-				"//div[@class='aui-diagram-builder-drop-container']/div[1]/div/input"));
+				"//div[@class='diagram-builder-drop-container']/div[1]/div/input"));
 	}
 }

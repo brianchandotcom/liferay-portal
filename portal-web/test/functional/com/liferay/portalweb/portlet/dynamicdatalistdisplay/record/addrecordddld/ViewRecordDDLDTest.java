@@ -86,11 +86,11 @@ public class ViewRecordDDLDTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'View')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'View')]");
 		assertEquals(RuntimeVariables.replace("View"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'View')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'View')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'View')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'View')]",
 			RuntimeVariables.replace("View"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isPartialText(

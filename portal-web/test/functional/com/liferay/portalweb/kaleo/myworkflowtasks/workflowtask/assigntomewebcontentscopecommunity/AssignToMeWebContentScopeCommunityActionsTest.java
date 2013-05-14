@@ -57,12 +57,12 @@ public class AssignToMeWebContentScopeCommunityActionsTest extends BaseTestCase 
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign to Me')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Assign to Me')]");
 		assertEquals(RuntimeVariables.replace("Assign to Me"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign to Me')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Assign to Me')]"));
 		selenium.click(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign to Me')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Assign to Me')]");
 		assertEquals(RuntimeVariables.replace("OK"),
 			selenium.getText("//div[3]/span/span/button"));
 		selenium.clickAt("//div[3]/span/span/button",

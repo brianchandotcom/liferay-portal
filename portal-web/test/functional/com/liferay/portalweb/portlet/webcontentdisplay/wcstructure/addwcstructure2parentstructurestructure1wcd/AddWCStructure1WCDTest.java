@@ -58,9 +58,9 @@ public class AddWCStructure1WCDTest extends BaseTestCase {
 			RuntimeVariables.replace("WC Structure1 Description"));
 		assertEquals(RuntimeVariables.replace("HTML"),
 			selenium.getText(
-				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li/div[contains(.,'HTML')]"));
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li/div[contains(.,'HTML')]",
-			"//div[@class='aui-tabview-content aui-widget-bd']");
+				"//div[@class='tabview-content widget-bd']/div/ul/li/div[contains(.,'HTML')]"));
+		selenium.dragAndDropToObject("//div[@class='tabview-content widget-bd']/div/ul/li/div[contains(.,'HTML')]",
+			"//div[@class='tabview-content widget-bd']");
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

@@ -41,11 +41,11 @@ public class TearDownOrganizationWorkflowConfigurationTest extends BaseTestCase 
 		selenium.clickAt("//strong/a/span",
 			RuntimeVariables.replace("Scope Selector"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization Name')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Organization Name')]");
 		assertEquals(RuntimeVariables.replace("Organization Name"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization Name')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization Name')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Organization Name')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Organization Name')]",
 			RuntimeVariables.replace("Organization Name"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForText("//strong/a/span", "Organization Name");

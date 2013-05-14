@@ -70,11 +70,11 @@ public class EditCalendarEventFuture2DaysSiteTest extends BaseTestCase {
 				selenium.clickAt("//tr[contains(.,'Calendar Future Day2 Event Title')]/td[contains(.,'Actions')]/span/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a");
+					"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Edit')]/a");
 				assertEquals(RuntimeVariables.replace("Edit"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a",
+						"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Edit')]/a"));
+				selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Edit')]/a",
 					RuntimeVariables.replace("Edit"));
 				selenium.waitForPageToLoad("30000");
 				Thread.sleep(1000);

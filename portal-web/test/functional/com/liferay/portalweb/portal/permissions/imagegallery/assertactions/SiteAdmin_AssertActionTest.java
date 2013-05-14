@@ -34,16 +34,16 @@ public class SiteAdmin_AssertActionTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Look and Feel')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Look and Feel')]/a");
 		assertEquals(RuntimeVariables.replace("Look and Feel"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Look and Feel')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Look and Feel')]/a"));
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Configuration')]/a"));
 		assertEquals(RuntimeVariables.replace("Export / Import"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Export / Import')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Export / Import')]/a"));
 		assertEquals(RuntimeVariables.replace("Permissions"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[contains(.,'Permissions')]/a"));
@@ -154,11 +154,11 @@ public class SiteAdmin_AssertActionTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Export / Import')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Export / Import')]/a");
 		assertEquals(RuntimeVariables.replace("Export / Import"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Export / Import')]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Export / Import')]/a",
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Export / Import')]/a"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Export / Import')]/a",
 			RuntimeVariables.replace("Export / Import"));
 		selenium.waitForVisible("//input[@value='Export']");
 		assertTrue(selenium.isVisible("//input[@value='Export']"));

@@ -48,12 +48,12 @@ public class DefineMemberRoleTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Permissions')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Permissions')]");
 				assertEquals(RuntimeVariables.replace("Permissions"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Permissions')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Permissions')]"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Permissions')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Permissions')]"));
 				selenium.waitForPageToLoad("30000");
 
 				boolean wcaViewChecked = selenium.isChecked(

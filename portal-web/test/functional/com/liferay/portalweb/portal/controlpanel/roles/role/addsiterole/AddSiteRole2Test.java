@@ -43,11 +43,11 @@ public class AddSiteRole2Test extends BaseTestCase {
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Site Role')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Site Role')]");
 		assertEquals(RuntimeVariables.replace("Site Role"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Site Role')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Site Role')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Site Role')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Site Role')]",
 			RuntimeVariables.replace("Site Role"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_128_name']",

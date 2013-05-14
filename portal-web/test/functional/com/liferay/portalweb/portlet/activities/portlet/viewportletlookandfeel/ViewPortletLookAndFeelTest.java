@@ -34,12 +34,12 @@ public class ViewPortletLookAndFeelTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Look and Feel')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Look and Feel')]");
 		assertEquals(RuntimeVariables.replace("Look and Feel"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Look and Feel')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Look and Feel')]"));
 		selenium.click(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Look and Feel')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Look and Feel')]");
 		selenium.waitForVisible("link=Portlet Configuration");
 		selenium.clickAt("link=Portlet Configuration",
 			RuntimeVariables.replace("Portlet Configuration"));

@@ -49,8 +49,7 @@ public class ViewRatePage1DLFolder1Document1Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("DL Folder1 Document1 Title.doc"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Average (1 Vote)"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[2]"));
+			selenium.getText("xPath=(//div[@class='rating-label-element'])[2]"));
 		assertTrue(selenium.isElementPresent(
 				"//img[@alt='The average rating is 4.0 stars out of 5.']"));
 		assertTrue(selenium.isTextPresent(

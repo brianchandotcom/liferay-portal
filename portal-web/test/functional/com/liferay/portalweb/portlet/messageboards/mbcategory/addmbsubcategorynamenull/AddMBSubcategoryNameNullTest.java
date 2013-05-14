@@ -41,12 +41,11 @@ public class AddMBSubcategoryNameNullTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForVisible(
-			"//div[@class='aui-form-validator-message required']");
+			"//div[@class='form-validator-message required']");
 		assertTrue(selenium.isVisible(
-				"//div[@class='aui-form-validator-message required']"));
+				"//div[@class='form-validator-message required']"));
 		assertEquals(RuntimeVariables.replace("This field is required."),
-			selenium.getText(
-				"//div[@class='aui-form-validator-message required']"));
+			selenium.getText("//div[@class='form-validator-message required']"));
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));

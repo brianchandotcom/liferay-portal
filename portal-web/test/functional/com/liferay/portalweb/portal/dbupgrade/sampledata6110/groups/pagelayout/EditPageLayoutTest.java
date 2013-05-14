@@ -60,9 +60,9 @@ public class EditPageLayoutTest extends BaseTestCase {
 			RuntimeVariables.replace("Page Layout Page"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementPresent(
-				"//div[@id='column-1' and @class='aui-w50 portlet-column portlet-column-first']"));
+				"//div[@id='column-1' and @class='w50 portlet-column portlet-column-first']"));
 		assertTrue(selenium.isElementPresent(
-				"//div[@id='column-2' and @class='aui-w50 portlet-column portlet-column-last']"));
+				"//div[@id='column-2' and @class='w50 portlet-column portlet-column-last']"));
 		assertEquals(RuntimeVariables.replace("Breadcrumb"),
 			selenium.getText(
 				"//div[@id='layout-column_column-1' and @class='portlet-dropzone portlet-column-content portlet-column-content-first']/div[1]/div[1]/section/header/h1/span[2]"));
@@ -70,8 +70,8 @@ public class EditPageLayoutTest extends BaseTestCase {
 			selenium.getText(
 				"//div[@id='layout-column_column-2' and @class='portlet-dropzone portlet-column-content portlet-column-content-last']/div[1]/div[1]/section/header/h1/span[2]"));
 		assertTrue(selenium.isElementNotPresent(
-				"//div[@id='column-1' and @class='aui-w30 portlet-column portlet-column-first']"));
+				"//div[@id='column-1' and @class='w30 portlet-column portlet-column-first']"));
 		assertTrue(selenium.isElementNotPresent(
-				"//div[@id='column-2' and @class='aui-w70 portlet-column portlet-column-last']"));
+				"//div[@id='column-2' and @class='w70 portlet-column portlet-column-last']"));
 	}
 }

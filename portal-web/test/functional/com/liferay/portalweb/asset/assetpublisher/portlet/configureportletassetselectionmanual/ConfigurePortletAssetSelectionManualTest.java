@@ -40,11 +40,11 @@ public class ConfigurePortletAssetSelectionManualTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 					RuntimeVariables.replace("Options"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Configuration')]");
 				assertEquals(RuntimeVariables.replace("Configuration"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Configuration')]"));
+				selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Configuration')]",
 					RuntimeVariables.replace("Configuration"));
 				selenium.waitForVisible(
 					"//iframe[contains(@id,'configurationIframeDialog')]");
@@ -78,7 +78,7 @@ public class ConfigurePortletAssetSelectionManualTest extends BaseTestCase {
 				assertTrue(selenium.isChecked(
 						"//input[@id='_86_selectionStyleManual']"));
 				assertTrue(selenium.isVisible(
-						"//span[@class='aui-legend' and contains(.,'Assets')]"));
+						"//span[@class='legend' and contains(.,'Assets')]"));
 				selenium.selectFrame("relative=top");
 
 			case 100:

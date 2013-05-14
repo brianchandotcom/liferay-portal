@@ -40,8 +40,8 @@ public class Member_AssertCannotAddSubfolderTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertTrue(selenium.isVisible("link=Add"));
 		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
-		selenium.waitForVisible("//div[@class='lfr-component lfr-menu-list']");
+		selenium.waitForVisible("//div[@class='lfr-menu-list unstyled']");
 		assertFalse(selenium.isPartialText(
-				"//div[@class='lfr-component lfr-menu-list']", "Subfolder"));
+				"//div[@class='lfr-menu-list unstyled']", "Subfolder"));
 	}
 }

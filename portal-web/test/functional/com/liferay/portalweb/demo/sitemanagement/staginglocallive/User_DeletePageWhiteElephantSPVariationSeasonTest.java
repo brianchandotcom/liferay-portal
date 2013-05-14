@@ -107,7 +107,7 @@ public class User_DeletePageWhiteElephantSPVariationSeasonTest
 				selenium.waitForNotValue("//input[@id='_88_friendlyURL']",
 					"/home");
 				selenium.selectFrame(
-					"//div[@class='yui3-widget-bd aui-panel-bd aui-dialog-bd aui-dialog-iframe-bd']/iframe");
+					"//div[@class='yui3-widget-bd panel-bd dialog-bd dialog-iframe-bd']/iframe");
 				Thread.sleep(5000);
 				selenium.waitForVisible("//button[3]");
 				assertEquals(RuntimeVariables.replace("Delete"),

@@ -55,11 +55,11 @@ public class LocalizeWCWebContentTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Add Translation']/ul/li/strong/a",
 			RuntimeVariables.replace("Add Translation"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Spanish (Spain)')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Spanish (Spain)')]");
 		assertEquals(RuntimeVariables.replace("Spanish (Spain)"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Spanish (Spain)')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Spanish (Spain)')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Spanish (Spain)')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Spanish (Spain)')]",
 			RuntimeVariables.replace("Spanish (Spain)"));
 		selenium.waitForVisible(
 			"//iframe[contains(@src,'_15_toLanguageId=es_ES')]");
@@ -82,7 +82,7 @@ public class LocalizeWCWebContentTest extends BaseTestCase {
 		selenium.selectFrame("relative=top");
 		selenium.selectFrame(
 			"//iframe[contains(@src,'_15_toLanguageId=es_ES')]");
-		selenium.clickAt("//span[@class='aui-button-content']/input[@value='Save']",
+		selenium.clickAt("//span[@class='button-content']/input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		Thread.sleep(3000);
 		selenium.selectFrame("relative=top");

@@ -54,17 +54,17 @@ public class RemoveMembersSitesTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Memberships')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Manage Memberships')]");
 				assertEquals(RuntimeVariables.replace("Manage Memberships"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Memberships')]"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Manage Memberships')]",
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Manage Memberships')]"));
+				selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Manage Memberships')]",
 					RuntimeVariables.replace("Manage Memberships"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Users"),
 					selenium.getText(
-						"//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Users')]"));
-				selenium.clickAt("//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Users')]",
+						"//ul[@class='tabview-list']/li/span/a[contains(.,'Users')]"));
+				selenium.clickAt("//ul[@class='tabview-list']/li/span/a[contains(.,'Users')]",
 					RuntimeVariables.replace("Users"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForElementPresent("//a[.='\u00ab Basic']");
@@ -93,11 +93,11 @@ public class RemoveMembersSitesTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Remove Membership')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Remove Membership')]");
 				assertEquals(RuntimeVariables.replace("Remove Membership"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Remove Membership')]"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Remove Membership')]",
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Remove Membership')]"));
+				selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Remove Membership')]",
 					RuntimeVariables.replace("Remove Membership"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForVisible("//div[@class='portlet-msg-success']");

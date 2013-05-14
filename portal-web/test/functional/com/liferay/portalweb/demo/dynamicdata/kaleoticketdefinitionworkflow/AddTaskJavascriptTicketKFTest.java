@@ -32,11 +32,11 @@ public class AddTaskJavascriptTicketKFTest extends BaseTestCase {
 		Thread.sleep(5000);
 		selenium.click("//span[@title='Submit New']/ul/li/strong/a");
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[1]/a");
 		assertEquals(RuntimeVariables.replace("Ticket Process"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
+				"//div[@class='lfr-menu-list unstyled']/ul/li[1]/a"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li[1]/a",
 			RuntimeVariables.replace("Ticket Process"));
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select[@id='_1_WAR_kaleoformsportlet_priority']",

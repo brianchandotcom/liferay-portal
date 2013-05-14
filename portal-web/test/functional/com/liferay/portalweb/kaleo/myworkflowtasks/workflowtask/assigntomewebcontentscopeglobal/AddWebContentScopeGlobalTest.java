@@ -40,12 +40,12 @@ public class AddWebContentScopeGlobalTest extends BaseTestCase {
 		selenium.clickAt("//a[@id='_160_groupSelectorButton']/span",
 			RuntimeVariables.replace("Scope Selector"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Global')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Global')]");
 		assertEquals(RuntimeVariables.replace("Global"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Global')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Global')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Global')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Global')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForText("//a[@id='_160_groupSelectorButton']/span",
 			"Global");
@@ -59,12 +59,12 @@ public class AddWebContentScopeGlobalTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Web Content')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Basic Web Content')]");
 		assertEquals(RuntimeVariables.replace("Basic Web Content"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Web Content')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Basic Web Content')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Basic Web Content')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Basic Web Content')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_15_title_en_US']",
 			RuntimeVariables.replace("Web Content Name"));

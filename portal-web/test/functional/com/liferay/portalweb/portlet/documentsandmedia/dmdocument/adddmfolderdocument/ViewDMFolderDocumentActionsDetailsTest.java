@@ -47,19 +47,18 @@ public class ViewDMFolderDocumentActionsDetailsTest extends BaseTestCase {
 		selenium.clickAt("//a[contains(@class,'entry-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DM Folder Document Title"));
 		selenium.waitForPageToLoad("30000");
-		selenium.waitForVisible(
-			"//span[@class='aui-toolbar-content']/button[1]");
+		selenium.waitForVisible("//span[@class='toolbar-content']/button[1]");
 		assertEquals(RuntimeVariables.replace("Download"),
-			selenium.getText("//span[@class='aui-toolbar-content']/button[1]"));
+			selenium.getText("//span[@class='toolbar-content']/button[1]"));
 		assertEquals(RuntimeVariables.replace("Edit"),
-			selenium.getText("//span[@class='aui-toolbar-content']/button[2]"));
+			selenium.getText("//span[@class='toolbar-content']/button[2]"));
 		assertEquals(RuntimeVariables.replace("Move"),
-			selenium.getText("//span[@class='aui-toolbar-content']/button[3]"));
+			selenium.getText("//span[@class='toolbar-content']/button[3]"));
 		assertEquals(RuntimeVariables.replace("Checkout"),
-			selenium.getText("//span[@class='aui-toolbar-content']/button[4]"));
+			selenium.getText("//span[@class='toolbar-content']/button[4]"));
 		assertEquals(RuntimeVariables.replace("Permissions"),
-			selenium.getText("//span[@class='aui-toolbar-content']/button[5]"));
+			selenium.getText("//span[@class='toolbar-content']/button[5]"));
 		assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
-			selenium.getText("//span[@class='aui-toolbar-content']/button[6]"));
+			selenium.getText("//span[@class='toolbar-content']/button[6]"));
 	}
 }

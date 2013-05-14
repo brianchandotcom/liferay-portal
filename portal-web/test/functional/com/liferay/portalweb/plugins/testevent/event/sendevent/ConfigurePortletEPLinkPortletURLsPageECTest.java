@@ -35,11 +35,11 @@ public class ConfigurePortletEPLinkPortletURLsPageECTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Look and Feel')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Look and Feel')]/a");
 		assertEquals(RuntimeVariables.replace("Look and Feel"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Look and Feel')]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Look and Feel')]/a",
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Look and Feel')]/a"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Look and Feel')]/a",
 			RuntimeVariables.replace("Look and Feel"));
 		Thread.sleep(5000);
 		selenium.waitForVisible("//select[@id='_113_lfr-point-links']");

@@ -72,7 +72,6 @@ public class AddPageStagingOrganizationWCDTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace(
 				"Page Staging Organization Web Content Display"),
-			selenium.getText(
-				"//ul[@class='aui-tree-container']/li/div/div[3]/a"));
+			selenium.getText("//ul[@class='tree-container']/li/div/div[3]/a"));
 	}
 }

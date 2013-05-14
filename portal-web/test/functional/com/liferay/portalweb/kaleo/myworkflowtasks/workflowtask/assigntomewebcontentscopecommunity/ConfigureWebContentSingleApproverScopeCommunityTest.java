@@ -42,12 +42,12 @@ public class ConfigureWebContentSingleApproverScopeCommunityTest
 		selenium.clickAt("//strong/a/span",
 			RuntimeVariables.replace("Scope Selector"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Community Name')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Community Name')]");
 		assertEquals(RuntimeVariables.replace("Community Name"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Community Name')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Community Name')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Community Name')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Community Name')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForText("//strong/a/span", "Community Name");
 		assertEquals(RuntimeVariables.replace("Community Name"),

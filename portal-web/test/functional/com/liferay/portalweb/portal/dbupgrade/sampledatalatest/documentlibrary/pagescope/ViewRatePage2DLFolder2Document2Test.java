@@ -50,8 +50,7 @@ public class ViewRatePage2DLFolder2Document2Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("DL Folder2 Document2 Title.xls"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Average (1 Vote)"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[2]"));
+			selenium.getText("xPath=(//div[@class='rating-label-element'])[2]"));
 		assertTrue(selenium.isElementPresent(
 				"//img[@alt='The average rating is 4.0 stars out of 5.']"));
 		assertTrue(selenium.isTextPresent(
@@ -82,8 +81,7 @@ public class ViewRatePage2DLFolder2Document2Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("DL Folder2 Document2 Title.xls"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Average (1 Vote)"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[2]"));
+			selenium.getText("xPath=(//div[@class='rating-label-element'])[2]"));
 		assertTrue(selenium.isElementPresent(
 				"//img[@alt='The average rating is 4.0 stars out of 5.']"));
 		assertTrue(selenium.isTextPresent(

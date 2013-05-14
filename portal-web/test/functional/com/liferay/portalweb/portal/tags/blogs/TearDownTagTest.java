@@ -63,11 +63,11 @@ public class TearDownTagTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a[contains(.,'Delete')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li[1]/a[contains(.,'Delete')]");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a[contains(.,'Delete')]"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a[contains(.,'Delete')]",
+						"//div[@class='lfr-menu-list unstyled']/ul/li[1]/a[contains(.,'Delete')]"));
+				selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li[1]/a[contains(.,'Delete')]",
 					RuntimeVariables.replace("Delete"));
 				selenium.waitForConfirmation(
 					"Are you sure you want to delete the selected tags?");

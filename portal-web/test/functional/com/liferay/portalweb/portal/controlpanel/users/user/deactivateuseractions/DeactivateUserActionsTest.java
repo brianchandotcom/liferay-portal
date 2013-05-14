@@ -58,12 +58,12 @@ public class DeactivateUserActionsTest extends BaseTestCase {
 		selenium.clickAt("//td[8]/span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Deactivate')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Deactivate')]");
 		assertEquals(RuntimeVariables.replace("Deactivate"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Deactivate')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Deactivate')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Deactivate')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Deactivate')]"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to deactivate this[\\s\\S]$"));

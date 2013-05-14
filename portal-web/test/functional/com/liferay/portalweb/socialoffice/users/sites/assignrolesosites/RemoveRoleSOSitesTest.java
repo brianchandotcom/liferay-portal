@@ -56,11 +56,11 @@ public class RemoveRoleSOSitesTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Assign Members')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Assign Members')]/a");
 		assertEquals(RuntimeVariables.replace("Assign Members"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Assign Members')]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Assign Members')]/a",
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Assign Members')]/a"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Assign Members')]/a",
 			RuntimeVariables.replace("Assign Members"));
 		selenium.waitForVisible("//div[2]/h1/span");
 		assertEquals(RuntimeVariables.replace("Social Office User"),

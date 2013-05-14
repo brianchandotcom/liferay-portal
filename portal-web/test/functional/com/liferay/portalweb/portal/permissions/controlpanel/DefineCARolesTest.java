@@ -31,9 +31,9 @@ public class DefineCARolesTest extends BaseTestCase {
 		selenium.clickAt("//tr[4]/td[4]/ul/li/strong/a",
 			RuntimeVariables.replace(""));
 		selenium.waitForElementPresent(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[3]/a");
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[3]/a"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Community Admin"),
 			selenium.getText("//h1[@class='header-title']/span"));

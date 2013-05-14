@@ -35,13 +35,13 @@ public class QAE_CompleteFormFailedTaskKFTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[1]/a");
 		assertEquals(RuntimeVariables.replace("Complete Form"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+				"//div[@class='lfr-menu-list unstyled']/ul/li[1]/a"));
+		selenium.click("//div[@class='lfr-menu-list unstyled']/ul/li[1]/a");
 		selenium.waitForVisible(
-			"//div[@class='aui-panel-content aui-dialog-content yui3-widget-stdmod']");
+			"//div[@class='panel-content dialog-content yui3-widget-stdmod']");
 		selenium.type("//input[@id='_1_WAR_kaleoformsportlet_tested_revision']",
 			RuntimeVariables.replace("95200"));
 		selenium.select("//select[@id='_1_WAR_kaleoformsportlet_tested_status']",

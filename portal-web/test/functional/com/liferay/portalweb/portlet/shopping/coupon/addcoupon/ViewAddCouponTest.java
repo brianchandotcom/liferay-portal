@@ -31,39 +31,39 @@ public class ViewAddCouponTest extends BaseTestCase {
 		selenium.clickAt("link=Coupons", RuntimeVariables.replace("Coupons"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Categories"),
-			selenium.getText("//ul[@class='aui-tabview-list']/li[1]"));
+			selenium.getText("//ul[@class='tabview-list']/li[1]"));
 		assertEquals(RuntimeVariables.replace("Cart"),
-			selenium.getText("//ul[@class='aui-tabview-list']/li[2]"));
+			selenium.getText("//ul[@class='tabview-list']/li[2]"));
 		assertEquals(RuntimeVariables.replace("Orders"),
-			selenium.getText("//ul[@class='aui-tabview-list']/li[3]"));
+			selenium.getText("//ul[@class='tabview-list']/li[3]"));
 		assertEquals(RuntimeVariables.replace("Coupons"),
-			selenium.getText("//ul[@class='aui-tabview-list']/li[4]"));
+			selenium.getText("//ul[@class='tabview-list']/li[4]"));
 		assertEquals(RuntimeVariables.replace("Code"),
 			selenium.getText(
-				"//div[@class='aui-fieldset-content ']/div[1]/div/span[1]/span/label"));
+				"//div[@class='fieldset-content ']/div[1]/div/span[1]/span/label"));
 		assertTrue(selenium.isVisible(
-				"//div[@class='aui-fieldset-content ']/div[1]/div/span[1]/span/span/input"));
+				"//div[@class='fieldset-content ']/div[1]/div/span[1]/span/span/input"));
 		assertTrue(selenium.isVisible(
-				"//div[@class='aui-fieldset-content ']/div[1]/div/span[2]/span/span/select"));
+				"//div[@class='fieldset-content ']/div[1]/div/span[2]/span/span/select"));
 		assertEquals(RuntimeVariables.replace("Discount Type"),
 			selenium.getText(
-				"//div[@class='aui-fieldset-content ']/div[2]/div/span/span/label"));
+				"//div[@class='fieldset-content ']/div[2]/div/span/span/label"));
 		assertTrue(selenium.isVisible(
-				"//div[@class='aui-fieldset-content ']/div[2]/div/span/span/span/select"));
+				"//div[@class='fieldset-content ']/div[2]/div/span/span/span/select"));
 		assertEquals(RuntimeVariables.replace("Active"),
 			selenium.getText(
-				"//div[@class='aui-fieldset-content ']/div[3]/div/span/span/label"));
+				"//div[@class='fieldset-content ']/div[3]/div/span/span/label"));
 		assertTrue(selenium.isVisible(
-				"//div[@class='aui-fieldset-content ']/div[3]/div/span/span/span/select"));
+				"//div[@class='fieldset-content ']/div[3]/div/span/span/span/select"));
 		assertEquals("Search",
 			selenium.getValue(
-				"xPath=(//div[@class='aui-button-holder ']/span[1]/span/input)[1]"));
+				"xPath=(//div[@class='button-holder ']/span[1]/span/input)[1]"));
 		assertEquals("Add Coupon",
 			selenium.getValue(
-				"xPath=(//div[@class='aui-button-holder ']/span[2]/span/input)[1]"));
+				"xPath=(//div[@class='button-holder ']/span[2]/span/input)[1]"));
 		assertEquals("Delete",
 			selenium.getValue(
-				"xPath=(//div[@class='aui-button-holder ']/span[1]/span/input)[2]"));
+				"xPath=(//div[@class='button-holder ']/span[1]/span/input)[2]"));
 		assertTrue(selenium.isVisible(
 				"//tr[@class='portlet-section-header results-header']/th[1]"));
 		assertEquals(RuntimeVariables.replace("Code"),

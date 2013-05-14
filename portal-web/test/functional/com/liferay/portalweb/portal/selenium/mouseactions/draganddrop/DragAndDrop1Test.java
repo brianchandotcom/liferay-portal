@@ -60,9 +60,9 @@ public class DragAndDrop1Test extends BaseTestCase {
 			RuntimeVariables.replace("Data Definition"));
 		assertEquals(RuntimeVariables.replace("Boolean"),
 			selenium.getText(
-				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[1]/div"));
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[1]/div",
-			"//div[@class='aui-tabview-content aui-widget-bd']");
+				"//div[@class='tabview-content widget-bd']/div/ul/li[1]/div"));
+		selenium.dragAndDropToObject("//div[@class='tabview-content widget-bd']/div/ul/li[1]/div",
+			"//div[@class='tabview-content widget-bd']");
 		assertTrue(selenium.isVisible("//input[@type='checkbox']"));
 	}
 }

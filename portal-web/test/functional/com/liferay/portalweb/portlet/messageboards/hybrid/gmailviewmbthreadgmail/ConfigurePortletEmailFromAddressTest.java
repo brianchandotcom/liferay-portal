@@ -35,11 +35,11 @@ public class ConfigurePortletEmailFromAddressTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[2]/a");
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+				"//div[@class='lfr-menu-list unstyled']/ul/li[2]/a"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li[2]/a",
 			RuntimeVariables.replace("Configuration"));
 		selenium.waitForVisible("//iframe[@id='_19_configurationIframeDialog']");
 		selenium.selectFrame("//iframe[@id='_19_configurationIframeDialog']");

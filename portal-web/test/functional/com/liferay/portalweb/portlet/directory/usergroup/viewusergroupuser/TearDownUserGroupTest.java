@@ -60,12 +60,12 @@ public class TearDownUserGroupTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Members')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Assign Members')]");
 				assertEquals(RuntimeVariables.replace("Assign Members"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Members')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Assign Members')]"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Members')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Assign Members')]"));
 				selenium.waitForPageToLoad("30000");
 
 				boolean user1Assigned = selenium.isVisible(
@@ -95,12 +95,12 @@ public class TearDownUserGroupTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Delete')]");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Delete')]"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Delete')]"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForConfirmation(
 					"Are you sure you want to delete this? It will be deleted immediately.");
@@ -120,12 +120,12 @@ public class TearDownUserGroupTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Members')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Assign Members')]");
 				assertEquals(RuntimeVariables.replace("Assign Members"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Members')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Assign Members')]"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Members')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Assign Members')]"));
 				selenium.waitForPageToLoad("30000");
 
 				boolean user2Assigned = selenium.isVisible(
@@ -155,12 +155,12 @@ public class TearDownUserGroupTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Delete')]");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Delete')]"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Delete')]"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForConfirmation(
 					"Are you sure you want to delete this? It will be deleted immediately.");
@@ -180,12 +180,12 @@ public class TearDownUserGroupTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Members')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Assign Members')]");
 				assertEquals(RuntimeVariables.replace("Assign Members"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Members')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Assign Members')]"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Members')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Assign Members')]"));
 				selenium.waitForPageToLoad("30000");
 
 				boolean user3Assigned = selenium.isVisible(
@@ -215,12 +215,12 @@ public class TearDownUserGroupTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Delete')]");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Delete')]"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Delete')]"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForConfirmation(
 					"Are you sure you want to delete this? It will be deleted immediately.");
@@ -240,12 +240,12 @@ public class TearDownUserGroupTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Members')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Assign Members')]");
 				assertEquals(RuntimeVariables.replace("Assign Members"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Members')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Assign Members')]"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Members')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Assign Members')]"));
 				selenium.waitForPageToLoad("30000");
 
 				boolean user4Assigned = selenium.isVisible(
@@ -275,12 +275,12 @@ public class TearDownUserGroupTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Delete')]");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Delete')]"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Delete')]"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForConfirmation(
 					"Are you sure you want to delete this? It will be deleted immediately.");
@@ -300,12 +300,12 @@ public class TearDownUserGroupTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Members')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Assign Members')]");
 				assertEquals(RuntimeVariables.replace("Assign Members"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Members')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Assign Members')]"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Members')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Assign Members')]"));
 				selenium.waitForPageToLoad("30000");
 
 				boolean user5Assigned = selenium.isVisible(
@@ -335,12 +335,12 @@ public class TearDownUserGroupTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Delete')]");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Delete')]"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Delete')]"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForConfirmation(
 					"Are you sure you want to delete this? It will be deleted immediately.");

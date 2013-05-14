@@ -47,13 +47,13 @@ public class TearDownWebContentScopePageTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Scope: Default']/ul/li/strong/a",
 					RuntimeVariables.replace("Scope: Default"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Web Content Display Page')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Web Content Display Page')]");
 				assertEquals(RuntimeVariables.replace(
 						"Web Content Display Page"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Web Content Display Page')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Web Content Display Page')]"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Web Content Display Page')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Web Content Display Page')]"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.isPartialText(
 						"//span[@title='Scope: Web Content Display Page']/ul/li/strong/a",
@@ -85,11 +85,11 @@ public class TearDownWebContentScopePageTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Move to the Recycle Bin')]");
 				assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]",
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Move to the Recycle Bin')]"));
+				selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Move to the Recycle Bin')]",
 					RuntimeVariables.replace("Move to the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
 

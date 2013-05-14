@@ -33,7 +33,7 @@ public class RateWCWebContentCommentWCDTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("WC WebContent Comment"),
 			selenium.getText("//div[@class='lfr-discussion-message']"));
 		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
-			selenium.getText("//div[@class='aui-rating-label-element']"));
+			selenium.getText("//div[@class='rating-label-element']"));
 		assertTrue(selenium.isVisible(
 				"//div[contains(@id, 'ratingThumbContent')]/a[contains(@class,'rating-thumb-up')]"));
 		assertTrue(selenium.isVisible(
@@ -43,26 +43,26 @@ public class RateWCWebContentCommentWCDTest extends BaseTestCase {
 		Thread.sleep(1000);
 		selenium.waitForVisible("//a[contains(@class,'aui-rating-element-on')]");
 		assertEquals(RuntimeVariables.replace("+1 (1 Vote)"),
-			selenium.getText("//div[@class='aui-rating-label-element']"));
+			selenium.getText("//div[@class='rating-label-element']"));
 		selenium.clickAt("//div[contains(@id, 'ratingThumbContent')]/a[contains(@class,'rating-thumb-up')]",
 			RuntimeVariables.replace("Rate this as good"));
 		Thread.sleep(1000);
 		selenium.waitForVisible(
 			"//a[contains(@class,'aui-rating-element-off')]");
 		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
-			selenium.getText("//div[@class='aui-rating-label-element']"));
+			selenium.getText("//div[@class='rating-label-element']"));
 		selenium.clickAt("//div[contains(@id, 'ratingThumbContent')]/a[contains(@class,'rating-thumb-down')]",
 			RuntimeVariables.replace("Rate this as bad"));
 		Thread.sleep(1000);
 		selenium.waitForVisible("//a[contains(@class,'aui-rating-element-on')]");
 		assertEquals(RuntimeVariables.replace("-1 (1 Vote)"),
-			selenium.getText("//div[@class='aui-rating-label-element']"));
+			selenium.getText("//div[@class='rating-label-element']"));
 		selenium.clickAt("//div[contains(@id, 'ratingThumbContent')]/a[contains(@class,'rating-thumb-down')]",
 			RuntimeVariables.replace("Rate this as bad"));
 		Thread.sleep(1000);
 		selenium.waitForVisible(
 			"//a[contains(@class,'aui-rating-element-off')]");
 		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
-			selenium.getText("//div[@class='aui-rating-label-element']"));
+			selenium.getText("//div[@class='rating-label-element']"));
 	}
 }

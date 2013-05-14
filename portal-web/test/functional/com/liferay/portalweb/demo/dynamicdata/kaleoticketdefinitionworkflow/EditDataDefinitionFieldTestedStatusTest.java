@@ -63,17 +63,17 @@ public class EditDataDefinitionFieldTestedStatusTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Edit')]/a");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a",
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Edit')]/a"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Edit')]/a",
 			RuntimeVariables.replace("Edit"));
-		selenium.waitForVisible("//div[@class='aui-diagram-builder-canvas']");
+		selenium.waitForVisible("//div[@class='diagram-builder-canvas']");
 		assertEquals(RuntimeVariables.replace("Select"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-canvas']/div/div[8]/div/label"));
-		selenium.clickAt("//div[@class='aui-diagram-builder-canvas']/div/div[8]",
+				"//div[@class='diagram-builder-canvas']/div/div[8]/div/label"));
+		selenium.clickAt("//div[@class='diagram-builder-canvas']/div/div[8]",
 			RuntimeVariables.replace("Select"));
 		selenium.waitForVisible("xPath=(//button[@id='editEvent'])[8]");
 		selenium.clickAt("xPath=(//button[@id='editEvent'])[8]",

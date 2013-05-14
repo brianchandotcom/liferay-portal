@@ -33,11 +33,11 @@ public class WCC_PublishToLiveNowWebContentSiteStagingTest extends BaseTestCase 
 		selenium.clickAt("//span[@class='staging-icon-menu-container']/span/ul/li/strong/a",
 			RuntimeVariables.replace("Staging Drop Down"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[1]/a");
 		assertEquals(RuntimeVariables.replace("Publish to Live Now"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+				"//div[@class='lfr-menu-list unstyled']/ul/li[1]/a"));
+		selenium.click("//div[@class='lfr-menu-list unstyled']/ul/li[1]/a");
 		Thread.sleep(5000);
 		selenium.waitForVisible("//input[@value='Publish']");
 		selenium.clickAt("//input[@value='Publish']",

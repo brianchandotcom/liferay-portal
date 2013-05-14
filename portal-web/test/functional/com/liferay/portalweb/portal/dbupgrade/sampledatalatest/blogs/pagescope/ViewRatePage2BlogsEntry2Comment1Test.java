@@ -58,8 +58,7 @@ public class ViewRatePage2BlogsEntry2Comment1Test extends BaseTestCase {
 			selenium.getText(
 				"xPath=(//div[@class='lfr-discussion-message'])[1]"));
 		assertEquals(RuntimeVariables.replace("+1 (1 Vote)"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[3]"));
+			selenium.getText("xPath=(//div[@class='rating-label-element'])[3]"));
 		selenium.open("/web/blogs-page-scope-community/");
 		selenium.waitForVisible("link=Blogs Test Page3");
 		selenium.clickAt("link=Blogs Test Page3",
@@ -91,8 +90,7 @@ public class ViewRatePage2BlogsEntry2Comment1Test extends BaseTestCase {
 			selenium.getText(
 				"xPath=(//div[@class='lfr-discussion-message'])[1]"));
 		assertEquals(RuntimeVariables.replace("+1 (1 Vote)"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[3]"));
+			selenium.getText("xPath=(//div[@class='rating-label-element'])[3]"));
 		selenium.open("/web/blogs-page-scope-community/");
 		selenium.waitForElementPresent("link=Control Panel");
 		selenium.clickAt("link=Control Panel",
@@ -106,12 +104,12 @@ public class ViewRatePage2BlogsEntry2Comment1Test extends BaseTestCase {
 		selenium.clickAt("//div/span/ul/li/strong/a/span",
 			RuntimeVariables.replace("Scope: Default"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[2]/a");
 		assertEquals(RuntimeVariables.replace("Blogs Test Page2"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[2]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[2]/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForText("//div/span/ul/li/strong/a/span",
 			"Scope: Blogs Test Page2");
@@ -139,7 +137,6 @@ public class ViewRatePage2BlogsEntry2Comment1Test extends BaseTestCase {
 			selenium.getText(
 				"xPath=(//div[@class='lfr-discussion-message'])[1]"));
 		assertEquals(RuntimeVariables.replace("+1 (1 Vote)"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[3]"));
+			selenium.getText("xPath=(//div[@class='rating-label-element'])[3]"));
 	}
 }

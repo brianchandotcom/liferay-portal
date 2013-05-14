@@ -36,7 +36,7 @@ public class Guest_ViewDmDocumentTest extends BaseTestCase {
 			RuntimeVariables.replace("DM Document Title"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Download"),
-			selenium.getText("//span[@class='aui-toolbar-content']/button[1]"));
+			selenium.getText("//span[@class='toolbar-content']/button[1]"));
 		assertEquals(RuntimeVariables.replace("DM Document Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertTrue(selenium.isPartialText(

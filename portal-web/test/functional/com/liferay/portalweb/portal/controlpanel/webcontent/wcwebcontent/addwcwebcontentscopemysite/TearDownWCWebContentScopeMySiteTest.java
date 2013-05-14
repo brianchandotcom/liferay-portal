@@ -46,12 +46,12 @@ public class TearDownWCWebContentScopeMySiteTest extends BaseTestCase {
 				selenium.clickAt("//a[@id='_160_groupSelectorButton']",
 					RuntimeVariables.replace("Liferay"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Personal Site')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Personal Site')]");
 				assertEquals(RuntimeVariables.replace(
 						"Joe Bloggs's Personal Site"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Personal Site')]"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Personal Site')]",
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Personal Site')]"));
+				selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Personal Site')]",
 					RuntimeVariables.replace("Joe Bloggs's Personal Site"));
 				selenium.waitForText("//a[@id='_160_groupSelectorButton']",
 					"Joe Bloggs's Personal...");
@@ -82,11 +82,11 @@ public class TearDownWCWebContentScopeMySiteTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Move to the Recycle Bin')]");
 				assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]",
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Move to the Recycle Bin')]"));
+				selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Move to the Recycle Bin')]",
 					RuntimeVariables.replace("Move to the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace(
@@ -116,12 +116,12 @@ public class TearDownWCWebContentScopeMySiteTest extends BaseTestCase {
 				selenium.clickAt("//a[@id='_160_groupSelectorButton']",
 					RuntimeVariables.replace("Liferay"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Personal Site')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Personal Site')]");
 				assertEquals(RuntimeVariables.replace(
 						"Joe Bloggs's Personal Site"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Personal Site')]"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Personal Site')]",
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Personal Site')]"));
+				selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Personal Site')]",
 					RuntimeVariables.replace("Joe Bloggs's Personal Site"));
 				selenium.waitForText("//a[@id='_160_groupSelectorButton']",
 					"Joe Bloggs's Personal...");

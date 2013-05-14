@@ -57,8 +57,8 @@ public class CancelCheckoutDMFolderDocumentTest extends BaseTestCase {
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Cancel Checkout"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[contains(.,'Cancel Checkout')]/span[2]"));
-		selenium.clickAt("//span[@class='aui-toolbar-content']/button[contains(.,'Cancel Checkout')]/span[2]",
+				"//span[@class='toolbar-content']/button[contains(.,'Cancel Checkout')]/span[2]"));
+		selenium.clickAt("//span[@class='toolbar-content']/button[contains(.,'Cancel Checkout')]/span[2]",
 			RuntimeVariables.replace("Cancel Checkout"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(

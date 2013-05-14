@@ -54,11 +54,11 @@ public class ActivateStagingSitesTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit Settings')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit Settings')]");
 				assertEquals(RuntimeVariables.replace("Edit Settings"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit Settings')]"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit Settings')]",
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit Settings')]"));
+				selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit Settings')]",
 					RuntimeVariables.replace("Edit Settings"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForVisible("//a[@id='_165_stagingLink']");
@@ -223,11 +223,11 @@ public class ActivateStagingSitesTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit Settings')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit Settings')]");
 				assertEquals(RuntimeVariables.replace("Edit Settings"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit Settings')]"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit Settings')]",
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit Settings')]"));
+				selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit Settings')]",
 					RuntimeVariables.replace("Edit Settings"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Site Name (Staging)"),

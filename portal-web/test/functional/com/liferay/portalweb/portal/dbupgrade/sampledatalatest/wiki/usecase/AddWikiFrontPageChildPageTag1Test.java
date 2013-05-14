@@ -46,7 +46,7 @@ public class AddWikiFrontPageChildPageTag1Test extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForElementPresent(
 			"//textarea[@id='_36_editor' and @style='display: none;']");
-		selenium.type("//input[@class='lfr-tag-selector-input aui-field-input-text']",
+		selenium.type("//input[@class='lfr-tag-selector-input field-input-text']",
 			RuntimeVariables.replace("Wiki Tag 1"));
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//button[@id='add']"));

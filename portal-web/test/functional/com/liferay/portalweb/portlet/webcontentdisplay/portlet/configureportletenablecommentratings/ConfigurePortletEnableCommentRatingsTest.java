@@ -40,11 +40,11 @@ public class ConfigurePortletEnableCommentRatingsTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 					RuntimeVariables.replace("Options"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Configuration')]");
 				assertEquals(RuntimeVariables.replace("Configuration"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Configuration')]"));
+				selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Configuration')]",
 					RuntimeVariables.replace("Configuration"));
 				selenium.waitForVisible(
 					"//iframe[contains(@id,'configurationIframeDialog')]");
@@ -86,7 +86,7 @@ public class ConfigurePortletEnableCommentRatingsTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("WC WebContent Comment"),
 					selenium.getText("//div[@class='lfr-discussion-message']"));
 				assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
-					selenium.getText("//div[@class='aui-rating-label-element']"));
+					selenium.getText("//div[@class='rating-label-element']"));
 				assertTrue(selenium.isVisible(
 						"//div[contains(@id, 'ratingThumbContent')]/a[contains(@class,'rating-thumb-up')]"));
 				assertTrue(selenium.isVisible(

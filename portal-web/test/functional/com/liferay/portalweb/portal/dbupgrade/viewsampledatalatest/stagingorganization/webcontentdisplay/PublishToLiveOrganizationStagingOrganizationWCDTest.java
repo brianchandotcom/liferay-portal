@@ -43,11 +43,10 @@ public class PublishToLiveOrganizationStagingOrganizationWCDTest
 		selenium.clickAt("//span[@class='staging-icon-menu-container']/span/ul/li/strong/a",
 			RuntimeVariables.replace("Staging Dropdown"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a");
 		assertEquals(RuntimeVariables.replace("Publish to Live Now"),
-			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a",
+			selenium.getText("//div[@class='lfr-menu-list unstyled']/ul/li/a"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a",
 			RuntimeVariables.replace("Publish to Live Now"));
 		selenium.waitForVisible("//div[@class='portlet-msg-info']");
 		assertEquals(RuntimeVariables.replace(

@@ -51,20 +51,20 @@ public class EditFieldBooleanTipTest extends BaseTestCase {
 		selenium.clickAt("//tr[contains(.,'Data Definition')]//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Edit')]/a");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Edit')]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Edit')]/a"));
 		selenium.waitForPageToLoad("30000");
 		Thread.sleep(1000);
 		assertEquals(RuntimeVariables.replace("Boolean"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-drop-container']/div[1]/div/label"));
+				"//div[@class='diagram-builder-drop-container']/div[1]/div/label"));
 		assertTrue(selenium.isVisible(
-				"//div[@class='aui-diagram-builder-drop-container']/div[1]/div/label"));
-		selenium.doubleClickAt("//div[@class='aui-diagram-builder-drop-container']/div[1]",
+				"//div[@class='diagram-builder-drop-container']/div[1]/div/label"));
+		selenium.doubleClickAt("//div[@class='diagram-builder-drop-container']/div[1]",
 			RuntimeVariables.replace("Boolean"));
 		selenium.waitForVisible("//div[@class='yui3-datatable-x-scroller']");
 		assertEquals(RuntimeVariables.replace("Tip"),
@@ -80,11 +80,11 @@ public class EditFieldBooleanTipTest extends BaseTestCase {
 			RuntimeVariables.replace("Save"));
 		assertEquals(RuntimeVariables.replace("Boolean Field Tip Edited"),
 			selenium.getText("//tr[6]/td[2]"));
-		assertTrue(selenium.isVisible("//a[@class='aui-form-builder-icon-tip']"));
-		selenium.mouseOver("//a[@class='aui-form-builder-icon-tip']");
+		assertTrue(selenium.isVisible("//a[@class='form-builder-icon-tip']"));
+		selenium.mouseOver("//a[@class='form-builder-icon-tip']");
 		assertEquals(RuntimeVariables.replace("Boolean Field Tip Edited"),
 			selenium.getText(
-				"//div[@class='yui3-widget aui-component aui-overlay aui-overlaycontext aui-overlaycontextpanel aui-tooltip yui3-widget-positioned yui3-widget-stacked']"));
+				"//div[@class='yui3-widget component overlay overlaycontext overlaycontextpanel tooltip yui3-widget-positioned yui3-widget-stacked']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

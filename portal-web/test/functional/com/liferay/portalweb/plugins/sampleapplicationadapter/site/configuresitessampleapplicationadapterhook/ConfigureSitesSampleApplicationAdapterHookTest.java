@@ -51,15 +51,15 @@ public class ConfigureSitesSampleApplicationAdapterHookTest extends BaseTestCase
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit Settings')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit Settings')]");
 		assertEquals(RuntimeVariables.replace("Edit Settings"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit Settings')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit Settings')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit Settings')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit Settings')]"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Configuration"),
-			selenium.getText("//span[@class='aui-legend']"));
+			selenium.getText("//span[@class='legend']"));
 		selenium.select("//select[@id='_165_customJspServletContextName']",
 			RuntimeVariables.replace("Sample Application Adapter Hook"));
 		selenium.clickAt("//input[@value='Save']",

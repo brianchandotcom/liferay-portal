@@ -46,7 +46,7 @@ public class AddDMImageMGTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.selectFrame("relative=top");
 		Thread.sleep(5000);
-		selenium.uploadCommonFile("//input[@class=\"aui-field-input aui-field-input-text\" and @type=\"file\"]",
+		selenium.uploadCommonFile("//input[@class=\"field-input field-input-text\" and @type=\"file\"]",
 			RuntimeVariables.replace("Document_1.jpg"));
 		selenium.type("//input[contains(@class,'aui-field-input-text lfr-input-text') and @type=\"text\"]",
 			RuntimeVariables.replace("DM Image Title"));

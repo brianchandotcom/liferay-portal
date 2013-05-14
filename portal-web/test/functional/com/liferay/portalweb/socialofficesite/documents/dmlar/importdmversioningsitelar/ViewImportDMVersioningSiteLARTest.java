@@ -67,10 +67,10 @@ public class ViewImportDMVersioningSiteLARTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"No comments yet. Be the first. Subscribe to Comments"),
 			selenium.getText(
-				"xPath=(//fieldset[@class='aui-fieldset add-comment ']/div)[1]"));
+				"xPath=(//fieldset[@class='fieldset add-comment ']/div)[1]"));
 		assertEquals(RuntimeVariables.replace("Be the first."),
 			selenium.getText(
-				"xPath=(//fieldset[@class='aui-fieldset add-comment ']/div/a)[1]"));
+				"xPath=(//fieldset[@class='fieldset add-comment ']/div/a)[1]"));
 		assertEquals(RuntimeVariables.replace("Subscribe to Comments"),
 			selenium.getText(
 				"xPath=(//span[@class='subscribe-link']/a/span)[1]"));

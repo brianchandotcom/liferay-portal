@@ -46,12 +46,12 @@ public class TearDownGlobalWebContentTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Liferay']/ul/li/strong/a",
 					RuntimeVariables.replace("Scope Selector"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Global')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Global')]");
 				assertEquals(RuntimeVariables.replace("Global"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Global')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Global')]"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Global')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Global')]"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForText("//span[@title='Global']/ul/li/strong/a/span",
 					"Global");
@@ -85,11 +85,11 @@ public class TearDownGlobalWebContentTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Move to the Recycle Bin')]");
 				assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]",
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Move to the Recycle Bin')]"));
+				selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Move to the Recycle Bin')]",
 					RuntimeVariables.replace("Move to the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
 
@@ -115,12 +115,12 @@ public class TearDownGlobalWebContentTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Liferay']/ul/li/strong/a",
 					RuntimeVariables.replace("Scope Selector"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Global')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Global')]");
 				assertEquals(RuntimeVariables.replace("Global"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Global')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Global')]"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Global')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Global')]"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForText("//span[@title='Global']/ul/li/strong/a/span",
 					"Global");

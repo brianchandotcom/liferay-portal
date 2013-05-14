@@ -37,12 +37,12 @@ public class SelectExistingBlogsEntryAPActionsTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Configuration')]");
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Configuration')]"));
 		selenium.click(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Configuration')]");
 		selenium.waitForVisible(
 			"//iframe[contains(@id,'configurationIframeDialog')]");
 		selenium.selectFrame(
@@ -57,12 +57,12 @@ public class SelectExistingBlogsEntryAPActionsTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='select-asset-selector']/div/span/ul/li/strong/a",
 			RuntimeVariables.replace("Select"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Blogs Entry')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Blogs Entry')]");
 		assertEquals(RuntimeVariables.replace("Blogs Entry"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Blogs Entry')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Blogs Entry')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Blogs Entry')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Blogs Entry')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.selectFrame("relative=top");
 		selenium.waitForVisible("//iframe[contains(@id,'_86_selectAsset')]");

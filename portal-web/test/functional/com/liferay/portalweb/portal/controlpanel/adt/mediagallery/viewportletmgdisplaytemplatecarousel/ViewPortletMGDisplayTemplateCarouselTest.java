@@ -55,16 +55,16 @@ public class ViewPortletMGDisplayTemplateCarouselTest extends BaseTestCase {
 		assertTrue(selenium.isElementNotPresent(
 				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li/a[contains(.,'Access from Desktop')]"));
 		assertTrue(selenium.isVisible(
-				"//div[@class='yui3-widget aui-component aui-carousel']/div/div"));
+				"//div[@class='yui3-widget component carousel']/div/div"));
 		assertTrue(selenium.isVisible(
-				"//div[@class='yui3-widget aui-component aui-carousel']/div/menu"));
+				"//div[@class='yui3-widget component carousel']/div/menu"));
 		assertTrue(selenium.isVisible(
-				"//a[@class='aui-carousel-menu-item aui-carousel-menu-pause']"));
+				"//a[@class='carousel-menu-item carousel-menu-pause']"));
 		assertTrue(selenium.isVisible(
-				"//a[@class='aui-carousel-menu-item aui-carousel-menu-prev']"));
+				"//a[@class='carousel-menu-item carousel-menu-prev']"));
 		assertTrue(selenium.isVisible(
-				"//a[@class='aui-carousel-menu-item aui-carousel-menu-item aui-carousel-menu-index aui-carousel-menu-active']"));
+				"//a[@class='carousel-menu-item carousel-menu-item carousel-menu-index carousel-menu-active']"));
 		assertTrue(selenium.isVisible(
-				"//a[@class='aui-carousel-menu-item aui-carousel-menu-next']"));
+				"//a[@class='carousel-menu-item carousel-menu-next']"));
 	}
 }

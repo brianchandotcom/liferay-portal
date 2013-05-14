@@ -136,14 +136,14 @@ public class ViewAddToShoppingCartCategoryItemsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Showing 3 results."),
 			selenium.getText("//div[@class='search-results']"));
 		assertEquals(RuntimeVariables.replace("Subtotal $29.97"),
-			selenium.getText("//div[@class='aui-fieldset-content ']/div[1]/div"));
+			selenium.getText("//div[@class='fieldset-content ']/div[1]/div"));
 		assertEquals(RuntimeVariables.replace("Shipping $0.00"),
-			selenium.getText("//div[@class='aui-fieldset-content ']/div[2]/div"));
+			selenium.getText("//div[@class='fieldset-content ']/div[2]/div"));
 		assertEquals(RuntimeVariables.replace("Coupon Code"),
 			selenium.getText(
-				"//div[@class='aui-fieldset-content ']/span/span/label"));
+				"//div[@class='fieldset-content ']/span/span/label"));
 		assertTrue(selenium.isVisible(
-				"//div[@class='aui-fieldset-content ']/span/span/span/input"));
+				"//div[@class='fieldset-content ']/span/span/span/input"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='portlet-body']/form/img[@alt='visa']"));
 		assertTrue(selenium.isVisible(
@@ -153,10 +153,10 @@ public class ViewAddToShoppingCartCategoryItemsTest extends BaseTestCase {
 		assertTrue(selenium.isVisible(
 				"//div[@class='portlet-body']/form/img[@alt='mastercard']"));
 		assertTrue(selenium.isVisible(
-				"//div[@class='aui-button-holder ']/span[1]/span/input"));
+				"//div[@class='button-holder ']/span[1]/span/input"));
 		assertTrue(selenium.isVisible(
-				"//div[@class='aui-button-holder ']/span[2]/span/input"));
+				"//div[@class='button-holder ']/span[2]/span/input"));
 		assertTrue(selenium.isVisible(
-				"//div[@class='aui-button-holder ']/span[3]/span/input"));
+				"//div[@class='button-holder ']/span[3]/span/input"));
 	}
 }

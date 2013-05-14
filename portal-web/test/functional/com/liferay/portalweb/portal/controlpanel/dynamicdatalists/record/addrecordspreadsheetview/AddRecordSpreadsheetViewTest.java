@@ -51,12 +51,12 @@ public class AddRecordSpreadsheetViewTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Spreadsheet View')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Spreadsheet View')]/a");
 		assertEquals(RuntimeVariables.replace("Spreadsheet View"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Spreadsheet View')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Spreadsheet View')]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Spreadsheet View')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Spreadsheet View')]/a"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Boolean"),
 			selenium.getText(

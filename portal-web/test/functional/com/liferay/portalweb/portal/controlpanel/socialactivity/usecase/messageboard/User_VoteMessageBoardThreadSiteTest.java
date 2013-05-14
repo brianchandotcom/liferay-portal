@@ -38,9 +38,9 @@ public class User_VoteMessageBoardThreadSiteTest extends BaseTestCase {
 				"//a[contains(@class,'aui-rating-thumb-up')]"));
 		selenium.clickAt("//a[contains(@class,'aui-rating-thumb-up')]",
 			RuntimeVariables.replace("Rate this as good."));
-		selenium.waitForText("//div[@class='aui-rating-label-element']",
+		selenium.waitForText("//div[@class='rating-label-element']",
 			"+1 (1 Vote)");
 		assertEquals(RuntimeVariables.replace("+1 (1 Vote)"),
-			selenium.getText("//div[@class='aui-rating-label-element']"));
+			selenium.getText("//div[@class='rating-label-element']"));
 	}
 }

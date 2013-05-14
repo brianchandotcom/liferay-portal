@@ -102,19 +102,19 @@ public class AddCalendarEventTagsSiteTest extends BaseTestCase {
 				selenium.clickAt("//button[@id='add']",
 					RuntimeVariables.replace("Add"));
 				selenium.waitForVisible(
-					"xPath=(//span[@class='aui-textboxlistentry-text'])[1]");
+					"xPath=(//span[@class='textboxlistentry-text'])[1]");
 				assertEquals(RuntimeVariables.replace("tag1"),
 					selenium.getText(
-						"xPath=(//span[@class='aui-textboxlistentry-text'])[1]"));
+						"xPath=(//span[@class='textboxlistentry-text'])[1]"));
 				selenium.type("//input[@title='Add Tags']",
 					RuntimeVariables.replace("tag2"));
 				selenium.clickAt("//button[@id='add']",
 					RuntimeVariables.replace("Add"));
 				selenium.waitForVisible(
-					"xPath=(//span[@class='aui-textboxlistentry-text'])[2]");
+					"xPath=(//span[@class='textboxlistentry-text'])[2]");
 				assertEquals(RuntimeVariables.replace("tag2"),
 					selenium.getText(
-						"xPath=(//span[@class='aui-textboxlistentry-text'])[2]"));
+						"xPath=(//span[@class='textboxlistentry-text'])[2]"));
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");

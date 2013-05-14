@@ -31,14 +31,14 @@ public class RateDMFolderDocumentAPTest extends BaseTestCase {
 		Thread.sleep(5000);
 
 		String voteCount = selenium.getFirstNumberIncrement(
-				"xPath=(//div[@class='aui-rating-label-element'])[2]");
+				"xPath=(//div[@class='rating-label-element'])[2]");
 		RuntimeVariables.setValue("voteCount", voteCount);
 		selenium.waitForVisible("//a[5]");
 		selenium.clickAt("//a[5]", RuntimeVariables.replace("5 Stars"));
-		selenium.waitForPartialText("xPath=(//div[@class='aui-rating-label-element'])[2]",
+		selenium.waitForPartialText("xPath=(//div[@class='rating-label-element'])[2]",
 			RuntimeVariables.getValue("voteCount"));
 		assertTrue(selenium.isPartialText(
-				"xPath=(//div[@class='aui-rating-label-element'])[2]",
+				"xPath=(//div[@class='rating-label-element'])[2]",
 				RuntimeVariables.getValue("voteCount")));
 	}
 }

@@ -50,19 +50,19 @@ public class AssignMembersRegRoleUserTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Members')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Assign Members')]");
 		assertEquals(RuntimeVariables.replace("Assign Members"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Members')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Members')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Assign Members')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Assign Members')]",
 			RuntimeVariables.replace("Assign Members"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Roles Regrole Name"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Available"),
 			selenium.getText(
-				"//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Available')]"));
-		selenium.clickAt("//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Available')]",
+				"//ul[@class='tabview-list']/li/span/a[contains(.,'Available')]"));
+		selenium.clickAt("//ul[@class='tabview-list']/li/span/a[contains(.,'Available')]",
 			RuntimeVariables.replace("Available"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@name='_128_keywords']",

@@ -44,11 +44,11 @@ public class ViewLocalizeWCStructureTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Administrar']/ul/li/strong/a",
 			RuntimeVariables.replace("Administrar"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Estructuras')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Estructuras')]");
 		assertEquals(RuntimeVariables.replace("Estructuras"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Estructuras')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Estructuras')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Estructuras')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Estructuras')]",
 			RuntimeVariables.replace("Estructuras"));
 		selenium.waitForVisible("//iframe[contains(@src,'Estructuras')]");
 		selenium.selectFrame("//iframe[contains(@src,'Estructuras')]");

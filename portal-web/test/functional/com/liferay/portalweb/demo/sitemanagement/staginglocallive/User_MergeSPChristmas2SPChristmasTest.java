@@ -51,18 +51,18 @@ public class User_MergeSPChristmas2SPChristmasTest extends BaseTestCase {
 			RuntimeVariables.replace("Manage Site Pages Variations"));
 		Thread.sleep(5000);
 		selenium.selectFrame(
-			"//div[@class='yui3-widget-bd aui-panel-bd aui-dialog-bd aui-dialog-iframe-bd']/iframe");
+			"//div[@class='yui3-widget-bd panel-bd dialog-bd dialog-iframe-bd']/iframe");
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
 				"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]"));
 		selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]",
 			RuntimeVariables.replace("Actions"));
-		selenium.waitForText("//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a[contains(.,'Merge')]",
+		selenium.waitForText("//div[@class='lfr-menu-list unstyled']/ul/li[4]/a[contains(.,'Merge')]",
 			"Merge");
 		assertEquals(RuntimeVariables.replace("Merge"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a[contains(.,'Merge')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a[contains(.,'Merge')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li[4]/a[contains(.,'Merge')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li[4]/a[contains(.,'Merge')]",
 			RuntimeVariables.replace("Merge"));
 		Thread.sleep(5000);
 		selenium.waitForVisible("//tr[3]/td[1]");

@@ -47,10 +47,10 @@ public class ViewMemberSOUserConnectionSiteTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"You have 1 connections in this site."),
 			selenium.getText(
-				"//div[@class='aui-layout contacts-count connections']"));
+				"//div[@class='layout contacts-count connections']"));
 		assertEquals(RuntimeVariables.replace("View all 2 users."),
-			selenium.getText("//div[@class='aui-layout contacts-count all']"));
-		selenium.clickAt("//div[@class='aui-layout contacts-count connections']",
+			selenium.getText("//div[@class='layout contacts-count all']"));
+		selenium.clickAt("//div[@class='layout contacts-count connections']",
 			RuntimeVariables.replace("You have 1 connections in this site."));
 		selenium.waitForText("//div[contains(@class, 'lfr-contact-name')]/a",
 			"User01, Social01");

@@ -36,11 +36,10 @@ public class AddSitesRestrictedTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a");
 		assertEquals(RuntimeVariables.replace("Blank Site"),
-			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a",
+			selenium.getText("//div[@class='lfr-menu-list unstyled']/ul/li/a"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a",
 			RuntimeVariables.replace("Blank Site"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_134_name']",

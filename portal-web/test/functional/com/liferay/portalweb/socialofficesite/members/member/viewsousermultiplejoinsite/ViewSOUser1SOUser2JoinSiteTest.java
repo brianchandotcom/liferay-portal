@@ -47,14 +47,13 @@ public class ViewSOUser1SOUser2JoinSiteTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"You have 1 connections in this site."),
 			selenium.getText(
-				"//div[@class='aui-layout contacts-count connections']"));
+				"//div[@class='layout contacts-count connections']"));
 		assertEquals(RuntimeVariables.replace(
 				"You are following 1 people in this site."),
-			selenium.getText(
-				"//div[@class='aui-layout contacts-count followings']"));
+			selenium.getText("//div[@class='layout contacts-count followings']"));
 		assertEquals(RuntimeVariables.replace("View all 3 users."),
-			selenium.getText("//div[@class='aui-layout contacts-count all']"));
-		selenium.clickAt("//div[@class='aui-layout contacts-count connections']",
+			selenium.getText("//div[@class='layout contacts-count all']"));
+		selenium.clickAt("//div[@class='layout contacts-count connections']",
 			RuntimeVariables.replace("You have 1 connections in this site."));
 		selenium.waitForText("//div[contains(@class, 'lfr-contact-name')]/a",
 			"User01, Social01");
@@ -62,7 +61,7 @@ public class ViewSOUser1SOUser2JoinSiteTest extends BaseTestCase {
 			selenium.getText("//div[contains(@class, 'lfr-contact-name')]/a"));
 		assertEquals(RuntimeVariables.replace("socialoffice01@liferay.com"),
 			selenium.getText("//div[contains(@class, 'lfr-contact-extra')]"));
-		selenium.clickAt("//div[@class='aui-layout contacts-count followings']",
+		selenium.clickAt("//div[@class='layout contacts-count followings']",
 			RuntimeVariables.replace("You are following 1 people in this site."));
 		selenium.waitForText("//div[contains(@class, 'lfr-contact-name')]/a",
 			"User02, Social02");

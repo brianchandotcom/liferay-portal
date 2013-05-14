@@ -35,11 +35,11 @@ public class SelectExistingDMFolderImageAPActionsTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Configuration')]");
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Configuration')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Configuration')]",
 			RuntimeVariables.replace("Configuration"));
 		selenium.waitForElementPresent(
 			"//iframe[contains(@id,'configurationIframeDialog')]");
@@ -55,12 +55,12 @@ public class SelectExistingDMFolderImageAPActionsTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Select Existing']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Select Existing"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Documents and Media Document')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Documents and Media Document')]");
 		assertEquals(RuntimeVariables.replace("Documents and Media Document"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Documents and Media Document')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Documents and Media Document')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Documents and Media Document')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Documents and Media Document')]"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("DM Folder Image Title"),
 			selenium.getText("//td[1]/a"));

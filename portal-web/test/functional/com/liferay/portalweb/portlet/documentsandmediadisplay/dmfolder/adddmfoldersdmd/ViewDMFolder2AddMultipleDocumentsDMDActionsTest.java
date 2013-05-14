@@ -39,11 +39,11 @@ public class ViewDMFolder2AddMultipleDocumentsDMDActionsTest
 		selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Multiple Documents')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Multiple Documents')]/a");
 		assertEquals(RuntimeVariables.replace("Multiple Documents"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Multiple Documents')]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Multiple Documents')]/a",
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Multiple Documents')]/a"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Multiple Documents')]/a",
 			RuntimeVariables.replace("Multiple Documents"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Add Multiple Documents"),

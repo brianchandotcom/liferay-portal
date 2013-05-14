@@ -46,11 +46,11 @@ public class ActivateStagingCommunitySiteTest extends BaseTestCase {
 						"//span[@title='Actions']/ul/li/strong/a/span"));
 				selenium.click("//span[@title='Actions']/ul/li/strong/a/span");
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
+					"//div[@class='lfr-menu-list unstyled']/ul/li[1]/a");
 				assertEquals(RuntimeVariables.replace("Edit Settings"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
+						"//div[@class='lfr-menu-list unstyled']/ul/li[1]/a"));
+				selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li[1]/a",
 					RuntimeVariables.replace("Edit Settings"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.isPartialText(

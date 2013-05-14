@@ -41,12 +41,12 @@ public class EditOrganizationTeamTest extends BaseTestCase {
 		selenium.clickAt("//a[contains(@id,'groupSelectorButton')]/span",
 			RuntimeVariables.replace("Site Selector"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization Name')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Organization Name')]");
 		assertEquals(RuntimeVariables.replace("Organization Name"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization Name')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Organization Name')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization Name')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Organization Name')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Site Memberships",
 			RuntimeVariables.replace("Site Memberships"));
@@ -74,12 +74,12 @@ public class EditOrganizationTeamTest extends BaseTestCase {
 		selenium.clickAt("//tr[contains(.,'Organization Team Name')]/td[3]/span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit')]");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_174_name']",
 			RuntimeVariables.replace("Organization Team Name Edit"));

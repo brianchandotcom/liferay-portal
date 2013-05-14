@@ -35,12 +35,12 @@ public class ConfigurePortletShowMetadataViewCountTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Configuration')]");
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Configuration')]"));
 		selenium.click(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Configuration')]");
 		selenium.waitForElementPresent(
 			"//iframe[contains(@id,'configurationIframeDialog')]");
 		selenium.selectFrame(
@@ -48,11 +48,11 @@ public class ConfigurePortletShowMetadataViewCountTest extends BaseTestCase {
 		selenium.waitForElementPresent(
 			"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 		selenium.waitForVisible(
-			"//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Display Settings')]");
+			"//ul[@class='tabview-list']/li/span/a[contains(.,'Display Settings')]");
 		assertEquals(RuntimeVariables.replace("Display Settings"),
 			selenium.getText(
-				"//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Display Settings')]"));
-		selenium.clickAt("//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Display Settings')]",
+				"//ul[@class='tabview-list']/li/span/a[contains(.,'Display Settings')]"));
+		selenium.clickAt("//ul[@class='tabview-list']/li/span/a[contains(.,'Display Settings')]",
 			RuntimeVariables.replace("Display Settings"));
 		selenium.waitForVisible("//select[@id='_86_availableMetadataFields']");
 		selenium.addSelection("//select[@id='_86_availableMetadataFields']",

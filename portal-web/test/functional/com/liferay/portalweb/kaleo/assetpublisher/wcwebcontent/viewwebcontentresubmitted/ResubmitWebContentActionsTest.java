@@ -57,15 +57,15 @@ public class ResubmitWebContentActionsTest extends BaseTestCase {
 		selenium.clickAt("//tr[contains(.,'Web Content Name')]/td[6]/span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Resubmit')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Resubmit')]");
 		assertEquals(RuntimeVariables.replace("Resubmit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Resubmit')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Resubmit')]"));
 		selenium.click(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Resubmit')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Resubmit')]");
 		selenium.waitForVisible(
-			"//span[@class='aui-toolbar-content']/button[contains(.,'OK')]");
-		selenium.clickAt("//span[@class='aui-toolbar-content']/button[contains(.,'OK')]",
+			"//span[@class='toolbar-content']/button[contains(.,'OK')]");
+		selenium.clickAt("//span[@class='toolbar-content']/button[contains(.,'OK')]",
 			RuntimeVariables.replace("OK"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForText("//div[@class='portlet-msg-success']",

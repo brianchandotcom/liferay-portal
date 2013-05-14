@@ -46,11 +46,10 @@ public class ViewMemberSOUserFollowingSiteTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"You are following 1 people in this site."),
-			selenium.getText(
-				"//div[@class='aui-layout contacts-count followings']"));
+			selenium.getText("//div[@class='layout contacts-count followings']"));
 		assertEquals(RuntimeVariables.replace("View all 2 users."),
-			selenium.getText("//div[@class='aui-layout contacts-count all']"));
-		selenium.clickAt("//div[@class='aui-layout contacts-count followings']",
+			selenium.getText("//div[@class='layout contacts-count all']"));
+		selenium.clickAt("//div[@class='layout contacts-count followings']",
 			RuntimeVariables.replace("You are following 1 people in this site."));
 		selenium.waitForText("//div[contains(@class, 'lfr-contact-name')]/a",
 			"User01, Social01");

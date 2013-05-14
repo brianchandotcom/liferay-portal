@@ -34,11 +34,11 @@ public class AddDMMetadataSetSongInformationTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Manage']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Manage"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Metadata Sets')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Metadata Sets')]");
 		assertEquals(RuntimeVariables.replace("Metadata Sets"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Metadata Sets')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Metadata Sets')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Metadata Sets')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Metadata Sets')]",
 			RuntimeVariables.replace("Metadata Sets"));
 		selenium.waitForVisible(
 			"//iframe[contains(@src,'DLFileEntryMetadata')]");
@@ -51,7 +51,7 @@ public class AddDMMetadataSetSongInformationTest extends BaseTestCase {
 		selenium.type("//input[@id='_166_name_en_US']",
 			RuntimeVariables.replace("Song Information"));
 		selenium.dragAndDropToObject("//ul[contains(@class,'aui-diagram-builder-fields-container')]/li/div[.='Text']",
-			"//div[@class='aui-diagram-builder-drop-container']");
+			"//div[@class='diagram-builder-drop-container']");
 		selenium.waitForVisible(
 			"//div[contains(@id,'fields_field_aui')]/div/label");
 		assertEquals(RuntimeVariables.replace("Text"),
@@ -94,7 +94,7 @@ public class AddDMMetadataSetSongInformationTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Yes"),
 			selenium.getText("//tr[4]/td[2]/div"));
 		assertEquals(RuntimeVariables.replace("*"),
-			selenium.getText("//span[@class='aui-form-builder-required']"));
+			selenium.getText("//span[@class='form-builder-required']"));
 		assertEquals(RuntimeVariables.replace("Name"),
 			selenium.getText("//tr[5]/td[1]/div"));
 		assertTrue(selenium.isPartialText("//tr[5]/td[2]/div", "text"));
@@ -113,7 +113,7 @@ public class AddDMMetadataSetSongInformationTest extends BaseTestCase {
 		selenium.waitForVisible(
 			"//ul[contains(@class,'aui-diagram-builder-fields-container')]/li/div[.='Number']");
 		selenium.dragAndDropToObject("//ul[contains(@class,'aui-diagram-builder-fields-container')]/li/div[.='Number']",
-			"//div[@class='aui-diagram-builder-drop-container']");
+			"//div[@class='diagram-builder-drop-container']");
 		selenium.waitForVisible(
 			"xPath=(//div[contains(@id,'fields_field_aui')]/div/label)[2]");
 		assertEquals(RuntimeVariables.replace("Number"),

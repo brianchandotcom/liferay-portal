@@ -78,8 +78,8 @@ public class AssignToMeTaskWebContentDetailsTest extends BaseTestCase {
 				selenium.clickAt("//a[@id='_151_workflowTasksSearchContainer_1_menu_assign-to-me_1']",
 					RuntimeVariables.replace("Assign to Me"));
 				selenium.waitForVisible(
-					"//span[@class='aui-toolbar-content']/button[contains(.,'OK')]");
-				selenium.clickAt("//span[@class='aui-toolbar-content']/button[contains(.,'OK')]",
+					"//span[@class='toolbar-content']/button[contains(.,'OK')]");
+				selenium.clickAt("//span[@class='toolbar-content']/button[contains(.,'OK')]",
 					RuntimeVariables.replace("OK"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForText("//div[@class='portlet-msg-success']",

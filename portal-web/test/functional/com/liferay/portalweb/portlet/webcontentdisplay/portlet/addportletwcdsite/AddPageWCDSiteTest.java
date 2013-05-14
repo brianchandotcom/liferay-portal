@@ -44,12 +44,12 @@ public class AddPageWCDSiteTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Pages')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Manage Pages')]/a");
 		assertEquals(RuntimeVariables.replace("Manage Pages"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Pages')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Manage Pages')]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Pages')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Manage Pages')]/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.waitForVisible("link=Public Pages");
 		selenium.clickAt("link=Public Pages",
@@ -70,9 +70,9 @@ public class AddPageWCDSiteTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.waitForVisible(
-			"//ul[@class='aui-tree-container']/li/div/div/a[contains(.,'Web Content Display Test Page')]");
+			"//ul[@class='tree-container']/li/div/div/a[contains(.,'Web Content Display Test Page')]");
 		assertEquals(RuntimeVariables.replace("Web Content Display Test Page"),
 			selenium.getText(
-				"//ul[@class='aui-tree-container']/li/div/div/a[contains(.,'Web Content Display Test Page')]"));
+				"//ul[@class='tree-container']/li/div/div/a[contains(.,'Web Content Display Test Page')]"));
 	}
 }

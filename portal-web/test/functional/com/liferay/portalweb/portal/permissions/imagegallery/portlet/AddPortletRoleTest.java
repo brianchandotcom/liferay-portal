@@ -40,12 +40,12 @@ public class AddPortletRoleTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Regular Role')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Regular Role')]/a");
 		assertEquals(RuntimeVariables.replace("Regular Role"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Regular Role')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Regular Role')]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Regular Role')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Regular Role')]/a"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_128_name']",
 			RuntimeVariables.replace("Portlet"));

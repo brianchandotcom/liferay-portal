@@ -35,20 +35,20 @@ public class Member_AssertConfigurationTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 			RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[2]/a");
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+				"//div[@class='lfr-menu-list unstyled']/ul/li[2]/a"));
+		selenium.click("//div[@class='lfr-menu-list unstyled']/ul/li[2]/a");
 		selenium.waitForVisible("//input[@value='Save']");
 		assertEquals(RuntimeVariables.replace("Setup"),
-			selenium.getText("//ul[@class='aui-tabview-list']/li[1]/span/a"));
+			selenium.getText("//ul[@class='tabview-list']/li[1]/span/a"));
 		assertEquals(RuntimeVariables.replace("Communication"),
-			selenium.getText("//ul[@class='aui-tabview-list']/li[2]/span/a"));
+			selenium.getText("//ul[@class='tabview-list']/li[2]/span/a"));
 		assertEquals(RuntimeVariables.replace("Sharing"),
-			selenium.getText("//ul[@class='aui-tabview-list']/li[3]/span/a"));
+			selenium.getText("//ul[@class='tabview-list']/li[3]/span/a"));
 		assertEquals(RuntimeVariables.replace("Scope"),
-			selenium.getText("//ul[@class='aui-tabview-list']/li[4]/span/a"));
+			selenium.getText("//ul[@class='tabview-list']/li[4]/span/a"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

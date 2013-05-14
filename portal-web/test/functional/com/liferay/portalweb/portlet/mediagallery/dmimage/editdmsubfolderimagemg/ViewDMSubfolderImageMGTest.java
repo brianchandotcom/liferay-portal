@@ -51,12 +51,12 @@ public class ViewDMSubfolderImageMGTest extends BaseTestCase {
 		selenium.clickAt("//span[@class='image-title']",
 			RuntimeVariables.replace("DM Subfolder Image Title Edit"));
 		Thread.sleep(1000);
-		selenium.waitForVisible("//img[@class='aui-image-viewer-image']");
+		selenium.waitForVisible("//img[@class='image-viewer-image']");
 		assertEquals(RuntimeVariables.replace(
 				"DM Subfolder Image Title Edit - DM Subfolder Image Description Edit"),
-			selenium.getText("//div[@class='aui-image-viewer-caption']"));
+			selenium.getText("//div[@class='image-viewer-caption']"));
 		assertEquals(RuntimeVariables.replace("Image 1 of 1"),
-			selenium.getText("//div[@class='aui-image-viewer-info']"));
+			selenium.getText("//div[@class='image-viewer-info']"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='lfr-image-gallery-actions']/div/div/span[1]/a/img[@alt='Download (13k)']"));
 		assertTrue(selenium.isVisible(
@@ -68,8 +68,8 @@ public class ViewDMSubfolderImageMGTest extends BaseTestCase {
 		assertTrue(selenium.isVisible(
 				"//div[@class='lfr-image-gallery-actions']/div/div/span[5]/a/img[@alt='Move to the Recycle Bin']"));
 		assertTrue(selenium.isVisible(
-				"//span[@class='aui-image-gallery-player-content']/span/span/button[@id='play']"));
+				"//span[@class='image-gallery-player-content']/span/span/button[@id='play']"));
 		assertTrue(selenium.isVisible(
-				"//span[@class='aui-image-gallery-player-content']/span/span/button[@id='pause']"));
+				"//span[@class='image-gallery-player-content']/span/span/button[@id='pause']"));
 	}
 }

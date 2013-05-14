@@ -39,11 +39,11 @@ public class ConfigurePortletAPEnableRatingsTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
 					RuntimeVariables.replace("Options"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Configuration')]");
 				assertEquals(RuntimeVariables.replace("Configuration"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Configuration')]"));
+				selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Configuration')]",
 					RuntimeVariables.replace("Configuration"));
 				selenium.waitForVisible(
 					"//iframe[contains(@id,'configurationIframeDialog')]");
@@ -52,11 +52,11 @@ public class ConfigurePortletAPEnableRatingsTest extends BaseTestCase {
 				selenium.waitForElementPresent(
 					"//script[contains(@src,'/liferay/navigation_interaction.js')]");
 				selenium.waitForVisible(
-					"//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Display Settings')]");
+					"//ul[@class='tabview-list']/li/span/a[contains(.,'Display Settings')]");
 				assertEquals(RuntimeVariables.replace("Display Settings"),
 					selenium.getText(
-						"//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Display Settings')]"));
-				selenium.clickAt("//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Display Settings')]",
+						"//ul[@class='tabview-list']/li/span/a[contains(.,'Display Settings')]"));
+				selenium.clickAt("//ul[@class='tabview-list']/li/span/a[contains(.,'Display Settings')]",
 					RuntimeVariables.replace("Display Settings"));
 				selenium.waitForVisible(
 					"//input[@id='_86_enableRatingsCheckbox']");

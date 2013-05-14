@@ -73,8 +73,8 @@ public class ResubmitTaskWebContentDetailsTest extends BaseTestCase {
 				selenium.clickAt("//a[@id='_158_workflowTasksSearchContainer_1_menu_resubmit_1']",
 					RuntimeVariables.replace("Resubmit"));
 				selenium.waitForVisible(
-					"//span[@class='aui-toolbar-content']/button[contains(.,'OK')]");
-				selenium.clickAt("//span[@class='aui-toolbar-content']/button[contains(.,'OK')]",
+					"//span[@class='toolbar-content']/button[contains(.,'OK')]");
+				selenium.clickAt("//span[@class='toolbar-content']/button[contains(.,'OK')]",
 					RuntimeVariables.replace("OK"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForText("//div[@class='portlet-msg-success']",

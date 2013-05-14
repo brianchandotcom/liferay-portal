@@ -56,7 +56,7 @@ public class ViewWDFrontPageChildPageMulitpleTest extends BaseTestCase {
 			selenium.getText(
 				"//ul[@class='top-links-navigation']/li/span[contains(.,'Draft Pages')]"));
 		assertTrue(selenium.isVisible(
-				"//span[@class='aui-search-bar']/span/span/span/input"));
+				"//span[@class='search-bar']/span/span/span/input"));
 		assertTrue(selenium.isVisible("//input[@title='Search Pages']"));
 		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage1 Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
@@ -89,11 +89,10 @@ public class ViewWDFrontPageChildPageMulitpleTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Comments"),
 			selenium.getText("//div[@id='wikiCommentsPanel']/div/div/span"));
 		assertTrue(selenium.isPartialText(
-				"//fieldset[@class='aui-fieldset add-comment ']/div",
+				"//fieldset[@class='fieldset add-comment ']/div",
 				"No comments yet."));
 		assertEquals(RuntimeVariables.replace("Be the first."),
-			selenium.getText(
-				"//fieldset[@class='aui-fieldset add-comment ']/div/a"));
+			selenium.getText("//fieldset[@class='fieldset add-comment ']/div/a"));
 		assertEquals(RuntimeVariables.replace("Subscribe to Comments"),
 			selenium.getText("//span[@class='subscribe-link']/a/span"));
 		assertEquals(RuntimeVariables.replace("\u00ab Back to FrontPage"),
@@ -122,7 +121,7 @@ public class ViewWDFrontPageChildPageMulitpleTest extends BaseTestCase {
 			selenium.getText(
 				"//ul[@class='top-links-navigation']/li/span[contains(.,'Draft Pages')]"));
 		assertTrue(selenium.isVisible(
-				"//span[@class='aui-search-bar']/span/span/span/input"));
+				"//span[@class='search-bar']/span/span/span/input"));
 		assertTrue(selenium.isVisible("//input[@title='Search Pages']"));
 		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage2 Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
@@ -155,11 +154,10 @@ public class ViewWDFrontPageChildPageMulitpleTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Comments"),
 			selenium.getText("//div[@id='wikiCommentsPanel']/div/div/span"));
 		assertTrue(selenium.isPartialText(
-				"//fieldset[@class='aui-fieldset add-comment ']/div",
+				"//fieldset[@class='fieldset add-comment ']/div",
 				"No comments yet."));
 		assertEquals(RuntimeVariables.replace("Be the first."),
-			selenium.getText(
-				"//fieldset[@class='aui-fieldset add-comment ']/div/a"));
+			selenium.getText("//fieldset[@class='fieldset add-comment ']/div/a"));
 		assertEquals(RuntimeVariables.replace("Subscribe to Comments"),
 			selenium.getText("//span[@class='subscribe-link']/a/span"));
 		assertEquals(RuntimeVariables.replace("\u00ab Back to FrontPage"),
@@ -188,7 +186,7 @@ public class ViewWDFrontPageChildPageMulitpleTest extends BaseTestCase {
 			selenium.getText(
 				"//ul[@class='top-links-navigation']/li/span[contains(.,'Draft Pages')]"));
 		assertTrue(selenium.isVisible(
-				"//span[@class='aui-search-bar']/span/span/span/input"));
+				"//span[@class='search-bar']/span/span/span/input"));
 		assertTrue(selenium.isVisible("//input[@title='Search Pages']"));
 		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage3 Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
@@ -221,11 +219,10 @@ public class ViewWDFrontPageChildPageMulitpleTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Comments"),
 			selenium.getText("//div[@id='wikiCommentsPanel']/div/div/span"));
 		assertTrue(selenium.isPartialText(
-				"//fieldset[@class='aui-fieldset add-comment ']/div",
+				"//fieldset[@class='fieldset add-comment ']/div",
 				"No comments yet."));
 		assertEquals(RuntimeVariables.replace("Be the first."),
-			selenium.getText(
-				"//fieldset[@class='aui-fieldset add-comment ']/div/a"));
+			selenium.getText("//fieldset[@class='fieldset add-comment ']/div/a"));
 		assertEquals(RuntimeVariables.replace("Subscribe to Comments"),
 			selenium.getText("//span[@class='subscribe-link']/a/span"));
 	}

@@ -49,11 +49,11 @@ public class AddMembersSoccerAdminSiteBWCTest extends BaseTestCase {
 		selenium.clickAt("//span[contains(.,'Add Members')]/ul/li/strong/a",
 			RuntimeVariables.replace("Add Members"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'User')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'User')]/a");
 		assertEquals(RuntimeVariables.replace("User"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'User')]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'User')]/a",
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'User')]/a"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'User')]/a",
 			RuntimeVariables.replace("User"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isVisible("//input[@name='_174_keywords']"));

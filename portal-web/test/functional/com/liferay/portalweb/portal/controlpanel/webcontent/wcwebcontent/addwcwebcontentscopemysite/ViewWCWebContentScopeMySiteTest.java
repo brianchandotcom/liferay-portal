@@ -60,11 +60,11 @@ public class ViewWCWebContentScopeMySiteTest extends BaseTestCase {
 		selenium.clickAt("//a[@id='_160_groupSelectorButton']",
 			RuntimeVariables.replace("Liferay"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Global')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Global')]");
 		assertEquals(RuntimeVariables.replace("Global"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Global')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Global')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Global')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Global')]",
 			RuntimeVariables.replace("Global"));
 		selenium.waitForText("//a[@id='_160_groupSelectorButton']", "Global");
 		selenium.clickAt("link=Web Content",
@@ -89,11 +89,11 @@ public class ViewWCWebContentScopeMySiteTest extends BaseTestCase {
 		selenium.clickAt("//a[@id='_160_groupSelectorButton']",
 			RuntimeVariables.replace("Liferay"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Personal Site')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Personal Site')]");
 		assertEquals(RuntimeVariables.replace("Joe Bloggs's Personal Site"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Personal Site')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Personal Site')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Personal Site')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Personal Site')]",
 			RuntimeVariables.replace("Joe Bloggs's Personal Site"));
 		selenium.waitForText("//a[@id='_160_groupSelectorButton']",
 			"Joe Bloggs's Personal...");

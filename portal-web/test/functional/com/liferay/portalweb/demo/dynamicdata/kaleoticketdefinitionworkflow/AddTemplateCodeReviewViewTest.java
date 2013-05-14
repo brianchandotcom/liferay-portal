@@ -61,36 +61,36 @@ public class AddTemplateCodeReviewViewTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Templates')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Manage Templates')]/a");
 		assertEquals(RuntimeVariables.replace("Manage Templates"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Templates')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Manage Templates')]/a"));
 		selenium.click(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Templates')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Manage Templates')]/a");
 		selenium.waitForVisible("link=Add Detail Template");
 		selenium.clickAt("link=Add Detail Template",
 			RuntimeVariables.replace("Add Detail Template"));
-		selenium.waitForVisible("//div[@class='aui-diagram-builder-canvas']");
+		selenium.waitForVisible("//div[@class='diagram-builder-canvas']");
 		selenium.type("//input[@id='_166_name_en_US']",
 			RuntimeVariables.replace("Code Review View"));
 		selenium.select("//select[@id='_166_mode']",
 			RuntimeVariables.replace("Edit"));
 		assertEquals(RuntimeVariables.replace("Tested Revision"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-canvas']/div/div[7]/div[1]/label"));
-		selenium.clickAt("//div[@class='aui-diagram-builder-canvas']/div/div[7]",
+				"//div[@class='diagram-builder-canvas']/div/div[7]/div[1]/label"));
+		selenium.clickAt("//div[@class='diagram-builder-canvas']/div/div[7]",
 			RuntimeVariables.replace("Tested Revision"));
 		selenium.click(
-			"//div[@class='aui-diagram-builder-canvas']/div/div[7]/div[3]/span/span/button[2]");
+			"//div[@class='diagram-builder-canvas']/div/div[7]/div[3]/span/span/button[2]");
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete the selected entries[\\s\\S]$"));
 		assertEquals(RuntimeVariables.replace("Tested Status"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-canvas']/div/div[7]/div[1]/label"));
-		selenium.clickAt("//div[@class='aui-diagram-builder-canvas']/div/div[7]",
+				"//div[@class='diagram-builder-canvas']/div/div[7]/div[1]/label"));
+		selenium.clickAt("//div[@class='diagram-builder-canvas']/div/div[7]",
 			RuntimeVariables.replace("Tested Status"));
 		selenium.click(
-			"//div[@class='aui-diagram-builder-canvas']/div/div[7]/div[2]/span/span/button[2]");
+			"//div[@class='diagram-builder-canvas']/div/div[7]/div[2]/span/span/button[2]");
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete the selected entries[\\s\\S]$"));
 		selenium.clickAt("//input[@value='Save']",

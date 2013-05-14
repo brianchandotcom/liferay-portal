@@ -43,13 +43,13 @@ public class RateMBCategoryThreadTest extends BaseTestCase {
 			selenium.getText(
 				"//div[@class='taglib-ratings thumbs']/div/div/div"));
 		assertTrue(selenium.isVisible(
-				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']"));
+				"//a[@class='rating-element rating-element-off rating-thumb-up']"));
 		assertTrue(selenium.isVisible(
-				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down']"));
+				"//a[@class='rating-element rating-element-off rating-thumb-down']"));
 		assertTrue(selenium.isElementNotPresent(
-				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up aui-rating-element-on']"));
+				"//a[@class='rating-element rating-element-off rating-thumb-up rating-element-on']"));
 		assertTrue(selenium.isElementNotPresent(
-				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down aui-rating-element-on']"));
+				"//a[@class='rating-element rating-element-off rating-thumb-down rating-element-on']"));
 		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a[1]",
 			RuntimeVariables.replace("Thumb Up"));
 		selenium.waitForText("//div[@class='taglib-ratings thumbs']/div/div/div",
@@ -58,13 +58,13 @@ public class RateMBCategoryThreadTest extends BaseTestCase {
 			selenium.getText(
 				"//div[@class='taglib-ratings thumbs']/div/div/div"));
 		assertTrue(selenium.isElementNotPresent(
-				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']"));
+				"//a[@class='rating-element rating-element-off rating-thumb-up']"));
 		assertTrue(selenium.isVisible(
-				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down']"));
+				"//a[@class='rating-element rating-element-off rating-thumb-down']"));
 		assertTrue(selenium.isVisible(
-				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up aui-rating-element-on']"));
+				"//a[@class='rating-element rating-element-off rating-thumb-up rating-element-on']"));
 		assertTrue(selenium.isElementNotPresent(
-				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down aui-rating-element-on']"));
+				"//a[@class='rating-element rating-element-off rating-thumb-down rating-element-on']"));
 		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a[2]",
 			RuntimeVariables.replace("Thumb Down"));
 		selenium.waitForText("//div[@class='taglib-ratings thumbs']/div/div/div",
@@ -73,13 +73,13 @@ public class RateMBCategoryThreadTest extends BaseTestCase {
 			selenium.getText(
 				"//div[@class='taglib-ratings thumbs']/div/div/div"));
 		assertTrue(selenium.isVisible(
-				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']"));
+				"//a[@class='rating-element rating-element-off rating-thumb-up']"));
 		assertTrue(selenium.isElementNotPresent(
-				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down']"));
+				"//a[@class='rating-element rating-element-off rating-thumb-down']"));
 		assertTrue(selenium.isElementNotPresent(
-				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up aui-rating-element-on']"));
+				"//a[@class='rating-element rating-element-off rating-thumb-up rating-element-on']"));
 		assertTrue(selenium.isVisible(
-				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down aui-rating-element-on']"));
+				"//a[@class='rating-element rating-element-off rating-thumb-down rating-element-on']"));
 		selenium.clickAt("//div[@class='taglib-ratings thumbs']/div/div/a[2]",
 			RuntimeVariables.replace("Thumb Down"));
 		selenium.waitForText("//div[@class='taglib-ratings thumbs']/div/div/div",
@@ -88,12 +88,12 @@ public class RateMBCategoryThreadTest extends BaseTestCase {
 			selenium.getText(
 				"//div[@class='taglib-ratings thumbs']/div/div/div"));
 		assertTrue(selenium.isVisible(
-				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']"));
+				"//a[@class='rating-element rating-element-off rating-thumb-up']"));
 		assertTrue(selenium.isVisible(
-				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down']"));
+				"//a[@class='rating-element rating-element-off rating-thumb-down']"));
 		assertTrue(selenium.isElementNotPresent(
-				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up aui-rating-element-on']"));
+				"//a[@class='rating-element rating-element-off rating-thumb-up rating-element-on']"));
 		assertTrue(selenium.isElementNotPresent(
-				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down aui-rating-element-on']"));
+				"//a[@class='rating-element rating-element-off rating-thumb-down rating-element-on']"));
 	}
 }

@@ -34,11 +34,11 @@ public class AddNewBMFolderBookmarkAPActionsTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Add New']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add New"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Bookmarks Entry')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Bookmarks Entry')]");
 		assertEquals(RuntimeVariables.replace("Bookmarks Entry"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Bookmarks Entry')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Bookmarks Entry')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Bookmarks Entry')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Bookmarks Entry')]",
 			RuntimeVariables.replace("Bookmarks Entry"));
 		selenium.waitForVisible("//iframe[contains(@id,'editAsset')]");
 		selenium.selectFrame("//iframe[contains(@id,'editAsset')]");

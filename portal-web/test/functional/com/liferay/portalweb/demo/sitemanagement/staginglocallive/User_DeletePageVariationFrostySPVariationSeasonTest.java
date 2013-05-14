@@ -77,7 +77,7 @@ public class User_DeletePageVariationFrostySPVariationSeasonTest
 					RuntimeVariables.replace("Manage Page Variations"));
 				Thread.sleep(5000);
 				selenium.selectFrame(
-					"//div[@class='yui3-widget-bd aui-panel-bd aui-dialog-bd aui-dialog-iframe-bd']/iframe");
+					"//div[@class='yui3-widget-bd panel-bd dialog-bd dialog-iframe-bd']/iframe");
 				selenium.waitForVisible(
 					"//span[@title='Actions']/ul/li/strong/a/span");
 				assertEquals(RuntimeVariables.replace("Actions"),
@@ -85,13 +85,13 @@ public class User_DeletePageVariationFrostySPVariationSeasonTest
 						"//span[@title='Actions']/ul/li/strong/a/span"));
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
-				selenium.waitForText("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a[contains(.,'Delete')]",
+				selenium.waitForText("//div[@class='lfr-menu-list unstyled']/ul/li[2]/a[contains(.,'Delete')]",
 					"Delete");
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a[contains(.,'Delete')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li[2]/a[contains(.,'Delete')]"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a[contains(.,'Delete')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li[2]/a[contains(.,'Delete')]"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));

@@ -55,11 +55,11 @@ public class AssignMembersOrgRoleUserTest extends BaseTestCase {
 		selenium.clickAt("//tr[contains(.,'Organization Name')]/td[4]/span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Organization Role')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Assign Organization Role')]");
 		assertEquals(RuntimeVariables.replace("Assign Organization Roles"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Organization Role')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Organization Role')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Assign Organization Role')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Assign Organization Role')]",
 			RuntimeVariables.replace("Assign Organization Roles"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Organization Name"),
@@ -75,8 +75,8 @@ public class AssignMembersOrgRoleUserTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Available"),
 			selenium.getText(
-				"//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Available')]"));
-		selenium.clickAt("//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Available')]",
+				"//ul[@class='tabview-list']/li/span/a[contains(.,'Available')]"));
+		selenium.clickAt("//ul[@class='tabview-list']/li/span/a[contains(.,'Available')]",
 			RuntimeVariables.replace("Available"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@name='_125_keywords']",

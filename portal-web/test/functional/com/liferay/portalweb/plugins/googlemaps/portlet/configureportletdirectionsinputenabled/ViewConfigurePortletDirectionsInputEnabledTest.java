@@ -35,7 +35,7 @@ public class ViewConfigurePortletDirectionsInputEnabledTest extends BaseTestCase
 		assertTrue(selenium.isVisible("//input[@value='Get Directions']"));
 		assertEquals(RuntimeVariables.replace(
 				"From 1220 Brea Canyon Road, Diamond Bar, CA, 91789"),
-			selenium.getText("//div[@class='aui-field-wrapper-content']"));
+			selenium.getText("//div[@class='field-wrapper-content']"));
 		selenium.clickAt("//input[@value='Get Directions']",
 			RuntimeVariables.replace("Get Directions"));
 		Thread.sleep(5000);

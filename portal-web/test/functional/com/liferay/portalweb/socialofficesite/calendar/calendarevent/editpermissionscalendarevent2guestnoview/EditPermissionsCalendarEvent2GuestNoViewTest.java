@@ -66,11 +66,11 @@ public class EditPermissionsCalendarEvent2GuestNoViewTest extends BaseTestCase {
 				selenium.clickAt("xPath=(//td[contains(.,'Actions')]/span/ul/li/strong/a)[2]",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Permissions')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Permissions')]");
 				assertEquals(RuntimeVariables.replace("Permissions"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Permissions')]"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Permissions')]",
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Permissions')]"));
+				selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Permissions')]",
 					RuntimeVariables.replace("Permissions"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForVisible("//input[@id='guest_ACTION_VIEW']");

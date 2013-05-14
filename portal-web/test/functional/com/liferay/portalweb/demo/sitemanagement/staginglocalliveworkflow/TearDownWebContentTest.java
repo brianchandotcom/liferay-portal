@@ -37,12 +37,12 @@ public class TearDownWebContentTest extends BaseTestCase {
 				selenium.clickAt("//strong/a",
 					RuntimeVariables.replace("liferay.com"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a");
+					"//div[@class='lfr-menu-list unstyled']/ul/li[3]/a");
 				assertEquals(RuntimeVariables.replace("Community Site Test"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li[3]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li[3]/a"));
 				selenium.waitForPageToLoad("30000");
 				selenium.clickAt("link=Web Content",
 					RuntimeVariables.replace("Web Content"));

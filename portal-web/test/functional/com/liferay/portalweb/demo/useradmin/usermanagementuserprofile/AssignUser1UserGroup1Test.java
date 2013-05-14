@@ -51,11 +51,11 @@ public class AssignUser1UserGroup1Test extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a");
+					"//div[@class='lfr-menu-list unstyled']/ul/li[6]/a");
 				assertEquals(RuntimeVariables.replace("Assign Members"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a",
+						"//div[@class='lfr-menu-list unstyled']/ul/li[6]/a"));
+				selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li[6]/a",
 					RuntimeVariables.replace("Assign Members"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Available"),

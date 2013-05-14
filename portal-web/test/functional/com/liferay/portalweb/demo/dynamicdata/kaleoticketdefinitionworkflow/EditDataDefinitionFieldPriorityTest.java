@@ -61,19 +61,19 @@ public class EditDataDefinitionFieldPriorityTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Edit')]/a");
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a",
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Edit')]/a"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Edit')]/a",
 			RuntimeVariables.replace("Edit"));
-		selenium.waitForVisible("//div[@class='aui-diagram-builder-canvas']");
+		selenium.waitForVisible("//div[@class='diagram-builder-canvas']");
 		assertEquals(RuntimeVariables.replace("Select"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-canvas']/div/div[1]/div/label"));
-		selenium.clickAt("//div[@class='aui-diagram-builder-canvas']/div/div[1]",
+				"//div[@class='diagram-builder-canvas']/div/div[1]/div/label"));
+		selenium.clickAt("//div[@class='diagram-builder-canvas']/div/div[1]",
 			RuntimeVariables.replace("Select"));
-		selenium.clickAt("//div[@class='aui-diagram-builder-canvas']/div/div[1]",
+		selenium.clickAt("//div[@class='diagram-builder-canvas']/div/div[1]",
 			RuntimeVariables.replace("Field"));
 		selenium.waitForVisible("xPath=(//button[@id='editEvent'])[1]");
 		selenium.clickAt("xPath=(//button[@id='editEvent'])[1]",
@@ -108,8 +108,8 @@ public class EditDataDefinitionFieldPriorityTest extends BaseTestCase {
 			"//div[@class='yui3-widget-bd']/div/div[2]/input[1]");
 		assertEquals(RuntimeVariables.replace("Add option"),
 			selenium.getText(
-				"//a[@class='aui-celleditor-edit-link aui-celleditor-edit-add-option']"));
-		selenium.clickAt("//a[@class='aui-celleditor-edit-link aui-celleditor-edit-add-option']",
+				"//a[@class='celleditor-edit-link celleditor-edit-add-option']"));
+		selenium.clickAt("//a[@class='celleditor-edit-link celleditor-edit-add-option']",
 			RuntimeVariables.replace("Add option"));
 		assertTrue(selenium.isVisible(
 				"//div[@class='yui3-widget-bd']/div[2]/div[5]/input"));

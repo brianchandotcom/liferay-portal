@@ -59,11 +59,11 @@ public class AssignToUserTaskMWTActionsTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign to...')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Assign to...')]");
 		assertEquals(RuntimeVariables.replace("Assign to..."),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign to...')]"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign to...')]",
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Assign to...')]"));
+		selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Assign to...')]",
 			RuntimeVariables.replace("Assign to..."));
 		selenium.waitForVisible("//select[@id='_153_assigneeUserId']");
 		selenium.select("//select[@id='_153_assigneeUserId']",

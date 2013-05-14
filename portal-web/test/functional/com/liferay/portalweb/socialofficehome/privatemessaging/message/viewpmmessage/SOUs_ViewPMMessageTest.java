@@ -46,7 +46,7 @@ public class SOUs_ViewPMMessageTest extends BaseTestCase {
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Between Joe Bloggs And you"),
 			selenium.getText(
-				"//div[@class='aui-layout-content thread-info-content ']"));
+				"//div[@class='layout-content thread-info-content ']"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText(
 				"xPath=(//span[@class='name'])[contains(.,'Joe Bloggs')]"));

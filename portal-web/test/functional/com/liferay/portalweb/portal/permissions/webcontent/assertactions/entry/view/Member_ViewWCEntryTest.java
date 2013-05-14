@@ -44,10 +44,10 @@ public class Member_ViewWCEntryTest extends BaseTestCase {
 		selenium.clickAt("//div[@data-title='WC WebContent Title']/span[@class='entry-action overlay']/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'View')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'View')]");
 		assertEquals(RuntimeVariables.replace("View (Opens New Window)"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'View')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'View')]"));
 		selenium.clickAt("//a[@class='entry-link']/span",
 			RuntimeVariables.replace("WC WebContent Title"));
 		selenium.waitForPageToLoad("30000");

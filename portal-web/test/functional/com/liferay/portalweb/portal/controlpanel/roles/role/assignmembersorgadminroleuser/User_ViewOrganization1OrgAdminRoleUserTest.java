@@ -76,25 +76,25 @@ public class User_ViewOrganization1OrgAdminRoleUserTest extends BaseTestCase {
 			RuntimeVariables.replace("Actions"));
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Edit')]"));
 		assertEquals(RuntimeVariables.replace("Assign Organization Roles"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Organization Roles')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Assign Organization Roles')]"));
 		assertEquals(RuntimeVariables.replace("Assign Users"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Assign Users')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Assign Users')]"));
 		assertEquals(RuntimeVariables.replace("Add User"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Add User')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Add User')]"));
 		assertEquals(RuntimeVariables.replace("Add Regular Organization"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Add Regular Organization')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Add Regular Organization')]"));
 		assertEquals(RuntimeVariables.replace("Add Location"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Add Location')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Add Location')]"));
 		assertEquals(RuntimeVariables.replace("Delete"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Delete')]"));
 		assertEquals(RuntimeVariables.replace("Showing 1 result."),
 			selenium.getText("//div[@class='search-results']"));
 	}

@@ -45,12 +45,12 @@ public class TearDownCommunityWebContentTest extends BaseTestCase {
 				selenium.clickAt("//a[@id='_160_groupSelectorButton']/span",
 					RuntimeVariables.replace("Scope Selector"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Community Name')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Community Name')]");
 				assertEquals(RuntimeVariables.replace("Community Name"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Community Name')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Community Name')]"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Community Name')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Community Name')]"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForText("//a[@id='_160_groupSelectorButton']/span",
 					"Community Name");
@@ -83,11 +83,11 @@ public class TearDownCommunityWebContentTest extends BaseTestCase {
 				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Move to the Recycle Bin')]");
 				assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move to the Recycle Bin')]",
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Move to the Recycle Bin')]"));
+				selenium.clickAt("//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Move to the Recycle Bin')]",
 					RuntimeVariables.replace("Move to the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForVisible(
@@ -117,12 +117,12 @@ public class TearDownCommunityWebContentTest extends BaseTestCase {
 				selenium.clickAt("//a[@id='_160_groupSelectorButton']/span",
 					RuntimeVariables.replace("Scope Selector"));
 				selenium.waitForVisible(
-					"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Community Name')]");
+					"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Community Name')]");
 				assertEquals(RuntimeVariables.replace("Community Name"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Community Name')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Community Name')]"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Community Name')]"));
+						"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Community Name')]"));
 				selenium.waitForPageToLoad("30000");
 				selenium.waitForText("//a[@id='_160_groupSelectorButton']/span",
 					"Community Name");

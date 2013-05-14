@@ -44,8 +44,8 @@ public class Member_AssertCannotExpireEntryTest extends BaseTestCase {
 		selenium.clickAt("//div[@data-title='WC WebContent Title']/span[@class='entry-action overlay']/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'View')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'View')]/a");
 		assertTrue(selenium.isElementNotPresent(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Expire')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Expire')]/a"));
 	}
 }

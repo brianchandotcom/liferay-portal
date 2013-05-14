@@ -54,28 +54,28 @@ public class AddDataDefinitionNameDuplicateTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_166_name_en_US']",
 			RuntimeVariables.replace("Data Definition"));
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[1]/div",
-			"//div[@class='aui-tabview-content aui-widget-bd']");
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[2]/div",
-			"//div[@class='aui-tabview-content aui-widget-bd']");
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[3]/div",
-			"//div[@class='aui-tabview-content aui-widget-bd']");
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[4]/div",
-			"//div[@class='aui-tabview-content aui-widget-bd']");
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[5]/div",
-			"//div[@class='aui-tabview-content aui-widget-bd']");
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[6]/div",
-			"//div[@class='aui-tabview-content aui-widget-bd']");
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[7]/div",
-			"//div[@class='aui-tabview-content aui-widget-bd']");
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[8]/div",
-			"//div[@class='aui-tabview-content aui-widget-bd']");
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[9]/div",
-			"//div[@class='aui-tabview-content aui-widget-bd']");
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[10]/div",
-			"//div[@class='aui-tabview-content aui-widget-bd']");
-		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[11]/div",
-			"//div[@class='aui-tabview-content aui-widget-bd']");
+		selenium.dragAndDropToObject("//div[@class='tabview-content widget-bd']/div/ul/li[1]/div",
+			"//div[@class='tabview-content widget-bd']");
+		selenium.dragAndDropToObject("//div[@class='tabview-content widget-bd']/div/ul/li[2]/div",
+			"//div[@class='tabview-content widget-bd']");
+		selenium.dragAndDropToObject("//div[@class='tabview-content widget-bd']/div/ul/li[3]/div",
+			"//div[@class='tabview-content widget-bd']");
+		selenium.dragAndDropToObject("//div[@class='tabview-content widget-bd']/div/ul/li[4]/div",
+			"//div[@class='tabview-content widget-bd']");
+		selenium.dragAndDropToObject("//div[@class='tabview-content widget-bd']/div/ul/li[5]/div",
+			"//div[@class='tabview-content widget-bd']");
+		selenium.dragAndDropToObject("//div[@class='tabview-content widget-bd']/div/ul/li[6]/div",
+			"//div[@class='tabview-content widget-bd']");
+		selenium.dragAndDropToObject("//div[@class='tabview-content widget-bd']/div/ul/li[7]/div",
+			"//div[@class='tabview-content widget-bd']");
+		selenium.dragAndDropToObject("//div[@class='tabview-content widget-bd']/div/ul/li[8]/div",
+			"//div[@class='tabview-content widget-bd']");
+		selenium.dragAndDropToObject("//div[@class='tabview-content widget-bd']/div/ul/li[9]/div",
+			"//div[@class='tabview-content widget-bd']");
+		selenium.dragAndDropToObject("//div[@class='tabview-content widget-bd']/div/ul/li[10]/div",
+			"//div[@class='tabview-content widget-bd']");
+		selenium.dragAndDropToObject("//div[@class='tabview-content widget-bd']/div/ul/li[11]/div",
+			"//div[@class='tabview-content widget-bd']");
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

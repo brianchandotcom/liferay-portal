@@ -45,8 +45,8 @@ public class Member_AssertCannotDeleteEntryTest extends BaseTestCase {
 		selenium.clickAt("//span[@class='entry-action overlay']/span/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'View')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'View')]/a");
 		assertTrue(selenium.isElementNotPresent(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Delete')]/a"));
 	}
 }

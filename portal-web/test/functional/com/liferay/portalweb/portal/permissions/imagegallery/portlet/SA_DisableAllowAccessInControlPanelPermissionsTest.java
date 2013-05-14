@@ -34,8 +34,8 @@ public class SA_DisableAllowAccessInControlPanelPermissionsTest
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[2]/a");
+		selenium.click("//div[@class='lfr-menu-list unstyled']/ul/li[2]/a");
 		selenium.waitForVisible("//tr[7]/td[2]/input");
 		assertTrue(selenium.isElementPresent(
 				"//tr[7]/td[2]/input[@disabled='']"));

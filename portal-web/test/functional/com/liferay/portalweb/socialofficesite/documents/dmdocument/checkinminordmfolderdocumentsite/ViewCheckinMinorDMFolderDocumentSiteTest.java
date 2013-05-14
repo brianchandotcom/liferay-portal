@@ -104,22 +104,22 @@ public class ViewCheckinMinorDMFolderDocumentSiteTest extends BaseTestCase {
 			selenium.getText("//span[@class='header-back-to']/a"));
 		assertEquals(RuntimeVariables.replace("Download"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[contains(.,'Download')]/span[2]"));
+				"//span[@class='toolbar-content']/button[contains(.,'Download')]/span[2]"));
 		assertEquals(RuntimeVariables.replace("Checkout"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[.='Checkout']/span[2]"));
+				"//span[@class='toolbar-content']/button[.='Checkout']/span[2]"));
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[contains(.,'Edit')]/span[2]"));
+				"//span[@class='toolbar-content']/button[contains(.,'Edit')]/span[2]"));
 		assertEquals(RuntimeVariables.replace("Move"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[contains(.,'Move')]/span[2]"));
+				"//span[@class='toolbar-content']/button[contains(.,'Move')]/span[2]"));
 		assertEquals(RuntimeVariables.replace("Permissions"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[contains(.,'Permissions')]/span[2]"));
+				"//span[@class='toolbar-content']/button[contains(.,'Permissions')]/span[2]"));
 		assertEquals(RuntimeVariables.replace("Delete"),
 			selenium.getText(
-				"//span[@class='aui-toolbar-content']/button[contains(.,'Delete')]/span[2]"));
+				"//span[@class='toolbar-content']/button[contains(.,'Delete')]/span[2]"));
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
 			selenium.getText("//span[@class='document-title']"));
 		assertTrue(selenium.isVisible("//span[@class='document-thumbnail']/img"));
@@ -142,10 +142,10 @@ public class ViewCheckinMinorDMFolderDocumentSiteTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"No comments yet. Be the first. Subscribe to Comments"),
 			selenium.getText(
-				"xPath=(//fieldset[@class='aui-fieldset add-comment ']/div)[1]"));
+				"xPath=(//fieldset[@class='fieldset add-comment ']/div)[1]"));
 		assertEquals(RuntimeVariables.replace("Be the first."),
 			selenium.getText(
-				"xPath=(//fieldset[@class='aui-fieldset add-comment ']/div/a)[1]"));
+				"xPath=(//fieldset[@class='fieldset add-comment ']/div/a)[1]"));
 		assertEquals(RuntimeVariables.replace("Subscribe to Comments"),
 			selenium.getText(
 				"xPath=(//span[@class='subscribe-link']/a/span)[1]"));
@@ -160,10 +160,10 @@ public class ViewCheckinMinorDMFolderDocumentSiteTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"No comments yet. Be the first. Subscribe to Comments"),
 			selenium.getText(
-				"xPath=(//fieldset[@class='aui-fieldset add-comment ']/div)[2]"));
+				"xPath=(//fieldset[@class='fieldset add-comment ']/div)[2]"));
 		assertEquals(RuntimeVariables.replace("Be the first."),
 			selenium.getText(
-				"xPath=(//fieldset[@class='aui-fieldset add-comment ']/div/a)[2]"));
+				"xPath=(//fieldset[@class='fieldset add-comment ']/div/a)[2]"));
 		assertEquals(RuntimeVariables.replace("Subscribe to Comments"),
 			selenium.getText(
 				"xPath=(//span[@class='subscribe-link']/a/span)[2]"));

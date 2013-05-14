@@ -41,12 +41,12 @@ public class ViewOrganizationsTeamTest extends BaseTestCase {
 		selenium.clickAt("//a[contains(@id,'groupSelectorButton')]/span",
 			RuntimeVariables.replace("Site Selector"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization1 Name')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Organization1 Name')]");
 		assertEquals(RuntimeVariables.replace("Organization1 Name"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization1 Name')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Organization1 Name')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization1 Name')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Organization1 Name')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Site Memberships",
 			RuntimeVariables.replace("Site Memberships"));
@@ -107,12 +107,12 @@ public class ViewOrganizationsTeamTest extends BaseTestCase {
 		selenium.clickAt("//a[contains(@id,'groupSelectorButton')]/span",
 			RuntimeVariables.replace("Site Selector"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization2 Name')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Organization2 Name')]");
 		assertEquals(RuntimeVariables.replace("Organization2 Name"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization2 Name')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Organization2 Name')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization2 Name')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Organization2 Name')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Site Memberships",
 			RuntimeVariables.replace("Site Memberships"));
@@ -173,12 +173,12 @@ public class ViewOrganizationsTeamTest extends BaseTestCase {
 		selenium.clickAt("//a[contains(@id,'groupSelectorButton')]/span",
 			RuntimeVariables.replace("Site Selector"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization3 Name')]");
+			"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Organization3 Name')]");
 		assertEquals(RuntimeVariables.replace("Organization3 Name"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization3 Name')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Organization3 Name')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Organization3 Name')]"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li/a[contains(.,'Organization3 Name')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.clickAt("link=Site Memberships",
 			RuntimeVariables.replace("Site Memberships"));

@@ -61,24 +61,24 @@ public class AddTemplateQAViewTest extends BaseTestCase {
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 		selenium.waitForVisible(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Templates')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Manage Templates')]/a");
 		assertEquals(RuntimeVariables.replace("Manage Templates"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Templates')]/a"));
+				"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Manage Templates')]/a"));
 		selenium.click(
-			"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Templates')]/a");
+			"//div[@class='lfr-menu-list unstyled']/ul/li[contains(.,'Manage Templates')]/a");
 		selenium.waitForVisible("link=Add Detail Template");
 		selenium.clickAt("link=Add Detail Template",
 			RuntimeVariables.replace("Add Detail Template"));
-		selenium.waitForVisible("//div[@class='aui-diagram-builder-canvas']");
+		selenium.waitForVisible("//div[@class='diagram-builder-canvas']");
 		selenium.type("//input[@id='_166_name_en_US']",
 			RuntimeVariables.replace("QA View"));
 		selenium.select("//select[@id='_166_mode']",
 			RuntimeVariables.replace("Edit"));
 		assertEquals(RuntimeVariables.replace("Pull Request URL"),
 			selenium.getText(
-				"//div[@class='aui-diagram-builder-canvas']/div/div[9]/div[1]/label"));
-		selenium.clickAt("//div[@class='aui-diagram-builder-canvas']/div/div[9]",
+				"//div[@class='diagram-builder-canvas']/div/div[9]/div[1]/label"));
+		selenium.clickAt("//div[@class='diagram-builder-canvas']/div/div[9]",
 			RuntimeVariables.replace("Pull Request URL"));
 		selenium.waitForVisible("xPath=(//button[@id='editEvent'])[9]");
 		selenium.clickAt("xPath=(//button[@id='editEvent'])[9]",

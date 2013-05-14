@@ -1,5 +1,5 @@
-<nav class="$nav_css_class navbar site-navigation">
-	<div class="navbar-inner" id="navigation">
+<nav class="$nav_css_class navbar site-navigation" id="navigation">
+	<div class="navbar-inner">
 		<a class="brand $logo_css_class" href="$site_default_url" title="#language ("go-to") $site_name">
 			<img alt="$logo_description" height="$site_logo_height" src="$site_logo" width="$site_logo_width" />
 		</a>
@@ -8,12 +8,12 @@
 			#foreach ($nav_item in $nav_items)
 					#set($nav_item_attr_selected="")
 					#set($nav_item_caret="")
-					#set($nav_item_css_class="")
+					#set($nav_item_css_class="lfr-nav-item")
 					#set($nav_item_link_css_class="")
 
 				#if ($nav_item.isSelected())
 					#set($nav_item_attr_selected="aria-selected='true'")
-					#set($nav_item_css_class="selected active")
+					#set($nav_item_css_class="$nav_item_css_class selected active")
 				#end
 
 				#if ($nav_item.hasChildren())

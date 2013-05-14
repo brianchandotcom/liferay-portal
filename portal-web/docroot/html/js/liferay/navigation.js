@@ -82,7 +82,7 @@ AUI.add(
 				NAME: 'navigation',
 
 				prototype: {
-					TPL_DELETE_BUTTON: '<span class="delete-tab hide">X</span>',
+					TPL_DELETE_BUTTON: '<i class="icon-remove-sign delete-tab hide"></i>',
 
 					initializer: function(config) {
 						var instance = this;
@@ -92,7 +92,10 @@ AUI.add(
 						if (navBlock) {
 							instance._updateURL = themeDisplay.getPathMain() + '/layouts_admin/update_page?p_auth=' + Liferay.authToken;
 
-							var items = navBlock.all('> ul > li');
+							var navItemSelector = Liferay.Data.NAV_ITEM_SELECTOR || 'ul > li';
+
+							var items = navBlock.all(navItemSelector);
+
 							var layoutIds = instance.get('layoutIds');
 
 							var cssClassBuffer = [];
@@ -124,6 +127,8 @@ AUI.add(
 									}
 								}
 							);
+
+							instance._navItemSelector = navItemSelector;
 
 							instance._makeAddable();
 							instance._makeDeletable();
@@ -241,7 +246,9 @@ AUI.add(
 						if (instance.get('isModifiable')) {
 							var navBlock = instance.get('navBlock');
 
-							var navItems = navBlock.all('> ul > li').filter(
+							var navItemSelector = instance._navItemSelector;
+
+							var navItems = navBlock.all(navItemSelector).filter(
 								function(item, index, collection) {
 									return !item.hasClass('selected');
 								}
@@ -256,18 +263,18 @@ AUI.add(
 							navBlock.delegate(
 								'keydown',
 								A.bind('_handleKeyDown', instance),
-								'> ul > li a'
+								navItemSelector
 							);
 
 							navBlock.delegate(
 								'mouseenter',
-								A.rbind('_toggleDeleteButton', instance, 'removeClass'),
+								A.rbind('_toggleDeleteButton', instance, 'show'),
 								'li'
 							);
 
 							navBlock.delegate(
 								'mouseleave',
-								A.rbind('_toggleDeleteButton', instance, 'addClass'),
+								A.rbind('_toggleDeleteButton', instance, 'hide'),
 								'li'
 							);
 
@@ -285,54 +292,50 @@ AUI.add(
 								var currentLink = currentItem.one('a');
 
 								if (currentLink) {
-									var currentSpan = currentLink.one('span');
-
-									if (currentSpan) {
-										currentLink.on(
-											'click',
-											function(event) {
-												if (event.shiftKey) {
-													event.halt();
-												}
-											}
-										);
-
-										currentLink.on(
-											'mouseenter',
-											function(event) {
-												if (!themeDisplay.isStateMaximized() || event.shiftKey) {
-													currentSpan.setStyle('cursor', 'text');
-												}
-											}
-										);
-
-										currentLink.on('mouseleave', A.bind('setStyle', currentSpan, 'cursor', 'pointer'));
-
-										currentSpan.on(
-											'click',
-											function(event) {
-												if (themeDisplay.isStateMaximized() && !event.shiftKey) {
-													return;
-												}
-
+									currentLink.on(
+										'click',
+										function(event) {
+											if (event.shiftKey) {
 												event.halt();
-
-												var textNode = event.currentTarget;
-
-												var actionNode = textNode.get('parentNode');
-												var currentText = textNode.text();
-
-												instance._createEditor(
-													currentItem,
-													{
-														actionNode: actionNode,
-														prevVal: currentText,
-														textNode: textNode
-													}
-												);
 											}
-										);
-									}
+										}
+									);
+
+									currentLink.on(
+										'mouseenter',
+										function(event) {
+											if (!themeDisplay.isStateMaximized() || event.shiftKey) {
+												currentLink.setStyle('cursor', 'text');
+											}
+										}
+									);
+
+									currentLink.on('mouseleave', A.bind('setStyle', currentLink, 'cursor', 'pointer'));
+
+									currentLink.on(
+										'click',
+										function(event) {
+											if (themeDisplay.isStateMaximized() && !event.shiftKey) {
+												return;
+											}
+
+											event.halt();
+
+											var textNode = event.currentTarget;
+
+											var actionNode = textNode.get('parentNode');
+											var currentText = textNode.text();
+
+											instance._createEditor(
+												currentItem,
+												{
+													actionNode: actionNode,
+													prevVal: currentText,
+													textNode: textNode
+												}
+											);
+										}
+									);
 								}
 							}
 						}
@@ -361,7 +364,7 @@ AUI.add(
 						var deleteTab = event.currentTarget.one('.delete-tab');
 
 						if (deleteTab) {
-							deleteTab[action]('hide');
+							deleteTab[action](true);
 						}
 					},
 
@@ -815,6 +818,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-component']
+		requires: ['aui-component', 'transition']
 	}
 );

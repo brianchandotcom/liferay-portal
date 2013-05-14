@@ -149,9 +149,11 @@ if (layout != null) {
 			var navBlock = A.one('#navigation');
 
 			if (navBlock) {
-				navBlock.once(
-					'mousemove',
+				var handle = navBlock.on(
+					['mousemove', 'touchstart'],
 					function() {
+						handle.detach();
+
 						Liferay.fire('initNavigation');
 					}
 				);

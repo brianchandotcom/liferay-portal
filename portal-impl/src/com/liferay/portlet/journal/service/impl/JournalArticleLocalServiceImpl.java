@@ -73,6 +73,7 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextUtil;
+import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -870,7 +871,10 @@ public class JournalArticleLocalServiceImpl
 		newArticle.setSmallImageId(counterLocalService.increment());
 		newArticle.setSmallImageURL(oldArticle.getSmallImageURL());
 
-		if (oldArticle.isPending()) {
+		if (oldArticle.isPending() ||
+			WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(
+				user.getCompanyId(), groupId, JournalArticle.class.getName())) {
+
 			newArticle.setStatus(WorkflowConstants.STATUS_DRAFT);
 		}
 		else {

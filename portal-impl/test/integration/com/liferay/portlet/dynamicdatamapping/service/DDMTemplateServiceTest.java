@@ -61,12 +61,12 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 		try {
 			addTemplate(
 				_classNameId, 0, templateKey, "Test Template 1",
-				DDMTemplateConstants.TEMPLATE_TYPE_FORM,
+				DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
 				DDMTemplateConstants.TEMPLATE_MODE_CREATE, language,
 				getTestTemplateScript(language));
 			addTemplate(
 				_classNameId, 0, templateKey, "Test Template 2",
-				DDMTemplateConstants.TEMPLATE_TYPE_FORM,
+				DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
 				DDMTemplateConstants.TEMPLATE_MODE_CREATE, language,
 				getTestTemplateScript(language));
 
@@ -83,7 +83,7 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 		try {
 			addTemplate(
 				_classNameId, 0, null, StringPool.BLANK,
-				DDMTemplateConstants.TEMPLATE_TYPE_FORM,
+				DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
 				DDMTemplateConstants.TEMPLATE_MODE_CREATE, language,
 				getTestTemplateScript(language));
 

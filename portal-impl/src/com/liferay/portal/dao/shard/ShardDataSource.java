@@ -56,7 +56,6 @@ public class ShardDataSource implements DataSource {
 		return getDataSource().getLogWriter();
 	}
 
-	@Override
 	public Logger getParentLogger() {
 
 		// JDK 7

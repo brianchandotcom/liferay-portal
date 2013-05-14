@@ -54,7 +54,6 @@ public class DataSourceWrapper implements DataSource {
 		return _dataSource.getLogWriter();
 	}
 
-	@Override
 	public Logger getParentLogger() {
 
 		// JDK 7

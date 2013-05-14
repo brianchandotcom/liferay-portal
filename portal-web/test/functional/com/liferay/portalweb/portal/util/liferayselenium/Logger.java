@@ -14,8 +14,11 @@
 
 package com.liferay.portalweb.portal.util.liferayselenium;
 
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portalweb.portal.BaseTestCase;
+
+import java.io.File;
 
 import java.lang.reflect.Method;
 
@@ -32,7 +35,9 @@ import org.openqa.selenium.firefox.FirefoxDriver;
  */
 public class Logger {
 
-	public Logger(String projectDir) {
+	public Logger(String className, String projectDir) {
+		_className = className;
+
 		_projectDir = projectDir;
 
 		WebDriver.Options options = _webDriver.manage();
@@ -133,6 +138,25 @@ public class Logger {
 	}
 
 	public void stop() {
+		if (_className != null) {
+			JavascriptExecutor javascriptExecutor =
+				(JavascriptExecutor)_webDriver;
+
+			String content = (String)javascriptExecutor.executeScript(
+				"return window.document.getElementsByTagName('html')[0]." +
+					"outerHTML;");
+
+			File file = new File(
+				_projectDir + "portal-web\\test-results\\functional\\TEST-" +
+					_className + ".html");
+
+			try {
+				FileUtil.write(file, content);
+			}
+			catch (Exception e) {
+			}
+		}
+
 		_webDriver.quit();
 	}
 
@@ -158,6 +182,7 @@ public class Logger {
 		javascriptExecutor.executeScript(sb.toString());
 	}
 
+	private String _className;
 	private boolean _loggerStarted = false;
 	private String _projectDir;
 	private WebDriver _webDriver = new FirefoxDriver();

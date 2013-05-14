@@ -39,6 +39,8 @@ public abstract class BaseWebDriverImpl
 
 		super(webDriver);
 
+		_className = TestPropsValues.TEST_CLASS;
+
 		_projectDir = projectDir;
 
 		webDriver.get(browserURL);
@@ -163,6 +165,10 @@ public abstract class BaseWebDriverImpl
 
 	public void fail(String message) {
 		LiferaySeleniumHelper.fail(message);
+	}
+
+	public String getClassName() {
+		return _className;
 	}
 
 	public String getCurrentDay() {
@@ -489,6 +495,7 @@ public abstract class BaseWebDriverImpl
 		super.waitForPageToLoad("30000");
 	}
 
+	private String _className;
 	private String _clipBoard = "";
 	private String _projectDir;
 

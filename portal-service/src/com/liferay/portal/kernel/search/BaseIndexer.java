@@ -822,7 +822,8 @@ public abstract class BaseIndexer implements Indexer {
 
 		for (String fieldName : fieldNames) {
 			String name = DDMIndexerUtil.encodeName(
-				ddmStructure.getStructureId(), fieldName);
+				ddmStructure.getStructureId(), fieldName,
+				searchContext.getLocale());
 
 			addSearchTerm(searchQuery, searchContext, name, false);
 		}

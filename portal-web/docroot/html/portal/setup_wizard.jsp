@@ -43,7 +43,7 @@
 	</header>
 
 	<div id="content">
-		<div id="main-content">
+		<div id="main-content" class="row-fluid">
 
 			<%
 			String defaultEmailAddress = PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + StringPool.AT + company.getMx();
@@ -63,7 +63,7 @@
 					<aui:form action='<%= themeDisplay.getPathMain() + "/portal/setup_wizard" %>' method="post" name="fm" onSubmit="event.preventDefault();">
 						<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 
-						<aui:fieldset cssClass="span6" label="portal">
+						<aui:fieldset cssClass="span12" label="portal">
 							<aui:input label="portal-name" name="companyName" suffix='<%= LanguageUtil.format(pageContext, "for-example-x", "Liferay") %>' value="<%= PropsValues.COMPANY_DEFAULT_NAME %>" />
 
 							<aui:select inlineField="<%= true %>" label="default-language" name="companyLocale">
@@ -87,7 +87,7 @@
 							<aui:button cssClass="change-language" name="changeLanguageButton" value="change" />
 						</aui:fieldset>
 
-						<aui:fieldset cssClass="column-last span6" label="administrator-user">
+						<aui:fieldset cssClass="column-last span12" label="administrator-user">
 							<aui:input label="first-name" name="adminFirstName" value="<%= PropsValues.DEFAULT_ADMIN_FIRST_NAME %>" />
 
 							<aui:input label="last-name" name="adminLastName" value="<%= PropsValues.DEFAULT_ADMIN_LAST_NAME %>" />
@@ -209,7 +209,7 @@
 							</div>
 						</aui:fieldset>
 
-						<aui:button-row>
+						<aui:button-row cssClass="span12">
 							<aui:button name="finishButton" type="submit" value="finish-configuration" />
 						</aui:button-row>
 					</aui:form>
@@ -371,7 +371,7 @@
 								<aui:input name="password" type="hidden" value="<%= PropsValues.DEFAULT_ADMIN_PASSWORD %>" />
 
 								<p>
-									<span class="alert alert-success">
+									<span class="alert alert-success span12">
 										<liferay-ui:message key="your-configuration-was-saved-sucessfully" />
 									</span>
 

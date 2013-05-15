@@ -23,6 +23,8 @@ public class GroupParentException extends PortalException {
 
 	public static final int CHILD_DESCENDANT = 3;
 
+	public static final int MISSING_PARENT = 4;
+
 	public static final int SELF_DESCENDANT = 1;
 
 	public static final int STAGING_DESCENDANT = 2;

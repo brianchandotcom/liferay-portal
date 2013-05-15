@@ -41,7 +41,7 @@ public interface SPIAgent {
 		"SPI_AGENT_EVENT_RESULT";
 
 	@Distributed(direction = Direction.REQUEST)
-	public static final String SPI_AGENT_LAYOUT = "SPI_AGENT__LAYOUT";
+	public static final String SPI_AGENT_LAYOUT = "SPI_AGENT_LAYOUT";
 
 	@Distributed(direction = Direction.RESPONSE)
 	public static final String SPI_AGENT_LAYOUT_TYPE_SETTINGS =

@@ -40,7 +40,7 @@ portletURL.setParameter("struts_action", "/message_boards/view");
 		portletURL.setParameter("tag", StringPool.BLANK);
 		%>
 
-		<aui:nav-item cssClass='<%= topLink.equals(label) ? "active" : StringPool.BLANK %>' href="portletURL.toString()" label="<%= label %>" selected="<%= topLink.equals(label) %>" />
+		<aui:nav-item cssClass='<%= topLink.equals(label) ? "active" : StringPool.BLANK %>' href="<%= portletURL.toString() %>" label="<%= label %>" selected="<%= topLink.equals(label) %>" />
 
 		<%
 		label = "recent-posts";
@@ -48,7 +48,7 @@ portletURL.setParameter("struts_action", "/message_boards/view");
 		portletURL.setParameter("topLink", label);
 		%>
 
-		<aui:nav-item cssClass='<%= topLink.equals(label) ? "active" : StringPool.BLANK %>' href="portletURL.toString()" label="<%= label %>" selected="<%= topLink.equals(label) %>" />
+		<aui:nav-item cssClass='<%= topLink.equals(label) ? "active" : StringPool.BLANK %>' href="<%= portletURL.toString() %>" label="<%= label %>" selected="<%= topLink.equals(label) %>" />
 
 		<c:if test="<%= themeDisplay.isSignedIn() %>">
 
@@ -58,7 +58,7 @@ portletURL.setParameter("struts_action", "/message_boards/view");
 			portletURL.setParameter("topLink", label);
 			%>
 
-			<aui:nav-item cssClass='<%= topLink.equals(label) ? "active" : StringPool.BLANK %>' href="portletURL.toString()" label="<%= label %>" selected="<%= topLink.equals(label) %>" />
+			<aui:nav-item cssClass='<%= topLink.equals(label) ? "active" : StringPool.BLANK %>' href="<%= portletURL.toString() %>" label="<%= label %>" selected="<%= topLink.equals(label) %>" />
 
 			<c:if test="<%= MBUtil.getEmailMessageAddedEnabled(preferences) || MBUtil.getEmailMessageUpdatedEnabled(preferences) %>">
 
@@ -68,7 +68,7 @@ portletURL.setParameter("struts_action", "/message_boards/view");
 				portletURL.setParameter("topLink", label);
 				%>
 
-				<aui:nav-item cssClass='<%= topLink.equals(label) ? "active" : StringPool.BLANK %>' href="portletURL.toString()" label="<%= label %>" selected="<%= topLink.equals(label) %>" />
+				<aui:nav-item cssClass='<%= topLink.equals(label) ? "active" : StringPool.BLANK %>' href="<%= portletURL.toString() %>" label="<%= label %>" selected="<%= topLink.equals(label) %>" />
 			</c:if>
 		</c:if>
 
@@ -78,7 +78,7 @@ portletURL.setParameter("struts_action", "/message_boards/view");
 		portletURL.setParameter("topLink", label);
 		%>
 
-		<aui:nav-item cssClass='<%= topLink.equals(label) ? "active" : StringPool.BLANK %>' href="portletURL.toString()" label="<%= label %>" selected="<%= topLink.equals(label) %>" />
+		<aui:nav-item cssClass='<%= topLink.equals(label) ? "active" : StringPool.BLANK %>' href="<%= portletURL.toString() %>" label="<%= label %>" selected="<%= topLink.equals(label) %>" />
 
 		<c:if test="<%= MBPermission.contains(permissionChecker, scopeGroupId, ActionKeys.BAN_USER) %>">
 
@@ -88,7 +88,7 @@ portletURL.setParameter("struts_action", "/message_boards/view");
 			portletURL.setParameter("topLink", label);
 			%>
 
-			<aui:nav-item cssClass='<%= topLink.equals(label) ? "active" : StringPool.BLANK %>' href="portletURL.toString()" label="<%= label %>" selected="<%= topLink.equals(label) %>" />
+			<aui:nav-item cssClass='<%= topLink.equals(label) ? "active" : StringPool.BLANK %>' href="<%= portletURL.toString() %>" label="<%= label %>" selected="<%= topLink.equals(label) %>" />
 		</c:if>
 	</aui:nav>
 

@@ -233,22 +233,30 @@ public class MVCPortlet extends LiferayPortlet {
 
 	@Override
 	protected boolean callActionMethod(
-			ActionRequest request, ActionResponse response)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortletException {
 
+		try {
+			checkPermissions(actionRequest);
+		}
+		catch (Exception e) {
+			throw new PortletException(e);
+		}
+
 		if (_actionCommandCache == null) {
-			return super.callActionMethod(request, response);
+			return super.callActionMethod(actionRequest, actionResponse);
 		}
 
 		String actionName = ParamUtil.getString(
-			request, ActionRequest.ACTION_NAME);
+			actionRequest, ActionRequest.ACTION_NAME);
 
 		if (!actionName.contains(StringPool.COMMA)) {
 			ActionCommand actionCommand = _actionCommandCache.getActionCommand(
 				actionName);
 
 			if (actionCommand != ActionCommandCache.EMPTY) {
-				return actionCommand.processCommand(request, response);
+				return actionCommand.processCommand(
+					actionRequest, actionResponse);
 			}
 		}
 		else {
@@ -260,7 +268,9 @@ public class MVCPortlet extends LiferayPortlet {
 			}
 
 			for (ActionCommand actionCommand : actionCommands) {
-				if (!actionCommand.processCommand(request, response)) {
+				if (!actionCommand.processCommand(
+						actionRequest, actionResponse)) {
+
 					return false;
 				}
 			}
@@ -269,6 +279,10 @@ public class MVCPortlet extends LiferayPortlet {
 		}
 
 		return false;
+	}
+
+	protected void checkPermissions(PortletRequest portletRequest)
+		throws Exception {
 	}
 
 	protected void checkPath(String path) throws PortletException {

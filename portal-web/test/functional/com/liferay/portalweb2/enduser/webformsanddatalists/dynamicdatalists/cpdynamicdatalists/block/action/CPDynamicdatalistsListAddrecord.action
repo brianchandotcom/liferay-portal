@@ -1,0 +1,13 @@
+<definition>
+	<command name="click">
+		<case locator-key1="PUBLISH_BUTTON">
+			<execute function="Click#textClickAtAndWait" value1="Publish" />
+		</case>
+	</command>
+
+	<command name="type">
+		<case comparator="startsWith" locator1="//div[contains(@id,'cke__167_">
+			<execute function="Type#typeFrameWaitForCKEditor" />
+		</case>
+	</command>
+</definition>

@@ -1,0 +1,10 @@
+<definition>
+	<command name="click">
+		<case comparator="startsWith" locator-key1="DATA_DEFINITION_TABLE_CHOOSE_BUTTON_">
+			<execute function="Click#textClick" value1="Choose" />
+		</case>
+		<case locator-key1="TOOLBAR_SEARCH_BUTTON">
+			<execute function="Click#textClickAtAndWait" value1="Search" />
+		</case>
+	</command>
+</definition>

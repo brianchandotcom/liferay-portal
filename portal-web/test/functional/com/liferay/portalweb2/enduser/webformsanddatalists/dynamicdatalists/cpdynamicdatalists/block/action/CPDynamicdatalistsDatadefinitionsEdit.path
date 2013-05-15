@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
-	<td>//iframe[contains(@src,'dynamicdatalists')]</td>
+	<td></td>
 	<td>CPDynamicdatalistsDatadefinitionsEdit</td>
 </tr>
 <tr>
@@ -19,23 +19,33 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DATA_DEFINTIONS_IFRAME</td>
+	<td>//iframe[contains(@src,'dynamicdatalists')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HEADER_TITLE</td>
+	<td>//h3[@class='header-title']/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NAME_FIELD</td>
 	<td>//input[@id='_166_name']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>DESCRIPTION_FIELD</td>
-	<td>//textarea[@id='_166_description']</td>
+	<td>DETAILS</td>
+	<td>//div[@id='structureDetailsSectionPanel']/div/div</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SAVE_BUTTON</td>
-	<td>//button[contains(.,'Save')]</td>
+	<td>//div[@class='button-holder ']/button[contains(.,'Save')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CANCEL_BUTTON</td>
-	<td>//button[contains(.,'Cancel')]</td>
+	<td>//div[@class='button-holder ']/button[contains(.,'Cancel')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -43,14 +53,19 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--PARENT_DATA_DEFINTION-->
+<!--DETAILS-->
 <tr>
-	<td>PARENT_DATA_DEFINTION_SELECT_BUTTON</td>
+	<td>DETAILS_DESCRIPTION_FIELD</td>
+	<td>//textarea[@id='_166_description']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_PARENT_SELECT_BUTTON</td>
 	<td>//button[contains(.,'Select')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PARENT_DATA_DEFINTION_REMOVE_BUTTON</td>
+	<td>DETAILS_PARENT_REMOVE_BUTTON</td>
 	<td>//button[@id='_166_removeParentStructureButton']</td>
 	<td></td>
 </tr>
@@ -128,6 +143,26 @@
 </tr>
 <!--SETTINGS-->
 <tr>
+	<td>SETTINGS_TYPE</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Type')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_FIELD_LABEL</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Field Label')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_NAME</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Name')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_PREDEFINED_VALUE</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Predefined Value')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -140,7 +175,72 @@
 </tr>
 <tr>
 	<td>FORM_FIELD_1</td>
-	<td>xpath=(//div[contains(@class,'component form-builder-field')])[1]</td>
+	<td>xpath=(//div[@class='form-builder-field-content form-builder-text-field-content clearfix'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_BOOLEAN_FIELD_1</td>
+	<td>xpath=(//div[contains(@class,'form-builder-checkbox-field-content')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_DATE_FIELD_1</td>
+	<td>xpath=(//div[contains(@class,'ddm-date-content')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_DECIMAL_FIELD_1</td>
+	<td>xpath=(//div[contains(@class,'ddm-decimal-content')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_DOCUMENTS_AND_MEDIA_FIELD_1</td>
+	<td>xpath=(//div[contains(@class,'ddm-documentlibrary-content')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_FILE_UPLOAD_FIELD_1</td>
+	<td>xpath=(//div[contains(@class,'ddm-fileupload-content')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_HTML_FIELD_1</td>
+	<td>xpath=(//div[contains(@class,'ddm-text-html-content')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_INTEGER_FIELD_1</td>
+	<td>xpath=(//div[contains(@class,'ddm-integer-content')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_LINK_TO_PAGE_FIELD_1</td>
+	<td>xpath=(//div[contains(@class,'ddm-link-to-page-content')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_NUMBER_FIELD_1</td>
+	<td>xpath=(//div[contains(@class,'ddm-number-content')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_RADIO_FIELD_1</td>
+	<td>xpath=(//div[contains(@class,'form-builder-radio-field-content')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_SELECT_FIELD_1</td>
+	<td>xpath=(//div[contains(@class,'form-builder-select-field-content')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_TEXT_FIELD_1</td>
+	<td>xpath=(//div[@class='form-builder-field-content form-builder-text-field-content clearfix'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_TEXT_BOX_FIELD_1</td>
+	<td>xpath=(//div[contains(@class,'form-builder-textarea-field-content')])[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -156,6 +256,27 @@
 <tr>
 	<td>FORM_FIELD_DELETE_ICON</td>
 	<td>xpath=(//button/i[@class='icon-trash'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SETTINGS_CELL_EDITOR-->
+<tr>
+	<td>SETTINGS_CELL_EDITOR_FIELD</td>
+	<td>//input[@name='value']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_SAVE_BUTTON</td>
+	<td>//div[contains(@class,'component toolbar')]//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_CANCEL_BUTTON</td>
+	<td>//div[contains(@class,'component toolbar')]//button[contains(.,'Cancel')]</td>
 	<td></td>
 </tr>
 </tbody>

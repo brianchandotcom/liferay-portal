@@ -1,0 +1,251 @@
+<definition>
+	<command name="addCP">
+		<execute macro="Page#cpGotoContent">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute action="CPDynamicdatalists#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${listName}" />
+		<execute action="CPDynamicdatalists#click" locator-key1="TOOLBAR_SEARCH_BUTTON" />
+		<execute action="CPDynamicdatalists#assertTextEquals" locator-key1="LIST_TABLE_NAME_1" value1="${listName}" />
+		<execute action="CPDynamicdatalists#click" locator-key1="LIST_TABLE_NAME_1" value1="${listName}" />
+
+		<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="HEADER_TITLE" value1="${listName}" />
+		<execute action="CPDynamicdatalistsList#click" locator-key1="ADD_RECORD_BUTTON" />
+
+		<execute macro="ListRecord#addTextCmdCP">
+			<var name="textNameLabel" value="text" />
+		</execute>
+
+		<execute action="CPDynamicdatalistsListAddrecord#click" locator-key1="PUBLISH_BUTTON" />
+
+		<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
+	</command>
+
+	<command name="addBooleanCmdCP">
+		<if>
+			<equals arg1="${recordBoolean}" arg2="false" />
+			<then>
+				<execute action="CPDynamicdatalistsListAddrecord#uncheck" locator1="//input[contains(@id,'_167_${booleanNameLabel}')]" />
+			</then>
+			<elseif>
+				<equals arg1="${recordBoolean}" arg2="true" />
+				<then>
+					<execute action="CPDynamicdatalistsListAddrecord#check" locator1="//input[contains(@id,'_167_${booleanNameLabel}')]" />
+				</then>
+			</elseif>
+			<else>
+				<fail message="Invalid var recordBooleanValue. Must be (true|false)." />
+			</else>
+		</if>
+	</command>
+
+	<command name="addDateCmdCP">
+		<execute action="CPDynamicdatalistsListAddrecord#select" locator1="//select[contains(@id,'_167_${dateNameLabel}') and @class='datepicker-month']" value1="${recordDateMonth}" />
+		<execute action="CPDynamicdatalistsListAddrecord#select" locator1="//select[contains(@id,'_167_${dateNameLabel}') and @class='datepicker-day']" value1="${recordDateDay}" />
+		<execute action="CPDynamicdatalistsListAddrecord#select" locator1="//select[contains(@id,'_167_${dateNameLabel}') and @class='datepicker-year']" value1="${recordDateYear}" />
+	</command>
+
+	<command name="addDecimalCmdCP">
+		<execute action="CPDynamicdatalistsListAddrecord#type" locator1="//input[contains(@id,'_167_${decimalNameLabel}')]" value1="${recordDecimal}" />
+	</command>
+
+	<command name="addDocumentsAndMediaCmdCP">
+		<fail message="Add Documents and Media record not yet impletemented." />
+	</command>
+
+	<command name="addFileUploadCmdCP">
+		<fail message="Add File Upload record not yet implemented." />
+	</command>
+
+	<command name="addHtmlCmdCP">
+		<execute action="CPDynamicdatalistsListAddrecord#type" locator1="//div[contains(@id,'cke__167_${htmlNameLabel}')]//iframe" value1="${recordHtml}" />
+	</command>
+
+	<command name="addIntegerCmdCP">
+		<execute action="CPDynamicdatalistsListAddrecord#type" locator1="//input[contains(@id,'_167_${integerNameLabel}')]" value1="${recordInteger}" />
+	</command>
+
+	<command name="addLinkToPageCmdCP">
+		<fail message="Add Link to page record not yet implemented." />
+	</command>
+
+	<command name="addNumberCmdCP">
+		<execute action="CPDynamicdatalistsListAddrecord#type" locator1="//input[contains(@id,'_167_${numberNameLabel}')]" value1="${recordNumber}" />
+	</command>
+
+	<command name="addRadioCmdCP">
+		<if>
+			<equals arg1="${recordRadio}" arg2="1" />
+			<then>
+				<execute action="CPDynamicdatalistsListAddrecord#click" locator1="xpath=(//input[contains(@name,'_167_${radioNameLabel}')])[1]" />
+			</then>
+			<elseif>
+				<equals arg1="${recordRadio}" arg2="2" />
+				<then>
+					<execute action="CPDynamicdatalistsListAddrecord#click" locator1="xpath=(//input[contains(@name,'_167_${radioNameLabel}')])[2]" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${recordRadio}" arg2="3" />
+				<then>
+					<execute action="CPDynamicdatalistsListAddrecord#click" locator1="xpath=(//input[contains(@name,'_167_${radioNameLabel}')])[3]" />
+				</then>
+			</elseif>
+			<else>
+				<fail message="Invalid var recordBooleanValue. Must be (1|2|3)." />
+			</else>
+		</if>
+	</command>
+
+	<command name="addSelectCmdCP">
+		<execute action="CPDynamicdatalistsListAddrecord#select" locator1="//select[contains(@name,'_167_${selectNameLabel}')" value1="${recordSelect}" />
+	</command>
+
+	<command name="addTextCmdCP">
+		<execute action="CPDynamicdatalistsListAddrecord#type" locator1="//input[contains(@id,'_167_${textNameLabel}')]" value1="${recordText}" />
+	</command>
+
+	<command name="addTextBoxCmdCP">
+		<execute action="CPDynamicdatalistsListAddrecord#type" locator1="//textarea[contains(@id,'_167_${textBoxNameLabel}')]" value1="${recordTextBox}" />
+	</command>
+
+	<command name="deleteCP">
+		<execute macro="Page#cpGotoContent">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute action="CPDynamicdatalists#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${listName}" />
+		<execute action="CPDynamicdatalists#click" locator-key1="TOOLBAR_SEARCH_BUTTON" />
+		<execute action="CPDynamicdatalists#assertTextEquals" locator-key1="LIST_TABLE_NAME_1" value1="${listName}" />
+		<execute action="CPDynamicdatalists#click" locator-key1="LIST_TABLE_NAME_1" value1="${listName}" />
+
+		<execute action="CPDynamicdatalistsList#click" locator-key1="RECORD_TABLE_ACTIONS_1" />
+		<execute action="CPDynamicdatalistsList#click" locator-key1="RECORD_MENULIST_DELETE" />
+		<execute action="CPDynamicdatalistsList#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
+		<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="INFO_MESSAGE" />
+	</command>
+
+	<command name="editCP">
+		<execute macro="Page#cpGotoContent">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute action="CPDynamicdatalists#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${listName}" />
+		<execute action="CPDynamicdatalists#click" locator-key1="TOOLBAR_SEARCH_BUTTON" />
+		<execute action="CPDynamicdatalists#assertTextEquals" locator-key1="LIST_TABLE_NAME_1" value1="${listName}" />
+		<execute action="CPDynamicdatalists#click" locator-key1="LIST_TABLE_NAME_1" value1="${listName}" />
+
+		<execute action="CPDynamicdatalistsList#click" locator-key1="RECORD_TABLE_ACTIONS_1" />
+		<execute action="CPDynamicdatalistsList#click" locator-key1="RECORD_MENULIST_EDIT" />
+
+		<execute macro="ListRecord#editTextCmdCP">
+			<var name="textNameLabel" value="text" />
+		</execute>
+
+		<execute action="CPDynamicdatalistsListEditrecord#click" locator-key1="PUBLISH_BUTTON" />
+
+		<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
+	</command>
+
+	<command name="editBooleanCmdCP">
+		<execute macro="ListRecord#addBooleanCmdCP">
+			<var name="recordBoolean" value="${recordBooleanEdit}" />
+		</execute>
+	</command>
+
+	<command name="editDateCmdCP">
+		<execute macro="ListRecord#addDateCmdCP">
+			<var name="recordDateMonth" value="${recordDateMonthEdit}" />
+			<var name="recordDateDay" value="${recordDateDayEdit}" />
+			<var name="recordDateYear" value="${recordDateYearEdit}" />
+		</execute>
+	</command>
+
+	<command name="editDecimalCmdCP">
+		<execute macro="ListRecord#addDecimalCmdCP">
+			<var name="recordDecimal" value="${recordDecimalEdit}" />
+		</execute>
+	</command>
+
+	<command name="editDocumentsAndMediaCmdCP">
+		<execute macro="ListRecord#addDocumentsAndMediaCmdCP">
+			<var name="recordDocument" value="${recordDocumentEdit}" />
+		</execute>
+	</command>
+
+	<command name="editFileUploadCmdCP">
+		<execute macro="ListRecord#addFileUploadCmdCP">
+			<var name="recordFileUpload" value="${recordFileUploadEdit}" />
+		</execute>
+	</command>
+
+	<command name="editHtmlCmdCP">
+		<execute macro="ListRecord#addHtmlCmdCP">
+			<var name="recordHtml" value="${recordHtmlEdit}" />
+		</execute>
+	</command>
+
+	<command name="editIntegerCmdCP">
+		<execute macro="ListRecord#addIntegerCmdCP">
+			<var name="recordInteger" value="${recordIntegerEdit}" />
+		</execute>
+	</command>
+
+	<command name="editLinkToPageCmdCP">
+		<execute macro="ListRecord#addLinkToPageCmdCP">
+			<var name="recordLinkToPage" value="${recordLinkToPageEdit}" />
+		</execute>
+	</command>
+
+	<command name="editNumberCmdCP">
+		<execute macro="ListRecord#addNumberCmdCP">
+			<var name="recordNumber" value="${recordNumberEdit}" />
+		</execute>
+	</command>
+
+	<command name="editRadioCmdCP">
+		<execute macro="ListRecord#addRadioCmdCP">
+			<var name="recordRadio" value="${recordRadioEdit}" />
+		</execute>
+	</command>
+
+	<command name="editSelectCmdCP">
+		<execute macro="ListRecord#addSelectCmdCP">
+			<var name="recordSelect" value="${recordSelectEdit}" />
+		</execute>
+	</command>
+
+	<command name="editTextCmdCP">
+		<execute macro="ListRecord#addTextCmdCP">
+			<var name="recordText" value="${recordTextEdit}" />
+		</execute>
+	</command>
+
+	<command name="editTextBoxCmdCP">
+		<execute macro="ListRecord#addTextBoxCmdCP">
+			<var name="recordTextBox" value="${recordTextBoxEdit}" />
+		</execute>
+	</command>
+
+	<command name="viewCP">
+		<execute macro="Page#cpGotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute action="CPDynamicdatalists#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${listName}" />
+		<execute action="CPDynamicdatalists#click" locator-key1="TOOLBAR_SEARCH_BUTTON" />
+		<execute action="CPDynamicdatalists#assertTextEquals" locator-key1="LIST_TABLE_NAME_1" value1="${listName}" />
+		<execute action="CPDynamicdatalists#click" locator-key1="LIST_TABLE_NAME_1" value1="${listName}" />
+
+		<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="HEADER_TITLE" value1="${listName}" />
+		<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="RECORD_TABLE_COLUMN_ONE_NAME" value1="Text" />
+		<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="RECORD_TABLE_COLUMN_ONE_RECORD_1" value1="${recordText}" />
+		<execute action="CPDynamicdatalistsList#click" locator-key1="RECORD_TABLE_ACTIONS_1" />
+		<execute action="CPDynamicdatalistsList#click" locator-key1="RECORD_MENULIST_VIEW" />
+
+		<execute action="CPDynamicdatalistsListRecord#assertTextEquals" locator-key1="FIELD_1" value1="Text ${recordText}" />
+
+		<execute action="CPDynamicdatalists#selectFrameTop" />
+	</command>
+</definition>

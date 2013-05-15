@@ -1,0 +1,7 @@
+<definition>
+	<command name="doubleClickAt">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="doubleClickAt" />
+	</command>
+</definition>

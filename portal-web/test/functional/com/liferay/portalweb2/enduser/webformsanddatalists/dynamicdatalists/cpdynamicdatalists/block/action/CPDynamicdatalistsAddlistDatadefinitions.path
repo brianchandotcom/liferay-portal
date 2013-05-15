@@ -10,12 +10,17 @@
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
-	<td>//iframe[contains(@src,'dynamicdatalists')]</td>
+	<td></td>
 	<td>CPDynamicdatalistsAddlistDatadefinitions</td>
 </tr>
 <tr>
 	<td></td>
 	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATA_DEFINITIONS_IFRAME</td>
+	<td>//iframe[contains(@src,'dynamic_data_lists')]</td>
 	<td></td>
 </tr>
 <tr>

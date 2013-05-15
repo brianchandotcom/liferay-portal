@@ -1,0 +1,90 @@
+<definition>
+	<command name="addCP">
+		<execute macro="Page#cpGotoContent">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute action="CPDynamicdatalists#click" locator-key1="TOOLBAR_ADD" />
+
+		<execute action="CPDynamicdatalistsAddlist#type" locator-key1="NAME_FIELD" value1="${listName}" />
+		<execute action="CPDynamicdatalistsAddlist#type" locator-key1="DESCRIPTION_FIELD" value1="${listDescription}" />
+		<execute action="CPDynamicdatalistsAddlist#click" locator-key1="DATA_DEFINITION_SELECT_LINK" />
+
+		<execute action="CPDynamicdatalistsAddlistDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />
+		<execute action="CPDynamicdatalistsAddlistDatadefinitions#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${dataDefinitionName}" />
+		<execute action="CPDynamicdatalistsAddlistDatadefinitions#click" locator-key1="TOOLBAR_SEARCH_BUTTON" />
+		<execute action="CPDynamicdatalistsAddlistDatadefinitions#assertTextEquals" locator-key1="DATA_DEFINITION_TABLE_NAME_1" value1="${dataDefinitionName}" />
+		<execute action="CPDynamicdatalistsAddlistDatadefinitions#click" locator-key1="DATA_DEFINITION_TABLE_CHOOSE_BUTTON_1" />
+
+		<execute action="CPDynamicdatalists#selectFrameTop" />
+
+		<execute action="CPDynamicdatalistsAddlist#assertTextEquals" locator-key1="DATA_DEFINITION_NAME" value1="${dataDefinitionName}" />
+		<execute action="CPDynamicdatalistsAddlist#click" locator-key1="SAVE_BUTTON" />
+
+		<execute action="CPDynamicdatalists#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
+	</command>
+
+	<command name="deleteCP">
+		<execute macro="Page#cpGotoContent">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute action="CPDynamicdatalists#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${listName}" />
+		<execute action="CPDynamicdatalists#click" locator-key1="TOOLBAR_SEARCH_BUTTON" />
+		<execute action="CPDynamicdatalists#assertTextEquals" locator-key1="LIST_TABLE_NAME_1" value1="${listName}" />
+		<execute action="CPDynamicdatalists#click" locator-key1="LIST_TABLE_ACTIONS_1" />
+		<execute action="CPDynamicdatalists#click" locator-key1="LIST_MENULIST_DELETE" />
+		<execute action="CPDynamicdatalists#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute action="CPDynamicdatalists#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
+		<execute action="CPDynamicdatalists#assertTextNotPresent" value1="${listName}" />
+	</command>
+
+	<command name="editCP">
+		<execute macro="Page#cpGotoContent">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute action="CPDynamicdatalists#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${listName}" />
+		<execute action="CPDynamicdatalists#click" locator-key1="TOOLBAR_SEARCH_BUTTON" />
+		<execute action="CPDynamicdatalists#assertTextEquals" locator-key1="LIST_TABLE_NAME_1" value1="${listName}" />
+		<execute action="CPDynamicdatalists#click" locator-key1="LIST_TABLE_ACTIONS_1" />
+		<execute action="CPDynamicdatalists#click" locator-key1="LIST_MENULIST_EDIT" />
+
+		<execute action="CPDynamicdatalistsEditlist#type" locator-key1="NAME_FIELD" value1="${listNameEdit}" />
+		<execute action="CPDynamicdatalistsEditlist#type" locator-key1="DESCRIPTION_FIELD" value1="${listDescriptionEdit}" />
+		<execute action="CPDynamicdatalistsEditlist#click" locator-key1="SAVE_BUTTON" />
+
+		<execute action="CPDynamicdatalists#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
+	</command>
+
+	<command name="tearDownCP">
+		<execute macro="Page#cpGotoContent">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<while>
+			<condition action="CPDynamicdatalists#isElementPresent" locator-key1="LIST_TABLE_ACTIONS_1" />
+			<then>
+				<execute action="CPDynamicdatalists#click" locator-key1="LIST_TABLE_ACTIONS_1" />
+				<execute action="CPDynamicdatalists#click" locator-key1="LIST_MENULIST_DELETE" />
+				<execute action="CPDynamicdatalists#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+				<execute action="CPDynamicdatalists#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
+			</then>
+		</while>
+	</command>
+
+	<command name="viewCP">
+		<execute macro="Page#cpGotoContent">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute action="CPDynamicdatalists#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${listName}" />
+		<execute action="CPDynamicdatalists#click" locator-key1="TOOLBAR_SEARCH_BUTTON" />
+		<execute action="CPDynamicdatalists#assertTextEquals" locator-key1="LIST_TABLE_NAME_1" value1="${listName}" />
+		<execute action="CPDynamicdatalists#assertTextEquals" locator-key1="LIST_TABLE_DESCRIPTION_1" value1="${listDescription}" />
+		<execute action="CPDynamicdatalists#click" locator-key1="LIST_TABLE_NAME_1" value1="${listName}" />
+
+		<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="HEADER_TITLE" value1="${listName}" />
+		<execute action="CPDynamicdatalistsList#assertElementPresent" locator-key1="ADD_RECORD_BUTTON" />
+	</command>
+</definition>

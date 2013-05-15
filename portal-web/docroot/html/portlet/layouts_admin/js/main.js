@@ -554,7 +554,7 @@ AUI.add(
 
 						var contentNode = instance.byId('content_' + portletId);
 
-						var inputs = contentNode.all('.field-input-choice');
+						var inputs = contentNode.all('.field');
 
 						var selectedContent = [];
 

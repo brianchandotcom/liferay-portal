@@ -220,6 +220,14 @@ public class LayoutStagedModelDataHandler
 
 		portletDataContext.setPlid(layout.getPlid());
 
+		// Layout ratings
+
+		portletDataContext.addRatingsEntries(Layout.class, layout.getPlid());
+
+		// Layout comments
+
+		portletDataContext.addComments(Layout.class, layout.getPlid());
+
 		if (layout.isIconImage()) {
 			Image image = ImageLocalServiceUtil.getImage(
 				layout.getIconImageId());
@@ -687,6 +695,16 @@ public class LayoutStagedModelDataHandler
 		List<Layout> newLayouts = portletDataContext.getNewLayouts();
 
 		newLayouts.add(importedLayout);
+
+		// Layout ratings
+
+		portletDataContext.importRatingsEntries(
+			Layout.class, layout.getPlid(), importedLayout.getPlid());
+
+		// Layout comments
+
+		portletDataContext.importComments(
+			Layout.class, layout.getPlid(), importedLayout.getPlid(), groupId);
 
 		boolean importPermissions = MapUtil.getBoolean(
 			portletDataContext.getParameterMap(),

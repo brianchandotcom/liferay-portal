@@ -870,7 +870,10 @@ public class JournalArticleLocalServiceImpl
 		newArticle.setSmallImageId(counterLocalService.increment());
 		newArticle.setSmallImageURL(oldArticle.getSmallImageURL());
 
-		if (oldArticle.isPending()) {
+		if (oldArticle.isPending() ||
+			workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
+				user.getCompanyId(), groupId, JournalArticle.class.getName())) {
+
 			newArticle.setStatus(WorkflowConstants.STATUS_DRAFT);
 		}
 		else {

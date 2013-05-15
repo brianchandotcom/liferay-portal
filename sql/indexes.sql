@@ -4,6 +4,8 @@ create index IX_71CB1123 on Address (companyId, classNameId, classPK);
 create index IX_923BD178 on Address (companyId, classNameId, classPK, mailing);
 create index IX_9226DBB4 on Address (companyId, classNameId, classPK, primary_);
 create index IX_5BC8B0D4 on Address (userId);
+create index IX_381E55DA on Address (uuid_);
+create index IX_8FCB620E on Address (uuid_, companyId);
 
 create index IX_6EDB9600 on AnnouncementsDelivery (userId);
 create unique index IX_BA4413D5 on AnnouncementsDelivery (userId, type_);
@@ -291,6 +293,8 @@ create index IX_49D2DEC4 on EmailAddress (companyId, classNameId);
 create index IX_551A519F on EmailAddress (companyId, classNameId, classPK);
 create index IX_2A2CB130 on EmailAddress (companyId, classNameId, classPK, primary_);
 create index IX_7B43CD8 on EmailAddress (userId);
+create index IX_D24F3956 on EmailAddress (uuid_);
+create index IX_F74AB912 on EmailAddress (uuid_, companyId);
 
 create index IX_A8C0CBE8 on ExpandoColumn (tableId);
 create unique index IX_FEFC8DA7 on ExpandoColumn (tableId, name);
@@ -628,6 +632,8 @@ create index IX_A2E4AFBA on Phone (companyId, classNameId);
 create index IX_9A53569 on Phone (companyId, classNameId, classPK);
 create index IX_812CE07A on Phone (companyId, classNameId, classPK, primary_);
 create index IX_F202B9CE on Phone (userId);
+create index IX_EA6245A0 on Phone (uuid_);
+create index IX_B271FA88 on Phone (uuid_, companyId);
 
 create index IX_B9746445 on PluginSetting (companyId);
 create unique index IX_7171B2E8 on PluginSetting (companyId, pluginId, pluginType);
@@ -945,6 +951,8 @@ create index IX_4F0F0CA7 on Website (companyId, classNameId);
 create index IX_F960131C on Website (companyId, classNameId, classPK);
 create index IX_1AA07A6D on Website (companyId, classNameId, classPK, primary_);
 create index IX_F75690BB on Website (userId);
+create index IX_76F15D13 on Website (uuid_);
+create index IX_712BCD35 on Website (uuid_, companyId);
 
 create index IX_5D6FE3F0 on WikiNode (companyId);
 create index IX_B54332D6 on WikiNode (companyId, status);

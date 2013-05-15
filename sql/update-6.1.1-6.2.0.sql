@@ -1,3 +1,5 @@
+alter table Address add uuid_ VARCHAR(75) null;
+
 update BlogsEntry set status = 2 where status = 9;
 
 alter table BookmarksEntry add status INTEGER;
@@ -324,6 +326,8 @@ update DLFolder set statusByUserId = userId;
 update DLFolder set statusByUserName = userName;
 update DLFolder set statusDate = modifiedDate;
 
+alter table EmailAddress add uuid_ VARCHAR(75) null;
+
 alter table ExpandoRow add modifiedDate DATE null;
 
 COMMIT_TRANSACTION;
@@ -439,6 +443,8 @@ drop index IX_ED7CF243 on PasswordPolicyRel;
 
 drop table Permission_;
 
+alter table Phone add uuid_ VARCHAR(75) null;
+
 alter table PollsChoice add groupId LONG;
 alter table PollsChoice add companyId LONG;
 alter table PollsChoice add userId LONG;
@@ -529,6 +535,8 @@ alter table UserGroup add createDate DATE null;
 alter table UserGroup add modifiedDate DATE null;
 
 drop table Users_Permissions;
+
+alter table Website add uuid_ VARCHAR(75) null;
 
 alter table WikiNode add status INTEGER;
 alter table WikiNode add statusByUserId LONG;

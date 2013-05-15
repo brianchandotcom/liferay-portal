@@ -77,6 +77,12 @@ public class WebsiteLocalServiceImpl extends WebsiteLocalServiceBaseImpl {
 		}
 	}
 
+	public Website fetchWebsiteByUuidAndCompanyId(String uuid, long companyId)
+		throws SystemException {
+
+		return websitePersistence.fetchByUuid_C_First(uuid, companyId, null);
+	}
+
 	public List<Website> getWebsites() throws SystemException {
 		return websitePersistence.findAll();
 	}

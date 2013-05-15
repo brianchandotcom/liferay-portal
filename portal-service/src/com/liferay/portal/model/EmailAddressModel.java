@@ -37,8 +37,8 @@ import java.util.Date;
  * @see com.liferay.portal.model.impl.EmailAddressModelImpl
  * @generated
  */
-public interface EmailAddressModel extends AttachedModel, AuditedModel,
-	BaseModel<EmailAddress> {
+public interface EmailAddressModel extends AttachedModel, BaseModel<EmailAddress>,
+	StagedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -58,6 +58,21 @@ public interface EmailAddressModel extends AttachedModel, AuditedModel,
 	 * @param primaryKey the primary key of this email address
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the uuid of this email address.
+	 *
+	 * @return the uuid of this email address
+	 */
+	@AutoEscape
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this email address.
+	 *
+	 * @param uuid the uuid of this email address
+	 */
+	public void setUuid(String uuid);
 
 	/**
 	 * Returns the email address ID of this email address.

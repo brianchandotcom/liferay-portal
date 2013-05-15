@@ -31,6 +31,7 @@ public class EmailAddressSoap implements Serializable {
 	public static EmailAddressSoap toSoapModel(EmailAddress model) {
 		EmailAddressSoap soapModel = new EmailAddressSoap();
 
+		soapModel.setUuid(model.getUuid());
 		soapModel.setEmailAddressId(model.getEmailAddressId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -92,6 +93,14 @@ public class EmailAddressSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setEmailAddressId(pk);
+	}
+
+	public String getUuid() {
+		return _uuid;
+	}
+
+	public void setUuid(String uuid) {
+		_uuid = uuid;
 	}
 
 	public long getEmailAddressId() {
@@ -186,6 +195,7 @@ public class EmailAddressSoap implements Serializable {
 		_primary = primary;
 	}
 
+	private String _uuid;
 	private long _emailAddressId;
 	private long _companyId;
 	private long _userId;

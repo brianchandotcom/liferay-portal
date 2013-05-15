@@ -265,6 +265,12 @@ public class PhoneLocalServiceUtil {
 		getService().deletePhones(companyId, className, classPK);
 	}
 
+	public static com.liferay.portal.model.Phone fetchPhoneByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchPhoneByUuidAndCompanyId(uuid, companyId);
+	}
+
 	public static java.util.List<com.liferay.portal.model.Phone> getPhones()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getPhones();

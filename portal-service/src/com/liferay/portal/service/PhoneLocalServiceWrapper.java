@@ -252,6 +252,12 @@ public class PhoneLocalServiceWrapper implements PhoneLocalService,
 		_phoneLocalService.deletePhones(companyId, className, classPK);
 	}
 
+	public com.liferay.portal.model.Phone fetchPhoneByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _phoneLocalService.fetchPhoneByUuidAndCompanyId(uuid, companyId);
+	}
+
 	public java.util.List<com.liferay.portal.model.Phone> getPhones()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _phoneLocalService.getPhones();

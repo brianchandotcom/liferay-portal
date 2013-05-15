@@ -36,9 +36,11 @@ import java.util.Date;
 public class WebsiteCacheModel implements CacheModel<Website>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
-		sb.append("{websiteId=");
+		sb.append("{uuid=");
+		sb.append(uuid);
+		sb.append(", websiteId=");
 		sb.append(websiteId);
 		sb.append(", companyId=");
 		sb.append(companyId);
@@ -67,6 +69,13 @@ public class WebsiteCacheModel implements CacheModel<Website>, Externalizable {
 
 	public Website toEntityModel() {
 		WebsiteImpl websiteImpl = new WebsiteImpl();
+
+		if (uuid == null) {
+			websiteImpl.setUuid(StringPool.BLANK);
+		}
+		else {
+			websiteImpl.setUuid(uuid);
+		}
 
 		websiteImpl.setWebsiteId(websiteId);
 		websiteImpl.setCompanyId(companyId);
@@ -112,6 +121,7 @@ public class WebsiteCacheModel implements CacheModel<Website>, Externalizable {
 	}
 
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		uuid = objectInput.readUTF();
 		websiteId = objectInput.readLong();
 		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
@@ -127,6 +137,13 @@ public class WebsiteCacheModel implements CacheModel<Website>, Externalizable {
 
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		if (uuid == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
 		objectOutput.writeLong(websiteId);
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
@@ -154,6 +171,7 @@ public class WebsiteCacheModel implements CacheModel<Website>, Externalizable {
 		objectOutput.writeBoolean(primary);
 	}
 
+	public String uuid;
 	public long websiteId;
 	public long companyId;
 	public long userId;

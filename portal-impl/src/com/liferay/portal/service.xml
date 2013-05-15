@@ -30,7 +30,7 @@
 		<column name="type" type="String" />
 		<column name="size" type="String" />
 	</entity>
-	<entity name="Address" local-service="true" remote-service="true" persistence-class="com.liferay.portal.service.persistence.AddressPersistenceImpl2">
+	<entity name="Address" uuid="true" local-service="true" remote-service="true" persistence-class="com.liferay.portal.service.persistence.AddressPersistenceImpl2">
 
 		<!-- PK fields -->
 
@@ -271,7 +271,7 @@
 			<finder-column name="active" />
 		</finder>
 	</entity>
-	<entity name="EmailAddress" local-service="true" remote-service="true">
+	<entity name="EmailAddress" uuid="true" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
 
@@ -1267,7 +1267,7 @@
 		</finder>
 	</entity>
 	<entity name="Permission" local-service="false" remote-service="true" />
-	<entity name="Phone" local-service="true" remote-service="true">
+	<entity name="Phone" uuid="true" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
 
@@ -2436,7 +2436,7 @@
 			<finder-column name="classPK" />
 		</finder>
 	</entity>
-	<entity name="Website" local-service="true" remote-service="true">
+	<entity name="Website" uuid="true" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
 

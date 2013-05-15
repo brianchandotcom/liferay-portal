@@ -44,6 +44,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("emailAddressId", getEmailAddressId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -60,6 +61,12 @@ public class EmailAddressWrapper implements EmailAddress,
 	}
 
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long emailAddressId = (Long)attributes.get("emailAddressId");
 
 		if (emailAddressId != null) {
@@ -143,6 +150,24 @@ public class EmailAddressWrapper implements EmailAddress,
 	*/
 	public void setPrimaryKey(long primaryKey) {
 		_emailAddress.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	* Returns the uuid of this email address.
+	*
+	* @return the uuid of this email address
+	*/
+	public java.lang.String getUuid() {
+		return _emailAddress.getUuid();
+	}
+
+	/**
+	* Sets the uuid of this email address.
+	*
+	* @param uuid the uuid of this email address
+	*/
+	public void setUuid(java.lang.String uuid) {
+		_emailAddress.setUuid(uuid);
 	}
 
 	/**

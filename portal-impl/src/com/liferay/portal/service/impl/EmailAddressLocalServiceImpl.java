@@ -82,6 +82,14 @@ public class EmailAddressLocalServiceImpl
 		}
 	}
 
+	public EmailAddress fetchEmailAddressByUuidAndCompanyId(
+			String uuid, long companyId)
+		throws SystemException {
+
+		return
+			emailAddressPersistence.fetchByUuid_C_First(uuid, companyId, null);
+	}
+
 	public List<EmailAddress> getEmailAddresses() throws SystemException {
 		return emailAddressPersistence.findAll();
 	}

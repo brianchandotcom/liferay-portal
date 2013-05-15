@@ -111,6 +111,8 @@ public class EmailAddressPersistenceTest {
 
 		EmailAddress newEmailAddress = _persistence.create(pk);
 
+		newEmailAddress.setUuid(ServiceTestUtil.randomString());
+
 		newEmailAddress.setCompanyId(ServiceTestUtil.nextLong());
 
 		newEmailAddress.setUserId(ServiceTestUtil.nextLong());
@@ -135,6 +137,8 @@ public class EmailAddressPersistenceTest {
 
 		EmailAddress existingEmailAddress = _persistence.findByPrimaryKey(newEmailAddress.getPrimaryKey());
 
+		Assert.assertEquals(existingEmailAddress.getUuid(),
+			newEmailAddress.getUuid());
 		Assert.assertEquals(existingEmailAddress.getEmailAddressId(),
 			newEmailAddress.getEmailAddressId());
 		Assert.assertEquals(existingEmailAddress.getCompanyId(),
@@ -196,8 +200,8 @@ public class EmailAddressPersistenceTest {
 	}
 
 	protected OrderByComparator getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("EmailAddress",
-			"emailAddressId", true, "companyId", true, "userId", true,
+		return OrderByComparatorFactoryUtil.create("EmailAddress", "uuid",
+			true, "emailAddressId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"classNameId", true, "classPK", true, "address", true, "typeId",
 			true, "primary", true);
@@ -319,6 +323,8 @@ public class EmailAddressPersistenceTest {
 		long pk = ServiceTestUtil.nextLong();
 
 		EmailAddress emailAddress = _persistence.create(pk);
+
+		emailAddress.setUuid(ServiceTestUtil.randomString());
 
 		emailAddress.setCompanyId(ServiceTestUtil.nextLong());
 

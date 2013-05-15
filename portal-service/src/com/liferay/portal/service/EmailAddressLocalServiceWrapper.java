@@ -259,6 +259,13 @@ public class EmailAddressLocalServiceWrapper implements EmailAddressLocalService
 			classPK);
 	}
 
+	public com.liferay.portal.model.EmailAddress fetchEmailAddressByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _emailAddressLocalService.fetchEmailAddressByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
 	public java.util.List<com.liferay.portal.model.EmailAddress> getEmailAddresses()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _emailAddressLocalService.getEmailAddresses();

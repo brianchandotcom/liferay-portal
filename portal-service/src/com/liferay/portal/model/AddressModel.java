@@ -37,8 +37,8 @@ import java.util.Date;
  * @see com.liferay.portal.model.impl.AddressModelImpl
  * @generated
  */
-public interface AddressModel extends AttachedModel, AuditedModel,
-	BaseModel<Address> {
+public interface AddressModel extends AttachedModel, BaseModel<Address>,
+	StagedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -58,6 +58,21 @@ public interface AddressModel extends AttachedModel, AuditedModel,
 	 * @param primaryKey the primary key of this address
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the uuid of this address.
+	 *
+	 * @return the uuid of this address
+	 */
+	@AutoEscape
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this address.
+	 *
+	 * @param uuid the uuid of this address
+	 */
+	public void setUuid(String uuid);
 
 	/**
 	 * Returns the address ID of this address.

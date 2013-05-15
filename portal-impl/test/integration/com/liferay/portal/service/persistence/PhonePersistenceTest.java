@@ -111,6 +111,8 @@ public class PhonePersistenceTest {
 
 		Phone newPhone = _persistence.create(pk);
 
+		newPhone.setUuid(ServiceTestUtil.randomString());
+
 		newPhone.setCompanyId(ServiceTestUtil.nextLong());
 
 		newPhone.setUserId(ServiceTestUtil.nextLong());
@@ -137,6 +139,7 @@ public class PhonePersistenceTest {
 
 		Phone existingPhone = _persistence.findByPrimaryKey(newPhone.getPrimaryKey());
 
+		Assert.assertEquals(existingPhone.getUuid(), newPhone.getUuid());
 		Assert.assertEquals(existingPhone.getPhoneId(), newPhone.getPhoneId());
 		Assert.assertEquals(existingPhone.getCompanyId(),
 			newPhone.getCompanyId());
@@ -192,10 +195,11 @@ public class PhonePersistenceTest {
 	}
 
 	protected OrderByComparator getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("Phone", "phoneId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "classNameId", true, "classPK", true,
-			"number", true, "extension", true, "typeId", true, "primary", true);
+		return OrderByComparatorFactoryUtil.create("Phone", "uuid", true,
+			"phoneId", true, "companyId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true, "classNameId",
+			true, "classPK", true, "number", true, "extension", true, "typeId",
+			true, "primary", true);
 	}
 
 	@Test
@@ -312,6 +316,8 @@ public class PhonePersistenceTest {
 		long pk = ServiceTestUtil.nextLong();
 
 		Phone phone = _persistence.create(pk);
+
+		phone.setUuid(ServiceTestUtil.randomString());
 
 		phone.setCompanyId(ServiceTestUtil.nextLong());
 

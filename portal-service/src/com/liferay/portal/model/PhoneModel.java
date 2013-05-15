@@ -37,7 +37,7 @@ import java.util.Date;
  * @see com.liferay.portal.model.impl.PhoneModelImpl
  * @generated
  */
-public interface PhoneModel extends AttachedModel, AuditedModel, BaseModel<Phone> {
+public interface PhoneModel extends AttachedModel, BaseModel<Phone>, StagedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -57,6 +57,21 @@ public interface PhoneModel extends AttachedModel, AuditedModel, BaseModel<Phone
 	 * @param primaryKey the primary key of this phone
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the uuid of this phone.
+	 *
+	 * @return the uuid of this phone
+	 */
+	@AutoEscape
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this phone.
+	 *
+	 * @param uuid the uuid of this phone
+	 */
+	public void setUuid(String uuid);
 
 	/**
 	 * Returns the phone ID of this phone.

@@ -256,6 +256,13 @@ public class AddressLocalServiceWrapper implements AddressLocalService,
 		_addressLocalService.deleteAddresses(companyId, className, classPK);
 	}
 
+	public com.liferay.portal.model.Address fetchAddressByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _addressLocalService.fetchAddressByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
 	public java.util.List<com.liferay.portal.model.Address> getAddresses()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _addressLocalService.getAddresses();

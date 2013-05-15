@@ -31,6 +31,7 @@ public class AddressSoap implements Serializable {
 	public static AddressSoap toSoapModel(Address model) {
 		AddressSoap soapModel = new AddressSoap();
 
+		soapModel.setUuid(model.getUuid());
 		soapModel.setAddressId(model.getAddressId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -99,6 +100,14 @@ public class AddressSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setAddressId(pk);
+	}
+
+	public String getUuid() {
+		return _uuid;
+	}
+
+	public void setUuid(String uuid) {
+		_uuid = uuid;
 	}
 
 	public long getAddressId() {
@@ -253,6 +262,7 @@ public class AddressSoap implements Serializable {
 		_primary = primary;
 	}
 
+	private String _uuid;
 	private long _addressId;
 	private long _companyId;
 	private long _userId;

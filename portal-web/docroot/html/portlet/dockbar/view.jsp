@@ -128,7 +128,7 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 				</c:if>
 
 				<c:if test="<%= themeDisplay.isShowManageSiteIcon() %>">
-					<aui:nav-item cssClass='<%= "settings" + useDialogFullDialog %>' href="<%= themeDisplay.getURLManageSite() %>" label="site" title="manage-site" />
+					<aui:nav-item cssClass="settings" href="<%= themeDisplay.getURLManageSite() %>" label="site" title="manage-site" />
 				</c:if>
 			</aui:nav-item>
 
@@ -181,19 +181,13 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 		<%
 		String useDialog = StringPool.BLANK;
 
-		if (!group.isControlPanel() && PropsValues.DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP) {
+		if (PropsValues.DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP) {
 			useDialog = StringPool.SPACE + "use-dialog";
-		}
-
-		String controlPanelCategory = StringPool.BLANK;
-
-		if (!group.isControlPanel()) {
-			controlPanelCategory = PortletCategoryKeys.MY;
 		}
 
 		String myAccountURL = themeDisplay.getURLMyAccount().toString();
 
-		myAccountURL = HttpUtil.setParameter(myAccountURL, "controlPanelCategory", controlPanelCategory);
+		myAccountURL = HttpUtil.setParameter(myAccountURL, "controlPanelCategory", PortletCategoryKeys.MY);
 		%>
 
 		<liferay-util:buffer var="userName">

@@ -16,7 +16,7 @@
 
 $theme.include($body_top_include)
 
-#if (($control_panel_category == "") || !$getterUtil.getBoolean($propsUtil.get("dockbar.administrative.links.show.in.pop.up")))
+#if (($control_panel_category != "my") || !$getterUtil.getBoolean($propsUtil.get("dockbar.administrative.links.show.in.pop.up")))
 	#dockbar()
 #end
 

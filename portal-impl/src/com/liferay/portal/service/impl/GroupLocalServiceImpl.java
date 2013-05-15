@@ -3487,7 +3487,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				portlet.getControlPanelEntryCategory());
 
 			if (actions.contains(ActionKeys.ACCESS_IN_CONTROL_PANEL) &&
-				controlPanelEntryCategory.equals(PortletCategoryKeys.CONTENT)) {
+				controlPanelEntryCategory.startsWith(
+					PortletCategoryKeys.SITE_ADMINISTRATION)) {
 
 				setRolePermissions(
 					group, role, portlet.getPortletId(),

@@ -50,7 +50,7 @@ long groupId = ParamUtil.getLong(request, "groupId");
 
 String category = PortalUtil.getControlPanelCategory(portletDisplay.getId(), themeDisplay);
 
-if ((groupId == 0) && !category.equals(PortletCategoryKeys.CONTENT)) {
+if ((groupId == 0) && !category.startsWith(PortletCategoryKeys.SITE_ADMINISTRATION)) {
 	groupId = themeDisplay.getCompanyGroupId();
 }
 

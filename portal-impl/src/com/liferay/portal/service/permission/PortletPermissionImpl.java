@@ -403,7 +403,9 @@ public class PortletPermissionImpl implements PortletPermission {
 		if ((layout != null) && layout.isTypeControlPanel()) {
 			String category = portlet.getControlPanelEntryCategory();
 
-			if (Validator.equals(category, PortletCategoryKeys.CONTENT)) {
+			if (Validator.startsWith(
+					category, PortletCategoryKeys.SITE_ADMINISTRATION)) {
+
 				layout = null;
 			}
 		}

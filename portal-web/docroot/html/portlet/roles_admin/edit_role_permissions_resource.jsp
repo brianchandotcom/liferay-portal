@@ -82,7 +82,7 @@ for (int i = 0; i < results.size(); i++) {
 		if (Validator.isNotNull(portletResource)) {
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletResource);
 
-			if (Validator.isNotNull(portlet.getControlPanelEntryCategory()) && portlet.getControlPanelEntryCategory().equals(PortletCategoryKeys.CONTENT)) {
+			if (Validator.isNotNull(portlet.getControlPanelEntryCategory()) && portlet.getControlPanelEntryCategory().startsWith(PortletCategoryKeys.SITE_ADMINISTRATION)) {
 				supportsFilterByGroup = true;
 			}
 		}

@@ -91,7 +91,7 @@ public abstract class BaseControlPanelEntry implements ControlPanelEntry {
 	protected long getDefaultPlid(Group group, String category) {
 		long plid = LayoutConstants.DEFAULT_PLID;
 
-		if (category.equals(PortletCategoryKeys.CONTENT)) {
+		if (category.startsWith(PortletCategoryKeys.SITE_ADMINISTRATION)) {
 			plid = group.getDefaultPublicPlid();
 
 			if (plid == LayoutConstants.DEFAULT_PLID) {
@@ -123,7 +123,7 @@ public abstract class BaseControlPanelEntry implements ControlPanelEntry {
 			category = StringPool.BLANK;
 		}
 
-		if (category.equals(PortletCategoryKeys.CONTENT)) {
+		if (category.startsWith(PortletCategoryKeys.SITE_ADMINISTRATION)) {
 			if (group.isLayout() && !portlet.isScopeable()) {
 				return false;
 			}
@@ -137,8 +137,11 @@ public abstract class BaseControlPanelEntry implements ControlPanelEntry {
 
 		long groupId = group.getGroupId();
 
-		if (category.equals(PortletCategoryKeys.PORTAL) ||
-			category.equals(PortletCategoryKeys.SERVER)) {
+		if (category.equals(PortletCategoryKeys.CONFIGURATION) ||
+			category.equals(PortletCategoryKeys.MARKETPLACE) ||
+			category.equals(PortletCategoryKeys.SERVER) ||
+			category.equals(PortletCategoryKeys.SITES) ||
+			category.equals(PortletCategoryKeys.USERS)) {
 
 			groupId = 0;
 		}

@@ -146,3 +146,13 @@
 .lfr-control-panel-help-content {
 	border-radius: 0;
 }
+
+.control-panel-bar-main {
+	font-size: 1.2em;
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+
+.control-panel-bar-secondary {
+	margin-bottom: 5px;
+}

@@ -784,13 +784,14 @@ public class ServicePreAction extends Action {
 		if (signedIn && PropsValues.DOCKBAR_SHOW_SITE_CONTENT_ICON) {
 			controlPanelPlid = PortalUtil.getControlPanelPlid(companyId);
 
-			List<Portlet> siteContentPortlets =
+			List<Portlet> siteAdministrationPortlets =
 				PortalUtil.getControlPanelPortlets(
-					PortletCategoryKeys.CONTENT, themeDisplay);
+					PortletCategoryKeys.SITE_ADMINISTRATION, themeDisplay);
 
 			showManageSiteIcon =
 				PortletPermissionUtil.hasControlPanelAccessPermission(
-					permissionChecker, scopeGroupId, siteContentPortlets);
+					permissionChecker, scopeGroupId,
+					siteAdministrationPortlets);
 		}
 
 		themeDisplay.setShowManageSiteIcon(showManageSiteIcon);
@@ -865,7 +866,10 @@ public class ServicePreAction extends Action {
 		String manageSiteURL = urlControlPanel;
 
 		manageSiteURL = HttpUtil.addParameter(
-			manageSiteURL, "controlPanelCategory", PortletCategoryKeys.CONTENT);
+			manageSiteURL, "controlPanelCategory",
+			PortletCategoryKeys.CURRENT_SITE);
+		manageSiteURL = HttpUtil.addParameter(
+			manageSiteURL, "doAsGroupId", siteGroupId);
 
 		themeDisplay.setURLManageSite(manageSiteURL);
 

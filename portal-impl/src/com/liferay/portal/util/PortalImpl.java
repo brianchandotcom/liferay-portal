@@ -1433,7 +1433,12 @@ public class PortalImpl implements Portal {
 			companyId);
 
 		for (Portlet portlet : portletsList) {
-			if (category.equals(portlet.getControlPanelEntryCategory())) {
+			String portletCategory = portlet.getControlPanelEntryCategory();
+
+			if (category.equals(portletCategory) ||
+				(category.endsWith(StringPool.PERIOD) &&
+				 Validator.startsWith(portletCategory, category))) {
+
 				portletsSet.add(portlet);
 			}
 		}
@@ -5200,7 +5205,7 @@ public class PortalImpl implements Portal {
 			themeDisplay.setScopeGroupId(companyGroup.getGroupId());
 
 			List<Portlet> controlPanelPortlets = getControlPanelPortlets(
-				PortletCategoryKeys.CONTENT, themeDisplay);
+				PortletCategoryKeys.SITE_ADMINISTRATION, themeDisplay);
 
 			if (!controlPanelPortlets.isEmpty()) {
 				return true;
@@ -6215,7 +6220,7 @@ public class PortalImpl implements Portal {
 		long doAsGroupId = 0;
 
 		Collection<Portlet> portlets = getControlPanelPortlets(
-			companyId, PortletCategoryKeys.CONTENT);
+			companyId, PortletCategoryKeys.SITE_ADMINISTRATION);
 
 		List<Group> groups = GroupServiceUtil.getManageableSites(portlets, 1);
 

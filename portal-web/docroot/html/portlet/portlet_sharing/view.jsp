@@ -29,7 +29,7 @@ String widgetURL = ParamUtil.getString(request, "widgetURL");
 
 		<textarea class="lfr-textarea" onClick="Liferay.Util.selectAndCopy(this);">&lt;script src=&quot;<%= themeDisplay.getPortalURL() %><%= themeDisplay.getPathContext() %>/html/js/liferay/widget.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
 &lt;script type=&quot;text/javascript&quot;&gt;
-Liferay.Widget({ url: &#x27;<%= widgetURL %>&#x27;});
+Liferay.Widget({ url: &#x27;<%= HtmlUtil.escape(widgetURL) %>&#x27;});
 &lt;/script&gt;</textarea>
 	</c:when>
 	<c:when test="<%= Validator.isNotNull(netvibesURL) %>">

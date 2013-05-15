@@ -43,6 +43,7 @@ public class WebsiteWrapper implements Website, ModelWrapper<Website> {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("websiteId", getWebsiteId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -59,6 +60,12 @@ public class WebsiteWrapper implements Website, ModelWrapper<Website> {
 	}
 
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long websiteId = (Long)attributes.get("websiteId");
 
 		if (websiteId != null) {
@@ -142,6 +149,24 @@ public class WebsiteWrapper implements Website, ModelWrapper<Website> {
 	*/
 	public void setPrimaryKey(long primaryKey) {
 		_website.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	* Returns the uuid of this website.
+	*
+	* @return the uuid of this website
+	*/
+	public java.lang.String getUuid() {
+		return _website.getUuid();
+	}
+
+	/**
+	* Sets the uuid of this website.
+	*
+	* @param uuid the uuid of this website
+	*/
+	public void setUuid(java.lang.String uuid) {
+		_website.setUuid(uuid);
 	}
 
 	/**

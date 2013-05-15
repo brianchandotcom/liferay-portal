@@ -94,6 +94,12 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 		}
 	}
 
+	public Address fetchAddressByUuidAndCompanyId(String uuid, long companyId)
+		throws SystemException {
+
+		return addressPersistence.fetchByUuid_C_First(uuid, companyId, null);
+	}
+
 	public List<Address> getAddresses() throws SystemException {
 		return addressPersistence.findAll();
 	}

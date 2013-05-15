@@ -18,6 +18,7 @@ create table Account_ (
 );
 
 create table Address (
+	uuid_ VARCHAR(75) null,
 	addressId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
@@ -690,6 +691,7 @@ create table DLFolder (
 );
 
 create table EmailAddress (
+	uuid_ VARCHAR(75) null,
 	emailAddressId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
@@ -1436,6 +1438,7 @@ create table PasswordTracker (
 );
 
 create table Phone (
+	uuid_ VARCHAR(75) null,
 	phoneId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
@@ -2260,6 +2263,7 @@ create table WebDAVProps (
 );
 
 create table Website (
+	uuid_ VARCHAR(75) null,
 	websiteId LONG not null primary key,
 	companyId LONG,
 	userId LONG,

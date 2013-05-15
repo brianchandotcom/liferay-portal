@@ -43,6 +43,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("addressId", getAddressId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -66,6 +67,12 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	}
 
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long addressId = (Long)attributes.get("addressId");
 
 		if (addressId != null) {
@@ -191,6 +198,24 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	public void setPrimaryKey(long primaryKey) {
 		_address.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	* Returns the uuid of this address.
+	*
+	* @return the uuid of this address
+	*/
+	public java.lang.String getUuid() {
+		return _address.getUuid();
+	}
+
+	/**
+	* Sets the uuid of this address.
+	*
+	* @param uuid the uuid of this address
+	*/
+	public void setUuid(java.lang.String uuid) {
+		_address.setUuid(uuid);
 	}
 
 	/**

@@ -37,9 +37,11 @@ public class EmailAddressCacheModel implements CacheModel<EmailAddress>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
-		sb.append("{emailAddressId=");
+		sb.append("{uuid=");
+		sb.append(uuid);
+		sb.append(", emailAddressId=");
 		sb.append(emailAddressId);
 		sb.append(", companyId=");
 		sb.append(companyId);
@@ -68,6 +70,13 @@ public class EmailAddressCacheModel implements CacheModel<EmailAddress>,
 
 	public EmailAddress toEntityModel() {
 		EmailAddressImpl emailAddressImpl = new EmailAddressImpl();
+
+		if (uuid == null) {
+			emailAddressImpl.setUuid(StringPool.BLANK);
+		}
+		else {
+			emailAddressImpl.setUuid(uuid);
+		}
 
 		emailAddressImpl.setEmailAddressId(emailAddressId);
 		emailAddressImpl.setCompanyId(companyId);
@@ -113,6 +122,7 @@ public class EmailAddressCacheModel implements CacheModel<EmailAddress>,
 	}
 
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		uuid = objectInput.readUTF();
 		emailAddressId = objectInput.readLong();
 		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
@@ -128,6 +138,13 @@ public class EmailAddressCacheModel implements CacheModel<EmailAddress>,
 
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		if (uuid == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
 		objectOutput.writeLong(emailAddressId);
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
@@ -155,6 +172,7 @@ public class EmailAddressCacheModel implements CacheModel<EmailAddress>,
 		objectOutput.writeBoolean(primary);
 	}
 
+	public String uuid;
 	public long emailAddressId;
 	public long companyId;
 	public long userId;

@@ -52,6 +52,7 @@
 		<default-hints>
 			<hint name="display-width">150</hint>
 		</default-hints>
+		<field name="uuid" type="String" />
 		<field name="addressId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -164,6 +165,7 @@
 		<field name="active" type="boolean" />
 	</model>
 	<model name="com.liferay.portal.model.EmailAddress">
+		<field name="uuid" type="String" />
 		<field name="emailAddressId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -596,6 +598,7 @@
 		<field name="password" type="String" />
 	</model>
 	<model name="com.liferay.portal.model.Phone">
+		<field name="uuid" type="String" />
 		<field name="phoneId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -992,6 +995,7 @@
 		</field>
 	</model>
 	<model name="com.liferay.portal.model.Website">
+		<field name="uuid" type="String" />
 		<field name="websiteId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />

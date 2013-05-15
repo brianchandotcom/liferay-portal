@@ -51,6 +51,9 @@
 	<mapped-superclass class="com.liferay.portal.model.impl.AddressModelImpl">
 		<attributes>
 			<id name="addressId" />
+			<basic name="uuid">
+				<column name="UUID_" />
+			</basic>
 			<basic name="companyId" />
 			<basic name="userId" />
 			<basic name="userName" />
@@ -208,6 +211,9 @@
 	<mapped-superclass class="com.liferay.portal.model.impl.EmailAddressModelImpl">
 		<attributes>
 			<id name="emailAddressId" />
+			<basic name="uuid">
+				<column name="UUID_" />
+			</basic>
 			<basic name="companyId" />
 			<basic name="userId" />
 			<basic name="userName" />
@@ -767,6 +773,9 @@
 	<mapped-superclass class="com.liferay.portal.model.impl.PhoneModelImpl">
 		<attributes>
 			<id name="phoneId" />
+			<basic name="uuid">
+				<column name="UUID_" />
+			</basic>
 			<basic name="companyId" />
 			<basic name="userId" />
 			<basic name="userName" />
@@ -1371,6 +1380,9 @@
 	<mapped-superclass class="com.liferay.portal.model.impl.WebsiteModelImpl">
 		<attributes>
 			<id name="websiteId" />
+			<basic name="uuid">
+				<column name="UUID_" />
+			</basic>
 			<basic name="companyId" />
 			<basic name="userId" />
 			<basic name="userName" />

@@ -43,6 +43,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("phoneId", getPhoneId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -60,6 +61,12 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	}
 
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long phoneId = (Long)attributes.get("phoneId");
 
 		if (phoneId != null) {
@@ -149,6 +156,24 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	*/
 	public void setPrimaryKey(long primaryKey) {
 		_phone.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	* Returns the uuid of this phone.
+	*
+	* @return the uuid of this phone
+	*/
+	public java.lang.String getUuid() {
+		return _phone.getUuid();
+	}
+
+	/**
+	* Sets the uuid of this phone.
+	*
+	* @param uuid the uuid of this phone
+	*/
+	public void setUuid(java.lang.String uuid) {
+		_phone.setUuid(uuid);
 	}
 
 	/**

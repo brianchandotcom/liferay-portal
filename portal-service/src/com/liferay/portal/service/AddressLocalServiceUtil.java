@@ -267,6 +267,12 @@ public class AddressLocalServiceUtil {
 		getService().deleteAddresses(companyId, className, classPK);
 	}
 
+	public static com.liferay.portal.model.Address fetchAddressByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchAddressByUuidAndCompanyId(uuid, companyId);
+	}
+
 	public static java.util.List<com.liferay.portal.model.Address> getAddresses()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getAddresses();

@@ -632,6 +632,12 @@ public class OrganizationWrapper implements Organization,
 		return _organization.getParentOrganization();
 	}
 
+	public com.liferay.portal.model.PasswordPolicy getPasswordPolicy()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _organization.getPasswordPolicy();
+	}
+
 	public javax.portlet.PortletPreferences getPreferences()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _organization.getPreferences();

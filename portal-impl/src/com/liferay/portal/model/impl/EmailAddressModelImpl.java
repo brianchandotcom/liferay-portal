@@ -66,6 +66,7 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 	 */
 	public static final String TABLE_NAME = "EmailAddress";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "uuid_", Types.VARCHAR },
 			{ "emailAddressId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
@@ -78,7 +79,7 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 			{ "typeId", Types.INTEGER },
 			{ "primary_", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table EmailAddress (emailAddressId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,address VARCHAR(75) null,typeId INTEGER,primary_ BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table EmailAddress (uuid_ VARCHAR(75) null,emailAddressId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,address VARCHAR(75) null,typeId INTEGER,primary_ BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table EmailAddress";
 	public static final String ORDER_BY_JPQL = " ORDER BY emailAddress.createDate ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY EmailAddress.createDate ASC";
@@ -99,7 +100,8 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 	public static long COMPANYID_COLUMN_BITMASK = 4L;
 	public static long PRIMARY_COLUMN_BITMASK = 8L;
 	public static long USERID_COLUMN_BITMASK = 16L;
-	public static long CREATEDATE_COLUMN_BITMASK = 32L;
+	public static long UUID_COLUMN_BITMASK = 32L;
+	public static long CREATEDATE_COLUMN_BITMASK = 64L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -114,6 +116,7 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 
 		EmailAddress model = new EmailAddressImpl();
 
+		model.setUuid(soapModel.getUuid());
 		model.setEmailAddressId(soapModel.getEmailAddressId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
@@ -183,6 +186,7 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("emailAddressId", getEmailAddressId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -200,6 +204,12 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long emailAddressId = (Long)attributes.get("emailAddressId");
 
 		if (emailAddressId != null) {
@@ -265,6 +275,28 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 		if (primary != null) {
 			setPrimary(primary);
 		}
+	}
+
+	@JSON
+	public String getUuid() {
+		if (_uuid == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _uuid;
+		}
+	}
+
+	public void setUuid(String uuid) {
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
+		}
+
+		_uuid = uuid;
+	}
+
+	public String getOriginalUuid() {
+		return GetterUtil.getString(_originalUuid);
 	}
 
 	@JSON
@@ -499,6 +531,7 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 	public Object clone() {
 		EmailAddressImpl emailAddressImpl = new EmailAddressImpl();
 
+		emailAddressImpl.setUuid(getUuid());
 		emailAddressImpl.setEmailAddressId(getEmailAddressId());
 		emailAddressImpl.setCompanyId(getCompanyId());
 		emailAddressImpl.setUserId(getUserId());
@@ -559,6 +592,8 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 	public void resetOriginalValues() {
 		EmailAddressModelImpl emailAddressModelImpl = this;
 
+		emailAddressModelImpl._originalUuid = emailAddressModelImpl._uuid;
+
 		emailAddressModelImpl._originalCompanyId = emailAddressModelImpl._companyId;
 
 		emailAddressModelImpl._setOriginalCompanyId = false;
@@ -585,6 +620,14 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 	@Override
 	public CacheModel<EmailAddress> toCacheModel() {
 		EmailAddressCacheModel emailAddressCacheModel = new EmailAddressCacheModel();
+
+		emailAddressCacheModel.uuid = getUuid();
+
+		String uuid = emailAddressCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			emailAddressCacheModel.uuid = null;
+		}
 
 		emailAddressCacheModel.emailAddressId = getEmailAddressId();
 
@@ -639,9 +682,11 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
-		sb.append("{emailAddressId=");
+		sb.append("{uuid=");
+		sb.append(getUuid());
+		sb.append(", emailAddressId=");
 		sb.append(getEmailAddressId());
 		sb.append(", companyId=");
 		sb.append(getCompanyId());
@@ -669,12 +714,16 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(40);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.EmailAddress");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>uuid</column-name><column-value><![CDATA[");
+		sb.append(getUuid());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>emailAddressId</column-name><column-value><![CDATA[");
 		sb.append(getEmailAddressId());
@@ -729,6 +778,8 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 	private static Class<?>[] _escapedModelInterfaces = new Class[] {
 			EmailAddress.class
 		};
+	private String _uuid;
+	private String _originalUuid;
 	private long _emailAddressId;
 	private long _companyId;
 	private long _originalCompanyId;

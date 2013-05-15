@@ -31,6 +31,7 @@ public class WebsiteSoap implements Serializable {
 	public static WebsiteSoap toSoapModel(Website model) {
 		WebsiteSoap soapModel = new WebsiteSoap();
 
+		soapModel.setUuid(model.getUuid());
 		soapModel.setWebsiteId(model.getWebsiteId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -92,6 +93,14 @@ public class WebsiteSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setWebsiteId(pk);
+	}
+
+	public String getUuid() {
+		return _uuid;
+	}
+
+	public void setUuid(String uuid) {
+		_uuid = uuid;
 	}
 
 	public long getWebsiteId() {
@@ -186,6 +195,7 @@ public class WebsiteSoap implements Serializable {
 		_primary = primary;
 	}
 
+	private String _uuid;
 	private long _websiteId;
 	private long _companyId;
 	private long _userId;

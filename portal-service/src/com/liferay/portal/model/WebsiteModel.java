@@ -37,8 +37,8 @@ import java.util.Date;
  * @see com.liferay.portal.model.impl.WebsiteModelImpl
  * @generated
  */
-public interface WebsiteModel extends AttachedModel, AuditedModel,
-	BaseModel<Website> {
+public interface WebsiteModel extends AttachedModel, BaseModel<Website>,
+	StagedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -58,6 +58,21 @@ public interface WebsiteModel extends AttachedModel, AuditedModel,
 	 * @param primaryKey the primary key of this website
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the uuid of this website.
+	 *
+	 * @return the uuid of this website
+	 */
+	@AutoEscape
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this website.
+	 *
+	 * @param uuid the uuid of this website
+	 */
+	public void setUuid(String uuid);
 
 	/**
 	 * Returns the website ID of this website.

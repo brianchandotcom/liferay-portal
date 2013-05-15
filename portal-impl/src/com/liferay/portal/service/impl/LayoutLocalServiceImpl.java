@@ -517,6 +517,11 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		portletPreferencesLocalService.deletePortletPreferencesByPlid(
 			layout.getPlid());
 
+		// Layout Friendly URLs
+
+		layoutFriendlyURLLocalService.deleteLayoutFriendlyURLs(
+			layout.getPlid());
+
 		// Subscriptions
 
 		subscriptionLocalService.deleteSubscriptions(
@@ -1775,7 +1780,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			groupId, privateLayout, parentLayoutId);
 		String name = nameMap.get(LocaleUtil.getDefault());
 		friendlyURLMap = layoutLocalServiceHelper.getFriendlyURLMap(
-			groupId, privateLayout, layoutId, StringPool.BLANK, friendlyURLMap);
+			groupId, privateLayout, layoutId, name, friendlyURLMap);
 
 		String friendlyURL = friendlyURLMap.get(LocaleUtil.getDefault());
 

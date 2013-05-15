@@ -284,7 +284,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 		Map<Locale, String> friendlyURLMap = getFriendlyURLMap();
 
 		return LocalizationUtil.updateLocalization(
-			friendlyURLMap, StringPool.BLANK, "friendlyURL",
+			friendlyURLMap, StringPool.BLANK, "FriendlyURL",
 			LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
 	}
 

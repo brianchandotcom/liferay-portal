@@ -136,11 +136,11 @@ public class BlogsPortletDataHandler extends BasePortletDataHandler {
 		ManifestSummary manifestSummary =
 			portletDataContext.getManifestSummary();
 
-		ActionableDynamicQuery entryActionableDynamicQuery =
+		ActionableDynamicQuery actionableDynamicQuery =
 			new BlogsEntryExportActionableDynamicQuery(portletDataContext);
 
 		manifestSummary.addModelCount(
-			BlogsEntry.class, entryActionableDynamicQuery.performCount());
+			BlogsEntry.class, actionableDynamicQuery.performCount());
 	}
 
 }

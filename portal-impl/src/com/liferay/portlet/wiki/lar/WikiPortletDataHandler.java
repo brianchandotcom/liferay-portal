@@ -202,8 +202,7 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 
 			@Override
 			protected void addCriteria(DynamicQuery dynamicQuery) {
-				portletDataContext.addDateRangeCriteria(
-					dynamicQuery, "modifiedDate");
+				super.addCriteria(dynamicQuery);
 
 				Property statusProperty = PropertyFactoryUtil.forName("status");
 

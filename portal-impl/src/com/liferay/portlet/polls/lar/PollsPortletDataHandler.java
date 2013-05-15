@@ -172,15 +172,11 @@ public class PollsPortletDataHandler extends BasePortletDataHandler {
 		manifestSummary.addModelCount(
 			PollsQuestion.class, questionActionableDynamicQuery.performCount());
 
-		if (portletDataContext.getBooleanParameter(
-				PollsPortletDataHandler.NAMESPACE, "votes")) {
+		ActionableDynamicQuery voteActionableDynamicQuery =
+			new PollsVoteExportActionableDynamicQuery(portletDataContext);
 
-			ActionableDynamicQuery voteActionableDynamicQuery =
-				new PollsVoteExportActionableDynamicQuery(portletDataContext);
-
-			manifestSummary.addModelCount(
-				PollsVote.class, voteActionableDynamicQuery.performCount());
-		}
+		manifestSummary.addModelCount(
+			PollsVote.class, voteActionableDynamicQuery.performCount());
 	}
 
 }

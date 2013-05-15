@@ -218,23 +218,18 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 		manifestSummary.addModelCount(
 			MBMessage.class, messagesActionableDynamicQuery.performCount());
 
-		if (portletDataContext.getBooleanParameter(NAMESPACE, "thread-flags")) {
-			ActionableDynamicQuery threadFlagsActionableDynamicQuery =
-				new MBThreadFlagExportActionableDynamicQuery(
-					portletDataContext);
+		ActionableDynamicQuery threadFlagsActionableDynamicQuery =
+			new MBThreadFlagExportActionableDynamicQuery(portletDataContext);
 
-			manifestSummary.addModelCount(
-				MBThreadFlag.class,
-				threadFlagsActionableDynamicQuery.performCount());
-		}
+		manifestSummary.addModelCount(
+			MBThreadFlag.class,
+			threadFlagsActionableDynamicQuery.performCount());
 
-		if (portletDataContext.getBooleanParameter(NAMESPACE, "user-bans")) {
-			ActionableDynamicQuery userBansActionableDynamicQuery =
-				new MBBanExportActionableDynamicQuery(portletDataContext);
+		ActionableDynamicQuery userBansActionableDynamicQuery =
+			new MBBanExportActionableDynamicQuery(portletDataContext);
 
-			manifestSummary.addModelCount(
-				MBBan.class, userBansActionableDynamicQuery.performCount());
-		}
+		manifestSummary.addModelCount(
+			MBBan.class, userBansActionableDynamicQuery.performCount());
 	}
 
 }

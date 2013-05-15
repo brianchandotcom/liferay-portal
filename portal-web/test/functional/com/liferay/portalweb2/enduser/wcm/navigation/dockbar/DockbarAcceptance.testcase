@@ -1,0 +1,33 @@
+<definition>
+	<set-up>
+		<execute macro="User#pgFirstLogin" />
+	</set-up>
+
+	<command name="GotoAdministration">
+		<execute macro="Page#cpGotoUsers">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Page#cpGotoSites">
+			<var name="portletName" value="Site Templates" />
+		</execute>
+
+		<execute macro="Page#cpGotoConfiguration">
+			<var name="portletName" value="Mobile Device Rules" />
+		</execute>
+
+		<execute macro="Page#cpGotoServer">
+			<var name="portletName" value="Update Manager" />
+		</execute>
+	</command>
+
+	<command name="GotoContent">
+		<execute macro="Page#cpGotoContent">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="Page#cpGotoContent">
+			<var name="portletName" value="Wiki" />
+		</execute>
+	</command>
+</definition>

@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>SIGN_IN_BUTTON</td>
-	<td>//input[@value='Sign In']</td>
+	<td>//button[contains(.,'Sign In')]</td>
 	<td></td>
 </tr>
 </tbody>

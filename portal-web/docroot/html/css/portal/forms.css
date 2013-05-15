@@ -21,12 +21,10 @@
 		width: 16px;
 
 		&.lfr-ddm-repeatable-add-button {
-			background: transparent url(@theme_image_path@/common/add.png) no-repeat 0 0;
 			right: 4px;
 		}
 
 		&.lfr-ddm-repeatable-delete-button {
-			background: transparent url(@theme_image_path@/common/delete.png) no-repeat 0 0;
 			right: 24px;
 		}
 	}

@@ -4,4 +4,6 @@
 	<execute test-case="CPSitepagesAcceptance" />
 
 	<execute test-case="CPSitesAcceptance" />
+
+	<execute test-case="DockbarAcceptance" />
 </definition>

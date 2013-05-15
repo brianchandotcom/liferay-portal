@@ -18,6 +18,12 @@
 		<case comparator="startsWith" locator1="//a[@role='menuitem' and contains(.,">
 			<execute function="Click#clickAtAndWait" />
 		</case>
+		<case comparator="startsWith" locator1="//div[@class='navbar control-panel-bar-main']//a[contains(.,">
+			<execute function="Click#clickAtAndWait" />
+		</case>
+		<case comparator="startsWith" locator1="//div[@class='navbar control-panel-bar-secondary']//a[contains(.,">
+			<execute function="Click#clickAtAndWait" />
+		</case>
 	</command>
 
 	<command name="confirm">

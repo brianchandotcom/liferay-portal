@@ -3,25 +3,74 @@
 		<execute action="Home#open" locator-key1="HOME_URL" />
 
 		<execute action="Dockbar#mouseOver" locator-key1="GO_TO" />
+		<execute action="Dockbar#click" locator-key1="GO_TO" />
 		<execute action="Dockbar#click" locator-key1="GO_TO_CONTROL_PANEL" />
 
-		<if>
-			<isset var="siteScopeName" />
-			<then>
-				<execute action="Home#click" locator1="//a[@id='_160_groupSelectorButton']" />
-				<execute action="Home#click" locator1="//a[@role='menuitem' and contains(.,'${siteScopeName}')]" />
-			</then>
-		</if>
+		<execute action="Home#click" locator1="//div[@class='navbar control-panel-bar-main']//a[contains(.,'${categoryName}')]" />
+	</command>
 
+	<command name="cpGotoConfiguration">
+		<execute macro="Page#cpGoto">
+			<var name="categoryName" value="Configuration" />
+		</execute>
+
+		<execute action="Home#click" locator1="//div[@class='navbar control-panel-bar-secondary']//a[contains(.,'${portletName}')]" />
+	</command>
+
+	<command name="cpGotoContent">
 		<if>
-			<equals arg1="${portletName}" arg2="Wiki" />
+			<equals arg1="${siteScope}" arg2="Organization" />
 			<then>
-				<execute action="Home#click" locator1="//ul[@class='category-portlets']/li[contains(.,'Wiki')]/a" />
+				<execute action="Home#open" locator-key1="ORGANIZATION_URL" />
 			</then>
+			<elseif>
+				<equals arg1="${siteScope}" arg2="Private" />
+				<then>
+					<execute action="Home#open" locator-key1="SITE_URL_PRIVATE" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${siteScope}" arg2="Public" />
+				<then>
+					<execute action="Home#open" locator-key1="SITE_URL_PUBLIC" />
+				</then>
+			</elseif>
 			<else>
-				<execute action="Home#click" locator1="link=${portletName}" />
+				<execute action="Home#open" locator-key1="HOME_URL" />
 			</else>
 		</if>
+
+		<execute action="Home#open" locator-key1="HOME_URL" />
+
+		<execute action="Dockbar#mouseOver" locator-key1="MANAGE" />
+		<execute action="Dockbar#click" locator-key1="MANAGE" />
+		<execute action="Dockbar#click" locator-key1="MANAGE_SITE" />
+
+		<execute action="Home#click" locator1="//ul[@class='category-portlets']/li[contains(.,'${portletName}')]/a" />
+	</command>
+
+	<command name="cpGotoServer">
+		<execute macro="Page#cpGoto">
+			<var name="categoryName" value="Server" />
+		</execute>
+
+		<execute action="Home#click" locator1="//div[@class='navbar control-panel-bar-secondary']//a[contains(.,'${portletName}')]" />
+	</command>
+
+	<command name="cpGotoSites">
+		<execute macro="Page#cpGoto">
+			<var name="categoryName" value="Sites" />
+		</execute>
+
+		<execute action="Home#click" locator1="//div[@class='navbar control-panel-bar-secondary']//a[contains(.,'${portletName}')]" />
+	</command>
+
+	<command name="cpGotoUsers">
+		<execute macro="Page#cpGoto">
+			<var name="categoryName" value="Users" />
+		</execute>
+
+		<execute action="Home#click" locator1="//div[@class='navbar control-panel-bar-secondary']//a[contains(.,'${portletName}')]" />
 	</command>
 
 	<command name="isPresent">

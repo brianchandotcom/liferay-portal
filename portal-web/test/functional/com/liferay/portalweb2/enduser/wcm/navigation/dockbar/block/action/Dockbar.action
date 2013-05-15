@@ -1,19 +1,28 @@
 <definition>
 	<command name="click">
-		<case locator-key1="ADD_PAGE">
-			<execute function="Click#textClickAt" value1="Page" />
+		<case locator-key1="ADD_APPLICATION_LINK">
+			<execute function="Click#clickAtApplicationSearch" />
 		</case>
 		<case locator-key1="ADD_CONTENT_AND_APPLICATIONS">
 			<execute function="Click#partialTextClickAt" value1="Content and Applications" />
 		</case>
+		<case locator-key1="ADD_PAGE">
+			<execute function="Click#textClickAt" value1="Page" />
+		</case>
+		<case locator-key1="GO_TO">
+			<execute function="Click#textClickAt" value1="Go to" />
+		</case>
 		<case locator-key1="GO_TO_CONTROL_PANEL">
 			<execute function="Click#textClickAtAndWait" value1="Control Panel" />
 		</case>
+		<case locator-key1="MANAGE">
+			<execute function="Click#textClickAt" value1="Manage" />
+		</case>
+		<case locator-key1="MANAGE_SITE">
+			<execute function="Click#textClickAtAndWait" value1="Site" />
+		</case>
 		<case locator-key1="USER_SIGN_OUT">
 			<execute function="Click#textClickAtAndWait" value1="Sign Out" />
-		</case>
-		<case locator-key1="ADD_APPLICATION_LINK">
-			<execute function="Click#clickAtApplicationSearch" />
 		</case>
 		<case comparator="startsWith" locator1="//span[@data-title='">
 			<execute function="Click#makeVisibleClickAt" />
@@ -24,11 +33,11 @@
 		<case locator-key1="ADD">
 			<execute function="MouseOver#textMouseOverClickDockbar" value1="Add" />
 		</case>
-		<case locator-key1="MANAGE">
-			<execute function="MouseOver#textMouseOverClickDockbar" value1="Manage" />
-		</case>
 		<case locator-key1="GO_TO">
 			<execute function="MouseOver#textMouseOverClickDockbar" value1="Go to" />
+		</case>
+		<case locator-key1="MANAGE">
+			<execute function="MouseOver#textMouseOverClickDockbar" value1="Manage" />
 		</case>
 	</command>
 

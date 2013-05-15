@@ -32,6 +32,17 @@ AUI.add(
 					'<li class="upload-file upload-error" data-fileId="{id}" id="{id}">',
 						'<span class="file-title" title="{name}">{name}</span>',
 						'<span class="error-message" title="{error}">{error}</span>',
+						'<tpl if="messageListItems && (messageListItems.length > 0)">',
+							'<ul class="error-list-items">',
+								'<tpl for="messageListItems">',
+									'<li>{type}: <strong>{name}</strong>',
+										'<tpl if="info">',
+											'<span class="error-info"">({info})</span>',
+										'</tpl>',
+									'</li>',
+								'</tpl>',
+							'</ul>',
+						'</tpl>',
 					'</li>',
 				'</tpl>',
 			'</tpl>'
@@ -709,6 +720,8 @@ AUI.add(
 
 						if (data.status && (data.status >= 490 && data.status < 500)) {
 							file.error = data.message || strings.unexpectedErrorOnUploadText;
+
+							file.messageListItems = data.messageListItems;
 
 							var newLi = instance._fileListTPL.parse([file]);
 

@@ -33,12 +33,12 @@ public class ServiceBeanMethodInvocationFactoryUtil {
 		return _serviceBeanMethodInvocationFactory;
 	}
 
-	public static void proceed(
+	public static Object proceed(
 			Object target, Class<?> targetClass, Method method,
 			Object[] arguments, String[] methodInterceptorBeanIds)
 		throws Exception {
 
-		getServiceBeanMethodInvocationFactory().proceed(
+		return getServiceBeanMethodInvocationFactory().proceed(
 			target, targetClass, method, arguments, methodInterceptorBeanIds);
 	}
 

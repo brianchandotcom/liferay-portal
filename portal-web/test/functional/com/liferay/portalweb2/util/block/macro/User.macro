@@ -186,6 +186,7 @@
 		<if>
 			<condition action="Dockbar#isElementPresent" locator-key1="USER_NAME" />
 			<then>
+				<execute action="Dockbar#click" locator-key1="USER_NAME" />
 				<execute action="Dockbar#click" locator-key1="USER_SIGN_OUT" />
 			</then>
 		</if>

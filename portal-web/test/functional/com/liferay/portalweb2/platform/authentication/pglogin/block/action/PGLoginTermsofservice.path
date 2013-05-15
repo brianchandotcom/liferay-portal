@@ -20,12 +20,12 @@
 </tr>
 <tr>
 	<td>I_AGREE_BUTTON</td>
-	<td>//input[@value='I Agree']</td>
+	<td>//button[contains(.,'I Agree')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>I_DISAGREE_BUTTON</td>
-	<td>//input[@value='I Disagree']</td>
+	<td>//button[contains(.,'I Disagree')]</td>
 	<td></td>
 </tr>
 </tbody>

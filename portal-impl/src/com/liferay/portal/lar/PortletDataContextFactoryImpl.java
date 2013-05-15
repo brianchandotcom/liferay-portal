@@ -46,21 +46,7 @@ public class PortletDataContextFactoryImpl
 
 		PortletDataContext portletDataContext = new PortletDataContextImpl();
 
-		try {
-			Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
-				companyId);
-
-			portletDataContext.setCompanyGroupId(companyGroup.getGroupId());
-
-			Group userPersonalSiteGroup =
-				GroupLocalServiceUtil.getUserPersonalSiteGroup(companyId);
-
-			portletDataContext.setUserPersonalSiteGroupId(
-				userPersonalSiteGroup.getGroupId());
-		}
-		catch (Exception e) {
-			throw new IllegalStateException(e);
-		}
+		populateGroupIds(companyId, portletDataContext);
 
 		portletDataContext.setCompanyId(companyId);
 		portletDataContext.setEndDate(endDate);
@@ -79,15 +65,7 @@ public class PortletDataContextFactoryImpl
 
 		PortletDataContext portletDataContext = new PortletDataContextImpl();
 
-		try {
-			Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
-				companyId);
-
-			portletDataContext.setCompanyGroupId(companyGroup.getGroupId());
-		}
-		catch (Exception e) {
-			throw new IllegalStateException(e);
-		}
+		populateGroupIds(companyId, portletDataContext);
 
 		portletDataContext.setCompanyId(companyId);
 
@@ -115,11 +93,33 @@ public class PortletDataContextFactoryImpl
 
 		PortletDataContext portletDataContext = new PortletDataContextImpl();
 
+		populateGroupIds(themeDisplay.getCompanyId(), portletDataContext);
+
 		portletDataContext.setCompanyId(themeDisplay.getCompanyId());
 		portletDataContext.setGroupId(themeDisplay.getScopeGroupId());
 		portletDataContext.setScopeGroupId(themeDisplay.getScopeGroupId());
 
 		return portletDataContext;
+	}
+
+	protected void populateGroupIds(
+		long companyId, PortletDataContext portletDataContext) {
+
+		try {
+			Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
+				companyId);
+
+			portletDataContext.setCompanyGroupId(companyGroup.getGroupId());
+
+			Group userPersonalSiteGroup =
+				GroupLocalServiceUtil.getUserPersonalSiteGroup(companyId);
+
+			portletDataContext.setUserPersonalSiteGroupId(
+				userPersonalSiteGroup.getGroupId());
+		}
+		catch (Exception e) {
+			throw new IllegalStateException(e);
+		}
 	}
 
 	protected void validateDateRange(Date startDate, Date endDate)

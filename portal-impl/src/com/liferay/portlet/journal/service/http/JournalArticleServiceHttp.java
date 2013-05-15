@@ -2122,6 +2122,41 @@ public class JournalArticleServiceHttp {
 		}
 	}
 
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticleComposite> getSiteArticlesAsJSON(
+		HttpPrincipal httpPrincipal, java.lang.String site,
+		java.lang.String type, java.lang.String locale)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			java.lang.Exception {
+		try {
+			MethodKey methodKey = new MethodKey(JournalArticleServiceUtil.class,
+					"getSiteArticlesAsJSON",
+					_getSiteArticlesAsJSONParameterTypes54);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, site,
+					type, locale);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof java.lang.Exception) {
+					throw (java.lang.Exception)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.portlet.journal.model.JournalArticleComposite>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(JournalArticleServiceHttp.class);
 	private static final Class<?>[] _addArticleParameterTypes0 = new Class[] {
 			long.class, long.class, long.class, long.class,
@@ -2370,5 +2405,9 @@ public class JournalArticleServiceHttp {
 			long.class, java.lang.String.class, double.class, int.class,
 			java.lang.String.class,
 			com.liferay.portal.service.ServiceContext.class
+		};
+	private static final Class<?>[] _getSiteArticlesAsJSONParameterTypes54 = new Class[] {
+			java.lang.String.class, java.lang.String.class,
+			java.lang.String.class
 		};
 }

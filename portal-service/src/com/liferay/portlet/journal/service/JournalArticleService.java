@@ -1755,4 +1755,12 @@ public interface JournalArticleService extends BaseService {
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Just an example!
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.journal.model.JournalArticleComposite> getSiteArticlesAsJSON(
+		java.lang.String site, java.lang.String type, java.lang.String locale)
+		throws java.lang.Exception;
 }

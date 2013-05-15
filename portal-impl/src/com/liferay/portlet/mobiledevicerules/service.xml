@@ -157,6 +157,7 @@
 		<reference package-path="com.liferay.portal" entity="LayoutSet" />
 	</entity>
 	<exceptions>
+		<exception>ActionType</exception>
 		<exception>DuplicateRuleGroupInstance</exception>
 	</exceptions>
 </service-builder>

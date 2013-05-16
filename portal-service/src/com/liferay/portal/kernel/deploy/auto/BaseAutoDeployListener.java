@@ -32,7 +32,7 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 	public boolean isExtPlugin(File file) {
 		String fileName = file.getName();
 
-		if (fileName.contains("-ext")) {
+		if (fileName.contains("-ext") || !isJarFile(file)) {
 			return true;
 		}
 
@@ -41,7 +41,8 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 
 	public boolean isHookPlugin(File file) throws AutoDeployException {
 		if (isMatchingFile(file, "WEB-INF/liferay-hook.xml") &&
-			!isMatchingFile(file, "WEB-INF/liferay-portlet.xml")) {
+			!isMatchingFile(file, "WEB-INF/liferay-portlet.xml") &&
+			!isJarFile(file)) {
 
 			return true;
 		}
@@ -98,28 +99,34 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 	}
 
 	public boolean isMatchingFileExtension(File file) {
+		return isMatchingFileExtension(file, ".war", ".zip");
+	}
+
+	public boolean isMatchingFileExtension(File file, String ... extensions) {
 		String fileName = file.getName().toLowerCase();
 
-		if (fileName.endsWith(".war") || fileName.endsWith(".zip")) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(file.getPath() + " has a matching extension");
-			}
+		for (String extension : extensions) {
+			if (fileName.endsWith(extension)) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(file.getPath() + " has a matching extension");
+				}
 
-			return true;
-		}
-		else {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					file.getPath() + " does not have a matching extension");
+				return true;
 			}
-
-			return false;
 		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(file.getPath() + " does not have a matching extension");
+		}
+
+		return false;
 	}
 
 	public boolean isThemePlugin(File file) throws AutoDeployException {
-		if (isMatchingFile(file, "WEB-INF/liferay-look-and-feel.xml")) {
-			return true;
+		if (isMatchingFile(file, "WEB-INF/liferay-look-and-feel.xml") &&
+			!isJarFile(file)) {
+
+				return true;
 		}
 
 		String fileName = file.getName();
@@ -137,12 +144,16 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 		String fileName = file.getName();
 
 		if (isMatchingFile(file, "WEB-INF/liferay-plugin-package.properties") &&
-			fileName.contains("-web")) {
+			fileName.contains("-web") && !isJarFile(file)) {
 
 			return true;
 		}
 
 		return false;
+	}
+
+	protected boolean isJarFile(File file) {
+		return isMatchingFileExtension(file, ".jar");
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

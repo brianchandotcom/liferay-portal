@@ -361,9 +361,6 @@ public abstract class BaseSeleniumImpl
 	public void setTimeoutImplicit(String timeout) {
 	}
 
-	public void startLogger() {
-	}
-
 	public void stopLogger() {
 	}
 

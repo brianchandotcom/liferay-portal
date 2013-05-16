@@ -15,6 +15,7 @@
 package com.liferay.portalweb.portal;
 
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.InitUtil;
 import com.liferay.portalweb.portal.util.SeleniumUtil;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
@@ -26,6 +27,8 @@ import junit.framework.TestSuite;
 public class NamedTestSuite extends TestSuite {
 
 	public NamedTestSuite() {
+		InitUtil.initWithSpring();
+
 		LiferaySelenium liferaySelenium = SeleniumUtil.getSelenium();
 
 		if (Validator.isNotNull(liferaySelenium.getPrimaryTestSuiteName())) {
@@ -34,7 +37,7 @@ public class NamedTestSuite extends TestSuite {
 
 		Thread currentThread = Thread.currentThread();
 
-		StackTraceElement stackTraceElement = currentThread.getStackTrace()[1];
+		StackTraceElement stackTraceElement = currentThread.getStackTrace()[2];
 
 		liferaySelenium.setPrimaryTestSuiteName(
 			stackTraceElement.getClassName());

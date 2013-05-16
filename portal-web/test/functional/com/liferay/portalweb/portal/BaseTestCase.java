@@ -52,8 +52,6 @@ public class BaseTestCase extends LiferaySeleneseTestCase {
 		}
 
 		selenium = SeleniumUtil.getSelenium();
-
-		selenium.startLogger();
 	}
 
 	@Override

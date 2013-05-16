@@ -229,18 +229,18 @@ if (layout.isTypeControlPanel()) {
 						<aui:button-row>
 							<c:choose>
 								<c:when test='<%= tabs2.equals("export") %>'>
-									<aui:button onClick='<%= renderResponse.getNamespace() + "exportData();" %>' value="export" />
+									<aui:button cssClass="btn-primary" onClick='<%= renderResponse.getNamespace() + "exportData();" %>' value="export" />
 
 									<aui:button href="<%= redirect %>" type="cancel" />
 								</c:when>
 								<c:when test='<%= tabs2.equals("import") %>'>
-									<aui:button onClick='<%= renderResponse.getNamespace() + "importData();" %>' value="import" />
+									<aui:button cssClass="btn-primary" onClick='<%= renderResponse.getNamespace() + "importData();" %>' value="import" />
 
 									<aui:button href="<%= redirect %>" type="cancel" />
 								</c:when>
 								<c:when test='<%= tabs2.equals("staging") %>'>
 									<c:if test="<%= (themeDisplay.getURLPublishToLive() != null) || controlPanel %>">
-										<aui:button onClick='<%= renderResponse.getNamespace() + "publishToLive();" %>' value="publish-to-live" />
+										<aui:button cssClass="btn-primary" onClick='<%= renderResponse.getNamespace() + "publishToLive();" %>' value="publish-to-live" />
 
 										<aui:button onClick='<%= renderResponse.getNamespace() + "copyFromLive();" %>' value="copy-from-live" />
 									</c:if>

@@ -23,9 +23,11 @@ List<LayoutSetPrototype> layoutSetPrototypes = LayoutSetPrototypeServiceUtil.sea
 
 LayoutSet privateLayoutSet = null;
 LayoutSetPrototype privateLayoutSetPrototype = null;
+boolean privateLayoutSetPrototypeLinkEnabled = true;
 
 LayoutSet publicLayoutSet = null;
 LayoutSetPrototype publicLayoutSetPrototype = null;
+boolean publicLayoutSetPrototypeLinkEnabled = true;
 
 boolean site = false;
 
@@ -42,6 +44,8 @@ if (organization != null) {
 
 			privateLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(organizationGroup.getGroupId(), true);
 
+			privateLayoutSetPrototypeLinkEnabled = privateLayoutSet.isLayoutSetPrototypeLinkEnabled();
+
 			String layoutSetPrototypeUuid = privateLayoutSet.getLayoutSetPrototypeUuid();
 
 			if (Validator.isNotNull(layoutSetPrototypeUuid)) {
@@ -55,6 +59,8 @@ if (organization != null) {
 			LayoutLocalServiceUtil.getLayouts(organizationGroup.getGroupId(), true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 			publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(organizationGroup.getGroupId(), false);
+
+			publicLayoutSetPrototypeLinkEnabled = publicLayoutSet.isLayoutSetPrototypeLinkEnabled();
 
 			String layoutSetPrototypeUuid = publicLayoutSet.getLayoutSetPrototypeUuid();
 
@@ -124,26 +130,40 @@ if (organization != null) {
 					<c:otherwise>
 						<aui:field-wrapper label="public-pages">
 							<c:choose>
-								<c:when test="<%= (organization != null) && (organization.getPublicLayoutsPageCount() > 0) %>">
-
+								<c:when test="<%= organization != null %>">
 									<liferay-portlet:actionURL portletName="<%= PortletKeys.SITE_REDIRECTOR %>" var="publicPagesURL">
 										<portlet:param name="struts_action" value="/my_sites/view" />
 										<portlet:param name="groupId" value="<%= String.valueOf(organization.getGroup().getGroupId()) %>" />
 										<portlet:param name="privateLayout" value="<%= Boolean.FALSE.toString() %>" />
 									</liferay-portlet:actionURL>
 
-									<liferay-ui:icon
-										image="view"
-										label="<%= true %>"
-										message="open-public-pages"
-										method="get"
-										target="_blank"
-										url="<%= publicPagesURL.toString() %>"
-									/>
+									<c:choose>
+										<c:when test="<%= organization.getPublicLayoutsPageCount() > 0 %>">
+											<liferay-ui:icon
+												image="view"
+												label="<%= true %>"
+												message="open-public-pages"
+												method="get"
+												target="_blank"
+												url="<%= publicPagesURL.toString() %>"
+											/>
+										</c:when>
+										<c:otherwise>
+											<liferay-ui:message key="this-organization-does-not-have-any-public-pages" />
+										</c:otherwise>
+									</c:choose>
+
+									<c:choose>
+										<c:when test="<%= (publicLayoutSetPrototype != null) && !organizationGroup.isStaged() && hasUnlinkLayoutSetPrototypePermission %>">
+											<aui:input label='<%= LanguageUtil.format(pageContext, "enable-propagation-of-changes-from-the-site-template-x", HtmlUtil.escape(publicLayoutSetPrototype.getName(user.getLanguageId()))) %>' name="publicLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= publicLayoutSetPrototypeLinkEnabled %>" />
+										</c:when>
+										<c:when test="<%= publicLayoutSetPrototype != null %>">
+											<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(publicLayoutSetPrototype.getName(locale))} %>" key="these-pages-are-linked-to-site-template-x" />
+
+											<aui:input name="publicLayoutSetPrototypeLinkEnabled" type="hidden" value="<%= publicLayoutSetPrototypeLinkEnabled %>" />
+										</c:when>
+									</c:choose>
 								</c:when>
-								<c:otherwise>
-									<liferay-ui:message key="this-organization-does-not-have-any-public-pages" />
-								</c:otherwise>
 							</c:choose>
 						</aui:field-wrapper>
 					</c:otherwise>
@@ -186,25 +206,40 @@ if (organization != null) {
 					<c:otherwise>
 						<aui:field-wrapper label="private-pages">
 							<c:choose>
-								<c:when test="<%= (organization != null) && (organization.getPrivateLayoutsPageCount() > 0) %>">
+								<c:when test="<%= organization != null %>">
 									<liferay-portlet:actionURL portletName="<%= PortletKeys.SITE_REDIRECTOR %>" var="privatePagesURL">
 										<portlet:param name="struts_action" value="/my_sites/view" />
 										<portlet:param name="groupId" value="<%= String.valueOf(organization.getGroup().getGroupId()) %>" />
 										<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />
 									</liferay-portlet:actionURL>
 
-									<liferay-ui:icon
-										image="view"
-										label="<%= true %>"
-										message="open-private-pages"
-										method="get"
-										target="_blank"
-										url="<%= privatePagesURL.toString() %>"
-									/>
+									<c:choose>
+										<c:when test="<%= organization.getPrivateLayoutsPageCount() > 0 %>">
+											<liferay-ui:icon
+												image="view"
+												label="<%= true %>"
+												message="open-private-pages"
+												method="get"
+												target="_blank"
+												url="<%= privatePagesURL.toString() %>"
+											/>
+										</c:when>
+										<c:otherwise>
+											<liferay-ui:message key="this-organization-does-not-have-any-private-pages" />
+										</c:otherwise>
+									</c:choose>
+
+									<c:choose>
+										<c:when test="<%= (privateLayoutSetPrototype != null) && !organizationGroup.isStaged() && hasUnlinkLayoutSetPrototypePermission %>">
+											<aui:input label='<%= LanguageUtil.format(pageContext, "enable-propagation-of-changes-from-the-site-template-x", HtmlUtil.escape(privateLayoutSetPrototype.getName(user.getLanguageId()))) %>' name="privateLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
+										</c:when>
+										<c:when test="<%= privateLayoutSetPrototype != null %>">
+											<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(privateLayoutSetPrototype.getName(locale))} %>" key="these-pages-are-linked-to-site-template-x" />
+
+											<aui:input name="privateLayoutSetPrototypeLinkEnabled" type="hidden" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
+										</c:when>
+									</c:choose>
 								</c:when>
-								<c:otherwise>
-									<liferay-ui:message key="this-organization-does-not-have-any-private-pages" />
-								</c:otherwise>
 							</c:choose>
 						</aui:field-wrapper>
 					</c:otherwise>

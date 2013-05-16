@@ -349,8 +349,9 @@ public class VerifyJournal extends VerifyProcess {
 
 			ps = con.prepareStatement(
 				"select distinct urlTitle from JournalArticle where urlTitle " +
-					"like '%\u2018%' or urlTitle like '%\u2019%' or urlTitle " +
-						"like '%\u201c%' or urlTitle like '%\u201d%'");
+					"like '%\u00a3%' or urlTitle like '%\u2018%' or urlTitle " +
+						"like '%\u2019%' or urlTitle like '%\u201c%' or " +
+							"urlTitle like '%\u201d%'");
 
 			rs = ps.executeQuery();
 

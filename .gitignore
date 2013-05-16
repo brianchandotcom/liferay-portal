@@ -145,6 +145,7 @@ cobertura.ser
 /portal-web/docroot/html/js/editor/fckeditor
 /portal-web/docroot/html/js/editor/tiny_mce
 
+/portal-web/docroot/html/themes/_unstyled/css/aui
 /portal-web/docroot/html/themes/_unstyled/images/aui
 
 /portal-web/docroot/html/themes/classic/css

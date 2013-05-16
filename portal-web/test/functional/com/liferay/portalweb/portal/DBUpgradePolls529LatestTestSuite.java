@@ -27,7 +27,7 @@ import junit.framework.TestSuite;
 public class DBUpgradePolls529LatestTestSuite extends BaseTestSuite {
 
 	public static Test suite() {
-		TestSuite testSuite = new TestSuite();
+		TestSuite testSuite = new NamedTestSuite();
 
 		testSuite.addTest(LoginTests.suite());
 		testSuite.addTest(Polls529LatestTestPlan.suite());

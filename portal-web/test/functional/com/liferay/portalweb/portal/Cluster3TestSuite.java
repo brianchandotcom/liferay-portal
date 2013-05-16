@@ -26,7 +26,7 @@ import junit.framework.TestSuite;
 public class Cluster3TestSuite extends BaseTestSuite {
 
 	public static Test suite() {
-		TestSuite testSuite = new TestSuite();
+		TestSuite testSuite = new NamedTestSuite();
 
 		testSuite.addTest(Cluster3aTests.suite());
 		testSuite.addTest(Cluster3bTests.suite());

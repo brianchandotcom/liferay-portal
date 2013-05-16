@@ -26,7 +26,7 @@ import junit.framework.TestSuite;
 public class DBUpgradeMessageBoards6010LatestTestSuite extends BaseTestSuite {
 
 	public static Test suite() {
-		TestSuite testSuite = new TestSuite();
+		TestSuite testSuite = new NamedTestSuite();
 
 		testSuite.addTest(LoginTests.suite());
 		testSuite.addTest(MessageBoards6010LatestTestPlan.suite());

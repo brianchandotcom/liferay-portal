@@ -25,7 +25,7 @@ import junit.framework.TestSuite;
 public class EvaluateLogTestSuite extends TestSuite {
 
 	public static Test suite() {
-		TestSuite testSuite = new TestSuite();
+		TestSuite testSuite = new NamedTestSuite();
 
 		testSuite.addTestSuite(EvaluateLogTest.class);
 

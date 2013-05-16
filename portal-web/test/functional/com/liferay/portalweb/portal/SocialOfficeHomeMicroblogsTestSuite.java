@@ -26,7 +26,7 @@ import junit.framework.TestSuite;
 public class SocialOfficeHomeMicroblogsTestSuite extends BaseTestSuite {
 
 	public static Test suite() {
-		TestSuite testSuite = new TestSuite();
+		TestSuite testSuite = new NamedTestSuite();
 
 		testSuite.addTest(SetupTests.suite());
 		testSuite.addTest(MicroblogsTestPlan.suite());

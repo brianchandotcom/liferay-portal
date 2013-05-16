@@ -27,7 +27,7 @@ import junit.framework.TestSuite;
 public class PluginsWelcomeTestSuite extends BaseTestSuite {
 
 	public static Test suite() {
-		TestSuite testSuite = new TestSuite();
+		TestSuite testSuite = new NamedTestSuite();
 
 		testSuite.addTest(SignInTests.suite());
 		testSuite.addTest(SmokeTests.suite());

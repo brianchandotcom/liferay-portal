@@ -27,7 +27,7 @@ import junit.framework.TestSuite;
 public class DBUpgradeCalendar527LatestTestSuite extends BaseTestSuite {
 
 	public static Test suite() {
-		TestSuite testSuite = new TestSuite();
+		TestSuite testSuite = new NamedTestSuite();
 
 		testSuite.addTest(LoginTests.suite());
 		testSuite.addTest(Calendar527LatestTestPlan.suite());

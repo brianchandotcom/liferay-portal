@@ -26,7 +26,7 @@ import junit.framework.TestSuite;
 public class PluginsTestHookTestSuite extends BaseTestSuite {
 
 	public static Test suite() {
-		TestSuite testSuite = new TestSuite();
+		TestSuite testSuite = new NamedTestSuite();
 
 		testSuite.addTest(LoginPlugins2Tests.suite());
 		testSuite.addTest(TestHookTests.suite());

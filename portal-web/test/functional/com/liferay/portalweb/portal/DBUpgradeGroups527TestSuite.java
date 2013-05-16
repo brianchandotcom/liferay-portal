@@ -27,7 +27,7 @@ import junit.framework.TestSuite;
 public class DBUpgradeGroups527TestSuite extends BaseTestSuite {
 
 	public static Test suite() {
-		TestSuite testSuite = new TestSuite();
+		TestSuite testSuite = new NamedTestSuite();
 
 		testSuite.addTest(LoginTests.suite());
 		testSuite.addTest(GroupsTestPlan.suite());

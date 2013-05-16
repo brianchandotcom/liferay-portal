@@ -27,7 +27,7 @@ public class DBUpgradeAnnouncementsDelivery6120LatestTestSuite
 	extends BaseTestSuite {
 
 	public static Test suite() {
-		TestSuite testSuite = new TestSuite();
+		TestSuite testSuite = new NamedTestSuite();
 
 		testSuite.addTest(LoginTests.suite());
 		testSuite.addTest(AnnouncementsDelivery6120LatestTestPlan.suite());

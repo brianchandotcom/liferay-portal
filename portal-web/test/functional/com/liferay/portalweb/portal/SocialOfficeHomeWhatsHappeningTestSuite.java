@@ -26,7 +26,7 @@ import junit.framework.TestSuite;
 public class SocialOfficeHomeWhatsHappeningTestSuite extends BaseTestSuite {
 
 	public static Test suite() {
-		TestSuite testSuite = new TestSuite();
+		TestSuite testSuite = new NamedTestSuite();
 
 		testSuite.addTest(SetupTests.suite());
 		testSuite.addTest(WhatsHappeningTestPlan.suite());

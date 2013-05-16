@@ -26,7 +26,7 @@ import junit.framework.TestSuite;
 public class DBUpgradeAddress611LatestTestSuite extends BaseTestSuite {
 
 	public static Test suite() {
-		TestSuite testSuite = new TestSuite();
+		TestSuite testSuite = new NamedTestSuite();
 
 		testSuite.addTest(LoginTests.suite());
 		testSuite.addTest(Address611LatestTestPlan.suite());

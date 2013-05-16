@@ -26,7 +26,7 @@ import junit.framework.TestSuite;
 public class DBUpgradeSocial611TestSuite extends BaseTestSuite {
 
 	public static Test suite() {
-		TestSuite testSuite = new TestSuite();
+		TestSuite testSuite = new NamedTestSuite();
 
 		testSuite.addTest(LoginTests.suite());
 		testSuite.addTest(SocialTestPlan.suite());

@@ -27,7 +27,7 @@ public class DBUpgradeStagingOrganization6010LatestTestSuite
 	extends BaseTestSuite {
 
 	public static Test suite() {
-		TestSuite testSuite = new TestSuite();
+		TestSuite testSuite = new NamedTestSuite();
 
 		testSuite.addTest(LoginTests.suite());
 		testSuite.addTest(StagingOrganization6010LatestTestPlan.suite());

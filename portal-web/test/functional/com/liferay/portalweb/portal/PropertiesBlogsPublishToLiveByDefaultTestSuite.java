@@ -27,7 +27,7 @@ public class PropertiesBlogsPublishToLiveByDefaultTestSuite
 	extends BaseTestSuite {
 
 	public static Test suite() {
-		TestSuite testSuite = new TestSuite();
+		TestSuite testSuite = new NamedTestSuite();
 
 		testSuite.addTest(LoginTests.suite());
 		testSuite.addTest(PublishToLiveByDefaultTestPlan.suite());

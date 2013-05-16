@@ -159,9 +159,10 @@ public class JournalArticleStagedModelDataHandler
 
 			if (Validator.isNotNull(article.getSmallImageURL())) {
 				String smallImageURL =
-					ExportImportUtil.exportContentReferences(
+					ExportImportUtil.replaceExportContentReferences(
 						portletDataContext, article, articleElement,
-						article.getSmallImageURL().concat(StringPool.SPACE));
+						article.getSmallImageURL().concat(StringPool.SPACE),
+						true);
 
 				article.setSmallImageURL(smallImageURL);
 			}
@@ -191,15 +192,12 @@ public class JournalArticleStagedModelDataHandler
 
 		article.setStatusByUserUuid(article.getStatusByUserUuid());
 
-		if (portletDataContext.getBooleanParameter(
-				JournalPortletDataHandler.NAMESPACE, "embedded-assets")) {
+		String content = ExportImportUtil.replaceExportContentReferences(
+			portletDataContext, article, articleElement, article.getContent(),
+			portletDataContext.getBooleanParameter(
+				JournalPortletDataHandler.NAMESPACE, "embedded-assets"));
 
-			String content = ExportImportUtil.exportContentReferences(
-				portletDataContext, article, articleElement,
-				article.getContent());
-
-			article.setContent(content);
-		}
+		article.setContent(content);
 
 		portletDataContext.addClassedModel(
 			articleElement, ExportImportPathUtil.getModelPath(article), article,
@@ -281,8 +279,8 @@ public class JournalArticleStagedModelDataHandler
 		Element articleElement =
 			portletDataContext.getImportDataStagedModelElement(article);
 
-		content = ExportImportUtil.importContentReferences(
-			portletDataContext, articleElement, content);
+		content = ExportImportUtil.replaceImportContentReferences(
+			portletDataContext, articleElement, content, true);
 
 		article.setContent(content);
 
@@ -502,9 +500,9 @@ public class JournalArticleStagedModelDataHandler
 
 			if (Validator.isNotNull(article.getSmallImageURL())) {
 				String smallImageURL =
-					ExportImportUtil.importContentReferences(
+					ExportImportUtil.replaceImportContentReferences(
 						portletDataContext, articleElement,
-						article.getSmallImageURL());
+						article.getSmallImageURL(), true);
 
 				article.setSmallImageURL(smallImageURL);
 			}

@@ -28,47 +28,52 @@ import java.util.Map;
  */
 public interface ExportImport {
 
-	public String exportContentReferences(
-			PortletDataContext portletDataContext,
-			StagedModel entityStagedModel, Element entityElement,
-			String content)
-		throws Exception;
-
-	public String exportDLReferences(
-			PortletDataContext portletDataContext,
-			StagedModel entityStagedModel, Element entityElement,
-			String content)
-		throws Exception;
-
-	public String exportLayoutReferences(
-			PortletDataContext portletDataContext, String content)
-		throws Exception;
-
-	public String exportLinksToLayouts(
-			PortletDataContext portletDataContext, String content)
-		throws Exception;
-
 	public ManifestSummary getManifestSummary(
 			long userId, long groupId, Map<String, String[]> parameterMap,
 			File file)
 		throws Exception;
 
-	public String importContentReferences(
+	public String replaceExportContentReferences(
+			PortletDataContext portletDataContext,
+			StagedModel entityStagedModel, Element entityElement,
+			String content, boolean exportReferencedContent)
+		throws Exception;
+
+	public String replaceExportDLReferences(
+			PortletDataContext portletDataContext,
+			StagedModel entityStagedModel, Element entityElement,
+			String content, boolean exportReferencedContent)
+		throws Exception;
+
+	public String replaceExportLayoutReferences(
+			PortletDataContext portletDataContext, String content,
+			boolean exportReferencedContent)
+		throws Exception;
+
+	public String replaceExportLinksToLayouts(
+			PortletDataContext portletDataContext,
+			StagedModel entityStagedModel, Element entityElement,
+			String content, boolean exportReferencedContent)
+		throws Exception;
+
+	public String replaceImportContentReferences(
 			PortletDataContext portletDataContext, Element entityElement,
-			String content)
+			String content, boolean importReferencedContent)
 		throws Exception;
 
-	public String importDLReferences(
+	public String replaceImportDLReferences(
 			PortletDataContext portletDataContext, Element entityElement,
-			String content)
+			String content, boolean importReferencedContent)
 		throws Exception;
 
-	public String importLayoutReferences(
-			PortletDataContext portletDataContext, String content)
+	public String replaceImportLayoutReferences(
+			PortletDataContext portletDataContext, String content,
+			boolean importReferencedContent)
 		throws Exception;
 
-	public String importLinksToLayouts(
-			PortletDataContext portletDataContext, String content)
+	public String replaceImportLinksToLayouts(
+			PortletDataContext portletDataContext, String content,
+			boolean importReferencedContent)
 		throws Exception;
 
 	public List<MissingReference> validateMissingReferences(

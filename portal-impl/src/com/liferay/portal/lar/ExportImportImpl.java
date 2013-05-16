@@ -81,19 +81,68 @@ import org.xml.sax.InputSource;
  */
 public class ExportImportImpl implements ExportImport {
 
-	public String exportContentReferences(
-			PortletDataContext portletDataContext,
-			StagedModel entityStagedModel, Element entityElement,
-			String content)
+	public ManifestSummary getManifestSummary(
+			long userId, long groupId, Map<String, String[]> parameterMap,
+			File file)
 		throws Exception {
 
-		content = ExportImportUtil.exportLayoutReferences(
-			portletDataContext, content);
-		content = ExportImportUtil.exportLinksToLayouts(
-			portletDataContext, content);
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+		String userIdStrategy = MapUtil.getString(
+			parameterMap, PortletDataHandlerKeys.USER_ID_STRATEGY);
+		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
 
-		content = ExportImportUtil.exportDLReferences(
-			portletDataContext, entityStagedModel, entityElement, content);
+		PortletDataContext portletDataContext =
+			PortletDataContextFactoryUtil.createImportPortletDataContext(
+				group.getCompanyId(), groupId, parameterMap,
+				getUserIdStrategy(userId, userIdStrategy), zipReader);
+
+		final ManifestSummary manifestSummary = new ManifestSummary();
+
+		SAXParser saxParser = new SAXParser();
+
+		ElementHandler elementHandler = new ElementHandler(
+			new ElementProcessor() {
+
+				@Override
+				public void processElement(Element element) {
+					String className = element.attributeValue("class-name");
+					long count = GetterUtil.getLong(element.getText());
+
+					manifestSummary.addModelCount(className, count);
+				}
+
+			},
+			new String[] {"staged-model"});
+
+		saxParser.setContentHandler(elementHandler);
+
+		InputStream is = portletDataContext.getZipEntryAsInputStream(
+			"/manifest.xml");
+
+		if (is == null) {
+			throw new LARFileException("manifest.xml not found in the LAR");
+		}
+
+		saxParser.parse(new InputSource(is));
+
+		return manifestSummary;
+	}
+
+	public String replaceExportContentReferences(
+			PortletDataContext portletDataContext,
+			StagedModel entityStagedModel, Element entityElement,
+			String content, boolean exportReferencedContent)
+		throws Exception {
+
+		content = ExportImportUtil.replaceExportLayoutReferences(
+			portletDataContext, content, exportReferencedContent);
+		content = ExportImportUtil.replaceExportLinksToLayouts(
+			portletDataContext, entityStagedModel, entityElement, content,
+			exportReferencedContent);
+
+		content = ExportImportUtil.replaceExportDLReferences(
+			portletDataContext, entityStagedModel, entityElement, content,
+			exportReferencedContent);
 
 		Element groupElement = entityElement.getParent();
 
@@ -107,10 +156,10 @@ public class ExportImportImpl implements ExportImport {
 		return content;
 	}
 
-	public String exportDLReferences(
+	public String replaceExportDLReferences(
 			PortletDataContext portletDataContext,
 			StagedModel entityStagedModel, Element entityElement,
-			String content)
+			String content, boolean exportReferencedContent)
 		throws Exception {
 
 		Group group = GroupLocalServiceUtil.getGroup(
@@ -163,13 +212,16 @@ public class ExportImportImpl implements ExportImport {
 			endPos = MapUtil.getInteger(dlReferenceParameters, "endPos");
 
 			try {
-				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext, fileEntry);
+				if (exportReferencedContent) {
+					StagedModelDataHandlerUtil.exportStagedModel(
+						portletDataContext, fileEntry);
+				}
 
 				portletDataContext.addReferenceElement(
 					entityStagedModel, entityElement, fileEntry,
-					FileEntry.class, PortletDataContext.REFERENCE_TYPE_EMBEDDED,
-					false);
+					FileEntry.class,
+					PortletDataContext.REFERENCE_TYPE_DEPENDENCY,
+					!exportReferencedContent);
 
 				String path = ExportImportPathUtil.getModelPath(
 					fileEntry.getGroupId(), FileEntry.class.getName(),
@@ -192,8 +244,9 @@ public class ExportImportImpl implements ExportImport {
 		return sb.toString();
 	}
 
-	public String exportLayoutReferences(
-			PortletDataContext portletDataContext, String content)
+	public String replaceExportLayoutReferences(
+			PortletDataContext portletDataContext, String content,
+			boolean exportReferencedContent)
 		throws Exception {
 
 		Group group = GroupLocalServiceUtil.getGroup(
@@ -295,8 +348,10 @@ public class ExportImportImpl implements ExportImport {
 		return sb.toString();
 	}
 
-	public String exportLinksToLayouts(
-			PortletDataContext portletDataContext, String content)
+	public String replaceExportLinksToLayouts(
+			PortletDataContext portletDataContext,
+			StagedModel entityStagedModel, Element entityElement,
+			String content, boolean exportReferencedContent)
 		throws Exception {
 
 		List<String> oldLinksToLayout = new ArrayList<String>();
@@ -331,6 +386,16 @@ public class ExportImportImpl implements ExportImport {
 
 				oldLinksToLayout.add(oldLinkToLayout);
 				newLinksToLayout.add(newLinkToLayout);
+
+				if (exportReferencedContent) {
+					StagedModelDataHandlerUtil.exportStagedModel(
+						portletDataContext, layout);
+				}
+
+				portletDataContext.addReferenceElement(
+					entityStagedModel, entityElement, layout, Layout.class,
+					PortletDataContext.REFERENCE_TYPE_DEPENDENCY,
+					!exportReferencedContent);
 			}
 			catch (Exception e) {
 				if (_log.isDebugEnabled() || _log.isWarnEnabled()) {
@@ -355,72 +420,26 @@ public class ExportImportImpl implements ExportImport {
 		return content;
 	}
 
-	public ManifestSummary getManifestSummary(
-			long userId, long groupId, Map<String, String[]> parameterMap,
-			File file)
-		throws Exception {
-
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
-		String userIdStrategy = MapUtil.getString(
-			parameterMap, PortletDataHandlerKeys.USER_ID_STRATEGY);
-		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
-
-		PortletDataContext portletDataContext =
-			PortletDataContextFactoryUtil.createImportPortletDataContext(
-				group.getCompanyId(), groupId, parameterMap,
-				getUserIdStrategy(userId, userIdStrategy), zipReader);
-
-		final ManifestSummary manifestSummary = new ManifestSummary();
-
-		SAXParser saxParser = new SAXParser();
-
-		ElementHandler elementHandler = new ElementHandler(
-			new ElementProcessor() {
-
-				@Override
-				public void processElement(Element element) {
-					String className = element.attributeValue("class-name");
-					long count = GetterUtil.getLong(element.getText());
-
-					manifestSummary.addModelCount(className, count);
-				}
-
-			},
-			new String[] {"staged-model"});
-
-		saxParser.setContentHandler(elementHandler);
-
-		InputStream is = portletDataContext.getZipEntryAsInputStream(
-			"/manifest.xml");
-
-		if (is == null) {
-			throw new LARFileException("manifest.xml not found in the LAR");
-		}
-
-		saxParser.parse(new InputSource(is));
-
-		return manifestSummary;
-	}
-
-	public String importContentReferences(
+	public String replaceImportContentReferences(
 			PortletDataContext portletDataContext, Element entityElement,
-			String content)
+			String content, boolean importReferencedContent)
 		throws Exception {
 
-		content = ExportImportUtil.importLayoutReferences(
-			portletDataContext, content);
-		content = ExportImportUtil.importLinksToLayouts(
-			portletDataContext, content);
+		content = ExportImportUtil.replaceImportLayoutReferences(
+			portletDataContext, content, importReferencedContent);
+		content = ExportImportUtil.replaceImportLinksToLayouts(
+			portletDataContext, content, importReferencedContent);
 
-		content = ExportImportUtil.importDLReferences(
-			portletDataContext, entityElement, content);
+		content = ExportImportUtil.replaceImportDLReferences(
+			portletDataContext, entityElement, content,
+			importReferencedContent);
 
 		return content;
 	}
 
-	public String importDLReferences(
+	public String replaceImportDLReferences(
 			PortletDataContext portletDataContext, Element entityElement,
-			String content)
+			String content, boolean importReferencedContent)
 		throws Exception {
 
 		List<Element> referenceDataElements =
@@ -475,8 +494,9 @@ public class ExportImportImpl implements ExportImport {
 		return content;
 	}
 
-	public String importLayoutReferences(
-			PortletDataContext portletDataContext, String content)
+	public String replaceImportLayoutReferences(
+			PortletDataContext portletDataContext, String content,
+			boolean importReferencedContent)
 		throws Exception {
 
 		content = StringUtil.replace(
@@ -499,8 +519,9 @@ public class ExportImportImpl implements ExportImport {
 		return content;
 	}
 
-	public String importLinksToLayouts(
-			PortletDataContext portletDataContext, String content)
+	public String replaceImportLinksToLayouts(
+			PortletDataContext portletDataContext, String content,
+			boolean importReferencedContent)
 		throws Exception {
 
 		List<String> oldLinksToLayout = new ArrayList<String>();

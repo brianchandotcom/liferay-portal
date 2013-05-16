@@ -59,8 +59,8 @@ public class WikiPageStagedModelDataHandler
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, page.getNode());
 
-		String content = ExportImportUtil.exportContentReferences(
-			portletDataContext, page, pageElement, page.getContent());
+		String content = ExportImportUtil.replaceExportContentReferences(
+			portletDataContext, page, pageElement, page.getContent(), true);
 
 		page.setContent(content);
 
@@ -107,8 +107,8 @@ public class WikiPageStagedModelDataHandler
 		Element pageElement =
 			portletDataContext.getImportDataStagedModelElement(page);
 
-		String content = ExportImportUtil.importContentReferences(
-			portletDataContext, pageElement, page.getContent());
+		String content = ExportImportUtil.replaceImportContentReferences(
+			portletDataContext, pageElement, page.getContent(), true);
 
 		page.setContent(content);
 

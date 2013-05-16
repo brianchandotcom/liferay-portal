@@ -148,9 +148,9 @@ public class ExportImportUtilTest {
 
 		List<String> urls = getURLs(content);
 
-		content = ExportImportUtil.exportContentReferences(
+		content = ExportImportUtil.replaceExportContentReferences(
 			_portletDataContextExport, _referrerStagedModel,
-			rootElement.element("entry"), content);
+			rootElement.element("entry"), content, true);
 
 		for (String url : urls) {
 			Assert.assertFalse(content.contains(url));
@@ -181,9 +181,9 @@ public class ExportImportUtilTest {
 		String content = replaceParameters(
 			getContent("layout_references.txt"), _fileEntry);
 
-		content = ExportImportUtil.exportContentReferences(
+		content = ExportImportUtil.replaceExportContentReferences(
 			_portletDataContextExport, _referrerStagedModel,
-			rootElement.element("entry"), content);
+			rootElement.element("entry"), content, true);
 
 		Assert.assertFalse(
 			content.contains(PortalUtil.getPathFriendlyURLPrivateGroup()));
@@ -207,9 +207,9 @@ public class ExportImportUtilTest {
 		String content = replaceParameters(
 			getContent("layout_links.txt"), _fileEntry);
 
-		content = ExportImportUtil.exportContentReferences(
+		content = ExportImportUtil.replaceExportContentReferences(
 			_portletDataContextExport, _referrerStagedModel,
-			rootElement.element("entry"), content);
+			rootElement.element("entry"), content, true);
 
 		StringBundler sb = new StringBundler(5);
 
@@ -242,11 +242,11 @@ public class ExportImportUtilTest {
 		String content = replaceParameters(
 			getContent("dl_references.txt"), _fileEntry);
 
-		content = ExportImportUtil.exportContentReferences(
+		content = ExportImportUtil.replaceExportContentReferences(
 			_portletDataContextExport, _referrerStagedModel, entryElement,
-			content);
-		content = ExportImportUtil.importContentReferences(
-			_portletDataContextImport, entryElement, content);
+			content, true);
+		content = ExportImportUtil.replaceImportContentReferences(
+			_portletDataContextImport, entryElement, content, true);
 
 		Assert.assertFalse(content.contains("[$dl-reference="));
 	}
@@ -261,11 +261,11 @@ public class ExportImportUtilTest {
 		String content = replaceParameters(
 			getContent("layout_references.txt"), _fileEntry);
 
-		content = ExportImportUtil.exportContentReferences(
+		content = ExportImportUtil.replaceExportContentReferences(
 			_portletDataContextExport, _referrerStagedModel, entryElement,
-			content);
-		content = ExportImportUtil.importContentReferences(
-			_portletDataContextExport, entryElement, content);
+			content, true);
+		content = ExportImportUtil.replaceImportContentReferences(
+			_portletDataContextExport, entryElement, content, true);
 
 		Assert.assertFalse(
 			content.contains("@data_handler_private_group_servlet_mapping@"));
@@ -292,13 +292,14 @@ public class ExportImportUtilTest {
 		String content = replaceParameters(
 			getContent("layout_links.txt"), _fileEntry);
 
-		content = ExportImportUtil.exportContentReferences(
+		content = ExportImportUtil.replaceExportContentReferences(
 			_portletDataContextExport, _referrerStagedModel, entryElement,
-			content);
+			content, true);
 
-		String importedContent = ExportImportUtil.exportContentReferences(
-			_portletDataContextExport, _referrerStagedModel, entryElement,
-			content);
+		String importedContent =
+			ExportImportUtil.replaceExportContentReferences(
+				_portletDataContextExport, _referrerStagedModel, entryElement,
+				content, true);
 
 		Assert.assertEquals(importedContent, content);
 	}

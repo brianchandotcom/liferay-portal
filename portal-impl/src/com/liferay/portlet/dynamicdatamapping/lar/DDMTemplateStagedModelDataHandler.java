@@ -123,9 +123,10 @@ public class DDMTemplateStagedModelDataHandler
 
 			if (Validator.isNotNull(template.getSmallImageURL())) {
 				String smallImageURL =
-					ExportImportUtil.exportContentReferences(
+					ExportImportUtil.replaceExportContentReferences(
 						portletDataContext, template, templateElement,
-						template.getSmallImageURL().concat(StringPool.SPACE));
+						template.getSmallImageURL().concat(StringPool.SPACE),
+						true);
 
 				template.setSmallImageURL(smallImageURL);
 			}
@@ -147,9 +148,9 @@ public class DDMTemplateStagedModelDataHandler
 		if (portletDataContext.getBooleanParameter(
 				DDMPortletDataHandler.NAMESPACE, "embedded-assets")) {
 
-			String content = ExportImportUtil.exportContentReferences(
+			String content = ExportImportUtil.replaceExportContentReferences(
 				portletDataContext, template, templateElement,
-				template.getScript());
+				template.getScript(), true);
 
 			template.setScript(content);
 		}
@@ -193,9 +194,9 @@ public class DDMTemplateStagedModelDataHandler
 
 			if (Validator.isNotNull(template.getSmallImageURL())) {
 				String smallImageURL =
-					ExportImportUtil.importContentReferences(
+					ExportImportUtil.replaceImportContentReferences(
 						portletDataContext, element,
-						template.getSmallImageURL());
+						template.getSmallImageURL(), true);
 
 				template.setSmallImageURL(smallImageURL);
 			}

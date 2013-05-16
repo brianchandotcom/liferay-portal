@@ -22,7 +22,7 @@ import java.lang.reflect.Method;
  */
 public interface ServiceBeanMethodInvocationFactory {
 
-	public void proceed(
+	public Object proceed(
 			Object target, Class<?> targetClass, Method method,
 			Object[] arguments, String[] methodInterceptorBeanIds)
 		throws Exception;

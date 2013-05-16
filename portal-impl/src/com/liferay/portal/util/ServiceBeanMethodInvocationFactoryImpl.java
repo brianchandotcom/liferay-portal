@@ -37,7 +37,7 @@ import org.aopalliance.intercept.MethodInterceptor;
 public class ServiceBeanMethodInvocationFactoryImpl
 	implements ServiceBeanMethodInvocationFactory {
 
-	public void proceed(
+	public Object proceed(
 			Object target, Class<?> targetClass, Method method,
 			Object[] arguments, String[] methodInterceptorBeanIds)
 		throws Exception {
@@ -58,7 +58,7 @@ public class ServiceBeanMethodInvocationFactoryImpl
 		serviceBeanMethodInvocation.setMethodInterceptors(methodInterceptors);
 
 		try {
-			serviceBeanMethodInvocation.proceed();
+			return serviceBeanMethodInvocation.proceed();
 		}
 		catch (Throwable t) {
 			if (t instanceof Exception) {

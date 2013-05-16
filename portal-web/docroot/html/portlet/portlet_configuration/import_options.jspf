@@ -56,7 +56,7 @@
 				<li class="tree-item">
 					<aui:input name="<%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>" type="hidden" value="<%= false %>" />
 
-					<aui:input label="content" name='<%= PortletDataHandlerKeys.PORTLET_DATA + "_" + selPortlet.getRootPortletId() %>' type="checkbox" value="<%= portletDataHandler.isPublishToLiveByDefault() %>" />
+					<aui:input label="content" name="<%= PortletDataHandlerKeys.PORTLET_DATA %>" type="checkbox" value="<%= portletDataHandler.isPublishToLiveByDefault() %>" />
 
 					<%
 					PortletDataHandlerControl[] importControls = portletDataHandler.getImportControls();

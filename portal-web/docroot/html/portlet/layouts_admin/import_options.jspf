@@ -73,7 +73,7 @@
 	<aui:fieldset cssClass="options-group" label="application-configuration">
 		<ul class="lfr-tree unstyled">
 			<li class="tree-item">
-				<aui:input checked="<%= true %>" helpMessage="all-applications-import-help" label="all-applications" name="<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>" type="checkbox" value="<%= true %>" />
+				<aui:input checked="<%= true %>" helpMessage="all-applications-import-help" label="all-applications" name="<%= PortletDataHandlerKeys.PORTLET_SETUP %>" type="checkbox" value="<%= true %>" />
 
 				<ul id="<portlet:namespace />showGlobalConfiguration">
 					<li class="tree-item">
@@ -87,7 +87,7 @@
 				</ul>
 
 				<aui:script>
-					Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>Checkbox', '<portlet:namespace />showGlobalConfiguration');
+					Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_SETUP %>Checkbox', '<portlet:namespace />showGlobalConfiguration');
 				</aui:script>
 
 				<div class="hide" id="<portlet:namespace />globalConfiguration">
@@ -104,7 +104,7 @@
 	<aui:fieldset cssClass="options-group" label="content">
 		<ul class="lfr-tree unstyled">
 			<li class="tree-item">
-				<aui:input checked="<%= true %>" helpMessage="all-content-import-help" label="all-content" name="<%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>" type="checkbox" value="<%= true %>" />
+				<aui:input checked="<%= true %>" helpMessage="all-content-import-help" label="all-content" name="<%= PortletDataHandlerKeys.PORTLET_DATA %>" type="checkbox" value="<%= true %>" />
 
 				<ul id="<portlet:namespace />showChangeGlobalContent">
 					<li>
@@ -118,7 +118,7 @@
 				</ul>
 
 				<aui:script>
-					Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>Checkbox', '<portlet:namespace />showChangeGlobalContent');
+					Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA %>Checkbox', '<portlet:namespace />showChangeGlobalContent');
 				</aui:script>
 
 				<div class="hide" id="<portlet:namespace />globalContent">

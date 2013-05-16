@@ -1,5 +1,6 @@
 package ${seleniumBuilderContext.getTestCasePackageName(testCaseName)};
 
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.SeleniumUtil;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
@@ -43,7 +44,9 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)} 
 	public void setUp() throws Exception {
 		selenium = SeleniumUtil.getSelenium();
 
-		selenium.startLogger();
+		if (Validator.isNull(selenium.getPrimaryTestSuiteName())) {
+			selenium.setPrimaryTestSuiteName("${seleniumBuilderContext.getTestCaseClassName(testCaseName)}");
+		}
 
 		commandScopeVariables = new HashMap<String, String>();
 

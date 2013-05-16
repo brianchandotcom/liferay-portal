@@ -14,8 +14,11 @@
 
 package com.liferay.portalweb.portal.util.liferayselenium;
 
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portalweb.portal.BaseTestCase;
+
+import java.io.File;
 
 import java.lang.reflect.Method;
 
@@ -33,6 +36,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 public class Logger {
 
 	public Logger(LiferaySelenium liferaySelenium) {
+		_liferaySelenium = liferaySelenium;
+
 		WebDriver.Options options = _webDriver.manage();
 
 		WebDriver.Window window = options.window();
@@ -43,6 +48,11 @@ public class Logger {
 		JavascriptExecutor javascriptExecutor = (JavascriptExecutor)_webDriver;
 
 		javascriptExecutor.executeScript("window.name = 'Log Window';");
+
+		_webDriver.get(
+			"file:///" + _liferaySelenium.getProjectDir() +
+				"portal-web/test/functional/com/liferay/portalweb/portal/" +
+					"util/liferayselenium/dependencies/Logger.html");
 	}
 
 	public void logCommand(Method method, Object[] arguments) {
@@ -117,28 +127,34 @@ public class Logger {
 		BaseTestCase.fail(sb.toString());
 	}
 
-	public void start() {
-		if (_loggerStarted) {
-			return;
+	public void stop() {
+		String primaryTestSuiteName =
+			_liferaySelenium.getPrimaryTestSuiteName();
+
+		if (primaryTestSuiteName != null) {
+			JavascriptExecutor javascriptExecutor =
+				(JavascriptExecutor)_webDriver;
+
+			String content = (String)javascriptExecutor.executeScript(
+				"return window.document.getElementsByTagName('html')[0]." +
+					"outerHTML;");
+
+			File file = new File(
+				_liferaySelenium.getProjectDir() +
+					"portal-web\\test-results\\functional\\TEST-" +
+					primaryTestSuiteName + ".html");
+
+			try {
+				FileUtil.write(file, content);
+			}
+			catch (Exception e) {
+			}
 		}
 
-		_loggerStarted = true;
-
-		_webDriver.get(
-			"file:///" + _liferaySelenium.getProjectDir() +
-				"portal-web/test/functional/com/liferay/portalweb/portal/" +
-					"util/liferayselenium/dependencies/Logger.html");
-	}
-
-	public void stop() {
 		_webDriver.quit();
 	}
 
 	protected void log(String message) {
-		WebDriver.TargetLocator targetLocator = _webDriver.switchTo();
-
-		targetLocator.window("Log Window");
-
 		JavascriptExecutor javascriptExecutor = (JavascriptExecutor)_webDriver;
 
 		StringBundler sb = new StringBundler();

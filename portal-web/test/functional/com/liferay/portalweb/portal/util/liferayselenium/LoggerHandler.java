@@ -35,10 +35,7 @@ public class LoggerHandler implements InvocationHandler {
 		String methodName = method.getName();
 
 		try {
-			if (methodName.equals("startLogger")) {
-				_logger.start();
-			}
-			else if (methodName.equals("stopLogger")) {
+			if (methodName.equals("stopLogger")) {
 				_logger.stop();
 			}
 			else {

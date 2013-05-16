@@ -1,6 +1,7 @@
 package ${seleniumBuilderContext.getTestSuitePackageName(testSuiteName)};
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.NamedTestSuite;
 import com.liferay.portalweb.portal.StopSeleniumTest;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
@@ -29,7 +30,7 @@ import junit.framework.TestSuite;
 public class ${seleniumBuilderContext.getTestSuiteSimpleClassName(testSuiteName)} extends BaseTestSuite {
 
 	public static TestSuite suite() {
-		TestSuite testSuite = new TestSuite();
+		TestSuite testSuite = new NamedTestSuite();
 
 		<#list executeElements as executeElement>
 			<#if executeElement.attributeValue("test-case")??>

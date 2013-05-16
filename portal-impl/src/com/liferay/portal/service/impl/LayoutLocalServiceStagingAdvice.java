@@ -238,7 +238,7 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 
 		layoutLocalServiceHelper.validate(
 			groupId, privateLayout, layoutId, parentLayoutId, name, type,
-			hidden, friendlyURL);
+			hidden, friendlyURLMap);
 
 		layoutLocalServiceHelper.validateParentLayoutId(
 			groupId, privateLayout, layoutId, parentLayoutId);

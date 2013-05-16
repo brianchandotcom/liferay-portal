@@ -31,9 +31,11 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
+import com.liferay.portal.model.LayoutFriendlyURL;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.impl.LayoutImpl;
+import com.liferay.portal.service.persistence.LayoutFriendlyURLPersistence;
 import com.liferay.portal.service.persistence.LayoutPersistence;
 import com.liferay.portal.service.persistence.LayoutSetPersistence;
 import com.liferay.portal.util.PortalUtil;
@@ -203,7 +205,7 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 	public void validate(
 			long groupId, boolean privateLayout, long layoutId,
 			long parentLayoutId, String name, String type, boolean hidden,
-			String friendlyURL)
+			Map<Locale, String> friendlyURLMap)
 		throws PortalException, SystemException {
 
 		validateName(name);
@@ -239,7 +241,7 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 			}
 		}
 
-		validateFriendlyURL(groupId, privateLayout, layoutId, friendlyURL);
+		validateFriendlyURLs(groupId, privateLayout, layoutId, friendlyURLMap);
 	}
 
 	public void validateFirstLayout(String type) throws PortalException {
@@ -254,9 +256,8 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 	}
 
 	public void validateFriendlyURL(
-			long groupId, boolean privateLayout, long layoutId,
-			String friendlyURL)
-		throws PortalException, SystemException {
+		long groupId, boolean privateLayout, long layoutId, String friendlyURL)
+	throws PortalException, SystemException {
 
 		if (Validator.isNull(friendlyURL)) {
 			return;
@@ -268,12 +269,18 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 			throw new LayoutFriendlyURLException(exceptionType);
 		}
 
-		Layout layout = layoutPersistence.fetchByG_P_F(
-			groupId, privateLayout, friendlyURL);
+		List<LayoutFriendlyURL> layoutFriendlyURLs =
+			layoutFriendlyURLPersistence.findByG_P_F(
+				groupId, privateLayout, friendlyURL);
 
-		if ((layout != null) && (layout.getLayoutId() != layoutId)) {
-			throw new LayoutFriendlyURLException(
-				LayoutFriendlyURLException.DUPLICATE);
+		for (LayoutFriendlyURL layoutFriendlyURL : layoutFriendlyURLs) {
+			Layout layout = layoutPersistence.findByPrimaryKey(
+				layoutFriendlyURL.getPlid());
+
+			if (layout.getLayoutId() != layoutId) {
+				throw new LayoutFriendlyURLException(
+					LayoutFriendlyURLException.DUPLICATE);
+			}
 		}
 
 		LayoutImpl.validateFriendlyURLKeyword(friendlyURL);
@@ -304,6 +311,20 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 			lfurle.setKeywordConflict(layoutIdFriendlyURL);
 
 			throw lfurle;
+		}
+	}
+
+	public void validateFriendlyURLs(
+			long groupId, boolean privateLayout, long layoutId,
+			Map<Locale, String> friendlyURLMap)
+		throws PortalException, SystemException {
+
+		for (Map.Entry<Locale, String> friendlyURLEntry :
+				friendlyURLMap.entrySet()) {
+
+			String friendlyURL = friendlyURLEntry.getValue();
+
+			validateFriendlyURL(groupId, privateLayout, layoutId, friendlyURL);
 		}
 	}
 
@@ -393,6 +414,9 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 			}
 		}
 	}
+
+	@BeanReference(type = LayoutFriendlyURLPersistence.class)
+	protected LayoutFriendlyURLPersistence layoutFriendlyURLPersistence;
 
 	@BeanReference(type = LayoutPersistence.class)
 	protected LayoutPersistence layoutPersistence;

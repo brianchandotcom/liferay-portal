@@ -666,6 +666,11 @@
 			<finder-column name="plid" />
 			<finder-column name="languageId" />
 		</finder>
+		<finder name="G_P_F" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="privateLayout" />
+			<finder-column name="friendlyURL" />
+		</finder>
 		<finder name="G_P_F_L" return-type="LayoutFriendlyURL" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="privateLayout" />

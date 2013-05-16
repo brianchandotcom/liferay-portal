@@ -1218,16 +1218,17 @@ public class LayoutLocalServiceUtil {
 	*
 	* @param plid the primary key of the layout
 	* @param friendlyURL the friendly URL to be assigned
+	* @param locale the locale of the friendly URL
 	* @return the updated layout
 	* @throws PortalException if a group or layout with the primary key could
 	not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Layout updateFriendlyURL(long plid,
-		java.lang.String friendlyURL)
+		java.lang.String friendlyURL, java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().updateFriendlyURL(plid, friendlyURL);
+		return getService().updateFriendlyURL(plid, friendlyURL, locale);
 	}
 
 	public static com.liferay.portal.model.Layout updateLayout(long groupId,

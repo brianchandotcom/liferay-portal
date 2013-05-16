@@ -159,7 +159,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		layoutLocalServiceHelper.validate(
 			groupId, privateLayout, layoutId, parentLayoutId, name, type,
-			hidden, friendlyURL);
+			hidden, friendlyURLMap);
 
 		Date now = new Date();
 
@@ -1736,12 +1736,14 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 *
 	 * @param  plid the primary key of the layout
 	 * @param  friendlyURL the friendly URL to be assigned
+	 * @param  locale the locale of the friendly URL
 	 * @return the updated layout
 	 * @throws PortalException if a group or layout with the primary key could
 	 *         not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Layout updateFriendlyURL(long plid, String friendlyURL)
+	public Layout updateFriendlyURL(
+			long plid, String friendlyURL, Locale locale)
 		throws PortalException, SystemException {
 
 		Date now = new Date();
@@ -1756,8 +1758,16 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			friendlyURL);
 
+		layoutFriendlyURLLocalService.updateLayoutFriendlyURL(
+			layout.getCompanyId(), layout.getGroupId(), layout.getPlid(),
+			layout.isPrivateLayout(), friendlyURL,
+			LocaleUtil.toLanguageId(locale), new ServiceContext());
+
 		layout.setModifiedDate(now);
-		layout.setFriendlyURL(friendlyURL);
+
+		if (locale == LocaleUtil.getDefault()) {
+			layout.setFriendlyURL(friendlyURL);
+		}
 
 		layoutPersistence.update(layout);
 
@@ -1786,7 +1796,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		layoutLocalServiceHelper.validate(
 			groupId, privateLayout, layoutId, parentLayoutId, name, type,
-			hidden, friendlyURL);
+			hidden, friendlyURLMap);
 
 		layoutLocalServiceHelper.validateParentLayoutId(
 			groupId, privateLayout, layoutId, parentLayoutId);

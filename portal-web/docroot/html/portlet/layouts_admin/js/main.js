@@ -210,7 +210,8 @@ AUI.add(
 															contentDialog.hide();
 														}
 													},
-													label: Liferay.Language.get('ok')
+													label: Liferay.Language.get('ok'),
+													primary: true
 												},
 												{
 													on: {
@@ -262,7 +263,8 @@ AUI.add(
 															globalConfigurationDialog.hide();
 														}
 													},
-													label: Liferay.Language.get('ok')
+													label: Liferay.Language.get('ok'),
+													primary: true
 												},
 												{
 													on: {
@@ -314,7 +316,8 @@ AUI.add(
 															globalContentDialog.hide();
 														}
 													},
-													label: Liferay.Language.get('ok')
+													label: Liferay.Language.get('ok'),
+													primary: true
 												},
 												{
 													on: {
@@ -365,7 +368,8 @@ AUI.add(
 															pagesDialog.hide();
 														}
 													},
-													label: Liferay.Language.get('ok')
+													label: Liferay.Language.get('ok'),
+													primary: true
 												},
 												{
 													on: {
@@ -417,7 +421,8 @@ AUI.add(
 															rangeDialog.hide();
 														}
 													},
-													label: Liferay.Language.get('ok')
+													label: Liferay.Language.get('ok'),
+													primary: true
 												},
 												{
 													on: {
@@ -469,7 +474,8 @@ AUI.add(
 															remoteDialog.hide();
 														}
 													},
-													label: Liferay.Language.get('ok')
+													label: Liferay.Language.get('ok'),
+													primary: true
 												},
 												{
 													on: {

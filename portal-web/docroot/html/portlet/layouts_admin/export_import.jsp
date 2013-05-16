@@ -288,3 +288,20 @@ String[] tempFileEntryNames = LayoutServiceUtil.getTempFileEntryNames(groupId, I
 		}
 	);
 </aui:script>
+
+<c:if test='<%= SessionMessages.contains(liferayPortletRequest, "requestProcessed") %>'>
+	<aui:script>
+		var opener = Liferay.Util.getOpener();
+
+		if (opener.<portlet:namespace />saveLayoutset) {
+			Liferay.fire(
+				'closeWindow',
+				{
+					id: '<portlet:namespace />importDialog'
+				}
+			);
+
+			opener.<portlet:namespace />saveLayoutset('view');
+		}
+	</aui:script>
+</c:if>

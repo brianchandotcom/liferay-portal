@@ -20,11 +20,15 @@ package com.liferay.portlet.social.model;
  */
 public class SocialActivityConstants {
 
+	public static final int INTERNAL_TYPES_START = 10001;
+
 	public static final int TYPE_ADD_ATTACHMENT = 10006;
 
 	public static final int TYPE_ADD_COMMENT = 10005;
 
 	public static final int TYPE_ADD_VOTE = 10004;
+
+	public static final int TYPE_DELETE = 10000;
 
 	public static final int TYPE_MOVE_ATTACHMENT_TO_TRASH = 10009;
 

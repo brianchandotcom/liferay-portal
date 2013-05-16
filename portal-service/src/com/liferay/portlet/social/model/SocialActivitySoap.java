@@ -41,6 +41,8 @@ public class SocialActivitySoap implements Serializable {
 		soapModel.setType(model.getType());
 		soapModel.setExtraData(model.getExtraData());
 		soapModel.setReceiverUserId(model.getReceiverUserId());
+		soapModel.setParentClassNameId(model.getParentClassNameId());
+		soapModel.setParentClassPK(model.getParentClassPK());
 
 		return soapModel;
 	}
@@ -189,6 +191,22 @@ public class SocialActivitySoap implements Serializable {
 		_receiverUserId = receiverUserId;
 	}
 
+	public long getParentClassNameId() {
+		return _parentClassNameId;
+	}
+
+	public void setParentClassNameId(long parentClassNameId) {
+		_parentClassNameId = parentClassNameId;
+	}
+
+	public long getParentClassPK() {
+		return _parentClassPK;
+	}
+
+	public void setParentClassPK(long parentClassPK) {
+		_parentClassPK = parentClassPK;
+	}
+
 	private long _activityId;
 	private long _groupId;
 	private long _companyId;
@@ -201,4 +219,6 @@ public class SocialActivitySoap implements Serializable {
 	private int _type;
 	private String _extraData;
 	private long _receiverUserId;
+	private long _parentClassNameId;
+	private long _parentClassPK;
 }

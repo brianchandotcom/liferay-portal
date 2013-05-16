@@ -71,9 +71,11 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 			{ "classPK", Types.BIGINT },
 			{ "type_", Types.INTEGER },
 			{ "extraData", Types.VARCHAR },
-			{ "receiverUserId", Types.BIGINT }
+			{ "receiverUserId", Types.BIGINT },
+			{ "parentClassNameId", Types.BIGINT },
+			{ "parentClassPK", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table SocialActivity (activityId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,createDate LONG,activitySetId LONG,mirrorActivityId LONG,classNameId LONG,classPK LONG,type_ INTEGER,extraData STRING null,receiverUserId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table SocialActivity (activityId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,createDate LONG,activitySetId LONG,mirrorActivityId LONG,classNameId LONG,classPK LONG,type_ INTEGER,extraData STRING null,receiverUserId LONG,parentClassNameId LONG,parentClassPK LONG)";
 	public static final String TABLE_SQL_DROP = "drop table SocialActivity";
 	public static final String ORDER_BY_JPQL = " ORDER BY socialActivity.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY SocialActivity.createDate DESC";
@@ -151,6 +153,8 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 		attributes.put("type", getType());
 		attributes.put("extraData", getExtraData());
 		attributes.put("receiverUserId", getReceiverUserId());
+		attributes.put("parentClassNameId", getParentClassNameId());
+		attributes.put("parentClassPK", getParentClassPK());
 
 		return attributes;
 	}
@@ -227,6 +231,18 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 
 		if (receiverUserId != null) {
 			setReceiverUserId(receiverUserId);
+		}
+
+		Long parentClassNameId = (Long)attributes.get("parentClassNameId");
+
+		if (parentClassNameId != null) {
+			setParentClassNameId(parentClassNameId);
+		}
+
+		Long parentClassPK = (Long)attributes.get("parentClassPK");
+
+		if (parentClassPK != null) {
+			setParentClassPK(parentClassPK);
 		}
 	}
 
@@ -516,6 +532,26 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 		return _originalReceiverUserId;
 	}
 
+	@Override
+	public long getParentClassNameId() {
+		return _parentClassNameId;
+	}
+
+	@Override
+	public void setParentClassNameId(long parentClassNameId) {
+		_parentClassNameId = parentClassNameId;
+	}
+
+	@Override
+	public long getParentClassPK() {
+		return _parentClassPK;
+	}
+
+	@Override
+	public void setParentClassPK(long parentClassPK) {
+		_parentClassPK = parentClassPK;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -559,6 +595,8 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 		socialActivityImpl.setType(getType());
 		socialActivityImpl.setExtraData(getExtraData());
 		socialActivityImpl.setReceiverUserId(getReceiverUserId());
+		socialActivityImpl.setParentClassNameId(getParentClassNameId());
+		socialActivityImpl.setParentClassPK(getParentClassPK());
 
 		socialActivityImpl.resetOriginalValues();
 
@@ -696,12 +734,16 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 
 		socialActivityCacheModel.receiverUserId = getReceiverUserId();
 
+		socialActivityCacheModel.parentClassNameId = getParentClassNameId();
+
+		socialActivityCacheModel.parentClassPK = getParentClassPK();
+
 		return socialActivityCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{activityId=");
 		sb.append(getActivityId());
@@ -727,6 +769,10 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 		sb.append(getExtraData());
 		sb.append(", receiverUserId=");
 		sb.append(getReceiverUserId());
+		sb.append(", parentClassNameId=");
+		sb.append(getParentClassNameId());
+		sb.append(", parentClassPK=");
+		sb.append(getParentClassPK());
 		sb.append("}");
 
 		return sb.toString();
@@ -734,7 +780,7 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(40);
+		StringBundler sb = new StringBundler(46);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.social.model.SocialActivity");
@@ -788,6 +834,14 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 			"<column><column-name>receiverUserId</column-name><column-value><![CDATA[");
 		sb.append(getReceiverUserId());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>parentClassNameId</column-name><column-value><![CDATA[");
+		sb.append(getParentClassNameId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>parentClassPK</column-name><column-value><![CDATA[");
+		sb.append(getParentClassPK());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -832,6 +886,8 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 	private String _receiverUserUuid;
 	private long _originalReceiverUserId;
 	private boolean _setOriginalReceiverUserId;
+	private long _parentClassNameId;
+	private long _parentClassPK;
 	private long _columnBitmask;
 	private SocialActivity _escapedModel;
 }

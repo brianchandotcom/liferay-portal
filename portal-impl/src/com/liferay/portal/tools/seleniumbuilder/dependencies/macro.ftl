@@ -31,7 +31,11 @@ public class ${seleniumBuilderContext.getMacroSimpleClassName(macroName)} extend
 			<#list varElements as varElement>
 				<#assign varName = varElement.attributeValue("name")>
 
-				<#assign varValue = varElement.attributeValue("value")>
+				<#if varElement.attributeValue("value")??>
+					<#assign varValue = varElement.attributeValue("value")>
+				<#else>
+					<#assign varValue = varElement.getText()>
+				</#if>
 
 				definitionScopeVariables.put("${varName}", "${varValue}");
 			</#list>

@@ -33,7 +33,11 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)} 
 			<#list varElements as varElement>
 				<#assign varName = varElement.attributeValue("name")>
 
-				<#assign varValue = varElement.attributeValue("value")>
+				<#if element.attributeValue("value")??>
+					<#assign varValue = element.attributeValue("value")>
+				<#elseif element.getText()??>
+					<#assign varValue = element.getText()>
+				</#if>
 
 				definitionScopeVariables.put("${varName}", "${varValue}");
 			</#list>

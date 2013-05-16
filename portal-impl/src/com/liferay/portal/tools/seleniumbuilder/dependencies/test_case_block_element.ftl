@@ -32,7 +32,11 @@
 	<#elseif name == "var">
 		<#assign varName = element.attributeValue("name")>
 
-		<#assign varValue = element.attributeValue("value")>
+		<#if element.attributeValue("value")??>
+			<#assign varValue = element.attributeValue("value")>
+		<#elseif element.getText()??>
+			<#assign varValue = element.getText()>
+		</#if>
 
 		<#if varValue?contains("${") && varValue?contains("}")>
 			<#assign varValue = varValue?replace("${", "\" + commandScopeVariables.get(\"")>

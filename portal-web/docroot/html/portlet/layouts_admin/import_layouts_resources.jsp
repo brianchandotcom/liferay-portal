@@ -115,6 +115,7 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 
 <portlet:actionURL var="importPagesURL">
 	<portlet:param name="struts_action" value="/layouts_admin/import_layouts" />
+	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.IMPORT %>" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 	<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 </portlet:actionURL>

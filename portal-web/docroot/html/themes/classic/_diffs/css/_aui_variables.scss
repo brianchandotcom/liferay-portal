@@ -1,0 +1,50 @@
+$gray: #555;
+$white: #FFF;
+
+$linkColor: #009EC3;
+$linkColorHover: darken($linkColor, 15%);
+
+$baseBorderRadius: 2px;
+$borderRadiusLarge: 3px;
+$borderRadiusSmall: 2px;
+
+$baseFontSize: 16px;
+$baseLineHeight: 22px;
+
+$btnBackgroundHighlight: #F3F3F3;
+$btnBorder: #CFCFCF;
+$btnDangerBackground: #F53924;
+$btnDangerBackgroundHighlight: #ED2C17;
+$btnInfoBackground: #00CFFF;
+$btnInfoBackgroundHighlight: darken($btnInfoBackground, 4%);
+$btnPrimaryBackground: #4A9FD9;
+$btnPrimaryBackgroundHighlight: darken($btnPrimaryBackground, 5%);
+$btnSuccessBackground: #CBDF2E;
+$btnSuccessBackgroundHighlight: #C4D72C;
+$btnWarningBackground: #FFA658;
+$btnWarningBackgroundHighlight: #F49645;
+
+$dropdownLinkBackgroundActive: lighten($linkColor, 5%);
+$dropdownLinkBackgroundHover: darken(#3ECAF4, 10%);
+$dropdownLinkColorActive: $white;
+
+$navbarBackground: #F3F3F3;
+$navbarBackgroundHighlight: #F9F9F9;
+$navbarBorder: #DDDDDD;
+$navbarLinkBackgroundActive: lighten($navbarBackground, 25%);
+$navbarLinkColor: $gray;
+$navbarLinkColorHover: $linkColorHover;
+$navbarText: $navbarLinkColor;
+
+$errorBackground: #FEE5E2;
+$errorBorder: #FCACA5;
+$errorText: #B50303;
+$infoBackground: #CEF1FC;
+$infoBorder: darken($infoBackground, 10%);
+$infoText: #12718F;
+$successBackground: #F5FBD1;
+$successBorder: #D3E830;
+$successText: #8D9D0D;
+$warningBackground: #FFFBDC;
+$warningBorder: #F1D875;
+$warningText: #BF7900;

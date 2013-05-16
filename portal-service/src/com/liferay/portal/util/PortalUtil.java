@@ -541,6 +541,13 @@ public class PortalUtil {
 		return getPortal().getFirstPageLayoutTypes(pageContext);
 	}
 
+	public static Portlet getFirstSiteAdministrationPortlet(
+			ThemeDisplay themeDisplay)
+		throws PortalException, SystemException {
+
+		return getPortal().getFirstSiteAdministrationPortlet(themeDisplay);
+	}
+
 	public static String getFullName(
 		String firstName, String middleName, String lastName) {
 
@@ -1214,6 +1221,14 @@ public class PortalUtil {
 		throws PortalException, SystemException {
 
 		return getPortal().getSelectedUser(portletRequest, checkPermission);
+	}
+
+	public static PortletURL getSiteAdministrationURL(
+			PortletResponse portletResponse, ThemeDisplay themeDisplay)
+		throws PortalException, SystemException {
+
+		return getPortal().getSiteAdministrationURL(
+			portletResponse, themeDisplay);
 	}
 
 	public static long[] getSiteAndCompanyGroupIds(long groupId)

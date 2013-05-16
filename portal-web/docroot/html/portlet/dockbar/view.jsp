@@ -104,7 +104,7 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 			</aui:nav-item>
 		</c:if>
 
-		<c:if test="<%= !group.isControlPanel() && (themeDisplay.isShowLayoutTemplatesIcon() || themeDisplay.isShowManageSiteIcon() || themeDisplay.isShowPageSettingsIcon()) %>">
+		<c:if test="<%= !group.isControlPanel() && (themeDisplay.isShowLayoutTemplatesIcon() || themeDisplay.isShowSiteAdministrationIcon() || themeDisplay.isShowPageSettingsIcon()) %>">
 			<aui:nav-item anchorCssClass="manage-content-link" dropdown="<%= true %>" iconClass="icon-cog" id="manageContent" label="manage">
 
 				<%
@@ -127,8 +127,8 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 					<aui:nav-item anchorCssClass='<%= themeDisplay.isFreeformLayout() ? "disabled" : StringPool.BLANK %>' anchorId="manageCustomization" cssClass="manage-page-customization" href='<%= themeDisplay.isFreeformLayout() ? null : "javascript:;" %>' label='<%= group.isLayoutPrototype() ? "page-modifications" : "page-customizations" %>' title='<%= themeDisplay.isFreeformLayout() ? "it-is-not-possible-to-specify-customization-settings-for-freeform-layouts" : null %>' />
 				</c:if>
 
-				<c:if test="<%= themeDisplay.isShowManageSiteIcon() %>">
-					<aui:nav-item cssClass="settings" href="<%= themeDisplay.getURLManageSite() %>" label="site" title="manage-site" />
+				<c:if test="<%= themeDisplay.isShowSiteAdministrationIcon() %>">
+					<aui:nav-item cssClass="settings" href="<%= themeDisplay.getURLSiteAdministration() %>" label="site" title="manage-site" />
 				</c:if>
 			</aui:nav-item>
 

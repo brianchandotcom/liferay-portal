@@ -648,6 +648,9 @@ public interface Portal {
 
 	public String getFirstPageLayoutTypes(PageContext pageContext);
 
+	public Portlet getFirstSiteAdministrationPortlet(ThemeDisplay themeDisplay)
+		throws PortalException, SystemException;
+
 	public String getFullName(
 		String firstName, String middleName, String lastName);
 
@@ -966,6 +969,10 @@ public interface Portal {
 
 	public User getSelectedUser(
 			PortletRequest portletRequest, boolean checkPermission)
+		throws PortalException, SystemException;
+
+	public PortletURL getSiteAdministrationURL(
+			PortletResponse portletResponse, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException;
 
 	public long[] getSiteAndCompanyGroupIds(long groupId)

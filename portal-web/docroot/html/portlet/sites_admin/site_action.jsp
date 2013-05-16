@@ -49,7 +49,45 @@ if (row == null) {
 %>
 
 <liferay-ui:icon-menu showExpanded="<%= view %>" showWhenSingleIcon="<%= view %>">
+
+	<%
+	ThemeDisplay siteThemeDisplay = (ThemeDisplay)themeDisplay.clone();
+
+	siteThemeDisplay.setScopeGroupId(group.getGroupId());
+
+	PortletURL siteAdministrationURL = PortalUtil.getSiteAdministrationURL(renderResponse, siteThemeDisplay);
+	%>
+
+	<c:if test="<%= siteAdministrationURL != null %>">
+		<liferay-ui:icon
+			image="edit"
+			message="manage"
+			method="get"
+			url="<%= siteAdministrationURL.toString() %>"
+		/>
+	</c:if>
+
 	<c:if test="<%= hasUpdatePermission %>">
+
+		<%
+		int childSitesCount = GroupLocalServiceUtil.getGroupsCount(company.getCompanyId(), group.getGroupId(), true);
+		%>
+
+		<c:if test="<%= childSitesCount > 0 %>">
+			<liferay-portlet:renderURL var="viewSubsitesURL">
+				<portlet:param name="struts_action" value="/sites_admin/view" />
+				<portlet:param name="backURL" value="/<%= currentURL %>" />
+				<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
+				<portlet:param name="sitesListView" value="<%= SiteConstants.LIST_VIEW_TREE %>" />
+			</liferay-portlet:renderURL>
+
+			<liferay-ui:icon
+				image="view"
+				message="view-subsites"
+				url="<%= viewSubsitesURL %>"
+			/>
+		</c:if>
+
 		<liferay-portlet:renderURL doAsGroupId="<%= group.getGroupId() %>" portletName="<%= PortletKeys.SITE_SETTINGS %>" var="editURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 		</liferay-portlet:renderURL>

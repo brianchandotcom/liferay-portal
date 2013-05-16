@@ -81,7 +81,7 @@
 					}
 				%>
 
-					<aui:nav-item href="<%= urlControlPanelSitesPortlet %>" label="<%= PortalUtil.getPortletTitle(curPortlet, locale) %>" selected="<%= selected %>" />
+					<aui:nav-item href="<%= urlControlPanelSitesPortlet %>" label="<%= PortalUtil.getPortletTitle(curPortlet, application, locale) %>" selected="<%= selected %>" />
 
 				<%
 				}

@@ -21,6 +21,12 @@ String ppid = ParamUtil.getString(request, "p_p_id");
 
 String controlPanelCategory = themeDisplay.getControlPanelCategory();
 
+boolean showControlPanelMenu = true;
+
+if (controlPanelCategory.equals(PortletCategoryKeys.CURRENT_SITE) || controlPanelCategory.equals(PortletCategoryKeys.MY)) {
+	showControlPanelMenu = false;
+}
+
 if (controlPanelCategory.equals(PortletCategoryKeys.CURRENT_SITE)) {
 	controlPanelCategory = PortletCategoryKeys.SITE_ADMINISTRATION;
 }
@@ -131,7 +137,9 @@ request.setAttribute("control_panel.jsp-ppid", ppid);
 
 		<div id="content-wrapper">
 			<div class="<%= panelCategory %>">
-				<%@ include file="/html/portal/layout/view/control_panel_nav_main.jspf" %>
+				<c:if test="<%= showControlPanelMenu %>">
+					<%@ include file="/html/portal/layout/view/control_panel_nav_main.jspf" %>
+				</c:if>
 
 				<div class="<%= panelBodyCssClass %>">
 					<c:choose>

@@ -7,6 +7,7 @@
 #set ($portlet_description_css_class = "alert alert-info lfr-control-panel-help-content lfr-message-content")
 #set ($portlet_back_url = $htmlUtil.escapeAttribute($portlet_display.getURLBack()))
 #set ($enable_portlet_descriptions = $sessionClicks.get($request, "enable-portlet-descriptions", "1"))
+#set ($show_portlet_title = $themeDisplay.getDoAsGroupId() != 0)
 #set ($show_portlet_description = $enable_portlet_descriptions == "1" && $sessionClicks.get($request, "show-portlet-description-$portlet_id", "1") == "1")
 #set ($valid_portlet_description = $validator.isNotNull($portlet_description) && $portlet_description.indexOf('javax.portlet.description') == -1)
 
@@ -18,13 +19,16 @@
 
 <section class="portlet" id="portlet_$portlet_id">
 	<header class="portlet-topper">
-		<h1 class="portlet-title" id="cpPortletTitle">
-			<span class="portlet-title-text">$portlet_title</span>
 
-			#if ($valid_portlet_description)
-				<img class="$portlet_title_icon_css_class" id="cpPortletTitleHelpIcon" src="$themeDisplay.getPathThemeImages()/portlet/help.png" />
-			#end
-		</h1>
+		#if ($show_portlet_title)
+			<h2 class="portlet-title" id="cpPortletTitle">
+				<span class="portlet-title-text">$portlet_title</span>
+
+				#if ($valid_portlet_description)
+					<img class="$portlet_title_icon_css_class" id="cpPortletTitleHelpIcon" src="$themeDisplay.getPathThemeImages()/portlet/help.png" />
+				#end
+			</h2>
+		#end
 
 		#if ($valid_portlet_description)
 			<div class="$portlet_description_css_class" data-portlet-id="$portlet_id" data-visible-panel="$show_portlet_description" id="cpContextPanelTemplate">

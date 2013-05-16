@@ -568,3 +568,11 @@ update WikiNode set status = 0;
 update WikiNode set statusByUserId = userId;
 update WikiNode set statusByUserName = userName;
 update WikiNode set statusDate = modifiedDate;
+
+alter table SocialActivity add parentClassNameId LONG;
+alter table SocialActivity add parentClassPK LONG;
+
+COMMIT_TRANSACTION;
+
+update SocialActivity set parentClassNameId = 0;
+update SocialActivity set parentClassPK = 0;

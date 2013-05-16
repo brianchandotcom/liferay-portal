@@ -499,6 +499,17 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 			userPreferencesNode: '#<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES %>Checkbox'
 		}
 	);
+
+	var form = A.one('#<portlet:namespace />fm1');
+
+	form.on(
+		'submit',
+		function(event) {
+			event.preventDefault();
+
+			submitForm(form, form.attr('action'), false);
+		}
+	);
 </aui:script>
 
 <aui:script>

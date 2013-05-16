@@ -14,7 +14,13 @@
  */
 --%>
 
+<%@ include file="/html/portlet/layouts_admin/init.jsp" %>
+
 <%
+long groupId = ParamUtil.getLong(request, "groupId");
+
+boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
+
 Group group = null;
 
 if (groupId > 0) {
@@ -80,7 +86,7 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 		<portlet:param name="exportLAR" value="<%= Boolean.TRUE.toString() %>" />
 	</portlet:actionURL>
 
-	<aui:form action='<%= exportPagesURL + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" encoding='<%= (cmd.equals(Constants.VALIDATE)) ? "multipart/form-data" : StringPool.BLANK %>' method="post" name="fm1">
+	<aui:form action='<%= exportPagesURL + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="fm1">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.EXPORT %>" />
 
 		<div class="export-dialog-tree">

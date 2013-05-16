@@ -202,7 +202,6 @@ boolean hasExportImportLayoutsPermission = GroupPermissionUtil.contains(permissi
 						click: function(event) {
 							<portlet:renderURL var="exportPagesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 								<portlet:param name="struts_action" value="/layouts_admin/export_layouts" />
-								<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
 								<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 								<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
 								<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />

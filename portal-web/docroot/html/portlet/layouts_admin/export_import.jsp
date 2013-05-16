@@ -17,8 +17,6 @@
 <%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
 <%
-String cmd = ParamUtil.getString(request, Constants.CMD, Constants.EXPORT);
-
 long groupId = ParamUtil.getLong(request, "groupId");
 
 boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
@@ -27,10 +25,7 @@ String[] tempFileEntryNames = LayoutServiceUtil.getTempFileEntryNames(groupId, I
 %>
 
 <c:choose>
-	<c:when test="<%= cmd.equals(Constants.EXPORT) %>">
-		<%@ include file="/html/portlet/layouts_admin/export_options.jspf" %>
-	</c:when>
-	<c:when test="<%= cmd.equals(Constants.IMPORT) && (tempFileEntryNames.length > 0) %>">
+	<c:when test="<%= tempFileEntryNames.length > 0 %>">
 		<liferay-util:include page="/html/portlet/layouts_admin/import_layouts_resources.jsp" />
 	</c:when>
 	<c:otherwise>

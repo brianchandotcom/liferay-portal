@@ -22,6 +22,10 @@ DDLRecordSet recordSet = null;
 try {
 	if (Validator.isNotNull(recordSetId)) {
 		recordSet = DDLRecordSetLocalServiceUtil.getRecordSet(recordSetId);
+
+		if (recordSet.getGroupId() != scopeGroupId) {
+			recordSet = null;
+		}
 	}
 %>
 
@@ -29,8 +33,6 @@ try {
 		<c:when test="<%= (recordSet != null) %>">
 
 			<%
-			portletDisplay.setTitle(recordSet.getName(locale));
-
 			renderRequest.setAttribute(WebKeys.DYNAMIC_DATA_LISTS_RECORD_SET, recordSet);
 			%>
 

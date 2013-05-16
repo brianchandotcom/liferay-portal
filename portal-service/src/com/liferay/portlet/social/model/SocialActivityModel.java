@@ -271,6 +271,34 @@ public interface SocialActivityModel extends AttachedModel,
 	 */
 	public void setReceiverUserUuid(String receiverUserUuid);
 
+	/**
+	 * Returns the parent class name ID of this social activity.
+	 *
+	 * @return the parent class name ID of this social activity
+	 */
+	public long getParentClassNameId();
+
+	/**
+	 * Sets the parent class name ID of this social activity.
+	 *
+	 * @param parentClassNameId the parent class name ID of this social activity
+	 */
+	public void setParentClassNameId(long parentClassNameId);
+
+	/**
+	 * Returns the parent class p k of this social activity.
+	 *
+	 * @return the parent class p k of this social activity
+	 */
+	public long getParentClassPK();
+
+	/**
+	 * Sets the parent class p k of this social activity.
+	 *
+	 * @param parentClassPK the parent class p k of this social activity
+	 */
+	public void setParentClassPK(long parentClassPK);
+
 	@Override
 	public boolean isNew();
 

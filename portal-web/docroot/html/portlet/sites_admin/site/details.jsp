@@ -337,8 +337,8 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 						<%
 						String customJspServletContextName = StringPool.BLANK;
 
-						if (group != null) {
-							UnicodeProperties typeSettingsProperties = group.getTypeSettingsProperties();
+						if (liveGroup != null) {
+							UnicodeProperties typeSettingsProperties = liveGroup.getTypeSettingsProperties();
 
 							customJspServletContextName = GetterUtil.getString(typeSettingsProperties.get("customJspServletContextName"));
 						}

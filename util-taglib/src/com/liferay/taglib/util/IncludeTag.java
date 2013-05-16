@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.servlet.TrackedServletRequest;
 import com.liferay.portal.kernel.servlet.taglib.FileAvailabilityUtil;
+import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -226,7 +227,14 @@ public class IncludeTag extends AttributesTagSupport {
 			return null;
 		}
 
-		Group group = themeDisplay.getScopeGroup();
+		Group group;
+
+		try {
+			group = StagingUtil.getLiveGroup(themeDisplay.getScopeGroupId());
+		}
+		catch (Exception e) {
+			return null;
+		}
 
 		UnicodeProperties typeSettingsProperties =
 			group.getTypeSettingsProperties();

@@ -17,6 +17,7 @@ package com.liferay.portlet.mobiledevicerules.service.impl;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
@@ -101,7 +102,8 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 			mdrRuleGroupInstancePersistence.findByGroupId(groupId);
 
 		for (MDRRuleGroupInstance ruleGroupInstance : ruleGroupInstances) {
-			deleteRuleGroupInstance(ruleGroupInstance);
+			mdrRuleGroupInstanceLocalService.deleteRuleGroupInstance(
+				ruleGroupInstance);
 		}
 	}
 
@@ -113,25 +115,20 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 			mdrRuleGroupInstancePersistence.fetchByPrimaryKey(
 				ruleGroupInstanceId);
 
-		deleteRuleGroupInstance(ruleGroupInstance);
+		mdrRuleGroupInstanceLocalService.deleteRuleGroupInstance(
+			ruleGroupInstance);
 	}
 
 	@Override
+	@SystemEvent(
+		action = SystemEventConstants.ACTION_SKIP,
+		type = SystemEventConstants.TYPE_DELETE)
 	public void deleteRuleGroupInstance(MDRRuleGroupInstance ruleGroupInstance)
 		throws PortalException, SystemException {
 
 		// Rule group instance
 
 		mdrRuleGroupInstancePersistence.remove(ruleGroupInstance);
-
-		// System event
-
-		systemEventLocalService.addSystemEvent(
-			0, ruleGroupInstance.getGroupId(),
-			MDRRuleGroupInstance.class.getName(),
-			ruleGroupInstance.getRuleGroupInstanceId(),
-			ruleGroupInstance.getUuid(), null, SystemEventConstants.TYPE_DELETE,
-			null);
 
 		// Rule actions
 
@@ -147,7 +144,8 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 			mdrRuleGroupInstancePersistence.findByRuleGroupId(ruleGroupId);
 
 		for (MDRRuleGroupInstance ruleGroupInstance : ruleGroupInstances) {
-			deleteRuleGroupInstance(ruleGroupInstance);
+			mdrRuleGroupInstanceLocalService.deleteRuleGroupInstance(
+				ruleGroupInstance);
 		}
 	}
 

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
@@ -190,10 +191,13 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 
 		WikiNode node = wikiNodePersistence.findByPrimaryKey(nodeId);
 
-		deleteNode(node);
+		wikiNodeLocalService.deleteNode(node);
 	}
 
 	@Override
+	@SystemEvent(
+		action = SystemEventConstants.ACTION_SKIP,
+		type = SystemEventConstants.TYPE_DELETE)
 	public void deleteNode(WikiNode node)
 		throws PortalException, SystemException {
 
@@ -210,12 +214,6 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		resourceLocalService.deleteResource(
 			node.getCompanyId(), WikiNode.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL, node.getNodeId());
-
-		// System event
-
-		systemEventLocalService.addSystemEvent(
-			0, node.getGroupId(), WikiNode.class.getName(), node.getNodeId(),
-			node.getUuid(), null, SystemEventConstants.TYPE_DELETE, null);
 
 		// Attachments
 
@@ -261,7 +259,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		List<WikiNode> nodes = wikiNodePersistence.findByGroupId(groupId);
 
 		for (WikiNode node : nodes) {
-			deleteNode(node);
+			wikiNodeLocalService.deleteNode(node);
 		}
 
 		PortletFileRepositoryUtil.deletePortletRepository(

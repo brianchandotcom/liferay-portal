@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -387,6 +388,7 @@ public class DDMTemplateLocalServiceImpl
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public void deleteTemplate(DDMTemplate template)
 		throws PortalException, SystemException {
 
@@ -431,13 +433,6 @@ public class DDMTemplateLocalServiceImpl
 		resourceLocalService.deleteResource(
 			template.getCompanyId(), DDMTemplate.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL, template.getTemplateId());
-
-		// System event
-
-		systemEventLocalService.addSystemEvent(
-			0, template.getGroupId(), DDMTemplate.class.getName(),
-			template.getTemplateId(), template.getUuid(), null,
-			SystemEventConstants.TYPE_DELETE, null);
 	}
 
 	/**
@@ -454,7 +449,7 @@ public class DDMTemplateLocalServiceImpl
 		DDMTemplate template = ddmTemplatePersistence.findByPrimaryKey(
 			templateId);
 
-		deleteTemplate(template);
+		ddmTemplateLocalService.deleteTemplate(template);
 	}
 
 	/**
@@ -472,7 +467,7 @@ public class DDMTemplateLocalServiceImpl
 			groupId);
 
 		for (DDMTemplate template : templates) {
-			deleteTemplate(template);
+			ddmTemplateLocalService.deleteTemplate(template);
 		}
 	}
 

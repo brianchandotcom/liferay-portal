@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
+
+<service-builder package-path="com.liferay.portlet.backgroundtask">
+	<namespace>BT</namespace>
+	<entity name="BackgroundTask" local-service="true" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="backgroundTaskId" type="long" primary="true" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="className" type="String" />
+		<column name="completedDate" type="Date" />
+		<column name="data" type="String" />
+		<column name="name" type="String" />
+		<column name="servletContextName" type="String" />
+		<column name="status" type="int" />
+
+		<!-- Finder methods -->
+
+		<finder name="G_C" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="className" />
+		</finder>
+		<finder name="G_C_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="className" />
+			<finder-column name="status" />
+		</finder>
+	</entity>
+	<exceptions>
+	</exceptions>
+</service-builder>

@@ -65,8 +65,8 @@ public class LegacyAlgorithmAwarePasswordEncryptor
 
 				sb.append("Password upgrade was not successfully configured. ");
 				sb.append("Please set the property ");
-				sb.append("\"passwords.encryption.algorithm.legacy\" with the");
-				sb.append("previous password encryption algorithm and ");
+				sb.append("\"passwords.encryption.algorithm.legacy\" with ");
+				sb.append("the previous password encryption algorithm and ");
 				sb.append("restart.");
 
 				throw new PwdEncryptorException(sb.toString(), e);

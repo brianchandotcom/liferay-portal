@@ -179,18 +179,14 @@ public class JournalArticleStagedModelDataHandler
 			}
 		}
 
-		if (portletDataContext.getBooleanParameter(
-				JournalPortletDataHandler.NAMESPACE, "images")) {
+		List<JournalArticleImage> articleImages =
+			JournalArticleImageUtil.findByG_A_V(
+				article.getGroupId(), article.getArticleId(),
+				article.getVersion());
 
-			List<JournalArticleImage> articleImages =
-				JournalArticleImageUtil.findByG_A_V(
-					article.getGroupId(), article.getArticleId(),
-					article.getVersion());
-
-			for (JournalArticleImage articleImage : articleImages) {
-				exportArticleImage(
-					portletDataContext, articleImage, article, articleElement);
-			}
+		for (JournalArticleImage articleImage : articleImages) {
+			exportArticleImage(
+				portletDataContext, articleImage, article, articleElement);
 		}
 
 		article.setStatusByUserUuid(article.getStatusByUserUuid());
@@ -527,22 +523,16 @@ public class JournalArticleStagedModelDataHandler
 
 		Map<String, byte[]> images = new HashMap<String, byte[]>();
 
-		if (portletDataContext.getBooleanParameter(
-				JournalPortletDataHandler.NAMESPACE, "images")) {
+		List<Element> imagesElements =
+			portletDataContext.getReferenceDataElements(article, Image.class);
 
-			List<Element> imagesElements =
-				portletDataContext.getReferenceDataElements(
-					article, Image.class);
+		for (Element imageElement : imagesElements) {
+			String imagePath = imageElement.attributeValue("path");
 
-			for (Element imageElement : imagesElements) {
-				String imagePath = imageElement.attributeValue("path");
+			String fileName = imageElement.attributeValue("file-name");
 
-				String fileName = imageElement.attributeValue("file-name");
-
-				images.put(
-					fileName,
-					portletDataContext.getZipEntryAsByteArray(imagePath));
-			}
+			images.put(
+				fileName, portletDataContext.getZipEntryAsByteArray(imagePath));
 		}
 
 		String articleURL = null;

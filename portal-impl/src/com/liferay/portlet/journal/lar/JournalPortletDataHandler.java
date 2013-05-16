@@ -90,7 +90,9 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 		setExportControls(
 			new PortletDataHandlerBoolean(NAMESPACE, "web-content"),
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "structures-templates-and-feeds", true, true),
+				NAMESPACE, "structures-and-templates", true),
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "feeds", true, true),
 			new PortletDataHandlerBoolean(NAMESPACE, "embedded-assets"),
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "version-history",
@@ -99,7 +101,6 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "web-content", true,
 				new PortletDataHandlerControl[] {
-					new PortletDataHandlerBoolean(NAMESPACE, "images"),
 					new PortletDataHandlerBoolean(NAMESPACE, "categories"),
 					new PortletDataHandlerBoolean(NAMESPACE, "comments"),
 					new PortletDataHandlerBoolean(NAMESPACE, "ratings"),
@@ -149,51 +150,60 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
-		ActionableDynamicQuery ddmStructureActionableDynamicQuery =
-			new DDMStructureExportActionableDynamicQuery(portletDataContext) {
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "feeds")) {
+			ActionableDynamicQuery feedActionableDynamicQuery =
+				new JournalFeedExportActionableDynamicQuery(portletDataContext);
 
-			@Override
-			protected void addCriteria(DynamicQuery dynamicQuery) {
-				super.addCriteria(dynamicQuery);
+			feedActionableDynamicQuery.performActions();
+		}
 
-				Property classNameIdProperty = PropertyFactoryUtil.forName(
-					"classNameId");
+		if (portletDataContext.getBooleanParameter(
+				NAMESPACE, "structures-and-templates")) {
 
-				long classNameId = PortalUtil.getClassNameId(
-					JournalArticle.class);
+			ActionableDynamicQuery ddmStructureActionableDynamicQuery =
+				new DDMStructureExportActionableDynamicQuery(
+					portletDataContext) {
 
-				dynamicQuery.add(classNameIdProperty.eq(classNameId));
-			}
+				@Override
+				protected void addCriteria(DynamicQuery dynamicQuery) {
+					super.addCriteria(dynamicQuery);
 
-			@Override
-			protected void performAction(Object object) throws PortalException {
-				DDMStructure ddmStructure = (DDMStructure)object;
+					Property classNameIdProperty = PropertyFactoryUtil.forName(
+						"classNameId");
 
-				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext, ddmStructure);
+					long classNameId = PortalUtil.getClassNameId(
+						JournalArticle.class);
 
-				List<DDMTemplate> ddmTemplates = Collections.emptyList();
-
-				try {
-					ddmTemplates = ddmStructure.getTemplates();
-				}
-				catch (SystemException se) {
+					dynamicQuery.add(classNameIdProperty.eq(classNameId));
 				}
 
-				for (DDMTemplate ddmTemplate : ddmTemplates) {
+				@Override
+				protected void performAction(Object object)
+					throws PortalException {
+
+					DDMStructure ddmStructure = (DDMStructure)object;
+
 					StagedModelDataHandlerUtil.exportStagedModel(
-						portletDataContext, ddmTemplate);
+						portletDataContext, ddmStructure);
+
+					List<DDMTemplate> ddmTemplates = Collections.emptyList();
+
+					try {
+						ddmTemplates = ddmStructure.getTemplates();
+					}
+					catch (SystemException se) {
+					}
+
+					for (DDMTemplate ddmTemplate : ddmTemplates) {
+						StagedModelDataHandlerUtil.exportStagedModel(
+							portletDataContext, ddmTemplate);
+					}
 				}
-			}
 
-		};
+			};
 
-		ddmStructureActionableDynamicQuery.performActions();
-
-		ActionableDynamicQuery feedActionableDynamicQuery =
-			new JournalFeedExportActionableDynamicQuery(portletDataContext);
-
-		feedActionableDynamicQuery.performActions();
+			ddmStructureActionableDynamicQuery.performActions();
+		}
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "web-content")) {
 			ActionableDynamicQuery folderActionableDynamicQuery =
@@ -221,34 +231,42 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 			portletDataContext.getSourceGroupId(),
 			portletDataContext.getScopeGroupId());
 
-		Element ddmStructuresElement =
-			portletDataContext.getImportDataGroupElement(DDMStructure.class);
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "feeds")) {
+			Element feedsElement = portletDataContext.getImportDataGroupElement(
+				JournalFeed.class);
 
-		List<Element> ddmStructureElements = ddmStructuresElement.elements();
+			List<Element> feedElements = feedsElement.elements();
 
-		for (Element ddmStructureElement : ddmStructureElements) {
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, ddmStructureElement);
+			for (Element feedElement : feedElements) {
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, feedElement);
+			}
 		}
 
-		Element ddmTemplatesElement =
-			portletDataContext.getImportDataGroupElement(DDMTemplate.class);
+		if (portletDataContext.getBooleanParameter(
+				NAMESPACE, "structures-and-templates")) {
 
-		List<Element> ddmTemplateElements = ddmTemplatesElement.elements();
+			Element ddmStructuresElement =
+				portletDataContext.getImportDataGroupElement(
+					DDMStructure.class);
 
-		for (Element ddmTemplateElement : ddmTemplateElements) {
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, ddmTemplateElement);
-		}
+			List<Element> ddmStructureElements =
+				ddmStructuresElement.elements();
 
-		Element feedsElement = portletDataContext.getImportDataGroupElement(
-			JournalFeed.class);
+			for (Element ddmStructureElement : ddmStructureElements) {
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, ddmStructureElement);
+			}
 
-		List<Element> feedElements = feedsElement.elements();
+			Element ddmTemplatesElement =
+				portletDataContext.getImportDataGroupElement(DDMTemplate.class);
 
-		for (Element feedElement : feedElements) {
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, feedElement);
+			List<Element> ddmTemplateElements = ddmTemplatesElement.elements();
+
+			for (Element ddmTemplateElement : ddmTemplateElements) {
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, ddmTemplateElement);
+			}
 		}
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "web-content")) {

@@ -6,6 +6,7 @@
 #set ($theme_timestamp = $themeDisplay.getTheme().getTimestamp())
 #set ($theme_settings = $themeDisplay.getThemeSettings())
 
+#set ($root_css_class = "aui " + $languageUtil.get($locale, "lang.dir"))
 #set ($css_class = $theme_display.getColorScheme().getCssClass() + " yui3-skin-sam")
 
 #set ($liferay_toggle_controls = $sessionClicks.get($request, "liferay_toggle_controls", "visible"))

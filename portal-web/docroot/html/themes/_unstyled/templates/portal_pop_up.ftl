@@ -2,7 +2,7 @@
 
 <#include init />
 
-<html dir="<@liferay.language key="lang.dir" />" lang="${w3c_language_id}">
+<html class="${root_css_class}" dir="<@liferay.language key="lang.dir" />" lang="${w3c_language_id}">
 
 <head>
 	<title>${the_title}</title>

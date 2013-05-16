@@ -54,6 +54,8 @@
 	</path>
 
 	<target name="build-alloy">
+		<antcall target="build-alloy-twitter-bootstrap" />
+
 		<property name="alloy.version" value="2.0.0pr5" />
 
 		<property name="alloy.file" value="alloy-${alloy.version}.zip" />
@@ -71,7 +73,6 @@
 
 				<delete dir="docroot/html/ALLOY_ZIP" />
 				<delete dir="docroot/html/css/portal/aui_deprecated.css" />
-				<delete dir="docroot/html/css/portal/bootstrap.css" />
 				<delete dir="docroot/html/js/aui" />
 				<delete dir="docroot/html/themes/_unstyled/images/aui" />
 
@@ -81,24 +82,6 @@
 
 				<property name="alloy.build.dir" value="docroot/html/ALLOY_ZIP/alloy-${alloy.version}/build" />
 				<property name="alloy.temp.dir" value="docroot/html/ALLOY_ZIP/temp" />
-
-				<concat destfile="${alloy.temp.dir}/bootstrap.css">
-					<filelist
-						dir="${alloy.build.dir}/aui-css/css"
-						files="bootstrap.css,bootstrap-responsive.css"
-					/>
-				</concat>
-
-				<replace file="${alloy.temp.dir}/bootstrap.css">
-					<replacetoken><![CDATA[url("../img/]]></replacetoken>
-					<replacevalue><![CDATA[url("@theme_image_path@/aui/]]></replacevalue>
-				</replace>
-
-				<copy
-					file="${alloy.temp.dir}/bootstrap.css"
-					tofile="docroot/html/css/portal/bootstrap.css"
-					overwrite="true"
-				/>
 
 				<concat destfile="${alloy.temp.dir}/aui_deprecated.css">
 					<filelist
@@ -190,6 +173,48 @@
 				<!-- Clean up -->
 
 				<delete dir="docroot/html/ALLOY_ZIP" />
+			</then>
+		</if>
+	</target>
+
+	<target name="build-alloy-twitter-bootstrap">
+		<property name="alloy.bootstrap.version" value="2.2.2" />
+
+		<property name="alloy.bootstrap.deploy" value="docroot/html/themes/_unstyled/css/aui" />
+
+		<property name="alloy.bootstrap.file" value="alloy-twitter-bootstrap-${alloy.bootstrap.version}.zip" />
+
+		<property name="alloy.bootstrap.tmp.dir" value="docroot/html/ALLOY_BOOTSTRAP_ZIP" />
+
+		<if>
+			<not>
+				<uptodate
+					srcfile="third-party/${alloy.bootstrap.file}"
+					targetfile="${alloy.bootstrap.deploy}"
+				/>
+			</not>
+			<then>
+
+				<!-- Prepare -->
+
+				<delete dir="${alloy.bootstrap.tmp.dir}" />
+				<delete dir="${alloy.bootstrap.deploy}" />
+
+				<unzip src="third-party/${alloy.bootstrap.file}" dest="${alloy.bootstrap.tmp.dir}" />
+
+				<!-- CSS -->
+
+				<property name="alloy.bootstrap.lib.dir" value="${alloy.bootstrap.tmp.dir}/lib" />
+
+				<delete dir="${alloy.bootstrap.lib.dir}/tests" />
+
+				<copy todir="${alloy.bootstrap.deploy}" overwrite="true" preservelastmodified="true">
+					<fileset dir="${alloy.bootstrap.lib.dir}/" />
+				</copy>
+
+				<!-- Clean up -->
+
+				<delete dir="${alloy.bootstrap.tmp.dir}" />
 			</then>
 		</if>
 	</target>

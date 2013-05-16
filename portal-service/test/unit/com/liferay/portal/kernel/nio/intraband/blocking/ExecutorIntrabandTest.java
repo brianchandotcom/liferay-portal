@@ -270,6 +270,8 @@ public class ExecutorIntrabandTest {
 		RandomAccessFile randomAccessFile = new RandomAccessFile(
 			tempFile, "rw");
 
+		randomAccessFile.setLength(Integer.MAX_VALUE);
+
 		FileChannel fileChannel = randomAccessFile.getChannel();
 
 		try {
@@ -395,8 +397,14 @@ public class ExecutorIntrabandTest {
 
 		File tempFile = new File("tempFile");
 
-		tempFile.createNewFile();
 		tempFile.deleteOnExit();
+
+		RandomAccessFile randomAccessFile = new RandomAccessFile(
+			tempFile, "rw");
+
+		randomAccessFile.setLength(Integer.MAX_VALUE);
+
+		randomAccessFile.close();
 
 		FileInputStream fileInputStream = new FileInputStream(tempFile);
 		FileOutputStream fileOutputStream = new FileOutputStream(tempFile);

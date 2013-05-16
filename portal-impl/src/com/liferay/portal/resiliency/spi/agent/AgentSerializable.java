@@ -71,7 +71,7 @@ public class AgentSerializable implements Serializable {
 				else if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Nonserializable distributed request attribute name " +
-							" " + name + " with value " + value);
+							name + " with value " + value);
 				}
 			}
 			else if (_log.isDebugEnabled()) {

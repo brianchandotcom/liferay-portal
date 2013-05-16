@@ -167,7 +167,7 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 		}
 
 		return mapping.findForward(
-			getForward(renderRequest, "portlet.layouts_admin.export_layouts"));
+			getForward(renderRequest, "portlet.layouts_admin.import_layouts"));
 	}
 
 	@Override
@@ -180,7 +180,7 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 
 		PortletRequestDispatcher portletRequestDispatcher =
 			portletContext.getRequestDispatcher(
-				"/html/portlet/layouts_admin/export_import_resources.jsp");
+				"/html/portlet/layouts_admin/import_layouts_resources.jsp");
 
 		portletRequestDispatcher.include(resourceRequest, resourceResponse);
 	}

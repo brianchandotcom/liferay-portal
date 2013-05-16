@@ -830,6 +830,10 @@
 		<put name="portlet_content" value="/portlet/layouts_admin/export_layouts.jsp" />
 	</definition>
 
+	<definition name="portlet.layouts_admin.import_layouts" extends="portlet.layouts_admin">
+		<put name="portlet_content" value="/portlet/layouts_admin/import_layouts.jsp" />
+	</definition>
+
 	<definition name="portlet.layouts_admin.publish_layouts" extends="portlet.layouts_admin">
 		<put name="portlet_content" value="/portlet/layouts_admin/publish_layouts.jsp" />
 	</definition>

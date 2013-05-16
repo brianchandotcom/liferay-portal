@@ -19,19 +19,20 @@
 <%
 long groupId = ParamUtil.getLong(request, "groupId");
 
-boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
-
 String[] tempFileEntryNames = LayoutServiceUtil.getTempFileEntryNames(groupId, ImportLayoutsAction.class.getName());
 %>
 
-<c:choose>
-	<c:when test="<%= tempFileEntryNames.length > 0 %>">
-		<liferay-util:include page="/html/portlet/layouts_admin/import_layouts_resources.jsp" />
-	</c:when>
-	<c:otherwise>
-		<liferay-util:include page="/html/portlet/layouts_admin/import_layouts_validation.jsp" />
-	</c:otherwise>
-</c:choose>
+<div id="<portlet:namespace />exportImportOptions">
+	<c:choose>
+		<c:when test="<%= tempFileEntryNames.length > 0 %>">
+			<liferay-util:include page="/html/portlet/layouts_admin/import_layouts_resources.jsp" />
+		</c:when>
+		<c:otherwise>
+			<liferay-util:include page="/html/portlet/layouts_admin/import_layouts_validation.jsp" />
+		</c:otherwise>
+	</c:choose>
+</div>
+
 <c:if test='<%= SessionMessages.contains(liferayPortletRequest, "requestProcessed") %>'>
 	<aui:script>
 		var opener = Liferay.Util.getOpener();

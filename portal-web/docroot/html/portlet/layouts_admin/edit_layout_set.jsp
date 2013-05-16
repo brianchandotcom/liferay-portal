@@ -78,8 +78,7 @@ boolean hasExportImportLayoutsPermission = GroupPermissionUtil.contains(permissi
 				<c:if test="<%= SessionErrors.contains(liferayPortletRequest, LayoutImportException.class.getName()) || SessionErrors.contains(liferayPortletRequest, LARFileException.class.getName()) || SessionErrors.contains(liferayPortletRequest, LARFileSizeException.class.getName()) || SessionErrors.contains(liferayPortletRequest, LARTypeException.class.getName()) %>">
 					<liferay-util:html-top>
 						<div class="hide" id="<portlet:namespace />importPage">
-							<liferay-util:include page="/html/portlet/layouts_admin/export_import.jsp">
-								<liferay-util:param name="<%= Constants.CMD %>" value="<%= Constants.IMPORT %>" />
+							<liferay-util:include page="/html/portlet/layouts_admin/import_layouts.jsp">
 								<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 								<liferay-util:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
 								<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
@@ -225,7 +224,6 @@ boolean hasExportImportLayoutsPermission = GroupPermissionUtil.contains(permissi
 						click: function(event) {
 							<portlet:renderURL var="importPagesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 								<portlet:param name="struts_action" value="/layouts_admin/import_layouts" />
-								<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VALIDATE %>" />
 								<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 								<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
 								<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />

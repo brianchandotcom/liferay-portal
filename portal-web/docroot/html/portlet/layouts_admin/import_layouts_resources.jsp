@@ -120,8 +120,6 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 </portlet:actionURL>
 
 <aui:form action="<%= importPagesURL %>" cssClass="lfr-export-dialog" method="post" name="fm1">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.IMPORT %>" />
-
 	<%@ include file="/html/portlet/layouts_admin/import_options.jspf" %>
 
 	<aui:button-row>

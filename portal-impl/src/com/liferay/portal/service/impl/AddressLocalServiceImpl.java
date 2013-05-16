@@ -27,6 +27,7 @@ import com.liferay.portal.model.Country;
 import com.liferay.portal.model.ListTypeConstants;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.User;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.AddressLocalServiceBaseImpl;
 import com.liferay.portal.util.PortalUtil;
 
@@ -39,11 +40,24 @@ import java.util.List;
  */
 public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 
+	@Deprecated
 	public Address addAddress(
 			long userId, String className, long classPK, String street1,
 			String street2, String street3, String city, String zip,
 			long regionId, long countryId, int typeId, boolean mailing,
 			boolean primary)
+		throws PortalException, SystemException {
+
+		return addAddress(
+			userId, className, classPK, street1, street2, street3, city, zip,
+			regionId, countryId, typeId, mailing, primary, null);
+	}
+
+	public Address addAddress(
+			long userId, String className, long classPK, String street1,
+			String street2, String street3, String city, String zip,
+			long regionId, long countryId, int typeId, boolean mailing,
+			boolean primary, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
@@ -57,6 +71,10 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 		long addressId = counterLocalService.increment();
 
 		Address address = addressPersistence.create(addressId);
+
+		if (serviceContext != null) {
+			address.setUuid(serviceContext.getUuid());
+		}
 
 		address.setCompanyId(user.getCompanyId());
 		address.setUserId(user.getUserId());

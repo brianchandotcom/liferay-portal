@@ -835,8 +835,7 @@ public class JournalArticleLocalServiceImpl
 				groupId, newArticleId);
 
 		JournalArticle newArticle = journalArticlePersistence.create(id);
-		
-		newArticle.setFolderId(oldArticle.getFolderId());
+
 		newArticle.setResourcePrimKey(resourcePrimKey);
 		newArticle.setGroupId(groupId);
 		newArticle.setCompanyId(user.getCompanyId());
@@ -844,6 +843,7 @@ public class JournalArticleLocalServiceImpl
 		newArticle.setUserName(user.getFullName());
 		newArticle.setCreateDate(now);
 		newArticle.setModifiedDate(now);
+		newArticle.setFolderId(oldArticle.getFolderId());
 		newArticle.setArticleId(newArticleId);
 		newArticle.setVersion(JournalArticleConstants.VERSION_DEFAULT);
 		newArticle.setTitle(oldArticle.getTitle());

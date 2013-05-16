@@ -185,7 +185,7 @@ String[] tempFileEntryNames = LayoutServiceUtil.getTempFileEntryNames(groupId, I
 	</aui:form>
 </div>
 
-<aui:script use="aui-base,aui-io-plugin-deprecated,aui-loading-mask-deprecated,json-stringify">
+<aui:script use="aui-base,aui-io-plugin-deprecated,aui-loading-mask-deprecated">
 	var form = A.one('#<portlet:namespace />fm1');
 
 	form.on(
@@ -195,42 +195,6 @@ String[] tempFileEntryNames = LayoutServiceUtil.getTempFileEntryNames(groupId, I
 
 			<c:choose>
 				<c:when test="<%= cmd.equals(Constants.EXPORT) %>">
-					<c:if test="<%= !group.isLayoutPrototype() %>">
-						var layoutsExportTreeOutput = A.one('#<portlet:namespace />layoutsExportTreeOutput');
-
-						if (layoutsExportTreeOutput) {
-							var treeView = layoutsExportTreeOutput.getData('treeInstance');
-
-							var layoutIds = [];
-
-							var regexLayoutId = /layoutId_(\d+)/;
-
-							treeView.eachChildren(
-								function(item, index, collection) {
-									if (item.isChecked()) {
-										var match = regexLayoutId.exec(item.get('id'));
-
-										if (match) {
-											layoutIds.push(
-												{
-													includeChildren: !item.hasChildNodes(),
-													layoutId: match[1]
-												}
-											);
-										}
-									}
-								},
-								true
-							);
-
-							var layoutIdsInput = A.one('#<portlet:namespace />layoutIds');
-
-							if (layoutIdsInput) {
-								layoutIdsInput.val(A.JSON.stringify(layoutIds));
-							}
-						}
-					</c:if>
-
 					<portlet:actionURL var="exportPagesURL">
 						<portlet:param name="struts_action" value="/layouts_admin/export_layouts" />
 						<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
@@ -262,33 +226,7 @@ String[] tempFileEntryNames = LayoutServiceUtil.getTempFileEntryNames(groupId, I
 			</c:choose>
 		}
 	);
-
-	var toggleHandlerControl = function(item, index, collection) {
-		var container = item.ancestor('.handler-control').one('ul');
-
-		if (container) {
-			var checked = item.get('checked');
-
-			container.toggle(checked);
-
-			container.all(':checkbox').attr('checked', checked);
-		}
-	};
-
-	var checkboxes = A.all('.handler-control :checkbox');
-
-	checkboxes.filter(':not(:checked)').each(toggleHandlerControl);
-
-	checkboxes.detach('click');
-
-	checkboxes.on(
-		'click',
-		function(event) {
-			toggleHandlerControl(event.currentTarget);
-		}
-	);
 </aui:script>
-
 <c:if test='<%= SessionMessages.contains(liferayPortletRequest, "requestProcessed") %>'>
 	<aui:script>
 		var opener = Liferay.Util.getOpener();

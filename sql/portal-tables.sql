@@ -1970,7 +1970,9 @@ create table SocialActivity (
 	classPK LONG,
 	type_ INTEGER,
 	extraData STRING null,
-	receiverUserId LONG
+	receiverUserId LONG,
+	parentClassNameId LONG,
+	parentClassPK LONG
 );
 
 create table SocialActivityAchievement (

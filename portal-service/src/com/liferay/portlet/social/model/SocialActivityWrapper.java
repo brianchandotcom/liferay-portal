@@ -60,6 +60,8 @@ public class SocialActivityWrapper implements SocialActivity,
 		attributes.put("type", getType());
 		attributes.put("extraData", getExtraData());
 		attributes.put("receiverUserId", getReceiverUserId());
+		attributes.put("parentClassNameId", getParentClassNameId());
+		attributes.put("parentClassPK", getParentClassPK());
 
 		return attributes;
 	}
@@ -136,6 +138,18 @@ public class SocialActivityWrapper implements SocialActivity,
 
 		if (receiverUserId != null) {
 			setReceiverUserId(receiverUserId);
+		}
+
+		Long parentClassNameId = (Long)attributes.get("parentClassNameId");
+
+		if (parentClassNameId != null) {
+			setParentClassNameId(parentClassNameId);
+		}
+
+		Long parentClassPK = (Long)attributes.get("parentClassPK");
+
+		if (parentClassPK != null) {
+			setParentClassPK(parentClassPK);
 		}
 	}
 
@@ -456,6 +470,46 @@ public class SocialActivityWrapper implements SocialActivity,
 	@Override
 	public void setReceiverUserUuid(java.lang.String receiverUserUuid) {
 		_socialActivity.setReceiverUserUuid(receiverUserUuid);
+	}
+
+	/**
+	* Returns the parent class name ID of this social activity.
+	*
+	* @return the parent class name ID of this social activity
+	*/
+	@Override
+	public long getParentClassNameId() {
+		return _socialActivity.getParentClassNameId();
+	}
+
+	/**
+	* Sets the parent class name ID of this social activity.
+	*
+	* @param parentClassNameId the parent class name ID of this social activity
+	*/
+	@Override
+	public void setParentClassNameId(long parentClassNameId) {
+		_socialActivity.setParentClassNameId(parentClassNameId);
+	}
+
+	/**
+	* Returns the parent class p k of this social activity.
+	*
+	* @return the parent class p k of this social activity
+	*/
+	@Override
+	public long getParentClassPK() {
+		return _socialActivity.getParentClassPK();
+	}
+
+	/**
+	* Sets the parent class p k of this social activity.
+	*
+	* @param parentClassPK the parent class p k of this social activity
+	*/
+	@Override
+	public void setParentClassPK(long parentClassPK) {
+		_socialActivity.setParentClassPK(parentClassPK);
 	}
 
 	@Override

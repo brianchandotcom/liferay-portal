@@ -605,6 +605,12 @@ public class Creole10Parser]]></replacevalue>
 		</antcall>
 	</target>
 
+	<target name="build-service-portlet-backgroundtask">
+		<antcall target="build-service">
+			<param name="service.file" value="${basedir}/src/com/liferay/portlet/backgroundtask/service.xml" />
+		</antcall>
+	</target>
+
 	<target name="build-service-portlet-blogs">
 		<antcall target="build-service">
 			<param name="service.file" value="${basedir}/src/com/liferay/portlet/blogs/service.xml" />

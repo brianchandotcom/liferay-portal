@@ -454,4 +454,6 @@
 	<bean id="com.liferay.portlet.wiki.service.persistence.WikiPageFinder" class="com.liferay.portlet.wiki.service.persistence.WikiPageFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.wiki.service.WikiPageResourceLocalService" class="com.liferay.portlet.wiki.service.impl.WikiPageResourceLocalServiceImpl" />
 	<bean id="com.liferay.portlet.wiki.service.persistence.WikiPageResourcePersistence" class="com.liferay.portlet.wiki.service.persistence.WikiPageResourcePersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portlet.backgroundtask.service.BackgroundTaskLocalService" class="com.liferay.portlet.backgroundtask.service.impl.BackgroundTaskLocalServiceImpl" />
+	<bean id="com.liferay.portlet.backgroundtask.service.persistence.BackgroundTaskPersistence" class="com.liferay.portlet.backgroundtask.service.persistence.BackgroundTaskPersistenceImpl" parent="basePersistence" />
 </beans>

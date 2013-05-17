@@ -18,13 +18,14 @@
 
 <%
 long groupId = ParamUtil.getLong(request, "groupId");
+boolean validate = ParamUtil.getBoolean(request, "validate", true);
 
 String[] tempFileEntryNames = LayoutServiceUtil.getTempFileEntryNames(groupId, ExportImportUtil.TEMP_FOLDER_NAME);
 %>
 
 <div id="<portlet:namespace />exportImportOptions">
 	<c:choose>
-		<c:when test="<%= tempFileEntryNames.length > 0 %>">
+		<c:when test="<%= (tempFileEntryNames.length > 0) && !validate %>">
 			<liferay-util:include page="/html/portlet/layouts_admin/import_layouts_resources.jsp" />
 		</c:when>
 		<c:otherwise>

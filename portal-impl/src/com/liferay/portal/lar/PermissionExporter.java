@@ -54,21 +54,6 @@ public class PermissionExporter {
 
 	public static final String ROLE_TEAM_PREFIX = "ROLE_TEAM_,*";
 
-	public void exportLayoutPermissions(
-			PortletDataContext portletDataContext, LayoutCache layoutCache,
-			long companyId, long groupId, Layout layout, Element layoutElement)
-		throws Exception {
-
-		String resourceName = Layout.class.getName();
-		String resourcePrimKey = String.valueOf(layout.getPlid());
-
-		Element permissionsElement = layoutElement.addElement("permissions");
-
-		exportPermissions(
-			layoutCache, companyId, groupId, resourceName, resourcePrimKey,
-			permissionsElement, false);
-	}
-
 	protected void exportGroupRoles(
 			LayoutCache layoutCache, long companyId, long groupId,
 			String resourceName, String entityName, Element parentElement)

@@ -53,23 +53,6 @@ import java.util.Map;
  */
 public class PermissionImporter {
 
-	public void importLayoutPermissions(
-			LayoutCache layoutCache, long companyId, long groupId, long userId,
-			Layout layout, Element layoutElement, Element parentElement)
-		throws Exception {
-
-		Element permissionsElement = layoutElement.element("permissions");
-
-		if (permissionsElement != null) {
-			String resourceName = Layout.class.getName();
-			String resourcePrimKey = String.valueOf(layout.getPlid());
-
-			importPermissions(
-				layoutCache, companyId, groupId, userId, layout, resourceName,
-				resourcePrimKey, permissionsElement, false);
-		}
-	}
-
 	protected List<String> getActions(Element element) {
 		List<String> actions = new ArrayList<String>();
 

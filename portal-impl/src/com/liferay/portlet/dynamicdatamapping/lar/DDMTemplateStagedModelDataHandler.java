@@ -178,8 +178,10 @@ public class DDMTemplateStagedModelDataHandler
 		DDMStructure structure =
 			(DDMStructure)portletDataContext.getZipEntryAsObject(structurePath);
 
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, structure);
+		if (structure != null) {
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, structure);
+		}
 
 		long classPK = MapUtil.getLong(
 			structureIds, template.getClassPK(), template.getClassPK());

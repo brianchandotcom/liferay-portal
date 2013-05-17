@@ -2635,6 +2635,7 @@
 		<exception>LayoutSetVirtualHost</exception>
 		<exception>LayoutType</exception>
 		<exception>MembershipRequestComments</exception>
+		<exception>MissingReference</exception>
 		<exception>OldServiceComponent</exception>
 		<exception>OrganizationId</exception>
 		<exception>OrganizationName</exception>

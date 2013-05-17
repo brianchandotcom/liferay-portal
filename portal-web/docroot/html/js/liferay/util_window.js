@@ -103,7 +103,7 @@ AUI.add(
 
 					var width = config.width;
 
-					if (!modal.attrAdded('autoHeight') || !modal.attrAdded('autoWidth')) {
+					if (!modal.attrAdded('autoHeight') && !modal.attrAdded('autoWidth')) {
 						modal.addAttrs(
 							{
 								autoHeight: {

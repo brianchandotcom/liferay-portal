@@ -19,7 +19,7 @@
 <%
 long groupId = ParamUtil.getLong(request, "groupId");
 
-String[] tempFileEntryNames = LayoutServiceUtil.getTempFileEntryNames(groupId, ImportLayoutsAction.class.getName());
+String[] tempFileEntryNames = LayoutServiceUtil.getTempFileEntryNames(groupId, ExportImportUtil.TEMP_FOLDER_NAME);
 %>
 
 <div id="<portlet:namespace />exportImportOptions">

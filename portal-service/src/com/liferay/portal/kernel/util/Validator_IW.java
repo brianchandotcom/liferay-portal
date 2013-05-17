@@ -259,10 +259,6 @@ public class Validator_IW {
 		return Validator.isXml(s);
 	}
 
-	public boolean startsWith(java.lang.String string, java.lang.String prefix) {
-		return Validator.startsWith(string, prefix);
-	}
-
 	private Validator_IW() {
 	}
 

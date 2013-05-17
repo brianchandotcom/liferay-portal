@@ -332,6 +332,10 @@ public class SearchContainer<R> {
 	}
 
 	public boolean isRecalculateCur(int total) {
+		if (total == 0) {
+			return false;
+		}
+
 		if (((_cur - 1) * _delta) >= total) {
 			return true;
 		}

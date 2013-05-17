@@ -13,10 +13,15 @@
 	float: none;
 	overflow-y: auto;
 	position: relative;
-}
 
-.lfr-menu-list.direction-left, .lfr-menu-list.direction-right {
-	margin: 0 2px;
+	&.direction-left, &.direction-right {
+		margin: 0 2px;
+	}
+
+	&.dropdown-menu {
+		position: relative;
+		float: none;
+	}
 }
 
 .ie6, .ie7 {

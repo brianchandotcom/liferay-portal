@@ -17,13 +17,9 @@ package com.liferay.portal.xsl;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.template.BaseTemplateManager;
-import com.liferay.portal.template.RestrictedTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
-
-import java.util.Map;
 
 /**
  * @author Tina Tian
@@ -61,39 +57,13 @@ public class XSLManager extends BaseTemplateManager {
 	@Override
 	protected Template doGetTemplate(
 		TemplateResource templateResource,
-		TemplateResource errorTemplateResource,
-		TemplateContextType templateContextType,
-		Map<String, Object> helperUtilities) {
-
-		Template template = null;
+		TemplateResource errorTemplateResource, boolean restricted) {
 
 		XSLTemplateResource xslTemplateResource =
 			(XSLTemplateResource)templateResource;
 
-		if (templateContextType.equals(TemplateContextType.EMPTY)) {
-			template = new XSLTemplate(
-				xslTemplateResource, errorTemplateResource, null,
-				_templateContextHelper);
-		}
-		else if (templateContextType.equals(TemplateContextType.RESTRICTED)) {
-			template = new RestrictedTemplate(
-				new XSLTemplate(
-					xslTemplateResource, errorTemplateResource, helperUtilities,
-					_templateContextHelper),
-				_templateContextHelper.getRestrictedVariables());
-		}
-		else if (templateContextType.equals(TemplateContextType.STANDARD)) {
-			template = new XSLTemplate(
-				xslTemplateResource, errorTemplateResource, helperUtilities,
-				_templateContextHelper);
-		}
-
-		return template;
-	}
-
-	@Override
-	protected TemplateContextHelper getTemplateContextHelper() {
-		return _templateContextHelper;
+		return new XSLTemplate(
+			xslTemplateResource, errorTemplateResource, _templateContextHelper);
 	}
 
 	private TemplateContextHelper _templateContextHelper;

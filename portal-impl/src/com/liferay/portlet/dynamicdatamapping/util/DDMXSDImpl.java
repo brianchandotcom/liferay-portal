@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.URLTemplateResource;
@@ -777,8 +776,7 @@ public class DDMXSDImpl implements DDMXSD {
 		}
 
 		Template template = TemplateManagerUtil.getTemplate(
-			TemplateConstants.LANG_TYPE_FTL, templateResource,
-			TemplateContextType.STANDARD);
+			TemplateConstants.LANG_TYPE_FTL, templateResource, false);
 
 		for (Map.Entry<String, Object> entry : freeMarkerContext.entrySet()) {
 			template.put(entry.getKey(), entry.getValue());

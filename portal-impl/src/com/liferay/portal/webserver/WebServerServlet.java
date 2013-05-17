@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.servlet.Range;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.URLTemplateResource;
@@ -1137,8 +1136,7 @@ public class WebServerServlet extends HttpServlet {
 		throws Exception {
 
 		Template template = TemplateManagerUtil.getTemplate(
-			TemplateConstants.LANG_TYPE_FTL, _templateResource,
-			TemplateContextType.RESTRICTED);
+			TemplateConstants.LANG_TYPE_FTL, _templateResource, true);
 
 		template.put("dateFormat", _dateFormat);
 		template.put("entries", webServerEntries);

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
@@ -105,8 +104,7 @@ public class FreeMarkerPortlet extends MVCPortlet {
 						TemplateConstants.LANG_TYPE_FTL, resourcePath);
 
 				Template template = TemplateManagerUtil.getTemplate(
-					TemplateConstants.LANG_TYPE_FTL, templateResource,
-					TemplateContextType.STANDARD);
+					TemplateConstants.LANG_TYPE_FTL, templateResource, false);
 
 				TemplateTaglibSupportProvider templateTaglibSupportProvider =
 					getTaglibSupportProvider();

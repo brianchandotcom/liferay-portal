@@ -206,6 +206,22 @@ create table AssetVocabulary (
 	settings_ STRING null
 );
 
+create table BTEntry (
+	btEntryId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	completionDate DATE null,
+	taskContext TEXT null,
+	taskExecutorClassName VARCHAR(200) null,
+	name VARCHAR(75) null,
+	servletContextNames VARCHAR(255) null,
+	status INTEGER
+);
+
 create table BlogsEntry (
 	uuid_ VARCHAR(75) null,
 	entryId LONG not null primary key,

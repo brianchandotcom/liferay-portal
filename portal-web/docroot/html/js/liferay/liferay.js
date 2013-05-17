@@ -59,24 +59,6 @@ Liferay = window.Liferay || {};
 				return A.bind.apply(A, args);
 			},
 
-			invoke: function(payload, ioConfig) {
-				var instance = this;
-
-				return A.io.request(
-					instance.URL_INVOKE,
-					A.merge(
-						{
-							data: {
-								cmd: A.JSON.stringify(payload),
-								p_auth: Liferay.authToken
-							},
-							dataType: 'json'
-						},
-						ioConfig
-					)
-				);
-			},
-
 			parseInvokeArgs: function(args) {
 				var instance = this;
 
@@ -177,6 +159,29 @@ Liferay = window.Liferay || {};
 			}
 		},
 		true
+	);
+
+	Liferay.provide(
+		Service,
+		'invoke',
+		function(payload, ioConfig) {
+			var instance = this;
+
+			A.io.request(
+				instance.URL_INVOKE,
+				A.merge(
+					{
+						data: {
+							cmd: A.JSON.stringify(payload),
+							p_auth: Liferay.authToken
+						},
+						dataType: 'json'
+					},
+					ioConfig
+				)
+			);
+		},
+		['aui-io-request']
 	);
 
 	A.each(

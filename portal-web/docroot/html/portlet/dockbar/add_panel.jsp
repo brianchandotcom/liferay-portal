@@ -70,11 +70,11 @@
 								%>
 
 								<div class="btn-group" id="<portlet:namespace />styleButtons">
-									<aui:button cssClass='<%= displayStyle.equals("icon") ? "active" : StringPool.BLANK %>' icon="icon-th-large" data-style="icon" />
+									<aui:button cssClass='<%= displayStyle.equals("icon") ? "active" : StringPool.BLANK %>' data-style="icon" icon="icon-th-large" />
 
-									<aui:button cssClass='<%= displayStyle.equals("descriptive") ? "active" : StringPool.BLANK %>' icon="icon-th-list" data-style="descriptive" />
+									<aui:button cssClass='<%= displayStyle.equals("descriptive") ? "active" : StringPool.BLANK %>' data-style="descriptive" icon="icon-th-list" />
 
-									<aui:button cssClass='<%= displayStyle.equals("list") ? "active" : StringPool.BLANK %>' icon="icon-list" data-style="list" />
+									<aui:button cssClass='<%= displayStyle.equals("list") ? "active" : StringPool.BLANK %>' data-style="list" icon="icon-list" />
 								</div>
 
 								<aui:select cssClass="input-mini" inlineField="<%= true %>" label="" name="numItems">

@@ -259,7 +259,7 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 					pageContext.getServletContext(), getStartPage())) {
 
 				if (_showExpanded) {
-					jspWriter.write("<ul class=\"dropdown-menu lfr-menu-list");
+					jspWriter.write("<ul class=\"lfr-menu-list");
 					jspWriter.write(" lfr-menu-expanded ");
 					jspWriter.print(_cssClass);
 					jspWriter.write("\" id=\"");

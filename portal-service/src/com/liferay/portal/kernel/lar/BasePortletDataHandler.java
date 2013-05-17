@@ -91,6 +91,10 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		}
 	}
 
+	public DataLevel getDataLevel() {
+		return _dataLevel;
+	}
+
 	public String[] getDataPortletPreferences() {
 		return _dataPortletPreferences;
 	}
@@ -172,7 +176,15 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	}
 
 	public boolean isDataPortalLevel() {
-		return _dataPortalLevel;
+		return _dataLevel.equals(DataLevel.PORTAL);
+	}
+
+	public boolean isDataPortletInstanceLevel() {
+		return _dataLevel.equals(DataLevel.PORTLET_INSTANCE);
+	}
+
+	public boolean isDataSiteLevel() {
+		return _dataLevel.equals(DataLevel.SITE);
 	}
 
 	public boolean isPublishToLiveByDefault() {
@@ -256,12 +268,12 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		_alwaysStaged = alwaysStaged;
 	}
 
-	protected void setDataLocalized(boolean dataLocalized) {
-		_dataLocalized = dataLocalized;
+	protected void setDataLevel(DataLevel dataLevel) {
+		_dataLevel = dataLevel;
 	}
 
-	protected void setDataPortalLevel(boolean dataPortalLevel) {
-		_dataPortalLevel = dataPortalLevel;
+	protected void setDataLocalized(boolean dataLocalized) {
+		_dataLocalized = dataLocalized;
 	}
 
 	protected void setDataPortletPreferences(String... dataPortletPreferences) {
@@ -305,8 +317,8 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 
 	private boolean _alwaysExportable;
 	private boolean _alwaysStaged;
+	private DataLevel _dataLevel = DataLevel.PORTLET_INSTANCE;
 	private boolean _dataLocalized;
-	private boolean _dataPortalLevel;
 	private String[] _dataPortletPreferences = new String[0];
 	private PortletDataHandlerControl[] _exportControls =
 		new PortletDataHandlerControl[0];

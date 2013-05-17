@@ -68,13 +68,13 @@ public class BTEntryModelImpl extends BaseModelImpl<BTEntry>
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "completionDate", Types.TIMESTAMP },
-			{ "taskContext", Types.VARCHAR },
+			{ "taskContext", Types.CLOB },
 			{ "taskExecutorClassName", Types.VARCHAR },
 			{ "name", Types.VARCHAR },
 			{ "servletContextNames", Types.VARCHAR },
 			{ "status", Types.INTEGER }
 		};
-	public static final String TABLE_SQL_CREATE = "create table BTEntry (btEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,completionDate DATE null,taskContext VARCHAR(75) null,taskExecutorClassName VARCHAR(75) null,name VARCHAR(75) null,servletContextNames VARCHAR(75) null,status INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table BTEntry (btEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,completionDate DATE null,taskContext TEXT null,taskExecutorClassName VARCHAR(200) null,name VARCHAR(75) null,servletContextNames VARCHAR(255) null,status INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table BTEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY btEntry.btEntryId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY BTEntry.btEntryId ASC";

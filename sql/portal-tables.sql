@@ -215,10 +215,10 @@ create table BTEntry (
 	createDate DATE null,
 	modifiedDate DATE null,
 	completionDate DATE null,
-	taskContext VARCHAR(75) null,
-	taskExecutorClassName VARCHAR(75) null,
+	taskContext TEXT null,
+	taskExecutorClassName VARCHAR(200) null,
 	name VARCHAR(75) null,
-	servletContextNames VARCHAR(75) null,
+	servletContextNames VARCHAR(255) null,
 	status INTEGER
 );
 

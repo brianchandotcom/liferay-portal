@@ -468,7 +468,8 @@ public class BTEntryWrapper implements BTEntry, ModelWrapper<BTEntry> {
 		return new BTEntryWrapper((BTEntry)_btEntry.clone());
 	}
 
-	public int compareTo(BTEntry btEntry) {
+	public int compareTo(
+		com.liferay.portlet.backgroundtask.model.BTEntry btEntry) {
 		return _btEntry.compareTo(btEntry);
 	}
 
@@ -477,15 +478,15 @@ public class BTEntryWrapper implements BTEntry, ModelWrapper<BTEntry> {
 		return _btEntry.hashCode();
 	}
 
-	public com.liferay.portal.model.CacheModel<BTEntry> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.backgroundtask.model.BTEntry> toCacheModel() {
 		return _btEntry.toCacheModel();
 	}
 
-	public BTEntry toEscapedModel() {
+	public com.liferay.portlet.backgroundtask.model.BTEntry toEscapedModel() {
 		return new BTEntryWrapper(_btEntry.toEscapedModel());
 	}
 
-	public BTEntry toUnescapedModel() {
+	public com.liferay.portlet.backgroundtask.model.BTEntry toUnescapedModel() {
 		return new BTEntryWrapper(_btEntry.toUnescapedModel());
 	}
 

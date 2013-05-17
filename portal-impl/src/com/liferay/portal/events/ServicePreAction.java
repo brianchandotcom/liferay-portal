@@ -380,20 +380,31 @@ public class ServicePreAction extends Action {
 			}
 
 			if (Validator.isNull(controlPanelCategory) &&
-				Validator.isNotNull(ppid)) {
+				Validator.isNotNull(ppid) &&
+				(LiferayWindowState.isPopUp(request) ||
+				 LiferayWindowState.isExclusive(request))) {
 
-				if (LiferayWindowState.isPopUp(request) ||
-					LiferayWindowState.isExclusive(request)) {
+				controlPanelCategory =
+					_CONTROL_PANEL_CATEGORY_PORTLET_PREFIX + ppid;
+			}
+			else if (Validator.isNotNull(ppid)) {
+				Portlet portlet = PortletLocalServiceUtil.getPortletById(
+					companyId, ppid);
 
-					controlPanelCategory =
-						_CONTROL_PANEL_CATEGORY_PORTLET_PREFIX + ppid;
+				String portletControlPanelEntryCategory =
+					portlet.getControlPanelEntryCategory();
+
+				if (!controlPanelCategory.equals(
+						PortletCategoryKeys.CURRENT_SITE) &&
+					portletControlPanelEntryCategory.startsWith(
+						PortletCategoryKeys.SITE_ADMINISTRATION)) {
+
+					portletControlPanelEntryCategory =
+						PortletCategoryKeys.SITES;
 				}
-				else {
-					Portlet portlet = PortletLocalServiceUtil.getPortletById(
-						companyId, ppid);
 
-					controlPanelCategory =
-						portlet.getControlPanelEntryCategory();
+				if (Validator.isNotNull(portletControlPanelEntryCategory)) {
+					controlPanelCategory = portletControlPanelEntryCategory;
 				}
 			}
 

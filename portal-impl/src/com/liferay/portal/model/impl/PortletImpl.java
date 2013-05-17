@@ -3494,7 +3494,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * The name of the category of the Control Panel where this portlet will be
 	 * shown.
 	 */
-	private String _controlPanelEntryCategory;
+	private String _controlPanelEntryCategory = StringPool.BLANK;
 
 	/**
 	 * The name of the class that will control when this portlet will be shown

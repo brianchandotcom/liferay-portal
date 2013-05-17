@@ -45,21 +45,21 @@ if (group == null) {
 				assignMembersURL.setParameter("tabs2", "available");
 				%>
 
-				<aui:nav-item href="<%= assignMembersURL %>" iconClass="icon-user" label="user" />
+				<aui:nav-item href="<%= assignMembersURL.toString() %>" iconClass="icon-user" label="user" />
 
 				<%
 				assignMembersURL.setParameter("tabs1", "organizations");
 				assignMembersURL.setParameter("tabs2", "available");
 				%>
 
-				<aui:nav-item href="<%= assignMembersURL %>" iconClass="icon-globe" label="organization" />
+				<aui:nav-item href="<%= assignMembersURL.toString() %>" iconClass="icon-globe" label="organization" />
 
 				<%
 				assignMembersURL.setParameter("tabs1", "user-groups");
 				assignMembersURL.setParameter("tabs2", "available");
 				%>
 
-				<aui:nav-item href="<%= assignMembersURL %>" iconClass="icon-globe" label="user-group" />
+				<aui:nav-item href="<%= assignMembersURL.toString() %>" iconClass="icon-globe" label="user-group" />
 			</aui:nav-item>
 		</c:if>
 

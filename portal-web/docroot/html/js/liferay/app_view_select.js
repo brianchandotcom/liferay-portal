@@ -165,7 +165,7 @@ AUI.add(
 					_getSelectedFolder: function() {
 						var instance = this;
 
-						var selectedFolderNode = instance._folderContainer.one('.selected .browse-folder');
+						var selectedFolderNode = instance._folderContainer.one('.active .browse-folder');
 
 						var selectedFolderId = 0;
 						var repositoryId = 0;

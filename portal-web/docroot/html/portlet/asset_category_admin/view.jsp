@@ -40,7 +40,7 @@
 			</c:if>
 
 			<aui:nav-item dropdown="<%= true %>" label="actions">
-				<aui:nav-item iconCssClass="icon-trash" id="deleteSelectedItems" label="delete" />
+				<aui:nav-item iconClass="icon-trash" id="deleteSelectedItems" label="delete" />
 			</aui:nav-item>
 		</aui:nav>
 
@@ -55,50 +55,46 @@
 		</div>
 	</aui:nav-bar>
 
-	<div class="categories-admin-container lfr-app-column-view">
-		<div class="categories-admin-content-wrapper">
-			<aui:row cssClass="categories-admin-content">
-				<aui:col cssClass="vocabulary-list-container" width="<%= 25 %>">
-					<span class="select-vocabularies-container">
-						<aui:input cssClass="select-vocabularies" inline="<%= true %>" label="" name="checkAllVocabularies" title='<%= LanguageUtil.get(pageContext, "check-all-vocabularies") %>' type="checkbox" />
-					</span>
+	<aui:row cssClass="categories-admin-content">
+		<aui:col cssClass="vocabulary-list-container" width="<%= 25 %>">
+			<span class="select-vocabularies-container">
+				<aui:input cssClass="select-vocabularies" inline="<%= true %>" label="" name="checkAllVocabularies" title='<%= LanguageUtil.get(pageContext, "check-all-vocabularies") %>' type="checkbox" />
+			</span>
 
-					<h3 class="vocabularies-header"><%= LanguageUtil.get(pageContext, "vocabularies") %></h3>
+			<h3 class="vocabularies-header"><%= LanguageUtil.get(pageContext, "vocabularies") %></h3>
 
 					<div class="unstyled vocabulary-message"></div>
 
 					<div class="unstyled vocabulary-list"></div>
 
-					<div class="vocabularies-pagination"></div>
-				</aui:col>
+			<div class="vocabularies-pagination"></div>
+		</aui:col>
 
-				<aui:col cssClass="vocabulary-categories-container" width="<%= 40 %>">
-					<span class="select-vocabularies-container">
-						<aui:input cssClass="select-categories" inline="<%= true %>" label="" name="checkAllCategories" title='<%= LanguageUtil.get(pageContext, "check-all-categories") %>' type="checkbox" />
-					</span>
+		<aui:col cssClass="vocabulary-categories-container" width="<%= 40 %>">
+			<span class="select-vocabularies-container">
+				<aui:input cssClass="select-categories" inline="<%= true %>" label="" name="checkAllCategories" title='<%= LanguageUtil.get(pageContext, "check-all-categories") %>' type="checkbox" />
+			</span>
 
-					<h3 class="categories-header"><%= LanguageUtil.get(pageContext, "categories") %></h3>
+			<h3 class="categories-header"><%= LanguageUtil.get(pageContext, "categories") %></h3>
 
-					<div class="vocabulary-categories"></div>
-				</aui:col>
+			<div class="vocabulary-categories"></div>
+		</aui:col>
 
-				<aui:col cssClass="hide vocabulary-edit-category" width="<%= 35 %>">
-					<h3><%= LanguageUtil.get(pageContext, "category-details") %></h3>
+		<aui:col cssClass="hide vocabulary-edit-category" width="<%= 35 %>">
+			<h3><%= LanguageUtil.get(pageContext, "category-details") %></h3>
 
-					<div class="category-view-close">
-						<span>
-							<liferay-ui:icon
-								id="category-view-close"
-								image="close"
-							/>
-						</span>
-					</div>
+			<div class="category-view-close">
+				<span>
+					<liferay-ui:icon
+						id="category-view-close"
+						image="close"
+					/>
+				</span>
+			</div>
 
-					<div class="category-view"></div>
-				</aui:col>
-			</aui:row>
-		</div>
-	</div>
+			<div class="category-view"></div>
+		</aui:col>
+	</aui:row>
 </aui:form>
 
 <aui:script use="liferay-category-admin">

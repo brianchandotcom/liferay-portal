@@ -9,7 +9,7 @@ AUI.add(
 
 		var owns = AObject.owns;
 
-		var CSS_SELECTED = 'selected';
+		var CSS_SELECTED = 'active';
 
 		var DATA_DIRECTION_RIGHT = 'data-direction-right';
 
@@ -306,7 +306,7 @@ AUI.add(
 					_afterListViewItemChange: function(event) {
 						var instance = this;
 
-						var selFolder = A.one('.folder.selected');
+						var selFolder = A.one('.folder.active');
 
 						if (selFolder) {
 							selFolder.removeClass(CSS_SELECTED);
@@ -548,7 +548,7 @@ AUI.add(
 						if (addButton) {
 							var addButtonContainer = instance.byId('addButtonContainer');
 
-							addButtonContainer.setContent(addButton);
+							addButtonContainer.replace(addButton.html());
 						}
 
 						var displayStyleButtons = instance.one('#displayStyleButtons', content);
@@ -566,7 +566,7 @@ AUI.add(
 						if (sortButton) {
 							var sortButtonContainer = instance.byId('sortButtonContainer');
 
-							sortButtonContainer.setContent(sortButton);
+							sortButtonContainer.replace(sortButton.html());
 						}
 					},
 
@@ -600,8 +600,6 @@ AUI.add(
 						var folders = instance.one('#folderContainer', content);
 
 						if (folders) {
-							var listViewDataContainer = A.one('.lfr-list-view-data-container');
-
 							instance._listView.set(STR_DATA, folders.html());
 						}
 					},

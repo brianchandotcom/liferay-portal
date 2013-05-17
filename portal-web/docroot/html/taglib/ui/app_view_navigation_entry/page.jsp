@@ -30,18 +30,19 @@ boolean selected = GetterUtil.getBoolean(request.getAttribute("liferay-ui:app-vi
 boolean showExpand = GetterUtil.getBoolean(request.getAttribute("liferay-ui:app-view-navigation-entry:showExpand"));
 String viewURL = (String)request.getAttribute("liferay-ui:app-view-navigation-entry:viewURL");
 
-String dataDirection = StringPool.BLANK;
-String dataExpandFolder = "data-expand-folder=\"" + Boolean.TRUE.toString() + "\"";
-String dataViewFolders = "data-view-folders=\"" + Boolean.FALSE.toString() + "\"";
+Map<String, Object> data = new HashMap<String, Object>();
+
+data.putAll(dataView);
 
 if (browseUp) {
-	dataDirection = "data-direction-right=\"" + Boolean.TRUE.toString() + "\"";
-	dataExpandFolder = StringPool.BLANK;
-	dataViewFolders = StringPool.BLANK;
+	data.put("direction-right", Boolean.TRUE);
+}
+else {
+	data.put("view-folders", Boolean.FALSE);
 }
 %>
 
-<li class="app-view-navigation-entry <%= selected ? cssClass + " selected" : cssClass %>">
+<aui:nav-item anchorCssClass='<%= "browse-" + cssClass %>' anchorData="<%= data %>" cssClass='<%= "app-view-navigation-entry " + cssClass %>' href="<%= viewURL.toString() %>" iconClass="<%= iconImage %>" label="<%= entryTitle %>" selected="<%= selected %>">
 
 	<%
 	request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
@@ -52,25 +53,10 @@ if (browseUp) {
 	</c:if>
 
 	<c:if test="<%= showExpand %>">
-		<a class="<%= "expand-" + cssClass %>" <%= dataDirection %> <%= dataExpandFolder %> data-view-entries="<%= Boolean.FALSE.toString() %>" <%= AUIUtil.buildData(dataExpand) %> href="<%= expandURL.toString() %>">
-			<liferay-ui:icon cssClass='<%= "expand-" + cssClass + "-arrow" %>' image='<%= browseUp ? "../aui/carat-1-l" : "../aui/carat-1-r" %>' message="expand" />
-		</a>
-	</c:if>
-
-	<a class="<%= "browse-" + cssClass %>" <%= dataDirection %> <%= dataViewFolders %> <%= AUIUtil.buildData(dataView) %> href="<%= viewURL.toString() %>">
-		<c:choose>
-			<c:when test="<%= Validator.isNotNull(iconImage) %>">
-				<liferay-ui:icon image="<%= iconImage %>" />
-			</c:when>
-			<c:otherwise>
-				<liferay-ui:icon src="<%= iconSrc %>" />
-			</c:otherwise>
-		</c:choose>
-
-		<span class="entry-title">
-			<span class="entry-title-text">
-				<%= entryTitle %>
-			</span>
+		<span class="expand-folder-container">
+			<a class="<%= "expand-" + cssClass %>" data-view-entries="<%= Boolean.FALSE.toString() %>" <%= AUIUtil.buildData(dataExpand) %> href="<%= expandURL.toString() %>">
+				<liferay-ui:icon cssClass='<%= "expand-" + cssClass + "-arrow" %>' image='<%= browseUp ? "../aui/carat-1-l" : "../aui/carat-1-r" %>' message="expand" />
+			</a>
 		</span>
-	</a>
-</li>
+	</c:if>
+</aui:nav-item>

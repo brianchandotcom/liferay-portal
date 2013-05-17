@@ -4,21 +4,24 @@
 	}
 
 	.entry-thumbnail {
-		img {
-			background: #EAEAEA;
-			border: 1px solid #CCC;
-			margin: 0;
-			padding: 5px;
+		margin: 0;
+		padding: 5px;
+
+		.entry-thumbnail-container {
+			margin-top: 50%;
+			position: relative;
+
+			img {
+				margin-top: -50%;
+			}
 		}
 	}
 
-	&:hover .entry-thumbnail img {
-		background-color: #B0D2E1;
+	&:hover .entry-thumbnail {
 		border-color: #7ABFDD;
 	}
 
-	&.selected .entry-thumbnail img {
-		background-color: #B0D2E1;
+	&.selected .entry-thumbnail {
 		border-color: #057CB0;
 	}
 

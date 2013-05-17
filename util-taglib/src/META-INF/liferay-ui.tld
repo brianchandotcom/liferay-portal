@@ -145,16 +145,6 @@
 		</attribute>
 	</tag>
 	<tag>
-		<name>app-view-navigation</name>
-		<tag-class>com.liferay.taglib.ui.AppViewNavigationTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<name>title</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	<tag>
 		<name>app-view-navigation-entry</name>
 		<tag-class>com.liferay.taglib.ui.AppViewNavigationEntryTag</tag-class>
 		<body-content>empty</body-content>

@@ -739,6 +739,8 @@ AUI.add(
 			},
 
 			_getNavigationOverlays: function() {
+				return null;
+
 				var instance = this;
 
 				var navigationOverlays = instance._navigationOverlays;

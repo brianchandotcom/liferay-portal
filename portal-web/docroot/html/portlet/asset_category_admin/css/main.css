@@ -1,8 +1,4 @@
 .portlet-asset-category-admin {
-	.lfr-app-column-view {
-		border: none;
-	}
-
 	.form-search {
 		float: left;
 
@@ -23,7 +19,7 @@
 		}
 	}
 
-	.categories-admin-container {
+	.categories-admin-content {
 		.select-vocabularies-container, .select-categories-container {
 			display: inline-block;
 			margin-left: 10px;

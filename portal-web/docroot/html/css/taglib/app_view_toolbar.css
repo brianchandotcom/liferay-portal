@@ -1,4 +1,4 @@
-.app-view-taglib.lfr-header-row {
+.app-view-taglib {
 	.display-style .icon {
 		background-image: url(@theme_image_path@/application/layouts.png);
 		background-repeat: no-repeat;
@@ -29,20 +29,14 @@
 	.lfr-header-row-content {
 		position: relative;
 
-		.toolbar {
-			float: left;
-		}
-
 		.display-style {
 			float: right;
 		}
 
 		.select-all-entries {
-			border-color: #5F5F5F;
-			float: left;
-			line-height: 0;
-			margin-right: 2px;
-			padding: 0;
+			position: absolute;
+			left: 10px;
+			top: 10px;
 		}
 	}
 }

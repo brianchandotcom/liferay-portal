@@ -680,6 +680,11 @@
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<name>anchorData</name>
+				<inputType>java.lang.Object</inputType>
+				<outputType>java.util.Map</outputType>
+			</attribute>
+			<attribute>
 				<name>anchorId</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
@@ -688,6 +693,11 @@
 				<name>cssClass</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<name>data</name>
+				<inputType>java.lang.Object</inputType>
+				<outputType>java.util.Map</outputType>				
 			</attribute>
 			<attribute>
 				<name>dropdown</name>

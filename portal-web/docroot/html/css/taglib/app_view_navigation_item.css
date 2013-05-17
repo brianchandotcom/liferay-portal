@@ -1,13 +1,4 @@
-.app-view-navigation-taglib {
-	.app-view-navigation-entry {
-		margin-top: 2px;
-		position: relative;
-
-		.active-area {
-			background-color: #5AD300;
-		}
-	}
-
+.navigation-pane {
 	.body-row {
 		height: 100%;
 		overflow: hidden;
@@ -20,36 +11,35 @@
 		}
 	}
 
-	.lfr-list-view-content li {
-		&.folder.error, a {
-			color: #34404F;
-			display: block;
-			padding: 6px 8px;
-			text-decoration: none;
+	.lfr-list-view-content {
+		.lfr-component {
+			margin-left: 0;
 		}
 
-		&.selected {
-			background-color: #00a2ea;
-
-			a {
-				color: #FFF;
-				font-weight: bold;
-			}
-		}
-
-		.overlay.entry-action {
-			display: block;
-			height: 16px;
-			overflow: hidden;
-			position: absolute;
-			right: 15px;
-			top: 5px;
-			width: 24px;
-
-			a {
+		.app-view-navigation-entry {
+			position: relative;
+			
+			&.folder.error {
+				color: #34404F;
 				display: block;
-				float: right;
-				min-height: 15px;
+				padding: 6px 8px;
+				text-decoration: none;
+			}
+
+			.overlay.entry-action {
+				display: block;
+				height: 16px;
+				overflow: hidden;
+				position: absolute;
+				right: 15px;
+				top: 5px;
+				width: 24px;
+
+				a {
+					display: block;
+					float: right;
+					min-height: 15px;
+				}
 			}
 		}
 	}

@@ -37,9 +37,9 @@
 
 
 			<aui:nav-item dropdown="<%= true %>" label="actions">
-				<aui:nav-item iconCssClass="icon-trash" id="deleteSelectedTags" label="delete" />
+				<aui:nav-item iconClass="icon-trash" id="deleteSelectedTags" label="delete" />
 
-				<aui:nav-item iconCssClass="icon-random" id="mergeSelectedTags" label="merge" />
+				<aui:nav-item iconClass="icon-random" id="mergeSelectedTags" label="merge" />
 			</aui:nav-item>
 		</aui:nav>
 

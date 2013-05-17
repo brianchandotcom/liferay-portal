@@ -21,13 +21,13 @@ boolean includeSelectAll = GetterUtil.getBoolean(request.getAttribute("liferay-u
 String searchJsp = (String)request.getAttribute("liferay-ui:app_view_toolbar:searchJsp");
 %>
 
-<div class="app-view-taglib lfr-header-row">
+<div class="app-view-taglib">
 	<div class="lfr-header-row-content">
 		<c:if test="<%= Validator.isNotNull(searchJsp) %>">
 			<liferay-util:include page="<%= searchJsp %>" />
 		</c:if>
 
-		<div class="toolbar">
+		<div>
 			<c:if test="<%= includeSelectAll %>">
 				<c:if test="<%= !user.isDefaultUser() %>">
 					<aui:input cssClass="select-all-entries" inline="<%= true %>" label="" name="<%= RowChecker.ALL_ROW_IDS %>" type="checkbox" />

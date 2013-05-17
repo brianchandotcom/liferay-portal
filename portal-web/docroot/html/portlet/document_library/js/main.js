@@ -589,17 +589,19 @@ AUI.add(
 					_toggleTrashAction: function() {
 						var instance = this;
 
-						var repositoryId = instance._appViewSelect.get(STR_SELECTED_FOLDER).repositoryId;
+						var trashEnabled = instance._config.trashEnabled;
 
-						var scopeGroupId = themeDisplay.getScopeGroupId();
+						if (trashEnabled) {
+							var repositoryId = instance._appViewSelect.get(STR_SELECTED_FOLDER).repositoryId;
 
-						var trashEnabled = instance._config.trashEnabled && (scopeGroupId == repositoryId);
+							var scopeGroupId = themeDisplay.getScopeGroupId();
 
-						var deleteAction = instance.one('#deleteAction');
-						var moveToTrashAction = instance.one('#moveToTrashAction');
+							trashEnabled = (scopeGroupId === repositoryId);
+						}
 
-						deleteAction.ancestor().toggle(!trashEnabled);
-						moveToTrashAction.ancestor().toggle(trashEnabled);
+						instance.one('#deleteAction').toggle(!trashEnabled);
+
+						instance.one('#moveToTrashAction').toggle(trashEnabled);
 					}
 				}
 			}

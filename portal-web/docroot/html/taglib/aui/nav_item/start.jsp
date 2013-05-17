@@ -16,10 +16,10 @@
 
 <%@ include file="/html/taglib/aui/nav_item/init.jsp" %>
 
-<li class="<%= cssClass %><%= selected ? " active" : StringPool.BLANK %>" id="<%= id %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
+<li class="<%= cssClass %><%= selected ? " active" : StringPool.BLANK %>" id="<%= id %>" <%= AUIUtil.buildData(data) %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
 	<c:if test="<%= Validator.isNotNull(label) %>">
 		<c:if test="<%= Validator.isNotNull(href) %>">
-			<a class="<%= anchorCssClass %>" href="<%= href %>" id="<%= anchorId %>" title="<liferay-ui:message key="<%= title %>" />">
+			<a class="<%= anchorCssClass %>" <%= AUIUtil.buildData(anchorData) %> href="<%= href %>" id="<%= anchorId %>" title="<liferay-ui:message key="<%= title %>" />">
 		</c:if>
 				<c:if test="<%= Validator.isNotNull(iconClass) %>">
 					<i class="<%= iconClass %>"></i>

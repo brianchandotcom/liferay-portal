@@ -33,8 +33,10 @@ if ((dynamicAttributes != null) && !dynamicAttributes.isEmpty()) {
 }
 
 java.lang.String anchorCssClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:nav-item:anchorCssClass"));
+java.util.Map anchorData = (java.util.Map)request.getAttribute("aui:nav-item:anchorData");
 java.lang.String anchorId = GetterUtil.getString((java.lang.String)request.getAttribute("aui:nav-item:anchorId"));
 java.lang.String cssClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:nav-item:cssClass"));
+java.util.Map data = (java.util.Map)request.getAttribute("aui:nav-item:data");
 boolean dropdown = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:nav-item:dropdown")));
 java.lang.String href = GetterUtil.getString((java.lang.Object)request.getAttribute("aui:nav-item:href"), "javascript:void(0);");
 java.lang.String iconClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:nav-item:iconClass"));
@@ -44,8 +46,10 @@ boolean selected = GetterUtil.getBoolean(String.valueOf(request.getAttribute("au
 java.lang.String title = GetterUtil.getString((java.lang.String)request.getAttribute("aui:nav-item:title"));
 
 _updateOptions(_options, "anchorCssClass", anchorCssClass);
+_updateOptions(_options, "anchorData", anchorData);
 _updateOptions(_options, "anchorId", anchorId);
 _updateOptions(_options, "cssClass", cssClass);
+_updateOptions(_options, "data", data);
 _updateOptions(_options, "dropdown", dropdown);
 _updateOptions(_options, "href", href);
 _updateOptions(_options, "iconClass", iconClass);

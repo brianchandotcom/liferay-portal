@@ -215,7 +215,7 @@ AUI.add(
 
 						instance._prefixedPortletId = '_' + config.portletId + '_';
 
-						instance._container = A.one('.categories-admin-container');
+						instance._container = A.one('.categories-admin-content');
 						instance._categoryViewSection = instance._container.one('.vocabulary-edit-category');
 						instance._categoryViewContainer = instance._categoryViewSection.one('.category-view');
 

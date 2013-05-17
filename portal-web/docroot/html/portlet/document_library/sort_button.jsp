@@ -30,53 +30,38 @@ if (orderByType.equals("asc")) {
 }
 %>
 
-<liferay-ui:icon-menu direction="down" icon="" message="sort-by" showExpanded="<%= false %>" showWhenSingleIcon="<%= false %>">
+<aui:nav-item dropdown="<%= true %>" id="sortButtonContainer" label="sort-by">
 
 	<%
 	String taglibURL = "javascript:" + liferayPortletResponse.getNamespace() + "sortEntries('" + folderId + "', 'title','" + reverseOrderByType + "')";
 	%>
 
-	<liferay-ui:icon
-		message="title"
-		url="<%= taglibURL %>"
-	/>
+	<aui:nav-item href="<%= taglibURL %>" label="title" />
 
 	<%
 	taglibURL = "javascript:" + liferayPortletResponse.getNamespace() + "sortEntries('" + folderId + "', 'creationDate','" + reverseOrderByType + "')";
 	%>
 
-	<liferay-ui:icon
-		message="create-date"
-		url="<%= taglibURL %>"
-	/>
+	<aui:nav-item href="<%= taglibURL %>" label="create-date" />
 
 	<%
 	taglibURL = "javascript:" + liferayPortletResponse.getNamespace() + "sortEntries('" + folderId + "', 'modifiedDate','" + reverseOrderByType + "')";
 	%>
 
-	<liferay-ui:icon
-		message="modified-date"
-		url="<%= taglibURL %>"
-	/>
+	<aui:nav-item href="<%= taglibURL %>" label="modified-date" />
 
 	<%
 	taglibURL = "javascript:" + liferayPortletResponse.getNamespace() + "sortEntries('" + folderId + "', 'downloads','" + reverseOrderByType + "')";
 	%>
 
-	<liferay-ui:icon
-		message="downloads"
-		url="<%= taglibURL %>"
-	/>
+	<aui:nav-item href="<%= taglibURL %>" label="downloads" />
 
 	<%
 	taglibURL = "javascript:" + liferayPortletResponse.getNamespace() + "sortEntries('" + folderId + "', 'size','" + reverseOrderByType + "')";
 	%>
 
-	<liferay-ui:icon
-		message="size"
-		url="<%= taglibURL %>"
-	/>
-</liferay-ui:icon-menu>
+	<aui:nav-item href="<%= taglibURL %>" label="size" />
+</aui:nav-item>
 
 <aui:script>
 	Liferay.provide(

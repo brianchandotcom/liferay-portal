@@ -3867,6 +3867,33 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="com.liferay.portlet.backgroundtask.model.impl.BTEntryModelImpl">
+		<attributes>
+			<id name="btEntryId" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="completionDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="taskContext" />
+			<basic name="taskExecutorClassName" />
+			<basic name="name" />
+			<basic name="servletContextNames" />
+			<basic name="status" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
 	<entity class="com.liferay.counter.model.impl.CounterImpl" name="Counter">
 		<table name="Counter" />
 		<attributes />
@@ -4652,6 +4679,10 @@
 	</entity>
 	<entity class="com.liferay.portlet.wiki.model.impl.WikiPageResourceImpl" name="WikiPageResource">
 		<table name="WikiPageResource" />
+		<attributes />
+	</entity>
+	<entity class="com.liferay.portlet.backgroundtask.model.impl.BTEntryImpl" name="BTEntry">
+		<table name="BTEntry" />
 		<attributes />
 	</entity>
 </entity-mappings>

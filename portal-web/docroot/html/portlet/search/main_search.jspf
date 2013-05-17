@@ -63,7 +63,7 @@ boolean showMenu = advancedConfiguration || displayScopeFacet || displayAssetTyp
 
 <aui:row cssClass='<%= "search-layout" + (showMenu ? " menu-column" : StringPool.BLANK) %>'>
 	<c:if test="<%= showMenu %>">
-		<aui:col cssClass="menu" id="facetNavigation">
+		<aui:col id="facetNavigation" span="2">
 
 			<%
 			Map<String, Facet> facets = searchContext.getFacets();
@@ -132,7 +132,7 @@ boolean showMenu = advancedConfiguration || displayScopeFacet || displayAssetTyp
 		</aui:col>
 	</c:if>
 
-	<aui:col cssClass="result" first="<%= !showMenu %>">
+	<aui:col cssClass="result" first="<%= !showMenu %>" span="10">
 		<liferay-ui:search-container
 			searchContainer="<%= mainSearchSearchContainer %>"
 		>

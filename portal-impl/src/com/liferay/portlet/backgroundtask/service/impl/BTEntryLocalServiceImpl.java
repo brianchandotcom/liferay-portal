@@ -31,9 +31,5 @@ import com.liferay.portlet.backgroundtask.service.base.BTEntryLocalServiceBaseIm
  * @see com.liferay.portlet.backgroundtask.service.BTEntryLocalServiceUtil
  */
 public class BTEntryLocalServiceImpl extends BTEntryLocalServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this interface directly. Always use {@link com.liferay.portlet.backgroundtask.service.BTEntryLocalServiceUtil} to access the b t entry local service.
-	 */
+
 }

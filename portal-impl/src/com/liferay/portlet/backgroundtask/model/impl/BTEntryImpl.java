@@ -24,11 +24,8 @@ package com.liferay.portlet.backgroundtask.model.impl;
  * @author Brian Wing Shun Chan
  */
 public class BTEntryImpl extends BTEntryBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a b t entry model instance should use the {@link com.liferay.portlet.backgroundtask.model.BTEntry} interface instead.
-	 */
+
 	public BTEntryImpl() {
 	}
+
 }

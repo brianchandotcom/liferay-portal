@@ -219,7 +219,7 @@ public class ExportImportImpl implements ExportImport {
 
 				portletDataContext.addReferenceElement(
 					entityStagedModel, entityElement, fileEntry,
-					FileEntry.class,
+					DLFileEntry.class,
 					PortletDataContext.REFERENCE_TYPE_DEPENDENCY,
 					!exportReferencedContent);
 

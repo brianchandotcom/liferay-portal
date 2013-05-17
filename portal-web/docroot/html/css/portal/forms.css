@@ -6,6 +6,30 @@
 	margin-top: 20px;
 }
 
+.lfr-ddm-container .field-wrapper {
+	position: relative;
+
+	.aui-field-wrapper {
+		margin-left: 20px;
+	}
+
+	.lfr-ddm-repeatable-add-button, .lfr-ddm-repeatable-delete-button {
+		display: block;
+		height: 16px;
+		position: absolute;
+		top: 4px;
+		width: 16px;
+
+		&.lfr-ddm-repeatable-add-button {
+			right: 4px;
+		}
+
+		&.lfr-ddm-repeatable-delete-button {
+			right: 24px;
+		}
+	}
+}
+
 .lfr-input-resource {
 	width: @model_hints_constants_text_display_width@px;
 }

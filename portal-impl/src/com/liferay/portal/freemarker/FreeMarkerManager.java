@@ -116,8 +116,10 @@ public class FreeMarkerManager extends BaseTemplateManager {
 	protected Template doGetTemplate(
 		TemplateResource templateResource,
 		TemplateResource errorTemplateResource,
-		TemplateContextType templateContextType,
-		Map<String, Object> helperUtilities) {
+		TemplateContextType templateContextType) {
+
+		Map<String, Object> helperUtilities =
+			_templateContextHelper.getHelperUtilities(templateContextType);
 
 		Template template = null;
 
@@ -135,11 +137,6 @@ public class FreeMarkerManager extends BaseTemplateManager {
 		}
 
 		return template;
-	}
-
-	@Override
-	protected TemplateContextHelper getTemplateContextHelper() {
-		return _templateContextHelper;
 	}
 
 	private Configuration _configuration;

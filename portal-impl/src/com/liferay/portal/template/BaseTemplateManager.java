@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.template.TemplateResource;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 
-import java.util.Map;
-
 /**
  * @author Raymond Augé
  */
@@ -44,25 +42,15 @@ public abstract class BaseTemplateManager implements TemplateManager {
 		TemplateResource errorTemplateResource,
 		TemplateContextType templateContextType) {
 
-		TemplateContextHelper templateContextHelper =
-			getTemplateContextHelper();
-
-		Map<String, Object> helperUtilities =
-			templateContextHelper.getHelperUtilities(templateContextType);
-
 		return AccessController.doPrivileged(
 			new DoGetTemplatePrivilegedAction(
-				templateResource, errorTemplateResource, templateContextType,
-				helperUtilities));
+				templateResource, errorTemplateResource, templateContextType));
 	}
 
 	protected abstract Template doGetTemplate(
 		TemplateResource templateResource,
 		TemplateResource errorTemplateResource,
-		TemplateContextType templateContextType,
-		Map<String, Object> helperUtilities);
-
-	protected abstract TemplateContextHelper getTemplateContextHelper();
+		TemplateContextType templateContextType);
 
 	private class DoGetTemplatePrivilegedAction
 		implements PrivilegedAction<Template> {
@@ -70,23 +58,20 @@ public abstract class BaseTemplateManager implements TemplateManager {
 		public DoGetTemplatePrivilegedAction(
 			TemplateResource templateResource,
 			TemplateResource errorTemplateResource,
-			TemplateContextType templateContextType,
-			Map<String, Object> helperUtilities) {
+			TemplateContextType templateContextType) {
 
 			_templateResource = templateResource;
 			_errorTemplateResource = errorTemplateResource;
 			_templateContextType = templateContextType;
-			_helperUtilities = helperUtilities;
 		}
 
 		public Template run() {
 			return doGetTemplate(
-				_templateResource, _errorTemplateResource, _templateContextType,
-				_helperUtilities);
+				_templateResource, _errorTemplateResource,
+				_templateContextType);
 		}
 
 		private TemplateResource _errorTemplateResource;
-		private Map<String, Object> _helperUtilities;
 		private TemplateContextType _templateContextType;
 		private TemplateResource _templateResource;
 

@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.template.BaseTemplateManager;
 import com.liferay.portal.template.TemplateContextHelper;
 
-import java.util.Map;
-
 /**
  * @author Tina Tian
  */
@@ -61,20 +59,13 @@ public class XSLManager extends BaseTemplateManager {
 	protected Template doGetTemplate(
 		TemplateResource templateResource,
 		TemplateResource errorTemplateResource,
-		TemplateContextType templateContextType,
-		Map<String, Object> helperUtilities) {
+		TemplateContextType templateContextType) {
 
 		XSLTemplateResource xslTemplateResource =
 			(XSLTemplateResource)templateResource;
 
 		return new XSLTemplate(
-			xslTemplateResource, errorTemplateResource, null,
-			_templateContextHelper);
-	}
-
-	@Override
-	protected TemplateContextHelper getTemplateContextHelper() {
-		return _templateContextHelper;
+			xslTemplateResource, errorTemplateResource, _templateContextHelper);
 	}
 
 	private TemplateContextHelper _templateContextHelper;

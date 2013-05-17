@@ -49,7 +49,7 @@ public class XSLTemplate extends AbstractProcessingTemplate {
 
 	public XSLTemplate(
 		XSLTemplateResource xslTemplateResource,
-		TemplateResource errorTemplateResource, Map<String, Object> context,
+		TemplateResource errorTemplateResource,
 		TemplateContextHelper templateContextHelper) {
 
 		if (xslTemplateResource == null) {
@@ -66,12 +66,6 @@ public class XSLTemplate extends AbstractProcessingTemplate {
 		_templateContextHelper = templateContextHelper;
 
 		_context = new HashMap<String, Object>();
-
-		if (context != null) {
-			for (Map.Entry<String, Object> entry : context.entrySet()) {
-				put(entry.getKey(), entry.getValue());
-			}
-		}
 	}
 
 	public Object get(String key) {

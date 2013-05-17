@@ -33,30 +33,28 @@ if (!themeDisplay.isStatePopUp()) {
 
 					instance._renderUI();
 					instance._bindUI();
-
-					instance._createCancelButton();
-					instance._createFocusManager();
-					instance._createLiveSearch();
 				},
 
 				_bindUI: function() {
 					var instance = this;
 
-					Liferay.publish(
-						'focusSearchBar',
-						{
-							defaultFn: A.bind('_focusSearchBar', instance)
-						}
-					);
-
-					A.getDoc().on(
-						'keyup',
-						function(event) {
-							if (event.isKey('ESC')) {
-								Liferay.fire('focusSearchBar');
+					if (instance._searchPanelHolder) {
+						Liferay.publish(
+							'focusSearchBar',
+							{
+								defaultFn: A.bind('_focusSearchBar', instance)
 							}
-						}
-					);
+						);
+
+						A.getDoc().on(
+							'keyup',
+							function(event) {
+								if (event.isKey('ESC')) {
+									Liferay.fire('focusSearchBar');
+								}
+							}
+						);
+					}
 				},
 
 				_createCancelButton: function() {
@@ -163,12 +161,6 @@ if (!themeDisplay.isStatePopUp()) {
 				_renderUI: function() {
 					var instance = this;
 
-					var searchPanelHolder = A.one('.search-panels');
-
-					var searchPanelInput = searchPanelHolder.one('#_160_searchPanel');
-
-					searchPanelInput.attr('autocomplete', 'off');
-
 					if (portletInformationEl) {
 						instance._helpBox = new Liferay.Message(
 							{
@@ -186,8 +178,20 @@ if (!themeDisplay.isStatePopUp()) {
 						).render();
 					}
 
-					instance._searchPanelHolder = searchPanelHolder;
-					instance._searchPanelInput = searchPanelInput;
+					var searchPanelHolder = A.one('.search-panels');
+
+					if (searchPanelHolder) {
+						var searchPanelInput = searchPanelHolder.one('#_160_searchPanel');
+
+						searchPanelInput.attr('autocomplete', 'off');
+
+						instance._searchPanelHolder = searchPanelHolder;
+						instance._searchPanelInput = searchPanelInput;
+
+						instance._createCancelButton();
+						instance._createFocusManager();
+						instance._createLiveSearch();
+					}
 				},
 
 				_searchActive: false,

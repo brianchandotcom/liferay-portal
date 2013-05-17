@@ -190,6 +190,15 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 
 			indexer.reindex(baseModel);
 		}
+		else {
+			Indexer baseModelIndexer = 
+				IndexerRegistryUtil.nullSafeGetIndexer(
+					baseModel.getModelClass());
+
+			if (baseModelIndexer != null) {
+				baseModelIndexer.reindex(baseModel);
+			}
+		}	
 	}
 
 	protected void addSuccessMessage() {

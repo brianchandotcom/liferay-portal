@@ -1429,6 +1429,10 @@ public class PortalImpl implements Portal {
 		Set<Portlet> portletsSet = new TreeSet<Portlet>(
 			new PortletControlPanelWeightComparator());
 
+		if (Validator.isNull(category)) {
+			return portletsSet;
+		}
+
 		List<Portlet> portletsList = PortletLocalServiceUtil.getPortlets(
 			companyId);
 

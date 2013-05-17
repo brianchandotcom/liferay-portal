@@ -128,8 +128,6 @@ request.setAttribute("record_set_action.jsp-selRecordSet", selRecordSet);
 	</c:if>
 
 	<aui:fieldset label="lists">
-		<br />
-
 		<liferay-ui:search-container
 			searchContainer="<%= new RecordSetSearch(renderRequest, configurationRenderURL) %>"
 		>

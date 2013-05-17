@@ -49,7 +49,7 @@
 					boundingBox: advancedNode,
 					srcNode: '#<%= id %>advancedContent',
 					visible: false,
-					width: 500,
+					width: <%= width %>,
 					zIndex: Liferay.zIndex.ALERT
 				}
 			);

@@ -414,11 +414,11 @@ AUI.add(
 				var saveStructureButton = instance.getById('saveStructureButton');
 
 				if (editStructureButton) {
-					editStructureButton.ancestor('.btn').show();
+					editStructureButton.show();
 				}
 
 				if (saveStructureButton) {
-					saveStructureButton.ancestor('.btn').show();
+					saveStructure.show();
 				}
 
 				instance._attachEditStructureEvents();

@@ -100,7 +100,6 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "add");
 <aui:script use="aui-base">
 	var config = {
 		dialog: {
-			align: Liferay.Util.Window.ALIGN_CENTER,
 			width: 820
 		}
 	};

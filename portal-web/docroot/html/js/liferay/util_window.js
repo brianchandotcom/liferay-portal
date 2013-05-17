@@ -215,7 +215,7 @@ AUI.add(
 				_getWindowConfig: function(config) {
 					var instance = this;
 
-					var modalConfig = A.merge(config.dialog, instance.DEFAULTS);
+					var modalConfig = A.merge(instance.DEFAULTS, config.dialog);
 
 					modalConfig.id = config.id;
 

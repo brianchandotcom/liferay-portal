@@ -109,7 +109,6 @@
 			Liferay.Util.openWindow(
 				{
 					dialog: {
-						align: Liferay.Util.Window.ALIGN_CENTER,
 						constrain: true,
 						modal: true,
 						width: 600

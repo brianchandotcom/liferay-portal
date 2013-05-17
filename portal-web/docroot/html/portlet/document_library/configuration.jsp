@@ -232,10 +232,9 @@ String editorContent = emailBody;
 						Liferay.Util.selectEntity(
 							{
 								dialog: {
-									align: Liferay.Util.Window.ALIGN_CENTER,
 									constrain: true,
 									modal: true,
-									stack: true,
+									zIndex: Liferay.zIndex.WINDOW + 2,
 									width: 600
 								},
 								id: '_<%= HtmlUtil.escapeJS(portletResource) %>_selectFolder',

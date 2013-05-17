@@ -111,10 +111,9 @@ List<Group> groups = (List<Group>)request.getAttribute("user.groups");
 				Liferay.Util.selectEntity(
 					{
 						dialog: {
-							align: Liferay.Util.Window.ALIGN_CENTER,
 							constrain: true,
 							modal: true,
-							stack: true,
+							zIndex: Liferay.zIndex.WINDOW + 2,
 							width: 600
 						},
 						id: '<portlet:namespace />selectGroup',

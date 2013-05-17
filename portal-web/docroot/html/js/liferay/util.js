@@ -1425,7 +1425,7 @@
 
 			Liferay.Util.toggleDisabled(A.byIdNS(namespace, 'removeFolderButton'), true);
 		},
-		['aui-base']
+		['aui-base', 'liferay-node']
 	);
 
 	Liferay.provide(
@@ -1666,10 +1666,10 @@
 			if (button) {
 				button.set('disabled', false);
 
-				button.ancestor('.btn').removeClass('btn-disabled');
+				button.removeClass('btn-disabled');
 			}
 		},
-		['aui-base']
+		['aui-base', 'liferay-node']
 	);
 
 	Liferay.provide(

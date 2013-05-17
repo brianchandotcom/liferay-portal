@@ -31,7 +31,7 @@
 		<antcall target="clean-up-plugins" />
 
 		<antcall target="prepare-common">
-			<param name="db.type" value="mysql" />
+			<param name="database" value="mysql" />
 		</antcall>
 
 		<antcall target="rebuild-database">
@@ -49,7 +49,7 @@
 		<antcall target="clean-up-plugins" />
 
 		<antcall target="prepare-common">
-			<param name="db.type" value="${db.type}" />
+			<param name="database" value="${database}" />
 		</antcall>
 
 		<antcall target="prepare-database-jars" />
@@ -60,7 +60,9 @@
 
 		<antcall target="revert-test-properties" />
 
-		<antcall target="prepare-test-properties" />
+		<antcall target="prepare-test-properties">
+			<param name="database" value="${database}" />
+		</antcall>
 
 		<antcall target="test-integration" inheritAll="false" />
 

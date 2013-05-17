@@ -3598,7 +3598,7 @@ svn --username ${svn.username} --password ${svn.password} update -r ${svn.info.r
 		</if>
 	</target>
 
-	<target name="prepare-test-properties">
+	<target name="prepare-test-properties" depends="generate-test-properties">
 		<echo file="portal-impl/test/portal-test-ext.properties">
 jdbc.default.driverClassName=${database.driver}
 jdbc.default.url=${database.url}

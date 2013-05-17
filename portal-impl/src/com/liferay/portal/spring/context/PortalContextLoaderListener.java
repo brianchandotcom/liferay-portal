@@ -121,6 +121,13 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		}
 
 		try {
+			PortalLifecycleUtil.reset();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		try {
 			ModuleFrameworkUtilAdapter.stopRuntime();
 		}
 		catch (Exception e) {
@@ -149,7 +156,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		InstancePool.reset();
 		MethodCache.reset();
 		PortalBeanLocatorUtil.reset();
-		PortalLifecycleUtil.reset();
 		PortletBagPool.reset();
 
 		ReferenceRegistry.releaseReferences();

@@ -357,11 +357,8 @@
 }
 
 .tree-pages {
-	.tree-icon {
-		background: transparent url() no-repeat 50% 50%;
-		cursor: move;
-		height: 18px;
-		width: 18px;
+	.tree-label {
+		display: inline-block;
 	}
 
 	.tree-node-selected {
@@ -369,14 +366,6 @@
 			cursor: move;
 		}
 	}
-}
-
-.tree-expanded .tree-icon {
-	background-image: url(@theme_image_path@/trees/page_copy.png);
-}
-
-.tree-collapsed .tree-icon, .tree-node-leaf .tree-icon {
-	background-image: url(@theme_image_path@/trees/page.png);
 }
 
 .lfr-page-locked .tree-icon {
@@ -464,11 +453,6 @@
 }
 
 .lfr-root-node {
-	.tree-icon {
-		background-image: url(@theme_image_path@/trees/root.png);
-		cursor: pointer;
-	}
-
 	.tree-icon a, .tree-label a {
 		cursor: pointer;
 	}

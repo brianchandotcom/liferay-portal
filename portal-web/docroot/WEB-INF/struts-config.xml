@@ -1679,6 +1679,8 @@
 			<forward name="portlet.users_admin.error" path="portlet.users_admin.error" />
 		</action>
 
+		<action path="/roles_admin/select_organization" forward="portlet.users_admin.select_organization" />
+
 		<action path="/roles_admin/select_organization_role" forward="portlet.roles_admin.select_organization_role" />
 
 		<action path="/roles_admin/select_regular_role" forward="portlet.roles_admin.select_regular_role" />

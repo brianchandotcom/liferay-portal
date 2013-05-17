@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.Portal;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -41,10 +42,6 @@ import java.util.jar.Manifest;
  */
 public class ModuleAutoDeployListener extends BaseAutoDeployListener {
 
-	public ModuleAutoDeployListener() {
-		_autoDeployer = new ThreadSafeAutoDeployer(new ModuleAutoDeployer());
-	}
-
 	public void deploy(AutoDeploymentContext autoDeploymentContext)
 		throws AutoDeployException {
 
@@ -59,16 +56,34 @@ public class ModuleAutoDeployListener extends BaseAutoDeployListener {
 		}
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Copied module for " + file.getPath());
+			_log.info("Copying module for " + file.getPath());
 		}
 
-		int code = _autoDeployer.autoDeploy(autoDeploymentContext);
+		AutoDeployer autoDeployer = getAutoDeployer(file);
+
+		int code = autoDeployer.autoDeploy(autoDeploymentContext);
 
 		if ((code == AutoDeployer.CODE_DEFAULT) && _log.isInfoEnabled()) {
 			_log.info(
 				"Module for " + file.getPath() + " copied successfully. " +
 					"Deployment will start in a few seconds.");
 		}
+	}
+
+	protected AutoDeployer getAutoDeployer(File file)
+		throws AutoDeployException {
+
+		AutoDeployer autoDeployer = null;
+
+		if (isPortletModule(file)) {
+			autoDeployer = new ThreadSafeAutoDeployer(new ModuleAutoDeployer());
+		}
+		else {
+			autoDeployer = new ThreadSafeAutoDeployer(
+				new PortletModuleAutoDeployer());
+		}
+
+		return autoDeployer;
 	}
 
 	protected boolean isModule(File file) throws AutoDeployException {
@@ -106,9 +121,12 @@ public class ModuleAutoDeployListener extends BaseAutoDeployListener {
 		return Validator.isNotNull(bundleSymbolicName);
 	}
 
+	protected boolean isPortletModule(File file) throws AutoDeployException {
+		return isMatchingFile(
+			file, "WEB-INF/" + Portal.PORTLET_XML_FILE_NAME_STANDARD);
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		ModuleAutoDeployListener.class);
-
-	private AutoDeployer _autoDeployer;
 
 }

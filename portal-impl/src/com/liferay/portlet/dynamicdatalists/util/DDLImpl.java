@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
-import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -532,7 +531,6 @@ public class DDLImpl implements DDL {
 
 	private Transformer _transformer = new Transformer(
 		PropsKeys.DYNAMIC_DATA_LISTS_TRANSFORMER_LISTENER,
-		PropsKeys.DYNAMIC_DATA_LISTS_ERROR_TEMPLATE,
-		TemplateContextType.STANDARD);
+		PropsKeys.DYNAMIC_DATA_LISTS_ERROR_TEMPLATE, false);
 
 }

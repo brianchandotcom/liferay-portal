@@ -17,7 +17,6 @@ package com.liferay.portal.freemarker;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
-import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.ReflectionUtil;
@@ -304,9 +303,7 @@ public class FreeMarkerTemplateTest {
 	private class MockTemplateContextHelper extends TemplateContextHelper {
 
 		@Override
-		public Map<String, Object> getHelperUtilities(
-			TemplateContextType templateContextType) {
-
+		public Map<String, Object> getHelperUtilities(boolean restricted) {
 			return Collections.emptyMap();
 		}
 
@@ -338,10 +335,12 @@ public class FreeMarkerTemplateTest {
 			_templateId = templateId;
 		}
 
+		@Override
 		public long getLastModified() {
 			return _lastModified;
 		}
 
+		@Override
 		public Reader getReader() throws IOException {
 			if (_templateId.equals(_TEMPLATE_FILE_NAME)) {
 				return new StringReader(_TEST_TEMPLATE_CONTENT);
@@ -352,15 +351,18 @@ public class FreeMarkerTemplateTest {
 				0);
 		}
 
+		@Override
 		public String getTemplateId() {
 			return _templateId;
 		}
 
+		@Override
 		public void readExternal(ObjectInput objectInput) throws IOException {
 			_lastModified = objectInput.readLong();
 			_templateId = objectInput.readUTF();
 		}
 
+		@Override
 		public void writeExternal(ObjectOutput objectOutput)
 			throws IOException {
 

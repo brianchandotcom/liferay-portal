@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.servlet.PluginContextListener;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -269,13 +268,11 @@ public class RuntimePageImpl implements RuntimePage {
 
 			if (processTemplate) {
 				return doProcessTemplate(
-					pageContext, portletId, templateResource,
-					TemplateContextType.STANDARD);
+					pageContext, portletId, templateResource, false);
 			}
 			else {
 				doProcessCustomizationSettings(
-					pageContext, templateResource,
-					TemplateContextType.STANDARD);
+					pageContext, templateResource, false);
 
 				return null;
 			}
@@ -291,7 +288,7 @@ public class RuntimePageImpl implements RuntimePage {
 
 	protected void doProcessCustomizationSettings(
 			PageContext pageContext, TemplateResource templateResource,
-			TemplateContextType templateContextType)
+			boolean restricted)
 		throws Exception {
 
 		HttpServletRequest request =
@@ -301,8 +298,7 @@ public class RuntimePageImpl implements RuntimePage {
 			new CustomizationSettingsProcessor(pageContext);
 
 		Template template = TemplateManagerUtil.getTemplate(
-			TemplateConstants.LANG_TYPE_VM, templateResource,
-			templateContextType);
+			TemplateConstants.LANG_TYPE_VM, templateResource, restricted);
 
 		template.put("processor", processor);
 
@@ -329,8 +325,7 @@ public class RuntimePageImpl implements RuntimePage {
 
 	protected StringBundler doProcessTemplate(
 			PageContext pageContext, String portletId,
-			TemplateResource templateResource,
-			TemplateContextType templateContextType)
+			TemplateResource templateResource, boolean restricted)
 		throws Exception {
 
 		HttpServletRequest request =
@@ -342,8 +337,7 @@ public class RuntimePageImpl implements RuntimePage {
 			request, response, portletId);
 
 		Template template = TemplateManagerUtil.getTemplate(
-			TemplateConstants.LANG_TYPE_VM, templateResource,
-			templateContextType);
+			TemplateConstants.LANG_TYPE_VM, templateResource, restricted);
 
 		template.put("processor", processor);
 

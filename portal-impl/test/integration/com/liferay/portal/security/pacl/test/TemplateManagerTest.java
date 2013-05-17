@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -40,8 +39,7 @@ public class TemplateManagerTest {
 	public void test1() throws Exception {
 		Template template = TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_FTL,
-			new StringTemplateResource("123.ftl", "Hello World!"),
-			TemplateContextType.STANDARD);
+			new StringTemplateResource("123.ftl", "Hello World!"), false);
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
@@ -57,7 +55,7 @@ public class TemplateManagerTest {
 		Template template = TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_VM,
 			new StringTemplateResource("123.vm", "#set($sum = 5 + 6)$sum"),
-			TemplateContextType.STANDARD);
+			false);
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
@@ -73,8 +71,7 @@ public class TemplateManagerTest {
 		Template template = TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_FTL,
 			new StringTemplateResource(
-				"123.ftl", "<#if httpUtil??>FAIL<#else>PASS</#if>"),
-			TemplateContextType.STANDARD);
+				"123.ftl", "<#if httpUtil??>FAIL<#else>PASS</#if>"), false);
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
@@ -90,8 +87,7 @@ public class TemplateManagerTest {
 		Template template = TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_FTL,
 			new StringTemplateResource(
-				"123.ftl", "<#if !httpUtil??>PASS</#if>"),
-			TemplateContextType.STANDARD);
+				"123.ftl", "<#if !httpUtil??>PASS</#if>"), false);
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
@@ -107,8 +103,7 @@ public class TemplateManagerTest {
 		Template template = TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_FTL,
 			new StringTemplateResource(
-				"123.ftl", "<#if languageUtil??>PASS</#if>"),
-			TemplateContextType.STANDARD);
+				"123.ftl", "<#if languageUtil??>PASS</#if>"), false);
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
@@ -124,8 +119,7 @@ public class TemplateManagerTest {
 		Template template = TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_FTL,
 			new StringTemplateResource(
-				"123.ftl", "<#assign sum = (5 + 6)>${sum}"),
-			TemplateContextType.STANDARD);
+				"123.ftl", "<#assign sum = (5 + 6)>${sum}"), false);
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
@@ -140,8 +134,7 @@ public class TemplateManagerTest {
 	public void test6() throws Exception {
 		Template template = TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_VM,
-			new StringTemplateResource("123.vm", "Hello World!"),
-			TemplateContextType.STANDARD);
+			new StringTemplateResource("123.vm", "Hello World!"), false);
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
@@ -157,8 +150,7 @@ public class TemplateManagerTest {
 		Template template = TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_VM,
 			new StringTemplateResource(
-				"123.vm", "#if ($httpUtil) FAIL #else PASS #end"),
-			TemplateContextType.STANDARD);
+				"123.vm", "#if ($httpUtil) FAIL #else PASS #end"), false);
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
@@ -174,7 +166,7 @@ public class TemplateManagerTest {
 		Template template = TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_VM,
 			new StringTemplateResource("123.vm", "#if (!$httpUtil)PASS#end"),
-			TemplateContextType.STANDARD);
+			false);
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
@@ -190,8 +182,7 @@ public class TemplateManagerTest {
 		Template template = TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_VM,
 			new StringTemplateResource(
-				"123.vm", "#if ($languageUtil)PASS#end"),
-			TemplateContextType.STANDARD);
+				"123.vm", "#if ($languageUtil)PASS#end"), false);
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 

@@ -17,7 +17,6 @@ package com.liferay.portal.velocity;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -148,30 +147,18 @@ public class VelocityManager extends BaseTemplateManager {
 	@Override
 	protected Template doGetTemplate(
 		TemplateResource templateResource,
-		TemplateResource errorTemplateResource,
-		TemplateContextType templateContextType,
+		TemplateResource errorTemplateResource, boolean restricted,
 		Map<String, Object> helperUtilities) {
-
-		Template template = null;
 
 		VelocityContext velocityContext = getVelocityContext(helperUtilities);
 
-		if (templateContextType.equals(TemplateContextType.EMPTY)) {
-			template = new VelocityTemplate(
-				templateResource, errorTemplateResource, null, _velocityEngine,
-				_templateContextHelper);
-		}
-		else if (templateContextType.equals(TemplateContextType.RESTRICTED)) {
+		Template template = new VelocityTemplate(
+			templateResource, errorTemplateResource, velocityContext,
+			_velocityEngine, _templateContextHelper);
+
+		if (restricted) {
 			template = new RestrictedTemplate(
-				new VelocityTemplate(
-					templateResource, errorTemplateResource, velocityContext,
-					_velocityEngine, _templateContextHelper),
-				_templateContextHelper.getRestrictedVariables());
-		}
-		else if (templateContextType.equals(TemplateContextType.STANDARD)) {
-			template = new VelocityTemplate(
-				templateResource, errorTemplateResource, velocityContext,
-				_velocityEngine, _templateContextHelper);
+				template, _templateContextHelper.getRestrictedVariables());
 		}
 
 		return template;

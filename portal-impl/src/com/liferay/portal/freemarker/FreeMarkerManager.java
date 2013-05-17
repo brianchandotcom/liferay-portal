@@ -17,7 +17,6 @@ package com.liferay.portal.freemarker;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.ReflectionUtil;
@@ -115,28 +114,16 @@ public class FreeMarkerManager extends BaseTemplateManager {
 	@Override
 	protected Template doGetTemplate(
 		TemplateResource templateResource,
-		TemplateResource errorTemplateResource,
-		TemplateContextType templateContextType,
+		TemplateResource errorTemplateResource, boolean restricted,
 		Map<String, Object> helperUtilities) {
 
-		Template template = null;
+		Template template = new FreeMarkerTemplate(
+			templateResource, errorTemplateResource, helperUtilities,
+			_configuration, _templateContextHelper);
 
-		if (templateContextType.equals(TemplateContextType.EMPTY)) {
-			template = new FreeMarkerTemplate(
-				templateResource, errorTemplateResource, null, _configuration,
-				_templateContextHelper);
-		}
-		else if (templateContextType.equals(TemplateContextType.RESTRICTED)) {
+		if (restricted) {
 			template = new RestrictedTemplate(
-				new FreeMarkerTemplate(
-					templateResource, errorTemplateResource, helperUtilities,
-					_configuration, _templateContextHelper),
-				_templateContextHelper.getRestrictedVariables());
-		}
-		else if (templateContextType.equals(TemplateContextType.STANDARD)) {
-			template = new FreeMarkerTemplate(
-				templateResource, errorTemplateResource, helperUtilities,
-				_configuration, _templateContextHelper);
+				template, _templateContextHelper.getRestrictedVariables());
 		}
 
 		return template;

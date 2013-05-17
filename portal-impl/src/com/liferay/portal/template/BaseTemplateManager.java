@@ -16,7 +16,6 @@ package com.liferay.portal.template;
 
 import com.liferay.portal.kernel.security.pacl.NotPrivileged;
 import com.liferay.portal.kernel.template.Template;
-import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateResource;
 
@@ -32,34 +31,31 @@ public abstract class BaseTemplateManager implements TemplateManager {
 
 	@NotPrivileged
 	public Template getTemplate(
-		TemplateResource templateResource,
-		TemplateContextType templateContextType) {
+		TemplateResource templateResource, boolean restricted) {
 
-		return getTemplate(templateResource, null, templateContextType);
+		return getTemplate(templateResource, null, restricted);
 	}
 
 	@NotPrivileged
 	public Template getTemplate(
 		TemplateResource templateResource,
-		TemplateResource errorTemplateResource,
-		TemplateContextType templateContextType) {
+		TemplateResource errorTemplateResource, boolean restricted) {
 
 		TemplateContextHelper templateContextHelper =
 			getTemplateContextHelper();
 
 		Map<String, Object> helperUtilities =
-			templateContextHelper.getHelperUtilities(templateContextType);
+			templateContextHelper.getHelperUtilities(restricted);
 
 		return AccessController.doPrivileged(
 			new DoGetTemplatePrivilegedAction(
-				templateResource, errorTemplateResource, templateContextType,
+				templateResource, errorTemplateResource, restricted,
 				helperUtilities));
 	}
 
 	protected abstract Template doGetTemplate(
 		TemplateResource templateResource,
-		TemplateResource errorTemplateResource,
-		TemplateContextType templateContextType,
+		TemplateResource errorTemplateResource, boolean restricted,
 		Map<String, Object> helperUtilities);
 
 	protected abstract TemplateContextHelper getTemplateContextHelper();
@@ -69,25 +65,24 @@ public abstract class BaseTemplateManager implements TemplateManager {
 
 		public DoGetTemplatePrivilegedAction(
 			TemplateResource templateResource,
-			TemplateResource errorTemplateResource,
-			TemplateContextType templateContextType,
+			TemplateResource errorTemplateResource, boolean restricted,
 			Map<String, Object> helperUtilities) {
 
 			_templateResource = templateResource;
 			_errorTemplateResource = errorTemplateResource;
-			_templateContextType = templateContextType;
+			_restricted = restricted;
 			_helperUtilities = helperUtilities;
 		}
 
 		public Template run() {
 			return doGetTemplate(
-				_templateResource, _errorTemplateResource, _templateContextType,
+				_templateResource, _errorTemplateResource, _restricted,
 				_helperUtilities);
 		}
 
 		private TemplateResource _errorTemplateResource;
 		private Map<String, Object> _helperUtilities;
-		private TemplateContextType _templateContextType;
+		private boolean _restricted;
 		private TemplateResource _templateResource;
 
 	}

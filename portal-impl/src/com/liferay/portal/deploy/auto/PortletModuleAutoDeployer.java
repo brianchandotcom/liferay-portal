@@ -17,12 +17,11 @@ package com.liferay.portal.deploy.auto;
 import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.tools.deploy.BaseDeployer;
 
 /**
  * @author Miguel Pastor
  */
-public class PortletModuleAutoDeployer extends BaseDeployer {
+public class PortletModuleAutoDeployer extends ModuleAutoDeployer {
 
 	@Override
 	public int deployFile(AutoDeploymentContext autoDeploymentContext)

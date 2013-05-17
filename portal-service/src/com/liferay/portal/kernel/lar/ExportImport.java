@@ -20,7 +20,6 @@ import com.liferay.portal.model.StagedModel;
 
 import java.io.File;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -76,7 +75,7 @@ public interface ExportImport {
 			boolean importReferencedContent)
 		throws Exception;
 
-	public List<MissingReference> validateMissingReferences(
+	public Map<String, MissingReference> validateMissingReferences(
 			long userId, long groupId, Map<String, String[]> parameterMap,
 			File file)
 		throws Exception;

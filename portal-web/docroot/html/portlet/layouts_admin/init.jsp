@@ -60,7 +60,6 @@ page import="com.liferay.portal.util.LayoutView" %><%@
 page import="com.liferay.portlet.documentlibrary.FileSizeException" %><%@
 page import="com.liferay.portlet.dynamicdatalists.RecordSetDuplicateRecordSetKeyException" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.StructureDuplicateStructureKeyException" %><%@
-page import="com.liferay.portlet.layoutsadmin.action.ImportLayoutsAction" %><%@
 page import="com.liferay.portlet.layoutsadmin.util.ExportImportUtil" %><%@
 page import="com.liferay.portlet.layoutsadmin.util.LayoutsTreeUtil" %><%@
 page import="com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup" %><%@

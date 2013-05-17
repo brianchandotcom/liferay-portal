@@ -21,7 +21,6 @@ import com.liferay.portal.model.StagedModel;
 
 import java.io.File;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -124,7 +123,7 @@ public class ExportImportUtil {
 			portletDataContext, content, importReferencedContent);
 	}
 
-	public static List<MissingReference> validateMissingReferences(
+	public static Map<String, MissingReference> validateMissingReferences(
 			long userId, long groupId, Map<String, String[]> parameterMap,
 			File file)
 		throws Exception {

@@ -19,6 +19,7 @@ import com.liferay.portal.LARTypeException;
 import com.liferay.portal.LayoutImportException;
 import com.liferay.portal.LayoutPrototypeException;
 import com.liferay.portal.LocaleException;
+import com.liferay.portal.MissingReferenceException;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.NoSuchLayoutPrototypeException;
 import com.liferay.portal.NoSuchLayoutSetPrototypeException;
@@ -26,6 +27,8 @@ import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
+import com.liferay.portal.kernel.lar.ExportImportUtil;
+import com.liferay.portal.kernel.lar.MissingReference;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
@@ -148,6 +151,14 @@ public class LayoutImporter {
 				zipReader);
 
 		validateFile(portletDataContext);
+
+		Map<String, MissingReference> missingReferences =
+			ExportImportUtil.validateMissingReferences(
+				userId, groupId, parameterMap, file);
+
+		if (!missingReferences.isEmpty()) {
+			throw new MissingReferenceException(missingReferences);
+		}
 	}
 
 	protected void deleteMissingLayouts(

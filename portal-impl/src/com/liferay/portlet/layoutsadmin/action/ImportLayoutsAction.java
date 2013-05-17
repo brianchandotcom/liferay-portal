@@ -20,12 +20,14 @@ import com.liferay.portal.LARTypeException;
 import com.liferay.portal.LayoutImportException;
 import com.liferay.portal.LayoutPrototypeException;
 import com.liferay.portal.LocaleException;
+import com.liferay.portal.MissingReferenceException;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.lar.MissingReference;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -64,6 +66,7 @@ import java.io.File;
 import java.io.InputStream;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -322,7 +325,8 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 			e instanceof LARFileSizeException ||
 			e instanceof LARTypeException ||
 			e instanceof LayoutPrototypeException ||
-			e instanceof LocaleException) {
+			e instanceof LocaleException ||
+			e instanceof MissingReferenceException) {
 
 			if (e instanceof DuplicateFileException) {
 				errorMessage = themeDisplay.translate(
@@ -437,6 +441,77 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 							le.getTargetAvailableLocales(),
 							StringPool.COMMA_AND_SPACE)
 					});
+				errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
+			}
+			else if (e instanceof MissingReferenceException) {
+				MissingReferenceException mre = (MissingReferenceException)e;
+
+				StringBundler sb = new StringBundler(4);
+
+				sb.append("the-lar-file-could-not-be-imported-because-there-");
+				sb.append("are-missing-references-that-can-not-be-found-in-");
+				sb.append("the-current-site.-please-import-another-lar-file");
+				sb.append("-containing-the-following-elements");
+
+				errorMessage = themeDisplay.translate(sb.toString());
+
+				errorMessageJSONArray = JSONFactoryUtil.createJSONArray();
+
+				Map<String, MissingReference> missingReferences =
+					mre.getMissingReferences();
+
+				for (String missingReferenceDisplayName :
+						missingReferences.keySet()) {
+
+					MissingReference missingReference = missingReferences.get(
+						missingReferenceDisplayName);
+
+					JSONObject errorMessageJSONObject =
+						JSONFactoryUtil.createJSONObject();
+
+					Map<String, String> referrers =
+						missingReference.getReferrers();
+
+					if (referrers.size() == 1) {
+						for (String referrerDisplayName : referrers.keySet()) {
+							String referrerClasName = referrers.get(
+								referrerDisplayName);
+
+							errorMessageJSONObject.put(
+								"info",
+								themeDisplay.translate(
+									"referenced-by-a-x-x",
+									new String[] {
+										ResourceActionsUtil.getModelResource(
+											themeDisplay.getLocale(),
+											referrerClasName),
+										referrerDisplayName
+									}
+								));
+
+							break;
+						}
+					}
+					else {
+						errorMessageJSONObject.put(
+							"info",
+							themeDisplay.translate(
+								"referenced-by-x-elements", referrers.size()));
+
+					}
+
+					errorMessageJSONObject.put(
+						"name", missingReferenceDisplayName);
+
+					errorMessageJSONObject.put(
+						"type",
+						ResourceActionsUtil.getModelResource(
+							themeDisplay.getLocale(),
+							missingReference.getClassName()));
+
+					errorMessageJSONArray.put(errorMessageJSONObject);
+				}
+
 				errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 			}
 		}

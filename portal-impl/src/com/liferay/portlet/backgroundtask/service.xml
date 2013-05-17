@@ -3,11 +3,11 @@
 
 <service-builder package-path="com.liferay.portlet.backgroundtask">
 	<namespace>BT</namespace>
-	<entity name="BackgroundTask" local-service="true" remote-service="false">
+	<entity name="BTEntry" local-service="true" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="backgroundTaskId" type="long" primary="true" />
+		<column name="btEntryId" type="long" primary="true" />
 
 		<!-- Group instance -->
 
@@ -23,23 +23,23 @@
 
 		<!-- Other fields -->
 
-		<column name="className" type="String" />
-		<column name="completedDate" type="Date" />
-		<column name="data" type="String" />
+		<column name="completionDate" type="Date" />
+		<column name="taskContext" type="String" />
+		<column name="taskExecutorClassName" type="String" />
 		<column name="name" type="String" />
-		<column name="servletContextName" type="String" />
+		<column name="servletContextNames" type="String" />
 		<column name="status" type="int" />
 
 		<!-- Finder methods -->
 
-		<finder name="G_C" return-type="Collection">
+		<finder name="G_T" return-type="Collection">
 			<finder-column name="groupId" />
-			<finder-column name="className" />
+			<finder-column name="taskExecutorClassName" />
 		</finder>
-		<finder name="G_C_S" return-type="Collection">
+		<finder name="G_S_T" return-type="Collection">
 			<finder-column name="groupId" />
-			<finder-column name="className" />
 			<finder-column name="status" />
+			<finder-column name="taskExecutorClassName" />
 		</finder>
 	</entity>
 	<exceptions>

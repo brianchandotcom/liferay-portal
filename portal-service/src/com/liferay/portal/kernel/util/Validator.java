@@ -1315,15 +1315,6 @@ public class Validator {
 		}
 	}
 
-	public static boolean startsWith(String string, String prefix) {
-		if ((string == null) || (prefix == null)) {
-			return false;
-		}
-		else {
-			return string.startsWith(prefix);
-		}
-	}
-
 	private static final int _CHAR_LOWER_CASE_BEGIN = 97;
 
 	private static final int _CHAR_LOWER_CASE_END = 122;

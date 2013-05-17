@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.journal.lar;
 
+import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
@@ -76,6 +77,7 @@ public class JournalContentPortletDataHandler
 
 	public JournalContentPortletDataHandler() {
 		setAlwaysStaged(true);
+		setDataLevel(DataLevel.PORTLET_INSTANCE);
 		setDataPortletPreferences("groupId", "articleId", "templateId");
 		setExportControls(
 			new PortletDataHandlerBoolean(

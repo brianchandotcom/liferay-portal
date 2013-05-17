@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.polls.lar;
 
+import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -40,6 +41,7 @@ import javax.portlet.PortletPreferences;
 public class PollsDisplayPortletDataHandler extends PollsPortletDataHandler {
 
 	public PollsDisplayPortletDataHandler() {
+		setDataLevel(DataLevel.PORTLET_INSTANCE);
 		setDataPortletPreferences("questionId");
 		setPublishToLiveByDefault(true);
 	}

@@ -270,25 +270,6 @@
 .taglib-page-iterator .search-pages .page-links {
 }
 
-/* ---------- Application Column View ---------- */
-
-.lfr-app-column-view {
-
-	.column:before {
-	}
-
-	.column-content {
-
-		.lfr-message-response {
-		}
-	}
-}
-
-/* ---------- Header row ---------- */
-
-.lfr-header-row {
-}
-
 /* ---------- Inline editing ---------- */
 
 .lfr-editable {

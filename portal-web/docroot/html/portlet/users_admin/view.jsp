@@ -58,19 +58,23 @@ String portletURLString = portletURL.toString();
 	%>
 
 	<c:if test="<%= portletName.equals(PortletKeys.USERS_ADMIN) %>">
-		<liferay-util:include page="/html/portlet/users_admin/toolbar.jsp" />
+		<aui:nav-bar>
+			<liferay-util:include page="/html/portlet/users_admin/toolbar.jsp" />
 
-		<c:if test="<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS) || usersListView.equals(UserConstants.LIST_VIEW_FLAT_USERS) %>">
-			<portlet:renderURL var="headerBackURL">
-				<portlet:param name="struts_action" value="/users_admin/view_users" />
-			</portlet:renderURL>
+			<c:if test="<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS) || usersListView.equals(UserConstants.LIST_VIEW_FLAT_USERS) %>">
+				<portlet:renderURL var="headerBackURL">
+					<portlet:param name="struts_action" value="/users_admin/view_users" />
+				</portlet:renderURL>
 
-			<liferay-ui:header
-				backLabel="users-and-organizations-home"
-				backURL="<%= headerBackURL.toString() %>"
-				title='<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS) ? "organizations" : "users" %>'
-			/>
-		</c:if>
+				<liferay-ui:header
+					backLabel="users-and-organizations-home"
+					backURL="<%= headerBackURL.toString() %>"
+					title='<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS) ? "organizations" : "users" %>'
+				/>
+			</c:if>
+
+			<aui:nav-bar-search cssClass="pull-right" file="/html/portlet/dynamic_data_lists/record_set_search.jsp" />
+		</aui:nav-bar>
 	</c:if>
 
 	<c:choose>

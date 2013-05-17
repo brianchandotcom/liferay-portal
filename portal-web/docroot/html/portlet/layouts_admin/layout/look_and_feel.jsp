@@ -115,7 +115,7 @@ else {
 
 				<liferay-util:include page="/html/portlet/layouts_admin/look_and_feel_themes.jsp" />
 
-				<h3><liferay-ui:message key="css" /></h3>
+				<legend><liferay-ui:message key="css" /></legend>
 
 				<aui:input cssClass="lfr-textarea-container" label="insert-custom-css-that-will-be-loaded-after-the-theme" name="regularCss" type="textarea" value="<%= cssText %>" />
 			</div>

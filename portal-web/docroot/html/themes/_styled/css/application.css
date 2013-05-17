@@ -443,35 +443,6 @@
 	padding: 0;
 }
 
-/* ---------- Application Column View ---------- */
-
-.lfr-app-column-view {
-	border: 1px solid #C9C9C9;
-
-	.column:before {
-		border-right: 1px solid #C9C9C9;
-		bottom: 0;
-		content: "";
-		margin-left: -1px;
-		position: absolute;
-		top: 0;
-	}
-
-	.column-content {
-		border-right: 1px solid transparent;
-
-		.lfr-message-response {
-			margin: 10px;
-		}
-	}
-}
-
-/* ---------- Header row ---------- */
-
-.lfr-header-row {
-	background: #8F8F8F url(../images/application/header_row_bg.png) 0 0 repeat-x;
-}
-
 /* ---------- Inline editing ---------- */
 
 .lfr-editable {

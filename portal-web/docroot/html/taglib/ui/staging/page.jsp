@@ -117,11 +117,15 @@ String publishMessage = LanguageUtil.get(pageContext, publishDialogTitle);
 			<%@ include file="/html/taglib/ui/staging/staging_actions.jspf" %>
 		</c:when>
 		<c:otherwise>
-			<span class="staging-icon-menu-container">
-				<liferay-ui:icon-menu cssClass="<%= cssClass %>" direction="down" extended="<%= extended %>" icon="<%= extended ? icon : StringPool.BLANK %>" message="<%= extended ? message : StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
-					<%@ include file="/html/taglib/ui/staging/staging_actions.jspf" %>
-				</liferay-ui:icon-menu>
-			</span>
+			<aui:nav-bar>
+				<aui:nav>
+					<aui:nav-item cssClass="staging-icon-menu-container" dropdown="<%= true %>" label="staging">
+						<aui:nav-item cssClass="<%= cssClass %>" label="<%= extended ? message : StringPool.BLANK %>">
+							<%@ include file="/html/taglib/ui/staging/staging_actions.jspf" %>
+						</aui:nav-item>
+					</aui:nav-item>
+				</aui:nav>
+			</aui:nav-bar>
 		</c:otherwise>
 	</c:choose>
 </c:if>

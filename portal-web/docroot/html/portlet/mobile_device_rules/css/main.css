@@ -12,11 +12,6 @@
 }
 
 .theme-title {
-	display: block;
-	font-weight: bold;
-	margin: 0;
-	padding: 2px;
-
 	.field-content {
 		margin: 0;
 	}
@@ -92,10 +87,6 @@
 
 	.lfr-theme-list {
 		margin-top: 0.7em;
-	}
-
-	.header-title {
-		float: left;
 	}
 
 	.install-themes {

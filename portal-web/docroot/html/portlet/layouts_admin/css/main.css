@@ -1,10 +1,5 @@
 .portlet-communities, .portlet-users-admin {
 	.lfr-theme-list {
-		h3 {
-			background: #D3DADD;
-			padding: 0.5em;
-		}
-
 		li {
 			float: left;
 			margin: 0 1.3em 1.3em 0;
@@ -17,49 +12,8 @@
 	}
 
 	.theme-title {
-		display: block;
-		font-weight: bold;
-		margin: 0;
-		padding: 2px;
-
 		.field-content {
 			margin: 0;
-		}
-	}
-
-	.lfr-current-theme {
-		background: #F0F5F7;
-		border: 1px solid #828F95;
-		margin-bottom: 1em;
-		padding: 3px 3px 1em;
-
-		h3 {
-			margin: 0 0 0.5em;
-		}
-
-		.selected-theme {
-			border-bottom: 1px solid #CCC;
-			font-size: 1.5em;
-
-			.field-content {
-				display: inline-block;
-			}
-		}
-
-		.theme-details {
-			padding: 0 2px 0 170px;
-		}
-
-		.theme-fields {
-			margin-left: 0.5em;
-		}
-
-		.theme-screenshot {
-			border: 1px solid #CCC;
-			float: left;
-			height: 120px;
-			margin: 0 0.5em;
-			width: 150px;
 		}
 	}
 
@@ -156,10 +110,6 @@
 			margin-top: 0.7em;
 		}
 
-		.header-title {
-			float: left;
-		}
-
 		.install-themes {
 			float: right;
 			font-size: 11px;
@@ -223,10 +173,6 @@
 		.icon-search {
 			background-image: url(@theme_image_path@/common/search.png);
 		}
-	}
-
-	.manage-view {
-		border: 1px solid #CCC;
 	}
 
 	.button-holder.edit-toolbar {
@@ -342,10 +288,6 @@
 	.incomplete-layout {
 		color: #CCC;
 	}
-}
-
-.tree-node-selected {
-	background: #eee;
 }
 
 .tree-drag-helper a {

@@ -16,7 +16,7 @@
 
 <c:choose>
 	<c:when test="<%= group.isCompany() && GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.PUBLISH_STAGING) %>">
-		<liferay-ui:icon id='<%= groupId + "publishGlobalLink" %>' image="maximize" message="<%= publishDialogTitle %>" url="<%= publishRenderURL.toString() %>" />
+		<aui:nav-item href="<%= publishRenderURL.toString() %>" id='<%= groupId + "publishGlobalLink" %>' label="<%= publishDialogTitle %>" />
 
 		<aui:script use="aui-base">
 			var publishGlobalLink = A.one('#<portlet:namespace /><%= groupId + "publishGlobalLink" %>');
@@ -76,7 +76,7 @@
 				</c:otherwise>
 			</c:choose>
 
-			<liferay-ui:icon id='<%= layoutSetBranchId + "publishLink" %>' image="maximize" message="<%= publishMessage %>" url="<%= publishRenderURL.toString() %>" />
+			<aui:nav-item href="<%= publishRenderURL.toString() %>" id='<%= layoutSetBranchId + "publishLink" %>' label="<%= publishMessage %>" />
 
 			<aui:script use="aui-base">
 				var publishLink = A.one('#<portlet:namespace /><%= layoutSetBranchId + "publishLink" %>');
@@ -110,14 +110,7 @@
 				<portlet:param name="selPlid" value="<%= String.valueOf(selPlid) %>" />
 			</portlet:renderURL>
 
-			<liferay-ui:icon
-				cssClass="manage-layout-set-branches"
-				id="manageLayoutSetBranches"
-				image="configuration"
-				label="<%= true %>"
-				message="manage-site-pages-variations"
-				url="<%= layoutSetBranchesURL %>"
-			/>
+			<aui:nav-item cssClass="manage-layout-set-branches" href="<%= layoutSetBranchesURL %>" id="manageLayoutSetBranches" label="manage-site-pages-variations" />
 
 			<aui:script use="aui-base">
 				var layoutSetBranchesLink = A.one('#<portlet:namespace />manageLayoutSetBranches');

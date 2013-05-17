@@ -15,13 +15,7 @@
 				padding: 3px 1px;
 			}
 
-			.checkbox, .radio {
-				margin-bottom: 10px;
-			}
-
 			.field {
-				margin-bottom: 10px;
-
 				&.mailing-ctrl {
 					clear: both;
 

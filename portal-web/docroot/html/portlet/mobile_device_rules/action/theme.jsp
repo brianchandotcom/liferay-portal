@@ -51,7 +51,7 @@ ColorScheme selColorScheme = ThemeLocalServiceUtil.getColorScheme(company.getCom
 		<h3><liferay-ui:message key="current-theme" /></h3>
 
 		<div class="lfr-current-theme-body">
-			<img alt="<%= selTheme.getName() %>" class="theme-screenshot" onclick="document.getElementById('<portlet:namespace />SelTheme').checked = true;" src="<%= selTheme.getStaticResourcePath() %><%= selTheme.getImagesPath() %>/thumbnail.png" title="<%= selTheme.getName() %>" />
+			<img alt="<%= selTheme.getName() %>" class="img-polaroid theme-screenshot" onclick="document.getElementById('<portlet:namespace />SelTheme').checked = true;" src="<%= selTheme.getStaticResourcePath() %><%= selTheme.getImagesPath() %>/thumbnail.png" title="<%= selTheme.getName() %>" />
 
 			<div class="theme-details">
 				<aui:input checked="<%= true %>" cssClass="selected-theme theme-title" id="SelTheme" label="<%= selTheme.getName() %>" name="themeId" type="radio" value="<%= selTheme.getThemeId() %>" />

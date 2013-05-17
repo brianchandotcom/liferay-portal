@@ -32,10 +32,10 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 
 <div class="lfr-theme-list">
 	<div class="float-container lfr-current-theme" id="<%= editable ? device : StringPool.BLANK %>LookAndFeel">
-		<h3><liferay-ui:message key="current-theme" /></h3>
+		<legend><liferay-ui:message key="current-theme" /></legend>
 
 		<div>
-			<img alt="<%= selTheme.getName() %>" class="theme-screenshot" onclick="<portlet:namespace /><%= device %>selectTheme('SelTheme', false);" src="<%= themeDisplay.getCDNBaseURL() %><%= selTheme.getStaticResourcePath() %><%= selTheme.getImagesPath() %>/thumbnail.png" title="<%= selTheme.getName() %>" />
+			<img alt="<%= selTheme.getName() %>" class="img-polaroid theme-screenshot" onclick="<portlet:namespace /><%= device %>selectTheme('SelTheme', false);" src="<%= themeDisplay.getCDNBaseURL() %><%= selTheme.getStaticResourcePath() %><%= selTheme.getImagesPath() %>/thumbnail.png" title="<%= selTheme.getName() %>" />
 
 			<div class="theme-details">
 				<c:choose>
@@ -198,7 +198,7 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 
 	<c:if test="<%= editable %>">
 		<div class="float-container lfr-available-themes" id="<%= device %>availableThemes">
-			<h3>
+			<legend>
 				<span class="header-title">
 					<%= LanguageUtil.format(pageContext, "available-themes-x", (themes.size() - 1)) %>
 				</span>
@@ -213,7 +213,7 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 						<a href="<%= HttpUtil.removeParameter(marketplaceURL.toString(), "controlPanelCategory") %>" id="<portlet:namespace />installMore"><liferay-ui:message key="install-more" /></a>
 					</span>
 				</c:if>
-			</h3>
+			</legend>
 
 			<c:if test="<%= themes.size() > 1 %>">
 				<ul class="lfr-theme-list unstyled">

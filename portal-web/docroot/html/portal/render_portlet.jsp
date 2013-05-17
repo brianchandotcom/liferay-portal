@@ -414,6 +414,7 @@ portletDisplay.setShowPortletIcon(showPortletIcon);
 portletDisplay.setShowPrintIcon(showPrintIcon);
 portletDisplay.setShowRefreshIcon(showRefreshIcon);
 
+portletDisplay.setControlPanelCategory(portlet.getControlPanelEntryCategory());
 portletDisplay.setWebDAVEnabled(portlet.getWebDAVStorageInstance() != null);
 portletDisplay.setRestoreCurrentView(portlet.isRestoreCurrentView());
 

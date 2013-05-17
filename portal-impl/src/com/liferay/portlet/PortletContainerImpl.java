@@ -910,6 +910,8 @@ public class PortletContainerImpl implements PortletContainer {
 		portletDisplay.setPortletName(portletConfig.getPortletName());
 		portletDisplay.setNamespace(
 			PortalUtil.getPortletNamespace(portlet.getPortletId()));
+		portletDisplay.setControlPanelCategory(
+			portlet.getControlPanelEntryCategory());
 
 		WebDAVStorage webDAVStorage = portlet.getWebDAVStorageInstance();
 

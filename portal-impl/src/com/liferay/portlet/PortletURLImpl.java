@@ -50,7 +50,6 @@ import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletCategoryKeys;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
@@ -935,14 +934,7 @@ public class PortletURLImpl
 
 		long doAsGroupId = _doAsGroupId;
 
-		String curControlPanelCategory = themeDisplay.getControlPanelCategory();
-
-		if ((doAsGroupId <= 0) &&
-			Validator.isNotNull(curControlPanelCategory) &&
-			(curControlPanelCategory.equals(PortletCategoryKeys.CURRENT_SITE) ||
-			 curControlPanelCategory.startsWith(
-				 PortletCategoryKeys.SITE_ADMINISTRATION))) {
-
+		if (doAsGroupId <= 0) {
 			doAsGroupId = themeDisplay.getDoAsGroupId();
 		}
 

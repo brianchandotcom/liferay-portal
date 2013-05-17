@@ -146,7 +146,7 @@ request.setAttribute("control_panel.jsp-ppid", ppid);
 						<c:when test="<%= Validator.isNull(controlPanelCategory) %>">
 							<%@ include file="/html/portal/layout/view/control_panel_home.jspf" %>
 						</c:when>
-						<c:when test="<%= ((portlet != null) && !portlet.getControlPanelEntryCategory().startsWith(PortletCategoryKeys.SITE_ADMINISTRATION)) || Validator.isNull(themeDisplay.getDoAsGroupId()) %>">
+						<c:when test="<%= ((portlet != null) && !portlet.getControlPanelEntryCategory().startsWith(PortletCategoryKeys.SITE_ADMINISTRATION)) %>">
 							<%@ include file="/html/portal/layout/view/panel_content.jspf" %>
 						</c:when>
 						<c:otherwise>

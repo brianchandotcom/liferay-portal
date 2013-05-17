@@ -7,7 +7,7 @@
 #set ($portlet_description_css_class = "alert alert-info lfr-control-panel-help-content lfr-message-content")
 #set ($portlet_back_url = $htmlUtil.escapeAttribute($portlet_display.getURLBack()))
 #set ($enable_portlet_descriptions = $sessionClicks.get($request, "enable-portlet-descriptions", "1"))
-#set ($show_portlet_title = $themeDisplay.getDoAsGroupId() != 0)
+#set ($show_portlet_title = $portlet_display.getControlPanelCategory().startsWith("site_administration."))
 #set ($show_portlet_description = $enable_portlet_descriptions == "1" && $sessionClicks.get($request, "show-portlet-description-$portlet_id", "1") == "1")
 #set ($valid_portlet_description = $validator.isNotNull($portlet_description) && $portlet_description.indexOf('javax.portlet.description') == -1)
 

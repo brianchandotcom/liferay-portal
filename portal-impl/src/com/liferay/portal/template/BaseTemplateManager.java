@@ -16,7 +16,6 @@ package com.liferay.portal.template;
 
 import com.liferay.portal.kernel.security.pacl.NotPrivileged;
 import com.liferay.portal.kernel.template.Template;
-import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateResource;
 
@@ -30,49 +29,44 @@ public abstract class BaseTemplateManager implements TemplateManager {
 
 	@NotPrivileged
 	public Template getTemplate(
-		TemplateResource templateResource,
-		TemplateContextType templateContextType) {
+		TemplateResource templateResource, boolean restricted) {
 
-		return getTemplate(templateResource, null, templateContextType);
+		return getTemplate(templateResource, null, restricted);
 	}
 
 	@NotPrivileged
 	public Template getTemplate(
 		TemplateResource templateResource,
-		TemplateResource errorTemplateResource,
-		TemplateContextType templateContextType) {
+		TemplateResource errorTemplateResource, boolean restricted) {
 
 		return AccessController.doPrivileged(
 			new DoGetTemplatePrivilegedAction(
-				templateResource, errorTemplateResource, templateContextType));
+				templateResource, errorTemplateResource, restricted));
 	}
 
 	protected abstract Template doGetTemplate(
 		TemplateResource templateResource,
-		TemplateResource errorTemplateResource,
-		TemplateContextType templateContextType);
+		TemplateResource errorTemplateResource, boolean restricted);
 
 	private class DoGetTemplatePrivilegedAction
 		implements PrivilegedAction<Template> {
 
 		public DoGetTemplatePrivilegedAction(
 			TemplateResource templateResource,
-			TemplateResource errorTemplateResource,
-			TemplateContextType templateContextType) {
+			TemplateResource errorTemplateResource, boolean restricted) {
 
 			_templateResource = templateResource;
 			_errorTemplateResource = errorTemplateResource;
-			_templateContextType = templateContextType;
+			_restricted = restricted;
 		}
 
 		public Template run() {
 			return doGetTemplate(
-				_templateResource, _errorTemplateResource,
-				_templateContextType);
+				_templateResource, _errorTemplateResource, _restricted);
 		}
 
 		private TemplateResource _errorTemplateResource;
-		private TemplateContextType _templateContextType;
+		private boolean _restricted;
 		private TemplateResource _templateResource;
 
 	}

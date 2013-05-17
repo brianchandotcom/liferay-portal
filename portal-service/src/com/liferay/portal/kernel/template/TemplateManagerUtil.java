@@ -81,27 +81,25 @@ public class TemplateManagerUtil {
 
 	public static Template getTemplate(
 			String templateManagerName, TemplateResource templateResource,
-			TemplateContextType templateContextType)
+			boolean restricted)
 		throws TemplateException {
 
 		TemplateManager templateManager = _getTemplateManager(
 			templateManagerName);
 
-		return templateManager.getTemplate(
-			templateResource, templateContextType);
+		return templateManager.getTemplate(templateResource, restricted);
 	}
 
 	public static Template getTemplate(
 			String templateManagerName, TemplateResource templateResource,
-			TemplateResource errorTemplateResource,
-			TemplateContextType templateContextType)
+			TemplateResource errorTemplateResource, boolean restricted)
 		throws TemplateException {
 
 		TemplateManager templateManager = _getTemplateManager(
 			templateManagerName);
 
 		return templateManager.getTemplate(
-			templateResource, errorTemplateResource, templateContextType);
+			templateResource, errorTemplateResource, restricted);
 	}
 
 	public static TemplateManager getTemplateManager(

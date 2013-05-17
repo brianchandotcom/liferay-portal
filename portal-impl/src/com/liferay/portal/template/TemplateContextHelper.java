@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.portlet.PortletModeFactory_IW;
 import com.liferay.portal.kernel.portlet.WindowStateFactory_IW;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.template.Template;
-import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
@@ -95,7 +94,6 @@ import java.security.AccessController;
 import java.security.PrivilegedAction;
 
 import java.util.Collections;
-import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -153,9 +151,7 @@ public class TemplateContextHelper {
 		return templateVariableGroups;
 	}
 
-	public Map<String, Object> getHelperUtilities(
-		TemplateContextType templateContextType) {
-
+	public Map<String, Object> getHelperUtilities(boolean restricted) {
 		TemplateControlContext templateControlContext =
 			getTemplateControlContext();
 
@@ -164,12 +160,11 @@ public class TemplateContextHelper {
 		ClassLoader classLoader = templateControlContext.getClassLoader();
 
 		if (accessControlContext == null) {
-			return doGetHelperUtilities(classLoader, templateContextType);
+			return doGetHelperUtilities(classLoader, restricted);
 		}
 
 		return AccessController.doPrivileged(
-			new DoGetHelperUtilitiesPrivilegedAction(
-				classLoader, templateContextType),
+			new DoGetHelperUtilitiesPrivilegedAction(classLoader, restricted),
 			accessControlContext);
 	}
 
@@ -327,20 +322,19 @@ public class TemplateContextHelper {
 	}
 
 	protected Map<String, Object> doGetHelperUtilities(
-		ClassLoader classLoader, TemplateContextType templateContextType) {
+		ClassLoader classLoader, boolean restricted) {
 
 		HelperUtilitiesMap helperUtilitiesMap = _helperUtilitiesMaps.get(
 			classLoader);
 
 		if (helperUtilitiesMap == null) {
-			helperUtilitiesMap = new HelperUtilitiesMap(
-				TemplateContextType.class);
+			helperUtilitiesMap = new HelperUtilitiesMap();
 
 			_helperUtilitiesMaps.put(classLoader, helperUtilitiesMap);
 		}
 
-		Map<String, Object> helperUtilities = helperUtilitiesMap.get(
-			templateContextType);
+		Map<String, Object> helperUtilities = helperUtilitiesMap.getMap(
+			restricted);
 
 		if (helperUtilities != null) {
 			return helperUtilities;
@@ -351,7 +345,7 @@ public class TemplateContextHelper {
 		populateCommonHelperUtilities(helperUtilities);
 		populateExtraHelperUtilities(helperUtilities);
 
-		if (templateContextType.equals(TemplateContextType.RESTRICTED)) {
+		if (restricted) {
 			Set<String> restrictedVariables = getRestrictedVariables();
 
 			for (String restrictedVariable : restrictedVariables) {
@@ -359,9 +353,7 @@ public class TemplateContextHelper {
 			}
 		}
 
-		helperUtilities = Collections.unmodifiableMap(helperUtilities);
-
-		helperUtilitiesMap.put(templateContextType, helperUtilities);
+		helperUtilitiesMap.setMap(helperUtilities, restricted);
 
 		return helperUtilities;
 	}
@@ -884,27 +876,42 @@ public class TemplateContextHelper {
 		implements PrivilegedAction<Map<String, Object>> {
 
 		public DoGetHelperUtilitiesPrivilegedAction(
-			ClassLoader classLoader, TemplateContextType templateContextType) {
+			ClassLoader classLoader, boolean restricted) {
 
 			_classLoader = classLoader;
-			_templateContextType = templateContextType;
+			_restricted = restricted;
 		}
 
 		public Map<String, Object> run() {
-			return doGetHelperUtilities(_classLoader, _templateContextType);
+			return doGetHelperUtilities(_classLoader, _restricted);
 		}
 
 		private ClassLoader _classLoader;
-		private TemplateContextType _templateContextType;
+		private boolean _restricted;
 
 	}
 
-	private class HelperUtilitiesMap
-		extends EnumMap<TemplateContextType, Map<String, Object>> {
+	private class HelperUtilitiesMap {
 
-		public HelperUtilitiesMap(Class<TemplateContextType> keyClazz) {
-			super(keyClazz);
+		public Map<String, Object> getMap(boolean restricted) {
+			if (restricted) {
+				return _restrictedMap;
+			}
+
+			return _standardMap;
 		}
+
+		public void setMap(Map<String, Object> map, boolean restricted) {
+			if (restricted) {
+				_restrictedMap = Collections.unmodifiableMap(map);
+			}
+			else {
+				_standardMap = Collections.unmodifiableMap(map);
+			}
+		}
+
+		Map<String, Object> _restrictedMap;
+		Map<String, Object> _standardMap;
 
 	}
 

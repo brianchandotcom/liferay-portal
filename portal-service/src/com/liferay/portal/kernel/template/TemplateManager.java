@@ -26,13 +26,11 @@ public interface TemplateManager {
 	public String getName();
 
 	public Template getTemplate(
-		TemplateResource templateResource,
-		TemplateContextType templateContextType);
+		TemplateResource templateResource, boolean restricted);
 
 	public Template getTemplate(
 		TemplateResource templateResource,
-		TemplateResource errorTemplateResource,
-		TemplateContextType templateContextType);
+		TemplateResource errorTemplateResource, boolean restricted);
 
 	public void init() throws TemplateException;
 

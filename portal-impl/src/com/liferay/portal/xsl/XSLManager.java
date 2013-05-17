@@ -17,7 +17,6 @@ package com.liferay.portal.xsl;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.template.BaseTemplateManager;
 import com.liferay.portal.template.TemplateContextHelper;
@@ -58,8 +57,7 @@ public class XSLManager extends BaseTemplateManager {
 	@Override
 	protected Template doGetTemplate(
 		TemplateResource templateResource,
-		TemplateResource errorTemplateResource,
-		TemplateContextType templateContextType) {
+		TemplateResource errorTemplateResource, boolean restricted) {
 
 		XSLTemplateResource xslTemplateResource =
 			(XSLTemplateResource)templateResource;

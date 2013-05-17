@@ -620,13 +620,13 @@ public class ExportImportImpl implements ExportImport {
 		return content;
 	}
 
-	public List<MissingReference> validateMissingReferences(
+	public Map<String, MissingReference> validateMissingReferences(
 			long userId, long groupId, Map<String, String[]> parameterMap,
 			File file)
 		throws Exception {
 
-		final List<MissingReference> missingReferences =
-			new ArrayList<MissingReference>();
+		final Map<String, MissingReference> missingReferences =
+			new HashMap<String, MissingReference>();
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 		String userIdStrategy = MapUtil.getString(
@@ -649,7 +649,19 @@ public class ExportImportImpl implements ExportImport {
 						validateMissingReference(element);
 
 					if (missingReference != null) {
-						missingReferences.add(missingReference);
+						MissingReference existingMissingReference =
+							missingReferences.get(
+								missingReference.getDisplayName());
+
+						if (existingMissingReference != null) {
+							existingMissingReference.addReferrers(
+								missingReference.getReferrers());
+						}
+						else {
+							missingReferences.put(
+								missingReference.getDisplayName(),
+								missingReference);
+						}
 					}
 				}
 

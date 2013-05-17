@@ -17,6 +17,10 @@ package com.liferay.portal.kernel.lar;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.xml.Element;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
 /**
  * @author Zsolt Berentey
  */
@@ -26,9 +30,24 @@ public class MissingReference {
 		_className = element.attributeValue("class-name");
 		_displayName = GetterUtil.getString(
 			element.attributeValue("display-name"));
-		_referrerClassName = element.attributeValue("referrer-class-name");
-		_referrerDisplayName = GetterUtil.getString(
+		_referrers = new HashMap<String, String>();
+
+		String referrerClassName = element.attributeValue(
+			"referrer-class-name");
+		String referrerDisplayName = GetterUtil.getString(
 			element.attributeValue("referrer-display-name"));
+
+		addReferrer(referrerClassName, referrerDisplayName);
+	}
+
+	public void addReferrer(
+		String referrerClassName, String referrerDisplayName) {
+
+		_referrers.put(referrerDisplayName, referrerClassName);
+	}
+
+	public void addReferrers(Map<String, String> referrers) {
+		_referrers.putAll(referrers);
 	}
 
 	public String getClassName() {
@@ -39,17 +58,16 @@ public class MissingReference {
 		return _displayName;
 	}
 
-	public String getReferrerClassName() {
-		return _referrerClassName;
+	public Set<String> getReferrerDisplayNames() {
+		return _referrers.keySet();
 	}
 
-	public String getReferrerDisplayName() {
-		return _referrerDisplayName;
+	public Map<String, String> getReferrers() {
+		return _referrers;
 	}
 
 	private String _className;
 	private String _displayName;
-	private String _referrerClassName;
-	private String _referrerDisplayName;
+	private Map<String, String> _referrers;
 
 }

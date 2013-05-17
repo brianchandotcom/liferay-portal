@@ -321,23 +321,31 @@ public class TemplateContextHelper {
 		_helperUtilitiesMaps.remove(classLoader);
 	}
 
+	@SuppressWarnings("unchecked")
 	protected Map<String, Object> doGetHelperUtilities(
 		ClassLoader classLoader, boolean restricted) {
 
-		HelperUtilitiesMap helperUtilitiesMap = _helperUtilitiesMaps.get(
+		Map<String, Object> helperUtilities = null;
+
+		Map<String, Object>[] helperUtilitiesArray = _helperUtilitiesMaps.get(
 			classLoader);
 
-		if (helperUtilitiesMap == null) {
-			helperUtilitiesMap = new HelperUtilitiesMap();
+		if (helperUtilitiesArray == null) {
+			helperUtilitiesArray = (Map<String, Object>[])new Map<?, ?>[2];
 
-			_helperUtilitiesMaps.put(classLoader, helperUtilitiesMap);
+			_helperUtilitiesMaps.put(classLoader, helperUtilitiesArray);
 		}
+		else {
+			if (restricted) {
+				helperUtilities = helperUtilitiesArray[1];
+			}
+			else {
+				helperUtilities = helperUtilitiesArray[0];
+			}
 
-		Map<String, Object> helperUtilities = helperUtilitiesMap.getMap(
-			restricted);
-
-		if (helperUtilities != null) {
-			return helperUtilities;
+			if (helperUtilities != null) {
+				return helperUtilities;
+			}
 		}
 
 		helperUtilities = new HashMap<String, Object>();
@@ -351,9 +359,12 @@ public class TemplateContextHelper {
 			for (String restrictedVariable : restrictedVariables) {
 				helperUtilities.remove(restrictedVariable);
 			}
-		}
 
-		helperUtilitiesMap.setMap(helperUtilities, restricted);
+			helperUtilitiesArray[1] = helperUtilities;
+		}
+		else {
+			helperUtilitiesArray[0] = helperUtilities;
+		}
 
 		return helperUtilities;
 	}
@@ -851,9 +862,8 @@ public class TemplateContextHelper {
 
 	private static PACL _pacl = new NoPACL();
 
-	private Map<ClassLoader, HelperUtilitiesMap>
-		_helperUtilitiesMaps = new ConcurrentHashMap
-			<ClassLoader, HelperUtilitiesMap>();
+	private Map<ClassLoader, Map<String, Object>[]> _helperUtilitiesMaps =
+		new ConcurrentHashMap<ClassLoader, Map<String, Object>[]>();
 
 	private static class NoPACL implements PACL {
 
@@ -888,30 +898,6 @@ public class TemplateContextHelper {
 
 		private ClassLoader _classLoader;
 		private boolean _restricted;
-
-	}
-
-	private class HelperUtilitiesMap {
-
-		public Map<String, Object> getMap(boolean restricted) {
-			if (restricted) {
-				return _restrictedMap;
-			}
-
-			return _standardMap;
-		}
-
-		public void setMap(Map<String, Object> map, boolean restricted) {
-			if (restricted) {
-				_restrictedMap = Collections.unmodifiableMap(map);
-			}
-			else {
-				_standardMap = Collections.unmodifiableMap(map);
-			}
-		}
-
-		Map<String, Object> _restrictedMap;
-		Map<String, Object> _standardMap;
 
 	}
 

@@ -119,17 +119,16 @@ public class FreeMarkerManager extends BaseTemplateManager {
 		Map<String, Object> helperUtilities =
 			_templateContextHelper.getHelperUtilities(restricted);
 
-		if (restricted) {
-			return new RestrictedTemplate(
-				new FreeMarkerTemplate(
-					templateResource, errorTemplateResource, helperUtilities,
-					_configuration, _templateContextHelper),
-				_templateContextHelper.getRestrictedVariables());
-		}
-
-		return new FreeMarkerTemplate(
+		Template template = new FreeMarkerTemplate(
 			templateResource, errorTemplateResource, helperUtilities,
 			_configuration, _templateContextHelper);
+
+		if (restricted) {
+			template = new RestrictedTemplate(
+				template, _templateContextHelper.getRestrictedVariables());
+		}
+
+		return template;
 	}
 
 	private Configuration _configuration;

@@ -14,9 +14,13 @@
 
 package com.liferay.portal.kernel.servlet;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+
+import java.io.NotSerializableException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -61,7 +65,25 @@ public class NonSerializableObjectRequestWrapper
 
 	@Override
 	public Object getAttribute(String name) {
-		Object object = super.getAttribute(name);
+		Object object = null;
+
+		try {
+			object = super.getAttribute(name);
+		}
+		catch (Exception e) {
+			
+			if (e instanceof NotSerializableException) {
+
+				String message = e.getMessage();
+	
+				if ((message != null) && message.contains("BEA-101362")) {
+					// LPS-31885: Ignore exception thrown by WebLogic
+				}
+				else {
+					_log.error(e, e);
+				}
+			}
+		}
 
 		object = NonSerializableObjectHandler.getValue(object);
 
@@ -76,6 +98,9 @@ public class NonSerializableObjectRequestWrapper
 
 		super.setAttribute(name, object);
 	}
+
+	private static final Log _log =
+		LogFactoryUtil.getLog(NonSerializableObjectRequestWrapper.class);
 
 	private static final boolean _WEBLOGIC_REQUEST_WRAP_NON_SERIALIZABLE =
 		GetterUtil.getBoolean(

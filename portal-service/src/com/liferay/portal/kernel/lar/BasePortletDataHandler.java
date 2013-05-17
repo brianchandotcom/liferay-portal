@@ -317,7 +317,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 
 	private boolean _alwaysExportable;
 	private boolean _alwaysStaged;
-	private DataLevel _dataLevel = DataLevel.PORTLET_INSTANCE;
+	private DataLevel _dataLevel = DataLevel.SITE;
 	private boolean _dataLocalized;
 	private String[] _dataPortletPreferences = new String[0];
 	private PortletDataHandlerControl[] _exportControls =

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -558,7 +557,7 @@ public class LayoutTemplateLocalServiceImpl
 				TemplateConstants.LANG_TYPE_VM,
 				new StringTemplateResource(
 					velocityTemplateId, velocityTemplateContent),
-				TemplateContextType.STANDARD);
+				false);
 
 			template.put("processor", processor);
 

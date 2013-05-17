@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.mobile.device.UnknownDevice;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.URLTemplateResource;
@@ -81,7 +80,7 @@ public class Transformer {
 
 	public Transformer(
 		String transformerListenerPropertyKey, String errorTemplatePropertyKey,
-		TemplateContextType defaultTemplateContextType) {
+		boolean restricted) {
 
 		_transformerListenerClassNames = SetUtil.fromArray(
 			PropsUtil.getArray(transformerListenerPropertyKey));
@@ -98,7 +97,7 @@ public class Transformer {
 			}
 		}
 
-		_defaultTemplateContextType = defaultTemplateContextType;
+		_restricted = restricted;
 	}
 
 	public String transform(
@@ -449,8 +448,7 @@ public class Transformer {
 			langType);
 
 		return TemplateManagerUtil.getTemplate(
-			langType, templateResource, errorTemplateResource,
-			_defaultTemplateContextType);
+			langType, templateResource, errorTemplateResource, _restricted);
 	}
 
 	protected Template getTemplate(
@@ -464,8 +462,7 @@ public class Transformer {
 			langType);
 
 		return TemplateManagerUtil.getTemplate(
-			langType, templateResource, errorTemplateResource,
-			_defaultTemplateContextType);
+			langType, templateResource, errorTemplateResource, _restricted);
 	}
 
 	protected String getTemplateId(
@@ -668,9 +665,9 @@ public class Transformer {
 	private static Log _logXmlBeforeListener = LogFactoryUtil.getLog(
 		Transformer.class.getName() + ".XmlBeforeListener");
 
-	private TemplateContextType _defaultTemplateContextType;
 	private Map<String, String> _errorTemplateIds =
 		new HashMap<String, String>();
+	private boolean _restricted;
 	private Set<String> _transformerListenerClassNames;
 
 }

@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.templateparser.TransformerListener;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
@@ -1725,6 +1724,6 @@ public class JournalUtil {
 	private static Map<String, String> _customTokens;
 	private static Transformer _transformer = new Transformer(
 		PropsKeys.JOURNAL_TRANSFORMER_LISTENER,
-		PropsKeys.JOURNAL_ERROR_TEMPLATE, TemplateContextType.RESTRICTED);
+		PropsKeys.JOURNAL_ERROR_TEMPLATE, true);
 
 }

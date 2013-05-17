@@ -16,7 +16,6 @@ package com.liferay.portlet;
 
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
@@ -180,8 +179,7 @@ public class VelocityPortlet extends GenericPortlet {
 		}
 
 		Template template = TemplateManagerUtil.getTemplate(
-			TemplateConstants.LANG_TYPE_VM, templateResource,
-			TemplateContextType.STANDARD);
+			TemplateConstants.LANG_TYPE_VM, templateResource, false);
 
 		prepareTemplate(template, portletRequest, portletResponse);
 

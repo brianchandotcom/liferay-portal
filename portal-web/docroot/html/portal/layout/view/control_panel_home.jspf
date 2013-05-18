@@ -47,8 +47,8 @@
 			<aui:col width="<%= 25 %>">
 				<liferay-ui:panel-container>
 
-					<liferay-ui:panel cssClass="control-panel-home-category unstyled" extended="<%= true %>" id='<%= "control-panel-home-" + curCategory %>' title="<%= title %>">
-						<ul>
+					<liferay-ui:panel cssClass="control-panel-home-category" extended="<%= true %>" id='<%= "control-panel-home-" + curCategory %>' title="<%= title %>">
+						<ul class="unstyled">
 
 							<%
 							for (Portlet categoryPortlet : categoryPortlets) {

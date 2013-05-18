@@ -109,10 +109,12 @@ public abstract class BTEntryLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param btEntry the b t entry
 	 * @return the b t entry that was removed
+	 * @throws PortalException
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
-	public BTEntry deleteBTEntry(BTEntry btEntry) throws SystemException {
+	public BTEntry deleteBTEntry(BTEntry btEntry)
+		throws PortalException, SystemException {
 		return btEntryPersistence.remove(btEntry);
 	}
 

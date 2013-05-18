@@ -73,11 +73,13 @@ public class BTEntryLocalServiceWrapper implements BTEntryLocalService,
 	*
 	* @param btEntry the b t entry
 	* @return the b t entry that was removed
+	* @throws PortalException
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.backgroundtask.model.BTEntry deleteBTEntry(
 		com.liferay.portlet.backgroundtask.model.BTEntry btEntry)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _btEntryLocalService.deleteBTEntry(btEntry);
 	}
 
@@ -242,6 +244,87 @@ public class BTEntryLocalServiceWrapper implements BTEntryLocalService,
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier) {
 		_btEntryLocalService.setBeanIdentifier(beanIdentifier);
+	}
+
+	public com.liferay.portlet.backgroundtask.model.BTEntry addBTEntry(
+		long userId, long groupId, java.lang.Class taskExecutorClass,
+		java.lang.String name,
+		java.util.Map<java.lang.String, java.io.Serializable> taskContext,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _btEntryLocalService.addBTEntry(userId, groupId,
+			taskExecutorClass, name, taskContext, serviceContext);
+	}
+
+	public com.liferay.portlet.backgroundtask.model.BTEntry addBTEntry(
+		long userId, long groupId, java.lang.Class taskExecutorClass,
+		java.lang.String name,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _btEntryLocalService.addBTEntry(userId, groupId,
+			taskExecutorClass, name, serviceContext);
+	}
+
+	public com.liferay.portlet.backgroundtask.model.BTEntry addBTEntry(
+		long userId, long groupId, java.lang.Class taskExecutorClass,
+		java.lang.String[] servletContextNames, java.lang.String name,
+		java.util.Map<java.lang.String, java.io.Serializable> taskContext,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _btEntryLocalService.addBTEntry(userId, groupId,
+			taskExecutorClass, servletContextNames, name, taskContext,
+			serviceContext);
+	}
+
+	public void addBTEntryAttachment(long userId, long btEntryId,
+		java.lang.String fileName, java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_btEntryLocalService.addBTEntryAttachment(userId, btEntryId, fileName,
+			file);
+	}
+
+	public void addBTEntryAttachment(long userId, long btEntryId,
+		java.lang.String fileName, java.io.InputStream inputStream)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_btEntryLocalService.addBTEntryAttachment(userId, btEntryId, fileName,
+			inputStream);
+	}
+
+	public java.util.List<com.liferay.portlet.backgroundtask.model.BTEntry> getBTEntries(
+		long groupId, java.lang.String taskExecutorClassName)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _btEntryLocalService.getBTEntries(groupId, taskExecutorClassName);
+	}
+
+	public java.util.List<com.liferay.portlet.backgroundtask.model.BTEntry> getBTEntries(
+		long groupId, java.lang.String taskExecutorClassName, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _btEntryLocalService.getBTEntries(groupId,
+			taskExecutorClassName, status);
+	}
+
+	public com.liferay.portlet.backgroundtask.model.BTEntry updateBTEntry(
+		long btEntryId, int status,
+		java.util.Map<java.lang.String, java.io.Serializable> taskContext,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _btEntryLocalService.updateBTEntry(btEntryId, status,
+			taskContext, serviceContext);
+	}
+
+	public com.liferay.portlet.backgroundtask.model.BTEntry updateBTEntry(
+		long btEntryId, int status,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _btEntryLocalService.updateBTEntry(btEntryId, status,
+			serviceContext);
 	}
 
 	/**

@@ -538,6 +538,37 @@ public class BTEntryWrapper implements BTEntry, ModelWrapper<BTEntry> {
 		_btEntry.persist();
 	}
 
+	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _btEntry.addAttachmentsFolder();
+	}
+
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _btEntry.getAttachmentsFileEntries();
+	}
+
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries(
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _btEntry.getAttachmentsFileEntries(start, end);
+	}
+
+	public int getAttachmentsFileEntriesCount()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _btEntry.getAttachmentsFileEntriesCount();
+	}
+
+	public long getAttachmentsFolderId()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _btEntry.getAttachmentsFolderId();
+	}
+
+	public java.util.Map<java.lang.String, java.io.Serializable> getTaskContextMap() {
+		return _btEntry.getTaskContextMap();
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */

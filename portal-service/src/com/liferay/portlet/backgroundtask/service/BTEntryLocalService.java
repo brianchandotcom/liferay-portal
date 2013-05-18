@@ -82,11 +82,13 @@ public interface BTEntryLocalService extends BaseLocalService,
 	*
 	* @param btEntry the b t entry
 	* @return the b t entry that was removed
+	* @throws PortalException
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.backgroundtask.model.BTEntry deleteBTEntry(
 		com.liferay.portlet.backgroundtask.model.BTEntry btEntry)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -228,4 +230,60 @@ public interface BTEntryLocalService extends BaseLocalService,
 	* @param beanIdentifier the Spring bean ID for this bean
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
+
+	public com.liferay.portlet.backgroundtask.model.BTEntry addBTEntry(
+		long userId, long groupId, java.lang.Class taskExecutorClass,
+		java.lang.String name,
+		java.util.Map<java.lang.String, java.io.Serializable> taskContext,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.portlet.backgroundtask.model.BTEntry addBTEntry(
+		long userId, long groupId, java.lang.Class taskExecutorClass,
+		java.lang.String name,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.portlet.backgroundtask.model.BTEntry addBTEntry(
+		long userId, long groupId, java.lang.Class taskExecutorClass,
+		java.lang.String[] servletContextNames, java.lang.String name,
+		java.util.Map<java.lang.String, java.io.Serializable> taskContext,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void addBTEntryAttachment(long userId, long btEntryId,
+		java.lang.String fileName, java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void addBTEntryAttachment(long userId, long btEntryId,
+		java.lang.String fileName, java.io.InputStream inputStream)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.backgroundtask.model.BTEntry> getBTEntries(
+		long groupId, java.lang.String taskExecutorClassName)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.backgroundtask.model.BTEntry> getBTEntries(
+		long groupId, java.lang.String taskExecutorClassName, int status)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.portlet.backgroundtask.model.BTEntry updateBTEntry(
+		long btEntryId, int status,
+		java.util.Map<java.lang.String, java.io.Serializable> taskContext,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.portlet.backgroundtask.model.BTEntry updateBTEntry(
+		long btEntryId, int status,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 }

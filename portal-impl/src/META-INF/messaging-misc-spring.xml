@@ -14,6 +14,9 @@
 	<bean id="destination.async_service" class="com.liferay.portal.kernel.messaging.ParallelDestination">
 		<property name="name" value="liferay/async_service" />
 	</bean>
+	<bean id="destination.background_task" class="com.liferay.portal.kernel.messaging.ParallelDestination">
+		<property name="name" value="liferay/background_task" />
+	</bean>
 	<bean id="destination.convert_process" class="com.liferay.portal.kernel.messaging.SerialDestination">
 		<property name="name" value="liferay/convert_process" />
 	</bean>
@@ -60,6 +63,7 @@
 	<!-- Listeners -->
 
 	<bean id="messageListener.async_service" class="com.liferay.portal.messaging.async.AsyncMessageListener" />
+	<bean id="messageListener.background_task" class="com.liferay.portlet.backgroundtask.messaging.BackgroundTaskMessageListener" />
 	<bean id="messageListener.convert_process" class="com.liferay.portal.convert.messaging.ConvertProcessMessageListener" />
 	<bean id="messageListener.document_library_audio_processor" class="com.liferay.portlet.documentlibrary.messaging.AudioProcessorMessageListener" />
 	<bean id="messageListener.document_library_image_processor" class="com.liferay.portlet.documentlibrary.messaging.ImageProcessorMessageListener" />
@@ -109,6 +113,7 @@
 		<property name="destinations">
 			<list>
 				<ref bean="destination.async_service" />
+				<ref bean="destination.background_task" />
 				<ref bean="destination.convert_process" />
 				<ref bean="destination.document_library_audio_processor" />
 				<ref bean="destination.document_library_image_processor" />
@@ -133,6 +138,11 @@
 				<entry key="liferay/async_service">
 					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
 						<ref bean="messageListener.async_service" />
+					</list>
+				</entry>
+				<entry key="liferay/background_task">
+					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
+						<ref bean="messageListener.background_task" />
 					</list>
 				</entry>
 				<entry key="liferay/convert_process">

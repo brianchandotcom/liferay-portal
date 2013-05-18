@@ -21,45 +21,58 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @author Edward C. Han
  */
 public class MDRRuleGroupFinderUtil {
-	public static int countByKeywords(long groupId, java.lang.String keywords)
+	public static int countByKeywords(long groupId, java.lang.String keywords,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder().countByKeywords(groupId, keywords);
+		return getFinder().countByKeywords(groupId, keywords, params);
 	}
 
 	public static int countByG_N(long groupId, java.lang.String name,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder().countByG_N(groupId, name, andOperator);
+		return getFinder().countByG_N(groupId, name, params, andOperator);
 	}
 
 	public static int countByG_N(long groupId, java.lang.String[] names,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder().countByG_N(groupId, names, andOperator);
+		return getFinder().countByG_N(groupId, names, params, andOperator);
 	}
 
 	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> findByKeywords(
-		long groupId, java.lang.String keywords, int start, int end)
+		long groupId, java.lang.String keywords,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder().findByKeywords(groupId, keywords, start, end);
+		return getFinder().findByKeywords(groupId, keywords, params, start, end);
 	}
 
 	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> findByG_N(
-		long groupId, java.lang.String name, boolean andOperator)
+		long groupId, java.lang.String name,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder().findByG_N(groupId, name, andOperator);
+		return getFinder().findByG_N(groupId, name, params, andOperator);
 	}
 
 	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> findByG_N(
-		long groupId, java.lang.String name, boolean andOperator, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder().findByG_N(groupId, name, andOperator, start, end);
+		long groupId, java.lang.String name,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andOperator, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .findByG_N(groupId, name, params, andOperator, start, end);
 	}
 
 	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> findByG_N(
-		long groupId, java.lang.String[] names, boolean andOperator, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder().findByG_N(groupId, names, andOperator, start, end);
+		long groupId, java.lang.String[] names,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andOperator, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .findByG_N(groupId, names, params, andOperator, start, end);
 	}
 
 	public static MDRRuleGroupFinder getFinder() {

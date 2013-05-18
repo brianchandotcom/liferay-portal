@@ -1943,20 +1943,6 @@
 		<css-class-wrapper>license-manager</css-class-wrapper>
 	</portlet>
 	<portlet>
-		<portlet-name>177</portlet-name>
-		<icon>/html/icons/default.png</icon>
-		<struts-path>mobile_device_rules</struts-path>
-		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
-		<control-panel-entry-category>configuration</control-panel-entry-category>
-		<control-panel-entry-weight>3.0</control-panel-entry-weight>
-		<use-default-template>false</use-default-template>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/mobile_device_rules/css/main.css</header-portlet-css>
-		<css-class-wrapper>mobile-device-rules</css-class-wrapper>
-	</portlet>
-	<portlet>
 		<portlet-name>178</portlet-name>
 		<icon>/html/icons/default.png</icon>
 		<parent-struts-path>mobile_device_rules</parent-struts-path>

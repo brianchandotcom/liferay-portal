@@ -19,20 +19,30 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Company;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.security.auth.CompanyThreadLocal;
+import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
 import com.liferay.portlet.mobiledevicerules.model.impl.MDRRuleGroupImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Edward Han
  * @author Eduardo Lundgren
+ * @author Manuel de la Peña
  */
 public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 	implements MDRRuleGroupFinder {
@@ -43,7 +53,8 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 	public static final String FIND_BY_G_N =
 		MDRRuleGroupFinder.class.getName() + ".findByG_N";
 
-	public int countByKeywords(long groupId, String keywords)
+	public int countByKeywords(
+			long groupId, String keywords, LinkedHashMap<String, Object> params)
 		throws SystemException {
 
 		String[] names = null;
@@ -56,28 +67,46 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 			andOperator = true;
 		}
 
-		return countByG_N(groupId, names, andOperator);
+		return countByG_N(groupId, names, params, andOperator);
 	}
 
-	public int countByG_N(long groupId, String name, boolean andOperator)
+	public int countByG_N(
+			long groupId, String name, LinkedHashMap<String, Object> params,
+			boolean andOperator)
 		throws SystemException {
 
 		String[] names = CustomSQLUtil.keywords(name);
 
-		return countByG_N(groupId, names, andOperator);
+		return countByG_N(groupId, names, params, andOperator);
 	}
 
-	public int countByG_N(long groupId, String[] names, boolean andOperator)
+	public int countByG_N(
+			long groupId, String[] names, LinkedHashMap<String, Object> params,
+			boolean andOperator)
 		throws SystemException {
 
 		names = CustomSQLUtil.keywords(names);
+
+		if (params == null) {
+			params = _emptyLinkedHashMap;
+		}
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(COUNT_BY_G_N);
+			String cacheKey = _buildCacheKey(COUNT_BY_G_N, params);
+
+			String countByG_N = CustomSQLUtil.get(COUNT_BY_G_N);
+
+			StringBundler sb = new StringBundler();
+
+			sb.append(StringPool.OPEN_PARENTHESIS);
+			sb.append(replaceGroupIds(countByG_N, cacheKey, params));
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+
+			String sql = sql = sb.toString();
 
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "lower(name)", StringPool.LIKE, true, names);
@@ -90,6 +119,9 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(groupId);
+
+			setParams(qPos, params);
+
 			qPos.add(names, 2);
 
 			Iterator<Long> itr = q.iterate();
@@ -113,7 +145,8 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 	}
 
 	public List<MDRRuleGroup> findByKeywords(
-			long groupId, String keywords, int start, int end)
+			long groupId, String keywords, LinkedHashMap<String, Object> params,
+			int start, int end)
 		throws SystemException {
 
 		String[] names = null;
@@ -126,39 +159,56 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 			andOperator = true;
 		}
 
-		return findByG_N(groupId, names, andOperator, start, end);
+		return findByG_N(groupId, names, params, andOperator, start, end);
 	}
 
 	public List<MDRRuleGroup> findByG_N(
-			long groupId, String name, boolean andOperator)
+			long groupId, String name, LinkedHashMap<String, Object> params,
+			boolean andOperator)
 		throws SystemException {
 
 		return findByG_N(
-			groupId, name, andOperator, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			groupId, name, params, andOperator, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
 	}
 
 	public List<MDRRuleGroup> findByG_N(
-			long groupId, String name, boolean andOperator, int start, int end)
+			long groupId, String name, LinkedHashMap<String, Object> params,
+			boolean andOperator, int start, int end)
 		throws SystemException {
 
 		String[] names = CustomSQLUtil.keywords(name);
 
-		return findByG_N(groupId, names, andOperator, start, end);
+		return findByG_N(groupId, names, params, andOperator, start, end);
 	}
 
 	public List<MDRRuleGroup> findByG_N(
-			long groupId, String[] names, boolean andOperator, int start,
-			int end)
+			long groupId, String[] names, LinkedHashMap<String, Object> params,
+			boolean andOperator, int start, int end)
 		throws SystemException {
 
 		names = CustomSQLUtil.keywords(names);
+
+		if (params == null) {
+			params = _emptyLinkedHashMap;
+		}
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_G_N);
+			String cacheKey = _buildCacheKey(FIND_BY_G_N, params);
+
+			String findByG_N = CustomSQLUtil.get(FIND_BY_G_N);
+
+			StringBundler sb = new StringBundler();
+
+			sb.append(StringPool.OPEN_PARENTHESIS);
+			sb.append(replaceGroupIds(findByG_N, cacheKey, params));
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+
+			String sql = sb.toString();
 
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "lower(name)", StringPool.LIKE, true, names);
@@ -171,6 +221,9 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(groupId);
+
+			setParams(qPos, params);
+
 			qPos.add(names, 2);
 
 			return (List<MDRRuleGroup>)QueryUtil.list(
@@ -183,5 +236,88 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 			closeSession(session);
 		}
 	}
+
+	protected String getGroupIds(Map<String, Object> params) {
+
+		StringBundler sb = new StringBundler();
+
+		for (Map.Entry<String, Object> entry : params.entrySet()) {
+			String key = entry.getKey();
+
+			if (key.equals("includeGlobalScope")) {
+				boolean includeGlobalScope = (Boolean)entry.getValue();
+
+				sb.append("((groupId = ?)");
+
+				if (includeGlobalScope) {
+					sb.append(" OR ");
+					sb.append("(groupId = ?))");
+				}
+			}
+		}
+
+		return sb.toString();
+	}
+
+	protected String replaceGroupIds(
+		String sql, String cacheKey, Map<String, Object> params) {
+
+		if (params.isEmpty()) {
+			return StringUtil.replace(
+				sql,
+				new String[] {
+					"[$GROUP_ID$]"
+				},
+				new String[] {
+					"(groupId = ?)"
+				});
+		}
+
+		return StringUtil.replace(sql, "[$GROUP_ID$]", getGroupIds(params));
+	}
+
+	protected void setParams(QueryPos qPos, Map<String, Object> params)
+		throws PortalException, SystemException {
+
+		if ((params == null) || params.isEmpty()) {
+			return;
+		}
+
+		for (Map.Entry<String, Object> entry : params.entrySet()) {
+			String key = entry.getKey();
+
+			if (key.equals("includeGlobalScope")) {
+				boolean includeGlobalScope = (Boolean)entry.getValue();
+
+				if (includeGlobalScope) {
+					long currentCompanyId = CompanyThreadLocal.getCompanyId();
+
+					Company company = CompanyLocalServiceUtil.getCompany(
+						currentCompanyId);
+
+					Group globalGroup = company.getGroup();
+
+					qPos.add(globalGroup.getGroupId());
+				}
+			}
+		}
+	}
+
+	private String _buildCacheKey(
+		String keyPrefix, Map<String, Object> param1) {
+
+		StringBundler sb = new StringBundler(param1.size() + 2);
+
+		sb.append(keyPrefix);
+
+		for (Map.Entry<String, Object> entry : param1.entrySet()) {
+			sb.append(entry.getKey());
+		}
+
+		return sb.toString();
+	}
+
+	private LinkedHashMap<String, Object> _emptyLinkedHashMap =
+		new LinkedHashMap<String, Object>(0);
 
 }

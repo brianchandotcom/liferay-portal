@@ -35,6 +35,12 @@ public class TestSuiteConverter extends BaseConverter {
 		seleniumBuilderFileUtil.writeFile(
 			seleniumBuilderContext.getTestSuiteJavaFileName(testSuiteName),
 			content, true);
+
+		String contentHTML = processTemplate("test_suite_html.ftl", context);
+
+		seleniumBuilderFileUtil.writeFile(
+			seleniumBuilderContext.getTestSuiteHTMLFileName(testSuiteName),
+			contentHTML, false);
 	}
 
 }

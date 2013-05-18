@@ -337,6 +337,16 @@
 		</if>
 
 		<if>
+			<equals arg1="${test.ant.script.selenium.logger}" arg2="true" />
+			<then>
+				<property name="test.ant.script.file.selenium.logger" value="&lt;property name=&quot;test.selenium.logger&quot; value=&quot;true&quot; /&gt;" />
+			</then>
+			<else>
+				<property name="test.ant.script.file.selenium.logger" value=" " />
+			</else>
+		</if>
+
+		<if>
 			<not>
 				<isset property="test.ant.script.template" />
 			</not>
@@ -369,6 +379,16 @@
 			</then>
 			<else>
 				<property name="test.ant.script.file.selenium.implementation" value="&lt;param name=&quot;test.selenium.implementation&quot; value=&quot;selenium&quot; /&gt;" />
+			</else>
+		</if>
+
+		<if>
+			<equals arg1="${test.ant.script.selenium.logger}" arg2="true" />
+			<then>
+				<property name="test.ant.script.file.selenium.logger" value="&lt;param name=&quot;test.selenium.logger&quot; value=&quot;true&quot; /&gt;" />
+			</then>
+			<else>
+				<property name="test.ant.script.file.selenium.logger" value=" " />
 			</else>
 		</if>
 
@@ -427,7 +447,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="8" />
+		<property name="build-test-ant-scripts.version" value="9" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -2298,6 +2318,7 @@
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="smoke-test" />
+			<param name="test.ant.script.selenium.logger" value="true" />
 			<param name="test.ant.script.suite" value="SmokeTestSuite" />
 		</antcall>
 
@@ -3582,6 +3603,17 @@ svn --username ${svn.username} --password ${svn.password} update -r ${svn.info.r
 					file="portal-web/test/test-portal-web.properties"
 					token="selenium.implementation=com.thoughtworks.selenium.Selenium"
 					value="selenium.implementation=org.openqa.selenium.WebDriver"
+				/>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${test.selenium.logger}" arg2="true" />
+			<then>
+				<replace
+					file="portal-web/test/test-portal-web.properties"
+					token="selenium.logger=false"
+					value="selenium.logger=true"
 				/>
 			</then>
 		</if>

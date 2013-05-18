@@ -83,25 +83,46 @@ public class SeleniumUtil extends TestPropsValues {
 
 			liferaySelenium.setContext(clazz.getName());
 
-			_selenium = _wrapWithLoggerHandler(liferaySelenium);
+			if (SELENIUM_LOGGER) {
+				_selenium = _wrapWithLoggerHandler(liferaySelenium);
+			}
+			else {
+				_selenium = liferaySelenium;
+			}
 		}
 		else if (SELENIUM_IMPLEMENTATION.equals(WebDriver.class.getName())) {
 			if (BROWSER_TYPE.equals("*chrome") ||
 				BROWSER_TYPE.equals("*firefox")) {
 
-				_selenium = _wrapWithLoggerHandler(
-					new FirefoxWebDriverImpl(projectDir, PORTAL_URL));
+				if (SELENIUM_LOGGER) {
+					_selenium = _wrapWithLoggerHandler(
+						new FirefoxWebDriverImpl(projectDir, PORTAL_URL));
+				}
+				else {
+					_selenium = new FirefoxWebDriverImpl(projectDir, PORTAL_URL);
+				}
 			}
 			else if (BROWSER_TYPE.equals("*googlechrome")) {
-				_selenium = _wrapWithLoggerHandler(
-					new ChromeWebDriverImpl(projectDir, PORTAL_URL));
-
+				if (SELENIUM_LOGGER) {
+					_selenium = _wrapWithLoggerHandler(
+						new ChromeWebDriverImpl(projectDir, PORTAL_URL));
+				}
+				else {
+					_selenium = new ChromeWebDriverImpl(projectDir, PORTAL_URL);
+				}
 			}
 			else if (BROWSER_TYPE.equals("*iehta") ||
 					 BROWSER_TYPE.equals("*iexplore")) {
 
-				_selenium = _wrapWithLoggerHandler(
-					new InternetExplorerWebDriverImpl(projectDir, PORTAL_URL));
+				if (SELENIUM_LOGGER) {
+					_selenium = _wrapWithLoggerHandler(
+						new InternetExplorerWebDriverImpl(
+							projectDir, PORTAL_URL));
+				}
+				else {
+					_selenium = new InternetExplorerWebDriverImpl(
+						projectDir, PORTAL_URL);
+				}
 			}
 			else {
 				throw new RuntimeException(

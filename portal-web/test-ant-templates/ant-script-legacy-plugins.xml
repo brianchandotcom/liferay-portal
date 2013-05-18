@@ -23,6 +23,7 @@
 			${test.ant.script.file.legacy.plugins}
 			${test.ant.script.file.legacy.version}
 			${test.ant.script.file.selenium.implementation}
+			${test.ant.script.file.selenium.logger}
 			<property name="test.name" value="${test.ant.script.suite}" />
 		</ant>
 	</target>

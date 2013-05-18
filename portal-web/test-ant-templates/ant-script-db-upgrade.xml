@@ -34,6 +34,7 @@
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets.ee}
 			${test.ant.script.file.selenium.implementation}
+			${test.ant.script.file.selenium.logger}
 			<param name="bundled.dir.name" value="${db-upgrade.bundled.tomcat.dir.name}" />
 			<param name="bundled.file.name" value="${db-upgrade.bundled.tomcat.file.name}" />
 			<param name="legacy.theme.ids" value="classic,controlpanel" />
@@ -51,6 +52,7 @@
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets}
 			${test.ant.script.file.selenium.implementation}
+			${test.ant.script.file.selenium.logger}
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}LatestTestSuite" />
 		</antcall>
 
@@ -79,6 +81,7 @@
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets.ee}
 			${test.ant.script.file.selenium.implementation}
+			${test.ant.script.file.selenium.logger}
 			<param name="bundled.dir.name" value="${db-upgrade.bundled.tomcat.dir.name}" />
 			<param name="bundled.file.name" value="${db-upgrade.bundled.tomcat.file.name}" />
 			<param name="legacy.theme.ids" value="classic,controlpanel" />
@@ -96,6 +99,7 @@
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets}
 			${test.ant.script.file.selenium.implementation}
+			${test.ant.script.file.selenium.logger}
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}LatestTestSuite" />
 		</antcall>
 	</target>
@@ -127,6 +131,7 @@
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets.ee}
 			${test.ant.script.file.selenium.implementation}
+			${test.ant.script.file.selenium.logger}
 			<param name="bundled.dir.name" value="${db-upgrade.bundled.tomcat.dir.name}" />
 			<param name="bundled.file.name" value="${db-upgrade.bundled.tomcat.file.name}" />
 			<param name="legacy.theme.ids" value="classic,controlpanel" />
@@ -144,6 +149,7 @@
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets}
 			${test.ant.script.file.selenium.implementation}
+			${test.ant.script.file.selenium.logger}
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}LatestTestSuite" />
 		</antcall>
 
@@ -179,6 +185,7 @@
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets.ee}
 			${test.ant.script.file.selenium.implementation}
+			${test.ant.script.file.selenium.logger}
 			<param name="bundled.dir.name" value="${db-upgrade.bundled.tomcat.dir.name}" />
 			<param name="bundled.file.name" value="${db-upgrade.bundled.tomcat.file.name}" />
 			<param name="legacy.theme.ids" value="classic,controlpanel" />
@@ -196,6 +203,7 @@
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets}
 			${test.ant.script.file.selenium.implementation}
+			${test.ant.script.file.selenium.logger}
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}LatestTestSuite" />
 		</antcall>
 
@@ -231,6 +239,7 @@
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets.ee}
 			${test.ant.script.file.selenium.implementation}
+			${test.ant.script.file.selenium.logger}
 			<param name="bundled.dir.name" value="${db-upgrade.bundled.tomcat.dir.name}" />
 			<param name="bundled.file.name" value="${db-upgrade.bundled.tomcat.file.name}" />
 			<param name="legacy.theme.ids" value="classic,controlpanel" />
@@ -248,6 +257,7 @@
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets}
 			${test.ant.script.file.selenium.implementation}
+			${test.ant.script.file.selenium.logger}
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}LatestTestSuite" />
 		</antcall>
 
@@ -283,6 +293,7 @@
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets.ee}
 			${test.ant.script.file.selenium.implementation}
+			${test.ant.script.file.selenium.logger}
 			<param name="bundled.dir.name" value="${db-upgrade.bundled.tomcat.dir.name}" />
 			<param name="bundled.file.name" value="${db-upgrade.bundled.tomcat.file.name}" />
 			<param name="legacy.theme.ids" value="classic,controlpanel" />
@@ -300,6 +311,7 @@
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets}
 			${test.ant.script.file.selenium.implementation}
+			${test.ant.script.file.selenium.logger}
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}LatestTestSuite" />
 		</antcall>
 
@@ -335,6 +347,7 @@
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets.ee}
 			${test.ant.script.file.selenium.implementation}
+			${test.ant.script.file.selenium.logger}
 			<param name="bundled.dir.name" value="${db-upgrade.bundled.tomcat.dir.name}" />
 			<param name="bundled.file.name" value="${db-upgrade.bundled.tomcat.file.name}" />
 			<param name="legacy.theme.ids" value="classic,controlpanel" />
@@ -352,6 +365,7 @@
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets}
 			${test.ant.script.file.selenium.implementation}
+			${test.ant.script.file.selenium.logger}
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}LatestTestSuite" />
 		</antcall>
 
@@ -387,6 +401,7 @@
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets.ee}
 			${test.ant.script.file.selenium.implementation}
+			${test.ant.script.file.selenium.logger}
 			<param name="bundled.dir.name" value="${db-upgrade.bundled.tomcat.dir.name}" />
 			<param name="bundled.file.name" value="${db-upgrade.bundled.tomcat.file.name}" />
 			<param name="legacy.theme.ids" value="classic,controlpanel" />
@@ -404,6 +419,7 @@
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets}
 			${test.ant.script.file.selenium.implementation}
+			${test.ant.script.file.selenium.logger}
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}LatestTestSuite" />
 		</antcall>
 
@@ -439,6 +455,7 @@
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets.ee}
 			${test.ant.script.file.selenium.implementation}
+			${test.ant.script.file.selenium.logger}
 			<param name="bundled.dir.name" value="${db-upgrade.bundled.tomcat.dir.name}" />
 			<param name="bundled.file.name" value="${db-upgrade.bundled.tomcat.file.name}" />
 			<param name="legacy.theme.ids" value="classic,controlpanel" />
@@ -456,6 +473,7 @@
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets}
 			${test.ant.script.file.selenium.implementation}
+			${test.ant.script.file.selenium.logger}
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}LatestTestSuite" />
 		</antcall>
 

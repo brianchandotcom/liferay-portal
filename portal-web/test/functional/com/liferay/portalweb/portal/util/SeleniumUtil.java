@@ -83,7 +83,7 @@ public class SeleniumUtil extends TestPropsValues {
 
 			liferaySelenium.setContext(clazz.getName());
 
-			if (SELENIUM_LOGGER) {
+			if (SELENIUM_LOGGER_ENABLED) {
 				_selenium = _wrapWithLoggerHandler(liferaySelenium);
 			}
 			else {
@@ -94,7 +94,7 @@ public class SeleniumUtil extends TestPropsValues {
 			if (BROWSER_TYPE.equals("*chrome") ||
 				BROWSER_TYPE.equals("*firefox")) {
 
-				if (SELENIUM_LOGGER) {
+				if (SELENIUM_LOGGER_ENABLED) {
 					_selenium = _wrapWithLoggerHandler(
 						new FirefoxWebDriverImpl(projectDir, PORTAL_URL));
 				}
@@ -104,7 +104,7 @@ public class SeleniumUtil extends TestPropsValues {
 				}
 			}
 			else if (BROWSER_TYPE.equals("*googlechrome")) {
-				if (SELENIUM_LOGGER) {
+				if (SELENIUM_LOGGER_ENABLED) {
 					_selenium = _wrapWithLoggerHandler(
 						new ChromeWebDriverImpl(projectDir, PORTAL_URL));
 				}
@@ -115,7 +115,7 @@ public class SeleniumUtil extends TestPropsValues {
 			else if (BROWSER_TYPE.equals("*iehta") ||
 					 BROWSER_TYPE.equals("*iexplore")) {
 
-				if (SELENIUM_LOGGER) {
+				if (SELENIUM_LOGGER_ENABLED) {
 					_selenium = _wrapWithLoggerHandler(
 						new InternetExplorerWebDriverImpl(
 							projectDir, PORTAL_URL));

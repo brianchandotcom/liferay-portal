@@ -49,7 +49,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="app.server.bundled" value="true" />
 			<property name="app.server.type" value="glassfish" />
 			<property name="bundled.dir.name" value="$${db-upgrade.bundled.glassfish.dir.name}" />
@@ -92,7 +92,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="bundled.dir.name" value="$${db-upgrade.bundled.jboss.dir.name}" />
 			<property name="bundled.file.name" value="$${db-upgrade.bundled.jboss.file.name}" />
 			<property name="legacy.theme.ids" value="classic,controlpanel" />
@@ -133,7 +133,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="bundled.dir.name" value="$${db-upgrade.bundled.tomcat.dir.name}" />
 			<property name="bundled.file.name" value="$${db-upgrade.bundled.tomcat.file.name}" />
 			<property name="legacy.theme.ids" value="classic,controlpanel" />
@@ -181,7 +181,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="bundled.dir.name" value="$${db-upgrade.bundled.tomcat.dir.name}" />
 			<property name="bundled.file.name" value="$${db-upgrade.bundled.tomcat.file.name}" />
 			<property name="legacy.theme.ids" value="classic,controlpanel" />
@@ -223,7 +223,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
 		</ant>
@@ -254,7 +254,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
 		</ant>
@@ -285,7 +285,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
 		</ant>
@@ -316,7 +316,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
 		</ant>
@@ -347,7 +347,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
 		</ant>
@@ -385,7 +385,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
 		</ant>
@@ -420,7 +420,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
 		</ant>
@@ -451,7 +451,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
 		</ant>
@@ -482,7 +482,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.browser" value="googlechrome" />
 			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
@@ -514,7 +514,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.browser" value="iehta" />
 			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
@@ -553,7 +553,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
 		</ant>
@@ -595,7 +595,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
 		</ant>
@@ -637,7 +637,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
 		</ant>
@@ -679,7 +679,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
 		</ant>
@@ -721,7 +721,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
 		</ant>
@@ -763,7 +763,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
 		</ant>
@@ -805,7 +805,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
 		</ant>
@@ -840,7 +840,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
 		</ant>
@@ -872,7 +872,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
 		</ant>
@@ -903,7 +903,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
 		</ant>
@@ -935,7 +935,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
 		</ant>

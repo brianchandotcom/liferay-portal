@@ -52,8 +52,8 @@ public class TestPropsValues extends com.liferay.portal.util.TestPropsValues {
 	public static final String SELENIUM_IMPLEMENTATION = TestPropsUtil.get(
 		"selenium.implementation");
 
-	public static final boolean SELENIUM_LOGGER = GetterUtil.getBoolean(
-		TestPropsUtil.get("selenium.logger"));
+	public static final boolean SELENIUM_LOGGER_ENABLED = GetterUtil.getBoolean(
+		TestPropsUtil.get("selenium.logger.enabled"));
 
 	public static final int SELENIUM_PORT = GetterUtil.getInteger(
 		TestPropsUtil.get("selenium.port"));

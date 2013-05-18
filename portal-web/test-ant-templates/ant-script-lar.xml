@@ -25,7 +25,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.name" value="${test.ant.script.suite.1}" />
 		</ant>
 
@@ -37,7 +37,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.delete-selenium-output" value="true" />
 			<property name="test.name" value="${test.ant.script.suite.2}" />
 		</ant>
@@ -65,7 +65,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.name" value="${test.ant.script.suite.1}" />
 		</ant>
 
@@ -77,7 +77,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.delete-selenium-output" value="true" />
 			<property name="test.name" value="${test.ant.script.suite.2}" />
 		</ant>
@@ -105,7 +105,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.name" value="${test.ant.script.suite.1}" />
 		</ant>
 
@@ -117,7 +117,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.delete-selenium-output" value="true" />
 			<property name="test.name" value="${test.ant.script.suite.2}" />
 		</ant>
@@ -145,7 +145,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.name" value="${test.ant.script.suite.1}" />
 		</ant>
 
@@ -157,7 +157,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.delete-selenium-output" value="true" />
 			<property name="test.name" value="${test.ant.script.suite.2}" />
 		</ant>
@@ -185,7 +185,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.name" value="${test.ant.script.suite.1}" />
 		</ant>
 
@@ -197,7 +197,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.delete-selenium-output" value="true" />
 			<property name="test.name" value="${test.ant.script.suite.2}" />
 		</ant>
@@ -232,7 +232,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.name" value="${test.ant.script.suite.1}" />
 		</ant>
 
@@ -244,7 +244,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.delete-selenium-output" value="true" />
 			<property name="test.name" value="${test.ant.script.suite.2}" />
 		</ant>
@@ -276,7 +276,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.name" value="${test.ant.script.suite.1}" />
 		</ant>
 
@@ -288,7 +288,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.delete-selenium-output" value="true" />
 			<property name="test.name" value="${test.ant.script.suite.2}" />
 		</ant>
@@ -316,7 +316,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.name" value="${test.ant.script.suite.1}" />
 		</ant>
 
@@ -328,7 +328,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.delete-selenium-output" value="true" />
 			<property name="test.name" value="${test.ant.script.suite.2}" />
 		</ant>
@@ -356,7 +356,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.browser" value="googlechrome" />
 			<property name="test.name" value="${test.ant.script.suite.1}" />
 		</ant>
@@ -369,7 +369,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.delete-selenium-output" value="true" />
 			<property name="test.browser" value="googlechrome" />
 			<property name="test.name" value="${test.ant.script.suite.2}" />
@@ -398,7 +398,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.browser" value="iehta" />
 			<property name="test.name" value="${test.ant.script.suite.1}" />
 		</ant>
@@ -411,7 +411,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.delete-selenium-output" value="true" />
 			<property name="test.browser" value="iehta" />
 			<property name="test.name" value="${test.ant.script.suite.2}" />
@@ -447,7 +447,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.name" value="${test.ant.script.suite.1}" />
 		</ant>
 
@@ -459,7 +459,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.delete-selenium-output" value="true" />
 			<property name="test.name" value="${test.ant.script.suite.2}" />
 		</ant>
@@ -498,7 +498,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.name" value="${test.ant.script.suite.1}" />
 		</ant>
 
@@ -510,7 +510,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.delete-selenium-output" value="true" />
 			<property name="test.name" value="${test.ant.script.suite.2}" />
 		</ant>
@@ -549,7 +549,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.name" value="${test.ant.script.suite.1}" />
 		</ant>
 
@@ -561,7 +561,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.delete-selenium-output" value="true" />
 			<property name="test.name" value="${test.ant.script.suite.2}" />
 		</ant>
@@ -600,7 +600,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.name" value="${test.ant.script.suite.1}" />
 		</ant>
 
@@ -612,7 +612,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.delete-selenium-output" value="true" />
 			<property name="test.name" value="${test.ant.script.suite.2}" />
 		</ant>
@@ -651,7 +651,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.name" value="${test.ant.script.suite.1}" />
 		</ant>
 
@@ -663,7 +663,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.delete-selenium-output" value="true" />
 			<property name="test.name" value="${test.ant.script.suite.2}" />
 		</ant>
@@ -698,7 +698,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.name" value="${test.ant.script.suite.1}" />
 		</ant>
 
@@ -710,7 +710,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.delete-selenium-output" value="true" />
 			<property name="test.name" value="${test.ant.script.suite.2}" />
 		</ant>
@@ -749,7 +749,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.name" value="${test.ant.script.suite.1}" />
 		</ant>
 
@@ -761,7 +761,7 @@
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.delete-selenium-output" value="true" />
 			<property name="test.name" value="${test.ant.script.suite.2}" />
 		</ant>
@@ -787,13 +787,13 @@
 
 		<ant antfile="build-test-weblogic-10.3.xml" target="run-selenium-weblogic-10.3">
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.name" value="${test.ant.script.suite.1}" />
 		</ant>
 
 		<ant antfile="build-test-weblogic-10.3.xml" target="run-selenium-weblogic-10.3">
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.delete-selenium-output" value="true" />
 			<property name="test.name" value="${test.ant.script.suite.2}" />
 		</ant>
@@ -815,13 +815,13 @@
 
 		<ant antfile="build-test-websphere-6.1.xml" target="run-selenium-websphere-6.1">
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.name" value="${test.ant.script.suite.1}" />
 		</ant>
 
 		<ant antfile="build-test-websphere-6.1.xml" target="run-selenium-websphere-6.1">
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.delete-selenium-output" value="true" />
 			<property name="test.name" value="${test.ant.script.suite.2}" />
 		</ant>
@@ -843,13 +843,13 @@
 
 		<ant antfile="build-test-websphere-7.0.xml" target="run-selenium-websphere-7.0">
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.name" value="${test.ant.script.suite.1}" />
 		</ant>
 
 		<ant antfile="build-test-websphere-7.0.xml" target="run-selenium-websphere-7.0">
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.delete-selenium-output" value="true" />
 			<property name="test.name" value="${test.ant.script.suite.2}" />
 		</ant>
@@ -871,13 +871,13 @@
 
 		<ant antfile="build-test-websphere-8.0.xml" target="run-selenium-websphere-8.0">
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.name" value="${test.ant.script.suite.1}" />
 		</ant>
 
 		<ant antfile="build-test-websphere-8.0.xml" target="run-selenium-websphere-8.0">
 			${test.ant.script.file.selenium.implementation}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.delete-selenium-output" value="true" />
 			<property name="test.name" value="${test.ant.script.suite.2}" />
 		</ant>

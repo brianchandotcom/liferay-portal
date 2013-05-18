@@ -30,7 +30,7 @@
 			${test.ant.script.file.plugin.portlets.properties}
 			${test.ant.script.file.plugin.themes}
 			${test.ant.script.file.plugin.webs}
-			${test.ant.script.file.selenium.logger}
+			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.rebuild-database" value="true" />
 			<property name="test.database.minimal" value="true" />
 			<property name="test.name" value="${test.ant.script.suite}" />

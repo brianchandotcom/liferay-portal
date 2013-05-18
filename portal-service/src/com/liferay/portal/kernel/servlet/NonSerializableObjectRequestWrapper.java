@@ -71,18 +71,18 @@ public class NonSerializableObjectRequestWrapper
 			object = super.getAttribute(name);
 		}
 		catch (Exception e) {
-			
 			if (e instanceof NotSerializableException) {
 
+				// LPS-31885
+
 				String message = e.getMessage();
-	
-				if ((message != null) && message.contains("BEA-101362")) {
-					// LPS-31885: Ignore exception thrown by WebLogic
-				}
-				else {
+
+				if ((message == null) || !message.contains("BEA-101362")) {
 					_log.error(e, e);
 				}
 			}
+
+			return null;
 		}
 
 		object = NonSerializableObjectHandler.getValue(object);
@@ -99,11 +99,11 @@ public class NonSerializableObjectRequestWrapper
 		super.setAttribute(name, object);
 	}
 
-	private static final Log _log =
-		LogFactoryUtil.getLog(NonSerializableObjectRequestWrapper.class);
-
 	private static final boolean _WEBLOGIC_REQUEST_WRAP_NON_SERIALIZABLE =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.WEBLOGIC_REQUEST_WRAP_NON_SERIALIZABLE));
+
+	private static Log _log = LogFactoryUtil.getLog(
+		NonSerializableObjectRequestWrapper.class);
 
 }

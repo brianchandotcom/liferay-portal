@@ -8,9 +8,23 @@ AUI.add(
 
 		var CSS_OVER = 'over';
 
+		var STR_ACTION = 'action';
+
+		var STR_ALIGN_NODE = 'align.node';
+
 		var STR_BOUNDING_BOX = 'boundingBox';
 
+		var STR_CLICK = 'click';
+
+		var STR_CLICKOUTSIDE = 'clickoutside';
+
 		var STR_CURRENT_NODE = 'currentNode';
+
+		var STR_MOUSEENTER = 'mouseenter';
+
+		var STR_RESPONSE_DATA = 'responseData';
+
+		var STR_RIGHT = 'right';
 
 		var TPL_MESSAGE_ERROR = '<div class="portlet-msg-error">{0}</div>';
 
@@ -23,11 +37,17 @@ AUI.add(
 			initializer: function(config) {
 				var instance = this;
 
+				instance._eventHandles = [];
+
 				instance._loadPreviewTask = A.debounce('_loadPreviewFn', 200, instance);
 
-				instance.after(instance._createToolTip, instance, '_afterSuccess');
+				instance._bindUIACPreview();
+			},
 
-				instance._createToolTip();
+			destructor: function() {
+				var instance = this;
+
+				(new A.EventHandle(instance._eventHandles)).detach();
 			},
 
 			_afterPreviewFailure: function(event) {
@@ -40,7 +60,7 @@ AUI.add(
 					]
 				);
 
-				instance._tooltip.set(BODY_CONTENT, errorMsg);
+				tooltip.setStdModContent(A.WidgetStdMod.BODY, errorMsg);
 			},
 
 			_afterPreviewSuccess: function(event) {
@@ -48,39 +68,23 @@ AUI.add(
 
 				var tooltip = instance._tooltip;
 
-				tooltip.set(BODY_CONTENT, event.currentTarget.get('responseData'));
+				tooltip.setStdModContent(A.WidgetStdMod.BODY, event.currentTarget.get(STR_RESPONSE_DATA));
+				tooltip.align();
 
-				tooltip.get(STR_BOUNDING_BOX).one('.add-button-preview').on('click', instance._addApplication, instance);
+				instance._eventHandles.push(
+					tooltip.get(STR_BOUNDING_BOX).one('.add-button-preview').on(STR_CLICK, instance._addApplication, instance)
+				);
 			},
 
-			_createToolTip: function() {
+			_bindUIACPreview: function() {
 				var instance = this;
 
-				if (instance._tooltip) {
-					instance._tooltip.destroy();
-				}
-
-				instance._tooltip = new AddContentTooltip(
-					{
-						align: {
-							points: ['lc', 'rc']
-						},
-						cssClass: 'lfr-content-preview-popup',
-						constrain: true,
-						hideOn: 'mouseleave',
-						on: {
-							show: A.bind('_onTooltipShow', instance),
-							hide: function() {
-								var currentNode = this.get(STR_CURRENT_NODE);
-
-								currentNode.removeClass(CSS_OVER);
-							}
-						},
-						showArrow: false,
-						showOn: 'mouseenter',
-						trigger: '.has-preview'
-					}
-				).render();
+				Liferay.Dockbar.getPanelNode().delegate(
+					STR_MOUSEENTER,
+					instance._showTooltip,
+					'.has-preview',
+					instance
+				);
 			},
 
 			_getIOPreview: function() {
@@ -90,7 +94,7 @@ AUI.add(
 
 				if (!ioPreview) {
 					ioPreview = A.io.request(
-						instance._addContentForm.getAttribute('action'),
+						instance._addContentForm.getAttribute(STR_ACTION),
 						{
 							after: {
 								failure: A.bind('_afterPreviewFailure', instance),
@@ -110,6 +114,38 @@ AUI.add(
 				return ioPreview;
 			},
 
+			_getTooltip: function() {
+				var instance = this;
+
+				var tooltip = instance._tooltip;
+
+				if (!tooltip) {
+					tooltip = new A.Popover(
+						{
+							align: {
+								points: [A.WidgetPositionAlign.LC, A.WidgetPositionAlign.RC]
+							},
+							constrain: true,
+							position: STR_RIGHT,
+							visible: false,
+							zIndex: 500
+						}
+					);
+
+					tooltip.get(STR_BOUNDING_BOX).addClass('lfr-add-content-preview');
+
+					tooltip.render();
+
+					instance._eventHandles.push(
+						tooltip.get(STR_BOUNDING_BOX).on(STR_CLICKOUTSIDE, tooltip.hide, tooltip)
+					);
+
+					instance._tooltip = tooltip;
+				}
+
+				return tooltip;
+			},
+
 			_loadPreviewFn: function(className, classPK) {
 				var instance = this;
 
@@ -123,54 +159,26 @@ AUI.add(
 				ioPreview.start();
 			},
 
-			_onTooltipShow: function(event) {
+			_showTooltip: function(event) {
 				var instance = this;
 
-				var tooltip = instance._tooltip;
+				var currentNode = event.currentTarget;
+
+				var tooltip = instance._getTooltip();
 
 				tooltip.set(BODY_CONTENT, TPL_LOADING);
+				tooltip.set(STR_ALIGN_NODE, currentNode);
 
-				var currentNode = tooltip.get(STR_CURRENT_NODE);
-
-				if (instance._previousNode && (instance._previousNode != currentNode)) {
-					currentNode.addClass(CSS_OVER);
-
-					instance._previousNode.removeClass(CSS_OVER);
-				}
-
-				instance._previousNode = currentNode;
+				tooltip.show();
 
 				instance._loadPreviewTask(currentNode.attr('data-class-name'), currentNode.attr('data-class-pk'));
-
-				tooltip.get(STR_BOUNDING_BOX).show();
 			}
 		};
 
-		var AddContentTooltip = A.Component.create(
-			{
-				EXTENDS: A.Tooltip,
-				NAME: 'addcontenttooltip',
-				prototype: {
-					_setShowOn: function(eventType) {
-						var instance = this;
-
-						AddContentTooltip.superclass._setShowOn.call(instance, eventType);
-
-						var trigger = instance.get('trigger');
-
-						trigger.detach('mousedown', instance._stopTriggerEventPropagation);
-
-						instance.get(STR_BOUNDING_BOX).hide();
-					}
-				}
-			}
-		);
-
 		Dockbar.AddContentPreview = AddContentPreview;
-		Dockbar.AddContentTooltip = AddContentTooltip;
 	},
 	'',
 	{
-		requires: ['aui-io-request', 'aui-tooltip-deprecated', 'event-mouseenter']
+		requires: ['aui-debounce', 'aui-io-request', 'aui-popover', 'event-mouseenter']
 	}
 );

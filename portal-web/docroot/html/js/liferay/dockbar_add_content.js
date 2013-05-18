@@ -15,7 +15,9 @@ AUI.add(
 
 		var DATA_STYLE = 'data-style';
 
-		var SELECTOR_BUTTON = '.button';
+		var SELECTOR_BUTTON = '.btn';
+
+		var SELECTOR_ADD_CONTENT_ITEM = '.add-content-item';
 
 		var STR_ACTION = 'action';
 
@@ -44,12 +46,11 @@ AUI.add(
 						instance._addApplicationForm = instance.byId('addApplicationForm');
 						instance._addContentForm = instance.byId('addContentForm');
 						instance._addPanelContainer = instance.byId('addPanelContainer');
-						instance._closePanel = instance.byId('closePanel');
+						instance._closePanel = instance._addPanelContainer.one('#closePanel');
 						instance._entriesContainer = instance.byId('entriesContainer');
 						instance._numItems = instance.byId('numItems');
 						instance._searchContentInput = instance.byId('searchContentInput');
 						instance._styleButtonsList = instance.byId('styleButtons');
-
 						instance._styleButtons = instance._styleButtonsList.all(SELECTOR_BUTTON);
 
 						instance._bindUI();
@@ -130,7 +131,7 @@ AUI.add(
 
 						instance._closePanel.on(STR_CLICK, Dockbar.loadPanel, Dockbar);
 
-						instance._addPanelContainer.delegate(STR_CLICK, instance._addApplication, '.add-content-item', instance);
+						instance._addPanelContainer.delegate(STR_CLICK, instance._addApplication, SELECTOR_ADD_CONTENT_ITEM, instance);
 
 						instance._styleButtonsList.delegate(STR_CLICK, instance._onChangeDisplayStyle, SELECTOR_BUTTON, instance);
 
@@ -211,7 +212,7 @@ AUI.add(
 
 						var currentTarget = event.currentTarget;
 
-						currentTarget.radioClass('selected');
+						currentTarget.radioClass('active');
 
 						var displayStyle = currentTarget.attr(DATA_STYLE);
 
@@ -241,7 +242,7 @@ AUI.add(
 					_onPortletClose: function(event) {
 						var instance = this;
 
-						var item = instance._addPanelContainer.one('.lfr-portlet-item[data-plid=' + event.plid + '][data-portlet-id=' + event.portletId + '][data-instanceable=false]');
+						var item = instance._addPanelContainer.one('.lfr-content-item[data-plid=' + event.plid + '][data-portlet-id=' + event.portletId + '][data-instanceable=false]');
 
 						if (item && item.hasClass(CSS_LFR_PORTLET_USED)) {
 							var portletId = item.attr(DATA_PORTLET_ID);
@@ -253,7 +254,7 @@ AUI.add(
 					_refreshContentList: function(event) {
 						var instance = this;
 
-						var styleButton = instance._styleButtonsList.one('.selected');
+						var styleButton = instance._styleButtonsList.one('.active');
 
 						var displayStyle = styleButton.attr(DATA_STYLE);
 

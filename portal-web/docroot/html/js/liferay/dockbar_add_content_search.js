@@ -14,7 +14,7 @@ AUI.add(
 
 				instance._searchApplication = instance.byId('searchApplication');
 
-				instance._portlets = instance._addPanelContainer.all('.content-item');
+				instance._portlets = instance._addPanelContainer.all('.lfr-content-item');
 				instance._categories = instance._addPanelContainer.all('.lfr-content-category');
 				instance._categoryContainers = instance._addPanelContainer.all('.lfr-add-content');
 

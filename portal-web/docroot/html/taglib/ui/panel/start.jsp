@@ -27,4 +27,4 @@
 		</div>
 	</div>
 	<div class="<%= contentCssClass %>" id="<%= id %>Content">
-		<div class="accordion-inner">
+		<div class="accordion-inner row-fluid">

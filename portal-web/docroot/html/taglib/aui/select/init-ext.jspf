@@ -41,11 +41,11 @@ else if (Validator.isNotNull(title)) {
 String controlGroupCss = "control-group";
 
 if (inlineField) {
-	controlGroupCss = controlGroupCss.concat(" aui-control-group-inline");
+	controlGroupCss = controlGroupCss.concat(" control-group-inline");
 }
 
 if (Validator.isNotNull(inlineLabel)) {
-	controlGroupCss = controlGroupCss.concat(" aui-form-inline");
+	controlGroupCss = controlGroupCss.concat(" form-inline");
 }
 
 String fieldCss = AUIUtil.buildCss("aui-field-select", disabled, first, last, cssClass);

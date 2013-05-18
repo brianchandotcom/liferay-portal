@@ -18,7 +18,7 @@ AUI.add(
 
 		var EVENT_CLICK = 'click';
 
-		var TPL_ADD_CONTENT = '<div class="lfr-add-panel" />';
+		var TPL_ADD_CONTENT = '<div class="span4" />';
 
 		var TPL_LOADING = '<div class="loading-animation" />';
 
@@ -109,6 +109,12 @@ AUI.add(
 
 				instance.messageList = [];
 				instance.messageIdList = [];
+			},
+
+			getPanelNode: function() {
+				var instance = this;
+
+				return instance._getPanelNode();
 			},
 
 			loadPanel: function() {
@@ -217,7 +223,7 @@ AUI.add(
 
 						addPanelNode.plug(A.Plugin.ParseContent);
 
-						BODY.appendChild(addPanelNode);
+						A.one('#wrapper .row-fluid').prepend(addPanelNode);
 
 						addPanelNode.set('id', instance._namespace + 'addPanelSidebar');
 
@@ -235,15 +241,19 @@ AUI.add(
 
 				var addPanelNode = instance._getPanelNode();
 
-				if (BODY.hasClass(CSS_ADD_CONTENT)) {
-					instance._setPanelOffset();
+				var contentWrapper = A.one('#content-wrapper');
 
+				if (BODY.hasClass(CSS_ADD_CONTENT)) {
 					instance._addPanel();
 
 					addPanelNode.show();
+
+					contentWrapper.replaceClass('span12', 'span8');
 				}
 				else {
 					addPanelNode.hide();
+
+					contentWrapper.replaceClass('span8', 'span12');
 				}
 			},
 
@@ -266,12 +276,6 @@ AUI.add(
 				var instance = this;
 
 				instance._getPanelNode().html(TPL_LOADING);
-			},
-
-			_setPanelOffset: function() {
-				var instance = this;
-
-				instance._addPanelNode.setStyle('top', instance.dockBar.height());
 			},
 
 			_toggleAppShortcut: function(item, force) {

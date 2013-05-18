@@ -35,110 +35,121 @@ boolean viewPreview = ParamUtil.getBoolean(request, "viewPreview");
 			}
 			%>
 
-			<liferay-ui:panel collapsible="<%= false %>" cssClass="clearfix panel-page-category recent unstyled" extended="<%= true %>" id="manageRecentPanel" persistState="<%= true %>" title="<%= panelTitle %>">
+			<liferay-ui:panel collapsible="<%= false %>" cssClass="clearfix lfr-component panel-page-category recent" extended="<%= true %>" id="manageRecentPanel" persistState="<%= true %>" title="<%= panelTitle %>">
+				<aui:nav cssClass="nav-list no-margin-nav-list">
 
-				<%
-				int deltaDefault = GetterUtil.getInteger(SessionClicks.get(request, "liferay_addpanel_numitems", "10"));
-				int delta = ParamUtil.getInteger(request, "delta", deltaDefault);
+					<%
+					int deltaDefault = GetterUtil.getInteger(SessionClicks.get(request, "liferay_addpanel_numitems", "10"));
+					int delta = ParamUtil.getInteger(request, "delta", deltaDefault);
 
-				String displayStyleDefault = GetterUtil.getString(SessionClicks.get(request, "liferay_addpanel_displaystyle", "descriptive"));
-				String displayStyle = ParamUtil.getString(request, "displayStyle", displayStyleDefault);
+					String displayStyleDefault = GetterUtil.getString(SessionClicks.get(request, "liferay_addpanel_displaystyle", "descriptive"));
+					String displayStyle = ParamUtil.getString(request, "displayStyle", displayStyleDefault);
 
-				long[] groupIds = new long[]{scopeGroupId};
+					long[] groupIds = new long[]{scopeGroupId};
 
-				long[] availableClassNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds(company.getCompanyId());
+					long[] availableClassNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds(company.getCompanyId());
 
-				for (long classNameId : availableClassNameIds) {
-					AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(PortalUtil.getClassName(classNameId));
+					for (long classNameId : availableClassNameIds) {
+						AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(PortalUtil.getClassName(classNameId));
 
-					if (!assetRendererFactory.isSelectable()) {
-						availableClassNameIds = ArrayUtil.remove(availableClassNameIds, classNameId);
-					}
-				}
-
-				AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
-
-				assetEntryQuery.setClassNameIds(availableClassNameIds);
-				assetEntryQuery.setEnd(delta);
-				assetEntryQuery.setGroupIds(groupIds);
-				assetEntryQuery.setKeywords(keywords);
-				assetEntryQuery.setOrderByCol1("modifiedDate");
-				assetEntryQuery.setOrderByCol2("title");
-				assetEntryQuery.setOrderByType1("DESC");
-				assetEntryQuery.setOrderByType2("ASC");
-				assetEntryQuery.setStart(0);
-
-				List<AssetEntry> results = null;
-
-				if (PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX && (assetEntryQuery.getLinkedAssetEntryId() == 0)) {
-					Hits hits = AssetUtil.search(request, assetEntryQuery, 0, delta);
-
-					results = AssetUtil.getAssetEntries(hits);
-				}
-				else {
-					results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
-				}
-
-				for (AssetEntry assetEntry : results) {
-					String className = PortalUtil.getClassName(assetEntry.getClassNameId());
-					long classPK = assetEntry.getClassPK();
-
-					AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
-
-					if (assetRendererFactory == null) {
-						continue;
+						if (!assetRendererFactory.isSelectable()) {
+							availableClassNameIds = ArrayUtil.remove(availableClassNameIds, classNameId);
+						}
 					}
 
-					AssetRenderer assetRenderer = null;
+					AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
-					try {
-						assetRenderer = assetRendererFactory.getAssetRenderer(classPK);
+					assetEntryQuery.setClassNameIds(availableClassNameIds);
+					assetEntryQuery.setEnd(delta);
+					assetEntryQuery.setGroupIds(groupIds);
+					assetEntryQuery.setKeywords(keywords);
+					assetEntryQuery.setOrderByCol1("modifiedDate");
+					assetEntryQuery.setOrderByCol2("title");
+					assetEntryQuery.setOrderByType1("DESC");
+					assetEntryQuery.setOrderByType2("ASC");
+					assetEntryQuery.setStart(0);
+
+					List<AssetEntry> results = null;
+
+					if (PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX && (assetEntryQuery.getLinkedAssetEntryId() == 0)) {
+						Hits hits = AssetUtil.search(request, assetEntryQuery, 0, delta);
+
+						results = AssetUtil.getAssetEntries(hits);
 					}
-					catch (Exception e) {
+					else {
+						results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
 					}
 
-					if ((assetRenderer == null) || !assetRenderer.isDisplayable()) {
-						continue;
-					}
+					for (AssetEntry assetEntry : results) {
+						String className = PortalUtil.getClassName(assetEntry.getClassNameId());
+						long classPK = assetEntry.getClassPK();
 
-					String title = HtmlUtil.escape(StringUtil.shorten(assetRenderer.getTitle(themeDisplay.getLocale()), 60));
+						AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
 
-					Map<String, Object> data = new HashMap<String, Object>();
+						if (assetRendererFactory == null) {
+							continue;
+						}
 
-					data.put("class-name", assetEntry.getClassName());
-					data.put("class-pk", assetEntry.getClassPK());
-					data.put("instanceable", true);
-					data.put("portlet-id", assetRenderer.getAddToPagePortletId());
-					data.put("title", title);
-				%>
+						AssetRenderer assetRenderer = null;
 
-					<div class="content-item display-style-<%= HtmlUtil.escapeAttribute(displayStyle) %>">
-						<c:if test='<%= !displayStyle.equals("icon") %>'>
-							<span <%= AUIUtil.buildData(data) %> class="add-content-item">
-								<liferay-ui:message key="add" />
-							</span>
-						</c:if>
+						try {
+							assetRenderer = assetRendererFactory.getAssetRenderer(classPK);
+						}
+						catch (Exception e) {
+						}
 
-						<%
-						data.put("draggable", Boolean.TRUE.toString());
-						%>
+						if ((assetRenderer == null) || !assetRenderer.isDisplayable()) {
+							continue;
+						}
 
-						<liferay-ui:app-view-entry
-							cssClass='<%= !displayStyle.equals("icon") ? "has-preview content-shortcut" : "content-shortcut" %>'
+						String title = HtmlUtil.escape(StringUtil.shorten(assetRenderer.getTitle(themeDisplay.getLocale()), 60));
+
+						Map<String, Object> data = new HashMap<String, Object>();
+
+						data.put("class-name", assetEntry.getClassName());
+						data.put("class-pk", assetEntry.getClassPK());
+						data.put("draggable", true);
+						data.put("instanceable", true);
+						data.put("portlet-id", assetRenderer.getAddToPagePortletId());
+						data.put("title", title);
+					%>
+
+						<aui:nav-item cssClass='<%= displayStyle.equals("icon") ? "content-shortcut lfr-content-item span6" : "has-preview content-shortcut lfr-content-item row-fluid" %>'
 							data="<%= data %>"
-							description="<%= StringUtil.shorten(assetRenderer.getSummary(themeDisplay.getLocale()), 120) %>"
-							displayStyle="<%= displayStyle %>"
-							showCheckbox="<%= false %>"
-							showLinkTitle="<%= false %>"
-							thumbnailSrc='<%= displayStyle.equals("list") ? assetRenderer.getIconPath(liferayPortletRequest) : assetRenderer.getThumbnailPath(liferayPortletRequest) %>'
-							title="<%= title %>"
-						/>
-					</div>
+							href=""
+							iconClass='<%= displayStyle.equals("icon") ? "" : "icon-file" %>'
+							label='<%= displayStyle.equals("list") ? title : "" %>' >
 
-				<%
-				}
-				%>
+							<c:choose>
+								<c:when test='<%= !displayStyle.equals("list") %>' >
+									<img class='<%= displayStyle.equals("descriptive") ? "span4" : StringPool.BLANK %>' src="<%= assetRenderer.getThumbnailPath(liferayPortletRequest) %>" />
 
+									<c:choose>
+										<c:when test='<%= displayStyle.equals("descriptive") %>' >
+											<div class="span8">
+												<div><%= title %></div>
+												<div><%= StringUtil.shorten(assetRenderer.getSummary(themeDisplay.getLocale()), 120) %></div>
+											</div>
+										</c:when>
+										<c:when test='<%= displayStyle.equals("icon") %>' >
+											<p class="text-center"><%= title %></p>
+										</c:when>
+									</c:choose>
+								</c:when>
+								<c:otherwise >
+									<div <%= AUIUtil.buildData(data) %> class="add-content-item">
+										<liferay-ui:message key="add" />
+									</div>
+								</c:otherwise>
+							</c:choose>
+
+						</aui:nav-item>
+
+					<%
+					}
+					%>
+
+				</aui:nav>
 			</liferay-ui:panel>
 		</div>
 	</c:when>

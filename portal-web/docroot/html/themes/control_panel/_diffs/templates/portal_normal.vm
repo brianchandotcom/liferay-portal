@@ -21,28 +21,32 @@ $theme.include($body_top_include)
 #end
 
 <div class="container-fluid" id="wrapper">
-	<header id="banner" role="banner">
-		<div id="heading">
-			<h1 class="company-title">
-				<a class="$logo_css_class" href="$control_panel_url" title="#language ("go-to") #language ("control-panel")">
-					<span>#language ("control-panel")</span>
-				</a>
-			</h1>
+	<div class="row-fluid">
+		<div class="span12" id="content-wrapper">
+			<header id="banner" role="banner">
+				<div id="heading">
+					<h1 class="company-title">
+						<a class="$logo_css_class" href="$control_panel_url" title="#language ("go-to") #language ("control-panel")">
+							<span>#language ("control-panel")</span>
+						</a>
+					</h1>
+				</div>
+			</header>
+
+			<div id="content">
+				#if ($selectable)
+					$theme.include($content_include)
+				#else
+					$portletDisplay.recycle()
+
+					$portletDisplay.setTitle($the_title)
+
+					$theme.wrapPortlet("portlet.vm", $content_include)
+				#end
+
+				<div class="clear"></div>
+			</div>
 		</div>
-	</header>
-
-	<div id="content">
-		#if ($selectable)
-			$theme.include($content_include)
-		#else
-			$portletDisplay.recycle()
-
-			$portletDisplay.setTitle($the_title)
-
-			$theme.wrapPortlet("portlet.vm", $content_include)
-		#end
-
-		<div class="clear"></div>
 	</div>
 </div>
 

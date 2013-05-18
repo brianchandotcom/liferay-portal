@@ -130,6 +130,7 @@ window.YUI_config = {
 				'liferay-dockbar-add-content-preview': {
 					path: 'dockbar_add_content_preview.js',
 					requires: [
+						'aui-debounce',
 						'aui-io-request',
 						'aui-tooltip-deprecated',
 						'event-mouseenter'

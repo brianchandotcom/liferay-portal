@@ -1,503 +1,124 @@
 @import "compass";
 
-.lfr-content-preview-popup {
-	&.tooltip {
-		max-width: 250px;
-	}
+.add-content-menu {
+	.btn-toolbar {
+		.control-group-inline {
+			display: inline;
 
-	.lfr-content-preview-popup-content {
-		margin: 0;
-		overflow: hidden;
-		padding: 10px;
-		width: 230px;
-
-		.add-button-preview {
-			float: right;
-		}
-
-		.asset-information {
-			margin-bottom: 20px;
-		}
-
-		.asset-image-preview {
-			margin-bottom: 5px;
-			text-align: center;
-
-			img {
-				max-width: 230px;
+			.search-query, .aui-field-select {
+				margin-bottom: 0;
 			}
 		}
 
-		.asset-metadata {
-			margin-bottom: 20px;
-
-			.categories {
-				margin-bottom: 5px;
-			}
-		}
-
-		.asset-summary {
-			margin-bottom: 20px;
-		}
-
-		.asset-title {
-			margin-bottom: 5px;
+		.control-group-inline, .btn-group {
+			margin-right: 5px;
 		}
 	}
-}
 
-.lfr-add-panel {
-	bottom: 0;
-	overflow: auto;
-	position: fixed;
-	top: 0;
-	width: 330px;
+	.container-fluid {
+		.accordion-inner {
+			padding-left: 0;
+			padding-right: 0;
 
-	.tabview-list {
-		margin: 5px;
-		padding-left: 5px;
-	}
-
-	.add-application-tab {
-		.lfr-add-content {
-			margin-bottom: 0;
-
-			.lfr-content-category {
-				margin: 0;
-
-				.lfr-portlet-item {
-					margin-left: 0;
-					padding-bottom: 3px;
-					padding-left: 30px;
-					padding-top: 3px;
-
-					&.lfr-archived-setup {
-						padding-left: 40px;
-					}
-
-					p {
-						padding-left: 2em;
-					}
-				}
-			}
-
-			.lfr-title-category {
-				border-top: 1px solid transparent;
-				padding: 7px 6px 6px 2em;
+			.content-item {
+				margin-left: 5px;
 			}
 		}
 	}
 
-	.close-add-panel {
-		cursor: pointer;
-		height: 16px;
-		position: absolute;
-		right: 12px;
-		top: 11px;
-		width: 16px;
-	}
+	.lfr-content-item {
+		color: #3EA9DB;
+		cursor: move;
+		margin: 0 -15px 0 -15px;
+		padding: 0 15px 0 15px;
+		position: relative;
 
-	.content-item {
 		&:hover {
+			background-color: #EEE;
+			color: #006076;
+
 			.add-content-item {
 				display: inline;
-
-				&.lfr-portlet-used {
-					display: none;
-				}
 			}
-		}
-
-		&.display-style-icon {
-			float: left;
 		}
 
 		.add-content-item {
 			cursor: pointer;
 			display: none;
-			padding: 5px 10px;
+			margin-right: 15px;
 			position: absolute;
 			right: 0;
-			z-index: 1;
+			top: 0;
 		}
 
-		.app-view-entry {
-			cursor: move;
-
-			&.lfr-portlet-used {
-				&, .taglib-text {
-					cursor: default;
-				}
-			}
-		}
-	}
-
-	.search-panel {
-		padding: 5px;
-		overflow: hidden;
-		white-space: nowrap;
-
-		.buttons {
-			float: left;
-			margin-left: 5px;
-			padding: 2px 0;
-
-			.button {
-				cursor: pointer;
-				float: left;
-				height: 21px;
-				margin-right: 5px;
-				width: 23px;
-
-				&.last {
-					margin-right: 0;
-				}
-			}
-		}
-
-		.num-items {
-			display: inline-block;
-			margin-left: 5px;
-			padding: 3px 0;
-		}
-	}
-
-	.add-content-tab .search-panel .add-content-search {
-		background-image: url(@theme_image_path@/common/search.png);
-		background-position: 5px center;
-		background-repeat: no-repeat;
-		float: left;
-		padding-left: 25px;
-		width: 160px;
-	}
-
-	.lfr-panel.lfr-extended {
-		clear: both;
-
-		&.recent .lfr-panel-titlebar {
+		&.lfr-portlet-used {
+			color: #BBB;
 			cursor: default;
-		}
 
-		.lfr-panel-titlebar {
-			border-top: 1px solid transparent;
-			cursor: pointer;
-			margin-bottom: 0;
-			padding: 7px 6px 6px;
-
-			.lfr-panel-title {
-				padding-left: 20px;
+			.add-content-item {
+				display: none;
 			}
 		}
 
-		.lfr-panel-content {
-			padding: 0;
-
-			.app-view-entry-taglib.entry-display-style {
-				&.display-descriptive {
-					margin: 0;
-
-					.entry-title {
-						margin-bottom: 10px;
-					}
-				}
-
-				&.display-icon {
-					float: none;
-					height: 110px;
-					width: 145px;
-				}
-
-				&.display-list {
-					padding: 5px 8px 5px 20px;
-				}
-
-				.entry-thumbnail {
-					max-width: 75px;
-
-					img {
-						max-width: 65px;
-					}
-				}
-			}
+		&.lfr-archived-setup {
+			padding-left: 30px;
 		}
 	}
 
-	.taglib-icon {
-		.icon {
-			float: left;
-			margin-right: 3px;
-		}
+	.portal-add-content .portlet-msg-info {
+		color: #333;
+	}
 
-		.taglib-text {
-			display: block;
-			overflow: hidden;
+	.lfr-install-more {
+		border-top-color: #CCC;
+
+		a {
+			background: url(@theme_image_path@/common/install_more.png) no-repeat 0 50%;
+			font-weight: bold;
 		}
 	}
 }
 
-.portal-add-content-search {
-	margin-bottom: 8px;
-}
-
-.portal-add-content .portlet-msg-info {
-	margin-bottom: 0;
-	margin-top: 10px;
-}
-
-.lfr-install-more {
-	border-top: 1px solid transparent;
-	margin: 10px 0 0;
-	padding-top: 10px;
-
-	a {
-		display: block;
-		padding-left: 20px;
-	}
-}
-
-.dockbar .lfr-content-category {
-	padding-left: 10px;
-	padding-top: 3px;
-
-	&.hidden {
-		display: none;
+.lfr-add-content-preview {
+	.add-button-preview {
+		float: right;
+		margin-bottom: 10px;
 	}
 
-	&.visible {
-		border-bottom: 1px solid transparent;
-		border-top: 1px solid transparent;
-		display: block;
-	}
-}
-
-.ie6 .lfr-content-category.visible {
-	height: 1%;
-}
-
-/* Skin */
-
-.lfr-content-preview-popup {
-	.lfr-content-preview-popup-content {
-		background: #FFF;
-		border-width: 0;
-
-		.asset-information {
-			font-size: 10px;
-
-			.user-name {
-				color: #369;
-			}
-		}
-
-		.asset-summary {
-			font-size: 12px;
-		}
-
-		.asset-title {
-			color: #369;
-			font-size: 14px;
-		}
-	}
-}
-
-.lfr-add-panel {
-	background-color: #D3DBE4;
-	border: 1px solid #CCC;
-
-	.lfr-portlet-item {
-		border-width: 0;
-	}
-
-	.add-application-tab {
-		.lfr-add-content {
-			.lfr-content-category {
-				.accordion-inner {
-					padding-right: 0;
-				}
-
-				.lfr-portlet-item {
-					background-position: 3px 50%;
-					color: #2D2D2D;
-					font-size: 12px;
-
-					.taglib-text {
-						color: #2D2D2D;
-						font-weight: normal;
-					}
-
-					&.lfr-portlet-used {
-						.taglib-text {
-							color: #CCC;
-						}
-					}
-
-					&:hover, &.over {
-						background-color: #EBF0F5;
-						text-decoration: underline;
-	            	}
-
-					&.lfr-archived-setup {
-						background-position: 22px 50%;
-					}
-
-					&.lfr-portlet-used:hover, &.lfr-portlet-used.over {
-						background-color: #D3DBE4;
-						text-decoration: none;
-					}
-				}
-
-				.content-item {
-					&:hover, &.over {
-						background-color: #EBF0F5;
-						text-decoration: underline;
-					}
-				}
-
-				.lfr-portlet-used {
-					color: #999;
-				}
-			}
-
-			.lfr-title-category {
-				border-top-color: #F0F1F2;
-			}
-		}
-	}
-
-	.close-add-panel {
-		background-image: url(@theme_image_path@/portlet/close.png);
-		background-repeat: no-repeat;
-		font-size: 0;
-	}
-
-	.content-item .add-content-item {
+	.asset-information {
 		font-size: 10px;
-		font-weight: bold;
-	}
+		margin-bottom: 20px;
 
-	.search-panel {
-		background: #D3DBE4 url(@theme_image_path@/common/shadow_bottom_bg.png) repeat-x 0 100%;
-
-		.control-group {
-			margin-bottom: 0;
-
-			.field-select {
-				width: 40px;
-			}
-
-			.add-applications-search {
-				background-image: url(@theme_image_path@/common/search.png);
-				background-position: 5px center;
-				background-repeat: no-repeat;
-				padding-left: 25px;
-				width: 90%;
-			}
-		}
-
-		.buttons {
-			font-size: 0;
-			padding-top: 5px;
-
-			.button {
-				background: url(@theme_image_path@/add_content/layouts.png) no-repeat 0 0;
-
-				&:hover, &.selected {
-					background-color: #61a1d6;
-					background-position: 0 100%;
-				}
-
-				&.selected {
-					background-color: #437299;
-				}
-			}
-
-			.list {
-				background-position: 0 0;
-
-				&:hover, &.selected {
-					background-position: 0 100%;
-				}
-			}
-
-			.descriptive {
-				background-position: 100% 0;
-
-				&:hover, &.selected {
-					background-position: 100% 100%;
-				}
-			}
-
-			.icon {
-				background-position: -23px 0;
-
-				&:hover, &.selected {
-					background-position: -23px 100%;
-				}
-			}
+		.user-name {
+			color: #369;
 		}
 	}
 
-	.lfr-panel.lfr-extended {
-		border-width: 0;
-		border-color: #979798 #FAFAFB #FAFAFB #BDBDBE;
+	.asset-image-preview {
+		margin-bottom: 5px;
+		text-align: center;
 
-		.lfr-panel-titlebar {
-			border-top-color: #F0F1F2;
-
-			.lfr-panel-title {
-				font-size: 13px;
-				font-weight: bold;
-			}
-		}
-
-		.lfr-panel-content {
-			background: url(@theme_image_path@/common/shadow_top_bg.png) repeat-x 0 0;
-
-			.app-view-entry-taglib.entry-display-style {
-				&.focus {
-					text-shadow: 0 0;
-				}
-
-				&.display-descriptive {
-					.entry-title {
-						color: #369;
-						font-size: 13px;
-						font-weight: normal;
-					}
-
-					.entry-description {
-						font-size: 11px;
-					}
-				}
-
-				&:hover, &.hover, &.over {
-					background-color: #EBF0F5;
-				}
-
-				.taglib-text {
-					font-size: 12px;
-					font-weight: normal;
-					text-decoration: none;
-				}
-			}
+		img {
+			max-width: 230px;
 		}
 	}
-}
 
-.portal-add-content .portlet-msg-info {
-	color: #333;
-}
+	.asset-metadata {
+		margin-bottom: 20px;
 
-.lfr-install-more {
-	border-top-color: #CCC;
-
-	a {
-		background: url(@theme_image_path@/common/install_more.png) no-repeat 0 50%;
-		font-weight: bold;
+		.categories {
+			margin-bottom: 5px;
+		}
 	}
-}
 
-.lfr-content-category.visible {
-	border-bottom-color: #DDD;
-	border-top-color: #DDD;
+	.asset-summary {
+		font-size: 12px;
+		margin-bottom: 20px;
+	}
+
+	.asset-title {
+		color: #369;
+		font-size: 14px;
+		margin-bottom: 5px;
+	}
 }

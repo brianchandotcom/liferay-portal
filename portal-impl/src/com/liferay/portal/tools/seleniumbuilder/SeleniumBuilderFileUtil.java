@@ -141,6 +141,12 @@ public class SeleniumBuilderFileUtil {
 		return classSuffix;
 	}
 
+	public String getHTMLFileName(String fileName) {
+		String javaFileName = getJavaFileName(fileName);
+
+		return StringUtil.replace(javaFileName, ".java", ".html");
+	}
+
 	public String getJavaFileName(String fileName) {
 		String classSuffix = getClassSuffix(fileName);
 

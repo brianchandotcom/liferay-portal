@@ -1,80 +1,82 @@
 @import "compass";
 @import url(../../classic/css/custom_common.css);
 
-#banner, .lfr-ctrl-panel .user-greeting {
-	position: absolute;
-	clip: rect(0 0 0 0);
-}
-
-#wrapper {
-	padding-top: 1.5em;
-}
-
-.dockbar {
-	position: relative;
-
-	&:after {
-		background-color: #333;
-		bottom: -10px;
-		content: '';
-		display: block;
-		height: 10px;
-		left: 0;
+.aui {
+	#banner, .lfr-ctrl-panel .user-greeting {
 		position: absolute;
-		right: 0;
-		z-index: -1;
+		clip: rect(0 0 0 0);
 	}
-}
 
-.portlet-title, .portlet-content {
-	padding: 0;
-}
+	#wrapper {
+		padding-top: 1.5em;
+	}
 
-.portlet-title {
-	margin-top: 0;
-}
+	.dockbar {
+		position: relative;
 
-.panel-page-menu .portlet-borderless-container {
-	background: #222;
+		&:after {
+			background-color: #333;
+			bottom: -10px;
+			content: '';
+			display: block;
+			height: 10px;
+			left: 0;
+			position: absolute;
+			right: 0;
+			z-index: -1;
+		}
+	}
 
-	.accordion {
-		background: #FFF;
-		margin-bottom: 0;
+	.portlet-title, .portlet-content {
+		padding: 0;
+	}
 
-		.accordion-group {
+	.portlet-title {
+		margin-top: 0;
+	}
+
+	.panel-page-menu .portlet-borderless-container {
+		background: #222;
+
+		.accordion {
 			background: #FFF;
-			border-width: 1px 0 0;
 			margin-bottom: 0;
 
-			.accordion-inner {
-				padding-left: 0;
-				padding-right: 0;
-			}
+			.accordion-group {
+				background: #FFF;
+				border-width: 1px 0 0;
+				margin-bottom: 0;
 
-			.category-portlets {
-				list-style: none;
-				margin: 0;
+				.accordion-inner {
+					padding-left: 0;
+					padding-right: 0;
+				}
 
-				li {
-					a {
-						display: block;
-						padding: 3px 15px;
+				.category-portlets {
+					list-style: none;
+					margin: 0;
 
-						&:focus, &:hover {
-							background-color: #F3F3F3;
-						}
-					}
-
-					&.selected-portlet {
-						background: #222;
-						color: #FFF;
-
+					li {
 						a {
+							display: block;
+							padding: 3px 15px;
+
+							&:focus, &:hover {
+								background-color: #F3F3F3;
+							}
+						}
+
+						&.selected-portlet {
+							background: #222;
 							color: #FFF;
 
-							&:hover{
-								background: #222;
-								color: #3EA9DB;
+							a {
+								color: #FFF;
+
+								&:hover{
+									background: #222;
+									color: #3EA9DB;
+								}
 							}
 						}
 					}
@@ -82,85 +84,85 @@
 			}
 		}
 	}
-}
 
-.search-panels {
-	position: relative;
+	.search-panels {
+		position: relative;
 
-	.cancel-search {
-		display: none;
-		margin-top: -7px;
-		position: absolute;
-		right: 5px;
-		top: 50%;
+		.cancel-search {
+			display: none;
+			margin-top: -7px;
+			position: absolute;
+			right: 5px;
+			top: 50%;
 
-		.search-panel-active & {
-			display: inline-block;
-		}
-	}
-}
-
-.lfr-control-panel-help-content.alert {
-	border-width: 1px 0;
-	margin-bottom: 1em;
-}
-
-/* ---------- Extras ---------- */
-
-.dockbar:after {
-	$stripe: transparent;
-	$stripe_alt: #C2B362;
-
-	background-image: linear-gradient(
-		45deg,
-		$stripe 25%,
-		$stripe_alt 25%,
-		$stripe_alt 50%,
-		$stripe 50%,
-		$stripe 75%,
-		$stripe_alt 75%
-	);
-
-	background-size: 35px 35px;
-}
-
-.panel-page-menu .portlet-borderless-container {
-	border-radius: 2px;
-	box-shadow: 0 0 3px #000 inset;
-
-	.accordion .accordion-group {
-		border-radius: 0;
-
-		.accordion-heading {
-			&.toggler-header-collapsed, &.toggler-header-expanded {
-				border-radius: 0;
+			.search-panel-active & {
+				display: inline-block;
 			}
 		}
 	}
 
-	.search-panels-input {
-		border-radius: 2px;
+	.lfr-control-panel-help-content.alert {
+		border-width: 1px 0;
+		margin-bottom: 1em;
 	}
-}
 
-.lfr-control-panel-help-content {
-	border-radius: 0;
-}
+	/* ---------- Extras ---------- */
 
-.control-panel-bar-main {
-	font-size: 1.2em;
-	font-weight: bold;
-	margin-bottom: 5px;
-}
+	.dockbar:after {
+		$stripe: transparent;
+		$stripe_alt: #C2B362;
 
-.control-panel-bar-secondary {
-	margin-bottom: 5px;
-}
+		background-image: linear-gradient(
+			45deg,
+			$stripe 25%,
+			$stripe_alt 25%,
+			$stripe_alt 50%,
+			$stripe 50%,
+			$stripe 75%,
+			$stripe_alt 75%
+		);
 
-.control-panel-home-menu {
-	margin-top: 40px;
-}
-.control-panel-home-menu li {
-	list-style: none;
-	margin-bottom: 15px;
+		background-size: 35px 35px;
+	}
+
+	.panel-page-menu .portlet-borderless-container {
+		border-radius: 2px;
+		box-shadow: 0 0 3px #000 inset;
+
+		.accordion .accordion-group {
+			border-radius: 0;
+
+			.accordion-heading {
+				&.toggler-header-collapsed, &.toggler-header-expanded {
+					border-radius: 0;
+				}
+			}
+		}
+
+		.search-panels-input {
+			border-radius: 2px;
+		}
+	}
+
+	.lfr-control-panel-help-content {
+		border-radius: 0;
+	}
+
+	.control-panel-bar-main {
+		font-size: 1.2em;
+		font-weight: bold;
+		margin-bottom: 5px;
+	}
+
+	.control-panel-bar-secondary {
+		margin-bottom: 5px;
+	}
+
+	.control-panel-home-menu {
+		margin-top: 40px;
+	}
+	.control-panel-home-menu li {
+		list-style: none;
+		margin-bottom: 15px;
+	}
 }

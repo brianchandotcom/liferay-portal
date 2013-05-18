@@ -18,6 +18,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.util.ClassLoaderUtil;
 
 import java.io.InputStream;
+import java.net.URL;
+import java.util.List;
+import java.util.Map;
 
 /**
  * This class is a simple wrapper in order to make the framework module running
@@ -41,6 +44,10 @@ public class ModuleFrameworkUtilAdapter {
 
 	public static Object getFramework() {
 		return _moduleFramework.getFramework();
+	}
+
+	public static Map<String, List<URL>> getExtraPackageMap() {
+		return _moduleFramework.getExtraPackageMap();
 	}
 
 	public static String getState(long bundleId) throws PortalException {

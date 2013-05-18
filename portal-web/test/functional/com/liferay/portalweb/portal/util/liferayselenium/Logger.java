@@ -241,9 +241,12 @@ public class Logger {
 		formattedMessage = formattedMessage.replace("'", "\\'");
 
 		sb.append("logger = window.document.getElementById('log');");
-		sb.append("logger.innerHTML += '");
+		sb.append("var newLine = window.document.createElement('div');");
+		sb.append("newLine.setAttribute('class', 'line');");
+		sb.append("newLine.innerHTML = '");
 		sb.append(formattedMessage);
-		sb.append("<br /><hr />';");
+		sb.append("';");
+		sb.append("logger.appendChild(newLine);");
 		sb.append("logger.scrollTop = logger.scrollHeight;");
 
 		javascriptExecutor.executeScript(sb.toString());

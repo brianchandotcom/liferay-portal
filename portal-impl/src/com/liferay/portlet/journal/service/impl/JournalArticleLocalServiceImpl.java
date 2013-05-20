@@ -6146,38 +6146,40 @@ public class JournalArticleLocalServiceImpl
 		String[] imageExtensions = PrefsPropsUtil.getStringArray(
 			PropsKeys.JOURNAL_IMAGE_EXTENSIONS, StringPool.COMMA);
 
-		if (smallImage && Validator.isNull(smallImageURL) &&
-			(smallImageFile != null) && (smallImageBytes != null)) {
+		if (!smallImage || Validator.isNotNull(smallImageURL) ||
+			(smallImageFile == null) || (smallImageBytes == null)) {
 
-			String smallImageName = smallImageFile.getName();
+			return;
+		}
 
-			if (smallImageName != null) {
-				boolean validSmallImageExtension = false;
+		String smallImageName = smallImageFile.getName();
 
-				for (String _imageExtension : imageExtensions) {
-					if (StringPool.STAR.equals(_imageExtension) ||
-						StringUtil.endsWith(smallImageName, _imageExtension)) {
+		if (smallImageName != null) {
+			boolean validSmallImageExtension = false;
 
-						validSmallImageExtension = true;
+			for (String _imageExtension : imageExtensions) {
+				if (StringPool.STAR.equals(_imageExtension) ||
+					StringUtil.endsWith(smallImageName, _imageExtension)) {
 
-						break;
-					}
-				}
+					validSmallImageExtension = true;
 
-				if (!validSmallImageExtension) {
-					throw new ArticleSmallImageNameException(smallImageName);
+					break;
 				}
 			}
 
-			long smallImageMaxSize = PrefsPropsUtil.getLong(
-				PropsKeys.JOURNAL_IMAGE_SMALL_MAX_SIZE);
-
-			if ((smallImageMaxSize > 0) &&
-				((smallImageBytes == null) ||
-				 (smallImageBytes.length > smallImageMaxSize))) {
-
-				throw new ArticleSmallImageSizeException();
+			if (!validSmallImageExtension) {
+				throw new ArticleSmallImageNameException(smallImageName);
 			}
+		}
+
+		long smallImageMaxSize = PrefsPropsUtil.getLong(
+			PropsKeys.JOURNAL_IMAGE_SMALL_MAX_SIZE);
+
+		if ((smallImageMaxSize > 0) &&
+			((smallImageBytes == null) ||
+			 (smallImageBytes.length > smallImageMaxSize))) {
+
+			throw new ArticleSmallImageSizeException();
 		}
 	}
 

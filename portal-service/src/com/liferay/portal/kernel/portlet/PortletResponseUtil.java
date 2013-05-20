@@ -310,81 +310,82 @@ public class PortletResponseUtil {
 		mimeResponse.setProperty(
 			HttpHeaders.CACHE_CONTROL, HttpHeaders.CACHE_CONTROL_PRIVATE_VALUE);
 
-		if (Validator.isNotNull(fileName)) {
-			String contentDispositionFileName = "filename=\"" + fileName + "\"";
+		if (Validator.isNull(fileName)) {
+			return;
+		}
 
-			// If necessary for non-ASCII characters, encode based on RFC 2184.
-			// However, not all browsers support RFC 2184. See LEP-3127.
+		String contentDispositionFileName = "filename=\"" + fileName + "\"";
 
-			boolean ascii = true;
+		// If necessary for non-ASCII characters, encode based on RFC 2184.
+		// However, not all browsers support RFC 2184. See LEP-3127.
 
-			for (int i = 0; i < fileName.length(); i++) {
-				if (!Validator.isAscii(fileName.charAt(i))) {
-					ascii = false;
+		boolean ascii = true;
 
-					break;
-				}
+		for (int i = 0; i < fileName.length(); i++) {
+			if (!Validator.isAscii(fileName.charAt(i))) {
+				ascii = false;
+
+				break;
 			}
+		}
 
-			try {
-				if (!ascii) {
-					String encodedFileName = HttpUtil.encodeURL(fileName, true);
+		try {
+			if (!ascii) {
+				String encodedFileName = HttpUtil.encodeURL(fileName, true);
 
-					HttpServletRequest request =
-						PortalUtil.getHttpServletRequest(portletRequest);
+				HttpServletRequest request = PortalUtil.getHttpServletRequest(
+					portletRequest);
 
-					if (BrowserSnifferUtil.isIe(request)) {
-						contentDispositionFileName =
-							"filename=\"" + encodedFileName + "\"";
-					}
-					else {
-						contentDispositionFileName =
-							"filename*=UTF-8''" + encodedFileName;
-					}
-				}
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(e);
-				}
-			}
-
-			if (Validator.isNull(contentDispositionType)) {
-				String extension = GetterUtil.getString(
-					FileUtil.getExtension(fileName)).toLowerCase();
-
-				String[] mimeTypesContentDispositionInline = null;
-
-				try {
-					mimeTypesContentDispositionInline = PropsUtil.getArray(
-						"mime.types.content.disposition.inline");
-				}
-				catch (Exception e) {
-					mimeTypesContentDispositionInline = new String[0];
-				}
-
-				if (ArrayUtil.contains(
-						mimeTypesContentDispositionInline, extension)) {
-
-					contentDispositionType =
-						HttpHeaders.CONTENT_DISPOSITION_INLINE;
+				if (BrowserSnifferUtil.isIe(request)) {
+					contentDispositionFileName =
+						"filename=\"" + encodedFileName + "\"";
 				}
 				else {
-					contentDispositionType =
-						HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT;
+					contentDispositionFileName =
+						"filename*=UTF-8''" + encodedFileName;
 				}
 			}
-
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(contentDispositionType);
-			sb.append(StringPool.SEMICOLON);
-			sb.append(StringPool.SPACE);
-			sb.append(contentDispositionFileName);
-
-			mimeResponse.setProperty(
-				HttpHeaders.CONTENT_DISPOSITION, sb.toString());
 		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e);
+			}
+		}
+
+		if (Validator.isNull(contentDispositionType)) {
+			String extension = GetterUtil.getString(
+				FileUtil.getExtension(fileName)).toLowerCase();
+
+			String[] mimeTypesContentDispositionInline = null;
+
+			try {
+				mimeTypesContentDispositionInline = PropsUtil.getArray(
+					"mime.types.content.disposition.inline");
+			}
+			catch (Exception e) {
+				mimeTypesContentDispositionInline = new String[0];
+			}
+
+			if (ArrayUtil.contains(
+					mimeTypesContentDispositionInline, extension)) {
+
+				contentDispositionType = HttpHeaders.CONTENT_DISPOSITION_INLINE;
+			}
+			else {
+				contentDispositionType =
+					HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT;
+			}
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(contentDispositionType);
+		sb.append(StringPool.SEMICOLON);
+		sb.append(StringPool.SPACE);
+		sb.append(contentDispositionFileName);
+
+		mimeResponse.setProperty(
+			HttpHeaders.CONTENT_DISPOSITION, sb.toString());
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(PortletResponseUtil.class);

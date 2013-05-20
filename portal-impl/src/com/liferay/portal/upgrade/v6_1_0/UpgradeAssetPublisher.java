@@ -88,41 +88,42 @@ public class UpgradeAssetPublisher extends BaseUpgradePortletPreferences {
 		String[] classNameIds = portletPreferences.getValues(
 			"classNameIds", null);
 
-		if ((classNameIds != null) && (classNameIds.length > 0)) {
-			long dlFileEntryClassNameId = PortalUtil.getClassNameId(
-				DLFileEntry.class.getName());
-			long igImageClassNameId = PortalUtil.getClassNameId(
-				"com.liferay.portlet.imagegallery.model.IGImage");
-
-			List<String> classNameIdsList = ListUtil.fromArray(classNameIds);
-
-			int index = classNameIdsList.indexOf(
-				String.valueOf(igImageClassNameId));
-
-			if (index >= 0) {
-				classNameIdsList.remove(index);
-
-				if (!classNameIdsList.contains(
-						String.valueOf(dlFileEntryClassNameId))) {
-
-					classNameIdsList.add(
-						index, String.valueOf(dlFileEntryClassNameId));
-				}
-			}
-
-			portletPreferences.setValues(
-				"classNameIds",
-				classNameIdsList.toArray(new String[classNameIdsList.size()]));
-
-			long fileEntryTypeId = getIGImageFileEntryType(companyId);
-
-			portletPreferences.setValue(
-				"anyClassTypeDLFileEntryAssetRendererFactory",
-				String.valueOf(fileEntryTypeId));
-			portletPreferences.setValue(
-				"classTypeIds", String.valueOf(fileEntryTypeId));
-
+		if ((classNameIds == null) || (classNameIds.length == 0)) {
+			return PortletPreferencesFactoryUtil.toXML(portletPreferences);
 		}
+
+		long dlFileEntryClassNameId = PortalUtil.getClassNameId(
+			DLFileEntry.class.getName());
+		long igImageClassNameId = PortalUtil.getClassNameId(
+			"com.liferay.portlet.imagegallery.model.IGImage");
+
+		List<String> classNameIdsList = ListUtil.fromArray(classNameIds);
+
+		int index = classNameIdsList.indexOf(
+			String.valueOf(igImageClassNameId));
+
+		if (index >= 0) {
+			classNameIdsList.remove(index);
+
+			if (!classNameIdsList.contains(
+					String.valueOf(dlFileEntryClassNameId))) {
+
+				classNameIdsList.add(
+					index, String.valueOf(dlFileEntryClassNameId));
+			}
+		}
+
+		portletPreferences.setValues(
+			"classNameIds",
+			classNameIdsList.toArray(new String[classNameIdsList.size()]));
+
+		long fileEntryTypeId = getIGImageFileEntryType(companyId);
+
+		portletPreferences.setValue(
+			"anyClassTypeDLFileEntryAssetRendererFactory",
+			String.valueOf(fileEntryTypeId));
+		portletPreferences.setValue(
+			"classTypeIds", String.valueOf(fileEntryTypeId));
 
 		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
 	}

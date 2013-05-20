@@ -915,39 +915,41 @@ public class ShoppingItemLocalServiceImpl
 
 		// Large image
 
-		if (largeImage && Validator.isNull(largeImageURL) &&
-			(largeImageFile != null) && (largeImageBytes != null)) {
+		if (!largeImage || Validator.isNotNull(largeImageURL) ||
+			(largeImageFile == null) || (largeImageBytes == null)) {
 
-			String largeImageName = largeImageFile.getName();
+			return;
+		}
 
-			if (largeImageName != null) {
-				boolean validLargeImageExtension = false;
+		String largeImageName = largeImageFile.getName();
 
-				for (int i = 0; i < imageExtensions.length; i++) {
-					if (StringPool.STAR.equals(imageExtensions[i]) ||
-						StringUtil.endsWith(
-							largeImageName, imageExtensions[i])) {
+		if (largeImageName != null) {
+			boolean validLargeImageExtension = false;
 
-						validLargeImageExtension = true;
+			for (int i = 0; i < imageExtensions.length; i++) {
+				if (StringPool.STAR.equals(imageExtensions[i]) ||
+					StringUtil.endsWith(
+						largeImageName, imageExtensions[i])) {
 
-						break;
-					}
-				}
+					validLargeImageExtension = true;
 
-				if (!validLargeImageExtension) {
-					throw new ItemLargeImageNameException(largeImageName);
+					break;
 				}
 			}
 
-			long largeImageMaxSize = PrefsPropsUtil.getLong(
-				PropsKeys.SHOPPING_IMAGE_LARGE_MAX_SIZE);
-
-			if ((largeImageMaxSize > 0) &&
-				((largeImageBytes == null) ||
-				 (largeImageBytes.length > largeImageMaxSize))) {
-
-				throw new ItemLargeImageSizeException();
+			if (!validLargeImageExtension) {
+				throw new ItemLargeImageNameException(largeImageName);
 			}
+		}
+
+		long largeImageMaxSize = PrefsPropsUtil.getLong(
+			PropsKeys.SHOPPING_IMAGE_LARGE_MAX_SIZE);
+
+		if ((largeImageMaxSize > 0) &&
+			((largeImageBytes == null) ||
+			 (largeImageBytes.length > largeImageMaxSize))) {
+
+			throw new ItemLargeImageSizeException();
 		}
 	}
 

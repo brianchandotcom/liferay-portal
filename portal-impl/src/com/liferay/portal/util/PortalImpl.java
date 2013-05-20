@@ -5959,45 +5959,47 @@ public class PortalImpl implements Portal {
 	public String updateRedirect(
 		String redirect, String oldPath, String newPath) {
 
-		if (Validator.isNotNull(redirect) && (oldPath != null) &&
-			!oldPath.equals(newPath)) {
+		if (Validator.isNull(redirect) || (oldPath == null) ||
+			oldPath.equals(newPath)) {
 
-			String queryString = HttpUtil.getQueryString(redirect);
+			return redirect;
+		}
 
-			String redirectParam = HttpUtil.getParameter(
-				redirect, "redirect", false);
+		String queryString = HttpUtil.getQueryString(redirect);
 
-			if (Validator.isNotNull(redirectParam)) {
-				String newRedirectParam = StringUtil.replace(
-					redirectParam, HttpUtil.encodeURL(oldPath),
-					HttpUtil.encodeURL(newPath));
+		String redirectParam = HttpUtil.getParameter(
+			redirect, "redirect", false);
 
-				queryString = StringUtil.replace(
-					queryString, redirectParam, newRedirectParam);
-			}
+		if (Validator.isNotNull(redirectParam)) {
+			String newRedirectParam = StringUtil.replace(
+				redirectParam, HttpUtil.encodeURL(oldPath),
+				HttpUtil.encodeURL(newPath));
 
-			String redirectPath = HttpUtil.getPath(redirect);
+			queryString = StringUtil.replace(
+				queryString, redirectParam, newRedirectParam);
+		}
 
-			int pos = redirect.indexOf(redirectPath);
+		String redirectPath = HttpUtil.getPath(redirect);
 
-			String prefix = redirect.substring(0, pos);
+		int pos = redirect.indexOf(redirectPath);
 
-			pos = redirectPath.lastIndexOf(oldPath);
+		String prefix = redirect.substring(0, pos);
 
-			if (pos != -1) {
-				prefix += redirectPath.substring(0, pos);
+		pos = redirectPath.lastIndexOf(oldPath);
 
-				String suffix = redirectPath.substring(pos + oldPath.length());
+		if (pos != -1) {
+			prefix += redirectPath.substring(0, pos);
 
-				redirect = prefix + newPath + suffix;
-			}
-			else {
-				redirect = prefix + redirectPath;
-			}
+			String suffix = redirectPath.substring(pos + oldPath.length());
 
-			if (Validator.isNotNull(queryString)) {
-				redirect += StringPool.QUESTION + queryString;
-			}
+			redirect = prefix + newPath + suffix;
+		}
+		else {
+			redirect = prefix + redirectPath;
+		}
+
+		if (Validator.isNotNull(queryString)) {
+			redirect += StringPool.QUESTION + queryString;
 		}
 
 		return redirect;

@@ -55,43 +55,45 @@ public class FreeMarkerTaglibFactoryUtil implements CacheRegistryItem {
 	private static FreeMarkerTaglibFactoryUtil _getInstance(
 		ServletContext servletContext) {
 
-		if (_instance == null) {
-			synchronized(FreeMarkerTaglibFactoryUtil.class) {
-				if (_instance == null) {
-					String contextPath = ContextPathUtil.getContextPath(
-						servletContext);
+		if (_instance != null) {
+			return _instance;
+		}
 
-					// First call within current class loader
+		synchronized(FreeMarkerTaglibFactoryUtil.class) {
+			if (_instance == null) {
+				String contextPath = ContextPathUtil.getContextPath(
+					servletContext);
 
-					_instance = new FreeMarkerTaglibFactoryUtil(contextPath);
+				// First call within current class loader
 
-					// Unregister previous one if there is one, this should only
-					// happen on plugin redeploy
+				_instance = new FreeMarkerTaglibFactoryUtil(contextPath);
 
-					CacheRegistryUtil.unregister(_instance._registryName);
+				// Unregister previous one if there is one, this should only
+				// happen on plugin redeploy
 
-					// Register current instance
+				CacheRegistryUtil.unregister(_instance._registryName);
 
-					CacheRegistryUtil.register(_instance);
+				// Register current instance
 
-					// Save a hard stack copy to prevent Tomcat null out heap
-					// reference
+				CacheRegistryUtil.register(_instance);
 
-					final String name = _instance._registryName;
+				// Save a hard stack copy to prevent Tomcat null out heap
+				// reference
 
-					// Bind _instance lifecycle to servlet context to prevent
-					// memory leak on undeploy
+				final String name = _instance._registryName;
 
-					FinalizeManager.register(
-						servletContext,
-						new FinalizeAction() {
+				// Bind _instance lifecycle to servlet context to prevent memory
+				// leak on undeploy
 
-							public void doFinalize() {
-								CacheRegistryUtil.unregister(name);
-							}
+				FinalizeManager.register(
+					servletContext,
+					new FinalizeAction() {
 
-						});
-				}
+						public void doFinalize() {
+							CacheRegistryUtil.unregister(name);
+						}
+
+					});
 			}
 		}
 

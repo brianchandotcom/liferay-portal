@@ -886,7 +886,6 @@ if ((layout.isTypePanel() || layout.isTypeControlPanel()) && !portletDisplay.get
 				}
 
 				String portletContent = "/portal/portlet_error.jsp";
-
 		%>
 
 				<liferay-util:include page="<%= templatePath %>">

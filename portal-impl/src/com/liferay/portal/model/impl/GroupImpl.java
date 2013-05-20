@@ -16,10 +16,12 @@ package com.liferay.portal.model.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.staging.StagingConstants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -316,6 +318,76 @@ public class GroupImpl extends GroupBaseImpl {
 		}
 
 		return 0;
+	}
+
+	public String getScopeName(ThemeDisplay themeDisplay)
+		throws PortalException, SystemException {
+
+		String name = null;
+
+		if (getGroupId() == themeDisplay.getScopeGroupId()) {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(
+				LanguageUtil.get(themeDisplay.getLocale(), "current-site"));
+			sb.append(StringPool.SPACE);
+			sb.append(StringPool.OPEN_PARENTHESIS);
+			sb.append(
+				HtmlUtil.escape(getDescriptiveName(themeDisplay.getLocale())));
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+
+			name = sb.toString();
+		}
+		else if (isLayout() && (getClassPK() == themeDisplay.getPlid())) {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(
+				LanguageUtil.get(themeDisplay.getLocale(), "current-page"));
+			sb.append(StringPool.SPACE);
+			sb.append(StringPool.OPEN_PARENTHESIS);
+			sb.append(
+				HtmlUtil.escape(getDescriptiveName(themeDisplay.getLocale())));
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+
+			name = sb.toString();
+		}
+		else if (isLayoutPrototype()) {
+			name = LanguageUtil.get(themeDisplay.getLocale(), "default");
+		}
+		else {
+			name = HtmlUtil.escape(
+				getDescriptiveName(themeDisplay.getLocale()));
+		}
+
+		return name;
+	}
+
+	public String getScopeType(ThemeDisplay themeDisplay)
+		throws PortalException, SystemException {
+
+		String type = "site";
+
+		if (getGroupId() == themeDisplay.getScopeGroupId()) {
+			type = "current-site";
+		}
+		else if (getGroupId() == themeDisplay.getCompanyGroupId()) {
+			type = "global";
+		}
+		else if (isLayout()) {
+			type = "page";
+		}
+		else {
+			Group scopeGroup = themeDisplay.getScopeGroup();
+
+			if (scopeGroup.hasAncestor(getGroupId())) {
+				type = "parent-site";
+			}
+			else if (hasAncestor(scopeGroup.getGroupId())) {
+				type = "child-site";
+			}
+		}
+
+		return type;
 	}
 
 	public Group getStagingGroup() {

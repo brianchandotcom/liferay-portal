@@ -83,6 +83,16 @@ public interface Group extends GroupModel, PersistedModel {
 
 	public int getPrivateLayoutsPageCount();
 
+	public java.lang.String getScopeName(
+		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public java.lang.String getScopeType(
+		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public com.liferay.portal.model.LayoutSet getPublicLayoutSet();
 
 	public int getPublicLayoutsPageCount();

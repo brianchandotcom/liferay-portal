@@ -694,6 +694,20 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 		return _group.getPrivateLayoutsPageCount();
 	}
 
+	public java.lang.String getScopeName(
+		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _group.getScopeName(themeDisplay);
+	}
+
+	public java.lang.String getScopeType(
+		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _group.getScopeType(themeDisplay);
+	}
+
 	public com.liferay.portal.model.LayoutSet getPublicLayoutSet() {
 		return _group.getPublicLayoutSet();
 	}

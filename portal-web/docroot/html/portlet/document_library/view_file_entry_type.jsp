@@ -52,6 +52,15 @@ portletURL.setParameter("struts_action", "/document_library/view_file_entry_type
 			property="name"
 		/>
 
+		<%
+		Group group = GroupLocalServiceUtil.getGroup(fileEntryType.getGroupId());
+		%>
+
+		<liferay-ui:search-container-column-text
+			name="scope"
+			value="<%= LanguageUtil.get(pageContext, group.getScopeType(themeDisplay)) %>"
+		/>
+
 		<liferay-ui:search-container-column-text
 			buffer="buffer"
 			name="modified-date"

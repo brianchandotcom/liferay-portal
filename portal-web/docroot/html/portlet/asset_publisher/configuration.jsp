@@ -101,14 +101,14 @@ String editorParam = emailParam + "Body_" + currentLanguageId;
 					>
 						<liferay-ui:icon
 							label="<%= true %>"
-							message="<%= _getName(themeDisplay, group) %>"
+							message="<%= group.getScopeName(themeDisplay) %>"
 							src="<%= group.getIconURL(themeDisplay) %>"
 						/>
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
 						name="type"
-						value="<%= LanguageUtil.get(pageContext, _getType(themeDisplay, group)) %>"
+						value="<%= LanguageUtil.get(pageContext, group.getScopeType(themeDisplay)) %>"
 					/>
 
 					<liferay-ui:search-container-column-text
@@ -148,7 +148,7 @@ String editorParam = emailParam + "Body_" + currentLanguageId;
 
 						<liferay-ui:icon
 							id='<%= "scope" + group.getGroupId() %>'
-							message="<%= _getName(themeDisplay, group) %>"
+							message="<%= group.getScopeName(themeDisplay) %>"
 							method="post"
 							src="<%= group.getIconURL(themeDisplay) %>"
 							url="<%= addScopeURL %>"
@@ -357,66 +357,3 @@ String editorParam = emailParam + "Body_" + currentLanguageId;
 
 	Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />selectionStyle);
 </aui:script>
-
-<%!
-private String _getName(ThemeDisplay themeDisplay, Group group) throws Exception {
-	String name = null;
-
-	if (group.getGroupId() == themeDisplay.getScopeGroupId()) {
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(LanguageUtil.get(themeDisplay.getLocale(), "current-site"));
-		sb.append(StringPool.SPACE);
-		sb.append(StringPool.OPEN_PARENTHESIS);
-		sb.append(HtmlUtil.escape(group.getDescriptiveName(themeDisplay.getLocale())));
-		sb.append(StringPool.CLOSE_PARENTHESIS);
-
-		name = sb.toString();
-	}
-	else if (group.isLayout() && (group.getClassPK() == themeDisplay.getPlid())) {
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(LanguageUtil.get(themeDisplay.getLocale(), "current-page"));
-		sb.append(StringPool.SPACE);
-		sb.append(StringPool.OPEN_PARENTHESIS);
-		sb.append(HtmlUtil.escape(group.getDescriptiveName(themeDisplay.getLocale())));
-		sb.append(StringPool.CLOSE_PARENTHESIS);
-
-		name = sb.toString();
-	}
-	else if (group.isLayoutPrototype()) {
-		name = LanguageUtil.get(themeDisplay.getLocale(), "default");
-	}
-	else {
-		name = HtmlUtil.escape(group.getDescriptiveName(themeDisplay.getLocale()));
-	}
-
-	return name;
-}
-
-private String _getType(ThemeDisplay themeDisplay, Group group) {
-	String type = "site";
-
-	if (group.getGroupId() == themeDisplay.getScopeGroupId()) {
-		type = "current-site";
-	}
-	else if (group.getGroupId() == themeDisplay.getCompanyGroupId()) {
-		type = "global";
-	}
-	else if (group.isLayout()) {
-		type = "page";
-	}
-	else {
-		Group scopeGroup = themeDisplay.getScopeGroup();
-
-		if (scopeGroup.hasAncestor(group.getGroupId())) {
-			type = "parent-site";
-		}
-		else if (group.hasAncestor(scopeGroup.getGroupId())) {
-			type = "child-site";
-		}
-	}
-
-	return type;
-}
-%>

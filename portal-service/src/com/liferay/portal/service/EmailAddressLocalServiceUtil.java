@@ -253,6 +253,10 @@ public class EmailAddressLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
+	/**
+	* @deprecated As of 6.2.0, replaced by {@link #addEmailAddress(long,
+	String, long, String, int, boolean, ServiceContext)}
+	*/
 	public static com.liferay.portal.model.EmailAddress addEmailAddress(
 		long userId, java.lang.String className, long classPK,
 		java.lang.String address, int typeId, boolean primary)
@@ -261,6 +265,17 @@ public class EmailAddressLocalServiceUtil {
 		return getService()
 				   .addEmailAddress(userId, className, classPK, address,
 			typeId, primary);
+	}
+
+	public static com.liferay.portal.model.EmailAddress addEmailAddress(
+		long userId, java.lang.String className, long classPK,
+		java.lang.String address, int typeId, boolean primary,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addEmailAddress(userId, className, classPK, address,
+			typeId, primary, serviceContext);
 	}
 
 	public static void deleteEmailAddresses(long companyId,

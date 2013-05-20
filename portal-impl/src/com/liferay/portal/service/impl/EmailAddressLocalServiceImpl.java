@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.EmailAddress;
 import com.liferay.portal.model.ListTypeConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.EmailAddressLocalServiceBaseImpl;
 import com.liferay.portal.util.PortalUtil;
 
@@ -34,9 +35,23 @@ import java.util.List;
 public class EmailAddressLocalServiceImpl
 	extends EmailAddressLocalServiceBaseImpl {
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #addEmailAddress(long,
+	 *             String, long, String, int, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	public EmailAddress addEmailAddress(
 			long userId, String className, long classPK, String address,
 			int typeId, boolean primary)
+		throws PortalException, SystemException {
+
+		return addEmailAddress(
+			userId, className, classPK, address, typeId, primary, null);
+	}
+
+	public EmailAddress addEmailAddress(
+			long userId, String className, long classPK, String address,
+			int typeId, boolean primary, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
@@ -52,11 +67,23 @@ public class EmailAddressLocalServiceImpl
 		EmailAddress emailAddress = emailAddressPersistence.create(
 			emailAddressId);
 
+		if (serviceContext != null) {
+			emailAddress.setUuid(serviceContext.getUuid());
+		}
+
 		emailAddress.setCompanyId(user.getCompanyId());
 		emailAddress.setUserId(user.getUserId());
 		emailAddress.setUserName(user.getFullName());
-		emailAddress.setCreateDate(now);
-		emailAddress.setModifiedDate(now);
+
+		if (serviceContext != null) {
+			emailAddress.setCreateDate(serviceContext.getCreateDate(now));
+			emailAddress.setModifiedDate(serviceContext.getModifiedDate(now));
+		}
+		else {
+			emailAddress.setCreateDate(now);
+			emailAddress.setModifiedDate(now);
+		}
+
 		emailAddress.setClassNameId(classNameId);
 		emailAddress.setClassPK(classPK);
 		emailAddress.setAddress(address);

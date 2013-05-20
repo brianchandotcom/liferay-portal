@@ -25,6 +25,7 @@ import com.liferay.portal.model.ListTypeConstants;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Phone;
 import com.liferay.portal.model.User;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.PhoneLocalServiceBaseImpl;
 import com.liferay.portal.util.PortalUtil;
 
@@ -36,9 +37,25 @@ import java.util.List;
  */
 public class PhoneLocalServiceImpl extends PhoneLocalServiceBaseImpl {
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #addPhone(long,
+	 *             String, long, String, String, int, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	public Phone addPhone(
 			long userId, String className, long classPK, String number,
 			String extension, int typeId, boolean primary)
+		throws PortalException, SystemException {
+
+		return addPhone(
+			userId, className, classPK, number, extension, typeId, primary,
+			null);
+	}
+
+	public Phone addPhone(
+			long userId, String className, long classPK, String number,
+			String extension, int typeId, boolean primary,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
@@ -53,11 +70,23 @@ public class PhoneLocalServiceImpl extends PhoneLocalServiceBaseImpl {
 
 		Phone phone = phonePersistence.create(phoneId);
 
+		if (serviceContext != null) {
+			phone.setUuid(serviceContext.getUuid());
+		}
+
 		phone.setCompanyId(user.getCompanyId());
 		phone.setUserId(user.getUserId());
 		phone.setUserName(user.getFullName());
-		phone.setCreateDate(now);
-		phone.setModifiedDate(now);
+
+		if (serviceContext != null) {
+			phone.setCreateDate(serviceContext.getCreateDate(now));
+			phone.setModifiedDate(serviceContext.getModifiedDate(now));
+		}
+		else {
+			phone.setCreateDate(now);
+			phone.setModifiedDate(now);
+		}
+
 		phone.setClassNameId(classNameId);
 		phone.setClassPK(classPK);
 		phone.setNumber(number);

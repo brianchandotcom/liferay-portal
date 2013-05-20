@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ListTypeConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.Website;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.WebsiteLocalServiceBaseImpl;
 import com.liferay.portal.util.PortalUtil;
 
@@ -32,9 +33,23 @@ import java.util.List;
  */
 public class WebsiteLocalServiceImpl extends WebsiteLocalServiceBaseImpl {
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #addWebsite(long,
+	 *             String, long, String, int, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	public Website addWebsite(
 			long userId, String className, long classPK, String url, int typeId,
 			boolean primary)
+		throws PortalException, SystemException {
+
+		return addWebsite(
+			userId, className, classPK, url, typeId, primary, null);
+	}
+
+	public Website addWebsite(
+			long userId, String className, long classPK, String url, int typeId,
+			boolean primary, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
@@ -48,11 +63,24 @@ public class WebsiteLocalServiceImpl extends WebsiteLocalServiceBaseImpl {
 
 		Website website = websitePersistence.create(websiteId);
 
+		if (serviceContext != null) {
+			website.setUuid(serviceContext.getUuid());
+		}
+
 		website.setCompanyId(user.getCompanyId());
 		website.setUserId(user.getUserId());
 		website.setUserName(user.getFullName());
 		website.setCreateDate(now);
-		website.setModifiedDate(now);
+
+		if (serviceContext != null) {
+			website.setCreateDate(serviceContext.getCreateDate(now));
+			website.setModifiedDate(serviceContext.getModifiedDate(now));
+		}
+		else {
+			website.setCreateDate(now);
+			website.setModifiedDate(now);
+		}
+
 		website.setClassNameId(classNameId);
 		website.setClassPK(classPK);
 		website.setUrl(url);

@@ -52,6 +52,16 @@ public class UserGroupStagedModelDataHandlerTest
 	}
 
 	@Override
+	protected void clearStagedModel(
+			StagedModel stagedModel,
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		UserGroupLocalServiceUtil.deleteUserGroup((UserGroup)stagedModel);
+	}
+
+	@Override
 	protected StagedModel getStagedModel(String uuid, Group group) {
 		try {
 			return UserGroupLocalServiceUtil.fetchUserGroupByUuidAndCompanyId(

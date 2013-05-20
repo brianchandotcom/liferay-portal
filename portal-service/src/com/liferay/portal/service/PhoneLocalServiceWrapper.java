@@ -237,6 +237,10 @@ public class PhoneLocalServiceWrapper implements PhoneLocalService,
 		_phoneLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
+	/**
+	* @deprecated As of 6.2.0, replaced by {@link #addPhone(long,
+	String, long, String, String, int, boolean, ServiceContext)}
+	*/
 	public com.liferay.portal.model.Phone addPhone(long userId,
 		java.lang.String className, long classPK, java.lang.String number,
 		java.lang.String extension, int typeId, boolean primary)
@@ -244,6 +248,16 @@ public class PhoneLocalServiceWrapper implements PhoneLocalService,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _phoneLocalService.addPhone(userId, className, classPK, number,
 			extension, typeId, primary);
+	}
+
+	public com.liferay.portal.model.Phone addPhone(long userId,
+		java.lang.String className, long classPK, java.lang.String number,
+		java.lang.String extension, int typeId, boolean primary,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _phoneLocalService.addPhone(userId, className, classPK, number,
+			extension, typeId, primary, serviceContext);
 	}
 
 	public void deletePhones(long companyId, java.lang.String className,

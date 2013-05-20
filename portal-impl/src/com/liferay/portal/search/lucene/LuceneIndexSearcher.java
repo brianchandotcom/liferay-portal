@@ -76,6 +76,7 @@ import org.apache.lucene.document.NumericField;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Explanation;
+import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.SortField;
 import org.apache.lucene.search.TopFieldDocs;
@@ -96,7 +97,7 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 
 		Hits hits = null;
 
-		org.apache.lucene.search.IndexSearcher indexSearcher = null;
+		IndexSearcher indexSearcher = null;
 		Map<String, Facet> facets = null;
 		BoboBrowser boboBrowser = null;
 		BrowseRequest browseRequest = null;
@@ -320,7 +321,7 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 
 		Hits hits = null;
 
-		org.apache.lucene.search.IndexSearcher indexSearcher = null;
+		IndexSearcher indexSearcher = null;
 		org.apache.lucene.search.Sort luceneSort = null;
 
 		try {
@@ -446,7 +447,7 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 		}
 	}
 
-	protected void close(org.apache.lucene.search.IndexSearcher indexSearcher) {
+	protected void close(IndexSearcher indexSearcher) {
 		if (indexSearcher == null) {
 			return;
 		}
@@ -570,9 +571,8 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 	}
 
 	protected Hits toHits(
-			org.apache.lucene.search.IndexSearcher indexSearcher,
-			HitDocs hitDocs, Query query, long startTime, float searchTime,
-			int start, int end)
+			IndexSearcher indexSearcher, HitDocs hitDocs, Query query,
+			long startTime, float searchTime, int start, int end)
 		throws IOException, ParseException {
 
 		int length = hitDocs.getTotalHits();

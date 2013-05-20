@@ -586,15 +586,11 @@ AUI.add(
 					_initLabels: function() {
 						var instance = this;
 
-						var contentLinkNodes = instance.all('.content-link');
-
-						contentLinkNodes.each(
+						instance.all('.content-link').each(
 							function(item, index, collection) {
-								var portletId = item.attr('data-portletid');
-
-								instance._setContentLabels(portletId);
+								instance._setContentLabels(item.attr('data-portletid'));
 							}
-						)
+						);
 
 						instance._setGlobalConfigurationLabels();
 						instance._setGlobalContentLabels();
@@ -616,9 +612,7 @@ AUI.add(
 
 						instance.byId('cmd').val(STR_EMPTY);
 
-						var form = instance.get('form');
-
-						submitForm(form);
+						submitForm(instance.get('form'));
 					},
 
 					_setContentLabels: function(portletId) {

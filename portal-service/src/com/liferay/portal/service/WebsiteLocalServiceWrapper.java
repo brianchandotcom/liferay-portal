@@ -238,6 +238,10 @@ public class WebsiteLocalServiceWrapper implements WebsiteLocalService,
 		_websiteLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
+	/**
+	* @deprecated As of 6.2.0, replaced by {@link #addWebsite(long,
+	String, long, String, int, boolean, ServiceContext)}
+	*/
 	public com.liferay.portal.model.Website addWebsite(long userId,
 		java.lang.String className, long classPK, java.lang.String url,
 		int typeId, boolean primary)
@@ -245,6 +249,16 @@ public class WebsiteLocalServiceWrapper implements WebsiteLocalService,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _websiteLocalService.addWebsite(userId, className, classPK, url,
 			typeId, primary);
+	}
+
+	public com.liferay.portal.model.Website addWebsite(long userId,
+		java.lang.String className, long classPK, java.lang.String url,
+		int typeId, boolean primary,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _websiteLocalService.addWebsite(userId, className, classPK, url,
+			typeId, primary, serviceContext);
 	}
 
 	public void deleteWebsites(long companyId, java.lang.String className,

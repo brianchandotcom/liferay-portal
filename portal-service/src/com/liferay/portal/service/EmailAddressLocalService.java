@@ -227,9 +227,20 @@ public interface EmailAddressLocalService extends BaseLocalService,
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
+	/**
+	* @deprecated As of 6.2.0, replaced by {@link #addEmailAddress(long,
+	String, long, String, int, boolean, ServiceContext)}
+	*/
 	public com.liferay.portal.model.EmailAddress addEmailAddress(long userId,
 		java.lang.String className, long classPK, java.lang.String address,
 		int typeId, boolean primary)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.portal.model.EmailAddress addEmailAddress(long userId,
+		java.lang.String className, long classPK, java.lang.String address,
+		int typeId, boolean primary,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

@@ -143,8 +143,6 @@ public interface PortletDataHandler {
 			PortletPreferences portletPreferences, String data)
 		throws PortletDataException;
 
-	public boolean isAlwaysStaged();
-
 	public boolean isDataLocalized();
 
 	public boolean isDataPortalLevel();

@@ -76,7 +76,6 @@ public class JournalContentPortletDataHandler
 	extends JournalPortletDataHandler {
 
 	public JournalContentPortletDataHandler() {
-		setAlwaysStaged(true);
 		setDataLevel(DataLevel.PORTLET_INSTANCE);
 		setDataPortletPreferences("groupId", "articleId", "templateId");
 		setExportControls(

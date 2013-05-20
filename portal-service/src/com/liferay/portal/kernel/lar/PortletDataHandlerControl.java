@@ -42,9 +42,21 @@ public class PortletDataHandlerControl {
 	public PortletDataHandlerControl(
 		String namespace, String controlName, boolean disabled) {
 
+		this(namespace, controlName, disabled, null);
+	}
+
+	public PortletDataHandlerControl(
+		String namespace, String controlName, boolean disabled,
+		String className) {
+
 		_namespace = namespace;
 		_controlName = controlName;
 		_disabled = disabled;
+		_className = className;
+	}
+
+	public String getClassName() {
+		return _className;
 	}
 
 	public String getControlName() {
@@ -67,6 +79,7 @@ public class PortletDataHandlerControl {
 		_namespace = namespace;
 	}
 
+	private String _className;
 	private String _controlName;
 	private boolean _disabled;
 	private String _namespace;

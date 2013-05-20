@@ -40,7 +40,15 @@ public class PortletDataHandlerBoolean extends PortletDataHandlerControl {
 		String namespace, String controlName, boolean defaultState,
 		boolean disabled, PortletDataHandlerControl[] children) {
 
-		super(namespace, controlName, disabled);
+		this(namespace, controlName, defaultState, disabled, children, null);
+	}
+
+	public PortletDataHandlerBoolean(
+		String namespace, String controlName, boolean defaultState,
+		boolean disabled, PortletDataHandlerControl[] children,
+		String className) {
+
+		super(namespace, controlName, disabled, className);
 
 		_children = children;
 		_defaultState = defaultState;

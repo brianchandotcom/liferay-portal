@@ -21,7 +21,9 @@ import com.liferay.portal.kernel.portlet.PortletContainer;
 import com.liferay.portal.kernel.portlet.PortletContainerException;
 import com.liferay.portal.kernel.portlet.PortletContainerSecurity;
 import com.liferay.portal.kernel.portlet.PortletContainerSecurityUtil;
+import com.liferay.portal.kernel.portlet.PortletContainerUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.kernel.servlet.TempAttributesServletRequest;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -332,6 +334,59 @@ public class PortletContainerSecurityImpl implements PortletContainer,
 		}
 
 		throw new PrincipalException();
+	}
+
+	protected HttpServletRequest getOwnerLayoutRequestWrapper(
+		HttpServletRequest request, Portlet portlet)
+		throws Exception {
+
+		if (!PropsValues.PORTLET_EVENT_DISTRIBUTION_LAYOUT_SET ||
+			PropsValues.PORTLET_CROSS_LAYOUT_INVOCATION_MODE.equals("render")) {
+
+			return request;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			com.liferay.portal.kernel.util.WebKeys.THEME_DISPLAY);
+
+		Layout currentLayout = themeDisplay.getLayout();
+
+		Layout requestLayout = (Layout)request.getAttribute(WebKeys.LAYOUT);
+
+		List<LayoutTypePortlet> layoutTypePortlets =
+			PortletContainerUtil.getLayoutTypePortlets(requestLayout);
+
+		Layout ownerLayout = null;
+		LayoutTypePortlet ownerLayoutTypePortlet = null;
+
+		for (LayoutTypePortlet layoutTypePortlet : layoutTypePortlets) {
+			if (layoutTypePortlet.hasPortletId(portlet.getPortletId())) {
+				ownerLayoutTypePortlet = layoutTypePortlet;
+
+				ownerLayout = layoutTypePortlet.getLayout();
+
+				break;
+			}
+		}
+
+		if ((ownerLayout != null) && !currentLayout.equals(ownerLayout)) {
+			ThemeDisplay themeDisplayClone = (ThemeDisplay)themeDisplay.clone();
+
+			themeDisplayClone.setLayout(ownerLayout);
+			themeDisplayClone.setLayoutTypePortlet(ownerLayoutTypePortlet);
+
+			TempAttributesServletRequest tempAttributesServletRequest =
+				new TempAttributesServletRequest(request);
+
+			tempAttributesServletRequest.setTempAttribute(
+				WebKeys.THEME_DISPLAY, themeDisplayClone);
+			tempAttributesServletRequest.setTempAttribute(
+				WebKeys.LAYOUT, ownerLayout);
+
+			return tempAttributesServletRequest;
+		}
+
+		return request;
 	}
 
 	public void preparePortlet(HttpServletRequest request, Portlet portlet)

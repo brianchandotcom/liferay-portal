@@ -171,52 +171,7 @@ public class PortletContainerImpl implements PortletContainer {
 			HttpServletRequest request, Portlet portlet)
 		throws Exception {
 
-		if (!PropsValues.PORTLET_EVENT_DISTRIBUTION_LAYOUT_SET ||
-			PropsValues.PORTLET_CROSS_LAYOUT_INVOCATION_MODE.equals("render")) {
-
-			return request;
-		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Layout currentLayout = themeDisplay.getLayout();
-
-		Layout requestLayout = (Layout)request.getAttribute(WebKeys.LAYOUT);
-
-		List<LayoutTypePortlet> layoutTypePortlets =
-			PortletContainerUtil.getLayoutTypePortlets(requestLayout);
-
-		Layout ownerLayout = null;
-		LayoutTypePortlet ownerLayoutTypePortlet = null;
-
-		for (LayoutTypePortlet layoutTypePortlet : layoutTypePortlets) {
-			if (layoutTypePortlet.hasPortletId(portlet.getPortletId())) {
-				ownerLayoutTypePortlet = layoutTypePortlet;
-
-				ownerLayout = layoutTypePortlet.getLayout();
-
-				break;
-			}
-		}
-
-		if ((ownerLayout != null) && !currentLayout.equals(ownerLayout)) {
-			ThemeDisplay themeDisplayClone = (ThemeDisplay)themeDisplay.clone();
-
-			themeDisplayClone.setLayout(ownerLayout);
-			themeDisplayClone.setLayoutTypePortlet(ownerLayoutTypePortlet);
-
-			TempAttributesServletRequest tempAttributesServletRequest =
-				new TempAttributesServletRequest(request);
-
-			tempAttributesServletRequest.setTempAttribute(
-				WebKeys.THEME_DISPLAY, themeDisplayClone);
-			tempAttributesServletRequest.setTempAttribute(
-				WebKeys.LAYOUT, ownerLayout);
-
-			return tempAttributesServletRequest;
-		}
-
+		// moved, will be removed later
 		return request;
 	}
 

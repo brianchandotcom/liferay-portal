@@ -136,16 +136,13 @@ public class LayoutExporter {
 		return portlets;
 	}
 
-	public static List<Portlet> getInstanciatedPortlets(
-			long liveGroupId, boolean privateLayout)
+	public static List<Portlet> getInstanciatedPortlets(List<Layout> layouts)
 		throws SystemException {
 
 		List<Portlet> portletsList = new ArrayList<Portlet>();
 		Set<String> portletIdsSet = new HashSet<String>();
 
-		for (Layout curLayout : LayoutLocalServiceUtil.getLayouts(
-				liveGroupId, privateLayout)) {
-
+		for (Layout curLayout : layouts) {
 			if (curLayout.isTypePortlet()) {
 				LayoutTypePortlet curLayoutTypePortlet =
 					(LayoutTypePortlet)curLayout.getLayoutType();
@@ -173,6 +170,14 @@ public class LayoutExporter {
 		}
 
 		return portletsList;
+	}
+
+	public static List<Portlet> getInstanciatedPortlets(
+			long liveGroupId, boolean privateLayout)
+		throws SystemException {
+
+		return getInstanciatedPortlets(
+			LayoutLocalServiceUtil.getLayouts(liveGroupId, privateLayout));
 	}
 
 	public static void updateLastPublishDate(

@@ -342,8 +342,6 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 						</aui:fieldset>
 					</c:if>
 
-					<%@ include file="/html/portlet/layouts_admin/publish_layouts_portlets.jspf" %>
-
 					<aui:fieldset cssClass="options-group" label="application-configuration">
 						<%@ include file="/html/portlet/layouts_admin/publish_layouts_portlets_setup.jspf" %>
 					</aui:fieldset>

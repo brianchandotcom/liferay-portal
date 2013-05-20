@@ -14,9 +14,19 @@
 
 package com.liferay.portal.kernel.portlet;
 
+import java.util.Set;
+
 /**
  * @author Tomas Polesovsky
  */
 public interface PortletContainerSecurity {
+
+	public Set<String> getPortletAddDefaultResourceCheckWhitelist();
+
+	public Set<String> getPortletAddDefaultResourceCheckWhitelistActions();
+
+	public Set<String> resetPortletAddDefaultResourceCheckWhitelist();
+
+	public Set<String> resetPortletAddDefaultResourceCheckWhitelistActions();
 
 }

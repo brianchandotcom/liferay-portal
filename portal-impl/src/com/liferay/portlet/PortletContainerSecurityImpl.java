@@ -19,22 +19,30 @@ import com.liferay.portal.kernel.portlet.PortletContainer;
 import com.liferay.portal.kernel.portlet.PortletContainerException;
 import com.liferay.portal.kernel.portlet.PortletContainerSecurity;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.util.PropsValues;
 
 import javax.portlet.Event;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 @DoPrivileged
 public class PortletContainerSecurityImpl implements PortletContainer,
 	PortletContainerSecurity {
 
-	public PortletContainerSecurityImpl(
-		PortletContainer portletContainer){
+	public PortletContainerSecurityImpl(PortletContainer portletContainer){
 
 		this._portletContainer = portletContainer;
+
+		// Portlet add default resource check white list
+
+		resetPortletAddDefaultResourceCheckWhitelist();
+		resetPortletAddDefaultResourceCheckWhitelistActions();
 	}
 
 	public void preparePortlet(HttpServletRequest request, Portlet portlet)
@@ -76,5 +84,36 @@ public class PortletContainerSecurityImpl implements PortletContainer,
 		_portletContainer.serveResource(request, response, portlet);
 	}
 
+	public Set<String> getPortletAddDefaultResourceCheckWhitelist() {
+		return _portletAddDefaultResourceCheckWhitelist;
+	}
+
+	public Set<String> getPortletAddDefaultResourceCheckWhitelistActions() {
+		return _portletAddDefaultResourceCheckWhitelistActions;
+	}
+
+	public Set<String> resetPortletAddDefaultResourceCheckWhitelist() {
+		_portletAddDefaultResourceCheckWhitelist = SetUtil.fromArray(
+			PropsValues.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST);
+
+		_portletAddDefaultResourceCheckWhitelist = Collections.unmodifiableSet(
+			_portletAddDefaultResourceCheckWhitelist);
+
+		return _portletAddDefaultResourceCheckWhitelist;
+	}
+
+	public Set<String> resetPortletAddDefaultResourceCheckWhitelistActions() {
+		_portletAddDefaultResourceCheckWhitelistActions = SetUtil.fromArray(
+			PropsValues.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST_ACTIONS);
+
+		_portletAddDefaultResourceCheckWhitelistActions =
+			Collections.unmodifiableSet(
+				_portletAddDefaultResourceCheckWhitelistActions);
+
+		return _portletAddDefaultResourceCheckWhitelistActions;
+	}
+
+	private Set<String> _portletAddDefaultResourceCheckWhitelist;
+	private Set<String> _portletAddDefaultResourceCheckWhitelistActions;
 	private PortletContainer _portletContainer;
 }

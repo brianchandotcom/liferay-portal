@@ -331,22 +331,12 @@ public class SearchContainer<R> {
 		return _hover;
 	}
 
-	public boolean isRecalculateCur(int total) {
-		if ((total == 0) && (_cur == DEFAULT_CUR)) {
+	public boolean isRecalculateCur() {
+		if ((_total == 0) && (_cur == DEFAULT_CUR)) {
 			return false;
 		}
 
-		if (((_cur - 1) * _delta) >= total) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean recalculateCur(int total) {
-		if (isRecalculateCur(total)) {
-			setTotal(total);
-
+		if (((_cur - 1) * _delta) >= _total) {
 			return true;
 		}
 
@@ -475,7 +465,7 @@ public class SearchContainer<R> {
 			return;
 		}
 
-		if (isRecalculateCur(_total)) {
+		if (isRecalculateCur()) {
 			if ((_total % _delta) == 0) {
 				_cur = (_total / _delta);
 			}

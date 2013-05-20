@@ -45,8 +45,13 @@ if (companyPreferencesMap.containsKey(property)) {
 }
 %>
 
-<%= HtmlUtil.escape(StringUtil.shorten(value, 80)) %>
+<c:choose>
+	<c:when test="<%= overriddenPropertyValue %>">
+		<liferay-ui:icon image="drive" label="false" message="property-value-read-from-database" toolTip="true" />
+	</c:when>
+	<c:otherwise>
+		<liferay-ui:icon image="page" label="false" message="property-value-read-from-file" toolTip="true" />
+	</c:otherwise>
+</c:choose>
 
-<c:if test="<%= overriddenPropertyValue %>">
-	 <liferay-ui:icon-help message='<%= LanguageUtil.format(pageContext, "this-property-was-stored-in-portal-preferences-using-the-control-panel-and-its-original-value-x-from-portal-ext-properties-was-overridden-by-this-value", HtmlUtil.escape(value)) %>' />
-</c:if>
+<%= HtmlUtil.escape(StringUtil.shorten(value, 80)) %>

@@ -312,6 +312,19 @@ serverURL.setParameter("tabs3", tabs3);
 				}
 				%>
 
+				<c:if test='<%= tabs3.equals("portal-properties") %>'>
+					<liferay-util:buffer var="storedInDatabaseTaglib">
+						<liferay-ui:icon image="drive" alt="database" />
+					</liferay-util:buffer>
+					<liferay-util:buffer var="storedInFileTaglib">
+						<liferay-ui:icon image="page" alt="file" />
+					</liferay-util:buffer>
+
+					<p class="alert alert-info">
+						<liferay-ui:message key="properties-with-icon-x-were-overridden-using-control-panel-and-stored-in-database-properties-with-icon-y-are-read-from-portal-ext-properties"
+						                    arguments="<%= new Object[]{storedInDatabaseTaglib, storedInFileTaglib} %>" />
+					</p>
+				</c:if>
 				<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
 			</c:when>
 			<c:when test='<%= tabs2.equals("captcha") %>'>

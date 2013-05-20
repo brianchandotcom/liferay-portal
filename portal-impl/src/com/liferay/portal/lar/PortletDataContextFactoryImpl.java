@@ -86,6 +86,8 @@ public class PortletDataContextFactoryImpl
 			themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId());
 
 		portletDataContext.setCompanyId(themeDisplay.getCompanyId());
+		portletDataContext.setEndDate(endDate);
+		portletDataContext.setStartDate(startDate);
 
 		return portletDataContext;
 	}

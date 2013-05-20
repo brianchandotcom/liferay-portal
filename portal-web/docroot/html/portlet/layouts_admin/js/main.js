@@ -199,12 +199,14 @@ AUI.add(
 										centered: true,
 										height: 300,
 										modal: true,
-										render: instance.rootNode,
+										render: instance.get('form'),
 										toolbars: {
 											footer: [
 												{
 													on: {
-														click: function() {
+														click: function(event) {
+															event.domEvent.preventDefault();
+
 															instance._handleContent(portletId);
 
 															contentDialog.hide();
@@ -215,7 +217,9 @@ AUI.add(
 												},
 												{
 													on: {
-														click: function() {
+														click: function(event) {
+															event.domEvent.preventDefault();
+
 															contentDialog.hide();
 														}
 													},
@@ -252,12 +256,14 @@ AUI.add(
 										centered: true,
 										height: 300,
 										modal: true,
-										render: instance.rootNode,
+										render: instance.get('form'),
 										toolbars: {
 											footer: [
 												{
 													on: {
-														click: function() {
+														click: function(event) {
+															event.domEvent.preventDefault();
+
 															instance._handleGlobalConfiguration();
 
 															globalConfigurationDialog.hide();
@@ -268,7 +274,9 @@ AUI.add(
 												},
 												{
 													on: {
-														click: function() {
+														click: function(event) {
+															event.domEvent.preventDefault();
+
 															globalConfigurationDialog.hide();
 														}
 													},
@@ -305,12 +313,14 @@ AUI.add(
 										centered: true,
 										height: 300,
 										modal: true,
-										render: instance.rootNode,
+										render: instance.get('form'),
 										toolbars: {
 											footer: [
 												{
 													on: {
-														click: function() {
+														click: function(event) {
+															event.domEvent.preventDefault();
+
 															instance._handleGlobalContent();
 
 															globalContentDialog.hide();
@@ -321,7 +331,9 @@ AUI.add(
 												},
 												{
 													on: {
-														click: function() {
+														click: function(event) {
+															event.domEvent.preventDefault();
+
 															globalContentDialog.hide();
 														}
 													},
@@ -357,12 +369,14 @@ AUI.add(
 										bodyContent: pagesNode,
 										height: 300,
 										modal: true,
-										render: instance.rootNode,
+										render: instance.get('form'),
 										toolbars: {
 											footer: [
 												{
 													on: {
-														click: function() {
+														click: function(event) {
+															event.domEvent.preventDefault();
+
 															instance._handlePages();
 
 															pagesDialog.hide();
@@ -373,7 +387,9 @@ AUI.add(
 												},
 												{
 													on: {
-														click: function() {
+														click: function(event) {
+															event.domEvent.preventDefault();
+
 															pagesDialog.hide();
 														}
 													},
@@ -410,12 +426,14 @@ AUI.add(
 										centered: true,
 										height: 300,
 										modal: true,
-										render: instance.rootNode,
+										render: instance.get('form'),
 										toolbars: {
 											footer: [
 												{
 													on: {
-														click: function() {
+														click: function(event) {
+															event.domEvent.preventDefault();
+
 															instance._handleRange();
 
 															rangeDialog.hide();
@@ -426,7 +444,9 @@ AUI.add(
 												},
 												{
 													on: {
-														click: function() {
+														click: function(event) {
+															event.domEvent.preventDefault();
+
 															rangeDialog.hide();
 														}
 													},
@@ -463,12 +483,14 @@ AUI.add(
 										centered: true,
 										height: 300,
 										modal: true,
-										render: instance.rootNode,
+										render: instance.get('form'),
 										toolbars: {
 											footer: [
 												{
 													on: {
-														click: function() {
+														click: function(event) {
+															event.domEvent.preventDefault();
+
 															instance._handleRemote();
 
 															remoteDialog.hide();
@@ -479,7 +501,9 @@ AUI.add(
 												},
 												{
 													on: {
-														click: function() {
+														click: function(event) {
+															event.domEvent.preventDefault();
+
 															remoteDialog.hide();
 														},
 														label: Liferay.Language.get('cancel')
@@ -516,12 +540,14 @@ AUI.add(
 										centered: true,
 										height: 300,
 										modal: true,
-										render: instance.rootNode,
+										render: instance.get('form'),
 										toolbars: {
 											footer: [
 												{
 													on: {
-														click: function() {
+														click: function(event) {
+															event.domEvent.preventDefault();
+
 															scheduledPublishingEventsDialog.hide();
 														}
 													},

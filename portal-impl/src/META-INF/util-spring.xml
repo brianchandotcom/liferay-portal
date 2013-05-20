@@ -828,8 +828,14 @@
 	</bean>
 	<bean id="com.liferay.portlet.DefaultControlPanelEntryFactory" class="com.liferay.portlet.DefaultControlPanelEntryFactory" />
 	<bean id="com.liferay.portlet.PortletContainerImpl" class="com.liferay.portlet.PortletContainerImpl" />
-	<bean id="com.liferay.portlet.RestrictPortletContainerWrapper" class="com.liferay.portlet.RestrictPortletContainerWrapper" factory-method="createRestrictPortletContainerWrapper">
+	<bean id="com.liferay.portlet.PortletContainerSecurity" class="com.liferay.portlet.PortletContainerSecurityImpl">
 		<constructor-arg name="portletContainer" ref="com.liferay.portlet.PortletContainerImpl" />
+	</bean>
+	<bean id="com.liferay.portal.kernel.portlet.PortletContainerSecurityUtil" class="com.liferay.portal.kernel.portlet.PortletContainerSecurityUtil">
+		<property name="portletContainerSecurity" ref="com.liferay.portlet.PortletContainerSecurity"/>
+	</bean>
+	<bean id="com.liferay.portlet.RestrictPortletContainerWrapper" class="com.liferay.portlet.RestrictPortletContainerWrapper" factory-method="createRestrictPortletContainerWrapper">
+		<constructor-arg name="portletContainer" ref="com.liferay.portlet.PortletContainerSecurity" />
 	</bean>
 	<bean id="com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil" class="com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil">
 		<property name="assetRendererFactoryRegistry">

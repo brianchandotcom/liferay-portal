@@ -109,6 +109,7 @@ import com.liferay.portlet.dynamicdatamapping.model.impl.DDMContentImpl;
 import com.liferay.portlet.dynamicdatamapping.model.impl.DDMStorageLinkImpl;
 import com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureImpl;
 import com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureLinkImpl;
+import com.liferay.portlet.dynamicdatamapping.util.DDMImpl;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalArticleResource;
@@ -145,6 +146,7 @@ import com.liferay.portlet.wiki.model.impl.WikiNodeImpl;
 import com.liferay.portlet.wiki.model.impl.WikiPageImpl;
 import com.liferay.portlet.wiki.model.impl.WikiPageResourceImpl;
 import com.liferay.portlet.wiki.social.WikiActivityKeys;
+import com.liferay.util.PwdGenerator;
 import com.liferay.util.SimpleCounter;
 
 import java.io.File;
@@ -902,14 +904,14 @@ public class DataFactory {
 		ddlRecordVersion.setRecordId(ddlRecord.getRecordId());
 		ddlRecordVersion.setVersion(ddlRecord.getVersion());
 		ddlRecordVersion.setDisplayIndex(ddlRecord.getDisplayIndex());
-		ddlRecordVersion.setStatus(WorkflowConstants.STATUS_DRAFT);
+		ddlRecordVersion.setStatus(WorkflowConstants.STATUS_APPROVED);
 		ddlRecordVersion.setStatusDate(ddlRecord.getModifiedDate());
 
 		return ddlRecordVersion;
 	}
 
 	public DDMContent newDDMContent(DDLRecord ddlRecord, int currentIndex) {
-		StringBundler sb = new StringBundler(2 + _maxDDLCustomFieldCount * 6);
+		StringBundler sb = new StringBundler(3 + _maxDDLCustomFieldCount * 10);
 
 		sb.append("<?xml version=\"1.0\"?><root>");
 
@@ -922,7 +924,19 @@ public class DataFactory {
 			sb.append("]]></dynamic-content></dynamic-element>");
 		}
 
-		sb.append("</root>");
+		sb.append("<dynamic-element default-language-id=\"en_US\" name=\"_");
+		sb.append(
+			"fieldsDisplay\"><dynamic-content language-id=\"en_US\"><![CDATA[");
+
+		for (int i = 0; i < _maxDDLCustomFieldCount; i++) {
+			sb.append(nextDDLCustomFieldName(ddlRecord.getGroupId(), i));
+			sb.append(DDMImpl.INSTANCE_SEPARATOR);
+			sb.append(PwdGenerator.getPassword(4));
+			sb.append(StringPool.COMMA);
+		}
+
+		sb.setStringAt(
+			"]]></dynamic-content></dynamic-element></root>", sb.index() - 1);
 
 		return newDDMContent(
 			ddlRecord.getDDMStorageId(), ddlRecord.getGroupId(), sb.toString());

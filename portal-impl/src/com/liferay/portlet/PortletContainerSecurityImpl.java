@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.portlet.ActionResult;
 import com.liferay.portal.kernel.portlet.PortletContainer;
 import com.liferay.portal.kernel.portlet.PortletContainerException;
 import com.liferay.portal.kernel.portlet.PortletContainerSecurity;
-import com.liferay.portal.kernel.portlet.PortletContainerSecurityUtil;
 import com.liferay.portal.kernel.portlet.PortletContainerUtil;
 import com.liferay.portal.kernel.portlet.PortletModeFactory;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
@@ -504,9 +503,33 @@ public class PortletContainerSecurityImpl implements PortletContainer,
 
 			return _portletContainer.processAction(request, response, portlet);
 		}
+		catch (PrincipalException e) {
+			return processActionException(request, response, portlet, e);
+		}
+		catch (PortletContainerException e) {
+			throw e;
+		}
 		catch (Exception e) {
 			throw new PortletContainerException(e);
 		}
+	}
+
+	protected ActionResult processActionException(
+			HttpServletRequest request, HttpServletResponse response,
+			Portlet portlet, PrincipalException e)
+		throws PortletContainerException {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(e);
+		}
+
+		String url = getOriginalURL(request);
+
+		_log.warn(
+			"Reject processAction for " + url + " on " +
+				portlet.getPortletId());
+
+		return ActionResult.EMPTY_ACTION_RESULT;
 	}
 
 	public List<Event> processEvent(
@@ -528,8 +551,37 @@ public class PortletContainerSecurityImpl implements PortletContainer,
 
 			_portletContainer.render(request, response, portlet);
 		}
+		catch (PrincipalException e) {
+			processRenderException(request, response, portlet);
+		}
+		catch (PortletContainerException e) {
+			throw e;
+		}
 		catch (Exception e) {
 			throw new PortletContainerException(e);
+		}
+	}
+
+	protected void processRenderException(
+			HttpServletRequest request, HttpServletResponse response,
+			Portlet portlet)
+		throws PortletContainerException {
+
+		String portletContent = null;
+
+		if (portlet.isShowPortletAccessDenied()) {
+			portletContent = "/html/portal/portlet_access_denied.jsp";
+		}
+
+		try {
+			if (portletContent != null) {
+				RequestDispatcher requestDispatcher =
+					request.getRequestDispatcher(portletContent);
+
+				requestDispatcher.include(request, response);
+			}
+		} catch (Exception ex) {
+			throw new PortletContainerException(ex);
 		}
 	}
 
@@ -546,9 +598,54 @@ public class PortletContainerSecurityImpl implements PortletContainer,
 
 			_portletContainer.serveResource(request, response, portlet);
 		}
+		catch (PrincipalException e) {
+			processServeResourceException(request, response, portlet, e);
+		}
+		catch (PortletContainerException e) {
+			throw e;
+		}
 		catch (Exception e) {
 			throw new PortletContainerException(e);
 		}
+	}
+
+	protected void processServeResourceException(
+			HttpServletRequest request, HttpServletResponse response,
+			Portlet portlet, PrincipalException e)
+		throws PortletContainerException {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(e);
+		}
+
+		String url = getOriginalURL(request);
+
+		response.setHeader(
+			HttpHeaders.CACHE_CONTROL,
+			HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);
+
+		response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+
+		_log.warn(
+			"Reject serveResource for " + url + " on " +
+				portlet.getPortletId());
+	}
+
+	private String getOriginalURL(HttpServletRequest request){
+		LastPath lastPath = (LastPath)request.getAttribute(
+			WebKeys.LAST_PATH);
+
+		if (lastPath != null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(PortalUtil.getPortalURL(request));
+			sb.append(lastPath.getContextPath());
+			sb.append(lastPath.getPath());
+
+			return sb.toString();
+		}
+
+		return String.valueOf(request.getRequestURI());
 	}
 
 	public Set<String> getPortletAddDefaultResourceCheckWhitelist() {
@@ -579,6 +676,9 @@ public class PortletContainerSecurityImpl implements PortletContainer,
 
 		return _portletAddDefaultResourceCheckWhitelistActions;
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		PortletContainerSecurityImpl.class);
 
 	private Set<String> _portletAddDefaultResourceCheckWhitelist;
 	private Set<String> _portletAddDefaultResourceCheckWhitelistActions;

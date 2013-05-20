@@ -81,6 +81,7 @@ public class WebsiteLocalServiceImpl extends WebsiteLocalServiceBaseImpl {
 			website.setModifiedDate(now);
 		}
 
+		website.setClassNameId(classNameId);
 		website.setClassPK(classPK);
 		website.setUrl(url);
 		website.setTypeId(typeId);

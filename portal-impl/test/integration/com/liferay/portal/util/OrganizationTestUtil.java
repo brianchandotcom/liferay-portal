@@ -17,6 +17,7 @@ package com.liferay.portal.util;
 import com.liferay.portal.model.Address;
 import com.liferay.portal.model.EmailAddress;
 import com.liferay.portal.model.ListType;
+import com.liferay.portal.model.ListTypeConstants;
 import com.liferay.portal.model.OrgLabor;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.OrganizationConstants;
@@ -46,8 +47,8 @@ public class OrganizationTestUtil {
 	public static Address addAddress(Organization organization)
 		throws Exception {
 
-		String type = organization.getModelClassName().concat(".address");
-		List<ListType> listTypeIds = ListTypeServiceUtil.getListTypes(type);
+		List<ListType> listTypeIds = ListTypeServiceUtil.getListTypes(
+			ListTypeConstants.ORGANIZATION_ADDRESS);
 
 		return AddressLocalServiceUtil.addAddress(
 			organization.getUserId(), organization.getModelClassName(),
@@ -55,19 +56,19 @@ public class OrganizationTestUtil {
 			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(),
 			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(),
 			ServiceTestUtil.nextLong(), ServiceTestUtil.randomLong(),
-			listTypeIds.get(0).getListTypeId(), false, false);
+			listTypeIds.get(0).getListTypeId(), false, false, null);
 	}
 
 	public static EmailAddress addEmailAddress(Organization organization)
 		throws Exception {
 
-		String type = organization.getModelClassName().concat(".emailAddress");
-		List<ListType> listTypeIds = ListTypeServiceUtil.getListTypes(type);
+		List<ListType> listTypeIds = ListTypeServiceUtil.getListTypes(
+			ListTypeConstants.ORGANIZATION_EMAIL_ADDRESS);
 
 		return EmailAddressLocalServiceUtil.addEmailAddress(
 			organization.getUserId(), organization.getModelClassName(),
 			organization.getPrimaryKey(), "test@liferay.com",
-			listTypeIds.get(0).getListTypeId(), false);
+			listTypeIds.get(0).getListTypeId(), false, null);
 	}
 
 	public static Organization addOrganization() throws Exception {
@@ -96,8 +97,8 @@ public class OrganizationTestUtil {
 	public static OrgLabor addOrgLabor(Organization organization)
 		throws Exception {
 
-		String type = organization.getModelClassName().concat(".service");
-		List<ListType> listTypeIds = ListTypeServiceUtil.getListTypes(type);
+		List<ListType> listTypeIds = ListTypeServiceUtil.getListTypes(
+			ListTypeConstants.ORGANIZATION_SERVICE);
 
 		return OrgLaborLocalServiceUtil.addOrgLabor(
 			organization.getOrganizationId(),
@@ -127,25 +128,25 @@ public class OrganizationTestUtil {
 
 	public static Phone addPhone(Organization organization) throws Exception {
 
-		String type = organization.getModelClassName().concat(".phone");
-		List<ListType> listTypeIds = ListTypeServiceUtil.getListTypes(type);
+		List<ListType> listTypeIds = ListTypeServiceUtil.getListTypes(
+			ListTypeConstants.ORGANIZATION_PHONE);
 
 		return PhoneLocalServiceUtil.addPhone(
 			organization.getUserId(), organization.getModelClassName(),
 			organization.getPrimaryKey(), "0000000000", "000",
-			listTypeIds.get(0).getListTypeId(), false);
+			listTypeIds.get(0).getListTypeId(), false, null);
 	}
 
 	public static Website addWebsite(Organization organization)
 		throws Exception {
 
-		String type = organization.getModelClassName().concat(".website");
-		List<ListType> listTypeIds = ListTypeServiceUtil.getListTypes(type);
+		List<ListType> listTypeIds = ListTypeServiceUtil.getListTypes(
+			ListTypeConstants.ORGANIZATION_WEBSITE);
 
 		return WebsiteLocalServiceUtil.addWebsite(
 			organization.getUserId(), organization.getModelClassName(),
 			organization.getPrimaryKey(), "http://www.test.com",
-			listTypeIds.get(0).getListTypeId(), false);
+			listTypeIds.get(0).getListTypeId(), false, null);
 	}
 
 }

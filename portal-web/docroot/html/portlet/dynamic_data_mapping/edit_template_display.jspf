@@ -80,7 +80,7 @@ templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(classNa
 
 											<li class="palette-item-container">
 												<span class="palette-item" data-content1="<%= HtmlUtil.escapeAttribute(dataContentArray[0]) %>" <c:if test="<%= Validator.isNotNull(dataContentArray[1]) %>">data-content2="<%= HtmlUtil.escapeAttribute(dataContentArray[1]) %>"</c:if> <c:if test="<%= Validator.isNotNull(dataContentArray[2]) %>">data-content3="<%= HtmlUtil.escapeAttribute(dataContentArray[2]) %>"</c:if> title="<%= HtmlUtil.escapeAttribute(_getPaletteItemTitle(pageContext, templateVariableDefinition)) %>">
-													<liferay-ui:message key="<%= templateVariableDefinition.getLabel() %>" /> <c:if test="<%= templateVariableDefinition.isCollection() || templateVariableDefinition.isRepeatable() %>">*</c:if>
+													<liferay-ui:message key="<%= templateVariableDefinition.getLabel() %>" /><c:if test="<%= templateVariableDefinition.isCollection() || templateVariableDefinition.isRepeatable() %>">*</c:if>
 												</span>
 											</li>
 
@@ -588,12 +588,12 @@ private String _getPaletteItemTitle(PageContext pageContext, TemplateVariableDef
 	}
 
 	if (templateVariableDefinition.isCollection()) {
-		sb.append("<p><i>* ");
+		sb.append("<p><i>*");
 		sb.append(LanguageUtil.get(pageContext, "this-is-a-collection-of-fields"));
 		sb.append("</i></p>");
 	}
 	else if (templateVariableDefinition.isRepeatable()) {
-		sb.append("<p><i>* ");
+		sb.append("<p><i>*");
 		sb.append(LanguageUtil.get(pageContext, "this-is-a-repeatable-field"));
 		sb.append("</i></p>");
 	}

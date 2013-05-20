@@ -385,7 +385,7 @@ DDMDisplay ddmDisplay = DDMDisplayRegistryUtil.getDDMDisplay(refererPortletName)
 					availableFields: 'Liferay.FormBuilder.AVAILABLE_FIELDS.WCM_STRUCTURE',
 					classNameId: '<%= PortalUtil.getClassNameId(DDMStructure.class) %>',
 					classPK: 0,
-					ddmResource: '<%= ddmResource %>',
+					ddmResource: '<%= HtmlUtil.escapeJS(ddmResource) %>',
 					dialog: {
 						modal: true,
 						width: 820

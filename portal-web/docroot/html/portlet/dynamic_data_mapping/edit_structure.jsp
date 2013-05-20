@@ -160,7 +160,7 @@ if (Validator.isNotNull(script)) {
 
 				<aui:input name="description" />
 
-				<aui:field-wrapper label='<%= LanguageUtil.format(pageContext, "parent-x", scopeStructureName) %>'>
+				<aui:field-wrapper label='<%= LanguageUtil.format(pageContext, "parent-x", HtmlUtil.escape(scopeStructureName)) %>'>
 					<aui:input name="parentStructureId" type="hidden" value="<%= parentStructureId %>" />
 
 					<c:choose>
@@ -215,18 +215,18 @@ if (Validator.isNotNull(script)) {
 			{
 				availableFields: 'Liferay.FormBuilder.AVAILABLE_FIELDS.WCM_STRUCTURE',
 				classPK: <%= (structure != null) ? structure.getPrimaryKey() : 0 %>,
-				ddmResource: '<%= ddmResource %>',
+				ddmResource: '<%= HtmlUtil.escapeJS(ddmResource) %>',
 				dialog: {
 					destroyOnHide: true
 				},
 				eventName: '<portlet:namespace />selectParentStructure',
 				showGlobalScope: true,
 				showManageTemplates: false,
-				storageType: '<%= scopeStorageType %>',
-				structureName: '<%= scopeStructureName %>',
-				structureType: '<%= scopeStructureType %>',
+				storageType: '<%= HtmlUtil.escapeJS(scopeStorageType) %>',
+				structureName: '<%= HtmlUtil.escapeJS(scopeStructureName) %>',
+				structureType: '<%= HtmlUtil.escapeJS(scopeStructureType) %>',
 				struts_action: '/dynamic_data_mapping/select_structure',
-				title: '<%= scopeTitle %>'
+				title: '<%= HtmlUtil.escapeJS(scopeTitle) %>'
 			},
 			function(event){
 				document.<portlet:namespace />fm.<portlet:namespace />parentStructureId.value = event.ddmstructureid;

@@ -40,6 +40,10 @@
 							<span class="arrow">&lt;</span><span class="tag">set-up</span><span class="arrow">&gt;</span>
 						</div>
 
+						<#assign testCaseBlockElement = testCaseSetupElement>
+
+						<#include "test_case_block_element_html.ftl">
+
 						<div>
 							<span class="arrow">&lt;/</span><span class="tag">set-up</span><span class="arrow">&gt;</span>
 						</div>
@@ -55,6 +59,10 @@
 						<span class="arrow">&gt;</span>
 					</div>
 
+					<#assign testCaseBlockElement = testCaseCommandElement>
+
+					<#include "test_case_block_element_html.ftl">
+
 					<div>
 						<span class="arrow">&lt;/</span><span class="tag">command</span><span class="arrow">&gt;</span>
 					</div>
@@ -69,6 +77,10 @@
 						<div>
 							<span class="arrow">&lt;</span><span class="tag">tear-down</span><span class="arrow">&gt;</span>
 						</div>
+
+						<#assign testCaseBlockElement = testCaseTearDownElement>
+
+						<#include "test_case_block_element_html.ftl">
 
 						<div>
 							<span class="arrow">&lt;/</span><span class="tag">tear-down</span><span class="arrow">&gt;</span>

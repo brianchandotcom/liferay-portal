@@ -37,6 +37,10 @@ import java.util.List;
  */
 public class PhoneLocalServiceImpl extends PhoneLocalServiceBaseImpl {
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #addPhone(long,
+	 *             String, long, String, String, int, boolean, ServiceContext)}
+	 */
 	@Deprecated
 	public Phone addPhone(
 			long userId, String className, long classPK, String number,
@@ -73,8 +77,16 @@ public class PhoneLocalServiceImpl extends PhoneLocalServiceBaseImpl {
 		phone.setCompanyId(user.getCompanyId());
 		phone.setUserId(user.getUserId());
 		phone.setUserName(user.getFullName());
-		phone.setCreateDate(now);
-		phone.setModifiedDate(now);
+
+		if (serviceContext != null) {
+			phone.setCreateDate(serviceContext.getCreateDate(now));
+			phone.setModifiedDate(serviceContext.getModifiedDate(now));
+		}
+		else {
+			phone.setCreateDate(now);
+			phone.setModifiedDate(now);
+		}
+
 		phone.setClassNameId(classNameId);
 		phone.setClassPK(classPK);
 		phone.setNumber(number);

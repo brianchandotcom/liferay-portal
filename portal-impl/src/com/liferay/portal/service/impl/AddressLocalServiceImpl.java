@@ -40,6 +40,11 @@ import java.util.List;
  */
 public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #addAddress(long,
+	 *             String, long, String, String, String, String, String, long,
+	 *             long, int, boolean, boolean, ServiceContext)}
+	 */
 	@Deprecated
 	public Address addAddress(
 			long userId, String className, long classPK, String street1,
@@ -79,8 +84,16 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 		address.setCompanyId(user.getCompanyId());
 		address.setUserId(user.getUserId());
 		address.setUserName(user.getFullName());
-		address.setCreateDate(now);
-		address.setModifiedDate(now);
+
+		if (serviceContext != null) {
+			address.setCreateDate(serviceContext.getCreateDate(now));
+			address.setModifiedDate(serviceContext.getModifiedDate(now));
+		}
+		else {
+			address.setCreateDate(now);
+			address.setModifiedDate(now);
+		}
+
 		address.setClassNameId(classNameId);
 		address.setClassPK(classPK);
 		address.setStreet1(street1);

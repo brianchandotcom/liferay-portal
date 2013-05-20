@@ -35,6 +35,10 @@ import java.util.List;
 public class EmailAddressLocalServiceImpl
 	extends EmailAddressLocalServiceBaseImpl {
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #addEmailAddress(long,
+	 *             String, long, String, int, boolean, ServiceContext)}
+	 */
 	@Deprecated
 	public EmailAddress addEmailAddress(
 			long userId, String className, long classPK, String address,
@@ -70,8 +74,16 @@ public class EmailAddressLocalServiceImpl
 		emailAddress.setCompanyId(user.getCompanyId());
 		emailAddress.setUserId(user.getUserId());
 		emailAddress.setUserName(user.getFullName());
-		emailAddress.setCreateDate(now);
-		emailAddress.setModifiedDate(now);
+
+		if (serviceContext != null) {
+			emailAddress.setCreateDate(serviceContext.getCreateDate(now));
+			emailAddress.setModifiedDate(serviceContext.getModifiedDate(now));
+		}
+		else {
+			emailAddress.setCreateDate(now);
+			emailAddress.setModifiedDate(now);
+		}
+
 		emailAddress.setClassNameId(classNameId);
 		emailAddress.setClassPK(classPK);
 		emailAddress.setAddress(address);

@@ -33,6 +33,10 @@ import java.util.List;
  */
 public class WebsiteLocalServiceImpl extends WebsiteLocalServiceBaseImpl {
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #addWebsite(long,
+	 *             String, long, String, int, boolean, ServiceContext)}
+	 */
 	@Deprecated
 	public Website addWebsite(
 			long userId, String className, long classPK, String url, int typeId,
@@ -67,8 +71,16 @@ public class WebsiteLocalServiceImpl extends WebsiteLocalServiceBaseImpl {
 		website.setUserId(user.getUserId());
 		website.setUserName(user.getFullName());
 		website.setCreateDate(now);
-		website.setModifiedDate(now);
-		website.setClassNameId(classNameId);
+
+		if (serviceContext != null) {
+			website.setCreateDate(serviceContext.getCreateDate(now));
+			website.setModifiedDate(serviceContext.getModifiedDate(now));
+		}
+		else {
+			website.setCreateDate(now);
+			website.setModifiedDate(now);
+		}
+
 		website.setClassPK(classPK);
 		website.setUrl(url);
 		website.setTypeId(typeId);

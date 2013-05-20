@@ -54,7 +54,6 @@ import javax.portlet.PortletPreferences;
 public class DLDisplayPortletDataHandler extends DLPortletDataHandler {
 
 	public DLDisplayPortletDataHandler() {
-		setAlwaysExportable(false);
 		setDataLevel(DataLevel.PORTLET_INSTANCE);
 	}
 

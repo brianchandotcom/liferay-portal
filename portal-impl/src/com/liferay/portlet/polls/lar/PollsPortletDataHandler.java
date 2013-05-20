@@ -44,7 +44,6 @@ public class PollsPortletDataHandler extends BasePortletDataHandler {
 	public static final String NAMESPACE = "polls";
 
 	public PollsPortletDataHandler() {
-		setAlwaysExportable(true);
 		setDataLocalized(true);
 		setExportControls(
 			new PortletDataHandlerBoolean(NAMESPACE, "questions", true, true),

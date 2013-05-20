@@ -167,10 +167,6 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		}
 	}
 
-	public boolean isAlwaysExportable() {
-		return _alwaysExportable;
-	}
-
 	public boolean isAlwaysStaged() {
 		return _alwaysStaged;
 	}
@@ -268,10 +264,6 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		}
 	}
 
-	protected void setAlwaysExportable(boolean alwaysExportable) {
-		_alwaysExportable = alwaysExportable;
-	}
-
 	protected void setAlwaysStaged(boolean alwaysStaged) {
 		_alwaysStaged = alwaysStaged;
 	}
@@ -323,7 +315,6 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	private static Log _log = LogFactoryUtil.getLog(
 		BasePortletDataHandler.class);
 
-	private boolean _alwaysExportable;
 	private boolean _alwaysStaged;
 	private DataLevel _dataLevel = DataLevel.SITE;
 	private boolean _dataLocalized;

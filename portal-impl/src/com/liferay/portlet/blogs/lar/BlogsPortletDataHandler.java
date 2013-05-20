@@ -44,7 +44,6 @@ public class BlogsPortletDataHandler extends BasePortletDataHandler {
 	public static final String NAMESPACE = "blogs";
 
 	public BlogsPortletDataHandler() {
-		setAlwaysExportable(true);
 		setExportControls(
 			new PortletDataHandlerBoolean(NAMESPACE, "entries", true, true));
 		setExportMetadataControls(

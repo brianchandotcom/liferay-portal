@@ -47,7 +47,6 @@ public class MDRPortletDataHandler extends BasePortletDataHandler {
 	public static final String NAMESPACE = "mobile_device_rules";
 
 	public MDRPortletDataHandler() {
-		setAlwaysExportable(true);
 		setAlwaysStaged(true);
 		setExportControls(
 			new PortletDataHandlerBoolean(NAMESPACE, "rules", true, true),

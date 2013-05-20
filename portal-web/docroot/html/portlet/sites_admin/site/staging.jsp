@@ -161,10 +161,6 @@ LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroup.get
 					<liferay-ui:message key="staged-portlets-alert" />
 				</div>
 
-				<div class="alert alert-info">
-					<liferay-ui:message key="always-exported-portlets-help" />
-				</div>
-
 				<%
 				Set<String> portletDataHandlerClasses = new HashSet<String>();
 
@@ -197,15 +193,9 @@ LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroup.get
 					if (portletDataHandler.isAlwaysStaged()) {
 						staged = true;
 					}
-
-					String includedInEveryPublish = StringPool.BLANK;
-
-					if (portletDataHandler.isAlwaysExportable()) {
-						includedInEveryPublish = " (*)";
-					}
 				%>
 
-					<aui:input disabled="<%= portletDataHandler.isAlwaysStaged() %>" label="<%= PortalUtil.getPortletTitle(curPortlet, application, locale) + includedInEveryPublish %>" name="<%= StagingConstants.STAGED_PORTLET + curPortlet.getRootPortletId() %>" type="checkbox" value="<%= staged %>" />
+					<aui:input disabled="<%= portletDataHandler.isAlwaysStaged() %>" label="<%= PortalUtil.getPortletTitle(curPortlet, application, locale) %>" name="<%= StagingConstants.STAGED_PORTLET + curPortlet.getRootPortletId() %>" type="checkbox" value="<%= staged %>" />
 
 				<%
 				}

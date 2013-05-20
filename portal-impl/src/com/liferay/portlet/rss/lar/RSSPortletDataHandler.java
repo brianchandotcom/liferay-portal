@@ -54,7 +54,6 @@ public class RSSPortletDataHandler extends BasePortletDataHandler {
 	public static final String NAMESPACE = "rss";
 
 	public RSSPortletDataHandler() {
-		setAlwaysExportable(true);
 		setDataLevel(DataLevel.PORTLET_INSTANCE);
 		setDataPortletPreferences("footerArticleValues", "headerArticleValues");
 			setExportControls(

@@ -9,11 +9,15 @@
 		<java
 			classname="com.liferay.portal.tools.DBBuilder"
 			classpathref="project.classpath"
+			fork="on"
 		>
 			<arg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
 			<arg value="db.database.name=${database.name}" />
 			<arg value="db.database.types=${database.types}" />
 			<arg value="db.sql.dir=${basedir}" />
+			<jvmarg line="${db.build.debug.jpda}" />
+			<jvmarg value="-Xmx${db.build.java.mx}" />
+			<jvmarg value="-XX:MaxPermSize=${db.build.java.maxpermsize}" />
 		</java>
 	</target>
 

@@ -16,17 +16,24 @@ package com.liferay.portlet;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ActionResult;
 import com.liferay.portal.kernel.portlet.PortletContainer;
 import com.liferay.portal.kernel.portlet.PortletContainerException;
 import com.liferay.portal.kernel.portlet.PortletContainerSecurity;
 import com.liferay.portal.kernel.portlet.PortletContainerSecurityUtil;
 import com.liferay.portal.kernel.portlet.PortletContainerUtil;
+import com.liferay.portal.kernel.portlet.PortletModeFactory;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.TempAttributesServletRequest;
+import com.liferay.portal.kernel.struts.LastPath;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
@@ -51,10 +58,13 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 
 import javax.portlet.Event;
+import javax.portlet.PortletMode;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @DoPrivileged
@@ -69,6 +79,92 @@ public class PortletContainerSecurityImpl implements PortletContainer,
 
 		resetPortletAddDefaultResourceCheckWhitelist();
 		resetPortletAddDefaultResourceCheckWhitelistActions();
+	}
+
+	protected void check(HttpServletRequest request, Portlet portlet)
+		throws Exception {
+
+		if (portlet == null) {
+			return;
+		}
+
+		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
+
+		if (layout.isTypeControlPanel()) {
+			checkControlPanel(request, portlet);
+			return;
+		}
+
+		if (isPortletAllowedToExecute(request, portlet)) {
+			PortalUtil.addPortletDefaultResource(request, portlet);
+
+			if (hasAccessPermission(request, portlet)) {
+				return;
+			}
+		}
+
+		throw new PrincipalException();
+	}
+
+	private boolean hasAccessPermission(
+			HttpServletRequest request, Portlet portlet)
+		throws PortalException, SystemException {
+
+		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long scopeGroupId = themeDisplay.getScopeGroupId();
+
+		PortletMode portletMode = PortletModeFactory.getPortletMode(
+			ParamUtil.getString(request, "p_p_mode"));
+
+		boolean access = PortletPermissionUtil.hasAccessPermission(
+			permissionChecker, scopeGroupId, layout, portlet, portletMode);
+
+		return access;
+	}
+
+	protected void checkAction(HttpServletRequest request, Portlet portlet)
+		throws Exception {
+
+		checkCSRFProtection(request, portlet);
+
+		check(request, portlet);
+	}
+
+	protected void checkCSRFProtection(
+		HttpServletRequest request, Portlet portlet)
+		throws PortalException {
+
+		if (!PropsValues.AUTH_TOKEN_CHECK_ENABLED) {
+			return;
+		}
+
+		Map<String, String> initParams = portlet.getInitParams();
+
+		boolean checkAuthToken = GetterUtil.getBoolean(
+			initParams.get("check-auth-token"), true);
+
+		if (checkAuthToken) {
+			AuthTokenUtil.check(request);
+		}
+	}
+
+	protected void checkRender(HttpServletRequest request, Portlet portlet)
+		throws Exception {
+
+		check(request, portlet);
+	}
+
+	protected void checkResource(HttpServletRequest request, Portlet portlet)
+		throws Exception {
+
+		check(request, portlet);
 	}
 
 	protected boolean isPortletAllowedToExecute(
@@ -400,7 +496,17 @@ public class PortletContainerSecurityImpl implements PortletContainer,
 			Portlet portlet)
 		throws PortletContainerException {
 
-		return _portletContainer.processAction(request, response, portlet);
+		try {
+			HttpServletRequest ownerLayoutRequest =
+				getOwnerLayoutRequestWrapper(request, portlet);
+
+			checkAction(ownerLayoutRequest, portlet);
+
+			return _portletContainer.processAction(request, response, portlet);
+		}
+		catch (Exception e) {
+			throw new PortletContainerException(e);
+		}
 	}
 
 	public List<Event> processEvent(
@@ -417,7 +523,14 @@ public class PortletContainerSecurityImpl implements PortletContainer,
 			Portlet portlet)
 		throws PortletContainerException {
 
-		_portletContainer.render(request, response, portlet);
+		try {
+			checkRender(request, portlet);
+
+			_portletContainer.render(request, response, portlet);
+		}
+		catch (Exception e) {
+			throw new PortletContainerException(e);
+		}
 	}
 
 	public void serveResource(
@@ -425,7 +538,17 @@ public class PortletContainerSecurityImpl implements PortletContainer,
 			Portlet portlet)
 		throws PortletContainerException {
 
-		_portletContainer.serveResource(request, response, portlet);
+		try {
+			HttpServletRequest ownerLayoutRequest =
+				getOwnerLayoutRequestWrapper(request, portlet);
+
+			checkResource(ownerLayoutRequest, portlet);
+
+			_portletContainer.serveResource(request, response, portlet);
+		}
+		catch (Exception e) {
+			throw new PortletContainerException(e);
+		}
 	}
 
 	public Set<String> getPortletAddDefaultResourceCheckWhitelist() {

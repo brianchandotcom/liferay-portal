@@ -60,14 +60,6 @@ import java.util.Map;
  */
 public class PropertiesConverter {
 
-	private static final String _INDENT = new StringBundler(
-		StringPool.SPACE).append(
-			StringPool.SPACE).append(
-				StringPool.SPACE).append(StringPool.SPACE).toString();
-	private static final String _INDENT_DOUBLE = _INDENT + _INDENT;
-	private static final String _TPL_PROPERTIES_HTML =
-		"com/liferay/portal/tools/dependencies/properties_html.ftl";
-
 	public static void main(String[] args) {
 		String propertiesFilePath = args[0];
 
@@ -101,28 +93,27 @@ public class PropertiesConverter {
 		root.put("propertiesFileName", propertiesFileName);
 
 		PropertiesConverter converter = new PropertiesConverter(
-			root, propertiesFilePath, propertiesFileName, destDir);
+				root, propertiesFilePath, propertiesFileName, destDir);
 	}
 
-	public PropertiesConverter(Map root, String propertiesFilePath,
-		String propertiesFileName, String destDir) {
+	public PropertiesConverter(
+			Map root, String propertiesFilePath, String propertiesFileName,
+			String destDir) {
 
 		File propertiesFile = new File(propertiesFilePath);
 
-		String propertiesString = "";
-
-		propertiesString = _read(propertiesFile);
+		String propertiesString = _read(propertiesFile);
 
 		String[] sectionStrings = propertiesString.split("\n\n");
 
 		List<PropertiesSection> sections = new ArrayList<PropertiesSection>(
-			sectionStrings.length);
+				sectionStrings.length);
 
 		PropertiesSection section;
 
 		for (int i = 0; i < sectionStrings.length; i++) {
-
 			sectionStrings[i] = StringUtil.trimLeading(sectionStrings[i], ' ');
+
 			section = new PropertiesSection(sectionStrings[i]);
 
 			if (sectionStrings[i].startsWith("##")) {
@@ -130,29 +121,35 @@ public class PropertiesConverter {
 
 				if (numLines == 3) {
 					section.setTitle(_extractTitle(section));
+
 					sections.add(section);
 				}
 				else if (numLines > 3) {
 					section.setComments(_extractComments(section));
+
 					sections.add(section);
 				}
 				else {
 					System.out.println(
-						"Error: PropertiesSection should consist of 3 or " +
-						"more lines:\n" +
-						"##\n" +
-						"## Comment(s)\n" +
-						"##");
+							"Error: PropertiesSection should consist of 3 or " +
+							"more lines:\n" +
+							"##\n" +
+							"## Comment(s)\n" +
+							"##");
 
 					return;
 				}
+
 			}
 			else {
 				section.setPropertyComments(_extractPropertyComments(section));
+
 				section.setDefaultProperties(
 					_extractDefaultProperties(section));
+
 				section.setExampleProperties(
 					_extractExampleProperties(section));
+
 				sections.add(section);
 			}
 
@@ -532,5 +529,11 @@ public class PropertiesConverter {
 	private String _replaceFirstPoundWithBlank(String line) {
 		return line.trim().replaceFirst(StringPool.POUND, StringPool.BLANK);
 	}
+
+	private static final String _INDENT = StringPool.SPACE + StringPool.SPACE +
+		StringPool.SPACE + StringPool.SPACE;
+	private static final String _INDENT_DOUBLE = _INDENT + _INDENT;
+	private static final String _TPL_PROPERTIES_HTML =
+		"com/liferay/portal/tools/dependencies/properties_html.ftl";
 
 }

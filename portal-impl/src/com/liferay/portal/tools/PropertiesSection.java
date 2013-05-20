@@ -162,12 +162,12 @@ public class PropertiesSection {
 		_title = title;
 	}
 
-	private final String _text;
-
 	private List<String> _comments;
 	private String _defaultProperties;
 	private String _exampleProperties;
 	private List<PropertyComment> _propertyComments;
+	private final String _text;
+
 	private String _title;
 
 }

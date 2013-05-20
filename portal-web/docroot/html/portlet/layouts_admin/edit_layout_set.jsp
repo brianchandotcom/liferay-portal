@@ -256,7 +256,7 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 
 			window.open('<%= viewPagesURL %>').focus();
 		}
-		else if (dataValue == 'view') {
+		else if (dataValue == 'import') {
 			<portlet:renderURL var="importPagesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 				<portlet:param name="struts_action" value="/layouts_admin/import_layouts" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VALIDATE %>" />

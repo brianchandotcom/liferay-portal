@@ -26,9 +26,7 @@
 
 		<ul class="hide" id="<portlet:namespace />showChangeGlobalConfiguration">
 			<li class="tree-item">
-				<div class="selected-labels" id="<portlet:namespace />selectedGlobalConfiguration">
-					<liferay-ui:message key="user-preferences" />
-				</div>
+				<div class="selected-labels" id="<portlet:namespace />selectedGlobalConfiguration"></div>
 
 				<aui:a cssClass="modify-link" href="javascript:;" id="globalConfigurationLink" label="change" method="get" />
 			</li>

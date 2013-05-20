@@ -152,12 +152,7 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 
 		<c:if test="<%= !group.isLayoutPrototype() %>">
 			<aui:fieldset cssClass="options-group" label="pages">
-				<div class="selected-labels" id="<portlet:namespace />selectedPages">
-					<liferay-ui:message key="site-pages-settings" />,
-					<liferay-ui:message key="theme" />,
-					<liferay-ui:message key="theme-settings" />,
-					<liferay-ui:message key="logo" />
-				</div>
+				<div class="selected-labels" id="<portlet:namespace />selectedPages"></div>
 
 				<aui:a cssClass="modify-link" href="javascript:;" id="pagesLink" label="change" method="get" />
 
@@ -184,10 +179,7 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 
 					<ul id="<portlet:namespace />showGlobalConfiguration">
 						<li class="tree-item">
-							<div class="selected-labels" id="<portlet:namespace />selectedGlobalConfiguration">
-								<liferay-ui:message key="archived-setups" />,
-								<liferay-ui:message key="user-preferences" />
-							</div>
+							<div class="selected-labels" id="<portlet:namespace />selectedGlobalConfiguration"></div>
 
 							<aui:a cssClass="modify-link" href="javascript:;" id="globalConfigurationLink" label="change" method="get" />
 						</li>
@@ -215,10 +207,7 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 
 					<ul id="<portlet:namespace />showChangeGlobalContent">
 						<li>
-							<div class="selected-labels" id="<portlet:namespace />selectedGlobalContent">
-								<liferay-ui:message key="mirror" />,
-								<liferay-ui:message key="use-the-original-author" />
-							</div>
+							<div class="selected-labels" id="<portlet:namespace />selectedGlobalContent"></div>
 
 							<aui:a cssClass="modify-link" href="javascript:;" id="globalContentLink" label="change" method="get" />
 						</li>

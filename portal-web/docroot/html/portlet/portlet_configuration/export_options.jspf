@@ -25,13 +25,7 @@
 
 					<ul id="<portlet:namespace />showGlobalConfiguration">
 						<li class="tree-item">
-							<div class="selected-labels" id="<portlet:namespace />selectedGlobalConfiguration">
-								<c:if test="<%= !PortletItemLocalServiceUtil.getPortletItems(layout.getGroupId(), selPortlet.getRootPortletId(), com.liferay.portal.model.PortletPreferences.class.getName()).isEmpty() %>">
-									<liferay-ui:message key="archived-setups" />,
-								</c:if>
-
-								<liferay-ui:message key="user-preferences" />
-							</div>
+							<div class="selected-labels" id="<portlet:namespace />selectedGlobalConfiguration"></div>
 
 							<aui:a cssClass="modify-link" href="javascript:;" id="globalConfigurationLink" label="change" method="get" />
 						</li>
@@ -71,7 +65,6 @@
 					PortletDataHandlerControl[] metadataControls = portletDataHandler.getExportMetadataControls();
 
 					if (Validator.isNotNull(exportControls) || Validator.isNotNull(metadataControls)) {
-						String selectedContent = StringPool.BLANK;
 					%>
 
 						<div class="hide" id="<portlet:namespace />content_<%= selPortlet.getRootPortletId() %>">
@@ -83,8 +76,6 @@
 									<%
 									request.setAttribute("render_controls.jsp-controls", exportControls);
 									request.setAttribute("render_controls.jsp-portletDisabled", !portletDataHandler.isPublishToLiveByDefault());
-
-									selectedContent += ArrayUtil.toString(exportControls, "controlName", StringPool.COMMA_AND_SPACE, locale);
 									%>
 
 									<ul class="lfr-tree unstyled">
@@ -103,8 +94,6 @@
 
 									if ((childrenControls != null) && (childrenControls.length > 0)) {
 										request.setAttribute("render_controls.jsp-controls", childrenControls);
-
-										selectedContent += (selectedContent.equals(StringPool.BLANK) ? "" : ",") + ArrayUtil.toString(childrenControls, "controlName", StringPool.COMMA_AND_SPACE, locale);
 									%>
 
 										<aui:field-wrapper label="content-metadata">
@@ -200,12 +189,7 @@
 
 						<ul id="<portlet:namespace />showChangeContent">
 							<li>
-								<div class="selected-labels" id="<portlet:namespace />selectedContent_<%= selPortlet.getRootPortletId() %>">
-
-									<%= selectedContent %>,
-
-									<liferay-ui:message key="from-last-publish-date" />
-								</div>
+								<div class="selected-labels" id="<portlet:namespace />selectedContent_<%= selPortlet.getRootPortletId() %>"></div>
 
 								<%
 								Map<String,Object> data = new HashMap<String,Object>();

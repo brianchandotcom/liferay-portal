@@ -14,34 +14,7 @@
  */
 --%>
 
-<div class="selected-labels" id="<portlet:namespace />selectedRemote">
-
-	<%
-	List<String> selectedRemote = new ArrayList<String>();
-
-	if (Validator.isNotNull(liveGroupTypeSettings.getProperty("remoteAddress"))) {
-		selectedRemote.add(liveGroupTypeSettings.getProperty("remoteAddress"));
-	}
-
-	if (Validator.isNotNull(liveGroupTypeSettings.getProperty("remotePort"))) {
-		selectedRemote.add(liveGroupTypeSettings.getProperty("remotePort"));
-	}
-
-	if (Validator.isNotNull(liveGroupTypeSettings.getProperty("remotePathContext"))) {
-		selectedRemote.add(liveGroupTypeSettings.getProperty("remotePathContext"));
-	}
-
-	if (Validator.isNotNull(liveGroupTypeSettings.getProperty("remoteGroupId"))) {
-		selectedRemote.add(liveGroupTypeSettings.getProperty("remoteGroupId"));
-	}
-
-	if (Validator.isNotNull(liveGroupTypeSettings.getProperty("secureConnection")) && liveGroupTypeSettings.getProperty("secureConnection").equals(Boolean.TRUE.toString())) {
-		selectedRemote.add(LanguageUtil.get(pageContext, "use-a-secure-network-connection"));
-	}
-	%>
-
-	<liferay-ui:message key="<%= StringUtil.merge(selectedRemote, StringPool.COMMA_AND_SPACE) %>" />
-</div>
+<div class="selected-labels" id="<portlet:namespace />selectedRemote"></div>
 
 <aui:a cssClass="modify-link" href="javascript:;" id="remoteLink" label="change" method="get" />
 

@@ -58,6 +58,8 @@ AUI.add(
 						instance._dialogTitle = config.dialogTitle;
 
 						instance._bindUI();
+
+						instance._initLabels();
 					},
 
 					destructor: function() {
@@ -579,6 +581,26 @@ AUI.add(
 						}
 
 						return value;
+					},
+
+					_initLabels: function() {
+						var instance = this;
+
+						var contentLinkNodes = instance.all('.content-link');
+
+						contentLinkNodes.each(
+							function(item, index, collection) {
+								var portletId = item.attr('data-portletid');
+
+								instance._setContentLabels(portletId);
+							}
+						)
+
+						instance._setGlobalConfigurationLabels();
+						instance._setGlobalContentLabels();
+						instance._setPageLabels();
+						instance._setRangeLabels();
+						instance._setRemoteLabels();
 					},
 
 					_isChecked: function(nodeName) {

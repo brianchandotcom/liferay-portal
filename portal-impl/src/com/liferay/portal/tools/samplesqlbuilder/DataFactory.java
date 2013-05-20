@@ -911,12 +911,9 @@ public class DataFactory {
 	}
 
 	public DDMContent newDDMContent(DDLRecord ddlRecord, int currentIndex) {
-		StringBundler sb = new StringBundler(5 + _maxDDLCustomFieldCount * 6);
+		StringBundler sb = new StringBundler(3 + _maxDDLCustomFieldCount * 10);
 
 		sb.append("<?xml version=\"1.0\"?><root>");
-
-		StringBundler fieldNames = new StringBundler(
-			_maxDDLCustomFieldCount * 4);
 
 		for (int i = 0; i < _maxDDLCustomFieldCount; i++) {
 			sb.append("<dynamic-element default-language-id=\"en_US\" name=\"");
@@ -925,21 +922,21 @@ public class DataFactory {
 			sb.append("<![CDATA[Test Record ");
 			sb.append(currentIndex);
 			sb.append("]]></dynamic-content></dynamic-element>");
-
-			fieldNames.append(
-				nextDDLCustomFieldName(ddlRecord.getGroupId(), i));
-			fieldNames.append(DDMImpl.INSTANCE_SEPARATOR);
-			fieldNames.append(PwdGenerator.getPassword(4));
-			fieldNames.append(StringPool.COMMA);
 		}
-
-		fieldNames.setIndex(fieldNames.index() - 1);
 
 		sb.append("<dynamic-element default-language-id=\"en_US\" name=\"_");
 		sb.append(
 			"fieldsDisplay\"><dynamic-content language-id=\"en_US\"><![CDATA[");
-		sb.append(fieldNames.toString());
-		sb.append("]]></dynamic-content></dynamic-element></root>");
+
+		for (int i = 0; i < _maxDDLCustomFieldCount; i++) {
+			sb.append(nextDDLCustomFieldName(ddlRecord.getGroupId(), i));
+			sb.append(DDMImpl.INSTANCE_SEPARATOR);
+			sb.append(PwdGenerator.getPassword(4));
+			sb.append(StringPool.COMMA);
+		}
+
+		sb.setStringAt(
+			"]]></dynamic-content></dynamic-element></root>", sb.index() - 1);
 
 		return newDDMContent(
 			ddlRecord.getDDMStorageId(), ddlRecord.getGroupId(), sb.toString());

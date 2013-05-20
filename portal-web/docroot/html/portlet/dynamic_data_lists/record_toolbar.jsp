@@ -41,7 +41,9 @@ long formDDMTemplateId = ParamUtil.getLong(request, "formDDMTemplateId");
 				label: '<%= UnicodeLanguageUtil.get(pageContext, "view-history") %>',
 				on: {
 					click: function (event) {
-						window.location = '<%= viewHistoryURL %>';
+						event.domEvent.preventDefault();
+
+						window.location.href = '<%= viewHistoryURL %>';
 					}
 				}
 			}

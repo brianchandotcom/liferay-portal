@@ -8,5 +8,7 @@
 
 		<div id="log">
 		</div>
+
+		<#include "test_case_element_html.ftl">
 	</body>
 </html>

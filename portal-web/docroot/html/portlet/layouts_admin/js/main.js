@@ -436,7 +436,7 @@ AUI.add(
 														click: function(event) {
 															event.domEvent.preventDefault();
 
-															instance._setRangeLabels();
+															instance._reloadForm();
 
 															rangeDialog.hide();
 														}
@@ -609,6 +609,16 @@ AUI.add(
 						var node = instance.get(nodeName);
 
 						return (node && node.attr(STR_CHECKED));
+					},
+
+					_reloadForm: function() {
+						var instance = this;
+
+						instance.byId('cmd').val(STR_EMPTY);
+
+						var form = instance.get('form');
+
+						submitForm(form);
 					},
 
 					_setContentLabels: function(portletId) {

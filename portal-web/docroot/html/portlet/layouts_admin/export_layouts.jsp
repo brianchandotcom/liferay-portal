@@ -40,6 +40,20 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 
 String rootNodeName = ParamUtil.getString(request, "rootNodeName");
 
+long startDateTime = ParamUtil.getLong(request, "startDate");
+long endDateTime = ParamUtil.getLong(request, "endDate");
+
+Date startDate = null;
+Date endDate = null;
+
+if (startDateTime > 0) {
+	startDate = new Date(startDateTime);
+}
+
+if (endDateTime > 0) {
+	endDate = new Date(endDateTime);
+}
+
 List<Portlet> portletsList = new ArrayList<Portlet>();
 Set<String> portletIdsSet = new HashSet<String>();
 
@@ -322,6 +336,8 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 							Set<String> displayedControls = new HashSet<String>();
 							Set<String> portletDataHandlerClasses = new HashSet<String>();
 
+							PortletDataContext portletDataContext = PortletDataContextFactoryUtil.createPreparePortletDataContext(themeDisplay, startDate, endDate);
+
 							for (Portlet portlet : portletsList) {
 								String portletDataHandlerClass = portlet.getPortletDataHandlerClass();
 
@@ -335,6 +351,10 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 								String portletTitle = PortalUtil.getPortletTitle(portlet, application, locale);
 
 								PortletDataHandler portletDataHandler = portlet.getPortletDataHandlerInstance();
+
+								portletDataHandler.prepareManifestSummary(portletDataContext);
+
+								ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 							%>
 
 								<li>
@@ -355,6 +375,7 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 														<%
 														if (exportControls != null) {
 															request.setAttribute("render_controls.jsp-controls", exportControls);
+															request.setAttribute("render_controls.jsp-manifestSummary", manifestSummary);
 															request.setAttribute("render_controls.jsp-portletDisabled", !portletDataHandler.isPublishToLiveByDefault());
 														%>
 

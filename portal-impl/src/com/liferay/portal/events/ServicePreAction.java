@@ -1596,13 +1596,45 @@ public class ServicePreAction extends Action {
 					layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
 					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
+				Group group = null;
+
 				if (layouts.size() > 0) {
 					layout = layouts.get(0);
+					group = layout.getGroup();
+				}
+
+				if ((layout != null) && layout.isPrivateLayout()) {
+					layouts = LayoutLocalServiceUtil.getLayouts(
+						group.getGroupId(), false,
+						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+					if (layouts.size() > 0) {
+						layout = layouts.get(0);
+					}
+					else {
+						group = null;
+						layout = null;
+					}
+				}
+
+				if ((group != null) && group.isStagingGroup()) {
+					Group liveGroup = group.getLiveGroup();
+
+					layouts = LayoutLocalServiceUtil.getLayouts(
+						liveGroup.getGroupId(), false,
+						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+					if (layouts.size() > 0) {
+						layout = layouts.get(0);
+					}
+					else {
+						layout = null;
+					}
 				}
 			}
 		}
 
-		if ((layout == null) || layout.isPrivateLayout()) {
+		if (layout == null) {
 
 			// Check the Guest site
 

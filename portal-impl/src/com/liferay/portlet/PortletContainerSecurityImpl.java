@@ -66,18 +66,31 @@ public class PortletContainerSecurityImpl implements PortletContainer,
 		resetPortletAddDefaultResourceCheckWhitelistActions();
 	}
 
-	public boolean isAllowAddPortletDefaultResource(
+	protected boolean isPortletAllowedToExecute(
 		HttpServletRequest request, Portlet portlet)
 		throws PortalException, SystemException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		if (isRenderingRuntimePortlet(request, portlet)) {
+			return true;
+		}
 
-		Layout layout = themeDisplay.getLayout();
-		LayoutTypePortlet layoutTypePortlet =
-			themeDisplay.getLayoutTypePortlet();
+		if (isPortletOnPage(request, portlet)) {
+			return true;
+		}
 
-		String portletId = portlet.getPortletId();
+		if (isLayoutConfigurationAllowed(request, portlet)) {
+			return true;
+		}
+
+		if (isGrantedByPPAUTH(request, portlet)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isRenderingRuntimePortlet(
+		HttpServletRequest request, Portlet portlet) {
 
 		Boolean renderPortletResource = (Boolean)request.getAttribute(
 			WebKeys.RENDER_PORTLET_RESOURCE);
@@ -90,14 +103,24 @@ public class PortletContainerSecurityImpl implements PortletContainer,
 			}
 		}
 
+		return false;
+	}
+
+	protected boolean isPortletOnPage(
+		HttpServletRequest request, Portlet portlet)
+		throws PortalException, SystemException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+		LayoutTypePortlet layoutTypePortlet =
+			themeDisplay.getLayoutTypePortlet();
+
+		String portletId = portlet.getPortletId();
+
 		if (layout.isTypePanel() &&
 			isPanelSelectedPortlet(themeDisplay, portletId)) {
-
-			return true;
-		}
-
-		if (layout.isTypeControlPanel() &&
-			PortalUtil.isControlPanelPortlet(portletId, themeDisplay)) {
 
 			return true;
 		}
@@ -108,71 +131,97 @@ public class PortletContainerSecurityImpl implements PortletContainer,
 			return true;
 		}
 
-		if (themeDisplay.isSignedIn() &&
-			portletId.equals(PortletKeys.LAYOUTS_ADMIN)) {
+		return false;
+	}
 
-			PermissionChecker permissionChecker =
-				themeDisplay.getPermissionChecker();
+	protected boolean isLayoutConfigurationAllowed(
+		HttpServletRequest request, Portlet portlet)
+		throws PortalException, SystemException {
 
-			Group group = layout.getGroup();
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-			if (group.isSite()) {
-				if (LayoutPermissionUtil.contains(
-					permissionChecker, layout, ActionKeys.CUSTOMIZE) ||
-					LayoutPermissionUtil.contains(
-						permissionChecker, layout, ActionKeys.UPDATE)) {
+		if (!themeDisplay.isSignedIn()) {
+			return false;
+		}
 
-					return true;
-				}
-			}
+		if (!portlet.getPortletId().equals(PortletKeys.LAYOUTS_ADMIN)) {
+			return false;
+		}
 
-			if (group.isCompany()) {
-				if (permissionChecker.isCompanyAdmin()) {
-					return true;
-				}
-			}
-			else if (group.isLayoutPrototype()) {
-				long layoutPrototypeId = group.getClassPK();
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
 
-				if (LayoutPrototypePermissionUtil.contains(
-					permissionChecker, layoutPrototypeId,
-					ActionKeys.UPDATE)) {
+		Layout layout = themeDisplay.getLayout();
+		Group group = layout.getGroup();
 
-					return true;
-				}
-			}
-			else if (group.isLayoutSetPrototype()) {
-				long layoutSetPrototypeId = group.getClassPK();
+		if (group.isSite()) {
+			if (LayoutPermissionUtil.contains(
+				permissionChecker, layout, ActionKeys.CUSTOMIZE) ||
+				LayoutPermissionUtil.contains(
+					permissionChecker, layout, ActionKeys.UPDATE)) {
 
-				if (LayoutSetPrototypePermissionUtil.contains(
-					permissionChecker, layoutSetPrototypeId,
-					ActionKeys.UPDATE)) {
-
-					return true;
-				}
-			}
-			else if (group.isOrganization()) {
-				long organizationId = group.getOrganizationId();
-
-				if (OrganizationPermissionUtil.contains(
-					permissionChecker, organizationId, ActionKeys.UPDATE)) {
-
-					return true;
-				}
-			}
-			else if (group.isUserGroup()) {
-				long scopeGroupId = themeDisplay.getScopeGroupId();
-
-				if (GroupPermissionUtil.contains(
-					permissionChecker, scopeGroupId, ActionKeys.UPDATE)) {
-
-					return true;
-				}
-			}
-			else if (group.isUser()) {
 				return true;
 			}
 		}
+
+		if (group.isCompany()) {
+			if (permissionChecker.isCompanyAdmin()) {
+				return true;
+			}
+		}
+		else if (group.isLayoutPrototype()) {
+			long layoutPrototypeId = group.getClassPK();
+
+			if (LayoutPrototypePermissionUtil.contains(
+				permissionChecker, layoutPrototypeId,
+				ActionKeys.UPDATE)) {
+
+				return true;
+			}
+		}
+		else if (group.isLayoutSetPrototype()) {
+			long layoutSetPrototypeId = group.getClassPK();
+
+			if (LayoutSetPrototypePermissionUtil.contains(
+				permissionChecker, layoutSetPrototypeId,
+				ActionKeys.UPDATE)) {
+
+				return true;
+			}
+		}
+		else if (group.isOrganization()) {
+			long organizationId = group.getOrganizationId();
+
+			if (OrganizationPermissionUtil.contains(
+				permissionChecker, organizationId, ActionKeys.UPDATE)) {
+
+				return true;
+			}
+		}
+		else if (group.isUserGroup()) {
+			long scopeGroupId = themeDisplay.getScopeGroupId();
+
+			if (GroupPermissionUtil.contains(
+				permissionChecker, scopeGroupId, ActionKeys.UPDATE)) {
+
+				return true;
+			}
+		}
+		else if (group.isUser()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isGrantedByPPAUTH(
+		HttpServletRequest request, Portlet portlet) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String portletId = portlet.getPortletId();
 
 		if (!portlet.isAddDefaultResource()) {
 			return false;
@@ -182,10 +231,7 @@ public class PortletContainerSecurityImpl implements PortletContainer,
 			return true;
 		}
 
-		if (PortletContainerSecurityUtil.
-			getPortletAddDefaultResourceCheckWhitelist().contains(
-			portletId)) {
-
+		if (_portletAddDefaultResourceCheckWhitelist.contains(portletId)) {
 			return true;
 		}
 
@@ -198,8 +244,7 @@ public class PortletContainerSecurityImpl implements PortletContainer,
 			strutsAction = ParamUtil.getString(request, "struts_action");
 		}
 
-		if (PortletContainerSecurityUtil.
-			getPortletAddDefaultResourceCheckWhitelistActions().contains(
+		if (_portletAddDefaultResourceCheckWhitelistActions.contains(
 			strutsAction)) {
 
 			return true;
@@ -218,7 +263,7 @@ public class PortletContainerSecurityImpl implements PortletContainer,
 
 		if (Validator.isNotNull(requestPortletAuthenticationToken)) {
 			String actualPortletAuthenticationToken = AuthTokenUtil.getToken(
-				request, layout.getPlid(), portletId);
+				request, themeDisplay.getPlid(), portletId);
 
 			if (requestPortletAuthenticationToken.equals(
 				actualPortletAuthenticationToken)) {

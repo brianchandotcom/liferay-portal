@@ -52,7 +52,7 @@ for (Layout curLayout : exportLayouts) {
 	}
 }
 
-List<Portlet> alwaysExportablePortlets = LayoutExporter.getAlwaysExportablePortlets(company.getCompanyId());
+List<Portlet> alwaysExportablePortlets = LayoutExporter.getDataSiteLevelPortlets(company.getCompanyId());
 
 for (Portlet alwaysExportablePortlet : alwaysExportablePortlets) {
 	if (!portletIdsSet.contains(alwaysExportablePortlet.getRootPortletId())) {

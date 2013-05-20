@@ -55,20 +55,6 @@ long endDateTime = ParamUtil.getLong(request, "endDate");
 if (endDateTime > 0) {
 	endDate = new Date(endDateTime);
 }
-	
-List<Portlet> portletsList = LayoutExporter.getInstanciatedPortlets(liveGroupId, privateLayout);
-
-List<Portlet> alwaysExportablePortlets = LayoutExporter.getAlwaysExportablePortlets(company.getCompanyId());
-
-for (Portlet alwaysExportablePortlet : alwaysExportablePortlets) {
-	if (!portletIdsSet.contains(alwaysExportablePortlet.getRootPortletId())) {
-		portletIdsSet.add(alwaysExportablePortlet.getRootPortletId());
-
-		portletsList.add(alwaysExportablePortlet);
-	}
-}
-
-portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(application, locale));
 %>
 
 <div id="<portlet:namespace />exportImportOptions">
@@ -146,9 +132,13 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 								<aui:input name="<%= PortletDataHandlerKeys.PORTLET_SETUP %>" type="hidden" value="<%= true %>" />
 
 								<%
+								List<Portlet> instanciatedPortlets = LayoutExporter.getInstanciatedPortlets(liveGroupId, privateLayout);
+
+								instanciatedPortlets = ListUtil.sort(instanciatedPortlets, new PortletTitleComparator(application, locale));
+
 								Set<String> portletDataHandlerClasses = new HashSet<String>();
 
-								for (Portlet portlet : portletsList) {
+								for (Portlet portlet : instanciatedPortlets) {
 									String portletDataHandlerClass = portlet.getPortletDataHandlerClass();
 
 									if (!portletDataHandlerClasses.contains(portletDataHandlerClass)) {
@@ -312,12 +302,16 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 							</li>
 
 							<%
+							List<Portlet> dataSiteLevelPortlets = LayoutExporter.getDataSiteLevelPortlets(company.getCompanyId());
+
+							dataSiteLevelPortlets = ListUtil.sort(dataSiteLevelPortlets, new PortletTitleComparator(application, locale));
+
 							Set<String> displayedControls = new HashSet<String>();
 							Set<String> portletDataHandlerClasses = new HashSet<String>();
 
 							PortletDataContext portletDataContext = PortletDataContextFactoryUtil.createPreparePortletDataContext(themeDisplay, startDate, endDate);
 
-							for (Portlet portlet : portletsList) {
+							for (Portlet portlet : dataSiteLevelPortlets) {
 								String portletDataHandlerClass = portlet.getPortletDataHandlerClass();
 
 								if (!portletDataHandlerClasses.contains(portletDataHandlerClass)) {

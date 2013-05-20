@@ -107,7 +107,7 @@ public class LayoutExporter {
 	public static final String SAME_GROUP_FRIENDLY_URL =
 		"/[$SAME_GROUP_FRIENDLY_URL$]";
 
-	public static List<Portlet> getAlwaysExportablePortlets(long companyId)
+	public static List<Portlet> getDataSiteLevelPortlets(long companyId)
 		throws Exception {
 
 		List<Portlet> portlets = PortletLocalServiceUtil.getPortlets(companyId);
@@ -127,7 +127,7 @@ public class LayoutExporter {
 				portlet.getPortletDataHandlerInstance();
 
 			if ((portletDataHandler == null) ||
-				!portletDataHandler.isAlwaysExportable()) {
+				!portletDataHandler.isDataSiteLevel()) {
 
 				itr.remove();
 			}
@@ -427,7 +427,7 @@ public class LayoutExporter {
 				groupId, privateLayout, layoutIds);
 		}
 
-		List<Portlet> portlets = getAlwaysExportablePortlets(companyId);
+		List<Portlet> portlets = getDataSiteLevelPortlets(companyId);
 
 		long plid = LayoutConstants.DEFAULT_PLID;
 

@@ -32,13 +32,16 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.auth.AuthTokenUtil;
+import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.service.permission.LayoutPrototypePermissionUtil;
 import com.liferay.portal.service.permission.LayoutSetPrototypePermissionUtil;
 import com.liferay.portal.service.permission.OrganizationPermissionUtil;
+import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
@@ -291,6 +294,44 @@ public class PortletContainerSecurityImpl implements PortletContainer,
 		}
 
 		return false;
+	}
+
+	private void checkControlPanel(HttpServletRequest request, Portlet portlet)
+		throws PortalException, SystemException {
+
+//		if ((portlet != null) &&
+//			    (portlet.isSystem() || PortletPermissionUtil.hasControlPanelAccessPermission(permissionChecker, scopeGroupId, portlet) || PortalUtil.isAllowAddPortletDefaultResource(request, portlet))) {
+//
+//				    denyAccess = false;
+//		}
+
+		if (portlet.isSystem()) {
+			return;
+		}
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long scopeGroupId = themeDisplay.getScopeGroupId();
+
+		if (PortletPermissionUtil.hasControlPanelAccessPermission(
+			permissionChecker, scopeGroupId, portlet)) {
+
+			return;
+		}
+
+		if (isRenderingRuntimePortlet(request, portlet)) {
+			return;
+		}
+
+		if (isGrantedByPPAUTH(request, portlet)) {
+			return;
+		}
+
+		throw new PrincipalException();
 	}
 
 	public void preparePortlet(HttpServletRequest request, Portlet portlet)

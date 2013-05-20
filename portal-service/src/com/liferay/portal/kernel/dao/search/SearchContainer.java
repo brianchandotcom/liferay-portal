@@ -332,7 +332,7 @@ public class SearchContainer<R> {
 	}
 
 	public boolean isRecalculateCur(int total) {
-		if (total == 0) {
+		if ((total == 0) && (_cur == DEFAULT_CUR)) {
 			return false;
 		}
 

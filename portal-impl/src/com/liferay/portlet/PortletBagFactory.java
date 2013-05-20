@@ -827,8 +827,13 @@ public class PortletBagFactory {
 			return null;
 		}
 
-		return (PortletDataHandler)newInstance(
-			PortletDataHandler.class, portlet.getPortletDataHandlerClass());
+		PortletDataHandler portletDataHandlerInstance =
+			(PortletDataHandler)newInstance(
+				PortletDataHandler.class, portlet.getPortletDataHandlerClass());
+
+		portletDataHandlerInstance.setPortletId(portlet.getPortletId());
+
+		return portletDataHandlerInstance;
 	}
 
 	protected PortletLayoutListener newPortletLayoutListener(Portlet portlet)

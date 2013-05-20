@@ -121,6 +121,8 @@ public interface PortletDataHandler {
 	public PortletDataHandlerControl[] getImportMetadataControls()
 		throws PortletDataException;
 
+	public String getPortletId();
+
 	/**
 	 * Handles any special processing of the data when the portlet is imported
 	 * into a new layout. Can optionally return a modified version of
@@ -164,5 +166,7 @@ public interface PortletDataHandler {
 
 	public void prepareManifestSummary(PortletDataContext portletDataContext)
 		throws PortletDataException;
+
+	public void setPortletId(String portletId);
 
 }

@@ -115,6 +115,10 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		return _importMetadataControls;
 	}
 
+	public String getPortletId() {
+		return _portletId;
+	}
+
 	public PortletPreferences importData(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences, String data)
@@ -200,6 +204,10 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		catch (Exception e) {
 			throw new PortletDataException(e);
 		}
+	}
+
+	public void setPortletId(String portletId) {
+		_portletId = portletId;
 	}
 
 	protected Element addExportDataRootElement(
@@ -328,6 +336,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		new PortletDataHandlerControl[0];
 	private PortletDataHandlerControl[] _importMetadataControls =
 		new PortletDataHandlerControl[0];
+	private String _portletId;
 	private boolean _publishToLiveByDefault;
 
 }

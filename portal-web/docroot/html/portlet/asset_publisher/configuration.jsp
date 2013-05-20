@@ -31,8 +31,8 @@ String emailParam = "emailAssetEntryAdded";
 
 String currentLanguageId = LanguageUtil.getLanguageId(request);
 
-String bodyParam = emailParam + "Body_" + currentLanguageId;
 String subjectParam = emailParam + "Subject_" + currentLanguageId;
+String bodyParam = emailParam + "Body_" + currentLanguageId;
 %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />

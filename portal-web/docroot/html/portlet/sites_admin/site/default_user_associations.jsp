@@ -240,7 +240,6 @@ for (long defaultTeamId : defaultTeamIds) {
 			Liferay.Util.selectEntity(
 				{
 					dialog: {
-						,
 						constrain: true,
 						modal: true,
 						zIndex: Liferay.zIndex.WINDOW + 2,

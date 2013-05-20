@@ -192,7 +192,6 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 			Liferay.Util.selectEntity(
 				{
 					dialog: {
-						,
 						constrain: true,
 						modal: true,
 						zIndex: Liferay.zIndex.WINDOW + 2,

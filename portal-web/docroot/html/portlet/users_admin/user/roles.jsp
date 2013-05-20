@@ -379,7 +379,6 @@ userGroupRoles.addAll(siteRoles);
 						Liferay.Util.selectEntity(
 							{
 								dialog: {
-									,
 									constrain: true,
 									modal: true,
 									zIndex: Liferay.zIndex.WINDOW + 2,

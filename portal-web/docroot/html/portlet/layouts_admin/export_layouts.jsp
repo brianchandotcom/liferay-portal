@@ -55,31 +55,8 @@ long endDateTime = ParamUtil.getLong(request, "endDate");
 if (endDateTime > 0) {
 	endDate = new Date(endDateTime);
 }
-
-List<Portlet> portletsList = new ArrayList<Portlet>();
-Set<String> portletIdsSet = new HashSet<String>();
-
-for (Layout curLayout : LayoutLocalServiceUtil.getLayouts(liveGroupId, privateLayout)) {
-	if (curLayout.isTypePortlet()) {
-		LayoutTypePortlet curLayoutTypePortlet = (LayoutTypePortlet)curLayout.getLayoutType();
-
-		for (String portletId : curLayoutTypePortlet.getPortletIds()) {
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletId);
-
-			if (portlet == null) {
-				continue;
-			}
-
-			PortletDataHandler portletDataHandler = portlet.getPortletDataHandlerInstance();
-
-			if ((portletDataHandler != null) && !portletIdsSet.contains(portlet.getRootPortletId())) {
-				portletIdsSet.add(portlet.getRootPortletId());
-
-				portletsList.add(portlet);
-			}
-		}
-	}
-}
+	
+List<Portlet> portletsList = LayoutExporter.getInstanciatedPortlets(liveGroupId, privateLayout);
 
 List<Portlet> alwaysExportablePortlets = LayoutExporter.getAlwaysExportablePortlets(company.getCompanyId());
 

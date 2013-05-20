@@ -14,6 +14,7 @@
 
 package com.liferay.portal.lar;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
@@ -76,11 +77,14 @@ import com.liferay.util.ContentUtil;
 
 import java.io.File;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.ServletContext;
 
@@ -130,6 +134,45 @@ public class LayoutExporter {
 		}
 
 		return portlets;
+	}
+
+	public static List<Portlet> getInstanciatedPortlets(
+			long liveGroupId, boolean privateLayout)
+		throws SystemException {
+
+		List<Portlet> portletsList = new ArrayList<Portlet>();
+		Set<String> portletIdsSet = new HashSet<String>();
+
+		for (Layout curLayout : LayoutLocalServiceUtil.getLayouts(
+				liveGroupId, privateLayout)) {
+
+			if (curLayout.isTypePortlet()) {
+				LayoutTypePortlet curLayoutTypePortlet =
+					(LayoutTypePortlet)curLayout.getLayoutType();
+
+				for (String portletId : curLayoutTypePortlet.getPortletIds()) {
+					Portlet portlet = PortletLocalServiceUtil.getPortletById(
+						curLayout.getCompanyId(), portletId);
+
+					if (portlet == null) {
+						continue;
+					}
+
+					PortletDataHandler portletDataHandler =
+						portlet.getPortletDataHandlerInstance();
+
+					if ((portletDataHandler != null) &&
+						!portletIdsSet.contains(portlet.getRootPortletId())) {
+
+						portletIdsSet.add(portlet.getRootPortletId());
+
+						portletsList.add(portlet);
+					}
+				}
+			}
+		}
+
+		return portletsList;
 	}
 
 	public static void updateLastPublishDate(

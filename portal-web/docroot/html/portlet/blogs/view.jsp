@@ -58,7 +58,9 @@ portletURL.setParameter("struts_action", "/blogs/view");
 
 		total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
 
-		if (searchContainer.recalculateCur(total)) {
+		searchContainer.setTotal(total);
+
+		if (searchContainer.isRecalculateCur()) {
 			assetEntryQuery.setEnd(searchContainer.getEnd());
 			assetEntryQuery.setStart(searchContainer.getStart());
 		}

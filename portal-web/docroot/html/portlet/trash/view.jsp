@@ -109,7 +109,9 @@ portletURL.setParameter("tabs1", tabs1);
 
 			total = hits.getLength();
 
-			if (searchContainer.recalculateCur(total)) {
+			searchContainer.setTotal(total);
+
+			if (searchContainer.isRecalculateCur()) {
 				hits = TrashEntryLocalServiceUtil.search(company.getCompanyId(), groupId, user.getUserId(), searchTerms.getKeywords(), searchContainer.getStart(), searchContainer.getEnd(), sort);
 			}
 
@@ -121,7 +123,9 @@ portletURL.setParameter("tabs1", tabs1);
 
 			total = trashEntryList.getCount();
 
-			if (searchContainer.recalculateCur(total)) {
+			searchContainer.setTotal(total);
+
+			if (searchContainer.isRecalculateCur()) {
 				trashEntryList = TrashEntryServiceUtil.getEntries(groupId, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 			}
 

@@ -34,7 +34,9 @@ while (true) {
 
 		total = hits.getLength();
 
-		if (searchContainer.recalculateCur(total)) {
+		searchContainer.setTotal(total);
+
+		if (searchContainer.isRecalculateCur()) {
 			hits = JournalArticleLocalServiceUtil.search(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFolderIds(), JournalArticleConstants.CLASSNAME_ID_DEFAULT, searchTerms.getArticleId(), searchTerms.getTitle(), searchTerms.getDescription(), searchTerms.getContent(), searchTerms.getType(), StringUtil.valueOf(searchTerms.getStatusCode()), searchTerms.getStructureId(), searchTerms.getTemplateId(), journalParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), sort);
 		}
 	}
@@ -43,7 +45,9 @@ while (true) {
 
 		total = hits.getLength();
 
-		if (searchContainer.recalculateCur(total)) {
+		searchContainer.setTotal(total);
+
+		if (searchContainer.isRecalculateCur()) {
 			hits = JournalArticleLocalServiceUtil.search(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFolderIds(), JournalArticleConstants.CLASSNAME_ID_DEFAULT, searchTerms.getStructureId(), searchTerms.getTemplateId(), searchTerms.getKeywords(), journalParams, searchContainer.getStart(), searchContainer.getEnd(), sort);
 		}
 	}

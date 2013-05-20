@@ -93,7 +93,7 @@ List<Group> mySites = user.getMySites(true, max);
 
 						<c:choose>
 							<c:when test="<%= mySite.isControlPanel() %>">
-								<li class="control-panel<%= itemCssClass %>">
+								<li class="<%= selectedSite ? "active" : StringPool.BLANK %> control-panel<%= itemCssClass %>">
 									<a href="<%= themeDisplay.getURLControlPanel() %>">
 
 										<%
@@ -142,7 +142,7 @@ List<Group> mySites = user.getMySites(true, max);
 									}
 									%>
 
-									<li class="<%= (selectedSite && layout.isPublicLayout()) ? "current-site" : "public-site" %> <%= itemCssClass %>">
+									<li class="<%= (selectedSite && layout.isPublicLayout()) ? "active" : "public-site" %> <%= itemCssClass %>">
 										<a href="<%= HtmlUtil.escape(portletURL.toString()) %>" onclick="Liferay.Util.forcePost(this); return false;">
 
 											<%
@@ -203,7 +203,7 @@ List<Group> mySites = user.getMySites(true, max);
 									}
 									%>
 
-									<li class="<%= (selectedSite && layout.isPrivateLayout()) ? "current-site" : "private-site" %> <%= itemCssClass %>">
+									<li class="<%= (selectedSite && layout.isPrivateLayout()) ? "active" : "private-site" %> <%= itemCssClass %>">
 										<a href="<%= HtmlUtil.escape(portletURL.toString()) %>" onclick="Liferay.Util.forcePost(this); return false;">
 
 											<%
@@ -311,7 +311,7 @@ List<Group> mySites = user.getMySites(true, max);
 						}
 						%>
 
-						<li class="<%= selectedSite ? "current-site" : "" %>">
+						<li class="<%= selectedSite ? "active" : StringPool.BLANK %>">
 							<c:choose>
 								<c:when test="<%= mySite.isControlPanel() %>">
 									<h3>

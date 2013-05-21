@@ -377,6 +377,9 @@ public abstract class BaseWebDriverImpl
 		_primaryTestSuiteName = primaryTestSuiteName;
 	}
 
+	public void startLogger() {
+	}
+
 	public void stopLogger() {
 	}
 

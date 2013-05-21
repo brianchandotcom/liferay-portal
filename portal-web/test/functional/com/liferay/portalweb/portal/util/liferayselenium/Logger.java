@@ -16,6 +16,7 @@ package com.liferay.portalweb.portal.util.liferayselenium;
 
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portalweb.portal.BaseTestCase;
 
 import java.io.File;
@@ -48,11 +49,6 @@ public class Logger {
 		JavascriptExecutor javascriptExecutor = (JavascriptExecutor)_webDriver;
 
 		javascriptExecutor.executeScript("window.name = 'Log Window';");
-
-		_webDriver.get(
-			"file:///" + _liferaySelenium.getProjectDir() +
-				"portal-web/test/functional/com/liferay/portalweb/portal/" +
-					"util/liferayselenium/dependencies/Logger.html");
 	}
 
 	public void logCommand(Method method, Object[] arguments) {
@@ -127,6 +123,32 @@ public class Logger {
 		BaseTestCase.fail(sb.toString());
 	}
 
+	public void start() {
+		String primaryTestSuiteName =
+			_liferaySelenium.getPrimaryTestSuiteName();
+
+		String htmlFileName =
+			"portal-web/test/functional-generated/" +
+				StringUtil.replace(primaryTestSuiteName, ".", "/") + ".html";
+
+		if (_loggerStarted) {
+			return;
+		}
+
+		if (FileUtil.exists(_liferaySelenium.getProjectDir() + htmlFileName)) {
+			_webDriver.get(
+				"file:///" + _liferaySelenium.getProjectDir() + htmlFileName);
+		}
+		else {
+			_webDriver.get(
+				"file:///" + _liferaySelenium.getProjectDir() +
+					"portal-web/test/functional/com/liferay/portalweb/portal/" +
+						"util/liferayselenium/dependencies/Logger.html");
+		}
+
+		_loggerStarted = true;
+	}
+
 	public void stop() {
 		String primaryTestSuiteName =
 			_liferaySelenium.getPrimaryTestSuiteName();
@@ -175,6 +197,7 @@ public class Logger {
 	}
 
 	private LiferaySelenium _liferaySelenium;
+	private boolean _loggerStarted;
 	private WebDriver _webDriver = new FirefoxDriver();
 
 }

@@ -1,5 +1,8 @@
 <definition>
 	<command name="assertTextEquals">
+		<case locator-key1="PORTLET_TITLE">
+			<execute function="AssertTextEquals#assertText" value1="Blogs" />
+		</case>
 		<case locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN">
 			<execute function="AssertTextEquals#assertText" value1="The selected item was moved to the Recycle Bin. Undo" />
 		</case>

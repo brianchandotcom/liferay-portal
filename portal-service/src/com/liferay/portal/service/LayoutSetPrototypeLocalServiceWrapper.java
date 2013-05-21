@@ -260,6 +260,12 @@ public class LayoutSetPrototypeLocalServiceWrapper
 			serviceContext);
 	}
 
+	public void deleteNonDefaultLayoutSetPrototypes(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_layoutSetPrototypeLocalService.deleteNonDefaultLayoutSetPrototypes(companyId);
+	}
+
 	public com.liferay.portal.model.LayoutSetPrototype fetchLayoutSetPrototypeByUuidAndCompanyId(
 		java.lang.String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.SystemException {

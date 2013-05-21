@@ -47,7 +47,7 @@
 			<aui:col width="<%= 25 %>">
 				<liferay-ui:panel-container>
 
-					<liferay-ui:panel cssClass="control-panel-home-category" extended="<%= true %>" id='<%= "control-panel-home-" + curCategory %>' title="<%= title %>">
+					<liferay-ui:panel collapsible="<%= false %>" cssClass="control-panel-home-category" extended="<%= true %>" id='<%= "control-panel-home-" + curCategory %>' title="<%= title %>">
 						<ul class="unstyled">
 
 							<%

@@ -1,0 +1,40 @@
+<definition>
+	<set-up>
+		<execute macro="User#pgFirstLogin" />
+	</set-up>
+
+	<command name="Smoke">
+		<execute macro="Page#pgAdd">
+			<var name="pageName" value="Test Page1" />
+		</execute>
+
+		<execute macro="Page#pgAdd">
+			<var name="pageName" value="Test Page2" />
+		</execute>
+
+		<execute macro="Page#pgAdd">
+			<var name="pageName" value="Test Page3" />
+		</execute>
+
+		<execute macro="Portlet#pgAdd">
+			<var name="pageName" value="Test Page1" />
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="Page#pgGoto">
+			<var name="pageName" value="Test Page1" />
+		</execute>
+
+		<execute action="PGBlogs#assertTextEquals" locator-key1="PORTLET_TITLE" />
+
+		<execute macro="Page#cpGotoContent">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute action="CPBlogs#assertTextEquals" locator-key1="PORTLET_TITLE" />
+	</command>
+
+	<tear-down>
+		<execute macro="Page#pgTearDown" />
+	</tear-down>
+</definition>

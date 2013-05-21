@@ -1,0 +1,3 @@
+<definition>
+	<execute test-case="PortalSmoke" />
+</definition>

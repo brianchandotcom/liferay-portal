@@ -1,4 +1,10 @@
 <definition>
+	<command name="assertTextEquals">
+		<case locator-key1="PORTLET_TITLE">
+			<execute function="AssertTextEquals#assertText" value1="Blogs" />
+		</case>
+	</command>
+
 	<command name="click">
 		<case locator-key1="RECYCLE_BIN_BUTTON">
 			<execute function="Click#valueClickAtAndWait" value1="Move to the Recycle Bin" />

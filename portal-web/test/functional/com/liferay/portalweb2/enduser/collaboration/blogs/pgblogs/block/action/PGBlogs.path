@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PORTLET_TITLE</td>
+	<td>//h1[@class='portlet-title']/span[@class='portlet-title-text']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_ENTRY_BUTTON</td>
 	<td>//button[@id='_33_addEntryButton']</td>
 	<td></td>

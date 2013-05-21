@@ -17,6 +17,7 @@ package com.liferay.taglib.ui;
 import com.liferay.portal.kernel.servlet.PortalIncludeUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseBodyTagSupport;
 import com.liferay.portal.kernel.util.IntegerWrapper;
+import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.util.PwdGenerator;
 
@@ -81,6 +82,11 @@ public class PanelContainerTag extends BaseBodyTagSupport implements BodyTag {
 		catch (Exception e) {
 			throw new JspException(e);
 		}
+		finally {
+			if (!ServerDetector.isResin()) {
+				cleanUp();
+			}
+		}
 	}
 
 	@Override
@@ -137,6 +143,16 @@ public class PanelContainerTag extends BaseBodyTagSupport implements BodyTag {
 
 	public void setStartPage(String startPage) {
 		_startPage = startPage;
+	}
+
+	protected void cleanUp() {
+		_accordion = false;
+		_cssClass = null;
+		_endPage = null;
+		_extended = false;
+		_id = null;
+		_persistState = false;
+		_startPage = null;
 	}
 
 	protected String getEndPage() {

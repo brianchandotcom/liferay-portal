@@ -21,21 +21,9 @@ if (Validator.isNotNull(scriptContent)) {
 	script = scriptContent;
 }
 
-Map<String, TemplateVariableGroup> templateVariableGroups = Collections.emptyMap();
+long templateHandlerClassNameId = ddmDisplay.getTemplateHandlerClassNameId(template);
 
-if (classPK > 0) {
-	DDMStructure ddmStructure = DDMStructureServiceUtil.getStructure(classPK);
-
-	classNameId = ddmStructure.getClassNameId();
-}
-else if ((classPK == -1) && refererPortletName.equals(PortletKeys.JOURNAL)) {
-	classNameId = PortalUtil.getClassNameId(JournalArticle.class);
-}
-else if (template != null) {
-	classNameId = template.getClassNameId();
-}
-
-templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(classNameId, classPK, language, locale);
+Map<String, TemplateVariableGroup> templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(templateHandlerClassNameId, classPK, language, locale);
 %>
 
 <aui:input name="scriptContent" type="hidden" value="<%= script %>" />

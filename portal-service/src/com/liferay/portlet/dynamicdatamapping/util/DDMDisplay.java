@@ -50,6 +50,8 @@ public interface DDMDisplay {
 
     public long[] getTemplateClassNameIds(long classNameId);
 
+	public long getTemplateHandlerClassNameId(DDMTemplate template);
+
 	public Set<String> getTemplateLanguageTypes();
 
 	public String getTemplateType(DDMTemplate template, Locale locale);

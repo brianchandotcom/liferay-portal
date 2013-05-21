@@ -329,6 +329,16 @@ public class LayoutServiceWrapper implements LayoutService,
 			layoutIds, parameterMap, startDate, endDate);
 	}
 
+	public long exportLayoutsAsFileInBackground(java.lang.String taskName,
+		long groupId, boolean privateLayout, long[] layoutIds,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.util.Date startDate, java.util.Date endDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _layoutService.exportLayoutsAsFileInBackground(taskName,
+			groupId, privateLayout, layoutIds, parameterMap, startDate, endDate);
+	}
+
 	/**
 	* Exports the portlet information (categories, permissions, ... etc.) as a
 	* byte array.
@@ -387,6 +397,16 @@ public class LayoutServiceWrapper implements LayoutService,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _layoutService.exportPortletInfoAsFile(plid, groupId, portletId,
 			parameterMap, startDate, endDate);
+	}
+
+	public long exportPortletInfoAsFileInBackground(java.lang.String taskName,
+		long plid, long groupId, java.lang.String portletId,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.util.Date startDate, java.util.Date endDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _layoutService.exportPortletInfoAsFileInBackground(taskName,
+			plid, groupId, portletId, parameterMap, startDate, endDate);
 	}
 
 	/**
@@ -593,6 +613,16 @@ public class LayoutServiceWrapper implements LayoutService,
 		_layoutService.importLayouts(groupId, privateLayout, parameterMap, is);
 	}
 
+	public long importLayoutsInBackground(java.lang.String taskName,
+		long groupId, boolean privateLayout,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _layoutService.importLayoutsInBackground(taskName, groupId,
+			privateLayout, parameterMap, file);
+	}
+
 	/**
 	* Imports the portlet information (categories, permissions, ... etc.) from
 	* the file.
@@ -645,6 +675,26 @@ public class LayoutServiceWrapper implements LayoutService,
 			com.liferay.portal.kernel.exception.SystemException {
 		_layoutService.importPortletInfo(plid, groupId, portletId,
 			parameterMap, is);
+	}
+
+	public long importPortletInfoInBackground(java.lang.String taskName,
+		long plid, long groupId, java.lang.String portletId,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _layoutService.importPortletInfoInBackground(taskName, plid,
+			groupId, portletId, parameterMap, file);
+	}
+
+	public long importPortletInfoInBackground(java.lang.String taskName,
+		long plid, long groupId, java.lang.String portletId,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.io.InputStream is)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _layoutService.importPortletInfoInBackground(taskName, plid,
+			groupId, portletId, parameterMap, is);
 	}
 
 	/**

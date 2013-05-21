@@ -312,6 +312,13 @@ public interface LayoutService extends BaseService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public long exportLayoutsAsFileInBackground(java.lang.String taskName,
+		long groupId, boolean privateLayout, long[] layoutIds,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.util.Date startDate, java.util.Date endDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Exports the portlet information (categories, permissions, ... etc.) as a
 	* byte array.
@@ -361,6 +368,13 @@ public interface LayoutService extends BaseService {
 	*/
 	public java.io.File exportPortletInfoAsFile(long plid, long groupId,
 		java.lang.String portletId,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.util.Date startDate, java.util.Date endDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public long exportPortletInfoAsFileInBackground(java.lang.String taskName,
+		long plid, long groupId, java.lang.String portletId,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		java.util.Date startDate, java.util.Date endDate)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -549,6 +563,13 @@ public interface LayoutService extends BaseService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public long importLayoutsInBackground(java.lang.String taskName,
+		long groupId, boolean privateLayout,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Imports the portlet information (categories, permissions, ... etc.) from
 	* the file.
@@ -592,6 +613,20 @@ public interface LayoutService extends BaseService {
 	*/
 	public void importPortletInfo(long plid, long groupId,
 		java.lang.String portletId,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.io.InputStream is)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public long importPortletInfoInBackground(java.lang.String taskName,
+		long plid, long groupId, java.lang.String portletId,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public long importPortletInfoInBackground(java.lang.String taskName,
+		long plid, long groupId, java.lang.String portletId,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		java.io.InputStream is)
 		throws com.liferay.portal.kernel.exception.PortalException,

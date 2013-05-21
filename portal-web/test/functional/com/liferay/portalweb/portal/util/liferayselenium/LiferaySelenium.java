@@ -153,6 +153,8 @@ public interface LiferaySelenium extends Selenium {
 
 	public void setTimeoutImplicit(String timeout);
 
+	public void startLogger();
+
 	public void stopLogger();
 
 	public void typeFrame(String locator, String value);

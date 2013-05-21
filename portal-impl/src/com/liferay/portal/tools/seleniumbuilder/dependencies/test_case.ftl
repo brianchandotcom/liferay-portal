@@ -48,6 +48,8 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)} 
 			selenium.setPrimaryTestSuiteName("${seleniumBuilderContext.getTestCaseClassName(testCaseName)}");
 		}
 
+		selenium.startLogger();
+
 		commandScopeVariables = new HashMap<String, String>();
 
 		commandScopeVariables.putAll(definitionScopeVariables);

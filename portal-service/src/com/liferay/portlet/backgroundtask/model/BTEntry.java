@@ -31,6 +31,10 @@ public interface BTEntry extends BTEntryModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.backgroundtask.model.impl.BTEntryImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public void addAttachment(java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

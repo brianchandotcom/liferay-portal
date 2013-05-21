@@ -538,6 +538,12 @@ public class BTEntryWrapper implements BTEntry, ModelWrapper<BTEntry> {
 		_btEntry.persist();
 	}
 
+	public void addAttachment(java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_btEntry.addAttachment(file);
+	}
+
 	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

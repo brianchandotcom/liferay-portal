@@ -25,8 +25,10 @@ import com.liferay.portal.model.Repository;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.backgroundtask.service.BTEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 
+import java.io.File;
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -39,6 +41,13 @@ import java.util.Map;
 public class BTEntryImpl extends BTEntryBaseImpl {
 
 	public BTEntryImpl() {
+	}
+
+	public void addAttachment(File file)
+		throws PortalException, SystemException {
+
+		BTEntryLocalServiceUtil.addEntryAttachment(
+			getUserId(), getBtEntryId(), file.getName(), file);
 	}
 
 	public Folder addAttachmentsFolder()

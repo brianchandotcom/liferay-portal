@@ -12,6 +12,8 @@
 					<#include "action_element_html.ftl">
 				<#elseif element.attributeValue("macro")??>
 					<#assign macroElement = element>
+
+					<#include "macro_element_html.ftl">
 				</#if>
 			<#elseif element.getName() == "var">
 				<#assign testCaseBlockVarElement = element>

@@ -165,34 +165,36 @@ public class LicenseUtil {
 	}
 
 	public static Set<String> getIpAddresses() {
-		if (_ipAddresses == null) {
-			_ipAddresses = new HashSet<String>();
+		if (_ipAddresses != null) {
+			return new HashSet<String>(_ipAddresses);
+		}
 
-			try {
-				List<NetworkInterface> networkInterfaces = Collections.list(
-					NetworkInterface.getNetworkInterfaces());
+		_ipAddresses = new HashSet<String>();
 
-				for (NetworkInterface networkInterface : networkInterfaces) {
-					List<InetAddress> inetAddresses = Collections.list(
-						networkInterface.getInetAddresses());
+		try {
+			List<NetworkInterface> networkInterfaces = Collections.list(
+				NetworkInterface.getNetworkInterfaces());
 
-					for (InetAddress inetAddress : inetAddresses) {
-						if (inetAddress.isLinkLocalAddress() ||
-							inetAddress.isLoopbackAddress() ||
-							!(inetAddress instanceof Inet4Address)) {
+			for (NetworkInterface networkInterface : networkInterfaces) {
+				List<InetAddress> inetAddresses = Collections.list(
+					networkInterface.getInetAddresses());
 
-							continue;
-						}
+				for (InetAddress inetAddress : inetAddresses) {
+					if (inetAddress.isLinkLocalAddress() ||
+						inetAddress.isLoopbackAddress() ||
+						!(inetAddress instanceof Inet4Address)) {
 
-						_ipAddresses.add(inetAddress.getHostAddress());
+						continue;
 					}
+
+					_ipAddresses.add(inetAddress.getHostAddress());
 				}
 			}
-			catch (Exception e) {
-				_log.error("Unable to read local server's IP addresses");
+		}
+		catch (Exception e) {
+			_log.error("Unable to read local server's IP addresses");
 
-				_log.error(e, e);
-			}
+			_log.error(e, e);
 		}
 
 		return new HashSet<String>(_ipAddresses);

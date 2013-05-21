@@ -74,31 +74,33 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			setHeaderArticle(actionRequest, preferences);
 		}
 
-		if (SessionErrors.isEmpty(actionRequest)) {
-			try {
-				preferences.store();
-			}
-			catch (ValidatorException ve) {
-				SessionErrors.add(
-					actionRequest, ValidatorException.class.getName(), ve);
-
-				return;
-			}
-
-			LiferayPortletConfig liferayPortletConfig =
-				(LiferayPortletConfig)portletConfig;
-
-			SessionMessages.add(
-				actionRequest,
-				liferayPortletConfig.getPortletId() +
-					SessionMessages.KEY_SUFFIX_REFRESH_PORTLET,
-				portletResource);
-
-			SessionMessages.add(
-				actionRequest,
-				liferayPortletConfig.getPortletId() +
-					SessionMessages.KEY_SUFFIX_UPDATED_CONFIGURATION);
+		if (!SessionErrors.isEmpty(actionRequest)) {
+			return;
 		}
+
+		try {
+			preferences.store();
+		}
+		catch (ValidatorException ve) {
+			SessionErrors.add(
+				actionRequest, ValidatorException.class.getName(), ve);
+
+			return;
+		}
+
+		LiferayPortletConfig liferayPortletConfig =
+			(LiferayPortletConfig)portletConfig;
+
+		SessionMessages.add(
+			actionRequest,
+			liferayPortletConfig.getPortletId() +
+				SessionMessages.KEY_SUFFIX_REFRESH_PORTLET,
+			portletResource);
+
+		SessionMessages.add(
+			actionRequest,
+			liferayPortletConfig.getPortletId() +
+				SessionMessages.KEY_SUFFIX_UPDATED_CONFIGURATION);
 	}
 
 	protected void removeFooterArticle(

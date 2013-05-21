@@ -210,28 +210,28 @@ public class PortletResponseUtil {
 
 		// LEP-3122
 
-		if (!mimeResponse.isCommitted()) {
+		if (mimeResponse.isCommitted()) {
+			return;
+		}
 
-			// LEP-536
+		// LEP-536
 
-			int contentLength = 0;
+		int contentLength = 0;
 
-			for (byte[] bytes : bytesArray) {
-				contentLength += bytes.length;
-			}
+		for (byte[] bytes : bytesArray) {
+			contentLength += bytes.length;
+		}
 
-			if (mimeResponse instanceof ResourceResponse) {
-				ResourceResponse resourceResponse =
-					(ResourceResponse)mimeResponse;
+		if (mimeResponse instanceof ResourceResponse) {
+			ResourceResponse resourceResponse = (ResourceResponse)mimeResponse;
 
-				resourceResponse.setContentLength(contentLength);
-			}
+			resourceResponse.setContentLength(contentLength);
+		}
 
-			OutputStream outputStream = mimeResponse.getPortletOutputStream();
+		OutputStream outputStream = mimeResponse.getPortletOutputStream();
 
-			for (byte[] bytes : bytesArray) {
-				outputStream.write(bytes);
-			}
+		for (byte[] bytes : bytesArray) {
+			outputStream.write(bytes);
 		}
 	}
 

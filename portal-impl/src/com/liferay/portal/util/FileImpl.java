@@ -82,28 +82,30 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 	public void copyDirectory(File source, File destination)
 		throws IOException {
 
-		if (source.exists() && source.isDirectory()) {
-			if (!destination.exists()) {
-				destination.mkdirs();
+		if (!source.exists() || !source.isDirectory()) {
+			return;
+		}
+
+		if (!destination.exists()) {
+			destination.mkdirs();
+		}
+
+		File[] fileArray = source.listFiles();
+
+		for (int i = 0; i < fileArray.length; i++) {
+			if (fileArray[i].isDirectory()) {
+				copyDirectory(
+					fileArray[i],
+					new File(
+						destination.getPath() + File.separator +
+							fileArray[i].getName()));
 			}
-
-			File[] fileArray = source.listFiles();
-
-			for (int i = 0; i < fileArray.length; i++) {
-				if (fileArray[i].isDirectory()) {
-					copyDirectory(
-						fileArray[i],
-						new File(
-							destination.getPath() + File.separator +
-								fileArray[i].getName()));
-				}
-				else {
-					copyFile(
-						fileArray[i],
-						new File(
-							destination.getPath() + File.separator +
-								fileArray[i].getName()));
-				}
+			else {
+				copyFile(
+					fileArray[i],
+					new File(
+						destination.getPath() + File.separator +
+							fileArray[i].getName()));
 			}
 		}
 	}

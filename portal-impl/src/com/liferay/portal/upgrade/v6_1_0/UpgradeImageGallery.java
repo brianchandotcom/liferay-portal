@@ -729,27 +729,29 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			DataAccess.cleanUp(con, ps, rs);
 		}
 
-		if (!_sourceHookClassName.equals(DLHook.class.getName())) {
-			try {
-				con = DataAccess.getUpgradeOptimizedConnection();
+		if (_sourceHookClassName.equals(DLHook.class.getName())) {
+			return;
+		}
 
-				ps = con.prepareStatement("select imageId from Image");
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
 
-				rs = ps.executeQuery();
+			ps = con.prepareStatement("select imageId from Image");
 
-				while (rs.next()) {
-					long imageId = rs.getLong("imageId");
+			rs = ps.executeQuery();
 
-					migrateImage(imageId);
-				}
+			while (rs.next()) {
+				long imageId = rs.getLong("imageId");
+
+				migrateImage(imageId);
 			}
-			finally {
-				DataAccess.cleanUp(con, ps, rs);
-			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
 
-			if (_sourceHookClassName.equals(DatabaseHook.class.getName())) {
-				runSQL("update Image set text_ = ''");
-			}
+		if (_sourceHookClassName.equals(DatabaseHook.class.getName())) {
+			runSQL("update Image set text_ = ''");
 		}
 	}
 

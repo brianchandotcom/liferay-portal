@@ -183,34 +183,36 @@ public class PortletRequestProcessor extends TilesRequestProcessor {
 		String forward = (String)actionRequest.getAttribute(
 			PortletAction.getForwardKey(actionRequest));
 
-		if (forward != null) {
-			String queryString = StringPool.BLANK;
+		if (forward == null) {
+			return;
+		}
 
-			int pos = forward.indexOf(CharPool.QUESTION);
+		String queryString = StringPool.BLANK;
 
-			if (pos != -1) {
-				queryString = forward.substring(pos + 1);
-				forward = forward.substring(0, pos);
+		int pos = forward.indexOf(CharPool.QUESTION);
+
+		if (pos != -1) {
+			queryString = forward.substring(pos + 1);
+			forward = forward.substring(0, pos);
+		}
+
+		ActionForward actionForward = actionMapping.findForward(forward);
+
+		if ((actionForward != null) && actionForward.getRedirect()) {
+			String forwardPath = actionForward.getPath();
+
+			if (forwardPath.startsWith(StringPool.SLASH)) {
+				LiferayPortletURL forwardURL =
+					(LiferayPortletURL)actionResponseImpl.createRenderURL();
+
+				forwardURL.setParameter("struts_action", forwardPath);
+
+				StrutsURLEncoder.setParameters(forwardURL, queryString);
+
+				forwardPath = forwardURL.toString();
 			}
 
-			ActionForward actionForward = actionMapping.findForward(forward);
-
-			if ((actionForward != null) && actionForward.getRedirect()) {
-				String forwardPath = actionForward.getPath();
-
-				if (forwardPath.startsWith(StringPool.SLASH)) {
-					LiferayPortletURL forwardURL =
-						(LiferayPortletURL)actionResponseImpl.createRenderURL();
-
-					forwardURL.setParameter("struts_action", forwardPath);
-
-					StrutsURLEncoder.setParameters(forwardURL, queryString);
-
-					forwardPath = forwardURL.toString();
-				}
-
-				actionResponse.sendRedirect(forwardPath);
-			}
+			actionResponse.sendRedirect(forwardPath);
 		}
 	}
 

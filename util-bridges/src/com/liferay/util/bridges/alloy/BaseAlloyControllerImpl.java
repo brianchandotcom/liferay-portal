@@ -285,27 +285,28 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		Boolean touch = (Boolean)portletContext.getAttribute(
 			TOUCH + portlet.getRootPortletId());
 
-		if (touch == null) {
-			String touchPath =
-				"/WEB-INF/jsp/" + portlet.getFriendlyURLMapping() +
-					"/views/touch.jsp";
+		if (touch != null) {
+			return;
+		}
 
-			if (log.isDebugEnabled()) {
-				log.debug(
-					"Touch " + portlet.getRootPortletId() + " by including " +
-						touchPath);
-			}
+		String touchPath =
+			"/WEB-INF/jsp/" + portlet.getFriendlyURLMapping() +
+				"/views/touch.jsp";
 
-			portletContext.setAttribute(
-				TOUCH + portlet.getRootPortletId(), Boolean.FALSE);
+		if (log.isDebugEnabled()) {
+			log.debug(
+				"Touch " + portlet.getRootPortletId() + " by including " +
+					touchPath);
+		}
 
-			portletRequestDispatcher = portletContext.getRequestDispatcher(
-				touchPath);
+		portletContext.setAttribute(
+			TOUCH + portlet.getRootPortletId(), Boolean.FALSE);
 
-			if (portletRequestDispatcher != null) {
-				portletRequestDispatcher.include(
-					portletRequest, portletResponse);
-			}
+		portletRequestDispatcher = portletContext.getRequestDispatcher(
+			touchPath);
+
+		if (portletRequestDispatcher != null) {
+			portletRequestDispatcher.include(portletRequest, portletResponse);
 		}
 	}
 

@@ -44,30 +44,32 @@ public class SerializableSessionAttributeListener
 		String name = httpSessionBindingEvent.getName();
 		Object value = httpSessionBindingEvent.getValue();
 
-		if (!(value instanceof Serializable)) {
-			Class<?> clazz = value.getClass();
+		if (value instanceof Serializable) {
+			return;
+		}
 
-			_log.error(
-				clazz.getName() +
-					" is not serializable and will prevent this session from " +
-						"being replicated");
+		Class<?> clazz = value.getClass();
 
-			if (_requiresSerializable == null) {
-				HttpSession session = httpSessionBindingEvent.getSession();
+		_log.error(
+			clazz.getName() +
+				" is not serializable and will prevent this session from " +
+					"being replicated");
 
-				ServletContext servletContext = session.getServletContext();
+		if (_requiresSerializable == null) {
+			HttpSession session = httpSessionBindingEvent.getSession();
 
-				_requiresSerializable = Boolean.valueOf(
-					GetterUtil.getBoolean(
-						servletContext.getInitParameter(
-							"session-attributes-requires-serializable")));
-			}
+			ServletContext servletContext = session.getServletContext();
 
-			if (_requiresSerializable) {
-				HttpSession session = httpSessionBindingEvent.getSession();
+			_requiresSerializable = Boolean.valueOf(
+				GetterUtil.getBoolean(
+					servletContext.getInitParameter(
+						"session-attributes-requires-serializable")));
+		}
 
-				session.removeAttribute(name);
-			}
+		if (_requiresSerializable) {
+			HttpSession session = httpSessionBindingEvent.getSession();
+
+			session.removeAttribute(name);
 		}
 	}
 

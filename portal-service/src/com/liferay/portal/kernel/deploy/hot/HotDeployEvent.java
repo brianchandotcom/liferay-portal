@@ -83,29 +83,26 @@ public class HotDeployEvent {
 		InputStream is = _servletContext.getResourceAsStream(
 			"/WEB-INF/liferay-plugin-package.properties");
 
-		if (is != null) {
-			String propertiesString = StringUtil.read(is);
+		if (is == null) {
+			return;
+		}
 
-			Properties properties = PropertiesUtil.load(propertiesString);
+		String propertiesString = StringUtil.read(is);
 
-			String[] requiredDeploymentContexts = StringUtil.split(
-				properties.getProperty("required-deployment-contexts"));
+		Properties properties = PropertiesUtil.load(propertiesString);
 
-			if ((requiredDeploymentContexts.length > 0) &&
-				_log.isInfoEnabled()) {
+		String[] requiredDeploymentContexts = StringUtil.split(
+			properties.getProperty("required-deployment-contexts"));
 
-				_log.info(
-					"Plugin " + _servletContext.getServletContextName() +
-						" requires " +
-						StringUtil.merge(requiredDeploymentContexts, ", "));
-			}
+		if ((requiredDeploymentContexts.length > 0) && _log.isInfoEnabled()) {
+			_log.info(
+				"Plugin " + _servletContext.getServletContextName() +
+					" requires " +
+					StringUtil.merge(requiredDeploymentContexts, ", "));
+		}
 
-			for (String requiredDeploymentContext :
-					requiredDeploymentContexts) {
-
-				_dependentServletContextNames.add(
-					requiredDeploymentContext.trim());
-			}
+		for (String requiredDeploymentContext : requiredDeploymentContexts) {
+			_dependentServletContextNames.add(requiredDeploymentContext.trim());
 		}
 	}
 

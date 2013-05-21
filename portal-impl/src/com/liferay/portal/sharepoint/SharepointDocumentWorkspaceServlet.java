@@ -269,37 +269,38 @@ public class SharepointDocumentWorkspaceServlet extends HttpServlet {
 			responseElement.addElement(membersEl);
 		}
 
-		if (!minimal) {
-			Element assigneesEl = resultsEl.addElement("Assignees");
-
-			for (User member : users) {
-				responseElement = new MemberResponseElement(member, true);
-
-				responseElement.addElement(assigneesEl);
-			}
-
-			Element listEl = resultsEl.addElement("List");
-
-			listEl.addAttribute("Name", "Documents");
-
-			listEl.addElement("ID");
-
-			String parentFolderPath = path;
-
-			int pos = parentFolderPath.lastIndexOf("/");
-
-			if (pos != -1) {
-				parentFolderPath = parentFolderPath.substring(0, pos);
-			}
-
-			SharepointStorage storage = SharepointUtil.getStorage(
-				parentFolderPath);
-
-			SharepointRequest sharepointRequest = new SharepointRequest(
-				parentFolderPath);
-
-			storage.addDocumentElements(sharepointRequest, listEl);
+		if (minimal) {
+			return doc.asXML();
 		}
+
+		Element assigneesEl = resultsEl.addElement("Assignees");
+
+		for (User member : users) {
+			responseElement = new MemberResponseElement(member, true);
+
+			responseElement.addElement(assigneesEl);
+		}
+
+		Element listEl = resultsEl.addElement("List");
+
+		listEl.addAttribute("Name", "Documents");
+
+		listEl.addElement("ID");
+
+		String parentFolderPath = path;
+
+		int pos = parentFolderPath.lastIndexOf("/");
+
+		if (pos != -1) {
+			parentFolderPath = parentFolderPath.substring(0, pos);
+		}
+
+		SharepointStorage storage = SharepointUtil.getStorage(parentFolderPath);
+
+		SharepointRequest sharepointRequest = new SharepointRequest(
+			parentFolderPath);
+
+		storage.addDocumentElements(sharepointRequest, listEl);
 
 		return doc.asXML();
 	}

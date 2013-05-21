@@ -48,37 +48,41 @@ public class StoreFactory {
 
 		String dlHookImpl = PropsUtil.get("dl.hook.impl");
 
-		if (Validator.isNotNull(dlHookImpl)) {
-			boolean found = false;
+		if (Validator.isNull(dlHookImpl)) {
+			_warned = true;
 
-			for (String[] dlHookStoreParts : _DL_HOOK_STORES) {
-				if (dlHookImpl.equals(dlHookStoreParts[0])) {
-					PropsValues.DL_STORE_IMPL = dlHookStoreParts[1];
+			return;
+		}
 
-					found = true;
+		boolean found = false;
 
-					break;
-				}
+		for (String[] dlHookStoreParts : _DL_HOOK_STORES) {
+			if (dlHookImpl.equals(dlHookStoreParts[0])) {
+				PropsValues.DL_STORE_IMPL = dlHookStoreParts[1];
+
+				found = true;
+
+				break;
 			}
+		}
 
-			if (!found) {
-				PropsValues.DL_STORE_IMPL = dlHookImpl;
-			}
+		if (!found) {
+			PropsValues.DL_STORE_IMPL = dlHookImpl;
+		}
 
-			if (_log.isWarnEnabled()) {
-				StringBundler sb = new StringBundler(8);
+		if (_log.isWarnEnabled()) {
+			StringBundler sb = new StringBundler(8);
 
-				sb.append("Liferay is configured with the legacy ");
-				sb.append("property \"dl.hook.impl=" + dlHookImpl + "\" ");
-				sb.append("in portal-ext.properties. Please reconfigure ");
-				sb.append("to use the new property \"");
-				sb.append(PropsKeys.DL_STORE_IMPL + "\". Liferay will ");
-				sb.append("attempt to temporarily set \"");
-				sb.append(PropsKeys.DL_STORE_IMPL + "=");
-				sb.append(PropsValues.DL_STORE_IMPL + "\".");
+			sb.append("Liferay is configured with the legacy ");
+			sb.append("property \"dl.hook.impl=" + dlHookImpl + "\" ");
+			sb.append("in portal-ext.properties. Please reconfigure ");
+			sb.append("to use the new property \"");
+			sb.append(PropsKeys.DL_STORE_IMPL + "\". Liferay will ");
+			sb.append("attempt to temporarily set \"");
+			sb.append(PropsKeys.DL_STORE_IMPL + "=");
+			sb.append(PropsValues.DL_STORE_IMPL + "\".");
 
-				_log.warn(sb.toString());
-			}
+			_log.warn(sb.toString());
 		}
 
 		_warned = true;
@@ -123,28 +127,29 @@ public class StoreFactory {
 		Store store = (Store)InstanceFactory.newInstance(
 			classLoader, PropsValues.DL_STORE_IMPL);
 
-		if (store instanceof DBStore) {
-			DB db = DBFactoryUtil.getDB();
+		if (!(store instanceof DBStore)) {
+			return store;
+		}
 
-			String dbType = db.getType();
+		DB db = DBFactoryUtil.getDB();
 
-			if (dbType.equals(DB.TYPE_POSTGRESQL)) {
-				MethodInterceptor transactionAdviceMethodInterceptor =
-					(MethodInterceptor)PortalBeanLocatorUtil.locate(
-						"transactionAdvice");
+		String dbType = db.getType();
 
-				MethodInterceptor tempFileMethodInterceptor =
-					new TempFileMethodInterceptor();
+		if (dbType.equals(DB.TYPE_POSTGRESQL)) {
+			MethodInterceptor transactionAdviceMethodInterceptor =
+				(MethodInterceptor)PortalBeanLocatorUtil.locate(
+					"transactionAdvice");
 
-				List<MethodInterceptor> methodInterceptors = Arrays.asList(
-					transactionAdviceMethodInterceptor,
-					tempFileMethodInterceptor);
+			MethodInterceptor tempFileMethodInterceptor =
+				new TempFileMethodInterceptor();
 
-				store = (Store)ProxyUtil.newProxyInstance(
-					classLoader, new Class<?>[] {Store.class},
-					new MethodInterceptorInvocationHandler(
-						store, methodInterceptors));
-			}
+			List<MethodInterceptor> methodInterceptors = Arrays.asList(
+				transactionAdviceMethodInterceptor, tempFileMethodInterceptor);
+
+			store = (Store)ProxyUtil.newProxyInstance(
+				classLoader, new Class<?>[] {Store.class},
+				new MethodInterceptorInvocationHandler(
+					store, methodInterceptors));
 		}
 
 		return store;

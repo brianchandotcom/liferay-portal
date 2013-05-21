@@ -109,36 +109,36 @@ public class ViewAction extends PortletAction {
 		boolean auth = GetterUtil.getBoolean(
 			preferences.getValue("auth", StringPool.BLANK));
 
-		if (auth) {
-			String authType = preferences.getValue(
-				"authType", StringPool.BLANK);
+		if (!auth) {
+			return src;
+		}
 
-			if (authType.equals("basic")) {
-				String userName = getUserName(renderRequest, renderResponse);
-				String password = getPassword(renderRequest, renderResponse);
+		String authType = preferences.getValue("authType", StringPool.BLANK);
 
-				int pos = src.indexOf("://");
+		if (authType.equals("basic")) {
+			String userName = getUserName(renderRequest, renderResponse);
+			String password = getPassword(renderRequest, renderResponse);
 
-				String protocol = src.substring(0, pos + 3);
-				String url = src.substring(pos + 3);
+			int pos = src.indexOf("://");
 
-				src = protocol + userName + ":" + password + "@" + url;
-			}
-			else {
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)renderRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
+			String protocol = src.substring(0, pos + 3);
+			String url = src.substring(pos + 3);
 
-				String portletId = PortalUtil.getPortletId(renderRequest);
+			src = protocol + userName + ":" + password + "@" + url;
+		}
+		else {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-				Portlet portlet = PortletLocalServiceUtil.getPortletById(
-					themeDisplay.getCompanyId(), portletId);
+			String portletId = PortalUtil.getPortletId(renderRequest);
 
-				src =
-					themeDisplay.getPathMain() + "/" + portlet.getStrutsPath() +
-						"/proxy?p_l_id=" + themeDisplay.getPlid() + "&p_p_id=" +
-							portletId;
-			}
+			Portlet portlet = PortletLocalServiceUtil.getPortletById(
+				themeDisplay.getCompanyId(), portletId);
+
+			src =
+				themeDisplay.getPathMain() + "/" + portlet.getStrutsPath() +
+					"/proxy?p_l_id=" + themeDisplay.getPlid() + "&p_p_id=" +
+						portletId;
 		}
 
 		return src;

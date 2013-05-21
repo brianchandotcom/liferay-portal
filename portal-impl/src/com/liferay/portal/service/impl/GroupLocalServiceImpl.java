@@ -3072,29 +3072,29 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		// Asset
 
-		if ((serviceContext != null) && group.isSite()) {
-			User user = null;
+		if ((serviceContext == null) || !group.isSite()) {
+			return group;
+		}
 
+		User user = null;
+
+		try {
+			user = userPersistence.findByPrimaryKey(group.getCreatorUserId());
+
+		}
+		catch (NoSuchUserException nsue1) {
 			try {
 				user = userPersistence.findByPrimaryKey(
-					group.getCreatorUserId());
-
+					serviceContext.getUserId());
 			}
-			catch (NoSuchUserException nsue1) {
-				try {
-					user = userPersistence.findByPrimaryKey(
-						serviceContext.getUserId());
-				}
-				catch (NoSuchUserException nsue2) {
-					user = userLocalService.getDefaultUser(
-						group.getCompanyId());
-				}
+			catch (NoSuchUserException nsue2) {
+				user = userLocalService.getDefaultUser(group.getCompanyId());
 			}
-
-			updateAsset(
-				user.getUserId(), group, serviceContext.getAssetCategoryIds(),
-				serviceContext.getAssetTagNames());
 		}
+
+		updateAsset(
+			user.getUserId(), group, serviceContext.getAssetCategoryIds(),
+			serviceContext.getAssetTagNames());
 
 		return group;
 	}

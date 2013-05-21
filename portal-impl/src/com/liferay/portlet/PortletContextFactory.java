@@ -63,33 +63,34 @@ public class PortletContextFactory {
 		PortletContext portletContext = portletContexts.get(
 			portlet.getPortletId());
 
-		if (portletContext == null) {
-			PortletApp portletApp = portlet.getPortletApp();
+		if (portletContext != null) {
+			return DoPrivilegedUtil.wrap(portletContext);
+		}
 
-			if (portletApp.isWARFile()) {
-				PortletBag portletBag = PortletBagPool.get(
-					portlet.getRootPortletId());
+		PortletApp portletApp = portlet.getPortletApp();
 
-				if (portletBag == null) {
-					_log.error(
-						"Portlet " + portlet.getRootPortletId() +
-							" has a null portlet bag");
-				}
+		if (portletApp.isWARFile()) {
+			PortletBag portletBag = PortletBagPool.get(
+				portlet.getRootPortletId());
 
-				//String mainPath = (String)ctx.getAttribute(WebKeys.MAIN_PATH);
-
-				servletContext = portletBag.getServletContext();
-
-				// Context path for the portal must be passed to individual
-				// portlets
-
-				//ctx.setAttribute(WebKeys.MAIN_PATH, mainPath);
+			if (portletBag == null) {
+				_log.error(
+					"Portlet " + portlet.getRootPortletId() +
+						" has a null portlet bag");
 			}
 
-			portletContext = new PortletContextImpl(portlet, servletContext);
+			//String mainPath = (String)ctx.getAttribute(WebKeys.MAIN_PATH);
 
-			portletContexts.put(portlet.getPortletId(), portletContext);
+			servletContext = portletBag.getServletContext();
+
+			// Context path for the portal must be passed to individual portlets
+
+			//ctx.setAttribute(WebKeys.MAIN_PATH, mainPath);
 		}
+
+		portletContext = new PortletContextImpl(portlet, servletContext);
+
+		portletContexts.put(portlet.getPortletId(), portletContext);
 
 		return DoPrivilegedUtil.wrap(portletContext);
 	}

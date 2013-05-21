@@ -920,31 +920,33 @@ public class ResourceBlockLocalServiceImpl
 			resourceBlockPersistence.fetchByPrimaryKey(
 				permissionedModel.getResourceBlockId());
 
-		if (resourceBlock == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Resource block " + permissionedModel.getResourceBlockId() +
-						" missing for " + name + "#" + primKey);
-			}
-
-			long groupId = 0;
-			long ownerId = 0;
-
-			if (permissionedModel instanceof GroupedModel) {
-				GroupedModel groupedModel = (GroupedModel)permissionedModel;
-
-				groupId = groupedModel.getGroupId();
-				ownerId = groupedModel.getUserId();
-			}
-			else if (permissionedModel instanceof AuditedModel) {
-				AuditedModel auditedModel = (AuditedModel)permissionedModel;
-
-				ownerId = auditedModel.getUserId();
-			}
-
-			resourceLocalService.addResources(
-				companyId, groupId, ownerId, name, primKey, false, true, true);
+		if (resourceBlock != null) {
+			return;
 		}
+
+		if (_log.isWarnEnabled()) {
+			_log.warn(
+				"Resource block " + permissionedModel.getResourceBlockId() +
+					" missing for " + name + "#" + primKey);
+		}
+
+		long groupId = 0;
+		long ownerId = 0;
+
+		if (permissionedModel instanceof GroupedModel) {
+			GroupedModel groupedModel = (GroupedModel)permissionedModel;
+
+			groupId = groupedModel.getGroupId();
+			ownerId = groupedModel.getUserId();
+		}
+		else if (permissionedModel instanceof AuditedModel) {
+			AuditedModel auditedModel = (AuditedModel)permissionedModel;
+
+			ownerId = auditedModel.getUserId();
+		}
+
+		resourceLocalService.addResources(
+			companyId, groupId, ownerId, name, primKey, false, true, true);
 	}
 
 	protected void updatePermissions(

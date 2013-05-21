@@ -154,35 +154,37 @@ public class PropertiesUtil {
 	public static void load(Properties properties, String s)
 		throws IOException {
 
-		if (Validator.isNotNull(s)) {
-			s = UnicodeFormatter.toString(s);
+		if (Validator.isNull(s)) {
+			return;
+		}
 
-			s = StringUtil.replace(s, "\\u003d", "=");
-			s = StringUtil.replace(s, "\\u000a", "\n");
-			s = StringUtil.replace(s, "\\u0021", "!");
-			s = StringUtil.replace(s, "\\u0023", "#");
-			s = StringUtil.replace(s, "\\u0020", " ");
-			s = StringUtil.replace(s, "\\u005c", "\\");
+		s = UnicodeFormatter.toString(s);
 
-			properties.load(new UnsyncByteArrayInputStream(s.getBytes()));
+		s = StringUtil.replace(s, "\\u003d", "=");
+		s = StringUtil.replace(s, "\\u000a", "\n");
+		s = StringUtil.replace(s, "\\u0021", "!");
+		s = StringUtil.replace(s, "\\u0023", "#");
+		s = StringUtil.replace(s, "\\u0020", " ");
+		s = StringUtil.replace(s, "\\u005c", "\\");
 
-			List<String> propertyNames = Collections.list(
-				(Enumeration<String>)properties.propertyNames());
+		properties.load(new UnsyncByteArrayInputStream(s.getBytes()));
 
-			for (int i = 0; i < propertyNames.size(); i++) {
-				String key = propertyNames.get(i);
+		List<String> propertyNames = Collections.list(
+			(Enumeration<String>)properties.propertyNames());
 
-				String value = properties.getProperty(key);
+		for (int i = 0; i < propertyNames.size(); i++) {
+			String key = propertyNames.get(i);
 
-				// Trim values because it may leave a trailing \r in certain
-				// Windows environments. This is a known case for loading SQL
-				// scripts in SQL Server.
+			String value = properties.getProperty(key);
 
-				if (value != null) {
-					value = value.trim();
+			// Trim values because it may leave a trailing \r in certain Windows
+			// environments. This is a known case for loading SQL scripts in SQL
+			// Server.
 
-					properties.setProperty(key, value);
-				}
+			if (value != null) {
+				value = value.trim();
+
+				properties.setProperty(key, value);
 			}
 		}
 	}

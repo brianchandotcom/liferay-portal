@@ -106,50 +106,53 @@ public class LogUtil {
 		// Make the stack trace more readable by limiting the number of
 		// elements.
 
-		if (steArray.length > STACK_TRACE_LENGTH) {
-			int count = 0;
+		if (steArray.length <= STACK_TRACE_LENGTH) {
+			log.error(StackTraceUtil.getStackTrace(cause));
 
-			List<StackTraceElement> steList =
-				new ArrayList<StackTraceElement>();
+			return;
+		}
 
-			for (int i = 0; i < steArray.length; i++) {
-				StackTraceElement ste = steArray[i];
+		int count = 0;
 
-				// Make the stack trace more readable by removing elements that
-				// refer to classes with no packages, or starts with a $, or are
-				// Spring classes, or are standard reflection classes.
+		List<StackTraceElement> steList = new ArrayList<StackTraceElement>();
 
-				String className = ste.getClassName();
+		for (int i = 0; i < steArray.length; i++) {
+			StackTraceElement ste = steArray[i];
 
-				boolean addElement = true;
+			// Make the stack trace more readable by removing elements that
+			// refer to classes with no packages, or starts with a $, or are
+			// Spring classes, or are standard reflection classes.
 
-				if (REMOVE_UNKNOWN_SOURCE && (ste.getLineNumber() < 0)) {
-					addElement = false;
-				}
+			String className = ste.getClassName();
 
-				if (className.startsWith("$") ||
-					className.startsWith("java.lang.reflect.") ||
-					className.startsWith("org.springframework.") ||
-					className.startsWith("sun.reflect.")) {
+			boolean addElement = true;
 
-					addElement = false;
-				}
-
-				if (addElement) {
-					steList.add(ste);
-
-					count++;
-				}
-
-				if (count >= STACK_TRACE_LENGTH) {
-					break;
-				}
+			if (REMOVE_UNKNOWN_SOURCE && (ste.getLineNumber() < 0)) {
+				addElement = false;
 			}
 
-			steArray = steList.toArray(new StackTraceElement[steList.size()]);
+			if (className.startsWith("$") ||
+				className.startsWith("java.lang.reflect.") ||
+				className.startsWith("org.springframework.") ||
+				className.startsWith("sun.reflect.")) {
 
-			cause.setStackTrace(steArray);
+				addElement = false;
+			}
+
+			if (addElement) {
+				steList.add(ste);
+
+				count++;
+			}
+
+			if (count >= STACK_TRACE_LENGTH) {
+				break;
+			}
 		}
+
+		steArray = steList.toArray(new StackTraceElement[steList.size()]);
+
+		cause.setStackTrace(steArray);
 
 		log.error(StackTraceUtil.getStackTrace(cause));
 	}

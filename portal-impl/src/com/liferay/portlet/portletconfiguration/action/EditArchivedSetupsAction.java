@@ -97,30 +97,32 @@ public class EditArchivedSetupsAction extends EditConfigurationAction {
 			}
 		}
 
-		if (SessionErrors.isEmpty(actionRequest)) {
-			LiferayPortletConfig liferayPortletConfig =
-				(LiferayPortletConfig)portletConfig;
+		if (!SessionErrors.isEmpty(actionRequest)) {
+			return;
+		}
 
-			String portletResource = ParamUtil.getString(
-				actionRequest, "portletResource");
+		LiferayPortletConfig liferayPortletConfig =
+			(LiferayPortletConfig)portletConfig;
 
-			SessionMessages.add(
-				actionRequest,
-				liferayPortletConfig.getPortletId() +
-					SessionMessages.KEY_SUFFIX_REFRESH_PORTLET,
-				portletResource);
+		String portletResource = ParamUtil.getString(
+			actionRequest, "portletResource");
 
-			SessionMessages.add(
-				actionRequest,
-				liferayPortletConfig.getPortletId() +
-					SessionMessages.KEY_SUFFIX_UPDATED_CONFIGURATION);
+		SessionMessages.add(
+			actionRequest,
+			liferayPortletConfig.getPortletId() +
+				SessionMessages.KEY_SUFFIX_REFRESH_PORTLET,
+			portletResource);
 
-			String redirect = PortalUtil.escapeRedirect(
-				ParamUtil.getString(actionRequest, "redirect"));
+		SessionMessages.add(
+			actionRequest,
+			liferayPortletConfig.getPortletId() +
+				SessionMessages.KEY_SUFFIX_UPDATED_CONFIGURATION);
 
-			if (Validator.isNotNull(redirect)) {
-				actionResponse.sendRedirect(redirect);
-			}
+		String redirect = PortalUtil.escapeRedirect(
+			ParamUtil.getString(actionRequest, "redirect"));
+
+		if (Validator.isNotNull(redirect)) {
+			actionResponse.sendRedirect(redirect);
 		}
 	}
 

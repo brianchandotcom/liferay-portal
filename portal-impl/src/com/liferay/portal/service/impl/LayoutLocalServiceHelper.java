@@ -63,29 +63,31 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 
 		friendlyURL = getFriendlyURL(friendlyURL);
 
-		if (Validator.isNull(friendlyURL)) {
-			friendlyURL = StringPool.SLASH + getFriendlyURL(name);
+		if (Validator.isNotNull(friendlyURL)) {
+			return friendlyURL;
+		}
 
-			String originalFriendlyURL = friendlyURL;
+		friendlyURL = StringPool.SLASH + getFriendlyURL(name);
 
-			for (int i = 1;; i++) {
-				try {
-					validateFriendlyURL(
-						groupId, privateLayout, layoutId, friendlyURL);
+		String originalFriendlyURL = friendlyURL;
+
+		for (int i = 1;; i++) {
+			try {
+				validateFriendlyURL(
+					groupId, privateLayout, layoutId, friendlyURL);
+
+				break;
+			}
+			catch (LayoutFriendlyURLException lfurle) {
+				int type = lfurle.getType();
+
+				if (type == LayoutFriendlyURLException.DUPLICATE) {
+					friendlyURL = originalFriendlyURL + i;
+				}
+				else {
+					friendlyURL = StringPool.SLASH + layoutId;
 
 					break;
-				}
-				catch (LayoutFriendlyURLException lfurle) {
-					int type = lfurle.getType();
-
-					if (type == LayoutFriendlyURLException.DUPLICATE) {
-						friendlyURL = originalFriendlyURL + i;
-					}
-					else {
-						friendlyURL = StringPool.SLASH + layoutId;
-
-						break;
-					}
 				}
 			}
 		}

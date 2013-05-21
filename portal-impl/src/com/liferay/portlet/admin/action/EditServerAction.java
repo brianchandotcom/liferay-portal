@@ -437,31 +437,32 @@ public class EditServerAction extends PortletAction {
 			}
 		}
 
-		if (LuceneHelperUtil.isLoadIndexFromClusterEnabled()) {
-			Set<BaseAsyncDestination> searchWriterDestinations =
-				new HashSet<BaseAsyncDestination>();
-
-			MessageBus messageBus = MessageBusUtil.getMessageBus();
-
-			for (String usedSearchEngineId : usedSearchEngineIds) {
-				String searchWriterDestinationName =
-					SearchEngineUtil.getSearchWriterDestinationName(
-						usedSearchEngineId);
-
-				Destination destination = messageBus.getDestination(
-					searchWriterDestinationName);
-
-				if (destination instanceof BaseAsyncDestination) {
-					BaseAsyncDestination baseAsyncDestination =
-						(BaseAsyncDestination)destination;
-
-					searchWriterDestinations.add(baseAsyncDestination);
-				}
-			}
-
-			submitClusterIndexLoadingSyncJob(
-				searchWriterDestinations, companyIds);
+		if (!LuceneHelperUtil.isLoadIndexFromClusterEnabled()) {
+			return;
 		}
+
+		Set<BaseAsyncDestination> searchWriterDestinations =
+			new HashSet<BaseAsyncDestination>();
+
+		MessageBus messageBus = MessageBusUtil.getMessageBus();
+
+		for (String usedSearchEngineId : usedSearchEngineIds) {
+			String searchWriterDestinationName =
+				SearchEngineUtil.getSearchWriterDestinationName(
+					usedSearchEngineId);
+
+			Destination destination = messageBus.getDestination(
+				searchWriterDestinationName);
+
+			if (destination instanceof BaseAsyncDestination) {
+				BaseAsyncDestination baseAsyncDestination =
+					(BaseAsyncDestination)destination;
+
+				searchWriterDestinations.add(baseAsyncDestination);
+			}
+		}
+
+		submitClusterIndexLoadingSyncJob(searchWriterDestinations, companyIds);
 	}
 
 	protected void reindexDictionaries(ActionRequest actionRequest)

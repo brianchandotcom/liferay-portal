@@ -93,38 +93,42 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 			callbackSB.append(portletData._callbackSB);
 		}
 
-		if (callbackSB.index() > 0) {
-			String loadMethod = "use";
+		if (callbackSB.index() == 0) {
+			writer.write("\n// ]]>\n</script>");
 
-			if (BrowserSnifferUtil.isIe(request) &&
-				(BrowserSnifferUtil.getMajorVersion(request) < 8)) {
-
-				loadMethod = "ready";
-			}
-
-			writer.write("AUI().");
-			writer.write(loadMethod);
-			writer.write("(");
-
-			Set<String> useSet = new TreeSet<String>();
-
-			for (PortletData portletData : _portletDataMap.values()) {
-				useSet.addAll(portletData._useSet);
-			}
-
-			for (String use : useSet) {
-				writer.write(StringPool.APOSTROPHE);
-				writer.write(use);
-				writer.write(StringPool.APOSTROPHE);
-				writer.write(StringPool.COMMA_AND_SPACE);
-			}
-
-			writer.write("function(A) {");
-
-			callbackSB.writeTo(writer);
-
-			writer.write("});");
+			return;
 		}
+
+		String loadMethod = "use";
+
+		if (BrowserSnifferUtil.isIe(request) &&
+			(BrowserSnifferUtil.getMajorVersion(request) < 8)) {
+
+			loadMethod = "ready";
+		}
+
+		writer.write("AUI().");
+		writer.write(loadMethod);
+		writer.write("(");
+
+		Set<String> useSet = new TreeSet<String>();
+
+		for (PortletData portletData : _portletDataMap.values()) {
+			useSet.addAll(portletData._useSet);
+		}
+
+		for (String use : useSet) {
+			writer.write(StringPool.APOSTROPHE);
+			writer.write(use);
+			writer.write(StringPool.APOSTROPHE);
+			writer.write(StringPool.COMMA_AND_SPACE);
+		}
+
+		writer.write("function(A) {");
+
+		callbackSB.writeTo(writer);
+
+		writer.write("});");
 
 		writer.write("\n// ]]>\n</script>");
 	}

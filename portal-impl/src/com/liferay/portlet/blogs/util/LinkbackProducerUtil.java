@@ -214,28 +214,29 @@ public class LinkbackProducerUtil {
 			_log.error("Unable to call HEAD of " + targetUri, e);
 		}
 
-		if (Validator.isNull(serverUri)) {
-			try {
-				Source clientSource = new Source(
-					HttpUtil.URLtoString(targetUri));
+		if (Validator.isNotNull(serverUri)) {
+			return serverUri;
+		}
 
-				List<StartTag> startTags = clientSource.getAllStartTags("link");
+		try {
+			Source clientSource = new Source(HttpUtil.URLtoString(targetUri));
 
-				for (StartTag startTag : startTags) {
-					String rel = startTag.getAttributeValue("rel");
+			List<StartTag> startTags = clientSource.getAllStartTags("link");
 
-					if (rel.equalsIgnoreCase("pingback")) {
-						String href = startTag.getAttributeValue("href");
+			for (StartTag startTag : startTags) {
+				String rel = startTag.getAttributeValue("rel");
 
-						serverUri = HtmlUtil.escape(href);
+				if (rel.equalsIgnoreCase("pingback")) {
+					String href = startTag.getAttributeValue("href");
 
-						break;
-					}
+					serverUri = HtmlUtil.escape(href);
+
+					break;
 				}
 			}
-			catch (Exception e) {
-				_log.error("Unable to call GET of " + targetUri, e);
-			}
+		}
+		catch (Exception e) {
+			_log.error("Unable to call GET of " + targetUri, e);
 		}
 
 		return serverUri;

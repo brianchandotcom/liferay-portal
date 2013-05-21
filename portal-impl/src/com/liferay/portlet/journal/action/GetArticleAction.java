@@ -145,35 +145,36 @@ public class GetArticleAction extends Action {
 
 		String templateId = article.getTemplateId();
 
-		if (Validator.isNotNull(templateId)) {
-			DDMTemplate ddmTemplate = null;
+		if (Validator.isNull(templateId)) {
+			return;
+		}
 
-			try {
-				ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
-					article.getGroupId(),
-					PortalUtil.getClassNameId(DDMStructure.class), templateId);
+		DDMTemplate ddmTemplate = null;
 
-				if (Validator.equals(
-						ddmTemplate.getLanguage(),
-						TemplateConstants.LANG_TYPE_XSL)) {
+		try {
+			ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
+				article.getGroupId(),
+				PortalUtil.getClassNameId(DDMStructure.class), templateId);
 
-					url =
-						themeDisplay.getPathMain() +
-							"/journal/get_template?groupId=" +
-								article.getGroupId() + "&templateId=" +
-									templateId;
+			if (Validator.equals(
+					ddmTemplate.getLanguage(),
+					TemplateConstants.LANG_TYPE_XSL)) {
 
-					arguments.clear();
+				url =
+					themeDisplay.getPathMain() +
+						"/journal/get_template?groupId=" +
+							article.getGroupId() + "&templateId=" + templateId;
 
-					arguments.put("type", "text/xsl");
-					arguments.put("href", url);
-					arguments.put("title", "xsl");
+				arguments.clear();
 
-					addStyleSheet(doc, url, arguments);
-				}
+				arguments.put("type", "text/xsl");
+				arguments.put("href", url);
+				arguments.put("title", "xsl");
+
+				addStyleSheet(doc, url, arguments);
 			}
-			catch (Exception e) {
-			}
+		}
+		catch (Exception e) {
 		}
 	}
 

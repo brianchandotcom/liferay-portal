@@ -26,6 +26,7 @@ import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -48,10 +49,12 @@ public class UpgradeProcessTestUtil {
 		upgradeProcess.upgrade();
 	}
 
-	public static void reloadCurrentSpringDatasources() {
+	public static void reloadCurrentSpringDatasources() throws Exception {
 		Properties jdbcProperties = getDefaultDatabaseProperties();
 
 		InitUtil.reloadSpringDatasources(jdbcProperties);
+
+		CustomSQLUtil.reloadCustomSQL();
 	}
 
 	public static void setUpOriginDatabase(String sql) throws Exception {
@@ -70,6 +73,8 @@ public class UpgradeProcessTestUtil {
 		jdbcProperties.put(PropsKeys.JDBC_DEFAULT_URL, url);
 
 		InitUtil.reloadSpringDatasources(jdbcProperties);
+
+		CustomSQLUtil.reloadCustomSQL();
 	}
 
 	public static void tearDownOriginDatabase() throws Exception {

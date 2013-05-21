@@ -2355,8 +2355,10 @@ AUI.add(
 
 					downloadArticleContentButton.on(
 						'click',
-						function() {
+						function(event) {
 							instance.downloadArticleContent();
+
+							event.domEvent.preventDefault();
 						}
 					);
 				}
@@ -2392,8 +2394,10 @@ AUI.add(
 
 					previewArticleButton.on(
 						'click',
-						function() {
+						function(event) {
 							instance.previewArticle();
+
+							event.domEvent.preventDefault();
 						}
 					);
 				}

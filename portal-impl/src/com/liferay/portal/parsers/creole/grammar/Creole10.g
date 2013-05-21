@@ -1003,18 +1003,19 @@ extension_statement
 table_of_contents returns [TableOfContentsNode tableOfContents = new TableOfContentsNode()]
 	:
 		(
-			TABLE_OF_CONTENTS_OPEN 'TableOfContents' TABLE_OF_CONTENTS_CLOSE
+			'<<TableOfContents>>'
 			|
-			TABLE_OF_CONTENTS_OPEN 'TableOfContents title='
+			'<<TableOfContents title='
 			'\"'
 			t = table_of_contents_title_text { tableOfContents.setTitle($t.text.toString()); }
 			'\"'
-			TABLE_OF_CONTENTS_CLOSE
+			'>>'
 		)
 	;
 
+
 table_of_contents_title_text returns [StringBundler text = new StringBundler()]
-	:	( c = ~(LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN |EQUAL | ESCAPE | NEWLINE | EOF | TABLE_OF_CONTENTS_CLOSE )  {$text.append($c.text);} )+
+	:	( c = ~(LINK_OPEN | IMAGE_OPEN | NOWIKI_OPEN |EQUAL | ESCAPE | NEWLINE | EOF | '>>' )  {$text.append($c.text);} )+
 	;
 
 onestar
@@ -1143,8 +1144,5 @@ DASH					: '-';
 STAR					: '*';
 SLASH					: '/';
 EXTENSION				: '@@';
-
-TABLE_OF_CONTENTS_OPEN	: '<<';
-TABLE_OF_CONTENTS_CLOSE	: '>>';
 
 INSIGNIFICANT_CHAR		: .;

@@ -723,7 +723,7 @@ Plugins: ${lp.plugins.dir}</echo>
 		<ant dir="util-taglib" target="jar" inheritAll="false" />
 
 		<ant dir="sql" target="build-db" inheritAll="false" />
-		<!--<ant dir="sql" target="rebuild-hypersonic" inheritAll="false" />-->
+		<ant dir="sql" target="rebuild-hypersonic" inheritAll="false" />
 
 		<ant dir="portal-impl" target="build-themes" inheritAll="false" />
 

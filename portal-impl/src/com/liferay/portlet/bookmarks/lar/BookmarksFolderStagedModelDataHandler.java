@@ -72,31 +72,26 @@ public class BookmarksFolderStagedModelDataHandler
 
 		long userId = portletDataContext.getUserId(folder.getUserUuid());
 
-		Map<Long, Long> folderIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				BookmarksFolder.class);
-
-		long parentFolderId = MapUtil.getLong(
-			folderIds, folder.getParentFolderId(), folder.getParentFolderId());
-
-		if ((parentFolderId !=
-				BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) &&
-			(parentFolderId == folder.getParentFolderId())) {
+		if (folder.getParentFolderId() !=
+				BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
 			String parentFolderPath = ExportImportPathUtil.getModelPath(
 				portletDataContext, BookmarksFolder.class.getName(),
-				parentFolderId);
+				folder.getParentFolderId());
 
 			BookmarksFolder parentFolder =
 				(BookmarksFolder)portletDataContext.getZipEntryAsObject(
 					parentFolderPath);
 
 			importStagedModel(portletDataContext, parentFolder);
-
-			parentFolderId = MapUtil.getLong(
-				folderIds, folder.getParentFolderId(),
-				folder.getParentFolderId());
 		}
+
+		Map<Long, Long> folderIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				BookmarksFolder.class);
+
+		long parentFolderId = MapUtil.getLong(
+			folderIds, folder.getParentFolderId(), folder.getParentFolderId());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			folder, BookmarksPortletDataHandler.NAMESPACE);

@@ -6,10 +6,23 @@
 	<mkdir dir="log" />
 
 	<target name="build-db">
+		<var name="fork.mode" value="false" />
+
+		<if>
+			<equals arg1="${db.build.debug}" arg2="true" />
+			<then>
+				<var name="fork.mode" value="true" />
+			</then>
+		</if>
+
 		<java
 			classname="com.liferay.portal.tools.DBBuilder"
 			classpathref="project.classpath"
+			fork="${fork.mode}"
 		>
+			<jvmarg line="${db.build.debug.jpda}" />
+			<jvmarg value="-Xmx${db.build.java.mx}" />
+			<jvmarg value="-XX:MaxPermSize=${db.build.java.maxpermsize}" />
 			<arg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
 			<arg value="db.database.name=${database.name}" />
 			<arg value="db.database.types=${database.types}" />

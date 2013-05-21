@@ -502,16 +502,12 @@ public class AgentSerializableTest {
 
 		AgentSerializable agentSerializable = new AgentSerializable();
 
-		Field threadLocalDistributorsField = ReflectionUtil.getDeclaredField(
-			AgentSerializable.class, "_threadLocalDistributors");
-
-		Assert.assertNull(threadLocalDistributorsField.get(agentSerializable));
+		Assert.assertNull(agentSerializable.threadLocalDistributors);
 
 		agentSerializable.captureThreadLocals();
 
 		ThreadLocalDistributor[] threadLocalDistributors =
-			(ThreadLocalDistributor[])threadLocalDistributorsField.get(
-				agentSerializable);
+			agentSerializable.threadLocalDistributors;
 
 		Assert.assertNotNull(threadLocalDistributors);
 		Assert.assertEquals(1, threadLocalDistributors.length);

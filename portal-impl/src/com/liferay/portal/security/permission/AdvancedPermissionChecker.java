@@ -143,41 +143,42 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		PermissionCheckerBag bag = PermissionCacheUtil.getBag(
 			defaultUserId, guestGroup.getGroupId());
 
-		if (bag == null) {
-			try {
-				List<Group> groups = new ArrayList<Group>();
+		if (bag != null) {
+			return bag;
+		}
 
-				groups.add(guestGroup);
+		try {
+			List<Group> groups = new ArrayList<Group>();
 
-				List<Role> roles = RoleLocalServiceUtil.getUserRelatedRoles(
-					defaultUserId, groups);
+			groups.add(guestGroup);
 
-				// Only use the guest group for deriving the roles for
-				// unauthenticated users. Do not add the group to the permission
-				// bag as this implies group membership which is incorrect in
-				// the case of unauthenticated users.
+			List<Role> roles = RoleLocalServiceUtil.getUserRelatedRoles(
+				defaultUserId, groups);
 
+			// Only use the guest group for deriving the roles for
+			// unauthenticated users. Do not add the group to the permission bag
+			// as this implies group membership which is incorrect in the case
+			// of unauthenticated users.
+
+			bag = new PermissionCheckerBagImpl(
+				defaultUserId, Collections.<Group>emptyList(),
+				Collections.<Organization>emptyList(),
+				Collections.<Group>emptyList(), Collections.<Group>emptyList(),
+				Collections.<Group>emptyList(), roles);
+		}
+		finally {
+			if (bag == null) {
 				bag = new PermissionCheckerBagImpl(
 					defaultUserId, Collections.<Group>emptyList(),
 					Collections.<Organization>emptyList(),
 					Collections.<Group>emptyList(),
 					Collections.<Group>emptyList(),
-					Collections.<Group>emptyList(), roles);
+					Collections.<Group>emptyList(),
+					Collections.<Role>emptyList());
 			}
-			finally {
-				if (bag == null) {
-					bag = new PermissionCheckerBagImpl(
-						defaultUserId, Collections.<Group>emptyList(),
-						Collections.<Organization>emptyList(),
-						Collections.<Group>emptyList(),
-						Collections.<Group>emptyList(),
-						Collections.<Group>emptyList(),
-						Collections.<Role>emptyList());
-				}
 
-				PermissionCacheUtil.putBag(
-					defaultUserId, guestGroup.getGroupId(), bag);
-			}
+			PermissionCacheUtil.putBag(
+				defaultUserId, guestGroup.getGroupId(), bag);
 		}
 
 		return bag;

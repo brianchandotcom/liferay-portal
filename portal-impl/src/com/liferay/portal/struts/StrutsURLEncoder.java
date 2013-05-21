@@ -110,82 +110,84 @@ public class StrutsURLEncoder implements URLEncoder {
 
 		String encodedURL = path;
 
-		if (path.startsWith("//") ||
-			path.startsWith(_contextPath) ||
-			path.startsWith(_servletMapping)) {
+		if (!path.startsWith("//") &&
+			!path.startsWith(_contextPath) &&
+			!path.startsWith(_servletMapping)) {
 
-			// Struts uses &amp; instead of & to delimit parameter key value
-			// pairs when you set the "name" attribute for html:link.
+			return encodedURL;
+		}
 
-			path = StringUtil.replace(path, "&amp;", "&");
+		// Struts uses &amp; instead of & to delimit parameter key value pairs
+		// when you set the "name" attribute for html:link.
 
-			// Reset portlet URL settings so it can be reused
+		path = StringUtil.replace(path, "&amp;", "&");
 
-			_liferayPortletURL.setLifecycle(PortletRequest.RENDER_PHASE);
-			_liferayPortletURL.setParameters(new HashMap<String, String[]>());
+		// Reset portlet URL settings so it can be reused
 
-			try {
-				_liferayPortletURL.setWindowState(_windowState);
-			}
-			catch (WindowStateException wse) {
-			}
+		_liferayPortletURL.setLifecycle(PortletRequest.RENDER_PHASE);
+		_liferayPortletURL.setParameters(new HashMap<String, String[]>());
 
-			try {
-				_liferayPortletURL.setPortletMode(_portletMode);
-			}
-			catch (PortletModeException pme) {
-			}
+		try {
+			_liferayPortletURL.setWindowState(_windowState);
+		}
+		catch (WindowStateException wse) {
+		}
 
-			// Separate the Struts action from the query string
+		try {
+			_liferayPortletURL.setPortletMode(_portletMode);
+		}
+		catch (PortletModeException pme) {
+		}
 
-			String strutsAction = path;
-			String queryString = StringPool.BLANK;
+		// Separate the Struts action from the query string
 
-			int pos = strutsAction.indexOf(CharPool.QUESTION);
+		String strutsAction = path;
+		String queryString = StringPool.BLANK;
 
-			if (pos != -1) {
-				strutsAction = path.substring(0, pos);
-				queryString = path.substring(pos + 1);
-			}
+		int pos = strutsAction.indexOf(CharPool.QUESTION);
 
-			// Set the Struts action
+		if (pos != -1) {
+			strutsAction = path.substring(0, pos);
+			queryString = path.substring(pos + 1);
+		}
 
-			if (strutsAction.startsWith("c/")) {
-				strutsAction = strutsAction.substring(1);
-			}
-			else if (strutsAction.startsWith("/c/")) {
-				strutsAction = strutsAction.substring(2);
-			}
+		// Set the Struts action
 
-			if (Validator.isNotNull(_contextPath)) {
-				strutsAction = strutsAction.substring(_contextPath.length());
-			}
+		if (strutsAction.startsWith("c/")) {
+			strutsAction = strutsAction.substring(1);
+		}
+		else if (strutsAction.startsWith("/c/")) {
+			strutsAction = strutsAction.substring(2);
+		}
 
-			if (strutsAction.startsWith(_servletMapping)) {
-				strutsAction = strutsAction.substring(_servletMapping.length());
-			}
+		if (Validator.isNotNull(_contextPath)) {
+			strutsAction = strutsAction.substring(_contextPath.length());
+		}
 
-			if (!strutsAction.startsWith(StringPool.SLASH)) {
-				strutsAction = StringPool.SLASH + strutsAction;
-			}
+		if (strutsAction.startsWith(_servletMapping)) {
+			strutsAction = strutsAction.substring(_servletMapping.length());
+		}
 
-			if (_log.isDebugEnabled()) {
-				_log.debug("Struts action " + strutsAction);
-			}
+		if (!strutsAction.startsWith(StringPool.SLASH)) {
+			strutsAction = StringPool.SLASH + strutsAction;
+		}
 
-			_liferayPortletURL.setParameter("struts_action", strutsAction);
+		if (_log.isDebugEnabled()) {
+			_log.debug("Struts action " + strutsAction);
+		}
 
-			// Set the query string
+		_liferayPortletURL.setParameter("struts_action", strutsAction);
 
-			setParameters(_liferayPortletURL, queryString);
+		// Set the query string
 
-			// Return the portlet URL
+		setParameters(_liferayPortletURL, queryString);
 
-			encodedURL = _liferayPortletURL.toString();
+		// Return the portlet URL
 
-			if (_log.isDebugEnabled()) {
-				_log.debug("Encoded portlet URL " + encodedURL);
-			}
+		encodedURL = _liferayPortletURL.toString();
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Encoded portlet URL " + encodedURL);
 		}
 
 		return encodedURL;

@@ -42,60 +42,61 @@ public class PhoneNumberConverter implements Converter, StateHolder {
 	public Object getAsObject(
 		FacesContext facesContext, UIComponent uiComponent, String value) {
 
-		if (value != null) {
-			StringBuilder integerChars = new StringBuilder(value.length());
-			StringBuilder invalidChars = new StringBuilder(value.length());
+		if (value == null) {
+			return null;
+		}
 
-			for (int i = 0; i < value.length(); i++) {
-				char curChar = value.charAt(i);
+		StringBuilder integerChars = new StringBuilder(value.length());
+		StringBuilder invalidChars = new StringBuilder(value.length());
 
-				if (Character.isDigit(curChar)) {
-					integerChars.append(curChar);
+		for (int i = 0; i < value.length(); i++) {
+			char curChar = value.charAt(i);
+
+			if (Character.isDigit(curChar)) {
+				integerChars.append(curChar);
+			}
+			else if ((curChar != '-') && (curChar != '(') &&
+					 (curChar != ')') && (curChar != '.') &&
+					 (curChar != '+') && (curChar != ' ')) {
+
+				invalidChars.append(curChar);
+			}
+		}
+
+		if (invalidChars.length() > 0) {
+			ExternalContext externalContext = facesContext.getExternalContext();
+
+			Locale locale = externalContext.getRequestLocale();
+
+			String summary = LanguageUtil.get(
+				locale, "the-following-are-invalid-characters");
+
+			summary += " " + invalidChars.toString();
+
+			FacesMessage facesMessage = new FacesMessage(
+				FacesMessage.SEVERITY_ERROR, summary, null);
+
+			throw new ConverterException(facesMessage);
+		}
+		else if (integerChars.length() == 10) {
+			StringBuilder unitedStatesPhoneNumber = new StringBuilder(
+				_unitedStatesFormat.length());
+
+			int integerDigitIndex = 0;
+
+			for (int i = 0; i < _unitedStatesFormat.length(); i++) {
+				char curChar = _unitedStatesFormat.charAt(i);
+
+				if (curChar == '#') {
+					unitedStatesPhoneNumber.append(
+						integerChars.charAt(integerDigitIndex++));
 				}
-				else if ((curChar != '-') && (curChar != '(') &&
-						 (curChar != ')') && (curChar != '.') &&
-						 (curChar != '+') && (curChar != ' ')) {
-
-					invalidChars.append(curChar);
+				else {
+					unitedStatesPhoneNumber.append(curChar);
 				}
 			}
 
-			if (invalidChars.length() > 0) {
-				ExternalContext externalContext =
-					facesContext.getExternalContext();
-
-				Locale locale = externalContext.getRequestLocale();
-
-				String summary = LanguageUtil.get(
-					locale, "the-following-are-invalid-characters");
-
-				summary += " " + invalidChars.toString();
-
-				FacesMessage facesMessage = new FacesMessage(
-					FacesMessage.SEVERITY_ERROR, summary, null);
-
-				throw new ConverterException(facesMessage);
-			}
-			else if (integerChars.length() == 10) {
-				StringBuilder unitedStatesPhoneNumber = new StringBuilder(
-					_unitedStatesFormat.length());
-
-				int integerDigitIndex = 0;
-
-				for (int i = 0; i < _unitedStatesFormat.length(); i++) {
-					char curChar = _unitedStatesFormat.charAt(i);
-
-					if (curChar == '#') {
-						unitedStatesPhoneNumber.append(
-							integerChars.charAt(integerDigitIndex++));
-					}
-					else {
-						unitedStatesPhoneNumber.append(curChar);
-					}
-				}
-
-				return unitedStatesPhoneNumber.toString();
-			}
+			return unitedStatesPhoneNumber.toString();
 		}
 
 		return value;

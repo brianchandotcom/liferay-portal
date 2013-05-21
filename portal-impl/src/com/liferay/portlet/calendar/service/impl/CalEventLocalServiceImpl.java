@@ -523,44 +523,45 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 
 		List<CalEvent> events = eventsPool.get(key);
 
-		if (events == null) {
-
-			// Time zone sensitive
-
-			List<CalEvent> timeZoneSensitiveEvents =
-				calEventFinder.findByG_SD_T(
-					groupId, CalendarUtil.getGTDate(cal),
-					CalendarUtil.getLTDate(cal), true, types);
-
-			// Time zone insensitive
-
-			Calendar tzICal = CalendarFactoryUtil.getCalendar(
-				TimeZoneUtil.getTimeZone(StringPool.UTC));
-
-			tzICal.set(
-				cal.get(Calendar.YEAR), cal.get(Calendar.MONTH),
-				cal.get(Calendar.DATE));
-
-			List<CalEvent> timeZoneInsensitiveEvents =
-				calEventFinder.findByG_SD_T(
-					groupId, CalendarUtil.getGTDate(tzICal),
-					CalendarUtil.getLTDate(tzICal), false, types);
-
-			// Create new list
-
-			events = new ArrayList<CalEvent>();
-
-			events.addAll(timeZoneSensitiveEvents);
-			events.addAll(timeZoneInsensitiveEvents);
-
-			// Add repeating events
-
-			events.addAll(getRepeatingEvents(groupId, cal, types));
-
-			events = new UnmodifiableList<CalEvent>(events);
-
-			eventsPool.put(key, events);
+		if (events != null) {
+			return events;
 		}
+
+		// Time zone sensitive
+
+		List<CalEvent> timeZoneSensitiveEvents =
+			calEventFinder.findByG_SD_T(
+				groupId, CalendarUtil.getGTDate(cal),
+				CalendarUtil.getLTDate(cal), true, types);
+
+		// Time zone insensitive
+
+		Calendar tzICal = CalendarFactoryUtil.getCalendar(
+			TimeZoneUtil.getTimeZone(StringPool.UTC));
+
+		tzICal.set(
+			cal.get(Calendar.YEAR), cal.get(Calendar.MONTH),
+			cal.get(Calendar.DATE));
+
+		List<CalEvent> timeZoneInsensitiveEvents =
+			calEventFinder.findByG_SD_T(
+				groupId, CalendarUtil.getGTDate(tzICal),
+				CalendarUtil.getLTDate(tzICal), false, types);
+
+		// Create new list
+
+		events = new ArrayList<CalEvent>();
+
+		events.addAll(timeZoneSensitiveEvents);
+		events.addAll(timeZoneInsensitiveEvents);
+
+		// Add repeating events
+
+		events.addAll(getRepeatingEvents(groupId, cal, types));
+
+		events = new UnmodifiableList<CalEvent>(events);
+
+		eventsPool.put(key, events);
 
 		return events;
 	}

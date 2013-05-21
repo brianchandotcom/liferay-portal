@@ -307,42 +307,43 @@ public class JournalUtil {
 				data);
 		}
 
-		if (folder != null) {
-			List<JournalFolder> ancestorFolders = folder.getAncestors();
+		if (folder == null) {
+			return;
+		}
 
-			Collections.reverse(ancestorFolders);
+		List<JournalFolder> ancestorFolders = folder.getAncestors();
 
-			for (JournalFolder ancestorFolder : ancestorFolders) {
-				portletURL.setParameter(
-					"folderId", String.valueOf(ancestorFolder.getFolderId()));
+		Collections.reverse(ancestorFolders);
 
-				Map<String, Object> data = new HashMap<String, Object>();
-
-				data.put("direction-right", Boolean.TRUE.toString());
-				data.put("folder-id", ancestorFolder.getFolderId());
-
-				PortalUtil.addPortletBreadcrumbEntry(
-					request, ancestorFolder.getName(), portletURL.toString(),
-					data);
-			}
-
+		for (JournalFolder ancestorFolder : ancestorFolders) {
 			portletURL.setParameter(
-				"folderId", String.valueOf(folder.getFolderId()));
+				"folderId", String.valueOf(ancestorFolder.getFolderId()));
 
-			if (folder.getFolderId() !=
-					JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			Map<String, Object> data = new HashMap<String, Object>();
 
-				JournalFolder unescapedFolder = folder.toUnescapedModel();
+			data.put("direction-right", Boolean.TRUE.toString());
+			data.put("folder-id", ancestorFolder.getFolderId());
 
-				Map<String, Object> data = new HashMap<String, Object>();
+			PortalUtil.addPortletBreadcrumbEntry(
+				request, ancestorFolder.getName(), portletURL.toString(), data);
+		}
 
-				data.put("direction-right", Boolean.TRUE.toString());
-				data.put("folder-id", folder.getFolderId());
+		portletURL.setParameter(
+			"folderId", String.valueOf(folder.getFolderId()));
 
-				PortalUtil.addPortletBreadcrumbEntry(
-					request, unescapedFolder.getName(), portletURL.toString(),
-					data);
-			}
+		if (folder.getFolderId() !=
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+
+			JournalFolder unescapedFolder = folder.toUnescapedModel();
+
+			Map<String, Object> data = new HashMap<String, Object>();
+
+			data.put("direction-right", Boolean.TRUE.toString());
+			data.put("folder-id", folder.getFolderId());
+
+			PortalUtil.addPortletBreadcrumbEntry(
+				request, unescapedFolder.getName(), portletURL.toString(),
+				data);
 		}
 	}
 

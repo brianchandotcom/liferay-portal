@@ -118,59 +118,56 @@ public class UpgradeLayout extends UpgradeProcess {
 			updateTitle(plid, title);
 		}
 
-		if (Validator.isNotNull(typeSettings)) {
-			Locale defaultLocale = LocaleUtil.getDefault();
-			String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
-
-			UnicodeProperties typeSettingsProperties = new UnicodeProperties(
-				true);
-
-			typeSettingsProperties.load(typeSettings);
-
-			String defaultDescription = typeSettingsProperties.getProperty(
-				"meta-description_" + defaultLanguageId);
-
-			if (Validator.isNotNull(defaultDescription)) {
-				typeSettingsProperties = updateMetaField(
-					plid, typeSettingsProperties, "meta-description_",
-					"Description", "description");
-			}
-
-			String defaultKeywords = typeSettingsProperties.getProperty(
-				"meta-keywords_" + defaultLanguageId);
-
-			if (Validator.isNotNull(defaultKeywords)) {
-				typeSettingsProperties = updateMetaField(
-					plid, typeSettingsProperties, "meta-keywords_", "Keywords",
-					"keywords");
-			}
-
-			String defaultRobots = typeSettingsProperties.getProperty(
-				"meta-robots_" + defaultLanguageId);
-
-			if (Validator.isNotNull(defaultRobots)) {
-				typeSettingsProperties = updateMetaField(
-					plid, typeSettingsProperties, "meta-robots_", "Robots",
-					"robots");
-			}
-
-			String javaScript1 = typeSettingsProperties.getProperty(
-				"javascript-1");
-			String javaScript2 = typeSettingsProperties.getProperty(
-				"javascript-2");
-			String javaScript3 = typeSettingsProperties.getProperty(
-				"javascript-3");
-
-			if ((javaScript1 != null) || (javaScript2 != null) ||
-				(javaScript3 != null)) {
-
-				updateJavaScript(
-					typeSettingsProperties, javaScript1, javaScript2,
-					javaScript3);
-			}
-
-			updateTypeSettings(plid, typeSettingsProperties.toString());
+		if (Validator.isNull(typeSettings)) {
+			return;
 		}
+
+		Locale defaultLocale = LocaleUtil.getDefault();
+		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
+
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
+
+		typeSettingsProperties.load(typeSettings);
+
+		String defaultDescription = typeSettingsProperties.getProperty(
+			"meta-description_" + defaultLanguageId);
+
+		if (Validator.isNotNull(defaultDescription)) {
+			typeSettingsProperties = updateMetaField(
+				plid, typeSettingsProperties, "meta-description_",
+				"Description", "description");
+		}
+
+		String defaultKeywords = typeSettingsProperties.getProperty(
+			"meta-keywords_" + defaultLanguageId);
+
+		if (Validator.isNotNull(defaultKeywords)) {
+			typeSettingsProperties = updateMetaField(
+				plid, typeSettingsProperties, "meta-keywords_", "Keywords",
+				"keywords");
+		}
+
+		String defaultRobots = typeSettingsProperties.getProperty(
+			"meta-robots_" + defaultLanguageId);
+
+		if (Validator.isNotNull(defaultRobots)) {
+			typeSettingsProperties = updateMetaField(
+				plid, typeSettingsProperties, "meta-robots_", "Robots",
+				"robots");
+		}
+
+		String javaScript1 = typeSettingsProperties.getProperty("javascript-1");
+		String javaScript2 = typeSettingsProperties.getProperty("javascript-2");
+		String javaScript3 = typeSettingsProperties.getProperty("javascript-3");
+
+		if ((javaScript1 != null) || (javaScript2 != null) ||
+			(javaScript3 != null)) {
+
+			updateJavaScript(
+				typeSettingsProperties, javaScript1, javaScript2, javaScript3);
+		}
+
+		updateTypeSettings(plid, typeSettingsProperties.toString());
 	}
 
 	protected UnicodeProperties updateMetaField(

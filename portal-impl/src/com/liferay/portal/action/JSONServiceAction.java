@@ -99,46 +99,46 @@ public class JSONServiceAction extends JSONAction {
 		Object[] methodAndParameterTypes = getMethodAndParameterTypes(
 			clazz, methodName, serviceParameters, serviceParameterTypes);
 
-		if (methodAndParameterTypes != null) {
-			Method method = (Method)methodAndParameterTypes[0];
-			Type[] parameterTypes = (Type[])methodAndParameterTypes[1];
-			Object[] args = new Object[serviceParameters.length];
-
-			for (int i = 0; i < serviceParameters.length; i++) {
-				args[i] = getArgValue(
-					request, clazz, methodName, serviceParameters[i],
-					parameterTypes[i]);
-			}
-
-			try {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Invoking " + clazz + " on method " + method.getName() +
-							" with args " + Arrays.toString(args));
-				}
-
-				Object returnObj = method.invoke(clazz, args);
-
-				if (returnObj != null) {
-					return getReturnValue(returnObj);
-				}
-				else {
-					return JSONFactoryUtil.getNullJSON();
-				}
-			}
-			catch (Exception e) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Invoked " + clazz + " on method " + method.getName() +
-							" with args " + Arrays.toString(args),
-						e);
-				}
-
-				return JSONFactoryUtil.serializeException(e);
-			}
+		if (methodAndParameterTypes == null) {
+			return null;
 		}
 
-		return null;
+		Method method = (Method)methodAndParameterTypes[0];
+		Type[] parameterTypes = (Type[])methodAndParameterTypes[1];
+		Object[] args = new Object[serviceParameters.length];
+
+		for (int i = 0; i < serviceParameters.length; i++) {
+			args[i] = getArgValue(
+				request, clazz, methodName, serviceParameters[i],
+				parameterTypes[i]);
+		}
+
+		try {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Invoking " + clazz + " on method " + method.getName() +
+						" with args " + Arrays.toString(args));
+			}
+
+			Object returnObj = method.invoke(clazz, args);
+
+			if (returnObj != null) {
+				return getReturnValue(returnObj);
+			}
+			else {
+				return JSONFactoryUtil.getNullJSON();
+			}
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Invoked " + clazz + " on method " + method.getName() +
+						" with args " + Arrays.toString(args),
+					e);
+			}
+
+			return JSONFactoryUtil.serializeException(e);
+		}
 	}
 
 	protected Object getArgValue(

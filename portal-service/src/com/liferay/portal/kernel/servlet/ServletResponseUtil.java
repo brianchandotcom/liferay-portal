@@ -631,75 +631,75 @@ public class ServletResponseUtil {
 				HttpHeaders.CACHE_CONTROL_PRIVATE_VALUE);
 		}
 
-		if (Validator.isNotNull(fileName)) {
-			String contentDispositionFileName = "filename=\"" + fileName + "\"";
-
-			// If necessary for non-ASCII characters, encode based on RFC 2184.
-			// However, not all browsers support RFC 2184. See LEP-3127.
-
-			boolean ascii = true;
-
-			for (int i = 0; i < fileName.length(); i++) {
-				if (!Validator.isAscii(fileName.charAt(i))) {
-					ascii = false;
-
-					break;
-				}
-			}
-
-			if (!ascii) {
-				String encodedFileName = HttpUtil.encodeURL(fileName, true);
-
-				if (BrowserSnifferUtil.isIe(request)) {
-					contentDispositionFileName =
-						"filename=\"" + encodedFileName + "\"";
-				}
-				else {
-					contentDispositionFileName =
-						"filename*=UTF-8''" + encodedFileName;
-				}
-			}
-
-			if (Validator.isNull(contentDispositionType)) {
-				String extension = GetterUtil.getString(
-					FileUtil.getExtension(fileName)).toLowerCase();
-
-				String[] mimeTypesContentDispositionInline = null;
-
-				try {
-					mimeTypesContentDispositionInline = PropsUtil.getArray(
-						PropsKeys.MIME_TYPES_CONTENT_DISPOSITION_INLINE);
-				}
-				catch (Exception e) {
-					mimeTypesContentDispositionInline = new String[0];
-				}
-
-				if (ArrayUtil.contains(
-						mimeTypesContentDispositionInline, extension)) {
-
-					contentDispositionType =
-						HttpHeaders.CONTENT_DISPOSITION_INLINE;
-				}
-				else {
-					contentDispositionType =
-						HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT;
-				}
-			}
-
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(contentDispositionType);
-			sb.append(StringPool.SEMICOLON);
-			sb.append(StringPool.SPACE);
-			sb.append(contentDispositionFileName);
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Setting content disposition header " + sb.toString());
-			}
-
-			response.setHeader(HttpHeaders.CONTENT_DISPOSITION, sb.toString());
+		if (Validator.isNull(fileName)) {
+			return;
 		}
+
+		String contentDispositionFileName = "filename=\"" + fileName + "\"";
+
+		// If necessary for non-ASCII characters, encode based on RFC 2184.
+		// However, not all browsers support RFC 2184. See LEP-3127.
+
+		boolean ascii = true;
+
+		for (int i = 0; i < fileName.length(); i++) {
+			if (!Validator.isAscii(fileName.charAt(i))) {
+				ascii = false;
+
+				break;
+			}
+		}
+
+		if (!ascii) {
+			String encodedFileName = HttpUtil.encodeURL(fileName, true);
+
+			if (BrowserSnifferUtil.isIe(request)) {
+				contentDispositionFileName =
+					"filename=\"" + encodedFileName + "\"";
+			}
+			else {
+				contentDispositionFileName =
+					"filename*=UTF-8''" + encodedFileName;
+			}
+		}
+
+		if (Validator.isNull(contentDispositionType)) {
+			String extension = GetterUtil.getString(
+				FileUtil.getExtension(fileName)).toLowerCase();
+
+			String[] mimeTypesContentDispositionInline = null;
+
+			try {
+				mimeTypesContentDispositionInline = PropsUtil.getArray(
+					PropsKeys.MIME_TYPES_CONTENT_DISPOSITION_INLINE);
+			}
+			catch (Exception e) {
+				mimeTypesContentDispositionInline = new String[0];
+			}
+
+			if (ArrayUtil.contains(
+					mimeTypesContentDispositionInline, extension)) {
+
+				contentDispositionType = HttpHeaders.CONTENT_DISPOSITION_INLINE;
+			}
+			else {
+				contentDispositionType =
+					HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT;
+			}
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(contentDispositionType);
+		sb.append(StringPool.SEMICOLON);
+		sb.append(StringPool.SPACE);
+		sb.append(contentDispositionFileName);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Setting content disposition header " + sb.toString());
+		}
+
+		response.setHeader(HttpHeaders.CONTENT_DISPOSITION, sb.toString());
 	}
 
 	protected static void setHeaders(

@@ -1286,39 +1286,41 @@ public class DDMTemplateLocalServiceImpl
 		String[] imageExtensions = PrefsPropsUtil.getStringArray(
 			PropsKeys.DYNAMIC_DATA_MAPPING_IMAGE_EXTENSIONS, StringPool.COMMA);
 
-		if (smallImage && Validator.isNull(smallImageURL) &&
-			(smallImageFile != null) && (smallImageBytes != null)) {
+		if (!smallImage || Validator.isNotNull(smallImageURL) ||
+			(smallImageFile == null) || (smallImageBytes == null)) {
 
-			String smallImageName = smallImageFile.getName();
+			return;
+		}
 
-			if (smallImageName != null) {
-				boolean validSmallImageExtension = false;
+		String smallImageName = smallImageFile.getName();
 
-				for (int i = 0; i < imageExtensions.length; i++) {
-					if (StringPool.STAR.equals(imageExtensions[i]) ||
-						StringUtil.endsWith(
-							smallImageName, imageExtensions[i])) {
+		if (smallImageName != null) {
+			boolean validSmallImageExtension = false;
 
-						validSmallImageExtension = true;
+			for (int i = 0; i < imageExtensions.length; i++) {
+				if (StringPool.STAR.equals(imageExtensions[i]) ||
+					StringUtil.endsWith(
+						smallImageName, imageExtensions[i])) {
 
-						break;
-					}
-				}
+					validSmallImageExtension = true;
 
-				if (!validSmallImageExtension) {
-					throw new TemplateSmallImageNameException(smallImageName);
+					break;
 				}
 			}
 
-			long smallImageMaxSize = PrefsPropsUtil.getLong(
-				PropsKeys.DYNAMIC_DATA_MAPPING_IMAGE_SMALL_MAX_SIZE);
-
-			if ((smallImageMaxSize > 0) &&
-				((smallImageBytes == null) ||
-				 (smallImageBytes.length > smallImageMaxSize))) {
-
-				throw new TemplateSmallImageSizeException();
+			if (!validSmallImageExtension) {
+				throw new TemplateSmallImageNameException(smallImageName);
 			}
+		}
+
+		long smallImageMaxSize = PrefsPropsUtil.getLong(
+			PropsKeys.DYNAMIC_DATA_MAPPING_IMAGE_SMALL_MAX_SIZE);
+
+		if ((smallImageMaxSize > 0) &&
+			((smallImageBytes == null) ||
+			 (smallImageBytes.length > smallImageMaxSize))) {
+
+			throw new TemplateSmallImageSizeException();
 		}
 	}
 

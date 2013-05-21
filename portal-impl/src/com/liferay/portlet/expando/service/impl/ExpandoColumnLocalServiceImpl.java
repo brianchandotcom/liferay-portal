@@ -429,72 +429,73 @@ public class ExpandoColumnLocalServiceImpl
 
 		ExpandoValue value = new ExpandoValueImpl();
 
-		if (defaultData != null) {
-			value.setColumnId(columnId);
+		if (defaultData == null) {
+			return value;
+		}
 
-			if (type == ExpandoColumnConstants.BOOLEAN) {
-				value.setBoolean((Boolean)defaultData);
-			}
-			else if (type == ExpandoColumnConstants.BOOLEAN_ARRAY) {
-				value.setBooleanArray((boolean[])defaultData);
-			}
-			else if (type == ExpandoColumnConstants.DATE) {
-				value.setDate((Date)defaultData);
-			}
-			else if (type == ExpandoColumnConstants.DATE_ARRAY) {
-				value.setDateArray((Date[])defaultData);
-			}
-			else if (type == ExpandoColumnConstants.DOUBLE) {
-				value.setDouble((Double)defaultData);
-			}
-			else if (type == ExpandoColumnConstants.DOUBLE_ARRAY) {
-				value.setDoubleArray((double[])defaultData);
-			}
-			else if (type == ExpandoColumnConstants.FLOAT) {
-				value.setFloat((Float)defaultData);
-			}
-			else if (type == ExpandoColumnConstants.FLOAT_ARRAY) {
-				value.setFloatArray((float[])defaultData);
-			}
-			else if (type == ExpandoColumnConstants.INTEGER) {
-				value.setInteger((Integer)defaultData);
-			}
-			else if (type == ExpandoColumnConstants.INTEGER_ARRAY) {
-				value.setIntegerArray((int[])defaultData);
-			}
-			else if (type == ExpandoColumnConstants.LONG) {
-				value.setLong((Long)defaultData);
-			}
-			else if (type == ExpandoColumnConstants.LONG_ARRAY) {
-				value.setLongArray((long[])defaultData);
-			}
-			else if (type == ExpandoColumnConstants.NUMBER) {
-				value.setNumber((Number)defaultData);
-			}
-			else if (type == ExpandoColumnConstants.NUMBER_ARRAY) {
-				value.setNumberArray((Number[])defaultData);
-			}
-			else if (type == ExpandoColumnConstants.SHORT) {
-				value.setShort((Short)defaultData);
-			}
-			else if (type == ExpandoColumnConstants.SHORT_ARRAY) {
-				value.setShortArray((short[])defaultData);
-			}
-			else if (type == ExpandoColumnConstants.STRING) {
-				value.setString((String)defaultData);
-			}
-			else if (type == ExpandoColumnConstants.STRING_ARRAY) {
-				value.setStringArray((String[])defaultData);
-			}
-			else if (type == ExpandoColumnConstants.STRING_ARRAY_LOCALIZED) {
-				value.setStringArrayMap(
-					(Map<Locale, String[]>)defaultData,
-					LocaleUtil.getDefault());
-			}
-			else if (type == ExpandoColumnConstants.STRING_LOCALIZED) {
-				value.setStringMap(
-					(Map<Locale, String>)defaultData, LocaleUtil.getDefault());
-			}
+		value.setColumnId(columnId);
+
+		if (type == ExpandoColumnConstants.BOOLEAN) {
+			value.setBoolean((Boolean)defaultData);
+		}
+		else if (type == ExpandoColumnConstants.BOOLEAN_ARRAY) {
+			value.setBooleanArray((boolean[])defaultData);
+		}
+		else if (type == ExpandoColumnConstants.DATE) {
+			value.setDate((Date)defaultData);
+		}
+		else if (type == ExpandoColumnConstants.DATE_ARRAY) {
+			value.setDateArray((Date[])defaultData);
+		}
+		else if (type == ExpandoColumnConstants.DOUBLE) {
+			value.setDouble((Double)defaultData);
+		}
+		else if (type == ExpandoColumnConstants.DOUBLE_ARRAY) {
+			value.setDoubleArray((double[])defaultData);
+		}
+		else if (type == ExpandoColumnConstants.FLOAT) {
+			value.setFloat((Float)defaultData);
+		}
+		else if (type == ExpandoColumnConstants.FLOAT_ARRAY) {
+			value.setFloatArray((float[])defaultData);
+		}
+		else if (type == ExpandoColumnConstants.INTEGER) {
+			value.setInteger((Integer)defaultData);
+		}
+		else if (type == ExpandoColumnConstants.INTEGER_ARRAY) {
+			value.setIntegerArray((int[])defaultData);
+		}
+		else if (type == ExpandoColumnConstants.LONG) {
+			value.setLong((Long)defaultData);
+		}
+		else if (type == ExpandoColumnConstants.LONG_ARRAY) {
+			value.setLongArray((long[])defaultData);
+		}
+		else if (type == ExpandoColumnConstants.NUMBER) {
+			value.setNumber((Number)defaultData);
+		}
+		else if (type == ExpandoColumnConstants.NUMBER_ARRAY) {
+			value.setNumberArray((Number[])defaultData);
+		}
+		else if (type == ExpandoColumnConstants.SHORT) {
+			value.setShort((Short)defaultData);
+		}
+		else if (type == ExpandoColumnConstants.SHORT_ARRAY) {
+			value.setShortArray((short[])defaultData);
+		}
+		else if (type == ExpandoColumnConstants.STRING) {
+			value.setString((String)defaultData);
+		}
+		else if (type == ExpandoColumnConstants.STRING_ARRAY) {
+			value.setStringArray((String[])defaultData);
+		}
+		else if (type == ExpandoColumnConstants.STRING_ARRAY_LOCALIZED) {
+			value.setStringArrayMap(
+				(Map<Locale, String[]>)defaultData, LocaleUtil.getDefault());
+		}
+		else if (type == ExpandoColumnConstants.STRING_LOCALIZED) {
+			value.setStringMap(
+				(Map<Locale, String>)defaultData, LocaleUtil.getDefault());
 		}
 
 		return value;

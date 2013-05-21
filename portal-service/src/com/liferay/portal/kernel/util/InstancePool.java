@@ -64,45 +64,46 @@ public class InstancePool {
 
 		Object instance = _instances.get(className);
 
-		if (instance == null) {
-			ClassLoader portalClassLoader =
-				PortalClassLoaderUtil.getClassLoader();
+		if (instance != null) {
+			return instance;
+		}
+
+		ClassLoader portalClassLoader = PortalClassLoaderUtil.getClassLoader();
+
+		try {
+			Class<?> clazz = portalClassLoader.loadClass(className);
+
+			instance = clazz.newInstance();
+
+			_instances.put(className, instance);
+		}
+		catch (Exception e1) {
+			if (logErrors && _log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to load " + className +
+						" with the portal class loader",
+					e1);
+			}
+
+			Thread currentThread = Thread.currentThread();
+
+			ClassLoader contextClassLoader =
+				currentThread.getContextClassLoader();
 
 			try {
-				Class<?> clazz = portalClassLoader.loadClass(className);
+				Class<?> clazz = contextClassLoader.loadClass(className);
 
 				instance = clazz.newInstance();
 
 				_instances.put(className, instance);
 			}
-			catch (Exception e1) {
-				if (logErrors && _log.isWarnEnabled()) {
-					_log.warn(
+			catch (Exception e2) {
+				if (logErrors) {
+					_log.error(
 						"Unable to load " + className +
-							" with the portal class loader",
-						e1);
-				}
-
-				Thread currentThread = Thread.currentThread();
-
-				ClassLoader contextClassLoader =
-					currentThread.getContextClassLoader();
-
-				try {
-					Class<?> clazz = contextClassLoader.loadClass(className);
-
-					instance = clazz.newInstance();
-
-					_instances.put(className, instance);
-				}
-				catch (Exception e2) {
-					if (logErrors) {
-						_log.error(
-							"Unable to load " + className +
-								" with the portal class loader or the " +
-									"current context class loader",
-							e2);
-					}
+							" with the portal class loader or the " +
+								"current context class loader",
+						e2);
 				}
 			}
 		}

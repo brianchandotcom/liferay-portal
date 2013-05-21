@@ -34,45 +34,47 @@ public class SystemLogger extends DefaultLogger {
 	public void messageLogged(BuildEvent event) {
 		int priority = event.getPriority();
 
-		if (priority <= msgOutputLevel) {
-			StringBundler sb = new StringBundler();
-
-			try {
-				UnsyncBufferedReader unsyncBufferedReader =
-					new UnsyncBufferedReader(
-						new UnsyncStringReader(event.getMessage()));
-
-				String line = unsyncBufferedReader.readLine();
-
-				boolean first = true;
-
-				while (line != null) {
-					if (!first) {
-						sb.append(StringUtils.LINE_SEP);
-					}
-
-					first = false;
-
-					sb.append("  ");
-					sb.append(line);
-
-					line = unsyncBufferedReader.readLine();
-				}
-			}
-			catch (IOException ioe) {
-			}
-
-			String msg = sb.toString();
-
-			if (priority != Project.MSG_ERR) {
-				printMessage(msg, out, priority);
-			}
-			else {
-				printMessage(msg, err, priority);
-			}
-
-			log(msg);
+		if (priority > msgOutputLevel) {
+			return;
 		}
+
+		StringBundler sb = new StringBundler();
+
+		try {
+			UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(
+					new UnsyncStringReader(event.getMessage()));
+
+			String line = unsyncBufferedReader.readLine();
+
+			boolean first = true;
+
+			while (line != null) {
+				if (!first) {
+					sb.append(StringUtils.LINE_SEP);
+				}
+
+				first = false;
+
+				sb.append("  ");
+				sb.append(line);
+
+				line = unsyncBufferedReader.readLine();
+			}
+		}
+		catch (IOException ioe) {
+		}
+
+		String msg = sb.toString();
+
+		if (priority != Project.MSG_ERR) {
+			printMessage(msg, out, priority);
+		}
+		else {
+			printMessage(msg, err, priority);
+		}
+
+		log(msg);
 	}
 
 }

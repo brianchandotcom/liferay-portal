@@ -1111,41 +1111,42 @@ public class EditLayoutsAction extends PortletAction {
 				layoutRevision.getWapColorSchemeId(), layoutRevision.getCss(),
 				serviceContext);
 
-		if (layoutRevision.getStatus() == WorkflowConstants.STATUS_INCOMPLETE) {
-			LayoutRevision lastLayoutRevision =
-				LayoutRevisionLocalServiceUtil.fetchLastLayoutRevision(
-					enableLayoutRevision.getPlid(), true);
+		if (layoutRevision.getStatus() != WorkflowConstants.STATUS_INCOMPLETE) {
+			return;
+		}
 
-			if (lastLayoutRevision != null) {
-				LayoutRevision newLayoutRevision =
-					LayoutRevisionLocalServiceUtil.addLayoutRevision(
-						serviceContext.getUserId(),
-						layoutRevision.getLayoutSetBranchId(),
-						layoutRevision.getLayoutBranchId(),
-						enableLayoutRevision.getLayoutRevisionId(), false,
-						layoutRevision.getPlid(),
-						lastLayoutRevision.getLayoutRevisionId(),
-						lastLayoutRevision.isPrivateLayout(),
-						lastLayoutRevision.getName(),
-						lastLayoutRevision.getTitle(),
-						lastLayoutRevision.getDescription(),
-						lastLayoutRevision.getKeywords(),
-						lastLayoutRevision.getRobots(),
-						lastLayoutRevision.getTypeSettings(),
-						lastLayoutRevision.isIconImage(),
-						lastLayoutRevision.getIconImageId(),
-						lastLayoutRevision.getThemeId(),
-						lastLayoutRevision.getColorSchemeId(),
-						lastLayoutRevision.getWapThemeId(),
-						lastLayoutRevision.getWapColorSchemeId(),
-						lastLayoutRevision.getCss(), serviceContext);
+		LayoutRevision lastLayoutRevision =
+			LayoutRevisionLocalServiceUtil.fetchLastLayoutRevision(
+				enableLayoutRevision.getPlid(), true);
 
-				StagingUtil.setRecentLayoutRevisionId(
-					themeDisplay.getUser(),
-					newLayoutRevision.getLayoutSetBranchId(),
-					newLayoutRevision.getPlid(),
-					newLayoutRevision.getLayoutRevisionId());
-			}
+		if (lastLayoutRevision != null) {
+			LayoutRevision newLayoutRevision =
+				LayoutRevisionLocalServiceUtil.addLayoutRevision(
+					serviceContext.getUserId(),
+					layoutRevision.getLayoutSetBranchId(),
+					layoutRevision.getLayoutBranchId(),
+					enableLayoutRevision.getLayoutRevisionId(), false,
+					layoutRevision.getPlid(),
+					lastLayoutRevision.getLayoutRevisionId(),
+					lastLayoutRevision.isPrivateLayout(),
+					lastLayoutRevision.getName(), lastLayoutRevision.getTitle(),
+					lastLayoutRevision.getDescription(),
+					lastLayoutRevision.getKeywords(),
+					lastLayoutRevision.getRobots(),
+					lastLayoutRevision.getTypeSettings(),
+					lastLayoutRevision.isIconImage(),
+					lastLayoutRevision.getIconImageId(),
+					lastLayoutRevision.getThemeId(),
+					lastLayoutRevision.getColorSchemeId(),
+					lastLayoutRevision.getWapThemeId(),
+					lastLayoutRevision.getWapColorSchemeId(),
+					lastLayoutRevision.getCss(), serviceContext);
+
+			StagingUtil.setRecentLayoutRevisionId(
+				themeDisplay.getUser(),
+				newLayoutRevision.getLayoutSetBranchId(),
+				newLayoutRevision.getPlid(),
+				newLayoutRevision.getLayoutRevisionId());
 		}
 	}
 

@@ -49,38 +49,40 @@ public class PrettyDateFormat extends DateFormat {
 	public StringBuffer format(Date date, StringBuffer sb, FieldPosition pos) {
 		String dateString = StringPool.NBSP;
 
-		if (date != null) {
-			Date today = new Date();
+		if (date == null) {
+			return sb.append(dateString);
+		}
 
-			Calendar cal = Calendar.getInstance(_timeZone, _locale);
+		Date today = new Date();
 
-			cal.setTime(today);
-			cal.add(Calendar.DATE, -1);
+		Calendar cal = Calendar.getInstance(_timeZone, _locale);
 
-			Date yesterday = cal.getTime();
+		cal.setTime(today);
+		cal.add(Calendar.DATE, -1);
 
-			Format dateFormatDate = FastDateFormatFactoryUtil.getDate(
-				_locale, _timeZone);
-			Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
-				_locale, _timeZone);
-			Format dateFormatTime = FastDateFormatFactoryUtil.getTime(
-				_locale, _timeZone);
+		Date yesterday = cal.getTime();
 
-			dateString = dateFormatDate.format(date);
+		Format dateFormatDate = FastDateFormatFactoryUtil.getDate(
+			_locale, _timeZone);
+		Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
+			_locale, _timeZone);
+		Format dateFormatTime = FastDateFormatFactoryUtil.getTime(
+			_locale, _timeZone);
 
-			if (dateString.equals(dateFormatDate.format(today))) {
-				dateString =
-					_todayString + StringPool.SPACE +
-						dateFormatTime.format(date);
-			}
-			else if (dateString.equals(dateFormatDate.format(yesterday))) {
-				dateString =
-					_yesterdayString + StringPool.SPACE +
-						dateFormatTime.format(date);
-			}
-			else {
-				dateString = dateFormatDateTime.format(date);
-			}
+		dateString = dateFormatDate.format(date);
+
+		if (dateString.equals(dateFormatDate.format(today))) {
+			dateString =
+				_todayString + StringPool.SPACE +
+					dateFormatTime.format(date);
+		}
+		else if (dateString.equals(dateFormatDate.format(yesterday))) {
+			dateString =
+				_yesterdayString + StringPool.SPACE +
+					dateFormatTime.format(date);
+		}
+		else {
+			dateString = dateFormatDateTime.format(date);
 		}
 
 		return sb.append(dateString);

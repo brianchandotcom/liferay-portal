@@ -17,6 +17,7 @@ package com.liferay.portal.lar;
 import com.liferay.portal.RequiredGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.model.Group;
@@ -52,6 +53,10 @@ import org.powermock.api.mockito.PowerMockito;
  * @author Juan Fernández
  */
 public class BasePortletExportImportTestCase extends PowerMockito {
+
+	public String getNameSpace() {
+		return null;
+	}
 
 	public String getPortletId() {
 		return null;
@@ -130,6 +135,30 @@ public class BasePortletExportImportTestCase extends PowerMockito {
 		return AssetLinkLocalServiceUtil.addLink(
 			TestPropsValues.getUserId(), originAssetEntry.getEntryId(),
 			targetAssetEntry.getEntryId(), 0, weight);
+	}
+
+	protected void addBooleanParameter(
+		Map<String, String[]> parameterMap, String name, boolean value) {
+
+		addBooleanParameter(parameterMap, getNameSpace(), name, value);
+	}
+
+	protected void addBooleanParameter(
+		Map<String, String[]> parameterMap, String namespace, String name,
+		boolean value) {
+
+		PortletDataHandlerBoolean portletDataHandlerBoolean =
+			new PortletDataHandlerBoolean(namespace, name);
+
+		addParameter(
+			parameterMap, portletDataHandlerBoolean.getNamespacedControlName(),
+			String.valueOf(value));
+	}
+
+	protected void addParameter(
+		Map<String, String[]> parameterMap, String name, String value) {
+
+		parameterMap.put(name, new String[] {value});
 	}
 
 	protected StagedModel addStagedModel(long groupId) throws Exception {

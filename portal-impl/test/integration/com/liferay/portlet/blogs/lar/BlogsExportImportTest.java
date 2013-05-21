@@ -29,6 +29,8 @@ import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.util.BlogsTestUtil;
 
+import java.util.Map;
+
 import org.junit.runner.RunWith;
 
 /**
@@ -44,6 +46,11 @@ import org.junit.runner.RunWith;
 public class BlogsExportImportTest extends BasePortletExportImportTestCase {
 
 	@Override
+	public String getNameSpace() {
+		return BlogsPortletDataHandler.NAMESPACE;
+	}
+
+	@Override
 	public String getPortletId() {
 		return PortletKeys.BLOGS;
 	}
@@ -53,6 +60,26 @@ public class BlogsExportImportTest extends BasePortletExportImportTestCase {
 		return BlogsTestUtil.addEntry(
 			TestPropsValues.getUserId(), groupId,
 			ServiceTestUtil.randomString(), true);
+	}
+
+	@Override
+	protected Map<String, String[]> getExportParameterMap() throws Exception {
+		Map<String, String[]> parameterMap = super.getExportParameterMap();
+
+		addBooleanParameter(parameterMap, "entries", true);
+		addBooleanParameter(parameterMap, "embedded-assets", true);
+
+		return parameterMap;
+	}
+
+	@Override
+	protected Map<String, String[]> getImportParameterMap() throws Exception {
+		Map<String, String[]> parameterMap = super.getImportParameterMap();
+
+		addBooleanParameter(parameterMap, "entries", true);
+		addBooleanParameter(parameterMap, "embedded-assets", true);
+
+		return parameterMap;
 	}
 
 	@Override

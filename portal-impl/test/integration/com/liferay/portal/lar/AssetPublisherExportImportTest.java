@@ -266,6 +266,27 @@ public class AssetPublisherExportImportTest
 
 	@Override
 	protected void doExportImportPortlet(String portletId) throws Exception {
+		larFile = LayoutLocalServiceUtil.exportLayoutsAsFile(
+			layout.getGroupId(), layout.isPrivateLayout(), null,
+			getExportParameterMap(), null, null);
+
+		importedGroup = GroupTestUtil.addGroup();
+
+		// Import site LAR
+
+		LayoutLocalServiceUtil.importLayouts(
+			TestPropsValues.getUserId(), importedGroup.getGroupId(),
+			layout.isPrivateLayout(), getImportParameterMap(), larFile);
+
+		importedLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+			layout.getUuid(), importedGroup.getGroupId(),
+			layout.isPrivateLayout());
+
+		Assert.assertNotNull(importedLayout);
+	}
+
+	@Override
+	protected Map<String, String[]> getExportParameterMap() throws Exception {
 		Map<String, String[]> parameterMap =  new HashMap<String, String[]>();
 
 		parameterMap.put(
@@ -275,23 +296,7 @@ public class AssetPublisherExportImportTest
 			PortletDataHandlerKeys.PORTLET_SETUP,
 			new String[] {Boolean.TRUE.toString()});
 
-		larFile = LayoutLocalServiceUtil.exportLayoutsAsFile(
-			layout.getGroupId(), layout.isPrivateLayout(), null, parameterMap,
-			null, null);
-
-		importedGroup = GroupTestUtil.addGroup();
-
-		// Import site LAR
-
-		LayoutLocalServiceUtil.importLayouts(
-			TestPropsValues.getUserId(), importedGroup.getGroupId(),
-			layout.isPrivateLayout(), parameterMap, larFile);
-
-		importedLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-			layout.getUuid(), importedGroup.getGroupId(),
-			layout.isPrivateLayout());
-
-		Assert.assertNotNull(importedLayout);
+		return parameterMap;
 	}
 
 	protected PortletPreferences getImportedPortletPreferences(
@@ -309,6 +314,11 @@ public class AssetPublisherExportImportTest
 		return LayoutTestUtil.getPortletPreferences(
 			importedLayout.getCompanyId(), importedLayout.getPlid(),
 			assetPublisherPortletId);
+	}
+
+	@Override
+	protected Map<String, String[]> getImportParameterMap() throws Exception {
+		return getExportParameterMap();
 	}
 
 	protected void testSortByAssetVocabulary(boolean globalVocabulary)

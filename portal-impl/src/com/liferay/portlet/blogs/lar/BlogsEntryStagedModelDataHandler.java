@@ -93,7 +93,9 @@ public class BlogsEntryStagedModelDataHandler
 		}
 
 		String content = ExportImportUtil.replaceExportContentReferences(
-			portletDataContext, entry, entryElement, entry.getContent(), true);
+			portletDataContext, entry, entryElement, entry.getContent(),
+			portletDataContext.getBooleanParameter(
+				BlogsPortletDataHandler.NAMESPACE, "embedded-assets"));
 
 		entry.setContent(content);
 
@@ -113,7 +115,9 @@ public class BlogsEntryStagedModelDataHandler
 			portletDataContext.getImportDataStagedModelElement(entry);
 
 		String content = ExportImportUtil.replaceImportContentReferences(
-			portletDataContext, entryElement, entry.getContent(), true);
+			portletDataContext, entryElement, entry.getContent(),
+			portletDataContext.getBooleanParameter(
+				BlogsPortletDataHandler.NAMESPACE, "embedded-assets"));
 
 		entry.setContent(content);
 

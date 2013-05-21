@@ -46,7 +46,8 @@ public class BlogsPortletDataHandler extends BasePortletDataHandler {
 	public BlogsPortletDataHandler() {
 		setAlwaysExportable(true);
 		setExportControls(
-			new PortletDataHandlerBoolean(NAMESPACE, "entries", true, true));
+			new PortletDataHandlerBoolean(NAMESPACE, "entries"),
+			new PortletDataHandlerBoolean(NAMESPACE, "embedded-assets"));
 		setExportMetadataControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "blog-entries", true,
@@ -56,7 +57,7 @@ public class BlogsPortletDataHandler extends BasePortletDataHandler {
 					new PortletDataHandlerBoolean(NAMESPACE, "ratings"),
 					new PortletDataHandlerBoolean(NAMESPACE, "tags")
 				}));
-		setImportMetadataControls(getExportMetadataControls()[0]);
+		setImportMetadataControls(getExportMetadataControls());
 		setPublishToLiveByDefault(PropsValues.BLOGS_PUBLISH_TO_LIVE_BY_DEFAULT);
 	}
 
@@ -96,10 +97,12 @@ public class BlogsPortletDataHandler extends BasePortletDataHandler {
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			new BlogsEntryExportActionableDynamicQuery(portletDataContext);
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "entries")) {
+			ActionableDynamicQuery actionableDynamicQuery =
+				new BlogsEntryExportActionableDynamicQuery(portletDataContext);
 
-		actionableDynamicQuery.performActions();
+			actionableDynamicQuery.performActions();
+		}
 
 		return getExportDataRootElementString(rootElement);
 	}
@@ -115,14 +118,16 @@ public class BlogsPortletDataHandler extends BasePortletDataHandler {
 			portletDataContext.getSourceGroupId(),
 			portletDataContext.getScopeGroupId());
 
-		Element entriesElement = portletDataContext.getImportDataGroupElement(
-			BlogsEntry.class);
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "entries")) {
+			Element entriesElement =
+				portletDataContext.getImportDataGroupElement(BlogsEntry.class);
 
-		List<Element> entryElements = entriesElement.elements();
+			List<Element> entryElements = entriesElement.elements();
 
-		for (Element entryElement : entryElements) {
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, entryElement);
+			for (Element entryElement : entryElements) {
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, entryElement);
+			}
 		}
 
 		return null;

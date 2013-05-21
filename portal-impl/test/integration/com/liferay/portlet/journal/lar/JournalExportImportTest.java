@@ -62,6 +62,11 @@ import org.junit.runner.RunWith;
 public class JournalExportImportTest extends BasePortletExportImportTestCase {
 
 	@Override
+	public String getNameSpace() {
+		return JournalPortletDataHandler.NAMESPACE;
+	}
+
+	@Override
 	public String getPortletId() {
 		return PortletKeys.JOURNAL;
 	}
@@ -165,28 +170,23 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 			PortletDataHandlerKeys.PORTLET_METADATA_ALL,
 			new String[] {Boolean.TRUE.toString()});
 
-		parameterMap.put(
-			"_journal_categories", new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			"_journal_comments", new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			"_journal_ddmStructures-ddmTemplates-and-feeds",
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			"_journal_images", new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			"_journal_ratings", new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			"_journal_tags", new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			"_journal_web-content", new String[] {Boolean.TRUE.toString()});
-		parameterMap.put("doAsGroupId", new String[] {String.valueOf(groupId)});
-		parameterMap.put("groupId", new String[] {String.valueOf(groupId)});
-		parameterMap.put(
-			"permissionsAssignedToRoles",
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.put("plid", new String[] {String.valueOf(plid)});
-		parameterMap.put("portletResource", new String[] {PortletKeys.JOURNAL});
+		addBooleanParameter(parameterMap, "categories", true);
+		addBooleanParameter(parameterMap, "comments", true);
+		addBooleanParameter(parameterMap, "embedded-assets", true);
+		addBooleanParameter(parameterMap, "feeds", true);
+		addBooleanParameter(parameterMap, "ratings", true);
+		addBooleanParameter(parameterMap, "structures-and-templates", true);
+		addBooleanParameter(parameterMap, "tags", true);
+		addBooleanParameter(parameterMap, "version-history", true);
+		addBooleanParameter(parameterMap, "web-content", true);
+
+		addParameter(parameterMap, "doAsGroupId", String.valueOf(groupId));
+		addParameter(parameterMap, "groupId", String.valueOf(groupId));
+		addParameter(
+			parameterMap, "permissionsAssignedToRoles",
+			Boolean.TRUE.toString());
+		addParameter(parameterMap, "plid", String.valueOf(plid));
+		addParameter(parameterMap, "portletResource", PortletKeys.JOURNAL);
 
 		return parameterMap;
 	}
@@ -201,12 +201,6 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 			PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE +
 				PortletKeys.JOURNAL,
 			new String[] {Boolean.TRUE.toString()});
-
-		parameterMap.put(
-			"_journal_embedded-assets", new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			"_journal_version-history", new String[] {Boolean.TRUE.toString()});
-		parameterMap.put("range", new String[] {"fromLastPublishDate"});
 
 		return parameterMap;
 	}

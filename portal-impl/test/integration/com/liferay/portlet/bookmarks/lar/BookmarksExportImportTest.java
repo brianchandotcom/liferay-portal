@@ -27,6 +27,8 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.bookmarks.service.BookmarksEntryLocalServiceUtil;
 import com.liferay.portlet.bookmarks.util.BookmarksTestUtil;
 
+import java.util.Map;
+
 import org.junit.runner.RunWith;
 
 /**
@@ -42,6 +44,11 @@ import org.junit.runner.RunWith;
 public class BookmarksExportImportTest extends BasePortletExportImportTestCase {
 
 	@Override
+	public String getNameSpace() {
+		return BookmarksPortletDataHandler.NAMESPACE;
+	}
+
+	@Override
 	public String getPortletId() {
 		return PortletKeys.BOOKMARKS;
 	}
@@ -49,6 +56,24 @@ public class BookmarksExportImportTest extends BasePortletExportImportTestCase {
 	@Override
 	protected StagedModel addStagedModel(long groupId) throws Exception {
 		return BookmarksTestUtil.addEntry(groupId, true);
+	}
+
+	@Override
+	protected Map<String, String[]> getExportParameterMap() throws Exception {
+		Map<String, String[]> parameterMap = super.getExportParameterMap();
+
+		addBooleanParameter(parameterMap, "entries", true);
+
+		return parameterMap;
+	}
+
+	@Override
+	protected Map<String, String[]> getImportParameterMap() throws Exception {
+		Map<String, String[]> parameterMap = super.getImportParameterMap();
+
+		addBooleanParameter(parameterMap, "entries", true);
+
+		return parameterMap;
 	}
 
 	@Override

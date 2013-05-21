@@ -204,11 +204,11 @@ public class PortletContainerSecurityImpl implements PortletContainer,
 		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
 
 		if (layout.isTypeControlPanel()) {
-			checkControlPanel(request, portlet);
+			isAccessAllowedToControlPanelPortlet(request, portlet);
 			return;
 		}
 
-		if (isPortletAllowedToExecute(request, portlet)) {
+		if (isAccessAllowedToLayoutPortlet(request, portlet)) {
 			PortalUtil.addPortletDefaultResource(request, portlet);
 
 			if (hasAccessPermission(request, portlet)) {
@@ -225,39 +225,6 @@ public class PortletContainerSecurityImpl implements PortletContainer,
 		checkCSRFProtection(request, portlet);
 
 		check(request, portlet);
-	}
-
-	protected void checkControlPanel(
-			HttpServletRequest request, Portlet portlet)
-		throws PortalException, SystemException {
-
-		if (portlet.isSystem()) {
-			return;
-		}
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long scopeGroupId = themeDisplay.getScopeGroupId();
-
-		if (PortletPermissionUtil.hasControlPanelAccessPermission(
-				permissionChecker, scopeGroupId, portlet)) {
-
-			return;
-		}
-
-		if (isRenderingRuntimePortlet(request, portlet)) {
-			return;
-		}
-
-		if (isGrantedByPPAUTH(request, portlet)) {
-			return;
-		}
-
-		throw new PrincipalException();
 	}
 
 	protected void checkCSRFProtection(
@@ -366,7 +333,91 @@ public class PortletContainerSecurityImpl implements PortletContainer,
 		return access;
 	}
 
-	protected boolean isGrantedByPPAUTH(
+	protected void isAccessAllowedToControlPanelPortlet(
+			HttpServletRequest request, Portlet portlet)
+		throws PortalException, SystemException {
+
+		if (portlet.isSystem()) {
+			return;
+		}
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long scopeGroupId = themeDisplay.getScopeGroupId();
+
+		if (PortletPermissionUtil.hasControlPanelAccessPermission(
+				permissionChecker, scopeGroupId, portlet)) {
+
+			return;
+		}
+
+		if (isAccessGrantedByRuntimePortlet(request, portlet)) {
+			return;
+		}
+
+		if (isAccessGrantedByPPAuthToken(request, portlet)) {
+			return;
+		}
+
+		throw new PrincipalException();
+	}
+
+	protected boolean isAccessAllowedToLayoutPortlet(
+			HttpServletRequest request, Portlet portlet)
+		throws PortalException, SystemException {
+
+		if (isAccessGrantedByRuntimePortlet(request, portlet)) {
+			return true;
+		}
+
+		if (isAccessGrantedByPortletOnPage(request, portlet)) {
+			return true;
+		}
+
+		if (isLayoutConfigurationAllowed(request, portlet)) {
+			return true;
+		}
+
+		if (isAccessGrantedByPPAuthToken(request, portlet)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isAccessGrantedByPortletOnPage(
+			HttpServletRequest request, Portlet portlet)
+		throws PortalException, SystemException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+		LayoutTypePortlet layoutTypePortlet =
+			themeDisplay.getLayoutTypePortlet();
+
+		String portletId = portlet.getPortletId();
+
+		if (layout.isTypePanel() &&
+			isPanelSelectedPortlet(themeDisplay, portletId)) {
+
+			return true;
+		}
+
+		if ((layoutTypePortlet != null) &&
+			layoutTypePortlet.hasPortletId(portletId)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isAccessGrantedByPPAuthToken(
 		HttpServletRequest request, Portlet portlet) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -419,6 +470,23 @@ public class PortletContainerSecurityImpl implements PortletContainer,
 			if (requestPortletAuthenticationToken.equals(
 					actualPortletAuthenticationToken)) {
 
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	protected boolean isAccessGrantedByRuntimePortlet(
+		HttpServletRequest request, Portlet portlet) {
+
+		Boolean renderPortletResource = (Boolean)request.getAttribute(
+			WebKeys.RENDER_PORTLET_RESOURCE);
+
+		if (renderPortletResource != null) {
+			boolean runtimePortlet = renderPortletResource.booleanValue();
+
+			if (runtimePortlet) {
 				return true;
 			}
 		}
@@ -520,74 +588,6 @@ public class PortletContainerSecurityImpl implements PortletContainer,
 				panelSelectedPortlets);
 
 			return ArrayUtil.contains(panelSelectedPortletsArray, portletId);
-		}
-
-		return false;
-	}
-
-	protected boolean isPortletAllowedToExecute(
-			HttpServletRequest request, Portlet portlet)
-		throws PortalException, SystemException {
-
-		if (isRenderingRuntimePortlet(request, portlet)) {
-			return true;
-		}
-
-		if (isPortletOnPage(request, portlet)) {
-			return true;
-		}
-
-		if (isLayoutConfigurationAllowed(request, portlet)) {
-			return true;
-		}
-
-		if (isGrantedByPPAUTH(request, portlet)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	protected boolean isPortletOnPage(
-			HttpServletRequest request, Portlet portlet)
-		throws PortalException, SystemException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Layout layout = themeDisplay.getLayout();
-		LayoutTypePortlet layoutTypePortlet =
-			themeDisplay.getLayoutTypePortlet();
-
-		String portletId = portlet.getPortletId();
-
-		if (layout.isTypePanel() &&
-			isPanelSelectedPortlet(themeDisplay, portletId)) {
-
-			return true;
-		}
-
-		if ((layoutTypePortlet != null) &&
-			layoutTypePortlet.hasPortletId(portletId)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	protected boolean isRenderingRuntimePortlet(
-		HttpServletRequest request, Portlet portlet) {
-
-		Boolean renderPortletResource = (Boolean)request.getAttribute(
-			WebKeys.RENDER_PORTLET_RESOURCE);
-
-		if (renderPortletResource != null) {
-			boolean runtimePortlet = renderPortletResource.booleanValue();
-
-			if (runtimePortlet) {
-				return true;
-			}
 		}
 
 		return false;

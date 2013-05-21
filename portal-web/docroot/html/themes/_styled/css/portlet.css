@@ -45,6 +45,17 @@ body.portlet {
 		float: left;
 		padding: 1px;
 	}
+
+	.portlet-icon-back {
+		color: #FFF;
+		font-weight: bold;
+		padding: 5px 5px 5px 0;
+
+		&:hover {
+			color: #FFF;
+			text-decoration: underline;
+		}
+	}
 }
 
 .portlet-content, .portlet-minimized .portlet-content-container {
@@ -53,12 +64,6 @@ body.portlet {
 
 .portlet-minimized .portlet-content {
 	padding: 0;
-}
-
-.portlet-icon-back {
-	background: url(../images/arrows/01_left.png) no-repeat 0 50%;
-	font-weight: bold;
-	padding: 5px 5px 5px 18px;
 }
 
 .portlet-nested-portlets .portlet-boundary {

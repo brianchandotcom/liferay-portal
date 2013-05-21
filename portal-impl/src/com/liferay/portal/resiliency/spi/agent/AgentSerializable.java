@@ -222,11 +222,11 @@ public class AgentSerializable implements Serializable {
 	}
 
 	protected void captureThreadLocals() {
-		_threadLocalDistributors =
+		threadLocalDistributors =
 			ThreadLocalDistributorRegistry.getThreadLocalDistributors();
 
 		for (ThreadLocalDistributor threadLocalDistributor :
-				_threadLocalDistributors) {
+				threadLocalDistributors) {
 
 			threadLocalDistributor.capture();
 		}
@@ -234,14 +234,14 @@ public class AgentSerializable implements Serializable {
 
 	protected void restoreThreadLocals() {
 		for (ThreadLocalDistributor threadLocalDistributor :
-				_threadLocalDistributors) {
+				threadLocalDistributors) {
 
 			threadLocalDistributor.restore();
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(AgentSerializable.class);
+	protected ThreadLocalDistributor[] threadLocalDistributors;
 
-	private ThreadLocalDistributor[] _threadLocalDistributors;
+	private static Log _log = LogFactoryUtil.getLog(AgentSerializable.class);
 
 }

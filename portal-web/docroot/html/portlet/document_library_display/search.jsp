@@ -148,7 +148,9 @@ int mountFoldersCount = DLAppServiceUtil.getMountFoldersCount(scopeGroupId, DLFo
 
 		Hits hits = DLAppServiceUtil.search(repositoryId, searchContext);
 
-		if (searchContainer.recalculateCur(hits.getLength())) {
+		searchContainer.setTotal(hits.getLength());
+
+		if (searchContainer.isRecalculateCur()) {
 			searchContext.setEnd(searchContainer.getEnd());
 			searchContext.setStart(searchContainer.getStart());
 

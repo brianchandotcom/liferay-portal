@@ -88,7 +88,9 @@ portletURL.setParameter("keywords", keywords);
 
 		Hits hits = indexer.search(searchContext);
 
-		if (searchContainer.recalculateCur(hits.getLength())) {
+		searchContainer.setTotal(hits.getLength());
+
+		if (searchContainer.isRecalculateCur()) {
 			searchContext.setEnd(searchContainer.getEnd());
 			searchContext.setStart(searchContainer.getStart());
 

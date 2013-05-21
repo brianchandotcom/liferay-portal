@@ -76,6 +76,15 @@ public class SearchContainerTest {
 		Assert.assertEquals(2, _searchContainer.getCur());
 	}
 
+	@Test
+	public void testNotCalculateCurWhenNoResultsAndInitialPage() {
+		buildSearchContainer(1);
+
+		_searchContainer.setTotal(0);
+
+		Assert.assertEquals(false, _searchContainer.isRecalculateCur());
+	}
+
 	protected void buildSearchContainer(int cur) {
 		PortletRequest portletRequest= PowerMockito.mock(PortletRequest.class);
 

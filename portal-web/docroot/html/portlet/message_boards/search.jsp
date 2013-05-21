@@ -107,7 +107,9 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 			total = hits.getLength();
 
-			if (searchContainer.recalculateCur(total)) {
+			searchContainer.setTotal(total);
+
+			if (searchContainer.isRecalculateCur()) {
 				searchContext.setStart(searchContainer.getStart());
 				searchContext.setEnd(searchContainer.getEnd());
 

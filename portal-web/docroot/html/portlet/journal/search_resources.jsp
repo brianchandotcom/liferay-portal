@@ -249,7 +249,9 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, entryEn
 
 						total = hits.getLength();
 
-						if (searchContainer.recalculateCur(total)) {
+						searchContainer.setTotal(total);
+
+						if (searchContainer.isRecalculateCur()) {
 							searchContext.setEnd(searchContainer.getEnd());
 							searchContext.setStart(searchContainer.getStart());
 

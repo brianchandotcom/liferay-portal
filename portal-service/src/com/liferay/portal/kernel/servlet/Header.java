@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.servlet;
 
+import com.liferay.portal.kernel.util.CookieUtil;
 import com.liferay.portal.kernel.util.HashUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -152,27 +152,7 @@ public class Header implements Serializable {
 	@Override
 	public String toString() {
 		if (_type == Type.COOKIE) {
-			StringBundler sb = new StringBundler(17);
-
-			sb.append("{comment=");
-			sb.append(_cookieValue.getComment());
-			sb.append(", domain=");
-			sb.append(_cookieValue.getDomain());
-			sb.append(", maxAge=");
-			sb.append(_cookieValue.getMaxAge());
-			sb.append(", name=");
-			sb.append(_cookieValue.getName());
-			sb.append(", path=");
-			sb.append(_cookieValue.getPath());
-			sb.append(", secure=");
-			sb.append(_cookieValue.getSecure());
-			sb.append(", value=");
-			sb.append(_cookieValue.getValue());
-			sb.append(", version=");
-			sb.append(_cookieValue.getVersion());
-			sb.append("}");
-
-			return sb.toString();
+			return CookieUtil.toString(_cookieValue);
 		}
 		else if (_type == Type.DATE) {
 			return String.valueOf(_dateValue);

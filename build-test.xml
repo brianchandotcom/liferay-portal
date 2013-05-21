@@ -3117,6 +3117,8 @@
 	<target name="prepare-portal-ext-properties" depends="generate-test-properties">
 		<echo file="portal-impl/src/portal-ext.properties">plugin.notifications.enabled=false
 
+liferay.home=$${user.home}/liferay
+
 jdbc.default.jndi.name=
 
 jdbc.default.driverClassName=${database.driver}
@@ -3136,9 +3138,7 @@ mail.session.jndi.name=
 
 axis.servlet.hosts.allowed=
 
-tunnel.servlet.hosts.allowed=
-
-resource.repositories.root=$${user.home}/liferay</echo>
+tunnel.servlet.hosts.allowed=</echo>
 
 		<if>
 			<contains string="${database}" substring="db2" />
@@ -3397,8 +3397,8 @@ message.boards.subscribe.by.default=false</echo>
 			<then>
 				<replace
 					file="portal-impl/src/portal-ext.properties"
-					token="resource.repositories.root=$${user.home}/liferay"
-					value="resource.repositories.root=C:/WINDOWS/system32/config/systemprofile/liferay"
+					token="liferay.home=$${user.home}/liferay"
+					value="liferay.home=C:/WINDOWS/system32/config/systemprofile/liferay"
 				/>
 
 				<echo file="portal-impl/src/portal-ext.properties" append="true">

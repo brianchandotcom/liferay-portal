@@ -32,7 +32,7 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 	public boolean isExtPlugin(File file) {
 		String fileName = file.getName();
 
-		if (fileName.contains("-ext") || !isJarFile(file)) {
+		if (fileName.contains("-ext") && !isJarFile(file)) {
 			return true;
 		}
 

@@ -379,39 +379,41 @@ AUI.add(
 					_onShowTab: function(event) {
 						var instance = this;
 
-						var tabSection = event.tabSection;
+						if (event.namespace.indexOf(instance.NS) === 0) {
+							var tabSection = event.tabSection;
 
-						var searchResultsWrapper = tabSection.one('[data-repositoryId]');
+							var searchResultsWrapper = tabSection.one('[data-repositoryId]');
 
-						var repositoryId = searchResultsWrapper.attr('data-repositoryId');
+							var repositoryId = searchResultsWrapper.attr('data-repositoryId');
 
-						var repositoryData = instance._repositoriesData[repositoryId];
+							var repositoryData = instance._repositoriesData[repositoryId];
 
-						if (repositoryData) {
-							var paginationData = repositoryData.paginationData;
+							if (repositoryData) {
+								var paginationData = repositoryData.paginationData;
 
-							if (paginationData) {
-								instance._appViewPaginator.set(STR_PAGINATION_DATA, paginationData);
+								if (paginationData) {
+									instance._appViewPaginator.set(STR_PAGINATION_DATA, paginationData);
+								}
 							}
-						}
 
-						if (!searchResultsWrapper.hasAttribute(STR_DATA_SEARCH_PROCESSED)) {
-							searchResultsWrapper.setAttribute(STR_DATA_SEARCH_PROCESSED, true);
+							if (!searchResultsWrapper.hasAttribute(STR_DATA_SEARCH_PROCESSED)) {
+								searchResultsWrapper.setAttribute(STR_DATA_SEARCH_PROCESSED, true);
 
-							var selectedFolder = instance._appViewSelect.get(STR_SELECTED_FOLDER);
+								var selectedFolder = instance._appViewSelect.get(STR_SELECTED_FOLDER);
 
-							var searchData = {
-								folderId: selectedFolder.id,
-								keywords: instance._keywordsNode.get('value'),
-								repositoryId: selectedFolder.repositoryId,
-								searchFolderId: DEFAULT_FOLDER_ID,
-								searchRepositoryId: repositoryId
-							};
+								var searchData = {
+									folderId: selectedFolder.id,
+									keywords: instance._keywordsNode.get('value'),
+									repositoryId: selectedFolder.repositoryId,
+									searchFolderId: DEFAULT_FOLDER_ID,
+									searchRepositoryId: repositoryId
+								};
 
-							instance._searchFileEntry(searchData);
-						}
-						else {
-							instance._documentLibraryContainer.all('.document-entries-pagination').show();
+								instance._searchFileEntry(searchData);
+							}
+							else {
+								instance._documentLibraryContainer.all('.document-entries-pagination').show();
+							}
 						}
 					},
 

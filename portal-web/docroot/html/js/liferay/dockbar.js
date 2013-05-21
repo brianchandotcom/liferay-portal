@@ -48,69 +48,6 @@ AUI.add(
 				}
 			},
 
-			addItem: function(options) {
-				var instance = this;
-
-				if (options.url) {
-					options.text = '<a href="' + options.url + '">' + options.text + '</a>';
-				}
-
-				var item = A.Node.create('<li class="' + (options.className || '') + '">' + options.text + '</li>');
-
-				instance.dockBar.one('> ul').appendChild(item);
-
-				instance._toolbarItems[options.name] = item;
-
-				return item;
-			},
-
-			addMessage: function(message, messageId) {
-				var instance = this;
-
-				var messages = instance.messages;
-
-				if (!instance.messageList) {
-					instance.messageList = [];
-					instance.messageIdList = [];
-				}
-
-				messages.show();
-
-				if (!messageId) {
-					messageId = A.guid();
-				}
-
-				instance.messageList.push(message);
-				instance.messageIdList.push(messageId);
-
-				var currentBody = messages.get(BODY_CONTENT);
-
-				message = instance._createMessage(message, messageId);
-
-				messages.setStdModContent('body', message, 'after');
-
-				var messagesContainer = messages.get(BOUNDING_BOX);
-
-				var action = 'removeClass';
-
-				if (instance.messageList.length > 1) {
-					action = 'addClass';
-				}
-
-				messagesContainer[action]('multiple-messages');
-
-				return messageId;
-			},
-
-			clearMessages: function(event) {
-				var instance = this;
-
-				instance.messages.set(BODY_CONTENT, ' ');
-
-				instance.messageList = [];
-				instance.messageIdList = [];
-			},
-
 			getPanelNode: function() {
 				var instance = this;
 
@@ -121,31 +58,6 @@ AUI.add(
 				var instance = this;
 
 				Dockbar._loadAddPanel();
-			},
-
-			setMessage: function(message, messageId) {
-				var instance = this;
-
-				var messages = instance.messages;
-
-				if (!messageId) {
-					messageId = A.guid();
-				}
-
-				instance.messageList = [message];
-				instance.messageIdList = [messageId];
-
-				messages.show();
-
-				message = instance._createMessage(message, messageId);
-
-				messages.set(BODY_CONTENT, message);
-
-				var messagesContainer = messages.get(BOUNDING_BOX);
-
-				messagesContainer.removeClass('multiple-messages');
-
-				return messageId;
 			},
 
 			_createCustomizationMask: function(column) {
@@ -196,18 +108,6 @@ AUI.add(
 				column.setData('customizationControls', overlayMask);
 
 				return overlayMask;
-			},
-
-			_createMessage: function(message, messageId) {
-				var instance = this;
-
-				var cssClass = '';
-
-				if (instance.messageList.length === 1) {
-					cssClass = 'first';
-				}
-
-				return '<div class="dockbar-message ' + cssClass + '" id="' + messageId + '">' + message + '</div>';
 			},
 
 			_getPanelNode: function() {
@@ -289,17 +189,6 @@ AUI.add(
 
 		Liferay.provide(
 			Dockbar,
-			'addUnderlay',
-			function(options) {
-				var instance = this;
-
-				instance._addUnderlay(options);
-			},
-			['liferay-dockbar-underlay']
-		);
-
-		Liferay.provide(
-			Dockbar,
 			'_init',
 			function() {
 				var instance = this;
@@ -309,43 +198,7 @@ AUI.add(
 
 				Liferay.Util.toggleControls(dockBar);
 
-				var UnderlayManager = new A.OverlayManager(
-					{
-						zIndexBase: 300
-					}
-				);
-
-				Dockbar.UnderlayManager = UnderlayManager;
-
 				instance._toolbarItems = {};
-
-				var messages = instance._addUnderlay(
-					{
-						align: {
-							node: instance.dockBar,
-							points: ['tc', 'bc']
-						},
-						bodyContent: '',
-						boundingBox: '#' + namespace + 'dockbarMessages',
-						header: 'My messages',
-						name: 'messages',
-						visible: false
-					}
-				);
-
-				messages.on(
-					'visibleChange',
-					function(event) {
-						if (event.newVal) {
-							BODY.addClass('showing-messages');
-						}
-						else {
-							BODY.removeClass('showing-messages');
-						}
-					}
-				);
-
-				messages.closeTool.on(EVENT_CLICK, instance.clearMessages, instance);
 
 				Liferay.fire('initLayout');
 				Liferay.fire('initNavigation');
@@ -466,7 +319,7 @@ AUI.add(
 
 				Liferay.fire('dockbarLoaded');
 			},
-			['aui-io-request', 'aui-overlay-context-deprecated', 'liferay-dockbar-underlay', 'liferay-store', 'node-focusmanager']
+			['aui-io-request', 'aui-overlay-context-deprecated', 'liferay-store', 'node-focusmanager']
 		);
 
 		Liferay.provide(

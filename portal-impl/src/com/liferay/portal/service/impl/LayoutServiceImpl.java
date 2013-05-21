@@ -65,7 +65,6 @@ import java.util.Map;
  */
 public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
-	@Override
 	public Layout addLayout(
 			long groupId, boolean privateLayout, long parentLayoutId,
 			Map<Locale, String> localeNamesMap,
@@ -406,6 +405,20 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			endDate);
 	}
 
+	public long exportLayoutsAsFileInBackground(
+			String taskName, long groupId, boolean privateLayout,
+			long[] layoutIds, Map<String, String[]> parameterMap,
+			Date startDate, Date endDate)
+		throws PortalException, SystemException {
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
+
+		return layoutLocalService.exportLayoutsAsFileInBackground(
+			getUserId(), taskName, groupId, privateLayout, layoutIds,
+			parameterMap, startDate, endDate);
+	}
+
 	/**
 	 * Exports the portlet information (categories, permissions, ... etc.) as a
 	 * byte array.
@@ -474,6 +487,22 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 		return layoutLocalService.exportPortletInfoAsFile(
 			plid, groupId, portletId, parameterMap, startDate, endDate);
+	}
+
+	public long exportPortletInfoAsFileInBackground(
+			String taskName, long plid, long groupId, String portletId,
+			Map<String, String[]> parameterMap, Date startDate, Date endDate)
+		throws PortalException, SystemException {
+
+		Layout layout = layoutLocalService.getLayout(plid);
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), layout.getGroupId(),
+			ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
+
+		return layoutLocalService.exportPortletInfoAsFileInBackground(
+			getUserId(), taskName, plid, groupId, portletId, parameterMap,
+			startDate, endDate);
 	}
 
 	/**
@@ -802,6 +831,18 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			getUserId(), groupId, privateLayout, parameterMap, is);
 	}
 
+	public long importLayoutsInBackground(
+			String taskName, long groupId, boolean privateLayout,
+			Map<String, String[]> parameterMap, File file)
+		throws PortalException, SystemException {
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
+
+		return layoutLocalService.importLayoutsInBackground(
+			getUserId(), taskName, groupId, privateLayout, parameterMap, file);
+	}
+
 	/**
 	 * Imports the portlet information (categories, permissions, ... etc.) from
 	 * the file.
@@ -860,6 +901,33 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 		layoutLocalService.importPortletInfo(
 			getUserId(), plid, groupId, portletId, parameterMap, is);
+	}
+
+	public long importPortletInfoInBackground(
+			String taskName, long plid, long groupId, String portletId,
+			Map<String, String[]> parameterMap, File file)
+		throws PortalException, SystemException {
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), groupId,
+			ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
+
+		return layoutLocalService.importPortletInfoInBackground(
+			getUserId(), taskName, plid, groupId, portletId, parameterMap,
+			file);
+	}
+
+	public long importPortletInfoInBackground(
+			String taskName, long plid, long groupId, String portletId,
+			Map<String, String[]> parameterMap, InputStream is)
+		throws PortalException, SystemException {
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), groupId,
+			ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
+
+		return layoutLocalService.importPortletInfoInBackground(
+			getUserId(), taskName, plid, groupId, portletId, parameterMap, is);
 	}
 
 	/**
@@ -1058,7 +1126,6 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			jobName, groupName, StorageType.PERSISTED);
 	}
 
-	@Override
 	public Layout updateLayout(
 			long groupId, boolean privateLayout, long layoutId,
 			long parentLayoutId, Map<Locale, String> localeNamesMap,

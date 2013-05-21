@@ -156,27 +156,19 @@ LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroup.get
 				</aui:fieldset>
 			</c:if>
 
-			<aui:fieldset helpMessage="staged-portlets-help" label="staged-portlets">
+			<aui:fieldset helpMessage="staged-portlets-help" label="staged-content">
 				<div class="alert alert-block">
 					<liferay-ui:message key="staged-portlets-alert" />
-				</div>
-
-				<div class="alert alert-info">
-					<liferay-ui:message key="always-exported-portlets-help" />
 				</div>
 
 				<%
 				Set<String> portletDataHandlerClasses = new HashSet<String>();
 
-				List<Portlet> portlets = PortletLocalServiceUtil.getPortlets(company.getCompanyId());
+				List<Portlet> dataSiteLevelPortlets = LayoutExporter.getDataSiteLevelPortlets(company.getCompanyId());
 
-				portlets = ListUtil.sort(portlets, new PortletTitleComparator(application, locale));
+				dataSiteLevelPortlets = ListUtil.sort(dataSiteLevelPortlets, new PortletTitleComparator(application, locale));
 
-				for (Portlet curPortlet : portlets) {
-					if (!curPortlet.isActive()) {
-						continue;
-					}
-
+				for (Portlet curPortlet : dataSiteLevelPortlets) {
 					String portletDataHandlerClass = curPortlet.getPortletDataHandlerClass();
 
 					if (!portletDataHandlerClasses.contains(portletDataHandlerClass)) {
@@ -188,24 +180,10 @@ LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroup.get
 
 					PortletDataHandler portletDataHandler = curPortlet.getPortletDataHandlerInstance();
 
-					if (portletDataHandler == null) {
-						continue;
-					}
-
 					boolean staged = GetterUtil.getBoolean(liveGroupTypeSettings.getProperty(StagingConstants.STAGED_PORTLET + curPortlet.getRootPortletId()), portletDataHandler.isPublishToLiveByDefault());
-
-					if (portletDataHandler.isAlwaysStaged()) {
-						staged = true;
-					}
-
-					String includedInEveryPublish = StringPool.BLANK;
-
-					if (portletDataHandler.isAlwaysExportable()) {
-						includedInEveryPublish = " (*)";
-					}
 				%>
 
-					<aui:input disabled="<%= portletDataHandler.isAlwaysStaged() %>" label="<%= PortalUtil.getPortletTitle(curPortlet, application, locale) + includedInEveryPublish %>" name="<%= StagingConstants.STAGED_PORTLET + curPortlet.getRootPortletId() %>" type="checkbox" value="<%= staged %>" />
+					<aui:input label="<%= PortalUtil.getPortletTitle(curPortlet, application, locale) %>" name="<%= StagingConstants.STAGED_PORTLET + curPortlet.getRootPortletId() %>" type="checkbox" value="<%= staged %>" />
 
 				<%
 				}

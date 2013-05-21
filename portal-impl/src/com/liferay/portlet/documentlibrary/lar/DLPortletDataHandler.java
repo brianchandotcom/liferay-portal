@@ -64,7 +64,6 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 	public static final String NAMESPACE = "document_library";
 
 	public DLPortletDataHandler() {
-		setAlwaysExportable(true);
 		setDataLocalized(true);
 		setDataPortletPreferences("rootFolderId");
 		setExportControls(

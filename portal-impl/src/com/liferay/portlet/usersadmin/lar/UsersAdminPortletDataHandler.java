@@ -16,6 +16,7 @@ package com.liferay.portlet.usersadmin.lar;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
+import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
@@ -41,7 +42,7 @@ public class UsersAdminPortletDataHandler extends BasePortletDataHandler {
 	public UsersAdminPortletDataHandler() {
 		super();
 
-		setDataPortalLevel(true);
+		setDataLevel(DataLevel.PORTAL);
 
 		setExportControls(
 			new PortletDataHandlerBoolean(

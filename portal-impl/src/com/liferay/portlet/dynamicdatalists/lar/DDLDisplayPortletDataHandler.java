@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.dynamicdatalists.lar;
 
+import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -38,6 +39,7 @@ import javax.portlet.PortletPreferences;
 public class DDLDisplayPortletDataHandler extends DDLPortletDataHandler {
 
 	public DDLDisplayPortletDataHandler() {
+		setDataLevel(DataLevel.PORTLET_INSTANCE);
 		setDataPortletPreferences(
 			"recordSetId", "displayDDMTemplateId", "formDDMTemplateId");
 	}

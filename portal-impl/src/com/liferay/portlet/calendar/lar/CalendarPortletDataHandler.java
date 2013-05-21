@@ -53,7 +53,6 @@ public class CalendarPortletDataHandler extends BasePortletDataHandler {
 	public static final String NAMESPACE = "calendar";
 
 	public CalendarPortletDataHandler() {
-		setAlwaysExportable(true);
 		setExportControls(
 			new PortletDataHandlerBoolean(NAMESPACE, "events", true, true));
 		setExportMetadataControls(

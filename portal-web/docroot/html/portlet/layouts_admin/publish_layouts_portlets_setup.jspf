@@ -14,74 +14,94 @@
  */
 --%>
 
-<ul class="lfr-tree unstyled">
-	<li class="tree-item">
-		<aui:input checked="<%= true %>" helpMessage="all-applications-publish-help" id="allApplications" label="all-applications" name="<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>" type="radio" value="<%= true %>" />
+<%
+List<Layout> exportLayouts = new ArrayList<Layout>();
 
-		<div class="hide" id="<portlet:namespace />globalConfiguration">
-			<aui:fieldset cssClass="portlet-data-section" label="all-applications">
-				<aui:input helpMessage="import-user-preferences-help" label="user-preferences" name="<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES %>" type="checkbox" value="<%= true %>" />
-			</aui:fieldset>
-		</div>
+if (selLayout != null) {
+	exportLayouts.add(selLayout);
+}
+else if (!results.isEmpty()) {
+	exportLayouts = results;
+}
+else {
+	exportLayouts = LayoutLocalServiceUtil.getLayouts(selGroup.getGroupId(), privateLayout);
+}
 
-		<ul class="hide" id="<portlet:namespace />showChangeGlobalConfiguration">
-			<li class="tree-item">
-				<div class="selected-labels" id="<portlet:namespace />selectedGlobalConfiguration"></div>
+List<Portlet> instanciatedPortlets = LayoutExporter.getInstanciatedPortlets(exportLayouts);
+%>
 
-				<aui:a cssClass="modify-link" href="javascript:;" id="globalConfigurationLink" label="change" method="get" />
-			</li>
-		</ul>
+<c:if test="<%= !instanciatedPortlets.isEmpty() %>">
+	<ul class="lfr-tree unstyled">
+		<li class="tree-item">
+			<aui:input checked="<%= true %>" helpMessage="all-applications-publish-help" id="allApplications" label="all-applications" name="<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>" type="radio" value="<%= true %>" />
 
-		<aui:input helpMessage="choose-applications-publish-help" id="chooseApplications" label="choose-applications" name="<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>" type="radio" value="<%= false %>" />
+			<div class="hide" id="<portlet:namespace />globalConfiguration">
+				<aui:fieldset cssClass="portlet-data-section" label="all-applications">
+					<aui:input helpMessage="import-user-preferences-help" label="user-preferences" name="<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES %>" type="checkbox" value="<%= true %>" />
+				</aui:fieldset>
+			</div>
 
-		<ul class="hide" id="<portlet:namespace />selectApplications">
-			<aui:input name="<%= PortletDataHandlerKeys.PORTLET_SETUP %>" type="hidden" value="<%= true %>" />
+			<ul class="hide" id="<portlet:namespace />showChangeGlobalConfiguration">
+				<li class="tree-item">
+					<div class="selected-labels" id="<portlet:namespace />selectedGlobalConfiguration"></div>
 
-			<%
-			Set<String> portletDataHandlerClasses = new HashSet<String>();
+					<aui:a cssClass="modify-link" href="javascript:;" id="globalConfigurationLink" label="change" method="get" />
+				</li>
+			</ul>
 
-			for (Portlet portlet : portletsList) {
-				String portletDataHandlerClass = portlet.getPortletDataHandlerClass();
+			<aui:input helpMessage="choose-applications-publish-help" id="chooseApplications" label="choose-applications" name="<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>" type="radio" value="<%= false %>" />
 
-				if (!portletDataHandlerClasses.contains(portletDataHandlerClass)) {
-					portletDataHandlerClasses.add(portletDataHandlerClass);
-				}
-				else {
-					continue;
-				}
+			<ul class="hide" id="<portlet:namespace />selectApplications">
+				<aui:input name="<%= PortletDataHandlerKeys.PORTLET_SETUP %>" type="hidden" value="<%= true %>" />
 
-				PortletDataHandler portletDataHandler = portlet.getPortletDataHandlerInstance();
+				<%
+				Set<String> portletDataHandlerClasses = new HashSet<String>();
 
-				try {
-					PortletDataHandlerControl[] controls = portletDataHandler.getExportControls();
+				instanciatedPortlets = ListUtil.sort(instanciatedPortlets, new PortletTitleComparator(application, locale));
 
-					if (controls != null) {
-						String rootPortletId = portlet.getRootPortletId();
+				for (Portlet portlet : instanciatedPortlets) {
+					String portletDataHandlerClass = portlet.getPortletDataHandlerClass();
 
-						boolean checked = GetterUtil.getBoolean(liveGroupTypeSettings.getProperty(StagingConstants.STAGED_PORTLET + portlet.getRootPortletId()), portletDataHandler.isPublishToLiveByDefault());
-			%>
-
-						<li class="tree-item">
-							<aui:input label="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>" name="<%= PortletDataHandlerKeys.PORTLET_SETUP + StringPool.UNDERLINE + rootPortletId %>" type="checkbox" value="<%= checked %>" />
-						</li>
-
-			<%
+					if (!portletDataHandlerClasses.contains(portletDataHandlerClass)) {
+						portletDataHandlerClasses.add(portletDataHandlerClass);
 					}
-				}
-				catch (PortletDataException pde) {
+					else {
+						continue;
+					}
+
+					PortletDataHandler portletDataHandler = portlet.getPortletDataHandlerInstance();
+
+					try {
+						PortletDataHandlerControl[] controls = portletDataHandler.getExportControls();
+
+						if (controls != null) {
+							String rootPortletId = portlet.getRootPortletId();
+
+							boolean checked = GetterUtil.getBoolean(liveGroupTypeSettings.getProperty(StagingConstants.STAGED_PORTLET + portlet.getRootPortletId()), portletDataHandler.isPublishToLiveByDefault());
 				%>
 
-					<li class="tree-item">
-						<div class="alert alert-error">
-							<%= PortalUtil.getPortletTitle(portlet, application, locale) %>: <%= LanguageUtil.get(pageContext, "error-initializing-import-controls") %>
-						</div>
-					</li>
+							<li class="tree-item">
+								<aui:input label="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>" name="<%= PortletDataHandlerKeys.PORTLET_SETUP + StringPool.UNDERLINE + rootPortletId %>" type="checkbox" value="<%= checked %>" />
+							</li>
 
-			<%
+				<%
+						}
+					}
+					catch (PortletDataException pde) {
+					%>
+
+						<li class="tree-item">
+							<div class="alert alert-error">
+								<%= PortalUtil.getPortletTitle(portlet, application, locale) %>: <%= LanguageUtil.get(pageContext, "error-initializing-import-controls") %>
+							</div>
+						</li>
+
+				<%
+					}
 				}
-			}
-			%>
+				%>
 
-		</ul>
-	</li>
-</ul>
+			</ul>
+		</li>
+	</ul>
+</c:if>

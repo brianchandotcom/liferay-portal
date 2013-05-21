@@ -52,7 +52,6 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 	public static final String NAMESPACE = "message_boards";
 
 	public MBPortletDataHandler() {
-		setAlwaysExportable(true);
 		setExportControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "categories-and-messages", true, true),

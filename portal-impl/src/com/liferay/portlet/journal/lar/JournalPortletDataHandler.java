@@ -86,7 +86,6 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 	public static final String NAMESPACE = "journal";
 
 	public JournalPortletDataHandler() {
-		setAlwaysExportable(true);
 		setDataLocalized(true);
 		setExportControls(
 			new PortletDataHandlerBoolean(

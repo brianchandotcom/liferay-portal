@@ -41,7 +41,6 @@ public class DDMPortletDataHandler extends BasePortletDataHandler {
 	public static final String NAMESPACE = "dynamic_data_mapping";
 
 	public DDMPortletDataHandler() {
-		setAlwaysExportable(true);
 		setDataLocalized(true);
 		setExportControls(
 			new PortletDataHandlerBoolean(NAMESPACE, "structures", true, true),

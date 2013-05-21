@@ -15,6 +15,7 @@
 package com.liferay.portlet.rss.lar;
 
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
+import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataException;
@@ -53,7 +54,7 @@ public class RSSPortletDataHandler extends BasePortletDataHandler {
 	public static final String NAMESPACE = "rss";
 
 	public RSSPortletDataHandler() {
-		setAlwaysExportable(true);
+		setDataLevel(DataLevel.PORTLET_INSTANCE);
 		setDataPortletPreferences("footerArticleValues", "headerArticleValues");
 			setExportControls(
 			new PortletDataHandlerBoolean(

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.lar;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
@@ -76,11 +77,14 @@ import com.liferay.util.ContentUtil;
 
 import java.io.File;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.ServletContext;
 
@@ -103,7 +107,7 @@ public class LayoutExporter {
 	public static final String SAME_GROUP_FRIENDLY_URL =
 		"/[$SAME_GROUP_FRIENDLY_URL$]";
 
-	public static List<Portlet> getAlwaysExportablePortlets(long companyId)
+	public static List<Portlet> getDataSiteLevelPortlets(long companyId)
 		throws Exception {
 
 		List<Portlet> portlets = PortletLocalServiceUtil.getPortlets(companyId);
@@ -123,13 +127,57 @@ public class LayoutExporter {
 				portlet.getPortletDataHandlerInstance();
 
 			if ((portletDataHandler == null) ||
-				!portletDataHandler.isAlwaysExportable()) {
+				!portletDataHandler.isDataSiteLevel()) {
 
 				itr.remove();
 			}
 		}
 
 		return portlets;
+	}
+
+	public static List<Portlet> getInstanciatedPortlets(List<Layout> layouts)
+		throws SystemException {
+
+		List<Portlet> portletsList = new ArrayList<Portlet>();
+		Set<String> portletIdsSet = new HashSet<String>();
+
+		for (Layout curLayout : layouts) {
+			if (curLayout.isTypePortlet()) {
+				LayoutTypePortlet curLayoutTypePortlet =
+					(LayoutTypePortlet)curLayout.getLayoutType();
+
+				for (String portletId : curLayoutTypePortlet.getPortletIds()) {
+					Portlet portlet = PortletLocalServiceUtil.getPortletById(
+						curLayout.getCompanyId(), portletId);
+
+					if (portlet == null) {
+						continue;
+					}
+
+					PortletDataHandler portletDataHandler =
+						portlet.getPortletDataHandlerInstance();
+
+					if ((portletDataHandler != null) &&
+						!portletIdsSet.contains(portlet.getRootPortletId())) {
+
+						portletIdsSet.add(portlet.getRootPortletId());
+
+						portletsList.add(portlet);
+					}
+				}
+			}
+		}
+
+		return portletsList;
+	}
+
+	public static List<Portlet> getInstanciatedPortlets(
+			long liveGroupId, boolean privateLayout)
+		throws SystemException {
+
+		return getInstanciatedPortlets(
+			LayoutLocalServiceUtil.getLayouts(liveGroupId, privateLayout));
 	}
 
 	public static void updateLastPublishDate(
@@ -384,7 +432,7 @@ public class LayoutExporter {
 				groupId, privateLayout, layoutIds);
 		}
 
-		List<Portlet> portlets = getAlwaysExportablePortlets(companyId);
+		List<Portlet> portlets = getDataSiteLevelPortlets(companyId);
 
 		long plid = LayoutConstants.DEFAULT_PLID;
 

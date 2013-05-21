@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
+import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.xml.Element;
@@ -39,7 +40,7 @@ public class PasswordPolicyPortletDataHandler extends BasePortletDataHandler {
 	public PasswordPolicyPortletDataHandler() {
 		super();
 
-		setDataPortalLevel(true);
+		setDataLevel(DataLevel.PORTAL);
 	}
 
 	@Override

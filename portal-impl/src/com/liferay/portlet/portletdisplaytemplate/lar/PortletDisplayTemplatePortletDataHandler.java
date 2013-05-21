@@ -36,7 +36,6 @@ public class PortletDisplayTemplatePortletDataHandler
 	public static final String NAMESPACE = "portlet_display_templates";
 
 	public PortletDisplayTemplatePortletDataHandler() {
-		setAlwaysExportable(true);
 		setExportControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "application-display-templates"));

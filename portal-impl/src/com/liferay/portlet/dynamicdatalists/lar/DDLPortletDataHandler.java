@@ -37,7 +37,6 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 	public static final String NAMESPACE = "dynamic_data_lists";
 
 	public DDLPortletDataHandler() {
-		setAlwaysExportable(true);
 		setDataLocalized(true);
 	}
 

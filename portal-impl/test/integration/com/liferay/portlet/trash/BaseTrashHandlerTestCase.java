@@ -593,27 +593,29 @@ public abstract class BaseTrashHandlerTestCase {
 			Assert.assertFalse(isAssetEntryVisible(baseModel));
 		}
 
-		if (isBaseModelMoveableFromTrash()) {
-			moveBaseModelFromTrash(baseModel, group, serviceContext);
+		if (!isBaseModelMoveableFromTrash()) {
+			return;
+		}
 
-			if (isIndexableBaseModel()) {
-				if (isBaseModelContainerModel()) {
-					Assert.assertEquals(
-						initialBaseModelsSearchCount + 2,
-						searchBaseModelsCount(
-							getBaseModelClass(), group.getGroupId()));
-				}
-				else {
-					Assert.assertEquals(
-						initialBaseModelsSearchCount + 1,
-						searchBaseModelsCount(
-							getBaseModelClass(), group.getGroupId()));
-				}
-			}
+		moveBaseModelFromTrash(baseModel, group, serviceContext);
 
-			if (isAssetableModel()) {
-				Assert.assertTrue(isAssetEntryVisible(baseModel));
+		if (isIndexableBaseModel()) {
+			if (isBaseModelContainerModel()) {
+				Assert.assertEquals(
+					initialBaseModelsSearchCount + 2,
+					searchBaseModelsCount(
+						getBaseModelClass(), group.getGroupId()));
 			}
+			else {
+				Assert.assertEquals(
+					initialBaseModelsSearchCount + 1,
+					searchBaseModelsCount(
+						getBaseModelClass(), group.getGroupId()));
+			}
+		}
+
+		if (isAssetableModel()) {
+			Assert.assertTrue(isAssetEntryVisible(baseModel));
 		}
 	}
 

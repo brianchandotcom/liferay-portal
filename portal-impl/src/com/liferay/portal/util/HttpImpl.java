@@ -145,32 +145,34 @@ public class HttpImpl implements Http {
 		_httpClient.setHttpConnectionManager(httpConnectionManager);
 		_proxyHttpClient.setHttpConnectionManager(httpConnectionManager);
 
-		if (hasProxyConfig() && Validator.isNotNull(_PROXY_USERNAME)) {
-			List<String> authPrefs = new ArrayList<String>();
-
-			if (_PROXY_AUTH_TYPE.equals("username-password")) {
-				_proxyCredentials = new UsernamePasswordCredentials(
-					_PROXY_USERNAME, _PROXY_PASSWORD);
-
-				authPrefs.add(AuthPolicy.BASIC);
-				authPrefs.add(AuthPolicy.DIGEST);
-				authPrefs.add(AuthPolicy.NTLM);
-			}
-			else if (_PROXY_AUTH_TYPE.equals("ntlm")) {
-				_proxyCredentials = new NTCredentials(
-					_PROXY_USERNAME, _PROXY_PASSWORD, _PROXY_NTLM_HOST,
-					_PROXY_NTLM_DOMAIN);
-
-				authPrefs.add(AuthPolicy.NTLM);
-				authPrefs.add(AuthPolicy.BASIC);
-				authPrefs.add(AuthPolicy.DIGEST);
-			}
-
-			HttpClientParams httpClientParams = _proxyHttpClient.getParams();
-
-			httpClientParams.setParameter(
-				AuthPolicy.AUTH_SCHEME_PRIORITY, authPrefs);
+		if (!hasProxyConfig() || Validator.isNull(_PROXY_USERNAME)) {
+			return;
 		}
+
+		List<String> authPrefs = new ArrayList<String>();
+
+		if (_PROXY_AUTH_TYPE.equals("username-password")) {
+			_proxyCredentials = new UsernamePasswordCredentials(
+				_PROXY_USERNAME, _PROXY_PASSWORD);
+
+			authPrefs.add(AuthPolicy.BASIC);
+			authPrefs.add(AuthPolicy.DIGEST);
+			authPrefs.add(AuthPolicy.NTLM);
+		}
+		else if (_PROXY_AUTH_TYPE.equals("ntlm")) {
+			_proxyCredentials = new NTCredentials(
+				_PROXY_USERNAME, _PROXY_PASSWORD, _PROXY_NTLM_HOST,
+				_PROXY_NTLM_DOMAIN);
+
+			authPrefs.add(AuthPolicy.NTLM);
+			authPrefs.add(AuthPolicy.BASIC);
+			authPrefs.add(AuthPolicy.DIGEST);
+		}
+
+		HttpClientParams httpClientParams = _proxyHttpClient.getParams();
+
+		httpClientParams.setParameter(
+			AuthPolicy.AUTH_SCHEME_PRIORITY, authPrefs);
 	}
 
 	public String addParameter(String url, String name, boolean value) {

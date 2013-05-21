@@ -22,26 +22,28 @@ import java.io.File;
 public class OSDetector {
 
 	public static String getBitmode() {
-		if (_bitMode == null) {
-			_bitMode = System.getProperty("sun.arch.data.model");
+		if (_bitMode != null) {
+			return _bitMode;
+		}
 
-			if (Validator.isNull(_bitMode)) {
-				_bitMode = System.getProperty("com.ibm.vm.bitmode");
+		_bitMode = System.getProperty("sun.arch.data.model");
+
+		if (Validator.isNull(_bitMode)) {
+			_bitMode = System.getProperty("com.ibm.vm.bitmode");
+		}
+
+		if (Validator.isNull(_bitMode)) {
+			String arch = System.getProperty("os.arch");
+
+			arch = arch.toLowerCase();
+
+			if (arch.equals("amd64") || arch.equals("x86_64")) {
+				_bitMode = "64";
 			}
+			else if (arch.equals("i386") || arch.equals("i686") ||
+					 arch.equals("x86")) {
 
-			if (Validator.isNull(_bitMode)) {
-				String arch = System.getProperty("os.arch");
-
-				arch = arch.toLowerCase();
-
-				if (arch.equals("amd64") || arch.equals("x86_64")) {
-					_bitMode = "64";
-				}
-				else if (arch.equals("i386") || arch.equals("i686") ||
-						 arch.equals("x86")) {
-
-					_bitMode = "32";
-				}
+				_bitMode = "32";
 			}
 		}
 

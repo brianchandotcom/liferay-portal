@@ -791,45 +791,48 @@ public class LayoutStagedModelDataHandler
 		String linkedToLayoutUuid = layoutElement.attributeValue(
 			"linked-to-layout-uuid");
 
-		if (linkToLayoutId > 0) {
-			Element linkedToLayoutElement =
-				portletDataContext.getReferenceDataElement(
-					layout, Layout.class, layout.getGroupId(),
-					linkedToLayoutUuid);
+		if (linkToLayoutId <= 0) {
+			updateTypeSettings(importedLayout, layout);
 
-			if (linkedToLayoutElement != null) {
-				String linkedToLayoutPath =
-					linkedToLayoutElement.attributeValue("path");
+			return;
+		}
 
-				Layout linkedToLayout =
-					(Layout)portletDataContext.getZipEntryAsObject(
-						linkedToLayoutPath);
+		Element linkedToLayoutElement =
+			portletDataContext.getReferenceDataElement(
+				layout, Layout.class, layout.getGroupId(), linkedToLayoutUuid);
 
-				StagedModelDataHandlerUtil.importStagedModel(
-					portletDataContext, linkedToLayout);
+		if (linkedToLayoutElement != null) {
+			String linkedToLayoutPath = linkedToLayoutElement.attributeValue(
+				"path");
 
-				Layout importedLinkedLayout = newLayoutsMap.get(linkToLayoutId);
+			Layout linkedToLayout =
+				(Layout)portletDataContext.getZipEntryAsObject(
+					linkedToLayoutPath);
 
-				typeSettingsProperties.setProperty(
-					"privateLayout",
-					String.valueOf(importedLinkedLayout.isPrivateLayout()));
-				typeSettingsProperties.setProperty(
-					"linkToLayoutId",
-					String.valueOf(importedLinkedLayout.getLayoutId()));
-			}
-			else {
-				if (_log.isWarnEnabled()) {
-					StringBundler sb = new StringBundler(6);
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, linkedToLayout);
 
-					sb.append("Unable to link layout with friendly URL ");
-					sb.append(layout.getFriendlyURL());
-					sb.append(" and layout id ");
-					sb.append(layout.getLayoutId());
-					sb.append(" to layout with layout id ");
-					sb.append(linkToLayoutId);
+			Layout importedLinkedLayout = newLayoutsMap.get(linkToLayoutId);
 
-					_log.warn(sb.toString());
-				}
+			typeSettingsProperties.setProperty(
+				"privateLayout",
+				String.valueOf(importedLinkedLayout.isPrivateLayout()));
+			typeSettingsProperties.setProperty(
+				"linkToLayoutId",
+				String.valueOf(importedLinkedLayout.getLayoutId()));
+		}
+		else {
+			if (_log.isWarnEnabled()) {
+				StringBundler sb = new StringBundler(6);
+
+				sb.append("Unable to link layout with friendly URL ");
+				sb.append(layout.getFriendlyURL());
+				sb.append(" and layout id ");
+				sb.append(layout.getLayoutId());
+				sb.append(" to layout with layout id ");
+				sb.append(linkToLayoutId);
+
+				_log.warn(sb.toString());
 			}
 		}
 

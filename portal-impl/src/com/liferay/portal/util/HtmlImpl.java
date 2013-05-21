@@ -524,35 +524,36 @@ public class HtmlImpl implements Html {
 
 		x = text.indexOf(">", x);
 
-		if (x >= 0) {
+		if (x < 0) {
+			return pos;
+		}
 
-			// Check if preceding character is / (i.e. is this instance of
-			// <abc/>)
+		// Check if preceding character is / (i.e. is this instance of <abc/>)
 
-			if (text.charAt(x-1) != '/') {
+		if (text.charAt(x-1) == '/') {
+			return pos;
+		}
 
-				// Search for the ending </abc> tag
+		// Search for the ending </abc> tag
 
-				for (;;) {
-					x = text.indexOf("</", x);
+		for (;;) {
+			x = text.indexOf("</", x);
 
-					if (x >= 0) {
-						if (isTag(tag, text, x + 2)) {
-							pos = x;
+			if (x >= 0) {
+				if (isTag(tag, text, x + 2)) {
+					pos = x;
 
-							break;
-						}
-						else {
-
-							// Skip past "</"
-
-							x += 2;
-						}
-					}
-					else {
-						break;
-					}
+					break;
 				}
+				else {
+
+					// Skip past "</"
+
+					x += 2;
+				}
+			}
+			else {
+				break;
 			}
 		}
 

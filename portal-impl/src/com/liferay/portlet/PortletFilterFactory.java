@@ -70,30 +70,31 @@ public class PortletFilterFactory {
 		PortletFilter portletFilter = portletFilters.get(
 			portletFilterModel.getFilterName());
 
-		if (portletFilter == null) {
-			FilterConfig filterConfig = FilterConfigFactory.create(
-				portletFilterModel, portletContext);
-
-			if (portletApp.isWARFile()) {
-				PortletContextBag portletContextBag = PortletContextBagPool.get(
-					portletApp.getServletContextName());
-
-				Map<String, PortletFilter> curPortletFilters =
-					portletContextBag.getPortletFilters();
-
-				portletFilter = curPortletFilters.get(
-					portletFilterModel.getFilterName());
-
-				portletFilter = _init(
-					portletFilterModel, filterConfig, portletFilter);
-			}
-			else {
-				portletFilter = _init(portletFilterModel, filterConfig);
-			}
-
-			portletFilters.put(
-				portletFilterModel.getFilterName(), portletFilter);
+		if (portletFilter != null) {
+			return portletFilter;
 		}
+
+		FilterConfig filterConfig = FilterConfigFactory.create(
+			portletFilterModel, portletContext);
+
+		if (portletApp.isWARFile()) {
+			PortletContextBag portletContextBag = PortletContextBagPool.get(
+				portletApp.getServletContextName());
+
+			Map<String, PortletFilter> curPortletFilters =
+				portletContextBag.getPortletFilters();
+
+			portletFilter = curPortletFilters.get(
+				portletFilterModel.getFilterName());
+
+			portletFilter = _init(
+				portletFilterModel, filterConfig, portletFilter);
+		}
+		else {
+			portletFilter = _init(portletFilterModel, filterConfig);
+		}
+
+		portletFilters.put(portletFilterModel.getFilterName(), portletFilter);
 
 		return portletFilter;
 	}

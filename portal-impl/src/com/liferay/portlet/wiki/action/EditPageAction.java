@@ -267,39 +267,43 @@ public class EditPageAction extends PortletAction {
 
 		WikiPage page = null;
 
-		if (Validator.isNotNull(title)) {
+		if (Validator.isNull(title)) {
+			renderRequest.setAttribute(WebKeys.WIKI_PAGE, page);
+
+			return;
+		}
+
+		try {
+			if (version == 0) {
+				page = WikiPageServiceUtil.getPage(nodeId, title, null);
+			}
+			else {
+				page = WikiPageServiceUtil.getPage(nodeId, title, version);
+			}
+		}
+		catch (NoSuchPageException nspe1) {
 			try {
-				if (version == 0) {
-					page = WikiPageServiceUtil.getPage(nodeId, title, null);
+				page = WikiPageServiceUtil.getPage(nodeId, title, false);
+			}
+			catch (NoSuchPageException nspe2) {
+				if (title.equals(WikiPageConstants.FRONT_PAGE) &&
+					(version == 0)) {
+
+					ServiceContext serviceContext = new ServiceContext();
+
+					page = WikiPageServiceUtil.addPage(
+						nodeId, title, null, WikiPageConstants.NEW, true,
+						serviceContext);
 				}
 				else {
-					page = WikiPageServiceUtil.getPage(nodeId, title, version);
+					throw nspe2;
 				}
 			}
-			catch (NoSuchPageException nspe1) {
-				try {
-					page = WikiPageServiceUtil.getPage(nodeId, title, false);
-				}
-				catch (NoSuchPageException nspe2) {
-					if (title.equals(WikiPageConstants.FRONT_PAGE) &&
-						(version == 0)) {
+		}
 
-						ServiceContext serviceContext = new ServiceContext();
-
-						page = WikiPageServiceUtil.addPage(
-							nodeId, title, null, WikiPageConstants.NEW, true,
-							serviceContext);
-					}
-					else {
-						throw nspe2;
-					}
-				}
-			}
-
-			if (removeRedirect) {
-				page.setContent(StringPool.BLANK);
-				page.setRedirectTitle(StringPool.BLANK);
-			}
+		if (removeRedirect) {
+			page.setContent(StringPool.BLANK);
+			page.setRedirectTitle(StringPool.BLANK);
 		}
 
 		renderRequest.setAttribute(WebKeys.WIKI_PAGE, page);

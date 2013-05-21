@@ -957,29 +957,31 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		recurrenceCal.set(Calendar.SECOND, 0);
 		recurrenceCal.set(Calendar.MILLISECOND, 0);
 
-		if (event.isTimeZoneSensitive()) {
-			int gmtDate = eventCal.get(Calendar.DATE);
-			long gmtMills = eventCal.getTimeInMillis();
+		if (!event.isTimeZoneSensitive()) {
+			return recurrenceCal;
+		}
 
-			eventCal.setTimeZone(cal.getTimeZone());
+		int gmtDate = eventCal.get(Calendar.DATE);
+		long gmtMills = eventCal.getTimeInMillis();
 
-			int tziDate = eventCal.get(Calendar.DATE);
-			long tziMills = Time.getDate(eventCal).getTime();
+		eventCal.setTimeZone(cal.getTimeZone());
 
-			if (gmtDate != tziDate) {
-				int diffDate = 0;
+		int tziDate = eventCal.get(Calendar.DATE);
+		long tziMills = Time.getDate(eventCal).getTime();
 
-				if (gmtMills > tziMills) {
-					diffDate = (int)Math.ceil(
-						(double)(gmtMills - tziMills) / Time.DAY);
-				}
-				else {
-					diffDate = (int)Math.floor(
-						(double)(gmtMills - tziMills) / Time.DAY);
-				}
+		if (gmtDate != tziDate) {
+			int diffDate = 0;
 
-				recurrenceCal.add(Calendar.DATE, diffDate);
+			if (gmtMills > tziMills) {
+				diffDate = (int)Math.ceil(
+					(double)(gmtMills - tziMills) / Time.DAY);
 			}
+			else {
+				diffDate = (int)Math.floor(
+					(double)(gmtMills - tziMills) / Time.DAY);
+			}
+
+			recurrenceCal.add(Calendar.DATE, diffDate);
 		}
 
 		return recurrenceCal;

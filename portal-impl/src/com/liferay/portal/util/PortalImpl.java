@@ -878,35 +878,37 @@ public class PortalImpl implements Portal {
 
 		long mainJournalArticleId = ParamUtil.getLong(request, "p_j_a_id");
 
-		if (mainJournalArticleId > 0) {
-			JournalArticle mainJournalArticle =
-				JournalArticleLocalServiceUtil.getJournalArticle(
-					mainJournalArticleId);
+		if (mainJournalArticleId <= 0) {
+			return availableLocales;
+		}
 
-			if (mainJournalArticle != null) {
-				String[] articleLocales =
-					mainJournalArticle.getAvailableLocales();
+		JournalArticle mainJournalArticle =
+			JournalArticleLocalServiceUtil.getJournalArticle(
+				mainJournalArticleId);
 
-				if (articleLocales.length > 1) {
-					Locale[] alternateLocales = new Locale[
-						availableLocales.length - articleLocales.length];
+		if (mainJournalArticle == null) {
+			return availableLocales;
+		}
 
-					int i = 0;
+		String[] articleLocales = mainJournalArticle.getAvailableLocales();
 
-					for (Locale locale : availableLocales) {
-						if (!ArrayUtil.contains(
-								articleLocales,
-								LocaleUtil.toLanguageId(locale))) {
+		if (articleLocales.length > 1) {
+			Locale[] alternateLocales = new Locale[
+				availableLocales.length - articleLocales.length];
 
-							alternateLocales[i] = locale;
+			int i = 0;
 
-							i++;
-						}
-					}
+			for (Locale locale : availableLocales) {
+				if (!ArrayUtil.contains(
+						articleLocales, LocaleUtil.toLanguageId(locale))) {
 
-					return alternateLocales;
+					alternateLocales[i] = locale;
+
+					i++;
 				}
 			}
+
+			return alternateLocales;
 		}
 
 		return availableLocales;
@@ -3167,35 +3169,37 @@ public class PortalImpl implements Portal {
 		catch (Exception e) {
 		}
 
-		if (group != null) {
-			Layout layout = null;
+		if (group == null) {
+			return LayoutConstants.DEFAULT_PLID;
+		}
 
-			try {
-				String layoutFriendlyURL = null;
+		Layout layout = null;
 
-				if (urlParts.length == 4) {
-					layoutFriendlyURL = StringPool.SLASH + urlParts[3];
+		try {
+			String layoutFriendlyURL = null;
 
-					layout = LayoutLocalServiceUtil.getFriendlyURLLayout(
-						group.getGroupId(), privateLayout, layoutFriendlyURL);
+			if (urlParts.length == 4) {
+				layoutFriendlyURL = StringPool.SLASH + urlParts[3];
+
+				layout = LayoutLocalServiceUtil.getFriendlyURLLayout(
+					group.getGroupId(), privateLayout, layoutFriendlyURL);
+			}
+			else {
+				List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+					group.getGroupId(), privateLayout,
+					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, true, 0, 1);
+
+				if (!layouts.isEmpty()) {
+					layout = layouts.get(0);
 				}
 				else {
-					List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-						group.getGroupId(), privateLayout,
-						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, true, 0, 1);
-
-					if (!layouts.isEmpty()) {
-						layout = layouts.get(0);
-					}
-					else {
-						return LayoutConstants.DEFAULT_PLID;
-					}
+					return LayoutConstants.DEFAULT_PLID;
 				}
+			}
 
-				return layout.getPlid();
-			}
-			catch (Exception e) {
-			}
+			return layout.getPlid();
+		}
+		catch (Exception e) {
 		}
 
 		return LayoutConstants.DEFAULT_PLID;

@@ -39,36 +39,38 @@ public class PortalLoginModule extends BasicLoginModule {
 	public boolean commit() throws LoginException {
 		boolean commitValue = super.commit();
 
-		if (commitValue) {
-			Subject subject = getSubject();
+		if (!commitValue) {
+			return false;
+		}
 
-			Set<Principal> principals = subject.getPrincipals();
+		Subject subject = getSubject();
 
-			principals.add(getPrincipal());
+		Set<Principal> principals = subject.getPrincipals();
 
-			Set<Object> privateCredentials = subject.getPrivateCredentials();
+		principals.add(getPrincipal());
 
-			privateCredentials.add(getPassword());
+		Set<Object> privateCredentials = subject.getPrivateCredentials();
 
-			try {
-				Principal group = (Principal)InstanceFactory.newInstance(
-					_JGROUP, String.class, "Roles");
-				Object role = InstanceFactory.newInstance(
-					_JROLE, String.class, "users");
+		privateCredentials.add(getPassword());
 
-				MethodKey methodKey = new MethodKey(
-					ClassResolverUtil.resolveByContextClassLoader(_JGROUP),
-					"addMember", role.getClass());
+		try {
+			Principal group = (Principal)InstanceFactory.newInstance(
+				_JGROUP, String.class, "Roles");
+			Object role = InstanceFactory.newInstance(
+				_JROLE, String.class, "users");
 
-				Method method = methodKey.getMethod();
+			MethodKey methodKey = new MethodKey(
+				ClassResolverUtil.resolveByContextClassLoader(_JGROUP),
+				"addMember", role.getClass());
 
-				method.invoke(group, new Object[] {role});
+			Method method = methodKey.getMethod();
 
-				principals.add(group);
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
+			method.invoke(group, new Object[] {role});
+
+			principals.add(group);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
 		}
 
 		return commitValue;

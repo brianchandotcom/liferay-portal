@@ -66,29 +66,31 @@ public class SessionIdServletRequest extends HttpServletRequestWrapper {
 
 		Object jsessionIdAlreadySet = getAttribute(_JESSIONID_ALREADY_SET);
 
-		if (jsessionIdAlreadySet == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Processing " + session.getId());
-			}
-
-			Cookie cookie = new Cookie(_JESSIONID, session.getId());
-
-			cookie.setMaxAge(-1);
-
-			String contextPath = getContextPath();
-
-			if (Validator.isNotNull(contextPath)) {
-				cookie.setPath(contextPath);
-			}
-			else {
-				cookie.setPath(StringPool.SLASH);
-			}
-
-			CookieKeys.addCookie(
-				(HttpServletRequest)super.getRequest(), _response, cookie);
-
-			setAttribute(_JESSIONID_ALREADY_SET, Boolean.TRUE);
+		if (jsessionIdAlreadySet != null) {
+			return;
 		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Processing " + session.getId());
+		}
+
+		Cookie cookie = new Cookie(_JESSIONID, session.getId());
+
+		cookie.setMaxAge(-1);
+
+		String contextPath = getContextPath();
+
+		if (Validator.isNotNull(contextPath)) {
+			cookie.setPath(contextPath);
+		}
+		else {
+			cookie.setPath(StringPool.SLASH);
+		}
+
+		CookieKeys.addCookie(
+			(HttpServletRequest)super.getRequest(), _response, cookie);
+
+		setAttribute(_JESSIONID_ALREADY_SET, Boolean.TRUE);
 	}
 
 	private static final String _JESSIONID = "JSESSIONID";

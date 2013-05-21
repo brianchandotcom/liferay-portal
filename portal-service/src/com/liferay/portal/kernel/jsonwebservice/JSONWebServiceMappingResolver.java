@@ -64,30 +64,29 @@ public class JSONWebServiceMappingResolver {
 			path = CamelCaseUtil.fromCamelCase(method.getName());
 		}
 
-		if (!path.startsWith(StringPool.SLASH)) {
-			path = StringPool.SLASH + path;
-
-			String pathFromClass = null;
-
-			jsonWebServiceAnnotation = clazz.getAnnotation(
-				JSONWebService.class);
-
-			if (jsonWebServiceAnnotation != null) {
-				pathFromClass = jsonWebServiceAnnotation.value().trim();
-			}
-
-			if ((pathFromClass == null) || (pathFromClass.length() == 0)) {
-				pathFromClass = _classNameToPath(clazz);
-			}
-
-			if (!pathFromClass.startsWith(StringPool.SLASH)) {
-				pathFromClass = StringPool.SLASH + pathFromClass;
-			}
-
-			path = pathFromClass + path;
+		if (path.startsWith(StringPool.SLASH)) {
+			return path;
 		}
 
-		return path;
+		path = StringPool.SLASH + path;
+
+		String pathFromClass = null;
+
+		jsonWebServiceAnnotation = clazz.getAnnotation(JSONWebService.class);
+
+		if (jsonWebServiceAnnotation != null) {
+			pathFromClass = jsonWebServiceAnnotation.value().trim();
+		}
+
+		if ((pathFromClass == null) || (pathFromClass.length() == 0)) {
+			pathFromClass = _classNameToPath(clazz);
+		}
+
+		if (!pathFromClass.startsWith(StringPool.SLASH)) {
+			pathFromClass = StringPool.SLASH + pathFromClass;
+		}
+
+		return pathFromClass + path;
 	}
 
 	private String _classNameToPath(Class<?> clazz) {

@@ -153,29 +153,29 @@ public class MBMessageIndexer extends BaseIndexer {
 
 		long[] categoryIds = searchContext.getCategoryIds();
 
-		if ((categoryIds != null) && (categoryIds.length > 0)) {
-			if (categoryIds[0] ==
-					MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
-
-				return;
-			}
-
-			BooleanQuery categoriesQuery = BooleanQueryFactoryUtil.create(
-				searchContext);
-
-			for (long categoryId : categoryIds) {
-				try {
-					MBCategoryServiceUtil.getCategory(categoryId);
-				}
-				catch (Exception e) {
-					continue;
-				}
-
-				categoriesQuery.addTerm(Field.CATEGORY_ID, categoryId);
-			}
-
-			contextQuery.add(categoriesQuery, BooleanClauseOccur.MUST);
+		if ((categoryIds == null) || (categoryIds.length == 0)) {
+			return;
 		}
+
+		if (categoryIds[0] == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+			return;
+		}
+
+		BooleanQuery categoriesQuery = BooleanQueryFactoryUtil.create(
+			searchContext);
+
+		for (long categoryId : categoryIds) {
+			try {
+				MBCategoryServiceUtil.getCategory(categoryId);
+			}
+			catch (Exception e) {
+				continue;
+			}
+
+			categoriesQuery.addTerm(Field.CATEGORY_ID, categoryId);
+		}
+
+		contextQuery.add(categoriesQuery, BooleanClauseOccur.MUST);
 	}
 
 	@Override

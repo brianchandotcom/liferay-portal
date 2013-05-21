@@ -117,30 +117,30 @@ public class CookieKeys {
 
 		String value = _get(request, name, toUpperCase);
 
-		if ((value != null) && isEncodedCookie(name)) {
-			try {
-				String encodedValue = value;
-				String originalValue = new String(
-					UnicodeFormatter.hexToBytes(encodedValue));
-
-				if (_log.isDebugEnabled()) {
-					_log.debug("Get encoded cookie " + name);
-					_log.debug("Hex encoded value " + encodedValue);
-					_log.debug("Original value " + originalValue);
-				}
-
-				return originalValue;
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(e.getMessage());
-				}
-
-				return value;
-			}
+		if ((value == null) || !isEncodedCookie(name)) {
+			return value;
 		}
 
-		return value;
+		try {
+			String encodedValue = value;
+			String originalValue = new String(
+				UnicodeFormatter.hexToBytes(encodedValue));
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Get encoded cookie " + name);
+				_log.debug("Hex encoded value " + encodedValue);
+				_log.debug("Original value " + originalValue);
+			}
+
+			return originalValue;
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e.getMessage());
+			}
+
+			return value;
+		}
 	}
 
 	public static String getDomain(HttpServletRequest request) {

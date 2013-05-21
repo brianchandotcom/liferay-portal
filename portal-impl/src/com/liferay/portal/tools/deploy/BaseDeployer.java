@@ -1973,31 +1973,32 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 			contextParamElement, "param-value",
 			StringUtil.merge(listenerClasses));
 
-		if (securityManagerEnabled) {
-			List<Element> servletElements = rootElement.elements("servlet");
+		if (!securityManagerEnabled) {
+			return document.compactString();
+		}
 
-			for (Element servletElement : servletElements) {
-				Element servletClassElement = servletElement.element(
-					"servlet-class");
+		List<Element> servletElements = rootElement.elements("servlet");
 
-				String servletClass = GetterUtil.getString(
-					servletClassElement.getText());
+		for (Element servletElement : servletElements) {
+			Element servletClassElement = servletElement.element(
+				"servlet-class");
 
-				if (servletClass.equals(
-						PortalClassLoaderServlet.class.getName()) ||
-					servletClass.equals(PortletServlet.class.getName())) {
+			String servletClass = GetterUtil.getString(
+				servletClassElement.getText());
 
-					continue;
-				}
+			if (servletClass.equals(
+					PortalClassLoaderServlet.class.getName()) ||
+				servletClass.equals(PortletServlet.class.getName())) {
 
-				servletClassElement.setText(SecureServlet.class.getName());
-
-				Element initParamElement = servletElement.addElement(
-					"init-param");
-
-				DocUtil.add(initParamElement, "param-name", "servlet-class");
-				DocUtil.add(initParamElement, "param-value", servletClass);
+				continue;
 			}
+
+			servletClassElement.setText(SecureServlet.class.getName());
+
+			Element initParamElement = servletElement.addElement("init-param");
+
+			DocUtil.add(initParamElement, "param-name", "servlet-class");
+			DocUtil.add(initParamElement, "param-value", servletClass);
 		}
 
 		return document.compactString();

@@ -493,30 +493,32 @@ public class LDAPAuth implements Authenticator {
 
 		// Only allow omniadmin if Liferay password checking is enabled
 
-		if (PropsValues.AUTH_PIPELINE_ENABLE_LIFERAY_CHECK) {
-			if (userId > 0) {
-				if (OmniadminUtil.isOmniadmin(userId)) {
+		if (!PropsValues.AUTH_PIPELINE_ENABLE_LIFERAY_CHECK) {
+			return FAILURE;
+		}
+
+		if (userId > 0) {
+			if (OmniadminUtil.isOmniadmin(userId)) {
+				return SUCCESS;
+			}
+		}
+		else if (Validator.isNotNull(emailAddress)) {
+			User user = UserLocalServiceUtil.fetchUserByEmailAddress(
+				companyId, emailAddress);
+
+			if (user != null) {
+				if (OmniadminUtil.isOmniadmin(user)) {
 					return SUCCESS;
 				}
 			}
-			else if (Validator.isNotNull(emailAddress)) {
-				User user = UserLocalServiceUtil.fetchUserByEmailAddress(
-					companyId, emailAddress);
+		}
+		else if (Validator.isNotNull(screenName)) {
+			User user = UserLocalServiceUtil.fetchUserByScreenName(
+				companyId, screenName);
 
-				if (user != null) {
-					if (OmniadminUtil.isOmniadmin(user)) {
-						return SUCCESS;
-					}
-				}
-			}
-			else if (Validator.isNotNull(screenName)) {
-				User user = UserLocalServiceUtil.fetchUserByScreenName(
-					companyId, screenName);
-
-				if (user != null) {
-					if (OmniadminUtil.isOmniadmin(user)) {
-						return SUCCESS;
-					}
+			if (user != null) {
+				if (OmniadminUtil.isOmniadmin(user)) {
+					return SUCCESS;
 				}
 			}
 		}

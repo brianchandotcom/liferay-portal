@@ -323,32 +323,34 @@ public class ShoppingUtil {
 			subtotal += calculateActualPrice(itemPrice) * count.intValue();
 		}
 
-		if ((preferences != null) && (subtotal > 0)) {
-			double insuranceRate = 0.0;
+		if ((preferences == null) || (subtotal == 0)) {
+			return insurance;
+		}
 
-			double[] range = ShoppingPreferences.INSURANCE_RANGE;
+		double insuranceRate = 0.0;
 
-			for (int i = 0; i < range.length - 1; i++) {
-				if ((subtotal > range[i]) && (subtotal <= range[i + 1])) {
-					int rangeId = i / 2;
+		double[] range = ShoppingPreferences.INSURANCE_RANGE;
 
-					if (MathUtil.isOdd(i)) {
-						rangeId = (i + 1) / 2;
-					}
+		for (int i = 0; i < range.length - 1; i++) {
+			if ((subtotal > range[i]) && (subtotal <= range[i + 1])) {
+				int rangeId = i / 2;
 
-					insuranceRate = GetterUtil.getDouble(
-						preferences.getInsurance()[rangeId]);
+				if (MathUtil.isOdd(i)) {
+					rangeId = (i + 1) / 2;
 				}
-			}
 
-			String formula = preferences.getInsuranceFormula();
+				insuranceRate = GetterUtil.getDouble(
+					preferences.getInsurance()[rangeId]);
+			}
+		}
 
-			if (formula.equals("flat")) {
-				insurance += insuranceRate;
-			}
-			else if (formula.equals("percentage")) {
-				insurance += subtotal * insuranceRate;
-			}
+		String formula = preferences.getInsuranceFormula();
+
+		if (formula.equals("flat")) {
+			insurance += insuranceRate;
+		}
+		else if (formula.equals("percentage")) {
+			insurance += subtotal * insuranceRate;
 		}
 
 		return insurance;
@@ -397,32 +399,34 @@ public class ShoppingUtil {
 			}
 		}
 
-		if ((preferences != null) && (subtotal > 0)) {
-			double shippingRate = 0.0;
+		if ((preferences == null) || (subtotal == 0)) {
+			return shipping;
+		}
 
-			double[] range = ShoppingPreferences.SHIPPING_RANGE;
+		double shippingRate = 0.0;
 
-			for (int i = 0; i < range.length - 1; i++) {
-				if ((subtotal > range[i]) && (subtotal <= range[i + 1])) {
-					int rangeId = i / 2;
+		double[] range = ShoppingPreferences.SHIPPING_RANGE;
 
-					if (MathUtil.isOdd(i)) {
-						rangeId = (i + 1) / 2;
-					}
+		for (int i = 0; i < range.length - 1; i++) {
+			if ((subtotal > range[i]) && (subtotal <= range[i + 1])) {
+				int rangeId = i / 2;
 
-					shippingRate = GetterUtil.getDouble(
-						preferences.getShipping()[rangeId]);
+				if (MathUtil.isOdd(i)) {
+					rangeId = (i + 1) / 2;
 				}
-			}
 
-			String formula = preferences.getShippingFormula();
+				shippingRate = GetterUtil.getDouble(
+					preferences.getShipping()[rangeId]);
+			}
+		}
 
-			if (formula.equals("flat")) {
-				shipping += shippingRate;
-			}
-			else if (formula.equals("percentage")) {
-				shipping += subtotal * shippingRate;
-			}
+		String formula = preferences.getShippingFormula();
+
+		if (formula.equals("flat")) {
+			shipping += shippingRate;
+		}
+		else if (formula.equals("percentage")) {
+			shipping += subtotal * shippingRate;
 		}
 
 		return shipping;

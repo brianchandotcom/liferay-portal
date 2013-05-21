@@ -80,32 +80,34 @@ public class ModifiedFacet extends RangeFacet {
 
 		JSONObject dataJSONObject = facetConfiguration.getData();
 
-		if (dataJSONObject.has("ranges")) {
-			JSONArray rangesJSONArray = dataJSONObject.getJSONArray("ranges");
+		if (!dataJSONObject.has("ranges")) {
+			return;
+		}
 
-			for (int i = 0; i < rangesJSONArray.length(); i++) {
-				JSONObject rangeObject = rangesJSONArray.getJSONObject(i);
+		JSONArray rangesJSONArray = dataJSONObject.getJSONArray("ranges");
 
-				String rangeString = rangeObject.getString("range");
+		for (int i = 0; i < rangesJSONArray.length(); i++) {
+			JSONObject rangeObject = rangesJSONArray.getJSONObject(i);
 
-				rangeString = StringUtil.replace(
-					rangeString,
-					new String[] {
-						"past-hour", "past-24-hours", "past-week", "past-month",
-						"past-year", "*"
-					},
-					new String[] {
-						dateFormat.format(pastHour.getTime()),
-						dateFormat.format(past24Hours.getTime()),
-						dateFormat.format(pastWeek.getTime()),
-						dateFormat.format(pastMonth.getTime()),
-						dateFormat.format(pastYear.getTime()),
-						dateFormat.format(now.getTime())
-					}
-				);
+			String rangeString = rangeObject.getString("range");
 
-				rangeObject.put("range", rangeString);
-			}
+			rangeString = StringUtil.replace(
+				rangeString,
+				new String[] {
+					"past-hour", "past-24-hours", "past-week", "past-month",
+					"past-year", "*"
+				},
+				new String[] {
+					dateFormat.format(pastHour.getTime()),
+					dateFormat.format(past24Hours.getTime()),
+					dateFormat.format(pastWeek.getTime()),
+					dateFormat.format(pastMonth.getTime()),
+					dateFormat.format(pastYear.getTime()),
+					dateFormat.format(now.getTime())
+				}
+			);
+
+			rangeObject.put("range", rangeString);
 		}
 	}
 

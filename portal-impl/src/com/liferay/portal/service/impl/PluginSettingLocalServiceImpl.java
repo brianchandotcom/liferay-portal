@@ -57,30 +57,29 @@ public class PluginSettingLocalServiceImpl
 		PluginSetting pluginSetting = pluginSettingPersistence.fetchByC_I_T(
 			companyId, pluginId, pluginType);
 
-		if (pluginSetting == null) {
-			Plugin plugin = null;
+		if (pluginSetting != null) {
+			return pluginSetting;
+		}
 
-			if (pluginType.equals(Plugin.TYPE_LAYOUT_TEMPLATE)) {
-				plugin = layoutTemplateLocalService.getLayoutTemplate(
-					pluginId, false, null);
-			}
-			else if (pluginType.equals(Plugin.TYPE_THEME)) {
-				boolean wapTheme = true;
+		Plugin plugin = null;
 
-				plugin = themeLocalService.getTheme(
-					companyId, pluginId, wapTheme);
-			}
+		if (pluginType.equals(Plugin.TYPE_LAYOUT_TEMPLATE)) {
+			plugin = layoutTemplateLocalService.getLayoutTemplate(
+				pluginId, false, null);
+		}
+		else if (pluginType.equals(Plugin.TYPE_THEME)) {
+			boolean wapTheme = true;
 
-			if ((plugin == null) ||
-				(plugin.getDefaultPluginSetting() == null)) {
+			plugin = themeLocalService.getTheme(companyId, pluginId, wapTheme);
+		}
 
-				pluginSetting = getDefaultPluginSetting();
+		if ((plugin == null) || (plugin.getDefaultPluginSetting() == null)) {
+			pluginSetting = getDefaultPluginSetting();
 
-				pluginSetting.setCompanyId(companyId);
-			}
-			else {
-				pluginSetting = plugin.getDefaultPluginSetting(companyId);
-			}
+			pluginSetting.setCompanyId(companyId);
+		}
+		else {
+			pluginSetting = plugin.getDefaultPluginSetting(companyId);
 		}
 
 		return pluginSetting;

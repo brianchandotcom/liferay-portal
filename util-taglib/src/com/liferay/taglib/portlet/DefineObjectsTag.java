@@ -95,28 +95,30 @@ public class DefineObjectsTag extends TagSupport {
 		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-		if (portletResponse != null) {
-			pageContext.setAttribute(
-				"liferayPortletResponse",
-				PortalUtil.getLiferayPortletResponse(portletResponse));
-
-			String portletResponseAttrName = null;
-
-			if (lifecycle.equals(PortletRequest.ACTION_PHASE)) {
-				portletResponseAttrName = "actionResponse";
-			}
-			else if (lifecycle.equals(PortletRequest.EVENT_PHASE)) {
-				portletResponseAttrName = "eventResponse";
-			}
-			else if (lifecycle.equals(PortletRequest.RENDER_PHASE)) {
-				portletResponseAttrName = "renderResponse";
-			}
-			else if (lifecycle.equals(PortletRequest.RESOURCE_PHASE)) {
-				portletResponseAttrName = "resourceResponse";
-			}
-
-			pageContext.setAttribute(portletResponseAttrName, portletResponse);
+		if (portletResponse == null) {
+			return SKIP_BODY;
 		}
+
+		pageContext.setAttribute(
+			"liferayPortletResponse",
+			PortalUtil.getLiferayPortletResponse(portletResponse));
+
+		String portletResponseAttrName = null;
+
+		if (lifecycle.equals(PortletRequest.ACTION_PHASE)) {
+			portletResponseAttrName = "actionResponse";
+		}
+		else if (lifecycle.equals(PortletRequest.EVENT_PHASE)) {
+			portletResponseAttrName = "eventResponse";
+		}
+		else if (lifecycle.equals(PortletRequest.RENDER_PHASE)) {
+			portletResponseAttrName = "renderResponse";
+		}
+		else if (lifecycle.equals(PortletRequest.RESOURCE_PHASE)) {
+			portletResponseAttrName = "resourceResponse";
+		}
+
+		pageContext.setAttribute(portletResponseAttrName, portletResponse);
 
 		return SKIP_BODY;
 	}

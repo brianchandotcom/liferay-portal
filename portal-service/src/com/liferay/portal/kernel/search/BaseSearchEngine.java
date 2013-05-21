@@ -113,27 +113,28 @@ public class BaseSearchEngine implements SearchEngine {
 	}
 
 	public TermRangeQueryFactory getTermRangeQueryFactory() {
-		if (_termRangeQueryFactory == null) {
-			ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
+		if (_termRangeQueryFactory != null) {
+			return _termRangeQueryFactory;
+		}
 
-			String className =
-				"com.liferay.portal.search.lucene.TermRangeQueryFactoryImpl";
+		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
 
-			if (!isLuceneBased()) {
-				className =
-					"com.liferay.portal.search.generic." +
-						"TermRangeQueryFactoryImpl";
-			}
+		String className =
+			"com.liferay.portal.search.lucene.TermRangeQueryFactoryImpl";
 
-			try {
-				_termRangeQueryFactory =
-					(TermRangeQueryFactory)InstanceFactory.newInstance(
-						classLoader, className);
-			}
-			catch (Exception e) {
-				_log.fatal(
-					"Unable to locate appropriate BooleanQueryFactory", e);
-			}
+		if (!isLuceneBased()) {
+			className =
+				"com.liferay.portal.search.generic." +
+					"TermRangeQueryFactoryImpl";
+		}
+
+		try {
+			_termRangeQueryFactory =
+				(TermRangeQueryFactory)InstanceFactory.newInstance(
+					classLoader, className);
+		}
+		catch (Exception e) {
+			_log.fatal("Unable to locate appropriate BooleanQueryFactory", e);
 		}
 
 		return _termRangeQueryFactory;

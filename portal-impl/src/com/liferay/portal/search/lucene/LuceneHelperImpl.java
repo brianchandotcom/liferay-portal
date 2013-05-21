@@ -562,30 +562,32 @@ public class LuceneHelperImpl implements LuceneHelper {
 	}
 
 	public void startup(long companyId) {
-		if (PropsValues.INDEX_ON_STARTUP) {
-			if (_log.isInfoEnabled()) {
-				_log.info("Indexing Lucene on startup");
+		if (!PropsValues.INDEX_ON_STARTUP) {
+			return;
+		}
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Indexing Lucene on startup");
+		}
+
+		LuceneIndexer luceneIndexer = new LuceneIndexer(companyId);
+
+		if (PropsValues.INDEX_WITH_THREAD) {
+			if (_luceneIndexThreadPoolExecutor == null) {
+
+				// This should never be null except for the case where
+				// VerifyProcessUtil#_verifyProcess(boolean) sets
+				// PropsValues#INDEX_ON_STARTUP to true.
+
+				_luceneIndexThreadPoolExecutor =
+					PortalExecutorManagerUtil.getPortalExecutor(
+						LuceneHelperImpl.class.getName());
 			}
 
-			LuceneIndexer luceneIndexer = new LuceneIndexer(companyId);
-
-			if (PropsValues.INDEX_WITH_THREAD) {
-				if (_luceneIndexThreadPoolExecutor == null) {
-
-					// This should never be null except for the case where
-					// VerifyProcessUtil#_verifyProcess(boolean) sets
-					// PropsValues#INDEX_ON_STARTUP to true.
-
-					_luceneIndexThreadPoolExecutor =
-						PortalExecutorManagerUtil.getPortalExecutor(
-							LuceneHelperImpl.class.getName());
-				}
-
-				_luceneIndexThreadPoolExecutor.execute(luceneIndexer);
-			}
-			else {
-				luceneIndexer.reindex();
-			}
+			_luceneIndexThreadPoolExecutor.execute(luceneIndexer);
+		}
+		else {
+			luceneIndexer.reindex();
 		}
 	}
 

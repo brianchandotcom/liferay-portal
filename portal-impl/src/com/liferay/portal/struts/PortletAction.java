@@ -366,32 +366,33 @@ public class PortletAction extends Action {
 				closeRedirect);
 		}
 
+		if (Validator.isNull(redirect)) {
+			return;
+		}
+
+		// LPS-1928
+
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			actionRequest);
+
+		if (BrowserSnifferUtil.isIe(request) &&
+			(BrowserSnifferUtil.getMajorVersion(request) == 6.0) &&
+			redirect.contains(StringPool.POUND)) {
+
+			String redirectToken = "&#";
+
+			if (!redirect.contains(StringPool.QUESTION)) {
+				redirectToken = StringPool.QUESTION + redirectToken;
+			}
+
+			redirect = StringUtil.replace(
+				redirect, StringPool.POUND, redirectToken);
+		}
+
+		redirect = PortalUtil.escapeRedirect(redirect);
+
 		if (Validator.isNotNull(redirect)) {
-
-			// LPS-1928
-
-			HttpServletRequest request = PortalUtil.getHttpServletRequest(
-				actionRequest);
-
-			if (BrowserSnifferUtil.isIe(request) &&
-				(BrowserSnifferUtil.getMajorVersion(request) == 6.0) &&
-				redirect.contains(StringPool.POUND)) {
-
-				String redirectToken = "&#";
-
-				if (!redirect.contains(StringPool.QUESTION)) {
-					redirectToken = StringPool.QUESTION + redirectToken;
-				}
-
-				redirect = StringUtil.replace(
-					redirect, StringPool.POUND, redirectToken);
-			}
-
-			redirect = PortalUtil.escapeRedirect(redirect);
-
-			if (Validator.isNotNull(redirect)) {
-				actionResponse.sendRedirect(redirect);
-			}
+			actionResponse.sendRedirect(redirect);
 		}
 	}
 

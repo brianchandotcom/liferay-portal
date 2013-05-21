@@ -304,31 +304,30 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		catch (Exception e) {
 		}
 
-		if (bag != null) {
-			if (checkGuest) {
-				Set<Long> roleIds = SetUtil.fromArray(bag.getRoleIds());
-
-				try {
-					PermissionCheckerBag guestBag = getGuestUserBag();
-
-					if (guestBag != null) {
-						for (long roleId : guestBag.getRoleIds()) {
-							roleIds.add(roleId);
-						}
-					}
-				}
-				catch (Exception e) {
-				}
-
-				return ArrayUtil.toArray(
-					roleIds.toArray(new Long[roleIds.size()]));
-			}
-			else {
-				return bag.getRoleIds();
-			}
+		if (bag == null) {
+			return PermissionChecker.DEFAULT_ROLE_IDS;
 		}
 
-		return PermissionChecker.DEFAULT_ROLE_IDS;
+		if (checkGuest) {
+			Set<Long> roleIds = SetUtil.fromArray(bag.getRoleIds());
+
+			try {
+				PermissionCheckerBag guestBag = getGuestUserBag();
+
+				if (guestBag != null) {
+					for (long roleId : guestBag.getRoleIds()) {
+						roleIds.add(roleId);
+					}
+				}
+			}
+			catch (Exception e) {
+			}
+
+			return ArrayUtil.toArray(roleIds.toArray(new Long[roleIds.size()]));
+		}
+		else {
+			return bag.getRoleIds();
+		}
 	}
 
 	/**
@@ -565,27 +564,29 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			user.getUserId(), signedIn, checkGuest, groupId, name, primKey,
 			actionId);
 
-		if (value == null) {
-			try {
-				value = Boolean.valueOf(
-					hasPermissionImpl(groupId, name, primKey, actionId));
+		if (value != null) {
+			return value.booleanValue();
+		}
 
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Checking permission for " + groupId + " " + name +
-							" " + primKey + " " + actionId + " takes " +
-								stopWatch.getTime() + " ms");
-				}
-			}
-			finally {
-				if (value == null) {
-					value = Boolean.FALSE;
-				}
+		try {
+			value = Boolean.valueOf(
+				hasPermissionImpl(groupId, name, primKey, actionId));
 
-				PermissionCacheUtil.putPermission(
-					user.getUserId(), signedIn, checkGuest, groupId, name,
-					primKey, actionId, value);
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Checking permission for " + groupId + " " + name +
+						" " + primKey + " " + actionId + " takes " +
+							stopWatch.getTime() + " ms");
 			}
+		}
+		finally {
+			if (value == null) {
+				value = Boolean.FALSE;
+			}
+
+			PermissionCacheUtil.putPermission(
+				user.getUserId(), signedIn, checkGuest, groupId, name, primKey,
+				actionId, value);
 		}
 
 		return value.booleanValue();

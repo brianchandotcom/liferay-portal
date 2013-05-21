@@ -259,31 +259,32 @@ public class PollsQuestionLocalServiceImpl
 
 		// Choices
 
-		if (choices != null) {
-			int oldChoicesCount = pollsChoicePersistence.countByQuestionId(
-				questionId);
+		if (choices == null) {
+			return question;
+		}
 
-			if (oldChoicesCount > choices.size()) {
-				throw new QuestionChoiceException();
+		int oldChoicesCount = pollsChoicePersistence.countByQuestionId(
+			questionId);
+
+		if (oldChoicesCount > choices.size()) {
+			throw new QuestionChoiceException();
+		}
+
+		for (PollsChoice choice : choices) {
+			String choiceName = choice.getName();
+			String choiceDescription = choice.getDescription();
+
+			choice = pollsChoicePersistence.fetchByQ_N(questionId, choiceName);
+
+			if (choice == null) {
+				pollsChoiceLocalService.addChoice(
+					userId, questionId, choiceName, choiceDescription,
+					new ServiceContext());
 			}
-
-			for (PollsChoice choice : choices) {
-				String choiceName = choice.getName();
-				String choiceDescription = choice.getDescription();
-
-				choice = pollsChoicePersistence.fetchByQ_N(
-					questionId, choiceName);
-
-				if (choice == null) {
-					pollsChoiceLocalService.addChoice(
-						userId, questionId, choiceName, choiceDescription,
-						new ServiceContext());
-				}
-				else {
-					pollsChoiceLocalService.updateChoice(
-						choice.getChoiceId(), questionId, choiceName,
-						choiceDescription, new ServiceContext());
-				}
+			else {
+				pollsChoiceLocalService.updateChoice(
+					choice.getChoiceId(), questionId, choiceName,
+					choiceDescription, new ServiceContext());
 			}
 		}
 

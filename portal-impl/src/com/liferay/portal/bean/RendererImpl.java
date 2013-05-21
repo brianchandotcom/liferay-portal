@@ -284,33 +284,36 @@ public class RendererImpl implements Renderer {
 
 		Object bean = null;
 
-		if (serviceBean != null) {
-			Method getMethod = null;
+		if (serviceBean == null) {
+			return renderBean(
+				request, response, servletContextName, bean, varientSuffix);
+		}
 
+		Method getMethod = null;
+
+		try {
+			getMethod = serviceBean.getClass().getDeclaredMethod(
+				"get" + beanNameParts[1], classPK.getClass());
+		}
+		catch (Exception e) {
+		}
+
+		if (getMethod == null) {
 			try {
 				getMethod = serviceBean.getClass().getDeclaredMethod(
-					"get" + beanNameParts[1], classPK.getClass());
+					"get" + beanNameParts[1],
+					mapToPrimitive(classPK.getClass()));
 			}
 			catch (Exception e) {
 			}
+		}
 
-			if (getMethod == null) {
-				try {
-					getMethod = serviceBean.getClass().getDeclaredMethod(
-						"get" + beanNameParts[1],
-						mapToPrimitive(classPK.getClass()));
-				}
-				catch (Exception e) {
-				}
+		if (getMethod != null) {
+			try {
+				bean = getMethod.invoke(null, classPK);
 			}
-
-			if (getMethod != null) {
-				try {
-					bean = getMethod.invoke(null, classPK);
-				}
-				catch (Exception e) {
-					_log.warn(e.getMessage());
-				}
+			catch (Exception e) {
+				_log.warn(e.getMessage());
 			}
 		}
 

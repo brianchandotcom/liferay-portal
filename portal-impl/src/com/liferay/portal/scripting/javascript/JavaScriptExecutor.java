@@ -108,28 +108,28 @@ public class JavaScriptExecutor extends BaseScriptingExecutor {
 
 		Script compiledScript = _portalCache.get(key);
 
-		if (compiledScript == null) {
-			try {
-				Context context = Context.enter();
-
-				if ((classLoaders != null) && (classLoaders.length > 0)) {
-					ClassLoader aggregateClassLoader =
-						AggregateClassLoader.getAggregateClassLoader(
-							ClassLoaderUtil.getPortalClassLoader(),
-							classLoaders);
-
-					context.setApplicationClassLoader(aggregateClassLoader);
-				}
-
-				compiledScript = context.compileString(
-					script, "script", 0, null);
-			}
-			finally {
-				Context.exit();
-			}
-
-			_portalCache.put(key, compiledScript);
+		if (compiledScript != null) {
+			return compiledScript;
 		}
+
+		try {
+			Context context = Context.enter();
+
+			if ((classLoaders != null) && (classLoaders.length > 0)) {
+				ClassLoader aggregateClassLoader =
+					AggregateClassLoader.getAggregateClassLoader(
+						ClassLoaderUtil.getPortalClassLoader(), classLoaders);
+
+				context.setApplicationClassLoader(aggregateClassLoader);
+			}
+
+			compiledScript = context.compileString(script, "script", 0, null);
+		}
+		finally {
+			Context.exit();
+		}
+
+		_portalCache.put(key, compiledScript);
 
 		return compiledScript;
 	}

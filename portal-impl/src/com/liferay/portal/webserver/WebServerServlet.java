@@ -692,33 +692,34 @@ public class WebServerServlet extends HttpServlet {
 			String[] pathArray)
 		throws Exception {
 
-		if (pathArray.length == 5) {
-			String className = GetterUtil.getString(pathArray[1]);
-			long classPK = GetterUtil.getLong(pathArray[2]);
-			String fieldName = GetterUtil.getString(pathArray[3]);
-			int valueIndex = GetterUtil.getInteger(pathArray[4]);
+		if (pathArray.length != 5) {
+			return;
+		}
 
-			Field field = null;
+		String className = GetterUtil.getString(pathArray[1]);
+		long classPK = GetterUtil.getLong(pathArray[2]);
+		String fieldName = GetterUtil.getString(pathArray[3]);
+		int valueIndex = GetterUtil.getInteger(pathArray[4]);
 
-			if (className.equals(DDLRecord.class.getName())) {
-				DDLRecord ddlRecord = DDLRecordLocalServiceUtil.getRecord(
+		Field field = null;
+
+		if (className.equals(DDLRecord.class.getName())) {
+			DDLRecord ddlRecord = DDLRecordLocalServiceUtil.getRecord(classPK);
+
+			field = ddlRecord.getField(fieldName);
+		}
+		else if (className.equals(DLFileEntryMetadata.class.getName())) {
+			DLFileEntryMetadata fileEntryMetadata =
+				DLFileEntryMetadataLocalServiceUtil.getDLFileEntryMetadata(
 					classPK);
 
-				field = ddlRecord.getField(fieldName);
-			}
-			else if (className.equals(DLFileEntryMetadata.class.getName())) {
-				DLFileEntryMetadata fileEntryMetadata =
-					DLFileEntryMetadataLocalServiceUtil.getDLFileEntryMetadata(
-						classPK);
+			Fields fields = StorageEngineUtil.getFields(
+				fileEntryMetadata.getDDMStorageId());
 
-				Fields fields = StorageEngineUtil.getFields(
-					fileEntryMetadata.getDDMStorageId());
-
-				field = fields.get(fieldName);
-			}
-
-			DDMUtil.sendFieldFile(request, response, field, valueIndex);
+			field = fields.get(fieldName);
 		}
+
+		DDMUtil.sendFieldFile(request, response, field, valueIndex);
 	}
 
 	protected void sendDocumentLibrary(

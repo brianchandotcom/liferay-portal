@@ -85,30 +85,31 @@ public class EditPagesAction extends PortletAction {
 				description, type, hidden, friendlyURL, serviceContext);
 		}
 
-		if (layout != null) {
-			String tabs1 = "public-pages";
-
-			if (privateLayout) {
-				tabs1 = "private-pages";
-			}
-
-			HttpServletRequest request = PortalUtil.getHttpServletRequest(
-				actionRequest);
-
-			PortletURL portletURL = new PortletURLImpl(
-				request, PortletKeys.LAYOUTS_ADMIN, layout.getPlid(),
-				PortletRequest.RENDER_PHASE);
-
-			portletURL.setParameter(
-				"struts_action", "/layouts_admin/edit_layouts");
-			portletURL.setParameter("tabs1", tabs1);
-			portletURL.setParameter("redirect", redirect);
-			portletURL.setParameter("groupId", String.valueOf(groupId));
-			portletURL.setPortletMode(PortletMode.VIEW);
-			portletURL.setWindowState(WindowState.MAXIMIZED);
-
-			actionResponse.sendRedirect(portletURL.toString());
+		if (layout == null) {
+			return;
 		}
+
+		String tabs1 = "public-pages";
+
+		if (privateLayout) {
+			tabs1 = "private-pages";
+		}
+
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			actionRequest);
+
+		PortletURL portletURL = new PortletURLImpl(
+			request, PortletKeys.LAYOUTS_ADMIN, layout.getPlid(),
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter("struts_action", "/layouts_admin/edit_layouts");
+		portletURL.setParameter("tabs1", tabs1);
+		portletURL.setParameter("redirect", redirect);
+		portletURL.setParameter("groupId", String.valueOf(groupId));
+		portletURL.setPortletMode(PortletMode.VIEW);
+		portletURL.setWindowState(WindowState.MAXIMIZED);
+
+		actionResponse.sendRedirect(portletURL.toString());
 	}
 
 }

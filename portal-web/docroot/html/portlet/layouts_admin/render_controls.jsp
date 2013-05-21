@@ -17,6 +17,7 @@
 <%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
 <%
+ManifestSummary manifestSummary = (ManifestSummary)request.getAttribute("render_controls.jsp-manifestSummary");
 PortletDataHandlerControl[] controls = (PortletDataHandlerControl[])request.getAttribute("render_controls.jsp-controls");
 
 for (int i = 0; i < controls.length; i++) {
@@ -29,14 +30,27 @@ for (int i = 0; i < controls.length; i++) {
 				<%
 				Map<String, Object> data = new HashMap<String, Object>();
 
-				data.put("name", LanguageUtil.get(pageContext, controls[i].getControlName()));
-
 				PortletDataHandlerBoolean control = (PortletDataHandlerBoolean)controls[i];
+
+				String controlName = LanguageUtil.get(pageContext, control.getControlName());
+
+				String className = controls[i].getClassName();
+
+				if (Validator.isNotNull(className) && (manifestSummary != null)) {
+					if (manifestSummary.getModelCount(className) > 0) {
+						controlName += " (" + manifestSummary.getModelCount(className) + ")";
+					}
+					else {
+						continue;
+					}
+				}
+
+				data.put("name", controlName);
 
 				PortletDataHandlerControl[] children = control.getChildren();
 				%>
 
-				<aui:input data="<%= data %>" disabled="<%= controls[i].isDisabled() %>" label="<%= controls[i].getControlName() %>" name="<%= control.getNamespacedControlName() %>" type="checkbox" value="<%= control.getDefaultState() %>" />
+				<aui:input data="<%= data %>" disabled="<%= controls[i].isDisabled() %>" label="<%= controlName %>" name="<%= control.getNamespacedControlName() %>" type="checkbox" value="<%= control.getDefaultState() %>" />
 
 				<c:if test="<%= children != null %>">
 					<ul id="<portlet:namespace /><%= control.getNamespacedControlName() %>Controls">
@@ -66,7 +80,9 @@ for (int i = 0; i < controls.length; i++) {
 
 						Map<String, Object> data = new HashMap<String, Object>();
 
-						data.put("name", LanguageUtil.get(pageContext, choice));
+						String controlName = LanguageUtil.get(pageContext, choice);
+
+						data.put("name", controlName);
 					%>
 
 						<aui:input checked="<%= control.getDefaultChoiceIndex() == j %>" data="<%= data %>" label="<%= choice %>" name="<%= control.getNamespacedControlName() %>" type="radio" value="<%= choices[j] %>" />

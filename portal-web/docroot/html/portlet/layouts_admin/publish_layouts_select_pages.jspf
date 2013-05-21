@@ -37,13 +37,7 @@ rowChecker.setValign("top");
 searchContainer.setRowChecker(rowChecker);
 %>
 
-<div class="selected-labels" id="<portlet:namespace />selectedPages">
-	<liferay-ui:message key='<%= results.size() > 0 ? "selected-pages" : "all-pages" %>' />,
-	<liferay-ui:message key="site-pages-settings" />,
-	<liferay-ui:message key="theme" />,
-	<liferay-ui:message key="theme-settings" />,
-	<liferay-ui:message key="logo" />
-</div>
+<div class="selected-labels" id="<portlet:namespace />selectedPages"></div>
 
 <aui:a cssClass="modify-link" href="javascript:;" id="pagesLink" label="change" method="get" />
 

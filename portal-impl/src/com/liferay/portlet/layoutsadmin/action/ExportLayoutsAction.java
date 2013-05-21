@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -75,6 +76,8 @@ public class ExportLayoutsAction extends PortletAction {
 			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
+
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		File file = null;
 
@@ -163,20 +166,28 @@ public class ExportLayoutsAction extends PortletAction {
 				endDate = now;
 			}
 
-			file = LayoutServiceUtil.exportLayoutsAsFile(
-				groupId, privateLayout, layoutIds,
-				actionRequest.getParameterMap(), startDate, endDate);
+			if (Validator.isNotNull(cmd)) {
+				file = LayoutServiceUtil.exportLayoutsAsFile(
+					groupId, privateLayout, layoutIds,
+					actionRequest.getParameterMap(), startDate, endDate);
 
-			HttpServletRequest request = PortalUtil.getHttpServletRequest(
-				actionRequest);
-			HttpServletResponse response = PortalUtil.getHttpServletResponse(
-				actionResponse);
+				HttpServletRequest request = PortalUtil.getHttpServletRequest(
+					actionRequest);
+				HttpServletResponse response =
+					PortalUtil.getHttpServletResponse(actionResponse);
 
-			ServletResponseUtil.sendFile(
-				request, response, fileName, new FileInputStream(file),
-				ContentTypes.APPLICATION_ZIP);
+				ServletResponseUtil.sendFile(
+					request, response, fileName, new FileInputStream(file),
+					ContentTypes.APPLICATION_ZIP);
 
-			setForward(actionRequest, ActionConstants.COMMON_NULL);
+				setForward(actionRequest, ActionConstants.COMMON_NULL);
+			}
+			else {
+				actionResponse.setRenderParameter(
+					"startDate", String.valueOf(startDate.getTime()));
+				actionResponse.setRenderParameter(
+					"endDate", String.valueOf(endDate.getTime()));
+			}
 		}
 		catch (Exception e) {
 			_log.error(e, e);

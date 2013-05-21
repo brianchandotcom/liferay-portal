@@ -58,6 +58,8 @@ AUI.add(
 						instance._dialogTitle = config.dialogTitle;
 
 						instance._bindUI();
+
+						instance._initLabels();
 					},
 
 					destructor: function() {
@@ -199,13 +201,15 @@ AUI.add(
 										centered: true,
 										height: 300,
 										modal: true,
-										render: instance.rootNode,
+										render: instance.get('form'),
 										toolbars: {
 											footer: [
 												{
 													on: {
-														click: function() {
-															instance._handleContent(portletId);
+														click: function(event) {
+															event.domEvent.preventDefault();
+
+															instance._setContentLabels(portletId);
 
 															contentDialog.hide();
 														}
@@ -215,7 +219,9 @@ AUI.add(
 												},
 												{
 													on: {
-														click: function() {
+														click: function(event) {
+															event.domEvent.preventDefault();
+
 															contentDialog.hide();
 														}
 													},
@@ -252,13 +258,15 @@ AUI.add(
 										centered: true,
 										height: 300,
 										modal: true,
-										render: instance.rootNode,
+										render: instance.get('form'),
 										toolbars: {
 											footer: [
 												{
 													on: {
-														click: function() {
-															instance._handleGlobalConfiguration();
+														click: function(event) {
+															event.domEvent.preventDefault();
+
+															instance._setGlobalConfigurationLabels();
 
 															globalConfigurationDialog.hide();
 														}
@@ -268,7 +276,9 @@ AUI.add(
 												},
 												{
 													on: {
-														click: function() {
+														click: function(event) {
+															event.domEvent.preventDefault();
+
 															globalConfigurationDialog.hide();
 														}
 													},
@@ -305,13 +315,15 @@ AUI.add(
 										centered: true,
 										height: 300,
 										modal: true,
-										render: instance.rootNode,
+										render: instance.get('form'),
 										toolbars: {
 											footer: [
 												{
 													on: {
-														click: function() {
-															instance._handleGlobalContent();
+														click: function(event) {
+															event.domEvent.preventDefault();
+
+															instance._setGlobalContentLabels();
 
 															globalContentDialog.hide();
 														}
@@ -321,7 +333,9 @@ AUI.add(
 												},
 												{
 													on: {
-														click: function() {
+														click: function(event) {
+															event.domEvent.preventDefault();
+
 															globalContentDialog.hide();
 														}
 													},
@@ -357,13 +371,15 @@ AUI.add(
 										bodyContent: pagesNode,
 										height: 300,
 										modal: true,
-										render: instance.rootNode,
+										render: instance.get('form'),
 										toolbars: {
 											footer: [
 												{
 													on: {
-														click: function() {
-															instance._handlePages();
+														click: function(event) {
+															event.domEvent.preventDefault();
+
+															instance._setPageLabels();
 
 															pagesDialog.hide();
 														}
@@ -373,7 +389,9 @@ AUI.add(
 												},
 												{
 													on: {
-														click: function() {
+														click: function(event) {
+															event.domEvent.preventDefault();
+
 															pagesDialog.hide();
 														}
 													},
@@ -410,13 +428,15 @@ AUI.add(
 										centered: true,
 										height: 300,
 										modal: true,
-										render: instance.rootNode,
+										render: instance.get('form'),
 										toolbars: {
 											footer: [
 												{
 													on: {
-														click: function() {
-															instance._handleRange();
+														click: function(event) {
+															event.domEvent.preventDefault();
+
+															instance._reloadForm();
 
 															rangeDialog.hide();
 														}
@@ -426,7 +446,9 @@ AUI.add(
 												},
 												{
 													on: {
-														click: function() {
+														click: function(event) {
+															event.domEvent.preventDefault();
+
 															rangeDialog.hide();
 														}
 													},
@@ -463,13 +485,15 @@ AUI.add(
 										centered: true,
 										height: 300,
 										modal: true,
-										render: instance.rootNode,
+										render: instance.get('form'),
 										toolbars: {
 											footer: [
 												{
 													on: {
-														click: function() {
-															instance._handleRemote();
+														click: function(event) {
+															event.domEvent.preventDefault();
+
+															instance._setRemoteLabels();
 
 															remoteDialog.hide();
 														}
@@ -479,7 +503,9 @@ AUI.add(
 												},
 												{
 													on: {
-														click: function() {
+														click: function(event) {
+															event.domEvent.preventDefault();
+
 															remoteDialog.hide();
 														},
 														label: Liferay.Language.get('cancel')
@@ -516,12 +542,14 @@ AUI.add(
 										centered: true,
 										height: 300,
 										modal: true,
-										render: instance.rootNode,
+										render: instance.get('form'),
 										toolbars: {
 											footer: [
 												{
 													on: {
-														click: function() {
+														click: function(event) {
+															event.domEvent.preventDefault();
+
 															scheduledPublishingEventsDialog.hide();
 														}
 													},
@@ -555,7 +583,39 @@ AUI.add(
 						return value;
 					},
 
-					_handleContent: function(portletId) {
+					_initLabels: function() {
+						var instance = this;
+
+						instance.all('.content-link').each(
+							function(item, index, collection) {
+								instance._setContentLabels(item.attr('data-portletid'));
+							}
+						);
+
+						instance._setGlobalConfigurationLabels();
+						instance._setGlobalContentLabels();
+						instance._setPageLabels();
+						instance._setRangeLabels();
+						instance._setRemoteLabels();
+					},
+
+					_isChecked: function(nodeName) {
+						var instance = this;
+
+						var node = instance.get(nodeName);
+
+						return (node && node.attr(STR_CHECKED));
+					},
+
+					_reloadForm: function() {
+						var instance = this;
+
+						instance.byId('cmd').val(STR_EMPTY);
+
+						submitForm(instance.get('form'));
+					},
+
+					_setContentLabels: function(portletId) {
 						var instance = this;
 
 						var contentNode = instance.byId('content_' + portletId);
@@ -574,10 +634,10 @@ AUI.add(
 							}
 						);
 
-						instance._refreshSelectedLabel('selectedContent_' + portletId, selectedContent.join(', '));
+						instance._setLabels('selectedContent_' + portletId, selectedContent.join(', '));
 					},
 
-					_handleGlobalConfiguration: function() {
+					_setGlobalConfigurationLabels: function() {
 						var instance = this;
 
 						var selectedGlobalConfiguration = [];
@@ -590,10 +650,10 @@ AUI.add(
 							selectedGlobalConfiguration.push(Liferay.Language.get('user-preferences'));
 						}
 
-						instance._refreshSelectedLabel('selectedGlobalConfiguration', selectedGlobalConfiguration.join(', '));
+						instance._setLabels('selectedGlobalConfiguration', selectedGlobalConfiguration.join(', '));
 					},
 
-					_handleGlobalContent: function() {
+					_setGlobalContentLabels: function() {
 						var instance = this;
 
 						var selectedGlobalContent = [];
@@ -626,10 +686,33 @@ AUI.add(
 							selectedGlobalContent.push(Liferay.Language.get('use-the-current-user-as-author'));
 						}
 
-						instance._refreshSelectedLabel('selectedGlobalContent', selectedGlobalContent.join(', '));
+						instance._setLabels('selectedGlobalContent', selectedGlobalContent.join(', '));
 					},
 
-					_handlePages: function() {
+					_setLabels: function(labelDivId, label) {
+						var instance = this;
+
+						var labelNode = instance.byId(labelDivId);
+
+						if (labelNode) {
+							labelNode.html(label);
+						}
+					},
+
+					_setNode: function(val) {
+						var instance = this;
+
+						if (Lang.isString(val)) {
+							val = instance.one(val);
+						}
+						else {
+							val = A.one(val);
+						}
+
+						return val;
+					},
+
+					_setPageLabels: function() {
 						var instance = this;
 
 						var selectedPages = [];
@@ -697,10 +780,10 @@ AUI.add(
 							selectedPages.push(Liferay.Language.get('logo'));
 						}
 
-						instance._refreshSelectedLabel('selectedPages', selectedPages.join(', '));
+						instance._setLabels('selectedPages', selectedPages.join(', '));
 					},
 
-					_handleRange: function() {
+					_setRangeLabels: function() {
 						var instance = this;
 
 						var selectedRange = STR_EMPTY;
@@ -718,10 +801,10 @@ AUI.add(
 							selectedRange = Liferay.Language.get('last');
 						}
 
-						instance._refreshSelectedLabel('selectedRange', selectedRange);
+						instance._setLabels('selectedRange', selectedRange);
 					},
 
-					_handleRemote: function() {
+					_setRemoteLabels: function() {
 						var instance = this;
 
 						var selectedRemote = [];
@@ -758,38 +841,7 @@ AUI.add(
 							selectedRemote.push(Liferay.Language.get('delete-portlet-data-before-importing'));
 						}
 
-						instance._refreshSelectedLabel('selectedRemote', selectedRemote.join(', '));
-					},
-
-					_isChecked: function(nodeName) {
-						var instance = this;
-
-						var node = instance.get(nodeName);
-
-						return (node && node.attr(STR_CHECKED));
-					},
-
-					_refreshSelectedLabel: function(labelDivId, label) {
-						var instance = this;
-
-						var labelNode = instance.byId(labelDivId);
-
-						if (labelNode) {
-							labelNode.html(label);
-						}
-					},
-
-					_setNode: function(val) {
-						var instance = this;
-
-						if (Lang.isString(val)) {
-							val = instance.one(val);
-						}
-						else {
-							val = A.one(val);
-						}
-
-						return val;
+						instance._setLabels('selectedRemote', selectedRemote.join(', '));
 					}
 				}
 			}

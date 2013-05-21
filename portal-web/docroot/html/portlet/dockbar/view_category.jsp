@@ -133,14 +133,14 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 							data.put("search", divId.toString().replace(':', '-'));
 							data.put("title", PortalUtil.getPortletTitle(portlet, application, locale));
 
-							String cssClass = "lfr-portlet-item";
+							String cssClass = "lfr-content-item";
 
 							if (portletLocked) {
 								cssClass += " lfr-portlet-used";
 							}
 							%>
 
-							<aui:nav-item cssClass="lfr-content-item"
+							<aui:nav-item cssClass="<%= cssClass %>"
 								data="<%= data %>"
 								href=""
 								iconClass='<%= portletInstanceable ? "icon-th-large" : "icon-stop" %>'

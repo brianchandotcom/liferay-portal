@@ -19,6 +19,7 @@
 <%
 String bulletStyle = ((String)request.getAttribute("liferay-ui:navigation:bulletStyle")).toLowerCase();
 String displayStyle = (String)request.getAttribute("liferay-ui:navigation:displayStyle");
+boolean preview = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:navigation:preview"), false);
 
 String headerType = null;
 String includedLayouts = null;

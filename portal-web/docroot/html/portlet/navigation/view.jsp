@@ -22,6 +22,7 @@
 	headerType="<%= headerType %>"
 	includedLayouts="<%= includedLayouts %>"
 	nestedChildren="<%= nestedChildren %>"
+	preview="<%= preview %>"
 	rootLayoutLevel="<%= rootLayoutLevel %>"
 	rootLayoutType="<%= rootLayoutType %>"
 />

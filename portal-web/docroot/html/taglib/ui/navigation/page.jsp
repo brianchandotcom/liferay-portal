@@ -48,6 +48,12 @@
 			hidden = true;
 		}
 	}
+
+	StringBundler sb = new StringBundler();
+
+	if (!hidden) {
+		_buildNavigation(rootLayout, layout, branchLayouts, themeDisplay, 1, includedLayouts, nestedChildren, sb);
+	}
 	%>
 
 	<div class="nav-menu nav-menu-style-<%= bulletStyle %>">
@@ -63,21 +69,14 @@
 			<c:when test='<%= headerType.equals("breadcrumb") %>'>
 				<liferay-ui:breadcrumb />
 			</c:when>
+			<c:when test="<%= preview && (sb.length() == 0) %>">
+				<div class="alert alert-info">
+					<liferay-ui:message key="there-are-no-pages-to-display-for-the-current-page-level" />
+				</div>
+			</c:when>
 		</c:choose>
 
-		<%
-		if (!hidden) {
-			StringBundler sb = new StringBundler();
-
-			_buildNavigation(rootLayout, layout, branchLayouts, themeDisplay, 1, includedLayouts, nestedChildren, sb);
-		%>
-
-			<%= sb.toString() %>
-
-		<%
-		}
-		%>
-
+		<%= sb.toString() %>
 	</div>
 </c:if>
 

@@ -2311,6 +2311,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>preview</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>rootLayoutLevel</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

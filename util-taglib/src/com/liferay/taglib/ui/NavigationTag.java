@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
+ * @author Tibor Lipusz
  */
 public class NavigationTag extends IncludeTag {
 
@@ -44,6 +45,10 @@ public class NavigationTag extends IncludeTag {
 		_nestedChildren = nestedChildren;
 	}
 
+	public void setPreview(boolean preview) {
+		_preview = preview;
+	}
+
 	public void setRootLayoutLevel(int rootLayoutLevel) {
 		_rootLayoutLevel = rootLayoutLevel;
 	}
@@ -59,6 +64,7 @@ public class NavigationTag extends IncludeTag {
 		_headerType = "none";
 		_includedLayouts = "auto";
 		_nestedChildren = true;
+		_preview = false;
 		_rootLayoutLevel = 1;
 		_rootLayoutType = "absolute";
 	}
@@ -80,6 +86,8 @@ public class NavigationTag extends IncludeTag {
 			"liferay-ui:navigation:nestedChildren",
 			String.valueOf(_nestedChildren));
 		request.setAttribute(
+			"liferay-ui:navigation:preview", String.valueOf(_preview));
+		request.setAttribute(
 			"liferay-ui:navigation:rootLayoutLevel",
 			String.valueOf(_rootLayoutLevel));
 		request.setAttribute(
@@ -93,6 +101,7 @@ public class NavigationTag extends IncludeTag {
 	private String _headerType = "none";
 	private String _includedLayouts = "auto";
 	private boolean _nestedChildren = true;
+	private boolean _preview = false;
 	private int _rootLayoutLevel = 1;
 	private String _rootLayoutType = "absolute";
 

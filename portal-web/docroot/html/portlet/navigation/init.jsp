@@ -30,6 +30,7 @@ String displayStyle = PrefsParamUtil.getString(preferences, renderRequest, "disp
 String headerType = PrefsParamUtil.getString(preferences, renderRequest, "headerType", "root-layout");
 String includedLayouts = PrefsParamUtil.getString(preferences, renderRequest, "includedLayouts", "current");
 boolean nestedChildren = PrefsParamUtil.getBoolean(preferences, renderRequest, "nestedChildren", true);
+boolean preview = PrefsParamUtil.getBoolean(preferences, renderRequest, "preview", false);
 int rootLayoutLevel = PrefsParamUtil.getInteger(preferences, renderRequest, "rootLayoutLevel", 1);
 String rootLayoutType = PrefsParamUtil.getString(preferences, renderRequest, "rootLayoutType", "absolute");
 %>

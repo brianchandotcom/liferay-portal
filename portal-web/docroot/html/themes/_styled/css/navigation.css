@@ -18,6 +18,12 @@
 	}
 }
 
+.nav {
+	li .toolbar {
+		margin-top: 5px;
+	}
+}
+
 /* ---------- Navigation portlet ---------- */
 
 .nav-menu {

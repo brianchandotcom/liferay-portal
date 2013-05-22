@@ -33,7 +33,7 @@ String eventName = ParamUtil.getString(request, "eventName", "selectStructure");
 
 		<aui:nav-item href="<%= viewStructureURL %>" label="view-all" selected='<%= toolbarItem.equals("view-all") %>' />
 
-		<c:if test="<%= DDMPermission.contains(permissionChecker, scopeGroupId, ddmResource, ActionKeys.ADD_STRUCTURE) %>">
+		<c:if test="<%= DDMPermission.contains(permissionChecker, scopeGroupId, ddmDisplay.getResourceName(), ddmDisplay.getAddStructureActionId()) %>">
 			<portlet:renderURL var="addStructureURL">
 				<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_structure" />
 				<portlet:param name="redirect" value="<%= viewStructureURL %>" />

@@ -267,6 +267,7 @@
 		<atom-collection-adapter>com.liferay.portlet.documentlibrary.atom.FolderAtomCollectionAdapter</atom-collection-adapter>
 		<custom-attributes-display>com.liferay.portlet.documentlibrary.DLFileEntryCustomAttributesDisplay</custom-attributes-display>
 		<custom-attributes-display>com.liferay.portlet.documentlibrary.DLFolderCustomAttributesDisplay</custom-attributes-display>
+		<ddm-display>com.liferay.portlet.documentlibrary.ddm.DLDDMDisplay</ddm-display>
 		<trash-handler>com.liferay.portlet.documentlibrary.trash.DLFileEntryTrashHandler</trash-handler>
 		<trash-handler>com.liferay.portlet.documentlibrary.trash.DLFileShortcutTrashHandler</trash-handler>
 		<trash-handler>com.liferay.portlet.documentlibrary.trash.DLFolderTrashHandler</trash-handler>
@@ -1796,12 +1797,11 @@
 		<portlet-data-handler-class>com.liferay.portlet.dynamicdatamapping.lar.DDMPortletDataHandler</portlet-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.portlet.dynamicdatamapping.lar.DDMStructureStagedModelDataHandler</staged-model-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.portlet.dynamicdatamapping.lar.DDMTemplateStagedModelDataHandler</staged-model-data-handler-class>
-		<ddm-display>com.liferay.portlet.dynamicdatamapping.util.BaseDDMDisplay</ddm-display>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
-		<autopropagated-parameters>ddmResource,ddmResourceActionId,refererPortletName,refererWebDAVToken,scopeAvailableFields,scopeStorageType,scopeStructureName,scopeStructureType,scopeTemplateMode,scopeTemplateType,scopeTitle,showGlobalScope,showManageTemplates,showToolbar</autopropagated-parameters>
+		<autopropagated-parameters>refererPortletName,refererWebDAVToken,scopeAvailableFields,scopeStorageType,scopeStructureName,scopeStructureType,scopeTemplateMode,scopeTemplateType,scopeTitle,showGlobalScope,showManageTemplates,showToolbar</autopropagated-parameters>
 		<render-weight>50</render-weight>
 		<header-portlet-css>/html/portlet/dynamic_data_mapping/css/main.css</header-portlet-css>
 		<header-portlet-javascript>/html/portlet/dynamic_data_lists/js/main.js</header-portlet-javascript>
@@ -1823,6 +1823,7 @@
 		<control-panel-entry-category>site_administration.content</control-panel-entry-category>
 		<control-panel-entry-weight>8.0</control-panel-entry-weight>
 		<asset-renderer-factory>com.liferay.portlet.dynamicdatalists.asset.DDLRecordAssetRendererFactory</asset-renderer-factory>
+		<ddm-display>com.liferay.portlet.dynamicdatalists.ddm.DDLDDMDisplay</ddm-display>
 		<workflow-handler>com.liferay.portlet.dynamicdatalists.workflow.DDLRecordWorkflowHandler</workflow-handler>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
@@ -2042,7 +2043,7 @@
 		<use-default-template>false</use-default-template>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
-		<autopropagated-parameters>ddmResource,ddmResourceActionId,scopeAvailableFields,scopeStorageType,scopeStructureName,scopeStructureType,scopeTemplateMode,scopeTitle,scopeTemplateType,showGlobalScope,showManageTemplates,showToolbar</autopropagated-parameters>
+		<autopropagated-parameters>scopeAvailableFields,scopeStorageType,scopeStructureName,scopeStructureType,scopeTemplateMode,scopeTitle,scopeTemplateType,showGlobalScope,showManageTemplates,showToolbar</autopropagated-parameters>
 		<render-weight>50</render-weight>
 		<header-portlet-css>/html/portlet/dynamic_data_mapping/css/main.css</header-portlet-css>
 		<css-class-wrapper>portlet-dynamic-data-mapping</css-class-wrapper>

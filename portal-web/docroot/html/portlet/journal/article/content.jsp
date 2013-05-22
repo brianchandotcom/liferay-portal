@@ -686,12 +686,12 @@ if (Validator.isNotNull(content)) {
 				availableFields: 'Liferay.FormBuilder.AVAILABLE_FIELDS.WCM_STRUCTURE',
 				classNameId: '<%= PortalUtil.getClassNameId(DDMStructure.class) %>',
 				classPK: <%= (ddmStructure != null) ? ddmStructure.getPrimaryKey() : 0 %>,
-				ddmResource: '<%= ddmResource %>',
 				dialog: {
 					destroyOnHide: true
 				},
 				eventName: '<portlet:namespace />selectStructure',
 				groupId: <%= groupId %>,
+				refererPortletName: '<%= PortletKeys.JOURNAL %>',
 				storageType: '<%= PropsValues.JOURNAL_ARTICLE_STORAGE_TYPE %>',
 				structureName: 'structure',
 				structureType: 'com.liferay.portlet.journal.model.JournalArticle',
@@ -715,13 +715,12 @@ if (Validator.isNotNull(content)) {
 				availableFields: 'Liferay.FormBuilder.AVAILABLE_FIELDS.WCM_STRUCTURE',
 				classNameId: '<%= PortalUtil.getClassNameId(DDMStructure.class) %>',
 				classPK: ddmStructureId,
-				ddmResource: '<%= ddmResource %>',
-				ddmResourceActionId: '<%= ActionKeys.ADD_TEMPLATE %>',
 				dialog: {
 					destroyOnHide: true
 				},
 				eventName: '<portlet:namespace />selectTemplate',
 				groupId: <%= groupId %>,
+				refererPortletName: '<%= PortletKeys.JOURNAL %>',
 				storageType: '<%= PropsValues.JOURNAL_ARTICLE_STORAGE_TYPE %>',
 				structureName: 'structure',
 				structureType: 'com.liferay.portlet.journal.model.JournalArticle',

@@ -56,8 +56,6 @@ String orderByType = preferences.getValue("orderByType", StringPool.BLANK);
 
 OrderByComparator orderByComparator = JournalUtil.getArticleOrderByComparator(orderByCol, orderByType);
 
-String ddmResource = portletConfig.getInitParameter("ddm-resource");
-
 DDMStructure ddmStructure = null;
 
 if (Validator.isNotNull(ddmStructureKey)) {

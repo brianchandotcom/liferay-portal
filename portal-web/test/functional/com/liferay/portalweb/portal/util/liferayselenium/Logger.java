@@ -23,12 +23,17 @@ import java.io.File;
 
 import java.lang.reflect.Method;
 
+import java.util.List;
+import java.util.Stack;
+
 import org.apache.commons.lang3.StringEscapeUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 /**
@@ -123,6 +128,54 @@ public class Logger {
 		BaseTestCase.fail(sb.toString());
 	}
 
+	public void send(Object[] arguments) {
+		String id = (String)arguments[0];
+		String status = (String)arguments[1];
+
+		if (status.equals("pending")) {
+			_xpathIdStack.push(id);
+		}
+		else if (status.equals("start")) {
+			_xpathIdStack = new Stack<String>();
+
+			_xpathIdStack.push(id);
+
+			return;
+		}
+
+		StringBundler sb = new StringBundler();
+
+		sb.append("/");
+
+		for (String xpathId : _xpathIdStack) {
+			sb.append("/ul/li[@id='");
+			sb.append(xpathId);
+			sb.append("']");
+		}
+
+		sb.append("/div");
+
+		List<WebElement> webElements = _webDriver.findElements(
+			By.xpath(sb.toString()));
+
+		if (status.equals("pass")) {
+			_xpathIdStack.pop();
+		}
+
+		sb = new StringBundler();
+
+		sb.append("var element = arguments[0];");
+		sb.append("element.className = \"");
+		sb.append(status);
+		sb.append("\";");
+
+		JavascriptExecutor javascriptExecutor = (JavascriptExecutor)_webDriver;
+
+		for (WebElement webElement : webElements) {
+			javascriptExecutor.executeScript(sb.toString(), webElement);
+		}
+	}
+
 	public void start() {
 		String primaryTestSuiteName =
 			_liferaySelenium.getPrimaryTestSuiteName();
@@ -199,5 +252,6 @@ public class Logger {
 	private LiferaySelenium _liferaySelenium;
 	private boolean _loggerStarted;
 	private WebDriver _webDriver = new FirefoxDriver();
+	private Stack<String> _xpathIdStack = new Stack<String>();
 
 }

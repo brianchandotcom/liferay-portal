@@ -97,9 +97,19 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)} 
 				${childElementAttributeValue}Macro ${seleniumBuilderFileUtil.getVariableName(childElementAttributeValue)}Macro = new ${childElementAttributeValue}Macro(selenium);
 			</#list>
 
+			selenium.sendLogger("${testCaseName}TestCase__${commandName}", "start");
+
+			<#assign lineNumber = commandElement.attributeValue("line-number")>
+
+			selenium.sendLogger("${testCaseName}TestCase__${lineNumber}", "pending");
+
 			<#assign blockElement = commandElement>
 
 			<#include "test_case_block_element.ftl">
+
+			<#assign lineNumber = commandElement.attributeValue("line-number")>
+
+			selenium.sendLogger("${testCaseName}TestCase__${lineNumber}", "pass");
 		}
 	</#list>
 

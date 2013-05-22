@@ -338,6 +338,9 @@ public abstract class BaseSeleniumImpl
 		_commandProcessor.doCommand("sendKeys", new String[] {locator, value});
 	}
 
+	public void sendLogger(String id, String status) {
+	}
+
 	public void setDefaultTimeout() {
 		int timeout = TestPropsValues.TIMEOUT_EXPLICIT_WAIT * 1000;
 

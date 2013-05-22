@@ -38,6 +38,9 @@ public class LoggerHandler implements InvocationHandler {
 			if (methodName.equals("getPrimaryTestSuiteName") ||
 				methodName.equals("setPrimaryTestSuiteName")) {
 			}
+			else if (methodName.equals("sendLogger")) {
+				_logger.send(arguments);
+			}
 			else if (methodName.equals("startLogger")) {
 				_logger.start();
 			}

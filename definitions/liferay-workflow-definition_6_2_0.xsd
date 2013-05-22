@@ -241,6 +241,17 @@
 			</xs:complexContent>
 		</xs:complexType>
 	</xs:element>
+	<xs:element name="join-xor">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="action-timer-workflow-node-complex-type">
+					<xs:sequence>
+						<xs:element ref="transitions" />
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
 	<xs:element name="transitions">
 		<xs:complexType>
 			<xs:sequence>

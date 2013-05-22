@@ -49,7 +49,6 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 			A.one('#<portlet:namespace />manageDDMStructuresLink').on('click', function() {
 				Liferay.Util.openDDMPortlet(
 					{
-						ddmResource: '<%= ddmResource %>',
 						dialog: {
 							destroyOnHide: true
 						},
@@ -58,8 +57,8 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 						Portlet portlet = PortletLocalServiceUtil.getPortletById(portletDisplay.getId());
 						%>
 
+						refererPortletName: '<%= portlet.getPortletName() %>',
 						refererWebDAVToken: '<%= portlet.getWebDAVStorageToken() %>',
-
 						storageType: '<%= PropsValues.DYNAMIC_DATA_LISTS_STORAGE_TYPE %>',
 						structureName: 'data-definition',
 						structureType: 'com.liferay.portlet.dynamicdatalists.model.DDLRecordSet',

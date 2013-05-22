@@ -215,7 +215,6 @@ if (Validator.isNotNull(script)) {
 			{
 				availableFields: 'Liferay.FormBuilder.AVAILABLE_FIELDS.WCM_STRUCTURE',
 				classPK: <%= (structure != null) ? structure.getPrimaryKey() : 0 %>,
-				ddmResource: '<%= HtmlUtil.escapeJS(ddmResource) %>',
 				dialog: {
 					destroyOnHide: true,
 					zIndex: Liferay.zIndex.WINDOW + 2

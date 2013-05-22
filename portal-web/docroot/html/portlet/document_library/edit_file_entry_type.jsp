@@ -144,11 +144,11 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 		Liferay.Util.openDDMPortlet(
 			{
 				classPK: '<%= ddmStructureId %>',
-				ddmResource: '<%= ddmResource %>',
 				dialog: {
 					destroyOnHide: true
 				},
 				eventName: '<portlet:namespace />selectDDMStructure',
+				refererPortletName: '<%= PortletKeys.DOCUMENT_LIBRARY %>',
 				showGlobalScope: true,
 				showManageTemplates: false,
 				showToolbar: true,

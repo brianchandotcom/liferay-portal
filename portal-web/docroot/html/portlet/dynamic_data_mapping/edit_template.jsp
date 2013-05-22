@@ -69,8 +69,6 @@ String structureAvailableFields = ParamUtil.getString(request, "structureAvailab
 if (Validator.isNotNull(structureAvailableFields)) {
 	scopeAvailableFields = structureAvailableFields;
 }
-
-DDMDisplay ddmDisplay = DDMDisplayRegistryUtil.getDDMDisplay(refererPortletName);
 %>
 
 <portlet:actionURL var="editTemplateURL">
@@ -385,13 +383,13 @@ DDMDisplay ddmDisplay = DDMDisplayRegistryUtil.getDDMDisplay(refererPortletName)
 					availableFields: 'Liferay.FormBuilder.AVAILABLE_FIELDS.WCM_STRUCTURE',
 					classNameId: '<%= PortalUtil.getClassNameId(DDMStructure.class) %>',
 					classPK: 0,
-					ddmResource: '<%= HtmlUtil.escapeJS(ddmResource) %>',
 					dialog: {
 						modal: true,
 						width: 820
 					},
 					eventName: '<portlet:namespace />selectStructure',
 					groupId: <%= groupId %>,
+					refererPortletName: '<%= PortletKeys.JOURNAL %>',
 					storageType: '<%= PropsValues.JOURNAL_ARTICLE_STORAGE_TYPE %>',
 					structureName: 'structure',
 					structureType: 'com.liferay.portlet.journal.model.JournalArticle',

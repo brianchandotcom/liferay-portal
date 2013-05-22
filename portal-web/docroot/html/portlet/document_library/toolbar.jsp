@@ -141,10 +141,10 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 	function <portlet:namespace />openDDMStructureView() {
 		Liferay.Util.openDDMPortlet(
 			{
-				ddmResource: '<%= ddmResource %>',
 				dialog: {
 					destroyOnHide: true
 				},
+				refererPortletName: '<%= PortletKeys.DOCUMENT_LIBRARY %>',
 				showGlobalScope: 'true',
 				showManageTemplates: 'false',
 				storageType: 'xml',

@@ -41,6 +41,10 @@ public class DDMUtil {
 		return _ddm;
 	}
 
+	public static DDMDisplay getDDMDisplay(ServiceContext serviceContext) {
+		return getDDM().getDDMDisplay(serviceContext);
+	}
+
 	public static Serializable getDisplayFieldValue(
 			Serializable fieldValue, String type, Locale locale)
 		throws Exception {

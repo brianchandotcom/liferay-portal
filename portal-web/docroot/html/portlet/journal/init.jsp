@@ -113,8 +113,6 @@ PortletPreferences preferences = liferayPortletRequest.getPreferences();
 
 String[] displayViews = StringUtil.split(PrefsParamUtil.getString(preferences, liferayPortletRequest, "displayViews", StringUtil.merge(PropsValues.JOURNAL_DISPLAY_VIEWS)));
 
-String ddmResource = portletConfig.getInitParameter("ddm-resource");
-
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>

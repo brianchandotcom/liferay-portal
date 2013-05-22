@@ -69,7 +69,7 @@ StructureDisplayTerms displayTerms = new StructureDisplayTerms(renderRequest);
 boolean showAddStructureButton = false;
 
 if (!refererPortletName.equals(PortletKeys.DYNAMIC_DATA_MAPPING)) {
-	showAddStructureButton = DDMPermission.contains(permissionChecker, scopeGroupId, ddmResource, ActionKeys.ADD_STRUCTURE);
+	showAddStructureButton = DDMPermission.contains(permissionChecker, scopeGroupId, ddmDisplay.getResourceName(), ddmDisplay.getAddStructureActionId());
 }
 
 String buttonLabel = "add-structure";

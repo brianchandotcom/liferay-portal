@@ -27,6 +27,10 @@ import java.util.Set;
  */
 public interface DDMDisplay {
 
+	public String getAddStructureActionId();
+
+	public String getAddTemplateActionId();
+
 	public String getEditTemplateBackURL(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse, long classNameId,
@@ -39,6 +43,10 @@ public interface DDMDisplay {
 	public String getEditTemplateTitle(long classNameId, Locale locale);
 
 	public String getPortletId();
+
+	public String getResourceName();
+
+	public String getResourceName(long classNameId);
 
 	public Set<String> getTemplateLanguageTypes();
 

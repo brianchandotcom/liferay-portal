@@ -49,9 +49,12 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 		return backURL;
 	}
 
-	@Override
 	public String getPortletId() {
 		return PortletKeys.JOURNAL;
+	}
+
+	public String getResourceName() {
+		return "com.liferay.portlet.journal";
 	}
 
 	@Override

@@ -152,10 +152,6 @@
 			<value>/html/portlet/journal/configuration.jsp</value>
 		</init-param>
 		<init-param>
-			<name>ddm-resource</name>
-			<value>com.liferay.portlet.journal</value>
-		</init-param>
-		<init-param>
 			<name>template-path</name>
 			<value>/html/portlet/journal/</value>
 		</init-param>
@@ -278,10 +274,6 @@
 		<init-param>
 			<name>config-template</name>
 			<value>/html/portlet/document_library/configuration.jsp</value>
-		</init-param>
-		<init-param>
-			<name>ddm-resource</name>
-			<value>com.liferay.portlet.documentlibrary</value>
 		</init-param>
 		<init-param>
 			<name>template-path</name>
@@ -934,10 +926,6 @@
 		<init-param>
 			<name>config-template</name>
 			<value>/html/portlet/journal_articles/configuration.jsp</value>
-		</init-param>
-		<init-param>
-			<name>ddm-resource</name>
-			<value>com.liferay.portlet.journal</value>
 		</init-param>
 		<init-param>
 			<name>template-path</name>
@@ -2853,10 +2841,6 @@
 		<display-name>Dynamic Data Lists</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
 		<init-param>
-			<name>ddm-resource</name>
-			<value>com.liferay.portlet.dynamicdatalists</value>
-		</init-param>
-		<init-param>
 			<name>template-path</name>
 			<value>/html/portlet/dynamic_data_lists/</value>
 		</init-param>
@@ -2883,10 +2867,6 @@
 		<init-param>
 			<name>config-template</name>
 			<value>/html/portlet/dynamic_data_list_display/configuration.jsp</value>
-		</init-param>
-		<init-param>
-			<name>ddm-resource</name>
-			<value>com.liferay.portlet.dynamicdatalists</value>
 		</init-param>
 		<init-param>
 			<name>template-path</name>

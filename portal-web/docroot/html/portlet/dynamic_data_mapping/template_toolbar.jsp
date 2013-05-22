@@ -36,7 +36,7 @@ long classPK = ParamUtil.getLong(request, "classPK");
 
 		<c:choose>
 			<c:when test="<%= classNameId == PortalUtil.getClassNameId(DDMStructure.class) %>">
-				<c:if test="<%= DDMPermission.contains(permissionChecker, scopeGroupId, ddmResource, ActionKeys.ADD_TEMPLATE) && (Validator.isNull(templateTypeValue) || templateTypeValue.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM)) %>">
+				<c:if test="<%= DDMPermission.contains(permissionChecker, scopeGroupId, ddmDisplay.getResourceName(), ddmDisplay.getAddTemplateActionId()) && (Validator.isNull(templateTypeValue) || templateTypeValue.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM)) %>">
 					<portlet:renderURL var="addTemplateURL">
 						<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
 						<portlet:param name="redirect" value="<%= redirect %>" />
@@ -55,7 +55,7 @@ long classPK = ParamUtil.getLong(request, "classPK");
 					<aui:nav-item href="<%= addTemplateURL %>" iconClass="icon-plus" label="<%= message %>" selected='<%= toolbarItem.equals("add-form-template") %>' />
 				</c:if>
 
-				<c:if test="<%= DDMPermission.contains(permissionChecker, scopeGroupId, ddmResource, ActionKeys.ADD_TEMPLATE) && (Validator.isNull(templateTypeValue) || templateTypeValue.equals(DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY)) %>">
+				<c:if test="<%= DDMPermission.contains(permissionChecker, scopeGroupId, ddmDisplay.getResourceName(), ddmDisplay.getAddTemplateActionId()) && (Validator.isNull(templateTypeValue) || templateTypeValue.equals(DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY)) %>">
 					<portlet:renderURL var="addTemplateURL">
 						<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
 						<portlet:param name="redirect" value="<%= redirect %>" />
@@ -96,14 +96,12 @@ long classPK = ParamUtil.getLong(request, "classPK");
 							<portlet:param name="backURL" value="<%= redirect %>" />
 							<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
 							<portlet:param name="type" value="<%= DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY %>" />
-							<portlet:param name="ddmResourceActionId" value="<%= ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE %>" />
 						</liferay-portlet:renderURL>
 
 						<%
 						for (TemplateHandler templateHandler : templateHandlers) {
 							addPortletDisplayTemplateURL.setParameter("classNameId", String.valueOf(PortalUtil.getClassNameId(templateHandler.getClassName())));
 							addPortletDisplayTemplateURL.setParameter("classPK", String.valueOf(0));
-							addPortletDisplayTemplateURL.setParameter("ddmResource", templateHandler.getResourceName());
 						%>
 
 							<aui:nav-item

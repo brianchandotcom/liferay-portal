@@ -73,9 +73,33 @@ ${ifType} (
 		commandScopeVariables.containsKey("${var}")
 	</#if>
 ) {
+	<#if ifElement.element("condition")??>
+		<#assign conditionalElement = ifElement.element("condition")>
+	<#elseif ifElement.element("contains")??>
+		<#assign conditionalElement = ifElement.element("contains")>
+	<#elseif ifElement.element("equals")??>
+		<#assign conditionalElement = ifElement.element("equals")>
+	<#elseif ifElement.element("isset")??>
+		<#assign conditionalElement = ifElement.element("isset")>
+	</#if>
+
+	<#assign lineNumber = conditionalElement.attributeValue("line-number")>
+
+	liferaySelenium.sendLogger("${macroName}Macro__${lineNumber}", "pending");
+
+	liferaySelenium.sendLogger("${macroName}Macro__${lineNumber}", "pass");
+
 	<#assign thenElement = ifElement.element("then")>
+
+	<#assign lineNumber = thenElement.attributeValue("line-number")>
+
+	liferaySelenium.sendLogger("${macroName}Macro__${lineNumber}", "pending");
 
 	<#assign blockElement = thenElement>
 
 	<#include "macro_block_element.ftl">
+
+	<#assign lineNumber = thenElement.attributeValue("line-number")>
+
+	liferaySelenium.sendLogger("${macroName}Macro__${lineNumber}", "pass");
 }

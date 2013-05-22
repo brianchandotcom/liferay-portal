@@ -28,6 +28,7 @@ public class MacroConverter extends BaseConverter {
 	public void convert(String macroName) throws Exception {
 		Map<String, Object> context = getContext();
 
+		context.put("macroNameStack", new FreeMarkerStack());
 		context.put("macroName", macroName);
 
 		String content = processTemplate("macro.ftl", context);

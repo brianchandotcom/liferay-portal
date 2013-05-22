@@ -1,5 +1,9 @@
 <#assign macro = macroElement.attributeValue("macro")>
 
+<#assign x = macro?last_index_of("#")>
+
+<#assign void = macroNameStack.push(macro?substring(0, x))>
+
 <#if macroElement.getName() == "execute">
 	executeScopeVariables = new HashMap<String, String>();
 
@@ -24,8 +28,6 @@
 	</#if>
 </#if>
 
-<#assign x = macro?last_index_of("#")>
-
 <#if macroElement.getName() == "execute" && macro?substring(x + 1)?starts_with("is")>
 	return
 </#if>
@@ -35,3 +37,5 @@ ${seleniumBuilderFileUtil.getVariableName(macro?substring(0, x))}Macro.${macro?s
 <#if macroElement.getName() == "execute">
 	;
 </#if>
+
+<#assign void = macroNameStack.pop()>

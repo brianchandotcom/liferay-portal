@@ -69,9 +69,6 @@ String structureAvailableFields = ParamUtil.getString(request, "structureAvailab
 if (Validator.isNotNull(structureAvailableFields)) {
 	scopeAvailableFields = structureAvailableFields;
 }
-
-ddmResource = ddmDisplay.getTemplateDDMResource(request, template);
-String ddmResourceActionId = ddmDisplay.getTemplateDDMResourceActionId();
 %>
 
 <portlet:actionURL var="editTemplateURL">
@@ -89,8 +86,6 @@ String ddmResourceActionId = ddmDisplay.getTemplateDDMResourceActionId();
 	<aui:input name="type" type="hidden" value="<%= type %>" />
 	<aui:input name="structureAvailableFields" type="hidden" value="<%= structureAvailableFields %>" />
 	<aui:input name="saveAndContinue" type="hidden" value="<%= false %>" />
-	<aui:input name="ddmResource" type="hidden" value="<%= ddmResource %>" />
-	<aui:input name="ddmResourceActionId" type="hidden" value="<%= ddmResourceActionId %>" />
 
 	<liferay-ui:error exception="<%= TemplateNameException.class %>" message="please-enter-a-valid-name" />
 	<liferay-ui:error exception="<%= TemplateScriptException.class %>" message="please-enter-a-valid-script" />

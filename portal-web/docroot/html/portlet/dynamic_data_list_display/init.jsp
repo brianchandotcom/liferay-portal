@@ -55,8 +55,6 @@ boolean spreadsheet = GetterUtil.getBoolean(preferences.getValue("spreadsheet", 
 
 DDMDisplay ddmDisplay = DDMDisplayRegistryUtil.getDDMDisplay(PortletKeys.DYNAMIC_DATA_LISTS);
 
-String ddmResource = ddmDisplay.getDDMResource();
-
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
 

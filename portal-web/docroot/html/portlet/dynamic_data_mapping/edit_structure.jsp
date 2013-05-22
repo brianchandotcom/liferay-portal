@@ -71,7 +71,6 @@ if (Validator.isNotNull(script)) {
 	<aui:input name="classPK" type="hidden" value="<%= String.valueOf(classPK) %>" />
 	<aui:input name="xsd" type="hidden" />
 	<aui:input name="saveAndContinue" type="hidden" value="<%= false %>" />
-	<aui:input name="ddmResource" type="hidden" value="<%= ddmResource %>" />
 
 	<liferay-ui:error exception="<%= LocaleException.class %>">
 

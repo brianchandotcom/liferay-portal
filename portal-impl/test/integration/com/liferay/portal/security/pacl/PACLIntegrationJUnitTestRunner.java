@@ -128,7 +128,7 @@ public class PACLIntegrationJUnitTestRunner
 				try {
 					return new URL("file", null, path);
 				}
-				catch (MalformedURLException e) {
+				catch (MalformedURLException murle) {
 				}
 			}
 

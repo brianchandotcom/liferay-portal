@@ -41,7 +41,7 @@ public class SilentPrefsPropsUtil {
 		try {
 			return PrefsPropsUtil.getBoolean(companyId, name, defaultValue);
 		}
-		catch (SystemException e) {
+		catch (SystemException se) {
 		}
 
 		return GetterUtil.getBoolean(PropsUtil.get(name), defaultValue);
@@ -103,7 +103,7 @@ public class SilentPrefsPropsUtil {
 		try {
 			return PrefsPropsUtil.getContent(name);
 		}
-		catch (SystemException e) {
+		catch (SystemException se) {
 		}
 
 		return PropsUtil.get(name);
@@ -126,7 +126,7 @@ public class SilentPrefsPropsUtil {
 		try {
 			return PrefsPropsUtil.getDouble(companyId, name, defaultValue);
 		}
-		catch (SystemException e) {
+		catch (SystemException se) {
 		}
 
 		return GetterUtil.getDouble(PropsUtil.get(name), defaultValue);
@@ -172,7 +172,7 @@ public class SilentPrefsPropsUtil {
 		try {
 			return PrefsPropsUtil.getInteger(companyId, name);
 		}
-		catch (SystemException e) {
+		catch (SystemException se) {
 		}
 
 		return GetterUtil.getInteger(PropsUtil.get(name));
@@ -229,7 +229,7 @@ public class SilentPrefsPropsUtil {
 		try {
 			return PrefsPropsUtil.getLong(companyId, name);
 		}
-		catch (SystemException e) {
+		catch (SystemException se) {
 		}
 
 		return GetterUtil.getLong(PropsUtil.get(name));
@@ -239,7 +239,7 @@ public class SilentPrefsPropsUtil {
 		try {
 			return PrefsPropsUtil.getLong(companyId, name, defaultValue);
 		}
-		catch (SystemException e) {
+		catch (SystemException se) {
 		}
 
 		return GetterUtil.getLong(PropsUtil.get(name), defaultValue);
@@ -273,7 +273,7 @@ public class SilentPrefsPropsUtil {
 		try {
 			return PrefsPropsUtil.getLong(name, defaultValue);
 		}
-		catch (SystemException e) {
+		catch (SystemException se) {
 		}
 
 		return GetterUtil.getLong(PropsUtil.get(name), defaultValue);
@@ -315,7 +315,7 @@ public class SilentPrefsPropsUtil {
 		try {
 			return PrefsPropsUtil.getShort(companyId, name, defaultValue);
 		}
-		catch (SystemException e) {
+		catch (SystemException se) {
 		}
 
 		return GetterUtil.getShort(PropsUtil.get(name), defaultValue);
@@ -339,7 +339,7 @@ public class SilentPrefsPropsUtil {
 		try {
 			return PrefsPropsUtil.getShort(name);
 		}
-		catch (SystemException e) {
+		catch (SystemException se) {
 		}
 
 		return GetterUtil.getShort(PropsUtil.get(name));
@@ -350,7 +350,7 @@ public class SilentPrefsPropsUtil {
 		try {
 			return PrefsPropsUtil.getShort(name, defaultValue);
 		}
-		catch (SystemException e) {
+		catch (SystemException se) {
 		}
 
 		return GetterUtil.getShort(PropsUtil.get(name), defaultValue);
@@ -372,7 +372,7 @@ public class SilentPrefsPropsUtil {
 		try {
 			return PrefsPropsUtil.getString(companyId, name, defaultValue);
 		}
-		catch (SystemException e) {
+		catch (SystemException se) {
 		}
 
 		return GetterUtil.get(PropsUtil.get(name), defaultValue);

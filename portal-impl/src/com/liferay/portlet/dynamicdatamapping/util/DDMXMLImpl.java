@@ -96,7 +96,7 @@ public class DDMXMLImpl implements DDMXML {
 		try {
 			document = SAXReaderUtil.read(xml);
 		}
-		catch (DocumentException e) {
+		catch (DocumentException de) {
 			return null;
 		}
 

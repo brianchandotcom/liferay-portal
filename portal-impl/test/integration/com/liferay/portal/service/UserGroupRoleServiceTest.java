@@ -149,7 +149,7 @@ public class UserGroupRoleServiceTest {
 
 			Assert.fail();
 		}
-		catch (PrincipalException e) {
+		catch (PrincipalException pe) {
 			Assert.assertTrue(
 				UserGroupRoleLocalServiceUtil.hasUserGroupRole(
 					objectUser.getUserId(), group.getGroupId(),
@@ -178,7 +178,7 @@ public class UserGroupRoleServiceTest {
 
 			Assert.fail();
 		}
-		catch (PrincipalException e) {
+		catch (PrincipalException pe) {
 			Assert.assertTrue(
 				UserGroupRoleLocalServiceUtil.hasUserGroupRole(
 					objectUser.getUserId(), group.getGroupId(),
@@ -206,7 +206,7 @@ public class UserGroupRoleServiceTest {
 
 			Assert.fail();
 		}
-		catch (PrincipalException e) {
+		catch (PrincipalException pe) {
 			Assert.assertTrue(
 				UserGroupRoleLocalServiceUtil.hasUserGroupRole(
 					objectUser.getUserId(), group.getGroupId(),
@@ -234,7 +234,7 @@ public class UserGroupRoleServiceTest {
 
 			Assert.fail();
 		}
-		catch (PrincipalException e) {
+		catch (PrincipalException pe) {
 			Assert.assertTrue(
 				UserGroupRoleLocalServiceUtil.hasUserGroupRole(
 					objectUser.getUserId(), group.getGroupId(),
@@ -335,7 +335,7 @@ public class UserGroupRoleServiceTest {
 
 			Assert.fail();
 		}
-		catch (PrincipalException e) {
+		catch (PrincipalException pe) {
 			Assert.assertTrue(
 				UserGroupRoleLocalServiceUtil.hasUserGroupRole(
 					objectUser.getUserId(), group.getGroupId(),
@@ -364,7 +364,7 @@ public class UserGroupRoleServiceTest {
 
 			Assert.fail();
 		}
-		catch (PrincipalException e) {
+		catch (PrincipalException pe) {
 			Assert.assertTrue(
 				UserGroupRoleLocalServiceUtil.hasUserGroupRole(
 					objectUser.getUserId(), group.getGroupId(),
@@ -392,7 +392,7 @@ public class UserGroupRoleServiceTest {
 
 			Assert.fail();
 		}
-		catch (PrincipalException e) {
+		catch (PrincipalException pe) {
 			Assert.assertTrue(
 				UserGroupRoleLocalServiceUtil.hasUserGroupRole(
 					objectUser.getUserId(), group.getGroupId(),
@@ -420,7 +420,7 @@ public class UserGroupRoleServiceTest {
 
 			Assert.fail();
 		}
-		catch (PrincipalException e) {
+		catch (PrincipalException pe) {
 			Assert.assertTrue(
 				UserGroupRoleLocalServiceUtil.hasUserGroupRole(
 					objectUser.getUserId(), group.getGroupId(),

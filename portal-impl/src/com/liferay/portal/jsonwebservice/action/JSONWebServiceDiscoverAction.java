@@ -115,8 +115,8 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 				try {
 					genericTypes = methodParameter.getGenericTypes();
 				}
-				catch (ClassNotFoundException e) {
-					throw new PortalException(e);
+				catch (ClassNotFoundException cnfe) {
+					throw new PortalException(cnfe);
 				}
 
 				parameterMap.put(

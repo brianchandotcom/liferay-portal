@@ -46,8 +46,12 @@ public class PollsPortletDataHandler extends BasePortletDataHandler {
 	public PollsPortletDataHandler() {
 		setDataLocalized(true);
 		setExportControls(
-			new PortletDataHandlerBoolean(NAMESPACE, "questions"),
-			new PortletDataHandlerBoolean(NAMESPACE, "votes"));
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "questions", true, false, null,
+				PollsQuestion.class.getName()),
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "votes", true, false, null,
+				PollsVote.class.getName()));
 		setImportControls(getExportControls());
 	}
 

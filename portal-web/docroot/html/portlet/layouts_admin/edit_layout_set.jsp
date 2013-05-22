@@ -229,7 +229,7 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 	var clickHandler = function(event) {
 		var dataValue = event.target.ancestor().attr('data-value');
 
-		if (dataValue == 'add-child-page') {
+		if (dataValue == 'add-page') {
 			var content = A.one('#<portlet:namespace />addLayout');
 
 			if (!popup) {

@@ -73,42 +73,50 @@ public class ServletContextUtil {
 	public static long getLastModified(
 		ServletContext servletContext, String path, boolean cache) {
 
+		String lastModifiedCacheKey = null;
+
 		if (cache) {
+			lastModifiedCacheKey = ServletContextUtil.class.getName().concat(
+				StringPool.PERIOD).concat(path);
+
 			Long lastModified = (Long)servletContext.getAttribute(
-				ServletContextUtil.class.getName() + StringPool.PERIOD +
-					path);
+				lastModifiedCacheKey);
 
 			if (lastModified != null) {
 				return lastModified.longValue();
 			}
 		}
 
+		String curPath = null;
+
 		long lastModified = 0;
 
-		Queue<String> tempPaths = new LinkedList<String>();
-		String tempPath = path;
+		Queue<String> pathQueue = new LinkedList<String>();
 
-		while (tempPath != null) {
+		pathQueue.offer(path);
 
-			if (tempPath.endsWith(StringPool.SLASH)) {
-				Set<String> s = servletContext.getResourcePaths(
-						tempPath);
-				tempPaths.addAll(s);
-			} else {
+		while ((curPath = pathQueue.poll()) != null) {
+			if (curPath.charAt(curPath.length() - 1) == CharPool.SLASH) {
+				Set<String> pathSet = servletContext.getResourcePaths(curPath);
 
+				if (pathSet != null) {
+					pathQueue.addAll(pathSet);
+				}
+			}
+			else {
 				try {
-					URL url = servletContext.getResource(tempPath);
+					URL url = servletContext.getResource(curPath);
 
 					if (url == null) {
-						_log.error(
-							"Resource URL for " + tempPath + " is null");
-					} else {
-
+						_log.error("Resource URL for " + curPath + " is null");
+					}
+					else {
 						URLConnection urlConnection = url.openConnection();
-						long urlModified = urlConnection.getLastModified();
 
-						if (urlModified > lastModified) {
-							lastModified = urlModified;
+						long curLastModified = urlConnection.getLastModified();
+
+						if (curLastModified > lastModified) {
+							lastModified = curLastModified;
 						}
 					}
 				}
@@ -116,15 +124,11 @@ public class ServletContextUtil {
 					_log.error(ioe, ioe);
 				}
 			}
-
-			tempPath = tempPaths.poll();
 		}
 
 		if (cache) {
 			servletContext.setAttribute(
-				ServletContextUtil.class.getName() + StringPool.PERIOD +
-					path,
-				new Long(lastModified));
+				lastModifiedCacheKey, new Long(lastModified));
 		}
 
 		return lastModified;

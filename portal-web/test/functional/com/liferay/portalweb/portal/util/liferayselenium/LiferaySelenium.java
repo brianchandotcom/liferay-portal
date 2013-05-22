@@ -145,6 +145,8 @@ public interface LiferaySelenium extends Selenium {
 
 	public void sendKeys(String locator, String value);
 
+	public void sendLogger(String id, String status);
+
 	public void setDefaultTimeout();
 
 	public void setDefaultTimeoutImplicit();

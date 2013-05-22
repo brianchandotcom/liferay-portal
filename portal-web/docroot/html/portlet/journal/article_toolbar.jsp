@@ -89,9 +89,7 @@ if ((article != null) && article.isDraft()) {
 							permissionPopUp.iframe.node.get('contentWindow.location').reload(true);
 						}
 
-						permissionPopUp.show();
-						permissionPopUp.centered();
-
+						event.domEvent.preventDefault();
 					}
 				}
 			}
@@ -106,6 +104,8 @@ if ((article != null) && article.isDraft()) {
 				on: {
 					click: function() {
 						<portlet:namespace />expireArticle();
+
+						event.domEvent.preventDefault();
 					}
 				}
 			}
@@ -120,6 +120,8 @@ if ((article != null) && article.isDraft()) {
 				on: {
 					click: function() {
 						<portlet:namespace />deleteArticle();
+
+						event.domEvent.preventDefault();
 					}
 				}
 			}
@@ -141,6 +143,8 @@ if ((article != null) && article.isDraft()) {
 				on: {
 					click: function (event) {
 						window.location = '<%= viewHistoryURL %>';
+
+						event.domEvent.preventDefault();
 					}
 				}
 			}

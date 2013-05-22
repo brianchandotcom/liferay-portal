@@ -17,13 +17,14 @@ package com.liferay.portlet.dynamicdatamapping.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.base.DDMStructureServiceBaseImpl;
 import com.liferay.portlet.dynamicdatamapping.service.permission.DDMPermission;
 import com.liferay.portlet.dynamicdatamapping.service.permission.DDMStructurePermission;
+import com.liferay.portlet.dynamicdatamapping.util.DDMDisplay;
+import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 
 import java.util.List;
 import java.util.Locale;
@@ -67,11 +68,11 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			String xsd, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		String ddmResource = ParamUtil.getString(serviceContext, "ddmResource");
+		DDMDisplay ddmDisplay = DDMUtil.getDDMDisplay(serviceContext);
 
 		DDMPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			ddmResource, ActionKeys.ADD_STRUCTURE);
+			ddmDisplay.getResourceName(), ddmDisplay.getAddStructureActionId());
 
 		return ddmStructureLocalService.addStructure(
 			getUserId(), groupId, classNameId, nameMap, descriptionMap, xsd,
@@ -113,11 +114,11 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			int type, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		String ddmResource = ParamUtil.getString(serviceContext, "ddmResource");
+		DDMDisplay ddmDisplay = DDMUtil.getDDMDisplay(serviceContext);
 
 		DDMPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			ddmResource, ActionKeys.ADD_STRUCTURE);
+			ddmDisplay.getResourceName(), ddmDisplay.getAddStructureActionId());
 
 		return ddmStructureLocalService.addStructure(
 			getUserId(), groupId, parentStructureId, classNameId, structureKey,
@@ -161,11 +162,11 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			int type, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		String ddmResource = ParamUtil.getString(serviceContext, "ddmResource");
+		DDMDisplay ddmDisplay = DDMUtil.getDDMDisplay(serviceContext);
 
 		DDMPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			ddmResource, ActionKeys.ADD_STRUCTURE);
+			ddmDisplay.getResourceName(), ddmDisplay.getAddStructureActionId());
 
 		return ddmStructureLocalService.addStructure(
 			userId, groupId, parentStructureKey, classNameId, structureKey,
@@ -194,11 +195,11 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		String ddmResource = ParamUtil.getString(serviceContext, "ddmResource");
+		DDMDisplay ddmDisplay = DDMUtil.getDDMDisplay(serviceContext);
 
 		DDMPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			ddmResource, ActionKeys.ADD_STRUCTURE);
+			ddmDisplay.getResourceName(), ddmDisplay.getAddStructureActionId());
 
 		return ddmStructureLocalService.copyStructure(
 			getUserId(), structureId, nameMap, descriptionMap, serviceContext);
@@ -208,11 +209,11 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			long structureId, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		String ddmResource = ParamUtil.getString(serviceContext, "ddmResource");
+		DDMDisplay ddmDisplay = DDMUtil.getDDMDisplay(serviceContext);
 
 		DDMPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			ddmResource, ActionKeys.ADD_STRUCTURE);
+			ddmDisplay.getResourceName(), ddmDisplay.getAddStructureActionId());
 
 		return ddmStructureLocalService.copyStructure(
 			getUserId(), structureId, serviceContext);

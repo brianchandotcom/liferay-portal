@@ -34,6 +34,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface DDM {
 
+	public DDMDisplay getDDMDisplay(ServiceContext serviceContext);
+
 	public Serializable getDisplayFieldValue(
 			Serializable fieldValue, String type, Locale locale)
 		throws Exception;

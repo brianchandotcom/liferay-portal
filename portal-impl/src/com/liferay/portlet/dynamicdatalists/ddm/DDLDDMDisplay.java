@@ -22,14 +22,12 @@ import com.liferay.portlet.dynamicdatamapping.util.BaseDDMDisplay;
  */
 public class DDLDDMDisplay extends BaseDDMDisplay {
 
-	@Override
-	public String getDDMResource() {
-		return "com.liferay.portlet.dynamicdatalists";
-	}
-
-	@Override
 	public String getPortletId() {
 		return PortletKeys.DYNAMIC_DATA_LISTS;
+	}
+
+	public String getResourceName() {
+		return "com.liferay.portlet.dynamicdatalists";
 	}
 
 }

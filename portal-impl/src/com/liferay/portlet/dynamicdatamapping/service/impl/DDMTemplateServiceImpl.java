@@ -17,14 +17,14 @@ package com.liferay.portlet.dynamicdatamapping.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.base.DDMTemplateServiceBaseImpl;
 import com.liferay.portlet.dynamicdatamapping.service.permission.DDMPermission;
 import com.liferay.portlet.dynamicdatamapping.service.permission.DDMTemplatePermission;
+import com.liferay.portlet.dynamicdatamapping.util.DDMDisplay;
+import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 
 import java.io.File;
 
@@ -77,14 +77,12 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		String ddmResource = ParamUtil.getString(serviceContext, "ddmResource");
-
-		String ddmResourceActionId = getDDMResourceActionId(
-			ddmResource, serviceContext);
+		DDMDisplay ddmDisplay = DDMUtil.getDDMDisplay(serviceContext);
 
 		DDMPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			ddmResource, ddmResourceActionId);
+			ddmDisplay.getResourceName(classNameId),
+			ddmDisplay.getAddTemplateActionId());
 
 		return ddmTemplateLocalService.addTemplate(
 			getUserId(), groupId, classNameId, classPK, null, nameMap,
@@ -134,14 +132,12 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			File smallImageFile, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		String ddmResource = ParamUtil.getString(serviceContext, "ddmResource");
-
-		String ddmResourceActionId = getDDMResourceActionId(
-			ddmResource, serviceContext);
+		DDMDisplay ddmDisplay = DDMUtil.getDDMDisplay(serviceContext);
 
 		DDMPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			ddmResource, ddmResourceActionId);
+			ddmDisplay.getResourceName(classNameId),
+			ddmDisplay.getAddTemplateActionId());
 
 		return ddmTemplateLocalService.addTemplate(
 			getUserId(), groupId, classNameId, classPK, templateKey, nameMap,
@@ -172,14 +168,17 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		String ddmResource = ParamUtil.getString(serviceContext, "ddmResource");
+		DDMDisplay ddmDisplay = DDMUtil.getDDMDisplay(serviceContext);
 
-		String ddmResourceActionId = getDDMResourceActionId(
-			ddmResource, serviceContext);
+		DDMTemplate template = ddmTemplatePersistence.findByPrimaryKey(
+			templateId);
+
+		long classNameId = template.getClassNameId();
 
 		DDMPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			ddmResource, ddmResourceActionId);
+			ddmDisplay.getResourceName(classNameId),
+			ddmDisplay.getAddTemplateActionId());
 
 		return ddmTemplateLocalService.copyTemplate(
 			getUserId(), templateId, nameMap, descriptionMap, serviceContext);
@@ -189,14 +188,17 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			long templateId, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		String ddmResource = ParamUtil.getString(serviceContext, "ddmResource");
+		DDMDisplay ddmDisplay = DDMUtil.getDDMDisplay(serviceContext);
 
-		String ddmResourceActionId = getDDMResourceActionId(
-			ddmResource, serviceContext);
+		DDMTemplate template = ddmTemplatePersistence.findByPrimaryKey(
+			templateId);
+
+		long classNameId = template.getClassNameId();
 
 		DDMPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			ddmResource, ddmResourceActionId);
+			ddmDisplay.getResourceName(classNameId),
+			ddmDisplay.getAddTemplateActionId());
 
 		return ddmTemplateLocalService.copyTemplate(
 			getUserId(), templateId, serviceContext);
@@ -227,14 +229,12 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		String ddmResource = ParamUtil.getString(serviceContext, "ddmResource");
-
-		String ddmResourceActionId = getDDMResourceActionId(
-			ddmResource, serviceContext);
+		DDMDisplay ddmDisplay = DDMUtil.getDDMDisplay(serviceContext);
 
 		DDMPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			ddmResource, ddmResourceActionId);
+			ddmDisplay.getResourceName(classNameId),
+			ddmDisplay.getAddTemplateActionId());
 
 		return ddmTemplateLocalService.copyTemplates(
 			getUserId(), classNameId, classPK, newClassPK, type,
@@ -854,23 +854,5 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			cacheable, smallImage, smallImageURL, smallImageFile,
 			serviceContext);
 	}
-
-	protected String getDDMResourceActionId(
-		String ddmResource, ServiceContext serviceContext) {
-
-		String ddmResourceActionId = ParamUtil.getString(
-			serviceContext, "ddmResourceActionId");
-
-		if (Validator.isNull(ddmResourceActionId) &&
-			ddmResource.equals(_DDL_CLASS_NAME)) {
-
-			ddmResourceActionId = ActionKeys.ADD_TEMPLATE;
-		}
-
-		return ddmResourceActionId;
-	}
-
-	private static final String _DDL_CLASS_NAME =
-		"com.liferay.portlet.dynamicdatalists";
 
 }

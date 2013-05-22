@@ -49,30 +49,6 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)} 
 		}
 
 		selenium.startLogger();
-
-		commandScopeVariables = new HashMap<String, String>();
-
-		commandScopeVariables.putAll(definitionScopeVariables);
-
-		<#if rootElement.element("set-up")??>
-			<#assign setUpElement = rootElement.element("set-up")>
-
-			<#assign childElementAttributeValues = seleniumBuilderFileUtil.getChildElementAttributeValues(setUpElement, "action")>
-
-			<#list childElementAttributeValues as childElementAttributeValue>
-				${childElementAttributeValue}Action ${seleniumBuilderFileUtil.getVariableName(childElementAttributeValue)}Action = new ${childElementAttributeValue}Action(selenium);
-			</#list>
-
-			<#assign childElementAttributeValues = seleniumBuilderFileUtil.getChildElementAttributeValues(setUpElement, "macro")>
-
-			<#list childElementAttributeValues as childElementAttributeValue>
-				${childElementAttributeValue}Macro ${seleniumBuilderFileUtil.getVariableName(childElementAttributeValue)}Macro = new ${childElementAttributeValue}Macro(selenium);
-			</#list>
-
-			<#assign blockElement = setUpElement>
-
-			<#include "test_case_block_element.ftl">
-		</#if>
 	}
 
 	<#assign commandElements = rootElement.elements("command")>
@@ -85,59 +61,82 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)} 
 
 			commandScopeVariables.putAll(definitionScopeVariables);
 
-			<#assign childElementAttributeValues = seleniumBuilderFileUtil.getChildElementAttributeValues(commandElement, "action")>
+			<#assign childElementAttributeValues = seleniumBuilderFileUtil.getChildElementAttributeValues(rootElement, "action")>
 
 			<#list childElementAttributeValues as childElementAttributeValue>
 				${childElementAttributeValue}Action ${seleniumBuilderFileUtil.getVariableName(childElementAttributeValue)}Action = new ${childElementAttributeValue}Action(selenium);
 			</#list>
 
-			<#assign childElementAttributeValues = seleniumBuilderFileUtil.getChildElementAttributeValues(commandElement, "macro")>
+			<#assign childElementAttributeValues = seleniumBuilderFileUtil.getChildElementAttributeValues(rootElement, "macro")>
 
 			<#list childElementAttributeValues as childElementAttributeValue>
 				${childElementAttributeValue}Macro ${seleniumBuilderFileUtil.getVariableName(childElementAttributeValue)}Macro = new ${childElementAttributeValue}Macro(selenium);
 			</#list>
 
-			selenium.sendLogger("${testCaseName}TestCase__${commandName}", "start");
+			try {
+				<#if rootElement.element("set-up")??>
+					commandScopeVariables = new HashMap<String, String>();
 
-			<#assign lineNumber = commandElement.attributeValue("line-number")>
+					commandScopeVariables.putAll(definitionScopeVariables);
 
-			selenium.sendLogger("${testCaseName}TestCase__${lineNumber}", "pending");
+					selenium.sendLogger("${testCaseName}TestCase__${commandName}", "start");
 
-			<#assign blockElement = commandElement>
+					<#assign setUpElement = rootElement.element("set-up")>
 
-			<#include "test_case_block_element.ftl">
+					<#assign lineNumber = setUpElement.attributeValue("line-number")>
 
-			<#assign lineNumber = commandElement.attributeValue("line-number")>
+					selenium.sendLogger("${testCaseName}TestCase__${lineNumber}", "pending");
 
-			selenium.sendLogger("${testCaseName}TestCase__${lineNumber}", "pass");
+					<#assign blockElement = setUpElement>
+
+					<#include "test_case_block_element.ftl">
+
+					<#assign lineNumber = setUpElement.attributeValue("line-number")>
+
+					selenium.sendLogger("${testCaseName}TestCase__${lineNumber}", "pass");
+				</#if>
+
+				commandScopeVariables = new HashMap<String, String>();
+
+				commandScopeVariables.putAll(definitionScopeVariables);
+
+				selenium.sendLogger("${testCaseName}TestCase__${commandName}", "start");
+
+				<#assign lineNumber = commandElement.attributeValue("line-number")>
+
+				selenium.sendLogger("${testCaseName}TestCase__${lineNumber}", "pending");
+
+				<#assign blockElement = commandElement>
+
+				<#include "test_case_block_element.ftl">
+
+				<#assign lineNumber = commandElement.attributeValue("line-number")>
+
+				selenium.sendLogger("${testCaseName}TestCase__${lineNumber}", "pass");
+			}
+			finally {
+				<#if rootElement.element("tear-down")??>
+					commandScopeVariables = new HashMap<String, String>();
+
+					commandScopeVariables.putAll(definitionScopeVariables);
+
+					<#assign tearDownElement = rootElement.element("tear-down")>
+
+					selenium.sendLogger("${testCaseName}TestCase__${commandName}", "start");
+
+					<#assign lineNumber = tearDownElement.attributeValue("line-number")>
+
+					selenium.sendLogger("${testCaseName}TestCase__${lineNumber}", "pending");
+
+					<#assign blockElement = tearDownElement>
+
+					<#include "test_case_block_element.ftl">
+
+					<#assign lineNumber = tearDownElement.attributeValue("line-number")>
+
+					selenium.sendLogger("${testCaseName}TestCase__${lineNumber}", "pass");
+				</#if>
+			}
 		}
 	</#list>
-
-	@Override
-	public void tearDown() throws Exception {
-		commandScopeVariables = new HashMap<String, String>();
-
-		commandScopeVariables.putAll(definitionScopeVariables);
-
-		<#if rootElement.element("tear-down")??>
-			<#assign tearDownElement = rootElement.element("tear-down")>
-
-			<#assign childElementAttributeValues = seleniumBuilderFileUtil.getChildElementAttributeValues(tearDownElement, "action")>
-
-			<#list childElementAttributeValues as childElementAttributeValue>
-				${childElementAttributeValue}Action ${seleniumBuilderFileUtil.getVariableName(childElementAttributeValue)}Action = new ${childElementAttributeValue}Action(selenium);
-			</#list>
-
-			<#assign childElementAttributeValues = seleniumBuilderFileUtil.getChildElementAttributeValues(tearDownElement, "macro")>
-
-			<#list childElementAttributeValues as childElementAttributeValue>
-				${childElementAttributeValue}Macro ${seleniumBuilderFileUtil.getVariableName(childElementAttributeValue)}Macro = new ${childElementAttributeValue}Macro(selenium);
-			</#list>
-
-			<#assign blockElement = tearDownElement>
-
-			<#include "test_case_block_element.ftl">
-		</#if>
-	}
-
 }

@@ -207,6 +207,13 @@ AUI.add(
 
 				var addPanel = A.one('#' + namespace + 'addPanel');
 
+				Liferay.on(
+					'dockbar:closeAddContentMenu',
+					function(event) {
+						addContent.removeClass('open');
+					}
+				);
+
 				if (addPanel) {
 					addPanel.on(
 						EVENT_CLICK,
@@ -215,7 +222,7 @@ AUI.add(
 
 							instance._loadAddPanel();
 
-							addContent.removeClass('open');
+							Liferay.fire('dockbar:closeAddContentMenu');
 						}
 					);
 				}

@@ -24,7 +24,7 @@
 
 				<li class="$nav_item_css_class" $nav_item_attr_selected>
 					<a class="$nav_item_link_css_class" href="$nav_item.getURL()" $nav_item.getTarget()>
-						$nav_item.icon() $nav_item.getName() $nav_item_caret
+						<span>$nav_item.icon() $nav_item.getName() $nav_item_caret</span>
 					</a>
 
 					#if ($nav_item.hasChildren())
@@ -45,3 +45,7 @@
 		</ul>
 	</div>
 </nav>
+
+<script>
+	Liferay.Data.NAV_ITEM_SELECTOR = '.navbar-inner > ul > li';
+</script>

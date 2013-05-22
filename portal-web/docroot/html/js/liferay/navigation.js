@@ -5,6 +5,10 @@ AUI.add(
 		var Util = Liferay.Util;
 		var Lang = A.Lang;
 
+		var TPL_EDITOR = '<div class="add-page-editor"><div class="input-append"></div></div>';
+
+		var TPL_FIELD_INPUT = '<input class="add-page-editor-input" type="text" value="{0}" />';
+
 		var TPL_LIST_ITEM = '<li class="add-page"></li>';
 
 		var TPL_TAB_LINK = '<a href="{url}"><span>{pageTitle}</span></a>';
@@ -82,7 +86,7 @@ AUI.add(
 				NAME: 'navigation',
 
 				prototype: {
-					TPL_DELETE_BUTTON: '<i class="icon-remove-sign delete-tab hide"></i>',
+					TPL_DELETE_BUTTON: '<span class="delete-tab">&times;</span>',
 
 					initializer: function(config) {
 						var instance = this;
@@ -92,7 +96,7 @@ AUI.add(
 						if (navBlock) {
 							instance._updateURL = themeDisplay.getPathMain() + '/layouts_admin/update_page?p_auth=' + Liferay.authToken;
 
-							var navItemSelector = Liferay.Data.NAV_ITEM_SELECTOR || 'ul > li';
+							var navItemSelector = Liferay.Data.NAV_ITEM_SELECTOR || '> ul > li';
 
 							var items = navBlock.all(navItemSelector);
 
@@ -145,11 +149,14 @@ AUI.add(
 					_addPage: function(event) {
 						var instance = this;
 
+						event.halt();
+
 						if (!event.shiftKey) {
-							Dockbar.UnderlayManager.hideAll();
+							Liferay.fire('dockbar:closeAddContentMenu');
 						}
 
 						var navBlock = instance.get('navBlock');
+
 						var addBlock = A.Node.create(TPL_LIST_ITEM);
 
 						navBlock.show();
@@ -175,10 +182,9 @@ AUI.add(
 						var navBlock = instance.get('navBlock');
 
 						if (actionNode) {
-							currentLink = actionNode.one('a');
-							currentLink.show();
+							actionNode.show();
 
-							field.val(instance.prevVal);
+							field.val(event.prevVal);
 						}
 						else {
 							listItem.remove(true);
@@ -219,6 +225,12 @@ AUI.add(
 						if (event.isKey('DELETE') && !event.currentTarget.ancestor('li.selected')) {
 							instance._removePage(event);
 						}
+					},
+
+					_hoverNavItem: function(event) {
+						var instance = this;
+
+						event.currentTarget.toggleClass('lfr-nav-hover', (event.type == 'mouseenter'));
 					},
 
 					_makeAddable: function() {
@@ -267,17 +279,7 @@ AUI.add(
 								navItemSelector
 							);
 
-							navBlock.delegate(
-								'mouseenter',
-								A.rbind('_toggleDeleteButton', instance, 'show'),
-								'li'
-							);
-
-							navBlock.delegate(
-								'mouseleave',
-								A.rbind('_toggleDeleteButton', instance, 'hide'),
-								'li'
-							);
+							navBlock.delegate(['mouseenter', 'mouseleave'], instance._hoverNavItem, 'li', instance);
 
 							instance._deleteButton(navItems);
 						}
@@ -293,51 +295,43 @@ AUI.add(
 								var currentLink = currentItem.one('a');
 
 								if (currentLink) {
-									currentLink.on(
-										'click',
-										function(event) {
-											if (event.shiftKey) {
-												event.halt();
-											}
-										}
-									);
+									var currentSpan = currentLink.one('span');
 
-									currentLink.on(
-										'mouseenter',
-										function(event) {
-											if (!themeDisplay.isStateMaximized() || event.shiftKey) {
-												currentLink.setStyle('cursor', 'text');
-											}
-										}
-									);
-
-									currentLink.on('mouseleave', A.bind('setStyle', currentLink, 'cursor', 'pointer'));
-
-									currentLink.on(
-										'click',
-										function(event) {
-											if (themeDisplay.isStateMaximized() && !event.shiftKey) {
-												return;
-											}
-
-											event.halt();
-
-											var textNode = event.currentTarget;
-
-											var actionNode = textNode.get('parentNode');
-											var currentText = textNode.text();
-
-											instance._createEditor(
-												currentItem,
-												{
-													actionNode: actionNode,
-													currentLink: currentLink,
-													prevVal: currentText,
-													textNode: textNode
+									if (currentSpan) {
+										currentLink.on(
+											'click',
+											function(event) {
+												if (event.shiftKey) {
+													event.halt();
 												}
-											);
-										}
-									);
+											}
+										);
+
+										currentSpan.on(
+											'click',
+											function(event) {
+												if (themeDisplay.isStateMaximized() && !event.shiftKey) {
+													return;
+												}
+
+												event.halt();
+
+												var textNode = event.currentTarget;
+
+												var actionNode = textNode.get('parentNode');
+												var currentText = textNode.text();
+
+												instance._createEditor(
+													currentItem,
+													{
+														actionNode: actionNode,
+														prevVal: currentText,
+														textNode: textNode
+													}
+												);
+											}
+										);
+									}
 								}
 							}
 						}
@@ -354,19 +348,7 @@ AUI.add(
 								eventType = 'cancelPage';
 							}
 
-							var toolbar = listItem._toolbar;
-
-							toolbar.fire(eventType);
-						}
-					},
-
-					_toggleDeleteButton: function(event, action) {
-						var instance = this;
-
-						var deleteTab = event.currentTarget.one('.delete-tab');
-
-						if (deleteTab) {
-							deleteTab[action](true);
+							listItem._toolbar.fire(eventType);
 						}
 					},
 
@@ -384,17 +366,16 @@ AUI.add(
 
 				var prototypeTemplate = instance._prototypeMenuTemplate || '';
 
-				var prevVal = options.prevVal;
-				instance.prevVal = prevVal;
+				var prevVal = Lang.trim(options.prevVal);
 
 				if (options.actionNode) {
-					options.currentLink.hide();
+					options.actionNode.hide();
 				}
 
-				var docClick;
-
 				var relayEvent = function(event) {
-					docClick.detach();
+					if (docClick) {
+						docClick.detach();
+					}
 
 					var eventName = event.type.split(':');
 
@@ -406,13 +387,12 @@ AUI.add(
 				var icons = [
 					{
 						icon: 'icon-ok',
-						id: 'Save',
-						title: 'Save',
 						on: {
 							click: function(event) {
 								toolbar.fire('savePage', options);
 							}
-						}
+						},
+						title: Liferay.Language.get('save')
 					}
 				];
 
@@ -420,113 +400,114 @@ AUI.add(
 					icons.unshift(
 						{
 							icon: 'icon-cog',
-							id: 'Options',
-							title: 'Options',
-						}
-					);
-				}
-
-				var optionsPopover = instance._popover;
-
-				if (!optionsPopover) {
-					optionsPopover = new A.Popover(
-						{
-							bodyContent: prototypeTemplate,
-							align: {
-								node: optionItem,
-								points: ['tc', 'bc']
-							},
 							on: {
-								visibleChange: function(event) {
-									var instance = this;
+								click: function(event) {
+									var button = event.currentTarget.get('boundingBox');
 
-									if (event.newVal) {
-										if (!instance.get('rendered')) {
-											instance.set('align.node', optionItem);
-											instance.setStdModContent(A.WidgetStdMod.BODY, prototypeTemplate);
-											instance.render();
-										}
-									}
+									var active = button.hasClass('active');
+
+									optionsPopover.set('visible', !active);
+
+									button.toggleClass('active');
 								}
 							},
-							zIndex: 200
+							title: Liferay.Language.get('options')
 						}
 					);
-					instance._popover = optionsPopover;
 				}
+
+				var editorContainer = A.Node.create(TPL_EDITOR);
+
+				var docClick = editorContainer.on(
+					'clickoutside',
+					function(event) {
+						docClick.detach();
+
+						instance.fire('cancelPage', options);
+					}
+				);
+
+				var toolbarBoundingBox = editorContainer.one('.input-append');
 
 				var toolbar = new A.Toolbar(
 					{
 						after: {
 							destroy: function(event) {
-								var instance = this;
 								instance.fire('stopEditing');
+
+								optionsPopover.destroy();
+
+								editorContainer.remove(true);
+
+								if (docClick) {
+									docClick.detach();
+								}
 							},
 							render: function(event) {
-								var instance = this;
-
-								docClick = A.getDoc().on('click',
-									function(event) {
-										docClick.detach();
-
-										instance.fire('cancelPage', options);
-									}
-								);
-
 								instance.fire('startEditing');
 							}
 						},
-						boundingBox: A.Node.create('<div class="input-append" />').prependTo(listItem),
-						children: icons,
+						boundingBox: toolbarBoundingBox,
+						children: icons
+					}
+				).render(editorContainer);
+
+				toolbar.get('contentBox').swallowEvent('click');
+
+				var optionItem;
+
+				var optionsPopover = new A.Popover(
+					{
+						bodyContent: prototypeTemplate,
+						align: {
+							points: ['tc', 'bc']
+						},
 						on: {
-							destroy: function(event) {
+							visibleChange: function(event) {
 								var instance = this;
 
-								if (optionsPopover.get('rendered')) {
-									optionsPopover.hide();
+								if (event.newVal && !instance.get('rendered')) {
+									instance.set('align.node', optionItem);
 
-									optionsPopover.setStdModContent(A.WidgetStdMod.BODY, '');
+									instance.render(editorContainer);
 								}
 							}
-						}
+						},
+						zIndex: 200
 					}
-				).render();
+				);
 
-				var navInput = A.Node.create('<input type="text" class="span2">');
-				navInput.val(prevVal);
-				var toolbarBoundingBox = A.one(toolbar.get('boundingBox'));
-				toolbarBoundingBox.prepend(navInput);
+				var popoverContentBox = optionsPopover.get('contentBox');
+
+				popoverContentBox.addClass('lfr-menu-list lfr-page-templates');
+
+				popoverContentBox.swallowEvent('click');
+
+				var toolbarField = A.Node.create(Lang.sub(TPL_FIELD_INPUT, [prevVal]));
+
+				toolbarBoundingBox.prepend(toolbarField);
+
+				listItem.prepend(editorContainer);
 
 				if (prototypeTemplate && instance._optionsOpen && !prevVal) {
-					var optionItem = toolbar.item(1)._host;
+					optionItem = toolbar.item(1).get('boundingBox');
 
-					optionItem.toggleClass('active', true);
+					optionItem.addClass('active');
+
 					optionsPopover.show();
 				}
 
-				var toolbarField = toolbarBoundingBox.one('input');
-
-				var toolbarContentBox = toolbar.get('contentBox');
-
-				var popoverBoundingBox = optionsPopover.get('boundingBox');
-				var popoverContentBox = optionsPopover.get('contentBox');
-
 				options.listItem = listItem;
-				options.toolbar = toolbar;
-				options.field = toolbarField;
 				options.optionsPopover = optionsPopover;
+				options.toolbar = toolbar;
 
-				toolbar.on('savePage', relayEvent);
-				toolbar.on('cancelPage', relayEvent);
+				options.field = editorContainer.one('input');
+
+				toolbar.on(['cancelPage', 'savePage'], relayEvent);
 
 				toolbar._optionsPopover = optionsPopover;
 
 				listItem._toolbar = toolbar;
-
-				popoverContentBox.addClass('lfr-menu-list lfr-page-templates');
-
-				toolbarContentBox.swallowEvent('click');
-				popoverContentBox.swallowEvent('click');
 
 				Util.focusFormField(toolbarField);
 
@@ -534,14 +515,13 @@ AUI.add(
 
 				optionsPopover.on('visibleChange', realign);
 
-				instance.on('stopEditing', realign);
-				instance.on('startEditing', realign);
+				instance.on(['startEditing', 'stopEditing'], realign);
 
 				if (prevVal) {
 					instance.fire('editPage');
 				}
 			},
-			['aui-toolbar', 'aui-popover'],
+			['aui-toolbar', 'aui-popover', 'event-outside'],
 			true
 		);
 
@@ -650,7 +630,7 @@ AUI.add(
 		Liferay.provide(
 			Navigation,
 			'_savePage',
-			function(event, obj, oldName) {
+			function(event, obj) {
 				var instance = this;
 
 				var actionNode = event.actionNode;
@@ -661,8 +641,9 @@ AUI.add(
 
 				var pageTitle = field.get('value');
 
+				var prevVal = Lang.trim(event.prevVal);
+
 				pageTitle = Lang.trim(pageTitle);
-				prevVal = textNode ? Lang.trim(textNode.text()) : '';
 
 				var data = null;
 				var onSuccess = null;
@@ -685,8 +666,8 @@ AUI.add(
 								var doc = A.getDoc();
 
 								textNode.text(pageTitle);
-								currentLink = actionNode.one('a');
-								currentLink.show();
+
+								actionNode.show();
 
 								toolbar.destroy();
 
@@ -707,9 +688,13 @@ AUI.add(
 					}
 					else {
 						var popoverBoundingBox = toolbar._optionsPopover.get('boundingBox');
+
 						var selectedInput = popoverBoundingBox.one('input:checked');
+
+						var layoutPrototypeId;
+
 						if (selectedInput) {
-							var layoutPrototypeId = selectedInput.val();
+							layoutPrototypeId = selectedInput.val();
 						}
 
 						data = {
@@ -738,8 +723,6 @@ AUI.add(
 
 							var newTab = A.Node.create(tabHtml);
 
-							newTab.setStyle('cursor', 'move');
-
 							listItem._LFR_layoutId = data.layoutId;
 
 							listItem.append(newTab);
@@ -747,7 +730,7 @@ AUI.add(
 							toolbar.destroy();
 
 							if (data.sortable) {
-								listItem.addClass('sortable-item lfr-nav-sortable');
+								listItem.addClass('lfr-nav-sortable sortable-item');
 							}
 
 							if (data.updateable) {
@@ -831,6 +814,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-component', 'transition']
+		requires: ['aui-component']
 	}
 );

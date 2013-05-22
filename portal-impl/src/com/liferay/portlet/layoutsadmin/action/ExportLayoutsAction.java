@@ -183,10 +183,15 @@ public class ExportLayoutsAction extends PortletAction {
 				setForward(actionRequest, ActionConstants.COMMON_NULL);
 			}
 			else {
-				actionResponse.setRenderParameter(
-					"startDate", String.valueOf(startDate.getTime()));
-				actionResponse.setRenderParameter(
-					"endDate", String.valueOf(endDate.getTime()));
+				if (startDate != null) {
+					actionResponse.setRenderParameter(
+						"startDate", String.valueOf(startDate.getTime()));
+				}
+
+				if (endDate != null) {
+					actionResponse.setRenderParameter(
+						"endDate", String.valueOf(endDate.getTime()));
+				}
 			}
 		}
 		catch (Exception e) {

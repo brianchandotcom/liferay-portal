@@ -403,7 +403,10 @@ public class ServicePreAction extends Action {
 						PortletCategoryKeys.SITES;
 				}
 
-				if (Validator.isNotNull(portletControlPanelEntryCategory)) {
+				if (!controlPanelCategory.equals(
+						PortletCategoryKeys.CURRENT_SITE) &&
+					Validator.isNotNull(portletControlPanelEntryCategory)) {
+
 					controlPanelCategory = portletControlPanelEntryCategory;
 				}
 			}

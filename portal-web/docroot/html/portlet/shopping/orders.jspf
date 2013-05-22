@@ -19,6 +19,8 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/shopping/view");
 portletURL.setParameter("tabs1", tabs1);
+
+String searchContainerId = StringPool.BLANK;
 %>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
@@ -41,6 +43,8 @@ portletURL.setParameter("tabs1", tabs1);
 	/>
 
 	<%
+	searchContainerId = searchContainer.getId(request, renderResponse.getNamespace());
+
 	OrderSearchTerms searchTerms = (OrderSearchTerms)searchContainer.getSearchTerms();
 
 	long searchUserId = user.getUserId();
@@ -61,7 +65,7 @@ portletURL.setParameter("tabs1", tabs1);
 	<div class="separator"><!-- --></div>
 
 	<aui:button-row>
-		<aui:button onClick='<%= renderResponse.getNamespace() + "deleteOrders();" %>' value="delete" />
+		<aui:button disabled="<%= true %>" name="delete" onClick='<%= renderResponse.getNamespace() + "deleteOrders();" %>' value="delete" />
 	</aui:button-row>
 
 	<%
@@ -109,14 +113,26 @@ portletURL.setParameter("tabs1", tabs1);
 	<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
 </aui:form>
 
+<aui:script use="aui-base,liferay-util-list-fields">
+	Liferay.Util.utilandy(
+		A.one('#<portlet:namespace />delete'),
+		A.one('#<portlet:namespace /><%= searchContainerId %>'),
+		document.<portlet:namespace />fm,
+		"<portlet:namespace />allRowIds"
+	);
+</aui:script>
+
 <aui:script>
 	Liferay.provide(
 		window,
 		'<portlet:namespace />deleteOrders',
 		function() {
-			if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-the-selected-orders") %>')) {
+			var deleteOrderIds = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
+
+			if (deleteOrderIds && confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-the-selected-orders") %>')) {
 				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.DELETE %>";
-				document.<portlet:namespace />fm.<portlet:namespace />deleteOrderIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
+				document.<portlet:namespace />fm.<portlet:namespace />deleteOrderIds.value = deleteOrderIds;
+
 				submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/shopping/edit_order" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>");
 			}
 		},

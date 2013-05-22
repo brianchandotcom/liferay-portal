@@ -20,6 +20,8 @@
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/journal/view_feeds");
+
+String searchContainerId = StringPool.BLANK;
 %>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
@@ -44,6 +46,8 @@ portletURL.setParameter("struts_action", "/journal/view_feeds");
 	/>
 
 	<%
+	searchContainerId = searchContainer.getId(request, renderResponse.getNamespace());
+
 	FeedSearchTerms searchTerms = (FeedSearchTerms)searchContainer.getSearchTerms();
 	%>
 
@@ -51,7 +55,7 @@ portletURL.setParameter("struts_action", "/journal/view_feeds");
 
 	<div class="separator"><!-- --></div>
 
-	<aui:button onClick='<%= renderResponse.getNamespace() + "deleteFeeds();" %>' value="delete" />
+	<aui:button disabled="<%= true %>" name="delete" onClick='<%= renderResponse.getNamespace() + "deleteFeeds();" %>' value="delete" />
 
 	<br /><br />
 
@@ -100,15 +104,27 @@ portletURL.setParameter("struts_action", "/journal/view_feeds");
 	<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
 </aui:form>
 
+<aui:script use="aui-base,liferay-util-list-fields">
+	Liferay.Util.updateSearchContainerButton(
+		A.one('#<portlet:namespace />delete'),
+		A.one('#<portlet:namespace /><%= searchContainerId %>'),
+		document.<portlet:namespace />fm,
+		"<portlet:namespace />allRowIds"
+	);
+</aui:script>
+
 <aui:script>
 	Liferay.provide(
 		window,
 		'<portlet:namespace />deleteFeeds',
 		function() {
-			if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-the-selected-feeds") %>')) {
+			var deleteFeedIds = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
+
+			if (deleteFeedIds && confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-the-selected-feeds") %>')) {
 				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.DELETE %>";
 				document.<portlet:namespace />fm.<portlet:namespace />groupId.value = "<%= scopeGroupId %>";
-				document.<portlet:namespace />fm.<portlet:namespace />deleteFeedIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
+				document.<portlet:namespace />fm.<portlet:namespace />deleteFeedIds.value = deleteFeedIds;
+
 				submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/journal/edit_feed" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>");
 			}
 		},

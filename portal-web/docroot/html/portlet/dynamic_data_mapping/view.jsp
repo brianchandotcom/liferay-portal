@@ -26,6 +26,8 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("struts_action", "/dynamic_data_mapping/view");
 portletURL.setParameter("groupId", String.valueOf(groupId));
 portletURL.setParameter("tabs1", tabs1);
+
+String searchContainerId = StringPool.BLANK;
 %>
 
 <liferay-ui:error exception="<%= RequiredStructureException.class %>">
@@ -74,6 +76,10 @@ portletURL.setParameter("tabs1", tabs1);
 				<liferay-util:param name="toolbarItem" value="view-all" />
 			</liferay-util:include>
 		</c:if>
+
+		<%
+			searchContainerId = searchContainer.getId(request, renderResponse.getNamespace());
+		%>
 
 		<liferay-ui:search-container-results>
 			<%@ include file="/html/portlet/dynamic_data_mapping/structure_search_results.jspf" %>
@@ -160,7 +166,7 @@ portletURL.setParameter("tabs1", tabs1);
 
 		<c:if test="<%= total > 0 %>">
 			<aui:button-row>
-				<aui:button cssClass="delete-structures-button" onClick='<%= renderResponse.getNamespace() + "deleteStructures();" %>' value="delete" />
+				<aui:button disabled="<%= true %>" name="delete" onClick='<%= renderResponse.getNamespace() + "deleteStructures();" %>' value="delete" />
 			</aui:button-row>
 
 			<div class="separator"><!-- --></div>
@@ -169,6 +175,15 @@ portletURL.setParameter("tabs1", tabs1);
 		<liferay-ui:search-iterator />
 	</liferay-ui:search-container>
 </aui:form>
+
+<aui:script use="aui-base,liferay-util-list-fields">
+	Liferay.Util.updateSearchContainerButton(
+		A.one('#<portlet:namespace />delete'),
+		A.one('#<portlet:namespace /><%= searchContainerId %>'),
+		document.<portlet:namespace />fm,
+		"<portlet:namespace />allRowIds"
+	);
+</aui:script>
 
 <aui:script>
 	function <portlet:namespace />copyStructure(uri) {
@@ -189,49 +204,12 @@ portletURL.setParameter("tabs1", tabs1);
 		window,
 		'<portlet:namespace />deleteStructures',
 		function() {
-			if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-this") %>')) {
+			var deleteStructureIds = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
+
+			if (deleteStructureIds && confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-this") %>')) {
 				document.<portlet:namespace />fm.method = "post";
 				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.DELETE %>";
-				document.<portlet:namespace />fm.<portlet:namespace />deleteStructureIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
-
-				submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/dynamic_data_mapping/edit_structure" /></portlet:actionURL>");
-			}
-		},
-		['liferay-util-list-fields']
-	);
-</aui:script>
-
-<aui:script use="aui-base">
-	var buttons = A.all('.delete-structures-button');
-
-	if (buttons.size()) {
-		var toggleDisabled = A.bind('toggleDisabled', Liferay.Util, ':button');
-
-		var resultsGrid = A.one('.searchcontainer-content');
-
-		if (resultsGrid) {
-			resultsGrid.delegate(
-					'click',
-					function(event) {
-						var disabled = (resultsGrid.one(':checked') == null);
-
-						toggleDisabled(disabled);
-					},
-					':checkbox'
-			);
-		}
-
-		toggleDisabled(true);
-	}
-
-	Liferay.provide(
-		window,
-		'<portlet:namespace />deleteStructures',
-		function() {
-			if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-this") %>')) {
-				document.<portlet:namespace />fm.method = "post";
-				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.DELETE %>";
-				document.<portlet:namespace />fm.<portlet:namespace />deleteStructureIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
+				document.<portlet:namespace />fm.<portlet:namespace />deleteStructureIds.value = deleteStructureIds;
 
 				submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/dynamic_data_mapping/edit_structure" /></portlet:actionURL>");
 			}

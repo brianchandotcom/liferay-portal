@@ -37,6 +37,8 @@ portletURL.setParameter("organizationId", String.valueOf(organization.getOrganiz
 UsersAdminUtil.addPortletBreadcrumbEntries(organization, request, renderResponse);
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "assign-members"), currentURL);
+
+String searchContainerId = StringPool.BLANK;
 %>
 
 <liferay-ui:header
@@ -77,6 +79,8 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "ass
 		/>
 
 		<%
+		searchContainerId = searchContainer.getId(request, renderResponse.getNamespace());
+
 		UserSearchTerms searchTerms = (UserSearchTerms)searchContainer.getSearchTerms();
 
 		LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
@@ -117,7 +121,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "ass
 		String taglibOnClick = renderResponse.getNamespace() + "updateOrganizationUsers('" + portletURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur + "');";
 		%>
 
-		<aui:button onClick="<%= taglibOnClick %>" value="update-associations" />
+		<aui:button disabled="<%= true %>" name="updateAssociations" onClick="<%= taglibOnClick %>" value="update-associations" />
 
 		<br /><br />
 
@@ -125,16 +129,30 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "ass
 	</liferay-ui:search-container>
 </aui:form>
 
+<aui:script use="aui-base,liferay-util-list-fields">
+	Liferay.Util.updateSearchContainerButton(
+		A.one('#<portlet:namespace />updateAssociations'),
+		A.one('#<portlet:namespace /><%= searchContainerId %>'),
+		document.<portlet:namespace />fm,
+		"<portlet:namespace />allRowIds"
+	);
+</aui:script>
+
 <aui:script>
 	Liferay.provide(
 		window,
 		'<portlet:namespace />updateOrganizationUsers',
 		function(assignmentsRedirect) {
-			document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "organization_users";
-			document.<portlet:namespace />fm.<portlet:namespace />assignmentsRedirect.value = assignmentsRedirect;
-			document.<portlet:namespace />fm.<portlet:namespace />addUserIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
-			document.<portlet:namespace />fm.<portlet:namespace />removeUserIds.value = Liferay.Util.listUncheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
-			submitForm(document.<portlet:namespace />fm);
+			var updateOrganizationUserIds = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
+
+			if (updateOrganizationUserIds) {
+				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "organization_users";
+				document.<portlet:namespace />fm.<portlet:namespace />assignmentsRedirect.value = assignmentsRedirect;
+				document.<portlet:namespace />fm.<portlet:namespace />addUserIds.value = updateOrganizationUserIds;
+				document.<portlet:namespace />fm.<portlet:namespace />removeUserIds.value = Liferay.Util.listUncheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
+
+				submitForm(document.<portlet:namespace />fm);
+			}
 		},
 		['liferay-util-list-fields']
 	);

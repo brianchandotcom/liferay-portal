@@ -19,6 +19,8 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/shopping/view");
 portletURL.setParameter("tabs1", tabs1);
+
+String searchContainerId = StringPool.BLANK;
 %>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
@@ -41,6 +43,8 @@ portletURL.setParameter("tabs1", tabs1);
 	/>
 
 	<%
+	searchContainerId = searchContainer.getId(request, renderResponse.getNamespace());
+
 	CouponSearchTerms searchTerms = (CouponSearchTerms)searchContainer.getSearchTerms();
 
 	int total = ShoppingCouponLocalServiceUtil.searchCount(scopeGroupId, company.getCompanyId(), searchTerms.getCode(), searchTerms.isActive(), searchTerms.getDiscountType(), searchTerms.isAndOperator());
@@ -55,7 +59,7 @@ portletURL.setParameter("tabs1", tabs1);
 	<div class="separator"><!-- --></div>
 
 	<aui:button-row>
-		<aui:button onClick='<%= renderResponse.getNamespace() + "deleteCoupons();" %>' value="delete" />
+		<aui:button disabled="<%= true %>" name="delete" onClick='<%= renderResponse.getNamespace() + "deleteCoupons();" %>' value="delete" />
 	</aui:button-row>
 
 	<%
@@ -117,14 +121,26 @@ portletURL.setParameter("tabs1", tabs1);
 	<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
 </aui:form>
 
+<aui:script use="aui-base,liferay-util-list-fields">
+	Liferay.Util.updateSearchContainerButton(
+		A.one('#<portlet:namespace />delete'),
+		A.one('#<portlet:namespace /><%= searchContainerId %>'),
+		document.<portlet:namespace />fm,
+		"<portlet:namespace />allRowIds"
+	);
+</aui:script>
+
 <aui:script>
 	Liferay.provide(
 		window,
 		'<portlet:namespace />deleteCoupons',
 		function() {
-			if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-the-selected-coupons") %>')) {
+			var deleteCouponIds = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
+
+			if (deleteCouponIds && confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-the-selected-coupons") %>')) {
 				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.DELETE %>";
-				document.<portlet:namespace />fm.<portlet:namespace />deleteCouponIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
+				document.<portlet:namespace />fm.<portlet:namespace />deleteCouponIds.value = deleteCouponIds;
+
 				submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/shopping/edit_coupon" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>");
 			}
 		},

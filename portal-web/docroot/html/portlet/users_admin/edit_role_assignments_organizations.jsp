@@ -44,6 +44,8 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.
 	/>
 
 	<%
+	request.setAttribute("edit_role_assignments.jsp-searchContainer", searchContainer);
+
 	OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)searchContainer.getSearchTerms();
 
 	long parentOrganizationId = OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
@@ -117,10 +119,10 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.
 	<div class="separator"><!-- --></div>
 
 	<%
-	String taglibOnClick = renderResponse.getNamespace() + "updateRoleGroups('" + portletURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur + "');";
+	String taglibOnClick = renderResponse.getNamespace() + "updateRoles('" + portletURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur + "');";
 	%>
 
-	<aui:button onClick="<%= taglibOnClick %>" value="update-associations" />
+	<aui:button disabled="<%= true %>" name="updateAssociations" onClick="<%= taglibOnClick %>" value="update-associations" />
 
 	<br /><br />
 

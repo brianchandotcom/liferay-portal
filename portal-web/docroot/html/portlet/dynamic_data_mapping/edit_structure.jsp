@@ -217,7 +217,8 @@ if (Validator.isNotNull(script)) {
 				classPK: <%= (structure != null) ? structure.getPrimaryKey() : 0 %>,
 				ddmResource: '<%= HtmlUtil.escapeJS(ddmResource) %>',
 				dialog: {
-					destroyOnHide: true
+					destroyOnHide: true,
+					zIndex: Liferay.zIndex.WINDOW + 2
 				},
 				eventName: '<portlet:namespace />selectParentStructure',
 				showGlobalScope: true,

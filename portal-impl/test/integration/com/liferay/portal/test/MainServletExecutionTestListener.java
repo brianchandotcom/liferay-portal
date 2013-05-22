@@ -48,7 +48,7 @@ public class MainServletExecutionTestListener
 		try {
 			_mainServlet.init(mockServletConfig);
 		}
-		catch (ServletException e) {
+		catch (ServletException se) {
 			throw new RuntimeException(
 				"The main servlet could not be initialized");
 		}

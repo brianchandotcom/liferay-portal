@@ -668,8 +668,8 @@ public class ImageToolImpl implements ImageTool {
 			try {
 				bytes = _fileUtil.getBytes(_outputFile);
 			}
-			catch (IOException e) {
-				throw new ExecutionException(e);
+			catch (IOException ioe) {
+				throw new ExecutionException(ioe);
 			}
 
 			return read(bytes, _type);

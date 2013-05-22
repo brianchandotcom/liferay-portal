@@ -150,7 +150,7 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 			portlet = PortletLocalServiceUtil.getPortletById(
 				companyId, getPortletId());
 		}
-		catch (SystemException e) {
+		catch (SystemException se) {
 			portlet = PortletLocalServiceUtil.getPortletById(getPortletId());
 		}
 

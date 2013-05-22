@@ -78,8 +78,8 @@ public class ProcessUtil {
 					"Cancelled execution because of a concurrent destroy", ree);
 			}
 		}
-		catch (IOException e) {
-			throw new ProcessException(e);
+		catch (IOException ioe) {
+			throw new ProcessException(ioe);
 		}
 	}
 

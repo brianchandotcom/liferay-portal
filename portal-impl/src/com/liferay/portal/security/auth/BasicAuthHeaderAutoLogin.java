@@ -109,8 +109,8 @@ public class BasicAuthHeaderAutoLogin
 
 			return authVerifierResult;
 		}
-		catch (AutoLoginException e) {
-			throw new AuthException(e);
+		catch (AutoLoginException ale) {
+			throw new AuthException(ale);
 		}
 	}
 

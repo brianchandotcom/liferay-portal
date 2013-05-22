@@ -1804,7 +1804,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		try {
 			imageLocalService.deleteImage(user.getPortraitId());
 		}
-		catch (NoSuchImageException e) {
+		catch (NoSuchImageException nsie) {
 			if (_log.isWarnEnabled()) {
 				_log.warn("Unable to delete image " + user.getPortraitId());
 			}

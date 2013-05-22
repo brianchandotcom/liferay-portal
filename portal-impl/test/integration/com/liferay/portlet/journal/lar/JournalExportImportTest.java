@@ -166,9 +166,6 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 		parameterMap.put(
 			PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT,
 			new String[] {Boolean.FALSE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.PORTLET_METADATA_ALL,
-			new String[] {Boolean.TRUE.toString()});
 
 		addParameter(parameterMap, "categories", true);
 		addParameter(parameterMap, "comments", true);

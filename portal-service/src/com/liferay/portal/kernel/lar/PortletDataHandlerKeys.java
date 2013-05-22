@@ -74,8 +74,6 @@ public class PortletDataHandlerKeys {
 	public static final String PORTLET_DATA_CONTROL_DEFAULT =
 		"PORTLET_DATA_CONTROL_DEFAULT";
 
-	public static final String PORTLET_METADATA_ALL = "PORTLET_METADATA_ALL";
-
 	public static final String PORTLET_SETUP = "PORTLET_SETUP";
 
 	public static final String PORTLET_SETUP_ALL = "PORTLET_SETUP_ALL";

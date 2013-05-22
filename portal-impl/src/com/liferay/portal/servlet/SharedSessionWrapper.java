@@ -155,7 +155,15 @@ public class SharedSessionWrapper implements HttpSession {
 
 	@Override
 	public int hashCode() {
-		return _portalSession.hashCode() ^ _portletSession.hashCode();
+		if (_portletSession == null) {
+
+			// LPS-35558
+
+			return _portalSession.hashCode();
+		}
+		else {
+			return _portalSession.hashCode() ^ _portletSession.hashCode();
+		}
 	}
 
 	public void invalidate() {

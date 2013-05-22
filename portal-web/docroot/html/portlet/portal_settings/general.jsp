@@ -39,7 +39,7 @@ String defaultLogoutPagePath = PrefsPropsUtil.getString(company.getCompanyId(), 
 
 <aui:model-context bean="<%= account %>" model="<%= Account.class %>" />
 
-<aui:fieldset cssClass="span6">
+<aui:fieldset>
 	<liferay-ui:error exception="<%= AccountNameException.class %>" message="please-enter-a-valid-name" />
 
 	<aui:input name="name" />
@@ -53,7 +53,7 @@ String defaultLogoutPagePath = PrefsPropsUtil.getString(company.getCompanyId(), 
 	<aui:input bean="<%= virtualHost %>" fieldParam="virtualHostname" label="virtual-host" model="<%= VirtualHost.class %>" name="hostname" />
 </aui:fieldset>
 
-<aui:fieldset cssClass="span6">
+<aui:fieldset>
 	<aui:input label="cdn-host-http" name='<%= "settings--" + PropsKeys.CDN_HOST_HTTP + "--" %>' type="text" value="<%= cdnHostHttp %>" />
 
 	<aui:input label="cdn-host-https" name='<%= "settings--" + PropsKeys.CDN_HOST_HTTPS + "--" %>' type="text" value="<%= cdnHostHttps %>" />
@@ -63,11 +63,11 @@ String defaultLogoutPagePath = PrefsPropsUtil.getString(company.getCompanyId(), 
 
 <h3><liferay-ui:message key="navigation" /></h3>
 
-<aui:fieldset cssClass="span6">
+<aui:fieldset>
 	<aui:input bean="<%= company %>" helpMessage="home-url-help" label="home-url" model="<%= Company.class %>" name="homeURL" />
 </aui:fieldset>
 
-<aui:fieldset cssClass="span6">
+<aui:fieldset>
 	<aui:input helpMessage="default-landing-page-help" label="default-landing-page" name='<%= "settings--" + PropsKeys.DEFAULT_LANDING_PAGE_PATH + "--" %>' type="text" value="<%= defaultLandingPagePath %>" />
 
 	<aui:input helpMessage="default-logout-page-help" label="default-logout-page" name='<%= "settings--" + PropsKeys.DEFAULT_LOGOUT_PAGE_PATH + "--" %>' type="text" value="<%= defaultLogoutPagePath %>" />
@@ -75,7 +75,7 @@ String defaultLogoutPagePath = PrefsPropsUtil.getString(company.getCompanyId(), 
 
 <h3><liferay-ui:message key="additional-information" /></h3>
 
-<aui:fieldset cssClass="span6">
+<aui:fieldset>
 	<aui:input name="legalName" />
 
 	<aui:input name="legalId" />
@@ -83,7 +83,7 @@ String defaultLogoutPagePath = PrefsPropsUtil.getString(company.getCompanyId(), 
 	<aui:input name="legalType" />
 </aui:fieldset>
 
-<aui:fieldset cssClass="span6">
+<aui:fieldset>
 	<aui:input name="sicCode" />
 
 	<aui:input name="tickerSymbol" />

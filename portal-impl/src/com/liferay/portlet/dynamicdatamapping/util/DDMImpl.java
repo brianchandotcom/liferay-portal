@@ -108,6 +108,17 @@ public class DDMImpl implements DDM {
 
 	public static final String TYPE_SELECT = "select";
 
+	public DDMDisplay getDDMDisplay(ServiceContext serviceContext) {
+		String refererPortletName = (String)serviceContext.getAttribute(
+			"refererPortletName");
+
+		if (refererPortletName == null) {
+			refererPortletName = serviceContext.getPortletId();
+		}
+
+		return DDMDisplayRegistryUtil.getDDMDisplay(refererPortletName);
+	}
+
 	public Serializable getDisplayFieldValue(
 			Serializable fieldValue, String type, Locale locale)
 		throws Exception {

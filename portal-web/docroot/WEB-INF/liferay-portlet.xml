@@ -1797,7 +1797,6 @@
 		<portlet-data-handler-class>com.liferay.portlet.dynamicdatamapping.lar.DDMPortletDataHandler</portlet-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.portlet.dynamicdatamapping.lar.DDMStructureStagedModelDataHandler</staged-model-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.portlet.dynamicdatamapping.lar.DDMTemplateStagedModelDataHandler</staged-model-data-handler-class>
-		<ddm-display>com.liferay.portlet.dynamicdatamapping.util.BaseDDMDisplay</ddm-display>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
 		<private-request-attributes>false</private-request-attributes>

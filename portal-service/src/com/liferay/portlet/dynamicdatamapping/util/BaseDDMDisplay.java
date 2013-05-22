@@ -39,15 +39,17 @@ import java.util.Set;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Eduardo Garcia
  */
-public class BaseDDMDisplay implements DDMDisplay {
+public abstract class BaseDDMDisplay implements DDMDisplay {
 
-	public String getDDMResource() {
-		return StringPool.BLANK;
+	public String getAddStructureActionId() {
+		return ActionKeys.ADD_STRUCTURE;
+	}
+
+	public String getAddTemplateActionId() {
+		return ActionKeys.ADD_TEMPLATE;
 	}
 
 	public String getEditTemplateBackURL(
@@ -107,18 +109,17 @@ public class BaseDDMDisplay implements DDMDisplay {
 		return getDefaultEditTemplateTitle(locale);
 	}
 
-	public String getPortletId() {
-		return PortletKeys.DYNAMIC_DATA_MAPPING;
-	}
+	public String getResourceName(long classNameId) {
+		if (classNameId > 0) {
+			TemplateHandler templateHandler =
+				TemplateHandlerRegistryUtil.getTemplateHandler(classNameId);
 
-	public String getTemplateDDMResource(
-		HttpServletRequest request, DDMTemplate template) {
+			if (templateHandler != null) {
+				return templateHandler.getResourceName();
+			}
+		}
 
-		return getDDMResource();
-	}
-
-	public String getTemplateDDMResourceActionId() {
-		return ActionKeys.ADD_TEMPLATE;
+		return getResourceName();
 	}
 
 	public Set<String> getTemplateLanguageTypes() {

@@ -118,33 +118,37 @@ public class AgentResponse extends AgentSerializable {
 
 		stringData = null;
 
-		if (bufferCacheServletResponse.isCharMode()) {
-			String content = bufferCacheServletResponse.getString();
+		if (!bufferCacheServletResponse.isCharMode()) {
+			return;
+		}
 
-			if (content.length() > 0) {
-				if (ParamUtil.get(
-						request, "prpsf",
-						PropsValues.PORTAL_RESILIENCY_PORTLET_SHOW_FOOTER)) {
+		String content = bufferCacheServletResponse.getString();
 
-					int index = content.lastIndexOf("</");
+		if (content.length() == 0) {
+			return;
+		}
 
-					if (index > 0) {
-						StringBundler sb = new StringBundler(6);
+		if (ParamUtil.get(
+				request, "prpsf",
+				PropsValues.PORTAL_RESILIENCY_PORTLET_SHOW_FOOTER)) {
 
-						sb.append(content.substring(0, index));
-						sb.append("<div class=\"portlet-msg-info\"><strong>");
-						sb.append("This portlet is from SPI ");
-						sb.append(PortalUtil.getPortalPort(false));
-						sb.append("</strong></div>");
-						sb.append(content.substring(index));
+			int index = content.lastIndexOf("</");
 
-						content = sb.toString();
-					}
-				}
+			if (index > 0) {
+				StringBundler sb = new StringBundler(6);
 
-				stringData = content;
+				sb.append(content.substring(0, index));
+				sb.append("<div class=\"portlet-msg-info\"><strong>");
+				sb.append("This portlet is from SPI ");
+				sb.append(PortalUtil.getPortalPort(false));
+				sb.append("</strong></div>");
+				sb.append(content.substring(index));
+
+				content = sb.toString();
 			}
 		}
+
+		stringData = content;
 	}
 
 	public void populate(

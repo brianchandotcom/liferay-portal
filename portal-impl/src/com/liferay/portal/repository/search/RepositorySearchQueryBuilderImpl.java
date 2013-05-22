@@ -106,27 +106,29 @@ public class RepositorySearchQueryBuilderImpl
 
 		long[] folderIds = searchContext.getFolderIds();
 
-		if ((folderIds != null) && (folderIds.length > 0)) {
-			if (folderIds[0] == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-				return;
-			}
-
-			BooleanQuery folderIdsQuery = BooleanQueryFactoryUtil.create(
-				searchContext);
-
-			for (long folderId : folderIds) {
-				try {
-					DLAppServiceUtil.getFolder(folderId);
-				}
-				catch (Exception e) {
-					continue;
-				}
-
-				folderIdsQuery.addTerm(Field.FOLDER_ID, folderId);
-			}
-
-			contextQuery.add(folderIdsQuery, BooleanClauseOccur.MUST);
+		if ((folderIds == null) || (folderIds.length == 0)) {
+			return;
 		}
+
+		if (folderIds[0] == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			return;
+		}
+
+		BooleanQuery folderIdsQuery = BooleanQueryFactoryUtil.create(
+			searchContext);
+
+		for (long folderId : folderIds) {
+			try {
+				DLAppServiceUtil.getFolder(folderId);
+			}
+			catch (Exception e) {
+				continue;
+			}
+
+			folderIdsQuery.addTerm(Field.FOLDER_ID, folderId);
+		}
+
+		contextQuery.add(folderIdsQuery, BooleanClauseOccur.MUST);
 	}
 
 	protected void addSearchKeywords(

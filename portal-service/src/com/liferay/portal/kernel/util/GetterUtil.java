@@ -832,26 +832,28 @@ public class GetterUtil {
 	public static long[] getLongValues(Object value, long[] defaultValue) {
 		Class<?> clazz = value.getClass();
 
-		if (clazz.isArray()) {
-			Class<?> componentType = clazz.getComponentType();
+		if (!clazz.isArray()) {
+			return defaultValue;
+		}
 
-			if (componentType.isAssignableFrom(String.class)) {
-				return getLongValues((String[])value, defaultValue);
+		Class<?> componentType = clazz.getComponentType();
+
+		if (componentType.isAssignableFrom(String.class)) {
+			return getLongValues((String[])value, defaultValue);
+		}
+		else if (componentType.isAssignableFrom(Long.class)) {
+			return (long[])value;
+		}
+		else if (Number.class.isAssignableFrom(componentType)) {
+			Number[] numbers = (Number[])value;
+
+			long[] values = new long[numbers.length];
+
+			for (int i = 0; i < values.length; i++) {
+				values[i] = numbers[i].longValue();
 			}
-			else if (componentType.isAssignableFrom(Long.class)) {
-				return (long[])value;
-			}
-			else if (Number.class.isAssignableFrom(componentType)) {
-				Number[] numbers = (Number[])value;
 
-				long[] values = new long[numbers.length];
-
-				for (int i = 0; i < values.length; i++) {
-					values[i] = numbers[i].longValue();
-				}
-
-				return values;
-			}
+			return values;
 		}
 
 		return defaultValue;

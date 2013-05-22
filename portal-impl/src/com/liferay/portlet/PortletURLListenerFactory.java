@@ -69,26 +69,28 @@ public class PortletURLListenerFactory {
 			portletURLGenerationListeners.get(
 				portletURLListener.getListenerClass());
 
-		if (portletURLGenerationListener == null) {
-			if (portletApp.isWARFile()) {
-				PortletContextBag portletContextBag = PortletContextBagPool.get(
-					portletApp.getServletContextName());
-
-				portletURLGenerationListener =
-					portletContextBag.getPortletURLListeners().get(
-						portletURLListener.getListenerClass());
-
-				portletURLGenerationListener = _init(
-					portletURLListener, portletURLGenerationListener);
-			}
-			else {
-				portletURLGenerationListener = _init(portletURLListener);
-			}
-
-			portletURLGenerationListeners.put(
-				portletURLListener.getListenerClass(),
-				portletURLGenerationListener);
+		if (portletURLGenerationListener != null) {
+			return portletURLGenerationListener;
 		}
+
+		if (portletApp.isWARFile()) {
+			PortletContextBag portletContextBag = PortletContextBagPool.get(
+				portletApp.getServletContextName());
+
+			portletURLGenerationListener =
+				portletContextBag.getPortletURLListeners().get(
+					portletURLListener.getListenerClass());
+
+			portletURLGenerationListener = _init(
+				portletURLListener, portletURLGenerationListener);
+		}
+		else {
+			portletURLGenerationListener = _init(portletURLListener);
+		}
+
+		portletURLGenerationListeners.put(
+			portletURLListener.getListenerClass(),
+			portletURLGenerationListener);
 
 		return portletURLGenerationListener;
 	}

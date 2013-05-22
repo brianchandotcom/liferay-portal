@@ -297,26 +297,26 @@ public class PluginsEnvironmentBuilder {
 		List<String> ignores = ListUtil.fromFile(
 			libDir.getCanonicalPath() + "/../.gitignore");
 
-		if (!libDirPath.contains("/ext/") && !ignores.contains("/lib")) {
-			File gitignoreFile = new File(
-				libDir.getCanonicalPath() + "/.gitignore");
-
-			System.out.println("Updating " + gitignoreFile);
-
-			String[] gitIgnores = jars.toArray(new String[jars.size()]);
-
-			for (int i = 0; i < gitIgnores.length; i++) {
-				String gitIgnore = gitIgnores[i];
-
-				if (Validator.isNotNull(gitIgnore) &&
-					!gitIgnore.startsWith("/")) {
-
-					gitIgnores[i] = "/" + gitIgnore;
-				}
-			}
-
-			_fileUtil.write(gitignoreFile, StringUtil.merge(gitIgnores, "\n"));
+		if (libDirPath.contains("/ext/") || ignores.contains("/lib")) {
+			return;
 		}
+
+		File gitignoreFile = new File(
+			libDir.getCanonicalPath() + "/.gitignore");
+
+		System.out.println("Updating " + gitignoreFile);
+
+		String[] gitIgnores = jars.toArray(new String[jars.size()]);
+
+		for (int i = 0; i < gitIgnores.length; i++) {
+			String gitIgnore = gitIgnores[i];
+
+			if (Validator.isNotNull(gitIgnore) && !gitIgnore.startsWith("/")) {
+				gitIgnores[i] = "/" + gitIgnore;
+			}
+		}
+
+		_fileUtil.write(gitignoreFile, StringUtil.merge(gitIgnores, "\n"));
 	}
 
 	protected void writeClasspathFile(

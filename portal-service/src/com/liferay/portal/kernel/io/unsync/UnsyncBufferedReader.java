@@ -69,25 +69,27 @@ public class UnsyncBufferedReader extends Reader {
 
 		markLimitIndex = markLimit;
 
-		if (index > 0) {
-			int available = firstInvalidIndex - index;
+		if (index == 0) {
+			return;
+		}
 
-			if (available > 0) {
+		int available = firstInvalidIndex - index;
 
-				// Shuffle mark beginning to buffer beginning
+		if (available > 0) {
 
-				System.arraycopy(buffer, index, buffer, 0, available);
+			// Shuffle mark beginning to buffer beginning
 
-				index = 0;
+			System.arraycopy(buffer, index, buffer, 0, available);
 
-				firstInvalidIndex = available;
-			}
-			else {
+			index = 0;
 
-				// Reset buffer states
+			firstInvalidIndex = available;
+		}
+		else {
 
-				index = firstInvalidIndex = 0;
-			}
+			// Reset buffer states
+
+			index = firstInvalidIndex = 0;
 		}
 	}
 

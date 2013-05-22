@@ -45,26 +45,27 @@ public class FileAvailabilityUtil {
 
 		Boolean available = _availabilities.get(path);
 
-		if (available == null) {
-			URL url = null;
-
-			try {
-				url = AccessController.doPrivileged(
-					new ResourcePrivilegedExceptionAction(
-						servletContext, path));
-			}
-			catch (Exception e) {
-			}
-
-			if (url == null) {
-				available = Boolean.FALSE;
-			}
-			else {
-				available = Boolean.TRUE;
-			}
-
-			_availabilities.put(path, available);
+		if (available != null) {
+			return available;
 		}
+
+		URL url = null;
+
+		try {
+			url = AccessController.doPrivileged(
+				new ResourcePrivilegedExceptionAction(servletContext, path));
+		}
+		catch (Exception e) {
+		}
+
+		if (url == null) {
+			available = Boolean.FALSE;
+		}
+		else {
+			available = Boolean.TRUE;
+		}
+
+		_availabilities.put(path, available);
 
 		return available;
 	}

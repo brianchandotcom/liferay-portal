@@ -180,25 +180,27 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 	public DLFolder getFolder() {
 		DLFolder dlFolder = new DLFolderImpl();
 
-		if (getFolderId() > 0) {
-			try {
-				dlFolder = DLFolderLocalServiceUtil.getFolder(getFolderId());
-			}
-			catch (NoSuchFolderException nsfe) {
-				try {
-					DLFileVersion dlFileVersion = getLatestFileVersion(true);
+		if (getFolderId() <= 0) {
+			return dlFolder;
+		}
 
-					if (!dlFileVersion.isInTrash()) {
-						_log.error(nsfe, nsfe);
-					}
-				}
-				catch (Exception e) {
-					_log.error(e, e);
+		try {
+			dlFolder = DLFolderLocalServiceUtil.getFolder(getFolderId());
+		}
+		catch (NoSuchFolderException nsfe) {
+			try {
+				DLFileVersion dlFileVersion = getLatestFileVersion(true);
+
+				if (!dlFileVersion.isInTrash()) {
+					_log.error(nsfe, nsfe);
 				}
 			}
 			catch (Exception e) {
 				_log.error(e, e);
 			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
 		}
 
 		return dlFolder;

@@ -153,27 +153,29 @@ public class LayoutCache {
 
 		List<Role> roles = groupRolesMap.get(groupId);
 
-		if (roles == null) {
-			Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-			roles = ResourceActionsUtil.getRoles(
-				group.getCompanyId(), group, resourceName, null);
-
-			List<Team> teams = TeamLocalServiceUtil.getGroupTeams(groupId);
-
-			for (Team team : teams) {
-				Role teamRole = RoleLocalServiceUtil.getTeamRole(
-					group.getCompanyId(), team.getTeamId());
-
-				teamRole.setName(
-					PermissionExporter.ROLE_TEAM_PREFIX + team.getName());
-				teamRole.setDescription(team.getDescription());
-
-				roles.add(teamRole);
-			}
-
-			groupRolesMap.put(groupId, roles);
+		if (roles != null) {
+			return roles;
 		}
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		roles = ResourceActionsUtil.getRoles(
+			group.getCompanyId(), group, resourceName, null);
+
+		List<Team> teams = TeamLocalServiceUtil.getGroupTeams(groupId);
+
+		for (Team team : teams) {
+			Role teamRole = RoleLocalServiceUtil.getTeamRole(
+				group.getCompanyId(), team.getTeamId());
+
+			teamRole.setName(
+				PermissionExporter.ROLE_TEAM_PREFIX + team.getName());
+			teamRole.setDescription(team.getDescription());
+
+			roles.add(teamRole);
+		}
+
+		groupRolesMap.put(groupId, roles);
 
 		return roles;
 	}

@@ -296,26 +296,27 @@ public class DLDisplayPortletDataHandler extends DLPortletDataHandler {
 		boolean defaultRepository = GetterUtil.getBoolean(
 			rootElement.attributeValue("default-repository"), true);
 
-		if (rootFolderId > 0) {
-			Map<Long, Long> folderIds = null;
-
-			if (defaultRepository) {
-				folderIds =
-					(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-						Folder.class);
-			}
-			else {
-				folderIds =
-					(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-						RepositoryEntry.class);
-			}
-
-			rootFolderId = MapUtil.getLong(
-				folderIds, rootFolderId, rootFolderId);
-
-			portletPreferences.setValue(
-				"rootFolderId", String.valueOf(rootFolderId));
+		if (rootFolderId <= 0) {
+			return portletPreferences;
 		}
+
+		Map<Long, Long> folderIds = null;
+
+		if (defaultRepository) {
+			folderIds =
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					Folder.class);
+		}
+		else {
+			folderIds =
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					RepositoryEntry.class);
+		}
+
+		rootFolderId = MapUtil.getLong(folderIds, rootFolderId, rootFolderId);
+
+		portletPreferences.setValue(
+			"rootFolderId", String.valueOf(rootFolderId));
 
 		return portletPreferences;
 	}

@@ -139,26 +139,28 @@ public class LicenseUtil {
 	}
 
 	public static String getHostName() {
-		if (_hostName == null) {
-			_hostName = StringPool.BLANK;
+		if (_hostName != null) {
+			return _hostName;
+		}
 
-			try {
-				Runtime runtime = Runtime.getRuntime();
+		_hostName = StringPool.BLANK;
 
-				Process process = runtime.exec("hostname");
+		try {
+			Runtime runtime = Runtime.getRuntime();
 
-				BufferedReader bufferedReader = new BufferedReader(
-					new InputStreamReader(process.getInputStream()), 128);
+			Process process = runtime.exec("hostname");
 
-				_hostName = bufferedReader.readLine();
+			BufferedReader bufferedReader = new BufferedReader(
+				new InputStreamReader(process.getInputStream()), 128);
 
-				bufferedReader.close();
-			}
-			catch (Exception e) {
-				_log.error("Unable to read local server's host name");
+			_hostName = bufferedReader.readLine();
 
-				_log.error(e, e);
-			}
+			bufferedReader.close();
+		}
+		catch (Exception e) {
+			_log.error("Unable to read local server's host name");
+
+			_log.error(e, e);
 		}
 
 		return _hostName;

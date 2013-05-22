@@ -310,25 +310,27 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 			srcFile.getAbsolutePath() +
 				"/WEB-INF/classes/META-INF/portal-log4j.xml");
 
-		if (portalLog4jXml.exists()) {
-			InputStream is = null;
+		if (!portalLog4jXml.exists()) {
+			return;
+		}
 
-			try {
-				Class<?> clazz = getClass();
+		InputStream is = null;
 
-				ClassLoader classLoader = clazz.getClassLoader();
+		try {
+			Class<?> clazz = getClass();
 
-				is = classLoader.getResourceAsStream("META-INF/log4j.dtd");
+			ClassLoader classLoader = clazz.getClassLoader();
 
-				File file = new File(
-					srcFile.getAbsolutePath() +
-						"/WEB-INF/classes/META-INF/log4j.dtd");
+			is = classLoader.getResourceAsStream("META-INF/log4j.dtd");
 
-				FileUtil.write(file, is);
-			}
-			finally {
-				StreamUtil.cleanUp(is);
-			}
+			File file = new File(
+				srcFile.getAbsolutePath() +
+					"/WEB-INF/classes/META-INF/log4j.dtd");
+
+			FileUtil.write(file, is);
+		}
+		finally {
+			StreamUtil.cleanUp(is);
 		}
 	}
 
@@ -465,26 +467,29 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 		File servicePropertiesFile = new File(
 			srcFile.getAbsolutePath() + "/WEB-INF/classes/service.properties");
 
-		if (servicePropertiesFile.exists()) {
-			File portletPropertiesFile = new File(
-				srcFile.getAbsolutePath() +
-					"/WEB-INF/classes/portlet.properties");
-
-			if (!portletPropertiesFile.exists()) {
-				String pluginPackageName = null;
-
-				if (pluginPackage != null) {
-					pluginPackageName = pluginPackage.getName();
-				}
-				else {
-					pluginPackageName = srcFile.getName();
-				}
-
-				FileUtil.write(
-					portletPropertiesFile,
-					"plugin.package.name=" + pluginPackageName);
-			}
+		if (!servicePropertiesFile.exists()) {
+			return;
 		}
+
+		File portletPropertiesFile = new File(
+			srcFile.getAbsolutePath() +
+				"/WEB-INF/classes/portlet.properties");
+
+		if (portletPropertiesFile.exists()) {
+			return;
+		}
+
+		String pluginPackageName = null;
+
+		if (pluginPackage != null) {
+			pluginPackageName = pluginPackage.getName();
+		}
+		else {
+			pluginPackageName = srcFile.getName();
+		}
+
+		FileUtil.write(
+			portletPropertiesFile, "plugin.package.name=" + pluginPackageName);
 	}
 
 	public void copyTlds(File srcFile, PluginPackage pluginPackage)

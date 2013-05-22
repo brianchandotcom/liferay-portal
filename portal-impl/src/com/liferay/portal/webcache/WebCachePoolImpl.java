@@ -42,24 +42,26 @@ public class WebCachePoolImpl implements WebCachePool {
 	public Object get(String key, WebCacheItem wci) {
 		Object obj = _portalCache.get(key);
 
-		if (obj == null) {
-			try {
-				obj = wci.convert(key);
+		if (obj != null) {
+			return obj;
+		}
 
-				int timeToLive = (int)(wci.getRefreshTime() / Time.SECOND);
+		try {
+			obj = wci.convert(key);
 
-				_portalCache.put(key, obj, timeToLive);
-			}
-			catch (WebCacheException wce) {
-				if (_log.isWarnEnabled()) {
-					Throwable cause = wce.getCause();
+			int timeToLive = (int)(wci.getRefreshTime() / Time.SECOND);
 
-					if (cause != null) {
-						_log.warn(cause, cause);
-					}
-					else {
-						_log.warn(wce, wce);
-					}
+			_portalCache.put(key, obj, timeToLive);
+		}
+		catch (WebCacheException wce) {
+			if (_log.isWarnEnabled()) {
+				Throwable cause = wce.getCause();
+
+				if (cause != null) {
+					_log.warn(cause, cause);
+				}
+				else {
+					_log.warn(wce, wce);
 				}
 			}
 		}

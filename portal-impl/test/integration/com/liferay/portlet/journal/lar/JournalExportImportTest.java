@@ -129,27 +129,28 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 
 		Assert.assertNotNull(importedJournalArticleResource);
 
-		if (structuredContent) {
-			DDMStructure importedDDMStructure =
-				DDMStructureLocalServiceUtil.fetchStructure(
-					ddmStructure.getUuid(), importedGroup.getGroupId());
-
-			Assert.assertNotNull(importedDDMStructure);
-
-			DDMTemplate importedDDMTemplate =
-				DDMTemplateLocalServiceUtil.fetchTemplate(
-					ddmTemplate.getUuid(), importedGroup.getGroupId());
-
-			Assert.assertNotNull(importedDDMTemplate);
-			Assert.assertEquals(
-				article.getStructureId(),
-				importedDDMStructure.getStructureKey());
-			Assert.assertEquals(
-				article.getTemplateId(), importedDDMTemplate.getTemplateKey());
-			Assert.assertEquals(
-				importedDDMTemplate.getClassPK(),
-				importedDDMStructure.getStructureId());
+		if (!structuredContent) {
+			return;
 		}
+
+		DDMStructure importedDDMStructure =
+			DDMStructureLocalServiceUtil.fetchStructure(
+				ddmStructure.getUuid(), importedGroup.getGroupId());
+
+		Assert.assertNotNull(importedDDMStructure);
+
+		DDMTemplate importedDDMTemplate =
+			DDMTemplateLocalServiceUtil.fetchTemplate(
+				ddmTemplate.getUuid(), importedGroup.getGroupId());
+
+		Assert.assertNotNull(importedDDMTemplate);
+		Assert.assertEquals(
+			article.getStructureId(), importedDDMStructure.getStructureKey());
+		Assert.assertEquals(
+			article.getTemplateId(), importedDDMTemplate.getTemplateKey());
+		Assert.assertEquals(
+			importedDDMTemplate.getClassPK(),
+			importedDDMStructure.getStructureId());
 	}
 
 	protected Map<String, String[]> getBaseParameterMap(long groupId, long plid)

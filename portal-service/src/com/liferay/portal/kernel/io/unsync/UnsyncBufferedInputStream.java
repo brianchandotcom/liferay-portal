@@ -67,26 +67,27 @@ public class UnsyncBufferedInputStream extends UnsyncFilterInputStream {
 
 		markLimitIndex = readLimit;
 
-		if (index > 0) {
+		if (index == 0) {
+			return;
+		}
 
-			int available = firstInvalidIndex - index;
+		int available = firstInvalidIndex - index;
 
-			if (available > 0) {
+		if (available > 0) {
 
-				// Shuffle mark beginning to buffer beginning
+			// Shuffle mark beginning to buffer beginning
 
-				System.arraycopy(buffer, index, buffer, 0, available);
+			System.arraycopy(buffer, index, buffer, 0, available);
 
-				index = 0;
+			index = 0;
 
-				firstInvalidIndex = available;
-			}
-			else {
+			firstInvalidIndex = available;
+		}
+		else {
 
-				// Reset buffer states
+			// Reset buffer states
 
-				index = firstInvalidIndex = 0;
-			}
+			index = firstInvalidIndex = 0;
 		}
 	}
 

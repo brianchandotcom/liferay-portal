@@ -248,27 +248,29 @@ public class SocialConfigurationUtil {
 
 		activityDefinition.setCountersEnabled(countersEnabled);
 
-		if (countersEnabled) {
-			String languageKey = GetterUtil.getString(
-				activityElement.elementText("language-key"));
-
-			activityDefinition.setLanguageKey(languageKey);
-
-			String processorClassName = GetterUtil.getString(
-				activityElement.elementText("processor-class"));
-
-			if (Validator.isNotNull(processorClassName)) {
-				SocialActivityProcessor activityProcessor =
-					(SocialActivityProcessor)ProxyFactory.newInstance(
-						classLoader, SocialActivityProcessor.class,
-						processorClassName);
-
-				activityDefinition.setActivityProcessor(activityProcessor);
-			}
-
-			_readActivityContribution(activityElement, activityDefinition);
-			_readActivityParticipation(activityElement, activityDefinition);
+		if (!countersEnabled) {
+			return;
 		}
+
+		String languageKey = GetterUtil.getString(
+			activityElement.elementText("language-key"));
+
+		activityDefinition.setLanguageKey(languageKey);
+
+		String processorClassName = GetterUtil.getString(
+			activityElement.elementText("processor-class"));
+
+		if (Validator.isNotNull(processorClassName)) {
+			SocialActivityProcessor activityProcessor =
+				(SocialActivityProcessor)ProxyFactory.newInstance(
+					classLoader, SocialActivityProcessor.class,
+					processorClassName);
+
+			activityDefinition.setActivityProcessor(activityProcessor);
+		}
+
+		_readActivityContribution(activityElement, activityDefinition);
+		_readActivityParticipation(activityElement, activityDefinition);
 	}
 
 	private static void _readActivity(

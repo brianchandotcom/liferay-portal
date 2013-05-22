@@ -191,32 +191,36 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 
 		List<TreeNode<HeadingNode>> treeNodes = tableOfContents.getChildNodes();
 
-		if (treeNodes != null) {
-			for (TreeNode<HeadingNode> treeNode : treeNodes) {
-				append("<li class=\"toc-level-");
-				append(depth);
-				append("\">");
+		if (treeNodes == null) {
+			append("</ol>");
 
-				HeadingNode headingNode = treeNode.getValue();
+			return;
+		}
 
-				String content = getUnformattedHeadingText(headingNode);
+		for (TreeNode<HeadingNode> treeNode : treeNodes) {
+			append("<li class=\"toc-level-");
+			append(depth);
+			append("\">");
 
-				append("<a class=\"wikipage\" href=\"");
+			HeadingNode headingNode = treeNode.getValue();
 
-				if (_viewPageURL != null) {
-					append(_viewPageURL.toString());
-				}
+			String content = getUnformattedHeadingText(headingNode);
 
-				append(StringPool.POUND);
-				append(getHeadingMarkup(_page.getTitle(), content));
-				append("\">");
-				append(content);
-				append("</a>");
+			append("<a class=\"wikipage\" href=\"");
 
-				appendTableOfContents(treeNode, depth + 1);
-
-				append("</li>");
+			if (_viewPageURL != null) {
+				append(_viewPageURL.toString());
 			}
+
+			append(StringPool.POUND);
+			append(getHeadingMarkup(_page.getTitle(), content));
+			append("\">");
+			append(content);
+			append("</a>");
+
+			appendTableOfContents(treeNode, depth + 1);
+
+			append("</li>");
 		}
 
 		append("</ol>");

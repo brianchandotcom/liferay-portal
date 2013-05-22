@@ -47,25 +47,27 @@ public class MSNConnector {
 	}
 
 	private void _connect() {
+		if (_msn.isLoggedIn()) {
+			return;
+		}
+
+		_msn.login();
+
+		// Spend 5 seconds to attempt to login
+
+		for (int i = 0; i < 50 && !_msn.isLoggedIn(); i++) {
+			try {
+				Thread.sleep(100);
+			}
+			catch (InterruptedException ie) {
+				_log.warn(ie);
+
+				break;
+			}
+		}
+
 		if (!_msn.isLoggedIn()) {
-			_msn.login();
-
-			// Spend 5 seconds to attempt to login
-
-			for (int i = 0; i < 50 && !_msn.isLoggedIn(); i++) {
-				try {
-					Thread.sleep(100);
-				}
-				catch (InterruptedException ie) {
-					_log.warn(ie);
-
-					break;
-				}
-			}
-
-			if (!_msn.isLoggedIn()) {
-				_log.error("Unable to connect as " + _login);
-			}
+			_log.error("Unable to connect as " + _login);
 		}
 	}
 

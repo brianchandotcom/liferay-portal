@@ -559,24 +559,26 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 		List<Portlet> portlets = ListUtil.fromMapValues(portletsPool);
 
-		if (!showSystem || !showPortal) {
-			Iterator<Portlet> itr = portlets.iterator();
+		if (showSystem && showPortal) {
+			return portlets;
+		}
 
-			while (itr.hasNext()) {
-				Portlet portlet = itr.next();
+		Iterator<Portlet> itr = portlets.iterator();
 
-				if (showPortal &&
-					portlet.getPortletId().equals(PortletKeys.PORTAL)) {
+		while (itr.hasNext()) {
+			Portlet portlet = itr.next();
 
-				}
-				else if (!showPortal &&
-						 portlet.getPortletId().equals(PortletKeys.PORTAL)) {
+			if (showPortal &&
+				portlet.getPortletId().equals(PortletKeys.PORTAL)) {
 
-					itr.remove();
-				}
-				else if (!showSystem && portlet.isSystem()) {
-					itr.remove();
-				}
+			}
+			else if (!showPortal &&
+					 portlet.getPortletId().equals(PortletKeys.PORTAL)) {
+
+				itr.remove();
+			}
+			else if (!showSystem && portlet.isSystem()) {
+				itr.remove();
 			}
 		}
 

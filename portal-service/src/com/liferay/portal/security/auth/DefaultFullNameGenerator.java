@@ -63,25 +63,27 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 		String middleName = StringPool.BLANK;
 		String lastName = StringPool.BLANK;
 
-		if (Validator.isNotNull(fullName)) {
-			String[] name = StringUtil.split(fullName, CharPool.SPACE);
+		if (Validator.isNull(fullName)) {
+			return new String[] {firstName, middleName, lastName};
+		}
 
-			firstName = name[0];
-			middleName = StringPool.BLANK;
-			lastName = name[name.length - 1];
+		String[] name = StringUtil.split(fullName, CharPool.SPACE);
 
-			if (name.length > 2) {
-				for (int i = 1; i < name.length - 1; i++) {
-					if (Validator.isNull(name[i].trim())) {
-						continue;
-					}
+		firstName = name[0];
+		middleName = StringPool.BLANK;
+		lastName = name[name.length - 1];
 
-					if (i != 1) {
-						middleName += StringPool.SPACE;
-					}
-
-					middleName += name[i].trim();
+		if (name.length > 2) {
+			for (int i = 1; i < name.length - 1; i++) {
+				if (Validator.isNull(name[i].trim())) {
+					continue;
 				}
+
+				if (i != 1) {
+					middleName += StringPool.SPACE;
+				}
+
+				middleName += name[i].trim();
 			}
 		}
 

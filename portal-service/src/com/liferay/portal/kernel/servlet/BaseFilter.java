@@ -162,26 +162,28 @@ public abstract class BaseFilter implements LiferayFilter {
 
 		filterChain.doFilter(request, response);
 
-		if (log.isDebugEnabled()) {
-			long endTime = System.currentTimeMillis();
-
-			depther = (String)request.getAttribute(_DEPTHER);
-
-			if (depther == null) {
-				return;
-			}
-
-			log.debug(
-				"[" + threadName + "]" + depther + "< " +
-					filterClass.getName() + " " + path + " " +
-						(endTime - startTime) + " ms");
-
-			if (depther.length() > 0) {
-				depther = depther.substring(1);
-			}
-
-			request.setAttribute(_DEPTHER, depther);
+		if (!log.isDebugEnabled()) {
+			return;
 		}
+
+		long endTime = System.currentTimeMillis();
+
+		depther = (String)request.getAttribute(_DEPTHER);
+
+		if (depther == null) {
+			return;
+		}
+
+		log.debug(
+			"[" + threadName + "]" + depther + "< " +
+				filterClass.getName() + " " + path + " " +
+					(endTime - startTime) + " ms");
+
+		if (depther.length() > 0) {
+			depther = depther.substring(1);
+		}
+
+		request.setAttribute(_DEPTHER, depther);
 	}
 
 	protected void processFilter(

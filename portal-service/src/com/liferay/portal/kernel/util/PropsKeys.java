@@ -1909,6 +1909,8 @@ public interface PropsKeys {
 
 	public static final String PORTAL_RESILIENCY_PORTLET_SHOW_FOOTER = "portal.resiliency.portlet.show.footer";
 
+	public static final String PORTAL_RESILIENCY_SPI_AGENT_HTTPCLIENTSPIAGENT_SOCKETPOOL_MAX_SIZE = "portal.resiliency.spi.agent.httpclientspiagent.socketpool.max.size";
+
 	public static final String PORTAL_SECURITY_MANAGER_FILE_CHECKER_DEFAULT_READ_PATHS = "portal.security.manager.file.checker.default.read.paths";
 
 	public static final String PORTAL_SECURITY_MANAGER_PRELOAD_CLASSLOADER_CLASSES = "portal.security.manager.preload.classloader.classes";

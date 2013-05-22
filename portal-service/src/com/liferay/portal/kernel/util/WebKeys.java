@@ -160,6 +160,8 @@ public interface WebKeys {
 	@Distributed(direction = Direction.REQUEST)
 	public static final String SPI_AGENT_LIFECYCLE = "SPI_AGENT_LIFECYCLE";
 
+	public static final String SPI_AGENT_ORIGINAL_RESPONSE = "SPI_AGENT_ORIGINAL_RESPONSE";
+
 	@Distributed(direction = Direction.REQUEST)
 	public static final String SPI_AGENT_PORTLET = "SPI_AGENT_PORTLET";
 

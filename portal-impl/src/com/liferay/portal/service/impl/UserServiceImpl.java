@@ -1385,7 +1385,9 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		UserPermissionUtil.check(
 			getPermissionChecker(), userId, ActionKeys.UPDATE);
 
-		validateEmailAddress(getUserById(userId),emailAddress2);
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		validateEmailAddress(user, emailAddress2);
 
 		return userLocalService.updateEmailAddress(
 			userId, password, emailAddress1, emailAddress2, serviceContext);

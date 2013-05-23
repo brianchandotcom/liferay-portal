@@ -443,6 +443,13 @@ public class PortletImporter {
 			}
 		}
 
+		// Company id
+
+		long sourceCompanyId = GetterUtil.getLong(
+			headerElement.attributeValue("company-id"));
+
+		portletDataContext.setSourceCompanyId(sourceCompanyId);
+
 		// Company group id
 
 		long sourceCompanyGroupId = GetterUtil.getLong(

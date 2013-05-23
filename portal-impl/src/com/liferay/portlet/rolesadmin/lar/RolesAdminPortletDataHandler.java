@@ -32,6 +32,7 @@ import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.persistence.RoleExportActionableDynamicQuery;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 
 import java.util.List;
 
@@ -85,7 +86,7 @@ public class RolesAdminPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		portletDataContext.addPermissions(
-			_RESOURCE_NAME, portletDataContext.getScopeGroupId());
+			PortletKeys.PORTAL, portletDataContext.getCompanyId());
 
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
@@ -143,8 +144,8 @@ public class RolesAdminPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		portletDataContext.importPermissions(
-			_RESOURCE_NAME, portletDataContext.getSourceGroupId(),
-			portletDataContext.getScopeGroupId());
+			PortletKeys.PORTAL, portletDataContext.getSourceCompanyId(),
+			portletDataContext.getCompanyId());
 
 		Element rolesElement = portletDataContext.getImportDataGroupElement(
 			Role.class);
@@ -158,8 +159,5 @@ public class RolesAdminPortletDataHandler extends BasePortletDataHandler {
 
 		return null;
 	}
-
-	private static final String _RESOURCE_NAME =
-		"com.liferay.portlet.rolesadmin";
 
 }

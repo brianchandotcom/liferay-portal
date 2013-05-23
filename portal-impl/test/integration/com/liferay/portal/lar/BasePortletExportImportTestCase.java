@@ -65,6 +65,7 @@ public class BasePortletExportImportTestCase extends PowerMockito {
 	@Before
 	public void setUp() throws Exception {
 		group = GroupTestUtil.addGroup();
+		importedGroup = GroupTestUtil.addGroup();
 
 		layout = LayoutTestUtil.addLayout(
 			group.getGroupId(), ServiceTestUtil.randomString());
@@ -169,8 +170,6 @@ public class BasePortletExportImportTestCase extends PowerMockito {
 		larFile = LayoutLocalServiceUtil.exportPortletInfoAsFile(
 			layout.getPlid(), layout.getGroupId(), portletId,
 			getExportParameterMap(), null, null);
-
-		importedGroup = GroupTestUtil.addGroup();
 
 		importedLayout = LayoutTestUtil.addLayout(
 			importedGroup.getGroupId(), ServiceTestUtil.randomString());

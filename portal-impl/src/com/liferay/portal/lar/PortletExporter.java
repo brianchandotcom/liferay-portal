@@ -81,6 +81,8 @@ import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetCategoryUtil;
 import com.liferay.portlet.asset.service.persistence.AssetVocabularyUtil;
 import com.liferay.portlet.assetpublisher.util.AssetPublisher;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.expando.model.ExpandoColumn;
@@ -1560,6 +1562,14 @@ public class PortletExporter {
 				updatePreferencesClassPKs(
 					jxPreferences, name, DDMStructure.class.getName());
 			}
+			else if (name.equals(
+						"anyClassTypeDLFileEntryAssetRendererFactory") ||
+					 name.equals(
+						"classTypeIdsDLFileEntryAssetRendererFactory")) {
+
+				updatePreferencesClassPKs(
+					jxPreferences, name, DLFileEntryType.class.getName());
+			}
 			else if (name.equals("anyAssetType") ||
 					 name.equals("classNameIds")) {
 
@@ -1695,6 +1705,15 @@ public class PortletExporter {
 
 					if (ddmStructure != null) {
 						uuid = ddmStructure.getUuid();
+					}
+				}
+				else if (className.equals(DLFileEntryType.class.getName())) {
+					DLFileEntryType dlFileEntryType =
+						DLFileEntryTypeLocalServiceUtil.getFileEntryType(
+							primaryKeyLong);
+
+					if (dlFileEntryType != null) {
+						uuid = dlFileEntryType.getUuid();
 					}
 				}
 

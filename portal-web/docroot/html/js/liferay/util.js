@@ -1383,6 +1383,8 @@
 				if (title && !title.hasClass('not-editable')) {
 					title.setData('portletTitleEditOptions', options);
 
+					title.addClass('portlet-title-editable');
+
 					title.on(
 						EVENT_CLICK,
 						function(event) {

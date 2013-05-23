@@ -244,7 +244,8 @@ String[][] categorySections = {mainSections};
 								popup = Liferay.Util.Window.getWindow(
 									{
 										dialog: {
-											bodyContent: content.show()
+											bodyContent: content.show(),
+											zIndex: Liferay.zIndex.WINDOW + 2
 										},
 										title: '<%= UnicodeLanguageUtil.get(pageContext, "add-child-page") %>'
 									}
@@ -267,6 +268,9 @@ String[][] categorySections = {mainSections};
 							Liferay.Util.openWindow(
 								{
 									cache: false,
+									dialog: {
+										zIndex: Liferay.zIndex.WINDOW + 2
+									},
 									id: '<portlet:namespace /><%= selLayout.getFriendlyURL().substring(1) %>_permissions',
 									title: '<%= UnicodeLanguageUtil.get(pageContext, "permissions") %>',
 									uri: '<%= permissionURL %>'
@@ -284,6 +288,7 @@ String[][] categorySections = {mainSections};
 									dialog: {
 										bodyContent: content.show(),
 										destroyOnHide: true,
+										zIndex: Liferay.zIndex.WINDOW + 2
 									},
 									title: '<%= UnicodeLanguageUtil.get(pageContext, "copy-portlets-from-page") %>'
 								}

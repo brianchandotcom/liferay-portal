@@ -136,7 +136,6 @@ public class ImageProcessorImpl
 
 		try {
 			if (_hasPreview(fileVersion) && hasThumbnails(fileVersion)) {
-
 				hasImages = true;
 			}
 

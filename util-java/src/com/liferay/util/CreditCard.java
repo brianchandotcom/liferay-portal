@@ -102,7 +102,6 @@ public class CreditCard {
 		}
 		else if (type.equals("discover")) {
 			if (!number.startsWith("6011")) {
-
 				return false;
 			}
 

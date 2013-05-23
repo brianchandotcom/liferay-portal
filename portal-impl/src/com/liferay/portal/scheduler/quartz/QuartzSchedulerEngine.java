@@ -733,7 +733,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 			message.put(START_TIME, trigger.getStartTime());
 
 			if (CronTrigger.class.isAssignableFrom(trigger.getClass())) {
-
 				CronTrigger cronTrigger = CronTrigger.class.cast(trigger);
 
 				schedulerResponse = new SchedulerResponse();

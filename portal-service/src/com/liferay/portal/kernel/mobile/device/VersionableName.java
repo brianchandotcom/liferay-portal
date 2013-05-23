@@ -83,7 +83,6 @@ public class VersionableName
 		VersionableName versionableName = (VersionableName)obj;
 
 		if (Validator.equals(_name, versionableName._name)) {
-
 			return true;
 		}
 

@@ -103,7 +103,6 @@ public class EditWorkflowInstanceAction extends PortletAction {
 		}
 		catch (Exception e) {
 			if (e instanceof WorkflowException) {
-
 				SessionErrors.add(renderRequest, e.getClass());
 
 				return mapping.findForward("portlet.workflow_instances.error");

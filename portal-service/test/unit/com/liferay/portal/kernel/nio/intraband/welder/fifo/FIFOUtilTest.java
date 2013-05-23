@@ -115,7 +115,6 @@ public class FIFOUtilTest {
 			@Override
 			public void checkRead(String file) {
 				if (!checkFlag.get() && file.contains("temp-fifo-")) {
-
 					try {
 						checkFlag.set(true);
 

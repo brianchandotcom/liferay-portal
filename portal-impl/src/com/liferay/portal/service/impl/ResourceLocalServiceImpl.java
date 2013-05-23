@@ -699,7 +699,6 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 		}
 
 		if (resourceBlockLocalService.isSupported(resource.getName())) {
-
 			if (permissionedModel == null) {
 				throw new IllegalArgumentException(
 					"Permissioned model is null");

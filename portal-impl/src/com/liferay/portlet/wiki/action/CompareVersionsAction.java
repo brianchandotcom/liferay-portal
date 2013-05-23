@@ -60,7 +60,6 @@ public class CompareVersionsAction extends PortletAction {
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchPageException) {
-
 				SessionErrors.add(renderRequest, e.getClass());
 
 				return mapping.findForward("portlet.wiki.error");

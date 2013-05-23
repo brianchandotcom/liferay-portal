@@ -39,7 +39,6 @@ public class PanelContainerTag extends BaseBodyTagSupport implements BodyTag {
 			"liferay-ui:panel-container:panelCount" + _id);
 
 		if ((panelCount != null) && (panelCount.getValue() == 1)) {
-
 			bodyContent.clearBody();
 
 			return EVAL_BODY_AGAIN;

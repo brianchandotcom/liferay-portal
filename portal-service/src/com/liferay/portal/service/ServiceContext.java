@@ -949,7 +949,6 @@ public class ServiceContext implements Cloneable, Serializable {
 		setSignedIn(serviceContext.isSignedIn());
 
 		if (Validator.isNotNull(serviceContext.getUserDisplayURL())) {
-
 			setUserDisplayURL(serviceContext.getUserDisplayURL());
 		}
 

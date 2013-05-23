@@ -1,22 +1,54 @@
+@import "compass";
+
 /* ---------- Add/remove page ---------- */
 
 .modify-pages {
 	li {
 		position: relative;
+
+		&.lfr-nav-hover {
+			.delete-tab {
+				@include opacity(1);
+			}
+		}
+	}
+
+	.add-page-editor-input {
+		width: 150px;
 	}
 
 	.delete-tab {
-		background: #333 url(../images/portlet/close_borderless.png) no-repeat 50%;
+		color: #444;
 		cursor: pointer;
 		display: block;
-		height: 8px;
-		margin-top: -7px;
-		padding: 3px;
+		font-size: 20px;
+		font-weight: bold;
+		height: 10px;
+		line-height: 6px;
+		margin-top: -8px;
+		overflow: hidden;
+
+		@include opacity(0);
+
+		padding: 3px 0;
 		position: absolute;
 		right: 1px;
-		text-indent: -9999em;
+		text-shadow: 0 1px #FFF;
 		top: 50%;
-		width: 8px;
+
+		&:hover {
+			color: #B50303;
+		}
+	}
+
+	.lfr-nav-updateable.selected a:hover span {
+		cursor: text;
+	}
+}
+
+.nav {
+	li .toolbar {
+		margin-top: 5px;
 	}
 }
 

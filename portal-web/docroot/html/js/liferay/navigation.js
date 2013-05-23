@@ -5,6 +5,10 @@ AUI.add(
 		var Util = Liferay.Util;
 		var Lang = A.Lang;
 
+		var TPL_EDITOR = '<div class="add-page-editor"><div class="input-append"></div></div>';
+
+		var TPL_FIELD_INPUT = '<input class="add-page-editor-input" type="text" value="{0}" />';
+
 		var TPL_LIST_ITEM = '<li class="add-page"></li>';
 
 		var TPL_TAB_LINK = '<a href="{url}"><span>{pageTitle}</span></a>';
@@ -82,7 +86,7 @@ AUI.add(
 				NAME: 'navigation',
 
 				prototype: {
-					TPL_DELETE_BUTTON: '<span class="delete-tab hide">X</span>',
+					TPL_DELETE_BUTTON: '<span class="delete-tab">&times;</span>',
 
 					initializer: function(config) {
 						var instance = this;
@@ -92,7 +96,10 @@ AUI.add(
 						if (navBlock) {
 							instance._updateURL = themeDisplay.getPathMain() + '/layouts_admin/update_page?p_auth=' + Liferay.authToken;
 
-							var items = navBlock.all('> ul > li');
+							var navItemSelector = Liferay.Data.NAV_ITEM_SELECTOR || '> ul > li';
+
+							var items = navBlock.all(navItemSelector);
+
 							var layoutIds = instance.get('layoutIds');
 
 							var cssClassBuffer = [];
@@ -125,6 +132,8 @@ AUI.add(
 								}
 							);
 
+							instance._navItemSelector = navItemSelector;
+
 							instance._makeAddable();
 							instance._makeDeletable();
 							instance._makeSortable();
@@ -140,11 +149,14 @@ AUI.add(
 					_addPage: function(event) {
 						var instance = this;
 
+						event.halt();
+
 						if (!event.shiftKey) {
-							Dockbar.UnderlayManager.hideAll();
+							Liferay.fire('dockbar:closeAddContentMenu');
 						}
 
 						var navBlock = instance.get('navBlock');
+
 						var addBlock = A.Node.create(TPL_LIST_ITEM);
 
 						navBlock.show();
@@ -163,7 +175,7 @@ AUI.add(
 						var instance = this;
 
 						var actionNode = event.actionNode;
-						var comboBox = event.comboBox;
+						var toolbar = event.toolbar;
 						var field = event.field;
 						var listItem = event.listItem;
 
@@ -172,13 +184,13 @@ AUI.add(
 						if (actionNode) {
 							actionNode.show();
 
-							field.resetValue();
+							field.val(event.prevVal);
 						}
 						else {
 							listItem.remove(true);
 						}
 
-						comboBox.destroy();
+						toolbar.destroy();
 
 						if (!navBlock.one('li')) {
 							navBlock.hide();
@@ -215,6 +227,12 @@ AUI.add(
 						}
 					},
 
+					_hoverNavItem: function(event) {
+						var instance = this;
+
+						event.currentTarget.toggleClass('lfr-nav-hover', (event.type == 'mouseenter'));
+					},
+
 					_makeAddable: function() {
 						var instance = this;
 
@@ -241,7 +259,9 @@ AUI.add(
 						if (instance.get('isModifiable')) {
 							var navBlock = instance.get('navBlock');
 
-							var navItems = navBlock.all('> ul > li').filter(
+							var navItemSelector = instance._navItemSelector;
+
+							var navItems = navBlock.all(navItemSelector).filter(
 								function(item, index, collection) {
 									return !item.hasClass('selected');
 								}
@@ -256,20 +276,10 @@ AUI.add(
 							navBlock.delegate(
 								'keydown',
 								A.bind('_handleKeyDown', instance),
-								'> ul > li a'
+								navItemSelector
 							);
 
-							navBlock.delegate(
-								'mouseenter',
-								A.rbind('_toggleDeleteButton', instance, 'removeClass'),
-								'li'
-							);
-
-							navBlock.delegate(
-								'mouseleave',
-								A.rbind('_toggleDeleteButton', instance, 'addClass'),
-								'li'
-							);
+							navBlock.delegate(['mouseenter', 'mouseleave'], instance._hoverNavItem, 'li', instance);
 
 							instance._deleteButton(navItems);
 						}
@@ -296,17 +306,6 @@ AUI.add(
 												}
 											}
 										);
-
-										currentLink.on(
-											'mouseenter',
-											function(event) {
-												if (!themeDisplay.isStateMaximized() || event.shiftKey) {
-													currentSpan.setStyle('cursor', 'text');
-												}
-											}
-										);
-
-										currentLink.on('mouseleave', A.bind('setStyle', currentSpan, 'cursor', 'pointer'));
 
 										currentSpan.on(
 											'click',
@@ -349,19 +348,7 @@ AUI.add(
 								eventType = 'cancelPage';
 							}
 
-							var comboBox = listItem._comboBox;
-
-							comboBox.fire(eventType);
-						}
-					},
-
-					_toggleDeleteButton: function(event, action) {
-						var instance = this;
-
-						var deleteTab = event.currentTarget.one('.delete-tab');
-
-						if (deleteTab) {
-							deleteTab[action]('hide');
+							listItem._toolbar.fire(eventType);
 						}
 					},
 
@@ -377,29 +364,18 @@ AUI.add(
 			function(listItem, options) {
 				var instance = this;
 
-				var id = A.guid();
-
 				var prototypeTemplate = instance._prototypeMenuTemplate || '';
 
-				prototypeTemplate = prototypeTemplate.replace(/name=\"template\"/g, 'name="' + id + 'Template"');
-
-				var prevVal = options.prevVal;
+				var prevVal = Lang.trim(options.prevVal);
 
 				if (options.actionNode) {
 					options.actionNode.hide();
 				}
 
-				var docClick = A.getDoc().on(
-					'click',
-					function(event) {
-						docClick.detach();
-
-						instance.fire('cancelPage', options);
-					}
-				);
-
 				var relayEvent = function(event) {
-					docClick.detach();
+					if (docClick) {
+						docClick.detach();
+					}
 
 					var eventName = event.type.split(':');
 
@@ -410,46 +386,90 @@ AUI.add(
 
 				var icons = [
 					{
-						handler: function(event) {
-							comboBox.fire('savePage', options);
+						icon: 'icon-ok',
+						on: {
+							click: function(event) {
+								toolbar.fire('savePage', options);
+							}
 						},
-						icon: 'check',
-						id: id + 'Save'
+						title: Liferay.Language.get('save')
 					}
 				];
 
 				if (prototypeTemplate && !prevVal) {
 					icons.unshift(
 						{
-							activeState: true,
-							handler: function(event) {
-								event.halt();
+							icon: 'icon-cog',
+							on: {
+								click: function(event) {
+									var button = event.currentTarget.get('boundingBox');
 
-								comboBox._optionsOverlay.toggle(this.StateInteraction.get('active'));
+									var active = button.hasClass('active');
+
+									optionsPopover.set('visible', !active);
+
+									button.toggleClass('active');
+								}
 							},
-							icon: 'gear',
-							id: id + 'Options'
+							title: Liferay.Language.get('options')
 						}
 					);
 				}
 
-				var optionsOverlay = new A.OverlayBase(
+				var editorContainer = A.Node.create(TPL_EDITOR);
+
+				var docClick = editorContainer.on(
+					'clickoutside',
+					function(event) {
+						docClick.detach();
+
+						instance.fire('cancelPage', options);
+					}
+				);
+
+				var toolbarBoundingBox = editorContainer.one('.input-append');
+
+				var toolbar = new A.Toolbar(
+					{
+						after: {
+							destroy: function(event) {
+								instance.fire('stopEditing');
+
+								optionsPopover.destroy();
+
+								editorContainer.remove(true);
+
+								if (docClick) {
+									docClick.detach();
+								}
+							},
+							render: function(event) {
+								instance.fire('startEditing');
+							}
+						},
+						boundingBox: toolbarBoundingBox,
+						children: icons
+					}
+				).render(editorContainer);
+
+				toolbar.get('contentBox').swallowEvent('click');
+
+				var optionItem;
+
+				var optionsPopover = new A.Popover(
 					{
 						bodyContent: prototypeTemplate,
 						align: {
-							node: listItem,
-							points: ['tl', 'bl']
+							points: ['tc', 'bc']
 						},
 						on: {
 							visibleChange: function(event) {
 								var instance = this;
 
-								if (event.newVal) {
-									if (!instance.get('rendered')) {
-										instance.set('align.node', comboBox.get('contentBox'));
+								if (event.newVal && !instance.get('rendered')) {
+									instance.set('align.node', optionItem);
 
-										instance.render();
-									}
+									instance.render(editorContainer);
 								}
 							}
 						},
@@ -457,79 +477,51 @@ AUI.add(
 					}
 				);
 
-				var comboBox = new A.Combobox(
-					{
-						after: {
-							destroy: function(event) {
-								instance.fire('stopEditing');
-							},
-							render: function(event) {
-								instance.fire('startEditing');
-							}
-						},
-						boundingBox: A.Node.create('<div />').prependTo(listItem),
-						field: {
-							value: prevVal
-						},
-						icons: icons,
-						on: {
-							destroy: function(event) {
-								var instance = this;
+				var popoverContentBox = optionsPopover.get('contentBox');
 
-								if (optionsOverlay.get('rendered')) {
-									optionsOverlay.destroy();
-								}
-							}
-						}
-					}
-				).render();
+				popoverContentBox.addClass('lfr-menu-list lfr-page-templates');
+
+				popoverContentBox.swallowEvent('click');
+
+				var toolbarField = A.Node.create(Lang.sub(TPL_FIELD_INPUT, [prevVal]));
+
+				toolbarBoundingBox.prepend(toolbarField);
+
+				listItem.prepend(editorContainer);
 
 				if (prototypeTemplate && instance._optionsOpen && !prevVal) {
-					var optionItem = comboBox.icons.item(id + 'Options');
+					optionItem = toolbar.item(1).get('boundingBox');
 
-					optionItem.StateInteraction.set('active', true);
-					optionsOverlay.show();
+					optionItem.addClass('active');
+
+					optionsPopover.show();
 				}
 
-				var comboField = comboBox._field;
-
-				var comboContentBox = comboBox.get('contentBox');
-
-				var overlayBoundingBox = optionsOverlay.get('boundingBox');
-				var overlayContentBox = optionsOverlay.get('contentBox');
-
 				options.listItem = listItem;
-				options.comboBox = comboBox;
-				options.field = comboField;
-				options.optionsOverlay = optionsOverlay;
+				options.optionsPopover = optionsPopover;
+				options.toolbar = toolbar;
 
-				comboBox.on('savePage', relayEvent);
-				comboBox.on('cancelPage', relayEvent);
+				options.field = editorContainer.one('input');
 
-				comboBox._optionsOverlay = optionsOverlay;
+				toolbar.on(['cancelPage', 'savePage'], relayEvent);
 
-				listItem._comboBox = comboBox;
+				toolbar._optionsPopover = optionsPopover;
 
-				overlayBoundingBox.setStyle('minWidth', listItem.get('offsetWidth') + 'px');
-				overlayContentBox.addClass('lfr-menu-list lfr-page-templates');
+				listItem._toolbar = toolbar;
 
-				comboContentBox.swallowEvent('click');
-				overlayContentBox.swallowEvent('click');
+				Util.focusFormField(toolbarField);
 
-				Util.focusFormField(comboField.get('node'));
+				var realign = A.bind('fire', optionsPopover, 'align');
 
-				var realign = A.bind('fire', optionsOverlay, 'align');
+				optionsPopover.on('visibleChange', realign);
 
-				optionsOverlay.on('visibleChange', realign);
-
-				instance.on('stopEditing', realign);
-				instance.on('startEditing', realign);
+				instance.on(['startEditing', 'stopEditing'], realign);
 
 				if (prevVal) {
 					instance.fire('editPage');
 				}
 			},
-			['aui-form-combobox-deprecated', 'aui-overlay-deprecated'],
+			['aui-toolbar', 'aui-popover', 'event-outside'],
 			true
 		);
 
@@ -638,16 +630,18 @@ AUI.add(
 		Liferay.provide(
 			Navigation,
 			'_savePage',
-			function(event, obj, oldName) {
+			function(event, obj) {
 				var instance = this;
 
 				var actionNode = event.actionNode;
-				var comboBox = event.comboBox;
+				var toolbar = event.toolbar;
 				var field = event.field;
 				var listItem = event.listItem;
 				var textNode = event.textNode;
 
 				var pageTitle = field.get('value');
+
+				var prevVal = Lang.trim(event.prevVal);
 
 				pageTitle = Lang.trim(pageTitle);
 
@@ -656,7 +650,7 @@ AUI.add(
 
 				if (pageTitle) {
 					if (actionNode) {
-						if (field.isDirty()) {
+						if (!pageTitle || pageTitle != prevVal) {
 							data = {
 								cmd: 'name',
 								doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
@@ -672,13 +666,14 @@ AUI.add(
 								var doc = A.getDoc();
 
 								textNode.text(pageTitle);
+
 								actionNode.show();
 
-								comboBox.destroy();
+								toolbar.destroy();
 
 								var oldTitle = doc.get('title');
 
-								var regex = new RegExp(field.get('prevVal'), 'g');
+								var regex = new RegExp(prevVal, 'g');
 
 								newTitle = oldTitle.replace(regex, pageTitle);
 
@@ -688,13 +683,19 @@ AUI.add(
 						else {
 							// The new name is the same as the old one
 
-							comboBox.fire('cancelPage');
+							toolbar.fire('cancelPage');
 						}
 					}
 					else {
-						var optionsOverlay = comboBox._optionsOverlay;
-						var selectedInput = optionsOverlay.get('contentBox').one('input:checked');
-						var layoutPrototypeId = selectedInput && selectedInput.val();
+						var popoverBoundingBox = toolbar._optionsPopover.get('boundingBox');
+
+						var selectedInput = popoverBoundingBox.one('input:checked');
+
+						var layoutPrototypeId;
+
+						if (selectedInput) {
+							layoutPrototypeId = selectedInput.val();
+						}
 
 						data = {
 							cmd: 'add',
@@ -722,16 +723,14 @@ AUI.add(
 
 							var newTab = A.Node.create(tabHtml);
 
-							newTab.setStyle('cursor', 'move');
-
 							listItem._LFR_layoutId = data.layoutId;
 
 							listItem.append(newTab);
 
-							comboBox.destroy();
+							toolbar.destroy();
 
 							if (data.sortable) {
-								listItem.addClass('sortable-item lfr-nav-sortable');
+								listItem.addClass('lfr-nav-sortable sortable-item');
 							}
 
 							if (data.updateable) {

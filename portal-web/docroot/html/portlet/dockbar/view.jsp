@@ -281,7 +281,7 @@ List<LayoutPrototype> layoutPrototypes = LayoutPrototypeServiceUtil.search(compa
 
 <c:if test="<%= !layoutPrototypes.isEmpty() %>">
 	<div class="html-template" id="layoutPrototypeTemplate">
-		<ul>
+		<ul class="unstyled">
 
 			<%
 			for (LayoutPrototype layoutPrototype : layoutPrototypes) {

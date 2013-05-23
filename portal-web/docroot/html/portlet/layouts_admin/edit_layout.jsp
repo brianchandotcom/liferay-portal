@@ -237,7 +237,7 @@ String[][] categorySections = {mainSections};
 					var clickHandler = function(event) {
 						var dataValue = event.target.ancestor().attr('data-value');
 
-						if (dataValue == 'add-child-page') {
+						if (dataValue === 'add-child-page') {
 							content = A.one('#<portlet:namespace />addLayout');
 
 							if (!popup) {
@@ -255,7 +255,7 @@ String[][] categorySections = {mainSections};
 
 							Liferay.Util.focusFormField(content.one('input:text'));
 						}
-						else if (dataValue == 'permissions') {
+						else if (dataValue === 'permissions') {
 							<liferay-security:permissionsURL
 								modelResource="<%= Layout.class.getName() %>"
 								modelResourceDescription="<%= selLayout.getName(locale) %>"
@@ -273,7 +273,7 @@ String[][] categorySections = {mainSections};
 								}
 							);
 						}
-						else if (dataValue == 'delete') {
+						else if (dataValue === 'delete') {
 							<portlet:namespace />saveLayout('<%= Constants.DELETE %>');
 						}
 						else if (dataValue == 'copy-portlets-from-page') {

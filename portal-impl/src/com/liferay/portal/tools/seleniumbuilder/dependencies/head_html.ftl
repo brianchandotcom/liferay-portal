@@ -5,6 +5,13 @@
 			width:500px;
 			border:1px solid #ccc;
 			overflow:auto;
+			font-family: sans-serif;
+			font-size: 11pt;
+		}
+
+		.line {
+			border-bottom: 1px solid #ccc;
+			padding: 7px;
 		}
 
 		.arrow {

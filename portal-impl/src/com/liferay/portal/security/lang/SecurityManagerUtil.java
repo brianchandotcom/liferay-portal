@@ -29,6 +29,16 @@ import java.util.List;
  */
 public class SecurityManagerUtil {
 
+	public static void applySmartStrategy() {
+		if ((_portalSecurityManagerStrategy ==
+				PortalSecurityManagerStrategy.SMART) &&
+			(_originalSecurityManager == null) &&
+			ServerDetector.isWebSphere()) {
+
+			System.setSecurityManager(null);
+		}
+	}
+
 	public static PortalSecurityManager getPortalSecurityManager() {
 		return _portalSecurityManager;
 	}
@@ -37,6 +47,8 @@ public class SecurityManagerUtil {
 		if (_portalSecurityManagerStrategy != null) {
 			return;
 		}
+
+		_originalSecurityManager = System.getSecurityManager();
 
 		if (PropsValues.TCK_URL) {
 			_portalSecurityManagerStrategy = PortalSecurityManagerStrategy.NONE;
@@ -163,6 +175,7 @@ public class SecurityManagerUtil {
 
 	private static Log _log = LogFactoryUtil.getLog(SecurityManagerUtil.class);
 
+	private static SecurityManager _originalSecurityManager;
 	private static PortalSecurityManager _portalSecurityManager;
 	private static PortalSecurityManagerStrategy _portalSecurityManagerStrategy;
 
@@ -178,10 +191,6 @@ public class SecurityManagerUtil {
 				return LIFERAY;
 			}
 			else if (value.equals("smart")) {
-				if (ServerDetector.isWebSphere()) {
-					return NONE;
-				}
-
 				return SMART;
 			}
 

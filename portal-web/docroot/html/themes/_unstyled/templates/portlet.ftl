@@ -12,7 +12,6 @@
 
 		<menu class="portlet-topper-toolbar" id="portlet-topper-toolbar_${portlet_id}" type="toolbar">
 			<#if portlet_display.isShowBackIcon()>
-				<i class="icon-circle-arrow-left"></i>
 				<a href="${portlet_back_url}" class="portlet-icon-back"><@liferay.language key="return-to-full-page" /></a>
 			<#else>
 				${theme.iconOptions()}

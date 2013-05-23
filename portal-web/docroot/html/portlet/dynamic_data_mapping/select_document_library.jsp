@@ -27,6 +27,11 @@ Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
 
 long folderId = BeanParamUtil.getLong(folder, request, "folderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
+if ((folder != null) && (folder.getGroupId() != groupId)) {
+	folder = null;
+	folderId = 0;
+}
+
 long searchFolderIds = ParamUtil.getLong(request, "searchFolderIds");
 
 long[] folderIdsArray = null;

@@ -4096,17 +4096,26 @@ public class PortalImpl implements Portal {
 			PortletResponse portletResponse, ThemeDisplay themeDisplay)
 		throws SystemException {
 
-		LiferayPortletResponse liferayPortletResponse =
-			(LiferayPortletResponse)portletResponse;
-
 		Portlet portlet = getFirstSiteAdministrationPortlet(themeDisplay);
 
 		if (portlet == null) {
 			return null;
 		}
 
+		return getSiteAdministrationURL(
+			portletResponse, themeDisplay, portlet.getPortletName());
+	}
+
+	public PortletURL getSiteAdministrationURL(
+			PortletResponse portletResponse, ThemeDisplay themeDisplay,
+			String portletName)
+		throws SystemException {
+
+		LiferayPortletResponse liferayPortletResponse =
+			(LiferayPortletResponse)portletResponse;
+
 		LiferayPortletURL siteAdministrationURL =
-			liferayPortletResponse.createRenderURL(portlet.getPortletName());
+			liferayPortletResponse.createRenderURL(portletName);
 
 		siteAdministrationURL.setControlPanelCategory(
 			PortletCategoryKeys.SITES);

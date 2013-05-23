@@ -37,9 +37,11 @@ if (organization != null) {
 String[][] categorySections = {mainSections, identificationSections, miscellaneousSections};
 %>
 
-<liferay-util:include page="/html/portlet/users_admin/toolbar.jsp">
-	<liferay-util:param name="toolbarItem" value='<%= (organization == null) ? "add" : "view" %>' />
-</liferay-util:include>
+<aui:nav-bar>
+	<liferay-util:include page="/html/portlet/users_admin/toolbar.jsp">
+		<liferay-util:param name="toolbarItem" value='<%= (organization == null) ? "add" : "view" %>' />
+	</liferay-util:include>
+</aui:nav-bar>
 
 <liferay-ui:header
 	backURL="<%= backURL %>"

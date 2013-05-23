@@ -1050,12 +1050,20 @@ public class SitesImpl implements Sites {
 		String sourcePrototypeLayoutUuid =
 			layout.getSourcePrototypeLayoutUuid();
 
-		if (Validator.isNotNull(sourcePrototypeLayoutUuid)) {
-			LayoutSet layoutSet = layout.getLayoutSet();
+		if (Validator.isNull(sourcePrototypeLayoutUuid)) {
+			doMergeLayoutPrototypeLayout(group, layout);
 
+			return;
+		}
+
+		LayoutSet layoutSet = layout.getLayoutSet();
+
+		long layoutSetPrototypeId = layoutSet.getLayoutSetPrototypeId();
+
+		if (layoutSetPrototypeId > 0) {
 			Group layoutSetPrototypeGroup =
 				GroupLocalServiceUtil.getLayoutSetPrototypeGroup(
-					layout.getCompanyId(), layoutSet.getLayoutSetPrototypeId());
+					layout.getCompanyId(), layoutSetPrototypeId);
 
 			Layout sourcePrototypeLayout =
 				LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(

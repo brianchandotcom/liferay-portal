@@ -1050,24 +1050,28 @@ public class SitesImpl implements Sites {
 		String sourcePrototypeLayoutUuid =
 			layout.getSourcePrototypeLayoutUuid();
 
-		if (Validator.isNotNull(sourcePrototypeLayoutUuid)) {
-			LayoutSet layoutSet = layout.getLayoutSet();
+		if (Validator.isNull(sourcePrototypeLayoutUuid)) {
+			doMergeLayoutPrototypeLayout(group, layout);
 
-			long layoutSetPrototypeId = layoutSet.getLayoutSetPrototypeId();
+			return;
+		}
 
-			if (Validator.isNotNull(layoutSetPrototypeId)) {
-				Group layoutSetPrototypeGroup =
-					GroupLocalServiceUtil.getLayoutSetPrototypeGroup(
-						layout.getCompanyId(), layoutSetPrototypeId);
+		LayoutSet layoutSet = layout.getLayoutSet();
 
-				Layout sourcePrototypeLayout =
-					LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-						sourcePrototypeLayoutUuid,
-						layoutSetPrototypeGroup.getGroupId(), true);
+		long layoutSetPrototypeId = layoutSet.getLayoutSetPrototypeId();
 
-				doMergeLayoutPrototypeLayout(
-					layoutSetPrototypeGroup, sourcePrototypeLayout);
-			}
+		if (layoutSetPrototypeId > 0) {
+			Group layoutSetPrototypeGroup =
+				GroupLocalServiceUtil.getLayoutSetPrototypeGroup(
+					layout.getCompanyId(), layoutSetPrototypeId);
+
+			Layout sourcePrototypeLayout =
+				LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
+					sourcePrototypeLayoutUuid,
+					layoutSetPrototypeGroup.getGroupId(), true);
+
+			doMergeLayoutPrototypeLayout(
+				layoutSetPrototypeGroup, sourcePrototypeLayout);
 		}
 
 		doMergeLayoutPrototypeLayout(group, layout);

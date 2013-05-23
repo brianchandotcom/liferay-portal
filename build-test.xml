@@ -3461,8 +3461,8 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			</then>
 		</if>
 
-		<exec dir="${project.dir}" executable="cmd.exe" os="${os.windows}" outputproperty="svn.info.output">
-			<arg line="/c svn info" />
+		<exec dir="${project.dir}" executable="svn" outputproperty="svn.info.output">
+			<arg line="info" />
 		</exec>
 
 		<script classpathref="project.classpath" language="beanshell">
@@ -3869,16 +3869,16 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 				<echo>Portal GIT ID:</echo>
 				<echo />
 
-				<exec dir="${project.dir}" executable="cmd.exe" os="${os.windows}">
-					<arg line="/c git log -n 1" />
+				<exec dir="${project.dir}" executable="git">
+					<arg line="log -n 1" />
 				</exec>
 
 				<echo />
 				<echo>Plugins GIT ID:</echo>
 				<echo />
 
-				<exec dir="${lp.plugins.dir}" executable="cmd.exe" os="${os.windows}">
-					<arg line="/c git log -n 1" />
+				<exec dir="${lp.plugins.dir}" executable="git">
+					<arg line="log -n 1" />
 				</exec>
 
 				<echo />
@@ -3887,16 +3887,16 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 				<echo>Portal SVN Revision:</echo>
 				<echo />
 
-				<exec dir="${project.dir}" executable="cmd.exe" os="${os.windows}">
-					<arg line="/c svn info" />
+				<exec dir="${project.dir}" executable="svn">
+					<arg line="info" />
 				</exec>
 
 				<echo />
 				<echo>Plugins SVN Revision:</echo>
 				<echo />
 
-				<exec dir="${lp.plugins.dir}" executable="cmd.exe" os="${os.windows}">
-					<arg line="/c svn info" />
+				<exec dir="${lp.plugins.dir}" executable="svn">
+					<arg line="info" />
 				</exec>
 			</else>
 		</if>

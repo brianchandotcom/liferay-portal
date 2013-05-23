@@ -16,7 +16,7 @@
 
 <c:choose>
 	<c:when test="<%= group.isCompany() && GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.PUBLISH_STAGING) %>">
-		<aui:nav-item href="<%= publishRenderURL.toString() %>" id='<%= groupId + "publishGlobalLink" %>' label="<%= publishDialogTitle %>" />
+		<aui:nav-item anchorId='<%= groupId + "publishGlobalLink" %>' href="<%= publishRenderURL.toString() %>" label="<%= publishDialogTitle %>" />
 
 		<aui:script use="aui-base">
 			var publishGlobalLink = A.one('#<portlet:namespace /><%= groupId + "publishGlobalLink" %>');
@@ -35,7 +35,6 @@
 								url: event.currentTarget.attr('href')
 							}
 						);
-
 					}
 				);
 			}
@@ -76,7 +75,7 @@
 				</c:otherwise>
 			</c:choose>
 
-			<aui:nav-item href="<%= publishRenderURL.toString() %>" id='<%= layoutSetBranchId + "publishLink" %>' label="<%= publishMessage %>" />
+			<aui:nav-item anchorId='<%= layoutSetBranchId + "publishLink" %>' href="<%= publishRenderURL.toString() %>" label="<%= publishMessage %>" />
 
 			<aui:script use="aui-base">
 				var publishLink = A.one('#<portlet:namespace /><%= layoutSetBranchId + "publishLink" %>');
@@ -95,7 +94,6 @@
 									url: event.currentTarget.attr('href')
 								}
 							);
-
 						}
 					);
 				}
@@ -110,7 +108,7 @@
 				<portlet:param name="selPlid" value="<%= String.valueOf(selPlid) %>" />
 			</portlet:renderURL>
 
-			<aui:nav-item cssClass="manage-layout-set-branches" href="<%= layoutSetBranchesURL %>" id="manageLayoutSetBranches" label="manage-site-pages-variations" />
+			<aui:nav-item anchorId="manageLayoutSetBranches" cssClass="manage-layout-set-branches" href="<%= layoutSetBranchesURL %>" label="manage-site-pages-variations" />
 
 			<aui:script use="aui-base">
 				var layoutSetBranchesLink = A.one('#<portlet:namespace />manageLayoutSetBranches');

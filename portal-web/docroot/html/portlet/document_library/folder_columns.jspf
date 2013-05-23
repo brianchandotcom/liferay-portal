@@ -38,7 +38,7 @@ for (int j = 0; j < folderColumns.length; j++) {
 %>
 
 	<c:choose>
-		<c:when test='<%= folderColumn.equals("action") %>'>
+		<c:when test='<%= folderColumn.equals("action") && showActions %>'>
 
 			<%
 			String align = SearchEntry.DEFAULT_ALIGN;

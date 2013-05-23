@@ -151,7 +151,7 @@ else if (((folderId != rootFolderId) && (parentFolderId == 0)) || ((folderId == 
 						dataView="<%= dataView %>"
 						entryTitle='<%= LanguageUtil.get(pageContext, "home") %>'
 						expandURL="<%= expandViewDocumentsHomeURL.toString() %>"
-						iconImage="../aui/home"
+						iconImage="icon-home"
 						selected='<%= (navigation.equals("home") && (folderId == rootFolderId) && (fileEntryTypeId == -1)) %>'
 						showExpand="<%= foldersCount > 0 %>"
 						viewURL="<%= viewDocumentsHomeURL.toString() %>"
@@ -177,7 +177,7 @@ else if (((folderId != rootFolderId) && (parentFolderId == 0)) || ((folderId == 
 						<liferay-ui:app-view-navigation-entry
 							dataView="<%= dataView %>"
 							entryTitle='<%= LanguageUtil.get(pageContext, "recent") %>'
-							iconImage="../aui/clock"
+							iconImage="icon-time"
 							selected='<%= navigation.equals("recent") %>'
 							viewURL="<%= viewRecentDocumentsURL.toString() %>"
 						/>
@@ -202,7 +202,7 @@ else if (((folderId != rootFolderId) && (parentFolderId == 0)) || ((folderId == 
 							<liferay-ui:app-view-navigation-entry
 								dataView="<%= dataView %>"
 								entryTitle='<%= LanguageUtil.get(pageContext, "mine") %>'
-								iconImage="../aui/person"
+								iconImage="icon-user"
 								selected='<%= navigation.equals("mine") %>'
 								viewURL="<%= viewMyDocumentsURL.toString() %>"
 							/>
@@ -233,7 +233,7 @@ else if (((folderId != rootFolderId) && (parentFolderId == 0)) || ((folderId == 
 								cssClass="folder file-entry-type"
 								dataView="<%= dataView %>"
 								entryTitle='<%= LanguageUtil.get(pageContext, "basic-document") %>'
-								iconImage="copy"
+								iconImage="icon-file"
 								selected="<%= (fileEntryTypeId == 0) %>"
 								viewURL="<%= viewBasicFileEntryTypeURL.toString() %>"
 							/>
@@ -264,7 +264,7 @@ else if (((folderId != rootFolderId) && (parentFolderId == 0)) || ((folderId == 
 								cssClass="folder file-entry-type"
 								dataView="<%= dataView %>"
 								entryTitle="<%= HtmlUtil.escape(fileEntryType.getName()) %>"
-								iconImage="copy"
+								iconImage="icon-file"
 								selected="<%= (fileEntryTypeId == fileEntryType.getFileEntryTypeId()) %>"
 								viewURL="<%= viewFileEntryTypeURL.toString() %>"
 							/>
@@ -314,7 +314,7 @@ else if (((folderId != rootFolderId) && (parentFolderId == 0)) || ((folderId == 
 									dataView="<%= dataView %>"
 									entryTitle="<%= mountFolder.getName() %>"
 									expandURL="<%= expandViewURL.toString() %>"
-									iconImage="drive"
+									iconImage="icon-hdd"
 									selected="<%= (mountFolder.getFolderId() == folderId) %>"
 									showExpand="<%= mountFoldersCount > 0 %>"
 									viewURL="<%= viewURL.toString() %>"

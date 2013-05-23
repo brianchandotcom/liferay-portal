@@ -59,10 +59,6 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 			<liferay-util:include page="/html/portlet/journal/display_style_buttons.jsp" />
 		</span>
 
-		<span id="<portlet:namespace />sortButton">
-			<liferay-util:include page="/html/portlet/journal/sort_button.jsp" />
-		</span>
-
 		<span id="<portlet:namespace />breadcrumb">
 			<div class="portlet-breadcrumb">
 				<liferay-util:include page="/html/portlet/journal/breadcrumb.jsp" />
@@ -80,10 +76,6 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 		<div id="<portlet:namespace />entries">
 			<liferay-util:include page="/html/portlet/journal/view_entries.jsp" />
 		</div>
-
-		<span id="<portlet:namespace />sortButton">
-			<liferay-util:include page="/html/portlet/journal/sort_button.jsp" />
-		</span>
 	</c:if>
 
 	<c:if test="<%= viewFolders %>">

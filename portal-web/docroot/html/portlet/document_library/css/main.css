@@ -257,13 +257,9 @@
 		}
 	}
 
-	.context-pane {
-		overflow: hidden;
-
-		.context-pane-content {
-			border-left: 1px solid #7B7B7B;
-			position: relative;
-		}
+	.context-pane .context-pane-content {
+		border-left: 1px solid #7B7B7B;
+		position: relative;
 	}
 
 	.taglib-search-iterator-page-iterator-top, .taglib-search-iterator-page-iterator-bottom, .paginator-container {

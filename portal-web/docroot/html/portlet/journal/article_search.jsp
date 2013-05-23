@@ -27,22 +27,14 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, portletURL);
 
 ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)searchContainer.getDisplayTerms();
-
-boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, displayTerms.ADVANCED_SEARCH);
 %>
 
-<div class='taglib-search-toggle taglib-search-toggle-advanced <%= advancedSearch ? StringPool.BLANK : "hide" %>' id="<portlet:namespace />advancedSearch">
-	<aui:form action="<%= portletURL.toString() %>" method="post" name="fmAdvancedSearch" onSubmit="event.preventDefault();">
-		<aui:input name="<%= displayTerms.ADVANCED_SEARCH %>" type="hidden" value="<%= true %>" />
-
-		<liferay-util:buffer var="andOperator">
-			<aui:select cssClass="inline-control" inlineField="<%= true %>" label="" name="<%= displayTerms.AND_OPERATOR %>">
-				<aui:option label="all" selected="<%= displayTerms.isAndOperator() %>" value="1" />
-				<aui:option label="any" selected="<%= !displayTerms.isAndOperator() %>" value="0" />
-			</aui:select>
-		</liferay-util:buffer>
-
-		<liferay-ui:message arguments="<%= andOperator %>" key="match-x-of-the-following-fields" />
+<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1" onSubmit="event.preventDefault();">
+	<liferay-ui:search-toggle
+		buttonLabel="search"
+		displayTerms="<%= displayTerms %>"
+		id="<%= renderResponse.getNamespace() %>"
+	>
 
 		<aui:fieldset>
 			<aui:input label="id" name="<%= displayTerms.ARTICLE_ID %>" size="20" value="<%= displayTerms.getArticleId() %>" />
@@ -125,7 +117,11 @@ boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, displayTerm
 				</aui:select>
 			</c:if>
 		</aui:fieldset>
+	</liferay-ui:search-toggle>
+</aui:form>
 
-		<aui:button type="submit" value="search" />
-	</aui:form>
-</div>
+<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
+	<aui:script>
+		Liferay.Util.focusFormField(document.<portlet:namespace />fm1.<portlet:namespace /><%= displayTerms.KEYWORDS %>);
+	</aui:script>
+</c:if>

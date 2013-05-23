@@ -72,7 +72,6 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 			<liferay-ui:app-view-toolbar
 				includeDisplayStyle="<%= true %>"
 				includeSelectAll="<%= true %>"
-				searchJsp="/html/portlet/journal/article_toolbar_search.jsp"
 			>
 
 				<liferay-util:include page="/html/portlet/journal/toolbar.jsp" />
@@ -88,10 +87,6 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 			portletURL.setParameter("struts_action", "/journal/edit_article");
 			portletURL.setParameter("folderId", String.valueOf(folderId));
 			%>
-
-			<div id="<portlet:namespace />advancedSearchContainer">
-				<liferay-util:include page="/html/portlet/journal/article_search.jsp" />
-			</div>
 
 			<aui:form action="<%= portletURL.toString() %>" method="get" name="fm">
 				<aui:input name="<%= Constants.CMD %>" type="hidden" />
@@ -120,10 +115,6 @@ entryStart = GetterUtil.getInteger(request.getAttribute("view_entries.jsp-entryS
 folderEnd = GetterUtil.getInteger(request.getAttribute("view_folders.jsp-folderEnd"), folderEnd);
 folderStart = GetterUtil.getInteger(request.getAttribute("view_folders.jsp-folderStart"), folderStart);
 %>
-
-<span id="<portlet:namespace />displayStyleButtonsContainer">
-	<liferay-util:include page="/html/portlet/journal/display_style_buttons.jsp" />
-</span>
 
 <aui:script>
 	Liferay.provide(
@@ -159,6 +150,7 @@ folderStart = GetterUtil.getInteger(request.getAttribute("view_folders.jsp-folde
 					p_p_lifecycle: 0
 				},
 				defaultParentFolderId: '<%= JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID %>',
+				'listViewConfig.useTransition': false,
 				mainUrl: '<%= mainURL %>',
 				strutsAction: '/journal/view'
 			},

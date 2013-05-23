@@ -16,86 +16,71 @@
 
 <%@ include file="/html/portlet/journal/init.jsp" %>
 
-<liferay-ui:icon-menu cssClass="actions-button" direction="down" icon="" id="actionsButtonContainer" message="actions" showExpanded="<%= false %>" showWhenSingleIcon="<%= true %>">
+<%
+String strutsAction = ParamUtil.getString(request, "struts_action");
+%>
 
-	<%
-	String taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + (TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE) + "'});";
-	%>
-
-	<liferay-ui:icon-delete
-		confirmation="are-you-sure-you-want-to-delete-the-selected-entries"
-		trash="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>"
-		url="<%= taglibOnClick %>"
-	/>
-
-	<%
-	taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.EXPIRE + "'});";
-	%>
-
-	<liferay-ui:icon
-		cssClass="expire-articles-button"
-		image="time"
-		message="expire"
-		onClick="<%= taglibOnClick %>"
-		url="javascript:;"
-	/>
-
-	<%
-	taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.MOVE + "'});";
-	%>
-
-	<liferay-ui:icon
-		cssClass="move-articles-button"
-		image="submit"
-		message="move"
-		onClick="<%= taglibOnClick %>"
-		url="javascript:;"
-	/>
-</liferay-ui:icon-menu>
-
-<span class="add-button" id="<portlet:namespace />addButtonContainer">
-	<liferay-util:include page="/html/portlet/journal/add_button.jsp" />
-</span>
-
-<span class="sort-button" id="<portlet:namespace />sortButtonContainer">
-	<liferay-util:include page="/html/portlet/journal/sort_button.jsp" />
-</span>
-
-<span class="manage-button">
-	<c:if test="<%= !user.isDefaultUser() %>">
-		<liferay-ui:icon-menu direction="down" icon="" message="manage" showExpanded="<%= false %>" showWhenSingleIcon="<%= true %>">
+<aui:nav-bar>
+	<aui:nav>
+		<aui:nav-item cssClass="hide" dropdown="<%= true %>" id="actionsButtonContainer" label="actions">
 
 			<%
-			String taglibURL = "javascript:" + renderResponse.getNamespace() + "openStructuresView()";
+			String taglibOnClick = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + (TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE) + "'});";
 			%>
 
-			<liferay-ui:icon
-				message="structures"
-				url="<%= taglibURL %>"
-			/>
+			<aui:nav-item href="<%= taglibOnClick %>" iconClass="icon-trash" label="delete" />
 
 			<%
-			taglibURL = "javascript:" + renderResponse.getNamespace() + "openTemplatesView()";
+			taglibOnClick = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.EXPIRE + "'});";
 			%>
 
-			<liferay-ui:icon
-				message="templates"
-				url="<%= taglibURL %>"
-			/>
+			<aui:nav-item href="<%= taglibOnClick %>" label="expire" />
 
 			<%
-			taglibURL = "javascript:" + renderResponse.getNamespace() + "openFeedsView()";
+			taglibOnClick = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.MOVE + "'});";
 			%>
 
-			<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
-				<liferay-ui:icon
-					message="feeds"
-					url="<%= taglibURL %>"
-				/>
+			<aui:nav-item href="<%= taglibOnClick %>" label="move" />
+		</aui:nav-item>
+
+		<liferay-util:include page="/html/portlet/journal/add_button.jsp" />
+
+		<c:if test="<%= !user.isDefaultUser() %>">
+			<aui:nav-item dropdown="<%= true %>" label="manage">
+
+				<%
+				String taglibURL = "javascript:" + renderResponse.getNamespace() + "openStructuresView()";
+				%>
+
+				<aui:nav-item href="<%= taglibURL %>" label="structures" />
+
+				<%
+				taglibURL = "javascript:" + renderResponse.getNamespace() + "openTemplatesView()";
+				%>
+
+				<aui:nav-item href="<%= taglibURL %>" label="templates" />
+
+				<%
+				taglibURL = "javascript:" + renderResponse.getNamespace() + "openFeedsView()";
+				%>
+
+				<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
+					<aui:nav-item href="<%= taglibURL %>" label="feeds" />
+				</c:if>
+			</aui:nav-item>
+		</c:if>
+	</aui:nav>
+
+	<div class="pull-right">
+		<span class="pull-left display-style-buttons-container" id="<portlet:namespace />displayStyleButtonsContainer">
+			<c:if test='<%= !strutsAction.equals("/journal/search") %>'>
+				<liferay-util:include page="/html/portlet/journal/display_style_buttons.jsp" />
 			</c:if>
-		</liferay-ui:icon-menu>
-	</c:if>
-</span>
+		</span>
+
+		<aui:nav-bar-search file="/html/portlet/journal/article_search.jsp" />
+	</div>
+</aui:nav-bar>
 
 <aui:script>
 	<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">

@@ -39,7 +39,7 @@ if ((folder == null) || folder.isSupportsMetadata()) {
 			<portlet:param name="parentFolderId" value="<%= String.valueOf(folderId) %>" />
 		</portlet:renderURL>
 
-		<aui:nav-item href="<%= addFolderURL %>" label='<%= (folder != null) ? "subfolder" : "folder" %>' />
+		<aui:nav-item href="<%= addFolderURL %>" iconClass="icon-folder-open" label='<%= (folder != null) ? "subfolder" : "folder" %>' />
 	</c:if>
 
 	<c:if test="<%= ((folder == null) || folder.isSupportsShortcuts()) && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_SHORTCUT) %>">
@@ -59,7 +59,7 @@ if ((folder == null) || folder.isSupportsMetadata()) {
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 		</portlet:renderURL>
 
-		<aui:nav-item href="<%= addRepositoryURL %>" label="repository" />
+		<aui:nav-item href="<%= addRepositoryURL %>" iconClass="icon-hdd" label="repository" />
 	</c:if>
 
 	<c:if test="<%= ((folder == null) || folder.isSupportsMultipleUpload()) && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) %>">
@@ -85,7 +85,7 @@ if ((folder == null) || folder.isSupportsMetadata()) {
 				<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 			</portlet:renderURL>
 
-			<aui:nav-item href="<%= editFileEntryURL %>" label="basic-document" />
+			<aui:nav-item href="<%= editFileEntryURL %>" iconClass="icon-file" label="basic-document" />
 		</c:if>
 
 		<c:if test="<%= (folder == null) || folder.isSupportsMetadata() %>">
@@ -103,7 +103,7 @@ if ((folder == null) || folder.isSupportsMetadata()) {
 					<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryType.getFileEntryTypeId()) %>" />
 				</portlet:renderURL>
 
-				<aui:nav-item href="<%= addFileEntryTypeURL %>" label="<%= HtmlUtil.escape(fileEntryType.getName()) %>" />
+				<aui:nav-item href="<%= addFileEntryTypeURL %>" iconClass="icon-file" label="<%= HtmlUtil.escape(fileEntryType.getName()) %>" />
 
 			<%
 			}

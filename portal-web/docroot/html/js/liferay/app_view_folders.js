@@ -591,7 +591,9 @@ AUI.add(
 
 						var sortButtonContainer = instance.byId('sortButtonContainer');
 
-						sortButtonContainer.show();
+						if (sortButtonContainer) {
+							sortButtonContainer.show();
+						}
 					},
 
 					_setFolders: function(content) {

@@ -84,6 +84,7 @@ AUI.add(
 
 						instance._eventPageLoaded = instance.ns('pageLoaded');
 
+						instance._advancedSearchNode = instance.byId(STR_ADVANCED_SEARCH);
 						instance._andOperatorNode = instance.byId(STR_AND_OPERATOR);
 						instance._contentNode = instance.byId(STR_CONTENT);
 						instance._descriptionNode = instance.byId(STR_DESCRIPTION);
@@ -170,12 +171,6 @@ AUI.add(
 							Liferay.on(instance._eventChangeSearchFolder, instance._onChangeSearchFolder, instance)
 						];
 
-						journalContainer.delegate(
-							STR_CLICK,
-							A.bind('_onOpenAdvancedSearch', instance),
-							'.article-advanced-search-button'
-						);
-
 						instance._config = config;
 
 						instance._eventHandles = eventHandles;
@@ -186,12 +181,6 @@ AUI.add(
 
 						if (searchFormNode) {
 							searchFormNode.on('submit', instance._onSearchFormSubmit, instance);
-						}
-
-						var advancedSearchFormNode = instance.one('#fmAdvancedSearch');
-
-						if (advancedSearchFormNode) {
-							advancedSearchFormNode.on('submit', instance._onAdvancedSearchFormSubmit, instance);
 						}
 					},
 
@@ -254,8 +243,6 @@ AUI.add(
 					_onAdvancedSearchFormSubmit: function(event) {
 						var instance = this;
 
-						event.preventDefault();
-
 						var selectedFolder = instance._appViewSelect._getSelectedFolder();
 
 						var searchFolderId = selectedFolder.id;
@@ -287,10 +274,8 @@ AUI.add(
 
 						var selectedFolder = instance._appViewSelect.get(STR_SELECTED_FOLDER);
 
-						var showAdvancedSearch = instance.byId('showAdvancedSearch');
-
 						var searchData = {
-							advancedSearch: !showAdvancedSearch.hasClass('hide'),
+							advancedSearch: instance._advancedSearchNode.get('value'),
 							andOperator: instance._andOperatorNode.get('value'),
 							folderId: selectedFolder.id,
 							content: instance._contentNode.get('value'),
@@ -331,23 +316,6 @@ AUI.add(
 						}
 					},
 
-					_onOpenAdvancedSearch: function(event) {
-						var instance = this;
-
-						var advancedSearch = instance.byId('advancedSearch');
-
-						var showAdvancedSearch = event.currentTarget;
-
-						var showAdvancedSearchIcon = showAdvancedSearch.one('i');
-
-						var advancedSearchHidden = advancedSearch.hasClass('hide');
-
-						showAdvancedSearchIcon.toggleClass('icon-chevron-down', !advancedSearchHidden);
-						showAdvancedSearchIcon.toggleClass('icon-chevron-up', advancedSearchHidden);
-
-						advancedSearch.toggleClass('hide', !advancedSearchHidden);
-					},
-
 					_onPageLoaded: function(event) {
 						var instance = this;
 
@@ -362,6 +330,17 @@ AUI.add(
 						var instance = this;
 
 						event.preventDefault();
+
+						if (instance._advancedSearchNode.get('value') === 'true') {
+							instance._onAdvancedSearchFormSubmit(event);
+						}
+						else {
+							instance._onSimpleSearchFormSubmit(event)
+						}
+					},
+
+					_onSimpleSearchFormSubmit: function(event) {
+						var instance = this;
 
 						var selectedFolder = instance._appViewSelect.get(STR_SELECTED_FOLDER);
 
@@ -468,7 +447,7 @@ AUI.add(
 						}
 
 						if (searchResultsContainer || fragmentSearchResults) {
-							instance.all('#addButtonContainer, #sortButtonContainer').hide();
+							instance.all('#addButtonContainer').hide();
 						}
 					}
 				}

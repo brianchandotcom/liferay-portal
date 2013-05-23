@@ -207,27 +207,23 @@ String portletNameSpace = PortalUtil.getPortletNamespace(portletResource);
 	A.one('#<portlet:namespace />showActionsCheckbox').after(
 		'change',
 		function(event) {
+			var currentFileEntryColumns = A.one('#<portlet:namespace />currentFileEntryColumns');
+			var currentFolderColumns = A.one('#<portlet:namespace />currentFolderColumns');
 			var showActionsInput = A.one('#<portlet:namespace />showActions');
 
-			var currentFolderColumns = A.one('#<portlet:namespace />currentFolderColumns');
-
-			var currentFileEntryColumns = A.one('#<portlet:namespace />currentFileEntryColumns');
-
-			var optionAction = '<option value="action">' + Liferay.Language.get('action') + '</option>';
-
 			if (showActionsInput.val() === 'false') {
-				currentFileEntryColumns.appendChild(optionAction);
+				var actionHTML = '<option value="action"><%= UnicodeLanguageUtil.get(pageContext, "action") %></option>';
 
-				currentFolderColumns.appendChild(optionAction);
+				currentFileEntryColumns.append(actionHTML);
+				currentFolderColumns.append(actionHTML);
 			}
 			else {
 				var availableFileEntryColumns = A.one('#<portlet:namespace />availableFileEntryColumns');
-
 				var availableFolderColumns = A.one('#<portlet:namespace />availableFolderColumns');
 
 				A.Array.each(
 					[currentFolderColumns, currentFileEntryColumns, availableFileEntryColumns, availableFolderColumns],
-					function(item, index) {
+					function(item, index, collection) {
 						var actionsNode = item.one('option[value="action"]');
 
 						if (actionsNode) {

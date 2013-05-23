@@ -6391,7 +6391,7 @@ public class PortalImpl implements Portal {
 		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 			group.getGroupId(), privateLayoutSet);
 
-		String portalURL = StringPool.BLANK;
+		String portalURL = themeDisplay.getPortalURL();
 
 		if (canonicalURL || !themeDisplay.getServerName().equals(_LOCALHOST)) {
 			String virtualHostname = layoutSet.getVirtualHostname();

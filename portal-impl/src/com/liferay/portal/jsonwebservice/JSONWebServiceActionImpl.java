@@ -192,7 +192,6 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 				stringValue = stringValue.trim();
 
 				if (!stringValue.startsWith(StringPool.OPEN_CURLY_BRACE)) {
-
 					throw cce;
 				}
 

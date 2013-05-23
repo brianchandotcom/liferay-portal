@@ -415,7 +415,6 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 			String name = entry.getKey();
 
 			if (_portlet.getPublicRenderParameter(name) != null) {
-
 				if (publicParameterMap == null) {
 					publicParameterMap = new HashMap<String, String[]>(
 						parameterMap.size(), 1);

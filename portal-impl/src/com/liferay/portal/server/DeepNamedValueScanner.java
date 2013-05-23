@@ -255,7 +255,6 @@ public class DeepNamedValueScanner {
 		if (_excludedClassNames != null) {
 			for (String excludedClassName : _excludedClassNames) {
 				if (targetClassName.contains(excludedClassName)) {
-
 					return false;
 				}
 			}
@@ -265,7 +264,6 @@ public class DeepNamedValueScanner {
 			boolean accept = false;
 
 			for (String includedClassName : _includedClassNames) {
-
 				if (targetClassName.contains(includedClassName)) {
 					accept = true;
 
@@ -295,7 +293,6 @@ public class DeepNamedValueScanner {
 		if (_excludedNames != null) {
 			for (String excludedNames : _excludedNames) {
 				if (name.contains(excludedNames)) {
-
 					return false;
 				}
 			}

@@ -117,7 +117,6 @@ public class EditWorkflowTaskAction extends PortletAction {
 		}
 		catch (Exception e) {
 			if (e instanceof WorkflowException) {
-
 				SessionErrors.add(renderRequest, e.getClass());
 
 				return mapping.findForward("portlet.workflow_tasks.error");

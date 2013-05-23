@@ -1300,7 +1300,6 @@ public class GroupFinderImpl
 			}
 
 			if (key.equals("rolePermissions")) {
-
 				List<Object> values = (List<Object>)value;
 
 				String name = (String)values.get(0);
@@ -1388,7 +1387,6 @@ public class GroupFinderImpl
 			}
 			else {
 				if (key.equals("rolePermissions")) {
-
 					List<Object> values = (List<Object>)entry.getValue();
 
 					String name = (String)values.get(0);
@@ -1623,7 +1621,6 @@ public class GroupFinderImpl
 			String key = entry.getKey();
 
 			if (key.equals("rolePermissions")) {
-
 				List<Object> values = (List<Object>)entry.getValue();
 
 				String name = (String)values.get(0);

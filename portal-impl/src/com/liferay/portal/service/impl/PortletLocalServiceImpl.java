@@ -1008,7 +1008,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 			if (Validator.isNotNull(servletContextNameSuffix)) {
 				if (portletId.endsWith(servletContextNameSuffix)) {
-
 					portlets.add(portlet);
 				}
 			}

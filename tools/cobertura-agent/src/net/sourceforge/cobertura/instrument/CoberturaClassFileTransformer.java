@@ -91,7 +91,6 @@ public class CoberturaClassFileTransformer implements ClassFileTransformer {
 	public boolean matches(String className) {
 		if (_excludePatterns.length != 0) {
 			for (Pattern excludePattern : _excludePatterns) {
-
 				Matcher matcher = excludePattern.matcher(className);
 
 				if (matcher.matches()) {
@@ -102,7 +101,6 @@ public class CoberturaClassFileTransformer implements ClassFileTransformer {
 
 		if (_includePatterns.length != 0) {
 			for (Pattern includePattern : _includePatterns) {
-
 				Matcher matcher = includePattern.matcher(className);
 
 				if (matcher.matches()) {
@@ -247,7 +245,6 @@ public class CoberturaClassFileTransformer implements ClassFileTransformer {
 				access, name, desc, signature, exceptions);
 
 			if ((methodVisitor != null) && name.equals("<clinit>")) {
-
 				methodVisitor = new TouchCollectorCLINITVisitor(methodVisitor);
 			}
 

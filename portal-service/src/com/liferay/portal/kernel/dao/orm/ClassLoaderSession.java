@@ -48,7 +48,6 @@ public class ClassLoaderSession implements Session {
 		}
 		finally {
 			if (contextClassLoader != _classLoader) {
-
 				currentThread.setContextClassLoader(contextClassLoader);
 			}
 		}

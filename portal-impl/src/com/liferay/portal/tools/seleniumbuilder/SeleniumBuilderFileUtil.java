@@ -61,15 +61,18 @@ public class SeleniumBuilderFileUtil {
 		_reservedTags.add("default");
 		_reservedTags.add("definition");
 		_reservedTags.add("echo");
+		_reservedTags.add("else");
+		_reservedTags.add("elseif");
 		_reservedTags.add("equals");
 		_reservedTags.add("execute");
 		_reservedTags.add("fail");
 		_reservedTags.add("if");
 		_reservedTags.add("isset");
 		_reservedTags.add("set-up");
-		_reservedTags.add("substring");
+		_reservedTags.add("td");
 		_reservedTags.add("tear-down");
 		_reservedTags.add("then");
+		_reservedTags.add("tr");
 		_reservedTags.add("while");
 		_reservedTags.add("var");
 	}
@@ -245,26 +248,21 @@ public class SeleniumBuilderFileUtil {
 			Matcher matcher = pattern.matcher(line);
 
 			if (matcher.find()) {
-				boolean containsReservedTag = false;
-
 				for (String reservedTag : _reservedTags) {
 					if (line.contains("<" + reservedTag)) {
-						containsReservedTag = true;
+						line = StringUtil.replace(
+							line, matcher.group(),
+							matcher.group() + " line-number=\"" + lineNumber +
+								"\"");
 
 						break;
 					}
 				}
-
-				if (containsReservedTag) {
-					line = StringUtil.replace(
-					line, matcher.group(),
-					matcher.group() + " line-number=\"" + lineNumber + "\"");
-
-					lineNumber++;
-				}
 			}
 
 			sb.append(line);
+
+			lineNumber++;
 		}
 
 		content = sb.toString();
@@ -1220,7 +1218,6 @@ public class SeleniumBuilderFileUtil {
 
 		for (String neededAttribute : neededAttributes) {
 			if (!hasNeededAttributes.get(neededAttribute)) {
-
 				if (!neededAttribute.equals("value")) {
 					throwValidationException(
 						1004, fileName, element, neededAttributes);

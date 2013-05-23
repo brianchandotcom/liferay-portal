@@ -15,10 +15,10 @@
 		<#list varElements as varElement>
 			<#assign varName = varElement.attributeValue("name")>
 
-			<#if element.attributeValue("value")??>
-				<#assign varValue = element.attributeValue("value")>
+			<#if varElement.attributeValue("value")??>
+				<#assign varValue = varElement.attributeValue("value")>
 			<#elseif element.getText()??>
-				<#assign varValue = element.getText()>
+				<#assign varValue = varElement.getText()>
 			</#if>
 
 			<#if varValue?contains("${") && varValue?contains("}")>

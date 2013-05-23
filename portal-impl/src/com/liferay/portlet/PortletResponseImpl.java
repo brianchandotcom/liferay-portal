@@ -36,6 +36,7 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 
 import java.io.Writer;
@@ -562,6 +563,13 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 
 			String linkToLayoutUuid = GetterUtil.getString(
 				_portletSetup.getValue("portletSetupLinkToLayoutUuid", null));
+
+			if (PropsValues.PORTLET_CROSS_LAYOUT_INVOCATION_MODE.equals(
+					"render") &&
+				!PortletRequest.RENDER_PHASE.equals(lifecycle)) {
+
+				includeLinkToLayoutUuid = false;
+			}
 
 			if (Validator.isNotNull(linkToLayoutUuid) &&
 				includeLinkToLayoutUuid) {

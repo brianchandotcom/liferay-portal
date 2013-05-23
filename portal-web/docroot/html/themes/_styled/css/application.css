@@ -101,6 +101,10 @@
 }
 
 .tagselector {
+	.lfr-tags-selector-content {
+		border-width: 0;
+	}
+
 	.lfr-tag-selector-input {
 		background: none;
 		padding: 0;

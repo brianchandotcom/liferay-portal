@@ -166,7 +166,9 @@ public class PortletContainerImpl implements PortletContainer {
 			HttpServletRequest request, Portlet portlet)
 		throws Exception {
 
-		if (!PropsValues.PORTLET_EVENT_DISTRIBUTION_LAYOUT_SET) {
+		if (!PropsValues.PORTLET_EVENT_DISTRIBUTION_LAYOUT_SET ||
+			PropsValues.PORTLET_CROSS_LAYOUT_INVOCATION_MODE.equals("render")) {
+
 			return request;
 		}
 

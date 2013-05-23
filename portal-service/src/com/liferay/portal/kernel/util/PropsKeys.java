@@ -1925,6 +1925,8 @@ public interface PropsKeys {
 
 	public static final String PORTLET_CONTAINER_RESTRICT = "portlet.container.restrict";
 
+	public static final String PORTLET_CROSS_LAYOUT_INVOCATION_MODE = "portlet.cross.layout.invocation.mode";
+
 	public static final String PORTLET_CSS_ENABLED = "portlet.css.enabled";
 
 	public static final String PORTLET_DISPLAY_TEMPLATES_HELP = "portlet.display.templates.help";

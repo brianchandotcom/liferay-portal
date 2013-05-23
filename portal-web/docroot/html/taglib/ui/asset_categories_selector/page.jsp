@@ -93,7 +93,7 @@ if (Validator.isNotNull(className)) {
 				</c:if>
 			</label>
 
-			<div id="<%= namespace + randomNamespace %>assetCategoriesSelector_<%= vocabulary.getVocabularyId() %>">
+			<div class="lfr-tags-selector-content" id="<%= namespace + randomNamespace %>assetCategoriesSelector_<%= vocabulary.getVocabularyId() %>">
 				<aui:input name="<%= hiddenInput + StringPool.UNDERLINE + vocabulary.getVocabularyId() %>" type="hidden" />
 			</div>
 		</span>
@@ -131,7 +131,7 @@ else {
 	String[] categoryIdsTitles = _getCategoryIdsTitles(curCategoryIds, curCategoryNames, 0, themeDisplay);
 %>
 
-	<div id="<%= namespace + randomNamespace %>assetCategoriesSelector">
+	<div class="lfr-tags-selector-content" id="<%= namespace + randomNamespace %>assetCategoriesSelector">
 		<aui:input name="<%= hiddenInput %>" type="hidden" />
 	</div>
 

@@ -1606,6 +1606,26 @@ public class SourceFormatter {
 					"for (", "while (", "List<", ") {\n", "] {\n", "\n\n"
 				});
 
+			Pattern pattern = Pattern.compile(
+				"\t(catch |else |finally |for |if |try |while ).*\\{\n\n" +
+					"\t+\\w"); 
+
+			for (;;) {
+				Matcher matcher = pattern.matcher(newContent);
+
+				if (!matcher.find()) {
+					break;
+				}
+
+				String match = matcher.group();
+
+				String replacement = StringUtil.replaceFirst(
+					match, StringPool.NEW_LINE, StringPool.BLANK);
+
+				newContent = StringUtil.replaceFirst(
+					newContent, match, replacement);
+			}
+
 			if (newContent.contains("*/\npackage ")) {
 				_processErrorMessage(fileName, "package: " + fileName);
 			}

@@ -506,15 +506,15 @@ public class SPIAgentRequestTest {
 		sb.setIndex(sb.index() - 1);
 
 		sb.append("}, _regularParameterMap=null");
-		sb.append(", _SERVER_NAME=");
+		sb.append(", _serverName=");
 		sb.append(_SERVER_NAME);
-		sb.append(", _SERVER_PORT=");
+		sb.append(", _serverPort=");
 		sb.append(_SERVER_PORT);
 		sb.append("}");
 
 		Assert.assertEquals(sb.toString(), spiAgentRequest.toString());
 
-		_mockHttpServletRequest.setCookies((Cookie)null);
+		_mockHttpServletRequest.setCookies((Cookie[])null);
 
 		spiAgentRequest = new SPIAgentRequest(_mockHttpServletRequest);
 
@@ -539,9 +539,9 @@ public class SPIAgentRequestTest {
 		sb.setIndex(sb.index() - 1);
 
 		sb.append("}, _regularParameterMap=null");
-		sb.append(", _SERVER_NAME=");
+		sb.append(", _serverName=");
 		sb.append(_SERVER_NAME);
-		sb.append(", _SERVER_PORT=");
+		sb.append(", _serverPort=");
 		sb.append(_SERVER_PORT);
 		sb.append("}");
 

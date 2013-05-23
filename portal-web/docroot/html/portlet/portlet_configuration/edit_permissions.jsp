@@ -444,8 +444,6 @@ definePermissionsURL.setRefererPlid(plid);
 			<liferay-ui:search-iterator paginate="<%= false %>" searchContainer="<%= searchContainer %>" />
 		</liferay-ui:search-container>
 
-		<br />
-
 		<aui:button-row>
 			<aui:button type="submit" />
 		</aui:button-row>

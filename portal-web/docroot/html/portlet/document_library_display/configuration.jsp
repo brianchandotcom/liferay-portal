@@ -213,32 +213,32 @@ String portletNameSpace = PortalUtil.getPortletNamespace(portletResource);
 
 			var currentFileEntryColumns = A.one('#<portlet:namespace />currentFileEntryColumns');
 
-			var optAction = '<option label="Action" value="action" />';
+			var optionAction = '<option value="action">' + Liferay.Language.get('action') + '</option>';
 
 			if (showActionsInput.val() === 'false') {
-				currentFileEntryColumns.appendChild(optAction);
-				currentFolderColumns.appendChild(optAction);
+				currentFileEntryColumns.appendChild(optionAction);
+
+				currentFolderColumns.appendChild(optionAction);
 			}
 			else {
 				var availableFileEntryColumns = A.one('#<portlet:namespace />availableFileEntryColumns');
+
 				var availableFolderColumns = A.one('#<portlet:namespace />availableFolderColumns');
 
-				var nodes = [currentFolderColumns, currentFileEntryColumns, availableFileEntryColumns, availableFolderColumns]
-				removeActionOption (nodes);
+				A.Array.each(
+					[currentFolderColumns, currentFileEntryColumns, availableFileEntryColumns, availableFolderColumns],
+					function(item, index) {
+						var actionsNode = item.one('option[value="action"]');
+
+						if (actionsNode) {
+							actionsNode.remove();
+						}
+					}
+				);
 			}
 		}
 	);
 
-	function removeActionOption(nodes) {
-		for (var i = 0; i < nodes.length ; i++) {
-			var currentNode = nodes[i];
-			var actionsNode = currentNode.one('option[value="action"]');
-
-			if (actionsNode) {
-				actionsNode.remove();
-			}
-		}
-	}
 </aui:script>
 
 <aui:script>

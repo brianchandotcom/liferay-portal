@@ -229,7 +229,7 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 	var clickHandler = function(event) {
 		var dataValue = event.target.ancestor().attr('data-value');
 
-		if (dataValue == 'add-child-page') {
+		if (dataValue === 'add-page' || dataValue === 'add-child-page') {
 			var content = A.one('#<portlet:namespace />addLayout');
 
 			if (!popup) {
@@ -247,7 +247,7 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 
 			Liferay.Util.focusFormField(content.one('input:text'));
 		}
-		else if (dataValue == 'view-pages') {
+		else if (dataValue === 'view-pages') {
 			<liferay-portlet:actionURL plid="<%= selPlid %>" portletName="<%= PortletKeys.SITE_REDIRECTOR %>" var="viewPagesURL">
 				<portlet:param name="struts_action" value="/my_sites/view" />
 				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
@@ -256,7 +256,7 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 
 			window.open('<%= viewPagesURL %>').focus();
 		}
-		else if (dataValue == 'import') {
+		else if (dataValue === 'import') {
 			<portlet:renderURL var="importPagesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 				<portlet:param name="struts_action" value="/layouts_admin/import_layouts" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VALIDATE %>" />
@@ -274,7 +274,7 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 				}
 			);
 		}
-		else if (dataValue == 'export') {
+		else if (dataValue === 'export') {
 			<portlet:renderURL var="exportPagesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 				<portlet:param name="struts_action" value="/layouts_admin/export_layouts" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />

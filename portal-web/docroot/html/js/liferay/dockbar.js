@@ -360,7 +360,7 @@ AUI.add(
 					);
 				}
 			},
-			['aui-io-request']
+			['aui-io-request', 'aui-parse-content']
 		);
 
 		Liferay.provide(

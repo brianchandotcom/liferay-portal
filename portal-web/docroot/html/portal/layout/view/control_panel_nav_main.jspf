@@ -61,34 +61,32 @@
 	if (portlets.size() > 1) {
 	%>
 
-		<aui:nav-bar cssClass="control-panel-bar-secondary">
-			<aui:nav>
+		<aui:nav cssClass="control-panel-bar-secondary nav-pills">
 
-				<%
-				for (Portlet curPortlet : portlets) {
-					String curPortletId = curPortlet.getPortletId();
+			<%
+			for (Portlet curPortlet : portlets) {
+				String curPortletId = curPortlet.getPortletId();
 
-					String urlControlPanelSitesPortlet = HttpUtil.setParameter(themeDisplay.getURLControlPanel(), "p_p_id", curPortletId);
+				String urlControlPanelSitesPortlet = HttpUtil.setParameter(themeDisplay.getURLControlPanel(), "p_p_id", curPortletId);
 
-					urlControlPanelSitesPortlet = HttpUtil.setParameter(urlControlPanelSitesPortlet, "controlPanelCategory", controlPanelCategory);
+				urlControlPanelSitesPortlet = HttpUtil.setParameter(urlControlPanelSitesPortlet, "controlPanelCategory", controlPanelCategory);
 
-					boolean selected = curPortletId.equals(ppid);
+				boolean selected = curPortletId.equals(ppid);
 
-					String portletControlPanelEntryCategory = curPortlet.getControlPanelEntryCategory();
+				String portletControlPanelEntryCategory = curPortlet.getControlPanelEntryCategory();
 
-					if (curPortletId.equals(PortletKeys.SITES_ADMIN) && portletControlPanelEntryCategory.startsWith("site.")) {
-						selected = true;
-					}
-				%>
-
-					<aui:nav-item href="<%= urlControlPanelSitesPortlet %>" label="<%= PortalUtil.getPortletTitle(curPortlet, application, locale) %>" selected="<%= selected %>" />
-
-				<%
+				if (curPortletId.equals(PortletKeys.SITES_ADMIN) && portletControlPanelEntryCategory.startsWith("site.")) {
+					selected = true;
 				}
-				%>
+			%>
 
-			</aui:nav>
-		</aui:nav-bar>
+				<aui:nav-item href="<%= urlControlPanelSitesPortlet %>" label="<%= PortalUtil.getPortletTitle(curPortlet, application, locale) %>" selected="<%= selected %>" />
+
+			<%
+			}
+			%>
+
+		</aui:nav>
 
 	<%
 	}

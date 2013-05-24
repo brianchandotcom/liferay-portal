@@ -450,10 +450,9 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 
 				StringBundler sb = new StringBundler(4);
 
-				sb.append("the-lar-file-could-not-be-imported-because-there-");
-				sb.append("are-missing-references-that-could-not-be-found-in-");
-				sb.append("the-current-site.-please-import-another-lar-file");
-				sb.append("-containing-the-following-elements");
+				sb.append("there-are-missing-references-that-could-not-be-");;
+				sb.append("found-in-the-current-site.-please-import-another-");
+				sb.append("lar-file-containing-the-following-elements");
 
 				errorMessage = themeDisplay.translate(sb.toString());
 

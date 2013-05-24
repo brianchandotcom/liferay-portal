@@ -28,9 +28,26 @@ AUI.add(
 						'<a class="lfr-button delete-button" href="javascript:;" id="{id}deleteButton">{[ this.strings.deleteFileText ]}</a>',
 					'</li>',
 				'</tpl>',
-				'<tpl if="values.error">',
+				'<tpl if="values.error && this.multipleFiles">',
 					'<li class="upload-file upload-error" data-fileId="{id}" id="{id}">',
 						'<span class="file-title" title="{name}">{name}</span>',
+						'<span class="error-message" title="{error}">{error}</span>',
+						'<tpl if="messageListItems && (messageListItems.length > 0)">',
+							'<ul class="error-list-items">',
+								'<tpl for="messageListItems">',
+									'<li>{type}: <strong>{name}</strong>',
+										'<tpl if="info">',
+											'<span class="error-info"">({info})</span>',
+										'</tpl>',
+									'</li>',
+								'</tpl>',
+							'</ul>',
+						'</tpl>',
+					'</li>',
+				'</tpl>',
+				'<tpl if="values.error && !this.multipleFiles">',
+					'<li class="alert alert-error upload-error" data-fileId="{id}" id="{id}">',
+						'<h4 class="upload-error-message">{[ Lang.sub(this.strings.fileCannotBeSavedText, [values.name]) ]}</h4>',
 						'<span class="error-message" title="{error}">{error}</span>',
 						'<tpl if="messageListItems && (messageListItems.length > 0)">',
 							'<ul class="error-list-items">',
@@ -52,9 +69,11 @@ AUI.add(
 			'<div class="upload-target" id="{$ns}uploader">',
 				'<div class="drag-drop-area" id="{$ns}uploaderContent">',
 					'<tpl if="this.uploaderType == \'html5\'">',
-						'<h4 class="drop-file-text">{[ this.dropFileText ]}<span>{[ this.strings.orText ]}</span></h4>',
+						'<h4 class="drop-file-text">{[ this.dropFileText ]}<span class="or-text">{[ this.strings.orText ]}</span></h4>',
 					'</tpl>',
-					'<button class="btn" id="{$ns}selectFilesButton" type="button">{[ this.selectFilesText ]}</button>',
+					'<span class="select-files-container" id="{$ns}selectFilesButton">',
+						'<button class="btn" type="button">{[ this.selectFilesText ]}</button>',
+					'</span>',
 				'</div>',
 			'</div>',
 
@@ -80,7 +99,7 @@ AUI.add(
 			'</div>',
 
 			'<div class="upload-list" id="{$ns}fileList">',
-				'<ul class="unstyled" id="{$ns}fileListContent"></ul>',
+				'<ul class="unstyled {[ this.multipleFiles ? "multiple-files" : "single-file" ]}" id="{$ns}fileListContent"></ul>',
 			'</div>'
 		];
 
@@ -143,7 +162,7 @@ AUI.add(
 							deleteFileText: Liferay.Language.get('delete-file'),
 							dropFilesText: Liferay.Language.get('drop-files-here-to-upload'),
 							dropFileText: Liferay.Language.get('drop-file-here-to-upload'),
-							fileCannotBeSavedText: Liferay.Language.get('the-file-cannot-be-saved'),
+							fileCannotBeSavedText: Liferay.Language.get('the-file-x-cannot-be-saved'),
 							invalidFileNameText: Liferay.Language.get('please-enter-a-file-with-a-valid-file-name'),
 							invalidFileSizeText: Liferay.Language.get('please-enter-a-file-with-a-valid-file-size-no-larger-than-x'),
 							noFilesSelectedText: Liferay.Language.get('no-files-selected'),
@@ -550,11 +569,8 @@ AUI.add(
 
 						var uploadsCompleteText;
 
-						if (instance._fileListContent.one('.upload-file.upload-complete')) {
+						if (instance._fileListContent.one('.upload-file.upload-complete') && instance.get('multipleFiles')) {
 							uploadsCompleteText = strings.uploadsCompleteText;
-						}
-						else {
-							uploadsCompleteText = strings.fileCannotBeSavedText;
 						}
 
 						instance._updateList(0, uploadsCompleteText);
@@ -941,7 +957,10 @@ AUI.add(
 
 						var infoTitle = instance._listInfo.one('h4');
 
-						if (infoTitle) {
+						if (!instance.get('multipleFiles')) {
+							infoTitle.html('');
+						}
+						else if (infoTitle) {
 							var listText = message || Lang.sub(strings.xFilesReadyText, [listLength]);
 
 							infoTitle.html(listText);

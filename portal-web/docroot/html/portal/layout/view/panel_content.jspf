@@ -54,7 +54,7 @@ if (!denyAccess && (themeDisplay.isStatePopUp() || (layoutTypePortlet.hasStateMa
 	}
 	%>
 
-	<c:if test="<%= !controlPanelCategory.equals(PortletCategoryKeys.MY) %>">
+	<c:if test="<%= !controlPanelCategory.equals(PortletCategoryKeys.MY) && !LiferayWindowState.isPopUp(request) %>">
 		<div id="breadcrumb">
 			<liferay-ui:breadcrumb />
 		</div>

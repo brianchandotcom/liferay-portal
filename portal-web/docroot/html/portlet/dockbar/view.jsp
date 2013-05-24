@@ -152,72 +152,23 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 
 	<aui:nav cssClass="pull-right">
 		<c:if test="<%= (themeDisplay.isShowControlPanelIcon() || themeDisplay.isShowSiteAdministrationIcon()) && (!layout.getGroup().isControlPanel() || Validator.equals(themeDisplay.getControlPanelCategory(), PortletCategoryKeys.CURRENT_SITE)) %>">
-			<li class="dropdown admin-links" id="adminLinks">
-				<a class="dropdown-toggle" href="javascript:;">
-					<liferay-ui:message key="admin" />
+			<aui:nav-item cssClass="admin-links" dropdown="<%= true %>" id="adminLinks" label="admin">
+				<c:if test="<%= themeDisplay.isShowSiteAdministrationIcon() %>">
+					<aui:nav-item href="<%= themeDisplay.getURLSiteAdministration() %>" iconClass="icon-cog" label="site-administration" />
+				</c:if>
 
-					<b class="caret"></b>
-				</a>
-
-				<ul class="dropdown-menu">
-					<c:if test="<%= themeDisplay.isShowSiteAdministrationIcon() %>">
-						<li>
-							<a href="<%= themeDisplay.getURLSiteAdministration() %>">
-								<i class="icon-cog"></i>
-
-								<span class="administration-name">
-									<liferay-ui:message key="site-administration" />
-								</span>
-							</a>
-						</li>
-					</c:if>
-
-					<c:if test="<%= themeDisplay.isShowControlPanelIcon() %>">
-						<li>
-							<a href="<%= themeDisplay.getURLControlPanel() %>">
-								<i class="icon-wrench"></i>
-
-								<span class="administration-name">
-									<liferay-ui:message key="control-panel" />
-								</span>
-							</a>
-						</li>
-					</c:if>
-				</ul>
-
-				<aui:script use="aui-base">
-					A.one('#adminLinks').on(
-						'click',
-						function(event) {
-							event.currentTarget.toggleClass('open');
-						}
-					);
-				</aui:script>
-			</li>
+				<c:if test="<%= themeDisplay.isShowControlPanelIcon() %>">
+					<aui:nav-item href="<%= themeDisplay.getURLControlPanel() %>" iconClass="icon-wrench" label="control-panel" />
+				</c:if>
+			</aui:nav-item>
 
 			<aui:nav-item cssClass="divider-vertical"></aui:nav-item>
-
 		</c:if>
 
 		<c:if test="<%= user.hasMySites() %>">
-			<li class="dropdown my-sites" id="mySites">
-				<a class="dropdown-toggle" href="javascript:;">
-					<liferay-ui:message key="my-sites" />
-
-					<b class="caret"></b>
-				</a>
-
+			<aui:nav-item cssClass="my-sites" dropdown="<%= true %>" id="mySites" label="my-sites" wrapDropDownMenu="<%= false %>">
 				<liferay-ui:my-sites cssClass="dropdown-menu my-sites-menu" />
-
-				<aui:script use="aui-base">
-					A.one('#mySites').on(
-						'click',
-						function(event) {
-							event.currentTarget.toggleClass('open');
-						}
-					);
-				</aui:script>
-			</li>
+			</aui:nav-item>
 		</c:if>
 
 		<aui:nav-item cssClass="divider-vertical"></aui:nav-item>

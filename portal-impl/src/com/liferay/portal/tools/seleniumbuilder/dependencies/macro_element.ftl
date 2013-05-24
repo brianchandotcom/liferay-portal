@@ -15,7 +15,11 @@
 		<#list varElements as varElement>
 			<#assign varName = varElement.attributeValue("name")>
 
-			<#assign varValue = varElement.attributeValue("value")>
+			<#if varElement.attributeValue("value")??>
+				<#assign varValue = varElement.attributeValue("value")>
+			<#elseif element.getText()??>
+				<#assign varValue = varElement.getText()>
+			</#if>
 
 			<#if varValue?contains("${") && varValue?contains("}")>
 				<#assign varValue = varValue?replace("${", "\" + commandScopeVariables.get(\"")>

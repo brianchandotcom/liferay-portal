@@ -51,6 +51,30 @@ public class SeleniumBuilderFileUtil {
 
 	public SeleniumBuilderFileUtil(String baseDir) {
 		_baseDir = baseDir;
+
+		_reservedTags = new ArrayList<String>();
+
+		_reservedTags.add("case");
+		_reservedTags.add("command");
+		_reservedTags.add("condition");
+		_reservedTags.add("contains");
+		_reservedTags.add("default");
+		_reservedTags.add("definition");
+		_reservedTags.add("echo");
+		_reservedTags.add("else");
+		_reservedTags.add("elseif");
+		_reservedTags.add("equals");
+		_reservedTags.add("execute");
+		_reservedTags.add("fail");
+		_reservedTags.add("if");
+		_reservedTags.add("isset");
+		_reservedTags.add("set-up");
+		_reservedTags.add("td");
+		_reservedTags.add("tear-down");
+		_reservedTags.add("then");
+		_reservedTags.add("tr");
+		_reservedTags.add("while");
+		_reservedTags.add("var");
 	}
 
 	public List<Element> getAllChildElements(
@@ -224,9 +248,16 @@ public class SeleniumBuilderFileUtil {
 			Matcher matcher = pattern.matcher(line);
 
 			if (matcher.find()) {
-				line = StringUtil.replace(
-					line, matcher.group(),
-					matcher.group() + " line-number=\"" + lineNumber + "\"");
+				for (String reservedTag : _reservedTags) {
+					if (line.contains("<" + reservedTag)) {
+						line = StringUtil.replace(
+							line, matcher.group(),
+							matcher.group() + " line-number=\"" + lineNumber +
+								"\"");
+
+						break;
+					}
+				}
 			}
 
 			sb.append(line);
@@ -1187,8 +1218,16 @@ public class SeleniumBuilderFileUtil {
 
 		for (String neededAttribute : neededAttributes) {
 			if (!hasNeededAttributes.get(neededAttribute)) {
-				throwValidationException(
-					1004, fileName, element, neededAttributes);
+				if (!neededAttribute.equals("value")) {
+					throwValidationException(
+						1004, fileName, element, neededAttributes);
+				}
+				else {
+					if (Validator.isNull(element.getText())) {
+						throwValidationException(
+							1004, fileName, element, neededAttributes);
+					}
+				}
 			}
 		}
 
@@ -1339,5 +1378,7 @@ public class SeleniumBuilderFileUtil {
 		"com/liferay/portal/tools/seleniumbuilder/dependencies/";
 
 	private String _baseDir;
+
+	private List<String> _reservedTags;
 
 }

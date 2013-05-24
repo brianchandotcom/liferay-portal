@@ -85,18 +85,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_DELETE_1</td>
-	<td>xpath=(//li[contains(@class,'lfr-nav-deletable')])[1]/span[@class='delete-tab']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_DELETE_2</td>
-	<td>xpath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_DELETE_3</td>
-	<td>xpath=(//li[contains(@class,'lfr-nav-deletable')])[3]/span[@class='delete-tab']</td>
+	<td>PAGE_DELETE</td>
+	<td>//li[contains(@class,'lfr-nav-deletable') and contains(@class,'lfr-nav-hover')]/span[@class='delete-tab']</td>
 	<td></td>
 </tr>
 <tr>
@@ -128,12 +118,12 @@
 <!--NEW_PAGE-->
 <tr>
 	<td>NEW_PAGE_FIELD</td>
-	<td>//li[@class='add-page']//input[contains(@class,'input-text')]</td>
+	<td>//input[@type='text']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>NEW_PAGE_SAVE</td>
-	<td>//button[contains(@id,'Save')]</td>
+	<td>NEW_PAGE_SAVE_BUTTON</td>
+	<td>//button/i[@class='icon-ok']</td>
 	<td></td>
 </tr>
 <tr>

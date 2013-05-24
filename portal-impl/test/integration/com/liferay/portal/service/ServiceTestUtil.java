@@ -350,6 +350,16 @@ public class ServiceTestUtil {
 		return _random.nextLong();
 	}
 
+	public static long randomPK() throws Exception {
+		while (true) {
+			long value = _random.nextLong();
+
+			if (value > 0) {
+				return value;
+			}
+		}
+	}
+
 	public static String randomString() throws Exception {
 		return PwdGenerator.getPassword();
 	}

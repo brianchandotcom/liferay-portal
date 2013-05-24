@@ -29,6 +29,7 @@ long folderId = BeanParamUtil.getLong(folder, request, "folderId", DLFolderConst
 
 if ((folder != null) && (folder.getGroupId() != groupId)) {
 	folder = null;
+
 	folderId = 0;
 }
 

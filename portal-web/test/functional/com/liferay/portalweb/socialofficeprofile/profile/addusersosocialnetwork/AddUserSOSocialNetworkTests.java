@@ -33,6 +33,7 @@ public class AddUserSOSocialNetworkTests extends BaseTestSuite {
 		testSuite.addTestSuite(SelectRegularRolesSOUserTest.class);
 		testSuite.addTestSuite(EditSOUserPasswordTest.class);
 		testSuite.addTestSuite(AddUserSOSocialNetworkTest.class);
+		testSuite.addTestSuite(ViewProfileSocialNetworkTest.class);
 		testSuite.addTestSuite(TearDownSOUserTest.class);
 
 		return testSuite;

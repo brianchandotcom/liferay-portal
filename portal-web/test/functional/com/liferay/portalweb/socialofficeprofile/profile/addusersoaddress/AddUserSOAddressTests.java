@@ -33,6 +33,7 @@ public class AddUserSOAddressTests extends BaseTestSuite {
 		testSuite.addTestSuite(SelectRegularRolesSOUserTest.class);
 		testSuite.addTestSuite(EditSOUserPasswordTest.class);
 		testSuite.addTestSuite(AddUserSOAddressTest.class);
+		testSuite.addTestSuite(ViewProfileAddressTest.class);
 		testSuite.addTestSuite(TearDownSOUserTest.class);
 
 		return testSuite;

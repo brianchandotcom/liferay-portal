@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.socialofficeprofile.profile.viewprofilephonenumber;
+package com.liferay.portalweb.socialofficeprofile.profile.addusersoadditionalemailaddress;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewProfilePhoneNumberTest extends BaseTestCase {
-	public void testViewProfilePhoneNumber() throws Exception {
+public class ViewProfileAdditionalEmailAddressTest extends BaseTestCase {
+	public void testViewProfileAdditionalEmailAddress()
+		throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/socialoffice01/so/profile");
@@ -33,15 +34,15 @@ public class ViewProfilePhoneNumberTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("socialoffice01@liferay.com"),
 			selenium.getText("//div[@class='lfr-contact-extra']"));
 		assertTrue(selenium.isVisible(
-				"//div[@class='section field-group lfr-user-phones']/h3"));
-		assertEquals(RuntimeVariables.replace("Phones:"),
+				"//div[@class='section field-group lfr-user-email-addresses']/h3"));
+		assertEquals(RuntimeVariables.replace("Additional Email Addresses:"),
 			selenium.getText(
-				"//div[@class='section field-group lfr-user-phones']/h3"));
-		assertEquals(RuntimeVariables.replace("Business"),
+				"//div[@class='section field-group lfr-user-email-addresses']/h3"));
+		assertEquals(RuntimeVariables.replace("Email Address"),
 			selenium.getText(
-				"//div[@class='section field-group lfr-user-phones']/ul/li/span"));
-		assertEquals(RuntimeVariables.replace("123-123-1234 123"),
+				"//div[@class='section field-group lfr-user-email-addresses']/ul/li/span"));
+		assertEquals(RuntimeVariables.replace("socialoffice02@liferay.com"),
 			selenium.getText(
-				"//div[@class='section field-group lfr-user-phones']/ul/li/span[2]"));
+				"//div[@class='section field-group lfr-user-email-addresses']/ul/li/span[2]/a"));
 	}
 }

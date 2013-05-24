@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.socialofficeprofile.profile.viewprofilesms;
+package com.liferay.portalweb.socialofficeprofile.profile.addusersosms;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;

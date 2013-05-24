@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.socialofficeprofile.profile.viewprofileinstantmessenger;
+package com.liferay.portalweb.socialofficeprofile.profile.addusersoinstantmessenger;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;

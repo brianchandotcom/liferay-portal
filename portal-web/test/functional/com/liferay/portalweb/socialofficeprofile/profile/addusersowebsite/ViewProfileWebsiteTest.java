@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.socialofficeprofile.profile.viewprofileexpertise;
+package com.liferay.portalweb.socialofficeprofile.profile.addusersowebsite;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewProfileExpertiseTest extends BaseTestCase {
-	public void testViewProfileExpertise() throws Exception {
+public class ViewProfileWebsiteTest extends BaseTestCase {
+	public void testViewProfileWebsite() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/socialoffice01/so/profile");
@@ -32,13 +32,16 @@ public class ViewProfileExpertiseTest extends BaseTestCase {
 			selenium.getText("//div[@class='lfr-contact-name']/a"));
 		assertEquals(RuntimeVariables.replace("socialoffice01@liferay.com"),
 			selenium.getText("//div[@class='lfr-contact-extra']"));
-		selenium.waitForVisible("//div[@data-title='Projects']/div/h3");
-		assertEquals(RuntimeVariables.replace("Expertise Title:"),
-			selenium.getText("//div[@data-title='Projects']/div/h3"));
-		assertEquals(RuntimeVariables.replace("01 Jan 2012 - Current"),
-			selenium.getText("//div[@class='project-date property-list']"));
-		assertEquals(RuntimeVariables.replace("Expertise Description"),
+		assertTrue(selenium.isVisible(
+				"//div[@class='section field-group lfr-user-websites']/h3"));
+		assertEquals(RuntimeVariables.replace("Websites:"),
 			selenium.getText(
-				"//div[@class='project-description property-list']"));
+				"//div[@class='section field-group lfr-user-websites']/h3"));
+		assertEquals(RuntimeVariables.replace("Personal"),
+			selenium.getText(
+				"//div[@class='section field-group lfr-user-websites']/ul/li/span"));
+		assertEquals(RuntimeVariables.replace("http://www.socialoffice01.com"),
+			selenium.getText(
+				"//div[@class='section field-group lfr-user-websites']/ul/li/span[2]"));
 	}
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.socialofficeprofile.profile.viewprofileaddress;
+package com.liferay.portalweb.socialofficeprofile.profile.addusersoexpertise;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewProfileAddressTest extends BaseTestCase {
-	public void testViewProfileAddress() throws Exception {
+public class ViewProfileExpertiseTest extends BaseTestCase {
+	public void testViewProfileExpertise() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/socialoffice01/so/profile");
@@ -32,14 +32,13 @@ public class ViewProfileAddressTest extends BaseTestCase {
 			selenium.getText("//div[@class='lfr-contact-name']/a"));
 		assertEquals(RuntimeVariables.replace("socialoffice01@liferay.com"),
 			selenium.getText("//div[@class='lfr-contact-extra']"));
-		assertTrue(selenium.isVisible(
-				"//div[@class='section field-group lfr-user-addresses']/h3"));
-		assertEquals(RuntimeVariables.replace("Addresses:"),
+		selenium.waitForVisible("//div[@data-title='Projects']/div/h3");
+		assertEquals(RuntimeVariables.replace("Expertise Title:"),
+			selenium.getText("//div[@data-title='Projects']/div/h3"));
+		assertEquals(RuntimeVariables.replace("01 Jan 2012 - Current"),
+			selenium.getText("//div[@class='project-date property-list']"));
+		assertEquals(RuntimeVariables.replace("Expertise Description"),
 			selenium.getText(
-				"//div[@class='section field-group lfr-user-addresses']/h3"));
-		assertEquals(RuntimeVariables.replace(
-				"Personal 123 Liferay Ln., Ray of Light, 91234, California, United States (Mailing)"),
-			selenium.getText(
-				"//div[@class='section field-group lfr-user-addresses']/ul/li"));
+				"//div[@class='project-description property-list']"));
 	}
 }

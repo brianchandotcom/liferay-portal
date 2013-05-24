@@ -70,14 +70,6 @@ import com.liferay.portalweb.socialofficeprofile.profile.unblockccuserprofile.Un
 import com.liferay.portalweb.socialofficeprofile.profile.unfollowccuserprofile.UnfollowCCUserProfileTests;
 import com.liferay.portalweb.socialofficeprofile.profile.viewactivitiesdashboardactivitiesprofile.ViewActivitiesDashboardActivitiesProfileTests;
 import com.liferay.portalweb.socialofficeprofile.profile.viewactivitiessitesactivitiesprofile.ViewActivitiesSitesActivitiesProfileTests;
-import com.liferay.portalweb.socialofficeprofile.profile.viewprofileadditionalemailaddress.ViewProfileAdditionalEmailAddressTests;
-import com.liferay.portalweb.socialofficeprofile.profile.viewprofileaddress.ViewProfileAddressTests;
-import com.liferay.portalweb.socialofficeprofile.profile.viewprofileexpertise.ViewProfileExpertiseTests;
-import com.liferay.portalweb.socialofficeprofile.profile.viewprofileinstantmessenger.ViewProfileInstantMessengerTests;
-import com.liferay.portalweb.socialofficeprofile.profile.viewprofilephonenumber.ViewProfilePhoneNumberTests;
-import com.liferay.portalweb.socialofficeprofile.profile.viewprofilesms.ViewProfileSMSTests;
-import com.liferay.portalweb.socialofficeprofile.profile.viewprofilesocialnetwork.ViewProfileSocialNetworkTests;
-import com.liferay.portalweb.socialofficeprofile.profile.viewprofilewebsite.ViewProfileWebsiteTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -149,14 +141,6 @@ public class ProfileTestPlan extends BaseTestSuite {
 		testSuite.addTest(
 			ViewActivitiesDashboardActivitiesProfileTests.suite());
 		testSuite.addTest(ViewActivitiesSitesActivitiesProfileTests.suite());
-		testSuite.addTest(ViewProfileAdditionalEmailAddressTests.suite());
-		testSuite.addTest(ViewProfileAddressTests.suite());
-		testSuite.addTest(ViewProfileExpertiseTests.suite());
-		testSuite.addTest(ViewProfileInstantMessengerTests.suite());
-		testSuite.addTest(ViewProfilePhoneNumberTests.suite());
-		testSuite.addTest(ViewProfileSMSTests.suite());
-		testSuite.addTest(ViewProfileSocialNetworkTests.suite());
-		testSuite.addTest(ViewProfileWebsiteTests.suite());
 
 		return testSuite;
 	}

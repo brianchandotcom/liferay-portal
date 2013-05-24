@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.socialofficeprofile.profile.viewprofilewebsite;
+package com.liferay.portalweb.socialofficeprofile.profile.addusersoaddress;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewProfileWebsiteTest extends BaseTestCase {
-	public void testViewProfileWebsite() throws Exception {
+public class ViewProfileAddressTest extends BaseTestCase {
+	public void testViewProfileAddress() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/socialoffice01/so/profile");
@@ -33,15 +33,13 @@ public class ViewProfileWebsiteTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("socialoffice01@liferay.com"),
 			selenium.getText("//div[@class='lfr-contact-extra']"));
 		assertTrue(selenium.isVisible(
-				"//div[@class='section field-group lfr-user-websites']/h3"));
-		assertEquals(RuntimeVariables.replace("Websites:"),
+				"//div[@class='section field-group lfr-user-addresses']/h3"));
+		assertEquals(RuntimeVariables.replace("Addresses:"),
 			selenium.getText(
-				"//div[@class='section field-group lfr-user-websites']/h3"));
-		assertEquals(RuntimeVariables.replace("Personal"),
+				"//div[@class='section field-group lfr-user-addresses']/h3"));
+		assertEquals(RuntimeVariables.replace(
+				"Personal 123 Liferay Ln., Ray of Light, 91234, California, United States (Mailing)"),
 			selenium.getText(
-				"//div[@class='section field-group lfr-user-websites']/ul/li/span"));
-		assertEquals(RuntimeVariables.replace("http://www.socialoffice01.com"),
-			selenium.getText(
-				"//div[@class='section field-group lfr-user-websites']/ul/li/span[2]"));
+				"//div[@class='section field-group lfr-user-addresses']/ul/li"));
 	}
 }

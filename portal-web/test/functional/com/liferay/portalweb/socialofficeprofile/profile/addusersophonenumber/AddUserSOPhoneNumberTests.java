@@ -33,6 +33,7 @@ public class AddUserSOPhoneNumberTests extends BaseTestSuite {
 		testSuite.addTestSuite(SelectRegularRolesSOUserTest.class);
 		testSuite.addTestSuite(EditSOUserPasswordTest.class);
 		testSuite.addTestSuite(AddUserSOPhoneNumberTest.class);
+		testSuite.addTestSuite(ViewProfilePhoneNumberTest.class);
 		testSuite.addTestSuite(TearDownSOUserTest.class);
 
 		return testSuite;

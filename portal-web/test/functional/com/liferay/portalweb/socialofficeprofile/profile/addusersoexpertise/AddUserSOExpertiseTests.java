@@ -33,6 +33,7 @@ public class AddUserSOExpertiseTests extends BaseTestSuite {
 		testSuite.addTestSuite(SelectRegularRolesSOUserTest.class);
 		testSuite.addTestSuite(EditSOUserPasswordTest.class);
 		testSuite.addTestSuite(AddUserSOExpertiseTest.class);
+		testSuite.addTestSuite(ViewProfileExpertiseTest.class);
 		testSuite.addTestSuite(TearDownSOUserTest.class);
 
 		return testSuite;

@@ -33,6 +33,7 @@ public class AddUserSOInstantMessengerTests extends BaseTestSuite {
 		testSuite.addTestSuite(SelectRegularRolesSOUserTest.class);
 		testSuite.addTestSuite(EditSOUserPasswordTest.class);
 		testSuite.addTestSuite(AddUserSOInstantMessengerTest.class);
+		testSuite.addTestSuite(ViewProfileInstantMessengerTest.class);
 		testSuite.addTestSuite(TearDownSOUserTest.class);
 
 		return testSuite;

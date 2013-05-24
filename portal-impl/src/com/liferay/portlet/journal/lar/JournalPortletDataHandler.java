@@ -91,7 +91,9 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "web-content", true, false, null,
 				JournalArticle.class.getName()),
-			new PortletDataHandlerBoolean(NAMESPACE, "structures"),
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "structures", true, false, null,
+				DDMStructure.class.getName()),
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "feeds", true, false, null,
 				JournalFeed.class.getName()),

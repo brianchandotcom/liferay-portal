@@ -29,16 +29,16 @@ import java.util.Map;
  */
 public abstract class BaseTemplateManager implements TemplateManager {
 
-	@Override
 	@NotPrivileged
+	@Override
 	public Template getTemplate(
 		TemplateResource templateResource, boolean restricted) {
 
 		return getTemplate(templateResource, null, restricted);
 	}
 
-	@Override
 	@NotPrivileged
+	@Override
 	public Template getTemplate(
 		TemplateResource templateResource,
 		TemplateResource errorTemplateResource, boolean restricted) {

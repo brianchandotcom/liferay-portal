@@ -704,8 +704,8 @@ public class DLFileEntryLocalServiceImpl
 		}
 	}
 
-	@Override
 	@Indexable(type = IndexableType.DELETE)
+	@Override
 	public DLFileEntry deleteFileEntry(DLFileEntry dlFileEntry)
 		throws PortalException, SystemException {
 
@@ -771,8 +771,8 @@ public class DLFileEntryLocalServiceImpl
 		return dlFileEntry;
 	}
 
-	@Override
 	@Indexable(type = IndexableType.DELETE)
+	@Override
 	public DLFileEntry deleteFileEntry(long fileEntryId)
 		throws PortalException, SystemException {
 
@@ -781,8 +781,8 @@ public class DLFileEntryLocalServiceImpl
 		return deleteFileEntry(dlFileEntry);
 	}
 
-	@Override
 	@Indexable(type = IndexableType.DELETE)
+	@Override
 	public DLFileEntry deleteFileEntry(long userId, long fileEntryId)
 		throws PortalException, SystemException {
 
@@ -798,8 +798,8 @@ public class DLFileEntryLocalServiceImpl
 		}
 	}
 
-	@Override
 	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public DLFileEntry deleteFileVersion(
 			long userId, long fileEntryId, String version)
 		throws PortalException, SystemException {
@@ -1242,9 +1242,9 @@ public class DLFileEntryLocalServiceImpl
 		return hasLock;
 	}
 
-	@Override
 	@BufferedIncrement(
 		configuration = "DLFileEntry", incrementClass = NumberIncrement.class)
+	@Override
 	public void incrementViewCounter(DLFileEntry dlFileEntry, int increment)
 		throws SystemException {
 
@@ -1284,8 +1284,8 @@ public class DLFileEntryLocalServiceImpl
 			DLFileEntryImpl.LOCK_EXPIRATION_TIME);
 	}
 
-	@Override
 	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public DLFileEntry moveFileEntry(
 			long userId, long fileEntryId, long newFolderId,
 			ServiceContext serviceContext)

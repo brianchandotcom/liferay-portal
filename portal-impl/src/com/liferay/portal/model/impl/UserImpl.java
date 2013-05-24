@@ -254,8 +254,8 @@ public class UserImpl extends UserBaseImpl {
 		return !getMale();
 	}
 
-	@Override
 	@AutoEscape
+	@Override
 	public String getFullName() {
 		FullNameGenerator fullNameGenerator =
 			FullNameGeneratorFactory.getInstance();

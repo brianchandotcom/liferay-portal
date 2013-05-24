@@ -96,16 +96,16 @@ public class BookmarksFolderLocalServiceImpl
 		return folder;
 	}
 
-	@Override
 	@Indexable(type = IndexableType.DELETE)
+	@Override
 	public BookmarksFolder deleteFolder(BookmarksFolder folder)
 		throws PortalException, SystemException {
 
 		return deleteFolder(folder, true);
 	}
 
-	@Override
 	@Indexable(type = IndexableType.DELETE)
+	@Override
 	public BookmarksFolder deleteFolder(
 			BookmarksFolder folder, boolean includeTrashedEntries)
 		throws PortalException, SystemException {
@@ -160,8 +160,8 @@ public class BookmarksFolderLocalServiceImpl
 		return folder;
 	}
 
-	@Override
 	@Indexable(type = IndexableType.DELETE)
+	@Override
 	public BookmarksFolder deleteFolder(long folderId)
 		throws PortalException, SystemException {
 
@@ -171,8 +171,8 @@ public class BookmarksFolderLocalServiceImpl
 		return deleteFolder(folder);
 	}
 
-	@Override
 	@Indexable(type = IndexableType.DELETE)
+	@Override
 	public BookmarksFolder deleteFolder(
 			long folderId, boolean includeTrashedEntries)
 		throws PortalException, SystemException {
@@ -328,8 +328,8 @@ public class BookmarksFolderLocalServiceImpl
 		}
 	}
 
-	@Override
 	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public BookmarksFolder moveFolder(long folderId, long parentFolderId)
 		throws PortalException, SystemException {
 
@@ -361,8 +361,8 @@ public class BookmarksFolderLocalServiceImpl
 		return bookmarksFolderLocalService.moveFolder(folderId, parentFolderId);
 	}
 
-	@Override
 	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public void moveFolderToTrash(long userId, long folderId)
 		throws PortalException, SystemException {
 
@@ -384,8 +384,8 @@ public class BookmarksFolderLocalServiceImpl
 			StringPool.BLANK, 0);
 	}
 
-	@Override
 	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public void restoreFolderFromTrash(long userId, long folderId)
 		throws PortalException, SystemException {
 
@@ -454,8 +454,8 @@ public class BookmarksFolderLocalServiceImpl
 			AssetLinkConstants.TYPE_RELATED);
 	}
 
-	@Override
 	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public BookmarksFolder updateFolder(
 			long userId, long folderId, long parentFolderId, String name,
 			String description, boolean mergeWithParentFolder,

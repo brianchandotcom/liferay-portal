@@ -99,16 +99,16 @@ public class JournalFolderLocalServiceImpl
 		return folder;
 	}
 
-	@Override
 	@Indexable(type = IndexableType.DELETE)
+	@Override
 	public JournalFolder deleteFolder(JournalFolder folder)
 		throws PortalException, SystemException {
 
 		return deleteFolder(folder, true);
 	}
 
-	@Override
 	@Indexable(type = IndexableType.DELETE)
+	@Override
 	public JournalFolder deleteFolder(
 			JournalFolder folder, boolean includeTrashedEntries)
 		throws PortalException, SystemException {
@@ -156,8 +156,8 @@ public class JournalFolderLocalServiceImpl
 		return folder;
 	}
 
-	@Override
 	@Indexable(type = IndexableType.DELETE)
+	@Override
 	public JournalFolder deleteFolder(long folderId)
 		throws PortalException, SystemException {
 
@@ -167,8 +167,8 @@ public class JournalFolderLocalServiceImpl
 		return deleteFolder(folder, true);
 	}
 
-	@Override
 	@Indexable(type = IndexableType.DELETE)
+	@Override
 	public JournalFolder deleteFolder(
 			long folderId, boolean includeTrashedEntries)
 		throws PortalException, SystemException {
@@ -365,8 +365,8 @@ public class JournalFolderLocalServiceImpl
 		}
 	}
 
-	@Override
 	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public JournalFolder moveFolder(
 			long folderId, long parentFolderId, ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -486,8 +486,8 @@ public class JournalFolderLocalServiceImpl
 			AssetLinkConstants.TYPE_RELATED);
 	}
 
-	@Override
 	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public JournalFolder updateFolder(
 			long userId, long folderId, long parentFolderId, String name,
 			String description, boolean mergeWithParentFolder,

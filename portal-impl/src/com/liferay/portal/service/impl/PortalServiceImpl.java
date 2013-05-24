@@ -51,8 +51,8 @@ public class PortalServiceImpl extends PortalServiceBaseImpl {
 			PropsValues.AUTO_DEPLOY_DEPLOY_DIR);
 	}
 
-	@Override
 	@JSONWebService
+	@Override
 	public int getBuildNumber() {
 		return ReleaseInfo.getBuildNumber();
 	}

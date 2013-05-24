@@ -134,8 +134,8 @@ public class CompanyImpl extends CompanyBaseImpl {
 		return getDefaultUser().getLocale();
 	}
 
-	@Override
 	@AutoEscape
+	@Override
 	public String getName() throws PortalException, SystemException {
 		return getAccount().getName();
 	}

@@ -217,7 +217,7 @@ templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(classNa
 			var cursorPos;
 			var processed;
 
-			var aceAutocomplete = richEditor['aui-ace-autocomplete-plugin'];
+			var aceAutocomplete = richEditor['ace-autocomplete-plugin'];
 
 			aceAutocomplete._lockEditor = true;
 

@@ -35,8 +35,8 @@ import org.apache.jasper.Constants;
  */
 public class TagHandlerPool extends org.apache.jasper.runtime.TagHandlerPool {
 
-	@SuppressWarnings("rawtypes")
 	@Override
+	@SuppressWarnings("rawtypes")
 	public Tag get(Class tagClass) throws JspException {
 		Tag tag = _tags.poll();
 

@@ -244,8 +244,8 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 		return new AssetVocabularyDisplay(vocabularies, total, start, end);
 	}
 
-	@Override
 	@Deprecated
+	@Override
 	public JSONObject getJSONGroupVocabularies(
 			long groupId, String name, int start, int end,
 			OrderByComparator obc)

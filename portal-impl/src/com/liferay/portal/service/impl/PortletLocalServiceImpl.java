@@ -203,8 +203,8 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		portletLocalService.clearCompanyPortletsPool();
 	}
 
-	@Override
 	@Clusterable
+	@Override
 	@Transactional(enabled = false)
 	public void clearCompanyPortletsPool() {
 		_companyPortletsPool.clear();
@@ -884,8 +884,8 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		return portletsPool;
 	}
 
-	@Override
 	@Clusterable
+	@Override
 	@Transactional(enabled = false)
 	public void removeCompanyPortletsPool(long companyId) {
 		_companyPortletsPool.remove(companyId);

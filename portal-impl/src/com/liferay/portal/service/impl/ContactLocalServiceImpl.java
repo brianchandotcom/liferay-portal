@@ -35,8 +35,8 @@ import java.util.List;
  */
 public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 
-	@Override
 	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public Contact addContact(
 			long userId, String className, long classPK, String emailAddress,
 			String firstName, String middleName, String lastName, int prefixId,
@@ -154,8 +154,8 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 		return contactPersistence.countByC_C(classNameId, classPK);
 	}
 
-	@Override
 	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public Contact updateContact(
 			long contactId, String emailAddress, String firstName,
 			String middleName, String lastName, int prefixId, int suffixId,

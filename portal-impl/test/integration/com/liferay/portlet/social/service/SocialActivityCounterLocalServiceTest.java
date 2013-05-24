@@ -54,9 +54,8 @@ public class SocialActivityCounterLocalServiceTest
 
 	@Test
 	public void testAddActivity() throws Exception {
-		SocialActivityCounterLocalServiceUtil.addActivityCounters(
-			SocialActivityTestUtil.addActivity(
-				_creatorUser, _group, _assetEntry, 1));
+		SocialActivityTestUtil.addActivity(
+			_creatorUser, _group, _assetEntry, 1);
 
 		SocialActivityCounter contribution =
 			SocialActivityTestUtil.getActivityCounter(
@@ -73,9 +72,7 @@ public class SocialActivityCounterLocalServiceTest
 
 		Assert.assertEquals(2, participation.getCurrentValue());
 
-		SocialActivityCounterLocalServiceUtil.addActivityCounters(
-			SocialActivityTestUtil.addActivity(
-				_actorUser, _group, _assetEntry, 2));
+		SocialActivityTestUtil.addActivity(_actorUser, _group, _assetEntry, 2);
 
 		contribution = SocialActivityTestUtil.getActivityCounter(
 			_group.getGroupId(),
@@ -99,11 +96,9 @@ public class SocialActivityCounterLocalServiceTest
 		Assert.assertNotNull(activityLimit);
 		Assert.assertEquals(1, activityLimit.getCount());
 
-		SocialActivityCounterLocalServiceUtil.addActivityCounters(
-			SocialActivityTestUtil.addActivity(
-				_actorUser, _group, _assetEntry, 2));
+		SocialActivityTestUtil.addActivity(_actorUser, _group, _assetEntry, 2);
 
-		activityLimit =  SocialActivityTestUtil.getActivityLimit(
+		activityLimit = SocialActivityTestUtil.getActivityLimit(
 			_group.getGroupId(), _actorUser, _assetEntry, 2,
 			SocialActivityCounterConstants.NAME_PARTICIPATION);
 
@@ -113,13 +108,10 @@ public class SocialActivityCounterLocalServiceTest
 
 	@Test
 	public void testToggleActivities() throws Exception {
-		SocialActivityCounterLocalServiceUtil.addActivityCounters(
-			SocialActivityTestUtil.addActivity(
-				_creatorUser, _group, _assetEntry, 1));
+		SocialActivityTestUtil.addActivity(
+			_creatorUser, _group, _assetEntry, 1);
 
-		SocialActivityCounterLocalServiceUtil.addActivityCounters(
-			SocialActivityTestUtil.addActivity(
-				_actorUser, _group, _assetEntry, 2));
+		SocialActivityTestUtil.addActivity(_actorUser, _group, _assetEntry, 2);
 
 		SocialActivityCounter contribution =
 			SocialActivityTestUtil.getActivityCounter(

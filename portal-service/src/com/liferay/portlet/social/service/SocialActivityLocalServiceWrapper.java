@@ -410,6 +410,7 @@ public class SocialActivityLocalServiceWrapper
 	* @param assetEntry the asset from which to remove stored activities
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
+	* @deprecated As of 6.2.0, replaced by {@link #deleteActivities(long)}. Activities should only be deleted when the group is deleted.
 	*/
 	@Override
 	public void deleteActivities(
@@ -419,6 +420,11 @@ public class SocialActivityLocalServiceWrapper
 		_socialActivityLocalService.deleteActivities(assetEntry);
 	}
 
+	public void deleteActivities(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_socialActivityLocalService.deleteActivities(groupId);
+	}
+
 	/**
 	* Removes stored activities for the asset identified by the class name and
 	* class primary key.
@@ -426,6 +432,7 @@ public class SocialActivityLocalServiceWrapper
 	* @param className the target asset's class name
 	* @param classPK the primary key of the target asset
 	* @throws SystemException if a system exception occurred
+	* @deprecated As of 6.2.0, replaced by {@link #deleteActivities(long)}. Activities should only be deleted when the group is deleted.
 	*/
 	@Override
 	public void deleteActivities(java.lang.String className, long classPK)
@@ -440,6 +447,7 @@ public class SocialActivityLocalServiceWrapper
 	* @param activityId the primary key of the stored activity
 	* @throws PortalException if the activity could not be found
 	* @throws SystemException if a system exception occurred
+	* @deprecated As of 6.2.0, replaced by {@link #deleteActivities(long)}. Activities should only be deleted when the group is deleted.
 	*/
 	@Override
 	public void deleteActivity(long activityId)
@@ -453,6 +461,7 @@ public class SocialActivityLocalServiceWrapper
 	*
 	* @param activity the activity to be removed
 	* @throws SystemException if a system exception occurred
+	* @deprecated As of 6.2.0, replaced by {@link #deleteActivities(long)}. Activities should only be deleted when the group is deleted.
 	*/
 	@Override
 	public void deleteActivity(

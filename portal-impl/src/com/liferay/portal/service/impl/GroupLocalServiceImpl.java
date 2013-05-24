@@ -796,6 +796,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		socialActivitySettingLocalService.deleteActivitySettings(
 			group.getGroupId());
 
+		socialActivityLocalService.deleteActivities(group.getGroupId());
+
 		// Software catalog
 
 		scFrameworkVersionLocalService.deleteFrameworkVersions(

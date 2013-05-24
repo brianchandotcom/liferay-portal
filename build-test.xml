@@ -3115,9 +3115,9 @@
 	</target>
 
 	<target name="prepare-portal-ext-properties" depends="generate-test-properties">
-		<echo file="portal-impl/src/portal-ext.properties">plugin.notifications.enabled=false
+		<echo file="portal-impl/src/portal-ext.properties">liferay.home=$${user.home}/liferay
 
-liferay.home=$${user.home}/liferay
+plugin.notifications.enabled=false
 
 jdbc.default.jndi.name=
 
@@ -3197,15 +3197,15 @@ organizations.assignment.auto=true
 organizations.assignment.strict=false
 organizations.membership.strict=true
 
-lucene.dir=$${resource.repositories.root}/lucene/
+lucene.dir=$${liferay.home}/lucene/
 
-jcr.jackrabbit.repository.root=$${resource.repositories.root}/jackrabbit
+jcr.jackrabbit.repository.root=$${liferay.home}/jackrabbit
 
 discussion.thread.view=combination
 
 dl.hook.impl=com.liferay.documentlibrary.util.JCRHook
 
-dl.hook.file.system.root.dir=$${resource.repositories.root}/document_library
+dl.hook.file.system.root.dir=$${liferay.home}/document_library
 
 ##
 ## From portal-legacy-5.2.properties

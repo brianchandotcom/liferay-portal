@@ -310,6 +310,8 @@ public interface PortletDataContext extends Serializable {
 
 	public long getSourceCompanyGroupId();
 
+	public long getSourceCompanyId();
+
 	public long getSourceGroupId();
 
 	/**
@@ -451,6 +453,8 @@ public interface PortletDataContext extends Serializable {
 	public void setScopeType(String scopeType);
 
 	public void setSourceCompanyGroupId(long sourceCompanyGroupId);
+
+	public void setSourceCompanyId(long sourceCompanyId);
 
 	public void setSourceGroupId(long sourceGroupId);
 

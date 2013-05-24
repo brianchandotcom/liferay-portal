@@ -358,6 +358,8 @@ public class LayoutExporter {
 		}
 
 		headerElement.addAttribute(
+			"company-id", String.valueOf(portletDataContext.getCompanyId()));
+		headerElement.addAttribute(
 			"company-group-id",
 			String.valueOf(portletDataContext.getCompanyGroupId()));
 		headerElement.addAttribute("group-id", String.valueOf(groupId));

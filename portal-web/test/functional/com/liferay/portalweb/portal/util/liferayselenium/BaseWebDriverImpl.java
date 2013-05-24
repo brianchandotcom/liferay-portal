@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.TestPropsValues;
 
 import java.util.Calendar;
 
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -40,6 +41,12 @@ public abstract class BaseWebDriverImpl
 		super(webDriver);
 
 		_projectDir = projectDir;
+
+		WebDriver.Options options = webDriver.manage();
+
+		WebDriver.Window window = options.window();
+
+		window.setSize(new Dimension(1000, 1025));
 
 		webDriver.get(browserURL);
 	}

@@ -40,8 +40,8 @@ String contentsLanguageDir = LanguageUtil.get(contentsLocale, "lang.dir");
 
 // LPS-35567
 
-languageId = languageId.replace("iw_", "he_");
-contentsLanguageId = contentsLanguageId.replace("iw_", "he_");
+String ckEditorLanguageId = languageId.replace("iw_", "he_");
+String ckEditorContentsLanguageId = contentsLanguageId.replace("iw_", "he_");
 %>
 
 CKEDITOR.config.height = 265;
@@ -79,7 +79,7 @@ CKEDITOR.config.contentsCss = '<%= HtmlUtil.escapeJS(cssPath) %>/main.css';
 
 CKEDITOR.config.contentsLangDirection = '<%= HtmlUtil.escapeJS(contentsLanguageDir) %>';
 
-CKEDITOR.config.contentsLanguage = '<%= HtmlUtil.escapeJS(contentsLanguageId) %>';
+CKEDITOR.config.contentsLanguage = '<%= HtmlUtil.escapeJS(ckEditorContentsLanguageId) %>';
 
 CKEDITOR.config.enterMode = CKEDITOR.ENTER_BR;
 
@@ -101,7 +101,7 @@ CKEDITOR.config.format_tags = 'p;pre';
 
 CKEDITOR.config.imagesPath = '<%= HtmlUtil.escapeJS(imagesPath) %>/message_boards/';
 
-CKEDITOR.config.language = '<%= HtmlUtil.escapeJS(languageId) %>';
+CKEDITOR.config.language = '<%= HtmlUtil.escapeJS(ckEditorLanguageId) %>';
 
 CKEDITOR.config.newThreadURL = '<%= MBThreadConstants.NEW_THREAD_URL %>';
 

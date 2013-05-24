@@ -37,8 +37,8 @@ String contentsLanguageDir = LanguageUtil.get(contentsLocale, "lang.dir");
 
 // LPS-35567
 
-languageId = languageId.replace("iw_", "he_");
-contentsLanguageId = contentsLanguageId.replace("iw_", "he_");
+String ckEditorLanguageId = languageId.replace("iw_", "he_");
+String ckEditorContestsLanguageId = contentsLanguageId.replace("iw_", "he_");
 
 response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 %>
@@ -83,7 +83,7 @@ CKEDITOR.config.contentsCss = '<%= HtmlUtil.escapeJS(cssPath) %>/main.css';
 
 CKEDITOR.config.contentsLangDirection = '<%= HtmlUtil.escapeJS(contentsLanguageDir) %>';
 
-CKEDITOR.config.contentsLanguage = '<%= HtmlUtil.escapeJS(contentsLanguageId) %>';
+CKEDITOR.config.contentsLanguage = '<%= HtmlUtil.escapeJS(ckEditorContestsLanguageId) %>';
 
 CKEDITOR.config.entities = false;
 
@@ -91,7 +91,7 @@ CKEDITOR.config.extraPlugins = 'ajaxsave,restore,scayt,wsc';
 
 CKEDITOR.config.height = 265;
 
-CKEDITOR.config.language = '<%= HtmlUtil.escapeJS(languageId) %>';
+CKEDITOR.config.language = '<%= HtmlUtil.escapeJS(ckEditorLanguageId) %>';
 
 CKEDITOR.config.resize_enabled = <%= resizable %>;
 

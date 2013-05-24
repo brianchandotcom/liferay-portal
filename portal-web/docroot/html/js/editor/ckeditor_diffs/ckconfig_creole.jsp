@@ -43,8 +43,8 @@ String contentsLanguageDir = LanguageUtil.get(contentsLocale, "lang.dir");
 
 // LPS-35567
 
-languageId = languageId.replace("iw_", "he_");
-contentsLanguageId = contentsLanguageId.replace("iw_", "he_");
+String ckEditorLanguageId = languageId.replace("iw_", "he_");
+String ckEditorContentsLanguageId = contentsLanguageId.replace("iw_", "he_");
 %>
 
 CKEDITOR.config.attachmentURLPrefix = '<%= HtmlUtil.escapeJS(attachmentURLPrefix) %>';
@@ -53,7 +53,7 @@ CKEDITOR.config.bodyClass = 'html-editor <%= HtmlUtil.escapeJS(cssClasses) %>';
 
 CKEDITOR.config.contentsLangDirection = '<%= HtmlUtil.escapeJS(contentsLanguageDir) %>';
 
-CKEDITOR.config.contentsLanguage = '<%= HtmlUtil.escapeJS(contentsLanguageId) %>';
+CKEDITOR.config.contentsLanguage = '<%= HtmlUtil.escapeJS(ckEditorContentsLanguageId) %>';
 
 CKEDITOR.config.decodeLinks = true;
 
@@ -65,7 +65,7 @@ CKEDITOR.config.format_tags = 'p;h1;h2;h3;h4;h5;h6;pre';
 
 CKEDITOR.config.height = 265;
 
-CKEDITOR.config.language = '<%= HtmlUtil.escapeJS(languageId) %>';
+CKEDITOR.config.language = '<%= HtmlUtil.escapeJS(ckEditorLanguageId) %>';
 
 CKEDITOR.config.removePlugins = [
 	'elementspath',

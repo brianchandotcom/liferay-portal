@@ -49,14 +49,14 @@ public class HitsImpl implements Hits {
 		return _docs[n];
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getCollatedSpellCheckResult() {
 		return _collatedSpellCheckResult;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Document[] getDocs() {
 		return _docs;
 	}
@@ -66,14 +66,14 @@ public class HitsImpl implements Hits {
 		return _length;
 	}
 
-	@Override
 	@JSON(include = false)
+	@Override
 	public Query getQuery() {
 		return _query;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String[] getQuerySuggestions() {
 		if ((_querySuggestions == null) || (_querySuggestions.length == 0)) {
 			return StringPool.EMPTY_ARRAY;
@@ -82,14 +82,14 @@ public class HitsImpl implements Hits {
 		return _querySuggestions;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String[] getQueryTerms() {
 		return _queryTerms;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public float[] getScores() {
 		return _scores;
 	}
@@ -99,8 +99,8 @@ public class HitsImpl implements Hits {
 		return _searchTime;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String[] getSnippets() {
 		return _snippets;
 	}

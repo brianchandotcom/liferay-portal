@@ -90,8 +90,8 @@ public class ClusterSchedulerEngine
 		_schedulerEngine = schedulerEngine;
 	}
 
-	@Override
 	@Clusterable(acceptor = SchedulerClusterInvokeAcceptor.class)
+	@Override
 	public void delete(String groupName) throws SchedulerException {
 		boolean memoryClusteredSlaveJob = isMemoryClusteredSlaveJob(groupName);
 
@@ -112,8 +112,8 @@ public class ClusterSchedulerEngine
 		setClusterableThreadLocal(groupName);
 	}
 
-	@Override
 	@Clusterable(acceptor = SchedulerClusterInvokeAcceptor.class)
+	@Override
 	public void delete(String jobName, String groupName)
 		throws SchedulerException {
 
@@ -249,8 +249,8 @@ public class ClusterSchedulerEngine
 		}
 	}
 
-	@Override
 	@Clusterable(acceptor = SchedulerClusterInvokeAcceptor.class)
+	@Override
 	public void pause(String groupName) throws SchedulerException {
 		boolean memoryClusteredSlaveJob = isMemoryClusteredSlaveJob(groupName);
 
@@ -271,8 +271,8 @@ public class ClusterSchedulerEngine
 		setClusterableThreadLocal(groupName);
 	}
 
-	@Override
 	@Clusterable(acceptor = SchedulerClusterInvokeAcceptor.class)
+	@Override
 	public void pause(String jobName, String groupName)
 		throws SchedulerException {
 
@@ -296,8 +296,8 @@ public class ClusterSchedulerEngine
 		setClusterableThreadLocal(groupName);
 	}
 
-	@Override
 	@Clusterable(acceptor = SchedulerClusterInvokeAcceptor.class)
+	@Override
 	public void resume(String groupName) throws SchedulerException {
 		boolean memoryClusteredSlaveJob = isMemoryClusteredSlaveJob(groupName);
 
@@ -318,8 +318,8 @@ public class ClusterSchedulerEngine
 		setClusterableThreadLocal(groupName);
 	}
 
-	@Override
 	@Clusterable(acceptor = SchedulerClusterInvokeAcceptor.class)
+	@Override
 	public void resume(String jobName, String groupName)
 		throws SchedulerException {
 
@@ -343,8 +343,8 @@ public class ClusterSchedulerEngine
 		setClusterableThreadLocal(groupName);
 	}
 
-	@Override
 	@Clusterable(acceptor = SchedulerClusterInvokeAcceptor.class)
+	@Override
 	public void schedule(
 			Trigger trigger, String description, String destinationName,
 			Message message)
@@ -416,8 +416,8 @@ public class ClusterSchedulerEngine
 		_portalReady = true;
 	}
 
-	@Override
 	@Clusterable(acceptor = SchedulerClusterInvokeAcceptor.class)
+	@Override
 	public void suppressError(String jobName, String groupName)
 		throws SchedulerException {
 
@@ -437,8 +437,8 @@ public class ClusterSchedulerEngine
 		setClusterableThreadLocal(groupName);
 	}
 
-	@Override
 	@Clusterable(acceptor = SchedulerClusterInvokeAcceptor.class)
+	@Override
 	public void unschedule(String groupName) throws SchedulerException {
 		boolean memoryClusteredSlaveJob = isMemoryClusteredSlaveJob(groupName);
 
@@ -459,8 +459,8 @@ public class ClusterSchedulerEngine
 		setClusterableThreadLocal(groupName);
 	}
 
-	@Override
 	@Clusterable(acceptor = SchedulerClusterInvokeAcceptor.class)
+	@Override
 	public void unschedule(String jobName, String groupName)
 		throws SchedulerException {
 
@@ -483,8 +483,8 @@ public class ClusterSchedulerEngine
 		setClusterableThreadLocal(groupName);
 	}
 
-	@Override
 	@Clusterable(acceptor = SchedulerClusterInvokeAcceptor.class)
+	@Override
 	public void update(Trigger trigger) throws SchedulerException {
 		String jobName = trigger.getJobName();
 		String groupName = trigger.getGroupName();

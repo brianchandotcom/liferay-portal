@@ -2361,6 +2361,8 @@ public class SourceFormatter {
 			}
 
 			newContent = _sortJavaTerms(fileName, content, javaTerms);
+
+			newContent = _sortAnnotations(newContent, javaTerms);
 		}
 
 		return newContent;
@@ -4722,6 +4724,32 @@ public class SourceFormatter {
 		}
 
 		return newLine;
+	}
+
+	private static String _sortAnnotations(
+		String content, Set<JavaTerm> javaTerms) throws IOException {
+
+		Iterator<JavaTerm> itr = javaTerms.iterator();
+
+		while (itr.hasNext()) {
+			JavaTerm javaTerm = itr.next();
+
+			for (;;) {
+				String javaTermContent = javaTerm.getContent();
+
+				javaTerm.sortAnnotations();
+
+				String newJavaTermContent = javaTerm.getContent();
+
+				if (javaTermContent.equals(newJavaTermContent)) {
+					break;
+				}
+
+				content = content.replace(javaTermContent, newJavaTermContent);
+			}
+		}
+
+		return content;
 	}
 
 	private static String _sortExceptions(String line) {

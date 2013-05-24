@@ -52,8 +52,8 @@ public class QueryImpl implements Query {
 		}
 	}
 
-	@Override
 	@NotPrivileged
+	@Override
 	public int executeUpdate() throws ORMException {
 		try {
 			return _query.executeUpdate();
@@ -63,14 +63,14 @@ public class QueryImpl implements Query {
 		}
 	}
 
-	@Override
 	@NotPrivileged
+	@Override
 	public Iterator<?> iterate() throws ORMException {
 		return iterate(true);
 	}
 
-	@Override
 	@NotPrivileged
+	@Override
 	public Iterator<?> iterate(boolean unmodifiable) throws ORMException {
 		try {
 			return list(unmodifiable).iterator();
@@ -80,8 +80,8 @@ public class QueryImpl implements Query {
 		}
 	}
 
-	@Override
 	@NotPrivileged
+	@Override
 	public Object iterateNext() throws ORMException {
 		Iterator<?> iterator = iterate(false);
 
@@ -92,20 +92,20 @@ public class QueryImpl implements Query {
 		return null;
 	}
 
-	@Override
 	@NotPrivileged
+	@Override
 	public List<?> list() throws ORMException {
 		return list(false, false);
 	}
 
-	@Override
 	@NotPrivileged
+	@Override
 	public List<?> list(boolean unmodifiable) throws ORMException {
 		return list(true, unmodifiable);
 	}
 
-	@Override
 	@NotPrivileged
+	@Override
 	public List<?> list(boolean copy, boolean unmodifiable)
 		throws ORMException {
 
@@ -126,8 +126,8 @@ public class QueryImpl implements Query {
 		}
 	}
 
-	@Override
 	@NotPrivileged
+	@Override
 	public ScrollableResults scroll() throws ORMException {
 		try {
 			return new ScrollableResultsImpl(_query.scroll());
@@ -348,8 +348,8 @@ public class QueryImpl implements Query {
 		return this;
 	}
 
-	@Override
 	@NotPrivileged
+	@Override
 	public Object uniqueResult() throws ORMException {
 		try {
 			return _query.uniqueResult();

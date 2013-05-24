@@ -183,8 +183,8 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 		return deleteEntry(entry);
 	}
 
-	@Override
 	@Indexable(type = IndexableType.DELETE)
+	@Override
 	public TrashEntry deleteEntry(TrashEntry trashEntry)
 		throws SystemException {
 

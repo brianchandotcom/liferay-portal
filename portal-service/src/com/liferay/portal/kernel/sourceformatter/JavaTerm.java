@@ -14,6 +14,14 @@
 
 package com.liferay.portal.kernel.sourceformatter;
 
+import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
+import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.io.IOException;
+
 import java.util.List;
 
 /**
@@ -70,6 +78,48 @@ public class JavaTerm {
 
 	public void setType(int type) {
 		_type = type;
+	}
+
+	public void sortAnnotations() throws IOException {
+		if (!_content.startsWith(StringPool.TAB + StringPool.AT)) {
+			return;
+		}
+
+		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
+			new UnsyncStringReader(_content));
+
+		String line = null;
+
+		String annotation = StringPool.BLANK;
+		String previousAnnotation = StringPool.BLANK;
+
+		while ((line = unsyncBufferedReader.readLine()) != null) {
+			if (StringUtil.count(line, StringPool.TAB) == 1) {
+				if (Validator.isNotNull(previousAnnotation) &&
+					(previousAnnotation.compareTo(annotation) > 0)) {
+
+					_content = StringUtil.replaceFirst(
+						_content, previousAnnotation, annotation);
+					_content = StringUtil.replaceLast(
+						_content, annotation, previousAnnotation);
+
+					return;
+				}
+
+				if (!line.startsWith(StringPool.TAB + StringPool.AT)) {
+					return;
+				}
+
+				if (Validator.isNotNull(annotation)) {
+					previousAnnotation = annotation;
+				}
+
+				annotation = line + "\n";
+			}
+			else {
+				annotation += line + "\n";
+			}
+		}
 	}
 
 	private String _content;

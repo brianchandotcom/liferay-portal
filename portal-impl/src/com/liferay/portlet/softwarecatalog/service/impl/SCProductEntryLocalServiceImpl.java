@@ -63,8 +63,8 @@ import java.util.Properties;
 public class SCProductEntryLocalServiceImpl
 	extends SCProductEntryLocalServiceBaseImpl {
 
-	@Override
 	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public SCProductEntry addProductEntry(
 			long userId, String name, String type, String tags,
 			String shortDescription, String longDescription, String pageURL,
@@ -208,8 +208,8 @@ public class SCProductEntryLocalServiceImpl
 		}
 	}
 
-	@Override
 	@Indexable(type = IndexableType.DELETE)
+	@Override
 	public SCProductEntry deleteProductEntry(long productEntryId)
 		throws PortalException, SystemException {
 
@@ -219,8 +219,8 @@ public class SCProductEntryLocalServiceImpl
 		return deleteProductEntry(productEntry);
 	}
 
-	@Override
 	@Indexable(type = IndexableType.DELETE)
+	@Override
 	public SCProductEntry deleteProductEntry(SCProductEntry productEntry)
 		throws PortalException, SystemException {
 
@@ -408,8 +408,8 @@ public class SCProductEntryLocalServiceImpl
 		return doc.asXML();
 	}
 
-	@Override
 	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public SCProductEntry updateProductEntry(
 			long productEntryId, String name, String type, String tags,
 			String shortDescription, String longDescription, String pageURL,

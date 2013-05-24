@@ -46,8 +46,8 @@ public class CountryImpl extends CountryBaseImpl {
 		return _nameCurrentLanguageId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getNameCurrentValue() {
 		Locale locale = getLocale(_nameCurrentLanguageId);
 

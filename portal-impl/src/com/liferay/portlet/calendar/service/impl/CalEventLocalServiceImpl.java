@@ -131,8 +131,8 @@ import net.fortuna.ical4j.model.property.Version;
  */
 public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 
-	@Override
 	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public CalEvent addEvent(
 			long userId, String title, String description, String location,
 			int startDateMonth, int startDateDay, int startDateYear,
@@ -402,8 +402,8 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		}
 	}
 
-	@Override
 	@Indexable(type = IndexableType.DELETE)
+	@Override
 	public CalEvent deleteEvent(CalEvent event)
 		throws PortalException, SystemException {
 
@@ -439,8 +439,8 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		return event;
 	}
 
-	@Override
 	@Indexable(type = IndexableType.DELETE)
+	@Override
 	public CalEvent deleteEvent(long eventId)
 		throws PortalException, SystemException {
 
@@ -789,8 +789,8 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 			AssetLinkConstants.TYPE_RELATED);
 	}
 
-	@Override
 	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public CalEvent updateEvent(
 			long userId, long eventId, String title, String description,
 			String location, int startDateMonth, int startDateDay,

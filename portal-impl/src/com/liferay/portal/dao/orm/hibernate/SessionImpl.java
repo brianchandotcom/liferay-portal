@@ -39,8 +39,8 @@ public class SessionImpl implements Session {
 		_session = session;
 	}
 
-	@Override
 	@NotPrivileged
+	@Override
 	public void clear() throws ORMException {
 		try {
 			_session.clear();
@@ -50,8 +50,8 @@ public class SessionImpl implements Session {
 		}
 	}
 
-	@Override
 	@NotPrivileged
+	@Override
 	public Connection close() throws ORMException {
 		try {
 			return _session.close();
@@ -61,8 +61,8 @@ public class SessionImpl implements Session {
 		}
 	}
 
-	@Override
 	@NotPrivileged
+	@Override
 	public boolean contains(Object object) throws ORMException {
 		try {
 			return _session.contains(object);
@@ -115,8 +115,8 @@ public class SessionImpl implements Session {
 		}
 	}
 
-	@Override
 	@NotPrivileged
+	@Override
 	public void delete(Object object) throws ORMException {
 		try {
 			_session.delete(object);
@@ -126,8 +126,8 @@ public class SessionImpl implements Session {
 		}
 	}
 
-	@Override
 	@NotPrivileged
+	@Override
 	public void evict(Object object) throws ORMException {
 		try {
 			_session.evict(object);
@@ -137,8 +137,8 @@ public class SessionImpl implements Session {
 		}
 	}
 
-	@Override
 	@NotPrivileged
+	@Override
 	public void flush() throws ORMException {
 		try {
 			_session.flush();
@@ -148,8 +148,8 @@ public class SessionImpl implements Session {
 		}
 	}
 
-	@Override
 	@NotPrivileged
+	@Override
 	public Object get(Class<?> clazz, Serializable id) throws ORMException {
 		try {
 			return _session.get(clazz, id);
@@ -176,14 +176,14 @@ public class SessionImpl implements Session {
 		}
 	}
 
-	@Override
 	@NotPrivileged
+	@Override
 	public Object getWrappedSession() {
 		return _session;
 	}
 
-	@Override
 	@NotPrivileged
+	@Override
 	public Object load(Class<?> clazz, Serializable id) throws ORMException {
 		try {
 			return _session.load(clazz, id);
@@ -193,8 +193,8 @@ public class SessionImpl implements Session {
 		}
 	}
 
-	@Override
 	@NotPrivileged
+	@Override
 	public Object merge(Object object) throws ORMException {
 		try {
 			return _session.merge(object);
@@ -204,8 +204,8 @@ public class SessionImpl implements Session {
 		}
 	}
 
-	@Override
 	@NotPrivileged
+	@Override
 	public Serializable save(Object object) throws ORMException {
 		try {
 			return _session.save(object);
@@ -215,8 +215,8 @@ public class SessionImpl implements Session {
 		}
 	}
 
-	@Override
 	@NotPrivileged
+	@Override
 	public void saveOrUpdate(Object object) throws ORMException {
 		try {
 			_session.saveOrUpdate(object);

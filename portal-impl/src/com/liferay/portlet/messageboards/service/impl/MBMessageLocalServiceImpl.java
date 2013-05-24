@@ -459,8 +459,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			guestPermissions);
 	}
 
-	@Override
 	@Indexable(type = IndexableType.DELETE)
+	@Override
 	public MBMessage deleteDiscussionMessage(long messageId)
 		throws PortalException, SystemException {
 
@@ -503,8 +503,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 	}
 
-	@Override
 	@Indexable(type = IndexableType.DELETE)
+	@Override
 	public MBMessage deleteMessage(long messageId)
 		throws PortalException, SystemException {
 
@@ -513,8 +513,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		return deleteMessage(message);
 	}
 
-	@Override
 	@Indexable(type = IndexableType.DELETE)
+	@Override
 	public MBMessage deleteMessage(MBMessage message)
 		throws PortalException, SystemException {
 

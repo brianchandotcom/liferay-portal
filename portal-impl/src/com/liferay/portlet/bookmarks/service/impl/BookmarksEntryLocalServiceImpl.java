@@ -63,8 +63,8 @@ import javax.portlet.PortletPreferences;
 public class BookmarksEntryLocalServiceImpl
 	extends BookmarksEntryLocalServiceBaseImpl {
 
-	@Override
 	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public BookmarksEntry addEntry(
 			long userId, long groupId, long folderId, String name, String url,
 			String description, ServiceContext serviceContext)
@@ -151,8 +151,8 @@ public class BookmarksEntryLocalServiceImpl
 		}
 	}
 
-	@Override
 	@Indexable(type = IndexableType.DELETE)
+	@Override
 	public BookmarksEntry deleteEntry(BookmarksEntry entry)
 		throws PortalException, SystemException {
 
@@ -189,8 +189,8 @@ public class BookmarksEntryLocalServiceImpl
 		return entry;
 	}
 
-	@Override
 	@Indexable(type = IndexableType.DELETE)
+	@Override
 	public BookmarksEntry deleteEntry(long entryId)
 		throws PortalException, SystemException {
 
@@ -298,8 +298,8 @@ public class BookmarksEntryLocalServiceImpl
 		return bookmarksEntryFinder.findByNoAssets();
 	}
 
-	@Override
 	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public BookmarksEntry moveEntry(long entryId, long parentFolderId)
 		throws PortalException, SystemException {
 
@@ -329,16 +329,16 @@ public class BookmarksEntryLocalServiceImpl
 		return bookmarksEntryLocalService.moveEntry(entryId, parentFolderId);
 	}
 
-	@Override
 	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public BookmarksEntry moveEntryToTrash(long userId, BookmarksEntry entry)
 		throws PortalException, SystemException {
 
 		return updateStatus(userId, entry, WorkflowConstants.STATUS_IN_TRASH);
 	}
 
-	@Override
 	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public BookmarksEntry moveEntryToTrash(long userId, long entryId)
 		throws PortalException, SystemException {
 
@@ -371,8 +371,8 @@ public class BookmarksEntryLocalServiceImpl
 		return openEntry(userId, entry);
 	}
 
-	@Override
 	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public BookmarksEntry restoreEntryFromTrash(long userId, long entryId)
 		throws PortalException, SystemException {
 
@@ -424,8 +424,8 @@ public class BookmarksEntryLocalServiceImpl
 			AssetLinkConstants.TYPE_RELATED);
 	}
 
-	@Override
 	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public BookmarksEntry updateEntry(
 			long userId, long entryId, long groupId, long folderId, String name,
 			String url, String description, ServiceContext serviceContext)

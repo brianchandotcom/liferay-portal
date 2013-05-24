@@ -79,7 +79,7 @@ templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(classNa
 										%>
 
 											<li class="palette-item-container">
-												<span class="palette-item" data-content1="<%= HtmlUtil.escapeAttribute(dataContentArray[0]) %>" <c:if test="<%= Validator.isNotNull(dataContentArray[1]) %>">data-content2="<%= HtmlUtil.escapeAttribute(dataContentArray[1]) %>"</c:if> <c:if test="<%= Validator.isNotNull(dataContentArray[2]) %>">data-content3="<%= HtmlUtil.escapeAttribute(dataContentArray[2]) %>"</c:if> title="<%= HtmlUtil.escapeAttribute(_getPaletteItemTitle(pageContext, templateVariableDefinition)) %>">
+												<span class="palette-item" data-content1="<%= HtmlUtil.escapeAttribute(dataContentArray[0]) %>" <c:if test="<%= Validator.isNotNull(dataContentArray[1]) %>">data-content2="<%= HtmlUtil.escapeAttribute(dataContentArray[1]) %>"</c:if> <c:if test="<%= Validator.isNotNull(dataContentArray[2]) %>">data-content3="<%= HtmlUtil.escapeAttribute(dataContentArray[2]) %>"</c:if> data-title="<%= HtmlUtil.escapeAttribute(_getPaletteItemTitle(pageContext, templateVariableDefinition)) %>">
 													<liferay-ui:message key="<%= templateVariableDefinition.getLabel() %>" /><c:if test="<%= templateVariableDefinition.isCollection() || templateVariableDefinition.isRepeatable() %>">*</c:if>
 												</span>
 											</li>
@@ -117,10 +117,18 @@ templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(classNa
 	</liferay-ui:panel>
 </liferay-ui:panel-container>
 
-<aui:script use="aui-ace-autocomplete-freemarker,aui-ace-autocomplete-plugin,aui-ace-autocomplete-velocity,aui-toggler,aui-tooltip-deprecated,event-mouseenter,transition">
+<aui:script use="aui-ace-autocomplete-freemarker,aui-ace-autocomplete-plugin,aui-ace-autocomplete-velocity,aui-toggler,aui-popover,event-mouseenter,event-outside,transition">
 	var ACPlugin = A.Plugin.AceAutoComplete;
 	var AObject = A.Object;
 	var Util = Liferay.Util;
+	
+	var STR_ALIGN_NODE = 'align.node';
+
+	var STR_BOUNDING_BOX = 'boundingBox';
+
+	var STR_CLICKOUTSIDE = 'clickoutside';
+
+	var STR_DATA_TITLE = 'data-title';
 
 	var STR_EMPTY = '';
 
@@ -388,16 +396,34 @@ templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(classNa
 						header: '.palette-item-header'
 					}
 				);
-
-				var t1 = new A.Tooltip(
+				
+				var tooltip = new A.Popover(
 					{
 						align: {
-							points: ['bl', 'tr']
+							points: [A.WidgetPositionAlign.LC, A.WidgetPositionAlign.RC]
 						},
-						title: true,
-						trigger: '.palette-item'
+						constrain: true,
+						position: 'right',
+						visible: false,
+						zIndex: 6
 					}
 				).render(paletteContainer);
+
+				tooltip.get(STR_BOUNDING_BOX).on(STR_CLICKOUTSIDE, tooltip.hide, tooltip);
+
+				paletteContainer.delegate(
+					'mouseenter',
+					function(event) {
+						var node = event.currentTarget;
+
+						tooltip.set(STR_ALIGN_NODE, node);
+
+						tooltip.setStdModContent(A.WidgetStdMod.BODY, node.attr(STR_DATA_TITLE));
+
+						tooltip.show();
+					},
+					'.palette-item'
+				);
 			</c:if>
 		},
 		'#<portlet:namespace />richEditor'

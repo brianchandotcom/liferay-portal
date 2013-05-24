@@ -1,0 +1,138 @@
+<html>
+<head>
+<title>CPWebcontentStructures</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPWebcontentStructures</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td>//div[contains(@class,'dialog-iframe-bd')]/iframe</td>
+	<td>CPWebcontentStructures</td>
+</tr>
+<!---->
+<tr>
+	<td>CLOSE_WINDOW</td>
+	<td>//button[contains(@class, 'close-content')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_ALL</td>
+	<td>//div[@class='container']/ul[contains(@class,'nav')]/li/a[contains(.,'View All')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_STRUCTURE</td>
+	<td>//div[@class='container']/ul[contains(@class,'nav')]/li/a[contains(.,'Add')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_BUTTON</td>
+	<td>//button[contains(., 'Search')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_FIELD</td>
+	<td>//input[@id='toggle_id_ddm_structure_searchkeywords']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DELETE_BUTTON</td>
+	<td>//button[@class='btn delete-structures-button']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[@class='alert alert-info']</td>
+	<td>There are no results.</td>
+</tr>
+<!---->
+<!--STRUCTURE_TABLE-->
+<tr>
+	<td>STRUCTURE_TABLE_SELECT_ALL_CHECKBOX</td>
+	<td>//input[@name='_166_allRowIds']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STRUCTURE_TABLE_ENTRY1</td>
+	<td>//div[@id='_166_ddmStructuresSearchContainerSearchContainer']/table/tbody/tr[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STRUCTURE_TABLE_ENTRY1_CHECKBOX</td>
+	<td>//div[@id='_166_ddmStructuresSearchContainerSearchContainer']/table/tbody/tr[1]/td[1]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STRUCTURE_TABLE_ENTRY1_ID</td>
+	<td>//div[@id='_166_ddmStructuresSearchContainerSearchContainer']/table/tbody/tr[1]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STRUCTURE_TABLE_ENTRY1_NAME</td>
+	<td>//div[@id='_166_ddmStructuresSearchContainerSearchContainer']/table/tbody/tr[1]/td[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STRUCTURE_TABLE_ENTRY1_DESCRIPTION</td>
+	<td>//div[@id='_166_ddmStructuresSearchContainerSearchContainer']/table/tbody/tr[1]/td[4]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STRUCTURE_TABLE_ENTRY1_MODIFIED_DATE</td>
+	<td>//div[@id='_166_ddmStructuresSearchContainerSearchContainer']/table/tbody/tr[1]/td[5]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STRUCTURE_TABLE_ENTRY1_ACTIONS</td>
+	<td>//a[@id='_166_ddmStructuresSearchContainer_1_menu']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--STRUCTURE_MENULIST-->
+<tr>
+	<td>STRUCTURE_MENULIST_EDIT</td>
+	<td>//a[@id='_166_ddmStructuresSearchContainer_1_menu_edit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STRUCTURE_MENULIST_EDIT_DEFAULT_VALUES</td>
+	<td>//a[@id='_166_ddmStructuresSearchContainer_1_menu_edit-default-values']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STRUCTURE_MENULIST_MANAGE_TEMPLATES</td>
+	<td>//a[@id='_166_ddmStructuresSearchContainer_1_menu_manage-templates']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STRUCTURE_MENULIST_PERMISSIONS</td>
+	<td>//a[@id='_166_ddmStructuresSearchContainer_1_menu_permissions']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STRUCTURE_MENULIST_COPY</td>
+	<td>//a[@id='_166_ddmStructuresSearchContainer_1_menu_copy']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STRUCTURE_MENULIST_DELETE</td>
+	<td>//a[@id='_166_ddmStructuresSearchContainer_1_menu_delete']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

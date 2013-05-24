@@ -1,0 +1,62 @@
+<html>
+<head>
+<title>CPWebcontentTemplatesAddtemplate</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPWebcontentTemplatesAddtemplate</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPWebcontentTemplatesAddtemplate</td>
+</tr>
+<!---->
+<tr>
+	<td>CLOSE_WINDOW</td>
+	<td>//button[contains(@class, 'close-content')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAME_FIELD</td>
+	<td>//input[@id='_166_name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DESCRIPTION_FIELD</td>
+	<td>//textarea[@id='_166_description']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[contains(@onclick, '_166_saveTemplate')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_AND_CONTINUE_BUTTON</td>
+	<td>//button[contains(@onclick, '_166_saveAndContinueTemplate')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CANCEL_BUTTON</td>
+	<td>//button[contains(., 'Cancel')]</td>
+	<td></td>
+</tr>
+<!---->
+<!--SCRIPT-->
+<tr>
+	<td>SCRIPT_FIELD</td>
+	<td>//div[@id='_166_richEditor']/textarea</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCRIPT_CHOOSE_FILE</td>
+	<td>//input[@id='_166_script']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

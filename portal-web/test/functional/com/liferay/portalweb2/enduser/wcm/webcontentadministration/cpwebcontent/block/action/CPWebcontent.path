@@ -15,17 +15,17 @@
 </tr>
 <!---->
 <tr>
-	<td>REQUEST_SUCCESS_MESSAGE</td>
+	<td>SUCCESS_MESSAGE</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>MOVED_TO_RECYCLE_BIN_MESSAGE</td>
+	<td>SUCCESS_MESSAGE_RECYCLE_BIN</td>
 	<td>//div[@class='portlet-msg-success taglib-trash-undo']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>NO_WEBCONTENT_FOUND_MESSAGE</td>
+	<td>INFO_MESSAGE</td>
 	<td>//div[@class='entries-empty portlet-msg-info']</td>
 	<td></td>
 </tr>
@@ -42,12 +42,12 @@
 <!--OPTIONS_MENULIST-->
 <tr>
 	<td>OPTIONS_MENULIST_CONFIGURATION</td>
-	<td></td>
+	<td>//a[@role='menuitem' and contains(.,'Configuration')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>OPTIONS_MENULIST_EXPORT_IMPORT</td>
-	<td></td>
+	<td>//a[@role='menuitem' and contains(.,'Export / Import')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -63,17 +63,17 @@
 </tr>
 <tr>
 	<td>TOOLBAR_ACTIONS</td>
-	<td>//input[@id='_15_actionsButtonContainer']</td>
+	<td>//li[@id='_15_actionsButtonContainer']/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_ADD</td>
-	<td>//span[@title='Add']/ul/li/strong/a</td>
+	<td>//li[@id='_15_addButtonContainer']/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_MANAGE</td>
-	<td>//span[@title='Manage']/ul/li/strong/a</td>
+	<td>//li/a[contains(.,'Manage')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -83,12 +83,12 @@
 </tr>
 <tr>
 	<td>TOOLBAR_SEARCH_BUTTON</td>
-	<td>//input[@id='_15_search']</td>
+	<td>//button[contains(.,'Search')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_ADVANCED_SEARCH_BUTTON</td>
-	<td>//input[@id='_15_showAdvancedSearch']</td>
+	<td>//button[@id='_15_toggleAdvanced']</td>
 	<td></td>
 </tr>
 <tr>
@@ -98,18 +98,23 @@
 </tr>
 <!--ACTION_MENULIST-->
 <tr>
+	<td>ACTION_MENULIST_DELETE</td>
+	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ACTION_MENULIST_MOVE_TO_THE_RECYCLE_BIN</td>
-	<td>//a[@id='_15_actionsButtonContainer_move-to-the-recycle-bin']</td>
+	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Move to the Recycle Bin')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ACTION_MENULIST_EXPIRE</td>
-	<td>//a[@id='_15_actionsButtonContainer_expire']</td>
+	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Expire')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ACTION_MENULIST_MOVE</td>
-	<td>//a[@id='_15_actionsButtonContainer_move']</td>
+	<td>//ul[@class='dropdown-menu']/li/a[.=' Move ']</td>
 	<td></td>
 </tr>
 <tr>
@@ -120,12 +125,12 @@
 <!--ADD_MENULIST-->
 <tr>
 	<td>ADD_MENULIST_ADD_FOLDER</td>
-	<td>//a[@id='_15_tiym_menu_folder']</td>
+	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Folder')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_MENULIST_ADD_BASIC_WEB_CONTENT</td>
-	<td>//a[@id='_15_tiym_menu_basic-web-content']</td>
+	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Basic Web Content')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -136,17 +141,17 @@
 <!--MANAGE_MENULIST-->
 <tr>
 	<td>MANAGE_MENULIST_STRUCTURES</td>
-	<td>//a[@id='_15_hjzj_menu_structures']</td>
+	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Structures')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MANAGE_MENULIST_TEMPLATES</td>
-	<td>//a[@id='_15_hjzj_menu_templates']</td>
+	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Templates')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MANAGE_MENULIST_FEEDS</td>
-	<td>//a[@id='_15_hjzj_menu_feeds']</td>
+	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Feeds')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -162,7 +167,7 @@
 </tr>
 <tr>
 	<td>FILTER_HOME_ARROW</td>
-	<td>//a[@id='_15_kldx_menuButton']</td>
+	<td>//span[contains(@class,'entry-action')]/div/a/i[@class='caret']</td>
 	<td></td>
 </tr>
 <tr>
@@ -183,17 +188,17 @@
 <!--HOME_MENULIST-->
 <tr>
 	<td>HOME_MENULIST_ADD_FOLDER</td>
-	<td>//a[@id='_15_kldx_menu_add-folder']</td>
+	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Add Folder')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>HOME_MENULIST_SUBSCRIBE</td>
-	<td>//a[@id='_15_kldx_menu_subscribe']</td>
+	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Subscribe')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>HOME_MENULIST_PERMISSIONS</td>
-	<td>//a[@id='_15_kldx_menu_permissions']</td>
+	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Permissions')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -201,25 +206,25 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--ENTRY_CONTAINER-->
+<!--ENTRY_TABLE-->
 <tr>
-	<td>ENTRY_CONTAINER_ENTRY1</td>
+	<td>ENTRY_TABLE_ENTRY</td>
 	<td>//div[@class='entry-thumbnail']/img</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_MENULIST_ARROW</td>
-	<td>//a[@id='_15_dhec_menuButton']</td>
+	<td>ENTRY_TABLE_MENULIST_ARROW</td>
+	<td>//div[@id='_15_entriesContainer']/div/span[contains(@class,'entry-action')]/div/a/i[@class='caret']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_CONTAINER_ENTRY_CHECKBOX</td>
+	<td>ENTRY_TABLE_CHECKBOX</td>
 	<td>//input[@id='_15_rowIdsJournalArticleCheckbox']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_CONTAINER_ENTRY_TITLE</td>
-	<td>//div[@id='_15_entriesContainer']/div/a/span/span</td>
+	<td>ENTRY_TABLE_TITLE</td>
+	<td>//div[@id='_15_entriesContainer']/div/a[@class='entry-link']/span/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -230,37 +235,37 @@
 <!--ENTRY_MENULIST-->
 <tr>
 	<td>ENTRY_MENULIST_EDIT</td>
-	<td>//a[@id='_15_dhec_menu_edit']</td>
+	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_MENULIST_MOVE</td>
-	<td>//a[@id='_15_dhec_menu_move']</td>
+	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Move')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_MENULIST_PERMISSIONS</td>
-	<td>//a[@id='_15_dhec_menu_permissions']</td>
+	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Permissions')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_MENULIST_VIEW</td>
-	<td>//a[@id='_15_dhec_menu_view']</td>
+	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'View')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_MENULIST_COPY</td>
-	<td>//a[@id='_15_dhec_menu_copy']</td>
+	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Copy')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_MENULIST_EXPIRE</td>
-	<td>//a[@id='_15_dhec_menu_expire']</td>
+	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Expire')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_MENULIST_MOVE_TO_THE_RECYCLE_BIN</td>
-	<td>//a[@id='_15_dhec_menu_move-to-the-recycle-bin']</td>
+	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Move to the Recycle Bin')]</td>
 	<td></td>
 </tr>
 <tr>

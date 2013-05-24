@@ -19,22 +19,22 @@
 	<td></td>
 </tr>
 <tr>
-	<td>OPTIONS_MENULIST_WRENCH_ICON</td>
+	<td>OPTIONS_WRENCH_ICON</td>
 	<td>//span[@title='Options']/ul/li/strong/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SELECT_STRUCTURE</td>
-	<td>//a[@id='_15_umre']</td>
+	<td>//a[contains(.,'Select')]/span</td>
 	<td></td>
 </tr>
 <tr>
-	<td>TITLE</td>
+	<td>TITLE_FIELD</td>
 	<td>//input[@id='_15_title_en_US']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CK_EDITOR</td>
+	<td>CONTENT_FIELD</td>
 	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
 	<td></td>
 </tr>
@@ -56,22 +56,6 @@
 <tr>
 	<td>CANCEL_BUTTON</td>
 	<td>//input[@class='aui-button-input aui-button-input-cancel']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--OPTIONS_MENULIST-->
-<tr>
-	<td>OPTIONS_MENULIST_CONFIGURATION</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>OPTIONS_MENULIST_EXPORT_IMPORT</td>
-	<td></td>
 	<td></td>
 </tr>
 <tr>

@@ -16,10 +16,15 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+<%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %>
+<%@ page import="com.liferay.portal.kernel.util.LocaleUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
 
+<%@ page import="java.util.Locale" %>
+
 <%
+String contentsLanguageId = ParamUtil.getString(request, "contentsLanguageId");
 String cssPath = ParamUtil.getString(request, "cssPath");
 String cssClasses = ParamUtil.getString(request, "cssClasses");
 String languageId = ParamUtil.getString(request, "languageId");
@@ -32,11 +37,23 @@ String linkButtonBar = "['Link', 'Unlink']";
 if (wikiPageResourcePrimKey > 0) {
 	linkButtonBar = "['Link', 'Unlink', 'Image']";
 }
+
+Locale contentsLocale = LocaleUtil.fromLanguageId(contentsLanguageId);
+String contentsLanguageDir = LanguageUtil.get(contentsLocale, "lang.dir");
+
+// LPS-35567
+
+languageId = languageId.replace("iw_", "he_");
+contentsLanguageId = contentsLanguageId.replace("iw_", "he_");
 %>
 
 CKEDITOR.config.attachmentURLPrefix = '<%= HtmlUtil.escapeJS(attachmentURLPrefix) %>';
 
 CKEDITOR.config.bodyClass = 'html-editor <%= HtmlUtil.escapeJS(cssClasses) %>';
+
+CKEDITOR.config.contentsLangDirection = '<%= HtmlUtil.escapeJS(contentsLanguageDir) %>';
+
+CKEDITOR.config.contentsLanguage = '<%= HtmlUtil.escapeJS(contentsLanguageId) %>';
 
 CKEDITOR.config.decodeLinks = true;
 

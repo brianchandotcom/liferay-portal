@@ -16,16 +16,29 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+<%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.ContentTypes" %>
 <%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %>
+<%@ page import="com.liferay.portal.kernel.util.LocaleUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
 
+<%@ page import="java.util.Locale" %>
+
 <%
+String contentsLanguageId = ParamUtil.getString(request, "contentsLanguageId");
 String cssPath = ParamUtil.getString(request, "cssPath");
 String cssClasses = ParamUtil.getString(request, "cssClasses");
 boolean inlineEdit = ParamUtil.getBoolean(request, "inlineEdit");
 String languageId = ParamUtil.getString(request, "languageId");
 boolean resizable = ParamUtil.getBoolean(request, "resizable");
+
+Locale contentsLocale = LocaleUtil.fromLanguageId(contentsLanguageId);
+String contentsLanguageDir = LanguageUtil.get(contentsLocale, "lang.dir");
+
+// LPS-35567
+
+languageId = languageId.replace("iw_", "he_");
+contentsLanguageId = contentsLanguageId.replace("iw_", "he_");
 
 response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 %>
@@ -67,6 +80,10 @@ CKEDITOR.config.bodyClass = 'html-editor <%= HtmlUtil.escapeJS(cssClasses) %>';
 CKEDITOR.config.closeNoticeTimeout = 8000;
 
 CKEDITOR.config.contentsCss = '<%= HtmlUtil.escapeJS(cssPath) %>/main.css';
+
+CKEDITOR.config.contentsLangDirection = '<%= HtmlUtil.escapeJS(contentsLanguageDir) %>';
+
+CKEDITOR.config.contentsLanguage = '<%= HtmlUtil.escapeJS(contentsLanguageId) %>';
 
 CKEDITOR.config.entities = false;
 

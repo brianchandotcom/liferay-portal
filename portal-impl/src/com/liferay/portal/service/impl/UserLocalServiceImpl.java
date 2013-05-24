@@ -597,6 +597,17 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		try {
 			WorkflowThreadLocal.setEnabled(false);
 
+			if (serviceContext == null) {
+				serviceContext = new ServiceContext();
+			}
+
+			if (serviceContext.getWorkflowAction() !=
+					WorkflowConstants.ACTION_PUBLISH) {
+
+				serviceContext.setWorkflowAction(
+					WorkflowConstants.ACTION_PUBLISH);
+			}
+
 			return addUserWithWorkflow(
 				creatorUserId, companyId, autoPassword, password1, password2,
 				autoScreenName, screenName, emailAddress, facebookId, openId,

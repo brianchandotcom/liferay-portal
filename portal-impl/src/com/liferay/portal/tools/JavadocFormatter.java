@@ -802,7 +802,32 @@ public class JavadocFormatter {
 			"(?s)\\s*<li>\\s*(.*?)\\s*</li>\\s*", "\n<li>\n$1\n</li>\n");
 		cdata = StringUtil.replace(cdata, "</li>\n\n<li>", "</li>\n<li>");
 		cdata = cdata.replaceAll("\n\\s+\n", "\n\n");
-		cdata = cdata.replaceAll(" +", " ");
+		
+		if (cdata.contains("<pre>")) {
+
+			String[] sections = cdata.split("<pre>");
+			for (int i=0; i < sections.length; i++) {
+				if (!sections[i].contains("</pre>")) {
+					sections[i] = sections[i].replaceAll(" +", " ");
+				}
+			}
+
+			StringBuffer sb = new StringBuffer();
+
+			for (int i=0; i < sections.length; i++) {
+				if (sections[i].contains("</pre>")) {
+					sb.append("<pre>");
+				}
+				
+				sb.append(sections[i]);
+			}
+
+			cdata = sb.toString();
+		}
+
+		else {
+			cdata.replaceAll(" +", " ");
+		}
 
 		// Trim whitespace inside paragraph tags or in the first paragraph
 
@@ -825,7 +850,9 @@ public class JavadocFormatter {
 
 		matcher.appendTail(sb);
 
-		cdata = sb.toString();
+		if (!cdata.contains("<pre>")) {
+			cdata = sb.toString();
+		}
 
 		return cdata.trim();
 	}
@@ -1803,8 +1830,6 @@ public class JavadocFormatter {
 			}
 
 			matcher.appendTail(sb);
-
-			sb.append("\n");
 
 			text = sb.toString();
 		}

@@ -72,16 +72,14 @@ List<Portlet> portletDataHandlerPortlets = LayoutExporter.getPortletDataHandlerP
 					PortletDataHandler portletDataHandler = portlet.getPortletDataHandlerInstance();
 
 					try {
-						PortletDataHandlerControl[] controls = portletDataHandler.getExportControls();
+						boolean isStagedPortlet = GetterUtil.getBoolean(liveGroupTypeSettings.getProperty(StagingConstants.STAGED_PORTLET + portlet.getRootPortletId()), portletDataHandler.isPublishToLiveByDefault());
 
-						if (controls != null) {
+						if (isStagedPortlet && (portletDataHandler.getExportControls() != null)) {
 							String rootPortletId = portlet.getRootPortletId();
-
-							boolean checked = GetterUtil.getBoolean(liveGroupTypeSettings.getProperty(StagingConstants.STAGED_PORTLET + portlet.getRootPortletId()), portletDataHandler.isPublishToLiveByDefault());
 				%>
 
 							<li class="tree-item">
-								<aui:input label="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>" name="<%= PortletDataHandlerKeys.PORTLET_SETUP + StringPool.UNDERLINE + rootPortletId %>" type="checkbox" value="<%= checked %>" />
+								<aui:input label="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>" name="<%= PortletDataHandlerKeys.PORTLET_SETUP + StringPool.UNDERLINE + rootPortletId %>" type="checkbox" value="<%= true %>" />
 							</li>
 
 				<%

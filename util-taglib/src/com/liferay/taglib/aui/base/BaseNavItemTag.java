@@ -81,6 +81,10 @@ public class BaseNavItemTag extends com.liferay.taglib.util.IncludeTag {
 		return _title;
 	}
 
+	public boolean getWrapDropDownMenu() {
+		return _wrapDropDownMenu;
+	}
+
 	public void setAnchorCssClass(java.lang.String anchorCssClass) {
 		_anchorCssClass = anchorCssClass;
 
@@ -153,6 +157,12 @@ public class BaseNavItemTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("title", title);
 	}
 
+	public void setWrapDropDownMenu(boolean wrapDropDownMenu) {
+		_wrapDropDownMenu = wrapDropDownMenu;
+
+		setScopedAttribute("wrapDropDownMenu", wrapDropDownMenu);
+	}
+
 	@Override
 	protected void cleanUp() {
 		_anchorCssClass = null;
@@ -167,6 +177,7 @@ public class BaseNavItemTag extends com.liferay.taglib.util.IncludeTag {
 		_label = null;
 		_selected = false;
 		_title = null;
+		_wrapDropDownMenu = true;
 	}
 
 	@Override
@@ -193,6 +204,7 @@ public class BaseNavItemTag extends com.liferay.taglib.util.IncludeTag {
 		setNamespacedAttribute(request, "label", _label);
 		setNamespacedAttribute(request, "selected", _selected);
 		setNamespacedAttribute(request, "title", _title);
+		setNamespacedAttribute(request, "wrapDropDownMenu", _wrapDropDownMenu);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "aui:nav-item:";
@@ -215,5 +227,6 @@ public class BaseNavItemTag extends com.liferay.taglib.util.IncludeTag {
 	private java.lang.String _label = null;
 	private boolean _selected = false;
 	private java.lang.String _title = null;
+	private boolean _wrapDropDownMenu = true;
 
 }

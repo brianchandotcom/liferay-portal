@@ -45,5 +45,7 @@
 			);
 		</aui:script>
 
-		<ul class="dropdown-menu">
+		<c:if test="<%= wrapDropDownMenu %>">
+			<ul class="dropdown-menu">
+		</c:if>
 	</c:if>

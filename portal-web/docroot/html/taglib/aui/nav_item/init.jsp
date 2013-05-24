@@ -44,6 +44,7 @@ java.lang.String id = GetterUtil.getString((java.lang.String)request.getAttribut
 java.lang.String label = GetterUtil.getString((java.lang.String)request.getAttribute("aui:nav-item:label"));
 boolean selected = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:nav-item:selected")));
 java.lang.String title = GetterUtil.getString((java.lang.String)request.getAttribute("aui:nav-item:title"));
+boolean wrapDropDownMenu = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:nav-item:wrapDropDownMenu")), true);
 
 _updateOptions(_options, "anchorCssClass", anchorCssClass);
 _updateOptions(_options, "anchorData", anchorData);
@@ -57,6 +58,7 @@ _updateOptions(_options, "id", id);
 _updateOptions(_options, "label", label);
 _updateOptions(_options, "selected", selected);
 _updateOptions(_options, "title", title);
+_updateOptions(_options, "wrapDropDownMenu", wrapDropDownMenu);
 %>
 
 <%@ include file="/html/taglib/aui/nav_item/init-ext.jspf" %>

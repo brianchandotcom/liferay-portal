@@ -697,7 +697,7 @@
 			<attribute>
 				<name>data</name>
 				<inputType>java.lang.Object</inputType>
-				<outputType>java.util.Map</outputType>				
+				<outputType>java.util.Map</outputType>
 			</attribute>
 			<attribute>
 				<name>dropdown</name>
@@ -734,6 +734,12 @@
 				<name>title</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<name>wrapDropDownMenu</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+				<defaultValue>true</defaultValue>
 			</attribute>
 		</attributes>
 	</component>

@@ -16,7 +16,7 @@
 
 <%@ include file="/html/taglib/aui/nav_item/init.jsp" %>
 
-	<c:if test="<%= dropdown %>">
+	<c:if test="<%= dropdown && wrapDropDownMenu %>">
 		</ul>
 	</c:if>
 </li>

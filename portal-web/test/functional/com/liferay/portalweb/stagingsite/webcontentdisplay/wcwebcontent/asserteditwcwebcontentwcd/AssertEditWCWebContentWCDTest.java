@@ -39,9 +39,10 @@ public class AssertEditWCWebContentWCDTest extends BaseTestCase {
 			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("WCD Web Content Content"),
-			selenium.getText("//div[@class='journal-content-article']/p"));
-		assertTrue(selenium.isVisible("//img[@alt='Edit Web Content']"));
-		assertTrue(selenium.isVisible("//img[@alt='Select Web Content']"));
-		assertTrue(selenium.isVisible("//img[@alt='Add Web Content']"));
+			selenium.getText("//div[@class='journal-content-article']"));
+		assertTrue(selenium.isVisible("//div/span/a/span"));
+		assertTrue(selenium.isVisible("//span[2]/a/span"));
+		assertTrue(selenium.isVisible(
+				"//span[@class='icon-action icon-action-add']/a/span"));
 	}
 }

@@ -53,9 +53,9 @@ public class DefinePermissionsBlogsManagePagesPowerUserTest extends BaseTestCase
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select[@id='_128_add-permissions']",
 			RuntimeVariables.replace("Blogs"));
-		selenium.waitForText("//tr[4]/td[2]", "Add Entry");
+		selenium.waitForVisible("//tr/td[contains(.,'Add Entry')]");
 		assertEquals(RuntimeVariables.replace("Add Entry"),
-			selenium.getText("//tr[4]/td[2]"));
+			selenium.getText("//tr/td[contains(.,'Add Entry')]"));
 		assertTrue(selenium.isPartialText(
 				"//span[@id='_128_groupHTMLcom.liferay.portlet.blogsADD_ENTRY']",
 				"User Personal Site"));
@@ -77,9 +77,9 @@ public class DefinePermissionsBlogsManagePagesPowerUserTest extends BaseTestCase
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select[@id='_128_add-permissions']",
 			RuntimeVariables.replace("Sites"));
-		selenium.waitForText("//tr[14]/td[2]", "Manage Pages");
+		selenium.waitForVisible("//tr/td[contains(.,'Manage Pages')]");
 		assertEquals(RuntimeVariables.replace("Manage Pages"),
-			selenium.getText("//tr[14]/td[2]"));
+			selenium.getText("//tr/td[contains(.,'Manage Pages')]"));
 		assertTrue(selenium.isPartialText(
 				"//span[@id='_128_groupHTMLcom.liferay.portal.model.GroupMANAGE_LAYOUTS']",
 				"User Personal Site"));

@@ -68,11 +68,11 @@ public class AddUserPortalContentReviewerTest extends BaseTestCase {
 					RuntimeVariables.replace("Reviewer"));
 				selenium.select("//select[@id='_125_suffixId']",
 					RuntimeVariables.replace("label=Phd."));
-				selenium.select("//select[@id='_125_birthdayMonth']",
+				selenium.select("//select[@name='_125_birthdayMonth']",
 					RuntimeVariables.replace("label=April"));
-				selenium.select("//select[@id='_125_birthdayDay']",
+				selenium.select("//select[@name='_125_birthdayDay']",
 					RuntimeVariables.replace("label=10"));
-				selenium.select("//select[@id='_125_birthdayYear']",
+				selenium.select("//select[@name='_125_birthdayYear']",
 					RuntimeVariables.replace("label=1986"));
 				selenium.select("//select[@id='_125_male']",
 					RuntimeVariables.replace("label=Male"));
@@ -117,24 +117,30 @@ public class AddUserPortalContentReviewerTest extends BaseTestCase {
 				selenium.clickAt("//div[6]/span/a/span",
 					RuntimeVariables.replace("Select"));
 				Thread.sleep(5000);
-				selenium.selectWindow("title=Users and Organizations");
-				selenium.waitForVisible("//tr[4]/td/a");
+				selenium.selectFrame("//iframe");
+				selenium.waitForVisible(
+					"//tr/td[contains(.,'Portal Content Reviewer')]");
 				assertEquals(RuntimeVariables.replace("Portal Content Reviewer"),
-					selenium.getText("//tr[4]/td/a"));
-				selenium.clickAt("//tr[4]/td/a",
+					selenium.getText(
+						"//tr/td[contains(.,'Portal Content Reviewer')]"));
+				selenium.clickAt("xPath=(//input[@value='Choose'])[2]",
 					RuntimeVariables.replace("Portal Content Reviewer"));
 				Thread.sleep(5000);
-				selenium.selectWindow("null");
+				selenium.selectFrame("relative=top");
 				assertEquals(RuntimeVariables.replace("Portal Content Reviewer"),
-					selenium.getText("//table/tr/td[1]"));
+					selenium.getText(
+						"//tr/td[contains(.,'Portal Content Reviewer')]"));
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
+				selenium.waitForVisible(
+					"//tr/td[contains(.,'Portal Content Reviewer')]");
 				assertEquals(RuntimeVariables.replace("Portal Content Reviewer"),
-					selenium.getText("//tr[3]/td[1]"));
+					selenium.getText(
+						"//tr/td[contains(.,'Portal Content Reviewer')]"));
 				selenium.open("/web/guest/home/");
 				selenium.clickAt("link=Sign Out",
 					RuntimeVariables.replace("Sign Out"));

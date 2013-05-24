@@ -94,14 +94,29 @@
 	<td>AUI Live Search Min</td>
 </tr>
 <tr>
+	<td>storeVisible</td>
+	<td>//input[@id='layout_configuration_content']</td>
+	<td>searchApplicationsNotVisible</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${searchApplicationsNotVisible}</td>
+	<td>SearchApplicationsVisible</td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>//div[@id='_145_addPanelContainer']/ul/li/span/a[contains(.,'Applications')]</td>
+	<td>//div[@id='portal_add_panel']/ul/li/span/a[contains(.,'Applications')]</td>
 	<td>Applications</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[@id='_145_addPanelContainer']/ul/li/span/a[contains(.,'Applications')]</td>
+	<td>//div[@id='portal_add_panel']/ul/li/span/a[contains(.,'Applications')]</td>
 	<td>Applications</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>SearchApplicationsVisible</td>
+	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>

@@ -79,23 +79,23 @@
 	<td>Blogs</td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>//tr[4]/td[2]</td>
+	<td>waitForVisible</td>
+	<td>//tr[contains(.,'Add Entry')]/td[2]</td>
 	<td>Add Entry</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[2]</td>
+	<td>//tr[contains(.,'Add Entry')]/td[2]</td>
 	<td>Add Entry</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td[4]/span/a/span</td>
+	<td>//tr[contains(.,'Add Entry')]/td[4]/span/a/span[contains(.,'Limit Scope')]</td>
 	<td>Limit Scope</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//tr[4]/td[4]/span/a/span</td>
+	<td>//tr[contains(.,'Add Entry')]/td[4]/span/a/span[contains(.,'Limit Scope')]</td>
 	<td>Limit Scope</td>
 </tr>
 <tr>
@@ -104,24 +104,24 @@
 	<td></td>
 </tr>
 <tr>
-	<td>selectWindow</td>
-	<td>title=Roles</td>
-	<td></td>
+	<td>selectFrame</td>
+	<td>//iframe</td>
+	<td>Select Site</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//tr[4]/td/a</td>
+	<td>//tr/td[contains(.,'User Personal Site')]</td>
 	<td>User Personal Site</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td/a</td>
+	<td>//tr/td[contains(.,'User Personal Site')]</td>
 	<td>User Personal Site</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//tr[4]/td/a</td>
-	<td>User Personal Site</td>
+	<td>xPath=(//input[@value='Choose'])[2]</td>
+	<td>Choose</td>
 </tr>
 <tr>
 	<td>pause</td>
@@ -129,8 +129,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>selectWindow</td>
-	<td>null</td>
+	<td>selectFrame</td>
+	<td>relative=top</td>
 	<td></td>
 </tr>
 <tr>
@@ -160,12 +160,12 @@
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//tr[14]/td[2]</td>
+	<td>//tr/td[contains(.,'Manage Pages')]</td>
 	<td>Manage Pages</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[14]/td[2]</td>
+	<td>//tr/td[contains(.,'Manage Pages')]</td>
 	<td>Manage Pages</td>
 </tr>
 <tr>
@@ -175,12 +175,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[14]/td[4]/span/a/span</td>
+	<td>//tr[contains(.,'Manage Pages')]/td[4]/span/a/span[contains(.,'Limit Scope')]</td>
 	<td>Limit Scope</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//tr[14]/td[4]/span/a/span</td>
+	<td>//tr[contains(.,'Manage Pages')]/td[4]/span/a/span[contains(.,'Limit Scope')]</td>
 	<td>Limit Scope</td>
 </tr>
 <tr>
@@ -189,24 +189,24 @@
 	<td></td>
 </tr>
 <tr>
-	<td>selectWindow</td>
-	<td>title=Roles</td>
+	<td>selectFrame</td>
+	<td>//iframe</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//tr[4]/td/a</td>
+	<td>//tr/td[contains(.,'User Personal Site')]</td>
 	<td>User Personal Site</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td/a</td>
+	<td>//tr/td[contains(.,'User Personal Site')]</td>
 	<td>User Personal Site</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//tr[4]/td/a</td>
-	<td>User Personal Site</td>
+	<td>xPath=(//input[@value='Choose'])[2]</td>
+	<td>Choose</td>
 </tr>
 <tr>
 	<td>pause</td>
@@ -214,8 +214,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>selectWindow</td>
-	<td>null</td>
+	<td>selectFrame</td>
+	<td>relative=top</td>
 	<td></td>
 </tr>
 <tr>

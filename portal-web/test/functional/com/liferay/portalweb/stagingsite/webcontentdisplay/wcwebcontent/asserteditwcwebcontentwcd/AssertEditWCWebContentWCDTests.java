@@ -35,7 +35,6 @@ public class AssertEditWCWebContentWCDTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddSiteTest.class);
-		testSuite.addTestSuite(AddSitePublicPageTest.class);
 		testSuite.addTestSuite(AddPageWCDTest.class);
 		testSuite.addTestSuite(AddPortletWCDTest.class);
 		testSuite.addTestSuite(AddWCWebContentWCDTest.class);
@@ -44,6 +43,7 @@ public class AssertEditWCWebContentWCDTests extends BaseTestSuite {
 		testSuite.addTestSuite(AssertCannotEditWCWebContentWCDTest.class);
 		testSuite.addTestSuite(DeactivateStagingTest.class);
 		testSuite.addTestSuite(AssertEditWCWebContentWCDTest.class);
+		testSuite.addTestSuite(AddSitePublicPageTest.class);
 		testSuite.addTestSuite(TearDownSiteTest.class);
 
 		return testSuite;

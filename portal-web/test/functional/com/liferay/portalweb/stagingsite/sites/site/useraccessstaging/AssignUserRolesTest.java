@@ -58,18 +58,18 @@ public class AssignUserRolesTest extends BaseTestCase {
 		selenium.clickAt("//div[6]/span[1]/a/span",
 			RuntimeVariables.replace("Select"));
 		Thread.sleep(5000);
-		selenium.selectWindow("title=Users and Organizations");
-		selenium.waitForVisible("link=Member");
+		selenium.selectFrame("//iframe");
+		selenium.waitForVisible("//tr/td[contains(.,'Member')]");
 		selenium.type("//input[@id='_125_keywords']",
 			RuntimeVariables.replace("Member"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Member"),
-			selenium.getText("//tr[contains(.,'Member')]/td[1]/a"));
-		selenium.clickAt("//tr[contains(.,'Member')]/td[1]/a",
-			RuntimeVariables.replace("Member"));
-		selenium.selectWindow("null");
+			selenium.getText("//tr/td[contains(.,'Member')]"));
+		selenium.clickAt("//input[@value='Choose']",
+			RuntimeVariables.replace("Choose"));
+		selenium.selectFrame("relative=top");
 		selenium.waitForPartialText("//div[@id='_125_rolesSearchContainer']",
 			"Member");
 		assertTrue(selenium.isPartialText(

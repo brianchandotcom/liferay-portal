@@ -58,12 +58,11 @@ public class ViewPublishToLiveNowDMDocumentNoPagesDockTest extends BaseTestCase 
 		assertEquals(RuntimeVariables.replace("Download (12k)"),
 			selenium.getText("//span[@class='download-document']"));
 		assertEquals(RuntimeVariables.replace("1.0"),
-			selenium.getText("//tr[3]/td[1]"));
-		assertTrue(selenium.isElementPresent("//tr[3]/td[2]"));
+			selenium.getText("//tr/td[contains(.,'1.0')]"));
 		assertEquals(RuntimeVariables.replace("12k"),
-			selenium.getText("//tr[3]/td[3]"));
+			selenium.getText("//tr/td[contains(.,'12k')]"));
 		assertEquals(RuntimeVariables.replace("Approved"),
-			selenium.getText("//tr[3]/td[4]"));
+			selenium.getText("//tr/td[contains(.,'Approved')]"));
 		assertTrue(selenium.isPartialText("//li[2]/span/a", "Staging"));
 		selenium.clickAt("//li[2]/span/a", RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
@@ -86,11 +85,10 @@ public class ViewPublishToLiveNowDMDocumentNoPagesDockTest extends BaseTestCase 
 		assertEquals(RuntimeVariables.replace("Download (12k)"),
 			selenium.getText("//span[@class='download-document']"));
 		assertEquals(RuntimeVariables.replace("1.0"),
-			selenium.getText("//tr[3]/td[1]"));
-		assertTrue(selenium.isElementPresent("//tr[3]/td[2]"));
+			selenium.getText("//tr/td[contains(.,'1.0')]"));
 		assertEquals(RuntimeVariables.replace("12k"),
-			selenium.getText("//tr[3]/td[3]"));
+			selenium.getText("//tr/td[contains(.,'12k')]"));
 		assertEquals(RuntimeVariables.replace("Approved"),
-			selenium.getText("//tr[3]/td[4]"));
+			selenium.getText("//tr/td[contains(.,'Approved')]"));
 	}
 }

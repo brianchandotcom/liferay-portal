@@ -105,17 +105,17 @@
 </tr>
 <tr>
 	<td>select</td>
-	<td>//select[@id='_125_birthdayMonth']</td>
+	<td>//select[@name='_125_birthdayMonth']</td>
 	<td>label=April</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>//select[@id='_125_birthdayDay']</td>
+	<td>//select[@name='_125_birthdayDay']</td>
 	<td>label=10</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>//select[@id='_125_birthdayYear']</td>
+	<td>//select[@name='_125_birthdayYear']</td>
 	<td>label=1986</td>
 </tr>
 <tr>
@@ -224,23 +224,23 @@
 	<td></td>
 </tr>
 <tr>
-	<td>selectWindow</td>
-	<td>title=Users and Organizations</td>
+	<td>selectFrame</td>
+	<td>//iframe</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//tr[4]/td/a</td>
+	<td>//tr/td[contains(.,'Portal Content Reviewer')]</td>
 	<td>Portal Content Reviewer</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[4]/td/a</td>
+	<td>//tr/td[contains(.,'Portal Content Reviewer')]</td>
 	<td>Portal Content Reviewer</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//tr[4]/td/a</td>
+	<td>xPath=(//input[@value='Choose'])[2]</td>
 	<td>Portal Content Reviewer</td>
 </tr>
 <tr>
@@ -249,13 +249,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>selectWindow</td>
-	<td>null</td>
+	<td>selectFrame</td>
+	<td>relative=top</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//table/tr/td[1]</td>
+	<td>//tr/td[contains(.,'Portal Content Reviewer')]</td>
 	<td>Portal Content Reviewer</td>
 </tr>
 <tr>
@@ -269,8 +269,13 @@
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//tr/td[contains(.,'Portal Content Reviewer')]</td>
+	<td>Portal Content Reviewer</td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[1]</td>
+	<td>//tr/td[contains(.,'Portal Content Reviewer')]</td>
 	<td>Portal Content Reviewer</td>
 </tr>
 <tr>

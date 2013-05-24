@@ -52,22 +52,23 @@ public class TearDownPermissionsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select[@id='_128_add-permissions']",
 			RuntimeVariables.replace("Blogs"));
-		selenium.waitForText("//tr[4]/td[2]", "Add Entry");
+		selenium.waitForVisible("//tr[contains(.,'Add Entry')]/td[2]");
 		assertEquals(RuntimeVariables.replace("Add Entry"),
-			selenium.getText("//tr[4]/td[2]"));
+			selenium.getText("//tr[contains(.,'Add Entry')]/td[2]"));
 		assertEquals(RuntimeVariables.replace("Limit Scope"),
-			selenium.getText("//tr[4]/td[4]/span/a/span"));
-		selenium.clickAt("//tr[4]/td[4]/span/a/span",
+			selenium.getText(
+				"//tr[contains(.,'Add Entry')]/td[4]/span/a/span[contains(.,'Limit Scope')]"));
+		selenium.clickAt("//tr[contains(.,'Add Entry')]/td[4]/span/a/span[contains(.,'Limit Scope')]",
 			RuntimeVariables.replace("Limit Scope"));
 		Thread.sleep(5000);
-		selenium.selectWindow("title=Roles");
-		selenium.waitForVisible("//tr[4]/td/a");
+		selenium.selectFrame("//iframe");
+		selenium.waitForVisible("//tr/td[contains(.,'User Personal Site')]");
 		assertEquals(RuntimeVariables.replace("User Personal Site"),
-			selenium.getText("//tr[4]/td/a"));
-		selenium.clickAt("//tr[4]/td/a",
-			RuntimeVariables.replace("User Personal Site"));
+			selenium.getText("//tr/td[contains(.,'User Personal Site')]"));
+		selenium.clickAt("xPath=(//input[@value='Choose'])[2]",
+			RuntimeVariables.replace("Choose"));
 		Thread.sleep(5000);
-		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		assertTrue(selenium.isPartialText(
 				"//span[@id='_128_groupHTMLcom.liferay.portlet.blogsADD_ENTRY']",
 				"User Personal Site"));
@@ -82,24 +83,26 @@ public class TearDownPermissionsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select[@id='_128_add-permissions']",
 			RuntimeVariables.replace("Sites"));
-		selenium.waitForText("//tr[14]/td[2]", "Manage Pages");
+		selenium.waitForText("//tr/td[contains(.,'Manage Pages')]",
+			"Manage Pages");
 		assertEquals(RuntimeVariables.replace("Manage Pages"),
-			selenium.getText("//tr[14]/td[2]"));
+			selenium.getText("//tr/td[contains(.,'Manage Pages')]"));
 		selenium.waitForText("//span[@id='_128_groupHTMLcom.liferay.portal.model.GroupMANAGE_LAYOUTS']",
 			"Portal");
 		assertEquals(RuntimeVariables.replace("Limit Scope"),
-			selenium.getText("//tr[14]/td[4]/span/a/span"));
-		selenium.clickAt("//tr[14]/td[4]/span/a/span",
+			selenium.getText(
+				"//tr[contains(.,'Manage Pages')]/td[4]/span/a/span[contains(.,'Limit Scope')]"));
+		selenium.clickAt("//tr[contains(.,'Manage Pages')]/td[4]/span/a/span[contains(.,'Limit Scope')]",
 			RuntimeVariables.replace("Limit Scope"));
 		Thread.sleep(5000);
-		selenium.selectWindow("title=Roles");
-		selenium.waitForVisible("//tr[4]/td/a");
+		selenium.selectFrame("//iframe");
+		selenium.waitForVisible("//tr/td[contains(.,'User Personal Site')]");
 		assertEquals(RuntimeVariables.replace("User Personal Site"),
-			selenium.getText("//tr[4]/td/a"));
-		selenium.clickAt("//tr[4]/td/a",
-			RuntimeVariables.replace("User Personal Site"));
+			selenium.getText("//tr/td[contains(.,'User Personal Site')]"));
+		selenium.clickAt("xPath=(//input[@value='Choose'])[2]",
+			RuntimeVariables.replace("Choose"));
 		Thread.sleep(5000);
-		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		assertTrue(selenium.isPartialText(
 				"//span[@id='_128_groupHTMLcom.liferay.portal.model.GroupMANAGE_LAYOUTS']",
 				"User Personal Site"));

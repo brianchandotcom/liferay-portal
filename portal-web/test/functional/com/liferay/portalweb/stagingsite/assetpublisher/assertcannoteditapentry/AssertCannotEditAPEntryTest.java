@@ -50,8 +50,6 @@ public class AssertCannotEditAPEntryTest extends BaseTestCase {
 		assertTrue(selenium.isElementNotPresent("//img[@title='Remove']"));
 		assertTrue(selenium.isElementNotPresent(
 				"//span[@title='Add New']/ul/li/strong/a/span"));
-		assertTrue(selenium.isElementNotPresent(
-				"//div[@class='subscribe-action']/span/a/span"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
 			selenium.getText("//h3[@class='asset-title']/a"));
 		assertTrue(selenium.isElementNotPresent(

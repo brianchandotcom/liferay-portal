@@ -47,7 +47,7 @@ public class Administrator_PublishToLiveStagedBlogsEntryTest
 				assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
 					selenium.getText("//div[@class='entry-title']/h2/a"));
 				assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
-					selenium.getText("//div[@class='entry-body']/p"));
+					selenium.getText("//div[@class='entry-body']"));
 				assertTrue(selenium.isElementPresent(
 						"//a[@id='_170_0publishNowLink']"));
 				selenium.clickAt("//a[@id='_170_0publishNowLink']",

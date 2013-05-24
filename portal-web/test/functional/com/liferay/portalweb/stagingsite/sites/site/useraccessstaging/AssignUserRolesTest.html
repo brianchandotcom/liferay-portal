@@ -99,13 +99,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>selectWindow</td>
-	<td>title=Users and Organizations</td>
-	<td></td>
+	<td>selectFrame</td>
+	<td>//iframe</td>
+	<td>Select Regular Role</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>link=Member</td>
+	<td>//tr/td[contains(.,'Member')]</td>
 	<td>Member</td>
 </tr>
 <tr>
@@ -120,17 +120,17 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[contains(.,'Member')]/td[1]/a</td>
+	<td>//tr/td[contains(.,'Member')]</td>
 	<td>Member</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//tr[contains(.,'Member')]/td[1]/a</td>
-	<td>Member</td>
+	<td>//input[@value='Choose']</td>
+	<td>Choose</td>
 </tr>
 <tr>
-	<td>selectWindow</td>
-	<td>null</td>
+	<td>selectFrame</td>
+	<td>relative=top</td>
 	<td></td>
 </tr>
 <tr>

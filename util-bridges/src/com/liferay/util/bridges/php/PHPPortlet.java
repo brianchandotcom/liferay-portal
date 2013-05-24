@@ -14,6 +14,8 @@
 
 package com.liferay.util.bridges.php;
 
+import com.caucho.quercus.servlet.QuercusServlet.PhpIni;
+import com.caucho.quercus.servlet.QuercusServlet;
 import com.caucho.vfs.Path;
 import com.caucho.vfs.SchemeMap;
 import com.caucho.vfs.Vfs;
@@ -27,6 +29,8 @@ import com.liferay.portal.kernel.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.servlet.ServletObjectsFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.util.bridges.common.ScriptPostProcess;
 
@@ -38,6 +42,7 @@ import java.net.URI;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -181,6 +186,26 @@ public class PHPPortlet extends GenericPortlet {
 			}
 
 			servletConfig = new DynamicServletConfig(servletConfig, params);
+
+			Properties phpProperties = PropsUtil.getProperties(
+				PropsKeys.PORTLET_BRIDGES_PHP_PROPERTIES, true);
+
+			QuercusServlet qs = (QuercusServlet)quercusServlet;
+
+			PhpIni phpIni = qs.createPhpIni();
+
+			for (Map.Entry<Object, Object> entry : phpProperties.entrySet()) {
+				String key = (String)entry.getKey();
+				String value = (String)entry.getValue();
+
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Setting php.ini property: " + key +
+							" = " + value);
+				}
+
+				phpIni.setProperty(key, value);
+			}
 
 			quercusServlet.init(servletConfig);
 		}

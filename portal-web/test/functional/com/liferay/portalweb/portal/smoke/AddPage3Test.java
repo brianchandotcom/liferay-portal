@@ -41,10 +41,11 @@ public class AddPage3Test extends BaseTestCase {
 		selenium.waitForVisible("//input[@type='text']");
 		selenium.type("//input[@type='text']",
 			RuntimeVariables.replace("Test Page3"));
-		selenium.clickAt("//button[contains(@id,'Save')]",
+		selenium.clickAt("//button/i[@class='icon-ok']",
 			RuntimeVariables.replace("Save"));
-		selenium.waitForVisible("link=Test Page3");
-		selenium.clickAt("link=Test Page3",
+		selenium.waitForVisible(
+			"//li[contains(@class,'lfr-nav-updateable')]/a[.='Test Page3']");
+		selenium.clickAt("//li[contains(@class,'lfr-nav-updateable')]/a[.='Test Page3']",
 			RuntimeVariables.replace("Test Page3"));
 		selenium.waitForPageToLoad("30000");
 	}

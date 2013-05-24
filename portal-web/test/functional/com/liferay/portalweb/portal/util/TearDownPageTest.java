@@ -47,16 +47,13 @@ public class TearDownPageTest extends BaseTestCase {
 				selenium.mouseOver(
 					"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/a/span");
 				selenium.waitForVisible(
-					"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']");
-				assertEquals(RuntimeVariables.replace("X"),
-					selenium.getText(
-						"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']"));
+					"//li[contains(@class,'lfr-nav-deletable') and contains(@class,'lfr-nav-hover')]/span[@class='delete-tab']");
 				selenium.click(
-					"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']");
+					"//li[contains(@class,'lfr-nav-deletable') and contains(@class,'lfr-nav-hover')]/span[@class='delete-tab']");
 				selenium.waitForConfirmation(
 					"Are you sure you want to delete this page?");
 				selenium.waitForElementNotPresent(
-					"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']");
+					"//li[contains(@class,'lfr-nav-deletable') and contains(@class,'lfr-nav-hover')]/span[@class='delete-tab']");
 
 				boolean page2Present = selenium.isElementPresent(
 						"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/a/span");
@@ -70,16 +67,13 @@ public class TearDownPageTest extends BaseTestCase {
 				selenium.mouseOver(
 					"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/a/span");
 				selenium.waitForVisible(
-					"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']");
-				assertEquals(RuntimeVariables.replace("X"),
-					selenium.getText(
-						"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']"));
+					"//li[contains(@class,'lfr-nav-deletable') and contains(@class,'lfr-nav-hover')]/span[@class='delete-tab']");
 				selenium.click(
-					"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']");
+					"//li[contains(@class,'lfr-nav-deletable') and contains(@class,'lfr-nav-hover')]/span[@class='delete-tab']");
 				selenium.waitForConfirmation(
 					"Are you sure you want to delete this page?");
 				selenium.waitForElementNotPresent(
-					"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']");
+					"//li[contains(@class,'lfr-nav-deletable') and contains(@class,'lfr-nav-hover')]/span[@class='delete-tab']");
 
 				boolean page3Present = selenium.isElementPresent(
 						"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/a/span");
@@ -93,16 +87,13 @@ public class TearDownPageTest extends BaseTestCase {
 				selenium.mouseOver(
 					"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/a/span");
 				selenium.waitForVisible(
-					"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']");
-				assertEquals(RuntimeVariables.replace("X"),
-					selenium.getText(
-						"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']"));
+					"//li[contains(@class,'lfr-nav-deletable') and contains(@class,'lfr-nav-hover')]/span[@class='delete-tab']");
 				selenium.click(
-					"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']");
+					"//li[contains(@class,'lfr-nav-deletable') and contains(@class,'lfr-nav-hover')]/span[@class='delete-tab']");
 				selenium.waitForConfirmation(
 					"Are you sure you want to delete this page?");
 				selenium.waitForElementNotPresent(
-					"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']");
+					"//li[contains(@class,'lfr-nav-deletable') and contains(@class,'lfr-nav-hover')]/span[@class='delete-tab']");
 
 				boolean page4Present = selenium.isElementPresent(
 						"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/a/span");
@@ -116,16 +107,13 @@ public class TearDownPageTest extends BaseTestCase {
 				selenium.mouseOver(
 					"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/a/span");
 				selenium.waitForVisible(
-					"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']");
-				assertEquals(RuntimeVariables.replace("X"),
-					selenium.getText(
-						"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']"));
+					"//li[contains(@class,'lfr-nav-deletable') and contains(@class,'lfr-nav-hover')]/span[@class='delete-tab']");
 				selenium.click(
-					"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']");
+					"//li[contains(@class,'lfr-nav-deletable') and contains(@class,'lfr-nav-hover')]/span[@class='delete-tab']");
 				selenium.waitForConfirmation(
 					"Are you sure you want to delete this page?");
 				selenium.waitForElementNotPresent(
-					"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']");
+					"//li[contains(@class,'lfr-nav-deletable') and contains(@class,'lfr-nav-hover')]/span[@class='delete-tab']");
 
 				boolean page5Present = selenium.isElementPresent(
 						"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/a/span");
@@ -139,16 +127,13 @@ public class TearDownPageTest extends BaseTestCase {
 				selenium.mouseOver(
 					"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/a/span");
 				selenium.waitForVisible(
-					"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']");
-				assertEquals(RuntimeVariables.replace("X"),
-					selenium.getText(
-						"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']"));
+					"//li[contains(@class,'lfr-nav-deletable') and contains(@class,'lfr-nav-hover')]/span[@class='delete-tab']");
 				selenium.click(
-					"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']");
+					"//li[contains(@class,'lfr-nav-deletable') and contains(@class,'lfr-nav-hover')]/span[@class='delete-tab']");
 				selenium.waitForConfirmation(
 					"Are you sure you want to delete this page?");
 				selenium.waitForElementNotPresent(
-					"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']");
+					"//li[contains(@class,'lfr-nav-deletable') and contains(@class,'lfr-nav-hover')]/span[@class='delete-tab']");
 
 			case 2:
 			case 3:

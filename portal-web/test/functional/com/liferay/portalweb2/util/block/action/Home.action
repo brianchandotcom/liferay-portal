@@ -9,10 +9,10 @@
 		<case locator-key1="PAGE_1_CHILD_PAGE_3">
 			<execute function="Click#textClickAtAndWait" />
 		</case>
-		<case comparator="startsWith" locator-key1="PAGE_DELETE">
-			<execute function="Click#textClick" value1="X" />
+		<case locator-key1="PAGE_DELETE">
+			<execute function="Click#click" />
 		</case>
-		<case comparator="startsWith" locator1="link=">
+		<case comparator="startsWith" locator1="//li[contains(@class,'lfr-nav-updateable')]/a[.='">
 			<execute function="Click#clickAtAndWait" />
 		</case>
 		<case comparator="startsWith" locator1="//a[@role='menuitem' and contains(.,">

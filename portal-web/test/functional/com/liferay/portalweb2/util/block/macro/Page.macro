@@ -121,12 +121,12 @@
 			</else>
 		</if>
 
-		<execute action="Dockbar#mouseOver" locator-key1="ADD" />
+		<execute action="Dockbar#click" locator-key1="ADD" />
 		<execute action="Dockbar#click" locator-key1="ADD_PAGE" />
 
 		<execute action="Home#type" locator-key1="NEW_PAGE_FIELD" value1="${pageName}" />
-		<execute action="Home#click" locator-key1="NEW_PAGE_SAVE" />
-		<execute action="Home#click" locator1="link=${pageName}" />
+		<execute action="Home#click" locator-key1="NEW_PAGE_SAVE_BUTTON" />
+		<execute action="Home#click" locator1="//li[contains(@class,'lfr-nav-updateable')]/a[.='${pageName}']" />
 	</command>
 
 	<command name="pgAddOrganization">
@@ -157,9 +157,9 @@
 			<condition action="Home#isElementPresent" locator-key1="PAGE_2" />
 			<then>
 				<execute action="Home#mouseOver" locator-key1="PAGE_2" />
-				<execute action="Home#click" locator-key1="PAGE_DELETE_2" />
+				<execute action="Home#click" locator-key1="PAGE_DELETE" />
 				<execute action="Home#confirm" locator-key1="PAGE_CONFIRM" value1="Are you sure you want to delete this page?" />
-				<execute action="Home#assertElementNotPresent" locator-key1="PAGE_DELETE_2" />
+				<execute action="Home#assertElementNotPresent" locator-key1="PAGE_DELETE" />
 			</then>
 		</while>
 	</command>

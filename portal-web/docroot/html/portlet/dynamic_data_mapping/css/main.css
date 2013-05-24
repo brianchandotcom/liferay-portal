@@ -140,11 +140,13 @@
 
 				.palette-item-content {
 					list-style: none;
-					margin: 0 1.5em;
-
+					
 					.palette-item-container {
 						cursor: pointer;
 						line-height: 1.8em;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						white-space: nowrap;
 					}
 				}
 			}

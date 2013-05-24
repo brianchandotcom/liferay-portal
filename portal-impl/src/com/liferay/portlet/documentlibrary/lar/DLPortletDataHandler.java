@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
+import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
@@ -67,8 +68,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		setDataLocalized(true);
 		setDataPortletPreferences("rootFolderId");
 		setExportControls(
-			new PortletDataHandlerBoolean(
-				NAMESPACE, "folders-and-documents", true, true),
+			new PortletDataHandlerBoolean(NAMESPACE, "documents"),
 			new PortletDataHandlerBoolean(NAMESPACE, "shortcuts"),
 			new PortletDataHandlerBoolean(NAMESPACE, "previews-and-thumbnails"),
 			new PortletDataHandlerBoolean(NAMESPACE, "ranks"));
@@ -123,29 +123,29 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 				"root-folder-id", String.valueOf(rootFolderId));
 		}
 
-		ActionableDynamicQuery fileEntryTypeActionableDynamicQuery =
-			getDLFileEntryTypeActionableDynamicQuery(portletDataContext);
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "documents")) {
+			ActionableDynamicQuery fileEntryTypeActionableDynamicQuery =
+				getDLFileEntryTypeActionableDynamicQuery(portletDataContext);
 
-		fileEntryTypeActionableDynamicQuery.performActions();
+			fileEntryTypeActionableDynamicQuery.performActions();
 
-		ActionableDynamicQuery folderActionableDynamicQuery =
-			getFolderActionableDynamicQuery(portletDataContext);
+			ActionableDynamicQuery folderActionableDynamicQuery =
+				getFolderActionableDynamicQuery(portletDataContext);
 
-		folderActionableDynamicQuery.performActions();
+			folderActionableDynamicQuery.performActions();
 
-		ActionableDynamicQuery fileEntryActionableDynamicQuery =
-			getFileEntryActionableDynamicQuery(portletDataContext);
+			ActionableDynamicQuery fileEntryActionableDynamicQuery =
+				getFileEntryActionableDynamicQuery(portletDataContext);
 
-		fileEntryActionableDynamicQuery.performActions();
-
-		if (!portletDataContext.getBooleanParameter(NAMESPACE, "shortcuts")) {
-			return getExportDataRootElementString(rootElement);
+			fileEntryActionableDynamicQuery.performActions();
 		}
 
-		ActionableDynamicQuery fileShortcutActionableDynamicQuery =
-			getDLFileShortcutActionableDynamicQuery(portletDataContext);
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "shortcuts")) {
+			ActionableDynamicQuery fileShortcutActionableDynamicQuery =
+				getDLFileShortcutActionableDynamicQuery(portletDataContext);
 
-		fileShortcutActionableDynamicQuery.performActions();
+			fileShortcutActionableDynamicQuery.performActions();
+		}
 
 		return getExportDataRootElementString(rootElement);
 	}
@@ -170,24 +170,26 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 				portletDataContext, fileEntryTypeElement);
 		}
 
-		Element foldersElement = portletDataContext.getImportDataGroupElement(
-			Folder.class);
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "documents")) {
+			Element foldersElement =
+				portletDataContext.getImportDataGroupElement(Folder.class);
 
-		List<Element> folderElements = foldersElement.elements();
+			List<Element> folderElements = foldersElement.elements();
 
-		for (Element folderElement : folderElements) {
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, folderElement);
-		}
+			for (Element folderElement : folderElements) {
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, folderElement);
+			}
 
-		Element fileEntriesElement =
-			portletDataContext.getImportDataGroupElement(FileEntry.class);
+			Element fileEntriesElement =
+				portletDataContext.getImportDataGroupElement(FileEntry.class);
 
-		List<Element> fileEntryElements = fileEntriesElement.elements();
+			List<Element> fileEntryElements = fileEntriesElement.elements();
 
-		for (Element fileEntryElement : fileEntryElements) {
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, fileEntryElement);
+			for (Element fileEntryElement : fileEntryElements) {
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, fileEntryElement);
+			}
 		}
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "shortcuts")) {
@@ -222,6 +224,15 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 			rootElement.attributeValue("root-folder-id"));
 
 		if (rootFolderId > 0) {
+			String rootFolderPath = ExportImportPathUtil.getModelPath(
+				portletDataContext, Folder.class.getName(), rootFolderId);
+
+			Folder folder = (Folder)portletDataContext.getZipEntryAsObject(
+				rootFolderPath);
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, folder);
+
 			Map<Long, Long> folderIds =
 				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 					Folder.class);

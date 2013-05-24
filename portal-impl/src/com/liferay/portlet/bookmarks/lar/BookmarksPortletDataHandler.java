@@ -89,28 +89,28 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
+		Element rootElement = addExportDataRootElement(portletDataContext);
+
+		if (!portletDataContext.getBooleanParameter(NAMESPACE, "entries")) {
+			return getExportDataRootElementString(rootElement);
+		}
+
 		portletDataContext.addPermissions(
 			BookmarksPermission.RESOURCE_NAME,
 			portletDataContext.getScopeGroupId());
 
-		Element rootElement = addExportDataRootElement(portletDataContext);
-
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
-		if (portletDataContext.getBooleanParameter(NAMESPACE, "entries")) {
-			ActionableDynamicQuery folderActionableDynamicQuery =
-				new BookmarksFolderExportActionableDynamicQuery(
-					portletDataContext);
+		ActionableDynamicQuery folderActionableDynamicQuery =
+			new BookmarksFolderExportActionableDynamicQuery(portletDataContext);
 
-			folderActionableDynamicQuery.performActions();
+		folderActionableDynamicQuery.performActions();
 
-			ActionableDynamicQuery entryActionableDynamicQuery =
-				new BookmarksEntryExportActionableDynamicQuery(
-					portletDataContext);
+		ActionableDynamicQuery entryActionableDynamicQuery =
+			new BookmarksEntryExportActionableDynamicQuery(portletDataContext);
 
-			entryActionableDynamicQuery.performActions();
-		}
+		entryActionableDynamicQuery.performActions();
 
 		return getExportDataRootElementString(rootElement);
 	}
@@ -121,14 +121,14 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences, String data)
 		throws Exception {
 
+		if (!portletDataContext.getBooleanParameter(NAMESPACE, "entries")) {
+			return null;
+		}
+
 		portletDataContext.importPermissions(
 			BookmarksPermission.RESOURCE_NAME,
 			portletDataContext.getSourceGroupId(),
 			portletDataContext.getScopeGroupId());
-
-		if (!portletDataContext.getBooleanParameter(NAMESPACE, "entries")) {
-			return null;
-		}
 
 		Element foldersElement = portletDataContext.getImportDataGroupElement(
 			BookmarksFolder.class);

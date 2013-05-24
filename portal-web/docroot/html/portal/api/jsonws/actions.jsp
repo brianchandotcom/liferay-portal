@@ -27,12 +27,14 @@ Set<String> contextPaths = JSONWebServiceActionsManagerUtil.getContextPaths();
 
 		<%
 		for (String curContextPath : contextPaths) {
+			String curContextPathView = curContextPath;
+
 			if (Validator.isNull(curContextPath)) {
-				curContextPath = StringPool.SLASH;
+				curContextPathView = StringPool.SLASH;
 			}
 		%>
 
-			<aui:option label="<%= curContextPath %>" selected="<%= contextPath.equals(curContextPath) %>" value="<%= curContextPath %>" />
+			<aui:option label="<%= curContextPathView %>" selected="<%= contextPath.equals(curContextPath) %>" value="<%= curContextPath %>" />
 
 		<%
 		}

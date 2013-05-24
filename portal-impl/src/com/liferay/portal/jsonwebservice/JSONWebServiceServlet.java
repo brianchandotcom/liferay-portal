@@ -22,9 +22,7 @@ import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.ac.AccessControlThreadLocal;
 import com.liferay.portal.servlet.JSONServlet;
 import com.liferay.portal.struts.JSONAction;
@@ -33,10 +31,6 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
-import java.net.URL;
 
 import java.util.Locale;
 
@@ -116,46 +110,14 @@ public class JSONWebServiceServlet extends JSONServlet {
 				requestDispatcher.forward(request, response);
 			}
 			else {
-				String requestURI = request.getRequestURI();
-				String requestURL = String.valueOf(request.getRequestURL());
-
-				String serverURL = requestURL.substring(
-					0, requestURL.length() - requestURI.length());
-
-				String queryString = request.getQueryString();
-
-				if (Validator.isNull(queryString)) {
-					queryString = StringPool.BLANK;
-				}
-				else {
-					queryString += StringPool.AMPERSAND;
-				}
-
 				String servletContextPath = ContextPathUtil.getContextPath(
 					servletContext);
 
-				queryString +=
-					"contextPath=" + HttpUtil.encodeURL(servletContextPath);
+				String redirectPath =
+					"/api/jsonws?contextPath=" +
+						HttpUtil.encodeURL(servletContextPath);
 
-				apiPath =
-					serverURL + apiPath + StringPool.QUESTION + queryString;
-
-				URL url = new URL(apiPath);
-
-				InputStream inputStream = null;
-
-				try {
-					inputStream = url.openStream();
-
-					OutputStream outputStream = response.getOutputStream();
-
-					StreamUtil.transfer(inputStream, outputStream);
-				}
-				finally {
-					StreamUtil.cleanUp(inputStream);
-
-					AccessControlThreadLocal.setRemoteAccess(remoteAccess);
-				}
+				response.sendRedirect(redirectPath);
 			}
 		}
 		finally {

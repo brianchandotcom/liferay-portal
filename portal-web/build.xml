@@ -101,13 +101,13 @@
 						<basename property="dir.name" file="@{dir}" />
 						<if>
 							<and>
-								<available file="docroot/html/js/aui/${dir.name}/assets/skins/sam/${dir.name}.css" />
+								<available file="${alloy.build.dir}/${dir.name}/assets/skins/sam/${dir.name}.css" />
 								<matches pattern="-deprecated" string="${dir.name}" />
 							</and>
 							<then>
 								<concat append="true" destfile="${alloy.temp.dir}/aui_deprecated.css">
 									<filelist
-										dir="docroot/html/js/aui/${dir.name}/assets/skins/sam"
+										dir="${alloy.build.dir}/${dir.name}/assets/skins/sam"
 										files="${dir.name}.css"
 									/>
 								</concat>

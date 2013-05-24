@@ -121,14 +121,6 @@ templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(classNa
 	var ACPlugin = A.Plugin.AceAutoComplete;
 	var AObject = A.Object;
 	var Util = Liferay.Util;
-	
-	var STR_ALIGN_NODE = 'align.node';
-
-	var STR_BOUNDING_BOX = 'boundingBox';
-
-	var STR_CLICKOUTSIDE = 'clickoutside';
-
-	var STR_DATA_TITLE = 'data-title';
 
 	var STR_EMPTY = '';
 
@@ -396,7 +388,7 @@ templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(classNa
 						header: '.palette-item-header'
 					}
 				);
-				
+
 				var tooltip = new A.Popover(
 					{
 						align: {
@@ -409,16 +401,16 @@ templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(classNa
 					}
 				).render(paletteContainer);
 
-				tooltip.get(STR_BOUNDING_BOX).on(STR_CLICKOUTSIDE, tooltip.hide, tooltip);
+				tooltip.get('boundingBox').on('clickoutside', tooltip.hide, tooltip);
 
 				paletteContainer.delegate(
 					'mouseenter',
 					function(event) {
 						var node = event.currentTarget;
 
-						tooltip.set(STR_ALIGN_NODE, node);
+						tooltip.set('align.node', node);
 
-						tooltip.setStdModContent(A.WidgetStdMod.BODY, node.attr(STR_DATA_TITLE));
+						tooltip.setStdModContent(A.WidgetStdMod.BODY, node.attr('data-title'));
 
 						tooltip.show();
 					},

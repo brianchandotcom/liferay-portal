@@ -56,18 +56,18 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 
 	public WikiPortletDataHandler() {
 		setExportControls(
-			new PortletDataHandlerBoolean(
-				NAMESPACE, "wikis-and-pages", true, true));
+			new PortletDataHandlerBoolean(NAMESPACE, "wiki-pages"),
+			new PortletDataHandlerBoolean(NAMESPACE, "embedded-assets"));
 		setExportMetadataControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "wiki-pages", true,
 				new PortletDataHandlerControl[] {
-					new PortletDataHandlerBoolean(NAMESPACE, "attachments"),
 					new PortletDataHandlerBoolean(NAMESPACE, "categories"),
 					new PortletDataHandlerBoolean(NAMESPACE, "comments"),
 					new PortletDataHandlerBoolean(NAMESPACE, "ratings"),
 					new PortletDataHandlerBoolean(NAMESPACE, "tags")
 				}));
+		setImportControls(getExportControls());
 	}
 
 	@Override
@@ -111,10 +111,14 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
+		Element rootElement = addExportDataRootElement(portletDataContext);
+
+		if (!portletDataContext.getBooleanParameter(NAMESPACE, "wiki-pages")) {
+			return getExportDataRootElementString(rootElement);
+		}
+
 		portletDataContext.addPermissions(
 			WikiPermission.RESOURCE_NAME, portletDataContext.getScopeGroupId());
-
-		Element rootElement = addExportDataRootElement(portletDataContext);
 
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
@@ -137,6 +141,10 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences, String data)
 		throws Exception {
+
+		if (!portletDataContext.getBooleanParameter(NAMESPACE, "wiki-pages")) {
+			return null;
+		}
 
 		portletDataContext.importPermissions(
 			WikiPermission.RESOURCE_NAME, portletDataContext.getSourceGroupId(),
@@ -170,7 +178,7 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 			WikiCacheUtil.clearCache(nodeId);
 		}
 
-		return portletPreferences;
+		return null;
 	}
 
 	@Override

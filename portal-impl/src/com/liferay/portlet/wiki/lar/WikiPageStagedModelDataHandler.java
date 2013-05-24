@@ -60,14 +60,13 @@ public class WikiPageStagedModelDataHandler
 			portletDataContext, page.getNode());
 
 		String content = ExportImportUtil.replaceExportContentReferences(
-			portletDataContext, page, pageElement, page.getContent(), true);
+			portletDataContext, page, pageElement, page.getContent(),
+			portletDataContext.getBooleanParameter(
+				WikiPortletDataHandler.NAMESPACE, "embedded-assets"));
 
 		page.setContent(content);
 
-		if (page.isHead() &&
-			portletDataContext.getBooleanParameter(
-				WikiPortletDataHandler.NAMESPACE, "attachments")) {
-
+		if (page.isHead()) {
 			for (FileEntry fileEntry : page.getAttachmentsFileEntries()) {
 				StagedModelDataHandlerUtil.exportStagedModel(
 					portletDataContext, fileEntry);
@@ -108,7 +107,9 @@ public class WikiPageStagedModelDataHandler
 			portletDataContext.getImportDataStagedModelElement(page);
 
 		String content = ExportImportUtil.replaceImportContentReferences(
-			portletDataContext, pageElement, page.getContent(), true);
+			portletDataContext, pageElement, page.getContent(),
+			portletDataContext.getBooleanParameter(
+				WikiPortletDataHandler.NAMESPACE, "embedded-assets"));
 
 		page.setContent(content);
 
@@ -152,10 +153,7 @@ public class WikiPageStagedModelDataHandler
 				page.getParentTitle(), page.getRedirectTitle(), serviceContext);
 		}
 
-		if (page.isHead() &&
-			portletDataContext.getBooleanParameter(
-				WikiPortletDataHandler.NAMESPACE, "attachments")) {
-
+		if (page.isHead()) {
 			List<Element> attachmentElements =
 				portletDataContext.getReferenceDataElements(
 					pageElement, FileEntry.class,

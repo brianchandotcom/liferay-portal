@@ -218,13 +218,17 @@ AUI.add(
 						var instance = this;
 
 						if (!event.domEvent) {
+							var languageId = event.value;
+
 							var inputPlaceholder = instance.get('inputPlaceholder');
 
-							var inputLanguage = instance._getInputLanguage(event.value);
+							var inputLanguage = instance._getInputLanguage(languageId);
 
 							var defaultInputLanguage = instance._getInputLanguage(defaultLanguageId);
 
 							inputPlaceholder.val(inputLanguage.val());
+
+							inputPlaceholder.attr('dir', Liferay.Language.direction[languageId]);
 
 							inputPlaceholder.attr('placeholder', defaultInputLanguage.val());
 

@@ -37,18 +37,22 @@ AUI.add(
 	function(A) {
 		var available = {};
 
+		var direction = {};
+
 		<%
 		for (Locale curLocale : locales) {
 			String selLanguageId = LocaleUtil.toLanguageId(curLocale);
 		%>
 
 			available['<%= selLanguageId %>'] = '<%= curLocale.getDisplayName(locale) %>';
+			direction['<%= selLanguageId %>'] = '<%= LanguageUtil.get(curLocale, "lang.dir") %>';
 
 		<%
 		}
 		%>
 
 		Liferay.Language.available = available;
+		Liferay.Language.direction = direction;
 	},
 	'',
 	{

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -710,6 +711,8 @@ public class DDMXSDImpl implements DDMXSD {
 		freeMarkerContext.put("parentFieldStructure", parentFieldContext);
 		freeMarkerContext.put("portletNamespace", portletNamespace);
 		freeMarkerContext.put("requestedLocale", locale);
+		freeMarkerContext.put(
+			"requestedLocaleLangDir", LanguageUtil.get(locale, "lang.dir"));
 
 		return freeMarkerContext;
 	}

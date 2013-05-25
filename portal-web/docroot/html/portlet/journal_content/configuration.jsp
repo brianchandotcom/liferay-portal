@@ -23,6 +23,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 JournalArticle article = null;
 
+groupId = ParamUtil.getLong(request, "groupId", themeDisplay.getScopeGroupId());
 String type = ParamUtil.getString(request, "type");
 
 try {

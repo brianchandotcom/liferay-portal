@@ -44,10 +44,15 @@
 	<bean id="com.liferay.portal.kernel.cache.MultiVMPoolUtil" class="com.liferay.portal.kernel.cache.MultiVMPoolUtil">
 		<property name="multiVMPool" ref="com.liferay.portal.kernel.cache.MultiVMPool" />
 	</bean>
-	<bean id="com.liferay.portal.kernel.cache.MultiVMPortalCacheManager" class="com.liferay.portal.cache.ehcache.EhcachePortalCacheManager">
-		<property name="clusterAware" value="true" />
-		<property name="configPropertyKey" value="ehcache.multi.vm.config.location" />
-		<property name="MBeanServer" ref="registryAwareMBeanServer" />
+	<bean id="com.liferay.portal.kernel.cache.MultiVMPortalCacheManager" class="com.liferay.portal.resiliency.spi.cache.SPIPortalCacheManagerConfigurator" factory-method="createSPIPortalCacheManager">
+		<constructor-arg name="portalCacheManager">
+			<bean class="com.liferay.portal.cache.ehcache.EhcachePortalCacheManager">
+				<property name="clusterAware" value="true" />
+				<property name="configPropertyKey" value="ehcache.multi.vm.config.location" />
+				<property name="MBeanServer" ref="registryAwareMBeanServer" />
+				<property name="mpiOnly" value="true" />
+			</bean>
+		</constructor-arg>
 	</bean>
 	<!--<bean id="com.liferay.kernel.portal.cache.MultiVMPortalCacheManager" class="com.liferay.portal.cache.memory.MemoryPortalCacheManager" />-->
 	<bean id="com.liferay.portal.kernel.cache.SingleVMPool" class="com.liferay.portal.cache.SingleVMPoolImpl">

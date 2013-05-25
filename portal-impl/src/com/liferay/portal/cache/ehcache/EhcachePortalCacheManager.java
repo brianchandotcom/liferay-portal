@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsUtil;
@@ -57,6 +58,10 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	implements PortalCacheManager<K, V> {
 
 	public void afterPropertiesSet() {
+		if ((_cacheManager != null) || (_mpiOnly && SPIUtil.isSPI())) {
+			return;
+		}
+
 		String configurationPath = PropsUtil.get(_configPropertyKey);
 
 		if (Validator.isNull(configurationPath)) {
@@ -189,6 +194,10 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		_mBeanServer = mBeanServer;
 	}
 
+	public void setMpiOnly(boolean mpiOnly) {
+		_mpiOnly = mpiOnly;
+	}
+
 	public void setRegisterCacheConfigurations(
 		boolean registerCacheConfigurations) {
 
@@ -266,6 +275,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		new HashMap<String, EhcachePortalCache<K, V>>();
 	private ManagementService _managementService;
 	private MBeanServer _mBeanServer;
+	private boolean _mpiOnly = false;
 	private boolean _registerCacheConfigurations = true;
 	private boolean _registerCacheManager = true;
 	private boolean _registerCaches = true;

@@ -48,11 +48,6 @@ AUI.add(
 						'</a>' +
 					'</td>',
 
-					TOOLTIP_TEMPLATE: '<div class="tooltip top">' +
-						'<div class="tooltip-arrow"></div>' +
-						'<div class="tooltip-inner"></div>' +
-					'</div>',
-
 					initializer: function() {
 						var instance = this;
 
@@ -62,9 +57,7 @@ AUI.add(
 
 						instance.on(
 							{
-								enter: instance._onMouseEnterFlag,
 								focusedChange: instance._onFocusedChange,
-								leave: instance._onMouseLeaveFlag,
 								select: instance._onSelectFlag
 							}
 						);
@@ -87,38 +80,12 @@ AUI.add(
 						instance._flags.hide();
 					},
 
-					hideTooltip: function() {
-						var instance = this;
-
-						var tooltip = instance._getTooltip();
-
-						tooltip.setStyle('opacity', 0);
-					},
-
 					showFlags: function() {
 						var instance = this;
 
+						instance._initializeTooltip();
+
 						instance._flags.show();
-					},
-
-					showTooltip: function(alignNode, content) {
-						var instance = this;
-
-						var tooltip = instance._getTooltip();
-
-						tooltip.one('.tooltip-inner').html(content);
-
-						var nodeRegion = alignNode.get('region');
-						var tooltipRegion = tooltip.get('region');
-
-						tooltip.setStyle('opacity', 0.7);
-
-						tooltip.setXY(
-							[
-								nodeRegion.left + nodeRegion.width/2 - tooltipRegion.width/2,
-								nodeRegion.top - tooltipRegion.height
-							]
-						);
 					},
 
 					_afterRenderUI: function() {
@@ -198,13 +165,27 @@ AUI.add(
 						return inputLanguage;
 					},
 
-					_getTooltip: function() {
+					_initializeTooltip: function() {
 						var instance = this;
+
+						var boundingBox = instance.get('boundingBox');
 
 						var tooltip = instance._tooltip;
 
 						if (!tooltip) {
-							tooltip = instance._tooltip = A.Node.create(instance.TOOLTIP_TEMPLATE).appendTo(A.getBody());
+							tooltip = instance._tooltip = new A.TooltipDelegate(
+								{
+									container: boundingBox,
+									formatter: function(title) {
+										var flagNode = this.get('trigger');
+										var value = flagNode.getData('value');
+
+										return availableLanguages[value];
+									},
+									trigger: '.palette-item',
+									visible: false
+								}
+							);
 						}
 
 						return tooltip;
@@ -231,18 +212,6 @@ AUI.add(
 						instance.showFlags();
 
 						inputLanguage.val(event.currentTarget.val());
-					},
-
-					_onMouseEnterFlag: function(event) {
-						var instance = this;
-
-						instance.showTooltip(event.item, availableLanguages[event.value]);
-					},
-
-					_onMouseLeaveFlag: function(event) {
-						var instance = this;
-
-						instance.hideTooltip();
 					},
 
 					_onSelectFlag: function(event) {
@@ -306,6 +275,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-component', 'aui-event-input', 'aui-palette', 'portal-available-languages']
+		requires: ['aui-base', 'aui-component', 'aui-event-input', 'aui-palette', 'aui-tooltip', 'portal-available-languages']
 	}
 );

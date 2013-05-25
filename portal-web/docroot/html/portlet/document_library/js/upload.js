@@ -544,12 +544,8 @@ AUI.add(
 				if (!tooltip) {
 					tooltip = new A.Tooltip(
 						{
-							align: {
-								points: ['bc', 'tc']
-							},
 							constrain: true,
 							cssClass: 'portlet-document-library-entry-error',
-							showArrow: false,
 							trigger: errorNode
 						}
 					).render();
@@ -1280,6 +1276,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-data-set-deprecated', 'aui-overlay-manager-deprecated', 'aui-overlay-mask-deprecated', 'aui-progressbar', 'aui-template-deprecated', 'aui-tooltip-deprecated', 'liferay-app-view-folders', 'liferay-app-view-move', 'liferay-app-view-paginator', 'liferay-app-view-select', 'liferay-search-container', 'uploader']
+		requires: ['aui-data-set-deprecated', 'aui-overlay-manager-deprecated', 'aui-overlay-mask-deprecated', 'aui-progressbar', 'aui-template-deprecated', 'aui-tooltip', 'liferay-app-view-folders', 'liferay-app-view-move', 'liferay-app-view-paginator', 'liferay-app-view-select', 'liferay-search-container', 'uploader']
 	}
 );

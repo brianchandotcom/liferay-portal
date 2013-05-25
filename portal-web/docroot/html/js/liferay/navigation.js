@@ -473,6 +473,7 @@ AUI.add(
 								}
 							}
 						},
+						position: 'bottom',
 						zIndex: 200
 					}
 				);

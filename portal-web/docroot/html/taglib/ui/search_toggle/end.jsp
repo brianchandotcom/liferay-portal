@@ -47,6 +47,7 @@
 					},
 					bodyContent: A.one('#<%= id %>advancedBodyNode'),
 					boundingBox: advancedNode,
+					position: 'bottom',
 					srcNode: '#<%= id %>advancedContent',
 					visible: false,
 					width: <%= width %>,

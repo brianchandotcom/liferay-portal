@@ -16,6 +16,7 @@ package com.liferay.portalweb.socialofficesite.recentblogs.blogsentry;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.socialofficesite.recentblogs.blogsentry.configurerbselectionmethodusers.ConfigureRBSelectionMethodUsersTests;
+import com.liferay.portalweb.socialofficesite.recentblogs.blogsentry.sousviewblogsentryguestnoviewrbsite.SOUs_ViewBlogsEntryGuestNoViewRBSiteTests;
 import com.liferay.portalweb.socialofficesite.recentblogs.blogsentry.viewblogsentrymultiplerbsite.ViewBlogsEntryMultipleRBSiteTests;
 import com.liferay.portalweb.socialofficesite.recentblogs.blogsentry.viewblogsentryrbsite.ViewBlogsEntryRBSiteTests;
 import com.liferay.portalweb.socialofficesite.recentblogs.blogsentry.viewdeleteblogsentryrbsite.ViewDeleteBlogsEntryRBSiteTests;
@@ -33,6 +34,7 @@ public class BlogsEntryTestPlan extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(ConfigureRBSelectionMethodUsersTests.suite());
+		testSuite.addTest(SOUs_ViewBlogsEntryGuestNoViewRBSiteTests.suite());
 		testSuite.addTest(ViewBlogsEntryMultipleRBSiteTests.suite());
 		testSuite.addTest(ViewBlogsEntryRBSiteTests.suite());
 		testSuite.addTest(ViewDeleteBlogsEntryRBSiteTests.suite());

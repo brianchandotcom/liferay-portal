@@ -243,4 +243,8 @@
 			</util:map>
 		</property>
 	</bean>
+
+	<bean id="com.liferay.portal.resiliency.spi.search.SPISearchEngineConfigurator" class="com.liferay.portal.resiliency.spi.search.SPISearchEngineConfigurator">
+		<property name="messageBus" ref="com.liferay.portal.kernel.messaging.MessageBus" />
+	</bean>
 </beans>

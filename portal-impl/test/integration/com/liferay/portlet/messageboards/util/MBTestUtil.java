@@ -180,10 +180,21 @@ public class MBTestUtil {
 			long groupId, long categoryId, boolean approved)
 		throws Exception {
 
+		return addMessageWithWorkflowAndAttachments(
+			groupId, categoryId, approved, null);
+	}
+
+	public static MBMessage addMessageWithWorkflowAndAttachments(
+			long groupId, long categoryId, boolean approved,
+			List<ObjectValuePair<String, InputStream>> inputStreamOVPs)
+		throws Exception {
+
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			groupId);
 
-		return addMessage(groupId, categoryId, true, approved, serviceContext);
+		return addMessage(
+			groupId, categoryId, true, approved, inputStreamOVPs,
+			serviceContext);
 	}
 
 	public static MBThreadFlag addThreadFlag(long groupId, MBThread thread)
@@ -226,7 +237,9 @@ public class MBTestUtil {
 
 	protected static MBMessage addMessage(
 			long groupId, long categoryId, boolean workflowEnabled,
-			boolean approved, ServiceContext serviceContext)
+			boolean approved,
+			List<ObjectValuePair<String, InputStream>> inputStreamOVPs,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		long userId = TestPropsValues.getUserId();
@@ -236,11 +249,13 @@ public class MBTestUtil {
 		String subject = ServiceTestUtil.randomString();
 		String body = ServiceTestUtil.randomString();
 		String format = MBMessageConstants.DEFAULT_FORMAT;
-		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
-			Collections.emptyList();
 		boolean anonymous = false;
 		double priority = 0.0;
 		boolean allowPingbacks = false;
+
+		if (inputStreamOVPs == null) {
+			inputStreamOVPs = Collections.emptyList();
+		}
 
 		if (workflowEnabled) {
 			serviceContext.setWorkflowAction(

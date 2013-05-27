@@ -195,6 +195,12 @@ public abstract class BaseStagedModelDataHandlerTestCase extends PowerMockito {
 		rootElement = SAXReaderUtil.createElement("root");
 
 		portletDataContext.setExportDataRootElement(rootElement);
+
+		missingReferencesElement = SAXReaderUtil.createElement(
+			"missing-references");
+
+		portletDataContext.setMissingReferencesElement(
+			missingReferencesElement);
 	}
 
 	protected void initImport() throws Exception {
@@ -301,6 +307,7 @@ public abstract class BaseStagedModelDataHandlerTestCase extends PowerMockito {
 	}
 
 	protected Group liveGroup;
+	protected Element missingReferencesElement;
 	protected PortletDataContext portletDataContext;
 	protected Element rootElement;
 	protected Group stagingGroup;

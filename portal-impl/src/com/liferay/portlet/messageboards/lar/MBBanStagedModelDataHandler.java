@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.persistence.UserUtil;
 import com.liferay.portlet.messageboards.model.MBBan;
 import com.liferay.portlet.messageboards.service.MBBanLocalServiceUtil;
@@ -47,6 +48,12 @@ public class MBBanStagedModelDataHandler
 		Element userBanElement = portletDataContext.getExportDataElement(ban);
 
 		ban.setBanUserUuid(ban.getBanUserUuid());
+
+		User bannedUser = UserLocalServiceUtil.getUser(ban.getUserId());
+
+		portletDataContext.addReferenceElement(
+			ban, userBanElement, bannedUser, User.class,
+			PortletDataContext.REFERENCE_TYPE_DEPENDENCY_DISPOSABLE, true);
 
 		portletDataContext.addClassedModel(
 			userBanElement, ExportImportPathUtil.getModelPath(ban), ban,

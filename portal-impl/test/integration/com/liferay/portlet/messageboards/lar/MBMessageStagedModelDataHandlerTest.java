@@ -15,6 +15,8 @@
 package com.liferay.portlet.messageboards.lar;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
@@ -26,6 +28,8 @@ import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.util.MBTestUtil;
+
+import java.io.InputStream;
 
 import java.util.HashMap;
 import java.util.List;
@@ -73,8 +77,13 @@ public class MBMessageStagedModelDataHandlerTest
 
 		MBCategory category = (MBCategory)dependentStagedModels.get(0);
 
-		return MBTestUtil.addMessageWithWorkflow(
-			group.getGroupId(), category.getCategoryId(), true);
+		List<ObjectValuePair<String, InputStream>> objectValuePairs =
+			MBTestUtil.getInputStreamOVPs(
+				"attachment.txt", getClass(), StringPool.BLANK);
+
+		return MBTestUtil.addMessageWithWorkflowAndAttachments(
+			group.getGroupId(), category.getCategoryId(), true,
+			objectValuePairs);
 	}
 
 	@Override
@@ -108,6 +117,22 @@ public class MBMessageStagedModelDataHandlerTest
 
 		MBCategoryLocalServiceUtil.getMBCategoryByUuidAndGroupId(
 			category.getUuid(), group.getGroupId());
+	}
+
+	@Override
+	protected void validateImport(
+			StagedModel stagedModel,
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		super.validateImport(stagedModel, dependentStagedModelsMap, group);
+
+		MBMessage importedMessage = (MBMessage)getStagedModel(
+			stagedModel.getUuid(), group);
+
+		Assert.assertEquals(
+			1, importedMessage.getAttachmentsFileEntriesCount());
 	}
 
 }

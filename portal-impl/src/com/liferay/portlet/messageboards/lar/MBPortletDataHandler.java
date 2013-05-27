@@ -54,17 +54,22 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 	public MBPortletDataHandler() {
 		setExportControls(
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "categories-and-messages", true, true),
-			new PortletDataHandlerBoolean(NAMESPACE, "thread-flags"),
-			new PortletDataHandlerBoolean(NAMESPACE, "user-bans"));
+				NAMESPACE, "messages", true, false, null,
+				MBMessage.class.getName()),
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "thread-flags", true, false, null,
+				MBThreadFlag.class.getName()),
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "user-bans", true, false, null,
+				MBBan.class.getName()));
 		setExportMetadataControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "message-board-messages", true,
 				new PortletDataHandlerControl[] {
-					new PortletDataHandlerBoolean(NAMESPACE, "attachments"),
 					new PortletDataHandlerBoolean(NAMESPACE, "ratings"),
 					new PortletDataHandlerBoolean(NAMESPACE, "tags")
 				}));
+		setImportControls(getExportControls());
 		setPublishToLiveByDefault(
 			PropsValues.MESSAGE_BOARDS_PUBLISH_TO_LIVE_BY_DEFAULT);
 	}
@@ -111,15 +116,17 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
-		ActionableDynamicQuery categoryActionableDynamicQuery =
-			new MBCategoryExportActionableDynamicQuery(portletDataContext);
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "messages")) {
+			ActionableDynamicQuery categoryActionableDynamicQuery =
+				new MBCategoryExportActionableDynamicQuery(portletDataContext);
 
-		categoryActionableDynamicQuery.performActions();
+			categoryActionableDynamicQuery.performActions();
 
-		ActionableDynamicQuery messageActionableDynamicQuery =
-			new MBMessageExportActionableDynamicQuery(portletDataContext);
+			ActionableDynamicQuery messageActionableDynamicQuery =
+				new MBMessageExportActionableDynamicQuery(portletDataContext);
 
-		messageActionableDynamicQuery.performActions();
+			messageActionableDynamicQuery.performActions();
+		}
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "thread-flags")) {
 			ActionableDynamicQuery threadFlagActionableDynamicQuery =
@@ -149,24 +156,26 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 			MBPermission.RESOURCE_NAME, portletDataContext.getSourceGroupId(),
 			portletDataContext.getScopeGroupId());
 
-		Element categoriesElement =
-			portletDataContext.getImportDataGroupElement(MBCategory.class);
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "messages")) {
+			Element categoriesElement =
+				portletDataContext.getImportDataGroupElement(MBCategory.class);
 
-		List<Element> categoryElements = categoriesElement.elements();
+			List<Element> categoryElements = categoriesElement.elements();
 
-		for (Element categoryElement : categoryElements) {
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, categoryElement);
-		}
+			for (Element categoryElement : categoryElements) {
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, categoryElement);
+			}
 
-		Element messagesElement = portletDataContext.getImportDataGroupElement(
-			MBMessage.class);
+			Element messagesElement =
+				portletDataContext.getImportDataGroupElement(MBMessage.class);
 
-		List<Element> messageElements = messagesElement.elements();
+			List<Element> messageElements = messagesElement.elements();
 
-		for (Element messageElement : messageElements) {
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, messageElement);
+			for (Element messageElement : messageElements) {
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, messageElement);
+			}
 		}
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "thread-flags")) {

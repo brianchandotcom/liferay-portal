@@ -54,6 +54,9 @@ public interface PortletDataContext extends Serializable {
 
 	public static final String REFERENCE_TYPE_DEPENDENCY = "dependency";
 
+	public static final String REFERENCE_TYPE_DEPENDENCY_DISPOSABLE =
+		"disposable_dependency";
+
 	public static final String REFERENCE_TYPE_EMBEDDED = "embedded";
 
 	public static final String REFERENCE_TYPE_PARENT = "parent";

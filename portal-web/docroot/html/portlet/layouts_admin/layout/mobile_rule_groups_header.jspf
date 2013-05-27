@@ -29,4 +29,4 @@ String redirect = portletURL.toString();
 
 <liferay-ui:error-marker key="errorSection" value="device" />
 
-<h3><liferay-ui:message key="selected-mobile-device-rule-groups" /></h3>
+<h3><liferay-ui:message key="mobile-device-rules" /></h3>

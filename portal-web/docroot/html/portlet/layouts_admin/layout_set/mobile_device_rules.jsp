@@ -14,4 +14,18 @@
  */
 --%>
 
-<%@ include file="/html/portlet/layouts_admin/layout_set/mobile_device_rules.jsp" %>
+<%@ include file="/html/portlet/layouts_admin/init.jsp" %>
+
+<%
+LayoutSet selLayoutSet = ((LayoutSet)request.getAttribute("edit_pages.jsp-selLayoutSet"));
+
+long groupId = selLayoutSet.getGroupId();
+String className = LayoutSet.class.getName();
+long classPK = selLayoutSet.getLayoutSetId();
+%>
+
+<%@ include file="/html/portlet/layouts_admin/layout/mobile_rule_groups_header.jspf" %>
+
+<%@ include file="/html/portlet/layouts_admin/layout/mobile_rule_groups_toolbar.jspf" %>
+
+<%@ include file="/html/portlet/layouts_admin/layout/mobile_rule_groups_rule_group_instances.jspf" %>

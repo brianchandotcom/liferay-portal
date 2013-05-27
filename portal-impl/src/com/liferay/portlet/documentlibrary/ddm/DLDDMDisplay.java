@@ -32,8 +32,8 @@ public class DLDDMDisplay extends BaseDDMDisplay {
 	public String getResourceName() {
 		return DLPermission.RESOURCE_NAME;
 	}
-   
-    @Override
+
+	@Override
 	public String getStorageType() {
 		return "xml";
 	}

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.util.BaseDDMDisplay;
@@ -95,7 +96,7 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 		return JournalPermission.RESOURCE_NAME;
 	}
 
-    @Override
+	@Override
 	public String getStorageType() {
 		return PropsValues.JOURNAL_ARTICLE_STORAGE_TYPE;
 	}
@@ -144,4 +145,3 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 		SetUtil.fromArray(new String[] {"mode"});
 
 }
-	public String getStorageType() {

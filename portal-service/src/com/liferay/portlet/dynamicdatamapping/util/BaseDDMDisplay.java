@@ -139,9 +139,9 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 		return getResourceName();
 	}
 
-    public String getStorageType() {
+	@Override
+	public String getStorageType() {
 		return StringPool.BLANK;
-
 	}
 
 	@Override
@@ -270,5 +270,4 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 	private static Set<String> _viewTemplateExcludedColumnNames =
 		SetUtil.fromArray(new String[] {"structure"});
 
-}	public String getAddStructureActionId() {
-		return ActionKeys.ADD_STRUCTURE;
+}

@@ -55,7 +55,7 @@ public interface DDMDisplay {
 
 	public String getResourceName(long classNameId);
 
-    public String getStorageType();
+	public String getStorageType();
 
 	public long[] getTemplateClassNameIds(long classNameId);
 

@@ -324,19 +324,18 @@ public class SocialActivityAchievementLocalServiceWrapper
 	}
 
 	@Override
-	public int getUserAchievementCount(long userId, long groupId,
-		java.lang.String name)
+	public int getUserAchievementsCount(long userId, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _socialActivityAchievementLocalService.getUserAchievementCount(userId,
-			groupId, name);
+		return _socialActivityAchievementLocalService.getUserAchievementsCount(userId,
+			groupId);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portlet.social.model.SocialActivityAchievement> getUserAchievements(
-		long userId, long groupId, java.lang.String name)
+		long userId, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _socialActivityAchievementLocalService.getUserAchievements(userId,
-			groupId, name);
+			groupId);
 	}
 
 	/**

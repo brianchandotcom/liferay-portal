@@ -305,16 +305,15 @@ public class SocialActivityAchievementLocalServiceUtil {
 		return getService().getGroupFirstAchievementsCount(groupId);
 	}
 
-	public static int getUserAchievementCount(long userId, long groupId,
-		java.lang.String name)
+	public static int getUserAchievementsCount(long userId, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getUserAchievementCount(userId, groupId, name);
+		return getService().getUserAchievementsCount(userId, groupId);
 	}
 
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivityAchievement> getUserAchievements(
-		long userId, long groupId, java.lang.String name)
+		long userId, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getUserAchievements(userId, groupId, name);
+		return getService().getUserAchievements(userId, groupId);
 	}
 
 	public static SocialActivityAchievementLocalService getService() {

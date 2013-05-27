@@ -122,19 +122,18 @@ public class SocialActivityAchievementLocalServiceImpl
 	}
 
 	@Override
-	public int getUserAchievementCount(long userId, long groupId, String name)
-		throws SystemException {
-
-		return socialActivityAchievementPersistence.countByG_U_N(
-			groupId, userId, name);
-	}
-
-	@Override
 	public List<SocialActivityAchievement> getUserAchievements(
-			long userId, long groupId, String name)
+			long userId, long groupId)
 		throws SystemException {
 
 		return socialActivityAchievementPersistence.findByG_U(groupId, userId);
+	}
+
+	@Override
+	public int getUserAchievementsCount(long userId, long groupId)
+		throws SystemException {
+
+		return socialActivityAchievementPersistence.countByG_U(groupId, userId);
 	}
 
 }

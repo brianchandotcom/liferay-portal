@@ -187,11 +187,11 @@ public class BaseSocialAchievement implements SocialAchievement {
 			return;
 		}
 
-		int count =
-			SocialActivityAchievementLocalServiceUtil.getUserAchievementCount(
+		SocialActivityAchievement achievement =
+			SocialActivityAchievementLocalServiceUtil.fetchUserAchievement(
 				activity.getUserId(), activity.getGroupId(), _name);
 
-		if (count > 0) {
+		if (achievement != null) {
 			return;
 		}
 

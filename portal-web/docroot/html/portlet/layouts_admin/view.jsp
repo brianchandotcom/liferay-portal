@@ -95,9 +95,9 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 	</c:otherwise>
 </c:choose>
 
-<c:if test="<%= !group.isLayoutPrototype() %>">
-	<div class="container-fluid">
-		<div class="lfr-app-column-view manage-view row-fluid">
+<div class="container-fluid">
+	<div class="lfr-app-column-view manage-view row-fluid">
+		<c:if test="<%= !group.isLayoutPrototype() %>">
 			<div class="span3">
 				<c:if test="<%= stagingGroup != null %>">
 
@@ -170,21 +170,22 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 					<liferay-util:param name="treeId" value="layoutsTree" />
 				</liferay-util:include>
 			</div>
-			<div class="span9">
-				<div id="<portlet:namespace />layoutsContainer">
-					<c:choose>
-						<c:when test="<%= selPlid > 0 %>">
-							<liferay-util:include page="/html/portlet/layouts_admin/edit_layout.jsp" />
-						</c:when>
-						<c:otherwise>
-							<liferay-util:include page="/html/portlet/layouts_admin/edit_layout_set.jsp" />
-						</c:otherwise>
-					</c:choose>
-				</div>
+		</c:if>
+
+		<div class='<%= !group.isLayoutPrototype() ? "span9" : "span12" %>'>
+			<div id="<portlet:namespace />layoutsContainer">
+				<c:choose>
+					<c:when test="<%= selPlid > 0 %>">
+						<liferay-util:include page="/html/portlet/layouts_admin/edit_layout.jsp" />
+					</c:when>
+					<c:otherwise>
+						<liferay-util:include page="/html/portlet/layouts_admin/edit_layout_set.jsp" />
+					</c:otherwise>
+				</c:choose>
 			</div>
 		</div>
 	</div>
-</c:if>
+</div>
 
 <c:if test="<%= !group.isLayoutPrototype() %>">
 	<aui:script use="aui-io-plugin-deprecated">

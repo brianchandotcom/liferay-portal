@@ -43,32 +43,6 @@
 	buffer.append("\">");
 	buffer.append(HtmlUtil.escape(name));
 	buffer.append("</a>");
-
-	if (Validator.isNotNull(expandoColumn.getDefaultData())) {
-		buffer.append("<br /><span class=\"default-value\">");
-		buffer.append(LanguageUtil.get(pageContext, "default-value"));
-		buffer.append("</span>: ");
-
-		if (type == ExpandoColumnConstants.DATE) {
-			Date defaultDate = new Date(GetterUtil.getLong(expandoColumn.getDefaultData()));
-
-			buffer.append(dateFormatDateTime.format(defaultDate));
-		}
-		else if (type == ExpandoColumnConstants.STRING_ARRAY) {
-			ExpandoValue expandoValue = new ExpandoValueImpl();
-
-			expandoValue.setColumnId(expandoColumn.getColumnId());
-			expandoValue.setData(expandoColumn.getDefaultData());
-
-			for (String stringValue : expandoValue.getStringArray()) {
-				buffer.append("<br />");
-				buffer.append(HtmlUtil.escape(stringValue));
-			}
-		}
-		else {
-			buffer.append(HtmlUtil.escape(expandoColumn.getDefaultData()));
-		}
-	}
 	%>
 
 </liferay-ui:search-container-column-text>

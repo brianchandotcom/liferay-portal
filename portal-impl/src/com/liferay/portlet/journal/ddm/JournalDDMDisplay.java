@@ -16,6 +16,7 @@ package com.liferay.portlet.journal.ddm;
 
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.util.BaseDDMDisplay;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -30,10 +32,40 @@ import com.liferay.portlet.journal.service.permission.JournalPermission;
 
 import java.util.Set;
 
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
+
 /**
  * @author Eduardo Garcia
  */
 public class JournalDDMDisplay extends BaseDDMDisplay {
+
+	@Override
+	public String getEditStructureDefaultValuesURL(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			DDMStructure structure, String redirectURL, String backURL)
+		throws Exception {
+
+		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
+			getControlPanelPlid(liferayPortletRequest), PortletKeys.JOURNAL,
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter("struts_action", "/journal/edit_article");
+		portletURL.setParameter("redirect", redirectURL);
+		portletURL.setParameter("backURL", backURL);
+		portletURL.setParameter(
+			"groupId", String.valueOf(structure.getGroupId()));
+		portletURL.setParameter(
+			"classNameId",
+			String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)));
+		portletURL.setParameter(
+			"classPK", String.valueOf(structure.getStructureId()));
+		portletURL.setParameter("structureId", structure.getStructureKey());
+		portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+		return portletURL.toString();
+	}
 
 	@Override
 	public String getEditTemplateBackURL(

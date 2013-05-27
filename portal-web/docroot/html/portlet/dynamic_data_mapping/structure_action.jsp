@@ -37,17 +37,11 @@ DDMStructure structure = (DDMStructure)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= refererPortletName.equals(PortletKeys.JOURNAL) && DDMStructurePermission.contains(permissionChecker, structure, ActionKeys.UPDATE) %>">
-		<liferay-portlet:renderURL portletName="<%= PortletKeys.JOURNAL %>" var="editStructureDefaultValuesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-			<portlet:param name="struts_action" value="/journal/edit_article" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="backURL" value="<%= currentURL %>" />
-			<portlet:param name="groupId" value="<%= String.valueOf(structure.getGroupId()) %>" />
-			<portlet:param name="classNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)) %>" />
-			<portlet:param name="classPK" value="<%= String.valueOf(structure.getStructureId()) %>" />
-			<portlet:param name="structureId" value="<%= structure.getStructureKey() %>" />
-		</liferay-portlet:renderURL>
+	<%
+	String editStructureDefaultValuesURL = ddmDisplay.getEditStructureDefaultValuesURL(liferayPortletRequest, liferayPortletResponse, structure, currentURL, currentURL);
+	%>
 
+	<c:if test="<%= Validator.isNotNull(editStructureDefaultValuesURL) && DDMStructurePermission.contains(permissionChecker, structure, ActionKeys.UPDATE) %>">
 		<liferay-ui:icon
 			image="edit"
 			message="edit-default-values"

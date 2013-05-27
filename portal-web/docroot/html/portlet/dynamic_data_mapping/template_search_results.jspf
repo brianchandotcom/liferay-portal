@@ -23,16 +23,11 @@ if (showGlobalScope) {
 	groupIds = PortalUtil.getSiteAndCompanyGroupIds(themeDisplay);
 }
 
-long[] classNameIds = null;
-long searchClassPK = 0;
+long[] classNameIds = ddmDisplay.getTemplateClassNameIds(classNameId);
+long searchClassPK = classPK;
 
-if (refererPortletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES) && (classNameId == 0)) {
-	classNameIds = TemplateHandlerRegistryUtil.getClassNameIds();
+if (classNameIds.length > 1) {
 	searchClassPK = -1;
-}
-else {
-	classNameIds = new long[] {classNameId};
-	searchClassPK = classPK;
 }
 
 if (searchTerms.isAdvancedSearch()) {

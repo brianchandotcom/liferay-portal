@@ -129,6 +129,23 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 	}
 
 	@Override
+	public long[] getTemplateClassNameIds(long classNameId) {
+		if (classNameId > 0) {
+			return new long[] {classNameId};
+		}
+
+		return TemplateHandlerRegistryUtil.getClassNameIds();
+	}
+
+	public long getTemplateHandlerClassNameId(DDMTemplate template) {
+		if (template != null) {
+			return template.getClassNameId();
+		}
+
+		return 0;
+	}
+
+	@Override
 	public Set<String> getTemplateLanguageTypes() {
 		return _templateLanguageTypes;
 	}

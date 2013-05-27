@@ -38,12 +38,14 @@ Group group = (Group)request.getAttribute(WebKeys.GROUP);
 
 <liferay-ui:success key="membershipReplySent" message="your-reply-will-be-sent-to-the-user-by-email" />
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	escapeXml="<%= false %>"
-	localizeTitle="<%= false %>"
-	title='<%= HtmlUtil.escape(group.getDescriptiveName(locale)) + StringPool.COLON + StringPool.SPACE + LanguageUtil.get(pageContext, "manage-memberships") %>'
-/>
+<c:if test="<%= !layout.isTypeControlPanel() %>">
+	<liferay-ui:header
+		backURL="<%= redirect %>"
+		escapeXml="<%= false %>"
+		localizeTitle="<%= false %>"
+		title='<%= HtmlUtil.escape(group.getDescriptiveName(locale)) + StringPool.COLON + StringPool.SPACE + LanguageUtil.get(pageContext, "manage-memberships") %>'
+	/>
+</c:if>
 
 <liferay-util:include page="/html/portlet/sites_admin/edit_site_assignments_toolbar.jsp">
 	<liferay-util:param name="toolbarItem" value="view-membership-requests" />

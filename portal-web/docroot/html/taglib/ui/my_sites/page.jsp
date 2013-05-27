@@ -24,7 +24,7 @@ if (max <= 0) {
 	max = PropsValues.MY_SITES_MAX_ELEMENTS;
 }
 
-List<Group> mySites = user.getMySites(true, max);
+List<Group> mySites = user.getMySites(false, max);
 %>
 
 <c:if test="<%= !mySites.isEmpty() %>">
@@ -89,170 +89,148 @@ List<Group> mySites = user.getMySites(true, max);
 						}
 
 						String iconCssClass = "icon-spacer";
+
+						portletURL.setParameter("privateLayout", Boolean.FALSE.toString());
+
+						long stagingGroupId = 0;
+
+						boolean showPublicSiteStaging = false;
+						boolean showPrivateSiteStaging = false;
+
+						if (mySite.hasStagingGroup()) {
+							Group stagingGroup = mySite.getStagingGroup();
+
+							stagingGroupId = stagingGroup.getGroupId();
+
+							if (GroupPermissionUtil.contains(permissionChecker, mySite.getGroupId(), ActionKeys.VIEW_STAGING)) {
+								if ((mySite.getPublicLayoutsPageCount() == 0) && (stagingGroup.getPublicLayoutsPageCount() > 0)) {
+									showPublicSiteStaging = true;
+								}
+
+								if ((mySite.getPrivateLayoutsPageCount() == 0) && (stagingGroup.getPrivateLayoutsPageCount() > 0)) {
+									showPrivateSiteStaging = true;
+								}
+							}
+						}
 						%>
 
-						<c:choose>
-							<c:when test="<%= mySite.isControlPanel() %>">
-								<li class="<%= selectedSite ? "active" : StringPool.BLANK %> control-panel<%= itemCssClass %>">
-									<a href="<%= themeDisplay.getURLControlPanel() %>">
+						<c:if test="<%= showPublicSite && ((mySite.getPublicLayoutsPageCount() > 0) || showPublicSiteStaging) %>">
 
-										<%
-										String siteName = mySite.getDescriptiveName(locale);
+							<%
+							if (showPublicSiteStaging) {
+								portletURL.setParameter("groupId", String.valueOf(stagingGroupId));
+							}
+							%>
 
-										iconCssClass = "icon-wrench";
-										%>
-
-										<%@ include file="/html/taglib/ui/my_sites/page_site_name.jspf" %>
-
-									</a>
-								</li>
-							</c:when>
-							<c:otherwise>
-
-								<%
-								portletURL.setParameter("privateLayout", Boolean.FALSE.toString());
-
-								long stagingGroupId = 0;
-
-								boolean showPublicSiteStaging = false;
-								boolean showPrivateSiteStaging = false;
-
-								if (mySite.hasStagingGroup()) {
-									Group stagingGroup = mySite.getStagingGroup();
-
-									stagingGroupId = stagingGroup.getGroupId();
-
-									if (GroupPermissionUtil.contains(permissionChecker, mySite.getGroupId(), ActionKeys.VIEW_STAGING)) {
-										if ((mySite.getPublicLayoutsPageCount() == 0) && (stagingGroup.getPublicLayoutsPageCount() > 0)) {
-											showPublicSiteStaging = true;
-										}
-
-										if ((mySite.getPrivateLayoutsPageCount() == 0) && (stagingGroup.getPrivateLayoutsPageCount() > 0)) {
-											showPrivateSiteStaging = true;
-										}
-									}
-								}
-								%>
-
-								<c:if test="<%= showPublicSite && ((mySite.getPublicLayoutsPageCount() > 0) || showPublicSiteStaging) %>">
+							<li class="<%= (selectedSite && layout.isPublicLayout()) ? "active" : "public-site" %> <%= itemCssClass %>">
+								<a href="<%= HtmlUtil.escape(portletURL.toString()) %>" onclick="Liferay.Util.forcePost(this); return false;">
 
 									<%
+									String siteName = StringPool.BLANK;
+
+									if (mySite.isUser()) {
+										siteName = LanguageUtil.get(pageContext, "my-public-pages");
+									}
+									else if (escapedSiteName.equals(GroupConstants.GUEST)) {
+										siteName = themeDisplay.getAccount().getName();
+									}
+									else {
+										siteName = mySite.getDescriptiveName(locale);
+									}
+
 									if (showPublicSiteStaging) {
-										portletURL.setParameter("groupId", String.valueOf(stagingGroupId));
+										StringBundler sb = new StringBundler(5);
+
+										sb.append(HtmlUtil.escape(siteName));
+										sb.append(StringPool.SPACE);
+										sb.append(StringPool.OPEN_PARENTHESIS);
+										sb.append(LanguageUtil.get(pageContext, "staging"));
+										sb.append(StringPool.CLOSE_PARENTHESIS);
+
+										siteName = sb.toString();
+									}
+
+									if ((mySite.getPrivateLayoutsPageCount() > 0) || showPrivateSiteStaging) {
+										iconCssClass = "icon-eye-open";
 									}
 									%>
 
-									<li class="<%= (selectedSite && layout.isPublicLayout()) ? "active" : "public-site" %> <%= itemCssClass %>">
-										<a href="<%= HtmlUtil.escape(portletURL.toString()) %>" onclick="Liferay.Util.forcePost(this); return false;">
+									<%@ include file="/html/taglib/ui/my_sites/page_site_name.jspf" %>
 
-											<%
-											String siteName = StringPool.BLANK;
+									<c:if test="<%= (mySite.getPrivateLayoutsPageCount() > 0) || showPrivateSiteStaging %>">
+										<span class="badge site-type"><liferay-ui:message key="public" /></span>
+									</c:if>
+								</a>
+							</li>
 
-											if (mySite.isUser()) {
-												siteName = LanguageUtil.get(pageContext, "my-public-pages");
-											}
-											else if (escapedSiteName.equals(GroupConstants.GUEST)) {
-												siteName = themeDisplay.getAccount().getName();
-											}
-											else {
-												siteName = mySite.getDescriptiveName(locale);
-											}
+							<%
+							if (showPublicSiteStaging) {
+								portletURL.setParameter("groupId", String.valueOf(mySite.getGroupId()));
+							}
+							%>
 
-											if (showPublicSiteStaging) {
-												StringBundler sb = new StringBundler(5);
+						</c:if>
 
-												sb.append(HtmlUtil.escape(siteName));
-												sb.append(StringPool.SPACE);
-												sb.append(StringPool.OPEN_PARENTHESIS);
-												sb.append(LanguageUtil.get(pageContext, "staging"));
-												sb.append(StringPool.CLOSE_PARENTHESIS);
+						<%
+						portletURL.setParameter("privateLayout", Boolean.TRUE.toString());
+						%>
 
-												siteName = sb.toString();
-											}
+						<c:if test="<%= showPrivateSite && ((mySite.getPrivateLayoutsPageCount() > 0) || showPrivateSiteStaging) %>">
 
-											if ((mySite.getPrivateLayoutsPageCount() > 0) || showPrivateSiteStaging) {
-												iconCssClass = "icon-eye-open";
-											}
-											%>
+							<%
+							if (showPrivateSiteStaging) {
+								portletURL.setParameter("groupId", String.valueOf(stagingGroupId));
+							}
+							%>
 
-											<%@ include file="/html/taglib/ui/my_sites/page_site_name.jspf" %>
-
-											<c:if test="<%= (mySite.getPrivateLayoutsPageCount() > 0) || showPrivateSiteStaging %>">
-												<span class="badge site-type"><liferay-ui:message key="public" /></span>
-											</c:if>
-										</a>
-									</li>
+							<li class="<%= (selectedSite && layout.isPrivateLayout()) ? "active" : "private-site" %> <%= itemCssClass %>">
+								<a href="<%= HtmlUtil.escape(portletURL.toString()) %>" onclick="Liferay.Util.forcePost(this); return false;">
 
 									<%
-									if (showPublicSiteStaging) {
-										portletURL.setParameter("groupId", String.valueOf(mySite.getGroupId()));
+									String siteName = StringPool.BLANK;
+
+									if (mySite.isUser()) {
+										siteName = LanguageUtil.get(pageContext, "my-private-pages");
 									}
-									%>
+									else if (escapedSiteName.equals(GroupConstants.GUEST)) {
+										siteName = themeDisplay.getAccount().getName();
+									}
+									else {
+										siteName = mySite.getDescriptiveName(locale);
+									}
 
-								</c:if>
-
-								<%
-								portletURL.setParameter("privateLayout", Boolean.TRUE.toString());
-								%>
-
-								<c:if test="<%= showPrivateSite && ((mySite.getPrivateLayoutsPageCount() > 0) || showPrivateSiteStaging) %>">
-
-									<%
 									if (showPrivateSiteStaging) {
-										portletURL.setParameter("groupId", String.valueOf(stagingGroupId));
+										StringBundler sb = new StringBundler(5);
+
+										sb.append(siteName);
+										sb.append(StringPool.SPACE);
+										sb.append(StringPool.OPEN_PARENTHESIS);
+										sb.append(LanguageUtil.get(pageContext, "staging"));
+										sb.append(StringPool.CLOSE_PARENTHESIS);
+
+										siteName = sb.toString();
+									}
+
+									if ((mySite.getPublicLayoutsPageCount() > 0) || showPublicSiteStaging) {
+										iconCssClass = "icon-eye-close";
 									}
 									%>
 
-									<li class="<%= (selectedSite && layout.isPrivateLayout()) ? "active" : "private-site" %> <%= itemCssClass %>">
-										<a href="<%= HtmlUtil.escape(portletURL.toString()) %>" onclick="Liferay.Util.forcePost(this); return false;">
+									<%@ include file="/html/taglib/ui/my_sites/page_site_name.jspf" %>
 
-											<%
-											String siteName = StringPool.BLANK;
+									<c:if test="<%= (mySite.getPublicLayoutsPageCount() > 0) || showPublicSiteStaging %>">
+										<span class="badge site-type"><liferay-ui:message key="private" /></span>
+									</c:if>
+								</a>
+							</li>
 
-											if (mySite.isUser()) {
-												siteName = LanguageUtil.get(pageContext, "my-private-pages");
-											}
-											else if (escapedSiteName.equals(GroupConstants.GUEST)) {
-												siteName = themeDisplay.getAccount().getName();
-											}
-											else {
-												siteName = mySite.getDescriptiveName(locale);
-											}
+							<%
+							if (showPrivateSiteStaging) {
+								portletURL.setParameter("groupId", String.valueOf(mySite.getGroupId()));
+							}
+							%>
 
-											if (showPrivateSiteStaging) {
-												StringBundler sb = new StringBundler(5);
-
-												sb.append(siteName);
-												sb.append(StringPool.SPACE);
-												sb.append(StringPool.OPEN_PARENTHESIS);
-												sb.append(LanguageUtil.get(pageContext, "staging"));
-												sb.append(StringPool.CLOSE_PARENTHESIS);
-
-												siteName = sb.toString();
-											}
-
-											if ((mySite.getPublicLayoutsPageCount() > 0) || showPublicSiteStaging) {
-												iconCssClass = "icon-eye-close";
-											}
-											%>
-
-											<%@ include file="/html/taglib/ui/my_sites/page_site_name.jspf" %>
-
-											<c:if test="<%= (mySite.getPublicLayoutsPageCount() > 0) || showPublicSiteStaging %>">
-												<span class="badge site-type"><liferay-ui:message key="private" /></span>
-											</c:if>
-										</a>
-									</li>
-
-									<%
-									if (showPrivateSiteStaging) {
-										portletURL.setParameter("groupId", String.valueOf(mySite.getGroupId()));
-									}
-									%>
-
-								</c:if>
-							</c:otherwise>
-						</c:choose>
+						</c:if>
 					</c:when>
 					<c:when test='<%= PropsValues.MY_SITES_DISPLAY_STYLE.equals("classic") %>'>
 

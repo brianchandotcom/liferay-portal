@@ -118,31 +118,36 @@ if ((group != null) && group.isCompany()) {
 String[][] categorySections = {mainSections, seoSections, advancedSections, miscellaneousSections};
 %>
 
-<liferay-util:include page="/html/portlet/sites_admin/toolbar.jsp">
-	<liferay-util:param name="toolbarItem" value='<%= (group == null) ? "add" : "browse" %>' />
-</liferay-util:include>
+<c:if test="<%= !portletName.equals(PortletKeys.SITE_SETTINGS) %>">
+	<liferay-util:include page="/html/portlet/sites_admin/toolbar.jsp">
+		<liferay-util:param name="toolbarItem" value='<%= (group == null) ? "add" : "browse" %>' />
+	</liferay-util:include>
+</c:if>
 
-<%
-boolean localizeTitle = true;
-String title = "new-site";
+<c:if test="<%= (group == null) || !layout.isTypeControlPanel() %>">
 
-if (group != null) {
-	localizeTitle= false;
-	title = group.getDescriptiveName(locale);
-}
-else if (layoutSetPrototype != null) {
-	localizeTitle= false;
-	title = layoutSetPrototype.getName(locale);
-}
-%>
+	<%
+	boolean localizeTitle = true;
+	String title = "new-site";
 
-<liferay-ui:header
-	backURL="<%= backURL %>"
-	escapeXml="<%= false %>"
-	localizeTitle="<%= localizeTitle %>"
-	showBackURL="<%= showBackURL %>"
-	title="<%= HtmlUtil.escape(title) %>"
-/>
+	if (group != null) {
+		localizeTitle= false;
+		title = group.getDescriptiveName(locale);
+	}
+	else if (layoutSetPrototype != null) {
+		localizeTitle= false;
+		title = layoutSetPrototype.getName(locale);
+	}
+	%>
+
+	<liferay-ui:header
+		backURL="<%= backURL %>"
+		escapeXml="<%= false %>"
+		localizeTitle="<%= localizeTitle %>"
+		showBackURL="<%= showBackURL %>"
+		title="<%= HtmlUtil.escape(title) %>"
+	/>
+</c:if>
 
 <portlet:actionURL var="editSiteURL">
 	<portlet:param name="struts_action" value="/sites_admin/edit_site" />

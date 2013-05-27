@@ -38,12 +38,14 @@ portletURL.setParameter("groupId", String.valueOf(groupId));
 pageContext.setAttribute("portletURL", portletURL);
 %>
 
-<liferay-ui:header
-	backURL="<%= backURL %>"
-	escapeXml="<%= false %>"
-	localizeTitle="<%= false %>"
-	title='<%= HtmlUtil.escape(group.getDescriptiveName(locale)) + StringPool.COLON + StringPool.SPACE + LanguageUtil.get(pageContext, "manage-memberships") %>'
-/>
+<c:if test="<%= !layout.isTypeControlPanel() %>">
+	<liferay-ui:header
+		backURL="<%= backURL %>"
+		escapeXml="<%= false %>"
+		localizeTitle="<%= false %>"
+		title='<%= HtmlUtil.escape(group.getDescriptiveName(locale)) + StringPool.COLON + StringPool.SPACE + LanguageUtil.get(pageContext, "manage-memberships") %>'
+	/>
+</c:if>
 
 <liferay-util:include page="/html/portlet/sites_admin/edit_site_assignments_toolbar.jsp">
 	<liferay-util:param name="toolbarItem" value="view-teams" />

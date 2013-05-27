@@ -70,10 +70,20 @@
 
 				boolean selected = curPortletId.equals(ppid);
 
-				String portletControlPanelEntryCategory = curPortlet.getControlPanelEntryCategory();
+				String portletControlPanelEntryCategory = portlet.getControlPanelEntryCategory();
 
-				if (curPortletId.equals(PortletKeys.SITES_ADMIN) && portletControlPanelEntryCategory.startsWith("site.")) {
-					selected = true;
+				if (portletControlPanelEntryCategory.startsWith(PortletCategoryKeys.SITE_ADMINISTRATION)) {
+					Group siteGroup = themeDisplay.getSiteGroup();
+
+					if (siteGroup.isLayoutPrototype() && curPortletId.equals(PortletKeys.LAYOUT_PROTOTYPE)) {
+						selected = true;
+					}
+					else if (siteGroup.isLayoutSetPrototype() && curPortletId.equals(PortletKeys.LAYOUT_SET_PROTOTYPE)) {
+						selected = true;
+					}
+					else if (curPortletId.equals(PortletKeys.SITES_ADMIN)) {
+						selected = true;
+					}
 				}
 			%>
 

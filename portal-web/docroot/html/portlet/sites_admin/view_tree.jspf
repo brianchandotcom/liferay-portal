@@ -36,7 +36,7 @@ if ((group != null) && !group.isRoot()) {
 }
 %>
 
-<c:if test="<%= group != null %>">
+<c:if test="<%= (group != null) && !layout.isTypeControlPanel() %>">
 	<portlet:renderURL var="headerBackURL">
 		<portlet:param name="struts_action" value="/sites_admin/view" />
 		<portlet:param name="groupId" value="<%= String.valueOf(parentGroupId) %>" />

@@ -66,13 +66,15 @@ request.setAttribute("edit_site_assignments.jsp-portletURL", portletURL);
 
 <c:choose>
 	<c:when test="<%= selUser == null %>">
-		<liferay-ui:header
-			backURL="<%= redirect %>"
-			escapeXml="<%= false %>"
-			localizeTitle="<%= false %>"
-			showBackURL="<%= showBackURL %>"
-			title="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
-		/>
+		<c:if test="<%= !layout.isTypeControlPanel() %>">
+			<liferay-ui:header
+				backURL="<%= redirect %>"
+				escapeXml="<%= false %>"
+				localizeTitle="<%= false %>"
+				showBackURL="<%= showBackURL %>"
+				title="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
+			/>
+		</c:if>
 
 		<liferay-util:include page="/html/portlet/sites_admin/edit_site_assignments_toolbar.jsp">
 			<liferay-util:param name="toolbarItem" value='<%= tabs2.equals("available") ? "add-role" : null %>' />

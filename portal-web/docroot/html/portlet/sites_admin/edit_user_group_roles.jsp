@@ -80,12 +80,14 @@ request.setAttribute("edit_user_group_roles.jsp-organization", organization);
 request.setAttribute("edit_user_group_roles.jsp-portletURL", portletURL);
 %>
 
-<liferay-ui:header
-	backURL="<%= backURL %>"
-	escapeXml="<%= false %>"
-	localizeTitle="<%= false %>"
-	title="<%= HtmlUtil.escape(groupName) %>"
-/>
+<c:if test="<%= !layout.isTypeControlPanel() %>">
+	<liferay-ui:header
+		backURL="<%= backURL %>"
+		escapeXml="<%= false %>"
+		localizeTitle="<%= false %>"
+		title="<%= HtmlUtil.escape(groupName) %>"
+	/>
+</c:if>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />

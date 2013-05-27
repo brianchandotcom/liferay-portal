@@ -135,8 +135,7 @@ public class RuntimeTag extends TagSupport {
 				jsonObject = JSONFactoryUtil.createJSONObject();
 
 				PortletJSONUtil.populatePortletJSONObject(
-					restrictPortletServletRequest, StringPool.BLANK, portlet,
-					jsonObject);
+					request, StringPool.BLANK, portlet, jsonObject);
 			}
 
 			if (jsonObject != null) {

@@ -1015,6 +1015,10 @@
 	<bean id="com.liferay.portlet.sites.util.SitesUtil" class="com.liferay.portlet.sites.util.SitesUtil">
 		<property name="sites" ref="com.liferay.portlet.sites.util.Sites" />
 	</bean>
+	<bean id="com.liferay.portlet.social.util.SocialConfiguration" class="com.liferay.portlet.social.util.SocialConfigurationImpl" />
+	<bean id="com.liferay.portlet.social.util.SocialConfigurationUtil" class="com.liferay.portlet.social.util.SocialConfigurationUtil">
+		<property name="socialConfiguration" ref="com.liferay.portlet.social.util.SocialConfiguration" />
+	</bean>
 	<bean id="com.liferay.portlet.trash.util.Trash" class="com.liferay.portlet.trash.util.TrashImpl" />
 	<bean id="com.liferay.portlet.trash.util.TrashUtil" class="com.liferay.portlet.trash.util.TrashUtil">
 		<property name="trash" ref="com.liferay.portlet.trash.util.Trash" />

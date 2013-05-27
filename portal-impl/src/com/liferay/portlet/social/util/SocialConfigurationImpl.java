@@ -44,25 +44,27 @@ import java.util.Set;
 /**
  * @author Zsolt Berentey
  */
-public class SocialConfigurationUtil {
+public class SocialConfigurationImpl implements SocialConfiguration {
 
-	public static List<String> getActivityCounterNames() {
+	@Override
+	public List<String> getActivityCounterNames() {
 		return getActivityCounterNames(
 			SocialActivityCounterConstants.TYPE_ALL, false);
 	}
 
-	public static List<String> getActivityCounterNames(
-		boolean transientCounter) {
-
+	@Override
+	public List<String> getActivityCounterNames(boolean transientCounter) {
 		return getActivityCounterNames(
 			SocialActivityCounterConstants.TYPE_ALL, transientCounter);
 	}
 
-	public static List<String> getActivityCounterNames(int ownerType) {
+	@Override
+	public List<String> getActivityCounterNames(int ownerType) {
 		return getActivityCounterNames(ownerType, false);
 	}
 
-	public static List<String> getActivityCounterNames(
+	@Override
+	public List<String> getActivityCounterNames(
 		int ownerType, boolean transientCounter) {
 
 		List<String> activityCounterNames = new UniqueList<String>();
@@ -93,7 +95,8 @@ public class SocialConfigurationUtil {
 		return activityCounterNames;
 	}
 
-	public static SocialActivityDefinition getActivityDefinition(
+	@Override
+	public SocialActivityDefinition getActivityDefinition(
 		String modelName, int activityType) {
 
 		Map<Integer, SocialActivityDefinition> activityDefinitions =
@@ -106,7 +109,8 @@ public class SocialConfigurationUtil {
 		return activityDefinitions.get(activityType);
 	}
 
-	public static List<SocialActivityDefinition> getActivityDefinitions(
+	@Override
+	public List<SocialActivityDefinition> getActivityDefinitions(
 		String modelName) {
 
 		Map<Integer, SocialActivityDefinition> activityDefinitions =
@@ -119,14 +123,16 @@ public class SocialConfigurationUtil {
 		return ListUtil.fromCollection(activityDefinitions.values());
 	}
 
-	public static String[] getActivityModelNames() {
+	@Override
+	public String[] getActivityModelNames() {
 		Set<String> activityModelNames = _activityDefinitions.keySet();
 
 		return activityModelNames.toArray(
 			new String[activityModelNames.size()]);
 	}
 
-	public static List<Object> read(ClassLoader classLoader, String[] xmls)
+	@Override
+	public List<Object> read(ClassLoader classLoader, String[] xmls)
 		throws Exception {
 
 		List<Object> objects = new ArrayList<Object>();
@@ -138,7 +144,8 @@ public class SocialConfigurationUtil {
 		return objects;
 	}
 
-	public static void removeActivityDefinition(
+	@Override
+	public void removeActivityDefinition(
 		SocialActivityDefinition activityDefinition) {
 
 		Map<Integer, SocialActivityDefinition> activityDefinitions =
@@ -149,7 +156,7 @@ public class SocialConfigurationUtil {
 		}
 	}
 
-	private static void _read(
+	private void _read(
 			ClassLoader classLoader, String xml, List<Object> objects)
 		throws Exception {
 
@@ -181,7 +188,7 @@ public class SocialConfigurationUtil {
 		}
 	}
 
-	private static void _readAchievement(
+	private void _readAchievement(
 			ClassLoader classLoader, List<Object> objects,
 			SocialActivityDefinition activityDefinition,
 			Element achievementElement)
@@ -223,7 +230,7 @@ public class SocialConfigurationUtil {
 		objects.add(tuple);
 	}
 
-	private static void _readAchievementProperty(
+	private void _readAchievementProperty(
 		SocialAchievement achievement, Element propertyElement) {
 
 		String name = GetterUtil.getString(propertyElement.elementText("name"));
@@ -233,7 +240,7 @@ public class SocialConfigurationUtil {
 		achievement.setProperty(name, value);
 	}
 
-	private static void _readActivity(
+	private void _readActivity(
 			ClassLoader classLoader, Element activityElement,
 			SocialActivityDefinition activityDefinition)
 		throws Exception {
@@ -273,7 +280,7 @@ public class SocialConfigurationUtil {
 		_readActivityParticipation(activityElement, activityDefinition);
 	}
 
-	private static void _readActivity(
+	private void _readActivity(
 			ClassLoader classLoader, List<Object> objects,
 			Element activityElement)
 		throws Exception {
@@ -325,7 +332,7 @@ public class SocialConfigurationUtil {
 		}
 	}
 
-	private static void _readActivityContribution(
+	private void _readActivityContribution(
 		Element activityElement, SocialActivityDefinition activityDefinition) {
 
 		Element contributionValueElement = activityElement.element(
@@ -399,7 +406,7 @@ public class SocialConfigurationUtil {
 		activityDefinition.addCounter(popularityActivityCounterDefinition);
 	}
 
-	private static void _readActivityParticipation(
+	private void _readActivityParticipation(
 		Element activityElement, SocialActivityDefinition activityDefinition) {
 
 		Element participationValueElement = activityElement.element(
@@ -455,7 +462,7 @@ public class SocialConfigurationUtil {
 		activityDefinition.addCounter(activityCounterDefinition);
 	}
 
-	private static void _readCounter(
+	private void _readCounter(
 		List<Object> objects, SocialActivityDefinition activityDefinition,
 		Element counterElement) {
 
@@ -498,10 +505,9 @@ public class SocialConfigurationUtil {
 		objects.add(tuple);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		SocialConfigurationUtil.class);
+	private Log _log = LogFactoryUtil.getLog(SocialConfigurationUtil.class);
 
-	private static Map<String, Map<Integer, SocialActivityDefinition>>
+	private Map<String, Map<Integer, SocialActivityDefinition>>
 		_activityDefinitions =
 			new HashMap<String, Map<Integer, SocialActivityDefinition>>();
 

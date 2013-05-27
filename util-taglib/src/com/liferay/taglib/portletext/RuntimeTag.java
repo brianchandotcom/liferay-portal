@@ -38,6 +38,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletRequest;
@@ -139,55 +140,13 @@ public class RuntimeTag extends TagSupport {
 			}
 
 			if (jsonObject != null) {
-				PrintWriter writer = response.getWriter();
-
-				JSONArray jsonArray = jsonObject.getJSONArray("headerCssPaths");
-
-				for (int i = 0; i < jsonArray.length(); i++) {
-					String value = jsonArray.getString(i);
-
-					writer.print("<link href=\"");
-					writer.print(HtmlUtil.escape(value));
-					writer.println(
-						"\" rel=\"stylesheet\" type=\"text/css\" />");
-				}
-
-				jsonArray = jsonObject.getJSONArray("headerJavaScriptPaths");
-
-				for (int i = 0; i < jsonArray.length(); i++) {
-					String value = jsonArray.getString(i);
-
-					writer.print("<script src=\"");
-					writer.print(HtmlUtil.escape(value));
-					writer.println("\" type=\"text/javascript\"></script>");
-				}
+				doHeader(response, jsonObject);
 			}
 
 			PortletContainerUtil.render(request, response, portlet);
 
 			if (jsonObject != null) {
-				PrintWriter writer = response.getWriter();
-
-				JSONArray jsonArray = jsonObject.getJSONArray("footerCssPaths");
-
-				for (int i = 0; i < jsonArray.length(); i++) {
-					String value = jsonArray.getString(i);
-
-					writer.print("<link href=\"");
-					writer.print(HtmlUtil.escape(value));
-					writer.println(
-						"\" rel=\"stylesheet\" type=\"text/css\" />");
-				}
-
-				jsonArray = jsonObject.getJSONArray("footerJavaScriptPaths");
-
-				for (int i = 0; i < jsonArray.length(); i++) {
-					String value = jsonArray.getString(i);
-
-					writer.print("<script src=\"");
-					writer.print(HtmlUtil.escape(value));
-					writer.println("\" type=\"text/javascript\"></script>");
-				}
+				doFooter(response, jsonObject);
 			}
 		}
 		finally {
@@ -233,6 +192,62 @@ public class RuntimeTag extends TagSupport {
 
 	public void setQueryString(String queryString) {
 		_queryString = queryString;
+	}
+
+	protected static void doFooter(
+			HttpServletResponse response, JSONObject jsonObject)
+		throws IOException {
+
+		PrintWriter writer = response.getWriter();
+
+		JSONArray jsonArray = jsonObject.getJSONArray("footerCssPaths");
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			String value = jsonArray.getString(i);
+
+			writer.print("<link href=\"");
+			writer.print(HtmlUtil.escape(value));
+			writer.println(
+				"\" rel=\"stylesheet\" type=\"text/css\" />");
+		}
+
+		jsonArray = jsonObject.getJSONArray("footerJavaScriptPaths");
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			String value = jsonArray.getString(i);
+
+			writer.print("<script src=\"");
+			writer.print(HtmlUtil.escape(value));
+			writer.println("\" type=\"text/javascript\"></script>");
+		}
+	}
+
+	protected static void doHeader(
+			HttpServletResponse response, JSONObject jsonObject)
+		throws IOException {
+
+		PrintWriter writer = response.getWriter();
+
+		JSONArray jsonArray = jsonObject.getJSONArray("headerCssPaths");
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			String value = jsonArray.getString(i);
+
+			writer.print("<link href=\"");
+			writer.print(HtmlUtil.escape(value));
+			writer.println(
+				"\" rel=\"stylesheet\" type=\"text/css\" />");
+		}
+
+		jsonArray = jsonObject.getJSONArray("headerJavaScriptPaths");
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			String value = jsonArray.getString(i);
+
+			writer.print("<script src=\"");
+			writer.print(HtmlUtil.escape(value));
+			writer.println("\" type=\"text/javascript\"></script>");
+		}
 	}
 
 	/**

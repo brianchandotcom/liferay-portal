@@ -56,6 +56,7 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 		return ActionKeys.ADD_TEMPLATE;
 	}
 
+	@Override
 	public String getAvailableFields() {
 		return "Liferay.FormBuilder.AVAILABLE_FIELDS.DDM_STRUCTURE";
 	}
@@ -183,7 +184,7 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 	}
 
 	@Override
-    public String getTemplateType() {
+	public String getTemplateType() {
 		return DDMTemplateConstants.TEMPLATE_TYPE_FORM;
 	}
 

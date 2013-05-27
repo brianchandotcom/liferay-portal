@@ -42,7 +42,7 @@ import javax.portlet.PortletURL;
  */
 public class JournalDDMDisplay extends BaseDDMDisplay {
 
-    @Override
+	@Override
 	public String getAvailableFields() {
 		return "Liferay.FormBuilder.AVAILABLE_FIELDS.WCM_STRUCTURE";
 	}

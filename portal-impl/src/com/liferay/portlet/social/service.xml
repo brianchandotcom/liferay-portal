@@ -28,6 +28,8 @@
 		<column name="type" type="int" />
 		<column name="extraData" type="String" />
 		<column name="receiverUserId" type="long" />
+		<column name="parentClassNameId" type="long" />
+		<column name="parentClassPK" type="long" />
 
 		<!-- Order -->
 

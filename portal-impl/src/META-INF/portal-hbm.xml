@@ -2486,6 +2486,8 @@
 		<property name="type" type="com.liferay.portal.dao.orm.hibernate.IntegerType" column="type_" />
 		<property name="extraData" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="receiverUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="parentClassNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="parentClassPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.portlet.social.model.impl.SocialActivityAchievementImpl" table="SocialActivityAchievement">
 		<cache usage="read-write" />

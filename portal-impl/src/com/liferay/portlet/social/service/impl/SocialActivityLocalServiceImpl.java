@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.messaging.async.Async;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;
@@ -27,8 +29,10 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.social.NoSuchActivityException;
 import com.liferay.portlet.social.model.SocialActivity;
+import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.social.model.SocialActivityDefinition;
 import com.liferay.portlet.social.service.base.SocialActivityLocalServiceBaseImpl;
+import com.liferay.portlet.social.util.SocialActivityHierarchyThreadLocal;
 
 import java.util.Date;
 import java.util.List;
@@ -117,6 +121,8 @@ public class SocialActivityLocalServiceImpl
 			}
 		}
 
+		Tuple parent = SocialActivityHierarchyThreadLocal.peek();
+
 		SocialActivity activity = socialActivityPersistence.create(0);
 
 		activity.setGroupId(groupId);
@@ -129,6 +135,12 @@ public class SocialActivityLocalServiceImpl
 		activity.setType(type);
 		activity.setExtraData(extraData);
 		activity.setReceiverUserId(receiverUserId);
+
+		if (parent != null) {
+			activity.setParentClassNameId(
+				GetterUtil.getLong(parent.getObject(0)));
+			activity.setParentClassPK(GetterUtil.getLong(parent.getObject(1)));
+		}
 
 		AssetEntry assetEntry = assetEntryPersistence.fetchByC_C(
 			classNameId, classPK);
@@ -149,6 +161,14 @@ public class SocialActivityLocalServiceImpl
 			mirrorActivity.setType(type);
 			mirrorActivity.setExtraData(extraData);
 			mirrorActivity.setReceiverUserId(user.getUserId());
+
+			if (parent != null) {
+				mirrorActivity.setParentClassNameId(
+					GetterUtil.getLong(parent.getObject(0)));
+				mirrorActivity.setParentClassPK(
+					GetterUtil.getLong(parent.getObject(1)));
+			}
+
 			mirrorActivity.setAssetEntry(assetEntry);
 		}
 
@@ -225,10 +245,22 @@ public class SocialActivityLocalServiceImpl
 				activity.getGroupId(), activity.getClassName(),
 				activity.getType());
 
-		if (((activityDefinition == null) && (activity.getType() < 10000)) ||
-			((activityDefinition != null) &&
-			 activityDefinition.isLogActivity())) {
+		boolean logActivity = false;
 
+		if (activityDefinition != null) {
+			logActivity = activityDefinition.isLogActivity();
+		}
+		else if (activity.getType() <= 10000) {
+			logActivity = true;
+		}
+
+		if ((activity.getParentClassPK() > 0) &&
+			(activity.getType() == SocialActivityConstants.TYPE_DELETE)) {
+
+			logActivity = false;
+		}
+
+		if (logActivity) {
 			long activityId = counterLocalService.increment(
 				SocialActivity.class.getName());
 

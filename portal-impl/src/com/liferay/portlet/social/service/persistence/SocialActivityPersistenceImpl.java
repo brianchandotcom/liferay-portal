@@ -6550,6 +6550,8 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 		socialActivityImpl.setType(socialActivity.getType());
 		socialActivityImpl.setExtraData(socialActivity.getExtraData());
 		socialActivityImpl.setReceiverUserId(socialActivity.getReceiverUserId());
+		socialActivityImpl.setParentClassNameId(socialActivity.getParentClassNameId());
+		socialActivityImpl.setParentClassPK(socialActivity.getParentClassPK());
 
 		return socialActivityImpl;
 	}

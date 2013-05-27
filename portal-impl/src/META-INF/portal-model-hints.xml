@@ -2477,6 +2477,8 @@
 			<hint name="auto-escape">false</hint>
 		</field>
 		<field name="receiverUserId" type="long" />
+		<field name="parentClassNameId" type="long" />
+		<field name="parentClassPK" type="long" />
 	</model>
 	<model name="com.liferay.portlet.social.model.SocialActivityAchievement">
 		<field name="activityAchievementId" type="long" />

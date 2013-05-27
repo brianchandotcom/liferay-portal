@@ -220,6 +220,8 @@ public class RuntimeTag extends TagSupport {
 			writer.print(HtmlUtil.escape(value));
 			writer.println("\" type=\"text/javascript\"></script>");
 		}
+
+		writer.flush();
 	}
 
 	protected static void doHeader(
@@ -248,6 +250,8 @@ public class RuntimeTag extends TagSupport {
 			writer.print(HtmlUtil.escape(value));
 			writer.println("\" type=\"text/javascript\"></script>");
 		}
+
+		writer.flush();
 	}
 
 	/**

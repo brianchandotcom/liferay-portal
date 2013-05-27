@@ -751,6 +751,7 @@ public abstract class BaseIndexer implements Indexer {
 
 		multiValueFacet.setFieldName(Field.ASSET_CATEGORY_IDS);
 		multiValueFacet.setStatic(true);
+		multiValueFacet.setValues(searchContext.getAssetCategoryIds());
 
 		searchContext.addFacet(multiValueFacet);
 	}
@@ -812,6 +813,7 @@ public abstract class BaseIndexer implements Indexer {
 
 		multiValueFacet.setFieldName(Field.ASSET_TAG_NAMES);
 		multiValueFacet.setStatic(true);
+		multiValueFacet.setValues(searchContext.getAssetTagNames());
 
 		searchContext.addFacet(multiValueFacet);
 	}
@@ -905,6 +907,7 @@ public abstract class BaseIndexer implements Indexer {
 
 		multiValueFacet.setFieldName(Field.FOLDER_ID);
 		multiValueFacet.setStatic(true);
+		multiValueFacet.setValues(searchContext.getFolderIds());
 
 		searchContext.addFacet(multiValueFacet);
 	}

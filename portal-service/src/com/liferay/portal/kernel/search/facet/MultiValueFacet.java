@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.search.facet;
 
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -39,6 +40,102 @@ public class MultiValueFacet extends BaseFacet {
 
 	public MultiValueFacet(SearchContext searchContext) {
 		super(searchContext);
+	}
+
+	public void setValues(boolean[] values) {
+		if ((values == null) || (values.length == 0)) {
+			return;
+		}
+
+		JSONArray valuesJSONArray = JSONFactoryUtil.createJSONArray();
+
+		for (boolean value : values) {
+			valuesJSONArray.put(value);
+		}
+
+		doSetValues(valuesJSONArray);
+	}
+
+	public void setValues(double[] values) {
+		if ((values == null) || (values.length == 0)) {
+			return;
+		}
+
+		JSONArray valuesJSONArray = JSONFactoryUtil.createJSONArray();
+
+		for (double value : values) {
+			valuesJSONArray.put(value);
+		}
+
+		doSetValues(valuesJSONArray);
+	}
+
+	public void setValues(int[] values) {
+		if ((values == null) || (values.length == 0)) {
+			return;
+		}
+
+		JSONArray valuesJSONArray = JSONFactoryUtil.createJSONArray();
+
+		for (int value : values) {
+			valuesJSONArray.put(value);
+		}
+
+		doSetValues(valuesJSONArray);
+	}
+
+	public void setValues(JSONArray values) {
+		doSetValues(values);
+	}
+
+	public void setValues(JSONObject[] values) {
+		if ((values == null) || (values.length == 0)) {
+			return;
+		}
+
+		JSONArray valuesJSONArray = JSONFactoryUtil.createJSONArray();
+
+		for (JSONObject value : values) {
+			valuesJSONArray.put(value);
+		}
+
+		doSetValues(valuesJSONArray);
+	}
+
+	public void setValues(long[] values) {
+		if ((values == null) || (values.length == 0)) {
+			return;
+		}
+
+		JSONArray valuesJSONArray = JSONFactoryUtil.createJSONArray();
+
+		for (long value : values) {
+			valuesJSONArray.put(value);
+		}
+
+		doSetValues(valuesJSONArray);
+	}
+
+	public void setValues(String[] values) {
+		if ((values == null) || (values.length == 0)) {
+			return;
+		}
+
+		JSONArray valuesJSONArray = JSONFactoryUtil.createJSONArray();
+
+		for (String value : values) {
+			valuesJSONArray.put(value);
+		}
+
+		doSetValues(valuesJSONArray);
+	}
+
+	private void doSetValues(JSONArray valuesJSONArray) {
+		FacetConfiguration facetConfiguration = getFacetConfiguration();
+
+		JSONObject dataJSONObject = facetConfiguration.getData();
+
+		dataJSONObject.put("values", valuesJSONArray);
 	}
 
 	@Override

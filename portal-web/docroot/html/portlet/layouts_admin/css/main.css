@@ -299,10 +299,6 @@
 }
 
 .tree-pages {
-	.tree-label {
-		display: inline-block;
-	}
-
 	.tree-node-selected {
 		.tree-label a {
 			cursor: move;

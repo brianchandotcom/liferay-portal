@@ -69,7 +69,6 @@ String refererPortletName = ParamUtil.getString(request, "refererPortletName", p
 String refererWebDAVToken = ParamUtil.getString(request, "refererWebDAVToken", portletConfig.getInitParameter("refererWebDAVToken"));
 String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields");
 String scopeStructureName = ParamUtil.getString(request, "scopeStructureName");
-String scopeStructureType = ParamUtil.getString(request, "scopeStructureType");
 String scopeTemplateMode = ParamUtil.getString(request, "scopeTemplateMode");
 String scopeTemplateType = ParamUtil.getString(request, "scopeTemplateType");
 String scopeTitle = ParamUtil.getString(request, "scopeTitle");
@@ -77,7 +76,9 @@ boolean showGlobalScope = ParamUtil.getBoolean(request, "showGlobalScope");
 boolean showManageTemplates = ParamUtil.getBoolean(request, "showManageTemplates", true);
 boolean showToolbar = ParamUtil.getBoolean(request, "showToolbar", true);
 
-long scopeClassNameId = PortalUtil.getClassNameId(scopeStructureType);
+DDMDisplay ddmDisplay = DDMDisplayRegistryUtil.getDDMDisplay(refererPortletName);
+
+long scopeClassNameId = PortalUtil.getClassNameId(ddmDisplay.getStructureType());
 
 String templateTypeValue = StringPool.BLANK;
 
@@ -87,8 +88,6 @@ if (scopeTemplateType.equals(DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY)) {
 else if (scopeTemplateType.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM)) {
 	templateTypeValue = DDMTemplateConstants.TEMPLATE_TYPE_FORM;
 }
-
-DDMDisplay ddmDisplay = DDMDisplayRegistryUtil.getDDMDisplay(refererPortletName);
 
 String storageType = ddmDisplay.getStorageType();
 

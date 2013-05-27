@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.ddm;
 
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
 import com.liferay.portlet.dynamicdatamapping.util.BaseDDMDisplay;
 
@@ -38,7 +39,7 @@ public class DLDDMDisplay extends BaseDDMDisplay {
 		return "xml";
 	}
 
-    @Override
+	@Override
 	public String getStructureType() {
 		return DLFileEntryMetadata.class.getName();
 	}

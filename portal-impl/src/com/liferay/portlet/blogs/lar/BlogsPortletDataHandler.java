@@ -45,7 +45,9 @@ public class BlogsPortletDataHandler extends BasePortletDataHandler {
 
 	public BlogsPortletDataHandler() {
 		setExportControls(
-			new PortletDataHandlerBoolean(NAMESPACE, "entries"),
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "entries", true, false, null,
+				BlogsEntry.class.getName()),
 			new PortletDataHandlerBoolean(NAMESPACE, "embedded-assets"));
 		setExportMetadataControls(
 			new PortletDataHandlerBoolean(

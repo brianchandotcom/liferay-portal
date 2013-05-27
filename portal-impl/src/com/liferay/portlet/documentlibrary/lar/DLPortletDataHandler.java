@@ -68,10 +68,16 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		setDataLocalized(true);
 		setDataPortletPreferences("rootFolderId");
 		setExportControls(
-			new PortletDataHandlerBoolean(NAMESPACE, "documents"),
-			new PortletDataHandlerBoolean(NAMESPACE, "shortcuts"),
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "documents", true, false, null,
+				DLFileEntry.class.getName()),
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "shortcuts", true, false, null,
+				DLFileShortcut.class.getName()),
 			new PortletDataHandlerBoolean(NAMESPACE, "previews-and-thumbnails"),
-			new PortletDataHandlerBoolean(NAMESPACE, "ranks"));
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "ranks", true, false, null,
+				DLFileRank.class.getName()));
 		setExportMetadataControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "folders-and-documents", true,

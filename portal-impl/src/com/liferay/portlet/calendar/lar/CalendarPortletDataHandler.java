@@ -54,7 +54,9 @@ public class CalendarPortletDataHandler extends BasePortletDataHandler {
 
 	public CalendarPortletDataHandler() {
 		setExportControls(
-			new PortletDataHandlerBoolean(NAMESPACE, "events", true, true));
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "events", true, true, null,
+				CalEvent.class.getName()));
 		setExportMetadataControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "events", true,

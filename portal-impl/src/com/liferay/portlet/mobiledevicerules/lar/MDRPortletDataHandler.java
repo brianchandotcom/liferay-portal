@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
-import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portlet.mobiledevicerules.model.MDRAction;
@@ -48,9 +47,12 @@ public class MDRPortletDataHandler extends BasePortletDataHandler {
 
 	public MDRPortletDataHandler() {
 		setExportControls(
-			new PortletDataHandlerBoolean(NAMESPACE, "rules", true, true),
-			new PortletDataHandlerBoolean(NAMESPACE, "actions", true, true));
-		setImportControls(new PortletDataHandlerControl[0]);
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "rules", true, false, null, MDRRule.class.getName()),
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "actions", true, false, null,
+				MDRAction.class.getName()));
+		setImportControls(getExportControls());
 		setPublishToLiveByDefault(true);
 	}
 
@@ -83,15 +85,19 @@ public class MDRPortletDataHandler extends BasePortletDataHandler {
 
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
-		ActionableDynamicQuery rulesActionableDynamicQuery =
-			new MDRRuleExportActionableDynamicQuery(portletDataContext);
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "rules")) {
+			ActionableDynamicQuery rulesActionableDynamicQuery =
+				new MDRRuleExportActionableDynamicQuery(portletDataContext);
 
-		rulesActionableDynamicQuery.performActions();
+			rulesActionableDynamicQuery.performActions();
+		}
 
-		ActionableDynamicQuery actionsActionableDynamicQuery =
-			new MDRActionExportActionableDynamicQuery(portletDataContext);
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "actions")) {
+			ActionableDynamicQuery actionsActionableDynamicQuery =
+				new MDRActionExportActionableDynamicQuery(portletDataContext);
 
-		actionsActionableDynamicQuery.performActions();
+			actionsActionableDynamicQuery.performActions();
+		}
 
 		return getExportDataRootElementString(rootElement);
 	}
@@ -106,24 +112,28 @@ public class MDRPortletDataHandler extends BasePortletDataHandler {
 			MDRPermission.RESOURCE_NAME, portletDataContext.getSourceGroupId(),
 			portletDataContext.getScopeGroupId());
 
-		Element rulesElement = portletDataContext.getImportDataGroupElement(
-			MDRRule.class);
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "rules")) {
+			Element rulesElement = portletDataContext.getImportDataGroupElement(
+				MDRRule.class);
 
-		List<Element> ruleElements = rulesElement.elements();
+			List<Element> ruleElements = rulesElement.elements();
 
-		for (Element ruleElement : ruleElements) {
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, ruleElement);
+			for (Element ruleElement : ruleElements) {
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, ruleElement);
+			}
 		}
 
-		Element actionsElement = portletDataContext.getImportDataGroupElement(
-			MDRAction.class);
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "actions")) {
+			Element actionsElement =
+				portletDataContext.getImportDataGroupElement(MDRAction.class);
 
-		List<Element> actionElements = actionsElement.elements();
+			List<Element> actionElements = actionsElement.elements();
 
-		for (Element actionElement : actionElements) {
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, actionElement);
+			for (Element actionElement : actionElements) {
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, actionElement);
+			}
 		}
 
 		return null;

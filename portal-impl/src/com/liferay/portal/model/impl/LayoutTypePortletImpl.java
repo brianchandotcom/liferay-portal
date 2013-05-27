@@ -1571,10 +1571,10 @@ public class LayoutTypePortletImpl
 
 		String[] portletIds = StringUtil.split(value);
 
-		for (int i = 0; i < portletIds.length; i++) {
+		for (String portletId : portletIds) {
 			try {
 				String rootPortletId = PortletConstants.getRootPortletId(
-					portletIds[i]);
+					portletId);
 
 				if (!PortletPermissionUtil.contains(
 						permissionChecker, rootPortletId,
@@ -1589,17 +1589,16 @@ public class LayoutTypePortletImpl
 
 			String newPortletId = null;
 
-			if (PortletConstants.hasInstanceId(portletIds[i])) {
+			if (PortletConstants.hasInstanceId(portletId)) {
 				newPortletId = PortletConstants.assemblePortletId(
-					portletIds[i], _portalPreferences.getUserId(),
+					portletId, _portalPreferences.getUserId(),
 					generateInstanceId());
 
 				copyPreferences(
-					_portalPreferences.getUserId(), portletIds[i],
-					newPortletId);
+					_portalPreferences.getUserId(), portletId, newPortletId);
 			}
 			else {
-				newPortletId = portletIds[i];
+				newPortletId = portletId;
 			}
 
 			newPortletIds.add(newPortletId);

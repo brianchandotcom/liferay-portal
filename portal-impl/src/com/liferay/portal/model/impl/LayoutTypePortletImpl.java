@@ -1384,9 +1384,7 @@ public class LayoutTypePortletImpl
 					PortletKeys.PREFS_OWNER_TYPE_USER, layout.getPlid()));
 		}
 
-		Set<String> portletAddDefaultResourceCheckWhiteList =
-			PortletContainerSecurityUtil.
-				getPortletAddDefaultResourceCheckWhitelist();
+		Set<String> whiteList = PortletContainerSecurityUtil.getWhitelist();
 
 		for (PortletPreferences portletPreference : portletPreferences) {
 			String portletId = portletPreference.getPortletId();
@@ -1399,7 +1397,7 @@ public class LayoutTypePortletImpl
 				staticPortlets.contains(portlet) ||
 				portlet.isSystem() || portlet.isUndeployedPortlet() ||
 				!portlet.isActive() ||
-				!portletAddDefaultResourceCheckWhiteList.contains(portletId)) {
+				!whiteList.contains(portletId)) {
 
 				continue;
 			}

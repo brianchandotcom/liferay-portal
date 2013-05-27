@@ -81,8 +81,8 @@ public class PortletContainerSecurityImpl implements PortletContainer,
 		resetPortletAddDefaultResourceCheckWhitelistActions();
 	}
 
-	public Set<String> getPortletAddDefaultResourceCheckWhitelist() {
-		return _portletAddDefaultResourceCheckWhitelist;
+	public Set<String> getWhitelist() {
+		return _whitelist;
 	}
 
 	public Set<String> getPortletAddDefaultResourceCheckWhitelistActions() {
@@ -150,13 +150,12 @@ public class PortletContainerSecurityImpl implements PortletContainer,
 	}
 
 	public Set<String> resetPortletAddDefaultResourceCheckWhitelist() {
-		_portletAddDefaultResourceCheckWhitelist = SetUtil.fromArray(
+		_whitelist = SetUtil.fromArray(
 			PropsValues.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST);
 
-		_portletAddDefaultResourceCheckWhitelist = Collections.unmodifiableSet(
-			_portletAddDefaultResourceCheckWhitelist);
+		_whitelist = Collections.unmodifiableSet(_whitelist);
 
-		return _portletAddDefaultResourceCheckWhitelist;
+		return _whitelist;
 	}
 
 	public Set<String> resetPortletAddDefaultResourceCheckWhitelistActions() {
@@ -433,7 +432,7 @@ public class PortletContainerSecurityImpl implements PortletContainer,
 			return true;
 		}
 
-		if (_portletAddDefaultResourceCheckWhitelist.contains(portletId)) {
+		if (_whitelist.contains(portletId)) {
 			return true;
 		}
 
@@ -676,7 +675,7 @@ public class PortletContainerSecurityImpl implements PortletContainer,
 	private static Log _log = LogFactoryUtil.getLog(
 		PortletContainerSecurityImpl.class);
 
-	private Set<String> _portletAddDefaultResourceCheckWhitelist;
+	private Set<String> _whitelist;
 	private Set<String> _portletAddDefaultResourceCheckWhitelistActions;
 	private PortletContainer _portletContainer;
 

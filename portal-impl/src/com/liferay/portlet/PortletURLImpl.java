@@ -805,11 +805,9 @@ public class PortletURLImpl
 			}
 		}
 
-		Set<String> portletAddDefaultResourceCheckWhiteList =
-			PortletContainerSecurityUtil.
-				getPortletAddDefaultResourceCheckWhitelist();
+		Set<String> whiteList = PortletContainerSecurityUtil.getWhitelist();
 
-		if (portletAddDefaultResourceCheckWhiteList.contains(_portletId)) {
+		if (whiteList.contains(_portletId)) {
 			return;
 		}
 

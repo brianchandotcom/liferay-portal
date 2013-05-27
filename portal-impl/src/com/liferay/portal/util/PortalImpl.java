@@ -3565,8 +3565,7 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public Set<String> getPortletAddDefaultResourceCheckWhitelist() {
-		return PortletContainerSecurityUtil.
-			getPortletAddDefaultResourceCheckWhitelist();
+		return PortletContainerSecurityUtil.getWhitelist();
 	}
 
 	@Override
@@ -5354,10 +5353,9 @@ public class PortalImpl implements Portal {
 			return true;
 		}
 
-		if (PortletContainerSecurityUtil.
-				getPortletAddDefaultResourceCheckWhitelist().contains(
-					portletId)) {
+		Set<String> whiteList = PortletContainerSecurityUtil.getWhitelist();
 
+		if (whiteList.contains(portletId)) {
 			return true;
 		}
 

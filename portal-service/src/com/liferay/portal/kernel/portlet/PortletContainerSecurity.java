@@ -21,7 +21,7 @@ import java.util.Set;
  */
 public interface PortletContainerSecurity {
 
-	public Set<String> getPortletAddDefaultResourceCheckWhitelist();
+	public Set<String> getWhitelist();
 
 	public Set<String> getPortletAddDefaultResourceCheckWhitelistActions();
 

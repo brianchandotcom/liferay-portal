@@ -23,9 +23,8 @@ import java.util.Set;
  */
 public class PortletContainerSecurityUtil {
 
-	public static Set<String> getPortletAddDefaultResourceCheckWhitelist() {
-		return getPortletContainerSecurity().
-			getPortletAddDefaultResourceCheckWhitelist();
+	public static Set<String> getWhitelist() {
+		return getPortletContainerSecurity().getWhitelist();
 	}
 
 	public static Set<String>

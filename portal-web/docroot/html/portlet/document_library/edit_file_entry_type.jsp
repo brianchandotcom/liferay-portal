@@ -132,6 +132,14 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 				url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMStructureSelector();" %>'
 			/>
 		</liferay-ui:panel>
+
+		<c:if test="<%= (fileEntryType == null) %>">
+			<aui:field-wrapper label="permissions">
+				<liferay-ui:input-permissions
+					modelName="<%= DLFileEntryType.class.getName() %>"
+				/>
+			</aui:field-wrapper>
+		</c:if>
 	</aui:fieldset>
 </aui:form>
 

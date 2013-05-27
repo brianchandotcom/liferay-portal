@@ -25,7 +25,7 @@ public interface PortletContainerSecurity {
 
 	public Set<String> getWhitelistActions();
 
-	public Set<String> resetPortletAddDefaultResourceCheckWhitelist();
+	public Set<String> resetWhitelist();
 
 	public Set<String> resetPortletAddDefaultResourceCheckWhitelistActions();
 

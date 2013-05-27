@@ -2472,8 +2472,7 @@ public class HookHotDeployListener
 				portalProperties,
 				PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST)) {
 
-			PortletContainerSecurityUtil.
-				resetPortletAddDefaultResourceCheckWhitelist();
+			PortletContainerSecurityUtil.resetWhitelist();
 		}
 
 		if (containsKey(

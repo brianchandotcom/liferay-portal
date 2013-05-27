@@ -38,9 +38,8 @@ public class PortletContainerSecurityUtil {
 		return _portletContainerSecurity;
 	}
 
-	public static Set<String> resetPortletAddDefaultResourceCheckWhitelist() {
-		return getPortletContainerSecurity().
-			resetPortletAddDefaultResourceCheckWhitelist();
+	public static Set<String> resetWhitelist() {
+		return getPortletContainerSecurity().resetWhitelist();
 	}
 
 	public static Set<String>

@@ -1647,7 +1647,7 @@ public class PortalUtil {
 
 	/**
 	 * @deprecated As of 6.2.0 replaced by {@link
-	 * PortletContainerSecurityUtil#resetPortletAddDefaultResourceCheckWhitelist()}
+	 * PortletContainerSecurityUtil#resetWhitelist()}
 	 */
 	public static Set<String> resetPortletAddDefaultResourceCheckWhitelist() {
 		return getPortal().resetPortletAddDefaultResourceCheckWhitelist();

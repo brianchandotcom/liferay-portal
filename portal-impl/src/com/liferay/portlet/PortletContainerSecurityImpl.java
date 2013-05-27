@@ -77,7 +77,7 @@ public class PortletContainerSecurityImpl implements PortletContainer,
 
 		// Portlet add default resource check white list
 
-		resetPortletAddDefaultResourceCheckWhitelist();
+		resetWhitelist();
 		resetPortletAddDefaultResourceCheckWhitelistActions();
 	}
 
@@ -149,7 +149,7 @@ public class PortletContainerSecurityImpl implements PortletContainer,
 		}
 	}
 
-	public Set<String> resetPortletAddDefaultResourceCheckWhitelist() {
+	public Set<String> resetWhitelist() {
 		_whitelist = SetUtil.fromArray(
 			PropsValues.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST);
 

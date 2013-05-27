@@ -32,6 +32,8 @@ boolean preview = ParamUtil.getBoolean(request, "preview");
 
 boolean allowPingbacks = PropsValues.BLOGS_PINGBACK_ENABLED && BeanParamUtil.getBoolean(entry, request, "allowPingbacks", true);
 boolean allowTrackbacks = PropsValues.BLOGS_TRACKBACK_ENABLED && BeanParamUtil.getBoolean(entry, request, "allowTrackbacks", true);
+
+boolean smallImage = BeanParamUtil.getBoolean(entry, request, "smallImage");
 %>
 
 <liferay-ui:header
@@ -168,13 +170,35 @@ boolean allowTrackbacks = PropsValues.BLOGS_TRACKBACK_ENABLED && BeanParamUtil.g
 			<aui:fieldset>
 				<aui:input label="description" name="description" />
 
-				<aui:input label="use-small-image" name="smallImage" />
+				<div id="<portlet:namespace />smallImageContainer">
+					<div class="lfr-blogs-small-image-header">
+						<aui:input label="use-small-image" name="smallImage" />
+					</div>
 
-				<aui:input label="small-image-url" name="smallImageURL" />
+					<div class="lfr-blogs-small-image-content toggler-content-collapsed">
+						<aui:row>
+							<c:if test="<%= smallImage && (entry != null) %>">
+								<aui:col width="<%= 50 %>">
+									<img alt="<liferay-ui:message key="preview" />" class="lfr-blogs-small-image-preview" src="<%= Validator.isNotNull(entry.getSmallImageURL()) ? entry.getSmallImageURL() : themeDisplay.getPathImage() + "/template?img_id=" + entry.getSmallImageId() + "&t=" + WebServerServletTokenUtil.getToken(entry.getSmallImageId()) %>" />
+								</aui:col>
+							</c:if>
 
-				<span style="font-size: xx-small;">-- <%= LanguageUtil.get(pageContext, "or").toUpperCase() %> --</span>
+							<aui:col width="<%= (smallImage && (entry != null)) ? 50 : 100 %>">
+								<aui:fieldset>
+									<aui:input cssClass="lfr-blogs-small-image-type" inlineField="<%= true %>" label="small-image-url" name="type" type="radio" />
 
-				<aui:input cssClass="lfr-input-text-container" label="small-image" name="smallFile" onChange='<%= renderResponse.getNamespace() + "manageAttachments();" %>' type="file" />
+									<aui:input cssClass="lfr-blogs-small-image-value" inlineField="<%= true %>" label="" name="smallImageURL" />
+								</aui:fieldset>
+
+								<aui:fieldset>
+									<aui:input cssClass="lfr-blogs-small-image-type" inlineField="<%= true %>" label="small-image" name="type" type="radio" />
+
+									<aui:input cssClass="lfr-blogs-small-image-value" inlineField="<%= true %>" label="" name="smallFile" type="file" />
+								</aui:fieldset>
+							</aui:col>
+						</aui:row>
+					</div>
+				</div>
 			</aui:fieldset>
 		</liferay-ui:panel>
 
@@ -447,6 +471,67 @@ boolean allowTrackbacks = PropsValues.BLOGS_TRACKBACK_ENABLED && BeanParamUtil.g
 		<portlet:namespace />oldTitle = document.<portlet:namespace />fm.<portlet:namespace />title.value;
 		<portlet:namespace />oldContent = <portlet:namespace />initEditor();
 	</c:if>
+</aui:script>
+
+<aui:script use="aui-toggler">
+	var container = A.one('#<portlet:namespace />smallImageContainer');
+
+	var types = container.all('.lfr-blogs-small-image-type');
+	var values = container.all('.lfr-blogs-small-image-value');
+
+	var selectSmallImageType = function(index) {
+		types.set('checked', false);
+
+		types.item(index).set('checked', true);
+
+		values.set('disabled', true);
+
+		values.item(index).set('disabled', false);
+	};
+
+	container.delegate(
+		'change',
+		function(event) {
+			var index = types.indexOf(event.currentTarget);
+
+			selectSmallImageType(index);
+		},
+		'.lfr-blogs-small-image-type'
+	);
+
+	new A.Toggler(
+		{
+			animated: true,
+			content: '#<portlet:namespace />smallImageContainer .lfr-blogs-small-image-content',
+			expanded: <%= smallImage %>,
+			header: '#<portlet:namespace />smallImageContainer .lfr-blogs-small-image-header',
+			on: {
+				animatingChange: function(event) {
+					var instance = this;
+
+					var expanded = !instance.get('expanded');
+
+					A.one('#<portlet:namespace />smallImage').set('value', expanded);
+					A.one('#<portlet:namespace />smallImageCheckbox').set('checked', expanded);
+
+					if (expanded) {
+						types.each(
+							function (item, index, collection) {
+								if (item.get('checked')) {
+									values.item(index).set('disabled', false);
+								}
+							}
+						);
+					}
+					else {
+						values.set('disabled', true);
+					}
+				}
+			}
+		}
+	);
+
+	selectSmallImageType('<%= (entry != null) && Validator.isNotNull(entry.getSmallImageURL()) ? 0 : 1 %>');
 </aui:script>
 
 <%

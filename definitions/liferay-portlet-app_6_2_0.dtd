@@ -345,9 +345,15 @@ http://docs.liferay.com/portal/6.2/javadocs/portal-impl/com/liferay/portlet/blog
 <!ELEMENT xml-rpc-method-class (#PCDATA)>
 
 <!--
-Set the control-panel-entry-category value to "my", "content", "portal" or
-"server" to make this portlet available in the Control Panel under that
-category.
+Set the control-panel-entry-category value to "my" to make this portlet
+available within the My Account administration of the user. Set the value to
+"users", "sites", "apps" or "configuration" to make it available in the Control
+Panel under that category. Set the value to "site_administration.main",
+"site_administration.content" or "site_administration.configuration" to make it
+available in the Site Administration under that category.
+Legacy values from previous versions of Liferay will be automatically mapped to
+the new values: "portal" to "users", "server" to "apps" and "content" to
+"site_administration.content".
 -->
 <!ELEMENT control-panel-entry-category (#PCDATA)>
 

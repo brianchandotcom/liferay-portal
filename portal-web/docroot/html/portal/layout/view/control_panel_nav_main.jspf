@@ -28,14 +28,11 @@
 
 					String iconClass = StringPool.BLANK;
 
-					if (curCategory.equals(PortletCategoryKeys.CONFIGURATION)) {
-						iconClass = "icon-cog";
-					}
-					else if (curCategory.equals(PortletCategoryKeys.MARKETPLACE)) {
+					if (curCategory.equals(PortletCategoryKeys.APPS)) {
 						iconClass = "icon-gift";
 					}
-					else if (curCategory.equals(PortletCategoryKeys.SERVER)) {
-						iconClass = "icon-hdd";
+					else if (curCategory.equals(PortletCategoryKeys.CONFIGURATION)) {
+						iconClass = "icon-cog";
 					}
 					else if (curCategory.equals(PortletCategoryKeys.SITES)) {
 						iconClass = "icon-globe";

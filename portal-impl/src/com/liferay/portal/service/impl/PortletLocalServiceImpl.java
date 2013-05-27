@@ -69,6 +69,7 @@ import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.base.PortletLocalServiceBaseImpl;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletCategoryKeys;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebAppPool;
@@ -1418,10 +1419,27 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			GetterUtil.getString(
 				portletElement.elementText("xml-rpc-method-class"),
 				portletModel.getXmlRpcMethodClass()));
-		portletModel.setControlPanelEntryCategory(
-			GetterUtil.getString(
-				portletElement.elementText("control-panel-entry-category"),
-				portletModel.getControlPanelEntryCategory()));
+
+		String controlPanelEntryCategory = GetterUtil.getString(
+			portletElement.elementText("control-panel-entry-category"),
+			portletModel.getControlPanelEntryCategory());
+
+		if (Validator.equals(controlPanelEntryCategory, "content")) {
+			controlPanelEntryCategory =
+				PortletCategoryKeys.SITE_ADMINISTRATION_CONTENT;
+		}
+		else if (Validator.equals(controlPanelEntryCategory, "marketplace")) {
+			controlPanelEntryCategory = PortletCategoryKeys.APPS;
+		}
+		else if (Validator.equals(controlPanelEntryCategory, "portal")) {
+			controlPanelEntryCategory = PortletCategoryKeys.USERS;
+		}
+		else if (Validator.equals(controlPanelEntryCategory, "server")) {
+			controlPanelEntryCategory = PortletCategoryKeys.APPS;
+		}
+
+		portletModel.setControlPanelEntryCategory(controlPanelEntryCategory);
+
 		portletModel.setControlPanelEntryWeight(
 			GetterUtil.getDouble(
 				portletElement.elementText("control-panel-entry-weight"),

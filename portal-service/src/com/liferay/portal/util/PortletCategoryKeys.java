@@ -21,9 +21,10 @@ public class PortletCategoryKeys {
 
 	public static final String[] ALL = {
 		PortletCategoryKeys.USERS, PortletCategoryKeys.SITES,
-		PortletCategoryKeys.CONFIGURATION, PortletCategoryKeys.MARKETPLACE,
-		PortletCategoryKeys.SERVER
+		PortletCategoryKeys.APPS, PortletCategoryKeys.CONFIGURATION
 	};
+
+	public static final String APPS = "apps";
 
 	public static final String CONFIGURATION = "configuration";
 
@@ -34,6 +35,9 @@ public class PortletCategoryKeys {
 
 	public static final String CURRENT_SITE = "current_site";
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #APPS}
+	 */
 	public static final String MARKETPLACE = "marketplace";
 
 	public static final String MY = "my";
@@ -44,7 +48,10 @@ public class PortletCategoryKeys {
 	 */
 	public static final String PORTAL = CONFIGURATION;
 
-	public static final String SERVER = "server";
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #APPS}
+	 */
+	public static final String SERVER = APPS;
 
 	public static final String SITE_ADMINISTRATION = "site_administration.";
 

@@ -65,22 +65,6 @@ StructureDisplayTerms displayTerms = new StructureDisplayTerms(renderRequest);
 	</aui:fieldset>
 </liferay-ui:search-toggle>
 
-<%
-boolean showAddStructureButton = ddmDisplay.isShowAddStructureButton(permissionChecker, scopeGroupId);
-
-String buttonLabel = "add-structure";
-
-if (Validator.isNotNull(scopeStructureName)) {
-	buttonLabel = LanguageUtil.format(pageContext, "add-x", scopeStructureName);
-}
-%>
-
-<c:if test="<%= showAddStructureButton %>">
-	<aui:button-row>
-		<aui:button onClick='<%= renderResponse.getNamespace() + "addStructure();" %>' value="<%= buttonLabel %>" />
-	</aui:button-row>
-</c:if>
-
 <aui:script>
 	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
 		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace /><%= displayTerms.NAME %>);

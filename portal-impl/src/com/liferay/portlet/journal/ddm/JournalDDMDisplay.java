@@ -16,6 +16,7 @@ package com.liferay.portlet.journal.ddm;
 
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.util.BaseDDMDisplay;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -30,12 +32,15 @@ import com.liferay.portlet.journal.service.permission.JournalPermission;
 
 import java.util.Set;
 
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
+
 /**
  * @author Eduardo Garcia
  */
 public class JournalDDMDisplay extends BaseDDMDisplay {
 
-    @Override
+	@Override
 	public String getEditStructureDefaultValuesURL(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,

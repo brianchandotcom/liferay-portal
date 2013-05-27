@@ -69,6 +69,7 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 					new PortletDataHandlerBoolean(NAMESPACE, "ratings"),
 					new PortletDataHandlerBoolean(NAMESPACE, "tags")
 				}));
+		setImportControls(getExportControls());
 		setPublishToLiveByDefault(
 			PropsValues.MESSAGE_BOARDS_PUBLISH_TO_LIVE_BY_DEFAULT);
 	}

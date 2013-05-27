@@ -105,12 +105,14 @@ Map<String, TemplateVariableGroup> templateVariableGroups = TemplateContextHelpe
 	</liferay-ui:panel>
 </liferay-ui:panel-container>
 
-<aui:script use="aui-ace-autocomplete-freemarker,aui-ace-autocomplete-plugin,aui-ace-autocomplete-velocity,aui-toggler,aui-popover,event-mouseenter,event-outside,transition">
+<aui:script use="aui-ace-autocomplete-freemarker,aui-ace-autocomplete-plugin,aui-ace-autocomplete-velocity,aui-toggler,aui-popover,event-mouseenter,event-outside,resize,transition">
 	var ACPlugin = A.Plugin.AceAutoComplete;
 	var AObject = A.Object;
 	var Util = Liferay.Util;
 
 	var STR_EMPTY = '';
+
+	var STR_HEIGHT = 'height';
 
 	var selectLanguageNode = A.one('#<portlet:namespace />language');
 
@@ -277,6 +279,15 @@ Map<String, TemplateVariableGroup> templateVariableGroups = TemplateContextHelpe
 		return selectLanguageNode.val();
 	}
 
+	function resizeEditor(event) {
+		var info = event.info;
+
+		richEditor.set(STR_HEIGHT, info.offsetHeight);
+		richEditor.set('width', info.offsetWidth);
+
+		paletteDataContainer.setStyle(STR_HEIGHT, info.offsetHeight + 'px');
+	}
+
 	function setEditorContent(content) {
 		richEditor.getSession().setValue(content);
 
@@ -329,17 +340,29 @@ Map<String, TemplateVariableGroup> templateVariableGroups = TemplateContextHelpe
 
 	var editorContentElement = A.one('#<portlet:namespace />scriptContent');
 
+	var editorNode = A.one('#<portlet:namespace />richEditor');
+
 	A.on(
 		'domready',
 		function(event) {
 			richEditor = new A.AceEditor(
 				{
-					boundingBox: '#<portlet:namespace />richEditor',
+					boundingBox: editorNode,
 					height: 400,
 					mode: '<%= EditorUtil.getEditorMode(langType) %>',
 					width: '100%'
 				}
 			).render();
+
+			var resize = new A.Resize(
+				{
+					handles: ['br'],
+					node: editorNode,
+					on: {
+						resize: resizeEditor
+					}
+				}
+			);
 
 			if (editorContentElement) {
 				setEditorContent(editorContentElement.val());

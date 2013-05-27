@@ -354,6 +354,7 @@ if (endDateTime > 0) {
 
 															<%
 															if (exportControls != null) {
+																request.setAttribute("render_controls.jsp-action", Constants.EXPORT);
 																request.setAttribute("render_controls.jsp-controls", exportControls);
 																request.setAttribute("render_controls.jsp-manifestSummary", manifestSummary);
 																request.setAttribute("render_controls.jsp-portletDisabled", !portletDataHandler.isPublishToLiveByDefault());
@@ -383,7 +384,6 @@ if (endDateTime > 0) {
 
 																	if ((childrenControls != null) && (childrenControls.length > 0)) {
 																		request.setAttribute("render_controls.jsp-controls", childrenControls);
-																		request.setAttribute("render_controls.portletId", portlet.getPortletId());
 																	%>
 
 																	<aui:field-wrapper label="content-metadata">

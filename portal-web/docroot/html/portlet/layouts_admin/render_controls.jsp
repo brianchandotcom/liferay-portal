@@ -17,6 +17,7 @@
 <%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
 <%
+String action = (String)request.getAttribute("render_controls.jsp-action");
 PortletDataHandlerControl[] controls = (PortletDataHandlerControl[])request.getAttribute("render_controls.jsp-controls");
 ManifestSummary manifestSummary = (ManifestSummary)request.getAttribute("render_controls.jsp-manifestSummary");
 
@@ -50,7 +51,7 @@ for (int i = 0; i < controls.length; i++) {
 				PortletDataHandlerControl[] children = control.getChildren();
 				%>
 
-				<aui:input data="<%= data %>" disabled="<%= controls[i].isDisabled() %>" label="<%= controlName %>" name="<%= control.getNamespacedControlName() %>" type="checkbox" value="<%= control.getDefaultState() %>" />
+				<aui:input data="<%= data %>" disabled="<%= controls[i].isDisabled() %>" helpMessage="<%= control.getHelpMessage(locale, action) %>" label="<%= controlName %>" name="<%= control.getNamespacedControlName() %>" type="checkbox" value="<%= control.getDefaultState() %>" />
 
 				<c:if test="<%= children != null %>">
 					<ul id="<portlet:namespace /><%= control.getNamespacedControlName() %>Controls">
@@ -85,7 +86,7 @@ for (int i = 0; i < controls.length; i++) {
 						data.put("name", controlName);
 					%>
 
-						<aui:input checked="<%= control.getDefaultChoiceIndex() == j %>" data="<%= data %>" label="<%= choice %>" name="<%= control.getNamespacedControlName() %>" type="radio" value="<%= choices[j] %>" />
+						<aui:input checked="<%= control.getDefaultChoiceIndex() == j %>" data="<%= data %>" helpMessage="<%= control.getHelpMessage(locale, action) %>" label="<%= choice %>" name="<%= control.getNamespacedControlName() %>" type="radio" value="<%= choices[j] %>" />
 
 					<%
 					}

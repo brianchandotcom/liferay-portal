@@ -74,6 +74,7 @@
 								<c:if test="<%= exportControls != null %>">
 
 									<%
+									request.setAttribute("render_controls.jsp-action", Constants.EXPORT);
 									request.setAttribute("render_controls.jsp-controls", exportControls);
 									request.setAttribute("render_controls.jsp-portletDisabled", !portletDataHandler.isPublishToLiveByDefault());
 									%>

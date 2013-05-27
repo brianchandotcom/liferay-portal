@@ -192,7 +192,7 @@ public class FacebookConnectAction extends PortletAction {
 		portletURL.setParameter("struts_action", "/login/update_account");
 
 		PortletURL redirectURL = PortletURLFactoryUtil.create(
-			request, PortletKeys.LOGIN, themeDisplay.getPlid(),
+			request, PortletKeys.FAST_LOGIN, themeDisplay.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
 		redirectURL.setParameter("struts_action", "/login/login_redirect");

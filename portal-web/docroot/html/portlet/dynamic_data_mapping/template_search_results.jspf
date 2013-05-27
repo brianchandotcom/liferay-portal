@@ -31,12 +31,12 @@ if (classNameIds.length > 1) {
 }
 
 if (searchTerms.isAdvancedSearch()) {
-	results = DDMTemplateServiceUtil.search(company.getCompanyId(), groupIds, classNameIds, searchClassPK, searchTerms.getName(), searchTerms.getDescription(), templateTypeValue, scopeTemplateMode, null, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+	results = DDMTemplateServiceUtil.search(company.getCompanyId(), groupIds, classNameIds, searchClassPK, searchTerms.getName(), searchTerms.getDescription(), templateTypeValue, ddmDisplay.getTemplateMode(), null, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 	total = DDMTemplateServiceUtil.searchCount(company.getCompanyId(), groupIds, classNameIds, searchClassPK, searchTerms.getName(), searchTerms.getDescription(), templateTypeValue, null, null, searchTerms.isAndOperator());
 }
 else {
-	results = DDMTemplateServiceUtil.search(company.getCompanyId(), groupIds, classNameIds, searchClassPK, searchTerms.getKeywords(), templateTypeValue, scopeTemplateMode, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-	total = DDMTemplateServiceUtil.searchCount(company.getCompanyId(), groupIds, classNameIds, searchClassPK, searchTerms.getKeywords(), templateTypeValue, scopeTemplateMode);
+	results = DDMTemplateServiceUtil.search(company.getCompanyId(), groupIds, classNameIds, searchClassPK, searchTerms.getKeywords(), templateTypeValue, ddmDisplay.getTemplateMode(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+	total = DDMTemplateServiceUtil.searchCount(company.getCompanyId(), groupIds, classNameIds, searchClassPK, searchTerms.getKeywords(), templateTypeValue, ddmDisplay.getTemplateMode());
 }
 
 pageContext.setAttribute("results", results);

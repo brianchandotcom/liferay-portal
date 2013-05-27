@@ -93,8 +93,8 @@ if (Validator.isNotNull(script)) {
 		localizeTitle = false;
 		title = structure.getName(locale);
 	}
-	else if (Validator.isNotNull(scopeStructureName)) {
-		title = LanguageUtil.format(pageContext, "new-x", scopeStructureName);
+	else {
+		title = LanguageUtil.format(pageContext, "new-x", ddmDisplay.getStructureName(locale));
 	}
 	%>
 
@@ -160,7 +160,7 @@ if (Validator.isNotNull(script)) {
 
 				<aui:input name="description" />
 
-				<aui:field-wrapper label='<%= LanguageUtil.format(pageContext, "parent-x", HtmlUtil.escape(scopeStructureName)) %>'>
+				<aui:field-wrapper label='<%= LanguageUtil.format(pageContext, "parent-x", ddmDisplay.getStructureName(locale)) %>'>
 					<aui:input name="parentStructureId" type="hidden" value="<%= parentStructureId %>" />
 
 					<c:choose>

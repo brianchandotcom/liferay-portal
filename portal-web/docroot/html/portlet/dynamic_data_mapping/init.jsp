@@ -74,12 +74,11 @@ boolean showToolbar = ParamUtil.getBoolean(request, "showToolbar", true);
 
 DDMDisplay ddmDisplay = DDMDisplayRegistryUtil.getDDMDisplay(refererPortletName);
 
-String scopeAvailableFields = ddmDisplay.getAvailableFields();
-String scopeStructureName = ddmDisplay.getStructureName(locale);
-String scopeTemplateMode = ddmDisplay.getTemplateMode();
-String scopeTemplateType = ddmDisplay.getTemplateType();
-
 long scopeClassNameId = PortalUtil.getClassNameId(ddmDisplay.getStructureType());
+
+String scopeAvailableFields = ddmDisplay.getAvailableFields();
+String scopeStorageType = ddmDisplay.getStorageType();
+String scopeTemplateType = ddmDisplay.getTemplateType();
 
 String templateTypeValue = StringPool.BLANK;
 
@@ -90,14 +89,12 @@ else if (scopeTemplateType.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM)) {
 	templateTypeValue = DDMTemplateConstants.TEMPLATE_TYPE_FORM;
 }
 
-String storageType = ddmDisplay.getStorageType();
-
 String storageTypeValue = StringPool.BLANK;
 
-if (storageType.equals("expando")) {
+if (scopeStorageType.equals("expando")) {
 	storageTypeValue = StorageType.EXPANDO.getValue();
 }
-else if (storageType.equals("xml")) {
+else if (scopeStorageType.equals("xml")) {
 	storageTypeValue = StorageType.XML.getValue();
 }
 

@@ -32,7 +32,7 @@ String eventName = ParamUtil.getString(request, "eventName", "selectStructure");
 	<c:if test="<%= !showToolbar %>">
 		<liferay-ui:header
 			localizeTitle="<%= false %>"
-			title="<%= scopeStructureName %>"
+			title="<%= ddmDisplay.getStructureName(locale) %>"
 		/>
 	</c:if>
 

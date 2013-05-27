@@ -5843,8 +5843,7 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public Set<String> resetPortletAddDefaultResourceCheckWhitelistActions() {
-		return PortletContainerSecurityUtil.
-			resetPortletAddDefaultResourceCheckWhitelistActions();
+		return PortletContainerSecurityUtil.resetWhitelistActions();
 	}
 
 	@Override

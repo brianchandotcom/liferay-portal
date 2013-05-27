@@ -366,6 +366,72 @@ public class FilesTest {
 	}
 
 	@Test
+	public void testRead9() throws Exception {
+		try {
+			File file = new File(System.getenv("JAVA_HOME"));
+
+			file.canRead();
+		}
+		catch (SecurityException se) {
+			Assert.fail();
+		}
+	}
+
+	@Test
+	public void testRead10() throws Exception {
+		try {
+			File file = new File(System.getenv("JAVA_HOME"), "bin");
+
+			file.canRead();
+
+			Assert.fail();
+		}
+		catch (SecurityException se) {
+		}
+	}
+
+	@Test
+	public void testRead11() throws Exception {
+		try {
+			String javaCommand = "java";
+
+			if (OSDetector.isWindows()) {
+				javaCommand = "java.exe";
+			}
+
+			File file = new File(
+				System.getenv("JAVA_HOME"),
+				"bin".concat(File.separator).concat(javaCommand));
+
+			file.canRead();
+		}
+		catch (SecurityException se) {
+			Assert.fail();
+		}
+	}
+
+	@Test
+	public void testRead12() throws Exception {
+		try {
+			String javaCommand = "javac";
+
+			if (OSDetector.isWindows()) {
+				javaCommand = "javac.exe";
+			}
+
+			File file = new File(
+				System.getenv("JAVA_HOME"),
+				"bin".concat(File.separator).concat(javaCommand));
+
+			file.canRead();
+
+			Assert.fail();
+		}
+		catch (SecurityException se) {
+		}
+	}
+
+	@Test
 	public void testWrite1() throws Exception {
 		try {
 			File file = new File(PropsValues.LIFERAY_HOME, "pacl-test");

@@ -20,7 +20,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.servlet.WebDirDetector;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContextPathUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PathUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -318,31 +320,31 @@ public class FileChecker extends BaseChecker {
 		String value = getProperty(key);
 
 		if (value != null) {
-			// Begin LPS-34711, allow ${env:ENV_VAR} as a replaceable value
-			int pos;
-			
-			// do this check in a loop in case we are grabbing multiple environment vars in a single value.
-			while ((pos = value.indexOf("${env:")) >= 0) {
-				// find where the ${env:...} ends
-				int end = value.indexOf('}', pos);
-				
-				// extract the string that is going to be replaced
-				String replacement = value.substring(pos, end + 1);
-				
-				// extract the environment variable that needs to be referenced
-				String envVar = value.substring(pos+6, end);
-				
-				// get the value from the system
-				String envValue = System.getenv(envVar.trim());
-				
-				// protect from NPEs...
-				if (envValue == null) envValue = "";
-				
-				// do the environment replacement...
-				value = StringUtil.replace(value, replacement, envValue);
+			int pos = value.indexOf(_ENV_PREFIX);
+
+			while (pos >= 0) {
+				int end = value.indexOf(StringPool.CLOSE_CURLY_BRACE, pos);
+
+				String propertyName = value.substring(pos + 6, end);
+
+				String propertyValue = GetterUtil.getString(
+					System.getenv(propertyName));
+
+				String nameEncoded = _ENV_PREFIX.concat(propertyName).concat(
+					StringPool.CLOSE_CURLY_BRACE);
+
+				if (!ArrayUtil.contains(
+						_defaultReadPathsFromArray, nameEncoded)) {
+
+					_defaultReadPathsFromArray = ArrayUtil.append(
+						_defaultReadPathsFromArray, nameEncoded);
+					_defaultReadPathsToArray = ArrayUtil.append(
+						_defaultReadPathsToArray, propertyValue);
+				}
+
+				pos = value.indexOf(_ENV_PREFIX, end + 1);
 			}
-			// End LPS-34711, allow ${env:ENV_VAR} as a replaceable value
-			
+
 			value = StringUtil.replace(
 				value, _defaultReadPathsFromArray, _defaultReadPathsToArray);
 
@@ -471,6 +473,8 @@ public class FileChecker extends BaseChecker {
 		getPermissions(
 			"security-manager-files-write", FILE_PERMISSION_ACTION_WRITE);
 	}
+
+	private static final String _ENV_PREFIX = "${env:";
 
 	private static Log _log = LogFactoryUtil.getLog(FileChecker.class);
 

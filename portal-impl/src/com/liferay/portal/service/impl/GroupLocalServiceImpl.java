@@ -726,6 +726,12 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		membershipRequestLocalService.deleteMembershipRequests(
 			group.getGroupId());
 
+		// Portlet preferences
+
+		portletPreferencesLocalService.deletePortletPreferences(
+			group.getGroupId(), PortletKeys.PREFS_OWNER_TYPE_GROUP,
+			PortletKeys.PREFS_PLID_SHARED);
+
 		// Repositories
 
 		repositoryLocalService.deleteRepositories(group.getGroupId());

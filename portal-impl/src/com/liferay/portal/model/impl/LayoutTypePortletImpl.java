@@ -1397,7 +1397,7 @@ public class LayoutTypePortletImpl
 				staticPortlets.contains(portlet) ||
 				portlet.isSystem() || portlet.isUndeployedPortlet() ||
 				!portlet.isActive() ||
-				portletAddDefaultResourceCheckWhiteList.contains(portletId)) {
+				!portletAddDefaultResourceCheckWhiteList.contains(portletId)) {
 
 				continue;
 			}

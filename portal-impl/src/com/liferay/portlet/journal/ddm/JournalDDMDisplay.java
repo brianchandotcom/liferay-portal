@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.util.BaseDDMDisplay;
@@ -62,7 +63,7 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 		return JournalPermission.RESOURCE_NAME;
 	}
 
-    @Override
+	@Override
 	public long getTemplateHandlerClassNameId(DDMTemplate template) {
 		return PortalUtil.getClassNameId(JournalArticle.class);
 	}

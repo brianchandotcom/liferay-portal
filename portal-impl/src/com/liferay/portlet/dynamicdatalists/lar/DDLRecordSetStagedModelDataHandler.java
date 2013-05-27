@@ -84,10 +84,6 @@ public class DDLRecordSetStagedModelDataHandler
 
 		long userId = portletDataContext.getUserId(recordSet.getUserUuid());
 
-		Map<Long, Long> ddmStructureIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				DDMStructure.class);
-
 		String structurePath = ExportImportPathUtil.getModelPath(
 			portletDataContext, DDMStructure.class.getName(),
 			recordSet.getDDMStructureId());
@@ -97,6 +93,10 @@ public class DDLRecordSetStagedModelDataHandler
 
 		StagedModelDataHandlerUtil.importStagedModel(
 			portletDataContext, ddmStructure);
+
+		Map<Long, Long> ddmStructureIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				DDMStructure.class);
 
 		long ddmStructureId = MapUtil.getLong(
 			ddmStructureIds, recordSet.getDDMStructureId(),

@@ -177,7 +177,7 @@
 														}
 													%>
 
-													<aui:nav-item cssClass="lfr-content-item <%= cssClass %>"
+													<aui:nav-item cssClass="<%= \"lfr-content-item \" + cssClass %>"
 														data='<%= data %>'
 														href=""
 														iconClass='<%= portletInstanceable ? "icon-th-large" : "icon-stop" %>'

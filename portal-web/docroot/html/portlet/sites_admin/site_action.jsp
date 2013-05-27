@@ -76,7 +76,7 @@ if (row == null) {
 		<c:if test="<%= childSitesCount > 0 %>">
 			<liferay-portlet:renderURL var="viewSubsitesURL">
 				<portlet:param name="struts_action" value="/sites_admin/view" />
-				<portlet:param name="backURL" value="/<%= currentURL %>" />
+				<portlet:param name="backURL" value="<%=\"/\" + currentURL %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
 				<portlet:param name="sitesListView" value="<%= SiteConstants.LIST_VIEW_TREE %>" />
 			</liferay-portlet:renderURL>

@@ -3570,8 +3570,7 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public Set<String> getPortletAddDefaultResourceCheckWhitelistActions() {
-		return PortletContainerSecurityUtil.
-			getPortletAddDefaultResourceCheckWhitelistActions();
+		return PortletContainerSecurityUtil.getWhitelistActions();
 	}
 
 	/**
@@ -5368,10 +5367,10 @@ public class PortalImpl implements Portal {
 			strutsAction = ParamUtil.getString(request, "struts_action");
 		}
 
-		if (PortletContainerSecurityUtil.
-				getPortletAddDefaultResourceCheckWhitelistActions().contains(
-					strutsAction)) {
+		Set<String> whitelistActions =
+			PortletContainerSecurityUtil.getWhitelistActions();
 
+		if (whitelistActions.contains(strutsAction)) {
 			return true;
 		}
 

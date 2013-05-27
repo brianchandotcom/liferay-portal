@@ -867,7 +867,7 @@ public interface Portal {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 * com.liferay.portal.kernel.portlet.PortletContainerSecurityUtil#getPortletAddDefaultResourceCheckWhitelistActions()}
+	 * com.liferay.portal.kernel.portlet.PortletContainerSecurityUtil#getWhitelistActions()}
 	 */
 	public Set<String> getPortletAddDefaultResourceCheckWhitelistActions();
 

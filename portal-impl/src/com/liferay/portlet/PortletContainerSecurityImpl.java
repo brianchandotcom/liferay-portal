@@ -85,8 +85,8 @@ public class PortletContainerSecurityImpl implements PortletContainer,
 		return _whitelist;
 	}
 
-	public Set<String> getPortletAddDefaultResourceCheckWhitelistActions() {
-		return _portletAddDefaultResourceCheckWhitelistActions;
+	public Set<String> getWhitelistActions() {
+		return _whitelistActions;
 	}
 
 	public void preparePortlet(HttpServletRequest request, Portlet portlet)
@@ -159,14 +159,12 @@ public class PortletContainerSecurityImpl implements PortletContainer,
 	}
 
 	public Set<String> resetPortletAddDefaultResourceCheckWhitelistActions() {
-		_portletAddDefaultResourceCheckWhitelistActions = SetUtil.fromArray(
+		_whitelistActions = SetUtil.fromArray(
 			PropsValues.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST_ACTIONS);
 
-		_portletAddDefaultResourceCheckWhitelistActions =
-			Collections.unmodifiableSet(
-				_portletAddDefaultResourceCheckWhitelistActions);
+		_whitelistActions = Collections.unmodifiableSet(_whitelistActions);
 
-		return _portletAddDefaultResourceCheckWhitelistActions;
+		return _whitelistActions;
 	}
 
 	public void serveResource(
@@ -445,9 +443,7 @@ public class PortletContainerSecurityImpl implements PortletContainer,
 			strutsAction = ParamUtil.getString(request, "struts_action");
 		}
 
-		if (_portletAddDefaultResourceCheckWhitelistActions.contains(
-				strutsAction)) {
-
+		if (_whitelistActions.contains(strutsAction)) {
 			return true;
 		}
 
@@ -676,7 +672,7 @@ public class PortletContainerSecurityImpl implements PortletContainer,
 		PortletContainerSecurityImpl.class);
 
 	private Set<String> _whitelist;
-	private Set<String> _portletAddDefaultResourceCheckWhitelistActions;
+	private Set<String> _whitelistActions;
 	private PortletContainer _portletContainer;
 
 }

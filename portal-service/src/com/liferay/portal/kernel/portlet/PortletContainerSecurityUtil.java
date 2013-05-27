@@ -27,11 +27,8 @@ public class PortletContainerSecurityUtil {
 		return getPortletContainerSecurity().getWhitelist();
 	}
 
-	public static Set<String>
-		getPortletAddDefaultResourceCheckWhitelistActions() {
-
-		return getPortletContainerSecurity().
-			getPortletAddDefaultResourceCheckWhitelistActions();
+	public static Set<String> getWhitelistActions() {
+		return getPortletContainerSecurity().getWhitelistActions();
 	}
 
 	public static PortletContainerSecurity getPortletContainerSecurity() {

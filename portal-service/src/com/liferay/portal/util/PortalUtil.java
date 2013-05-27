@@ -995,7 +995,7 @@ public class PortalUtil {
 
 	/**
 	 * @deprecated As of 6.2.0 replaced by {@link
-	 * PortletContainerSecurityUtil#getPortletAddDefaultResourceCheckWhitelistActions()}
+	 * PortletContainerSecurityUtil#getWhitelistActions()}
 	 */
 	public static Set<String>
 		getPortletAddDefaultResourceCheckWhitelistActions() {

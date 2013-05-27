@@ -74,7 +74,7 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 	<liferay-ui:header
 		backURL="<%= redirect %>"
 		localizeTitle="<%= (fileEntryType == null) %>"
-		title='<%= (fileEntryType == null) ? "new-document-type" : fileEntryType.getName() %>'
+		title='<%= (fileEntryType == null) ? "new-document-type" : fileEntryType.getName(locale) %>'
 	/>
 
 	<liferay-ui:error exception="<%= DuplicateFileEntryTypeException.class %>" message="please-enter-a-unique-document-type-name" />
@@ -88,7 +88,9 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 	<aui:fieldset cssClass="edit-file-entry-type">
 		<aui:input name="name" />
 
-		<aui:input name="description" />
+		<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="detailsMetadataFields" persistState="<%= true %>" title="details">
+			<aui:input name="description" />
+		</liferay-ui:panel>
 
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="mainMetadataFields" persistState="<%= true %>" title="main-metadata-fields">
 			<%@ include file="/html/portlet/dynamic_data_mapping/form_builder.jspf" %>

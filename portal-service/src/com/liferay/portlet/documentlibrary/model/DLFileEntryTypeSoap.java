@@ -39,6 +39,7 @@ public class DLFileEntryTypeSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setFileEntryTypeKey(model.getFileEntryTypeKey());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
 
@@ -159,6 +160,14 @@ public class DLFileEntryTypeSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public String getFileEntryTypeKey() {
+		return _fileEntryTypeKey;
+	}
+
+	public void setFileEntryTypeKey(String fileEntryTypeKey) {
+		_fileEntryTypeKey = fileEntryTypeKey;
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -183,6 +192,7 @@ public class DLFileEntryTypeSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private String _fileEntryTypeKey;
 	private String _name;
 	private String _description;
 }

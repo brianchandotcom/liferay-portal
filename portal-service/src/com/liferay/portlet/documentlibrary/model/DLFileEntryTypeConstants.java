@@ -25,7 +25,7 @@ public class DLFileEntryTypeConstants {
 
 	public static final long FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT = 0;
 
-	public static final String NAME_BASIC_DOCUMENT = "Basic Document";
+	public static final String NAME_BASIC_DOCUMENT = "basic-document";
 
 	public static final String NAME_CONTRACT = "Contract";
 

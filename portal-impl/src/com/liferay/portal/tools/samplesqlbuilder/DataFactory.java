@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -492,7 +493,8 @@ public class DataFactory {
 		_defaultDLFileEntryType.setCreateDate(nextFutureDate());
 		_defaultDLFileEntryType.setModifiedDate(nextFutureDate());
 		_defaultDLFileEntryType.setName(
-			DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT);
+			DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT,
+			LocaleUtil.getDefault());
 
 		_defaultDLDDMStructure = newDDMStructure(
 			_guestGroupId, getDLFileEntryClassNameId(), "TIKARAWMETADATA",

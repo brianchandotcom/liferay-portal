@@ -902,76 +902,78 @@ public class DLFileEntryTypeUtil {
 	}
 
 	/**
-	* Returns the document library file entry type where groupId = &#63; and name = &#63; or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException} if it could not be found.
+	* Returns the document library file entry type where groupId = &#63; and fileEntryTypeKey = &#63; or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException} if it could not be found.
 	*
 	* @param groupId the group ID
-	* @param name the name
+	* @param fileEntryTypeKey the file entry type key
 	* @return the matching document library file entry type
 	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException if a matching document library file entry type could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.documentlibrary.model.DLFileEntryType findByG_N(
-		long groupId, java.lang.String name)
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntryType findByG_F(
+		long groupId, java.lang.String fileEntryTypeKey)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException {
-		return getPersistence().findByG_N(groupId, name);
+		return getPersistence().findByG_F(groupId, fileEntryTypeKey);
 	}
 
 	/**
-	* Returns the document library file entry type where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the document library file entry type where groupId = &#63; and fileEntryTypeKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param groupId the group ID
-	* @param name the name
+	* @param fileEntryTypeKey the file entry type key
 	* @return the matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.documentlibrary.model.DLFileEntryType fetchByG_N(
-		long groupId, java.lang.String name)
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntryType fetchByG_F(
+		long groupId, java.lang.String fileEntryTypeKey)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByG_N(groupId, name);
+		return getPersistence().fetchByG_F(groupId, fileEntryTypeKey);
 	}
 
 	/**
-	* Returns the document library file entry type where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the document library file entry type where groupId = &#63; and fileEntryTypeKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param groupId the group ID
-	* @param name the name
+	* @param fileEntryTypeKey the file entry type key
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.documentlibrary.model.DLFileEntryType fetchByG_N(
-		long groupId, java.lang.String name, boolean retrieveFromCache)
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntryType fetchByG_F(
+		long groupId, java.lang.String fileEntryTypeKey,
+		boolean retrieveFromCache)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByG_N(groupId, name, retrieveFromCache);
+		return getPersistence()
+				   .fetchByG_F(groupId, fileEntryTypeKey, retrieveFromCache);
 	}
 
 	/**
-	* Removes the document library file entry type where groupId = &#63; and name = &#63; from the database.
+	* Removes the document library file entry type where groupId = &#63; and fileEntryTypeKey = &#63; from the database.
 	*
 	* @param groupId the group ID
-	* @param name the name
+	* @param fileEntryTypeKey the file entry type key
 	* @return the document library file entry type that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portlet.documentlibrary.model.DLFileEntryType removeByG_N(
-		long groupId, java.lang.String name)
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntryType removeByG_F(
+		long groupId, java.lang.String fileEntryTypeKey)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException {
-		return getPersistence().removeByG_N(groupId, name);
+		return getPersistence().removeByG_F(groupId, fileEntryTypeKey);
 	}
 
 	/**
-	* Returns the number of document library file entry types where groupId = &#63; and name = &#63;.
+	* Returns the number of document library file entry types where groupId = &#63; and fileEntryTypeKey = &#63;.
 	*
 	* @param groupId the group ID
-	* @param name the name
+	* @param fileEntryTypeKey the file entry type key
 	* @return the number of matching document library file entry types
 	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByG_N(long groupId, java.lang.String name)
+	public static int countByG_F(long groupId, java.lang.String fileEntryTypeKey)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByG_N(groupId, name);
+		return getPersistence().countByG_F(groupId, fileEntryTypeKey);
 	}
 
 	/**

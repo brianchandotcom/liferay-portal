@@ -2779,30 +2779,30 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "dlFileEntryType.groupId = ?";
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_5 = "(" +
 		removeConjunction(_FINDER_COLUMN_GROUPID_GROUPID_2) + ")";
-	public static final FinderPath FINDER_PATH_FETCH_BY_G_N = new FinderPath(DLFileEntryTypeModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_FETCH_BY_G_F = new FinderPath(DLFileEntryTypeModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileEntryTypeModelImpl.FINDER_CACHE_ENABLED,
-			DLFileEntryTypeImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByG_N",
+			DLFileEntryTypeImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByG_F",
 			new String[] { Long.class.getName(), String.class.getName() },
 			DLFileEntryTypeModelImpl.GROUPID_COLUMN_BITMASK |
-			DLFileEntryTypeModelImpl.NAME_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_G_N = new FinderPath(DLFileEntryTypeModelImpl.ENTITY_CACHE_ENABLED,
+			DLFileEntryTypeModelImpl.FILEENTRYTYPEKEY_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_F = new FinderPath(DLFileEntryTypeModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileEntryTypeModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_N",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_F",
 			new String[] { Long.class.getName(), String.class.getName() });
 
 	/**
-	 * Returns the document library file entry type where groupId = &#63; and name = &#63; or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException} if it could not be found.
+	 * Returns the document library file entry type where groupId = &#63; and fileEntryTypeKey = &#63; or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException} if it could not be found.
 	 *
 	 * @param groupId the group ID
-	 * @param name the name
+	 * @param fileEntryTypeKey the file entry type key
 	 * @return the matching document library file entry type
 	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException if a matching document library file entry type could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public DLFileEntryType findByG_N(long groupId, String name)
+	public DLFileEntryType findByG_F(long groupId, String fileEntryTypeKey)
 		throws NoSuchFileEntryTypeException, SystemException {
-		DLFileEntryType dlFileEntryType = fetchByG_N(groupId, name);
+		DLFileEntryType dlFileEntryType = fetchByG_F(groupId, fileEntryTypeKey);
 
 		if (dlFileEntryType == null) {
 			StringBundler msg = new StringBundler(6);
@@ -2812,8 +2812,8 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 			msg.append("groupId=");
 			msg.append(groupId);
 
-			msg.append(", name=");
-			msg.append(name);
+			msg.append(", fileEntryTypeKey=");
+			msg.append(fileEntryTypeKey);
 
 			msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -2828,37 +2828,37 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	}
 
 	/**
-	 * Returns the document library file entry type where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the document library file entry type where groupId = &#63; and fileEntryTypeKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param groupId the group ID
-	 * @param name the name
+	 * @param fileEntryTypeKey the file entry type key
 	 * @return the matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public DLFileEntryType fetchByG_N(long groupId, String name)
+	public DLFileEntryType fetchByG_F(long groupId, String fileEntryTypeKey)
 		throws SystemException {
-		return fetchByG_N(groupId, name, true);
+		return fetchByG_F(groupId, fileEntryTypeKey, true);
 	}
 
 	/**
-	 * Returns the document library file entry type where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the document library file entry type where groupId = &#63; and fileEntryTypeKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param groupId the group ID
-	 * @param name the name
+	 * @param fileEntryTypeKey the file entry type key
 	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public DLFileEntryType fetchByG_N(long groupId, String name,
+	public DLFileEntryType fetchByG_F(long groupId, String fileEntryTypeKey,
 		boolean retrieveFromCache) throws SystemException {
-		Object[] finderArgs = new Object[] { groupId, name };
+		Object[] finderArgs = new Object[] { groupId, fileEntryTypeKey };
 
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_G_N,
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_G_F,
 					finderArgs, this);
 		}
 
@@ -2866,7 +2866,8 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 			DLFileEntryType dlFileEntryType = (DLFileEntryType)result;
 
 			if ((groupId != dlFileEntryType.getGroupId()) ||
-					!Validator.equals(name, dlFileEntryType.getName())) {
+					!Validator.equals(fileEntryTypeKey,
+						dlFileEntryType.getFileEntryTypeKey())) {
 				result = null;
 			}
 		}
@@ -2876,20 +2877,20 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 
 			query.append(_SQL_SELECT_DLFILEENTRYTYPE_WHERE);
 
-			query.append(_FINDER_COLUMN_G_N_GROUPID_2);
+			query.append(_FINDER_COLUMN_G_F_GROUPID_2);
 
-			boolean bindName = false;
+			boolean bindFileEntryTypeKey = false;
 
-			if (name == null) {
-				query.append(_FINDER_COLUMN_G_N_NAME_1);
+			if (fileEntryTypeKey == null) {
+				query.append(_FINDER_COLUMN_G_F_FILEENTRYTYPEKEY_1);
 			}
-			else if (name.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_G_N_NAME_3);
+			else if (fileEntryTypeKey.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_F_FILEENTRYTYPEKEY_3);
 			}
 			else {
-				bindName = true;
+				bindFileEntryTypeKey = true;
 
-				query.append(_FINDER_COLUMN_G_N_NAME_2);
+				query.append(_FINDER_COLUMN_G_F_FILEENTRYTYPEKEY_2);
 			}
 
 			String sql = query.toString();
@@ -2905,14 +2906,14 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 
 				qPos.add(groupId);
 
-				if (bindName) {
-					qPos.add(name);
+				if (bindFileEntryTypeKey) {
+					qPos.add(fileEntryTypeKey);
 				}
 
 				List<DLFileEntryType> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N,
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_F,
 						finderArgs, list);
 				}
 				else {
@@ -2923,15 +2924,16 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 					cacheResult(dlFileEntryType);
 
 					if ((dlFileEntryType.getGroupId() != groupId) ||
-							(dlFileEntryType.getName() == null) ||
-							!dlFileEntryType.getName().equals(name)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N,
+							(dlFileEntryType.getFileEntryTypeKey() == null) ||
+							!dlFileEntryType.getFileEntryTypeKey()
+												.equals(fileEntryTypeKey)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_F,
 							finderArgs, dlFileEntryType);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_N,
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_F,
 					finderArgs);
 
 				throw processException(e);
@@ -2950,34 +2952,35 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	}
 
 	/**
-	 * Removes the document library file entry type where groupId = &#63; and name = &#63; from the database.
+	 * Removes the document library file entry type where groupId = &#63; and fileEntryTypeKey = &#63; from the database.
 	 *
 	 * @param groupId the group ID
-	 * @param name the name
+	 * @param fileEntryTypeKey the file entry type key
 	 * @return the document library file entry type that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public DLFileEntryType removeByG_N(long groupId, String name)
+	public DLFileEntryType removeByG_F(long groupId, String fileEntryTypeKey)
 		throws NoSuchFileEntryTypeException, SystemException {
-		DLFileEntryType dlFileEntryType = findByG_N(groupId, name);
+		DLFileEntryType dlFileEntryType = findByG_F(groupId, fileEntryTypeKey);
 
 		return remove(dlFileEntryType);
 	}
 
 	/**
-	 * Returns the number of document library file entry types where groupId = &#63; and name = &#63;.
+	 * Returns the number of document library file entry types where groupId = &#63; and fileEntryTypeKey = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param name the name
+	 * @param fileEntryTypeKey the file entry type key
 	 * @return the number of matching document library file entry types
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByG_N(long groupId, String name) throws SystemException {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_N;
+	public int countByG_F(long groupId, String fileEntryTypeKey)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_F;
 
-		Object[] finderArgs = new Object[] { groupId, name };
+		Object[] finderArgs = new Object[] { groupId, fileEntryTypeKey };
 
 		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
 				this);
@@ -2987,20 +2990,20 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 
 			query.append(_SQL_COUNT_DLFILEENTRYTYPE_WHERE);
 
-			query.append(_FINDER_COLUMN_G_N_GROUPID_2);
+			query.append(_FINDER_COLUMN_G_F_GROUPID_2);
 
-			boolean bindName = false;
+			boolean bindFileEntryTypeKey = false;
 
-			if (name == null) {
-				query.append(_FINDER_COLUMN_G_N_NAME_1);
+			if (fileEntryTypeKey == null) {
+				query.append(_FINDER_COLUMN_G_F_FILEENTRYTYPEKEY_1);
 			}
-			else if (name.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_G_N_NAME_3);
+			else if (fileEntryTypeKey.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_F_FILEENTRYTYPEKEY_3);
 			}
 			else {
-				bindName = true;
+				bindFileEntryTypeKey = true;
 
-				query.append(_FINDER_COLUMN_G_N_NAME_2);
+				query.append(_FINDER_COLUMN_G_F_FILEENTRYTYPEKEY_2);
 			}
 
 			String sql = query.toString();
@@ -3016,8 +3019,8 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 
 				qPos.add(groupId);
 
-				if (bindName) {
-					qPos.add(name);
+				if (bindFileEntryTypeKey) {
+					qPos.add(fileEntryTypeKey);
 				}
 
 				count = (Long)q.uniqueResult();
@@ -3037,10 +3040,10 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_G_N_GROUPID_2 = "dlFileEntryType.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_N_NAME_1 = "dlFileEntryType.name IS NULL";
-	private static final String _FINDER_COLUMN_G_N_NAME_2 = "dlFileEntryType.name = ?";
-	private static final String _FINDER_COLUMN_G_N_NAME_3 = "(dlFileEntryType.name IS NULL OR dlFileEntryType.name = '')";
+	private static final String _FINDER_COLUMN_G_F_GROUPID_2 = "dlFileEntryType.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_F_FILEENTRYTYPEKEY_1 = "dlFileEntryType.fileEntryTypeKey IS NULL";
+	private static final String _FINDER_COLUMN_G_F_FILEENTRYTYPEKEY_2 = "dlFileEntryType.fileEntryTypeKey = ?";
+	private static final String _FINDER_COLUMN_G_F_FILEENTRYTYPEKEY_3 = "(dlFileEntryType.fileEntryTypeKey IS NULL OR dlFileEntryType.fileEntryTypeKey = '')";
 
 	/**
 	 * Caches the document library file entry type in the entity cache if it is enabled.
@@ -3057,9 +3060,11 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 			new Object[] { dlFileEntryType.getUuid(), dlFileEntryType.getGroupId() },
 			dlFileEntryType);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N,
-			new Object[] { dlFileEntryType.getGroupId(), dlFileEntryType.getName() },
-			dlFileEntryType);
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_F,
+			new Object[] {
+				dlFileEntryType.getGroupId(),
+				dlFileEntryType.getFileEntryTypeKey()
+			}, dlFileEntryType);
 
 		dlFileEntryType.resetOriginalValues();
 	}
@@ -3147,12 +3152,13 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 				dlFileEntryType);
 
 			args = new Object[] {
-					dlFileEntryType.getGroupId(), dlFileEntryType.getName()
+					dlFileEntryType.getGroupId(),
+					dlFileEntryType.getFileEntryTypeKey()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_N, args,
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_F, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N, args,
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_F, args,
 				dlFileEntryType);
 		}
 		else {
@@ -3171,14 +3177,15 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 			}
 
 			if ((dlFileEntryTypeModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_G_N.getColumnBitmask()) != 0) {
+					FINDER_PATH_FETCH_BY_G_F.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						dlFileEntryType.getGroupId(), dlFileEntryType.getName()
+						dlFileEntryType.getGroupId(),
+						dlFileEntryType.getFileEntryTypeKey()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_N, args,
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_F, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N, args,
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_F, args,
 					dlFileEntryType);
 			}
 		}
@@ -3206,21 +3213,22 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 		}
 
 		args = new Object[] {
-				dlFileEntryType.getGroupId(), dlFileEntryType.getName()
+				dlFileEntryType.getGroupId(),
+				dlFileEntryType.getFileEntryTypeKey()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_N, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_F, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_F, args);
 
 		if ((dlFileEntryTypeModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_G_N.getColumnBitmask()) != 0) {
+				FINDER_PATH_FETCH_BY_G_F.getColumnBitmask()) != 0) {
 			args = new Object[] {
 					dlFileEntryTypeModelImpl.getOriginalGroupId(),
-					dlFileEntryTypeModelImpl.getOriginalName()
+					dlFileEntryTypeModelImpl.getOriginalFileEntryTypeKey()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_N, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_F, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_F, args);
 		}
 	}
 
@@ -3480,6 +3488,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 		dlFileEntryTypeImpl.setUserName(dlFileEntryType.getUserName());
 		dlFileEntryTypeImpl.setCreateDate(dlFileEntryType.getCreateDate());
 		dlFileEntryTypeImpl.setModifiedDate(dlFileEntryType.getModifiedDate());
+		dlFileEntryTypeImpl.setFileEntryTypeKey(dlFileEntryType.getFileEntryTypeKey());
 		dlFileEntryTypeImpl.setName(dlFileEntryType.getName());
 		dlFileEntryTypeImpl.setDescription(dlFileEntryType.getDescription());
 

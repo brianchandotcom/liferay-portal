@@ -100,7 +100,7 @@ long assetClassPK = 0;
 
 					<div class="document-type-selector">
 
-						<liferay-ui:icon-menu direction="down" icon='<%= themeDisplay.getPathThemeImages() + "/common/copy.png" %>' id="groupSelector" message='<%= (fileEntryTypeId > 0) ? HtmlUtil.escape(fileEntryType.getName()) : "basic-document" %>' showWhenSingleIcon="<%= true %>">
+						<liferay-ui:icon-menu direction="down" icon='<%= themeDisplay.getPathThemeImages() + "/common/copy.png" %>' id="groupSelector" message='<%= (fileEntryTypeId > 0) ? HtmlUtil.escape(fileEntryType.getName(locale)) : "basic-document" %>' showWhenSingleIcon="<%= true %>">
 
 							<%
 							for (DLFileEntryType curFileEntryType : fileEntryTypes) {
@@ -117,7 +117,7 @@ long assetClassPK = 0;
 									cssClass="upload-multiple-document-types"
 									id='<%= "fileEntryType_" + String.valueOf(curFileEntryType.getFileEntryTypeId()) %>'
 									image="copy"
-									message="<%= HtmlUtil.escape(curFileEntryType.getName()) %>"
+									message="<%= HtmlUtil.escape(curFileEntryType.getName(locale)) %>"
 									method="get"
 									url="<%= viewFileEntryTypeURL %>"
 								/>

@@ -39,7 +39,7 @@ DLFileEntryType fileEntryType = (DLFileEntryType)row.getObject();
 	<c:if test="<%= DLFileEntryTypePermission.contains(permissionChecker, fileEntryType, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= DLFileEntryType.class.getName() %>"
-			modelResourceDescription="<%= fileEntryType.getName() %>"
+			modelResourceDescription="<%= fileEntryType.getName(locale) %>"
 			resourcePrimKey="<%= String.valueOf(fileEntryType.getFileEntryTypeId()) %>"
 			var="permissionsURL"
 		/>

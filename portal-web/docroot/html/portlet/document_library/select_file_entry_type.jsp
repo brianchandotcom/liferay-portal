@@ -57,7 +57,7 @@
 			sb.append("selectFileEntryType('");
 			sb.append(fileEntryType.getFileEntryTypeId());
 			sb.append("', '");
-			sb.append(HtmlUtil.escapeJS(fileEntryType.getName()));
+			sb.append(HtmlUtil.escapeJS(fileEntryType.getName(locale)));
 			sb.append("', Liferay.Util.getWindow());");
 
 			String rowHREF = sb.toString();
@@ -66,7 +66,7 @@
 			<liferay-ui:search-container-column-text
 				href="<%= rowHREF %>"
 				name="name"
-				value="<%= HtmlUtil.escape(fileEntryType.getName()) %>"
+				value="<%= HtmlUtil.escape(fileEntryType.getName(locale)) %>"
 			/>
 
 		</liferay-ui:search-container-row>

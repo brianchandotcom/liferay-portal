@@ -263,7 +263,7 @@ else if (((folderId != rootFolderId) && (parentFolderId == 0)) || ((folderId == 
 							<liferay-ui:app-view-navigation-entry
 								cssClass="folder file-entry-type"
 								dataView="<%= dataView %>"
-								entryTitle="<%= HtmlUtil.escape(fileEntryType.getName()) %>"
+								entryTitle="<%= HtmlUtil.escape(fileEntryType.getName(locale)) %>"
 								iconImage="icon-file"
 								selected="<%= (fileEntryTypeId == fileEntryType.getFileEntryTypeId()) %>"
 								viewURL="<%= viewFileEntryTypeURL.toString() %>"

@@ -167,7 +167,7 @@ if (fileVersion != null) {
 	localizeTitle= false;
 }
 else if (dlFileEntryType != null) {
-	headerTitle = LanguageUtil.format(pageContext, "new-x", new Object[] {dlFileEntryType.getName()});
+	headerTitle = LanguageUtil.format(pageContext, "new-x", new Object[] {dlFileEntryType.getName(locale)});
 }
 %>
 
@@ -352,7 +352,7 @@ else if (dlFileEntryType != null) {
 							for (DLFileEntryType curDLFileEntryType : dlFileEntryTypes) {
 							%>
 
-								<aui:option label="<%= HtmlUtil.escape(curDLFileEntryType.getName()) %>" selected="<%= (fileEntryTypeId == curDLFileEntryType.getPrimaryKey()) %>" value="<%= curDLFileEntryType.getPrimaryKey() %>" />
+								<aui:option label="<%= HtmlUtil.escape(curDLFileEntryType.getName(locale)) %>" selected="<%= (fileEntryTypeId == curDLFileEntryType.getPrimaryKey()) %>" value="<%= curDLFileEntryType.getPrimaryKey() %>" />
 
 							<%
 							}

@@ -130,7 +130,7 @@ if (fileEntryTypeId >= 0) {
 	if (fileEntryTypeId > 0) {
 		DLFileEntryType dlFileEntryType = DLFileEntryTypeLocalServiceUtil.getFileEntryType(fileEntryTypeId);
 
-		dlFileEntryTypeName = dlFileEntryType.getName();
+		dlFileEntryTypeName = dlFileEntryType.getName(locale);
 	}
 
 	SearchContext searchContext = SearchContextFactory.getInstance(request);

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Group;
@@ -45,6 +46,9 @@ import com.liferay.portlet.dynamicdatamapping.StructureDuplicateElementException
 import com.liferay.portlet.dynamicdatamapping.StructureNameException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
+
+import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -236,8 +240,11 @@ public class EditFileEntryTypeAction extends PortletAction {
 		long fileEntryTypeId = ParamUtil.getLong(
 			actionRequest, "fileEntryTypeId");
 
-		String name = ParamUtil.getString(actionRequest, "name");
-		String description = ParamUtil.getString(actionRequest, "description");
+		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "name");
+		Map<Locale, String> descriptionMap =
+			LocalizationUtil.getLocalizationMap(actionRequest, "description");
+
 		long[] ddmStructureIds = getLongArray(
 			actionRequest, "ddmStructuresSearchContainerPrimaryKeys");
 
@@ -257,14 +264,15 @@ public class EditFileEntryTypeAction extends PortletAction {
 			}
 
 			DLFileEntryTypeServiceUtil.addFileEntryType(
-				groupId, name, description, ddmStructureIds, serviceContext);
+				groupId, null, nameMap, descriptionMap, ddmStructureIds,
+				serviceContext);
 		}
 		else {
 
 			// Update file entry type
 
 			DLFileEntryTypeServiceUtil.updateFileEntryType(
-				fileEntryTypeId, name, description, ddmStructureIds,
+				fileEntryTypeId, nameMap, descriptionMap, ddmStructureIds,
 				serviceContext);
 		}
 	}

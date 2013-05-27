@@ -1605,7 +1605,8 @@ public class DLAppHelperLocalServiceImpl
 			"[$DOCUMENT_STATUS_BY_USER_NAME$]",
 			fileVersion.getStatusByUserName(), "[$DOCUMENT_TITLE$]",
 			fileVersion.getTitle(), "[$DOCUMENT_TYPE$]",
-			dlFileEntryType.getName(), "[$FOLDER_NAME$]", folderName);
+			dlFileEntryType.getName(serviceContext.getLocale()),
+			"[$FOLDER_NAME$]", folderName);
 		subscriptionSender.setContextUserPrefix("DOCUMENT");
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);

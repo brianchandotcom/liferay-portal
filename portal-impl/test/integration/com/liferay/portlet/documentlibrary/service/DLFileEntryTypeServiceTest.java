@@ -85,7 +85,7 @@ public class DLFileEntryTypeServiceTest {
 			PortalUtil.getSiteAndCompanyGroupIds(_group.getGroupId()));
 
 		for (DLFileEntryType dlFileEntryType : _dlFileEntryTypes) {
-			String name = dlFileEntryType.getName();
+			String name = dlFileEntryType.getName(LocaleUtil.getDefault());
 
 			if (name.equals(DLFileEntryTypeConstants.NAME_CONTRACT)) {
 				_contractDLFileEntryType = dlFileEntryType;

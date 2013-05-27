@@ -1,6 +1,6 @@
 <#assign dlFileEntryType = dataFactory.defaultDLFileEntryType>
 
-insert into DLFileEntryType values ('${dlFileEntryType.uuid}', ${dlFileEntryType.fileEntryTypeId}, ${dlFileEntryType.groupId}, ${dlFileEntryType.companyId}, ${dlFileEntryType.userId}, '${dlFileEntryType.userName}', '${dataFactory.getDateString(dlFileEntryType.createDate)}', '${dataFactory.getDateString(dlFileEntryType.modifiedDate)}', '${dlFileEntryType.name}', '${dlFileEntryType.description}');
+insert into DLFileEntryType values ('${dlFileEntryType.uuid}', ${dlFileEntryType.fileEntryTypeId}, ${dlFileEntryType.groupId}, ${dlFileEntryType.companyId}, ${dlFileEntryType.userId}, '${dlFileEntryType.userName}', '${dataFactory.getDateString(dlFileEntryType.createDate)}', '${dataFactory.getDateString(dlFileEntryType.modifiedDate)}', '${dlFileEntryType.fileEntryTypeKey}', '${dlFileEntryType.name}', '${dlFileEntryType.description}');
 
 <#assign ddmStructure = dataFactory.defaultDLDDMStructure>
 

@@ -129,6 +129,8 @@ public class DLFileEntryTypePersistenceTest {
 
 		newDLFileEntryType.setModifiedDate(ServiceTestUtil.nextDate());
 
+		newDLFileEntryType.setFileEntryTypeKey(ServiceTestUtil.randomString());
+
 		newDLFileEntryType.setName(ServiceTestUtil.randomString());
 
 		newDLFileEntryType.setDescription(ServiceTestUtil.randomString());
@@ -155,6 +157,8 @@ public class DLFileEntryTypePersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingDLFileEntryType.getModifiedDate()),
 			Time.getShortTimestamp(newDLFileEntryType.getModifiedDate()));
+		Assert.assertEquals(existingDLFileEntryType.getFileEntryTypeKey(),
+			newDLFileEntryType.getFileEntryTypeKey());
 		Assert.assertEquals(existingDLFileEntryType.getName(),
 			newDLFileEntryType.getName());
 		Assert.assertEquals(existingDLFileEntryType.getDescription(),
@@ -210,7 +214,8 @@ public class DLFileEntryTypePersistenceTest {
 		return OrderByComparatorFactoryUtil.create("DLFileEntryType", "uuid",
 			true, "fileEntryTypeId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "name", true, "description", true);
+			"modifiedDate", true, "fileEntryTypeKey", true, "name", true,
+			"description", true);
 	}
 
 	@Test
@@ -346,8 +351,8 @@ public class DLFileEntryTypePersistenceTest {
 		Assert.assertEquals(existingDLFileEntryTypeModelImpl.getGroupId(),
 			existingDLFileEntryTypeModelImpl.getOriginalGroupId());
 		Assert.assertTrue(Validator.equals(
-				existingDLFileEntryTypeModelImpl.getName(),
-				existingDLFileEntryTypeModelImpl.getOriginalName()));
+				existingDLFileEntryTypeModelImpl.getFileEntryTypeKey(),
+				existingDLFileEntryTypeModelImpl.getOriginalFileEntryTypeKey()));
 	}
 
 	protected DLFileEntryType addDLFileEntryType() throws Exception {
@@ -368,6 +373,8 @@ public class DLFileEntryTypePersistenceTest {
 		dlFileEntryType.setCreateDate(ServiceTestUtil.nextDate());
 
 		dlFileEntryType.setModifiedDate(ServiceTestUtil.nextDate());
+
+		dlFileEntryType.setFileEntryTypeKey(ServiceTestUtil.randomString());
 
 		dlFileEntryType.setName(ServiceTestUtil.randomString());
 

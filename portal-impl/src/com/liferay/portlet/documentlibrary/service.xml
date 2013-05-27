@@ -260,8 +260,9 @@
 
 		<!-- Other fields -->
 
-		<column name="name" type="String" />
-		<column name="description" type="String" />
+		<column name="fileEntryTypeKey" type="String" />
+		<column name="name" type="String" localized="true" />
+		<column name="description" type="String" localized="true" />
 
 		<!-- Relationships -->
 
@@ -273,9 +274,9 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" arrayable-operator="OR" />
 		</finder>
-		<finder name="G_N" return-type="DLFileEntryType" unique="true">
+		<finder name="G_F" return-type="DLFileEntryType" unique="true">
 			<finder-column name="groupId" />
-			<finder-column name="name" />
+			<finder-column name="fileEntryTypeKey" />
 		</finder>
 
 		<!-- References -->

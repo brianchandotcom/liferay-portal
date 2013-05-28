@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.PortletIdException;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -47,6 +48,7 @@ import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.EventDefinition;
+import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.model.PortletCategory;
@@ -1814,9 +1816,10 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	}
 
 	private void _readPortletXML(
-		String servletContextName, Map<String, Portlet> portletsPool,
-		PluginPackage pluginPackage, PortletApp portletApp,
-		Set<String> portletIds, long timestamp, Element portletElement) {
+			String servletContextName, Map<String, Portlet> portletsPool,
+			PluginPackage pluginPackage, PortletApp portletApp,
+			Set<String> portletIds, long timestamp, Element portletElement)
+		throws PortletIdException {
 
 		String portletName = portletElement.elementText("portlet-name");
 
@@ -1828,6 +1831,15 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		}
 
 		portletId = PortalUtil.getJsSafePortletId(portletId);
+
+		if (portletId.length() > _PORTLET_ID_MAX_LENGTH) {
+
+			// LPS-32878
+
+			throw new PortletIdException(
+				"Portlet id " + portletId + " is too long. The max length is " +
+					_PORTLET_ID_MAX_LENGTH);
+		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Reading portlet " + portletId);
@@ -2358,6 +2370,11 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 		portletApp.setSpriteImages(spriteFileName, spriteProperties);
 	}
+
+	private static final int _PORTLET_ID_MAX_LENGTH =
+		ModelHintsUtil.getMaxLength(Portlet.class.getName(), "portletId") -
+		(PortletConstants.INSTANCE_SEPARATOR.length() +
+		 PortletConstants.USER_SEPARATOR.length() + 39);
 
 	private static Log _log = LogFactoryUtil.getLog(
 		PortletLocalServiceImpl.class);

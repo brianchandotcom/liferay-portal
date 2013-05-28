@@ -965,9 +965,7 @@
 
 			inputs.each(
 				function(item, index, collection) {
-					var inArray = (arrayIndexOf(name, item.getAttribute('name')) > -1);
-
-					if (!item.compareTo(allBox) && inArray) {
+					if (!item.compareTo(allBox) && (arrayIndexOf(name, item.attr('name')) > -1)) {
 						totalBoxes++;
 
 						if (item.get('checked')) {

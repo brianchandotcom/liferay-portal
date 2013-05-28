@@ -780,12 +780,10 @@ public class JavadocFormatter {
 
 		String[] cdataParts = cdata.split(startTag);
 
-		for (int i = 0; i < cdataParts.length; i++) {
-			if (!cdataParts[i].contains(endTag)) {
-				cdataParts[i] = _getCDATA(cdataParts[i]);
+		for (String cdataPart : cdataParts) {
+			if (!cdataPart.contains(endTag)) {
+				cdataPart = _getCDATA(cdataPart);
 			}
-
-			String cdataPart = cdataParts[i];
 
 			if (cdataPart.contains("</" + exclude + ">")) {
 				sb.append(startTag);

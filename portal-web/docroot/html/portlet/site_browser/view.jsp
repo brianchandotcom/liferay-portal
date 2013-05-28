@@ -191,7 +191,7 @@ portletURL.setParameter("target", target);
 			<liferay-ui:search-container-column-text
 				href="<%= rowHREF %>"
 				name="type"
-				value="<%= LanguageUtil.get(pageContext, group.getTypeLabel()) %>"
+				value="<%= LanguageUtil.get(pageContext, group.getScopeLabel(themeDisplay)) %>"
 			/>
 		</liferay-ui:search-container-row>
 

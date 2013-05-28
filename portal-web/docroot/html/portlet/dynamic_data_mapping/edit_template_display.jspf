@@ -285,7 +285,7 @@ Map<String, TemplateVariableGroup> templateVariableGroups = TemplateContextHelpe
 		richEditor.set(STR_HEIGHT, info.offsetHeight);
 		richEditor.set('width', info.offsetWidth);
 
-		paletteDataContainer.setStyle(STR_HEIGHT, info.offsetHeight + 'px');
+		paletteDataContainer.setStyle(STR_HEIGHT, info.offsetHeight);
 	}
 
 	function setEditorContent(content) {

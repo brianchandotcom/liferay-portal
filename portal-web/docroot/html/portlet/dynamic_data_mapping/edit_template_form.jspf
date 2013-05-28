@@ -37,7 +37,7 @@ if (Validator.isNotNull(portletResourceNamespace)) {
 <aui:input name="scriptContent" type="hidden" />
 
 <aui:script>
-	window.<portlet:namespace />getAvailableFields = function(A, FormBuilder) {
+	window.<%= namespace %>getAvailableFields = function(A, FormBuilder) {
 		var availableFields = <%= scriptJSONArray.toString() %>;
 
 		A.Array.each(

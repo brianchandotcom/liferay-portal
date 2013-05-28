@@ -19,22 +19,28 @@ import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalService;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordService;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetLocalService;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetService;
+import com.liferay.portlet.dynamicdatalists.util.DDLConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureService;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalService;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateService;
+import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.template.BaseDDMTemplateHandler;
 
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 /**
  * @author Jorge Ferrer
+ * @author Marcellus Tavares
  */
 public class DDLTemplateHandler extends BaseDDMTemplateHandler {
 
@@ -63,7 +69,25 @@ public class DDLTemplateHandler extends BaseDDMTemplateHandler {
 		throws Exception {
 
 		Map<String, TemplateVariableGroup> templateVariableGroups =
-			super.getTemplateVariableGroups(classPK, language, locale);
+			new LinkedHashMap<String, TemplateVariableGroup>();
+
+		addTemplateVariableGroup(
+			templateVariableGroups, getDDLVariablesTemplateVariableGroups());
+
+		TemplateVariableGroup structureFieldsTemplateVariableGroup =
+			getStructureFieldsTemplateVariableGroup(classPK, locale);
+
+		structureFieldsTemplateVariableGroup.setLabel(
+			"data-list-record-fields");
+
+		addTemplateVariableGroup(
+			templateVariableGroups, structureFieldsTemplateVariableGroup);
+
+		addTemplateVariableGroup(
+			templateVariableGroups, getGeneralVariablesTemplateVariableGroup());
+
+		addTemplateVariableGroup(
+			templateVariableGroups, getUtilTemplateVariableGroup());
 
 		TemplateVariableGroup ddlServicesTemplateVariableGroup =
 			new TemplateVariableGroup("data-list-services");
@@ -81,6 +105,35 @@ public class DDLTemplateHandler extends BaseDDMTemplateHandler {
 			ddlServicesTemplateVariableGroup);
 
 		return templateVariableGroups;
+	}
+
+	protected TemplateVariableGroup getDDLVariablesTemplateVariableGroups() {
+		TemplateVariableGroup templateVariableGroup = new TemplateVariableGroup(
+			"data-list-variables");
+
+		templateVariableGroup.addVariable(
+			"data-definition-id", null, DDLConstants.RESERVED_DDM_STRUCTURE_ID);
+		templateVariableGroup.addVariable(
+			"template-id", null, DDLConstants.RESERVED_DDM_TEMPLATE_ID);
+		templateVariableGroup.addVariable(
+			"data-list-id", null, DDLConstants.RESERVED_RECORD_SET_ID);
+		templateVariableGroup.addVariable(
+			"data-list-name", String.class,
+			DDLConstants.RESERVED_RECORD_SET_NAME);
+		templateVariableGroup.addVariable(
+			"data-list-description", String.class,
+			DDLConstants.RESERVED_RECORD_SET_DESCRIPTION);
+
+		templateVariableGroup.addCollectionVariable(
+			"data-list-records", List.class, "records", "record",
+			DDLRecord.class, "curRecord");
+
+		return templateVariableGroup;
+	}
+
+	@Override
+	protected Class<?> getFieldVariableClass() {
+		return Field.class;
 	}
 
 }

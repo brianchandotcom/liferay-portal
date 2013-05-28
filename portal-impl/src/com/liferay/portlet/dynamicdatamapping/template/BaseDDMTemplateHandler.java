@@ -44,18 +44,33 @@ public abstract class BaseDDMTemplateHandler extends BaseTemplateHandler {
 		Map<String, TemplateVariableGroup> templateVariableGroups =
 			new LinkedHashMap<String, TemplateVariableGroup>();
 
-		if (classPK > 0) {
-			templateVariableGroups.put(
-				"fields",
-				getStructureFieldsTemplateVariableGroup(classPK, locale));
+		addTemplateVariableGroup(
+			templateVariableGroups,
+			getStructureFieldsTemplateVariableGroup(classPK, locale));
+
+		addTemplateVariableGroup(
+			templateVariableGroups, getGeneralVariablesTemplateVariableGroup());
+
+		addTemplateVariableGroup(
+			templateVariableGroups, getUtilTemplateVariableGroup());
+
+		return templateVariableGroups;
+	}
+
+	protected void addTemplateVariableGroup(
+		Map<String, TemplateVariableGroup> templateVariableGroups,
+		TemplateVariableGroup templateVariableGroup) {
+
+		if (templateVariableGroup == null) {
+			return;
 		}
 
 		templateVariableGroups.put(
-			"general-variables", getGeneralVariablesTemplateVariableGroup());
+			templateVariableGroup.getLabel(), templateVariableGroup);
+	}
 
-		templateVariableGroups.put("util", getUtilTemplateVariableGroup());
-
-		return templateVariableGroups;
+	protected Class<?> getFieldVariableClass() {
+		return TemplateNode.class;
 	}
 
 	protected TemplateVariableGroup getGeneralVariablesTemplateVariableGroup() {
@@ -78,6 +93,10 @@ public abstract class BaseDDMTemplateHandler extends BaseTemplateHandler {
 			long ddmStructureId, Locale locale)
 		throws PortalException, SystemException {
 
+		if (ddmStructureId <= 0) {
+			return null;
+		}
+
 		TemplateVariableGroup templateVariableGroup = new TemplateVariableGroup(
 			"fields");
 
@@ -97,7 +116,7 @@ public abstract class BaseDDMTemplateHandler extends BaseTemplateHandler {
 			boolean repeatable = ddmStructure.getFieldRepeatable(fieldName);
 
 			templateVariableGroup.addFieldVariable(
-				label, TemplateNode.class, fieldName, tip, dataType,
+				label, getFieldVariableClass(), fieldName, tip, dataType,
 				repeatable);
 		}
 

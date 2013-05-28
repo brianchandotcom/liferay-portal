@@ -15,7 +15,6 @@
 package com.liferay.portlet.dynamicdatamapping.util;
 
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.util.PortletKeys;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,13 +28,7 @@ public class DDMDisplayRegistryImpl implements DDMDisplayRegistry {
 
 	@Override
 	public DDMDisplay getDDMDisplay(String portletId) {
-		DDMDisplay ddmDisplay = _ddmDisplays.get(portletId);
-
-		if (ddmDisplay == null) {
-			ddmDisplay = _ddmDisplays.get(PortletKeys.DYNAMIC_DATA_MAPPING);
-		}
-
-		return ddmDisplay;
+		return _ddmDisplays.get(portletId);
 	}
 
 	@Override

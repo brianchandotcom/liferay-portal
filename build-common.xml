@@ -535,7 +535,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 					fork="true"
 					newenvironment="true"
 				>
-					<jvmarg value="-Xmx512m" />
+					<jvmarg value="-Xmx1024m" />
 					<arg value="javadoc.init=${init}" />
 					<arg value="javadoc.input.dir=${input.dir}" />
 					<arg value="javadoc.limit=${limit}" />

@@ -62,6 +62,7 @@ import org.apache.commons.lang.time.StopWatch;
  * the group and guests are passed in from the service context.
  * </p>
  *
+ * <p>
  * <pre>
  * <code>
  * resourceLocalService.addModelResources(
@@ -70,6 +71,7 @@ import org.apache.commons.lang.time.StopWatch;
  * 		serviceContext.getGroupPermissions, serviceContext.getGuestPermissions);
  * </code>
  * </pre>
+ * </p>
  *
  * <p>
  * Just prior to deleting an entity instance, you should delete its resource at
@@ -78,6 +80,7 @@ import org.apache.commons.lang.time.StopWatch;
  * individual scope.
  * </p>
  *
+ * <p>
  * <pre>
  * <code>
  * resourceLocalService.deleteResource(
@@ -85,6 +88,7 @@ import org.apache.commons.lang.time.StopWatch;
  * 		ResourceConstants.SCOPE_INDIVIDUAL, SomeWidget.getPrimaryKey());
  * </code>
  * </pre>
+ * </p>
  *
  * @author Brian Wing Shun Chan
  * @author Wilson S. Man

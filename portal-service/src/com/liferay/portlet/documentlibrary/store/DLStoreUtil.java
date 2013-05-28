@@ -39,6 +39,7 @@ import java.io.InputStream;
  * methods can be used in plugins and other portlets, as shown below.
  * </p>
  *
+ * <p>
  * <pre>
  * <code>
  * long repositoryId = CompanyConstants.SYSTEM;
@@ -54,6 +55,7 @@ import java.io.InputStream;
  * companyId, repositoryId, dirName + "/" + fileName, file);
  * </code>
  * </pre>
+ * </p>
  *
  * @author Brian Wing Shun Chan
  * @author Alexander Chow

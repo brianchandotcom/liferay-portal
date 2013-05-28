@@ -58,11 +58,13 @@ public class StringParser {
 	 * following is a valid pattern for greeting:
 	 * </p>
 	 *
+	 * <p>
 	 * <pre>
 	 * <code>
 	 * Hi {name}! How are you?
 	 * </code>
 	 * </pre>
+	 * </p>
 	 *
 	 * <p>
 	 * This pattern would match the string &quot;Hi Tom! How are you?&quot;. The
@@ -72,11 +74,13 @@ public class StringParser {
 	 * following:
 	 * </p>
 	 *
+	 * <p>
 	 * <pre>
 	 * <code>
 	 * Hi {name:[a-z]+}! How are you?
 	 * </code>
 	 * </pre>
+	 * </p>
 	 *
 	 * <p>
 	 * By default, a fragment will match anything except a forward slash or a
@@ -89,11 +93,13 @@ public class StringParser {
 	 * prefixing its name with a percent sign, as shown below:
 	 * </p>
 	 *
+	 * <p>
 	 * <pre>
 	 * <code>
 	 * /view_page/{%path:.*}
 	 * </code>
 	 * </pre>
+	 * </p>
 	 *
 	 * <p>
 	 * The format of the path fragment has also been specified to match anything
@@ -101,11 +107,13 @@ public class StringParser {
 	 * string:
 	 * </p>
 	 *
+	 * <p>
 	 * <pre>
 	 * <code>
 	 * /view_page/root/home/mysite/pages/index.htm
 	 * </code>
 	 * </pre>
+	 * </p>
 	 *
 	 * <p>
 	 * <code>path</code> would be set to
@@ -116,7 +124,6 @@ public class StringParser {
 	 * <p>
 	 * <b>Do not include capturing subgroups in the pattern.</b>
 	 * </p>
-	 *
 	 *
 	 * @param pattern the pattern string
 	 */

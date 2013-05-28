@@ -149,6 +149,7 @@ import javax.portlet.PortletPreferences;
  * example:
  * </p>
  *
+ * <p>
  * <pre>
  * <code>
  * &lt;?xml version='1.0' encoding='UTF-8'?&gt;
@@ -159,6 +160,7 @@ import javax.portlet.PortletPreferences;
  * &lt;/root&gt;
  * </code>
  * </pre>
+ * </p>
  *
  * @author Brian Wing Shun Chan
  * @author Raymond Augé

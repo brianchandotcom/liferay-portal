@@ -56,7 +56,9 @@ public class DDLDDMDisplay extends BaseDDMDisplay {
 	}
 
 	@Override
-	public long getTemplateHandlerClassNameId(DDMTemplate template) {
+	public long getTemplateHandlerClassNameId(
+		DDMTemplate template, long classNameId) {
+
 		return PortalUtil.getClassNameId(DDLRecordSet.class);
 	}
 

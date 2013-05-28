@@ -65,7 +65,8 @@ public interface DDMDisplay {
 
 	public long[] getTemplateClassNameIds(long classNameId);
 
-	public long getTemplateHandlerClassNameId(DDMTemplate template);
+	public long getTemplateHandlerClassNameId(
+		DDMTemplate template, long classNameId);
 
 	public Set<String> getTemplateLanguageTypes();
 

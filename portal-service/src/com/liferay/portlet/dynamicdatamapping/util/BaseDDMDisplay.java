@@ -169,12 +169,14 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 	}
 
 	@Override
-	public long getTemplateHandlerClassNameId(DDMTemplate template) {
+	public long getTemplateHandlerClassNameId(
+		DDMTemplate template, long classNameId) {
+
 		if (template != null) {
 			return template.getClassNameId();
 		}
 
-		return 0;
+		return classNameId;
 	}
 
 	@Override

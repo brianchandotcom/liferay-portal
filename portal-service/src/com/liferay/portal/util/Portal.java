@@ -859,8 +859,16 @@ public interface Portal {
 
 	public String getPortalWebDir();
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 * com.liferay.portal.kernel.portlet.PortletContainerSecurityUtil#getWhitelist()}
+	 */
 	public Set<String> getPortletAddDefaultResourceCheckWhitelist();
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 * com.liferay.portal.kernel.portlet.PortletContainerSecurityUtil#getWhitelistActions()}
+	 */
 	public Set<String> getPortletAddDefaultResourceCheckWhitelistActions();
 
 	/**
@@ -1095,6 +1103,9 @@ public interface Portal {
 			ActionResponse actionResponse)
 		throws Exception;
 
+	/**
+	 * @deprecated As of 6.2 with no direct replacement
+	 */
 	public boolean isAllowAddPortletDefaultResource(
 			HttpServletRequest request, Portlet portlet)
 		throws PortalException, SystemException;
@@ -1186,8 +1197,16 @@ public interface Portal {
 
 	public void resetCDNHosts();
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 * com.liferay.portal.kernel.portlet.PortletContainerSecurityUtil#resetWhitelist()}
+	 */
 	public Set<String> resetPortletAddDefaultResourceCheckWhitelist();
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 * com.liferay.portal.kernel.portlet.PortletContainerSecurityUtil#resetWhitelistActions()}
+	 */
 	public Set<String> resetPortletAddDefaultResourceCheckWhitelistActions();
 
 	public void sendError(

@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
+import com.liferay.portal.kernel.portlet.PortletContainerSecurityUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
@@ -212,7 +213,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -418,11 +418,6 @@ public class PortalImpl implements Portal {
 			PropsValues.AUTH_TOKEN_IGNORE_ACTIONS);
 		_authTokenIgnorePortlets = SetUtil.fromArray(
 			PropsValues.AUTH_TOKEN_IGNORE_PORTLETS);
-
-		// Portlet add default resource check white list
-
-		resetPortletAddDefaultResourceCheckWhitelist();
-		resetPortletAddDefaultResourceCheckWhitelistActions();
 
 		// Reserved parameter names
 
@@ -3570,12 +3565,12 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public Set<String> getPortletAddDefaultResourceCheckWhitelist() {
-		return _portletAddDefaultResourceCheckWhitelist;
+		return PortletContainerSecurityUtil.getWhitelist();
 	}
 
 	@Override
 	public Set<String> getPortletAddDefaultResourceCheckWhitelistActions() {
-		return _portletAddDefaultResourceCheckWhitelistActions;
+		return PortletContainerSecurityUtil.getWhitelistActions();
 	}
 
 	/**
@@ -5237,6 +5232,9 @@ public class PortalImpl implements Portal {
 			null, null, portletConfig, actionRequest, actionResponse);
 	}
 
+	/**
+	 * @deprecated As of 6.2 with no direct replacement
+	 */
 	@Override
 	public boolean isAllowAddPortletDefaultResource(
 			HttpServletRequest request, Portlet portlet)
@@ -5354,7 +5352,9 @@ public class PortalImpl implements Portal {
 			return true;
 		}
 
-		if (_portletAddDefaultResourceCheckWhitelist.contains(portletId)) {
+		Set<String> whiteList = PortletContainerSecurityUtil.getWhitelist();
+
+		if (whiteList.contains(portletId)) {
 			return true;
 		}
 
@@ -5367,9 +5367,10 @@ public class PortalImpl implements Portal {
 			strutsAction = ParamUtil.getString(request, "struts_action");
 		}
 
-		if (_portletAddDefaultResourceCheckWhitelistActions.contains(
-				strutsAction)) {
+		Set<String> whitelistActions =
+			PortletContainerSecurityUtil.getWhitelistActions();
 
+		if (whitelistActions.contains(strutsAction)) {
 			return true;
 		}
 
@@ -5837,25 +5838,12 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public Set<String> resetPortletAddDefaultResourceCheckWhitelist() {
-		_portletAddDefaultResourceCheckWhitelist = SetUtil.fromArray(
-			PropsValues.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST);
-
-		_portletAddDefaultResourceCheckWhitelist = Collections.unmodifiableSet(
-			_portletAddDefaultResourceCheckWhitelist);
-
-		return _portletAddDefaultResourceCheckWhitelist;
+		return PortletContainerSecurityUtil.resetWhitelist();
 	}
 
 	@Override
 	public Set<String> resetPortletAddDefaultResourceCheckWhitelistActions() {
-		_portletAddDefaultResourceCheckWhitelistActions = SetUtil.fromArray(
-			PropsValues.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST_ACTIONS);
-
-		_portletAddDefaultResourceCheckWhitelistActions =
-			Collections.unmodifiableSet(
-				_portletAddDefaultResourceCheckWhitelistActions);
-
-		return _portletAddDefaultResourceCheckWhitelistActions;
+		return PortletContainerSecurityUtil.resetWhitelistActions();
 	}
 
 	@Override
@@ -6967,6 +6955,9 @@ public class PortalImpl implements Portal {
 		return true;
 	}
 
+	/**
+	 * @deprecated As of 6.2 with no direct replacement
+	 */
 	protected boolean isPanelSelectedPortlet(
 		ThemeDisplay themeDisplay, String portletId) {
 
@@ -7101,8 +7092,6 @@ public class PortalImpl implements Portal {
 	private final AtomicInteger _portalPort = new AtomicInteger(-1);
 	private List<PortalPortEventListener> _portalPortEventListeners =
 		new ArrayList<PortalPortEventListener>();
-	private Set<String> _portletAddDefaultResourceCheckWhitelist;
-	private Set<String> _portletAddDefaultResourceCheckWhitelistActions;
 	private Set<String> _reservedParams;
 	private final AtomicInteger _securePortalPort = new AtomicInteger(-1);
 	private String[] _sortedSystemGroups;

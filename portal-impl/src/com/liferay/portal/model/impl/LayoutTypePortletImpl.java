@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletContainerSecurityUtil;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
@@ -1383,8 +1384,7 @@ public class LayoutTypePortletImpl
 					PortletKeys.PREFS_OWNER_TYPE_USER, layout.getPlid()));
 		}
 
-		Set<String> portletAddDefaultResourceCheckWhiteList =
-			PortalUtil.getPortletAddDefaultResourceCheckWhitelist();
+		Set<String> whiteList = PortletContainerSecurityUtil.getWhitelist();
 
 		for (PortletPreferences portletPreference : portletPreferences) {
 			String portletId = portletPreference.getPortletId();
@@ -1394,10 +1394,9 @@ public class LayoutTypePortletImpl
 
 			if (Validator.isNull(portletId) ||
 				columnPortlets.contains(portlet) ||
-				staticPortlets.contains(portlet) ||
-				portlet.isSystem() || portlet.isUndeployedPortlet() ||
-				!portlet.isActive() ||
-				!portletAddDefaultResourceCheckWhiteList.contains(portletId)) {
+				staticPortlets.contains(portlet) || portlet.isSystem() ||
+				portlet.isUndeployedPortlet() || !portlet.isActive() ||
+				!whiteList.contains(portletId)) {
 
 				continue;
 			}
@@ -1571,10 +1570,10 @@ public class LayoutTypePortletImpl
 
 		String[] portletIds = StringUtil.split(value);
 
-		for (int i = 0; i < portletIds.length; i++) {
+		for (String portletId : portletIds) {
 			try {
 				String rootPortletId = PortletConstants.getRootPortletId(
-					portletIds[i]);
+					portletId);
 
 				if (!PortletPermissionUtil.contains(
 						permissionChecker, rootPortletId,
@@ -1589,17 +1588,16 @@ public class LayoutTypePortletImpl
 
 			String newPortletId = null;
 
-			if (PortletConstants.hasInstanceId(portletIds[i])) {
+			if (PortletConstants.hasInstanceId(portletId)) {
 				newPortletId = PortletConstants.assemblePortletId(
-					portletIds[i], _portalPreferences.getUserId(),
+					portletId, _portalPreferences.getUserId(),
 					generateInstanceId());
 
 				copyPreferences(
-					_portalPreferences.getUserId(), portletIds[i],
-					newPortletId);
+					_portalPreferences.getUserId(), portletId, newPortletId);
 			}
 			else {
-				newPortletId = portletIds[i];
+				newPortletId = portletId;
 			}
 
 			newPortletIds.add(newPortletId);

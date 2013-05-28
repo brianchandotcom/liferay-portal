@@ -15,7 +15,7 @@
 --%>
 
 <%
-if (!denyAccess && (themeDisplay.isStatePopUp() || (layoutTypePortlet.hasStateMax() && (portlet != null)) || Validator.isNotNull(controlPanelCategory))) {
+if (themeDisplay.isStatePopUp() || (layoutTypePortlet.hasStateMax() && (portlet != null)) || Validator.isNotNull(controlPanelCategory)) {
 	String velocityTemplateId = null;
 
 	String content = null;
@@ -66,23 +66,10 @@ if (!denyAccess && (themeDisplay.isStatePopUp() || (layoutTypePortlet.hasStateMa
 	}
 }
 else {
-	String description = StringPool.BLANK;
-
-	String className = "alert alert-info";
-
-	if (denyAccess) {
-		description = LanguageUtil.get(pageContext, "you-do-not-have-the-required-permissions-to-access-this-application");
-
-		className = "alert alert-error";
-	}
-
-	if (Validator.isNull(description)) {
-		description = LanguageUtil.get(pageContext, "please-select-a-tool-from-the-left-menu");
-	}
 %>
 
-	<div class="<%= className %>">
-		<%= description %>
+	<div class="portlet-msg-info">
+		<%= LanguageUtil.get(pageContext, "please-select-a-tool-from-the-left-menu") %>
 	</div>
 
 <%

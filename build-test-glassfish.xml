@@ -74,7 +74,9 @@
 			</then>
 		</if>
 
-		<unzip src="${app.server.parent.dir}/${bundled.file.name}" dest="${app.server.parent.dir}" />
+		<exec executable="unzip">
+			<arg line="-qq ${app.server.parent.dir}/${bundled.file.name} -d ${app.server.parent.dir}" />
+		</exec>
 
 		<echo file="app.server.${user.name}.properties">app.server.type=glassfish
 

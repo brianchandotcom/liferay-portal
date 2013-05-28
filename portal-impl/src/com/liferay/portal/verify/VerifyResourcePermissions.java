@@ -18,6 +18,7 @@ import com.liferay.portal.NoSuchResourcePermissionException;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSetBranch;
@@ -72,17 +73,34 @@ public class VerifyResourcePermissions extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		long[] companyIds = PortalInstances.getCompanyIdsBySQL();
+		verifyActionIds(17, "com.liferay.portlet.bookmarks", "Site Member");
+		verifyActionIds(
+			513, "com.liferay.portlet.documentlibrary", "Site Member");
+		verifyModelAndLayout();
+	}
 
-		for (long companyId : companyIds) {
-			Role role = RoleLocalServiceUtil.getRole(
-				companyId, RoleConstants.OWNER);
+	protected void verifyActionIds(long actionId, String portlet, String role) 
+		throws Exception {
 
-			for (String[] model : _MODELS) {
-				verifyModel(role, model[0], model[1], model[2]);
-			}
+		Connection con = null;
+		PreparedStatement ps = null;
 
-			verifyLayout(role);
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"update ResourcePermission set actionIds = ? where name = ? " +
+					"and roleId = (select roleId from Role_ where name = ?) " +
+						"and primKey != 0");
+
+			ps.setLong(1, actionId);
+			ps.setString(2, portlet);
+			ps.setString(3, role);
+
+			ps.executeUpdate();
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
 		}
 	}
 
@@ -187,6 +205,21 @@ public class VerifyResourcePermissions extends VerifyProcess {
 		}
 	}
 
+	protected void verifyModelAndLayout() throws Exception {
+		long[] companyIds = PortalInstances.getCompanyIdsBySQL();
+
+		for (long companyId : companyIds) {
+			Role role = RoleLocalServiceUtil.getRole(
+				companyId, RoleConstants.OWNER);
+
+			for (String[] model : _MODELS) {
+				verifyModel(role, model[0], model[1], model[2]);
+			}
+
+			verifyLayout(role);
+		}
+	}
+		
 	private static final String[][] _MODELS = new String[][] {
 		new String[] {
 			AnnouncementsEntry.class.getName(), "AnnouncementsEntry", "entryId"

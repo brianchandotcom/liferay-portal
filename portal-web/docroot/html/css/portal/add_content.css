@@ -1,21 +1,30 @@
 @import "compass";
 
-.add-content-menu {
-	.btn-toolbar {
-		.control-group-inline {
-			display: inline;
+.lfr-add-panel {
+	bottom: 0;
+	left: 0;
+	overflow: auto;
+	padding: 10px;
+	position: fixed;
+	top: 0;
+	width: 330px;
+	z-index: 450;
 
-			.search-query, .aui-field-select {
-				margin-bottom: 0;
+	.add-content-menu {
+		.btn-toolbar {
+			.control-group-inline {
+				display: inline;
+
+				.search-query, .aui-field-select {
+					margin-bottom: 0;
+				}
+			}
+
+			.control-group-inline, .btn-group {
+				margin-right: 5px;
 			}
 		}
 
-		.control-group-inline, .btn-group {
-			margin-right: 5px;
-		}
-	}
-
-	.container-fluid {
 		.accordion-inner {
 			padding-left: 0;
 			padding-right: 0;
@@ -24,57 +33,94 @@
 				margin-left: 5px;
 			}
 		}
-	}
 
-	.lfr-content-item {
-		color: #3EA9DB;
-		cursor: move;
-		margin: 0 -15px 0 -15px;
-		padding: 0 15px 0 15px;
-		position: relative;
+		.add-content-thumbnail {
+			text-align: center;
 
-		&:hover {
-			background-color: #EEE;
-			color: #006076;
+			img {
+				max-height: 128px;
+			}
+		}
 
-			.add-content-item {
+		.lfr-content-item {
+			cursor: move;
+			position: relative;
+
+			&:hover .add-content-item {
 				display: inline;
 			}
-		}
-
-		.add-content-item {
-			cursor: pointer;
-			display: none;
-			margin-right: 15px;
-			position: absolute;
-			right: 0;
-			top: 0;
-		}
-
-		&.lfr-portlet-used {
-			color: #BBB;
-			cursor: default;
 
 			.add-content-item {
+				cursor: pointer;
 				display: none;
+				margin-right: 15px;
+				position: absolute;
+				right: 0;
+				top: 0;
+			}
+
+			&.lfr-portlet-used {
+				cursor: default;
+
+				.add-content-item {
+					display: none;
+				}
+			}
+
+			&.lfr-archived-setup {
+				padding-left: 30px;
 			}
 		}
 
-		&.lfr-archived-setup {
-			padding-left: 30px;
+		.add-content-descriptive, .add-content-icon {
+			padding: 0;
+
+			.lfr-content-item {
+				padding: 2%;
+			}
+
+			.add-content-details {
+				.add-content-title, .add-content-description {
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+					width: 100%;
+				}
+			}
 		}
-	}
 
-	.portal-add-content .portlet-msg-info {
-		color: #333;
-	}
+		.add-content-descriptive {
+			.lfr-content-item {
+				width: auto;
 
-	.lfr-install-more {
-		border-top-color: #CCC;
+				&:after {
+					clear: both;
+					content: ".";
+					display: block;
+					height: 0;
+					visibility: hidden;
+				}
+			}
+		}
 
-		a {
-			background: url(@theme_image_path@/common/install_more.png) no-repeat 0 50%;
-			font-weight: bold;
+		.add-content-icon {
+			text-align: center;
+
+			.lfr-content-item {
+				display: inline-block;
+				margin-bottom: 1em;
+				width: 140px;
+			}
+
+			.add-content-details {
+				.add-content-description {
+					display: none;
+				}
+			}
+
+			.add-content-thumbnail {
+				line-height: 128px;
+			}
 		}
 	}
 }
@@ -86,12 +132,7 @@
 	}
 
 	.asset-information {
-		font-size: 10px;
 		margin-bottom: 20px;
-
-		.user-name {
-			color: #369;
-		}
 	}
 
 	.asset-image-preview {
@@ -112,13 +153,63 @@
 	}
 
 	.asset-summary {
-		font-size: 12px;
 		margin-bottom: 20px;
+	}
+
+	.asset-title {
+		margin-bottom: 5px;
+	}
+}
+
+/*Skin*/
+
+.lfr-add-panel {
+	background-color: #FFF;
+
+	.add-content-menu {
+		.lfr-content-item {
+			color: #3EA9DB;
+
+			&:hover {
+				background-color: #EEE;
+				color: #006076;
+			}
+
+			&.lfr-portlet-used {
+				color: #BBB;
+			}
+		}
+
+		.portal-add-content .portlet-msg-info {
+			color: #333;
+		}
+
+		.lfr-install-more {
+			border-top-color: #CCC;
+
+			a {
+				background: url(@theme_image_path@/common/install_more.png) no-repeat 0 50%;
+				font-weight: bold;
+			}
+		}
+	}
+}
+
+.lfr-add-content-preview {
+	.asset-information {
+		font-size: 10px;
+
+		.user-name {
+			color: #369;
+		}
+	}
+
+	.asset-summary {
+		font-size: 12px;
 	}
 
 	.asset-title {
 		color: #369;
 		font-size: 14px;
-		margin-bottom: 5px;
 	}
 }

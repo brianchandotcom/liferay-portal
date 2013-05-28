@@ -57,47 +57,46 @@
 						</portlet:resourceURL>
 
 						<aui:form action="<%= updateContentListURL %>" name="addContentForm" onSubmit="event.preventDefault();">
-							<div class="container-fluid">
+							<div class="row-fluid">
+								<div class="btn-toolbar">
+									<aui:input cssClass="input-small search-query" inlineField="<%= true %>" label="" name="searchContentInput" type="text" />
 
-							<div class="btn-toolbar">
-								<aui:input cssClass="input-medium search-query" inlineField="<%= true %>" label="" name="searchContentInput" type="text" />
+									<%
+									String displayStyleDefault = GetterUtil.getString(SessionClicks.get(request, "liferay_addpanel_displaystyle", "descriptive"));
 
-								<%
-								String displayStyleDefault = GetterUtil.getString(SessionClicks.get(request, "liferay_addpanel_displaystyle", "descriptive"));
+									String displayStyle = ParamUtil.getString(request, "displayStyle", displayStyleDefault);
+									%>
 
-								String displayStyle = ParamUtil.getString(request, "displayStyle", displayStyleDefault);
-								%>
+									<div class="btn-group" id="<portlet:namespace />styleButtons">
+										<aui:button cssClass='<%= displayStyle.equals("icon") ? "active" : StringPool.BLANK %>' data-style="icon" icon="icon-th-large" />
 
-								<div class="btn-group" id="<portlet:namespace />styleButtons">
-									<aui:button cssClass='<%= displayStyle.equals("icon") ? "active" : StringPool.BLANK %>' data-style="icon" icon="icon-th-large" />
+										<aui:button cssClass='<%= displayStyle.equals("descriptive") ? "active" : StringPool.BLANK %>' data-style="descriptive" icon="icon-th-list" />
 
-									<aui:button cssClass='<%= displayStyle.equals("descriptive") ? "active" : StringPool.BLANK %>' data-style="descriptive" icon="icon-th-list" />
+										<aui:button cssClass='<%= displayStyle.equals("list") ? "active" : StringPool.BLANK %>' data-style="list" icon="icon-list" />
+									</div>
 
-									<aui:button cssClass='<%= displayStyle.equals("list") ? "active" : StringPool.BLANK %>' data-style="list" icon="icon-list" />
+									<aui:select cssClass="input-mini" inlineField="<%= true %>" label="" name="numItems">
+
+										<%
+										for (int curDelta : PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) {
+											if (curDelta > SearchContainer.MAX_DELTA) {
+												continue;
+											}
+										%>
+
+											<aui:option label="<%= curDelta %>" selected="<%= delta == curDelta %>" />
+
+										<%
+										}
+										%>
+
+									</aui:select>
 								</div>
 
-								<aui:select cssClass="input-mini" inlineField="<%= true %>" label="" name="numItems">
-
-									<%
-									for (int curDelta : PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) {
-										if (curDelta > SearchContainer.MAX_DELTA) {
-											continue;
-										}
-									%>
-
-										<aui:option label="<%= curDelta %>" selected="<%= delta == curDelta %>" />
-
-									<%
-									}
-									%>
-
-								</aui:select>
+								<div id="<portlet:namespace />entriesContainer">
+									<liferay-util:include page="/html/portlet/dockbar/view_resources.jsp" />
+								</div>
 							</div>
-
-							<div class="row-fluid" id="<portlet:namespace />entriesContainer">
-								<liferay-util:include page="/html/portlet/dockbar/view_resources.jsp" />
-							</div>
-						</div>
 						</aui:form>
 					</liferay-ui:section>
 
@@ -109,150 +108,147 @@
 						refererURL.setParameter("updateLayout", "true");
 						%>
 
-						<div class="container-fluid">
-							<aui:form action='<%= themeDisplay.getPathMain() + "/portal/update_layout?p_auth=" + AuthTokenUtil.getToken(request) + "&p_l_id=" + plid + "&p_v_l_s_g_id=" + themeDisplay.getSiteGroupId() %>' method="post" name="addApplicationForm">
-								<aui:input name="doAsUserId" type="hidden" value="<%= themeDisplay.getDoAsUserId() %>" />
-								<aui:input name="<%= Constants.CMD %>" type="hidden" value="template" />
-								<aui:input name="<%= WebKeys.REFERER %>" type="hidden" value="<%= refererURL.toString() %>" />
-								<aui:input name="refresh" type="hidden" value="<%= true %>" />
+						<aui:form action='<%= themeDisplay.getPathMain() + "/portal/update_layout?p_auth=" + AuthTokenUtil.getToken(request) + "&p_l_id=" + plid + "&p_v_l_s_g_id=" + themeDisplay.getSiteGroupId() %>' method="post" name="addApplicationForm">
+							<aui:input name="doAsUserId" type="hidden" value="<%= themeDisplay.getDoAsUserId() %>" />
+							<aui:input name="<%= Constants.CMD %>" type="hidden" value="template" />
+							<aui:input name="<%= WebKeys.REFERER %>" type="hidden" value="<%= refererURL.toString() %>" />
+							<aui:input name="refresh" type="hidden" value="<%= true %>" />
 
+							<div class="row-fluid">
 								<c:if test="<%= layout.isTypePortlet() %>">
 									<div class="search-panel btn-toolbar">
 										<aui:input cssClass="search-query span12" label="" name="searchApplication" type="text"  />
 									</div>
 								</c:if>
 
-								<div class="row-fluid">
+								<%
+								int portletCategoryIndex = 0;
+
+								List<Portlet> portlets = new ArrayList<Portlet>();
+
+								for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
+									Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
+
+									if ((portlet != null) && portlet.isInclude() && portlet.isActive() && PortletPermissionUtil.contains(permissionChecker, layout, portlet, ActionKeys.ADD_TO_PAGE)) {
+										portlets.add(portlet);
+									}
+								}
+								%>
+
+								<c:if test="<%= portlets.size() > 0 %>">
 
 									<%
-									int portletCategoryIndex = 0;
-
-									List<Portlet> portlets = new ArrayList<Portlet>();
-
-									for (String portletId : PropsValues.DOCKBAR_ADD_PORTLETS) {
-										Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
-
-										if ((portlet != null) && portlet.isInclude() && portlet.isActive() && PortletPermissionUtil.contains(permissionChecker, layout, portlet, ActionKeys.ADD_TO_PAGE)) {
-											portlets.add(portlet);
-										}
-									}
+									String panelId = renderResponse.getNamespace() + "portletCategory" + portletCategoryIndex;
 									%>
 
-									<c:if test="<%= portlets.size() > 0 %>">
+									<div class="lfr-add-content">
+										<liferay-ui:panel collapsible="<%= layout.isTypePortlet() %>" cssClass="lfr-content-category lfr-component panel-page-category" extended="<%= true %>" id="<%= panelId %>" persistState="<%= true %>" title='<%= LanguageUtil.get(pageContext, "highlighted") %>'>
 
-										<%
-										String panelId = renderResponse.getNamespace() + "portletCategory" + portletCategoryIndex;
-										%>
+											<aui:nav cssClass="nav-list">
 
-										<div class="lfr-add-content">
-											<liferay-ui:panel collapsible="<%= layout.isTypePortlet() %>" cssClass="lfr-content-category lfr-component panel-page-category" extended="<%= true %>" id="<%= panelId %>" persistState="<%= true %>" title='<%= LanguageUtil.get(pageContext, "highlighted") %>'>
-
-												<aui:nav cssClass="nav-list">
-
-													<%
-													for (Portlet portlet : portlets) {
-														if (!PortletPermissionUtil.contains(permissionChecker, layout, portlet.getPortletId(), ActionKeys.ADD_TO_PAGE)) {
-															continue;
-														}
-
-														boolean portletInstanceable = portlet.isInstanceable();
-
-														boolean portletUsed = layoutTypePortlet.hasPortletId(portlet.getPortletId());
-
-														boolean portletLocked = (!portletInstanceable && portletUsed);
-
-														Map<String, Object> data = new HashMap<String, Object>();
-
-														data.put("draggable", "true");
-														data.put("id", renderResponse.getNamespace() + "portletItem" + portlet.getPortletId());
-														data.put("instanceable", portletInstanceable);
-														data.put("plid", plid);
-														data.put("portlet-id", portlet.getPortletId());
-														data.put("title", PortalUtil.getPortletTitle(portlet, application, locale));
-
-														String cssClass = "lfr-content-item";
-
-														if (portletLocked) {
-															cssClass += " lfr-portlet-used";
-														}
-													%>
-
-													<aui:nav-item cssClass='<%= "lfr-content-item " + cssClass %>'
-														data='<%= data %>'
-														href=""
-														iconClass='<%= portletInstanceable ? "icon-th-large" : "icon-stop" %>'
-														label="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>">
-
-														<span <%= AUIUtil.buildData(data) %> class='add-content-item <%= portletLocked ? "lfr-portlet-used" : StringPool.BLANK %>'>
-															<liferay-ui:message key="add" />
-														</span>
-													</aui:nav-item>
-
-													<%
+												<%
+												for (Portlet portlet : portlets) {
+													if (!PortletPermissionUtil.contains(permissionChecker, layout, portlet.getPortletId(), ActionKeys.ADD_TO_PAGE)) {
+														continue;
 													}
-													%>
 
-												</aui:nav>
+													boolean portletInstanceable = portlet.isInstanceable();
 
-											</liferay-ui:panel>
-										</div>
+													boolean portletUsed = layoutTypePortlet.hasPortletId(portlet.getPortletId());
 
-										<%
-										portletCategoryIndex++;
-										%>
+													boolean portletLocked = (!portletInstanceable && portletUsed);
 
-									</c:if>
+													Map<String, Object> data = new HashMap<String, Object>();
+
+													data.put("draggable", "true");
+													data.put("id", renderResponse.getNamespace() + "portletItem" + portlet.getPortletId());
+													data.put("instanceable", portletInstanceable);
+													data.put("plid", plid);
+													data.put("portlet-id", portlet.getPortletId());
+													data.put("title", PortalUtil.getPortletTitle(portlet, application, locale));
+
+													String cssClass = "lfr-content-item";
+
+													if (portletLocked) {
+														cssClass += " lfr-portlet-used";
+													}
+												%>
+
+												<aui:nav-item cssClass='<%= cssClass %>'
+													data='<%= data %>'
+													href=""
+													iconClass='<%= portletInstanceable ? "icon-th-large" : "icon-stop" %>'
+													label="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>">
+
+													<span <%= AUIUtil.buildData(data) %> class='add-content-item <%= portletLocked ? "lfr-portlet-used" : StringPool.BLANK %>'>
+														<liferay-ui:message key="add" />
+													</span>
+												</aui:nav-item>
+
+												<%
+												}
+												%>
+
+											</aui:nav>
+
+										</liferay-ui:panel>
+									</div>
 
 									<%
-									UnicodeProperties typeSettingsProperties = layout.getTypeSettingsProperties();
-
-									Set panelSelectedPortlets = SetUtil.fromArray(StringUtil.split(typeSettingsProperties.getProperty("panelSelectedPortlets")));
-
-									PortletCategory portletCategory = (PortletCategory)WebAppPool.get(company.getCompanyId(), WebKeys.PORTLET_CATEGORY);
-
-									portletCategory = _getRelevantPortletCategory(permissionChecker, portletCategory, panelSelectedPortlets, layoutTypePortlet, layout, user);
-
-									List<PortletCategory> categories = ListUtil.fromCollection(portletCategory.getCategories());
-
-									categories = ListUtil.sort(categories, new PortletCategoryComparator(locale));
-
-									for (PortletCategory curPortletCategory : categories) {
-										if (curPortletCategory.isHidden()) {
-											continue;
-										}
-
-										request.setAttribute(WebKeys.PORTLET_CATEGORY, curPortletCategory);
-										request.setAttribute(WebKeys.PORTLET_CATEGORY_INDEX, String.valueOf(portletCategoryIndex));
+									portletCategoryIndex++;
 									%>
 
-									<liferay-util:include page="/html/portlet/dockbar/view_category.jsp" />
+								</c:if>
 
-									<%
-										portletCategoryIndex++;
+								<%
+								UnicodeProperties typeSettingsProperties = layout.getTypeSettingsProperties();
+
+								Set panelSelectedPortlets = SetUtil.fromArray(StringUtil.split(typeSettingsProperties.getProperty("panelSelectedPortlets")));
+
+								PortletCategory portletCategory = (PortletCategory)WebAppPool.get(company.getCompanyId(), WebKeys.PORTLET_CATEGORY);
+
+								portletCategory = _getRelevantPortletCategory(permissionChecker, portletCategory, panelSelectedPortlets, layoutTypePortlet, layout, user);
+
+								List<PortletCategory> categories = ListUtil.fromCollection(portletCategory.getCategories());
+
+								categories = ListUtil.sort(categories, new PortletCategoryComparator(locale));
+
+								for (PortletCategory curPortletCategory : categories) {
+									if (curPortletCategory.isHidden()) {
+										continue;
 									}
+
+									request.setAttribute(WebKeys.PORTLET_CATEGORY, curPortletCategory);
+									request.setAttribute(WebKeys.PORTLET_CATEGORY_INDEX, String.valueOf(portletCategoryIndex));
+								%>
+
+								<liferay-util:include page="/html/portlet/dockbar/view_category.jsp" />
+
+								<%
+									portletCategoryIndex++;
+								}
+								%>
+
+								<c:if test="<%= layout.isTypePortlet() %>">
+									<div class="alert alert-info">
+										<liferay-ui:message key="to-add-a-portlet-to-the-page-just-drag-it" />
+									</div>
+								</c:if>
+
+								<c:if test="<%= !layout.isTypePanel() && permissionChecker.isOmniadmin() && PortletLocalServiceUtil.hasPortlet(themeDisplay.getCompanyId(), PortletKeys.MARKETPLACE_STORE) %>">
+
+									<%
+									long controlPanelPlid = PortalUtil.getControlPanelPlid(company.getCompanyId());
+
+									PortletURLImpl marketplaceURL = new PortletURLImpl(request, PortletKeys.MARKETPLACE_STORE, controlPanelPlid, PortletRequest.RENDER_PHASE);
 									%>
 
-									<c:if test="<%= layout.isTypePortlet() %>">
-										<div class="alert alert-info">
-											<liferay-ui:message key="to-add-a-portlet-to-the-page-just-drag-it" />
-										</div>
-									</c:if>
-
-									<c:if test="<%= !layout.isTypePanel() && permissionChecker.isOmniadmin() && PortletLocalServiceUtil.hasPortlet(themeDisplay.getCompanyId(), PortletKeys.MARKETPLACE_STORE) %>">
-
-										<%
-										long controlPanelPlid = PortalUtil.getControlPanelPlid(company.getCompanyId());
-
-										PortletURLImpl marketplaceURL = new PortletURLImpl(request, PortletKeys.MARKETPLACE_STORE, controlPanelPlid, PortletRequest.RENDER_PHASE);
-										%>
-
-										<p class="lfr-install-more">
-											<aui:a href='<%= HttpUtil.removeParameter(marketplaceURL.toString(), "controlPanelCategory") %>' label="install-more-applications" />
-										</p>
-									</c:if>
-								</div>
-							</aui:form>
-						</div>
+									<p class="lfr-install-more">
+										<aui:a href='<%= HttpUtil.removeParameter(marketplaceURL.toString(), "controlPanelCategory") %>' label="install-more-applications" />
+									</p>
+								</c:if>
+							</div>
+						</aui:form>
 					</liferay-ui:section>
 				</liferay-ui:tabs>
 			</div>

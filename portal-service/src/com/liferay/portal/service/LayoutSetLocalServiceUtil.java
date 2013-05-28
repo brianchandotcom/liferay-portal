@@ -313,7 +313,7 @@ public class LayoutSetLocalServiceUtil {
 	prototype is link enabled
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
-	* @deprecated As of 6.1, replaced by {@link
+	* @deprecated As of 6.1.0, replaced by {@link
 	#updateLayoutSetPrototypeLinkEnabled(long, boolean, boolean,
 	String)}
 	*/

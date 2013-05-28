@@ -838,7 +838,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	}
 
 	/**
-	* @deprecated As of 6.1, renamed to {@link #isRegularSite}
+	* @deprecated As of 6.1.0, renamed to {@link #isRegularSite}
 	*/
 	@Override
 	public boolean isCommunity() {

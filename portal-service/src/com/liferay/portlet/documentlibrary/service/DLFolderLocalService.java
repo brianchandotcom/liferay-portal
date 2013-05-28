@@ -369,7 +369,7 @@ public interface DLFolderLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated As of 6.2, replaced by more general {@link #addFolder(long,
+	* @deprecated As of 6.2.0, replaced by more general {@link #addFolder(long,
 	long, long, boolean, long, String, String, boolean,
 	ServiceContext)}
 	*/

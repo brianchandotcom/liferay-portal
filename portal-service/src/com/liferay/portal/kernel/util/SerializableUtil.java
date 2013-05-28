@@ -24,7 +24,7 @@ import java.io.ObjectOutputStream;
 /**
  * @author     Alexander Chow
  * @author     Igor Spasic
- * @deprecated As of 6.1, moved to {@link com.liferay.util.SerializableUtil}
+ * @deprecated As of 6.1.0, moved to {@link com.liferay.util.SerializableUtil}
  */
 public class SerializableUtil {
 

@@ -858,7 +858,7 @@ public class PortalUtil {
 	}
 
 	/**
-	 * @deprecated As of 6.2 renamed to {@link #getSiteGroupId(long)}
+	 * @deprecated As of 6.2.0 renamed to {@link #getSiteGroupId(long)}
 	 */
 	public static long getParentGroupId(long scopeGroupId)
 		throws PortalException, SystemException {
@@ -1474,7 +1474,7 @@ public class PortalUtil {
 	}
 
 	/**
-	 * @deprecated As of 6.1, renamed to {@link #isGroupAdmin(User, long)}
+	 * @deprecated As of 6.1.0, renamed to {@link #isGroupAdmin(User, long)}
 	 */
 	public static boolean isCommunityAdmin(User user, long groupId)
 		throws Exception {
@@ -1483,7 +1483,7 @@ public class PortalUtil {
 	}
 
 	/**
-	 * @deprecated As of 6.1, renamed to {@link #isGroupOwner(User, long)}
+	 * @deprecated As of 6.1.0, renamed to {@link #isGroupOwner(User, long)}
 	 */
 	public static boolean isCommunityOwner(User user, long groupId)
 		throws Exception {

@@ -200,8 +200,7 @@ public class PHPPortlet extends GenericPortlet {
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"Setting php.ini property: " + key +
-							" = " + value);
+						"Setting php.ini property: " + key + " = " + value);
 				}
 
 				phpIni.setProperty(key, value);

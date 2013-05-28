@@ -746,7 +746,7 @@ AUI.add(
 						}
 					};
 
-					var entriesContainer = A.one('#' + instance.ns('documentLibraryContainer'));
+					var entriesContainer = instance.one('#documentLibraryContainer');
 
 					createNavigationOverlay(entriesContainer.one(SELECTOR_DOCUMENT_ENTRIES_PAGINATION));
 					createNavigationOverlay(entriesContainer.one('.app-view-taglib.lfr-header-row'));
@@ -1227,6 +1227,8 @@ AUI.add(
 
 				var maxFileSize = instance._maxFileSize;
 
+				var invalidSizeText = sub(instance._invalidFileSizeText, [maxFileSize / 1024]);
+
 				return AArray.partition(
 					data,
 					function(item, index, collection) {
@@ -1235,17 +1237,16 @@ AUI.add(
 						var size = item.get('size') || 0;
 
 						if ((maxFileSize !== 0) && (size > maxFileSize)) {
-							var maxFileSizeString = (maxFileSize / 1024) + '';
-
-							errorMessage = sub(instance._invalidFileSizeText, maxFileSizeString);
+							errorMessage = invalidSizeText;
 						}
 						else if (size === 0) {
 							errorMessage = instance._zeroByteFileText;
 						}
 
 						item.errorMessage = errorMessage;
-						item.name = item.get('name');
 						item.size = size;
+
+						item.name = item.get('name');
 
 						return !errorMessage;
 					}

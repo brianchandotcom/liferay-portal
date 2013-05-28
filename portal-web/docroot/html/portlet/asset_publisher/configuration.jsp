@@ -173,15 +173,15 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 						layoutSiteBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 
 						String layoutSiteBrowserURLString = HttpUtil.addParameter(layoutSiteBrowserURL.toString(), "doAsGroupId", scopeGroupId);
-
-						String taglibLayoutSiteBrowserURL = "javascript:Liferay.Util.openWindow({dialog: {zIndex: Liferay.zIndex.WINDOW + 2}, id: '" + liferayPortletResponse.getNamespace() + "selectGroup', title: '" + LanguageUtil.get(pageContext, "select-pages") + "', uri:'" + HtmlUtil.escapeURL(layoutSiteBrowserURLString) + "'});";
 						%>
 
 						<liferay-ui:icon
-							cssClass="highlited"
+							cssClass="scope-selector highlited"
+							id="selectGroup"
 							image="add"
 							message='<%= LanguageUtil.get(pageContext, "pages") + StringPool.TRIPLE_PERIOD %>'
-							url="<%= taglibLayoutSiteBrowserURL %>"
+							method="get"
+							url="<%= layoutSiteBrowserURLString %>"
 						/>
 					</c:if>
 
@@ -204,15 +204,15 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 						parentSiteBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 
 						String parentSiteBrowserURLString = HttpUtil.addParameter(parentSiteBrowserURL.toString(), "doAsGroupId", scopeGroupId);
-
-						String taglibParentSiteBrowserURL = "javascript:Liferay.Util.openWindow({dialog: {zIndex: Liferay.zIndex.WINDOW + 2}, id: '" + liferayPortletResponse.getNamespace() + "selectGroup', title: '" + LanguageUtil.get(pageContext, "select-parent-site") + "', uri:'" + HtmlUtil.escapeURL(parentSiteBrowserURLString) + "'});";
 						%>
 
 						<liferay-ui:icon
-							cssClass="highlited"
+							cssClass="scope-selector highlited"
+							id="selectGroup"
 							image="add"
 							message='<%= LanguageUtil.get(pageContext, "parent-site") + StringPool.TRIPLE_PERIOD %>'
-							url="<%= taglibParentSiteBrowserURL %>"
+							method="get"
+							url="<%= parentSiteBrowserURLString %>"
 						/>
 					</c:if>
 
@@ -230,15 +230,15 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 						childrenSiteBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 
 						String childrenSiteBrowserURLString = HttpUtil.addParameter(childrenSiteBrowserURL.toString(), "doAsGroupId", scopeGroupId);
-
-						String taglibChildrenSiteBrowserURL = "javascript:Liferay.Util.openWindow({dialog: {zIndex: Liferay.zIndex.WINDOW + 2}, id: '" + liferayPortletResponse.getNamespace() + "selectGroup', title: '" + LanguageUtil.get(pageContext, "select-child-site") + "', uri:'" + HtmlUtil.escapeURL(childrenSiteBrowserURLString) + "'});";
 						%>
 
 						<liferay-ui:icon
-							cssClass="highlited"
+							cssClass="scope-selector highlited"
+							id="selectChildGroup"
 							image="add"
 							message='<%= LanguageUtil.get(pageContext, "child-site") + StringPool.TRIPLE_PERIOD %>'
-							url="<%= taglibChildrenSiteBrowserURL %>"
+							method="get"
+							url="<%= childrenSiteBrowserURLString %>"
 						/>
 					</c:if>
 
@@ -255,15 +255,15 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 						siteBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 
 						String siteBrowserURLString = HttpUtil.addParameter(siteBrowserURL.toString(), "doAsGroupId", scopeGroupId);
-
-						String taglibSiteBrowserURL = "javascript:Liferay.Util.openWindow({dialog: {zIndex: Liferay.zIndex.WINDOW + 2}, id: '" + liferayPortletResponse.getNamespace() + "selectGroup', title: '" + LanguageUtil.get(pageContext, "select-site") + "', uri:'" + HtmlUtil.escapeURL(siteBrowserURLString) + "'});";
 						%>
 
 						<liferay-ui:icon
-							cssClass="highlited"
+							cssClass="scope-selector highlited"
+							id="selectManageableGroup"
 							image="add"
 							message='<%= LanguageUtil.get(pageContext, "site") + StringPool.TRIPLE_PERIOD %>'
-							url="<%= taglibSiteBrowserURL %>"
+							method="get"
+							url="<%= siteBrowserURLString %>"
 						/>
 					</c:if>
 				</liferay-ui:icon-menu>
@@ -292,6 +292,29 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 		</c:when>
 	</c:choose>
 </aui:form>
+
+<aui:script use="aui-base">
+	A.getBody().delegate(
+		'click',
+		function (event) {
+			event.preventDefault();
+
+			var link = event.currentTarget;
+
+			Liferay.Util.openWindow(
+				{
+					dialog: {
+						zIndex: Liferay.zIndex.WINDOW + 2
+					},
+					id: link.attr('id'),
+					title: link.html(),
+					uri: link.attr('href')
+				}
+			);
+		},
+		'.scope-selector a'
+	);
+</aui:script>
 
 <aui:script>
 	function <portlet:namespace />chooseSelectionStyle() {

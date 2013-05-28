@@ -23,12 +23,14 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.Team;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.TeamLocalServiceUtil;
@@ -123,10 +125,13 @@ public class PermissionImporter {
 					subtype, null);
 			}
 
+			Group group = GroupLocalServiceUtil.getGroup(groupId);
+
 			String roleName = role.getName();
 
 			if (!layout.isPrivateLayout() ||
-				!roleName.equals(RoleConstants.GUEST)) {
+				!roleName.equals(RoleConstants.GUEST) ||
+				group.isLayoutSetPrototype()) {
 
 				List<String> actions = getActions(roleElement);
 

@@ -62,6 +62,7 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -78,13 +79,7 @@ import java.util.Set;
  */
 public class Transformer {
 
-	public Transformer(
-		String transformerListenerPropertyKey, String errorTemplatePropertyKey,
-		boolean restricted) {
-
-		_transformerListenerClassNames = SetUtil.fromArray(
-			PropsUtil.getArray(transformerListenerPropertyKey));
-
+	public Transformer(String errorTemplatePropertyKey, boolean restricted) {
 		Set<String> langTypes = TemplateManagerUtil.getSupportedLanguageTypes(
 			errorTemplatePropertyKey);
 
@@ -98,6 +93,16 @@ public class Transformer {
 		}
 
 		_restricted = restricted;
+	}
+
+	public Transformer(
+		String transformerListenerPropertyKey, String errorTemplatePropertyKey,
+		boolean restricted) {
+
+		this(errorTemplatePropertyKey, restricted);
+
+		_transformerListenerClassNames = SetUtil.fromArray(
+			PropsUtil.getArray(transformerListenerPropertyKey));
 	}
 
 	public String transform(
@@ -668,6 +673,6 @@ public class Transformer {
 	private Map<String, String> _errorTemplateIds =
 		new HashMap<String, String>();
 	private boolean _restricted;
-	private Set<String> _transformerListenerClassNames;
+	private Set<String> _transformerListenerClassNames = new HashSet<String>();
 
 }

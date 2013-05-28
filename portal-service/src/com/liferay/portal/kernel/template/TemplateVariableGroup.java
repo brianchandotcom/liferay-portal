@@ -107,6 +107,10 @@ public class TemplateVariableGroup {
 		_autocompleteEnabled = autocompleteEnabled;
 	}
 
+	public void setLabel(String label) {
+		_label = label;
+	}
+
 	private boolean _autocompleteEnabled = true;
 	private String _label;
 	private Collection<TemplateVariableDefinition>

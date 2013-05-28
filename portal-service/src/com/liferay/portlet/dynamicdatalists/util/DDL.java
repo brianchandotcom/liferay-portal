@@ -17,14 +17,12 @@ package com.liferay.portlet.dynamicdatalists.util;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
@@ -37,10 +35,6 @@ import javax.servlet.http.HttpServletResponse;
  * @author Eduardo Lundgren
  */
 public interface DDL {
-
-	public void addAllReservedEls(
-		Element rootElement, Map<String, String> tokens,
-		DDLRecordSet recordSet);
 
 	public JSONObject getRecordJSONObject(DDLRecord record) throws Exception;
 

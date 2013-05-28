@@ -437,7 +437,7 @@ public class JSONWebServiceActionsManagerImpl
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
-		JSONWebServiceActionParameters.class);
+		JSONWebServiceActionsManagerImpl.class);
 
 	private SortedArrayList<JSONWebServiceActionConfig>
 		_jsonWebServiceActionConfigs =

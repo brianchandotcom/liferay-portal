@@ -78,7 +78,8 @@ public abstract class BaseMessageStatusMessageListener
 		return _responseSender;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(BaseMessageListener.class);
+	private static Log _log = LogFactoryUtil.getLog(
+		BaseMessageStatusMessageListener.class);
 
 	private MessageSender _responseSender;
 	private SingleDestinationMessageSender _statusSender;

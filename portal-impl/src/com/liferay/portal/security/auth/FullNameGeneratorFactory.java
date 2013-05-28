@@ -59,7 +59,7 @@ public class FullNameGeneratorFactory {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
-		FullNameValidatorFactory.class);
+		FullNameGeneratorFactory.class);
 
 	private static volatile FullNameGenerator _fullNameGenerator;
 	private static FullNameGenerator _originalFullNameGenerator;

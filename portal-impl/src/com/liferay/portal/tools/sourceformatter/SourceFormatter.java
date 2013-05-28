@@ -1625,6 +1625,21 @@ public class SourceFormatter {
 					newContent, match, replacement);
 			}
 
+			pattern = Pattern.compile(
+				"Log _log = LogFactoryUtil.getLog\\(\n*\t*(.+)\\.class\\)");
+
+			Matcher matcher = pattern.matcher(newContent);
+
+			if (matcher.find()) {
+				String logClassName = matcher.group(1);
+
+				if (!logClassName.equals(className)) {
+					newContent = StringUtil.replaceLast(
+						newContent, logClassName + ".class)",
+						className + ".class)");
+				}
+			}
+
 			if (newContent.contains("*/\npackage ")) {
 				_processErrorMessage(fileName, "package: " + fileName);
 			}

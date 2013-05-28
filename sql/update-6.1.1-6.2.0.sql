@@ -500,6 +500,8 @@ alter table Role_ add modifiedDate DATE null;
 drop table Roles_Permissions;
 
 alter table SocialActivity add activitySetId LONG;
+alter table SocialActivity add parentClassNameId LONG;
+alter table SocialActivity add parentClassPK LONG;
 
 alter table SocialActivityCounter add active_ BOOLEAN;
 

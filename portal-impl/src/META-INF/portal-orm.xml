@@ -3524,6 +3524,8 @@
 			</basic>
 			<basic name="extraData" />
 			<basic name="receiverUserId" />
+			<basic name="parentClassNameId" />
+			<basic name="parentClassPK" />
 			<transient name="className" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />

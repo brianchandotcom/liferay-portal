@@ -165,7 +165,7 @@ long assetClassPK = 0;
 					%>
 
 					<aui:script use="aui-base">
-						var groupSelectorMenu = A.one('#<portlet:namespace />groupSelector ul');
+						var groupSelectorMenu = A.one('#<portlet:namespace />groupSelector').ancestor();
 
 						groupSelectorMenu.delegate(
 							'click',

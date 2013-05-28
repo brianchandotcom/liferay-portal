@@ -69,6 +69,7 @@ import com.liferay.portalweb.socialofficeprofile.profile.sousviewaddtagmyaccount
 import com.liferay.portalweb.socialofficeprofile.profile.unblockccuserprofile.UnblockCCUserProfileTests;
 import com.liferay.portalweb.socialofficeprofile.profile.unfollowccuserprofile.UnfollowCCUserProfileTests;
 import com.liferay.portalweb.socialofficeprofile.profile.viewactivitiesdashboardactivitiesprofile.ViewActivitiesDashboardActivitiesProfileTests;
+import com.liferay.portalweb.socialofficeprofile.profile.viewactivitiesprofileimageprofile.ViewActivitiesProfileImageProfileTests;
 import com.liferay.portalweb.socialofficeprofile.profile.viewactivitiessitesactivitiesprofile.ViewActivitiesSitesActivitiesProfileTests;
 
 import junit.framework.Test;
@@ -140,6 +141,7 @@ public class ProfileTestPlan extends BaseTestSuite {
 		testSuite.addTest(UnfollowCCUserProfileTests.suite());
 		testSuite.addTest(
 			ViewActivitiesDashboardActivitiesProfileTests.suite());
+		testSuite.addTest(ViewActivitiesProfileImageProfileTests.suite());
 		testSuite.addTest(ViewActivitiesSitesActivitiesProfileTests.suite());
 
 		return testSuite;

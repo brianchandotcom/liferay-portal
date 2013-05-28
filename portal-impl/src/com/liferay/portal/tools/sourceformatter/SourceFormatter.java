@@ -1821,11 +1821,24 @@ public class SourceFormatter {
 
 			String trimmedLine = StringUtil.trimLeading(line);
 
-			if (trimmedLine.startsWith("* @deprecated") &&
-				!trimmedLine.startsWith("* @deprecated As of")) {
+			if (trimmedLine.startsWith("* @deprecated")) {
+				if (!trimmedLine.startsWith("* @deprecated As of ")) {
+					line = StringUtil.replace(
+						line, "* @deprecated", "* @deprecated As of 6.2.0");
+				}
+				else {
+					String version = trimmedLine.substring(20);
 
-				line = StringUtil.replace(
-					line, "* @deprecated", "* @deprecated As of 6.2.0");
+					version = StringUtil.split(version, StringPool.SPACE)[0];
+
+					version = StringUtil.replace(
+						version, StringPool.COMMA, StringPool.BLANK);
+
+					if (StringUtil.count(version, StringPool.PERIOD) == 1) {
+						line = StringUtil.replaceFirst(
+							line, version, version + ".0");
+					}
+				}
 			}
 
 			if (trimmedLine.startsWith(StringPool.EQUAL)) {

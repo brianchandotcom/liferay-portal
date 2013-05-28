@@ -827,7 +827,7 @@ public class JavadocFormatter {
 		else {
 			cdata = cdata.replaceAll(
 				"(?s)\\s*<(p|[ou]l)>\\s*(.*?)\\s*</\\1>\\s*",
-							"\n\n<$1>\n$2\n</$1>\n\n");
+				"\n\n<$1>\n$2\n</$1>\n\n");
 			cdata = cdata.replaceAll(
 				"(?s)\\s*<li>\\s*(.*?)\\s*</li>\\s*", "\n<li>\n$1\n</li>\n");
 			cdata = StringUtil.replace(cdata, "</li>\n\n<li>", "</li>\n<li>");

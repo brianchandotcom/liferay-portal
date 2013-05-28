@@ -1,12 +1,13 @@
 AUI.add(
 	'liferay-input-localized',
 	function(A) {
-		var defaultLanguageId = themeDisplay.getLanguageId();
+		var defaultLanguageId = themeDisplay.getDefaultLanguageId();
+		var userLanguageId = themeDisplay.getLanguageId();
 
 		var availableLanguages = Liferay.Language.available;
 
 		var availableLanguageIds = A.Array.dedupe(
-			[defaultLanguageId].concat(A.Object.keys(availableLanguages))
+			[defaultLanguageId, userLanguageId].concat(A.Object.keys(availableLanguages))
 		);
 
 		var InputLocalized = A.Component.create(
@@ -179,8 +180,16 @@ AUI.add(
 									formatter: function(title) {
 										var flagNode = this.get('trigger');
 										var value = flagNode.getData('value');
+										var formattedValue = availableLanguages[value];
 
-										return availableLanguages[value];
+										if (value === defaultLanguageId) {
+											formattedValue += ' - ' + Liferay.Language.get('default');
+										}
+										else if (value === userLanguageId) {
+											formattedValue += ' - ' + Liferay.Language.get('current');
+										}
+
+										return formattedValue;
 									},
 									trigger: '.palette-item',
 									visible: false

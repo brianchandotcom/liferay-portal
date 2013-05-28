@@ -14,15 +14,17 @@
 
 package com.liferay.portal.kernel.messaging;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class HotDeployMessageListener extends BaseMessageListener {
 
-	public HotDeployMessageListener(String servletContextName) {
-		_servletContextName = servletContextName;
+	public HotDeployMessageListener(String[] servletContextNames) {
+		_servletContextNames = servletContextNames;
 	}
 
 	@Override
@@ -30,26 +32,28 @@ public class HotDeployMessageListener extends BaseMessageListener {
 		String servletContextName = GetterUtil.getString(
 			message.getString("servletContextName"));
 
-		if (!servletContextName.equals(_servletContextName)) {
+		if (Validator.isNotNull(_servletContextNames) &&
+			!ArrayUtil.contains(_servletContextNames, servletContextName)) {
+
 			return;
 		}
 
 		String command = GetterUtil.getString(message.getString("command"));
 
 		if (command.equals("deploy")) {
-			onDeploy();
+			onDeploy(message);
 		}
 		else if (command.equals("undeploy")) {
-			onUndeploy();
+			onUndeploy(message);
 		}
 	}
 
-	protected void onDeploy() throws Exception {
+	protected void onDeploy(Message message) throws Exception {
 	}
 
-	protected void onUndeploy() throws Exception {
+	protected void onUndeploy(Message message) throws Exception {
 	}
 
-	private String _servletContextName;
+	private String[] _servletContextNames;
 
 }

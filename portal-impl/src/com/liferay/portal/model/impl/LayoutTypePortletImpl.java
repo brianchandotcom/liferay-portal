@@ -1394,9 +1394,8 @@ public class LayoutTypePortletImpl
 
 			if (Validator.isNull(portletId) ||
 				columnPortlets.contains(portlet) ||
-				staticPortlets.contains(portlet) ||
-				portlet.isSystem() || portlet.isUndeployedPortlet() ||
-				!portlet.isActive() ||
+				staticPortlets.contains(portlet) || portlet.isSystem() ||
+				portlet.isUndeployedPortlet() || !portlet.isActive() ||
 				!whiteList.contains(portletId)) {
 
 				continue;

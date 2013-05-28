@@ -9,6 +9,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd"
 >
+	<bean id="com.liferay.mail.util.HookFactory" class="com.liferay.mail.util.HookFactory" />
 	<bean id="com.liferay.portal.events.StartupHelperUtil" class="com.liferay.portal.events.StartupHelperUtil">
 		<property name="startupHelper">
 			<bean class="com.liferay.portal.events.StartupHelper" />
@@ -227,7 +228,6 @@
 			<bean class="com.liferay.portal.util.LockListenerRegistryImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.mail.util.HookFactory" class="com.liferay.mail.util.HookFactory" />
 	<bean id="com.liferay.portal.kernel.management.PortalManagerUtil" class="com.liferay.portal.kernel.management.PortalManagerUtil">
 		<property name="portalManager">
 			<bean class="com.liferay.portal.management.BasePortalManager" />
@@ -269,6 +269,9 @@
 		<property name="cometHandlerPool">
 			<bean class="com.liferay.portal.kernel.poller.comet.CometHandlerPool" />
 		</property>
+	</bean>
+	<bean id="com.liferay.portal.kernel.portlet.PortletContainerSecurityUtil" class="com.liferay.portal.kernel.portlet.PortletContainerSecurityUtil">
+		<property name="portletContainerSecurity" ref="com.liferay.portlet.PortletContainerSecurity" />
 	</bean>
 	<bean id="com.liferay.portal.kernel.portlet.PortletContainerUtil" class="com.liferay.portal.kernel.portlet.PortletContainerUtil">
 		<property name="portletContainer" ref="com.liferay.portlet.RestrictPortletContainerWrapper" />
@@ -830,9 +833,6 @@
 	<bean id="com.liferay.portlet.PortletContainerImpl" class="com.liferay.portlet.PortletContainerImpl" />
 	<bean id="com.liferay.portlet.PortletContainerSecurity" class="com.liferay.portlet.PortletContainerSecurityImpl">
 		<constructor-arg name="portletContainer" ref="com.liferay.portlet.PortletContainerImpl" />
-	</bean>
-	<bean id="com.liferay.portal.kernel.portlet.PortletContainerSecurityUtil" class="com.liferay.portal.kernel.portlet.PortletContainerSecurityUtil">
-		<property name="portletContainerSecurity" ref="com.liferay.portlet.PortletContainerSecurity"/>
 	</bean>
 	<bean id="com.liferay.portlet.RestrictPortletContainerWrapper" class="com.liferay.portlet.RestrictPortletContainerWrapper" factory-method="createRestrictPortletContainerWrapper">
 		<constructor-arg name="portletContainer" ref="com.liferay.portlet.PortletContainerSecurity" />

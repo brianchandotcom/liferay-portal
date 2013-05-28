@@ -72,10 +72,9 @@ public class PortletContainerSecurityImpl implements PortletContainer,
 	PortletContainerSecurity {
 
 	public PortletContainerSecurityImpl(PortletContainer portletContainer) {
-
 		this._portletContainer = portletContainer;
 
-		// Portlet add default resource check white list
+		// Portlet white list
 
 		resetWhitelist();
 		resetWhitelistActions();
@@ -671,8 +670,8 @@ public class PortletContainerSecurityImpl implements PortletContainer,
 	private static Log _log = LogFactoryUtil.getLog(
 		PortletContainerSecurityImpl.class);
 
+	private PortletContainer _portletContainer;
 	private Set<String> _whitelist;
 	private Set<String> _whitelistActions;
-	private PortletContainer _portletContainer;
 
 }

@@ -23,19 +23,19 @@ import java.util.Set;
  */
 public class PortletContainerSecurityUtil {
 
+	public static PortletContainerSecurity getPortletContainerSecurity() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			PortletContainerSecurity.class);
+
+		return _portletContainerSecurity;
+	}
+
 	public static Set<String> getWhitelist() {
 		return getPortletContainerSecurity().getWhitelist();
 	}
 
 	public static Set<String> getWhitelistActions() {
 		return getPortletContainerSecurity().getWhitelistActions();
-	}
-
-	public static PortletContainerSecurity getPortletContainerSecurity() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			PortletContainerSecurity.class);
-
-		return _portletContainerSecurity;
 	}
 
 	public static Set<String> resetWhitelist() {

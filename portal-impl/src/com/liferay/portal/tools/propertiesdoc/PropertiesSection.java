@@ -55,7 +55,8 @@ public class PropertiesSection {
 	public boolean hasComments() {
 		if ((_comments != null) && !_comments.isEmpty()) {
 			return true;
-		} else {
+		}
+		else {
 			return false;
 		}
 	}
@@ -69,7 +70,7 @@ public class PropertiesSection {
 	}
 
 	public boolean hasPropertyComments() {
-		if ((_propertyComments != null) && (_propertyComments.isEmpty())) {
+		if ((_propertyComments != null) && _propertyComments.isEmpty()) {
 			return true;
 		}
 		else {

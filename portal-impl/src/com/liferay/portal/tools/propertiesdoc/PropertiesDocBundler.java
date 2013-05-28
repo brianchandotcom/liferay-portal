@@ -14,27 +14,28 @@
 
 package com.liferay.portal.tools.propertiesdoc;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.liferay.portal.freemarker.FreeMarkerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ArgumentsUtil;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author Jesse Rao
  * @author James Hinkey
  */
 public class PropertiesDocBundler {
-	
+
 	public static void main(String[] args) {
 		try {
 			new PropertiesDocBundler (args);
@@ -47,15 +48,17 @@ public class PropertiesDocBundler {
 	public PropertiesDocBundler(String[] args) {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 
-		String propertiesDir = GetterUtil.getString(arguments
-				.get("propertiesDir"));
+		String propertiesDir = GetterUtil.getString(
+				arguments.get("propertiesDir"));
+
 		String lpVersion = GetterUtil.getString(arguments.get("lpVersion"));
-		
+
 		Map<String, Object> context = new HashMap<String, Object>();
 
 		context.put("lpVersion", lpVersion);
 
-		List<PropertiesHtmlFile> htmlFiles = new ArrayList<PropertiesHtmlFile>();
+		List<PropertiesHtmlFile> htmlFiles =
+				new ArrayList<PropertiesHtmlFile>();
 
 		File[] files = new File(propertiesDir).listFiles();
 
@@ -69,20 +72,20 @@ public class PropertiesDocBundler {
 
 		try {
 			String indexHTMLFileName = "./properties/index.html";
-			
+
 			File indexHTMLFile = new File (indexHTMLFileName);
-			
+
 			Writer writer = new FileWriter(indexHTMLFile);
-			
+
 			try {
-				FreeMarkerUtil.process("com/liferay/portal/tools/"
-						+ "propertiesdoc/dependencies/index.ftl", context,
-						writer);
+				FreeMarkerUtil.process(
+						"com/liferay/portal/tools/propertiesdoc" +
+						"/dependencies/index.ftl", context, writer);
 			}
 			catch (Exception e) {
 				e.printStackTrace();
 			}
-			
+
 			writer.flush();
 		}
 		catch (IOException ioe) {
@@ -99,8 +102,8 @@ public class PropertiesDocBundler {
 		public PropertiesHtmlFile(String fileName) {
 			_fileName = fileName;
 
-			_propertiesFileName = StringUtil.replaceLast(_fileName, ".html",
-				StringPool.BLANK);
+			_propertiesFileName = StringUtil.replaceLast(
+					_fileName, ".html", StringPool.BLANK);
 		}
 
 		public String getFileName() {
@@ -108,7 +111,7 @@ public class PropertiesDocBundler {
 		}
 
 		public String getPropertiesFileName() {
-	
+
 			return _propertiesFileName;
 		}
 

@@ -1379,6 +1379,12 @@
 			<type>java.lang.Object</type>
 		</attribute>
 		<attribute>
+			<name>bootstrapHelpTextClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
 			<name>changesContext</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

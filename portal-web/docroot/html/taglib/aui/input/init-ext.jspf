@@ -60,12 +60,14 @@ if (choiceField && Validator.isNull(inlineLabel)) {
 
 String addOnCss = StringPool.BLANK;
 
-if (Validator.isNotNull(prefix)) {
-	addOnCss = addOnCss.concat("input-prepend ");
-}
+if (bootstrapHelpTextClass.equals("add-on")) {
+	if (Validator.isNotNull(prefix)) {
+		addOnCss = addOnCss.concat("input-prepend ");
+	}
 
-if (Validator.isNotNull(suffix)) {
-	addOnCss = addOnCss.concat("input-append");
+	if (Validator.isNotNull(suffix)) {
+		addOnCss = addOnCss.concat("input-append");
+	}
 }
 
 String controlGroupCss = "control-group";

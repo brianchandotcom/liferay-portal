@@ -76,6 +76,6 @@ public class LayoutSetPrototypeLayoutSetListener
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
-		LayoutSetPrototypeLayoutListener.class);
+		LayoutSetPrototypeLayoutSetListener.class);
 
 }

@@ -717,8 +717,7 @@ public class LicenseUtil {
 	private static final String _PROXY_USER_NAME = GetterUtil.getString(
 		PropsUtil.get("license.proxy.username"));
 
-	private static Log _log = LogFactoryUtil.getLog(
-		DefaultLicenseManagerImpl.class);
+	private static Log _log = LogFactoryUtil.getLog(LicenseUtil.class);
 
 	private static String _encryptedSymmetricKey;
 	private static MethodHandler _getServerInfoMethodHandler =

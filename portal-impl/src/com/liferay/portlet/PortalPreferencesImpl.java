@@ -244,7 +244,8 @@ public class PortalPreferencesImpl
 
 	private static final String _RANDOM_KEY = "r";
 
-	private static Log _log = LogFactoryUtil.getLog(PortalPreferences.class);
+	private static Log _log = LogFactoryUtil.getLog(
+		PortalPreferencesImpl.class);
 
 	private boolean _signedIn;
 	private long _userId;

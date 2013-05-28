@@ -364,7 +364,8 @@ public class ClassLoaderAggregateProperties extends AggregatedProperties {
 		return delay;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(AggregatedProperties.class);
+	private static Log _log = LogFactoryUtil.getLog(
+		ClassLoaderAggregateProperties.class);
 
 	private CompositeConfiguration _baseCompositeConfiguration =
 		new CompositeConfiguration();

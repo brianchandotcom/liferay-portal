@@ -354,7 +354,7 @@ public class InvokerFilterHelper {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(InvokerFilter.class);
+	private static Log _log = LogFactoryUtil.getLog(InvokerFilterHelper.class);
 
 	private Map<String, FilterConfig> _filterConfigs =
 		new HashMap<String, FilterConfig>();

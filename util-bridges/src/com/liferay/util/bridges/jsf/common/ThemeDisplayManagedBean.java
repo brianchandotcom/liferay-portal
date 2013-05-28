@@ -49,6 +49,7 @@ public class ThemeDisplayManagedBean {
 		return null;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(User.class);
+	private static Log _log = LogFactoryUtil.getLog(
+		ThemeDisplayManagedBean.class);
 
 }

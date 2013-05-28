@@ -475,7 +475,7 @@ public class AudioProcessorImpl
 	private static final String[] _PREVIEW_TYPES =
 		PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_CONTAINERS;
 
-	private static Log _log = LogFactoryUtil.getLog(AudioProcessor.class);
+	private static Log _log = LogFactoryUtil.getLog(AudioProcessorImpl.class);
 
 	private Set<String> _audioMimeTypes = SetUtil.fromArray(
 		PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_MIME_TYPES);

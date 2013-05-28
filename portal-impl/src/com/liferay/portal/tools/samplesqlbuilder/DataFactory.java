@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -492,9 +491,18 @@ public class DataFactory {
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
 		_defaultDLFileEntryType.setCreateDate(nextFutureDate());
 		_defaultDLFileEntryType.setModifiedDate(nextFutureDate());
-		_defaultDLFileEntryType.setName(
-			DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT,
-			LocaleUtil.getDefault());
+		_defaultDLFileEntryType.setFileEntryTypeKey(
+			DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT.toUpperCase());
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><root ");
+		sb.append("available-locales=\"en_US\" default-locale=\"en_US\">");
+		sb.append("<Name language-id=\"en_US\">");
+		sb.append(DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT);
+		sb.append("</Name></root>");
+
+		_defaultDLFileEntryType.setName(sb.toString());
 
 		_defaultDLDDMStructure = newDDMStructure(
 			_guestGroupId, getDLFileEntryClassNameId(), "TIKARAWMETADATA",

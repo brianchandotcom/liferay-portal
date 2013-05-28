@@ -25,16 +25,13 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -61,14 +58,13 @@ import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMImpl;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
-import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
-import com.liferay.portlet.journal.util.JournalUtil;
-import com.liferay.util.portlet.PortletRequestUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
@@ -84,28 +80,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 @DoPrivileged
 public class DDLImpl implements DDL {
-
-	@Override
-	public void addAllReservedEls(
-		Element rootElement, Map<String, String> tokens,
-		DDLRecordSet recordSet) {
-
-		JournalUtil.addReservedEl(
-			rootElement, tokens, DDLConstants.RESERVED_RECORD_SET_ID,
-			String.valueOf(recordSet.getRecordSetId()));
-
-		JournalUtil.addReservedEl(
-			rootElement, tokens, DDLConstants.RESERVED_RECORD_SET_NAME,
-			recordSet.getName());
-
-		JournalUtil.addReservedEl(
-			rootElement, tokens, DDLConstants.RESERVED_RECORD_SET_DESCRIPTION,
-			recordSet.getDescription());
-
-		JournalUtil.addReservedEl(
-			rootElement, tokens, DDLConstants.RESERVED_DDM_STRUCTURE_ID,
-			String.valueOf(recordSet.getDDMStructureId()));
-	}
 
 	@Override
 	public JSONObject getRecordJSONObject(DDLRecord record) throws Exception {
@@ -319,42 +293,39 @@ public class DDLImpl implements DDL {
 			RenderResponse renderResponse)
 		throws Exception {
 
+		Map<String, Object> contextObjects = new HashMap<String, Object>();
+
+		contextObjects.put(
+			DDLConstants.RESERVED_DDM_STRUCTURE_ID,
+			recordSet.getDDMStructureId());
+		contextObjects.put(
+			DDLConstants.RESERVED_DDM_TEMPLATE_ID, ddmTemplateId);
+
+		contextObjects.put(
+			DDLConstants.RESERVED_RECORD_SET_ID, recordSet.getRecordSetId());
+
+		Locale locale = themeDisplay.getLocale();
+
+		contextObjects.put(
+			DDLConstants.RESERVED_RECORD_SET_NAME, recordSet.getName(locale));
+		contextObjects.put(
+			DDLConstants.RESERVED_RECORD_SET_DESCRIPTION,
+			recordSet.getDescription(locale));
+
 		String viewMode = ParamUtil.getString(renderRequest, "viewMode");
 
-		String languageId = LanguageUtil.getLanguageId(renderRequest);
-
-		String xmlRequest = PortletRequestUtil.toXML(
-			renderRequest, renderResponse);
-
-		if (Validator.isNull(xmlRequest)) {
-			xmlRequest = "<request />";
+		if (Validator.isNull(viewMode)) {
+			viewMode = Constants.VIEW;
 		}
 
-		Map<String, String> tokens = JournalUtil.getTokens(
-			recordSet.getGroupId(), themeDisplay, xmlRequest);
-
-		tokens.put("template_id", StringUtil.valueOf(ddmTemplateId));
-
-		String xml = StringPool.BLANK;
-
-		Document document = SAXReaderUtil.createDocument();
-
-		Element rootElement = document.addElement("root");
-
-		Document requestDocument = SAXReaderUtil.read(xmlRequest);
-
-		rootElement.add(requestDocument.getRootElement().createCopy());
-
-		addAllReservedEls(rootElement, tokens, recordSet);
-
-		xml = DDMXMLUtil.formatXML(document);
+		contextObjects.put("viewMode", viewMode);
 
 		DDMTemplate template = DDMTemplateLocalServiceUtil.getTemplate(
 			ddmTemplateId);
 
 		return _transformer.transform(
-			themeDisplay, tokens, viewMode, languageId, xml,
-			template.getScript(), template.getLanguage());
+			themeDisplay, contextObjects, template.getScript(),
+			template.getLanguage());
 	}
 
 	@Override

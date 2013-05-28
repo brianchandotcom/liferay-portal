@@ -23,6 +23,9 @@ public class DDLConstants {
 	public static final String RESERVED_DDM_STRUCTURE_ID =
 		"reserved_ddm_structure_id";
 
+	public static final String RESERVED_DDM_TEMPLATE_ID =
+		"reserved_ddm_template_id";
+
 	public static final String RESERVED_RECORD_SET_DESCRIPTION =
 		"reserved_record_set_description";
 

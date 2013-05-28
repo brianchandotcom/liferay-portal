@@ -134,89 +134,6 @@ public class ThreadTest {
 	}
 
 	@Test
-	public void testNew10() throws Exception {
-		final ClassLoader classLoader = getClass().getClassLoader();
-
-		FutureTask<Exception> futureTask = new FutureTask<Exception>(
-			new Callable<Exception>() {
-
-				@Override
-				public Exception call() throws Exception {
-					try {
-						Thread.currentThread().setContextClassLoader(
-							classLoader);
-					}
-					catch (SecurityException se) {
-						return se;
-					}
-
-					return null;
-				}
-
-			}
-		);
-
-		Thread thread = new Thread(futureTask);
-
-		thread.start();
-
-		Exception exception = futureTask.get();
-
-		Assert.assertNotNull(exception);
-		Assert.assertTrue(exception instanceof SecurityException);
-	}
-
-	@Test
-	public void testNew11() throws Exception {
-		FutureTask<Exception> futureTask = new FutureTask<Exception>(
-			new Callable<Exception>() {
-
-				@Override
-				public Exception call() throws Exception {
-					try {
-						Thread.setDefaultUncaughtExceptionHandler(null);
-					}
-					catch (SecurityException se) {
-						return se;
-					}
-
-					return null;
-				}
-
-			}
-		);
-
-		Thread thread = new Thread(futureTask);
-
-		thread.start();
-
-		Exception exception = futureTask.get();
-
-		Assert.assertNotNull(exception);
-		Assert.assertTrue(exception instanceof SecurityException);
-	}
-
-	@Test
-	public void testNew12() throws Exception {
-		try {
-			Thread thread = new Thread(
-				new Runnable() {
-
-					@Override
-					public void run() {
-					}
-
-				}
-			);
-
-			thread.start();
-		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
-	}
-
-	@Test
 	public void testNew2() throws Exception {
 		try {
 			Thread thread = new Thread() {
@@ -405,6 +322,89 @@ public class ThreadTest {
 		Exception exception = futureTask.get();
 
 		Assert.assertNull(exception);
+	}
+
+	@Test
+	public void testNew10() throws Exception {
+		final ClassLoader classLoader = getClass().getClassLoader();
+
+		FutureTask<Exception> futureTask = new FutureTask<Exception>(
+			new Callable<Exception>() {
+
+				@Override
+				public Exception call() throws Exception {
+					try {
+						Thread.currentThread().setContextClassLoader(
+							classLoader);
+					}
+					catch (SecurityException se) {
+						return se;
+					}
+
+					return null;
+				}
+
+			}
+		);
+
+		Thread thread = new Thread(futureTask);
+
+		thread.start();
+
+		Exception exception = futureTask.get();
+
+		Assert.assertNotNull(exception);
+		Assert.assertTrue(exception instanceof SecurityException);
+	}
+
+	@Test
+	public void testNew11() throws Exception {
+		FutureTask<Exception> futureTask = new FutureTask<Exception>(
+			new Callable<Exception>() {
+
+				@Override
+				public Exception call() throws Exception {
+					try {
+						Thread.setDefaultUncaughtExceptionHandler(null);
+					}
+					catch (SecurityException se) {
+						return se;
+					}
+
+					return null;
+				}
+
+			}
+		);
+
+		Thread thread = new Thread(futureTask);
+
+		thread.start();
+
+		Exception exception = futureTask.get();
+
+		Assert.assertNotNull(exception);
+		Assert.assertTrue(exception instanceof SecurityException);
+	}
+
+	@Test
+	public void testNew12() throws Exception {
+		try {
+			Thread thread = new Thread(
+				new Runnable() {
+
+					@Override
+					public void run() {
+					}
+
+				}
+			);
+
+			thread.start();
+		}
+		catch (SecurityException se) {
+			Assert.fail();
+		}
 	}
 
 	@Test

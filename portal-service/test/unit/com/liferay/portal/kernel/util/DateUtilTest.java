@@ -87,6 +87,11 @@ public class DateUtilTest extends PowerMockito {
 	}
 
 	@Test
+	public void testGetISOFormatLength8() {
+		_testGetISOFormat("01234567","yyyyMMdd");
+	}
+
+	@Test
 	public void testGetISOFormatLength12() {
 		_testGetISOFormat("012345678901","yyyyMMddHHmm");
 	}
@@ -104,11 +109,6 @@ public class DateUtilTest extends PowerMockito {
 	@Test
 	public void testGetISOFormatLength15() {
 		_testGetISOFormat("012345678901234","yyyyMMdd'T'HHmmss");
-	}
-
-	@Test
-	public void testGetISOFormatLength8() {
-		_testGetISOFormat("01234567","yyyyMMdd");
 	}
 
 	@Test

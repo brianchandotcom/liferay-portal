@@ -71,6 +71,102 @@ public class ClassLoaderTest {
 	}
 
 	@Test
+	public void testGet2() throws Exception {
+		try {
+			ClassLoader.getSystemClassLoader();
+
+			Assert.fail();
+		}
+		catch (SecurityException se) {
+		}
+	}
+
+	@Test
+	public void testGet3() throws Exception {
+		try {
+			User defaultUser = UserLocalServiceUtil.getDefaultUser(
+				TestPropsValues.getCompanyId());
+
+			defaultUser.toEscapedModel();
+		}
+		catch (SecurityException se) {
+			Assert.fail();
+		}
+	}
+
+	@Test
+	public void testGet4() throws Exception {
+		try {
+			BeanPropertyTest.class.getClassLoader();
+		}
+		catch (SecurityException se) {
+			Assert.fail();
+		}
+	}
+
+	@Test
+	public void testGet5() throws Exception {
+		try {
+			Class<?> clazz = getClass();
+
+			clazz.getClassLoader();
+		}
+		catch (SecurityException se) {
+			Assert.fail();
+		}
+	}
+
+	@Test
+	public void testGet6() throws Exception {
+		try {
+			Object.class.getClassLoader();
+		}
+		catch (SecurityException se) {
+			Assert.fail();
+		}
+	}
+
+	@Test
+	public void testGet7() throws Exception {
+		try {
+			Object object = new Object();
+
+			Class<?> clazz = object.getClass();
+
+			clazz.getClassLoader();
+		}
+		catch (SecurityException se) {
+			Assert.fail();
+		}
+	}
+
+	@Test
+	public void testGet8() throws Exception {
+		try {
+			Portal portal = PortalUtil.getPortal();
+
+			Class<?> clazz = portal.getClass();
+
+			clazz.getClassLoader();
+
+			Assert.fail();
+		}
+		catch (SecurityException se) {
+		}
+	}
+
+	@Test
+	public void testGet9() throws Exception {
+		try {
+			PortalClassLoaderUtil.getClassLoader();
+
+			Assert.fail();
+		}
+		catch (SecurityException se) {
+		}
+	}
+
+	@Test
 	public void testGet10() throws Exception {
 		try {
 			PortalRuntimePermission.checkGetClassLoader("");
@@ -180,17 +276,6 @@ public class ClassLoaderTest {
 	}
 
 	@Test
-	public void testGet2() throws Exception {
-		try {
-			ClassLoader.getSystemClassLoader();
-
-			Assert.fail();
-		}
-		catch (SecurityException se) {
-		}
-	}
-
-	@Test
 	public void testGet20() throws Exception {
 		try {
 			User.class.getClassLoader();
@@ -210,91 +295,6 @@ public class ClassLoaderTest {
 			Class<?> clazz = userLocalService.getClass();
 
 			clazz.getClassLoader();
-
-			Assert.fail();
-		}
-		catch (SecurityException se) {
-		}
-	}
-
-	@Test
-	public void testGet3() throws Exception {
-		try {
-			User defaultUser = UserLocalServiceUtil.getDefaultUser(
-				TestPropsValues.getCompanyId());
-
-			defaultUser.toEscapedModel();
-		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
-	}
-
-	@Test
-	public void testGet4() throws Exception {
-		try {
-			BeanPropertyTest.class.getClassLoader();
-		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
-	}
-
-	@Test
-	public void testGet5() throws Exception {
-		try {
-			Class<?> clazz = getClass();
-
-			clazz.getClassLoader();
-		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
-	}
-
-	@Test
-	public void testGet6() throws Exception {
-		try {
-			Object.class.getClassLoader();
-		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
-	}
-
-	@Test
-	public void testGet7() throws Exception {
-		try {
-			Object object = new Object();
-
-			Class<?> clazz = object.getClass();
-
-			clazz.getClassLoader();
-		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
-	}
-
-	@Test
-	public void testGet8() throws Exception {
-		try {
-			Portal portal = PortalUtil.getPortal();
-
-			Class<?> clazz = portal.getClass();
-
-			clazz.getClassLoader();
-
-			Assert.fail();
-		}
-		catch (SecurityException se) {
-		}
-	}
-
-	@Test
-	public void testGet9() throws Exception {
-		try {
-			PortalClassLoaderUtil.getClassLoader();
 
 			Assert.fail();
 		}

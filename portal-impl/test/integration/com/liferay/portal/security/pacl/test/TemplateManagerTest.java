@@ -51,22 +51,6 @@ public class TemplateManagerTest {
 	}
 
 	@Test
-	public void test10() throws Exception {
-		Template template = TemplateManagerUtil.getTemplate(
-			TemplateConstants.LANG_TYPE_VM,
-			new StringTemplateResource("123.vm", "#set($sum = 5 + 6)$sum"),
-			false);
-
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
-
-		template.processTemplate(unsyncStringWriter);
-
-		String result = unsyncStringWriter.toString();
-
-		Assert.assertEquals(11, GetterUtil.getInteger(result));
-	}
-
-	@Test
 	public void test2() throws Exception {
 		Template template = TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_FTL,
@@ -191,6 +175,22 @@ public class TemplateManagerTest {
 		String result = unsyncStringWriter.toString();
 
 		Assert.assertEquals("PASS", result);
+	}
+
+	@Test
+	public void test10() throws Exception {
+		Template template = TemplateManagerUtil.getTemplate(
+			TemplateConstants.LANG_TYPE_VM,
+			new StringTemplateResource("123.vm", "#set($sum = 5 + 6)$sum"),
+			false);
+
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		template.processTemplate(unsyncStringWriter);
+
+		String result = unsyncStringWriter.toString();
+
+		Assert.assertEquals(11, GetterUtil.getInteger(result));
 	}
 
 }

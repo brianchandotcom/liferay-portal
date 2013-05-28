@@ -20,7 +20,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.servlet.WebDirDetector;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContextPathUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PathUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -95,6 +97,7 @@ public class FileChecker extends BaseChecker {
 			"${com.sun.aas.installRoot}",
 			"${file.separator}",
 			"${java.io.tmpdir}",
+			"${java.home}", // LPS-34711, add JAVA_HOME as a replaceable value
 			"${jboss.home.dir}",
 			"${jetty.home}",
 			"${jonas.base}",
@@ -132,6 +135,7 @@ public class FileChecker extends BaseChecker {
 			System.getProperty("com.sun.aas.installRoot"),
 			System.getProperty("file.separator"),
 			System.getProperty("java.io.tmpdir"),
+			System.getenv("JAVA_HOME"), // LPS-34711, add JAVA_HOME as a replaceable value.
 			System.getProperty("jboss.home.dir"),
 			System.getProperty("jetty.home"), System.getProperty("jonas.base"),
 			_portalDir, PropsValues.LIFERAY_HOME,
@@ -316,6 +320,31 @@ public class FileChecker extends BaseChecker {
 		String value = getProperty(key);
 
 		if (value != null) {
+			int pos = value.indexOf(_ENV_PREFIX);
+
+			while (pos >= 0) {
+				int end = value.indexOf(StringPool.CLOSE_CURLY_BRACE, pos);
+
+				String propertyName = value.substring(pos + 6, end);
+
+				String propertyValue = GetterUtil.getString(
+					System.getenv(propertyName));
+
+				String nameEncoded = _ENV_PREFIX.concat(propertyName).concat(
+					StringPool.CLOSE_CURLY_BRACE);
+
+				if (!ArrayUtil.contains(
+						_defaultReadPathsFromArray, nameEncoded)) {
+
+					_defaultReadPathsFromArray = ArrayUtil.append(
+						_defaultReadPathsFromArray, nameEncoded);
+					_defaultReadPathsToArray = ArrayUtil.append(
+						_defaultReadPathsToArray, propertyValue);
+				}
+
+				pos = value.indexOf(_ENV_PREFIX, end + 1);
+			}
+
 			value = StringUtil.replace(
 				value, _defaultReadPathsFromArray, _defaultReadPathsToArray);
 
@@ -444,6 +473,8 @@ public class FileChecker extends BaseChecker {
 		getPermissions(
 			"security-manager-files-write", FILE_PERMISSION_ACTION_WRITE);
 	}
+
+	private static final String _ENV_PREFIX = "${env:";
 
 	private static Log _log = LogFactoryUtil.getLog(FileChecker.class);
 

@@ -21,7 +21,7 @@ if (Validator.isNotNull(scriptContent)) {
 	script = scriptContent;
 }
 
-long templateHandlerClassNameId = ddmDisplay.getTemplateHandlerClassNameId(template);
+long templateHandlerClassNameId = ddmDisplay.getTemplateHandlerClassNameId(template, classNameId);
 
 Map<String, TemplateVariableGroup> templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(templateHandlerClassNameId, classPK, language, locale);
 %>

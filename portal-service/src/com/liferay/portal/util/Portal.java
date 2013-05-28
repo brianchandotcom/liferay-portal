@@ -128,6 +128,12 @@ public interface Portal {
 	 */
 	public void addPageTitle(String title, HttpServletRequest request);
 
+	public void addPortalMessage(HttpServletRequest request, String message);
+
+	public void addPortalMessage(
+		HttpServletRequest request, String message, String cssClass,
+		boolean animation, int timeout);
+
 	/**
 	 * Adds the portal port event listener to the portal. The listener will be
 	 * notified whenever the portal port is set.

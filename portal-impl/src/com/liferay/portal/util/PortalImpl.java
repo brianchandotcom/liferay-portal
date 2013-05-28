@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.servlet.PersistentHttpServletRequestWrapper;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
@@ -543,6 +544,22 @@ public class PortalImpl implements Portal {
 		}
 
 		titleListMergeable.add(title);
+	}
+
+	@Override
+	public void addPortalMessage(HttpServletRequest request, String message) {
+		SessionMessages.add(request, "portalMessageMessage", message);
+	}
+
+	@Override
+	public void addPortalMessage(
+		HttpServletRequest request, String message, String cssClass,
+		boolean animation, int timeout) {
+
+		SessionMessages.add(request, "portalMessageMessage", message);
+		SessionMessages.add(request, "portalMessageAnimation", animation);
+		SessionMessages.add(request, "portalMessageCssClass", cssClass);
+		SessionMessages.add(request, "portalMessageTimeout", timeout);
 	}
 
 	@Override

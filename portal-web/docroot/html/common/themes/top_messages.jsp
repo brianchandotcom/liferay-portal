@@ -26,3 +26,36 @@
 		</c:if>
 	</div>
 </c:if>
+
+<%
+String message = GetterUtil.getString(SessionMessages.get(request, "portalMessageMessage"));
+
+if (Validator.isNotNull(message)) {
+	String cssClass = GetterUtil.getString(SessionMessages.get(request, "portalMessageCssClass"), "alert-info");
+	int timeout = GetterUtil.getInteger(SessionMessages.get(request, "portalMessageTimeout"), 10000);
+	boolean useAnimation = GetterUtil.getBoolean(SessionMessages.get(request, "portalMessageAnimation"), true);
+%>
+
+	<aui:script use="liferay-notice">
+		var banner = new Liferay.Notice(
+			{
+				animationConfig:
+					{
+						duration: 2,
+						top: '0px'
+					},
+				closeText: false,
+				content: '<liferay-ui:message key="<%= message %>" /><button type="button" class="close">&times;</button>',
+				noticeClass: 'hide taglib-portal-message <%= cssClass %>',
+				timeout: <%= timeout %>,
+				toggleText: false,
+				useAnimation: <%= useAnimation %>
+			}
+		);
+
+		banner.show();
+	</aui:script>
+
+<%
+}
+%>

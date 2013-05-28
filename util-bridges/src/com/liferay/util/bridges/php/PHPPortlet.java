@@ -187,14 +187,14 @@ public class PHPPortlet extends GenericPortlet {
 
 			servletConfig = new DynamicServletConfig(servletConfig, params);
 
-			Properties phpProperties = PropsUtil.getProperties(
+			Properties properties = PropsUtil.getProperties(
 				PropsKeys.PORTLET_BRIDGES_PHP_PROPERTIES, true);
 
 			QuercusServlet qs = (QuercusServlet)quercusServlet;
 
 			PhpIni phpIni = qs.createPhpIni();
 
-			for (Map.Entry<Object, Object> entry : phpProperties.entrySet()) {
+			for (Map.Entry<Object, Object> entry : properties.entrySet()) {
 				String key = (String)entry.getKey();
 				String value = (String)entry.getValue();
 

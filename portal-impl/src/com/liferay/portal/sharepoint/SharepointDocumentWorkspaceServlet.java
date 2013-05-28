@@ -305,6 +305,7 @@ public class SharepointDocumentWorkspaceServlet extends HttpServlet {
 		return doc.asXML();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(SharepointServlet.class);
+	private static Log _log = LogFactoryUtil.getLog(
+		SharepointDocumentWorkspaceServlet.class);
 
 }

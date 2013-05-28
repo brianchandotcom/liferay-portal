@@ -319,7 +319,7 @@ public class JavadocManagerImpl implements JavadocManager {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(JavadocManager.class);
+	private static Log _log = LogFactoryUtil.getLog(JavadocManagerImpl.class);
 
 	private Map<Class<?>, JavadocClass> _javadocClasses =
 		new HashMap<Class<?>, JavadocClass>();

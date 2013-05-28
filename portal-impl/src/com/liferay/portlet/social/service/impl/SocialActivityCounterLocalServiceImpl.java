@@ -44,7 +44,6 @@ import com.liferay.portlet.social.model.SocialActivityCounterDefinition;
 import com.liferay.portlet.social.model.SocialActivityDefinition;
 import com.liferay.portlet.social.model.SocialActivityLimit;
 import com.liferay.portlet.social.model.SocialActivityProcessor;
-import com.liferay.portlet.social.service.SocialActivityCounterLocalService;
 import com.liferay.portlet.social.service.base.SocialActivityCounterLocalServiceBaseImpl;
 import com.liferay.portlet.social.service.persistence.SocialActivityCounterFinder;
 import com.liferay.portlet.social.util.SocialCounterPeriodUtil;
@@ -1289,6 +1288,6 @@ public class SocialActivityCounterLocalServiceImpl
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
-		SocialActivityCounterLocalService.class);
+		SocialActivityCounterLocalServiceImpl.class);
 
 }

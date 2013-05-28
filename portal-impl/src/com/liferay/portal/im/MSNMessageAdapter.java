@@ -49,7 +49,7 @@ public class MSNMessageAdapter extends MsnAdapter {
 		_msn.removeMsnListener(this);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(MSNConnector.class);
+	private static Log _log = LogFactoryUtil.getLog(MSNMessageAdapter.class);
 
 	private String _msg;
 	private MSNMessenger _msn;

@@ -772,6 +772,30 @@ public class JavadocFormatter {
 			fileName, originalContent, javadocLessContent, document);
 	}
 
+	private String _formatCDATA(String cdata, String exclude) {
+		String startTag = "<" + exclude + ">";
+		String endTag = "</" + exclude + ">";
+
+		String[] sections = cdata.split(startTag);
+		for (int i=0; i < sections.length; i++) {
+			if (!sections[i].contains(endTag)) {
+				sections[i] = _getCDATA(sections[i]);
+			}
+		}
+
+		StringBundler sb = new StringBundler();
+
+		for (String section : sections) {
+			if (section.contains("</" + exclude + ">")) {
+				sb.append(startTag);
+			}
+
+			sb.append(section);
+		}
+
+		return sb.toString();
+	}
+
 	private String _formatInlines(String text) {
 
 		// Capitalize ID
@@ -794,63 +818,43 @@ public class JavadocFormatter {
 		if (cdata == null) {
 			return StringPool.BLANK;
 		}
+		else if (cdata.contains("<table>")) {
+			cdata = _formatCDATA(cdata, "table");
+		}
+		else if (cdata.contains("<pre>")) {
+			cdata = _formatCDATA(cdata, "pre");
+		}
+		else {
+			cdata = cdata.replaceAll(
+				"(?s)\\s*<(p|[ou]l)>\\s*(.*?)\\s*</\\1>\\s*",
+							"\n\n<$1>\n$2\n</$1>\n\n");
+			cdata = cdata.replaceAll(
+				"(?s)\\s*<li>\\s*(.*?)\\s*</li>\\s*", "\n<li>\n$1\n</li>\n");
+			cdata = StringUtil.replace(cdata, "</li>\n\n<li>", "</li>\n<li>");
+			cdata = cdata.replaceAll("\n\\s+\n", "\n\n");
+			cdata.replaceAll(" +", " ");
 
-		cdata = cdata.replaceAll(
-			"(?s)\\s*<(p|pre|[ou]l)>\\s*(.*?)\\s*</\\1>\\s*",
-			"\n\n<$1>\n$2\n</$1>\n\n");
-		cdata = cdata.replaceAll(
-			"(?s)\\s*<li>\\s*(.*?)\\s*</li>\\s*", "\n<li>\n$1\n</li>\n");
-		cdata = StringUtil.replace(cdata, "</li>\n\n<li>", "</li>\n<li>");
-		cdata = cdata.replaceAll("\n\\s+\n", "\n\n");
-		
-		if (cdata.contains("<pre>")) {
+			// Trim whitespace inside paragraph tags or in the first paragraph
 
-			String[] sections = cdata.split("<pre>");
-			for (int i=0; i < sections.length; i++) {
-				if (!sections[i].contains("</pre>")) {
-					sections[i] = sections[i].replaceAll(" +", " ");
-				}
-			}
+			Pattern pattern = Pattern.compile(
+				"(^.*?(?=\n\n|$)+|(?<=<p>\n).*?(?=\n</p>))", Pattern.DOTALL);
+
+			Matcher matcher = pattern.matcher(cdata);
 
 			StringBuffer sb = new StringBuffer();
 
-			for (int i=0; i < sections.length; i++) {
-				if (sections[i].contains("</pre>")) {
-					sb.append("<pre>");
-				}
-				
-				sb.append(sections[i]);
+			while (matcher.find()) {
+				String trimmed = _trimMultilineText(matcher.group());
+
+				// Escape dollar signs
+
+				trimmed = trimmed.replaceAll("\\$", "\\\\\\$");
+
+				matcher.appendReplacement(sb, trimmed);
 			}
 
-			cdata = sb.toString();
-		}
+			matcher.appendTail(sb);
 
-		else {
-			cdata.replaceAll(" +", " ");
-		}
-
-		// Trim whitespace inside paragraph tags or in the first paragraph
-
-		Pattern pattern = Pattern.compile(
-			"(^.*?(?=\n\n|$)+|(?<=<p>\n).*?(?=\n</p>))", Pattern.DOTALL);
-
-		Matcher matcher = pattern.matcher(cdata);
-
-		StringBuffer sb = new StringBuffer();
-
-		while (matcher.find()) {
-			String trimmed = _trimMultilineText(matcher.group());
-
-			// Escape dollar signs so they are not treated as replacement groups
-
-			trimmed = trimmed.replaceAll("\\$", "\\\\\\$");
-
-			matcher.appendReplacement(sb, trimmed);
-		}
-
-		matcher.appendTail(sb);
-
-		if (!cdata.contains("<pre>")) {
 			cdata = sb.toString();
 		}
 
@@ -1811,31 +1815,14 @@ public class JavadocFormatter {
 	private String _wrapText(String text, String indent) {
 		int indentLength = _getIndentLength(indent);
 
-		// Do not wrap text inside <pre>
-
-		if (text.contains("<pre>")) {
-			Pattern pattern = Pattern.compile(
-				"(?<=^|</pre>).+?(?=$|<pre>)", Pattern.DOTALL);
-
-			Matcher matcher = pattern.matcher(text);
-
-			StringBuffer sb = new StringBuffer();
-
-			while (matcher.find()) {
-				String wrapped = _formatInlines(matcher.group());
-
-				wrapped = StringUtil.wrap(wrapped, 80 - indentLength, "\n");
-
-				matcher.appendReplacement(sb, wrapped);
-			}
-
-			matcher.appendTail(sb);
-
-			text = sb.toString();
+		if (text.contains("<table>")) {
+			text = _wrapText(text, indentLength, "table");
+		}
+		else if (text.contains("<pre>")) {
+			text = _wrapText(text, indentLength, "pre");
 		}
 		else {
 			text = _formatInlines(text);
-
 			text = StringUtil.wrap(text, 80 - indentLength, "\n");
 		}
 
@@ -1843,6 +1830,33 @@ public class JavadocFormatter {
 		text = text.replaceAll("(?m) +$", StringPool.BLANK);
 
 		return text;
+	}
+
+	private String _wrapText(String text, int indentLength, String exclude) {
+		StringBundler regexSb = new StringBundler("(?<=^|</");
+		regexSb.append(exclude);
+		regexSb.append(">).+?(?=$|<");
+		regexSb.append(exclude);
+		regexSb.append(">)");
+
+		Pattern pattern = Pattern.compile(
+			regexSb.toString(), Pattern.DOTALL);
+
+		Matcher matcher = pattern.matcher(text);
+
+		StringBuffer sb = new StringBuffer();
+
+		while (matcher.find()) {
+			String wrapped = _formatInlines(matcher.group());
+
+			wrapped = StringUtil.wrap(wrapped, 80 - indentLength, "\n");
+
+			matcher.appendReplacement(sb, wrapped);
+		}
+
+		matcher.appendTail(sb);
+
+		return sb.toString();
 	}
 
 	private static FileImpl _fileUtil = FileImpl.getInstance();

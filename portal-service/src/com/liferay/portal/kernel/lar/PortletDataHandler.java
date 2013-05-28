@@ -112,6 +112,18 @@ public interface PortletDataHandler {
 	public PortletDataHandlerControl[] getExportMetadataControls()
 		throws PortletDataException;
 
+	/**
+	 * Returns the overall count of entities defined for this data handler that
+	 * are available for export according to the provided manifest summary, or
+	 * <code>-1</code> if the entities are not included in the manifest summary.
+	 *
+	 * @param manifestSummary the manifest summary with the count of the
+	 *                        exportable entities
+	 * @return the overall count of entities defined for this data handler that
+	 * 		   are available for export according to the provided manifest
+	 * 		   summary, or <code>-1</code> if the entities are not included in
+	 * 		   the manifest summary
+	 */
 	public long getExportModelCount(ManifestSummary manifestSummary);
 
 	public PortletDataHandlerControl[] getImportConfigurationControls(

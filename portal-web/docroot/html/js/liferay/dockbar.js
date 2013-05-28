@@ -18,7 +18,7 @@ AUI.add(
 
 		var EVENT_CLICK = 'click';
 
-		var TPL_ADD_CONTENT = '<div class="span4" />';
+		var TPL_ADD_CONTENT = '<div class="lfr-add-panel" id="{0}" />';
 
 		var TPL_LOADING = '<div class="loading-animation" />';
 
@@ -51,7 +51,29 @@ AUI.add(
 			getPanelNode: function() {
 				var instance = this;
 
-				return instance._getPanelNode();
+				var addPanelNode = instance._addPanelNode;
+
+				if (!addPanelNode) {
+					var namespace = instance._namespace;
+
+					var addPanelSidebarId = namespace + 'addPanelSidebar';
+
+					addPanelNode = A.one('#' + addPanelSidebarId);
+
+					if (!addPanelNode) {
+						addPanelNode = A.Node.create(Lang.sub(TPL_ADD_CONTENT, [namespace]));
+
+						addPanelNode.plug(A.Plugin.ParseContent);
+
+						BODY.prepend(addPanelNode);
+
+						addPanelNode.set('id', addPanelSidebarId);
+
+						instance._addPanelNode = addPanelNode;
+					}
+				}
+
+				return addPanelNode;
 			},
 
 			loadPanel: function() {
@@ -110,50 +132,20 @@ AUI.add(
 				return overlayMask;
 			},
 
-			_getPanelNode: function() {
-				var instance = this;
-
-				var addPanelNode = instance._addPanelNode;
-
-				if (!addPanelNode) {
-					addPanelNode = A.one('#' + instance._namespace + 'addPanelSidebar');
-
-					if (!addPanelNode) {
-						addPanelNode = A.Node.create(TPL_ADD_CONTENT);
-
-						addPanelNode.plug(A.Plugin.ParseContent);
-
-						A.one('#wrapper .row-fluid').prepend(addPanelNode);
-
-						addPanelNode.set('id', instance._namespace + 'addPanelSidebar');
-
-						instance._addPanelNode = addPanelNode;
-					}
-				}
-
-				return addPanelNode;
-			},
-
 			_loadAddPanel: function() {
 				var instance = this;
 
 				BODY.toggleClass(CSS_ADD_CONTENT);
 
-				var addPanelNode = instance._getPanelNode();
-
-				var contentWrapper = A.one('#content-wrapper');
+				var addPanelNode = instance.getPanelNode();
 
 				if (BODY.hasClass(CSS_ADD_CONTENT)) {
 					instance._addPanel();
 
 					addPanelNode.show();
-
-					contentWrapper.replaceClass('span12', 'span8');
 				}
 				else {
 					addPanelNode.hide();
-
-					contentWrapper.replaceClass('span8', 'span12');
 				}
 			},
 
@@ -175,7 +167,7 @@ AUI.add(
 			_setLoadingAnimation: function() {
 				var instance = this;
 
-				instance._getPanelNode().html(TPL_LOADING);
+				instance.getPanelNode().html(TPL_LOADING);
 			},
 
 			_toggleAppShortcut: function(item, force) {
@@ -349,7 +341,7 @@ AUI.add(
 								success: function(event, id, obj) {
 									var response = this.get('responseData');
 
-									var panelNode = instance._getPanelNode();
+									var panelNode = instance.getPanelNode();
 
 									panelNode.plug(A.Plugin.ParseContent);
 
@@ -360,7 +352,7 @@ AUI.add(
 					);
 				}
 			},
-			['aui-io-request', 'aui-parse-content']
+			['aui-io-request', 'aui-parse-content', 'event-outside']
 		);
 
 		Liferay.provide(

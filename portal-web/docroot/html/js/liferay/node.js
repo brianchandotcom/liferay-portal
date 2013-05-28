@@ -44,6 +44,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['dom-base']
+		requires: ['aui-node-base']
 	}
 );

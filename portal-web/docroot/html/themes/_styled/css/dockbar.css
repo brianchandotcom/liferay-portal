@@ -128,6 +128,11 @@
 	}
 }
 
+/* ---------- Add Content ---------- */
+.lfr-has-add-content {
+	padding-left: 340px;
+}
+
 /* ---------- Menus ---------- */
 
 .my-sites-menu {

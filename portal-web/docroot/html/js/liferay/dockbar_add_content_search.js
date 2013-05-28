@@ -21,11 +21,11 @@ AUI.add(
 				var results = [];
 
 				instance._portlets.each(
-					function(node) {
+					function(item, index, collection) {
 						results.push(
 							{
-								node: node,
-								search: node.attr('data-search')
+								node: item,
+								search: item.attr('data-search')
 							}
 						);
 					}
@@ -83,9 +83,9 @@ AUI.add(
 					instance._openedCategories = [];
 
 					instance._categories.each(
-						function(node) {
-							if (!node.hasClass(CSS_LFR_COLLAPSED)) {
-								instance._openedCategories.push(node);
+						function(item, index, collection) {
+							if (!item.hasClass(CSS_LFR_COLLAPSED)) {
+								instance._openedCategories.push(item);
 							}
 						}
 					);
@@ -97,8 +97,8 @@ AUI.add(
 					if (instance._openedCategories) {
 						A.each(
 							instance._openedCategories,
-							function(node) {
-								node.removeClass(CSS_LFR_COLLAPSED);
+							function(item, index, collection) {
+								item.removeClass(CSS_LFR_COLLAPSED);
 							}
 						);
 
@@ -123,8 +123,8 @@ AUI.add(
 
 					A.each(
 						event.results,
-						function(result) {
-							var node = result.raw.node;
+						function(item, index, collection) {
+							var node = item.raw.node;
 
 							node.show();
 

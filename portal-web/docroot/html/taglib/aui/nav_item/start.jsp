@@ -36,11 +36,37 @@
 	</c:if>
 
 	<c:if test="<%= dropdown %>">
-		<aui:script use="aui-base">
+		<aui:script use="aui-base,event-outside">
 			A.one('#<%= id %>').on(
 				'click',
 				function(event) {
-					event.currentTarget.toggleClass('open');
+					var currentTarget = event.currentTarget;
+
+					currentTarget.toggleClass('open');
+
+					var menuOpen = currentTarget.hasClass('open');
+
+					var handle = Liferay.Data['<%= id %>Handle'];
+
+					if (menuOpen && !handle) {
+						handle = currentTarget.on(
+							'clickoutside',
+							function(event) {
+								Liferay.Data['<%= id %>Handle'] = null;
+
+								handle.detach();
+
+								currentTarget.removeClass('open');
+							}
+						);
+					}
+					else if (handle) {
+						handle.detach();
+
+						handle = null;
+					}
+
+					Liferay.Data['<%= id %>Handle'] = handle;
 				}
 			);
 		</aui:script>

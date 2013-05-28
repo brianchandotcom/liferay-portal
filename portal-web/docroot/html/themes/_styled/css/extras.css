@@ -22,6 +22,10 @@
 	@include box-shadow(2px 4px 7px rgba(0, 0, 0, 0.5));
 }
 
+.lfr-add-panel {
+	@include box-shadow(0 0 5px rgba(0, 0, 0, 0.5));
+}
+
 .lfr-preview-file-image img, .lfr-translation-manager {
 	@include box-shadow(0 3px 5px -3px rgba(0, 0, 0, 0.8));
 }

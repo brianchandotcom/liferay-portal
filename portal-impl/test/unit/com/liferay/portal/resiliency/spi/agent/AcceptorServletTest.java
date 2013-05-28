@@ -12,12 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.kernel.resiliency.spi.agent;
+package com.liferay.portal.resiliency.spi.agent;
 
 import com.liferay.portal.kernel.process.ProcessExecutor;
 import com.liferay.portal.kernel.resiliency.spi.MockSPI;
 import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
+import com.liferay.portal.kernel.resiliency.spi.agent.AcceptorServlet;
+import com.liferay.portal.kernel.resiliency.spi.agent.MockSPIAgent;
+import com.liferay.portal.kernel.resiliency.spi.agent.SPIAgent;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.util.PortalUtil;

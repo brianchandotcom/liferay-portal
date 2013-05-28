@@ -74,7 +74,7 @@
 			</then>
 		</if>
 
-		<exec executable="unzip">
+		<exec executable="${unzip.executable}">
 			<arg line="-qq ${app.server.parent.dir}/${bundled.file.name} -d ${app.server.parent.dir}" />
 		</exec>
 

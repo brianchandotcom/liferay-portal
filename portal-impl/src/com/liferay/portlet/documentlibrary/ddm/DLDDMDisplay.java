@@ -14,9 +14,14 @@
 
 package com.liferay.portlet.documentlibrary.ddm;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
+import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
 import com.liferay.portlet.dynamicdatamapping.util.BaseDDMDisplay;
+
+import java.util.Locale;
 
 /**
  * @author Eduardo Garcia
@@ -31,6 +36,21 @@ public class DLDDMDisplay extends BaseDDMDisplay {
 	@Override
 	public String getResourceName() {
 		return DLPermission.RESOURCE_NAME;
+	}
+
+	@Override
+	public String getStorageType() {
+		return StorageType.XML.toString();
+	}
+
+	@Override
+	public String getStructureName(Locale locale) {
+		return LanguageUtil.get(locale, "metadata-set");
+	}
+
+	@Override
+	public String getStructureType() {
+		return DLFileEntryMetadata.class.getName();
 	}
 
 }

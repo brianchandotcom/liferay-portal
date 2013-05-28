@@ -169,7 +169,7 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, controlPanel, locale)
 				/>
 			</c:if>
 
-			<c:if test='<%= !excludedColumnNames.contains("type") && Validator.isNull(templateTypeValue) && (classNameId == 0) %>'>
+			<c:if test='<%= !excludedColumnNames.contains("type") && (classNameId == 0) %>'>
 				<liferay-ui:search-container-column-text
 					href="<%= rowHREF %>"
 					name="type"

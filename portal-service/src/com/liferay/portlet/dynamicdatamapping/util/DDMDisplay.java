@@ -32,6 +32,8 @@ public interface DDMDisplay {
 
 	public String getAddTemplateActionId();
 
+	public String getAvailableFields();
+
 	public String getEditStructureDefaultValuesURL(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
@@ -55,11 +57,21 @@ public interface DDMDisplay {
 
 	public String getResourceName(long classNameId);
 
+	public String getStorageType();
+
+	public String getStructureName(Locale locale);
+
+	public String getStructureType();
+
 	public long[] getTemplateClassNameIds(long classNameId);
 
 	public long getTemplateHandlerClassNameId(DDMTemplate template);
 
 	public Set<String> getTemplateLanguageTypes();
+
+	public String getTemplateMode();
+
+	public String getTemplateType();
 
 	public String getTemplateType(DDMTemplate template, Locale locale);
 

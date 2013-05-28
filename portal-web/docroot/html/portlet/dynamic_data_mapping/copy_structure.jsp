@@ -24,8 +24,8 @@ DDMStructure structure = (DDMStructure)request.getAttribute(WebKeys.DYNAMIC_DATA
 long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
 long classPK = BeanParamUtil.getLong(structure, request, "structureId");
 
-boolean copyDetailTemplates = ParamUtil.getBoolean(request, "copyDetailTemplates");
-boolean copyListTemplates = ParamUtil.getBoolean(request, "copyListTemplates");
+boolean copyFormTemplates = ParamUtil.getBoolean(request, "copyFormTemplates");
+boolean copyDisplayTemplates = ParamUtil.getBoolean(request, "copyDisplayTemplates");
 %>
 
 <portlet:actionURL var="copyStructureURL">
@@ -49,9 +49,9 @@ boolean copyListTemplates = ParamUtil.getBoolean(request, "copyListTemplates");
 
 		<aui:input name="description" />
 
-		<aui:input checked="<%= copyDetailTemplates %>" label="copy-detail-templates" name="copyDetailTemplates" type="checkbox" />
+		<aui:input checked="<%= copyFormTemplates %>" label="copy-form-templates" name="copyFormTemplates" type="checkbox" />
 
-		<aui:input checked="<%= copyListTemplates %>" label="copy-list-templates" name="copyListTemplates" type="checkbox" />
+		<aui:input checked="<%= copyDisplayTemplates %>" label="copy-display-templates" name="copyDisplayTemplates" type="checkbox" />
 	</aui:fieldset>
 
 	<aui:button-row>

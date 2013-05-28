@@ -23,7 +23,7 @@ if (Validator.isNull(script)) {
 }
 
 if (scriptJSONArray != null) {
-	scriptJSONArray = _addDetailTemplateFieldAttributes(structure, scriptJSONArray);
+	scriptJSONArray = _addFormTemplateFieldAttributes(structure, scriptJSONArray);
 }
 
 String namespace = renderResponse.getNamespace();
@@ -52,7 +52,7 @@ if (Validator.isNotNull(portletResourceNamespace)) {
 </aui:script>
 
 <%!
-public JSONArray _addDetailTemplateFieldAttributes(DDMStructure structure, JSONArray scriptJSONArray) throws Exception {
+public JSONArray _addFormTemplateFieldAttributes(DDMStructure structure, JSONArray scriptJSONArray) throws Exception {
 	for (int i = 0; i < scriptJSONArray.length(); i++) {
 		JSONObject jsonObject = scriptJSONArray.getJSONObject(i);
 

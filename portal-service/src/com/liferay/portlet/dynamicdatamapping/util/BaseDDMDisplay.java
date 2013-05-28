@@ -56,6 +56,11 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 	}
 
 	@Override
+	public String getAvailableFields() {
+		return "Liferay.FormBuilder.AVAILABLE_FIELDS.DDM_STRUCTURE";
+	}
+
+	@Override
 	public String getEditStructureDefaultValuesURL(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
@@ -140,6 +145,21 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 	}
 
 	@Override
+	public String getStorageType() {
+		return StringPool.BLANK;
+	}
+
+	@Override
+	public String getStructureName(Locale locale) {
+		return LanguageUtil.get(locale, "structure");
+	}
+
+	@Override
+	public String getStructureType() {
+		return StringPool.BLANK;
+	}
+
+	@Override
 	public long[] getTemplateClassNameIds(long classNameId) {
 		if (classNameId > 0) {
 			return new long[] {classNameId};
@@ -160,6 +180,16 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 	@Override
 	public Set<String> getTemplateLanguageTypes() {
 		return _templateLanguageTypes;
+	}
+
+	@Override
+	public String getTemplateMode() {
+		return StringPool.BLANK;
+	}
+
+	@Override
+	public String getTemplateType() {
+		return StringPool.BLANK;
 	}
 
 	@Override

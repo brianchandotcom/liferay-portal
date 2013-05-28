@@ -380,7 +380,6 @@ if (Validator.isNotNull(structureAvailableFields)) {
 		function <portlet:namespace />openDDMStructureSelector() {
 			Liferay.Util.openDDMPortlet(
 				{
-					availableFields: 'Liferay.FormBuilder.AVAILABLE_FIELDS.WCM_STRUCTURE',
 					classNameId: '<%= PortalUtil.getClassNameId(DDMStructure.class) %>',
 					classPK: 0,
 					dialog: {
@@ -390,9 +389,6 @@ if (Validator.isNotNull(structureAvailableFields)) {
 					eventName: '<portlet:namespace />selectStructure',
 					groupId: <%= groupId %>,
 					refererPortletName: '<%= PortletKeys.JOURNAL %>',
-					storageType: '<%= PropsValues.JOURNAL_ARTICLE_STORAGE_TYPE %>',
-					structureName: 'structure',
-					structureType: 'com.liferay.portlet.journal.model.JournalArticle',
 					struts_action: '/dynamic_data_mapping/select_structure',
 					title: '<%= UnicodeLanguageUtil.get(pageContext, "structures") %>'
 				},

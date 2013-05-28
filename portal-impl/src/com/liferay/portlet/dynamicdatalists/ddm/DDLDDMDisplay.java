@@ -14,12 +14,16 @@
 
 package com.liferay.portlet.dynamicdatalists.ddm;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.service.permission.DDLPermission;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.util.BaseDDMDisplay;
+
+import java.util.Locale;
 
 /**
  * @author Eduardo Garcia
@@ -34,6 +38,21 @@ public class DDLDDMDisplay extends BaseDDMDisplay {
 	@Override
 	public String getResourceName() {
 		return DDLPermission.RESOURCE_NAME;
+	}
+
+	@Override
+	public String getStorageType() {
+		return PropsValues.DYNAMIC_DATA_LISTS_STORAGE_TYPE;
+	}
+
+	@Override
+	public String getStructureName(Locale locale) {
+		return LanguageUtil.get(locale, "data-definition");
+	}
+
+	@Override
+	public String getStructureType() {
+		return DDLRecordSet.class.getName();
 	}
 
 	@Override

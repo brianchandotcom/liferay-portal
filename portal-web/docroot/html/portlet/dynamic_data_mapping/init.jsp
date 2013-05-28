@@ -67,27 +67,18 @@ PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPre
 
 String refererPortletName = ParamUtil.getString(request, "refererPortletName", portletName);
 String refererWebDAVToken = ParamUtil.getString(request, "refererWebDAVToken", portletConfig.getInitParameter("refererWebDAVToken"));
-String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields");
-String scopeStorageType = ParamUtil.getString(request, "scopeStorageType");
-String scopeStructureName = ParamUtil.getString(request, "scopeStructureName");
-String scopeStructureType = ParamUtil.getString(request, "scopeStructureType");
-String scopeTemplateMode = ParamUtil.getString(request, "scopeTemplateMode");
-String scopeTemplateType = ParamUtil.getString(request, "scopeTemplateType");
 String scopeTitle = ParamUtil.getString(request, "scopeTitle");
 boolean showGlobalScope = ParamUtil.getBoolean(request, "showGlobalScope");
 boolean showManageTemplates = ParamUtil.getBoolean(request, "showManageTemplates", true);
 boolean showToolbar = ParamUtil.getBoolean(request, "showToolbar", true);
 
-long scopeClassNameId = PortalUtil.getClassNameId(scopeStructureType);
+DDMDisplay ddmDisplay = DDMDisplayRegistryUtil.getDDMDisplay(refererPortletName);
 
-String storageTypeValue = StringPool.BLANK;
+long scopeClassNameId = PortalUtil.getClassNameId(ddmDisplay.getStructureType());
 
-if (scopeStorageType.equals("expando")) {
-	storageTypeValue = StorageType.EXPANDO.getValue();
-}
-else if (scopeStorageType.equals("xml")) {
-	storageTypeValue = StorageType.XML.getValue();
-}
+String scopeAvailableFields = ddmDisplay.getAvailableFields();
+String scopeStorageType = ddmDisplay.getStorageType();
+String scopeTemplateType = ddmDisplay.getTemplateType();
 
 String templateTypeValue = StringPool.BLANK;
 
@@ -98,7 +89,14 @@ else if (scopeTemplateType.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM)) {
 	templateTypeValue = DDMTemplateConstants.TEMPLATE_TYPE_FORM;
 }
 
-DDMDisplay ddmDisplay = DDMDisplayRegistryUtil.getDDMDisplay(refererPortletName);
+String storageTypeValue = StringPool.BLANK;
+
+if (scopeStorageType.equals("expando")) {
+	storageTypeValue = StorageType.EXPANDO.getValue();
+}
+else if (scopeStorageType.equals("xml")) {
+	storageTypeValue = StorageType.XML.getValue();
+}
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>

@@ -174,7 +174,7 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 
 						String layoutSiteBrowserURLString = HttpUtil.addParameter(layoutSiteBrowserURL.toString(), "doAsGroupId", scopeGroupId);
 
-						String taglibLayoutSiteBrowserURL = "javascript:Liferay.Util.openWindow({id: '" + liferayPortletResponse.getNamespace() + "selectGroup', title: '" + LanguageUtil.get(pageContext, "select-pages") + "', uri:'" + HtmlUtil.escapeURL(layoutSiteBrowserURLString) + "'});";
+						String taglibLayoutSiteBrowserURL = "javascript:Liferay.Util.openWindow({dialog: {zIndex: Liferay.zIndex.WINDOW + 2}, id: '" + liferayPortletResponse.getNamespace() + "selectGroup', title: '" + LanguageUtil.get(pageContext, "select-pages") + "', uri:'" + HtmlUtil.escapeURL(layoutSiteBrowserURLString) + "'});";
 						%>
 
 						<liferay-ui:icon
@@ -205,7 +205,7 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 
 						String parentSiteBrowserURLString = HttpUtil.addParameter(parentSiteBrowserURL.toString(), "doAsGroupId", scopeGroupId);
 
-						String taglibParentSiteBrowserURL = "javascript:Liferay.Util.openWindow({id: '" + liferayPortletResponse.getNamespace() + "selectGroup', title: '" + LanguageUtil.get(pageContext, "select-parent-site") + "', uri:'" + HtmlUtil.escapeURL(parentSiteBrowserURLString) + "'});";
+						String taglibParentSiteBrowserURL = "javascript:Liferay.Util.openWindow({dialog: {zIndex: Liferay.zIndex.WINDOW + 2}, id: '" + liferayPortletResponse.getNamespace() + "selectGroup', title: '" + LanguageUtil.get(pageContext, "select-parent-site") + "', uri:'" + HtmlUtil.escapeURL(parentSiteBrowserURLString) + "'});";
 						%>
 
 						<liferay-ui:icon
@@ -231,7 +231,7 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 
 						String childrenSiteBrowserURLString = HttpUtil.addParameter(childrenSiteBrowserURL.toString(), "doAsGroupId", scopeGroupId);
 
-						String taglibChildrenSiteBrowserURL = "javascript:Liferay.Util.openWindow({id: '" + liferayPortletResponse.getNamespace() + "selectGroup', title: '" + LanguageUtil.get(pageContext, "select-child-site") + "', uri:'" + HtmlUtil.escapeURL(childrenSiteBrowserURLString) + "'});";
+						String taglibChildrenSiteBrowserURL = "javascript:Liferay.Util.openWindow({dialog: {zIndex: Liferay.zIndex.WINDOW + 2}, id: '" + liferayPortletResponse.getNamespace() + "selectGroup', title: '" + LanguageUtil.get(pageContext, "select-child-site") + "', uri:'" + HtmlUtil.escapeURL(childrenSiteBrowserURLString) + "'});";
 						%>
 
 						<liferay-ui:icon
@@ -256,7 +256,7 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 
 						String siteBrowserURLString = HttpUtil.addParameter(siteBrowserURL.toString(), "doAsGroupId", scopeGroupId);
 
-						String taglibSiteBrowserURL = "javascript:Liferay.Util.openWindow({id: '" + liferayPortletResponse.getNamespace() + "selectGroup', title: '" + LanguageUtil.get(pageContext, "select-site") + "', uri:'" + HtmlUtil.escapeURL(siteBrowserURLString) + "'});";
+						String taglibSiteBrowserURL = "javascript:Liferay.Util.openWindow({dialog: {zIndex: Liferay.zIndex.WINDOW + 2}, id: '" + liferayPortletResponse.getNamespace() + "selectGroup', title: '" + LanguageUtil.get(pageContext, "select-site") + "', uri:'" + HtmlUtil.escapeURL(siteBrowserURLString) + "'});";
 						%>
 
 						<liferay-ui:icon

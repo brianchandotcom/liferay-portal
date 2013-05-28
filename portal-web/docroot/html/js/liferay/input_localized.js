@@ -101,7 +101,7 @@ AUI.add(
 
 						var animateClass = instance.get('animateClass');
 
-						if (!animateClass) {
+						if (animateClass) {
 							input.removeClass(animateClass);
 
 							clearTimeout(instance._animating);

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.ddm.template.BaseDDMTemplateHandler;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalService;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordService;
@@ -29,6 +28,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureService;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalService;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateService;
+import com.liferay.portlet.dynamicdatamapping.template.BaseDDMTemplateHandler;
 
 import java.util.Locale;
 import java.util.Map;

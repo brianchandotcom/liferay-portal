@@ -105,8 +105,8 @@ public class PermissionCheckerBagImpl implements PermissionCheckerBag {
 	}
 
 	/**
-	 * @deprecated As of 6.1, renamed to {@link #isGroupAdmin(PermissionChecker,
-	 *             Group)}
+	 * @deprecated As of 6.1.0, renamed to {@link
+	 *             #isGroupAdmin(PermissionChecker, Group)}
 	 */
 	@Override
 	public boolean isCommunityAdmin(
@@ -117,8 +117,8 @@ public class PermissionCheckerBagImpl implements PermissionCheckerBag {
 	}
 
 	/**
-	 * @deprecated As of 6.1, renamed to {@link #isGroupOwner(PermissionChecker,
-	 *             Group)}
+	 * @deprecated As of 6.1.0, renamed to {@link
+	 *             #isGroupOwner(PermissionChecker, Group)}
 	 */
 	@Override
 	public boolean isCommunityOwner(

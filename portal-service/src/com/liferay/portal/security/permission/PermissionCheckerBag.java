@@ -42,16 +42,16 @@ public interface PermissionCheckerBag extends Serializable {
 	public List<Group> getUserUserGroupGroups();
 
 	/**
-	 * @deprecated As of 6.1, renamed to {@link #isGroupAdmin(PermissionChecker,
-	 *             Group)}
+	 * @deprecated As of 6.1.0, renamed to {@link
+	 *             #isGroupAdmin(PermissionChecker, Group)}
 	 */
 	public boolean isCommunityAdmin(
 			PermissionChecker permissionChecker, Group group)
 		throws Exception;
 
 	/**
-	 * @deprecated As of 6.1, renamed to {@link #isGroupOwner(PermissionChecker,
-	 *             Group)}
+	 * @deprecated As of 6.1.0, renamed to {@link
+	 *             #isGroupOwner(PermissionChecker, Group)}
 	 */
 	public boolean isCommunityOwner(
 			PermissionChecker permissionChecker, Group group)

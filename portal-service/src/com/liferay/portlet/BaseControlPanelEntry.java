@@ -54,7 +54,7 @@ public abstract class BaseControlPanelEntry implements ControlPanelEntry {
 	}
 
 	/**
-	 * @deprecated As of 6.2, with no direct replacement.<p>This method was
+	 * @deprecated As of 6.2.0, with no direct replacement.<p>This method was
 	 *             originally defined to determine if a portlet should be
 	 *             displayed in the Control Panel. In this version, this method
 	 *             should always return <code>false</code> and remains only to
@@ -73,7 +73,7 @@ public abstract class BaseControlPanelEntry implements ControlPanelEntry {
 	}
 
 	/**
-	 * @deprecated As of 6.2, with no direct replacement.<p>This method was
+	 * @deprecated As of 6.2.0, with no direct replacement.<p>This method was
 	 *             originally defined to determine if a portlet should be
 	 *             displayed in the Control Panel. In this version, this method
 	 *             should always return <code>false</code> and remains only to

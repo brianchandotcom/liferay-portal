@@ -64,7 +64,7 @@ public class SiteMembershipPolicyFactoryImpl
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
-		SiteMembershipPolicyFactory.class);
+		SiteMembershipPolicyFactoryImpl.class);
 
 	private static SiteMembershipPolicy _originalSiteMembershipPolicy;
 	private static volatile SiteMembershipPolicy _siteMembershipPolicy;

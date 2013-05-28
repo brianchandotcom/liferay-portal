@@ -249,6 +249,6 @@ public class DigesterImpl implements Digester {
 	private static final boolean _BASE_64 =
 		PropsValues.PASSWORDS_DIGEST_ENCODING.equals("base64");
 
-	private static Log _log = LogFactoryUtil.getLog(Digester.class);
+	private static Log _log = LogFactoryUtil.getLog(DigesterImpl.class);
 
 }

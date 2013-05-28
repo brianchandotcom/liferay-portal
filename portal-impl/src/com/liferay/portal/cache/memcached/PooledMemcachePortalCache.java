@@ -262,7 +262,8 @@ public class PooledMemcachePortalCache<V> implements PortalCache<String, V> {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(MemcachePortalCache.class);
+	private static Log _log = LogFactoryUtil.getLog(
+		PooledMemcachePortalCache.class);
 
 	private MemcachedClientFactory _memcachedClientFactory;
 	private String _name;

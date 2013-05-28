@@ -65,7 +65,7 @@ public class UserGroupMembershipPolicyFactoryImpl
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
-		UserGroupMembershipPolicyFactory.class);
+		UserGroupMembershipPolicyFactoryImpl.class);
 
 	private static UserGroupMembershipPolicy _originalUserGroupMembershipPolicy;
 	private static volatile UserGroupMembershipPolicy

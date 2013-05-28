@@ -66,7 +66,7 @@ public class OrganizationMembershipPolicyFactoryImpl
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
-		OrganizationMembershipPolicyFactory.class);
+		OrganizationMembershipPolicyFactoryImpl.class);
 
 	private static volatile OrganizationMembershipPolicy
 		_organizationMembershipPolicy;

@@ -114,6 +114,29 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	}
 
 	@Override
+	public long getExportModelCount(ManifestSummary manifestSummary) {
+		long totalModelCount = -1;
+
+		for (PortletDataHandlerControl exportControl : getExportControls()) {
+			long modelCount = manifestSummary.getModelCount(
+				exportControl.getClassName());
+
+			if (modelCount == -1) {
+				continue;
+			}
+
+			if (totalModelCount == -1) {
+				totalModelCount = modelCount;
+			}
+			else {
+				totalModelCount += modelCount;
+			}
+		}
+
+		return totalModelCount;
+	}
+
+	@Override
 	public PortletDataHandlerControl[] getImportControls() {
 		return _importControls;
 	}

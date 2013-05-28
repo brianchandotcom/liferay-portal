@@ -40,7 +40,9 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 	public DDLPortletDataHandler() {
 		setDataLocalized(true);
 		setExportControls(
-			new PortletDataHandlerBoolean(NAMESPACE, "record-sets"));
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "record-sets", true, false, null,
+				DDLRecordSet.class.getName()));
 		setImportControls(getExportControls());
 	}
 

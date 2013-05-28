@@ -99,6 +99,20 @@ public interface PortletDataHandler {
 		throws PortletDataException;
 
 	/**
+	 * Returns the overall count of entities defined for this data handler that
+	 * are available for export according to the provided manifest summary, or
+	 * <code>-1</code> if the entities are not included in the manifest summary.
+	 *
+	 * @param manifestSummary the manifest summary with the count of the
+	 *                        exportable entities
+	 * @return the overall count of entities defined for this data handler that
+	 * 		   are available for export according to the provided manifest
+	 * 		   summary, or <code>-1</code> if the entities are not included in
+	 * 		   the manifest summary
+	 */
+	public long getExportModelCount(ManifestSummary manifestSummary);
+
+	/**
 	 * Returns an array of the controls defined for this data handler. These
 	 * controls enable the developer to create fine grained controls over import
 	 * behavior. The controls are rendered in the import UI.

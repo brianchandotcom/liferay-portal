@@ -38,7 +38,8 @@ public class PortletDisplayTemplatePortletDataHandler
 	public PortletDisplayTemplatePortletDataHandler() {
 		setExportControls(
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "application-display-templates"));
+				NAMESPACE, "application-display-templates", true, false, null,
+				DDMTemplate.class.getName()));
 	}
 
 	@Override

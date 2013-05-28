@@ -38,8 +38,10 @@ for (int i = 0; i < controls.length; i++) {
 				String className = controls[i].getClassName();
 
 				if (Validator.isNotNull(className) && (manifestSummary != null)) {
-					if (manifestSummary.getModelCount(className) > 0) {
-						controlName += " (" + manifestSummary.getModelCount(className) + ")";
+					long modelCount = manifestSummary.getModelCount(className);
+
+					if (modelCount != 0) {
+						controlName += modelCount > 0 ? " (" + modelCount + ")" : StringPool.BLANK;
 					}
 					else {
 						continue;

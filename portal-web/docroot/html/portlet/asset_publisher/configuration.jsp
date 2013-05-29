@@ -242,27 +242,30 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 						/>
 					</c:if>
 
-					<%
-					PortletURL siteBrowserURL = PortletURLFactoryUtil.create(request, PortletKeys.SITE_BROWSER, PortalUtil.getControlPanelPlid(company.getCompanyId()), PortletRequest.RENDER_PHASE);
+					<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.SITES_CONTENT_SHARING_THROUGH_ADMINISTRATORS_ENABLED) %>">
 
-					siteBrowserURL.setParameter("struts_action", "/site_browser/view");
-					siteBrowserURL.setParameter("selectedGroupIds", StringUtil.merge(groupIds));
-					siteBrowserURL.setParameter("type", "manageable-sites");
-					siteBrowserURL.setParameter("callback", liferayPortletResponse.getNamespace() + "selectGroup");
-					siteBrowserURL.setPortletMode(PortletMode.VIEW);
-					siteBrowserURL.setWindowState(LiferayWindowState.POP_UP);
+						<%
+						PortletURL siteBrowserURL = PortletURLFactoryUtil.create(request, PortletKeys.SITE_BROWSER, PortalUtil.getControlPanelPlid(company.getCompanyId()), PortletRequest.RENDER_PHASE);
 
-					String siteBrowserURLString = HttpUtil.addParameter(siteBrowserURL.toString(), "doAsGroupId", scopeGroupId);
+						siteBrowserURL.setParameter("struts_action", "/site_browser/view");
+						siteBrowserURL.setParameter("selectedGroupIds", StringUtil.merge(groupIds));
+						siteBrowserURL.setParameter("type", "manageable-sites");
+						siteBrowserURL.setParameter("callback", liferayPortletResponse.getNamespace() + "selectGroup");
+						siteBrowserURL.setPortletMode(PortletMode.VIEW);
+						siteBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 
-					String taglibSiteBrowserURL = "javascript:Liferay.Util.openWindow({id: '" + liferayPortletResponse.getNamespace() + "selectGroup', title: '" + LanguageUtil.get(pageContext, "select-site") + "', uri:'" + HtmlUtil.escapeURL(siteBrowserURLString) + "'});";
-					%>
+						String siteBrowserURLString = HttpUtil.addParameter(siteBrowserURL.toString(), "doAsGroupId", scopeGroupId);
 
-					<liferay-ui:icon
-						cssClass="highlited"
-						image="add"
-						message='<%= LanguageUtil.get(pageContext, "site") + StringPool.TRIPLE_PERIOD %>'
-						url="<%= taglibSiteBrowserURL %>"
-					/>
+						String taglibSiteBrowserURL = "javascript:Liferay.Util.openWindow({id: '" + liferayPortletResponse.getNamespace() + "selectGroup', title: '" + LanguageUtil.get(pageContext, "select-site") + "', uri:'" + HtmlUtil.escapeURL(siteBrowserURLString) + "'});";
+						%>
+
+						<liferay-ui:icon
+							cssClass="highlited"
+							image="add"
+							message='<%= LanguageUtil.get(pageContext, "site") + StringPool.TRIPLE_PERIOD %>'
+							url="<%= taglibSiteBrowserURL %>"
+						/>
+					</c:if>
 				</liferay-ui:icon-menu>
 			</div>
 		</div>

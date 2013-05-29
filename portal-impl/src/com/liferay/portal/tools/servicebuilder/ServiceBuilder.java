@@ -84,6 +84,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -4037,6 +4038,19 @@ public class ServiceBuilder {
 				return null;
 			}
 		}
+
+		Arrays.sort(
+			entities,
+			new Comparator<Entity>() {
+
+				@Override
+				public int compare(Entity entity1, Entity entity2) {
+					String name1 = entity1.getName();
+					String name2 = entity2.getName();
+
+					return name1.compareTo(name2);
+				}
+			});
 
 		StringBundler sb = new StringBundler();
 

@@ -20,6 +20,7 @@ import com.liferay.portalweb.socialofficehome.whatshappening.whentry.addwhentryc
 import com.liferay.portalweb.socialofficehome.whatshappening.whentry.addwhentrycontentviewablebyconnections.AddWHEntryContentViewableByConnectionsTests;
 import com.liferay.portalweb.socialofficehome.whatshappening.whentry.addwhentrycontentviewablebyeveryone.AddWHEntryContentViewableByEveryoneTests;
 import com.liferay.portalweb.socialofficehome.whatshappening.whentry.addwhentrycontentviewablebyfollowers.AddWHEntryContentViewableByFollowersTests;
+import com.liferay.portalweb.socialofficehome.whatshappening.whentry.sousviewwhentrycontentviewablebyeveryone.SOUs_ViewWHEntryContentViewableByEveryoneTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -37,6 +38,8 @@ public class WHEntryTestPlan extends BaseTestSuite {
 		testSuite.addTest(AddWHEntryContentViewableByConnectionsTests.suite());
 		testSuite.addTest(AddWHEntryContentViewableByEveryoneTests.suite());
 		testSuite.addTest(AddWHEntryContentViewableByFollowersTests.suite());
+		testSuite.addTest(
+			SOUs_ViewWHEntryContentViewableByEveryoneTests.suite());
 
 		return testSuite;
 	}

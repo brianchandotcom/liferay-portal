@@ -131,7 +131,7 @@ public class PermissionImporter {
 
 			if (!layout.isPrivateLayout() ||
 				!roleName.equals(RoleConstants.GUEST) ||
-				group.isLayoutSetPrototype()) {
+				group.isLayoutPrototype() || group.isLayoutSetPrototype()) {
 
 				List<String> actions = getActions(roleElement);
 

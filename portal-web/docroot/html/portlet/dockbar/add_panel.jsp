@@ -39,7 +39,7 @@
 				%>
 
 				<liferay-ui:tabs
-					names="content,applications"
+					names="content,applications,page"
 					refresh="<%= false %>"
 					value="<%= selectedTab %>"
 				>
@@ -249,6 +249,10 @@
 								</c:if>
 							</div>
 						</aui:form>
+					</liferay-ui:section>
+
+					<liferay-ui:section>
+						<liferay-util:include page="/html/portlet/dockbar/add_page.jsp" />
 					</liferay-ui:section>
 				</liferay-ui:tabs>
 			</div>

@@ -173,9 +173,24 @@ AUI.add(
 			}
 		);
 
+		var AddPageTabSearch = A.Component.create(
+			{
+				AUGMENTS: [A.AutoCompleteBase],
+				EXTENDS: A.Base,
+				NAME: 'addpagetabsearch',
+				prototype: {
+					initializer: function() {
+						this._bindUIACBase();
+						this._syncUIACBase();
+					}
+				}
+			}
+		);
+
 		Dockbar.AddApplicationTabSearch = AddApplicationTabSearch;
 		Dockbar.AddContentSearch = AddContentSearch;
 		Dockbar.AddContentTabSearch = AddContentTabSearch;
+		Dockbar.AddPageTabSearch = AddPageTabSearch;
 	},
 	'',
 	{

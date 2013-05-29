@@ -187,10 +187,18 @@ public class BasicLoginModule implements LoginModule {
 		}
 
 		try {
-			long userId = GetterUtil.getLong(name);
+			List<Company> companies = CompanyLocalServiceUtil.getCompanies();
 
-			if (UserLocalServiceUtil.authenticateForJAAS(userId, password)) {
-				return new String[] {name, password};
+			for (Company company : companies) {
+				long userId = getJaasUserId(company.getCompanyId(), name);
+
+				if (userId == 0) {
+					continue;
+				}
+
+				if (UserLocalServiceUtil.authenticateForJAAS(userId, password)) {
+					return new String[] {String.valueOf(userId), password};
+				}
 			}
 		}
 		catch (Exception e) {

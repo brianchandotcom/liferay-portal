@@ -1826,7 +1826,11 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		// Group
 
-		Group group = user.getGroup();
+		Group group = null;
+
+		if (!user.isDefaultUser()) {
+			group = user.getGroup();
+		}
 
 		if (group != null) {
 			groupLocalService.deleteGroup(group);

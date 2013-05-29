@@ -17,6 +17,7 @@ package com.liferay.portal.service.impl;
 import com.liferay.portal.kernel.concurrent.LockRegistry;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -82,7 +83,13 @@ public class PortalPreferencesLocalServiceImpl
 		return portalPreferences;
 	}
 
-	@Override
+	public PortalPreferences getPortalPreferences(
+			long companyId, long ownerId, int ownerType)
+		throws PortalException, SystemException {
+
+		return portalPreferencesPersistence.findByO_O(ownerId, ownerType);
+	}
+
 	public PortletPreferences getPreferences(
 			long companyId, long ownerId, int ownerType)
 		throws SystemException {

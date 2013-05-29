@@ -22,6 +22,8 @@ import com.liferay.portal.LocaleException;
 import com.liferay.portal.NoSuchShardException;
 import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.NoSuchVirtualHostException;
+import com.liferay.portal.RequiredCompanyException;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -51,13 +53,24 @@ import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.ContactConstants;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.GroupConstants;
+import com.liferay.portal.model.LayoutPrototype;
+import com.liferay.portal.model.LayoutSetPrototype;
+import com.liferay.portal.model.Organization;
+import com.liferay.portal.model.OrganizationConstants;
+import com.liferay.portal.model.PasswordPolicy;
+import com.liferay.portal.model.PortalPreferences;
+import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
+import com.liferay.portal.model.Shard;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.VirtualHost;
 import com.liferay.portal.service.base.CompanyLocalServiceBaseImpl;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalInstances;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -434,6 +447,163 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			companyPersistence.update(company);
 		}
+	}
+
+	public Company deleteCompany(long companyId)
+		throws PortalException, SystemException {
+
+		if (companyId == PortalInstances.getDefaultCompanyId()) {
+			throw new RequiredCompanyException();
+		}
+
+		Company company = companyPersistence.findByPrimaryKey(companyId);
+
+		company.setActive(false);
+
+		companyPersistence.update(company);
+
+		// Users
+
+		List<User> users = userLocalService.getCompanyUsers(
+			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		for (User user : users) {
+			if (!user.isDefaultUser()) {
+				userLocalService.deleteUser(user.getUserId());
+			}
+		}
+
+		// Organizations
+
+		List<Organization> organizations =
+			organizationLocalService.getOrganizations(
+				companyId,
+				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID);
+
+		for (Organization organization : organizations) {
+			organizationLocalService.deleteOrganization(organization, true);
+		}
+
+		// Sites
+
+		List<Group> siteGroups = groupLocalService.getGroups(
+			companyId, GroupConstants.DEFAULT_PARENT_GROUP_ID, true);
+
+		for (Group group : siteGroups) {
+			if (!PortalUtil.isSystemGroup(group.getName()) &&
+				!group.isCompany()) {
+
+				groupLocalService.deleteGroup(group, false, true);
+			}
+		}
+
+		// System Groups
+
+		String[] systemGroups = PortalUtil.getSystemGroups();
+
+		for (String groupName : systemGroups) {
+			Group group = groupLocalService.getGroup(companyId, groupName);
+
+			groupLocalService.deleteGroup(group, true, true);
+		}
+
+		// Company Group
+
+		Group companyGroup = groupLocalService.getCompanyGroup(companyId);
+
+		groupLocalService.deleteGroup(companyGroup, true, true);
+
+		// LayoutPrototype
+
+		List<LayoutPrototype> layoutPrototypes =
+			layoutPrototypeLocalService.search(
+				companyId, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		for (LayoutPrototype layoutPrototype : layoutPrototypes) {
+			layoutPrototypeLocalService.deleteLayoutPrototype(layoutPrototype);
+		}
+
+		// LayoutSetPrototype
+
+		List<LayoutSetPrototype> layoutSetPrototypes =
+			layoutSetPrototypeLocalService.search(
+				companyId, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		for (LayoutSetPrototype layoutSetPrototype : layoutSetPrototypes) {
+			layoutSetPrototypeLocalService.deleteLayoutSetPrototype(
+				layoutSetPrototype);
+		}
+
+		// Default user
+
+		User defaultUser = userLocalService.getDefaultUser(companyId);
+
+		userLocalService.deleteUser(defaultUser);
+
+		// Roles
+
+		List<Role> roles = roleLocalService.getRoles(companyId);
+
+		for (Role role : roles) {
+			roleLocalService.deleteRole(role, true);
+		}
+
+		// Password Policy
+
+		passwordPolicyLocalService.deleteNondefaultPasswordPolicies(companyId);
+
+		PasswordPolicy defaultPasswordPolicy =
+			passwordPolicyLocalService.getDefaultPasswordPolicy(companyId);
+
+		passwordPolicyLocalService.deletePasswordPolicy(
+			defaultPasswordPolicy, true);
+
+		// Portlet
+
+		List<Portlet> portlets = portletPersistence.findByCompanyId(companyId);
+
+		for (Portlet portlet : portlets) {
+			portletLocalService.deletePortlet(portlet.getId());
+		}
+
+		portletLocalService.removeCompanyPortletsPool(companyId);
+
+		// Portal Preferences
+
+		PortalPreferences portalPreferences =
+			portalPreferencesLocalService.getPortalPreferences(
+				companyId, companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY);
+
+		portalPreferencesLocalService.deletePortalPreferences(
+			portalPreferences);
+
+		// Virtual Host
+
+		VirtualHost companyVirtualHost =
+			virtualHostLocalService.fetchVirtualHost(companyId, 0);
+
+		virtualHostLocalService.deleteVirtualHost(companyVirtualHost);
+
+		// Account
+
+		accountLocalService.deleteAccount(company.getAccountId());
+
+		// Shard
+
+		Shard shard = shardLocalService.getShard(
+			Company.class.getName(), company.getCompanyId());
+
+		shardLocalService.deleteShard(shard);
+
+		// Company
+
+		company = companyPersistence.remove(companyId);
+
+		// Portal instance
+
+		PortalInstances.removeCompany(companyId);
+
+		return company;
 	}
 
 	/**

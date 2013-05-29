@@ -226,6 +226,24 @@ public class GroupServiceWrapper implements GroupService,
 	}
 
 	/**
+	* Returns all the groups that are direct children of the parent group.
+	*
+	* @param companyId the primary key of the company
+	* @param parentGroupId the primary key of the parent group
+	* @param site whether the group is to be associated with a main site
+	* @return the matching groups, or <code>null</code> if no matches were
+	found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.model.Group> getGroups(
+		long companyId, long parentGroupId, boolean site)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _groupService.getGroups(companyId, parentGroupId, site);
+	}
+
+	/**
 	* Returns a range of all the site groups for which the user has control
 	* panel access.
 	*

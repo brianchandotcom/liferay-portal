@@ -688,58 +688,6 @@ public class ThreadPoolExecutorTest extends TestCase {
 		}
 	}
 
-	public void testExecute10() throws InterruptedException {
-		ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
-			1, 1, TestUtil.KEEPALIVE_TIME, TimeUnit.MILLISECONDS, true, 1);
-
-		MarkerBlockingJob markerBlockingJob1 = new MarkerBlockingJob(true);
-
-		threadPoolExecutor.execute(markerBlockingJob1);
-
-		markerBlockingJob1.waitUntilBlock();
-
-		ReentrantLock mainLock = threadPoolExecutor.getMainLock();
-
-		TaskQueue<Runnable> taskQueue = threadPoolExecutor.getTaskQueue();
-
-		ReentrantLock takeLock = taskQueue.getTakeLock();
-
-		takeLock.lock();
-
-		try {
-			markerBlockingJob1.unBlock();
-
-			while (!takeLock.hasQueuedThreads()) {
-				Thread.sleep(1);
-			}
-
-			mainLock.lock();
-		}
-		finally {
-			takeLock.unlock();
-		}
-
-		MarkerBlockingJob markerBlockingJob2 = new MarkerBlockingJob(true);
-
-		try {
-			while (!mainLock.hasQueuedThreads()) {
-				Thread.sleep(1);
-			}
-
-			threadPoolExecutor.execute(markerBlockingJob2);
-		}
-		finally {
-			mainLock.unlock();
-		}
-
-		markerBlockingJob2.waitUntilBlock();
-		markerBlockingJob2.unBlock();
-
-		TestUtil.closePool(threadPoolExecutor);
-
-		assertTrue(markerBlockingJob2.isEnded());
-	}
-
 	public void testExecute2() {
 		RecordRejectedExecutionHandler recordRejectedExecutionHandler =
 			new RecordRejectedExecutionHandler();
@@ -1032,6 +980,58 @@ public class ThreadPoolExecutorTest extends TestCase {
 		finally {
 			TestUtil.closePool(threadPoolExecutor);
 		}
+	}
+
+	public void testExecute10() throws InterruptedException {
+		ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
+			1, 1, TestUtil.KEEPALIVE_TIME, TimeUnit.MILLISECONDS, true, 1);
+
+		MarkerBlockingJob markerBlockingJob1 = new MarkerBlockingJob(true);
+
+		threadPoolExecutor.execute(markerBlockingJob1);
+
+		markerBlockingJob1.waitUntilBlock();
+
+		ReentrantLock mainLock = threadPoolExecutor.getMainLock();
+
+		TaskQueue<Runnable> taskQueue = threadPoolExecutor.getTaskQueue();
+
+		ReentrantLock takeLock = taskQueue.getTakeLock();
+
+		takeLock.lock();
+
+		try {
+			markerBlockingJob1.unBlock();
+
+			while (!takeLock.hasQueuedThreads()) {
+				Thread.sleep(1);
+			}
+
+			mainLock.lock();
+		}
+		finally {
+			takeLock.unlock();
+		}
+
+		MarkerBlockingJob markerBlockingJob2 = new MarkerBlockingJob(true);
+
+		try {
+			while (!mainLock.hasQueuedThreads()) {
+				Thread.sleep(1);
+			}
+
+			threadPoolExecutor.execute(markerBlockingJob2);
+		}
+		finally {
+			mainLock.unlock();
+		}
+
+		markerBlockingJob2.waitUntilBlock();
+		markerBlockingJob2.unBlock();
+
+		TestUtil.closePool(threadPoolExecutor);
+
+		assertTrue(markerBlockingJob2.isEnded());
 	}
 
 	public void testFinalize() {

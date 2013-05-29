@@ -123,27 +123,20 @@ String searchContainerId = StringPool.BLANK;
 	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script use="aui-base,liferay-util-list-fields">
-	Liferay.Util.updateSearchContainerButton(
-		A.one('#<portlet:namespace />updateAssociations'),
-		A.one('#<portlet:namespace /><%= searchContainerId %>'),
-		document.<portlet:namespace />fm,
-		"<portlet:namespace />allRowIds"
-	);
-</aui:script>
-
 <aui:script>
+	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />updateAssociations', '#<portlet:namespace /><%= searchContainerId %>', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+
 	Liferay.provide(
 		window,
 		'<portlet:namespace />updateUserGroupUsers',
 		function(assignmentsRedirect) {
-			var updateUserGroupUserIds = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
+			var updateUserGroupUserIds = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
 
 			if (updateUserGroupUserIds) {
 				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "user_group_users";
 				document.<portlet:namespace />fm.<portlet:namespace />assignmentsRedirect.value = assignmentsRedirect;
 				document.<portlet:namespace />fm.<portlet:namespace />addUserIds.value = updateUserGroupUserIds;
-				document.<portlet:namespace />fm.<portlet:namespace />removeUserIds.value = Liferay.Util.listUncheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
+				document.<portlet:namespace />fm.<portlet:namespace />removeUserIds.value = Liferay.Util.listUncheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
 
 				submitForm(document.<portlet:namespace />fm);
 			}

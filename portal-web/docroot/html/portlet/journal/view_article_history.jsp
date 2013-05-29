@@ -159,38 +159,25 @@ String searchContainerId = StringPool.BLANK;
 			<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
 		</aui:form>
 
-		<aui:script use="aui-base,liferay-util-list-fields">
-			var allRowsIds = "<portlet:namespace />allRowIds";
+		<aui:script>
+			var allRowsIds = '<portlet:namespace />allRowIds';
 			var form = document.<portlet:namespace />fm;
-
-			var searchContainer = A.one('#<portlet:namespace /><%= searchContainerId %>');
+			var searchContainer = '#<portlet:namespace /><%= searchContainerId %>';
 
 			<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.DELETE) %>">
-				Liferay.Util.updateSearchContainerButton(
-					A.one('#<portlet:namespace />delete'),
-					searchContainer,
-					form,
-					allRowsIds
-				);
+				Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />delete', searchContainer, form, allRowsIds );
 			</c:if>
 
 			<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.EXPIRE) %>">
-				Liferay.Util.updateSearchContainerButton(
-					A.one('#<portlet:namespace />expire'),
-					searchContainer,
-					form,
-					allRowsIds
-				);
+				Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />expire', searchContainer, form, allRowsIds );
 			</c:if>
-		</aui:script>
 
-		<aui:script>
 			<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.DELETE) %>">
 				Liferay.provide(
 					window,
 					'<portlet:namespace />deleteArticles',
 					function() {
-						var articleIds = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
+						var articleIds = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
 
 						if (articleIds && confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-the-selected-version") %>')) {
 							document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.DELETE %>";
@@ -198,7 +185,7 @@ String searchContainerId = StringPool.BLANK;
 							document.<portlet:namespace />fm.<portlet:namespace />articleId.value = "";
 							document.<portlet:namespace />fm.<portlet:namespace />articleIds.value = articleIds;
 
-							submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/journal/edit_article" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>");
+							submitForm(document.<portlet:namespace />fm, '<portlet:actionURL><portlet:param name="struts_action" value="/journal/edit_article" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
 						}
 					},
 					['liferay-util-list-fields']
@@ -210,7 +197,7 @@ String searchContainerId = StringPool.BLANK;
 					window,
 					'<portlet:namespace />expireArticles',
 					function() {
-						var expireArticleIds = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
+						var expireArticleIds = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
 
 						if (expireArticleIds && confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-expire-the-selected-version") %>')) {
 							document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.EXPIRE %>";
@@ -218,7 +205,7 @@ String searchContainerId = StringPool.BLANK;
 							document.<portlet:namespace />fm.<portlet:namespace />articleId.value = "";
 							document.<portlet:namespace />fm.<portlet:namespace />expireArticleIds.value = expireArticleIds;
 
-							submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/journal/edit_article" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>");
+							submitForm(document.<portlet:namespace />fm, '<portlet:actionURL><portlet:param name="struts_action" value="/journal/edit_article" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
 						}
 					},
 					['liferay-util-list-fields']

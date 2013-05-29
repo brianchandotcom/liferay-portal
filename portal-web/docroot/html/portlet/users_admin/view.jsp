@@ -102,7 +102,8 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.DELETE %>";
 		document.<portlet:namespace />fm.<portlet:namespace />redirect.value = document.<portlet:namespace />fm.<portlet:namespace />organizationsRedirect.value;
 		document.<portlet:namespace />fm.<portlet:namespace />deleteOrganizationIds.value = organizationIds;
-		submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/users_admin/edit_organization" /></portlet:actionURL>");
+
+		submitForm(document.<portlet:namespace />fm, '<portlet:actionURL><portlet:param name="struts_action" value="/users_admin/edit_organization" /></portlet:actionURL>');
 	}
 
 	function <portlet:namespace />search() {
@@ -139,7 +140,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		function() {
 			<portlet:namespace />doDeleteOrganization(
 				'<%= Organization.class.getName() %>',
-				Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds")
+				Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds')
 			);
 		},
 		['liferay-util-list-fields']
@@ -149,14 +150,15 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		window,
 		'<portlet:namespace />deleteUsers',
 		function(cmd) {
-			var deleteUserIds = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
+			var deleteUserIds = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+
 			if (deleteUserIds && ((cmd == "<%= Constants.DEACTIVATE %>") && confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-deactivate-the-selected-users") %>')) || ((cmd == "<%= Constants.DELETE %>") && confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-permanently-delete-the-selected-users") %>'))) {
 				document.<portlet:namespace />fm.method = "post";
 				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = cmd;
 				document.<portlet:namespace />fm.<portlet:namespace />redirect.value = document.<portlet:namespace />fm.<portlet:namespace />usersRedirect.value;
 				document.<portlet:namespace />fm.<portlet:namespace />deleteUserIds.value = deleteUserIds;
 
-				submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/users_admin/edit_user" /></portlet:actionURL>");
+				submitForm(document.<portlet:namespace />fm, '<portlet:actionURL><portlet:param name="struts_action" value="/users_admin/edit_user" /></portlet:actionURL>');
 			}
 		},
 		['liferay-util-list-fields']

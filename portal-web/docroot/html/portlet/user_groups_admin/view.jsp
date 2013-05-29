@@ -50,16 +50,9 @@ String searchContainerId = StringPool.BLANK;
 
 </aui:form>
 
-<aui:script use="aui-base,liferay-util-list-fields">
-	Liferay.Util.updateSearchContainerButton(
-		A.one('#<portlet:namespace />delete'),
-		A.one('#<portlet:namespace /><%= searchContainerId %>'),
-		document.<portlet:namespace />fm,
-		"<portlet:namespace />allRowIds"
-	);
-</aui:script>
-
 <aui:script>
+	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />delete', '#<portlet:namespace /><%= searchContainerId %>', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+
 	function <portlet:namespace />deleteUserGroup(userGroupId) {
 		<portlet:namespace />doDeleteUserGroup('<%= UserGroup.class.getName() %>', userGroupId);
 	}
@@ -121,7 +114,7 @@ String searchContainerId = StringPool.BLANK;
 		document.<portlet:namespace />fm.<portlet:namespace />redirect.value = document.<portlet:namespace />fm.<portlet:namespace />userGroupsRedirect.value;
 		document.<portlet:namespace />fm.<portlet:namespace />deleteUserGroupIds.value = userGroupIds;
 
-		submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/user_groups_admin/edit_user_group" /></portlet:actionURL>");
+		submitForm(document.<portlet:namespace />fm, '<portlet:actionURL><portlet:param name="struts_action" value="/user_groups_admin/edit_user_group" /></portlet:actionURL>');
 	}
 
 	Liferay.provide(
@@ -130,7 +123,7 @@ String searchContainerId = StringPool.BLANK;
 		function() {
 			<portlet:namespace />doDeleteUserGroup(
 				'<%= UserGroup.class.getName() %>',
-				Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds")
+				Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds')
 			);
 		},
 		['liferay-util-list-fields']

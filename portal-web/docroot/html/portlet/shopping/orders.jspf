@@ -113,27 +113,20 @@ String searchContainerId = StringPool.BLANK;
 	<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
 </aui:form>
 
-<aui:script use="aui-base,liferay-util-list-fields">
-	Liferay.Util.utilandy(
-		A.one('#<portlet:namespace />delete'),
-		A.one('#<portlet:namespace /><%= searchContainerId %>'),
-		document.<portlet:namespace />fm,
-		"<portlet:namespace />allRowIds"
-	);
-</aui:script>
-
 <aui:script>
+	Liferay.Util.utilandy('#<portlet:namespace />delete', '#<portlet:namespace /><%= searchContainerId %>', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+
 	Liferay.provide(
 		window,
 		'<portlet:namespace />deleteOrders',
 		function() {
-			var deleteOrderIds = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
+			var deleteOrderIds = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
 
 			if (deleteOrderIds && confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-the-selected-orders") %>')) {
 				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.DELETE %>";
 				document.<portlet:namespace />fm.<portlet:namespace />deleteOrderIds.value = deleteOrderIds;
 
-				submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/shopping/edit_order" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>");
+				submitForm(document.<portlet:namespace />fm, '<portlet:actionURL><portlet:param name="struts_action" value="/shopping/edit_order" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
 			}
 		},
 		['liferay-util-list-fields']

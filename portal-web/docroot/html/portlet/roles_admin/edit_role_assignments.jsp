@@ -97,6 +97,7 @@ String searchContainerId = StringPool.BLANK;
 
 			searchContainerId = searchContainer.getId(request, renderResponse.getNamespace());
 			%>
+
 		</c:when>
 		<c:when test='<%= tabs2.equals("sites") %>'>
 			<liferay-util:include page="/html/portlet/sites_admin/edit_role_assignments_sites.jsp" />
@@ -106,6 +107,7 @@ String searchContainerId = StringPool.BLANK;
 
 			searchContainerId = searchContainer.getId(request, renderResponse.getNamespace());
 			%>
+
 		</c:when>
 		<c:when test='<%= tabs2.equals("organizations") %>'>
 			<liferay-util:include page="/html/portlet/users_admin/edit_role_assignments_organizations.jsp" />
@@ -115,6 +117,7 @@ String searchContainerId = StringPool.BLANK;
 
 			searchContainerId = searchContainer.getId(request, renderResponse.getNamespace());
 			%>
+
 		</c:when>
 		<c:when test='<%= tabs2.equals("user-groups") %>'>
 			<liferay-util:include page="/html/portlet/users_admin/edit_role_assignments_user_groups.jsp" />
@@ -124,31 +127,25 @@ String searchContainerId = StringPool.BLANK;
 
 			searchContainerId = searchContainer.getId(request, renderResponse.getNamespace());
 			%>
+
 		</c:when>
 	</c:choose>
 </aui:form>
 
-<aui:script use="aui-base,liferay-util-list-fields">
-	Liferay.Util.updateSearchContainerButton(
-		A.one('#<portlet:namespace />updateAssociations'),
-		A.one('#<portlet:namespace /><%= searchContainerId %>'),
-		document.<portlet:namespace />fm,
-		"<portlet:namespace />allRowIds"
-	);
-</aui:script>
-
 <aui:script>
+	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />updateAssociations', '#<portlet:namespace /><%= searchContainerId %>', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+
 	Liferay.provide(
 		window,
 		'<portlet:namespace />updateRoles',
 		function(assignmentsRedirect) {
-			var updateRoleIds = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
+			var updateRoleIds = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
 
 			if (updateRoleIds) {
 				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= cmdVal %>";
 				document.<portlet:namespace />fm.<portlet:namespace />assignmentsRedirect.value = assignmentsRedirect;
 				document.<portlet:namespace />fm.<portlet:namespace /><%= addInputId %>.value = updateRoleIds;
-				document.<portlet:namespace />fm.<portlet:namespace /><%= removeInputId %>.value = Liferay.Util.listUncheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
+				document.<portlet:namespace />fm.<portlet:namespace /><%= removeInputId %>.value = Liferay.Util.listUncheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
 
 				submitForm(document.<portlet:namespace />fm);
 			}

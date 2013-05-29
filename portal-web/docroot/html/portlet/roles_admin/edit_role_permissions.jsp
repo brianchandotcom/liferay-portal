@@ -263,7 +263,7 @@ editPermissionsURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 		window,
 		'<portlet:namespace />updateActions',
 		function() {
-			var selectedTargets = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
+			var selectedTargets = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
 
 			if (selectedTargets) {
 				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "actions";

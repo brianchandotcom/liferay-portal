@@ -130,11 +130,6 @@ String searchContainerOrganizationId = StringPool.BLANK;
 	</c:otherwise>
 </c:choose>
 
-<aui:script use="aui-base,liferay-util-list-fields">
-	Liferay.Util.updateSearchContainerButton(
-		A.one('#<portlet:namespace />delete'),
-		A.one('#<portlet:namespace /><%= searchContainerOrganizationId %>'),
-		document.<portlet:namespace />fm,
-		"<portlet:namespace />allRowIds"
-	);
+<aui:script>
+	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />delete', '#<portlet:namespace /><%= searchContainerOrganizationId %>', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
 </aui:script>

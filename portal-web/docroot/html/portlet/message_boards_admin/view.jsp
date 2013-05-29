@@ -161,6 +161,7 @@ String searchContainerThreadsId = StringPool.BLANK;
 							rowChecker="<%= new RowChecker(renderResponse) %>"
 							total="<%= categoriesCount %>"
 						>
+
 							<%
 								searchContainerCategoriesId = searchContainer.getId(request, renderResponse.getNamespace());
 							%>
@@ -214,6 +215,7 @@ String searchContainerThreadsId = StringPool.BLANK;
 						rowChecker="<%= new RowChecker(renderResponse) %>"
 						total="<%= MBThreadServiceUtil.getThreadsCount(scopeGroupId, categoryId, WorkflowConstants.STATUS_APPROVED) %>"
 					>
+
 						<%
 							searchContainerThreadsId = searchContainer.getId(request, renderResponse.getNamespace());
 						%>
@@ -673,54 +675,31 @@ String searchContainerThreadsId = StringPool.BLANK;
 	</c:when>
 </c:choose>
 
-<aui:script use="aui-base,liferay-util-list-fields">
-	var allRowsIds = "<portlet:namespace />allRowIds";
-	var form = document.<portlet:namespace />fm1;
-
-	var seachContainerThread = A.one('#<portlet:namespace /><%= searchContainerThreadsId %>');
-
-	Liferay.Util.updateSearchContainerButton(
-		A.one('#<portlet:namespace />deleteCategory'),
-		A.one('#<portlet:namespace /><%= searchContainerCategoriesId %>'),
-		document.<portlet:namespace />fm,
-		allRowsIds
-	);
-
-	Liferay.Util.updateSearchContainerButton(
-		A.one('#<portlet:namespace />delete'),
-		seachContainerThread,
-		form,
-		allRowsIds
-	);
-
-	Liferay.Util.updateSearchContainerButton(
-		A.one('#<portlet:namespace />lockThread'),
-		seachContainerThread,
-		form,
-		allRowsIds
-	);
-
-	Liferay.Util.updateSearchContainerButton(
-		A.one('#<portlet:namespace />unlockThread'),
-		seachContainerThread,
-		form,
-		allRowsIds
-	);
-</aui:script>
-
 <aui:script>
+	var allRowsIds = '<portlet:namespace />allRowIds';
+	var form = document.<portlet:namespace />fm1;
+	var seachContainerThread = '#<portlet:namespace /><%= searchContainerThreadsId %>';
+
+	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />deleteCategory', '#<portlet:namespace /><%= searchContainerCategoriesId %>', document.<portlet:namespace />fm, allRowsIds);
+
+	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />delete', seachContainerThread, form, allRowsIds);
+
+	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />lockThread', seachContainerThread, form, allRowsIds);
+
+	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />unlockThread', seachContainerThread, form, allRowsIds);
+
 	Liferay.provide(
 		window,
 		'<portlet:namespace />deleteCategories',
 		function() {
-			var deleteCategoryIds = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
+			var deleteCategoryIds = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
 
 			if (deleteCategoryIds && confirm('<%= UnicodeLanguageUtil.get(pageContext, TrashUtil.isTrashEnabled(scopeGroupId) ? "are-you-sure-you-want-to-move-the-selected-entries-to-the-recycle-bin" : "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
 				document.<portlet:namespace />fm.method = "post";
 				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>";
 				document.<portlet:namespace />fm.<portlet:namespace />deleteCategoryIds.value = deleteCategoryIds;
 
-				submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/message_boards_admin/edit_category" /></portlet:actionURL>");
+				submitForm(document.<portlet:namespace />fm, '<portlet:actionURL><portlet:param name="struts_action" value="/message_boards_admin/edit_category" /></portlet:actionURL>');
 			}
 		},
 		['liferay-util-list-fields']
@@ -730,14 +709,14 @@ String searchContainerThreadsId = StringPool.BLANK;
 		window,
 		'<portlet:namespace />deleteThreads',
 		function() {
-			var threadIds = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm1, "<portlet:namespace />allRowIds");
+			var threadIds = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm1, '<portlet:namespace />allRowIds');
 
 			if (threadIds && confirm('<%= UnicodeLanguageUtil.get(pageContext, TrashUtil.isTrashEnabled(scopeGroupId) ? "are-you-sure-you-want-to-move-the-selected-entries-to-the-recycle-bin" : "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
 				document.<portlet:namespace />fm1.method = "post";
 				document.<portlet:namespace />fm1.<portlet:namespace /><%= Constants.CMD %>.value = "<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>";
 				document.<portlet:namespace />fm1.<portlet:namespace />threadIds.value = threadIds;
 
-				submitForm(document.<portlet:namespace />fm1, "<portlet:actionURL><portlet:param name="struts_action" value="/message_boards_admin/delete_thread" /></portlet:actionURL>");
+				submitForm(document.<portlet:namespace />fm1, '<portlet:actionURL><portlet:param name="struts_action" value="/message_boards_admin/delete_thread" /></portlet:actionURL>');
 			}
 		},
 		['liferay-util-list-fields']
@@ -747,14 +726,14 @@ String searchContainerThreadsId = StringPool.BLANK;
 		window,
 		'<portlet:namespace />lockThreads',
 		function() {
-			var threadIds = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm1, "<portlet:namespace />allRowIds");
+			var threadIds = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm1, '<portlet:namespace />allRowIds');
 
 			if (threadIds) {
 				document.<portlet:namespace />fm1.method = "post";
 				document.<portlet:namespace />fm1.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.LOCK %>";
 				document.<portlet:namespace />fm1.<portlet:namespace />threadIds.value = threadIds;
 
-				submitForm(document.<portlet:namespace />fm1, "<portlet:actionURL><portlet:param name="struts_action" value="/message_boards_admin/edit_message" /></portlet:actionURL>");
+				submitForm(document.<portlet:namespace />fm1, '<portlet:actionURL><portlet:param name="struts_action" value="/message_boards_admin/edit_message" /></portlet:actionURL>');
 			}
 		},
 		['liferay-util-list-fields']
@@ -764,14 +743,14 @@ String searchContainerThreadsId = StringPool.BLANK;
 		window,
 		'<portlet:namespace />unlockThreads',
 		function() {
-			var threadIds = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm1, "<portlet:namespace />allRowIds");
+			var threadIds = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm1, '<portlet:namespace />allRowIds');
 
 			if (threadIds) {
 				document.<portlet:namespace />fm1.method = "post";
 				document.<portlet:namespace />fm1.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.UNLOCK %>";
 				document.<portlet:namespace />fm1.<portlet:namespace />threadIds.value = threadIds;
 
-				submitForm(document.<portlet:namespace />fm1, "<portlet:actionURL><portlet:param name="struts_action" value="/message_boards_admin/edit_message" /></portlet:actionURL>");
+				submitForm(document.<portlet:namespace />fm1, '<portlet:actionURL><portlet:param name="struts_action" value="/message_boards_admin/edit_message" /></portlet:actionURL>');
 			}
 		},
 		['liferay-util-list-fields']

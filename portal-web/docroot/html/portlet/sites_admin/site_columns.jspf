@@ -70,24 +70,26 @@
 		buffer.append(iconHelp);
 	}
 
-	int childSitesCount = GroupLocalServiceUtil.getGroupsCount(company.getCompanyId(), curGroup.getGroupId(), true);
+	if (GroupPermissionUtil.contains(permissionChecker, curGroup.getGroupId(), ActionKeys.VIEW)) {
+		List<Group> childSites = GroupServiceUtil.getGroups(company.getCompanyId(), curGroup.getGroupId(), true);
 
-	if (childSitesCount > 0) {
+		if (childSites.size() > 0) {
 	%>
 
-		<liferay-portlet:renderURL var="viewSubsitesURL">
-			<portlet:param name="struts_action" value="/sites_admin/view" />
-			<portlet:param name="backURL" value="<%= StringPool.SLASH + currentURL %>" />
-			<portlet:param name="groupId" value="<%= String.valueOf(curGroup.getGroupId()) %>" />
-			<portlet:param name="sitesListView" value="<%= SiteConstants.LIST_VIEW_TREE %>" />
-		</liferay-portlet:renderURL>
+			<liferay-portlet:renderURL var="viewSubsitesURL">
+				<portlet:param name="struts_action" value="/sites_admin/view" />
+				<portlet:param name="backURL" value="<%= StringPool.SLASH + currentURL %>" />
+				<portlet:param name="groupId" value="<%= String.valueOf(curGroup.getGroupId()) %>" />
+				<portlet:param name="sitesListView" value="<%= SiteConstants.LIST_VIEW_TREE %>" />
+			</liferay-portlet:renderURL>
 
 	<%
-		buffer.append("<div class=\"subsites-count\"><a href=\"");
-		buffer.append(viewSubsitesURL.toString());
-		buffer.append("\">");
-		buffer.append(LanguageUtil.format(pageContext, "this-site-has-x-child-sites", String.valueOf(childSitesCount)));
-		buffer.append("</a></div>");
+			buffer.append("<div class=\"subsites-count\"><a href=\"");
+			buffer.append(viewSubsitesURL.toString());
+			buffer.append("\">");
+			buffer.append(LanguageUtil.format(pageContext, childSites.size() == 1 ? "this-site-has-x-child-site" : "this-site-has-x-child-sites", String.valueOf(childSites.size())));
+			buffer.append("</a></div>");
+		}
 	}
 	%>
 

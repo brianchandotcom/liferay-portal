@@ -37,7 +37,7 @@ import java.util.Date;
  * @see com.liferay.portal.model.impl.UserGroupModelImpl
  * @generated
  */
-public interface UserGroupModel extends BaseModel<UserGroup>, StagedModel {
+public interface UserGroupModel extends BaseModel<UserGroup>, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

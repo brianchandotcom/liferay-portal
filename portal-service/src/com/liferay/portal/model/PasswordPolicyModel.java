@@ -38,7 +38,7 @@ import java.util.Date;
  * @generated
  */
 public interface PasswordPolicyModel extends BaseModel<PasswordPolicy>,
-	StagedModel {
+	StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

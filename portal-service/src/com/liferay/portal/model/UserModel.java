@@ -37,7 +37,7 @@ import java.util.Date;
  * @see com.liferay.portal.model.impl.UserModelImpl
  * @generated
  */
-public interface UserModel extends BaseModel<User> {
+public interface UserModel extends BaseModel<User>, StagedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -64,6 +64,7 @@ public interface UserModel extends BaseModel<User> {
 	 * @return the uuid of this user
 	 */
 	@AutoEscape
+	@Override
 	public String getUuid();
 
 	/**
@@ -71,6 +72,7 @@ public interface UserModel extends BaseModel<User> {
 	 *
 	 * @param uuid the uuid of this user
 	 */
+	@Override
 	public void setUuid(String uuid);
 
 	/**
@@ -93,6 +95,7 @@ public interface UserModel extends BaseModel<User> {
 	 * @return the user uuid of this user
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public String getUserUuid() throws SystemException;
 
 	/**
@@ -100,6 +103,7 @@ public interface UserModel extends BaseModel<User> {
 	 *
 	 * @param userUuid the user uuid of this user
 	 */
+	@Override
 	public void setUserUuid(String userUuid);
 
 	/**
@@ -107,6 +111,7 @@ public interface UserModel extends BaseModel<User> {
 	 *
 	 * @return the company ID of this user
 	 */
+	@Override
 	public long getCompanyId();
 
 	/**
@@ -114,6 +119,7 @@ public interface UserModel extends BaseModel<User> {
 	 *
 	 * @param companyId the company ID of this user
 	 */
+	@Override
 	public void setCompanyId(long companyId);
 
 	/**
@@ -121,6 +127,7 @@ public interface UserModel extends BaseModel<User> {
 	 *
 	 * @return the create date of this user
 	 */
+	@Override
 	public Date getCreateDate();
 
 	/**
@@ -128,6 +135,7 @@ public interface UserModel extends BaseModel<User> {
 	 *
 	 * @param createDate the create date of this user
 	 */
+	@Override
 	public void setCreateDate(Date createDate);
 
 	/**
@@ -135,6 +143,7 @@ public interface UserModel extends BaseModel<User> {
 	 *
 	 * @return the modified date of this user
 	 */
+	@Override
 	public Date getModifiedDate();
 
 	/**
@@ -142,6 +151,7 @@ public interface UserModel extends BaseModel<User> {
 	 *
 	 * @param modifiedDate the modified date of this user
 	 */
+	@Override
 	public void setModifiedDate(Date modifiedDate);
 
 	/**

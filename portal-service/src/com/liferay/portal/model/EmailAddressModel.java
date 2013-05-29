@@ -38,7 +38,7 @@ import java.util.Date;
  * @generated
  */
 public interface EmailAddressModel extends AttachedModel, BaseModel<EmailAddress>,
-	StagedModel {
+	StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

@@ -176,7 +176,7 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 						%>
 
 						<liferay-ui:icon
-							cssClass="scope-selector highlited"
+							cssClass="highlited scope-selector"
 							id="selectGroup"
 							image="add"
 							message='<%= LanguageUtil.get(pageContext, "pages") + StringPool.TRIPLE_PERIOD %>'
@@ -207,7 +207,7 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 						%>
 
 						<liferay-ui:icon
-							cssClass="scope-selector highlited"
+							cssClass="highlited scope-selector"
 							id="selectGroup"
 							image="add"
 							message='<%= LanguageUtil.get(pageContext, "parent-site") + StringPool.TRIPLE_PERIOD %>'
@@ -233,7 +233,7 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 						%>
 
 						<liferay-ui:icon
-							cssClass="scope-selector highlited"
+							cssClass="highlited scope-selector"
 							id="selectChildGroup"
 							image="add"
 							message='<%= LanguageUtil.get(pageContext, "child-site") + StringPool.TRIPLE_PERIOD %>'
@@ -258,7 +258,7 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 						%>
 
 						<liferay-ui:icon
-							cssClass="scope-selector highlited"
+							cssClass="highlited scope-selector"
 							id="selectManageableGroup"
 							image="add"
 							message='<%= LanguageUtil.get(pageContext, "site") + StringPool.TRIPLE_PERIOD %>'

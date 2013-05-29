@@ -56,12 +56,10 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 						metadataExplanationContainer: '#<portlet:namespace />metadataExplanationContainer',
 						multipleFiles: false,
 						namespace: '<portlet:namespace />',
-						strings: {
-							dropFileText: '<liferay-ui:message key="drop-a-lar-file-here-to-import" />',
-							fileCannotBeSavedText: '<liferay-ui:message key="the-file-x-cannot-be-imported" />',
-							pendingFileText: '<liferay-ui:message key="this-file-was-previously-uploaded-but-not-actually-imported" />',
-							uploadsCompleteText: '<liferay-ui:message key="the-file-is-ready-to-be-imported" />'
-						},
+						'strings.dropFileText': '<liferay-ui:message key="drop-a-lar-file-here-to-import" />',
+						'strings.fileCannotBeSavedText': '<liferay-ui:message key="the-file-x-cannot-be-imported" />',
+						'strings.pendingFileText': '<liferay-ui:message key="this-file-was-previously-uploaded-but-not-actually-imported" />',
+						'strings.uploadsCompleteText': '<liferay-ui:message key="the-file-is-ready-to-be-imported" />',
 						tempFileURL: {
 							method: Liferay.Service.bind('/layout/get-temp-file-entry-names'),
 							params: {

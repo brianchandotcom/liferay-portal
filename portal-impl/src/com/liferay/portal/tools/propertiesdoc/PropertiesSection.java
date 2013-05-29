@@ -70,7 +70,7 @@ public class PropertiesSection {
 	}
 
 	public boolean hasPropertyComments() {
-		if ((_propertyComments != null) && _propertyComments.isEmpty()) {
+		if ((_propertyComments != null) && !_propertyComments.isEmpty()) {
 			return true;
 		}
 		else {

@@ -49,8 +49,6 @@ public class UpgradeMessageBoards extends BaseUpgradePortletPreferences {
 			PortletPreferencesFactoryUtil.fromXML(
 				companyId, ownerId, ownerType, plid, portletId, xml);
 
-		// RSS
-
 		String rssFormat = GetterUtil.getString(
 			portletPreferences.getValue("rssFormat", null));
 
@@ -64,38 +62,36 @@ public class UpgradeMessageBoards extends BaseUpgradePortletPreferences {
 
 		portletPreferences.reset("rssFormat");
 
-		// Email Subscription Subject
-
 		portletPreferences = upgradeSubscriptionSubject(
-			"mailMessageAddedSubject", "mailMessageAddedSubjectPrefix",
+			"emailMessageAddedSubject", "emailMessageAddedSubjectPrefix",
 			portletPreferences);
 
 		portletPreferences = upgradeSubscriptionSubject(
-			"mailMessageUpdatedSubject", "mailMessageUpdatedSubjectPrefix",
+			"emailMessageUpdatedSubject", "emailMessageUpdatedSubjectPrefix",
 			portletPreferences);
 
 		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
 	}
 
 	protected PortletPreferences upgradeSubscriptionSubject(
-			String valueKey, String oldValueKey,
+			String subjectName, String subjectPrefixName,
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		String subjectPrefixValue = GetterUtil.getString(
-			portletPreferences.getValue(oldValueKey, StringPool.BLANK));
+		String subjectPrefix = GetterUtil.getString(
+			portletPreferences.getValue(subjectPrefixName, StringPool.BLANK));
 
-		if (Validator.isNotNull(subjectPrefixValue)) {
-			String subjectValue = subjectPrefixValue;
+		if (Validator.isNotNull(subjectPrefix)) {
+			String subject = subjectPrefix;
 
-			if (!subjectPrefixValue.contains("[$MESSAGE_SUBJECT$]")) {
-				subjectValue = subjectValue.concat(" [$MESSAGE_SUBJECT$]");
+			if (!subjectPrefix.contains("[$MESSAGE_SUBJECT$]")) {
+				subject = subject.concat(" [$MESSAGE_SUBJECT$]");
 			}
 
-			portletPreferences.setValue(valueKey, subjectValue);
+			portletPreferences.setValue(subjectName, subject);
 		}
 
-		portletPreferences.reset(oldValueKey);
+		portletPreferences.reset(subjectPrefixName);
 
 		return portletPreferences;
 	}

@@ -47,38 +47,36 @@ public class UpgradeWiki extends BaseUpgradePortletPreferences {
 			PortletPreferencesFactoryUtil.fromXML(
 				companyId, ownerId, ownerType, plid, portletId, xml);
 
-		// Email Subscription Subject
-
 		portletPreferences = upgradeSubscriptionSubject(
-			"mailPageAddedSubject", "mailPageAddedSubjectPrefix",
+			"emailPageAddedSubject", "emailPageAddedSubjectPrefix",
 			portletPreferences);
 
 		portletPreferences = upgradeSubscriptionSubject(
-			"mailPageUpdatedSubject", "mailPageUpdatedSubjectPrefix",
+			"emailPageUpdatedSubject", "emailPageUpdatedSubjectPrefix",
 			portletPreferences);
 
 		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
 	}
 
 	protected PortletPreferences upgradeSubscriptionSubject(
-			String valueKey, String oldValueKey,
+			String subjectName, String subjectPrefixName,
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		String subjectPrefixValue = GetterUtil.getString(
-			portletPreferences.getValue(oldValueKey, StringPool.BLANK));
+		String subjectPrefix = GetterUtil.getString(
+			portletPreferences.getValue(subjectPrefixName, StringPool.BLANK));
 
-		if (Validator.isNotNull(subjectPrefixValue)) {
-			String subjectValue = subjectPrefixValue;
+		if (Validator.isNotNull(subjectPrefix)) {
+			String subject = subjectPrefix;
 
-			if (!subjectPrefixValue.contains("[$PAGE_TITLE$]")) {
-				subjectValue = subjectValue.concat(" [$PAGE_TITLE$]");
+			if (!subjectPrefix.contains("[$PAGE_TITLE$]")) {
+				subject = subject.concat(" [$PAGE_TITLE$]");
 			}
 
-			portletPreferences.setValue(valueKey, subjectValue);
+			portletPreferences.setValue(subjectName, subject);
 		}
 
-		portletPreferences.reset(oldValueKey);
+		portletPreferences.reset(subjectPrefixName);
 
 		return portletPreferences;
 	}

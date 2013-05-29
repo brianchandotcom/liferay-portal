@@ -47,7 +47,12 @@ public class SynchronousMessageListener implements MessageListener {
 		}
 
 		synchronized (this) {
-			_results = message.getPayload();
+			if (message.getPayload() == null) {
+				_results = _NULL_RESPONSE;
+			}
+			else {
+				_results = message.getPayload();
+			}
 
 			notify();
 		}
@@ -71,6 +76,10 @@ public class SynchronousMessageListener implements MessageListener {
 				}
 			}
 
+			if (_results == _NULL_RESPONSE) {
+				return null;
+			}
+
 			return _results;
 		}
 		catch (InterruptedException ie) {
@@ -86,6 +95,8 @@ public class SynchronousMessageListener implements MessageListener {
 			ThreadLocalCacheManager.destroy();
 		}
 	}
+
+	private static final String _NULL_RESPONSE = "NULL_RESPONSE";
 
 	private Message _message;
 	private MessageBus _messageBus;

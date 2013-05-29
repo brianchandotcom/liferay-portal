@@ -28,19 +28,23 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * The implementation of the layout friendly u r l local service.
+ * Provides the implementation of the layout friendly URL local service.
  *
  * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.portal.service.LayoutFriendlyURLLocalService} interface.
- * 
- * 
+ * All custom service methods should be put in this class. Whenever methods are
+ * added, rerun ServiceBuilder to copy their definitions into the {@link
+ * com.liferay.portal.service.LayoutFriendlyURLLocalService} interface.
+ * </p>
+ *
  * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p> 
- * 
+ * Methods of this service will not have security checks based on the propagated
+ * JAAS credentials because this service can only be accessed from within the
+ * same VM.
+ * </p>
+ *
  * @author Brian Wing Shun Chan
- * @see com.liferay.portal.service.base.LayoutFriendlyURLLocalServiceBaseImpl
- * @see com.liferay.portal.service.LayoutFriendlyURLLocalServiceUtil 
+ * @see    com.liferay.portal.service.base.LayoutFriendlyURLLocalServiceBaseImpl
+ * @see    com.liferay.portal.service.LayoutFriendlyURLLocalServiceUtil
  */
 public class LayoutFriendlyURLLocalServiceImpl
 	extends LayoutFriendlyURLLocalServiceBaseImpl {

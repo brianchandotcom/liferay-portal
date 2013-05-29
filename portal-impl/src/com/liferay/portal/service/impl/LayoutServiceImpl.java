@@ -91,19 +91,20 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 *         com.liferay.portal.model.LayoutConstants}.
 	 * @param  hidden whether the layout is hidden
 	 * @param  friendlyURLMap the layout's locales and localized friendly URLs.
-	 *         To see how the URL is normalized when accessed see {@link
+	 *         To see how the URL is normalized when accessed, see {@link
 	 *         com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
 	 *         String)}.
 	 * @param  serviceContext the service context to be applied. Must set the
-	 *         UUID for the layout. Can set the creation date, modification date
-	 *         and the expando bridge attributes for the layout. For layouts
+	 *         UUID for the layout. Can set the creation date, modification
+	 *         date, and expando bridge attributes for the layout. For layouts
 	 *         that belong to a layout set prototype, an attribute named
-	 *         'layoutUpdateable' can be used to specify whether site
+	 *         <code>layoutUpdateable</code> can be used to specify whether site
 	 *         administrators can modify this page within their site.
 	 * @return the layout
 	 * @throws PortalException if a group with the primary key could not be
 	 *         found, if the group did not have permission to manage the layouts
-	 *         involved, or if layout values were invalid
+	 *         involved, if layout values were invalid, or if a portal exception
+	 *         occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
@@ -160,22 +161,22 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 *             possible types can be found in {@link
 	 *             com.liferay.portal.model.LayoutConstants}.
 	 * @param      hidden whether the layout is hidden
-	 * @param      friendlyURL Map the layout's locales and localized friendly
-	 *             URLs. To see how the URL is normalized when accessed see
-	 *             {@link
+	 * @param      friendlyURL the layout's locales and localized friendly URLs.
+	 *             To see how the URL is normalized when accessed, see {@link
 	 *             com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
 	 *             String)}.
 	 * @param      serviceContext the service context to be applied. Must set
 	 *             the UUID for the layout. Can set the creation date,
-	 *             modification date and the expando bridge attributes for the
+	 *             modification date, and expando bridge attributes for the
 	 *             layout. For layouts that belong to a layout set prototype, an
-	 *             attribute named 'layoutUpdateable' can be used to specify
-	 *             whether site administrators can modify this page within their
-	 *             site.
+	 *             attribute named <code>layoutUpdateable</code> can be used to
+	 *             specify whether site administrators can modify this page
+	 *             within their site.
 	 * @return     the layout
 	 * @throws     PortalException if a group with the primary key could not be
 	 *             found, if the group did not have permission to manage the
-	 *             layouts involved, or if layout values were invalid
+	 *             layouts involved, if layout values were invalid, or if a
+	 *             portal exception occurred
 	 * @throws     SystemException if a system exception occurred
 	 * @deprecated As of 6.2.0, replaced by {@link #addLayout(long, boolean,
 	 *             long, Map, Map, Map, Map, Map, String, boolean, String,
@@ -234,19 +235,20 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 *         com.liferay.portal.model.LayoutConstants}.
 	 * @param  hidden whether the layout is hidden
 	 * @param  friendlyURL the layout's locales and localized friendly URLs. To
-	 *         see how the URL is normalized when accessed see {@link
+	 *         see how the URL is normalized when accessed, see {@link
 	 *         com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
 	 *         String)}.
 	 * @param  serviceContext the service context to be applied. Must set the
 	 *         UUID for the layout. Can specify the creation date, modification
-	 *         date and the expando bridge attributes for the layout. For
-	 *         layouts that belong to a layout set prototype, an attribute named
-	 *         'layoutUpdateable' can be used to specify whether site
+	 *         date, and expando bridge attributes for the layout. For layouts
+	 *         that belong to a layout set prototype, an attribute named
+	 *         <code>layoutUpdateable</code> can be used to specify whether site
 	 *         administrators can modify this page within their site.
 	 * @return the layout
 	 * @throws PortalException if a group with the primary key could not be
 	 *         found, if the group did not have permission to manage the layouts
-	 *         involved, or if layout values were invalid
+	 *         involved, if layout values were invalid, or if a portal exception
+	 *         occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
@@ -1192,7 +1194,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	/**
-	 * Updates the layout.
+	 * Updates the layout with additional parameters.
 	 *
 	 * @param      groupId the primary key of the group
 	 * @param      privateLayout whether the layout is private to the group
@@ -1210,8 +1212,9 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param      type the layout's new type (optionally {@link
 	 *             com.liferay.portal.model.LayoutConstants#TYPE_PORTLET})
 	 * @param      hidden whether the layout is hidden
-	 * @param      friendlyURL the layout's locales and new friendly URLs. To see how the URL is
-	 *             normalized when accessed see {@link
+	 * @param      friendlyURLMap the layout's locales and localized friendly
+	 *             URLs. To see how the URL is normalized when accessed see
+	 *             {@link
 	 *             com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
 	 *             String)}.
 	 * @param      iconImage whether the icon image will be updated
@@ -1252,7 +1255,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	/**
-	 * Updates the layout.
+	 * Updates the layout with additional parameters.
 	 *
 	 * @param      groupId the primary key of the group
 	 * @param      privateLayout whether the layout is private to the group
@@ -1270,8 +1273,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param      type the layout's new type (optionally {@link
 	 *             com.liferay.portal.model.LayoutConstants#TYPE_PORTLET})
 	 * @param      hidden whether the layout is hidden
-	 * @param      friendlyURL the layout's locales and new friendly URLs. To see how the URL is
-	 *             normalized when accessed see {@link
+	 * @param      friendlyURL the layout's locales and new friendly URLs. To
+	 *             see how the URL is normalized when accessed, see {@link
 	 *             com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
 	 *             String)}.
 	 * @param      iconImage whether the icon image will be updated

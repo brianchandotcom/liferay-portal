@@ -31,12 +31,12 @@
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_ENTRIES</td>
-	<td>link=Entries</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Entries')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_MANAGE_ENTRIES</td>
-	<td>link=Manage Entries</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Manage Entries')]</td>
 	<td></td>
 </tr>
 <tr>

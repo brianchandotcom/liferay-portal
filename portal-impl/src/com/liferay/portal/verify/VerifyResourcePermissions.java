@@ -18,6 +18,7 @@ import com.liferay.portal.NoSuchResourcePermissionException;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSetBranch;
@@ -72,6 +73,10 @@ public class VerifyResourcePermissions extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
+		for (String[] portletAndActionId : _PORTLET_ACTION_IDS) {
+			verifyActionIds(portletAndActionId[0], portletAndActionId[1]);
+		}
+
 		long[] companyIds = PortalInstances.getCompanyIdsBySQL();
 
 		for (long companyId : companyIds) {
@@ -83,6 +88,31 @@ public class VerifyResourcePermissions extends VerifyProcess {
 			}
 
 			verifyLayout(role);
+		}
+	}
+
+	protected void verifyActionIds(String portlet, String actionId)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"update ResourcePermission set actionIds = ? where name = ? " +
+					"and roleId = (select roleId from Role_ where name = ?) " +
+						"and primKey != 0");
+
+			ps.setLong(1, GetterUtil.getLong(actionId));
+			ps.setString(2, portlet);
+			ps.setString(3, "Site Member");
+
+			ps.executeUpdate();
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
 		}
 	}
 
@@ -268,6 +298,15 @@ public class VerifyResourcePermissions extends VerifyProcess {
 		new String[] {
 			WikiPage.class.getName(), "WikiPage", "resourcePrimKey"
 		}
+	};
+
+	private static final String[][] _PORTLET_ACTION_IDS = new String[][] {
+		new String[] {
+			"com.liferay.portlet.bookmarks", "17"
+		},
+		new String[] {
+			"com.liferay.portlet.documentlibrary", "513"
+		},
 	};
 
 	private static Log _log = LogFactoryUtil.getLog(

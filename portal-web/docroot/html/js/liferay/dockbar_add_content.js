@@ -137,6 +137,8 @@ AUI.add(
 
 						Liferay.on('closePortlet', instance._onPortletClose, instance);
 
+						Liferay.once('dockbarAddContentDD:init', instance._onDockbarAddContentDDInit, instance);
+
 						Liferay.on('showTab', instance._onShowTab, instance);
 					},
 
@@ -227,6 +229,12 @@ AUI.add(
 						Liferay.Store('liferay_addpanel_numitems', instance._numItems.val());
 
 						instance._refreshContentList(event);
+					},
+
+					_onDockbarAddContentDDInit: function(event) {
+						var instance = this;
+
+						instance._portletItem.delegate.dd.addInvalid(SELECTOR_ADD_CONTENT_ITEM);
 					},
 
 					_onShowTab: function(event) {

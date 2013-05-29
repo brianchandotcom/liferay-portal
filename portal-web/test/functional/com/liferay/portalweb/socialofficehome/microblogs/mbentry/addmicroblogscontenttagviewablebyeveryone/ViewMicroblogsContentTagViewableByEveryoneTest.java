@@ -51,5 +51,17 @@ public class ViewMicroblogsContentTagViewableByEveryoneTest extends BaseTestCase
 			selenium.getText("//div[@class='content']"));
 		assertEquals(RuntimeVariables.replace("Microblogs"),
 			selenium.getText("//div[@class='content']/span/a"));
+		selenium.clickAt("//ul[contains(@class,'tabview-list')]/li[contains(.,'Microblogs')]/span/a",
+			RuntimeVariables.replace("Microblogs"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Microblogs"),
+			selenium.getText(
+				"//ul[contains(@class,'tabview-list')]/li[contains(.,'Microblogs')]"));
+		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
+			selenium.getText("//div[@class='user-name']/span"));
+		assertEquals(RuntimeVariables.replace("Microblogs Post"),
+			selenium.getText("//div[@class='content']"));
+		assertEquals(RuntimeVariables.replace("Microblogs"),
+			selenium.getText("//div[@class='content']/span/a"));
 	}
 }

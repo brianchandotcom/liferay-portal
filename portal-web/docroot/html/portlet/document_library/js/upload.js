@@ -161,8 +161,8 @@ AUI.add(
 
 				instance._detachSubscriptions();
 
-				if (instance._tooltips.length) {
-					instance._destroyTooltips();
+				if (instance._tooltipDelegate) {
+					instance._tooltipDelegate.destroy();
 				}
 			},
 
@@ -475,16 +475,6 @@ AUI.add(
 				AArray.invoke(fileList, 'destroy');
 			},
 
-			_destroyTooltips: function() {
-				var instance = this;
-
-				var tooltips = instance._tooltips;
-
-				AArray.invoke(tooltips, 'destroy');
-
-				tooltips.length = 0;
-			},
-
 			_detachSubscriptions: function() {
 				var instance = this;
 
@@ -527,33 +517,29 @@ AUI.add(
 			_displayError: function(node, message) {
 				var instance = this;
 
-				var errorNode = node.errorNode;
+				node.attr('data-message', message);
 
-				if (!errorNode) {
-					errorNode = node.one(SELECTOR_ENTRY_TITLE_TEXT);
+				var tooltipDelegate = instance._tooltipDelegate;
 
-					node.errorNode = errorNode;
-				}
-
-				var tooltip = node.tooltip;
-
-				if (!tooltip) {
-					tooltip = new A.Tooltip(
+				if (!tooltipDelegate) {
+					tooltipDelegate = new A.TooltipDelegate(
 						{
-							constrain: true,
-							cssClass: 'portlet-document-library-entry-error',
-							trigger: errorNode
+							formatter: function() {
+								var tooltip = this;
+
+								tooltip.set('zIndex', 2);
+
+								var node = tooltip.get('trigger');
+
+								return node.attr('data-message');
+							},
+							trigger: '.app-view-entry.upload-error',
+							visible: false
 						}
-					).render();
+					);
 
-					node.tooltip = tooltip;
-
-					instance._tooltips.push(tooltip);
+					instance._tooltipDelegate = tooltipDelegate;
 				}
-
-				tooltip.set('bodyContent', message);
-
-				tooltip.show();
 
 				return node;
 			},
@@ -890,7 +876,7 @@ AUI.add(
 					instance._dimensions = foldersConfig.dimensions;
 
 					instance._handles = [];
-					instance._tooltips = [];
+					instance._tooltipDelegates = [];
 
 					var appViewEntryTemplates = instance.byId('appViewEntryTemplates');
 
@@ -921,9 +907,6 @@ AUI.add(
 
 				if (instance._isUploading()) {
 					event.halt();
-				}
-				else {
-					instance._destroyTooltips();
 				}
 			},
 

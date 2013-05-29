@@ -134,6 +134,6 @@
 
 			cached.set(TRIGGER, obj).show();
 		},
-		['aui-tooltip']
+		['aui-tooltip-deprecated']
 	);
 })(AUI(), Liferay);

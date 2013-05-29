@@ -81,6 +81,11 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 	}
 
 	@Override
+	protected String getTemplatePath() {
+		return _TPL_PATH;
+	}
+
+	@Override
 	protected TemplateVariableGroup getUtilTemplateVariableGroup() {
 		TemplateVariableGroup utilTemplateVariableGroup =
 			super.getUtilTemplateVariableGroup();
@@ -90,5 +95,8 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 
 		return utilTemplateVariableGroup;
 	}
+
+	private static final String _TPL_PATH =
+		"com/liferay/portlet/journal/dependencies/template/";
 
 }

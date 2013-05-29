@@ -47,11 +47,13 @@ public class TemplateVariableGroup {
 
 	public TemplateVariableDefinition addFieldVariable(
 		String label, Class<?> clazz, String variableName, String help,
-		String dataType, boolean repeatable) {
+		String dataType, boolean repeatable,
+		TemplateVariableCodeHandler templateVariableCodeHandler) {
 
 		TemplateVariableDefinition templateVariableDefinition =
 			new TemplateVariableDefinition(
-				label, clazz, dataType, variableName, help, repeatable);
+				label, clazz, dataType, variableName, help, repeatable,
+				templateVariableCodeHandler);
 
 		_templateVariableDefinitions.add(templateVariableDefinition);
 
@@ -68,7 +70,8 @@ public class TemplateVariableGroup {
 			TemplateVariableDefinition templateVariableDefinition =
 				new TemplateVariableDefinition(
 					label, serviceClass, "service-locator",
-					serviceClass.getCanonicalName(), label + "-help", false);
+					serviceClass.getCanonicalName(), label + "-help", false,
+					null);
 
 			_templateVariableDefinitions.add(templateVariableDefinition);
 		}

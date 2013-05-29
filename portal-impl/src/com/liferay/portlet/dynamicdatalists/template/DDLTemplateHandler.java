@@ -134,4 +134,9 @@ public class DDLTemplateHandler extends BaseDDMTemplateHandler {
 		return Field.class;
 	}
 
+	@Override
+	protected String getTemplatePath() {
+		return null;
+	}
+
 }

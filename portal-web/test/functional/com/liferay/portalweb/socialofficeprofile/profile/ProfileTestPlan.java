@@ -21,6 +21,7 @@ import com.liferay.portalweb.socialofficeprofile.profile.addusersoaddress.AddUse
 import com.liferay.portalweb.socialofficeprofile.profile.addusersoexpertise.AddUserSOExpertiseTests;
 import com.liferay.portalweb.socialofficeprofile.profile.addusersoinstantmessenger.AddUserSOInstantMessengerTests;
 import com.liferay.portalweb.socialofficeprofile.profile.addusersophonenumber.AddUserSOPhoneNumberTests;
+import com.liferay.portalweb.socialofficeprofile.profile.addusersoprofilepicture.AddUserSOProfilePictureTests;
 import com.liferay.portalweb.socialofficeprofile.profile.addusersosms.AddUserSOSMSTests;
 import com.liferay.portalweb.socialofficeprofile.profile.addusersosocialnetwork.AddUserSOSocialNetworkTests;
 import com.liferay.portalweb.socialofficeprofile.profile.addusersotag.AddUserSOTagTests;
@@ -35,6 +36,7 @@ import com.liferay.portalweb.socialofficeprofile.profile.sousaddexpertiseprofile
 import com.liferay.portalweb.socialofficeprofile.profile.sousaddinstantmessengerprofile.SOUs_AddInstantMessengerProfileTests;
 import com.liferay.portalweb.socialofficeprofile.profile.sousaddintroductionprofile.SOUs_AddIntroductionProfileTests;
 import com.liferay.portalweb.socialofficeprofile.profile.sousaddphonenumberprofile.SOUs_AddPhoneNumberProfileTests;
+import com.liferay.portalweb.socialofficeprofile.profile.sousaddprofilepictureprofile.SOUs_AddProfilePictureProfileTests;
 import com.liferay.portalweb.socialofficeprofile.profile.sousaddsmsprofile.SOUs_AddSMSProfileTests;
 import com.liferay.portalweb.socialofficeprofile.profile.sousaddsocialnetworkprofile.SOUs_AddSocialNetworkProfileTests;
 import com.liferay.portalweb.socialofficeprofile.profile.sousaddtagprofile.SOUs_AddTagProfileTests;
@@ -51,6 +53,7 @@ import com.liferay.portalweb.socialofficeprofile.profile.souseditinstantmessenge
 import com.liferay.portalweb.socialofficeprofile.profile.souseditintroductionprofile.SOUs_EditIntroductionProfileTests;
 import com.liferay.portalweb.socialofficeprofile.profile.souseditphonenumbernullprofile.SOUs_EditPhoneNumberNullProfileTests;
 import com.liferay.portalweb.socialofficeprofile.profile.souseditphonenumberprofile.SOUs_EditPhoneNumberProfileTests;
+import com.liferay.portalweb.socialofficeprofile.profile.souseditprofilepictureprofile.SOUs_EditProfilePictureProfileTests;
 import com.liferay.portalweb.socialofficeprofile.profile.souseditsmsnullprofile.SOUs_EditSMSNullProfileTests;
 import com.liferay.portalweb.socialofficeprofile.profile.souseditsmsprofile.SOUs_EditSMSProfileTests;
 import com.liferay.portalweb.socialofficeprofile.profile.souseditsocialnetworknullprofile.SOUs_EditSocialNetworkNullProfileTests;
@@ -65,7 +68,10 @@ import com.liferay.portalweb.socialofficeprofile.profile.sousunblockccuserprofil
 import com.liferay.portalweb.socialofficeprofile.profile.sousunfollowccuserprofile.SOUs_UnfollowCCUserProfileTests;
 import com.liferay.portalweb.socialofficeprofile.profile.sousviewactivitiessitetypeprivateprofile.SOUs_ViewActivitiesSiteTypePrivateProfileTests;
 import com.liferay.portalweb.socialofficeprofile.profile.sousviewactivitiessitetypeprivrstrprofile.SOUs_ViewActivitiesSiteTypePrivRstrProfileTests;
+import com.liferay.portalweb.socialofficeprofile.profile.sousviewaddprofilepicturemyaccountprofile.SOUs_ViewAddProfilePictureMyAccountProfileTests;
 import com.liferay.portalweb.socialofficeprofile.profile.sousviewaddtagmyaccountprofile.SOUs_ViewAddTagMyAccountProfileTests;
+import com.liferay.portalweb.socialofficeprofile.profile.sousviewdeleteprofilepicturemyaccountprofile.SOUs_ViewDeleteProfilePictureMyAccountProfileTests;
+import com.liferay.portalweb.socialofficeprofile.profile.sousvieweditprofilepicturemyaccountprofile.SOUs_ViewEditProfilePictureMyAccountProfileTests;
 import com.liferay.portalweb.socialofficeprofile.profile.unblockccuserprofile.UnblockCCUserProfileTests;
 import com.liferay.portalweb.socialofficeprofile.profile.unfollowccuserprofile.UnfollowCCUserProfileTests;
 import com.liferay.portalweb.socialofficeprofile.profile.viewactivitiesdashboardactivitiesprofile.ViewActivitiesDashboardActivitiesProfileTests;
@@ -88,6 +94,7 @@ public class ProfileTestPlan extends BaseTestSuite {
 		testSuite.addTest(AddUserSOExpertiseTests.suite());
 		testSuite.addTest(AddUserSOInstantMessengerTests.suite());
 		testSuite.addTest(AddUserSOPhoneNumberTests.suite());
+		testSuite.addTest(AddUserSOProfilePictureTests.suite());
 		testSuite.addTest(AddUserSOSMSTests.suite());
 		testSuite.addTest(AddUserSOSocialNetworkTests.suite());
 		testSuite.addTest(AddUserSOTagTests.suite());
@@ -102,6 +109,7 @@ public class ProfileTestPlan extends BaseTestSuite {
 		testSuite.addTest(SOUs_AddInstantMessengerProfileTests.suite());
 		testSuite.addTest(SOUs_AddIntroductionProfileTests.suite());
 		testSuite.addTest(SOUs_AddPhoneNumberProfileTests.suite());
+		testSuite.addTest(SOUs_AddProfilePictureProfileTests.suite());
 		testSuite.addTest(SOUs_AddSMSProfileTests.suite());
 		testSuite.addTest(SOUs_AddSocialNetworkProfileTests.suite());
 		testSuite.addTest(SOUs_AddTagProfileTests.suite());
@@ -119,6 +127,7 @@ public class ProfileTestPlan extends BaseTestSuite {
 		testSuite.addTest(SOUs_EditIntroductionProfileTests.suite());
 		testSuite.addTest(SOUs_EditPhoneNumberNullProfileTests.suite());
 		testSuite.addTest(SOUs_EditPhoneNumberProfileTests.suite());
+		testSuite.addTest(SOUs_EditProfilePictureProfileTests.suite());
 		testSuite.addTest(SOUs_EditSMSNullProfileTests.suite());
 		testSuite.addTest(SOUs_EditSMSProfileTests.suite());
 		testSuite.addTest(SOUs_EditSocialNetworkNullProfileTests.suite());
@@ -135,7 +144,13 @@ public class ProfileTestPlan extends BaseTestSuite {
 			SOUs_ViewActivitiesSiteTypePrivateProfileTests.suite());
 		testSuite.addTest(
 			SOUs_ViewActivitiesSiteTypePrivRstrProfileTests.suite());
+		testSuite.addTest(
+			SOUs_ViewAddProfilePictureMyAccountProfileTests.suite());
 		testSuite.addTest(SOUs_ViewAddTagMyAccountProfileTests.suite());
+		testSuite.addTest(
+			SOUs_ViewDeleteProfilePictureMyAccountProfileTests.suite());
+		testSuite.addTest(
+			SOUs_ViewEditProfilePictureMyAccountProfileTests.suite());
 		testSuite.addTest(UnblockCCUserProfileTests.suite());
 		testSuite.addTest(UnfollowCCUserProfileTests.suite());
 		testSuite.addTest(

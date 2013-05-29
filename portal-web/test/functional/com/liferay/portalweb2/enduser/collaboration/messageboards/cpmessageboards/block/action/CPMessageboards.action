@@ -1,10 +1,10 @@
 <definition>
 	<command name="click">
 		<case locator-key1="CATEGORIES_RECYCLE_BIN_BUTTON">
-			<execute function="Click#valueClickAtAndWait" value1="Move to the Recycle Bin" />
+			<execute function="Click#textClickAtAndWait" value1="Move to the Recycle Bin" />
 		</case>
 		<case locator-key1="THREADS_RECYCLE_BIN_BUTTON">
-			<execute function="Click#valueClickAtAndWait" value1="Move to the Recycle Bin" />
+			<execute function="Click#textClickAtAndWait" value1="Move to the Recycle Bin" />
 		</case>
 	</command>
 

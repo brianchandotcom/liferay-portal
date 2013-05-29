@@ -59,6 +59,56 @@
 	<td>My Posts</td>
 </tr>
 <tr>
+	<td>storeVisible</td>
+	<td>xPath=(//span[@class='portlet-title-default'])[contains(.,'Breadcrumb')]</td>
+	<td>portletTitleVisible</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${portletTitleVisible}</td>
+	<td>PortletTitleVisible</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//li[@id='_145_toggleControls']</td>
+	<td>Edit Controls</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>PortletTitleVisible</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//span[@class='portlet-title-default'])[contains(.,'Breadcrumb')]</td>
+	<td>Breadcrumb</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//span[@class='portlet-title-default'])[contains(.,'Message Boards')]</td>
+	<td>Message Boards</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//ul[contains(@class,'breadcrumbs')]/li)[1]</td>
+	<td>Liferay</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//ul[contains(@class,'breadcrumbs')]/li)[2]</td>
+	<td>Open Site Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//ul[contains(@class,'breadcrumbs')]/li)[3]</td>
+	<td>Forums</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//ul[contains(@class,'breadcrumbs')]/li)[4]</td>
+	<td>My Posts</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//td[1]/a</td>
 	<td>MB Category Thread Message Subject</td>
@@ -86,6 +136,41 @@
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//td[1]/a</td>
+	<td>MB Category Thread Message Subject</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//span[@class='portlet-title-default'])[contains(.,'Breadcrumb')]</td>
+	<td>Breadcrumb</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//span[@class='portlet-title-default'])[contains(.,'Message Boards')]</td>
+	<td>Message Boards</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//ul[contains(@class,'breadcrumbs')]/li)[1]</td>
+	<td>Liferay</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//ul[contains(@class,'breadcrumbs')]/li)[2]</td>
+	<td>Open Site Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//ul[contains(@class,'breadcrumbs')]/li)[3]</td>
+	<td>Forums</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//ul[contains(@class,'breadcrumbs')]/li)[4]</td>
+	<td>MB Category Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//ul[contains(@class,'breadcrumbs')]/li)[5]</td>
 	<td>MB Category Thread Message Subject</td>
 </tr>
 <tr>

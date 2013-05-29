@@ -157,6 +157,12 @@ web.server.display.node=true</echo>
 
 		<unzip src="${app.server.parent.dir}/${bundled.file.name}" dest="${app.server.parent.dir}" />
 
+		<chmod perm="a+x">
+			<fileset dir="${app.server.parent.dir}">
+				<include name="**/*.sh" />
+			</fileset>
+		</chmod>
+
 		<echo file="app.server.${user.name}.properties">app.server.tomcat.dir=${app.server.parent.dir}/${bundled.dir.name}</echo>
 
 		<antcall target="revert-test-properties" />

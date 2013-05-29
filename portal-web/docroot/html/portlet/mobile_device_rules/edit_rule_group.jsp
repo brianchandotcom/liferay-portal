@@ -31,6 +31,12 @@ long ruleGroupId = BeanParamUtil.getLong(ruleGroup, request, "ruleGroupId");
 	title='<%= (ruleGroup == null) ? "new-rule-group" : ruleGroup.getName(locale) %>'
 />
 
+<c:if test="<%= ruleGroup == null %>">
+	<div class="alert alert-info">
+		<liferay-ui:message key="rule-group-help" />
+	</div>
+</c:if>
+
 <portlet:actionURL var="editRuleGroupURL">
 	<portlet:param name="struts_action" value="/mobile_device_rules/edit_rule_group" />
 </portlet:actionURL>

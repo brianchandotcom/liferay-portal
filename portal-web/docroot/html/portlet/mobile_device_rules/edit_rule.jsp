@@ -64,6 +64,12 @@ if (ruleGroup != null) {
 
 	<aui:model-context bean="<%= rule %>" model="<%= MDRRule.class %>" />
 
+	<c:if test="<%= rule == null %>">
+		<div class="alert alert-info">
+			<liferay-ui:message key="rule-help" />
+		</div>
+	</c:if>
+
 	<aui:fieldset>
 		<aui:input name="name" />
 

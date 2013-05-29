@@ -1,4 +1,3 @@
-
 <%--
 /**
  * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
@@ -39,7 +38,7 @@ if (rule != null) {
 }
 %>
 
-<aui:select multiple="<%= true %>" name="os">
+<aui:select helpMessage='<%= PluginPackageUtil.isInstalled("wurfl-web") ? StringPool.BLANK : "os-help" %>' multiple="<%= true %>" name="os">
 	<aui:option label="any-os" selected="<%= operatingSystems.isEmpty() %>" value="" />
 
 	<%

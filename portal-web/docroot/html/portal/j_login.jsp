@@ -26,15 +26,18 @@ if (!ServerDetector.isWebSphere()) {
 String jUserName = (String)session.getAttribute("j_username");
 String jPassword = (String)session.getAttribute("j_password");
 
-if (PropsValues.PORTAL_JAAS_ENABLE && (user != null)) {
+if (PropsValues.PORTAL_JAAS_ENABLE && (jUserName != null)) {
+	long remoteUserId = GetterUtil.getLong(jUserName);
+	User remoteUser = UserLocalServiceUtil.getUser(remoteUserId);
+
 	if (PropsValues.PORTAL_JAAS_AUTH_TYPE.equals("emailAddress")) {
-		jUserName = user.getEmailAddress();
+		jUserName = remoteUser.getEmailAddress();
 	}
 	else if (PropsValues.PORTAL_JAAS_AUTH_TYPE.equals("screenName")) {
-		jUserName = user.getScreenName();
+		jUserName = remoteUser.getScreenName();
 	}
 	else if (PropsValues.PORTAL_JAAS_AUTH_TYPE.equals("login")) {
-		jUserName = user.getLogin();
+		jUserName = remoteUser.getLogin();
 	}
 }
 %>

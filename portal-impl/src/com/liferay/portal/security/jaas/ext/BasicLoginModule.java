@@ -14,17 +14,25 @@
 
 package com.liferay.portal.security.jaas.ext;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.jaas.PortalPrincipal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.Company;
+import com.liferay.portal.model.CompanyConstants;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 
 import java.security.Principal;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -41,6 +49,51 @@ import javax.security.auth.spi.LoginModule;
  * @author Brian Wing Shun Chan
  */
 public class BasicLoginModule implements LoginModule {
+
+	public static long getJaasUserId(long companyId, String name)
+		throws PortalException, SystemException {
+
+		String jaasAuthType = PropsValues.PORTAL_JAAS_AUTH_TYPE;
+
+		if (jaasAuthType.equals("login")) {
+			Company company = CompanyLocalServiceUtil.getCompany(companyId);
+			String authType = company.getAuthType();
+
+			if (authType.equals(CompanyConstants.AUTH_TYPE_EA)) {
+				jaasAuthType = "emailAddress";
+			}
+			else if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
+				jaasAuthType = "screenName";
+			}
+			else {
+				jaasAuthType = "userId";
+			}
+		}
+
+		long userId = 0;
+
+		if (jaasAuthType.equals("emailAddress")) {
+			User user = UserLocalServiceUtil.fetchUserByEmailAddress(
+				companyId, name);
+
+			if (user != null) {
+				userId = user.getUserId();
+			}
+		}
+		else if (jaasAuthType.equals("screenName")) {
+			User user = UserLocalServiceUtil.fetchUserByScreenName(
+				companyId, name);
+
+			if (user != null) {
+				userId = user.getUserId();
+			}
+		}
+		else {
+			userId = GetterUtil.getLong(name);
+		}
+
+		return userId;
+	}
 
 	@Override
 	public boolean abort() {

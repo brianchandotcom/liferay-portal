@@ -95,6 +95,15 @@ public class GroupPermissionImpl implements GroupPermission {
 
 			return true;
 		}
+		else if (actionId.equals(ActionKeys.ADD_COMMUNITY) &&
+				 permissionChecker.hasPermission(
+					groupId, Group.class.getName(), groupId,
+					ActionKeys.MANAGE_SUBGROUPS) ||
+				 PortalPermissionUtil.contains(
+					permissionChecker, ActionKeys.ADD_COMMUNITY)) {
+
+			return true;
+		}
 		else if ((actionId.equals(ActionKeys.EXPORT_IMPORT_LAYOUTS) ||
 				  actionId.equals(ActionKeys.EXPORT_IMPORT_PORTLET_INFO)) &&
 				 permissionChecker.hasPermission(

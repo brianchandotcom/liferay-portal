@@ -98,15 +98,14 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			boolean active, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		if (!GroupPermissionUtil.contains(
+		if (parentGroupId == GroupConstants.DEFAULT_PARENT_GROUP_ID) {
+			PortalPermissionUtil.contains(
+				getPermissionChecker(), ActionKeys.ADD_COMMUNITY);
+		}
+		else {
+			GroupPermissionUtil.check(
 				getPermissionChecker(), parentGroupId,
-				ActionKeys.MANAGE_SUBGROUPS) &&
-			!PortalPermissionUtil.contains(
-				getPermissionChecker(), ActionKeys.ADD_COMMUNITY)) {
-
-			throw new PrincipalException(
-				"User " + getUserId() + " does not have permissions to add " +
-					"a site with parent " + parentGroupId);
+				ActionKeys.ADD_COMMUNITY);
 		}
 
 		Group group = groupLocalService.addGroup(
@@ -904,17 +903,9 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 					getPermissionChecker(), ActionKeys.ADD_COMMUNITY);
 			}
 			else {
-				if (!GroupPermissionUtil.contains(
-						getPermissionChecker(), parentGroupId,
-						ActionKeys.MANAGE_SUBGROUPS) &&
-					!PortalPermissionUtil.contains(
-						getPermissionChecker(), ActionKeys.ADD_COMMUNITY)) {
-
-					throw new PrincipalException(
-						"User " + getUserId() + " does not have permissions " +
-							"to move site " + groupId + "to parent " +
-								parentGroupId);
-				}
+				GroupPermissionUtil.check(
+					getPermissionChecker(), parentGroupId,
+					ActionKeys.ADD_COMMUNITY);
 			}
 		}
 

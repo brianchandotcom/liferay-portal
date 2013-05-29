@@ -339,7 +339,7 @@ if (endDateTime > 0) {
 									long exportModelCount = portletDataHandler.getExportModelCount(manifestSummary);
 								%>
 
-									<c:if test="<%= exportModelCount > 0 %>">
+									<c:if test="<%= exportModelCount != 0 %>">
 										<li>
 											<aui:input checked="<%= portletDataHandler.isPublishToLiveByDefault() %>" label='<%= portletTitle + (exportModelCount > 0 ? " (" + exportModelCount + ")" : StringPool.BLANK) %>' name="<%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getPortletId() %>" type="checkbox" />
 

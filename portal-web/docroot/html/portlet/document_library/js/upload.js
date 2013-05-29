@@ -1017,9 +1017,7 @@ AUI.add(
 							instance._updateThumbnail(fileNode, file.name);
 						}
 
-						var fileEntryId = instance.ns('fileEntryId=') + response.message;
-
-						instance._updateFileLink(fileNode, fileEntryId, displayStyleList);
+						instance._updateFileLink(fileNode, response.message, displayStyleList);
 					}
 
 					instance._displayResult(fileNode, displayStyle, hasErrors);

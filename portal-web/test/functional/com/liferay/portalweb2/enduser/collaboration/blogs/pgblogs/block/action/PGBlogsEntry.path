@@ -36,7 +36,7 @@
 </tr>
 <tr>
 	<td>COMMENTS_REPLY_BUTTON</td>
-	<td>//button[@id='_33_kfit_postReplyButton0']</td>
+	<td>//button[contains(@id,'postReplyButton0')]</td>
 	<td></td>
 </tr>
 <tr>

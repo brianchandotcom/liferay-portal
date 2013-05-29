@@ -1,7 +1,7 @@
 <definition>
 	<command name="assertTextEquals">
 		<case locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN">
-			<execute function="AssertTextEquals#assertText" value1="The selected item was moved to the Recycle Bin. Undo" />
+			<execute function="AssertTextEquals#assertText" value1="The selected item was moved to the Recycle Bin. Undo Undo" />
 		</case>
 		<case locator-key1="SUCCESS_MESSAGE">
 			<execute function="AssertTextEquals#assertText" value1="Your request completed successfully." />
@@ -10,7 +10,7 @@
 
 	<command name="click">
 		<case locator-key1="ADD_WIKI_BUTTON">
-			<execute function="Click#valueClickAtAndWait" value1="Add Wiki" />
+			<execute function="Click#textClickAtAndWait" value1="Add Wiki" />
 		</case>
 		<case comparator="startsWith" locator-key1="WIKI_NODE_TABLE_ACTIONS_">
 			<execute function="Click#pauseTextClickAt" value1="Actions" />

@@ -1,6 +1,6 @@
 <definition>
 	<command name="cpAdd">
-		<execute macro="Page#cpGoto">
+		<execute macro="Page#cpGotoContent">
 			<var name="portletName" value="Wiki" />
 		</execute>
 
@@ -16,7 +16,7 @@
 	</command>
 
 	<command name="cpDelete">
-		<execute macro="Page#cpGoto">
+		<execute macro="Page#cpGotoContent">
 			<var name="portletName" value="Wiki" />
 		</execute>
 
@@ -28,7 +28,7 @@
 	</command>
 
 	<command name="cpEdit">
-		<execute macro="Page#cpGoto">
+		<execute macro="Page#cpGotoContent">
 			<var name="portletName" value="Wiki" />
 		</execute>
 
@@ -46,7 +46,7 @@
 	</command>
 
 	<command name="cpTearDown">
-		<execute macro="Page#cpGoto">
+		<execute macro="Page#cpGotoContent">
 			<var name="portletName" value="Wiki" />
 		</execute>
 

@@ -19,7 +19,14 @@
 <div class="hide" id="<portlet:namespace />copyPortletsFromPage">
 
 	<p>
-		<liferay-ui:message arguments="<%= HtmlUtil.escape(selLayout.getName(locale)) %>" key="the-portlets-in-page-x-will-be-replaced-with-the-portlets-in-the-page-you-select-below" />
+		<c:choose>
+			<c:when test="<% Validator.isNotNull(selLayout) %>">
+				<liferay-ui:message arguments="<%= HtmlUtil.escape(selLayout.getName(locale)) %>" key="the-portlets-in-page-x-will-be-replaced-with-the-portlets-in-the-page-you-select-below" />
+			</c:when>
+			<c:otherwise>
+				<liferay-ui:message key="the-portlets-in-the-page-will-be-replaced-with-the-portlets-in-the-page-you-select-below" />				
+			</c:otherwise>
+		</c:choose>
 	</p>
 
 	<aui:select label="copy-from-page" name="copyLayoutId" showEmptyOption="<%= true %>">
@@ -61,7 +68,7 @@
 			if (copiableLayout != null) {
 		%>
 
-				<aui:option disabled="<%= selLayout.getPlid() == copiableLayout.getPlid() %>" label="<%= name %>" value="<%= copiableLayout.getLayoutId() %>" />
+				<aui:option disabled="<%= Validator.isNotNull(selLayout) && selLayout.getPlid() == copiableLayout.getPlid() %>" label="<%= name %>" value="<%= copiableLayout.getLayoutId() %>" />
 
 		<%
 			}

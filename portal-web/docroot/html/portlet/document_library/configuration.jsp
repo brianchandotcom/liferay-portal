@@ -39,13 +39,13 @@ String defaultEmailBody = StringPool.BLANK;
 
 if (tabs2.equals("document-added-email")) {
 	emailParam = "emailFileEntryAdded";
-	defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.DL_EMAIL_FILE_ENTRY_ADDED_SUBJECT));
-	defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.DL_EMAIL_FILE_ENTRY_ADDED_BODY));
+	defaultEmailSubject = ContentUtil.get(PropsValues.DL_EMAIL_FILE_ENTRY_ADDED_SUBJECT);
+	defaultEmailBody = ContentUtil.get(PropsValues.DL_EMAIL_FILE_ENTRY_ADDED_BODY);
 }
 else if (tabs2.equals("document-updated-email")) {
 	emailParam = "emailFileEntryUpdated";
-	defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.DL_EMAIL_FILE_ENTRY_UPDATED_SUBJECT));
-	defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.DL_EMAIL_FILE_ENTRY_UPDATED_BODY));
+	defaultEmailSubject = ContentUtil.get(PropsValues.DL_EMAIL_FILE_ENTRY_UPDATED_SUBJECT);
+	defaultEmailBody = ContentUtil.get(PropsValues.DL_EMAIL_FILE_ENTRY_UPDATED_BODY);
 }
 
 String currentLanguageId = LanguageUtil.getLanguageId(request);

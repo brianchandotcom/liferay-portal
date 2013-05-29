@@ -34,15 +34,15 @@ String defaultEmailSignature = StringPool.BLANK;
 
 if (tabs2.equals("page-added-email")) {
 	emailParam = "emailPageAdded";
-	defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.WIKI_EMAIL_PAGE_ADDED_SUBJECT));
-	defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.WIKI_EMAIL_PAGE_ADDED_BODY));
-	defaultEmailSignature = ContentUtil.get(PropsUtil.get(PropsKeys.WIKI_EMAIL_PAGE_ADDED_SIGNATURE));
+	defaultEmailSubject = ContentUtil.get(PropsValues.WIKI_EMAIL_PAGE_ADDED_SUBJECT);
+	defaultEmailBody = ContentUtil.get(PropsValues.WIKI_EMAIL_PAGE_ADDED_BODY);
+	defaultEmailSignature = ContentUtil.get(PropsValues.WIKI_EMAIL_PAGE_ADDED_SIGNATURE);
 }
 else if (tabs2.equals("page-updated-email")) {
 	emailParam = "emailPageUpdated";
-	defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.WIKI_EMAIL_PAGE_UPDATED_SUBJECT));
-	defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.WIKI_EMAIL_PAGE_UPDATED_BODY));
-	defaultEmailSignature = ContentUtil.get(PropsUtil.get(PropsKeys.WIKI_EMAIL_PAGE_UPDATED_SIGNATURE));
+	defaultEmailSubject = ContentUtil.get(PropsValues.WIKI_EMAIL_PAGE_UPDATED_SUBJECT);
+	defaultEmailBody = ContentUtil.get(PropsValues.WIKI_EMAIL_PAGE_UPDATED_BODY);
+	defaultEmailSignature = ContentUtil.get(PropsValues.WIKI_EMAIL_PAGE_UPDATED_SIGNATURE);
 }
 
 String emailSubjectParam = emailParam + "Subject";

@@ -31,12 +31,12 @@ String defaultEmailBody = StringPool.BLANK;
 
 if (tabs2.equals("password-reset-notification")) {
 	emailParam = "emailPasswordReset";
-	defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.ADMIN_EMAIL_PASSWORD_RESET_SUBJECT));
-	defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.ADMIN_EMAIL_PASSWORD_RESET_BODY));
+	defaultEmailSubject = ContentUtil.get(PropsValues.ADMIN_EMAIL_PASSWORD_RESET_SUBJECT);
+	defaultEmailBody = ContentUtil.get(PropsValues.ADMIN_EMAIL_PASSWORD_RESET_BODY);
 }
 else if (tabs2.equals("password-changed-notification")) {
-	defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.ADMIN_EMAIL_PASSWORD_SENT_SUBJECT));
-	defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.ADMIN_EMAIL_PASSWORD_SENT_BODY));
+	defaultEmailSubject = ContentUtil.get(PropsValues.ADMIN_EMAIL_PASSWORD_SENT_SUBJECT);
+	defaultEmailBody = ContentUtil.get(PropsValues.ADMIN_EMAIL_PASSWORD_SENT_BODY);
 }
 
 String currentLanguageId = LanguageUtil.getLanguageId(request);

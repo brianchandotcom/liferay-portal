@@ -33,13 +33,13 @@ String defaultEmailBody = StringPool.BLANK;
 
 if (tabs2.equals("entry-added-email")) {
 	emailParam = "emailEntryAdded";
-	defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.BLOGS_EMAIL_ENTRY_ADDED_SUBJECT));
-	defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.BLOGS_EMAIL_ENTRY_ADDED_BODY));
+	defaultEmailSubject = ContentUtil.get(PropsValues.BLOGS_EMAIL_ENTRY_ADDED_SUBJECT);
+	defaultEmailBody = ContentUtil.get(PropsValues.BLOGS_EMAIL_ENTRY_ADDED_BODY);
 }
 else if (tabs2.equals("entry-updated-email")) {
 	emailParam = "emailEntryUpdated";
-	defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.BLOGS_EMAIL_ENTRY_UPDATED_SUBJECT));
-	defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.BLOGS_EMAIL_ENTRY_UPDATED_BODY));
+	defaultEmailSubject = ContentUtil.get(PropsValues.BLOGS_EMAIL_ENTRY_UPDATED_SUBJECT);
+	defaultEmailBody = ContentUtil.get(PropsValues.BLOGS_EMAIL_ENTRY_UPDATED_BODY);
 }
 
 String currentLanguageId = LanguageUtil.getLanguageId(request);

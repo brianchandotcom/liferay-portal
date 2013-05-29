@@ -34,15 +34,15 @@ String defaultEmailSignature = StringPool.BLANK;
 
 if (tabs2.equals("message-added-email")) {
 	emailParam = "emailMessageAdded";
-	defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_SUBJECT));
-	defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_BODY));
-	defaultEmailSignature = ContentUtil.get(PropsUtil.get(PropsKeys.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_SIGNATURE));
+	defaultEmailSubject = ContentUtil.get(PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_SUBJECT);
+	defaultEmailBody = ContentUtil.get(PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_BODY);
+	defaultEmailSignature = ContentUtil.get(PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_ADDED_SIGNATURE);
 }
 else if (tabs2.equals("message-updated-email")) {
 	emailParam = "emailMessageUpdated";
-	defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_SUBJECT));
-	defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_BODY));
-	defaultEmailSignature = ContentUtil.get(PropsUtil.get(PropsKeys.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_SIGNATURE));
+	defaultEmailSubject = ContentUtil.get(PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_SUBJECT);
+	defaultEmailBody = ContentUtil.get(PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_BODY);
+	defaultEmailSignature = ContentUtil.get(PropsValues.MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_SIGNATURE);
 }
 
 String emailSubjectParam = emailParam + "Subject";

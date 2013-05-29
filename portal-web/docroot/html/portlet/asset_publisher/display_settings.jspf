@@ -46,7 +46,7 @@
 
 	<aui:select cssClass="hidden-field asset-link-behavior" name="preferences--assetLinkBehavior--">
 		<aui:option label="show-full-content" selected='<%= assetLinkBehavior.equals("showFullContent") %>' value="showFullContent" />
-		<aui:option label="view-in-a-specific-portlet" selected='<%= assetLinkBehavior.equals("viewInPortlet") %>' value="viewInPortlet" />
+		<aui:option label="view-in-context" selected='<%= assetLinkBehavior.equals("viewInPortlet") %>' value="viewInPortlet" />
 	</aui:select>
 
 	<aui:select helpMessage="number-of-items-to-display-help" label="number-of-items-to-display" name="preferences--delta--">

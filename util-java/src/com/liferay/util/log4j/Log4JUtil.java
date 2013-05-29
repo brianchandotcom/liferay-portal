@@ -251,7 +251,15 @@ public class Log4JUtil {
 	private static String _getURLContent(URL url) {
 		Map<String, String> variables = new HashMap<String, String>();
 
-		variables.put("liferay.home", _getLiferayHome());
+		variables.put("@liferay.home@", _getLiferayHome());
+
+		String spiId = System.getProperty("spi.id");
+
+		if (spiId == null) {
+			spiId = StringPool.BLANK;
+		}
+
+		variables.put("@spi.id@", spiId);
 
 		String urlContent = null;
 
@@ -274,8 +282,8 @@ public class Log4JUtil {
 		}
 
 		for (Map.Entry<String, String> variable : variables.entrySet()) {
-			urlContent = urlContent.replaceAll(
-				"@" + variable.getKey() + "@", variable.getValue());
+			urlContent = StringUtil.replace(
+				urlContent, variable.getKey(), variable.getValue());
 		}
 
 		if (ServerDetector.getServerId() != null) {

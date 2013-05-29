@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>SOUs_AddDMDocumentComment3SiteTest</title>
+<title>SOUs_EditDMDocumentComment3SiteTest</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">SOUs_AddDMDocumentComment3SiteTest</td></tr>
+<tr><td rowspan="1" colspan="3">SOUs_EditDMDocumentComment3SiteTest</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -65,33 +65,33 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//fieldset/div/a</td>
-	<td>Be the first.</td>
+	<td>//ul[@class='lfr-discussion-actions']/li[contains(.,'Edit')]/span/a</td>
+	<td>Edit</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//fieldset/div/a</td>
-	<td>Be the first.</td>
+	<td>//ul[@class='lfr-discussion-actions']/li[contains(.,'Edit')]/span/a</td>
+	<td>Edit</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//textarea[@name='_20_postReplyBody0']</td>
+	<td>//textarea[@name='_20_editReplyBody1']</td>
 	<td>Comment Text Area</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//textarea[@name='_20_postReplyBody0']</td>
-	<td>DM Document Comment3</td>
+	<td>//textarea[@name='_20_editReplyBody1']</td>
+	<td>DM Document Comment3 Edit</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@value='Reply']</td>
-	<td>Reply</td>
+	<td>//input[@value='Publish']</td>
+	<td>Publish</td>
 </tr>
 <tr>
 	<td>waitForText</td>
 	<td>xPath=(//div[@class='lfr-discussion-message'])[1]</td>
-	<td>DM Document Comment3</td>
+	<td>DM Document Comment3 Edit</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -101,7 +101,7 @@
 <tr>
 	<td>assertText</td>
 	<td>xPath=(//div[@class='lfr-discussion-message'])[1]</td>
-	<td>DM Document Comment3</td>
+	<td>DM Document Comment3 Edit</td>
 </tr>
 <tr>
 	<td>assertText</td>

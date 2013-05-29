@@ -51,8 +51,10 @@ public class ViewDMDocumentLatestVersionSiteTests extends BaseTestSuite {
 		testSuite.addTestSuite(SOUs_SignInSOTest.class);
 		testSuite.addTestSuite(SOUs_EditDMDocumentMinorSiteTest.class);
 		testSuite.addTestSuite(SOUs_AddDMDocumentComment2SiteTest.class);
+		testSuite.addTestSuite(SOUs_EditDMDocumentComment2SiteTest.class);
 		testSuite.addTestSuite(SOUs_EditDMDocumentMajorSiteTest.class);
 		testSuite.addTestSuite(SOUs_AddDMDocumentComment3SiteTest.class);
+		testSuite.addTestSuite(SOUs_EditDMDocumentComment3SiteTest.class);
 		testSuite.addTestSuite(SOUs_ViewDMDocumentOriginalSiteTest.class);
 		testSuite.addTestSuite(SOUs_RevertDMDocumentMinorEditSiteTest.class);
 		testSuite.addTestSuite(SOUs_DeleteDMDocumentMajorEditSiteTest.class);

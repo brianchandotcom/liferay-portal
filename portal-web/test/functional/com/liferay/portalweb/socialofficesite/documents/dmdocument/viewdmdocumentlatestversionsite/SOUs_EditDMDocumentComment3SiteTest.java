@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SOUs_AddDMDocumentComment3SiteTest extends BaseTestCase {
-	public void testSOUs_AddDMDocumentComment3Site() throws Exception {
+public class SOUs_EditDMDocumentComment3SiteTest extends BaseTestCase {
+	public void testSOUs_EditDMDocumentComment3Site() throws Exception {
 		selenium.selectWindow("null");
 		selenium.selectFrame("relative=top");
 		selenium.open("/user/socialoffice01/so/dashboard/");
@@ -48,21 +48,22 @@ public class SOUs_AddDMDocumentComment3SiteTest extends BaseTestCase {
 		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DM Document Title Edit2"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Be the first."),
-			selenium.getText("//fieldset/div/a"));
-		selenium.clickAt("//fieldset/div/a",
-			RuntimeVariables.replace("Be the first."));
-		selenium.waitForVisible("//textarea[@name='_20_postReplyBody0']");
-		selenium.type("//textarea[@name='_20_postReplyBody0']",
-			RuntimeVariables.replace("DM Document Comment3"));
-		selenium.clickAt("//input[@value='Reply']",
-			RuntimeVariables.replace("Reply"));
+		assertEquals(RuntimeVariables.replace("Edit"),
+			selenium.getText(
+				"//ul[@class='lfr-discussion-actions']/li[contains(.,'Edit')]/span/a"));
+		selenium.clickAt("//ul[@class='lfr-discussion-actions']/li[contains(.,'Edit')]/span/a",
+			RuntimeVariables.replace("Edit"));
+		selenium.waitForVisible("//textarea[@name='_20_editReplyBody1']");
+		selenium.type("//textarea[@name='_20_editReplyBody1']",
+			RuntimeVariables.replace("DM Document Comment3 Edit"));
+		selenium.clickAt("//input[@value='Publish']",
+			RuntimeVariables.replace("Publish"));
 		selenium.waitForText("xPath=(//div[@class='lfr-discussion-message'])[1]",
-			"DM Document Comment3");
+			"DM Document Comment3 Edit");
 		assertEquals(RuntimeVariables.replace("DM Document Comment2 Edit"),
 			selenium.getText(
 				"xPath=(//div[@class='lfr-discussion-message'])[2]"));
-		assertEquals(RuntimeVariables.replace("DM Document Comment3"),
+		assertEquals(RuntimeVariables.replace("DM Document Comment3 Edit"),
 			selenium.getText(
 				"xPath=(//div[@class='lfr-discussion-message'])[1]"));
 		assertEquals(RuntimeVariables.replace("DM Document Comment1"),

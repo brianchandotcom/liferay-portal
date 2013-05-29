@@ -86,51 +86,43 @@ String controlPanelCategory = themeDisplay.getControlPanelCategory();
 			}
 			%>
 
-			<c:choose>
-				<c:when test="<%= controlPanelCategory.equals(PortletCategoryKeys.CURRENT_SITE) %>">
-					<aui:nav-item anchorCssClass="back-link" href="<%= backURL %>" iconClass="icon-arrow-left" id="backLink" label="<%= StringPool.NBSP %>" title='<%= LanguageUtil.format(pageContext, "back-to-x", HtmlUtil.escape(refererGroupDescriptiveName), false) %>' />
-				</c:when>
-				<c:when test="<%= !controlPanelCategory.equals(PortletCategoryKeys.MY) %>">
-					<aui:nav-bar cssClass="control-panel-bar-main">
-						<aui:nav>
-							<aui:nav-item anchorCssClass="back-link" href="<%= backURL %>" iconClass="icon-arrow-left" id="backLink" label="<%= StringPool.NBSP %>" title='<%= LanguageUtil.format(pageContext, "back-to-x", HtmlUtil.escape(refererGroupDescriptiveName), false) %>' />
+			<c:if test="<%= controlPanelCategory.equals(PortletCategoryKeys.CURRENT_SITE) || !controlPanelCategory.equals(PortletCategoryKeys.MY) %>">
+				<aui:nav-item anchorCssClass="back-link" href="<%= backURL %>" iconClass="icon-arrow-left" id="backLink" label="<%= StringPool.NBSP %>" title='<%= LanguageUtil.format(pageContext, "back-to-x", HtmlUtil.escape(refererGroupDescriptiveName), false) %>' />
+			</c:if>
 
-							<aui:nav-item href="<%= themeDisplay.getURLControlPanel() %>" iconClass="icon-tasks" label="<%= StringPool.NBSP %>" selected="<%= Validator.isNull(controlPanelCategory) %>" />
+			<c:if test="<%= !controlPanelCategory.equals(PortletCategoryKeys.MY) && !controlPanelCategory.equals(PortletCategoryKeys.CURRENT_SITE) %>">
+				<aui:nav-item href="<%= themeDisplay.getURLControlPanel() %>" iconClass="icon-list" selected="<%= Validator.isNull(controlPanelCategory) %>" />
 
-							<%
-							String[] categories = PortletCategoryKeys.ALL;
+				<%
+				String[] categories = PortletCategoryKeys.ALL;
 
-							for (String curCategory : categories) {
-								String urlControlPanelCategory = HttpUtil.setParameter(themeDisplay.getURLControlPanel(), "controlPanelCategory", curCategory);
+				for (String curCategory : categories) {
+					String urlControlPanelCategory = HttpUtil.setParameter(themeDisplay.getURLControlPanel(), "controlPanelCategory", curCategory);
 
-								String iconClass = StringPool.BLANK;
+					String iconClass = StringPool.BLANK;
 
-								if (curCategory.equals(PortletCategoryKeys.APPS)) {
-									iconClass = "icon-gift";
-								}
-								else if (curCategory.equals(PortletCategoryKeys.CONFIGURATION)) {
-									iconClass = "icon-cog";
-								}
-								else if (curCategory.equals(PortletCategoryKeys.SITES)) {
-									iconClass = "icon-globe";
-								}
-								else if (curCategory.equals(PortletCategoryKeys.USERS)) {
-									iconClass = "icon-user";
-								}
-							%>
+					if (curCategory.equals(PortletCategoryKeys.APPS)) {
+						iconClass = "icon-th";
+					}
+					else if (curCategory.equals(PortletCategoryKeys.CONFIGURATION)) {
+						iconClass = "icon-cog";
+					}
+					else if (curCategory.equals(PortletCategoryKeys.SITES)) {
+						iconClass = "icon-globe";
+					}
+					else if (curCategory.equals(PortletCategoryKeys.USERS)) {
+						iconClass = "icon-user";
+					}
+				%>
 
-								<c:if test="<%= _hasPortlets(curCategory, themeDisplay) %>">
-									<aui:nav-item href="<%= urlControlPanelCategory %>" iconClass="<%= iconClass %>" label='<%= "category." + curCategory %>' selected="<%= controlPanelCategory.equals(curCategory) %>" />
-								</c:if>
+					<c:if test="<%= _hasPortlets(curCategory, themeDisplay) %>">
+						<aui:nav-item href="<%= urlControlPanelCategory %>" iconClass="<%= iconClass %>" label='<%= "category." + curCategory %>' selected="<%= controlPanelCategory.equals(curCategory) %>" />
+					</c:if>
 
-							<%
-							}
-							%>
-
-						</aui:nav>
-					</aui:nav-bar>
-				</c:when>
-			</c:choose>
+				<%
+				}
+				%>
+			</c:if>
 		</c:if>
 
 		<c:if test="<%= !group.isControlPanel() && (!group.hasStagingGroup() || group.isStagingGroup()) && (GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.ADD_LAYOUT) || hasLayoutUpdatePermission || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && hasLayoutCustomizePermission)) %>">

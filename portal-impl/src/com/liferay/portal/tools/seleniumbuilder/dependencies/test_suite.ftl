@@ -22,6 +22,15 @@ import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 		<#assign importTestSuiteClassName = seleniumBuilderContext.getTestSuiteClassName(importTestSuiteName)>
 
 		import ${importTestSuiteClassName};
+
+	<#elseif executeElement.attributeValue("test-class")??>
+		<#assign importTestSuiteClassName = executeElement.attributeValue("test-class")>
+
+		<#assign importTestSuiteName = seleniumBuilderFileUtil.getName(importTestSuiteClassName)>
+
+		import ${importTestSuiteClassName};
+
+
 	</#if>
 </#list>
 
@@ -43,6 +52,12 @@ public class ${seleniumBuilderContext.getTestSuiteSimpleClassName(testSuiteName)
 				<#assign importTestSuiteName = executeElement.attributeValue("test-suite")>
 
 				<#assign importTestSuiteSimpleClassName = seleniumBuilderContext.getTestSuiteSimpleClassName(importTestSuiteName)>
+
+				testSuite.addTest(${importTestSuiteSimpleClassName}.suite());
+			<#elseif executeElement.attributeValue("test-class")??>
+				<#assign importTestSuiteName = executeElement.attributeValue("test-class")>
+
+				<#assign importTestSuiteSimpleClassName = seleniumBuilderFileUtil.getSimpleNameFromClassName(importTestSuiteName)>
 
 				testSuite.addTest(${importTestSuiteSimpleClassName}.suite());
 			</#if>

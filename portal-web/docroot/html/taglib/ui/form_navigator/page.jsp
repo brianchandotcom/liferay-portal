@@ -59,7 +59,7 @@ if (Validator.isNotNull(historyKey)) {
 }
 %>
 
-<div class="taglib-form-navigator" id="<portlet:namespace />boundingBox">
+<div class="taglib-form-navigator" id="<portlet:namespace />tabsBoundingBox">
 	<aui:input name="modifiedSections" type="hidden" />
 
 	<div class="taglib-form-navigator row-fluid" id="<portlet:namespace />tabs">
@@ -176,7 +176,7 @@ if (Validator.isNotNull(historyKey)) {
 
 	var tabview = new A.TabView(
 		{
-			boundingBox: '#<portlet:namespace />boundingBox',
+			boundingBox: '#<portlet:namespace />tabsBoundingBox',
 			srcNode: '#<portlet:namespace />tabs',
 			type: 'list'
 		}

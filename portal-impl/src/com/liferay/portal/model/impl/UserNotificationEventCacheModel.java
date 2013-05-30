@@ -35,7 +35,7 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -51,6 +51,8 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 		sb.append(timestamp);
 		sb.append(", deliverBy=");
 		sb.append(deliverBy);
+		sb.append(", delivered=");
+		sb.append(delivered);
 		sb.append(", payload=");
 		sb.append(payload);
 		sb.append(", archived=");
@@ -84,6 +86,7 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 
 		userNotificationEventImpl.setTimestamp(timestamp);
 		userNotificationEventImpl.setDeliverBy(deliverBy);
+		userNotificationEventImpl.setDelivered(delivered);
 
 		if (payload == null) {
 			userNotificationEventImpl.setPayload(StringPool.BLANK);
@@ -108,6 +111,7 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 		type = objectInput.readUTF();
 		timestamp = objectInput.readLong();
 		deliverBy = objectInput.readLong();
+		delivered = objectInput.readBoolean();
 		payload = objectInput.readUTF();
 		archived = objectInput.readBoolean();
 	}
@@ -135,6 +139,7 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 
 		objectOutput.writeLong(timestamp);
 		objectOutput.writeLong(deliverBy);
+		objectOutput.writeBoolean(delivered);
 
 		if (payload == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -153,6 +158,7 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 	public String type;
 	public long timestamp;
 	public long deliverBy;
+	public boolean delivered;
 	public String payload;
 	public boolean archived;
 }

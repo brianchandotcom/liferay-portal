@@ -1047,6 +1047,7 @@
 		<property name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" column="type_" />
 		<property name="timestamp" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="deliverBy" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="delivered" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="payload" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="archived" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>

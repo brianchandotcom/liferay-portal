@@ -275,6 +275,21 @@ public interface UserNotificationEventLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.UserNotificationEvent> getUserNotificationEventsByDelivered(
+		long userId, boolean delivered)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.UserNotificationEvent> getUserNotificationEventsByDelivered(
+		long userId, boolean delivered, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUserNotificationEventsByDeliveredCount(long userId,
+		boolean delivered)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserNotificationEventsCount(long userId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

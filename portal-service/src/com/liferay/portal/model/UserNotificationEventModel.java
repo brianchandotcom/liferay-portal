@@ -172,6 +172,27 @@ public interface UserNotificationEventModel extends BaseModel<UserNotificationEv
 	public void setDeliverBy(long deliverBy);
 
 	/**
+	 * Returns the delivered of this user notification event.
+	 *
+	 * @return the delivered of this user notification event
+	 */
+	public boolean getDelivered();
+
+	/**
+	 * Returns <code>true</code> if this user notification event is delivered.
+	 *
+	 * @return <code>true</code> if this user notification event is delivered; <code>false</code> otherwise
+	 */
+	public boolean isDelivered();
+
+	/**
+	 * Sets whether this user notification event is delivered.
+	 *
+	 * @param delivered the delivered of this user notification event
+	 */
+	public void setDelivered(boolean delivered);
+
+	/**
 	 * Returns the payload of this user notification event.
 	 *
 	 * @return the payload of this user notification event

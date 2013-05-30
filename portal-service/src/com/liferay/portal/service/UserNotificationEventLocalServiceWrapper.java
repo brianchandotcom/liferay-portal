@@ -341,6 +341,30 @@ public class UserNotificationEventLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.portal.model.UserNotificationEvent> getUserNotificationEventsByDelivered(
+		long userId, boolean delivered)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _userNotificationEventLocalService.getUserNotificationEventsByDelivered(userId,
+			delivered);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.UserNotificationEvent> getUserNotificationEventsByDelivered(
+		long userId, boolean delivered, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _userNotificationEventLocalService.getUserNotificationEventsByDelivered(userId,
+			delivered, start, end);
+	}
+
+	@Override
+	public int getUserNotificationEventsByDeliveredCount(long userId,
+		boolean delivered)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _userNotificationEventLocalService.getUserNotificationEventsByDeliveredCount(userId,
+			delivered);
+	}
+
+	@Override
 	public int getUserNotificationEventsCount(long userId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _userNotificationEventLocalService.getUserNotificationEventsCount(userId);

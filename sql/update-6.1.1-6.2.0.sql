@@ -555,6 +555,8 @@ alter table UserGroup add userName VARCHAR(75) null;
 alter table UserGroup add createDate DATE null;
 alter table UserGroup add modifiedDate DATE null;
 
+alter table UserNotificationEvent add delivered BOOLEAN FALSE;
+
 drop table Users_Permissions;
 
 alter table Website add uuid_ VARCHAR(75) null;

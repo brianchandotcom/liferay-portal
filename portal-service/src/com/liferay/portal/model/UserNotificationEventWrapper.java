@@ -54,6 +54,7 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 		attributes.put("type", getType());
 		attributes.put("timestamp", getTimestamp());
 		attributes.put("deliverBy", getDeliverBy());
+		attributes.put("delivered", getDelivered());
 		attributes.put("payload", getPayload());
 		attributes.put("archived", getArchived());
 
@@ -103,6 +104,12 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 
 		if (deliverBy != null) {
 			setDeliverBy(deliverBy);
+		}
+
+		Boolean delivered = (Boolean)attributes.get("delivered");
+
+		if (delivered != null) {
+			setDelivered(delivered);
 		}
 
 		String payload = (String)attributes.get("payload");
@@ -298,6 +305,36 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 	@Override
 	public void setDeliverBy(long deliverBy) {
 		_userNotificationEvent.setDeliverBy(deliverBy);
+	}
+
+	/**
+	* Returns the delivered of this user notification event.
+	*
+	* @return the delivered of this user notification event
+	*/
+	@Override
+	public boolean getDelivered() {
+		return _userNotificationEvent.getDelivered();
+	}
+
+	/**
+	* Returns <code>true</code> if this user notification event is delivered.
+	*
+	* @return <code>true</code> if this user notification event is delivered; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isDelivered() {
+		return _userNotificationEvent.isDelivered();
+	}
+
+	/**
+	* Sets whether this user notification event is delivered.
+	*
+	* @param delivered the delivered of this user notification event
+	*/
+	@Override
+	public void setDelivered(boolean delivered) {
+		_userNotificationEvent.setDelivered(delivered);
 	}
 
 	/**

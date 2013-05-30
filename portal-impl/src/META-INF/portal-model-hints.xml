@@ -947,6 +947,7 @@
 		<field name="type" type="String" />
 		<field name="timestamp" type="long" />
 		<field name="deliverBy" type="long" />
+		<field name="delivered" type="boolean" />
 		<field name="payload" type="String">
 			<hint-collection name="CLOB" />
 		</field>

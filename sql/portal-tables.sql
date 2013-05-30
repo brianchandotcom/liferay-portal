@@ -2213,6 +2213,7 @@ create table UserNotificationEvent (
 	type_ VARCHAR(75) null,
 	timestamp LONG,
 	deliverBy LONG,
+	delivered BOOLEAN,
 	payload TEXT null,
 	archived BOOLEAN
 );

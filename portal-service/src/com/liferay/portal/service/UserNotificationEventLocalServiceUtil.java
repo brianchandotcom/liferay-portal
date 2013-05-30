@@ -316,6 +316,28 @@ public class UserNotificationEventLocalServiceUtil {
 		return getService().getUserNotificationEvents(userId, start, end);
 	}
 
+	public static java.util.List<com.liferay.portal.model.UserNotificationEvent> getUserNotificationEventsByDelivered(
+		long userId, boolean delivered)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getUserNotificationEventsByDelivered(userId, delivered);
+	}
+
+	public static java.util.List<com.liferay.portal.model.UserNotificationEvent> getUserNotificationEventsByDelivered(
+		long userId, boolean delivered, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getUserNotificationEventsByDelivered(userId, delivered,
+			start, end);
+	}
+
+	public static int getUserNotificationEventsByDeliveredCount(long userId,
+		boolean delivered)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getUserNotificationEventsByDeliveredCount(userId, delivered);
+	}
+
 	public static int getUserNotificationEventsCount(long userId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getUserNotificationEventsCount(userId);

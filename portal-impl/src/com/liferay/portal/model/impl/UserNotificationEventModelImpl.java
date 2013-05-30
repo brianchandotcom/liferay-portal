@@ -65,10 +65,11 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 			{ "type_", Types.VARCHAR },
 			{ "timestamp", Types.BIGINT },
 			{ "deliverBy", Types.BIGINT },
+			{ "delivered", Types.BOOLEAN },
 			{ "payload", Types.CLOB },
 			{ "archived", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table UserNotificationEvent (uuid_ VARCHAR(75) null,userNotificationEventId LONG not null primary key,companyId LONG,userId LONG,type_ VARCHAR(75) null,timestamp LONG,deliverBy LONG,payload TEXT null,archived BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table UserNotificationEvent (uuid_ VARCHAR(75) null,userNotificationEventId LONG not null primary key,companyId LONG,userId LONG,type_ VARCHAR(75) null,timestamp LONG,deliverBy LONG,delivered BOOLEAN,payload TEXT null,archived BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table UserNotificationEvent";
 	public static final String ORDER_BY_JPQL = " ORDER BY userNotificationEvent.timestamp DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY UserNotificationEvent.timestamp DESC";
@@ -86,9 +87,10 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 			true);
 	public static long ARCHIVED_COLUMN_BITMASK = 1L;
 	public static long COMPANYID_COLUMN_BITMASK = 2L;
-	public static long USERID_COLUMN_BITMASK = 4L;
-	public static long UUID_COLUMN_BITMASK = 8L;
-	public static long TIMESTAMP_COLUMN_BITMASK = 16L;
+	public static long DELIVERED_COLUMN_BITMASK = 4L;
+	public static long USERID_COLUMN_BITMASK = 8L;
+	public static long UUID_COLUMN_BITMASK = 16L;
+	public static long TIMESTAMP_COLUMN_BITMASK = 32L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.UserNotificationEvent"));
 
@@ -136,6 +138,7 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 		attributes.put("type", getType());
 		attributes.put("timestamp", getTimestamp());
 		attributes.put("deliverBy", getDeliverBy());
+		attributes.put("delivered", getDelivered());
 		attributes.put("payload", getPayload());
 		attributes.put("archived", getArchived());
 
@@ -185,6 +188,12 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 
 		if (deliverBy != null) {
 			setDeliverBy(deliverBy);
+		}
+
+		Boolean delivered = (Boolean)attributes.get("delivered");
+
+		if (delivered != null) {
+			setDelivered(delivered);
 		}
 
 		String payload = (String)attributes.get("payload");
@@ -325,6 +334,33 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 	}
 
 	@Override
+	public boolean getDelivered() {
+		return _delivered;
+	}
+
+	@Override
+	public boolean isDelivered() {
+		return _delivered;
+	}
+
+	@Override
+	public void setDelivered(boolean delivered) {
+		_columnBitmask |= DELIVERED_COLUMN_BITMASK;
+
+		if (!_setOriginalDelivered) {
+			_setOriginalDelivered = true;
+
+			_originalDelivered = _delivered;
+		}
+
+		_delivered = delivered;
+	}
+
+	public boolean getOriginalDelivered() {
+		return _originalDelivered;
+	}
+
+	@Override
 	public String getPayload() {
 		if (_payload == null) {
 			return StringPool.BLANK;
@@ -404,6 +440,7 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 		userNotificationEventImpl.setType(getType());
 		userNotificationEventImpl.setTimestamp(getTimestamp());
 		userNotificationEventImpl.setDeliverBy(getDeliverBy());
+		userNotificationEventImpl.setDelivered(getDelivered());
 		userNotificationEventImpl.setPayload(getPayload());
 		userNotificationEventImpl.setArchived(getArchived());
 
@@ -476,6 +513,10 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 
 		userNotificationEventModelImpl._setOriginalUserId = false;
 
+		userNotificationEventModelImpl._originalDelivered = userNotificationEventModelImpl._delivered;
+
+		userNotificationEventModelImpl._setOriginalDelivered = false;
+
 		userNotificationEventModelImpl._originalArchived = userNotificationEventModelImpl._archived;
 
 		userNotificationEventModelImpl._setOriginalArchived = false;
@@ -513,6 +554,8 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 
 		userNotificationEventCacheModel.deliverBy = getDeliverBy();
 
+		userNotificationEventCacheModel.delivered = getDelivered();
+
 		userNotificationEventCacheModel.payload = getPayload();
 
 		String payload = userNotificationEventCacheModel.payload;
@@ -528,7 +571,7 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -544,6 +587,8 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 		sb.append(getTimestamp());
 		sb.append(", deliverBy=");
 		sb.append(getDeliverBy());
+		sb.append(", delivered=");
+		sb.append(getDelivered());
 		sb.append(", payload=");
 		sb.append(getPayload());
 		sb.append(", archived=");
@@ -555,7 +600,7 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(34);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.UserNotificationEvent");
@@ -590,6 +635,10 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 		sb.append(getDeliverBy());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>delivered</column-name><column-value><![CDATA[");
+		sb.append(getDelivered());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>payload</column-name><column-value><![CDATA[");
 		sb.append(getPayload());
 		sb.append("]]></column-value></column>");
@@ -620,6 +669,9 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 	private String _type;
 	private long _timestamp;
 	private long _deliverBy;
+	private boolean _delivered;
+	private boolean _originalDelivered;
+	private boolean _setOriginalDelivered;
 	private String _payload;
 	private boolean _archived;
 	private boolean _originalArchived;

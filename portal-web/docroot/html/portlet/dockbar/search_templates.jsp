@@ -16,15 +16,6 @@
 
 <%@ include file="/html/portlet/dockbar/init.jsp" %>
 
-<div class="navbar-search">
-	<div class="form-search">
-		<div class="input-append">
-			<input class="search-query" id="<portlet:namespace/>keywords1" name="<portlet:namespace/>keywords" placeholder="<liferay-ui:message key="templates" />" type="text" />
-
-			<aui:button primary="<%= false %>" type="button" value="search" />
-		</div>
-	</div>
+<div class="search-panel btn-toolbar">
+	<aui:input cssClass="search-query span12" label="" name="searchTemplates" type="text"  />
 </div>
-
-<br />
-<br />

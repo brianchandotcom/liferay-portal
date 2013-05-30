@@ -69,9 +69,8 @@ List<LayoutTemplate> layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutT
 	<fieldset>
 		<div class="row-fluid">
 
-			<!-- <span class="span9"> -->
-			<span class="span8">
-				<aui:input id="addLayoutName" name="name" placeholder="name" type="text" />
+			<span class="span9">
+				<aui:input id="addLayoutName" name="name" type="text" />
 			</span>
 
 			<span class="span3">
@@ -79,38 +78,50 @@ List<LayoutTemplate> layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutT
 			</span>
 
 			<span class="span12">
-				<liferay-ui:panel-container cssClass="message-boards-panels" extended="<%= false %>" id="messageBoardsPanelContainer" persistState="<%= true %>">
-
-					<liferay-ui:panel collapsible="<%= true %>" cssClass="threads-panel" extended="<%= true %>" persistState="<%= true %>" title="templates">
+				<liferay-ui:panel-container cssClass="message-boards-panels" extended="<%= false %>" id="addPagePanelContainer">
+					<liferay-ui:panel collapsible="<%= true %>" cssClass="threads-panel" extended="<%= true %>" title="templates">
 						<liferay-util:include page="/html/portlet/dockbar/search_templates.jsp" />
 
 						<aui:nav id="templateList" cssClass="nav-list no-margin-nav-list">
-
-							<aui:nav-item cssClass='lfr-content-item active'
-								data-type="blank"
-								href=""
+							<aui:nav-item cssClass="lfr-content-item lfr-page-template"
+								data-type="blank" data-search="blank"
 							>
-								<div>
+								<div class="toggler-header">
 									<h5>Blank (default)</h5>
 									Donec sit amet enim mi, sit amet blandit est. Sed id sapien auctor.
-									</br>
-									<a href="#">
-										<liferay-ui:message key="choose-page-layout" />
-									</a>
 								</div>
+
+								<div class="layout-type-form layout-type-form-blank toggler-content">
+									<%@ include file="/html/portlet/layouts_admin/layout/layout_templates.jspf" %>
+								</div>
+
+								<a href="#">
+									<liferay-ui:message key="choose-page-layout" />
+								</a>
 							</aui:nav-item>
 
 							<%
 							List<LayoutPrototype> layoutPrototypes = LayoutPrototypeServiceUtil.search(company.getCompanyId(), Boolean.TRUE, null);
 							for (LayoutPrototype layoutPrototype : layoutPrototypes) {
+
+								String name = HtmlUtil.escape(layoutPrototype.getName(user.getLanguageId()));
 							%>
-								<aui:nav-item cssClass='lfr-content-item'
-									href=""
+								<aui:nav-item cssClass="lfr-content-item lfr-page-template"
+									href="" data-type="" data-search="<%= name %>"
 								>
-									<div>
-										<h5><%= HtmlUtil.escape(layoutPrototype.getName(user.getLanguageId())) %></h5>
+									<div class="toggler-header">
+										<h5><%= name %></h5>
 										<%= HtmlUtil.escape(layoutPrototype.getDescription()) %>
-										</br>
+
+									</div>
+
+									<div class="toggler-content">
+										<p>
+											Lorem ipsum Ut commodo dolore dolor ex irure ex cupidatat amet enim officia pariatur in dolore sunt.
+										</p>
+										<p>
+											Lorem ipsum Veniam id minim ut id adipisicing dolore deserunt ex pariatur consectetur ad in reprehenderit aute qui culpa Excepteur eiusmod nostrud.
+										</p>
 									</div>
 								</aui:nav-item>
 							<%
@@ -121,105 +132,62 @@ List<LayoutTemplate> layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutT
 							for (int i = 0; i < PropsValues.LAYOUT_TYPES.length; i++) {
 								Map<String, Object> data = new HashMap<String, Object>();
 								data.put("type", LanguageUtil.get(pageContext, "layout.types." + PropsValues.LAYOUT_TYPES[i]));
+
+								String layoutType = LanguageUtil.get(pageContext, "layout.types." + PropsValues.LAYOUT_TYPES[i]);
 							%>
-								<aui:nav-item cssClass='lfr-content-item'
-									data="<%= data %>"
+								<aui:nav-item cssClass='lfr-content-item lfr-page-template'
+									data="<%= data %>" data-search="<%= layoutType %>"
 									href=""
 								>
-									<div>
-										<h5><%= LanguageUtil.get(pageContext, "layout.types." + PropsValues.LAYOUT_TYPES[i]) %></h5>
+									<div class="toggler-header">
+										<h5><%= layoutType %></h5>
 										Vivamus nec pulvinar lectus. Donec condimentum, augue id congue porttitor, libero enim semper.
-										</br>
 									</div>
-								</aui:nav-item>								
+
+									<div class="layout-type-form layout-type-form-<%= layoutType %> toggler-content">
+										<div id="<portlet:namespace />layoutTypeForm">
+											<div class="layout-type-form layout-type-form-template hide">
+												<aui:input label='<%= LanguageUtil.get(pageContext, "automatically-apply-changes-done-to-the-page-template") %>' name="layoutPrototypeLinkEnabled" type="checkbox" />
+											</div>
+										</div>
+
+										<liferay-util:include page="<%= StrutsUtil.TEXT_HTML_DIR + PortalUtil.getLayoutEditPage(PropsValues.LAYOUT_TYPES[i]) %>" />
+									</div>
+								</aui:nav-item>
 							<%
 							}
 							%>
 						</aui:nav>
-
-						<div id="<portlet:namespace />layoutTypeForm">
-
-							<div class="layout-type-form layout-type-form-blank hide">
-								<div>
-									<button class="btn back-button" href=""><i class="icon-arrow-left"></i></button>
-									<span>BLANK</span>
-								</div>
-								<%@ include file="/html/portlet/layouts_admin/layout/layout_templates.jspf" %>
-							</div>
-
-							<div class="layout-type-form layout-type-form-template hide">
-								<div>
-									<button class="btn back-button" href=""><i class="icon-arrow-left"></i></button>
-									<span>Template</span>
-								</div>
-								<aui:input label='<%= LanguageUtil.get(pageContext, "automatically-apply-changes-done-to-the-page-template") %>' name="layoutPrototypeLinkEnabled" type="checkbox" />
-							</div>
-
-							<%
-							for (int i = 0; i < PropsValues.LAYOUT_TYPES.length; i++) {
-								String curLayoutType = PropsValues.LAYOUT_TYPES[i];
-							%>
-
-								<div class="layout-type-form layout-type-form-<%= curLayoutType %> hide">
-									<div>
-										<button class="btn back-button" href=""><i class="icon-arrow-left"></i></button>
-										<span><%= curLayoutType %></span>
-									</div>
-									<liferay-util:include page="<%= StrutsUtil.TEXT_HTML_DIR + PortalUtil.getLayoutEditPage(curLayoutType) %>" />
-								</div>
-
-							<%
-							}
-							%>
-						</div>
 					</liferay-ui:panel>
 				</liferay-ui:panel-container>
 			</span>
 		</div>
 	</fieldset>
-				<div class="pull-right">
-					<button class="btn hide">OK</button>
-					<button class="btn btn-primary btn-submit" type="submit">Add Page</button>
-					<button class="btn" id="<portlet:namespace />cancelAction">Cancel</button>
-				</div>
+
+	<div class="pull-right">
+		<button class="btn hide">OK</button>
+		<button class="btn btn-primary btn-submit" type="submit">Add Page</button>
+		<button class="btn" id="<portlet:namespace />cancelAction">Cancel</button>
+	</div>
 </aui:form>
 
+<aui:script use="aui-toggler-delegate">
+	new A.TogglerDelegate(
+		{
+			animated: true,
+			closeAllOnExpand: true,
+			container: '#addPagePanelContainer',
+			content: '.toggler-content-test',
+			expanded: false,
+			header: '.toggler-header-test',
+			transition: {
+				duration: 0.3
+			}
+		}
+	);
+</aui:script>
+
 <aui:script use="node-base">
-	A.one('#<portlet:namespace />templateList').delegate(
-		'click',
-		function(event) {
-			var templateList = A.one('#<portlet:namespace />templateList');
-
-			templateList.all('.active').removeClass('active');
-
-			event.currentTarget.addClass('active');
-
-			templateList.hide();
-
-			var templateType = event.currentTarget.getData('type');
-
-			if (!templateType) templateType = 'template';
-
-			toggleLayoutTypeFields(templateType.toLowerCase());
-		},
-		'.lfr-content-item'
-	);
-
-	A.one('#<portlet:namespace />layoutTypeForm').delegate(
-		'click',
-		function(event) {
-			event.preventDefault();
-
-			var templateList = A.one('#<portlet:namespace />templateList');
-			templateList.show();
-
-			var typeFormContainer = A.one('#<portlet:namespace />layoutTypeForm');
-
-			typeFormContainer.all('.layout-type-form').hide();
-		},
-		'.back-button'
-	);
-
 	A.one('#<portlet:namespace />cancelAction').on(
 		'click',
 		function(event) {

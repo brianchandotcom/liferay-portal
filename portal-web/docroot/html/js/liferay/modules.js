@@ -157,6 +157,22 @@ window.YUI_config = {
 						'liferay-dockbar'
 					]
 				},
+				'liferay-dockbar-add-page': {
+					path: 'dockbar_add_page.js',
+					requires: [
+						'liferay-dockbar',
+						'liferay-dockbar-add-content-search'
+					]
+				},
+				'liferay-dockbar-add-page-template-search': {
+					path: 'dockbar_add_page_template_search.js',
+					requires: [
+						'aui-base',
+						'autocomplete-base',
+						'autocomplete-filters',
+						'liferay-dockbar'
+					]
+				},
 				'liferay-dockbar-underlay': {
 					path: 'dockbar_underlay.js',
 					requires: [

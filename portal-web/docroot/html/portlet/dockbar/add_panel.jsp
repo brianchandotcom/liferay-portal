@@ -267,7 +267,7 @@
 				var results = [];
 
 				var templateList = A.one('#<portlet:namespace />templateList');
-				var templates = templateList.all('.lfr-content-item');
+				var templates = templateList.all('.lfr-page-template');
 
 				templates.each(
 					function(item, index, collection) {

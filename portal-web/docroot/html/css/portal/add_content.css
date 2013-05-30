@@ -72,6 +72,11 @@
 			}
 		}
 
+		.lfr-page-template {
+			cursor: pointer;
+			position: relative;
+		}
+
 		.add-content-descriptive, .add-content-icon {
 			padding: 0;
 
@@ -177,6 +182,17 @@
 
 			&.lfr-portlet-used {
 				color: #BBB;
+			}
+		}
+
+		.lfr-page-template {
+			&.active {
+				color: #00C44B;
+			}
+
+			&:hover {
+				background-color: #EEE;
+				color: #006076;
 			}
 		}
 

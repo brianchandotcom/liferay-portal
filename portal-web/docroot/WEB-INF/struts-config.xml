@@ -475,8 +475,8 @@
 		<action path="/dockbar/add_panel" forward="portlet.dockbar.add_panel" />
 
 		<action path="/dockbar/edit_layouts" type="com.liferay.portlet.grouppages.action.EditLayoutsAction">
-			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.layouts_admin.edit_layouts" />
-			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
+			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.dockbar.add_page" />
+			<forward name="portlet.layouts_admin.error" path="portlet.dockbar.add_page" />
 		</action>
 
 		<action path="/dockbar/view" type="com.liferay.portlet.dockbar.action.ViewAction">

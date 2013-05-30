@@ -24,7 +24,7 @@
 				<liferay-ui:message arguments="<%= HtmlUtil.escape(selLayout.getName(locale)) %>" key="the-portlets-in-page-x-will-be-replaced-with-the-portlets-in-the-page-you-select-below" />
 			</c:when>
 			<c:otherwise>
-				<liferay-ui:message key="the-portlets-in-the-page-will-be-replaced-with-the-portlets-in-the-page-you-select-below" />				
+				<liferay-ui:message key="the-portlets-in-the-page-will-be-replaced-with-the-portlets-in-the-page-you-select-below" />
 			</c:otherwise>
 		</c:choose>
 	</p>

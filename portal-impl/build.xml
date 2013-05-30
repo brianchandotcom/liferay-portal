@@ -11,17 +11,6 @@
 	<property name="manifest.bundle.symbolic.name" value="portal-impl;singleton:=true" />
 	<property name="service.file" value="service.xml" />
 
-	<property name="properties.dest.dir" value="./properties" />
-	<property name="portal.properties.file" value="./src/portal.properties" />
-	<property name="system.properties.file" value="./src/system.properties" />
-	<property name="liferay-plugin-package_6_2_0.properties.file" value="../definitions/liferay-plugin-package_6_2_0.properties" />
-	<property name="liferay-plugin-package_6_1_0.properties.file" value="../definitions/liferay-plugin-package_6_1_0.properties" />
-	<property name="properties.toc" value="true" />
-	<property name="portal.properties.title" value="Portal Properties" />
-	<property name="system.properties.title" value="System Properties" />
-	<property name="liferay-plugin-package_6_1_0.properties.title" value="Liferay Plugin Package 6.1 Properties" />
-	<property name="liferay-plugin-package_6_2_0.properties.title" value="Liferay Plugin Package 6.2 Properties" />
-
 	<target name="build-alloy-taglib-jar">
 		<if>
 			<not>
@@ -330,59 +319,6 @@ public class Creole10Parser]]></replacevalue>
 		/>
 
 		<copy file="${liferay.doclet.dir}/liferay-doclet.jar" todir="${project.dir}/lib/development" />
-	</target>
-
-	<target name="build-propertiesdocs">
-		<delete dir="${properties.dest.dir}" />
-		<mkdir dir="${properties.dest.dir}" />
-
-		<java
-			classname="com.liferay.portal.tools.propertiesdoc.PropertiesDocBuilder"
-			classpathref="project.classpath"
-			fork="true"
-			newenvironment="true"
-		>
-			<jvmarg value="-Dproperties.dest.dir=${properties.dest.dir}" />
-			<jvmarg value="-Dproperties.file=${portal.properties.file}" />
-			<jvmarg value="-Dproperties.toc=${properties.toc}" />
-			<jvmarg value="-Dproperties.title=${portal.properties.title}" />
-		</java>
-
-		<java
-			classname="com.liferay.portal.tools.propertiesdoc.PropertiesDocBuilder"
-			classpathref="project.classpath"
-			fork="true"
-			newenvironment="true"
-		>
-			<jvmarg value="-Dproperties.dest.dir=${properties.dest.dir}" />
-			<jvmarg value="-Dproperties.file=${system.properties.file}" />
-			<jvmarg value="-Dproperties.toc=${properties.toc}" />
-			<jvmarg value="-Dproperties.title=${system.properties.title}" />
-		</java>
-
-		<java
-			classname="com.liferay.portal.tools.propertiesdoc.PropertiesDocBuilder"
-			classpathref="project.classpath"
-			fork="true"
-			newenvironment="true"
-		>
-			<jvmarg value="-Dproperties.dest.dir=${properties.dest.dir}" />
-			<jvmarg value="-Dproperties.file=${liferay-plugin-package_6_1_0.properties.file}" />
-			<jvmarg value="-Dproperties.toc=${properties.toc}" />
-			<jvmarg value="-Dproperties.title=${liferay-plugin-package_6_1_0.properties.title}" />
-		</java>
-
-		<java
-			classname="com.liferay.portal.tools.propertiesdoc.PropertiesDocBuilder"
-			classpathref="project.classpath"
-			fork="true"
-			newenvironment="true"
-		>
-			<jvmarg value="-Dproperties.dest.dir=${properties.dest.dir}" />
-			<jvmarg value="-Dproperties.file=${liferay-plugin-package_6_2_0.properties.file}" />
-			<jvmarg value="-Dproperties.toc=${properties.toc}" />
-			<jvmarg value="-Dproperties.title=${liferay-plugin-package_6_2_0.properties.title}" />
-		</java>
 	</target>
 
 	<target name="build-releaseinfo" if="release.info">
@@ -1162,16 +1098,63 @@ public class Creole10Parser]]></replacevalue>
 			<zipfileset src="${project.dir}/tools/yuicompressor-2.4.7.jar" />
 		</jarjar>
 	</target>
-	
-	<target name="bundle-propertiesdocs" depends="build-propertiesdocs">
+
+	<target name="propertiesdoc">
+		<property name="properties.dest.dir" value="${project.dir}/api/propertiesdoc" />
+
+		<delete dir="${properties.dest.dir}" />
+		<mkdir dir="${properties.dest.dir}" />
+
+		<antcall target="propertiesdoc-cmd">
+			<param name="properties.dest.dir" value="${properties.dest.dir}" />
+			<param name="properties.file" value="${project.dir}/definitions/liferay-plugin-package_6_1_0.properties" />
+			<param name="properties.title" value="Liferay Plugin Package 6.1 Properties" />
+			<param name="properties.toc" value="true" />
+		</antcall>
+
+		<antcall target="propertiesdoc-cmd">
+			<param name="properties.dest.dir" value="${properties.dest.dir}" />
+			<param name="properties.file" value="${project.dir}/definitions/liferay-plugin-package_6_2_0.properties" />
+			<param name="properties.title" value="Liferay Plugin Package 6.2 Properties" />
+			<param name="properties.toc" value="true" />
+		</antcall>
+
+		<antcall target="propertiesdoc-cmd">
+			<param name="properties.dest.dir" value="${properties.dest.dir}" />
+			<param name="properties.file" value="src/system.properties" />
+			<param name="properties.title" value="System Properties" />
+			<param name="properties.toc" value="true" />
+		</antcall>
+
+		<antcall target="propertiesdoc-cmd">
+			<param name="properties.dest.dir" value="${properties.dest.dir}" />
+			<param name="properties.file" value="src/portal.properties" />
+			<param name="properties.title" value="Portal Properties" />
+			<param name="properties.toc" value="true" />
+		</antcall>
+
 		<java
-			classname="com.liferay.portal.tools.propertiesdoc.PropertiesDocBundler"
+			classname="com.liferay.portal.tools.propertiesdoc.PropertiesDocIndexBuilder"
 			classpathref="project.classpath"
 			fork="true"
 			newenvironment="true"
 		>
-			<jvmarg value="-DpropertiesDir=./properties" />
-			<jvmarg value="-DlpVersion=6.2" />
+			<arg value="properties.file.dir=${properties.dest.dir}" />
+			<arg value="lp.version=${lp.version}" />
+		</java>
+	</target>
+
+	<target name="propertiesdoc-cmd">
+		<java
+			classname="com.liferay.portal.tools.propertiesdoc.PropertiesDocBuilder"
+			classpathref="project.classpath"
+			fork="true"
+			newenvironment="true"
+		>
+			<arg value="properties.dest.dir=${properties.dest.dir}" />
+			<arg value="properties.file=${properties.file}" />
+			<arg value="properties.toc=${properties.toc}" />
+			<arg value="properties.title=${properties.title}" />
 		</java>
 	</target>
 

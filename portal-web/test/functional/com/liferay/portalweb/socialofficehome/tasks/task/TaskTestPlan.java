@@ -35,6 +35,7 @@ import com.liferay.portalweb.socialofficehome.tasks.task.filtertasksfilterbyplac
 import com.liferay.portalweb.socialofficehome.tasks.task.filtertasksfilterbytags.FilterTasksFilterByTagsTests;
 import com.liferay.portalweb.socialofficehome.tasks.task.resolvetaskstaskassignedtome.ResolveTasksTaskAssignedToMeTests;
 import com.liferay.portalweb.socialofficehome.tasks.task.sousresolvetaskstaskassignedtoconnection.SOUs_ResolveTasksTaskAssignedToConnectionTests;
+import com.liferay.portalweb.socialofficehome.tasks.task.sousviewtasksprogressbar60percentcomplete.SOUs_ViewTasksProgressBar60PercentCompleteTests;
 import com.liferay.portalweb.socialofficehome.tasks.task.viewtasksassignedtomelink.ViewTasksAssignedToMeLinkTests;
 import com.liferay.portalweb.socialofficehome.tasks.task.viewtasksihavecreatedlink.ViewTasksIHaveCreatedLinkTests;
 
@@ -70,6 +71,8 @@ public class TaskTestPlan extends BaseTestSuite {
 		testSuite.addTest(ResolveTasksTaskAssignedToMeTests.suite());
 		testSuite.addTest(
 			SOUs_ResolveTasksTaskAssignedToConnectionTests.suite());
+		testSuite.addTest(
+			SOUs_ViewTasksProgressBar60PercentCompleteTests.suite());
 		testSuite.addTest(ViewTasksAssignedToMeLinkTests.suite());
 		testSuite.addTest(ViewTasksIHaveCreatedLinkTests.suite());
 

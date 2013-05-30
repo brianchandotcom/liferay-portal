@@ -102,7 +102,7 @@ public class VerifyResourcePermissions extends VerifyProcess {
 
 			ps = con.prepareStatement(
 				"update ResourcePermission set actionIds = ? where name = ? " +
-					"and roleId = (select roleId from Role_ where name = ?) " +
+					"and roleId IN (select roleId from Role_ where name = ?) " +
 						"and primKey != 0");
 
 			ps.setLong(1, GetterUtil.getLong(actionId));

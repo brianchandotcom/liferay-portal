@@ -28,7 +28,8 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * Provides the implementation of the layout friendly URL local service.
+ * Provides the local service for accessing, adding, deleting, and updating
+ * friendly URLs for layouts.
  *
  * <p>
  * All custom service methods should be put in this class. Whenever methods are
@@ -43,8 +44,6 @@ import java.util.Map;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see    com.liferay.portal.service.base.LayoutFriendlyURLLocalServiceBaseImpl
- * @see    com.liferay.portal.service.LayoutFriendlyURLLocalServiceUtil
  */
 public class LayoutFriendlyURLLocalServiceImpl
 	extends LayoutFriendlyURLLocalServiceBaseImpl {

@@ -84,73 +84,69 @@ List<LayoutTemplate> layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutT
 				<aui:input id="addLayoutHidden" label="hidden" name="hidden" type="checkbox" />
 			</span>
 
-			<span class="span12">
-				<liferay-ui:panel-container cssClass="message-boards-panels" extended="<%= false %>" id="addPagePanelContainer">
-					<liferay-ui:panel collapsible="<%= true %>" cssClass="threads-panel" extended="<%= true %>" title="templates">
-						<liferay-util:include page="/html/portlet/dockbar/search_templates.jsp" />
+			<span class="span12" id="addPagePanelContainer">
+				<liferay-util:include page="/html/portlet/dockbar/search_templates.jsp" />
 
-						<aui:nav cssClass="nav-list no-margin-nav-list" id="templateList">
-							<aui:nav-item cssClass="lfr-page-template active" data-search="blank" data-type="portlet">
-								<div class="toggler-header">
-									<h5>Blank (default)</h5>
-									Donec sit amet enim mi, sit amet blandit est. Sed id sapien auctor.
-								</div>
+				<aui:nav cssClass="nav-list no-margin-nav-list" id="templateList">
+					<aui:nav-item cssClass="lfr-page-template active" data-search="blank" data-type="portlet">
+						<div class="toggler-header">
+							<h5>Blank (default)</h5>
+							Donec sit amet enim mi, sit amet blandit est. Sed id sapien auctor.
+						</div>
 
-								<div class="toggler-content">
-									<br />
-									<%@ include file="/html/portlet/layouts_admin/layout/layout_templates.jspf" %>
-								</div>
-							</aui:nav-item>
+						<div class="toggler-content">
+							<br />
+							<%@ include file="/html/portlet/layouts_admin/layout/layout_templates.jspf" %>
+						</div>
+					</aui:nav-item>
 
-							<%
-							List<LayoutPrototype> layoutPrototypes = LayoutPrototypeServiceUtil.search(company.getCompanyId(), Boolean.TRUE, null);
-							for (LayoutPrototype layoutPrototype : layoutPrototypes) {
+					<%
+					List<LayoutPrototype> layoutPrototypes = LayoutPrototypeServiceUtil.search(company.getCompanyId(), Boolean.TRUE, null);
+					for (LayoutPrototype layoutPrototype : layoutPrototypes) {
 
-								String name = HtmlUtil.escape(layoutPrototype.getName(user.getLanguageId()));
-							%>
+						String name = HtmlUtil.escape(layoutPrototype.getName(user.getLanguageId()));
+					%>
 
-								<aui:nav-item cssClass="lfr-page-template" data-prototype-id="<%= layoutPrototype.getLayoutPrototypeId() %>" data-search="<%= name %>" href="">
-									<div class="toggler-header toggler-header-collapsed">
-										<h5><%= name %></h5>
-										<%= HtmlUtil.escape(layoutPrototype.getDescription()) %>
-									</div>
+						<aui:nav-item cssClass="lfr-page-template" data-prototype-id="<%= layoutPrototype.getLayoutPrototypeId() %>" data-search="<%= name %>" href="">
+							<div class="toggler-header toggler-header-collapsed">
+								<h5><%= name %></h5>
+								<%= HtmlUtil.escape(layoutPrototype.getDescription()) %>
+							</div>
 
-									<div class="toggler-content toggler-content-collapsed">
-										<br />
-										<aui:input label='<%= LanguageUtil.get(pageContext, "automatically-apply-changes-done-to-the-page-template") %>' name="layoutPrototypeLinkEnabled" type="checkbox" />
-									</div>
-								</aui:nav-item>
+							<div class="toggler-content toggler-content-collapsed">
+								<br />
+								<aui:input label='<%= LanguageUtil.get(pageContext, "automatically-apply-changes-done-to-the-page-template") %>' name="layoutPrototypeLinkEnabled" type="checkbox" />
+							</div>
+						</aui:nav-item>
 
-							<%
-							}
-							%>
+					<%
+					}
+					%>
 
-							<%
-							for (int i = 0; i < PropsValues.LAYOUT_TYPES.length; i++) {
-								Map<String, Object> data = new HashMap<String, Object>();
-								data.put("type", PropsValues.LAYOUT_TYPES[i]);
+					<%
+					for (int i = 0; i < PropsValues.LAYOUT_TYPES.length; i++) {
+						Map<String, Object> data = new HashMap<String, Object>();
+						data.put("type", PropsValues.LAYOUT_TYPES[i]);
 
-								String layoutType = LanguageUtil.get(pageContext, "layout.types." + PropsValues.LAYOUT_TYPES[i]);
-							%>
+						String layoutType = LanguageUtil.get(pageContext, "layout.types." + PropsValues.LAYOUT_TYPES[i]);
+					%>
 
-								<aui:nav-item cssClass="lfr-page-template" data="<%= data %>" data-search="<%= layoutType %>" href="">
-									<div class="toggler-header toggler-header-collapsed">
-										<h5><%= layoutType %></h5>
-										Vivamus nec pulvinar lectus. Donec condimentum, augue id congue porttitor, libero enim semper.
-									</div>
+						<aui:nav-item cssClass="lfr-page-template" data="<%= data %>" data-search="<%= layoutType %>" href="">
+							<div class="toggler-header toggler-header-collapsed">
+								<h5><%= layoutType %></h5>
+								Vivamus nec pulvinar lectus. Donec condimentum, augue id congue porttitor, libero enim semper.
+							</div>
 
-									<div class="toggler-content toggler-content-collapsed">
-										<liferay-util:include page="<%= StrutsUtil.TEXT_HTML_DIR + PortalUtil.getLayoutEditPage(PropsValues.LAYOUT_TYPES[i]) %>" />
-									</div>
-								</aui:nav-item>
+							<div class="toggler-content toggler-content-collapsed">
+								<liferay-util:include page="<%= StrutsUtil.TEXT_HTML_DIR + PortalUtil.getLayoutEditPage(PropsValues.LAYOUT_TYPES[i]) %>" />
+							</div>
+						</aui:nav-item>
 
-							<%
-							}
-							%>
+					<%
+					}
+					%>
 
-						</aui:nav>
-					</liferay-ui:panel>
-				</liferay-ui:panel-container>
+				</aui:nav>
 			</span>
 		</div>
 	</fieldset>
@@ -214,9 +210,9 @@ List<LayoutTemplate> layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutT
 			animated: true,
 			closeAllOnExpand: true,
 			container: '#addPagePanelContainer',
-			content: '.toggler-content-test',
+			content: '.toggler-content',
 			expanded: false,
-			header: '.toggler-header-test',
+			header: '.toggler-header',
 			transition: {
 				duration: 0.3
 			}

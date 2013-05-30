@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.upload.UploadRequest;
@@ -39,14 +40,19 @@ import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CompanyConstants;
+import com.liferay.portal.model.Layout;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadataModel;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.documentlibrary.store.Store;
+import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordModel;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
@@ -122,23 +128,66 @@ public class DDMImpl implements DDM {
 
 	@Override
 	public Serializable getDisplayFieldValue(
-			Serializable fieldValue, String type, Locale locale)
+			Serializable fieldValue, String type, ThemeDisplay themeDisplay)
 		throws Exception {
 
 		if (fieldValue instanceof Date) {
 			Date valueDate = (Date)fieldValue;
 
-			DateFormat dateFormat = DateFormatFactoryUtil.getDate(locale);
+			DateFormat dateFormat = DateFormatFactoryUtil.getDate(
+				themeDisplay.getLocale());
 
-			fieldValue = dateFormat.format(valueDate);
+			fieldValue = dateFormat.format((Date)valueDate);
 		}
 		else if (type.equals(DDMImpl.TYPE_CHECKBOX)) {
-			if ((Boolean)fieldValue) {
-				fieldValue = LanguageUtil.get(locale, "yes");
+			Boolean valueBoolean = (Boolean)fieldValue;
+
+			if (valueBoolean) {
+				fieldValue = LanguageUtil.get(themeDisplay.getLocale(), "yes");
 			}
 			else {
-				fieldValue = LanguageUtil.get(locale, "no");
+				fieldValue = LanguageUtil.get(themeDisplay.getLocale(), "no");
 			}
+		}
+		else if (type.equals(DDMImpl.TYPE_DDM_DOCUMENTLIBRARY)) {
+			if (Validator.isNull(fieldValue)) {
+				return StringPool.BLANK;
+			}
+
+			String valueString = String.valueOf(fieldValue);
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				valueString);
+
+			String uuid = jsonObject.getString("uuid");
+			long groupId = jsonObject.getLong("groupId");
+
+			FileEntry fileEntry =
+				DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
+					uuid, groupId);
+
+			fieldValue = DLUtil.getPreviewURL(
+				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
+				false, true);
+		}
+		else if (type.equals(DDMImpl.TYPE_DDM_LINK_TO_PAGE)) {
+			if (Validator.isNull(fieldValue)) {
+				return StringPool.BLANK;
+			}
+
+			String valueString = String.valueOf(fieldValue);
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				valueString);
+
+			long groupId = jsonObject.getLong("groupId");
+			boolean privateLayout = jsonObject.getBoolean("privateLayout");
+			long layoutId = jsonObject.getLong("layoutId");
+
+			Layout layout = LayoutLocalServiceUtil.getLayout(
+				groupId, privateLayout, layoutId);
+
+			fieldValue = PortalUtil.getLayoutFriendlyURL(layout, themeDisplay);
 		}
 		else if (type.equals(DDMImpl.TYPE_RADIO) ||
 				 type.equals(DDMImpl.TYPE_SELECT)) {

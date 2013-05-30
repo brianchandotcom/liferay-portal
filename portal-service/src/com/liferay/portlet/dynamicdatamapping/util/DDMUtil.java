@@ -20,12 +20,11 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
 import java.io.Serializable;
-
-import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -46,10 +45,10 @@ public class DDMUtil {
 	}
 
 	public static Serializable getDisplayFieldValue(
-			Serializable fieldValue, String type, Locale locale)
+			Serializable fieldValue, String type, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		return getDDM().getDisplayFieldValue(fieldValue, type, locale);
+		return getDDM().getDisplayFieldValue(fieldValue, type, themeDisplay);
 	}
 
 	public static Fields getFields(

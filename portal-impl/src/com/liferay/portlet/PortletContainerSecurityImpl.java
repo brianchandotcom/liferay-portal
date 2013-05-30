@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.portlet.PortletContainerException;
 import com.liferay.portal.kernel.portlet.PortletContainerSecurity;
 import com.liferay.portal.kernel.portlet.PortletContainerUtil;
 import com.liferay.portal.kernel.portlet.PortletModeFactory;
+import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.TempAttributesServletRequest;
@@ -73,6 +74,17 @@ import javax.servlet.http.HttpServletResponse;
 @DoPrivileged
 public class PortletContainerSecurityImpl
 	implements PortletContainer, PortletContainerSecurity {
+
+	public static PortletContainer createPortletContainerSecurityImpl(
+		PortletContainer portletContainer) {
+
+		if (!SPIUtil.isSPI()) {
+			portletContainer = new PortletContainerSecurityImpl(
+				portletContainer);
+		}
+
+		return portletContainer;
+	}
 
 	public PortletContainerSecurityImpl(PortletContainer portletContainer) {
 		_portletContainer = portletContainer;

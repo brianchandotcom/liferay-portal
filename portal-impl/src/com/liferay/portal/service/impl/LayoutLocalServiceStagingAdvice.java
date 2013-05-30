@@ -37,6 +37,7 @@ import com.liferay.portal.model.LayoutStagingHandler;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.service.ImageLocalServiceUtil;
+import com.liferay.portal.service.LayoutFriendlyURLLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -300,6 +301,11 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 		originalLayout.setExpandoBridgeAttributes(serviceContext);
 
 		LayoutUtil.update(originalLayout);
+
+		LayoutFriendlyURLLocalServiceUtil.updateLayoutFriendlyURLs(
+			originalLayout.getUserId(), originalLayout.getCompanyId(),
+			originalLayout.getGroupId(), originalLayout.getPlid(),
+			originalLayout.isPrivateLayout(), friendlyURLMap, serviceContext);
 
 		boolean hasWorkflowTask = StagingUtil.hasWorkflowTask(
 			serviceContext.getUserId(), layoutRevision);

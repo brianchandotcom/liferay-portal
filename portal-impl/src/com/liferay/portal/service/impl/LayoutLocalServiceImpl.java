@@ -57,6 +57,7 @@ import com.liferay.portal.lar.backgroundtask.executor.PortletImportBackgroundTas
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
+import com.liferay.portal.model.LayoutFriendlyURL;
 import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.LayoutReference;
 import com.liferay.portal.model.LayoutSet;
@@ -283,8 +284,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		// Layout friendly URLs
 
 		layoutFriendlyURLLocalService.updateLayoutFriendlyURLs(
-			user.getCompanyId(), groupId, plid, privateLayout, friendlyURLMap,
-			serviceContext);
+			user.getUserId(), user.getCompanyId(), groupId, plid, privateLayout,
+			friendlyURLMap, serviceContext);
 
 		// Layout set
 
@@ -1079,8 +1080,18 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		friendlyURL = layoutLocalServiceHelper.getFriendlyURL(friendlyURL);
 
-		Layout layout = layoutPersistence.fetchByG_P_F(
-			groupId, privateLayout, friendlyURL);
+		Layout layout = null;
+
+		List<LayoutFriendlyURL> layoutFriendlyURLs =
+			layoutFriendlyURLPersistence.findByG_P_F(
+				groupId, privateLayout, friendlyURL);
+
+		if (!layoutFriendlyURLs.isEmpty()) {
+			LayoutFriendlyURL layoutFriendlyURL = layoutFriendlyURLs.get(0);
+
+			layout = layoutPersistence.findByPrimaryKey(
+				layoutFriendlyURL.getPlid());
+		}
 
 		if ((layout == null) &&
 			friendlyURL.startsWith(StringPool.SLASH) &&
@@ -1940,8 +1951,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			friendlyURL);
 
 		layoutFriendlyURLLocalService.updateLayoutFriendlyURL(
-			layout.getCompanyId(), layout.getGroupId(), layout.getPlid(),
-			layout.isPrivateLayout(), friendlyURL, languageId,
+			layout.getUserId(), layout.getCompanyId(), layout.getGroupId(),
+			layout.getPlid(), layout.isPrivateLayout(), friendlyURL, languageId,
 			new ServiceContext());
 
 		layout.setModifiedDate(now);
@@ -2073,8 +2084,9 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		// Layout friendly URLs
 
 		layoutFriendlyURLLocalService.updateLayoutFriendlyURLs(
-			layout.getCompanyId(), layout.getGroupId(), layout.getPlid(),
-			layout.isPrivateLayout(), friendlyURLMap, serviceContext);
+			layout.getUserId(), layout.getCompanyId(), layout.getGroupId(),
+			layout.getPlid(), layout.isPrivateLayout(), friendlyURLMap,
+			serviceContext);
 
 		return layout;
 	}

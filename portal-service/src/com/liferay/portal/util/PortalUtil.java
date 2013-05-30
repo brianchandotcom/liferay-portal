@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.layout.LayoutFriendlyURLComposite;
+import com.liferay.portal.kernel.layout.LayoutQueryStringComposite;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
@@ -192,6 +194,16 @@ public class PortalUtil {
 		HttpServletRequest request, String input) {
 
 		return getPortal().generateRandomKey(request, input);
+	}
+
+	public static LayoutQueryStringComposite
+		getActualLayoutQueryStringComposite(
+			long groupId, boolean privateLayout, String friendlyURL,
+			Map<String, String[]> params, Map<String, Object> requestContext)
+		throws PortalException, SystemException {
+
+		return getPortal().getActualLayoutQueryStringComposite(
+			groupId, privateLayout, friendlyURL, params, requestContext);
 	}
 
 	public static String getActualURL(
@@ -648,6 +660,13 @@ public class PortalUtil {
 		return getPortal().getHttpServletResponse(portletResponse);
 	}
 
+	public static String getI18nPathLanguageId(
+		Locale locale, String defaultI18nPathLanguageId) {
+
+		return getPortal().getI18nPathLanguageId(
+			locale, defaultI18nPathLanguageId);
+	}
+
 	public static String getJournalArticleActualURL(
 			long groupId, boolean privateLayout, String mainPath,
 			String friendlyURL, Map<String, String[]> params,
@@ -657,6 +676,14 @@ public class PortalUtil {
 		return getPortal().getJournalArticleActualURL(
 			groupId, privateLayout, mainPath, friendlyURL, params,
 			requestContext);
+	}
+
+	public static Layout getJournalArticleLayout(
+			long groupId, boolean privateLayout, String friendlyURL)
+		throws PortalException, SystemException {
+
+		return getPortal().getJournalArticleLayout(
+			groupId, privateLayout, friendlyURL);
 	}
 
 	public static String getJsSafePortletId(String portletId) {
@@ -711,6 +738,15 @@ public class PortalUtil {
 		throws PortalException, SystemException {
 
 		return getPortal().getLayoutFriendlyURL(layout, themeDisplay, locale);
+	}
+
+	public static LayoutFriendlyURLComposite getLayoutFriendlyURLComposite(
+			long groupId, boolean privateLayout, String friendlyURL,
+			Map<String, String[]> params, Map<String, Object> requestContext)
+		throws PortalException, SystemException {
+
+		return getPortal().getLayoutFriendlyURLComposite(
+			groupId, privateLayout, friendlyURL, params, requestContext);
 	}
 
 	public static String getLayoutFullURL(
@@ -809,6 +845,13 @@ public class PortalUtil {
 
 	public static Locale getLocale(RenderRequest renderRequest) {
 		return getPortal().getLocale(renderRequest);
+	}
+
+	public static String getLocalizedFriendlyURL(
+			HttpServletRequest request, Layout layout, Locale locale)
+		throws Exception {
+
+		return getPortal().getLocalizedFriendlyURL(request, layout, locale);
 	}
 
 	public static String getMailId(
@@ -1426,6 +1469,16 @@ public class PortalUtil {
 		throws PortalException, SystemException {
 
 		return getPortal().getValidUserId(companyId, userId);
+	}
+
+	public static LayoutFriendlyURLComposite
+		getVirtualLayoutFriendlyURLComposite(
+			boolean privateLayout, String friendlyURL,
+			Map<String, String[]> params, Map<String, Object> requestContext)
+		throws PortalException, SystemException {
+
+		return getPortal().getVirtualLayoutFriendlyURLComposite(
+			privateLayout, friendlyURL, params, requestContext);
 	}
 
 	public static String getVirtualLayoutActualURL(

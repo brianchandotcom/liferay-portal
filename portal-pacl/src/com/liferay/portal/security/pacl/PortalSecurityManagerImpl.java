@@ -444,6 +444,13 @@ public class PortalSecurityManagerImpl extends SecurityManager
 				return bean;
 			}
 
+			Class<?>[] interfaces = ReflectionUtil.getInterfaces(
+				bean, classLoader);
+
+			if (interfaces.length == 0) {
+				return bean;
+			}
+
 			if (classLoader == ClassLoaderUtil.getPortalClassLoader()) {
 				Class<?> callerClass = Reflection.getCallerClass(5);
 
@@ -470,8 +477,7 @@ public class PortalSecurityManagerImpl extends SecurityManager
 			invocationHandler = new PACLInvocationHandler(invocationHandler);
 
 			return ProxyUtil.newProxyInstance(
-				classLoader, ReflectionUtil.getInterfaces(bean, classLoader),
-				invocationHandler);
+				classLoader, interfaces, invocationHandler);
 		}
 
 	}

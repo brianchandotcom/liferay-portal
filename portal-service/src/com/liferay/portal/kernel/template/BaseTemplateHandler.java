@@ -39,8 +39,10 @@ public abstract class BaseTemplateHandler implements TemplateHandler {
 			return Collections.emptyList();
 		}
 
+		Class<?> clazz = getClass();
+
 		String xml = StringUtil.read(
-			getClassLoader(), templatesConfigPath, false);
+			clazz.getClassLoader(), templatesConfigPath, false);
 
 		Document document = SAXReaderUtil.read(xml);
 
@@ -58,12 +60,6 @@ public abstract class BaseTemplateHandler implements TemplateHandler {
 	@Override
 	public String getTemplatesHelpPropertyKey() {
 		return PropsKeys.PORTLET_DISPLAY_TEMPLATES_HELP;
-	}
-
-	protected ClassLoader getClassLoader() {
-		Class<?> clazz = getClass();
-
-		return clazz.getClassLoader();
 	}
 
 	protected String getTemplatesConfigPath() {

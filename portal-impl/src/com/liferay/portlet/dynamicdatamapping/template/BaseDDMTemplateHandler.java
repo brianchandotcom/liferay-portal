@@ -16,29 +16,16 @@ package com.liferay.portlet.dynamicdatamapping.template;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.mobile.device.Device;
 import com.liferay.portal.kernel.template.BaseTemplateHandler;
-import com.liferay.portal.kernel.template.Template;
-import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.template.TemplateManagerUtil;
-import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateVariableCodeHandler;
-import com.liferay.portal.kernel.template.TemplateVariableDefinition;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
-import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.templateparser.TemplateNode;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
-
-import java.io.Writer;
-
-import java.net.URL;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -49,34 +36,7 @@ import java.util.Map;
  * @author Jorge Ferrer
  * @author Marcellus Tavares
  */
-public abstract class BaseDDMTemplateHandler extends BaseTemplateHandler
-	implements TemplateVariableCodeHandler {
-
-	@Override
-	public String[] generate(
-			TemplateVariableDefinition templateVariableDefinition,
-			String language)
-		throws Exception {
-
-		String resourceName = getResourceName(
-			templateVariableDefinition.getDataType());
-
-		Template template = getTemplate(resourceName);
-
-		String content = getTemplateContent(
-			template, templateVariableDefinition, language);
-
-		String[] lines = getContentLines(content);
-
-		String[] dataContentArray = getDataContentArray(lines);
-
-		if (!templateVariableDefinition.isRepeatable()) {
-			return dataContentArray;
-		}
-
-		return handleRepeatableField(
-			templateVariableDefinition, language, dataContentArray);
-	}
+public abstract class BaseDDMTemplateHandler extends BaseTemplateHandler {
 
 	@Override
 	public Map<String, TemplateVariableGroup> getTemplateVariableGroups(
@@ -109,27 +69,6 @@ public abstract class BaseDDMTemplateHandler extends BaseTemplateHandler
 			templateVariableGroup.getLabel(), templateVariableGroup);
 	}
 
-	protected String[] getContentLines(String content) {
-		String[] lines = StringUtil.splitLines(content);
-
-		for (int i = 0; i < lines.length; i++) {
-			lines[i] = StringUtil.trim(lines[i]);
-		}
-
-		return lines;
-	}
-
-	protected String[] getDataContentArray(String[] lines) {
-		String[] dataContentArray = new String[] {
-			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK};
-
-		for (int i = 0; i < lines.length; i++) {
-			dataContentArray[i] = lines[i];
-		}
-
-		return dataContentArray;
-	}
-
 	protected Class<?> getFieldVariableClass() {
 		return TemplateNode.class;
 	}
@@ -150,19 +89,8 @@ public abstract class BaseDDMTemplateHandler extends BaseTemplateHandler
 		return templateVariableGroup;
 	}
 
-	protected String getResourceName(String dataType) {
-		if (isCommonResource(dataType)) {
-			dataType = "common";
-		}
-
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(getTemplatePath());
-		sb.append(dataType);
-		sb.append(".ftl");
-
-		return sb.toString();
-	}
+	protected abstract TemplateVariableCodeHandler
+		getTemplateVariableCodeHandler();
 
 	protected TemplateVariableGroup getStructureFieldsTemplateVariableGroup(
 			long ddmStructureId, Locale locale)
@@ -192,42 +120,10 @@ public abstract class BaseDDMTemplateHandler extends BaseTemplateHandler
 
 			templateVariableGroup.addFieldVariable(
 				label, getFieldVariableClass(), fieldName, tip, dataType,
-				repeatable, this);
+				repeatable, getTemplateVariableCodeHandler());
 		}
 
 		return templateVariableGroup;
-	}
-
-	protected Template getTemplate(String resource) throws Exception {
-		TemplateResource templateResource = getTemplateResource(resource);
-
-		return TemplateManagerUtil.getTemplate(
-			TemplateConstants.LANG_TYPE_FTL, templateResource, false);
-	}
-
-	protected String getTemplateContent(
-			Template template,
-			TemplateVariableDefinition templateVariableDefinition,
-			String language)
-		throws Exception {
-
-		populateContext(template, templateVariableDefinition, language);
-
-		Writer writer = new UnsyncStringWriter();
-
-		template.processTemplate(writer);
-
-		return writer.toString();
-	}
-
-	protected abstract String getTemplatePath();
-
-	protected TemplateResource getTemplateResource(String resource) {
-		ClassLoader classLoader = getClassLoader();
-
-		URL url = classLoader.getResource(resource);
-
-		return new URLTemplateResource(resource, url);
 	}
 
 	protected TemplateVariableGroup getUtilTemplateVariableGroup() {
@@ -242,55 +138,6 @@ public abstract class BaseDDMTemplateHandler extends BaseTemplateHandler
 			"templates-path", String.class, "templatesPath");
 
 		return templateVariableGroup;
-	}
-
-	protected String[] handleRepeatableField(
-			TemplateVariableDefinition templateVariableDefinition,
-			String language, String[] dataContentArray)
-		throws Exception {
-
-		Template template = getTemplate(getTemplatePath() + "repeatable.ftl");
-
-		String content = getTemplateContent(
-			template, templateVariableDefinition, language);
-
-		String[] lines = getContentLines(content);
-
-		String tmpDataContent = dataContentArray[0];
-
-		dataContentArray[0] =
-			lines[0] + StringPool.NEW_LINE + StringPool.TAB + lines[1];
-		dataContentArray[1] =
-			tmpDataContent + dataContentArray[1] + dataContentArray[2];
-		dataContentArray[2] = lines[2] + StringPool.NEW_LINE + lines[3];
-
-		return dataContentArray;
-	}
-
-	protected boolean isCommonResource(String dataType) {
-		if (dataType.equals("boolean") || dataType.equals("date") ||
-			dataType.equals("document-library") ||
-			dataType.equals("file-upload") || dataType.equals("image") ||
-			dataType.equals("link-to-page") ||
-			dataType.equals("service-locator")) {
-
-			return false;
-		}
-
-		return true;
-	}
-
-	protected void populateContext(
-		Template template,
-		TemplateVariableDefinition templateVariableDefinition,
-		String language) {
-
-		template.put("dataType", templateVariableDefinition.getDataType());
-		template.put("help", templateVariableDefinition.getHelp());
-		template.put("isRepeatable", templateVariableDefinition.isRepeatable());
-		template.put("label", templateVariableDefinition.getLabel());
-		template.put("language", language);
-		template.put("name", templateVariableDefinition.getName());
 	}
 
 }

@@ -57,13 +57,7 @@ Map<String, TemplateVariableGroup> templateVariableGroups = TemplateContextHelpe
 
 										<%
 										for (TemplateVariableDefinition templateVariableDefinition : templateVariableGroup.getTemplateVariableDefinitions()) {
-											String siblingName = templateVariableDefinition.getName();
-
-											if (templateVariableDefinition.isRepeatable()) {
-												siblingName = "cur_" + templateVariableDefinition.getName();
-											}
-
-											String[] dataContentArray = _getDataContentArray(templateVariableDefinition, siblingName, language, pageContext);
+											String[] dataContentArray = _getDataContentArray(templateVariableDefinition, language);
 										%>
 
 											<li class="palette-item-container">
@@ -454,104 +448,40 @@ Map<String, TemplateVariableGroup> templateVariableGroups = TemplateContextHelpe
 </aui:script>
 
 <%!
-private String[] _getBooleanCodeArray(String testClause, String language) {
-	String[] booleanCodeArray = new String[2];
-
-	if (language.equalsIgnoreCase("ftl")) {
-		booleanCodeArray[0] = "<#if getterUtil.getBoolean(" + testClause + ".getData())>";
-		booleanCodeArray[1] = "</#if>";
-	}
-	else if (language.equalsIgnoreCase("vm")) {
-		booleanCodeArray[0] = "#if ($getterUtil.getBoolean($" + testClause + ".getData())";
-		booleanCodeArray[1] = "#end";
-	}
-
-	return booleanCodeArray;
-}
-
-private String[] _getDataContentArray(TemplateVariableDefinition templateVariableDefinition, String siblingName, String language, PageContext pageContext) {
-	String[] dataContentArray = new String[3];
-
-	dataContentArray[0] = StringPool.BLANK;
-	dataContentArray[1] = StringPool.BLANK;
-	dataContentArray[2] = StringPool.BLANK;
+private String[] _getDataContentArray(TemplateVariableDefinition templateVariableDefinition, String language) {
+	String[] dataContentArray = new String[] {StringPool.BLANK, StringPool.BLANK, StringPool.BLANK};
 
 	String dataType = templateVariableDefinition.getDataType();
 
-	if (dataType.equals("boolean")) {
-		String[] booleanCodeArray = _getBooleanCodeArray(siblingName, language);
-
-		dataContentArray[0] = booleanCodeArray[0];
-		dataContentArray[1] = booleanCodeArray[1];
-	}
-	else if (dataType.equals("date")) {
-		String[] dateCodeArray = _getDateCodeArray(siblingName, language);
-
-		dataContentArray[0] = dateCodeArray[0];
-		dataContentArray[1] = dateCodeArray[1];
-	}
-	else if (dataType.equals("document-library") || dataType.equals("file-upload")) {
-		dataContentArray[0] = "<a href=\"" + _getVariableReferenceCode(siblingName + ".getData()", language) + "\">";
-		dataContentArray[1] = LanguageUtil.format(pageContext, "download-x", templateVariableDefinition.getLabel());
-		dataContentArray[2] = "</a>";
-	}
-	else if (dataType.equals("image")) {
-		dataContentArray[0] = "<img alt=\"" + templateVariableDefinition.getLabel() + "\" src=\"" + _getVariableReferenceCode(siblingName + ".getData()", language) + "\" />";
-	}
-	else if (dataType.equals("link-to-page")) {
-		dataContentArray[0] = "<a href=\"" + _getVariableReferenceCode(siblingName + ".getFriendlyUrl()", language) + "\">";
-		dataContentArray[1] = templateVariableDefinition.getLabel();
-		dataContentArray[2] = "</a>";
-	}
-	else if (dataType.equals("service-locator")) {
+	if (dataType.equals("service-locator")) {
 		Class<?> templateVariableDefinitionClass = templateVariableDefinition.getClazz();
 
 		String variableName = templateVariableDefinitionClass.getSimpleName();
 
-		dataContentArray[0] = _getVariableAssignmentCode(variableName, "serviceLocator.findService(\"" + siblingName + "\"", language);
+		dataContentArray[0] = _getVariableAssignmentCode(variableName, "serviceLocator.findService(\"" + templateVariableDefinition.getName() + "\"", language);
 		dataContentArray[1] = _getVariableReferenceCode(variableName, language);
 	}
 	else if (templateVariableDefinition.isCollection()) {
 		TemplateVariableDefinition itemTemplateVariableDefinition = templateVariableDefinition.getItemTemplateVariableDefinition();
 
-		String[] listCodeArray = _getListCodeArray(siblingName, itemTemplateVariableDefinition.getName(), language);
+		String[] listCodeArray = _getListCodeArray(templateVariableDefinition.getName(), itemTemplateVariableDefinition.getName(), language);
 
 		dataContentArray[0] = listCodeArray[0];
 		dataContentArray[1] = listCodeArray[1];
 	}
-	else if (Validator.isNotNull(dataType)) {
-		dataContentArray[0] = _getVariableReferenceCode(siblingName + ".getData()", language);
+	else if (Validator.isNull(dataType)) {
+		dataContentArray[0] = _getVariableReferenceCode(templateVariableDefinition.getName(), language);
 	}
 	else {
-		dataContentArray[0] = _getVariableReferenceCode(siblingName, language);
-	}
-
-	if (templateVariableDefinition.isRepeatable()) {
-		String[] listCodeArray = _getListCodeArray(templateVariableDefinition.getName() + ".getSiblings()", siblingName, language);
-
-		String tmpDataContent = dataContentArray[0];
-
-		dataContentArray[0] = listCodeArray[0];
-		dataContentArray[1] = tmpDataContent + dataContentArray[1] + dataContentArray[2];
-		dataContentArray[2] = listCodeArray[1];
+		try {
+			dataContentArray = templateVariableDefinition.generateCode(language);
+		}
+		catch (Exception e) {
+			_log.error(e);
+		}
 	}
 
 	return dataContentArray;
-}
-
-private String[] _getDateCodeArray(String variableName, String language) {
-	String[] dateCodeArray = new String[2];
-
-	if (language.equalsIgnoreCase("ftl")) {
-		dateCodeArray[0] = "<#assign " + variableName + "_DateObj = dateUtil.newDate(getterUtil.getLong(" + variableName + ".getData()))>";
-		dateCodeArray[1] = "${dateUtil.getDate(" + variableName + "_DateObj, \"dd MMM yyyy - HH:mm:ss\", locale)}";
-	}
-	else if (language.equalsIgnoreCase("vm")) {
-		dateCodeArray[0] = "#set ($" + variableName + "_DateObj = $dateUtil.newDate($getterUtil.getLong($" + variableName + ".getData())))";
-		dateCodeArray[1] = "$dateUtil.getDate($" + variableName + "_DateObj, \"dd MMM yyyy - HH:mm:ss\", $locale)";
-	}
-
-	return dateCodeArray;
 }
 
 private String[] _getListCodeArray(String variableName, String itemName, String language) {
@@ -562,7 +492,7 @@ private String[] _getListCodeArray(String variableName, String itemName, String 
 		listCodeArray[1] = "</#list>\n</#if>";
 	}
 	else if (language.equalsIgnoreCase("vm")) {
-		listCodeArray[0] = "#if (!$"+ variableName + ".isEmpty())\n #foreach ($" + itemName + " in $" + variableName + ")";
+		listCodeArray[0] = "#if (!$"+ variableName + ".isEmpty())\n\t#foreach ($" + itemName + " in $" + variableName + ")";
 		listCodeArray[1] = "#end\n#end";
 	}
 
@@ -666,4 +596,8 @@ private String _getVariableReferenceCode(String variableName, String language) {
 
 	return variableName;
 }
+%>
+
+<%!
+private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.dynamic_data_mapping.edit_template_display_jspf");
 %>

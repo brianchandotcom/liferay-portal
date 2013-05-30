@@ -15,6 +15,7 @@
 package com.liferay.portlet.dynamicdatalists.template;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.template.TemplateVariableCodeHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
@@ -132,6 +133,11 @@ public class DDLTemplateHandler extends BaseDDMTemplateHandler {
 	@Override
 	protected Class<?> getFieldVariableClass() {
 		return Field.class;
+	}
+
+	@Override
+	protected TemplateVariableCodeHandler getTemplateVariableCodeHandler() {
+		return null;
 	}
 
 }

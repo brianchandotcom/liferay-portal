@@ -27,12 +27,13 @@ public class TemplateVariableDefinition {
 
 		this(
 			label, clazz, StringPool.BLANK, variableName, label.concat("-help"),
-			false);
+			false, null);
 	}
 
 	public TemplateVariableDefinition(
 		String label, Class<?> clazz, String dataType, String variableName,
-		String help, boolean repeatable) {
+		String help, boolean repeatable,
+		TemplateVariableCodeHandler templateVariableCodeHandler) {
 
 		_label = label;
 		_clazz = clazz;
@@ -40,6 +41,7 @@ public class TemplateVariableDefinition {
 		_name = variableName;
 		_help = help;
 		_repeatable = repeatable;
+		_templateVariableCodeHandler = templateVariableCodeHandler;
 	}
 
 	public TemplateVariableDefinition(
@@ -71,6 +73,14 @@ public class TemplateVariableDefinition {
 		return false;
 	}
 
+	public String[] generateCode(String language) throws Exception {
+		if (_templateVariableCodeHandler == null) {
+			return null;
+		}
+
+		return _templateVariableCodeHandler.generate(this, language);
+	}
+
 	public Class<?> getClazz() {
 		return _clazz;
 	}
@@ -95,6 +105,10 @@ public class TemplateVariableDefinition {
 		return _name;
 	}
 
+	public TemplateVariableCodeHandler getTemplateVariableCodeHandler() {
+		return _templateVariableCodeHandler;
+	}
+
 	public boolean isCollection() {
 		if (_itemTemplateVariableDefinition != null) {
 			return true;
@@ -114,5 +128,6 @@ public class TemplateVariableDefinition {
 	private String _label;
 	private String _name;
 	private boolean _repeatable;
+	private TemplateVariableCodeHandler _templateVariableCodeHandler;
 
 }

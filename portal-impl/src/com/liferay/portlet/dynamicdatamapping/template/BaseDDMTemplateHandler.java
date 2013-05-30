@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.mobile.device.Device;
 import com.liferay.portal.kernel.template.BaseTemplateHandler;
+import com.liferay.portal.kernel.template.TemplateVariableCodeHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.templateparser.TemplateNode;
 import com.liferay.portal.kernel.util.StringPool;
@@ -33,6 +34,7 @@ import java.util.Map;
 
 /**
  * @author Jorge Ferrer
+ * @author Marcellus Tavares
  */
 public abstract class BaseDDMTemplateHandler extends BaseTemplateHandler {
 
@@ -87,6 +89,9 @@ public abstract class BaseDDMTemplateHandler extends BaseTemplateHandler {
 		return templateVariableGroup;
 	}
 
+	protected abstract TemplateVariableCodeHandler
+		getTemplateVariableCodeHandler();
+
 	protected TemplateVariableGroup getStructureFieldsTemplateVariableGroup(
 			long ddmStructureId, Locale locale)
 		throws PortalException, SystemException {
@@ -115,7 +120,7 @@ public abstract class BaseDDMTemplateHandler extends BaseTemplateHandler {
 
 			templateVariableGroup.addFieldVariable(
 				label, getFieldVariableClass(), fieldName, tip, dataType,
-				repeatable);
+				repeatable, getTemplateVariableCodeHandler());
 		}
 
 		return templateVariableGroup;

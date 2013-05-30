@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Organization;
+import com.liferay.portal.model.OrganizationConstants;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.persistence.OrganizationActionableDynamicQuery;
 import com.liferay.portal.util.PortletKeys;
@@ -118,7 +119,9 @@ public class OrganizationIndexer extends BaseIndexer {
 			long parentOrganizationId = GetterUtil.getLong(
 				searchContext.getAttribute("parentOrganizationId"));
 
-			if (parentOrganizationId > 0) {
+			if (parentOrganizationId !=
+					OrganizationConstants.ANY_PARENT_ORGANIZATION_ID) {
+
 				contextQuery.addRequiredTerm(
 					"parentOrganizationId", parentOrganizationId);
 			}

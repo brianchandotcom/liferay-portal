@@ -47,13 +47,8 @@ if (organizationId != OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) {
 
 boolean showList = true;
 
-if (filterManageableOrganizations) {
-	if (organizations.isEmpty()) {
-		showList = false;
-	}
-	else {
-		organizationParams.put("organizationsTree", organizations);
-	}
+if (filterManageableOrganizations && organizations.isEmpty()) {
+	showList = false;
 }
 %>
 
@@ -79,14 +74,14 @@ if (filterManageableOrganizations) {
 	<c:when test="<%= showList %>">
 
 		<%
-		int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCompanyId(), (organization != null) ? organization.getOrganizationId() : OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID, null, null, null, null, organizationParams);
+		int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCompanyId(), _getParentOrganizationId(request, organization, filterManageableOrganizations), null, null, null, null, organizationParams);
 		%>
 
 		<aui:row>
 			<c:if test="<%= (organization != null) && (organization.getOrganizationId() != OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) %>">
 
 				<%
-				long parentOrganizationId = 0;
+				long parentOrganizationId = OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID;
 				String parentOrganizationName = LanguageUtil.get(pageContext, "users-and-organizations-home");
 
 				if (!organization.isRoot()) {
@@ -292,37 +287,49 @@ if (filterManageableOrganizations) {
 								<%
 								OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)searchContainer.getSearchTerms();
 
-								long parentOrganizationId = OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID;
+								long parentOrganizationId = _getParentOrganizationId(request, organization, filterManageableOrganizations);
 
 								if (organization != null) {
 									parentOrganizationId = organization.getOrganizationId();
 								}
+
+								List<Long> excludedOrganizationIds = new ArrayList<Long>();
+
+								excludedOrganizationIds.add(parentOrganizationId);
+
+								organizationParams.put("excludedOrganizationIds", excludedOrganizationIds);
 								%>
 
-								<c:choose>
-									<c:when test="<%= !searchTerms.hasSearchTerms() %>">
-										<liferay-ui:search-container-results>
-											<c:choose>
-												<c:when test="<%= PropsValues.ORGANIZATIONS_INDEXER_ENABLED && PropsValues.ORGANIZATIONS_SEARCH_WITH_INDEX %>">
-													<%@ include file="/html/portlet/users_admin/organization_search_results_index.jspf" %>
-												</c:when>
-												<c:otherwise>
-													<%@ include file="/html/portlet/users_admin/organization_search_results_database.jspf" %>
-												</c:otherwise>
-											</c:choose>
-										</liferay-ui:search-container-results>
-
-										<c:if test="<%= !results.isEmpty() %>">
-											<aui:button cssClass="delete-organizations" onClick='<%= renderResponse.getNamespace() + "deleteOrganizations();" %>' value="delete" />
-										</c:if>
-									</c:when>
-									<c:otherwise>
-										<liferay-ui:search-container-results>
+								<liferay-ui:search-container-results>
+									<c:choose>
+										<c:when test="<%= !searchTerms.hasSearchTerms() && (parentOrganizationId <= 0) && (filterManageableOrganizations) %>">
 
 											<%
-											parentOrganizationId = ParamUtil.getLong(request, "parentOrganizationId", OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID);
+											results = ListUtil.subList(organizations, searchContainer.getStart(), searchContainer.getEnd());
+											total = organizations.size();
 
-											if (parentOrganizationId <= 0) {
+											pageContext.setAttribute("results", results);
+											pageContext.setAttribute("total", total);
+											%>
+
+										</c:when>
+										<c:otherwise>
+
+											<%
+											if (searchTerms.hasSearchTerms()) {
+												if (filterManageableOrganizations) {
+													organizationParams.put("organizationsTree", organizations);
+												}
+												else if (parentOrganizationId > 0) {
+													List<Organization> organizationsTree = new ArrayList<Organization>();
+
+													Organization parentOrganization = OrganizationLocalServiceUtil.getOrganization(parentOrganizationId);
+
+													organizationsTree.add(parentOrganization);
+
+													organizationParams.put("organizationsTree", organizationsTree);
+												}
+
 												parentOrganizationId = OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
 											}
 											%>
@@ -335,15 +342,13 @@ if (filterManageableOrganizations) {
 													<%@ include file="/html/portlet/users_admin/organization_search_results_database.jspf" %>
 												</c:otherwise>
 											</c:choose>
+										</c:otherwise>
+									</c:choose>
 
-											<c:if test="<%= !results.isEmpty() %>">
-												<div class="separator"><!-- --></div>
-
-												<aui:button cssClass="delete-organizations" onClick='<%= renderResponse.getNamespace() + "deleteOrganizations();" %>' value="delete" />
-											</c:if>
-										</liferay-ui:search-container-results>
-									</c:otherwise>
-								</c:choose>
+									<c:if test="<%= !results.isEmpty() %>">
+										<aui:button cssClass="delete-organizations" onClick='<%= renderResponse.getNamespace() + "deleteOrganizations();" %>' value="delete" />
+									</c:if>
+								</liferay-ui:search-container-results>
 
 								<liferay-ui:search-container-row
 									className="com.liferay.portal.model.Organization"
@@ -475,22 +480,17 @@ if (filterManageableOrganizations) {
 </c:choose>
 
 <%!
-private Long[][] _filterSuborganizations(Long[][]leftAndRightOrganizationIds, Long[][]leftAndRightParentOrganizationIds) {
-	if (leftAndRightOrganizationIds != null) {
-		if (leftAndRightOrganizationIds[0][0] < leftAndRightParentOrganizationIds[0][0]) {
-			leftAndRightParentOrganizationIds[0][0] = leftAndRightOrganizationIds[0][0];
-		}
-
-		if (leftAndRightOrganizationIds[0][1] > leftAndRightParentOrganizationIds[0][1]) {
-			leftAndRightParentOrganizationIds[0][1] = leftAndRightOrganizationIds[0][1];
-		}
+private long _getParentOrganizationId(HttpServletRequest request, Organization organization, boolean filterManageableOrganizations) {
+	if (organization != null) {
+		return organization.getOrganizationId();
 	}
 
-	if ((leftAndRightParentOrganizationIds[0][1] - leftAndRightParentOrganizationIds[0][0]) > 1) {
-		leftAndRightParentOrganizationIds[0][0] = leftAndRightParentOrganizationIds[0][0] + 1;
-		leftAndRightParentOrganizationIds[0][1] = leftAndRightParentOrganizationIds[0][1] - 1;
+	if (filterManageableOrganizations) {
+		return OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
 	}
 
-	return leftAndRightParentOrganizationIds;
+	long parentOrganizationId = ParamUtil.getLong(request, "parentOrganizationId", OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID);
+
+	return parentOrganizationId;
 }
 %>

@@ -635,6 +635,13 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	}
 
 	@Override
+	public java.util.List<java.io.Serializable> getFieldValues(
+		java.lang.String fieldName, java.util.Locale locale)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecord.getFieldValues(fieldName, locale);
+	}
+
+	@Override
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion getLatestRecordVersion()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

@@ -48,6 +48,10 @@ public interface DDLRecord extends DDLRecordModel, PersistedModel {
 	public java.io.Serializable getFieldValue(java.lang.String fieldName)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public java.util.List<java.io.Serializable> getFieldValues(
+		java.lang.String fieldName, java.util.Locale locale)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion getLatestRecordVersion()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

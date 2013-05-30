@@ -27,6 +27,9 @@
 		<case comparator="startsWith" locator1="//ul[@class='category-portlets']/li[contains(.,">
 			<execute function="Click#clickAtAndWait" />
 		</case>
+		<case comparator="startsWith" locator1="link" >
+			<execute function="Click#clickAtAndWait" />
+		</case>
 	</command>
 
 	<command name="confirm">

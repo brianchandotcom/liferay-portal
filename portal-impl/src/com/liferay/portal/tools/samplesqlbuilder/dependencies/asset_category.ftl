@@ -15,3 +15,17 @@
 		/>
 	</#list>
 </#if>
+
+<#if (maxAssetTagCount > 0)>
+	<#list dataFactory.assetTags as assetTag>
+		insert into AssetTag values (${assetTag.tagId}, ${assetTag.groupId}, ${assetTag.companyId}, ${assetTag.userId}, '${assetTag.userName}', '${dataFactory.getDateString(assetTag.createDate)}', '${dataFactory.getDateString(assetTag.modifiedDate)}', '${assetTag.name}', ${assetTag.assetCount});
+
+		<@insertResourcePermissions
+			_entry = assetTag
+		/>
+	</#list>
+
+	<#list dataFactory.assetTagStats as tagStats>
+		insert into AssetTagStats values (${tagStats.tagStatsId}, ${tagStats.tagId}, ${tagStats.classNameId}, ${tagStats.assetCount});
+	</#list>
+</#if>

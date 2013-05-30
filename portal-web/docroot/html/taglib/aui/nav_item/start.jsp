@@ -17,7 +17,7 @@
 <%@ include file="/html/taglib/aui/nav_item/init.jsp" %>
 
 <li class="<%= cssClass %><%= selected ? " active" : StringPool.BLANK %>" id="<%= id %>" <%= AUIUtil.buildData(data) %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
-	<c:if test="<%= Validator.isNotNull(label) %>">
+	<c:if test="<%= Validator.isNotNull(label) || Validator.isNotNull(iconClass) %>">
 		<c:if test="<%= Validator.isNotNull(href) %>">
 			<a class="<%= anchorCssClass %>" <%= AUIUtil.buildData(anchorData) %> href="<%= href %>" id="<%= anchorId %>" title="<liferay-ui:message key="<%= title %>" />">
 		</c:if>

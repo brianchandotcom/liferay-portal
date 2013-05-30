@@ -51,12 +51,31 @@
 		}
 
 		.nav {
-			> li > a {
-				color: #FFF;
-				text-shadow: 0 1px #000;
+			> li {
+				> a {
+					color: #FFF;
+					text-shadow: 0 1px #000;
 
-				&:focus, &:hover {
-					color: #3EA9DB;
+					&:focus, &:hover {
+						color: #3EA9DB;
+					}
+
+					[class^="icon-"], [class*=" icon-"] {
+						background-image: url(../images/aui/glyphicons-halflings-white.png);
+						margin-top: 3px;
+					}
+				}
+
+				&.active > a {
+					color: #FFF;
+
+					&, &:hover, &:focus {
+						background: #111;
+					}
+
+					&:focus, &:hover {
+						color: #3EA9DB;
+					}
 				}
 			}
 
@@ -82,12 +101,6 @@
 
 						@extend %dockbar-caret;
 					}
-				}
-			}
-
-			.add-link, .back-link, .manage-content-link, .toggle-controls-link {
-				[class^="icon-"], [class*=" icon-"] {
-					background-image: url(../images/aui/glyphicons-halflings-white.png);
 				}
 			}
 		}

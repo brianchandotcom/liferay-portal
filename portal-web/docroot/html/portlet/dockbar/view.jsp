@@ -29,6 +29,8 @@ boolean hasLayoutCustomizePermission = LayoutPermissionUtil.contains(permissionC
 boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE);
 
 String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "liferay_toggle_controls", ""));
+
+String controlPanelCategory = themeDisplay.getControlPanelCategory();
 %>
 
 <aui:nav-bar cssClass="navbar-static-top dockbar" data-namespace="<%= renderResponse.getNamespace() %>" id="dockbar">
@@ -84,7 +86,43 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 			}
 			%>
 
-			<aui:nav-item anchorCssClass="back-link" href="<%= backURL %>" iconClass="icon-arrow-left" id="backLink" label='<%= LanguageUtil.format(pageContext, "back-to-x", HtmlUtil.escape(refererGroupDescriptiveName), false) %>' />
+			<c:if test="<%= controlPanelCategory.equals(PortletCategoryKeys.CURRENT_SITE) || !controlPanelCategory.equals(PortletCategoryKeys.MY) %>">
+				<aui:nav-item anchorCssClass="back-link" href="<%= backURL %>" iconClass="icon-arrow-left" id="backLink" label="<%= StringPool.NBSP %>" title='<%= LanguageUtil.format(pageContext, "back-to-x", HtmlUtil.escape(refererGroupDescriptiveName), false) %>' />
+			</c:if>
+
+			<c:if test="<%= !controlPanelCategory.equals(PortletCategoryKeys.MY) && !controlPanelCategory.equals(PortletCategoryKeys.CURRENT_SITE) %>">
+				<aui:nav-item href="<%= themeDisplay.getURLControlPanel() %>" iconClass="icon-list" selected="<%= Validator.isNull(controlPanelCategory) %>" />
+
+				<%
+				String[] categories = PortletCategoryKeys.ALL;
+
+				for (String curCategory : categories) {
+					String urlControlPanelCategory = HttpUtil.setParameter(themeDisplay.getURLControlPanel(), "controlPanelCategory", curCategory);
+
+					String iconClass = StringPool.BLANK;
+
+					if (curCategory.equals(PortletCategoryKeys.APPS)) {
+						iconClass = "icon-th";
+					}
+					else if (curCategory.equals(PortletCategoryKeys.CONFIGURATION)) {
+						iconClass = "icon-cog";
+					}
+					else if (curCategory.equals(PortletCategoryKeys.SITES)) {
+						iconClass = "icon-globe";
+					}
+					else if (curCategory.equals(PortletCategoryKeys.USERS)) {
+						iconClass = "icon-user";
+					}
+				%>
+
+					<c:if test="<%= _hasPortlets(curCategory, themeDisplay) %>">
+						<aui:nav-item href="<%= urlControlPanelCategory %>" iconClass="<%= iconClass %>" label='<%= "category." + curCategory %>' selected="<%= controlPanelCategory.equals(curCategory) %>" />
+					</c:if>
+
+				<%
+				}
+				%>
+			</c:if>
 		</c:if>
 
 		<c:if test="<%= !group.isControlPanel() && (!group.hasStagingGroup() || group.isStagingGroup()) && (GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.ADD_LAYOUT) || hasLayoutUpdatePermission || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && hasLayoutCustomizePermission)) %>">
@@ -433,3 +471,15 @@ List<LayoutPrototype> layoutPrototypes = LayoutPrototypeServiceUtil.search(compa
 		customizableColumns.get('parentNode').addClass('customizable');
 	}
 </aui:script>
+
+<%!
+private boolean _hasPortlets(String category, ThemeDisplay themeDisplay) throws SystemException {
+	List<Portlet> portlets = PortalUtil.getControlPanelPortlets(category, themeDisplay);
+
+	if (portlets.isEmpty()) {
+		return false;
+	}
+
+	return true;
+}
+%>

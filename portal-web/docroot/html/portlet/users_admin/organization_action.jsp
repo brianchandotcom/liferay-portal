@@ -42,14 +42,18 @@ Group organizationGroup = organization.getGroup();
 
 long organizationGroupId = organizationGroup.getGroupId();
 
+String cssClass = StringPool.BLANK;
+
 boolean view = false;
 
 if (row == null) {
+	cssClass = "nav nav-list unstyled well";
+
 	view = true;
 }
 %>
 
-<liferay-ui:icon-menu showExpanded="<%= view %>" showWhenSingleIcon="<%= view %>">
+<liferay-ui:icon-menu cssClass="<%= cssClass %>" showExpanded="<%= view %>" showWhenSingleIcon="<%= view %>">
 
 	<%
 	boolean hasUpdatePermission = OrganizationPermissionUtil.contains(permissionChecker, organizationId, ActionKeys.UPDATE);

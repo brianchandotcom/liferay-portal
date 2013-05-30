@@ -261,7 +261,12 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 				if (_showExpanded) {
 					jspWriter.write("<ul class=\"lfr-menu-expanded ");
 					jspWriter.write("lfr-menu-list");
-					jspWriter.print(_cssClass);
+
+					if (Validator.isNotNull(_cssClass)) {
+						jspWriter.write(StringPool.SPACE);
+						jspWriter.print(_cssClass);
+					}
+					
 					jspWriter.write("\" id=\"");
 					jspWriter.write(_id);
 					jspWriter.write("\">");

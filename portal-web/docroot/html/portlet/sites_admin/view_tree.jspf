@@ -84,7 +84,7 @@ if ((group != null) && !group.isRoot()) {
 				searchContainer.setEmptyResultsMessage(null);
 			}
 
-			searchContainer.setRowChecker(new RowChecker(renderResponse));
+			searchContainer.setRowChecker(new SiteChecker(renderResponse));
 
 			GroupSearchTerms searchTerms = (GroupSearchTerms)searchContainer.getSearchTerms();
 

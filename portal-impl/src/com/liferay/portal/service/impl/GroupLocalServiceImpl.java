@@ -671,7 +671,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	public Group deleteGroup(Group group)
 		throws PortalException, SystemException {
 
-		if (PortalUtil.isSystemGroup(group.getName())) {
+		if (group.isCompany() || PortalUtil.isSystemGroup(group.getName())) {
 			throw new RequiredGroupException(
 				String.valueOf(group.getGroupId()),
 				RequiredGroupException.SYSTEM_GROUP);

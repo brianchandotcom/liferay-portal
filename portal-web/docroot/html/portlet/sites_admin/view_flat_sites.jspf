@@ -15,7 +15,7 @@
 --%>
 
 <liferay-ui:search-container
-	rowChecker="<%= new RowChecker(renderResponse) %>"
+	rowChecker="<%= new SiteChecker(renderResponse) %>"
 	searchContainer="<%= new GroupSearch(renderRequest, portletURL) %>"
 >
 	<aui:input disabled="<%= true %>" name="sitesRedirect" type="hidden" value="<%= portletURL.toString() %>" />

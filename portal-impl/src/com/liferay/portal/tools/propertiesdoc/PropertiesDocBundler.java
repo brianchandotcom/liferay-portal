@@ -52,7 +52,16 @@ public class PropertiesDocBundler {
 		String propertiesFileDir = GetterUtil.getString(
 			arguments.get("properties.file.dir"));
 
-		File[] files = new File(propertiesFileDir).listFiles();
+		File propertiesFileDirectory = new File(propertiesFileDir);
+
+		if (!propertiesFileDirectory.exists()) {
+			System.out.println(
+				propertiesFileDirectory.getPath() + " not found");
+
+			return;
+		}
+
+		File[] files = propertiesFileDirectory.listFiles();
 
 		List<PropertiesHtmlFile> htmlFiles =
 			new ArrayList<PropertiesHtmlFile>();
@@ -61,6 +70,14 @@ public class PropertiesDocBundler {
 			if (file.getName().endsWith(".properties.html")) {
 				htmlFiles.add(new PropertiesHtmlFile(file.getName()));
 			}
+		}
+
+		if (htmlFiles.isEmpty()) {
+			System.out.println(
+				"No *.properties.html files found in " +
+					propertiesFileDirectory.getPath());
+
+			return;
 		}
 
 		Map<String, Object> context = new HashMap<String, Object>();
@@ -83,6 +100,8 @@ public class PropertiesDocBundler {
 			catch (Exception e) {
 				e.printStackTrace();
 			}
+
+			System.out.println("Writing " + indexHTMLFile.getPath());
 
 			writer.flush();
 		}

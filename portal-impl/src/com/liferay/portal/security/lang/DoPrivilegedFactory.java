@@ -34,7 +34,30 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 public class DoPrivilegedFactory implements BeanPostProcessor {
 
 	public static <T> T wrap(T bean) {
-		return AccessController.doPrivileged(new BeanPrivilegedAction<T>(bean));
+		Class<?> clazz = bean.getClass();
+
+		if (clazz.isPrimitive()) {
+			return bean;
+		}
+
+		Package pkg = clazz.getPackage();
+
+		if (pkg != null) {
+			String packageName = pkg.getName();
+
+			if (packageName.startsWith("java.")) {
+				return bean;
+			}
+		}
+
+		Class<?>[] interfaces = ReflectionUtil.getInterfaces(bean);
+
+		if (interfaces.length <= 0) {
+			return bean;
+		}
+
+		return AccessController.doPrivileged(
+			new BeanPrivilegedAction<T>(bean, interfaces));
 	}
 
 	public DoPrivilegedFactory() {
@@ -105,39 +128,18 @@ public class DoPrivilegedFactory implements BeanPostProcessor {
 	private static class BeanPrivilegedAction <T>
 		implements PrivilegedAction<T> {
 
-		public BeanPrivilegedAction(T bean) {
+		public BeanPrivilegedAction(T bean, Class<?>[] interfaces) {
 			_bean = bean;
+			_interfaces = interfaces;
 		}
 
 		@Override
 		public T run() {
-			Class<?> clazz = _bean.getClass();
-
-			if (clazz.isPrimitive()) {
-				return _bean;
-			}
-
-			Package pkg = clazz.getPackage();
-
-			if (pkg != null) {
-				String packageName = pkg.getName();
-
-				if (packageName.startsWith("java.")) {
-					return _bean;
-				}
-			}
-
-			Class<?>[] interfaces = ReflectionUtil.getInterfaces(_bean);
-
-			if (interfaces.length <= 0) {
-				return _bean;
-			}
-
-			interfaces = ArrayUtil.append(interfaces, DoPrivilegedBean.class);
+			_interfaces = ArrayUtil.append(_interfaces, DoPrivilegedBean.class);
 
 			try {
 				return (T)ProxyUtil.newProxyInstance(
-					ClassLoaderUtil.getPortalClassLoader(), interfaces,
+					ClassLoaderUtil.getPortalClassLoader(), _interfaces,
 					new DoPrivilegedHandler(_bean));
 			}
 			catch (Exception e) {
@@ -150,6 +152,7 @@ public class DoPrivilegedFactory implements BeanPostProcessor {
 		}
 
 		private T _bean;
+		private Class<?>[] _interfaces;
 
 	}
 

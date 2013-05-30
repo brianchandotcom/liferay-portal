@@ -136,6 +136,8 @@ public class Transformer {
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
 		try {
+			prepareTemplate(template, themeDisplay);
+
 			if (contextObjects != null) {
 				for (String key : contextObjects.keySet()) {
 					template.put(key, contextObjects.get(key));
@@ -635,6 +637,16 @@ public class Transformer {
 		}
 
 		template.processTemplate(unsyncStringWriter);
+	}
+
+	protected void prepareTemplate(Template template, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		if (themeDisplay == null) {
+			return;
+		}
+
+		template.prepare(themeDisplay.getRequest());
 	}
 
 	protected String stripCDATA(String s) {

@@ -32,18 +32,18 @@ import java.util.Map;
  * @author Jesse Rao
  * @author James Hinkey
  */
-public class PropertiesDocBundler {
+public class PropertiesDocIndexBuilder {
 
 	public static void main(String[] args) {
 		try {
-			new PropertiesDocBundler (args);
+			new PropertiesDocIndexBuilder(args);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public PropertiesDocBundler(String[] args) {
+	public PropertiesDocIndexBuilder(String[] args) {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 
 		String lpVersion = GetterUtil.getString(arguments.get("lp.version"));

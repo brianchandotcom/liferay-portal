@@ -120,8 +120,7 @@ public class BreadcrumbTag extends IncludeTag {
 			sb.append(layoutSetFriendlyURL);
 			sb.append("\">");
 			sb.append(HtmlUtil.escape(account.getName()));
-			sb.append("</a><span class=\"divider\">/</span>");
-			sb.append("</li>");
+			sb.append("</a><span class=\"divider\">/</span></li>");
 		}
 	}
 
@@ -131,7 +130,7 @@ public class BreadcrumbTag extends IncludeTag {
 		throws Exception {
 
 		if (selLayout.getParentLayoutId() !=
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
 
 			Layout parentLayout = LayoutLocalServiceUtil.getParentLayout(
 				selLayout);
@@ -176,8 +175,7 @@ public class BreadcrumbTag extends IncludeTag {
 
 		sb.append(StringPool.GREATER_THAN);
 		sb.append(HtmlUtil.escape(layoutName));
-		sb.append("</a><span class=\"divider\">/</span>");
-		sb.append("</li>");
+		sb.append("</a><span class=\"divider\">/</span></li>");
 	}
 
 	protected void buildParentGroupsBreadcrumb(
@@ -246,8 +244,7 @@ public class BreadcrumbTag extends IncludeTag {
 			sb.append(layoutSetFriendlyURL);
 			sb.append("\">");
 			sb.append(HtmlUtil.escape(group.getDescriptiveName()));
-			sb.append("</a><span class=\"divider\">/</span>");
-			sb.append("</li>");
+			sb.append("</a><span class=\"divider\">/</span></li>");
 		}
 	}
 
@@ -305,28 +302,25 @@ public class BreadcrumbTag extends IncludeTag {
 
 			sb.append("<li>");
 
-			boolean showAnchor = true;
+			if (index < (breadcrumbEntriesSize - 1)) {
+				if (Validator.isNotNull(breadcrumbURL)) {
+					sb.append("<a href=\"");
+					sb.append(HtmlUtil.escape(breadcrumbURL));
+					sb.append("\"");
+					sb.append(AUIUtil.buildData(data));
+					sb.append(">");
+				}
 
-			if (index >= (breadcrumbEntriesSize - 1)) {
-				showAnchor = false;
-			}
+				sb.append(HtmlUtil.escape(breadcrumbTitle));
 
-			if (showAnchor && Validator.isNotNull(breadcrumbURL)) {
-				sb.append("<a href=\"");
-				sb.append(HtmlUtil.escape(breadcrumbURL));
-				sb.append("\"");
-				sb.append(AUIUtil.buildData(data));
-				sb.append(">");
-			}
+				if (Validator.isNotNull(breadcrumbURL)) {
+					sb.append("</a>");
+				}
 
-			sb.append(HtmlUtil.escape(breadcrumbTitle));
-
-			if (showAnchor && Validator.isNotNull(breadcrumbURL)) {
-				sb.append("</a>");
-			}
-
-			if (showAnchor) {
 				sb.append("<span class=\"divider\">/</span>");
+			}
+			else {
+				sb.append(HtmlUtil.escape(breadcrumbTitle));
 			}
 
 			sb.append("</li>");
@@ -366,7 +360,7 @@ public class BreadcrumbTag extends IncludeTag {
 				}
 
 				if (themeDisplay.getRefererPlid() !=
-					LayoutConstants.DEFAULT_PLID) {
+						LayoutConstants.DEFAULT_PLID) {
 
 					portletURL.setParameter(
 						"refererPlid",
@@ -425,25 +419,18 @@ public class BreadcrumbTag extends IncludeTag {
 
 	protected String insertClassOption(String breadcrumbString) {
 		if (Validator.isNotNull(breadcrumbString)) {
-			String keyString = "<li";
-
-			int keyLength = keyString.length();
-
-			int x = breadcrumbString.indexOf(keyString);
-			int y = breadcrumbString.lastIndexOf(keyString);
-
-			int xIndex = x + keyLength;
-			int yIndex = y + keyLength;
+			int x = breadcrumbString.indexOf("<li") + 3;
+			int y = breadcrumbString.lastIndexOf("<li") + 3;
 
 			if (x == y) {
 				breadcrumbString = StringUtil.insert(
-					breadcrumbString, " class=\"active only\"", xIndex);
+					breadcrumbString, " class=\"active only\"", x);
 			}
 			else {
 				breadcrumbString = StringUtil.insert(
-					breadcrumbString, " class=\"active last\"", yIndex);
+					breadcrumbString, " class=\"active last\"", y);
 				breadcrumbString = StringUtil.insert(
-					breadcrumbString, " class=\"first\"", xIndex);
+					breadcrumbString, " class=\"first\"", x);
 			}
 		}
 

@@ -306,8 +306,8 @@ public class LayoutStagedModelDataHandler
 					PortletDataHandlerKeys.
 						LAYOUTS_IMPORT_MODE_CREATED_FROM_PROTOTYPE)) {
 
-			existingLayout = LayoutUtil.fetchByG_P_SPLU(
-				groupId, privateLayout, layout.getUuid());
+			existingLayout = LayoutUtil.fetchByUUID_G_P(
+				layout.getUuid(), groupId, privateLayout);
 
 			if (SitesUtil.isLayoutModifiedSinceLastMerge(existingLayout)) {
 				newLayoutsMap.put(oldLayoutId, existingLayout);
@@ -1040,6 +1040,8 @@ public class LayoutStagedModelDataHandler
 			(LayoutTypePortlet)importedLayout.getLayoutType();
 
 		List<String> importedPortletIds = importedLayoutType.getPortletIds();
+
+		layout.setGroupId(importedLayout.getGroupId());
 
 		LayoutTypePortlet layoutType =
 			(LayoutTypePortlet)layout.getLayoutType();

@@ -435,6 +435,15 @@ public class PortalSecurityManagerImpl extends SecurityManager
 
 		@Override
 		public Object getBean(final Object bean, ClassLoader classLoader) {
+			Class<?> beanClass = bean.getClass();
+
+			if (ProxyUtil.isProxyClass(beanClass) &&
+				(ProxyUtil.getInvocationHandler(bean) instanceof
+					PACLInvocationHandler)) {
+
+				return bean;
+			}
+
 			if (classLoader == ClassLoaderUtil.getPortalClassLoader()) {
 				Class<?> callerClass = Reflection.getCallerClass(5);
 

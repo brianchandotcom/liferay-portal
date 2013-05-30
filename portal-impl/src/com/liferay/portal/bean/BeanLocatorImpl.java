@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.security.lang.DoPrivilegedBean;
 import com.liferay.portal.service.ResourceService;
 import com.liferay.portal.service.persistence.ResourcePersistence;
 
@@ -172,6 +173,10 @@ public class BeanLocatorImpl implements BeanLocator {
 		}
 
 		if (bean == null) {
+			return bean;
+		}
+
+		if (bean instanceof DoPrivilegedBean) {
 			return bean;
 		}
 

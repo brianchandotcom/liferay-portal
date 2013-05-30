@@ -1,1 +1,1 @@
-insert into Counter values ('com.liferay.counter.model.Counter', 10000);
+insert into Counter (name, currentId) values ('com.liferay.counter.model.Counter', 10000);

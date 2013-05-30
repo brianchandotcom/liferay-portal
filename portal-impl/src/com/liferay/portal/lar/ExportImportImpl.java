@@ -257,6 +257,21 @@ public class ExportImportImpl implements ExportImport {
 
 		saxParser.parse(new InputSource(is));
 
+		is = portletDataContext.getZipEntryAsInputStream("/manifest.xml");
+
+		Document document = SAXReaderUtil.read(is);
+
+		Element rootElement = document.getRootElement();
+		Element headerElement = rootElement.element("header");
+
+		String dateRFC822 = headerElement.attributeValue("export-date");
+
+		Date exportDate = GetterUtil.getDate(
+			dateRFC822,
+			DateFormatFactoryUtil.getSimpleDateFormat(Time.RFC822_FORMAT));
+
+		manifestSummary.setExportDate(exportDate);
+
 		return manifestSummary;
 	}
 

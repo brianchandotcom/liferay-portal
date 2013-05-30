@@ -920,12 +920,23 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 
 	@Override
 	public void runtime(
-			String portletName, String queryString, String defaultPreferences)
+		String portletName, String queryString, String defaultPreferences)
 		throws Exception {
 
 		RuntimeTag.doTag(
-			portletName, queryString, defaultPreferences, null, _request,
-			_response);
+			portletName, queryString, defaultPreferences, true,  null,
+			_request, _response);
+	}
+
+	@Override
+	public void runtime(
+			String portletName, String queryString, String defaultPreferences,
+			boolean wrapped)
+		throws Exception {
+
+		RuntimeTag.doTag(
+			portletName, queryString, defaultPreferences, wrapped,  null,
+			_request, _response);
 	}
 
 	@Override

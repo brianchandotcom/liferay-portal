@@ -65,13 +65,25 @@ public class RuntimeTag extends TagSupport {
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		doTag(portletName, queryString, null, pageContext, request, response);
+		doTag(
+			portletName, queryString, null, pageContext, request, response);
 	}
 
 	public static void doTag(
 			String portletName, String queryString, String defaultPreferences,
 			PageContext pageContext, HttpServletRequest request,
 			HttpServletResponse response)
+		throws Exception {
+
+		doTag(
+			portletName, queryString, defaultPreferences, true, pageContext,
+			request, response);
+	}
+
+	public static void doTag(
+			String portletName, String queryString, String defaultPreferences,
+			boolean wrapped, PageContext pageContext,
+			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
 		if (pageContext != null) {
@@ -142,6 +154,8 @@ public class RuntimeTag extends TagSupport {
 				writeHeaderPaths(response, jsonObject);
 			}
 
+			request.setAttribute("wrapped", wrapped);
+
 			PortletContainerUtil.render(request, response, portlet);
 
 			if (jsonObject != null) {
@@ -169,8 +183,8 @@ public class RuntimeTag extends TagSupport {
 				(HttpServletResponse)pageContext.getResponse();
 
 			doTag(
-				_portletName, _queryString, _defaultPreferences, pageContext,
-				request, response);
+				_portletName, _queryString, _defaultPreferences,
+				_wrapped, pageContext, request, response);
 
 			return EVAL_PAGE;
 		}
@@ -191,6 +205,10 @@ public class RuntimeTag extends TagSupport {
 
 	public void setQueryString(String queryString) {
 		_queryString = queryString;
+	}
+
+	public void setWrapped(boolean wrapped) {
+		_wrapped = wrapped;
 	}
 
 	/**
@@ -282,5 +300,6 @@ public class RuntimeTag extends TagSupport {
 	private String _defaultPreferences;
 	private String _portletName;
 	private String _queryString;
+	private boolean _wrapped;
 
 }

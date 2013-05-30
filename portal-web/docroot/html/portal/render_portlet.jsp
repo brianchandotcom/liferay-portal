@@ -763,6 +763,10 @@ if ((layout.isTypePanel() || layout.isTypeControlPanel()) && !portletDisplay.get
 }
 %>
 
+<%
+Boolean wrappped = GetterUtil.getBoolean(request.getAttribute("wrapped"), true);
+%>
+
 <c:if test="<%= !themeDisplay.isFacebook() && !themeDisplay.isStateExclusive() && !themeDisplay.isWapTheme() %>">
 
 	<%
@@ -820,8 +824,10 @@ if ((layout.isTypePanel() || layout.isTypeControlPanel()) && !portletDisplay.get
 	}
 	%>
 
-	<div class="<%= cssClasses %>" id="p_p_id<%= HtmlUtil.escapeAttribute(renderResponseImpl.getNamespace()) %>" <%= freeformStyles %>>
-		<span id="p_<%= HtmlUtil.escapeAttribute(portletId) %>"></span>
+	<c:if test="<%= wrappped %>">
+		<div class="<%= cssClasses %>" id="p_p_id<%= HtmlUtil.escapeAttribute(renderResponseImpl.getNamespace()) %>" <%= freeformStyles %>>
+			<span id="p_<%= HtmlUtil.escapeAttribute(portletId) %>"></span>
+	</c:if>
 </c:if>
 
 <c:choose>
@@ -974,7 +980,10 @@ else {
 				}
 			);
 		</aui:script>
-	</div>
+
+	<c:if test="<%= wrappped %>">
+		</div>
+	</c:if>
 </c:if>
 
 <%

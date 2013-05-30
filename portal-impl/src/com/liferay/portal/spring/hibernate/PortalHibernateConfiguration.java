@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
 import com.liferay.portal.kernel.util.Converter;
 import com.liferay.portal.kernel.util.PreloadClassLoader;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -128,7 +129,15 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 				}
 			}
 
-			configuration.setProperties(PropsUtil.getProperties());
+			Properties properties = PropsUtil.getProperties();
+
+			if (SPIUtil.isSPI()) {
+				properties.put("hibernate.cache.use_query_cache", "false");
+				properties.put(
+					"hibernate.cache.use_second_level_cache", "false");
+			}
+
+			configuration.setProperties(properties);
 
 			if (Validator.isNull(PropsValues.HIBERNATE_DIALECT)) {
 				Dialect dialect = determineDialect();

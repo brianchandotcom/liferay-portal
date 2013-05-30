@@ -16,8 +16,6 @@ package com.liferay.portal.tools.propertiesdoc;
 
 import com.liferay.portal.freemarker.FreeMarkerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ArgumentsUtil;
 
 import java.io.File;
@@ -108,31 +106,6 @@ public class PropertiesDocBundler {
 		catch (IOException ioe) {
 			ioe.printStackTrace();
 		}
-	}
-
-	/**
-	 * @author James Hinkey
-	 */
-	public class PropertiesHtmlFile {
-
-		public PropertiesHtmlFile(String fileName) {
-			_fileName = fileName;
-
-			_propertiesFileName = StringUtil.replaceLast(
-				_fileName, ".html", StringPool.BLANK);
-		}
-
-		public String getFileName() {
-			return _fileName;
-		}
-
-		public String getPropertiesFileName() {
-			return _propertiesFileName;
-		}
-
-		private final String _fileName;
-		private final String _propertiesFileName;
-
 	}
 
 }

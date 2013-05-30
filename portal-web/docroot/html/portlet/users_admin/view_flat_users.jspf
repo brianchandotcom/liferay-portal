@@ -93,6 +93,20 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 	}
 	%>
 
+	<c:if test="<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_USERS) %>">
+		<aui:nav-bar>
+			<liferay-util:include page="/html/portlet/users_admin/toolbar.jsp" />
+
+			<c:if test="<%= userOrganization == null %>">
+				<aui:nav-bar-search cssClass="pull-right">
+					<liferay-ui:search-form
+						page="/html/portlet/users_admin/user_search.jsp"
+					/>
+				</aui:nav-bar-search>
+			</c:if>
+		</aui:nav-bar>
+	</c:if>
+
 	<c:if test="<%= userOrganization != null %>">
 		<aui:input name="<%= UserDisplayTerms.ORGANIZATION_ID %>" type="hidden" value="<%= userOrganization.getOrganizationId() %>" />
 
@@ -142,12 +156,6 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "view-users"), currentURL);
 		%>
 
-	</c:if>
-
-	<c:if test="<%= (usersListView.equals(UserConstants.LIST_VIEW_FLAT_USERS)) && (userOrganization == null) %>">
-		<liferay-ui:search-form
-			page="/html/portlet/users_admin/user_search.jsp"
-		/>
 	</c:if>
 
 	<%

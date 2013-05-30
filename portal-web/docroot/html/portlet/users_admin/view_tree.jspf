@@ -57,6 +57,24 @@ if (filterManageableOrganizations) {
 }
 %>
 
+<c:if test="<%= portletName.equals(PortletKeys.USERS_ADMIN) && usersListView.equals(UserConstants.LIST_VIEW_TREE) %>">
+	<aui:nav-bar>
+		<liferay-util:include page="/html/portlet/users_admin/toolbar.jsp" />
+
+		<aui:nav-bar-search cssClass="pull-right">
+			<div class="form-search">
+				<div class="input-append">
+					<input class="search-query span9" name="keywords" type="text" />
+
+					<button class="btn" onClick='<%= "javascript:" + renderResponse.getNamespace() + "search();" %>' type="submit">
+						<liferay-ui:message key="search" />
+					</button>
+				</div>
+			</div>
+		</aui:nav-bar-search>
+	</aui:nav-bar>
+</c:if>
+
 <c:choose>
 	<c:when test="<%= showList %>">
 
@@ -65,43 +83,34 @@ if (filterManageableOrganizations) {
 		%>
 
 		<aui:row>
-			<c:choose>
-				<c:when test="<%= (organization != null) && (organization.getOrganizationId() != OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) %>">
+			<c:if test="<%= (organization != null) && (organization.getOrganizationId() != OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) %>">
 
-					<%
-					long parentOrganizationId = 0;
-					String parentOrganizationName = LanguageUtil.get(pageContext, "users-and-organizations-home");
+				<%
+				long parentOrganizationId = 0;
+				String parentOrganizationName = LanguageUtil.get(pageContext, "users-and-organizations-home");
 
-					if (!organization.isRoot()) {
-						Organization parentOrganization = organization.getParentOrganization();
+				if (!organization.isRoot()) {
+					Organization parentOrganization = organization.getParentOrganization();
 
-						if (OrganizationPermissionUtil.contains(permissionChecker, parentOrganization, ActionKeys.VIEW)) {
-							parentOrganizationId = parentOrganization.getOrganizationId();
-							parentOrganizationName = parentOrganization.getName();
-						}
+					if (OrganizationPermissionUtil.contains(permissionChecker, parentOrganization, ActionKeys.VIEW)) {
+						parentOrganizationId = parentOrganization.getOrganizationId();
+						parentOrganizationName = parentOrganization.getName();
 					}
-					%>
+				}
+				%>
 
-					<portlet:renderURL var="headerBackURL">
-						<portlet:param name="struts_action" value="/organization/view" />
-						<portlet:param name="organizationId" value="<%= String.valueOf(parentOrganizationId) %>" />
-					</portlet:renderURL>
+				<portlet:renderURL var="headerBackURL">
+					<portlet:param name="struts_action" value="/organization/view" />
+					<portlet:param name="organizationId" value="<%= String.valueOf(parentOrganizationId) %>" />
+				</portlet:renderURL>
 
-					<liferay-ui:header
-						backLabel="<%= parentOrganizationName %>"
-						backURL="<%= headerBackURL.toString() %>"
-						localizeTitle="<%= false %>"
-						title="<%= organization.getName() %>"
-					/>
-				</c:when>
-				<c:otherwise>
-					<span class="form-search">
-						<aui:input inlineField="<%= true %>" label="" name="keywords" size="30" title="search-users-and-organizations" type="text" />
-
-						<aui:button onClick='<%= "javascript:" + renderResponse.getNamespace() + "search();" %>' value="search" />
-					</span>
-				</c:otherwise>
-			</c:choose>
+				<liferay-ui:header
+					backLabel="<%= parentOrganizationName %>"
+					backURL="<%= headerBackURL.toString() %>"
+					localizeTitle="<%= false %>"
+					title="<%= organization.getName() %>"
+				/>
+			</c:if>
 
 			<aui:col cssClass="lfr-asset-column lfr-asset-column-details" width="<%= (organization != null) ? 75 : 100 %>">
 				<liferay-ui:panel-container extended="<%= false %>" id="usersAdminOrganizationPanelContainer" persistState="<%= true %>">
@@ -330,7 +339,7 @@ if (filterManageableOrganizations) {
 											<c:if test="<%= !results.isEmpty() %>">
 												<div class="separator"><!-- --></div>
 
-												<aui:button onClick='<%= renderResponse.getNamespace() + "deleteOrganizations();" %>' value="delete" />
+												<aui:button cssClass="delete-organizations" onClick='<%= renderResponse.getNamespace() + "deleteOrganizations();" %>' value="delete" />
 											</c:if>
 										</liferay-ui:search-container-results>
 									</c:otherwise>

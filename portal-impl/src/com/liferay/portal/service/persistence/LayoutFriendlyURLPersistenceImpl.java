@@ -4694,6 +4694,10 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 		layoutFriendlyURLImpl.setLayoutFriendlyURLId(layoutFriendlyURL.getLayoutFriendlyURLId());
 		layoutFriendlyURLImpl.setGroupId(layoutFriendlyURL.getGroupId());
 		layoutFriendlyURLImpl.setCompanyId(layoutFriendlyURL.getCompanyId());
+		layoutFriendlyURLImpl.setUserId(layoutFriendlyURL.getUserId());
+		layoutFriendlyURLImpl.setUserName(layoutFriendlyURL.getUserName());
+		layoutFriendlyURLImpl.setCreateDate(layoutFriendlyURL.getCreateDate());
+		layoutFriendlyURLImpl.setModifiedDate(layoutFriendlyURL.getModifiedDate());
 		layoutFriendlyURLImpl.setPlid(layoutFriendlyURL.getPlid());
 		layoutFriendlyURLImpl.setPrivateLayout(layoutFriendlyURL.isPrivateLayout());
 		layoutFriendlyURLImpl.setFriendlyURL(layoutFriendlyURL.getFriendlyURL());

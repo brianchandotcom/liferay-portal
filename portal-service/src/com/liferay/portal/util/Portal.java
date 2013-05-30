@@ -240,6 +240,11 @@ public interface Portal {
 	 */
 	public String generateRandomKey(HttpServletRequest request, String input);
 
+	public Object[] getActualLayout(
+			long groupId, boolean privateLayout, String friendlyURL,
+			Map<String, String[]> params, Map<String, Object> requestContext)
+		throws PortalException, SystemException;
+
 	public String getActualURL(
 			long groupId, boolean privateLayout, String mainPath,
 			String friendlyURL, Map<String, String[]> params,
@@ -701,13 +706,25 @@ public interface Portal {
 	public HttpServletResponse getHttpServletResponse(
 		PortletResponse portletResponse);
 
+	public String getI18nPathLanguageId(
+		Locale locale, String defaultI18nPathLanguageId);
+
 	public String getJournalArticleActualURL(
 			long groupId, boolean privateLayout, String mainPath,
 			String friendlyURL, Map<String, String[]> params,
 			Map<String, Object> requestContext)
 		throws PortalException, SystemException;
 
+	public Layout getJournalArticleLayout(
+			long groupId, boolean privateLayout, String friendlyURL)
+		throws PortalException, SystemException;
+
 	public String getJsSafePortletId(String portletId);
+
+	public Object[] getLayout(
+			long groupId, boolean privateLayout, String friendlyURL,
+			Map<String, String[]> params, Map<String, Object> requestContext)
+		throws PortalException, SystemException;
 
 	public String getLayoutActualURL(Layout layout);
 
@@ -785,6 +802,10 @@ public interface Portal {
 		boolean initialize);
 
 	public Locale getLocale(RenderRequest renderRequest);
+
+	public String getLocalizedFriendlyURL(
+			HttpServletRequest request, Layout layout, Locale locale)
+		throws Exception;
 
 	public String getMailId(String mx, String popPortletPrefix, Object... ids);
 
@@ -1083,6 +1104,11 @@ public interface Portal {
 		throws SystemException;
 
 	public long getValidUserId(long companyId, long userId)
+		throws PortalException, SystemException;
+
+	public Object[] getVirtualLayout(
+			boolean privateLayout, String friendlyURL,
+			Map<String, String[]> params, Map<String, Object> requestContext)
 		throws PortalException, SystemException;
 
 	public String getVirtualLayoutActualURL(

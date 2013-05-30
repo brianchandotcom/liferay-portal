@@ -46,6 +46,7 @@ import com.liferay.portal.model.Image;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutBranch;
 import com.liferay.portal.model.LayoutConstants;
+import com.liferay.portal.model.LayoutFriendlyURL;
 import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.LayoutSet;
@@ -54,6 +55,7 @@ import com.liferay.portal.model.LayoutTemplate;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.LayoutTypePortletConstants;
 import com.liferay.portal.service.ImageLocalServiceUtil;
+import com.liferay.portal.service.LayoutFriendlyURLLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
@@ -176,6 +178,19 @@ public class LayoutStagedModelDataHandler
 				layoutElement.addAttribute(
 					"parent-layout-uuid", parentLayout.getUuid());
 			}
+		}
+
+		List<LayoutFriendlyURL> layoutFriendlyURLs =
+			LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLs(
+				layout.getPlid());
+
+		for (LayoutFriendlyURL layoutFriendlyURL : layoutFriendlyURLs) {
+			StagedModelDataHandlerUtil.exportStagedModel(
+				portletDataContext, layoutFriendlyURL);
+
+			portletDataContext.addReferenceElement(
+				layout, layoutElement, layoutFriendlyURL,
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY, false);
 		}
 
 		portletDataContext.setPlid(layout.getPlid());
@@ -510,6 +525,8 @@ public class LayoutStagedModelDataHandler
 
 		portletDataContext.importClassedModel(
 			layout, importedLayout, LayoutPortletDataHandler.NAMESPACE);
+
+		importLayoutFriendlyURLs(portletDataContext, layout);
 	}
 
 	protected void exportJournalArticle(
@@ -749,6 +766,34 @@ public class LayoutStagedModelDataHandler
 		JournalContentSearchLocalServiceUtil.updateContentSearch(
 			portletDataContext.getScopeGroupId(), layout.isPrivateLayout(),
 			layout.getLayoutId(), StringPool.BLANK, articleId, true);
+	}
+
+	protected void importLayoutFriendlyURL(
+			PortletDataContext portletDataContext,
+			Element layoutFriendlyURLElement)
+		throws Exception {
+
+		String path = layoutFriendlyURLElement.attributeValue("path");
+
+		LayoutFriendlyURL layoutFriendlyURL =
+			(LayoutFriendlyURL)portletDataContext.getZipEntryAsObject(path);
+
+		StagedModelDataHandlerUtil.importStagedModel(
+			portletDataContext, layoutFriendlyURL);
+	}
+
+	protected void importLayoutFriendlyURLs(
+			PortletDataContext portletDataContext, Layout layout)
+		throws Exception {
+
+		List<Element> layoutFriendlyURLElements =
+			portletDataContext.getReferenceDataElements(
+				layout, LayoutFriendlyURL.class);
+
+		for (Element layoutFriendlyURLElement : layoutFriendlyURLElements) {
+			importLayoutFriendlyURL(
+				portletDataContext, layoutFriendlyURLElement);
+		}
 	}
 
 	protected void importLayoutIconImage(

@@ -1750,6 +1750,11 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	}
 
 	@Override
+	public java.lang.String getFriendlyURL(java.util.Locale locale) {
+		return _layout.getFriendlyURL(locale);
+	}
+
+	@Override
 	public java.util.Map<java.util.Locale, java.lang.String> getFriendlyURLMap()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _layout.getFriendlyURLMap();

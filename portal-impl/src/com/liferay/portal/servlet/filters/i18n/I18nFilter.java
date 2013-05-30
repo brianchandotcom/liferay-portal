@@ -156,19 +156,8 @@ public class I18nFilter extends BasePortalFilter {
 			return null;
 		}
 
-		String i18nPathLanguageId = i18nLanguageId;
-
-		if (!LanguageUtil.isDuplicateLanguageCode(locale.getLanguage())) {
-			i18nPathLanguageId = locale.getLanguage();
-		}
-		else {
-			Locale priorityLocale = LanguageUtil.getLocale(
-				locale.getLanguage());
-
-			if (locale.equals(priorityLocale)) {
-				i18nPathLanguageId = locale.getLanguage();
-			}
-		}
+		String i18nPathLanguageId = PortalUtil.getI18nPathLanguageId(
+			locale, i18nLanguageId);
 
 		String i18nPath = StringPool.SLASH.concat(i18nPathLanguageId);
 

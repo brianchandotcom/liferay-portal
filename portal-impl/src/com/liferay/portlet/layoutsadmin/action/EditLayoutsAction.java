@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
@@ -104,7 +103,6 @@ import com.liferay.portlet.sites.util.SitesUtil;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -169,9 +167,9 @@ public class EditLayoutsAction extends PortletAction {
 				oldFriendlyURL = (String)returnValue[1];
 
 				redirect = updateCloseRedirect(
-					redirect, null, layout, oldFriendlyURL);
+					redirect, null, layout, oldFriendlyURL, themeDisplay);
 				closeRedirect = updateCloseRedirect(
-					closeRedirect, null, layout, oldFriendlyURL);
+					closeRedirect, null, layout, oldFriendlyURL, themeDisplay);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				long plid = ParamUtil.getLong(actionRequest, "plid");
@@ -197,7 +195,7 @@ public class EditLayoutsAction extends PortletAction {
 				long newRefererPlid = (Long)returnValue[2];
 
 				redirect = updateCloseRedirect(
-					redirect, group, null, oldFriendlyURL);
+					redirect, group, null, oldFriendlyURL, themeDisplay);
 
 				long refererPlid = themeDisplay.getRefererPlid();
 
@@ -207,7 +205,7 @@ public class EditLayoutsAction extends PortletAction {
 				}
 
 				closeRedirect = updateCloseRedirect(
-					closeRedirect, group, null, oldFriendlyURL);
+					closeRedirect, group, null, oldFriendlyURL, themeDisplay);
 			}
 			else if (cmd.equals("copy_from_live")) {
 				StagingUtil.copyFromLive(actionRequest);
@@ -821,7 +819,7 @@ public class EditLayoutsAction extends PortletAction {
 
 	protected String updateCloseRedirect(
 		String closeRedirect, Group group, Layout layout,
-		String oldLayoutFriendlyURL) {
+		String oldLayoutFriendlyURL, ThemeDisplay themeDisplay) {
 
 		if (Validator.isNull(closeRedirect) ||
 			Validator.isNull(oldLayoutFriendlyURL)) {
@@ -831,7 +829,7 @@ public class EditLayoutsAction extends PortletAction {
 
 		if (layout != null) {
 			String oldPath = oldLayoutFriendlyURL;
-			String newPath = layout.getFriendlyURL();
+			String newPath = layout.getFriendlyURL(themeDisplay.getLocale());
 
 			return PortalUtil.updateRedirect(closeRedirect, oldPath, newPath);
 		}
@@ -896,13 +894,8 @@ public class EditLayoutsAction extends PortletAction {
 			actionRequest, "robots");
 		String type = ParamUtil.getString(uploadPortletRequest, "type");
 		boolean hidden = ParamUtil.getBoolean(uploadPortletRequest, "hidden");
-		String friendlyURL = ParamUtil.getString(
-			uploadPortletRequest, "friendlyURL");
-
-		Map<Locale, String> friendlyURLMap = new HashMap<Locale, String>();
-
-		friendlyURLMap.put(LocaleUtil.getDefault(), friendlyURL);
-
+		Map<Locale, String> friendlyURLMap =
+			LocalizationUtil.getLocalizationMap(actionRequest, "friendlyURL");
 		boolean iconImage = ParamUtil.getBoolean(
 			uploadPortletRequest, "iconImage");
 		byte[] iconBytes = getIconBytes(uploadPortletRequest, "iconFileName");
@@ -986,7 +979,7 @@ public class EditLayoutsAction extends PortletAction {
 			layout = LayoutLocalServiceUtil.getLayout(
 				groupId, privateLayout, layoutId);
 
-			oldFriendlyURL = layout.getFriendlyURL();
+			oldFriendlyURL = layout.getFriendlyURL(themeDisplay.getLocale());
 
 			layout = LayoutServiceUtil.updateLayout(
 				groupId, privateLayout, layoutId, layout.getParentLayoutId(),
@@ -996,7 +989,9 @@ public class EditLayoutsAction extends PortletAction {
 
 			layoutTypeSettingsProperties = layout.getTypeSettingsProperties();
 
-			if (oldFriendlyURL.equals(layout.getFriendlyURL())) {
+			if (oldFriendlyURL.equals(
+					layout.getFriendlyURL(themeDisplay.getLocale()))) {
+
 				oldFriendlyURL = StringPool.BLANK;
 			}
 

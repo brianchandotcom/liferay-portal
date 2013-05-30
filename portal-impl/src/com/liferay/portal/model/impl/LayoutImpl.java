@@ -274,6 +274,25 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	@Override
+	public String getFriendlyURL(Locale locale) {
+		Layout layout = this;
+
+		String friendlyURL = layout.getFriendlyURL();
+
+		try {
+			LayoutFriendlyURL layoutFriendlyURL =
+				LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURL(
+					layout.getPlid(), LocaleUtil.toLanguageId(locale));
+
+			friendlyURL = layoutFriendlyURL.getFriendlyURL();
+		}
+		catch (Exception e) {
+		}
+
+		return friendlyURL;
+	}
+
+	@Override
 	public Map<Locale, String> getFriendlyURLMap() throws SystemException {
 		Map<Locale, String> friendlyURLMap = new HashMap<Locale, String>();
 

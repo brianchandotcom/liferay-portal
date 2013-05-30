@@ -25,6 +25,10 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutWrapper;
 import com.liferay.portal.model.VirtualLayoutConstants;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.WebKeys;
+
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -47,6 +51,11 @@ public class VirtualLayout extends LayoutWrapper {
 
 	@Override
 	public String getFriendlyURL() {
+		return getFriendlyURL(null);
+	}
+
+	@Override
+	public String getFriendlyURL(Locale locale) {
 		StringBundler sb = new StringBundler(4);
 
 		sb.append(VirtualLayoutConstants.CANONICAL_URL_SEPARATOR);
@@ -60,7 +69,12 @@ public class VirtualLayout extends LayoutWrapper {
 			_log.error(e, e);
 		}
 
-		sb.append(_sourceLayout.getFriendlyURL());
+		if (locale == null) {
+			sb.append(_sourceLayout.getFriendlyURL());
+		}
+		else {
+			sb.append(_sourceLayout.getFriendlyURL(locale));
+		}
 
 		return sb.toString();
 	}
@@ -94,7 +108,10 @@ public class VirtualLayout extends LayoutWrapper {
 
 		String layoutURL = _sourceLayout.getRegularURL(request);
 
-		return injectVirtualGroupURL(layoutURL);
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return injectVirtualGroupURL(layoutURL, themeDisplay.getLocale());
 	}
 
 	@Override
@@ -103,7 +120,10 @@ public class VirtualLayout extends LayoutWrapper {
 
 		String layoutURL = _sourceLayout.getResetLayoutURL(request);
 
-		return injectVirtualGroupURL(layoutURL);
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return injectVirtualGroupURL(layoutURL, themeDisplay.getLocale());
 	}
 
 	@Override
@@ -112,7 +132,10 @@ public class VirtualLayout extends LayoutWrapper {
 
 		String layoutURL = _sourceLayout.getResetMaxStateURL(request);
 
-		return injectVirtualGroupURL(layoutURL);
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return injectVirtualGroupURL(layoutURL, themeDisplay.getLocale());
 	}
 
 	public long getSourceGroupId() {
@@ -127,7 +150,7 @@ public class VirtualLayout extends LayoutWrapper {
 		return _targetGroup.getGroupId();
 	}
 
-	protected String injectVirtualGroupURL(String layoutURL) {
+	protected String injectVirtualGroupURL(String layoutURL, Locale locale) {
 		if (_sourceLayout.isTypeURL()) {
 			return layoutURL;
 		}
@@ -141,7 +164,7 @@ public class VirtualLayout extends LayoutWrapper {
 
 			sb.append(layoutURL.substring(0, pos));
 			sb.append(_targetGroup.getFriendlyURL());
-			sb.append(getFriendlyURL());
+			sb.append(getFriendlyURL(locale));
 
 			pos = layoutURL.indexOf(StringPool.QUESTION);
 

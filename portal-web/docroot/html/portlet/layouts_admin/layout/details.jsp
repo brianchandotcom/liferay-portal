@@ -107,7 +107,11 @@ StringBuilder friendlyURLBase = new StringBuilder();
 
 			<c:choose>
 				<c:when test="<%= PortalUtil.isLayoutFriendliable(selLayout) %>">
-					<aui:input helpMessage='<%= LanguageUtil.format(pageContext, "for-example-x", "<em>/news</em>") %>' label="friendly-url" name="friendlyURL" prefix="<%= friendlyURLBase.toString() %>" />
+					<aui:field-wrapper cssClass="input-prepend input-append" helpMessage='<%= LanguageUtil.format(pageContext, "for-example-x", "<em>/news</em>") %>' label="friendly-url" name="friendlyURL">
+						<span class="add-on"><liferay-ui:message key="<%= friendlyURLBase.toString() %>" /></span>
+
+						<liferay-ui:input-localized name="friendlyURL" xml="<%= selLayout.getFriendlyURLsXML() %>" />
+					</aui:field-wrapper>
 				</c:when>
 				<c:otherwise>
 					<aui:input name="friendlyURL" type="hidden" value="<%= (selLayout != null) ? selLayout.getFriendlyURL() : StringPool.BLANK %>" />

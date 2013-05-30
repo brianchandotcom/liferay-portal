@@ -17,6 +17,7 @@ package com.liferay.portal.model;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,6 +34,10 @@ public class LayoutFriendlyURLSoap implements Serializable {
 		soapModel.setLayoutFriendlyURLId(model.getLayoutFriendlyURLId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
+		soapModel.setUserId(model.getUserId());
+		soapModel.setUserName(model.getUserName());
+		soapModel.setCreateDate(model.getCreateDate());
+		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setPlid(model.getPlid());
 		soapModel.setPrivateLayout(model.getPrivateLayout());
 		soapModel.setFriendlyURL(model.getFriendlyURL());
@@ -124,6 +129,38 @@ public class LayoutFriendlyURLSoap implements Serializable {
 		_companyId = companyId;
 	}
 
+	public long getUserId() {
+		return _userId;
+	}
+
+	public void setUserId(long userId) {
+		_userId = userId;
+	}
+
+	public String getUserName() {
+		return _userName;
+	}
+
+	public void setUserName(String userName) {
+		_userName = userName;
+	}
+
+	public Date getCreateDate() {
+		return _createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		_createDate = createDate;
+	}
+
+	public Date getModifiedDate() {
+		return _modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		_modifiedDate = modifiedDate;
+	}
+
 	public long getPlid() {
 		return _plid;
 	}
@@ -164,6 +201,10 @@ public class LayoutFriendlyURLSoap implements Serializable {
 	private long _layoutFriendlyURLId;
 	private long _groupId;
 	private long _companyId;
+	private long _userId;
+	private String _userName;
+	private Date _createDate;
+	private Date _modifiedDate;
 	private long _plid;
 	private boolean _privateLayout;
 	private String _friendlyURL;

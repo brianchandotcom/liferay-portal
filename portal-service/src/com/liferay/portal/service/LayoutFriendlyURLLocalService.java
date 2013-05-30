@@ -244,16 +244,20 @@ public interface LayoutFriendlyURLLocalService extends BaseLocalService,
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public com.liferay.portal.model.LayoutFriendlyURL addLayoutFriendlyURL(
-		long companyId, long groupId, long plid, boolean privateLayout,
-		java.lang.String friendlyURL, java.lang.String languageId,
+		long userId, long companyId, long groupId, long plid,
+		boolean privateLayout, java.lang.String friendlyURL,
+		java.lang.String languageId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
 	public java.util.List<com.liferay.portal.model.LayoutFriendlyURL> addLayoutFriendlyURLs(
-		long companyId, long groupId, long plid, boolean privateLayout,
+		long userId, long companyId, long groupId, long plid,
+		boolean privateLayout,
 		java.util.Map<java.util.Locale, java.lang.String> friendlyURLMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
 	public void deleteLayoutFriendlyURL(long plid, java.lang.String languageId)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -262,18 +266,34 @@ public interface LayoutFriendlyURLLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.LayoutFriendlyURL getLayoutFriendlyURL(
+		long plid, java.lang.String languageId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.LayoutFriendlyURL getLayoutFriendlyURL(
+		long plid, java.lang.String languageId, boolean useDefault)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.LayoutFriendlyURL> getLayoutFriendlyURLs(
 		long plid) throws com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.LayoutFriendlyURL updateLayoutFriendlyURL(
-		long companyId, long groupId, long plid, boolean privateLayout,
-		java.lang.String friendlyURL, java.lang.String languageId,
+		long userId, long companyId, long groupId, long plid,
+		boolean privateLayout, java.lang.String friendlyURL,
+		java.lang.String languageId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
 	public java.util.List<com.liferay.portal.model.LayoutFriendlyURL> updateLayoutFriendlyURLs(
-		long companyId, long groupId, long plid, boolean privateLayout,
+		long userId, long companyId, long groupId, long plid,
+		boolean privateLayout,
 		java.util.Map<java.util.Locale, java.lang.String> friendlyURLMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 }

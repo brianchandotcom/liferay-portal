@@ -73,7 +73,6 @@ public class PanelContainerTag extends BaseBodyTagSupport implements BodyTag {
 			request.removeAttribute("liferay-ui:panel-container:id");
 			request.removeAttribute("liferay-ui:panel-container:accordion");
 			request.removeAttribute("liferay-ui:panel-container:persistState");
-			request.removeAttribute("liferay-ui:panel-container:extended");
 			request.removeAttribute("liferay-ui:panel-container:cssClass");
 
 			return EVAL_PAGE;
@@ -103,7 +102,6 @@ public class PanelContainerTag extends BaseBodyTagSupport implements BodyTag {
 		request.setAttribute(
 			"liferay-ui:panel-container:persistState",
 			String.valueOf(_persistState));
-		request.setAttribute("liferay-ui:panel-container:extended", _extended);
 		request.setAttribute("liferay-ui:panel-container:cssClass", _cssClass);
 		request.setAttribute(
 			"liferay-ui:panel-container:panelCount" + _id,
@@ -128,10 +126,6 @@ public class PanelContainerTag extends BaseBodyTagSupport implements BodyTag {
 		_endPage = endPage;
 	}
 
-	public void setExtended(Boolean extended) {
-		_extended = extended;
-	}
-
 	public void setId(String id) {
 		_id = id;
 	}
@@ -148,7 +142,6 @@ public class PanelContainerTag extends BaseBodyTagSupport implements BodyTag {
 		_accordion = false;
 		_cssClass = null;
 		_endPage = null;
-		_extended = false;
 		_id = null;
 		_persistState = false;
 		_startPage = null;
@@ -181,7 +174,6 @@ public class PanelContainerTag extends BaseBodyTagSupport implements BodyTag {
 	private boolean _accordion;
 	private String _cssClass;
 	private String _endPage;
-	private Boolean _extended;
 	private String _id;
 	private boolean _persistState;
 	private String _startPage;

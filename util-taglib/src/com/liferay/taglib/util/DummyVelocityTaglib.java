@@ -450,6 +450,13 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 	}
 
 	@Override
+	public void runtime(
+			String portletName, String queryString, String defaultPreferences,
+			boolean wrapped)
+		throws Exception {
+	}
+
+	@Override
 	public void search() throws Exception {
 	}
 

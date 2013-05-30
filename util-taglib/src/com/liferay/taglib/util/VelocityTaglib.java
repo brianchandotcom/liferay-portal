@@ -288,6 +288,11 @@ public interface VelocityTaglib {
 			String portletName, String queryString, String defaultPreferences)
 		throws Exception;
 
+	public void runtime(
+			String portletName, String queryString, String defaultPreferences,
+			boolean wrapped)
+		throws Exception;
+
 	public void search() throws Exception;
 
 	public void setTemplate(Template template);

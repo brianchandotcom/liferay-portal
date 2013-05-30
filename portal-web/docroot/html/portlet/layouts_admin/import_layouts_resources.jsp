@@ -138,16 +138,29 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 					<%= fileEntry.getTitle() %>
 				</dd>
 				<dt>
-					<liferay-ui:message key="size" />
+					<liferay-ui:message key="exported" />
 				</dt>
 				<dd>
-					<%= fileEntry.getSize()/1024 %>k
+
+					<%
+					Date exportDate = manifestSummary.getExportDate();
+					%>
+
+					<span onmouseover="Liferay.Portal.ToolTip.show(this, '<%= dateFormatDateTime.format(exportDate) %>')">
+						<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(pageContext, System.currentTimeMillis() - exportDate.getTime(), true) %>" key="x-ago" />
+					</span>
 				</dd>
 				<dt>
 					<liferay-ui:message key="author" />
 				</dt>
 				<dd>
 					<%= fileEntry.getUserName() %>
+				</dd>
+				<dt>
+					<liferay-ui:message key="size" />
+				</dt>
+				<dd>
+					<%= fileEntry.getSize()/1024 %>k
 				</dd>
 			</dl>
 		</aui:fieldset>

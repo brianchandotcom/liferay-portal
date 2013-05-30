@@ -125,6 +125,8 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 
 		<%
 		FileEntry fileEntry = ExportImportUtil.getTempFileEntry(groupId, themeDisplay.getUserId());
+
+		ManifestSummary manifestSummary = com.liferay.portal.kernel.lar.ExportImportUtil.getManifestSummary(user.getUserId(), themeDisplay.getSiteGroupId(), new HashMap<String, String[]>(), fileEntry);
 		%>
 
 		<aui:fieldset cssClass="options-group" label="file">

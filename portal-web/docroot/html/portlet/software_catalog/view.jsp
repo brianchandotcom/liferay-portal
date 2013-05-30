@@ -666,14 +666,6 @@ portletURL.setParameter("tabs1", tabs1);
 	</c:if>
 </aui:script>
 
-<aui:script use="aui-base">
-	var description = A.one('#cpContextPanelTemplate');
-
-	if (description) {
-		description.append('<span class="warn"><liferay-ui:message key="warning-x-will-be-replaced-with-liferay-marketplace" arguments="<%= portletDisplay.getTitle() %>" /></span>');
-	}
-</aui:script>
-
 <%
 if (!tabs1.equals("products")) {
 	PortalUtil.setPageSubtitle(LanguageUtil.get(pageContext, StringUtil.replace(tabs1, StringPool.UNDERLINE, StringPool.DASH)), request);

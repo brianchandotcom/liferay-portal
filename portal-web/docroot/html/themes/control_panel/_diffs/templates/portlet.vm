@@ -25,21 +25,9 @@
 				<span class="portlet-title-text">$portlet_title</span>
 
 				#if ($valid_portlet_description)
-					<img class="$portlet_title_icon_css_class" id="cpPortletTitleHelpIcon" src="$themeDisplay.getPathThemeImages()/portlet/help.png" />
+                    $taglibLiferay.iconHelp($portlet_description)
 				#end
 			</h2>
-		#end
-
-		#if ($valid_portlet_description)
-			<div class="$portlet_description_css_class" data-portlet-id="$portlet_id" data-visible-panel="$show_portlet_description" id="cpContextPanelTemplate">
-				<button class="close" type="button">&#x00D7;</button>
-
-				$portlet_description
-
-				<a class="btn-link" href="javascript:;">
-					<small>#language ("disable-this-note-for-all-portlets")</small>
-				</a>
-			</div>
 		#end
 
 		<menu class="portlet-topper-toolbar" id="portlet-topper-toolbar_$portlet_id" type="portlet-topper-toolbar">

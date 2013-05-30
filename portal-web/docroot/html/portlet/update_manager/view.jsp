@@ -262,14 +262,6 @@ List updatablePackageIds = new ArrayList();
 	</c:otherwise>
 </c:choose>
 
-<aui:script use="aui-base">
-	var description = A.one('#cpContextPanelTemplate');
-
-	if (description) {
-		description.append('<span class="warn"><liferay-ui:message key="warning-x-will-be-replaced-with-liferay-marketplace" arguments="<%= portletDisplay.getTitle() %>" /></span>');
-	}
-</aui:script>
-
 <%!
 private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.update_manager.view_jsp");
 %>

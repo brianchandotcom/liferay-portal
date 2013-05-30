@@ -6,16 +6,8 @@ if (!themeDisplay.isStatePopUp()) {
 		function(A) {
 			var body = A.getBody();
 
-			var portletInformationEl = A.one('#cpContextPanelTemplate');
-			var portletInformationIcon = A.one('#cpPortletTitleHelpIcon');
-
 			var portletId = '';
 			var visible = false;
-
-			if (portletInformationEl) {
-				portletId = portletInformationEl.attr('data-portlet-id');
-				visible = (portletInformationEl.attr('data-visible-panel') == 'true');
-			}
 
 			var sessionKey = 'show-portlet-description-' + portletId;
 
@@ -160,23 +152,6 @@ if (!themeDisplay.isStatePopUp()) {
 
 				_renderUI: function() {
 					var instance = this;
-
-					if (portletInformationEl) {
-						instance._helpBox = new Liferay.Message(
-							{
-								contentBox: portletInformationEl,
-								cssClass: 'lfr-control-panel-help',
-								id: sessionKey,
-								persistenceCategory: 'enable-portlet-descriptions',
-								strings: {
-									dismissAll: Liferay.Language.get('disable-this-note-for-all-portlets')
-								},
-								trigger: portletInformationIcon,
-								type: 'help',
-								visible: portletInformationEl.test(':visible')
-							}
-						).render();
-					}
 
 					var searchPanelHolder = A.one('.search-panels');
 

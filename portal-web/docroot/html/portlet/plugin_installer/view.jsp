@@ -140,14 +140,6 @@
 				submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/plugin_installer/install_plugin" /></portlet:actionURL>");
 			}
 		</aui:script>
-
-		<aui:script use="aui-base">
-			var description = A.one('#cpContextPanelTemplate');
-
-			if (description) {
-				description.append('<span class="warn"><liferay-ui:message key="warning-x-will-be-replaced-with-liferay-marketplace" arguments="<%= portletDisplay.getTitle() %>" /></span>');
-			}
-		</aui:script>
 	</c:when>
 	<c:otherwise>
 		<liferay-util:include page="/html/portal/portlet_access_denied.jsp" />

@@ -160,6 +160,8 @@ public interface VelocityTaglib {
 
 	public void iconHelp() throws Exception;
 
+	public void iconHelp(String message) throws Exception;
+
 	public void iconMaximize() throws Exception;
 
 	public void iconMinimize() throws Exception;

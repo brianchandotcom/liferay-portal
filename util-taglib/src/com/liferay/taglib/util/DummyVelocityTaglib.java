@@ -252,6 +252,10 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 	}
 
 	@Override
+	public void iconHelp(String message) throws Exception {
+	}
+
+	@Override
 	public void iconMaximize() throws Exception {
 	}
 

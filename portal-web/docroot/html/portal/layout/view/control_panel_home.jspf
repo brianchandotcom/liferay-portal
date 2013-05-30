@@ -59,6 +59,8 @@
 								String categoryPortletId = categoryPortlet.getPortletId();
 
 								String urlCategoryPortlet = HttpUtil.setParameter(themeDisplay.getURLControlPanel(), "p_p_id", categoryPortletId);
+
+								String portletDescription = PortalUtil.getPortletDescription(categoryPortlet, application, locale);
 							%>
 
 								<li>
@@ -74,6 +76,10 @@
 
 										<%= PortalUtil.getPortletTitle(categoryPortlet, application, locale) %>
 									</a>
+
+									<c:if test='<%= Validator.isNotNull(portletDescription) && !portletDescription.startsWith("javax.portlet.description") %>'>
+										<liferay-ui:icon-help message="<%= portletDescription %>" />
+									</c:if>
 								</li>
 
 							<%

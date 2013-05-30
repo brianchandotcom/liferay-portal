@@ -28,6 +28,7 @@ public interface WebKeys {
 
 	public static final String ASSET_RENDERER_FACTORY_CLASS_TYPE_ID = "ASSET_RENDERER_FACTORY_CLASS_TYPE_ID";
 
+	@Distributed(direction = Direction.RESPONSE)
 	public static final String AUI_SCRIPT_DATA = "LIFERAY_SHARED_AUI_SCRIPT_DATA";
 
 	public static final String AUTHENTICATION_TOKEN = "LIFERAY_SHARED_AUTHENTICATION_TOKEN";
@@ -40,6 +41,7 @@ public interface WebKeys {
 
 	public static final String CURRENT_COMPLETE_URL = "CURRENT_COMPLETE_URL";
 
+	@Distributed(direction = Direction.REQUEST)
 	public static final String CURRENT_URL = "CURRENT_URL";
 
 	public static final String EXTEND_SESSION = "EXTEND_SESSION";
@@ -78,6 +80,7 @@ public interface WebKeys {
 
 	public static final String OSGI_BUNDLE = "OSGI_BUNDLE";
 
+	@Distributed(direction = Direction.RESPONSE)
 	public static final String OUTPUT_DATA = "LIFERAY_SHARED_OUTPUT_DATA";
 
 	public static final String PAGE_BODY_BOTTOM = "PAGE_BODY_BOTTOM";
@@ -86,12 +89,16 @@ public interface WebKeys {
 
 	public static final String PAGE_BOTTOM = "PAGE_BOTTOM";
 
+	@Distributed(direction = Direction.RESPONSE)
 	public static final String PAGE_DESCRIPTION = "LIFERAY_SHARED_PAGE_DESCRIPTION";
 
+	@Distributed(direction = Direction.RESPONSE)
 	public static final String PAGE_KEYWORDS = "LIFERAY_SHARED_PAGE_KEYWORDS";
 
+	@Distributed(direction = Direction.RESPONSE)
 	public static final String PAGE_SUBTITLE = "LIFERAY_SHARED_PAGE_SUBTITLE";
 
+	@Distributed(direction = Direction.RESPONSE)
 	public static final String PAGE_TITLE = "LIFERAY_SHARED_PAGE_TITLE";
 
 	public static final String PAGE_TOP = "PAGE_TOP";
@@ -177,8 +184,10 @@ public interface WebKeys {
 
 	public static final String UPLOAD_EXCEPTION = "UPLOAD_EXCEPTION";
 
+	@Distributed(direction = Direction.REQUEST)
 	public static final String USER = "USER";
 
+	@Distributed(direction = Direction.REQUEST)
 	public static final String USER_ID = "USER_ID";
 
 	public static final String USER_PASSWORD = "USER_PASSWORD";

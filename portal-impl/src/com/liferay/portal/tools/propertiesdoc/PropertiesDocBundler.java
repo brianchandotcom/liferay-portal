@@ -48,11 +48,11 @@ public class PropertiesDocBundler {
 	public PropertiesDocBundler(String[] args) {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 
-		String lpVersion = GetterUtil.getString(arguments.get("lpVersion"));
-		String propertiesDir = GetterUtil.getString(
-			arguments.get("propertiesDir"));
+		String lpVersion = GetterUtil.getString(arguments.get("lp.version"));
+		String propertiesFileDir = GetterUtil.getString(
+			arguments.get("properties.file.dir"));
 
-		File[] files = new File(propertiesDir).listFiles();
+		File[] files = new File(propertiesFileDir).listFiles();
 
 		List<PropertiesHtmlFile> htmlFiles =
 			new ArrayList<PropertiesHtmlFile>();
@@ -70,7 +70,7 @@ public class PropertiesDocBundler {
 		context.put("lpVersion", lpVersion);
 
 		try {
-			File indexHTMLFile = new File (propertiesDir + "/index.html");
+			File indexHTMLFile = new File (propertiesFileDir + "/index.html");
 
 			Writer writer = new FileWriter(indexHTMLFile);
 

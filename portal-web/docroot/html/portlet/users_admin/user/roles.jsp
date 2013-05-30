@@ -122,12 +122,23 @@ userGroupRoles.addAll(siteRoles);
 <h3><liferay-ui:message key="inherited-roles" /></h3>
 
 <liferay-ui:search-container
-	headerNames="title,null"
+	headerNames="title,group"
 	id="inheritedRolesSearchContainer"
 >
+
+	<%
+	List<Group> roleGroups = new ArrayList<Group>();
+
+	for (Group curGroup : allGroups) {
+		if (RoleLocalServiceUtil.hasGroupRoles(curGroup.getGroupId())) {
+			roleGroups.add(curGroup);
+		}
+	}
+	%>
+
 	<liferay-ui:search-container-results
-		results="<%= allGroups %>"
-		total="<%= allGroups.size() %>"
+		results="<%= roleGroups %>"
+		total="<%= roleGroups.size() %>"
 	/>
 
 	<liferay-ui:search-container-row
@@ -139,27 +150,20 @@ userGroupRoles.addAll(siteRoles);
 
 		<%
 		List<Role> groupRoles = RoleLocalServiceUtil.getGroupRoles(group.getGroupId());
-
-		if (!groupRoles.isEmpty()) {
-			Role groupRole = groupRoles.get(0);
 		%>
 
-			<liferay-util:param name="className" value="<%= RolesAdminUtil.getCssClassName(groupRole) %>" />
-			<liferay-util:param name="classHoverName" value="<%= RolesAdminUtil.getCssClassName(groupRole) %>" />
+		<liferay-util:param name="className" value="<%= RolesAdminUtil.getCssClassName(groupRoles.get(0)) %>" />
+		<liferay-util:param name="classHoverName" value="<%= RolesAdminUtil.getCssClassName(groupRoles.get(0)) %>" />
 
-			<liferay-ui:search-container-column-text
-				name="group"
-				value="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
-			/>
-			<liferay-ui:search-container-column-text
-				name="title"
-				value="<%= HtmlUtil.escape(ListUtil.toString(groupRoles, Role.NAME_ACCESSOR)) %>"
-			/>
+		<liferay-ui:search-container-column-text
+			name="title"
+			value="<%= HtmlUtil.escape(ListUtil.toString(groupRoles, Role.NAME_ACCESSOR)) %>"
+		/>
 
-		<%
-		}
-		%>
-
+		<liferay-ui:search-container-column-text
+			name="group"
+			value="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
+		/>
 	</liferay-ui:search-container-row>
 
 	<liferay-ui:search-iterator paginate="<%= false %>" />

@@ -1099,65 +1099,6 @@ public class Creole10Parser]]></replacevalue>
 		</jarjar>
 	</target>
 
-	<target name="propertiesdoc">
-		<property name="properties.dest.dir" value="${project.dir}/api/propertiesdoc" />
-
-		<delete dir="${properties.dest.dir}" />
-		<mkdir dir="${properties.dest.dir}" />
-
-		<antcall target="propertiesdoc-cmd">
-			<param name="properties.dest.dir" value="${properties.dest.dir}" />
-			<param name="properties.file" value="${project.dir}/definitions/liferay-plugin-package_6_1_0.properties" />
-			<param name="properties.title" value="Liferay Plugin Package 6.1 Properties" />
-			<param name="properties.toc" value="true" />
-		</antcall>
-
-		<antcall target="propertiesdoc-cmd">
-			<param name="properties.dest.dir" value="${properties.dest.dir}" />
-			<param name="properties.file" value="${project.dir}/definitions/liferay-plugin-package_6_2_0.properties" />
-			<param name="properties.title" value="Liferay Plugin Package 6.2 Properties" />
-			<param name="properties.toc" value="true" />
-		</antcall>
-
-		<antcall target="propertiesdoc-cmd">
-			<param name="properties.dest.dir" value="${properties.dest.dir}" />
-			<param name="properties.file" value="src/system.properties" />
-			<param name="properties.title" value="System Properties" />
-			<param name="properties.toc" value="true" />
-		</antcall>
-
-		<antcall target="propertiesdoc-cmd">
-			<param name="properties.dest.dir" value="${properties.dest.dir}" />
-			<param name="properties.file" value="src/portal.properties" />
-			<param name="properties.title" value="Portal Properties" />
-			<param name="properties.toc" value="true" />
-		</antcall>
-
-		<java
-			classname="com.liferay.portal.tools.propertiesdoc.PropertiesDocIndexBuilder"
-			classpathref="project.classpath"
-			fork="true"
-			newenvironment="true"
-		>
-			<arg value="properties.file.dir=${properties.dest.dir}" />
-			<arg value="lp.version=${lp.version}" />
-		</java>
-	</target>
-
-	<target name="propertiesdoc-cmd">
-		<java
-			classname="com.liferay.portal.tools.propertiesdoc.PropertiesDocBuilder"
-			classpathref="project.classpath"
-			fork="true"
-			newenvironment="true"
-		>
-			<arg value="properties.dest.dir=${properties.dest.dir}" />
-			<arg value="properties.file=${properties.file}" />
-			<arg value="properties.toc=${properties.toc}" />
-			<arg value="properties.title=${properties.title}" />
-		</java>
-	</target>
-
 	<target name="clean">
 		<delete dir="classes" />
 
@@ -1424,19 +1365,6 @@ public class Creole10Parser]]></replacevalue>
 		</if>
 	</target>
 
-	<target name="properties-to-html">
-		<java
-			classname="com.liferay.portal.tools.propertiesdoc.PropertiesDocBuilder"
-			classpathref="project.classpath"
-			fork="true"
-			newenvironment="true"
-		>
-			<jvmarg value="-Dproperties.dest.dir=${properties.dest.dir}" />
-			<jvmarg value="-Dproperties.file=${properties.file}" />
-			<jvmarg value="-Dproperties.title=${properties.title}" />
-			<jvmarg value="-Dproperties.toc=${properties.toc}" />
-		</java>
-	</target>
 	<target name="rebuild-hypersonic">
 		<ant dir="../sql" target="rebuild-hypersonic" />
 	</target>

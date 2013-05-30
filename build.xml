@@ -567,6 +567,7 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 		<antcall target="dtddoc" />
 		<antcall target="javadoc" />
 		<antcall target="javadoc-all" />
+		<antcall target="propertiesdoc" />
 		<ant dir="util-taglib" target="taglibdoc" inheritAll="false" />
 	</target>
 
@@ -689,6 +690,65 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 
 	<target name="prepare-generated-files">
 		<ant antfile="build-dist.xml" target="prepare-generated-files" inheritAll="false" />
+	</target>
+
+	<target name="propertiesdoc">
+		<property name="properties.dest.dir" value="${doc.dir}/propertiesdoc" />
+
+		<delete dir="${properties.dest.dir}" />
+		<mkdir dir="${properties.dest.dir}" />
+
+		<antcall target="propertiesdoc-cmd">
+			<param name="properties.dest.dir" value="${properties.dest.dir}" />
+			<param name="properties.file" value="definitions/liferay-plugin-package_6_1_0.properties" />
+			<param name="properties.title" value="Liferay Plugin Package 6.1 Properties" />
+			<param name="properties.toc" value="true" />
+		</antcall>
+
+		<antcall target="propertiesdoc-cmd">
+			<param name="properties.dest.dir" value="${properties.dest.dir}" />
+			<param name="properties.file" value="definitions/liferay-plugin-package_6_2_0.properties" />
+			<param name="properties.title" value="Liferay Plugin Package 6.2 Properties" />
+			<param name="properties.toc" value="true" />
+		</antcall>
+
+		<antcall target="propertiesdoc-cmd">
+			<param name="properties.dest.dir" value="${properties.dest.dir}" />
+			<param name="properties.file" value="portal-impl/src/portal.properties" />
+			<param name="properties.title" value="Portal Properties" />
+			<param name="properties.toc" value="true" />
+		</antcall>
+
+		<antcall target="propertiesdoc-cmd">
+			<param name="properties.dest.dir" value="${properties.dest.dir}" />
+			<param name="properties.file" value="portal-impl/src/system.properties" />
+			<param name="properties.title" value="System Properties" />
+			<param name="properties.toc" value="true" />
+		</antcall>
+
+		<java
+			classname="com.liferay.portal.tools.propertiesdoc.PropertiesDocIndexBuilder"
+			classpathref="project.classpath"
+			fork="true"
+			newenvironment="true"
+		>
+			<arg value="properties.file.dir=${doc.dir}/propertiesdoc" />
+			<arg value="lp.version=${lp.version}" />
+		</java>
+	</target>
+
+	<target name="propertiesdoc-cmd">
+		<java
+			classname="com.liferay.portal.tools.propertiesdoc.PropertiesDocBuilder"
+			classpathref="project.classpath"
+			fork="true"
+			newenvironment="true"
+		>
+			<arg value="properties.dest.dir=${properties.dest.dir}" />
+			<arg value="properties.file=${properties.file}" />
+			<arg value="properties.toc=${properties.toc}" />
+			<arg value="properties.title=${properties.title}" />
+		</java>
 	</target>
 
 	<target name="record-svn-revision">

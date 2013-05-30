@@ -17,6 +17,7 @@ package com.liferay.portal.servlet.filters.i18n;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -77,6 +78,10 @@ public class I18nFilter extends BasePortalFilter {
 	}
 
 	protected String getRedirect(HttpServletRequest request) throws Exception {
+		if (request.getMethod().equals(HttpMethods.POST)) {
+			return null;
+		}
+
 		if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 0) {
 			return null;
 		}

@@ -6,7 +6,7 @@
 		<p>
 			<strong>Liferay Portal ${lpVersion} Properties</strong>
 		</p>
-		
+
 		<p>
 			Here is a listing of Liferay Portal ${lpVersion} properties files and properties definition files:
 		</p>

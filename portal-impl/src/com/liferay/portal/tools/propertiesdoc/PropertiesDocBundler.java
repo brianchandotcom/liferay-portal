@@ -48,19 +48,14 @@ public class PropertiesDocBundler {
 	public PropertiesDocBundler(String[] args) {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 
-		String propertiesDir = GetterUtil.getString(
-				arguments.get("propertiesDir"));
-
 		String lpVersion = GetterUtil.getString(arguments.get("lpVersion"));
-
-		Map<String, Object> context = new HashMap<String, Object>();
-
-		context.put("lpVersion", lpVersion);
-
-		List<PropertiesHtmlFile> htmlFiles =
-				new ArrayList<PropertiesHtmlFile>();
+		String propertiesDir = GetterUtil.getString(
+			arguments.get("propertiesDir"));
 
 		File[] files = new File(propertiesDir).listFiles();
+
+		List<PropertiesHtmlFile> htmlFiles =
+			new ArrayList<PropertiesHtmlFile>();
 
 		for (File file : files) {
 			if (file.getName().endsWith(".properties.html")) {
@@ -68,19 +63,22 @@ public class PropertiesDocBundler {
 			}
 		}
 
+		Map<String, Object> context = new HashMap<String, Object>();
+
 		context.put("htmlFiles", htmlFiles);
 
-		try {
-			String indexHTMLFileName = "./properties/index.html";
+		context.put("lpVersion", lpVersion);
 
-			File indexHTMLFile = new File (indexHTMLFileName);
+		try {
+			File indexHTMLFile = new File (propertiesDir + "/index.html");
 
 			Writer writer = new FileWriter(indexHTMLFile);
 
 			try {
 				FreeMarkerUtil.process(
-						"com/liferay/portal/tools/propertiesdoc" +
-						"/dependencies/index.ftl", context, writer);
+					"com/liferay/portal/tools/propertiesdoc" +
+						"/dependencies/index.ftl",
+					context, writer);
 			}
 			catch (Exception e) {
 				e.printStackTrace();
@@ -91,7 +89,6 @@ public class PropertiesDocBundler {
 		catch (IOException ioe) {
 			ioe.printStackTrace();
 		}
-
 	}
 
 	/**
@@ -103,7 +100,7 @@ public class PropertiesDocBundler {
 			_fileName = fileName;
 
 			_propertiesFileName = StringUtil.replaceLast(
-					_fileName, ".html", StringPool.BLANK);
+				_fileName, ".html", StringPool.BLANK);
 		}
 
 		public String getFileName() {
@@ -111,12 +108,11 @@ public class PropertiesDocBundler {
 		}
 
 		public String getPropertiesFileName() {
-
 			return _propertiesFileName;
 		}
 
-		private final String _propertiesFileName;
 		private final String _fileName;
+		private final String _propertiesFileName;
 
 	}
 

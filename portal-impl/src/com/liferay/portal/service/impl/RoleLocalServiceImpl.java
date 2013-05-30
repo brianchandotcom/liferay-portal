@@ -411,7 +411,13 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 */
 	@Override
 	public Role deleteRole(Role role) throws PortalException, SystemException {
-		if (PortalUtil.isSystemRole(role.getName())) {
+		return deleteRole(role, false);
+	}
+
+	public Role deleteRole(Role role, boolean allowDeleteSystemRole)
+		throws PortalException, SystemException {
+
+		if (PortalUtil.isSystemRole(role.getName()) && !allowDeleteSystemRole) {
 			throw new RequiredRoleException();
 		}
 

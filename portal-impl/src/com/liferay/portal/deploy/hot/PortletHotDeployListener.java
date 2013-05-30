@@ -460,9 +460,7 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 
 		DirectServletRegistryUtil.clearServlets();
 
-		_portlets.put(
-			servletContextName,
-			new ObjectValuePair<long[], List<Portlet>>(companyIds, portlets));
+		_portlets.put(servletContextName, portlets);
 
 		if (_log.isInfoEnabled()) {
 			if (portlets.size() == 1) {
@@ -489,15 +487,11 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 			_log.debug("Invoking undeploy for " + servletContextName);
 		}
 
-		ObjectValuePair<long[], List<Portlet>> ovp = _portlets.remove(
-			servletContextName);
+		List<Portlet> portlets = _portlets.remove(servletContextName);
 
-		if (ovp == null) {
+		if (portlets == null) {
 			return;
 		}
-
-		long[] companyIds = ovp.getKey();
-		List<Portlet> portlets = ovp.getValue();
 
 		Set<String> portletIds = new HashSet<String>();
 
@@ -514,7 +508,7 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 		ServletContextPool.remove(servletContextName);
 
 		if (portletIds.size() > 0) {
-			for (long companyId : companyIds) {
+			for (long companyId : PortalInstances.getCompanyIds()) {
 				PortletCategory portletCategory =
 					(PortletCategory)WebAppPool.get(
 						companyId, WebKeys.PORTLET_CATEGORY);
@@ -727,8 +721,7 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 
 	private static Map<String, Boolean> _dataSourceBindStates =
 		new HashMap<String, Boolean>();
-	private static Map<String, ObjectValuePair<long[], List<Portlet>>>
-		_portlets =
-			new HashMap<String, ObjectValuePair<long[], List<Portlet>>>();
+	private static Map<String, List<Portlet>>
+		_portlets = new HashMap<String, List<Portlet>>();
 
 }

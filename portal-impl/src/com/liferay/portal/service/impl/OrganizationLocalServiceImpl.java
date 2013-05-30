@@ -428,6 +428,16 @@ public class OrganizationLocalServiceImpl
 		return deleteOrganization(organization);
 	}
 
+	public Organization deleteOrganization(
+			long organizationId, boolean deleteSubOrganizations)
+		throws PortalException, SystemException {
+
+		Organization organization = organizationPersistence.findByPrimaryKey(
+			organizationId);
+
+		return deleteOrganization(organization, deleteSubOrganizations);
+	}
+
 	/**
 	 * Deletes the organization. The organization's associated resources and
 	 * assets are also deleted.
@@ -442,6 +452,13 @@ public class OrganizationLocalServiceImpl
 	public Organization deleteOrganization(Organization organization)
 		throws PortalException, SystemException {
 
+		return deleteOrganization(organization, false);
+	}
+
+	public Organization deleteOrganization(
+			Organization organization, boolean deleteSubOrganizations)
+		throws PortalException, SystemException {
+
 		if ((userLocalService.getOrganizationUsersCount(
 				organization.getOrganizationId(),
 				WorkflowConstants.STATUS_APPROVED) > 0) ||
@@ -449,7 +466,18 @@ public class OrganizationLocalServiceImpl
 				organization.getCompanyId(),
 				organization.getOrganizationId()) > 0)) {
 
-			throw new RequiredOrganizationException();
+			if (!deleteSubOrganizations) {
+				throw new RequiredOrganizationException();
+			}
+
+			List<Organization> subOrganizations =
+				organizationPersistence.findByC_P(
+					organization.getCompanyId(),
+					organization.getOrganizationId());
+
+			for (Organization subOrganization : subOrganizations) {
+				deleteOrganization(subOrganization, deleteSubOrganizations);
+			}
 		}
 
 		// Asset

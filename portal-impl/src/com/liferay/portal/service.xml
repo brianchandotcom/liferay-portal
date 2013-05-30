@@ -2659,6 +2659,7 @@
 		<exception>RegionCode</exception>
 		<exception>RegionName</exception>
 		<exception>RemoteExport</exception>
+		<exception>RequiredCompany</exception>
 		<exception>RequiredGroup</exception>
 		<exception>RequiredLayout</exception>
 		<exception>RequiredLayoutPrototype</exception>

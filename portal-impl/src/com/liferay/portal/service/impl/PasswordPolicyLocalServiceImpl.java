@@ -216,7 +216,17 @@ public class PasswordPolicyLocalServiceImpl
 	public PasswordPolicy deletePasswordPolicy(PasswordPolicy passwordPolicy)
 		throws PortalException, SystemException {
 
-		if (passwordPolicy.isDefaultPolicy()) {
+		return deletePasswordPolicy(passwordPolicy, false);
+	}
+
+	public PasswordPolicy deletePasswordPolicy(
+			PasswordPolicy passwordPolicy,
+			boolean allowDeleteDefaultPasswordPolicy)
+		throws PortalException, SystemException {
+
+		if (passwordPolicy.isDefaultPolicy() &&
+			!allowDeleteDefaultPasswordPolicy) {
+
 			throw new RequiredPasswordPolicyException();
 		}
 

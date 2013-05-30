@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.zip.ZipWriter;
+import com.liferay.portal.liveusers.LiveUsers;
 import com.liferay.portal.model.Account;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
@@ -671,7 +672,17 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	public Group deleteGroup(Group group)
 		throws PortalException, SystemException {
 
-		if (PortalUtil.isSystemGroup(group.getName())) {
+		return deleteGroup(group, false, false);
+	}
+
+	public Group deleteGroup(
+			Group group, boolean allowDeleteSystemGroup,
+			boolean deleteSubGroups)
+		throws PortalException, SystemException {
+
+		if (PortalUtil.isSystemGroup(group.getName()) &&
+			!allowDeleteSystemGroup) {
+
 			throw new RequiredGroupException(
 				String.valueOf(group.getGroupId()),
 				RequiredGroupException.SYSTEM_GROUP);
@@ -680,9 +691,18 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		if (groupPersistence.countByC_P_S(
 				group.getCompanyId(), group.getGroupId(), true) > 0) {
 
-			throw new RequiredGroupException(
-				String.valueOf(group.getGroupId()),
-				RequiredGroupException.PARENT_GROUP);
+			if (!deleteSubGroups) {
+				throw new RequiredGroupException(
+					String.valueOf(group.getGroupId()),
+					RequiredGroupException.PARENT_GROUP);
+			}
+
+			List<Group> subGroups = groupLocalService.getGroups(
+				group.getCompanyId(), group.getGroupId(), true);
+
+			for (Group subGroup : subGroups) {
+				deleteGroup(subGroup, allowDeleteSystemGroup, deleteSubGroups);
+			}
 		}
 
 		// Layout set branches
@@ -845,6 +865,10 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		PermissionCacheUtil.clearCache();
 
+		// Live users
+
+		LiveUsers.deleteGroup(group.getCompanyId(), group.getGroupId());
+
 		return group;
 	}
 
@@ -872,6 +896,34 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		Group group = groupPersistence.findByPrimaryKey(groupId);
 
 		return deleteGroup(group);
+	}
+
+	/**
+	 * Deletes the group and its associated data.
+	 *
+	 * <p>
+	 * The group is unstaged and its assets and resources including layouts,
+	 * membership requests, subscriptions, teams, blogs, bookmarks, calendar
+	 * events, image gallery, journals, message boards, polls, shopping related
+	 * entities, software catalog, and wikis are also deleted.
+	 * </p>
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  allowDeleteSystemGroup
+	 * @return the deleted group
+	 * @throws PortalException if a group with the primary key could not be
+	 *         found, if the group was a system group, or if the user did not
+	 *         have permission to delete the group, its assets, or its resources
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Group deleteGroup(
+			long groupId, boolean allowDeleteSystemGroup,
+			boolean deleteSubGroups)
+		throws PortalException, SystemException {
+
+		Group group = groupPersistence.findByPrimaryKey(groupId);
+
+		return deleteGroup(group, allowDeleteSystemGroup, deleteSubGroups);
 	}
 
 	/**

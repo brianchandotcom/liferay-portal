@@ -107,7 +107,6 @@ public class PortletDataContextFactoryImpl
 			portletDataContext.setCompanyGroupId(companyGroup.getGroupId());
 		}
 		catch (Exception e) {
-			throw new IllegalStateException(e);
 		}
 
 		portletDataContext.setCompanyId(companyId);
@@ -122,7 +121,6 @@ public class PortletDataContextFactoryImpl
 				userPersonalSiteGroup.getGroupId());
 		}
 		catch (Exception e) {
-			throw new IllegalStateException(e);
 		}
 
 		return portletDataContext;

@@ -33,6 +33,14 @@
 		<execute action="Dockbar#click" locator-key1="ADD" />
 		<execute action="Dockbar#click" locator-key1="ADD_CONTENT_AND_APPLICATIONS" />
 		<execute action="Dockbar#click" locator-key1="ADD_APPLICATION_LINK" />
+
+		<while>
+			<condition action="Dockbar#isElementPresent" locator-key1="ADD_APPLICATION_COLLAPSED_CATEGORY" />
+			<then>
+				<execute action="Dockbar#click" locator-key1="ADD_APPLICATION_COLLAPSED_CATEGORY" />
+			</then>
+		</while>
+
 		<execute action="Dockbar#type" locator-key1="ADD_APPLICATION_SEARCH_FIELD" value1="${portletName}" />
 		<execute action="Dockbar#click" locator1="//span[@data-title='${portletName}']" value1="Add" />
 

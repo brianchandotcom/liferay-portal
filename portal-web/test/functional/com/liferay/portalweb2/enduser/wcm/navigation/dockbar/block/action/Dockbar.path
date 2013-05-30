@@ -67,6 +67,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_APPLICATION_COLLAPSED_CATEGORY</td>
+	<td>//div[contains(@class,'toggler-header-collapsed')]/div</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

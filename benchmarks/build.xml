@@ -12,6 +12,8 @@
 			<arg value="sample.sql.base.dir=${basedir}" />
 			<arg value="sample.sql.db.type=${sample.sql.db.type}" />
 			<arg value="sample.sql.max.asset.category.count=${sample.sql.max.asset.category.count}" />
+			<arg value="sample.sql.max.asset.tag.count=${sample.sql.max.asset.tag.count}" />
+			<arg value="sample.sql.max.asset.vocabulary.count=${sample.sql.max.asset.vocabulary.count}" />
 			<arg value="sample.sql.max.blogs.entry.comment.count=${sample.sql.max.blogs.entry.comment.count}" />
 			<arg value="sample.sql.max.blogs.entry.count=${sample.sql.max.blogs.entry.count}" />
 			<arg value="sample.sql.max.ddl.custom.field.count=${sample.sql.max.ddl.custom.field.count}" />
@@ -37,6 +39,8 @@
 			<arg value="sample.sql.optimize.buffer.size=${sample.sql.optimize.buffer.size}" />
 			<arg value="sample.sql.output.dir=${sample.sql.output.dir}" />
 			<arg value="sample.sql.output.merge=${sample.sql.output.merge}" />
+			<arg value="sample.sql.per.asset.entry.max.asset.category.count=${sample.sql.per.asset.entry.max.asset.category.count}" />
+			<arg value="sample.sql.per.asset.entry.max.asset.tag.count=${sample.sql.per.asset.entry.max.asset.tag.count}" />
 		</java>
 	</target>
 </project>

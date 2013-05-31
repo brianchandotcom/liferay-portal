@@ -63,16 +63,17 @@ public class PropertiesDocIndexBuilder {
 
 		File[] files = propertiesDirectory.listFiles();
 
-		List<PropertiesHtmlFile> htmlFiles =
-			new ArrayList<PropertiesHtmlFile>();
+		List<String> htmlFileNames = new ArrayList<String>();
 
 		for (File file : files) {
-			if (file.getName().endsWith(".properties.html")) {
-				htmlFiles.add(new PropertiesHtmlFile(file.getName()));
+			String fileName = file.getName();
+
+			if (fileName.endsWith(".properties.html")) {
+				htmlFileNames.add(fileName.substring(0, fileName.length() - 5));
 			}
 		}
 
-		if (htmlFiles.isEmpty()) {
+		if (htmlFileNames.isEmpty()) {
 			System.out.println(
 				"No *.properties.html files found in " +
 					propertiesDirectory.getPath());
@@ -82,7 +83,7 @@ public class PropertiesDocIndexBuilder {
 
 		Map<String, Object> context = new HashMap<String, Object>();
 
-		context.put("htmlFiles", htmlFiles);
+		context.put("htmlFileNames", htmlFileNames);
 
 		context.put("lpVersion", lpVersion);
 

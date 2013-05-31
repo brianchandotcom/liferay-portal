@@ -60,8 +60,7 @@ public class PanelTag extends IncludeTag {
 		request.setAttribute("liferay-ui:panel:defaultState", _defaultState);
 		request.setAttribute(
 			"liferay-ui:panel:persistState", String.valueOf(_persistState));
-		request.setAttribute(
-			"liferay-ui:panel:extended", String.valueOf(_extended));
+		request.setAttribute("liferay-ui:panel:extended", _extended);
 		request.setAttribute("liferay-ui:panel:cssClass", _cssClass);
 
 		super.doStartTag();
@@ -85,7 +84,7 @@ public class PanelTag extends IncludeTag {
 		_endPage = endPage;
 	}
 
-	public void setExtended(boolean extended) {
+	public void setExtended(Boolean extended) {
 		_extended = extended;
 	}
 
@@ -107,6 +106,20 @@ public class PanelTag extends IncludeTag {
 
 	public void setTitle(String title) {
 		_title = title;
+	}
+
+	@Override
+	protected void cleanUp() {
+		_collapsible = true;
+		_cssClass = null;
+		_defaultState = "open";
+		_endPage = null;
+		_extended = null;
+		_helpMessage = null;
+		_id = null;
+		_persistState = true;
+		_startPage = null;
+		_title = null;
 	}
 
 	@Override
@@ -137,7 +150,7 @@ public class PanelTag extends IncludeTag {
 	private String _cssClass;
 	private String _defaultState = "open";
 	private String _endPage;
-	private boolean _extended;
+	private Boolean _extended;
 	private String _helpMessage;
 	private String _id;
 	private boolean _persistState = true;

@@ -20,7 +20,7 @@
 boolean collapsible = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:panel:collapsible"));
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:panel:cssClass"));
 String defaultState = (String)request.getAttribute("liferay-ui:panel:defaultState");
-boolean extended = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:panel:extended"));
+Boolean extended = (Boolean)request.getAttribute("liferay-ui:panel:extended");
 String helpMessage = (String)request.getAttribute("liferay-ui:panel:helpMessage");
 String id = (String)request.getAttribute("liferay-ui:panel:id");
 String parentId = (String)request.getAttribute("liferay-ui:panel:parentId");
@@ -32,14 +32,16 @@ IntegerWrapper panelCount = (IntegerWrapper)request.getAttribute("liferay-ui:pan
 if (panelCount != null) {
 	panelCount.increment();
 
-	Boolean panelContainerExtended = (Boolean)request.getAttribute("liferay-ui:panel-container:extended");
+	if (extended == null) {
+		Boolean panelContainerExtended = (Boolean)request.getAttribute("liferay-ui:panel-container:extended");
 
-	if (panelContainerExtended != null) {
-		extended = panelContainerExtended.booleanValue();
+		if (panelContainerExtended != null) {
+			extended = panelContainerExtended;
+		}
 	}
 }
 
-if (extended) {
+if ((extended != null) && extended) {
 	cssClass += " lfr-panel-extended";
 }
 

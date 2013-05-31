@@ -32,7 +32,7 @@ public class EnvironmentVariablesTest {
 	@Test
 	public void test1() throws Exception {
 		try {
-			System.getenv("java.home");
+			System.getenv("JAVA_HOME");
 		}
 		catch (SecurityException se) {
 			Assert.fail();
@@ -42,52 +42,11 @@ public class EnvironmentVariablesTest {
 	@Test
 	public void test2() throws Exception {
 		try {
-			System.getenv("java.vendor");
-		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
-	}
-
-	@Test
-	public void test3() throws Exception {
-		try {
-			System.getenv("java.vendor.url");
+			System.getenv("PATH");
 
 			Assert.fail();
 		}
 		catch (SecurityException se) {
-		}
-	}
-
-	@Test
-	public void test4() throws Exception {
-		try {
-			System.getenv("java.vm.specification.name");
-
-			Assert.fail();
-		}
-		catch (SecurityException se) {
-		}
-	}
-
-	@Test
-	public void test5() throws Exception {
-		try {
-			System.getenv("java.vm.vendor");
-		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
-	}
-
-	@Test
-	public void test6() throws Exception {
-		try {
-			System.getenv("java.vm.version");
-		}
-		catch (SecurityException se) {
-			Assert.fail();
 		}
 	}
 

@@ -17,7 +17,9 @@ package com.liferay.portal.lar;
 import com.liferay.portal.kernel.lar.ExportImportUtil;
 import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
@@ -62,7 +64,13 @@ public class ManifestSummaryTest
 
 		Document document = SAXReaderUtil.createDocument();
 
-		document.addElement("root");
+		Element rootElement = document.addElement("root");
+
+		Element headerElement = rootElement.addElement("header");
+
+		_exportDate = Time.getRFC822();
+
+		headerElement.addAttribute("export-date", _exportDate);
 
 		ExportImportUtil.writeManifestSummary(document, manifestSummary);
 
@@ -91,6 +99,12 @@ public class ManifestSummaryTest
 			1, manifestSummary.getModelCount(JournalArticle.class));
 		Assert.assertEquals(
 			1, manifestSummary.getModelCount(JournalFolder.class));
+
+		String exportedDate = Time.getRFC822(manifestSummary.getExportDate());
+
+		Assert.assertEquals(_exportDate, exportedDate);
 	}
+
+	private String _exportDate;
 
 }

@@ -98,14 +98,14 @@ public class FriendlyURLServlet extends HttpServlet {
 
 		Object[] redirectArray = null;
 
-		boolean forceRedirect = false;
+		boolean forcePermanentRedirect = false;
 
 		try {
 			redirectArray = getRedirect(
 				request, pathInfo, mainPath, request.getParameterMap());
 
 			redirect = (String)redirectArray[0];
-			forceRedirect = (Boolean)redirectArray[1];
+			forcePermanentRedirect = (Boolean)redirectArray[1];
 
 			if (request.getAttribute(WebKeys.LAST_PATH) == null) {
 				LastPath lastPath = new LastPath(
@@ -137,7 +137,7 @@ public class FriendlyURLServlet extends HttpServlet {
 			_log.debug("Redirect " + redirect);
 		}
 
-		if ((redirect.charAt(0) == CharPool.SLASH) && !forceRedirect) {
+		if ((redirect.charAt(0) == CharPool.SLASH) && !forcePermanentRedirect) {
 			ServletContext servletContext = getServletContext();
 
 			RequestDispatcher requestDispatcher =
@@ -148,7 +148,13 @@ public class FriendlyURLServlet extends HttpServlet {
 			}
 		}
 		else {
-			response.sendRedirect(redirect);
+			if (forcePermanentRedirect) {
+				response.setHeader("Location", redirect);
+				response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
+			}
+			else {
+				response.sendRedirect(redirect);
+			}
 		}
 	}
 

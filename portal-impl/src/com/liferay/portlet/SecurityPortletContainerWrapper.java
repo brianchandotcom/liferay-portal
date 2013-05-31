@@ -72,21 +72,21 @@ import javax.servlet.http.HttpServletResponse;
  * @author Tomas Polesovsky
  */
 @DoPrivileged
-public class PortletContainerSecurityImpl
+public class SecurityPortletContainerWrapper
 	implements PortletContainer, PortletContainerSecurity {
 
 	public static PortletContainer createPortletContainerSecurityImpl(
 		PortletContainer portletContainer) {
 
 		if (!SPIUtil.isSPI()) {
-			portletContainer = new PortletContainerSecurityImpl(
+			portletContainer = new SecurityPortletContainerWrapper(
 				portletContainer);
 		}
 
 		return portletContainer;
 	}
 
-	public PortletContainerSecurityImpl(PortletContainer portletContainer) {
+	public SecurityPortletContainerWrapper(PortletContainer portletContainer) {
 		_portletContainer = portletContainer;
 
 		resetWhitelist();
@@ -687,7 +687,7 @@ public class PortletContainerSecurityImpl
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
-		PortletContainerSecurityImpl.class);
+		SecurityPortletContainerWrapper.class);
 
 	private PortletContainer _portletContainer;
 	private Set<String> _whitelist;

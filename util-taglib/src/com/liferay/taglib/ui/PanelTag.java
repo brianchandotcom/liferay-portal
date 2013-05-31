@@ -60,8 +60,7 @@ public class PanelTag extends IncludeTag {
 		request.setAttribute("liferay-ui:panel:defaultState", _defaultState);
 		request.setAttribute(
 			"liferay-ui:panel:persistState", String.valueOf(_persistState));
-		request.setAttribute(
-			"liferay-ui:panel:extended", String.valueOf(_extended));
+		request.setAttribute("liferay-ui:panel:extended", _extended);
 		request.setAttribute("liferay-ui:panel:cssClass", _cssClass);
 
 		super.doStartTag();

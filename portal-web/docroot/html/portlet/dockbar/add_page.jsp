@@ -159,8 +159,7 @@ List<LayoutTemplate> layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutT
 </aui:form>
 
 <%
-	Layout addedLayout = (Layout)SessionMessages.get(renderRequest, portletDisplay.getId()
-+ "PAGE_ADDED");
+Layout addedLayout = (Layout)SessionMessages.get(renderRequest, portletDisplay.getId() + "PAGE_ADDED");
 %>
 
 <c:if test="<%= addedLayout != null %>">

@@ -178,9 +178,7 @@ public class EditLayoutsAction extends PortletAction {
 
 				SessionMessages.add(
 					actionRequest,
-					liferayPortletConfig.getPortletId() +
-						"PAGE_ADDED",
-					layout);
+					liferayPortletConfig.getPortletId() + "PAGE_ADDED", layout);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				long plid = ParamUtil.getLong(actionRequest, "plid");
@@ -927,6 +925,10 @@ public class EditLayoutsAction extends PortletAction {
 			boolean inheritFromParentLayoutId = ParamUtil.getBoolean(
 				uploadPortletRequest, "inheritFromParentLayoutId");
 
+			UnicodeProperties formTypeSettingsProperties =
+				PropertiesParamUtil.getProperties(
+					actionRequest, "TypeSettingsProperties--");
+
 			if (inheritFromParentLayoutId && (parentLayoutId > 0)) {
 				Layout parentLayout = LayoutLocalServiceUtil.getLayout(
 					groupId, privateLayout, parentLayoutId);
@@ -935,8 +937,9 @@ public class EditLayoutsAction extends PortletAction {
 					groupId, privateLayout, parentLayoutId, nameMap, titleMap,
 					parentLayout.getDescriptionMap(),
 					parentLayout.getKeywordsMap(), parentLayout.getRobotsMap(),
-					parentLayout.getType(), hidden, friendlyURLMap,
-					serviceContext);
+					parentLayout.getType(),
+					formTypeSettingsProperties.toString(), hidden,
+					friendlyURLMap, serviceContext);
 
 				LayoutServiceUtil.updateLayout(
 					layout.getGroupId(), layout.isPrivateLayout(),
@@ -971,13 +974,15 @@ public class EditLayoutsAction extends PortletAction {
 				layout = LayoutServiceUtil.addLayout(
 					groupId, privateLayout, parentLayoutId, nameMap, titleMap,
 					descriptionMap, keywordsMap, robotsMap,
-					LayoutConstants.TYPE_PORTLET, hidden, friendlyURLMap,
-					serviceContext);
+					LayoutConstants.TYPE_PORTLET,
+					formTypeSettingsProperties.toString(), hidden,
+					friendlyURLMap, serviceContext);
 			}
 			else {
 				layout = LayoutServiceUtil.addLayout(
 					groupId, privateLayout, parentLayoutId, nameMap, titleMap,
-					descriptionMap, keywordsMap, robotsMap, type, hidden,
+					descriptionMap, keywordsMap, robotsMap, type,
+					formTypeSettingsProperties.toString(), hidden,
 					friendlyURLMap, serviceContext);
 			}
 

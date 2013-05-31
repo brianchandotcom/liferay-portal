@@ -19,12 +19,11 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
 import java.io.Serializable;
-
-import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,7 +36,7 @@ public interface DDM {
 	public DDMDisplay getDDMDisplay(ServiceContext serviceContext);
 
 	public Serializable getDisplayFieldValue(
-			Serializable fieldValue, String type, Locale locale)
+			Serializable fieldValue, String type, ThemeDisplay themeDisplay)
 		throws Exception;
 
 	public Fields getFields(

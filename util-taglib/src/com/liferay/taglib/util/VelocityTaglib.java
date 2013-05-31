@@ -181,6 +181,8 @@ public interface VelocityTaglib {
 	 */
 	public void iconHelp() throws Exception;
 
+	public void iconHelp(String message) throws Exception;
+
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #portletIconMaximize}
 	 */

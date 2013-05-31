@@ -33,17 +33,21 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.ElementHandler;
 import com.liferay.portal.kernel.xml.ElementProcessor;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.model.Group;
@@ -66,6 +70,7 @@ import java.io.File;
 import java.io.InputStream;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -125,6 +130,66 @@ public class ExportImportImpl implements ExportImport {
 		}
 
 		saxParser.parse(new InputSource(is));
+
+		is = portletDataContext.getZipEntryAsInputStream("/manifest.xml");
+
+		Document document = SAXReaderUtil.read(is);
+
+		Element rootElement = document.getRootElement();
+		Element headerElement = rootElement.element("header");
+
+		String dateRFC822 = headerElement.attributeValue("export-date");
+
+		Date exportDate = GetterUtil.getDate(
+			dateRFC822,
+			DateFormatFactoryUtil.getSimpleDateFormat(Time.RFC822_FORMAT));
+
+		manifestSummary.setExportDate(exportDate);
+
+		return manifestSummary;
+	}
+
+	@Override
+	public ManifestSummary getManifestSummary(
+			long userId, long groupId, Map<String, String[]> parameterMap,
+			FileEntry fileEntry)
+		throws Exception {
+
+		File file = DLFileEntryLocalServiceUtil.getFile(
+			userId, fileEntry.getFileEntryId(), fileEntry.getVersion(), false);
+
+		boolean successfulRename = false;
+
+		File newFile = null;
+
+		ManifestSummary manifestSummary = null;
+
+		try {
+			String newFileName = StringUtil.replace(
+				file.getPath(), file.getName(), fileEntry.getTitle());
+
+			newFile = new File(newFileName);
+
+			successfulRename = file.renameTo(newFile);
+
+			if (!successfulRename) {
+				newFile = FileUtil.createTempFile(fileEntry.getExtension());
+
+				FileUtil.copyFile(file, newFile);
+			}
+
+			manifestSummary = getManifestSummary(
+				userId, groupId, parameterMap, newFile);
+
+		}
+		finally {
+			if (successfulRename) {
+				newFile.renameTo(file);
+			}
+			else {
+				FileUtil.delete(newFile);
+			}
+		}
 
 		return manifestSummary;
 	}

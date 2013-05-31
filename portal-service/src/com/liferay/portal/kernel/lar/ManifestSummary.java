@@ -20,6 +20,7 @@ import com.liferay.portal.model.ClassedModel;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,6 +37,10 @@ public class ManifestSummary implements Serializable {
 
 	public void addModelCount(String modelName, long modelCount) {
 		_modelCounters.put(modelName, modelCount);
+	}
+
+	public Date getExportDate() {
+		return _exportDate;
 	}
 
 	public long getModelCount(Class<? extends ClassedModel> clazz) {
@@ -70,6 +75,10 @@ public class ManifestSummary implements Serializable {
 		_modelCounters.put(modelName, modelCounter + 1);
 	}
 
+	public void setExportDate(Date exportDate) {
+		_exportDate = exportDate;
+	}
+
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(3);
@@ -81,6 +90,7 @@ public class ManifestSummary implements Serializable {
 		return sb.toString();
 	}
 
+	private Date _exportDate;
 	private Map<String, Long> _modelCounters = new HashMap<String, Long>();
 
 }

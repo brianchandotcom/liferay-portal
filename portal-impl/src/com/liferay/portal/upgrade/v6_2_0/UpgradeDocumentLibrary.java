@@ -24,6 +24,7 @@ import com.liferay.portal.security.auth.FullNameGenerator;
 import com.liferay.portal.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.upgrade.v6_2_0.util.DLFileEntryTypeTable;
 import com.liferay.portal.upgrade.v6_2_0.util.DLFileRankTable;
+import com.liferay.portal.upgrade.v6_2_0.util.RepositoryTable;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 
@@ -116,6 +117,16 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		}
 
 		updateFileRanks();
+
+		try {
+			runSQL("alter_column_type Repository portletId VARCHAR(200) null");
+		}
+		catch (SQLException sqle) {
+			upgradeTable(
+				RepositoryTable.TABLE_NAME, RepositoryTable.TABLE_COLUMNS,
+				RepositoryTable.TABLE_SQL_CREATE,
+				RepositoryTable.TABLE_SQL_ADD_INDEXES);
+		}
 
 		// Checksum directory
 

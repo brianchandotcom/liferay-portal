@@ -71,7 +71,7 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 			{ "portletId", Types.VARCHAR },
 			{ "classNameId", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table PortletItem (portletItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,portletId VARCHAR(75) null,classNameId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table PortletItem (portletItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,portletId VARCHAR(200) null,classNameId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table PortletItem";
 	public static final String ORDER_BY_JPQL = " ORDER BY portletItem.portletItemId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY PortletItem.portletItemId ASC";

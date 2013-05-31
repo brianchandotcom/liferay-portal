@@ -33,6 +33,7 @@ import com.liferay.portal.upgrade.v6_2_0.UpgradeLayoutSet;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeLayoutSetBranch;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeMessageBoards;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeMessageBoardsAttachments;
+import com.liferay.portal.upgrade.v6_2_0.UpgradePortletItem;
 import com.liferay.portal.upgrade.v6_2_0.UpgradePortletPreferences;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeSchema;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeSocial;
@@ -70,6 +71,7 @@ public class UpgradeProcess_6_2_0 extends UpgradeProcess {
 		upgrade(UpgradeLayoutSetBranch.class);
 		upgrade(UpgradeMessageBoards.class);
 		upgrade(UpgradeMessageBoardsAttachments.class);
+		upgrade(UpgradePortletItem.class);
 		upgrade(UpgradePortletPreferences.class);
 		upgrade(UpgradeSocial.class);
 		upgrade(UpgradeUser.class);

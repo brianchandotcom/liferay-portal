@@ -1551,7 +1551,7 @@ create table PortletItem (
 	createDate DATE null,
 	modifiedDate DATE null,
 	name VARCHAR(75) null,
-	portletId VARCHAR(75) null,
+	portletId VARCHAR(200) null,
 	classNameId LONG
 );
 
@@ -1617,7 +1617,7 @@ create table Repository (
 	classNameId LONG,
 	name VARCHAR(75) null,
 	description STRING null,
-	portletId VARCHAR(75) null,
+	portletId VARCHAR(200) null,
 	typeSettings TEXT null,
 	dlFolderId LONG
 );

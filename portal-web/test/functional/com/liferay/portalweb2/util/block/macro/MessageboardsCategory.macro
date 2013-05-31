@@ -1,6 +1,6 @@
 <definition>
 	<command name="cpTearDown">
-		<execute macro="Page#cpGoto">
+		<execute macro="Page#cpGotoContent">
 			<var name="portletName" value="Message Boards" />
 		</execute>
 

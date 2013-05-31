@@ -2,18 +2,18 @@
 	<var name="userName" value="Test Test" />
 
 	<command name="cpTearDown">
-		<execute macro="Page#cpGoto">
+		<execute macro="Page#cpGotoContent">
 			<var name="portletName" value="Message Boards" />
 		</execute>
 
-		<while>
+		<if>
 			<condition action="CPMessageboards#isElementPresent" locator-key1="THREAD_TABLE_ALL_CHECKBOX" />
 			<then>
 				<execute action="CPMessageboards#click" locator-key1="THREAD_TABLE_ALL_CHECKBOX" />
 				<execute action="CPMessageboards#click" locator-key1="THREADS_RECYCLE_BIN_BUTTON" />
 				<execute action="CPMessageboards#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to move the selected entries to the Recycle Bin?" />
 			</then>
-		</while>
+		</if>
 
 		<execute macro="RecycleBin#cpEmptyRecycleBin" />
 	</command>

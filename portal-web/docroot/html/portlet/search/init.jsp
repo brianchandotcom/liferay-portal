@@ -153,14 +153,16 @@ private PortletURL _getViewFullContentURL(HttpServletRequest request, ThemeDispl
 		scopeGroupId = themeDisplay.getScopeGroupId();
 	}
 
-	long plid = LayoutServiceUtil.getDefaultPlid(groupId, scopeGroupId, portletId);
+	long plid = LayoutConstants.DEFAULT_PLID;
+
+	Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
+
+	if (layout != null) {
+		plid = layout.getPlid();
+	}
 
 	if (plid == 0) {
-		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
-
-		if (layout != null) {
-			plid = layout.getPlid();
-		}
+		plid = LayoutServiceUtil.getDefaultPlid(groupId, scopeGroupId, portletId);
 	}
 
 	PortletURL portletURL = PortletURLFactoryUtil.create(request, portletId, plid, PortletRequest.RENDER_PHASE);

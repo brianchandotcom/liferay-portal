@@ -484,6 +484,7 @@ create index IX_72BBA8B7 on LayoutSet (layoutSetPrototypeUuid);
 
 create index IX_8FF5D6EA on LayoutSetBranch (groupId);
 create index IX_C4079FD3 on LayoutSetBranch (groupId, privateLayout);
+create index IX_CCF0DA29 on LayoutSetBranch (groupId, privateLayout, master);
 create unique index IX_5FF18552 on LayoutSetBranch (groupId, privateLayout, name);
 
 create index IX_55F63D98 on LayoutSetPrototype (companyId);

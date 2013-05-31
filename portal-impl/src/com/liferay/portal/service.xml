@@ -909,6 +909,11 @@
 			<finder-column name="groupId" />
 			<finder-column name="privateLayout" />
 		</finder>
+		<finder name="G_P_M" return-type="LayoutSetBranch">
+			<finder-column name="groupId" />
+			<finder-column name="privateLayout" />
+			<finder-column name="master" />
+		</finder>
 		<finder name="G_P_N" return-type="LayoutSetBranch" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="privateLayout" />

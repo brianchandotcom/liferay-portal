@@ -110,6 +110,20 @@ public class PanelTag extends IncludeTag {
 	}
 
 	@Override
+	protected void cleanUp() {
+		_collapsible = true;
+		_cssClass = null;
+		_defaultState = "open";
+		_endPage = null;
+		_extended = false;
+		_helpMessage = null;
+		_id = null;
+		_persistState = true;
+		_startPage = null;
+		_title = null;
+	}
+
+	@Override
 	protected String getEndPage() {
 		if (Validator.isNull(_endPage)) {
 			return _END_PAGE;

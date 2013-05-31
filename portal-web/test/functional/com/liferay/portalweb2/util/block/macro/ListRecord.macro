@@ -229,7 +229,7 @@
 	</command>
 
 	<command name="viewCP">
-		<execute macro="Page#cpGotoContentCP">
+		<execute macro="Page#cpGotoContent">
 			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 

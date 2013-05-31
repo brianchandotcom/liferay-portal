@@ -522,18 +522,6 @@
 				(PortletPreferences.preferences LIKE ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.service.persistence.LayoutSetBranchFinder.findByMaster">
-		<![CDATA[
-			SELECT
-				{LayoutSetBranch.*}
-			FROM
-				LayoutSetBranch
-			WHERE
-				(LayoutSetBranch.groupId = ?) AND
-				(LayoutSetBranch.privateLayout = ?) AND
-				(LayoutSetBranch.master = ?)
-		]]>
-	</sql>
 	<sql id="com.liferay.portal.service.persistence.LockFinder.findByC_K">
 		<![CDATA[
 			SELECT

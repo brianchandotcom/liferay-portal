@@ -33,9 +33,6 @@ jdbc.two.url=jdbc:mysql://${database.host}/lportal2?useUnicode=true&characterEnc
 jdbc.two.username=
 jdbc.two.password=
 
-shard.available.names=default,one,two
-portal.security.manager.strategy=none
-
 spring.configs=\
 	META-INF/base-spring.xml,\
 	\
@@ -77,6 +74,8 @@ spring.configs=\
 	#META-INF/memcached-spring.xml,\
 	#META-INF/monitoring-spring.xml,\
 	\
-	META-INF/ext-spring.xml]]></echo>
+	META-INF/ext-spring.xml
+
+portal.security.manager.strategy=none]]></echo>
 	</target>
 </project>

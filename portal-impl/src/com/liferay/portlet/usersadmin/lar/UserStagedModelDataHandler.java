@@ -16,9 +16,7 @@ package com.liferay.portlet.usersadmin.lar;
 
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
 /**
@@ -51,12 +49,11 @@ public class UserStagedModelDataHandler
 	}
 
 	@Override
-	protected boolean validateMissingReference(String uuid, long groupId) {
-		try {
-			Group group = GroupLocalServiceUtil.getGroup(groupId);
+	protected boolean validateMissingReference(
+		String uuid, long companyId, long groupId) {
 
-			UserLocalServiceUtil.getUserByUuidAndCompanyId(
-				uuid, group.getCompanyId());
+		try {
+			UserLocalServiceUtil.getUserByUuidAndCompanyId(uuid, companyId);
 		}
 		catch (Exception e) {
 			return false;

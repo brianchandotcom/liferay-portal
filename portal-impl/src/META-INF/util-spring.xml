@@ -332,6 +332,7 @@
 				<entry key="com.liferay.portal.increment.BufferedIncrementAdvice" value="nextMethodInterceptor" />
 				<entry key="com.liferay.portal.messaging.async.AsyncAdvice" value="defaultDestinationName,nextMethodInterceptor" />
 				<entry key="com.liferay.portal.monitoring.statistics.service.ServiceMonitorAdvice" value="monitoringDestinationName,nextMethodInterceptor" />
+				<entry key="com.liferay.portal.resiliency.service.PortalResiliencyAdvice" value="nextMethodInterceptor" />
 				<entry key="com.liferay.portal.search.IndexableAdvice" value="nextMethodInterceptor" />
 				<entry key="com.liferay.portal.security.ac.AccessControlAdvice" value="accessControlAdvisor,nextMethodInterceptor" />
 				<entry key="com.liferay.portal.security.ac.AccessControlAdvisorImpl" value="" />

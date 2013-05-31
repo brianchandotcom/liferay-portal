@@ -15,6 +15,7 @@
 package com.liferay.portal.lar;
 
 import com.liferay.portal.LARFileException;
+import com.liferay.portal.kernel.cal.DateRange;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.ExportImport;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
@@ -32,13 +33,18 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -48,13 +54,18 @@ import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
@@ -66,11 +77,18 @@ import java.io.File;
 import java.io.InputStream;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
 
 import org.apache.xerces.parsers.SAXParser;
 
@@ -80,6 +98,116 @@ import org.xml.sax.InputSource;
  * @author Zsolt Berentey
  */
 public class ExportImportImpl implements ExportImport {
+
+	@Override
+	public Calendar getDate(
+		PortletRequest portletRequest, String paramPrefix,
+		boolean timeZoneSensitive) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		int dateMonth = ParamUtil.getInteger(
+			portletRequest, paramPrefix + "Month");
+		int dateDay = ParamUtil.getInteger(portletRequest, paramPrefix + "Day");
+		int dateYear = ParamUtil.getInteger(
+			portletRequest, paramPrefix + "Year");
+		int dateHour = ParamUtil.getInteger(
+			portletRequest, paramPrefix + "Hour");
+		int dateMinute = ParamUtil.getInteger(
+			portletRequest, paramPrefix + "Minute");
+		int dateAmPm = ParamUtil.getInteger(
+			portletRequest, paramPrefix + "AmPm");
+
+		if (dateAmPm == Calendar.PM) {
+			dateHour += 12;
+		}
+
+		Locale locale = null;
+		TimeZone timeZone = null;
+
+		if (timeZoneSensitive) {
+			locale = themeDisplay.getLocale();
+			timeZone = themeDisplay.getTimeZone();
+		}
+		else {
+			locale = LocaleUtil.getDefault();
+			timeZone = TimeZoneUtil.getTimeZone(StringPool.UTC);
+		}
+
+		Calendar cal = CalendarFactoryUtil.getCalendar(timeZone, locale);
+
+		cal.set(Calendar.MONTH, dateMonth);
+		cal.set(Calendar.DATE, dateDay);
+		cal.set(Calendar.YEAR, dateYear);
+		cal.set(Calendar.HOUR_OF_DAY, dateHour);
+		cal.set(Calendar.MINUTE, dateMinute);
+		cal.set(Calendar.SECOND, 0);
+		cal.set(Calendar.MILLISECOND, 0);
+
+		return cal;
+	}
+
+	@Override
+	public DateRange getDateRange(
+			PortletRequest portletRequest, long groupId, long plid,
+			String portletId, boolean privateLayout, boolean timeZoneSensitive)
+		throws Exception {
+
+		Date startDate = null;
+		Date endDate = null;
+
+		String range = ParamUtil.getString(portletRequest, "range");
+
+		if (range.equals("dateRange")) {
+			startDate = getDate(portletRequest, "startDate", true).getTime();
+
+			endDate = getDate(portletRequest, "endDate", true).getTime();
+		}
+		else if (range.equals("fromLastPublishDate")) {
+			if (Validator.isNotNull(portletId) && (plid > 0)) {
+				Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+
+				PortletPreferences preferences =
+					PortletPreferencesFactoryUtil.getPortletSetup(
+						layout, portletId, StringPool.BLANK);
+
+				long lastPublishDate = GetterUtil.getLong(
+					preferences.getValue(
+						"last-publish-date", StringPool.BLANK));
+
+				if (lastPublishDate > 0) {
+					endDate = new Date();
+
+					startDate = new Date(lastPublishDate);
+				}
+			}
+			else {
+				LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+					groupId, privateLayout);
+
+				long lastPublishDate = GetterUtil.getLong(
+					layoutSet.getSettingsProperty("last-publish-date"));
+
+				if (lastPublishDate > 0) {
+					endDate = new Date();
+
+					startDate = new Date(lastPublishDate);
+				}
+			}
+		}
+		else if (range.equals("last")) {
+			int rangeLast = ParamUtil.getInteger(portletRequest, "last");
+
+			Date now = new Date();
+
+			startDate = new Date(now.getTime() - (rangeLast * Time.HOUR));
+
+			endDate = now;
+		}
+
+		return new DateRange(startDate, endDate);
+	}
 
 	@Override
 	public ManifestSummary getManifestSummary(

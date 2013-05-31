@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.lar;
 
+import com.liferay.portal.kernel.cal.DateRange;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -21,12 +22,33 @@ import com.liferay.portal.model.StagedModel;
 
 import java.io.File;
 
+import java.util.Calendar;
 import java.util.Map;
+
+import javax.portlet.PortletRequest;
 
 /**
  * @author Zsolt Berentey
  */
 public class ExportImportUtil {
+
+	public static Calendar getDate(
+		PortletRequest portletRequest, String paramPrefix,
+		boolean timeZoneSensitive) {
+
+		return getExportImport().getDate(
+			portletRequest, paramPrefix, timeZoneSensitive);
+	}
+
+	public static DateRange getDateRange(
+			PortletRequest portletRequest, long groupId, long plid,
+			String portletId, boolean privateLayout, boolean timeZoneSensitive)
+		throws Exception {
+
+		return getExportImport().getDateRange(
+			portletRequest, groupId, plid, portletId, privateLayout,
+			timeZoneSensitive);
+	}
 
 	public static ExportImport getExportImport() {
 		PortalRuntimePermission.checkGetBeanProperty(ExportImportUtil.class);

@@ -21,7 +21,9 @@ import com.liferay.portal.LayoutImportException;
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.PortletIdException;
+import com.liferay.portal.kernel.cal.DateRange;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.lar.ExportImportUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
@@ -32,32 +34,25 @@ import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.Layout;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.struts.ActionConstants;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.dynamicdatalists.RecordSetDuplicateRecordSetKeyException;
 import com.liferay.portlet.dynamicdatamapping.StructureDuplicateStructureKeyException;
 
 import java.io.File;
 import java.io.FileInputStream;
 
-import java.util.Calendar;
 import java.util.Date;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -96,27 +91,49 @@ public class ExportImportAction extends EditConfigurationAction {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
-			if (cmd.equals("copy_from_live")) {
-				StagingUtil.copyFromLive(actionRequest, portlet);
+			if (Validator.isNotNull(cmd)) {
+				if (cmd.equals("copy_from_live")) {
+					StagingUtil.copyFromLive(actionRequest, portlet);
 
-				sendRedirect(actionRequest, actionResponse);
+					sendRedirect(actionRequest, actionResponse);
+				}
+				else if (cmd.equals(Constants.EXPORT)) {
+					exportData(actionRequest, actionResponse, portlet);
+
+					sendRedirect(actionRequest, actionResponse);
+				}
+				else if (cmd.equals(Constants.IMPORT)) {
+					checkExceededSizeLimit(actionRequest);
+
+					importData(actionRequest, actionResponse, portlet);
+
+					sendRedirect(actionRequest, actionResponse);
+				}
+				else if (cmd.equals("publish_to_live")) {
+					StagingUtil.publishToLive(actionRequest, portlet);
+
+					sendRedirect(actionRequest, actionResponse);
+				}
 			}
-			else if (cmd.equals(Constants.EXPORT)) {
-				exportData(actionRequest, actionResponse, portlet);
+			else {
+				long plid = ParamUtil.getLong(actionRequest, "plid");
 
-				sendRedirect(actionRequest, actionResponse);
-			}
-			else if (cmd.equals(Constants.IMPORT)) {
-				checkExceededSizeLimit(actionRequest);
+				DateRange dateRange = ExportImportUtil.getDateRange(
+					actionRequest, -1, plid, portlet.getPortletId(), false,
+					true);
 
-				importData(actionRequest, actionResponse, portlet);
+				Date startDate = dateRange.getStartDate();
+				Date endDate = dateRange.getEndDate();
 
-				sendRedirect(actionRequest, actionResponse);
-			}
-			else if (cmd.equals("publish_to_live")) {
-				StagingUtil.publishToLive(actionRequest, portlet);
+				if (startDate != null) {
+					actionResponse.setRenderParameter(
+						"startDate", String.valueOf(startDate.getTime()));
+				}
 
-				sendRedirect(actionRequest, actionResponse);
+				if (endDate != null) {
+					actionResponse.setRenderParameter(
+						"endDate", String.valueOf(endDate.getTime()));
+				}
 			}
 		}
 		catch (Exception e) {
@@ -184,84 +201,19 @@ public class ExportImportAction extends EditConfigurationAction {
 		File file = null;
 
 		try {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
 			long plid = ParamUtil.getLong(actionRequest, "plid");
 			long groupId = ParamUtil.getLong(actionRequest, "groupId");
 			String fileName = ParamUtil.getString(
 				actionRequest, "exportFileName");
-			String range = ParamUtil.getString(actionRequest, "range");
 
-			Date startDate = null;
-			Date endDate = null;
-
-			if (range.equals("dateRange")) {
-				int startDateMonth = ParamUtil.getInteger(
-					actionRequest, "startDateMonth");
-				int startDateDay = ParamUtil.getInteger(
-					actionRequest, "startDateDay");
-				int startDateYear = ParamUtil.getInteger(
-					actionRequest, "startDateYear");
-				int startDateHour = ParamUtil.getInteger(
-					actionRequest, "startDateHour");
-				int startDateMinute = ParamUtil.getInteger(
-					actionRequest, "startDateMinute");
-				int startDateAmPm = ParamUtil.getInteger(
-					actionRequest, "startDateAmPm");
-
-				if (startDateAmPm == Calendar.PM) {
-					startDateHour += 12;
-				}
-
-				startDate = PortalUtil.getDate(
-					startDateMonth, startDateDay, startDateYear, startDateHour,
-					startDateMinute, themeDisplay.getTimeZone(),
-					PortalException.class);
-
-				int endDateMonth = ParamUtil.getInteger(
-					actionRequest, "endDateMonth");
-				int endDateDay = ParamUtil.getInteger(
-					actionRequest, "endDateDay");
-				int endDateYear = ParamUtil.getInteger(
-					actionRequest, "endDateYear");
-				int endDateHour = ParamUtil.getInteger(
-					actionRequest, "endDateHour");
-				int endDateMinute = ParamUtil.getInteger(
-					actionRequest, "endDateMinute");
-				int endDateAmPm = ParamUtil.getInteger(
-					actionRequest, "endDateAmPm");
-
-				if (endDateAmPm == Calendar.PM) {
-					endDateHour += 12;
-				}
-
-				endDate = PortalUtil.getDate(
-					endDateMonth, endDateDay, endDateYear, endDateHour,
-					endDateMinute, themeDisplay.getTimeZone(),
-					PortalException.class);
-			}
-			else if (range.equals("fromLastPublishDate")) {
-				Layout layout = LayoutLocalServiceUtil.getLayout(plid);
-
-				PortletPreferences preferences =
-					PortletPreferencesFactoryUtil.getPortletSetup(
-						layout, portlet.getPortletId(), StringPool.BLANK);
-
-				long lastPublishDate = GetterUtil.getLong(
-					preferences.getValue(
-						"last-publish-date", StringPool.BLANK));
-
-				if (lastPublishDate > 0) {
-					endDate = new Date();
-
-					startDate = new Date(lastPublishDate);
-				}
-			}
+			DateRange dateRange = ExportImportUtil.getDateRange(
+				actionRequest, groupId, plid, portlet.getPortletId(), false,
+				true);
 
 			file = LayoutServiceUtil.exportPortletInfoAsFile(
 				plid, groupId, portlet.getPortletId(),
-				actionRequest.getParameterMap(), startDate, endDate);
+				actionRequest.getParameterMap(), dateRange.getStartDate(),
+				dateRange.getEndDate());
 
 			HttpServletRequest request = PortalUtil.getHttpServletRequest(
 				actionRequest);

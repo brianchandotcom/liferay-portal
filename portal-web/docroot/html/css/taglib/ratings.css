@@ -27,14 +27,18 @@
 		.thumbrating {
 			height: 20px;
 
-			.rating-label-element {
+			.rating-label {
 				padding: 0 5px;
 			}
 		}
 	}
+
+	.rating-input-container .rating-input {
+		margin-left: 1px;	
+	}
 }
 
-.js .taglib-ratings .liferay-rating-vote .field {
+.js .taglib-ratings .liferay-rating-vote .rating-input-container {
 	display: none;
 }
 

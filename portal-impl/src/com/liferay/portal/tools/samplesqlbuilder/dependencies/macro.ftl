@@ -143,6 +143,10 @@
 	<@insertResourcePermissions
 		_entry = _layout
 	/>
+
+	<#local layoutFriendlyURL = dataFactory.newLayoutFriendlyURL(_layout)>
+
+	insert into LayoutFriendlyURL values ('${layoutFriendlyURL.uuid}', ${layoutFriendlyURL.layoutFriendlyURLId}, ${layoutFriendlyURL.groupId}, ${layoutFriendlyURL.companyId}, ${layoutFriendlyURL.userId}, '${layoutFriendlyURL.userName}', '${dataFactory.getDateString(layoutFriendlyURL.createDate)}', '${dataFactory.getDateString(layoutFriendlyURL.modifiedDate)}', ${layoutFriendlyURL.plid}, ${layoutFriendlyURL.privateLayout?string}, '${layoutFriendlyURL.friendlyURL}', '${layoutFriendlyURL.languageId}');
 </#macro>
 
 <#macro insertMBDiscussion

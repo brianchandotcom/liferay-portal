@@ -47,6 +47,12 @@
 		<execute function="Click#textClickAt" />
 	</command>
 
+	<command name="pauseTextClickAtAndWait">
+		<execute selenium="pause" argument1="1000" />
+
+		<execute function="Click#textClickAtAndWait" />
+	</command>
+
 	<command name="textClick">
 		<execute function="AssertTextEquals#assertText" />
 

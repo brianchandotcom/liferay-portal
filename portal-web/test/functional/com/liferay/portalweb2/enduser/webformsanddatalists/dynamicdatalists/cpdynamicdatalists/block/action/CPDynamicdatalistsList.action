@@ -1,0 +1,28 @@
+<definition>
+	<command name="assertTextEquals">
+		<case locator-key1="INFO_MESSAGE">
+			<execute function="AssertTextEquals#assertPartialText" value1="No" />
+		</case>
+		<case locator-key1="SUCCESS_MESSAGE">
+			<execute function="AssertTextEquals#assertText" value1="Your request completed successfully." />
+		</case>
+	</command>
+
+	<command name="click">
+		<case locator-key1="ADD_RECORD_BUTTON">
+			<execute function="Click#partialTextClickAtAndWait" value1="Add" />
+		</case>
+		<case locator-key1="RECORD_MENULIST_DELETE">
+			<execute function="Click#textClickAtAndWait" value1="Delete" />
+		</case>
+		<case locator-key1="RECORD_MENULIST_EDIT">
+			<execute function="Click#textClickAtAndWait" value1="Edit" />
+		</case>
+		<case locator-key1="RECORD_MENULIST_VIEW">
+			<execute function="Click#textClickAtAndWait" value1="View" />
+		</case>
+		<case comparator="startsWith" locator-key1="RECORD_TABLE_ACTIONS_">
+			<execute function="Click#textClickAt" value1="Actions" />
+		</case>
+	</command>
+</definition>

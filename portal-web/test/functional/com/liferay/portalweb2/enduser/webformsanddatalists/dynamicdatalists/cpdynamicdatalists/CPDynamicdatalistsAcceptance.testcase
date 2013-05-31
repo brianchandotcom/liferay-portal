@@ -1,0 +1,132 @@
+<definition>
+	<set-up>
+		<execute macro="User#pgFirstLogin" />
+	</set-up>
+
+	<command name="AddDataDefinition">
+		<var name="dataDefinitionDescription" value="Data Definition Description" />
+		<var name="dataDefinitionName" value="Data Definition" />
+
+		<execute macro="DataDefinition#addCP" />
+		<execute macro="DataDefinition#viewCP" />
+	</command>
+
+	<command name="AddList">
+		<var name="dataDefinitionDescription" value="Data Definition Description" />
+		<var name="dataDefinitionName" value="Data Definition" />
+		<var name="listDescription" value="List Description" />
+		<var name="listName" value="List Name" />
+
+		<execute macro="DataDefinition#addCP" />
+
+		<execute macro="List#addCP" />
+		<execute macro="List#viewCP" />
+	</command>
+
+	<command name="AddRecord">
+		<var name="dataDefinitionDescription" value="Data Definition Description" />
+		<var name="dataDefinitionName" value="Data Definition" />
+		<var name="listDescription" value="List Description" />
+		<var name="listName" value="List Name" />
+		<var name="recordText" value="Text Field" />
+
+		<execute macro="DataDefinition#addCP" />
+
+		<execute macro="List#addCP" />
+
+		<execute macro="ListRecord#addCP" />
+		<execute macro="ListRecord#viewCP" />
+	</command>
+
+	<command name="EditDataDefinition">
+		<var name="dataDefinitionDescription" value="Data Definition Description" />
+		<var name="dataDefinitionDescriptionEdit" value="Data Definition Description Edit" />
+		<var name="dataDefinitionName" value="Data Definition" />
+		<var name="dataDefinitionNameEdit" value="Data Definition Edit" />
+
+		<execute macro="DataDefinition#addCP" />
+		<execute macro="DataDefinition#editCP" />
+		<execute macro="DataDefinition#viewCP">
+			<var name="dataDefinitionName" value="${dataDefinitionNameEdit}" />
+			<var name="dataDefinitionDescription" value="${dataDefinitionDescriptionEdit}" />
+		</execute>
+	</command>
+
+	<command name="EditList">
+		<var name="dataDefinitionDescription" value="Data Definition Description" />
+		<var name="dataDefinitionName" value="Data Definition" />
+		<var name="listDescription" value="List Description" />
+		<var name="listDescriptionEdit" value="List Description Edit" />
+		<var name="listName" value="List Name" />
+		<var name="listNameEdit" value="List Name Edit" />
+
+		<execute macro="DataDefinition#addCP" />
+
+		<execute macro="List#addCP" />
+		<execute macro="List#editCP" />
+		<execute macro="List#viewCP">
+			<var name="listName" value="${listNameEdit}" />
+			<var name="listDescription" value="${listDescriptionEdit}" />
+		</execute>
+	</command>
+
+	<command name="EditRecord">
+		<var name="dataDefinitionDescription" value="Data Definition Description" />
+		<var name="dataDefinitionName" value="Data Definition" />
+		<var name="listDescription" value="List Description" />
+		<var name="listName" value="List Name" />
+		<var name="recordText" value="Text Field" />
+		<var name="recordTextEdit" value="Text Field Edit" />
+
+		<execute macro="DataDefinition#addCP" />
+
+		<execute macro="List#addCP" />
+
+		<execute macro="ListRecord#addCP" />
+		<execute macro="ListRecord#editCP" />
+		<execute macro="ListRecord#viewCP">
+			<var name="recordText" value="${recordTextEdit}" />
+		</execute>
+	</command>
+
+	<command name="DeleteDataDefinition">
+		<var name="dataDefinitionDescription" value="Data Definition Description" />
+		<var name="dataDefinitionName" value="Data Definition" />
+
+		<execute macro="DataDefinition#addCP" />
+		<execute macro="DataDefinition#deleteCP" />
+	</command>
+
+	<command name="DeleteList">
+		<var name="dataDefinitionDescription" value="Data Definition Description" />
+		<var name="dataDefinitionName" value="Data Definition" />
+		<var name="listDescription" value="List Description" />
+		<var name="listName" value="List Name" />
+
+		<execute macro="DataDefinition#addCP" />
+
+		<execute macro="List#addCP" />
+		<execute macro="List#deleteCP" />
+	</command>
+
+	<command name="DeleteRecord">
+		<var name="dataDefinitionDescription" value="Data Definition Description" />
+		<var name="dataDefinitionName" value="Data Definition" />
+		<var name="listDescription" value="List Description" />
+		<var name="listName" value="List Name" />
+		<var name="recordText" value="Text Field" />
+
+		<execute macro="DataDefinition#addCP" />
+
+		<execute macro="List#addCP" />
+
+		<execute macro="ListRecord#addCP" />
+		<execute macro="ListRecord#deleteCP" />
+	</command>
+
+	<tear-down>
+		<execute macro="List#tearDownCP" />
+
+		<execute macro="DataDefinition#tearDownCP" />
+	</tear-down>
+</definition>

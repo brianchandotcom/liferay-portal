@@ -1,0 +1,16 @@
+<definition>
+	<command name="click">
+		<case locator-key1="SAVE_BUTTON">
+			<execute function="Click#pauseTextClickAtAndWait" value1="Save" />
+		</case>
+	</command>
+
+	<command name="type">
+		<case locator-key1="DETAILS_DESCRIPTION_FIELD">
+			<execute function="Type#clickAtSendKeys" />
+		</case>
+		<case locator-key1="NAME_FIELD">
+			<execute function="Type#clickAtSendKeys" />
+		</case>
+	</command>
+</definition>

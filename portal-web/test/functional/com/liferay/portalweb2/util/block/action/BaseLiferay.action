@@ -92,6 +92,12 @@
 		</default>
 	</command>
 
+	<command name="doubleClick">
+		<default>
+			<execute function="DoubleClick#doubleClickAt" />
+		</default>
+	</command>
+
 	<command name="dragAndDrop">
 		<default>
 			<execute function="DragAndDrop#dragAndDrop" />

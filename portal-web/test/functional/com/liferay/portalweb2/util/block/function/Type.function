@@ -1,4 +1,14 @@
 <definition>
+	<command name="clickAtSendKeys">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="type" argument2="" />
+
+		<execute selenium="clickAt" />
+
+		<execute selenium="sendKeys" />
+	</command>
+
 	<command name="sendKeys">
 		<execute selenium="waitForVisible" />
 

@@ -1385,7 +1385,7 @@
 				(Contact_.twitterSn != '')
 		]]>
 	</sql>
-    <sql id="com.liferay.portal.service.persistence.UserFinder.joinByNoOrganizations">
+	<sql id="com.liferay.portal.service.persistence.UserFinder.joinByNoOrganizations">
 		<![CDATA[
 			LEFT JOIN
 				Users_Orgs ON

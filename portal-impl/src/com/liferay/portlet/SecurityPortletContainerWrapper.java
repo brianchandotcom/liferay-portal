@@ -21,9 +21,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ActionResult;
 import com.liferay.portal.kernel.portlet.PortletContainer;
 import com.liferay.portal.kernel.portlet.PortletContainerException;
-import com.liferay.portal.kernel.portlet.PortletContainerSecurity;
 import com.liferay.portal.kernel.portlet.PortletContainerUtil;
 import com.liferay.portal.kernel.portlet.PortletModeFactory;
+import com.liferay.portal.kernel.portlet.PortletSecurity;
 import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.struts.LastPath;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
@@ -56,7 +55,6 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -70,37 +68,27 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Tomas Polesovsky
+ * @author Raymond Augé
  */
 @DoPrivileged
-public class SecurityPortletContainerWrapper
-	implements PortletContainer, PortletContainerSecurity {
+public class SecurityPortletContainerWrapper implements PortletContainer {
 
-	public static PortletContainer createPortletContainerSecurityImpl(
-		PortletContainer portletContainer) {
+	public static PortletContainer createSecurityPortletContainerWrapper(
+		PortletContainer portletContainer, PortletSecurity portletSecurity) {
 
 		if (!SPIUtil.isSPI()) {
 			portletContainer = new SecurityPortletContainerWrapper(
-				portletContainer);
+				portletContainer, portletSecurity);
 		}
 
 		return portletContainer;
 	}
 
-	public SecurityPortletContainerWrapper(PortletContainer portletContainer) {
+	public SecurityPortletContainerWrapper(
+		PortletContainer portletContainer, PortletSecurity portletSecurity) {
+
 		_portletContainer = portletContainer;
-
-		resetWhitelist();
-		resetWhitelistActions();
-	}
-
-	@Override
-	public Set<String> getWhitelist() {
-		return _whitelist;
-	}
-
-	@Override
-	public Set<String> getWhitelistActions() {
-		return _whitelistActions;
+		_portletSecurity = portletSecurity;
 	}
 
 	@Override
@@ -165,24 +153,6 @@ public class SecurityPortletContainerWrapper
 		catch (Exception e) {
 			throw new PortletContainerException(e);
 		}
-	}
-
-	@Override
-	public Set<String> resetWhitelist() {
-		_whitelist = SetUtil.fromArray(
-			PropsValues.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST);
-		_whitelist = Collections.unmodifiableSet(_whitelist);
-
-		return _whitelist;
-	}
-
-	@Override
-	public Set<String> resetWhitelistActions() {
-		_whitelistActions = SetUtil.fromArray(
-			PropsValues.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST_ACTIONS);
-		_whitelistActions = Collections.unmodifiableSet(_whitelistActions);
-
-		return _whitelistActions;
 	}
 
 	@Override
@@ -434,7 +404,9 @@ public class SecurityPortletContainerWrapper
 			return true;
 		}
 
-		if (_whitelist.contains(portletId)) {
+		Set<String> whitelist = _portletSecurity.getWhitelist();
+
+		if (whitelist.contains(portletId)) {
 			return true;
 		}
 
@@ -447,7 +419,9 @@ public class SecurityPortletContainerWrapper
 			strutsAction = ParamUtil.getString(request, "struts_action");
 		}
 
-		if (_whitelistActions.contains(strutsAction)) {
+		Set<String> whitelistActions = _portletSecurity.getWhitelistActions();
+
+		if (whitelistActions.contains(strutsAction)) {
 			return true;
 		}
 
@@ -690,7 +664,6 @@ public class SecurityPortletContainerWrapper
 		SecurityPortletContainerWrapper.class);
 
 	private PortletContainer _portletContainer;
-	private Set<String> _whitelist;
-	private Set<String> _whitelistActions;
+	private PortletSecurity _portletSecurity;
 
 }

@@ -194,6 +194,10 @@ if (Validator.isNotNull(historyKey)) {
 		if (tab && (tabIndex > -1)) {
 			tabview.selectChild(tabIndex);
 		}
+
+		updateRedirectForSectionId(sectionId);
+
+		Liferay.fire('formNavigator:reveal' + sectionId);
 	};
 
 	function updateSectionStatus() {
@@ -239,11 +243,7 @@ if (Validator.isNotNull(historyKey)) {
 
 			var sectionId = boundingBox.getData('sectionId');
 
-			Liferay.fire('formNavigator:reveal' + sectionId);
-
 			history.addValue('<portlet:namespace />tab', sectionId);
-
-			updateRedirectForSectionId(sectionId);
 		}
 	);
 
@@ -256,7 +256,7 @@ if (Validator.isNotNull(historyKey)) {
 
 			var removed = event.removed.<portlet:namespace />tab;
 
-			if (event.src === A.HistoryHash.SRC_HASH) {
+			if (event.src === A.HistoryHash.SRC_HASH || event.src === A.HistoryBase.SRC_ADD) {
 				if (changed) {
 					selectTabBySectionId(changed.newVal);
 				}
@@ -282,15 +282,23 @@ if (Validator.isNotNull(historyKey)) {
 		formNode.delegate('change', updateSectionStatus, 'input, select, textarea');
 	}
 
-	var currentLocationHash = A.HistoryHash.getHash();
+	var currentUrl = new A.Url(location.href);
 
-	var locationSectionId = currentLocationHash.substring(currentLocationHash.indexOf('=') + 1);
+	var currentAnchor = currentUrl.getAnchor();
 
-	if (locationSectionId.indexOf('<portlet:namespace />') === -1) {
-		locationSectionId = '<portlet:namespace />' + locationSectionId;
+	if (!currentAnchor) {
+		currentAnchor = currentUrl.getParameter('<portlet:namespace />historyKey');
 	}
 
-	selectTabBySectionId(locationSectionId);
+	if (currentAnchor) {
+		var locationSectionId = currentAnchor.substring(currentAnchor.indexOf('=') + 1);
+
+		if (locationSectionId.indexOf('<portlet:namespace />') === -1) {
+			locationSectionId = '<portlet:namespace />' + locationSectionId;
+		}
+
+		selectTabBySectionId(locationSectionId);
+	}
 </aui:script>
 
 <%!

@@ -18,8 +18,9 @@ import java.util.Set;
 
 /**
  * @author Tomas Polesovsky
+ * @author Raymond Augé
  */
-public interface PortletContainerSecurity {
+public interface PortletSecurity {
 
 	public Set<String> getWhitelist();
 

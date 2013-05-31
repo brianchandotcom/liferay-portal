@@ -40,7 +40,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
-import com.liferay.portal.kernel.portlet.PortletContainerSecurityUtil;
+import com.liferay.portal.kernel.portlet.PortletSecurityUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
@@ -3744,12 +3744,12 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public Set<String> getPortletAddDefaultResourceCheckWhitelist() {
-		return PortletContainerSecurityUtil.getWhitelist();
+		return PortletSecurityUtil.getWhitelist();
 	}
 
 	@Override
 	public Set<String> getPortletAddDefaultResourceCheckWhitelistActions() {
-		return PortletContainerSecurityUtil.getWhitelistActions();
+		return PortletSecurityUtil.getWhitelistActions();
 	}
 
 	/**
@@ -5574,7 +5574,7 @@ public class PortalImpl implements Portal {
 			return true;
 		}
 
-		Set<String> whiteList = PortletContainerSecurityUtil.getWhitelist();
+		Set<String> whiteList = PortletSecurityUtil.getWhitelist();
 
 		if (whiteList.contains(portletId)) {
 			return true;
@@ -5590,7 +5590,7 @@ public class PortalImpl implements Portal {
 		}
 
 		Set<String> whitelistActions =
-			PortletContainerSecurityUtil.getWhitelistActions();
+			PortletSecurityUtil.getWhitelistActions();
 
 		if (whitelistActions.contains(strutsAction)) {
 			return true;
@@ -6060,12 +6060,12 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public Set<String> resetPortletAddDefaultResourceCheckWhitelist() {
-		return PortletContainerSecurityUtil.resetWhitelist();
+		return PortletSecurityUtil.resetWhitelist();
 	}
 
 	@Override
 	public Set<String> resetPortletAddDefaultResourceCheckWhitelistActions() {
-		return PortletContainerSecurityUtil.resetWhitelistActions();
+		return PortletSecurityUtil.resetWhitelistActions();
 	}
 
 	@Override

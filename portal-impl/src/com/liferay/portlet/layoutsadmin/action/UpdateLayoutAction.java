@@ -28,7 +28,6 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutPrototypeServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -200,9 +199,6 @@ public class UpdateLayoutAction extends JSONAction {
 		long layoutId = ParamUtil.getLong(request, "layoutId");
 		String name = ParamUtil.getString(request, "name");
 		String languageId = ParamUtil.getString(request, "languageId");
-
-		LayoutLocalServiceUtil.updateScopedPortletNames(
-			groupId, privateLayout, layoutId, name, languageId);
 
 		if (plid <= 0) {
 			LayoutServiceUtil.updateName(

@@ -96,9 +96,13 @@ public class PropertiesDocBuilder {
 
 			String propertiesHTMLFileName = sb.toString();
 
-			System.out.println("Writing " + propertiesHTMLFileName);
-
 			File propertiesHTMLFile = new File(propertiesHTMLFileName);
+
+			propertiesHTMLFileName = StringUtil.replace(
+				propertiesHTMLFileName, StringPool.BACK_SLASH,
+				StringPool.SLASH);
+
+			System.out.println("Writing " + propertiesHTMLFileName);
 
 			Writer writer = new FileWriter(propertiesHTMLFile);
 

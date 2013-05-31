@@ -16,6 +16,8 @@ package com.liferay.portal.tools.propertiesdoc;
 
 import com.liferay.portal.freemarker.FreeMarkerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ArgumentsUtil;
 
 import java.io.File;
@@ -85,7 +87,12 @@ public class PropertiesDocIndexBuilder {
 		context.put("lpVersion", lpVersion);
 
 		try {
-			File indexHTMLFile = new File (propertiesDir + "/index.html");
+			String indexHTMLFileName = propertiesDir + "/index.html";
+
+			File indexHTMLFile = new File (indexHTMLFileName);
+
+			indexHTMLFileName = StringUtil.replace(
+				indexHTMLFileName, StringPool.BACK_SLASH, StringPool.SLASH);
 
 			Writer writer = new FileWriter(indexHTMLFile);
 
@@ -99,7 +106,7 @@ public class PropertiesDocIndexBuilder {
 				e.printStackTrace();
 			}
 
-			System.out.println("Writing " + indexHTMLFile.getPath());
+			System.out.println("Writing " + indexHTMLFileName);
 
 			writer.flush();
 		}

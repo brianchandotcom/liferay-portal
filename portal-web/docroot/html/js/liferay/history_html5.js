@@ -19,6 +19,8 @@ AUI.add(
 		A.mix(
 			History.prototype,
 			{
+				PROTECTED_HASH_KEYS: [ /^tab$/, /^_\d+_tab$/ ],
+
 				add: function(state, options) {
 					var instance = this;
 
@@ -72,9 +74,27 @@ AUI.add(
 						var hashMap = instance._parse(hash);
 
 						if (!isEmpty(hashMap)) {
+							var protectedHashMap = {};
+
 							state = hashMap;
 
+							A.each(
+								state,
+								function(value1, key1, collection1) {
+									A.Array.each(
+										instance.PROTECTED_HASH_KEYS,
+										function(value2, key2, collection2) {
+											if (value2.test(key1)) {
+												delete state[key1];
+												protectedHashMap[key1] = value1;
+											}
+										}
+									);
+								}
+							);
+
 							uriData.pop();
+							uriData.push('#', QueryString.stringify(protectedHashMap));
 						}
 					}
 

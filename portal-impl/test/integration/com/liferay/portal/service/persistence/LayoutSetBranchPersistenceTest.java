@@ -389,6 +389,13 @@ public class LayoutSetBranchPersistenceTest {
 			existingLayoutSetBranchModelImpl.getOriginalGroupId());
 		Assert.assertEquals(existingLayoutSetBranchModelImpl.getPrivateLayout(),
 			existingLayoutSetBranchModelImpl.getOriginalPrivateLayout());
+		Assert.assertEquals(existingLayoutSetBranchModelImpl.getMaster(),
+			existingLayoutSetBranchModelImpl.getOriginalMaster());
+
+		Assert.assertEquals(existingLayoutSetBranchModelImpl.getGroupId(),
+			existingLayoutSetBranchModelImpl.getOriginalGroupId());
+		Assert.assertEquals(existingLayoutSetBranchModelImpl.getPrivateLayout(),
+			existingLayoutSetBranchModelImpl.getOriginalPrivateLayout());
 		Assert.assertTrue(Validator.equals(
 				existingLayoutSetBranchModelImpl.getName(),
 				existingLayoutSetBranchModelImpl.getOriginalName()));

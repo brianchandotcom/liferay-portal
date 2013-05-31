@@ -473,6 +473,74 @@ public interface LayoutSetBranchPersistence extends BasePersistence<LayoutSetBra
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns the layout set branch where groupId = &#63; and privateLayout = &#63; and master = &#63; or throws a {@link com.liferay.portal.NoSuchLayoutSetBranchException} if it could not be found.
+	*
+	* @param groupId the group ID
+	* @param privateLayout the private layout
+	* @param master the master
+	* @return the matching layout set branch
+	* @throws com.liferay.portal.NoSuchLayoutSetBranchException if a matching layout set branch could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.LayoutSetBranch findByG_P_M(long groupId,
+		boolean privateLayout, boolean master)
+		throws com.liferay.portal.NoSuchLayoutSetBranchException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the layout set branch where groupId = &#63; and privateLayout = &#63; and master = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param groupId the group ID
+	* @param privateLayout the private layout
+	* @param master the master
+	* @return the matching layout set branch, or <code>null</code> if a matching layout set branch could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.LayoutSetBranch fetchByG_P_M(long groupId,
+		boolean privateLayout, boolean master)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the layout set branch where groupId = &#63; and privateLayout = &#63; and master = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param groupId the group ID
+	* @param privateLayout the private layout
+	* @param master the master
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching layout set branch, or <code>null</code> if a matching layout set branch could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.LayoutSetBranch fetchByG_P_M(long groupId,
+		boolean privateLayout, boolean master, boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes the layout set branch where groupId = &#63; and privateLayout = &#63; and master = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param privateLayout the private layout
+	* @param master the master
+	* @return the layout set branch that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.LayoutSetBranch removeByG_P_M(
+		long groupId, boolean privateLayout, boolean master)
+		throws com.liferay.portal.NoSuchLayoutSetBranchException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of layout set branchs where groupId = &#63; and privateLayout = &#63; and master = &#63;.
+	*
+	* @param groupId the group ID
+	* @param privateLayout the private layout
+	* @param master the master
+	* @return the number of matching layout set branchs
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByG_P_M(long groupId, boolean privateLayout, boolean master)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns the layout set branch where groupId = &#63; and privateLayout = &#63; and name = &#63; or throws a {@link com.liferay.portal.NoSuchLayoutSetBranchException} if it could not be found.
 	*
 	* @param groupId the group ID

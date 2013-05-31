@@ -82,13 +82,13 @@ public interface ${entity.name}Model extends
 		<#assign overrideColumnNames = overrideColumnNames + ["companyId", "createDate", "groupId", "modifiedDate", "userId", "userName", "userUuid", "uuid"]>
 	</#if>
 
-	<#if !entity.isStagedGroupedModel() && entity.isStagedAuditedModel()>
+	<#if entity.isStagedAuditedModel() && !entity.isStagedGroupedModel()>
 		, StagedAuditedModel
 
 		<#assign overrideColumnNames = overrideColumnNames + ["companyId", "createDate", "modifiedDate", "userId", "userName", "userUuid", "uuid"]>
 	</#if>
 
-	<#if !entity.isStagedGroupedModel() && !entity.isStagedAuditedModel() && entity.isStagedModel()>
+	<#if !entity.isStagedAuditedModel() && !entity.isStagedGroupedModel() && entity.isStagedModel()>
 		, StagedModel
 
 		<#assign overrideColumnNames = overrideColumnNames + ["companyId", "createDate", "modifiedDate", "userUuid", "uuid"]>

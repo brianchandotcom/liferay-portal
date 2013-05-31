@@ -1030,7 +1030,7 @@ public class PortalUtil {
 
 	/**
 	 * @deprecated As of 6.2.0 replaced by {@link
-	 * PortletContainerSecurityUtil#getWhitelist()}
+	 * PortletSecurityUtil#getWhitelist()}
 	 */
 	public static Set<String> getPortletAddDefaultResourceCheckWhitelist() {
 		return getPortal().getPortletAddDefaultResourceCheckWhitelist();
@@ -1038,7 +1038,7 @@ public class PortalUtil {
 
 	/**
 	 * @deprecated As of 6.2.0 replaced by {@link
-	 * PortletContainerSecurityUtil#getWhitelistActions()}
+	 * PortletSecurityUtil#getWhitelistActions()}
 	 */
 	public static Set<String>
 		getPortletAddDefaultResourceCheckWhitelistActions() {
@@ -1700,7 +1700,7 @@ public class PortalUtil {
 
 	/**
 	 * @deprecated As of 6.2.0 replaced by {@link
-	 * PortletContainerSecurityUtil#resetWhitelist()}
+	 * PortletSecurityUtil#resetWhitelist()}
 	 */
 	public static Set<String> resetPortletAddDefaultResourceCheckWhitelist() {
 		return getPortal().resetPortletAddDefaultResourceCheckWhitelist();
@@ -1708,7 +1708,7 @@ public class PortalUtil {
 
 	/**
 	 * @deprecated As of 6.2.0 replaced by {@link
-	 * PortletContainerSecurityUtil#resetWhitelistActions()}
+	 * PortletSecurityUtil#resetWhitelistActions()}
 	 */
 	public static Set<String>
 		resetPortletAddDefaultResourceCheckWhitelistActions() {

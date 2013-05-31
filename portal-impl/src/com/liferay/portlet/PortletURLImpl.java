@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortletContainerSecurityUtil;
+import com.liferay.portal.kernel.portlet.PortletSecurityUtil;
 import com.liferay.portal.kernel.portlet.PortletModeFactory;
 import com.liferay.portal.kernel.portlet.WindowStateFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -805,7 +805,7 @@ public class PortletURLImpl
 			}
 		}
 
-		Set<String> whiteList = PortletContainerSecurityUtil.getWhitelist();
+		Set<String> whiteList = PortletSecurityUtil.getWhitelist();
 
 		if (whiteList.contains(_portletId)) {
 			return;

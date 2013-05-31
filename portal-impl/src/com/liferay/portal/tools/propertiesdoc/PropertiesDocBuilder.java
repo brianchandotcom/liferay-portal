@@ -83,7 +83,6 @@ public class PropertiesDocBuilder {
 		}
 
 		context.put("sections", propertiesSections);
-
 		context.put("toc", toc);
 
 		try {

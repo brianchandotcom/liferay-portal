@@ -270,8 +270,9 @@
 			<bean class="com.liferay.portal.kernel.poller.comet.CometHandlerPool" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.kernel.portlet.PortletContainerSecurityUtil" class="com.liferay.portal.kernel.portlet.PortletContainerSecurityUtil">
-		<property name="portletContainerSecurity" ref="com.liferay.portlet.PortletContainerSecurity" />
+	<bean id="com.liferay.portlet.PortletSecurity" class="com.liferay.portlet.PortletSecurityImpl" />
+	<bean id="com.liferay.portal.kernel.portlet.PortletSecurityUtil" class="com.liferay.portal.kernel.portlet.PortletSecurityUtil">
+		<property name="portletSecurity" ref="com.liferay.portlet.PortletSecurity" />
 	</bean>
 	<bean id="com.liferay.portal.kernel.portlet.PortletContainerUtil" class="com.liferay.portal.kernel.portlet.PortletContainerUtil">
 		<property name="portletContainer" ref="com.liferay.portlet.RestrictPortletContainerWrapper" />
@@ -844,11 +845,12 @@
 	</bean>
 	<bean id="com.liferay.portlet.DefaultControlPanelEntryFactory" class="com.liferay.portlet.DefaultControlPanelEntryFactory" />
 	<bean id="com.liferay.portlet.PortletContainerImpl" class="com.liferay.portlet.PortletContainerImpl" />
-	<bean id="com.liferay.portlet.PortletContainerSecurity" class="com.liferay.portlet.PortletContainerSecurityImpl" factory-method="createPortletContainerSecurityImpl">
+	<bean id="com.liferay.portlet.SecurityPortletContainerWrapper" class="com.liferay.portlet.SecurityPortletContainerWrapper" factory-method="createSecurityPortletContainerWrapper">
 		<constructor-arg name="portletContainer" ref="com.liferay.portal.resiliency.mpi.portlet.PortalResiliencyPortletContainerWrapper" />
+		<constructor-arg name="portletSecurity" ref="com.liferay.portlet.PortletSecurity" />
 	</bean>
 	<bean id="com.liferay.portlet.RestrictPortletContainerWrapper" class="com.liferay.portlet.RestrictPortletContainerWrapper" factory-method="createRestrictPortletContainerWrapper">
-		<constructor-arg name="portletContainer" ref="com.liferay.portlet.PortletContainerSecurity" />
+		<constructor-arg name="portletContainer" ref="com.liferay.portlet.SecurityPortletContainerWrapper" />
 	</bean>
 	<bean id="com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil" class="com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil">
 		<property name="assetRendererFactoryRegistry">

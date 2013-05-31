@@ -532,6 +532,18 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		portletIconHelp();
 	}
 
+	@Override
+	public void iconHelp(String message) throws Exception {
+		com.liferay.taglib.ui.IconHelpTag iconHelpTag =
+			new com.liferay.taglib.ui.IconHelpTag();
+
+		setUp(iconHelpTag);
+
+		iconHelpTag.setMessage(message);
+
+		iconHelpTag.runTag();
+	}
+
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #portletIconMaximize}
 	 */

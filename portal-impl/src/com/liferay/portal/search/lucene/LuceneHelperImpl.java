@@ -287,8 +287,6 @@ public class LuceneHelperImpl implements LuceneHelper {
 			return;
 		}
 
-		indexAccessor.close();
-
 		indexAccessor.delete();
 	}
 

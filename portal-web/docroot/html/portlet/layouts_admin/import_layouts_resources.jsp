@@ -160,7 +160,7 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 					<liferay-ui:message key="size" />
 				</dt>
 				<dd>
-					<%= fileEntry.getSize()/1024 %>k
+					<%= fileEntry.getSize() / 1024 %>k
 				</dd>
 			</dl>
 		</aui:fieldset>

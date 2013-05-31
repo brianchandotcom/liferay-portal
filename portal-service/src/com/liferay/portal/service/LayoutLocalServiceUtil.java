@@ -1051,6 +1051,13 @@ public class LayoutLocalServiceUtil {
 		return getService().getNullFriendlyURLLayouts();
 	}
 
+	public static com.liferay.portal.model.Layout getParentLayout(
+		com.liferay.portal.model.Layout layout)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getParentLayout(layout);
+	}
+
 	/**
 	* Returns all the layouts within scope of the group
 	*

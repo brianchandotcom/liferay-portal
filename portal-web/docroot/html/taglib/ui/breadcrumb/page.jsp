@@ -16,48 +16,6 @@
 
 <%@ include file="/html/taglib/ui/breadcrumb/init.jsp" %>
 
-<%
-StringBundler sb = new StringBundler();
-
-if (showGuestGroup) {
-	_buildGuestGroupBreadcrumb(themeDisplay, sb);
-}
-
-if (showParentGroups) {
-	_buildParentGroupsBreadcrumb(selLayout.getLayoutSet(), portletURL, themeDisplay, sb);
-}
-
-if (showLayout) {
-	_buildLayoutBreadcrumb(selLayout, selLayoutParam, true, portletURL, themeDisplay, sb);
-}
-
-if (showPortletBreadcrumb) {
-	_buildPortletBreadcrumb(request, showCurrentGroup, showCurrentPortlet, themeDisplay, sb);
-}
-
-String breadcrumbString = sb.toString();
-
-if (Validator.isNotNull(breadcrumbString)) {
-	String keyString = "<li";
-
-	int keyLength = keyString.length();
-
-	int x = breadcrumbString.indexOf(keyString);
-	int y = breadcrumbString.lastIndexOf(keyString);
-
-	int xIndex = x + keyLength;
-	int yIndex = y + keyLength;
-
-	if (x == y) {
-		breadcrumbString = StringUtil.insert(breadcrumbString, " class=\"active only\"", xIndex);
-	}
-	else {
-		breadcrumbString = StringUtil.insert(breadcrumbString, " class=\"active last\"", yIndex);
-		breadcrumbString = StringUtil.insert(breadcrumbString, " class=\"first\"", xIndex);
-	}
-}
-%>
-
 <ul class="breadcrumb">
 	<%= breadcrumbString %>
 </ul>

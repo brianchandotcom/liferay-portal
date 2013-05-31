@@ -47,19 +47,19 @@ public class PropertiesDocIndexBuilder {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 
 		String lpVersion = GetterUtil.getString(arguments.get("lp.version"));
-		String propertiesFileDir = GetterUtil.getString(
-			arguments.get("properties.file.dir"));
+		String propertiesDir = GetterUtil.getString(
+			arguments.get("properties.dir"));
 
-		File propertiesFileDirectory = new File(propertiesFileDir);
+		File propertiesDirectory = new File(propertiesDir);
 
-		if (!propertiesFileDirectory.exists()) {
+		if (!propertiesDirectory.exists()) {
 			System.out.println(
-				propertiesFileDirectory.getPath() + " not found");
+				propertiesDirectory.getPath() + " not found");
 
 			return;
 		}
 
-		File[] files = propertiesFileDirectory.listFiles();
+		File[] files = propertiesDirectory.listFiles();
 
 		List<PropertiesHtmlFile> htmlFiles =
 			new ArrayList<PropertiesHtmlFile>();
@@ -73,7 +73,7 @@ public class PropertiesDocIndexBuilder {
 		if (htmlFiles.isEmpty()) {
 			System.out.println(
 				"No *.properties.html files found in " +
-					propertiesFileDirectory.getPath());
+					propertiesDirectory.getPath());
 
 			return;
 		}
@@ -85,7 +85,7 @@ public class PropertiesDocIndexBuilder {
 		context.put("lpVersion", lpVersion);
 
 		try {
-			File indexHTMLFile = new File (propertiesFileDir + "/index.html");
+			File indexHTMLFile = new File (propertiesDir + "/index.html");
 
 			Writer writer = new FileWriter(indexHTMLFile);
 

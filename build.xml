@@ -732,7 +732,7 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 			fork="true"
 			newenvironment="true"
 		>
-			<arg value="properties.file.dir=${doc.dir}/propertiesdoc" />
+			<arg value="properties.dir=${doc.dir}/propertiesdoc" />
 			<arg value="lp.version=${lp.version}" />
 		</java>
 	</target>

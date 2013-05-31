@@ -173,17 +173,6 @@ window.YUI_config = {
 				},
 				'liferay-form': {
 					path: 'form.js',
-					plugins: {
-						'liferay-form-placeholders': {
-							condition: {
-								name: 'liferay-form-placeholders',
-								test: function(A) {
-									return 'placeholder' in document.createElement('input');
-								},
-								trigger: 'liferay-form'
-							}
-						}
-					},
 					requires: [
 						'aui-base',
 						'aui-form-validator'
@@ -191,6 +180,13 @@ window.YUI_config = {
 				},
 				'liferay-form-placeholders': {
 					path: 'form_placeholders.js',
+					condition: {
+						name: 'liferay-form-placeholders',
+						test: function(A) {
+							return !('placeholder' in document.createElement('input'));
+						},
+						trigger: 'liferay-form',
+					},
 					requires: [
 						'liferay-form',
 						'plugin'

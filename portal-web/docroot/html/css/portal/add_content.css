@@ -186,13 +186,14 @@
 		}
 
 		.lfr-page-template {
-			&.active {
-				color: #00C44B;
+			.toggler-header.active .title {
+				background-color: #0DB5E7;
+				color: #FFFFFF;
+				padding: 2px;
 			}
 
 			&:hover {
-				background-color: #EEE;
-				color: #006076;
+				background-color: #F0F0F0;
 			}
 		}
 

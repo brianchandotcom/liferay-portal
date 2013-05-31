@@ -158,6 +158,25 @@
 		margin-bottom: 5px;
 	}
 
+	.control-panel-home-actions {
+		margin-top: 100px;
+	}
+
+	.control-panel-home-actions .control-panel-home-actions-category {
+	    border-top: solid 1px #009ec3;
+		padding-top: 10px;
+	}
+
+    .control-panel-home-category-header {
+	    border-bottom: solid 1px #009ec3;
+	    color: #009ec3;
+	    margin-bottom: 30px;
+    }
+
+	.control-panel-home-menu {
+		margin-top: 40px;
+	}
+
 	.control-panel-home-menu li {
 		list-style: none;
 		margin-bottom: 15px;

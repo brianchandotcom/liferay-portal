@@ -3381,6 +3381,24 @@
 			<role-name>user</role-name>
 		</security-role-ref>
 	</portlet>
+	<portlet>
+		<portlet-name>189</portlet-name>
+		<display-name>Control Panel Home</display-name>
+		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<init-param>
+			<name>template-path</name>
+			<value>/html/portlet/control_panel_home/</value>
+		</init-param>
+		<init-param>
+			<name>view-action</name>
+			<value>/control_panel_home/view</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
+	</portlet>
 	<custom-portlet-mode>
 		<portlet-mode>edit_guest</portlet-mode>
 		<portal-managed>true</portal-managed>

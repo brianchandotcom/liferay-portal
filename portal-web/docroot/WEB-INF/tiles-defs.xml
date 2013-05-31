@@ -350,6 +350,16 @@
 		<put name="portlet_content" value="/portlet/calendar/view_event.jsp" />
 	</definition>
 
+	<!-- Control Panel Home -->
+
+	<definition name="portlet.control_panel_home" extends="portlet">
+		<put name="portlet_decorate" value="false" />
+	</definition>
+
+	<definition name="portlet.control_panel_home.view" extends="portlet.control_panel_home">
+		<put name="portlet_content" value="/portlet/control_panel_home/view.jsp" />
+	</definition>
+
 	<!-- Control Panel Menu -->
 
 	<definition name="portlet.control_panel_menu" extends="portlet">

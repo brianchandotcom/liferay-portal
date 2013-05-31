@@ -465,6 +465,8 @@ public interface PropsKeys {
 
 	public static final String CONTROL_PANEL_DEFAULT_ENTRY_CLASS = "control.panel.default.entry.class";
 
+	public static final String CONTROL_PANEL_HOME_PORTLET_NAME = "control.panel.home.portlet.name";
+
 	public static final String CONTROL_PANEL_LAYOUT_FRIENDLY_URL = "control.panel.layout.friendly.url";
 
 	public static final String CONTROL_PANEL_LAYOUT_NAME = "control.panel.layout.name";

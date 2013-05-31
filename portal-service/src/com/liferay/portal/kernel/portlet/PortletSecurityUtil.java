@@ -20,40 +20,38 @@ import java.util.Set;
 
 /**
  * @author Tomas Polesovsky
+ * @author Raymond Augé
  */
-public class PortletContainerSecurityUtil {
+public class PortletSecurityUtil {
 
-	public static PortletContainerSecurity getPortletContainerSecurity() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			PortletContainerSecurity.class);
+	public static PortletSecurity getPortletSecurity() {
+		PortalRuntimePermission.checkGetBeanProperty(PortletSecurity.class);
 
-		return _portletContainerSecurity;
+		return _portletSecurity;
 	}
 
 	public static Set<String> getWhitelist() {
-		return getPortletContainerSecurity().getWhitelist();
+		return getPortletSecurity().getWhitelist();
 	}
 
 	public static Set<String> getWhitelistActions() {
-		return getPortletContainerSecurity().getWhitelistActions();
+		return getPortletSecurity().getWhitelistActions();
 	}
 
 	public static Set<String> resetWhitelist() {
-		return getPortletContainerSecurity().resetWhitelist();
+		return getPortletSecurity().resetWhitelist();
 	}
 
 	public static Set<String> resetWhitelistActions() {
-		return getPortletContainerSecurity().resetWhitelistActions();
+		return getPortletSecurity().resetWhitelistActions();
 	}
 
-	public void setPortletContainerSecurity(
-		PortletContainerSecurity portletContainerSecurity) {
-
+	public void setPortletSecurity(PortletSecurity portletSecurity) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
-		_portletContainerSecurity = portletContainerSecurity;
+		_portletSecurity = portletSecurity;
 	}
 
-	private static PortletContainerSecurity _portletContainerSecurity;
+	private static PortletSecurity _portletSecurity;
 
 }

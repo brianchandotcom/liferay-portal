@@ -130,13 +130,11 @@ public class DoPrivilegedFactory implements BeanPostProcessor {
 
 		public BeanPrivilegedAction(T bean, Class<?>[] interfaces) {
 			_bean = bean;
-			_interfaces = interfaces;
+			_interfaces = ArrayUtil.append(interfaces, DoPrivilegedBean.class);
 		}
 
 		@Override
 		public T run() {
-			_interfaces = ArrayUtil.append(_interfaces, DoPrivilegedBean.class);
-
 			try {
 				return (T)ProxyUtil.newProxyInstance(
 					ClassLoaderUtil.getPortalClassLoader(), _interfaces,

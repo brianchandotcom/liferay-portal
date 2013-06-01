@@ -44,8 +44,6 @@ public class InputTag extends BaseInputTag {
 	public int doEndTag() throws JspException {
 		updateFormValidators();
 
-		setEndAttributes();
-
 		return super.doEndTag();
 	}
 
@@ -249,17 +247,11 @@ public class InputTag extends BaseInputTag {
 		setNamespacedAttribute(request, "model", model);
 
 		request.setAttribute(getAttributeNamespace() + "value", getValue());
-	}
 
-	protected void setEndAttributes() {
-		if ((_validators == null) || (_validators.get("required") == null)) {
-			return;
+		if ((_validators != null) && (_validators.get("required") != null)) {
+			setNamespacedAttribute(
+				request, "required", Boolean.TRUE.toString());
 		}
-
-		HttpServletRequest request =
-			(HttpServletRequest)pageContext.getRequest();
-
-		setNamespacedAttribute(request, "required", Boolean.TRUE.toString());
 	}
 
 	protected void updateFormValidators() {

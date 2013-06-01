@@ -422,35 +422,22 @@
 						html = portletBody.html();
 					}
 
-					var hasBodyContent = !!(A.Lang.trim(html));
-
-					if (hasBodyContent) {
-						content.unplug(A.Plugin.IO);
-					}
-					else {
-						content.plug(
-							A.Plugin.IO,
-							{
-								autoLoad: false,
-								data: {
-									doAsUserId: doAsUserId,
-									p_l_id: plid,
-									p_p_id: portlet.portletId,
-									p_p_state: 'exclusive'
-								},
-								showLoading: false,
-								uri: themeDisplay.getPathMain() + '/portal/render_portlet'
-							}
-						);
-					}
-
 					A.io.request(
 						themeDisplay.getPathMain() + '/portal/update_layout',
 						{
 							after: {
 								success: function() {
-									if (restore && content.io) {
-										content.io.start();
+									if (restore) {
+										var data = {
+											doAsUserId: doAsUserId,
+											p_l_id: plid,
+											p_p_id: portlet.portletId,
+											p_p_state: 'exclusive'
+										};
+
+										content.plug(A.Plugin.ParseContent);
+
+										content.load(themeDisplay.getPathMain() + '/portal/render_portlet?' + A.QueryString.stringify(data));
 									}
 								}
 							},
@@ -468,7 +455,7 @@
 				}
 			}
 		},
-		['aui-io']
+		['aui-io', 'aui-parse-content', 'node-load', 'querystring-stringify']
 	);
 
 	Liferay.provide(

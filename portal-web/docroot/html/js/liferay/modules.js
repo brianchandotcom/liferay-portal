@@ -251,6 +251,7 @@ window.YUI_config = {
 						'aui-component',
 						'aui-event-input',
 						'aui-palette',
+						'aui-set',
 						'portal-available-languages'
 					]
 				},

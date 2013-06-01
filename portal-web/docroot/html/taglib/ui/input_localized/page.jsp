@@ -71,6 +71,8 @@ String fieldSuffix = StringPool.BLANK;
 if ((locales.length > 1) && !Validator.isNull(languageId)) {
 	fieldSuffix = StringPool.UNDERLINE + mainLanguageId;
 }
+
+List<String> languageIds = new ArrayList<String>();
 %>
 
 <span class="liferay-input-localized" id="<portlet:namespace /><%= id %>BoundingBox">
@@ -94,8 +96,6 @@ if ((locales.length > 1) && !Validator.isNull(languageId)) {
 	<c:if test="<%= (locales.length > 1) && Validator.isNull(languageId) %>">
 
 		<%
-		List<String> languageIds = new ArrayList<String>();
-
 		languageIds.add(defaultLanguageId);
 
 		if (Validator.isNotNull(xml)) {
@@ -162,7 +162,8 @@ if ((locales.length > 1) && !Validator.isNull(languageId)) {
 				contentBox: '#<portlet:namespace /><%= id %>ContentBox',
 				inputNamespace: '<portlet:namespace /><%= id + StringPool.UNDERLINE %>',
 				inputPlaceholder: '#<portlet:namespace /><%= HtmlUtil.escapeJS(id + fieldSuffix) %>',
-				toggleSelection: false
+				toggleSelection: false,
+				translatedLanguages: '<%= StringUtil.merge(languageIds) %>'
 			}
 		);
 	</aui:script>

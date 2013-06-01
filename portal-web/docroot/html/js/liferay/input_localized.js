@@ -23,14 +23,29 @@ AUI.add(
 						setter: A.one
 					},
 
+					items: {
+						value: availableLanguageIds
+					},
+
 					selected: {
 						valueFn: function() {
 							return A.Array.indexOf(availableLanguageIds, defaultLanguageId);
 						}
 					},
 
-					items: {
-						value: availableLanguageIds
+					translatedLanguages: {
+						setter: function(val) {
+							var instance = this;
+
+							var set = new A.Set();
+
+							if (A.Lang.isString(val)) {
+								A.Array.each(val.split(','), set.add, set);
+							}
+
+							return set;
+						},
+						value: null
 					}
 				},
 
@@ -87,6 +102,8 @@ AUI.add(
 						instance._initializeTooltip();
 
 						instance._flags.show();
+
+						instance._syncTranslatedLanguagesUI();
 					},
 
 					_afterRenderUI: function() {
@@ -217,10 +234,26 @@ AUI.add(
 						var selectedLanguageId = instance.getSelectedLanguageId();
 
 						var inputLanguage = instance._getInputLanguage(selectedLanguageId);
+						var defaultInputLanguage = instance._getInputLanguage(defaultLanguageId);
 
 						instance.showFlags();
 
-						inputLanguage.val(event.currentTarget.val());
+						var currentValue = event.currentTarget.val();
+
+						inputLanguage.val(currentValue);
+
+						if (instance._fillDefaultLanguage) {
+							defaultInputLanguage.val(currentValue);
+						}
+
+						var translatedLanguages = instance.get('translatedLanguages');
+
+						if (currentValue) {
+							translatedLanguages.add(selectedLanguageId);
+						}
+						else {
+							translatedLanguages.remove(selectedLanguageId);
+						}
 					},
 
 					_onSelectFlag: function(event) {
@@ -235,15 +268,44 @@ AUI.add(
 
 							var defaultInputLanguage = instance._getInputLanguage(defaultLanguageId);
 
+							var defaultLanguageValue = defaultInputLanguage.val();
+
 							inputPlaceholder.val(inputLanguage.val());
 
 							inputPlaceholder.attr('dir', Liferay.Language.direction[languageId]);
 
-							inputPlaceholder.attr('placeholder', defaultInputLanguage.val());
+							inputPlaceholder.attr('placeholder', defaultLanguageValue);
 
 							instance._animate(inputPlaceholder);
 							instance._clearFormValidator(inputPlaceholder);
+
+							if (defaultLanguageValue) {
+								instance._fillDefaultLanguage = false;
+							}
+							else {
+								instance._fillDefaultLanguage = true;
+							}
 						}
+					},
+
+					_syncTranslatedLanguagesUI: function() {
+						var instance = this;
+
+						var flags = instance.get('items');
+
+						var translatedLanguages = instance.get('translatedLanguages');
+
+						A.Array.each(
+							flags,
+							function(item, index, collection) {
+								var flagNode = instance.getItemByIndex(index);
+
+								flagNode.toggleClass(
+									'lfr-input-localized',
+									translatedLanguages.has(item)
+								);
+							}
+						);
 					},
 
 					_animating: null,
@@ -288,6 +350,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-component', 'aui-event-input', 'aui-palette', 'aui-tooltip', 'portal-available-languages']
+		requires: ['aui-base', 'aui-component', 'aui-event-input', 'aui-palette', 'aui-set', 'aui-tooltip', 'portal-available-languages']
 	}
 );

@@ -19,7 +19,11 @@
 	}
 
 	.lfr-input-localized-flag {
-		@include opacity(0.15);
+		@include opacity(0.05);
+	}
+
+	.lfr-input-localized .lfr-input-localized-flag {
+		@include opacity(.3);
 	}
 
 	.palette-item-selected .lfr-input-localized-flag, .palette-item-hover .lfr-input-localized-flag {

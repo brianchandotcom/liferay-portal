@@ -38,6 +38,7 @@ public class TransactionalPortalCacheHelper {
 		_pushPortalCacheMap();
 	}
 
+	@SuppressWarnings("unchecked")
 	public static void commit() {
 		if (!PropsValues.TRANSACTIONAL_CACHE_ENABLED) {
 			return;
@@ -46,23 +47,16 @@ public class TransactionalPortalCacheHelper {
 		PortalCacheMap portalCacheMap = _popPortalCacheMap();
 
 		for (Map.Entry
-				<PortalCache<? extends Serializable, ?>,
-					Map<? extends Serializable, ?>> portalCacheMapEntry :
-				portalCacheMap.entrySet()) {
+				<PortalCache<? extends Serializable, ?>, UncommittedBuffer>
+					portalCacheMapEntry : portalCacheMap.entrySet()) {
 
 			PortalCache<Serializable, Object> portalCache =
 				(PortalCache<Serializable, Object>)portalCacheMapEntry.getKey();
 
-			Map<? extends Serializable, ?> uncommittedMap =
+			UncommittedBuffer uncommittedBuffer =
 				portalCacheMapEntry.getValue();
 
-			for (Map.Entry<? extends Serializable, ?> uncommittedMapEntry :
-					uncommittedMap.entrySet()) {
-
-				portalCache.put(
-					uncommittedMapEntry.getKey(),
-					uncommittedMapEntry.getValue());
-			}
+			uncommittedBuffer.commitTo(portalCache);
 		}
 
 		portalCacheMap.clear();
@@ -89,19 +83,19 @@ public class TransactionalPortalCacheHelper {
 		portalCacheMap.clear();
 	}
 
+	@SuppressWarnings("unchecked")
 	protected static <K extends Serializable, V> V get(
 		PortalCache<K, V> portalCache, K key) {
 
 		PortalCacheMap portalCacheMap = _peekPortalCacheMap();
 
-		Map<? extends Serializable, ?> uncommittedMap = portalCacheMap.get(
-			portalCache);
+		UncommittedBuffer uncommittedBuffer = portalCacheMap.get(portalCache);
 
-		if (uncommittedMap == null) {
+		if (uncommittedBuffer == null) {
 			return null;
 		}
 
-		return (V)uncommittedMap.get(key);
+		return (V)uncommittedBuffer.get(key);
 	}
 
 	protected static <K extends Serializable, V> void put(
@@ -109,29 +103,15 @@ public class TransactionalPortalCacheHelper {
 
 		PortalCacheMap portalCacheMap = _peekPortalCacheMap();
 
-		Map<Serializable, Object> uncommittedMap =
-			(Map<Serializable, Object>)portalCacheMap.get(portalCache);
+		UncommittedBuffer uncommittedBuffer = portalCacheMap.get(portalCache);
 
-		if (uncommittedMap == null) {
-			uncommittedMap = new HashMap<Serializable, Object>();
+		if (uncommittedBuffer == null) {
+			uncommittedBuffer = new UncommittedBuffer();
 
-			portalCacheMap.put(portalCache, uncommittedMap);
+			portalCacheMap.put(portalCache, uncommittedBuffer);
 		}
 
-		uncommittedMap.put(key, value);
-	}
-
-	protected static <K extends Serializable, V> void remove(
-		PortalCache<K, V> portalCache, K key) {
-
-		PortalCacheMap portalCacheMap = _peekPortalCacheMap();
-
-		Map<? extends Serializable, ?> uncommittedMap = portalCacheMap.get(
-			portalCache);
-
-		if (uncommittedMap != null) {
-			uncommittedMap.remove(key);
-		}
+		uncommittedBuffer.put(key, value);
 	}
 
 	protected static <K extends Serializable, V> void removeAll(
@@ -139,12 +119,15 @@ public class TransactionalPortalCacheHelper {
 
 		PortalCacheMap portalCacheMap = _peekPortalCacheMap();
 
-		Map<? extends Serializable, ?> uncommittedMap = portalCacheMap.get(
-			portalCache);
+		UncommittedBuffer uncommittedBuffer = portalCacheMap.get(portalCache);
 
-		if (uncommittedMap != null) {
-			uncommittedMap.clear();
+		if (uncommittedBuffer == null) {
+			uncommittedBuffer = new UncommittedBuffer();
+
+			portalCacheMap.put(portalCache, uncommittedBuffer);
 		}
+
+		uncommittedBuffer.removeAll();
 	}
 
 	private static PortalCacheMap _peekPortalCacheMap() {
@@ -177,8 +160,56 @@ public class TransactionalPortalCacheHelper {
 
 	private static class PortalCacheMap
 		extends HashMap
-			<PortalCache<? extends Serializable, ?>,
-				Map<? extends Serializable, ?>> {
+			<PortalCache<? extends Serializable, ?>, UncommittedBuffer> {
+	}
+
+	private static class UncommittedBuffer {
+
+		public void commitTo(PortalCache<Serializable, Object> portalCache) {
+			if (_removeAll) {
+				portalCache.removeAll();
+			}
+
+			for (Map.Entry<? extends Serializable, ?> uncommittedMapEntry :
+					_uncommittedMap.entrySet()) {
+
+				Serializable key = uncommittedMapEntry.getKey();
+				Object value = uncommittedMapEntry.getValue();
+
+				if (value == TransactionalPortalCache.NULL_HOLDER) {
+					portalCache.remove(key);
+				}
+				else {
+					portalCache.put(
+						uncommittedMapEntry.getKey(),
+						uncommittedMapEntry.getValue());
+				}
+			}
+		}
+
+		public Object get(Serializable key) {
+			Object value = _uncommittedMap.get(key);
+
+			if ((value == null) && _removeAll) {
+				value = TransactionalPortalCache.NULL_HOLDER;
+			}
+
+			return value;
+		}
+
+		public void put(Serializable key, Object value) {
+			_uncommittedMap.put(key, value);
+		}
+
+		public void removeAll() {
+			_uncommittedMap.clear();
+			_removeAll = true;
+		}
+
+		private Map<Serializable, Object> _uncommittedMap =
+			new HashMap<Serializable, Object>();
+		private boolean _removeAll;
+
 	}
 
 }

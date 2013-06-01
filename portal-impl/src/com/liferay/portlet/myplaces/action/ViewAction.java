@@ -174,7 +174,8 @@ public class ViewAction extends PortletAction {
 				LayoutPermissionUtil.contains(
 					permissionChecker, layout, ActionKeys.VIEW)) {
 
-				return PortalUtil.getLayoutURL(layout, themeDisplay);
+				return PortalUtil.getCanonicalURL(
+					null, themeDisplay, layout, true);
 			}
 		}
 

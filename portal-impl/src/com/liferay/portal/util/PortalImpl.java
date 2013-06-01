@@ -1160,22 +1160,25 @@ public class PortalImpl implements Portal {
 			boolean forceLayoutFriendlyURL)
 		throws PortalException, SystemException {
 
-		completeURL = removeRedirectParameter(completeURL);
-
+		String groupFriendlyURL = StringPool.BLANK;
 		String parametersURL = StringPool.BLANK;
 
-		int pos = completeURL.indexOf(Portal.FRIENDLY_URL_SEPARATOR);
+		if (Validator.isNotNull(completeURL)) {
+			completeURL = removeRedirectParameter(completeURL);
 
-		if (pos == -1) {
-			pos = completeURL.indexOf(StringPool.QUESTION);
-		}
+			int pos = completeURL.indexOf(Portal.FRIENDLY_URL_SEPARATOR);
 
-		String groupFriendlyURL = completeURL;
+			if (pos == -1) {
+				pos = completeURL.indexOf(StringPool.QUESTION);
+			}
 
-		if (pos != -1) {
-			groupFriendlyURL = completeURL.substring(0, pos);
+			groupFriendlyURL = completeURL;
 
-			parametersURL = completeURL.substring(pos);
+			if (pos != -1) {
+				groupFriendlyURL = completeURL.substring(0, pos);
+
+				parametersURL = completeURL.substring(pos);
+			}
 		}
 
 		if (layout == null) {

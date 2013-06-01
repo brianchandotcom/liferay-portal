@@ -30,6 +30,7 @@ Collections.sort(customAttributesDisplays, new CustomAttributesDisplayComparator
 %>
 
 <liferay-ui:search-container
+	delta="<%= customAttributesDisplays.size() %>"
 	emptyResultsMessage='<%= LanguageUtil.get(pageContext, "custom-fields-are-not-enabled-for-any-resource") %>'
 	iteratorURL="<%= portletURL %>"
 >

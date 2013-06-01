@@ -83,14 +83,7 @@
 		<aui:col cssClass="hide vocabulary-edit-category" width="<%= 35 %>">
 			<h3><%= LanguageUtil.get(pageContext, "category-details") %></h3>
 
-			<div class="category-view-close">
-				<span>
-					<liferay-ui:icon
-						id="category-view-close"
-						image="close"
-					/>
-				</span>
-			</div>
+			<aui:button cssClass="category-view-close close" icon="icon-remove" />
 
 			<div class="category-view"></div>
 		</aui:col>

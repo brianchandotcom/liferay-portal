@@ -196,18 +196,13 @@
 		}
 	}
 
-	.vocabulary-edit-category .category-view {
-		padding: 0 5px 0 0px;
-	}
+	.vocabulary-edit-category {
+		position: relative;
 
-	.category-view-close {
-		position: absolute;
-		right: 2px;
-		text-align: right;
-		top: 4px;
-
-		span {
-			cursor: pointer;
+		.category-view-close {
+			position: absolute;
+			right: 5px;
+			top: 26px;
 		}
 	}
 

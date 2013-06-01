@@ -33,6 +33,10 @@
 		vertical-align: top;
 	}
 
+	.license-form {
+		padding-bottom: 30px;
+	}
+
 	.alert-error, .alert-success {
 		margin: 15px auto 5px;
 	}
@@ -79,7 +83,7 @@ dateFormatDateTime.setTimeZone(timeZone);
 	<%= buildInfo %>
 </h3>
 
-<form method="post" name="license_fm" <%= (clusterNodes.size() > 1) ? "onsubmit=\"return validateForm();\"" : "" %>>
+<form class="license-form" method="post" name="license_fm" <%= (clusterNodes.size() > 1) ? "onsubmit=\"return validateForm();\"" : "" %>>
 
 <c:if test="<%= Validator.isNotNull(errorMessage) %>">
 	<div class="alert alert-error">
@@ -584,7 +588,7 @@ dateFormatDateTime.setTimeZone(timeZone);
 
 <br />
 
-<strong>Register Your Application</strong>
+<h3>Register Your Application</h3>
 
 <table class="lfr-table">
 <tr>
@@ -674,12 +678,12 @@ dateFormatDateTime.setTimeZone(timeZone);
 
 <c:choose>
 	<c:when test="<%= orderProducts != null %>">
-		<input type="submit" value="<liferay-ui:message key="register" />" />
+		<input class="btn" type="submit" value="<liferay-ui:message key="register" />" />
 
 		<input onClick="location.href='<%= themeDisplay.getURLCurrent() %>';" type="button" value="<liferay-ui:message key="cancel" />" />
 	</c:when>
 	<c:otherwise>
-		<input type="submit" value="Query" />
+		<input class="btn" type="submit" value="Query" />
 	</c:otherwise>
 </c:choose>
 

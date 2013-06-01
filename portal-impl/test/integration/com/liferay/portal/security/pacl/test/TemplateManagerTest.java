@@ -23,8 +23,15 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.security.pacl.PACLExecutionTestListener;
 import com.liferay.portal.security.pacl.PACLIntegrationJUnitTestRunner;
+import com.liferay.portal.template.TemplateContextHelper;
+import com.liferay.portal.test.CaptureAppender;
+import com.liferay.portal.test.Log4JLoggerTestUtil;
 
+import org.apache.log4j.Level;
+
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -34,6 +41,24 @@ import org.junit.runner.RunWith;
 @ExecutionTestListeners(listeners = {PACLExecutionTestListener.class})
 @RunWith(PACLIntegrationJUnitTestRunner.class)
 public class TemplateManagerTest {
+
+	@BeforeClass
+	public static void setUpClass() {
+		CaptureAppender captureAppender =
+			Log4JLoggerTestUtil.configureLog4JLogger(
+				TemplateContextHelper.class.getName(), Level.OFF);
+
+		captureAppender.close();
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		CaptureAppender captureAppender =
+			Log4JLoggerTestUtil.configureLog4JLogger(
+				TemplateContextHelper.class.getName(), null);
+
+		captureAppender.close();
+	}
 
 	@Test
 	public void test1() throws Exception {

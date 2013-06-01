@@ -16,6 +16,7 @@ package com.liferay.portal.xml;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
@@ -53,6 +54,7 @@ import org.dom4j.DocumentHelper;
 /**
  * @author Brian Wing Shun Chan
  */
+@DoPrivileged
 public class SAXReaderImpl implements SAXReader {
 
 	public static SAXReaderImpl getInstance() {

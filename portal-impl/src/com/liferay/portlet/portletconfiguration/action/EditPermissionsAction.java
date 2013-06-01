@@ -30,6 +30,7 @@ import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockServiceUtil;
 import com.liferay.portal.service.ResourcePermissionServiceUtil;
+import com.liferay.portal.servlet.filters.cache.CacheUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
@@ -233,6 +234,8 @@ public class EditPermissionsAction extends EditConfigurationAction {
 				layout.setModifiedDate(new Date());
 
 				LayoutLocalServiceUtil.updateLayout(layout);
+
+				CacheUtil.clearCache(layout.getCompanyId());
 			}
 		}
 

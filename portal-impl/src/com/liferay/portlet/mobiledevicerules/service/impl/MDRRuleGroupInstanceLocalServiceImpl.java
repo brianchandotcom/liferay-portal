@@ -17,14 +17,18 @@ package com.liferay.portlet.mobiledevicerules.service.impl;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.mobiledevicerules.DuplicateRuleGroupInstanceException;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
 import com.liferay.portlet.mobiledevicerules.service.base.MDRRuleGroupInstanceLocalServiceBaseImpl;
 import com.liferay.portlet.mobiledevicerules.util.RuleGroupInstancePriorityComparator;
+import com.liferay.portlet.social.model.SocialActivityConstants;
 
 import java.util.Date;
 import java.util.List;
@@ -94,7 +98,7 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 
 	@Override
 	public void deleteGroupRuleGroupInstances(long groupId)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		List<MDRRuleGroupInstance> ruleGroupInstances =
 			mdrRuleGroupInstancePersistence.findByGroupId(groupId);
@@ -106,7 +110,7 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 
 	@Override
 	public void deleteRuleGroupInstance(long ruleGroupInstanceId)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		MDRRuleGroupInstance ruleGroupInstance =
 			mdrRuleGroupInstancePersistence.fetchByPrimaryKey(
@@ -117,7 +121,7 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 
 	@Override
 	public void deleteRuleGroupInstance(MDRRuleGroupInstance ruleGroupInstance)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		// Rule group instance
 
@@ -127,11 +131,24 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 
 		mdrActionLocalService.deleteActions(
 			ruleGroupInstance.getRuleGroupInstanceId());
+
+		// Social
+
+		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
+
+		extraDataJSONObject.put("uuid", ruleGroupInstance.getUuid());
+
+		socialActivityLocalService.addActivity(
+			PrincipalThreadLocal.getUserId(), ruleGroupInstance.getGroupId(),
+			MDRRuleGroupInstance.class.getName(),
+			ruleGroupInstance.getRuleGroupInstanceId(),
+			SocialActivityConstants.TYPE_DELETE, extraDataJSONObject.toString(),
+			0);
 	}
 
 	@Override
 	public void deleteRuleGroupInstances(long ruleGroupId)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		List<MDRRuleGroupInstance> ruleGroupInstances =
 			mdrRuleGroupInstancePersistence.findByRuleGroupId(ruleGroupId);

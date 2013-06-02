@@ -273,6 +273,13 @@ public class SocialActivitySetLocalServiceWrapper
 	}
 
 	@Override
+	public void addAssetActivitySet(
+		com.liferay.portlet.social.model.SocialActivity activity)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_socialActivitySetLocalService.addAssetActivitySet(activity);
+	}
+
+	@Override
 	public void decrementActivityCount(long activitySetId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -284,6 +291,14 @@ public class SocialActivitySetLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_socialActivitySetLocalService.decrementActivityCount(classNameId,
+			classPK);
+	}
+
+	@Override
+	public com.liferay.portlet.social.model.SocialActivitySet fetchAssetActivitySet(
+		long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _socialActivitySetLocalService.fetchAssetActivitySet(classNameId,
 			classPK);
 	}
 

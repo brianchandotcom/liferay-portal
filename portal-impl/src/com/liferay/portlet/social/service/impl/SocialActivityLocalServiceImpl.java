@@ -172,6 +172,8 @@ public class SocialActivityLocalServiceImpl
 			mirrorActivity.setAssetEntry(assetEntry);
 		}
 
+		socialActivitySetLocalService.addAssetActivitySet(activity);
+
 		socialActivityLocalService.addActivity(activity, mirrorActivity);
 	}
 

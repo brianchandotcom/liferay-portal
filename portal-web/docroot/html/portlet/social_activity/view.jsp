@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/social_activity/init.jsp" %>
 
 <%
-Map<String, Boolean> activitySettingsMap = (Map<String, Boolean>)request.getAttribute(WebKeys.SOCIAL_ACTIVITY_SETTINGS_MAP);
+	Map<String, Boolean> activitySettingsMap = (Map<String, Boolean>)request.getAttribute(WebKeys.SOCIAL_ACTIVITY_SETTINGS_MAP);
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -43,10 +43,10 @@ portletURL.setParameter("struts_action", "/social_activity/view");
 		<aui:col cssClass="social-activity-items" width="<%= 20 %>">
 
 			<%
-			for (String className : activitySettingsMap.keySet()) {
-				String localizedClassName = ResourceActionsUtil.getModelResource(locale, className);
+				for (String className : activitySettingsMap.keySet()) {
+					String localizedClassName = ResourceActionsUtil.getModelResource(locale, className);
 
-				boolean enabled = activitySettingsMap.get(className);
+					boolean enabled = activitySettingsMap.get(className);
 			%>
 
 				<h4 class="social-activity-item" data-modelName="<%= className %>" title="<%= localizedClassName %>">

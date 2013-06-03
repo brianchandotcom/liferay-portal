@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.resiliency.spi.SPIRegistryUtil;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.security.ac.AccessControl;
 import com.liferay.portal.security.ac.AccessControlThreadLocal;
 import com.liferay.portal.security.ac.AccessControlled;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
@@ -38,7 +39,7 @@ public class PortalResiliencyAdvice
 	public Object before(MethodInvocation methodInvocation) throws Throwable {
 		AccessControlled accessControlled = findAnnotation(methodInvocation);
 
-		if (accessControlled == AccessControlled.NULL_ACCESS_CONTROLLED) {
+		if (accessControlled == AccessControl.NULL_ACCESS_CONTROLLED) {
 			return null;
 		}
 
@@ -94,7 +95,7 @@ public class PortalResiliencyAdvice
 
 	@Override
 	public AccessControlled getNullAnnotation() {
-		return AccessControlled.NULL_ACCESS_CONTROLLED;
+		return AccessControl.NULL_ACCESS_CONTROLLED;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

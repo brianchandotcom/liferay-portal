@@ -78,6 +78,10 @@ public class SampleSQLBuilder {
 		_dbType = arguments.get("sample.sql.db.type");
 		_maxAssetCategoryCount = GetterUtil.getInteger(
 			arguments.get("sample.sql.max.asset.category.count"));
+		_maxAssetTagCount = GetterUtil.getInteger(
+			arguments.get("sample.sql.max.asset.tag.count"));
+		_maxAssetVocabularyCount = GetterUtil.getInteger(
+			arguments.get("sample.sql.max.asset.vocabulary.count"));
 		_maxBlogsEntryCommentCount = GetterUtil.getInteger(
 			arguments.get("sample.sql.max.blogs.entry.comment.count"));
 		_maxBlogsEntryCount = GetterUtil.getInteger(
@@ -127,12 +131,19 @@ public class SampleSQLBuilder {
 		_outputDir = arguments.get("sample.sql.output.dir");
 		_outputMerge = GetterUtil.getBoolean(
 			arguments.get("sample.sql.output.merge"));
+		int perAssetEntryMaxAssetCategoryCount = GetterUtil.getInteger(
+			arguments.get(
+				"sample.sql.per.asset.entry.max.asset.category.count"));
+		int perAssetEntryMaxAssetTagCount = GetterUtil.getInteger(
+			arguments.get("sample.sql.per.asset.entry.max.asset.tag.count"));
 
 		_dataFactory = new DataFactory(
-			baseDir, _maxAssetCategoryCount, _maxBlogsEntryCount,
+			baseDir, _maxAssetCategoryCount, _maxAssetTagCount,
+			_maxAssetVocabularyCount, _maxBlogsEntryCount,
 			_maxDDLCustomFieldCount, _maxGroupCount, _maxJournalArticleCount,
 			_maxJournalArticleSize, _maxMBCategoryCount, _maxMBThreadCount,
-			_maxMBMessageCount, _maxUserToGroupCount);
+			_maxMBMessageCount, _maxUserToGroupCount,
+			perAssetEntryMaxAssetCategoryCount, perAssetEntryMaxAssetTagCount);
 
 		_db = DBFactoryUtil.getDB(_dbType);
 
@@ -339,6 +350,8 @@ public class SampleSQLBuilder {
 		put(context, "counter", _dataFactory.getCounter());
 		put(context, "dataFactory", _dataFactory);
 		put(context, "maxAssetCategoryCount", _maxAssetCategoryCount);
+		put(context, "maxAssetTagCount", _maxAssetTagCount);
+		put(context, "maxAssetVocabularyCount", _maxAssetVocabularyCount);
 		put(context, "maxDLFileEntrySize", _maxDLFileEntrySize);
 		put(context, "maxBlogsEntryCommentCount", _maxBlogsEntryCommentCount);
 		put(context, "maxBlogsEntryCount", _maxBlogsEntryCount);
@@ -492,6 +505,8 @@ public class SampleSQLBuilder {
 	private Map<String, Writer> _insertSQLWriters =
 		new ConcurrentHashMap<String, Writer>();
 	private int _maxAssetCategoryCount;
+	private int _maxAssetTagCount;
+	private int _maxAssetVocabularyCount;
 	private int _maxBlogsEntryCommentCount;
 	private int _maxBlogsEntryCount;
 	private int _maxDDLCustomFieldCount;

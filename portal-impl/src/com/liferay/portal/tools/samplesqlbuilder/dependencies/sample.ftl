@@ -1,6 +1,6 @@
 <#include "macro.ftl">
 
-<#include "asset_category.ftl">
+<#include "asset.ftl">
 
 <#include "class_names.ftl">
 

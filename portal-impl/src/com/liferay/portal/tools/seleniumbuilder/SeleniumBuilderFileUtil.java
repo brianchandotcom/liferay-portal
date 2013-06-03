@@ -329,7 +329,7 @@ public class SeleniumBuilderFileUtil {
 		return getName(fileName) + classSuffix;
 	}
 
-	public String getSimpleNameFromClassName(String className) {
+	public String getSimpleClassNameFromClassName(String className) {
 		int x = className.lastIndexOf(CharPool.PERIOD);
 
 		return className.substring(x + 1);
@@ -905,7 +905,6 @@ public class SeleniumBuilderFileUtil {
 				}
 			}
 		}
-
 		else if (testSuite != null) {
 			if (Validator.isNull(testSuite) ||
 				!testSuite.matches(allowedExecuteAttributeValuesRegex)) {
@@ -1327,8 +1326,8 @@ public class SeleniumBuilderFileUtil {
 
 			if (elementName.equals("execute")) {
 				validateExecuteElement(
-					fileName, element, new String[]
-					{"test-case", "test-suite", "test-class"},
+					fileName, element,
+					new String[] {"test-case", "test-class", "test-suite"},
 					".+", new String[0]);
 			}
 			else {

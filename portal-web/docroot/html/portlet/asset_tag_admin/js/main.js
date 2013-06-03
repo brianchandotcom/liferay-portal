@@ -862,10 +862,10 @@ AUI.add(
 						Liferay.Service(
 							'/assettag/get-json-group-tags',
 							{
+								end: end,
 								groupId: themeDisplay.getSiteGroupId(),
 								name: query,
-								start: start,
-								end: end
+								start: start
 							},
 							function(result) {
 								var total = result.total;
@@ -1103,8 +1103,8 @@ AUI.add(
 							'/assettag/merge-tags',
 							{
 								fromTagIds: fromIds,
-								toTagId: toId,
-								overrideProperties: overrideProperties
+								overrideProperties: overrideProperties,
+								toTagId: toId
 							},
 							callback
 						);
@@ -1115,8 +1115,8 @@ AUI.add(
 							'/assettag/merge-tags',
 							{
 								fromTagId: fromId,
-								toTagId: toId,
-								overrideProperties: true
+								overrideProperties: true,
+								toTagId: toId
 							},
 							callback
 						);

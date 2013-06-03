@@ -305,8 +305,8 @@ AUI.add(
 							Liferay.Service(
 								{
 									'$vocabularies = /assetvocabulary/get-groups-vocabularies': {
-										groupIds: groupIds,
 										className: className,
+										groupIds: groupIds,
 
 										'$categoriesCount = /assetcategory/get-vocabulary-categories-count': {
 											'groupId': '$vocabularies.groupId',
@@ -541,11 +541,11 @@ AUI.add(
 							Liferay.Service(
 								'/assetcategory/search',
 								{
+									end: -1,
 									groupIds: vocabularyGroupIds,
 									name: Lang.sub(TPL_SEARCH_QUERY, [searchValue]),
-									vocabularyIds: vocabularyIds,
 									start: -1,
-									end: -1
+									vocabularyIds: vocabularyIds
 								},
 								callback
 							);

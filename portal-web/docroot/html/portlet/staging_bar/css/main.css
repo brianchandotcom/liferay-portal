@@ -86,20 +86,6 @@
 		}
 	}
 
-	.staging-icon-menu-container {
-		display: inline-block;
-		margin-top: -0.1em;
-		overflow: hidden;
-		position: relative;
-		vertical-align: middle;
-
-		a {
-			display: block;
-			float: right;
-			min-height: 15px;
-		}
-	}
-
 	.branch-results {
 		min-height: 300px;
 	}

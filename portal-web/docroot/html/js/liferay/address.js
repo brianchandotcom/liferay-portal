@@ -13,8 +13,8 @@ Liferay.Address = {
 		Liferay.Service(
 			'/region/get-regions',
 			{
-				countryId: Number(selectKey),
-				active: true
+				active: true,
+				countryId: Number(selectKey)
 			},
 			callback
 		);

@@ -71,8 +71,8 @@ long folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
 					tempFileURL: {
 						method: Liferay.Service.bind('/dlapp/get-temp-file-entry-names'),
 						params: {
-							groupId: <%= scopeGroupId %>,
 							folderId: <%= folderId %>,
+							groupId: <%= scopeGroupId %>,
 							tempFolderName: 'com.liferay.portlet.documentlibrary.action.EditFileEntryAction'
 						}
 					},

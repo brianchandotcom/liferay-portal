@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.lar;
 
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -43,6 +44,11 @@ public interface ExportImport {
 	public ManifestSummary getManifestSummary(
 			long userId, long groupId, Map<String, String[]> parameterMap,
 			File file)
+		throws Exception;
+
+	public ManifestSummary getManifestSummary(
+			long userId, long groupId, Map<String, String[]> parameterMap,
+			FileEntry fileEntry)
 		throws Exception;
 
 	public String replaceExportContentReferences(

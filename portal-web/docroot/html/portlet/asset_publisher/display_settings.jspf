@@ -207,7 +207,7 @@
 		var selectDisplayStyle = A.one('#<portlet:namespace />displayStyle');
 
 		if (hiddenFields) {
-			hiddenFields.hide();
+			hiddenFields.get('parentNode').hide();
 		}
 
 		if (selectDisplayStyle) {
@@ -218,11 +218,11 @@
 				var showContextLink = A.one('.show-context-link');
 
 				if (showAssetTitle) {
-					showAssetTitle.show();
+					showAssetTitle.get('parentNode').show();
 				}
 
 				if (showContextLink) {
-					showContextLink.show();
+					showContextLink.get('parentNode').show();
 				}
 			}
 			else {
@@ -230,12 +230,12 @@
 					var abstractLength = A.one('.abstract-length');
 
 					if (abstractLength) {
-						abstractLength.show();
+						abstractLength.get('parentNode').show();
 					}
 				}
 
 				if (assetLinkBehavior) {
-					assetLinkBehavior.show();
+					assetLinkBehavior.get('parentNode').show();
 				}
 			}
 		}

@@ -1,5 +1,5 @@
 AUI().ready(
-	'aui-modal', 'liferay-hudcrumbs', 'liferay-navigation-interaction',
+	'aui-modal', 'liferay-hudcrumbs', 'liferay-navigation-interaction', 'node-load',
 	function(A) {
 		var navigation = A.one('#navigation');
 
@@ -32,18 +32,15 @@ AUI().ready(
 							modal: true,
 							zIndex: 400
 						}
-					).plug(
-						A.Plugin.IO,
-						{
-							after: {
-								success: function(event) {
-									signInDialog._syncUIPosAlign();
-								}
-							},
-							selector: '#portlet_58 .portlet-body',
-							uri: signInURL
-						}
 					).render();
+
+					signInDialog.bodyNode.load(
+						signInURL,
+						'#portlet_58 .portlet-body',
+						function() {
+							signInDialog.align();
+						}
+					);
 				}
 			);
 		}

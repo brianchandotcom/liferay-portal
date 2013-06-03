@@ -38,19 +38,6 @@ searchContainer.setRowChecker(rowChecker);
 	searchContainer="<%= searchContainer %>"
 />
 
-<div>
-	<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_COMMUNITY) %>">
-		<aui:button onClick='<%= renderResponse.getNamespace() + "addGroup();" %>' value="add-site" />
-	</c:if>
-</div>
-
-<aui:script>
-	function <portlet:namespace />addGroup() {
-		document.<portlet:namespace />fm.method = 'post';
-		submitForm(document.<portlet:namespace />fm, '<portlet:renderURL><portlet:param name="struts_action" value="/sites_admin/edit_site" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>');
-	}
-</aui:script>
-
 <%
 GroupSearchTerms searchTerms = (GroupSearchTerms)searchContainer.getSearchTerms();
 

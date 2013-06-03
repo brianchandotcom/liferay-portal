@@ -84,21 +84,8 @@ request.setAttribute("view.jsp-tabs1", tabs1);
 		</liferay-ui:search-container-results>
 
 		<aui:nav-bar>
-			<aui:nav-bar-search cssClass="pull-right" file="/html/portlet/directory/user_group_search.jsp" searchContainer="<%= searchContainer %>" />
+			<aui:nav-bar-search cssClass="pull-right" file="/html/portlet/users_admin/group_search.jsp" searchContainer="<%= searchContainer %>" />
 		</aui:nav-bar>
-
-		<div>
-			<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_COMMUNITY) %>">
-				<aui:button onClick='<%= renderResponse.getNamespace() + "addGroup();" %>' value="add-site" />
-			</c:if>
-		</div>
-
-		<aui:script>
-			function <portlet:namespace />addGroup() {
-				document.<portlet:namespace />fm.method = 'post';
-				submitForm(document.<portlet:namespace />fm, '<portlet:renderURL><portlet:param name="struts_action" value="/sites_admin/edit_site" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>');
-			}
-		</aui:script>
 
 		<liferay-ui:error exception="<%= RequiredGroupException.class %>">
 

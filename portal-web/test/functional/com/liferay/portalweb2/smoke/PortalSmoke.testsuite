@@ -1,3 +1,9 @@
 <definition>
+	<execute test-class="com.liferay.portalweb.portal.login.LoginTests" />
+
+	<execute test-class="com.liferay.portalweb.portal.smoke.SmokeTests" />
+
+	<execute test-class="com.liferay.portalweb.portal.logout.LogoutTests" />
+
 	<execute test-case="PortalSmoke" />
 </definition>

@@ -107,6 +107,8 @@ public interface LuceneHelper {
 
 	public void loadIndexesFromCluster(long companyId) throws SystemException;
 
+	public void shutdown(long companyId);
+
 	public void shutdown();
 
 	public void startup(long companyId);

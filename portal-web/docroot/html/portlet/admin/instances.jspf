@@ -14,6 +14,8 @@
  */
 --%>
 
+<liferay-ui:error exception="<%= RequiredCompanyException.class %>" message="default-company-is-required" />
+
 <input onClick="location.href = '<portlet:renderURL><portlet:param name="struts_action" value="/admin/edit_instance" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>';" type="button" value="<liferay-ui:message key="add" />" />
 
 <br /><br />
@@ -33,6 +35,7 @@ if (showShardSelector) {
 headerNames.add("num-of-users");
 headerNames.add("max-num-of-users");
 headerNames.add("active");
+headerNames.add(StringPool.BLANK);
 
 SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, null);
 
@@ -101,6 +104,10 @@ for (int i = 0; i < results.size(); i++) {
 	// Active
 
 	row.addText(LanguageUtil.get(pageContext, curCompany.isActive() ? "yes" : "no"), rowURL);
+
+	// Actions
+
+	row.addJSP("right", SearchEntry.DEFAULT_VALIGN, "/html/portlet/admin/instance_actions.jsp");
 
 	// Add result row
 

@@ -612,6 +612,14 @@ public class LuceneHelperImpl implements LuceneHelper {
 		_version = version;
 	}
 
+	public void shutdown(long companyId) {
+		IndexAccessor indexAccessor = _getIndexAccessor(companyId);
+
+		_indexAccessors.remove(indexAccessor);
+
+		indexAccessor.close();
+	}
+
 	@Override
 	public void shutdown() {
 		if (_luceneIndexThreadPoolExecutor != null) {

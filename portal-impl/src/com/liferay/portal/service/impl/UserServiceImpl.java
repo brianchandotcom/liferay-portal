@@ -2380,7 +2380,12 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 				permissionChecker, roleId, ActionKeys.ASSIGN_MEMBERS);
 		}
 
-		return UsersAdminUtil.addRequiredRoles(userId, roleIds);
+		if (userId != CompanyConstants.SYSTEM) {
+			return UsersAdminUtil.addRequiredRoles(userId, roleIds);
+		}
+		else {
+			return roleIds;
+		}
 	}
 
 	protected long[] checkUserGroupIds(long userId, long[] userGroupIds)

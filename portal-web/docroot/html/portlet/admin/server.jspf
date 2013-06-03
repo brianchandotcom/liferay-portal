@@ -711,7 +711,7 @@ serverURL.setParameter("tabs3", tabs3);
 
 					</aui:select>
 
-					<aui:input cssClass="lfr-textarea-container" name="script" type="textarea" value="<%= script %>" />
+					<aui:input cssClass="lfr-textarea-container" name="script" resizable="<%= true %>" type="textarea" value="<%= script %>" />
 				</aui:fieldset>
 
 				<c:if test="<%= Validator.isNotNull(scriptOutput) %>">

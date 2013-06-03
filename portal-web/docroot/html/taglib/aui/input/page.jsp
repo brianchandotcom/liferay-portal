@@ -175,13 +175,40 @@
 
 		<c:choose>
 			<c:when test='<%= type.equals("textarea") %>'>
-				<textarea class="<%= fieldCss %>" <%= disabled ? "disabled" : StringPool.BLANK %> id="<%= namespace + id %>" <%= multiple ? "multiple" : StringPool.BLANK %> name="<%= namespace + name %>" <%= Validator.isNotNull(onChange) ? "onChange=\"" + onChange + "\"" : StringPool.BLANK %> <%= Validator.isNotNull(onClick) ? "onClick=\"" + onClick + "\"" : StringPool.BLANK %> <%= Validator.isNotNull(placeholder) ? "placeholder=\"" + LanguageUtil.get(pageContext, placeholder) + "\"" : StringPool.BLANK %> <%= Validator.isNotNull(title) ? "title=\"" + title + "\"" : StringPool.BLANK %> <%= AUIUtil.buildData(data) %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>><%= HtmlUtil.escape(valueString) %></textarea>
+
+				<%
+				String[] storedDimensions = resizable ? StringUtil.split(SessionClicks.get(request, _TEXTAREA_WIDTH_HEIGHT_PREFIX + namespace + id, StringPool.BLANK)) : StringPool.EMPTY_ARRAY;
+				%>
+
+				<textarea class="<%= fieldCss %>" <%= disabled ? "disabled" : StringPool.BLANK %> id="<%= namespace + id %>" <%= multiple ? "multiple" : StringPool.BLANK %> name="<%= namespace + name %>" <%= Validator.isNotNull(onChange) ? "onChange=\"" + onChange + "\"" : StringPool.BLANK %> <%= Validator.isNotNull(onClick) ? "onClick=\"" + onClick + "\"" : StringPool.BLANK %> <%= Validator.isNotNull(placeholder) ? "placeholder=\"" + LanguageUtil.get(pageContext, placeholder) + "\"" : StringPool.BLANK %> <%= (storedDimensions.length > 1) ? "style=\"height: " + storedDimensions[0] + "; width: " + storedDimensions[1] + ";" + title + "\"" : StringPool.BLANK %> <%= Validator.isNotNull(title) ? "title=\"" + title + "\"" : StringPool.BLANK %> <%= AUIUtil.buildData(data) %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>><%= HtmlUtil.escape(valueString) %></textarea>
 
 				<c:if test="<%= autoSize %>">
 					<aui:script use="aui-autosize">
 						A.one('#<%= namespace + id %>').plug(A.Plugin.Autosize);
 					</aui:script>
 				</c:if>
+
+				<c:if test="<%= resizable %>">
+					<aui:script use="resize-base,liferay-store">
+						var textareaNode = A.one('#<%= namespace + id %>');
+
+						var resizeInstance = new A.Resize(
+							{
+								after: {
+									'end': function(event) {
+										Liferay.Store('<%= _TEXTAREA_WIDTH_HEIGHT_PREFIX %><%= namespace + id %>', textareaNode.getStyle('height') + ',' + textareaNode.getStyle('width'))
+									}
+								},
+								autoHide: true,
+								handles: 'r, br, b',
+								node: textareaNode
+							}
+						);
+
+						textareaNode.setData('resizeInstance', resizeInstance);
+					</aui:script>
+				</c:if>
+
 			</c:when>
 			<c:otherwise>
 				<input class="<%= fieldCss %>" <%= disabled ? "disabled" : StringPool.BLANK %> id="<%= namespace + id %>" <%= multiple ? "multiple" : StringPool.BLANK %> name="<%= namespace + name %>" <%= Validator.isNotNull(onChange) ? "onChange=\"" + onChange + "\"" : StringPool.BLANK %> <%= Validator.isNotNull(onClick) ? "onClick=\"" + onClick + "\"" : StringPool.BLANK %> <%= Validator.isNotNull(placeholder) ? "placeholder=\"" + LanguageUtil.get(pageContext, placeholder) + "\"" : StringPool.BLANK %> <%= Validator.isNotNull(title) ? "title=\"" + title + "\"" : StringPool.BLANK %> type="<%= Validator.isNull(type) ? "text" : type %>" <%= !type.equals("image") ? "value=\"" + HtmlUtil.escapeAttribute(valueString) + "\"" : StringPool.BLANK %> <%= AUIUtil.buildData(data) %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %> />
@@ -232,4 +259,6 @@ private long _getClassPK(Object bean, long classPK) {
 
 	return classPK;
 }
+
+private static final String _TEXTAREA_WIDTH_HEIGHT_PREFIX = "liferay_resize_";
 %>

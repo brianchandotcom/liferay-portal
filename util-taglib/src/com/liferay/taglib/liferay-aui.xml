@@ -559,6 +559,11 @@
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
+				<name>resizable</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+			</attribute>
+			<attribute>
 				<name>showRequiredLabel</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>

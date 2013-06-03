@@ -1541,6 +1541,12 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<name>resizable</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<name>showRequiredLabel</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

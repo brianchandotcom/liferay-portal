@@ -19,7 +19,7 @@
 <liferay-util:buffer var="labelContent">
 	<liferay-ui:message key="<%= label %>" />
 
-	<c:if test="<%= required && showRequiredLabel %>">
+	<c:if test='<%= required && showRequiredLabel && !type.equals("radio")%>'>
 		<span class="label-required">(<liferay-ui:message key="required" />)</span>
 	</c:if>
 

@@ -81,8 +81,7 @@ else {
 
 		<aui:input name="description" />
 
-		<aui:select changesContext="<%= true %>" name="type" onChange='<%= renderResponse.getNamespace() + "changeType();" %>'>
-			<aui:option disabled="<%= true %>" label="select-an-action-type" selected="<%= Validator.isNull(type) %>" />
+		<aui:select changesContext="<%= true %>" name="type" onChange='<%= renderResponse.getNamespace() + "changeType();" %>' showEmptyOption="<%= true %>">
 
 			<%
 			for (ActionHandler actionHandler : ActionHandlerManagerUtil.getActionHandlers()) {

@@ -135,34 +135,33 @@
 		position: absolute;
 		right: 5px;
 
-			.lfr-actions .lfr-trigger {
-				padding-right: 0;
+		.lfr-actions .lfr-trigger {
+			padding-right: 0;
 
-				strong {
-					min-width: 20px;
+			strong {
+				min-width: 20px;
 
-					a {
-						img {
-							display: none;
-						}
+				a {
+					img {
+						display: none;
+					}
 
-						.taglib-text {
-							display: none;
-							padding-left: 10px;
-						}
+					.taglib-text {
+						display: none;
+						padding-left: 10px;
 					}
 				}
 			}
+		}
 
-			&:hover .lfr-trigger strong {
-				min-width: 70px;
+		&:hover .lfr-trigger strong {
+			min-width: 70px;
 
-				a {
-					padding-right: 5px;
+			a {
+				padding-right: 5px;
 
-					.taglib-text {
-						display: inline-block;
-					}
+				.taglib-text {
+					display: inline-block;
 				}
 			}
 		}

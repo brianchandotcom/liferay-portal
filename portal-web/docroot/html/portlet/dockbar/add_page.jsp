@@ -52,6 +52,8 @@ Theme selTheme = layout.getTheme();
 List<LayoutTemplate> layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutTemplates(selTheme.getThemeId());
 
 int columnsCount = 2;
+
+request.setAttribute("add_page.jsp-embedded", true);
 %>
 
 <aui:model-context model="<%= Layout.class %>" />

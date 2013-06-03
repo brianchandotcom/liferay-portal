@@ -16,7 +16,11 @@
 
 <%@ include file="/html/portal/layout/edit/init.jsp" %>
 
-<div class="hide" id="<portlet:namespace />copyPortletsFromPage">
+<%
+boolean addPage = GetterUtil.getBoolean((Boolean)request.getAttribute("add_page.jsp-embedded"), false);
+%>
+
+<div class='<%= addPage ? StringPool.BLANK : "hide" %>' id="<portlet:namespace />copyPortletsFromPage">
 
 	<p>
 		<c:choose>
@@ -77,7 +81,9 @@
 
 	</aui:select>
 
-	<aui:button-row>
-		<aui:button name="copySubmitButton" value="copy" />
-	</aui:button-row>
+	<c:if test="<%= !addPage %>">
+		<aui:button-row>
+			<aui:button name="copySubmitButton" value="copy" />
+		</aui:button-row>
+	</c:if>
 </div>

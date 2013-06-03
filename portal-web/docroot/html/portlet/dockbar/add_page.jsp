@@ -77,15 +77,12 @@ int columnsCount = 2;
 
 	<div class="row-fluid">
 
-		<span class="span12">
+		<div class="span12">
 			<aui:input id="addLayoutName" name="name" />
-		</span>
+			<aui:input id="addLayoutHidden" label="show-in-navigation" name="hidden" type="checkbox" />
+		</div>
 
-		<span class="span12">
-			<aui:input id="addLayoutHidden" label="hidden" name="hidden" type="checkbox" />
-		</span>
-
-		<span class="span12" id="addPagePanelContainer">
+		<liferay-ui:panel collapsible="<%= false %>" cssClass="span12" id="addPagePanelContainer" title="templates">
 			<liferay-util:include page="/html/portlet/dockbar/search_templates.jsp" />
 
 			<aui:nav cssClass="nav-list no-margin-nav-list" id="templateList">
@@ -143,13 +140,12 @@ int columnsCount = 2;
 				%>
 
 			</aui:nav>
-		</span>
+		</liferay-ui:panel>
 	</div>
 
 	<div class="pull-right">
-		<button class="btn hide">OK</button>
-		<button class="btn btn-primary btn-submit" type="submit">Add Page</button>
-		<button class="btn" id="<portlet:namespace />cancelAction">Cancel</button>
+		<button class="btn btn-primary btn-submit" type="submit"><%= LanguageUtil.get(pageContext, "add-page") %></button>
+		<button class="btn" id="<portlet:namespace />cancelAction"><%= LanguageUtil.get(pageContext, "cancel") %></button>
 	</div>
 </aui:form>
 

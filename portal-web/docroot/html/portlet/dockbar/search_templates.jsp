@@ -17,5 +17,5 @@
 <%@ include file="/html/portlet/dockbar/init.jsp" %>
 
 <div class="search-panel btn-toolbar">
-	<aui:input cssClass="search-query span12" label="" name="searchTemplates" type="text"  />
+	<aui:input cssClass="search-query span12" label="" name="searchTemplates" placeholder="search" type="text"  />
 </div>

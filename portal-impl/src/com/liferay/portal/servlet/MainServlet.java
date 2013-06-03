@@ -63,7 +63,7 @@ import com.liferay.portal.plugin.PluginPackageUtil;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.security.jaas.ext.BasicLoginModule;
+import com.liferay.portal.security.jaas.JAASHelper;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.server.capabilities.ServerCapabilitiesUtil;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
@@ -993,7 +993,7 @@ public class MainServlet extends ActionServlet {
 		}
 
 		if (PropsValues.PORTAL_JAAS_ENABLE) {
-			userId = BasicLoginModule.getJaasUserId(companyId, remoteUser);
+			userId = JAASHelper.getJaasUserId(companyId, remoteUser);
 		}
 		else {
 			userId = GetterUtil.getLong(remoteUser);
@@ -1299,8 +1299,7 @@ public class MainServlet extends ActionServlet {
 			long remoteUserId = 0;
 
 			try {
-				remoteUserId = BasicLoginModule.getJaasUserId(
-					companyId, remoteUser);
+				remoteUserId = JAASHelper.getJaasUserId(companyId, remoteUser);
 			}
 			catch (Exception e) {
 				_log.warn(e);

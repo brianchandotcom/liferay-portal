@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.jaas.PortalPrincipal;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Company;
+import com.liferay.portal.security.jaas.JAASHelper;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
@@ -139,7 +140,8 @@ public class BasicLoginModule implements LoginModule {
 			List<Company> companies = CompanyLocalServiceUtil.getCompanies();
 
 			for (Company company : companies) {
-				long userId = getJaasUserId(company.getCompanyId(), name);
+				long userId = JAASHelper.getJaasUserId(
+					company.getCompanyId(), name);
 
 				if (userId == 0) {
 					continue;

@@ -21,6 +21,7 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portal.util.UserTestUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
@@ -93,6 +94,13 @@ public class BaseSocialActivityTestCase {
 			GroupLocalServiceUtil.deleteGroup(_group);
 
 			_group = null;
+		}
+
+		Group group = GroupLocalServiceUtil.fetchFriendlyURLGroup(
+			TestPropsValues.getCompanyId(), "/global");
+
+		if (group != null) {
+			SocialActivityLocalServiceUtil.deleteActivities(group.getGroupId());
 		}
 	}
 

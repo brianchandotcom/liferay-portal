@@ -16,12 +16,15 @@ package com.liferay.portlet.mobiledevicerules.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.mobiledevicerules.model.MDRAction;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
 import com.liferay.portlet.mobiledevicerules.service.base.MDRActionLocalServiceBaseImpl;
+import com.liferay.portlet.social.model.SocialActivityConstants;
 
 import java.util.Date;
 import java.util.List;
@@ -89,7 +92,9 @@ public class MDRActionLocalServiceImpl extends MDRActionLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void deleteAction(long actionId) throws SystemException {
+	public void deleteAction(long actionId)
+		throws PortalException, SystemException {
+
 		MDRAction action = mdrActionPersistence.fetchByPrimaryKey(actionId);
 
 		if (action != null) {
@@ -98,7 +103,9 @@ public class MDRActionLocalServiceImpl extends MDRActionLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void deleteAction(MDRAction action) throws SystemException {
+	public void deleteAction(MDRAction action)
+		throws PortalException, SystemException {
+
 		mdrActionPersistence.remove(action);
 
 		MDRRuleGroupInstance ruleGroupInstance =
@@ -110,10 +117,23 @@ public class MDRActionLocalServiceImpl extends MDRActionLocalServiceBaseImpl {
 
 			mdrRuleGroupInstancePersistence.update(ruleGroupInstance);
 		}
+
+		// Social
+
+		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
+
+		extraDataJSONObject.put("uuid", action.getUuid());
+
+		socialActivityLocalService.addUniqueActivity(
+			0, action.getGroupId(), MDRAction.class.getName(),
+			action.getActionId(), SocialActivityConstants.TYPE_DELETE,
+			extraDataJSONObject.toString(), 0);
 	}
 
 	@Override
-	public void deleteActions(long ruleGroupInstanceId) throws SystemException {
+	public void deleteActions(long ruleGroupInstanceId)
+		throws PortalException, SystemException {
+
 		List<MDRAction> actions =
 			mdrActionPersistence.findByRuleGroupInstanceId(ruleGroupInstanceId);
 

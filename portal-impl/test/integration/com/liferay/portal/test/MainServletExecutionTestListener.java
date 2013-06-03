@@ -60,9 +60,9 @@ public class MainServletExecutionTestListener
 		return "file:" + file.getAbsolutePath();
 	}
 
-	private MainServlet _mainServlet;
+	protected MainServlet _mainServlet;
 
-	private class AutoDeployMockServletContext extends MockServletContext {
+	protected class AutoDeployMockServletContext extends MockServletContext {
 
 		public AutoDeployMockServletContext(
 			String resourceBasePath, ResourceLoader resourceLoader) {

@@ -823,7 +823,7 @@ serverURL.setParameter("tabs3", tabs3);
 
 				<liferay-ui:panel-container extended="<%= true %>" id="adminServerAdministrationActionsPanelContainer" persistState="<%= true %>">
 					<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="adminServerAdministrationActionsPanel" persistState="<%= true %>" title="actions">
-						<table class="table table-condensed">
+						<table class="table table-condensed table-hover">
 						<tr>
 							<td>
 								<liferay-ui:message key="run-the-garbage-collector-to-free-up-memory" />

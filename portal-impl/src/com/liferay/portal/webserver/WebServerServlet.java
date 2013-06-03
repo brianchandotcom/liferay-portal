@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.Validator_IW;
 import com.liferay.portal.kernel.webdav.WebDAVUtil;
@@ -727,13 +728,25 @@ public class WebServerServlet extends HttpServlet {
 			String path, String[] pathArray)
 		throws Exception {
 
-		if (!PropsValues.WEB_SERVER_SERVLET_DIRECTORY_INDEXING_ENABLED) {
+		long groupId = _getGroupId(user.getCompanyId(), pathArray[0]);
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		UnicodeProperties typeSettingsProperties =
+			group.getTypeSettingsProperties();
+
+		boolean directoryIndexingEnabled = GetterUtil.getBoolean(
+			typeSettingsProperties.getProperty("directoryIndexingEnabled"),
+			PropsValues.WEB_SERVER_SERVLET_DIRECTORY_INDEXING_ENABLED);
+
+		if (!PropsValues.WEB_SERVER_SERVLET_DIRECTORY_INDEXING_ENABLED &&
+			!directoryIndexingEnabled) {
+
 			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 
 			return;
 		}
 
-		long groupId = _getGroupId(user.getCompanyId(), pathArray[0]);
 		long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
 		for (int i = 1; i < pathArray.length; i++) {

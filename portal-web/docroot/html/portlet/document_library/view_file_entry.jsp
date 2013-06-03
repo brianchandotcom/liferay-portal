@@ -576,7 +576,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 									}
 						%>
 
-									<liferay-ui:panel collapsible="<%= true %>" cssClass="metadata" extended="<%= true %>" id="documentLibraryMetadataPanel" persistState="<%= true %>" title="<%= HtmlUtil.escape(ddmStructure.getName(LocaleUtil.getDefault())) %>">
+									<liferay-ui:panel collapsible="<%= true %>" cssClass="metadata" extended="<%= true %>" id="documentLibraryMetadataPanel" persistState="<%= true %>" title="<%= HtmlUtil.escape(ddmStructure.getName(themeDisplay.getLocale())) %>">
 
 										<liferay-ddm:html
 											classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
@@ -624,7 +624,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 								}
 
 								if (fields != null) {
-									String name = "metadata." + ddmStructure.getName(LocaleUtil.getDefault(), true);
+									String name = "metadata." + ddmStructure.getName(themeDisplay.getLocale(), true);
 						%>
 
 									<liferay-ui:panel collapsible="<%= true %>" cssClass="lfr-asset-metadata" id="documentLibraryAssetMetadataPanel" persistState="<%= true %>" title="<%= name %>">

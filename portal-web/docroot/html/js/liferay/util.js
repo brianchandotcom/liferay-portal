@@ -1620,19 +1620,18 @@
 
 			var eventName = config.eventName || config.id;
 
-			var selectionEvent = Liferay.on(eventName, callback);
+			var eventHandles = [];
 
-			var detachSelectionEventFn = function(event) {
+			eventHandles.push(Liferay.on(eventName, callback));
+
+			var detachSelectionOnHideFn = function(event) {
 				if (!event.newVal) {
-					selectionEvent.detach();
-					visibleChangeHandle.detach();
+					(new A.EventHandle(eventHandles)).detach();
 				}
 			};
 
-			var visibleChangeHandle;
-
 			if (dialog) {
-				visibleChangeHandle = dialog.after('visibleChange', detachSelectionEventFn);
+				eventHandles.push(dialog.after('visibleChange', detachSelectionOnHideFn));
 
 				dialog.show();
 			}
@@ -1640,7 +1639,7 @@
 				Util.openWindow(
 					config,
 					function(dialogWindow) {
-						visibleChangeHandle = dialogWindow.after('visibleChange', detachSelectionEventFn);
+						eventHandles.push(dialogWindow.after('visibleChange', detachSelectionOnHideFn));
 					}
 				);
 			}

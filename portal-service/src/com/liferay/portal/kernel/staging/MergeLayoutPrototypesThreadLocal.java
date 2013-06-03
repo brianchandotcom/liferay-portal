@@ -60,6 +60,10 @@ public class MergeLayoutPrototypesThreadLocal {
 	private static String _buildMethodKey(
 		String methodName, Object[] arguments, Class<?>[] parameterTypes) {
 
+		if ((arguments == null) || (arguments.length == 0)) {
+			return methodName;
+		}
+
 		StringBundler sb = new StringBundler(arguments.length * 2 + 1);
 
 		sb.append(methodName);

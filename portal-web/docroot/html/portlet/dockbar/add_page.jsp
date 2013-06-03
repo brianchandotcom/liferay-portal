@@ -50,6 +50,8 @@ request.setAttribute(WebKeys.LAYOUT_LISTER_LIST, layoutList);
 Theme selTheme = layout.getTheme();
 
 List<LayoutTemplate> layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutTemplates(selTheme.getThemeId());
+
+int columnsCount = 2;
 %>
 
 <aui:model-context model="<%= Layout.class %>" />

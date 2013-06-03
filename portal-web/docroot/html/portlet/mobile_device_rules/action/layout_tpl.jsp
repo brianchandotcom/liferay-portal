@@ -20,6 +20,8 @@
 String layoutTemplateId = GetterUtil.getString(typeSettingsProperties.getProperty("layoutTemplateId"));
 
 List<LayoutTemplate> layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutTemplates();
+
+int columnsCount = 3;
 %>
 
 <liferay-ui:error-marker key="errorSection" value="layout" />

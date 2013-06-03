@@ -131,19 +131,19 @@ public class SampleSQLBuilder {
 		_outputDir = arguments.get("sample.sql.output.dir");
 		_outputMerge = GetterUtil.getBoolean(
 			arguments.get("sample.sql.output.merge"));
-		_maxAssetCategoryPerAssetEntry = GetterUtil.getInteger(
+		int perAssetEntryMaxAssetCategoryCount = GetterUtil.getInteger(
 			arguments.get(
 				"sample.sql.per.asset.entry.max.asset.category.count"));
-		_maxAssetTagPerAssetEntryCount = GetterUtil.getInteger(
+		int perAssetEntryMaxAssetTagCount = GetterUtil.getInteger(
 			arguments.get("sample.sql.per.asset.entry.max.asset.tag.count"));
 
 		_dataFactory = new DataFactory(
-			baseDir, _maxAssetCategoryCount, _maxAssetCategoryPerAssetEntry,
-			_maxAssetTagCount, _maxAssetTagPerAssetEntryCount,
+			baseDir, _maxAssetCategoryCount, _maxAssetTagCount,
 			_maxAssetVocabularyCount, _maxBlogsEntryCount,
 			_maxDDLCustomFieldCount, _maxGroupCount, _maxJournalArticleCount,
 			_maxJournalArticleSize, _maxMBCategoryCount, _maxMBThreadCount,
-			_maxMBMessageCount, _maxUserToGroupCount);
+			_maxMBMessageCount, _maxUserToGroupCount,
+			perAssetEntryMaxAssetCategoryCount, perAssetEntryMaxAssetTagCount);
 
 		_db = DBFactoryUtil.getDB(_dbType);
 
@@ -505,9 +505,7 @@ public class SampleSQLBuilder {
 	private Map<String, Writer> _insertSQLWriters =
 		new ConcurrentHashMap<String, Writer>();
 	private int _maxAssetCategoryCount;
-	private int _maxAssetCategoryPerAssetEntry;
 	private int _maxAssetTagCount;
-	private int _maxAssetTagPerAssetEntryCount;
 	private int _maxAssetVocabularyCount;
 	private int _maxBlogsEntryCommentCount;
 	private int _maxBlogsEntryCount;

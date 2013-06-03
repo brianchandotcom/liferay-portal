@@ -173,22 +173,21 @@ import java.util.Map;
 public class DataFactory {
 
 	public DataFactory(
-			String baseDir, int maxAssetCategoryCount,
-			int maxAssetCategoryPerAssetEntryCount, int maxAssetTagCount,
-			int maxAssetTagPerAssetEntryCount, int maxAssetVocabularyCount,
-			int maxBlogsEntryCount, int maxDDLCustomFieldCount,
-			int maxGroupsCount, int maxJournalArticleCount,
-			int maxJournalArticleSize, int maxMBCategoryCount,
-			int maxMBThreadCount, int maxMBMessageCount,
-			int maxUserToGroupCount)
+			String baseDir, int maxAssetCategoryCount, int maxAssetTagCount,
+			int maxAssetVocabularyCount, int maxBlogsEntryCount,
+			int maxDDLCustomFieldCount, int maxGroupsCount,
+			int maxJournalArticleCount, int maxJournalArticleSize,
+			int maxMBCategoryCount, int maxMBThreadCount, int maxMBMessageCount,
+			int maxUserToGroupCount, int perAssetEntryMaxAssetCategoryCount,
+			int perAssetEntryMaxAssetTagCount)
 		throws Exception {
 
 		_baseDir = baseDir;
 		_maxAssetCategoryCount = maxAssetCategoryCount;
-		_maxAssetCategoryPerAssetEntryCount =
-			maxAssetCategoryPerAssetEntryCount;
+		_perAssetEntryMaxAssetCategoryCount =
+			perAssetEntryMaxAssetCategoryCount;
 		_maxAssetTagCount = maxAssetTagCount;
-		_maxAssetTagPerAssetEntryCount = maxAssetTagPerAssetEntryCount;
+		_perAssetEntryMaxAssetTagCount = perAssetEntryMaxAssetTagCount;
 		_maxAssetVocabularyCount = maxAssetVocabularyCount;
 		_maxBlogsEntryCount = maxBlogsEntryCount;
 		_maxDDLCustomFieldCount = maxDDLCustomFieldCount;
@@ -262,23 +261,23 @@ public class DataFactory {
 	}
 
 	public List<Long> getAssetCategoryIds(long groupId) {
+		SimpleCounter counter = _assetCategoryCounters.get(groupId);
+
+		if (counter == null) {
+			counter = new SimpleCounter(0);
+
+			_assetCategoryCounters.put(groupId, counter);
+		}
+
 		int assetCategoryCountPerGroup =
 			_maxAssetCategoryCount * _maxAssetVocabularyCount;
 
 		int startIndex = assetCategoryCountPerGroup * ((int)groupId - 1);
 
 		List<Long> assetCategoryIds = new ArrayList<Long>(
-			_maxAssetCategoryPerAssetEntryCount);
+			_perAssetEntryMaxAssetCategoryCount);
 
-		for (int i = 0; i < _maxAssetCategoryPerAssetEntryCount; i++) {
-			SimpleCounter counter = _assetCategoryCounters.get(groupId);
-
-			if (counter == null) {
-				counter = new SimpleCounter(0);
-
-				_assetCategoryCounters.put(groupId, counter);
-			}
-
+		for (int i = 0; i < _perAssetEntryMaxAssetCategoryCount; i++) {
 			int index =
 				startIndex + (int)counter.get() % assetCategoryCountPerGroup;
 
@@ -291,20 +290,20 @@ public class DataFactory {
 	}
 
 	public List<Long> getAssetTagIds(long groupId) {
+		SimpleCounter counter = _assetTagCounters.get(groupId);
+
+		if (counter == null) {
+			counter = new SimpleCounter(0);
+
+			_assetTagCounters.put(groupId, counter);
+		}
+
 		int startIndex = _maxAssetTagCount * ((int)groupId - 1);
 
 		List<Long> assetTagIds = new ArrayList<Long>(
-			_maxAssetTagPerAssetEntryCount);
+			_perAssetEntryMaxAssetTagCount);
 
-		for (int i = 0; i < _maxAssetTagPerAssetEntryCount; i++) {
-			SimpleCounter counter = _assetTagCounters.get(groupId);
-
-			if (counter == null) {
-				counter = new SimpleCounter(0);
-
-				_assetTagCounters.put(groupId, counter);
-			}
-
+		for (int i = 0; i < _perAssetEntryMaxAssetTagCount; i++) {
 			int index = startIndex + (int)counter.get() % _maxAssetTagCount;
 
 			long assetTagId = _assetTags.get(index).getTagId();
@@ -2336,9 +2335,7 @@ public class DataFactory {
 	private Map<Long, SimpleCounter> _layoutCounters =
 		new HashMap<Long, SimpleCounter>();
 	private int _maxAssetCategoryCount;
-	private int _maxAssetCategoryPerAssetEntryCount;
 	private int _maxAssetTagCount;
-	private int _maxAssetTagPerAssetEntryCount;
 	private int _maxAssetVocabularyCount;
 	private int _maxBlogsEntryCount;
 	private int _maxDDLCustomFieldCount;
@@ -2350,6 +2347,8 @@ public class DataFactory {
 	private int _maxMBThreadCount;
 	private int _maxUserToGroupCount;
 	private Role _ownerRole;
+	private int _perAssetEntryMaxAssetCategoryCount;
+	private int _perAssetEntryMaxAssetTagCount;
 	private Role _powerUserRole;
 	private SimpleCounter _resourcePermissionCounter;
 	private List<Role> _roles;

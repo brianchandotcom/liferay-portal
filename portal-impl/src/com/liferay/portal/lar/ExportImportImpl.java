@@ -34,7 +34,9 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.DateRange;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -50,6 +52,7 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.ElementHandler;
 import com.liferay.portal.kernel.xml.ElementProcessor;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.model.Group;
@@ -253,6 +256,51 @@ public class ExportImportImpl implements ExportImport {
 		}
 
 		saxParser.parse(new InputSource(is));
+
+		return manifestSummary;
+	}
+
+	@Override
+	public ManifestSummary getManifestSummary(
+			long userId, long groupId, Map<String, String[]> parameterMap,
+			FileEntry fileEntry)
+		throws Exception {
+
+		File file = DLFileEntryLocalServiceUtil.getFile(
+			userId, fileEntry.getFileEntryId(), fileEntry.getVersion(), false);
+
+		boolean successfulRename = false;
+
+		File newFile = null;
+
+		ManifestSummary manifestSummary = null;
+
+		try {
+			String newFileName = StringUtil.replace(
+				file.getPath(), file.getName(), fileEntry.getTitle());
+
+			newFile = new File(newFileName);
+
+			successfulRename = file.renameTo(newFile);
+
+			if (!successfulRename) {
+				newFile = FileUtil.createTempFile(fileEntry.getExtension());
+
+				FileUtil.copyFile(file, newFile);
+			}
+
+			manifestSummary = getManifestSummary(
+				userId, groupId, parameterMap, newFile);
+
+		}
+		finally {
+			if (successfulRename) {
+				newFile.renameTo(file);
+			}
+			else {
+				FileUtil.delete(newFile);
+			}
+		}
 
 		return manifestSummary;
 	}

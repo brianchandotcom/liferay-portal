@@ -34,7 +34,7 @@ public class AccessControlAdvice
 	public Object before(MethodInvocation methodInvocation) throws Throwable {
 		AccessControlled accessControlled = findAnnotation(methodInvocation);
 
-		if (accessControlled == AccessControlled.NULL_ACCESS_CONTROLLED) {
+		if (accessControlled == AccessControl.NULL_ACCESS_CONTROLLED) {
 			return null;
 		}
 
@@ -51,7 +51,7 @@ public class AccessControlAdvice
 
 	@Override
 	public AccessControlled getNullAnnotation() {
-		return AccessControlled.NULL_ACCESS_CONTROLLED;
+		return AccessControl.NULL_ACCESS_CONTROLLED;
 	}
 
 	public void setAccessControlAdvisor(

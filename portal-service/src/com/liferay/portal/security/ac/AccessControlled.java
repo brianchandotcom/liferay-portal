@@ -14,7 +14,6 @@
 
 package com.liferay.portal.security.ac;
 
-import java.lang.annotation.Annotation;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -33,24 +32,5 @@ public @interface AccessControlled {
 	public boolean guestAccessEnabled() default false;
 
 	public boolean hostAllowedValidationEnabled() default true;
-
-	public AccessControlled NULL_ACCESS_CONTROLLED = new AccessControlled() {
-
-		@Override
-		public Class<? extends Annotation> annotationType() {
-			return AccessControlled.class;
-		}
-
-		@Override
-		public boolean guestAccessEnabled() {
-			return false;
-		}
-
-		@Override
-		public boolean hostAllowedValidationEnabled() {
-			return false;
-		}
-
-	};
 
 }

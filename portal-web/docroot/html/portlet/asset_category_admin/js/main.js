@@ -1476,6 +1476,7 @@ AUI.add(
 									name: query,
 									start: start,
 									end: end,
+									addDefaultVocabulary: true,
 									obc: null,
 									'vocabularies.$categoriesCount = /assetcategory/get-vocabulary-root-categories-count': {
 										groupId: parentGroupId,

@@ -178,6 +178,17 @@ public class AssetVocabularyServiceWrapper implements AssetVocabularyService,
 	@Override
 	public com.liferay.portlet.asset.model.AssetVocabularyDisplay getGroupVocabulariesDisplay(
 		long groupId, java.lang.String name, int start, int end,
+		boolean addDefaultVocabulary,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _assetVocabularyService.getGroupVocabulariesDisplay(groupId,
+			name, start, end, addDefaultVocabulary, obc);
+	}
+
+	@Override
+	public com.liferay.portlet.asset.model.AssetVocabularyDisplay getGroupVocabulariesDisplay(
+		long groupId, java.lang.String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -185,6 +196,9 @@ public class AssetVocabularyServiceWrapper implements AssetVocabularyService,
 			name, start, end, obc);
 	}
 
+	/**
+	* @deprecated As of 6.2.0
+	*/
 	@Override
 	public com.liferay.portal.kernel.json.JSONObject getJSONGroupVocabularies(
 		long groupId, java.lang.String name, int start, int end,

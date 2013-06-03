@@ -311,6 +311,24 @@ public class AssetVocabularyServiceSoap {
 
 	public static com.liferay.portlet.asset.model.AssetVocabularyDisplay getGroupVocabulariesDisplay(
 		long groupId, java.lang.String name, int start, int end,
+		boolean addDefaultVocabulary,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws RemoteException {
+		try {
+			com.liferay.portlet.asset.model.AssetVocabularyDisplay returnValue = AssetVocabularyServiceUtil.getGroupVocabulariesDisplay(groupId,
+					name, start, end, addDefaultVocabulary, obc);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.asset.model.AssetVocabularyDisplay getGroupVocabulariesDisplay(
+		long groupId, java.lang.String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws RemoteException {
 		try {
@@ -326,6 +344,9 @@ public class AssetVocabularyServiceSoap {
 		}
 	}
 
+	/**
+	* @deprecated As of 6.2.0
+	*/
 	public static java.lang.String getJSONGroupVocabularies(long groupId,
 		java.lang.String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)

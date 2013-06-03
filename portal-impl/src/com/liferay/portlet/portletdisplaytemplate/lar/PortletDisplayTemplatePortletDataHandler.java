@@ -14,14 +14,21 @@
 
 package com.liferay.portlet.portletdisplaytemplate.lar;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
-import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateExportActionableDynamicQuery;
 
 import java.util.List;
 
@@ -52,16 +59,11 @@ public class PortletDisplayTemplatePortletDataHandler
 
 		long[] classNameIds = TemplateHandlerRegistryUtil.getClassNameIds();
 
-		for (long classNameId : classNameIds) {
-			List<DDMTemplate> ddmTemplates =
-				DDMTemplateLocalServiceUtil.getTemplates(
-					portletDataContext.getScopeGroupId(), classNameId);
+		ActionableDynamicQuery ddmTemplateActionableDynamicQuery =
+			getDDMTemplateActionableDynamicQuery(
+				portletDataContext, ArrayUtil.toArray(classNameIds), null);
 
-			for (DDMTemplate ddmTemplate : ddmTemplates) {
-				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext, ddmTemplate);
-			}
-		}
+		ddmTemplateActionableDynamicQuery.performActions();
 
 		return getExportDataRootElementString(rootElement);
 	}
@@ -83,6 +85,47 @@ public class PortletDisplayTemplatePortletDataHandler
 		}
 
 		return null;
+	}
+
+	@Override
+	protected void doPrepareManifestSummary(
+			PortletDataContext portletDataContext)
+		throws Exception {
+
+		for (long classNameId : TemplateHandlerRegistryUtil.getClassNameIds()) {
+			ActionableDynamicQuery ddmTemplateActionableDynamicQuery =
+				getDDMTemplateActionableDynamicQuery(
+					portletDataContext, new Long[] {classNameId},
+					PortalUtil.getClassName(classNameId));
+
+			ddmTemplateActionableDynamicQuery.performCount();
+		}
+	}
+
+	protected ActionableDynamicQuery getDDMTemplateActionableDynamicQuery(
+			final PortletDataContext portletDataContext,
+			final Long[] classNameIds, final String manifestSummaryKey)
+		throws SystemException {
+
+		return new DDMTemplateExportActionableDynamicQuery(
+			portletDataContext) {
+
+			@Override
+			protected void addCriteria(DynamicQuery dynamicQuery) {
+				super.addCriteria(dynamicQuery);
+
+				Property classNameIdProperty = PropertyFactoryUtil.forName(
+					"classNameId");
+
+				dynamicQuery.add(classNameIdProperty.in(classNameIds));
+			}
+
+			@Override
+			protected String getManifestSummaryKey() {
+				return manifestSummaryKey;
+			}
+
+		};
 	}
 
 }

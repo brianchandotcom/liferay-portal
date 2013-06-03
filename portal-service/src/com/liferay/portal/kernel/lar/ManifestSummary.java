@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.lar;
 
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.ClassedModel;
 
 import java.io.Serializable;
@@ -29,14 +30,34 @@ import java.util.Map;
  */
 public class ManifestSummary implements Serializable {
 
+	public static String getManifestSummaryKey(
+		String modelName, String referrerModelName) {
+
+		if (modelName.equals(referrerModelName)) {
+			return modelName;
+		}
+
+		return referrerModelName.concat(StringPool.POUND).concat(modelName);
+	}
+
+	public void addModelCount(
+		Class<? extends ClassedModel> clazz,
+		Class<? extends ClassedModel> referrerClazz, long modelCount) {
+
+		String manifestSummaryKey = getManifestSummaryKey(
+			clazz.getName(), referrerClazz.getName());
+
+		addModelCount(manifestSummaryKey, modelCount);
+	}
+
 	public void addModelCount(
 		Class<? extends ClassedModel> clazz, long modelCount) {
 
-		addModelCount(clazz.getName(), modelCount);
+		addModelCount(clazz, clazz, modelCount);
 	}
 
-	public void addModelCount(String modelName, long modelCount) {
-		_modelCounters.put(modelName, modelCount);
+	public void addModelCount(String manifestSummaryKey, long modelCount) {
+		_modelCounters.put(manifestSummaryKey, modelCount);
 	}
 
 	public Date getExportDate() {
@@ -44,15 +65,25 @@ public class ManifestSummary implements Serializable {
 	}
 
 	public long getModelCount(Class<? extends ClassedModel> clazz) {
-		return getModelCount(clazz.getName());
+		return getModelCount(clazz, clazz);
 	}
 
-	public long getModelCount(String modelName) {
-		if (!_modelCounters.containsKey(modelName)) {
+	public long getModelCount(
+		Class<? extends ClassedModel> clazz,
+		Class<? extends ClassedModel> referrerClazz) {
+
+		String manifestSummaryKey = getManifestSummaryKey(
+			clazz.getName(), referrerClazz.getName());
+
+		return getModelCount(manifestSummaryKey);
+	}
+
+	public long getModelCount(String manifestSummaryKey) {
+		if (!_modelCounters.containsKey(manifestSummaryKey)) {
 			return -1;
 		}
 
-		return _modelCounters.get(modelName);
+		return _modelCounters.get(manifestSummaryKey);
 	}
 
 	public Map<String, Long> getModelCounters() {
@@ -60,19 +91,29 @@ public class ManifestSummary implements Serializable {
 	}
 
 	public void incrementModelCount(Class<? extends ClassedModel> clazz) {
-		incrementModelCount(clazz.getName());
+		incrementModelCount(clazz, clazz);
 	}
 
-	public void incrementModelCount(String modelName) {
-		if (!_modelCounters.containsKey(modelName)) {
-			_modelCounters.put(modelName, 1L);
+	public void incrementModelCount(
+		Class<? extends ClassedModel> clazz,
+		Class<? extends ClassedModel> referrerClazz) {
+
+		String manifestSummaryKey = getManifestSummaryKey(
+			clazz.getName(), referrerClazz.getName());
+
+		incrementModelCount(manifestSummaryKey);
+	}
+
+	public void incrementModelCount(String manifestSummaryKey) {
+		if (!_modelCounters.containsKey(manifestSummaryKey)) {
+			_modelCounters.put(manifestSummaryKey, 1L);
 
 			return;
 		}
 
-		long modelCounter = _modelCounters.get(modelName);
+		long modelCounter = _modelCounters.get(manifestSummaryKey);
 
-		_modelCounters.put(modelName, modelCounter + 1);
+		_modelCounters.put(manifestSummaryKey, modelCounter + 1);
 	}
 
 	public void setExportDate(Date exportDate) {

@@ -16,7 +16,6 @@ package com.liferay.portlet.bookmarks.lar;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
-import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
@@ -161,22 +160,15 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 			PortletDataContext portletDataContext)
 		throws Exception {
 
-		ManifestSummary manifestSummary =
-			portletDataContext.getManifestSummary();
-
 		ActionableDynamicQuery entryExportActionableDynamicQuery =
 			new BookmarksEntryExportActionableDynamicQuery(portletDataContext);
 
-		manifestSummary.addModelCount(
-			BookmarksEntry.class,
-			entryExportActionableDynamicQuery.performCount());
+		entryExportActionableDynamicQuery.performCount();
 
 		ActionableDynamicQuery folderExportActionableDynamicQuery =
 			new BookmarksFolderExportActionableDynamicQuery(portletDataContext);
 
-		manifestSummary.addModelCount(
-			BookmarksFolder.class,
-			folderExportActionableDynamicQuery.performCount());
+		folderExportActionableDynamicQuery.performCount();
 	}
 
 }

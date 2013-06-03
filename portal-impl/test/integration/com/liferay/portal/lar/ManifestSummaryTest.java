@@ -52,11 +52,14 @@ public class ManifestSummaryTest
 
 		Map<String, Long> modelCountMap = manifestSummary.getModelCounters();
 
+		long ddmStructuresCount = manifestSummary.getModelCount(
+			DDMStructure.class, JournalArticle.class);
+		long ddmTemplatesCount = manifestSummary.getModelCount(
+			DDMTemplate.class, DDMStructure.class);
+
 		Assert.assertEquals(4, modelCountMap.size());
-		Assert.assertEquals(
-			1, manifestSummary.getModelCount(DDMStructure.class));
-		Assert.assertEquals(
-			1, manifestSummary.getModelCount(DDMTemplate.class));
+		Assert.assertEquals(1, ddmStructuresCount);
+		Assert.assertEquals(1, ddmTemplatesCount);
 		Assert.assertEquals(
 			1, manifestSummary.getModelCount(JournalArticle.class));
 		Assert.assertEquals(
@@ -90,11 +93,14 @@ public class ManifestSummaryTest
 
 		Map<String, Long> modelCountMap = manifestSummary.getModelCounters();
 
+		long ddmStructuresCount = manifestSummary.getModelCount(
+			DDMStructure.class, JournalArticle.class);
+		long ddmTemplatesCount = manifestSummary.getModelCount(
+			DDMTemplate.class, DDMStructure.class);
+
 		Assert.assertEquals(4, modelCountMap.size());
-		Assert.assertEquals(
-			1, manifestSummary.getModelCount(DDMStructure.class));
-		Assert.assertEquals(
-			1, manifestSummary.getModelCount(DDMTemplate.class));
+		Assert.assertEquals(1, ddmStructuresCount);
+		Assert.assertEquals(1, ddmTemplatesCount);
 		Assert.assertEquals(
 			1, manifestSummary.getModelCount(JournalArticle.class));
 		Assert.assertEquals(

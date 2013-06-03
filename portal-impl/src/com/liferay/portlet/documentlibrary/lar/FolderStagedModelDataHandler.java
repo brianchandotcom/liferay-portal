@@ -59,11 +59,6 @@ public class FolderStagedModelDataHandler
 	};
 
 	@Override
-	public String getClassName(StagedModel stagedModel) {
-		return Folder.class.getName();
-	}
-
-	@Override
 	public String[] getClassNames() {
 		return CLASS_NAMES;
 	}
@@ -71,6 +66,11 @@ public class FolderStagedModelDataHandler
 	@Override
 	public String getDisplayName(Folder folder) {
 		return folder.getName();
+	}
+
+	@Override
+	public String getManifestSummaryKey(StagedModel stagedModel) {
+		return Folder.class.getName();
 	}
 
 	@Override

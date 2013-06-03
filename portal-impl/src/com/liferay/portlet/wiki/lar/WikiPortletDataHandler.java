@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
-import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
@@ -188,20 +187,15 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 			PortletDataContext portletDataContext)
 		throws Exception {
 
-		ManifestSummary manifestSummary =
-			portletDataContext.getManifestSummary();
-
 		ActionableDynamicQuery nodeActionableDynamicQuery =
 			new WikiNodeExportActionableDynamicQuery(portletDataContext);
 
-		manifestSummary.addModelCount(
-			WikiNode.class, nodeActionableDynamicQuery.performCount());
+		nodeActionableDynamicQuery.performCount();
 
 		ActionableDynamicQuery pageExportActionableDynamicQuery =
 			getPageActionableDynamicQuery(portletDataContext);
 
-		manifestSummary.addModelCount(
-			WikiPage.class, pageExportActionableDynamicQuery.performCount());
+		pageExportActionableDynamicQuery.performCount();
 	}
 
 	protected ActionableDynamicQuery getPageActionableDynamicQuery(

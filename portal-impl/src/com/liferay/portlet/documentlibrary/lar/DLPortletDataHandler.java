@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
-import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
@@ -258,27 +257,20 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 			final PortletDataContext portletDataContext)
 		throws Exception {
 
-		ManifestSummary manifestSummary =
-			portletDataContext.getManifestSummary();
-
 		ActionableDynamicQuery dlFileShortcutActionableDynamicQuery =
 			getDLFileShortcutActionableDynamicQuery(portletDataContext);
 
-		manifestSummary.addModelCount(
-			DLFileShortcut.class,
-			dlFileShortcutActionableDynamicQuery.performCount());
+		dlFileShortcutActionableDynamicQuery.performCount();
 
 		ActionableDynamicQuery fileEntryActionableDynamicQuery =
 			getFileEntryActionableDynamicQuery(portletDataContext);
 
-		manifestSummary.addModelCount(
-			FileEntry.class, fileEntryActionableDynamicQuery.performCount());
+		fileEntryActionableDynamicQuery.performCount();
 
 		ActionableDynamicQuery folderActionableDynamicQuery =
 			getFolderActionableDynamicQuery(portletDataContext);
 
-		manifestSummary.addModelCount(
-			Folder.class, folderActionableDynamicQuery.performCount());
+		folderActionableDynamicQuery.performCount();
 	}
 
 	protected ActionableDynamicQuery getDLFileEntryTypeActionableDynamicQuery(
@@ -344,6 +336,11 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		return new DLFileEntryExportActionableDynamicQuery(portletDataContext) {
 
 			@Override
+			protected String getManifestSummaryKey() {
+				return FileEntry.class.getName();
+			}
+
+			@Override
 			protected void performAction(Object object)
 				throws PortalException, SystemException {
 
@@ -364,6 +361,11 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		return new DLFolderExportActionableDynamicQuery(portletDataContext) {
+
+			@Override
+			protected String getManifestSummaryKey() {
+				return Folder.class.getName();
+			}
 
 			@Override
 			protected void performAction(Object object)

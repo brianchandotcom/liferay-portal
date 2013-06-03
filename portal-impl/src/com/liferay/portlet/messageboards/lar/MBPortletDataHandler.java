@@ -16,7 +16,6 @@ package com.liferay.portlet.messageboards.lar;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
-import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
@@ -211,33 +210,25 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 			PortletDataContext portletDataContext)
 		throws Exception {
 
-		ManifestSummary manifestSummary =
-			portletDataContext.getManifestSummary();
-
 		ActionableDynamicQuery banActionableDynamicQuery =
 			new MBBanExportActionableDynamicQuery(portletDataContext);
 
-		manifestSummary.addModelCount(
-			MBBan.class, banActionableDynamicQuery.performCount());
+		banActionableDynamicQuery.performCount();
 
 		ActionableDynamicQuery categoryActionableDynamicQuery =
 			new MBCategoryExportActionableDynamicQuery(portletDataContext);
 
-		manifestSummary.addModelCount(
-			MBCategory.class, categoryActionableDynamicQuery.performCount());
+		categoryActionableDynamicQuery.performCount();
 
 		ActionableDynamicQuery messageActionableDynamicQuery =
 			new MBMessageExportActionableDynamicQuery(portletDataContext);
 
-		manifestSummary.addModelCount(
-			MBMessage.class, messageActionableDynamicQuery.performCount());
+		messageActionableDynamicQuery.performCount();
 
 		ActionableDynamicQuery threadFlagActionableDynamicQuery =
 			new MBThreadFlagExportActionableDynamicQuery(portletDataContext);
 
-		manifestSummary.addModelCount(
-			MBThreadFlag.class,
-			threadFlagActionableDynamicQuery.performCount());
+		threadFlagActionableDynamicQuery.performCount();
 	}
 
 }

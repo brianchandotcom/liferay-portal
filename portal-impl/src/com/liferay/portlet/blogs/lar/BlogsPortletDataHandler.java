@@ -16,7 +16,6 @@ package com.liferay.portlet.blogs.lar;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
-import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
@@ -143,14 +142,10 @@ public class BlogsPortletDataHandler extends BasePortletDataHandler {
 			PortletDataContext portletDataContext)
 		throws Exception {
 
-		ManifestSummary manifestSummary =
-			portletDataContext.getManifestSummary();
-
 		ActionableDynamicQuery actionableDynamicQuery =
 			new BlogsEntryExportActionableDynamicQuery(portletDataContext);
 
-		manifestSummary.addModelCount(
-			BlogsEntry.class, actionableDynamicQuery.performCount());
+		actionableDynamicQuery.performCount();
 	}
 
 }

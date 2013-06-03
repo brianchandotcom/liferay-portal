@@ -233,6 +233,10 @@
 		@include opacity(0.8);
 	}
 
+	&.ie .dockbar .navbar-inner {
+		filter: none;
+	}
+
 	&.ie6, &.ie7 {
 		.accordion-group .accordion-heading {
 			background: none no-repeat 0 50%;

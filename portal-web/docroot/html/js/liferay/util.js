@@ -1622,14 +1622,25 @@
 
 			var selectionEvent = Liferay.on(eventName, callback);
 
+			var detachSelectionEventFn = function(event) {
+				if (!event.newVal) {
+					selectionEvent.detach();
+					visibleChangeHandle.detach();
+				}
+			};
+
+			var visibleChangeHandle;
+
 			if (dialog) {
+				visibleChangeHandle = dialog.after('visibleChange', detachSelectionEventFn);
+
 				dialog.show();
 			}
 			else {
 				Util.openWindow(
 					config,
 					function(dialogWindow) {
-						dialogWindow.after('close', selectionEvent.detach, selectionEvent);
+						visibleChangeHandle = dialogWindow.after('visibleChange', detachSelectionEventFn);
 					}
 				);
 			}
@@ -1959,7 +1970,11 @@
 		Util,
 		'_openWindowProvider',
 		function(config, callback) {
-			Window.getWindow(config, callback);
+			var dialog = Window.getWindow(config);
+
+			if (Lang.isFunction(callback)) {
+				callback(dialog);
+			}
 		},
 		['liferay-util-window']
 	);

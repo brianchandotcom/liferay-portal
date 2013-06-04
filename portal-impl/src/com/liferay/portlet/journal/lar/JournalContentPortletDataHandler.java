@@ -80,7 +80,8 @@ public class JournalContentPortletDataHandler
 		setDataPortletPreferences("groupId", "articleId", "templateId");
 		setExportControls(
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "selected-web-content", true, true),
+				NAMESPACE, "selected-web-content", true, true, null,
+				JournalArticle.class.getName()),
 				new PortletDataHandlerBoolean(NAMESPACE, "embedded-assets"));
 
 		DLPortletDataHandler dlPortletDataHandler = new DLPortletDataHandler();

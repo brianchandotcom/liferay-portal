@@ -79,13 +79,11 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryServiceUtil;
 import com.liferay.portlet.documentlibrary.util.AudioProcessorUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
@@ -95,12 +93,6 @@ import com.liferay.portlet.documentlibrary.util.PDFProcessor;
 import com.liferay.portlet.documentlibrary.util.PDFProcessorUtil;
 import com.liferay.portlet.documentlibrary.util.VideoProcessor;
 import com.liferay.portlet.documentlibrary.util.VideoProcessorUtil;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
-import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.storage.Field;
-import com.liferay.portlet.dynamicdatamapping.storage.Fields;
-import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
-import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 
 import java.awt.image.RenderedImage;
 
@@ -148,9 +140,6 @@ public class WebServerServlet extends HttpServlet {
 
 			if (pathArray.length == 0) {
 				return true;
-			}
-			else if (_PATH_DDM.equals(pathArray[0])) {
-				_checkDDMRecord(pathArray);
 			}
 			else if (Validator.isNumber(pathArray[0])) {
 				_checkFileEntry(pathArray);
@@ -257,10 +246,7 @@ public class WebServerServlet extends HttpServlet {
 					request.getServletPath() + StringPool.SLASH + path);
 			}
 			else {
-				if (_PATH_DDM.equals(pathArray[0])) {
-					sendDDMRecordFile(request, response, pathArray);
-				}
-				else if (Validator.isNumber(pathArray[0])) {
+				if (Validator.isNumber(pathArray[0])) {
 					sendFile(request, response, user, pathArray);
 				}
 				else {
@@ -686,41 +672,6 @@ public class WebServerServlet extends HttpServlet {
 		redirect = HttpUtil.addParameter(redirect, "redirect", currentURL);
 
 		response.sendRedirect(redirect);
-	}
-
-	protected void sendDDMRecordFile(
-			HttpServletRequest request, HttpServletResponse response,
-			String[] pathArray)
-		throws Exception {
-
-		if (pathArray.length != 5) {
-			return;
-		}
-
-		String className = GetterUtil.getString(pathArray[1]);
-		long classPK = GetterUtil.getLong(pathArray[2]);
-		String fieldName = GetterUtil.getString(pathArray[3]);
-		int valueIndex = GetterUtil.getInteger(pathArray[4]);
-
-		Field field = null;
-
-		if (className.equals(DDLRecord.class.getName())) {
-			DDLRecord ddlRecord = DDLRecordLocalServiceUtil.getRecord(classPK);
-
-			field = ddlRecord.getField(fieldName);
-		}
-		else if (className.equals(DLFileEntryMetadata.class.getName())) {
-			DLFileEntryMetadata fileEntryMetadata =
-				DLFileEntryMetadataLocalServiceUtil.getDLFileEntryMetadata(
-					classPK);
-
-			Fields fields = StorageEngineUtil.getFields(
-				fileEntryMetadata.getDDMStorageId());
-
-			field = fields.get(fieldName);
-		}
-
-		DDMUtil.sendFieldFile(request, response, field, valueIndex);
 	}
 
 	protected void sendDocumentLibrary(
@@ -1207,21 +1158,6 @@ public class WebServerServlet extends HttpServlet {
 		}
 	}
 
-	private static void _checkDDMRecord(String[] pathArray) throws Exception {
-		if (pathArray.length == 3) {
-			String className = GetterUtil.getString(pathArray[1]);
-			long classPK = GetterUtil.getLong(pathArray[2]);
-
-			if (className.equals(DDLRecord.class.getName())) {
-				DDLRecordLocalServiceUtil.getRecord(classPK);
-			}
-			else if (className.equals(DLFileEntryMetadata.class.getName())) {
-				DLFileEntryMetadataLocalServiceUtil.getDLFileEntryMetadata(
-					classPK);
-			}
-		}
-	}
-
 	private static void _checkFileEntry(String[] pathArray) throws Exception {
 		if (pathArray.length == 1) {
 			long dlFileShortcutId = GetterUtil.getLong(pathArray[0]);
@@ -1314,8 +1250,6 @@ public class WebServerServlet extends HttpServlet {
 	}
 
 	private static final String _DATE_FORMAT_PATTERN = "d MMM yyyy HH:mm z";
-
-	private static final String _PATH_DDM = "ddm";
 
 	private static final boolean _WEB_SERVER_SERVLET_VERSION_VERBOSITY_DEFAULT =
 		PropsValues.WEB_SERVER_SERVLET_VERSION_VERBOSITY.equalsIgnoreCase(

@@ -175,13 +175,18 @@ String[][] categorySections = {mainSections, identificationSections, miscellaneo
 	title='<%= (selUser == null) ? "new-user" : selUser.getFullName() %>'
 />
 
-<%
-String taglibOnSubmit = "event.preventDefault(); " + renderResponse.getNamespace() + "saveUser('" + ((selUser == null) ? Constants.ADD : Constants.UPDATE) + "');";
-%>
+<portlet:actionURL var="editUserActionURL">
+	<portlet:param name="struts_action" value="/users_admin/edit_user" />
+</portlet:actionURL>
 
-<aui:form method="post" name="fm" onSubmit="<%= taglibOnSubmit %>">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
-	<aui:input name="redirect" type="hidden" />
+<portlet:renderURL var="editUserRenderURL">
+	<portlet:param name="struts_action" value="/users_admin/edit_user" />
+	<portlet:param name="backURL" value="<%= backURL %>"></portlet:param>
+</portlet:renderURL>
+
+<aui:form action="<%= editUserActionURL %>" method="post" name="fm">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (selUser == null) ? Constants.ADD : Constants.UPDATE %>" />
+	<aui:input name="redirect" type="hidden" value="<%= editUserRenderURL %>" />
 	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 	<aui:input name="p_u_i_d" type="hidden" value="<%= (selUser != null) ? selUser.getUserId() : 0 %>" />
 
@@ -262,16 +267,6 @@ if (selUser != null) {
 	function <portlet:namespace />createURL(href, value, onclick) {
 		return '<a href="' + href + '"' + (onclick ? ' onclick="' + onclick + '" ' : '') + '>' + value + '</a>';
 	};
-
-	function <portlet:namespace />saveUser(cmd) {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = cmd;
-
-		var redirect = "<portlet:renderURL><portlet:param name="struts_action" value="/users_admin/edit_user" /><portlet:param name="backURL" value="<%= backURL %>"></portlet:param></portlet:renderURL>";
-
-		document.<portlet:namespace />fm.<portlet:namespace />redirect.value = redirect;
-
-		submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/users_admin/edit_user" /></portlet:actionURL>");
-	}
 
 	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
 		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />screenName);

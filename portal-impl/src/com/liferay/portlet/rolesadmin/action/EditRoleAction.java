@@ -20,6 +20,7 @@ import com.liferay.portal.RequiredRoleException;
 import com.liferay.portal.RoleNameException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -59,14 +60,24 @@ public class EditRoleAction extends PortletAction {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
+			Role role = null;
+
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updateRole(actionRequest);
+				role = updateRole(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteRole(actionRequest);
 			}
 
-			sendRedirect(actionRequest, actionResponse);
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+			if (role != null) {
+				redirect = HttpUtil.setParameter(
+					redirect, actionResponse.getNamespace() + "roleId",
+					role.getRoleId());
+			}
+
+			sendRedirect(actionRequest, actionResponse, redirect);
 		}
 		catch (Exception e) {
 			if (e instanceof PrincipalException) {
@@ -128,7 +139,7 @@ public class EditRoleAction extends PortletAction {
 		RoleServiceUtil.deleteRole(roleId);
 	}
 
-	protected void updateRole(ActionRequest actionRequest) throws Exception {
+	protected Role updateRole(ActionRequest actionRequest) throws Exception {
 		long roleId = ParamUtil.getLong(actionRequest, "roleId");
 
 		String name = ParamUtil.getString(actionRequest, "name");
@@ -146,7 +157,7 @@ public class EditRoleAction extends PortletAction {
 
 			// Add role
 
-			RoleServiceUtil.addRole(
+			return RoleServiceUtil.addRole(
 				null, 0, name, titleMap, descriptionMap, type, subtype,
 				serviceContext);
 		}
@@ -154,7 +165,7 @@ public class EditRoleAction extends PortletAction {
 
 			// Update role
 
-			RoleServiceUtil.updateRole(
+			return RoleServiceUtil.updateRole(
 				roleId, name, titleMap, descriptionMap, subtype,
 				serviceContext);
 		}

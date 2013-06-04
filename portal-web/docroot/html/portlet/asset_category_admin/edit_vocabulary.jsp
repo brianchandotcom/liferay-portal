@@ -80,3 +80,7 @@ long vocabularyId = BeanParamUtil.getLong(vocabulary, request, "vocabularyId");
 		</div>
 	</aui:fieldset>
 </aui:form>
+
+<aui:script>
+	Liferay.Util.focusFormField(document.<portlet:namespace /><%= randomNamespace %>fm.<portlet:namespace />title);
+</aui:script>

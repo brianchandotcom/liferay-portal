@@ -175,6 +175,10 @@ else {
 	</aui:fieldset>
 </aui:form>
 
+<aui:script>
+	Liferay.Util.focusFormField(document.<portlet:namespace /><%= randomNamespace %>fm.<portlet:namespace />title);
+</aui:script>
+
 <aui:script use="liferay-auto-fields">
 	var autoFields = new Liferay.AutoFields(
 		{

@@ -34,4 +34,18 @@
 			</guest-unsupported>
 		</permissions>
 	</portlet-resource>
+	<model-resource>
+		<model-name>com.liferay.portlet.social.model.SocialActivitySet</model-name>
+		<portlet-ref>
+			<portlet-name>179</portlet-name>
+		</portlet-ref>
+		<permissions>
+			<supports>
+				<action-key>VIEW</action-key>
+			</supports>
+			<site-member-defaults />
+			<guest-defaults />
+			<guest-unsupported />
+		</permissions>
+	</model-resource>
 </resource-action-mapping>

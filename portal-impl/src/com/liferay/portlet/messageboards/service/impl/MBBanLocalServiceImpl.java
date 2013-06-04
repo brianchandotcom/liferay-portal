@@ -16,6 +16,8 @@ package com.liferay.portlet.messageboards.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -28,6 +30,8 @@ import com.liferay.portlet.messageboards.NoSuchBanException;
 import com.liferay.portlet.messageboards.model.MBBan;
 import com.liferay.portlet.messageboards.service.base.MBBanLocalServiceBaseImpl;
 import com.liferay.portlet.messageboards.util.MBUtil;
+import com.liferay.portlet.polls.model.PollsQuestion;
+import com.liferay.portlet.social.model.SocialActivityConstants;
 
 import java.util.Date;
 import java.util.List;
@@ -88,7 +92,7 @@ public class MBBanLocalServiceImpl extends MBBanLocalServiceBaseImpl {
 
 	@Override
 	public void deleteBan(long banUserId, ServiceContext serviceContext)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		long groupId = serviceContext.getScopeGroupId();
 
@@ -102,12 +106,25 @@ public class MBBanLocalServiceImpl extends MBBanLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void deleteBan(MBBan ban) throws SystemException {
+	public void deleteBan(MBBan ban) throws PortalException, SystemException {
 		mbBanPersistence.remove(ban);
+
+		// Social
+
+		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
+
+		extraDataJSONObject.put("uuid", ban.getUuid());
+
+		socialActivityLocalService.addUniqueActivity(
+			0, ban.getGroupId(), PollsQuestion.class.getName(), ban.getBanId(),
+			SocialActivityConstants.TYPE_DELETE, extraDataJSONObject.toString(),
+			0);
 	}
 
 	@Override
-	public void deleteBansByBanUserId(long banUserId) throws SystemException {
+	public void deleteBansByBanUserId(long banUserId)
+		throws PortalException, SystemException {
+
 		List<MBBan> bans = mbBanPersistence.findByBanUserId(banUserId);
 
 		for (MBBan ban : bans) {
@@ -116,7 +133,9 @@ public class MBBanLocalServiceImpl extends MBBanLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void deleteBansByGroupId(long groupId) throws SystemException {
+	public void deleteBansByGroupId(long groupId)
+		throws PortalException, SystemException {
+
 		List<MBBan> bans = mbBanPersistence.findByGroupId(groupId);
 
 		for (MBBan ban : bans) {

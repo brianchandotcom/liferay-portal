@@ -16,6 +16,14 @@ package com.liferay.portlet.social.service;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.model.Role;
+import com.liferay.portal.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.service.ResourceActionLocalServiceUtil;
+import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
+import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.Sync;
@@ -23,9 +31,11 @@ import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityConstants;
+import com.liferay.portlet.social.model.SocialActivitySet;
 import com.liferay.portlet.social.util.SocialActivityHierarchyEntryThreadLocal;
 import com.liferay.portlet.social.util.SocialActivityTestUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
@@ -76,6 +86,91 @@ public class SocialActivityLocalServiceTest extends BaseSocialActivityTestCase {
 			1,
 			SocialActivityLocalServiceUtil.getGroupActivitiesCount(
 				_group.getGroupId()));
+	}
+
+	@Test
+	public void testAssetActivitySet() throws Exception {
+		List<String> actionIds = new ArrayList<String>();
+
+		actionIds.add(ActionKeys.VIEW);
+
+		ResourceActionLocalServiceUtil.checkResourceActions(
+			TEST_MODEL, actionIds);
+
+		Role role = RoleLocalServiceUtil.getRole(_group.getCompanyId(), "User");
+
+		ResourcePermissionLocalServiceUtil.setOwnerResourcePermissions(
+			_group.getCompanyId(), _assetEntry.getClassName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(_assetEntry.getClassPK()), role.getRoleId(), 0,
+			new String[] {ActionKeys.VIEW});
+
+		SocialActivityTestUtil.addActivity(
+			_creatorUser, _group, _assetEntry, 1,
+			SocialActivityTestUtil.createExtraDataJSON("title", "title1"));
+
+		Assert.assertEquals(
+			1,
+			SocialActivityLocalServiceUtil.getGroupActivitiesCount(
+				_group.getGroupId()));
+
+		SocialActivitySet activitySet =
+			SocialActivitySetLocalServiceUtil.fetchAssetActivitySet(
+				_assetEntry.getClassNameId(), _assetEntry.getClassPK());
+
+		Assert.assertNotNull(activitySet);
+
+		Assert.assertFalse(
+			ResourcePermissionLocalServiceUtil.hasResourcePermission(
+				_group.getCompanyId(), SocialActivitySet.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(activitySet.getActivitySetId()),
+				role.getRoleId(), ActionKeys.VIEW));
+
+		ResourcePermissionLocalServiceUtil.deleteResourcePermissions(
+			_group.getCompanyId(), _assetEntry.getClassName(),
+			ResourceConstants.SCOPE_INDIVIDUAL, _assetEntry.getClassPK());
+
+		Assert.assertTrue(
+			ResourcePermissionLocalServiceUtil.hasResourcePermission(
+				_group.getCompanyId(), SocialActivitySet.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(activitySet.getActivitySetId()),
+				role.getRoleId(), ActionKeys.VIEW));
+	}
+
+	@Test
+	public void testSystemActivity() throws Exception {
+		SocialActivityTestUtil.addActivity(
+			_creatorUser, _group, _assetEntry, 1);
+
+		Assert.assertEquals(
+			1,
+			SocialActivityLocalServiceUtil.getGroupActivitiesCount(
+				_group.getGroupId()));
+
+		long userId = PrincipalThreadLocal.getUserId();
+
+		PrincipalThreadLocal.setName(0);
+
+		SocialActivityLocalServiceUtil.addUniqueActivity(
+			0, _group.getGroupId(), _assetEntry.getClassName(),
+			_assetEntry.getClassPK(), SocialActivityConstants.TYPE_DELETE,
+			StringPool.BLANK, 0);
+
+		PrincipalThreadLocal.setName(userId);
+
+		List<SocialActivity> activities =
+			SocialActivityLocalServiceUtil.getGroupActivities(
+				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(2, activities.size());
+
+		for (SocialActivity activity : activities) {
+			if (activity.getType() == SocialActivityConstants.TYPE_DELETE) {
+				Assert.assertEquals(0, activity.getUserId());
+			}
+		}
 	}
 
 }

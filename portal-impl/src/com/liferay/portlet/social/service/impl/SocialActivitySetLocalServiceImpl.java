@@ -65,6 +65,30 @@ public class SocialActivitySetLocalServiceImpl
 	}
 
 	@Override
+	public void addAssetActivitySet(SocialActivity activity)
+		throws SystemException {
+
+		SocialActivitySet activitySet = fetchAssetActivitySet(
+			activity.getClassNameId(), activity.getClassPK());
+
+		if (activitySet == null) {
+			long activitySetId = counterLocalService.increment();
+
+			activitySet = createSocialActivitySet(activitySetId);
+
+			activitySet.setGroupId(activity.getGroupId());
+			activitySet.setCompanyId(activity.getCompanyId());
+			activitySet.setUserId(activity.getUserId());
+			activitySet.setCreateDate(activity.getCreateDate());
+			activitySet.setModifiedDate(activity.getCreateDate());
+			activitySet.setClassName(activity.getClassName());
+			activitySet.setClassPK(activity.getClassPK());
+
+			socialActivitySetPersistence.update(activitySet);
+		}
+	}
+
+	@Override
 	public void decrementActivityCount(long activitySetId)
 		throws PortalException, SystemException {
 
@@ -96,6 +120,15 @@ public class SocialActivitySetLocalServiceImpl
 		for (SocialActivity activity : activities) {
 			decrementActivityCount(activity.getActivitySetId());
 		}
+	}
+
+	@Override
+	public SocialActivitySet fetchAssetActivitySet(
+			long classNameId, long classPK)
+		throws SystemException {
+
+		return socialActivitySetPersistence.fetchByC_C_T_First(
+			classNameId, classPK, 0, null);
 	}
 
 	@Override

@@ -6,25 +6,33 @@
 	<command name="AddUserGroup">
 		<var name="userGroupName" value="UG UserGroup Name" />
 
-		<execute macro="UserGroup#cpAdd" />
+		<execute macro="UserGroup#addCP">
+			<var name="userGroupName" value="${userGroupName}" />
+		</execute>
 	</command>
 
 	<command name="DeleteUserGroup">
 		<var name="userGroupName" value="UG UserGroup Name" />
 
-		<execute macro="UserGroup#cpAdd" />
-		<execute macro="UserGroup#cpDelete" />
+		<execute macro="UserGroup#addCP">
+			<var name="userGroupName" value="${userGroupName}" />
+		</execute>
+		<execute macro="UserGroup#deleteCP" />
 	</command>
 
 	<command name="EditUserGroup">
 		<var name="userGroupName" value="UG UserGroup Name" />
-		<var name="userGroupNameEdit" value="UG UserGroup Name Edit" />
+		<var name="userGroupNameNew" value="UG UserGroup Name Edit" />
 
-		<execute macro="UserGroup#cpAdd" />
-		<execute macro="UserGroup#cpEdit" />
+		<execute macro="UserGroup#addCP">
+			<var name="userGroupName" value="${userGroupName}" />
+		</execute>
+		<execute macro="UserGroup#editCP">
+			<var name="userGroupNameNew" value="${userGroupNameNew}" />
+		</execute>
 	</command>
 
 	<tear-down>
-		<execute macro="UserGroup#cpTearDown" />
+		<execute macro="UserGroup#tearDownCP" />
 	</tear-down>
 </definition>

@@ -1,19 +1,19 @@
 <definition>
-	<command name="cpAdd">
+	<command name="addCP">
 		<execute macro="Page#cpGotoUsers">
 			<var name="portletName" value="User Groups" />
 		</execute>
 
 		<execute action="CPUsergroups#click" locator-key1="ADD" />
 
-		<execute action="CPUsergroupsAdd#type" locator-key1="NAME_FIELD" value1="${userGroupName}" />
-		<execute action="CPUsergroupsAdd#click" locator-key1="SAVE_BUTTON" />
+		<execute action="CPUsergroupsAddusergroup#type" locator-key1="NAME_FIELD" value1="${userGroupName}" />
+		<execute action="CPUsergroupsAddusergroup#click" locator-key1="SAVE_BUTTON" />
 
 		<execute action="CPUsergroups#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
 		<execute action="CPUsergroups#assertTextEquals" locator-key1="USER_GROUP_TABLE_NAME_1" value1="${userGroupName}" />
 	</command>
 
-	<command name="cpDelete">
+	<command name="deleteCP">
 		<execute macro="Page#cpGotoUsers">
 			<var name="portletName" value="User Groups" />
 		</execute>
@@ -25,7 +25,7 @@
 		<execute action="CPUsergroups#assertElementNotPresent" locator-key1="USER_GROUP_TABLE_NAME_1" />
 	</command>
 
-	<command name="cpEdit">
+	<command name="editCP">
 		<execute macro="Page#cpGotoUsers">
 			<var name="portletName" value="User Groups" />
 		</execute>
@@ -33,14 +33,14 @@
 		<execute action="CPUsergroups#click" locator-key1="USER_GROUP_TABLE_ACTIONS_1" />
 		<execute action="CPUsergroups#click" locator-key1="USER_GROUP_MENULIST_EDIT" />
 
-		<execute action="CPUsergroupsEdit#type" locator-key1="NAME_FIELD" value1="${userGroupNameEdit}" />
-		<execute action="CPUsergroupsEdit#click" locator-key1="SAVE_BUTTON" />
+		<execute action="CPUsergroupsEditusergroup#type" locator-key1="NAME_FIELD" value1="${userGroupNameNew}" />
+		<execute action="CPUsergroupsEditusergroup#click" locator-key1="SAVE_BUTTON" />
 
 		<execute action="CPUsergroups#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
-		<execute action="CPUsergroups#assertTextEquals" locator-key1="USER_GROUP_TABLE_NAME_1" value1="${userGroupNameEdit}" />
+		<execute action="CPUsergroups#assertTextEquals" locator-key1="USER_GROUP_TABLE_NAME_1" value1="${userGroupNameNew}" />
 	</command>
 
-	<command name="cpTearDown">
+	<command name="tearDownCP">
 		<execute macro="Page#cpGotoUsers">
 			<var name="portletName" value="User Groups" />
 		</execute>

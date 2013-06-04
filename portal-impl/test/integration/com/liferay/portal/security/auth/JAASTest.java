@@ -374,7 +374,7 @@ public class JAASTest extends MainServletExecutionTestListener {
 
 			_user = UserLocalServiceUtil.getUser(_user.getUserId());
 
-			Assert.assertTrue(lastLoginDate.before(_user.getLastLoginDate()));
+			Assert.assertFalse(lastLoginDate.after(_user.getLastLoginDate()));
 		}
 		finally {
 			EventsProcessorUtil.unregisterEvent(

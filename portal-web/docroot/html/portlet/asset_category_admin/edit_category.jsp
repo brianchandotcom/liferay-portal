@@ -188,4 +188,6 @@ else {
 	if (categoryPropertiesTrigger) {
 		categoryPropertiesTrigger.setData('autoFieldsInstance', autoFields);
 	}
+
+	Liferay.Util.focusFormField(document.<portlet:namespace /><%= randomNamespace %>fm.<portlet:namespace />title);
 </aui:script>

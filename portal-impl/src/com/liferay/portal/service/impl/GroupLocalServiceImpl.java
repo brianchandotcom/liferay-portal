@@ -71,6 +71,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.UserPersonalSite;
 import com.liferay.portal.model.impl.LayoutImpl;
+import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
@@ -671,7 +672,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	public Group deleteGroup(Group group)
 		throws PortalException, SystemException {
 
-		if (group.isCompany() || PortalUtil.isSystemGroup(group.getName())) {
+		if ((group.isCompany() || PortalUtil.isSystemGroup(group.getName())) &&
+			!CompanyThreadLocal.isDeleteInProcess()) {
+
 			throw new RequiredGroupException(
 				String.valueOf(group.getGroupId()),
 				RequiredGroupException.SYSTEM_GROUP);

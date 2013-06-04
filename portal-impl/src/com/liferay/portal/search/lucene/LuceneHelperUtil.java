@@ -382,6 +382,10 @@ public class LuceneHelperUtil {
 		getLuceneHelper().loadIndexesFromCluster(companyId);
 	}
 
+	public static void shutdown(long companyId) {
+		getLuceneHelper().shutdown(companyId);
+	}
+
 	public static void shutdown() {
 		getLuceneHelper().shutdown();
 	}

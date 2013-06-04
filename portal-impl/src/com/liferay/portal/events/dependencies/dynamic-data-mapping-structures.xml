@@ -86,9 +86,8 @@
 		<name><![CDATA[Events]]></name>
 		<description><![CDATA[Events]]></description>
 		<root available-locales="[$LOCALE_DEFAULT$]" default-locale="[$LOCALE_DEFAULT$]">
-			<dynamic-element dataType="file-upload" fieldNamespace="ddm" name="attachment" required="false" showLabel="true" type="ddm-fileupload">
+			<dynamic-element dataType="document-library" fieldNamespace="ddm" name="attachment" required="false" showLabel="true" type="ddm-documentlibrary">
 				<meta-data locale="[$LOCALE_DEFAULT$]">
-					<entry name="acceptFiles"><![CDATA[*]]></entry>
 					<entry name="folder"><![CDATA[{"folderId":0,"folderName":"Documents Home"}]]></entry>
 					<entry name="label"><![CDATA[Attachment]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
@@ -201,9 +200,8 @@
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 				</meta-data>
 			</dynamic-element>
-			<dynamic-element dataType="file-upload" fieldNamespace="ddm" name="attachment" required="false" showLabel="true" type="ddm-fileupload">
+			<dynamic-element dataType="document-library" fieldNamespace="ddm" name="attachment" required="false" showLabel="true" type="ddm-documentlibrary">
 				<meta-data locale="[$LOCALE_DEFAULT$]">
-					<entry name="acceptFiles"><![CDATA[*]]></entry>
 					<entry name="folder"><![CDATA[{"folderId":0,"folderName":"Documents Home"}]]></entry>
 					<entry name="label"><![CDATA[Attachment]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
@@ -293,14 +291,12 @@
 		<name><![CDATA[Meeting Minutes]]></name>
 		<description><![CDATA[Meeting Minutes]]></description>
 		<root available-locales="[$LOCALE_DEFAULT$]" default-locale="[$LOCALE_DEFAULT$]">
-			<dynamic-element dataType="file-upload" fieldNamespace="ddm" name="attachment" required="false" showLabel="true" type="ddm-fileupload">
+			<dynamic-element dataType="document-library" fieldNamespace="ddm" name="attachment" required="false" showLabel="true" type="ddm-documentlibrary">
 				<meta-data locale="[$LOCALE_DEFAULT$]">
-					<entry name="acceptFiles"><![CDATA[*]]></entry>
 					<entry name="folder"><![CDATA[{"folderId":0,"folderName":"Documents Home"}]]></entry>
 					<entry name="label"><![CDATA[Attachment]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 					<entry name="tip"><![CDATA[Upload documents no larger than 3,000k.]]></entry>
-					<entry name="type"><![CDATA[ddm-fileupload]]></entry>
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" name="author" required="false" showLabel="true" type="text">
@@ -351,9 +347,8 @@
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 				</meta-data>
 			</dynamic-element>
-			<dynamic-element dataType="file-upload" fieldNamespace="ddm" name="attachment" required="false" showLabel="true" type="ddm-fileupload">
+			<dynamic-element dataType="document-library" fieldNamespace="ddm" name="attachment" required="false" showLabel="true" type="ddm-documentlibrary">
 				<meta-data locale="[$LOCALE_DEFAULT$]">
-					<entry name="acceptFiles"><![CDATA[*]]></entry>
 					<entry name="folder"><![CDATA[{"folderId":0,"folderName":"Documents Home"}]]></entry>
 					<entry name="label"><![CDATA[Attachment]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>

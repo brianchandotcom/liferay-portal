@@ -26,7 +26,6 @@ page import="com.liferay.portal.kernel.template.TemplateVariableDefinition" %><%
 page import="com.liferay.portal.kernel.template.TemplateVariableGroup" %><%@
 page import="com.liferay.portal.template.TemplateContextHelper" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata" %><%@
-page import="com.liferay.portlet.documentlibrary.model.DLFolderConstants" %><%@
 page import="com.liferay.portlet.dynamicdatalists.model.DDLRecordSet" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.NoSuchStructureException" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.RequiredStructureException" %><%@

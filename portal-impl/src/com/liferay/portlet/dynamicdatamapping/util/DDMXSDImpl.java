@@ -410,10 +410,6 @@ public class DDMXSDImpl implements DDMXSD {
 				hiddenAttributesJSONArray.put("required");
 			}
 
-			if (type.equals(DDMImpl.TYPE_DDM_FILEUPLOAD)) {
-				hiddenAttributesJSONArray.put("predefinedValue");
-			}
-
 			hiddenAttributesJSONArray.put("readOnly");
 
 			jsonObject.put("hiddenAttributes", hiddenAttributesJSONArray);

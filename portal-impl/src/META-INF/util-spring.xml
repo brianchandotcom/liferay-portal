@@ -912,9 +912,6 @@
 				<entry key="document-library">
 					<bean class="com.liferay.portlet.dynamicdatamapping.storage.DocumentLibraryFieldRenderer" />
 				</entry>
-				<entry key="file-upload">
-					<bean class="com.liferay.portlet.dynamicdatamapping.storage.FileUploadFieldRenderer" />
-				</entry>
 				<entry key="link-to-page">
 					<bean class="com.liferay.portlet.dynamicdatamapping.storage.LinkToPageFieldRenderer" />
 				</entry>

@@ -171,7 +171,7 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 		for (Map<String, String> field : fieldsMap.values()) {
 			String dataType = field.get(FieldConstants.DATA_TYPE);
 
-			if (dataType.equals(FieldConstants.FILE_UPLOAD)) {
+			if (dataType.equals("file-upload")) {
 				return true;
 			}
 		}
@@ -293,9 +293,7 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 
 			String dataType = field.getDataType();
 
-			if (!dataType.equals(FieldConstants.FILE_UPLOAD) ||
-				(field.getValue() == null)) {
-
+			if (!dataType.equals("file-upload") || (field.getValue() == null)) {
 				continue;
 			}
 

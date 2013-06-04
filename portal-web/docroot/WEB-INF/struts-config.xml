@@ -597,8 +597,6 @@
 			<forward name="portlet.dynamic_data_lists.error" path="portlet.dynamic_data_lists.error" />
 		</action>
 
-		<action path="/dynamic_data_list_display/edit_record_file" type="com.liferay.portlet.dynamicdatalists.action.EditRecordFileAction" />
-
 		<action path="/dynamic_data_list_display/view" forward="portlet.dynamic_data_list_display.view" />
 
 		<action path="/dynamic_data_list_display/view_record" type="com.liferay.portlet.dynamicdatalists.action.EditRecordAction">

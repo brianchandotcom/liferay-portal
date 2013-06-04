@@ -29,10 +29,10 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Eduardo Lundgren
+ * @author Marcellus Tavares
  */
 public interface DDL {
 
@@ -71,16 +71,6 @@ public interface DDL {
 			PortletPreferences preferences, String portletId, long groupId)
 		throws Exception;
 
-	public void sendRecordFileUpload(
-			HttpServletRequest request, HttpServletResponse response,
-			DDLRecord record, String fieldName, int valueIndex)
-		throws Exception;
-
-	public void sendRecordFileUpload(
-			HttpServletRequest request, HttpServletResponse response,
-			long recordId, String fieldName, int valueIndex)
-		throws Exception;
-
 	public DDLRecord updateRecord(
 			long recordId, long recordSetId, boolean mergeFields,
 			boolean checkPermission, ServiceContext serviceContext)
@@ -89,10 +79,6 @@ public interface DDL {
 	public DDLRecord updateRecord(
 			long recordId, long recordSetId, boolean mergeFields,
 			ServiceContext serviceContext)
-		throws Exception;
-
-	public void uploadRecordFieldFile(
-			DDLRecord record, String fieldName, ServiceContext serviceContext)
 		throws Exception;
 
 }

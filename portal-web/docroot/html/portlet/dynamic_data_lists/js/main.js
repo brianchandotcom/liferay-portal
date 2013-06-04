@@ -494,31 +494,6 @@ AUI.add(
 									return label;
 								};
 							}
-							else if (type === 'ddm-fileupload') {
-								item.formatter = function(obj) {
-									var data = obj.data;
-
-									var label = STR_EMPTY;
-									var value = data[name];
-
-									if (value !== STR_EMPTY) {
-										var fileData = SpreadSheet.Util.parseJSON(value);
-
-										if (fileData.classPK) {
-											label = fileData.name;
-										}
-									}
-
-									return label;
-								};
-
-								structureField = instance.findStructureFieldByAttribute(structure, 'name', name);
-
-								config.validator.rules[name] = {
-									acceptFiles: structureField.acceptFiles,
-									requiredFields: true
-								};
-							}
 							else if ((type === 'radio') || (type === 'select')) {
 								structureField = instance.findStructureFieldByAttribute(structure, 'name', name);
 

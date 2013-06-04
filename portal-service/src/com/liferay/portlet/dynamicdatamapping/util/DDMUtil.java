@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
@@ -26,11 +25,9 @@ import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
 import java.io.Serializable;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 /**
  * @author Eduardo Lundgren
+ * @author Marcellus Tavares
  */
 public class DDMUtil {
 
@@ -91,10 +88,6 @@ public class DDMUtil {
 		return getDDM().getFieldsDisplayValues(fieldsDisplayField);
 	}
 
-	public static String getFileUploadPath(BaseModel<?> baseModel) {
-		return getDDM().getFileUploadPath(baseModel);
-	}
-
 	public static Serializable getIndexedFieldValue(
 			Serializable fieldValue, String type)
 		throws Exception {
@@ -116,34 +109,6 @@ public class DDMUtil {
 
 	public static Fields mergeFields(Fields newFields, Fields existingFields) {
 		return getDDM().mergeFields(newFields, existingFields);
-	}
-
-	public static void sendFieldFile(
-			HttpServletRequest request, HttpServletResponse response,
-			Field field, int valueIndex)
-		throws Exception {
-
-		getDDM().sendFieldFile(request, response, field, valueIndex);
-	}
-
-	public static void uploadFieldFile(
-			long structureId, long storageId, BaseModel<?> baseModel,
-			String fieldName, ServiceContext serviceContext)
-		throws Exception {
-
-		getDDM().uploadFieldFile(
-			structureId, storageId, baseModel, fieldName, serviceContext);
-	}
-
-	public static void uploadFieldFile(
-			long structureId, long storageId, BaseModel<?> baseModel,
-			String fieldName, String fieldNamespace,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		getDDM().uploadFieldFile(
-			structureId, storageId, baseModel, fieldName, fieldNamespace,
-			serviceContext);
 	}
 
 	public void setDDM(DDM ddm) {

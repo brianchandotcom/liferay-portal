@@ -49,13 +49,17 @@ String[][] categorySections = {mainSections, identificationSections, miscellaneo
 	title='<%= (organization == null) ? "new-organization" : organization.getName() %>'
 />
 
-<portlet:actionURL var="editOrganizationURL">
+<portlet:actionURL var="editOrganizationActionURL">
 	<portlet:param name="struts_action" value="/users_admin/edit_organization" />
 </portlet:actionURL>
 
-<aui:form action="<%= editOrganizationURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveOrganization();" %>'>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
-	<aui:input name="redirect" type="hidden" />
+<portlet:renderURL var="editOrganizationRenderURL">
+	<portlet:param name="struts_action" value="/users_admin/edit_organization" />
+</portlet:renderURL>
+
+<aui:form action="<%= editOrganizationActionURL %>" method="post" name="fm">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (organization == null) ? Constants.ADD : Constants.UPDATE %>" />
+	<aui:input name="redirect" type="hidden" value="<%= editOrganizationRenderURL %>" />
 	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 	<aui:input name="organizationId" type="hidden" value="<%= organizationId %>" />
 
@@ -100,12 +104,6 @@ String[][] categorySections = {mainSections, identificationSections, miscellaneo
 	function <portlet:namespace />createURL(href, value, onclick) {
 		return '<a href="' + href + '"' + (onclick ? ' onclick="' + onclick + '" ' : '') + '>' + value + '</a>';
 	};
-
-	function <portlet:namespace />saveOrganization() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (organization == null) ? Constants.ADD : Constants.UPDATE %>";
-
-		submitForm(document.<portlet:namespace />fm);
-	}
 
 	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
 		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />name);

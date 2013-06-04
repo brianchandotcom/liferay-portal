@@ -30,10 +30,10 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Eduardo Lundgren
+ * @author Marcellus Tavares
  */
 public class DDLUtil {
 
@@ -41,15 +41,6 @@ public class DDLUtil {
 		PortalRuntimePermission.checkGetBeanProperty(DDLUtil.class);
 
 		return _ddl;
-	}
-
-	public static void getRecordFileUpload(
-			HttpServletRequest request, HttpServletResponse response,
-			DDLRecord record, String fieldName, int valueIndex)
-		throws Exception {
-
-		getDDL().sendRecordFileUpload(
-			request, response, record, fieldName, valueIndex);
 	}
 
 	public static JSONObject getRecordJSONObject(DDLRecord record)
@@ -113,24 +104,6 @@ public class DDLUtil {
 		return getDDL().isEditable(preferences, portletId, groupId);
 	}
 
-	public static void sendRecordFileUpload(
-			HttpServletRequest request, HttpServletResponse response,
-			DDLRecord record, String fieldName, int valueIndex)
-		throws Exception {
-
-		getDDL().sendRecordFileUpload(
-			request, response, record, fieldName, valueIndex);
-	}
-
-	public static void sendRecordFileUpload(
-			HttpServletRequest request, HttpServletResponse response,
-			long recordId, String fieldName, int valueIndex)
-		throws Exception {
-
-		getDDL().sendRecordFileUpload(
-			request, response, recordId, fieldName, valueIndex);
-	}
-
 	public static DDLRecord updateRecord(
 			long recordId, long recordSetId, boolean mergeFields,
 			boolean checkPermission, ServiceContext serviceContext)
@@ -148,13 +121,6 @@ public class DDLUtil {
 
 		return getDDL().updateRecord(
 			recordId, recordSetId, mergeFields, serviceContext);
-	}
-
-	public static void uploadRecordFieldFile(
-			DDLRecord record, String fieldName, ServiceContext serviceContext)
-		throws Exception {
-
-		getDDL().uploadRecordFieldFile(record, fieldName, serviceContext);
 	}
 
 	public void setDDL(DDL ddl) {

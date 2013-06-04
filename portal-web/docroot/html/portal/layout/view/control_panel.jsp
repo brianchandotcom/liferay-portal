@@ -121,10 +121,6 @@ request.setAttribute("control_panel.jsp-ppid", ppid);
 			scopeLayout = LayoutLocalServiceUtil.getLayout(curGroup.getClassPK());
 			curGroup = scopeLayout.getGroup();
 		}
-
-		if (Validator.isNotNull(categoryTitle) && !category.startsWith(PortletCategoryKeys.SITE_ADMINISTRATION)) {
-			PortalUtil.addPortletBreadcrumbEntry(request, categoryTitle, null);
-		}
 		%>
 
 		<div id="content-wrapper">

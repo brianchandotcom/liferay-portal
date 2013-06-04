@@ -26,14 +26,10 @@ if (themeDisplay.isStatePopUp() || (layoutTypePortlet.hasStateMax() && (portlet 
 		content = LayoutTemplateLocalServiceUtil.getContent("pop_up", true, theme.getThemeId());
 	}
 	else if (layoutTypePortlet.hasStateMax()) {
-		String portletTitle = PortalUtil.getPortletTitle(portlet, application, locale);
-
 		PortletURL portletURL = new PortletURLImpl(request, ppid, plid, PortletRequest.RENDER_PHASE);
 
 		portletURL.setPortletMode(PortletMode.VIEW);
 		portletURL.setWindowState(WindowState.MAXIMIZED);
-
-		PortalUtil.addPortletBreadcrumbEntry(request, portletTitle, portletURL.toString());
 
 		ppid = StringUtil.split(layoutTypePortlet.getStateMax())[0];
 
@@ -52,15 +48,7 @@ if (themeDisplay.isStatePopUp() || (layoutTypePortlet.hasStateMax() && (portlet 
 	if (Validator.isNotNull(velocityTemplateId) && Validator.isNotNull(content)) {
 		sb = RuntimePageUtil.getProcessedTemplate(pageContext, ppid, new StringTemplateResource(velocityTemplateId, content));
 	}
-	%>
 
-	<c:if test="<%= !controlPanelCategory.equals(PortletCategoryKeys.MY) && !LiferayWindowState.isPopUp(request) %>">
-		<div id="breadcrumb">
-			<liferay-ui:breadcrumb />
-		</div>
-	</c:if>
-
-	<%
 	if (sb != null) {
 		sb.writeTo(pageContext.getOut());
 	}

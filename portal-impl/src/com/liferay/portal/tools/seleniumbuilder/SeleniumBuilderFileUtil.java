@@ -329,6 +329,12 @@ public class SeleniumBuilderFileUtil {
 		return getName(fileName) + classSuffix;
 	}
 
+	public String getSimpleClassNameFromClassName(String className) {
+		int x = className.lastIndexOf(CharPool.PERIOD);
+
+		return className.substring(x + 1);
+	}
+
 	public String getVariableName(String name) {
 		return TextFormatter.format(name, TextFormatter.I);
 	}
@@ -760,6 +766,7 @@ public class SeleniumBuilderFileUtil {
 		String macro = executeElement.attributeValue("macro");
 		String selenium = executeElement.attributeValue("selenium");
 		String testCase = executeElement.attributeValue("test-case");
+		String testClass = executeElement.attributeValue("test-class");
 		String testSuite = executeElement.attributeValue("test-suite");
 
 		if (action != null) {
@@ -873,6 +880,25 @@ public class SeleniumBuilderFileUtil {
 
 				if (!attributeName.equals("line-number") &&
 					!attributeName.equals("test-case")) {
+
+					throwValidationException(
+						1005, fileName, executeElement, attributeName);
+				}
+			}
+		}
+		else if (testClass != null) {
+			if (Validator.isNull(testClass) ||
+				!testClass.matches(allowedExecuteAttributeValuesRegex)) {
+
+				throwValidationException(
+					1006, fileName, executeElement, "test-class");
+			}
+
+			for (Attribute attribute : attributes) {
+				String attributeName = attribute.getName();
+
+				if (!attributeName.equals("line-number") &&
+					!attributeName.equals("test-class")) {
 
 					throwValidationException(
 						1005, fileName, executeElement, attributeName);
@@ -1300,7 +1326,8 @@ public class SeleniumBuilderFileUtil {
 
 			if (elementName.equals("execute")) {
 				validateExecuteElement(
-					fileName, element, new String[] {"test-case", "test-suite"},
+					fileName, element,
+					new String[] {"test-case", "test-class", "test-suite"},
 					".+", new String[0]);
 			}
 			else {

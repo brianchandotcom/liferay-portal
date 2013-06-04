@@ -17,7 +17,6 @@ package com.liferay.portlet.dynamicdatamapping.util;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
@@ -25,11 +24,9 @@ import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
 import java.io.Serializable;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 /**
  * @author Eduardo Lundgren
+ * @author Marcellus Tavares
  */
 public interface DDM {
 
@@ -60,8 +57,6 @@ public interface DDM {
 	public String[] getFieldsDisplayValues(Field fieldsDisplayField)
 		throws Exception;
 
-	public String getFileUploadPath(BaseModel<?> baseModel);
-
 	public Serializable getIndexedFieldValue(
 			Serializable fieldValue, String type)
 		throws Exception;
@@ -73,21 +68,5 @@ public interface DDM {
 		String orderByCol, String orderByType);
 
 	public Fields mergeFields(Fields newFields, Fields existingFields);
-
-	public void sendFieldFile(
-			HttpServletRequest request, HttpServletResponse response,
-			Field field, int valueIndex)
-		throws Exception;
-
-	public void uploadFieldFile(
-			long structureId, long storageId, BaseModel<?> baseModel,
-			String fieldName, ServiceContext serviceContext)
-		throws Exception;
-
-	public void uploadFieldFile(
-			long structureId, long storageId, BaseModel<?> baseModel,
-			String fieldName, String fieldNamespace,
-			ServiceContext serviceContext)
-		throws Exception;
 
 }

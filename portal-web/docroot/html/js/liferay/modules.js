@@ -113,12 +113,37 @@ window.YUI_config = {
 						'event-touch'
 					]
 				},
+				'liferay-dockbar-add-application': {
+					path: 'dockbar_add_application.js',
+					requires: [
+						'aui-io-request',
+						'event-mouseenter',
+						'liferay-dockbar',
+						'liferay-dockbar-add-base',
+						'liferay-dockbar-add-content-drag-drop',
+						'liferay-dockbar-add-application-search',
+						'liferay-portlet-base'
+					]
+				},
+				'liferay-dockbar-add-application-search': {
+					path: 'dockbar_add_application_search.js',
+					requires: [
+						'aui-base',
+						'liferay-dockbar',
+						'liferay-dockbar-add-search'
+					]
+				},
+				'liferay-dockbar-add-base': {
+					path: 'dockbar_add_base.js',
+					requires: [
+						'aui-base',
+						'liferay-dockbar'
+					]
+				},
 				'liferay-dockbar-add-content': {
 					path: 'dockbar_add_content.js',
 					requires: [
 						'aui-io-request',
-						'aui-tooltip-deprecated',
-						'autocomplete-base',
 						'event-mouseenter',
 						'liferay-dockbar',
 						'liferay-dockbar-add-content-content-preview',
@@ -132,7 +157,6 @@ window.YUI_config = {
 					requires: [
 						'aui-debounce',
 						'aui-io-request',
-						'aui-tooltip-deprecated',
 						'event-mouseenter'
 					]
 				},
@@ -152,20 +176,28 @@ window.YUI_config = {
 					path: 'dockbar_add_content_search.js',
 					requires: [
 						'aui-base',
-						'autocomplete-base',
-						'autocomplete-filters',
-						'liferay-dockbar'
+						'liferay-dockbar',
+						'liferay-dockbar-add-search'
 					]
 				},
 				'liferay-dockbar-add-page': {
 					path: 'dockbar_add_page.js',
 					requires: [
 						'liferay-dockbar',
-						'liferay-dockbar-add-content-search'
+						'liferay-dockbar-add-base',
+						'liferay-dockbar-add-page-search'
 					]
 				},
-				'liferay-dockbar-add-page-template-search': {
-					path: 'dockbar_add_page_template_search.js',
+				'liferay-dockbar-add-page-search': {
+					path: 'dockbar_add_page_search.js',
+					requires: [
+						'aui-base',
+						'liferay-dockbar',
+						'liferay-dockbar-add-search'
+					]
+				},
+				'liferay-dockbar-add-search': {
+					path: 'dockbar_add_search.js',
 					requires: [
 						'aui-base',
 						'autocomplete-base',

@@ -28,7 +28,7 @@ refererURL.setParameter("updateLayout", "true");
 	<aui:input name="<%= WebKeys.REFERER %>" type="hidden" value="<%= refererURL.toString() %>" />
 	<aui:input name="refresh" type="hidden" value="<%= true %>" />
 
-	<div class="row-fluid">
+	<div class="row-fluid" id="<portlet:namespace />applicationList">
 		<c:if test="<%= layout.isTypePortlet() %>">
 			<div class="search-panel btn-toolbar">
 				<aui:input cssClass="search-query span12" label="" name="searchApplication" type="text"  />
@@ -211,3 +211,14 @@ private static PortletCategory _getRelevantPortletCategory(PermissionChecker per
 	return relevantPortletCategory;
 }
 %>
+
+<aui:script use="liferay-dockbar-add-application">
+	new Liferay.Dockbar.AddApplication(
+		{
+			inputNode: A.one('#<portlet:namespace />searchApplication'),
+			namespace: '<portlet:namespace />',
+			nodeList: A.one('#<portlet:namespace />applicationList'),
+			nodeSelector: '.lfr-content-item'
+		}
+	);
+</aui:script>

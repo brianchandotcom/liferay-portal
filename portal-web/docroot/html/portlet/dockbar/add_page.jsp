@@ -16,42 +16,32 @@
 
 <%@ include file="/html/portlet/dockbar/init.jsp" %>
 
-<%@ page import="com.liferay.portal.plugin.PluginUtil" %>
-<%@ page import="com.liferay.portal.util.LayoutLister" %>
-<%@ page import="com.liferay.portal.util.LayoutView" %>
-
 <%
-Group group = null;
+int columnsCount = 2;
 
-if (layout != null) {
-	group = layout.getGroup();
-}
-
-LayoutLister layoutLister = new LayoutLister();
-
-String pagesName = null;
+Group group = layout.getGroup();
 
 long groupId = group.getGroupId();
 
+long layoutId = layout.getLayoutId();
+
 boolean privateLayout = layout.isPrivateLayout();
 
-String rootNodeName = LanguageUtil.get(pageContext, pagesName);
+String layoutTemplateId = StringPool.BLANK;
+
+String rootNodeName = LanguageUtil.get(pageContext, null);
+
+LayoutLister layoutLister = new LayoutLister();
 
 LayoutView layoutView = layoutLister.getLayoutView(groupId, privateLayout, rootNodeName, locale);
 
 List layoutList = layoutView.getList();
-
-long layoutId = layout.getLayoutId();
-
-String layoutTemplateId = StringPool.BLANK;
 
 request.setAttribute(WebKeys.LAYOUT_LISTER_LIST, layoutList);
 
 Theme selTheme = layout.getTheme();
 
 List<LayoutTemplate> layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutTemplates(selTheme.getThemeId());
-
-int columnsCount = 2;
 
 request.setAttribute("add_page.jsp-embedded", true);
 %>
@@ -66,7 +56,7 @@ request.setAttribute("add_page.jsp-embedded", true);
 	<portlet:param name="struts_action" value="/dockbar/edit_layouts" />
 </portlet:renderURL>
 
-<aui:form action="<%= editPageURL %>" enctype="multipart/form-data" method="post" name="fm2" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveEntry();" %>'>
+<aui:form action="<%= editPageURL %>" enctype="multipart/form-data" method="post" name="addPageFm" onSubmit="event.preventDefault()">
 	<aui:input id="cmd" name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
 	<aui:input id="explicitCreation" name="explicitCreation" type="hidden" value="<%= true %>" />
 	<aui:input id="groupId" name="groupId" type="hidden" value="<%= groupId %>" />
@@ -84,13 +74,13 @@ request.setAttribute("add_page.jsp-embedded", true);
 			<aui:input id="addLayoutHidden" label="show-in-navigation" name="hidden" type="checkbox" />
 		</div>
 
-		<liferay-ui:panel collapsible="<%= false %>" cssClass="span12" id="addPagePanelContainer" title="templates">
+		<liferay-ui:panel collapsible="<%= false %>" cssClass="span12" title="templates">
 			<liferay-util:include page="/html/portlet/dockbar/search_templates.jsp" />
 
 			<aui:nav cssClass="nav-list no-margin-nav-list" id="templateList">
 				<aui:nav-item cssClass="lfr-page-template" data-search="blank">
 					<div class="active toggler-header toggler-header-collapsed" data-type="portlet">
-						<h5 class="title">Blank (default)</h5>
+						<h5 class="title"><%= LanguageUtil.get(pageContext, "blank-default") %></h5>
 					</div>
 
 					<div class="toggler-content toggler-content-collapsed">
@@ -146,8 +136,8 @@ request.setAttribute("add_page.jsp-embedded", true);
 	</div>
 
 	<div class="pull-right">
-		<button class="btn btn-primary btn-submit" type="submit"><%= LanguageUtil.get(pageContext, "add-page") %></button>
-		<button class="btn" id="<portlet:namespace />cancelAction"><%= LanguageUtil.get(pageContext, "cancel") %></button>
+		<aui:button type="submit" value="add-page" />
+		<aui:button name="cancelAddOperation" value="cancel" />
 	</div>
 </aui:form>
 
@@ -172,94 +162,13 @@ Layout addedLayout = (Layout)SessionMessages.get(renderRequest, portletDisplay.g
 	</aui:script>
 </c:if>
 
-<aui:script use="aui-base,aui-parse-content">
-	window.<portlet:namespace />saveEntry = function() {
-		var title =
-		A.io.request(
-			document.<portlet:namespace />fm2.action,
-			{
-				dataType: 'json',
-				form: {
-					id: document.<portlet:namespace />fm2
-				},
-				after: {
-					success: function(event, id, obj) {
-						var response = this.get('responseData');
-
-						var panel = A.one('#<portlet:namespace />addPanelSidebar');
-
-						panel.plug(A.Plugin.ParseContent);
-
-						panel.setContent(response);
-					}
-				}
-			}
-		);
-	}
-</aui:script>
-
-<aui:script use="aui-toggler-delegate">
-	new A.TogglerDelegate(
+<aui:script use="aui-toggler-delegate,liferay-dockbar-add-page">
+	new Liferay.Dockbar.AddPage(
 		{
-			animated: true,
-			closeAllOnExpand: true,
-			container: '#addPagePanelContainer',
-			content: '.toggler-content',
-			expanded: false,
-			header: '.toggler-header',
-			on: {
-				'toggler:expandedChange': function(event) {
-					if (event.newVal === true) {
-						var header = event.target.get('header');
-
-						var selectedType = header.attr('data-type');
-
-						var selectedPrototypeId = header.attr('data-prototype-id');
-
-						var templateList = A.one('#<portlet:namespace />templateList');
-
-						templateList.all('.active').removeClass('active');
-
-						header.addClass('active');
-
-						A.one('#<portlet:namespace />type').set('value', selectedType);
-
-						A.one('#<portlet:namespace />layoutPrototypeId').set('value', selectedPrototypeId);
-
-						toggleLayoutTypeFields();
-					}
-				}
-			},
-			transition: {
-				duration: 0.2
-			}
+			inputNode: A.one('#<portlet:namespace />searchTemplates'),
+			namespace: '<portlet:namespace />',
+			nodeList: A.one('#<portlet:namespace />templateList'),
+			nodeSelector: '.lfr-page-template'
 		}
 	);
-
-	function toggleLayoutTypeFields() {
-		A.all('.lfr-page-template').each(
-			function(item, index, collection) {
-				var header = item.one('.toggler-header');
-
-				var active = header.hasClass('active');
-
-				var disabled = !active;
-
-				item.all('input, select, textarea').set('disabled', disabled);
-			}
-		);
-	}
-
-	A.one('#<portlet:namespace />cancelAction').on(
-		'click',
-		function(event) {
-			var Dockbar = Liferay.Dockbar;
-
-			Dockbar.loadPanel();
-
-			event.preventDefault();
-		}
-	);
-
-	toggleLayoutTypeFields();
 </aui:script>

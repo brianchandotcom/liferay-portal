@@ -56,42 +56,6 @@
 					</liferay-ui:section>
 				</liferay-ui:tabs>
 			</div>
-
-			<aui:script use="liferay-dockbar-add-content,liferay-dockbar-add-page">
-				new Liferay.Dockbar.AddContent(
-					{
-						namespace: '<portlet:namespace />'
-					}
-				);
-
-				var results = [];
-
-				var templateList = A.one('#<portlet:namespace />templateList');
-				var templates = templateList.all('.lfr-page-template');
-
-				templates.each(
-					function(item, index, collection) {
-						results.push(
-							{
-								node: item,
-								search: item.attr('data-search')
-							}
-						);
-					}
-				);
-
-				new Liferay.Dockbar.AddPage(
-					{
-						entries: templates,
-						inputNode: A.one('#<portlet:namespace />searchTemplates'),
-						minQueryLength: 0,
-						queryDelay: 100,
-						resultFilters: 'phraseMatch',
-						resultTextLocator: 'search',
-						source: results
-					}
-				);
-			</aui:script>
 		</c:if>
 	</c:when>
 	<c:otherwise>

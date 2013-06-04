@@ -30,7 +30,7 @@ int delta = ParamUtil.getInteger(request, "delta", deltaDefault);
 <aui:form action="<%= updateContentListURL %>" name="addContentForm" onSubmit="event.preventDefault();">
 	<div class="row-fluid">
 		<div class="btn-toolbar">
-			<aui:input cssClass="input-small search-query" inlineField="<%= true %>" label="" name="searchContentInput" type="text" />
+			<aui:input cssClass="input-small search-query" inlineField="<%= true %>" label="" name="searchContent" type="text" />
 
 			<%
 			String displayStyleDefault = GetterUtil.getString(SessionClicks.get(request, "liferay_addpanel_displaystyle", "descriptive"));
@@ -69,3 +69,12 @@ int delta = ParamUtil.getInteger(request, "delta", deltaDefault);
 		</div>
 	</div>
 </aui:form>
+
+<aui:script use="liferay-dockbar-add-content">
+	new Liferay.Dockbar.AddContent(
+		{
+			inputNode: A.one('#<portlet:namespace />searchContent'),
+			namespace: '<portlet:namespace />',
+		}
+	);
+</aui:script>

@@ -75,6 +75,10 @@ public class DDLRecordImpl extends DDLRecordBaseImpl {
 	public Serializable getFieldValue(String fieldName) throws PortalException {
 		Field field = getField(fieldName);
 
+		if (field == null) {
+			return null;
+		}
+
 		return field.getValue();
 	}
 
@@ -83,6 +87,10 @@ public class DDLRecordImpl extends DDLRecordBaseImpl {
 		throws PortalException {
 
 		Field field = getField(fieldName);
+
+		if (field == null) {
+			return null;
+		}
 
 		return field.getValues(locale);
 	}

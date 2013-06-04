@@ -707,6 +707,10 @@
 		<finder name="Plid" return-type="Collection">
 			<finder-column name="plid" />
 		</finder>
+		<finder name="P_F" return-type="Collection">
+			<finder-column name="plid" />
+			<finder-column name="friendlyURL" />
+		</finder>
 		<finder name="P_L" return-type="LayoutFriendlyURL" unique="true">
 			<finder-column name="plid" />
 			<finder-column name="languageId" />

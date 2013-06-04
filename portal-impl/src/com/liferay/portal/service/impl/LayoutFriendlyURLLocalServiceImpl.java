@@ -184,6 +184,15 @@ public class LayoutFriendlyURLLocalServiceImpl
 	}
 
 	@Override
+	public List<LayoutFriendlyURL> getLayoutFriendlyURLs(
+			long plid, String friendlyURL, int start, int end)
+		throws PortalException, SystemException {
+
+		return layoutFriendlyURLPersistence.findByP_F(
+			plid, friendlyURL, start, end);
+	}
+
+	@Override
 	public LayoutFriendlyURL updateLayoutFriendlyURL(
 			long userId, long companyId, long groupId, long plid,
 			boolean privateLayout, String friendlyURL, String languageId,

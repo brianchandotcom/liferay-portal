@@ -5,7 +5,7 @@
 		<execute action="Dockbar#click" locator-key1="ADMIN" />
 		<execute action="Dockbar#click" locator-key1="ADMIN_CONTROL_PANEL" />
 
-		<execute action="Home#click" locator1="//div[@class='navbar control-panel-bar-main']//a[contains(.,'${categoryName}')]" />
+		<execute action="Home#click" locator1="//div[@id='_145_dockbar']//a[contains(.,'${categoryName}')]" />
 	</command>
 
 	<command name="cpGotoApps">

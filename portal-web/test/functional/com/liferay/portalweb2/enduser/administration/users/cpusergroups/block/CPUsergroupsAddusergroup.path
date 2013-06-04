@@ -1,17 +1,17 @@
 <html>
 <head>
-<title>CPUsergroupsAdd</title>
+<title>CPUsergroupsAddusergroup</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">CPUsergroupsAdd</td></tr>
+<tr><td rowspan="1" colspan="3">CPUsergroupsAddusergroup</td></tr>
 </thead>
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>CPUsergroupsAdd</td>
+	<td>CPUsergroupsAddusergroup</td>
 </tr>
 <tr>
 	<td></td>

@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>VIEW_ALL</td>
-	<td>//span[contains(@class,'view-button')]/a</td>
+	<td>//div[@class='navbar-inner']//a[contains(.,'View All')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -61,7 +61,7 @@
 </tr>
 <tr>
 	<td>BASIC_SEARCH_BUTTON</td>
-	<td>xpath=(//input[@value='Search'])[1]</td>
+	<td>xpath=(//button[contains(.,'Search')])[1]</td>
 	<td></td>
 </tr>
 <tr>

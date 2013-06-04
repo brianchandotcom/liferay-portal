@@ -196,11 +196,11 @@ if (endDateTime > 0) {
 							<aui:input helpMessage="choose-content-export-help" id="chooseContent" label="choose-content" name="<%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>" type="radio" value="<%= false %>" />
 
 							<ul class="hide" id="<portlet:namespace />selectContents">
-								<aui:input name="<%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>" type="hidden" value="<%= true %>" />
-
-								<aui:input name="<%= PortletDataHandlerKeys.PORTLET_DATA %>" type="hidden" value="<%= true %>" />
-
 								<li>
+									<aui:input name="<%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>" type="hidden" value="<%= true %>" />
+
+									<aui:input name="<%= PortletDataHandlerKeys.PORTLET_DATA %>" type="hidden" value="<%= true %>" />
+
 									<div class="hide" id="<portlet:namespace />range">
 										<ul class="lfr-tree unstyled">
 											<li class="tree-item">

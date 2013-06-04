@@ -1118,6 +1118,9 @@ public class PortletExporter {
 		element.addAttribute("portlet-id", portletId);
 		element.addAttribute("layout-id", String.valueOf(layoutId));
 		element.addAttribute("path", path);
+		element.addAttribute("portlet-data", String.valueOf(exportPortletData));
+		element.addAttribute(
+			"portlet-setup", String.valueOf(exportPortletSetup));
 
 		if (portletDataContext.isPathNotProcessed(path)) {
 			try {

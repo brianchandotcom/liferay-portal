@@ -18,11 +18,14 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.ClassedModel;
+import com.liferay.portal.model.Portlet;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,6 +41,10 @@ public class ManifestSummary implements Serializable {
 		}
 
 		return referrerModelName.concat(StringPool.POUND).concat(modelName);
+	}
+
+	public void addDataPortlet(Portlet portlet) {
+		_dataPortlets.add(portlet);
 	}
 
 	public void addModelCount(
@@ -58,6 +65,14 @@ public class ManifestSummary implements Serializable {
 
 	public void addModelCount(String manifestSummaryKey, long modelCount) {
 		_modelCounters.put(manifestSummaryKey, modelCount);
+	}
+
+	public void addSetupPortlet(Portlet portlet) {
+		_setupPortlets.add(portlet);
+	}
+
+	public List<Portlet> getDataPortlets() {
+		return _dataPortlets;
 	}
 
 	public Date getExportDate() {
@@ -88,6 +103,10 @@ public class ManifestSummary implements Serializable {
 
 	public Map<String, Long> getModelCounters() {
 		return _modelCounters;
+	}
+
+	public List<Portlet> getSetupPortlets() {
+		return _setupPortlets;
 	}
 
 	public void incrementModelCount(Class<? extends ClassedModel> clazz) {
@@ -131,7 +150,9 @@ public class ManifestSummary implements Serializable {
 		return sb.toString();
 	}
 
+	private List<Portlet> _dataPortlets = new ArrayList<Portlet>();
 	private Date _exportDate;
 	private Map<String, Long> _modelCounters = new HashMap<String, Long>();
+	private List<Portlet> _setupPortlets = new ArrayList<Portlet>();
 
 }

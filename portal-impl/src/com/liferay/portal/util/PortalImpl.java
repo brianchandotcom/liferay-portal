@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.servlet.PersistentHttpServletRequestWrapper;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
@@ -548,15 +547,19 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public void addPortalMessage(HttpServletRequest request, String message) {
-		SessionMessages.add(request, "portalMessageMessage", message);
+		HttpSession session = request.getSession();
+
+		session.setAttribute(WebKeys.PORTAL_MESSAGE_MESSAGE, message);
 	}
 
 	@Override
 	public void addPortalMessage(
 		HttpServletRequest request, String jspPath, String portletId) {
 
-		SessionMessages.add(request, "portalMessageJSPPath", jspPath);
-		SessionMessages.add(request, "portalMessagePortletId", portletId);
+		HttpSession session = request.getSession();
+
+		session.setAttribute(WebKeys.PORTAL_MESSAGE_JSP_PATH, jspPath);
+		session.setAttribute(WebKeys.PORTAL_MESSAGE_PORTLET_ID, portletId);
 	}
 
 	@Override
@@ -564,10 +567,12 @@ public class PortalImpl implements Portal {
 		HttpServletRequest request, String message, String cssClass,
 		boolean animation, int timeout) {
 
-		SessionMessages.add(request, "portalMessageMessage", message);
-		SessionMessages.add(request, "portalMessageAnimation", animation);
-		SessionMessages.add(request, "portalMessageCssClass", cssClass);
-		SessionMessages.add(request, "portalMessageTimeout", timeout);
+		HttpSession session = request.getSession();
+
+		session.setAttribute(WebKeys.PORTAL_MESSAGE_MESSAGE, message);
+		session.setAttribute(WebKeys.PORTAL_MESSAGE_ANIMATION, animation);
+		session.setAttribute(WebKeys.PORTAL_MESSAGE_CSS_CLASS, cssClass);
+		session.setAttribute(WebKeys.PORTAL_MESSAGE_TIMEOUT, timeout);
 	}
 
 	@Override
@@ -575,11 +580,13 @@ public class PortalImpl implements Portal {
 		HttpServletRequest request, String jspPath, String portletId,
 		String cssClass, boolean animation, int timeout) {
 
-		SessionMessages.add(request, "portalMessageJSPPath", jspPath);
-		SessionMessages.add(request, "portalMessagePortletId", portletId);
-		SessionMessages.add(request, "portalMessageAnimation", animation);
-		SessionMessages.add(request, "portalMessageCssClass", cssClass);
-		SessionMessages.add(request, "portalMessageTimeout", timeout);
+		HttpSession session = request.getSession();
+
+		session.setAttribute(WebKeys.PORTAL_MESSAGE_JSP_PATH, jspPath);
+		session.setAttribute(WebKeys.PORTAL_MESSAGE_PORTLET_ID, portletId);
+		session.setAttribute(WebKeys.PORTAL_MESSAGE_ANIMATION, animation);
+		session.setAttribute(WebKeys.PORTAL_MESSAGE_CSS_CLASS, cssClass);
+		session.setAttribute(WebKeys.PORTAL_MESSAGE_TIMEOUT, timeout);
 	}
 
 	@Override

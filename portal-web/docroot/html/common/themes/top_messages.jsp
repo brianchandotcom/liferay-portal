@@ -28,14 +28,14 @@
 </c:if>
 
 <%
-String jspPath = GetterUtil.getString(SessionMessages.get(request, "portalMessageJSPPath"));
-String message = GetterUtil.getString(SessionMessages.get(request, "portalMessageMessage"));
+String jspPath = GetterUtil.getString(session.getAttribute(WebKeys.PORTAL_MESSAGE_JSP_PATH));
+String message = GetterUtil.getString(session.getAttribute(WebKeys.PORTAL_MESSAGE_MESSAGE));
 
 if (Validator.isNotNull(jspPath) || Validator.isNotNull(message)) {
-	String cssClass = GetterUtil.getString(SessionMessages.get(request, "portalMessageCssClass"), "alert-info");
-	String portletId = GetterUtil.getString(SessionMessages.get(request, "portalMessagePortletId"));
-	int timeout = GetterUtil.getInteger(SessionMessages.get(request, "portalMessageTimeout"), 10000);
-	boolean useAnimation = GetterUtil.getBoolean(SessionMessages.get(request, "portalMessageAnimation"), true);
+	String cssClass = GetterUtil.getString(session.getAttribute(WebKeys.PORTAL_MESSAGE_CSS_CLASS), "alert-info");
+	String portletId = GetterUtil.getString(session.getAttribute(WebKeys.PORTAL_MESSAGE_PORTLET_ID));
+	int timeout = GetterUtil.getInteger(session.getAttribute(WebKeys.PORTAL_MESSAGE_TIMEOUT), 10000);
+	boolean useAnimation = GetterUtil.getBoolean(session.getAttribute(WebKeys.PORTAL_MESSAGE_ANIMATION), true);
 %>
 
 	<div class="hide <%= cssClass %>" id="portalMessageContainer">
@@ -72,5 +72,12 @@ if (Validator.isNotNull(jspPath) || Validator.isNotNull(message)) {
 	</aui:script>
 
 <%
+	session.removeAttribute(WebKeys.PORTAL_MESSAGE_CSS_CLASS);
+	session.removeAttribute(WebKeys.PORTAL_MESSAGE_PORTLET_ID);
+	session.removeAttribute(WebKeys.PORTAL_MESSAGE_TIMEOUT);
+	session.removeAttribute(WebKeys.PORTAL_MESSAGE_ANIMATION);
 }
+
+session.removeAttribute(WebKeys.PORTAL_MESSAGE_JSP_PATH);
+session.removeAttribute(WebKeys.PORTAL_MESSAGE_MESSAGE);
 %>

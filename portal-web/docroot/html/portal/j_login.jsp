@@ -1,3 +1,5 @@
+<%@ page import="com.liferay.portal.kernel.servlet.PortalMessages" %>
+
 <%--
 /**
  * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
@@ -88,6 +90,7 @@ if (PropsValues.PORTAL_JAAS_ENABLE && (jUserName != null)) {
 		session.removeAttribute("j_username");
 		session.removeAttribute("j_password");
 
+		PortalMessages.clear(request);
 		SessionMessages.clear(request);
 		SessionErrors.clear(request);
 		%>

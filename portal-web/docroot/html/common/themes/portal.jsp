@@ -52,6 +52,7 @@ else {
 
 request.removeAttribute(WebKeys.LAYOUT_CONTENT);
 
+PortalMessages.clear(request);
 SessionMessages.clear(request);
 SessionErrors.clear(request);
 %>

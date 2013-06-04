@@ -81,6 +81,7 @@ page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.search.Field" %><%@
 page import="com.liferay.portal.kernel.servlet.BrowserSnifferUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.BufferCacheServletResponse" %><%@
+page import="com.liferay.portal.kernel.servlet.PortalMessages" %><%@
 page import="com.liferay.portal.kernel.servlet.ServletContextPool" %><%@
 page import="com.liferay.portal.kernel.servlet.ServletContextUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.SessionErrors" %><%@

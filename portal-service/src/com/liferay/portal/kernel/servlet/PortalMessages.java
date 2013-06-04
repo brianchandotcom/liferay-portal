@@ -14,10 +14,8 @@
 
 package com.liferay.portal.kernel.servlet;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletSession;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import com.liferay.portal.kernel.util.WebKeys;
+
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -25,11 +23,30 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletSession;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
+ * @author Sergio González
  */
 public class PortalMessages {
+
+	public static final String KEY_ANIMATION = "animation";
+
+	public static final String KEY_CSS_CLASS = "cssClass";
+
+	public static final String KEY_JSP_PATH = "jspPath";
+
+	public static final String KEY_MESSAGE = "message";
+
+	public static final String KEY_PORTLET_ID = "portletId";
+
+	public static final String KEY_TIMEOUT = "timeout";
 
 	public static void add(HttpServletRequest request, Class<?> clazz) {
 		add(request.getSession(), clazz.getName());
@@ -381,12 +398,14 @@ public class PortalMessages {
 		Map<String, Object> map = null;
 
 		try {
-			map = (Map<String, Object>)session.getAttribute(_CLASS_NAME);
+			map = (Map<String, Object>)session.getAttribute(
+				WebKeys.LIFERAY_SHARED_PORTAL_MESSAGES);
 
 			if ((map == null) && createIfAbsent) {
 				map = new LinkedHashMap<String, Object>();
 
-				session.setAttribute(_CLASS_NAME, map);
+				session.setAttribute(
+					WebKeys.LIFERAY_SHARED_PORTAL_MESSAGES, map);
 			}
 		}
 		catch (IllegalStateException ise) {
@@ -404,12 +423,14 @@ public class PortalMessages {
 		Map<String, Object> map = null;
 
 		try {
-			map = (Map<String, Object>)portletSession.getAttribute(_CLASS_NAME);
+			map = (Map<String, Object>)portletSession.getAttribute(
+				WebKeys.LIFERAY_SHARED_PORTAL_MESSAGES);
 
 			if ((map == null) && createIfAbsent) {
 				map = new LinkedHashMap<String, Object>();
 
-				portletSession.setAttribute(_CLASS_NAME, map);
+				portletSession.setAttribute(
+					WebKeys.LIFERAY_SHARED_PORTAL_MESSAGES, map);
 			}
 		}
 		catch (IllegalStateException ise) {
@@ -420,7 +441,5 @@ public class PortalMessages {
 
 		return map;
 	}
-
-	private static final String _CLASS_NAME = PortalMessages.class.getName();
 
 }

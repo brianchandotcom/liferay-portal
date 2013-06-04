@@ -120,31 +120,31 @@ public class LayoutPrototypeStagedModelDataHandlerTest
 
 		Assert.assertNotNull(importedLayoutPrototype);
 
-		List<StagedModel> dependentLayoutPrototypeStagedModels =
-			dependentStagedModelsMap.get(Layout.class.getSimpleName());
+		List<StagedModel> dependentLayouts = dependentStagedModelsMap.get(
+			Layout.class.getSimpleName());
 
-		Assert.assertEquals(1, dependentLayoutPrototypeStagedModels.size());
+		Assert.assertEquals(1, dependentLayouts.size());
 
-		Layout layout = (Layout)dependentLayoutPrototypeStagedModels.get(0);
+		Layout dependentLayout = (Layout)dependentLayouts.get(0);
 
 		Layout importedLayout =
 			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-				layout.getUuid(), importedLayoutPrototype.getGroupId(),
-				layout.isPrivateLayout());
+				dependentLayout.getUuid(), importedLayoutPrototype.getGroupId(),
+				dependentLayout.isPrivateLayout());
 
 		Assert.assertNotNull(importedLayout);
 
 		Assert.assertEquals(
-			layout.getTypeSettingsProperty("layoutPrototypeExportTest"),
+			dependentLayout.getTypeSettingsProperty(
+				"layoutPrototypeExportTest"),
 			importedLayout.getTypeSettingsProperty(
 				"layoutPrototypeExportTest"));
 
-		List<StagedModel> dependentLayoutFriendlyURLsStagedModels =
-			dependentStagedModelsMap.get(
-				LayoutFriendlyURL.class.getSimpleName());
+		List<StagedModel> layoutFriendlyURLs = dependentStagedModelsMap.get(
+			LayoutFriendlyURL.class.getSimpleName());
 
 		LayoutFriendlyURL layoutFriendlyURL =
-			(LayoutFriendlyURL)dependentLayoutFriendlyURLsStagedModels.get(0);
+			(LayoutFriendlyURL)layoutFriendlyURLs.get(0);
 
 		LayoutFriendlyURL importedLayoutFriendlyURL =
 			LayoutFriendlyURLLocalServiceUtil.

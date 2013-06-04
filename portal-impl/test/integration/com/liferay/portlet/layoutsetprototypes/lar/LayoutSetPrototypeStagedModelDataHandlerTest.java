@@ -77,31 +77,32 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 			LayoutTestUtil.addLayoutSetPrototype(
 				ServiceTestUtil.randomString());
 
-		List<Layout> layoutSetPrototypeLayouts =
+		List<Layout> layouts =
 			LayoutLocalServiceUtil.getLayouts(
 				layoutSetPrototype.getGroup().getGroupId(), true,
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
-		Assert.assertEquals(1, layoutSetPrototypeLayouts.size());
+		Assert.assertEquals(1, layouts.size());
 
-		_addDependentLayout(
-			LayoutSetPrototype.class, layoutSetPrototypeLayouts.get(0));
+		Layout layout = layouts.get(0);
+
+		_addDependentLayout(LayoutSetPrototype.class, layout);
 
 		_addDependentLayoutFriendlyURLs(
-			LayoutSetPrototype.class,
-			layoutSetPrototypeLayouts.get(0).getPlid());
+			LayoutSetPrototype.class, layout.getPlid());
 
 		LayoutPrototype layoutPrototype = _addLayoutPrototype(
 			dependentStagedModelsMap);
 
-		Layout layoutSetPrototypeLayout = LayoutTestUtil.addLayout(
+		Layout layoutPrototypeBasedLayout = LayoutTestUtil.addLayout(
 			layoutSetPrototype.getGroup().getGroupId(),
 			ServiceTestUtil.randomString(), true, layoutPrototype, true);
 
-		_addDependentLayout(LayoutSetPrototype.class, layoutSetPrototypeLayout);
+		_addDependentLayout(
+			LayoutSetPrototype.class, layoutPrototypeBasedLayout);
 
 		_addDependentLayoutFriendlyURLs(
-			LayoutSetPrototype.class, layoutSetPrototypeLayout.getPlid());
+			LayoutSetPrototype.class, layoutPrototypeBasedLayout.getPlid());
 
 		return layoutSetPrototype;
 	}
@@ -157,12 +158,11 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 		LayoutPrototype importedLayoutPrototype =
 			_retrieveImportedLayoutPrototype(dependentStagedModelsMap, group);
 
-		Layout layoutSetPrototypeLayoutFromLAR =
-			_retrieveLayoutSetPrototypeLayoutsFromLAR(stagedModel);
+		Layout importedLayout = _importLayoutFromLAR(stagedModel);
 
 		_validateLayouts(
 			importedLayoutSetPrototype, importedLayoutPrototype,
-			layoutSetPrototypeLayoutFromLAR);
+			importedLayout);
 	}
 
 	private void _addDependentLayout(Class<?> clazz, Layout layout)
@@ -216,23 +216,21 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 		addDependentStagedModel(
 			dependentStagedModelsMap, LayoutPrototype.class, layoutPrototype);
 
-		List<Layout> layoutPrototypeLayouts =
-			LayoutLocalServiceUtil.getLayouts(
-				layoutPrototype.getGroupId(), true,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+			layoutPrototype.getGroupId(), true,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
-		Assert.assertEquals(1, layoutPrototypeLayouts.size());
+		Assert.assertEquals(1, layouts.size());
 
-		addDependentStagedModel(
-			dependentStagedModelsMap, Layout.class,
-			layoutPrototypeLayouts.get(0));
+		Layout layout = layouts.get(0);
 
-		_addDependentLayout(
-			LayoutPrototype.class, layoutPrototypeLayouts.get(0));
+		addDependentStagedModel(dependentStagedModelsMap, Layout.class, layout);
+
+		_addDependentLayout(LayoutPrototype.class, layout);
 
 		List<LayoutFriendlyURL> layoutFriendlyURLs =
 			LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLs(
-				layoutPrototypeLayouts.get(0).getPlid());
+				layout.getPlid());
 
 		Assert.assertEquals(1, layoutFriendlyURLs.size());
 
@@ -241,18 +239,60 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 			layoutFriendlyURLs.get(0));
 
 		_addDependentLayoutFriendlyURLs(
-			LayoutPrototype.class, layoutPrototypeLayouts.get(0).getPlid());
+			LayoutPrototype.class, layout.getPlid());
 
 		return layoutPrototype;
 	}
 
 	private List<LayoutFriendlyURL> _getDependentLayoutFriendlyURLs(
 		Class<?> clazz) {
+
 		return _dependentLayoutFriendlyURLsMap.get(clazz.getSimpleName());
 	}
 
 	private List<Layout> _getDependentLayouts(Class<?> clazz) {
 		return _dependentLayoutsMap.get(clazz.getSimpleName());
+	}
+
+	private Layout _importLayoutFromLAR(StagedModel stagedModel)
+		throws DocumentException, IOException {
+
+		String modelPath = ExportImportPathUtil.getModelPath(
+			stagedModel, _LAR_FILE_NAME);
+
+		InputStream larFile = portletDataContext.getZipEntryAsInputStream(
+			modelPath);
+
+		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(larFile);
+
+		String manifest = zipReader.getEntryAsString("manifest.xml");
+
+		Document document = SAXReaderUtil.read(manifest);
+
+		List<Element> layoutElements =
+			document.getRootElement().element("Layout").elements();
+
+		List<Layout> importedLayouts = new ArrayList<Layout>(
+			layoutElements.size());
+
+		for (Element layoutElement : layoutElements) {
+			String layoutPrototypeUuid = layoutElement.attributeValue(
+				"layout-prototype-uuid");
+
+			if (Validator.isNotNull(layoutPrototypeUuid)) {
+				String path = layoutElement.attributeValue("path");
+
+				String entryString = zipReader.getEntryAsString(path);
+
+				Layout layout = (Layout)portletDataContext.fromXML(entryString);
+
+				importedLayouts.add(layout);
+			}
+		}
+
+		Assert.assertEquals(1, importedLayouts.size());
+
+		return importedLayouts.get(0);
 	}
 
 	private LayoutPrototype _retrieveImportedLayoutPrototype(
@@ -278,48 +318,6 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 		return importedLayoutPrototype;
 	}
 
-	private Layout _retrieveLayoutSetPrototypeLayoutsFromLAR(
-			StagedModel stagedModel)
-		throws DocumentException, IOException {
-
-		String path = ExportImportPathUtil.getModelPath(
-			stagedModel, _LAR_FILE_NAME);
-
-		InputStream larFile = portletDataContext.getZipEntryAsInputStream(path);
-
-		ZipReader larZipReader = ZipReaderFactoryUtil.getZipReader(larFile);
-
-		String manifest = larZipReader.getEntryAsString("manifest.xml");
-
-		Document manifestDocument = SAXReaderUtil.read(manifest);
-
-		List<Element> stagedModelDataElements =
-			manifestDocument.getRootElement().element("Layout").elements();
-
-		List<Layout> importedLayoutSetPrototypeLayouts = new ArrayList<Layout>(
-			stagedModelDataElements.size());
-
-		for (Element stagedModelDataElement : stagedModelDataElements) {
-			String layoutPrototypeUuid = stagedModelDataElement.attributeValue(
-				"layout-prototype-uuid");
-
-			if (Validator.isNotNull(layoutPrototypeUuid)) {
-				String layoutPath = stagedModelDataElement.attributeValue(
-					"path");
-
-				Layout layoutSetPrototypeLayout =
-					(Layout)portletDataContext.fromXML(
-						larZipReader.getEntryAsString(layoutPath));
-
-				importedLayoutSetPrototypeLayouts.add(layoutSetPrototypeLayout);
-			}
-		}
-
-		Assert.assertEquals(1, importedLayoutSetPrototypeLayouts.size());
-
-		return importedLayoutSetPrototypeLayouts.get(0);
-	}
-
 	private void _validateLayouts(
 			LayoutSetPrototype importedLayoutSetPrototype,
 			LayoutPrototype importedLayoutPrototype,
@@ -335,20 +333,20 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 
 		Assert.assertNotNull(layoutSetPrototypeLayout.getLayoutPrototypeUuid());
 
-		Layout importedLayoutSetPrototypeLayout =
+		Layout importedLayout =
 			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
 				layoutSetPrototypeLayout.getUuid(),
 				importedLayoutSetPrototype.getGroup().getGroupId(), true);
 
-		Assert.assertNotNull(importedLayoutSetPrototypeLayout);
+		Assert.assertNotNull(importedLayout);
 
 		Assert.assertEquals(
 			importedLayoutSetPrototype.getGroup().getGroupId(),
-			importedLayoutSetPrototypeLayout.getGroupId());
+			importedLayout.getGroupId());
 
 		Assert.assertEquals(
 			importedLayoutPrototype.getUuid(),
-			importedLayoutSetPrototypeLayout.getLayoutPrototypeUuid());
+			importedLayout.getLayoutPrototypeUuid());
 	}
 
 	private void _validatePrototypeLayouts(Class<?> clazz, long groupId)
@@ -375,7 +373,8 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 			_getDependentLayoutFriendlyURLs(clazz);
 
 		for (LayoutFriendlyURL dependentLayoutFriendlyURL :
-			dependentLayoutFriendlyURLs) {
+				dependentLayoutFriendlyURLs) {
+
 			LayoutFriendlyURL importedLayoutFriendlyURL =
 				LayoutFriendlyURLLocalServiceUtil.
 					fetchLayoutFriendlyURLByUuidAndGroupId(

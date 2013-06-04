@@ -145,11 +145,11 @@ public class LayoutPrototypeStagedModelDataHandler
 			LayoutPrototype layoutPrototype, long importedGroupId)
 		throws PortalException, SystemException {
 
-		long currentGroupId = portletDataContext.getGroupId();
+		long groupId = portletDataContext.getGroupId();
 
-		long currentScopeGroupId = portletDataContext.getScopeGroupId();
+		long scopeGroupId = portletDataContext.getScopeGroupId();
 
-		boolean isCurrentPrivateLayout = portletDataContext.isPrivateLayout();
+		boolean privateLayout = portletDataContext.isPrivateLayout();
 
 		try {
 			portletDataContext.setGroupId(importedGroupId);
@@ -168,11 +168,11 @@ public class LayoutPrototypeStagedModelDataHandler
 			}
 		}
 		finally {
-			portletDataContext.setGroupId(currentGroupId);
+			portletDataContext.setGroupId(groupId);
 
-			portletDataContext.setPrivateLayout(isCurrentPrivateLayout);
+			portletDataContext.setPrivateLayout(privateLayout);
 
-			portletDataContext.setScopeGroupId(currentScopeGroupId);
+			portletDataContext.setScopeGroupId(scopeGroupId);
 		}
 	}
 

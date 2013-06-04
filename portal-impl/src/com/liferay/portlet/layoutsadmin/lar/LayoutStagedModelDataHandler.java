@@ -1042,7 +1042,8 @@ public class LayoutStagedModelDataHandler
 			LayoutTypePortlet importedLayoutType =
 				(LayoutTypePortlet)importedLayout.getLayoutType();
 
-			List<String> importedPortletIds = importedLayoutType.getPortletIds();
+			List<String> importedPortletIds =
+				importedLayoutType.getPortletIds();
 
 			layout.setGroupId(importedLayout.getGroupId());
 

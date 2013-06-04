@@ -160,10 +160,9 @@ public class LayoutSetPrototypeStagedModelDataHandler
 
 		Property groupIdProperty = PropertyFactoryUtil.forName("groupId");
 
-		Group layoutSetPrototypeGroup = layoutSetPrototype.getGroup();
+		Group group = layoutSetPrototype.getGroup();
 
-		dynamicQuery.add(
-			groupIdProperty.eq(layoutSetPrototypeGroup.getGroupId()));
+		dynamicQuery.add(groupIdProperty.eq(group.getGroupId()));
 
 		Conjunction conjunction = RestrictionsFactoryUtil.conjunction();
 		dynamicQuery.add(conjunction);

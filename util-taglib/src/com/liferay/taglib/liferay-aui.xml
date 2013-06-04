@@ -979,6 +979,7 @@
 			</attribute>
 		</attributes>
 	</component>
+	<component name="Spacer" dynamicAttributes="false" parentClass="com.liferay.portal.kernel.servlet.taglib.TagSupport" writeJSP="false" />
 	<component name="TranslationManager" dynamicAttributes="false">
 		<attributes>
 			<attribute>

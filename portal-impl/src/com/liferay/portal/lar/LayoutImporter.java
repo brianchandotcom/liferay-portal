@@ -452,10 +452,17 @@ public class LayoutImporter {
 				logoPath);
 
 			if ((iconBytes != null) && (iconBytes.length > 0)) {
-				File logo = FileUtil.createTempFile(iconBytes);
+				File logo = null;
 
-				LayoutSetLocalServiceUtil.updateLogo(
-					groupId, privateLayout, true, logo);
+				try {
+					logo = FileUtil.createTempFile(iconBytes);
+
+					LayoutSetLocalServiceUtil.updateLogo(
+						groupId, privateLayout, true, logo);
+				}
+				finally {
+					FileUtil.delete(logo);
+				}
 			}
 			else {
 				LayoutSetLocalServiceUtil.updateLogo(

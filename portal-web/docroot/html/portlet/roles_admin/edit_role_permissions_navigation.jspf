@@ -156,7 +156,9 @@ portlets = ListUtil.sort(portlets, new PortletTitleComparator(application, local
 			</optgroup>
 
 			<%
-			Map<String, List<Portlet>> portletsMap = new LinkedHashMap<String, List<Portlet>>(PortletCategoryKeys.ALL.length);
+			String[] portletCategories = ArrayUtil.append(PortletCategoryKeys.ALL, PortletCategoryKeys.MY);
+
+			Map<String, List<Portlet>> portletsMap = new LinkedHashMap<String, List<Portlet>>(portletCategories.length);
 
 			for (Portlet portlet : portlets) {
 				String controlPanelCategory = portlet.getControlPanelEntryCategory();
@@ -181,7 +183,7 @@ portlets = ListUtil.sort(portlets, new PortletTitleComparator(application, local
 				}
 			}
 
-			for (String controlPanelCategory : PortletCategoryKeys.ALL) {
+			for (String controlPanelCategory : portletCategories) {
 				List<Portlet> categoryPortlets = portletsMap.get(controlPanelCategory);
 
 				if (categoryPortlets == null) {

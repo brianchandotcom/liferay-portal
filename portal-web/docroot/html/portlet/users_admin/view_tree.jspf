@@ -126,7 +126,7 @@ if (filterManageableOrganizations && organizations.isEmpty()) {
 										<portlet:param name="groupId" value="<%= String.valueOf(organizationGroupId) %>" />
 									</portlet:renderURL>
 
-									<aui:a href="<%= manageTeamsURL %>"> <%= teamsCount %> <liferay-ui:message key='<%= (teamsCount == 1) ? "team" : "teams" %>' /></aui:a>
+									<aui:a href="<%= manageTeamsURL %>"><aui:spacer /><%= teamsCount %><aui:spacer /><liferay-ui:message key='<%= (teamsCount == 1) ? "team" : "teams" %>' /></aui:a>
 								</div>
 							</div>
 						</c:if>

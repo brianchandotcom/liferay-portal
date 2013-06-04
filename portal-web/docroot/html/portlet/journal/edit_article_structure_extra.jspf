@@ -155,7 +155,7 @@
 					<input class="journal-list-value" size="15" title="<liferay-ui:message key="item-value" />" type="text" value="value" />
 
 					<span class="journal-icon-button journal-add-field">
-						<liferay-ui:icon image="add" /> <liferay-ui:message key="add-to-list" />
+						<liferay-ui:icon image="add" /><aui:spacer /><liferay-ui:message key="add-to-list" />
 					</span>
 				</div>
 			</div>
@@ -177,7 +177,7 @@
 					<input class="journal-list-value" size="15" title="<liferay-ui:message key="item-value" />" type="text" value="value" />
 
 					<span class="journal-icon-button journal-add-field">
-						<liferay-ui:icon image="add" /> <liferay-ui:message key="add-to-list" />
+						<liferay-ui:icon image="add" /><aui:spacer /><liferay-ui:message key="add-to-list" />
 					</span>
 				</div>
 			</div>

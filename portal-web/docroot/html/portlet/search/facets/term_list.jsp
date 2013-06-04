@@ -56,7 +56,7 @@ int maxTerms = dataJSONObject.getInt("maxTerms");
 		%>
 
 			<li class="facet-value <%= fieldParam.equals(termCollector.getTerm()) ? "current-term" : StringPool.BLANK %>">
-				<a data-value="<%= HtmlUtil.escapeAttribute(termCollector.getTerm()) %>" href="javascript:;"><%= HtmlUtil.escape(termCollector.getTerm()) %></a> <span class="frequency">(<%= termCollector.getFrequency() %>)</span>
+				<a data-value="<%= HtmlUtil.escapeAttribute(termCollector.getTerm()) %>" href="javascript:;"><%= HtmlUtil.escape(termCollector.getTerm()) %></a><aui:spacer /><span class="frequency">(<%= termCollector.getFrequency() %>)</span>
 			</li>
 
 		<%

@@ -331,10 +331,10 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 
 					<c:choose>
 						<c:when test="<%= assetEntry.getViewCount() == 1 %>">
-							<%= assetEntry.getViewCount() %> <liferay-ui:message key="view" />
+							<%= assetEntry.getViewCount() %><aui:spacer /><liferay-ui:message key="view" />
 						</c:when>
 						<c:when test="<%= assetEntry.getViewCount() > 1 %>">
-							<%= assetEntry.getViewCount() %> <liferay-ui:message key="views" />
+							<%= assetEntry.getViewCount() %><aui:spacer /><liferay-ui:message key="views" />
 						</c:when>
 					</c:choose>
 				</div>

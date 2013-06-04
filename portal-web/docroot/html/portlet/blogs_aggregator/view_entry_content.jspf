@@ -42,9 +42,9 @@
 			<div class="entry-info">
 				<span class="entry-title"><a href="<%= viewEntryURL %>"><%= HtmlUtil.escape(entry.getTitle()) %></a></span>
 
-				<span class="entry-author"><liferay-ui:message key="written-by" /> <a href="<%= viewAllEntriesURL %>"><%= HtmlUtil.escape(PortalUtil.getUserName(entry)) %></a>,</span>
+				<span class="entry-author"><liferay-ui:message key="written-by" /><aui:spacer /><a href="<%= viewAllEntriesURL %>"><%= HtmlUtil.escape(PortalUtil.getUserName(entry)) %></a>,</span>
 
-				<span class="entry-date"><liferay-ui:message key="on-date" /> <%= dateFormatDateTime.format(entry.getDisplayDate()) %></span>
+				<span class="entry-date"><liferay-ui:message key="on-date" /><aui:spacer /><%= dateFormatDateTime.format(entry.getDisplayDate()) %></span>
 
 				<span class="entry-categories">
 					<liferay-ui:asset-categories-summary
@@ -123,7 +123,7 @@
 					int messagesCount = MBMessageLocalServiceUtil.getDiscussionMessagesCount(classNameId, entry.getEntryId(), WorkflowConstants.STATUS_APPROVED);
 					%>
 
-					<a href="<%= PropsValues.PORTLET_URL_ANCHOR_ENABLE ? viewEntryURL : viewEntryURL + "#blogsCommentsPanelContainer" %>"><%= messagesCount %> <liferay-ui:message key='<%= (messagesCount == 1) ? "comment" : "comments" %>' /></a>
+					<a href="<%= PropsValues.PORTLET_URL_ANCHOR_ENABLE ? viewEntryURL : viewEntryURL + "#blogsCommentsPanelContainer" %>"><%= messagesCount %><aui:spacer /><liferay-ui:message key='<%= (messagesCount == 1) ? "comment" : "comments" %>' /></a>
 				</c:when>
 			</c:choose>
 		</div>

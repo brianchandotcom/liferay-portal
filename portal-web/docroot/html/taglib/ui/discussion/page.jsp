@@ -124,7 +124,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 						<c:otherwise>
 							<c:choose>
 								<c:when test="<%= messagesCount == 1 %>">
-									<liferay-ui:message key="no-comments-yet" /> <a href="<%= taglibPostReplyURL %>"><liferay-ui:message key="be-the-first" /></a>
+									<liferay-ui:message key="no-comments-yet" /><aui:spacer /><a href="<%= taglibPostReplyURL %>"><liferay-ui:message key="be-the-first" /></a>
 								</c:when>
 								<c:otherwise>
 									<liferay-ui:icon

@@ -67,7 +67,7 @@ JSONArray rangesJSONArray = dataJSONObject.getJSONArray("ranges");
 		%>
 
 			<li class="facet-value <%= fieldParam.equals(range) ? "current-term" : StringPool.BLANK %>">
-				<a data-value="<%= HtmlUtil.escapeAttribute(range) %>" href="javascript:;"><liferay-ui:message key="<%= label %>" /></a> <span class="frequency">(<%= frequency %>)</span>
+				<a data-value="<%= HtmlUtil.escapeAttribute(range) %>" href="javascript:;"><liferay-ui:message key="<%= label %>" /></a><aui:spacer /><span class="frequency">(<%= frequency %>)</span>
 			</li>
 
 		<%

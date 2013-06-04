@@ -80,10 +80,10 @@ viewURL = _checkViewURL(assetEntry, viewInContext, viewURL, currentURL, themeDis
 		<h3 class="asset-title">
 			<c:choose>
 				<c:when test="<%= Validator.isNotNull(viewURL) %>">
-					<a href="<%= viewURL %>"><img alt="" src="<%= assetRenderer.getIconPath(renderRequest) %>" /> <%= HtmlUtil.escape(title) %></a>
+					<a href="<%= viewURL %>"><img alt="" src="<%= assetRenderer.getIconPath(renderRequest) %>" /><aui:spacer /><%= HtmlUtil.escape(title) %></a>
 				</c:when>
 				<c:otherwise>
-					<img alt="" src="<%= assetRenderer.getIconPath(renderRequest) %>" /> <%= HtmlUtil.escape(title) %>
+					<img alt="" src="<%= assetRenderer.getIconPath(renderRequest) %>" /><aui:spacer /><%= HtmlUtil.escape(title) %>
 				</c:otherwise>
 			</c:choose>
 		</h3>

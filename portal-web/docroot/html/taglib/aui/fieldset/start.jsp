@@ -16,7 +16,7 @@
 
 <%@ include file="/html/taglib/aui/fieldset/init.jsp" %>
 
-<fieldset class="fieldset <%= cssClass %>" <%= Validator.isNotNull(id) ? "id=\"" + namespace + id + "\"" : StringPool.BLANK %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
+<fieldset class="fieldset <%= cssClass %>" <%= Validator.isNotNull(id) ? "id=\"" + namespace + id + "\"" : StringPool.BLANK %><aui:spacer /><%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
 	<c:if test="<%= Validator.isNotNull(label) %>">
 		<legend class="fieldset-legend">
 			<span class="legend">

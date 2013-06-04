@@ -153,7 +153,7 @@ boolean preview = ParamUtil.getBoolean(request, "preview");
 				String[] imageExtensions = PrefsPropsUtil.getStringArray(PropsKeys.BLOGS_IMAGE_EXTENSIONS, StringPool.COMMA);
 				%>
 
-				<liferay-ui:message key="image-names-must-end-with-one-of-the-following-extensions" /> <%= StringUtil.merge(imageExtensions, ", ") %>.
+				<liferay-ui:message key="image-names-must-end-with-one-of-the-following-extensions" /><aui:spacer /><%= StringUtil.merge(imageExtensions, ", ") %>.
 			</liferay-ui:error>
 
 			<liferay-ui:error exception="<%= EntrySmallImageSizeException.class %>">

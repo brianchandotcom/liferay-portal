@@ -122,7 +122,7 @@ List<Group> mySites = user.getMySites(false, max);
 							}
 							%>
 
-							<li class="<%= (selectedSite && layout.isPublicLayout()) ? "active" : "public-site" %> <%= itemCssClass %>">
+							<li class="<%= (selectedSite && layout.isPublicLayout()) ? "active" : "public-site" %><aui:spacer /><%= itemCssClass %>">
 								<a href="<%= HtmlUtil.escape(portletURL.toString()) %>" onclick="Liferay.Util.forcePost(this); return false;">
 
 									<%
@@ -183,7 +183,7 @@ List<Group> mySites = user.getMySites(false, max);
 							}
 							%>
 
-							<li class="<%= (selectedSite && layout.isPrivateLayout()) ? "active" : "private-site" %> <%= itemCssClass %>">
+							<li class="<%= (selectedSite && layout.isPrivateLayout()) ? "active" : "private-site" %><aui:spacer /><%= itemCssClass %>">
 								<a href="<%= HtmlUtil.escape(portletURL.toString()) %>" onclick="Liferay.Util.forcePost(this); return false;">
 
 									<%
@@ -331,7 +331,7 @@ List<Group> mySites = user.getMySites(false, max);
 													onclick="Liferay.Util.forcePost(this); return false;"
 												</c:if>
 
-												><liferay-ui:message key="public-pages" /> <span class="page-count">(<%= mySite.getPublicLayoutsPageCount() %>)</span></a>
+												><liferay-ui:message key="public-pages" /><aui:spacer /><span class="page-count">(<%= mySite.getPublicLayoutsPageCount() %>)</span></a>
 
 												<c:if test="<%= publicAddPageHREF != null %>">
 													<a class="add-page" href="<%= HtmlUtil.escape(publicAddPageHREF) %>" onclick="Liferay.Util.forcePost(this); return false;"><liferay-ui:message key="manage-pages" /></a>
@@ -356,7 +356,7 @@ List<Group> mySites = user.getMySites(false, max);
 													onclick="Liferay.Util.forcePost(this); return false;"
 												</c:if>
 
-												><liferay-ui:message key="private-pages" /> <span class="page-count">(<%= mySite.getPrivateLayoutsPageCount() %>)</span></a>
+												><liferay-ui:message key="private-pages" /><aui:spacer /><span class="page-count">(<%= mySite.getPrivateLayoutsPageCount() %>)</span></a>
 
 												<c:if test="<%= privateAddPageHREF != null %>">
 													<a class="add-page" href="<%= HtmlUtil.escape(privateAddPageHREF) %>" onclick="Liferay.Util.forcePost(this); return false;"><liferay-ui:message key="manage-pages" /></a>

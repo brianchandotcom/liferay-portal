@@ -189,7 +189,7 @@ StringBuilder friendlyURLBase = new StringBuilder();
 				}
 			%>
 
-				<div class="layout-type-form layout-type-form-<%= curLayoutType %> <%= selLayout.getType().equals(PropsValues.LAYOUT_TYPES[i]) ? "" : "hide" %>">
+				<div class="layout-type-form layout-type-form-<%= curLayoutType %><aui:spacer /><%= selLayout.getType().equals(PropsValues.LAYOUT_TYPES[i]) ? "" : "hide" %>">
 
 					<%
 					request.setAttribute(WebKeys.SEL_LAYOUT, selLayout);

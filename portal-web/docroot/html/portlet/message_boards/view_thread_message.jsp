@@ -56,16 +56,16 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 
 						<c:if test="<%= Validator.isNotNull(ranks[0]) %>">
 							<div class="thread-user-rank">
-								<span><liferay-ui:message key="rank" />:</span> <%= ranks[0] %>
+								<span><liferay-ui:message key="rank" />:</span><aui:spacer /><%= ranks[0] %>
 							</div>
 						</c:if>
 
 						<div class="thread-user-post-count">
-							<span><liferay-ui:message key="posts" />:</span> <%= posts %>
+							<span><liferay-ui:message key="posts" />:</span><aui:spacer /><%= posts %>
 						</div>
 
 						<div class="thread-user-join-date">
-							<span><liferay-ui:message key="join-date" />:</span> <%= dateFormatDate.format(userDisplay.getCreateDate()) %>
+							<span><liferay-ui:message key="join-date" />:</span><aui:spacer /><%= dateFormatDate.format(userDisplay.getCreateDate()) %>
 						</div>
 
 						<portlet:renderURL var="recentPostsURL">

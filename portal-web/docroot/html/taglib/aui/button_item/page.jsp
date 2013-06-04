@@ -18,7 +18,7 @@
 
 <c:if test="<%= useMarkup %>">
 	<c:if test="<%= !hasBoundingBox %>">
-		<button class="buttonitem buttonitem-content component widget <%= (iconTypeClass != null) ? iconTypeClass : StringPool.BLANK %> <%= cssClass %>" id="<%= uniqueId %>BoundingBox" type="button">
+		<button class="buttonitem buttonitem-content component widget <%= (iconTypeClass != null) ? iconTypeClass : StringPool.BLANK %><aui:spacer /><%= cssClass %>" id="<%= uniqueId %>BoundingBox" type="button">
 	</c:if>
 
 	<c:if test="<%= Validator.isNotNull(icon) %>">

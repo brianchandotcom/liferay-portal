@@ -103,7 +103,7 @@ private void _buildCategoriesNavigation(String[] assetCategoryIdsOrNames, boolea
 		sb.append(HtmlUtil.escapeAttribute(term));
 		sb.append("\">");
 		sb.append(assetCategoryName);
-		sb.append("</a> <span class=\"frequency\">(");
+		sb.append("</a><aui:spacer /><span class=\"frequency\">(");
 		sb.append(frequency);
 		sb.append(")</span>");
 

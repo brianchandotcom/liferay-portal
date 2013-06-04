@@ -112,7 +112,7 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 			</label>
 
 			<span <%= inputPermissionsShowOptions ? "class=\"hide\"" : "" %> id="<%= uniqueNamespace %>inputPermissionsShowOptionsLink">
-				<a href="javascript:<%= uniqueNamespace %>inputPermissionsShowOptions();" style="margin-left: 10px;"><liferay-ui:message key="more-options" /> &raquo;</a> <liferay-ui:icon-help message="input-permissions-more-options-help" />
+				<a href="javascript:<%= uniqueNamespace %>inputPermissionsShowOptions();" style="margin-left: 10px;"><liferay-ui:message key="more-options" /> &raquo;</a><aui:spacer /><liferay-ui:icon-help message="input-permissions-more-options-help" />
 			</span>
 
 			<a <%= inputPermissionsShowOptions ? "" : "class=\"hide\"" %> href="javascript:<%= uniqueNamespace %>inputPermissionsHideOptions();" id="<%= uniqueNamespace %>inputPermissionsHideOptionsLink" style="margin-left: 10px;">&laquo; <liferay-ui:message key="hide-options" /></a>
@@ -196,7 +196,7 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 					<td style="text-align: center;" <%= (action.equals(ActionKeys.VIEW)) ? "class=\"hide-accessible\"" : "" %>>
 						<label class="hidden-label" for="<%= checkboxFieldId %>"><liferay-ui:message arguments="<%= new Object[] {ResourceActionsUtil.getAction(pageContext, action), role.getTitle(themeDisplay.getLocale())} %>" key="give-x-permission-to-users-with-role-x" /></label>
 
-						<input <%= checked ? "checked" : "" %> <%= disabled ? "disabled" : "" %> id="<%= checkboxFieldId %>" name="<%= checkboxFieldName %>" title='<%= LanguageUtil.format(pageContext, "give-x-permission-to-users-with-role-x", new Object[] {ResourceActionsUtil.getAction(pageContext, action), role.getTitle(themeDisplay.getLocale())}) %>' type="checkbox" value="<%= action %>" />
+						<input <%= checked ? "checked" : "" %><aui:spacer /><%= disabled ? "disabled" : "" %> id="<%= checkboxFieldId %>" name="<%= checkboxFieldName %>" title='<%= LanguageUtil.format(pageContext, "give-x-permission-to-users-with-role-x", new Object[] {ResourceActionsUtil.getAction(pageContext, action), role.getTitle(themeDisplay.getLocale())}) %>' type="checkbox" value="<%= action %>" />
 					</td>
 
 				<%
@@ -279,9 +279,9 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 		<input name="<%= namespace %>addGroupPermissions" type="hidden" value="<%= addGroupPermissions %>" />
 		<input name="<%= namespace %>addGuestPermissions" type="hidden" value="<%= addGuestPermissions %>" />
 
-		<input <%= addGroupPermissions ? "checked" : "" %> name="<%= namespace %>addGroupPermissionsBox" type="checkbox" onClick="document.<%= formName %>.<%= namespace %>addGroupPermissions.value = this.checked; <%= namespace %>checkGroupAndGuestPermissions();"> <liferay-ui:message key="assign-default-permissions-to-site" /><br />
-		<input <%= addGuestPermissions ? "checked" : "" %> name="<%= namespace %>addGuestPermissionsBox" type="checkbox" onClick="document.<%= formName %>.<%= namespace %>addGuestPermissions.value = this.checked; <%= namespace %>checkGroupAndGuestPermissions();"> <liferay-ui:message key="assign-default-permissions-to-guest" /><br />
-		<input <%= !addGroupPermissions && !addGuestPermissions ? "checked" : "" %> name="<%= namespace %>addUserPermissionsBox" type="checkbox" onClick="document.<%= formName %>.<%= namespace %>addGroupPermissions.value = !this.checked; document.<%= formName %>.<%= namespace %>addGuestPermissions.value = !this.checked; <%= namespace %>checkUserPermissions();" /> <liferay-ui:message key="only-assign-permissions-to-me" />
+		<input <%= addGroupPermissions ? "checked" : "" %> name="<%= namespace %>addGroupPermissionsBox" type="checkbox" onClick="document.<%= formName %>.<%= namespace %>addGroupPermissions.value = this.checked; <%= namespace %>checkGroupAndGuestPermissions();"><aui:spacer /><liferay-ui:message key="assign-default-permissions-to-site" /><br />
+		<input <%= addGuestPermissions ? "checked" : "" %> name="<%= namespace %>addGuestPermissionsBox" type="checkbox" onClick="document.<%= formName %>.<%= namespace %>addGuestPermissions.value = this.checked; <%= namespace %>checkGroupAndGuestPermissions();"><aui:spacer /><liferay-ui:message key="assign-default-permissions-to-guest" /><br />
+		<input <%= !addGroupPermissions && !addGuestPermissions ? "checked" : "" %> name="<%= namespace %>addUserPermissionsBox" type="checkbox" onClick="document.<%= formName %>.<%= namespace %>addGroupPermissions.value = !this.checked; document.<%= formName %>.<%= namespace %>addGuestPermissions.value = !this.checked; <%= namespace %>checkUserPermissions();" /><aui:spacer /><liferay-ui:message key="only-assign-permissions-to-me" />
 
 		<aui:script>
 			function <%= namespace %>checkGroupAndGuestPermissions() {

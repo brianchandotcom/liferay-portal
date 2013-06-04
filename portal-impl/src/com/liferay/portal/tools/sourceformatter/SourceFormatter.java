@@ -2538,11 +2538,11 @@ public class SourceFormatter {
 				newContent,
 				new String[] {
 					"<br/>", "\"/>", "\" >", "@page import", "\"%>", ")%>",
-					"javascript: "
+					"javascript: ", "> <"
 				},
 				new String[] {
 					"<br />", "\" />", "\">", "@ page import", "\" %>", ") %>",
-					"javascript:"
+					"javascript:", "><aui:spacer /><"
 				});
 
 			if (stripJSPImports) {

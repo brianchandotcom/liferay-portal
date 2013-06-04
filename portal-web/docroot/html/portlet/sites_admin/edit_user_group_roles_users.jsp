@@ -36,7 +36,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_user_group_roles.
 <div>
 	<%= LanguageUtil.format(pageContext, "step-x-of-x", new String[] {"2", "2"}) %>
 
-	<em>Current</em> signifies current user groups associated with the <em><%= HtmlUtil.escape(role.getTitle(locale)) %></em> role. <em>Available</em> signifies all user groups associated with the <em><%= HtmlUtil.escape(groupName) %></em> <%= (group.isOrganization()) ? "organization" : "site" %>.
+	<em>Current</em> signifies current user groups associated with the <em><%= HtmlUtil.escape(role.getTitle(locale)) %></em> role. <em>Available</em> signifies all user groups associated with the <em><%= HtmlUtil.escape(groupName) %></em><aui:spacer /><%= (group.isOrganization()) ? "organization" : "site" %>.
 </div>
 
 <br />

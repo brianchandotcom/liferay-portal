@@ -485,7 +485,7 @@ long orderId = BeanParamUtil.getLong(order, request, "orderId");
 	</tr>
 	<tr>
 		<td>
-			<liferay-ui:message key="shipping" /> <%= Validator.isNotNull(order.getAltShipping()) ? "(" + order.getAltShipping() + ")" : StringPool.BLANK %>
+			<liferay-ui:message key="shipping" /><aui:spacer /><%= Validator.isNotNull(order.getAltShipping()) ? "(" + order.getAltShipping() + ")" : StringPool.BLANK %>
 		</td>
 		<td>
 			<%= currencyFormat.format(order.getShipping()) %>

@@ -28,15 +28,30 @@
 </c:if>
 
 <%
+String jspPath = GetterUtil.getString(SessionMessages.get(request, "portalMessageJSPPath"));
 String message = GetterUtil.getString(SessionMessages.get(request, "portalMessageMessage"));
 
-if (Validator.isNotNull(message)) {
+if (Validator.isNotNull(jspPath) || Validator.isNotNull(message)) {
 	String cssClass = GetterUtil.getString(SessionMessages.get(request, "portalMessageCssClass"), "alert-info");
+	String portletId = GetterUtil.getString(SessionMessages.get(request, "portalMessagePortletId"));
 	int timeout = GetterUtil.getInteger(SessionMessages.get(request, "portalMessageTimeout"), 10000);
 	boolean useAnimation = GetterUtil.getBoolean(SessionMessages.get(request, "portalMessageAnimation"), true);
 %>
 
+	<div class="hide <%= cssClass %>" id="portalMessageContainer">
+		<c:choose>
+			<c:when test="<%= Validator.isNotNull(jspPath) %>">
+				<liferay-util:include page="<%= jspPath %>" portletId="<%= portletId %>" />
+			</c:when>
+			<c:otherwise>
+				<liferay-ui:message key="<%= message %>" /><button type="button" class="close">&times;</button>
+			</c:otherwise>
+		</c:choose>
+	</div>
+
 	<aui:script use="liferay-notice">
+		var portalMessageContainer = A.one('#portalMessageContainer');
+
 		var banner = new Liferay.Notice(
 			{
 				animationConfig:
@@ -45,7 +60,7 @@ if (Validator.isNotNull(message)) {
 						top: '0px'
 					},
 				closeText: false,
-				content: '<liferay-ui:message key="<%= message %>" /><button type="button" class="close">&times;</button>',
+				content: portalMessageContainer.html(),
 				noticeClass: 'hide taglib-portal-message <%= cssClass %>',
 				timeout: <%= timeout %>,
 				toggleText: false,

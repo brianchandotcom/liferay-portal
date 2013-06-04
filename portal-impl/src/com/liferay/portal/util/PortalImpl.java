@@ -553,10 +553,30 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public void addPortalMessage(
+		HttpServletRequest request, String jspPath, String portletId) {
+
+		SessionMessages.add(request, "portalMessageJSPPath", jspPath);
+		SessionMessages.add(request, "portalMessagePortletId", portletId);
+	}
+
+	@Override
+	public void addPortalMessage(
 		HttpServletRequest request, String message, String cssClass,
 		boolean animation, int timeout) {
 
 		SessionMessages.add(request, "portalMessageMessage", message);
+		SessionMessages.add(request, "portalMessageAnimation", animation);
+		SessionMessages.add(request, "portalMessageCssClass", cssClass);
+		SessionMessages.add(request, "portalMessageTimeout", timeout);
+	}
+
+	@Override
+	public void addPortalMessage(
+		HttpServletRequest request, String jspPath, String portletId,
+		String cssClass, boolean animation, int timeout) {
+
+		SessionMessages.add(request, "portalMessageJSPPath", jspPath);
+		SessionMessages.add(request, "portalMessagePortletId", portletId);
 		SessionMessages.add(request, "portalMessageAnimation", animation);
 		SessionMessages.add(request, "portalMessageCssClass", cssClass);
 		SessionMessages.add(request, "portalMessageTimeout", timeout);

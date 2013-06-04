@@ -1,6 +1,8 @@
 AUI.add(
 	'liferay-dockbar-add-base',
 	function(A) {
+		var Lang = A.Lang;
+
 		var Dockbar = Liferay.Dockbar;
 
 		var AddBase = A.Component.create(
@@ -11,23 +13,25 @@ AUI.add(
 
 				ATTRS: {
 					inputNode: {
-						value: null
+						setter: A.one
 					},
 
 					nodeSelector: {
-						value: ''
+						validator: Lang.isString
 					},
 
 					nodeList: {
-						value: null
+						setter: A.one
 					},
 
 					nodes: {
-						value: null
+						getter: '_getNodes',
+						readOnly: true
 					},
 
 					searchData: {
-						value: []
+						getter: '_getSearchData',
+						readOnly: true
 					},
 
 					searchDataLocator: {
@@ -61,9 +65,21 @@ AUI.add(
 								}
 							);
 
-							instance.set('nodes', nodes);
-							instance.set('searchData', searchData);
+							instance._nodes = nodes;
+							instance._searchData = searchData;
 						}
+					},
+
+					_getNodes: function() {
+						var instance = this;
+
+						return instance._nodes;
+					},
+
+					_getSearchData: function() {
+						var instance = this;
+						
+						return instance._searchData;
 					}
 				}
 			}

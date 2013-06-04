@@ -1,6 +1,8 @@
 AUI.add(
 	'liferay-dockbar-add-page-search',
 	function(A) {
+		var AArray = A.Array;
+
 		var Dockbar = Liferay.Dockbar;
 
 		var AddSearch = Dockbar.AddSearch;
@@ -43,10 +45,10 @@ AUI.add(
 
 				var query = event.query;
 
-				instance.get('nodes').toggle(!query || query == '*');
+				instance.get('nodes').toggle(!query || query === '*');
 
 				if (query) {
-					A.Array.each(
+					AArray.each(
 						event.results,
 						function(item, index, collection) {
 							item.raw.node.show();
@@ -58,15 +60,17 @@ AUI.add(
 
 		AddPageSearch.ATTRS = {
 			inputNode: {
-				value: null
+				setter: A.one
 			},
 
-			nodes : {
-				value: []
+			nodes: {
+				getter: '_getNodes',
+				readOnly: true
 			},
 
 			searchData: {
-				value: []
+				getter: '_getSearchData',
+				readOnly: true
 			}
 		};
 

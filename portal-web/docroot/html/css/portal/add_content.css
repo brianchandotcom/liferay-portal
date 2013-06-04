@@ -25,6 +25,22 @@
 			}
 		}
 
+		.lfr-add-page-toolbar {
+			background-color: #FFFFFF;
+			bottom: 0;
+			margin-left: -10px;
+			padding: 10px;
+			position: fixed;
+			width: 330px;
+		}
+
+	    .category-header {
+		    border-bottom: solid 1px #009ec3;
+		    color: #0DB5E7;
+		    margin-bottom: 20px;
+		    margin-top: 20px;
+	    }
+
 		.accordion-inner {
 			padding-left: 0;
 			padding-right: 0;
@@ -74,7 +90,16 @@
 
 		.lfr-page-template {
 			cursor: pointer;
-			position: relative;
+			margin-bottom: 20px;
+
+			.lfr-page-template-title {
+				margin-bottom: 5px;
+				padding: 2px;
+			}
+
+			.lfr-page-template-options {
+				padding: 10px;
+			}
 		}
 
 		.add-content-descriptive, .add-content-icon {
@@ -125,44 +150,6 @@
 
 			.add-content-thumbnail {
 				line-height: 128px;
-			}
-		}
-	}
-
-	.add-content-tab .add-content-button {
-		display: block;
-		margin-top: 7px;
-		position: absolute;
-		right: 5px;
-
-		.lfr-actions .lfr-trigger {
-			padding-right: 0;
-
-			strong {
-				min-width: 20px;
-
-				a {
-					img {
-						display: none;
-					}
-
-					.taglib-text {
-						display: none;
-						padding-left: 10px;
-					}
-				}
-			}
-		}
-
-		&:hover .lfr-trigger strong {
-			min-width: 70px;
-
-			a {
-				padding-right: 5px;
-
-				.taglib-text {
-					display: inline-block;
-				}
 			}
 		}
 	}
@@ -224,10 +211,14 @@
 		}
 
 		.lfr-page-template {
-			.toggler-header.active .title {
-				background-color: #0DB5E7;
-				color: #FFFFFF;
-				padding: 2px;
+			.toggler-header {
+				&.active {
+					.lfr-page-template-title {
+						background-color: #0DB5E7;
+						color: #FFFFFF;
+						padding: 2px;
+					}
+				}
 			}
 
 			&:hover {
@@ -246,28 +237,6 @@
 				background: url(@theme_image_path@/common/install_more.png) no-repeat 0 50%;
 				font-weight: bold;
 			}
-		}
-	}
-
-	.add-content-tab .add-content-button {
-		.lfr-actions {
-			background-image: none;
-			background-color: #369;
-			border-width: 0;
-
-			.lfr-trigger strong a {
-				background-image: url("@theme_image_path@/common/add_white.png");
-				background-position: center center;
-
-				.taglib-text {
-					color: #FFF;
-					text-shadow: none;
-				}
-			}
-		}
-
-		&:hover .lfr-trigger strong a {
-			background-position: 2px 0;
 		}
 	}
 }

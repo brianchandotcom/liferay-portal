@@ -15,6 +15,8 @@ AUI.add(
 
 		var CSS_LFR_CONTENT_CATEGORY_SELECTOR = '.' + CSS_LFR_CONTENT_CATEGORY;
 
+		var STR_NODES = 'nodes';
+
 		var AddApplicationSearch = function() {
 		};
 
@@ -30,7 +32,7 @@ AUI.add(
 				var applicationSearch = new AddSearch(
 					{
 						inputNode: instance.get('inputNode'),
-						source: instance.get('searchData'),
+						source: instance.get('searchData')
 					}
 				);
 
@@ -86,19 +88,19 @@ AUI.add(
 
 					instance._categoryContainers.show();
 
-					instance.get('nodes').show();
+					instance.get(STR_NODES).show();
 				}
-				else if (query == '*') {
+				else if (query === '*') {
 					instance._categories.removeClass(CSS_LFR_COLLAPSED);
 
 					instance._categoryContainers.show();
 
-					instance.get('nodes').show();
+					instance.get(STR_NODES).show();
 				}
 				else {
 					instance._categoryContainers.hide();
 
-					instance.get('nodes').hide();
+					instance.get(STR_NODES).hide();
 
 					A.each(
 						event.results,

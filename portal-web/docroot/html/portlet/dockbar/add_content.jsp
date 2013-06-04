@@ -74,7 +74,7 @@ int delta = ParamUtil.getInteger(request, "delta", deltaDefault);
 	new Liferay.Dockbar.AddContent(
 		{
 			inputNode: A.one('#<portlet:namespace />searchContent'),
-			namespace: '<portlet:namespace />',
+			namespace: '<portlet:namespace />'
 		}
 	);
 </aui:script>

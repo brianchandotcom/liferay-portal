@@ -16,6 +16,7 @@ package com.liferay.portal.tools.propertiesdoc;
 
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -92,10 +93,11 @@ public class PropertiesSection {
 		_title = title;
 	}
 
-	private List<String> _comments;
+	private List<String> _comments = new ArrayList<String>();
 	private String _defaultProperties;
 	private String _exampleProperties;
-	private List<PropertyComment> _propertyComments;
+	private List<PropertyComment> _propertyComments =
+		new ArrayList<PropertyComment>();
 	private final String _text;
 	private String _title;
 

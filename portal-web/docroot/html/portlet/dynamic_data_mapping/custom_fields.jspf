@@ -292,73 +292,6 @@
 				}
 			);
 
-			var DDMFileUploadField = A.Component.create(
-				{
-					ATTRS: {
-						acceptFiles: {
-							value: '<%= UnicodeFormatter.toString(StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA))) %>'
-						},
-
-						dataType: {
-							value: 'file-upload'
-						},
-
-						fieldNamespace: {
-							value: 'ddm'
-						},
-
-						folder: {
-							setter: function(val) {
-								if (!A.Lang.isObject(val)) {
-									val = A.JSON.parse(val);
-								}
-
-								return val;
-							},
-
-							value: {
-								folderId: <%= DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>,
-								folderName: '<%= UnicodeLanguageUtil.get(pageContext, "home") %>'
-							}
-						},
-
-						tip: {
-							value: '<%= UnicodeLanguageUtil.format(locale, "upload-documents-no-larger-than-x-k", PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) / 1024, false) %>'
-						}
-					},
-
-					EXTENDS: A.FormBuilderFileUploadField,
-
-					NAME: 'ddm-fileupload',
-
-					prototype: {
-						getPropertyModel: function() {
-							var instance = this;
-
-							var model = DDMFileUploadField.superclass.getPropertyModel.apply(instance, arguments);
-
-							A.Array.each(
-								model,
-								function(item, index, collection) {
-									if (item.attributeName === 'predefinedValue') {
-										item.editor = false;
-									}
-								}
-							);
-
-							model.push(
-								{
-									attributeName: 'acceptFiles',
-									name: '<%= UnicodeLanguageUtil.get(pageContext, "allowed-file-extensions") %>'
-								}
-							);
-
-							return model;
-						}
-					}
-				}
-			);
-
 			var DDMIntegerField = A.Component.create(
 				{
 					ATTRS: {
@@ -596,7 +529,6 @@
 			FormBuilderTypes['ddm-date'] = DDMDateField;
 			FormBuilderTypes['ddm-decimal'] = DDMDecimalField;
 			FormBuilderTypes['ddm-documentlibrary'] = DDMDocumentLibraryField;
-			FormBuilderTypes['ddm-fileupload'] = DDMFileUploadField;
 			FormBuilderTypes['ddm-integer'] = DDMIntegerField;
 			FormBuilderTypes['ddm-link-to-page'] = DDMLinkToPageField;
 			FormBuilderTypes['ddm-number'] = DDMNumberField;

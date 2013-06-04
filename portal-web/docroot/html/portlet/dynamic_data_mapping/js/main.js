@@ -15,8 +15,6 @@ AUI.add(
 		var MAP_HIDDEN_FIELD_ATTRS = {
 			checkbox: ['readOnly', 'required'],
 
-			'ddm-fileupload': ['predefinedValue'],
-
 			DEFAULT: ['readOnly']
 		};
 
@@ -702,12 +700,6 @@ AUI.add(
 					type: 'fieldset'
 				},
 				{
-					fieldLabel: Liferay.Language.get('file-upload'),
-					iconClass: 'form-builder-field-icon form-builder-field-icon-fileupload',
-					label: Liferay.Language.get('file-upload'),
-					type: 'fileupload'
-				},
-				{
 					fieldLabel: Liferay.Language.get('text-box'),
 					iconClass: 'form-builder-field-icon form-builder-field-icon-text',
 					label: Liferay.Language.get('text-box'),
@@ -734,15 +726,6 @@ AUI.add(
 			],
 
 			DDM_STRUCTURE: [
-				{
-					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS['ddm-fileupload'],
-					iconClass: 'form-builder-field-icon form-builder-field-icon-fileupload',
-					label: Liferay.Language.get('file-upload'),
-					type: 'ddm-fileupload'
-				}
-			],
-
-			DDM_STRUCTURE_DEFAULT: [
 				{
 					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.checkbox,
 					iconClass: 'form-builder-field-icon form-builder-field-icon-checkbox',
@@ -848,9 +831,7 @@ AUI.add(
 			]
 		};
 
-		AVAILABLE_FIELDS.DDM_STRUCTURE = AVAILABLE_FIELDS.DDM_STRUCTURE.concat(AVAILABLE_FIELDS.DDM_STRUCTURE_DEFAULT);
-
-		AVAILABLE_FIELDS.WCM_STRUCTURE = AVAILABLE_FIELDS.WCM_STRUCTURE.concat(AVAILABLE_FIELDS.DDM_STRUCTURE_DEFAULT);
+		AVAILABLE_FIELDS.WCM_STRUCTURE = AVAILABLE_FIELDS.WCM_STRUCTURE.concat(AVAILABLE_FIELDS.DDM_STRUCTURE);
 
 		LiferayFormBuilder.AVAILABLE_FIELDS = AVAILABLE_FIELDS;
 

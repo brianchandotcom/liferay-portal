@@ -107,7 +107,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 	public void addDocument(long companyId, Document document)
 		throws IOException {
 
-		IndexAccessor indexAccessor = _getIndexAccessor(companyId);
+		IndexAccessor indexAccessor = getIndexAccessor(companyId);
 
 		indexAccessor.addDocument(document);
 	}
@@ -330,6 +330,56 @@ public class LuceneHelperImpl implements LuceneHelper {
 		return _analyzer;
 	}
 
+	public IndexAccessor getIndexAccessor(long companyId) {
+		IndexAccessor indexAccessor = _indexAccessors.get(companyId);
+
+		if (indexAccessor != null) {
+			return indexAccessor;
+		}
+
+		synchronized (this) {
+			indexAccessor = _indexAccessors.get(companyId);
+
+			if (indexAccessor == null) {
+				indexAccessor = new IndexAccessorImpl(companyId);
+
+				if (isLoadIndexFromClusterEnabled()) {
+					boolean clusterForwardMessage = GetterUtil.getBoolean(
+						MessageValuesThreadLocal.getValue(
+							ClusterLink.CLUSTER_FORWARD_MESSAGE));
+
+					if (clusterForwardMessage) {
+						if (_log.isInfoEnabled()) {
+							_log.info(
+								"Skip Luncene index files cluster loading " +
+									"since this is a manual reindex request");
+						}
+					}
+					else {
+						indexAccessor = new SynchronizedIndexAccessorImpl(
+							indexAccessor);
+
+						try {
+							_loadIndexFromCluster(
+								indexAccessor,
+								indexAccessor.getLastGeneration());
+						}
+						catch (Exception e) {
+							_log.error(
+								"Unable to load index for company " +
+									indexAccessor.getCompanyId(),
+								e);
+						}
+					}
+				}
+
+				_indexAccessors.put(companyId, indexAccessor);
+			}
+		}
+
+		return indexAccessor;
+	}
+
 	@Override
 	public long getLastGeneration(long companyId) {
 		if (!isLoadIndexFromClusterEnabled()) {
@@ -430,7 +480,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 	public IndexSearcher getSearcher(long companyId, boolean readOnly)
 		throws IOException {
 
-		IndexAccessor indexAccessor = _getIndexAccessor(companyId);
+		IndexAccessor indexAccessor = getIndexAccessor(companyId);
 
 		IndexReader indexReader = IndexReader.open(
 			indexAccessor.getLuceneDir(), readOnly);
@@ -620,7 +670,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 	public void updateDocument(long companyId, Term term, Document document)
 		throws IOException {
 
-		IndexAccessor indexAccessor = _getIndexAccessor(companyId);
+		IndexAccessor indexAccessor = getIndexAccessor(companyId);
 
 		indexAccessor.updateDocument(term, document);
 	}
@@ -683,56 +733,6 @@ public class LuceneHelperImpl implements LuceneHelper {
 		catch (Exception e) {
 			throw new SystemException(e);
 		}
-	}
-
-	private IndexAccessor _getIndexAccessor(long companyId) {
-		IndexAccessor indexAccessor = _indexAccessors.get(companyId);
-
-		if (indexAccessor != null) {
-			return indexAccessor;
-		}
-
-		synchronized (this) {
-			indexAccessor = _indexAccessors.get(companyId);
-
-			if (indexAccessor == null) {
-				indexAccessor = new IndexAccessorImpl(companyId);
-
-				if (isLoadIndexFromClusterEnabled()) {
-					boolean clusterForwardMessage = GetterUtil.getBoolean(
-						MessageValuesThreadLocal.getValue(
-							ClusterLink.CLUSTER_FORWARD_MESSAGE));
-
-					if (clusterForwardMessage) {
-						if (_log.isInfoEnabled()) {
-							_log.info(
-								"Skip Luncene index files cluster loading " +
-									"since this is a manual reindex request");
-						}
-					}
-					else {
-						indexAccessor = new SynchronizedIndexAccessorImpl(
-							indexAccessor);
-
-						try {
-							_loadIndexFromCluster(
-								indexAccessor,
-								indexAccessor.getLastGeneration());
-						}
-						catch (Exception e) {
-							_log.error(
-								"Unable to load index for company " +
-									indexAccessor.getCompanyId(),
-								e);
-						}
-					}
-				}
-
-				_indexAccessors.put(companyId, indexAccessor);
-			}
-		}
-
-		return indexAccessor;
 	}
 
 	private void _includeIfUnique(

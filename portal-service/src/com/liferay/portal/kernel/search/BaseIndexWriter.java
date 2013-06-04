@@ -24,6 +24,19 @@ public abstract class BaseIndexWriter
 	implements IndexWriter, SpellCheckIndexWriter {
 
 	@Override
+	public void clearDictionaryIndices(SearchContext searchContext)
+		throws SearchException {
+
+		if (_spellCheckIndexWriter == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("No spell check index writer configured");
+			}
+		}
+
+		_spellCheckIndexWriter.clearDictionaryIndices(searchContext);
+	}
+
+	@Override
 	public void indexDictionaries(SearchContext searchContext)
 		throws SearchException {
 

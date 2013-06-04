@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
@@ -83,6 +84,22 @@ public class IndexAccessorImpl implements IndexAccessor {
 		}
 
 		_write(null, document);
+	}
+
+	@Override
+	public void addDocuments(Collection<Document> documents)
+		throws IOException {
+
+		try {
+			for (Document document : documents) {
+				_indexWriter.addDocument(document);
+			}
+
+			_batchCount++;
+		}
+		finally {
+			_commit();
+		}
 	}
 
 	@Override

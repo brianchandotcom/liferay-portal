@@ -14,18 +14,17 @@
 
 package com.liferay.portal.kernel.search;
 
+import java.util.List;
+import java.util.Map;
+
 /**
- * @author Michael C. Han
+ * @author Daniela Zapata
+ * @author David Gonzalez
  */
-public interface SpellCheckIndexWriter {
+public interface Collator {
 
-	public void clearDictionaryIndices(SearchContext searchContext)
-		throws SearchException;
-
-	public void indexDictionaries(SearchContext searchContext)
-		throws SearchException;
-
-	public void indexDictionary(SearchContext searchContext)
+	public String collate(
+			Map<String, List<String>> mapSuggestions, List<String> tokens)
 		throws SearchException;
 
 }

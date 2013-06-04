@@ -64,6 +64,7 @@ import java.net.Socket;
 import java.nio.channels.ServerSocketChannel;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -806,6 +807,10 @@ public class LuceneHelperImplTest {
 
 		@Override
 		public void addDocument(Document document) {
+		}
+
+		@Override
+		public void addDocuments(Collection<Document> documents) {
 		}
 
 		@Override

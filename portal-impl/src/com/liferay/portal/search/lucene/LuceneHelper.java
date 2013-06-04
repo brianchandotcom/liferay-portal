@@ -80,6 +80,8 @@ public interface LuceneHelper {
 
 	public Analyzer getAnalyzer();
 
+	public IndexAccessor getIndexAccessor(long companyId);
+
 	public long getLastGeneration(long companyId);
 
 	public InputStream getLoadIndexesInputStreamFromCluster(

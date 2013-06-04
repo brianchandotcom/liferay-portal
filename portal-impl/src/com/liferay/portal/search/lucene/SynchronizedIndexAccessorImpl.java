@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import java.util.Collection;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -46,6 +47,20 @@ public class SynchronizedIndexAccessorImpl implements IndexAccessor {
 
 		try {
 			_indexAccessor.addDocument(document);
+		}
+		finally {
+			_readLock.unlock();
+		}
+	}
+
+	@Override
+	public void addDocuments(Collection<Document> documents)
+		throws IOException {
+
+		_readLock.lock();
+
+		try {
+			_indexAccessor.addDocuments(documents);
 		}
 		finally {
 			_readLock.unlock();

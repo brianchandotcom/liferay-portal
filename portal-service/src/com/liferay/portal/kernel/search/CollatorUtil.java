@@ -14,18 +14,29 @@
 
 package com.liferay.portal.kernel.search;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author Michael C. Han
  */
-public interface SpellCheckIndexWriter {
+public class CollatorUtil {
 
-	public void clearDictionaryIndices(SearchContext searchContext)
-		throws SearchException;
+	public static String collate(
+			Map<String, List<String>> mapSuggestions, List<String> tokens)
+		throws SearchException {
 
-	public void indexDictionaries(SearchContext searchContext)
-		throws SearchException;
+		return _getCollator().collate(mapSuggestions, tokens);
+	}
 
-	public void indexDictionary(SearchContext searchContext)
-		throws SearchException;
+	public void setCollator(Collator collator) {
+		_collator = collator;
+	}
+
+	private static Collator _getCollator() {
+		return _collator;
+	}
+
+	private static Collator _collator;
 
 }

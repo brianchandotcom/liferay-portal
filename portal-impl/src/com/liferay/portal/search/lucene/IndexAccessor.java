@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import java.util.Collection;
+
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.store.Directory;
@@ -31,6 +33,8 @@ public interface IndexAccessor {
 	public static final long DEFAULT_LAST_GENERATION = -1;
 
 	public void addDocument(Document document) throws IOException;
+
+	public void addDocuments(Collection<Document> documents) throws IOException;
 
 	public void close();
 

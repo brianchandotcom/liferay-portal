@@ -17,15 +17,8 @@ package com.liferay.portal.kernel.search;
 /**
  * @author Michael C. Han
  */
-public interface SpellCheckIndexWriter {
+public interface NGramHolderBuilder {
 
-	public void clearDictionaryIndices(SearchContext searchContext)
-		throws SearchException;
-
-	public void indexDictionaries(SearchContext searchContext)
-		throws SearchException;
-
-	public void indexDictionary(SearchContext searchContext)
-		throws SearchException;
+	public NGramHolder buildNGramHolder(String input) throws SearchException;
 
 }

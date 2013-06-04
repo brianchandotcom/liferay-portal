@@ -14,18 +14,15 @@
 
 package com.liferay.portal.kernel.search;
 
+import java.util.List;
+import java.util.Locale;
+
 /**
- * @author Michael C. Han
+ * @author David Mendez Gonzalez
  */
-public interface SpellCheckIndexWriter {
+public interface Tokenizer {
 
-	public void clearDictionaryIndices(SearchContext searchContext)
-		throws SearchException;
-
-	public void indexDictionaries(SearchContext searchContext)
-		throws SearchException;
-
-	public void indexDictionary(SearchContext searchContext)
+	public List<String> tokenize(String fieldName, String input, Locale locale)
 		throws SearchException;
 
 }

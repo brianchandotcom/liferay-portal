@@ -587,75 +587,48 @@ public class PortletDataContextImpl implements PortletDataContext {
 		ClassedModel classedModel, String className, String binPath,
 		String referenceType, boolean missing) {
 
+		Element referenceElement = doAddReferenceElement(
+			referrerStagedModel, element, classedModel, className, binPath,
+			referenceType, false);
+
+		String referenceKey =
+			classedModel.getModelClassName().concat(StringPool.POUND).concat(
+				String.valueOf(classedModel.getPrimaryKeyObj()));
+
 		if (missing) {
-			addReferenceElement(
-				referrerStagedModel, element, classedModel, className, binPath,
-				false);
-		}
+			if (_missingReferences.contains(referenceKey) ||
+				_references.contains(referenceKey)) {
 
-		Element referenceElement = null;
+				return referenceElement;
+			}
 
-		if (missing) {
-			Element referencesElement = _missingReferencesElement;
+			_missingReferences.add(referenceKey);
 
-			referenceElement = referencesElement.addElement(
-				"missing-reference");
+			doAddReferenceElement(
+				referrerStagedModel, null, classedModel, className, binPath,
+				referenceType, true);
 		}
 		else {
-			Element referencesElement = element.element("references");
+			_references.add(referenceKey);
 
-			if (referencesElement == null) {
-				referencesElement = element.addElement("references");
+			if (_missingReferences.contains(referenceKey)) {
+				_missingReferences.remove(referenceKey);
+
+				StringBundler sb = new StringBundler(5);
+
+				sb.append("missing-reference[@class-name='");
+				sb.append(classedModel.getModelClassName());
+				sb.append("' and @class-pk='");
+				sb.append(String.valueOf(classedModel.getPrimaryKeyObj()));
+				sb.append("']");
+
+				XPath xPath = SAXReaderUtil.createXPath(sb.toString());
+
+				Element missingReferenceElement =
+					(Element)xPath.selectSingleNode(_missingReferencesElement);
+
+				_missingReferencesElement.remove(missingReferenceElement);
 			}
-
-			referenceElement = referencesElement.addElement("reference");
-		}
-
-		referenceElement.addAttribute("class-name", className);
-
-		referenceElement.addAttribute(
-			"class-pk", String.valueOf(classedModel.getPrimaryKeyObj()));
-
-		if (missing) {
-			if (classedModel instanceof StagedModel) {
-				referenceElement.addAttribute(
-					"display-name",
-					StagedModelDataHandlerUtil.getDisplayName(
-						(StagedModel)classedModel));
-			}
-			else {
-				referenceElement.addAttribute(
-					"display-name",
-					String.valueOf(classedModel.getPrimaryKeyObj()));
-			}
-		}
-
-		if (classedModel instanceof StagedGroupedModel) {
-			StagedGroupedModel stagedGroupedModel =
-				(StagedGroupedModel)classedModel;
-
-			referenceElement.addAttribute(
-				"group-id", String.valueOf(stagedGroupedModel.getGroupId()));
-		}
-
-		if (Validator.isNotNull(binPath)) {
-			referenceElement.addAttribute("path", binPath);
-		}
-
-		referenceElement.addAttribute("type", referenceType);
-
-		if (missing) {
-			referenceElement.addAttribute(
-				"referrer-class-name", referrerStagedModel.getModelClassName());
-			referenceElement.addAttribute(
-				"referrer-display-name",
-				StagedModelDataHandlerUtil.getDisplayName(referrerStagedModel));
-		}
-
-		if (classedModel instanceof StagedModel) {
-			StagedModel stagedModel = (StagedModel)classedModel;
-
-			referenceElement.addAttribute("uuid", stagedModel.getUuid());
 		}
 
 		return referenceElement;
@@ -1926,6 +1899,79 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return serviceContext;
 	}
 
+	protected Element doAddReferenceElement(
+		StagedModel referrerStagedModel, Element element,
+		ClassedModel classedModel, String className, String binPath,
+		String referenceType, boolean missing) {
+
+		Element referenceElement = null;
+
+		if (missing) {
+			Element referencesElement = _missingReferencesElement;
+
+			referenceElement = referencesElement.addElement(
+				"missing-reference");
+		}
+		else {
+			Element referencesElement = element.element("references");
+
+			if (referencesElement == null) {
+				referencesElement = element.addElement("references");
+			}
+
+			referenceElement = referencesElement.addElement("reference");
+		}
+
+		referenceElement.addAttribute("class-name", className);
+
+		referenceElement.addAttribute(
+			"class-pk", String.valueOf(classedModel.getPrimaryKeyObj()));
+
+		if (missing) {
+			if (classedModel instanceof StagedModel) {
+				referenceElement.addAttribute(
+					"display-name",
+					StagedModelDataHandlerUtil.getDisplayName(
+						(StagedModel)classedModel));
+			}
+			else {
+				referenceElement.addAttribute(
+					"display-name",
+					String.valueOf(classedModel.getPrimaryKeyObj()));
+			}
+		}
+
+		if (classedModel instanceof StagedGroupedModel) {
+			StagedGroupedModel stagedGroupedModel =
+				(StagedGroupedModel)classedModel;
+
+			referenceElement.addAttribute(
+				"group-id", String.valueOf(stagedGroupedModel.getGroupId()));
+		}
+
+		if (Validator.isNotNull(binPath)) {
+			referenceElement.addAttribute("path", binPath);
+		}
+
+		referenceElement.addAttribute("type", referenceType);
+
+		if (missing) {
+			referenceElement.addAttribute(
+				"referrer-class-name", referrerStagedModel.getModelClassName());
+			referenceElement.addAttribute(
+				"referrer-display-name",
+				StagedModelDataHandlerUtil.getDisplayName(referrerStagedModel));
+		}
+
+		if (classedModel instanceof StagedModel) {
+			StagedModel stagedModel = (StagedModel)classedModel;
+
+			referenceElement.addAttribute("uuid", stagedModel.getUuid());
+		}
+
+		return referenceElement;
+	}
+
 	protected Map<Long, Set<String>> getActionIds(
 			long companyId, long[] roleIds, String className, long primKey,
 			List<String> actionIds)
@@ -2214,6 +2260,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private Element _importDataRootElement;
 	private Map<String, Lock> _locksMap = new HashMap<String, Lock>();
 	private ManifestSummary _manifestSummary = new ManifestSummary();
+	private Set<String> _missingReferences = new HashSet<String>();
 	private Element _missingReferencesElement;
 	private List<Layout> _newLayouts;
 	private Map<String, Map<?, ?>> _newPrimaryKeysMaps =
@@ -2229,6 +2276,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private boolean _privateLayout;
 	private Map<String, List<RatingsEntry>> _ratingsEntriesMap =
 		new HashMap<String, List<RatingsEntry>>();
+	private Set<String> _references = new HashSet<String>();
 	private Set<String> _scopedPrimaryKeys = new HashSet<String>();
 	private long _scopeGroupId;
 	private String _scopeLayoutUuid;

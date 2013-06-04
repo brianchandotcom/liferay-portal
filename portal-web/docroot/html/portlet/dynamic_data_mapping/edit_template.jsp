@@ -383,7 +383,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 					classNameId: '<%= PortalUtil.getClassNameId(DDMStructure.class) %>',
 					classPK: 0,
 					dialog: {
-						zIndex: (++Liferay.zIndex.WINDOW)
+						zIndex: Liferay.zIndex.WINDOW + 2
 					},
 					eventName: '<portlet:namespace />selectStructure',
 					groupId: <%= groupId %>,

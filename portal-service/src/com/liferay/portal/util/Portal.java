@@ -653,6 +653,9 @@ public interface Portal {
 			ThemeDisplay themeDisplay)
 		throws PortalException, SystemException;
 
+	public Portlet getFirstMyAccountPortlet(ThemeDisplay themeDisplay)
+		throws SystemException;
+
 	public String getFirstPageLayoutTypes(PageContext pageContext);
 
 	public Portlet getFirstSiteAdministrationPortlet(ThemeDisplay themeDisplay)

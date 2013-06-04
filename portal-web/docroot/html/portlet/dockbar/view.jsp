@@ -218,10 +218,6 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 		if (PropsValues.DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP) {
 			useDialog = StringPool.SPACE + "use-dialog";
 		}
-
-		String myAccountURL = themeDisplay.getURLMyAccount().toString();
-
-		myAccountURL = HttpUtil.setParameter(myAccountURL, "controlPanelCategory", PortletCategoryKeys.MY);
 		%>
 
 		<liferay-util:buffer var="userName">
@@ -283,7 +279,14 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 							</c:if>
 						</c:when>
 						<c:otherwise>
-							<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.VIEW_CONTROL_PANEL) %>">
+							<c:if test="<%= Validator.isNotNull(themeDisplay.getURLMyAccount()) %>">
+
+								<%
+								String myAccountURL = themeDisplay.getURLMyAccount().toString();
+
+								myAccountURL = HttpUtil.setParameter(myAccountURL, "controlPanelCategory", PortletCategoryKeys.MY);
+								%>
+
 								<aui:nav-item anchorCssClass='<%= themeDisplay.isImpersonated() ? "" : useDialog %>' href="<%= myAccountURL %>" label="my-account" title="manage-my-account" />
 							</c:if>
 

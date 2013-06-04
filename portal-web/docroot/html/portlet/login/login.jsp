@@ -22,7 +22,7 @@
 		<%
 		String signedInAs = HtmlUtil.escape(user.getFullName());
 
-		if (themeDisplay.isShowMyAccountIcon() && PortalPermissionUtil.contains(permissionChecker, ActionKeys.VIEW_CONTROL_PANEL)) {
+		if (themeDisplay.isShowMyAccountIcon() && Validator.isNotNull(themeDisplay.getURLMyAccount())) {
 			signedInAs = "<a href=\"" + HtmlUtil.escape(themeDisplay.getURLMyAccount().toString()) + "\">" + signedInAs + "</a>";
 		}
 		%>

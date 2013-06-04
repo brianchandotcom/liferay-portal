@@ -549,6 +549,12 @@ public class PortalUtil {
 			portlet, facebookCanvasPageURL, themeDisplay);
 	}
 
+	public static Portlet getFirstMyAccountPortlet(ThemeDisplay themeDisplay)
+		throws SystemException {
+
+		return getPortal().getFirstMyAccountPortlet(themeDisplay);
+	}
+
 	public static String getFirstPageLayoutTypes(PageContext pageContext) {
 		return getPortal().getFirstPageLayoutTypes(pageContext);
 	}

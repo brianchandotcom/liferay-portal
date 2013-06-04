@@ -2262,6 +2262,20 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
+	public Portlet getFirstMyAccountPortlet(ThemeDisplay themeDisplay)
+		throws SystemException {
+
+		List<Portlet> portlets = PortalUtil.getControlPanelPortlets(
+			PortletCategoryKeys.MY, themeDisplay);
+
+		if (portlets.isEmpty()) {
+			return null;
+		}
+
+		return portlets.get(0);
+	}
+
+	@Override
 	public String getFirstPageLayoutTypes(PageContext pageContext) {
 		StringBundler sb = new StringBundler();
 

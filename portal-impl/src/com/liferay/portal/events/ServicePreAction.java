@@ -1170,27 +1170,29 @@ public class ServicePreAction extends Action {
 				}
 			}
 
-			PortletURLImpl myAccountURL = new PortletURLImpl(
-				request, PortletKeys.MY_ACCOUNT, controlPanelPlid,
-				PortletRequest.RENDER_PHASE);
+			Portlet myAccountPortlet = PortalUtil.getFirstMyAccountPortlet(
+				themeDisplay);
 
-			if (scopeGroupId > 0) {
-				myAccountURL.setDoAsGroupId(scopeGroupId);
+			if (myAccountPortlet != null) {
+				PortletURLImpl myAccountURL = new PortletURLImpl(
+					request, myAccountPortlet.getPortletName(),
+					controlPanelPlid, PortletRequest.RENDER_PHASE);
+
+				if (scopeGroupId > 0) {
+					myAccountURL.setDoAsGroupId(scopeGroupId);
+				}
+
+				if (refererPlid > 0) {
+					myAccountURL.setRefererPlid(refererPlid);
+				}
+				else {
+					myAccountURL.setRefererPlid(plid);
+				}
+
+				myAccountURL.setWindowState(WindowState.MAXIMIZED);
+
+				themeDisplay.setURLMyAccount(myAccountURL);
 			}
-
-			myAccountURL.setParameter("struts_action", "/my_account/edit_user");
-			myAccountURL.setPortletMode(PortletMode.VIEW);
-
-			if (refererPlid > 0) {
-				myAccountURL.setRefererPlid(refererPlid);
-			}
-			else {
-				myAccountURL.setRefererPlid(plid);
-			}
-
-			myAccountURL.setWindowState(WindowState.MAXIMIZED);
-
-			themeDisplay.setURLMyAccount(myAccountURL);
 		}
 
 		if (!user.isActive() ||

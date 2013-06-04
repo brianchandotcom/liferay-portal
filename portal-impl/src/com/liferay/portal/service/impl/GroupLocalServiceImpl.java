@@ -3611,10 +3611,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		Role role = roleLocalService.getRole(
 			group.getCompanyId(), RoleConstants.USER);
 
-		setCompanyPermissions(
-			role, PortletKeys.PORTAL,
-			new String[] {ActionKeys.VIEW_CONTROL_PANEL});
-
 		List<Portlet> portlets = portletLocalService.getPortlets(
 			group.getCompanyId(), false, false);
 

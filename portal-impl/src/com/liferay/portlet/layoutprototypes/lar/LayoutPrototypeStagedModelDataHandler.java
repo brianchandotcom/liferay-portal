@@ -12,15 +12,23 @@
  * details.
  */
 
-package com.liferay.portlet.layoutsadmin.lar;
+package com.liferay.portlet.layoutprototypes.lar;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutPrototype;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+
+import java.util.List;
 
 /**
  * @author Daniela Zapata Riesco
@@ -44,6 +52,9 @@ public class LayoutPrototypeStagedModelDataHandler
 
 		Element layoutPrototypeElement =
 			portletDataContext.getExportDataElement(layoutPrototype);
+
+		exportLayouts(
+			portletDataContext, layoutPrototype, layoutPrototypeElement);
 
 		portletDataContext.addClassedModel(
 			layoutPrototypeElement,
@@ -80,7 +91,7 @@ public class LayoutPrototypeStagedModelDataHandler
 						userId, portletDataContext.getCompanyId(),
 						layoutPrototype.getNameMap(),
 						layoutPrototype.getDescription(),
-						layoutPrototype.isActive(), serviceContext);
+						layoutPrototype.isActive(), false, serviceContext);
 			}
 			else {
 				importedLayoutPrototype =
@@ -97,12 +108,72 @@ public class LayoutPrototypeStagedModelDataHandler
 					userId, portletDataContext.getCompanyId(),
 					layoutPrototype.getNameMap(),
 					layoutPrototype.getDescription(),
-					layoutPrototype.isActive(), serviceContext);
+					layoutPrototype.isActive(), false, serviceContext);
 		}
+
+		importLayouts(
+			portletDataContext, layoutPrototype,
+			importedLayoutPrototype.getGroupId());
 
 		portletDataContext.importClassedModel(
 			layoutPrototype, importedLayoutPrototype,
 			LayoutPrototypePortletDataHandler.NAMESPACE);
+	}
+
+	protected void exportLayouts(
+			PortletDataContext portletDataContext,
+			LayoutPrototype layoutPrototype, Element layoutPrototypeElement)
+		throws Exception {
+
+		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+			layoutPrototype.getGroupId(), true,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+		for (Layout layout : layouts) {
+			StagedModelDataHandlerUtil.exportStagedModel(
+				portletDataContext, layout);
+
+			portletDataContext.addReferenceElement(
+				layoutPrototype, layoutPrototypeElement, layout,
+				PortletDataContext.REFERENCE_TYPE_EMBEDDED, false);
+
+		}
+	}
+
+	protected void importLayouts(
+			PortletDataContext portletDataContext,
+			LayoutPrototype layoutPrototype, long importedGroupId)
+		throws PortalException, SystemException {
+
+		long currentGroupId = portletDataContext.getGroupId();
+
+		long currentScopeGroupId = portletDataContext.getScopeGroupId();
+
+		boolean isCurrentPrivateLayout = portletDataContext.isPrivateLayout();
+
+		try {
+			portletDataContext.setGroupId(importedGroupId);
+
+			portletDataContext.setPrivateLayout(true);
+
+			portletDataContext.setScopeGroupId(importedGroupId);
+
+			List<Element> layoutElements =
+				portletDataContext.getReferenceDataElements(
+					layoutPrototype, Layout.class);
+
+			for (Element layoutElement : layoutElements) {
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, layoutElement);
+			}
+		}
+		finally {
+			portletDataContext.setGroupId(currentGroupId);
+
+			portletDataContext.setPrivateLayout(isCurrentPrivateLayout);
+
+			portletDataContext.setScopeGroupId(currentScopeGroupId);
+		}
 	}
 
 }

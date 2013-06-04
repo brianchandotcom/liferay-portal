@@ -1036,27 +1036,35 @@ public class LayoutStagedModelDataHandler
 	protected void updateTypeSettings(Layout importedLayout, Layout layout)
 		throws PortalException, SystemException {
 
-		LayoutTypePortlet importedLayoutType =
-			(LayoutTypePortlet)importedLayout.getLayoutType();
+		long currentGroupId = layout.getGroupId();
 
-		List<String> importedPortletIds = importedLayoutType.getPortletIds();
+		try {
+			LayoutTypePortlet importedLayoutType =
+				(LayoutTypePortlet)importedLayout.getLayoutType();
 
-		layout.setGroupId(importedLayout.getGroupId());
+			List<String> importedPortletIds = importedLayoutType.getPortletIds();
 
-		LayoutTypePortlet layoutType =
-			(LayoutTypePortlet)layout.getLayoutType();
+			layout.setGroupId(importedLayout.getGroupId());
 
-		importedPortletIds.removeAll(layoutType.getPortletIds());
+			LayoutTypePortlet layoutType =
+				(LayoutTypePortlet)layout.getLayoutType();
 
-		if (!importedPortletIds.isEmpty()) {
-			PortletLocalServiceUtil.deletePortlets(
-				importedLayout.getCompanyId(),
-				importedPortletIds.toArray(
-					new String[importedPortletIds.size()]),
-				importedLayout.getPlid());
+			importedPortletIds.removeAll(layoutType.getPortletIds());
+
+			if (!importedPortletIds.isEmpty()) {
+				PortletLocalServiceUtil.deletePortlets(
+					importedLayout.getCompanyId(),
+					importedPortletIds.toArray(
+						new String[importedPortletIds.size()]),
+					importedLayout.getPlid());
+			}
+
+			importedLayout.setTypeSettings(layout.getTypeSettings());
+
 		}
-
-		importedLayout.setTypeSettings(layout.getTypeSettings());
+		finally {
+			layout.setGroupId(currentGroupId);
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

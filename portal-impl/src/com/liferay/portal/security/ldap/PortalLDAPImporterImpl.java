@@ -1303,8 +1303,9 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 	}
 
 	private static final String[] _CONTACT_PROPERTY_NAMES = {
-		"aimSn", "facebookSn", "icqSn", "jabberSn", "male", "mySpaceSn",
-		"prefixId", "skypeSn", "smsSn", "suffixId", "twitterSn", "ymSn"
+		"aimSn", "employeeNumber", "facebookSn", "icqSn", "jabberSn", "male",
+		"msnSn", "mySpaceSn","prefixId", "skypeSn", "smsSn", "suffixId",
+		"twitterSn", "ymSn"
 	};
 
 	private static final String _IMPORT_BY_GROUP = "group";

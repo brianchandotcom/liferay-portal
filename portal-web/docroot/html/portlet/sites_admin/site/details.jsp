@@ -142,20 +142,23 @@ if (showPrototypes && (group != null)) {
 		<aui:input name="active" value="<%= true %>" />
 	</c:if>
 
-	<%
-	UnicodeProperties typeSettingsProperties = null;
+	<c:if test="<%= (group != null) && !group.isCompany() %>">
 
-	if (liveGroup != null) {
-		typeSettingsProperties = liveGroup.getTypeSettingsProperties();
-	}
-	else {
-		typeSettingsProperties = group.getTypeSettingsProperties();
-	}
+		<%
+		UnicodeProperties typeSettingsProperties = null;
 
-	boolean directoryIndexingEnabled = PropertiesParamUtil.getBoolean(typeSettingsProperties, request, "directoryIndexingEnabled");
-	%>
+		if (liveGroup != null) {
+			typeSettingsProperties = liveGroup.getTypeSettingsProperties();
+		}
+		else {
+			typeSettingsProperties = group.getTypeSettingsProperties();
+		}
 
-	<aui:input label="directory-indexing-enabled" name="TypeSettingsProperties--directoryIndexingEnabled--" type="checkbox" value="<%= directoryIndexingEnabled %>" />
+		boolean directoryIndexingEnabled = PropertiesParamUtil.getBoolean(typeSettingsProperties, request, "directoryIndexingEnabled");
+		%>
+
+		<aui:input label="directory-indexing-enabled" name="TypeSettingsProperties--directoryIndexingEnabled--" type="checkbox" value="<%= directoryIndexingEnabled %>" />
+	</c:if>
 
 	<c:if test="<%= liveGroup != null %>">
 		<aui:field-wrapper label="site-id">

@@ -1447,6 +1447,15 @@ release was successful.</echo>
 			<replacevalue><![CDATA[redirectPort="8443" URIEncoding="UTF-8" />]]></replacevalue>
 		</replace>
 
+		<replace file="${app.server.tomcat.dir}/conf/web.xml">
+			<replacetoken><![CDATA[<servlet-class>org.apache.jasper.servlet.JspServlet</servlet-class>]]></replacetoken>
+			<replacevalue><![CDATA[<servlet-class>org.apache.jasper.servlet.JspServlet</servlet-class>
+        <init-param>
+            <param-name>trimSpaces</param-name>
+            <param-value>true</param-value>
+        </init-param>]]></replacevalue>
+		</replace>
+
 		<!--<replace file="${app.server.tomcat.dir}/conf/server.xml">
 			<replacetoken><![CDATA[xmlValidation="false" xmlNamespaceAware="false">]]></replacetoken>
 			<replacevalue><![CDATA[xmlValidation="false" xmlNamespaceAware="false" deployXML="false">]]></replacevalue>

@@ -114,7 +114,7 @@ if (entry == null) {
 			<aui:option label="important" selected="<%= (entry != null) && (entry.getPriority() == 1) %>" value="1" />
 		</aui:select>
 
-		<aui:input disabled="<%= autoDisplayDate %>" name="displayDate" />
+		<aui:input disabled="<%= autoDisplayDate %>" checkBoxLabel="display-immediately" name="displayDate" />
 
 		<c:if test="<%= autoDisplayDate %>">
 
@@ -161,26 +161,6 @@ if (entry == null) {
 		document.<portlet:namespace />fm.<portlet:namespace />content.value = <portlet:namespace />getContent();
 		submitForm(document.<portlet:namespace />fm);
 	}
-
-	Liferay.provide(
-		window,
-		'<portlet:namespace />toggleDisplayDate',
-		function(date, checked) {
-			var A = AUI();
-
-			document.<portlet:namespace />fm["<portlet:namespace />" + date + "Hour"].disabled = checked;
-			document.<portlet:namespace />fm["<portlet:namespace />" + date + "Minute"].disabled = checked;
-			document.<portlet:namespace />fm["<portlet:namespace />" + date + "AmPm"].disabled = checked;
-
-			var calendarWidget = A.Widget.getByNode(document.<portlet:namespace />fm["<portlet:namespace />" + date + "Month"]);
-
-			if (calendarWidget) {
-				calendarWidget.set('disabled', checked);
-			}
-		},
-		['aui-base']
-	);
-
 	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
 		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />title);
 	</c:if>

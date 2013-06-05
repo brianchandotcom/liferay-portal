@@ -34,8 +34,8 @@ public class InputFieldTag extends IncludeTag {
 		_bean = bean;
 	}
 
-	public void setCheckBox(boolean checkBox) {
-		_checkBox = checkBox;
+	public void setCheckBoxLabel(String checkBoxLabel) {
+		_checkBoxLabel = checkBoxLabel;
 	}
 
 	public void setCssClass(String cssClass) {
@@ -94,7 +94,7 @@ public class InputFieldTag extends IncludeTag {
 	protected void cleanUp() {
 		_autoSize = false;
 		_bean = null;
-		_checkBox = false;
+		_checkBoxLabel = null;
 		_cssClass = null;
 		_defaultLanguageId = null;
 		_defaultValue = null;
@@ -133,7 +133,7 @@ public class InputFieldTag extends IncludeTag {
 			"liferay-ui:input-field:autoSize", String.valueOf(_autoSize));
 		request.setAttribute("liferay-ui:input-field:bean", _bean);
 		request.setAttribute(
-			"liferay-ui:input-field:checkBox", String.valueOf(_checkBox));
+			"liferay-ui:input-field:checkBoxLabel", String.valueOf(_checkBoxLabel));
 		request.setAttribute("liferay-ui:input-field:cssClass", _cssClass);
 		request.setAttribute(
 			"liferay-ui:input-field:defaultLanguageId", _defaultLanguageId);
@@ -159,7 +159,7 @@ public class InputFieldTag extends IncludeTag {
 
 	private boolean _autoSize;
 	private Object _bean;
-	private boolean _checkBox;
+	private String _checkBoxLabel;
 	private String _cssClass;
 	private String _defaultLanguageId;
 	private Object _defaultValue;

@@ -34,6 +34,71 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		</copy>
 	</target>
 
+	<target name="build-axis-jar">
+		<get
+			dest="axis-1.4-sources.zip"
+			src="http://search.maven.org/remotecontent?filepath=axis/axis/1.4/axis-1.4-sources.jar"
+		/>
+		<get
+			dest="axis-1.4.jar"
+			src="http://search.maven.org/remotecontent?filepath=axis/axis/1.4/axis-1.4.jar"
+		/>
+
+		<tstamp>
+			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+		</tstamp>
+
+		<unzip
+			dest="${tstamp.value}"
+			src="axis-1.4-sources.zip"
+		>
+			<patternset>
+				<include name="**/AxisEngine.java"/>
+				<include name="**/EngineConfiguration.java"/>
+				<include name="**/JavaServiceDesc.java"/>
+				<include name="**/MapDeserializer.java"/>
+				<include name="**/Session.java"/>
+			</patternset>
+		</unzip>
+
+		<patch
+			dir="${tstamp.value}"
+			patchfile="${project.dir}/lib/portal/axis/AXIS-2585.patch"
+			strip="1"
+		/>
+		<patch
+			dir="${tstamp.value}"
+			patchfile="${project.dir}/lib/portal/axis/LPS-28561.patch"
+			strip="1"
+		/>
+		<patch
+			dir="${tstamp.value}"
+			patchfile="${project.dir}/lib/portal/axis/LPS-34308.patch"
+			strip="1"
+		/>
+		<patch
+			dir="${tstamp.value}"
+			patchfile="${project.dir}/lib/portal/axis/LPS-35125.patch"
+			strip="1"
+		/>
+
+		<antcall target="compile-java">
+			<param name="javac.classpathref" value="project.classpath" />
+			<param name="javac.destdir" value="${tstamp.value}" />
+			<param name="javac.srcdir" value="${tstamp.value}" />
+		</antcall>
+
+		<jar destfile="axis-1.4.jar" update="true">
+			<zipfileset dir="${tstamp.value}" includes="**/*.class"/>
+		</jar>
+
+		<move file="axis-1.4.jar" tofile="${project.dir}/lib/portal/axis.jar.new" />
+
+		<delete dir="${tstamp.value}" />
+		<delete file="axis-1.4-sources.zip" />
+
+	</target>
+
 	<!--<target name="build-copy-interface">
 		<java
 			classname="com.liferay.portal.tools.CopyInterfaceBuilder"

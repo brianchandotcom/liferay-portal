@@ -1,0 +1,116 @@
+--- LPS-35125/MapDeserializer.java	2006-04-22 18:57:28.000000000 +0200
++++ src/org/apache/axis/encoding/ser/MapDeserializer.java	2013-05-09 12:18:44.343331100 +0200
+@@ -31,6 +31,8 @@
+ import java.util.HashMap;
+ import java.util.Map;
+ 
++import org.apache.axis.soap.SOAPConstants;
++
+ /*
+  * A <code>MapSerializer</code> is be used to deserialize
+  * deserialize Maps using the <code>SOAP-ENC</code>
+@@ -38,6 +40,7 @@
+  * 
+  * @author Glen Daniels (gdaniels@apache.org)
+  * Modified by @author Rich scheuerle <scheu@us.ibm.com>
++ * Modified by @author Igor Spasic <igor.spasic@liferay.com>
+  */
+ public class MapDeserializer extends DeserializerImpl {
+ 
+@@ -105,16 +108,34 @@
+         }
+ 
+         if(localName.equals("item")) {
+-            ItemHandler handler = new ItemHandler(this);
+-            
+-            // This item must be complete before we're complete...
+-            addChildDeserializer(handler);
+-            
+-            if (log.isDebugEnabled()) {
+-                log.debug("Exit: MapDeserializer::onStartChild()");
+-            }
+-    
+-            return handler;
++
++            // liferay - changes started
++            // check if 'href' attribute is present. if so, process it
++            // with BigItemHandler (see bellow)
++            SOAPConstants soapConstants = context.getSOAPConstants();
++            String href = attributes.getValue(soapConstants.getAttrHref());
++
++            if (href != null) {
++                Object ref = context.getObjectByRef(href);
++
++				BigItemHandler handler = new BigItemHandler(this);
++
++				addChildDeserializer(handler);
++
++				return handler;
++			}
++			// liferay - end of changes
++
++			ItemHandler handler = new ItemHandler(this);
++
++			// This item must be complete before we're complete...
++			addChildDeserializer(handler);
++
++			if (log.isDebugEnabled()) {
++				log.debug("Exit: MapDeserializer::onStartChild()");
++			}
++
++			return handler;
+         }
+         
+         return this;
+@@ -208,4 +229,51 @@
+             return (SOAPHandler)dser;
+         }
+     }
++
++    // liferay - new class
++    // Handles simple items array, where each element has a href
++    // to actual key/value pair
++    class BigItemHandler extends DeserializerImpl {
++        Object key;
++        Object myValue;
++        int numSet = 0;
++        MapDeserializer md = null;
++
++        BigItemHandler(MapDeserializer md) {
++            this.md = md;
++        }
++
++        public SOAPHandler onStartChild(String namespace,
++                                    String localName,
++                                    String prefix,
++                                    Attributes attributes,
++                                    DeserializationContext context)
++        throws SAXException
++        {
++            QName typeQName = context.getTypeFromAttributes(namespace,
++                                                            localName,
++                                                            attributes);
++            Deserializer dser = context.getDeserializerForType(typeQName);
++
++            if (dser == null)
++                dser = new DeserializerImpl();
++
++
++			SOAPConstants soapConstants = context.getSOAPConstants();
++   			String href = attributes.getValue(soapConstants.getAttrHref());
++
++			if (href != null) {
++				Object ref = context.getObjectByRef(href);
++
++				ItemHandler handler = new ItemHandler(md);
++				
++                addChildDeserializer(handler);
++
++				return handler;
++			}
++
++            addChildDeserializer(dser);
++            return (SOAPHandler)dser;
++        }
++    }
+ }

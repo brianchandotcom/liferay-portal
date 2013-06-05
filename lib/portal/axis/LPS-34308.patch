@@ -1,0 +1,35 @@
+--- LPS-34308/AxisEngine.java	2006-04-22 18:57:28.000000000 +0200
++++ src/org/apache/axis/AxisEngine.java	2013-04-12 15:10:15.266025300 +0200
+@@ -518,6 +518,10 @@
+      * @return the class cache
+      */
+     public ClassCache getClassCache() {
++        // liferay: initialize cache if null
++        if (classCache == null) {
++            classCache = new ClassCache();
++        }
+         return classCache;
+     }
+ 
+--- LPS-34308/JavaServiceDesc.java	2006-04-22 18:57:26.000000000 +0200
++++ src/org/apache/axis/description/JavaServiceDesc.java	2013-04-12 15:11:07.380006000 +0200
+@@ -381,6 +381,7 @@
+     {
+         operations.add(operation);
+         operation.setParent(this);
++        // liferay init map if null
+         if (name2OperationsMap == null) {
+             name2OperationsMap = new HashMap();
+         }
+@@ -645,6 +646,11 @@
+         
+         for (int i = 0; i < methods.length; i++) {
+             Method method = methods[i];
++
++            if (method2OperationMap == null) {
++                method2OperationMap = new HashMap();
++            }
++
+             if (Modifier.isPublic(method.getModifiers()) &&
+                     method.getName().equals(oper.getName()) &&
+                     method2OperationMap.get(method) == null) {

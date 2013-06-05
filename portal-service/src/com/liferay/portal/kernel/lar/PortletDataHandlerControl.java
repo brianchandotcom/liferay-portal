@@ -52,10 +52,18 @@ public class PortletDataHandlerControl {
 		String namespace, String controlName, boolean disabled,
 		String className) {
 
+		this(namespace, controlName, disabled, className, null);
+	}
+
+	public PortletDataHandlerControl(
+		String namespace, String controlName, boolean disabled,
+		String className, String referrerClassName) {
+
 		_namespace = namespace;
 		_controlName = controlName;
 		_disabled = disabled;
 		_className = className;
+		_referrerClassName = referrerClassName;
 	}
 
 	public String getClassName() {
@@ -79,6 +87,10 @@ public class PortletDataHandlerControl {
 		return getNamespacedControlName(_namespace, getControlName());
 	}
 
+	public String getReferrerClassName() {
+		return _referrerClassName;
+	}
+
 	public boolean isDisabled() {
 		return _disabled;
 	}
@@ -91,5 +103,6 @@ public class PortletDataHandlerControl {
 	private String _controlName;
 	private boolean _disabled;
 	private String _namespace;
+	private String _referrerClassName;
 
 }

@@ -38,7 +38,7 @@ for (int i = 0; i < controls.length; i++) {
 				String className = controls[i].getClassName();
 
 				if (Validator.isNotNull(className) && (manifestSummary != null)) {
-					long modelCount = manifestSummary.getModelCount(className);
+					long modelCount = manifestSummary.getModelCount(className, controls[i].getReferrerClassName());
 
 					if (modelCount != 0) {
 						controlName += modelCount > 0 ? " (" + modelCount + ")" : StringPool.BLANK;

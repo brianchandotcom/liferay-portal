@@ -1319,6 +1319,14 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	@Override
+	public List<Layout> getLayoutsByLayoutPrototypeUuid(
+			String layoutPrototypeUuid)
+		throws SystemException {
+
+		return layoutPersistence.findByLayoutPrototypeUuid(layoutPrototypeUuid);
+	}
+
+	@Override
 	public int getLayoutsByLayoutPrototypeUuidCount(String layoutPrototypeUuid)
 		throws SystemException {
 

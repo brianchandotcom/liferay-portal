@@ -367,10 +367,20 @@ public class LayoutImporter {
 			}
 
 			if (existingLayoutPrototype == null) {
+				List<Layout> layoutsWithPreviousPrototype =
+					LayoutLocalServiceUtil.getLayoutsByLayoutPrototypeUuid(
+						layoutPrototype.getUuid());
+
 				layoutPrototype.setUuid(layoutPrototypeUuid);
 
 				LayoutPrototypeLocalServiceUtil.updateLayoutPrototype(
 					layoutPrototype);
+
+				for (Layout layout : layoutsWithPreviousPrototype) {
+					layout.setLayoutPrototypeUuid(layoutPrototypeUuid);
+
+					LayoutLocalServiceUtil.updateLayout(layout);
+				}
 			}
 		}
 		else if (group.isLayoutSetPrototype() &&

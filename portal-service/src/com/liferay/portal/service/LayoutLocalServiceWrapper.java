@@ -1007,6 +1007,13 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.portal.model.Layout> getLayoutsByLayoutPrototypeUuid(
+		java.lang.String layoutPrototypeUuid)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _layoutLocalService.getLayoutsByLayoutPrototypeUuid(layoutPrototypeUuid);
+	}
+
+	@Override
 	public int getLayoutsByLayoutPrototypeUuidCount(
 		java.lang.String layoutPrototypeUuid)
 		throws com.liferay.portal.kernel.exception.SystemException {

@@ -978,6 +978,12 @@ public class LayoutLocalServiceUtil {
 			preferencesValue);
 	}
 
+	public static java.util.List<com.liferay.portal.model.Layout> getLayoutsByLayoutPrototypeUuid(
+		java.lang.String layoutPrototypeUuid)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getLayoutsByLayoutPrototypeUuid(layoutPrototypeUuid);
+	}
+
 	public static int getLayoutsByLayoutPrototypeUuidCount(
 		java.lang.String layoutPrototypeUuid)
 		throws com.liferay.portal.kernel.exception.SystemException {

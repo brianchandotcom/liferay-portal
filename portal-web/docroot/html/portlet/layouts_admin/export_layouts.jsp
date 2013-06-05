@@ -236,6 +236,10 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 
 					<%
 					List<Portlet> dataSiteLevelPortlets = LayoutExporter.getDataSiteLevelPortlets(company.getCompanyId());
+
+					PortletDataContext portletDataContext = PortletDataContextFactoryUtil.createPreparePortletDataContext(themeDisplay, startDate, endDate);
+
+					ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 					%>
 
 					<c:if test="<%= !dataSiteLevelPortlets.isEmpty() %>">
@@ -366,8 +370,6 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 												Set<String> displayedControls = new HashSet<String>();
 												Set<String> portletDataHandlerClasses = new HashSet<String>();
 
-												PortletDataContext portletDataContext = PortletDataContextFactoryUtil.createPreparePortletDataContext(themeDisplay, startDate, endDate);
-
 												dataSiteLevelPortlets = ListUtil.sort(dataSiteLevelPortlets, new PortletTitleComparator(application, locale));
 
 												for (Portlet portlet : dataSiteLevelPortlets) {
@@ -385,8 +387,6 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 													PortletDataHandler portletDataHandler = portlet.getPortletDataHandlerInstance();
 
 													portletDataHandler.prepareManifestSummary(portletDataContext);
-
-													ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 
 													long exportModelCount = portletDataHandler.getExportModelCount(manifestSummary);
 												%>
@@ -508,6 +508,21 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 														</li>
 													</ul>
 												</div>
+											</aui:fieldset>
+
+											<aui:fieldset cssClass="export-deletions">
+
+												<%
+												long modelDeletionCount = manifestSummary.getModelDeletionCount();
+												%>
+
+												<c:if test="<%= modelDeletionCount != 0 %>">
+													<liferay-util:buffer var="badgeHTML">
+														<span class="badge badge-info"><%= modelDeletionCount > 0 ? modelDeletionCount : StringPool.BLANK %></span>
+													</liferay-util:buffer>
+
+													<aui:input checked="<%= true %>" helpMessage="export-deletions-help" id="deletions" label='<%= LanguageUtil.get(pageContext, "export-deletions") + badgeHTML %>' name="<%= PortletDataHandlerKeys.EXPORT_DELETIONS %>" type="checkbox" value="<%= true %>" />
+												</c:if>
 											</aui:fieldset>
 										</li>
 									</ul>

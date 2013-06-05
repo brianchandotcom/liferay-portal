@@ -16,177 +16,163 @@
 
 <%@ include file="/html/portlet/dockbar/init.jsp" %>
 
-<%
-int columnsCount = 2;
-
-Group group = layout.getGroup();
-
-long groupId = group.getGroupId();
-
-long layoutId = layout.getLayoutId();
-
-boolean privateLayout = layout.isPrivateLayout();
-
-String layoutTemplateId = StringPool.BLANK;
-
-String rootNodeName = LanguageUtil.get(pageContext, null);
-
-LayoutLister layoutLister = new LayoutLister();
-
-LayoutView layoutView = layoutLister.getLayoutView(groupId, privateLayout, rootNodeName, locale);
-
-List layoutList = layoutView.getList();
-
-request.setAttribute(WebKeys.LAYOUT_LISTER_LIST, layoutList);
-
-Theme selTheme = layout.getTheme();
-
-List<LayoutTemplate> layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutTemplates(selTheme.getThemeId());
-
-request.setAttribute("add_page.jsp-embedded", true);
-%>
-
 <aui:model-context model="<%= Layout.class %>" />
 
-<portlet:actionURL var="editPageURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+<portlet:actionURL var="editLayoutActionURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
 	<portlet:param name="struts_action" value="/dockbar/edit_layouts" />
 </portlet:actionURL>
 
-<portlet:renderURL var="redirectURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+<portlet:renderURL var="editLayoutRenderURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
 	<portlet:param name="struts_action" value="/dockbar/edit_layouts" />
 </portlet:renderURL>
 
-<aui:form action="<%= editPageURL %>" enctype="multipart/form-data" method="post" name="addPageFm" onSubmit="event.preventDefault()">
-	<aui:input id="cmd" name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
-	<aui:input id="explicitCreation" name="explicitCreation" type="hidden" value="<%= true %>" />
-	<aui:input id="groupId" name="groupId" type="hidden" value="<%= groupId %>" />
-	<aui:input id="layoutPrototypeId" name="layoutPrototypeId" type="hidden" value="" />
-	<aui:input id="privateLayout" name="privateLayout" type="hidden" value="<%= privateLayout %>" />
-	<aui:input id="parentPlid" name="parentPlid" type="hidden" value="<%= layout.getParentPlid() %>" />
-	<aui:input id="parentLayoutId" name="parentLayoutId" type="hidden" value="<%= layout.getParentLayoutId() %>" />
-	<aui:input id="redirect" name="redirect" type="hidden" value="<%= redirectURL.toString() %>" />
-	<aui:input id="type" name="type" type="hidden" value="portlet" />
+<aui:form action="<%= editLayoutActionURL %>" enctype="multipart/form-data" method="post" name="addPageFm" onSubmit="event.preventDefault()">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
+	<aui:input name="explicitCreation" type="hidden" value="<%= true %>" />
+	<aui:input name="groupId" type="hidden" value="<%= scopeGroupId %>" />
+	<aui:input name="layoutPrototypeId" type="hidden" value="" />
+	<aui:input name="privateLayout" type="hidden" value="<%= layout.isPrivateLayout() %>" />
+	<aui:input name="parentPlid" type="hidden" value="<%= layout.getParentPlid() %>" />
+	<aui:input name="parentLayoutId" type="hidden" value="<%= layout.getParentLayoutId() %>" />
+	<aui:input name="redirect" type="hidden" value="<%= editLayoutRenderURL.toString() %>" />
+	<aui:input name="type" type="hidden" value="portlet" />
 
-	<div class="row-fluid">
+	<aui:fieldset>
+		<div class="row-fluid">
+			<div class="span12">
+				<aui:input name="name" />
 
-		<div class="span12">
-			<div>
-				<aui:input id="addLayoutName" name="name" />
-				<aui:input id="addLayoutHidden" label="show-in-navigation" name="hidden" type="checkbox" />
+				<aui:input name="hidden" />
+
+				<aui:fieldset cssClass="template-selector" label="templates">
+					<div class="search-panel btn-toolbar">
+						<aui:input cssClass="search-query span12" label="" name="searchTemplates" placeholder="search" type="text"  />
+					</div>
+
+					<aui:nav cssClass="nav-list no-margin-nav-list" id="templateList">
+						<aui:nav-item cssClass="lfr-page-template" data-search="blank">
+							<div class="active lfr-page-template-title toggler-header toggler-header-collapsed" data-type="portlet">
+								<aui:input checked="<%= true %>" id="blank" label="blank" name="selectedPageTemplate" type="radio" />
+							</div>
+
+							<div class="lfr-page-template-options toggler-content toggler-content-collapsed">
+
+								<%
+								String layoutTemplateId = PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID;
+
+								Theme selTheme = layout.getTheme();
+
+								List<LayoutTemplate> layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutTemplates(selTheme.getThemeId());
+
+								int columnsCount = 2;
+								%>
+
+								<%@ include file="/html/portlet/layouts_admin/layout/layout_templates.jspf" %>
+							</div>
+						</aui:nav-item>
+
+						<%
+						List<LayoutPrototype> layoutPrototypes = LayoutPrototypeServiceUtil.search(company.getCompanyId(), Boolean.TRUE, null);
+
+						for (LayoutPrototype layoutPrototype : layoutPrototypes) {
+							String name = HtmlUtil.escape(layoutPrototype.getName(user.getLanguageId()));
+						%>
+
+							<aui:nav-item cssClass="lfr-page-template" data-search="<%= name %>">
+								<div class="lfr-page-template-title toggler-header toggler-header-collapsed" data-prototype-id="<%= layoutPrototype.getLayoutPrototypeId() %>">
+									<aui:input label="<%= name %>" name="selectedPageTemplate" type="radio" />
+
+									<%= HtmlUtil.escape(layoutPrototype.getDescription()) %>
+								</div>
+
+								<div class="lfr-page-template-options toggler-content toggler-content-collapsed">
+									<aui:input label="automatically-apply-changes-done-to-the-page-template" name="layoutPrototypeLinkEnabled" type="checkbox" />
+								</div>
+							</aui:nav-item>
+
+						<%
+						}
+						%>
+
+						<%
+						LayoutLister layoutLister = new LayoutLister();
+
+						LayoutView layoutView = layoutLister.getLayoutView(scopeGroupId, layout.isPrivateLayout(), StringPool.BLANK, locale);
+
+						request.setAttribute(WebKeys.LAYOUT_LISTER_LIST, layoutView.getList());
+
+						for (int i = 0; i < PropsValues.LAYOUT_TYPES.length; i++) {
+							if (PropsValues.LAYOUT_TYPES[i].equals("portlet")) {
+								continue;
+							}
+						%>
+
+							<aui:nav-item cssClass="lfr-page-template" data-search='<%= LanguageUtil.get(pageContext, "layout.types." + PropsValues.LAYOUT_TYPES[i]) %>'>
+								<div class="lfr-page-template-title toggler-header toggler-header-collapsed" data-type="<%= PropsValues.LAYOUT_TYPES[i] %>">
+									<aui:input label='<%= "layout.types." + PropsValues.LAYOUT_TYPES[i] %>' name="selectedPageTemplate" type="radio" />
+								</div>
+
+								<div class="lfr-page-template-options toggler-content toggler-content-collapsed">
+									<liferay-util:include page="<%= StrutsUtil.TEXT_HTML_DIR + PortalUtil.getLayoutEditPage(PropsValues.LAYOUT_TYPES[i]) %>" />
+								</div>
+							</aui:nav-item>
+
+						<%
+						}
+						%>
+
+						<c:if test='<%= ArrayUtil.contains(PropsValues.LAYOUT_TYPES, "portlet") %>'>
+							<aui:nav-item cssClass="lfr-page-template" data-search="portlet">
+								<div class="lfr-page-template-title toggler-header toggler-header-collapsed" data-type="portlet">
+									<aui:input label="copy-of-a-page" name="selectedPageTemplate" type="radio" />
+								</div>
+
+								<div class="lfr-page-template-options toggler-content toggler-content-collapsed">
+									<liferay-util:include page="/html/portal/layout/edit/portlet.jsp" />
+								</div>
+							</aui:nav-item>
+						</c:if>
+					</aui:nav>
+				</aui:fieldset>
 			</div>
-
-			<h5 class="category-header">Templates</h5>
-
-			<liferay-util:include page="/html/portlet/dockbar/search_templates.jsp" />
-
-			<aui:nav cssClass="nav-list no-margin-nav-list" id="templateList">
-				<aui:nav-item cssClass="lfr-page-template" data-search="blank">
-					<div class="active toggler-header toggler-header-collapsed" data-type="portlet">
-						<label class="radio lfr-page-template-title">
-							<input checked id="Blank" name="selectedPageTemplate" type="radio">
-							<strong><%= LanguageUtil.get(pageContext, "blank-default") %></strong>
-						</label>
-					</div>
-
-					<div class="lfr-page-template-options toggler-content toggler-content-collapsed">
-						<%@ include file="/html/portlet/layouts_admin/layout/layout_templates.jspf" %>
-					</div>
-				</aui:nav-item>
-
-				<%
-				List<LayoutPrototype> layoutPrototypes = LayoutPrototypeServiceUtil.search(company.getCompanyId(), Boolean.TRUE, null);
-				for (LayoutPrototype layoutPrototype : layoutPrototypes) {
-
-					String name = HtmlUtil.escape(layoutPrototype.getName(user.getLanguageId()));
-				%>
-
-					<aui:nav-item cssClass="lfr-page-template" data-search="<%= name %>">
-						<div class="toggler-header toggler-header-collapsed" data-prototype-id="<%= layoutPrototype.getLayoutPrototypeId() %>">
-							<label class="radio lfr-page-template-title">
-								<input id="<%= name %>" name="selectedPageTemplate" type="radio">
-								<strong><%= name %></strong>
-							</label>
-							<%= HtmlUtil.escape(layoutPrototype.getDescription()) %>
-						</div>
-
-						<div class="lfr-page-template-options toggler-content toggler-content-collapsed">
-							<aui:input label='<%= LanguageUtil.get(pageContext, "automatically-apply-changes-done-to-the-page-template") %>' name="layoutPrototypeLinkEnabled" type="checkbox" />
-						</div>
-					</aui:nav-item>
-
-				<%
-				}
-				%>
-
-				<%
-				for (int i = 0; i < PropsValues.LAYOUT_TYPES.length; i++) {
-					String layoutType = LanguageUtil.get(pageContext, "layout.types." + PropsValues.LAYOUT_TYPES[i]);
-
-					if (layoutType.equals("Portlet")) {
-						continue;
-					}
-				%>
-					<aui:nav-item cssClass="lfr-page-template" data-search="<%= layoutType %>">
-						<div class="toggler-header toggler-header-collapsed" data-type="<%= PropsValues.LAYOUT_TYPES[i] %>">
-							<label class="radio lfr-page-template-title">
-								<input id="<%= layoutType %>" name="selectedPageTemplate" type="radio">
-								<strong><%= layoutType %></strong>
-							</label>
-						</div>
-
-						<div class="lfr-page-template-options toggler-content toggler-content-collapsed">
-							<liferay-util:include page="<%= StrutsUtil.TEXT_HTML_DIR + PortalUtil.getLayoutEditPage(PropsValues.LAYOUT_TYPES[i]) %>" />
-						</div>
-					</aui:nav-item>
-
-				<%
-				}
-				%>
-
-				<aui:nav-item cssClass="lfr-page-template" data-search="portlet">
-					<div class="toggler-header toggler-header-collapsed" data-type="portlet">
-						<label class="radio lfr-page-template-title">
-							<input id="pageTemplateCopy" name="selectedPageTemplate" type="radio">
-							<strong><%= LanguageUtil.get(pageContext, "copy-of-a-page") %></strong>
-						</label>
-					</div>
-
-					<div class="lfr-page-template-options toggler-content toggler-content-collapsed">
-						<liferay-util:include page="/html/portal/layout/edit/portlet.jsp" />
-					</div>
-				</aui:nav-item>
-
-			</aui:nav>
-		</div>
-	<div>
-
-	<div class="lfr-add-page-toolbar">
 		<div>
-			<div class="pull-right">
-				<aui:button type="submit" value="add-page" />
-				<aui:button name="cancelAddOperation" value="cancel" />
-			</div>
+	</aui:fieldset>
+
+	<aui:button-row cssClass="lfr-add-page-toolbar">
+		<div class="pull-right">
+			<aui:button type="submit" value="add-page" />
+
+			<aui:button name="cancelAddOperation" value="cancel" />
 		</div>
-	</div>
+	</aui:button-row>
 </aui:form>
 
 <%
-Layout addedLayout = (Layout)SessionMessages.get(renderRequest, portletDisplay.getId() + "PAGE_ADDED");
+Layout addedLayout = (Layout)SessionMessages.get(renderRequest, portletDisplay.getId() + "pageAdded");
 %>
 
 <c:if test="<%= addedLayout != null && !addedLayout.isHidden() %>">
+
+	<%
+	NavItem navItem = new NavItem(request, addedLayout, null);
+	%>
+
 	<aui:script use="aui-base">
-		var TPL_TAB_LINK = '<li class="lfr-nav-item lfr-nav-deletable lfr-nav-sortable lfr-nav-updateable yui3-dd-drop" aria-selected="true"> <a class="" href="{url}" tabindex="-1"><span> {pageTitle} </span> </a> </li>';
+		var navigation = A.one('#banner .nav');
 
-		var tabHtml = A.Lang.sub(
-			TPL_TAB_LINK,
-			{
-				pageTitle: A.Lang.String.escapeHTML('<%= addedLayout.getName(locale) %>'),
-				url: '<%= addedLayout.getFriendlyURL() %>'
-			}
-		);
+		if (navigation) {
+			var TPL_TAB_LINK = '<li class="lfr-nav-item lfr-nav-deletable lfr-nav-sortable lfr-nav-updateable yui3-dd-drop" aria-selected="true"> <a class="" href="{url}" tabindex="-1"><span> {pageTitle} </span> </a> </li>';
 
-		A.one('#banner .nav').append(tabHtml);
+			var tabHtml = A.Lang.sub(
+				TPL_TAB_LINK,
+				{
+					pageTitle: A.Lang.String.escapeHTML('<%= navItem.getName() %>'),
+					url: '<%= navItem.getURL() %>'
+				}
+			);
+
+			navigation.append(tabHtml);
+		}
 	</aui:script>
 </c:if>
 

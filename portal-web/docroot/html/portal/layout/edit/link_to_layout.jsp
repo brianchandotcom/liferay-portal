@@ -16,16 +16,14 @@
 
 <%@ include file="/html/portal/layout/edit/init.jsp" %>
 
-<aui:input name="TypeSettingsProperties--groupId--" type="hidden" value="<%= Validator.isNull(selLayout)? StringPool.BLANK : selLayout.getGroupId() %>" />
-<aui:input name="TypeSettingsProperties--privateLayout--" type="hidden" value="<%= Validator.isNull(selLayout)? StringPool.BLANK : selLayout.isPrivateLayout() %>" />
+<aui:input name="TypeSettingsProperties--groupId--" type="hidden" value="<%= (selLayout == null) ? StringPool.BLANK : selLayout.getGroupId() %>" />
+<aui:input name="TypeSettingsProperties--privateLayout--" type="hidden" value="<%= (selLayout == null) ? StringPool.BLANK : selLayout.isPrivateLayout() %>" />
 
 <%
 long linkToLayoutId = 0;
 
-if (Validator.isNotNull(selLayout)) {
-	UnicodeProperties typeSettingsProperties = selLayout.getTypeSettingsProperties();
-
-	linkToLayoutId = GetterUtil.getLong(typeSettingsProperties.getProperty("linkToLayoutId", StringPool.BLANK));
+if (selLayout != null) {
+	linkToLayoutId = GetterUtil.getLong(selLayout.getTypeSettingsProperty("linkToLayoutId"));
 }
 %>
 
@@ -68,7 +66,7 @@ if (Validator.isNotNull(selLayout)) {
 		if (linkableLayout != null) {
 	%>
 
-			<aui:option disabled="<%= Validator.isNotNull(selLayout) && selLayout.getPlid() == linkableLayout.getPlid() %>" label="<%= name %>" selected="<%= (linkToLayoutId == linkableLayout.getLayoutId()) %>" value="<%= linkableLayout.getLayoutId() %>" />
+			<aui:option disabled="<%= (selLayout != null) && (selLayout.getPlid() == linkableLayout.getPlid()) %>" label="<%= name %>" selected="<%= (linkToLayoutId == linkableLayout.getLayoutId()) %>" value="<%= linkableLayout.getLayoutId() %>" />
 
 	<%
 		}

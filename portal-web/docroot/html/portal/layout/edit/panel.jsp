@@ -20,7 +20,7 @@
 String description = StringPool.BLANK;
 String panelSelectedPortlets = StringPool.BLANK;
 
-if (Validator.isNotNull(selLayout)) {
+if (selLayout != null) {
 	UnicodeProperties typeSettingsProperties = selLayout.getTypeSettingsProperties();
 
 	description = typeSettingsProperties.getProperty("description", StringPool.BLANK);
@@ -155,9 +155,9 @@ String panelTreeKey = "panelSelectedPortletsPanelTree";
 		initPanelSelectPortlets = A.Lang.emptyFn;
 	};
 
-	if (<%= Validator.isNull(selLayout) || selLayout.isTypePanel() %>) {
+	<c:if test="<%= (selLayout == null) || selLayout.isTypePanel() %>">
 		initPanelSelectPortlets();
-	}
+	</c:if>
 
 	Liferay.on(
 		'<portlet:namespace />toggleLayoutTypeFields',

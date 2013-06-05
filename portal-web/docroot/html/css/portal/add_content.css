@@ -34,11 +34,15 @@
 			width: 330px;
 		}
 
-	    .category-header {
-		    border-bottom: solid 1px #009ec3;
-		    color: #0DB5E7;
-		    margin-bottom: 20px;
-		    margin-top: 20px;
+	    .template-selector {
+			margin-top: 1.5em;
+
+			legend {
+				border-bottom: solid 1px #009ec3;
+				color: #0DB5E7;
+				font-size: 1em;
+				line-height: 1.5em;
+			}
 	    }
 
 		.accordion-inner {
@@ -92,7 +96,8 @@
 			cursor: pointer;
 			margin-bottom: 20px;
 
-			.lfr-page-template-title {
+			.lfr-page-template-title label {
+				font-weight: bold;
 				margin-bottom: 5px;
 				padding: 2px;
 			}
@@ -213,7 +218,7 @@
 		.lfr-page-template {
 			.toggler-header {
 				&.active {
-					.lfr-page-template-title {
+					&.lfr-page-template-title label{
 						background-color: #0DB5E7;
 						color: #FFFFFF;
 						padding: 2px;

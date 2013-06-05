@@ -78,7 +78,7 @@ AUI.add(
 
 					_getSearchData: function() {
 						var instance = this;
-						
+
 						return instance._searchData;
 					}
 				}

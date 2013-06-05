@@ -20,7 +20,7 @@
 String description = StringPool.BLANK;
 String url = StringPool.BLANK;
 
-if (Validator.isNotNull(selLayout)) {
+if (selLayout != null) {
 	UnicodeProperties typeSettingsProperties = selLayout.getTypeSettingsProperties();
 
 	url = typeSettingsProperties.getProperty("url", StringPool.BLANK);

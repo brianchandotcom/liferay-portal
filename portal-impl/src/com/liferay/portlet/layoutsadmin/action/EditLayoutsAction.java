@@ -174,11 +174,11 @@ public class EditLayoutsAction extends PortletAction {
 					themeDisplay, closeRedirect, null, layout, oldFriendlyURL);
 
 				LiferayPortletConfig liferayPortletConfig =
-				(LiferayPortletConfig)portletConfig;
+					(LiferayPortletConfig)portletConfig;
 
 				SessionMessages.add(
 					actionRequest,
-					liferayPortletConfig.getPortletId() + "PAGE_ADDED", layout);
+					liferayPortletConfig.getPortletId() + "pageAdded", layout);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				long plid = ParamUtil.getLong(actionRequest, "plid");

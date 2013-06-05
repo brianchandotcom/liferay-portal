@@ -33,6 +33,10 @@ portletURL.setParameter("tabs1", tabs1);
 portletURL.setParameter("tabs2", tabs2);
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("organizationId", String.valueOf(organization.getOrganizationId()));
+
+UsersAdminUtil.addPortletBreadcrumbEntries(organization, request, renderResponse);
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "assign-members"), currentURL);
 %>
 
 <liferay-ui:header
@@ -135,9 +139,3 @@ portletURL.setParameter("organizationId", String.valueOf(organization.getOrganiz
 		['liferay-util-list-fields']
 	);
 </aui:script>
-
-<%
-UsersAdminUtil.addPortletBreadcrumbEntries(organization, request, renderResponse);
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "assign-members"), currentURL);
-%>

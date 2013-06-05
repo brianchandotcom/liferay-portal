@@ -50,6 +50,10 @@ boolean showList = true;
 if (filterManageableOrganizations && organizations.isEmpty()) {
 	showList = false;
 }
+
+if (organization != null) {
+	UsersAdminUtil.addPortletBreadcrumbEntries(organization, request, renderResponse);
+}
 %>
 
 <c:if test="<%= portletName.equals(PortletKeys.USERS_ADMIN) && usersListView.equals(UserConstants.LIST_VIEW_TREE) %>">
@@ -68,6 +72,10 @@ if (filterManageableOrganizations && organizations.isEmpty()) {
 			</div>
 		</aui:nav-bar-search>
 	</aui:nav-bar>
+
+	<div id="breadcrumb">
+		<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showCurrentPortlet="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
+	</div>
 </c:if>
 
 <c:choose>
@@ -464,10 +472,6 @@ if (filterManageableOrganizations && organizations.isEmpty()) {
 
 					<liferay-util:include page="/html/portlet/users_admin/organization_action.jsp" />
 				</aui:col>
-
-				<%
-				UsersAdminUtil.addPortletBreadcrumbEntries(organization, request, renderResponse);
-				%>
 
 			</c:if>
 		</aui:row>

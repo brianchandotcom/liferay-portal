@@ -23,6 +23,8 @@ String backURL = ParamUtil.getString(request, "backURL", redirect);
 Organization organization = (Organization)request.getAttribute(WebKeys.ORGANIZATION);
 
 long organizationId = BeanParamUtil.getLong(organization, request, "organizationId");
+long parentOrganizationId = ParamUtil.getLong(request, "parentOrganizationSearchContainerPrimaryKeys", (organization != null) ? organization.getParentOrganizationId() : OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID);
+String type = BeanParamUtil.getString(organization, request, "type");
 
 String[] mainSections = PropsValues.ORGANIZATIONS_FORM_ADD_MAIN;
 String[] identificationSections = PropsValues.ORGANIZATIONS_FORM_ADD_IDENTIFICATION;
@@ -35,6 +37,27 @@ if (organization != null) {
 }
 
 String[][] categorySections = {mainSections, identificationSections, miscellaneousSections};
+
+String headerTitle = null;
+
+if (organization != null) {
+	headerTitle = LanguageUtil.format(pageContext, "edit-x", organization.getName());
+}
+else if (Validator.isNotNull(type)) {
+	headerTitle = LanguageUtil.format(pageContext, "add-x", type);
+}
+else {
+	headerTitle = LanguageUtil.get(pageContext, "add-organization");
+}
+
+if (organization != null) {
+	UsersAdminUtil.addPortletBreadcrumbEntries(organization, request, renderResponse);
+}
+else if (parentOrganizationId > 0) {
+	Organization parentOrganization = OrganizationServiceUtil.getOrganization(parentOrganizationId);
+
+	UsersAdminUtil.addPortletBreadcrumbEntries(parentOrganization, request, renderResponse);
+}
 %>
 
 <aui:nav-bar>
@@ -43,10 +66,14 @@ String[][] categorySections = {mainSections, identificationSections, miscellaneo
 	</liferay-util:include>
 </aui:nav-bar>
 
+<div id="breadcrumb">
+	<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showCurrentPortlet="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
+</div>
+
 <liferay-ui:header
 	backURL="<%= backURL %>"
 	localizeTitle="<%= (organization == null) %>"
-	title='<%= (organization == null) ? "new-organization" : organization.getName() %>'
+	title="<%= headerTitle %>"
 />
 
 <portlet:actionURL var="editOrganizationActionURL">
@@ -109,17 +136,6 @@ String[][] categorySections = {mainSections, identificationSections, miscellaneo
 		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />name);
 	</c:if>
 </aui:script>
-
-<%
-if (organization != null) {
-	UsersAdminUtil.addPortletBreadcrumbEntries(organization, request, renderResponse);
-
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "edit"), currentURL);
-}
-else {
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "add-organization"), currentURL);
-}
-%>
 
 <%!
 private static final String[] _CATEGORY_NAMES = {"organization-information", "identification", "miscellaneous"};

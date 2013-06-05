@@ -133,6 +133,8 @@ public interface WebKeys {
 
 	public static final String RENDER_PORTLET_RESOURCE = "RENDER_PORTLET_RESOURCE";
 
+	public static final String RENDER_PORTLET_WRAPPER = "RENDER_PORTLET_WRAPPER";
+
 	public static final String SEARCH_CONTAINER = "SEARCH_CONTAINER";
 
 	public static final String SEARCH_CONTAINER_RESULT_ROW = "SEARCH_CONTAINER_RESULT_ROW";

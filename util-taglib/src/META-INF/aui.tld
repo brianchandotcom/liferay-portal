@@ -1385,16 +1385,16 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<name>checkBox</name>
+			<name>checked</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<name>checked</name>
+			<name>checkBoxLabel</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>boolean</type>
+			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
 			<name>classPK</name>

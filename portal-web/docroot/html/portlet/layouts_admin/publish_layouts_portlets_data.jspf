@@ -30,6 +30,10 @@ long endDateTime = ParamUtil.getLong(request, "endDate");
 if (endDateTime > 0) {
 	endDate = new Date(endDateTime);
 }
+
+PortletDataContext portletDataContext = PortletDataContextFactoryUtil.createPreparePortletDataContext(themeDisplay, startDate, endDate);
+
+ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 %>
 
 <ul class="lfr-tree unstyled">
@@ -205,13 +209,9 @@ if (endDateTime > 0) {
 
 						String portletTitle = PortalUtil.getPortletTitle(portlet, application, locale);
 
-						PortletDataContext portletDataContext = PortletDataContextFactoryUtil.createPreparePortletDataContext(themeDisplay, startDate, endDate);
-
 						PortletDataHandler portletDataHandler = portlet.getPortletDataHandlerInstance();
 
 						portletDataHandler.prepareManifestSummary(portletDataContext);
-
-						ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 
 						long exportModelCount = portletDataHandler.getExportModelCount(manifestSummary);
 					%>
@@ -335,6 +335,21 @@ if (endDateTime > 0) {
 							</li>
 						</ul>
 					</div>
+				</aui:fieldset>
+
+				<aui:fieldset cssClass="export-deletions">
+
+					<%
+					long modelDeletionCount = manifestSummary.getModelDeletionCount();
+					%>
+
+					<c:if test="<%= modelDeletionCount != 0 %>">
+						<liferay-util:buffer var="badgeHTML">
+							<span class="badge badge-info"><%= modelDeletionCount > 0 ? modelDeletionCount : StringPool.BLANK %></span>
+						</liferay-util:buffer>
+
+						<aui:input checked="<%= true %>" helpMessage="export-deletions-help" id="deletions" label='<%= LanguageUtil.get(pageContext, "export-deletions") + badgeHTML %>' name="<%= PortletDataHandlerKeys.EXPORT_DELETIONS %>" type="checkbox" value="<%= true %>" />
+					</c:if>
 				</aui:fieldset>
 			</li>
 		</ul>

@@ -316,6 +316,12 @@
 		}
 	}
 
+	.export-deletions {
+		border-top: 1px solid #E5E5E5;
+		margin-bottom: 1em;
+		padding-top: 0.75em;
+	}
+
 	input.file-selector {
 		display: block;
 		margin: 0.5em 0 1.5em;

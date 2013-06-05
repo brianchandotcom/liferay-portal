@@ -38,6 +38,8 @@ public class PortletDataHandlerKeys {
 
 	public static final String DELETE_PORTLET_DATA = "DELETE_PORTLET_DATA";
 
+	public static final String EXPORT_DELETIONS = "EXPORT_DELETIONS";
+
 	public static final String IGNORE_LAST_PUBLISH_DATE =
 		"IGNORE_LAST_PUBLISH_DATE";
 

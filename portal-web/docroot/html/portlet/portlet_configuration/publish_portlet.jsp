@@ -182,9 +182,11 @@ portletURL.setParameter("tabs3", "all-publication-processes");
 							ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 
 							long exportModelCount = portletDataHandler.getExportModelCount(manifestSummary);
+
+							long modelDeletionCount = manifestSummary.getModelDeletionCount(portletDataHandler.getDeletionSystemEventStagedModelTypes());
 							%>
 
-							<c:if test="<%= (exportModelCount != 0) || (startDate != null) || (endDate != null) %>">
+							<c:if test="<%= (exportModelCount != 0) || (modelDeletionCount != 0) || (startDate != null) || (endDate != null) %>">
 								<aui:fieldset cssClass="options-group" label="content">
 									<ul class="lfr-tree select-options unstyled">
 										<li class="tree-item">
@@ -417,6 +419,20 @@ portletURL.setParameter("tabs3", "all-publication-processes");
 														</div>
 													</aui:fieldset>
 												</ul>
+
+												<c:if test="<%= modelDeletionCount > 0 %>">
+													<ul>
+														<aui:fieldset cssClass="export-deletions">
+															<liferay-util:buffer var="badgeHTML">
+																<span class="badge badge-info"><%= modelDeletionCount > 0 ? modelDeletionCount : StringPool.BLANK %></span>
+															</liferay-util:buffer>
+
+															<li class="tree-item">
+																<aui:input checked="<%= true %>" helpMessage="export-deletions-help" id="deletions" label='<%= LanguageUtil.get(pageContext, "export-deletions") + badgeHTML %>' name="<%= PortletDataHandlerKeys.EXPORT_DELETIONS %>" type="checkbox" value="<%= true %>" />
+															</li>
+														</aui:fieldset>
+													</ul>
+												</c:if>
 											</li>
 										</c:if>
 									</ul>

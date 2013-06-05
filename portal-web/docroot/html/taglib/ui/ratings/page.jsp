@@ -94,7 +94,7 @@ if (ratingsEntry != null) {
 						<div class="rating-label">
 							<liferay-ui:message key="average" />
 
-							(<%= ratingsStats.getTotalEntries() %> <liferay-ui:message key='<%= (ratingsStats.getTotalEntries() == 1) ? "vote" : "votes" %>' />)
+							(<%= ratingsStats.getTotalEntries() %><aui:spacer /><liferay-ui:message key='<%= (ratingsStats.getTotalEntries() == 1) ? "vote" : "votes" %>' />)
 						</div>
 
 						<%
@@ -125,7 +125,7 @@ if (ratingsEntry != null) {
 										</c:otherwise>
 									</c:choose>
 
-									(<%= ratingsStats.getTotalEntries() %> <liferay-ui:message key='<%= (ratingsStats.getTotalEntries() == 1) ? "vote" : "votes" %>' />)
+									(<%= ratingsStats.getTotalEntries() %><aui:spacer /><liferay-ui:message key='<%= (ratingsStats.getTotalEntries() == 1) ? "vote" : "votes" %>' />)
 								</div>
 
 								<c:choose>

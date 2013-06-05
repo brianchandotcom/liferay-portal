@@ -422,7 +422,7 @@
 
 	<footer id="footer" role="contentinfo">
 		<p class="powered-by">
-			<liferay-ui:message key="powered-by" /> <a href="http://www.liferay.com" rel="external">Liferay</a>
+			<liferay-ui:message key="powered-by" /><aui:spacer /><a href="http://www.liferay.com" rel="external">Liferay</a>
 		</p>
 	</footer>
 </div>

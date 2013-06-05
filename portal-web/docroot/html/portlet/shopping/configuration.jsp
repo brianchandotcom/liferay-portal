@@ -150,7 +150,7 @@ else if (tabs3.equals("shipping-email")) {
 		</c:when>
 		<c:when test='<%= tabs2.equals("shipping-calculation") %>'>
 			<div class="alert alert-info">
-				<liferay-ui:message key="calculate-a-flat-shipping-amount-based-on-the-total-amount-of-the-purchase" /> <span style="font-size: xx-small;">-- <%= LanguageUtil.get(pageContext, "or").toUpperCase() %> --</span> <liferay-ui:message key="calculate-the-shipping-based-on-a-percentage-of-the-total-amount-of-the-purchase" />
+				<liferay-ui:message key="calculate-a-flat-shipping-amount-based-on-the-total-amount-of-the-purchase" /><aui:spacer /><span style="font-size: xx-small;">-- <%= LanguageUtil.get(pageContext, "or").toUpperCase() %> --</span><aui:spacer /><liferay-ui:message key="calculate-the-shipping-based-on-a-percentage-of-the-total-amount-of-the-purchase" />
 			</div>
 
 			<aui:fieldset>
@@ -190,7 +190,7 @@ else if (tabs3.equals("shipping-email")) {
 		</c:when>
 		<c:when test='<%= tabs2.equals("insurance-calculation") %>'>
 			<div class="alert alert-info">
-				<liferay-ui:message key="calculate-a-flat-insurance-amount-based-on-the-total-amount-of-the-purchase" /> <span style="font-size: xx-small;">-- <%= LanguageUtil.get(pageContext, "or").toUpperCase() %> --</span> <liferay-ui:message key="calculate-the-insurance-based-on-a-percentage-of-the-total-amount-of-the-purchase" />
+				<liferay-ui:message key="calculate-a-flat-insurance-amount-based-on-the-total-amount-of-the-purchase" /><aui:spacer /><span style="font-size: xx-small;">-- <%= LanguageUtil.get(pageContext, "or").toUpperCase() %> --</span><aui:spacer /><liferay-ui:message key="calculate-the-insurance-based-on-a-percentage-of-the-total-amount-of-the-purchase" />
 			</div>
 
 			<aui:fieldset>

@@ -16,5 +16,5 @@
 
 <%@ include file="/html/taglib/aui/column/init.jsp" %>
 
-<div class="column <%= (columnWidth > 0) ? "w" + columnWidth : StringPool.BLANK %> <%= cssClass %> <%= first ? "column-first" : StringPool.BLANK %> <%= last ? "column-last" : StringPool.BLANK %>" <%= Validator.isNotNull(id) ? "id=\"" + namespace + id + "\"" : StringPool.BLANK %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
-	<div class="column-content <%= first ? "column-content-first" : StringPool.BLANK %> <%= last ? "column-content-last" : StringPool.BLANK %> <%= cssClasses %>" <%= Validator.isNotNull(id) ? "id=\"" + namespace + id + "Content\"" : StringPool.BLANK %>>
+<div class="column <%= (columnWidth > 0) ? "w" + columnWidth : StringPool.BLANK %><aui:spacer /><%= cssClass %><aui:spacer /><%= first ? "column-first" : StringPool.BLANK %><aui:spacer /><%= last ? "column-last" : StringPool.BLANK %>" <%= Validator.isNotNull(id) ? "id=\"" + namespace + id + "\"" : StringPool.BLANK %><aui:spacer /><%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
+	<div class="column-content <%= first ? "column-content-first" : StringPool.BLANK %><aui:spacer /><%= last ? "column-content-last" : StringPool.BLANK %><aui:spacer /><%= cssClasses %>" <%= Validator.isNotNull(id) ? "id=\"" + namespace + id + "Content\"" : StringPool.BLANK %>>

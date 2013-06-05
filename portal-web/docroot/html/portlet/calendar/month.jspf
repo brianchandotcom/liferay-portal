@@ -187,7 +187,7 @@ Format timeFormat = FastDateFormatFactoryUtil.getSimpleDateFormat("h:mma", local
 								<a href="<portlet:renderURL><portlet:param name="struts_action" value="/calendar/view" /><portlet:param name="tabs1" value="day" /><portlet:param name="month" value="<%= String.valueOf(month) %>" /><portlet:param name="day" value="<%= String.valueOf(i) %>" /><portlet:param name="year" value="<%= String.valueOf(year) %>" /></portlet:renderURL>"><%= i %></a>
 
 								<c:if test="<%= tempCal.get(Calendar.DAY_OF_WEEK) == cal.getFirstDayOfWeek() %>">
-									[<a href="<portlet:renderURL><portlet:param name="struts_action" value="/calendar/view" /><portlet:param name="tabs1" value="week" /><portlet:param name="month" value="<%= String.valueOf(month) %>" /><portlet:param name="day" value="<%= String.valueOf(i) %>" /><portlet:param name="year" value="<%= String.valueOf(year) %>" /></portlet:renderURL>"><liferay-ui:message key="week" /> <%= tempCal.get(Calendar.WEEK_OF_YEAR) %></a>]
+									[<a href="<portlet:renderURL><portlet:param name="struts_action" value="/calendar/view" /><portlet:param name="tabs1" value="week" /><portlet:param name="month" value="<%= String.valueOf(month) %>" /><portlet:param name="day" value="<%= String.valueOf(i) %>" /><portlet:param name="year" value="<%= String.valueOf(year) %>" /></portlet:renderURL>"><liferay-ui:message key="week" /><aui:spacer /><%= tempCal.get(Calendar.WEEK_OF_YEAR) %></a>]
 								</c:if>
 							</td>
 							<td align="right">

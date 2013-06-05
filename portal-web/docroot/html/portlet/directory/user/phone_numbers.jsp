@@ -51,7 +51,7 @@ for (int i = 0; i < organizations.size(); i++) {
 		%>
 
 			<li class="<%= phone.isPrimary() ? "primary" : "" %>">
-				<%= phone.getNumber() %> <%= phone.getExtension() %> <%= LanguageUtil.get(pageContext, phone.getType().getName()) %>
+				<%= phone.getNumber() %><aui:spacer /><%= phone.getExtension() %><aui:spacer /><%= LanguageUtil.get(pageContext, phone.getType().getName()) %>
 			</li>
 
 		<%
@@ -71,7 +71,7 @@ for (int i = 0; i < organizations.size(); i++) {
 		%>
 
 			<li class="<%= phone.isPrimary() ? "primary" : "" %>">
-				<%= phone.getNumber() %> <%= phone.getExtension() %> <%= LanguageUtil.get(pageContext, phone.getType().getName()) %>
+				<%= phone.getNumber() %><aui:spacer /><%= phone.getExtension() %><aui:spacer /><%= LanguageUtil.get(pageContext, phone.getType().getName()) %>
 			</li>
 
 		<%

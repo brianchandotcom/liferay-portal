@@ -41,7 +41,7 @@ serverURL.setParameter("tabs3", tabs3);
 <liferay-ui:message key="uptime" />:
 
 <c:if test="<%= days > 0 %>">
-	<%= days %> <%= LanguageUtil.get(pageContext, ((days > 1) ? "days" : "day")) %>,
+	<%= days %><aui:spacer /><%= LanguageUtil.get(pageContext, ((days > 1) ? "days" : "day")) %>,
 </c:if>
 
 <%= numberFormat.format(hours) %>:<%= numberFormat.format(minutes) %>:<%= numberFormat.format(seconds) %>
@@ -798,7 +798,7 @@ serverURL.setParameter("tabs3", tabs3);
 						<liferay-ui:message key="used-memory" />:
 					</td>
 					<td>
-						<%= numberFormat.format(usedMemory) %> <liferay-ui:message key="bytes" />
+						<%= numberFormat.format(usedMemory) %><aui:spacer /><liferay-ui:message key="bytes" />
 					</td>
 				</tr>
 				<tr>
@@ -806,7 +806,7 @@ serverURL.setParameter("tabs3", tabs3);
 						<liferay-ui:message key="total-memory" />:
 					</td>
 					<td>
-						<%= numberFormat.format(runtime.totalMemory()) %> <liferay-ui:message key="bytes" />
+						<%= numberFormat.format(runtime.totalMemory()) %><aui:spacer /><liferay-ui:message key="bytes" />
 					</td>
 				</tr>
 				<tr>
@@ -814,7 +814,7 @@ serverURL.setParameter("tabs3", tabs3);
 						<liferay-ui:message key="maximum-memory" />:
 					</td>
 					<td>
-						<%= numberFormat.format(runtime.maxMemory()) %> <liferay-ui:message key="bytes" />
+						<%= numberFormat.format(runtime.maxMemory()) %><aui:spacer /><liferay-ui:message key="bytes" />
 					</td>
 				</tr>
 				</table>
@@ -969,7 +969,7 @@ serverURL.setParameter("tabs3", tabs3);
 						</tr>
 						<tr>
 							<td>
-								<liferay-ui:message key="clean-up-permissions" /> <liferay-ui:icon-help message="clean-up-permissions-help" />
+								<liferay-ui:message key="clean-up-permissions" /><aui:spacer /><liferay-ui:icon-help message="clean-up-permissions-help" />
 							</td>
 							<td>
 

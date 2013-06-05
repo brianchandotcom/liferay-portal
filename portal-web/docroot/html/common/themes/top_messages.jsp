@@ -18,7 +18,7 @@
 
 <c:if test="<%= ShutdownUtil.isInProcess() %>">
 	<div class="alert alert-block" id="lfrShutdownMessage">
-		<span class="notice-label"><liferay-ui:message key="maintenance-alert" /></span> <span class="notice-date"><%= FastDateFormatFactoryUtil.getTime(locale).format(Time.getDate(CalendarFactoryUtil.getCalendar(timeZone))) %> <%= timeZone.getDisplayName(false, TimeZone.SHORT, locale) %></span>
+		<span class="notice-label"><liferay-ui:message key="maintenance-alert" /></span><aui:spacer /><span class="notice-date"><%= FastDateFormatFactoryUtil.getTime(locale).format(Time.getDate(CalendarFactoryUtil.getCalendar(timeZone))) %><aui:spacer /><%= timeZone.getDisplayName(false, TimeZone.SHORT, locale) %></span>
 		<span class="notice-message"><%= LanguageUtil.format(pageContext, "the-portal-will-shutdown-for-maintenance-in-x-minutes", String.valueOf(ShutdownUtil.getInProcess() / Time.MINUTE), false) %></span>
 
 		<c:if test="<%= Validator.isNotNull(ShutdownUtil.getMessage()) %>">

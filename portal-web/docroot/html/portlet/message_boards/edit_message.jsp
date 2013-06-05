@@ -337,7 +337,7 @@ if (Validator.isNull(redirect)) {
 									<span class="hide" id="<portlet:namespace />undoFile<%= i + 1 %>">
 										<aui:input id='<%= "undoPath" + (i + 1) %>' name='<%= "undoPath" + (i + 1) %>' type="hidden" value="<%= fileEntry.getFileEntryId() %>" />
 
-										<span class="undo">(<liferay-ui:message key="marked-as-removed" />)</span> <a class="trash-undo-link" href="<%= sb.toString() %>" id="<portlet:namespace />undo"><liferay-ui:message key="undo" /></a>
+										<span class="undo">(<liferay-ui:message key="marked-as-removed" />)</span><aui:spacer /><a class="trash-undo-link" href="<%= sb.toString() %>" id="<portlet:namespace />undo"><liferay-ui:message key="undo" /></a>
 									</span>
 								</c:if>
 							</li>

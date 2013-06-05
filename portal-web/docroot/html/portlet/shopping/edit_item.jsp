@@ -433,7 +433,7 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 				String[] imageExtensions = PrefsPropsUtil.getStringArray(PropsKeys.SHOPPING_IMAGE_EXTENSIONS, StringPool.COMMA);
 				%>
 
-				<liferay-ui:message key="image-names-must-end-with-one-of-the-following-extensions" /> <%= StringUtil.merge(imageExtensions, ", ") %>.
+				<liferay-ui:message key="image-names-must-end-with-one-of-the-following-extensions" /><aui:spacer /><%= StringUtil.merge(imageExtensions, ", ") %>.
 			</liferay-ui:error>
 
 			<liferay-ui:error exception="<%= ItemLargeImageSizeException.class %>">
@@ -451,7 +451,7 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 				String[] imageExtensions = PrefsPropsUtil.getStringArray(PropsKeys.SHOPPING_IMAGE_EXTENSIONS, StringPool.COMMA);
 				%>
 
-				<liferay-ui:message key="image-names-must-end-with-one-of-the-following-extensions" /> <%= StringUtil.merge(imageExtensions, ", ") %>.
+				<liferay-ui:message key="image-names-must-end-with-one-of-the-following-extensions" /><aui:spacer /><%= StringUtil.merge(imageExtensions, ", ") %>.
 			</liferay-ui:error>
 
 			<liferay-ui:error exception="<%= ItemMediumImageSizeException.class %>">
@@ -469,7 +469,7 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 				String[] imageExtensions = PrefsPropsUtil.getStringArray(PropsKeys.SHOPPING_IMAGE_EXTENSIONS, StringPool.COMMA);
 				%>
 
-				<liferay-ui:message key="image-names-must-end-with-one-of-the-following-extensions" /> <%= StringUtil.merge(imageExtensions, ", ") %>.
+				<liferay-ui:message key="image-names-must-end-with-one-of-the-following-extensions" /><aui:spacer /><%= StringUtil.merge(imageExtensions, ", ") %>.
 			</liferay-ui:error>
 
 			<liferay-ui:error exception="<%= ItemSmallImageSizeException.class %>">
@@ -484,7 +484,7 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 			<aui:fieldset>
 				<aui:input label="small-image-url" name="smallImageURL" />
 
-				<span style="font-size: xx-small;">-- <%= LanguageUtil.get(pageContext, "or").toUpperCase() %> --</span> <liferay-ui:message key="small-image" />
+				<span style="font-size: xx-small;">-- <%= LanguageUtil.get(pageContext, "or").toUpperCase() %> --</span><aui:spacer /><liferay-ui:message key="small-image" />
 
 				<aui:input label="" name="smallFile" type="file" />
 
@@ -492,7 +492,7 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 
 				<aui:input label="medium-image-url" name="mediumImageURL" />
 
-				<span style="font-size: xx-small;">-- <%= LanguageUtil.get(pageContext, "or").toUpperCase() %> --</span> <liferay-ui:message key="medium-image" />
+				<span style="font-size: xx-small;">-- <%= LanguageUtil.get(pageContext, "or").toUpperCase() %> --</span><aui:spacer /><liferay-ui:message key="medium-image" />
 
 				<aui:input label="" name="mediumFile" type="file" />
 
@@ -500,7 +500,7 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 
 				<aui:input label="large-image-url" name="largeImageURL" />
 
-				<span style="font-size: xx-small;">-- <%= LanguageUtil.get(pageContext, "or").toUpperCase() %> --</span> <liferay-ui:message key="large-image" />
+				<span style="font-size: xx-small;">-- <%= LanguageUtil.get(pageContext, "or").toUpperCase() %> --</span><aui:spacer /><liferay-ui:message key="large-image" />
 
 				<aui:input label="" name="largeFile" type="file" />
 

@@ -175,7 +175,7 @@ boolean expired = true;
 
 							<c:if test="<%= availableLocales.length > 1 %>">
 								<c:if test="<%= enableConversions || enablePrint %>">
-									<div class="locale-separator"> </div>
+									<div class="locale-separator"><aui:spacer /></div>
 								</c:if>
 
 								<div class="locale-actions">

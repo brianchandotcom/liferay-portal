@@ -82,6 +82,8 @@ public class Field implements Serializable {
 
 	public static final String LAYOUT_UUID = "layoutUuid";
 
+	public static final String LOCALE = "locale";
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #MODIFIED_DATE}
 	 */
@@ -120,6 +122,8 @@ public class Field implements Serializable {
 	public static final String SCOPE_GROUP_ID = "scopeGroupId";
 
 	public static final String SNIPPET = "snippet";
+
+	public static final String SPELL_CHECK_WORD = "spellCheckWord";
 
 	public static final String STAGING_GROUP = "stagingGroup";
 

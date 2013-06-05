@@ -1030,6 +1030,8 @@ public class PropsValues {
 
 	public static final boolean LUCENE_REPLICATE_WRITE = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.LUCENE_REPLICATE_WRITE));
 
+	public static final String[] LUCENE_SPELL_CHECKER_SUPPORTED_LOCALES = StringUtil.split(PropsUtil.get(PropsKeys.LUCENE_SPELL_CHECKER_SUPPORTED_LOCALES));
+
 	public static final String LUCENE_STORE_TYPE = PropsUtil.get(PropsKeys.LUCENE_STORE_TYPE);
 
 	public static final boolean LUCENE_STORE_TYPE_FILE_FORCE_MMAP = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.LUCENE_STORE_TYPE_FILE_FORCE_MMAP));

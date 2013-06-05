@@ -47,7 +47,7 @@
 <c:if test="<%= Validator.isNotNull(prefix) || Validator.isNotNull(suffix) %>">
 	<div class="<%= addOnCss %>">
 		<c:if test="<%= Validator.isNotNull(prefix) %>">
-			<span class="<%= bootstrapHelpTextClass %>"><liferay-ui:message key="<%= prefix %>" /></span>
+			<span class="<%= helpTextCssClass %>"><liferay-ui:message key="<%= prefix %>" /></span>
 		</c:if>
 </c:if>
 
@@ -220,7 +220,7 @@
 
 <c:if test="<%= Validator.isNotNull(prefix) || Validator.isNotNull(suffix) %>">
 		<c:if test="<%= Validator.isNotNull(suffix) %>">
-			<span class="<%= bootstrapHelpTextClass %>"><liferay-ui:message key="<%= suffix %>" /></span>
+			<span class="<%= helpTextCssClass %>"><liferay-ui:message key="<%= suffix %>" /></span>
 		</c:if>
 	</div>
 </c:if>

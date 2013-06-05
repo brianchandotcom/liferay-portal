@@ -34,7 +34,6 @@ if ((dynamicAttributes != null) && !dynamicAttributes.isEmpty()) {
 
 boolean autoSize = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:autoSize")));
 java.lang.Object bean = (java.lang.Object)request.getAttribute("aui:input:bean");
-java.lang.String bootstrapHelpTextClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:bootstrapHelpTextClass"));
 boolean changesContext = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:changesContext")));
 boolean checked = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:checked")));
 long classPK = GetterUtil.getLong(String.valueOf(request.getAttribute("aui:input:classPK")));
@@ -48,6 +47,7 @@ java.lang.String fieldParam = GetterUtil.getString((java.lang.String)request.get
 boolean first = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:first")));
 java.lang.String formName = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:formName"));
 java.lang.String helpMessage = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:helpMessage"));
+java.lang.String helpTextCssClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:helpTextCssClass"));
 java.lang.String id = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:id"));
 boolean ignoreRequestValue = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:ignoreRequestValue")));
 boolean inlineField = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:inlineField")));
@@ -73,7 +73,6 @@ java.lang.Object value = (java.lang.Object)request.getAttribute("aui:input:value
 
 _updateOptions(_options, "autoSize", autoSize);
 _updateOptions(_options, "bean", bean);
-_updateOptions(_options, "bootstrapHelpTextClass", bootstrapHelpTextClass);
 _updateOptions(_options, "changesContext", changesContext);
 _updateOptions(_options, "checked", checked);
 _updateOptions(_options, "classPK", classPK);
@@ -87,6 +86,7 @@ _updateOptions(_options, "fieldParam", fieldParam);
 _updateOptions(_options, "first", first);
 _updateOptions(_options, "formName", formName);
 _updateOptions(_options, "helpMessage", helpMessage);
+_updateOptions(_options, "helpTextCssClass", helpTextCssClass);
 _updateOptions(_options, "id", id);
 _updateOptions(_options, "ignoreRequestValue", ignoreRequestValue);
 _updateOptions(_options, "inlineField", inlineField);

@@ -43,8 +43,13 @@ body {
 	visibility: hidden;
 }
 
+#banner .logo {
+	margin-right: 20px;
+}
+
 #banner .site-name {
 	background-image: url(<%= themeDisplay.getPathThemeImages() %>/common/configuration.png);
+	margin-left: 0;
 }
 
 #footer {
@@ -154,11 +159,6 @@ body {
 @media (max-width: 1023px) {
 	#banner .site-name {
 		font-size: 0.8em;
-		margin-left: 0;
-	}
-
-	#banner .logo {
-		margin-right: 20px;
 	}
 }
 

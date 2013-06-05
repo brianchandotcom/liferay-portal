@@ -65,7 +65,7 @@
 
 						<div class="row-fluid">
 							<aui:fieldset cssClass="span6" label="portal">
-								<aui:input label="portal-name" name="companyName" suffix='<%= LanguageUtil.format(pageContext, "for-example-x", "Liferay") %>' value="<%= PropsValues.COMPANY_DEFAULT_NAME %>" bootstrapHelpTextClass='help-block' />
+								<aui:input helpTextCssClass="help-inline" label="portal-name" name="companyName" suffix='<%= LanguageUtil.format(pageContext, "for-example-x", "Liferay") %>' value="<%= PropsValues.COMPANY_DEFAULT_NAME %>" />
 
 								<aui:select inlineField="<%= true %>" label="default-language" name="companyLocale">
 

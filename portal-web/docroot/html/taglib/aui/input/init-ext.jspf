@@ -60,7 +60,7 @@ if (choiceField && Validator.isNull(inlineLabel)) {
 
 String addOnCss = StringPool.BLANK;
 
-if (bootstrapHelpTextClass.equals("add-on")) {
+if (helpTextCssClass.equals("add-on")) {
 	if (Validator.isNotNull(prefix)) {
 		addOnCss = addOnCss.concat("input-prepend ");
 	}

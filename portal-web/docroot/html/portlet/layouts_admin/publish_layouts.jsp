@@ -342,13 +342,37 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 						</aui:fieldset>
 					</c:if>
 
-					<aui:fieldset cssClass="options-group" label="application-configuration">
-						<%@ include file="/html/portlet/layouts_admin/publish_layouts_portlets_setup.jspf" %>
-					</aui:fieldset>
+					<%
+					List<Layout> exportLayouts = new ArrayList<Layout>();
 
-					<aui:fieldset cssClass="options-group" label="content">
-						<%@ include file="/html/portlet/layouts_admin/publish_layouts_portlets_data.jspf" %>
-					</aui:fieldset>
+					if (selLayout != null) {
+						exportLayouts.add(selLayout);
+					}
+					else if (!results.isEmpty()) {
+						exportLayouts = results;
+					}
+					else {
+						exportLayouts = LayoutLocalServiceUtil.getLayouts(selGroup.getGroupId(), privateLayout);
+					}
+
+					List<Portlet> portletDataHandlerPortlets = LayoutExporter.getPortletDataHandlerPortlets(exportLayouts);
+					%>
+
+					<c:if test="<%= !portletDataHandlerPortlets.isEmpty() %>">
+						<aui:fieldset cssClass="options-group" label="application-configuration">
+							<%@ include file="/html/portlet/layouts_admin/publish_layouts_portlets_setup.jspf" %>
+						</aui:fieldset>
+					</c:if>
+
+					<%
+					List<Portlet> dataSiteLevelPortlets = LayoutExporter.getDataSiteLevelPortlets(company.getCompanyId());
+					%>
+
+					<c:if test="<%= !dataSiteLevelPortlets.isEmpty() %>">
+						<aui:fieldset cssClass="options-group" label="content">
+							<%@ include file="/html/portlet/layouts_admin/publish_layouts_portlets_data.jspf" %>
+						</aui:fieldset>
+					</c:if>
 
 					<c:if test="<%= !selGroup.isCompany() %>">
 						<aui:fieldset cssClass="options-group" label="permissions">
@@ -399,7 +423,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 <aui:script use="liferay-export-import">
 	new Liferay.ExportImport(
 		{
-			categoriesNode: '#<%= PortletDataHandlerKeys.CATEGORIES %>Checkbox',
+			commentsNode: '#<%= PortletDataHandlerKeys.COMMENTS %>Checkbox',
 			deleteMissingLayoutsNode: '#<%= PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS %>Checkbox',
 			deletePortletDataNode: '#<%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>Checkbox',
 			dialogTitle: '<%= UnicodeLanguageUtil.get(pageContext, "content-to-publish") %>',
@@ -411,6 +435,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 			rangeDateRangeNode: '#rangeDateRange',
 			rangeLastNode: '#rangeLast',
 			rangeLastPublishNode: '#rangeLastPublish',
+			ratingsNode: '#<%= PortletDataHandlerKeys.RATINGS %>Checkbox',
 			remoteAddressNode: '#<portlet:namespace />remoteAddress',
 			remoteDeletePortletDataNode: '#remoteDeletePortletDataCheckbox',
 			remotePortNode: '#<portlet:namespace />remotePort',

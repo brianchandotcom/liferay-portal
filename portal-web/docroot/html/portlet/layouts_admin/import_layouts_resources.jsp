@@ -263,8 +263,6 @@ ManifestSummary manifestSummary = com.liferay.portal.kernel.lar.ExportImportUtil
 										</div>
 									</li>
 								</ul>
-
-								<aui:input helpMessage="export-import-categories-help" label="categories" name="<%= PortletDataHandlerKeys.CATEGORIES %>" type="checkbox" value="<%= false %>" />
 							</aui:fieldset>
 
 							<aui:script>
@@ -279,6 +277,8 @@ ManifestSummary manifestSummary = com.liferay.portal.kernel.lar.ExportImportUtil
 								<aui:input name="<%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>" type="hidden" value="<%= true %>" />
 
 								<aui:input name="<%= PortletDataHandlerKeys.PORTLET_DATA %>" type="hidden" value="<%= true %>" />
+
+								<aui:input helpMessage="export-import-categories-help" label="categories" name="<%= PortletDataHandlerKeys.CATEGORIES %>" type="checkbox" value="<%= true %>" />
 							</li>
 
 							<%
@@ -390,6 +390,23 @@ ManifestSummary manifestSummary = com.liferay.portal.kernel.lar.ExportImportUtil
 							}
 							%>
 
+							<li>
+								<aui:fieldset cssClass="comments-and-ratings" label="for-each-of-the-selected-content-types-import-their">
+									<div class="selected-labels" id="<portlet:namespace />selectedCommentsAndRatings"></div>
+
+									<aui:a cssClass="modify-link" href="javascript:;" id="commentsAndRatingsLink" label="change" method="get" />
+
+									<div class="hide" id="<portlet:namespace />commentsAndRatings">
+										<ul class="lfr-tree unstyled">
+											<li class="tree-item">
+												<aui:input label="comments" name="<%= PortletDataHandlerKeys.COMMENTS %>" type="checkbox" value="<%= true %>" />
+
+												<aui:input label="ratings" name="<%= PortletDataHandlerKeys.RATINGS %>" type="checkbox" value="<%= true %>" />
+											</li>
+										</ul>
+									</div>
+								</aui:fieldset>
+							</li>
 						</ul>
 					</li>
 				</ul>
@@ -482,7 +499,7 @@ ManifestSummary manifestSummary = com.liferay.portal.kernel.lar.ExportImportUtil
 		{
 			alwaysCurrentUserIdNode: '#alwaysCurrentUserIdNode',
 			archivedSetupsNode: '#<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS %>Checkbox',
-			categoriesNode: '#<%= PortletDataHandlerKeys.CATEGORIES %>Checkbox',
+			commentsNode: '#<%= PortletDataHandlerKeys.COMMENTS %>Checkbox',
 			copyAsNewNode: '#copyAsNew',
 			currentUserIdNode: '#currentUserId',
 			deleteMissingLayoutsNode: '#<%= PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS %>Checkbox',
@@ -494,6 +511,7 @@ ManifestSummary manifestSummary = com.liferay.portal.kernel.lar.ExportImportUtil
 			mirrorNode: '#mirror',
 			mirrorWithOverwritingNode: '#mirrorWithOverwriting',
 			namespace: '<portlet:namespace />',
+			ratingsNode: '#<%= PortletDataHandlerKeys.RATINGS %>Checkbox',
 			themeNode: '#<%= PortletDataHandlerKeys.THEME %>Checkbox',
 			themeReferenceNode: '#<%= PortletDataHandlerKeys.THEME_REFERENCE %>Checkbox',
 			userPreferencesNode: '#<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES %>Checkbox'

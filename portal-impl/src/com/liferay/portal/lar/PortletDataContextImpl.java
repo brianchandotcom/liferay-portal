@@ -281,7 +281,9 @@ public class PortletDataContextImpl implements PortletDataContext {
 		Class<?> clazz = classedModel.getModelClass();
 		long classPK = getClassPK(classedModel);
 
+		addAssetCategories(clazz, classPK);
 		addAssetLinks(clazz, classPK);
+		addAssetTags(clazz, classPK);
 		addExpando(element, path, classedModel);
 		addLocks(clazz, String.valueOf(classPK));
 		addPermissions(clazz, classPK);
@@ -289,20 +291,18 @@ public class PortletDataContextImpl implements PortletDataContext {
 		boolean portletDataAll = MapUtil.getBoolean(
 			getParameterMap(), PortletDataHandlerKeys.PORTLET_DATA_ALL);
 
-		if (portletDataAll || getBooleanParameter(namespace, "categories")) {
-			addAssetCategories(clazz, classPK);
-		}
+		if (portletDataAll ||
+			MapUtil.getBoolean(
+				getParameterMap(), PortletDataHandlerKeys.COMMENTS)) {
 
-		if (portletDataAll || getBooleanParameter(namespace, "comments")) {
 			addComments(clazz, classPK);
 		}
 
-		if (portletDataAll || getBooleanParameter(namespace, "ratings")) {
-			addRatingsEntries(clazz, classPK);
-		}
+		if (portletDataAll ||
+			MapUtil.getBoolean(
+				getParameterMap(), PortletDataHandlerKeys.RATINGS)) {
 
-		if (portletDataAll || getBooleanParameter(namespace, "tags")) {
-			addAssetTags(clazz, classPK);
+			addRatingsEntries(clazz, classPK);
 		}
 
 		addZipEntry(path, classedModel);
@@ -1326,11 +1326,17 @@ public class PortletDataContextImpl implements PortletDataContext {
 		boolean portletDataAll = MapUtil.getBoolean(
 			getParameterMap(), PortletDataHandlerKeys.PORTLET_DATA_ALL);
 
-		if (portletDataAll || getBooleanParameter(namespace, "comments")) {
+		if (portletDataAll ||
+			MapUtil.getBoolean(
+				getParameterMap(), PortletDataHandlerKeys.COMMENTS)) {
+
 			importComments(clazz, classPK, newClassPK, getScopeGroupId());
 		}
 
-		if (portletDataAll || getBooleanParameter(namespace, "ratings")) {
+		if (portletDataAll ||
+			MapUtil.getBoolean(
+				getParameterMap(), PortletDataHandlerKeys.RATINGS)) {
+
 			importRatingsEntries(clazz, classPK, newClassPK);
 		}
 	}
@@ -1856,19 +1862,13 @@ public class PortletDataContextImpl implements PortletDataContext {
 			getParameterMap(), PortletDataHandlerKeys.PORTLET_DATA_ALL);
 
 		if (isResourceMain(classedModel)) {
-			if (portletDataAll ||
-				getBooleanParameter(namespace, "categories")) {
+			long[] assetCategoryIds = getAssetCategoryIds(clazz, classPK);
 
-				long[] assetCategoryIds = getAssetCategoryIds(clazz, classPK);
+			serviceContext.setAssetCategoryIds(assetCategoryIds);
 
-				serviceContext.setAssetCategoryIds(assetCategoryIds);
-			}
+			String[] assetTagNames = getAssetTagNames(clazz, classPK);
 
-			if (portletDataAll || getBooleanParameter(namespace, "tags")) {
-				String[] assetTagNames = getAssetTagNames(clazz, classPK);
-
-				serviceContext.setAssetTagNames(assetTagNames);
-			}
+			serviceContext.setAssetTagNames(assetTagNames);
 		}
 
 		// Expando

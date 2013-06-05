@@ -197,8 +197,6 @@ if (endDateTime > 0) {
 
 								<div class="hide" id="<portlet:namespace />content_<%= selPortlet.getRootPortletId() %>">
 									<aui:field-wrapper label="content">
-										<aui:input data-name='<%= LanguageUtil.get(pageContext, "categories") %>' helpMessage="export-import-referenced-categories-help" label="categories" name="<%= PortletDataHandlerKeys.CATEGORIES %>" type="checkbox" value="<%= false %>" />
-
 										<c:if test="<%= exportControls != null %>">
 
 											<%
@@ -270,6 +268,24 @@ if (endDateTime > 0) {
 							%>
 
 						</li>
+
+						<li>
+							<aui:fieldset cssClass="comments-and-ratings" label="for-each-of-the-selected-content-types-export-their">
+								<div class="selected-labels" id="<portlet:namespace />selectedCommentsAndRatings"></div>
+
+								<aui:a cssClass="modify-link" href="javascript:;" id="commentsAndRatingsLink" label="change" method="get" />
+
+								<div class="hide" id="<portlet:namespace />commentsAndRatings">
+									<ul class="lfr-tree unstyled">
+										<li class="tree-item">
+											<aui:input label="comments" name="<%= PortletDataHandlerKeys.COMMENTS %>" type="checkbox" value="<%= true %>" />
+
+											<aui:input label="ratings" name="<%= PortletDataHandlerKeys.RATINGS %>" type="checkbox" value="<%= true %>" />
+										</li>
+									</ul>
+								</div>
+							</aui:fieldset>
+						</li>
 					</c:if>
 				</ul>
 			</aui:fieldset>
@@ -295,7 +311,7 @@ if (endDateTime > 0) {
 	new Liferay.ExportImport(
 		{
 			archivedSetupsNode: '#<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS %>Checkbox',
-			categoriesNode: '#<%= PortletDataHandlerKeys.CATEGORIES %>Checkbox',
+			commentsNode: '#<%= PortletDataHandlerKeys.COMMENTS %>Checkbox',
 			dialogTitle: '<%= UnicodeLanguageUtil.get(pageContext, "content-to-export") %>',
 			form: document.<portlet:namespace />fm1,
 			namespace: '<portlet:namespace />',
@@ -303,6 +319,7 @@ if (endDateTime > 0) {
 			rangeDateRangeNode: '#rangeDateRange',
 			rangeLastNode: '#rangeLast',
 			rangeLastPublishNode: '#rangeLastPublish',
+			ratingsNode: '#<%= PortletDataHandlerKeys.RATINGS %>Checkbox',
 			userPreferencesNode: '#<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES %>Checkbox'
 		}
 	);

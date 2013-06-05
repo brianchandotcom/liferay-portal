@@ -20,7 +20,7 @@ AUI.add(
 				ATTRS: {
 					alwaysCurrentUserIdNode: defaultConfig,
 					archivedSetupsNode: defaultConfig,
-					categoriesNode: defaultConfig,
+					commentsNode: defaultConfig,
 					copyAsNewNode: defaultConfig,
 					currentUserIdNode: defaultConfig,
 					deleteMissingLayoutsNode: defaultConfig,
@@ -34,6 +34,7 @@ AUI.add(
 					rangeDateRangeNode: defaultConfig,
 					rangeLastNode: defaultConfig,
 					rangeLastPublishNode: defaultConfig,
+					ratingsNode: defaultConfig,
 					remoteAddressNode: defaultConfig,
 					remoteDeletePortletDataNode: defaultConfig,
 					remotePortNode: defaultConfig,
@@ -64,6 +65,10 @@ AUI.add(
 
 					destructor: function() {
 						var instance = this;
+
+						if (instance._commentsAndRatingsDialog) {
+							instance._commentsAndRatingsDialog.destroy();
+						}
 
 						if (instance._globalConfigurationDialog) {
 							instance._globalConfigurationDialog.destroy();
@@ -104,6 +109,19 @@ AUI.add(
 							},
 							'.content-link'
 						);
+
+						var commentsAndRatingsLink = instance.byId('commentsAndRatingsLink');
+
+						if (commentsAndRatingsLink) {
+							commentsAndRatingsLink.on(
+								STR_CLICK,
+								function(event) {
+									var commentsAndRatingsDialog = instance._getCommentsAndRatingsDialog();
+
+									commentsAndRatingsDialog.show();
+								}
+							);
+						}
 
 						var globalConfigurationLink = instance.byId('globalConfigurationLink');
 
@@ -182,6 +200,63 @@ AUI.add(
 								}
 							);
 						}
+					},
+
+					_getCommentsAndRatingsDialog: function() {
+						var instance = this;
+
+						var commentsAndRatingsDialog = instance._commentsAndRatingsDialog;
+
+						if (!commentsAndRatingsDialog) {
+							var commentsAndRatingsNode = instance.byId('commentsAndRatings');
+
+							commentsAndRatingsNode.show();
+
+							commentsAndRatingsDialog = Liferay.Util.Window.getWindow(
+								{
+									dialog: {
+										bodyContent: commentsAndRatingsNode,
+										centered: true,
+										height: 300,
+										modal: true,
+										render: instance.get('form'),
+										toolbars: {
+											footer: [
+												{
+													on: {
+														click: function(event) {
+															event.domEvent.preventDefault();
+
+															instance._setCommentsAndRatingsLabels();
+
+															commentsAndRatingsDialog.hide();
+														}
+													},
+													label: Liferay.Language.get('ok'),
+													primary: true
+												},
+												{
+													on: {
+														click: function(event) {
+															event.domEvent.preventDefault();
+
+															commentsAndRatingsDialog.hide();
+														}
+													},
+													label: Liferay.Language.get('cancel')
+												}
+											]
+										},
+										width: 400
+									},
+									title: Liferay.Language.get('comments-and-ratings')
+								}
+							);
+
+							instance._commentsAndRatingsDialog = commentsAndRatingsDialog;
+						}
+
+						return commentsAndRatingsDialog;
 					},
 
 					_getContentDialog: function(portletId) {
@@ -592,6 +667,7 @@ AUI.add(
 							}
 						);
 
+						instance._setCommentsAndRatingsLabels();
 						instance._setGlobalConfigurationLabels();
 						instance._setGlobalContentLabels();
 						instance._setPageLabels();
@@ -613,6 +689,22 @@ AUI.add(
 						instance.byId('cmd').val(STR_EMPTY);
 
 						submitForm(instance.get('form'));
+					},
+
+					_setCommentsAndRatingsLabels: function() {
+						var instance = this;
+
+						var selectedCommentsAndRatings = [];
+
+						if (instance._isChecked('commentsNode')) {
+							selectedCommentsAndRatings.push(Liferay.Language.get('comments'));
+						}
+
+						if (instance._isChecked('ratingsNode')) {
+							selectedCommentsAndRatings.push(Liferay.Language.get('ratings'));
+						}
+
+						instance._setLabels('selectedCommentsAndRatings', selectedCommentsAndRatings.join(', '));
 					},
 
 					_setContentLabels: function(portletId) {
@@ -660,10 +752,6 @@ AUI.add(
 
 						if (instance._isChecked('deletePortletDataNode')) {
 							selectedGlobalContent.push(Liferay.Language.get('delete-portlet-data-before-importing'));
-						}
-
-						if (instance._isChecked('categoriesNode')) {
-							selectedGlobalContent.push(Liferay.Language.get('categories'));
 						}
 
 						if (instance._isChecked('mirrorNode')) {

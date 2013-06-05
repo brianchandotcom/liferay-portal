@@ -428,14 +428,14 @@
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
-				<name>checkBox</name>
+				<name>checked</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
-				<name>checked</name>
-				<inputType>boolean</inputType>
-				<outputType>boolean</outputType>
+				<name>checkBoxLabel</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
 				<name>classPK</name>

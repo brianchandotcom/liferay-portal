@@ -48,7 +48,7 @@ if (article != null) {
 <aui:fieldset>
 	<aui:input formName="fm1" name="displayDate" />
 
-	<aui:input checkBox="true" disabled="<%= neverExpire %>" formName="fm1" name="expirationDate" />
+	<aui:input checkBoxLabel="neverExpire" disabled="<%= neverExpire %>" formName="fm1" name="expirationDate" />
 
-	<aui:input checkBox="true" disabled="<%= neverReview %>" formName="fm1" name="reviewDate" />
+	<aui:input checkBoxLabel="neverReview" disabled="<%= neverReview %>" formName="fm1" name="reviewDate" />
 </aui:fieldset>

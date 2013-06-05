@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.layoutprototypes.lar;
+package com.liferay.portlet.layoutsetprototypes.lar;
 
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 

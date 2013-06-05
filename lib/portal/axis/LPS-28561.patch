@@ -1,0 +1,22 @@
+--- LPS-28561/EngineConfiguration.java	2006-04-22 18:57:26.000000000 +0200
++++ src/org/apache/axis/EngineConfiguration.java	2012-07-19 12:54:48.000000000 +0200
+@@ -38,7 +38,7 @@
+  * @author Glyn Normington (glyn@apache.org)
+  * @author Glen Daniels (gdaniels@apache.org)
+  */
+-public interface EngineConfiguration {
++public interface EngineConfiguration extends java.io.Serializable {
+     /**
+      * Property name used for setting an EngineConfiguration to be used
+      * in creating engines.
+--- LPS-28561/Session.java	2006-04-22 18:57:28.000000000 +0200
++++ src/org/apache/axis/session/Session.java	2012-07-19 13:20:36.000000000 +0200
+@@ -25,7 +25,7 @@
+  *
+  * @author Glen Daniels (gdaniels@apache.org)
+  */
+-public interface Session
++public interface Session extends java.io.Serializable
+ {
+     /** Get a property from the session
+      *

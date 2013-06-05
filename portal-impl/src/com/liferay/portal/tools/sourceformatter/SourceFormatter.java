@@ -2604,6 +2604,23 @@ public class SourceFormatter {
 				}
 			}
 
+			for (int x = 0;;) {
+				x = newContent.indexOf("> <", x + 1);
+
+				if (x == -1) {
+					break;
+				}
+
+				int y = newContent.lastIndexOf("<%", x);
+				int z = newContent.lastIndexOf("%>", x);
+
+				if ((y != -1) && (z != -1) && (y < z)) {
+					newContent =
+						newContent.substring(0, x + 1) + "<aui:spacer />" +
+							newContent.substring(x + 2);
+				}
+			}
+
 			newContent = _fixSessionKey(
 				fileName, newContent, _sessionKeyPattern);
 			newContent = _fixSessionKey(

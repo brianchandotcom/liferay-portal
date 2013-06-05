@@ -20,7 +20,7 @@
 String fieldCss = AUIUtil.buildCss("field-wrapper", false, first, last, cssClass);
 %>
 
-<div class="<%= controlGroupCss %> <%= fieldCss %>" <%= AUIUtil.buildData(data) %>>
+<div class="<%= controlGroupCss %><aui:spacer /><%= fieldCss %>" <%= AUIUtil.buildData(data) %>>
 	<c:if test='<%= Validator.isNotNull(label) && !inlineLabel.equals("right") %>'>
 		<label <%= AUIUtil.buildLabel("wrapper", inlineField, showForLabel, name) %>>
 			<liferay-ui:message key="<%= label %>" />

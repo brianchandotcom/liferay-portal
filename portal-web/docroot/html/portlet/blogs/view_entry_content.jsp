@@ -203,7 +203,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 
 			<div class="entry-footer">
 				<div class="entry-author">
-					<liferay-ui:message key="written-by" /> <%= HtmlUtil.escape(PortalUtil.getUserName(entry)) %>
+					<liferay-ui:message key="written-by" /><aui:spacer /><%= HtmlUtil.escape(PortalUtil.getUserName(entry)) %>
 				</div>
 
 				<div class="stats">
@@ -211,10 +211,10 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 						<span class="view-count">
 							<c:choose>
 								<c:when test="<%= assetEntry.getViewCount() == 1 %>">
-									<%= assetEntry.getViewCount() %> <liferay-ui:message key="view" />,
+									<%= assetEntry.getViewCount() %><aui:spacer /><liferay-ui:message key="view" />,
 								</c:when>
 								<c:when test="<%= assetEntry.getViewCount() > 1 %>">
-									<%= assetEntry.getViewCount() %> <liferay-ui:message key="views" />,
+									<%= assetEntry.getViewCount() %><aui:spacer /><liferay-ui:message key="views" />,
 								</c:when>
 							</c:choose>
 						</span>
@@ -231,10 +231,10 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 
 							<c:choose>
 								<c:when test='<%= strutsAction.equals("/blogs/view_entry") %>'>
-									<%= messagesCount %> <liferay-ui:message key='<%= (messagesCount == 1) ? "comment" : "comments" %>' />
+									<%= messagesCount %><aui:spacer /><liferay-ui:message key='<%= (messagesCount == 1) ? "comment" : "comments" %>' />
 								</c:when>
 								<c:otherwise>
-									<aui:a href='<%= PropsValues.PORTLET_URL_ANCHOR_ENABLE ? viewEntryURL : viewEntryURL + StringPool.POUND + "blogsCommentsPanelContainer" %>'><%= messagesCount %> <liferay-ui:message key='<%= (messagesCount == 1) ? "comment" : "comments" %>' /></aui:a>
+									<aui:a href='<%= PropsValues.PORTLET_URL_ANCHOR_ENABLE ? viewEntryURL : viewEntryURL + StringPool.POUND + "blogsCommentsPanelContainer" %>'><%= messagesCount %><aui:spacer /><liferay-ui:message key='<%= (messagesCount == 1) ? "comment" : "comments" %>' /></aui:a>
 								</c:otherwise>
 							</c:choose>
 						</span>

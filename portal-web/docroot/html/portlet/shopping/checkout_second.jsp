@@ -443,7 +443,7 @@ ShoppingOrder order = (ShoppingOrder)request.getAttribute(WebKeys.SHOPPING_ORDER
 	</tr>
 	<tr>
 		<td>
-			<liferay-ui:message key="shipping" /> <%= Validator.isNotNull(altShippingName) ? "(" + altShippingName + ")" : StringPool.BLANK %>:
+			<liferay-ui:message key="shipping" /><aui:spacer /><%= Validator.isNotNull(altShippingName) ? "(" + altShippingName + ")" : StringPool.BLANK %>:
 		</td>
 		<td>
 			<%= currencyFormat.format(ShoppingUtil.calculateAlternativeShipping(items, altShipping)) %>

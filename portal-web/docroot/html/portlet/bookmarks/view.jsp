@@ -118,11 +118,11 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 							</div>
 
 							<div class="lfr-asset-icon lfr-asset-subfolders">
-								<%= foldersCount %> <liferay-ui:message key='<%= (foldersCount == 1) ? "subfolder" : "subfolders" %>' />
+								<%= foldersCount %><aui:spacer /><liferay-ui:message key='<%= (foldersCount == 1) ? "subfolder" : "subfolders" %>' />
 							</div>
 
 							<div class="lfr-asset-icon lfr-asset-items last">
-								<%= entriesCount %> <liferay-ui:message key='<%= (entriesCount == 1) ? "entry" : "entries" %>' />
+								<%= entriesCount %><aui:spacer /><liferay-ui:message key='<%= (entriesCount == 1) ? "entry" : "entries" %>' />
 							</div>
 						</div>
 

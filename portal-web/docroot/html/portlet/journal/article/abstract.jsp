@@ -38,7 +38,7 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 	String[] imageExtensions = PrefsPropsUtil.getStringArray(PropsKeys.JOURNAL_IMAGE_EXTENSIONS, StringPool.COMMA);
 	%>
 
-	<liferay-ui:message key="image-names-must-end-with-one-of-the-following-extensions" /> <%= StringUtil.merge(imageExtensions, ", ") %>.
+	<liferay-ui:message key="image-names-must-end-with-one-of-the-following-extensions" /><aui:spacer /><%= StringUtil.merge(imageExtensions, ", ") %>.
 </liferay-ui:error>
 
 <liferay-ui:error exception="<%= ArticleSmallImageSizeException.class %>">

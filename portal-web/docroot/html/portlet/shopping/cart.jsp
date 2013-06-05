@@ -401,7 +401,7 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 			</c:if>
 
 			<c:if test="<%= subtotal != actualSubtotal %>">
-				<strike><%= currencyFormat.format(subtotal) %></strike> <div class="alert alert-success"><%= currencyFormat.format(actualSubtotal) %></div>
+				<strike><%= currencyFormat.format(subtotal) %></strike><aui:spacer /><div class="alert alert-success"><%= currencyFormat.format(actualSubtotal) %></div>
 			</c:if>
 		</aui:field-wrapper>
 

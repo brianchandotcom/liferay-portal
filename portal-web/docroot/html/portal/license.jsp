@@ -627,14 +627,14 @@ dateFormatDateTime.setTimeZone(timeZone);
 
 					<c:choose>
 						<c:when test='<%= key.equals("basic") %>'>
-							<option value="basic">Single Production Server (<%= licensesLeft %> <%= licensesLeft.equals("1") ? "License" : "Licenses" %> Left)</option>
-							<option value="basic-cluster">Create New Cluster Production Servers (<%= licensesLeft %> <%= licensesLeft.equals("1") ? "License" : "Licenses" %> Left)</option>
+							<option value="basic">Single Production Server (<%= licensesLeft %><aui:spacer /><%= licensesLeft.equals("1") ? "License" : "Licenses" %> Left)</option>
+							<option value="basic-cluster">Create New Cluster Production Servers (<%= licensesLeft %><aui:spacer /><%= licensesLeft.equals("1") ? "License" : "Licenses" %> Left)</option>
 						</c:when>
 						<c:when test='<%= key.startsWith("basic-") %>'>
-							<option value="<%= key %>">Join Existing Cluster (<%= licensesLeft %> <%= licensesLeft.equals("1") ? "Server" : "Servers" %> Left)</option>
+							<option value="<%= key %>">Join Existing Cluster (<%= licensesLeft %><aui:spacer /><%= licensesLeft.equals("1") ? "Server" : "Servers" %> Left)</option>
 						</c:when>
 						<c:otherwise>
-							<option value="<%= key %>"><%= LanguageUtil.get(pageContext, key) %> (<%= licensesLeft %> <%= licensesLeft.equals("1") ? "License" : "Licenses" %> Left)</option>
+							<option value="<%= key %>"><%= LanguageUtil.get(pageContext, key) %> (<%= licensesLeft %><aui:spacer /><%= licensesLeft.equals("1") ? "License" : "Licenses" %> Left)</option>
 						</c:otherwise>
 					</c:choose>
 

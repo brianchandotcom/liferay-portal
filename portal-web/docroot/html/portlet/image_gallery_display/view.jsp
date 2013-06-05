@@ -175,11 +175,11 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 									</div>
 
 									<div class="lfr-asset-icon lfr-asset-subfolders">
-										<%= foldersCount %> <liferay-ui:message key='<%= (foldersCount == 1) ? "subfolder" : "subfolders" %>' />
+										<%= foldersCount %><aui:spacer /><liferay-ui:message key='<%= (foldersCount == 1) ? "subfolder" : "subfolders" %>' />
 									</div>
 
 									<div class="lfr-asset-icon lfr-asset-items last">
-										<%= imagesCount %> <liferay-ui:message key='<%= (imagesCount == 1) ? "image" : "images" %>' />
+										<%= imagesCount %><aui:spacer /><liferay-ui:message key='<%= (imagesCount == 1) ? "image" : "images" %>' />
 									</div>
 								</div>
 

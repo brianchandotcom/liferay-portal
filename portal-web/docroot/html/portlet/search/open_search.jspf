@@ -87,7 +87,7 @@ if (Validator.isNotNull(primarySearch)) {
 			<liferay-ui:message key="no-portlets-were-searched" />
 		</c:when>
 		<c:otherwise>
-			<liferay-ui:message key="searched" /> <%= StringUtil.merge(portletTitles, StringPool.COMMA_AND_SPACE) %>
+			<liferay-ui:message key="searched" /><aui:spacer /><%= StringUtil.merge(portletTitles, StringPool.COMMA_AND_SPACE) %>
 		</c:otherwise>
 	</c:choose>
 </div>

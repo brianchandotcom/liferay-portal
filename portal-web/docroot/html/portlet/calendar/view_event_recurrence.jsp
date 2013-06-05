@@ -168,7 +168,7 @@ if (event.getRepeating() && (recurrence != null)) {
 	<liferay-ui:message key="repeat-daily" />:
 
 	<c:if test="<%= (dailyType == 0) %>">
-		<%= dailyInterval %> <liferay-ui:message key="day-s" />
+		<%= dailyInterval %><aui:spacer /><liferay-ui:message key="day-s" />
 	</c:if>
 
 	<c:if test="<%= (dailyType == 1) %>">
@@ -180,7 +180,7 @@ if (event.getRepeating() && (recurrence != null)) {
 	<liferay-ui:message key="repeat-weekly" />:
 
 	<abbr class="rrule" title="FREQ=WEEKLY">
-		<liferay-ui:message key="recur-every" /> <%= dailyInterval %> <liferay-ui:message key="weeks-on" />
+		<liferay-ui:message key="recur-every" /><aui:spacer /><%= dailyInterval %><aui:spacer /><liferay-ui:message key="weeks-on" />
 
 		<%= weeklyPosSu ? (days[0] + ",") : "" %>
 		<%= weeklyPosMo ? (days[1] + ",") : "" %>
@@ -196,7 +196,7 @@ if (event.getRepeating() && (recurrence != null)) {
 	<liferay-ui:message key="repeat-monthly" />:
 
 	<c:if test="<%= (monthlyType == 0) %>">
-		<liferay-ui:message key="day" /> <%= monthlyDay0 %> <liferay-ui:message key="of-every" /> <%= monthlyInterval0 %> <liferay-ui:message key="month-s" />
+		<liferay-ui:message key="day" /><aui:spacer /><%= monthlyDay0 %><aui:spacer /><liferay-ui:message key="of-every" /><aui:spacer /><%= monthlyInterval0 %><aui:spacer /><liferay-ui:message key="month-s" />
 	</c:if>
 
 	<c:if test="<%= (monthlyType == 1) %>">
@@ -216,7 +216,7 @@ if (event.getRepeating() && (recurrence != null)) {
 		<%= (monthlyDay1 == Calendar.FRIDAY) ? days[5] : "" %>
 		<%= (monthlyDay1 == Calendar.SATURDAY) ? days[6] : "" %>
 
-		<liferay-ui:message key="of-every" /> <%= monthlyInterval1 %> <liferay-ui:message key="month-s" />
+		<liferay-ui:message key="of-every" /><aui:spacer /><%= monthlyInterval1 %><aui:spacer /><liferay-ui:message key="month-s" />
 	</c:if>
 </c:if>
 
@@ -244,7 +244,7 @@ if (event.getRepeating() && (recurrence != null)) {
 			<%= (yearlyDay1 == Calendar.FRIDAY) ? days[5] : "" %>
 			<%= (yearlyDay1 == Calendar.SATURDAY) ? days[6] : "" %>
 
-			<liferay-ui:message key="of" /> <%= months[yearlyMonth1] %> <liferay-ui:message key="of-every" /> <%= yearlyInterval1 %> <liferay-ui:message key="year-s" />
+			<liferay-ui:message key="of" /><aui:spacer /><%= months[yearlyMonth1] %><aui:spacer /><liferay-ui:message key="of-every" /><aui:spacer /><%= yearlyInterval1 %><aui:spacer /><liferay-ui:message key="year-s" />
 		</c:if>
 	</abbr>
 </c:if>

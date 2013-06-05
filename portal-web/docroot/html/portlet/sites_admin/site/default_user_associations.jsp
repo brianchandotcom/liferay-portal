@@ -64,7 +64,7 @@ for (long defaultTeamId : defaultTeamIds) {
 <aui:input name="siteRolesRoleIds" type="hidden" value="<%= ListUtil.toString(defaultSiteRoles, Role.ROLE_ID_ACCESSOR) %>" />
 <aui:input name="teamsTeamIds" type="hidden" value="<%= ListUtil.toString(defaultTeams, TeamImpl.TEAM_ID_ACCESSOR) %>" />
 
-<h3><liferay-ui:message key="site-roles" /> <liferay-ui:icon-help message="default-site-roles-assignment-help" /></h3>
+<h3><liferay-ui:message key="site-roles" /><aui:spacer /><liferay-ui:icon-help message="default-site-roles-assignment-help" /></h3>
 
 <liferay-ui:search-container
 	headerNames="title,null"
@@ -105,7 +105,7 @@ for (long defaultTeamId : defaultTeamIds) {
 
 <br /><br />
 
-<h3><liferay-ui:message key="teams" /> <liferay-ui:icon-help message="default-teams-assignment-help" /></h3>
+<h3><liferay-ui:message key="teams" /><aui:spacer /><liferay-ui:icon-help message="default-teams-assignment-help" /></h3>
 
 <liferay-ui:search-container
 	headerNames="title,null"

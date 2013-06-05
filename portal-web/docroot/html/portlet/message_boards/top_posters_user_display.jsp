@@ -27,21 +27,21 @@ String[] ranks = MBUtil.getUserRank(preferences, themeDisplay.getLanguageId(), s
 <liferay-ui:user-display userId="<%= statsUser.getUserId() %>">
 	<c:if test="<%= Validator.isNotNull(ranks[0]) %>">
 		<div class="thread-user-rank">
-			<span><liferay-ui:message key="rank" />:</span> <%= ranks[0] %>
+			<span><liferay-ui:message key="rank" />:</span><aui:spacer /><%= ranks[0] %>
 		</div>
 	</c:if>
 
 	<div class="thread-user-post-count">
-		<span><liferay-ui:message key="posts" />:</span> <%= statsUser.getMessageCount() %>
+		<span><liferay-ui:message key="posts" />:</span><aui:spacer /><%= statsUser.getMessageCount() %>
 	</div>
 
 	<div class="thread-user-join-date">
-		<span><liferay-ui:message key="join-date" />:</span> <%= dateFormatDate.format(userDisplay.getCreateDate()) %>
+		<span><liferay-ui:message key="join-date" />:</span><aui:spacer /><%= dateFormatDate.format(userDisplay.getCreateDate()) %>
 	</div>
 
 	<c:if test="<%= statsUser.getLastPostDate() != null %>">
 		<div class="thread-user-last-post-date">
-			<span><liferay-ui:message key="last-post-date" />:</span> <%= dateFormatDate.format(statsUser.getLastPostDate()) %>
+			<span><liferay-ui:message key="last-post-date" />:</span><aui:spacer /><%= dateFormatDate.format(statsUser.getLastPostDate()) %>
 		</div>
 	</c:if>
 </liferay-ui:user-display>

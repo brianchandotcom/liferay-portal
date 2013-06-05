@@ -35,7 +35,7 @@ String casServiceURL = ParamUtil.getString(request, "casServiceURL");
 		String casLoginURLCssClass = _getCssClass(casLoginURLResult);
 		%>
 
-		<span class="<%= casLoginURLCssClass %>"><liferay-ui:message key="<%= casLoginURLResult %>" /></span> <span class="field-hint"><%= HtmlUtil.escape(casLoginURL) %></span>
+		<span class="<%= casLoginURLCssClass %>"><liferay-ui:message key="<%= casLoginURLResult %>" /></span><aui:spacer /><span class="field-hint"><%= HtmlUtil.escape(casLoginURL) %></span>
 	</td>
 </tr>
 <tr>
@@ -49,7 +49,7 @@ String casServiceURL = ParamUtil.getString(request, "casServiceURL");
 		String casLogoutURLCssClass = _getCssClass(casLogoutURLResult);
 		%>
 
-		<span class="<%= casLogoutURLCssClass %>"><liferay-ui:message key="<%= casLogoutURLResult %>" /></span> <span class="field-hint"><%= HtmlUtil.escape(casLogoutURL) %></span>
+		<span class="<%= casLogoutURLCssClass %>"><liferay-ui:message key="<%= casLogoutURLResult %>" /></span><aui:spacer /><span class="field-hint"><%= HtmlUtil.escape(casLogoutURL) %></span>
 	</td>
 </tr>
 
@@ -65,7 +65,7 @@ String casServiceURL = ParamUtil.getString(request, "casServiceURL");
 			String casServerURLCssClass = _getCssClass(casServerURLResult);
 			%>
 
-			<span class="<%= casServerURLCssClass %>"><liferay-ui:message key="<%= casServerURLResult %>" /></span> <span class="field-hint"><%= HtmlUtil.escape(casServerURL) %></span>
+			<span class="<%= casServerURLCssClass %>"><liferay-ui:message key="<%= casServerURLResult %>" /></span><aui:spacer /><span class="field-hint"><%= HtmlUtil.escape(casServerURL) %></span>
 		</td>
 	</tr>
 </c:if>
@@ -82,7 +82,7 @@ String casServiceURL = ParamUtil.getString(request, "casServiceURL");
 			String casServiceURLCssClass = _getCssClass(casServiceURLResult);
 			%>
 
-			<span class="<%= casServiceURLCssClass %>"><liferay-ui:message key="<%= casServiceURLResult %>" /></span> <span class="field-hint"><%= HtmlUtil.escape(casServiceURL) %></span>
+			<span class="<%= casServiceURLCssClass %>"><liferay-ui:message key="<%= casServiceURLResult %>" /></span><aui:spacer /><span class="field-hint"><%= HtmlUtil.escape(casServiceURL) %></span>
 		</td>
 	</tr>
 </c:if>

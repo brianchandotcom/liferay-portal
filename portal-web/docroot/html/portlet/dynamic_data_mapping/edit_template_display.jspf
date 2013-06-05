@@ -61,7 +61,7 @@ Map<String, TemplateVariableGroup> templateVariableGroups = TemplateContextHelpe
 										%>
 
 											<li class="palette-item-container">
-												<span class="palette-item" data-content1="<%= HtmlUtil.escapeAttribute(dataContentArray[0]) %>" <c:if test="<%= Validator.isNotNull(dataContentArray[1]) %>">data-content2="<%= HtmlUtil.escapeAttribute(dataContentArray[1]) %>"</c:if> <c:if test="<%= Validator.isNotNull(dataContentArray[2]) %>">data-content3="<%= HtmlUtil.escapeAttribute(dataContentArray[2]) %>"</c:if> data-title="<%= HtmlUtil.escapeAttribute(_getPaletteItemTitle(pageContext, templateVariableDefinition)) %>">
+												<span class="palette-item" data-content1="<%= HtmlUtil.escapeAttribute(dataContentArray[0]) %>" <c:if test="<%= Validator.isNotNull(dataContentArray[1]) %>">data-content2="<%= HtmlUtil.escapeAttribute(dataContentArray[1]) %>"</c:if><aui:spacer /><c:if test="<%= Validator.isNotNull(dataContentArray[2]) %>">data-content3="<%= HtmlUtil.escapeAttribute(dataContentArray[2]) %>"</c:if> data-title="<%= HtmlUtil.escapeAttribute(_getPaletteItemTitle(pageContext, templateVariableDefinition)) %>">
 													<liferay-ui:message key="<%= templateVariableDefinition.getLabel() %>" /><c:if test="<%= templateVariableDefinition.isCollection() || templateVariableDefinition.isRepeatable() %>">*</c:if>
 												</span>
 											</li>

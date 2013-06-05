@@ -143,7 +143,7 @@ String discountType = BeanParamUtil.getString(coupon, request, "discountType");
 				List categoryIds = (List)errorException;
 				%>
 
-				<liferay-ui:message key="the-following-are-invalid-category-ids" /> <%= StringUtil.merge((String[])categoryIds.toArray(new String[0])) %>
+				<liferay-ui:message key="the-following-are-invalid-category-ids" /><aui:spacer /><%= StringUtil.merge((String[])categoryIds.toArray(new String[0])) %>
 			</liferay-ui:error>
 
 			<liferay-ui:error exception="<%= CouponLimitSKUsException.class %>">
@@ -152,7 +152,7 @@ String discountType = BeanParamUtil.getString(coupon, request, "discountType");
 				List skus = (List)errorException;
 				%>
 
-				<liferay-ui:message key="the-following-are-invalid-item-skus" /> <%= StringUtil.merge((String[])skus.toArray(new String[0])) %>
+				<liferay-ui:message key="the-following-are-invalid-item-skus" /><aui:spacer /><%= StringUtil.merge((String[])skus.toArray(new String[0])) %>
 			</liferay-ui:error>
 
 			<aui:fieldset>

@@ -55,7 +55,7 @@ portletURL.setParameter("tabs1", tabs1);
 
 		<liferay-ui:error exception="<%= DNSLookup.class %>" message="please-enter-a-valid-host-name-or-ip" />
 
-		<input name="<portlet:namespace />domain" size="30" type="text" value="<%= HtmlUtil.escape(domain) %>" /> <input type="submit" value="<liferay-ui:message key="search" />" />
+		<input name="<portlet:namespace />domain" size="30" type="text" value="<%= HtmlUtil.escape(domain) %>" /><aui:spacer /><input type="submit" value="<liferay-ui:message key="search" />" />
 
 		<c:if test="<%= dnsLookup != null %>">
 <pre>
@@ -81,7 +81,7 @@ portletURL.setParameter("tabs1", tabs1);
 
 		<liferay-ui:error exception="<%= Whois.class %>" message="an-unexpected-error-occurred" />
 
-		<input name="<portlet:namespace />domain" size="30" type="text" value="<%= HtmlUtil.escape(domain) %>" /> <input type="submit" value="<liferay-ui:message key="search" />" />
+		<input name="<portlet:namespace />domain" size="30" type="text" value="<%= HtmlUtil.escape(domain) %>" /><aui:spacer /><input type="submit" value="<liferay-ui:message key="search" />" />
 
 		<c:if test="<%= whois != null %>">
 <pre>

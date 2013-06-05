@@ -55,7 +55,7 @@ public class VerifyUUID extends VerifyProcess {
 		}
 	}
 
-	public static void verifyModel(
+	protected static void verifyModel(
 			String modelName, String pkColumnName, long pk)
 		throws Exception {
 
@@ -65,7 +65,7 @@ public class VerifyUUID extends VerifyProcess {
 
 		db.runSQL(
 			"update " + modelName + " set uuid_ = '" + uuid +
-				"' where " + pkColumnName + " = " + pk);
+			"' where " + pkColumnName + " = " + pk);
 	}
 
 	@Override

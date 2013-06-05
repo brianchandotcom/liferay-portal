@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
-import com.liferay.portlet.documentlibrary.model.DLFileRank;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -272,20 +271,6 @@ public class DLDisplayPortletDataHandler extends DLPortletDataHandler {
 			for (Element fileShortcutElement : fileShortcutElements) {
 				StagedModelDataHandlerUtil.importStagedModel(
 					portletDataContext, fileShortcutElement);
-			}
-		}
-
-		if (portletDataContext.getBooleanParameter(
-				DLPortletDataHandler.NAMESPACE, "ranks")) {
-
-			Element fileRanksElement =
-				portletDataContext.getImportDataGroupElement(DLFileRank.class);
-
-			List<Element> fileRankElements = fileRanksElement.elements();
-
-			for (Element fileRankElement : fileRankElements) {
-				StagedModelDataHandlerUtil.importStagedModel(
-					portletDataContext, fileRankElement);
 			}
 		}
 

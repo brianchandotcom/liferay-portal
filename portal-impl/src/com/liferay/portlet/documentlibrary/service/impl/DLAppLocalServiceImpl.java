@@ -302,14 +302,13 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  fileEntryId the primary key of the file entry
 	 * @param  serviceContext the service context to be applied
 	 * @return the file rank
-	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DLFileRank addFileRank(
 			long repositoryId, long companyId, long userId, long fileEntryId,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws SystemException {
 
 		return dlFileRankLocalService.addFileRank(
 			repositoryId, companyId, userId, fileEntryId, serviceContext);
@@ -1132,14 +1131,13 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  fileEntryId the primary key of the file rank's file entry
 	 * @param  serviceContext the service context to be applied
 	 * @return the file rank
-	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DLFileRank updateFileRank(
 			long repositoryId, long companyId, long userId, long fileEntryId,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws SystemException {
 
 		return dlFileRankLocalService.updateFileRank(
 			repositoryId, companyId, userId, fileEntryId, serviceContext);

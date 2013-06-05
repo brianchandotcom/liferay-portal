@@ -316,7 +316,6 @@ alter table DLFileEntry add classNameId LONG;
 alter table DLFileEntry add classPK LONG;
 alter table DLFileEntry add manualCheckInRequired BOOLEAN;
 
-alter table DLFileRank add uuid_ VARCHAR(75) null;
 alter table DLFileRank add active_ BOOLEAN;
 
 COMMIT_TRANSACTION;

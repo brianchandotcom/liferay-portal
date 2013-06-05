@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
@@ -61,18 +60,15 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 	 */
 	public static final String TABLE_NAME = "DLFileRank";
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "uuid_", Types.VARCHAR },
 			{ "fileRankId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
-			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
-			{ "modifiedDate", Types.TIMESTAMP },
 			{ "fileEntryId", Types.BIGINT },
 			{ "active_", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table DLFileRank (uuid_ VARCHAR(75) null,fileRankId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fileEntryId LONG,active_ BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table DLFileRank (fileRankId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,createDate DATE null,fileEntryId LONG,active_ BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table DLFileRank";
 	public static final String ORDER_BY_JPQL = " ORDER BY dlFileRank.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY DLFileRank.createDate DESC";
@@ -93,8 +89,7 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 	public static long FILEENTRYID_COLUMN_BITMASK = 4L;
 	public static long GROUPID_COLUMN_BITMASK = 8L;
 	public static long USERID_COLUMN_BITMASK = 16L;
-	public static long UUID_COLUMN_BITMASK = 32L;
-	public static long CREATEDATE_COLUMN_BITMASK = 64L;
+	public static long CREATEDATE_COLUMN_BITMASK = 32L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.documentlibrary.model.DLFileRank"));
 
@@ -135,14 +130,11 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("uuid", getUuid());
 		attributes.put("fileRankId", getFileRankId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("fileEntryId", getFileEntryId());
 		attributes.put("active", getActive());
 
@@ -151,12 +143,6 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
-
-		if (uuid != null) {
-			setUuid(uuid);
-		}
-
 		Long fileRankId = (Long)attributes.get("fileRankId");
 
 		if (fileRankId != null) {
@@ -181,22 +167,10 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 			setUserId(userId);
 		}
 
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
 		Date createDate = (Date)attributes.get("createDate");
 
 		if (createDate != null) {
 			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
 		}
 
 		Long fileEntryId = (Long)attributes.get("fileEntryId");
@@ -210,29 +184,6 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 		if (active != null) {
 			setActive(active);
 		}
-	}
-
-	@Override
-	public String getUuid() {
-		if (_uuid == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _uuid;
-		}
-	}
-
-	@Override
-	public void setUuid(String uuid) {
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
-		}
-
-		_uuid = uuid;
-	}
-
-	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
 	}
 
 	@Override
@@ -322,21 +273,6 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 	}
 
 	@Override
-	public String getUserName() {
-		if (_userName == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _userName;
-		}
-	}
-
-	@Override
-	public void setUserName(String userName) {
-		_userName = userName;
-	}
-
-	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -346,16 +282,6 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 		_columnBitmask = -1L;
 
 		_createDate = createDate;
-	}
-
-	@Override
-	public Date getModifiedDate() {
-		return _modifiedDate;
-	}
-
-	@Override
-	public void setModifiedDate(Date modifiedDate) {
-		_modifiedDate = modifiedDate;
 	}
 
 	@Override
@@ -438,14 +364,11 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 	public Object clone() {
 		DLFileRankImpl dlFileRankImpl = new DLFileRankImpl();
 
-		dlFileRankImpl.setUuid(getUuid());
 		dlFileRankImpl.setFileRankId(getFileRankId());
 		dlFileRankImpl.setGroupId(getGroupId());
 		dlFileRankImpl.setCompanyId(getCompanyId());
 		dlFileRankImpl.setUserId(getUserId());
-		dlFileRankImpl.setUserName(getUserName());
 		dlFileRankImpl.setCreateDate(getCreateDate());
-		dlFileRankImpl.setModifiedDate(getModifiedDate());
 		dlFileRankImpl.setFileEntryId(getFileEntryId());
 		dlFileRankImpl.setActive(getActive());
 
@@ -500,8 +423,6 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 	public void resetOriginalValues() {
 		DLFileRankModelImpl dlFileRankModelImpl = this;
 
-		dlFileRankModelImpl._originalUuid = dlFileRankModelImpl._uuid;
-
 		dlFileRankModelImpl._originalGroupId = dlFileRankModelImpl._groupId;
 
 		dlFileRankModelImpl._setOriginalGroupId = false;
@@ -529,14 +450,6 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 	public CacheModel<DLFileRank> toCacheModel() {
 		DLFileRankCacheModel dlFileRankCacheModel = new DLFileRankCacheModel();
 
-		dlFileRankCacheModel.uuid = getUuid();
-
-		String uuid = dlFileRankCacheModel.uuid;
-
-		if ((uuid != null) && (uuid.length() == 0)) {
-			dlFileRankCacheModel.uuid = null;
-		}
-
 		dlFileRankCacheModel.fileRankId = getFileRankId();
 
 		dlFileRankCacheModel.groupId = getGroupId();
@@ -545,14 +458,6 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 
 		dlFileRankCacheModel.userId = getUserId();
 
-		dlFileRankCacheModel.userName = getUserName();
-
-		String userName = dlFileRankCacheModel.userName;
-
-		if ((userName != null) && (userName.length() == 0)) {
-			dlFileRankCacheModel.userName = null;
-		}
-
 		Date createDate = getCreateDate();
 
 		if (createDate != null) {
@@ -560,15 +465,6 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 		}
 		else {
 			dlFileRankCacheModel.createDate = Long.MIN_VALUE;
-		}
-
-		Date modifiedDate = getModifiedDate();
-
-		if (modifiedDate != null) {
-			dlFileRankCacheModel.modifiedDate = modifiedDate.getTime();
-		}
-		else {
-			dlFileRankCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		dlFileRankCacheModel.fileEntryId = getFileEntryId();
@@ -580,11 +476,9 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(15);
 
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", fileRankId=");
+		sb.append("{fileRankId=");
 		sb.append(getFileRankId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
@@ -592,12 +486,8 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
 		sb.append(", createDate=");
 		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
 		sb.append(", fileEntryId=");
 		sb.append(getFileEntryId());
 		sb.append(", active=");
@@ -609,16 +499,12 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.documentlibrary.model.DLFileRank");
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>fileRankId</column-name><column-value><![CDATA[");
 		sb.append(getFileRankId());
@@ -636,16 +522,8 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 		sb.append(getUserId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>createDate</column-name><column-value><![CDATA[");
 		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>fileEntryId</column-name><column-value><![CDATA[");
@@ -665,8 +543,6 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 	private static Class<?>[] _escapedModelInterfaces = new Class[] {
 			DLFileRank.class
 		};
-	private String _uuid;
-	private String _originalUuid;
 	private long _fileRankId;
 	private long _groupId;
 	private long _originalGroupId;
@@ -678,9 +554,7 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 	private String _userUuid;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;
-	private String _userName;
 	private Date _createDate;
-	private Date _modifiedDate;
 	private long _fileEntryId;
 	private long _originalFileEntryId;
 	private boolean _setOriginalFileEntryId;

@@ -113,8 +113,7 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 	public void getFileAsStream(long userId,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
 		boolean incrementCounter)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.SystemException {
 		_dlAppHelperLocalService.getFileAsStream(userId, fileEntry,
 			incrementCounter);
 	}

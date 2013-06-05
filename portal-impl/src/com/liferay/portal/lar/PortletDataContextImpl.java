@@ -85,7 +85,6 @@ import com.liferay.portlet.bookmarks.model.impl.BookmarksEntryImpl;
 import com.liferay.portlet.bookmarks.model.impl.BookmarksFolderImpl;
 import com.liferay.portlet.calendar.model.impl.CalEventImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
-import com.liferay.portlet.documentlibrary.model.impl.DLFileRankImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileShortcutImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFolderImpl;
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -2207,7 +2206,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 		_xStream.alias("DLFolder", DLFolderImpl.class);
 		_xStream.alias("DLFileEntry", DLFileEntryImpl.class);
 		_xStream.alias("DLFileShortcut", DLFileShortcutImpl.class);
-		_xStream.alias("DLFileRank", DLFileRankImpl.class);
 		_xStream.alias("JournalArticle", JournalArticleImpl.class);
 		_xStream.alias("JournalFeed", JournalFeedImpl.class);
 		_xStream.alias("JournalStructure", JournalStructureImpl.class);

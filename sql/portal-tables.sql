@@ -625,14 +625,11 @@ create table DLFileEntryTypes_DLFolders (
 );
 
 create table DLFileRank (
-	uuid_ VARCHAR(75) null,
 	fileRankId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
-	userName VARCHAR(75) null,
 	createDate DATE null,
-	modifiedDate DATE null,
 	fileEntryId LONG,
 	active_ BOOLEAN
 );

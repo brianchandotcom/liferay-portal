@@ -48,14 +48,11 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("uuid", getUuid());
 		attributes.put("fileRankId", getFileRankId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("fileEntryId", getFileEntryId());
 		attributes.put("active", getActive());
 
@@ -64,12 +61,6 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
-
-		if (uuid != null) {
-			setUuid(uuid);
-		}
-
 		Long fileRankId = (Long)attributes.get("fileRankId");
 
 		if (fileRankId != null) {
@@ -94,22 +85,10 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 			setUserId(userId);
 		}
 
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
 		Date createDate = (Date)attributes.get("createDate");
 
 		if (createDate != null) {
 			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
 		}
 
 		Long fileEntryId = (Long)attributes.get("fileEntryId");
@@ -143,26 +122,6 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		_dlFileRank.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	* Returns the uuid of this document library file rank.
-	*
-	* @return the uuid of this document library file rank
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _dlFileRank.getUuid();
-	}
-
-	/**
-	* Sets the uuid of this document library file rank.
-	*
-	* @param uuid the uuid of this document library file rank
-	*/
-	@Override
-	public void setUuid(java.lang.String uuid) {
-		_dlFileRank.setUuid(uuid);
 	}
 
 	/**
@@ -268,26 +227,6 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 	}
 
 	/**
-	* Returns the user name of this document library file rank.
-	*
-	* @return the user name of this document library file rank
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _dlFileRank.getUserName();
-	}
-
-	/**
-	* Sets the user name of this document library file rank.
-	*
-	* @param userName the user name of this document library file rank
-	*/
-	@Override
-	public void setUserName(java.lang.String userName) {
-		_dlFileRank.setUserName(userName);
-	}
-
-	/**
 	* Returns the create date of this document library file rank.
 	*
 	* @return the create date of this document library file rank
@@ -305,26 +244,6 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 	@Override
 	public void setCreateDate(java.util.Date createDate) {
 		_dlFileRank.setCreateDate(createDate);
-	}
-
-	/**
-	* Returns the modified date of this document library file rank.
-	*
-	* @return the modified date of this document library file rank
-	*/
-	@Override
-	public java.util.Date getModifiedDate() {
-		return _dlFileRank.getModifiedDate();
-	}
-
-	/**
-	* Sets the modified date of this document library file rank.
-	*
-	* @param modifiedDate the modified date of this document library file rank
-	*/
-	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
-		_dlFileRank.setModifiedDate(modifiedDate);
 	}
 
 	/**

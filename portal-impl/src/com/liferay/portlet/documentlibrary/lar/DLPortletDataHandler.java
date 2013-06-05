@@ -36,7 +36,6 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
-import com.liferay.portlet.documentlibrary.model.DLFileRank;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -73,10 +72,8 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "shortcuts", true, false, null,
 				DLFileShortcut.class.getName()),
-			new PortletDataHandlerBoolean(NAMESPACE, "previews-and-thumbnails"),
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "ranks", true, false, null,
-				DLFileRank.class.getName()));
+				NAMESPACE, "previews-and-thumbnails"));
 		setExportMetadataControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "folders-and-documents", true,
@@ -208,18 +205,6 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 			for (Element fileShortcutElement : fileShortcutElements) {
 				StagedModelDataHandlerUtil.importStagedModel(
 					portletDataContext, fileShortcutElement);
-			}
-		}
-
-		if (portletDataContext.getBooleanParameter(NAMESPACE, "ranks")) {
-			Element fileRanksElement =
-				portletDataContext.getImportDataGroupElement(DLFileRank.class);
-
-			List<Element> fileRankElements = fileRanksElement.elements();
-
-			for (Element fileRankElement : fileRankElements) {
-				StagedModelDataHandlerUtil.importStagedModel(
-					portletDataContext, fileRankElement);
 			}
 		}
 

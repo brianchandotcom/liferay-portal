@@ -80,9 +80,6 @@ public class VerifyUUID extends VerifyProcess {
 			"Address", "addressId"
 		},
 		new String[] {
-			"DLFileRank", "fileRankId"
-		},
-		new String[] {
 			"DLFileVersion", "fileVersionId"
 		},
 		new String[] {

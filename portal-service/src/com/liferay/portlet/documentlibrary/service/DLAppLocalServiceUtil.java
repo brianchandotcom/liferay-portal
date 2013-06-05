@@ -210,14 +210,12 @@ public class DLAppLocalServiceUtil {
 	* @param fileEntryId the primary key of the file entry
 	* @param serviceContext the service context to be applied
 	* @return the file rank
-	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileRank addFileRank(
 		long repositoryId, long companyId, long userId, long fileEntryId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .addFileRank(repositoryId, companyId, userId, fileEntryId,
 			serviceContext);
@@ -833,14 +831,12 @@ public class DLAppLocalServiceUtil {
 	* @param fileEntryId the primary key of the file rank's file entry
 	* @param serviceContext the service context to be applied
 	* @return the file rank
-	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileRank updateFileRank(
 		long repositoryId, long companyId, long userId, long fileEntryId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .updateFileRank(repositoryId, companyId, userId,
 			fileEntryId, serviceContext);

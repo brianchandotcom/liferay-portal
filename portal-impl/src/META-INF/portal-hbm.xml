@@ -1546,13 +1546,10 @@
 		<id name="fileRankId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
-		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="fileEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="active_" />
 	</class>

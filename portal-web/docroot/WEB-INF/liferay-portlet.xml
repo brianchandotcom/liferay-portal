@@ -248,7 +248,6 @@
 		<open-search-class>com.liferay.portlet.documentlibrary.util.DLOpenSearchImpl</open-search-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<portlet-data-handler-class>com.liferay.portlet.documentlibrary.lar.DLPortletDataHandler</portlet-data-handler-class>
-		<staged-model-data-handler-class>com.liferay.portlet.documentlibrary.lar.DLFileRankStagedModelDataHandler</staged-model-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.portlet.documentlibrary.lar.DLFileEntryTypeStagedModelDataHandler</staged-model-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.portlet.documentlibrary.lar.DLFileShortcutStagedModelDataHandler</staged-model-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.portlet.documentlibrary.lar.FileEntryStagedModelDataHandler</staged-model-data-handler-class>

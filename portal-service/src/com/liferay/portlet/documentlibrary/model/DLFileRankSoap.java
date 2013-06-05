@@ -30,14 +30,11 @@ public class DLFileRankSoap implements Serializable {
 	public static DLFileRankSoap toSoapModel(DLFileRank model) {
 		DLFileRankSoap soapModel = new DLFileRankSoap();
 
-		soapModel.setUuid(model.getUuid());
 		soapModel.setFileRankId(model.getFileRankId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
-		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
-		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setFileEntryId(model.getFileEntryId());
 		soapModel.setActive(model.getActive());
 
@@ -92,14 +89,6 @@ public class DLFileRankSoap implements Serializable {
 		setFileRankId(pk);
 	}
 
-	public String getUuid() {
-		return _uuid;
-	}
-
-	public void setUuid(String uuid) {
-		_uuid = uuid;
-	}
-
 	public long getFileRankId() {
 		return _fileRankId;
 	}
@@ -132,28 +121,12 @@ public class DLFileRankSoap implements Serializable {
 		_userId = userId;
 	}
 
-	public String getUserName() {
-		return _userName;
-	}
-
-	public void setUserName(String userName) {
-		_userName = userName;
-	}
-
 	public Date getCreateDate() {
 		return _createDate;
 	}
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
-	}
-
-	public Date getModifiedDate() {
-		return _modifiedDate;
-	}
-
-	public void setModifiedDate(Date modifiedDate) {
-		_modifiedDate = modifiedDate;
 	}
 
 	public long getFileEntryId() {
@@ -176,14 +149,11 @@ public class DLFileRankSoap implements Serializable {
 		_active = active;
 	}
 
-	private String _uuid;
 	private long _fileRankId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;
-	private String _userName;
 	private Date _createDate;
-	private Date _modifiedDate;
 	private long _fileEntryId;
 	private boolean _active;
 }

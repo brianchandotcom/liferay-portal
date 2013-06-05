@@ -45,7 +45,6 @@ import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
-import com.liferay.portlet.documentlibrary.model.DLFileRank;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
@@ -55,7 +54,6 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUt
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryTypeUtil;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryUtil;
-import com.liferay.portlet.documentlibrary.service.persistence.DLFileRankUtil;
 import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
 import com.liferay.portlet.documentlibrary.util.DLProcessorThreadLocal;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
@@ -201,22 +199,6 @@ public class FileEntryStagedModelDataHandler
 				catch (IOException ioe) {
 					_log.error(ioe, ioe);
 				}
-			}
-		}
-
-		if (portletDataContext.getBooleanParameter(
-				DLPortletDataHandler.NAMESPACE, "ranks")) {
-
-			List<DLFileRank> fileRanks = DLFileRankUtil.findByFileEntryId(
-				fileEntry.getFileEntryId());
-
-			for (DLFileRank fileRank : fileRanks) {
-				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext, fileRank);
-
-				portletDataContext.addReferenceElement(
-					fileEntry, fileEntryElement, fileRank,
-					PortletDataContext.REFERENCE_TYPE_EMBEDDED, false);
 			}
 		}
 

@@ -2072,17 +2072,10 @@
 	<mapped-superclass class="com.liferay.portlet.documentlibrary.model.impl.DLFileRankModelImpl">
 		<attributes>
 			<id name="fileRankId" />
-			<basic name="uuid">
-				<column name="UUID_" />
-			</basic>
 			<basic name="groupId" />
 			<basic name="companyId" />
 			<basic name="userId" />
-			<basic name="userName" />
 			<basic name="createDate">
-				<temporal>TIMESTAMP</temporal>
-			</basic>
-			<basic name="modifiedDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
 			<basic name="fileEntryId" />

@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.auth.FullNameGenerator;
 import com.liferay.portal.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.upgrade.v6_2_0.util.DLFileEntryTypeTable;
-import com.liferay.portal.upgrade.v6_2_0.util.DLFileRankTable;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 
@@ -31,7 +30,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -100,22 +98,6 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		}
 
 		updateFileEntryTypes();
-
-		// DLFileRank
-
-		try {
-			runSQL("alter table DLFileRank add userName STRING");
-
-			runSQL("alter table DLFileRank add modifiedDate DATE");
-		}
-		catch (SQLException sqle) {
-			upgradeTable(
-				DLFileRankTable.TABLE_NAME, DLFileRankTable.TABLE_COLUMNS,
-				DLFileRankTable.TABLE_SQL_CREATE,
-				DLFileRankTable.TABLE_SQL_ADD_INDEXES);
-		}
-
-		updateFileRanks();
 
 		// Checksum directory
 
@@ -228,57 +210,6 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 				updateFileEntryType(
 					fileEntryTypeId, name.toUpperCase(), name, description);
-			}
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
-		}
-	}
-
-	protected void updateFileRank(
-			long fileRankId, long userId, Timestamp modifiedDate)
-		throws Exception {
-
-		Connection con = null;
-		PreparedStatement ps = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
-				"update DLFileRank set userName = ?, modifiedDate = ? where " +
-					"fileRankId = ?");
-
-			ps.setString(1, getUserName(userId));
-			ps.setTimestamp(2, modifiedDate);
-			ps.setLong(3, fileRankId);
-
-			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(con, ps);
-		}
-	}
-
-	protected void updateFileRanks() throws Exception {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
-				"select fileRankId, userId, createDate from DLFileRank");
-
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				long fileRankId = rs.getLong("fileRankId");
-				long userId = rs.getLong("userId");
-				Timestamp createDate = rs.getTimestamp("createDate");
-
-				updateFileRank(fileRankId, userId, createDate);
 			}
 		}
 		finally {

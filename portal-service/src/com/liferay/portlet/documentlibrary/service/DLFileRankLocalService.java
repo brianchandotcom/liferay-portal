@@ -179,21 +179,6 @@ public interface DLFileRankLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the document library file rank matching the UUID and group.
-	*
-	* @param uuid the document library file rank's UUID
-	* @param groupId the primary key of the group
-	* @return the matching document library file rank
-	* @throws PortalException if a matching document library file rank could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFileRank getDLFileRankByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Returns a range of all the document library file ranks.
 	*
 	* <p>
@@ -248,8 +233,7 @@ public interface DLFileRankLocalService extends BaseLocalService,
 	public com.liferay.portlet.documentlibrary.model.DLFileRank addFileRank(
 		long groupId, long companyId, long userId, long fileEntryId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public void checkFileRanks()
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -290,6 +274,5 @@ public interface DLFileRankLocalService extends BaseLocalService,
 	public com.liferay.portlet.documentlibrary.model.DLFileRank updateFileRank(
 		long groupId, long companyId, long userId, long fileEntryId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

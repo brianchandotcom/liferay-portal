@@ -282,6 +282,18 @@ public class LayoutPrototypeLocalServiceUtil {
 			active, serviceContext);
 	}
 
+	public static com.liferay.portal.model.LayoutPrototype addLayoutPrototype(
+		long userId, long companyId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.lang.String description, boolean active, boolean addDefaultLayout,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addLayoutPrototype(userId, companyId, nameMap, description,
+			active, addDefaultLayout, serviceContext);
+	}
+
 	public static void deleteNondefaultLayoutPrototypes(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

@@ -184,7 +184,7 @@ window.YUI_config = {
 						test: function(A) {
 							return !('placeholder' in document.createElement('input'));
 						},
-						trigger: 'liferay-form',
+						trigger: 'liferay-form'
 					},
 					path: 'form_placeholders.js',
 					requires: [

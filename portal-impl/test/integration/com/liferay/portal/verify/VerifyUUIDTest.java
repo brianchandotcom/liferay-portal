@@ -20,7 +20,6 @@ import com.liferay.portal.test.MainServletExecutionTestListener;
 
 import java.sql.SQLException;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -32,17 +31,19 @@ import org.junit.runner.RunWith;
 public class VerifyUUIDTest extends BaseVerifyTestCase {
 
 	@Test
-	public void testVerifyModel() {
+	public void testVerifyModel() throws Exception {
 		testVerifyModel("Layout", "plid");
 	}
 
-	@Test
-	public void testVerifyModelWithUnknownPKColumnName() {
+	@Test(expected = SQLException.class)
+	public void testVerifyModelWithUnknownPKColumnName() throws Exception {
 		testVerifyModel("Layout", _UNKNOWN);
 	}
 
-	@Test
-	public void testVerifyUnknownModelWithUnknownPKColumnName() {
+	@Test(expected = SQLException.class)
+	public void testVerifyUnknownModelWithUnknownPKColumnName()
+		throws Exception {
+
 		testVerifyModel(_UNKNOWN, _UNKNOWN);
 	}
 
@@ -51,19 +52,10 @@ public class VerifyUUIDTest extends BaseVerifyTestCase {
 		return new VerifyUUID();
 	}
 
-	protected void testVerifyModel(String model, String pkColumnName) {
-		try {
-			VerifyUUID.verifyModel(model, pkColumnName);
-		}
-		catch (Exception e) {
-			boolean exceptionTypeCorrect = false;
+	protected void testVerifyModel(String model, String pkColumnName)
+		throws Exception {
 
-			if ((e instanceof SQLException) || (e instanceof VerifyException)) {
-				exceptionTypeCorrect = true;
-			}
-
-			Assert.assertTrue(exceptionTypeCorrect);
-		}
+		VerifyUUID.verifyModel(model, pkColumnName);
 	}
 
 	private static final String _UNKNOWN = "Unknown";

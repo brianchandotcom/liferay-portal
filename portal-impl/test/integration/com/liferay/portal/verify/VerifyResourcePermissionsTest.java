@@ -32,13 +32,13 @@ import org.junit.runner.RunWith;
 public class VerifyResourcePermissionsTest extends BaseVerifyTestCase {
 
 	@Test
-	public void testDoVerifyMoreThanOneCompany() throws Exception {
-		testVerify(false);
+	public void testVerifyMoreThanOneCompany() throws Exception {
+		verify(false);
 	}
 
 	@Test
-	public void testDoVerifyOneCompany() throws Exception {
-		testVerify(true);
+	public void testVerifyOneCompany() throws Exception {
+		verify(true);
 	}
 
 	@Override
@@ -46,14 +46,14 @@ public class VerifyResourcePermissionsTest extends BaseVerifyTestCase {
 		return new VerifyResourcePermissions();
 	}
 
-	protected void testVerify(boolean oneCompany) throws Exception {
+	protected void verify(boolean oneCompany) throws Exception {
 		Company company = null;
 
 		if (!oneCompany) {
 			company = CompanyTestUtil.addCompany();
 		}
 
-		testVerify();
+		doVerify();
 
 		if (!oneCompany) {
 			if (company != null) {

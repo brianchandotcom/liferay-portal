@@ -23,14 +23,11 @@ public abstract class BaseVerifyTestCase {
 
 	@Test
 	public void testVerify() throws Exception {
-		getVerifyProcess().verify();
+		doVerify();
 	}
 
-	@Test
-	public void testVerify2() throws Exception {
-		VerifyProcessSuite verifyProcessSuite = new VerifyProcessSuite();
-
-		verifyProcessSuite.verify(getVerifyProcess());
+	protected void doVerify() throws Exception {
+		getVerifyProcess().verify();
 	}
 
 	protected abstract VerifyProcess getVerifyProcess();

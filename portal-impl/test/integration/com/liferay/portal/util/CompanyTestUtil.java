@@ -30,8 +30,6 @@ public class CompanyTestUtil {
 	}
 
 	public static Company addCompany(String companyName) throws Exception {
-		String webId = companyName;
-
 		StringBundler sb = new StringBundler(3);
 
 		sb.append(companyName);
@@ -39,14 +37,10 @@ public class CompanyTestUtil {
 		sb.append(ServiceTestUtil.randomString(3));
 
 		String virtualHostname = sb.toString();
-		String mx = virtualHostname;
-		String shardName = ServiceTestUtil.randomString();
-		boolean system = false;
-		int maxUsers = 0;
-		boolean active = true;
 
 		return CompanyLocalServiceUtil.addCompany(
-			webId, virtualHostname, mx, shardName, system, maxUsers, active);
+			companyName, virtualHostname, virtualHostname,
+			PropsValues.SHARD_DEFAULT_NAME, false, 0, true);
 	}
 
 }

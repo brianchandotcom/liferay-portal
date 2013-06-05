@@ -138,12 +138,12 @@
 </tr>
 <tr>
 	<td>MESSAGE_RATING_2</td>
-	<td>xpath=(//div[contains(@id,'ratingThumbContent')]/div)[2]</td>
+	<td>xpath=(//div[contains(@id,'ratingThumbContent')]/div)[3]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MESSAGE_RATING_3</td>
-	<td>xpath=(//div[contains(@id,'ratingThumbContent')]/div)[3]</td>
+	<td>xpath=(//div[contains(@id,'ratingThumbContent')]/div)[5]</td>
 	<td></td>
 </tr>
 <tr>

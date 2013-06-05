@@ -40,6 +40,12 @@ else {
 }
 
 String keywords = ParamUtil.getString(request, "keywords");
+
+if (searchFolderId > 0) {
+	BookmarksUtil.addPortletBreadcrumbEntries(searchFolderId, request, renderResponse);
+}
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "search") + ": " + keywords, currentURL);
 %>
 
 <liferay-portlet:renderURL varImpl="searchURL">
@@ -212,11 +218,3 @@ String keywords = ParamUtil.getString(request, "keywords");
 		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />keywords);
 	</aui:script>
 </c:if>
-
-<%
-if (searchFolderId > 0) {
-	BookmarksUtil.addPortletBreadcrumbEntries(searchFolderId, request, renderResponse);
-}
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "search") + ": " + keywords, currentURL);
-%>

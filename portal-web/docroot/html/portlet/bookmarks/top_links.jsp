@@ -85,6 +85,12 @@ portletURL.setParameter("tag", StringPool.BLANK);
 	</c:if>
 </aui:nav-bar>
 
+<c:if test="<%= layout.isTypeControlPanel() %>">
+	<div id="breadcrumb">
+		<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showCurrentPortlet="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
+	</div>
+</c:if>
+
 <c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
 	<aui:script>
 		Liferay.Util.focusFormField(document.<portlet:namespace />searchFm.<portlet:namespace />keywords);

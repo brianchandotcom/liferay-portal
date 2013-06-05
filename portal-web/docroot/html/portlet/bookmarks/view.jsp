@@ -55,6 +55,10 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 request.setAttribute("view.jsp-viewFolder", Boolean.TRUE.toString());
 
 request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntryQuery));
+
+if (folder != null) {
+	BookmarksUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
+}
 %>
 
 <portlet:actionURL var="undoTrashURL">
@@ -199,8 +203,6 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 
 		<%
 		if (folder != null) {
-			BookmarksUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
-
 			if (portletName.equals(PortletKeys.BOOKMARKS)) {
 				PortalUtil.setPageSubtitle(folder.getName(), request);
 				PortalUtil.setPageDescription(folder.getDescription(), request);
@@ -264,7 +266,9 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 		</aui:row>
 
 		<%
-		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, topLink), currentURL);
+		if (!layout.isTypeControlPanel()) {
+			PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, topLink), currentURL);
+		}
 
 		PortalUtil.setPageSubtitle(LanguageUtil.get(pageContext, StringUtil.replace(topLink, StringPool.UNDERLINE, StringPool.DASH)), request);
 		%>

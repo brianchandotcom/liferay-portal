@@ -26,6 +26,26 @@ long folderId = BeanParamUtil.getLong(folder, request, "folderId");
 long parentFolderId = BeanParamUtil.getLong(folder, request, "parentFolderId", BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 boolean mergeWithParentFolderDisabled = ParamUtil.getBoolean(request, "mergeWithParentFolderDisabled");
+
+if (folder != null) {
+	BookmarksUtil.addPortletBreadcrumbEntries(folderId, request, renderResponse);
+
+	if (!layout.isTypeControlPanel()) {
+		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "edit"), currentURL);
+	}
+}
+else {
+	if (parentFolderId > 0) {
+		BookmarksUtil.addPortletBreadcrumbEntries(parentFolderId, request, renderResponse);
+
+		if (!layout.isTypeControlPanel()) {
+			PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "add-subfolder"), currentURL);
+		}
+	}
+	else if (!layout.isTypeControlPanel()) {
+		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "add-folder"), currentURL);
+	}
+}
 %>
 
 <liferay-util:include page="/html/portlet/bookmarks/top_links.jsp" />
@@ -43,7 +63,7 @@ boolean mergeWithParentFolderDisabled = ParamUtil.getBoolean(request, "mergeWith
 	<liferay-ui:header
 		backURL="<%= redirect %>"
 		localizeTitle="<%= (folder == null) %>"
-		title='<%= (folder == null) ? "new-folder" : folder.getName() %>'
+		title='<%= (folder == null) ? ((parentFolderId > 0) ? "add-subfolder" : "add-folder") : LanguageUtil.format(pageContext, "edit-x", folder.getName()) %>'
 	/>
 
 	<liferay-ui:error exception="<%= FolderNameException.class %>" message="please-enter-a-valid-name" />
@@ -155,18 +175,3 @@ boolean mergeWithParentFolderDisabled = ParamUtil.getBoolean(request, "mergeWith
 		}
 	);
 </aui:script>
-
-<%
-if (folder != null) {
-	BookmarksUtil.addPortletBreadcrumbEntries(folderId, request, renderResponse);
-
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "edit"), currentURL);
-}
-else {
-	if (parentFolderId > 0) {
-		BookmarksUtil.addPortletBreadcrumbEntries(parentFolderId, request, renderResponse);
-	}
-
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "add-folder"), currentURL);
-}
-%>

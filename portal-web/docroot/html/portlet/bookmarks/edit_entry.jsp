@@ -27,6 +27,21 @@ BookmarksEntry entry = (BookmarksEntry)request.getAttribute(WebKeys.BOOKMARKS_EN
 long entryId = BeanParamUtil.getLong(entry, request, "entryId");
 
 long folderId = BeanParamUtil.getLong(entry, request, "folderId");
+
+if (entry != null) {
+	BookmarksUtil.addPortletBreadcrumbEntries(entry, request, renderResponse);
+
+	if (!layout.isTypeControlPanel()) {
+		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "edit"), currentURL);
+	}
+}
+else {
+	BookmarksUtil.addPortletBreadcrumbEntries(folderId, request, renderResponse);
+
+	if (!layout.isTypeControlPanel()) {
+		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "add-bookmark"), currentURL);
+	}
+}
 %>
 
 <c:if test="<%= Validator.isNull(referringPortletResource) %>">
@@ -48,7 +63,7 @@ long folderId = BeanParamUtil.getLong(entry, request, "folderId");
 	<liferay-ui:header
 		backURL="<%= backURL %>"
 		localizeTitle="<%= (entry == null) %>"
-		title='<%= (entry == null) ? "new-bookmark" : entry.getName() %>'
+		title='<%= (entry == null) ? "add-bookmark" : LanguageUtil.format(pageContext, "edit-x", entry.getName()) %>'
 	/>
 
 	<liferay-ui:error exception="<%= EntryURLException.class %>" message="please-enter-a-valid-url" />
@@ -179,16 +194,3 @@ long folderId = BeanParamUtil.getLong(entry, request, "folderId");
 		}
 	);
 </aui:script>
-
-<%
-if (entry != null) {
-	BookmarksUtil.addPortletBreadcrumbEntries(entry, request, renderResponse);
-
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "edit"), currentURL);
-}
-else {
-	BookmarksUtil.addPortletBreadcrumbEntries(folderId, request, renderResponse);
-
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "add-entry"), currentURL);
-}
-%>

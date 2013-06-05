@@ -16,6 +16,8 @@
 
 <%@ include file="/html/taglib/ui/breadcrumb/init.jsp" %>
 
-<ul class="breadcrumb">
-	<%= breadcrumbString %>
-</ul>
+<c:if test="<%= Validator.isNotNull(breadcrumbString) %>">
+	<ul class="breadcrumb">
+		<%= breadcrumbString %>
+	</ul>
+</c:if>

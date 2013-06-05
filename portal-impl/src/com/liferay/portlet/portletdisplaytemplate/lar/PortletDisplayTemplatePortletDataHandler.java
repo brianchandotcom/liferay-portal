@@ -109,19 +109,15 @@ public class PortletDisplayTemplatePortletDataHandler
 			PortletDataContext portletDataContext)
 		throws Exception {
 
-		ManifestSummary manifestSummary =
-			portletDataContext.getManifestSummary();
-
 		for (long classNameId : TemplateHandlerRegistryUtil.getClassNameIds()) {
 			ActionableDynamicQuery actionableDynamicQuery =
 				getDDMTemplateActionableDynamicQuery(
 					portletDataContext, new Long[] {classNameId},
-					PortalUtil.getClassName(classNameId));
+					ManifestSummary.getManifestSummaryKey(
+						DDMTemplate.class.getName(),
+						PortalUtil.getClassName(classNameId)));
 
-			manifestSummary.addModelCount(
-				DDMTemplate.class.getName(),
-				PortalUtil.getClassName(classNameId),
-				actionableDynamicQuery.performCount());
+			actionableDynamicQuery.performCount();
 		}
 	}
 

@@ -427,8 +427,6 @@ public class UserServiceTest {
 		String password2 = StringPool.BLANK;
 		boolean autoScreenName = true;
 		String screenName = StringPool.BLANK;
-		String emailAddress =
-			"UserServiceTest." + ServiceTestUtil.nextLong() + "@liferay.com";
 		long facebookId = 0;
 		String openId = StringPool.BLANK;
 		Locale locale = LocaleUtil.getDefault();
@@ -450,7 +448,11 @@ public class UserServiceTest {
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		if (true) {
+		if (secure) {
+			String emailAddress =
+				"UserServiceTest." + ServiceTestUtil.nextLong() +
+					"@liferay.com";
+
 			return UserServiceUtil.addUser(
 				TestPropsValues.getCompanyId(), autoPassword, password1,
 				password2, autoScreenName, screenName, emailAddress, facebookId,
@@ -460,6 +462,9 @@ public class UserServiceTest {
 				sendMail, serviceContext);
 		}
 		else {
+			String emailAddress =
+				"UserServiceTest." + ServiceTestUtil.nextLong() + "@test.com";
+
 			return UserLocalServiceUtil.addUser(
 				TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
 				autoPassword, password1, password2, autoScreenName, screenName,

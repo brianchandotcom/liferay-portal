@@ -15,9 +15,13 @@
 package com.liferay.portal.verify;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.model.Company;
+import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
+import com.liferay.portal.util.CompanyTestUtil;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -27,9 +31,35 @@ import org.junit.runner.RunWith;
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class VerifyResourcePermissionsTest extends BaseVerifyTestCase {
 
+	@Test
+	public void testDoVerifyMoreThanOneCompany() throws Exception {
+		testVerify(false);
+	}
+
+	@Test
+	public void testDoVerifyOneCompany() throws Exception {
+		testVerify(true);
+	}
+
 	@Override
 	protected VerifyProcess getVerifyProcess() {
 		return new VerifyResourcePermissions();
+	}
+
+	protected void testVerify(boolean oneCompany) throws Exception {
+		Company company = null;
+
+		if (!oneCompany) {
+			company = CompanyTestUtil.addCompany();
+		}
+
+		testVerify();
+
+		if (!oneCompany) {
+			if (company != null) {
+				CompanyLocalServiceUtil.deleteCompany(company);
+			}
+		}
 	}
 
 }

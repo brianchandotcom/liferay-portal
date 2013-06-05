@@ -55,8 +55,15 @@ public class VerifyUUID extends VerifyProcess {
 		}
 	}
 
-	public static void verifyModel(
-			String modelName, String pkColumnName, long pk)
+	@Override
+	protected void doVerify() throws Exception {
+		for (String[] model : _MODELS) {
+			verifyModel(model[0], model[1]);
+		}
+	}
+
+	protected static void verifyModel(
+		String modelName, String pkColumnName, long pk)
 		throws Exception {
 
 		String uuid = PortalUUIDUtil.generate();
@@ -65,14 +72,7 @@ public class VerifyUUID extends VerifyProcess {
 
 		db.runSQL(
 			"update " + modelName + " set uuid_ = '" + uuid +
-				"' where " + pkColumnName + " = " + pk);
-	}
-
-	@Override
-	protected void doVerify() throws Exception {
-		for (String[] model : _MODELS) {
-			verifyModel(model[0], model[1]);
-		}
+			"' where " + pkColumnName + " = " + pk);
 	}
 
 	private static final String[][] _MODELS = new String[][] {

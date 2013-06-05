@@ -49,14 +49,32 @@ boolean viewPreview = ParamUtil.getBoolean(request, "viewPreview");
 			}
 			%>
 
+			<span class="add-content-button">
+
+				<%
+				long groupId = scopeGroupId;
+
+				long[] groupIds = new long[]{scopeGroupId};
+
+				boolean defaultAssetPublisher = false;
+
+				PortletURL redirectURL = liferayPortletResponse.createLiferayPortletURL(themeDisplay.getPlid(), portletDisplay.getId(), PortletRequest.RENDER_PHASE, false);
+
+				redirectURL.setParameter("struts_action", "/dockbar/add_content_redirect");
+				redirectURL.setWindowState(LiferayWindowState.POP_UP);
+
+				Map<String, PortletURL> addPortletURLs = AssetUtil.getAddPortletURLs(liferayPortletRequest, liferayPortletResponse, AssetRendererFactoryRegistryUtil.getClassNameIds(), new long[0], new long[0], new String[0], redirectURL.toString());
+				%>
+
+				<%@ include file="/html/portlet/asset_publisher/add_asset.jspf" %>
+			</span>
+
 			<liferay-ui:panel collapsible="<%= false %>" cssClass="clearfix lfr-component panel-page-category recent" extended="<%= true %>" id="manageRecentPanel" persistState="<%= true %>" title="<%= panelTitle %>">
 				<aui:nav cssClass="<%= navListCssClass %>">
 
 					<%
 					int deltaDefault = GetterUtil.getInteger(SessionClicks.get(request, "liferay_addpanel_numitems", "10"));
 					int delta = ParamUtil.getInteger(request, "delta", deltaDefault);
-
-					long[] groupIds = new long[]{scopeGroupId};
 
 					long[] availableClassNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds(company.getCompanyId());
 

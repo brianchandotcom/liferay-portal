@@ -105,7 +105,7 @@ public class LayoutServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.util.Map<java.util.Locale, java.lang.String> keywordsMap,
 		java.util.Map<java.util.Locale, java.lang.String> robotsMap,
-		java.lang.String type, boolean hidden,
+		java.lang.String type, java.lang.String typeSettings, boolean hidden,
 		java.util.Map<java.util.Locale, java.lang.String> friendlyURLMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -113,7 +113,8 @@ public class LayoutServiceUtil {
 		return getService()
 				   .addLayout(groupId, privateLayout, parentLayoutId,
 			localeNamesMap, localeTitlesMap, descriptionMap, keywordsMap,
-			robotsMap, type, hidden, friendlyURLMap, serviceContext);
+			robotsMap, type, typeSettings, hidden, friendlyURLMap,
+			serviceContext);
 	}
 
 	/**

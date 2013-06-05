@@ -14,18 +14,8 @@
  */
 --%>
 
-<%@ include file="/html/portlet/mobile_device_rules/action/init.jsp" %>
+<%@ include file="/html/portlet/dockbar/init.jsp" %>
 
-<%
-String layoutTemplateId = GetterUtil.getString(typeSettingsProperties.getProperty("layoutTemplateId"));
-
-List<LayoutTemplate> layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutTemplates();
-
-int columnsCount = 3;
-%>
-
-<liferay-ui:error-marker key="errorSection" value="layout" />
-
-<h5><%= LanguageUtil.get(pageContext, "layout-template") %></h5>
-
-<%@ include file="/html/portlet/layouts_admin/layout/layout_templates.jspf" %>
+<div class="search-panel btn-toolbar">
+	<aui:input cssClass="search-query span12" label="" name="searchTemplates" placeholder="search" type="text"  />
+</div>

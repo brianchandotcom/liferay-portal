@@ -118,7 +118,7 @@ StringBuilder friendlyURLBase = new StringBuilder();
 				</c:otherwise>
 			</c:choose>
 
-			<aui:input helpMessage="if-checked-this-page-wont-show-up-in-the-navigation-menu" name="hidden" />
+			<aui:input label="display-in-navigation-menu" name="displayInNavigation" value="<%= !selLayout.isHidden() %>" />
 
 			<c:if test="<%= group.isLayoutSetPrototype() %>">
 

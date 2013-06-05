@@ -36,6 +36,8 @@ if (selLayoutTypePortlet != null) {
 }
 
 List<LayoutTemplate> layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutTemplates(selTheme.getThemeId());
+
+int columnsCount = 3;
 %>
 
 <liferay-ui:error-marker key="errorSection" value="layout" />

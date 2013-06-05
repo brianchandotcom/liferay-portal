@@ -17,6 +17,7 @@ package com.liferay.portal.model.impl;
 import com.liferay.portal.LayoutFriendlyURLException;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -283,8 +284,8 @@ public class LayoutFriendlyURLTest {
 			ServiceTestUtil.randomLocaleStringMap(),
 			ServiceTestUtil.randomLocaleStringMap(),
 			ServiceTestUtil.randomLocaleStringMap(),
-			LayoutConstants.TYPE_PORTLET, false, friendlyURLMap,
-			serviceContext);
+			LayoutConstants.TYPE_PORTLET, StringPool.BLANK, false,
+			friendlyURLMap, serviceContext);
 	}
 
 	private static Locale _enLocale = Locale.ENGLISH;

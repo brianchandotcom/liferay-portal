@@ -35,7 +35,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
@@ -170,6 +172,13 @@ public class EditLayoutsAction extends PortletAction {
 					themeDisplay, redirect, null, layout, oldFriendlyURL);
 				closeRedirect = updateCloseRedirect(
 					themeDisplay, closeRedirect, null, layout, oldFriendlyURL);
+
+				LiferayPortletConfig liferayPortletConfig =
+					(LiferayPortletConfig)portletConfig;
+
+				SessionMessages.add(
+					actionRequest,
+					liferayPortletConfig.getPortletId() + "pageAdded", layout);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				long plid = ParamUtil.getLong(actionRequest, "plid");
@@ -893,7 +902,8 @@ public class EditLayoutsAction extends PortletAction {
 		Map<Locale, String> robotsMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "robots");
 		String type = ParamUtil.getString(uploadPortletRequest, "type");
-		boolean hidden = ParamUtil.getBoolean(uploadPortletRequest, "hidden");
+		boolean displayInNavigation = ParamUtil.getBoolean(
+			uploadPortletRequest, "displayInNavigation");
 		Map<Locale, String> friendlyURLMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "friendlyURL");
 		boolean iconImage = ParamUtil.getBoolean(
@@ -916,6 +926,10 @@ public class EditLayoutsAction extends PortletAction {
 			boolean inheritFromParentLayoutId = ParamUtil.getBoolean(
 				uploadPortletRequest, "inheritFromParentLayoutId");
 
+			UnicodeProperties formTypeSettingsProperties =
+				PropertiesParamUtil.getProperties(
+					actionRequest, "TypeSettingsProperties--");
+
 			if (inheritFromParentLayoutId && (parentLayoutId > 0)) {
 				Layout parentLayout = LayoutLocalServiceUtil.getLayout(
 					groupId, privateLayout, parentLayoutId);
@@ -924,12 +938,8 @@ public class EditLayoutsAction extends PortletAction {
 					groupId, privateLayout, parentLayoutId, nameMap, titleMap,
 					parentLayout.getDescriptionMap(),
 					parentLayout.getKeywordsMap(), parentLayout.getRobotsMap(),
-					parentLayout.getType(), hidden, friendlyURLMap,
-					serviceContext);
-
-				LayoutServiceUtil.updateLayout(
-					layout.getGroupId(), layout.isPrivateLayout(),
-					layout.getLayoutId(), parentLayout.getTypeSettings());
+					parentLayout.getType(), parentLayout.getTypeSettings(),
+					!displayInNavigation, friendlyURLMap, serviceContext);
 
 				inheritMobileRuleGroups(layout, serviceContext);
 
@@ -960,14 +970,58 @@ public class EditLayoutsAction extends PortletAction {
 				layout = LayoutServiceUtil.addLayout(
 					groupId, privateLayout, parentLayoutId, nameMap, titleMap,
 					descriptionMap, keywordsMap, robotsMap,
-					LayoutConstants.TYPE_PORTLET, hidden, friendlyURLMap,
-					serviceContext);
+					LayoutConstants.TYPE_PORTLET,
+					formTypeSettingsProperties.toString(), !displayInNavigation,
+					friendlyURLMap, serviceContext);
 			}
 			else {
+				long copyLayoutId = ParamUtil.getLong(
+					uploadPortletRequest, "copyLayoutId");
+
+				Layout copyLayout = null;
+
+				if (copyLayoutId > 0) {
+					try {
+						copyLayout = LayoutLocalServiceUtil.getLayout(
+							groupId, privateLayout, copyLayoutId);
+
+						if (copyLayout.isTypePortlet()) {
+							formTypeSettingsProperties =
+								copyLayout.getTypeSettingsProperties();
+						}
+					}
+					catch (NoSuchLayoutException nsle) {
+					}
+				}
+
 				layout = LayoutServiceUtil.addLayout(
 					groupId, privateLayout, parentLayoutId, nameMap, titleMap,
-					descriptionMap, keywordsMap, robotsMap, type, hidden,
+					descriptionMap, keywordsMap, robotsMap, type,
+					formTypeSettingsProperties.toString(), !displayInNavigation,
 					friendlyURLMap, serviceContext);
+
+				LayoutTypePortlet layoutTypePortlet =
+					(LayoutTypePortlet)layout.getLayoutType();
+
+				String layoutTemplateId = ParamUtil.getString(
+					uploadPortletRequest, "layoutTemplateId",
+					PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID);
+
+				layoutTypePortlet.setLayoutTemplateId(
+					themeDisplay.getUserId(), layoutTemplateId);
+
+				LayoutServiceUtil.updateLayout(
+					groupId, privateLayout, layout.getLayoutId(),
+					layout.getTypeSettings());
+
+				if (copyLayout != null) {
+					if (copyLayout.isTypePortlet()) {
+						ActionUtil.copyPreferences(
+							actionRequest, layout, copyLayout);
+
+						SitesUtil.copyLookAndFeel(layout, copyLayout);
+					}
+				}
 			}
 
 			layoutTypeSettingsProperties = layout.getTypeSettingsProperties();
@@ -984,8 +1038,8 @@ public class EditLayoutsAction extends PortletAction {
 			layout = LayoutServiceUtil.updateLayout(
 				groupId, privateLayout, layoutId, layout.getParentLayoutId(),
 				nameMap, titleMap, descriptionMap, keywordsMap, robotsMap, type,
-				hidden, friendlyURLMap, Boolean.valueOf(iconImage), iconBytes,
-				serviceContext);
+				!displayInNavigation, friendlyURLMap,
+				Boolean.valueOf(iconImage), iconBytes, serviceContext);
 
 			layoutTypeSettingsProperties = layout.getTypeSettingsProperties();
 

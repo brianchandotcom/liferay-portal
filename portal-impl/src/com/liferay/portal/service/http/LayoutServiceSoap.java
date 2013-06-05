@@ -119,7 +119,8 @@ public class LayoutServiceSoap {
 		java.lang.String[] keywordsMapValues,
 		java.lang.String[] robotsMapLanguageIds,
 		java.lang.String[] robotsMapValues, java.lang.String type,
-		boolean hidden, java.lang.String[] friendlyURLMapLanguageIds,
+		java.lang.String typeSettings, boolean hidden,
+		java.lang.String[] friendlyURLMapLanguageIds,
 		java.lang.String[] friendlyURLMapValues,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
@@ -140,7 +141,7 @@ public class LayoutServiceSoap {
 			com.liferay.portal.model.Layout returnValue = LayoutServiceUtil.addLayout(groupId,
 					privateLayout, parentLayoutId, localeNamesMap,
 					localeTitlesMap, descriptionMap, keywordsMap, robotsMap,
-					type, hidden, friendlyURLMap, serviceContext);
+					type, typeSettings, hidden, friendlyURLMap, serviceContext);
 
 			return com.liferay.portal.model.LayoutSoap.toSoapModel(returnValue);
 		}

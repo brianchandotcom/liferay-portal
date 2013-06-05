@@ -761,6 +761,8 @@ if ((invokerPortlet != null) && (invokerPortlet.isStrutsPortlet() || invokerPort
 if ((layout.isTypePanel() || layout.isTypeControlPanel()) && !portletDisplay.getId().equals(PortletKeys.CONTROL_PANEL_MENU)) {
 	PortalUtil.setPageTitle(portletDisplay.getTitle(), request);
 }
+
+Boolean renderPortletWrapper = GetterUtil.getBoolean(request.getAttribute(portletId + ":" + WebKeys.RENDER_PORTLET_WRAPPER), true);
 %>
 
 <c:if test="<%= !themeDisplay.isFacebook() && !themeDisplay.isStateExclusive() && !themeDisplay.isWapTheme() %>">
@@ -820,8 +822,10 @@ if ((layout.isTypePanel() || layout.isTypeControlPanel()) && !portletDisplay.get
 	}
 	%>
 
-	<div class="<%= cssClasses %>" id="p_p_id<%= HtmlUtil.escapeAttribute(renderResponseImpl.getNamespace()) %>" <%= freeformStyles %>>
-		<span id="p_<%= HtmlUtil.escapeAttribute(portletId) %>"></span>
+	<c:if test="<%= renderPortletWrapper %>">
+		<div class="<%= cssClasses %>" id="p_p_id<%= HtmlUtil.escapeAttribute(renderResponseImpl.getNamespace()) %>" <%= freeformStyles %>>
+			<span id="p_<%= HtmlUtil.escapeAttribute(portletId) %>"></span>
+	</c:if>
 </c:if>
 
 <c:choose>
@@ -974,7 +978,10 @@ else {
 				}
 			);
 		</aui:script>
-	</div>
+
+	<c:if test="<%= renderPortletWrapper %>">
+		</div>
+	</c:if>
 </c:if>
 
 <%

@@ -18,6 +18,10 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 
+import java.sql.SQLException;
+
+import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -27,9 +31,41 @@ import org.junit.runner.RunWith;
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class VerifyUUIDTest extends BaseVerifyTestCase {
 
+	@Test
+	public void testVerifyModel() {
+		testVerifyModel("Layout", "plid");
+	}
+
+	@Test
+	public void testVerifyModelWithUnknownPKColumnName() {
+		testVerifyModel("Layout", _UNKNOWN);
+	}
+
+	@Test
+	public void testVerifyUnknownModelWithUnknownPKColumnName() {
+		testVerifyModel(_UNKNOWN, _UNKNOWN);
+	}
+
 	@Override
 	protected VerifyProcess getVerifyProcess() {
 		return new VerifyUUID();
 	}
+
+	protected void testVerifyModel(String model, String pkColumnName) {
+		try {
+			VerifyUUID.verifyModel(model, pkColumnName);
+		}
+		catch (Exception e) {
+			boolean exceptionTypeCorrect = false;
+
+			if ((e instanceof SQLException) || (e instanceof VerifyException)) {
+				exceptionTypeCorrect = true;
+			}
+
+			Assert.assertTrue(exceptionTypeCorrect);
+		}
+	}
+
+	private static final String _UNKNOWN = "Unknown";
 
 }

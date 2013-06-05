@@ -202,7 +202,7 @@ public class ActionUtil {
 			}
 
 			article = JournalArticleServiceUtil.getArticle(
-				groupId, DDMStructure.class.getName(),
+				ddmStructure.getGroupId(), DDMStructure.class.getName(),
 				ddmStructure.getStructureId());
 
 			article.setNew(true);

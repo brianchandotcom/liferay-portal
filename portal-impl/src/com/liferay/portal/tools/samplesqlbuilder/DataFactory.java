@@ -174,21 +174,22 @@ public class DataFactory {
 
 	public DataFactory(
 			String baseDir, int maxAssetCategoryCount,
-			int maxAssetCategoryPerAssetEntryCount, int maxAssetTagCount,
-			int maxAssetTagPerAssetEntryCount, int maxAssetVocabularyCount,
-			int maxBlogsEntryCount, int maxDDLCustomFieldCount,
-			int maxGroupsCount, int maxJournalArticleCount,
-			int maxJournalArticleSize, int maxMBCategoryCount,
-			int maxMBThreadCount, int maxMBMessageCount,
+			int maxAssetEntryAssetCategoryAssociationCount,
+			int maxAssetEntryAssetTagAssociationCount, int maxAssetTagCount,
+			int maxAssetVocabularyCount, int maxBlogsEntryCount,
+			int maxDDLCustomFieldCount, int maxGroupsCount,
+			int maxJournalArticleCount, int maxJournalArticleSize,
+			int maxMBCategoryCount, int maxMBThreadCount, int maxMBMessageCount,
 			int maxUserToGroupCount)
 		throws Exception {
 
 		_baseDir = baseDir;
 		_maxAssetCategoryCount = maxAssetCategoryCount;
-		_maxAssetCategoryPerAssetEntryCount =
-			maxAssetCategoryPerAssetEntryCount;
+		_maxAssetEntryAssetCategoryAssociationCount =
+			maxAssetEntryAssetCategoryAssociationCount;
+		_maxAssetEntryAssetTagAssociationCount =
+			maxAssetEntryAssetTagAssociationCount;
 		_maxAssetTagCount = maxAssetTagCount;
-		_maxAssetTagPerAssetEntryCount = maxAssetTagPerAssetEntryCount;
 		_maxAssetVocabularyCount = maxAssetVocabularyCount;
 		_maxBlogsEntryCount = maxBlogsEntryCount;
 		_maxDDLCustomFieldCount = maxDDLCustomFieldCount;
@@ -268,9 +269,9 @@ public class DataFactory {
 		int startIndex = assetCategoryCountPerGroup * ((int)groupId - 1);
 
 		List<Long> assetCategoryIds = new ArrayList<Long>(
-			_maxAssetCategoryPerAssetEntryCount);
+			_maxAssetEntryAssetCategoryAssociationCount);
 
-		for (int i = 0; i < _maxAssetCategoryPerAssetEntryCount; i++) {
+		for (int i = 0; i < _maxAssetEntryAssetCategoryAssociationCount; i++) {
 			SimpleCounter counter = _assetCategoryCounters.get(groupId);
 
 			if (counter == null) {
@@ -294,9 +295,9 @@ public class DataFactory {
 		int startIndex = _maxAssetTagCount * ((int)groupId - 1);
 
 		List<Long> assetTagIds = new ArrayList<Long>(
-			_maxAssetTagPerAssetEntryCount);
+			_maxAssetEntryAssetTagAssociationCount);
 
-		for (int i = 0; i < _maxAssetTagPerAssetEntryCount; i++) {
+		for (int i = 0; i < _maxAssetEntryAssetTagAssociationCount; i++) {
 			SimpleCounter counter = _assetTagCounters.get(groupId);
 
 			if (counter == null) {
@@ -2336,9 +2337,9 @@ public class DataFactory {
 	private Map<Long, SimpleCounter> _layoutCounters =
 		new HashMap<Long, SimpleCounter>();
 	private int _maxAssetCategoryCount;
-	private int _maxAssetCategoryPerAssetEntryCount;
+	private int _maxAssetEntryAssetCategoryAssociationCount;
+	private int _maxAssetEntryAssetTagAssociationCount;
 	private int _maxAssetTagCount;
-	private int _maxAssetTagPerAssetEntryCount;
 	private int _maxAssetVocabularyCount;
 	private int _maxBlogsEntryCount;
 	private int _maxDDLCustomFieldCount;

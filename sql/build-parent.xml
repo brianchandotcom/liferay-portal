@@ -173,6 +173,8 @@
 			<arg value="sample.sql.base.dir=${basedir}/../benchmarks" />
 			<arg value="sample.sql.db.type=hypersonic" />
 			<arg value="sample.sql.max.asset.category.count=1" />
+			<arg value="sample.sql.max.asset.entry.asset.category.association.count=1" />
+			<arg value="sample.sql.max.asset.entry.asset.tag.association.count=1" />
 			<arg value="sample.sql.max.asset.tag.count=1" />
 			<arg value="sample.sql.max.asset.vocabulary.count=1" />
 			<arg value="sample.sql.max.blogs.entry.comment.count=1" />
@@ -200,8 +202,6 @@
 			<arg value="sample.sql.optimize.buffer.size=8192" />
 			<arg value="sample.sql.output.dir=${tstamp.value}" />
 			<arg value="sample.sql.output.merge=true" />
-			<arg value="sample.sql.per.asset.entry.max.asset.category.count=1" />
-			<arg value="sample.sql.per.asset.entry.max.asset.tag.count=1" />
 		</java>
 
 		<delete dir="${tstamp.value}" />

@@ -1152,14 +1152,10 @@
 			INNER JOIN
 				Role_ ON
 					(Role_.roleId = ResourceBlockPermission.roleId)
-			INNER JOIN
-				ResourceAction ON
-					(ResourceAction.name = ResourceBlock.name)
 			WHERE
 				(ResourceBlock.resourceBlockId = ?) AND
 				(ResourceBlock.name = ?) AND
-				(ResourceAction.actionId = ?) AND
-				(MOD(INTEGER_DIV(ResourceBlockPermission.actionIds, ResourceAction.bitwisevalue), 2) = 1)
+				(MOD(INTEGER_DIV(ResourceBlockPermission.actionIds, ?), 2) = 1)
 			ORDER BY
 				Role_.name ASC
 		]]>
@@ -1193,16 +1189,12 @@
 			INNER JOIN
 				Role_ ON
 					(Role_.roleId = ResourcePermission.roleId)
-			INNER JOIN
-				ResourceAction ON
-					(ResourceAction.name = ResourcePermission.name)
 			WHERE
 				(ResourcePermission.companyId = ?) AND
 				(ResourcePermission.name = ?) AND
 				(ResourcePermission.scope = ?) AND
 				(ResourcePermission.primKey = ?) AND
-				(ResourceAction.actionId = ?) AND
-				(MOD(INTEGER_DIV(ResourcePermission.actionIds, ResourceAction.bitwisevalue), 2) = 1)
+				(MOD(INTEGER_DIV(ResourcePermission.actionIds, ?), 2) = 1)
 			ORDER BY
 				Role_.name ASC
 		]]>

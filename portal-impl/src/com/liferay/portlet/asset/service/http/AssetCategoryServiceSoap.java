@@ -110,6 +110,22 @@ public class AssetCategoryServiceSoap {
 		}
 	}
 
+	/**
+	* @deprecated As of 6.2.0, Replaced by {@link #deleteCategories(long[],
+	ServiceContext)}
+	*/
+	public static void deleteCategories(long[] categoryIds)
+		throws RemoteException {
+		try {
+			AssetCategoryServiceUtil.deleteCategories(categoryIds);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.asset.model.AssetCategorySoap[] deleteCategories(
 		long[] categoryIds,
 		com.liferay.portal.service.ServiceContext serviceContext)

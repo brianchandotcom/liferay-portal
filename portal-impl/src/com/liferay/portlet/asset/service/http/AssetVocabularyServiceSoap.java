@@ -137,6 +137,22 @@ public class AssetVocabularyServiceSoap {
 		}
 	}
 
+	/**
+	* @deprecated As of 6.2.0, Replaced by {@link #deleteVocabularies(long[],
+	ServiceContext)}
+	*/
+	public static void deleteVocabularies(long[] vocabularyIds)
+		throws RemoteException {
+		try {
+			AssetVocabularyServiceUtil.deleteVocabularies(vocabularyIds);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.asset.model.AssetVocabularySoap[] deleteVocabularies(
 		long[] vocabularyIds,
 		com.liferay.portal.service.ServiceContext serviceContext)

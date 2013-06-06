@@ -28,7 +28,7 @@
 
 				<@insertAssetEntry
 					_entry = wikiPage
-					_currentIndex = wikiPageCount
+					_categoryAndTag = true
 				/>
 
 				<#assign mbRootMessageId = counter.get()>

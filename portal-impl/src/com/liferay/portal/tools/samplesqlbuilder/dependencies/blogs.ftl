@@ -10,7 +10,7 @@
 
 		<@insertAssetEntry
 			_entry = blogsEntry
-			_currentIndex = blogsEntryCount
+			_categoryAndTag = true
 		/>
 
 		<#assign mbThreadId = counter.get()>

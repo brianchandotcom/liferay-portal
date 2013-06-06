@@ -73,9 +73,13 @@ import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetCategoryConstants;
 import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.model.AssetTag;
+import com.liferay.portlet.asset.model.AssetTagStats;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.model.impl.AssetCategoryImpl;
 import com.liferay.portlet.asset.model.impl.AssetEntryImpl;
+import com.liferay.portlet.asset.model.impl.AssetTagImpl;
+import com.liferay.portlet.asset.model.impl.AssetTagStatsImpl;
 import com.liferay.portlet.asset.model.impl.AssetVocabularyImpl;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.model.BlogsStatsUser;
@@ -169,7 +173,10 @@ import java.util.Map;
 public class DataFactory {
 
 	public DataFactory(
-			String baseDir, int maxAssetCategoryCount, int maxBlogsEntryCount,
+			String baseDir, int maxAssetCategoryCount,
+			int maxAssetEntryAssetCategoryAssociationCount,
+			int maxAssetEntryAssetTagAssociationCount, int maxAssetTagCount,
+			int maxAssetVocabularyCount, int maxBlogsEntryCount,
 			int maxDDLCustomFieldCount, int maxGroupsCount,
 			int maxJournalArticleCount, int maxJournalArticleSize,
 			int maxMBCategoryCount, int maxMBThreadCount, int maxMBMessageCount,
@@ -178,6 +185,12 @@ public class DataFactory {
 
 		_baseDir = baseDir;
 		_maxAssetCategoryCount = maxAssetCategoryCount;
+		_maxAssetEntryAssetCategoryAssociationCount =
+			maxAssetEntryAssetCategoryAssociationCount;
+		_maxAssetEntryAssetTagAssociationCount =
+			maxAssetEntryAssetTagAssociationCount;
+		_maxAssetTagCount = maxAssetTagCount;
+		_maxAssetVocabularyCount = maxAssetVocabularyCount;
 		_maxBlogsEntryCount = maxBlogsEntryCount;
 		_maxDDLCustomFieldCount = maxDDLCustomFieldCount;
 		_maxGroupsCount = maxGroupsCount;
@@ -226,6 +239,7 @@ public class DataFactory {
 					_DEPENDENCIES_DIR + "ddm_structure_basic_document.xml")));
 
 		initAssetCateogries();
+		initAssetTags();
 		initCompany();
 		initDLFileEntryType();
 		initGroups();
@@ -248,14 +262,66 @@ public class DataFactory {
 		return _assetCategories;
 	}
 
-	public long getAssetCategoryId(long groupId, int currentIndex) {
-		int index = (currentIndex - 1) % _maxAssetCategoryCount;
+	public List<Long> getAssetCategoryIds(long groupId) {
+		SimpleCounter counter = _assetCategoryCounters.get(groupId);
 
-		index = _maxAssetCategoryCount * ((int)groupId - 1) + index;
+		if (counter == null) {
+			counter = new SimpleCounter(0);
 
-		AssetCategory assetCategory = _assetCategories.get(index);
+			_assetCategoryCounters.put(groupId, counter);
+		}
 
-		return assetCategory.getCategoryId();
+		int assetCategoryCountPerGroup =
+			_maxAssetCategoryCount * _maxAssetVocabularyCount;
+
+		int startIndex = assetCategoryCountPerGroup * ((int)groupId - 1);
+
+		List<Long> assetCategoryIds = new ArrayList<Long>(
+			_maxAssetEntryAssetCategoryAssociationCount);
+
+		for (int i = 0; i < _maxAssetEntryAssetCategoryAssociationCount; i++) {
+			int index =
+				startIndex + (int)counter.get() % assetCategoryCountPerGroup;
+
+			AssetCategory assetCategory = _assetCategories.get(index);
+
+			assetCategoryIds.add(assetCategory.getCategoryId());
+		}
+
+		return assetCategoryIds;
+	}
+
+	public List<Long> getAssetTagIds(long groupId) {
+		SimpleCounter counter = _assetTagCounters.get(groupId);
+
+		if (counter == null) {
+			counter = new SimpleCounter(0);
+
+			_assetTagCounters.put(groupId, counter);
+		}
+
+		int startIndex = _maxAssetTagCount * ((int)groupId - 1);
+
+		List<Long> assetTagIds = new ArrayList<Long>(
+			_maxAssetEntryAssetTagAssociationCount);
+
+		for (int i = 0; i < _maxAssetEntryAssetTagAssociationCount; i++) {
+			int index = startIndex + (int)counter.get() % _maxAssetTagCount;
+
+			AssetTag assetTag = _assetTags.get(index);
+
+			assetTagIds.add(assetTag.getTagId());
+		}
+
+		return assetTagIds;
+	}
+
+	public List<AssetTag> getAssetTags() {
+		return _assetTags;
+	}
+
+	public List<AssetTagStats> getAssetTagStats() {
+		return _assetTagStats;
 	}
 
 	public List<AssetVocabulary> getAssetVocabularies() {
@@ -398,70 +464,86 @@ public class DataFactory {
 		_assetVocabularies = new ArrayList<AssetVocabulary>();
 		_assetCategories = new ArrayList<AssetCategory>();
 
-		StringBundler sb = new StringBundler(5);
-
-		sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><root ");
-		sb.append("available-locales=\"en_US\" default-locale=\"en_US\">");
-		sb.append("<Title language-id=\"en_US\">");
-		sb.append(PropsValues.ASSET_VOCABULARY_DEFAULT);
-		sb.append("</Title></root>");
-
-		String defaultTitle = sb.toString();
-
 		_assetVocabularies.add(
 			newAssetVocabulary(
 				_globalGroupId, _defaultUserId, null,
-				PropsValues.ASSET_VOCABULARY_DEFAULT, defaultTitle));
+				PropsValues.ASSET_VOCABULARY_DEFAULT));
+
+		StringBundler sb = new StringBundler(4);
 
 		for (int i = 1; i <= _maxGroupsCount; i++) {
 			long lastRightCategoryId = 2;
 
-			for (int j = 0; j < _maxAssetCategoryCount; j++) {
-				sb = new StringBundler(4);
+			for (int j = 0; j < _maxAssetVocabularyCount; j++) {
+				sb.setIndex(0);
 
-				sb.append("Test_");
+				sb.append("TestVocabulary_");
 				sb.append(i);
 				sb.append(StringPool.UNDERLINE);
 				sb.append(j);
 
-				String name = sb.toString();
-
-				sb = new StringBundler(5);
-
-				sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><root ");
-				sb.append(
-					"available-locales=\"en_US\" default-locale=\"en_US\">");
-				sb.append("<Title language-id=\"en_US\">");
-				sb.append(name);
-				sb.append("</Title></root>");
-
-				String title = sb.toString();
-
 				AssetVocabulary assetVocabulary = newAssetVocabulary(
-					i, _sampleUserId, _SAMPLE_USER_NAME, name, title);
+					i, _sampleUserId, _SAMPLE_USER_NAME, sb.toString());
 
 				_assetVocabularies.add(assetVocabulary);
 
-				AssetCategory assetCategory = new AssetCategoryImpl();
+				long vocabularyId = assetVocabulary.getVocabularyId();
 
-				assetCategory.setUuid(SequentialUUID.generate());
-				assetCategory.setCategoryId(_counter.get());
-				assetCategory.setGroupId(i);
-				assetCategory.setCompanyId(_companyId);
-				assetCategory.setUserId(_sampleUserId);
-				assetCategory.setUserName(_SAMPLE_USER_NAME);
-				assetCategory.setCreateDate(new Date());
-				assetCategory.setModifiedDate(new Date());
-				assetCategory.setParentCategoryId(
-					AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
-				assetCategory.setLeftCategoryId(lastRightCategoryId++);
-				assetCategory.setRightCategoryId(lastRightCategoryId++);
-				assetCategory.setName(name);
-				assetCategory.setTitle(title);
-				assetCategory.setVocabularyId(
-					assetVocabulary.getVocabularyId());
+				for (int k = 0; k < _maxAssetCategoryCount; k++) {
+					sb.setIndex(0);
 
-				_assetCategories.add(assetCategory);
+					sb.append("TestCategory_");
+					sb.append(vocabularyId);
+					sb.append(StringPool.UNDERLINE);
+					sb.append(k);
+
+					AssetCategory assetCategory = newAssetCategory(
+						i, lastRightCategoryId, sb.toString(), vocabularyId);
+
+					lastRightCategoryId += 2;
+
+					_assetCategories.add(assetCategory);
+				}
+			}
+		}
+	}
+
+	public void initAssetTags() {
+		_assetTags = new ArrayList<AssetTag>(_maxAssetTagCount);
+		_assetTagStats = new ArrayList<AssetTagStats>(_maxAssetTagCount * 3);
+
+		for (int i = 1; i <= _maxGroupsCount; i++) {
+			for (int j = 0; j < _maxAssetTagCount; j++) {
+				AssetTag assetTag = new AssetTagImpl();
+
+				assetTag.setTagId(_counter.get());
+				assetTag.setGroupId(i);
+				assetTag.setCompanyId(_companyId);
+				assetTag.setUserId(_sampleUserId);
+				assetTag.setUserName(_SAMPLE_USER_NAME);
+				assetTag.setCreateDate(new Date());
+				assetTag.setModifiedDate(new Date());
+				assetTag.setName("TestTag_" + i + "_" + j);
+
+				_assetTags.add(assetTag);
+
+				AssetTagStats assetTagStats = newAssetTagStats(
+					assetTag.getTagId(),
+					_classNamesMap.get(BlogsEntry.class.getName()));
+
+				_assetTagStats.add(assetTagStats);
+
+				assetTagStats = newAssetTagStats(
+					assetTag.getTagId(),
+					_classNamesMap.get(WikiPage.class.getName()));
+
+				_assetTagStats.add(assetTagStats);
+
+				assetTagStats = newAssetTagStats(
+					assetTag.getTagId(),
+					_classNamesMap.get(JournalArticle.class.getName()));
+
+				_assetTagStats.add(assetTagStats);
 			}
 		}
 	}
@@ -1490,6 +1572,12 @@ public class DataFactory {
 			String.valueOf(assetCategory.getCategoryId()), _sampleUserId);
 	}
 
+	public List<ResourcePermission> newResourcePermissions(AssetTag assetTag) {
+		return newResourcePermissions(
+			AssetTag.class.getName(), String.valueOf(assetTag.getTagId()),
+			_sampleUserId);
+	}
+
 	public List<ResourcePermission> newResourcePermissions(
 		AssetVocabulary assetVocabulary) {
 
@@ -1780,6 +1868,40 @@ public class DataFactory {
 		return userName;
 	}
 
+	protected AssetCategory newAssetCategory(
+		long groupId, long lastRightCategoryId, String name,
+		long vocabularyId) {
+
+		AssetCategory assetCategory = new AssetCategoryImpl();
+
+		assetCategory.setUuid(SequentialUUID.generate());
+		assetCategory.setCategoryId(_counter.get());
+		assetCategory.setGroupId(groupId);
+		assetCategory.setCompanyId(_companyId);
+		assetCategory.setUserId(_sampleUserId);
+		assetCategory.setUserName(_SAMPLE_USER_NAME);
+		assetCategory.setCreateDate(new Date());
+		assetCategory.setModifiedDate(new Date());
+		assetCategory.setParentCategoryId(
+			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
+		assetCategory.setLeftCategoryId(lastRightCategoryId++);
+		assetCategory.setRightCategoryId(lastRightCategoryId++);
+		assetCategory.setName(name);
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><root ");
+		sb.append("available-locales=\"en_US\" default-locale=\"en_US\">");
+		sb.append("<Title language-id=\"en_US\">");
+		sb.append(name);
+		sb.append("</Title></root>");
+
+		assetCategory.setTitle(sb.toString());
+		assetCategory.setVocabularyId(vocabularyId);
+
+		return assetCategory;
+	}
+
 	protected AssetEntry newAssetEntry(
 		long groupId, Date createDate, Date modifiedDate, long classNameId,
 		long classPK, String uuid, long classTypeId, boolean visible,
@@ -1809,8 +1931,18 @@ public class DataFactory {
 		return assetEntry;
 	}
 
+	protected AssetTagStats newAssetTagStats(long tagId, long classNameId) {
+		AssetTagStats assetTagStats = new AssetTagStatsImpl();
+
+		assetTagStats.setTagStatsId(_counter.get());
+		assetTagStats.setTagId(tagId);
+		assetTagStats.setClassNameId(classNameId);
+
+		return assetTagStats;
+	}
+
 	protected AssetVocabulary newAssetVocabulary(
-		long grouId, long userId, String userName, String name, String title) {
+		long grouId, long userId, String userName, String name) {
 
 		AssetVocabulary assetVocabulary = new AssetVocabularyImpl();
 
@@ -1823,7 +1955,16 @@ public class DataFactory {
 		assetVocabulary.setCreateDate(new Date());
 		assetVocabulary.setModifiedDate(new Date());
 		assetVocabulary.setName(name);
-		assetVocabulary.setTitle(title);
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><root ");
+		sb.append("available-locales=\"en_US\" default-locale=\"en_US\">");
+		sb.append("<Title language-id=\"en_US\">");
+		sb.append(name);
+		sb.append("</Title></root>");
+
+		assetVocabulary.setTitle(sb.toString());
 		assetVocabulary.setSettings(
 			"multiValued=true\\nselectedClassNameIds=0");
 
@@ -2166,6 +2307,12 @@ public class DataFactory {
 	private long _accountId;
 	private Role _administratorRole;
 	private List<AssetCategory> _assetCategories;
+	private Map<Long, SimpleCounter> _assetCategoryCounters =
+		new HashMap<Long, SimpleCounter>();
+	private Map<Long, SimpleCounter> _assetTagCounters =
+		new HashMap<Long, SimpleCounter>();
+	private List<AssetTag> _assetTags;
+	private List<AssetTagStats> _assetTagStats;
 	private List<AssetVocabulary> _assetVocabularies;
 	private String _baseDir;
 	private List<ClassName> _classNames;
@@ -2192,6 +2339,10 @@ public class DataFactory {
 	private Map<Long, SimpleCounter> _layoutCounters =
 		new HashMap<Long, SimpleCounter>();
 	private int _maxAssetCategoryCount;
+	private int _maxAssetEntryAssetCategoryAssociationCount;
+	private int _maxAssetEntryAssetTagAssociationCount;
+	private int _maxAssetTagCount;
+	private int _maxAssetVocabularyCount;
 	private int _maxBlogsEntryCount;
 	private int _maxDDLCustomFieldCount;
 	private int _maxDLFileEntrySize;

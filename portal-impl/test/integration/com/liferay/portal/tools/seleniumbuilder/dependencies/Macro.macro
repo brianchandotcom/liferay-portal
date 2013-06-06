@@ -1,5 +1,6 @@
 <definition>
 	<var name="name" value="value" />
+	<var name="name" value="" />
 
 	<command name="name">
 		<var name="name" value="value" />

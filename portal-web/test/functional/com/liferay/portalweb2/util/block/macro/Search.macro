@@ -1,5 +1,5 @@
 <definition>
-	<command name="pgBlogsEntry">
+	<command name="blogsEntryPG">
 		<execute macro="Page#pgGoto">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -13,7 +13,7 @@
 		<execute action="PGSearchResults#assertTextEquals" locator-key1="SEARCH_RESULTS" value1="Showing 1 - 1." />
 	</command>
 
-	<command name="pgMessageboardsThread">
+	<command name="messageboardsThreadPG">
 		<execute macro="Page#pgGoto">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -27,7 +27,7 @@
 		<execute action="PGSearchResults#assertTextEquals" locator-key1="SEARCH_RESULTS" value1="Showing 1 - 1." />
 	</command>
 
-	<command name="pgUser">
+	<command name="userPG">
 		<execute macro="Page#pgGoto">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -46,7 +46,7 @@
 		<execute action="PGSearchResults#assertTextEquals" locator-key1="SEARCH_RESULTS" value1="Showing 1 - 1." />
 	</command>
 
-	<command name="pgWikiPage">
+	<command name="wikiPagePG">
 		<execute macro="Page#pgGoto">
 			<var name="pageName" value="${pageName}" />
 		</execute>

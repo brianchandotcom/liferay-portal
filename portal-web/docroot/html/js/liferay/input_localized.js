@@ -211,7 +211,8 @@ AUI.add(
 									},
 									position: 'bottom',
 									trigger: '.palette-item',
-									visible: false
+									visible: false,
+									zIndex: Liferay.zIndex.WINDOW + 2
 								}
 							);
 						}

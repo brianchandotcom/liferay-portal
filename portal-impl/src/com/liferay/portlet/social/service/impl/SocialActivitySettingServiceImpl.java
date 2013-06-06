@@ -25,7 +25,7 @@ import com.liferay.portlet.social.model.SocialActivityCounterDefinition;
 import com.liferay.portlet.social.model.SocialActivityDefinition;
 import com.liferay.portlet.social.model.SocialActivitySetting;
 import com.liferay.portlet.social.service.base.SocialActivitySettingServiceBaseImpl;
-import com.liferay.portlet.social.service.permission.SocialActivityPermission;
+import com.liferay.portlet.social.service.permission.SocialActivityPermissionUtil;
 import com.liferay.portlet.social.util.comparator.SocialActivityDefinitionNameComparator;
 
 import java.util.Collections;
@@ -42,7 +42,7 @@ public class SocialActivitySettingServiceImpl
 			long groupId, String className, int activityType)
 		throws PortalException, SystemException {
 
-		SocialActivityPermission.check(
+		SocialActivityPermissionUtil.check(
 			getPermissionChecker(), groupId, ActionKeys.VIEW);
 
 		return socialActivitySettingLocalService.getActivityDefinition(
@@ -54,7 +54,7 @@ public class SocialActivitySettingServiceImpl
 			long groupId, String className)
 		throws PortalException, SystemException {
 
-		SocialActivityPermission.check(
+		SocialActivityPermissionUtil.check(
 			getPermissionChecker(), groupId, ActionKeys.VIEW);
 
 		return socialActivitySettingLocalService.getActivityDefinitions(
@@ -65,7 +65,7 @@ public class SocialActivitySettingServiceImpl
 	public List<SocialActivitySetting> getActivitySettings(long groupId)
 		throws PortalException, SystemException {
 
-		SocialActivityPermission.check(
+		SocialActivityPermissionUtil.check(
 			getPermissionChecker(), groupId, ActionKeys.VIEW);
 
 		return socialActivitySettingLocalService.getActivitySettings(groupId);
@@ -75,7 +75,7 @@ public class SocialActivitySettingServiceImpl
 	public JSONArray getJSONActivityDefinitions(long groupId, String className)
 		throws PortalException, SystemException {
 
-		SocialActivityPermission.check(
+		SocialActivityPermissionUtil.check(
 			getPermissionChecker(), groupId, ActionKeys.VIEW);
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
@@ -129,7 +129,7 @@ public class SocialActivitySettingServiceImpl
 			long groupId, String className, boolean enabled)
 		throws PortalException, SystemException {
 
-		SocialActivityPermission.check(
+		SocialActivityPermissionUtil.check(
 			getPermissionChecker(), groupId, ActionKeys.CONFIGURATION);
 
 		socialActivitySettingLocalService.updateActivitySetting(
@@ -142,7 +142,7 @@ public class SocialActivitySettingServiceImpl
 			SocialActivityCounterDefinition activityCounterDefinition)
 		throws PortalException, SystemException {
 
-		SocialActivityPermission.check(
+		SocialActivityPermissionUtil.check(
 			getPermissionChecker(), groupId, ActionKeys.CONFIGURATION);
 
 		socialActivitySettingLocalService.updateActivitySetting(
@@ -155,7 +155,7 @@ public class SocialActivitySettingServiceImpl
 			List<SocialActivityCounterDefinition> activityCounterDefinitions)
 		throws PortalException, SystemException {
 
-		SocialActivityPermission.check(
+		SocialActivityPermissionUtil.check(
 			getPermissionChecker(), groupId, ActionKeys.CONFIGURATION);
 
 		socialActivitySettingLocalService.updateActivitySettings(

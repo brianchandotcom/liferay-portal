@@ -25,9 +25,10 @@ import com.liferay.portlet.social.service.SocialRequestLocalServiceUtil;
 /**
  * @author Shinn Lok
  */
-public class SocialRequestPermission {
+public class SocialRequestPermissionImpl implements SocialRequestPermission {
 
-	public static void check(
+	@Override
+	public void check(
 			PermissionChecker permissionChecker, long requestId,
 			String actionId)
 		throws PortalException, SystemException {
@@ -37,7 +38,8 @@ public class SocialRequestPermission {
 		}
 	}
 
-	public static boolean contains(
+	@Override
+	public boolean contains(
 			PermissionChecker permissionChecker, long requestId,
 			String actionId)
 		throws PortalException, SystemException {

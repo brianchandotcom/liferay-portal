@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
@@ -12,12 +11,22 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+package com.liferay.portlet.social.service.permission;
 
-<%@ page import="com.liferay.portlet.social.model.SocialActivityDefinition" %><%@
-page import="com.liferay.portlet.social.service.permission.SocialActivityPermissionUtil" %><%@
-page import="com.liferay.portlet.social.util.SocialConfigurationUtil" %>
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.security.permission.PermissionChecker;
 
-<%@ include file="/html/portlet/social_activity/init-ext.jsp" %>
+/**
+ * @author Zsolt Berentey
+ */
+public interface SocialActivityPermission {
+
+	public void check(
+			PermissionChecker permissionChecker, long groupId, String actionId)
+		throws PortalException;
+
+	public boolean contains(
+		PermissionChecker permissionChecker, long groupId, String actionId);
+
+}

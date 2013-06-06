@@ -1,18 +1,26 @@
 AUI.add(
 	'liferay-notice',
 	function(A) {
+		var Lang = A.Lang;
+		var ADOM = A.DOM;
+		var ANode = A.Node;
+		var Do = A.Do;
 
 		/**
+		 * @deprecated
+		 *
 		 * OPTIONS
 		 *
 		 * Required
 		 * content {string}: The content of the toolbar.
 		 *
 		 * Optional
-		 * closeText {string}: Use for the "close" button. Set to false to not have a close button.
+		 * closeText {string}: Use for the "close" button. Set to false to not have a close button. If set to false but in the provided markup (via content property) there is an element with class "close", a click listener on this element will be added. As result, the notice will be closed.
 		 * toggleText {object}: The text to use for the "hide" and "show" button. Set to false to not have a hide button.
 		 * noticeClass {string}: A class to add to the notice toolbar.
-		 * type {string}: Either 'notice' or 'warning', depending on the type of the toolbar. Defaults to notice.
+		 * timeout {Number}: The timeout in milliseconds, after it the notice will be automatically closed. Set it to -1, or do not add this property to disable this functionality.
+		 * animationConfig {Object}: The Transition config, defaults to {easing: 'ease-out', duration: 2, top: '50px'}. If 'left' property is not specified, it will be automatically calculated.
+		 * useAnimation {boolean}: To animate show/hide of the notice, defaults to true. If useAnimation is set to true, but there is no timeout, 5000 will be used as timeout.
 		 *
 		 * Callbacks
 		 * onClose {function}: Called when the toolbar is closed.
@@ -29,6 +37,21 @@ AUI.add(
 			instance._useCloseButton = true;
 			instance._onClose = options.onClose;
 			instance._closeText = options.closeText;
+
+			if (options.useAnimation && !Lang.isNumber(options.timeout)) {
+				options.timeout = 5000;
+			}
+
+			instance._animationConfig = options.animationConfig || {
+				easing: 'ease-out',
+				duration: 2,
+				top: '50px'
+			};
+
+			instance._useAnimation = options.useAnimation;
+
+			instance._timeout = options.timeout;
+
 			instance._body = A.getBody();
 
 			instance._useToggleButton = false;
@@ -95,13 +118,62 @@ AUI.add(
 				}
 			},
 
+			_beforeNoticeHide: function(event) {
+				var instance = this;
+
+				var returnVal;
+
+				if (instance._useAnimation) {
+					var animationConfig = A.merge(
+						instance._animationConfig,
+						{
+							top: -instance._notice.get('offsetHeight') + 'px'
+						}
+					);
+
+					instance._notice.transition(animationConfig);
+
+					returnVal = new Do.Halt(null);
+				}
+
+				return returnVal;
+			},
+
+			_afterNoticeShow: function(event) {
+				var instance = this;
+
+				if (instance._useAnimation) {
+					if (!instance._animationConfig.left) {
+						var viewportWidth = ADOM.winWidth();
+
+						var noticeRegion = ADOM.region(ANode.getDOMNode(instance._notice));
+
+						var noticeLeft = (viewportWidth / 2) - (noticeRegion.width / 2);
+
+						instance._animationConfig.left = noticeLeft + 'px';
+					}
+
+					instance._notice.setXY([noticeLeft, -noticeRegion.height]);
+
+					instance._notice.transition(
+						instance._animationConfig,
+						function() {
+							A.later(instance._timeout, instance._notice, 'hide');
+						}
+					);
+				}
+				else {
+					A.later(instance._timeout, instance._notice, 'hide');
+				}
+			},
+
 			_createHTML: function() {
 				var instance = this;
 
 				var content = instance._content;
 				var node = A.one(instance._node);
 
-				var notice = node || A.Node.create('<div class="alert" dynamic="true"></div>');
+				var notice = node || ANode.create('<div class="alert" dynamic="true"></div>');
 
 				if (content) {
 					notice.html(content);
@@ -118,11 +190,19 @@ AUI.add(
 
 				instance._body.addClass('has-alerts');
 
+				if (instance._timeout > 0) {
+					Do.before(instance._beforeNoticeHide, notice, 'hide', instance);
+
+					Do.after(instance._afterNoticeShow, notice, 'show', instance);
+				}
+
 				instance._notice = notice;
 			},
 
 			_addCloseButton: function(notice) {
 				var instance = this;
+
+				var closeButton;
 
 				if (instance._closeText !== false) {
 					instance._closeText = instance._closeText || Liferay.Language.get('close');
@@ -134,13 +214,16 @@ AUI.add(
 
 				if (instance._useCloseButton) {
 					var html =  '<button class="btn submit popup-alert-close">' +
-									instance._closeText
+									instance._closeText +
 								'</button>';
 
-					notice.append(html);
+					closeButton = notice.append(html);
+				}
+				else {
+					closeButton = notice.one('.close');
+				}
 
-					var closeButton = notice.one('.popup-alert-close');
-
+				if (closeButton) {
 					closeButton.on('click', instance.close, instance);
 				}
 			},
@@ -152,7 +235,7 @@ AUI.add(
 					instance._hideText = instance._toggleText.hide || Liferay.Language.get('hide');
 					instance._showText = instance._toggleText.show || Liferay.Language.get('show');
 
-					var toggleButton = A.Node.create('<a class="toggle-button" href="javascript:;"><span>' + instance._hideText + '</span></a>');
+					var toggleButton = ANode.create('<a class="toggle-button" href="javascript:;"><span>' + instance._hideText + '</span></a>');
 					var toggleSpan = toggleButton.one('span');
 					var height = 0;
 

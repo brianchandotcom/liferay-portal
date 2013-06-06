@@ -23,8 +23,8 @@ import java.util.Map;
  * This class is a wrapper for {@link Role}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       Role
+ * @author Brian Wing Shun Chan
+ * @see Role
  * @generated
  */
 public class RoleWrapper implements Role, ModelWrapper<Role> {

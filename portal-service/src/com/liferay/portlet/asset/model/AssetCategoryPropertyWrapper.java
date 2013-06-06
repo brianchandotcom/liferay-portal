@@ -25,8 +25,8 @@ import java.util.Map;
  * This class is a wrapper for {@link AssetCategoryProperty}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       AssetCategoryProperty
+ * @author Brian Wing Shun Chan
+ * @see AssetCategoryProperty
  * @generated
  */
 public class AssetCategoryPropertyWrapper implements AssetCategoryProperty,

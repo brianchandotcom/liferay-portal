@@ -23,8 +23,8 @@ import java.util.List;
 /**
  * This class is used by SOAP remote services, specifically {@link com.liferay.portal.service.http.AccountServiceSoap}.
  *
- * @author    Brian Wing Shun Chan
- * @see       com.liferay.portal.service.http.AccountServiceSoap
+ * @author Brian Wing Shun Chan
+ * @see com.liferay.portal.service.http.AccountServiceSoap
  * @generated
  */
 public class AccountSoap implements Serializable {

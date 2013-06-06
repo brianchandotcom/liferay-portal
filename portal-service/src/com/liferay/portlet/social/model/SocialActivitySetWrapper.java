@@ -24,8 +24,8 @@ import java.util.Map;
  * This class is a wrapper for {@link SocialActivitySet}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       SocialActivitySet
+ * @author Brian Wing Shun Chan
+ * @see SocialActivitySet
  * @generated
  */
 public class SocialActivitySetWrapper implements SocialActivitySet,

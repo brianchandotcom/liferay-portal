@@ -45,10 +45,10 @@ import com.liferay.portlet.expando.service.ExpandoColumnServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       ExpandoColumnServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portlet.expando.service.ExpandoColumnServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see ExpandoColumnServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portlet.expando.service.ExpandoColumnServiceUtil
  * @generated
  */
 public class ExpandoColumnServiceHttp {

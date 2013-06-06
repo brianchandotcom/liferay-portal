@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link LayoutSetLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       LayoutSetLocalService
+ * @author Brian Wing Shun Chan
+ * @see LayoutSetLocalService
  * @generated
  */
 public class LayoutSetLocalServiceWrapper implements LayoutSetLocalService,

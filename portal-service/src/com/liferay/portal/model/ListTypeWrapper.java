@@ -22,8 +22,8 @@ import java.util.Map;
  * This class is a wrapper for {@link ListType}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       ListType
+ * @author Brian Wing Shun Chan
+ * @see ListType
  * @generated
  */
 public class ListTypeWrapper implements ListType, ModelWrapper<ListType> {

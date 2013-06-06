@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link UserLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       UserLocalService
+ * @author Brian Wing Shun Chan
+ * @see UserLocalService
  * @generated
  */
 public class UserLocalServiceWrapper implements UserLocalService,

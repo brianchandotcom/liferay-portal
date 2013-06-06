@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link MBMessageService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       MBMessageService
+ * @author Brian Wing Shun Chan
+ * @see MBMessageService
  * @generated
  */
 public class MBMessageServiceWrapper implements MBMessageService,

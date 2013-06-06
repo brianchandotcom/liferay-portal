@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link MDRRuleGroupLocalService}.
  *
- * @author    Edward C. Han
- * @see       MDRRuleGroupLocalService
+ * @author Edward C. Han
+ * @see MDRRuleGroupLocalService
  * @generated
  */
 public class MDRRuleGroupLocalServiceWrapper implements MDRRuleGroupLocalService,

@@ -24,8 +24,8 @@ import java.util.Map;
  * This class is a wrapper for {@link ExpandoTable}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       ExpandoTable
+ * @author Brian Wing Shun Chan
+ * @see ExpandoTable
  * @generated
  */
 public class ExpandoTableWrapper implements ExpandoTable,

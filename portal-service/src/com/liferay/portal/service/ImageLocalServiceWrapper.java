@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link ImageLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       ImageLocalService
+ * @author Brian Wing Shun Chan
+ * @see ImageLocalService
  * @generated
  */
 public class ImageLocalServiceWrapper implements ImageLocalService,

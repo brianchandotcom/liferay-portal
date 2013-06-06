@@ -55,10 +55,10 @@ import java.rmi.RemoteException;
  * The SOAP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       AnnouncementsEntryServiceHttp
- * @see       com.liferay.portlet.announcements.model.AnnouncementsEntrySoap
- * @see       com.liferay.portlet.announcements.service.AnnouncementsEntryServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see AnnouncementsEntryServiceHttp
+ * @see com.liferay.portlet.announcements.model.AnnouncementsEntrySoap
+ * @see com.liferay.portlet.announcements.service.AnnouncementsEntryServiceUtil
  * @generated
  */
 public class AnnouncementsEntryServiceSoap {

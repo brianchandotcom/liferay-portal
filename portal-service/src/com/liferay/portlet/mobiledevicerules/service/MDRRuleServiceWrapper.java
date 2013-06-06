@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link MDRRuleService}.
  *
- * @author    Edward C. Han
- * @see       MDRRuleService
+ * @author Edward C. Han
+ * @see MDRRuleService
  * @generated
  */
 public class MDRRuleServiceWrapper implements MDRRuleService,

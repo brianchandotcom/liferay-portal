@@ -23,8 +23,8 @@ import java.util.Map;
  * This class is a wrapper for {@link Address}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       Address
+ * @author Brian Wing Shun Chan
+ * @see Address
  * @generated
  */
 public class AddressWrapper implements Address, ModelWrapper<Address> {

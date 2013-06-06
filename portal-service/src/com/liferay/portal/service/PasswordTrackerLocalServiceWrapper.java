@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link PasswordTrackerLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       PasswordTrackerLocalService
+ * @author Brian Wing Shun Chan
+ * @see PasswordTrackerLocalService
  * @generated
  */
 public class PasswordTrackerLocalServiceWrapper

@@ -43,10 +43,10 @@ import com.liferay.portal.service.LayoutBranchServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       LayoutBranchServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portal.service.LayoutBranchServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see LayoutBranchServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portal.service.LayoutBranchServiceUtil
  * @generated
  */
 public class LayoutBranchServiceHttp {

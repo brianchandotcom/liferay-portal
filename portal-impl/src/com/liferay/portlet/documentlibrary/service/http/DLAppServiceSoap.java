@@ -46,9 +46,9 @@ import java.rmi.RemoteException;
  * The SOAP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       DLAppServiceHttp
- * @see       com.liferay.portlet.documentlibrary.service.DLAppServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see DLAppServiceHttp
+ * @see com.liferay.portlet.documentlibrary.service.DLAppServiceUtil
  * @generated
  */
 public class DLAppServiceSoap {

@@ -25,8 +25,8 @@ import java.util.Map;
  * This class is a wrapper for {@link MDRRule}.
  * </p>
  *
- * @author    Edward C. Han
- * @see       MDRRule
+ * @author Edward C. Han
+ * @see MDRRule
  * @generated
  */
 public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {

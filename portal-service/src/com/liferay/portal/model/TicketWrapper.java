@@ -23,8 +23,8 @@ import java.util.Map;
  * This class is a wrapper for {@link Ticket}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       Ticket
+ * @author Brian Wing Shun Chan
+ * @see Ticket
  * @generated
  */
 public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {

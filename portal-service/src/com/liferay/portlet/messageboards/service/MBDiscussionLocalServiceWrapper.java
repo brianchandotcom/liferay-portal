@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link MBDiscussionLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       MBDiscussionLocalService
+ * @author Brian Wing Shun Chan
+ * @see MBDiscussionLocalService
  * @generated
  */
 public class MBDiscussionLocalServiceWrapper implements MBDiscussionLocalService,

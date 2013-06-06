@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link MDRActionService}.
  *
- * @author    Edward C. Han
- * @see       MDRActionService
+ * @author Edward C. Han
+ * @see MDRActionService
  * @generated
  */
 public class MDRActionServiceWrapper implements MDRActionService,

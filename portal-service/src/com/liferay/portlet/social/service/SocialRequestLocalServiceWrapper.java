@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link SocialRequestLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       SocialRequestLocalService
+ * @author Brian Wing Shun Chan
+ * @see SocialRequestLocalService
  * @generated
  */
 public class SocialRequestLocalServiceWrapper

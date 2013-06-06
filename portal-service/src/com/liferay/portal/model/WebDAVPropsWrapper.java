@@ -23,8 +23,8 @@ import java.util.Map;
  * This class is a wrapper for {@link WebDAVProps}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       WebDAVProps
+ * @author Brian Wing Shun Chan
+ * @see WebDAVProps
  * @generated
  */
 public class WebDAVPropsWrapper implements WebDAVProps,

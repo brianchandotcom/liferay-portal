@@ -25,8 +25,8 @@ import java.util.Map;
  * This class is a wrapper for {@link AssetTagProperty}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       AssetTagProperty
+ * @author Brian Wing Shun Chan
+ * @see AssetTagProperty
  * @generated
  */
 public class AssetTagPropertyWrapper implements AssetTagProperty,

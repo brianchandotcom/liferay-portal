@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link SocialActivityCounterLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       SocialActivityCounterLocalService
+ * @author Brian Wing Shun Chan
+ * @see SocialActivityCounterLocalService
  * @generated
  */
 public class SocialActivityCounterLocalServiceWrapper

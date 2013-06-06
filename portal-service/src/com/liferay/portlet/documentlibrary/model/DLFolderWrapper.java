@@ -25,8 +25,8 @@ import java.util.Map;
  * This class is a wrapper for {@link DLFolder}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       DLFolder
+ * @author Brian Wing Shun Chan
+ * @see DLFolder
  * @generated
  */
 public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {

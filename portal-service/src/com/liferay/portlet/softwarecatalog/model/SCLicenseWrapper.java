@@ -24,8 +24,8 @@ import java.util.Map;
  * This class is a wrapper for {@link SCLicense}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       SCLicense
+ * @author Brian Wing Shun Chan
+ * @see SCLicense
  * @generated
  */
 public class SCLicenseWrapper implements SCLicense, ModelWrapper<SCLicense> {

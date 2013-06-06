@@ -59,10 +59,10 @@ import java.util.Map;
  * The SOAP utility is only generated for remote services.
  * </p>
  *
- * @author    Edward C. Han
- * @see       MDRRuleServiceHttp
- * @see       com.liferay.portlet.mobiledevicerules.model.MDRRuleSoap
- * @see       com.liferay.portlet.mobiledevicerules.service.MDRRuleServiceUtil
+ * @author Edward C. Han
+ * @see MDRRuleServiceHttp
+ * @see com.liferay.portlet.mobiledevicerules.model.MDRRuleSoap
+ * @see com.liferay.portlet.mobiledevicerules.service.MDRRuleServiceUtil
  * @generated
  */
 public class MDRRuleServiceSoap {

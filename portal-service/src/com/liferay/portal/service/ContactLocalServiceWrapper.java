@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link ContactLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       ContactLocalService
+ * @author Brian Wing Shun Chan
+ * @see ContactLocalService
  * @generated
  */
 public class ContactLocalServiceWrapper implements ContactLocalService,

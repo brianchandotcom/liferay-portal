@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link ResourceTypePermissionLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       ResourceTypePermissionLocalService
+ * @author Brian Wing Shun Chan
+ * @see ResourceTypePermissionLocalService
  * @generated
  */
 public class ResourceTypePermissionLocalServiceWrapper

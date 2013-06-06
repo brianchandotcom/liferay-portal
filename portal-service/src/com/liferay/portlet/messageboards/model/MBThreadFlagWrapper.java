@@ -25,8 +25,8 @@ import java.util.Map;
  * This class is a wrapper for {@link MBThreadFlag}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       MBThreadFlag
+ * @author Brian Wing Shun Chan
+ * @see MBThreadFlag
  * @generated
  */
 public class MBThreadFlagWrapper implements MBThreadFlag,

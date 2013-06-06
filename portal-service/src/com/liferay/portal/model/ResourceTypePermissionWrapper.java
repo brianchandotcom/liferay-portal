@@ -22,8 +22,8 @@ import java.util.Map;
  * This class is a wrapper for {@link ResourceTypePermission}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       ResourceTypePermission
+ * @author Brian Wing Shun Chan
+ * @see ResourceTypePermission
  * @generated
  */
 public class ResourceTypePermissionWrapper implements ResourceTypePermission,

@@ -24,8 +24,8 @@ import java.util.Map;
  * This class is a wrapper for {@link TrashVersion}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       TrashVersion
+ * @author Brian Wing Shun Chan
+ * @see TrashVersion
  * @generated
  */
 public class TrashVersionWrapper implements TrashVersion,

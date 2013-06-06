@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link DLFileShortcutLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       DLFileShortcutLocalService
+ * @author Brian Wing Shun Chan
+ * @see DLFileShortcutLocalService
  * @generated
  */
 public class DLFileShortcutLocalServiceWrapper

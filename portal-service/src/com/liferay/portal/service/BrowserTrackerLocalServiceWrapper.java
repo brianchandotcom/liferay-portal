@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link BrowserTrackerLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       BrowserTrackerLocalService
+ * @author Brian Wing Shun Chan
+ * @see BrowserTrackerLocalService
  * @generated
  */
 public class BrowserTrackerLocalServiceWrapper

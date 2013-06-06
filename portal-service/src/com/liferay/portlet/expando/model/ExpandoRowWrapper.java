@@ -25,8 +25,8 @@ import java.util.Map;
  * This class is a wrapper for {@link ExpandoRow}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       ExpandoRow
+ * @author Brian Wing Shun Chan
+ * @see ExpandoRow
  * @generated
  */
 public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {

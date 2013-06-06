@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link ExpandoTableLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       ExpandoTableLocalService
+ * @author Brian Wing Shun Chan
+ * @see ExpandoTableLocalService
  * @generated
  */
 public class ExpandoTableLocalServiceWrapper implements ExpandoTableLocalService,

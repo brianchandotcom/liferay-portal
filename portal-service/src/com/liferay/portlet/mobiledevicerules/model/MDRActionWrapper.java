@@ -25,8 +25,8 @@ import java.util.Map;
  * This class is a wrapper for {@link MDRAction}.
  * </p>
  *
- * @author    Edward C. Han
- * @see       MDRAction
+ * @author Edward C. Han
+ * @see MDRAction
  * @generated
  */
 public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {

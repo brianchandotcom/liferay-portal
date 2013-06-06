@@ -45,10 +45,10 @@ import com.liferay.portlet.bookmarks.service.BookmarksFolderServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       BookmarksFolderServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portlet.bookmarks.service.BookmarksFolderServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see BookmarksFolderServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portlet.bookmarks.service.BookmarksFolderServiceUtil
  * @generated
  */
 public class BookmarksFolderServiceHttp {

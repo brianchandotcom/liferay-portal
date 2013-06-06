@@ -23,8 +23,8 @@ import java.util.List;
 /**
  * This class is used by SOAP remote services, specifically {@link com.liferay.portlet.documentlibrary.service.http.DLFileEntryTypeServiceSoap}.
  *
- * @author    Brian Wing Shun Chan
- * @see       com.liferay.portlet.documentlibrary.service.http.DLFileEntryTypeServiceSoap
+ * @author Brian Wing Shun Chan
+ * @see com.liferay.portlet.documentlibrary.service.http.DLFileEntryTypeServiceSoap
  * @generated
  */
 public class DLFileEntryTypeSoap implements Serializable {

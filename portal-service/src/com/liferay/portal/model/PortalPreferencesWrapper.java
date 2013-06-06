@@ -22,8 +22,8 @@ import java.util.Map;
  * This class is a wrapper for {@link PortalPreferences}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       PortalPreferences
+ * @author Brian Wing Shun Chan
+ * @see PortalPreferences
  * @generated
  */
 public class PortalPreferencesWrapper implements PortalPreferences,

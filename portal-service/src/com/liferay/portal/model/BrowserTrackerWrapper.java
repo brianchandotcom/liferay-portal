@@ -22,8 +22,8 @@ import java.util.Map;
  * This class is a wrapper for {@link BrowserTracker}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       BrowserTracker
+ * @author Brian Wing Shun Chan
+ * @see BrowserTracker
  * @generated
  */
 public class BrowserTrackerWrapper implements BrowserTracker,

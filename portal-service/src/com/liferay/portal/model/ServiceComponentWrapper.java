@@ -22,8 +22,8 @@ import java.util.Map;
  * This class is a wrapper for {@link ServiceComponent}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       ServiceComponent
+ * @author Brian Wing Shun Chan
+ * @see ServiceComponent
  * @generated
  */
 public class ServiceComponentWrapper implements ServiceComponent,

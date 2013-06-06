@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link RepositoryService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       RepositoryService
+ * @author Brian Wing Shun Chan
+ * @see RepositoryService
  * @generated
  */
 public class RepositoryServiceWrapper implements RepositoryService,

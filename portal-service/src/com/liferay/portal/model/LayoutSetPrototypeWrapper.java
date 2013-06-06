@@ -23,8 +23,8 @@ import java.util.Map;
  * This class is a wrapper for {@link LayoutSetPrototype}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       LayoutSetPrototype
+ * @author Brian Wing Shun Chan
+ * @see LayoutSetPrototype
  * @generated
  */
 public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,

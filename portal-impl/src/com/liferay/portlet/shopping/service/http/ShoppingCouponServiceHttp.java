@@ -45,10 +45,10 @@ import com.liferay.portlet.shopping.service.ShoppingCouponServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       ShoppingCouponServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portlet.shopping.service.ShoppingCouponServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see ShoppingCouponServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portlet.shopping.service.ShoppingCouponServiceUtil
  * @generated
  */
 public class ShoppingCouponServiceHttp {

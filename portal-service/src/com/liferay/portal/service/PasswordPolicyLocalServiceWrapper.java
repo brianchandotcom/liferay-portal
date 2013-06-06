@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link PasswordPolicyLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       PasswordPolicyLocalService
+ * @author Brian Wing Shun Chan
+ * @see PasswordPolicyLocalService
  * @generated
  */
 public class PasswordPolicyLocalServiceWrapper

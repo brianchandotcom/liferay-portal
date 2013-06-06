@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link DLFileEntryMetadataLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       DLFileEntryMetadataLocalService
+ * @author Brian Wing Shun Chan
+ * @see DLFileEntryMetadataLocalService
  * @generated
  */
 public class DLFileEntryMetadataLocalServiceWrapper

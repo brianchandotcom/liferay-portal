@@ -23,8 +23,8 @@ import java.util.List;
 /**
  * This class is used by SOAP remote services, specifically {@link com.liferay.portlet.trash.service.http.TrashEntryServiceSoap}.
  *
- * @author    Brian Wing Shun Chan
- * @see       com.liferay.portlet.trash.service.http.TrashEntryServiceSoap
+ * @author Brian Wing Shun Chan
+ * @see com.liferay.portlet.trash.service.http.TrashEntryServiceSoap
  * @generated
  */
 public class TrashEntrySoap implements Serializable {

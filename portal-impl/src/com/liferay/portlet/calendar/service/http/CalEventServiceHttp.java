@@ -45,10 +45,10 @@ import com.liferay.portlet.calendar.service.CalEventServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       CalEventServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portlet.calendar.service.CalEventServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see CalEventServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portlet.calendar.service.CalEventServiceUtil
  * @generated
  */
 public class CalEventServiceHttp {

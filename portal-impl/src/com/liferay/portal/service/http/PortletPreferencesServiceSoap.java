@@ -54,10 +54,10 @@ import java.rmi.RemoteException;
  * The SOAP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       PortletPreferencesServiceHttp
- * @see       com.liferay.portal.model.PortletPreferencesSoap
- * @see       com.liferay.portal.service.PortletPreferencesServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see PortletPreferencesServiceHttp
+ * @see com.liferay.portal.model.PortletPreferencesSoap
+ * @see com.liferay.portal.service.PortletPreferencesServiceUtil
  * @generated
  */
 public class PortletPreferencesServiceSoap {

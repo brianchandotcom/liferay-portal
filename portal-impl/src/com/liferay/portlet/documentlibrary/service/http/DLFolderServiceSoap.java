@@ -56,10 +56,10 @@ import java.rmi.RemoteException;
  * The SOAP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       DLFolderServiceHttp
- * @see       com.liferay.portlet.documentlibrary.model.DLFolderSoap
- * @see       com.liferay.portlet.documentlibrary.service.DLFolderServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see DLFolderServiceHttp
+ * @see com.liferay.portlet.documentlibrary.model.DLFolderSoap
+ * @see com.liferay.portlet.documentlibrary.service.DLFolderServiceUtil
  * @generated
  */
 public class DLFolderServiceSoap {

@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link UserTrackerLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       UserTrackerLocalService
+ * @author Brian Wing Shun Chan
+ * @see UserTrackerLocalService
  * @generated
  */
 public class UserTrackerLocalServiceWrapper implements UserTrackerLocalService,

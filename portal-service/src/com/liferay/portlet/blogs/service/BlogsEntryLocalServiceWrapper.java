@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link BlogsEntryLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       BlogsEntryLocalService
+ * @author Brian Wing Shun Chan
+ * @see BlogsEntryLocalService
  * @generated
  */
 public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,

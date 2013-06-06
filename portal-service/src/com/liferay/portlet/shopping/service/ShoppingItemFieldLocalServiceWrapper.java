@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link ShoppingItemFieldLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       ShoppingItemFieldLocalService
+ * @author Brian Wing Shun Chan
+ * @see ShoppingItemFieldLocalService
  * @generated
  */
 public class ShoppingItemFieldLocalServiceWrapper

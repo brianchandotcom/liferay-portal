@@ -24,8 +24,8 @@ import java.util.Map;
  * This class is a wrapper for {@link Counter}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       Counter
+ * @author Brian Wing Shun Chan
+ * @see Counter
  * @generated
  */
 public class CounterWrapper implements Counter, ModelWrapper<Counter> {

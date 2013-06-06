@@ -43,10 +43,10 @@ import com.liferay.portal.service.OrganizationServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       OrganizationServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portal.service.OrganizationServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see OrganizationServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portal.service.OrganizationServiceUtil
  * @generated
  */
 public class OrganizationServiceHttp {

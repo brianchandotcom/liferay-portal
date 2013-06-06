@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link AssetVocabularyService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       AssetVocabularyService
+ * @author Brian Wing Shun Chan
+ * @see AssetVocabularyService
  * @generated
  */
 public class AssetVocabularyServiceWrapper implements AssetVocabularyService,

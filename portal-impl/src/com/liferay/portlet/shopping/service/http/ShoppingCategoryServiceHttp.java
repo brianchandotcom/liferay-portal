@@ -45,10 +45,10 @@ import com.liferay.portlet.shopping.service.ShoppingCategoryServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       ShoppingCategoryServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portlet.shopping.service.ShoppingCategoryServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see ShoppingCategoryServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portlet.shopping.service.ShoppingCategoryServiceUtil
  * @generated
  */
 public class ShoppingCategoryServiceHttp {

@@ -23,8 +23,8 @@ import java.util.Map;
  * This class is a wrapper for {@link Contact}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       Contact
+ * @author Brian Wing Shun Chan
+ * @see Contact
  * @generated
  */
 public class ContactWrapper implements Contact, ModelWrapper<Contact> {

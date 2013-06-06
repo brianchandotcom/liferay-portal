@@ -24,8 +24,8 @@ import java.util.Map;
  * This class is a wrapper for {@link SCProductScreenshot}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       SCProductScreenshot
+ * @author Brian Wing Shun Chan
+ * @see SCProductScreenshot
  * @generated
  */
 public class SCProductScreenshotWrapper implements SCProductScreenshot,

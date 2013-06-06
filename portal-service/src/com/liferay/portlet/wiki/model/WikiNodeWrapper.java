@@ -25,8 +25,8 @@ import java.util.Map;
  * This class is a wrapper for {@link WikiNode}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       WikiNode
+ * @author Brian Wing Shun Chan
+ * @see WikiNode
  * @generated
  */
 public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {

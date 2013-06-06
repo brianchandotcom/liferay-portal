@@ -22,8 +22,8 @@ import java.util.Map;
  * This class is a wrapper for {@link VirtualHost}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       VirtualHost
+ * @author Brian Wing Shun Chan
+ * @see VirtualHost
  * @generated
  */
 public class VirtualHostWrapper implements VirtualHost,

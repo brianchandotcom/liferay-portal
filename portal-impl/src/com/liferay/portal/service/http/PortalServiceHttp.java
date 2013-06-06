@@ -43,10 +43,10 @@ import com.liferay.portal.service.PortalServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       PortalServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portal.service.PortalServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see PortalServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portal.service.PortalServiceUtil
  * @generated
  */
 public class PortalServiceHttp {

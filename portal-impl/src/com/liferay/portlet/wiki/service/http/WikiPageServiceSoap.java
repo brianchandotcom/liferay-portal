@@ -56,10 +56,10 @@ import java.rmi.RemoteException;
  * The SOAP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       WikiPageServiceHttp
- * @see       com.liferay.portlet.wiki.model.WikiPageSoap
- * @see       com.liferay.portlet.wiki.service.WikiPageServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see WikiPageServiceHttp
+ * @see com.liferay.portlet.wiki.model.WikiPageSoap
+ * @see com.liferay.portlet.wiki.service.WikiPageServiceUtil
  * @generated
  */
 public class WikiPageServiceSoap {

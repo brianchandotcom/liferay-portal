@@ -45,10 +45,10 @@ import com.liferay.portlet.social.service.SocialRequestServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       SocialRequestServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portlet.social.service.SocialRequestServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see SocialRequestServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portlet.social.service.SocialRequestServiceUtil
  * @generated
  */
 public class SocialRequestServiceHttp {

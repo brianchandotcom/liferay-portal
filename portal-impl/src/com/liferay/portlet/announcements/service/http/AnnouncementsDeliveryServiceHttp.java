@@ -45,10 +45,10 @@ import com.liferay.portlet.announcements.service.AnnouncementsDeliveryServiceUti
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       AnnouncementsDeliveryServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portlet.announcements.service.AnnouncementsDeliveryServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see AnnouncementsDeliveryServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portlet.announcements.service.AnnouncementsDeliveryServiceUtil
  * @generated
  */
 public class AnnouncementsDeliveryServiceHttp {

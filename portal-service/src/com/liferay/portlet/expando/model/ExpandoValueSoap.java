@@ -22,8 +22,8 @@ import java.util.List;
 /**
  * This class is used by SOAP remote services, specifically {@link com.liferay.portlet.expando.service.http.ExpandoValueServiceSoap}.
  *
- * @author    Brian Wing Shun Chan
- * @see       com.liferay.portlet.expando.service.http.ExpandoValueServiceSoap
+ * @author Brian Wing Shun Chan
+ * @see com.liferay.portlet.expando.service.http.ExpandoValueServiceSoap
  * @generated
  */
 public class ExpandoValueSoap implements Serializable {

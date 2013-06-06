@@ -59,10 +59,10 @@ import java.util.Map;
  * The SOAP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       AssetCategoryServiceHttp
- * @see       com.liferay.portlet.asset.model.AssetCategorySoap
- * @see       com.liferay.portlet.asset.service.AssetCategoryServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see AssetCategoryServiceHttp
+ * @see com.liferay.portlet.asset.model.AssetCategorySoap
+ * @see com.liferay.portlet.asset.service.AssetCategoryServiceUtil
  * @generated
  */
 public class AssetCategoryServiceSoap {

@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link FlagsEntryService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       FlagsEntryService
+ * @author Brian Wing Shun Chan
+ * @see FlagsEntryService
  * @generated
  */
 public class FlagsEntryServiceWrapper implements FlagsEntryService,

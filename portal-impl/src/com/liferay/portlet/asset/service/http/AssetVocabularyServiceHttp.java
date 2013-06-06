@@ -45,10 +45,10 @@ import com.liferay.portlet.asset.service.AssetVocabularyServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       AssetVocabularyServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portlet.asset.service.AssetVocabularyServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see AssetVocabularyServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portlet.asset.service.AssetVocabularyServiceUtil
  * @generated
  */
 public class AssetVocabularyServiceHttp {

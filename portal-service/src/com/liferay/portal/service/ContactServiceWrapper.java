@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link ContactService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       ContactService
+ * @author Brian Wing Shun Chan
+ * @see ContactService
  * @generated
  */
 public class ContactServiceWrapper implements ContactService,

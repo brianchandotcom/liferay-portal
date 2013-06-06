@@ -25,8 +25,8 @@ import java.util.Map;
  * This class is a wrapper for {@link DLFileShortcut}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       DLFileShortcut
+ * @author Brian Wing Shun Chan
+ * @see DLFileShortcut
  * @generated
  */
 public class DLFileShortcutWrapper implements DLFileShortcut,

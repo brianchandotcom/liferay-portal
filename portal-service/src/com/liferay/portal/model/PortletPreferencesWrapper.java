@@ -22,8 +22,8 @@ import java.util.Map;
  * This class is a wrapper for {@link PortletPreferences}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       PortletPreferences
+ * @author Brian Wing Shun Chan
+ * @see PortletPreferences
  * @generated
  */
 public class PortletPreferencesWrapper implements PortletPreferences,

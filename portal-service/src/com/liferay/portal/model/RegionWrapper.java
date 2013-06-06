@@ -22,8 +22,8 @@ import java.util.Map;
  * This class is a wrapper for {@link Region}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       Region
+ * @author Brian Wing Shun Chan
+ * @see Region
  * @generated
  */
 public class RegionWrapper implements Region, ModelWrapper<Region> {

@@ -48,10 +48,10 @@ package com.liferay.portal.service.http;
  * The SOAP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       AccountServiceHttp
- * @see       com.liferay.portal.model.AccountSoap
- * @see       com.liferay.portal.service.AccountServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see AccountServiceHttp
+ * @see com.liferay.portal.model.AccountSoap
+ * @see com.liferay.portal.service.AccountServiceUtil
  * @generated
  */
 public class AccountServiceSoap {

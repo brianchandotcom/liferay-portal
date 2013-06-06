@@ -22,8 +22,8 @@ import java.util.Map;
  * This class is a wrapper for {@link ClassName}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       ClassName
+ * @author Brian Wing Shun Chan
+ * @see ClassName
  * @generated
  */
 public class ClassNameWrapper implements ClassName, ModelWrapper<ClassName> {

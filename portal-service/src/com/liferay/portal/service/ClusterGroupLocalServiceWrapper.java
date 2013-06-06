@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link ClusterGroupLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       ClusterGroupLocalService
+ * @author Brian Wing Shun Chan
+ * @see ClusterGroupLocalService
  * @generated
  */
 public class ClusterGroupLocalServiceWrapper implements ClusterGroupLocalService,

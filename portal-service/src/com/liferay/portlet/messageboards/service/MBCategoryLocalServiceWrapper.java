@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link MBCategoryLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       MBCategoryLocalService
+ * @author Brian Wing Shun Chan
+ * @see MBCategoryLocalService
  * @generated
  */
 public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,

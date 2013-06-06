@@ -24,8 +24,8 @@ import java.util.Map;
  * This class is a wrapper for {@link DDMStorageLink}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       DDMStorageLink
+ * @author Brian Wing Shun Chan
+ * @see DDMStorageLink
  * @generated
  */
 public class DDMStorageLinkWrapper implements DDMStorageLink,

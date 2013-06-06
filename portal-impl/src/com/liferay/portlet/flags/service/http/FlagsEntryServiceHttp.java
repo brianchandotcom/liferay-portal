@@ -45,10 +45,10 @@ import com.liferay.portlet.flags.service.FlagsEntryServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       FlagsEntryServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portlet.flags.service.FlagsEntryServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see FlagsEntryServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portlet.flags.service.FlagsEntryServiceUtil
  * @generated
  */
 public class FlagsEntryServiceHttp {

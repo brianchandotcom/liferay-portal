@@ -23,8 +23,8 @@ import java.util.List;
 /**
  * This class is used by SOAP remote services, specifically {@link com.liferay.portlet.softwarecatalog.service.http.SCProductVersionServiceSoap}.
  *
- * @author    Brian Wing Shun Chan
- * @see       com.liferay.portlet.softwarecatalog.service.http.SCProductVersionServiceSoap
+ * @author Brian Wing Shun Chan
+ * @see com.liferay.portlet.softwarecatalog.service.http.SCProductVersionServiceSoap
  * @generated
  */
 public class SCProductVersionSoap implements Serializable {

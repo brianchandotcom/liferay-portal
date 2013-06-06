@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link UserIdMapperLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       UserIdMapperLocalService
+ * @author Brian Wing Shun Chan
+ * @see UserIdMapperLocalService
  * @generated
  */
 public class UserIdMapperLocalServiceWrapper implements UserIdMapperLocalService,

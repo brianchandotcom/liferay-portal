@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link OrgLaborLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       OrgLaborLocalService
+ * @author Brian Wing Shun Chan
+ * @see OrgLaborLocalService
  * @generated
  */
 public class OrgLaborLocalServiceWrapper implements OrgLaborLocalService,

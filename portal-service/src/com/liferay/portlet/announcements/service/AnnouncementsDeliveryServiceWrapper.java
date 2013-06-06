@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link AnnouncementsDeliveryService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       AnnouncementsDeliveryService
+ * @author Brian Wing Shun Chan
+ * @see AnnouncementsDeliveryService
  * @generated
  */
 public class AnnouncementsDeliveryServiceWrapper

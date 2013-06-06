@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link ResourceLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       ResourceLocalService
+ * @author Brian Wing Shun Chan
+ * @see ResourceLocalService
  * @generated
  */
 public class ResourceLocalServiceWrapper implements ResourceLocalService,

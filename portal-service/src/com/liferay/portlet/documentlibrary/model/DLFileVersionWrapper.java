@@ -25,8 +25,8 @@ import java.util.Map;
  * This class is a wrapper for {@link DLFileVersion}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       DLFileVersion
+ * @author Brian Wing Shun Chan
+ * @see DLFileVersion
  * @generated
  */
 public class DLFileVersionWrapper implements DLFileVersion,

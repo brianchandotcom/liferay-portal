@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link PortalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       PortalService
+ * @author Brian Wing Shun Chan
+ * @see PortalService
  * @generated
  */
 public class PortalServiceWrapper implements PortalService,

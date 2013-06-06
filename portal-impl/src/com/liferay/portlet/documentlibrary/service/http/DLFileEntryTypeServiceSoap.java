@@ -59,10 +59,10 @@ import java.util.Map;
  * The SOAP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       DLFileEntryTypeServiceHttp
- * @see       com.liferay.portlet.documentlibrary.model.DLFileEntryTypeSoap
- * @see       com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see DLFileEntryTypeServiceHttp
+ * @see com.liferay.portlet.documentlibrary.model.DLFileEntryTypeSoap
+ * @see com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil
  * @generated
  */
 public class DLFileEntryTypeServiceSoap {

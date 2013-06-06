@@ -25,8 +25,8 @@ import java.util.Map;
  * This class is a wrapper for {@link DDMTemplate}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       DDMTemplate
+ * @author Brian Wing Shun Chan
+ * @see DDMTemplate
  * @generated
  */
 public class DDMTemplateWrapper implements DDMTemplate,

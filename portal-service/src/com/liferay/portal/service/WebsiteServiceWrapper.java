@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link WebsiteService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       WebsiteService
+ * @author Brian Wing Shun Chan
+ * @see WebsiteService
  * @generated
  */
 public class WebsiteServiceWrapper implements WebsiteService,

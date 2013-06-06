@@ -23,8 +23,8 @@ import java.util.Map;
  * This class is a wrapper for {@link WorkflowDefinitionLink}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       WorkflowDefinitionLink
+ * @author Brian Wing Shun Chan
+ * @see WorkflowDefinitionLink
  * @generated
  */
 public class WorkflowDefinitionLinkWrapper implements WorkflowDefinitionLink,

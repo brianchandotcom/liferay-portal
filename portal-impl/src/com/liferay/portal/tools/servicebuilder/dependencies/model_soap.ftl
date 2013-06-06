@@ -15,9 +15,9 @@ import java.util.List;
 /**
  * This class is used by SOAP remote services<#if entity.hasRemoteService()>, specifically {@link ${packagePath}.service.http.${entity.name}ServiceSoap}</#if>.
  *
- * @author    ${author}
+ * @author ${author}
 <#if entity.hasRemoteService()>
- * @see       ${packagePath}.service.http.${entity.name}ServiceSoap
+ * @see ${packagePath}.service.http.${entity.name}ServiceSoap
 </#if>
  * @generated
  */

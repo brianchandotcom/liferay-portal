@@ -24,8 +24,8 @@ import java.util.Map;
  * This class is a wrapper for {@link DDMStructureLink}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       DDMStructureLink
+ * @author Brian Wing Shun Chan
+ * @see DDMStructureLink
  * @generated
  */
 public class DDMStructureLinkWrapper implements DDMStructureLink,

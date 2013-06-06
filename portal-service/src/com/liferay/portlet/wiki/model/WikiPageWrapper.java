@@ -25,8 +25,8 @@ import java.util.Map;
  * This class is a wrapper for {@link WikiPage}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       WikiPage
+ * @author Brian Wing Shun Chan
+ * @see WikiPage
  * @generated
  */
 public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {

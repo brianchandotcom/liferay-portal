@@ -43,10 +43,10 @@ import com.liferay.portal.service.RepositoryServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       RepositoryServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portal.service.RepositoryServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see RepositoryServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portal.service.RepositoryServiceUtil
  * @generated
  */
 public class RepositoryServiceHttp {

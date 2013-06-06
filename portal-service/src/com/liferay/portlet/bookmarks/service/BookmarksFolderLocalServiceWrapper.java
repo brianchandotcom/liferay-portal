@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link BookmarksFolderLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       BookmarksFolderLocalService
+ * @author Brian Wing Shun Chan
+ * @see BookmarksFolderLocalService
  * @generated
  */
 public class BookmarksFolderLocalServiceWrapper

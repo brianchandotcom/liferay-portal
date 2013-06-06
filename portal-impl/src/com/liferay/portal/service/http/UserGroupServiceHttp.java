@@ -43,10 +43,10 @@ import com.liferay.portal.service.UserGroupServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       UserGroupServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portal.service.UserGroupServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see UserGroupServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portal.service.UserGroupServiceUtil
  * @generated
  */
 public class UserGroupServiceHttp {

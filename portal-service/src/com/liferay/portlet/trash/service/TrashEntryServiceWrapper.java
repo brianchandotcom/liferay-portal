@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link TrashEntryService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       TrashEntryService
+ * @author Brian Wing Shun Chan
+ * @see TrashEntryService
  * @generated
  */
 public class TrashEntryServiceWrapper implements TrashEntryService,

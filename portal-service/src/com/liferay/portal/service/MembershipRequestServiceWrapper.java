@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link MembershipRequestService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       MembershipRequestService
+ * @author Brian Wing Shun Chan
+ * @see MembershipRequestService
  * @generated
  */
 public class MembershipRequestServiceWrapper implements MembershipRequestService,

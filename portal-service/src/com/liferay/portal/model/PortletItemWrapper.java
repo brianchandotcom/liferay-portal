@@ -23,8 +23,8 @@ import java.util.Map;
  * This class is a wrapper for {@link PortletItem}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       PortletItem
+ * @author Brian Wing Shun Chan
+ * @see PortletItem
  * @generated
  */
 public class PortletItemWrapper implements PortletItem,

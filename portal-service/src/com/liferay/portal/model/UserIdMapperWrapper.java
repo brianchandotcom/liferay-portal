@@ -22,8 +22,8 @@ import java.util.Map;
  * This class is a wrapper for {@link UserIdMapper}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       UserIdMapper
+ * @author Brian Wing Shun Chan
+ * @see UserIdMapper
  * @generated
  */
 public class UserIdMapperWrapper implements UserIdMapper,

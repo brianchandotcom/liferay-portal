@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link ListTypeService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       ListTypeService
+ * @author Brian Wing Shun Chan
+ * @see ListTypeService
  * @generated
  */
 public class ListTypeServiceWrapper implements ListTypeService,

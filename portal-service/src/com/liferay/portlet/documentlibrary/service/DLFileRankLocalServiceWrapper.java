@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link DLFileRankLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       DLFileRankLocalService
+ * @author Brian Wing Shun Chan
+ * @see DLFileRankLocalService
  * @generated
  */
 public class DLFileRankLocalServiceWrapper implements DLFileRankLocalService,

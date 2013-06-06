@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link SocialActivityLimitLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       SocialActivityLimitLocalService
+ * @author Brian Wing Shun Chan
+ * @see SocialActivityLimitLocalService
  * @generated
  */
 public class SocialActivityLimitLocalServiceWrapper

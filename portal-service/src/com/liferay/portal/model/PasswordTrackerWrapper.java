@@ -23,8 +23,8 @@ import java.util.Map;
  * This class is a wrapper for {@link PasswordTracker}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       PasswordTracker
+ * @author Brian Wing Shun Chan
+ * @see PasswordTracker
  * @generated
  */
 public class PasswordTrackerWrapper implements PasswordTracker,

@@ -55,10 +55,10 @@ import java.rmi.RemoteException;
  * The SOAP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       CalEventServiceHttp
- * @see       com.liferay.portlet.calendar.model.CalEventSoap
- * @see       com.liferay.portlet.calendar.service.CalEventServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see CalEventServiceHttp
+ * @see com.liferay.portlet.calendar.model.CalEventSoap
+ * @see com.liferay.portlet.calendar.service.CalEventServiceUtil
  * @generated
  */
 public class CalEventServiceSoap {

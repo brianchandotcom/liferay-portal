@@ -43,10 +43,10 @@ import com.liferay.portal.service.ListTypeServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       ListTypeServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portal.service.ListTypeServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see ListTypeServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portal.service.ListTypeServiceUtil
  * @generated
  */
 public class ListTypeServiceHttp {

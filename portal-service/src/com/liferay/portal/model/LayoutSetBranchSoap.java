@@ -23,8 +23,8 @@ import java.util.List;
 /**
  * This class is used by SOAP remote services, specifically {@link com.liferay.portal.service.http.LayoutSetBranchServiceSoap}.
  *
- * @author    Brian Wing Shun Chan
- * @see       com.liferay.portal.service.http.LayoutSetBranchServiceSoap
+ * @author Brian Wing Shun Chan
+ * @see com.liferay.portal.service.http.LayoutSetBranchServiceSoap
  * @generated
  */
 public class LayoutSetBranchSoap implements Serializable {

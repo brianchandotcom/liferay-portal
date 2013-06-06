@@ -22,8 +22,8 @@ import java.util.Map;
  * This class is a wrapper for {@link ClusterGroup}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       ClusterGroup
+ * @author Brian Wing Shun Chan
+ * @see ClusterGroup
  * @generated
  */
 public class ClusterGroupWrapper implements ClusterGroup,

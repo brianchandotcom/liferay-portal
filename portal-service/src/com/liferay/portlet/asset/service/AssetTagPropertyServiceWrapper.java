@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link AssetTagPropertyService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       AssetTagPropertyService
+ * @author Brian Wing Shun Chan
+ * @see AssetTagPropertyService
  * @generated
  */
 public class AssetTagPropertyServiceWrapper implements AssetTagPropertyService,

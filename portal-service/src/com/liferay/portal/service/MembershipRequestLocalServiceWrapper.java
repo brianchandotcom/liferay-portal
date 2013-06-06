@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link MembershipRequestLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       MembershipRequestLocalService
+ * @author Brian Wing Shun Chan
+ * @see MembershipRequestLocalService
  * @generated
  */
 public class MembershipRequestLocalServiceWrapper

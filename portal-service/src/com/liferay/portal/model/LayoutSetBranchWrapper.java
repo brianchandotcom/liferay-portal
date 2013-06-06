@@ -23,8 +23,8 @@ import java.util.Map;
  * This class is a wrapper for {@link LayoutSetBranch}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       LayoutSetBranch
+ * @author Brian Wing Shun Chan
+ * @see LayoutSetBranch
  * @generated
  */
 public class LayoutSetBranchWrapper implements LayoutSetBranch,

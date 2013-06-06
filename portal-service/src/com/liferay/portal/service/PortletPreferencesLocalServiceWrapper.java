@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link PortletPreferencesLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       PortletPreferencesLocalService
+ * @author Brian Wing Shun Chan
+ * @see PortletPreferencesLocalService
  * @generated
  */
 public class PortletPreferencesLocalServiceWrapper

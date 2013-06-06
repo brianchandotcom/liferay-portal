@@ -45,10 +45,10 @@ import com.liferay.portlet.asset.service.AssetCategoryServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       AssetCategoryServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portlet.asset.service.AssetCategoryServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see AssetCategoryServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portlet.asset.service.AssetCategoryServiceUtil
  * @generated
  */
 public class AssetCategoryServiceHttp {

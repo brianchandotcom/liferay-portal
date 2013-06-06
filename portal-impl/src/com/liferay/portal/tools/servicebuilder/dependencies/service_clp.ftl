@@ -2,6 +2,14 @@ package ${packagePath}.service;
 
 import com.liferay.portal.service.Invokable${sessionTypeName}Service;
 
+/**
+ * @author ${author}
+<#if isDeprecated>
+ * @deprecated ${deprecatedComment}
+</#if>
+ * @generated
+ */
+
 public class ${entity.name}${sessionTypeName}ServiceClp implements ${entity.name}${sessionTypeName}Service {
 
 	public ${entity.name}${sessionTypeName}ServiceClp(Invokable${sessionTypeName}Service invokable${sessionTypeName}Service) {

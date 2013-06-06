@@ -23,8 +23,8 @@ import java.util.List;
 /**
  * This class is used by SOAP remote services, specifically {@link com.liferay.portlet.journal.service.http.JournalStructureServiceSoap}.
  *
- * @author    Brian Wing Shun Chan
- * @see       com.liferay.portlet.journal.service.http.JournalStructureServiceSoap
+ * @author Brian Wing Shun Chan
+ * @see com.liferay.portlet.journal.service.http.JournalStructureServiceSoap
  * @generated
  */
 public class JournalStructureSoap implements Serializable {

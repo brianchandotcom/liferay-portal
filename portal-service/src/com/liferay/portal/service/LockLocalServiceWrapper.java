@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link LockLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       LockLocalService
+ * @author Brian Wing Shun Chan
+ * @see LockLocalService
  * @generated
  */
 public class LockLocalServiceWrapper implements LockLocalService,

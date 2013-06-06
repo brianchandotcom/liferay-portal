@@ -22,8 +22,8 @@ import java.util.Map;
  * This class is a wrapper for {@link Company}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       Company
+ * @author Brian Wing Shun Chan
+ * @see Company
  * @generated
  */
 public class CompanyWrapper implements Company, ModelWrapper<Company> {

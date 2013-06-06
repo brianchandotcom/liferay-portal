@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link MBThreadLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       MBThreadLocalService
+ * @author Brian Wing Shun Chan
+ * @see MBThreadLocalService
  * @generated
  */
 public class MBThreadLocalServiceWrapper implements MBThreadLocalService,

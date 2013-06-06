@@ -24,8 +24,8 @@ import java.util.Map;
  * This class is a wrapper for {@link JournalArticleResource}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       JournalArticleResource
+ * @author Brian Wing Shun Chan
+ * @see JournalArticleResource
  * @generated
  */
 public class JournalArticleResourceWrapper implements JournalArticleResource,

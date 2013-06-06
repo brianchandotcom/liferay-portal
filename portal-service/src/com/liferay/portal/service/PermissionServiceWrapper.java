@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link PermissionService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       PermissionService
+ * @author Brian Wing Shun Chan
+ * @see PermissionService
  * @generated
  */
 public class PermissionServiceWrapper implements PermissionService,

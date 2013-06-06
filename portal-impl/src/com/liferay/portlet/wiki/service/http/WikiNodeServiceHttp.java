@@ -45,10 +45,10 @@ import com.liferay.portlet.wiki.service.WikiNodeServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       WikiNodeServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portlet.wiki.service.WikiNodeServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see WikiNodeServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portlet.wiki.service.WikiNodeServiceUtil
  * @generated
  */
 public class WikiNodeServiceHttp {

@@ -45,10 +45,10 @@ import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceService
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Edward C. Han
- * @see       MDRRuleGroupInstanceServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceServiceUtil
+ * @author Edward C. Han
+ * @see MDRRuleGroupInstanceServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceServiceUtil
  * @generated
  */
 public class MDRRuleGroupInstanceServiceHttp {

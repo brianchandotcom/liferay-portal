@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link SocialActivitySettingService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       SocialActivitySettingService
+ * @author Brian Wing Shun Chan
+ * @see SocialActivitySettingService
  * @generated
  */
 public class SocialActivitySettingServiceWrapper

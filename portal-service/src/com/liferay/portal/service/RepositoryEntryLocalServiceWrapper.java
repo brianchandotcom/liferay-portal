@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link RepositoryEntryLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       RepositoryEntryLocalService
+ * @author Brian Wing Shun Chan
+ * @see RepositoryEntryLocalService
  * @generated
  */
 public class RepositoryEntryLocalServiceWrapper

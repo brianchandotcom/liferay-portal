@@ -22,8 +22,8 @@ import java.util.Map;
  * This class is a wrapper for {@link OrgLabor}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       OrgLabor
+ * @author Brian Wing Shun Chan
+ * @see OrgLabor
  * @generated
  */
 public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {

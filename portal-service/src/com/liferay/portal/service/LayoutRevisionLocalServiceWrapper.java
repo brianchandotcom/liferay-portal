@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link LayoutRevisionLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       LayoutRevisionLocalService
+ * @author Brian Wing Shun Chan
+ * @see LayoutRevisionLocalService
  * @generated
  */
 public class LayoutRevisionLocalServiceWrapper

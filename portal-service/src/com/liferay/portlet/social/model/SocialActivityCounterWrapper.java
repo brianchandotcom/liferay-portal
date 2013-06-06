@@ -24,8 +24,8 @@ import java.util.Map;
  * This class is a wrapper for {@link SocialActivityCounter}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       SocialActivityCounter
+ * @author Brian Wing Shun Chan
+ * @see SocialActivityCounter
  * @generated
  */
 public class SocialActivityCounterWrapper implements SocialActivityCounter,

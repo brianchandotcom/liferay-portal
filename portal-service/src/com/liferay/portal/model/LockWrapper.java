@@ -23,8 +23,8 @@ import java.util.Map;
  * This class is a wrapper for {@link Lock}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       Lock
+ * @author Brian Wing Shun Chan
+ * @see Lock
  * @generated
  */
 public class LockWrapper implements Lock, ModelWrapper<Lock> {

@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link DDMStorageLinkLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       DDMStorageLinkLocalService
+ * @author Brian Wing Shun Chan
+ * @see DDMStorageLinkLocalService
  * @generated
  */
 public class DDMStorageLinkLocalServiceWrapper

@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link RatingsStatsLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       RatingsStatsLocalService
+ * @author Brian Wing Shun Chan
+ * @see RatingsStatsLocalService
  * @generated
  */
 public class RatingsStatsLocalServiceWrapper implements RatingsStatsLocalService,

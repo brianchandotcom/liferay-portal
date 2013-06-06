@@ -24,8 +24,8 @@ import java.util.Map;
  * This class is a wrapper for {@link SocialActivityLimit}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       SocialActivityLimit
+ * @author Brian Wing Shun Chan
+ * @see SocialActivityLimit
  * @generated
  */
 public class SocialActivityLimitWrapper implements SocialActivityLimit,

@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link DLAppLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       DLAppLocalService
+ * @author Brian Wing Shun Chan
+ * @see DLAppLocalService
  * @generated
  */
 public class DLAppLocalServiceWrapper implements DLAppLocalService,

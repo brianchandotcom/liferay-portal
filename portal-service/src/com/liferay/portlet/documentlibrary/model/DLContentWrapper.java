@@ -26,8 +26,8 @@ import java.util.Map;
  * This class is a wrapper for {@link DLContent}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       DLContent
+ * @author Brian Wing Shun Chan
+ * @see DLContent
  * @generated
  */
 public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {

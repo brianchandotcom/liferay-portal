@@ -22,8 +22,8 @@ import java.util.List;
 /**
  * This class is used by SOAP remote services, specifically {@link com.liferay.portal.service.http.PortletPreferencesServiceSoap}.
  *
- * @author    Brian Wing Shun Chan
- * @see       com.liferay.portal.service.http.PortletPreferencesServiceSoap
+ * @author Brian Wing Shun Chan
+ * @see com.liferay.portal.service.http.PortletPreferencesServiceSoap
  * @generated
  */
 public class PortletPreferencesSoap implements Serializable {

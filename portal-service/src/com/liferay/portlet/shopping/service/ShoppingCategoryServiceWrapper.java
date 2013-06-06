@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link ShoppingCategoryService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       ShoppingCategoryService
+ * @author Brian Wing Shun Chan
+ * @see ShoppingCategoryService
  * @generated
  */
 public class ShoppingCategoryServiceWrapper implements ShoppingCategoryService,

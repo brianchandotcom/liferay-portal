@@ -43,10 +43,10 @@ import com.liferay.portal.service.AddressServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       AddressServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portal.service.AddressServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see AddressServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portal.service.AddressServiceUtil
  * @generated
  */
 public class AddressServiceHttp {

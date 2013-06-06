@@ -45,10 +45,10 @@ import com.liferay.portlet.documentlibrary.service.DLFileVersionServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       DLFileVersionServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portlet.documentlibrary.service.DLFileVersionServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see DLFileVersionServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portlet.documentlibrary.service.DLFileVersionServiceUtil
  * @generated
  */
 public class DLFileVersionServiceHttp {

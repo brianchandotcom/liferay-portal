@@ -23,8 +23,8 @@ import java.util.List;
 /**
  * This class is used by SOAP remote services, specifically {@link com.liferay.portlet.asset.service.http.AssetEntryServiceSoap}.
  *
- * @author    Brian Wing Shun Chan
- * @see       com.liferay.portlet.asset.service.http.AssetEntryServiceSoap
+ * @author Brian Wing Shun Chan
+ * @see com.liferay.portlet.asset.service.http.AssetEntryServiceSoap
  * @generated
  */
 public class AssetEntrySoap implements Serializable {

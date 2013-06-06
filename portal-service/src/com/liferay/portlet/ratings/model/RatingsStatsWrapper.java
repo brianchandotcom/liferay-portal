@@ -24,8 +24,8 @@ import java.util.Map;
  * This class is a wrapper for {@link RatingsStats}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       RatingsStats
+ * @author Brian Wing Shun Chan
+ * @see RatingsStats
  * @generated
  */
 public class RatingsStatsWrapper implements RatingsStats,

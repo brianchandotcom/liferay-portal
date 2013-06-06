@@ -22,8 +22,8 @@ import java.util.Map;
  * This class is a wrapper for {@link Country}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       Country
+ * @author Brian Wing Shun Chan
+ * @see Country
  * @generated
  */
 public class CountryWrapper implements Country, ModelWrapper<Country> {

@@ -22,8 +22,8 @@ import java.util.Map;
  * This class is a wrapper for {@link ResourceBlockPermission}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       ResourceBlockPermission
+ * @author Brian Wing Shun Chan
+ * @see ResourceBlockPermission
  * @generated
  */
 public class ResourceBlockPermissionWrapper implements ResourceBlockPermission,

@@ -24,8 +24,8 @@ import java.util.Map;
  * This class is a wrapper for {@link SocialRelation}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       SocialRelation
+ * @author Brian Wing Shun Chan
+ * @see SocialRelation
  * @generated
  */
 public class SocialRelationWrapper implements SocialRelation,

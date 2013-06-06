@@ -45,10 +45,10 @@ import com.liferay.portlet.asset.service.AssetTagPropertyServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       AssetTagPropertyServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portlet.asset.service.AssetTagPropertyServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see AssetTagPropertyServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portlet.asset.service.AssetTagPropertyServiceUtil
  * @generated
  */
 public class AssetTagPropertyServiceHttp {

@@ -24,8 +24,8 @@ import java.util.Map;
  * This class is a wrapper for {@link WikiPageResource}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       WikiPageResource
+ * @author Brian Wing Shun Chan
+ * @see WikiPageResource
  * @generated
  */
 public class WikiPageResourceWrapper implements WikiPageResource,

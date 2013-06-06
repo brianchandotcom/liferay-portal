@@ -23,8 +23,8 @@ import java.util.Map;
  * This class is a wrapper for {@link UserGroup}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       UserGroup
+ * @author Brian Wing Shun Chan
+ * @see UserGroup
  * @generated
  */
 public class UserGroupWrapper implements UserGroup, ModelWrapper<UserGroup> {

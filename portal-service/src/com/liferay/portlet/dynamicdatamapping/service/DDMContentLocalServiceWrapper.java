@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link DDMContentLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       DDMContentLocalService
+ * @author Brian Wing Shun Chan
+ * @see DDMContentLocalService
  * @generated
  */
 public class DDMContentLocalServiceWrapper implements DDMContentLocalService,

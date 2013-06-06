@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link AddressLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       AddressLocalService
+ * @author Brian Wing Shun Chan
+ * @see AddressLocalService
  * @generated
  */
 public class AddressLocalServiceWrapper implements AddressLocalService,

@@ -45,10 +45,10 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       DDMTemplateServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see DDMTemplateServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil
  * @generated
  */
 public class DDMTemplateServiceHttp {

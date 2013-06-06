@@ -23,8 +23,8 @@ import java.util.Map;
  * This class is a wrapper for {@link Subscription}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       Subscription
+ * @author Brian Wing Shun Chan
+ * @see Subscription
  * @generated
  */
 public class SubscriptionWrapper implements Subscription,

@@ -24,8 +24,8 @@ import java.util.Map;
  * This class is a wrapper for {@link ExpandoValue}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       ExpandoValue
+ * @author Brian Wing Shun Chan
+ * @see ExpandoValue
  * @generated
  */
 public class ExpandoValueWrapper implements ExpandoValue,

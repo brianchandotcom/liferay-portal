@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link JournalTemplateService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       JournalTemplateService
+ * @author Brian Wing Shun Chan
+ * @see JournalTemplateService
  * @generated
  */
 public class JournalTemplateServiceWrapper implements JournalTemplateService,

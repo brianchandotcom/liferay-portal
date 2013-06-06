@@ -25,8 +25,8 @@ import java.util.Map;
  * This class is a wrapper for {@link DDMContent}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       DDMContent
+ * @author Brian Wing Shun Chan
+ * @see DDMContent
  * @generated
  */
 public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {

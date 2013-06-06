@@ -22,8 +22,8 @@ import java.util.List;
 /**
  * This class is used by SOAP remote services, specifically {@link com.liferay.portlet.social.service.http.SocialActivitySettingServiceSoap}.
  *
- * @author    Brian Wing Shun Chan
- * @see       com.liferay.portlet.social.service.http.SocialActivitySettingServiceSoap
+ * @author Brian Wing Shun Chan
+ * @see com.liferay.portlet.social.service.http.SocialActivitySettingServiceSoap
  * @generated
  */
 public class SocialActivitySettingSoap implements Serializable {

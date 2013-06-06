@@ -4,6 +4,14 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}ServiceUtil;
 
 import java.util.Arrays;
 
+/**
+ * @author ${author}
+<#if isDeprecated>
+ * @deprecated ${deprecatedComment}
+</#if>
+ * @generated
+ */
+
 public class ${entity.name}${sessionTypeName}ServiceClpInvoker {
 
 	public ${entity.name}${sessionTypeName}ServiceClpInvoker() {

@@ -25,8 +25,8 @@ import java.util.Map;
  * This class is a wrapper for {@link JournalFolder}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       JournalFolder
+ * @author Brian Wing Shun Chan
+ * @see JournalFolder
  * @generated
  */
 public class JournalFolderWrapper implements JournalFolder,

@@ -45,10 +45,10 @@ import com.liferay.portlet.expando.service.ExpandoValueServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       ExpandoValueServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portlet.expando.service.ExpandoValueServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see ExpandoValueServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portlet.expando.service.ExpandoValueServiceUtil
  * @generated
  */
 public class ExpandoValueServiceHttp {

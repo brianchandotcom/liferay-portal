@@ -45,10 +45,10 @@ import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       DDLRecordSetServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portlet.dynamicdatalists.service.DDLRecordSetServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see DDLRecordSetServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portlet.dynamicdatalists.service.DDLRecordSetServiceUtil
  * @generated
  */
 public class DDLRecordSetServiceHttp {

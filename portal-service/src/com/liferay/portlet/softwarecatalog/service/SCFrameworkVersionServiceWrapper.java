@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link SCFrameworkVersionService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       SCFrameworkVersionService
+ * @author Brian Wing Shun Chan
+ * @see SCFrameworkVersionService
  * @generated
  */
 public class SCFrameworkVersionServiceWrapper

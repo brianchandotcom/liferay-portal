@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link JournalFolderLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       JournalFolderLocalService
+ * @author Brian Wing Shun Chan
+ * @see JournalFolderLocalService
  * @generated
  */
 public class JournalFolderLocalServiceWrapper

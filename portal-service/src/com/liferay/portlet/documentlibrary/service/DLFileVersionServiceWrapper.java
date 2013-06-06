@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link DLFileVersionService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       DLFileVersionService
+ * @author Brian Wing Shun Chan
+ * @see DLFileVersionService
  * @generated
  */
 public class DLFileVersionServiceWrapper implements DLFileVersionService,

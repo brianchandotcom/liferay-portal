@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link RepositoryLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       RepositoryLocalService
+ * @author Brian Wing Shun Chan
+ * @see RepositoryLocalService
  * @generated
  */
 public class RepositoryLocalServiceWrapper implements RepositoryLocalService,

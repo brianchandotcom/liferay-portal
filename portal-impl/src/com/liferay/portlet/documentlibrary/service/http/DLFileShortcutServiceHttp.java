@@ -45,10 +45,10 @@ import com.liferay.portlet.documentlibrary.service.DLFileShortcutServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       DLFileShortcutServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portlet.documentlibrary.service.DLFileShortcutServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see DLFileShortcutServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portlet.documentlibrary.service.DLFileShortcutServiceUtil
  * @generated
  */
 public class DLFileShortcutServiceHttp {

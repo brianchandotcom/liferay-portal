@@ -56,10 +56,10 @@ import java.rmi.RemoteException;
  * The SOAP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       ShoppingCategoryServiceHttp
- * @see       com.liferay.portlet.shopping.model.ShoppingCategorySoap
- * @see       com.liferay.portlet.shopping.service.ShoppingCategoryServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see ShoppingCategoryServiceHttp
+ * @see com.liferay.portlet.shopping.model.ShoppingCategorySoap
+ * @see com.liferay.portlet.shopping.service.ShoppingCategoryServiceUtil
  * @generated
  */
 public class ShoppingCategoryServiceSoap {

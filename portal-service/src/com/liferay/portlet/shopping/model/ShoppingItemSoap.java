@@ -23,8 +23,8 @@ import java.util.List;
 /**
  * This class is used by SOAP remote services, specifically {@link com.liferay.portlet.shopping.service.http.ShoppingItemServiceSoap}.
  *
- * @author    Brian Wing Shun Chan
- * @see       com.liferay.portlet.shopping.service.http.ShoppingItemServiceSoap
+ * @author Brian Wing Shun Chan
+ * @see com.liferay.portlet.shopping.service.http.ShoppingItemServiceSoap
  * @generated
  */
 public class ShoppingItemSoap implements Serializable {

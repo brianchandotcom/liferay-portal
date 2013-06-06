@@ -56,10 +56,10 @@ import java.rmi.RemoteException;
  * The SOAP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       BookmarksFolderServiceHttp
- * @see       com.liferay.portlet.bookmarks.model.BookmarksFolderSoap
- * @see       com.liferay.portlet.bookmarks.service.BookmarksFolderServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see BookmarksFolderServiceHttp
+ * @see com.liferay.portlet.bookmarks.model.BookmarksFolderSoap
+ * @see com.liferay.portlet.bookmarks.service.BookmarksFolderServiceUtil
  * @generated
  */
 public class BookmarksFolderServiceSoap {

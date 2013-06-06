@@ -25,8 +25,8 @@ import java.util.Map;
  * This class is a wrapper for {@link MBCategory}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       MBCategory
+ * @author Brian Wing Shun Chan
+ * @see MBCategory
  * @generated
  */
 public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {

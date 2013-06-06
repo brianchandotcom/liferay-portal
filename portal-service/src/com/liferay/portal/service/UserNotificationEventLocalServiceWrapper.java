@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link UserNotificationEventLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       UserNotificationEventLocalService
+ * @author Brian Wing Shun Chan
+ * @see UserNotificationEventLocalService
  * @generated
  */
 public class UserNotificationEventLocalServiceWrapper

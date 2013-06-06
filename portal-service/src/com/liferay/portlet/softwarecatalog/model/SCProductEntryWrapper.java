@@ -25,8 +25,8 @@ import java.util.Map;
  * This class is a wrapper for {@link SCProductEntry}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       SCProductEntry
+ * @author Brian Wing Shun Chan
+ * @see SCProductEntry
  * @generated
  */
 public class SCProductEntryWrapper implements SCProductEntry,

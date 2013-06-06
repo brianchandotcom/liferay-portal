@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link ShardLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       ShardLocalService
+ * @author Brian Wing Shun Chan
+ * @see ShardLocalService
  * @generated
  */
 public class ShardLocalServiceWrapper implements ShardLocalService,

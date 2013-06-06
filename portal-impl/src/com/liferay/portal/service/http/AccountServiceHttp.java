@@ -36,10 +36,10 @@ package com.liferay.portal.service.http;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       AccountServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portal.service.AccountServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see AccountServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portal.service.AccountServiceUtil
  * @generated
  */
 public class AccountServiceHttp {

@@ -45,10 +45,10 @@ import com.liferay.portlet.announcements.service.AnnouncementsEntryServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       AnnouncementsEntryServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portlet.announcements.service.AnnouncementsEntryServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see AnnouncementsEntryServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portlet.announcements.service.AnnouncementsEntryServiceUtil
  * @generated
  */
 public class AnnouncementsEntryServiceHttp {

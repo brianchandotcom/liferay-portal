@@ -25,8 +25,8 @@ import java.util.Map;
  * This class is a wrapper for {@link CalEvent}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       CalEvent
+ * @author Brian Wing Shun Chan
+ * @see CalEvent
  * @generated
  */
 public class CalEventWrapper implements CalEvent, ModelWrapper<CalEvent> {

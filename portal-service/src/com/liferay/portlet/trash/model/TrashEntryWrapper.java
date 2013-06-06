@@ -25,8 +25,8 @@ import java.util.Map;
  * This class is a wrapper for {@link TrashEntry}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       TrashEntry
+ * @author Brian Wing Shun Chan
+ * @see TrashEntry
  * @generated
  */
 public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {

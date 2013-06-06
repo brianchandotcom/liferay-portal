@@ -25,8 +25,8 @@ import java.util.Map;
  * This class is a wrapper for {@link MBThread}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       MBThread
+ * @author Brian Wing Shun Chan
+ * @see MBThread
  * @generated
  */
 public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {

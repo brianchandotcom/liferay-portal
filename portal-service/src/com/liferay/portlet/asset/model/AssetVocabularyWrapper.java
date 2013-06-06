@@ -25,8 +25,8 @@ import java.util.Map;
  * This class is a wrapper for {@link AssetVocabulary}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       AssetVocabulary
+ * @author Brian Wing Shun Chan
+ * @see AssetVocabulary
  * @generated
  */
 public class AssetVocabularyWrapper implements AssetVocabulary,

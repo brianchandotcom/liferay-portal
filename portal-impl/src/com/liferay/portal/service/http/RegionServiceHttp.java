@@ -43,10 +43,10 @@ import com.liferay.portal.service.RegionServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       RegionServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portal.service.RegionServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see RegionServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portal.service.RegionServiceUtil
  * @generated
  */
 public class RegionServiceHttp {

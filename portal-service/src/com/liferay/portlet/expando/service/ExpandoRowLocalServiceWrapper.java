@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link ExpandoRowLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       ExpandoRowLocalService
+ * @author Brian Wing Shun Chan
+ * @see ExpandoRowLocalService
  * @generated
  */
 public class ExpandoRowLocalServiceWrapper implements ExpandoRowLocalService,

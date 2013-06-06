@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link WebDAVPropsLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       WebDAVPropsLocalService
+ * @author Brian Wing Shun Chan
+ * @see WebDAVPropsLocalService
  * @generated
  */
 public class WebDAVPropsLocalServiceWrapper implements WebDAVPropsLocalService,

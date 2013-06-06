@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link RegionService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       RegionService
+ * @author Brian Wing Shun Chan
+ * @see RegionService
  * @generated
  */
 public class RegionServiceWrapper implements RegionService,

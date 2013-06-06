@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link JournalArticleImageLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       JournalArticleImageLocalService
+ * @author Brian Wing Shun Chan
+ * @see JournalArticleImageLocalService
  * @generated
  */
 public class JournalArticleImageLocalServiceWrapper

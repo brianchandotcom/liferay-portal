@@ -25,8 +25,8 @@ import java.util.Map;
  * This class is a wrapper for {@link MBDiscussion}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       MBDiscussion
+ * @author Brian Wing Shun Chan
+ * @see MBDiscussion
  * @generated
  */
 public class MBDiscussionWrapper implements MBDiscussion,

@@ -23,8 +23,8 @@ import java.util.List;
 /**
  * This class is used by SOAP remote services, specifically {@link com.liferay.portlet.dynamicdatamapping.service.http.DDMTemplateServiceSoap}.
  *
- * @author    Brian Wing Shun Chan
- * @see       com.liferay.portlet.dynamicdatamapping.service.http.DDMTemplateServiceSoap
+ * @author Brian Wing Shun Chan
+ * @see com.liferay.portlet.dynamicdatamapping.service.http.DDMTemplateServiceSoap
  * @generated
  */
 public class DDMTemplateSoap implements Serializable {

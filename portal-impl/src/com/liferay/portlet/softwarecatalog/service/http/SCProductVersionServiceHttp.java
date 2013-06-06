@@ -45,10 +45,10 @@ import com.liferay.portlet.softwarecatalog.service.SCProductVersionServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       SCProductVersionServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portlet.softwarecatalog.service.SCProductVersionServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see SCProductVersionServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portlet.softwarecatalog.service.SCProductVersionServiceUtil
  * @generated
  */
 public class SCProductVersionServiceHttp {

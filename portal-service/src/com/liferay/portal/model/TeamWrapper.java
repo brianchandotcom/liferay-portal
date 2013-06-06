@@ -23,8 +23,8 @@ import java.util.Map;
  * This class is a wrapper for {@link Team}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       Team
+ * @author Brian Wing Shun Chan
+ * @see Team
  * @generated
  */
 public class TeamWrapper implements Team, ModelWrapper<Team> {

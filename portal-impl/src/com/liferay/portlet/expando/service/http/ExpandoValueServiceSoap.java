@@ -55,10 +55,10 @@ import java.rmi.RemoteException;
  * The SOAP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       ExpandoValueServiceHttp
- * @see       com.liferay.portlet.expando.model.ExpandoValueSoap
- * @see       com.liferay.portlet.expando.service.ExpandoValueServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see ExpandoValueServiceHttp
+ * @see com.liferay.portlet.expando.model.ExpandoValueSoap
+ * @see com.liferay.portlet.expando.service.ExpandoValueServiceUtil
  * @generated
  */
 public class ExpandoValueServiceSoap {

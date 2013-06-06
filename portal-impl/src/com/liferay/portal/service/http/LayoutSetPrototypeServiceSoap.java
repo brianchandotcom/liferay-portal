@@ -58,10 +58,10 @@ import java.util.Map;
  * The SOAP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       LayoutSetPrototypeServiceHttp
- * @see       com.liferay.portal.model.LayoutSetPrototypeSoap
- * @see       com.liferay.portal.service.LayoutSetPrototypeServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see LayoutSetPrototypeServiceHttp
+ * @see com.liferay.portal.model.LayoutSetPrototypeSoap
+ * @see com.liferay.portal.service.LayoutSetPrototypeServiceUtil
  * @generated
  */
 public class LayoutSetPrototypeServiceSoap {

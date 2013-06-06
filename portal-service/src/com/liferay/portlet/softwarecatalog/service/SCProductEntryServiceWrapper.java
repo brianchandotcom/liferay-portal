@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link SCProductEntryService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       SCProductEntryService
+ * @author Brian Wing Shun Chan
+ * @see SCProductEntryService
  * @generated
  */
 public class SCProductEntryServiceWrapper implements SCProductEntryService,

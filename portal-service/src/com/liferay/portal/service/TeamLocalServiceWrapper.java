@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link TeamLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       TeamLocalService
+ * @author Brian Wing Shun Chan
+ * @see TeamLocalService
  * @generated
  */
 public class TeamLocalServiceWrapper implements TeamLocalService,

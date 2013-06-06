@@ -36,10 +36,10 @@ package com.liferay.portlet.polls.service.http;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       PollsChoiceServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portlet.polls.service.PollsChoiceServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see PollsChoiceServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portlet.polls.service.PollsChoiceServiceUtil
  * @generated
  */
 public class PollsChoiceServiceHttp {

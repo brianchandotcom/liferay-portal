@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link BookmarksEntryService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       BookmarksEntryService
+ * @author Brian Wing Shun Chan
+ * @see BookmarksEntryService
  * @generated
  */
 public class BookmarksEntryServiceWrapper implements BookmarksEntryService,

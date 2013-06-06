@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link UserGroupGroupRoleLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       UserGroupGroupRoleLocalService
+ * @author Brian Wing Shun Chan
+ * @see UserGroupGroupRoleLocalService
  * @generated
  */
 public class UserGroupGroupRoleLocalServiceWrapper

@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link TicketLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       TicketLocalService
+ * @author Brian Wing Shun Chan
+ * @see TicketLocalService
  * @generated
  */
 public class TicketLocalServiceWrapper implements TicketLocalService,

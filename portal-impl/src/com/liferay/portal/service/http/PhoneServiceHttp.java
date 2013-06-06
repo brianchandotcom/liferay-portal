@@ -43,10 +43,10 @@ import com.liferay.portal.service.PhoneServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       PhoneServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portal.service.PhoneServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see PhoneServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portal.service.PhoneServiceUtil
  * @generated
  */
 public class PhoneServiceHttp {

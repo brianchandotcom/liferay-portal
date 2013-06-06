@@ -43,10 +43,10 @@ import com.liferay.portal.service.ClassNameServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       ClassNameServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portal.service.ClassNameServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see ClassNameServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portal.service.ClassNameServiceUtil
  * @generated
  */
 public class ClassNameServiceHttp {

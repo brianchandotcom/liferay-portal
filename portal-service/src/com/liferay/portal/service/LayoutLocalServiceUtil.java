@@ -268,73 +268,6 @@ public class LayoutLocalServiceUtil {
 	}
 
 	/**
-	* Adds a layout with additional parameters.
-	*
-	* <p>
-	* This method handles the creation of the layout including its resources,
-	* metadata, and internal data structures. It is not necessary to make
-	* subsequent calls to any methods to setup default groups, resources, ...
-	* etc.
-	* </p>
-	*
-	* @param userId the primary key of the user
-	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
-	* @param parentLayoutId the primary key of the parent layout (optionally
-	{@link
-	com.liferay.portal.model.LayoutConstants#DEFAULT_PARENT_LAYOUT_ID})
-	* @param nameMap the layout's locales and localized names
-	* @param titleMap the layout's locales and localized titles
-	* @param descriptionMap the layout's locales and localized descriptions
-	* @param keywordsMap the layout's locales and localized keywords
-	* @param robotsMap the layout's locales and localized robots
-	* @param type the layout's type (optionally {@link
-	com.liferay.portal.model.LayoutConstants#TYPE_PORTLET}). The
-	possible types can be found in {@link
-	com.liferay.portal.model.LayoutConstants}.
-	* @param hidden whether the layout is hidden
-	* @param friendlyURLMap the layout's locales and localized friendly URLs.
-	To see how the URL is normalized when accessed, see {@link
-	com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
-	String)}.
-	* @param serviceContext the service context to be applied. Must set the
-	UUID for the layout. Can set the creation date, modification
-	date, and expando bridge attributes for the layout. For layouts
-	that belong to a layout set prototype, an attribute named
-	<code>layoutUpdateable</code> can be set to specify whether site
-	administrators can modify this page within their site. For
-	layouts that are created from a layout prototype, attributes
-	named <code>layoutPrototypeUuid</code> and
-	<code>layoutPrototypeLinkedEnabled</code> can be specified to
-	provide the unique identifier of the source prototype and a
-	boolean to determine whether a link to it should be enabled to
-	activate propagation of changes made to the linked page in the
-	prototype.
-	* @return the layout
-	* @throws PortalException if a group or user with the primary key could not
-	be found, if layout values were invalid, or if a portal exception
-	occurred
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portal.model.Layout addLayout(long userId,
-		long groupId, boolean privateLayout, long parentLayoutId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.util.Map<java.util.Locale, java.lang.String> keywordsMap,
-		java.util.Map<java.util.Locale, java.lang.String> robotsMap,
-		java.lang.String type, java.lang.String typeSettings, boolean hidden,
-		java.util.Map<java.util.Locale, java.lang.String> friendlyURLMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .addLayout(userId, groupId, privateLayout, parentLayoutId,
-			nameMap, titleMap, descriptionMap, keywordsMap, robotsMap, type,
-			typeSettings, hidden, friendlyURLMap, serviceContext);
-	}
-
-	/**
 	* Adds a layout.
 	*
 	* <p>
@@ -391,8 +324,8 @@ public class LayoutLocalServiceUtil {
 	exception occurred
 	* @throws SystemException if a system exception occurred
 	* @deprecated As of 6.2.0, replaced by {@link #addLayout(long, long,
-	boolean, long, Map, Map, Map, Map, Map, String, boolean, Map,
-	ServiceContext)}
+	boolean, long, Map, Map, Map, Map, Map, String, String,
+	boolean, Map, ServiceContext)}
 	*/
 	public static com.liferay.portal.model.Layout addLayout(long userId,
 		long groupId, boolean privateLayout, long parentLayoutId,
@@ -409,6 +342,76 @@ public class LayoutLocalServiceUtil {
 				   .addLayout(userId, groupId, privateLayout, parentLayoutId,
 			nameMap, titleMap, descriptionMap, keywordsMap, robotsMap, type,
 			hidden, friendlyURL, serviceContext);
+	}
+
+	/**
+	* Adds a layout with additional parameters.
+	*
+	* <p>
+	* This method handles the creation of the layout including its resources,
+	* metadata, and internal data structures. It is not necessary to make
+	* subsequent calls to any methods to setup default groups, resources, ...
+	* etc.
+	* </p>
+	*
+	* @param userId the primary key of the user
+	* @param groupId the primary key of the group
+	* @param privateLayout whether the layout is private to the group
+	* @param parentLayoutId the primary key of the parent layout (optionally
+	{@link
+	com.liferay.portal.model.LayoutConstants#DEFAULT_PARENT_LAYOUT_ID})
+	* @param nameMap the layout's locales and localized names
+	* @param titleMap the layout's locales and localized titles
+	* @param descriptionMap the layout's locales and localized descriptions
+	* @param keywordsMap the layout's locales and localized keywords
+	* @param robotsMap the layout's locales and localized robots
+	* @param type the layout's type (optionally {@link
+	com.liferay.portal.model.LayoutConstants#TYPE_PORTLET}). The
+	possible types can be found in {@link
+	com.liferay.portal.model.LayoutConstants}.
+	* @param typeSettings the settings to load the unicode properties object.
+	See {@link com.liferay.portal.kernel.util.UnicodeProperties
+	#fastLoad(String)}.
+	* @param hidden whether the layout is hidden
+	* @param friendlyURLMap the layout's locales and localized friendly URLs.
+	To see how the URL is normalized when accessed, see {@link
+	com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
+	String)}.
+	* @param serviceContext the service context to be applied. Must set the
+	UUID for the layout. Can set the creation date, modification
+	date, and expando bridge attributes for the layout. For layouts
+	that belong to a layout set prototype, an attribute named
+	<code>layoutUpdateable</code> can be set to specify whether site
+	administrators can modify this page within their site. For
+	layouts that are created from a layout prototype, attributes
+	named <code>layoutPrototypeUuid</code> and
+	<code>layoutPrototypeLinkedEnabled</code> can be specified to
+	provide the unique identifier of the source prototype and a
+	boolean to determine whether a link to it should be enabled to
+	activate propagation of changes made to the linked page in the
+	prototype.
+	* @return the layout
+	* @throws PortalException if a group or user with the primary key could not
+	be found, if layout values were invalid, or if a portal exception
+	occurred
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Layout addLayout(long userId,
+		long groupId, boolean privateLayout, long parentLayoutId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.util.Locale, java.lang.String> keywordsMap,
+		java.util.Map<java.util.Locale, java.lang.String> robotsMap,
+		java.lang.String type, java.lang.String typeSettings, boolean hidden,
+		java.util.Map<java.util.Locale, java.lang.String> friendlyURLMap,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addLayout(userId, groupId, privateLayout, parentLayoutId,
+			nameMap, titleMap, descriptionMap, keywordsMap, robotsMap, type,
+			typeSettings, hidden, friendlyURLMap, serviceContext);
 	}
 
 	/**

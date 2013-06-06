@@ -23,8 +23,8 @@ import java.util.List;
 /**
  * This class is used by SOAP remote services, specifically {@link com.liferay.portlet.polls.service.http.PollsChoiceServiceSoap}.
  *
- * @author    Brian Wing Shun Chan
- * @see       com.liferay.portlet.polls.service.http.PollsChoiceServiceSoap
+ * @author Brian Wing Shun Chan
+ * @see com.liferay.portlet.polls.service.http.PollsChoiceServiceSoap
  * @generated
  */
 public class PollsChoiceSoap implements Serializable {

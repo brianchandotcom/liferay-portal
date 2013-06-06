@@ -25,8 +25,8 @@ import java.util.Map;
  * This class is a wrapper for {@link MBStatsUser}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       MBStatsUser
+ * @author Brian Wing Shun Chan
+ * @see MBStatsUser
  * @generated
  */
 public class MBStatsUserWrapper implements MBStatsUser,

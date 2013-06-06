@@ -24,8 +24,8 @@ import java.util.Map;
  * This class is a wrapper for {@link SocialRequest}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       SocialRequest
+ * @author Brian Wing Shun Chan
+ * @see SocialRequest
  * @generated
  */
 public class SocialRequestWrapper implements SocialRequest,

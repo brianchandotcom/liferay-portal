@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link DLFileEntryService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       DLFileEntryService
+ * @author Brian Wing Shun Chan
+ * @see DLFileEntryService
  * @generated
  */
 public class DLFileEntryServiceWrapper implements DLFileEntryService,

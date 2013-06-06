@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link RoleService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       RoleService
+ * @author Brian Wing Shun Chan
+ * @see RoleService
  * @generated
  */
 public class RoleServiceWrapper implements RoleService,

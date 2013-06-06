@@ -43,10 +43,10 @@ import com.liferay.portal.service.ImageServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       ImageServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portal.service.ImageServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see ImageServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portal.service.ImageServiceUtil
  * @generated
  */
 public class ImageServiceHttp {

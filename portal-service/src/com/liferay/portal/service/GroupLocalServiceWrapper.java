@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link GroupLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       GroupLocalService
+ * @author Brian Wing Shun Chan
+ * @see GroupLocalService
  * @generated
  */
 public class GroupLocalServiceWrapper implements GroupLocalService,

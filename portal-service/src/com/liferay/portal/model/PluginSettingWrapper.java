@@ -22,8 +22,8 @@ import java.util.Map;
  * This class is a wrapper for {@link PluginSetting}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       PluginSetting
+ * @author Brian Wing Shun Chan
+ * @see PluginSetting
  * @generated
  */
 public class PluginSettingWrapper implements PluginSetting,

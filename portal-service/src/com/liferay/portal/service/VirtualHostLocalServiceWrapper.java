@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link VirtualHostLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       VirtualHostLocalService
+ * @author Brian Wing Shun Chan
+ * @see VirtualHostLocalService
  * @generated
  */
 public class VirtualHostLocalServiceWrapper implements VirtualHostLocalService,

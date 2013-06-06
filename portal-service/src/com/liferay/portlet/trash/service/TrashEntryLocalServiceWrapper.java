@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link TrashEntryLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       TrashEntryLocalService
+ * @author Brian Wing Shun Chan
+ * @see TrashEntryLocalService
  * @generated
  */
 public class TrashEntryLocalServiceWrapper implements TrashEntryLocalService,

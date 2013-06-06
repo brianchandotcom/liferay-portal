@@ -23,8 +23,8 @@ import java.util.Map;
  * This class is a wrapper for {@link Organization}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       Organization
+ * @author Brian Wing Shun Chan
+ * @see Organization
  * @generated
  */
 public class OrganizationWrapper implements Organization,

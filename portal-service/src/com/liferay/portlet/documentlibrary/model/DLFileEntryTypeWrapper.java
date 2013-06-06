@@ -25,8 +25,8 @@ import java.util.Map;
  * This class is a wrapper for {@link DLFileEntryType}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       DLFileEntryType
+ * @author Brian Wing Shun Chan
+ * @see DLFileEntryType
  * @generated
  */
 public class DLFileEntryTypeWrapper implements DLFileEntryType,

@@ -25,8 +25,8 @@ import java.util.Map;
  * This class is a wrapper for {@link SCFrameworkVersion}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       SCFrameworkVersion
+ * @author Brian Wing Shun Chan
+ * @see SCFrameworkVersion
  * @generated
  */
 public class SCFrameworkVersionWrapper implements SCFrameworkVersion,

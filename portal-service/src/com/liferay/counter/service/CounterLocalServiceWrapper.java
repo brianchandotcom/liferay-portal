@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link CounterLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       CounterLocalService
+ * @author Brian Wing Shun Chan
+ * @see CounterLocalService
  * @generated
  */
 public class CounterLocalServiceWrapper implements CounterLocalService,

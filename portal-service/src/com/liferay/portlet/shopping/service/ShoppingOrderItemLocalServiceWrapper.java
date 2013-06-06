@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link ShoppingOrderItemLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       ShoppingOrderItemLocalService
+ * @author Brian Wing Shun Chan
+ * @see ShoppingOrderItemLocalService
  * @generated
  */
 public class ShoppingOrderItemLocalServiceWrapper

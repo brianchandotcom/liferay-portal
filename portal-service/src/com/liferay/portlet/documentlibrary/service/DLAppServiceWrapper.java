@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link DLAppService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       DLAppService
+ * @author Brian Wing Shun Chan
+ * @see DLAppService
  * @generated
  */
 public class DLAppServiceWrapper implements DLAppService,

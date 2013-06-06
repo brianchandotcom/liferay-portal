@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link LayoutFriendlyURLLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       LayoutFriendlyURLLocalService
+ * @author Brian Wing Shun Chan
+ * @see LayoutFriendlyURLLocalService
  * @generated
  */
 public class LayoutFriendlyURLLocalServiceWrapper

@@ -45,10 +45,10 @@ import com.liferay.portlet.messageboards.service.MBBanServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       MBBanServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portlet.messageboards.service.MBBanServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see MBBanServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portlet.messageboards.service.MBBanServiceUtil
  * @generated
  */
 public class MBBanServiceHttp {

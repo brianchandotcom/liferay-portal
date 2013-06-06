@@ -59,10 +59,10 @@ import java.util.Map;
  * The SOAP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       DDMStructureServiceHttp
- * @see       com.liferay.portlet.dynamicdatamapping.model.DDMStructureSoap
- * @see       com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see DDMStructureServiceHttp
+ * @see com.liferay.portlet.dynamicdatamapping.model.DDMStructureSoap
+ * @see com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil
  * @generated
  */
 public class DDMStructureServiceSoap {

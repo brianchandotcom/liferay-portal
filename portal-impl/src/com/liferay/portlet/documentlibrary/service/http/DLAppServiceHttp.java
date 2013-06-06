@@ -45,10 +45,10 @@ import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       DLAppServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portlet.documentlibrary.service.DLAppServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see DLAppServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portlet.documentlibrary.service.DLAppServiceUtil
  * @generated
  */
 public class DLAppServiceHttp {

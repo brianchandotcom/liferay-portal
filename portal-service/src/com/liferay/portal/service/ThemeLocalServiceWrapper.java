@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link ThemeLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       ThemeLocalService
+ * @author Brian Wing Shun Chan
+ * @see ThemeLocalService
  * @generated
  */
 public class ThemeLocalServiceWrapper implements ThemeLocalService,

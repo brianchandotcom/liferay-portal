@@ -24,8 +24,8 @@ import java.util.Map;
  * This class is a wrapper for {@link DLFileEntryMetadata}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       DLFileEntryMetadata
+ * @author Brian Wing Shun Chan
+ * @see DLFileEntryMetadata
  * @generated
  */
 public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,

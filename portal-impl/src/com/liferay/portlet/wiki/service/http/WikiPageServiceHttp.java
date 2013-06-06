@@ -45,10 +45,10 @@ import com.liferay.portlet.wiki.service.WikiPageServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       WikiPageServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portlet.wiki.service.WikiPageServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see WikiPageServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portlet.wiki.service.WikiPageServiceUtil
  * @generated
  */
 public class WikiPageServiceHttp {

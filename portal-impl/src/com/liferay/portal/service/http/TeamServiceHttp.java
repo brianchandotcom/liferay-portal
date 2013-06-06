@@ -43,10 +43,10 @@ import com.liferay.portal.service.TeamServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       TeamServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portal.service.TeamServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see TeamServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portal.service.TeamServiceUtil
  * @generated
  */
 public class TeamServiceHttp {

@@ -23,8 +23,8 @@ import java.util.Map;
  * This class is a wrapper for {@link LayoutFriendlyURL}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       LayoutFriendlyURL
+ * @author Brian Wing Shun Chan
+ * @see LayoutFriendlyURL
  * @generated
  */
 public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,

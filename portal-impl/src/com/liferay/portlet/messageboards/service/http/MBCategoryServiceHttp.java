@@ -45,10 +45,10 @@ import com.liferay.portlet.messageboards.service.MBCategoryServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       MBCategoryServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portlet.messageboards.service.MBCategoryServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see MBCategoryServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portlet.messageboards.service.MBCategoryServiceUtil
  * @generated
  */
 public class MBCategoryServiceHttp {

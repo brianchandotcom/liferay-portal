@@ -45,10 +45,10 @@ import com.liferay.portlet.ratings.service.RatingsEntryServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       RatingsEntryServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portlet.ratings.service.RatingsEntryServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see RatingsEntryServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portlet.ratings.service.RatingsEntryServiceUtil
  * @generated
  */
 public class RatingsEntryServiceHttp {

@@ -45,10 +45,10 @@ import com.liferay.portlet.social.service.SocialActivitySettingServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       SocialActivitySettingServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portlet.social.service.SocialActivitySettingServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see SocialActivitySettingServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portlet.social.service.SocialActivitySettingServiceUtil
  * @generated
  */
 public class SocialActivitySettingServiceHttp {

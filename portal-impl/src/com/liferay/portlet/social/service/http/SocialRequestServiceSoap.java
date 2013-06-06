@@ -48,10 +48,10 @@ package com.liferay.portlet.social.service.http;
  * The SOAP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       SocialRequestServiceHttp
- * @see       com.liferay.portlet.social.model.SocialRequestSoap
- * @see       com.liferay.portlet.social.service.SocialRequestServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see SocialRequestServiceHttp
+ * @see com.liferay.portlet.social.model.SocialRequestSoap
+ * @see com.liferay.portlet.social.service.SocialRequestServiceUtil
  * @generated
  */
 public class SocialRequestServiceSoap {

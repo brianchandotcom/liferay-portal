@@ -25,8 +25,8 @@ import java.util.Map;
  * This class is a wrapper for {@link MBMessage}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       MBMessage
+ * @author Brian Wing Shun Chan
+ * @see MBMessage
  * @generated
  */
 public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {

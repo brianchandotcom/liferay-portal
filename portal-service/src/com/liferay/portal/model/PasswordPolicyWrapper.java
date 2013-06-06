@@ -23,8 +23,8 @@ import java.util.Map;
  * This class is a wrapper for {@link PasswordPolicy}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       PasswordPolicy
+ * @author Brian Wing Shun Chan
+ * @see PasswordPolicy
  * @generated
  */
 public class PasswordPolicyWrapper implements PasswordPolicy,

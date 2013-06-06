@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link SCLicenseLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       SCLicenseLocalService
+ * @author Brian Wing Shun Chan
+ * @see SCLicenseLocalService
  * @generated
  */
 public class SCLicenseLocalServiceWrapper implements SCLicenseLocalService,

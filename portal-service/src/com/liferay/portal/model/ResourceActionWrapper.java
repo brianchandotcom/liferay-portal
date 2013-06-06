@@ -22,8 +22,8 @@ import java.util.Map;
  * This class is a wrapper for {@link ResourceAction}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       ResourceAction
+ * @author Brian Wing Shun Chan
+ * @see ResourceAction
  * @generated
  */
 public class ResourceActionWrapper implements ResourceAction,

@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link ImageService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       ImageService
+ * @author Brian Wing Shun Chan
+ * @see ImageService
  * @generated
  */
 public class ImageServiceWrapper implements ImageService,

@@ -23,8 +23,8 @@ import java.util.Map;
  * This class is a wrapper for {@link Release}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       Release
+ * @author Brian Wing Shun Chan
+ * @see Release
  * @generated
  */
 public class ReleaseWrapper implements Release, ModelWrapper<Release> {

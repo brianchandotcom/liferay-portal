@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link RatingsEntryService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       RatingsEntryService
+ * @author Brian Wing Shun Chan
+ * @see RatingsEntryService
  * @generated
  */
 public class RatingsEntryServiceWrapper implements RatingsEntryService,

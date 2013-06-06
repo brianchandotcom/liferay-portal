@@ -2804,6 +2804,8 @@ public class ServiceBuilder {
 		context.put("methods", methods);
 		context.put("sessionTypeName", _getSessionTypeName(sessionType));
 
+		context = _putDeprecatedKeys(context, javaClass);
+
 		// Content
 
 		String content = _processTemplate(_tplService, context);
@@ -2847,6 +2849,8 @@ public class ServiceBuilder {
 		context.put(
 			"referenceList", _mergeReferenceList(entity.getReferenceList()));
 
+		context = _putDeprecatedKeys(context, javaClass);
+
 		// Content
 
 		String content = _processTemplate(_tplServiceBaseImpl, context);
@@ -2876,6 +2880,8 @@ public class ServiceBuilder {
 		context.put("entity", entity);
 		context.put("methods", _getMethods(javaClass));
 		context.put("sessionTypeName", _getSessionTypeName(sessionType));
+
+		context = _putDeprecatedKeys(context, javaClass);
 
 		// Content
 
@@ -2925,6 +2931,8 @@ public class ServiceBuilder {
 		context.put("methods", methods);
 		context.put("sessionTypeName", _getSessionTypeName(sessionType));
 
+		context = _putDeprecatedKeys(context, javaClass);
+
 		// Content
 
 		String content = _processTemplate(_tplServiceClpInvoker, context);
@@ -2935,7 +2943,7 @@ public class ServiceBuilder {
 			_outputPath + "/service/base/" + entity.getName() +
 				_getSessionTypeName(sessionType) + "ServiceClpInvoker.java");
 
-		writeFile(ejbFile, content);
+		writeFile(ejbFile, content, _author);
 	}
 
 	private void _createServiceClpMessageListener() throws Exception {
@@ -2957,7 +2965,7 @@ public class ServiceBuilder {
 		File ejbFile = new File(
 			_serviceOutputPath + "/service/messaging/ClpMessageListener.java");
 
-		writeFile(ejbFile, content);
+		writeFile(ejbFile, content, _author);
 	}
 
 	private void _createServiceClpSerializer(List<String> exceptions)
@@ -2981,7 +2989,7 @@ public class ServiceBuilder {
 		File ejbFile = new File(
 			_serviceOutputPath + "/service/ClpSerializer.java");
 
-		writeFile(ejbFile, content);
+		writeFile(ejbFile, content, _author);
 	}
 
 	private void _createServiceFactory(Entity entity, int sessionType) {
@@ -3016,6 +3024,8 @@ public class ServiceBuilder {
 		context.put("entity", entity);
 		context.put("methods", _getMethods(javaClass));
 		context.put("hasHttpMethods", new Boolean(_hasHttpMethods(javaClass)));
+
+		context = _putDeprecatedKeys(context, javaClass);
 
 		// Content
 
@@ -3099,6 +3109,8 @@ public class ServiceBuilder {
 		context.put("entity", entity);
 		context.put("methods", _getMethods(javaClass));
 
+		context = _putDeprecatedKeys(context, javaClass);
+
 		// Content
 
 		String content = _processTemplate(_tplServiceSoap, context);
@@ -3124,6 +3136,8 @@ public class ServiceBuilder {
 		context.put("entity", entity);
 		context.put("methods", _getMethods(javaClass));
 		context.put("sessionTypeName", _getSessionTypeName(sessionType));
+
+		context = _putDeprecatedKeys(context, javaClass);
 
 		// Content
 
@@ -3162,6 +3176,8 @@ public class ServiceBuilder {
 		context.put("entity", entity);
 		context.put("methods", _getMethods(javaClass));
 		context.put("sessionTypeName", _getSessionTypeName(sessionType));
+
+		context = _putDeprecatedKeys(context, javaClass);
 
 		// Content
 
@@ -4927,6 +4943,25 @@ public class ServiceBuilder {
 		throws Exception {
 
 		return StringUtil.strip(FreeMarkerUtil.process(name, context), '\r');
+	}
+
+	private Map<String, Object> _putDeprecatedKeys(
+		Map<String, Object> context, JavaClass javaClass) {
+
+		boolean isDeprecated = false;
+		String deprecatedComment = StringPool.BLANK;
+
+		DocletTag tag = javaClass.getTagByName("deprecated");
+
+		if (tag != null) {
+			isDeprecated = true;
+			deprecatedComment = tag.getValue();
+		}
+
+		context.put("isDeprecated", isDeprecated);
+		context.put("deprecatedComment", deprecatedComment);
+
+		return context;
 	}
 
 	private Set<String> _readLines(String fileName) throws Exception {

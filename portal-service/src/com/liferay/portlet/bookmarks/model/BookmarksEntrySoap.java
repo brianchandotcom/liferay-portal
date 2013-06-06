@@ -23,8 +23,8 @@ import java.util.List;
 /**
  * This class is used by SOAP remote services, specifically {@link com.liferay.portlet.bookmarks.service.http.BookmarksEntryServiceSoap}.
  *
- * @author    Brian Wing Shun Chan
- * @see       com.liferay.portlet.bookmarks.service.http.BookmarksEntryServiceSoap
+ * @author Brian Wing Shun Chan
+ * @see com.liferay.portlet.bookmarks.service.http.BookmarksEntryServiceSoap
  * @generated
  */
 public class BookmarksEntrySoap implements Serializable {

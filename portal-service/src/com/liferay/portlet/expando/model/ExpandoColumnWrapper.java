@@ -24,8 +24,8 @@ import java.util.Map;
  * This class is a wrapper for {@link ExpandoColumn}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       ExpandoColumn
+ * @author Brian Wing Shun Chan
+ * @see ExpandoColumn
  * @generated
  */
 public class ExpandoColumnWrapper implements ExpandoColumn,

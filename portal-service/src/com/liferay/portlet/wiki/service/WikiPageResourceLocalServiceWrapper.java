@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link WikiPageResourceLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       WikiPageResourceLocalService
+ * @author Brian Wing Shun Chan
+ * @see WikiPageResourceLocalService
  * @generated
  */
 public class WikiPageResourceLocalServiceWrapper

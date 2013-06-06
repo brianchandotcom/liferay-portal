@@ -45,10 +45,10 @@ import com.liferay.portlet.journal.service.JournalFolderServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       JournalFolderServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portlet.journal.service.JournalFolderServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see JournalFolderServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portlet.journal.service.JournalFolderServiceUtil
  * @generated
  */
 public class JournalFolderServiceHttp {

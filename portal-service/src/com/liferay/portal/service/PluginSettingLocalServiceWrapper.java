@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link PluginSettingLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       PluginSettingLocalService
+ * @author Brian Wing Shun Chan
+ * @see PluginSettingLocalService
  * @generated
  */
 public class PluginSettingLocalServiceWrapper

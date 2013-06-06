@@ -23,8 +23,8 @@ import java.util.Map;
  * This class is a wrapper for {@link Phone}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       Phone
+ * @author Brian Wing Shun Chan
+ * @see Phone
  * @generated
  */
 public class PhoneWrapper implements Phone, ModelWrapper<Phone> {

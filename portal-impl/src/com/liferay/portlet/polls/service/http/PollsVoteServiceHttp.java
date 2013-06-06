@@ -45,10 +45,10 @@ import com.liferay.portlet.polls.service.PollsVoteServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       PollsVoteServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portlet.polls.service.PollsVoteServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see PollsVoteServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portlet.polls.service.PollsVoteServiceUtil
  * @generated
  */
 public class PollsVoteServiceHttp {

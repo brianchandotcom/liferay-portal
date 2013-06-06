@@ -25,8 +25,8 @@ import java.util.Map;
  * This class is a wrapper for {@link ShoppingOrder}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       ShoppingOrder
+ * @author Brian Wing Shun Chan
+ * @see ShoppingOrder
  * @generated
  */
 public class ShoppingOrderWrapper implements ShoppingOrder,

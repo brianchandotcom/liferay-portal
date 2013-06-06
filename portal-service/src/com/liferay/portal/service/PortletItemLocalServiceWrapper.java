@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link PortletItemLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       PortletItemLocalService
+ * @author Brian Wing Shun Chan
+ * @see PortletItemLocalService
  * @generated
  */
 public class PortletItemLocalServiceWrapper implements PortletItemLocalService,

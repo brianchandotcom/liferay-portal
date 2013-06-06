@@ -25,8 +25,8 @@ import java.util.Map;
  * This class is a wrapper for {@link BTEntry}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       BTEntry
+ * @author Brian Wing Shun Chan
+ * @see BTEntry
  * @generated
  */
 public class BTEntryWrapper implements BTEntry, ModelWrapper<BTEntry> {

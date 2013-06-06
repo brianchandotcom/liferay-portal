@@ -76,6 +76,9 @@ import javax.sql.DataSource;
  * @author ${author}
  * @see ${packagePath}.service.impl.${entity.name}LocalServiceImpl
  * @see ${packagePath}.service.${entity.name}LocalServiceUtil
+<#if isDeprecated>
+ * @deprecated ${deprecatedComment}
+</#if>
  * @generated
  */
 	public abstract class ${entity.name}LocalServiceBaseImpl extends BaseLocalServiceImpl implements ${entity.name}LocalService, IdentifiableBean {
@@ -96,6 +99,9 @@ import javax.sql.DataSource;
  * @author ${author}
  * @see ${packagePath}.service.impl.${entity.name}ServiceImpl
  * @see ${packagePath}.service.${entity.name}ServiceUtil
+<#if isDeprecated>
+ * @deprecated ${deprecatedComment}
+</#if>
  * @generated
  */
 	public abstract class ${entity.name}ServiceBaseImpl extends BaseServiceImpl implements ${entity.name}Service, IdentifiableBean {

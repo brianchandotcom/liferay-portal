@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link WorkflowInstanceLinkLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       WorkflowInstanceLinkLocalService
+ * @author Brian Wing Shun Chan
+ * @see WorkflowInstanceLinkLocalService
  * @generated
  */
 public class WorkflowInstanceLinkLocalServiceWrapper

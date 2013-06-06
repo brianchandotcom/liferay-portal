@@ -45,10 +45,10 @@ import com.liferay.portlet.softwarecatalog.service.SCLicenseServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       SCLicenseServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portlet.softwarecatalog.service.SCLicenseServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see SCLicenseServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portlet.softwarecatalog.service.SCLicenseServiceUtil
  * @generated
  */
 public class SCLicenseServiceHttp {

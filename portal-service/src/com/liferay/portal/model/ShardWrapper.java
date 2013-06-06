@@ -22,8 +22,8 @@ import java.util.Map;
  * This class is a wrapper for {@link Shard}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       Shard
+ * @author Brian Wing Shun Chan
+ * @see Shard
  * @generated
  */
 public class ShardWrapper implements Shard, ModelWrapper<Shard> {

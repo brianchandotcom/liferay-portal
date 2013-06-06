@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link WikiPageService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       WikiPageService
+ * @author Brian Wing Shun Chan
+ * @see WikiPageService
  * @generated
  */
 public class WikiPageServiceWrapper implements WikiPageService,

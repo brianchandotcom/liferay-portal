@@ -22,8 +22,8 @@ import java.util.Map;
  * This class is a wrapper for {@link Portlet}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       Portlet
+ * @author Brian Wing Shun Chan
+ * @see Portlet
  * @generated
  */
 public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {

@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link ExpandoColumnService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       ExpandoColumnService
+ * @author Brian Wing Shun Chan
+ * @see ExpandoColumnService
  * @generated
  */
 public class ExpandoColumnServiceWrapper implements ExpandoColumnService,

@@ -25,8 +25,8 @@ import java.util.Map;
  * This class is a wrapper for {@link AnnouncementsEntry}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       AnnouncementsEntry
+ * @author Brian Wing Shun Chan
+ * @see AnnouncementsEntry
  * @generated
  */
 public class AnnouncementsEntryWrapper implements AnnouncementsEntry,

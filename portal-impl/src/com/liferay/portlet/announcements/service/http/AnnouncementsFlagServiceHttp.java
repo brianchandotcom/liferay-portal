@@ -45,10 +45,10 @@ import com.liferay.portlet.announcements.service.AnnouncementsFlagServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       AnnouncementsFlagServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portlet.announcements.service.AnnouncementsFlagServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see AnnouncementsFlagServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portlet.announcements.service.AnnouncementsFlagServiceUtil
  * @generated
  */
 public class AnnouncementsFlagServiceHttp {

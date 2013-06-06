@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link CMISRepositoryLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       CMISRepositoryLocalService
+ * @author Brian Wing Shun Chan
+ * @see CMISRepositoryLocalService
  * @generated
  */
 public class CMISRepositoryLocalServiceWrapper

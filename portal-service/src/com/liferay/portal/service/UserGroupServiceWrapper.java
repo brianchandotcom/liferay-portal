@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link UserGroupService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       UserGroupService
+ * @author Brian Wing Shun Chan
+ * @see UserGroupService
  * @generated
  */
 public class UserGroupServiceWrapper implements UserGroupService,

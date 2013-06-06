@@ -45,10 +45,10 @@ import com.liferay.portlet.mobiledevicerules.service.MDRRuleServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Edward C. Han
- * @see       MDRRuleServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portlet.mobiledevicerules.service.MDRRuleServiceUtil
+ * @author Edward C. Han
+ * @see MDRRuleServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portlet.mobiledevicerules.service.MDRRuleServiceUtil
  * @generated
  */
 public class MDRRuleServiceHttp {

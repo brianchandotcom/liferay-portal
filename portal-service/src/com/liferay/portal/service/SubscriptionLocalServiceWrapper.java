@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link SubscriptionLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       SubscriptionLocalService
+ * @author Brian Wing Shun Chan
+ * @see SubscriptionLocalService
  * @generated
  */
 public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService,

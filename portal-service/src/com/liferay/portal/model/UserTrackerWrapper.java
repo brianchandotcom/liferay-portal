@@ -23,8 +23,8 @@ import java.util.Map;
  * This class is a wrapper for {@link UserTracker}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       UserTracker
+ * @author Brian Wing Shun Chan
+ * @see UserTracker
  * @generated
  */
 public class UserTrackerWrapper implements UserTracker,

@@ -22,8 +22,8 @@ import java.util.Map;
  * This class is a wrapper for {@link UserGroupGroupRole}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       UserGroupGroupRole
+ * @author Brian Wing Shun Chan
+ * @see UserGroupGroupRole
  * @generated
  */
 public class UserGroupGroupRoleWrapper implements UserGroupGroupRole,

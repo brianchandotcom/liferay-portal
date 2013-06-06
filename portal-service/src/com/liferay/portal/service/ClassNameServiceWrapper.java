@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link ClassNameService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       ClassNameService
+ * @author Brian Wing Shun Chan
+ * @see ClassNameService
  * @generated
  */
 public class ClassNameServiceWrapper implements ClassNameService,

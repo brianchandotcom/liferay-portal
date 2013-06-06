@@ -24,8 +24,8 @@ import java.util.Map;
  * This class is a wrapper for {@link AssetTagStats}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       AssetTagStats
+ * @author Brian Wing Shun Chan
+ * @see AssetTagStats
  * @generated
  */
 public class AssetTagStatsWrapper implements AssetTagStats,

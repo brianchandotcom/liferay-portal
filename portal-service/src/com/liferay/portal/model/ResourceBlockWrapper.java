@@ -22,8 +22,8 @@ import java.util.Map;
  * This class is a wrapper for {@link ResourceBlock}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       ResourceBlock
+ * @author Brian Wing Shun Chan
+ * @see ResourceBlock
  * @generated
  */
 public class ResourceBlockWrapper implements ResourceBlock,

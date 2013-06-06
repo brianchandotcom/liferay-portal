@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link DDLRecordService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       DDLRecordService
+ * @author Brian Wing Shun Chan
+ * @see DDLRecordService
  * @generated
  */
 public class DDLRecordServiceWrapper implements DDLRecordService,

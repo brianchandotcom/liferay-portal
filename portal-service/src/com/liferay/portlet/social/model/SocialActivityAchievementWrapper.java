@@ -24,8 +24,8 @@ import java.util.Map;
  * This class is a wrapper for {@link SocialActivityAchievement}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       SocialActivityAchievement
+ * @author Brian Wing Shun Chan
+ * @see SocialActivityAchievement
  * @generated
  */
 public class SocialActivityAchievementWrapper

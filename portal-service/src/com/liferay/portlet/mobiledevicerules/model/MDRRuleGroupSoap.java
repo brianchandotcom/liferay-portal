@@ -23,8 +23,8 @@ import java.util.List;
 /**
  * This class is used by SOAP remote services, specifically {@link com.liferay.portlet.mobiledevicerules.service.http.MDRRuleGroupServiceSoap}.
  *
- * @author    Edward C. Han
- * @see       com.liferay.portlet.mobiledevicerules.service.http.MDRRuleGroupServiceSoap
+ * @author Edward C. Han
+ * @see com.liferay.portlet.mobiledevicerules.service.http.MDRRuleGroupServiceSoap
  * @generated
  */
 public class MDRRuleGroupSoap implements Serializable {

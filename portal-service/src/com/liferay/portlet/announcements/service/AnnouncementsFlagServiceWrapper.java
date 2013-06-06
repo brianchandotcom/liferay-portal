@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link AnnouncementsFlagService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       AnnouncementsFlagService
+ * @author Brian Wing Shun Chan
+ * @see AnnouncementsFlagService
  * @generated
  */
 public class AnnouncementsFlagServiceWrapper implements AnnouncementsFlagService,

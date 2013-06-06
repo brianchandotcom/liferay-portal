@@ -25,8 +25,8 @@ import java.util.Map;
  * This class is a wrapper for {@link SCProductVersion}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       SCProductVersion
+ * @author Brian Wing Shun Chan
+ * @see SCProductVersion
  * @generated
  */
 public class SCProductVersionWrapper implements SCProductVersion,

@@ -25,8 +25,8 @@ import java.util.Map;
  * This class is a wrapper for {@link MBBan}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       MBBan
+ * @author Brian Wing Shun Chan
+ * @see MBBan
  * @generated
  */
 public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {

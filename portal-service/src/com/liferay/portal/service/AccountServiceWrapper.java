@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link AccountService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       AccountService
+ * @author Brian Wing Shun Chan
+ * @see AccountService
  * @generated
  */
 public class AccountServiceWrapper implements AccountService,

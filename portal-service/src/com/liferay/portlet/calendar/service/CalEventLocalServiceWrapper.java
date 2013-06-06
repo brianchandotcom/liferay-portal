@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link CalEventLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       CalEventLocalService
+ * @author Brian Wing Shun Chan
+ * @see CalEventLocalService
  * @generated
  */
 public class CalEventLocalServiceWrapper implements CalEventLocalService,

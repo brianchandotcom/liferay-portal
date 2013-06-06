@@ -25,8 +25,8 @@ import java.util.Map;
  * This class is a wrapper for {@link BookmarksFolder}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       BookmarksFolder
+ * @author Brian Wing Shun Chan
+ * @see BookmarksFolder
  * @generated
  */
 public class BookmarksFolderWrapper implements BookmarksFolder,

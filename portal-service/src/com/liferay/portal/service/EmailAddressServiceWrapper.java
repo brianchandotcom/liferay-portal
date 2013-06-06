@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link EmailAddressService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       EmailAddressService
+ * @author Brian Wing Shun Chan
+ * @see EmailAddressService
  * @generated
  */
 public class EmailAddressServiceWrapper implements EmailAddressService,

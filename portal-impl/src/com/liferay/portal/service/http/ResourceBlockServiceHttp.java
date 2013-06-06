@@ -43,10 +43,10 @@ import com.liferay.portal.service.ResourceBlockServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       ResourceBlockServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portal.service.ResourceBlockServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see ResourceBlockServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portal.service.ResourceBlockServiceUtil
  * @generated
  */
 public class ResourceBlockServiceHttp {

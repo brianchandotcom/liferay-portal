@@ -24,8 +24,8 @@ import java.util.Map;
  * This class is a wrapper for {@link ShoppingItemField}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       ShoppingItemField
+ * @author Brian Wing Shun Chan
+ * @see ShoppingItemField
  * @generated
  */
 public class ShoppingItemFieldWrapper implements ShoppingItemField,

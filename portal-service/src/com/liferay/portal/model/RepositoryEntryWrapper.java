@@ -23,8 +23,8 @@ import java.util.Map;
  * This class is a wrapper for {@link RepositoryEntry}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       RepositoryEntry
+ * @author Brian Wing Shun Chan
+ * @see RepositoryEntry
  * @generated
  */
 public class RepositoryEntryWrapper implements RepositoryEntry,

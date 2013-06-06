@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link LayoutTemplateLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       LayoutTemplateLocalService
+ * @author Brian Wing Shun Chan
+ * @see LayoutTemplateLocalService
  * @generated
  */
 public class LayoutTemplateLocalServiceWrapper

@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link MBBanLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       MBBanLocalService
+ * @author Brian Wing Shun Chan
+ * @see MBBanLocalService
  * @generated
  */
 public class MBBanLocalServiceWrapper implements MBBanLocalService,

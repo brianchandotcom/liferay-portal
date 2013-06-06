@@ -55,10 +55,10 @@ import java.rmi.RemoteException;
  * The SOAP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       AssetTagServiceHttp
- * @see       com.liferay.portlet.asset.model.AssetTagSoap
- * @see       com.liferay.portlet.asset.service.AssetTagServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see AssetTagServiceHttp
+ * @see com.liferay.portlet.asset.model.AssetTagSoap
+ * @see com.liferay.portlet.asset.service.AssetTagServiceUtil
  * @generated
  */
 public class AssetTagServiceSoap {

@@ -25,8 +25,8 @@ import java.util.Map;
  * This class is a wrapper for {@link MDRRuleGroupInstance}.
  * </p>
  *
- * @author    Edward C. Han
- * @see       MDRRuleGroupInstance
+ * @author Edward C. Han
+ * @see MDRRuleGroupInstance
  * @generated
  */
 public class MDRRuleGroupInstanceWrapper implements MDRRuleGroupInstance,

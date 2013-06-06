@@ -56,10 +56,10 @@ import java.rmi.RemoteException;
  * The SOAP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       DDLRecordServiceHttp
- * @see       com.liferay.portlet.dynamicdatalists.model.DDLRecordSoap
- * @see       com.liferay.portlet.dynamicdatalists.service.DDLRecordServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see DDLRecordServiceHttp
+ * @see com.liferay.portlet.dynamicdatalists.model.DDLRecordSoap
+ * @see com.liferay.portlet.dynamicdatalists.service.DDLRecordServiceUtil
  * @generated
  */
 public class DDLRecordServiceSoap {

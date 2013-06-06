@@ -22,8 +22,8 @@ import java.util.Map;
  * This class is a wrapper for {@link UserNotificationEvent}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       UserNotificationEvent
+ * @author Brian Wing Shun Chan
+ * @see UserNotificationEvent
  * @generated
  */
 public class UserNotificationEventWrapper implements UserNotificationEvent,

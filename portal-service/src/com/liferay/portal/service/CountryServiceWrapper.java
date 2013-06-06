@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link CountryService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       CountryService
+ * @author Brian Wing Shun Chan
+ * @see CountryService
  * @generated
  */
 public class CountryServiceWrapper implements CountryService,

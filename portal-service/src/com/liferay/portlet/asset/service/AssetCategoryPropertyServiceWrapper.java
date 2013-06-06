@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link AssetCategoryPropertyService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       AssetCategoryPropertyService
+ * @author Brian Wing Shun Chan
+ * @see AssetCategoryPropertyService
  * @generated
  */
 public class AssetCategoryPropertyServiceWrapper

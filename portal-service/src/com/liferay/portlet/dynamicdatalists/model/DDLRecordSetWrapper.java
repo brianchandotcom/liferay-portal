@@ -25,8 +25,8 @@ import java.util.Map;
  * This class is a wrapper for {@link DDLRecordSet}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       DDLRecordSet
+ * @author Brian Wing Shun Chan
+ * @see DDLRecordSet
  * @generated
  */
 public class DDLRecordSetWrapper implements DDLRecordSet,

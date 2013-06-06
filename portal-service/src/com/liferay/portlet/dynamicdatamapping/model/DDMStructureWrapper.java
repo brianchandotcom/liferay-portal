@@ -25,8 +25,8 @@ import java.util.Map;
  * This class is a wrapper for {@link DDMStructure}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       DDMStructure
+ * @author Brian Wing Shun Chan
+ * @see DDMStructure
  * @generated
  */
 public class DDMStructureWrapper implements DDMStructure,

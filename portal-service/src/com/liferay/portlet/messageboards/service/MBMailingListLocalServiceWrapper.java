@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link MBMailingListLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       MBMailingListLocalService
+ * @author Brian Wing Shun Chan
+ * @see MBMailingListLocalService
  * @generated
  */
 public class MBMailingListLocalServiceWrapper

@@ -23,8 +23,8 @@ import java.util.Map;
  * This class is a wrapper for {@link User}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       User
+ * @author Brian Wing Shun Chan
+ * @see User
  * @generated
  */
 public class UserWrapper implements User, ModelWrapper<User> {

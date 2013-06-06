@@ -23,8 +23,8 @@ import java.util.Map;
  * This class is a wrapper for {@link Image}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       Image
+ * @author Brian Wing Shun Chan
+ * @see Image
  * @generated
  */
 public class ImageWrapper implements Image, ModelWrapper<Image> {

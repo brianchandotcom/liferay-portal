@@ -23,8 +23,8 @@ import java.util.List;
 /**
  * This class is used by SOAP remote services, specifically {@link com.liferay.portlet.messageboards.service.http.MBMessageServiceSoap}.
  *
- * @author    Brian Wing Shun Chan
- * @see       com.liferay.portlet.messageboards.service.http.MBMessageServiceSoap
+ * @author Brian Wing Shun Chan
+ * @see com.liferay.portlet.messageboards.service.http.MBMessageServiceSoap
  * @generated
  */
 public class MBMessageSoap implements Serializable {

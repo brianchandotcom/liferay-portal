@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link ServiceComponentLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       ServiceComponentLocalService
+ * @author Brian Wing Shun Chan
+ * @see ServiceComponentLocalService
  * @generated
  */
 public class ServiceComponentLocalServiceWrapper

@@ -25,8 +25,8 @@ import java.util.Map;
  * This class is a wrapper for {@link JournalStructure}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       JournalStructure
+ * @author Brian Wing Shun Chan
+ * @see JournalStructure
  * @generated
  */
 public class JournalStructureWrapper implements JournalStructure,

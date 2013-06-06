@@ -43,10 +43,10 @@ import com.liferay.portal.service.PluginSettingServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       PluginSettingServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portal.service.PluginSettingServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see PluginSettingServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portal.service.PluginSettingServiceUtil
  * @generated
  */
 public class PluginSettingServiceHttp {

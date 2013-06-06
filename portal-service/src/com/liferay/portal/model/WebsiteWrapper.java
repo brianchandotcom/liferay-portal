@@ -23,8 +23,8 @@ import java.util.Map;
  * This class is a wrapper for {@link Website}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       Website
+ * @author Brian Wing Shun Chan
+ * @see Website
  * @generated
  */
 public class WebsiteWrapper implements Website, ModelWrapper<Website> {

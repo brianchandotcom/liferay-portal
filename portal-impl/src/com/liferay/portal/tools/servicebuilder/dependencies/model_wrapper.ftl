@@ -17,8 +17,8 @@ import java.util.Map;
  * This class is a wrapper for {@link ${entity.name}}.
  * </p>
  *
- * @author    ${author}
- * @see       ${entity.name}
+ * @author ${author}
+ * @see ${entity.name}
  * @generated
  */
 public class ${entity.name}Wrapper implements ${entity.name}, ModelWrapper<${entity.name}> {

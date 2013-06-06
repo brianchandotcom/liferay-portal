@@ -45,10 +45,10 @@ import com.liferay.portlet.blogs.service.BlogsEntryServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       BlogsEntryServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portlet.blogs.service.BlogsEntryServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see BlogsEntryServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portlet.blogs.service.BlogsEntryServiceUtil
  * @generated
  */
 public class BlogsEntryServiceHttp {

@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link AssetTagLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       AssetTagLocalService
+ * @author Brian Wing Shun Chan
+ * @see AssetTagLocalService
  * @generated
  */
 public class AssetTagLocalServiceWrapper implements AssetTagLocalService,

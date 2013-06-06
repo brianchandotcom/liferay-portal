@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link BTEntryLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       BTEntryLocalService
+ * @author Brian Wing Shun Chan
+ * @see BTEntryLocalService
  * @generated
  */
 public class BTEntryLocalServiceWrapper implements BTEntryLocalService,

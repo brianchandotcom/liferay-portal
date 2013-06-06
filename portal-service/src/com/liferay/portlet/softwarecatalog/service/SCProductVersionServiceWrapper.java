@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link SCProductVersionService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       SCProductVersionService
+ * @author Brian Wing Shun Chan
+ * @see SCProductVersionService
  * @generated
  */
 public class SCProductVersionServiceWrapper implements SCProductVersionService,

@@ -22,8 +22,8 @@ import java.util.Map;
  * This class is a wrapper for {@link PasswordPolicyRel}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       PasswordPolicyRel
+ * @author Brian Wing Shun Chan
+ * @see PasswordPolicyRel
  * @generated
  */
 public class PasswordPolicyRelWrapper implements PasswordPolicyRel,

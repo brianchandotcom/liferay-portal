@@ -59,10 +59,10 @@ import java.util.Map;
  * The SOAP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       DDLRecordSetServiceHttp
- * @see       com.liferay.portlet.dynamicdatalists.model.DDLRecordSetSoap
- * @see       com.liferay.portlet.dynamicdatalists.service.DDLRecordSetServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see DDLRecordSetServiceHttp
+ * @see com.liferay.portlet.dynamicdatalists.model.DDLRecordSetSoap
+ * @see com.liferay.portlet.dynamicdatalists.service.DDLRecordSetServiceUtil
  * @generated
  */
 public class DDLRecordSetServiceSoap {

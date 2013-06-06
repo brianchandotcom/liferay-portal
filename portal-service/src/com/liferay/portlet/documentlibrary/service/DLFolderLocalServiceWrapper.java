@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link DLFolderLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       DLFolderLocalService
+ * @author Brian Wing Shun Chan
+ * @see DLFolderLocalService
  * @generated
  */
 public class DLFolderLocalServiceWrapper implements DLFolderLocalService,

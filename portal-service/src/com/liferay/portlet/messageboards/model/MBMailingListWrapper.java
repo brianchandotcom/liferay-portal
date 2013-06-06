@@ -25,8 +25,8 @@ import java.util.Map;
  * This class is a wrapper for {@link MBMailingList}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       MBMailingList
+ * @author Brian Wing Shun Chan
+ * @see MBMailingList
  * @generated
  */
 public class MBMailingListWrapper implements MBMailingList,

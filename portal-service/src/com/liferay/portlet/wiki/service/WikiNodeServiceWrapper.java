@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link WikiNodeService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       WikiNodeService
+ * @author Brian Wing Shun Chan
+ * @see WikiNodeService
  * @generated
  */
 public class WikiNodeServiceWrapper implements WikiNodeService,

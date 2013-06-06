@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link DDMTemplateService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       DDMTemplateService
+ * @author Brian Wing Shun Chan
+ * @see DDMTemplateService
  * @generated
  */
 public class DDMTemplateServiceWrapper implements DDMTemplateService,

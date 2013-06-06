@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link MBStatsUserLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       MBStatsUserLocalService
+ * @author Brian Wing Shun Chan
+ * @see MBStatsUserLocalService
  * @generated
  */
 public class MBStatsUserLocalServiceWrapper implements MBStatsUserLocalService,

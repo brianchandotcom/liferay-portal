@@ -45,10 +45,10 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       DLFileEntryServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portlet.documentlibrary.service.DLFileEntryServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see DLFileEntryServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portlet.documentlibrary.service.DLFileEntryServiceUtil
  * @generated
  */
 public class DLFileEntryServiceHttp {

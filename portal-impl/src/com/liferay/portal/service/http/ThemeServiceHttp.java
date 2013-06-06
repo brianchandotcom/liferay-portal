@@ -43,10 +43,10 @@ import com.liferay.portal.service.ThemeServiceUtil;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       ThemeServiceSoap
- * @see       com.liferay.portal.security.auth.HttpPrincipal
- * @see       com.liferay.portal.service.ThemeServiceUtil
+ * @author Brian Wing Shun Chan
+ * @see ThemeServiceSoap
+ * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portal.service.ThemeServiceUtil
  * @generated
  */
 public class ThemeServiceHttp {

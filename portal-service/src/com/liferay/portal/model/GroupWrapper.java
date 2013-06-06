@@ -22,8 +22,8 @@ import java.util.Map;
  * This class is a wrapper for {@link Group}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       Group
+ * @author Brian Wing Shun Chan
+ * @see Group
  * @generated
  */
 public class GroupWrapper implements Group, ModelWrapper<Group> {

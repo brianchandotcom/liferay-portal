@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link PollsQuestionService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       PollsQuestionService
+ * @author Brian Wing Shun Chan
+ * @see PollsQuestionService
  * @generated
  */
 public class PollsQuestionServiceWrapper implements PollsQuestionService,

@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link PhoneLocalService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       PhoneLocalService
+ * @author Brian Wing Shun Chan
+ * @see PhoneLocalService
  * @generated
  */
 public class PhoneLocalServiceWrapper implements PhoneLocalService,

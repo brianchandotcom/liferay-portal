@@ -25,8 +25,8 @@ import java.util.Map;
  * This class is a wrapper for {@link DLFileRank}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       DLFileRank
+ * @author Brian Wing Shun Chan
+ * @see DLFileRank
  * @generated
  */
 public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {

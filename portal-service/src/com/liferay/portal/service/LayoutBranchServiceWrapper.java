@@ -17,8 +17,8 @@ package com.liferay.portal.service;
 /**
  * Provides a wrapper for {@link LayoutBranchService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       LayoutBranchService
+ * @author Brian Wing Shun Chan
+ * @see LayoutBranchService
  * @generated
  */
 public class LayoutBranchServiceWrapper implements LayoutBranchService,

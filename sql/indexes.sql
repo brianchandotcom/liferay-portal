@@ -453,6 +453,7 @@ create index IX_742EF04A on LayoutFriendlyURL (groupId);
 create index IX_CA713461 on LayoutFriendlyURL (groupId, privateLayout, friendlyURL);
 create unique index IX_A6FC2B28 on LayoutFriendlyURL (groupId, privateLayout, friendlyURL, languageId);
 create index IX_83AE56AB on LayoutFriendlyURL (plid);
+create index IX_59051329 on LayoutFriendlyURL (plid, friendlyURL);
 create unique index IX_C5762E72 on LayoutFriendlyURL (plid, languageId);
 create index IX_9F80D54 on LayoutFriendlyURL (uuid_);
 create index IX_F4321A54 on LayoutFriendlyURL (uuid_, companyId);

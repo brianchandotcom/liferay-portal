@@ -329,6 +329,13 @@ public class LayoutFriendlyURLLocalServiceUtil {
 		return getService().getLayoutFriendlyURLs(plid);
 	}
 
+	public static java.util.List<com.liferay.portal.model.LayoutFriendlyURL> getLayoutFriendlyURLs(
+		long plid, java.lang.String friendlyURL, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getLayoutFriendlyURLs(plid, friendlyURL, start, end);
+	}
+
 	public static com.liferay.portal.model.LayoutFriendlyURL updateLayoutFriendlyURL(
 		long userId, long companyId, long groupId, long plid,
 		boolean privateLayout, java.lang.String friendlyURL,

@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
@@ -50,6 +51,7 @@ import com.liferay.portal.search.lucene.highlight.QueryTermExtractor;
 import com.liferay.portal.security.auth.TransientTokenUtil;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.util.lucene.KeywordsUtil;
 
@@ -695,6 +697,8 @@ public class LuceneHelperImpl implements LuceneHelper {
 			ClusterExecutorUtil.addClusterEventListener(
 				_loadIndexClusterEventListener);
 		}
+
+		BooleanQuery.setMaxClauseCount(_BOOLEAN_QUERY_MAX_CLAUSE_COUNT);
 	}
 
 	private ObjectValuePair<String, URL>
@@ -836,6 +840,11 @@ public class LuceneHelperImpl implements LuceneHelper {
 			new LoadIndexClusterResponseCallback(
 				indexAccessor, clusterNodeAddressesCount, localLastGeneration));
 	}
+
+	private static final int _BOOLEAN_QUERY_MAX_CLAUSE_COUNT =
+		GetterUtil.getInteger(
+			PropsUtil.get(PropsKeys.LUCENE_BOOLEAN_QUERY_MAX_CLAUSE_COUNT),
+			BooleanQuery.getMaxClauseCount());
 
 	private static final long _BOOTUP_CLUSTER_NODE_RESPONSE_TIMEOUT = 10000;
 

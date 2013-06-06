@@ -216,17 +216,20 @@ public class LuceneHelperImpl implements LuceneHelper {
 			QueryParser queryParser = new QueryParser(
 				getVersion(), field, analyzer);
 
-			Query query = null;
+			Query query = queryParser.parse(value);
 
 			try {
-				if (like) {
+				if (like && (query instanceof TermQuery)) {
 
 					// LUCENE-89
+					TermQuery termQuery = (TermQuery)query;
+					Term term = termQuery.getTerm();
 
+					value = term.text();
 					value = value.toLowerCase(queryParser.getLocale());
-				}
 
-				query = queryParser.parse(value);
+					query = new TermQuery(term.createTerm(value));
+				}
 			}
 			catch (Exception e) {
 				query = queryParser.parse(KeywordsUtil.escape(value));

@@ -168,8 +168,6 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 			PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT,
 			new String[] {Boolean.FALSE.toString()});
 
-		addParameter(parameterMap, "categories", true);
-		addParameter(parameterMap, "comments", true);
 		addParameter(parameterMap, "doAsGroupId", String.valueOf(groupId));
 		addParameter(parameterMap, "embedded-assets", true);
 		addParameter(parameterMap, "feeds", true);
@@ -179,9 +177,7 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 			Boolean.TRUE.toString());
 		addParameter(parameterMap, "plid", String.valueOf(plid));
 		addParameter(parameterMap, "portletResource", PortletKeys.JOURNAL);
-		addParameter(parameterMap, "ratings", true);
 		addParameter(parameterMap, "structures", true);
-		addParameter(parameterMap, "tags", true);
 		addParameter(parameterMap, "version-history", true);
 		addParameter(parameterMap, "web-content", true);
 

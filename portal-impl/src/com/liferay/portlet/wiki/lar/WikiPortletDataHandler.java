@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
-import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
@@ -59,15 +58,6 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 				NAMESPACE, "wiki-pages", true, false, null,
 				WikiPage.class.getName()),
 			new PortletDataHandlerBoolean(NAMESPACE, "embedded-assets"));
-		setExportMetadataControls(
-			new PortletDataHandlerBoolean(
-				NAMESPACE, "wiki-pages", true,
-				new PortletDataHandlerControl[] {
-					new PortletDataHandlerBoolean(NAMESPACE, "categories"),
-					new PortletDataHandlerBoolean(NAMESPACE, "comments"),
-					new PortletDataHandlerBoolean(NAMESPACE, "ratings"),
-					new PortletDataHandlerBoolean(NAMESPACE, "tags")
-				}));
 		setImportControls(getExportControls());
 	}
 

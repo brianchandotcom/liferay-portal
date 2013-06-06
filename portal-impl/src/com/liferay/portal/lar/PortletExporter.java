@@ -285,8 +285,6 @@ public class PortletExporter {
 			Map<String, String[]> parameterMap, Date startDate, Date endDate)
 		throws Exception {
 
-		boolean exportCategories = MapUtil.getBoolean(
-			parameterMap, PortletDataHandlerKeys.CATEGORIES);
 		boolean exportPermissions = MapUtil.getBoolean(
 			parameterMap, PortletDataHandlerKeys.PERMISSIONS);
 		boolean exportPortletArchivedSetups = MapUtil.getBoolean(
@@ -316,7 +314,6 @@ public class PortletExporter {
 			parameterMap, PortletDataHandlerKeys.PORTLET_USER_PREFERENCES);
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Export categories " + exportCategories);
 			_log.debug("Export permissions " + exportPermissions);
 			_log.debug(
 				"Export portlet archived setups " +
@@ -445,10 +442,7 @@ public class PortletExporter {
 			exportPortletData, exportPortletSetup,
 			exportPortletUserPreferences);
 
-		if (exportCategories) {
-			exportAssetCategories(portletDataContext);
-		}
-
+		exportAssetCategories(portletDataContext);
 		exportAssetLinks(portletDataContext);
 		exportAssetTags(portletDataContext);
 		exportComments(portletDataContext);

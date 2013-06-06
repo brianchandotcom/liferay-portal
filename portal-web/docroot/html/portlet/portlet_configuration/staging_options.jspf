@@ -80,8 +80,6 @@
 									Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>Checkbox', '<portlet:namespace />showDeleteContentWarning');
 								</aui:script>
 
-								<aui:input data-name='<%= LanguageUtil.get(pageContext, "categories") %>' helpMessage="export-import-referenced-categories-help" label="categories" name="<%= PortletDataHandlerKeys.CATEGORIES %>" type="checkbox" value="<%= false %>" />
-
 								<c:if test="<%= exportControls != null %>">
 
 									<%
@@ -230,6 +228,24 @@
 					%>
 
 				</li>
+
+				<li>
+					<aui:fieldset cssClass="comments-and-ratings" label="for-each-of-the-selected-content-types-publish-their">
+						<div class="selected-labels" id="<portlet:namespace />selectedCommentsAndRatings"></div>
+
+						<aui:a cssClass="modify-link" href="javascript:;" id="commentsAndRatingsLink" label="change" method="get" />
+
+						<div class="hide" id="<portlet:namespace />commentsAndRatings">
+							<ul class="lfr-tree unstyled">
+								<li class="tree-item">
+									<aui:input label="comments" name="<%= PortletDataHandlerKeys.COMMENTS %>" type="checkbox" value="<%= true %>" />
+
+									<aui:input label="ratings" name="<%= PortletDataHandlerKeys.RATINGS %>" type="checkbox" value="<%= true %>" />
+								</li>
+							</ul>
+						</div>
+					</aui:fieldset>
+				</li>
 			</ul>
 		</aui:fieldset>
 
@@ -253,9 +269,11 @@
 	new Liferay.ExportImport(
 		{
 			archivedSetupsNode: '#<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS %>Checkbox',
+			commentsNode: '#<%= PortletDataHandlerKeys.COMMENTS %>Checkbox',
 			dialogTitle: '<%= UnicodeLanguageUtil.get(pageContext, "staging") %>',
 			form: document.<portlet:namespace />fm1,
 			namespace: '<portlet:namespace />',
+			ratingsNode: '#<%= PortletDataHandlerKeys.RATINGS %>Checkbox',
 			userPreferencesNode: '#<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES %>Checkbox'
 		}
 	);

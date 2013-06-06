@@ -311,8 +311,6 @@ public class PortletImporter {
 
 		boolean deletePortletData = MapUtil.getBoolean(
 			parameterMap, PortletDataHandlerKeys.DELETE_PORTLET_DATA);
-		boolean importCategories = MapUtil.getBoolean(
-			parameterMap, PortletDataHandlerKeys.CATEGORIES);
 		boolean importPermissions = MapUtil.getBoolean(
 			parameterMap, PortletDataHandlerKeys.PERMISSIONS);
 		boolean importPortletData = MapUtil.getBoolean(
@@ -480,10 +478,7 @@ public class PortletImporter {
 			_permissionImporter.readPortletDataPermissions(portletDataContext);
 		}
 
-		if (importCategories) {
-			readAssetCategories(portletDataContext);
-		}
-
+		readAssetCategories(portletDataContext);
 		readAssetTags(portletDataContext);
 		readComments(portletDataContext);
 		readExpandoTables(portletDataContext);

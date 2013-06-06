@@ -1,0 +1,39 @@
+<html>
+<head>
+<title>PGWebcontentlistWebcontent</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGWebcontentlistWebcontent</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGWebcontentlistWebcontent</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>WEB_CONTENT_TITLE</td>
+	<td>//h3[@class='header-title']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BACK</td>
+	<td>//span[@class='header-back-to']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WEB_CONTENT_CONTENT</td>
+	<td>//div[@class='journal-content-article']/p</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

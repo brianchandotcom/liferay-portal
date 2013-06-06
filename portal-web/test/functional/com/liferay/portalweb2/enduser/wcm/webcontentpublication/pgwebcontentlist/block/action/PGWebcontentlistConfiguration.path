@@ -1,0 +1,106 @@
+<html>
+<head>
+<title>PGWebcontentlistConfiguration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGWebcontentlistConfiguration</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGWebcontentlistConfiguration</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[contains(@class,'dialog-iframe-node')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURATION_IFRAME</td>
+	<td>//iframe[contains(@class,'dialog-iframe-node')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CLOSE_BUTTON</td>
+	<td>//button[contains(@class,'close-content')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETUP</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Setup')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERMISSIONS</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHARING</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Sharing')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FILTER-->
+<tr>
+	<td>FILTER_SITE_SELECT</td>
+	<td>//select[@id='_86_groupId']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_WEB_CONTENT_TYPE_SELECT</td>
+	<td>//select[@id='_86_type']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DISPLAY_SETTINGS-->
+<tr>
+	<td>DISPLAY_SETTINGS_DISPLAY_URL_SELECT</td>
+	<td>//select[@id='_86_pageUrl']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTINGS_DISPLAY_PER_PAGE_SELECT</td>
+	<td>//select[@id='_86_pageDelta']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTINGS_ORDER_BY_COLUMN_SELECT</td>
+	<td>//select[@id='_86_orderByCol']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTINGS_ORDER_BY_TYPE_SELECT</td>
+	<td>//select[@id='_86_orderByType']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -1,5 +1,5 @@
 <definition>
-	<command name="pgAdd">
+	<command name="addPG">
 		<execute macro="Page#pgGoto">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -13,7 +13,7 @@
 		<execute action="PGCalendar#assertTextEquals" locator-key1="EVENT_CONTENT" value1="${eventTitle}" />
 	</command>
 
-	<command name="pgDelete">
+	<command name="deletePG">
 		<execute macro="Page#pgGoto">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -27,7 +27,7 @@
 		<execute action="PGCalendar#assertElementNotPresent" locator-key1="EVENT_BODY" />
 	</command>
 
-	<command name="pgEdit">
+	<command name="editPG">
 		<execute macro="Page#pgGoto">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -51,7 +51,7 @@
 		<execute action="PGCalendar#assertTextEquals" locator-key1="EVENT_CONTENT" value1="${eventTitleNew}" />
 	</command>
 
-	<command name="pgTearDown">
+	<command name="tearDownPG">
 		<execute macro="Page#pgGoto">
 			<var name="pageName" value="${pageName}" />
 		</execute>

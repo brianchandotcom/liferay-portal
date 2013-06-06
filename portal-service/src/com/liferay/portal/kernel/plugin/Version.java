@@ -120,25 +120,25 @@ public class Version implements Comparable<Version>, Serializable {
 			return -1;
 		}
 
-		int result = getMajor().compareTo(version.getMajor());
+		int result = _compareAsIntegers(getMajor(), version.getMajor());
 
 		if (result != 0) {
 			return result;
 		}
 
-		result = getMinor().compareTo(version.getMinor());
+		result = _compareAsIntegers(getMinor(), version.getMinor());
 
 		if (result != 0) {
 			return result;
 		}
 
-		result = getBugFix().compareTo(version.getBugFix());
+		result = _compareAsIntegers(getBugFix(), version.getBugFix());
 
 		if (result != 0) {
 			return result;
 		}
 
-		return getBuildNumber().compareTo(version.getBuildNumber());
+		return _compareAsIntegers(getBuildNumber(), version.getBuildNumber());
 	}
 
 	@Override
@@ -221,6 +221,11 @@ public class Version implements Comparable<Version>, Serializable {
 
 						return true;
 					}
+					else if (_contains(
+								getBuildNumber(), version.getBuildNumber())) {
+
+						return true;
+					}
 				}
 				else if (_contains(getBugFix(), version.getBugFix())) {
 					return true;
@@ -282,17 +287,9 @@ public class Version implements Comparable<Version>, Serializable {
 			_bugFix = st.nextToken();
 		}
 
-		StringBundler sb = new StringBundler();
-
-		while (st.hasMoreTokens()) {
-			sb.append(st.nextToken());
-
-			if (st.hasMoreTokens()) {
-				sb.append(_SEPARATOR);
-			}
+		if (st.hasMoreTokens()) {
+			_buildNumber = st.nextToken();
 		}
-
-		_buildNumber = sb.toString();
 	}
 
 	private static boolean _contains(
@@ -340,6 +337,21 @@ public class Version implements Comparable<Version>, Serializable {
 		}
 
 		return sb.toString();
+	}
+
+	private int _compareAsIntegers(String first, String second) {
+		int firstInteger = GetterUtil.getInteger(first);
+		int secondInteger = GetterUtil.getInteger(second);
+
+		if (firstInteger < secondInteger) {
+			return -1;
+		}
+		else if (firstInteger == secondInteger) {
+			return 0;
+		}
+		else {
+			return 1;
+		}
 	}
 
 	private static final String _SEPARATOR = StringPool.PERIOD;

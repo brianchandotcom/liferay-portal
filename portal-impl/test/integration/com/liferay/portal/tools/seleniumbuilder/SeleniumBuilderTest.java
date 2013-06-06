@@ -1370,19 +1370,11 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
-	public void testMacroVarElement1006_1() throws Exception {
+	public void testMacroVarElement1006() throws Exception {
 		test(
-			"MacroVarElement1006_1.macro",
+			"MacroVarElement1006.macro",
 			"Error 1006: Invalid name attribute value in " + _DIR_NAME +
-				"/MacroVarElement1006_1.macro:2");
-	}
-
-	@Test
-	public void testMacroVarElement1006_2() throws Exception {
-		test(
-			"MacroVarElement1006_2.macro",
-			"Error 1006: Invalid value attribute value in " + _DIR_NAME +
-				"/MacroVarElement1006_2.macro:2");
+				"/MacroVarElement1006.macro:2");
 	}
 
 	@Test
@@ -1820,19 +1812,11 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
-	public void testTestCaseVarElement1006_1() throws Exception {
+	public void testTestCaseVarElement1006() throws Exception {
 		test(
-			"TestCaseVarElement1006_1.testcase",
+			"TestCaseVarElement1006.testcase",
 			"Error 1006: Invalid name attribute value in " + _DIR_NAME +
-				"/TestCaseVarElement1006_1.testcase:2");
-	}
-
-	@Test
-	public void testTestCaseVarElement1006_2() throws Exception {
-		test(
-			"TestCaseVarElement1006_2.testcase",
-			"Error 1006: Invalid value attribute value in " + _DIR_NAME +
-				"/TestCaseVarElement1006_2.testcase:2");
+				"/TestCaseVarElement1006.testcase:2");
 	}
 
 	@Test

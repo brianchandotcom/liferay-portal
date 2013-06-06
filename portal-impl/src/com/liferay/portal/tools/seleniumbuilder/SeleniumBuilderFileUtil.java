@@ -1201,10 +1201,19 @@ public class SeleniumBuilderFileUtil {
 		for (Attribute attribute : attributes) {
 			String attributeName = attribute.getName();
 			String attributeValue = attribute.getValue();
+			String elementName = element.getName();
 
-			if (attributeValue == null) {
-				throwValidationException(
-					1006, fileName, element, attributeName);
+			if (attributeName.equals("value") && elementName.equals("var")) {
+				if (attributeValue == null) {
+					throwValidationException(
+						1006, fileName, element, attributeName);
+				}
+			}
+			else {
+				if (Validator.isNull(attributeValue)) {
+					throwValidationException(
+						1006, fileName, element, attributeName);
+				}
 			}
 
 			if (hasNeededAttributes.containsKey(attributeName)) {

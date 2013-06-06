@@ -34,9 +34,17 @@ if ((group != null) && !group.isRoot()) {
 
 	parentGroupName = HtmlUtil.escape(parentGroup.getDescriptiveName());
 }
+
+if (group != null) {
+	SitesUtil.addPortletBreadcrumbEntries(group, request, renderResponse);
+}
 %>
 
-<c:if test="<%= (group != null) && !layout.isTypeControlPanel() %>">
+<c:if test="<%= group != null %>">
+	<liferay-util:include page="/html/portlet/sites_admin/toolbar.jsp">
+		<liferay-util:param name="toolbarItem" value='<%= (group == null) ? "add" : "browse" %>' />
+	</liferay-util:include>
+
 	<portlet:renderURL var="headerBackURL">
 		<portlet:param name="struts_action" value="/sites_admin/view" />
 		<portlet:param name="groupId" value="<%= String.valueOf(parentGroupId) %>" />
@@ -182,10 +190,5 @@ if ((group != null) && !group.isRoot()) {
 
 			<liferay-util:include page="/html/portlet/sites_admin/site_action.jsp" />
 		</aui:col>
-
-		<%
-		SitesUtil.addPortletBreadcrumbEntries(group, request, renderResponse);
-		%>
-
 	</c:if>
 </aui:row>

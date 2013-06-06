@@ -27,3 +27,9 @@ String sitesListView = ParamUtil.get(request, "sitesListView", SiteConstants.LIS
 		<%@ include file="/html/portlet/sites_admin/toolbar_content.jspf" %>
 	</aui:nav>
 </aui:nav-bar>
+
+<c:if test="<%= layout.isTypeControlPanel() %>">
+	<div id="breadcrumb">
+		<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showCurrentPortlet="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
+	</div>
+</c:if>

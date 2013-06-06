@@ -1433,6 +1433,8 @@ public interface PropsKeys {
 
 	public static final String LUCENE_FILE_EXTRACTOR_REGEXP_STRIP = "lucene.file.extractor.regexp.strip";
 
+	public static final String LUCENE_BOOLEAN_QUERY_MAX_CLAUSE_COUNT = "lucene.boolean.query.max.clause.count";
+
 	public static final String LUCENE_MERGE_FACTOR = "lucene.merge.factor";
 
 	public static final String LUCENE_MERGE_POLICY = "lucene.merge.policy";

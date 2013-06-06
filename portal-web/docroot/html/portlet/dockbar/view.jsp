@@ -210,6 +210,8 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 			</aui:nav-item>
 		</c:if>
 
+		<%@ include file="/html/portlet/dockbar/view-ext.jsp" %>
+
 		<aui:nav-item cssClass="divider-vertical"></aui:nav-item>
 
 		<%

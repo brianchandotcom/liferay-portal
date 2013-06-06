@@ -331,8 +331,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 		}
 
 		for (MBMessage message : messages) {
-			message.setUserUuid(message.getUserUuid());
-
 			addRatingsEntries(MBDiscussion.class, message.getPrimaryKey());
 		}
 
@@ -538,10 +536,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		if (ratingsEntries.size() == 0) {
 			return;
-		}
-
-		for (RatingsEntry entry : ratingsEntries) {
-			entry.setUserUuid(entry.getUserUuid());
 		}
 
 		_ratingsEntriesMap.put(

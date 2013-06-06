@@ -139,21 +139,21 @@ public interface PortletDataContext extends Serializable {
 		String className, long classPK, List<RatingsEntry> ratingsEntries);
 
 	public Element addReferenceElement(
-		StagedModel referrerStagedModel, Element element,
+		ClassedModel referrerClassedModel, Element element,
 		ClassedModel classedModel, Class<?> clazz, String referenceType,
 		boolean missing);
 
 	public Element addReferenceElement(
-		StagedModel referrerStagedModel, Element element,
+		ClassedModel referrerClassedModel, Element element,
 		ClassedModel classedModel, String referenceType, boolean missing);
 
 	public Element addReferenceElement(
-		StagedModel referrerStagedModel, Element element,
+		ClassedModel referrerClassedModel, Element element,
 		ClassedModel classedModel, String binPath, String referenceType,
 		boolean missing);
 
 	public Element addReferenceElement(
-		StagedModel referrerStagedModel, Element element,
+		ClassedModel referrerClassedModel, Element element,
 		ClassedModel classedModel, String className, String binPath,
 		String referenceType, boolean missing);
 

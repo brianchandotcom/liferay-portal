@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.spring.context.PortalContextLoaderListener;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -239,7 +240,8 @@ public class DeployUtil {
 
 	private static boolean _isPortalContext(String context) {
 		if (Validator.isNull(context) || context.equals(StringPool.SLASH) ||
-			context.equals(PropsValues.PORTAL_CTX)) {
+			context.equals(
+				PortalContextLoaderListener.getPortalServletContextPath())) {
 
 			return true;
 		}

@@ -80,6 +80,10 @@ import org.springframework.web.context.ContextLoaderListener;
  */
 public class PortalContextLoaderListener extends ContextLoaderListener {
 
+	public static String getPortalServletContextPath() {
+		return _portalServletContextPath;
+	}
+
 	@Override
 	public void contextDestroyed(ServletContextEvent servletContextEvent) {
 		PortalContextLoaderLifecycleThreadLocal.setDestroying(true);
@@ -164,6 +168,8 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		InitUtil.init();
 
 		ServletContext servletContext = servletContextEvent.getServletContext();
+
+		_portalServletContextPath = servletContext.getContextPath();
 
 		ClassPathUtil.initializeClassPaths(servletContext);
 
@@ -274,6 +280,8 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		PortalContextLoaderListener.class);
 
 	private static Field _filteredPropertyDescriptorsCacheField;
+
+	private static String _portalServletContextPath = "/";
 
 	static {
 		try {

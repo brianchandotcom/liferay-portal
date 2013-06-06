@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.spring.context.PortalContextLoaderListener;
 import com.liferay.portal.util.PropsValues;
 
 import java.lang.reflect.Method;
@@ -188,7 +189,8 @@ public class JSONWebServiceDetectorBeanPostProcessor
 			servletContextName = servletContext.getContextPath();
 		}
 		else {
-			servletContextName = PropsValues.PORTAL_CTX;
+			servletContextName =
+				PortalContextLoaderListener.getPortalServletContextPath();
 
 			if (servletContextName.equals(StringPool.SLASH)) {
 				servletContextName = StringPool.BLANK;

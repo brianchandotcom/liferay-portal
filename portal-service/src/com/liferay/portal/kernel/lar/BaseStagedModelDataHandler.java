@@ -101,10 +101,12 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 		if (elementName.equals("missing-reference")) {
 			String uuid = referenceElement.attributeValue("uuid");
+			long companyId = GetterUtil.getLong(
+				referenceElement.attributeValue("company-id"));
 			long groupId = GetterUtil.getLong(
 				referenceElement.attributeValue("group-id"));
 
-			return validateMissingReference(uuid, groupId);
+			return validateMissingReference(uuid, companyId, groupId);
 		}
 
 		return true;
@@ -118,7 +120,9 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			PortletDataContext portletDataContext, T stagedModel)
 		throws Exception;
 
-	protected boolean validateMissingReference(String uuid, long groupId) {
+	protected boolean validateMissingReference(
+		String uuid, long companyId, long groupId) {
+
 		return true;
 	}
 

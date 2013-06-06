@@ -37,7 +37,8 @@ import java.util.Date;
  * @see com.liferay.portal.model.impl.OrganizationModelImpl
  * @generated
  */
-public interface OrganizationModel extends BaseModel<Organization>, StagedModel {
+public interface OrganizationModel extends BaseModel<Organization>,
+	StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

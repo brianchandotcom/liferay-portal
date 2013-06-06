@@ -14,34 +14,9 @@
 
 package com.liferay.portal.model;
 
-import com.liferay.portal.kernel.exception.SystemException;
-
-import java.util.Date;
-
 /**
- * @author Michael C. Han
+ * @author Daniel Kocsis
  */
-public interface StagedModel extends ClassedModel {
-
-	public Object clone();
-
-	public long getCompanyId();
-
-	public Date getCreateDate();
-
-	public Date getModifiedDate();
-
-	public String getUserUuid() throws SystemException;
-
-	public String getUuid();
-
-	public void setCompanyId(long companyId);
-
-	public void setCreateDate(Date date);
-
-	public void setModifiedDate(Date date);
-
-	public void setUserUuid(String userUuid);
-	public void setUuid(String uuid);
+public interface StagedAuditedModel extends AuditedModel, StagedModel {
 
 }

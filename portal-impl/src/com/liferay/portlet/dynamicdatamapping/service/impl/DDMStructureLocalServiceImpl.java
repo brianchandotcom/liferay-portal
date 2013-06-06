@@ -143,6 +143,7 @@ public class DDMStructureLocalServiceImpl
 		}
 
 		try {
+			xsd = DDMXMLUtil.validateXML(xsd);
 			xsd = DDMXMLUtil.formatXML(xsd);
 		}
 		catch (Exception e) {
@@ -1415,6 +1416,7 @@ public class DDMStructureLocalServiceImpl
 		throws PortalException, SystemException {
 
 		try {
+			xsd = DDMXMLUtil.validateXML(xsd);
 			xsd = DDMXMLUtil.formatXML(xsd);
 		}
 		catch (Exception e) {

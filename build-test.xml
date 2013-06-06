@@ -447,7 +447,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="0" />
+		<property name="build-test-ant-scripts.version" value="1" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -2318,8 +2318,9 @@
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="smoke-test" />
+			<param name="test.ant.script.selenium.implementation" value="webdriver" />
 			<param name="test.ant.script.selenium.logger.enabled" value="true" />
-			<param name="test.ant.script.suite" value="SmokeTestSuite" />
+			<param name="test.ant.script.suite" value="PortalSmokeTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">

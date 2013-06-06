@@ -19,28 +19,28 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DEACTIVATE</td>
-	<td>//input[@value='Deactivate']</td>
+	<td>//button[contains(.,'Deactivate')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DELETE</td>
-	<td>//input[@value='Delete']</td>
+	<td>//button[contains(.,'Delete')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RESTORE</td>
-	<td>//input[@value='Restore']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='portlet-msg-success']</td>
+	<td>//button[contains(.,'Restore')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>INFO_MESSAGE</td>
-	<td>//div[@class='portlet-msg-info']</td>
+	<td>//div[@class='alert alert-info']</td>
 	<td></td>
 </tr>
 <tr>
@@ -61,12 +61,12 @@
 </tr>
 <tr>
 	<td>BASIC_SEARCH_BUTTON</td>
-	<td>xpath=(//input[@value='Search'])[1]</td>
+	<td>//button[contains(.,'Search')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BASIC_SEARCH_ADVANCED</td>
-	<td>//a[contains(.,'Advanced')]</td>
+	<td>//button[@id='toggle_id_users_admin_user_searchtoggleAdvanced']</td>
 	<td></td>
 </tr>
 <tr>
@@ -81,43 +81,33 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADVANCED_SEARCH_FIRST_NAME</td>
+	<td>ADVANCED_SEARCH_FIRST_NAME_FIELD</td>
 	<td>//input[@id='_125_firstName']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ADVANCED_SEARCH_MIDDLE_NAME</td>
+	<td>ADVANCED_SEARCH_MIDDLE_NAME_FIELD</td>
 	<td>//input[@id='_125_middleName']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ADVANCED_SEARCH_LAST_NAME</td>
+	<td>ADVANCED_SEARCH_LAST_NAME_FIELD</td>
 	<td>//input[@id='_125_lastName']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ADVANCED_SEARCH_SCREEN_NAME</td>
+	<td>ADVANCED_SEARCH_SCREEN_NAME_FIELD</td>
 	<td>//input[@id='_125_screenName']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ADVANCED_SEARCH_EMAIL_ADDRESS</td>
+	<td>ADVANCED_SEARCH_EMAIL_ADDRESS_FIELD</td>
 	<td>//input[@id='_125_emailAddress']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ADVANCED_SEARCH_STATUS</td>
+	<td>ADVANCED_SEARCH_STATUS_SELECT</td>
 	<td>//select[@id='_125_status']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADVANCED_SEARCH_BUTTON</td>
-	<td>xpath=(//input[@value='Search'])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADVANCED_SEARCH_BASIC</td>
-	<td>//a[contains(.,'Basic')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -153,7 +143,7 @@
 </tr>
 <tr>
 	<td>USER_TABLE_ACTIONS_1</td>
-	<td>xpath=(//tr/td[8]/span[@title='Actions']/ul/li/strong/a/span)[1]</td>
+	<td>xpath=(//tr/td[8]/div/a[@title='Actions'])[1]</td>
 	<td></td>
 </tr>
 </tbody>

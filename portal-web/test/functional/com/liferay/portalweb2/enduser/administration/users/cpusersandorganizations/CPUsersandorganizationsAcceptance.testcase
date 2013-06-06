@@ -81,6 +81,7 @@
 	<command name="AddOrganizationTeam">
 		<var name="orgName" value="Organization Name" />
 		<var name="orgType" value="Regular Organization" />
+		<var name="siteName" value="${orgName}" />
 		<var name="teamName" value="Site Team Name" />
 		<var name="teamDescription" value="Site Team Description" />
 
@@ -94,7 +95,7 @@
 		</execute>
 
 		<execute macro="Team#addCP">
-			<var name="siteScopeName" value="Organization Name" />
+			<var name="siteName" value="${siteName}" />
 			<var name="teamName" value="${teamName}" />
 			<var name="teamDescription" value="${teamDescription}" />
 		</execute>

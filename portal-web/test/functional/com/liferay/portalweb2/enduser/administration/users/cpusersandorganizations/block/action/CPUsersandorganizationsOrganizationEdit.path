@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>TITLE</td>
-	<td>//h1[@class='header-title']</td>
+	<td>//h3[@class='header-title']/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -30,12 +30,12 @@
 </tr>
 <tr>
 	<td>SAVE_BUTTON</td>
-	<td>//input[@value='Save']</td>
+	<td>//button[contains(.,'Save')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='portlet-msg-success']</td>
+	<td>//div[@class='alert alert-success']</td>
 	<td></td>
 </tr>
 <tr>
@@ -72,7 +72,7 @@
 </tr>
 <tr>
 	<td>DETAILS_TYPE</td>
-	<td>//div[@id='_125_details']/fieldset/div/div/div</td>
+	<td>//div[@class='control-group field-wrapper']</td>
 	<td></td>
 </tr>
 <tr>

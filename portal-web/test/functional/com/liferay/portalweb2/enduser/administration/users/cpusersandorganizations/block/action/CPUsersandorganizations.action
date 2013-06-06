@@ -16,7 +16,7 @@
 			<execute function="Click#textClickAtAndWait" value1="User" />
 		</case>
 		<case comparator="startsWith" locator-key1="ORGANIZATION_TABLE_ACTIONS_">
-			<execute function="Click#pauseTextClickAt" value1="Actions" />
+			<execute function="Click#textClickAt" value1="Actions" />
 		</case>
 		<case locator-key1="ORGANIZATION_MENULIST_ADD_REGULAR_ORGANIZATION">
 			<execute function="Click#textClickAtAndWait" value1="Add Regular Organization" />
@@ -31,7 +31,7 @@
 			<execute function="Click#textClickAtAndWait" value1="Edit" />
 		</case>
 		<case locator-key1="SEARCH_BUTTON">
-			<execute function="Click#valueClickAtAndWait" value1="Search" />
+			<execute function="Click#textClickAtAndWait" value1="Search" />
 		</case>
 		<case locator-key1="SEARCH_ALL_USERS">
 			<execute function="Click#textClickAtAndWait" value1="Search All Users" />

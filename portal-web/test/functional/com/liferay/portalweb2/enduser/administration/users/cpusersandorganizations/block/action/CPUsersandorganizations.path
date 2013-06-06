@@ -20,32 +20,32 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='portlet-msg-success']</td>
+	<td>//div[@class='alert alert-success']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD</td>
-	<td>//span[@title='Add']/ul/li/strong/a/span</td>
+	<td>//div[@class='navbar-inner']/div/ul/li/a[contains(.,'Add')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SEARCH_FIELD</td>
-	<td>//input[@name='_125_keywords']</td>
+	<td>//input[@name='keywords']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SEARCH_BUTTON</td>
-	<td>//input[@value='Search']</td>
+	<td>//button[contains(.,'Search')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SEARCH_ALL_ORGANIZATIONS</td>
-	<td>link=Search All Organizations</td>
+	<td>//a[@id='_125_allOrganizationsLink']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SEARCH_ALL_USERS</td>
-	<td>link=Search All Users</td>
+	<td>//a[@id='_125_allUsersLink']</td>
 	<td></td>
 </tr>
 <tr>
@@ -67,12 +67,12 @@
 <!--ADD-->
 <tr>
 	<td>ADD_USER</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'User')]</td>
+	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'User')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_REGULAR_ORGANIZATION</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Regular Organization')]</td>
+	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Regular Organization')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -93,7 +93,7 @@
 </tr>
 <tr>
 	<td>ORGANIZATION_TABLE_ACTIONS_1</td>
-	<td>xpath=(//div[@id='_125_organizationsSearchContainer']//tr/td[4]/span[@title='Actions']/ul/li/strong/a/span)[1]</td>
+	<td>xpath=(//div[@id='_125_organizationsSearchContainer']//tr/td[4]/div/a[@title='Actions'])[1]</td>
 	<td></td>
 </tr>
 <tr>

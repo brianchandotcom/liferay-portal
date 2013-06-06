@@ -1,0 +1,55 @@
+<html>
+<head>
+<title>PGWebcontentdisplay</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGWebcontentdisplay</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGWebcontentdisplay</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[@class='alert alert-info']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_WEB_CONTENT</td>
+	<td>//span[contains(@class,'lfr-icon-action-edit')]/a/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_WEB_CONTENT</td>
+	<td>//span[contains(@class,'lfr-icon-action-configuration')]/a/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_WEB_CONTENT</td>
+	<td>//span[contains(@class,'lfr-icon-action-add')]/a/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--WEB_CONTENT-->
+<tr>
+	<td>WEB_CONTENT_CONTENT</td>
+	<td>//div[@class='journal-content-article']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

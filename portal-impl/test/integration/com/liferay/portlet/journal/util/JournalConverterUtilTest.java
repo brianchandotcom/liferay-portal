@@ -754,8 +754,10 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 	protected String readText(String fileName) throws Exception {
 		Class<?> clazz = getClass();
 
-		InputStream inputStream = clazz.getResourceAsStream(
-			"dependencies/" + fileName);
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		InputStream inputStream = classLoader.getResourceAsStream(
+			"com/liferay/portlet/journal/dependencies/" + fileName);
 
 		return StringUtil.read(inputStream);
 	}

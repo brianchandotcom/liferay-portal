@@ -87,7 +87,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		try {
 			runSQL("alter table DLFileEntryType add fileEntryTypeKey STRING");
 
-			runSQL("alter table DLFileEntryType modify name STRING");
+			runSQL("alter_column_type DLFileEntryType name STRING null");
 		}
 		catch (SQLException sqle) {
 			upgradeTable(

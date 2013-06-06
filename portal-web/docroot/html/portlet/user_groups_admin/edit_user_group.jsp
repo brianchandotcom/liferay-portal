@@ -30,15 +30,30 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="userGroupId" type="hidden" value="<%= userGroupId %>" />
 
-	<liferay-util:include page="/html/portlet/user_groups_admin/toolbar.jsp">
-		<liferay-util:param name="toolbarItem" value='<%= (userGroup == null) ? "add" : "view" %>' />
-	</liferay-util:include>
-
 	<liferay-ui:header
 		backURL="<%= backURL %>"
 		localizeTitle="<%= (userGroup == null) %>"
 		title='<%= (userGroup == null) ? "new-user-group" : userGroup.getName() %>'
 	/>
+
+	<aui:nav-bar>
+		<aui:nav>
+			<portlet:renderURL var="viewUserGroupsURL">
+				<portlet:param name="struts_action" value="/user_groups_admin/view" />
+			</portlet:renderURL>
+
+			<aui:nav-item href="<%= viewUserGroupsURL %>" label="view-all" />
+
+			<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_USER_GROUP) %>">
+				<portlet:renderURL var="addUsergroupURL">
+					<portlet:param name="struts_action" value="/user_groups_admin/edit_user_group" />
+					<portlet:param name="redirect" value="<%= viewUserGroupsURL %>" />
+				</portlet:renderURL>
+
+				<aui:nav-item href="<%= addUsergroupURL %>" iconClass="icon-plus" label="add" selected="<%= (userGroup == null) %>" />
+			</c:if>
+		</aui:nav>
+	</aui:nav-bar>
 
 	<liferay-ui:error exception="<%= DuplicateUserGroupException.class %>" message="please-enter-a-unique-name" />
 	<liferay-ui:error exception="<%= RequiredUserGroupException.class %>" message="this-is-a-required-user-group" />

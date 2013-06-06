@@ -1,5 +1,5 @@
 AUI.add(
-	'liferay-dockbar-add-content',
+	'liferay-dockbar-add-application',
 	function(A) {
 		var Dockbar = Liferay.Dockbar;
 		var Layout = Liferay.Layout;
@@ -29,13 +29,13 @@ AUI.add(
 
 		var TPL_LOADING = '<div class="loading-animation" />';
 
-		var AddContent = A.Component.create(
+		var AddApplication = A.Component.create(
 			{
-				AUGMENTS: [Dockbar.AddContentDragDrop, Dockbar.AddContentPreview, Dockbar.AddContentSearch, Liferay.PortletBase],
+				AUGMENTS: [Dockbar.AddContentDragDrop, Dockbar.AddApplicationSearch, Liferay.PortletBase],
 
 				EXTENDS: Dockbar.AddBase,
 
-				NAME: 'addcontent',
+				NAME: 'addapplicationsearch',
 
 				prototype: {
 					initializer: function(config) {
@@ -43,13 +43,11 @@ AUI.add(
 
 						instance._config = config;
 
-						instance._addContentForm = instance.byId('addContentForm');
+						instance._addApplicationForm = instance.byId('addApplicationForm');
 						instance._addPanelContainer = instance.byId('addPanelContainer');
 						instance._closePanel = instance._addPanelContainer.one('#closePanel');
 						instance._entriesContainer = instance.byId('entriesContainer');
 						instance._numItems = instance.byId('numItems');
-						instance._styleButtonsList = instance.byId('styleButtons');
-						instance._styleButtons = instance._styleButtonsList.all(SELECTOR_BUTTON);
 
 						instance._bindUI();
 					},
@@ -127,11 +125,7 @@ AUI.add(
 
 						instance._numItems.on('change', instance._onChangeNumItems, instance);
 
-						instance._closePanel.on(STR_CLICK, Dockbar.loadPanel, Dockbar);
-
 						instance._addPanelContainer.delegate(STR_CLICK, instance._addApplication, SELECTOR_ADD_CONTENT_ITEM, instance);
-
-						instance._styleButtonsList.delegate(STR_CLICK, instance._onChangeDisplayStyle, SELECTOR_BUTTON, instance);
 
 						Liferay.on(
 							'AddContent:addPortlet',
@@ -139,8 +133,6 @@ AUI.add(
 								instance._addPortlet(event.node, event.options);
 							}
 						);
-
-						Liferay.on('AddContent:refreshContentList', instance._refreshContentList, instance);
 
 						Liferay.on('closePortlet', instance._onPortletClose, instance);
 
@@ -216,28 +208,6 @@ AUI.add(
 						return portletMetaData;
 					},
 
-					_onChangeDisplayStyle: function(event) {
-						var instance = this;
-
-						var currentTarget = event.currentTarget;
-
-						currentTarget.radioClass('active');
-
-						var displayStyle = currentTarget.attr(DATA_STYLE);
-
-						Liferay.Store('liferay_addpanel_displaystyle', displayStyle);
-
-						instance._refreshContentList(event);
-					},
-
-					_onChangeNumItems: function(event) {
-						var instance = this;
-
-						Liferay.Store('liferay_addpanel_numitems', instance._numItems.val());
-
-						instance._refreshContentList(event);
-					},
-
 					_onDockbarAddContentDDInit: function(event) {
 						var instance = this;
 
@@ -264,39 +234,15 @@ AUI.add(
 
 							instance._enablePortletEntry(portletId);
 						}
-					},
-
-					_refreshContentList: function(event) {
-						var instance = this;
-
-						var styleButton = instance._styleButtonsList.one('.active');
-
-						var displayStyle = styleButton.attr(DATA_STYLE);
-
-						A.io.request(
-							instance._addContentForm.getAttribute('action'),
-							{
-								after: {
-									success: A.bind('_afterSuccess', instance)
-								},
-								data: {
-									delta: instance._numItems.val(),
-									displayStyle: displayStyle,
-									keywords: instance.get('inputNode').val(),
-									viewEntries: true,
-									viewPreview: false
-								}
-							}
-						);
 					}
 				}
 			}
 		);
 
-		Dockbar.AddContent = AddContent;
+		Dockbar.AddApplication = AddApplication;
 	},
 	'',
 	{
-		requires: ['aui-io-request', 'liferay-dockbar', 'liferay-dockbar-add-base', 'liferay-dockbar-add-content-drag-drop', 'liferay-dockbar-add-content-preview', 'liferay-dockbar-add-content-search']
+		requires: ['aui-io-request', 'liferay-dockbar', 'liferay-dockbar-add-base', 'liferay-dockbar-add-content-drag-drop', 'liferay-dockbar-add-application-search']
 	}
 );

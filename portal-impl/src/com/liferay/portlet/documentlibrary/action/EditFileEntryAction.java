@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -220,6 +221,17 @@ public class EditFileEntryAction extends PortletAction {
 							ParamUtil.getString(actionRequest, "redirect"));
 
 						if (Validator.isNotNull(redirect)) {
+							if (cmd.equals(Constants.ADD) &&
+								(fileEntry != null)) {
+
+								redirect = HttpUtil.addParameter(
+									redirect, "className",
+									DLFileEntry.class.getName());
+								redirect = HttpUtil.addParameter(
+									redirect, "classPK",
+									fileEntry.getFileEntryId());
+							}
+
 							actionResponse.sendRedirect(redirect);
 						}
 					}

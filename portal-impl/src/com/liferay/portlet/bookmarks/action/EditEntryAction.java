@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -71,8 +72,10 @@ public class EditEntryAction extends PortletAction {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
+			BookmarksEntry entry = null;
+
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updateEntry(actionRequest);
+				entry = updateEntry(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteEntry(
@@ -102,6 +105,14 @@ public class EditEntryAction extends PortletAction {
 					ParamUtil.getString(actionRequest, "redirect"));
 
 				if (Validator.isNotNull(redirect)) {
+					if (cmd.equals(Constants.ADD) && (entry != null)) {
+						redirect = HttpUtil.addParameter(
+							redirect, "className",
+							BookmarksEntry.class.getName());
+						redirect = HttpUtil.addParameter(
+							redirect, "classPK", entry.getEntryId());
+					}
+
 					actionResponse.sendRedirect(redirect);
 				}
 			}
@@ -234,7 +245,9 @@ public class EditEntryAction extends PortletAction {
 		BookmarksEntryServiceUtil.unsubscribeEntry(entryId);
 	}
 
-	protected void updateEntry(ActionRequest actionRequest) throws Exception {
+	protected BookmarksEntry updateEntry(ActionRequest actionRequest)
+		throws Exception {
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -249,11 +262,13 @@ public class EditEntryAction extends PortletAction {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			BookmarksEntry.class.getName(), actionRequest);
 
+		BookmarksEntry entry = null;
+
 		if (entryId <= 0) {
 
 			// Add entry
 
-			BookmarksEntry entry = BookmarksEntryServiceUtil.addEntry(
+			entry = BookmarksEntryServiceUtil.addEntry(
 				groupId, folderId, name, url, description, serviceContext);
 
 			AssetPublisherUtil.addAndStoreSelection(
@@ -264,13 +279,15 @@ public class EditEntryAction extends PortletAction {
 
 			// Update entry
 
-			BookmarksEntryServiceUtil.updateEntry(
+			entry = BookmarksEntryServiceUtil.updateEntry(
 				entryId, groupId, folderId, name, url, description,
 				serviceContext);
 		}
 
 		AssetPublisherUtil.addRecentFolderId(
 			actionRequest, BookmarksEntry.class.getName(), folderId);
+
+		return entry;
 	}
 
 }

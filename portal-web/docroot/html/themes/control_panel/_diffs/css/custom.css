@@ -148,6 +148,12 @@
 		border-radius: 0;
 	}
 
+	.control-panel-back-link {
+		float: left;
+		margin: 25px 10px;
+		text-decoration: none;
+	}
+
 	.control-panel-bar-main {
 		font-size: 1.2em;
 		font-weight: bold;

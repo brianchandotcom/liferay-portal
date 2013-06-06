@@ -140,7 +140,16 @@ request.setAttribute("control_panel.jsp-ppid", ppid);
 						<c:otherwise>
 							<aui:container cssClass="<%= panelCategory %>">
 								<aui:row>
-									<h1><%= curGroup.getDescriptiveName(themeDisplay.getLocale()) %></h1>
+
+									<%
+									String backURL = HttpUtil.setParameter(themeDisplay.getURLControlPanel(), "p_p_id", PortletKeys.SITES_ADMIN);
+									%>
+
+									<a class="control-panel-back-link icon-circle-arrow-left" href="<%= backURL %>">&nbsp;</a>
+
+									<h1>
+										<%= curGroup.getDescriptiveName(themeDisplay.getLocale()) %>
+									</h1>
 								</aui:row>
 								<aui:row>
 									<aui:col cssClass="panel-page-menu" width="<%= 25 %>">

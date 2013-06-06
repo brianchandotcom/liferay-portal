@@ -448,6 +448,7 @@
 		<exception>CategoryName</exception>
 		<exception>CategoryPropertyKey</exception>
 		<exception>CategoryPropertyValue</exception>
+		<exception>DuplicateAssetQueryRule</exception>
 		<exception>DuplicateCategory</exception>
 		<exception>DuplicateTag</exception>
 		<exception>DuplicateVocabulary</exception>

@@ -234,6 +234,10 @@
 			}
 		}
 
+		.asset-query-rule-error {
+			background-color: #fee5e2;
+		}
+
 		.general-display-settings {
 			margin-bottom: 1em;
 		}

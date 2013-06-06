@@ -1,5 +1,5 @@
 <definition>
-	<command name="cpAdd">
+	<command name="addCP">
 		<execute macro="Page#cpGoto">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
@@ -20,14 +20,14 @@
 
 	</command>
 
-	<command name="cpTearDown">
-		<execute macro="Organization#cpTearDown">
+	<command name="tearDownCP">
+		<execute macro="Organization#tearDownCP">
 			<var name="orgName" value="Suborganization*" />
 		</execute>
 	</command>
 
-	<command name="cpView">
-		<execute macro="Organization#cpView">
+	<command name="viewCP">
+		<execute macro="Organization#viewCP">
 			<var name="orgName" value="${suborgName}" />
 			<var name="orgType" value="${suborgType}" />
 			<var name="searchToken" value="${suborgSearchName}" />

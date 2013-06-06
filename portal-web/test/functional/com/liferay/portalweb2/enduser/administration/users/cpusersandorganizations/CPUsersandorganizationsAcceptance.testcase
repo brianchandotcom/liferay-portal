@@ -12,11 +12,32 @@
 		<var name="userLastName" value="userln" />
 		<var name="userScreenName" value="usersn" />
 
-		<execute macro="User#cpAdd" />
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
 
-		<execute macro="Organization#cpAdd" />
-		<execute macro="Organization#cpAddMember" />
-		<execute macro="Organization#cpViewAssignMember" />
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="${orgName}" />
+			<var name="orgType" value="${orgType}" />
+		</execute>
+
+		<execute macro="Organization#addMemberCP">
+			<var name="orgName" value="${orgName}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Organization#viewAssignMemberCP">
+			<var name="orgName" value="${orgName}" />
+			<var name="searchToken" value="${searchToken}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
 	</command>
 
 	<command name="AddUser">
@@ -25,8 +46,19 @@
 		<var name="userLastName" value="userln" />
 		<var name="userScreenName" value="usersn" />
 
-		<execute macro="User#cpAdd" />
-		<execute macro="User#cpView" />
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#viewCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
 	</command>
 
 	<command name="AddOrganization">
@@ -34,8 +66,16 @@
 		<var name="orgType" value="Regular Organization" />
 		<var name="searchToken" value="Organization" />
 
-		<execute macro="Organization#cpAdd" />
-		<execute macro="Organization#cpView" />
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="${orgName}" />
+			<var name="orgType" value="${orgType}" />
+		</execute>
+
+		<execute macro="Organization#viewCP">
+			<var name="orgName" value="${orgName}" />
+			<var name="orgType" value="${orgType}" />
+			<var name="searchToken" value="${searchToken}" />
+		</execute>
 	</command>
 
 	<command name="AddOrganizationTeam">
@@ -44,11 +84,19 @@
 		<var name="teamName" value="Site Team Name" />
 		<var name="teamDescription" value="Site Team Description" />
 
-		<execute macro="Organization#cpAdd" />
-		<execute macro="Organization#cpAddSite" />
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="${orgName}" />
+			<var name="orgType" value="${orgType}" />
+		</execute>
 
-		<execute macro="Team#cpAdd">
+		<execute macro="Organization#addSiteCP">
+			<var name="orgName" value="${orgName}" />
+		</execute>
+
+		<execute macro="Team#addCP">
 			<var name="siteScopeName" value="Organization Name" />
+			<var name="teamName" value="${teamName}" />
+			<var name="teamDescription" value="${teamDescription}" />
 		</execute>
 	</command>
 
@@ -59,10 +107,20 @@
 		<var name="siteName" value="Organization Name" />
 		<var name="siteType" value="Private" />
 
-		<execute macro="Organization#cpAdd" />
-		<execute macro="Organization#cpAddSite" />
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="${orgName}" />
+			<var name="orgType" value="${orgType}" />
+		</execute>
 
-		<execute macro="Site#cpView" />
+		<execute macro="Organization#addSiteCP">
+			<var name="orgName" value="${orgName}" />
+		</execute>
+
+		<execute macro="Site#viewCP">
+			<var name="siteMember" value="${siteMember}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
 	</command>
 
 	<command name="AddSuborganization">
@@ -72,10 +130,24 @@
 		<var name="suborgSearchName" value="Suborganization" />
 		<var name="suborgType" value="Regular Organization" />
 
-		<execute macro="Organization#cpAdd" />
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="${orgName}" />
+			<var name="orgType" value="${orgType}" />
+		</execute>
 
-		<execute macro="Suborganization#cpAdd" />
-		<execute macro="Suborganization#cpView" />
+		<execute macro="Suborganization#addCP">
+			<var name="orgName" value="${orgName}" />
+			<var name="suborgName" value="${suborgName}" />
+			<var name="suborgType" value="${suborgType}" />
+		</execute>
+
+		<execute macro="Suborganization#viewCP">
+			<var name="orgName" value="${orgName}" />
+			<var name="orgType" value="${orgType}" />
+			<var name="suborgName" value="${suborgName}" />
+			<var name="suborgSearchName" value="${suborgSearchName}" />
+			<var name="suborgType" value="${suborgType}" />
+		</execute>
 	</command>
 
 	<command name="DeleteUser">
@@ -84,17 +156,34 @@
 		<var name="userLastName" value="userln" />
 		<var name="userScreenName" value="usersn" />
 
-		<execute macro="User#cpAdd" />
-		<execute macro="User#cpDeactivate" />
-		<execute macro="User#cpDelete" />
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#deactivateCP">
+			<var name="userFirstName" value="${userFirstName}" />
+		</execute>
+
+		<execute macro="User#deleteCP">
+			<var name="userFirstName" value="${userFirstName}" />
+		</execute>
 	</command>
 
 	<command name="DeleteOrganization">
 		<var name="orgName" value="Organization Name" />
 		<var name="orgType" value="Regular Organization" />
 
-		<execute macro="Organization#cpAdd" />
-		<execute macro="Organization#cpDelete" />
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="${orgName}" />
+			<var name="orgType" value="${orgType}" />
+		</execute>
+
+		<execute macro="Organization#deleteCP">
+			<var name="orgName" value="${orgName}" />
+		</execute>
 	</command>
 
 	<command name="RemoveMember">
@@ -105,18 +194,37 @@
 		<var name="userLastName" value="userln" />
 		<var name="userScreenName" value="usersn" />
 
-		<execute macro="User#cpAdd" />
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
 
-		<execute macro="Organization#cpAdd" />
-		<execute macro="Organization#cpAddMember" />
-		<execute macro="Organization#cpRemoveMember" />
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="${orgName}" />
+			<var name="orgType" value="${orgType}" />
+		</execute>
+
+		<execute macro="Organization#addMemberCP">
+			<var name="orgName" value="${orgName}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Organization#removeMemberCP">
+			<var name="orgName" value="${orgName}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
 	</command>
 
 	<tear-down>
-		<execute macro="Suborganization#cpTearDown" />
+		<execute macro="Suborganization#tearDownCP" />
 
-		<execute macro="Organization#cpTearDown" />
+		<execute macro="Organization#tearDownCP" />
 
-		<execute macro="User#cpTearDown" />
+		<execute macro="User#tearDownCP" />
 	</tear-down>
 </definition>

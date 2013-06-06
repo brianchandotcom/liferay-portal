@@ -6,7 +6,6 @@
 	}
 
 	.palette-item-inner {
-		height: 11px;
 		width: 16px;
 
 		img {
@@ -18,16 +17,21 @@
 		border-color: transparent;
 	}
 
-	.lfr-input-localized-flag {
-		@include opacity(0.05);
+	.lfr-input-localized-state {
+		width: 6px;
+		height: 6px;
+		margin: 3px 5px;
+		@include border-radius(3px);
 	}
 
-	.lfr-input-localized .lfr-input-localized-flag {
-		@include opacity(.3);
+	.lfr-input-localized .lfr-input-localized-state {
+		background: #ddd;
+		@include box-shadow(0 0 3px #ddd);
 	}
 
-	.palette-item-selected .lfr-input-localized-flag, .palette-item-hover .lfr-input-localized-flag {
-		@include opacity(1);
+	.palette-item-selected .lfr-input-localized-state {
+		background: #27c1f2;
+		@include box-shadow(0 0 3px #27c1f2);
 	}
 
 	.palette-container {

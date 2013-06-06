@@ -76,8 +76,6 @@ List<String> languageIds = new ArrayList<String>();
 %>
 
 <span class="liferay-input-localized" id="<portlet:namespace /><%= id %>BoundingBox">
-	<div id="<portlet:namespace /><%= id %>ContentBox"></div>
-
 	<c:choose>
 		<c:when test='<%= type.equals("input") %>'>
 			<input class="language-value <%= cssClass %>" dir="<%= mainLanguageDir %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<portlet:namespace /><%= HtmlUtil.escapeAttribute(id + fieldSuffix) %>" name="<portlet:namespace /><%= HtmlUtil.escapeAttribute(name + fieldSuffix) %>" type="text" value="<%= HtmlUtil.escapeAttribute(mainLanguageValue) %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %> />
@@ -92,6 +90,8 @@ List<String> languageIds = new ArrayList<String>();
 			</c:if>
 		</c:when>
 	</c:choose>
+
+	<div id="<portlet:namespace /><%= id %>ContentBox"></div>
 
 	<c:if test="<%= (locales.length > 1) && Validator.isNull(languageId) %>">
 

@@ -43,7 +43,7 @@ Format timeFormat = FastDateFormatFactoryUtil.getSimpleDateFormat("h:mma", local
 			for (int i = 0; i < CalEventConstants.TYPES.length; i++) {
 			%>
 
-				<aui:option selected="<%= eventType.equals(CalEventConstants.TYPES[i]) %>" value="<%= HtmlUtil.escapeAttribute(CalEventConstants.TYPES[i]) %>"><%= HtmlUtil.escape(CalEventConstants.TYPES[i]) %></aui:option>
+				<aui:option label="<%= HtmlUtil.escape(CalEventConstants.TYPES[i]) %>" selected="<%= eventType.equals(CalEventConstants.TYPES[i]) %>" value="<%= HtmlUtil.escapeAttribute(CalEventConstants.TYPES[i]) %>" />
 
 			<%
 			}

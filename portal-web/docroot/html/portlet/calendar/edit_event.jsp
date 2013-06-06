@@ -175,7 +175,7 @@ int secondReminder = BeanParamUtil.getInteger(event, request, "secondReminder", 
 			for (int i = 0; i < CalEventConstants.TYPES.length; i++) {
 			%>
 
-				<aui:option value="<%= HtmlUtil.escapeAttribute(CalEventConstants.TYPES[i]) %>"><%= HtmlUtil.escape(CalEventConstants.TYPES[i]) %></aui:option>
+				<aui:option label="<%= HtmlUtil.escape(CalEventConstants.TYPES[i]) %>" value="<%= HtmlUtil.escapeAttribute(CalEventConstants.TYPES[i]) %>" />
 
 			<%
 			}

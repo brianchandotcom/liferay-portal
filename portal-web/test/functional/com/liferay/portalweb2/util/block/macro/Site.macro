@@ -2,7 +2,19 @@
 	<var name="siteMember" value="User" />
 	<var name="siteType" value="Open" />
 
-	<command name="cpAdd">
+	<command name="addBlankCP">
+		<execute macro="Site#addCP">
+			<var name="siteType" value="Blank" />
+		</execute>
+	</command>
+
+	<command name="addCommunityCP">
+		<execute macro="Site#addCP">
+			<var name="siteType" value="Community" />
+		</execute>
+	</command>
+
+	<command name="addCP">
 		<execute macro="Page#cpGotoSites">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -38,25 +50,13 @@
 		<execute action="CPSitesEdit#assertTextEquals" locator-key1="HEADER" value1="${siteName}" />
 	</command>
 
-	<command name="cpAddBlank">
-		<execute macro="Site#cpAdd">
-			<var name="siteType" value="Blank" />
-		</execute>
-	</command>
-
-	<command name="cpAddCommunity">
-		<execute macro="Site#cpAdd">
-			<var name="siteType" value="Community" />
-		</execute>
-	</command>
-
-	<command name="cpAddIntranet">
-		<execute macro="Site#cpAdd">
+	<command name="addIntranetCP">
+		<execute macro="Site#addCP">
 			<var name="siteType" value="Intranet" />
 		</execute>
 	</command>
 
-	<command name="cpAddMember">
+	<command name="addMemberCP">
 		<execute macro="Page#cpGotoSites">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -79,7 +79,7 @@
 		<execute action="CPSitemembershipsAddmembers#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
 	</command>
 
-	<command name="cpAssignRole">
+	<command name="assignRoleCP">
 		<execute macro="Page#cpGotoSites">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -112,7 +112,7 @@
 		<execute action="CPSitemembershipsAssignuserrolesUser#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME_1" value1="${userScreenName}" />
 	</command>
 
-	<command name="cpDelete">
+	<command name="deleteCP">
 		<execute macro="Page#cpGotoSites">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -127,7 +127,7 @@
 		<execute action="CPSites#assertTextNotPresent" value1="${siteName}" />
 	</command>
 
-	<command name="cpTearDown">
+	<command name="tearDownCP">
 		<execute macro="Page#cpGotoSites">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -145,7 +145,7 @@
 		</while>
 	</command>
 
-	<command name="cpView">
+	<command name="viewCP">
 		<execute macro="Page#cpGotoSites">
 			<var name="portletName" value="Sites" />
 		</execute>

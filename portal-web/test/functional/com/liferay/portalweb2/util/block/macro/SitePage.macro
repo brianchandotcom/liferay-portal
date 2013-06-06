@@ -1,5 +1,64 @@
 <definition>
-	<command name="cpAdd">
+	<command name="addChildCP">
+		<execute macro="Page#cpGoto">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute action="CPSites#type" locator-key1="BASIC_SEARCH_FIELD" value1="${siteName}" />
+		<execute action="CPSites#click" locator-key1="BASIC_SEARCH_BUTTON" />
+		<execute action="CPSites#click" locator-key1="SITE_TABLE_ACTIONS" />
+		<execute action="CPSites#click" locator-key1="SITE_MENULIST_MANAGE_PAGES" />
+
+		<if>
+			<equals arg1="${sitePageType}" arg2="Private" />
+			<then>
+				<execute action="CPSitepages#click" locator-key1="NAVIGATION_PRIVATE_PAGES" />
+			</then>
+			<elseif>
+				<equals arg1="${sitePageType}" arg2="Public" />
+				<then>
+					<execute action="CPSitepages#click" locator-key1="NAVIGATION_PUBLIC_PAGES" />
+				</then>
+			</elseif>
+			<else>
+				<fail message="Invalid var sitePageType. Must be (Organization|User)." />
+			</else>
+		</if>
+
+		<execute macro="SitePage#openRootCP" />
+
+		<execute action="CPSitepages#click" locator-key1="PAGE_TREE_PAGE_LINK_1" />
+
+		<execute action="CPSitepages#click" locator-key1="TOOLBAR_ADD_CHILD_PAGE" />
+		<execute action="CPSitepages#type" locator-key1="ADD_PAGE_NAME_FIELD" value1="${siteChildPageName}" />
+		<execute action="CPSitepages#click" locator-key1="ADD_PAGE_BUTTON" />
+		<execute action="CPSitepages#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<execute macro="SitePage#openPageCP" />
+
+		<execute action="CPSitepages#assertTextEquals" locator-key1="PAGE_TREE_PAGE_LINK_1" value1="${sitePageName}" />
+		<execute action="CPSitepages#assertTextEquals" locator-key1="PAGE_TREE_PAGE_LINK_2" value1="${siteChildPageName}" />
+	</command>
+
+	<command name="addChildPrivateCP">
+		<execute macro="SitePage#addChildCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteChildPageName" value="${siteChildPageName}" />
+			<var name="sitePageName" value="${sitePageName}" />
+			<var name="sitePageType" value="Private" />
+		</execute>
+	</command>
+
+	<command name="addChildPublicCP">
+		<execute macro="SitePage#addChildCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteChildPageName" value="${siteChildPageName}" />
+			<var name="sitePageName" value="${sitePageName}" />
+			<var name="sitePageType" value="Public" />
+		</execute>
+	</command>
+
+	<command name="addCP">
 		<execute macro="Page#cpGoto">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -30,85 +89,26 @@
 		<execute action="CPSitepages#click" locator-key1="ADD_PAGE_BUTTON" />
 		<execute action="CPSitepages#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
-		<execute macro="SitePage#cpOpenRoot" />
+		<execute macro="SitePage#openRootCP" />
 
 		<execute action="CPSitepages#assertTextEquals" locator-key1="PAGE_TREE_PAGE_LINK_1" value1="${sitePageName}" />
 	</command>
 
-	<command name="cpAddChild">
-		<execute macro="Page#cpGoto">
-			<var name="portletName" value="Sites" />
-		</execute>
-
-		<execute action="CPSites#type" locator-key1="BASIC_SEARCH_FIELD" value1="${siteName}" />
-		<execute action="CPSites#click" locator-key1="BASIC_SEARCH_BUTTON" />
-		<execute action="CPSites#click" locator-key1="SITE_TABLE_ACTIONS" />
-		<execute action="CPSites#click" locator-key1="SITE_MENULIST_MANAGE_PAGES" />
-
-		<if>
-			<equals arg1="${sitePageType}" arg2="Private" />
-			<then>
-				<execute action="CPSitepages#click" locator-key1="NAVIGATION_PRIVATE_PAGES" />
-			</then>
-			<elseif>
-				<equals arg1="${sitePageType}" arg2="Public" />
-				<then>
-					<execute action="CPSitepages#click" locator-key1="NAVIGATION_PUBLIC_PAGES" />
-				</then>
-			</elseif>
-			<else>
-				<fail message="Invalid var sitePageType. Must be (Organization|User)." />
-			</else>
-		</if>
-
-		<execute macro="SitePage#cpOpenRoot" />
-
-		<execute action="CPSitepages#click" locator-key1="PAGE_TREE_PAGE_LINK_1" />
-
-		<execute action="CPSitepages#click" locator-key1="TOOLBAR_ADD_CHILD_PAGE" />
-		<execute action="CPSitepages#type" locator-key1="ADD_PAGE_NAME_FIELD" value1="${siteChildPageName}" />
-		<execute action="CPSitepages#click" locator-key1="ADD_PAGE_BUTTON" />
-		<execute action="CPSitepages#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-
-		<execute macro="SitePage#cpOpenPage" />
-
-		<execute action="CPSitepages#assertTextEquals" locator-key1="PAGE_TREE_PAGE_LINK_1" value1="${sitePageName}" />
-		<execute action="CPSitepages#assertTextEquals" locator-key1="PAGE_TREE_PAGE_LINK_2" value1="${siteChildPageName}" />
-	</command>
-
-	<command name="cpAddChildPrivate">
-		<execute macro="SitePage#cpAddChild">
-			<var name="siteName" value="${siteName}" />
-			<var name="siteChildPageName" value="${siteChildPageName}" />
+	<command name="addPrivateCP">
+		<execute macro="SitePage#addCP">
 			<var name="sitePageName" value="${sitePageName}" />
 			<var name="sitePageType" value="Private" />
 		</execute>
 	</command>
 
-	<command name="cpAddChildPublic">
-		<execute macro="SitePage#cpAddChild">
-			<var name="siteName" value="${siteName}" />
-			<var name="siteChildPageName" value="${siteChildPageName}" />
+	<command name="addPublicCP">
+		<execute macro="SitePage#addCP">
 			<var name="sitePageName" value="${sitePageName}" />
 			<var name="sitePageType" value="Public" />
 		</execute>
 	</command>
 
-	<command name="cpAddPrivate">
-		<execute macro="SitePage#cpAdd">
-			<var name="sitePageName" value="${sitePageName}" />
-			<var name="sitePageType" value="Private" />
-		</execute>
-	</command>
-
-	<command name="cpAddPublic">
-		<execute macro="SitePage#cpAdd">
-			<var name="sitePageName" value="${sitePageName}" />
-			<var name="sitePageType" value="Public" />
-		</execute>
-	</command>
-
-	<command name="cpOpenPage">
+	<command name="openPageCP">
 		<execute action="CPSitepages#click" locator-key1="PAGE_TREE_PAGE_ARROW_1" />
 		<execute action="CPSitepages#assertElementPresent" locator-key1="PAGE_TREE_PAGE_LINK_2" />
 
@@ -120,7 +120,7 @@
 		</if>
 	</command>
 
-	<command name="cpOpenRoot">
+	<command name="openRootCP">
 		<execute action="CPSitepages#click" locator-key1="PAGE_TREE_ROOT_ARROW" />
 		<execute action="CPSitepages#assertElementPresent" locator-key1="PAGE_TREE_PAGE_LINK_1" />
 
@@ -132,7 +132,7 @@
 		</if>
 	</command>
 
-	<command name="pgViewChildPrivate">
+	<command name="viewChildPrivatePG">
 		<execute macro="Page#pgGotoSitePrivate">
 			<var name="pageName" value="${sitePageName}" />
 		</execute>
@@ -146,7 +146,7 @@
 		<execute action="Home#assertLocation" value1="${sitePageURL}"/>
 	</command>
 
-	<command name="pgViewChildPublic">
+	<command name="viewChildPublicPG">
 		<execute macro="Page#pgGotoSitePublic">
 			<var name="pageName" value="${sitePageName}" />
 		</execute>
@@ -160,7 +160,7 @@
 		<execute action="Home#assertLocation" value1="${sitePageURL}"/>
 	</command>
 
-	<command name="pgViewPrivate">
+	<command name="viewPrivatePG">
 		<execute macro="Page#pgGotoSitePrivate">
 			<var name="pageName" value="${sitePageName}" />
 		</execute>
@@ -171,7 +171,7 @@
 		<execute action="Home#assertLocation" value1="${sitePageURL}"/>
 	</command>
 
-	<command name="pgViewPublic">
+	<command name="viewPublicPG">
 		<execute macro="Page#pgGotoSitePublic">
 			<var name="pageName" value="${sitePageName}" />
 		</execute>

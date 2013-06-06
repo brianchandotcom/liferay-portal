@@ -78,6 +78,10 @@ public class DDMXMLUtil {
 			xml, contentDefaultLocale, contentNewDefaultLocale);
 	}
 
+	public static String validateXML(String xml) throws PortalException {
+		return getDDMXML().validateXML(xml);
+	}
+
 	public void setDDMXML(DDMXML ddmXML) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 

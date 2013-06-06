@@ -125,6 +125,8 @@ public interface WebKeys {
 
 	public static final String RENDER_PORTLET = "RENDER_PORTLET";
 
+	public static final String RENDER_PORTLET_BOUNDARY = "RENDER_PORTLET_BOUNDARY";
+
 	public static final String RENDER_PORTLET_COLUMN_COUNT = "RENDER_PORTLET_COLUMN_COUNT";
 
 	public static final String RENDER_PORTLET_COLUMN_ID = "RENDER_PORTLET_COLUMN_ID";

@@ -48,7 +48,6 @@ import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalStructure;
 import com.liferay.portlet.journal.model.JournalStructureConstants;
 import com.liferay.portlet.journal.service.base.JournalStructureLocalServiceBaseImpl;
-import com.liferay.portlet.journal.util.JournalUtil;
 import com.liferay.portlet.journal.util.comparator.StructurePKComparator;
 
 import java.util.ArrayList;
@@ -81,7 +80,6 @@ public class JournalStructureLocalServiceImpl
 		Date now = new Date();
 
 		try {
-			xsd = JournalUtil.validateXSD(xsd);
 			xsd = DDMXMLUtil.formatXML(xsd);
 		}
 		catch (Exception e) {
@@ -511,7 +509,6 @@ public class JournalStructureLocalServiceImpl
 		structureId = structureId.trim().toUpperCase();
 
 		try {
-			xsd = JournalUtil.validateXSD(xsd);
 			xsd = DDMXMLUtil.formatXML(xsd);
 		}
 		catch (Exception e) {

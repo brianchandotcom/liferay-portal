@@ -71,7 +71,6 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 import com.liferay.portlet.journal.NoSuchArticleException;
-import com.liferay.portlet.journal.StructureXsdException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
@@ -1239,17 +1238,6 @@ public class JournalUtil {
 
 		return _transformer.transform(
 			themeDisplay, tokens, viewMode, languageId, xml, script, langType);
-	}
-
-	public static String validateXSD(String xsd) throws PortalException {
-		try {
-			Document document = SAXReaderUtil.read(xsd);
-
-			return document.asXML();
-		}
-		catch (Exception e) {
-			throw new StructureXsdException();
-		}
 	}
 
 	private static void _addElementOptions(

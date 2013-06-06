@@ -552,45 +552,45 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	@Override
 	public Element addReferenceElement(
-		StagedModel referrerStagedModel, Element element,
+		ClassedModel referrerClassedModel, Element element,
 		ClassedModel classedModel, Class<?> clazz, String referenceType,
 		boolean missing) {
 
 		return addReferenceElement(
-			referrerStagedModel, element, classedModel, clazz.getName(),
+			referrerClassedModel, element, classedModel, clazz.getName(),
 			StringPool.BLANK, referenceType, missing);
 	}
 
 	@Override
 	public Element addReferenceElement(
-		StagedModel referrerStagedModel, Element element,
+		ClassedModel referrerClassedModel, Element element,
 		ClassedModel classedModel, String referenceType, boolean missing) {
 
 		return addReferenceElement(
-			referrerStagedModel, element, classedModel,
+			referrerClassedModel, element, classedModel,
 			classedModel.getModelClassName(), StringPool.BLANK, referenceType,
 			missing);
 	}
 
 	@Override
 	public Element addReferenceElement(
-		StagedModel referrerStagedModel, Element element,
+		ClassedModel referrerClassedModel, Element element,
 		ClassedModel classedModel, String binPath, String referenceType,
 		boolean missing) {
 
 		return addReferenceElement(
-			referrerStagedModel, element, classedModel,
+			referrerClassedModel, element, classedModel,
 			classedModel.getModelClassName(), binPath, referenceType, missing);
 	}
 
 	@Override
 	public Element addReferenceElement(
-		StagedModel referrerStagedModel, Element element,
+		ClassedModel referrerClassedModel, Element element,
 		ClassedModel classedModel, String className, String binPath,
 		String referenceType, boolean missing) {
 
 		Element referenceElement = doAddReferenceElement(
-			referrerStagedModel, element, classedModel, className, binPath,
+			referrerClassedModel, element, classedModel, className, binPath,
 			referenceType, false);
 
 		String referenceKey = classedModel.getModelClassName();
@@ -608,7 +608,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 			_missingReferences.add(referenceKey);
 
 			doAddReferenceElement(
-				referrerStagedModel, null, classedModel, className, binPath,
+				referrerClassedModel, null, classedModel, className, binPath,
 				referenceType, true);
 		}
 		else {
@@ -1905,7 +1905,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	protected Element doAddReferenceElement(
-		StagedModel referrerStagedModel, Element element,
+		ClassedModel referrerClassedModel, Element element,
 		ClassedModel classedModel, String className, String binPath,
 		String referenceType, boolean missing) {
 
@@ -1962,10 +1962,18 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		if (missing) {
 			referenceElement.addAttribute(
-				"referrer-class-name", referrerStagedModel.getModelClassName());
-			referenceElement.addAttribute(
-				"referrer-display-name",
-				StagedModelDataHandlerUtil.getDisplayName(referrerStagedModel));
+				"referrer-class-name",
+				referrerClassedModel.getModelClassName());
+
+			if (referrerClassedModel instanceof StagedModel) {
+				StagedModel referrerStagedModel =
+					(StagedModel)referrerClassedModel;
+
+				referenceElement.addAttribute(
+					"referrer-display-name",
+					StagedModelDataHandlerUtil.getDisplayName(
+						referrerStagedModel));
+			}
 		}
 
 		if (classedModel instanceof StagedModel) {

@@ -34,7 +34,7 @@ Collections.sort(customAttributesDisplays, new CustomAttributesDisplayComparator
 	iteratorURL="<%= portletURL %>"
 >
 	<liferay-ui:search-container-results
-		results="<%= ListUtil.subList(customAttributesDisplays, searchContainer.getStart(), searchContainer.getEnd()) %>"
+		results="<%= customAttributesDisplays %>"
 		total="<%= customAttributesDisplays.size() %>"
 	/>
 

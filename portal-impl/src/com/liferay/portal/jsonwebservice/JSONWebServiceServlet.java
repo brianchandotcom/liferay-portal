@@ -25,10 +25,10 @@ import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.ac.AccessControlThreadLocal;
 import com.liferay.portal.servlet.JSONServlet;
+import com.liferay.portal.spring.context.PortalContextLoaderListener;
 import com.liferay.portal.struts.JSONAction;
 import com.liferay.portal.upload.UploadServletRequestImpl;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 
@@ -95,7 +95,8 @@ public class JSONWebServiceServlet extends JSONServlet {
 		try {
 			AccessControlThreadLocal.setRemoteAccess(true);
 
-			String contextPath = PropsValues.PORTAL_CTX;
+			String contextPath =
+				PortalContextLoaderListener.getPortalServletContextPath();
 
 			if (servletContext.getContext(contextPath) != null) {
 				if (!contextPath.equals(StringPool.SLASH) &&

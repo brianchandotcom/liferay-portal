@@ -144,7 +144,7 @@ if (ldapAuthEnabled && (ldapServerIds.length <= 0) && Validator.isNull(PrefsProp
 			</tr>
 			</thead>
 
-			<tbody>
+			<tbody class="table-data">
 
 			<%
 			for (int i = 0; i < ldapServerIds.length; i++) {

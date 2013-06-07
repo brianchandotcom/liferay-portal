@@ -90,6 +90,7 @@
 	.section {
 		float: left;
 		margin-left: 10px;
+		min-width: 250px;
 		width: 47%;
 
 		h3 {

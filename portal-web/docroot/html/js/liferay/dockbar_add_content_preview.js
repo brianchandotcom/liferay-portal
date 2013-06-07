@@ -50,6 +50,14 @@ AUI.add(
 				(new A.EventHandle(instance._eventHandles)).detach();
 			},
 
+			_addContent: function(event) {
+				var instance = this;
+
+				var portlet = event.currentTarget;
+
+				instance._addPortlet(portlet);
+			},
+
 			_afterPreviewFailure: function(event) {
 				var instance = this;
 
@@ -72,7 +80,7 @@ AUI.add(
 				tooltip.align();
 
 				instance._eventHandles.push(
-					tooltip.get(STR_BOUNDING_BOX).one('.add-button-preview').on(STR_CLICK, instance._addApplication, instance)
+					tooltip.get(STR_BOUNDING_BOX).one('.add-button-preview').on(STR_CLICK, instance._addContent, instance)
 				);
 			},
 

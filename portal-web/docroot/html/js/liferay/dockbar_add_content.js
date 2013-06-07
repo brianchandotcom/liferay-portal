@@ -54,14 +54,6 @@ AUI.add(
 						instance._bindUI();
 					},
 
-					_addApplication: function(event) {
-						var instance = this;
-
-						var portlet = event.currentTarget;
-
-						instance._addPortlet(portlet);
-					},
-
 					_addPortlet: function(portlet, options) {
 						var instance = this;
 
@@ -128,8 +120,6 @@ AUI.add(
 						instance._numItems.on('change', instance._onChangeNumItems, instance);
 
 						instance._closePanel.on(STR_CLICK, Dockbar.loadPanel, Dockbar);
-
-						instance._addPanelContainer.delegate(STR_CLICK, instance._addApplication, SELECTOR_ADD_CONTENT_ITEM, instance);
 
 						instance._styleButtonsList.delegate(STR_CLICK, instance._onChangeDisplayStyle, SELECTOR_BUTTON, instance);
 

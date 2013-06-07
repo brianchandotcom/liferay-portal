@@ -22,8 +22,8 @@ import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.TestPropsValues;
-import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 import com.liferay.portlet.journal.model.JournalStructure;
+import com.liferay.portlet.journal.util.JournalTestUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -78,9 +78,7 @@ public class JournalStructureServiceTest extends BaseJournalServiceTestCase {
 		JournalStructure structure =
 			JournalStructureLocalServiceUtil.getStructure(groupId, structureId);
 
-		String xsl = structure.getXsd();
-
-		Assert.assertFalse(xsl.contains("\\n"));
+		Assert.assertFalse(structure.getXsd().contains("\\n"));
 	}
 
 	@Test
@@ -93,14 +91,16 @@ public class JournalStructureServiceTest extends BaseJournalServiceTestCase {
 
 		String newStructureId = generateId();
 
-		JournalStructure template =
+		JournalStructure structure =
 			JournalStructureLocalServiceUtil.copyStructure(
 				TestPropsValues.getUserId(), groupId, oldStructureId,
 				newStructureId, false);
 
-		Assert.assertEquals(newStructureId, template.getStructureId());
+		Assert.assertEquals(newStructureId, structure.getStructureId());
 
-		Assert.assertEquals(xsd, template.getXsd());
+		Assert.assertEquals(
+			JournalTestUtil.getXsdMap(xsd),
+			JournalTestUtil.getXsdMap(structure.getXsd()));
 	}
 
 	@Test
@@ -216,9 +216,14 @@ public class JournalStructureServiceTest extends BaseJournalServiceTestCase {
 		nameMap.put(Locale.US, "New Test Structure");
 
 		String xsd =
-			"<root><dynamic-element name=\"text\" type=\"text\" /></root>";
-
-		xsd = DDMXMLUtil.formatXML(xsd);
+			"<root>" +
+				"<dynamic-element name=\"abc\" index-type=\"\" type=\"text\">" +
+					"<meta-data>" +
+						"<entry name=\"label\"><![CDATA[abc]]></entry>" +
+						"<entry name=\"required\"><![CDATA[false]]></entry>" +
+					"</meta-data>" +
+				"</dynamic-element>" +
+			"</root>";
 
 		JournalStructure structure =
 			JournalStructureLocalServiceUtil.updateStructure(
@@ -227,7 +232,9 @@ public class JournalStructureServiceTest extends BaseJournalServiceTestCase {
 
 		Assert.assertEquals("New Test Structure", structure.getName(Locale.US));
 
-		Assert.assertEquals(xsd, structure.getXsd());
+		Assert.assertEquals(
+			JournalTestUtil.getXsdMap(xsd),
+			JournalTestUtil.getXsdMap(structure.getXsd()));
 	}
 
 	protected void deleteStructures() throws Exception {

@@ -2436,6 +2436,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>parentId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>persistState</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

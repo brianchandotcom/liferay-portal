@@ -15,30 +15,43 @@
 --%>
 
 <aui:script use="aui-toggler,liferay-store">
-	new A.TogglerDelegate(
-		{
-			animated: true,
-			container: '#<%= id %>',
-			content: '.toggler-content',
-			header: '.toggler-header',
-			on: {
-				'toggler:expandedChange': function(event) {
-					var header = event.target.get('header');
+	var togglerDelegate;
 
-					var persistId = header.getData('persist-id');
+	Liferay.component(
+		'<%= namespace + id %>',
+		function() {
+			if (!togglerDelegate) {
+				togglerDelegate = new A.TogglerDelegate(
+					{
+						animated: true,
+						container: '#<%= id %>',
+						content: '.toggler-content',
+						header: '.toggler-header',
+						on: {
+							'toggler:expandedChange': function(event) {
+								var header = event.target.get('header');
 
-					if (persistId) {
-						var data = {};
+								var persistId = header.getData('persist-id');
 
-						data[persistId] = event.newVal ? 'open' : 'closed';
+								if (persistId && !event.silent) {
+									var data = {};
 
-						Liferay.Store(data);
+									data[persistId] = event.newVal ? 'open' : 'closed';
+
+									Liferay.Store(data);
+								}
+							}
+						},
+						transition: {
+							duration: .3
+						}
 					}
-				}
-			},
-			transition: {
-				duration: .3
+				);
 			}
+
+			return togglerDelegate;
 		}
 	);
+
+	Liferay.component('<%= namespace + id %>');
 </aui:script>

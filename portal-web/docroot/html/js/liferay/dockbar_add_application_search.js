@@ -5,8 +5,6 @@ AUI.add(
 
 		var AddSearch = Dockbar.AddSearch;
 
-		var CSS_LFR_COLLAPSED = 'lfr-collapsed';
-
 		var CSS_LFR_CATEGORY_CONTAINER = 'lfr-add-content';
 
 		var CSS_LFR_CATEGORY_CONTAINER_SELECTOR = '.' + CSS_LFR_CATEGORY_CONTAINER;
@@ -24,10 +22,13 @@ AUI.add(
 			initializer: function(config) {
 				var instance = this;
 
+				var namespace = config.namespace || "";
+
 				var nodeList = instance.get('nodeList');
 
 				instance._categories = nodeList.all(CSS_LFR_CONTENT_CATEGORY_SELECTOR);
 				instance._categoryContainers = nodeList.all(CSS_LFR_CATEGORY_CONTAINER_SELECTOR);
+				instance._togglerDelegate = Liferay.component(namespace + "addApplicationPanelContainer");
 
 				var applicationSearch = new AddSearch(
 					{
@@ -58,68 +59,78 @@ AUI.add(
 			_updateList: function(event) {
 				var instance = this;
 
+				instance._togglerDelegate.createAll();
+
 				var query = event.query;
 
-				if (!instance._openedCategories) {
-					instance._openedCategories = [];
+				if (!instance._collapsedCategories) {
+					instance._collapsedCategories = [];
 
 					instance._categories.each(
 						function(item, index, collection) {
-							if (!item.hasClass(CSS_LFR_COLLAPSED)) {
-								instance._openedCategories.push(item);
+							var header = item.one('.toggler-header');
+
+							if (header && header.hasClass('toggler-header-collapsed')) {
+								instance._collapsedCategories.push(item);
 							}
 						}
 					);
 				}
 
 				if (!query) {
-					instance._categories.addClass(CSS_LFR_COLLAPSED);
+					instance._categoryContainers.show();
 
-					if (instance._openedCategories) {
+					instance.get(STR_NODES).show();
+
+					if (instance._collapsedCategories) {
 						A.each(
-							instance._openedCategories,
+							instance._collapsedCategories,
 							function(item, index, collection) {
-								item.removeClass(CSS_LFR_COLLAPSED);
+								var categoryIndex = instance._categories.indexOf(item);
+
+								var togglerItems = instance._togglerDelegate.items;
+
+								togglerItems[categoryIndex].collapse(
+									{
+										silent: true
+									}
+								);
 							}
 						);
 
-						instance._openedCategories = null;
+						instance._collapsedCategories = null;
 					}
-
-					instance._categoryContainers.show();
-
-					instance.get(STR_NODES).show();
-				}
-				else if (query === '*') {
-					instance._categories.removeClass(CSS_LFR_COLLAPSED);
-
-					instance._categoryContainers.show();
-
-					instance.get(STR_NODES).show();
 				}
 				else {
-					instance._categoryContainers.hide();
+					if (query === '*') {
+						instance._categoryContainers.show();
 
-					instance.get(STR_NODES).hide();
+						instance.get(STR_NODES).show();
+					}
+					else {
+						instance._categoryContainers.hide();
 
-					A.each(
-						event.results,
-						function(item, index, collection) {
-							var node = item.raw.node;
+						instance.get(STR_NODES).hide();
 
-							node.show();
+						A.each(
+							event.results,
+							function(item, index, collection) {
+								var node = item.raw.node;
 
-							var categoryParent = node.ancestorsByClassName(CSS_LFR_CONTENT_CATEGORY);
+								node.show();
 
-							if (categoryParent) {
-								categoryParent.removeClass(CSS_LFR_COLLAPSED);
+								var contentParent = node.ancestorsByClassName(CSS_LFR_CATEGORY_CONTAINER);
+
+								if (contentParent) {
+									contentParent.show();
+								}
 							}
+						);
+					}
 
-							var contentParent = node.ancestorsByClassName(CSS_LFR_CATEGORY_CONTAINER);
-
-							if (contentParent) {
-								contentParent.show();
-							}
+					instance._togglerDelegate.expandAll(
+						{
+							silent: true
 						}
 					);
 				}

@@ -47,101 +47,108 @@ refererURL.setParameter("updateLayout", "true");
 				portlets.add(portlet);
 			}
 		}
+
+		String panelContainerId = "addApplicationPanelContainer";
 		%>
 
-		<c:if test="<%= portlets.size() > 0 %>">
+		<liferay-ui:panel-container id="<%= panelContainerId %>">
+			<c:if test="<%= portlets.size() > 0 %>">
+
+				<%
+				String panelId = renderResponse.getNamespace() + "portletCategory" + portletCategoryIndex;
+				%>
+
+				<div class="lfr-add-content">
+					<liferay-ui:panel collapsible="<%= layout.isTypePortlet() %>" cssClass="lfr-content-category lfr-component panel-page-category" extended="<%= true %>" id="<%= panelId %>" persistState="<%= true %>" title='<%= LanguageUtil.get(pageContext, "highlighted") %>'>
+
+						<aui:nav cssClass="nav-list">
+
+							<%
+							for (Portlet portlet : portlets) {
+								if (!PortletPermissionUtil.contains(permissionChecker, layout, portlet.getPortletId(), ActionKeys.ADD_TO_PAGE)) {
+									continue;
+								}
+
+								boolean portletInstanceable = portlet.isInstanceable();
+
+								boolean portletUsed = layoutTypePortlet.hasPortletId(portlet.getPortletId());
+
+								boolean portletLocked = (!portletInstanceable && portletUsed);
+
+								Map<String, Object> data = new HashMap<String, Object>();
+
+								data.put("draggable", "true");
+								data.put("id", renderResponse.getNamespace() + "portletItem" + portlet.getPortletId());
+								data.put("instanceable", portletInstanceable);
+								data.put("plid", plid);
+								data.put("portlet-id", portlet.getPortletId());
+								data.put("title", PortalUtil.getPortletTitle(portlet, application, locale));
+
+								String cssClass = "lfr-content-item";
+
+								if (portletLocked) {
+									cssClass += " lfr-portlet-used";
+								}
+							%>
+
+							<aui:nav-item cssClass='<%= cssClass %>'
+								data='<%= data %>'
+								href=""
+								iconClass='<%= portletInstanceable ? "icon-th-large" : "icon-stop" %>'
+								label="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>">
+
+								<span <%= AUIUtil.buildData(data) %> class='add-content-item <%= portletLocked ? "lfr-portlet-used" : StringPool.BLANK %>'>
+									<liferay-ui:message key="add" />
+								</span>
+							</aui:nav-item>
+
+							<%
+							}
+							%>
+
+						</aui:nav>
+
+					</liferay-ui:panel>
+				</div>
+
+				<%
+				portletCategoryIndex++;
+				%>
+
+			</c:if>
 
 			<%
-			String panelId = renderResponse.getNamespace() + "portletCategory" + portletCategoryIndex;
+			UnicodeProperties typeSettingsProperties = layout.getTypeSettingsProperties();
+
+			Set panelSelectedPortlets = SetUtil.fromArray(StringUtil.split(typeSettingsProperties.getProperty("panelSelectedPortlets")));
+
+			PortletCategory portletCategory = (PortletCategory)WebAppPool.get(company.getCompanyId(), WebKeys.PORTLET_CATEGORY);
+
+			portletCategory = _getRelevantPortletCategory(permissionChecker, portletCategory, panelSelectedPortlets, layoutTypePortlet, layout, user);
+
+			List<PortletCategory> categories = ListUtil.fromCollection(portletCategory.getCategories());
+
+			categories = ListUtil.sort(categories, new PortletCategoryComparator(locale));
+
+			for (PortletCategory curPortletCategory : categories) {
+				if (curPortletCategory.isHidden()) {
+					continue;
+				}
+
+				request.setAttribute(WebKeys.PORTLET_CATEGORY, curPortletCategory);
+				request.setAttribute(WebKeys.PORTLET_CATEGORY_INDEX, String.valueOf(portletCategoryIndex));
 			%>
 
-			<div class="lfr-add-content">
-				<liferay-ui:panel collapsible="<%= layout.isTypePortlet() %>" cssClass="lfr-content-category lfr-component panel-page-category" extended="<%= true %>" id="<%= panelId %>" persistState="<%= true %>" title='<%= LanguageUtil.get(pageContext, "highlighted") %>'>
-
-					<aui:nav cssClass="nav-list">
-
-						<%
-						for (Portlet portlet : portlets) {
-							if (!PortletPermissionUtil.contains(permissionChecker, layout, portlet.getPortletId(), ActionKeys.ADD_TO_PAGE)) {
-								continue;
-							}
-
-							boolean portletInstanceable = portlet.isInstanceable();
-
-							boolean portletUsed = layoutTypePortlet.hasPortletId(portlet.getPortletId());
-
-							boolean portletLocked = (!portletInstanceable && portletUsed);
-
-							Map<String, Object> data = new HashMap<String, Object>();
-
-							data.put("draggable", "true");
-							data.put("id", renderResponse.getNamespace() + "portletItem" + portlet.getPortletId());
-							data.put("instanceable", portletInstanceable);
-							data.put("plid", plid);
-							data.put("portlet-id", portlet.getPortletId());
-							data.put("title", PortalUtil.getPortletTitle(portlet, application, locale));
-
-							String cssClass = "lfr-content-item";
-
-							if (portletLocked) {
-								cssClass += " lfr-portlet-used";
-							}
-						%>
-
-						<aui:nav-item cssClass='<%= cssClass %>'
-							data='<%= data %>'
-							href=""
-							iconClass='<%= portletInstanceable ? "icon-th-large" : "icon-stop" %>'
-							label="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>">
-
-							<span <%= AUIUtil.buildData(data) %> class='add-content-item <%= portletLocked ? "lfr-portlet-used" : StringPool.BLANK %>'>
-								<liferay-ui:message key="add" />
-							</span>
-						</aui:nav-item>
-
-						<%
-						}
-						%>
-
-					</aui:nav>
-
-				</liferay-ui:panel>
-			</div>
+			<liferay-util:include page="/html/portlet/dockbar/view_category.jsp">
+				<liferay-util:param name="panelContainerId" value="<%= panelContainerId %>" />
+			</liferay-util:include>
 
 			<%
-			portletCategoryIndex++;
-			%>
-
-		</c:if>
-
-		<%
-		UnicodeProperties typeSettingsProperties = layout.getTypeSettingsProperties();
-
-		Set panelSelectedPortlets = SetUtil.fromArray(StringUtil.split(typeSettingsProperties.getProperty("panelSelectedPortlets")));
-
-		PortletCategory portletCategory = (PortletCategory)WebAppPool.get(company.getCompanyId(), WebKeys.PORTLET_CATEGORY);
-
-		portletCategory = _getRelevantPortletCategory(permissionChecker, portletCategory, panelSelectedPortlets, layoutTypePortlet, layout, user);
-
-		List<PortletCategory> categories = ListUtil.fromCollection(portletCategory.getCategories());
-
-		categories = ListUtil.sort(categories, new PortletCategoryComparator(locale));
-
-		for (PortletCategory curPortletCategory : categories) {
-			if (curPortletCategory.isHidden()) {
-				continue;
+				portletCategoryIndex++;
 			}
+			%>
 
-			request.setAttribute(WebKeys.PORTLET_CATEGORY, curPortletCategory);
-			request.setAttribute(WebKeys.PORTLET_CATEGORY_INDEX, String.valueOf(portletCategoryIndex));
-		%>
-
-		<liferay-util:include page="/html/portlet/dockbar/view_category.jsp" />
-
-		<%
-			portletCategoryIndex++;
-		}
-		%>
+		</liferay-ui:panel-container>
 
 		<c:if test="<%= layout.isTypePortlet() %>">
 			<div class="alert alert-info">

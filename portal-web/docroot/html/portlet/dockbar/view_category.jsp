@@ -17,6 +17,8 @@
 <%@ include file="/html/portlet/dockbar/init.jsp" %>
 
 <%
+String panelContainerId = ParamUtil.getString(request, "panelContainerId");
+
 PortletCategory portletCategory = (PortletCategory)request.getAttribute(WebKeys.PORTLET_CATEGORY);
 
 int portletCategoryIndex = GetterUtil.getInteger((String)request.getAttribute(WebKeys.PORTLET_CATEGORY_INDEX));
@@ -77,7 +79,7 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 %>
 
 	<div class="lfr-add-content">
-		<liferay-ui:panel collapsible="<%= layout.isTypePortlet() %>" cssClass="lfr-content-category panel-page-category unstyled" defaultState="closed" extended="<%= true %>" id="<%= panelId %>" persistState="<%= true %>" title="<%= title %>">
+		<liferay-ui:panel collapsible="<%= layout.isTypePortlet() %>" cssClass="lfr-content-category panel-page-category unstyled" defaultState="closed" extended="<%= true %>" id="<%= panelId %>" parentId="<%= panelContainerId %>" persistState="<%= true %>" title="<%= title %>">
 
 			<aui:nav cssClass="nav-list">
 
@@ -88,7 +90,9 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 					request.setAttribute(WebKeys.PORTLET_CATEGORY_PATH, newCategoryPath);
 				%>
 
-					<liferay-util:include page="/html/portlet/dockbar/view_category.jsp" />
+					<liferay-util:include page="/html/portlet/dockbar/view_category.jsp">
+						<liferay-util:param name="panelContainerId" value="<%= panelContainerId %>" />
+					</liferay-util:include>
 
 				<%
 					request.setAttribute(WebKeys.PORTLET_CATEGORY_PATH, oldCategoryPath);

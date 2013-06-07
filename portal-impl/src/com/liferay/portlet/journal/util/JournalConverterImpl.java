@@ -776,7 +776,7 @@ public class JournalConverterImpl implements JournalConverter {
 				element.addAttribute(
 					"name", "option" + PwdGenerator.getPassword(4));
 				element.addAttribute("type", "option");
-				element.addAttribute("value", type);
+				element.addAttribute("value", name);
 
 				return;
 			}

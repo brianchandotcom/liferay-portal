@@ -98,6 +98,9 @@
 		<finder name="ClassNameId" return-type="Collection">
 			<finder-column name="classNameId" />
 		</finder>
+		<finder name="ParentStructureId" return-type="Collection">
+			<finder-column name="parentStructureId" />
+		</finder>
 		<finder name="StructureKey" return-type="Collection">
 			<finder-column name="structureKey" />
 		</finder>

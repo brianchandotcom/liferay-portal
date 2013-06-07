@@ -70,8 +70,8 @@
 	<c:when test="<%= (model != null) && Validator.isNull(type) %>">
 		<liferay-ui:input-field
 			bean="<%= bean %>"
-			checkBoxLabel="<%= checkBoxLabel %>"
 			cssClass="<%= fieldCss %>"
+			dateTogglerCheckboxLabel="<%= dateTogglerCheckboxLabel %>"
 			defaultLanguageId="<%= defaultLanguageId %>"
 			defaultValue="<%= value %>"
 			disabled="<%= disabled %>"

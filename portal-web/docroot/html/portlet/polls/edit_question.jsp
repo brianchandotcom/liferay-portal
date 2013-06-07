@@ -89,8 +89,7 @@ if (choiceName > 0) {
 		<aui:input label="polls-question" name="description" />
 
 		<aui:field-wrapper label="expiration-date">
-
-			<aui:input checkBoxLabel="neverExpire" disabled="<%= neverExpire %>" name="expirationDate" />
+			<aui:input dateTogglerCheckboxLabel="never-expire" disabled="<%= neverExpire %>" name="expirationDate" />
 		</aui:field-wrapper>
 
 		<aui:field-wrapper label="choices">

@@ -114,16 +114,7 @@ if (entry == null) {
 			<aui:option label="important" selected="<%= (entry != null) && (entry.getPriority() == 1) %>" value="1" />
 		</aui:select>
 
-		<aui:input disabled="<%= autoDisplayDate %>" checkBoxLabel="display-immediately" name="displayDate" />
-
-		<c:if test="<%= autoDisplayDate %>">
-
-			<%
-			String taglibAutoDisplayDateOnClick = renderResponse.getNamespace() + "toggleDisplayDate('displayDate', this.checked);";
-			%>
-
-			<aui:input label="display-immediately" name="autoDisplayDate" onClick="<%= taglibAutoDisplayDateOnClick %>" type="checkbox" value="<%= autoDisplayDate %>" />
-		</c:if>
+		<aui:input dateTogglerCheckboxLabel="display-immediately" disabled="<%= autoDisplayDate %>" name="displayDate" />
 
 		<aui:input name="expirationDate" />
 	</aui:fieldset>

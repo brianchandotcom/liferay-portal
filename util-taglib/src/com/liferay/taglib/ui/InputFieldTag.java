@@ -34,12 +34,12 @@ public class InputFieldTag extends IncludeTag {
 		_bean = bean;
 	}
 
-	public void setCheckBoxLabel(String checkBoxLabel) {
-		_checkBoxLabel = checkBoxLabel;
-	}
-
 	public void setCssClass(String cssClass) {
 		_cssClass = cssClass;
+	}
+
+	public void setDateTogglerCheckboxLabel(String dateTogglerCheckboxLabel) {
+		_dateTogglerCheckboxLabel = dateTogglerCheckboxLabel;
 	}
 
 	public void setDefaultLanguageId(String defaultLanguageId) {
@@ -94,8 +94,8 @@ public class InputFieldTag extends IncludeTag {
 	protected void cleanUp() {
 		_autoSize = false;
 		_bean = null;
-		_checkBoxLabel = null;
 		_cssClass = null;
+		_dateTogglerCheckboxLabel = null;
 		_defaultLanguageId = null;
 		_defaultValue = null;
 		_disabled = false;
@@ -132,9 +132,10 @@ public class InputFieldTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:input-field:autoSize", String.valueOf(_autoSize));
 		request.setAttribute("liferay-ui:input-field:bean", _bean);
-		request.setAttribute(
-			"liferay-ui:input-field:checkBoxLabel", String.valueOf(_checkBoxLabel));
 		request.setAttribute("liferay-ui:input-field:cssClass", _cssClass);
+		request.setAttribute(
+			"liferay-ui:input-field:dateTogglerCheckboxLabel",
+			String.valueOf(_dateTogglerCheckboxLabel));
 		request.setAttribute(
 			"liferay-ui:input-field:defaultLanguageId", _defaultLanguageId);
 		request.setAttribute(
@@ -159,8 +160,8 @@ public class InputFieldTag extends IncludeTag {
 
 	private boolean _autoSize;
 	private Object _bean;
-	private String _checkBoxLabel;
 	private String _cssClass;
+	private String _dateTogglerCheckboxLabel;
 	private String _defaultLanguageId;
 	private Object _defaultValue;
 	private boolean _disabled;

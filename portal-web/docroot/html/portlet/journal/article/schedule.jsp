@@ -48,7 +48,7 @@ if (article != null) {
 <aui:fieldset>
 	<aui:input formName="fm1" name="displayDate" />
 
-	<aui:input checkBoxLabel="neverExpire" disabled="<%= neverExpire %>" formName="fm1" name="expirationDate" />
+	<aui:input dateTogglerCheckboxLabel="never-expire" disabled="<%= neverExpire %>" formName="fm1" name="expirationDate" />
 
-	<aui:input checkBoxLabel="neverReview" disabled="<%= neverReview %>" formName="fm1" name="reviewDate" />
+	<aui:input dateTogglerCheckboxLabel="never-review" disabled="<%= neverReview %>" formName="fm1" name="reviewDate" />
 </aui:fieldset>

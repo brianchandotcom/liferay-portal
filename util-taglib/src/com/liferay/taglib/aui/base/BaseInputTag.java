@@ -49,10 +49,6 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		return _checked;
 	}
 
-	public java.lang.String getCheckBoxLabel() {
-		return _checkBoxLabel;
-	}
-
 	public long getClassPK() {
 		return _classPK;
 	}
@@ -63,6 +59,10 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 
 	public java.lang.Object getData() {
 		return _data;
+	}
+
+	public java.lang.String getDateTogglerCheckboxLabel() {
+		return _dateTogglerCheckboxLabel;
 	}
 
 	public java.lang.String getDefaultLanguageId() {
@@ -205,12 +205,6 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("checked", checked);
 	}
 
-	public void setCheckBoxLabel(java.lang.String checkBoxLabel) {
-		_checkBoxLabel = checkBoxLabel;
-
-		setScopedAttribute("checkBoxLabel", checkBoxLabel);
-	}
-
 	public void setClassPK(long classPK) {
 		_classPK = classPK;
 
@@ -227,6 +221,12 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		_data = data;
 
 		setScopedAttribute("data", data);
+	}
+
+	public void setDateTogglerCheckboxLabel(java.lang.String dateTogglerCheckboxLabel) {
+		_dateTogglerCheckboxLabel = dateTogglerCheckboxLabel;
+
+		setScopedAttribute("dateTogglerCheckboxLabel", dateTogglerCheckboxLabel);
 	}
 
 	public void setDefaultLanguageId(java.lang.String defaultLanguageId) {
@@ -409,10 +409,10 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		_bean = null;
 		_changesContext = false;
 		_checked = false;
-		_checkBoxLabel = null;
 		_classPK = 0;
 		_cssClass = null;
 		_data = null;
+		_dateTogglerCheckboxLabel = null;
 		_defaultLanguageId = null;
 		_disabled = false;
 		_field = null;
@@ -455,10 +455,10 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		setNamespacedAttribute(request, "bean", _bean);
 		setNamespacedAttribute(request, "changesContext", _changesContext);
 		setNamespacedAttribute(request, "checked", _checked);
-		setNamespacedAttribute(request, "checkBoxLabel", _checkBoxLabel);
 		setNamespacedAttribute(request, "classPK", _classPK);
 		setNamespacedAttribute(request, "cssClass", _cssClass);
 		setNamespacedAttribute(request, "data", _data);
+		setNamespacedAttribute(request, "dateTogglerCheckboxLabel", _dateTogglerCheckboxLabel);
 		setNamespacedAttribute(request, "defaultLanguageId", _defaultLanguageId);
 		setNamespacedAttribute(request, "disabled", _disabled);
 		setNamespacedAttribute(request, "field", _field);
@@ -499,10 +499,10 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 	private java.lang.Object _bean = null;
 	private boolean _changesContext = false;
 	private boolean _checked = false;
-	private java.lang.String _checkBoxLabel = null;
 	private long _classPK = 0;
 	private java.lang.String _cssClass = null;
 	private java.lang.Object _data = null;
+	private java.lang.String _dateTogglerCheckboxLabel = null;
 	private java.lang.String _defaultLanguageId = null;
 	private boolean _disabled = false;
 	private java.lang.String _field = null;

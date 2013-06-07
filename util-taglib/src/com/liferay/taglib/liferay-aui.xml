@@ -433,11 +433,6 @@
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
-				<name>checkBoxLabel</name>
-				<inputType>java.lang.String</inputType>
-				<outputType>java.lang.String</outputType>
-			</attribute>
-			<attribute>
 				<name>classPK</name>
 				<inputType>long</inputType>
 				<outputType>long</outputType>
@@ -451,6 +446,11 @@
 				<name>data</name>
 				<inputType>java.lang.Object</inputType>
 				<outputType>java.util.Map</outputType>
+			</attribute>
+			<attribute>
+				<name>dateTogglerCheckboxLabel</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
 				<name>defaultLanguageId</name>

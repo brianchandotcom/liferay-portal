@@ -1897,7 +1897,7 @@ public class SourceFormatter {
 				line.startsWith(StringPool.TAB + "protected ") ||
 				line.startsWith(StringPool.TAB + "public ")) {
 
-				Tuple tuple = _getJavaTermTuple(line);
+				Tuple tuple = _getJavaTermTuple(line, content, index, 1, 3);
 
 				if (tuple != null) {
 					int javaTermEndPosition = 0;
@@ -3941,7 +3941,9 @@ public class SourceFormatter {
 		return null;
 	}
 
-	private static Tuple _getJavaTermTuple(String line) {
+	private static Tuple _getJavaTermTuple(
+		String line, String content, int index, int numLines, int maxLines) {
+
 		int pos = line.indexOf(StringPool.OPEN_PARENTHESIS);
 
 		if (line.startsWith(StringPool.TAB + "public static final ") &&
@@ -4119,7 +4121,29 @@ public class SourceFormatter {
 			}
 		}
 
-		return null;
+		if (numLines < maxLines) {
+			int posStartNextLine =
+				content.indexOf(StringPool.NEW_LINE, index) + 1;
+
+			int posEndNextline = content.indexOf(
+				StringPool.NEW_LINE, posStartNextLine);
+
+			String nextLine = content.substring(
+				posStartNextLine, posEndNextline);
+
+			if (Validator.isNull(nextLine)) {
+				return null;
+			}
+
+			nextLine = StringUtil.trimLeading(nextLine);
+
+			return _getJavaTermTuple(
+				line + StringPool.SPACE + nextLine, content, posStartNextLine,
+				numLines + 1, maxLines);
+		}
+		else {
+			return null;
+		}
 	}
 
 	private static List<String> _getJSPDuplicateImports(

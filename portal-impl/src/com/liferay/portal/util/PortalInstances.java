@@ -538,6 +538,7 @@ public class PortalInstances {
 		_getWebIds();
 
 		LuceneHelperUtil.delete(companyId);
+		LuceneHelperUtil.shutdown(companyId);
 
 		LuceneHelperUtil.shutdown(companyId);
 

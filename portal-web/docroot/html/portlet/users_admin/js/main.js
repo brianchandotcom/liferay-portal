@@ -16,8 +16,8 @@ AUI.add(
 				Liferay.Service(
 					'/region/get-regions',
 					{
-						active: true,
-						countryId: Number(selectKey)
+						countryId: Number(selectKey),
+						active: true
 					},
 					callback
 				);

@@ -321,8 +321,8 @@ AUI.add(
 						Liferay.Service(
 							'/socialactivitysetting/get-json-activity-definitions',
 							{
-								className: modelName,
-								groupId: groupId
+								groupId: groupId,
+								className: modelName
 							},
 							callback
 						);
@@ -350,9 +350,9 @@ AUI.add(
 						Liferay.Service(
 							'/socialactivitysetting/update-activity-setting',
 							{
+								groupId: themeDisplay.getScopeGroupIdOrLiveGroupId(),
 								className: modelName,
-								enabled: currentTarget.attr('checked'),
-								groupId: themeDisplay.getScopeGroupIdOrLiveGroupId()
+								enabled: currentTarget.attr('checked')
 							}
 						);
 					},

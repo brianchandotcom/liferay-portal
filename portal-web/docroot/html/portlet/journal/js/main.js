@@ -122,20 +122,20 @@ AUI.add(
 				Liferay.Service(
 					'/journalstructure/add-structure',
 					{
-						autoStructureId: autoStructureId,
-						descriptionMap: JSON.stringify(descriptionMap),
 						groupId: groupId,
-						nameMap: JSON.stringify(nameMap),
-						parentStructureId: parentStructureId,
-						serviceContext: JSON.stringify(
-								{
-									addGroupPermissions: addGroupPermissions,
-									addGuestPermissions: addGuestPermissions,
-									scopeGroupId: groupId
-								}
-							),
 						structureId: structureId,
-						xsd: xsd
+						autoStructureId: autoStructureId,
+						parentStructureId: parentStructureId,
+						nameMap: JSON.stringify(nameMap),
+						descriptionMap: JSON.stringify(descriptionMap),
+						xsd: xsd,
+						serviceContext: JSON.stringify(
+							{
+								addGroupPermissions: addGroupPermissions,
+								addGuestPermissions: addGuestPermissions,
+								scopeGroupId: groupId
+							}
+						)
 					},
 					function(message) {
 						if (Lang.isFunction(callback)) {
@@ -1428,17 +1428,17 @@ AUI.add(
 				Liferay.Service(
 					'/journalstructure/update-structure',
 					{
-						descriptionMap: JSON.stringify(descriptionMap),
 						groupId: groupId,
-						nameMap: JSON.stringify(nameMap),
+						structureId: structureId,
 						parentStructureId: parentStructureId || '',
+						nameMap: JSON.stringify(nameMap),
+						descriptionMap: JSON.stringify(descriptionMap),
+						xsd: xsd,
 						serviceContext: JSON.stringify(
 							{
 								scopeGroupId: groupId
 							}
-						),
-						structureId: structureId,
-						xsd: xsd
+						)
 					},
 					function(message) {
 						if (Lang.isFunction(callback)) {

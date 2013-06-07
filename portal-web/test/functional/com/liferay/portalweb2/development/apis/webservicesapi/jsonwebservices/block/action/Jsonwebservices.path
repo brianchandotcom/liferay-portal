@@ -1,20 +1,17 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head profile="http://selenium-ide.openqa.org/profiles/test-case">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="selenium.base" href="http://hudson.liferay.com/" />
-<title>APIJsonws</title>
+<html>
+<head>
+<title>Jsonwebservices</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">APIJsonws</td></tr>
-</thead><tbody>
+<tr><td rowspan="1" colspan="3">Jsonwebservices</td></tr>
+</thead>
+<tbody>
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>API_JSONWS</td>
+	<td>Jsonwebservices</td>
 </tr>
 <tr>
 	<td></td>
@@ -51,7 +48,24 @@
 	<td></td>
 	<td></td>
 </tr>
-
-</tbody></table>
+<!--ADDRESS-->
+<tr>
+	<td>ADDRESS_ADD_ADDRESS</td>
+	<td>//div[@id='apiServiceAddressPanelContent']/div/ul/li/a[contains(text(),'add-address')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--WIKI_PAGE-->
+<tr>
+	<td>WIKI_PAGE_ADD_PAGE</td>
+	<td>//div[@id='apiServiceWikiPagePanelContent']/div/ul/li/a[contains(text(),'add-page')]</td>
+	<td>add-page</td>
+</tr>
+</tbody>
+</table>
 </body>
 </html>

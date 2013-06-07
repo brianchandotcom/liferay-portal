@@ -1,0 +1,34 @@
+<html>
+<head>
+<title>JsonwebservicesAddress</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">JsonwebservicesAddress</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>JsonwebservicesAddress</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>API_METHOD</td>
+	<td>//div[@class='lfr-api-method lfr-api-section']/h2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVOKE</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

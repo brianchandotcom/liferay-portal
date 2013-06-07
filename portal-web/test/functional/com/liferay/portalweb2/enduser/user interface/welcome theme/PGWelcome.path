@@ -1,0 +1,121 @@
+<html>
+<head>
+<title>PGWelcome</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGWelcome</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGWelcome</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TITLE</td>
+	<td>xPath=(//li[contains(@class,'lfr-nav-deletable')]/a/span)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HEADER_</td>
+	<td>//header/hgroup/h1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SOCIAL_OFFICE</td>
+	<td>//div[@id='social-office']/div/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GETTING_HELP</td>
+	<td>//div[@id='getting-started']/div/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEVELOP_FASTER</td>
+	<td>//div[@id='ide']/div/div/h3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_LINK</td>
+	<td>//a[@id='marketplace']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MENU-->
+<tr>
+	<td>MENU_PAGE_1</td>
+	<td>//ul[@id='contentNav']/li[1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_PAGE_2</td>
+	<td>//ul[@id='contentNav']/li[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_PAGE_3</td>
+	<td>//ul[@id='contentNav']/li[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_PAGE_4</td>
+	<td>//ul[@id='contentNav']/li[4]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_PAGE_5</td>
+	<td>//ul[@id='contentNav']/li[5]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_PAGE_6</td>
+	<td>//ul[@id='contentNav']/li[6]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_PAGE_7</td>
+	<td>//ul[@id='contentNav']/li[7]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TOOLS-->
+<tr>
+	<td>TOOLS_EDIT</td>
+	<td>//div[@class='lfr-meta-actions icons-container']/div/span/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLS_EDIT_TEMPLATE</td>
+	<td>//div[@class='lfr-meta-actions icons-container']/div/span[2]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLS_SELECT_WEB_CONTENT</td>
+	<td>//div[@class='lfr-meta-actions icons-container']/div/span[3]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLS_ADD</td>
+	<td>//div[@class='lfr-meta-actions icons-container']/div/span[4]/a/span</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

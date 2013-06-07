@@ -101,14 +101,14 @@ public class JournalStructureServiceImpl
 	public List<JournalStructure> getStructures(long groupId)
 		throws SystemException {
 
-		return journalStructurePersistence.filterFindByGroupId(groupId);
+		return journalStructureLocalService.filterFindByGroupId(groupId);
 	}
 
 	@Override
 	public List<JournalStructure> getStructures(long[] groupIds)
 		throws SystemException {
 
-		return journalStructurePersistence.filterFindByGroupId(groupIds);
+		return journalStructureLocalService.filterFindByGroupId(groupIds);
 	}
 
 	@Override

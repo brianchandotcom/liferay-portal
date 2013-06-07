@@ -39,6 +39,10 @@ public class JournalConverterUtil {
 	public static String getDDMXSD(String journalXSD) throws Exception {
 		return getJournalConverter().getDDMXSD(journalXSD);
 	}
+	
+	public static String getJournalXSD(String ddmXSD) throws Exception {
+		return getJournalConverter().getJournalXSD(ddmXSD);
+	}
 
 	public static JournalConverter getJournalConverter() {
 		PortalRuntimePermission.checkGetBeanProperty(

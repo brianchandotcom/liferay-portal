@@ -156,7 +156,7 @@
 								data.put("portletid", selPortlet.getRootPortletId());
 								%>
 
-								<aui:a cssClass="content-link modify-link" data="<%= data %>" href="javascript:;" label="change" method="get" />
+								<aui:a cssClass="content-link modify-link" data="<%= data %>" href="javascript:;" id='<%= "contentLink" + StringPool.UNDERLINE + selPortlet.getRootPortletId() %>' label="change" method="get" />
 							</li>
 						</ul>
 

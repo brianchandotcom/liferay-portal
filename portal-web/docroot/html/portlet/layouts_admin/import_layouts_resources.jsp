@@ -371,7 +371,7 @@ ManifestSummary manifestSummary = com.liferay.portal.kernel.lar.ExportImportUtil
 													data.put("portletid", portlet.getPortletId());
 													%>
 
-													<aui:a cssClass="content-link modify-link" data="<%= data %>" href="javascript:;" label="change" method="get" />
+													<aui:a cssClass="content-link modify-link" data="<%= data %>" href="javascript:;" id='<%= "contentLink" + StringPool.UNDERLINE + portlet.getPortletId() %>' label="change" method="get" />
 												</li>
 											</ul>
 

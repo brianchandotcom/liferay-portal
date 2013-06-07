@@ -704,7 +704,7 @@ AUI.add(
 							selectedCommentsAndRatings.push(Liferay.Language.get('ratings'));
 						}
 
-						instance._setLabels('selectedCommentsAndRatings', selectedCommentsAndRatings.join(', '));
+						instance._setLabels('commentsAndRatingsLink', 'selectedCommentsAndRatings', selectedCommentsAndRatings.join(', '));
 					},
 
 					_setContentLabels: function(portletId) {
@@ -726,7 +726,7 @@ AUI.add(
 							}
 						);
 
-						instance._setLabels('selectedContent_' + portletId, selectedContent.join(', '));
+						instance._setLabels('contentLink_' + portletId, 'selectedContent_' + portletId, selectedContent.join(', '));
 					},
 
 					_setGlobalConfigurationLabels: function() {
@@ -742,7 +742,7 @@ AUI.add(
 							selectedGlobalConfiguration.push(Liferay.Language.get('user-preferences'));
 						}
 
-						instance._setLabels('selectedGlobalConfiguration', selectedGlobalConfiguration.join(', '));
+						instance._setLabels('globalConfigurationLink', 'selectedGlobalConfiguration', selectedGlobalConfiguration.join(', '));
 					},
 
 					_setGlobalContentLabels: function() {
@@ -774,11 +774,22 @@ AUI.add(
 							selectedGlobalContent.push(Liferay.Language.get('use-the-current-user-as-author'));
 						}
 
-						instance._setLabels('selectedGlobalContent', selectedGlobalContent.join(', '));
+						instance._setLabels('globalContentLink', 'selectedGlobalContent', selectedGlobalContent.join(', '));
 					},
 
-					_setLabels: function(labelDivId, label) {
+					_setLabels: function(linkId, labelDivId, label) {
 						var instance = this;
+
+						var linkNode = instance.byId(linkId);
+
+						if (linkNode) {
+							if (label !== STR_EMPTY) {
+								linkNode.html(Liferay.Language.get('change'))
+							}
+							else {
+								linkNode.html(Liferay.Language.get('select'))
+							}
+						}
 
 						var labelNode = instance.byId(labelDivId);
 
@@ -868,7 +879,7 @@ AUI.add(
 							selectedPages.push(Liferay.Language.get('logo'));
 						}
 
-						instance._setLabels('selectedPages', selectedPages.join(', '));
+						instance._setLabels('pagesLink', 'selectedPages', selectedPages.join(', '));
 					},
 
 					_setRangeLabels: function() {
@@ -889,7 +900,7 @@ AUI.add(
 							selectedRange = Liferay.Language.get('last');
 						}
 
-						instance._setLabels('selectedRange', selectedRange);
+						instance._setLabels('rangeLink', 'selectedRange', selectedRange);
 					},
 
 					_setRemoteLabels: function() {
@@ -929,7 +940,7 @@ AUI.add(
 							selectedRemote.push(Liferay.Language.get('delete-portlet-data-before-importing'));
 						}
 
-						instance._setLabels('selectedRemote', selectedRemote.join(', '));
+						instance._setLabels('remoteLink', 'selectedRemote', selectedRemote.join(', '));
 					}
 				}
 			}

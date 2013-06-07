@@ -34,10 +34,6 @@ public class InputFieldTag extends IncludeTag {
 		_bean = bean;
 	}
 
-	public void setCheckBoxLabel(String checkBoxLabel) {
-		_checkBoxLabel = checkBoxLabel;
-	}
-
 	public void setCssClass(String cssClass) {
 		_cssClass = cssClass;
 	}
@@ -52,6 +48,10 @@ public class InputFieldTag extends IncludeTag {
 
 	public void setDisabled(boolean disabled) {
 		_disabled = disabled;
+	}
+
+	public void setDisabledToggler(String disabledToggler) {
+		_disabledToggler = disabledToggler;
 	}
 
 	public void setField(String field) {
@@ -94,11 +94,11 @@ public class InputFieldTag extends IncludeTag {
 	protected void cleanUp() {
 		_autoSize = false;
 		_bean = null;
-		_checkBoxLabel = null;
 		_cssClass = null;
 		_defaultLanguageId = null;
 		_defaultValue = null;
 		_disabled = false;
+		_disabledToggler = null;
 		_field = null;
 		_fieldParam = null;
 		_format = null;
@@ -132,8 +132,6 @@ public class InputFieldTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:input-field:autoSize", String.valueOf(_autoSize));
 		request.setAttribute("liferay-ui:input-field:bean", _bean);
-		request.setAttribute(
-			"liferay-ui:input-field:checkBoxLabel", String.valueOf(_checkBoxLabel));
 		request.setAttribute("liferay-ui:input-field:cssClass", _cssClass);
 		request.setAttribute(
 			"liferay-ui:input-field:defaultLanguageId", _defaultLanguageId);
@@ -141,6 +139,9 @@ public class InputFieldTag extends IncludeTag {
 			"liferay-ui:input-field:defaultValue", _defaultValue);
 		request.setAttribute(
 			"liferay-ui:input-field:disabled", String.valueOf(_disabled));
+		request.setAttribute(
+			"liferay-ui:input-field:disabledToggler",
+			String.valueOf(_disabledToggler));
 		request.setAttribute("liferay-ui:input-field:field", _field);
 		request.setAttribute("liferay-ui:input-field:fieldParam", fieldParam);
 		request.setAttribute("liferay-ui:input-field:id", id);
@@ -159,11 +160,11 @@ public class InputFieldTag extends IncludeTag {
 
 	private boolean _autoSize;
 	private Object _bean;
-	private String _checkBoxLabel;
 	private String _cssClass;
 	private String _defaultLanguageId;
 	private Object _defaultValue;
 	private boolean _disabled;
+	private String _disabledToggler;
 	private String _field;
 	private String _fieldParam;
 	private Format _format;

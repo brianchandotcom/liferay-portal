@@ -114,7 +114,7 @@ if (entry == null) {
 			<aui:option label="important" selected="<%= (entry != null) && (entry.getPriority() == 1) %>" value="1" />
 		</aui:select>
 
-		<aui:input disabled="<%= autoDisplayDate %>" checkBoxLabel="display-immediately" name="displayDate" />
+		<aui:input disabled="<%= autoDisplayDate %>" disabledToggler="displayImmediately" name="displayDate" />
 
 		<c:if test="<%= autoDisplayDate %>">
 

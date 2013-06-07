@@ -149,7 +149,7 @@ else if (yearNullable) {
 	var displayDateNode = A.one('#<%= randomNamespace %>displayDate');
 
 	Liferay.component(
-		'<%= namespace + name %>datePicker',
+		'<%= namespace + name %>DatePicker',
 		function() {
 			if (handle) {
 				handle.detach();
@@ -233,7 +233,7 @@ else if (yearNullable) {
 	var handle = displayDateNode.once(
 		['click', 'mousemove'],
 		function(event) {
-			Liferay.component('<%= namespace + name %>datePicker');
+			Liferay.component('<%= namespace + name %>DatePicker');
 		}
 	);
 </aui:script>

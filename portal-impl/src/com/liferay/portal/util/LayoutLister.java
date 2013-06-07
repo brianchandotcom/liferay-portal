@@ -35,8 +35,6 @@ public class LayoutLister {
 			Locale locale)
 		throws PortalException, SystemException {
 
-		_groupId = groupId;
-		_privateLayout = privateLayout;
 		_locale = locale;
 		_nodeId = 1;
 
@@ -46,19 +44,29 @@ public class LayoutLister {
 			"1|0|0|" + LayoutConstants.DEFAULT_PLID + "|" + rootNodeName +
 				"|0");
 
-		_createList(LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, _nodeId, 0);
+		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+			groupId, privateLayout);
+
+		_createList(
+			layouts, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, _nodeId, 0);
 
 		return new LayoutView(_list, _depth);
 	}
 
-	private void _createList(long parentLayoutId, int parentId, int depth)
+	private void _createList(
+			List<Layout> layouts, long parentLayoutId, int parentId, int depth)
 		throws PortalException, SystemException {
 
-		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-			_groupId, _privateLayout, parentLayoutId);
+		List<Layout> matchedLayouts = new ArrayList<Layout>();
 
-		for (int i = 0; i < layouts.size(); i++) {
-			Layout layout = layouts.get(i);
+		for (Layout layout : layouts) {
+			if (layout.getParentLayoutId() == parentLayoutId) {
+				matchedLayouts.add(layout);
+			}
+		}
+
+		for (int i = 0; i < matchedLayouts.size(); i++) {
+			Layout layout = matchedLayouts.get(i);
 
 			if (i == 0) {
 				depth++;
@@ -75,7 +83,7 @@ public class LayoutLister {
 			sb.append(parentId);
 			sb.append("|");
 
-			if ((i + 1) == layouts.size()) {
+			if ((i + 1) == matchedLayouts.size()) {
 				sb.append("1");
 			}
 			else {
@@ -94,15 +102,13 @@ public class LayoutLister {
 
 			_list.add(sb.toString());
 
-			_createList(layout.getLayoutId(), _nodeId, depth);
+			_createList(layouts, layout.getLayoutId(), _nodeId, depth);
 		}
 	}
 
 	private int _depth;
-	private long _groupId;
 	private List<String> _list;
 	private Locale _locale;
 	private int _nodeId;
-	private boolean _privateLayout;
 
 }

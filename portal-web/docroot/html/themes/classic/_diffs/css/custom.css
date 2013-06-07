@@ -216,6 +216,10 @@
 
 	/* ---------- Extras ---------- */
 
+	.control-group {
+		overflow: auto;
+	}
+
 	.modify-pages .delete-tab {
 		@include transition(opacity 0.3s ease);
 	}

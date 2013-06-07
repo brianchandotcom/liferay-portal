@@ -292,6 +292,8 @@ public class SocialActivityCounterLocalServiceWrapper
 	* @throws PortalException if the group or the previous activity counter
 	could not be found
 	* @throws SystemException if a system exception occurred
+	* @deprecated As of 6.2.0, replaced by {@link #addActivityCounter(long,
+	long, long, String, int, int, long, int)}
 	*/
 	@Override
 	public com.liferay.portlet.social.model.SocialActivityCounter addActivityCounter(

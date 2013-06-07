@@ -24,11 +24,34 @@ import java.io.Serializable;
  */
 public class SocialActivityCounterDefinition implements Serializable {
 
+	public static final SocialActivityCounterDefinition ASSET_ACTIVITIES =
+			new SocialActivityCounterDefinition(
+				SocialActivityCounterConstants.NAME_ASSET_ACTIVITIES,
+				SocialActivityCounterConstants.TYPE_ASSET);
+
 	public static final int LIMIT_PERIOD_DAY = 1;
 
 	public static final int LIMIT_PERIOD_LIFETIME = 2;
 
 	public static final int LIMIT_PERIOD_PERIOD = 3;
+
+	public static final SocialActivityCounterDefinition USER_ACHIEVEMENTS =
+		new SocialActivityCounterDefinition(
+			SocialActivityCounterConstants.NAME_USER_ACHIEVEMENTS,
+			SocialActivityCounterConstants.TYPE_ACTOR);
+
+	public static final SocialActivityCounterDefinition USER_ACTIVITIES =
+		new SocialActivityCounterDefinition(
+			SocialActivityCounterConstants.NAME_USER_ACTIVITIES,
+			SocialActivityCounterConstants.TYPE_ACTOR);
+
+	public SocialActivityCounterDefinition() {
+	}
+
+	public SocialActivityCounterDefinition(String name, int ownerType) {
+		_name = name;
+		_ownerType = ownerType;
+	}
 
 	@Override
 	public SocialActivityCounterDefinition clone() {

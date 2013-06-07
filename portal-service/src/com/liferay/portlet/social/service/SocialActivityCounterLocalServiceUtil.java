@@ -280,6 +280,8 @@ public class SocialActivityCounterLocalServiceUtil {
 	* @throws PortalException if the group or the previous activity counter
 	could not be found
 	* @throws SystemException if a system exception occurred
+	* @deprecated As of 6.2.0, replaced by {@link #addActivityCounter(long,
+	long, long, String, int, int, long, int)}
 	*/
 	public static com.liferay.portlet.social.model.SocialActivityCounter addActivityCounter(
 		long groupId, long classNameId, long classPK, java.lang.String name,

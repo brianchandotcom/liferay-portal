@@ -1484,6 +1484,7 @@ public class SourceFormatter {
 
 		Collection<String> fileNames = null;
 
+		Properties staticLogVariableExclustions = null;
 		Properties upgradeServiceUtilExclusions = null;
 
 		if (_portalSource) {
@@ -1493,6 +1494,8 @@ public class SourceFormatter {
 				"source_formatter_javaterm_sort_exclusions.properties");
 			_lineLengthExclusions = _getPortalExclusionsProperties(
 				"source_formatter_line_length_exclusions.properties");
+			staticLogVariableExclustions = _getPortalExclusionsProperties(
+				"source_formatter_static_log_exclusions.properties");
 			upgradeServiceUtilExclusions = _getPortalExclusionsProperties(
 				"source_formatter_upgrade_service_util_exclusions.properties");
 		}
@@ -1640,6 +1643,17 @@ public class SourceFormatter {
 				}
 			}
 
+			String excluded = null;
+
+			if (staticLogVariableExclustions != null) {
+				excluded = staticLogVariableExclustions.getProperty(fileName);
+			}
+
+			if (excluded == null) {
+				newContent = StringUtil.replace(
+					newContent, "private Log _log", "private static Log _log");
+			}
+
 			if (newContent.contains("*/\npackage ")) {
 				_processErrorMessage(fileName, "package: " + fileName);
 			}
@@ -1657,7 +1671,7 @@ public class SourceFormatter {
 
 			// LPS-34911
 
-			String excluded = null;
+			excluded = null;
 
 			if (upgradeServiceUtilExclusions != null) {
 				excluded = upgradeServiceUtilExclusions.getProperty(fileName);

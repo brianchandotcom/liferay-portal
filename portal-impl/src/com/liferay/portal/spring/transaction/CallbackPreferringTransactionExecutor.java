@@ -46,18 +46,24 @@ public class CallbackPreferringTransactionExecutor
 				(CallbackPreferringPlatformTransactionManager)
 					platformTransactionManager;
 
-		Object result = callbackPreferringPlatformTransactionManager.execute(
-			transactionAttribute,
-			new CallbackPreferringTransactionCallback(
-				transactionAttribute, methodInvocation));
+		try {
+			Object result =
+				callbackPreferringPlatformTransactionManager.execute(
+					transactionAttribute,
+					new CallbackPreferringTransactionCallback(
+						transactionAttribute, methodInvocation));
 
-		if (result instanceof ThrowableHolder) {
-			ThrowableHolder throwableHolder = (ThrowableHolder)result;
+			if (result instanceof ThrowableHolder) {
+				ThrowableHolder throwableHolder = (ThrowableHolder)result;
 
-			throw throwableHolder.getThrowable();
+				throw throwableHolder.getThrowable();
+			}
+
+			return result;
 		}
-
-		return result;
+		catch (ThrowableHolderException the) {
+			throw the.getCause();
+		}
 	}
 
 	protected static class ThrowableHolder {
@@ -71,6 +77,14 @@ public class CallbackPreferringTransactionExecutor
 		}
 
 		private Throwable _throwable;
+
+	}
+
+	protected static class ThrowableHolderException extends RuntimeException {
+
+		public ThrowableHolderException(Throwable cause) {
+			super(cause);
+		}
 
 	}
 
@@ -121,7 +135,7 @@ public class CallbackPreferringTransactionExecutor
 						throw (RuntimeException)throwable;
 					}
 					else {
-						throw new RuntimeException(throwable);
+						throw new ThrowableHolderException(throwable);
 					}
 				}
 				else {

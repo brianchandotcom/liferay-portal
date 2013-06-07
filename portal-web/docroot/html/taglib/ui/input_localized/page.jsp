@@ -159,7 +159,7 @@ List<String> languageIds = new ArrayList<String>();
 				for (String curLanguageId : uniqueLanguageIds) {
 				%>
 
-					<td class="palette-item" data-index="<%= index++ %>" data-value="<%= curLanguageId %>">
+					<td class='palette-item <%= (index == 0) ? "palette-item-selected" : StringPool.BLANK %>' data-index="<%= index++ %>" data-value="<%= curLanguageId %>">
 						<a class="palette-item-inner" href="javascript:void(0);">
 							<img class="lfr-input-localized-flag" data-languageid="<%= curLanguageId %>" src="<%= themeDisplay.getPathThemeImages() %>/language/<%= curLanguageId %>.png" />
 							<div class="lfr-input-localized-state"></div>

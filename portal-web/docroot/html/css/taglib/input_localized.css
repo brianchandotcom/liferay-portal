@@ -13,10 +13,6 @@
 		@include opacity(1);
 	}
 
-	.palette-container {
-		margin-bottom: 12px;
-	}
-
 	.palette-item {
 		border-width: 0;
 		padding: 0;
@@ -43,13 +39,13 @@
 		@include border-radius(3px);
 	}
 
-	.lfr-input-localized .lfr-input-localized-state {
+	&.input-localized-focused .lfr-input-localized .lfr-input-localized-state {
 		background: #ddd;
 		display: block;
 		@include box-shadow(0 0 3px #ddd);
 	}
 
-	.palette-item-selected .lfr-input-localized-state {
+	&.input-localized-focused .palette-item-selected .lfr-input-localized-state {
 		background: #27c1f2;
 		display: block;
 		@include box-shadow(0 0 3px #27c1f2);

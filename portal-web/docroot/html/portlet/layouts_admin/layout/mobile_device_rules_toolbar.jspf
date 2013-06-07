@@ -100,7 +100,8 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "add");
 <aui:script use="aui-base">
 	var config = {
 		dialog: {
-			width: 820
+			width: 820,
+			zIndex: Liferay.zIndex.WINDOW + 2
 		}
 	};
 

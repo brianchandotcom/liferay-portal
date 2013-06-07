@@ -50,6 +50,61 @@ public class UserNotificationInterpreterLocalServiceWrapper
 	}
 
 	/**
+	* Adds the use notification interpreter to the list of available
+	* interpreters.
+	*
+	* @param userNotificationInterpreter the user notification interpreter
+	*/
+	@Override
+	public void addUserNotificationInterpreter(
+		com.liferay.portal.kernel.notifications.UserNotificationInterpreter userNotificationInterpreter) {
+		_userNotificationInterpreterLocalService.addUserNotificationInterpreter(userNotificationInterpreter);
+	}
+
+	/**
+	* Removes the user notification interpreter from the list of available
+	* interpreters.
+	*
+	* @param userNotificationInterpreter the user notification interpreter
+	*/
+	@Override
+	public void deleteUserNotificationInterpreter(
+		com.liferay.portal.kernel.notifications.UserNotificationInterpreter userNotificationInterpreter) {
+		_userNotificationInterpreterLocalService.deleteUserNotificationInterpreter(userNotificationInterpreter);
+	}
+
+	@Override
+	public java.util.Map<java.lang.String, java.util.Map<java.lang.String, com.liferay.portal.kernel.notifications.UserNotificationInterpreter>> getUserNotificationInterpreters() {
+		return _userNotificationInterpreterLocalService.getUserNotificationInterpreters();
+	}
+
+	/**
+	* Creates a human readable user notification feed entry for the user
+	* notification using an available compatible user notification interpreter.
+	*
+	* <p>
+	* This method finds the appropriate interpreter for the user notification
+	* by going through the available interpreters and asking them if they can
+	* handle the user notidication based on the portlet.
+	* </p>
+	*
+	* @param userNotificationEvent the user notification event to be
+	translated to human readable form
+	* @return the user notification feed that is a human readable form of the
+	user notification record or <code>null</code> if a compatible
+	interpreter is not found
+	*/
+	@Override
+	public com.liferay.portal.kernel.notifications.UserNotificationFeedEntry interpret(
+		java.lang.String selector,
+		com.liferay.portal.model.UserNotificationEvent userNotificationEvent,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userNotificationInterpreterLocalService.interpret(selector,
+			userNotificationEvent, serviceContext);
+	}
+
+	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public UserNotificationInterpreterLocalService getWrappedUserNotificationInterpreterLocalService() {

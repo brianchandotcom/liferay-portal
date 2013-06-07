@@ -17,6 +17,7 @@ package com.liferay.portal.service;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
 /**
@@ -54,4 +55,47 @@ public interface UserNotificationInterpreterLocalService
 	* @param beanIdentifier the Spring bean ID for this bean
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
+
+	/**
+	* Adds the use notification interpreter to the list of available
+	* interpreters.
+	*
+	* @param userNotificationInterpreter the user notification interpreter
+	*/
+	public void addUserNotificationInterpreter(
+		com.liferay.portal.kernel.notifications.UserNotificationInterpreter userNotificationInterpreter);
+
+	/**
+	* Removes the user notification interpreter from the list of available
+	* interpreters.
+	*
+	* @param userNotificationInterpreter the user notification interpreter
+	*/
+	public void deleteUserNotificationInterpreter(
+		com.liferay.portal.kernel.notifications.UserNotificationInterpreter userNotificationInterpreter);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.Map<java.lang.String, java.util.Map<java.lang.String, com.liferay.portal.kernel.notifications.UserNotificationInterpreter>> getUserNotificationInterpreters();
+
+	/**
+	* Creates a human readable user notification feed entry for the user
+	* notification using an available compatible user notification interpreter.
+	*
+	* <p>
+	* This method finds the appropriate interpreter for the user notification
+	* by going through the available interpreters and asking them if they can
+	* handle the user notidication based on the portlet.
+	* </p>
+	*
+	* @param userNotificationEvent the user notification event to be
+	translated to human readable form
+	* @return the user notification feed that is a human readable form of the
+	user notification record or <code>null</code> if a compatible
+	interpreter is not found
+	*/
+	public com.liferay.portal.kernel.notifications.UserNotificationFeedEntry interpret(
+		java.lang.String selector,
+		com.liferay.portal.model.UserNotificationEvent userNotificationEvent,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

@@ -4176,6 +4176,7 @@
 			<transient name="undeployedPortlet" />
 			<transient name="unlinkedRoles" />
 			<transient name="useDefaultTemplate" />
+			<transient name="userNotificationInterpreterClasses" />
 			<transient name="userPrincipalStrategy" />
 			<transient name="virtualPath" />
 			<transient name="webDAVStorageClass" />

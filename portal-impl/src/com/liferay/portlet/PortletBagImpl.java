@@ -17,6 +17,7 @@ package com.liferay.portlet;
 import com.liferay.portal.kernel.atom.AtomCollectionAdapter;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.lar.StagedModelDataHandler;
+import com.liferay.portal.kernel.notifications.UserNotificationInterpreter;
 import com.liferay.portal.kernel.poller.PollerProcessor;
 import com.liferay.portal.kernel.pop.MessageListener;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
@@ -69,6 +70,7 @@ public class PortletBagImpl implements PortletBag {
 		MessageListener popMessageListenerInstance,
 		List<SocialActivityInterpreter> socialActivityInterpreterInstances,
 		SocialRequestInterpreter socialRequestInterpreterInstance,
+		List<UserNotificationInterpreter> userNotificationInterpreterInstances,
 		WebDAVStorage webDAVStorageInstance, Method xmlRpcMethodInstance,
 		ControlPanelEntry controlPanelEntryInstance,
 		List<AssetRendererFactory> assetRendererFactoryInstances,
@@ -97,6 +99,8 @@ public class PortletBagImpl implements PortletBag {
 		_socialActivityInterpreterInstances =
 			socialActivityInterpreterInstances;
 		_socialRequestInterpreterInstance = socialRequestInterpreterInstance;
+		_userNotificationInterpreterInstances =
+			userNotificationInterpreterInstances;
 		_webDAVStorageInstance = webDAVStorageInstance;
 		_xmlRpcMethodInstance = xmlRpcMethodInstance;
 		_controlPanelEntryInstance = controlPanelEntryInstance;
@@ -121,9 +125,10 @@ public class PortletBagImpl implements PortletBag {
 			getPortletLayoutListenerInstance(), getPollerProcessorInstance(),
 			getPopMessageListenerInstance(),
 			getSocialActivityInterpreterInstances(),
-			getSocialRequestInterpreterInstance(), getWebDAVStorageInstance(),
-			getXmlRpcMethodInstance(), getControlPanelEntryInstance(),
-			getAssetRendererFactoryInstances(),
+			getSocialRequestInterpreterInstance(),
+			getUserNotificationInterpreterInstances(),
+			getWebDAVStorageInstance(), getXmlRpcMethodInstance(),
+			getControlPanelEntryInstance(), getAssetRendererFactoryInstances(),
 			getAtomCollectionAdapterInstances(),
 			getCustomAttributesDisplayInstances(),
 			getPermissionPropagatorInstance(), getTrashHandlerInstances(),
@@ -273,6 +278,13 @@ public class PortletBagImpl implements PortletBag {
 	}
 
 	@Override
+	public List<UserNotificationInterpreter>
+		getUserNotificationInterpreterInstances() {
+
+		return _userNotificationInterpreterInstances;
+	}
+
+	@Override
 	public WebDAVStorage getWebDAVStorageInstance() {
 		return _webDAVStorageInstance;
 	}
@@ -317,6 +329,8 @@ public class PortletBagImpl implements PortletBag {
 	private ServletContext _servletContext;
 	private List<SocialActivityInterpreter> _socialActivityInterpreterInstances;
 	private SocialRequestInterpreter _socialRequestInterpreterInstance;
+	private List<UserNotificationInterpreter>
+		_userNotificationInterpreterInstances;
 	private List<StagedModelDataHandler<?>> _stagedModelDataHandlerInstances;
 	private TemplateHandler _templateHandlerInstance;
 	private List<TrashHandler> _trashHandlerInstances;

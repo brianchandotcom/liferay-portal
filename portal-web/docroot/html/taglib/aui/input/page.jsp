@@ -74,6 +74,7 @@
 			defaultLanguageId="<%= defaultLanguageId %>"
 			defaultValue="<%= value %>"
 			disabled="<%= disabled %>"
+			disabledToggler="<%= disabledToggler %>"
 			field="<%= field %>"
 			fieldParam="<%= fieldParam %>"
 			formName="<%= formName %>"

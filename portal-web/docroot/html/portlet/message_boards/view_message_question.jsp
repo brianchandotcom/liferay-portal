@@ -107,9 +107,9 @@ MBThread thread = messageDisplay.getThread();
 			Liferay.Service(
 				'/mbmessage/update-answer',
 				{
+					messageId: messageId,
 					answer: true,
-					cascade: false,
-					messageId: messageId
+					cascade: false
 				}
 			);
 
@@ -161,9 +161,9 @@ MBThread thread = messageDisplay.getThread();
 			Liferay.Service(
 				'/mbmessage/update-answer',
 				{
+					messageId: messageId,
 					answer: false,
-					cascade: false,
-					messageId: messageId
+					cascade: false
 				}
 			);
 

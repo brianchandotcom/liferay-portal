@@ -869,12 +869,12 @@ AUI.add(
 							Liferay.Service(
 								'/assetvocabulary/delete-vocabularies',
 								{
+									vocabularyIds: vocabularyIds,
 									serviceContext: JSON.stringify(
 										{
 											failOnPortalException: false
 										}
-									),
-									vocabularyIds: vocabularyIds
+									)
 								},
 								A.bind('_processVocabularyDeletion', instance)
 							);

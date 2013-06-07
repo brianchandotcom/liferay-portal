@@ -219,8 +219,8 @@ AUI.add(
 						Liferay.Service(
 							'/ddlrecordset/update-min-display-rows',
 							{
-								minDisplayRows: minDisplayRows,
 								recordSetId: recordsetId,
+								minDisplayRows: minDisplayRows,
 								serviceContext: JSON.stringify(
 									{
 										scopeGroupId: themeDisplay.getScopeGroupId(),
@@ -378,10 +378,10 @@ AUI.add(
 					Liferay.Service(
 						'/ddlrecord/add-record',
 						{
-							displayIndex: displayIndex,
-							fieldsMap: JSON.stringify(fieldsMap),
 							groupId: themeDisplay.getScopeGroupId(),
 							recordSetId: recordsetId,
+							displayIndex: displayIndex,
+							fieldsMap: JSON.stringify(fieldsMap),
 							serviceContext: JSON.stringify(
 								{
 									scopeGroupId: themeDisplay.getScopeGroupId(),
@@ -608,10 +608,10 @@ AUI.add(
 					Liferay.Service(
 						'/ddlrecord/update-record',
 						{
+							recordId: recordId,
 							displayIndex: displayIndex,
 							fieldsMap: JSON.stringify(fieldsMap),
 							mergeFields: merge,
-							recordId: recordId,
 							serviceContext: JSON.stringify(
 								{
 									scopeGroupId: themeDisplay.getScopeGroupId(),
@@ -635,8 +635,8 @@ AUI.add(
 				Liferay.Service(
 					'/dlapp/get-file-entry-by-uuid-and-group-id',
 					{
-						groupId: fileJSON.groupId,
-						uuid: fileJSON.uuid
+						uuid: fileJSON.uuid,
+						groupId: fileJSON.groupId
 					},
 					callback
 				);

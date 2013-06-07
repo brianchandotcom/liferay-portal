@@ -80,9 +80,9 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "add");
 			Liferay.Service(
 				'/mdrrulegroupinstance/add-rule-group-instance',
 				{
+					groupId: <%= groupId %>,
 					className: '<%= className %>',
 					classPK: <%= classPK %>,
-					groupId: <%= groupId %>,
 					ruleGroupId: ruleGroupId,
 					serviceContext: A.JSON.stringify(
 						{

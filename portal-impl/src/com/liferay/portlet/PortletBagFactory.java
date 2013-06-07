@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.notifications.UserNotificationInterpreter;
 import com.liferay.portal.kernel.poller.PollerProcessor;
 import com.liferay.portal.kernel.pop.MessageListener;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
@@ -72,6 +73,8 @@ import com.liferay.portal.poller.PollerProcessorUtil;
 import com.liferay.portal.pop.POPServerUtil;
 import com.liferay.portal.security.permission.PermissionPropagator;
 import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.service.UserNotificationInterpreterLocalServiceUtil;
+import com.liferay.portal.service.impl.UserNotificationInterpreterImpl;
 import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
@@ -187,6 +190,9 @@ public class PortletBagFactory {
 			SocialRequestInterpreterLocalServiceUtil.addRequestInterpreter(
 				socialRequestInterpreterInstance);
 		}
+
+		List<UserNotificationInterpreter> userNotificationInterpreterInstances =
+			newUserNotificationInterpreterInstances(portlet);
 
 		WebDAVStorage webDAVStorageInstance = null;
 
@@ -332,7 +338,8 @@ public class PortletBagFactory {
 			templateHandlerInstance, portletLayoutListenerInstance,
 			pollerProcessorInstance, popMessageListenerInstance,
 			socialActivityInterpreterInstances,
-			socialRequestInterpreterInstance, webDAVStorageInstance,
+			socialRequestInterpreterInstance,
+			userNotificationInterpreterInstances, webDAVStorageInstance,
 			xmlRpcMethodInstance, controlPanelEntryInstance,
 			assetRendererFactoryInstances, atomCollectionAdapterInstances,
 			customAttributesDisplayInstances, permissionPropagatorInstance,
@@ -930,6 +937,47 @@ public class PortletBagFactory {
 
 		return (URLEncoder)newInstance(
 			URLEncoder.class, portlet.getURLEncoderClass());
+	}
+
+	protected UserNotificationInterpreter
+			newUserNotificationInterpreterInstance(
+				Portlet portlet, String userNotificationInterpreterClass)
+		throws Exception {
+
+		UserNotificationInterpreter userNotificationInterpreterInstance =
+			(UserNotificationInterpreter)newInstance(
+				UserNotificationInterpreter.class,
+				userNotificationInterpreterClass);
+
+		userNotificationInterpreterInstance =
+			new UserNotificationInterpreterImpl(
+				portlet.getPortletId(), userNotificationInterpreterInstance);
+
+		UserNotificationInterpreterLocalServiceUtil.
+			addUserNotificationInterpreter(userNotificationInterpreterInstance);
+
+		return userNotificationInterpreterInstance;
+	}
+
+	protected List<UserNotificationInterpreter>
+			newUserNotificationInterpreterInstances(Portlet portlet)
+		throws Exception {
+
+		List<UserNotificationInterpreter> userNotificationInterpreterInstances =
+			new ArrayList<UserNotificationInterpreter>();
+
+		for (String userNotificationInterpreterClass :
+				portlet.getUserNotificationInterpreterClasses()) {
+
+			UserNotificationInterpreter userNotificationInterpreterInstance =
+				newUserNotificationInterpreterInstance(
+					portlet, userNotificationInterpreterClass);
+
+			userNotificationInterpreterInstances.add(
+				userNotificationInterpreterInstance);
+		}
+
+		return userNotificationInterpreterInstances;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(PortletBagFactory.class);

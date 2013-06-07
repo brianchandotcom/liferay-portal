@@ -125,6 +125,7 @@ import com.liferay.portal.service.UserGroupService;
 import com.liferay.portal.service.UserIdMapperLocalService;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.UserNotificationEventLocalService;
+import com.liferay.portal.service.UserNotificationInterpreterLocalService;
 import com.liferay.portal.service.UserService;
 import com.liferay.portal.service.UserTrackerLocalService;
 import com.liferay.portal.service.UserTrackerPathLocalService;
@@ -3475,6 +3476,25 @@ public abstract class ShardLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * Returns the user notification interpreter local service.
+	 *
+	 * @return the user notification interpreter local service
+	 */
+	public UserNotificationInterpreterLocalService getUserNotificationInterpreterLocalService() {
+		return userNotificationInterpreterLocalService;
+	}
+
+	/**
+	 * Sets the user notification interpreter local service.
+	 *
+	 * @param userNotificationInterpreterLocalService the user notification interpreter local service
+	 */
+	public void setUserNotificationInterpreterLocalService(
+		UserNotificationInterpreterLocalService userNotificationInterpreterLocalService) {
+		this.userNotificationInterpreterLocalService = userNotificationInterpreterLocalService;
+	}
+
+	/**
 	 * Returns the user tracker local service.
 	 *
 	 * @return the user tracker local service
@@ -4159,6 +4179,8 @@ public abstract class ShardLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected UserNotificationEventLocalService userNotificationEventLocalService;
 	@BeanReference(type = UserNotificationEventPersistence.class)
 	protected UserNotificationEventPersistence userNotificationEventPersistence;
+	@BeanReference(type = UserNotificationInterpreterLocalService.class)
+	protected UserNotificationInterpreterLocalService userNotificationInterpreterLocalService;
 	@BeanReference(type = UserTrackerLocalService.class)
 	protected UserTrackerLocalService userTrackerLocalService;
 	@BeanReference(type = UserTrackerPersistence.class)

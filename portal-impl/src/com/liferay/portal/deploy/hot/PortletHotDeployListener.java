@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.notifications.UserNotificationInterpreter;
 import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
@@ -62,6 +63,7 @@ import com.liferay.portal.pop.POPServerUtil;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ResourceActionLocalServiceUtil;
+import com.liferay.portal.service.UserNotificationInterpreterLocalServiceUtil;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
@@ -251,6 +253,19 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 
 		SocialRequestInterpreterLocalServiceUtil.deleteRequestInterpreter(
 			portlet.getSocialRequestInterpreterInstance());
+
+		List<UserNotificationInterpreter> userNotificationInterpreters =
+			portlet.getUserNotificationInterpreterInstances();
+
+		if (userNotificationInterpreters != null) {
+			for (UserNotificationInterpreter userNotificationInterpreter :
+					userNotificationInterpreters) {
+
+				UserNotificationInterpreterLocalServiceUtil.
+					deleteUserNotificationInterpreter(
+						userNotificationInterpreter);
+			}
+		}
 
 		WebDAVUtil.deleteStorage(portlet.getWebDAVStorageInstance());
 

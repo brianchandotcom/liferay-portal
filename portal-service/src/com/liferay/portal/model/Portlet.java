@@ -1043,6 +1043,22 @@ public interface Portlet extends PortletModel, PersistedModel {
 	public long getUserId();
 
 	/**
+	* Returns the names of the classes that represent user notification
+	* interpreters associated with the portlet.
+	*
+	* @return the names of the classes that represent user notification
+	interpreters associated with the portlet
+	*/
+	public java.util.List<java.lang.String> getUserNotificationInterpreterClasses();
+
+	/**
+	* Returns the user notification interpreter instances of the portlet.
+	*
+	* @return the user notification interpreter instances of the portlet
+	*/
+	public java.util.List<com.liferay.portal.kernel.notifications.UserNotificationInterpreter> getUserNotificationInterpreterInstances();
+
+	/**
 	* Returns the user principal strategy of the portlet.
 	*
 	* @return the user principal strategy of the portlet
@@ -2160,6 +2176,17 @@ public interface Portlet extends PortletModel, PersistedModel {
 	default template
 	*/
 	public void setUseDefaultTemplate(boolean useDefaultTemplate);
+
+	/**
+	* Sets the names of the classes that represent user notification
+	* interpreters associated with the portlet.
+	*
+	* @param userNotificationInterpreterClasses the names of the classes that
+	represent user notification interpreters associated with the
+	portlet
+	*/
+	public void setUserNotificationInterpreterClasses(
+		java.util.List<java.lang.String> userNotificationInterpreterClasses);
 
 	/**
 	* Sets the user principal strategy of the portlet.

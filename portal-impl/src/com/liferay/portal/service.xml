@@ -2358,6 +2358,7 @@
 			<finder-column name="archived" />
 		</finder>
 	</entity>
+	<entity name="UserNotificationInterpreter" local-service="true" remote-service="false" tx-manager="none" />
 	<entity name="UserTracker" local-service="true" remote-service="false">
 
 		<!-- PK fields -->

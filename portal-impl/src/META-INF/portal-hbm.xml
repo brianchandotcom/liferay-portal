@@ -65,6 +65,7 @@
 	<import class="com.liferay.portal.model.UserGroupRole" />
 	<import class="com.liferay.portal.model.UserIdMapper" />
 	<import class="com.liferay.portal.model.UserNotificationEvent" />
+	<import class="com.liferay.portal.model.UserNotificationInterpreter" />
 	<import class="com.liferay.portal.model.UserTracker" />
 	<import class="com.liferay.portal.model.UserTrackerPath" />
 	<import class="com.liferay.portal.model.VirtualHost" />

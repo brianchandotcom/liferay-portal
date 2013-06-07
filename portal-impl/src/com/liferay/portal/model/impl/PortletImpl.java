@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.notifications.UserNotificationInterpreter;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.poller.PollerProcessor;
 import com.liferay.portal.kernel.pop.MessageListener;
@@ -111,6 +112,7 @@ public class PortletImpl extends PortletBaseImpl {
 		_schedulerEntries = new ArrayList<SchedulerEntry>();
 		_stagedModelDataHandlerClasses = new ArrayList<String>();
 		_socialActivityInterpreterClasses = new ArrayList<String>();
+		_userNotificationInterpreterClasses = new ArrayList<String>();
 		_assetRendererFactoryClasses = new ArrayList<String>();
 		_atomCollectionAdapterClasses = new ArrayList<String>();
 		_customAttributesDisplayClasses = new ArrayList<String>();
@@ -155,10 +157,12 @@ public class PortletImpl extends PortletBaseImpl {
 		String portletLayoutListenerClass, String pollerProcessorClass,
 		String popMessageListenerClass,
 		List<String> socialActivityInterpreterClasses,
-		String socialRequestInterpreterClass, String webDAVStorageToken,
-		String webDAVStorageClass, String xmlRpcMethodClass,
-		String controlPanelEntryCategory, double controlPanelEntryWeight,
-		String controlPanelClass, List<String> assetRendererFactoryClasses,
+		String socialRequestInterpreterClass,
+		List<String> userNotificationInterpreterClasses,
+		String webDAVStorageToken, String webDAVStorageClass,
+		String xmlRpcMethodClass, String controlPanelEntryCategory,
+		double controlPanelEntryWeight, String controlPanelClass,
+		List<String> assetRendererFactoryClasses,
 		List<String> atomCollectionAdapterClasses,
 		List<String> customAttributesDisplayClasses, String ddmDisplayClass,
 		String permissionPropagatorClass, List<String> trashHandlerClasses,
@@ -220,6 +224,8 @@ public class PortletImpl extends PortletBaseImpl {
 		_popMessageListenerClass = popMessageListenerClass;
 		_socialActivityInterpreterClasses = socialActivityInterpreterClasses;
 		_socialRequestInterpreterClass = socialRequestInterpreterClass;
+		_userNotificationInterpreterClasses =
+			userNotificationInterpreterClasses;
 		_webDAVStorageToken = webDAVStorageToken;
 		_webDAVStorageClass = webDAVStorageClass;
 		_xmlRpcMethodClass = xmlRpcMethodClass;
@@ -364,7 +370,8 @@ public class PortletImpl extends PortletBaseImpl {
 			getTemplateHandlerClass(), getPortletLayoutListenerClass(),
 			getPollerProcessorClass(), getPopMessageListenerClass(),
 			getSocialActivityInterpreterClasses(),
-			getSocialRequestInterpreterClass(), getWebDAVStorageToken(),
+			getSocialRequestInterpreterClass(),
+			getUserNotificationInterpreterClasses(), getWebDAVStorageToken(),
 			getWebDAVStorageClass(), getXmlRpcMethodClass(),
 			getControlPanelEntryCategory(), getControlPanelEntryWeight(),
 			getControlPanelEntryClass(), getAssetRendererFactoryClasses(),
@@ -1955,6 +1962,34 @@ public class PortletImpl extends PortletBaseImpl {
 	@Override
 	public long getUserId() {
 		return PortletConstants.getUserId(getPortletId());
+	}
+
+	/**
+	 * Returns the names of the classes that represent user notification
+	 * interpreters associated with the portlet.
+	 *
+	 * @return the names of the classes that represent user notification
+	 *         interpreters associated with the portlet
+	 */
+	public List<String> getUserNotificationInterpreterClasses() {
+		return _userNotificationInterpreterClasses;
+	}
+
+	/**
+	 * Returns the user notification interpreter instances of the portlet.
+	 *
+	 * @return the user notification interpreter instances of the portlet
+	 */
+	public List<UserNotificationInterpreter>
+		getUserNotificationInterpreterInstances() {
+
+		if (_socialActivityInterpreterClasses.isEmpty()) {
+			return null;
+		}
+
+		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
+
+		return portletBag.getUserNotificationInterpreterInstances();
 	}
 
 	/**
@@ -3621,6 +3656,21 @@ public class PortletImpl extends PortletBaseImpl {
 	}
 
 	/**
+	 * Sets the names of the classes that represent user notification
+	 * interpreters associated with the portlet.
+	 *
+	 * @param userNotificationInterpreterClasses the names of the classes that
+	 *        represent user notification interpreters associated with the
+	 *        portlet
+	 */
+	public void setUserNotificationInterpreterClasses(
+		List<String> userNotificationInterpreterClasses) {
+
+		_userNotificationInterpreterClasses =
+			userNotificationInterpreterClasses;
+	}
+
+	/**
 	 * Sets the user principal strategy of the portlet.
 	 *
 	 * @param userPrincipalStrategy the user principal strategy of the portlet
@@ -4223,6 +4273,12 @@ public class PortletImpl extends PortletBaseImpl {
 	 * <code>True</code> if the portlet uses the default template.
 	 */
 	private boolean _useDefaultTemplate = true;
+
+	/**
+	 * The names of the classes that represents user notification interpreters
+	 * associated with the portlet.
+	 */
+	private List<String> _userNotificationInterpreterClasses;
 
 	/**
 	 * The user principal strategy of the portlet.

@@ -165,6 +165,7 @@
 	<bean id="com.liferay.portal.service.persistence.UserIdMapperPersistence" class="com.liferay.portal.service.persistence.UserIdMapperPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.UserNotificationEventLocalService" class="com.liferay.portal.service.impl.UserNotificationEventLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.UserNotificationEventPersistence" class="com.liferay.portal.service.persistence.UserNotificationEventPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portal.service.UserNotificationInterpreterLocalService" class="com.liferay.portal.service.impl.UserNotificationInterpreterLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.UserTrackerLocalService" class="com.liferay.portal.service.impl.UserTrackerLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.UserTrackerPersistence" class="com.liferay.portal.service.persistence.UserTrackerPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.UserTrackerPathLocalService" class="com.liferay.portal.service.impl.UserTrackerPathLocalServiceImpl" />

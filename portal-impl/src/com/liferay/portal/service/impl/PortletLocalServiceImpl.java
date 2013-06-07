@@ -1409,6 +1409,21 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			GetterUtil.getString(
 				portletElement.elementText("social-request-interpreter-class"),
 				portletModel.getSocialRequestInterpreterClass()));
+
+		List<String> userNotificationInterpreterClasses =
+			new ArrayList<String>();
+
+		for (Element userNotificationInterpreterClassElement :
+				portletElement.elements(
+					"user-notification-interpreter-class")) {
+
+			userNotificationInterpreterClasses.add(
+				userNotificationInterpreterClassElement.getText());
+		}
+
+		portletModel.setUserNotificationInterpreterClasses(
+			userNotificationInterpreterClasses);
+
 		portletModel.setWebDAVStorageToken(
 			GetterUtil.getString(
 				portletElement.elementText("webdav-storage-token"),

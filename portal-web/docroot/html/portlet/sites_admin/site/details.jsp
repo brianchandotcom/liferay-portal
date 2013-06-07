@@ -154,10 +154,19 @@ if (showPrototypes && (group != null)) {
 			typeSettingsProperties = group.getTypeSettingsProperties();
 		}
 
+		String siteName = HtmlUtil.escape(group.getDescriptiveName(themeDisplay.getLocale()));
+
+		StringBundler sb = new StringBundler(30);
+		sb.append(themeDisplay.getPortalURL());
+		sb.append("/documents");
+		sb.append(group.getFriendlyURL());
+
+		String siteUrl = sb.toString();
+
 		boolean directoryIndexingEnabled = PropertiesParamUtil.getBoolean(typeSettingsProperties, request, "directoryIndexingEnabled");
 		%>
 
-		<aui:input label="directory-indexing-enabled" name="TypeSettingsProperties--directoryIndexingEnabled--" type="checkbox" value="<%= directoryIndexingEnabled %>" />
+		<aui:input helpMessage='<%= LanguageUtil.format(pageContext, "directory-indexing-help", new Object[] {siteName, siteUrl}) %>' label="directory-indexing-enabled" name="TypeSettingsProperties--directoryIndexingEnabled--" type="checkbox" value="<%= directoryIndexingEnabled %>" />
 	</c:if>
 
 	<c:if test="<%= liveGroup != null %>">

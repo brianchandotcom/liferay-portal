@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
+import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -68,18 +69,16 @@ public class DeletionSystemEventExporter {
 
 			@Override
 			protected void addCriteria(DynamicQuery dynamicQuery) {
-				if (deletionEventClassNameIds.isEmpty()) {
-					return;
-				}
-
 				setGroupId(portletDataContext.getScopeGroupId());
 
 				Property classNameIdProperty = PropertyFactoryUtil.forName(
 					"classNameId");
 
-				dynamicQuery.add(
-					classNameIdProperty.in(
-						deletionEventClassNameIds.toArray()));
+				if (!deletionEventClassNameIds.isEmpty()) {
+					dynamicQuery.add(
+						classNameIdProperty.in(
+							deletionEventClassNameIds.toArray()));
+				}
 
 				Property typeProperty = PropertyFactoryUtil.forName("type");
 
@@ -93,7 +92,8 @@ public class DeletionSystemEventExporter {
 			protected void performAction(Object object) {
 				SystemEvent systemEvent = (SystemEvent)object;
 
-				exportDeletionSystemEvent(systemEvent, rootElement);
+				exportDeletionSystemEvent(
+					portletDataContext, systemEvent, rootElement);
 			}
 
 			private void _addCreateDateProperty(DynamicQuery dynamicQuery) {
@@ -106,11 +106,11 @@ public class DeletionSystemEventExporter {
 
 				Date startDate = portletDataContext.getStartDate();
 
-				dynamicQuery.add(createDateProperty.ge(startDate.getTime()));
+				dynamicQuery.add(createDateProperty.ge(startDate));
 
 				Date endDate = portletDataContext.getEndDate();
 
-				dynamicQuery.add(createDateProperty.le(endDate.getTime()));
+				dynamicQuery.add(createDateProperty.le(endDate));
 			}
 		};
 
@@ -118,7 +118,8 @@ public class DeletionSystemEventExporter {
 	}
 
 	protected void exportDeletionSystemEvent(
-		SystemEvent systemEvent, Element deletionSystemEventsElement) {
+		PortletDataContext portletDataContext, SystemEvent systemEvent,
+		Element deletionSystemEventsElement) {
 
 		Element deletionSystemEventElement =
 			deletionSystemEventsElement.addElement("deletion-system-event");
@@ -130,6 +131,12 @@ public class DeletionSystemEventExporter {
 			"group-id", String.valueOf(systemEvent.getGroupId()));
 		deletionSystemEventElement.addAttribute(
 			"uuid", systemEvent.getClassUuid());
+
+		ManifestSummary manifestSummary =
+			portletDataContext.getManifestSummary();
+
+		manifestSummary.incrementDeletionCount(
+			PortalUtil.getClassName(systemEvent.getClassNameId()));
 	}
 
 }

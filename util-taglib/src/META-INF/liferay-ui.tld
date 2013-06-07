@@ -1695,6 +1695,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>disabledToggler</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>field</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

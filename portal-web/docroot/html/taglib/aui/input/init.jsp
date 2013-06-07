@@ -41,6 +41,7 @@ java.lang.String cssClass = GetterUtil.getString((java.lang.String)request.getAt
 java.util.Map data = (java.util.Map)request.getAttribute("aui:input:data");
 java.lang.String defaultLanguageId = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:defaultLanguageId"));
 boolean disabled = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:disabled")));
+java.lang.String disabledToggler = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:disabledToggler"));
 java.lang.String field = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:field"));
 java.lang.String fieldParam = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:fieldParam"));
 boolean first = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:first")));
@@ -78,6 +79,7 @@ _updateOptions(_options, "cssClass", cssClass);
 _updateOptions(_options, "data", data);
 _updateOptions(_options, "defaultLanguageId", defaultLanguageId);
 _updateOptions(_options, "disabled", disabled);
+_updateOptions(_options, "disabledToggler", disabledToggler);
 _updateOptions(_options, "field", field);
 _updateOptions(_options, "fieldParam", fieldParam);
 _updateOptions(_options, "first", first);

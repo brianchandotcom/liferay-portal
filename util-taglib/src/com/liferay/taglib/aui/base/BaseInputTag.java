@@ -69,6 +69,10 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		return _disabled;
 	}
 
+	public java.lang.String getDisabledToggler() {
+		return _disabledToggler;
+	}
+
 	public java.lang.String getField() {
 		return _field;
 	}
@@ -229,6 +233,12 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		_disabled = disabled;
 
 		setScopedAttribute("disabled", disabled);
+	}
+
+	public void setDisabledToggler(java.lang.String disabledToggler) {
+		_disabledToggler = disabledToggler;
+
+		setScopedAttribute("disabledToggler", disabledToggler);
 	}
 
 	public void setField(java.lang.String field) {
@@ -404,6 +414,7 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		_data = null;
 		_defaultLanguageId = null;
 		_disabled = false;
+		_disabledToggler = null;
 		_field = null;
 		_fieldParam = null;
 		_first = false;
@@ -449,6 +460,7 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		setNamespacedAttribute(request, "data", _data);
 		setNamespacedAttribute(request, "defaultLanguageId", _defaultLanguageId);
 		setNamespacedAttribute(request, "disabled", _disabled);
+		setNamespacedAttribute(request, "disabledToggler", _disabledToggler);
 		setNamespacedAttribute(request, "field", _field);
 		setNamespacedAttribute(request, "fieldParam", _fieldParam);
 		setNamespacedAttribute(request, "first", _first);
@@ -492,6 +504,7 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 	private java.lang.Object _data = null;
 	private java.lang.String _defaultLanguageId = null;
 	private boolean _disabled = false;
+	private java.lang.String _disabledToggler = null;
 	private java.lang.String _field = null;
 	private java.lang.String _fieldParam = null;
 	private boolean _first = false;

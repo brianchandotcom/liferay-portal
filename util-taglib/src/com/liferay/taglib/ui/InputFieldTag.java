@@ -50,6 +50,10 @@ public class InputFieldTag extends IncludeTag {
 		_disabled = disabled;
 	}
 
+	public void setDisabledToggler(String disabledToggler) {
+		_disabledToggler = disabledToggler;
+	}
+
 	public void setField(String field) {
 		_field = field;
 	}
@@ -94,6 +98,7 @@ public class InputFieldTag extends IncludeTag {
 		_defaultLanguageId = null;
 		_defaultValue = null;
 		_disabled = false;
+		_disabledToggler = null;
 		_field = null;
 		_fieldParam = null;
 		_format = null;
@@ -134,6 +139,9 @@ public class InputFieldTag extends IncludeTag {
 			"liferay-ui:input-field:defaultValue", _defaultValue);
 		request.setAttribute(
 			"liferay-ui:input-field:disabled", String.valueOf(_disabled));
+		request.setAttribute(
+			"liferay-ui:input-field:disabledToggler",
+			String.valueOf(_disabledToggler));
 		request.setAttribute("liferay-ui:input-field:field", _field);
 		request.setAttribute("liferay-ui:input-field:fieldParam", fieldParam);
 		request.setAttribute("liferay-ui:input-field:id", id);
@@ -156,6 +164,7 @@ public class InputFieldTag extends IncludeTag {
 	private String _defaultLanguageId;
 	private Object _defaultValue;
 	private boolean _disabled;
+	private String _disabledToggler;
 	private String _field;
 	private String _fieldParam;
 	private Format _format;

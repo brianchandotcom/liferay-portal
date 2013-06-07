@@ -171,15 +171,16 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 					document.<portlet:namespace />fm.<portlet:namespace />toGroupId.value = event.groupid;
 					document.<portlet:namespace />fm.<portlet:namespace />toFileEntryId.value = 0;
 
-					var nameEl = document.getElementById("<portlet:namespace />toGroupName");
+					var nameEl = A.one("#<portlet:namespace />toGroupName");
+					var nameHTML = A.Escape.html(event.groupname) + '&nbsp;';
 
-					nameEl.innerHTML = A.Escape.html(event.groupname) + "&nbsp;";
+					nameEl.html(nameHTML);
+					nameEl.addClass('input uneditable-input span2');
 
 					var button = A.one('#<portlet:namespace />selectToFileEntryButton');
 
 					if (button) {
-						button.set('disabled', false);
-						button.ancestor('.button').removeClass('button-disabled');
+						Liferay.Util.toggleDisabled(button, false);
 					}
 				}
 			);
@@ -210,6 +211,8 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 </aui:script>
 
 <aui:script>
+	var A = AUI();
+
 	function <portlet:namespace />createSelectFileEntryId() {
 		return '<portlet:namespace />selectFileEntry_' + document.<portlet:namespace />fm.<portlet:namespace />toGroupId.value;
 	}
@@ -229,13 +232,14 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 	function <portlet:namespace />selectFileEntry(fileEntryId, title) {
 		document.<portlet:namespace />fm.<portlet:namespace />toFileEntryId.value = fileEntryId;
 
-		var titleEl = document.getElementById("<portlet:namespace />toFileEntryTitle");
+		var titleEl = A.one("#<portlet:namespace />toFileEntryTitle");
 
 		if (title != "") {
 			title += "&nbsp;";
 		}
 
-		titleEl.innerHTML = title;
+		titleEl.html(title);
+		titleEl.addClass('input uneditable-input span2');
 	}
 </aui:script>
 

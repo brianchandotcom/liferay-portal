@@ -189,6 +189,7 @@ create index IX_C8419FBE on DDMStructure (groupId);
 create index IX_B6ED5E50 on DDMStructure (groupId, classNameId);
 create unique index IX_C8785130 on DDMStructure (groupId, classNameId, structureKey);
 create index IX_43395316 on DDMStructure (groupId, parentStructureId);
+create index IX_657899A8 on DDMStructure (parentStructureId);
 create index IX_20FDE04C on DDMStructure (structureKey);
 create index IX_E61809C8 on DDMStructure (uuid_);
 create index IX_F9FB8D60 on DDMStructure (uuid_, companyId);

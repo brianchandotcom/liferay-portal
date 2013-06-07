@@ -65,15 +65,15 @@ public class JSONWebServiceActionsManagerUtil {
 			contextPath);
 	}
 
+	public static int getJSONWebServiceActionsCount(String contextPath) {
+		return getJSONWebServiceActionsManager().getJSONWebServiceActionsCount(
+			contextPath);
+	}
+
 	public static JSONWebServiceActionsManager
 		getJSONWebServiceActionsManager() {
 
 		return _jsonWebServiceActionsManager;
-	}
-
-	public static int getJSONWebServiceActionsCount(String contextPath) {
-		return getJSONWebServiceActionsManager().getJSONWebServiceActionsCount(
-			contextPath);
 	}
 
 	public static void registerJSONWebServiceAction(

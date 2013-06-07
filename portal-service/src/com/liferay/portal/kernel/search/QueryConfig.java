@@ -149,18 +149,18 @@ public class QueryConfig implements Serializable {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.INDEX_SEARCH_QUERY_SUGGESTION_ENABLED));
 
+	private static final float
+		_INDEX_SEARCH_QUERY_SUGGESTION_SCORING_THRESHOLD =
+			GetterUtil.getFloat(
+				PropsUtil.get(
+					PropsKeys.INDEX_SEARCH_QUERY_SUGGESTION_SCORING_THRESHOLD));
+
 	private static final boolean _INDEX_SEARCH_SCORING_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.INDEX_SEARCH_SCORING_ENABLED));
 
 	private static final String HITS_PROCESSING_ENABLED =
 		"hitsProcessingEnabled";
-
-	private static final float
-		_INDEX_SEARCH_QUERY_SUGGESTION_SCORING_THRESHOLD =
-			GetterUtil.getFloat(
-				PropsUtil.get(
-					PropsKeys.INDEX_SEARCH_QUERY_SUGGESTION_SCORING_THRESHOLD));
 
 	private Map<String, Serializable> _attributes =
 		new HashMap<String, Serializable>();

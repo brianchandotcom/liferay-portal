@@ -158,15 +158,15 @@ public class SessionFactoryImpl implements SessionFactory {
 		return liferaySession;
 	}
 
+	protected static final List<PortletSessionFactoryImpl>
+		portletSessionFactories =
+			new CopyOnWriteArrayList<PortletSessionFactoryImpl>();
+
 	private static final String[] _PRELOAD_CLASS_NAMES =
 		PropsValues.
 			SPRING_HIBERNATE_SESSION_FACTORY_PRELOAD_CLASSLOADER_CLASSES;
 
 	private static Log _log = LogFactoryUtil.getLog(SessionFactoryImpl.class);
-
-	protected static final List<PortletSessionFactoryImpl>
-		portletSessionFactories =
-			new CopyOnWriteArrayList<PortletSessionFactoryImpl>();
 
 	private ClassLoader _sessionFactoryClassLoader;
 	private SessionFactoryImplementor _sessionFactoryImplementor;

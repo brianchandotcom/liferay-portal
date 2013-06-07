@@ -158,33 +158,45 @@ configurationRenderURL.setParameter("portletResource", portletResource);
 						</aui:select>
 
 						<aui:field-wrapper label="header-web-content">
-							<c:if test="<%= Validator.isNotNull(headerArticleId) %>">
+							<div class="input-append">
+								<c:choose>
+									<c:when test="<%= Validator.isNotNull(headerArticleId) %>">
+										<%
+										JournalArticle headerArticle = JournalArticleLocalServiceUtil.getArticle(headerArticleGroupId, headerArticleId);
+										%>
 
-								<%
-								JournalArticle headerArticle = JournalArticleLocalServiceUtil.getArticle(headerArticleGroupId, headerArticleId);
-								%>
+										<liferay-ui:input-resource url="<%= HtmlUtil.escape(headerArticle.getTitle(locale)) %>" />
+									</c:when>
+									<c:otherwise>
+										<liferay-ui:input-resource url="" />
+									</c:otherwise>
+								</c:choose>
 
-								<%= HtmlUtil.escape(headerArticle.getTitle(locale)) %>
-							</c:if>
+								<aui:button name="selectButton" onClick='<%= renderResponse.getNamespace() + "selectionForHeader();" %>' value="select" />
 
-							<aui:button name="selectButton" onClick='<%= renderResponse.getNamespace() + "selectionForHeader();" %>' value="select" />
-
-							<aui:button name="removeButton" onClick='<%= renderResponse.getNamespace() + "removeSelectionForHeader();" %>' value="remove" />
+								<aui:button name="removeButton" onClick='<%= renderResponse.getNamespace() + "removeSelectionForHeader();" %>' value="remove" />
+							</div>
 						</aui:field-wrapper>
 
 						<aui:field-wrapper label="footer-web-content">
-							<c:if test="<%= Validator.isNotNull(footerArticleId) %>">
+							<div class="input-append">
+								<c:choose>
+									<c:when test="<%= Validator.isNotNull(footerArticleId) %>">
+										<%
+										JournalArticle footerArticle = JournalArticleLocalServiceUtil.getArticle(footerArticleGroupId, footerArticleId);
+										%>
 
-								<%
-								JournalArticle footerArticle = JournalArticleLocalServiceUtil.getArticle(footerArticleGroupId, footerArticleId);
-								%>
+										<liferay-ui:input-resource url="<%= HtmlUtil.escape(footerArticle.getTitle(locale)) %>" />
+									</c:when>
+									<c:otherwise>
+										<liferay-ui:input-resource url="" />
+									</c:otherwise>
+								</c:choose>
 
-								<%= HtmlUtil.escape(footerArticle.getTitle(locale)) %>
-							</c:if>
+								<aui:button name="selectButton" onClick='<%= renderResponse.getNamespace() + "selectionForFooter();" %>' value="select" />
 
-							<aui:button name="selectButton" onClick='<%= renderResponse.getNamespace() + "selectionForFooter();" %>' value="select" />
-
-							<aui:button name="removeButton" onClick='<%= renderResponse.getNamespace() + "removeSelectionForFooter();" %>' value="remove" />
+								<aui:button name="removeButton" onClick='<%= renderResponse.getNamespace() + "removeSelectionForFooter();" %>' value="remove" />
+							</div>
 						</aui:field-wrapper>
 					</aui:fieldset>
 				</liferay-ui:panel>

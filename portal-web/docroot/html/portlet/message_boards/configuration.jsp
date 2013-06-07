@@ -351,7 +351,7 @@ String emailSignature = PrefsParamUtil.getString(portletPreferences, request, em
 			<tr>
 				<td>
 					<aui:field-wrapper label="default-language">
-						<%= defaultLocale.getDisplayName(defaultLocale) %>
+						<liferay-ui:input-resource url="<%= defaultLocale.getDisplayName(defaultLocale) %>" />
 					</aui:field-wrapper>
 				</td>
 				<td>
@@ -607,7 +607,7 @@ String emailSignature = PrefsParamUtil.getString(portletPreferences, request, em
 				<tr>
 					<td class="lfr-label">
 						<aui:field-wrapper label="default-language">
-							<%= defaultLocale.getDisplayName(defaultLocale) %>
+							<liferay-ui:input-resource url="<%= defaultLocale.getDisplayName(defaultLocale) %>" />
 						</aui:field-wrapper>
 					</td>
 					<td class="lfr-label">

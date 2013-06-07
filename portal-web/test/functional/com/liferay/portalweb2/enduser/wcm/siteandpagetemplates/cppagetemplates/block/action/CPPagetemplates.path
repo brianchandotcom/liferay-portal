@@ -1,0 +1,106 @@
+<html>
+<head>
+<title>CPPagetemplates</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPPagetemplates</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPPagetemplates</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD</td>
+	<td>//section[@id='portlet_146']/div/div/div/div/div/div/ul/li/a[contains(.,'Add')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PAGE_TEMPLATE_TABLE-->
+<tr>
+	<td>PAGE_TEMPLATE_TABLE_NAME_1</td>
+	<td>xpath=(//tr/td[1]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TEMPLATE_TABLE_ACTIVE_1</td>
+	<td>xpath=(//tr/td[2]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TEMPLATE_TABLE_ACTIONS_1</td>
+	<td>xpath=(//tr/td[3]/div/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TEMPLATE_TABLE_NAME_4</td>
+	<td>xpath=(//tr/td[1]/a)[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TEMPLATE_TABLE_ACTIVE_4</td>
+	<td>xpath=(//tr/td[2]/a)[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TEMPLATE_TABLE_ACTIONS_4</td>
+	<td>xpath=(//tr/td[3]/div/a)[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PAGE_TEMPLATE_MENULIST-->
+<tr>
+	<td>PAGE_TEMPLATE_MENULIST_EDIT</td>
+	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TEMPLATE_MENULIST_PERMISSIONS</td>
+	<td>//a[@role='menuitem' and contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TEMPLATE_MENULIST_DELETE</td>
+	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TEMPLATE_MENULIST_EXPORT</td>
+	<td>//a[@role='menuitem' and contains(.,'Export')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TEMPLATE_MENULIST_IMPORT</td>
+	<td>//a[@role='menuitem' and contains(.,'Import')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

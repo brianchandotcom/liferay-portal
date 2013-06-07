@@ -85,6 +85,9 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 	public static final String NAMESPACE = "journal";
 
 	public JournalPortletDataHandler() {
+		setDeletionEventClassNames(
+			DDMStructure.class.getName(), DDMTemplate.class.getName(),
+			JournalArticle.class.getName(), JournalFeed.class.getName());
 		setDataLocalized(true);
 		setExportControls(
 			new PortletDataHandlerBoolean(

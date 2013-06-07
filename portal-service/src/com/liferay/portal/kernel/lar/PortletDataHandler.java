@@ -75,6 +75,8 @@ public interface PortletDataHandler {
 	 */
 	public String[] getDataPortletPreferences();
 
+	public String[] getDeletionEventClassNames();
+
 	/**
 	 * Returns an array of the controls defined for this data handler. These
 	 * controls enable the developer to create fine grained controls over export

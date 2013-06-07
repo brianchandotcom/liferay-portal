@@ -42,6 +42,10 @@ public class PortletDisplayTemplatePortletDataHandler
 
 	public static final String NAMESPACE = "portlet_display_templates";
 
+	public PortletDisplayTemplatePortletDataHandler() {
+		setDeletionEventClassNames(DDMTemplate.class.getName());
+	}
+
 	@Override
 	public long getExportModelCount(ManifestSummary manifestSummary) {
 		long totalModelCount = -1;

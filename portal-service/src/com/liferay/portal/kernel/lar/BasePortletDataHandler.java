@@ -78,6 +78,9 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		}
 
 		try {
+			portletDataContext.addDeletionEventClassNames(
+				getDeletionEventClassNames());
+
 			return doExportData(
 				portletDataContext, portletId, portletPreferences);
 		}
@@ -101,6 +104,11 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	@Override
 	public String[] getDataPortletPreferences() {
 		return _dataPortletPreferences;
+	}
+
+	@Override
+	public String[] getDeletionEventClassNames() {
+		return _deletionEventClassNames;
 	}
 
 	@Override
@@ -325,6 +333,12 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		_dataPortletPreferences = dataPortletPreferences;
 	}
 
+	protected void setDeletionEventClassNames(
+		String... deletionEventClassNames) {
+
+		_deletionEventClassNames = deletionEventClassNames;
+	}
+
 	protected void setExportControls(
 		PortletDataHandlerControl... exportControls) {
 
@@ -362,7 +376,8 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 
 	private DataLevel _dataLevel = DataLevel.SITE;
 	private boolean _dataLocalized;
-	private String[] _dataPortletPreferences = new String[0];
+	private String[] _dataPortletPreferences = StringPool.EMPTY_ARRAY;
+	private String[] _deletionEventClassNames = StringPool.EMPTY_ARRAY;
 	private PortletDataHandlerControl[] _exportControls =
 		new PortletDataHandlerControl[0];
 	private PortletDataHandlerControl[] _exportMetadataControls =

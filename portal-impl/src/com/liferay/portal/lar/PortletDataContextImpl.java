@@ -368,6 +368,19 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	@Override
+	public void addDeletionEventClassNames(String[] deletionEventClassNames) {
+
+		if (Validator.isNull(deletionEventClassNames)) {
+			return;
+		}
+
+		for (String deletionEventClassName : deletionEventClassNames) {
+			_deletionEventClassIds.add(
+				PortalUtil.getClassNameId(deletionEventClassName));
+		}
+	}
+
+	@Override
 	public void addExpando(
 			Element element, String path, ClassedModel classedModel)
 		throws PortalException, SystemException {
@@ -837,6 +850,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	@Override
+	public Set<Long> getDeletionEventClassIds() {
+		return _deletionEventClassIds;
+	}
+
 	public Date getEndDate() {
 		return _endDate;
 	}
@@ -2250,6 +2267,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private long _companyGroupId;
 	private long _companyId;
 	private String _dataStrategy;
+	private Set<Long> _deletionEventClassIds = new HashSet<Long>();
 	private Date _endDate;
 	private Map<String, List<ExpandoColumn>> _expandoColumnsMap =
 		new HashMap<String, List<ExpandoColumn>>();

@@ -505,13 +505,13 @@ if (hints != null) {
 				</c:otherwise>
 			</c:choose>
 
-			<c:if test="<%= autoFocus && !localized %>">
-				<aui:script>
-					Liferay.Util.focusFormField('#<%= namespace %><%= id %>');
-				</aui:script>
-			</c:if>
-
 			<c:if test="<%= !localized %>">
+				<c:if test="<%= autoFocus %>">
+					<aui:script>
+						Liferay.Util.focusFormField('#<%= namespace %><%= id %>');
+					</aui:script>
+				</c:if>
+
 				<aui:script use="aui-char-counter">
 					new A.CharCounter(
 						{

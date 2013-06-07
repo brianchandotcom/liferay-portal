@@ -236,7 +236,7 @@ if (Validator.isNull(redirect)) {
 		<c:when test="<%= editable %>">
 			<aui:fieldset>
 				<c:if test="<%= editTitle %>">
-					<aui:input name="title" size="30" value="<%= title %>" />
+					<aui:input autoFocus="<%= !preview %>" name="title" size="30" value="<%= title %>" />
 				</c:if>
 
 				<c:if test="<%= Validator.isNotNull(parentTitle) %>">
@@ -539,12 +539,6 @@ if (Validator.isNull(redirect)) {
 	}
 
 	window.<portlet:namespace />currentFormatIndex = document.<portlet:namespace />fm.<portlet:namespace />format.selectedIndex;
-
-	<c:if test="<%= editable && !preview %>">
-		if (!window.<portlet:namespace />editor) {
-			Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace /><%= editTitle ? "title" : "content" %>);
-		}
-	</c:if>
 </aui:script>
 
 <%

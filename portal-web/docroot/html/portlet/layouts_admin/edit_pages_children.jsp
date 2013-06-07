@@ -80,7 +80,7 @@ if (!StringUtil.contains(tabs4Names, tabs4)) {
 				<liferay-ui:message key="name" />
 			</td>
 			<td>
-				<input name="<portlet:namespace />name_<%= defaultLanguageId %>" size="30" type="text" value="<%= HtmlUtil.escape(name) %>" />
+				<input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="<portlet:namespace />name_<%= defaultLanguageId %>" size="30" type="text" value="<%= HtmlUtil.escape(name) %>" />
 			</td>
 		</tr>
 		<tr>
@@ -167,10 +167,6 @@ if (!StringUtil.contains(tabs4Names, tabs4)) {
 		<input type="submit" value="<liferay-ui:message key="add-page" />" /><br />
 
 		<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
-			<aui:script>
-				Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />name_<%= defaultLanguageId %>);
-			</aui:script>
-
 			<c:if test="<%= !layoutPrototypes.isEmpty() %>">
 				<aui:script use="aui-base">
 					var layoutPrototypeIdSelect = A.one('#<portlet:namespace />layoutPrototypeId');

@@ -125,7 +125,7 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajaxRequest) {
 
 		<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
 			<aui:script>
-				Liferay.Util.focusFormField(document.<portlet:namespace />fm1.<portlet:namespace />keywords);
+				Liferay.Util.focusFormField(document.getElementById('<portlet:namespace />keywords'));
 			</aui:script>
 		</c:if>
 

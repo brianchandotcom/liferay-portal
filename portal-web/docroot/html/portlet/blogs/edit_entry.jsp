@@ -72,7 +72,7 @@ boolean preview = ParamUtil.getBoolean(request, "preview");
 	</c:if>
 
 	<aui:fieldset>
-		<aui:input name="title" />
+		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="title" />
 
 		<aui:input name="displayDate" />
 
@@ -444,10 +444,6 @@ boolean preview = ParamUtil.getBoolean(request, "preview");
 		},
 		['aui-io']
 	);
-
-	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
-		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />title);
-	</c:if>
 </aui:script>
 
 <aui:script use="aui-base">

@@ -183,7 +183,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 	%>
 
 	<aui:fieldset>
-		<aui:input label="" name="keywords" size="30" title="search" value="<%= keywords %>" />
+		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" label="" name="keywords" size="30" title="search" value="<%= keywords %>" />
 	</aui:fieldset>
 
 	<aui:button-row>
@@ -192,9 +192,3 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 	<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
 </aui:form>
-
-<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
-	<aui:script>
-		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />keywords);
-	</aui:script>
-</c:if>

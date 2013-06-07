@@ -81,7 +81,7 @@ editProductEntryURL.setParameter("productEntryId", String.valueOf(productEntryId
 			<liferay-ui:message key="version-name" />
 		</td>
 		<td>
-			<liferay-ui:input-field bean="<%= productVersion %>" field="version" model="<%= SCProductVersion.class %>" />
+			<liferay-ui:input-field autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" bean="<%= productVersion %>" field="version" model="<%= SCProductVersion.class %>" />
 		</td>
 	</tr>
 	<tr>
@@ -205,10 +205,6 @@ editProductEntryURL.setParameter("productEntryId", String.valueOf(productEntryId
 			}
 		}
 	}
-
-	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
-		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />version);
-	</c:if>
 
 	document.<portlet:namespace />fm.<portlet:namespace />directDownloadURL.onkeyup = <portlet:namespace />toggleSelectBoxes;
 

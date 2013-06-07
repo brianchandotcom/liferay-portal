@@ -91,7 +91,7 @@ MembershipRequest membershipRequest = (MembershipRequest)request.getAttribute(We
 			<%= HtmlUtil.escape(membershipRequest.getComments()) %>
 		</aui:field-wrapper>
 
-		<aui:select label="status" name="statusId">
+		<aui:select autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" label="status" name="statusId">
 			<aui:option label="approve" value="<%= MembershipRequestConstants.STATUS_APPROVED %>" />
 			<aui:option label="deny" value="<%= MembershipRequestConstants.STATUS_DENIED %>" />
 		</aui:select>
@@ -105,9 +105,3 @@ MembershipRequest membershipRequest = (MembershipRequest)request.getAttribute(We
 		<aui:button href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
-
-<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
-	<aui:script>
-		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />statusId);
-	</aui:script>
-</c:if>

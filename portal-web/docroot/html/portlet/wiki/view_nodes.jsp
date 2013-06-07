@@ -130,9 +130,3 @@ searchContainer.setResults(results);
 		<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
 	</aui:fieldset>
 </aui:form>
-
-<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
-	<aui:script>
-		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />keywords);
-	</aui:script>
-</c:if>

@@ -57,7 +57,7 @@ MembershipRequest membershipRequest = (MembershipRequest)request.getAttribute(We
 			</aui:field-wrapper>
 		</c:if>
 
-		<aui:input name="comments" />
+		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="comments" />
 	</aui:fieldset>
 
 	<aui:button-row>
@@ -66,9 +66,3 @@ MembershipRequest membershipRequest = (MembershipRequest)request.getAttribute(We
 		<aui:button href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
-
-<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
-	<aui:script>
-		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />comments);
-	</aui:script>
-</c:if>

@@ -281,10 +281,6 @@ if (step == 1) {
 
 				<liferay-ui:search-iterator />
 			</liferay-ui:search-container>
-
-			<aui:script>
-				Liferay.Util.focusFormField(document.<portlet:namespace />selectOrganizationRoleFm.<portlet:namespace />name);
-			</aui:script>
 		</c:when>
 	</c:choose>
 </aui:form>

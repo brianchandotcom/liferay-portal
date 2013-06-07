@@ -90,7 +90,7 @@ List<String> languageIds = new ArrayList<String>();
 
 	<c:if test="<%= autoFocus %>">
 		<aui:script>
-			Liferay.Util.focusFormField('#<portlet:namespace /><%= id + StringPool.UNDERLINE + mainLanguageId %>');
+			Liferay.Util.focusFormField('#<portlet:namespace /><%= HtmlUtil.escapeAttribute(id + fieldSuffix) %>');
 		</aui:script>
 	</c:if>
 

@@ -129,12 +129,6 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, entryEn
 			<liferay-ui:icon cssClass="close-search" id="closeSearch" image="../aui/remove" url="javascript:;" />
 		</div>
 
-		<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
-			<aui:script>
-				Liferay.Util.focusFormField(document.<portlet:namespace />fm1.<portlet:namespace />keywords);
-			</aui:script>
-		</c:if>
-
 		<aui:script use="aui-base">
 			A.one('#<portlet:namespace />closeSearch').on(
 				'click',

@@ -92,7 +92,7 @@ String subtype = BeanParamUtil.getString(role, request, "subtype");
 				<aui:input name="name" type="hidden" value="<%= role.getName() %>" />
 			</c:when>
 			<c:otherwise>
-				<aui:input label='<%= (role != null) ? "new-name" : "name" %>' name="name" />
+				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" label='<%= (role != null) ? "new-name" : "name" %>' name="name" />
 			</c:otherwise>
 		</c:choose>
 
@@ -153,12 +153,6 @@ String subtype = BeanParamUtil.getString(role, request, "subtype");
 		</aui:button-row>
 	</aui:fieldset>
 </aui:form>
-
-<aui:script>
-	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
-		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />name);
-	</c:if>
-</aui:script>
 
 <%
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, ((role == null) ? "add-role" : "edit")), currentURL);

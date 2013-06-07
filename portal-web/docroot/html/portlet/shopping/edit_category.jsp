@@ -97,7 +97,7 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 			</aui:field-wrapper>
 		</c:if>
 
-		<aui:input cssClass="lfr-input-text-container" name="name" />
+		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" cssClass="lfr-input-text-container" name="name" />
 
 		<aui:input cssClass="lfr-textarea-container" name="description" />
 
@@ -173,8 +173,4 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 		},
 		['aui-base']
 	);
-
-	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
-		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />name);
-	</c:if>
 </aui:script>

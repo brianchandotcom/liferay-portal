@@ -467,6 +467,22 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 		assertEquals(expectedFields, actualFields);
 	}
 
+	@Test
+	public void testGetJournalSD() throws Exception {
+		String expectedXSD = readText("test-journal-structure-all-fields.xml");
+
+		Map<String, Map<String, String>> expectedMap =
+			JournalTestUtil.getXsdMap(expectedXSD);
+
+		String actualXSD = JournalConverterUtil.getJournalXSD(
+			readText("test-ddm-structure-all-fields.xml"));
+
+		Map<String, Map<String, String>> actualMap = JournalTestUtil.getXsdMap(
+			actualXSD);
+
+		Assert.assertEquals(expectedMap, actualMap);
+	}
+
 	protected void assertEquals(Fields expectedFields, Fields actualFields) {
 		Field expectedFieldsDisplayField = expectedFields.get(
 			DDMImpl.FIELDS_DISPLAY_NAME);

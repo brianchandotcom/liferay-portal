@@ -17,10 +17,14 @@ package com.liferay.portlet.journal.util;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -41,6 +45,7 @@ import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.util.RSSUtil;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -467,6 +472,35 @@ public class JournalTestUtil {
 		return "$name.getData()";
 	}
 
+	public static Map<String, Map<String, String>> getXsdMap(String xsd)
+		throws Exception {
+
+		Map<String, Map<String, String>> map =
+			new HashMap<String, Map<String, String>>();
+
+		Document document = SAXReaderUtil.read(xsd);
+
+		XPath xPathSelector = SAXReaderUtil.createXPath("//dynamic-element");
+
+		List<Node> nodes = xPathSelector.selectNodes(document);
+
+		for (Node node : nodes) {
+			Element dynamicElementElement = (Element)node;
+
+			String type = dynamicElementElement.attributeValue("type");
+
+			if (Validator.equals(type, "selection_break")) {
+				continue;
+			}
+
+			String name = dynamicElementElement.attributeValue("name");
+
+			map.put(name, _getMap(dynamicElementElement));
+		}
+
+		return map;
+	}
+
 	public static JournalArticle updateArticle(
 			JournalArticle article, String title, String content)
 		throws Exception {
@@ -521,6 +555,33 @@ public class JournalTestUtil {
 		friendlyURL = friendlyURL.concat(layout.getFriendlyURL());
 
 		return friendlyURL;
+	}
+
+	private static Map<String, String> _getMap(Element dynamicElementElement) {
+		Map<String, String> map = new HashMap<String, String>();
+
+		// Attributes
+
+		for (Attribute attribute : dynamicElementElement.attributes()) {
+			map.put(attribute.getName(), attribute.getValue());
+		}
+
+		// Metadata
+
+		Element metadadataElement = dynamicElementElement.element("meta-data");
+
+		if (metadadataElement == null) {
+			return map;
+		}
+
+		List<Element> entryElements = metadadataElement.elements("entry");
+
+		for (Element entryElement : entryElements) {
+			map.put(
+				entryElement.attributeValue("name"), entryElement.getText());
+		}
+
+		return map;
 	}
 
 	private static Locale[] _locales = {

@@ -1977,6 +1977,53 @@
 		<reference package-path="com.liferay.portlet.messageboards" entity="MBThread" />
 		<reference package-path="com.liferay.portlet.social" entity="SocialActivity" />
 	</entity>
+	<entity name="SystemEventEntry" local-service="true" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="entryId" type="long" primary="true" accessor="true" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="eventType" type="int" />
+		<column name="classNameId" type="long" />
+		<column name="classPK" type="long" />
+		<column name="classUuid" type="String" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="G_C_C" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
+		<finder name="G_E_C_C" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="eventType" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
+	</entity>
 	<entity name="Team" local-service="true" remote-service="true">
 
 		<!-- PK fields -->

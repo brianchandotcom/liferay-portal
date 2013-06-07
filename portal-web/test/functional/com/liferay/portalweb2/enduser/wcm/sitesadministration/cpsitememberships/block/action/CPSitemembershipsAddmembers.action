@@ -7,10 +7,10 @@
 
 	<command name="click">
 		<case locator-key1="SAVE_BUTTON">
-			<execute function="Click#valueClickAtAndWait" value1="Save" />
+			<execute function="Click#textClickAtAndWait" value1="Save" />
 		</case>
 		<case locator-key1="SEARCH_BUTTON">
-			<execute function="Click#valueClickAtAndWait" value1="Search" />
+			<execute function="Click#textClickAtAndWait" value1="Search" />
 		</case>
 	</command>
 </definition>

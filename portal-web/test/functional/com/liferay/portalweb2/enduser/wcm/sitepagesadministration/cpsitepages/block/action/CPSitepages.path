@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>HEADER</td>
-	<td>//h3[@class='header-title']/span</td>
+	<td>//div[@class='row-fluid ']/h1</td>
 	<td></td>
 </tr>
 <tr>
@@ -62,42 +62,42 @@
 <!--TOOLBAR-->
 <tr>
 	<td>TOOLBAR_ADD_PAGE</td>
-	<td>//div[@id='_156_layoutSetToolbar']/div/button[contains(.,'Add Page')]</td>
+	<td>//ul[@id='_156_layoutsNav']/li/a[contains(.,'Add Page')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_VIEW_PAGES</td>
-	<td>//div[@id='_156_layoutSetToolbar']/div/button[contains(.,'View Pages')]</td>
+	<td>//ul[@id='_156_layoutsNav']/li/a[contains(.,'View Pages')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_EXPORT</td>
-	<td>//div[@id='_156_layoutSetToolbar']/div/button[contains(.,'Export')]</td>
+	<td>//ul[@id='_156_layoutsNav']/li/a[contains(.,'Export')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_IMPORT</td>
-	<td>//div[@id='_156_layoutSetToolbar']/div/button[contains(.,'Import')]</td>
+	<td>//ul[@id='_156_layoutsNav']/li/a[contains(.,'Import')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_ADD_CHILD_PAGE</td>
-	<td>//div[@id='_156_layoutToolbar']/div/button[contains(.,'Add Child Page')]</td>
+	<td>//ul[@id='_156_layoutsNav']/li/a[contains(.,'Add Child Page')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_PERMISSIONS</td>
-	<td>//div[@id='_156_layoutToolbar']/div/button[contains(.,'Permissions')]</td>
+	<td>//ul[@id='_156_layoutsNav']/li/a[contains(.,'Permissions')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_DELETE</td>
-	<td>//div[@id='_156_layoutToolbar']/div/button[contains(.,'Delete')]</td>
+	<td>//ul[@id='_156_layoutsNav']/li/a[contains(.,'Delete')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_COPY_PORTLETS</td>
-	<td>//div[@id='_156_layoutToolbar']/div/button[contains(.,'Copy Portlets from Page')]</td>
+	<td>//ul[@id='_156_layoutsNav']/li/a[contains(.,'Copy Portlets from Page')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -144,7 +144,7 @@
 <!--PAGE_TREE-->
 <tr>
 	<td>PAGE_TREE_ROOT_ARROW</td>
-	<td>//li[contains(@id,'layoutsTree_layoutId_0_')]/div/div[@class='aui-tree-hitarea']</td>
+	<td>//li[contains(@id,'layoutsTree_layoutId_0_')]/div/i[contains(@class,'tree-hitarea')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -154,7 +154,7 @@
 </tr>
 <tr>
 	<td>PAGE_TREE_PAGE_ARROW_1</td>
-	<td>xpath=(//a[contains(@id,'layoutsTree_layout_')]/../../div[@class='aui-tree-hitarea'])[1]</td>
+	<td>xpath=(//a[contains(@id,'layoutsTree_layout_')]/../../i[contains(@class,'tree-hitarea')])[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -164,7 +164,7 @@
 </tr>
 <tr>
 	<td>PAGE_TREE_PAGE_ARROW_2</td>
-	<td>xpath=(//a[contains(@id,'layoutsTree_layout_')]/../../div[@class='aui-tree-hitarea'])[2]</td>
+	<td>xpath=(//a[contains(@id,'layoutsTree_layout_')]/../../i[contains(@class,'tree-hitarea')])[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -174,7 +174,7 @@
 </tr>
 <tr>
 	<td>PAGE_TREE_PAGE_ARROW_3</td>
-	<td>xpath=(//a[contains(@id,'layoutsTree_layout_')]/../../div[@class='aui-tree-hitarea'])[3]</td>
+	<td>xpath=(//a[contains(@id,'layoutsTree_layout_')]/../../i[contains(@class,'tree-hitarea')])[3]</td>
 	<td></td>
 </tr>
 <tr>

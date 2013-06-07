@@ -1,6 +1,6 @@
 <definition>
 	<command name="addChildCP">
-		<execute macro="Page#cpGoto">
+		<execute macro="Page#cpGotoSites">
 			<var name="portletName" value="Sites" />
 		</execute>
 
@@ -59,7 +59,7 @@
 	</command>
 
 	<command name="addCP">
-		<execute macro="Page#cpGoto">
+		<execute macro="Page#cpGotoSites">
 			<var name="portletName" value="Sites" />
 		</execute>
 

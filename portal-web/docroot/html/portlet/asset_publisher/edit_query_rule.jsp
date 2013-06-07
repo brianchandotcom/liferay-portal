@@ -43,7 +43,7 @@ if (queryLogicIndex >= 0) {
 }
 %>
 
-<div class="field-row query-row">
+<div class="field-row form-inline query-row">
 	<aui:select inlineField="<%= true %>" label="" name='<%= "queryContains" + index %>'>
 		<aui:option label="contains" selected="<%= queryContains %>" value="true" />
 		<aui:option label="does-not-contain" selected="<%= !queryContains %>" value="false" />
@@ -54,7 +54,7 @@ if (queryLogicIndex >= 0) {
 		<aui:option label="any" selected="<%= !queryAndOperator %>" value="false" />
 	</aui:select>
 
-	<aui:select cssClass="asset-query-name" id='<%= randomNamespace + "selector" %>' inlineLabel="left" label="of-the-following" name='<%= "queryName" + index %>'>
+	<aui:select cssClass="asset-query-name" id='<%= randomNamespace + "selector" %>' inlineField="<%= true %>" label="of-the-following" name='<%= "queryName" + index %>'>
 		<aui:option label="tags" selected='<%= Validator.equals(queryName, "assetTags") %>' value="assetTags" />
 		<aui:option label="categories" selected='<%= Validator.equals(queryName, "assetCategories") %>' value="assetCategories" />
 	</aui:select>

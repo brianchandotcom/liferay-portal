@@ -505,7 +505,8 @@ public class SocialConfigurationImpl implements SocialConfiguration {
 		objects.add(tuple);
 	}
 
-	private Log _log = LogFactoryUtil.getLog(SocialConfigurationImpl.class);
+	private static Log _log = LogFactoryUtil.getLog(
+		SocialConfigurationImpl.class);
 
 	private Map<String, Map<Integer, SocialActivityDefinition>>
 		_activityDefinitions =

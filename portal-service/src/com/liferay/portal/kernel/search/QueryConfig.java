@@ -76,7 +76,7 @@ public class QueryConfig implements Serializable {
 
 	public boolean isHitsProcessingEnabled() {
 		return GetterUtil.getBoolean(
-			_attributes.get(HITS_PROCESSING_ENABLED), true);
+			_attributes.get(_HITS_PROCESSING_ENABLED), true);
 	}
 
 	public boolean isQuerySuggestionEnabled() {
@@ -122,7 +122,7 @@ public class QueryConfig implements Serializable {
 	}
 
 	public void setHitsProcessingEnabled(boolean hitsProcessingEnabled) {
-		_attributes.put(HITS_PROCESSING_ENABLED, hitsProcessingEnabled);
+		_attributes.put(_HITS_PROCESSING_ENABLED, hitsProcessingEnabled);
 	}
 
 	public void setLocale(Locale locale) {
@@ -132,6 +132,9 @@ public class QueryConfig implements Serializable {
 	public void setScoreEnabled(boolean scoreEnabled) {
 		_attributes.put(PropsKeys.INDEX_SEARCH_SCORING_ENABLED, scoreEnabled);
 	}
+
+	private static final String _HITS_PROCESSING_ENABLED =
+		"hitsProcessingEnabled";
 
 	private static final boolean _INDEX_SEARCH_HIGHLIGHT_ENABLED =
 		GetterUtil.getBoolean(
@@ -149,18 +152,15 @@ public class QueryConfig implements Serializable {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.INDEX_SEARCH_QUERY_SUGGESTION_ENABLED));
 
-	private static final boolean _INDEX_SEARCH_SCORING_ENABLED =
-		GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.INDEX_SEARCH_SCORING_ENABLED));
-
-	private static final String HITS_PROCESSING_ENABLED =
-		"hitsProcessingEnabled";
-
 	private static final float
 		_INDEX_SEARCH_QUERY_SUGGESTION_SCORING_THRESHOLD =
 			GetterUtil.getFloat(
 				PropsUtil.get(
 					PropsKeys.INDEX_SEARCH_QUERY_SUGGESTION_SCORING_THRESHOLD));
+
+	private static final boolean _INDEX_SEARCH_SCORING_ENABLED =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.INDEX_SEARCH_SCORING_ENABLED));
 
 	private Map<String, Serializable> _attributes =
 		new HashMap<String, Serializable>();

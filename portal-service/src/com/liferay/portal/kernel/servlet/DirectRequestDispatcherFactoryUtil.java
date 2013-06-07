@@ -25,6 +25,15 @@ import javax.servlet.ServletRequest;
  */
 public class DirectRequestDispatcherFactoryUtil {
 
+	public static DirectRequestDispatcherFactory
+		getDirectRequestDispatcherFactory() {
+
+		PortalRuntimePermission.checkGetBeanProperty(
+			DirectRequestDispatcherFactoryUtil.class);
+
+		return _directRequestDispatcherFactory;
+	}
+
 	public static RequestDispatcher getRequestDispatcher(
 		ServletContext servletContext, String path) {
 
@@ -37,15 +46,6 @@ public class DirectRequestDispatcherFactoryUtil {
 
 		return getDirectRequestDispatcherFactory().getRequestDispatcher(
 			servletRequest, path);
-	}
-
-	public static DirectRequestDispatcherFactory
-		getDirectRequestDispatcherFactory() {
-
-		PortalRuntimePermission.checkGetBeanProperty(
-			DirectRequestDispatcherFactoryUtil.class);
-
-		return _directRequestDispatcherFactory;
 	}
 
 	public void setDirectRequestDispatcherFactory(

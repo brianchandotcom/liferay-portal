@@ -1114,7 +1114,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 		return recentFolderIds;
 	}
 
-	private Log _log = LogFactoryUtil.getLog(AssetPublisherImpl.class);
+	private static Log _log = LogFactoryUtil.getLog(AssetPublisherImpl.class);
 
 	private Accessor<AssetEntry, String> _titleAccessor =
 		new Accessor<AssetEntry, String>() {

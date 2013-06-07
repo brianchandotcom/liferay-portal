@@ -186,17 +186,16 @@ public class ServiceMonitorAdvice extends ChainableMethodAdvice {
 		return false;
 	}
 
-	private static ThreadLocal<ServiceRequestDataSample>
-		_serviceRequestDataSampleThreadLocal =
-			new AutoResetThreadLocal<ServiceRequestDataSample>(
-				ServiceRequestDataSample.class +
-					"._serviceRequestDataSampleThreadLocal");
-
 	private static boolean _active;
 	private static Set<String> _monitoredClasses = new HashSet<String>();
 	private static Set<MethodSignature> _monitoredMethods =
 		new HashSet<MethodSignature>();
 	private static String _monitoringDestinationName;
 	private static boolean _permissiveMode;
+	private static ThreadLocal<ServiceRequestDataSample>
+		_serviceRequestDataSampleThreadLocal =
+			new AutoResetThreadLocal<ServiceRequestDataSample>(
+				ServiceRequestDataSample.class +
+					"._serviceRequestDataSampleThreadLocal");
 
 }

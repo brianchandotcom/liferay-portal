@@ -158,16 +158,6 @@ public class SPIAgentFactoryUtilTest {
 				MockSPIAgent.class.getName()));
 	}
 
-	private static Map<String, Class<? extends SPIAgent>>
-		_getSpiAgentClasses() throws Exception {
-
-		Field spiAgentClassesField = ReflectionUtil.getDeclaredField(
-			SPIAgentFactoryUtil.class, "_spiAgentClasses");
-
-		return (Map<String, Class<? extends SPIAgent>>)
-			spiAgentClassesField.get(null);
-	}
-
 	public static class BadMockSPIAgent implements SPIAgent {
 
 		@Override
@@ -207,6 +197,16 @@ public class SPIAgentFactoryUtilTest {
 			throw new UnsupportedOperationException();
 		}
 
+	}
+
+	private static Map<String, Class<? extends SPIAgent>>
+		_getSpiAgentClasses() throws Exception {
+
+		Field spiAgentClassesField = ReflectionUtil.getDeclaredField(
+			SPIAgentFactoryUtil.class, "_spiAgentClasses");
+
+		return (Map<String, Class<? extends SPIAgent>>)
+			spiAgentClassesField.get(null);
 	}
 
 }

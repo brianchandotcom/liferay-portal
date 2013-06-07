@@ -1840,6 +1840,6 @@ public class SitesImpl implements Sites {
 		SystemProperties.get(SystemProperties.TMP_DIR) +
 			"/liferay/layout_set_prototype/";
 
-	private Log _log = LogFactoryUtil.getLog(SitesImpl.class);
+	private static Log _log = LogFactoryUtil.getLog(SitesImpl.class);
 
 }

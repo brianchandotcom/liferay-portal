@@ -141,6 +141,7 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 	function <portlet:namespace />openDDMStructureView() {
 		Liferay.Util.openDDMPortlet(
 			{
+				baseURL: '<%= PortletURLFactoryUtil.create(request, PortletKeys.DYNAMIC_DATA_MAPPING, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
 				dialog: {
 					destroyOnHide: true
 				},

@@ -1274,7 +1274,14 @@
 
 			config = A.merge(defaultValues,	config);
 
-			var ddmURL = Liferay.PortletURL.createRenderURL();
+			var ddmURL;
+
+			if (config.baseURL) {
+				ddmURL = Liferay.PortletURL.createURL(config.baseURL);
+			}
+			else {
+				ddmURL = Liferay.PortletURL.createRenderURL();
+			}
 
 			ddmURL.setEscapeXML(false);
 

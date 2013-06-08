@@ -93,6 +93,8 @@
 <aui:script use="liferay-category-admin">
 	new Liferay.Portlet.AssetCategoryAdmin(
 		{
+			baseActionURL: '<%= PortletURLFactoryUtil.create(request, portletDisplay.getId(), themeDisplay.getPlid(), PortletRequest.ACTION_PHASE) %>',
+			baseRenderURL: '<%= PortletURLFactoryUtil.create(request, portletDisplay.getId(), themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
 			itemsPerPage: <%= SearchContainer.DEFAULT_DELTA %>,
 			portletId: '<%= portletDisplay.getId() %>'
 		}

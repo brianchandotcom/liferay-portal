@@ -683,6 +683,7 @@ if (Validator.isNotNull(content)) {
 	function <portlet:namespace />openDDMStructureSelector() {
 		Liferay.Util.openDDMPortlet(
 			{
+				baseURL: '<%= PortletURLFactoryUtil.create(request, PortletKeys.DYNAMIC_DATA_MAPPING, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
 				classPK: <%= (ddmStructure != null) ? ddmStructure.getPrimaryKey() : 0 %>,
 				dialog: {
 					destroyOnHide: true
@@ -707,6 +708,7 @@ if (Validator.isNotNull(content)) {
 	function <portlet:namespace />openDDMTemplateSelector(ddmStructureId) {
 		Liferay.Util.openDDMPortlet(
 			{
+				baseURL: '<%= PortletURLFactoryUtil.create(request, PortletKeys.DYNAMIC_DATA_MAPPING, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
 				classNameId: '<%= PortalUtil.getClassNameId(DDMStructure.class) %>',
 				classPK: ddmStructureId,
 				dialog: {

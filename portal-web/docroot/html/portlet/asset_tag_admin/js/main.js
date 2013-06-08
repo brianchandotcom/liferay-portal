@@ -406,11 +406,13 @@ AUI.add(
 
 						var url;
 
+						var config = instance._config;
+
 						if (lifecycle == LIFECYCLE_RENDER) {
-							url = Liferay.PortletURL.createRenderURL();
+							url = Liferay.PortletURL.createURL(config.baseRenderURL);
 						}
 						else if (lifecycle == LIFECYCLE_PROCESS) {
-							url = Liferay.PortletURL.createActionURL();
+							url = Liferay.PortletURL.createURL(config.baseActionURL);
 						}
 						else {
 							throw 'Internal error. Unimplemented lifecycle.';

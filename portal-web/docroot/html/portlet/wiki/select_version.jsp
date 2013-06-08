@@ -74,9 +74,7 @@ double sourceVersion = ParamUtil.getDouble(request, "sourceVersion");
 				sourceVersion = tempVersion;
 			}
 
-			var redirect = Liferay.PortletURL.createRenderURL();
-
-			redirect.setPortletId('<%= portletDisplay.getId() %>');
+			var redirect = Liferay.PortletURL.createURL('<portlet:renderURL />');
 
 			redirect.setParameter('struts_action', '/wiki/view_page_history');
 
@@ -87,9 +85,7 @@ double sourceVersion = ParamUtil.getDouble(request, "sourceVersion");
 			redirect.setParameter('nodeId', '<%= wikiPage.getNode().getNodeId() %>');
 			redirect.setParameter("title", '<%= wikiPage.getTitle() %>');
 
-			var portletURL = Liferay.PortletURL.createRenderURL();
-
-			portletURL.setPortletId('<%= portletDisplay.getId() %>');
+			var portletURL = Liferay.PortletURL.createURL('<portlet:renderURL />');
 
 			portletURL.setParameter('struts_action', '/wiki/compare_versions');
 			portletURL.setParameter('redirect', redirect);

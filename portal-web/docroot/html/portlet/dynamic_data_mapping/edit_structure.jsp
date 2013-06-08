@@ -213,6 +213,7 @@ if (Validator.isNotNull(script)) {
 	function <portlet:namespace />openParentStructureSelector() {
 		Liferay.Util.openDDMPortlet(
 			{
+				baseURL: '<%= PortletURLFactoryUtil.create(request, PortletKeys.DYNAMIC_DATA_MAPPING, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
 				classPK: <%= (structure != null) ? structure.getPrimaryKey() : 0 %>,
 				dialog: {
 					destroyOnHide: true,

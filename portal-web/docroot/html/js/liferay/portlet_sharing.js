@@ -3,10 +3,14 @@ Liferay.namespace('PortletSharing');
 Liferay.provide(
 	Liferay.PortletSharing,
 	'showNetvibesInfo',
-	function(netvibesURL) {
+	function(netvibesURL, baseURL) {
 		var A = AUI();
 
 		var portletURL = Liferay.PortletURL.createResourceURL();
+
+		if (baseURL) {
+			portletURL = Liferay.PortletURL.createURL(baseURL);
+		}
 
 		portletURL.setPortletId(133);
 
@@ -34,10 +38,14 @@ Liferay.provide(
 Liferay.provide(
 	Liferay.PortletSharing,
 	'showWidgetInfo',
-	function(widgetURL) {
+	function(widgetURL, baseURL) {
 		var A = AUI();
 
 		var portletURL = Liferay.PortletURL.createResourceURL();
+
+		if (baseURL) {
+			portletURL = Liferay.PortletURL.createURL(baseURL);
+		}
 
 		portletURL.setPortletId(133);
 

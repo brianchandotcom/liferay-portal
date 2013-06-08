@@ -78,6 +78,8 @@
 <aui:script use="liferay-tags-admin">
 	new Liferay.Portlet.AssetTagsAdmin(
 		{
+			baseActionURL: '<%= PortletURLFactoryUtil.create(request, portletDisplay.getId(), themeDisplay.getPlid(), PortletRequest.ACTION_PHASE) %>',
+			baseRenderURL: '<%= PortletURLFactoryUtil.create(request, portletDisplay.getId(), themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
 			portletId: '<%= portletDisplay.getId() %>',
 			tagsPerPage: <%= SearchContainer.DEFAULT_DELTA %>
 		}

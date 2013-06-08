@@ -166,6 +166,8 @@ public class PortletKeys {
 
 	public static final String PORTLET_DISPLAY_TEMPLATES = "183";
 
+	public static final String PORTLET_SHARING = "133";
+
 	public static final long PREFS_OWNER_ID_DEFAULT = 0;
 
 	public static final int PREFS_OWNER_TYPE_ARCHIVED = 5;

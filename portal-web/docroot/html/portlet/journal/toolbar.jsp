@@ -102,6 +102,7 @@ String strutsAction = ParamUtil.getString(request, "struts_action");
 	function <portlet:namespace />openStructuresView() {
 		Liferay.Util.openDDMPortlet(
 			{
+				baseURL: '<%= PortletURLFactoryUtil.create(request, PortletKeys.DYNAMIC_DATA_MAPPING, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
 				dialog: {
 					destroyOnHide: true
 				},
@@ -117,6 +118,7 @@ String strutsAction = ParamUtil.getString(request, "struts_action");
 	function <portlet:namespace />openTemplatesView() {
 		Liferay.Util.openDDMPortlet(
 			{
+				baseURL: '<%= PortletURLFactoryUtil.create(request, PortletKeys.DYNAMIC_DATA_MAPPING, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
 				classNameId: '<%= PortalUtil.getClassNameId(DDMStructure.class) %>',
 				classPK: -1,
 				dialog: {

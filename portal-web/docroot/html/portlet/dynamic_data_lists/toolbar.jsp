@@ -49,6 +49,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 			A.one('#<portlet:namespace />manageDDMStructuresLink').on('click', function() {
 				Liferay.Util.openDDMPortlet(
 					{
+						baseURL: '<%= PortletURLFactoryUtil.create(request, PortletKeys.DYNAMIC_DATA_MAPPING, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
 						dialog: {
 							destroyOnHide: true
 						},

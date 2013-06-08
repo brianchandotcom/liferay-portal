@@ -53,9 +53,7 @@ List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolder
 		function(event) {
 			var link = event.currentTarget;
 
-			var portletURL = Liferay.PortletURL.createRenderURL();
-
-			portletURL.setPortletId('<%= portletId %>');
+			var portletURL = Liferay.PortletURL.createURL('<%= PortletURLFactoryUtil.create(request, portletId, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>');
 
 			portletURL.setParameter('<%= Constants.CMD %>', '<%= Constants.ADD %>');
 			portletURL.setParameter('backURL', '<%= HtmlUtil.escape(backURL) %>');

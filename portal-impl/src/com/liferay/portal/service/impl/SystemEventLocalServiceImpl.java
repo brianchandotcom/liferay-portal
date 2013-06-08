@@ -34,18 +34,17 @@ public class SystemEventLocalServiceImpl
 
 	@Override
 	public void addEvent(
-			long userId, long groupId, int type, long classNameId,
-			long classPK, String classUuid)
+			long userId, long groupId, int type, long classNameId, long classPK,
+			String classUuid)
 		throws PortalException, SystemException {
 
 		addEvent(userId, groupId, type, classNameId, classPK, classUuid, null);
 	}
 
-
 	@Override
 	public void addEvent(
-			long userId, long groupId, int type, long classNameId,
-			long classPK, String classUuid, String extraData)
+			long userId, long groupId, int type, long classNameId, long classPK,
+			String classUuid, String extraData)
 		throws PortalException, SystemException {
 
 		long companyId = 0;
@@ -105,17 +104,9 @@ public class SystemEventLocalServiceImpl
 	public SystemEvent fetchEvent(
 			long groupId, long classNameId, long classPK, int type)
 		throws SystemException {
+
 		return systemEventPersistence.fetchByG_C_C_T_First(
 			groupId, classNameId, classPK, type, null);
-	}
-
-	@Override
-	public List<SystemEvent> getEvents(
-			long groupId, long classNameId, long classPK, int type)
-		throws SystemException {
-
-		return systemEventPersistence.findByG_C_C_T(
-			groupId, classNameId, classPK, type);
 	}
 
 	@Override
@@ -125,6 +116,15 @@ public class SystemEventLocalServiceImpl
 
 		return systemEventPersistence.findByG_C_C(
 			groupId, classNameId, classPK);
+	}
+
+	@Override
+	public List<SystemEvent> getEvents(
+			long groupId, long classNameId, long classPK, int type)
+		throws SystemException {
+
+		return systemEventPersistence.findByG_C_C_T(
+			groupId, classNameId, classPK, type);
 	}
 
 }

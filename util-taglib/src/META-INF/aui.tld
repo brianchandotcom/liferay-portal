@@ -1409,6 +1409,12 @@
 			<type>java.lang.Object</type>
 		</attribute>
 		<attribute>
+			<name>dateTogglerCheckboxLabel</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
 			<name>defaultLanguageId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

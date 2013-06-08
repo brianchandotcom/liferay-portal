@@ -18,19 +18,20 @@
 
 <%
 boolean autoSize = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-field:autoSize"));
-String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-field:cssClass"));
-String formName = (String)request.getAttribute("liferay-ui:input-field:formName");
-String defaultLanguageId = (String)request.getAttribute("liferay-ui:input-field:defaultLanguageId");
-String languageId = (String)request.getAttribute("liferay-ui:input-field:languageId");
-String model = (String)request.getAttribute("liferay-ui:input-field:model");
 Object bean = request.getAttribute("liferay-ui:input-field:bean");
-String field = (String)request.getAttribute("liferay-ui:input-field:field");
-String fieldParam = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-field:fieldParam"));
+String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-field:cssClass"));
+String dateTogglerCheckboxLabel = GetterUtil.getString((String) request.getAttribute("liferay-ui:input-field:dateTogglerCheckboxLabel"));
+String defaultLanguageId = (String)request.getAttribute("liferay-ui:input-field:defaultLanguageId");
 Object defaultValue = request.getAttribute("liferay-ui:input-field:defaultValue");
 boolean disabled = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-field:disabled"));
+String field = (String)request.getAttribute("liferay-ui:input-field:field");
+String fieldParam = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-field:fieldParam"));
 Format format = (Format)request.getAttribute("liferay-ui:input-field:format");
+String formName = (String)request.getAttribute("liferay-ui:input-field:formName");
 String id = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-field:id"));
 boolean ignoreRequestValue = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-field:ignoreRequestValue"));
+String languageId = (String)request.getAttribute("liferay-ui:input-field:languageId");
+String model = (String)request.getAttribute("liferay-ui:input-field:model");
 String placeholder = (String)request.getAttribute("liferay-ui:input-field:placeholder");
 
 String type = ModelHintsUtil.getType(model, field);
@@ -305,6 +306,46 @@ if (hints != null) {
 					/>
 				</c:if>
 			</div>
+
+			<c:if test="<%= Validator.isNotNull(dateTogglerCheckboxLabel) %>">
+				<div class="clearfix">
+					<aui:input id="<%= formName + fieldParam %>" label="<%= dateTogglerCheckboxLabel %>" name='<%= formName + fieldParam + "DateTogglerCheckbox" %>' type="checkbox" value="<%= disabled %>" />
+				</div>
+
+				<aui:script use="aui-base">
+					var checkbox = A.one('#<portlet:namespace /><%= formName + fieldParam %>Checkbox');
+
+					checkbox.once(
+						['click', 'mouseover'],
+						function() {
+							Liferay.component('<portlet:namespace /><%= fieldParam %>DatePicker');
+						}
+					);
+
+					checkbox.on(
+						['click', 'mouseover'],
+						function(event) {
+							var checked = document.getElementById('<portlet:namespace /><%= formName + fieldParam %>Checkbox').checked;
+
+							document.<portlet:namespace /><%= formName %>["<portlet:namespace /><%= fieldParam %>Month"].disabled = checked;
+							document.<portlet:namespace /><%= formName %>["<portlet:namespace /><%= fieldParam %>Day"].disabled = checked;
+							document.<portlet:namespace /><%= formName %>["<portlet:namespace /><%= fieldParam %>Year"].disabled = checked;
+
+							<c:if test="<%= showTime %>">
+								document.<portlet:namespace /><%= formName %>["<portlet:namespace /><%= fieldParam %>Hour"].disabled = checked;
+								document.<portlet:namespace /><%= formName %>["<portlet:namespace /><%= fieldParam %>Minute"].disabled = checked;
+								document.<portlet:namespace /><%= formName %>["<portlet:namespace /><%= fieldParam %>AmPm"].disabled = checked;
+							</c:if>
+
+							var calendarWidget = A.Widget.getByNode(document.<portlet:namespace />fm["<portlet:namespace /><%= fieldParam %>Month"]);
+
+							if (calendarWidget) {
+								calendarWidget.set('disabled', checked);
+							}
+						}
+					);
+				</aui:script>
+			</c:if>
 		</c:when>
 		<c:when test='<%= type.equals("double") || type.equals("int") || type.equals("long") || type.equals("String") %>'>
 

@@ -71,6 +71,7 @@
 		<liferay-ui:input-field
 			bean="<%= bean %>"
 			cssClass="<%= fieldCss %>"
+			dateTogglerCheckboxLabel="<%= dateTogglerCheckboxLabel %>"
 			defaultLanguageId="<%= defaultLanguageId %>"
 			defaultValue="<%= value %>"
 			disabled="<%= disabled %>"

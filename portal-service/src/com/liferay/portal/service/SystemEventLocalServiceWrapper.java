@@ -260,6 +260,53 @@ public class SystemEventLocalServiceWrapper implements SystemEventLocalService,
 		_systemEventLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
+	@Override
+	public void addEvent(long userId, long groupId, int type, long classNameId,
+		long classPK, java.lang.String classUuid)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_systemEventLocalService.addEvent(userId, groupId, type, classNameId,
+			classPK, classUuid);
+	}
+
+	@Override
+	public void addEvent(long userId, long groupId, int type, long classNameId,
+		long classPK, java.lang.String classUuid, java.lang.String extraData)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_systemEventLocalService.addEvent(userId, groupId, type, classNameId,
+			classPK, classUuid, extraData);
+	}
+
+	@Override
+	public void deleteEvents(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_systemEventLocalService.deleteEvents(groupId);
+	}
+
+	@Override
+	public com.liferay.portal.model.SystemEvent fetchEvent(long groupId,
+		long classNameId, long classPK, int type)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _systemEventLocalService.fetchEvent(groupId, classNameId,
+			classPK, type);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.SystemEvent> getEvents(
+		long groupId, long classNameId, long classPK, int type)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _systemEventLocalService.getEvents(groupId, classNameId,
+			classPK, type);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.SystemEvent> getEvents(
+		long groupId, long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _systemEventLocalService.getEvents(groupId, classNameId, classPK);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

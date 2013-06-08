@@ -216,6 +216,21 @@ public interface SystemEventModel extends AttachedModel, BaseModel<SystemEvent> 
 	public void setClassUuid(String classUuid);
 
 	/**
+	 * Returns the extra data of this system event.
+	 *
+	 * @return the extra data of this system event
+	 */
+	@AutoEscape
+	public String getExtraData();
+
+	/**
+	 * Sets the extra data of this system event.
+	 *
+	 * @param extraData the extra data of this system event
+	 */
+	public void setExtraData(String extraData);
+
+	/**
 	 * Returns the type of this system event.
 	 *
 	 * @return the type of this system event

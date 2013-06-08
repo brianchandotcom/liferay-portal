@@ -253,6 +253,47 @@ public class SystemEventLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
+	public static void addEvent(long userId, long groupId, int type,
+		long classNameId, long classPK, java.lang.String classUuid)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.addEvent(userId, groupId, type, classNameId, classPK, classUuid);
+	}
+
+	public static void addEvent(long userId, long groupId, int type,
+		long classNameId, long classPK, java.lang.String classUuid,
+		java.lang.String extraData)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.addEvent(userId, groupId, type, classNameId, classPK, classUuid,
+			extraData);
+	}
+
+	public static void deleteEvents(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteEvents(groupId);
+	}
+
+	public static com.liferay.portal.model.SystemEvent fetchEvent(
+		long groupId, long classNameId, long classPK, int type)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchEvent(groupId, classNameId, classPK, type);
+	}
+
+	public static java.util.List<com.liferay.portal.model.SystemEvent> getEvents(
+		long groupId, long classNameId, long classPK, int type)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getEvents(groupId, classNameId, classPK, type);
+	}
+
+	public static java.util.List<com.liferay.portal.model.SystemEvent> getEvents(
+		long groupId, long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getEvents(groupId, classNameId, classPK);
+	}
+
 	public static SystemEventLocalService getService() {
 		if (_service == null) {
 			_service = (SystemEventLocalService)PortalBeanLocatorUtil.locate(SystemEventLocalService.class.getName());

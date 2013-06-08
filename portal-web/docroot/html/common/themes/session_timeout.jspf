@@ -48,20 +48,20 @@
 		sessionTimeoutCal.add(Calendar.MILLISECOND, sessionTimeoutMinute);
 		%>
 
-		<c:if test="<%= sessionTimeoutWarning > 0 %>">
-			<aui:script use="liferay-session">
-				Liferay.Session = new Liferay.SessionBase(
-					{
-						autoExtend: <%= PropsValues.SESSION_TIMEOUT_AUTO_EXTEND %>,
-						sessionLength: <%= sessionTimeout %>,
-						redirectOnExpire: <%= sessionRedirectOnExpire %>,
-						redirectUrl: '<%= HtmlUtil.escapeJS(sessionRedirectUrl) %>',
-						warningLength: <%= sessionTimeoutWarning %>
-					}
-				);
+		<aui:script use="liferay-session">
+			Liferay.Session = new Liferay.SessionBase(
+				{
+					autoExtend: <%= PropsValues.SESSION_TIMEOUT_AUTO_EXTEND %>,
+					sessionLength: <%= sessionTimeout %>,
+					redirectOnExpire: <%= sessionRedirectOnExpire %>,
+					redirectUrl: '<%= HtmlUtil.escapeJS(sessionRedirectUrl) %>',
+					warningLength: <%= sessionTimeoutWarning %>
+				}
+			);
 
+			<c:if test="<%= sessionTimeoutWarning > 0 %>">
 				Liferay.Session.plug(Liferay.SessionDisplay);
-			</aui:script>
-		</c:if>
+			</c:if>
+		</aui:script>
 	</c:if>
 </c:if>

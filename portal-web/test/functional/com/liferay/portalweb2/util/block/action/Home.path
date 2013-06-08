@@ -19,6 +19,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>API_AXIS_URL</td>
+	<td>/api/axis/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>API_JSON_URL</td>
+	<td>/api/jsonws/</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HOME_URL</td>
 	<td>/web/guest/home/</td>
 	<td></td>

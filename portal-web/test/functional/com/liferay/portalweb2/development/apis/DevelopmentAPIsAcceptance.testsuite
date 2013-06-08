@@ -1,3 +1,5 @@
 <definition>
-	<execute test-case="PGLoginAcceptance" />
+	<execute test-case="ApisAxisServicesAcceptance" />
+
+	<execute test-case="ApisJsonWebServicesAcceptance" />
 </definition>

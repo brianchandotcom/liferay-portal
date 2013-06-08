@@ -1,4 +1,12 @@
 <definition>
+	<command name="apiAxisGoto">
+		<execute action="Home#open" locator-key1="API_AXIS_URL" />
+	</command>
+
+	<command name="apiJsonWSGoto">
+		<execute action="Home#open" locator-key1="API_JSON_URL" />
+	</command>
+
 	<command name="cpGoto">
 		<execute action="Home#open" locator-key1="HOME_URL" />
 

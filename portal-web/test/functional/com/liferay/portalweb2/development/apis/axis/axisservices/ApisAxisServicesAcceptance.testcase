@@ -1,0 +1,9 @@
+<definition>
+	<set-up>
+		<execute macro="User#pgFirstLogin" />
+	</set-up>
+
+	<command name="ViewAxisServices">
+		<execute macro="Api#apiAxisView" />
+	</command>
+</definition>

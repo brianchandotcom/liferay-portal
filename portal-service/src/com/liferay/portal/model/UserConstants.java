@@ -38,6 +38,8 @@ public class UserConstants {
 	public static final String USERS_EMAIL_ADDRESS_AUTO_SUFFIX = PropsUtil.get(
 		PropsKeys.USERS_EMAIL_ADDRESS_AUTO_SUFFIX);
 
+	public static final String SYSTEM_USER_NAME = "system";
+
 	public static String getPortraitURL(
 		String imagePath, boolean male, long portraitId) {
 

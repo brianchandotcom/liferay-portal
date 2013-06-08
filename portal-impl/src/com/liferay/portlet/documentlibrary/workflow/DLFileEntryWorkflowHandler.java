@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.workflow;
 
-import com.liferay.portal.NoSuchWorkflowDefinitionLinkException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -76,18 +75,20 @@ public class DLFileEntryWorkflowHandler extends BaseWorkflowHandler {
 			folderId = dlFolder.getParentFolderId();
 		}
 
-		try {
-			return WorkflowDefinitionLinkLocalServiceUtil.
-				getWorkflowDefinitionLink(
-					companyId, groupId, DLFolder.class.getName(), folderId,
-					dlFileVersion.getFileEntryTypeId(), true);
+		WorkflowDefinitionLink workflowDefinitionLink =
+			WorkflowDefinitionLinkLocalServiceUtil.fetchWorkflowDefinitionLink(
+				companyId, groupId, DLFolder.class.getName(), folderId,
+				dlFileVersion.getFileEntryTypeId(), true);
+
+		if (workflowDefinitionLink == null) {
+			workflowDefinitionLink =
+				WorkflowDefinitionLinkLocalServiceUtil.
+					fetchWorkflowDefinitionLink(
+						companyId, groupId, DLFolder.class.getName(), folderId,
+						DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL, true);
 		}
-		catch (NoSuchWorkflowDefinitionLinkException nswdle) {
-			return WorkflowDefinitionLinkLocalServiceUtil.
-				getWorkflowDefinitionLink(
-					companyId, groupId, DLFolder.class.getName(), folderId,
-					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL, true);
-		}
+
+		return workflowDefinitionLink;
 	}
 
 	@Override

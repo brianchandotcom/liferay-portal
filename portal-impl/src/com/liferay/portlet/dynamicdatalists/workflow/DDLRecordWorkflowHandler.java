@@ -59,9 +59,10 @@ public class DDLRecordWorkflowHandler extends BaseWorkflowHandler {
 
 		DDLRecord record = recordVersion.getRecord();
 
-		return WorkflowDefinitionLinkLocalServiceUtil.getWorkflowDefinitionLink(
-			companyId, groupId, DDLRecordSet.class.getName(),
-			record.getRecordSetId(), 0);
+		return WorkflowDefinitionLinkLocalServiceUtil.
+			fetchWorkflowDefinitionLink(
+				companyId, groupId, DDLRecordSet.class.getName(),
+				record.getRecordSetId(), 0);
 	}
 
 	@Override

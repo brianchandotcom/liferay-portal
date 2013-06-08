@@ -146,6 +146,8 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 </portlet:renderURL>
 
 <aui:script use="aui-base,escape">
+	var selectToFileEntryButton = A.one('#<portlet:namespace />selectToFileEntryButton');
+
 	A.one('#<portlet:namespace />selectGroupButton').on(
 		'click',
 		function(event) {
@@ -171,23 +173,19 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 					document.<portlet:namespace />fm.<portlet:namespace />toGroupId.value = event.groupid;
 					document.<portlet:namespace />fm.<portlet:namespace />toFileEntryId.value = 0;
 
-					var nameEl = A.one("#<portlet:namespace />toGroupName");
-					var nameHTML = A.Escape.html(event.groupname) + '&nbsp;';
+					var nameEl = document.getElementById("<portlet:namespace />toGroupName");
 
-					nameEl.html(nameHTML);
-					nameEl.addClass('input uneditable-input span2');
+					nameEl.innerHTML = A.Escape.html(event.groupname) + "&nbsp;";
 
-					var button = A.one('#<portlet:namespace />selectToFileEntryButton');
-
-					if (button) {
-						Liferay.Util.toggleDisabled(button, false);
+					if (selectToFileEntryButton) {
+						Liferay.Util.toggleDisabled(selectToFileEntryButton, false);
 					}
 				}
 			);
 		}
 	);
 
-	A.one('#<portlet:namespace />selectToFileEntryButton').on(
+	selectToFileEntryButton.on(
 		'click',
 		function(event) {
 			Liferay.Util.selectEntity(
@@ -211,8 +209,6 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 </aui:script>
 
 <aui:script>
-	var A = AUI();
-
 	function <portlet:namespace />createSelectFileEntryId() {
 		return '<portlet:namespace />selectFileEntry_' + document.<portlet:namespace />fm.<portlet:namespace />toGroupId.value;
 	}
@@ -232,14 +228,13 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 	function <portlet:namespace />selectFileEntry(fileEntryId, title) {
 		document.<portlet:namespace />fm.<portlet:namespace />toFileEntryId.value = fileEntryId;
 
-		var titleEl = A.one("#<portlet:namespace />toFileEntryTitle");
+		var titleEl = document.getElementById("<portlet:namespace />toFileEntryTitle");
 
 		if (title != "") {
 			title += "&nbsp;";
 		}
 
-		titleEl.html(title);
-		titleEl.addClass('input uneditable-input span2');
+		titleEl.innerHTML = title;
 	}
 </aui:script>
 

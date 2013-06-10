@@ -19,18 +19,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>WEB_CONTENT_TITLE</td>
-	<td>//h3[@class='header-title']/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BACK</td>
-	<td>//span[@class='header-back-to']/a</td>
-	<td></td>
-</tr>
-<tr>
 	<td>WEB_CONTENT_CONTENT</td>
-	<td>//div[@class='journal-content-article']/p</td>
+	<td>//div[@class='journal-content-article']</td>
 	<td></td>
 </tr>
 </tbody>

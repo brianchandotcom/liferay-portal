@@ -208,6 +208,10 @@ window.YUI_config = {
 						'liferay-dockbar'
 					]
 				},
+				'liferay-dockbar-device-preview': {
+					path: 'dockbar_device_preview.js',
+					requires: []
+				},
 				'liferay-dockbar-underlay': {
 					path: 'dockbar_underlay.js',
 					requires: [

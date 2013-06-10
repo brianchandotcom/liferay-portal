@@ -19,18 +19,22 @@
 
 			.desktop {
 				background: url(@theme_image_path@/device_preview/desktop_off.png) no-repeat;
+				height: 100%;
 			}
 
 			.full {
 				background: url(@theme_image_path@/device_preview/full_off.png) no-repeat;
+				height: 100%;				
 			}
 
 			.smartphone {
 				background: url(@theme_image_path@/device_preview/smartphone_off.png) no-repeat;
+				height: 100%;
 			}
 
 			.tablet {
 				background: url(@theme_image_path@/device_preview/tablet_off.png) no-repeat;
+				height: 100%;
 			}
 
 			&.selected {
@@ -55,7 +59,6 @@
 }
 
 .lfr-device-preview {
-	background-color: rgba(255, 255, 255, 0.95);
 	bottom: 0;
 	left: 220px;
 	position: fixed;
@@ -63,7 +66,17 @@
 	top: 0;
 }
 
+.lfr-device {
+	.modal-header {
+		display: none;
+	}
+}
+
 /*Skin*/
+
+.lfr-device-preview {
+	background-color: rgba(255, 255, 255, 0.95);	
+}
 
 .lfr-device-preview-panel {
 	background-color: #FFF;

@@ -158,7 +158,7 @@ AUI.add(
 					_cancelAction: function(event) {
 						event.preventDefault();
 
-						Dockbar.loadPanel();
+						Dockbar._loadPanel('addPanel');
 					},
 
 					_updateActivePage: function(event) {

@@ -26,6 +26,14 @@
 	@include box-shadow(0 0 5px rgba(0, 0, 0, 0.5));
 }
 
+.lfr-device-preview-panel {
+	@include box-shadow(0 0 5px rgba(0, 0, 0, 0.5));
+}
+
+.lfr-has-device-preview {
+	overflow: hidden;
+}
+
 .lfr-preview-file-image img, .lfr-translation-manager {
 	@include box-shadow(0 3px 5px -3px rgba(0, 0, 0, 0.8));
 }

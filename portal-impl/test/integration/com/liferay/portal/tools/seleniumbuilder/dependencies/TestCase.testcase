@@ -7,9 +7,9 @@
 
 		<execute action="BaseLiferay#click" locator1="locator1" value1="value1" />
 
-		<execute macro="BlogsEntry#pgAdd" />
+		<execute macro="BlogsEntry#addCP" />
 
-				<execute macro="BlogsEntry#pgAdd">
+		<execute macro="BlogsEntry#addCP">
 			<var name="name" value="value" />
 		</execute>
 	</set-up>
@@ -19,9 +19,9 @@
 
 		<execute action="BaseLiferay#click" locator1="locator1" value1="value1" />
 
-		<execute macro="BlogsEntry#pgAdd" />
+		<execute macro="BlogsEntry#addCP" />
 
-				<execute macro="BlogsEntry#pgAdd">
+		<execute macro="BlogsEntry#addCP">
 			<var name="name" value="value" />
 		</execute>
 	</command>
@@ -31,9 +31,9 @@
 
 		<execute action="BaseLiferay#click" locator1="locator1" value1="value1" />
 
-		<execute macro="BlogsEntry#pgAdd" />
+		<execute macro="BlogsEntry#addCP" />
 
-				<execute macro="BlogsEntry#pgAdd">
+		<execute macro="BlogsEntry#addCP">
 			<var name="name" value="value" />
 		</execute>
 	</tear-down>

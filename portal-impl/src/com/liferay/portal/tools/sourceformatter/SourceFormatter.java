@@ -1530,9 +1530,8 @@ public class SourceFormatter {
 
 			String packagePath = fileName;
 
-			int packagePathX = packagePath.indexOf(
-				File.separator + "src" + File.separator);
-			int packagePathY = packagePath.lastIndexOf(File.separator);
+			int packagePathX = packagePath.indexOf("/src/");
+			int packagePathY = packagePath.lastIndexOf(StringPool.SLASH);
 
 			if ((packagePathX + 5) >= packagePathY) {
 				packagePath = StringPool.BLANK;
@@ -1543,7 +1542,7 @@ public class SourceFormatter {
 			}
 
 			packagePath = StringUtil.replace(
-				packagePath, File.separator, StringPool.PERIOD);
+				packagePath, StringPool.SLASH, StringPool.PERIOD);
 
 			if (packagePath.endsWith(".model")) {
 				if (content.contains("extends " + className + "Model")) {

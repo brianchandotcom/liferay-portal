@@ -2086,6 +2086,7 @@ create table SystemEvent (
 	classNameId LONG,
 	classPK LONG,
 	classUuid VARCHAR(75) null,
+	extraData VARCHAR(75) null,
 	type_ INTEGER
 );
 

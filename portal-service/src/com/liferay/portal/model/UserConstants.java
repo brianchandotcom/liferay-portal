@@ -35,6 +35,8 @@ public class UserConstants {
 
 	public static final String LIST_VIEW_TREE = "tree";
 
+	public static final String SYSTEM_USER_NAME = "system";
+
 	public static final String USERS_EMAIL_ADDRESS_AUTO_SUFFIX = PropsUtil.get(
 		PropsKeys.USERS_EMAIL_ADDRESS_AUTO_SUFFIX);
 

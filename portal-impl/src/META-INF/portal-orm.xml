@@ -1168,6 +1168,7 @@
 			<basic name="classNameId" />
 			<basic name="classPK" />
 			<basic name="classUuid" />
+			<basic name="extraData" />
 			<basic name="type">
 				<column name="TYPE_" />
 			</basic>

@@ -15,6 +15,7 @@
 		<antcall target="prepare-common">
 			<param name="database" value="mysql" />
 			<param name="custom.properties" value="counter.increment=5" />
+			<param name="setup.wizard.enabled" value="${test.ant.script.setup.wizard.enabled}" />
 		</antcall>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">

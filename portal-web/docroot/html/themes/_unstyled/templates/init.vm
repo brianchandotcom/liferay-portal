@@ -59,7 +59,6 @@
 #set ($company_logo = $htmlUtil.escape($theme_display.getCompanyLogo()))
 #set ($company_logo_height = $theme_display.getCompanyLogoHeight())
 #set ($company_logo_width = $theme_display.getCompanyLogoWidth())
-
 #set ($company_url = $theme_display.getURLHome())
 
 #if (!$request.isRequestedSessionIdFromCookie())
@@ -76,6 +75,7 @@
 #set ($is_female = $user.isFemale())
 #set ($user_birthday = $user.getBirthday())
 #set ($user_email_address = $user.getEmailAddress())
+#set ($language = $locale.getLanguage())
 #set ($language_id = $user.getLanguageId())
 #set ($w3c_language_id = $localeUtil.toW3cLanguageId($theme_display.getLanguageId()))
 #set ($time_zone = $user.getTimeZoneId())
@@ -173,6 +173,8 @@
 
 	#set ($the_title = $languageUtil.get($locale, $the_title, $page.getName($locale)))
 
+	#set ($is_portlet_page = false)
+
 	#if ($page.getType().equals("portlet"))
 		#set ($is_portlet_page = true)
 	#end
@@ -268,6 +270,8 @@
 	#end
 #end
 
+#set ($the_title = "")
+
 #if ($layout.getHTMLTitle($locale))
 	#set ($the_title = $layout.getHTMLTitle($locale))
 #end
@@ -299,9 +303,7 @@
 ## ---------- Logo ---------- ##
 
 #set($logo_css_class = "logo")
-
 #set ($use_company_logo = !$layout.layoutSet.isLogo())
-
 #set ($site_logo_height = $company_logo_height)
 #set ($site_logo_width = $company_logo_width)
 
@@ -322,10 +324,11 @@
 #end
 
 #set($site_logo = $company_logo)
-
 #set ($logo_description = $htmlUtil.escape($site_name))
 
 ## ---------- Navigation ---------- ##
+
+#set ($has_navigation = false)
 
 #if ($navItems)
 	#set ($nav_items = $navItems)

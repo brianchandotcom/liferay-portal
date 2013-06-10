@@ -95,7 +95,7 @@ LayoutPrototype layoutPrototype = (LayoutPrototype)row.getObject();
 
 		<liferay-ui:icon
 			cssClass="import-layout-prototype layout-prototype-action"
-			image="../aui/arrowthick-1-t"
+			image="add"
 			message="import"
 			method="get"
 			url="<%= importURL %>"

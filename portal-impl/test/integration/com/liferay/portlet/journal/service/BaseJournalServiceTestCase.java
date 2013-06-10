@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.journal.service;
 
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -23,6 +24,7 @@ import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 import com.liferay.portlet.journal.model.JournalStructure;
+import com.liferay.portlet.journal.model.JournalTemplate;
 
 import java.io.InputStream;
 
@@ -63,6 +65,30 @@ public class BaseJournalServiceTestCase {
 		return JournalStructureLocalServiceUtil.addStructure(
 			TestPropsValues.getUserId(), groupId, structureId, false, null,
 			nameMap, null, xsd, getServiceContext());
+	}
+
+	protected JournalTemplate addTemplate(
+			long groupId, String templateId, String structureId, String xsl)
+		throws Exception {
+
+		return addTemplate(
+			groupId, templateId, structureId, "Test template", xsl);
+	}
+
+	protected JournalTemplate addTemplate(
+			long groupId, String templateId, String structureId, String name,
+			String xsl)
+		throws Exception {
+
+		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+
+		nameMap.put(Locale.US, name);
+
+		return JournalTemplateLocalServiceUtil.addTemplate(
+			TestPropsValues.getUserId(), groupId, templateId, false,
+			structureId, nameMap, null, xsl, true,
+			TemplateConstants.LANG_TYPE_VM, true, false, null, null,
+			getServiceContext());
 	}
 
 	protected String generateId() throws Exception {

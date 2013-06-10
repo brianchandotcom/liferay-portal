@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.journal.lar;
 
-import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.lar.BasePortletDataHandlerTestCase;
@@ -24,6 +23,7 @@ import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.LayoutTestUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
@@ -54,6 +54,9 @@ public class JournalPortletDataHandlerTest
 		addBooleanParameter(
 			parameterMap, JournalPortletDataHandler.NAMESPACE, "feeds", true);
 		addBooleanParameter(
+			parameterMap, JournalPortletDataHandler.NAMESPACE, "structures",
+			true);
+		addBooleanParameter(
 			parameterMap, JournalPortletDataHandler.NAMESPACE, "web-content",
 			true);
 	}
@@ -73,20 +76,15 @@ public class JournalPortletDataHandlerTest
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			stagingGroup.getGroupId(), JournalArticle.class.getName());
 
-		portletDataContext.isPathProcessed(
-			ExportImportPathUtil.getModelPath(ddmStructure));
+		DDMTemplateTestUtil.addTemplate(
+			stagingGroup.getGroupId(),
+			PortalUtil.getClassNameId(DDMStructure.class), -1L);
 
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
 			stagingGroup.getGroupId(), ddmStructure.getStructureId());
 
-		portletDataContext.isPathProcessed(
-			ExportImportPathUtil.getModelPath(ddmTemplate));
-
 		DDMTemplate rendererDDMTemplate = DDMTemplateTestUtil.addTemplate(
 			stagingGroup.getGroupId(), ddmStructure.getStructureId());
-
-		portletDataContext.isPathProcessed(
-			ExportImportPathUtil.getModelPath(rendererDDMTemplate));
 
 		JournalTestUtil.addFeed(
 			stagingGroup.getGroupId(), layout.getPlid(),

@@ -70,6 +70,8 @@ public abstract class BasePortletDataHandlerTestCase extends PowerMockito {
 
 		addStagedModels();
 
+		portletDataContext.setEndDate(getEndDate());
+
 		portletDataHandler.prepareManifestSummary(portletDataContext);
 
 		ManifestSummary manifestSummary =
@@ -157,8 +159,15 @@ public abstract class BasePortletDataHandlerTestCase extends PowerMockito {
 		rootElement = SAXReaderUtil.createElement("root");
 
 		portletDataContext.setExportDataRootElement(rootElement);
+
+		missingReferencesElement = SAXReaderUtil.createElement(
+			"missing-references");
+
+		portletDataContext.setMissingReferencesElement(
+			missingReferencesElement);
 	}
 
+	protected Element missingReferencesElement;
 	protected PortletDataContext portletDataContext;
 	protected PortletDataHandler portletDataHandler;
 	protected String portletId;

@@ -293,7 +293,7 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 			getDDMTemplateActionableDynamicQuery(portletDataContext);
 
 		manifestSummary.addModelCount(
-			DDMTemplate.class, JournalArticle.class,
+			DDMTemplate.class, DDMStructure.class,
 			ddmTemplateActionableDynamicQuery.performCount() +
 				ddmTemplates.size());
 
@@ -431,8 +431,7 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 			@Override
 			protected String getManifestSummaryKey() {
 				return ManifestSummary.getManifestSummaryKey(
-					DDMTemplate.class.getName(),
-					JournalArticle.class.getName());
+					DDMTemplate.class.getName(), DDMStructure.class.getName());
 			}
 
 		};

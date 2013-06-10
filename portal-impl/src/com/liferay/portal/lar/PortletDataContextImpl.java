@@ -363,7 +363,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 			modifiedDatePropertyName);
 
 		dynamicQuery.add(modifiedDateProperty.ge(_startDate));
-		dynamicQuery.add(modifiedDateProperty.lt(_endDate));
+		dynamicQuery.add(modifiedDateProperty.le(_endDate));
 	}
 
 	@Override

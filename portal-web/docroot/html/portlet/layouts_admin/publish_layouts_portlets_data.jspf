@@ -75,7 +75,7 @@
 
 								<ul class="date-range-options hide unstyled" id="<portlet:namespace />startEndDate">
 									<li>
-										<aui:field-wrapper label="start-date">
+										<aui:fieldset label="start-date">
 											<liferay-ui:input-date
 												dayParam="startDateDay"
 												dayValue="<%= yesterday.get(Calendar.DATE) %>"
@@ -101,7 +101,7 @@
 												minuteParam='<%= "startDateMinute" %>'
 												minuteValue="<%= yesterday.get(Calendar.MINUTE) %>"
 											/>
-										</aui:field-wrapper>
+										</aui:fieldset>
 									</li>
 									<li>
 										<aui:field-wrapper label="end-date">
@@ -130,7 +130,7 @@
 												minuteParam='<%= "endDateMinute" %>'
 												minuteValue="<%= today.get(Calendar.MINUTE) %>"
 											/>
-										</aui:field-wrapper>
+										</aui:fieldset>
 									</li>
 								</ul>
 
@@ -148,10 +148,9 @@
 				</div>
 
 				<liferay-ui:icon
-					cssClass="modify-link"
 					image="calendar"
 					label="<%= true %>"
-					message="filter-to-export-by-date"
+					message="date-range"
 				/>
 
 				<ul>
@@ -212,7 +211,7 @@
 													request.setAttribute("render_controls.jsp-portletDisabled", !portletDataHandler.isPublishToLiveByDefault());
 												%>
 
-													<aui:field-wrapper label="content">
+													<aui:field-wrapper label='<%= Validator.isNotNull(metadataControls) ? "content" : StringPool.BLANK %>'>
 														<ul class="lfr-tree unstyled">
 															<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
 														</ul>
@@ -264,6 +263,7 @@
 									Map<String,Object> data = new HashMap<String,Object>();
 
 									data.put("portletid", portlet.getPortletId());
+									data.put("portlettitle", portletTitle);
 									%>
 
 									<aui:a cssClass="content-link modify-link" data="<%= data %>" href="javascript:;" id='<%= "contentLink_" + portlet.getPortletId() %>' label="change" method="get" />

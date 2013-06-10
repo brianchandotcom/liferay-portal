@@ -357,16 +357,6 @@
 		color: #933;
 	}
 
-	.portlet-data-section {
-		legend {
-			font-size: 110%;
-		}
-
-		.portlet-type-data-section .legend {
-			border-width: 0;
-		}
-	}
-
 	.selected-labels {
 		color:#999;
 		float:left;
@@ -395,8 +385,28 @@
 }
 
 .lfr-export-dialog {
-	.date-range-options {
-		margin-bottom: 1em;
+	.portlet-data-section, .portlet-type-data-section {
+		.control-label {
+			font-weight: bold;
+		}
+
+		.date-range-options {
+			margin-bottom: 1em;
+
+			legend {
+				border: 0;
+				display: block;
+				font-size: 1em;
+				font-weight: normal;
+				line-height: 1em;
+				margin-bottom: 0.2em;
+				padding-top: 1em;
+			}
+		}
+
+		legend {
+			display: none;
+		}
 	}
 
 	.upload-list li {

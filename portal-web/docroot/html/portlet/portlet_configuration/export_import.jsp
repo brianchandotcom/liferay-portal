@@ -150,7 +150,7 @@ if (layout.isTypeControlPanel()) {
 			<portlet:param name="struts_action" value="/portlet_configuration/export_import" />
 		</portlet:actionURL>
 
-		<aui:form action="<%= exportImportPagesURL %>" method="post" name="fm1">
+		<aui:form action="<%= exportImportPagesURL %>" cssClass="lfr-export-dialog" method="post" name="fm1">
 			<aui:input name="tabs1" type="hidden" value="export_import" />
 			<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 			<aui:input name="plid" type="hidden" value="<%= layout.getPlid() %>" />

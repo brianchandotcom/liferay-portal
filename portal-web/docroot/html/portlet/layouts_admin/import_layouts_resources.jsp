@@ -318,7 +318,7 @@ ManifestSummary manifestSummary = com.liferay.portal.kernel.lar.ExportImportUtil
 																request.setAttribute("render_controls.jsp-portletDisabled", !portletDataHandler.isPublishToLiveByDefault());
 															%>
 
-																<aui:field-wrapper label="content">
+																<aui:field-wrapper label='<%= Validator.isNotNull(importMetadataControls) ? "content" : StringPool.BLANK %>'>
 																	<ul class="lfr-tree unstyled">
 																		<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
 																	</ul>
@@ -369,6 +369,7 @@ ManifestSummary manifestSummary = com.liferay.portal.kernel.lar.ExportImportUtil
 													Map<String,Object> data = new HashMap<String,Object>();
 
 													data.put("portletid", portlet.getPortletId());
+													data.put("portlettitle", portletTitle);
 													%>
 
 													<aui:a cssClass="content-link modify-link" data="<%= data %>" href="javascript:;" id='<%= "contentLink_" + portlet.getPortletId() %>' label="change" method="get" />
@@ -504,7 +505,6 @@ ManifestSummary manifestSummary = com.liferay.portal.kernel.lar.ExportImportUtil
 			currentUserIdNode: '#currentUserId',
 			deleteMissingLayoutsNode: '#<%= PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS %>Checkbox',
 			deletePortletDataNode: '#<%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>Checkbox',
-			dialogTitle: '<%= UnicodeLanguageUtil.get(pageContext, "content-to-import") %>',
 			form: document.<portlet:namespace />fm1,
 			layoutSetSettingsNode: '#<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>Checkbox',
 			logoNode: '#<%= PortletDataHandlerKeys.LOGO %>Checkbox',

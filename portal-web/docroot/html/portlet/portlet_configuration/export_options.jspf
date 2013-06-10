@@ -86,7 +86,7 @@ if (endDateTime > 0) {
 				<ul class="lfr-tree unstyled">
 					<li class="tree-item">
 						<div class="hide" id="<portlet:namespace />range">
-							<aui:field-wrapper label="range">
+							<aui:fieldset cssClass="portlet-data-section" label="date-range">
 								<aui:input data-name='<%= LanguageUtil.get(pageContext, "all") %>' id="rangeAll" label="all" name="range" type="radio" value="all" />
 
 								<aui:input checked="<%= true %>" data-name='<%= LanguageUtil.get(pageContext, "from-last-publish-date") %>' id="rangeLastPublish" label="from-last-publish-date" name="range" type="radio" value="fromLastPublishDate" />
@@ -103,7 +103,7 @@ if (endDateTime > 0) {
 
 								<ul class="date-range-options hide unstyled" id="<portlet:namespace />startEndDate">
 									<li>
-										<aui:field-wrapper label="start-date">
+										<aui:fieldset label="start-date">
 											<liferay-ui:input-date
 												dayParam="startDateDay"
 												dayValue="<%= yesterday.get(Calendar.DATE) %>"
@@ -129,11 +129,11 @@ if (endDateTime > 0) {
 												minuteParam='<%= "startDateMinute" %>'
 												minuteValue="<%= yesterday.get(Calendar.MINUTE) %>"
 											/>
-										</aui:field-wrapper>
+										</aui:fieldset>
 									</li>
 
 									<li>
-										<aui:field-wrapper label="end-date">
+										<aui:fieldset label="end-date">
 											<liferay-ui:input-date
 												dayParam="endDateDay"
 												dayValue="<%= today.get(Calendar.DATE) %>"
@@ -158,18 +158,17 @@ if (endDateTime > 0) {
 												minuteParam='<%= "endDateMinute" %>'
 												minuteValue="<%= today.get(Calendar.MINUTE) %>"
 											/>
-										</aui:field-wrapper>
+										</aui:fieldset>
 									</li>
 								</ul>
-							</aui:field-wrapper>
+							</aui:fieldset>
 						</div>
 					</li>
 
 					<liferay-ui:icon
-						cssClass="modify-link"
 						image="calendar"
 						label="<%= true %>"
-						message="filter-to-export-by-date"
+						message="date-range"
 					/>
 
 					<ul>
@@ -196,21 +195,21 @@ if (endDateTime > 0) {
 							%>
 
 								<div class="hide" id="<portlet:namespace />content_<%= selPortlet.getRootPortletId() %>">
-									<aui:field-wrapper label="content">
-										<c:if test="<%= exportControls != null %>">
+									<c:if test="<%= exportControls != null %>">
 
-											<%
-											request.setAttribute("render_controls.jsp-action", Constants.EXPORT);
-											request.setAttribute("render_controls.jsp-controls", exportControls);
-											request.setAttribute("render_controls.jsp-manifestSummary", manifestSummary);
-											request.setAttribute("render_controls.jsp-portletDisabled", !portletDataHandler.isPublishToLiveByDefault());
-											%>
+										<%
+										request.setAttribute("render_controls.jsp-action", Constants.EXPORT);
+										request.setAttribute("render_controls.jsp-controls", exportControls);
+										request.setAttribute("render_controls.jsp-manifestSummary", manifestSummary);
+										request.setAttribute("render_controls.jsp-portletDisabled", !portletDataHandler.isPublishToLiveByDefault());
+										%>
 
+										<aui:field-wrapper label='<%= Validator.isNotNull(metadataControls) ? "content" : StringPool.BLANK %>'>
 											<ul class="lfr-tree unstyled">
 												<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
 											</ul>
-										</c:if>
-									</aui:field-wrapper>
+										</aui:field-wrapper>
+									</c:if>
 
 									<c:if test="<%= metadataControls != null %>">
 
@@ -312,7 +311,6 @@ if (endDateTime > 0) {
 		{
 			archivedSetupsNode: '#<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS %>Checkbox',
 			commentsNode: '#<%= PortletDataHandlerKeys.COMMENTS %>Checkbox',
-			dialogTitle: '<%= UnicodeLanguageUtil.get(pageContext, "content-to-export") %>',
 			form: document.<portlet:namespace />fm1,
 			namespace: '<portlet:namespace />',
 			rangeAllNode: '#rangeAll',

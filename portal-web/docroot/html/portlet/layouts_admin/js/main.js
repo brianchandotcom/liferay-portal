@@ -56,8 +56,6 @@ AUI.add(
 					initializer: function(config) {
 						var instance = this;
 
-						instance._dialogTitle = config.dialogTitle;
-
 						instance._bindUI();
 
 						instance._initLabels();
@@ -103,7 +101,13 @@ AUI.add(
 							function(event) {
 								var portletId = event.currentTarget.attr('data-portletid');
 
-								var contentDialog = instance._getContentDialog(portletId);
+								var portletTitle = event.currentTarget.attr('data-portlettitle');
+
+								if (!portletTitle) {
+									portletTitle = Liferay.Language.get('content');
+								}
+
+								var contentDialog = instance._getContentDialog(portletId, portletTitle);
 
 								contentDialog.show();
 							},
@@ -217,7 +221,6 @@ AUI.add(
 									dialog: {
 										bodyContent: commentsAndRatingsNode,
 										centered: true,
-										height: 300,
 										modal: true,
 										render: instance.get('form'),
 										toolbars: {
@@ -246,10 +249,11 @@ AUI.add(
 													label: Liferay.Language.get('cancel')
 												}
 											]
-										},
-										width: 400
+										}
 									},
-									title: Liferay.Language.get('comments-and-ratings')
+									height: 300,
+									title: Liferay.Language.get('comments-and-ratings'),
+									width: 400
 								}
 							);
 
@@ -259,7 +263,7 @@ AUI.add(
 						return commentsAndRatingsDialog;
 					},
 
-					_getContentDialog: function(portletId) {
+					_getContentDialog: function(portletId, portletTitle) {
 						var instance = this;
 
 						var contentNode = instance.byId('content_' + portletId);
@@ -274,7 +278,6 @@ AUI.add(
 									dialog: {
 										bodyContent: contentNode,
 										centered: true,
-										height: 300,
 										modal: true,
 										render: instance.get('form'),
 										toolbars: {
@@ -303,10 +306,11 @@ AUI.add(
 													label: Liferay.Language.get('cancel')
 												}
 											]
-										},
-										width: 400
+										}
 									},
-									title: instance._dialogTitle
+									height: 300,
+									title: portletTitle,
+									width: 400
 								}
 							);
 
@@ -331,7 +335,6 @@ AUI.add(
 									dialog: {
 										bodyContent: globalConfigurationNode,
 										centered: true,
-										height: 300,
 										modal: true,
 										render: instance.get('form'),
 										toolbars: {
@@ -360,10 +363,11 @@ AUI.add(
 													label: Liferay.Language.get('cancel')
 												}
 											]
-										},
-										width: 400
+										}
 									},
-									title: Liferay.Language.get('application-configuration')
+									height: 300,
+									title: Liferay.Language.get('application-configuration'),
+									width: 400
 								}
 							);
 
@@ -388,7 +392,6 @@ AUI.add(
 									dialog: {
 										bodyContent: globalContentNode,
 										centered: true,
-										height: 300,
 										modal: true,
 										render: instance.get('form'),
 										toolbars: {
@@ -417,10 +420,11 @@ AUI.add(
 													label: Liferay.Language.get('cancel')
 												}
 											]
-										},
-										width: 400
+										}
 									},
-									title: instance._dialogTitle
+									height: 300,
+									title: Liferay.Language.get('all-content'),
+									width: 400
 								}
 							);
 
@@ -444,7 +448,6 @@ AUI.add(
 								{
 									dialog: {
 										bodyContent: pagesNode,
-										height: 300,
 										modal: true,
 										render: instance.get('form'),
 										toolbars: {
@@ -473,10 +476,11 @@ AUI.add(
 													label: Liferay.Language.get('cancel')
 												}
 											]
-										},
-										width: 400
+										}
 									},
-									title: Liferay.Language.get('pages')
+									height: 300,
+									title: Liferay.Language.get('pages'),
+									width: 400
 								}
 							);
 
@@ -501,7 +505,6 @@ AUI.add(
 									dialog: {
 										bodyContent: rangeNode,
 										centered: true,
-										height: 300,
 										modal: true,
 										render: instance.get('form'),
 										toolbars: {
@@ -530,10 +533,11 @@ AUI.add(
 													label: Liferay.Language.get('cancel')
 												}
 											]
-										},
-										width: 400
+										}
 									},
-									title: instance._dialogTitle
+									height: 300,
+									title: Liferay.Language.get('date-range'),
+									width: 400
 								}
 							);
 
@@ -588,9 +592,11 @@ AUI.add(
 												}
 											]
 										},
-										width: 400
+
 									},
-									title: instance._dialogTitle
+									height: 300,
+									title: Liferay.Language.get('remote-live-connection-settings'),
+									width: 400
 								}
 							);
 
@@ -615,7 +621,6 @@ AUI.add(
 									dialog: {
 										bodyContent: scheduledPublishingEventsNode,
 										centered: true,
-										height: 300,
 										modal: true,
 										render: instance.get('form'),
 										toolbars: {
@@ -631,10 +636,11 @@ AUI.add(
 													label: Liferay.Language.get('close')
 												}
 											]
-										},
-										width: 400
+										}
 									},
-									title: Liferay.Language.get('scheduled-events')
+									height: 300,
+									title: Liferay.Language.get('scheduled-events'),
+									width: 400
 								}
 							);
 

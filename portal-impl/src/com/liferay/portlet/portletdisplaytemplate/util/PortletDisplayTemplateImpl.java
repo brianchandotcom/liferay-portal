@@ -196,8 +196,7 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 			"portlet-preferences", Map.class,
 			PortletDisplayTemplateConstants.PORTLET_PREFERENCES);
 		generalVariablesTemplateVariableGroup.addVariable(
-			"template-id", null,
-			PortletDisplayTemplateConstants.DDM_TEMPLATE_ID);
+			"template-id", null, PortletDisplayTemplateConstants.TEMPLATE_ID);
 		generalVariablesTemplateVariableGroup.addVariable(
 			"theme-display", ThemeDisplay.class,
 			PortletDisplayTemplateConstants.THEME_DISPLAY);
@@ -248,7 +247,7 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 		throws Exception {
 
 		contextObjects.put(
-			PortletDisplayTemplateConstants.DDM_TEMPLATE_ID, ddmTemplateId);
+			PortletDisplayTemplateConstants.TEMPLATE_ID, ddmTemplateId);
 		contextObjects.put(PortletDisplayTemplateConstants.ENTRIES, entries);
 
 		if (!entries.isEmpty()) {

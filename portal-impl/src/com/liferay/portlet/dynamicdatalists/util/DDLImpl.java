@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -306,6 +307,8 @@ public class DDLImpl implements DDL {
 		contextObjects.put(
 			DDLConstants.RESERVED_RECORD_SET_NAME,
 			recordSet.getName(themeDisplay.getLocale()));
+
+		contextObjects.put(TemplateConstants.TEMPLATE_ID, ddmTemplateId);
 
 		String viewMode = ParamUtil.getString(renderRequest, "viewMode");
 

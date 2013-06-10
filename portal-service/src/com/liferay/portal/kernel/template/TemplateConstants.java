@@ -38,6 +38,8 @@ public interface TemplateConstants {
 
 	public static final String SERVLET_SEPARATOR = "_SERVLET_CONTEXT_";
 
+	public static final String TEMPLATE_ID = "template_id";
+
 	public static final String TEMPLATE_RESOURCE_UUID_PREFIX =
 		"TEMPLATE_RESOURCE_UUID";
 

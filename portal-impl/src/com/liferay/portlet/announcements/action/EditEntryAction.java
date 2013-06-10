@@ -164,8 +164,8 @@ public class EditEntryAction extends PortletAction {
 			displayDateHour += 12;
 		}
 
-		boolean autoDisplayDate = ParamUtil.getBoolean(
-			actionRequest, "autoDisplayDate");
+		boolean displayImmediately = ParamUtil.getBoolean(
+			actionRequest, "displayImmediately");
 
 		int expirationDateMonth = ParamUtil.getInteger(
 			actionRequest, "expirationDateMonth");
@@ -194,7 +194,7 @@ public class EditEntryAction extends PortletAction {
 			AnnouncementsEntryServiceUtil.addEntry(
 				themeDisplay.getPlid(), classNameId, classPK, title, content,
 				url, type, displayDateMonth, displayDateDay, displayDateYear,
-				displayDateHour, displayDateMinute, autoDisplayDate,
+				displayDateHour, displayDateMinute, displayImmediately,
 				expirationDateMonth, expirationDateDay, expirationDateYear,
 				expirationDateHour, expirationDateMinute, priority, alert);
 		}

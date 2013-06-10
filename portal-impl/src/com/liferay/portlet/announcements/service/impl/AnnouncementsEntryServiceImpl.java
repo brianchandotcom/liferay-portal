@@ -44,7 +44,7 @@ public class AnnouncementsEntryServiceImpl
 			long plid, long classNameId, long classPK, String title,
 			String content, String url, String type, int displayDateMonth,
 			int displayDateDay, int displayDateYear, int displayDateHour,
-			int displayDateMinute, boolean autoDisplayDate,
+			int displayDateMinute, boolean displayImmediately,
 			int expirationDateMonth, int expirationDateDay,
 			int expirationDateYear, int expirationDateHour,
 			int expirationDateMinute, int priority, boolean alert)
@@ -107,7 +107,7 @@ public class AnnouncementsEntryServiceImpl
 		return announcementsEntryLocalService.addEntry(
 			getUserId(), classNameId, classPK, title, content, url, type,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, autoDisplayDate, expirationDateMonth,
+			displayDateMinute, displayImmediately, expirationDateMonth,
 			expirationDateDay, expirationDateYear, expirationDateHour,
 			expirationDateMinute, priority, alert);
 	}

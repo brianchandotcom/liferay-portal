@@ -25,10 +25,10 @@ long entryId = BeanParamUtil.getLong(entry, request, "entryId");
 
 String content = BeanParamUtil.getString(entry, request, "content");
 
-boolean autoDisplayDate = ParamUtil.getBoolean(request, "autoDisplayDate");
+boolean displayImmediately = ParamUtil.getBoolean(request, "displayImmediately");
 
 if (entry == null) {
-	autoDisplayDate = true;
+	displayImmediately = true;
 }
 %>
 
@@ -114,7 +114,7 @@ if (entry == null) {
 			<aui:option label="important" selected="<%= (entry != null) && (entry.getPriority() == 1) %>" value="1" />
 		</aui:select>
 
-		<aui:input dateTogglerCheckboxLabel="display-immediately" disabled="<%= autoDisplayDate %>" name="displayDate" />
+		<aui:input dateTogglerCheckboxLabel="display-immediately" disabled="<%= displayImmediately %>" name="displayDate" />
 
 		<aui:input name="expirationDate" />
 	</aui:fieldset>

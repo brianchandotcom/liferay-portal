@@ -7,9 +7,9 @@
 
 		<execute action="BaseLiferay#click" locator1="locator1" value1="value1" />
 
-		<execute macro="BlogsEntry#pgAdd" />
+		<execute macro="BlogsEntry#addCP" />
 
-		<execute macro="BlogsEntry#pgAdd">
+		<execute macro="BlogsEntry#addCP">
 			<var name="name" value="value" />
 		</execute>
 
@@ -27,9 +27,9 @@
 			<then>
 				<var name="name" value="value" />
 
-				<execute macro="BlogsEntry#pgAdd" />
+				<execute macro="BlogsEntry#addCP" />
 
-				<execute macro="BlogsEntry#pgAdd">
+				<execute macro="BlogsEntry#addCP">
 					<var name="name" value="value" />
 				</execute>
 			</then>

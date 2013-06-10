@@ -1,55 +1,75 @@
 <definition>
-	<var name="pageName" value="Search Page" />
-	<var name="portletName" value="Search" />
+	<var name="searchPageName" value="Search Page" />
+	<var name="searchPortletName" value="Search" />
 
 	<set-up>
 		<execute macro="User#pgFirstLogin" />
 
-		<execute macro="Page#pgAdd" />
+		<execute macro="Page#pgAdd">
+			<var name="pageName" value="${searchPageName}" />
+		</execute>
 
-		<execute macro="Portlet#pgAdd" />
+		<execute macro="Portlet#pgAdd">
+			<var name="pageName" value="${searchPageName}" />
+			<var name="portletName" value="${searchPortletName}" />
+		</execute>
 	</set-up>
 
 	<command name="SearchBlogsEntry">
+		<var name="pageName" value="Blogs Page" />
+		<var name="portletName" value="Blogs" />
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 
 		<execute macro="Page#pgAdd">
-			<var name="pageName" value="Blogs Page" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="Portlet#pgAdd">
-			<var name="pageName" value="Blogs Page" />
-			<var name="portletName" value="Blogs" />
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
 		</execute>
 
-		<execute macro="BlogsEntry#pgAdd">
-			<var name="pageName" value="Blogs Page" />
-			<var name="portletName" value="Blogs" />
+		<execute macro="BlogsEntry#addPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
 		</execute>
 
-		<execute macro="Search#pgBlogsEntry" />
+		<execute macro="Search#blogsEntryPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="pageName" value="${searchPageName}" />
+		</execute>
 	</command>
 
 	<command name="SearchMessageBoardsThread">
+		<var name="pageName" value="Message Boards Page" />
+		<var name="portletName" value="Message Boards" />
 		<var name="threadSubject" value="MB Thread Message Subject" />
 		<var name="threadBody" value="MB Thread Message Body" />
 
 		<execute macro="Page#pgAdd">
-			<var name="pageName" value="Message Boards Page" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="Portlet#pgAdd">
-			<var name="pageName" value="Message Boards Page" />
-			<var name="portletName" value="Message Boards" />
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
 		</execute>
 
-		<execute macro="MessageboardsThread#pgAdd">
-			<var name="pageName" value="Message Boards Page" />
-			<var name="portletName" value="Message Boards" />
+		<execute macro="MessageboardsThread#addPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadBody" value="${threadBody}" />
 		</execute>
 
-		<execute macro="Search#pgMessageboardsThread" />
+		<execute macro="Search#messageboardsThreadPG">
+			<var name="pageName" value="${searchPageName}" />
+			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadBody" value="${threadBody}" />
+		</execute>
 	</command>
 
 	<command name="SearchUser">
@@ -58,40 +78,56 @@
 		<var name="userLastName" value="userln" />
 		<var name="userScreenName" value="usersn" />
 
-		<execute macro="User#cpAdd" />
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
 
-		<execute macro="Search#pgUser" />
+		<execute macro="Search#userPG">
+			<var name="pageName" value="${searchPageName}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+		</execute>
 	</command>
 
 	<command name="SearchWikiPage">
+		<var name="pageName" value="Wiki Test Page" />
+		<var name="portletName" value="Wiki" />
 		<var name="wikiPageContent" value="Wiki Page Content" />
 		<var name="wikiPageTitle" value="Wiki Page Title" />
 
 		<execute macro="Page#pgAdd">
-			<var name="pageName" value="Wiki Test Page" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="Portlet#pgAdd">
-			<var name="pageName" value="Wiki Test Page" />
-			<var name="portletName" value="Wiki" />
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
 		</execute>
 
-		<execute macro="WikiPage#pgAddPage">
-			<var name="pageName" value="Wiki Test Page" />
-			<var name="portletName" value="Wiki" />
+		<execute macro="WikiPage#addPagePG">
+			<var name="pageName" value="${pageName}" />
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
-		<execute macro="Search#pgWikiPage" />
+		<execute macro="Search#wikiPagePG">
+			<var name="pageName" value="${searchPageName}" />
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+		</execute>
 	</command>
 
 	<tear-down>
-		<execute macro="BlogsEntry#cpTearDown" />
+		<execute macro="BlogsEntry#tearDownCP" />
 
-		<execute macro="MessageboardsThread#cpTearDown" />
+		<execute macro="MessageboardsThread#tearDownCP" />
 
-		<execute macro="User#cpTearDown" />
+		<execute macro="User#tearDownCP" />
 
-		<execute macro="WikiPage#cpTearDown" />
+		<execute macro="WikiPage#tearDownCP" />
 
 		<execute macro="Page#pgTearDown" />
 	</tear-down>

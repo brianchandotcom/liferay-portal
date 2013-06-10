@@ -10,12 +10,23 @@
 		<var name="userLastName" value="userln" />
 		<var name="userScreenName" value="usersn" />
 
-		<execute macro="User#cpAdd" />
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
 
-		<execute macro="Site#cpAddBlank" />
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
 
-		<execute macro="Site#cpAddMember">
+		<execute macro="Site#addMemberCP">
+			<var name="siteName" value="${siteName}" />
 			<var name="siteScopeName" value="${siteName}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 	</command>
 
@@ -24,16 +35,20 @@
 		<var name="teamName" value="Site Team Name" />
 		<var name="teamDescription" value="Site Team Description" />
 
-		<execute macro="Site#cpAddBlank" />
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
 
-		<execute macro="Team#cpAdd">
+		<execute macro="Team#addCP">
 			<var name="siteScopeName" value="${siteName}" />
+			<var name="teamName" value="${teamName}" />
+			<var name="teamDescription" value="${teamDescription}" />
 		</execute>
 	</command>
 
 	<tear-down>
-		<execute macro="Site#cpTearDown" />
+		<execute macro="Site#tearDownCP" />
 
-		<execute macro="User#cpTearDown" />
+		<execute macro="User#tearDownCP" />
 	</tear-down>
 </definition>

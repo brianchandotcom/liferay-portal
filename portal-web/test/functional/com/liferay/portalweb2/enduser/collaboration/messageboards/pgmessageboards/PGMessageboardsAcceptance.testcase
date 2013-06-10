@@ -4,94 +4,125 @@
 
 	<set-up>
 		<execute macro="User#pgFirstLogin" />
+
+		<execute macro="Page#pgAdd">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#pgAdd">
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
+		</execute>
 	</set-up>
 
 	<command name="AddMBCategory">
 		<var name="categoryName" value="MB Category Name" />
 
-		<execute macro="Page#pgAdd" />
-
-		<execute macro="Portlet#pgAdd" />
-
-		<execute macro="MessageboardsCategory#pgAdd" />
+		<execute macro="MessageboardsCategory#addPG">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="pageName" value="${pageName}" />
+		</execute>
 	</command>
 
 	<command name="AddMBThread">
-		<var name="threadSubject" value="MB Thread Message Subject" />
 		<var name="threadBody" value="MB Thread Message Body" />
+		<var name="threadSubject" value="MB Thread Message Subject" />
 
-		<execute macro="Page#pgAdd" />
-
-		<execute macro="Portlet#pgAdd" />
-
-		<execute macro="MessageboardsThread#pgAdd" />
+		<execute macro="MessageboardsThread#addPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
+		</execute>
 	</command>
 
 	<command name="DeleteMBCategory">
 		<var name="categoryName" value="MB Category Name" />
 
-		<execute macro="Page#pgAdd" />
+		<execute macro="MessageboardsCategory#addPG">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="pageName" value="${pageName}" />
+		</execute>
 
-		<execute macro="Portlet#pgAdd" />
-
-		<execute macro="MessageboardsCategory#pgAdd" />
-		<execute macro="MessageboardsCategory#pgDelete" />
+		<execute macro="MessageboardsCategory#deletePG">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="pageName" value="${pageName}" />
+		</execute>
 	</command>
 
 	<command name="DeleteMBThread">
-		<var name="threadSubject" value="MB Thread Message Subject" />
 		<var name="threadBody" value="MB Thread Message Body" />
+		<var name="threadSubject" value="MB Thread Message Subject" />
 
-		<execute macro="Page#pgAdd" />
+		<execute macro="MessageboardsThread#addPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
+		</execute>
 
-		<execute macro="Portlet#pgAdd" />
-
-		<execute macro="MessageboardsThread#pgAdd" />
-		<execute macro="MessageboardsThread#pgDelete" />
+		<execute macro="MessageboardsThread#deletePG">
+			<var name="pageName" value="${pageName}" />
+			<var name="threadSubject" value="${threadSubject}" />
+		</execute>
 	</command>
 
 	<command name="EditMBCategory">
 		<var name="categoryName" value="MB Category Name" />
 		<var name="categoryNameNew" value="MB Category Name Edit" />
 
-		<execute macro="Page#pgAdd" />
+		<execute macro="MessageboardsCategory#addPG">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="pageName" value="${pageName}" />
+		</execute>
 
-		<execute macro="Portlet#pgAdd" />
-
-		<execute macro="MessageboardsCategory#pgAdd" />
-		<execute macro="MessageboardsCategory#pgEdit" />
+		<execute macro="MessageboardsCategory#editPG">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="categoryNameNew" value="${categoryNameNew}" />
+			<var name="pageName" value="${pageName}" />
+		</execute>
 	</command>
 
 	<command name="EditMBThreadBody">
-		<var name="threadSubject" value="MB Thread Message Subject" />
 		<var name="threadBody" value="MB Thread Message Body" />
 		<var name="threadBodyNew" value="MB Thread Message Body Edit" />
+		<var name="threadSubject" value="MB Thread Message Subject" />
 
-		<execute macro="Page#pgAdd" />
+		<execute macro="MessageboardsThread#addPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
+		</execute>
 
-		<execute macro="Portlet#pgAdd" />
-
-		<execute macro="MessageboardsThread#pgAdd" />
-		<execute macro="MessageboardsThread#pgEdit" />
+		<execute macro="MessageboardsThread#editPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadBodyNew" value="${threadBodyNew}" />
+			<var name="threadSubject" value="${threadSubject}" />
+		</execute>
 	</command>
 
 	<command name="ReplyMBThread">
-		<var name="threadSubject" value="MB Thread Message Subject" />
 		<var name="threadBody" value="MB Thread Message Body" />
 		<var name="threadReplyBody" value="MB Thread Reply Body" />
+		<var name="threadSubject" value="MB Thread Message Subject" />
 
-		<execute macro="Page#pgAdd" />
+		<execute macro="MessageboardsThread#addPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
+		</execute>
 
-		<execute macro="Portlet#pgAdd" />
-
-		<execute macro="MessageboardsThread#pgAdd" />
-		<execute macro="MessageboardsThread#pgReply" />
+		<execute macro="MessageboardsThread#replyPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadReplyBody" value="${threadReplyBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
+		</execute>
 	</command>
 
 	<tear-down>
-		<execute macro="MessageboardsCategory#cpTearDown" />
+		<execute macro="MessageboardsCategory#tearDownCP" />
 
-		<execute macro="MessageboardsThread#cpTearDown" />
+		<execute macro="MessageboardsThread#tearDownCP" />
 
 		<execute macro="Page#pgTearDown" />
 	</tear-down>

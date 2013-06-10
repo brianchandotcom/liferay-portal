@@ -2,7 +2,7 @@
 	<var name="userEmailAddress" value="test@liferay.com" />
 	<var name="password" value="test" />
 
-	<command name="cpAdd">
+	<command name="addCP">
 		<execute macro="Page#cpGoto">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
@@ -23,7 +23,7 @@
 		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="DETAILS_LAST_NAME_FIELD" value1="${userLastName}" />
 	</command>
 
-	<command name="cpDeactivate">
+	<command name="deactivateCP">
 		<execute macro="Page#cpGoto">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
@@ -50,7 +50,7 @@
 		<execute macro="CPUsersandorganizationsViewusers#showBasicSearch" />
 	</command>
 
-	<command name="cpDelete">
+	<command name="deleteCP">
 		<execute macro="Page#cpGoto">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
@@ -77,7 +77,7 @@
 		<execute macro="CPUsersandorganizationsViewusers#showBasicSearch" />
 	</command>
 
-	<command name="cpEditPassword">
+	<command name="editPasswordCP">
 		<execute macro="Page#cpGoto">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
@@ -111,7 +111,7 @@
 		</execute>
 	</command>
 
-	<command name="cpView">
+	<command name="viewCP">
 		<execute macro="Page#cpGoto">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
@@ -192,10 +192,10 @@
 		</if>
 	</command>
 
-	<command name="cpTearDown">
+	<command name="tearDownCP">
 		<var name="userFirstName" value="userfn*" />
 
-		<execute macro="User#cpDeactivate" />
-		<execute macro="User#cpDelete" />
+		<execute macro="User#deactivateCP" />
+		<execute macro="User#deleteCP" />
 	</command>
 </definition>

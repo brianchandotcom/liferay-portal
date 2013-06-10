@@ -1,24 +1,7 @@
 <definition>
 	<var name="userName" value="Test Test" />
 
-	<command name="cpTearDown">
-		<execute macro="Page#cpGotoContent">
-			<var name="portletName" value="Message Boards" />
-		</execute>
-
-		<if>
-			<condition action="CPMessageboards#isElementPresent" locator-key1="THREAD_TABLE_ALL_CHECKBOX" />
-			<then>
-				<execute action="CPMessageboards#click" locator-key1="THREAD_TABLE_ALL_CHECKBOX" />
-				<execute action="CPMessageboards#click" locator-key1="THREADS_RECYCLE_BIN_BUTTON" />
-				<execute action="CPMessageboards#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to move the selected entries to the Recycle Bin?" />
-			</then>
-		</if>
-
-		<execute macro="RecycleBin#cpEmptyRecycleBin" />
-	</command>
-
-	<command name="pgAdd">
+	<command name="addPG">
 		<execute macro="Page#pgGoto">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -47,7 +30,7 @@
 		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_1" value1="${threadBody}" />
 	</command>
 
-	<command name="pgDelete">
+	<command name="deletePG">
 		<execute macro="Page#pgGoto">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -58,10 +41,10 @@
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" />
 		<execute action="PGMessageboards#assertTextNotPresent" value1="${threadSubject}" />
 
-		<execute macro="RecycleBin#cpEmptyRecycleBin" />
+		<execute macro="RecycleBin#emptyRecycleBinCP" />
 	</command>
 
-	<command name="pgEdit">
+	<command name="editPG">
 		<execute macro="Page#pgGoto">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -79,7 +62,7 @@
 		<execute action="PGMessageboardsThread#assertTextNotEquals" locator-key1="MESSAGE_BODY_1" value1="${threadBody}" />
 	</command>
 
-	<command name="pgReply">
+	<command name="replyPG">
 		<execute macro="Page#pgGoto">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -114,5 +97,22 @@
 		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_2" value1="${threadReplyBody}" />
 		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_USERNAME_2" value1="${userName}" />
 		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_RATING_2" value1="0 (0 Votes)" />
+	</command>
+
+	<command name="tearDownCP">
+		<execute macro="Page#cpGotoContent">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<if>
+			<condition action="CPMessageboards#isElementPresent" locator-key1="THREAD_TABLE_ALL_CHECKBOX" />
+			<then>
+				<execute action="CPMessageboards#click" locator-key1="THREAD_TABLE_ALL_CHECKBOX" />
+				<execute action="CPMessageboards#click" locator-key1="THREADS_RECYCLE_BIN_BUTTON" />
+				<execute action="CPMessageboards#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to move the selected entries to the Recycle Bin?" />
+			</then>
+		</if>
+
+		<execute macro="RecycleBin#emptyRecycleBinCP" />
 	</command>
 </definition>

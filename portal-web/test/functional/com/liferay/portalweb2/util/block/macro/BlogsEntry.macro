@@ -1,5 +1,17 @@
 <definition>
-	<command name="cpAdd">
+	<command name="addCmdPG">
+		<execute action="PGBlogs#click" locator-key1="ADD_ENTRY_BUTTON" />
+
+		<execute action="PGBlogsAdd#type" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
+		<execute action="PGBlogsAdd#type" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
+		<execute action="PGBlogsAdd#click" locator-key1="PUBLISH_BUTTON" />
+
+		<execute action="PGBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE_1" value1="${entryTitle}" />
+		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT_1" value1="${entryContent}" />
+	</command>
+
+	<command name="addCP">
 		<execute macro="Page#cpGotoContent">
 			<var name="portletName" value="Blogs" />
 		</execute>
@@ -18,95 +30,59 @@
 		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
 	</command>
 
-	<command name="cpTearDown">
-		<execute macro="Page#cpGotoContent">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<if>
-			<condition action="CPBlogs#isElementPresent" locator-key1="ENTRY_TABLE_ALL_CHECKBOX" />
-			<then>
-				<execute action="CPBlogs#click" locator-key1="ENTRY_TABLE_ALL_CHECKBOX" />
-				<execute action="CPBlogs#click" locator-key1="RECYCLE_BIN_BUTTON" />
-			</then>
-		</if>
-
-		<execute macro="RecycleBin#cpEmptyRecycleBin" />
-	</command>
-
-	<command name="pgAdd">
-		<execute macro="Page#pgGoto">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="BlogsEntry#pgAddCmd" />
-	</command>
-
-	<command name="pgAddCmd">
-		<execute action="PGBlogs#click" locator-key1="ADD_ENTRY_BUTTON" />
-
-		<execute action="PGBlogsAdd#type" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
-		<execute action="PGBlogsAdd#type" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
-		<execute action="PGBlogsAdd#click" locator-key1="PUBLISH_BUTTON" />
-
-		<execute action="PGBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE_1" value1="${entryTitle}" />
-		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT_1" value1="${entryContent}" />
-	</command>
-
-	<command name="pgAddNoPermission">
-		<execute macro="Page#pgGoto">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="BlogsEntry#pgAddNoPermissionCmd" />
-	</command>
-
-	<command name="pgAddNoPermissionCmd">
+	<command name="addNoPermissionCmdPG">
 		<execute action="PGBlogs#assertElementNotPresent" locator-key1="ADD_ENTRY_BUTTON" />
 	</command>
 
-	<command name="pgAddNoPermissionOrganization">
+	<command name="addNoPermissionOrganizationPG">
 		<execute macro="Page#pgGotoOrganization">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsEntry#pgAddNoPermissionCmd" />
+		<execute macro="BlogsEntry#addNoPermissionCmdPG" />
 	</command>
 
-	<command name="pgAddNoPermissionSitePublic">
-		<execute macro="Page#pgGotoSitePublic">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="BlogsEntry#pgAddNoPermissionCmd" />
-	</command>
-
-	<command name="pgAddOrganization">
-		<execute macro="Page#pgGotoOrganization">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="BlogsEntry#pgAddCmd" />
-	</command>
-
-	<command name="pgAddSitePublic">
-		<execute macro="Page#pgGotoSitePublic">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="BlogsEntry#pgAddCmd" />
-	</command>
-
-	<command name="pgDelete">
+	<command name="addNoPermissionPG">
 		<execute macro="Page#pgGoto">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsEntry#pgDeleteCmd" />
+		<execute macro="BlogsEntry#addNoPermissionCmdPG" />
 	</command>
 
-	<command name="pgDeleteCmd">
+	<command name="addNoPermissionSitePublicPG">
+		<execute macro="Page#pgGotoSitePublic">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#addNoPermissionCmdPG" />
+	</command>
+
+	<command name="addOrganizationPG">
+		<execute macro="Page#pgGotoOrganization">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#addCmdPG" />
+	</command>
+
+	<command name="addPG">
+		<execute macro="Page#pgGoto">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#addCmdPG" />
+	</command>
+
+	<command name="addSitePublicPG">
+		<execute macro="Page#pgGotoSitePublic">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#addCmdPG" />
+	</command>
+
+	<command name="deleteCmdPG">
 		<execute action="PGBlogs#click" locator-key1="ENTRY_RECYCLE_BIN_1" />
 
 		<execute action="PGBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" />
@@ -114,59 +90,59 @@
 		<execute action="PGBlogs#assertTextNotPresent" value1="${entryContent}" />
 	</command>
 
-	<command name="pgDeleteNoPermission">
+	<command name="deleteNoPermissionPG">
 		<execute macro="Page#pgGoto">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsEntry#pgDeleteNoPermissionCmd" />
+		<execute macro="BlogsEntry#deleteNoPermissionCmdPG" />
 	</command>
 
-	<command name="pgDeleteNoPermissionCmd">
+	<command name="deleteNoPermissionCmdPG">
 		<execute action="PGBlogs#assertElementNotPresent" locator-key1="ENTRY_RECYCLE_BIN_1" />
 	</command>
 
-	<command name="pgDeleteNoPermissionOrganization">
+	<command name="deleteNoPermissionOrganizationPG">
 		<execute macro="Page#pgGotoOrganization">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsEntry#pgDeleteNoPermissionCmd" />
+		<execute macro="BlogsEntry#deleteNoPermissionCmdPG" />
 	</command>
 
-	<command name="pgDeleteNoPermissionSitePublic">
+	<command name="deleteNoPermissionSitePublicPG">
 		<execute macro="Page#pgGotoSitePublic">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsEntry#pgDeleteNoPermissionCmd" />
+		<execute macro="BlogsEntry#deleteNoPermissionCmdPG" />
 	</command>
 
-	<command name="pgDeleteOrganization">
+	<command name="deleteOrganizationPG">
 		<execute macro="Page#pgGotoOrganization">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsEntry#pgDeleteCmd" />
+		<execute macro="BlogsEntry#deleteCmdPG" />
 	</command>
 
-	<command name="pgDeleteSitePublic">
-		<execute macro="Page#pgGotoSitePublic">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="BlogsEntry#pgDeleteCmd" />
-	</command>
-
-	<command name="pgEdit">
+	<command name="deletePG">
 		<execute macro="Page#pgGoto">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsEntry#pgEditCmd" />
+		<execute macro="BlogsEntry#deleteCmdPG" />
 	</command>
 
-	<command name="pgEditCmd">
+	<command name="deleteSitePublicPG">
+		<execute macro="Page#pgGotoSitePublic">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#deleteCmdPG" />
+	</command>
+
+	<command name="editCmdPG">
 		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE_1" value1="${entryTitle}" />
 		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT_1" value1="${entryContent}" />
 		<execute action="PGBlogs#click" locator-key1="ENTRY_EDIT_1" value1="${entryTitle}" />
@@ -180,20 +156,44 @@
 		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT_1" value1="${entryContentNew}" />
 	</command>
 
-	<command name="pgMoveToRecycleBin">
+	<command name="editPG">
 		<execute macro="Page#pgGoto">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsEntry#pgMoveToRecycleBinCmd" />
+		<execute macro="BlogsEntry#editCmdPG" />
 	</command>
 
-	<command name="pgMoveToRecycleBinCmd">
+	<command name="moveToRecycleBinPG">
+		<execute macro="Page#pgGoto">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#moveToRecycleBinCmdPG" />
+	</command>
+
+	<command name="moveToRecycleBinCmdPG">
 		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE_1" value1="${entryTitle}" />
 		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT_1" value1="${entryContent}" />
 		<execute action="PGBlogs#click" locator-key1="ENTRY_RECYCLE_BIN_1" />
 		<execute action="PGBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The selected item was moved to the Recycle Bin. Undo" />
 		<execute action="PGBlogs#assertTextNotPresent" value1="${entryTitle}" />
 		<execute action="PGBlogs#assertTextNotPresent" value1="${entryContent}" />
+	</command>
+
+	<command name="tearDownCP">
+		<execute macro="Page#cpGotoContent">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<if>
+			<condition action="CPBlogs#isElementPresent" locator-key1="ENTRY_TABLE_ALL_CHECKBOX" />
+			<then>
+				<execute action="CPBlogs#click" locator-key1="ENTRY_TABLE_ALL_CHECKBOX" />
+				<execute action="CPBlogs#click" locator-key1="RECYCLE_BIN_BUTTON" />
+			</then>
+		</if>
+
+		<execute macro="RecycleBin#emptyRecycleBinCP" />
 	</command>
 </definition>

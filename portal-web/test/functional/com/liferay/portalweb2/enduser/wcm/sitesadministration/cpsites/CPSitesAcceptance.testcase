@@ -6,20 +6,28 @@
 	<command name="AddSite">
 		<var name="siteName" value="Site Name" />
 
-		<execute macro="Site#cpAddBlank" />
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
 
-		<execute macro="Site#cpView" />
+		<execute macro="Site#viewCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
 	</command>
 
 	<command name="DeleteSite">
 		<var name="siteName" value="Site Name" />
 
-		<execute macro="Site#cpAddBlank" />
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
 
-		<execute macro="Site#cpDelete" />
+		<execute macro="Site#deleteCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
 	</command>
 
 	<tear-down>
-		<execute macro="Site#cpTearDown" />
+		<execute macro="Site#tearDownCP" />
 	</tear-down>
 </definition>

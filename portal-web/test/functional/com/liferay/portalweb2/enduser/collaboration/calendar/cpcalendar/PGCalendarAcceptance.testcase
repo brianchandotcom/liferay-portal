@@ -5,36 +5,58 @@
 	<set-up>
 		<execute macro="User#pgFirstLogin" />
 
-		<execute macro="Page#pgAdd" />
+		<execute macro="Page#pgAdd">
+			<var name="pageName" value="${pageName}" />
+		</execute>
 
-		<execute macro="Portlet#pgAdd" />
+		<execute macro="Portlet#pgAdd">
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
+		</execute>
 	</set-up>
 
 	<command name="pgAdd">
 		<var name="eventTitle" value="Calendar Test Entry" />
 
-		<execute macro="Event#pgAdd" />
+		<execute macro="Event#addPG">
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 	</command>
 
 	<command name="pgDelete">
 		<var name="eventTitle" value="Calendar Test Entry" />
 
-		<execute macro="Event#pgAdd" />
+		<execute macro="Event#addPG">
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="pageName" value="${pageName}" />
+		</execute>
 
-		<execute macro="Event#pgDelete" />
+		<execute macro="Event#deletePG">
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="pageName" value="${pageName}" />
+		</execute>
 	</command>
 
 	<command name="pgEdit">
 		<var name="eventTitle" value="Calendar Test Entry" />
 		<var name="eventTitleNew" value="Calendar Test Entry New" />
 
-		<execute macro="Event#pgAdd" />
+		<execute macro="Event#addPG">
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="pageName" value="${pageName}" />
+		</execute>
 
-		<execute macro="Event#pgEdit" />
+		<execute macro="Event#editPG">
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventTitleNew" value="${eventTitleNew}" />
+			<var name="pageName" value="${pageName}" />
+		</execute>
 	</command>
 
 	<tear-down>
-		<execute macro="Event#pgTearDown" />
+		<execute macro="Event#tearDownPG" />
 
 		<execute macro="Page#pgTearDown" />
 

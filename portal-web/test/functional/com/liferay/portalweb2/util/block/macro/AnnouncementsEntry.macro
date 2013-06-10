@@ -1,5 +1,5 @@
 <definition>
-	<command name="pgAdd">
+	<command name="addPG">
 		<execute macro="Page#pgGoto">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -26,7 +26,7 @@
 		<execute action="PGAnnouncementsManageentries#assertTextEquals" locator-key1="ENTRY_TABLE_TYPE_1" value1="${distributionScope}" />
 	</command>
 
-	<command name="pgDelete">
+	<command name="deletePG">
 		<execute macro="Page#pgGoto">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -44,7 +44,7 @@
 		<execute action="PGAnnouncements#assertTextNotPresent" value1="{entryContent}" />
 	</command>
 
-	<command name="pgEdit">
+	<command name="editPG">
 		<execute macro="Page#pgGoto">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -72,7 +72,7 @@
 		<execute action="PGAnnouncementsManageentries#assertTextEquals" locator-key1="ENTRY_TABLE_TYPE_1" value1="${distributionScope}" />
 	</command>
 
-	<command name="pgTearDown">
+	<command name="tearDownPG">
 		<execute macro="Page#pgGoto">
 			<var name="pageName" value="${pageName}" />
 		</execute>

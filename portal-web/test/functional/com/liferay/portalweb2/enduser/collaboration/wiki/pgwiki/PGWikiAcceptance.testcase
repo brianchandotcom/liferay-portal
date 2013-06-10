@@ -5,23 +5,36 @@
 	<set-up>
 		<execute macro="User#pgFirstLogin" />
 
-		<execute macro="Page#pgAdd" />
+		<execute macro="Page#pgAdd">
+			<var name="pageName" value="${pageName}" />
+		</execute>
 
-		<execute macro="Portlet#pgAdd" />
+		<execute macro="Portlet#pgAdd">
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
+		</execute>
 	</set-up>
 
 	<command name="AddWikiFrontPage">
 		<var name="wikiPageContent" value="Wiki FrontPage Content" />
 
-		<execute macro="WikiPage#pgAddFrontPage" />
+		<execute macro="WikiPage#addFrontPagePG">
+			<var name="pageName" value="${pageName}" />
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+		</execute>
 	</command>
 
 	<command name="DeleteWikiFrontPage">
 		<var name="wikiPageContent" value="Wiki FrontPage Content" />
 
-		<execute macro="WikiPage#pgAddFrontPage" />
+		<execute macro="WikiPage#addFrontPagePG">
+			<var name="pageName" value="${pageName}" />
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+		</execute>
 
-		<execute macro="WikiPage#pgDeleteFrontPage" />
+		<execute macro="WikiPage#deleteFrontPagePG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
 	</command>
 
 	<command name="AddWikiFrontPageChildPage">
@@ -30,15 +43,24 @@
 		<var name="wikiPageContent" value="Wiki Front Page Content" />
 		<var name="wikiPageTitle" value="FrontPage" />
 
-		<execute macro="WikiPage#pgAddFrontPage" />
+		<execute macro="WikiPage#addFrontPagePG">
+			<var name="pageName" value="${pageName}" />
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+		</execute>
 
-		<execute macro="WikiPage#pgAddChildPage" />
+		<execute macro="WikiPage#addChildPagePG">
+			<var name="pageName" value="${pageName}" />
+			<var name="wikiChildPageContent" value="${wikiChildPageContent}" />
+			<var name="wikiChildPageTitle" value="${wikiChildPageTitle}" />
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+		</execute>
 	</command>
 
 	<tear-down>
-		<execute macro="WikiNode#cpTearDown" />
+		<execute macro="WikiNode#tearDownCP" />
 
-		<execute macro="WikiPage#cpTearDown" />
+		<execute macro="WikiPage#tearDownCP" />
 
 		<execute macro="Page#pgTearDown" />
 	</tear-down>

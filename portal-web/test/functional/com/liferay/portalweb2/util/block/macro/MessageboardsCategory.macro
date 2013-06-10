@@ -1,22 +1,5 @@
 <definition>
-	<command name="cpTearDown">
-		<execute macro="Page#cpGotoContent">
-			<var name="portletName" value="Message Boards" />
-		</execute>
-
-		<while>
-			<condition action="CPMessageboards#isElementPresent" locator-key1="CATEGORY_TABLE_ALL_CHECKBOX" />
-			<then>
-				<execute action="CPMessageboards#click" locator-key1="CATEGORY_TABLE_ALL_CHECKBOX" />
-				<execute action="CPMessageboards#click" locator-key1="CATEGORIES_RECYCLE_BIN_BUTTON" />
-				<execute action="CPMessageboards#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to move the selected entries to the Recycle Bin?" />
-			</then>
-		</while>
-
-		<execute macro="RecycleBin#cpEmptyRecycleBin" />
-	</command>
-
-	<command name="pgAdd">
+	<command name="addPG">
 		<execute macro="Page#pgGoto">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -41,7 +24,7 @@
 		<execute action="PGMessageboardsCategory#assertTextEquals" locator-key1="NAME_HEADER" value1="${categoryName}" />
 	</command>
 
-	<command name="pgDelete">
+	<command name="deletePG">
 		<execute macro="Page#pgGoto">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -52,11 +35,11 @@
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" />
 		<execute action="PGMessageboards#assertTextNotPresent" value1="${categoryName}" />
 
-		<execute macro="RecycleBin#cpEmptyRecycleBin" />
+		<execute macro="RecycleBin#emptyRecycleBinCP" />
 
 	</command>
 
-	<command name="pgEdit">
+	<command name="editPG">
 		<execute macro="Page#pgGoto">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -70,5 +53,22 @@
 
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORY_1" value1="${categoryNameNew}" />
+	</command>
+
+	<command name="tearDownCP">
+		<execute macro="Page#cpGotoContent">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<while>
+			<condition action="CPMessageboards#isElementPresent" locator-key1="CATEGORY_TABLE_ALL_CHECKBOX" />
+			<then>
+				<execute action="CPMessageboards#click" locator-key1="CATEGORY_TABLE_ALL_CHECKBOX" />
+				<execute action="CPMessageboards#click" locator-key1="CATEGORIES_RECYCLE_BIN_BUTTON" />
+				<execute action="CPMessageboards#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to move the selected entries to the Recycle Bin?" />
+			</then>
+		</while>
+
+		<execute macro="RecycleBin#emptyRecycleBinCP" />
 	</command>
 </definition>

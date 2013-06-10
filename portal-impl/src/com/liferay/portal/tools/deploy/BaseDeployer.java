@@ -1669,16 +1669,28 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 		String pluginServletContextName = deployDir.substring(
 			0, deployDir.length() - 4);
 
+		String pluginApplicationName = pluginServletContextName;
+
+		if (Validator.isNotNull(
+				PropsValues.AUTO_DEPLOY_WEBSPHERE_WSADMIN_APP_NAME_SUFFIX)) {
+
+			pluginApplicationName = pluginApplicationName +
+				StringPool.UNDERLINE +
+				PropsValues.AUTO_DEPLOY_WEBSPHERE_WSADMIN_APP_NAME_SUFFIX;
+		}
+
 		wsadminContent = StringUtil.replace(
 			wsadminContent,
 			new String[] {
 				"${auto.deploy.dest.dir}",
 				"${auto.deploy.websphere.wsadmin.app.manager.query}",
+				"${auto.deploy.websphere.wsadmin.app.name}",
 				"${plugin.servlet.context.name}"
 			},
 			new String[] {
 				destDir,
 				PropsValues.AUTO_DEPLOY_WEBSPHERE_WSADMIN_APP_MANAGER_QUERY,
+				pluginApplicationName,
 				pluginServletContextName
 			});
 
@@ -1688,23 +1700,40 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 
 		String webSphereHome = System.getenv("WAS_HOME");
 
-		String wsadminBatchFileName = null;
+		List<String> commands = new ArrayList<String>();
 
 		if (OSDetector.isWindows()) {
-			wsadminBatchFileName = webSphereHome + "\\bin\\wsadmin.bat";
+			commands.add(webSphereHome + "\\bin\\wsadmin.bat");
 		}
 		else {
-			wsadminBatchFileName = webSphereHome + "/bin/wsadmin.sh";
+			commands.add(webSphereHome + "/bin/wsadmin.sh");
 		}
+
+		if (Validator.isNotNull(
+				PropsValues.AUTO_DEPLOY_WEBSPHERE_WSADMIN_PROPERTIES_FILE)) {
+
+			commands.add("-p");
+			commands.add(
+				PropsValues.AUTO_DEPLOY_WEBSPHERE_WSADMIN_PROPERTIES_FILE);
+		}
+
+		commands.add("-f");
+		commands.add(wsadminFileName);
 
 		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Installing plugin by executing " + wsadminBatchFileName +
-					" -f " + wsadminFileName);
+			StringBundler sb = new StringBundler(commands.size() + 1);
+
+			sb.append("Installing plugin by executing");
+
+			for (String command : commands) {
+				sb.append(StringPool.SPACE);
+				sb.append(command);
+			}
+
+			_log.info(sb.toString());
 		}
 
-		ProcessBuilder processBuilder = new ProcessBuilder(
-			wsadminBatchFileName, "-f", wsadminFileName);
+		ProcessBuilder processBuilder = new ProcessBuilder(commands);
 
 		processBuilder.redirectErrorStream(true);
 

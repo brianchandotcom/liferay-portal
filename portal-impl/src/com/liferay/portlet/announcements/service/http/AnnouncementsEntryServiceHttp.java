@@ -57,7 +57,7 @@ public class AnnouncementsEntryServiceHttp {
 		java.lang.String title, java.lang.String content, java.lang.String url,
 		java.lang.String type, int displayDateMonth, int displayDateDay,
 		int displayDateYear, int displayDateHour, int displayDateMinute,
-		boolean autoDisplayDate, int expirationDateMonth,
+		boolean displayImmediately, int expirationDateMonth,
 		int expirationDateDay, int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, int priority, boolean alert)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -69,7 +69,7 @@ public class AnnouncementsEntryServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(methodKey, plid,
 					classNameId, classPK, title, content, url, type,
 					displayDateMonth, displayDateDay, displayDateYear,
-					displayDateHour, displayDateMinute, autoDisplayDate,
+					displayDateHour, displayDateMinute, displayImmediately,
 					expirationDateMonth, expirationDateDay, expirationDateYear,
 					expirationDateHour, expirationDateMinute, priority, alert);
 

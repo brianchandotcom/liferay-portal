@@ -66,7 +66,7 @@ public class AnnouncementsEntryServiceSoap {
 		long plid, long classNameId, long classPK, java.lang.String title,
 		java.lang.String content, java.lang.String url, java.lang.String type,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, boolean autoDisplayDate,
+		int displayDateHour, int displayDateMinute, boolean displayImmediately,
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
 		int expirationDateHour, int expirationDateMinute, int priority,
 		boolean alert) throws RemoteException {
@@ -75,7 +75,7 @@ public class AnnouncementsEntryServiceSoap {
 				AnnouncementsEntryServiceUtil.addEntry(plid, classNameId,
 					classPK, title, content, url, type, displayDateMonth,
 					displayDateDay, displayDateYear, displayDateHour,
-					displayDateMinute, autoDisplayDate, expirationDateMonth,
+					displayDateMinute, displayImmediately, expirationDateMonth,
 					expirationDateDay, expirationDateYear, expirationDateHour,
 					expirationDateMinute, priority, alert);
 

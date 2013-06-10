@@ -308,8 +308,13 @@ if (hints != null) {
 			</div>
 
 			<c:if test="<%= Validator.isNotNull(dateTogglerCheckboxLabel) %>">
+
+				<%
+				String dateTogglerCheckboxName = TextFormatter.format(dateTogglerCheckboxLabel, TextFormatter.M);
+				%>
+
 				<div class="clearfix">
-					<aui:input id="<%= formName + fieldParam %>" label="<%= dateTogglerCheckboxLabel %>" name='<%= formName + fieldParam + "DateTogglerCheckbox" %>' type="checkbox" value="<%= disabled %>" />
+					<aui:input id="<%= formName + fieldParam %>" label="<%= dateTogglerCheckboxLabel %>" name="<%= dateTogglerCheckboxName %>" type="checkbox" value="<%= disabled %>" />
 				</div>
 
 				<aui:script use="aui-base">

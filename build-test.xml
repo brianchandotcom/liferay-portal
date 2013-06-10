@@ -347,6 +347,16 @@
 		</if>
 
 		<if>
+			<equals arg1="${test.ant.script.setup.wizard.enabled}" arg2="true" />
+			<then>
+				<property name="test.ant.script.setup.wizard.enabled" value="true" />
+			</then>
+			<else>
+				<property name="test.ant.script.setup.wizard.enabled" value="false" />
+			</else>
+		</if>
+
+		<if>
 			<not>
 				<isset property="test.ant.script.template" />
 			</not>

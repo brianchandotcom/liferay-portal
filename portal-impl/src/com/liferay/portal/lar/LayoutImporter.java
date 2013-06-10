@@ -581,7 +581,7 @@ public class LayoutImporter {
 
 		Map<Long, Layout> newLayoutsMap =
 			(Map<Long, Layout>)portletDataContext.getNewPrimaryKeysMap(
-				Layout.class);
+				Layout.class + ".layoutImpl");
 
 		if (deletePortletData) {
 			if (_log.isDebugEnabled()) {

@@ -18,6 +18,7 @@ import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.CustomizedPages;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
@@ -42,6 +43,7 @@ import javax.portlet.PortletPreferences;
 
 /**
  * @author Manuel de la Peña
+ * @author Mate Thurzo
  */
 public class LayoutTestUtil {
 
@@ -92,6 +94,18 @@ public class LayoutTestUtil {
 			LayoutConstants.TYPE_PORTLET, false, friendlyURL, serviceContext);
 	}
 
+	public static Layout addLayout(
+			long groupId, String name, long parentLayoutPlid)
+		throws Exception {
+
+		Layout layout = addLayout(groupId, name, false);
+
+		LayoutLocalServiceUtil.updateParentLayoutId(
+			layout.getPlid(), parentLayoutPlid);
+
+		return LayoutLocalServiceUtil.fetchLayout(layout.getPlid());
+	}
+
 	public static LayoutPrototype addLayoutPrototype(String name)
 		throws Exception {
 
@@ -114,6 +128,43 @@ public class LayoutTestUtil {
 		return LayoutSetPrototypeLocalServiceUtil.addLayoutSetPrototype(
 			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
 			nameMap, null, true, true, ServiceTestUtil.getServiceContext());
+	}
+
+	public static Layout addLayoutTypeArticle(
+			long groupId, String name, String articleId)
+		throws Exception {
+
+		Layout layout = addLayout(groupId, name);
+
+		UnicodeProperties typeSettingsProperties =
+			layout.getTypeSettingsProperties();
+
+		typeSettingsProperties.setProperty("article-id", articleId);
+
+		layout.setType(LayoutConstants.TYPE_ARTICLE);
+
+		LayoutLocalServiceUtil.updateLayout(layout);
+
+		return layout;
+	}
+
+	public static Layout addLayoutTypeLinkedToLayout(
+			long groupId, String name, long linkedToLayoutId)
+		throws Exception {
+
+		Layout layout = addLayout(groupId, name);
+
+		UnicodeProperties typeSettingsProperties =
+			layout.getTypeSettingsProperties();
+
+		typeSettingsProperties.setProperty(
+			"linkToLayoutId", String.valueOf(linkedToLayoutId));
+
+		layout.setType(LayoutConstants.TYPE_LINK_TO_LAYOUT);
+
+		LayoutLocalServiceUtil.updateLayout(layout);
+
+		return layout;
 	}
 
 	public static String addPortletToLayout(

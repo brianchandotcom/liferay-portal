@@ -239,6 +239,10 @@ public class LayoutStagedModelDataHandler
 
 		Map<Long, Layout> newLayoutsMap =
 			(Map<Long, Layout>)portletDataContext.getNewPrimaryKeysMap(
+				Layout.class + ".layoutImpl");
+
+		Map<Long, Long> layoutPlids =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				Layout.class);
 
 		if (deleteLayout) {
@@ -481,8 +485,6 @@ public class LayoutStagedModelDataHandler
 		importedLayout.setHidden(layout.isHidden());
 		importedLayout.setFriendlyURL(friendlyURL);
 
-		importLayoutFriendlyURLs(portletDataContext, layout);
-
 		importedLayout.setIconImage(false);
 
 		if (layout.isIconImage()) {
@@ -524,6 +526,10 @@ public class LayoutStagedModelDataHandler
 		List<Layout> newLayouts = portletDataContext.getNewLayouts();
 
 		newLayouts.add(importedLayout);
+
+		layoutPlids.put(layout.getPlid(), importedLayout.getPlid());
+
+		importLayoutFriendlyURLs(portletDataContext, layout);
 
 		portletDataContext.importClassedModel(
 			layout, importedLayout, LayoutPortletDataHandler.NAMESPACE);
@@ -572,8 +578,6 @@ public class LayoutStagedModelDataHandler
 		if (article == null) {
 			return;
 		}
-
-		portletDataContext.setExportDataRootElement(layoutElement.getParent());
 
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, article);

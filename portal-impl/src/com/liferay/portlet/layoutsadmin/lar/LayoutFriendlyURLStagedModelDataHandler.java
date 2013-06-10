@@ -17,11 +17,15 @@ package com.liferay.portlet.layoutsadmin.lar;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutFriendlyURL;
 import com.liferay.portal.service.LayoutFriendlyURLLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.persistence.LayoutFriendlyURLUtil;
+
+import java.util.Map;
 
 /**
  * @author Sergio González
@@ -61,7 +65,13 @@ public class LayoutFriendlyURLStagedModelDataHandler
 		long userId = portletDataContext.getUserId(
 			layoutFriendlyURL.getUserUuid());
 
-		long plid = portletDataContext.getPlid();
+		Map<Long, Long> layoutPlids =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Layout.class);
+
+		long plid = MapUtil.getLong(
+			layoutPlids, layoutFriendlyURL.getPlid(),
+			layoutFriendlyURL.getPlid());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			layoutFriendlyURL, LayoutPortletDataHandler.NAMESPACE);

@@ -54,6 +54,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUBMIT_FOR_PUBLICATION_BUTTON</td>
+	<td>//button[@id='_15_publishButton']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CANCEL_BUTTON</td>
 	<td>//button[contains(.,'Cancel')]</td>
 	<td></td>

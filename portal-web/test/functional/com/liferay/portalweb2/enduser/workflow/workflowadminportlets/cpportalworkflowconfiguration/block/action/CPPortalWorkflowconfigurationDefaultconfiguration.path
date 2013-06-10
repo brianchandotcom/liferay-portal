@@ -1,0 +1,131 @@
+<html>
+<head>
+<title>CPPortalWorkflowconfigurationDefaultconfiguration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPPortalWorkflowconfigurationDefaultconfiguration</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPPortalWorkflowconfigurationDefaultconfiguration</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_DEFINITIONS</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Definitions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_DEFAULT_CONFIGURATIONS</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Default Configuration')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_SUBMISSIONS</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Submissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RESOURCE_TABLE-->
+<tr>
+	<td>RESOURCE_TABLE_PAGE_REVISION</td>
+	<td>//div[@id='_151_workflowHandlersSearchContainer']/div/table/tbody/tr/td[contains(.,'Page Revision')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_TABLE_PAGE_REVISION_SELECT</td>
+	<td>//select[@id='_151_workflowDefinitionName@com.liferay.portal.model.LayoutRevision']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_TABLE_USER</td>
+	<td>//div[@id='_151_workflowHandlersSearchContainer']/div/table/tbody/tr/td[contains(.,'User')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_TABLE_USER_SELECT</td>
+	<td>//select[@id='_151_workflowDefinitionName@com.liferay.portal.model.User']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_TABLE_BLOGS_ENTRY</td>
+	<td>//div[@id='_151_workflowHandlersSearchContainer']/div/table/tbody/tr/td[contains(.,'Blogs Entry')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_TABLE_BLOGS_ENTRY_SELECT</td>
+	<td>//select[@id='_151_workflowDefinitionName@com.liferay.portlet.blogs.model.BlogsEntry']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_TABLE_WEB_CONTENT</td>
+	<td>//div[@id='_151_workflowHandlersSearchContainer']/div/table/tbody/tr/td[contains(.,'Web Content')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_TABLE_WEB_CONTENT_SELECT</td>
+	<td>//select[@id='_151_workflowDefinitionName@com.liferay.portlet.journal.model.JournalArticle']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_TABLE_COMMENTS</td>
+	<td>//div[@id='_151_workflowHandlersSearchContainer']/div/table/tbody/tr/td[contains(.,'Comments')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_TABLE_COMMENTS_SELECT</td>
+	<td>//select[@id='_151_workflowDefinitionName@com.liferay.portlet.messageboards.model.MBDiscussion']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_TABLE_MB_MESSAGE</td>
+	<td>//div[@id='_151_workflowHandlersSearchContainer']/div/table/tbody/tr/td[contains(.,'Message Boards Message')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_TABLE_MB_MESSAGE_SELECT</td>
+	<td>//select[@id='_151_workflowDefinitionName@com.liferay.portlet.messageboards.model.MBMessage']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_TABLE_WIKI_PAGE</td>
+	<td>//div[@id='_151_workflowHandlersSearchContainer']/div/table/tbody/tr/td[contains(.,'Wiki Page')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_TABLE_WIKI_PAGE_SELECT</td>
+	<td>//select[@id='_151_workflowDefinitionName@com.liferay.portlet.wiki.model.WikiPage']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

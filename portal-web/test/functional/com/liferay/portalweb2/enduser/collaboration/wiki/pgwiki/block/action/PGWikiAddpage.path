@@ -58,6 +58,11 @@
 	<td></td>
 	<td></td>
 </tr>
+<tr>
+	<td>SUBMIT_FOR_PUBLICATION_BUTTON</td>
+	<td>//button[@id='_36_publishButton']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

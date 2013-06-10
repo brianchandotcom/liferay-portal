@@ -1,0 +1,194 @@
+<html>
+<head>
+<title>CPMyworkflowtasksTask</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPMyworkflowtasksTask</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPMyworkflowtasksTask</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>MANAGE_MY_ACCOUNT_IFRAME</td>
+	<td>//iframe[contains(@class,'dialog-iframe-node')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGNED_TO</td>
+	<td>//div[@class='lfr-asset-assigned']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGN_TO_ME</td>
+	<td>//div[@class='lfr-asset-assigned']/div/span[contains(@class,'task-assign-to-me-link')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STATE</td>
+	<td>//div[@class='lfr-asset-status']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CREATE_DATE</td>
+	<td>//div[@class='lfr-asset-date']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DUE_DATE</td>
+	<td>//div[@class='lfr-asset-due-date']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DUE_DATE_CHANGE</td>
+	<td>//div[@class='lfr-asset-due-date']/div/span[contains(@class,'task-due-date-link')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MENU-->
+<tr>
+	<td>MENU_ASSIGN_TO_ME</td>
+	<td>//a[@id='_153_taskAssignToMeLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_APPROVE</td>
+	<td>//a[@id='_153_approvetaskChangeStatusLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_REJECT</td>
+	<td>//a[@id='_153_rejecttaskChangeStatusLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_UPDATE_DUE_DATE</td>
+	<td>//a[@id='_153_taskDueDateLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PANEL-->
+<tr>
+	<td>PANEL_COMMENT_FIELD</td>
+	<td>//textarea[@id='_153_comment']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PANEL_OK_BUTTON</td>
+	<td>//button[.='OK']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PANEL_CANCEL_BUTTON</td>
+	<td>//button[.='Cancel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PREVIEW-->
+<tr>
+	<td>PREVIEW</td>
+	<td>//div[@class='accordion-toggle' and contains(.,'Preview')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIEW_TITLE</td>
+	<td>//h3[@class='task-content-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIEW_CONTENT</td>
+	<td>xpath=(//div[@class='accordion-inner'])</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ACTIVITIES-->
+<tr>
+	<td>ACTIVITIES</td>
+	<td>//div[@class='accordion-toggle' and contains(.,'Activities')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIVITIES_DATE_1</td>
+	<td>xpath=(//div[@class='task-activity task-type-1']/div[@class='task-activity-date'])[1]</td>
+	<td>Task initially assigned to the Administrator role.</td>
+</tr>
+<tr>
+	<td>ACTIVITIES_TEXT_1_LINE_A</td>
+	<td>xpath=(//div[@class='task-activity task-type-1']/div[2])[1]</td>
+	<td>Task initially assigned to the Administrator role.</td>
+</tr>
+<tr>
+	<td>ACTIVITIES_TEXT_1_LINE_B</td>
+	<td>xpath=(//div[@class='task-activity task-type-1']/div[3])[1]</td>
+	<td>Task initially assigned to the Administrator role.</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--COMMENTS-->
+<tr>
+	<td>COMMENTS</td>
+	<td>//div[@class='accordion-toggle' and contains(.,'Comments')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_SUCCESS_MESSAGE</td>
+	<td>//div[@id='_153_discussion-status-messages']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_BE_THE_FIRST</td>
+	<td>//fieldset[contains(@class,'add-comment')]/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_ADD_COMMENT</td>
+	<td>//fieldset[contains(@class,'add-comment')]/div/span/a/span[contains(.,'Add Comment')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_ADD_FIELD</td>
+	<td>//textarea[contains(@id,'_postReplyBody0')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_REPLY_BUTTON</td>
+	<td>//button[contains(@id,'_postReplyButton0')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

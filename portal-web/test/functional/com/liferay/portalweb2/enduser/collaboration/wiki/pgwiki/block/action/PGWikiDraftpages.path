@@ -1,0 +1,164 @@
+<html>
+<head>
+<title>PGWikiDraftpages</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGWikiDraftpages</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGWikiDraftpages</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE_1</td>
+	<td>xpath=(//div[@class='alert alert-info'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE_2</td>
+	<td>xpath=(//div[@class='alert alert-info'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DRAFT_PAGES-->
+<tr>
+	<td>DRAFT_PAGES</td>
+	<td>//h3[@class='header-title']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DRAFT_PAGES_TABLE-->
+<tr>
+	<td>DRAFT_PAGES_TABLE_PAGE_1</td>
+	<td>//div[@id='_36_ocerSearchContainerSearchContainer']//tr/td[1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DRAFT_PAGES_TABLE_STATUS_1</td>
+	<td>//div[@id='_36_ocerSearchContainerSearchContainer']//tr/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DRAFT_PAGES_TABLE_REVISION_1</td>
+	<td>//div[@id='_36_ocerSearchContainerSearchContainer']//tr/td[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DRAFT_PAGES_TABLE_USER_1</td>
+	<td>//div[@id='_36_ocerSearchContainerSearchContainer']//tr/td[4]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DRAFT_PAGES_TABLE_DATE_1</td>
+	<td>//div[@id='_36_ocerSearchContainerSearchContainer']//tr/td[5]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DRAFT_PAGES_TABLE_ACTIONS_1</td>
+	<td>//div[@id='_36_ocerSearchContainerSearchContainer']//tr/td[6]/div/a[@title='Actions']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DRAFT_PAGES_MENULIST-->
+<tr>
+	<td>DRAFT_PAGES_MENULIST_EDIT</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DRAFT_PAGES_MENULIST_PERMISSIONS</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DRAFT_PAGES_MENULIST_COPY</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Copy')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DRAFT_PAGES_MENULIST_MOVE</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Move')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DRAFT_PAGES_MENULIST_SUBSCRIBE</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Subscribe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DRAFT_PAGES_MENULIST_DISCARD_DRAFT</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Discard Draft')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PENDING_APPROVAL-->
+<tr>
+	<td>PENDING_APPROVAL</td>
+	<td>//div[@class='portlet-body']/h2</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PENDING_APPROVAL_TABLE-->
+<tr>
+	<td>PENDING_APPROVAL_TABLE_PAGE_1</td>
+	<td>//div[@id='_36_ircfSearchContainerSearchContainer']//tr/td[1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PENDING_APPROVAL_TABLE_STATUS_1</td>
+	<td>//div[@id='_36_ircfSearchContainerSearchContainer']//tr/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PENDING_APPROVAL_TABLE_REVISION_1</td>
+	<td>//div[@id='_36_ircfSearchContainerSearchContainer']//tr/td[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PENDING_APPROVAL_TABLE_USER_1</td>
+	<td>//div[@id='_36_ircfSearchContainerSearchContainer']//tr/td[4]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PENDING_APPROVAL_TABLE_DATE_1</td>
+	<td>//div[@id='_36_ircfSearchContainerSearchContainer']//tr/td[5]/a</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -41,6 +41,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NAVIGATION_DRAFT_PAGES</td>
+	<td>//div[@class='navbar ']//li/a[contains(.,'Draft Pages')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

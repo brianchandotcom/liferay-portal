@@ -1,0 +1,92 @@
+<html>
+<head>
+<title>CPPortalWorkflowconfigurationSubmissions</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPPortalWorkflowconfigurationSubmissions</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPPortalWorkflowconfigurationSubmissions</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_DEFINITIONS</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Definitions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_DEFAULT_CONFIGURATIONS</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Default Configuration')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_SUBMISSIONS</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Submissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_PENDING</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Pending')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_COMPLETED</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Completed')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PENDING_TABLE-->
+<tr>
+	<td>PENDING_TABLE_TASK</td>
+	<td>//div[@id='_151_workflowInstancesSearchContainerSearchContainer']/table/tbody/tr/td[1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PENDING_TABLE_ASSET_TITLE</td>
+	<td>//div[@id='_151_workflowInstancesSearchContainerSearchContainer']/table/tbody/tr/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PENDING_TABLE_ASSET_TYPE</td>
+	<td>//div[@id='_151_workflowInstancesSearchContainerSearchContainer']/table/tbody/tr/td[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PENDING_TABLE_STATUS</td>
+	<td>//div[@id='_151_workflowInstancesSearchContainerSearchContainer']/table/tbody/tr/td[4]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PENDING_TABLE_LAST_ACTIVITY_DATE</td>
+	<td>//div[@id='_151_workflowInstancesSearchContainerSearchContainer']/table/tbody/tr/td[5]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PENDING_TABLE_END_DATE</td>
+	<td>//div[@id='_151_workflowInstancesSearchContainerSearchContainer']/table/tbody/tr/td[6]/a</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

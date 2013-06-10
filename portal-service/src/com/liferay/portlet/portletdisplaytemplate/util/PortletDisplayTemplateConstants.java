@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.portletdisplaytemplate.util;
 
+import com.liferay.portal.kernel.template.TemplateConstants;
+
 /**
  * @author Juan Fernández
  * @author Eduardo García
@@ -23,8 +25,6 @@ public class PortletDisplayTemplateConstants {
 	public static final String ASSET_PUBLISHER_HELPER = "assetPublisherHelper";
 
 	public static final String CURRENT_URL = "currentURL";
-
-	public static final String DDM_TEMPLATE_ID = "ddmTemplateId";
 
 	public static final String ENTRIES = "entries";
 
@@ -51,6 +51,8 @@ public class PortletDisplayTemplateConstants {
 	public static final String TAGLIB_LIFERAY = "taglibLiferay";
 
 	public static final String TAGLIB_LIFERAY_HASH = "taglibLiferayHash";
+
+	public static final String TEMPLATE_ID = TemplateConstants.TEMPLATE_ID;
 
 	public static final String THEME = "theme";
 

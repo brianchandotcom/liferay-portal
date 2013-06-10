@@ -299,25 +299,29 @@ public class MBBanLocalServiceWrapper implements MBBanLocalService,
 	@Override
 	public void deleteBan(long banUserId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		_mbBanLocalService.deleteBan(banUserId, serviceContext);
 	}
 
 	@Override
 	public void deleteBan(com.liferay.portlet.messageboards.model.MBBan ban)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		_mbBanLocalService.deleteBan(ban);
 	}
 
 	@Override
 	public void deleteBansByBanUserId(long banUserId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		_mbBanLocalService.deleteBansByBanUserId(banUserId);
 	}
 
 	@Override
 	public void deleteBansByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		_mbBanLocalService.deleteBansByGroupId(groupId);
 	}
 

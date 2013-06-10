@@ -37,6 +37,10 @@
 		<finder name="RuleGroupInstanceId" return-type="Collection">
 			<finder-column name="ruleGroupInstanceId" />
 		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portal" entity="SystemEvent" />
 	</entity>
 	<entity name="MDRRule" local-service="true" remote-service="true" uuid="true">
 
@@ -69,6 +73,10 @@
 		<finder name="RuleGroupId" return-type="Collection">
 			<finder-column name="ruleGroupId" />
 		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portal" entity="SystemEvent" />
 	</entity>
 	<entity name="MDRRuleGroup" local-service="true" remote-service="true" uuid="true">
 
@@ -102,6 +110,7 @@
 		<!-- References -->
 
 		<reference package-path="com.liferay.portal" entity="Group" />
+		<reference package-path="com.liferay.portal" entity="SystemEvent" />
 	</entity>
 	<entity name="MDRRuleGroupInstance" local-service="true" remote-service="true" uuid="true">
 
@@ -155,6 +164,7 @@
 
 		<reference package-path="com.liferay.portal" entity="Layout" />
 		<reference package-path="com.liferay.portal" entity="LayoutSet" />
+		<reference package-path="com.liferay.portal" entity="SystemEvent" />
 	</entity>
 	<exceptions>
 		<exception>ActionType</exception>

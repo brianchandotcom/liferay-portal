@@ -208,6 +208,7 @@
 
 		<reference package-path="com.liferay.portal" entity="Company" />
 		<reference package-path="com.liferay.portal" entity="Group" />
+		<reference package-path="com.liferay.portal" entity="SystemEvent" />
 		<reference package-path="com.liferay.portlet.blogs" entity="BlogsEntry" />
 		<reference package-path="com.liferay.portlet.bookmarks" entity="BookmarksEntry" />
 		<reference package-path="com.liferay.portlet.documentlibrary" entity="DLApp" />

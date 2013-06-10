@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.persistence.ImageUtil;
@@ -450,6 +451,13 @@ public class DDMTemplateLocalServiceImpl
 		resourceLocalService.deleteResource(
 			template.getCompanyId(), DDMTemplate.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL, template.getTemplateId());
+
+		// System Event
+
+		systemEventLocalService.addSystemEvent(
+			template.getGroupId(), DDMTemplate.class.getName(),
+			template.getTemplateId(), template.getUuid(),
+			SystemEventConstants.TYPE_DELETE);
 	}
 
 	/**

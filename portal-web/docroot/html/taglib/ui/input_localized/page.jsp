@@ -157,9 +157,22 @@ List<String> languageIds = new ArrayList<String>();
 				int index = 0;
 
 				for (String curLanguageId : uniqueLanguageIds) {
+					String itemCssClass = "palette-item";
+
+					if (index == 0) {
+						itemCssClass += " palette-item-selected";
+					}
+
+					if (defaultLanguageId.equals(curLanguageId)) {
+						itemCssClass += " lfr-input-localized-default";
+					}
+
+					if (languageIds.contains(curLanguageId)) {
+						itemCssClass += " lfr-input-localized";
+					}
 				%>
 
-					<td class="palette-item <%= (index == 0) ? "palette-item-selected" : StringPool.BLANK %>" data-index="<%= index++ %>" data-value="<%= curLanguageId %>">
+					<td class="palette-item <%= itemCssClass %>" data-index="<%= index++ %>" data-value="<%= curLanguageId %>">
 						<a class="palette-item-inner" href="javascript:void(0);">
 							<img class="lfr-input-localized-flag" data-languageid="<%= curLanguageId %>" src="<%= themeDisplay.getPathThemeImages() %>/language/<%= curLanguageId %>.png" />
 							<div class="lfr-input-localized-state"></div>

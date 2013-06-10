@@ -2708,39 +2708,6 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="com.liferay.portlet.journal.model.impl.JournalStructureModelImpl">
-		<attributes>
-			<id name="id">
-				<column name="ID_" />
-			</id>
-			<basic name="uuid">
-				<column name="UUID_" />
-			</basic>
-			<basic name="groupId" />
-			<basic name="companyId" />
-			<basic name="userId" />
-			<basic name="userName" />
-			<basic name="createDate">
-				<temporal>TIMESTAMP</temporal>
-			</basic>
-			<basic name="modifiedDate">
-				<temporal>TIMESTAMP</temporal>
-			</basic>
-			<basic name="structureId" />
-			<basic name="parentStructureId" />
-			<basic name="name" />
-			<basic name="description" />
-			<basic name="xsd" />
-			<transient name="descriptionCurrentLanguageId" />
-			<transient name="descriptionMap" />
-			<transient name="modelAttributes" />
-			<transient name="nameCurrentLanguageId" />
-			<transient name="nameMap" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-			<transient name="userUuid" />
-		</attributes>
-	</mapped-superclass>
 	<mapped-superclass class="com.liferay.portlet.journal.model.impl.JournalTemplateModelImpl">
 		<attributes>
 			<id name="id">
@@ -4522,10 +4489,6 @@
 	</entity>
 	<entity class="com.liferay.portlet.journal.model.impl.JournalFolderImpl" name="JournalFolder">
 		<table name="JournalFolder" />
-		<attributes />
-	</entity>
-	<entity class="com.liferay.portlet.journal.model.impl.JournalStructureImpl" name="JournalStructure">
-		<table name="JournalStructure" />
 		<attributes />
 	</entity>
 	<entity class="com.liferay.portlet.journal.model.impl.JournalTemplateImpl" name="JournalTemplate">

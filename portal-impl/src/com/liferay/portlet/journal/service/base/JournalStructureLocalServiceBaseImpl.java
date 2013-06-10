@@ -20,32 +20,23 @@ import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.search.Indexable;
-import com.liferay.portal.kernel.search.IndexableType;
-import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.model.PersistedModel;
+import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.service.BaseLocalServiceImpl;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.GroupService;
-import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.UserService;
-import com.liferay.portal.service.WebDAVPropsLocalService;
 import com.liferay.portal.service.persistence.GroupFinder;
 import com.liferay.portal.service.persistence.GroupPersistence;
 import com.liferay.portal.service.persistence.UserFinder;
 import com.liferay.portal.service.persistence.UserPersistence;
-import com.liferay.portal.service.persistence.WebDAVPropsPersistence;
 
-import com.liferay.portlet.expando.service.ExpandoValueLocalService;
-import com.liferay.portlet.expando.service.ExpandoValueService;
-import com.liferay.portlet.expando.service.persistence.ExpandoValuePersistence;
-import com.liferay.portlet.journal.model.JournalStructure;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureService;
+import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureFinder;
+import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructurePersistence;
 import com.liferay.portlet.journal.service.JournalArticleImageLocalService;
 import com.liferay.portlet.journal.service.JournalArticleLocalService;
 import com.liferay.portlet.journal.service.JournalArticleResourceLocalService;
@@ -68,14 +59,8 @@ import com.liferay.portlet.journal.service.persistence.JournalFeedFinder;
 import com.liferay.portlet.journal.service.persistence.JournalFeedPersistence;
 import com.liferay.portlet.journal.service.persistence.JournalFolderFinder;
 import com.liferay.portlet.journal.service.persistence.JournalFolderPersistence;
-import com.liferay.portlet.journal.service.persistence.JournalStructureFinder;
-import com.liferay.portlet.journal.service.persistence.JournalStructurePersistence;
 import com.liferay.portlet.journal.service.persistence.JournalTemplateFinder;
 import com.liferay.portlet.journal.service.persistence.JournalTemplatePersistence;
-
-import java.io.Serializable;
-
-import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -99,224 +84,6 @@ public abstract class JournalStructureLocalServiceBaseImpl
 	 *
 	 * Never modify or reference this class directly. Always use {@link com.liferay.portlet.journal.service.JournalStructureLocalServiceUtil} to access the journal structure local service.
 	 */
-
-	/**
-	 * Adds the journal structure to the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param journalStructure the journal structure
-	 * @return the journal structure that was added
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
-	public JournalStructure addJournalStructure(
-		JournalStructure journalStructure) throws SystemException {
-		journalStructure.setNew(true);
-
-		return journalStructurePersistence.update(journalStructure);
-	}
-
-	/**
-	 * Creates a new journal structure with the primary key. Does not add the journal structure to the database.
-	 *
-	 * @param id the primary key for the new journal structure
-	 * @return the new journal structure
-	 */
-	@Override
-	public JournalStructure createJournalStructure(long id) {
-		return journalStructurePersistence.create(id);
-	}
-
-	/**
-	 * Deletes the journal structure with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param id the primary key of the journal structure
-	 * @return the journal structure that was removed
-	 * @throws PortalException if a journal structure with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.DELETE)
-	@Override
-	public JournalStructure deleteJournalStructure(long id)
-		throws PortalException, SystemException {
-		return journalStructurePersistence.remove(id);
-	}
-
-	/**
-	 * Deletes the journal structure from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param journalStructure the journal structure
-	 * @return the journal structure that was removed
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.DELETE)
-	@Override
-	public JournalStructure deleteJournalStructure(
-		JournalStructure journalStructure) throws SystemException {
-		return journalStructurePersistence.remove(journalStructure);
-	}
-
-	@Override
-	public DynamicQuery dynamicQuery() {
-		Class<?> clazz = getClass();
-
-		return DynamicQueryFactoryUtil.forClass(JournalStructure.class,
-			clazz.getClassLoader());
-	}
-
-	/**
-	 * Performs a dynamic query on the database and returns the matching rows.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
-		return journalStructurePersistence.findWithDynamicQuery(dynamicQuery);
-	}
-
-	/**
-	 * Performs a dynamic query on the database and returns a range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
-		return journalStructurePersistence.findWithDynamicQuery(dynamicQuery,
-			start, end);
-	}
-
-	/**
-	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
-		return journalStructurePersistence.findWithDynamicQuery(dynamicQuery,
-			start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the number of rows that match the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
-		return journalStructurePersistence.countWithDynamicQuery(dynamicQuery);
-	}
-
-	@Override
-	public JournalStructure fetchJournalStructure(long id)
-		throws SystemException {
-		return journalStructurePersistence.fetchByPrimaryKey(id);
-	}
-
-	/**
-	 * Returns the journal structure with the primary key.
-	 *
-	 * @param id the primary key of the journal structure
-	 * @return the journal structure
-	 * @throws PortalException if a journal structure with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public JournalStructure getJournalStructure(long id)
-		throws PortalException, SystemException {
-		return journalStructurePersistence.findByPrimaryKey(id);
-	}
-
-	@Override
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
-		return journalStructurePersistence.findByPrimaryKey(primaryKeyObj);
-	}
-
-	/**
-	 * Returns the journal structure matching the UUID and group.
-	 *
-	 * @param uuid the journal structure's UUID
-	 * @param groupId the primary key of the group
-	 * @return the matching journal structure
-	 * @throws PortalException if a matching journal structure could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public JournalStructure getJournalStructureByUuidAndGroupId(String uuid,
-		long groupId) throws PortalException, SystemException {
-		return journalStructurePersistence.findByUUID_G(uuid, groupId);
-	}
-
-	/**
-	 * Returns a range of all the journal structures.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of journal structures
-	 * @param end the upper bound of the range of journal structures (not inclusive)
-	 * @return the range of journal structures
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public List<JournalStructure> getJournalStructures(int start, int end)
-		throws SystemException {
-		return journalStructurePersistence.findAll(start, end);
-	}
-
-	/**
-	 * Returns the number of journal structures.
-	 *
-	 * @return the number of journal structures
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public int getJournalStructuresCount() throws SystemException {
-		return journalStructurePersistence.countAll();
-	}
-
-	/**
-	 * Updates the journal structure in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * @param journalStructure the journal structure
-	 * @return the journal structure that was updated
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
-	public JournalStructure updateJournalStructure(
-		JournalStructure journalStructure) throws SystemException {
-		return journalStructurePersistence.update(journalStructure);
-	}
 
 	/**
 	 * Returns the journal article local service.
@@ -696,44 +463,6 @@ public abstract class JournalStructureLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the journal structure persistence.
-	 *
-	 * @return the journal structure persistence
-	 */
-	public JournalStructurePersistence getJournalStructurePersistence() {
-		return journalStructurePersistence;
-	}
-
-	/**
-	 * Sets the journal structure persistence.
-	 *
-	 * @param journalStructurePersistence the journal structure persistence
-	 */
-	public void setJournalStructurePersistence(
-		JournalStructurePersistence journalStructurePersistence) {
-		this.journalStructurePersistence = journalStructurePersistence;
-	}
-
-	/**
-	 * Returns the journal structure finder.
-	 *
-	 * @return the journal structure finder
-	 */
-	public JournalStructureFinder getJournalStructureFinder() {
-		return journalStructureFinder;
-	}
-
-	/**
-	 * Sets the journal structure finder.
-	 *
-	 * @param journalStructureFinder the journal structure finder
-	 */
-	public void setJournalStructureFinder(
-		JournalStructureFinder journalStructureFinder) {
-		this.journalStructureFinder = journalStructureFinder;
-	}
-
-	/**
 	 * Returns the journal template local service.
 	 *
 	 * @return the journal template local service
@@ -991,107 +720,83 @@ public abstract class JournalStructureLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the web d a v props local service.
+	 * Returns the d d m structure local service.
 	 *
-	 * @return the web d a v props local service
+	 * @return the d d m structure local service
 	 */
-	public WebDAVPropsLocalService getWebDAVPropsLocalService() {
-		return webDAVPropsLocalService;
+	public DDMStructureLocalService getDDMStructureLocalService() {
+		return ddmStructureLocalService;
 	}
 
 	/**
-	 * Sets the web d a v props local service.
+	 * Sets the d d m structure local service.
 	 *
-	 * @param webDAVPropsLocalService the web d a v props local service
+	 * @param ddmStructureLocalService the d d m structure local service
 	 */
-	public void setWebDAVPropsLocalService(
-		WebDAVPropsLocalService webDAVPropsLocalService) {
-		this.webDAVPropsLocalService = webDAVPropsLocalService;
+	public void setDDMStructureLocalService(
+		DDMStructureLocalService ddmStructureLocalService) {
+		this.ddmStructureLocalService = ddmStructureLocalService;
 	}
 
 	/**
-	 * Returns the web d a v props persistence.
+	 * Returns the d d m structure remote service.
 	 *
-	 * @return the web d a v props persistence
+	 * @return the d d m structure remote service
 	 */
-	public WebDAVPropsPersistence getWebDAVPropsPersistence() {
-		return webDAVPropsPersistence;
+	public DDMStructureService getDDMStructureService() {
+		return ddmStructureService;
 	}
 
 	/**
-	 * Sets the web d a v props persistence.
+	 * Sets the d d m structure remote service.
 	 *
-	 * @param webDAVPropsPersistence the web d a v props persistence
+	 * @param ddmStructureService the d d m structure remote service
 	 */
-	public void setWebDAVPropsPersistence(
-		WebDAVPropsPersistence webDAVPropsPersistence) {
-		this.webDAVPropsPersistence = webDAVPropsPersistence;
+	public void setDDMStructureService(DDMStructureService ddmStructureService) {
+		this.ddmStructureService = ddmStructureService;
 	}
 
 	/**
-	 * Returns the expando value local service.
+	 * Returns the d d m structure persistence.
 	 *
-	 * @return the expando value local service
+	 * @return the d d m structure persistence
 	 */
-	public ExpandoValueLocalService getExpandoValueLocalService() {
-		return expandoValueLocalService;
+	public DDMStructurePersistence getDDMStructurePersistence() {
+		return ddmStructurePersistence;
 	}
 
 	/**
-	 * Sets the expando value local service.
+	 * Sets the d d m structure persistence.
 	 *
-	 * @param expandoValueLocalService the expando value local service
+	 * @param ddmStructurePersistence the d d m structure persistence
 	 */
-	public void setExpandoValueLocalService(
-		ExpandoValueLocalService expandoValueLocalService) {
-		this.expandoValueLocalService = expandoValueLocalService;
+	public void setDDMStructurePersistence(
+		DDMStructurePersistence ddmStructurePersistence) {
+		this.ddmStructurePersistence = ddmStructurePersistence;
 	}
 
 	/**
-	 * Returns the expando value remote service.
+	 * Returns the d d m structure finder.
 	 *
-	 * @return the expando value remote service
+	 * @return the d d m structure finder
 	 */
-	public ExpandoValueService getExpandoValueService() {
-		return expandoValueService;
+	public DDMStructureFinder getDDMStructureFinder() {
+		return ddmStructureFinder;
 	}
 
 	/**
-	 * Sets the expando value remote service.
+	 * Sets the d d m structure finder.
 	 *
-	 * @param expandoValueService the expando value remote service
+	 * @param ddmStructureFinder the d d m structure finder
 	 */
-	public void setExpandoValueService(ExpandoValueService expandoValueService) {
-		this.expandoValueService = expandoValueService;
-	}
-
-	/**
-	 * Returns the expando value persistence.
-	 *
-	 * @return the expando value persistence
-	 */
-	public ExpandoValuePersistence getExpandoValuePersistence() {
-		return expandoValuePersistence;
-	}
-
-	/**
-	 * Sets the expando value persistence.
-	 *
-	 * @param expandoValuePersistence the expando value persistence
-	 */
-	public void setExpandoValuePersistence(
-		ExpandoValuePersistence expandoValuePersistence) {
-		this.expandoValuePersistence = expandoValuePersistence;
+	public void setDDMStructureFinder(DDMStructureFinder ddmStructureFinder) {
+		this.ddmStructureFinder = ddmStructureFinder;
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register("com.liferay.portlet.journal.model.JournalStructure",
-			journalStructureLocalService);
 	}
 
 	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.portlet.journal.model.JournalStructure");
 	}
 
 	/**
@@ -1114,14 +819,6 @@ public abstract class JournalStructureLocalServiceBaseImpl
 		_beanIdentifier = beanIdentifier;
 	}
 
-	protected Class<?> getModelClass() {
-		return JournalStructure.class;
-	}
-
-	protected String getModelClassName() {
-		return JournalStructure.class.getName();
-	}
-
 	/**
 	 * Performs an SQL query.
 	 *
@@ -1129,7 +826,7 @@ public abstract class JournalStructureLocalServiceBaseImpl
 	 */
 	protected void runSQL(String sql) throws SystemException {
 		try {
-			DataSource dataSource = journalStructurePersistence.getDataSource();
+			DataSource dataSource = InfrastructureUtil.getDataSource();
 
 			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
 					sql, new int[0]);
@@ -1181,10 +878,6 @@ public abstract class JournalStructureLocalServiceBaseImpl
 	protected JournalStructureLocalService journalStructureLocalService;
 	@BeanReference(type = JournalStructureService.class)
 	protected JournalStructureService journalStructureService;
-	@BeanReference(type = JournalStructurePersistence.class)
-	protected JournalStructurePersistence journalStructurePersistence;
-	@BeanReference(type = JournalStructureFinder.class)
-	protected JournalStructureFinder journalStructureFinder;
 	@BeanReference(type = JournalTemplateLocalService.class)
 	protected JournalTemplateLocalService journalTemplateLocalService;
 	@BeanReference(type = JournalTemplateService.class)
@@ -1213,17 +906,13 @@ public abstract class JournalStructureLocalServiceBaseImpl
 	protected UserPersistence userPersistence;
 	@BeanReference(type = UserFinder.class)
 	protected UserFinder userFinder;
-	@BeanReference(type = WebDAVPropsLocalService.class)
-	protected WebDAVPropsLocalService webDAVPropsLocalService;
-	@BeanReference(type = WebDAVPropsPersistence.class)
-	protected WebDAVPropsPersistence webDAVPropsPersistence;
-	@BeanReference(type = ExpandoValueLocalService.class)
-	protected ExpandoValueLocalService expandoValueLocalService;
-	@BeanReference(type = ExpandoValueService.class)
-	protected ExpandoValueService expandoValueService;
-	@BeanReference(type = ExpandoValuePersistence.class)
-	protected ExpandoValuePersistence expandoValuePersistence;
-	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
+	@BeanReference(type = DDMStructureLocalService.class)
+	protected DDMStructureLocalService ddmStructureLocalService;
+	@BeanReference(type = DDMStructureService.class)
+	protected DDMStructureService ddmStructureService;
+	@BeanReference(type = DDMStructurePersistence.class)
+	protected DDMStructurePersistence ddmStructurePersistence;
+	@BeanReference(type = DDMStructureFinder.class)
+	protected DDMStructureFinder ddmStructureFinder;
 	private String _beanIdentifier;
 }

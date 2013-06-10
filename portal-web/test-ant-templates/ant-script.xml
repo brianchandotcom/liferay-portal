@@ -209,6 +209,7 @@
 
 		<antcall target="prepare-common">
 			<param name="database" value="mysql" />
+			<param name="setup.wizard.enabled" value="${test.ant.script.setup.wizard.enabled}" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -240,6 +241,7 @@
 
 		<antcall target="prepare-common">
 			<param name="database" value="mysql" />
+			<param name="setup.wizard.enabled" value="${test.ant.script.setup.wizard.enabled}" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -271,6 +273,7 @@
 
 		<antcall target="prepare-common">
 			<param name="database" value="mysql" />
+			<param name="setup.wizard.enabled" value="${test.ant.script.setup.wizard.enabled}" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -302,6 +305,7 @@
 
 		<antcall target="prepare-common">
 			<param name="database" value="mysql" />
+			<param name="setup.wizard.enabled" value="${test.ant.script.setup.wizard.enabled}" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -333,6 +337,7 @@
 
 		<antcall target="prepare-common">
 			<param name="database" value="mysql" />
+			<param name="setup.wizard.enabled" value="${test.ant.script.setup.wizard.enabled}" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -371,6 +376,7 @@
 
 		<antcall target="prepare-common">
 			<param name="database" value="db2" />
+			<param name="setup.wizard.enabled" value="${test.ant.script.setup.wizard.enabled}" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -406,6 +412,7 @@
 
 		<antcall target="prepare-common">
 			<param name="database" value="hsql" />
+			<param name="setup.wizard.enabled" value="${test.ant.script.setup.wizard.enabled}" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -437,6 +444,7 @@
 
 		<antcall target="prepare-common">
 			<param name="database" value="mysql" />
+			<param name="setup.wizard.enabled" value="${test.ant.script.setup.wizard.enabled}" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -468,6 +476,7 @@
 
 		<antcall target="prepare-common">
 			<param name="database" value="mysql" />
+			<param name="setup.wizard.enabled" value="${test.ant.script.setup.wizard.enabled}" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -500,6 +509,7 @@
 
 		<antcall target="prepare-common">
 			<param name="database" value="mysql" />
+			<param name="setup.wizard.enabled" value="${test.ant.script.setup.wizard.enabled}" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -539,6 +549,7 @@
 
 		<antcall target="prepare-common">
 			<param name="database" value="oracle-10" />
+			<param name="setup.wizard.enabled" value="${test.ant.script.setup.wizard.enabled}" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -581,6 +592,7 @@
 
 		<antcall target="prepare-common">
 			<param name="database" value="oracle-11" />
+			<param name="setup.wizard.enabled" value="${test.ant.script.setup.wizard.enabled}" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -623,6 +635,7 @@
 
 		<antcall target="prepare-common">
 			<param name="database" value="postgresql-8.4" />
+			<param name="setup.wizard.enabled" value="${test.ant.script.setup.wizard.enabled}" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -665,6 +678,7 @@
 
 		<antcall target="prepare-common">
 			<param name="database" value="postgresql-9.0" />
+			<param name="setup.wizard.enabled" value="${test.ant.script.setup.wizard.enabled}" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -707,6 +721,7 @@
 
 		<antcall target="prepare-common">
 			<param name="database" value="sql-server-2005" />
+			<param name="setup.wizard.enabled" value="${test.ant.script.setup.wizard.enabled}" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -749,6 +764,7 @@
 
 		<antcall target="prepare-common">
 			<param name="database" value="sql-server-2008" />
+			<param name="setup.wizard.enabled" value="${test.ant.script.setup.wizard.enabled}" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -791,6 +807,7 @@
 
 		<antcall target="prepare-common">
 			<param name="database" value="sybase" />
+			<param name="setup.wizard.enabled" value="${test.ant.script.setup.wizard.enabled}" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -826,6 +843,7 @@
 
 		<antcall target="prepare-common">
 			<param name="database" value="mysql" />
+			<param name="setup.wizard.enabled" value="${test.ant.script.setup.wizard.enabled}" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -857,6 +875,7 @@
 
 		<antcall target="prepare-common">
 			<param name="database" value="mysql" />
+			<param name="setup.wizard.enabled" value="${test.ant.script.setup.wizard.enabled}" />
 			${test.ant.script.file.properties}
 			<param name="vm.vmdk.suffix" value="websphere-6.1.0.27" />
 		</antcall>
@@ -889,6 +908,7 @@
 
 		<antcall target="prepare-common">
 			<param name="database" value="mysql" />
+			<param name="setup.wizard.enabled" value="${test.ant.script.setup.wizard.enabled}" />
 			${test.ant.script.file.properties}
 		</antcall>
 
@@ -920,6 +940,7 @@
 
 		<antcall target="prepare-common">
 			<param name="database" value="mysql" />
+			<param name="setup.wizard.enabled" value="${test.ant.script.setup.wizard.enabled}" />
 			${test.ant.script.file.properties}
 			<param name="vm.vmdk.suffix" value="websphere-8.0.0.0" />
 		</antcall>

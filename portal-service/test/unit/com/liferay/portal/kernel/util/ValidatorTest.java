@@ -526,22 +526,24 @@ public class ValidatorTest extends PowerMockito {
 	}
 
 	protected void testIsValidByMethodName(
-			String methodName, String param, boolean valid)
+			String methodName, String[] params, boolean valid)
 		throws Exception {
 
 		Method method = ReflectionUtil.getDeclaredMethod(
 			Validator.class, methodName, String.class);
 
-		Boolean result = (Boolean)method.invoke(null, param);
-
 		if (valid) {
-			if (!result.booleanValue()) {
-				Assert.fail(param);
+			for (String param : params) {
+				if (!(Boolean)method.invoke(null, param)) {
+					Assert.fail(param);
+				}
 			}
 		}
 		else {
-			if (result.booleanValue()) {
-				Assert.fail(param);
+			for (String param : params) {
+				if ((Boolean)method.invoke(null, param)) {
+					Assert.fail(param);
+				}
 			}
 		}
 	}
@@ -550,26 +552,20 @@ public class ValidatorTest extends PowerMockito {
 			String[] emailAddresses, boolean valid)
 		throws Exception {
 
-		for (String emailAddress : emailAddresses) {
-			testIsValidByMethodName("isEmailAddress", emailAddress, valid);
-		}
+		testIsValidByMethodName("isEmailAddress", emailAddresses, valid);
 	}
 
 	protected void testValidFileExtensions(
 			String[] fileExtensions, boolean valid)
 		throws Exception {
 
-		for (String fileExtension : fileExtensions) {
-			testIsValidByMethodName("isFileExtension", fileExtension, valid);
-		}
+		testIsValidByMethodName("isFileExtension", fileExtensions, valid);
 	}
 
 	protected void testValidFileNames(String[] fileNames, boolean valid)
 		throws Exception {
 
-		for (String fileName : fileNames) {
-			testIsValidByMethodName("isFileName", fileName, valid);
-		}
+		testIsValidByMethodName("isFileName", fileNames, valid);
 	}
 
 	protected void testValidFilePaths(
@@ -594,39 +590,29 @@ public class ValidatorTest extends PowerMockito {
 	protected void testValidHostNames(String[] hostNames, boolean valid)
 		throws Exception {
 
-		for (String hostName : hostNames) {
-			testIsValidByMethodName("isHostName", hostName, valid);
-		}
+		testIsValidByMethodName("isHostName", hostNames, valid);
 	}
 
 	protected void testValidIPv4Addresses(String[] iPv4Addresses, boolean valid)
 		throws Exception {
 
-		for (String iPv4Address : iPv4Addresses) {
-			testIsValidByMethodName("isIPv4Address", iPv4Address, valid);
-		}
+		testIsValidByMethodName("isIPv4Address", iPv4Addresses, valid);
 	}
 
 	protected void testValidIPv6Addresses(String[] iPv6Addresses, boolean valid)
 		throws Exception {
 
-		for (String iPv6Address : iPv6Addresses) {
-			testIsValidByMethodName("isIPv6Address", iPv6Address, valid);
-		}
+		testIsValidByMethodName("isIPv6Address", iPv6Addresses, valid);
 	}
 
 	protected void testValidUris(String[] uris, boolean valid)
 		throws Exception {
 
-		for (String uri : uris) {
-			testIsValidByMethodName("isUri", uri, valid);
-		}
+		testIsValidByMethodName("isUri", uris, valid);
 	}
 
 	protected void testValidUrl(String[] urls, boolean valid) throws Exception {
-		for (String url : urls) {
-			testIsValidByMethodName("isUrl", url, valid);
-		}
+		testIsValidByMethodName("isUrl", urls, valid);
 	}
 
 }

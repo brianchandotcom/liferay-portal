@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import java.lang.reflect.Method;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -523,58 +525,50 @@ public class ValidatorTest extends PowerMockito {
 		}
 	}
 
-	protected void testValidEmailAddreses(
-		String[] emailAddresses, boolean valid) {
+	protected void testIsValidByMethodName(
+			String methodName, String param, boolean valid)
+		throws Exception {
+
+		Method method = ReflectionUtil.getDeclaredMethod(
+			Validator.class, methodName, String.class);
+
+		Boolean result = (Boolean)method.invoke(null, param);
 
 		if (valid) {
-			for (String emailAddress : emailAddresses) {
-				if (!Validator.isEmailAddress(emailAddress)) {
-					Assert.fail(emailAddress);
-				}
+			if (!result.booleanValue()) {
+				Assert.fail(param);
 			}
 		}
 		else {
-			for (String emailAddress : emailAddresses) {
-				if (Validator.isEmailAddress(emailAddress)) {
-					Assert.fail(emailAddress);
-				}
+			if (result.booleanValue()) {
+				Assert.fail(param);
 			}
+		}
+	}
+
+	protected void testValidEmailAddreses(
+			String[] emailAddresses, boolean valid)
+		throws Exception {
+
+		for (String emailAddress : emailAddresses) {
+			testIsValidByMethodName("isEmailAddress", emailAddress, valid);
 		}
 	}
 
 	protected void testValidFileExtensions(
-		String[] fileExtensions, boolean valid) {
+			String[] fileExtensions, boolean valid)
+		throws Exception {
 
-		if (valid) {
-			for (String fileExtension : fileExtensions) {
-				if (!Validator.isFileExtension(fileExtension)) {
-					Assert.fail(fileExtension);
-				}
-			}
-		}
-		else {
-			for (String fileExtension : fileExtensions) {
-				if (Validator.isFileExtension(fileExtension)) {
-					Assert.fail(fileExtension);
-				}
-			}
+		for (String fileExtension : fileExtensions) {
+			testIsValidByMethodName("isFileExtension", fileExtension, valid);
 		}
 	}
 
-	protected void testValidFileNames(String[] fileNames, boolean valid) {
-		if (valid) {
-			for (String fileName : fileNames) {
-				if (!Validator.isFileName(fileName)) {
-					Assert.fail(fileName);
-				}
-			}
-		}
-		else {
-			for (String fileName : fileNames) {
-				if (Validator.isFileName(fileName)) {
-					Assert.fail(fileName);
-				}
-			}
+	protected void testValidFileNames(String[] fileNames, boolean valid)
+		throws Exception {
+
+		for (String fileName : fileNames) {
+			testIsValidByMethodName("isFileName", fileName, valid);
 		}
 	}
 
@@ -597,92 +591,41 @@ public class ValidatorTest extends PowerMockito {
 		}
 	}
 
-	protected void testValidHostNames(String[] hostNames, boolean valid) {
-		if (valid) {
-			for (String hostName : hostNames) {
-				if (!Validator.isHostName(hostName)) {
-					Assert.fail(hostName);
-				}
-			}
-		}
-		else {
-			for (String hostName : hostNames) {
-				if (Validator.isHostName(hostName)) {
-					Assert.fail(hostName);
-				}
-			}
+	protected void testValidHostNames(String[] hostNames, boolean valid)
+		throws Exception {
+
+		for (String hostName : hostNames) {
+			testIsValidByMethodName("isHostName", hostName, valid);
 		}
 	}
 
-	protected void testValidIPv4Addresses(
-		String[] iPv4Addresses, boolean valid) {
+	protected void testValidIPv4Addresses(String[] iPv4Addresses, boolean valid)
+		throws Exception {
 
-		if (valid) {
-			for (String iPv4Address : iPv4Addresses) {
-				if (!Validator.isIPv4Address(iPv4Address)) {
-					Assert.fail(iPv4Address);
-				}
-			}
-		}
-		else {
-			for (String iPv4Address : iPv4Addresses) {
-				if (Validator.isIPv4Address(iPv4Address)) {
-					Assert.fail(iPv4Address);
-				}
-			}
+		for (String iPv4Address : iPv4Addresses) {
+			testIsValidByMethodName("isIPv4Address", iPv4Address, valid);
 		}
 	}
 
-	protected void testValidIPv6Addresses(
-		String[] iPv6Addresses, boolean valid) {
+	protected void testValidIPv6Addresses(String[] iPv6Addresses, boolean valid)
+		throws Exception {
 
-		if (valid) {
-			for (String iPv6Address : iPv6Addresses) {
-				if (!Validator.isIPv6Address(iPv6Address)) {
-					Assert.fail(iPv6Address);
-				}
-			}
-		}
-		else {
-			for (String iPv6Address : iPv6Addresses) {
-				if (Validator.isIPv6Address(iPv6Address)) {
-					Assert.fail(iPv6Address);
-				}
-			}
+		for (String iPv6Address : iPv6Addresses) {
+			testIsValidByMethodName("isIPv6Address", iPv6Address, valid);
 		}
 	}
 
-	protected void testValidUris(String[] uris, boolean valid) {
-		if (valid) {
-			for (String uri : uris) {
-				if (!Validator.isUri(uri)) {
-					Assert.fail(uri);
-				}
-			}
-		}
-		else {
-			for (String uri : uris) {
-				if (Validator.isUri(uri)) {
-					Assert.fail(uri);
-				}
-			}
+	protected void testValidUris(String[] uris, boolean valid)
+		throws Exception {
+
+		for (String uri : uris) {
+			testIsValidByMethodName("isUri", uri, valid);
 		}
 	}
 
-	protected void testValidUrl(String[] urls, boolean valid) {
-		if (valid) {
-			for (String url : urls) {
-				if (!Validator.isUrl(url)) {
-					Assert.fail(url);
-				}
-			}
-		}
-		else {
-			for (String url : urls) {
-				if (Validator.isUrl(url)) {
-					Assert.fail(url);
-				}
-			}
+	protected void testValidUrl(String[] urls, boolean valid) throws Exception {
+		for (String url : urls) {
+			testIsValidByMethodName("isUrl", url, valid);
 		}
 	}
 

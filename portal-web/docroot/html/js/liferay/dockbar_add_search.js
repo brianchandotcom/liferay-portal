@@ -5,11 +5,6 @@ AUI.add(
 
 		var Dockbar = Liferay.Dockbar;
 
-		// @eduardolundgren I've discussed this with Iliyan. It seems like we need this intermediate
-		// class in order to be able to override the default values in AutocompleteBase. If we just
-		// try to do it inside this create, the attributes on AutocompleteBase take over the ones
-		// here. Maybe the logic "extend then augment" could be reversed. Please ping Iliyan to talk
-		// about it.
 		var SearchImpl = A.Component.create (
 			{
 				AUGMENTS: [A.AutoCompleteBase],

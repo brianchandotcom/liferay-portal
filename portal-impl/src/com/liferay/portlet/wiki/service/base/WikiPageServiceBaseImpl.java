@@ -26,6 +26,8 @@ import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.CompanyService;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.GroupService;
+import com.liferay.portal.service.LayoutLocalService;
+import com.liferay.portal.service.LayoutService;
 import com.liferay.portal.service.PortletPreferencesLocalService;
 import com.liferay.portal.service.PortletPreferencesService;
 import com.liferay.portal.service.ResourceLocalService;
@@ -36,6 +38,8 @@ import com.liferay.portal.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.service.persistence.CompanyPersistence;
 import com.liferay.portal.service.persistence.GroupFinder;
 import com.liferay.portal.service.persistence.GroupPersistence;
+import com.liferay.portal.service.persistence.LayoutFinder;
+import com.liferay.portal.service.persistence.LayoutPersistence;
 import com.liferay.portal.service.persistence.PortletPreferencesFinder;
 import com.liferay.portal.service.persistence.PortletPreferencesPersistence;
 import com.liferay.portal.service.persistence.SubscriptionPersistence;
@@ -415,6 +419,78 @@ public abstract class WikiPageServiceBaseImpl extends BaseServiceImpl
 	 */
 	public void setGroupFinder(GroupFinder groupFinder) {
 		this.groupFinder = groupFinder;
+	}
+
+	/**
+	 * Returns the layout local service.
+	 *
+	 * @return the layout local service
+	 */
+	public LayoutLocalService getLayoutLocalService() {
+		return layoutLocalService;
+	}
+
+	/**
+	 * Sets the layout local service.
+	 *
+	 * @param layoutLocalService the layout local service
+	 */
+	public void setLayoutLocalService(LayoutLocalService layoutLocalService) {
+		this.layoutLocalService = layoutLocalService;
+	}
+
+	/**
+	 * Returns the layout remote service.
+	 *
+	 * @return the layout remote service
+	 */
+	public LayoutService getLayoutService() {
+		return layoutService;
+	}
+
+	/**
+	 * Sets the layout remote service.
+	 *
+	 * @param layoutService the layout remote service
+	 */
+	public void setLayoutService(LayoutService layoutService) {
+		this.layoutService = layoutService;
+	}
+
+	/**
+	 * Returns the layout persistence.
+	 *
+	 * @return the layout persistence
+	 */
+	public LayoutPersistence getLayoutPersistence() {
+		return layoutPersistence;
+	}
+
+	/**
+	 * Sets the layout persistence.
+	 *
+	 * @param layoutPersistence the layout persistence
+	 */
+	public void setLayoutPersistence(LayoutPersistence layoutPersistence) {
+		this.layoutPersistence = layoutPersistence;
+	}
+
+	/**
+	 * Returns the layout finder.
+	 *
+	 * @return the layout finder
+	 */
+	public LayoutFinder getLayoutFinder() {
+		return layoutFinder;
+	}
+
+	/**
+	 * Sets the layout finder.
+	 *
+	 * @param layoutFinder the layout finder
+	 */
+	public void setLayoutFinder(LayoutFinder layoutFinder) {
+		this.layoutFinder = layoutFinder;
 	}
 
 	/**
@@ -1325,6 +1401,14 @@ public abstract class WikiPageServiceBaseImpl extends BaseServiceImpl
 	protected GroupPersistence groupPersistence;
 	@BeanReference(type = GroupFinder.class)
 	protected GroupFinder groupFinder;
+	@BeanReference(type = LayoutLocalService.class)
+	protected LayoutLocalService layoutLocalService;
+	@BeanReference(type = LayoutService.class)
+	protected LayoutService layoutService;
+	@BeanReference(type = LayoutPersistence.class)
+	protected LayoutPersistence layoutPersistence;
+	@BeanReference(type = LayoutFinder.class)
+	protected LayoutFinder layoutFinder;
 	@BeanReference(type = PortletPreferencesLocalService.class)
 	protected PortletPreferencesLocalService portletPreferencesLocalService;
 	@BeanReference(type = PortletPreferencesService.class)

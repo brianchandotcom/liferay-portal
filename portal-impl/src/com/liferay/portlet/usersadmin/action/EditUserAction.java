@@ -130,7 +130,7 @@ public class EditUserAction extends PortletAction {
 		try {
 			User user = null;
 			String oldScreenName = StringPool.BLANK;
-			String oldLanguageId = StringPool.BLANK;
+			boolean updateLanguageIdRedirect = false;
 
 			if (cmd.equals(Constants.ADD)) {
 				user = addUser(actionRequest);
@@ -150,7 +150,7 @@ public class EditUserAction extends PortletAction {
 
 				user = (User)returnValue[0];
 				oldScreenName = ((String)returnValue[1]);
-				oldLanguageId = ((String)returnValue[2]);
+				updateLanguageIdRedirect = ((Boolean)returnValue[2]);
 			}
 			else if (cmd.equals("unlock")) {
 				user = updateLockout(actionRequest);
@@ -192,9 +192,7 @@ public class EditUserAction extends PortletAction {
 					}
 				}
 
-				if (Validator.isNotNull(oldLanguageId) &&
-					themeDisplay.isI18n()) {
-
+				if (updateLanguageIdRedirect && themeDisplay.isI18n()) {
 					String i18nLanguageId = user.getLanguageId();
 					int pos = i18nLanguageId.indexOf(CharPool.UNDERLINE);
 
@@ -571,7 +569,6 @@ public class EditUserAction extends PortletAction {
 			user, actionRequest, "emailAddress");
 		long facebookId = user.getFacebookId();
 		String openId = BeanParamUtil.getString(user, actionRequest, "openId");
-		String oldLanguageId = user.getLanguageId();
 		String languageId = BeanParamUtil.getString(
 			user, actionRequest, "languageId");
 		String timeZoneId = BeanParamUtil.getString(
@@ -590,6 +587,7 @@ public class EditUserAction extends PortletAction {
 			contact, actionRequest, "suffixId");
 		boolean male = BeanParamUtil.getBoolean(
 			user, actionRequest, "male", true);
+		boolean updateLanguageIdRedirect = false;
 
 		Calendar birthdayCal = CalendarFactoryUtil.getCalendar();
 
@@ -697,9 +695,8 @@ public class EditUserAction extends PortletAction {
 					WebKeys.USER_PASSWORD, newPassword1,
 					PortletSession.APPLICATION_SCOPE);
 			}
-		}
-		else {
-			oldLanguageId = StringPool.BLANK;
+
+			updateLanguageIdRedirect = true;
 		}
 
 		String portletId = serviceContext.getPortletId();
@@ -729,7 +726,7 @@ public class EditUserAction extends PortletAction {
 			SessionMessages.add(actionRequest, "verificationEmailSent");
 		}
 
-		return new Object[] {user, oldScreenName, oldLanguageId};
+		return new Object[] {user, oldScreenName, updateLanguageIdRedirect};
 	}
 
 }

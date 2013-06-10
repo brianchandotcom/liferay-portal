@@ -21,23 +21,22 @@ import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.service.BaseServiceImpl;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.GroupService;
 import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.UserService;
-import com.liferay.portal.service.WebDAVPropsLocalService;
 import com.liferay.portal.service.persistence.GroupFinder;
 import com.liferay.portal.service.persistence.GroupPersistence;
 import com.liferay.portal.service.persistence.UserFinder;
 import com.liferay.portal.service.persistence.UserPersistence;
-import com.liferay.portal.service.persistence.WebDAVPropsPersistence;
 
-import com.liferay.portlet.expando.service.ExpandoValueLocalService;
-import com.liferay.portlet.expando.service.ExpandoValueService;
-import com.liferay.portlet.expando.service.persistence.ExpandoValuePersistence;
-import com.liferay.portlet.journal.model.JournalStructure;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureService;
+import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureFinder;
+import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructurePersistence;
 import com.liferay.portlet.journal.service.JournalArticleImageLocalService;
 import com.liferay.portlet.journal.service.JournalArticleLocalService;
 import com.liferay.portlet.journal.service.JournalArticleResourceLocalService;
@@ -60,8 +59,6 @@ import com.liferay.portlet.journal.service.persistence.JournalFeedFinder;
 import com.liferay.portlet.journal.service.persistence.JournalFeedPersistence;
 import com.liferay.portlet.journal.service.persistence.JournalFolderFinder;
 import com.liferay.portlet.journal.service.persistence.JournalFolderPersistence;
-import com.liferay.portlet.journal.service.persistence.JournalStructureFinder;
-import com.liferay.portlet.journal.service.persistence.JournalStructurePersistence;
 import com.liferay.portlet.journal.service.persistence.JournalTemplateFinder;
 import com.liferay.portlet.journal.service.persistence.JournalTemplatePersistence;
 
@@ -465,44 +462,6 @@ public abstract class JournalStructureServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the journal structure persistence.
-	 *
-	 * @return the journal structure persistence
-	 */
-	public JournalStructurePersistence getJournalStructurePersistence() {
-		return journalStructurePersistence;
-	}
-
-	/**
-	 * Sets the journal structure persistence.
-	 *
-	 * @param journalStructurePersistence the journal structure persistence
-	 */
-	public void setJournalStructurePersistence(
-		JournalStructurePersistence journalStructurePersistence) {
-		this.journalStructurePersistence = journalStructurePersistence;
-	}
-
-	/**
-	 * Returns the journal structure finder.
-	 *
-	 * @return the journal structure finder
-	 */
-	public JournalStructureFinder getJournalStructureFinder() {
-		return journalStructureFinder;
-	}
-
-	/**
-	 * Sets the journal structure finder.
-	 *
-	 * @param journalStructureFinder the journal structure finder
-	 */
-	public void setJournalStructureFinder(
-		JournalStructureFinder journalStructureFinder) {
-		this.journalStructureFinder = journalStructureFinder;
-	}
-
-	/**
 	 * Returns the journal template local service.
 	 *
 	 * @return the journal template local service
@@ -760,97 +719,77 @@ public abstract class JournalStructureServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the web d a v props local service.
+	 * Returns the d d m structure local service.
 	 *
-	 * @return the web d a v props local service
+	 * @return the d d m structure local service
 	 */
-	public WebDAVPropsLocalService getWebDAVPropsLocalService() {
-		return webDAVPropsLocalService;
+	public DDMStructureLocalService getDDMStructureLocalService() {
+		return ddmStructureLocalService;
 	}
 
 	/**
-	 * Sets the web d a v props local service.
+	 * Sets the d d m structure local service.
 	 *
-	 * @param webDAVPropsLocalService the web d a v props local service
+	 * @param ddmStructureLocalService the d d m structure local service
 	 */
-	public void setWebDAVPropsLocalService(
-		WebDAVPropsLocalService webDAVPropsLocalService) {
-		this.webDAVPropsLocalService = webDAVPropsLocalService;
+	public void setDDMStructureLocalService(
+		DDMStructureLocalService ddmStructureLocalService) {
+		this.ddmStructureLocalService = ddmStructureLocalService;
 	}
 
 	/**
-	 * Returns the web d a v props persistence.
+	 * Returns the d d m structure remote service.
 	 *
-	 * @return the web d a v props persistence
+	 * @return the d d m structure remote service
 	 */
-	public WebDAVPropsPersistence getWebDAVPropsPersistence() {
-		return webDAVPropsPersistence;
+	public DDMStructureService getDDMStructureService() {
+		return ddmStructureService;
 	}
 
 	/**
-	 * Sets the web d a v props persistence.
+	 * Sets the d d m structure remote service.
 	 *
-	 * @param webDAVPropsPersistence the web d a v props persistence
+	 * @param ddmStructureService the d d m structure remote service
 	 */
-	public void setWebDAVPropsPersistence(
-		WebDAVPropsPersistence webDAVPropsPersistence) {
-		this.webDAVPropsPersistence = webDAVPropsPersistence;
+	public void setDDMStructureService(DDMStructureService ddmStructureService) {
+		this.ddmStructureService = ddmStructureService;
 	}
 
 	/**
-	 * Returns the expando value local service.
+	 * Returns the d d m structure persistence.
 	 *
-	 * @return the expando value local service
+	 * @return the d d m structure persistence
 	 */
-	public ExpandoValueLocalService getExpandoValueLocalService() {
-		return expandoValueLocalService;
+	public DDMStructurePersistence getDDMStructurePersistence() {
+		return ddmStructurePersistence;
 	}
 
 	/**
-	 * Sets the expando value local service.
+	 * Sets the d d m structure persistence.
 	 *
-	 * @param expandoValueLocalService the expando value local service
+	 * @param ddmStructurePersistence the d d m structure persistence
 	 */
-	public void setExpandoValueLocalService(
-		ExpandoValueLocalService expandoValueLocalService) {
-		this.expandoValueLocalService = expandoValueLocalService;
+	public void setDDMStructurePersistence(
+		DDMStructurePersistence ddmStructurePersistence) {
+		this.ddmStructurePersistence = ddmStructurePersistence;
 	}
 
 	/**
-	 * Returns the expando value remote service.
+	 * Returns the d d m structure finder.
 	 *
-	 * @return the expando value remote service
+	 * @return the d d m structure finder
 	 */
-	public ExpandoValueService getExpandoValueService() {
-		return expandoValueService;
+	public DDMStructureFinder getDDMStructureFinder() {
+		return ddmStructureFinder;
 	}
 
 	/**
-	 * Sets the expando value remote service.
+	 * Sets the d d m structure finder.
 	 *
-	 * @param expandoValueService the expando value remote service
+	 * @param ddmStructureFinder the d d m structure finder
 	 */
-	public void setExpandoValueService(ExpandoValueService expandoValueService) {
-		this.expandoValueService = expandoValueService;
-	}
-
-	/**
-	 * Returns the expando value persistence.
-	 *
-	 * @return the expando value persistence
-	 */
-	public ExpandoValuePersistence getExpandoValuePersistence() {
-		return expandoValuePersistence;
-	}
-
-	/**
-	 * Sets the expando value persistence.
-	 *
-	 * @param expandoValuePersistence the expando value persistence
-	 */
-	public void setExpandoValuePersistence(
-		ExpandoValuePersistence expandoValuePersistence) {
-		this.expandoValuePersistence = expandoValuePersistence;
+	public void setDDMStructureFinder(DDMStructureFinder ddmStructureFinder) {
+		this.ddmStructureFinder = ddmStructureFinder;
 	}
 
 	public void afterPropertiesSet() {
@@ -879,14 +818,6 @@ public abstract class JournalStructureServiceBaseImpl extends BaseServiceImpl
 		_beanIdentifier = beanIdentifier;
 	}
 
-	protected Class<?> getModelClass() {
-		return JournalStructure.class;
-	}
-
-	protected String getModelClassName() {
-		return JournalStructure.class.getName();
-	}
-
 	/**
 	 * Performs an SQL query.
 	 *
@@ -894,7 +825,7 @@ public abstract class JournalStructureServiceBaseImpl extends BaseServiceImpl
 	 */
 	protected void runSQL(String sql) throws SystemException {
 		try {
-			DataSource dataSource = journalStructurePersistence.getDataSource();
+			DataSource dataSource = InfrastructureUtil.getDataSource();
 
 			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
 					sql, new int[0]);
@@ -946,10 +877,6 @@ public abstract class JournalStructureServiceBaseImpl extends BaseServiceImpl
 	protected JournalStructureLocalService journalStructureLocalService;
 	@BeanReference(type = JournalStructureService.class)
 	protected JournalStructureService journalStructureService;
-	@BeanReference(type = JournalStructurePersistence.class)
-	protected JournalStructurePersistence journalStructurePersistence;
-	@BeanReference(type = JournalStructureFinder.class)
-	protected JournalStructureFinder journalStructureFinder;
 	@BeanReference(type = JournalTemplateLocalService.class)
 	protected JournalTemplateLocalService journalTemplateLocalService;
 	@BeanReference(type = JournalTemplateService.class)
@@ -978,15 +905,13 @@ public abstract class JournalStructureServiceBaseImpl extends BaseServiceImpl
 	protected UserPersistence userPersistence;
 	@BeanReference(type = UserFinder.class)
 	protected UserFinder userFinder;
-	@BeanReference(type = WebDAVPropsLocalService.class)
-	protected WebDAVPropsLocalService webDAVPropsLocalService;
-	@BeanReference(type = WebDAVPropsPersistence.class)
-	protected WebDAVPropsPersistence webDAVPropsPersistence;
-	@BeanReference(type = ExpandoValueLocalService.class)
-	protected ExpandoValueLocalService expandoValueLocalService;
-	@BeanReference(type = ExpandoValueService.class)
-	protected ExpandoValueService expandoValueService;
-	@BeanReference(type = ExpandoValuePersistence.class)
-	protected ExpandoValuePersistence expandoValuePersistence;
+	@BeanReference(type = DDMStructureLocalService.class)
+	protected DDMStructureLocalService ddmStructureLocalService;
+	@BeanReference(type = DDMStructureService.class)
+	protected DDMStructureService ddmStructureService;
+	@BeanReference(type = DDMStructurePersistence.class)
+	protected DDMStructurePersistence ddmStructurePersistence;
+	@BeanReference(type = DDMStructureFinder.class)
+	protected DDMStructureFinder ddmStructureFinder;
 	private String _beanIdentifier;
 }

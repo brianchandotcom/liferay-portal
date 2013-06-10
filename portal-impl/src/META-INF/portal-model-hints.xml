@@ -1899,30 +1899,6 @@
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
 	</model>
-	<model name="com.liferay.portlet.journal.model.JournalStructure">
-		<field name="uuid" type="String" />
-		<field name="id" type="long" />
-		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="userName" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
-		<field name="structureId" type="String">
-			<hint name="upper-case">true</hint>
-			<hint name="auto-escape">false</hint>
-		</field>
-		<field name="parentStructureId" type="String" />
-		<field name="name" type="String" localized="true">
-			<validator name="required" />
-		</field>
-		<field name="description" type="String" localized="true">
-			<hint-collection name="TEXTAREA" />
-		</field>
-		<field name="xsd" type="String">
-			<hint-collection name="CLOB" />
-		</field>
-	</model>
 	<model name="com.liferay.portlet.journal.model.JournalTemplate">
 		<field name="uuid" type="String" />
 		<field name="id" type="long" />

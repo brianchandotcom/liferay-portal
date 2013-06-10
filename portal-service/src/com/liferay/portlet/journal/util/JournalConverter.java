@@ -31,4 +31,6 @@ public interface JournalConverter {
 
 	public String getDDMXSD(String journalXSD) throws Exception;
 
+	public String getJournalXSD(String ddmXSD) throws Exception;
+
 }

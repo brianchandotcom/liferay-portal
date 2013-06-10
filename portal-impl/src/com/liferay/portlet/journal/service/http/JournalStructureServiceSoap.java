@@ -33,16 +33,6 @@ import java.util.Map;
  * support certain types.
  *
  * <p>
- * ServiceBuilder follows certain rules in translating the methods. For example,
- * if the method in the service utility returns a {@link java.util.List}, that
- * is translated to an array of {@link com.liferay.portlet.journal.model.JournalStructureSoap}.
- * If the method in the service utility returns a
- * {@link com.liferay.portlet.journal.model.JournalStructure}, that is translated to a
- * {@link com.liferay.portlet.journal.model.JournalStructureSoap}. Methods that SOAP cannot
- * safely wire are skipped.
- * </p>
- *
- * <p>
  * The benefits of using the SOAP utility is that it is cross platform
  * compatible. SOAP allows different languages like Java, .NET, C++, PHP, and
  * even Perl, to call the generated services. One drawback of SOAP is that it is
@@ -61,7 +51,6 @@ import java.util.Map;
  *
  * @author Brian Wing Shun Chan
  * @see JournalStructureServiceHttp
- * @see com.liferay.portlet.journal.model.JournalStructureSoap
  * @see com.liferay.portlet.journal.service.JournalStructureServiceUtil
  * @generated
  */
@@ -154,13 +143,13 @@ public class JournalStructureServiceSoap {
 		}
 	}
 
-	public static com.liferay.portlet.journal.model.JournalStructureSoap[] getStructures(
+	public static com.liferay.portlet.journal.model.JournalStructure[] getStructures(
 		long groupId) throws RemoteException {
 		try {
 			java.util.List<com.liferay.portlet.journal.model.JournalStructure> returnValue =
 				JournalStructureServiceUtil.getStructures(groupId);
 
-			return com.liferay.portlet.journal.model.JournalStructureSoap.toSoapModels(returnValue);
+			return returnValue.toArray(new com.liferay.portlet.journal.model.JournalStructure[returnValue.size()]);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -169,13 +158,13 @@ public class JournalStructureServiceSoap {
 		}
 	}
 
-	public static com.liferay.portlet.journal.model.JournalStructureSoap[] getStructures(
+	public static com.liferay.portlet.journal.model.JournalStructure[] getStructures(
 		long[] groupIds) throws RemoteException {
 		try {
 			java.util.List<com.liferay.portlet.journal.model.JournalStructure> returnValue =
 				JournalStructureServiceUtil.getStructures(groupIds);
 
-			return com.liferay.portlet.journal.model.JournalStructureSoap.toSoapModels(returnValue);
+			return returnValue.toArray(new com.liferay.portlet.journal.model.JournalStructure[returnValue.size()]);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -184,7 +173,7 @@ public class JournalStructureServiceSoap {
 		}
 	}
 
-	public static com.liferay.portlet.journal.model.JournalStructureSoap[] search(
+	public static com.liferay.portlet.journal.model.JournalStructure[] search(
 		long companyId, long[] groupIds, java.lang.String keywords, int start,
 		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws RemoteException {
@@ -193,7 +182,7 @@ public class JournalStructureServiceSoap {
 				JournalStructureServiceUtil.search(companyId, groupIds,
 					keywords, start, end, obc);
 
-			return com.liferay.portlet.journal.model.JournalStructureSoap.toSoapModels(returnValue);
+			return returnValue.toArray(new com.liferay.portlet.journal.model.JournalStructure[returnValue.size()]);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -202,7 +191,7 @@ public class JournalStructureServiceSoap {
 		}
 	}
 
-	public static com.liferay.portlet.journal.model.JournalStructureSoap[] search(
+	public static com.liferay.portlet.journal.model.JournalStructure[] search(
 		long companyId, long[] groupIds, java.lang.String structureId,
 		java.lang.String name, java.lang.String description,
 		boolean andOperator, int start, int end,
@@ -213,7 +202,7 @@ public class JournalStructureServiceSoap {
 				JournalStructureServiceUtil.search(companyId, groupIds,
 					structureId, name, description, andOperator, start, end, obc);
 
-			return com.liferay.portlet.journal.model.JournalStructureSoap.toSoapModels(returnValue);
+			return returnValue.toArray(new com.liferay.portlet.journal.model.JournalStructure[returnValue.size()]);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

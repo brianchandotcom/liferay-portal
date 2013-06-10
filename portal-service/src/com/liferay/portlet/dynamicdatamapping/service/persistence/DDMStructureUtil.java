@@ -1066,6 +1066,177 @@ public class DDMStructureUtil {
 	}
 
 	/**
+	* Returns all the d d m structures where parentStructureId = &#63;.
+	*
+	* @param parentStructureId the parent structure ID
+	* @return the matching d d m structures
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> findByParentStructureId(
+		long parentStructureId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByParentStructureId(parentStructureId);
+	}
+
+	/**
+	* Returns a range of all the d d m structures where parentStructureId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param parentStructureId the parent structure ID
+	* @param start the lower bound of the range of d d m structures
+	* @param end the upper bound of the range of d d m structures (not inclusive)
+	* @return the range of matching d d m structures
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> findByParentStructureId(
+		long parentStructureId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByParentStructureId(parentStructureId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the d d m structures where parentStructureId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param parentStructureId the parent structure ID
+	* @param start the lower bound of the range of d d m structures
+	* @param end the upper bound of the range of d d m structures (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching d d m structures
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> findByParentStructureId(
+		long parentStructureId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByParentStructureId(parentStructureId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first d d m structure in the ordered set where parentStructureId = &#63;.
+	*
+	* @param parentStructureId the parent structure ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching d d m structure
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException if a matching d d m structure could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure findByParentStructureId_First(
+		long parentStructureId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.dynamicdatamapping.NoSuchStructureException {
+		return getPersistence()
+				   .findByParentStructureId_First(parentStructureId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first d d m structure in the ordered set where parentStructureId = &#63;.
+	*
+	* @param parentStructureId the parent structure ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching d d m structure, or <code>null</code> if a matching d d m structure could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure fetchByParentStructureId_First(
+		long parentStructureId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByParentStructureId_First(parentStructureId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last d d m structure in the ordered set where parentStructureId = &#63;.
+	*
+	* @param parentStructureId the parent structure ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching d d m structure
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException if a matching d d m structure could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure findByParentStructureId_Last(
+		long parentStructureId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.dynamicdatamapping.NoSuchStructureException {
+		return getPersistence()
+				   .findByParentStructureId_Last(parentStructureId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last d d m structure in the ordered set where parentStructureId = &#63;.
+	*
+	* @param parentStructureId the parent structure ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching d d m structure, or <code>null</code> if a matching d d m structure could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure fetchByParentStructureId_Last(
+		long parentStructureId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByParentStructureId_Last(parentStructureId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the d d m structures before and after the current d d m structure in the ordered set where parentStructureId = &#63;.
+	*
+	* @param structureId the primary key of the current d d m structure
+	* @param parentStructureId the parent structure ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next d d m structure
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureException if a d d m structure with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure[] findByParentStructureId_PrevAndNext(
+		long structureId, long parentStructureId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.dynamicdatamapping.NoSuchStructureException {
+		return getPersistence()
+				   .findByParentStructureId_PrevAndNext(structureId,
+			parentStructureId, orderByComparator);
+	}
+
+	/**
+	* Removes all the d d m structures where parentStructureId = &#63; from the database.
+	*
+	* @param parentStructureId the parent structure ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByParentStructureId(long parentStructureId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByParentStructureId(parentStructureId);
+	}
+
+	/**
+	* Returns the number of d d m structures where parentStructureId = &#63;.
+	*
+	* @param parentStructureId the parent structure ID
+	* @return the number of matching d d m structures
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByParentStructureId(long parentStructureId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByParentStructureId(parentStructureId);
+	}
+
+	/**
 	* Returns all the d d m structures where structureKey = &#63;.
 	*
 	* @param structureKey the structure key

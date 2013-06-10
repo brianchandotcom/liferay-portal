@@ -52,4 +52,6 @@ public interface DDMXML {
 			Locale contentNewDefaultLocale)
 		throws SystemException;
 
+	public String validateXML(String xml) throws PortalException;
+
 }

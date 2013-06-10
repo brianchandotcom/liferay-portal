@@ -326,8 +326,6 @@
 	<bean id="com.liferay.portlet.journal.service.persistence.JournalFolderFinder" class="com.liferay.portlet.journal.service.persistence.JournalFolderFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.journal.service.JournalStructureLocalService" class="com.liferay.portlet.journal.service.impl.JournalStructureLocalServiceImpl" />
 	<bean id="com.liferay.portlet.journal.service.JournalStructureService" class="com.liferay.portlet.journal.service.impl.JournalStructureServiceImpl" />
-	<bean id="com.liferay.portlet.journal.service.persistence.JournalStructurePersistence" class="com.liferay.portlet.journal.service.persistence.JournalStructurePersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.journal.service.persistence.JournalStructureFinder" class="com.liferay.portlet.journal.service.persistence.JournalStructureFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.journal.service.JournalTemplateLocalService" class="com.liferay.portlet.journal.service.impl.JournalTemplateLocalServiceImpl" />
 	<bean id="com.liferay.portlet.journal.service.JournalTemplateService" class="com.liferay.portlet.journal.service.impl.JournalTemplateServiceImpl" />
 	<bean id="com.liferay.portlet.journal.service.persistence.JournalTemplatePersistence" class="com.liferay.portlet.journal.service.persistence.JournalTemplatePersistenceImpl" parent="basePersistence" />

@@ -71,10 +71,11 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 import com.liferay.portlet.journal.NoSuchArticleException;
-import com.liferay.portlet.journal.StructureXsdException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
+import com.liferay.portlet.journal.model.JournalStructure;
+import com.liferay.portlet.journal.model.JournalStructureAdapter;
 import com.liferay.portlet.journal.model.JournalStructureConstants;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
@@ -1231,6 +1232,22 @@ public class JournalUtil {
 		}
 	}
 
+	public static List<JournalStructure> toJournalStructures(
+			List<DDMStructure> ddmStructures)
+		throws SystemException {
+
+		List<JournalStructure> structures = new ArrayList<JournalStructure>();
+
+		for (DDMStructure ddmStructure : ddmStructures) {
+			JournalStructure structure = new JournalStructureAdapter(
+				ddmStructure);
+
+			structures.add(structure);
+		}
+
+		return structures;
+	}
+
 	public static String transform(
 			ThemeDisplay themeDisplay, Map<String, String> tokens,
 			String viewMode, String languageId, String xml, String script,
@@ -1239,17 +1256,6 @@ public class JournalUtil {
 
 		return _transformer.transform(
 			themeDisplay, tokens, viewMode, languageId, xml, script, langType);
-	}
-
-	public static String validateXSD(String xsd) throws PortalException {
-		try {
-			Document document = SAXReaderUtil.read(xsd);
-
-			return document.asXML();
-		}
-		catch (Exception e) {
-			throw new StructureXsdException();
-		}
 	}
 
 	private static void _addElementOptions(

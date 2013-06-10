@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
+import com.liferay.portlet.dynamicdatamapping.StructureXsdException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.FieldConstants;
@@ -264,6 +265,18 @@ public class DDMXMLImpl implements DDMXML {
 		}
 		catch (IOException ioe) {
 			throw new SystemException(ioe);
+		}
+	}
+
+	@Override
+	public String validateXML(String xml) throws PortalException {
+		try {
+			Document document = SAXReaderUtil.read(xml);
+
+			return document.asXML();
+		}
+		catch (Exception e) {
+			throw new StructureXsdException();
 		}
 	}
 

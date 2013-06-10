@@ -28,8 +28,18 @@
 			<entry name="required"><![CDATA[false]]></entry>
 		</meta-data>
 	</dynamic-element>
-	<dynamic-element name="image_2" type="image" repeatable="false" />
-	<dynamic-element name="image_3" type="image" />
+	<dynamic-element name="image_2" type="image" index-type="" repeatable="false">
+		<meta-data>
+			<entry name="label"><![CDATA[image_2]]></entry>
+			<entry name="required"><![CDATA[false]]></entry>
+		</meta-data>
+	</dynamic-element>
+	<dynamic-element name="image_3" type="image" index-type="">
+		<meta-data>
+			<entry name="label"><![CDATA[image_3]]></entry>
+			<entry name="required"><![CDATA[false]]></entry>
+		</meta-data>
+	</dynamic-element>
 	<dynamic-element name="link_to_layout" type="link_to_layout" index-type="" repeatable="false">
 		<meta-data>
 			<entry name="displayAsTooltip"><![CDATA[true]]></entry>
@@ -117,7 +127,7 @@
 	</dynamic-element>
 	<dynamic-element name="text_area" type="text_area" index-type="" repeatable="false">
 		<meta-data>
-			<entry name="displayAsTooltip"><![CDATA[false]]></entry>
+			<entry name="displayAsTooltip"><![CDATA[true]]></entry>
 			<entry name="instructions"><![CDATA[]]></entry>
 			<entry name="label"><![CDATA[HTML Field]]></entry>
 			<entry name="predefinedValue"><![CDATA[]]></entry>

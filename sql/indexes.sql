@@ -189,6 +189,7 @@ create index IX_C8419FBE on DDMStructure (groupId);
 create index IX_B6ED5E50 on DDMStructure (groupId, classNameId);
 create unique index IX_C8785130 on DDMStructure (groupId, classNameId, structureKey);
 create index IX_43395316 on DDMStructure (groupId, parentStructureId);
+create index IX_657899A8 on DDMStructure (parentStructureId);
 create index IX_20FDE04C on DDMStructure (structureKey);
 create index IX_E61809C8 on DDMStructure (uuid_);
 create index IX_F9FB8D60 on DDMStructure (uuid_, companyId);
@@ -408,15 +409,6 @@ create index IX_EFD9CAC on JournalFolder (groupId, parentFolderId, status);
 create index IX_63BDFA69 on JournalFolder (uuid_);
 create index IX_54F89E1F on JournalFolder (uuid_, companyId);
 create unique index IX_E002061 on JournalFolder (uuid_, groupId);
-
-create index IX_B97F5608 on JournalStructure (groupId);
-create index IX_CA0BD48C on JournalStructure (groupId, parentStructureId);
-create unique index IX_AB6E9996 on JournalStructure (groupId, structureId);
-create index IX_4FA67B72 on JournalStructure (parentStructureId);
-create index IX_8831E4FC on JournalStructure (structureId);
-create index IX_6702CA92 on JournalStructure (uuid_);
-create index IX_F1054A56 on JournalStructure (uuid_, companyId);
-create unique index IX_42E86E58 on JournalStructure (uuid_, groupId);
 
 create index IX_77923653 on JournalTemplate (groupId);
 create index IX_1701CB2B on JournalTemplate (groupId, structureId);

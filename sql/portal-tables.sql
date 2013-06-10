@@ -910,22 +910,6 @@ create table JournalFolder (
 	statusDate DATE null
 );
 
-create table JournalStructure (
-	uuid_ VARCHAR(75) null,
-	id_ LONG not null primary key,
-	groupId LONG,
-	companyId LONG,
-	userId LONG,
-	userName VARCHAR(75) null,
-	createDate DATE null,
-	modifiedDate DATE null,
-	structureId VARCHAR(75) null,
-	parentStructureId VARCHAR(75) null,
-	name STRING null,
-	description STRING null,
-	xsd TEXT null
-);
-
 create table JournalTemplate (
 	uuid_ VARCHAR(75) null,
 	id_ LONG not null primary key,

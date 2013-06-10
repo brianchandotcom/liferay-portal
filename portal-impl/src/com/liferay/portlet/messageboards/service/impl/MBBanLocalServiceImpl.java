@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PropsValues;
@@ -88,7 +89,7 @@ public class MBBanLocalServiceImpl extends MBBanLocalServiceBaseImpl {
 
 	@Override
 	public void deleteBan(long banUserId, ServiceContext serviceContext)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		long groupId = serviceContext.getScopeGroupId();
 
@@ -102,12 +103,20 @@ public class MBBanLocalServiceImpl extends MBBanLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void deleteBan(MBBan ban) throws SystemException {
+	public void deleteBan(MBBan ban) throws PortalException, SystemException {
 		mbBanPersistence.remove(ban);
+
+		// System Event
+
+		systemEventLocalService.addSystemEvent(
+			ban.getGroupId(), MBBan.class.getName(), ban.getBanId(),
+			ban.getUuid(), SystemEventConstants.TYPE_DELETE);
 	}
 
 	@Override
-	public void deleteBansByBanUserId(long banUserId) throws SystemException {
+	public void deleteBansByBanUserId(long banUserId)
+		throws PortalException, SystemException {
+
 		List<MBBan> bans = mbBanPersistence.findByBanUserId(banUserId);
 
 		for (MBBan ban : bans) {
@@ -116,7 +125,9 @@ public class MBBanLocalServiceImpl extends MBBanLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void deleteBansByGroupId(long groupId) throws SystemException {
+	public void deleteBansByGroupId(long groupId)
+		throws PortalException, SystemException {
+
 		List<MBBan> bans = mbBanPersistence.findByGroupId(groupId);
 
 		for (MBBan ban : bans) {

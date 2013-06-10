@@ -80,6 +80,10 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portal" entity="SystemEvent" />
 	</entity>
 	<entity name="PollsVote" uuid="true" local-service="true" remote-service="true">
 

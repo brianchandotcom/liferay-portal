@@ -22,6 +22,7 @@ import com.liferay.portal.model.SystemEvent;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.service.base.SystemEventLocalServiceBaseImpl;
+import com.liferay.portal.util.PortalUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -90,6 +91,17 @@ public class SystemEventLocalServiceImpl
 		systemEvent.setExtraData(extraData);
 
 		systemEventPersistence.update(systemEvent);
+	}
+
+	@Override
+	public void addSystemEvent(
+			long groupId, String className, long classPK, String classUuid,
+			int type)
+		throws PortalException, SystemException {
+
+		addSystemEvent(
+			0, groupId, PortalUtil.getClassNameId(className), classPK,
+			classUuid, type, null);
 	}
 
 	@Override

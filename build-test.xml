@@ -1565,6 +1565,13 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 				<replace file="portal-impl/src/portal-ext.properties" token="permissions.view.dynamic.inheritance=false" value="" />
 			</then>
 		</if>
+
+		<if>
+			<equals arg1="${setup.wizard.enabled}" arg2="true" />
+			<then>
+				<replace file="portal-impl/src/portal-ext.properties" token="setup.wizard.enabled=false" value="" />
+			</then>
+		</if>
 	</target>
 
 	<target name="prepare-portal-properties">

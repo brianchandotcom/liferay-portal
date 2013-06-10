@@ -19,10 +19,15 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
+import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalStructure;
 import com.liferay.portlet.journal.service.base.JournalStructureServiceBaseImpl;
 import com.liferay.portlet.journal.service.permission.JournalPermission;
 import com.liferay.portlet.journal.service.permission.JournalStructurePermission;
+import com.liferay.portlet.journal.util.JournalUtil;
 
 import java.util.List;
 import java.util.Locale;
@@ -101,14 +106,22 @@ public class JournalStructureServiceImpl
 	public List<JournalStructure> getStructures(long groupId)
 		throws SystemException {
 
-		return journalStructureLocalService.filterFindByGroupId(groupId);
+		List<DDMStructure> ddmStructures =
+			ddmStructurePersistence.filterFindByG_C(
+				groupId, PortalUtil.getClassNameId(JournalArticle.class));
+
+		return JournalUtil.toJournalStructures(ddmStructures);
 	}
 
 	@Override
 	public List<JournalStructure> getStructures(long[] groupIds)
 		throws SystemException {
 
-		return journalStructureLocalService.filterFindByGroupId(groupIds);
+		List<DDMStructure> ddmStructures =
+			ddmStructurePersistence.filterFindByG_C(
+				groupIds, PortalUtil.getClassNameId(JournalArticle.class));
+
+		return JournalUtil.toJournalStructures(ddmStructures);
 	}
 
 	@Override
@@ -117,8 +130,15 @@ public class JournalStructureServiceImpl
 			int end, OrderByComparator obc)
 		throws SystemException {
 
-		return journalStructureFinder.filterFindByKeywords(
-			companyId, groupIds, keywords, start, end, obc);
+		long[] classNameIds = new long[] {
+			PortalUtil.getClassNameId(JournalArticle.class)
+		};
+
+		List<DDMStructure> ddmStructures =
+			ddmStructureFinder.filterFindByKeywords(
+				companyId, groupIds, classNameIds, keywords, start, end, obc);
+
+		return JournalUtil.toJournalStructures(ddmStructures);
 	}
 
 	@Override
@@ -128,17 +148,29 @@ public class JournalStructureServiceImpl
 			OrderByComparator obc)
 		throws SystemException {
 
-		return journalStructureFinder.filterFindByC_G_S_N_D(
-			companyId, groupIds, structureId, name, description, andOperator,
-			start, end, obc);
+		long[] classNameIds = new long[] {
+			PortalUtil.getClassNameId(JournalArticle.class)
+		};
+
+		List<DDMStructure> ddmStructures =
+			ddmStructureFinder.filterFindByC_G_C_N_D_S_T(
+				companyId, groupIds, classNameIds, name, description, null,
+				DDMStructureConstants.TYPE_DEFAULT, andOperator, start, end,
+				obc);
+
+		return JournalUtil.toJournalStructures(ddmStructures);
 	}
 
 	@Override
 	public int searchCount(long companyId, long[] groupIds, String keywords)
 		throws SystemException {
 
-		return journalStructureFinder.filterCountByKeywords(
-			companyId, groupIds, keywords);
+		long[] classNameIds = new long[] {
+			PortalUtil.getClassNameId(JournalArticle.class)
+		};
+
+		return ddmStructureFinder.filterCountByKeywords(
+			companyId, groupIds, classNameIds, keywords);
 	}
 
 	@Override
@@ -147,8 +179,13 @@ public class JournalStructureServiceImpl
 			String description, boolean andOperator)
 		throws SystemException {
 
-		return journalStructureFinder.filterCountByC_G_S_N_D(
-			companyId, groupIds, structureId, name, description, andOperator);
+		long[] classNameIds = new long[] {
+			PortalUtil.getClassNameId(JournalArticle.class)
+		};
+
+		return ddmStructureFinder.filterCountByC_G_C_N_D_S_T(
+			companyId, groupIds, classNameIds, name, description, null,
+			DDMStructureConstants.TYPE_DEFAULT, andOperator);
 	}
 
 	@Override

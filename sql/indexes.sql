@@ -410,15 +410,6 @@ create index IX_63BDFA69 on JournalFolder (uuid_);
 create index IX_54F89E1F on JournalFolder (uuid_, companyId);
 create unique index IX_E002061 on JournalFolder (uuid_, groupId);
 
-create index IX_B97F5608 on JournalStructure (groupId);
-create index IX_CA0BD48C on JournalStructure (groupId, parentStructureId);
-create unique index IX_AB6E9996 on JournalStructure (groupId, structureId);
-create index IX_4FA67B72 on JournalStructure (parentStructureId);
-create index IX_8831E4FC on JournalStructure (structureId);
-create index IX_6702CA92 on JournalStructure (uuid_);
-create index IX_F1054A56 on JournalStructure (uuid_, companyId);
-create unique index IX_42E86E58 on JournalStructure (uuid_, groupId);
-
 create index IX_77923653 on JournalTemplate (groupId);
 create index IX_1701CB2B on JournalTemplate (groupId, structureId);
 create unique index IX_E802AA3C on JournalTemplate (groupId, templateId);

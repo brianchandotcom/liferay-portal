@@ -304,48 +304,6 @@
 				[$FOLDER_PARENT_FOLDER_ID$]
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.journal.service.persistence.JournalStructureFinder.countByC_G_S_N_D">
-		<![CDATA[
-			SELECT
-				COUNT(DISTINCT JournalStructure.structureId) AS COUNT_VALUE
-			FROM
-				JournalStructure
-			WHERE
-				(companyId = ?) AND
-				[$GROUP_ID$]
-				(
-					(structureId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(lower(description) LIKE ? [$AND_OR_NULL_CHECK$])
-				)
-		]]>
-	</sql>
-	<sql id="com.liferay.portlet.journal.service.persistence.JournalStructureFinder.findByC_G_S_N_D">
-		<![CDATA[
-			SELECT
-				{JournalStructure.*}
-			FROM
-				(
-					SELECT DISTINCT
-						id_
-					FROM
-						JournalStructure
-					WHERE
-						(companyId = ?) AND
-						[$GROUP_ID$]
-						(
-							(structureId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-							(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-							(lower(description) LIKE ? [$AND_OR_NULL_CHECK$])
-						)
-				) TEMP_TABLE
-				INNER JOIN
-					JournalStructure ON
-						(TEMP_TABLE.id_ = JournalStructure.id_)
-			ORDER BY
-				structureId ASC
-		]]>
-	</sql>
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalTemplateFinder.countByC_G_T_S_N_D">
 		<![CDATA[
 			SELECT

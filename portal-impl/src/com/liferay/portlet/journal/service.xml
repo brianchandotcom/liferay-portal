@@ -463,64 +463,12 @@
 		<reference package-path="com.liferay.portlet.social" entity="SocialActivityCounter" />
 		<reference package-path="com.liferay.portlet.trash" entity="TrashEntry" />
 	</entity>
-	<entity name="JournalStructure" uuid="true" local-service="true" remote-service="true">
-
-		<!-- PK fields -->
-
-		<column name="id" type="long" primary="true" />
-
-		<!-- Group instance -->
-
-		<column name="groupId" type="long" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-		<column name="userId" type="long" />
-		<column name="userName" type="String" />
-		<column name="createDate" type="Date" />
-		<column name="modifiedDate" type="Date" />
-
-		<!-- Other fields -->
-
-		<column name="structureId" type="String" />
-		<column name="parentStructureId" type="String" />
-		<column name="name" type="String" localized="true" />
-		<column name="description" type="String" localized="true" />
-		<column name="xsd" type="String" />
-
-		<!-- Order -->
-
-		<order by="asc">
-			<order-column name="structureId" />
-		</order>
-
-		<!-- Finder methods -->
-
-		<finder name="GroupId" return-type="Collection">
-			<finder-column name="groupId" arrayable-operator="OR" />
-		</finder>
-		<finder name="StructureId" return-type="Collection">
-			<finder-column name="structureId" />
-		</finder>
-		<finder name="ParentStructureId" return-type="Collection">
-			<finder-column name="parentStructureId" />
-		</finder>
-		<finder name="G_S" return-type="JournalStructure" unique="true">
-			<finder-column name="groupId" />
-			<finder-column name="structureId" />
-		</finder>
-		<finder name="G_P" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="parentStructureId" />
-		</finder>
+	<entity name="JournalStructure" local-service="true" remote-service="true">
 
 		<!-- References -->
 
 		<reference package-path="com.liferay.portal" entity="Group" />
-		<reference package-path="com.liferay.portal" entity="WebDAVProps" />
 		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructure" />
-		<reference package-path="com.liferay.portlet.expando" entity="ExpandoValue" />
 	</entity>
 	<entity name="JournalTemplate" uuid="true" local-service="true" remote-service="true">
 

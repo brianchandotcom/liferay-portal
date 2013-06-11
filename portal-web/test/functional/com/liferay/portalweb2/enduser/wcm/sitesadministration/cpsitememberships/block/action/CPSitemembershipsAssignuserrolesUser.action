@@ -16,13 +16,13 @@
 			<execute function="Click#partialTextClickAt" value1="Advanced" />
 		</case>
 		<case locator-key1="BASIC_SEARCH_BUTTON">
-			<execute function="Click#valueClickAtAndWait" value1="Search" />
+			<execute function="Click#textClickAtAndWait" value1="Search" />
 		</case>
 		<case locator-key1="CURRENT">
 			<execute function="Click#textClickAtAndWait" value1="Current" />
 		</case>
 		<case locator-key1="UPDATE_ASSOCIATIONS_BUTTON">
-			<execute function="Click#valueClickAtAndWait" value1="Update Associations" />
+			<execute function="Click#textClickAtAndWait" value1="Update Associations" />
 		</case>
 	</command>
 </definition>

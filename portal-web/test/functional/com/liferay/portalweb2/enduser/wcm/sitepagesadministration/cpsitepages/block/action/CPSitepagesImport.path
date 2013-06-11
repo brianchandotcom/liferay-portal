@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
-	<td>//iframe[@id='_156_importDialog_iframe_']</td>
+	<td></td>
 	<td>CPSitepagesImport</td>
 </tr>
 <tr>
@@ -19,8 +19,13 @@
 	<td></td>
 </tr>
 <tr>
+	<td>IMPORT_IFRAME</td>
+	<td>//iframe[@id='_156_importDialog_iframe_']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_FILE_BUTTON</td>
-	<td>//button[@id='_156_selectFilesButton']</td>
+	<td>//span[@id='_156_selectFilesButton']/button</td>
 	<td></td>
 </tr>
 <tr>

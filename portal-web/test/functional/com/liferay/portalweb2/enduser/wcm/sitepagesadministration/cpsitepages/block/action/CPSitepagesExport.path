@@ -10,12 +10,17 @@
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
-	<td>//iframe[@id='_156_exportDialog_iframe_']</td>
+	<td></td>
 	<td>CPSitepagesExport</td>
 </tr>
 <tr>
 	<td></td>
 	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPORT_IFRAME</td>
+	<td>//iframe[@id='_156_exportDialog_iframe_']</td>
 	<td></td>
 </tr>
 <tr>

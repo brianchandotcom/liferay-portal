@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.tools.ComparableRoute;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.xml.SAXReaderImpl;
@@ -153,6 +154,11 @@ public class SourceFormatter {
 	public static final int _TYPE_VARIABLE_PUBLIC_STATIC_FINAL = 1;
 
 	public static void main(String[] args) {
+		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
+
+		_checkUnprocessedExceptions = GetterUtil.getBoolean(
+			arguments.get("check.exceptions"));
+
 		try {
 			new SourceFormatter(false, false);
 		}
@@ -1860,8 +1866,10 @@ public class SourceFormatter {
 
 			// LPS-36174
 
-			_checkUnprocessedPortalOrSystemException(
-				newContent, file, packagePath, fileName);
+			if (_checkUnprocessedExceptions) {
+				_checkUnprocessedPortalOrSystemException(
+					newContent, file, packagePath, fileName);
+			}
 
 			String oldContent = newContent;
 
@@ -5439,6 +5447,7 @@ public class SourceFormatter {
 		"tiles"
 	};
 
+	private static boolean _checkUnprocessedExceptions;
 	private static List<String> _errorMessages = new ArrayList<String>();
 	private static String[] _excludes;
 	private static FileImpl _fileUtil = FileImpl.getInstance();

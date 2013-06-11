@@ -1,0 +1,54 @@
+<html>
+<head>
+<title>PGDocumentlibrarydisplayDocument</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGDocumentlibrarydisplayDocument</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGDocumentlibrarydisplayDocument</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_HEADER_TITLE</td>
+	<td>//h3[@class='header-title']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_TITLE</td>
+	<td>//h2[@class='document-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_VERSION</td>
+	<td>//h3[contains(@class,'version')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_THUMBNAIL</td>
+	<td>//span[@class='document-thumbnail']/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_COMMENTS</td>
+	<td>//a[contains(.,'Be the first')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_SUBSCRIBE_TO_COMMENTS</td>
+	<td>//a[contains(.,'Subscribe to Comments')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

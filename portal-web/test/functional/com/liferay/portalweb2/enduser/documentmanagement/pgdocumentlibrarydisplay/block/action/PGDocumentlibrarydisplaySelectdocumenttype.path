@@ -1,0 +1,53 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>PGDocumentlibrarydisplaySelectdocumenttype</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGDocumentlibrarydisplaySelectdocumenttype</td></tr>
+</thead><tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGDocumentlibrarydisplaySelectdocumenttype</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_DOCUMENT_TYPE_IFRAME</td>
+	<td>//iframe[contains(@class,'dialog-iframe-node')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_TYPE_BASIC_DOCUMENT</td>
+	<td>//tbody/tr/td/a[contains(.,'basic-document')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_TYPE_CONTRACT</td>
+	<td>//tbody/tr/td/a[contains(.,'Contract')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_TYPE_MARKETING_BANNER</td>
+	<td>//tbody/tr/td/a[contains(.,'Marketing Banner')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_TYPE_ONLINE_TRAINING</td>
+	<td>//tbody/tr/td/a[contains(.,'Online Training')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_TYPE_SALES_PRESENTATION</td>
+	<td>//tbody/tr/td/a[contains(.,'Sales Presentation')]</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

@@ -185,6 +185,8 @@ public class EditFileEntryAction extends PortletAction {
 				revertFileEntry(actionRequest);
 			}
 
+			WindowState windowState = actionRequest.getWindowState();
+
 			if (cmd.equals(Constants.ADD_TEMP) ||
 				cmd.equals(Constants.DELETE_TEMP)) {
 
@@ -192,7 +194,9 @@ public class EditFileEntryAction extends PortletAction {
 			}
 			else if (cmd.equals(Constants.PREVIEW)) {
 			}
-			else if (!cmd.equals(Constants.MOVE_FROM_TRASH)) {
+			else if (!cmd.equals(Constants.MOVE_FROM_TRASH) &&
+					!windowState.equals(LiferayWindowState.POP_UP)) {
+
 				sendRedirect(actionRequest, actionResponse);
 			}
 			else {
@@ -211,8 +215,6 @@ public class EditFileEntryAction extends PortletAction {
 					sendRedirect(actionRequest, actionResponse, redirect);
 				}
 				else {
-					WindowState windowState = actionRequest.getWindowState();
-
 					if (!windowState.equals(LiferayWindowState.POP_UP)) {
 						sendRedirect(actionRequest, actionResponse);
 					}

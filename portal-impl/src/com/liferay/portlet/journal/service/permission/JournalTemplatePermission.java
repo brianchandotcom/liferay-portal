@@ -40,15 +40,6 @@ public class JournalTemplatePermission {
 	}
 
 	public static void check(
-			PermissionChecker permissionChecker, long id, String actionId)
-		throws PortalException, SystemException {
-
-		if (!contains(permissionChecker, id, actionId)) {
-			throw new PrincipalException();
-		}
-	}
-
-	public static void check(
 			PermissionChecker permissionChecker, long groupId,
 			String templateId, String actionId)
 		throws PortalException, SystemException {
@@ -81,16 +72,6 @@ public class JournalTemplatePermission {
 		return permissionChecker.hasPermission(
 			template.getGroupId(), JournalTemplate.class.getName(),
 			template.getId(), actionId);
-	}
-
-	public static boolean contains(
-			PermissionChecker permissionChecker, long id, String actionId)
-		throws PortalException, SystemException {
-
-		JournalTemplate template = JournalTemplateLocalServiceUtil.getTemplate(
-			id);
-
-		return contains(permissionChecker, template, actionId);
 	}
 
 	public static boolean contains(

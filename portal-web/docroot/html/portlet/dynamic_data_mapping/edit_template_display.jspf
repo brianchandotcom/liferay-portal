@@ -30,15 +30,9 @@ Map<String, TemplateVariableGroup> templateVariableGroups = TemplateContextHelpe
 
 <liferay-ui:panel-container extended="<%= false %>" id="templateScriptContainer" persistState="<%= true %>">
 	<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="templateScriptSectionPanel" persistState="<%= true %>" title="script">
-		<div class="lfr-template-editor-container">
+		<div class="control-group lfr-template-editor-container">
 			<c:if test="<%= !templateVariableGroups.isEmpty() %>">
-				<div class="lfr-template-palette-container<%= (language.equalsIgnoreCase("ftl") || language.equalsIgnoreCase("vm")) ? "" : " hide" %>" id="<portlet:namespace />templatePaletteContainer">
-					<div class="minimize-panels" id="<portlet:namespace />paletteToggler">
-						<a href="javascript:;">
-							<span><liferay-ui:message key="minimize-panels" /></span>
-						</a>
-					</div>
-
+				<div class="lfr-template-palette-container pull-left<%= (language.equalsIgnoreCase("ftl") || language.equalsIgnoreCase("vm")) ? "" : " hide" %>" id="<portlet:namespace />templatePaletteContainer">
 					<div class="lfr-template-palette" id="<portlet:namespace />paletteDataContainer">
 						<div id="<portlet:namespace />paletteData">
 
@@ -95,7 +89,7 @@ Map<String, TemplateVariableGroup> templateVariableGroups = TemplateContextHelpe
 			</div>
 		</div>
 
-		<aui:input label="script-file" name="script" type="file" />
+		<aui:input inlineLabel="left" label="script-file" name="script" type="file" />
 	</liferay-ui:panel>
 </liferay-ui:panel-container>
 
@@ -118,78 +112,8 @@ Map<String, TemplateVariableGroup> templateVariableGroups = TemplateContextHelpe
 	var richEditor;
 
 	<c:if test="<%= !templateVariableGroups.isEmpty() %>">
-		var CSS_EDITOR_CONTAINER_FULL = 'lfr-editor-container-full';
-
-		var CSS_EDITOR_CONTAINER_PALETTE_MINIMIZED = 'lfr-editor-container-palette-minimized';
-
-		var CSS_PALETTE_CONTAINER_MINIMIZED = 'lfr-template-palette-container-minimized';
-
-		var MAP_OPACITY = {
-			mouseenter: 1,
-			mouseleave: 0
-		};
-
-		var paletteToggler = panelScriptContainer.one('#<portlet:namespace />paletteToggler');
-
 		var paletteContainer = panelScriptContainer.one('#<portlet:namespace />templatePaletteContainer');
 		var paletteDataContainer = panelScriptContainer.one('#<portlet:namespace />paletteDataContainer');
-		var paletteDataNode = panelScriptContainer.one('#<portlet:namespace />paletteData');
-		var paletteTogglerLink = paletteToggler.one('a');
-
-		var paletteHandle;
-
-		function attachPaletteInteraction() {
-			paletteHandle = paletteContainer.on(['mouseenter', 'mouseleave'], togglePaletteAction);
-		}
-
-		function detachPaletteInteraction() {
-			if (paletteHandle) {
-				paletteHandle.detach();
-			}
-		}
-
-		function hidePalette() {
-			paletteContainer.hide();
-
-			editorContainer.addClass(CSS_EDITOR_CONTAINER_FULL);
-		}
-
-		function maximizePalette() {
-			editorContainer.removeClass(CSS_EDITOR_CONTAINER_PALETTE_MINIMIZED);
-
-			paletteContainer.transition(
-				{
-					duration: 0.5,
-					width: '200px'
-				},
-				function() {
-					paletteContainer.removeClass(CSS_PALETTE_CONTAINER_MINIMIZED);
-
-					paletteDataContainer.appendChild(paletteDataNode);
-
-					attachPaletteInteraction();
-				}
-			);
-		}
-
-		function minimizePalette() {
-			paletteDataNode.remove();
-
-			detachPaletteInteraction();
-
-			paletteContainer.transition(
-				{
-					duration: 0.5,
-					width: '13px'
-				},
-				function() {
-					paletteContainer.addClass(CSS_PALETTE_CONTAINER_MINIMIZED);
-					editorContainer.addClass(CSS_EDITOR_CONTAINER_PALETTE_MINIMIZED);
-
-					paletteToggler.setStyle('opacity', '1');
-				}
-			);
-		}
 
 		function onPaletteItemChosen(event) {
 			var editor = richEditor.getEditor();
@@ -229,37 +153,6 @@ Map<String, TemplateVariableGroup> templateVariableGroups = TemplateContextHelpe
 			editor.focus();
 
 			aceAutocomplete._lockEditor = false;
-		}
-
-		function showPalette() {
-			editorContainer.removeClass(CSS_EDITOR_CONTAINER_FULL);
-
-			paletteContainer.show();
-		}
-
-		function togglePaletteCollapse() {
-			if (paletteContainer.hasClass(CSS_PALETTE_CONTAINER_MINIMIZED)) {
-				maximizePalette();
-			}
-			else {
-				minimizePalette();
-			}
-		}
-
-		function togglePaletteAction(event) {
-			if (!paletteContainer.hasClass(CSS_PALETTE_CONTAINER_MINIMIZED)) {
-				var opacity = 0;
-
-				if (event) {
-					opacity = MAP_OPACITY[event.type];
-				}
-
-				paletteToggler.transition(
-					{
-						opacity: opacity
-					}
-				);
-			}
 		}
 	</c:if>
 
@@ -381,10 +274,6 @@ Map<String, TemplateVariableGroup> templateVariableGroups = TemplateContextHelpe
 			<c:if test="<%= !templateVariableGroups.isEmpty() %>">
 				paletteContainer.delegate('click', onPaletteItemChosen, '.palette-item');
 
-				attachPaletteInteraction();
-
-				paletteToggler.on('click', togglePaletteCollapse);
-
 				var togglerDelegate = new A.TogglerDelegate(
 					{
 						animated: true,
@@ -411,6 +300,8 @@ Map<String, TemplateVariableGroup> templateVariableGroups = TemplateContextHelpe
 				paletteContainer.delegate(
 					'mouseenter',
 					function(event) {
+						tooltip.hide();
+
 						var node = event.currentTarget;
 
 						tooltip.set('align.node', node);

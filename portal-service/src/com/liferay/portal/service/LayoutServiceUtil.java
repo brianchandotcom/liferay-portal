@@ -1215,15 +1215,15 @@ public class LayoutServiceUtil {
 		return getService().updatePriority(plid, priority);
 	}
 
-	public static void validateImportLayoutsFile(long groupId,
-		boolean privateLayout,
+	public static com.liferay.portal.kernel.lar.MissingReferences validateImportLayoutsFile(
+		long groupId, boolean privateLayout,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		java.io.File file)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService()
-			.validateImportLayoutsFile(groupId, privateLayout, parameterMap,
-			file);
+		return getService()
+				   .validateImportLayoutsFile(groupId, privateLayout,
+			parameterMap, file);
 	}
 
 	public static LayoutService getService() {

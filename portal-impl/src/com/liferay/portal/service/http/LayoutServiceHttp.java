@@ -1865,8 +1865,8 @@ public class LayoutServiceHttp {
 		}
 	}
 
-	public static void validateImportLayoutsFile(HttpPrincipal httpPrincipal,
-		long groupId, boolean privateLayout,
+	public static com.liferay.portal.kernel.lar.MissingReferences validateImportLayoutsFile(
+		HttpPrincipal httpPrincipal, long groupId, boolean privateLayout,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		java.io.File file)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -1879,8 +1879,10 @@ public class LayoutServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					privateLayout, parameterMap, file);
 
+			Object returnObj = null;
+
 			try {
-				TunnelUtil.invoke(httpPrincipal, methodHandler);
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
 				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
@@ -1893,6 +1895,8 @@ public class LayoutServiceHttp {
 
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
+
+			return (com.liferay.portal.kernel.lar.MissingReferences)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);

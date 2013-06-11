@@ -118,6 +118,34 @@ public class PortalUtil {
 		getPortal().addPageTitle(title, request);
 	}
 
+	public static void addPortalMessage(
+		HttpServletRequest request, String message) {
+
+		getPortal().addPortalMessage(request, message);
+	}
+
+	public static void addPortalMessage(
+		HttpServletRequest request, String jspPath, String portletId) {
+
+		getPortal().addPortalMessage(request, jspPath, portletId);
+	}
+
+	public static void addPortalMessage(
+		HttpServletRequest request, String message, String cssClass,
+		boolean animation, int timeout) {
+
+		getPortal().addPortalMessage(
+			request, message, cssClass, animation, timeout);
+	}
+
+	public static void addPortalMessage(
+		HttpServletRequest request, String jspPath, String portletId,
+		String cssClass, boolean animation, int timeout) {
+
+		getPortal().addPortalMessage(
+			request, jspPath, portletId, cssClass, animation, timeout);
+	}
+
 	public static void addPortalPortEventListener(
 		PortalPortEventListener portalPortEventListener) {
 

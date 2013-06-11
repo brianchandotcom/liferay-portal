@@ -421,7 +421,8 @@ window.YUI_config = {
 				'liferay-notice': {
 					path: 'notice.js',
 					requires: [
-						'aui-base'
+						'aui-base',
+						'transition'
 					]
 				},
 				'liferay-node': {

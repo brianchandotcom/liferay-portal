@@ -546,6 +546,50 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
+	public void addPortalMessage(HttpServletRequest request, String message) {
+		HttpSession session = request.getSession();
+
+		session.setAttribute(WebKeys.PORTAL_MESSAGE_MESSAGE, message);
+	}
+
+	@Override
+	public void addPortalMessage(
+		HttpServletRequest request, String jspPath, String portletId) {
+
+		HttpSession session = request.getSession();
+
+		session.setAttribute(WebKeys.PORTAL_MESSAGE_JSP_PATH, jspPath);
+		session.setAttribute(WebKeys.PORTAL_MESSAGE_PORTLET_ID, portletId);
+	}
+
+	@Override
+	public void addPortalMessage(
+		HttpServletRequest request, String message, String cssClass,
+		boolean animation, int timeout) {
+
+		HttpSession session = request.getSession();
+
+		session.setAttribute(WebKeys.PORTAL_MESSAGE_MESSAGE, message);
+		session.setAttribute(WebKeys.PORTAL_MESSAGE_ANIMATION, animation);
+		session.setAttribute(WebKeys.PORTAL_MESSAGE_CSS_CLASS, cssClass);
+		session.setAttribute(WebKeys.PORTAL_MESSAGE_TIMEOUT, timeout);
+	}
+
+	@Override
+	public void addPortalMessage(
+		HttpServletRequest request, String jspPath, String portletId,
+		String cssClass, boolean animation, int timeout) {
+
+		HttpSession session = request.getSession();
+
+		session.setAttribute(WebKeys.PORTAL_MESSAGE_JSP_PATH, jspPath);
+		session.setAttribute(WebKeys.PORTAL_MESSAGE_PORTLET_ID, portletId);
+		session.setAttribute(WebKeys.PORTAL_MESSAGE_ANIMATION, animation);
+		session.setAttribute(WebKeys.PORTAL_MESSAGE_CSS_CLASS, cssClass);
+		session.setAttribute(WebKeys.PORTAL_MESSAGE_TIMEOUT, timeout);
+	}
+
+	@Override
 	public void addPortalPortEventListener(
 		PortalPortEventListener portalPortEventListener) {
 

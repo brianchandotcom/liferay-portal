@@ -629,6 +629,7 @@
 			<param name="test.ant.script.command" value="platform-deployment-acceptance" />
 			<param name="test.ant.script.database.minimal" value="true" />
 			<param name="test.ant.script.selenium.implementation" value="webdriver" />
+			<param name="test.ant.script.setup.wizard.enabled" value="true" />
 			<param name="test.ant.script.suite" value="PlatformDeploymentAcceptanceTestSuite" />
 		</antcall>
 

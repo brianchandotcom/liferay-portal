@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.lar.ExportImportHelper;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.MissingReference;
+import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -511,8 +512,13 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 					"there-are-missing-references-that-could-not-be-found-" +
 						"in-the-current-site.-please-import-another-lar-file-" +
 							"containing-the-following-elements");
+
+				MissingReferences missingReferences =
+					mre.getMissingReferences();
+
 				errorMessageJSONArray = getMissingReferencesJSONArray(
-					themeDisplay, mre.getMissingReferences());
+					themeDisplay,
+					missingReferences.getDependencyMissingReferences());
 				errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 			}
 		}

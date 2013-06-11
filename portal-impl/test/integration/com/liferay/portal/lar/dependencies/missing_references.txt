@@ -3,10 +3,10 @@
 <root>
 	<header available-locales="zh_CN,en_US,fr_CA,de_DE,hu_HU,pt_BR,es_ES" build-number="6200" export-date="Wed, 08 May 2013 01:36:12 +0000" type="portlet" company-group-id="10191" group-id="10179" private-layout="false" root-portlet-id="15" />
 	<missing-references>
-		<missing-reference class-name="com.liferay.portal.kernel.repository.model.FileEntry" display-name="file1" group-id="[$GROUP_ID$]" uuid="[$UUID$]" />
-		<missing-reference class-name="com.liferay.portal.kernel.repository.model.FileEntry" display-name="file2" group-id="99998" uuid="xyz" />
-		<missing-reference class-name="com.liferay.portal.kernel.repository.model.FileEntry" display-name="file3" group-id="99999" referrer-display-name="web-content-1" uuid="xyz" />
-		<missing-reference class-name="com.liferay.portal.kernel.repository.model.FileEntry" display-name="file3" group-id="99999" referrer-display-name="web-content-2" uuid="xyz" />
+		<missing-reference class-name="com.liferay.portal.kernel.repository.model.FileEntry" display-name="file1" group-id="[$GROUP_ID$]" type="dependency" uuid="[$UUID$]" />
+		<missing-reference class-name="com.liferay.portal.kernel.repository.model.FileEntry" display-name="file2" group-id="99998" type="dependency" uuid="xyz" />
+		<missing-reference class-name="com.liferay.portal.kernel.repository.model.FileEntry" display-name="file3" group-id="99999" type="dependency" referrer-display-name="web-content-1" uuid="xyz" />
+		<missing-reference class-name="com.liferay.portal.kernel.repository.model.FileEntry" display-name="file3" group-id="99999" type="dependency" referrer-display-name="web-content-2" uuid="xyz" />
 	</missing-references>
 	<portlet portlet-id="15" layout-id="1" path=" /group/10179/portlet/15/10182/portlet.xml" />
 </root>

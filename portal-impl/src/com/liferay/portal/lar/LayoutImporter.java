@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.lar.MissingReference;
+import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
@@ -135,7 +136,7 @@ public class LayoutImporter {
 		}
 	}
 
-	public void validateFile(
+	public MissingReferences validateFile(
 			long userId, long groupId, boolean privateLayout,
 			Map<String, String[]> parameterMap, File file)
 		throws Exception {
@@ -152,13 +153,18 @@ public class LayoutImporter {
 
 		validateFile(portletDataContext);
 
-		Map<String, MissingReference> missingReferences =
+		MissingReferences missingReferences =
 			ExportImportHelperUtil.validateMissingReferences(
 				userId, groupId, parameterMap, file);
 
-		if (!missingReferences.isEmpty()) {
+		Map<String, MissingReference> dependencyMissingReferences =
+			missingReferences.getDependencyMissingReferences();
+
+		if (!dependencyMissingReferences.isEmpty()) {
 			throw new MissingReferenceException(missingReferences);
 		}
+
+		return missingReferences;
 	}
 
 	protected void deleteMissingLayouts(

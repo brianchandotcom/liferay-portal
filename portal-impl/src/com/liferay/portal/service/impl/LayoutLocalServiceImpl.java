@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -2705,7 +2706,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void validateImportLayoutsFile(
+	public MissingReferences validateImportLayoutsFile(
 			long userId, long groupId, boolean privateLayout,
 			Map<String, String[]> parameterMap, File file)
 		throws PortalException, SystemException {
@@ -2713,7 +2714,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		try {
 			LayoutImporter layoutImporter = new LayoutImporter();
 
-			layoutImporter.validateFile(
+			return layoutImporter.validateFile(
 				userId, groupId, privateLayout, parameterMap, file);
 		}
 		catch (PortalException pe) {

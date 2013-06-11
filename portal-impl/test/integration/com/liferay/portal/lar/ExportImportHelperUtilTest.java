@@ -17,6 +17,7 @@ package com.liferay.portal.lar;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.MissingReference;
+import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -313,12 +314,15 @@ public class ExportImportHelperUtilTest {
 
 		zipWriter.addEntry("/manifest.xml", xml);
 
-		Map<String, MissingReference> missingReferences =
+		MissingReferences missingReferences =
 			ExportImportHelperUtil.validateMissingReferences(
 				TestPropsValues.getUserId(), _stagingGroup.getGroupId(),
 				new HashMap<String, String[]>(), zipWriter.getFile());
 
-		Assert.assertEquals(2, missingReferences.size());
+		Map<String, MissingReference> dependencyMissingReferences =
+			missingReferences.getDependencyMissingReferences();
+
+		Assert.assertEquals(2, dependencyMissingReferences.size());
 
 		FileUtil.delete(zipWriter.getFile());
 	}

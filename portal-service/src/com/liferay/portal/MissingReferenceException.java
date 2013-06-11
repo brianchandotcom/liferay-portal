@@ -15,9 +15,7 @@
 package com.liferay.portal;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.lar.MissingReference;
-
-import java.util.Map;
+import com.liferay.portal.kernel.lar.MissingReferences;
 
 /**
  * @author Julio Camarero
@@ -28,9 +26,7 @@ public class MissingReferenceException extends PortalException {
 		super();
 	}
 
-	public MissingReferenceException(
-		Map<String, MissingReference> missingReferences) {
-
+	public MissingReferenceException(MissingReferences missingReferences) {
 		super();
 
 		_missingReferences = missingReferences;
@@ -48,10 +44,10 @@ public class MissingReferenceException extends PortalException {
 		super(cause);
 	}
 
-	public Map<String, MissingReference> getMissingReferences() {
+	public MissingReferences getMissingReferences() {
 		return _missingReferences;
 	}
 
-	private Map<String, MissingReference> _missingReferences;
+	private MissingReferences _missingReferences;
 
 }

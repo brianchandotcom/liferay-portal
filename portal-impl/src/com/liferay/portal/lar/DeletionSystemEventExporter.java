@@ -69,12 +69,10 @@ public class DeletionSystemEventExporter {
 
 			@Override
 			protected void addCriteria(DynamicQuery dynamicQuery) {
-				setGroupId(portletDataContext.getScopeGroupId());
-
-				Property classNameIdProperty = PropertyFactoryUtil.forName(
-					"classNameId");
-
 				if (!deletionEventClassNameIds.isEmpty()) {
+					Property classNameIdProperty = PropertyFactoryUtil.forName(
+						"classNameId");
+
 					dynamicQuery.add(
 						classNameIdProperty.in(
 							deletionEventClassNameIds.toArray()));
@@ -113,6 +111,8 @@ public class DeletionSystemEventExporter {
 				dynamicQuery.add(createDateProperty.le(endDate));
 			}
 		};
+
+		actionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
 
 		actionableDynamicQuery.performActions();
 	}

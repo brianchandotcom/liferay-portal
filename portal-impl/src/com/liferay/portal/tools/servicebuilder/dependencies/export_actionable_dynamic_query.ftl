@@ -62,8 +62,6 @@ public class ${entity.name}ExportActionableDynamicQuery extends ${entity.name}Ac
 
 			@Override
 			protected void addCriteria(DynamicQuery dynamicQuery) {
-				setGroupId(_portletDataContext.getScopeGroupId());
-
 				Property classNameIdProperty = PropertyFactoryUtil.forName(
 					"classNameId");
 
@@ -101,6 +99,8 @@ public class ${entity.name}ExportActionableDynamicQuery extends ${entity.name}Ac
 				dynamicQuery.add(createDateProperty.le(endDate));
 			}
 		};
+
+		actionableDynamicQuery.setGroupId(_portletDataContext.getScopeGroupId());
 
 		return actionableDynamicQuery.performCount();
 	}

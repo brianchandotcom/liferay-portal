@@ -47,8 +47,8 @@ public abstract class BaseActionableDynamicQuery
 
 		dynamicQuery.setProjection(projectionList);
 
-		addCriteria(dynamicQuery);
 		addDefaultCriteria(dynamicQuery);
+		addCriteria(dynamicQuery);
 
 		List<Object[]> results = (List<Object[]>)executeDynamicQuery(
 			dynamicQuery, _dynamicQueryMethod);
@@ -87,8 +87,8 @@ public abstract class BaseActionableDynamicQuery
 		dynamicQuery.add(property.ge(startPrimaryKey));
 		dynamicQuery.add(property.lt(endPrimaryKey));
 
-		addCriteria(dynamicQuery);
 		addDefaultCriteria(dynamicQuery);
+		addCriteria(dynamicQuery);
 
 		List<Object> objects = (List<Object>)executeDynamicQuery(
 			dynamicQuery, _dynamicQueryMethod);

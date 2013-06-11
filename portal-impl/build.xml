@@ -1401,6 +1401,7 @@ public class Creole10Parser]]></replacevalue>
 			<jvmarg value="-Xmx512m" />
 			<jvmarg value="-Xss2048k" />
 			<jvmarg value="-Dsource.formatter.excludes=${source.formatter.excludes}" />
+			<arg value="check.exceptions=${check.exceptions}" />
 		</java>
 
 		<delete file="ServiceBuilder.temp" />

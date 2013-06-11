@@ -1,0 +1,69 @@
+<html>
+<head>
+<title>PGMediagalleryMedia</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGMediagalleryMedia</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGMediagalleryMedia</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>CLOSE</td>
+	<td>//button[@class='image-viewer-close close']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MEDIA_THUMBNAIL</td>
+	<td>//img[@class='image-viewer-image']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MEDIA_CAPTION</td>
+	<td>//h4[@class='image-viewer-caption']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOWNLOAD</td>
+	<td>//img[contains(@title,'Download' )]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW</td>
+	<td>//img[@title='View']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT</td>
+	<td>//img[@title='Edit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERMISSIONS</td>
+	<td>//img[@title='Permissions']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DELETE</td>
+	<td>//img[@title='Move to the Recycle Bin']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

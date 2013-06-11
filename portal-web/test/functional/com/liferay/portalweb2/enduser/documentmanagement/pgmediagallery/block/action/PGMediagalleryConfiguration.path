@@ -20,12 +20,12 @@
 </tr>
 <tr>
 	<td>SAVE_BUTTON</td>
-	<td>//input[@value='Save']</td>
+	<td>//button[contains(.,'Save')]</td>
 	<td>Save</td>
 </tr>
 <tr>
 	<td>CLOSE_BUTTON</td>
-	<td>//button[@title='Close dialog']</td>
+	<td>//button[contains(@class,'close-content')]</td>
 	<td>Close</td>
 </tr>
 <tr>
@@ -62,12 +62,12 @@
 <!--SETUP_DISPLAY_TEMPLATE-->
 <tr>
 	<td>SETUP_DISPLAY_TEMPLATE_SELECT</td>
-	<td>//div[@class='display-template']/span/span/span/select</td>
+	<td>//select[@id='_86_displayStyle']</td>
 	<td>Select Display Template</td>
 </tr>
 <tr>
 	<td>SETUP_DISPLAY_TEMPLATE_MANAGE</td>
-	<td>//div[@class='display-template']/span/a</td>
+	<td>//div[@class='display-template']/span/a/span</td>
 	<td>Manage Display Templates for Liferay</td>
 </tr>
 <tr>
@@ -78,12 +78,12 @@
 <!--SETUP_FOLDERS_LISTING-->
 <tr>
 	<td>SETUP_FOLDERS_LISTING_ROOT_FOLDER_SELECT_BUTTON</td>
-	<td>//input[@id='_86_openFolderSelectorButton']</td>
+	<td>//button[@id='_86_openFolderSelectorButton']</td>
 	<td>Select Root Folder</td>
 </tr>
 <tr>
 	<td>SETUP_FOLDERS_LISTING_ROOT_FOLDER_REMOVE_BUTTON</td>
-	<td>//input[@id='_86_removeFolderButton']</td>
+	<td>//button[@id='_86_removeFolderButton']</td>
 	<td>Remove Root Folder</td>
 </tr>
 <tr>

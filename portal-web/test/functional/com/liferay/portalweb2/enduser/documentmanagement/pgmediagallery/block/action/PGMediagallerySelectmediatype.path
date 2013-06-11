@@ -1,0 +1,45 @@
+<html>
+<head>
+<title>PGMediagallerySelectmediatype</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGMediagallerySelectmediatype</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGMediagallerySelectmediatype</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_MEDIA_TYPE_IFRAME</td>
+	<td>//iframe[@id='_31_selectFileEntryType']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CLOSE_ICON</td>
+	<td>//button[@title='Close dialog']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MEDIA_TABLE-->
+<tr>
+	<td>MEDIA_TABLE_BASIC_DOCUMENT</td>
+	<td>//a[@class='select-file-entry-type' and contains(.,'Basic Document')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

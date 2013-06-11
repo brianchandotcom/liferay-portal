@@ -18,7 +18,7 @@ AUI.add(
 		var TPL_FILE_LIST = [
 			'<tpl for=".">',
 				'<tpl if="!values.error">',
-					'<li class="upload-file {[ values.temp ? "upload-complete pending-file selectable" : "" ]}" data-fileId="{id}" data-fileName="{name}" id="{id}">',
+					'<li class="upload-file {[ values.temp ? "upload-complete pending-file selectable" : "" ]} {[ values.selected ? "selected" : "" ]}" data-fileId="{id}" data-fileName="{name}" id="{id}">',
 						'<input class="{[ !values.temp ? "hide" : "" ]} select-file" data-fileName="{name}" id="{id}checkbox" name="{$ns}selectUploadedFileCheckbox" type="{[ this.multipleFiles ? "checkbox" : "hidden" ]}" value="{name}" />',
 						'<span class="file-title" title="{name}">{name}</span>',
 						'<span class="progress-bar">',
@@ -60,6 +60,16 @@ AUI.add(
 								'</tpl>',
 							'</ul>',
 						'</tpl>',
+					'</li>',
+				'</tpl>',
+				'<tpl if="values.warningMessages && (values.warningMessages.length > 0)">',
+					'<li class="alert upload-error" data-fileId="{id}" id="{id}">',
+						'<span class="error-message" title="{error}">{[ this.strings.warningText ]}</span>',
+						'<ul class="error-list-items">',
+							'<tpl for="warningMessages">',
+								'<li>{.}</li>',
+							'</tpl>',
+						'</ul>',
 					'</li>',
 				'</tpl>',
 			'</tpl>'
@@ -165,6 +175,7 @@ AUI.add(
 							fileCannotBeSavedText: Liferay.Language.get('the-file-x-cannot-be-saved'),
 							invalidFileNameText: Liferay.Language.get('please-enter-a-file-with-a-valid-file-name'),
 							invalidFileSizeText: Liferay.Language.get('please-enter-a-file-with-a-valid-file-size-no-larger-than-x'),
+							warningText: Liferay.Language.get('the-following-data-would-not-be-imported'),
 							noFilesSelectedText: Liferay.Language.get('no-files-selected'),
 							notAvailableText: Liferay.Language.get('multiple-file-uploading-is-not-available'),
 							orText: Liferay.Language.get('or'),
@@ -738,6 +749,7 @@ AUI.add(
 							file.error = data.message || strings.unexpectedErrorOnUploadText;
 
 							file.messageListItems = data.messageListItems;
+							file.warningMessages = data.warningMessages;
 
 							var newLi = instance._fileListTPL.parse([file]);
 
@@ -752,14 +764,27 @@ AUI.add(
 						}
 						else {
 							if (li) {
-								li.replaceClass('file-uploading', 'pending-file upload-complete selectable selected');
+								if (data.warningMessages) {
+									file.selected = true;
+									file.temp = true;
+									file.warningMessages = data.warningMessages;
 
-								var input = li.one('input');
+									var newLi = instance._fileListTPL.parse([file]);
 
-								if (input) {
-									input.attr('checked', true);
+									li.placeBefore(newLi);
 
-									input.show();
+									li.remove(true);
+								}
+								else {
+									li.replaceClass('file-uploading', 'pending-file upload-complete selectable selected');
+
+									var input = li.one('input');
+
+									if (input) {
+										input.attr('checked', true);
+
+										input.show();
+									}
 								}
 
 								instance._updateManageUploadDisplay();

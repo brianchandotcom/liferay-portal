@@ -547,8 +547,7 @@ public class ValidatorTest extends PowerMockito {
 
 		String[] invalidUrls = {
 			"-test://liferay.com", "gopher://liferay.com", "htt<p://lifray.com",
-			"http://lif>ray.com", "http://liferay.com:valid",
-			"http:|lifray.com", "my@iosapp://liferay.com/authorize"
+			"http://liferay.com:valid", "my@iosapp://liferay.com/authorize"
 		};
 
 		for (String invalidUrl : invalidUrls) {

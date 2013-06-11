@@ -54,6 +54,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 				<include name="**/JavaServiceDesc.java" />
 				<include name="**/MapDeserializer.java" />
 				<include name="**/Session.java" />
+				<include name="**/Types.java" />
 			</patternset>
 		</unzip>
 
@@ -80,6 +81,12 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		<patch
 			dir="${tstamp.value}"
 			patchfile="${project.dir}/lib/portal/axis/LPS-35125.patch"
+			strip="1"
+		/>
+
+		<patch
+			dir="${tstamp.value}"
+			patchfile="${project.dir}/lib/portal/axis/LPS-36160.patch"
 			strip="1"
 		/>
 

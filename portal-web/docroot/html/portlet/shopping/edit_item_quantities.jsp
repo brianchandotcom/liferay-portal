@@ -19,8 +19,8 @@
 <%
 String[] fieldsQuantities = StringUtil.split(ParamUtil.getString(request, "fieldsQuantities"));
 
-List names = new ArrayList();
-List values = new ArrayList();
+List<String> names = new ArrayList<String>();
+List<String[]> values = new ArrayList<String[]>();
 
 for (int i = 0; i < 9; i++) {
 	String n = request.getParameter("n" + i);
@@ -36,9 +36,7 @@ for (int i = 0; i < 9; i++) {
 
 int rowsCount = 1;
 
-for (int i = 0; i < values.size(); i++) {
-	String[] vArray = (String[])values.get(i);
-
+for (String[] vArray : values) {
 	rowsCount = rowsCount * vArray.length;
 }
 %>
@@ -49,8 +47,7 @@ for (int i = 0; i < values.size(); i++) {
 		<tr>
 
 			<%
-			for (int i = 0; i < names.size(); i++) {
-				String name = (String)names.get(i);
+			for (String name : names) {
 			%>
 
 				<td>
@@ -77,12 +74,12 @@ for (int i = 0; i < values.size(); i++) {
 					int numOfRepeats = 1;
 
 					for (int k = j + 1; k < values.size(); k++) {
-						String[] vArray = (String[])values.get(k);
+						String[] vArray = values.get(k);
 
 						numOfRepeats = numOfRepeats * vArray.length;
 					}
 
-					String[] vArray = (String[])values.get(j);
+					String[] vArray = values.get(j);
 
 					int arrayPos;
 

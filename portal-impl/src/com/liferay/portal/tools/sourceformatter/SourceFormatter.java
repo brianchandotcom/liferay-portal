@@ -231,6 +231,10 @@ public class SourceFormatter {
 	public SourceFormatter(boolean useProperties, boolean throwException)
 		throws Exception {
 
+		_checkUnprocessedExceptions = GetterUtil.getBoolean(
+			System.getProperty(
+				"source.formatter.check.unprocessed.exceptions"));
+
 		_excludes = StringUtil.split(
 			GetterUtil.getString(
 				System.getProperty("source.formatter.excludes")));
@@ -1860,8 +1864,10 @@ public class SourceFormatter {
 
 			// LPS-36174
 
-			_checkUnprocessedExceptions(
-				newContent, file, packagePath, fileName);
+			if (_checkUnprocessedExceptions) {
+				_checkUnprocessedExceptions(
+					newContent, file, packagePath, fileName);
+			}
 
 			String oldContent = newContent;
 
@@ -5439,6 +5445,7 @@ public class SourceFormatter {
 		"tiles"
 	};
 
+	private static boolean _checkUnprocessedExceptions;
 	private static List<String> _errorMessages = new ArrayList<String>();
 	private static String[] _excludes;
 	private static FileImpl _fileUtil = FileImpl.getInstance();

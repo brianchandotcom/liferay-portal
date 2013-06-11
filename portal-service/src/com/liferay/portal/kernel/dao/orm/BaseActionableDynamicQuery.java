@@ -103,8 +103,8 @@ public abstract class BaseActionableDynamicQuery
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 			_clazz, _classLoader);
 
-		addDefaultCriteria(dynamicQuery);
 		addCriteria(dynamicQuery);
+		addDefaultCriteria(dynamicQuery);
 
 		return (Long)executeDynamicQuery(
 			dynamicQuery, _dynamicQueryCountMethod);

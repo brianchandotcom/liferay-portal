@@ -914,16 +914,23 @@ public class ExportImportImpl implements ExportImport {
 
 		Element summaryElement = rootElement.addElement("summary");
 
-		Map<String, Long> modelCounters = manifestSummary.getModelCounters();
-
-		for (String modelClassName : modelCounters.keySet()) {
+		for (String modelClassName : manifestSummary.getModelNames()) {
 			Element element = summaryElement.addElement("staged-model");
 
 			element.addAttribute("class-name", modelClassName);
 
-			String count = String.valueOf(modelCounters.get(modelClassName));
+			long modelCount = manifestSummary.getModelCount(modelClassName);
 
-			element.addText(count);
+			if (modelCount > 0) {
+				element.addAttribute("added", String.valueOf(modelCount));
+			}
+
+			long deletionCount = manifestSummary.getDeletionCount(
+				modelClassName);
+
+			if (deletionCount > 0) {
+				element.addAttribute("deleted", String.valueOf(deletionCount));
+			}
 		}
 	}
 

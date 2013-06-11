@@ -14,7 +14,10 @@
 
 package com.liferay.portal.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.ManifestSummary;
@@ -23,6 +26,10 @@ import com.liferay.portal.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.model.RepositoryEntry;
+import com.liferay.portal.model.SystemEventConstants;
+import com.liferay.portal.util.PortalUtil;
+
+import java.util.Date;
 
 /**
  * @author Brian Wing Shun Chan
@@ -45,12 +52,62 @@ public class RepositoryEntryExportActionableDynamicQuery
 
 		manifestSummary.addModelCount(getManifestSummaryKey(), count);
 
+		long deletionCount = getDeletionCount();
+
+		manifestSummary.addDeletionCount(getManifestSummaryKey(), deletionCount);
+
 		return count;
 	}
 
 	@Override
 	protected void addCriteria(DynamicQuery dynamicQuery) {
 		_portletDataContext.addDateRangeCriteria(dynamicQuery, "modifiedDate");
+	}
+
+	protected long getDeletionCount() throws PortalException, SystemException {
+		ActionableDynamicQuery actionableDynamicQuery = new SystemEventActionableDynamicQuery() {
+				@Override
+				protected void addCriteria(DynamicQuery dynamicQuery) {
+					Property classNameIdProperty = PropertyFactoryUtil.forName(
+							"classNameId");
+
+					dynamicQuery.add(classNameIdProperty.eq(
+							PortalUtil.getClassNameId(
+								RepositoryEntry.class.getName())));
+
+					Property typeProperty = PropertyFactoryUtil.forName("type");
+
+					dynamicQuery.add(typeProperty.eq(
+							SystemEventConstants.TYPE_DELETE));
+
+					_addCreateDateProperty(dynamicQuery);
+				}
+
+				@Override
+				protected void performAction(Object object) {
+				}
+
+				private void _addCreateDateProperty(DynamicQuery dynamicQuery) {
+					if (!_portletDataContext.hasDateRange()) {
+						return;
+					}
+
+					Property createDateProperty = PropertyFactoryUtil.forName(
+							"createDate");
+
+					Date startDate = _portletDataContext.getStartDate();
+
+					dynamicQuery.add(createDateProperty.ge(startDate));
+
+					Date endDate = _portletDataContext.getEndDate();
+
+					dynamicQuery.add(createDateProperty.le(endDate));
+				}
+			};
+
+		actionableDynamicQuery.setGroupId(_portletDataContext.getScopeGroupId());
+
+		return actionableDynamicQuery.performCount();
 	}
 
 	protected String getManifestSummaryKey() {

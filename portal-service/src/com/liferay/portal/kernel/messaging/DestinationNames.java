@@ -25,6 +25,9 @@ public interface DestinationNames {
 
 	public static final String BACKGROUND_TASK = "liferay/background_task";
 
+	public static final String BACKGROUND_TASK_STATUS =
+		"liferay/background_task/status";
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #SUBSCRIPTION_SENDER}
 	 */

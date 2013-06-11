@@ -14,9 +14,14 @@
 
 package com.liferay.portal.backgroundtask.messaging;
 
+import com.liferay.portal.DuplicateLockException;
 import com.liferay.portal.backgroundtask.executor.BackgroundTaskExecutor;
+import com.liferay.portal.backgroundtask.executor.ClassLoaderAwareBackgroundTaskExecutor;
+import com.liferay.portal.backgroundtask.executor.SerialBackgroundTaskExecutor;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -41,12 +46,13 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 			backgroundTaskId, null, BackgroundTaskConstants.STATUS_IN_PROGRESS,
 			serviceContext);
 
+		BackgroundTask backgroundTask =
+			BackgroundTaskLocalServiceUtil.getBackgroundTask(backgroundTaskId);
+
+		int status = backgroundTask.getStatus();
+
 		try {
 			ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
-
-			BackgroundTask backgroundTask =
-				BackgroundTaskLocalServiceUtil.getBackgroundTask(
-					backgroundTaskId);
 
 			String servletContextNames =
 				backgroundTask.getServletContextNames();
@@ -60,17 +66,53 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 				(BackgroundTaskExecutor)InstanceFactory.newInstance(
 					classLoader, backgroundTask.getTaskExecutorClassName());
 
-			backgroundTaskExecutor.execute(backgroundTask, classLoader);
+			backgroundTaskExecutor = wrapBackgroundTaskExecutor(
+				backgroundTaskExecutor, classLoader);
 
-			BackgroundTaskLocalServiceUtil.updateBackgroundTask(
-				backgroundTaskId, null,
-				BackgroundTaskConstants.STATUS_SUCCESSFUL, serviceContext);
+			backgroundTaskExecutor.execute(backgroundTask);
+
+			status = BackgroundTaskConstants.STATUS_SUCCESSFUL;
+		}
+		catch (DuplicateLockException e) {
+			status = BackgroundTaskConstants.STATUS_QUEUED;
 		}
 		catch (Exception e) {
-			BackgroundTaskLocalServiceUtil.updateBackgroundTask(
-				backgroundTaskId, null, BackgroundTaskConstants.STATUS_FAILED,
-				serviceContext);
+			status = BackgroundTaskConstants.STATUS_FAILED;
 		}
+		finally {
+			BackgroundTaskLocalServiceUtil.updateBackgroundTask(
+				backgroundTaskId, null, status, serviceContext);
+
+			Message completionMessage = new Message();
+			completionMessage.put(
+				"backgroundTaskId", backgroundTask.getBackgroundTaskId());
+			completionMessage.put("name", backgroundTask.getName());
+			completionMessage.put("status", status);
+			completionMessage.put(
+				"taskExecutorClassName",
+				backgroundTask.getTaskExecutorClassName());
+
+			MessageBusUtil.sendMessage(
+				DestinationNames.BACKGROUND_TASK_STATUS, completionMessage);
+		}
+	}
+
+	protected BackgroundTaskExecutor wrapBackgroundTaskExecutor(
+		BackgroundTaskExecutor backgroundTaskExecutor,
+		ClassLoader classLoader) {
+
+		if (classLoader != ClassLoaderUtil.getPortalClassLoader()) {
+			backgroundTaskExecutor =
+				new ClassLoaderAwareBackgroundTaskExecutor(
+					backgroundTaskExecutor, classLoader);
+		}
+
+		if (backgroundTaskExecutor.isSerial()) {
+			backgroundTaskExecutor = new SerialBackgroundTaskExecutor(
+				backgroundTaskExecutor);
+		}
+
+		return backgroundTaskExecutor;
 	}
 
 }

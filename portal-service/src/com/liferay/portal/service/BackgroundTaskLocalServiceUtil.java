@@ -288,6 +288,22 @@ public class BackgroundTaskLocalServiceUtil {
 			inputStream);
 	}
 
+	public static com.liferay.portal.model.BackgroundTask fetchFirstBackgroundTask(
+		java.lang.String taskExecutorClassName, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .fetchFirstBackgroundTask(taskExecutorClassName, status);
+	}
+
+	public static com.liferay.portal.model.BackgroundTask fetchFirstBackgroundTask(
+		java.lang.String taskExecutorClassName, int status,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .fetchFirstBackgroundTask(taskExecutorClassName, status,
+			orderByComparator);
+	}
+
 	public static java.util.List<com.liferay.portal.model.BackgroundTask> getBackgroundTasks(
 		long groupId, java.lang.String taskExecutorClassName)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -299,6 +315,26 @@ public class BackgroundTaskLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .getBackgroundTasks(groupId, taskExecutorClassName, status);
+	}
+
+	public static java.util.List<com.liferay.portal.model.BackgroundTask> getBackgroundTasks(
+		java.lang.String taskExecutorClassName, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getBackgroundTasks(taskExecutorClassName, status);
+	}
+
+	public static java.util.List<com.liferay.portal.model.BackgroundTask> getBackgroundTasks(
+		java.lang.String taskExecutorClassName, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getBackgroundTasks(taskExecutorClassName, status, start,
+			end, orderByComparator);
+	}
+
+	public static void resumeBackgroundTask(long backgroundTaskId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().resumeBackgroundTask(backgroundTaskId);
 	}
 
 	public static com.liferay.portal.model.BackgroundTask updateBackgroundTask(

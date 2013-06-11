@@ -14,8 +14,6 @@
 
 package com.liferay.portal.backgroundtask.executor;
 
-import com.liferay.portal.model.BackgroundTask;
-
 /**
  * @author Michael C. Han
  */
@@ -23,28 +21,14 @@ public abstract class BaseBackgroundTaskExecutor
 	implements BackgroundTaskExecutor {
 
 	@Override
-	public void execute(BackgroundTask backgroundTask, ClassLoader classLoader)
-		throws Exception {
-
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		if (classLoader != contextClassLoader) {
-			currentThread.setContextClassLoader(classLoader);
-		}
-
-		try {
-			doExecute(backgroundTask);
-		}
-		finally {
-			if (classLoader != contextClassLoader) {
-				currentThread.setContextClassLoader(contextClassLoader);
-			}
-		}
+	public boolean isSerial() {
+		return _serial;
 	}
 
-	protected abstract void doExecute(BackgroundTask backgroundTask)
-		throws Exception;
+	protected void setSerial(boolean serial) {
+		_serial = serial;
+	}
+
+	private boolean _serial;
 
 }

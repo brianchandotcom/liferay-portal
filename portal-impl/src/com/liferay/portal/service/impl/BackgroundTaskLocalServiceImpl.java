@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.model.BackgroundTaskConstants;
@@ -30,6 +32,7 @@ import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.BackgroundTaskLocalServiceBaseImpl;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.comparator.BackgroundTaskCreateDateComparator;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 
 import java.io.File;
@@ -157,6 +160,26 @@ public class BackgroundTaskLocalServiceImpl
 	}
 
 	@Override
+	public BackgroundTask fetchFirstBackgroundTask(
+			String taskExecutorClassName, int status)
+		throws SystemException {
+
+		return fetchFirstBackgroundTask(
+			taskExecutorClassName, status,
+			new BackgroundTaskCreateDateComparator(true));
+	}
+
+	@Override
+	public BackgroundTask fetchFirstBackgroundTask(
+			String taskExecutorClassName, int status,
+			OrderByComparator orderByComparator)
+		throws SystemException {
+
+		return backgroundTaskPersistence.fetchByT_S_First(
+			taskExecutorClassName, status, orderByComparator);
+	}
+
+	@Override
 	public BackgroundTask getBackgroundTask(long backgroundTaskId)
 		throws PortalException, SystemException {
 
@@ -179,6 +202,46 @@ public class BackgroundTaskLocalServiceImpl
 
 		return backgroundTaskPersistence.findByG_T_S(
 			groupId, taskExecutorClassName, status);
+	}
+
+	@Override
+	public List<BackgroundTask> getBackgroundTasks(
+			String taskExecutorClassName, int status)
+		throws SystemException {
+
+		return getBackgroundTasks(
+			taskExecutorClassName, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new BackgroundTaskCreateDateComparator(true));
+	}
+
+	@Override
+	public List<BackgroundTask> getBackgroundTasks(
+			String taskExecutorClassName, int status, int start, int end,
+			OrderByComparator orderByComparator)
+		throws SystemException {
+
+		return backgroundTaskPersistence.findByT_S(
+			taskExecutorClassName, status, start, end, orderByComparator);
+	}
+
+	@Override
+	public void resumeBackgroundTask(long backgroundTaskId)
+		throws SystemException {
+
+		BackgroundTask backgroundTask = fetchBackgroundTask(backgroundTaskId);
+
+		if ((backgroundTask == null) ||
+			(backgroundTask.getStatus() !=
+				BackgroundTaskConstants.STATUS_QUEUED)) {
+
+			return;
+		}
+
+		Message message = new Message();
+
+		message.put("backgroundTaskId", backgroundTaskId);
+
+		MessageBusUtil.sendMessage(DestinationNames.BACKGROUND_TASK, message);
 	}
 
 	@Override

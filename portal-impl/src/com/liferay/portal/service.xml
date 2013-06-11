@@ -134,6 +134,10 @@
 			<finder-column name="taskExecutorClassName" />
 			<finder-column name="status" />
 		</finder>
+		<finder name="T_S" return-type="Collection">
+			<finder-column name="taskExecutorClassName" />
+			<finder-column name="status" />
+		</finder>
 	</entity>
 	<entity name="BrowserTracker" local-service="true" remote-service="false">
 

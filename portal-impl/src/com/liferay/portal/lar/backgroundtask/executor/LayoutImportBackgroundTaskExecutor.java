@@ -30,8 +30,12 @@ import java.util.Map;
 public class LayoutImportBackgroundTaskExecutor
 	extends BaseBackgroundTaskExecutor {
 
+	public LayoutImportBackgroundTaskExecutor() {
+		setSerial(true);
+	}
+
 	@Override
-	protected void doExecute(BackgroundTask backgroundTask) throws Exception {
+	public void execute(BackgroundTask backgroundTask) throws Exception {
 		Map<String, Serializable> taskContextMap =
 			backgroundTask.getTaskContextMap();
 

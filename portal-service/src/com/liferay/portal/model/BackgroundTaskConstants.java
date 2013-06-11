@@ -25,6 +25,8 @@ public class BackgroundTaskConstants {
 
 	public static final int STATUS_NEW = 0;
 
+	public static final int STATUS_QUEUED = 4;
+
 	public static final int STATUS_SUCCESSFUL = 3;
 
 }

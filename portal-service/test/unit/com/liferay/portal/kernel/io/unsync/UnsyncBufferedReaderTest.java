@@ -21,11 +21,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 
+import org.junit.Test;
+
 /**
  * @author Shuyang Zhou
  */
 public class UnsyncBufferedReaderTest extends TestCase {
 
+	@Test
 	public void testBlockRead() throws IOException {
 		StringReader stringReader = new StringReader("abcdefghi");
 
@@ -102,6 +105,7 @@ public class UnsyncBufferedReaderTest extends TestCase {
 		assertEquals(-1, unsyncBufferedReader.read(tempBuffer));
 	}
 
+	@Test
 	public void testClose() throws IOException {
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new StringReader(""));
@@ -170,6 +174,7 @@ public class UnsyncBufferedReaderTest extends TestCase {
 		unsyncBufferedReader.close();
 	}
 
+	@Test
 	public void testConstructor() {
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new StringReader(""));
@@ -196,6 +201,7 @@ public class UnsyncBufferedReaderTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testMarkAndReset() throws IOException {
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new StringReader("abcdefghi"), 5);
@@ -305,6 +311,7 @@ public class UnsyncBufferedReaderTest extends TestCase {
 		assertEquals(0, unsyncBufferedReader.firstInvalidIndex);
 	}
 
+	@Test
 	public void testMarkSupported() {
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new StringReader("abcdefghi"), 5);
@@ -312,6 +319,7 @@ public class UnsyncBufferedReaderTest extends TestCase {
 		assertTrue(unsyncBufferedReader.markSupported());
 	}
 
+	@Test
 	public void testRead() throws IOException {
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new StringReader("ab\r\nef"), 3);
@@ -333,6 +341,7 @@ public class UnsyncBufferedReaderTest extends TestCase {
 		assertEquals(-1, unsyncBufferedReader.read());
 	}
 
+	@Test
 	public void testReadLine() throws IOException {
 
 		// With \r
@@ -380,6 +389,7 @@ public class UnsyncBufferedReaderTest extends TestCase {
 		assertEquals(5, unsyncBufferedReader.index);
 	}
 
+	@Test
 	public void testReady() throws IOException {
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new StringReader(""));
@@ -392,6 +402,7 @@ public class UnsyncBufferedReaderTest extends TestCase {
 		assertFalse(unsyncBufferedReader.ready());
 	}
 
+	@Test
 	public void testSkip() throws IOException {
 		int size = 10;
 

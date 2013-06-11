@@ -20,11 +20,14 @@ import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
+import org.junit.Test;
+
 /**
  * @author Shuyang Zhou
  */
 public class LimitedInputStreamTest extends TestCase {
 
+	@Test
 	public void testAvailable() throws IOException {
 		LimitedInputStream limitedInputStream = new LimitedInputStream(
 			new ByteArrayInputStream(new byte[10]), 5, 3);
@@ -37,6 +40,7 @@ public class LimitedInputStreamTest extends TestCase {
 		assertEquals(5, limitedInputStream.available());
 	}
 
+	@Test
 	public void testClose() throws IOException {
 		LimitedInputStream limitedInputStream = new LimitedInputStream(
 			new BufferedInputStream(
@@ -53,6 +57,7 @@ public class LimitedInputStreamTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testConstructor() throws IOException {
 
 		// Negative offset
@@ -93,6 +98,7 @@ public class LimitedInputStreamTest extends TestCase {
 		new LimitedInputStream(new ByteArrayInputStream(new byte[10]), 5, 5);
 	}
 
+	@Test
 	public void testMarkSupported() throws IOException {
 		LimitedInputStream limitedInputStream = new LimitedInputStream(
 			new ByteArrayInputStream(new byte[10]), 5, 5);
@@ -100,6 +106,7 @@ public class LimitedInputStreamTest extends TestCase {
 		assertFalse(limitedInputStream.markSupported());
 	}
 
+	@Test
 	public void testRead() throws IOException {
 		LimitedInputStream limitedInputStream = new LimitedInputStream(
 			new ByteArrayInputStream(new byte[10]), 5, 5);
@@ -120,6 +127,7 @@ public class LimitedInputStreamTest extends TestCase {
 		assertEquals(-1, limitedInputStream.read());
 	}
 
+	@Test
 	public void testReadBlock() throws IOException {
 		LimitedInputStream limitedInputStream = new LimitedInputStream(
 			new ByteArrayInputStream(new byte[10]), 5, 5);
@@ -137,6 +145,7 @@ public class LimitedInputStreamTest extends TestCase {
 		assertEquals(-1, limitedInputStream.read(buffer));
 	}
 
+	@Test
 	public void testReadBlockWithRange() throws IOException {
 		LimitedInputStream limitedInputStream = new LimitedInputStream(
 			new ByteArrayInputStream(new byte[10]), 5, 5);
@@ -154,6 +163,7 @@ public class LimitedInputStreamTest extends TestCase {
 		assertEquals(-1, limitedInputStream.read(buffer, 1, 4));
 	}
 
+	@Test
 	public void testSkip() throws IOException {
 		LimitedInputStream limitedInputStream = new LimitedInputStream(
 			new ByteArrayInputStream(new byte[10]), 5, 3);

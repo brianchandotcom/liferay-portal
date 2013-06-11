@@ -16,11 +16,14 @@ package com.liferay.portal.kernel.concurrent;
 
 import com.liferay.portal.kernel.test.TestCase;
 
+import org.junit.Test;
+
 /**
  * @author Shuyang Zhou
  */
 public class ConcurrentLFUCacheTest extends TestCase {
 
+	@Test
 	public void testConstruct() {
 
 		// maxSize is 0
@@ -132,6 +135,7 @@ public class ConcurrentLFUCacheTest extends TestCase {
 		assertNull(concurrentLFUCache.get("key"));
 	}
 
+	@Test
 	public void testLFU1() {
 		ConcurrentLFUCache<String, String> concurrentLFUCache =
 			new ConcurrentLFUCache<String, String>(2, 0.5F);
@@ -195,6 +199,7 @@ public class ConcurrentLFUCacheTest extends TestCase {
 		assertEquals(2, concurrentLFUCache.size());
 	}
 
+	@Test
 	public void testLFU2() {
 		ConcurrentLFUCache<String, String> concurrentLFUCache =
 			new ConcurrentLFUCache<String, String>(3);

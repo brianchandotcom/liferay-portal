@@ -24,11 +24,14 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import org.junit.Test;
+
 /**
  * @author Michael C. Han
  */
 public class FutureClusterResponsesTest extends TestCase {
 
+	@Test
 	public void testMultipleResponseFailure() throws UnknownHostException {
 		List<Address> addresses = new ArrayList<Address>();
 
@@ -65,6 +68,7 @@ public class FutureClusterResponsesTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testMultipleResponseSuccess() throws UnknownHostException {
 		List<Address> addresses = new ArrayList<Address>();
 
@@ -107,6 +111,7 @@ public class FutureClusterResponsesTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testSingleResponseFailure() {
 		List<Address> addresses = new ArrayList<Address>();
 
@@ -127,6 +132,7 @@ public class FutureClusterResponsesTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testSingleResponseSuccess() throws UnknownHostException {
 		List<Address> addresses = new ArrayList<Address>();
 

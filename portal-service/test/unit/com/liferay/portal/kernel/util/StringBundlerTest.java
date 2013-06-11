@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.util;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.test.TestCase;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -28,6 +29,7 @@ import java.io.StringWriter;
  */
 public class StringBundlerTest extends TestCase {
 
+	@Test
 	public void testAppend() {
 
 		// Append null charArray
@@ -217,6 +219,7 @@ public class StringBundlerTest extends TestCase {
 		assertEquals("test3", sb.stringAt(2));
 	}
 
+	@Test
 	public void testConstructor() {
 
 		// Default constructor
@@ -284,6 +287,7 @@ public class StringBundlerTest extends TestCase {
 		assertEquals(5, sb.capacity());
 	}
 
+	@Test
 	public void testSerialization() throws Exception {
 		StringBundler sb = new StringBundler();
 
@@ -321,6 +325,7 @@ public class StringBundlerTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testSetIndex() {
 
 		// Negative index
@@ -396,6 +401,7 @@ public class StringBundlerTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testToString() {
 
 		// Empty toString
@@ -419,6 +425,7 @@ public class StringBundlerTest extends TestCase {
 		assertEquals("test1test2test3test4", sb.toString());
 	}
 
+	@Test
 	public void testWriteTo() throws IOException {
 		StringBundler sb = new StringBundler();
 

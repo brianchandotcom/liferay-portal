@@ -16,11 +16,14 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.test.TestCase;
 
+import org.junit.Test;
+
 /**
  * @author Alexander Chow
  */
 public class UnicodePropertiesTest extends TestCase {
 
+	@Test
 	public void testLength() throws Exception {
 		String key = "hello";
 		String value = "world";
@@ -33,6 +36,7 @@ public class UnicodePropertiesTest extends TestCase {
 		assertEquals(0, props.getToStringLength());
 	}
 
+	@Test
 	public void testSetNullProperty() throws Exception {
 		UnicodeProperties props = new UnicodeProperties();
 

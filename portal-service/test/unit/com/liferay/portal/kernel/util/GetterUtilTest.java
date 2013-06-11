@@ -16,11 +16,14 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.test.TestCase;
 
+import org.junit.Test;
+
 /**
  * @author Shuyang Zhou
  */
 public class GetterUtilTest extends TestCase {
 
+	@Test
 	public void testGetBoolean() {
 		assertFalse(GetterUtil.getBoolean("false"));
 		assertTrue(GetterUtil.getBoolean("true"));
@@ -39,6 +42,7 @@ public class GetterUtilTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testGetInteger() {
 
 		// Wrong first char
@@ -90,6 +94,7 @@ public class GetterUtilTest extends TestCase {
 		assertEquals(-1, result);
 	}
 
+	@Test
 	public void testGetLong() {
 
 		// Wrong first char
@@ -141,6 +146,7 @@ public class GetterUtilTest extends TestCase {
 		assertEquals(-1L, result);
 	}
 
+	@Test
 	public void testGetShort() {
 
 		// Wrong first char
@@ -194,6 +200,7 @@ public class GetterUtilTest extends TestCase {
 		assertEquals((short)-1, result);
 	}
 
+	@Test
 	public void testGetString() {
 		assertEquals(
 			StringPool.BLANK,

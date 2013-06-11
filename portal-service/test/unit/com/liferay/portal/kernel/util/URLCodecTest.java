@@ -18,12 +18,15 @@ import com.liferay.portal.kernel.test.TestCase;
 
 import java.net.URLEncoder;
 
+import org.junit.Test;
+
 /**
  * @author Shuyang Zhou
  * @author Brian Wing Shun Chan
  */
 public class URLCodecTest extends TestCase {
 
+	@Test
 	public void testDecodeURL() throws Exception {
 		for (int i = 0; i < _RAW_URLS.length; i++) {
 			String result = URLCodec.decodeURL(
@@ -38,6 +41,7 @@ public class URLCodecTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testEncodeURL() throws Exception {
 		for (int i = 0; i < _RAW_URLS.length; i++) {
 			String result = URLCodec.encodeURL(

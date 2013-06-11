@@ -20,11 +20,14 @@ import com.liferay.portal.kernel.util.CharPool;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
+import org.junit.Test;
+
 /**
  * @author Tina Tian
  */
 public class Base64OutputStreamTest extends TestCase {
 
+	@Test
 	public void testClose() throws Exception {
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
@@ -50,6 +53,7 @@ public class Base64OutputStreamTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testEncodeUnit1Byte() throws Exception {
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
@@ -69,6 +73,7 @@ public class Base64OutputStreamTest extends TestCase {
 		byteArrayInputStream.close();
 	}
 
+	@Test
 	public void testEncodeUnit2Bytes() throws Exception {
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
@@ -88,6 +93,7 @@ public class Base64OutputStreamTest extends TestCase {
 		byteArrayInputStream.close();
 	}
 
+	@Test
 	public void testEncodeUnit3Args() throws Exception {
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
@@ -107,6 +113,7 @@ public class Base64OutputStreamTest extends TestCase {
 		byteArrayInputStream.close();
 	}
 
+	@Test
 	public void testFlush() throws Exception {
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
@@ -142,6 +149,7 @@ public class Base64OutputStreamTest extends TestCase {
 		byteArrayInputStream.close();
 	}
 
+	@Test
 	public void testGetChar() {
 		try {
 			Base64OutputStream base64OutputStream = new Base64OutputStream(
@@ -157,6 +165,7 @@ public class Base64OutputStreamTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testWrite3Args() throws Exception {
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
@@ -181,6 +190,7 @@ public class Base64OutputStreamTest extends TestCase {
 
 	}
 
+	@Test
 	public void testWriteByteArray() throws Exception {
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
@@ -200,6 +210,7 @@ public class Base64OutputStreamTest extends TestCase {
 		byteArrayInputStream.close();
 	}
 
+	@Test
 	public void testWriteInt() throws Exception {
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();

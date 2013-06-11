@@ -23,6 +23,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import org.junit.Test;
+
 /**
  * @author Shuyang Zhou
  * @author Brian Wing Shun Chan
@@ -84,6 +86,7 @@ public class DispatcherDestinationTest extends TestCase {
 		assertLessThan(expectedTime, actualTime);
 	}
 
+	@Test
 	public void testPerformance() throws Exception {
 		_executorService.invokeAll(_tasks);
 	}

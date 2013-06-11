@@ -23,11 +23,14 @@ import java.io.OutputStream;
 import java.io.StringWriter;
 import java.io.Writer;
 
+import org.junit.Test;
+
 /**
  * @author Shuyang Zhou
  */
 public class WriterOutputStreamTest extends TestCase {
 
+	@Test
 	public void testACSIIOutput() throws IOException {
 
 		// Auto flush
@@ -106,6 +109,7 @@ public class WriterOutputStreamTest extends TestCase {
 		assertEquals(expectedResult, writer.toString());
 	}
 
+	@Test
 	public void testChineseOutput() throws IOException {
 
 		// Auto flush
@@ -184,6 +188,7 @@ public class WriterOutputStreamTest extends TestCase {
 		assertEquals(expectedResult, writer.toString());
 	}
 
+	@Test
 	public void testNonAlignOutput() throws IOException {
 		CharArrayWriter charArrayWriter = new CharArrayWriter();
 

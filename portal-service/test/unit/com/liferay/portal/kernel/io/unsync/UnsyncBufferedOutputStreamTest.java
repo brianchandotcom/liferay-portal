@@ -21,11 +21,14 @@ import java.io.IOException;
 
 import java.util.Arrays;
 
+import org.junit.Test;
+
 /**
  * @author Shuyang Zhou
  */
 public class UnsyncBufferedOutputStreamTest extends TestCase {
 
+	@Test
 	public void testBlockWrite() throws IOException {
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
@@ -53,6 +56,7 @@ public class UnsyncBufferedOutputStreamTest extends TestCase {
 		assertEquals(_SIZE * 2, byteArrayOutputStream.size());
 	}
 
+	@Test
 	public void testConstructor() {
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
@@ -80,6 +84,7 @@ public class UnsyncBufferedOutputStreamTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testWrite() throws IOException {
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();

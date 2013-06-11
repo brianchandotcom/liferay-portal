@@ -19,11 +19,14 @@ import com.liferay.portal.kernel.test.TestCase;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Test;
+
 /**
  * @author Eudaldo Alonso
  */
 public class ArrayUtilTest extends TestCase {
 
+	@Test
 	public void testToDoubleArray() throws Exception {
 		List<Double> list = new ArrayList<Double>();
 
@@ -41,6 +44,7 @@ public class ArrayUtilTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testToFloatArray() throws Exception {
 		List<Float> list = new ArrayList<Float>();
 
@@ -58,6 +62,7 @@ public class ArrayUtilTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testToIntArray() throws Exception {
 		List<Integer> list = new ArrayList<Integer>();
 
@@ -75,6 +80,7 @@ public class ArrayUtilTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testToLongArray() throws Exception {
 		List<Long> list = new ArrayList<Long>();
 

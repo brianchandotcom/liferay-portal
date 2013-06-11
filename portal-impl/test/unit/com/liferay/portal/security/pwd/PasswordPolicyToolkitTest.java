@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.test.TestCase;
 import com.liferay.portal.model.PasswordPolicy;
 import com.liferay.portal.model.impl.PasswordPolicyImpl;
 
+import org.junit.Test;
+
 /**
  * @author Mika Koivisto
  */
@@ -41,6 +43,7 @@ public class PasswordPolicyToolkitTest extends TestCase {
 		_passwordPolicy.setRegex(".{5,}");
 	}
 
+	@Test
 	public void testGeneratePassword() {
 		String password = _passwordPolicyToolkit.generate(_passwordPolicy);
 
@@ -53,34 +56,42 @@ public class PasswordPolicyToolkitTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testValidateLength() {
 		assertEquals(false, validate("xH9fxM@"));
 	}
 
+	@Test
 	public void testValidateMinAlphanumeric() {
 		assertEquals(false, validate("xH9f.,@-"));
 	}
 
+	@Test
 	public void testValidateMinLowerChars() {
 		assertEquals(false, validate("xHFXM@W"));
 	}
 
+	@Test
 	public void testValidateMinNumbers() {
 		assertEquals(false, validate("xHafxMkw"));
 	}
 
+	@Test
 	public void testValidateMinSpecial() {
 		assertEquals(false, validate("xH9fxMkw"));
 	}
 
+	@Test
 	public void testValidateMinUpperChars() {
 		assertEquals(false, validate("xh9fxM@w"));
 	}
 
+	@Test
 	public void testValidateRegex() {
 		assertEquals(false, validate("xH9fxM@"));
 	}
 
+	@Test
 	public void testValidateValid() {
 		assertEquals(true, validate("xH9fxM@w"));
 	}

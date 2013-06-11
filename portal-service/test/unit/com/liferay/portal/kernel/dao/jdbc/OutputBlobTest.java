@@ -24,11 +24,14 @@ import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
 
+import org.junit.Test;
+
 /**
  * @author Shuyang Zhou
  */
 public class OutputBlobTest extends TestCase {
 
+	@Test
 	public void testConstructor() {
 		try {
 			new OutputBlob(null, 10);
@@ -49,6 +52,7 @@ public class OutputBlobTest extends TestCase {
 		new OutputBlob(new ByteArrayInputStream(new byte[10]), 10);
 	}
 
+	@Test
 	public void testFree() throws SQLException {
 		InputStream inputStream = new BufferedInputStream(
 			new ByteArrayInputStream(new byte[10]));
@@ -70,6 +74,7 @@ public class OutputBlobTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testGetBinaryStream() throws IOException, SQLException {
 		OutputBlob outputBlob = new OutputBlob(
 			new ByteArrayInputStream(new byte[10]), 10);
@@ -128,6 +133,7 @@ public class OutputBlobTest extends TestCase {
 		assertEquals(-1, inputStream.read());
 	}
 
+	@Test
 	public void testGetBytes() throws SQLException {
 		OutputBlob outputBlob = new OutputBlob(
 			new ByteArrayInputStream(new byte[10]), 10);
@@ -165,6 +171,7 @@ public class OutputBlobTest extends TestCase {
 		assertEquals(4, bytes.length);
 	}
 
+	@Test
 	public void testGetLength() {
 		OutputBlob outputBlob = new OutputBlob(
 			new ByteArrayInputStream(new byte[10]), 10);
@@ -176,6 +183,7 @@ public class OutputBlobTest extends TestCase {
 		assertEquals(5, outputBlob.length());
 	}
 
+	@Test
 	public void testUnsupportedMethods() {
 		OutputBlob outputBlob = new OutputBlob(
 			new ByteArrayInputStream(new byte[10]), 10);

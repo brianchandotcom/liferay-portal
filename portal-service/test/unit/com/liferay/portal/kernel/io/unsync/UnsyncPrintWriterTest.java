@@ -25,6 +25,8 @@ import java.io.Writer;
 
 import java.lang.reflect.Field;
 
+import org.junit.Test;
+
 /**
  * @author Shuyang Zhou
  */
@@ -37,6 +39,7 @@ public class UnsyncPrintWriterTest extends TestCase {
 		testFile.delete();
 	}
 
+	@Test
 	public void testConstructor() throws Exception {
 
 		// UnsyncPrintWriter(File file)
@@ -92,6 +95,7 @@ public class UnsyncPrintWriterTest extends TestCase {
 		assertEquals(stringWriter, _getOut(unsyncPrintWriter));
 	}
 
+	@Test
 	public void testFormat() {
 		StringWriter stringWriter = new StringWriter();
 
@@ -103,6 +107,7 @@ public class UnsyncPrintWriterTest extends TestCase {
 		assertEquals(" 1  a", stringWriter.toString());
 	}
 
+	@Test
 	public void testPrintln() {
 		StringWriter stringWriter = new StringWriter();
 
@@ -116,6 +121,7 @@ public class UnsyncPrintWriterTest extends TestCase {
 		assertEquals(lineSeparator, stringWriter.toString());
 	}
 
+	@Test
 	public void testWrite() {
 		StringWriter stringWriter = new StringWriter();
 

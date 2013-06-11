@@ -22,11 +22,14 @@ import java.io.UnsupportedEncodingException;
 
 import java.util.Arrays;
 
+import org.junit.Test;
+
 /**
  * @author Shuyang Zhou
  */
 public class UnsyncByteArrayOutputStreamTest extends TestCase {
 
+	@Test
 	public void testBlockWrite() {
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
@@ -38,6 +41,7 @@ public class UnsyncByteArrayOutputStreamTest extends TestCase {
 			Arrays.equals(_BUFFER, unsyncByteArrayOutputStream.toByteArray()));
 	}
 
+	@Test
 	public void testConstructor() {
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
@@ -49,6 +53,7 @@ public class UnsyncByteArrayOutputStreamTest extends TestCase {
 		assertEquals(0, unsyncByteArrayOutputStream.size());
 	}
 
+	@Test
 	public void testSizeAndReset() {
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
@@ -76,6 +81,7 @@ public class UnsyncByteArrayOutputStreamTest extends TestCase {
 		assertEquals(2, unsyncByteArrayOutputStream.size());
 	}
 
+	@Test
 	public void testToByteArray() {
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
@@ -93,6 +99,7 @@ public class UnsyncByteArrayOutputStreamTest extends TestCase {
 		assertNotSame(bytes1, bytes2);
 	}
 
+	@Test
 	public void testToString() throws UnsupportedEncodingException {
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
@@ -116,6 +123,7 @@ public class UnsyncByteArrayOutputStreamTest extends TestCase {
 			unsyncByteArrayOutputStream.toString(charsetName2));
 	}
 
+	@Test
 	public void testUnsafeGetByteArray() {
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
@@ -134,6 +142,7 @@ public class UnsyncByteArrayOutputStreamTest extends TestCase {
 		assertSame(bytes1, bytes2);
 	}
 
+	@Test
 	public void testWrite() {
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
@@ -148,6 +157,7 @@ public class UnsyncByteArrayOutputStreamTest extends TestCase {
 			Arrays.equals(_BUFFER, unsyncByteArrayOutputStream.toByteArray()));
 	}
 
+	@Test
 	public void testWriteTo() throws IOException {
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();

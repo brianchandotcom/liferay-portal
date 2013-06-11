@@ -16,11 +16,14 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.test.TestCase;
 
+import org.junit.Test;
+
 /**
  * @author Shuyang Zhou
  */
 public class TextFormatterTest extends TestCase {
 
+	@Test
 	public void testFormatA() {
 		String original = "Web Search";
 		String expected = "WEB_SEARCH";
@@ -30,6 +33,7 @@ public class TextFormatterTest extends TestCase {
 		assertEquals(expected, actual);
 	}
 
+	@Test
 	public void testFormatB() {
 		String original = "Web Search";
 		String expected = "websearch";
@@ -39,6 +43,7 @@ public class TextFormatterTest extends TestCase {
 		assertEquals(expected, actual);
 	}
 
+	@Test
 	public void testFormatC() {
 		String original = "Web Search";
 		String expected = "web_search";
@@ -48,6 +53,7 @@ public class TextFormatterTest extends TestCase {
 		assertEquals(expected, actual);
 	}
 
+	@Test
 	public void testFormatD() {
 		String original = "Web Search";
 		String expected = "WebSearch";
@@ -57,6 +63,7 @@ public class TextFormatterTest extends TestCase {
 		assertEquals(expected, actual);
 	}
 
+	@Test
 	public void testFormatE() {
 		String original = "Web Search";
 		String expected = "web search";
@@ -66,6 +73,7 @@ public class TextFormatterTest extends TestCase {
 		assertEquals(expected, actual);
 	}
 
+	@Test
 	public void testFormatF() {
 		String original = "Web Search";
 		String expected = "webSearch";
@@ -75,6 +83,7 @@ public class TextFormatterTest extends TestCase {
 		assertEquals(expected, actual);
 	}
 
+	@Test
 	public void testFormatG() {
 		String original = "formatId";
 		String expected = "FormatId";
@@ -84,6 +93,7 @@ public class TextFormatterTest extends TestCase {
 		assertEquals(expected, actual);
 	}
 
+	@Test
 	public void testFormatH() {
 		String original = "formatId";
 		String expected = "format id";
@@ -93,6 +103,7 @@ public class TextFormatterTest extends TestCase {
 		assertEquals(expected, actual);
 	}
 
+	@Test
 	public void testFormatI() {
 		String original = "FormatId";
 		String expected = "formatId";
@@ -102,6 +113,7 @@ public class TextFormatterTest extends TestCase {
 		assertEquals(expected, actual);
 	}
 
+	@Test
 	public void testFormatJ() {
 		String original = "format-id";
 		String expected = "Format Id";
@@ -111,6 +123,7 @@ public class TextFormatterTest extends TestCase {
 		assertEquals(expected, actual);
 	}
 
+	@Test
 	public void testFormatK() {
 		String original = "formatId";
 		String expected = "format-id";
@@ -120,6 +133,7 @@ public class TextFormatterTest extends TestCase {
 		assertEquals(expected, actual);
 	}
 
+	@Test
 	public void testFormatL() {
 		String original = "FormatId";
 		String expected = "formatId";
@@ -136,6 +150,7 @@ public class TextFormatterTest extends TestCase {
 		assertEquals(expected, actual);
 	}
 
+	@Test
 	public void testFormatM() {
 		String original = "format-id";
 		String expected = "formatId";
@@ -145,6 +160,7 @@ public class TextFormatterTest extends TestCase {
 		assertEquals(expected, actual);
 	}
 
+	@Test
 	public void testFormatN() {
 		String original = "format-id";
 		String expected = "format_id";
@@ -154,6 +170,7 @@ public class TextFormatterTest extends TestCase {
 		assertEquals(expected, actual);
 	}
 
+	@Test
 	public void testFormatO() {
 		String original = "format_id";
 		String expected = "format-id";
@@ -163,6 +180,7 @@ public class TextFormatterTest extends TestCase {
 		assertEquals(expected, actual);
 	}
 
+	@Test
 	public void testFormatP() {
 		String original = "formatID";
 		String expected = "format-id";

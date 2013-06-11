@@ -16,11 +16,14 @@ package com.liferay.portal.kernel.ldap;
 
 import com.liferay.portal.kernel.test.TestCase;
 
+import org.junit.Test;
+
 /**
  * @author James Lefeu
  */
 public class LDAPUtilTest extends TestCase {
 
+	@Test
 	public void testIsValidFilterBalancedParentheses() {
 		assertTrue(isValidFilter("(object=value)"));
 		assertTrue(isValidFilter("((((object=value))))"));
@@ -36,6 +39,7 @@ public class LDAPUtilTest extends TestCase {
 				"(((inetorg=www)((object=value))(org=liferay)))(user=test))"));
 	}
 
+	@Test
 	public void testIsValidFilterNoFilterType() {
 		assertTrue(isValidFilter("(object=value)"));
 		assertFalse(isValidFilter("(object)"));
@@ -43,6 +47,7 @@ public class LDAPUtilTest extends TestCase {
 		assertFalse(isValidFilter("(!object)"));
 	}
 
+	@Test
 	public void testIsValidFilterOpenAndCloseParentheses() {
 		assertTrue(isValidFilter("(object=value)"));
 		assertTrue(isValidFilter("  (object=value)"));
@@ -55,12 +60,14 @@ public class LDAPUtilTest extends TestCase {
 		assertFalse(isValidFilter(")("));
 	}
 
+	@Test
 	public void testIsValidFilterSpecialChars() {
 		assertTrue(isValidFilter(""));
 		assertTrue(isValidFilter("*"));
 		assertTrue(isValidFilter("  *   "));
 	}
 
+	@Test
 	public void testIsValidFilterTypeAfterOpenParenthesis() {
 		assertTrue(isValidFilter("(object=value)"));
 		assertFalse(isValidFilter("(=value)"));
@@ -70,6 +77,7 @@ public class LDAPUtilTest extends TestCase {
 		assertFalse(isValidFilter("(~=value)(object=value)"));
 	}
 
+	@Test
 	public void testIsValidFilterTypeBeforeCloseParenthesis() {
 		assertTrue(isValidFilter("(object=value)"));
 		assertTrue(isValidFilter("(object=*)"));
@@ -82,6 +90,7 @@ public class LDAPUtilTest extends TestCase {
 		assertFalse(isValidFilter("(org=liferay)(object=subobject=)"));
 	}
 
+	@Test
 	public void testIsValidFilterTypesInSequence() {
 		assertTrue(isValidFilter("(object=value)"));
 		assertTrue(isValidFilter("(object=value=subvalue)"));

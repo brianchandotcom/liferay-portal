@@ -20,12 +20,15 @@ import com.liferay.portal.kernel.test.TestCase;
 
 import java.util.Properties;
 
+import org.junit.Test;
+
 /**
  * @author Shuyang Zhou
  * @author Brian Wing Shun Chan
  */
 public class PropertiesUtilTest extends TestCase {
 
+	@Test
 	public void testLoad() throws Exception {
 		Properties properties = PropertiesUtil.load(_PROPERTIES_STRING);
 
@@ -34,6 +37,7 @@ public class PropertiesUtilTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testLoadJDK5() throws Exception {
 		byte[] utf8Encoded = _PROPERTIES_STRING.getBytes(StringPool.UTF8);
 
@@ -45,6 +49,7 @@ public class PropertiesUtilTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testLoadJDK6() throws Exception {
 		if (JavaDetector.isJDK6()) {
 			Properties properties = PropertiesUtil.loadJDK6(

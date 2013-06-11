@@ -20,11 +20,14 @@ import java.io.IOException;
 
 import java.util.Arrays;
 
+import org.junit.Test;
+
 /**
  * @author Shuyang Zhou
  */
 public class UnsyncStringReaderTest extends TestCase {
 
+	@Test
 	public void testBlockRead() throws IOException {
 		UnsyncStringReader unsyncStringReader = new UnsyncStringReader(
 			"abcdefg");
@@ -43,6 +46,7 @@ public class UnsyncStringReaderTest extends TestCase {
 		assertEquals(-1, unsyncStringReader.read(chars));
 	}
 
+	@Test
 	public void testClose() {
 		UnsyncStringReader unsyncStringReader = new UnsyncStringReader(
 			"abcdefg");
@@ -94,6 +98,7 @@ public class UnsyncStringReaderTest extends TestCase {
 		unsyncStringReader.close();
 	}
 
+	@Test
 	public void testConstructor() {
 		UnsyncStringReader unsyncStringReader = new UnsyncStringReader("abc");
 
@@ -106,6 +111,7 @@ public class UnsyncStringReaderTest extends TestCase {
 		assertEquals(4, unsyncStringReader.stringLength);
 	}
 
+	@Test
 	public void testMarkAndReset() throws IOException {
 		UnsyncStringReader unsyncStringReader = new UnsyncStringReader("abc");
 
@@ -124,12 +130,14 @@ public class UnsyncStringReaderTest extends TestCase {
 		assertEquals(-1, unsyncStringReader.read());
 	}
 
+	@Test
 	public void testMarkSupported() {
 		UnsyncStringReader unsyncStringReader = new UnsyncStringReader("abc");
 
 		assertTrue(unsyncStringReader.markSupported());
 	}
 
+	@Test
 	public void testRead() throws IOException {
 		UnsyncStringReader unsyncStringReader = new UnsyncStringReader("abc");
 
@@ -139,6 +147,7 @@ public class UnsyncStringReaderTest extends TestCase {
 		assertEquals(-1, unsyncStringReader.read());
 	}
 
+	@Test
 	public void testSkip() throws IOException {
 		UnsyncStringReader unsyncStringReader = new UnsyncStringReader(
 			"abcdef");

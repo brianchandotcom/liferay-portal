@@ -16,11 +16,14 @@ package com.liferay.portal.kernel.io.unsync;
 
 import com.liferay.portal.kernel.test.TestCase;
 
+import org.junit.Test;
+
 /**
  * @author Shuyang Zhou
  */
 public class UnsyncStringWriterTest extends TestCase {
 
+	@Test
 	public void testAppendChar() {
 
 		// StringBuilder
@@ -60,6 +63,7 @@ public class UnsyncStringWriterTest extends TestCase {
 		assertEquals("b", unsyncStringWriter.stringBundler.stringAt(1));
 	}
 
+	@Test
 	public void testAppendCharSequence() {
 
 		// StringBuilder
@@ -102,6 +106,7 @@ public class UnsyncStringWriterTest extends TestCase {
 		assertEquals("cd", unsyncStringWriter.stringBundler.stringAt(1));
 	}
 
+	@Test
 	public void testConstructor() {
 
 		// StringBuilder
@@ -133,6 +138,7 @@ public class UnsyncStringWriterTest extends TestCase {
 		assertEquals(32, unsyncStringWriter.stringBundler.capacity());
 	}
 
+	@Test
 	public void testReset() {
 
 		// StringBuilder
@@ -160,6 +166,7 @@ public class UnsyncStringWriterTest extends TestCase {
 		assertEquals(0, unsyncStringWriter.stringBundler.index());
 	}
 
+	@Test
 	public void testToString() {
 
 		// StringBuilder
@@ -197,6 +204,7 @@ public class UnsyncStringWriterTest extends TestCase {
 		assertEquals("ab", unsyncStringWriter.toString());
 	}
 
+	@Test
 	public void testWriteChar() {
 
 		// StringBuilder
@@ -236,6 +244,7 @@ public class UnsyncStringWriterTest extends TestCase {
 		assertEquals("b", unsyncStringWriter.stringBundler.stringAt(1));
 	}
 
+	@Test
 	public void testWriteCharArray() {
 
 		// StringBuilder
@@ -278,6 +287,7 @@ public class UnsyncStringWriterTest extends TestCase {
 		assertEquals("cd", unsyncStringWriter.stringBundler.stringAt(1));
 	}
 
+	@Test
 	public void testWriteString() {
 
 		// StringBuilder

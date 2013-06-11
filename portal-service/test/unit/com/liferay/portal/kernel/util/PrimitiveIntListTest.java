@@ -16,11 +16,14 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.test.TestCase;
 
+import org.junit.Test;
+
 /**
  * @author Michael C. Han
  */
 public class PrimitiveIntListTest extends TestCase {
 
+	@Test
 	public void testAdd() {
 		int[] expected = new int[] {10, 11, 12};
 
@@ -41,6 +44,7 @@ public class PrimitiveIntListTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testAddAll() {
 		int[] expected = new int[] {10, 11, 12};
 

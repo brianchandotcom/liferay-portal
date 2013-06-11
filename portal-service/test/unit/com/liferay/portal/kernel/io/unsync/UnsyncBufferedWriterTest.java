@@ -19,11 +19,14 @@ import com.liferay.portal.kernel.test.TestCase;
 import java.io.IOException;
 import java.io.StringWriter;
 
+import org.junit.Test;
+
 /**
  * @author Shuyang Zhou
  */
 public class UnsyncBufferedWriterTest extends TestCase {
 
+	@Test
 	public void testBlockWrite() throws IOException {
 		StringWriter stringWriter = new StringWriter();
 
@@ -66,6 +69,7 @@ public class UnsyncBufferedWriterTest extends TestCase {
 		assertEquals("abcdefghij", stringWriter.getBuffer().toString());
 	}
 
+	@Test
 	public void testClose() throws IOException {
 		UnsyncBufferedWriter unsyncBufferedWriter = new UnsyncBufferedWriter(
 			new StringWriter());
@@ -111,6 +115,7 @@ public class UnsyncBufferedWriterTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testConstructor() {
 		UnsyncBufferedWriter unsyncBufferedWriter = new UnsyncBufferedWriter(
 			new StringWriter());
@@ -124,6 +129,7 @@ public class UnsyncBufferedWriterTest extends TestCase {
 		assertEquals(0, unsyncBufferedWriter.count);
 	}
 
+	@Test
 	public void testNewLine() throws IOException {
 		StringWriter stringWriter = new StringWriter();
 
@@ -151,6 +157,7 @@ public class UnsyncBufferedWriterTest extends TestCase {
 			lineSeparator + "a" + lineSeparator, stringWriter.toString());
 	}
 
+	@Test
 	public void testStringWrite() throws IOException {
 		StringWriter stringWriter = new StringWriter();
 
@@ -184,6 +191,7 @@ public class UnsyncBufferedWriterTest extends TestCase {
 		assertEquals("abcdefghi", stringWriter.getBuffer().toString());
 	}
 
+	@Test
 	public void testWrite() throws IOException {
 		StringWriter stringWriter = new StringWriter();
 

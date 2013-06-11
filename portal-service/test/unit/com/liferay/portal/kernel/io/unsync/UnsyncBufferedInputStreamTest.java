@@ -19,11 +19,14 @@ import com.liferay.portal.kernel.test.TestCase;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
+import org.junit.Test;
+
 /**
  * @author Shuyang Zhou
  */
 public class UnsyncBufferedInputStreamTest extends TestCase {
 
+	@Test
 	public void testBlockRead() throws IOException {
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(
 			_BUFFER);
@@ -126,6 +129,7 @@ public class UnsyncBufferedInputStreamTest extends TestCase {
 		assertEquals(-1, unsyncBufferedInputStream.read(tempBuffer));
 	}
 
+	@Test
 	public void testClose() throws IOException {
 		int size = 10;
 
@@ -181,6 +185,7 @@ public class UnsyncBufferedInputStreamTest extends TestCase {
 		unsyncBufferedInputStream.close();
 	}
 
+	@Test
 	public void testConstructor() throws IOException {
 		int size = 10;
 
@@ -214,6 +219,7 @@ public class UnsyncBufferedInputStreamTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testMarkAndReset() throws IOException {
 		UnsyncBufferedInputStream unsyncBufferedInputStream =
 			new UnsyncBufferedInputStream(new ByteArrayInputStream(_BUFFER));
@@ -319,6 +325,7 @@ public class UnsyncBufferedInputStreamTest extends TestCase {
 		assertEquals(0, unsyncBufferedInputStream.firstInvalidIndex);
 	}
 
+	@Test
 	public void testMarkSupported() {
 		int size = 10;
 
@@ -329,6 +336,7 @@ public class UnsyncBufferedInputStreamTest extends TestCase {
 		assertTrue(unsyncBufferedInputStream.markSupported());
 	}
 
+	@Test
 	public void testRead() throws IOException {
 		int size = 10;
 
@@ -358,6 +366,7 @@ public class UnsyncBufferedInputStreamTest extends TestCase {
 		assertEquals(-1, unsyncBufferedInputStream.read());
 	}
 
+	@Test
 	public void testSkip() throws IOException {
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(
 			_BUFFER);

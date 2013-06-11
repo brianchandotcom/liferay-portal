@@ -16,11 +16,14 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.test.TestCase;
 
+import org.junit.Test;
+
 /**
  * @author Michael C. Han
  */
 public class PrimitiveLongListTest extends TestCase {
 
+	@Test
 	public void testAdd() {
 		long[] expected = new long[] {10l, 11l, 12l};
 
@@ -41,6 +44,7 @@ public class PrimitiveLongListTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testAddAll() {
 		long[] expected = new long[] {10l, 11l, 12l};
 

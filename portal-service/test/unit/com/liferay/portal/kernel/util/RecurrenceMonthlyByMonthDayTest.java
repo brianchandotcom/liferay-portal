@@ -19,11 +19,14 @@ import com.liferay.portal.kernel.cal.Recurrence;
 
 import java.util.Calendar;
 
+import org.junit.Test;
+
 /**
  * @author Douglas Wong
  */
 public class RecurrenceMonthlyByMonthDayTest extends RecurrenceTestCase {
 
+	@Test
 	public void testRecurrence() {
 		Recurrence recurrence = getRecurrence(dtStart, durationOneHour, 15, 1);
 
@@ -42,6 +45,7 @@ public class RecurrenceMonthlyByMonthDayTest extends RecurrenceTestCase {
 		assertRecurrenceEquals(false, recurrence, afterRecurrence);
 	}
 
+	@Test
 	public void testRecurrenceCrossDates() {
 		Recurrence recurrence = getRecurrence(dtStart, durationTwoHours, 15, 1);
 
@@ -54,6 +58,7 @@ public class RecurrenceMonthlyByMonthDayTest extends RecurrenceTestCase {
 		assertRecurrenceEquals(false, recurrence, afterRecurrence);
 	}
 
+	@Test
 	public void testRecurrenceCrossWeeks() {
 		Recurrence recurrence = getRecurrence(
 			dtStart, durationCrossWeek, 15, 1);
@@ -67,6 +72,7 @@ public class RecurrenceMonthlyByMonthDayTest extends RecurrenceTestCase {
 		assertRecurrenceEquals(false, recurrence, afterRecurrence);
 	}
 
+	@Test
 	public void testRecurrenceCrossYears() {
 		Recurrence recurrence = getRecurrence(
 			dtStart, durationCrossWeek, 29, 1);
@@ -80,6 +86,7 @@ public class RecurrenceMonthlyByMonthDayTest extends RecurrenceTestCase {
 		assertRecurrenceEquals(false, recurrence, afterRecurrence);
 	}
 
+	@Test
 	public void testRecurrenceWithInterval() {
 		Recurrence recurrence = getRecurrence(dtStart, durationOneHour, 15, 2);
 
@@ -94,6 +101,7 @@ public class RecurrenceMonthlyByMonthDayTest extends RecurrenceTestCase {
 		assertRecurrenceEquals(false, recurrence, duringRecurrence4);
 	}
 
+	@Test
 	public void testRecurrenceWithLeapYear() {
 		Recurrence recurrence = getRecurrence(dtStart, durationTwoHours, 29, 1);
 
@@ -114,6 +122,7 @@ public class RecurrenceMonthlyByMonthDayTest extends RecurrenceTestCase {
 		assertRecurrenceEquals(false, recurrence, afterRecurrence3);
 	}
 
+	@Test
 	public void testRecurrenceWithUntilDate() {
 		Recurrence recurrence = getRecurrence(dtStart, durationOneHour, 15, 1);
 

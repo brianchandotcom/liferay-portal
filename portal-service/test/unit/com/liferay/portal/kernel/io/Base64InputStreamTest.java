@@ -18,11 +18,14 @@ import com.liferay.portal.kernel.test.TestCase;
 
 import java.io.ByteArrayInputStream;
 
+import org.junit.Test;
+
 /**
  * @author Tina Tian
  */
 public class Base64InputStreamTest extends TestCase {
 
+	@Test
 	public void testAvailable() throws Exception {
 		byte[] bytes = {'a', 'b', 'c', 'd'};
 
@@ -36,6 +39,7 @@ public class Base64InputStreamTest extends TestCase {
 		base64InputStream.close();
 	}
 
+	@Test
 	public void testDecode() {
 		try {
 			byte[] bytes = {'a', 'b', 'c', 'd'};
@@ -62,6 +66,7 @@ public class Base64InputStreamTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testDecodeUnit() throws Exception {
 		byte[] bytes = {
 			'a', 'b', 'c', 'd', 'e', 'f', 'h', '=', 'e', 'f', '=', '=', 'e',
@@ -83,6 +88,7 @@ public class Base64InputStreamTest extends TestCase {
 		base64InputStream.close();
 	}
 
+	@Test
 	public void testGetByte() {
 		try {
 			byte[] bytes = {'a'};
@@ -102,6 +108,7 @@ public class Base64InputStreamTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testGetEncodedByte() throws Exception {
 		try {
 			byte[] bytes = {'A', '=', 'B', '\n'};
@@ -121,6 +128,7 @@ public class Base64InputStreamTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testRead_0args() throws Exception {
 		byte[] bytes = {'a', 'b', 'c', 'd'};
 
@@ -137,6 +145,7 @@ public class Base64InputStreamTest extends TestCase {
 		base64InputStream.close();
 	}
 
+	@Test
 	public void testRead_3args() throws Exception {
 		byte[] bytes = {
 			'a', 'b', 'c', 'd', 'a', 'b', 'c', 'd', 'e', 'f', 'g', '='};
@@ -157,6 +166,7 @@ public class Base64InputStreamTest extends TestCase {
 		base64InputStream.close();
 	}
 
+	@Test
 	public void testSkip() throws Exception {
 		byte[] bytes = {'a', 'b', 'c', 'd'};
 

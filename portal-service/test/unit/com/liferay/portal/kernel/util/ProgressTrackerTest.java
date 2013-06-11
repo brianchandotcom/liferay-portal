@@ -26,6 +26,7 @@ import org.springframework.mock.web.MockHttpSession;
  */
 public class ProgressTrackerTest extends TestCase {
 
+	@Test
 	public void testGetMessage() throws Exception {
 		_mockInstallProcess.initialize();
 
@@ -40,6 +41,7 @@ public class ProgressTrackerTest extends TestCase {
 		Assert.assertEquals("downloading", progressTracker.getMessage());
 	}
 
+	@Test
 	public void testGetPercent() throws Exception {
 		_mockInstallProcess.initialize();
 

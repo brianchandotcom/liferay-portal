@@ -16,6 +16,8 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.test.TestCase;
 
+import org.junit.Test;
+
 /**
  * @author Alexander Chow
  * @author Shuyang Zhou
@@ -23,6 +25,7 @@ import com.liferay.portal.kernel.test.TestCase;
  */
 public class StringUtilTest extends TestCase {
 
+	@Test
 	public void testAppendParentheticalSuffixInteger() throws Exception {
 		assertEquals(
 			"Hello World (2)",
@@ -38,6 +41,7 @@ public class StringUtilTest extends TestCase {
 			StringUtil.appendParentheticalSuffix("Hello World (2)", 4));
 	}
 
+	@Test
 	public void testAppendParentheticalSuffixString() throws Exception {
 		assertEquals(
 			"Hello (World)",
@@ -47,6 +51,7 @@ public class StringUtilTest extends TestCase {
 			StringUtil.appendParentheticalSuffix("Hello (World)", "Liferay"));
 	}
 
+	@Test
 	public void testHighlight() throws Exception {
 		assertEquals(
 			"<span class=\"highlight\">Hello</span> World <span " +
@@ -55,6 +60,7 @@ public class StringUtilTest extends TestCase {
 				"Hello World Liferay", new String[] {"Hello","Liferay"}));
 	}
 
+	@Test
 	public void testIndexOfAny() throws Exception {
 		char[] chars = {CharPool.COLON, CharPool.COMMA};
 
@@ -87,6 +93,7 @@ public class StringUtilTest extends TestCase {
 		assertEquals(2, StringUtil.indexOfAny("1234", new String[] {""}, 2, 4));
 	}
 
+	@Test
 	public void testLastIndexOfAny() throws Exception {
 		char[] chars = {CharPool.COLON, CharPool.COMMA};
 
@@ -123,10 +130,12 @@ public class StringUtilTest extends TestCase {
 			3, StringUtil.lastIndexOfAny("1234", new String[] {""}, 2, 3));
 	}
 
+	@Test
 	public void testReplaceChar() throws Exception {
 		assertEquals("127_0_0_1", StringUtil.replace("127.0.0.1", '.', '_'));
 	}
 
+	@Test
 	public void testReplaceEmptyString() throws Exception {
 		assertEquals(
 			"Hello World HELLO WORLD Hello World",
@@ -134,11 +143,13 @@ public class StringUtilTest extends TestCase {
 				"Hello World HELLO WORLD Hello World", "", "Aloha"));
 	}
 
+	@Test
 	public void testReplaceFirstChar() throws Exception {
 		assertEquals(
 			"127_0.0.1", StringUtil.replaceFirst("127.0.0.1", '.', '_'));
 	}
 
+	@Test
 	public void testReplaceFirstString() throws Exception {
 		assertEquals(
 			"Aloha World HELLO WORLD Hello World",
@@ -146,6 +157,7 @@ public class StringUtilTest extends TestCase {
 				"Hello World HELLO WORLD Hello World", "Hello", "Aloha"));
 	}
 
+	@Test
 	public void testReplaceFirstStringArray() throws Exception {
 		assertEquals(
 			"Aloha World ALOHA WORLD Hello World HELLO WORLD",
@@ -155,11 +167,13 @@ public class StringUtilTest extends TestCase {
 				new String[] {"Aloha", "ALOHA"}));
 	}
 
+	@Test
 	public void testReplaceLastChar() throws Exception {
 		assertEquals(
 			"127.0.0_1", StringUtil.replaceLast("127.0.0.1", '.', '_'));
 	}
 
+	@Test
 	public void testReplaceLastString() throws Exception {
 		assertEquals(
 			"Hello World HELLO WORLD Aloha World",
@@ -167,6 +181,7 @@ public class StringUtilTest extends TestCase {
 				"Hello World HELLO WORLD Hello World", "Hello", "Aloha"));
 	}
 
+	@Test
 	public void testReplaceLastStringArray() throws Exception {
 		assertEquals(
 			"Hello World HELLO WORLD Aloha World ALOHA WORLD",
@@ -176,6 +191,7 @@ public class StringUtilTest extends TestCase {
 				new String[] {"Aloha", "ALOHA"}));
 	}
 
+	@Test
 	public void testReplaceSpaceString() throws Exception {
 		assertEquals(
 			"HelloWorldHELLOWORLDHelloWorld",
@@ -183,6 +199,7 @@ public class StringUtilTest extends TestCase {
 				"Hello World HELLO WORLD Hello World", " ", StringPool.BLANK));
 	}
 
+	@Test
 	public void testReplaceString() throws Exception {
 		assertEquals(
 			"Aloha World HELLO WORLD Aloha World",
@@ -190,6 +207,7 @@ public class StringUtilTest extends TestCase {
 				"Hello World HELLO WORLD Hello World", "Hello", "Aloha"));
 	}
 
+	@Test
 	public void testReplaceStringArray() throws Exception {
 		assertEquals(
 			"Aloha World ALOHA WORLD Aloha World",
@@ -199,6 +217,7 @@ public class StringUtilTest extends TestCase {
 				new String[] {"Aloha", "ALOHA"}));
 	}
 
+	@Test
 	public void testShortenString() {
 		assertEquals(
 			"Hello World HELLO...",
@@ -214,6 +233,7 @@ public class StringUtilTest extends TestCase {
 				"... etc."));
 	}
 
+	@Test
 	public void testSplitLines() {
 		String singleLine = "abcdefg";
 
@@ -264,6 +284,7 @@ public class StringUtilTest extends TestCase {
 		assertEquals("lmn", lines[4]);
 	}
 
+	@Test
 	public void testStripChar() {
 		assertEquals("abcd", StringUtil.strip(" a b  c   d", ' '));
 	}

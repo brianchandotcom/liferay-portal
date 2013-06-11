@@ -25,11 +25,14 @@ import java.nio.CharBuffer;
 
 import java.util.Arrays;
 
+import org.junit.Test;
+
 /**
  * @author Shuyang Zhou
  */
 public class UnsyncCharArrayWriterTest extends TestCase {
 
+	@Test
 	public void testAppendChar() {
 		UnsyncCharArrayWriter unsyncCharArrayWriter =
 			new UnsyncCharArrayWriter();
@@ -46,6 +49,7 @@ public class UnsyncCharArrayWriterTest extends TestCase {
 		assertEquals('b', unsyncCharArrayWriter.buffer[1]);
 	}
 
+	@Test
 	public void testAppendCharSequence() {
 		UnsyncCharArrayWriter unsyncCharArrayWriter =
 			new UnsyncCharArrayWriter();
@@ -65,6 +69,7 @@ public class UnsyncCharArrayWriterTest extends TestCase {
 		assertEquals('d', unsyncCharArrayWriter.buffer[3]);
 	}
 
+	@Test
 	public void testConstructor() {
 		UnsyncCharArrayWriter unsyncCharArrayWriter =
 			new UnsyncCharArrayWriter();
@@ -78,6 +83,7 @@ public class UnsyncCharArrayWriterTest extends TestCase {
 		assertEquals(64, unsyncCharArrayWriter.buffer.length);
 	}
 
+	@Test
 	public void testReset() {
 		UnsyncCharArrayWriter unsyncCharArrayWriter =
 			new UnsyncCharArrayWriter();
@@ -91,6 +97,7 @@ public class UnsyncCharArrayWriterTest extends TestCase {
 		assertEquals(0, unsyncCharArrayWriter.size());
 	}
 
+	@Test
 	public void testToCharBuffer() {
 		UnsyncCharArrayWriter unsyncCharArrayWriter =
 			new UnsyncCharArrayWriter();
@@ -106,6 +113,7 @@ public class UnsyncCharArrayWriterTest extends TestCase {
 		assertEquals("test1", charBuffer.toString());
 	}
 
+	@Test
 	public void testToString() {
 		UnsyncCharArrayWriter unsyncCharArrayWriter =
 			new UnsyncCharArrayWriter();
@@ -115,6 +123,7 @@ public class UnsyncCharArrayWriterTest extends TestCase {
 		assertEquals("test1", unsyncCharArrayWriter.toString());
 	}
 
+	@Test
 	public void testWriteChar() {
 		UnsyncCharArrayWriter unsyncCharArrayWriter =
 			new UnsyncCharArrayWriter();
@@ -131,6 +140,7 @@ public class UnsyncCharArrayWriterTest extends TestCase {
 		assertEquals('b', unsyncCharArrayWriter.buffer[1]);
 	}
 
+	@Test
 	public void testWriteCharArray() {
 		UnsyncCharArrayWriter unsyncCharArrayWriter =
 			new UnsyncCharArrayWriter();
@@ -150,6 +160,7 @@ public class UnsyncCharArrayWriterTest extends TestCase {
 		assertEquals('d', unsyncCharArrayWriter.buffer[3]);
 	}
 
+	@Test
 	public void testWriteString() {
 		UnsyncCharArrayWriter unsyncCharArrayWriter =
 			new UnsyncCharArrayWriter();
@@ -169,6 +180,7 @@ public class UnsyncCharArrayWriterTest extends TestCase {
 		assertEquals('d', unsyncCharArrayWriter.buffer[3]);
 	}
 
+	@Test
 	public void testWriteTo() throws IOException {
 		UnsyncCharArrayWriter unsyncCharArrayWriter =
 			new UnsyncCharArrayWriter();

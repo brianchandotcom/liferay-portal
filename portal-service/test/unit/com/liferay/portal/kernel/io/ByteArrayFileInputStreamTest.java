@@ -20,6 +20,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import org.junit.Test;
+
 /**
  * @author Shuyang Zhou
  */
@@ -48,6 +50,7 @@ public class ByteArrayFileInputStreamTest extends TestCase {
 		_testFile.delete();
 	}
 
+	@Test
 	public void testaAailable() throws IOException {
 
 		// Uninitialized
@@ -87,6 +90,7 @@ public class ByteArrayFileInputStreamTest extends TestCase {
 		byteArrayFileInputStream.close();
 	}
 
+	@Test
 	public void testBlockRead() throws IOException {
 
 		// byte[]
@@ -164,6 +168,7 @@ public class ByteArrayFileInputStreamTest extends TestCase {
 		byteArrayFileInputStream.close();
 	}
 
+	@Test
 	public void testClose() throws IOException {
 
 		// Do not delete on close
@@ -192,6 +197,7 @@ public class ByteArrayFileInputStreamTest extends TestCase {
 		assertFalse(_testFile.exists());
 	}
 
+	@Test
 	public void testConstructor() {
 
 		// File is a dir
@@ -245,6 +251,7 @@ public class ByteArrayFileInputStreamTest extends TestCase {
 		assertTrue(byteArrayFileInputStream.deleteOnClose);
 	}
 
+	@Test
 	public void testMark() throws IOException {
 
 		// byte[]
@@ -299,6 +306,7 @@ public class ByteArrayFileInputStreamTest extends TestCase {
 		byteArrayFileInputStream.close();
 	}
 
+	@Test
 	public void testSkip() throws IOException {
 
 		// byte[]

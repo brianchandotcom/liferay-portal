@@ -19,11 +19,14 @@ import com.liferay.portal.kernel.cal.Recurrence;
 
 import java.util.Calendar;
 
+import org.junit.Test;
+
 /**
  * @author Douglas Wong
  */
 public class RecurrenceDailyTest extends RecurrenceTestCase {
 
+	@Test
 	public void testDtStart() {
 		Recurrence recurrence = getRecurrence(dtStart, durationOneHour, 2);
 
@@ -42,6 +45,7 @@ public class RecurrenceDailyTest extends RecurrenceTestCase {
 		assertRecurrenceEquals(false, recurrence, afterDtStart);
 	}
 
+	@Test
 	public void testRecurrence() {
 		Recurrence recurrence = getRecurrence(dtStart, durationOneHour, 1);
 
@@ -68,6 +72,7 @@ public class RecurrenceDailyTest extends RecurrenceTestCase {
 		assertRecurrenceEquals(false, recurrence, afterRecurrence);
 	}
 
+	@Test
 	public void testRecurrenceCrossDates() {
 		Recurrence recurrence = getRecurrence(dtStart, durationTwoHours, 1);
 
@@ -80,6 +85,7 @@ public class RecurrenceDailyTest extends RecurrenceTestCase {
 		assertRecurrenceEquals(false, recurrence, afterRecurrence);
 	}
 
+	@Test
 	public void testRecurrenceWithInterval() {
 		Recurrence recurrence = getRecurrence(dtStart, durationOneHour, 2);
 
@@ -94,6 +100,7 @@ public class RecurrenceDailyTest extends RecurrenceTestCase {
 		assertRecurrenceEquals(false, recurrence, duringRecurrence4);
 	}
 
+	@Test
 	public void testRecurrenceWithUntilDate() {
 		Recurrence recurrence = getRecurrence(dtStart, durationOneHour, 1);
 

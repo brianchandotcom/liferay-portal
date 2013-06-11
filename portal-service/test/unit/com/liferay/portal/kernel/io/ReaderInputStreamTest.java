@@ -21,11 +21,14 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 
+import org.junit.Test;
+
 /**
  * @author Tina Tian
  */
 public class ReaderInputStreamTest extends TestCase {
 
+	@Test
 	public void testAvailable() {
 		Reader reader = new StringReader(_TEST_STRING_ENGLISH);
 
@@ -48,6 +51,7 @@ public class ReaderInputStreamTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testConstructor1() {
 		Reader reader = new StringReader(_TEST_STRING_ENGLISH);
 
@@ -61,6 +65,7 @@ public class ReaderInputStreamTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testConstructor2() {
 		Reader reader = new StringReader(_TEST_STRING_ENGLISH);
 
@@ -74,6 +79,7 @@ public class ReaderInputStreamTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testRead1() throws IOException {
 		Reader reader = new StringReader(_TEST_STRING_ENGLISH);
 
@@ -87,6 +93,7 @@ public class ReaderInputStreamTest extends TestCase {
 		assertEquals(_expectedBytesForEnglish[0], result);
 	}
 
+	@Test
 	public void testRead2() throws IOException {
 		Reader reader = new StringReader(_TEST_STRING_ENGLISH);
 
@@ -103,6 +110,7 @@ public class ReaderInputStreamTest extends TestCase {
 		assertEquals(_expectedBytesForEnglish, bytes);
 	}
 
+	@Test
 	public void testRead3() throws IOException {
 		Reader reader = new StringReader(_TEST_STRING_CHINESE);
 
@@ -119,6 +127,7 @@ public class ReaderInputStreamTest extends TestCase {
 		assertEquals(_expectedBytesForChinese, bytes);
 	}
 
+	@Test
 	public void testRead4() throws IOException {
 		Reader reader = new StringReader(_TEST_STRING_CHINESE);
 
@@ -135,6 +144,7 @@ public class ReaderInputStreamTest extends TestCase {
 		assertEquals(_expectedBytesForChinese, bytes);
 	}
 
+	@Test
 	public void testRead5() throws IOException {
 		Reader reader = new StringReader(_TEST_STRING_CHINESE);
 
@@ -151,6 +161,7 @@ public class ReaderInputStreamTest extends TestCase {
 		assertEquals(_expectedBytesForChinese, bytes);
 	}
 
+	@Test
 	public void testRead6() throws IOException {
 		Reader reader = new StringReader(_TEST_STRING_CHINESE);
 
@@ -167,6 +178,7 @@ public class ReaderInputStreamTest extends TestCase {
 		assertEquals(_expectedBytesForChinese, bytes);
 	}
 
+	@Test
 	public void testRead7() throws IOException {
 		Reader reader = new StringReader(_TEST_STRING_ENGLISH);
 
@@ -187,6 +199,7 @@ public class ReaderInputStreamTest extends TestCase {
 		assertEquals(0, bytes[_expectedBytesForEnglish.length]);
 	}
 
+	@Test
 	public void testRead8() throws IOException {
 		Reader reader = new StringReader(_TEST_STRING_ENGLISH);
 
@@ -207,6 +220,7 @@ public class ReaderInputStreamTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testRead9() throws IOException {
 		Reader reader = new StringReader(_TEST_STRING_ENGLISH);
 
@@ -227,6 +241,7 @@ public class ReaderInputStreamTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testSkip1()  throws IOException {
 		Reader reader = new StringReader(_TEST_STRING_ENGLISH);
 
@@ -252,6 +267,7 @@ public class ReaderInputStreamTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testSkip2()  throws IOException {
 		Reader reader = new StringReader(_TEST_STRING_ENGLISH);
 
@@ -271,6 +287,7 @@ public class ReaderInputStreamTest extends TestCase {
 		assertEquals(-1, result);
 	}
 
+	@Test
 	public void testSkip3()  throws IOException {
 		Reader reader = new StringReader(_TEST_STRING_ENGLISH);
 

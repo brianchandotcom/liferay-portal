@@ -16,23 +16,28 @@ package com.liferay.portal.kernel.plugin;
 
 import com.liferay.portal.kernel.test.TestCase;
 
+import org.junit.Test;
+
 /**
  * @author Jorge Ferrer
  */
 public class VersionTest extends TestCase {
 
+	@Test
 	public void testBugFixNumber() {
 		assertPrevious("1.1.0", "1.1.1");
 		assertLater("1.1.1", "1.1.0");
 		assertLater("1.2.0", "1.1.1");
 	}
 
+	@Test
 	public void testBuildNumber() {
 		assertPrevious("1.1.1.0", "1.1.1.1");
 		assertPrevious("1.1.1.9", "1.1.1.10");
 		assertLater("1.1.1.20", "1.1.1.19");
 	}
 
+	@Test
 	public void testMajorNumber() {
 		assertPrevious("1.1", "1.1.1");
 		assertLater("2", "1.1.1");
@@ -40,6 +45,7 @@ public class VersionTest extends TestCase {
 		assertLater("10", "9");
 	}
 
+	@Test
 	public void testMinorNumber() {
 		assertPrevious("1.1", "1.1.1");
 		assertLater("1.2", "1.1.1");
@@ -47,6 +53,7 @@ public class VersionTest extends TestCase {
 		assertLater("1.10", "1.9");
 	}
 
+	@Test
 	public void testPlus() {
 		assertNotIncludes("1+", "0");
 		assertIncludes("1+", "1");
@@ -67,6 +74,7 @@ public class VersionTest extends TestCase {
 		assertNotIncludes("1.1.1.10+", "1.1.1.9");
 	}
 
+	@Test
 	public void testStar() {
 		assertIncludes("1.1.*", "1.1.0");
 		assertIncludes("1.*", "1.1");

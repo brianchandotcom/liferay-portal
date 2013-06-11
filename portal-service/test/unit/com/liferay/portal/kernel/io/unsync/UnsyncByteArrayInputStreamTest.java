@@ -16,11 +16,14 @@ package com.liferay.portal.kernel.io.unsync;
 
 import com.liferay.portal.kernel.test.TestCase;
 
+import org.junit.Test;
+
 /**
  * @author Shuyang Zhou
  */
 public class UnsyncByteArrayInputStreamTest extends TestCase {
 
+	@Test
 	public void testBlockRead() {
 		UnsyncByteArrayInputStream unsyncByteArrayInputStream =
 			new UnsyncByteArrayInputStream(_BUFFER);
@@ -46,6 +49,7 @@ public class UnsyncByteArrayInputStreamTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testConstructor() {
 		UnsyncByteArrayInputStream unsyncByteArrayInputStream =
 			new UnsyncByteArrayInputStream(_BUFFER);
@@ -58,6 +62,7 @@ public class UnsyncByteArrayInputStreamTest extends TestCase {
 		assertEquals(_SIZE / 2, unsyncByteArrayInputStream.available());
 	}
 
+	@Test
 	public void testMarkAndReset() {
 		UnsyncByteArrayInputStream unsyncByteArrayInputStream =
 			new UnsyncByteArrayInputStream(_BUFFER);
@@ -81,6 +86,7 @@ public class UnsyncByteArrayInputStreamTest extends TestCase {
 		assertEquals(_SIZE - 4, unsyncByteArrayInputStream.available());
 	}
 
+	@Test
 	public void testMarkSupported() {
 		UnsyncByteArrayInputStream unsyncByteArrayInputStream =
 			new UnsyncByteArrayInputStream(_BUFFER);
@@ -88,6 +94,7 @@ public class UnsyncByteArrayInputStreamTest extends TestCase {
 		assertTrue(unsyncByteArrayInputStream.markSupported());
 	}
 
+	@Test
 	public void testRead() {
 		UnsyncByteArrayInputStream unsyncByteArrayInputStream =
 			new UnsyncByteArrayInputStream(_BUFFER);
@@ -99,6 +106,7 @@ public class UnsyncByteArrayInputStreamTest extends TestCase {
 		assertEquals(-1, unsyncByteArrayInputStream.read());
 	}
 
+	@Test
 	public void testSkip() {
 		UnsyncByteArrayInputStream unsyncByteArrayInputStream =
 			new UnsyncByteArrayInputStream(_BUFFER);

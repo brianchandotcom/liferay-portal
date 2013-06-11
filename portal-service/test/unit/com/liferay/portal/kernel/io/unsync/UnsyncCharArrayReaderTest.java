@@ -20,11 +20,14 @@ import java.io.IOException;
 
 import java.nio.CharBuffer;
 
+import org.junit.Test;
+
 /**
  * @author Shuyang Zhou
  */
 public class UnsyncCharArrayReaderTest extends TestCase {
 
+	@Test
 	public void testBlockRead() throws IOException {
 		UnsyncCharArrayReader unsyncCharArrayReader = new UnsyncCharArrayReader(
 			_BUFFER);
@@ -50,6 +53,7 @@ public class UnsyncCharArrayReaderTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testBufferRead() throws IOException {
 		UnsyncCharArrayReader unsyncCharArrayReader = new UnsyncCharArrayReader(
 			_BUFFER);
@@ -77,6 +81,7 @@ public class UnsyncCharArrayReaderTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testClose() {
 		UnsyncCharArrayReader unsyncCharArrayReader = new UnsyncCharArrayReader(
 			_BUFFER);
@@ -144,6 +149,7 @@ public class UnsyncCharArrayReaderTest extends TestCase {
 		unsyncCharArrayReader.close();
 	}
 
+	@Test
 	public void testConstructor() {
 		UnsyncCharArrayReader unsyncCharArrayReader = new UnsyncCharArrayReader(
 			_BUFFER);
@@ -162,6 +168,7 @@ public class UnsyncCharArrayReaderTest extends TestCase {
 		assertEquals(_SIZE / 2, unsyncCharArrayReader.markIndex);
 	}
 
+	@Test
 	public void testMarkAndReset() throws IOException {
 		UnsyncCharArrayReader unsyncCharArrayReader = new UnsyncCharArrayReader(
 			_BUFFER);
@@ -184,6 +191,7 @@ public class UnsyncCharArrayReaderTest extends TestCase {
 		assertEquals(4, unsyncCharArrayReader.index);
 	}
 
+	@Test
 	public void testMarkSupported() {
 		UnsyncCharArrayReader unsyncCharArrayReader = new UnsyncCharArrayReader(
 			_BUFFER);
@@ -191,6 +199,7 @@ public class UnsyncCharArrayReaderTest extends TestCase {
 		assertTrue(unsyncCharArrayReader.markSupported());
 	}
 
+	@Test
 	public void testRead() throws IOException {
 		UnsyncCharArrayReader unsyncCharArrayReader = new UnsyncCharArrayReader(
 			_BUFFER);
@@ -202,6 +211,7 @@ public class UnsyncCharArrayReaderTest extends TestCase {
 		assertEquals(-1, unsyncCharArrayReader.read());
 	}
 
+	@Test
 	public void testReady() throws IOException {
 		UnsyncCharArrayReader unsyncCharArrayReader = new UnsyncCharArrayReader(
 			_BUFFER);
@@ -213,6 +223,7 @@ public class UnsyncCharArrayReaderTest extends TestCase {
 		assertFalse(unsyncCharArrayReader.ready());
 	}
 
+	@Test
 	public void testSkip() throws IOException {
 		UnsyncCharArrayReader unsyncCharArrayReader = new UnsyncCharArrayReader(
 			_BUFFER);

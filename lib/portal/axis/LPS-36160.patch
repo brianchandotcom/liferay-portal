@@ -1,0 +1,60 @@
+--- LPS-36160/Types.java	2006-04-22 18:57:28.000000000 +0200
++++ src/org/apache/axis/wsdl/fromJava/Types.java	2013-06-11 15:45:10.467659300 +0200
+@@ -1770,6 +1770,8 @@
+         return element;
+     }
+ 
++	private HashMap<String, Boolean> qnameReturnValue = new HashMap<String, Boolean>();
++
+     /**
+      * Create a schema type element (either simpleType or complexType) for
+      * the particular type/qName combination.  If the type is named, we
+@@ -1810,12 +1812,23 @@
+         // If we've already got this type (because it's a native type or
+         // because we've already written it), just add the type="" attribute
+         // (if appropriate) and return.
+-        if (!addToTypesList(qName) && !anonymous) {
++
++		// liferay - when added to type list, remember returned value!
++		boolean addedToTypeList = addToTypesList(qName);
++
++        if (!addedToTypeList && !anonymous) {
+             if (containingElement != null) {
+                 containingElement.setAttribute("type", getQNameString(qName));
+             }
+ 
+-            return true;
++			// liferay - get result from the map
++
++			Boolean storedResult = qnameReturnValue.get(getQNameString(qName));
++			if (storedResult == null) {
++				return true;
++			}
++
++            return storedResult.booleanValue();
+         }
+ 
+         // look up the serializer in the TypeMappingRegistry
+@@ -1830,6 +1843,10 @@
+             } else if (isBeanCompatible(type, true)) {
+                 factory = new BeanSerializerFactory(type, qName);
+             } else {
++				// liferay
++				if (addedToTypeList) {
++					qnameReturnValue.put(getQNameString(qName), Boolean.FALSE);
++				}
+                 return false;
+             }
+         }
+@@ -1879,6 +1896,11 @@
+             emitter.getQName2ClassMap().put(qName, type);
+         }
+ 
++		// liferay
++		if (addedToTypeList) {
++			qnameReturnValue.put(getQNameString(qName), Boolean.TRUE);
++		}
++
+         return true;
+     }
+ 

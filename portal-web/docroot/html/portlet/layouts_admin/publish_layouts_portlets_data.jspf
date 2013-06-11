@@ -104,7 +104,7 @@
 										</aui:fieldset>
 									</li>
 									<li>
-										<aui:field-wrapper label="end-date">
+										<aui:fieldset label="end-date">
 											<liferay-ui:input-date
 												dayParam="endDateDay"
 												dayValue="<%= today.get(Calendar.DATE) %>"

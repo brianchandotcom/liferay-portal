@@ -46,7 +46,7 @@
 
 	<aui:nav-bar>
 		<aui:nav>
-			<aui:nav-item dropdown="<%= true %>" iconClass="icon-plus" label='<%= LanguageUtil.format(pageContext, (groupIds.length == 1) ? "add" : "add-in-x", new Object[] {HtmlUtil.escape((GroupLocalServiceUtil.getGroup(groupId)).getDescriptiveName(locale))}) %>'>
+			<aui:nav-item dropdown="<%= true %>" iconClass="icon-plus" label='<%= LanguageUtil.format(pageContext, (groupIds.length == 1) ? "add-new" : "add-new-in-x", new Object[] {HtmlUtil.escape((GroupLocalServiceUtil.getGroup(groupId)).getDescriptiveName(locale))}) %>'>
 
 				<%
 				for (Map.Entry<String, PortletURL> entry : addPortletURLs.entrySet()) {

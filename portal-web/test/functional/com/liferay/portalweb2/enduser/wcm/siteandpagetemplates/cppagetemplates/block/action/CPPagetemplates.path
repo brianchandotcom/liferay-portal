@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>ADD</td>
-	<td>//section[@id='portlet_146']/div/div/div/div/div/div/ul/li/a[contains(.,'Add')]</td>
+	<td>//ul[contains(@class,'nav')]/li/a[contains(.,'Add')]</td>
 	<td></td>
 </tr>
 <tr>

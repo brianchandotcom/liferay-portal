@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.templateparser.TransformerListener;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -41,6 +42,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Tuple;
+import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
@@ -77,8 +79,11 @@ import com.liferay.portlet.journal.model.JournalFolderConstants;
 import com.liferay.portlet.journal.model.JournalStructure;
 import com.liferay.portlet.journal.model.JournalStructureAdapter;
 import com.liferay.portlet.journal.model.JournalStructureConstants;
+import com.liferay.portlet.journal.model.JournalTemplate;
+import com.liferay.portlet.journal.model.JournalTemplateAdapter;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
+import com.liferay.portlet.journal.service.JournalStructureLocalServiceUtil;
 import com.liferay.portlet.journal.util.comparator.ArticleCreateDateComparator;
 import com.liferay.portlet.journal.util.comparator.ArticleDisplayDateComparator;
 import com.liferay.portlet.journal.util.comparator.ArticleIDComparator;
@@ -944,6 +949,25 @@ public class JournalUtil {
 		return recentDDMTemplates;
 	}
 
+	public static long[] getStructureClassPKs(
+			long[] groupIds, String structureId)
+		throws SystemException {
+
+		List<Long> classPKs = new ArrayList<Long>();
+
+		for (long groupId : groupIds) {
+			JournalStructure structure =
+				JournalStructureLocalServiceUtil.fetchStructure(
+					groupId, structureId);
+
+			if (structure != null) {
+				classPKs.add(Long.valueOf(structure.getPrimaryKey()));
+			}
+		}
+
+		return ArrayUtil.toLongArray(classPKs);
+	}
+
 	public static String getTemplateScript(
 		DDMTemplate ddmTemplate, Map<String, String> tokens, String languageId,
 		boolean transform) {
@@ -1245,7 +1269,21 @@ public class JournalUtil {
 			structures.add(structure);
 		}
 
-		return structures;
+		return new UnmodifiableList<JournalStructure>(structures);
+	}
+
+	public static List<JournalTemplate> toJournalTemplates(
+		List<DDMTemplate> ddmTemplates) {
+
+		List<JournalTemplate> templates = new ArrayList<JournalTemplate>();
+
+		for (DDMTemplate ddmTemplate : ddmTemplates) {
+			JournalTemplate template = new JournalTemplateAdapter(ddmTemplate);
+
+			templates.add(template);
+		}
+
+		return new UnmodifiableList<JournalTemplate>(templates);
 	}
 
 	public static String transform(

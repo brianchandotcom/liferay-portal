@@ -536,6 +536,7 @@
 		<reference package-path="com.liferay.portal" entity="Group" />
 		<reference package-path="com.liferay.portal" entity="Image" />
 		<reference package-path="com.liferay.portal" entity="WebDAVProps" />
+		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMTemplate" />
 		<reference package-path="com.liferay.portlet.expando" entity="ExpandoValue" />
 	</entity>
 	<exceptions>

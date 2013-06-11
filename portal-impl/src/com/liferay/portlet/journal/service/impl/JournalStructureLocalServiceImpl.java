@@ -245,6 +245,19 @@ public class JournalStructureLocalServiceImpl
 	}
 
 	@Override
+	public JournalStructure fetchStructure(long groupId, String structureId)
+		throws SystemException {
+
+		DDMStructure ddmStructure = fetchDDMStructure(groupId, structureId);
+
+		if (ddmStructure != null) {
+			return new JournalStructureAdapter(ddmStructure);
+		}
+
+		return null;
+	}
+
+	@Override
 	@SuppressWarnings("deprecation")
 	public List<JournalStructure> findAll() throws SystemException {
 		List<DDMStructure> ddmStructures =
@@ -445,18 +458,6 @@ public class JournalStructureLocalServiceImpl
 		return ddmStructureLocalService.fetchStructure(
 			groupId, PortalUtil.getClassNameId(JournalArticle.class),
 			structureId);
-	}
-
-	protected JournalStructure fetchStructure(long groupId, String structureId)
-		throws SystemException {
-
-		DDMStructure ddmStructure = fetchDDMStructure(groupId, structureId);
-
-		if (ddmStructure != null) {
-			return new JournalStructureAdapter(ddmStructure);
-		}
-
-		return null;
 	}
 
 	protected DDMStructure getDDMStructure(JournalStructure structure)

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.staging.LayoutStagingUtil;
 import com.liferay.portal.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -483,6 +484,24 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 		return layout;
 	}
 
+	protected Layout createProxyIfNotInThreadLocalCache(Layout layout) {
+		Map<Layout, Object> map = _layoutStagingHandlerProxyCache.get();
+
+		Object proxy = map.get(layout);
+
+		if (proxy != null) {
+			return (Layout)proxy;
+		}
+
+		proxy = ProxyUtil.newProxyInstance(
+			ClassLoaderUtil.getPortalClassLoader(), new Class[] {Layout.class},
+			new LayoutStagingHandler(layout));
+
+		map.put(layout, proxy);
+
+		return (Layout)proxy;
+	}
+
 	protected Layout unwrapLayout(Layout layout) {
 		LayoutStagingHandler layoutStagingHandler =
 			LayoutStagingUtil.getLayoutStagingHandler(layout);
@@ -506,9 +525,7 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 			return layout;
 		}
 
-		return (Layout)ProxyUtil.newProxyInstance(
-			ClassLoaderUtil.getPortalClassLoader(), new Class[] {Layout.class},
-			new LayoutStagingHandler(layout));
+		return createProxyIfNotInThreadLocalCache(layout);
 	}
 
 	protected List<Layout> wrapLayouts(
@@ -598,6 +615,13 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 
 	private static Set<String> _layoutLocalServiceStagingAdviceMethodNames =
 		new HashSet<String>();
+
+	private static ThreadLocal<Map<Layout, Object>>
+		_layoutStagingHandlerProxyCache =
+			new AutoResetThreadLocal<Map<Layout, Object>>(
+				LayoutLocalServiceStagingAdvice.class +
+					"._layoutStagingHandlerProxyCache",
+				new HashMap<Layout, Object>());
 
 	static {
 		_layoutLocalServiceStagingAdviceMethodNames.add("deleteLayout");

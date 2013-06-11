@@ -275,6 +275,16 @@ public class LayoutBranchLocalServiceUtil {
 			master, serviceContext);
 	}
 
+	public static com.liferay.portal.model.LayoutBranch addOrFetchMasterLayoutBranch(
+		long layoutSetBranchId, long plid,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addOrFetchMasterLayoutBranch(layoutSetBranchId, plid,
+			serviceContext);
+	}
+
 	public static void deleteLayoutSetBranchLayoutBranches(
 		long layoutSetBranchId)
 		throws com.liferay.portal.kernel.exception.PortalException,

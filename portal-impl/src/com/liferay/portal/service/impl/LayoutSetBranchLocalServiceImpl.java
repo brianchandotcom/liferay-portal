@@ -385,10 +385,11 @@ public class LayoutSetBranchLocalServiceImpl
 		}
 
 		if (layoutSetBranchId > 0) {
-			try {
-				return getLayoutSetBranch(layoutSetBranchId);
-			}
-			catch (NoSuchLayoutSetBranchException nslsbe) {
+			LayoutSetBranch layoutSetBranch = fetchLayoutSetBranch(
+				layoutSetBranchId);
+
+			if (layoutSetBranch != null) {
+				return layoutSetBranch;
 			}
 		}
 

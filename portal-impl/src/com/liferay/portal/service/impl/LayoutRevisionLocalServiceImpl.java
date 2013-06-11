@@ -123,6 +123,20 @@ public class LayoutRevisionLocalServiceImpl
 			layoutRevision.getLayoutRevisionId(), layoutRevision,
 			serviceContext);
 
+		boolean explicitCreation = ParamUtil.getBoolean(
+			serviceContext, "explicitCreation");
+
+		if (!explicitCreation) {
+			layoutRevisionLocalService.updateStatus(
+				serviceContext.getUserId(),
+				layoutRevision.getLayoutRevisionId(),
+				WorkflowConstants.STATUS_INCOMPLETE, serviceContext);
+		}
+
+		StagingUtil.setRecentLayoutRevisionId(
+			user, layoutSetBranchId, plid,
+			layoutRevision.getLayoutRevisionId());
+
 		return layoutRevision;
 	}
 
@@ -324,6 +338,16 @@ public class LayoutRevisionLocalServiceImpl
 
 	@Override
 	public List<LayoutRevision> getLayoutRevisions(
+			long layoutSetBranchId, long plid, int start, int end,
+			OrderByComparator orderByComparator)
+		throws SystemException {
+
+		return layoutRevisionPersistence.findByL_P(
+			layoutSetBranchId, plid, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<LayoutRevision> getLayoutRevisions(
 			long layoutSetBranchId, long layoutBranchId, long plid, int start,
 			int end, OrderByComparator orderByComparator)
 		throws SystemException {
@@ -419,10 +443,6 @@ public class LayoutRevisionLocalServiceImpl
 			copyPortletPreferences(
 				layoutRevision, layoutRevision.getParentLayoutRevisionId(),
 				serviceContext);
-
-			StagingUtil.deleteRecentLayoutRevisionId(
-				user, layoutRevision.getLayoutSetBranchId(),
-				layoutRevision.getPlid());
 
 			StagingUtil.setRecentLayoutBranchId(
 				user, layoutRevision.getLayoutSetBranchId(),

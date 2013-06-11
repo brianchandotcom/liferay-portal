@@ -1,0 +1,34 @@
+<html>
+<head>
+<title>PGHelloworld</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGHelloworld</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGHelloworld</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_TITLE</td>
+	<td>//section[@id='portlet_47']//h1[@class='portlet-title']/span[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_CONTENT</td>
+	<td>//section[@id='portlet_47']//div[@class='portlet-body']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

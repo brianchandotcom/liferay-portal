@@ -1,0 +1,39 @@
+<html>
+<head>
+<title>PGSignin</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGSignin</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGSignin</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_TITLE</td>
+	<td>//section[@id='portlet_58']//h1[@class='portlet-title']/span[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_CONTENT</td>
+	<td>//section[@id='portlet_58']//div[@class='portlet-body']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_CONTENT_USER_NAME</td>
+	<td>//section[@id='portlet_58']//div[@class='portlet-body']/a</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

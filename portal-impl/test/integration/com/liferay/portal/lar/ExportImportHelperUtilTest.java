@@ -322,7 +322,11 @@ public class ExportImportHelperUtilTest {
 		Map<String, MissingReference> dependencyMissingReferences =
 			missingReferences.getDependencyMissingReferences();
 
+		Map<String, MissingReference> weakMissingReferences =
+			missingReferences.getWeakMissingReferences();
+
 		Assert.assertEquals(2, dependencyMissingReferences.size());
+		Assert.assertEquals(1, weakMissingReferences.size());
 
 		FileUtil.delete(zipWriter.getFile());
 	}

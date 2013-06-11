@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.test.TestCase;
+import com.liferay.portal.test.AssertUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +41,7 @@ public class ArrayUtilTest extends TestCase {
 		for (int i = 0; i < list.size(); i++) {
 			Double value = list.get(i);
 
-			assertEquals(value.doubleValue(), array[i]);
+			AssertUtils.assertEquals(value.doubleValue(), array[i]);
 		}
 	}
 
@@ -58,7 +59,7 @@ public class ArrayUtilTest extends TestCase {
 		for (int i = 0; i < list.size(); i++) {
 			Float value = list.get(i);
 
-			assertEquals(value.floatValue(), array[i]);
+			AssertUtils.assertEquals(value.floatValue(), array[i]);
 		}
 	}
 

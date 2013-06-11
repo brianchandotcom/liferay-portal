@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.messaging;
 
 import com.liferay.portal.kernel.test.TestCase;
+import com.liferay.portal.test.AssertUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,7 +84,7 @@ public class DispatcherDestinationTest extends TestCase {
 		long expectedTime = 100;
 		long actualTime = System.currentTimeMillis() - _startTime;
 
-		assertLessThan(expectedTime, actualTime);
+		AssertUtils.assertLessThan(expectedTime, actualTime);
 	}
 
 	@Test

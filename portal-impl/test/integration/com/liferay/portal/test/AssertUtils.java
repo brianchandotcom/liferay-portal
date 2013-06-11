@@ -109,4 +109,13 @@ public class AssertUtils {
 			StringUtil.merge(actualStringArray));
 	}
 
+	public static void assertLessThan(
+			double expectedDouble, double actualDouble)
+		throws Exception {
+
+		if (actualDouble > expectedDouble) {
+			Assert.fail(actualDouble + " is not less than " + expectedDouble);
+		}
+	}
+
 }

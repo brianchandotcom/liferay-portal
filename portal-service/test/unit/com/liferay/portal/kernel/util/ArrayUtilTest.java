@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.TestCase;
-import com.liferay.portal.test.AssertUtils;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -55,6 +55,7 @@ public class LayoutSetBranchTable {
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
 		"create index IX_8FF5D6EA on LayoutSetBranch (groupId)",
 		"create index IX_C4079FD3 on LayoutSetBranch (groupId, privateLayout)",
+		"create index IX_CCF0DA29 on LayoutSetBranch (groupId, privateLayout, master)",
 		"create unique index IX_5FF18552 on LayoutSetBranch (groupId, privateLayout, name)"
 	};
 

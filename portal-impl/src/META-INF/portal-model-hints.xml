@@ -441,7 +441,7 @@
 			<hint-collection name="CLOB" />
 		</field>
 		<field name="settings" type="String">
-			<hint-collection name="TEXTAREA" />
+			<hint-collection name="CLOB" />
 		</field>
 		<field name="layoutSetPrototypeUuid" type="String" />
 		<field name="layoutSetPrototypeLinkEnabled" type="boolean" />

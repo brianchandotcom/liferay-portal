@@ -28,6 +28,7 @@ public class UpgradeLayoutSetBranch extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		try {
 			runSQL("alter_column_type LayoutSetBranch css TEXT null");
+			runSQL("alter_column_type LayoutSetBranch settings_ TEXT null");
 		}
 		catch (SQLException sqle) {
 			upgradeTable(

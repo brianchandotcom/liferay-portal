@@ -36,6 +36,23 @@
 		<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_BODY" value1="${wikiPageContent}" />
 	</command>
 
+	<command name="addFrontPagePGHTMLSource" >
+		<execute macro="Page#pgGoto">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute action="PGWiki#click" locator-key1="ADD_FRONTPAGE" />
+
+		<execute action="PGWikiAddpage#select" locator-key1="FORMAT_DROPDOWN" value1="HTML" />
+		<execute action="PGWikiAddpage#confirm" locator-key1="CONFIRMATION" value1="You may lose some formatting when switching from Creole to HTML. Do you want to continue?" />
+		<execute action="PGWikiAddpage#click" locator-key1="SOURCE_HTML_BUTTON" />
+		<execute action="PGWikiAddpage#type" locator-key1="CK_EDITOR_SOURCE_FIELD" value1="${wikiPageContent}" />
+		<execute action="PGWikiAddpage#click" locator-key1="PUBLISH_BUTTON" />
+
+		<execute action="PGWiki#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
+		<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_BODY" value1="${wikiPageText}" />
+	</command>
+
 	<command name="addPagePG">
 		<execute macro="Page#pgGoto">
 			<var name="pageName" value="${pageName}" />

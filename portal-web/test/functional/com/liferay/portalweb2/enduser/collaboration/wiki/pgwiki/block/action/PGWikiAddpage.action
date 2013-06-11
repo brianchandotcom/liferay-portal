@@ -3,6 +3,9 @@
 		<case locator-key1="PUBLISH_BUTTON">
 			<execute function="Click#textClickAtAndWaitCKEditor" value1="Publish" />
 		</case>
+		<case locator-key1="SOURCE_HTML_BUTTON">
+			<execute function="Click#textClickAtAndWait" value1="Source" />
+		</case>
 	</command>
 
 	<command name="type">

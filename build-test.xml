@@ -457,7 +457,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="2" />
+		<property name="build-test-ant-scripts.version" value="3" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -649,6 +649,7 @@
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="platform-security-acceptance" />
 			<param name="test.ant.script.database.minimal" value="true" />
+			<param name="test.ant.script.plugin.hooks" value="antisamy-hook" />
 			<param name="test.ant.script.selenium.implementation" value="webdriver" />
 			<param name="test.ant.script.suite" value="PlatformSecurityAcceptanceTestSuite" />
 		</antcall>

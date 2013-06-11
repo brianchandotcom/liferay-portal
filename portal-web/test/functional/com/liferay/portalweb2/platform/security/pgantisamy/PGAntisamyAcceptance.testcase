@@ -1,0 +1,34 @@
+<definition>
+	<var name="pageName" value="Antisamy Test Page" />
+	<var name="portletName" value="Wiki" />
+
+	<set-up>
+		<execute macro="User#pgFirstLogin" />
+
+		<execute macro="Page#pgAdd">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#pgAdd">
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
+		</execute>
+	</set-up>
+
+	<command name="AddWikiFrontPageContentJavascript">
+		<var name="wikiPageContent" value="&lt;p id=\&quot;demo\&quot;&gt;PASS&lt;/p&gt;&lt;script type=\&quot;text/javascript\&quot;&gt;document.getElementById(&apos;demo&apos;).innerHTML=\&quot;FAIL\&quot;;&lt;/script&gt;" />
+		<var name="wikiPageText" value="PASS" />
+
+		<execute macro="WikiPage#addFrontPagePGHTMLSource">
+			<var name="pageName" value="${pageName}" />
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+			<var name="wikiPageText" value="${wikiPageText}" />
+		</execute>
+	</command>
+
+	<tear-down>
+		<execute macro="WikiPage#tearDownCP" />
+
+		<execute macro="Page#pgTearDown" />
+	</tear-down>
+</definition>

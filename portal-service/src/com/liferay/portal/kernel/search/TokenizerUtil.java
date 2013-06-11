@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.search;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 import java.util.List;
-import java.util.Locale;
 
 /**
  * @author David Mendez Gonzalez
@@ -31,10 +30,10 @@ public class TokenizerUtil {
 	}
 
 	public static List<String> tokenize(
-			String fieldName, String input, Locale locale)
+			String fieldName, String input, String languageId)
 		throws SearchException {
 
-		return getTokenizer().tokenize(fieldName, input, locale);
+		return getTokenizer().tokenize(fieldName, input, languageId);
 	}
 
 	public void setTokenizer(Tokenizer tokenizer) {

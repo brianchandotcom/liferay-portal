@@ -12,17 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search;
+package com.liferay.portal.search.lucene;
 
-import java.util.List;
+import org.apache.lucene.search.spell.SuggestWord;
 
 /**
- * @author David Mendez Gonzalez
+ * @author Michael C. Han
  */
-public interface Tokenizer {
+public class DefaultRelevancyChecker implements RelevancyChecker {
 
-	public List<String> tokenize(
-			String fieldName, String input, String languageId)
-		throws SearchException;
+	@Override
+	public boolean isRelevant(SuggestWord suggestWord) {
+		return true;
+	}
 
 }

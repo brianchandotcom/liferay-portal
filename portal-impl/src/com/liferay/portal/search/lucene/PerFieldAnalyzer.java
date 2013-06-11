@@ -16,6 +16,7 @@ package com.liferay.portal.search.lucene;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Tokenizer;
 
@@ -26,7 +27,6 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -92,18 +92,21 @@ public class PerFieldAnalyzer extends Analyzer implements Tokenizer {
 	}
 
 	@Override
-	public List<String> tokenize(String fieldName, String input, Locale locale)
+	public List<String> tokenize(
+			String fieldName, String input, String languageId)
 		throws SearchException {
 
 		List<String> tokens = new ArrayList<String>();
-
 		TokenStream tokenStream = null;
 
 		try {
-			Analyzer analyzer = getAnalyzer(fieldName);
+			String localizedFieldName = DocumentImpl.getLocalizedName(
+				languageId, fieldName);
+
+			Analyzer analyzer = getAnalyzer(localizedFieldName);
 
 			tokenStream = analyzer.tokenStream(
-				locale.toString(), new StringReader(input));
+				localizedFieldName, new StringReader(input));
 
 			CharTermAttribute charTermAttribute = tokenStream.addAttribute(
 				CharTermAttribute.class);

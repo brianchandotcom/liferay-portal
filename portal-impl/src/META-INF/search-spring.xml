@@ -41,12 +41,22 @@
 	<bean id="com.liferay.portal.kernel.repository.search.RepositorySearchQueryBuilderUtil" class="com.liferay.portal.kernel.repository.search.RepositorySearchQueryBuilderUtil">
 		<property name="repositorySearchQueryBuilder" ref="com.liferay.portal.kernel.repository.search.RepositorySearchQueryBuilder" />
 	</bean>
+	<bean id="com.liferay.portal.kernel.search.CollatorUtil" class="com.liferay.portal.kernel.search.CollatorUtil">
+		<property name="collator">
+			<bean class="com.liferay.portal.search.DefaultCollatorImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.search.HitsProcessorRegistryUtil" class="com.liferay.portal.kernel.search.HitsProcessorRegistryUtil">
 		<property name="defaultHitsProcessor">
 			<bean class="com.liferay.portal.kernel.search.CompositeHitsProcessor">
 				<property name="hitsProcessors">
 					<util:list>
 						<bean class="com.liferay.portal.kernel.search.CollatedSpellCheckHitsProcessor" />
+						<bean class="com.liferay.portal.kernel.search.QueryIndexingHitsProcessor">
+							<property name="document">
+								<bean class="com.liferay.portal.kernel.search.DocumentImpl" />
+							</property>
+						</bean>
 						<bean class="com.liferay.portal.kernel.search.QuerySuggestionHitsProcessor" />
 					</util:list>
 				</property>
@@ -75,6 +85,14 @@
 	<bean id="com.liferay.portal.kernel.search.StringQueryFactoryUtil" class="com.liferay.portal.kernel.search.StringQueryFactoryUtil">
 		<property name="stringQueryFactory" ref="com.liferay.portal.kernel.search.StringQueryFactory" />
 	</bean>
+	<bean id="com.liferay.portal.kernel.search.NGramHolderBuilderUtil" class="com.liferay.portal.kernel.search.NGramHolderBuilderUtil">
+		<property name="NGramHolderBuilder">
+			<bean class="com.liferay.portal.search.NGramHolderBuilderImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portal.kernel.search.TokenizerUtil" class="com.liferay.portal.kernel.search.TokenizerUtil">
+		<property name="tokenizer" ref="com.liferay.portal.search.lucene.PerFieldAnalyzer" />
+	</bean>
 
 	<!-- Generic search engine -->
 
@@ -96,8 +114,12 @@
 
 	<!-- Lucene search engine -->
 
-	<bean id="com.liferay.portal.search.lucene.LuceneIndexSearcher" class="com.liferay.portal.search.lucene.LuceneIndexSearcher" />
-	<bean id="com.liferay.portal.search.lucene.LuceneIndexWriter" class="com.liferay.portal.search.lucene.LuceneIndexWriter" />
+	<bean id="com.liferay.portal.search.lucene.LuceneIndexSearcher" class="com.liferay.portal.search.lucene.LuceneIndexSearcher">
+		<property name="querySuggester" ref="com.liferay.portal.search.lucene.LuceneQuerySuggester" />
+	</bean>
+	<bean id="com.liferay.portal.search.lucene.LuceneIndexWriter" class="com.liferay.portal.search.lucene.LuceneIndexWriter">
+		<property name="spellCheckIndexWriter" ref="com.liferay.portal.search.lucene.LuceneSpellCheckIndexWriter" />
+	</bean>
 	<bean id="com.liferay.portal.search.lucene.LuceneSearchEngineImpl" class="com.liferay.portal.kernel.search.BaseSearchEngine">
 		<property name="booleanClauseFactory" >
 			<bean class="com.liferay.portal.search.generic.BooleanClauseFactoryImpl" />
@@ -129,6 +151,13 @@
 	<bean id="com.liferay.portal.search.lucene.LuceneHelperUtil" class="com.liferay.portal.search.lucene.LuceneHelperUtil">
 		<property name="luceneHelper" ref="com.liferay.portal.search.lucene.LuceneHelperImpl" />
 	</bean>
+	<bean id="com.liferay.portal.search.lucene.LuceneQuerySuggester" class="com.liferay.portal.search.lucene.LuceneQuerySuggester">
+		<property name="stringDistance">
+			<bean class="org.apache.lucene.search.spell.LevensteinDistance" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portal.search.lucene.LuceneSpellCheckIndexWriter" class="com.liferay.portal.search.lucene.LuceneSpellCheckIndexWriter" />
+
 
 	<!-- Lucene analyzers -->
 

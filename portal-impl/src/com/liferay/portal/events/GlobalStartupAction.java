@@ -44,6 +44,8 @@ import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
+import freemarker.debug.impl.DebuggerService;
+
 import java.io.File;
 
 import java.util.ArrayList;
@@ -313,6 +315,12 @@ public class GlobalStartupAction extends SimpleAction {
 			Thread browserLauncherThread = new Thread(new BrowserLauncher());
 
 			browserLauncherThread.start();
+		}
+
+		// Freemarker Debugger
+		if (System.getProperty("freemarker.debug.password") != null &&
+			System.getProperty("freemarker.debug.port") != null) {
+			DebuggerService.getBreakpoints("*");
 		}
 	}
 

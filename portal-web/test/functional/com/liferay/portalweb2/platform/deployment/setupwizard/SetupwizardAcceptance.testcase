@@ -1,0 +1,64 @@
+<definition>
+	<command name="SetupWizardDefaultConfiguration">
+		<var name="administratorEmail" value="test@liferay.com" />
+		<var name="administratorFirstName" value="Test" />
+		<var name="administratorLastName" value="Test" />
+		<var name="newPassword" value="test1" />
+		<var name="pageName" value="Blogs Page" />
+		<var name="passwordReminder" value="test" />
+		<var name="portalDefaultLanguage" value="English (United States)" />
+		<var name="portalName" value="Liferay" />
+		<var name="portletName" value="Blogs" />
+
+		<execute action="Home#open" locator-key1="HOME_URL" />
+
+		<execute action="Setupwizard#assertTextEquals" locator-key1="PORTAL_PORTAL_NAME_FIELD" value1="${portalName}" />
+		<execute action="Setupwizard#assertSelectedLabel" locator-key1="PORTAL_DEFAULT_LANGUAGE_SELECT" value1="${portalDefaultLanguage}" />
+		<execute action="Setupwizard#assertTextEquals" locator-key1="ADMINISTRATOR_USER_FIRST_NAME_FIELD" value1="${administratorFirstName}" />
+		<execute action="Setupwizard#assertTextEquals" locator-key1="ADMINISTRATOR_USER_LAST_NAME_FIELD" value1="${administratorLastName}" />
+		<execute action="Setupwizard#assertTextEquals" locator-key1="ADMINISTRATOR_USER_EMAIL_FIELD" value1="${administratorEmail}" />
+		<execute action="Setupwizard#assertTextEquals" locator-key1="DATABASE_CONFIGURED_JDBC_URL_LABEL" />
+		<execute action="Setupwizard#assertTextEquals" locator-key1="DATABASE_CONFIGURED_JDBC_DRIVER_CLASS_NAME_LABEL" />
+		<execute action="Setupwizard#assertTextEquals" locator-key1="DATABASE_CONFIGURED_USER_NAME_LABEL" />
+		<execute action="Setupwizard#assertTextEquals" locator-key1="DATABASE_CONFIGURED_PASSWORD_LABEL" />
+		<execute action="Setupwizard#click" locator-key1="DATABASE_CHANGE_LINK" />
+		<execute action="Setupwizard#assertTextEquals" locator-key1="DATABASE_CHANGE_DATABASE_TYPE_LABEL" />
+		<execute action="Setupwizard#assertTextEquals" locator-key1="DATABASE_CHANGE_JDBC_URL_LABEL" />
+		<execute action="Setupwizard#assertTextEquals" locator-key1="DATABASE_CHANGE_JDBC_DRIVER_CLASS_NAME_LABEL" />
+		<execute action="Setupwizard#assertTextEquals" locator-key1="DATABASE_CHANGE_USER_NAME_LABEL" />
+		<execute action="Setupwizard#assertTextEquals" locator-key1="DATABASE_CHANGE_PASSWORD_LABEL" />
+		<execute action="Setupwizard#click" locator-key1="FINISH_CONFIGURATION_BUTTON" />
+
+		<execute action="SetupwizardFinishconfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
+		<execute action="SetupwizardFinishconfiguration#assertTextEquals" locator-key1="CONFIGURATION_SAVE_MESSAGE" />
+		<execute action="SetupwizardFinishconfiguration#assertTextEquals" locator-key1="CONFIGURATION_SAVE_LOCATION" />
+		<execute action="SetupwizardFinishconfiguration#click" locator-key1="GO_TO_MY_PORTAL_BUTTON" />
+
+		<execute action="PGLoginTermsofservice#click" locator-key1="I_AGREE_BUTTON" />
+
+		<execute action="PGLoginNewpassword#type" locator-key1="PASSWORD_FIELD" value1="${newPassword}" />
+		<execute action="PGLoginNewpassword#type" locator-key1="ENTER_AGAIN_FIELD" value1="${newPassword}" />
+		<execute action="PGLoginNewpassword#click" locator-key1="SAVE_BUTTON" />
+
+		<execute action="PGLoginPasswordreminder#type" locator-key1="ANSWER_FIELD" value1="${passwordReminder}" />
+		<execute action="PGLoginPasswordreminder#click" locator-key1="SAVE_BUTTON" />
+
+		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_1" value1="Welcome" />
+
+		<execute action="PGSignin#assertTextEquals" locator-key1="PORTLET_TITLE" />
+		<execute action="PGSignin#assertTextEquals" locator-key1="PORTLET_CONTENT" />
+		<execute action="PGSignin#assertTextEquals" locator-key1="PORTLET_CONTENT_USER_NAME" value1="${administratorFirstName} ${administratorLastName}" />
+
+		<execute action="PGHelloworld#assertTextEquals" locator-key1="PORTLET_TITLE" />
+		<execute action="PGHelloworld#assertTextEquals" locator-key1="PORTLET_CONTENT" />
+
+		<execute macro="Page#pgAdd">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#pgAdd">
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
+		</execute>
+	</command>
+</definition>

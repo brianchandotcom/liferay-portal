@@ -127,6 +127,8 @@ public class SocialActivitySetPersistenceTest {
 
 		newSocialActivitySet.setType(ServiceTestUtil.nextInt());
 
+		newSocialActivitySet.setExtraData(ServiceTestUtil.randomString());
+
 		newSocialActivitySet.setActivityCount(ServiceTestUtil.nextInt());
 
 		_persistence.update(newSocialActivitySet);
@@ -151,6 +153,8 @@ public class SocialActivitySetPersistenceTest {
 			newSocialActivitySet.getClassPK());
 		Assert.assertEquals(existingSocialActivitySet.getType(),
 			newSocialActivitySet.getType());
+		Assert.assertEquals(existingSocialActivitySet.getExtraData(),
+			newSocialActivitySet.getExtraData());
 		Assert.assertEquals(existingSocialActivitySet.getActivityCount(),
 			newSocialActivitySet.getActivityCount());
 	}
@@ -193,8 +197,8 @@ public class SocialActivitySetPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("SocialActivitySet",
 			"activitySetId", true, "groupId", true, "companyId", true,
 			"userId", true, "createDate", true, "modifiedDate", true,
-			"classNameId", true, "classPK", true, "type", true,
-			"activityCount", true);
+			"classNameId", true, "classPK", true, "type", true, "extraData",
+			true, "activityCount", true);
 	}
 
 	@Test
@@ -330,6 +334,8 @@ public class SocialActivitySetPersistenceTest {
 		socialActivitySet.setClassPK(ServiceTestUtil.nextLong());
 
 		socialActivitySet.setType(ServiceTestUtil.nextInt());
+
+		socialActivitySet.setExtraData(ServiceTestUtil.randomString());
 
 		socialActivitySet.setActivityCount(ServiceTestUtil.nextInt());
 

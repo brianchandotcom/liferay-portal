@@ -1708,6 +1708,610 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	private static final String _FINDER_COLUMN_C_C_T_CLASSNAMEID_2 = "socialActivitySet.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_T_CLASSPK_2 = "socialActivitySet.classPK = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_T_TYPE_2 = "socialActivitySet.type = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_U_C_T = new FinderPath(SocialActivitySetModelImpl.ENTITY_CACHE_ENABLED,
+			SocialActivitySetModelImpl.FINDER_CACHE_ENABLED,
+			SocialActivitySetImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_U_C_T",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				Integer.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_C_T =
+		new FinderPath(SocialActivitySetModelImpl.ENTITY_CACHE_ENABLED,
+			SocialActivitySetModelImpl.FINDER_CACHE_ENABLED,
+			SocialActivitySetImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_U_C_T",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				Integer.class.getName()
+			},
+			SocialActivitySetModelImpl.GROUPID_COLUMN_BITMASK |
+			SocialActivitySetModelImpl.USERID_COLUMN_BITMASK |
+			SocialActivitySetModelImpl.CLASSNAMEID_COLUMN_BITMASK |
+			SocialActivitySetModelImpl.TYPE_COLUMN_BITMASK |
+			SocialActivitySetModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_U_C_T = new FinderPath(SocialActivitySetModelImpl.ENTITY_CACHE_ENABLED,
+			SocialActivitySetModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_U_C_T",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				Integer.class.getName()
+			});
+
+	/**
+	 * Returns all the social activity sets where groupId = &#63; and userId = &#63; and classNameId = &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param type the type
+	 * @return the matching social activity sets
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<SocialActivitySet> findByG_U_C_T(long groupId, long userId,
+		long classNameId, int type) throws SystemException {
+		return findByG_U_C_T(groupId, userId, classNameId, type,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the social activity sets where groupId = &#63; and userId = &#63; and classNameId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.social.model.impl.SocialActivitySetModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param type the type
+	 * @param start the lower bound of the range of social activity sets
+	 * @param end the upper bound of the range of social activity sets (not inclusive)
+	 * @return the range of matching social activity sets
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<SocialActivitySet> findByG_U_C_T(long groupId, long userId,
+		long classNameId, int type, int start, int end)
+		throws SystemException {
+		return findByG_U_C_T(groupId, userId, classNameId, type, start, end,
+			null);
+	}
+
+	/**
+	 * Returns an ordered range of all the social activity sets where groupId = &#63; and userId = &#63; and classNameId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.social.model.impl.SocialActivitySetModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param type the type
+	 * @param start the lower bound of the range of social activity sets
+	 * @param end the upper bound of the range of social activity sets (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching social activity sets
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<SocialActivitySet> findByG_U_C_T(long groupId, long userId,
+		long classNameId, int type, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_C_T;
+			finderArgs = new Object[] { groupId, userId, classNameId, type };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_U_C_T;
+			finderArgs = new Object[] {
+					groupId, userId, classNameId, type,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<SocialActivitySet> list = (List<SocialActivitySet>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (SocialActivitySet socialActivitySet : list) {
+				if ((groupId != socialActivitySet.getGroupId()) ||
+						(userId != socialActivitySet.getUserId()) ||
+						(classNameId != socialActivitySet.getClassNameId()) ||
+						(type != socialActivitySet.getType())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(6 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(6);
+			}
+
+			query.append(_SQL_SELECT_SOCIALACTIVITYSET_WHERE);
+
+			query.append(_FINDER_COLUMN_G_U_C_T_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_U_C_T_USERID_2);
+
+			query.append(_FINDER_COLUMN_G_U_C_T_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_G_U_C_T_TYPE_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(SocialActivitySetModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(userId);
+
+				qPos.add(classNameId);
+
+				qPos.add(type);
+
+				if (!pagination) {
+					list = (List<SocialActivitySet>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList<SocialActivitySet>(list);
+				}
+				else {
+					list = (List<SocialActivitySet>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first social activity set in the ordered set where groupId = &#63; and userId = &#63; and classNameId = &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching social activity set
+	 * @throws com.liferay.portlet.social.NoSuchActivitySetException if a matching social activity set could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public SocialActivitySet findByG_U_C_T_First(long groupId, long userId,
+		long classNameId, int type, OrderByComparator orderByComparator)
+		throws NoSuchActivitySetException, SystemException {
+		SocialActivitySet socialActivitySet = fetchByG_U_C_T_First(groupId,
+				userId, classNameId, type, orderByComparator);
+
+		if (socialActivitySet != null) {
+			return socialActivitySet;
+		}
+
+		StringBundler msg = new StringBundler(10);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", userId=");
+		msg.append(userId);
+
+		msg.append(", classNameId=");
+		msg.append(classNameId);
+
+		msg.append(", type=");
+		msg.append(type);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchActivitySetException(msg.toString());
+	}
+
+	/**
+	 * Returns the first social activity set in the ordered set where groupId = &#63; and userId = &#63; and classNameId = &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching social activity set, or <code>null</code> if a matching social activity set could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public SocialActivitySet fetchByG_U_C_T_First(long groupId, long userId,
+		long classNameId, int type, OrderByComparator orderByComparator)
+		throws SystemException {
+		List<SocialActivitySet> list = findByG_U_C_T(groupId, userId,
+				classNameId, type, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last social activity set in the ordered set where groupId = &#63; and userId = &#63; and classNameId = &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching social activity set
+	 * @throws com.liferay.portlet.social.NoSuchActivitySetException if a matching social activity set could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public SocialActivitySet findByG_U_C_T_Last(long groupId, long userId,
+		long classNameId, int type, OrderByComparator orderByComparator)
+		throws NoSuchActivitySetException, SystemException {
+		SocialActivitySet socialActivitySet = fetchByG_U_C_T_Last(groupId,
+				userId, classNameId, type, orderByComparator);
+
+		if (socialActivitySet != null) {
+			return socialActivitySet;
+		}
+
+		StringBundler msg = new StringBundler(10);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", userId=");
+		msg.append(userId);
+
+		msg.append(", classNameId=");
+		msg.append(classNameId);
+
+		msg.append(", type=");
+		msg.append(type);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchActivitySetException(msg.toString());
+	}
+
+	/**
+	 * Returns the last social activity set in the ordered set where groupId = &#63; and userId = &#63; and classNameId = &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching social activity set, or <code>null</code> if a matching social activity set could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public SocialActivitySet fetchByG_U_C_T_Last(long groupId, long userId,
+		long classNameId, int type, OrderByComparator orderByComparator)
+		throws SystemException {
+		int count = countByG_U_C_T(groupId, userId, classNameId, type);
+
+		List<SocialActivitySet> list = findByG_U_C_T(groupId, userId,
+				classNameId, type, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the social activity sets before and after the current social activity set in the ordered set where groupId = &#63; and userId = &#63; and classNameId = &#63; and type = &#63;.
+	 *
+	 * @param activitySetId the primary key of the current social activity set
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next social activity set
+	 * @throws com.liferay.portlet.social.NoSuchActivitySetException if a social activity set with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public SocialActivitySet[] findByG_U_C_T_PrevAndNext(long activitySetId,
+		long groupId, long userId, long classNameId, int type,
+		OrderByComparator orderByComparator)
+		throws NoSuchActivitySetException, SystemException {
+		SocialActivitySet socialActivitySet = findByPrimaryKey(activitySetId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SocialActivitySet[] array = new SocialActivitySetImpl[3];
+
+			array[0] = getByG_U_C_T_PrevAndNext(session, socialActivitySet,
+					groupId, userId, classNameId, type, orderByComparator, true);
+
+			array[1] = socialActivitySet;
+
+			array[2] = getByG_U_C_T_PrevAndNext(session, socialActivitySet,
+					groupId, userId, classNameId, type, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected SocialActivitySet getByG_U_C_T_PrevAndNext(Session session,
+		SocialActivitySet socialActivitySet, long groupId, long userId,
+		long classNameId, int type, OrderByComparator orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_SOCIALACTIVITYSET_WHERE);
+
+		query.append(_FINDER_COLUMN_G_U_C_T_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_U_C_T_USERID_2);
+
+		query.append(_FINDER_COLUMN_G_U_C_T_CLASSNAMEID_2);
+
+		query.append(_FINDER_COLUMN_G_U_C_T_TYPE_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(SocialActivitySetModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(userId);
+
+		qPos.add(classNameId);
+
+		qPos.add(type);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(socialActivitySet);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<SocialActivitySet> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the social activity sets where groupId = &#63; and userId = &#63; and classNameId = &#63; and type = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param type the type
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeByG_U_C_T(long groupId, long userId, long classNameId,
+		int type) throws SystemException {
+		for (SocialActivitySet socialActivitySet : findByG_U_C_T(groupId,
+				userId, classNameId, type, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null)) {
+			remove(socialActivitySet);
+		}
+	}
+
+	/**
+	 * Returns the number of social activity sets where groupId = &#63; and userId = &#63; and classNameId = &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param type the type
+	 * @return the number of matching social activity sets
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByG_U_C_T(long groupId, long userId, long classNameId,
+		int type) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_U_C_T;
+
+		Object[] finderArgs = new Object[] { groupId, userId, classNameId, type };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(5);
+
+			query.append(_SQL_COUNT_SOCIALACTIVITYSET_WHERE);
+
+			query.append(_FINDER_COLUMN_G_U_C_T_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_U_C_T_USERID_2);
+
+			query.append(_FINDER_COLUMN_G_U_C_T_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_G_U_C_T_TYPE_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(userId);
+
+				qPos.add(classNameId);
+
+				qPos.add(type);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_U_C_T_GROUPID_2 = "socialActivitySet.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_U_C_T_USERID_2 = "socialActivitySet.userId = ? AND ";
+	private static final String _FINDER_COLUMN_G_U_C_T_CLASSNAMEID_2 = "socialActivitySet.classNameId = ? AND ";
+	private static final String _FINDER_COLUMN_G_U_C_T_TYPE_2 = "socialActivitySet.type = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_U_C_C_T = new FinderPath(SocialActivitySetModelImpl.ENTITY_CACHE_ENABLED,
 			SocialActivitySetModelImpl.FINDER_CACHE_ENABLED,
 			SocialActivitySetImpl.class,
@@ -2599,6 +3203,31 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 			}
 
 			if ((socialActivitySetModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_C_T.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						socialActivitySetModelImpl.getOriginalGroupId(),
+						socialActivitySetModelImpl.getOriginalUserId(),
+						socialActivitySetModelImpl.getOriginalClassNameId(),
+						socialActivitySetModelImpl.getOriginalType()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U_C_T, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_C_T,
+					args);
+
+				args = new Object[] {
+						socialActivitySetModelImpl.getGroupId(),
+						socialActivitySetModelImpl.getUserId(),
+						socialActivitySetModelImpl.getClassNameId(),
+						socialActivitySetModelImpl.getType()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U_C_T, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_C_T,
+					args);
+			}
+
+			if ((socialActivitySetModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_C_C_T.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						socialActivitySetModelImpl.getOriginalUserId(),
@@ -2651,6 +3280,7 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 		socialActivitySetImpl.setClassNameId(socialActivitySet.getClassNameId());
 		socialActivitySetImpl.setClassPK(socialActivitySet.getClassPK());
 		socialActivitySetImpl.setType(socialActivitySet.getType());
+		socialActivitySetImpl.setExtraData(socialActivitySet.getExtraData());
 		socialActivitySetImpl.setActivityCount(socialActivitySet.getActivityCount());
 
 		return socialActivitySetImpl;

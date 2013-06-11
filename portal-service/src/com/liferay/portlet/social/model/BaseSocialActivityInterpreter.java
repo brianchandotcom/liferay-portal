@@ -76,15 +76,7 @@ public abstract class BaseSocialActivityInterpreter
 		SocialActivitySet activitySet, ServiceContext serviceContext) {
 
 		try {
-			List<SocialActivity> activities =
-				SocialActivityLocalServiceUtil.getActivitySetActivities(
-					activitySet.getActivitySetId(), 0, 1);
-
-			if (!activities.isEmpty()) {
-				SocialActivity activity = activities.get(0);
-
-				return doInterpret(activity, serviceContext);
-			}
+			return doInterpret(activitySet, serviceContext);
 		}
 		catch (Exception e) {
 			_log.error("Unable to interpret activity set", e);
@@ -179,6 +171,23 @@ public abstract class BaseSocialActivityInterpreter
 		throws Exception {
 
 		return _deprecatedMarkerSocialActivityFeedEntry;
+	}
+
+	protected SocialActivityFeedEntry doInterpret(
+			SocialActivitySet activitySet, ServiceContext serviceContext)
+		throws Exception {
+
+		List<SocialActivity> activities =
+			SocialActivityLocalServiceUtil.getActivitySetActivities(
+				activitySet.getActivitySetId(), 0, 1);
+
+		if (!activities.isEmpty()) {
+			SocialActivity activity = activities.get(0);
+
+			return doInterpret(activity, serviceContext);
+		}
+
+		return null;
 	}
 
 	protected long getActivitySetId(long activityId) {

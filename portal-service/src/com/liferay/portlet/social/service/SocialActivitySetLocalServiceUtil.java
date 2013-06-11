@@ -324,6 +324,13 @@ public class SocialActivitySetLocalServiceUtil {
 		return getService().getUserActivitySet(groupId, userId, type);
 	}
 
+	public static com.liferay.portlet.social.model.SocialActivitySet getUserActivitySet(
+		long groupId, long userId, long classNameId, int type)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getUserActivitySet(groupId, userId, classNameId, type);
+	}
+
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivitySet> getUserActivitySets(
 		long userId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {

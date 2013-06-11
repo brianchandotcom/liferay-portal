@@ -30,13 +30,13 @@ public class MissingReference {
 		_className = element.attributeValue("class-name");
 		_displayName = GetterUtil.getString(
 			element.attributeValue("display-name"));
+		_type = GetterUtil.getString(element.attributeValue("type"));
 
-		String referrerClassName = element.attributeValue(
-			"referrer-class-name");
+		_referrerClassName = element.attributeValue("referrer-class-name");
 		String referrerDisplayName = GetterUtil.getString(
 			element.attributeValue("referrer-display-name"));
 
-		addReferrer(referrerClassName, referrerDisplayName);
+		addReferrer(_referrerClassName, referrerDisplayName);
 	}
 
 	public void addReferrer(
@@ -57,6 +57,10 @@ public class MissingReference {
 		return _displayName;
 	}
 
+	public String getReferrerClassName() {
+		return _referrerClassName;
+	}
+
 	public Set<String> getReferrerDisplayNames() {
 		return _referrers.keySet();
 	}
@@ -65,8 +69,14 @@ public class MissingReference {
 		return _referrers;
 	}
 
+	public String getType() {
+		return _type;
+	}
+
 	private String _className;
 	private String _displayName;
+	private String _referrerClassName;
 	private Map<String, String> _referrers = new HashMap<String, String>();
+	private String _type;
 
 }

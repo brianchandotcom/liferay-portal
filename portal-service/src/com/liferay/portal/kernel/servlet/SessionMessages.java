@@ -33,6 +33,24 @@ import javax.servlet.http.HttpSession;
  */
 public class SessionMessages {
 
+	public static final String KEY_PORTAL_MESSAGES_ANIMATION =
+		"portalMessagesAnimation";
+
+	public static final String KEY_PORTAL_MESSAGES_CSS_CLASS =
+		"portalMessagesCssClass";
+
+	public static final String KEY_PORTAL_MESSAGES_JSP_PATH =
+		"portalMessagesJSPPath";
+
+	public static final String KEY_PORTAL_MESSAGES_MESSAGE =
+		"portalMessagesMessage";
+
+	public static final String KEY_PORTAL_MESSAGES_PORTLET_ID =
+		"portalMessagesPortletId";
+
+	public static final String KEY_PORTAL_MESSAGES_TIMEOUT =
+		"portalMessagesTimeout";
+
 	public static final String KEY_SUFFIX_CLOSE_REDIRECT = ".closeRedirect";
 
 	public static final String KEY_SUFFIX_DELETE_SUCCESS_DATA =

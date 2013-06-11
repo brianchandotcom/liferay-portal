@@ -186,6 +186,56 @@ public class Creole10Parser]]></replacevalue>
 		<ant dir="../sql" target="build-db" />
 	</target>
 
+	<target name="build-freemarker-jar">
+        <get
+            dest="freemarker-2.3.17-sources.zip"
+            src="http://search.maven.org/remotecontent?filepath=org/freemarker/freemarker/2.3.17/freemarker-2.3.17-sources.jar"
+        />
+
+        <tstamp>
+            <format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+        </tstamp>
+
+        <unzip
+            dest="${tstamp.value}"
+            src="freemarker-2.3.17-sources.zip"
+        >
+            <patternset>
+                <include name="**/DebugBreak.java" />
+                <include name="**/EnvironmentSuspendedEvent.java" />
+                <include name="**/DebuggerServer.java" />
+                <include name="**/DebuggerService.java" />
+                <include name="**/RmiDebuggedEnvironmentImpl.java" />
+            	<include name="**/RmiDebuggerService.java" />
+            </patternset>
+        </unzip>
+
+        <delete file="freemarker-2.3.17-sources.zip" />
+
+        <patch
+            dir="${tstamp.value}"
+            patchfile="${project.dir}/lib/portal/freemarker/LPS-35775.patch"
+            strip="1"
+        />
+
+        <antcall target="compile-java">
+            <param name="javac.classpathref" value="project.classpath" />
+            <param name="javac.destdir" value="${tstamp.value}" />
+            <param name="javac.srcdir" value="${tstamp.value}" />
+        </antcall>
+
+		<get
+            dest="${project.dir}/lib/portal/freemarker.jar.new"
+            src="http://search.maven.org/remotecontent?filepath=org/freemarker/freemarker/2.3.17/freemarker-2.3.17.jar"
+        />
+
+        <jar destfile="${project.dir}/lib/portal/freemarker.jar.new" update="true">
+            <zipfileset dir="${tstamp.value}" includes="**/*.class" />
+        </jar>
+
+        <delete dir="${tstamp.value}" />
+    </target>
+
 	<target name="build-icu4j-jar">
 		<tstamp>
 			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />

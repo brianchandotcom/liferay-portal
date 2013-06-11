@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='portlet-msg-success']</td>
+	<td>//div[@class='alert alert-success']</td>
 	<td></td>
 </tr>
 <tr>
@@ -30,22 +30,22 @@
 </tr>
 <tr>
 	<td>CURRENT</td>
-	<td>link=Current</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Current')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AVAILABLE</td>
-	<td>link=Available</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Available')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>UPDATE_ASSOCIATIONS_BUTTON</td>
-	<td>//input[@value='Update Associations']</td>
+	<td>//button[contains(.,'Update Associations')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>INFO_MESSAGE</td>
-	<td>//div[@class='portlet-msg-info']</td>
+	<td>//div[@class='alert alert-info']</td>
 	<td></td>
 </tr>
 <tr>
@@ -61,12 +61,12 @@
 </tr>
 <tr>
 	<td>BASIC_SEARCH_BUTTON</td>
-	<td>xpath=(//input[@value='Search'])[1]</td>
+	<td>//button[contains(.,'Search')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BASIC_SEARCH_ADVANCED</td>
-	<td>//a[.='Advanced »']</td>
+	<td>//button[@id='toggle_id_users_admin_user_searchtoggleAdvanced']</td>
 	<td></td>
 </tr>
 <tr>
@@ -108,16 +108,6 @@
 <tr>
 	<td>ADVANCED_SEARCH_STATUS_SELECT</td>
 	<td>//select[@id='_125_status']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADVANCED_SEARCH_BUTTON</td>
-	<td>xpath=(//input[@value='Search'])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADVANCED_SEARCH_BASIC</td>
-	<td>//a[.='« Basic']</td>
 	<td></td>
 </tr>
 <tr>

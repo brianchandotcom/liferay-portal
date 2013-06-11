@@ -10,7 +10,7 @@
 
 	<command name="click">
 		<case locator-key1="ADD_TEAM_BUTTON">
-			<execute function="Click#valueClickAtAndWait" value1="Add Team" />
+			<execute function="Click#textClickAtAndWait" value1="Add Team" />
 		</case>
 	</command>
 </definition>

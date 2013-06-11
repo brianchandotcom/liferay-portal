@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>SAVE</td>
-	<td>//input[@value='Save']</td>
+	<td>//button[contains(.,'Save')]</td>
 	<td></td>
 </tr>
 <tr>

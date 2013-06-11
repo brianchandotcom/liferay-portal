@@ -26,7 +26,7 @@
 </tr>
 <tr>
 	<td>ROLES_SEARCH_BUTTON</td>
-	<td>//input[@value='Search']</td>
+	<td>//button[contains(.,'Search')]</td>
 	<td></td>
 </tr>
 <tr>

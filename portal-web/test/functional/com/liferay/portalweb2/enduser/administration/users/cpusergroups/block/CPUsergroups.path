@@ -61,7 +61,12 @@
 </tr>
 <tr>
 	<td>BASIC_SEARCH_BUTTON</td>
-	<td>xpath=(//button[contains(.,'Search')])[1]</td>
+	<td>//button[contains(.,'Search')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BASIC_SEARCH_ADVANCED</td>
+	<td>//button[@id='toggle_id_users_groups_admin_group_searchtoggleAdvanced']</td>
 	<td></td>
 </tr>
 <tr>

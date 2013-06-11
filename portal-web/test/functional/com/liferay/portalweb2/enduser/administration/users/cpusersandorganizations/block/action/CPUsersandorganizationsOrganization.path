@@ -20,12 +20,12 @@
 </tr>
 <tr>
 	<td>ORGANIZATION_NAME</td>
-	<td>//h1[@class='header-title']/span</td>
+	<td>//h3[@class='header-title']/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>INFO_MESSAGE</td>
-	<td>//div[@class='portlet-msg-info']</td>
+	<td>//div[@class='alert alert-info']</td>
 	<td></td>
 </tr>
 <tr>
@@ -41,17 +41,17 @@
 <!--MENU-->
 <tr>
 	<td>MENU_EDIT</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Edit')]</td>
+	<td>//div[@class='span3 lfr-asset-column lfr-asset-column-actions']/ul/li/a[contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MENU_ASSIGN_USERS</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Assign Users')]</td>
+	<td>//div[@class='span3 lfr-asset-column lfr-asset-column-actions']/ul/li/a[contains(.,'Assign Users')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MENU_DELETE</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li/a[contains(.,'Delete')]</td>
+	<td>//div[@class='span3 lfr-asset-column lfr-asset-column-actions']/ul/li/a[contains(.,'Delete')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -62,7 +62,7 @@
 <!--SUBORGANIZATION-->
 <tr>
 	<td>SUBORGANIZATION_DELETE_BUTTON</td>
-	<td>//input[@value='Delete']</td>
+	<td>//button[contains(.,'Delete')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -93,7 +93,7 @@
 </tr>
 <tr>
 	<td>SUBORGANIZATION_TABLE_ACTIONS_1</td>
-	<td>xpath=(//div[@id='_125_organizationsSearchContainer']//tr/td[4]/span[@title='Actions']/ul/li/strong/a/span)[1]</td>
+	<td>xpath=(//div[@id='_125_organizationsSearchContainer']//tr/td[4]/div/a[@title='Actions'])[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -104,7 +104,7 @@
 <!--USER-->
 <tr>
 	<td>USER_DEACTIVATE_BUTTON</td>
-	<td>//input[@value='Deactivate']</td>
+	<td>//button[contains(.,'Deactivate')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -140,7 +140,7 @@
 </tr>
 <tr>
 	<td>USER_TABLE_ACTIONS_1</td>
-	<td>xpath=(//div[@id='_125_usersSearchContainer']//tr/td[8]/span[@title='Actions']/ul/li/strong/a/span)[1]</td>
+	<td>xpath=(//div[@id='_125_usersSearchContainer']//tr/td[8]/div/a[@title='Actions'])[1]</td>
 	<td></td>
 </tr>
 </tbody>

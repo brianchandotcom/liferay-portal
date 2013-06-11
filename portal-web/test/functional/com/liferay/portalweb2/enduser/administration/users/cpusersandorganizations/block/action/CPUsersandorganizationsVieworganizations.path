@@ -19,13 +19,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DELETE_BUTTON</td>
-	<td>//input[@value='Delete']</td>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='portlet-msg-success']</td>
+	<td>DELETE_BUTTON</td>
+	<td>//button[contains(.,'Delete')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -46,12 +46,12 @@
 </tr>
 <tr>
 	<td>BASIC_SEARCH_BUTTON</td>
-	<td>xpath=(//input[@value='Search'])[1]</td>
+	<td>//button[contains(.,'Search')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BASIC_SEARCH_ADVANCED</td>
-	<td>//a[.='Advanced »']</td>
+	<td>//button[@id='toggle_id_users_admin_organization_searchtoggleAdvanced']</td>
 	<td></td>
 </tr>
 <tr>
@@ -61,13 +61,43 @@
 </tr>
 <!--ADVANCED_SEARCH-->
 <tr>
-	<td>ADVANCED_SEARCH_BUTTON</td>
-	<td>xpath=(//input[@value='Search'])[2]</td>
+	<td>ADVANCED_SEARCH_MATCH_SELECT</td>
+	<td>//select[@id='_125_andOperator']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ADVANCED_SEARCH_BASIC</td>
-	<td>//a[.='« Basic']</td>
+	<td>ADVANCED_SEARCH_NAME_FIELD</td>
+	<td>//input[@id='_125_name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_STREET_FIELD</td>
+	<td>//input[@id='_125_street']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_CITY_FIELD</td>
+	<td>//input[@id='_125_city']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_TYPE_SELECT</td>
+	<td>//select[@id='_125_type']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_COUNTRY_SELECT</td>
+	<td>//select[@id='_125_countryId']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_REGION_SELECT</td>
+	<td>//select[@id='_125_regionId']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_POSTAL_CODE_FIELD</td>
+	<td>//input[@id='_125_zip']</td>
 	<td></td>
 </tr>
 <tr>
@@ -88,7 +118,7 @@
 </tr>
 <tr>
 	<td>ORGANIZATION_TABLE_ACTIONS_1</td>
-	<td>xpath=(//tr/td[8]/span[@title='Actions']/ul/li/strong/a/span)[1]</td>
+	<td>xpath=(//tr/td[8]/div/a[@title='Actions'])[1]</td>
 	<td></td>
 </tr>
 </tbody>

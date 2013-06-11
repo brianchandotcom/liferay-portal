@@ -1,17 +1,17 @@
 <html>
 <head>
-<title>PGWelcomePage3</title>
+<title>PGWelcomePage1</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">PGWelcomePage3</td></tr>
+<tr><td rowspan="1" colspan="3">PGWelcomePage1</td></tr>
 </thead>
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>PGWelcomePage3</td>
+	<td>PGWelcomePage1</td>
 </tr>
 <tr>
 	<td></td>
@@ -19,13 +19,38 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_TITLE</td>
+	<td>PAGE_1</td>
+	<td>xPath=(//li[contains(@class,'lfr-nav-deletable')]/a/span)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_2</td>
+	<td>xPath=(//li[contains(@class,'lfr-nav-deletable')]/a/span)[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_3</td>
 	<td>xPath=(//li[contains(@class,'lfr-nav-deletable')]/a/span)[3]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>HEADER</td>
 	<td>//header/hgroup/h1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SOCIAL_OFFICE</td>
+	<td>//div[@id='social-office']/div/div/h3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GETTING_STARTED</td>
+	<td>//div[@id='getting-started']/div/div/h3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEVELOP_FASTER</td>
+	<td>//div[@id='ide']/div/div/h3</td>
 	<td></td>
 </tr>
 <tr>
@@ -62,6 +87,16 @@
 <tr>
 	<td>MENU_PAGE_5</td>
 	<td>//ul[@id='contentNav']/li[5]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_PAGE_6</td>
+	<td>//ul[@id='contentNav']/li[6]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_PAGE_7</td>
+	<td>//ul[@id='contentNav']/li[7]/a</td>
 	<td></td>
 </tr>
 </tbody>

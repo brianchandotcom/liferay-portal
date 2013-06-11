@@ -19,11 +19,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_TITLE</td>
-	<td>xPath=(//li[contains(@class,'lfr-nav-deletable')]/a/span)[2]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>HEADER</td>
 	<td>//header/hgroup/h1</td>
 	<td></td>

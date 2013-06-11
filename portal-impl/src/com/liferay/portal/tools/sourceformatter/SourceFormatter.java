@@ -37,6 +37,10 @@ import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.xml.SAXReaderImpl;
 import com.liferay.util.ContentUtil;
 
+import com.thoughtworks.qdox.JavaDocBuilder;
+import com.thoughtworks.qdox.model.JavaClass;
+import com.thoughtworks.qdox.model.JavaSource;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -226,6 +230,10 @@ public class SourceFormatter {
 
 	public SourceFormatter(boolean useProperties, boolean throwException)
 		throws Exception {
+
+		_checkUnprocessedExceptions = GetterUtil.getBoolean(
+			System.getProperty(
+				"source.formatter.check.unprocessed.exceptions"));
 
 		_excludes = StringUtil.split(
 			GetterUtil.getString(
@@ -726,6 +734,119 @@ public class SourceFormatter {
 		while (pos1 != -1);
 
 		return false;
+	}
+
+	private static void _checkUnprocessedExceptions(
+			String content, File file, String packagePath, String fileName)
+		throws IOException {
+
+		List<String> importedExceptionClassNames = null;
+		JavaDocBuilder javaDocBuilder = null;
+
+		Pattern catchExceptionPattern = Pattern.compile(
+			"\n(\t+)catch \\((.+Exception) (.+)\\) \\{\n");
+
+		for (int lineCount = 1;;) {
+			Matcher catchExceptionMatcher = catchExceptionPattern.matcher(
+				content);
+
+			if (!catchExceptionMatcher.find()) {
+				return;
+			}
+
+			String beforeCatchCode = content.substring(
+				0, catchExceptionMatcher.start());
+
+			lineCount = lineCount + StringUtil.count(beforeCatchCode, "\n") + 1;
+
+			String exceptionClassName = catchExceptionMatcher.group(2);
+			String exceptionVariableName = catchExceptionMatcher.group(3);
+			String tabs = catchExceptionMatcher.group(1);
+
+			int pos = content.indexOf(
+				"\n" + tabs + StringPool.CLOSE_CURLY_BRACE,
+				catchExceptionMatcher.end() - 1);
+
+			String insideCatchCode = content.substring(
+				catchExceptionMatcher.end(), pos + 1);
+
+			Pattern exceptionVariablePattern = Pattern.compile(
+				"\\W" + exceptionVariableName + "\\W");
+
+			Matcher exceptionVariableMatcher = exceptionVariablePattern.matcher(
+				insideCatchCode);
+
+			if (exceptionVariableMatcher.find()) {
+				content = content.substring(catchExceptionMatcher.start() + 1);
+
+				continue;
+			}
+
+			if (javaDocBuilder == null) {
+				javaDocBuilder = new JavaDocBuilder();
+
+				javaDocBuilder.addSource(file);
+			}
+
+			if (importedExceptionClassNames == null) {
+				importedExceptionClassNames = _getImportedExceptionClassNames(
+					javaDocBuilder);
+			}
+
+			String originalExceptionClassName = exceptionClassName;
+
+			if (!exceptionClassName.contains(StringPool.PERIOD)) {
+				for (String exceptionClass : importedExceptionClassNames) {
+					if (exceptionClass.endsWith(
+							StringPool.PERIOD + exceptionClassName)) {
+
+						exceptionClassName = exceptionClass;
+
+						break;
+					}
+				}
+			}
+
+			if (!exceptionClassName.contains(StringPool.PERIOD)) {
+				exceptionClassName =
+					packagePath + StringPool.PERIOD + exceptionClassName;
+			}
+
+			JavaClass exceptionClass = javaDocBuilder.getClassByName(
+				exceptionClassName);
+
+			while (true) {
+				String packageName = exceptionClass.getPackageName();
+
+				if (!packageName.contains("com.liferay")) {
+					break;
+				}
+
+				exceptionClassName = exceptionClass.getName();
+
+				if (exceptionClassName.equals("PortalException") ||
+					exceptionClassName.equals("SystemException")) {
+
+					_processErrorMessage(
+						fileName,
+						"Unprocessed " + originalExceptionClassName + ": " +
+							fileName + " " + lineCount);
+
+					break;
+				}
+
+				JavaClass exceptionSuperClass =
+					exceptionClass.getSuperJavaClass();
+
+				if (exceptionSuperClass == null) {
+					break;
+				}
+
+				exceptionClass = exceptionSuperClass;
+			}
+
+			content = content.substring(catchExceptionMatcher.start() + 1);
+		}
 	}
 
 	private static void _checkXSS(String fileName, String jspContent) {
@@ -1740,6 +1861,13 @@ public class SourceFormatter {
 			}
 
 			_checkLanguageKeys(fileName, newContent, _languageKeyPattern);
+
+			// LPS-36174
+
+			if (_checkUnprocessedExceptions) {
+				_checkUnprocessedExceptions(
+					newContent, file, packagePath, fileName);
+			}
 
 			String oldContent = newContent;
 
@@ -3940,6 +4068,24 @@ public class SourceFormatter {
 		return null;
 	}
 
+	private static List<String> _getImportedExceptionClassNames(
+		JavaDocBuilder javaDocBuilder) {
+
+		List<String> exceptionClassNames = new ArrayList<String>();
+
+		JavaSource javaSource = javaDocBuilder.getSources()[0];
+
+		for (String importClassName : javaSource.getImports()) {
+			if (importClassName.endsWith("Exception") &&
+				!exceptionClassNames.contains(importClassName)) {
+
+				exceptionClassNames.add(importClassName);
+			}
+		}
+
+		return exceptionClassNames;
+	}
+
 	private static Tuple _getJavaTermTuple(
 		String line, String content, int index, int numLines, int maxLines) {
 
@@ -5299,6 +5445,7 @@ public class SourceFormatter {
 		"tiles"
 	};
 
+	private static boolean _checkUnprocessedExceptions;
 	private static List<String> _errorMessages = new ArrayList<String>();
 	private static String[] _excludes;
 	private static FileImpl _fileUtil = FileImpl.getInstance();

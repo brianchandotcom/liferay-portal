@@ -1400,6 +1400,7 @@ public class Creole10Parser]]></replacevalue>
 		>
 			<jvmarg value="-Xmx512m" />
 			<jvmarg value="-Xss2048k" />
+			<jvmarg value="-Dsource.formatter.check.unprocessed.exceptions=${source.formatter.check.unprocessed.exceptions}" />
 			<jvmarg value="-Dsource.formatter.excludes=${source.formatter.excludes}" />
 		</java>
 

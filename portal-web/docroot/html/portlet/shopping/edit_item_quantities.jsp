@@ -50,10 +50,11 @@ for (int i = 0; i < values.size(); i++) {
 
 			<%
 			for (int i = 0; i < names.size(); i++) {
+				String name = (String)names.get(i);
 			%>
 
 				<td>
-					<strong><%= names.get(i) %></strong>
+					<strong><%= HtmlUtil.escape(name) %></strong>
 				</td>
 
 			<%
@@ -90,7 +91,7 @@ for (int i = 0; i < values.size(); i++) {
 				%>
 
 					<td>
-						<%= vArray[arrayPos] %>
+						<%= HtmlUtil.escape(vArray[arrayPos]) %>
 					</td>
 
 				<%

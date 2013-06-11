@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.lar;
 
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.StagedModel;
@@ -37,6 +38,10 @@ public class StagedModelDataHandlerUtil {
 	public static <T extends StagedModel> String getDisplayName(T stagedModel) {
 		StagedModelDataHandler<T> stagedModelDataHandler =
 			_getStagedModelDataHandler(stagedModel);
+
+		if (stagedModelDataHandler == null) {
+			return StringPool.BLANK;
+		}
 
 		return stagedModelDataHandler.getDisplayName(stagedModel);
 	}

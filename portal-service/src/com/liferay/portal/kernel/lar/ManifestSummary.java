@@ -127,6 +127,10 @@ public class ManifestSummary implements Serializable {
 		return _exportDate;
 	}
 
+	public Collection<String> getManifestSummaryKeys() {
+		return _manifestSummaryKeys;
+	}
+
 	public long getModelAdditionCount(Class<? extends ClassedModel> clazz) {
 		return getModelAdditionCount(clazz, clazz);
 	}
@@ -179,10 +183,6 @@ public class ManifestSummary implements Serializable {
 
 	public Map<String, LongWrapper> getModelDeletionCounters() {
 		return _modelDeletionCounters;
-	}
-
-	public Collection<String> getManifestSummaryKeys() {
-		return _manifestSummaryKeys;
 	}
 
 	public List<Portlet> getSetupPortlets() {
@@ -260,11 +260,11 @@ public class ManifestSummary implements Serializable {
 
 	private List<Portlet> _dataPortlets = new ArrayList<Portlet>();
 	private Date _exportDate;
+	private Set<String> _manifestSummaryKeys = new HashSet<String>();
 	private Map<String, LongWrapper> _modelAdditionCounters =
 		new HashMap<String, LongWrapper>();
 	private Map<String, LongWrapper> _modelDeletionCounters =
 		new HashMap<String, LongWrapper>();
-	private Set<String> _manifestSummaryKeys = new HashSet<String>();
 	private List<Portlet> _setupPortlets = new ArrayList<Portlet>();
 
 }

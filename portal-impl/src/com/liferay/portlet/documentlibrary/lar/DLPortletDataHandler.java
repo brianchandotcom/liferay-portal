@@ -71,7 +71,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		setExportControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "documents", true, false, null,
-				DLFileEntry.class.getName()),
+				FileEntry.class.getName()),
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "shortcuts", true, false, null,
 				DLFileShortcut.class.getName()),

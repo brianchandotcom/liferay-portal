@@ -1263,7 +1263,6 @@ public class WebServerServlet extends HttpServlet {
 
 	private static Set<String> _acceptRangesMimeTypes = SetUtil.fromArray(
 		PropsValues.WEB_SERVER_SERVLET_ACCEPT_RANGES_MIME_TYPES);
-
 	private static Format _dateFormat =
 		FastDateFormatFactoryUtil.getSimpleDateFormat(_DATE_FORMAT_PATTERN);
 

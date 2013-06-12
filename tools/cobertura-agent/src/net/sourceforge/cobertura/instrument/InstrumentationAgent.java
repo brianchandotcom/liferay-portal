@@ -315,7 +315,6 @@ public class InstrumentationAgent {
 	private static CoberturaClassFileTransformer _coberturaClassFileTransformer;
 	private static boolean _dynamicallyInstrumented;
 	private static String[] _excludes;
-
 	private static String[] _includes;
 	private static Instrumentation _instrumentation;
 	private static File _lockFile;

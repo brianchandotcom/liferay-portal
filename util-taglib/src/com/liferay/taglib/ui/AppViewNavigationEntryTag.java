@@ -138,7 +138,6 @@ public class AppViewNavigationEntryTag extends IncludeTag {
 		"/html/taglib/ui/app_view_navigation_entry/page.jsp";
 
 	private String _actionJsp;
-
 	private boolean _browseUp;
 	private String _cssClass = "folder";
 	private Map<String, Object> _dataExpand;

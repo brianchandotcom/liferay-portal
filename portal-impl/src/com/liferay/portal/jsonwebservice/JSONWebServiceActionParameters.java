@@ -236,6 +236,7 @@ public class JSONWebServiceActionParameters {
 
 	private Map<String, List<NameValue<String, Object>>> _innerParameters;
 	private JSONRPCRequest _jsonRPCRequest;
+
 	private Map<String, Object> _parameters = new HashMap<String, Object>() {
 
 		@Override

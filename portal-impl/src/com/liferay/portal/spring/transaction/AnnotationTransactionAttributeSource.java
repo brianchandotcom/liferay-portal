@@ -71,6 +71,7 @@ public class AnnotationTransactionAttributeSource
 
 	private static TransactionAttribute _nullTransactionAttribute =
 		new DefaultTransactionAttribute();
+
 	private Map<MethodTargetClassKey, TransactionAttribute>
 		_transactionAttributes =
 			new ConcurrentHashMap<MethodTargetClassKey, TransactionAttribute>();

@@ -321,7 +321,6 @@ public class PortalPolicy extends Policy {
 	private ConcurrentMap<Object, PermissionCollection> _permissionCollections =
 		new WeakValueConcurrentHashMap<Object, PermissionCollection>();
 	private Policy _policy;
-
 	private Map<Object, PermissionCollection> _rootPermissionCollections;
 
 	private class FieldPrivilegedExceptionAction

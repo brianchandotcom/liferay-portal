@@ -54,6 +54,7 @@ public class PermissionThreadLocal {
 	private static ThreadLocal<Boolean> _flushEnabled =
 		new AutoResetThreadLocal<Boolean>(
 			PermissionThreadLocal.class + "._flushEnabled", true);
+
 	private static ThreadLocal<PermissionChecker> _permissionChecker =
 		new AutoResetThreadLocal<PermissionChecker>(
 			PermissionThreadLocal.class + "._permissionChecker") {

@@ -99,7 +99,7 @@
 				COUNT(DISTINCT templateId) AS COUNT_VALUE
 			FROM
 				DDMTemplate
-			INNER JOIN
+			LEFT JOIN
 				DDMStructure ON
 					(DDMTemplate.classPK = DDMStructure.structureId)
 			WHERE
@@ -157,7 +157,7 @@
 				{DDMTemplate.*}
 			FROM
 				DDMTemplate
-			INNER JOIN
+			LEFT JOIN
 				DDMStructure ON
 					(DDMTemplate.classPK = DDMStructure.structureId)
 			WHERE

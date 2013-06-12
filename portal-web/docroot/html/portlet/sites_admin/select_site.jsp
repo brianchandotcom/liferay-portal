@@ -77,7 +77,9 @@ portletURL.setParameter("target", target);
 				}
 			}
 
-			excludedGroupIds.add((GroupLocalServiceUtil.fetchFriendlyURLGroup(company.getCompanyId(), "/global")).getGroupId());
+			Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(company.getCompanyId());
+
+			excludedGroupIds.add(companyGroup.getGroupId());
 
 			groupParams.put("excludedGroupIds", excludedGroupIds);
 			groupParams.put("site", Boolean.TRUE);

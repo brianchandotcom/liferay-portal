@@ -21,12 +21,20 @@ MBMessageDisplay messageDisplay = (MBMessageDisplay)request.getAttribute(WebKeys
 
 MBCategory category = messageDisplay.getCategory();
 
+MBMessage message = messageDisplay.getMessage();
+
 String displayStyle = BeanPropertiesUtil.getString(category, "displayStyle", MBCategoryConstants.DEFAULT_DISPLAY_STYLE);
 
 if (Validator.isNull(displayStyle)) {
 	displayStyle = MBCategoryConstants.DEFAULT_DISPLAY_STYLE;
 }
+
+if ((message != null) && layout.isTypeControlPanel()) {
+	MBUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
+}
 %>
+
+<liferay-util:include page="/html/portlet/message_boards/top_links.jsp" />
 
 <div class="displayStyle-<%= displayStyle %>">
 	<liferay-util:include page='<%= "/html/portlet/message_boards/view_message_" + displayStyle + ".jsp" %>' />

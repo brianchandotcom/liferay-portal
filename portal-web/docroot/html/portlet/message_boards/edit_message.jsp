@@ -74,12 +74,37 @@ if (Validator.isNull(redirect)) {
 
 	redirect = viewMessageURL.toString();
 }
+
+if (curParentMessage != null) {
+
+	MBUtil.addPortletBreadcrumbEntries(curParentMessage, request, renderResponse);
+
+	if (!layout.isTypeControlPanel()) {
+		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "reply"), currentURL);
+	}
+}
+else if (message != null) {
+	MBUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
+
+	if (!layout.isTypeControlPanel()) {
+		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "edit"), currentURL);
+	}
+}
+else {
+	MBUtil.addPortletBreadcrumbEntries(categoryId, request, renderResponse);
+
+	if (!layout.isTypeControlPanel()) {
+		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "add-message"), currentURL);
+	}
+}
 %>
+
+<liferay-util:include page="/html/portlet/message_boards/top_links.jsp" />
 
 <liferay-ui:header
 	backURL="<%= redirect %>"
 	localizeTitle="<%= (message == null) %>"
-	title='<%= (message == null) ? "new-message" : message.getSubject() %>'
+	title='<%= (curParentMessage != null) ? LanguageUtil.format(pageContext, "reply-to-x", curParentMessage.getSubject()) : (message == null) ? "add-message" : LanguageUtil.format(pageContext, "edit-x", message.getSubject()) %>'
 />
 
 <c:if test="<%= preview %>">
@@ -584,21 +609,3 @@ if (Validator.isNull(redirect)) {
 
 	</aui:script>
 </c:if>
-
-<%
-if (curParentMessage != null) {
-	MBUtil.addPortletBreadcrumbEntries(curParentMessage, request, renderResponse);
-
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "reply"), currentURL);
-}
-else if (message != null) {
-	MBUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
-
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "edit"), currentURL);
-}
-else {
-	MBUtil.addPortletBreadcrumbEntries(categoryId, request, renderResponse);
-
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "add-message"), currentURL);
-}
-%>

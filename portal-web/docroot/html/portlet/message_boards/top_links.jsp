@@ -121,3 +121,9 @@ portletURL.setParameter("struts_action", "/message_boards/view");
 		</c:if>
 	</c:if>
 </aui:nav-bar>
+
+<c:if test="<%= layout.isTypeControlPanel() %>">
+	<div id="breadcrumb">
+		<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showCurrentPortlet="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
+	</div>
+</c:if>

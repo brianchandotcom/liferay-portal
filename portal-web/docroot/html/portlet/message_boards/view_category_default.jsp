@@ -27,6 +27,10 @@ Set<Long> categorySubscriptionClassPKs = (Set<Long>)request.getAttribute("view.j
 Set<Long> threadSubscriptionClassPKs = (Set<Long>)request.getAttribute("view.jsp-threadSubscriptionClassPKs");
 
 PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
+
+if ((category != null) && layout.isTypeControlPanel()) {
+	MBUtil.addPortletBreadcrumbEntries(category, request, renderResponse);
+}
 %>
 
 <liferay-ui:panel-container cssClass="message-boards-panels" extended="<%= false %>" id="messageBoardsPanelContainer" persistState="<%= true %>">

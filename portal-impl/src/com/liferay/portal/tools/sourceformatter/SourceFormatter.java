@@ -1109,6 +1109,71 @@ public class SourceFormatter {
 		return StringUtil.replace(ifClause, line, newLine);
 	}
 
+	private static String _fixJavaTermsDivider(
+		String content, JavaTerm previousJavaTerm, JavaTerm javaTerm) {
+
+		String javaTermContent = javaTerm.getContent();
+
+		if (javaTermContent.startsWith(StringPool.TAB + "//") ||
+			javaTermContent.contains(StringPool.TAB + "static {")) {
+
+			return content;
+		}
+
+		String previousJavaTermContent = previousJavaTerm.getContent();
+
+		if (previousJavaTermContent.startsWith(StringPool.TAB + "//") ||
+			previousJavaTermContent.contains(StringPool.TAB + "static {")) {
+
+			return content;
+		}
+
+		String previousJavaTermName = previousJavaTerm.getName();
+
+		boolean requiresEmptyLine = false;
+
+		if (previousJavaTerm.getType() != javaTerm.getType()) {
+			requiresEmptyLine = true;
+		}
+		else if (!_isInJavaTermTypeGroup(
+					javaTerm.getType(), _TYPE_VARIABLE_NOT_FINAL)) {
+
+			requiresEmptyLine = true;
+		}
+		else if (_hasAnnotationCommentOrJavadoc(javaTermContent) ||
+				 _hasAnnotationCommentOrJavadoc(previousJavaTermContent)) {
+
+			requiresEmptyLine = true;
+		}
+		else if ((previousJavaTerm.getType() ==
+					_TYPE_VARIABLE_PRIVATE_STATIC) &&
+				 (previousJavaTermName.equals("_log") ||
+				  previousJavaTermName.equals("_instance"))) {
+
+			requiresEmptyLine = true;
+		}
+		else if (previousJavaTermContent.contains("\n\n\t") ||
+				 javaTermContent.contains("\n\n\t")) {
+
+			requiresEmptyLine = true;
+		}
+
+		if (requiresEmptyLine) {
+			if (!content.contains("\n\n" + javaTermContent)) {
+				return StringUtil.replace(
+					content, "\n" + javaTermContent,
+					"\n\n" + javaTermContent);
+			}
+		}
+		else if (content.contains("\n\n" + javaTermContent)) {
+			return StringUtil.replace(
+				content, "\n\n" + javaTermContent,
+				"\n" + javaTermContent);
+		}
+
+		return content;
+	}
+
 	private static String _fixSessionKey(
 		String fileName, String content, Pattern pattern) {
 
@@ -1720,11 +1785,11 @@ public class SourceFormatter {
 				newContent,
 				new String[] {
 					";\n/**", "\t/*\n\t *", "catch(", "else{", "if(", "for(",
-					"while(", "List <", "){\n", "]{\n", "\n\n\n"
+					"while(", "List <", "){\n", "]{\n"
 				},
 				new String[] {
 					";\n\n/**", "\t/**\n\t *", "catch (", "else {", "if (",
-					"for (", "while (", "List<", ") {\n", "] {\n", "\n\n"
+					"for (", "while (", "List<", ") {\n", "] {\n"
 				});
 
 			Pattern pattern = Pattern.compile(
@@ -1872,6 +1937,8 @@ public class SourceFormatter {
 
 			for (;;) {
 				newContent = _formatJava(fileName, oldContent);
+
+				newContent = StringUtil.replace(newContent, "\n\n\n", "\n\n");
 
 				if (oldContent.equals(newContent)) {
 					break;
@@ -2070,7 +2137,7 @@ public class SourceFormatter {
 
 				lastCommentOrAnnotationPos = -1;
 			}
-			else if (_hasAnnotationOrJavadoc(line)) {
+			else if (_hasAnnotationCommentOrJavadoc(line)) {
 				if (lastCommentOrAnnotationPos == -1) {
 					lastCommentOrAnnotationPos = index;
 				}
@@ -4656,9 +4723,10 @@ public class SourceFormatter {
 		return StringPool.BLANK;
 	}
 
-	private static boolean _hasAnnotationOrJavadoc(String s) {
+	private static boolean _hasAnnotationCommentOrJavadoc(String s) {
 		if (s.startsWith(StringPool.TAB + StringPool.AT) ||
-			s.startsWith(StringPool.TAB + "/**")) {
+			s.startsWith(StringPool.TAB + "/**") ||
+			s.startsWith(StringPool.TAB + "//")) {
 
 			return true;
 		}
@@ -5009,20 +5077,15 @@ public class SourceFormatter {
 	private static String _sortJavaTerms(
 		String fileName, String content, Set<JavaTerm> javaTerms) {
 
-		String previousJavaTermContent = StringPool.BLANK;
-		int previousJavaTermLineCount = -1;
-		String previousJavaTermName = StringPool.BLANK;
-		int previousJavaTermType = -1;
+		JavaTerm previousJavaTerm = null;
 
 		Iterator<JavaTerm> itr = javaTerms.iterator();
 
 		while (itr.hasNext()) {
 			JavaTerm javaTerm = itr.next();
 
-			String javaTermContent = javaTerm.getContent();
 			int javaTermLineCount = javaTerm.getLineCount();
 			String javaTermName = javaTerm.getName();
-			int javaTermType = javaTerm.getType();
 
 			String excluded = null;
 
@@ -5040,8 +5103,13 @@ public class SourceFormatter {
 				}
 			}
 
-			if (excluded == null) {
-				if (previousJavaTermLineCount > javaTermLineCount) {
+			if ((excluded == null) && (previousJavaTerm != null)) {
+				String javaTermContent = javaTerm.getContent();
+				String previousJavaTermContent = previousJavaTerm.getContent();
+
+				if (previousJavaTerm.getLineCount() > javaTermLineCount) {
+					String previousJavaTermName = previousJavaTerm.getName();
+
 					String javaTermNameLowerCase = javaTermName.toLowerCase();
 					String previousJavaTermNameLowerCase =
 						previousJavaTermName.toLowerCase();
@@ -5070,26 +5138,11 @@ public class SourceFormatter {
 					}
 				}
 
-				if ((previousJavaTermType == javaTermType) &&
-					((javaTermType == _TYPE_VARIABLE_PRIVATE_STATIC) ||
-					 (javaTermType == _TYPE_VARIABLE_PRIVATE) ||
-					 (javaTermType == _TYPE_VARIABLE_PROTECTED_STATIC) ||
-					 (javaTermType == _TYPE_VARIABLE_PROTECTED)) &&
-					(_hasAnnotationOrJavadoc(previousJavaTermContent) ||
-					 _hasAnnotationOrJavadoc(javaTermContent))) {
-
-					if (!content.contains("\n\n" + javaTermContent)) {
-						return StringUtil.replace(
-							content, "\n" + javaTermContent,
-							"\n\n" + javaTermContent);
-					}
-				}
+				content = _fixJavaTermsDivider(
+					content, previousJavaTerm, javaTerm);
 			}
 
-			previousJavaTermContent = javaTermContent;
-			previousJavaTermLineCount = javaTermLineCount;
-			previousJavaTermName = javaTermName;
-			previousJavaTermType = javaTermType;
+			previousJavaTerm = javaTerm;
 		}
 
 		return content;

@@ -18,8 +18,8 @@ import com.liferay.portal.NoSuchImageException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
+import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
-import com.liferay.portal.kernel.lar.ExportImportUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -159,7 +159,7 @@ public class JournalArticleStagedModelDataHandler
 
 			if (Validator.isNotNull(article.getSmallImageURL())) {
 				String smallImageURL =
-					ExportImportUtil.replaceExportContentReferences(
+					ExportImportHelperUtil.replaceExportContentReferences(
 						portletDataContext, article, articleElement,
 						article.getSmallImageURL().concat(StringPool.SPACE),
 						true);
@@ -193,7 +193,7 @@ public class JournalArticleStagedModelDataHandler
 
 		article.setStatusByUserUuid(article.getStatusByUserUuid());
 
-		String content = ExportImportUtil.replaceExportContentReferences(
+		String content = ExportImportHelperUtil.replaceExportContentReferences(
 			portletDataContext, article, articleElement, article.getContent(),
 			portletDataContext.getBooleanParameter(
 				JournalPortletDataHandler.NAMESPACE, "embedded-assets"));
@@ -280,7 +280,7 @@ public class JournalArticleStagedModelDataHandler
 		Element articleElement =
 			portletDataContext.getImportDataStagedModelElement(article);
 
-		content = ExportImportUtil.replaceImportContentReferences(
+		content = ExportImportHelperUtil.replaceImportContentReferences(
 			portletDataContext, articleElement, content, true);
 
 		article.setContent(content);
@@ -501,7 +501,7 @@ public class JournalArticleStagedModelDataHandler
 
 			if (Validator.isNotNull(article.getSmallImageURL())) {
 				String smallImageURL =
-					ExportImportUtil.replaceImportContentReferences(
+					ExportImportHelperUtil.replaceImportContentReferences(
 						portletDataContext, articleElement,
 						article.getSmallImageURL(), true);
 

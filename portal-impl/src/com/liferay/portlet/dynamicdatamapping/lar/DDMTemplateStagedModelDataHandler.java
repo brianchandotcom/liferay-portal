@@ -15,8 +15,8 @@
 package com.liferay.portlet.dynamicdatamapping.lar;
 
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
+import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
-import com.liferay.portal.kernel.lar.ExportImportUtil;
 import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
@@ -137,7 +137,7 @@ public class DDMTemplateStagedModelDataHandler
 
 			if (Validator.isNotNull(template.getSmallImageURL())) {
 				String smallImageURL =
-					ExportImportUtil.replaceExportContentReferences(
+					ExportImportHelperUtil.replaceExportContentReferences(
 						portletDataContext, template, templateElement,
 						template.getSmallImageURL().concat(StringPool.SPACE),
 						true);
@@ -163,9 +163,10 @@ public class DDMTemplateStagedModelDataHandler
 		if (portletDataContext.getBooleanParameter(
 				DDMPortletDataHandler.NAMESPACE, "embedded-assets")) {
 
-			String content = ExportImportUtil.replaceExportContentReferences(
-				portletDataContext, template, templateElement,
-				template.getScript(), true);
+			String content =
+				ExportImportHelperUtil.replaceExportContentReferences(
+					portletDataContext, template, templateElement,
+					template.getScript(), true);
 
 			template.setScript(content);
 		}
@@ -211,7 +212,7 @@ public class DDMTemplateStagedModelDataHandler
 
 			if (Validator.isNotNull(template.getSmallImageURL())) {
 				String smallImageURL =
-					ExportImportUtil.replaceImportContentReferences(
+					ExportImportHelperUtil.replaceImportContentReferences(
 						portletDataContext, element,
 						template.getSmallImageURL(), true);
 

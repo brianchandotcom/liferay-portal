@@ -36,9 +36,9 @@ if (group.isStagingGroup()) {
 
 boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 
-FileEntry fileEntry = ExportImportUtil.getTempFileEntry(groupId, themeDisplay.getUserId());
+FileEntry fileEntry = ExportImportHelperUtil.getTempFileEntry(groupId, themeDisplay.getUserId());
 
-ManifestSummary manifestSummary = com.liferay.portal.kernel.lar.ExportImportUtil.getManifestSummary(user.getUserId(), themeDisplay.getSiteGroupId(), new HashMap<String, String[]>(), fileEntry);
+ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user.getUserId(), themeDisplay.getSiteGroupId(), new HashMap<String, String[]>(), fileEntry);
 %>
 
 <liferay-ui:error exception="<%= LARFileException.class %>" message="please-specify-a-lar-file-to-import" />

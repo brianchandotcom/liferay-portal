@@ -35,13 +35,13 @@ import javax.portlet.PortletRequest;
 /**
  * @author Zsolt Berentey
  */
-public class ExportImportUtil {
+public class ExportImportHelperUtil {
 
 	public static Calendar getDate(
 		PortletRequest portletRequest, String paramPrefix,
 		boolean timeZoneSensitive) {
 
-		return getExportImport().getDate(
+		return getExportImportHelper().getDate(
 			portletRequest, paramPrefix, timeZoneSensitive);
 	}
 
@@ -50,20 +50,21 @@ public class ExportImportUtil {
 			long plid, String portletId)
 		throws Exception {
 
-		return getExportImport().getDateRange(
+		return getExportImportHelper().getDateRange(
 			portletRequest, groupId, privateLayout, plid, portletId);
 	}
 
 	public static Layout getExportableLayout(ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
 
-		return getExportImport().getExportableLayout(themeDisplay);
+		return getExportImportHelper().getExportableLayout(themeDisplay);
 	}
 
-	public static ExportImport getExportImport() {
-		PortalRuntimePermission.checkGetBeanProperty(ExportImportUtil.class);
+	public static ExportImportHelper getExportImportHelper() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			ExportImportHelperUtil.class);
 
-		return _exportImport;
+		return _exportImportHelper;
 	}
 
 	public static ManifestSummary getManifestSummary(
@@ -71,7 +72,7 @@ public class ExportImportUtil {
 			File file)
 		throws Exception {
 
-		return getExportImport().getManifestSummary(
+		return getExportImportHelper().getManifestSummary(
 			userId, groupId, parameterMap, file);
 	}
 
@@ -80,14 +81,14 @@ public class ExportImportUtil {
 			FileEntry fileEntry)
 		throws Exception {
 
-		return getExportImport().getManifestSummary(
+		return getExportImportHelper().getManifestSummary(
 			userId, groupId, parameterMap, fileEntry);
 	}
 
 	public static FileEntry getTempFileEntry(long groupId, long userId)
 		throws PortalException, SystemException {
 
-		return getExportImport().getTempFileEntry(groupId, userId);
+		return getExportImportHelper().getTempFileEntry(groupId, userId);
 	}
 
 	public static String replaceExportContentReferences(
@@ -96,7 +97,7 @@ public class ExportImportUtil {
 			String content, boolean exportReferencedContent)
 		throws Exception {
 
-		return getExportImport().replaceExportContentReferences(
+		return getExportImportHelper().replaceExportContentReferences(
 			portletDataContext, entityStagedModel, entityElement, content,
 			exportReferencedContent);
 	}
@@ -107,7 +108,7 @@ public class ExportImportUtil {
 			String content, boolean exportReferencedContent)
 		throws Exception {
 
-		return getExportImport().replaceExportDLReferences(
+		return getExportImportHelper().replaceExportDLReferences(
 			portletDataContext, entityStagedModel, entityElement, content,
 			exportReferencedContent);
 	}
@@ -117,7 +118,7 @@ public class ExportImportUtil {
 			boolean exportReferencedContent)
 		throws Exception {
 
-		return getExportImport().replaceExportLayoutReferences(
+		return getExportImportHelper().replaceExportLayoutReferences(
 			portletDataContext, content, exportReferencedContent);
 	}
 
@@ -127,7 +128,7 @@ public class ExportImportUtil {
 			String content, boolean exportReferencedContent)
 		throws Exception {
 
-		return getExportImport().replaceExportLinksToLayouts(
+		return getExportImportHelper().replaceExportLinksToLayouts(
 			portletDataContext, entityStagedModel, entityElement, content,
 			exportReferencedContent);
 	}
@@ -137,7 +138,7 @@ public class ExportImportUtil {
 			String content, boolean importReferencedContent)
 		throws Exception {
 
-		return getExportImport().replaceImportContentReferences(
+		return getExportImportHelper().replaceImportContentReferences(
 			portletDataContext, entityElement, content,
 			importReferencedContent);
 	}
@@ -147,7 +148,7 @@ public class ExportImportUtil {
 			String content, boolean importReferencedContent)
 		throws Exception {
 
-		return getExportImport().replaceImportDLReferences(
+		return getExportImportHelper().replaceImportDLReferences(
 			portletDataContext, entityElement, content,
 			importReferencedContent);
 	}
@@ -157,7 +158,7 @@ public class ExportImportUtil {
 			boolean importReferencedContent)
 		throws Exception {
 
-		return getExportImport().replaceImportLayoutReferences(
+		return getExportImportHelper().replaceImportLayoutReferences(
 			portletDataContext, content, importReferencedContent);
 	}
 
@@ -166,7 +167,7 @@ public class ExportImportUtil {
 			boolean importReferencedContent)
 		throws Exception {
 
-		return getExportImport().replaceImportLinksToLayouts(
+		return getExportImportHelper().replaceImportLinksToLayouts(
 			portletDataContext, content, importReferencedContent);
 	}
 
@@ -175,22 +176,22 @@ public class ExportImportUtil {
 			File file)
 		throws Exception {
 
-		return getExportImport().validateMissingReferences(
+		return getExportImportHelper().validateMissingReferences(
 			userId, groupId, parameterMap, file);
 	}
 
 	public static void writeManifestSummary(
 		Document document, ManifestSummary manifestSummary) {
 
-		getExportImport().writeManifestSummary(document, manifestSummary);
+		getExportImportHelper().writeManifestSummary(document, manifestSummary);
 	}
 
-	public void setExportImport(ExportImport exportImport) {
+	public void setExportImportHelper(ExportImportHelper exportImportHelper) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
-		_exportImport = exportImport;
+		_exportImportHelper = exportImportHelper;
 	}
 
-	private static ExportImport _exportImport;
+	private static ExportImportHelper _exportImportHelper;
 
 }

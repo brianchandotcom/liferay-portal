@@ -15,8 +15,8 @@
 package com.liferay.portlet.blogs.lar;
 
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
+import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
-import com.liferay.portal.kernel.lar.ExportImportUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
@@ -71,7 +71,7 @@ public class BlogsEntryStagedModelDataHandler
 
 			if (Validator.isNotNull(entry.getSmallImageURL())) {
 				String smallImageURL =
-					ExportImportUtil.replaceExportContentReferences(
+					ExportImportHelperUtil.replaceExportContentReferences(
 						portletDataContext, entry, entryElement,
 						entry.getSmallImageURL().concat(StringPool.SPACE),
 						true);
@@ -93,7 +93,7 @@ public class BlogsEntryStagedModelDataHandler
 			}
 		}
 
-		String content = ExportImportUtil.replaceExportContentReferences(
+		String content = ExportImportHelperUtil.replaceExportContentReferences(
 			portletDataContext, entry, entryElement, entry.getContent(),
 			portletDataContext.getBooleanParameter(
 				BlogsPortletDataHandler.NAMESPACE, "embedded-assets"));
@@ -115,7 +115,7 @@ public class BlogsEntryStagedModelDataHandler
 		Element entryElement =
 			portletDataContext.getImportDataStagedModelElement(entry);
 
-		String content = ExportImportUtil.replaceImportContentReferences(
+		String content = ExportImportHelperUtil.replaceImportContentReferences(
 			portletDataContext, entryElement, entry.getContent(),
 			portletDataContext.getBooleanParameter(
 				BlogsPortletDataHandler.NAMESPACE, "embedded-assets"));
@@ -151,7 +151,7 @@ public class BlogsEntryStagedModelDataHandler
 
 				if (Validator.isNotNull(entry.getSmallImageURL())) {
 					String smallImageURL =
-						ExportImportUtil.replaceImportContentReferences(
+						ExportImportHelperUtil.replaceImportContentReferences(
 							portletDataContext, entryElement,
 							entry.getSmallImageURL(), true);
 

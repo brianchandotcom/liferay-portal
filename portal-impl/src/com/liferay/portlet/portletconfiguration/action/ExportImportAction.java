@@ -22,7 +22,7 @@ import com.liferay.portal.LocaleException;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.PortletIdException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.lar.ExportImportUtil;
+import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
@@ -118,7 +118,7 @@ public class ExportImportAction extends EditConfigurationAction {
 			else {
 				long plid = ParamUtil.getLong(actionRequest, "plid");
 
-				DateRange dateRange = ExportImportUtil.getDateRange(
+				DateRange dateRange = ExportImportHelperUtil.getDateRange(
 					actionRequest, 0, false, plid, portlet.getPortletId());
 
 				Date startDate = dateRange.getStartDate();
@@ -206,7 +206,7 @@ public class ExportImportAction extends EditConfigurationAction {
 			String fileName = ParamUtil.getString(
 				actionRequest, "exportFileName");
 
-			DateRange dateRange = ExportImportUtil.getDateRange(
+			DateRange dateRange = ExportImportHelperUtil.getDateRange(
 				actionRequest, groupId, false, plid, portlet.getPortletId());
 
 			file = LayoutServiceUtil.exportPortletInfoAsFile(

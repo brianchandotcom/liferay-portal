@@ -1,10 +1,22 @@
 AUI.add(
 	'liferay-notice',
 	function(A) {
-		var Lang = A.Lang;
 		var ADOM = A.DOM;
 		var ANode = A.Node;
 		var Do = A.Do;
+		var Lang = A.Lang;
+
+		var CSS_ALERTS = 'has-alerts';
+
+		var STR_CLICK = 'click';
+
+		var STR_EMPTY = '';
+
+		var STR_HIDE = 'hide';
+
+		var STR_PX = 'px';
+
+		var STR_SHOW = 'show';
 
 		/**
 		 * @deprecated
@@ -43,8 +55,8 @@ AUI.add(
 			}
 
 			instance._animationConfig = options.animationConfig || {
-				easing: 'ease-out',
 				duration: 2,
+				easing: 'ease-out',
 				top: '50px'
 			};
 
@@ -55,8 +67,8 @@ AUI.add(
 			instance._body = A.getBody();
 
 			instance._useToggleButton = false;
-			instance._hideText = '';
-			instance._showText = '';
+			instance._hideText = STR_EMPTY;
+			instance._showText = STR_EMPTY;
 
 			if (options.toggleText !== false) {
 				instance.toggleText = A.mix(
@@ -78,7 +90,7 @@ AUI.add(
 				instance._noticeClass += ' ' + options.noticeClass;
 			}
 
-			instance._content = options.content || '';
+			instance._content = options.content || STR_EMPTY;
 
 			instance._createHTML();
 
@@ -93,7 +105,7 @@ AUI.add(
 
 				notice.hide();
 
-				instance._body.removeClass('has-alerts');
+				instance._body.removeClass(CSS_ALERTS);
 
 				if (instance._onClose) {
 					instance._onClose();
@@ -112,9 +124,41 @@ AUI.add(
 						instance._body = A.getBody();
 					}
 
-					instance._body.addClass('has-alerts');
+					instance._body.addClass(CSS_ALERTS);
 
 					alerts.each(instance._addCloseButton, instance);
+				}
+			},
+
+			_afterNoticeShow: function(event) {
+				var instance = this;
+
+				if (instance._useAnimation) {
+					var noticeLeft;
+
+					var noticeRegion;
+
+					if (!instance._animationConfig.left) {
+						var viewportWidth = ADOM.winWidth();
+
+						noticeRegion = ADOM.region(ANode.getDOMNode(instance._notice));
+
+						noticeLeft = (viewportWidth / 2) - (noticeRegion.width / 2);
+
+						instance._animationConfig.left = noticeLeft + STR_PX;
+					}
+
+					instance._notice.setXY([noticeLeft, -noticeRegion.height]);
+
+					instance._notice.transition(
+						instance._animationConfig,
+						function() {
+							A.later(instance._timeout, instance._notice, STR_HIDE);
+						}
+					);
+				}
+				else {
+					A.later(instance._timeout, instance._notice, STR_HIDE);
 				}
 			},
 
@@ -127,7 +171,7 @@ AUI.add(
 					var animationConfig = A.merge(
 						instance._animationConfig,
 						{
-							top: -instance._notice.get('offsetHeight') + 'px'
+							top: -instance._notice.get('offsetHeight') + STR_PX
 						}
 					);
 
@@ -137,34 +181,6 @@ AUI.add(
 				}
 
 				return returnVal;
-			},
-
-			_afterNoticeShow: function(event) {
-				var instance = this;
-
-				if (instance._useAnimation) {
-					if (!instance._animationConfig.left) {
-						var viewportWidth = ADOM.winWidth();
-
-						var noticeRegion = ADOM.region(ANode.getDOMNode(instance._notice));
-
-						var noticeLeft = (viewportWidth / 2) - (noticeRegion.width / 2);
-
-						instance._animationConfig.left = noticeLeft + 'px';
-					}
-
-					instance._notice.setXY([noticeLeft, -noticeRegion.height]);
-
-					instance._notice.transition(
-						instance._animationConfig,
-						function() {
-							A.later(instance._timeout, instance._notice, 'hide');
-						}
-					);
-				}
-				else {
-					A.later(instance._timeout, instance._notice, 'hide');
-				}
 			},
 
 			_createHTML: function() {
@@ -188,12 +204,12 @@ AUI.add(
 					instance._body.append(notice);
 				}
 
-				instance._body.addClass('has-alerts');
+				instance._body.addClass(CSS_ALERTS);
 
 				if (instance._timeout > 0) {
-					Do.before(instance._beforeNoticeHide, notice, 'hide', instance);
+					Do.before(instance._beforeNoticeHide, notice, STR_HIDE, instance);
 
-					Do.after(instance._afterNoticeShow, notice, 'show', instance);
+					Do.after(instance._afterNoticeShow, notice, STR_SHOW, instance);
 				}
 
 				instance._notice = notice;
@@ -209,7 +225,7 @@ AUI.add(
 				}
 				else {
 					instance._useCloseButton = false;
-					instance._closeText = '';
+					instance._closeText = STR_EMPTY;
 				}
 
 				if (instance._useCloseButton) {
@@ -224,7 +240,7 @@ AUI.add(
 				}
 
 				if (closeButton) {
-					closeButton.on('click', instance.close, instance);
+					closeButton.on(STR_CLICK, instance.close, instance);
 				}
 			},
 
@@ -232,8 +248,8 @@ AUI.add(
 				var instance = this;
 
 				if (instance._useToggleButton) {
-					instance._hideText = instance._toggleText.hide || Liferay.Language.get('hide');
-					instance._showText = instance._toggleText.show || Liferay.Language.get('show');
+					instance._hideText = instance._toggleText.hide || Liferay.Language.get(STR_HIDE);
+					instance._showText = instance._toggleText.show || Liferay.Language.get(STR_SHOW);
 
 					var toggleButton = ANode.create('<a class="toggle-button" href="javascript:;"><span>' + instance._hideText + '</span></a>');
 					var toggleSpan = toggleButton.one('span');
@@ -245,7 +261,7 @@ AUI.add(
 					var hideText = instance._hideText;
 
 					toggleButton.on(
-						'click',
+						STR_CLICK,
 						function(event) {
 							var text = showText;
 

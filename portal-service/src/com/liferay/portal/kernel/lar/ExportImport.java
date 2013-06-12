@@ -36,6 +36,8 @@ import javax.portlet.PortletRequest;
  */
 public interface ExportImport {
 
+	public static final String TEMP_FOLDER_NAME = ExportImport.class.getName();
+
 	public Calendar getDate(
 		PortletRequest portletRequest, String paramPrefix,
 		boolean timeZoneSensitive);
@@ -57,6 +59,9 @@ public interface ExportImport {
 			long userId, long groupId, Map<String, String[]> parameterMap,
 			FileEntry fileEntry)
 		throws Exception;
+
+	public FileEntry getTempFileEntry(long groupId, long userId)
+		throws PortalException, SystemException;
 
 	public String replaceExportContentReferences(
 			PortletDataContext portletDataContext,

@@ -84,6 +84,12 @@ public class ExportImportUtil {
 			userId, groupId, parameterMap, fileEntry);
 	}
 
+	public static FileEntry getTempFileEntry(long groupId, long userId)
+		throws PortalException, SystemException {
+
+		return getExportImport().getTempFileEntry(groupId, userId);
+	}
+
 	public static String replaceExportContentReferences(
 			PortletDataContext portletDataContext,
 			StagedModel entityStagedModel, Element entityElement,

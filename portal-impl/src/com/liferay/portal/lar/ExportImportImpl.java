@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TempFileUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -63,6 +64,7 @@ import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -384,6 +386,21 @@ public class ExportImportImpl implements ExportImport {
 		}
 
 		return manifestSummary;
+	}
+
+	@Override
+	public FileEntry getTempFileEntry(long groupId, long userId)
+		throws PortalException, SystemException {
+
+		String[] tempFileEntryNames = LayoutServiceUtil.getTempFileEntryNames(
+			groupId, TEMP_FOLDER_NAME);
+
+		if (tempFileEntryNames.length == 0) {
+			return null;
+		}
+
+		return TempFileUtil.getTempFile(
+			groupId, userId, tempFileEntryNames[0], TEMP_FOLDER_NAME);
 	}
 
 	@Override

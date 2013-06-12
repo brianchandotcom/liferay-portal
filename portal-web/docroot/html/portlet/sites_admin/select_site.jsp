@@ -64,9 +64,13 @@ portletURL.setParameter("target", target);
 			<%
 			results.clear();
 
-			if (groupId > 0) {
-				List<Long> excludedGroupIds = new ArrayList<Long>();
+			List<Long> excludedGroupIds = new ArrayList<Long>();
 
+			Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(company.getCompanyId());
+
+			excludedGroupIds.add(companyGroup.getGroupId());
+
+			if (groupId > 0) {
 				Group group = GroupLocalServiceUtil.getGroup(groupId);
 
 				if (group.isStagingGroup()) {
@@ -75,9 +79,9 @@ portletURL.setParameter("target", target);
 				else {
 					excludedGroupIds.add(groupId);
 				}
-
-				groupParams.put("excludedGroupIds", excludedGroupIds);
 			}
+
+			groupParams.put("excludedGroupIds", excludedGroupIds);
 
 			groupParams.put("site", Boolean.TRUE);
 

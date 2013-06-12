@@ -66,32 +66,28 @@
 <aui:script use="liferay-dockbar-device-preview">
 	new Liferay.Dockbar.DevicePreview(
 		{
-			namespace: '<portlet:namespace />',
 			devices: {
 				'autosize': {},
-				'smartphone':
-				{
-					height: 640,
-					width: 400
+				'custom': {
+					height: '.device-height',
+					width: '.device-width'
 				},
-				'tablet':
-				{
-					height: 900,
-					width: 760
-				},
-				'desktop':
-				{
+				'desktop': {
 					height: 1050,
 					width: 1300
 				},
-				'custom':
-				{
-					height: '.device-height',
-					width: '.device-width'
+				'smartphone': {
+					height: 640,
+					width: 400
+				},
+				'tablet': {
+					height: 900,
+					width: 760
 				}
 			},
 			inputHeight: '.device-height',
-			inputWidth: '.device-width'
+			inputWidth: '.device-width',
+			namespace: '<portlet:namespace />'
 		}
 	);
 </aui:script>

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/update_manager/init.jsp" %>
+<%@ include file="/html/portlet/app_manager/init.jsp" %>
 
 <%
 List updatablePackageIds = new ArrayList();
@@ -40,15 +40,15 @@ List updatablePackageIds = new ArrayList();
 			<c:otherwise>
 
 				<%
-				String uploadProgressId = PortalUtil.generateRandomKey(request, "portlet_update_manager_view");
+				String uploadProgressId = PortalUtil.generateRandomKey(request, "portlet_app_manager_view");
 				%>
 
 				<portlet:actionURL var="installPluginURL">
-					<portlet:param name="struts_action" value="/update_manager/install_plugin" />
+					<portlet:param name="struts_action" value="/app_manager/install_plugin" />
 				</portlet:actionURL>
 
 				<portlet:renderURL var="redirectURL">
-					<portlet:param name="struts_action" value="/update_manager/view" />
+					<portlet:param name="struts_action" value="/app_manager/view" />
 				</portlet:renderURL>
 
 				<aui:form action="<%= installPluginURL %>" method="post" name="fm">
@@ -180,7 +180,7 @@ List updatablePackageIds = new ArrayList();
 
 							// Actions
 
-							row.addJSP("/html/portlet/update_manager/plugin_package_action.jsp");
+							row.addJSP("/html/portlet/app_manager/plugin_package_action.jsp");
 
 							// Add result row
 
@@ -208,7 +208,7 @@ List updatablePackageIds = new ArrayList();
 
 							<c:if test="<%= !updatablePackageIds.isEmpty() %>">
 								<portlet:actionURL var="ignoreAllURL">
-									<portlet:param name="struts_action" value="/update_manager/install_plugin" />
+									<portlet:param name="struts_action" value="/app_manager/install_plugin" />
 									<portlet:param name="<%= Constants.CMD %>" value="ignorePackages" />
 									<portlet:param name="redirect" value="<%= currentURL %>" />
 									<portlet:param name="pluginPackagesIgnored" value='<%= StringUtil.merge(updatablePackageIds, "\n") %>' />
@@ -263,5 +263,5 @@ List updatablePackageIds = new ArrayList();
 </c:choose>
 
 <%!
-private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.update_manager.view_jsp");
+private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.app_manager.view_jsp");
 %>

@@ -1619,12 +1619,12 @@
 		<put name="portlet_content" value="/portlet/trash/view_content.jsp" />
 	</definition>
 
-	<!-- Update Manager -->
+	<!-- App Manager -->
 
-	<definition name="portlet.update_manager" extends="portlet" />
+	<definition name="portlet.app_manager" extends="portlet" />
 
-	<definition name="portlet.update_manager.view" extends="portlet.update_manager">
-		<put name="portlet_content" value="/portlet/update_manager/view.jsp" />
+	<definition name="portlet.app_manager.view" extends="portlet.app_manager">
+		<put name="portlet_content" value="/portlet/app_manager/view.jsp" />
 	</definition>
 
 	<!-- User Groups Admin -->

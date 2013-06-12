@@ -1251,15 +1251,15 @@ public class ServicePreAction extends Action {
 
 		themeDisplay.setURLSignOut(mainPath.concat(_PATH_PORTAL_LOGOUT));
 
-		PortletURL updateManagerURL = new PortletURLImpl(
+		PortletURL appManagerURL = new PortletURLImpl(
 			request, PortletKeys.UPDATE_MANAGER, plid,
 			PortletRequest.RENDER_PHASE);
 
-		updateManagerURL.setParameter("struts_action", "/update_manager/view");
-		updateManagerURL.setPortletMode(PortletMode.VIEW);
-		updateManagerURL.setWindowState(WindowState.MAXIMIZED);
+		appManagerURL.setParameter("struts_action", "/app_manager/view");
+		appManagerURL.setPortletMode(PortletMode.VIEW);
+		appManagerURL.setWindowState(WindowState.MAXIMIZED);
 
-		themeDisplay.setURLUpdateManager(updateManagerURL);
+		themeDisplay.setURLAppManager(appManagerURL);
 
 		return themeDisplay;
 	}

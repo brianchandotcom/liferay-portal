@@ -610,8 +610,8 @@ public class ThemeDisplay
 		return _urlSiteSettings;
 	}
 
-	public PortletURL getURLUpdateManager() {
-		return _urlUpdateManager;
+	public PortletURL getURLAppManager() {
+		return _urlAppManager;
 	}
 
 	public User getUser() {
@@ -1430,8 +1430,8 @@ public class ThemeDisplay
 		_urlSiteSettings = urlSiteSettings;
 	}
 
-	public void setURLUpdateManager(PortletURL urlUpdateManager) {
-		_urlUpdateManager = urlUpdateManager;
+	public void setURLAppManager(PortletURL urlAppManager) {
+		_urlAppManager = urlAppManager;
 	}
 
 	public void setUser(User user) throws PortalException, SystemException {
@@ -1580,7 +1580,7 @@ public class ThemeDisplay
 	private String _urlSiteAdministration = StringPool.BLANK;
 	private transient PortletURL _urlSiteMapSettings = null;
 	private transient PortletURL _urlSiteSettings = null;
-	private transient PortletURL _urlUpdateManager = null;
+	private transient PortletURL _urlAppManager = null;
 	private User _user;
 	private boolean _widget;
 

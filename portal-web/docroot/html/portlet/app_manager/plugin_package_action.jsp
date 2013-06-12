@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/update_manager/init.jsp" %>
+<%@ include file="/html/portlet/app_manager/init.jsp" %>
 
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
@@ -37,7 +37,7 @@ if (availablePluginPackage != null) {
 <liferay-ui:icon-menu>
 	<c:if test='<%= pluginPackageStatus.equals("update-available") || pluginPackageStatus.equals("update-ignored") %>'>
 		<portlet:actionURL var="updateURL">
-			<portlet:param name="struts_action" value="/update_manager/install_plugin" />
+			<portlet:param name="struts_action" value="/app_manager/install_plugin" />
 			<portlet:param name="<%= Constants.CMD %>" value="remoteDeploy" />
 			<portlet:param name="<%= Constants.PROGRESS_ID %>" value="<%= uploadProgressId %>" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
@@ -57,7 +57,7 @@ if (availablePluginPackage != null) {
 		<c:choose>
 			<c:when test="<%= !PluginPackageUtil.isIgnored(pluginPackage) %>">
 				<portlet:actionURL var="ignoreURL">
-					<portlet:param name="struts_action" value="/update_manager/install_plugin" />
+					<portlet:param name="struts_action" value="/app_manager/install_plugin" />
 					<portlet:param name="<%= Constants.CMD %>" value="ignorePackages" />
 					<portlet:param name="redirect" value="<%= redirect %>" />
 					<portlet:param name="pluginPackagesIgnored" value="<%= pluginPackage.getPackageId() %>" />
@@ -75,7 +75,7 @@ if (availablePluginPackage != null) {
 			</c:when>
 			<c:otherwise>
 				<portlet:actionURL var="unignoreURL">
-					<portlet:param name="struts_action" value="/update_manager/install_plugin" />
+					<portlet:param name="struts_action" value="/app_manager/install_plugin" />
 					<portlet:param name="<%= Constants.CMD %>" value="unignorePackages" />
 					<portlet:param name="redirect" value="<%= redirect %>" />
 					<portlet:param name="pluginPackagesUnignored" value="<%= pluginPackage.getPackageId() %>" />
@@ -96,7 +96,7 @@ if (availablePluginPackage != null) {
 
 	<c:if test="<%= PrefsPropsUtil.getBoolean(PropsKeys.HOT_UNDEPLOY_ENABLED, PropsValues.HOT_UNDEPLOY_ENABLED) %>">
 		<portlet:actionURL var="uninstallURL">
-			<portlet:param name="struts_action" value="/update_manager/install_plugin" />
+			<portlet:param name="struts_action" value="/app_manager/install_plugin" />
 			<portlet:param name="<%= Constants.CMD %>" value="uninstall" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="deploymentContext" value="<%= pluginPackage.getContext() %>" />

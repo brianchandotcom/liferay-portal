@@ -15,6 +15,7 @@
 package com.liferay.portal.lar;
 
 import com.liferay.portal.LARFileException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.ExportImport;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
@@ -213,6 +214,33 @@ public class ExportImportImpl implements ExportImport {
 		}
 
 		return new DateRange(startDate, endDate);
+	}
+
+	@Override
+	public Layout getExportableLayout(ThemeDisplay themeDisplay)
+		throws PortalException, SystemException {
+
+		Layout layout = themeDisplay.getLayout();
+
+		if (!layout.isTypeControlPanel()) {
+			return layout;
+		}
+
+		Group scopeGroup = themeDisplay.getScopeGroup();
+
+		if (scopeGroup.isLayout()) {
+			layout = LayoutLocalServiceUtil.getLayout(scopeGroup.getClassPK());
+		}
+		else if (!scopeGroup.isCompany()) {
+			long defaultPlid = LayoutLocalServiceUtil.getDefaultPlid(
+				themeDisplay.getSiteGroupId());
+
+			if (defaultPlid > 0) {
+				layout = LayoutLocalServiceUtil.getLayout(defaultPlid);
+			}
+		}
+
+		return layout;
 	}
 
 	@Override

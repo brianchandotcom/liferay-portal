@@ -14,12 +14,16 @@
 
 package com.liferay.portal.kernel.lar;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.theme.ThemeDisplay;
 
 import java.io.File;
 
@@ -48,6 +52,12 @@ public class ExportImportUtil {
 
 		return getExportImport().getDateRange(
 			portletRequest, groupId, privateLayout, plid, portletId);
+	}
+
+	public static Layout getExportableLayout(ThemeDisplay themeDisplay)
+		throws PortalException, SystemException {
+
+		return getExportImport().getExportableLayout(themeDisplay);
 	}
 
 	public static ExportImport getExportImport() {

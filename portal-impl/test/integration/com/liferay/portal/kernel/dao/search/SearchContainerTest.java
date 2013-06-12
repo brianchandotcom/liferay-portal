@@ -95,7 +95,7 @@ public class SearchContainerTest {
 			_DEFAULT_DELTA, portletURL, null, null);
 	}
 
-	private final static int _DEFAULT_DELTA = 20;
+	private static final int _DEFAULT_DELTA = 20;
 
 	private SearchContainer<?> _searchContainer;
 

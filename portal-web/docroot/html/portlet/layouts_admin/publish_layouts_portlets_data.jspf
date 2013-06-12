@@ -14,15 +14,31 @@
  */
 --%>
 
+<%
+long startDateTime = ParamUtil.getLong(request, "startDate");
+long endDateTime = ParamUtil.getLong(request, "endDate");
+
+Date startDate = null;
+Date endDate = null;
+
+if (startDateTime > 0) {
+	startDate = new Date(startDateTime);
+}
+
+if (endDateTime > 0) {
+	endDate = new Date(endDateTime);
+}
+%>
+
 <ul class="lfr-tree unstyled">
 	<li class="tree-item">
 		<aui:input name="<%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>" type="hidden" value="false" />
 
 		<aui:input checked="<%= true %>" helpMessage="all-content-publish-help" id="allContent" label="all-content" name="<%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>" type="radio" value="<%= true %>" />
 
-		<div class="hide" id="<portlet:namespace />globalContent">
-			<aui:fieldset cssClass="portlet-data-section" label="all-content">
-				<c:if test="<%= !selGroup.isStagingGroup() || !localPublishing %>">
+		<c:if test="<%= !selGroup.isStagingGroup() || !localPublishing %>">
+			<div class="hide" id="<portlet:namespace />globalContent">
+				<aui:fieldset cssClass="portlet-data-section" label="all-content">
 					<aui:input helpMessage="delete-portlet-data-help" label="delete-portlet-data-before-importing" name="<%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>" />
 
 					<ul id="<portlet:namespace />showDeleteContentWarning">
@@ -35,17 +51,17 @@
 					<aui:script>
 						Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>Checkbox', '<portlet:namespace />showDeleteContentWarning');
 					</aui:script>
-				</c:if>
-			</aui:fieldset>
-		</div>
+				</aui:fieldset>
+			</div>
 
-		<ul class="hide" id="<portlet:namespace />showChangeGlobalContent">
-			<li>
-				<div class="selected-labels" id="<portlet:namespace />selectedGlobalContent"></div>
+			<ul class="hide" id="<portlet:namespace />showChangeGlobalContent">
+				<li>
+					<div class="selected-labels" id="<portlet:namespace />selectedGlobalContent"></div>
 
-				<aui:a cssClass="modify-link" href="javascript:;" id="globalContentLink" label="change" method="get" />
-			</li>
-		</ul>
+					<aui:a cssClass="modify-link" href="javascript:;" id="globalContentLink" label="change" method="get" />
+				</li>
+			</ul>
+		</c:if>
 
 		<aui:input helpMessage="choose-content-publish-help" id="chooseContent" label="choose-content" name="<%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>" type="radio" value="<%= false %>" />
 
@@ -184,7 +200,13 @@
 
 				String portletTitle = PortalUtil.getPortletTitle(portlet, application, locale);
 
+				PortletDataContext portletDataContext = PortletDataContextFactoryUtil.createPreparePortletDataContext(themeDisplay, startDate, endDate);
+
 				PortletDataHandler portletDataHandler = portlet.getPortletDataHandlerInstance();
+
+				portletDataHandler.prepareManifestSummary(portletDataContext);
+
+				ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 			%>
 
 				<c:if test="<%= GetterUtil.getBoolean(liveGroupTypeSettings.getProperty(StagingConstants.STAGED_PORTLET + portlet.getRootPortletId()), portletDataHandler.isPublishToLiveByDefault()) %>">
@@ -208,6 +230,7 @@
 												if (liveGroup.isStagedPortlet(portlet.getRootPortletId())) {
 													request.setAttribute("render_controls.jsp-action", Constants.PUBLISH);
 													request.setAttribute("render_controls.jsp-controls", exportControls);
+													request.setAttribute("render_controls.jsp-manifestSummary", manifestSummary);
 													request.setAttribute("render_controls.jsp-portletDisabled", !portletDataHandler.isPublishToLiveByDefault());
 												%>
 

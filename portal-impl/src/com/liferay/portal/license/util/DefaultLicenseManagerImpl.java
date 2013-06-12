@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
@@ -86,7 +87,7 @@ public class DefaultLicenseManagerImpl
 
 			byte[] serverIdBytes = LicenseUtil.getServerIdBytes();
 
-			jsonObject.put("cmd", "GET_LICENSE_STATE");
+			jsonObject.put(Constants.CMD, "GET_LICENSE_STATE");
 			jsonObject.put("hostName", getHostName());
 			jsonObject.put("ipAddresses", StringUtil.merge(getIpAddresses()));
 			jsonObject.put("macAddresses", StringUtil.merge(getMacAddresses()));

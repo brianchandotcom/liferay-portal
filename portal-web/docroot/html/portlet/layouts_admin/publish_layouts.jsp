@@ -17,7 +17,11 @@
 <%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
 <%
-String cmd = ParamUtil.getString(request, "cmd", "publish_to_live");
+String cmd = ParamUtil.getString(request, Constants.CMD);
+
+if (Validator.isNull(cmd)) {
+	cmd = ParamUtil.getString(request, "originalCmd", "publish_to_live");
+}
 
 String tabs1 = ParamUtil.getString(request, "tabs1", "public-pages");
 
@@ -168,7 +172,7 @@ if (selGroup.isStaged() && selGroup.isStagedRemotely()) {
 	cmd = "publish_to_remote";
 }
 
-portletURL.setParameter("struts_action", "/layouts_admin/edit_layouts");
+portletURL.setParameter("struts_action", "/layouts_admin/publish_layouts");
 portletURL.setParameter("closeRedirect", closeRedirect);
 portletURL.setParameter("groupId", String.valueOf(liveGroupId));
 portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
@@ -209,10 +213,10 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 	</c:if>
 </c:if>
 
-<aui:form action='<%= portletURL.toString() + "&etag=0&strip=0" %>' method="post" name="exportPagesFm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "publishPages();" %>' >
+<aui:form action='<%= portletURL.toString() + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="exportPagesFm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "publishPages();" %>' >
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= cmd %>" />
+	<aui:input name="originalCmd" type="hidden" value="<%= cmd %>" />
 	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="stagingGroupId" type="hidden" value="<%= stagingGroupId %>" />
 	<aui:input name="layoutSetBranchName" type="hidden" value="<%= layoutSetBranchName %>" />
 	<aui:input name="lastImportUserName" type="hidden" value="<%= user.getFullName() %>" />

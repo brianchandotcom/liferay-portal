@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionMapping;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -55,7 +56,7 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 	public JSONWebServiceInvokerAction(HttpServletRequest request) {
 		_request = request;
 
-		_command = request.getParameter("cmd");
+		_command = request.getParameter(Constants.CMD);
 
 		if (_command == null) {
 			try {

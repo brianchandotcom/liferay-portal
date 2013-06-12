@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.staging.LayoutStagingUtil;
 import com.liferay.portal.kernel.staging.Staging;
 import com.liferay.portal.kernel.staging.StagingConstants;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -1315,7 +1316,7 @@ public class StagingImpl implements Staging {
 		Map<String, String[]> parameterMap =
 			portletDataContext.getParameterMap();
 
-		String cmd = MapUtil.getString(parameterMap, "cmd");
+		String cmd = MapUtil.getString(parameterMap, Constants.CMD);
 
 		if (!cmd.equals("publish_to_live")) {
 			return;

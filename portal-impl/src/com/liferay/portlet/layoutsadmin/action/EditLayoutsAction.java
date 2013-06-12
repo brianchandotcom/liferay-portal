@@ -14,18 +14,14 @@
 
 package com.liferay.portlet.layoutsadmin.action;
 
-import com.liferay.portal.DuplicateLockException;
 import com.liferay.portal.ImageTypeException;
 import com.liferay.portal.LayoutFriendlyURLException;
 import com.liferay.portal.LayoutNameException;
 import com.liferay.portal.LayoutParentLayoutIdException;
-import com.liferay.portal.LayoutPrototypeException;
 import com.liferay.portal.LayoutSetVirtualHostException;
 import com.liferay.portal.LayoutTypeException;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.NoSuchLayoutException;
-import com.liferay.portal.RemoteExportException;
-import com.liferay.portal.RemoteOptionsException;
 import com.liferay.portal.RequiredLayoutException;
 import com.liferay.portal.SitemapChangeFrequencyException;
 import com.liferay.portal.SitemapIncludeException;
@@ -216,9 +212,6 @@ public class EditLayoutsAction extends PortletAction {
 				closeRedirect = updateCloseRedirect(
 					themeDisplay, closeRedirect, group, null, oldFriendlyURL);
 			}
-			else if (cmd.equals("copy_from_live")) {
-				StagingUtil.copyFromLive(actionRequest);
-			}
 			else if (cmd.equals("display_order")) {
 				updateDisplayOrder(actionRequest);
 			}
@@ -227,12 +220,6 @@ public class EditLayoutsAction extends PortletAction {
 			}
 			else if (cmd.equals("enable")) {
 				enableLayout(actionRequest);
-			}
-			else if (cmd.equals("publish_to_live")) {
-				StagingUtil.publishToLive(actionRequest);
-			}
-			else if (cmd.equals("publish_to_remote")) {
-				StagingUtil.publishToRemote(actionRequest);
 			}
 			else if (cmd.equals("reset_customized_view")) {
 				LayoutTypePortlet layoutTypePortlet =
@@ -251,29 +238,11 @@ public class EditLayoutsAction extends PortletAction {
 			else if (cmd.equals("reset_prototype")) {
 				SitesUtil.resetPrototype(themeDisplay.getLayout());
 			}
-			else if (cmd.equals("schedule_copy_from_live")) {
-				StagingUtil.scheduleCopyFromLive(actionRequest);
-			}
-			else if (cmd.equals("schedule_publish_to_live")) {
-				StagingUtil.schedulePublishToLive(actionRequest);
-			}
-			else if (cmd.equals("schedule_publish_to_remote")) {
-				StagingUtil.schedulePublishToRemote(actionRequest);
-			}
 			else if (cmd.equals("select_layout_set_branch")) {
 				selectLayoutSetBranch(actionRequest);
 			}
 			else if (cmd.equals("select_layout_branch")) {
 				selectLayoutBranch(actionRequest);
-			}
-			else if (cmd.equals("unschedule_copy_from_live")) {
-				StagingUtil.unscheduleCopyFromLive(actionRequest);
-			}
-			else if (cmd.equals("unschedule_publish_to_live")) {
-				StagingUtil.unschedulePublishToLive(actionRequest);
-			}
-			else if (cmd.equals("unschedule_publish_to_remote")) {
-				StagingUtil.unschedulePublishToRemote(actionRequest);
 			}
 			else if (cmd.equals("update_layout_revision")) {
 				updateLayoutRevision(actionRequest, themeDisplay);
@@ -316,12 +285,7 @@ public class EditLayoutsAction extends PortletAction {
 					portletConfig, actionRequest, actionResponse, redirect,
 					closeRedirect);
 			}
-			else if (e instanceof DuplicateLockException ||
-					 e instanceof LayoutPrototypeException ||
-					 e instanceof RemoteExportException ||
-					 e instanceof RemoteOptionsException ||
-					 e instanceof SystemException) {
-
+			else if (e instanceof SystemException) {
 				SessionErrors.add(actionRequest, e.getClass(), e);
 
 				redirect = ParamUtil.getString(actionRequest, "pagesRedirect");

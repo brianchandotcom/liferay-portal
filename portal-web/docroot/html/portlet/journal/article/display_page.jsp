@@ -116,7 +116,7 @@ Group parentGroup = themeDisplay.getSiteGroup();
 
 			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="treeUrlPublicPages">
 				<portlet:param name="struts_action" value="/journal/select_display_page" />
-				<portlet:param name="cmd" value="<%= ActionKeys.VIEW_TREE %>" />
+				<portlet:param name="<%= Constants.CMD %>" value="<%= ActionKeys.VIEW_TREE %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(themeDisplay.getSiteGroupId()) %>" />
 
 				<c:if test="<%= selLayout != null && !selLayout.isPrivateLayout() %>">

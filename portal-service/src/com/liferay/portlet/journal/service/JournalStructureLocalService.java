@@ -31,6 +31,7 @@ import com.liferay.portal.service.BaseLocalService;
  * @see JournalStructureLocalServiceUtil
  * @see com.liferay.portlet.journal.service.base.JournalStructureLocalServiceBaseImpl
  * @see com.liferay.portlet.journal.service.impl.JournalStructureLocalServiceImpl
+ * @deprecated As of 6.2.0, see LPS-35112
  * @generated
  */
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {

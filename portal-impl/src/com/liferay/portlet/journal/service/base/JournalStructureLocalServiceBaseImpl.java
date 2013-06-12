@@ -72,6 +72,7 @@ import javax.sql.DataSource;
  * @author Brian Wing Shun Chan
  * @see com.liferay.portlet.journal.service.impl.JournalStructureLocalServiceImpl
  * @see com.liferay.portlet.journal.service.JournalStructureLocalServiceUtil
+ * @deprecated As of 6.2.0, see LPS-35112
  * @generated
  */
 public abstract class JournalStructureLocalServiceBaseImpl

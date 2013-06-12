@@ -230,6 +230,9 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, controlPanel, locale)
 	function <portlet:namespace />copyTemplate(uri) {
 		Liferay.Util.openWindow(
 			{
+				dialog: {
+					zIndex: Liferay.zIndex.WINDOW + 2
+				},
 				id: '<portlet:namespace />copyTemplate',
 				refreshWindow: window,
 				title: '<%= UnicodeLanguageUtil.get(pageContext, "copy-template") %>',

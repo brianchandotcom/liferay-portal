@@ -1,6 +1,6 @@
 <definition>
 	<command name="click">
-		<case locator-key1="ADD_NEW_MENULIST_WEB_CONTENT">
+		<case locator-key1="ADD_MENULIST_WEB_CONTENT">
 			<execute function="Click#textClickAtAndWait" />
 		</case>
 	</command>

@@ -14,17 +14,16 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.portal.kernel.test.TestCase;
-
 import java.net.URLEncoder;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
  * @author Shuyang Zhou
  * @author Brian Wing Shun Chan
  */
-public class URLCodecTest extends TestCase {
+public class URLCodecTest {
 
 	@Test
 	public void testDecodeURL() throws Exception {
@@ -32,12 +31,12 @@ public class URLCodecTest extends TestCase {
 			String result = URLCodec.decodeURL(
 				_ENCODED_URLS[i], StringPool.UTF8, false);
 
-			assertEquals(_RAW_URLS[i], result);
+			Assert.assertEquals(_RAW_URLS[i], result);
 
 			result = URLCodec.decodeURL(
 				_ESCAPE_SPACES_ENCODED_URLS[i], StringPool.UTF8, true);
 
-			assertEquals(_RAW_URLS[i], result);
+			Assert.assertEquals(_RAW_URLS[i], result);
 		}
 	}
 
@@ -47,11 +46,12 @@ public class URLCodecTest extends TestCase {
 			String result = URLCodec.encodeURL(
 				_RAW_URLS[i], StringPool.UTF8, false);
 
-			assertTrue(_ENCODED_URLS[i].equalsIgnoreCase(result));
+			Assert.assertTrue(_ENCODED_URLS[i].equalsIgnoreCase(result));
 
 			result = URLCodec.encodeURL(_RAW_URLS[i], StringPool.UTF8, true);
 
-			assertTrue(_ESCAPE_SPACES_ENCODED_URLS[i].equalsIgnoreCase(result));
+			Assert.assertTrue(
+				_ESCAPE_SPACES_ENCODED_URLS[i].equalsIgnoreCase(result));
 		}
 	}
 

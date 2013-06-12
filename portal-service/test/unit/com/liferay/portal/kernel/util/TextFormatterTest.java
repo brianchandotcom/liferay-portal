@@ -14,14 +14,13 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.portal.kernel.test.TestCase;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
  * @author Shuyang Zhou
  */
-public class TextFormatterTest extends TestCase {
+public class TextFormatterTest {
 
 	@Test
 	public void testFormatA() {
@@ -30,7 +29,7 @@ public class TextFormatterTest extends TestCase {
 
 		String actual = TextFormatter.format(original, TextFormatter.A);
 
-		assertEquals(expected, actual);
+		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
@@ -40,7 +39,7 @@ public class TextFormatterTest extends TestCase {
 
 		String actual = TextFormatter.format(original, TextFormatter.B);
 
-		assertEquals(expected, actual);
+		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
@@ -50,7 +49,7 @@ public class TextFormatterTest extends TestCase {
 
 		String actual = TextFormatter.format(original, TextFormatter.C);
 
-		assertEquals(expected, actual);
+		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
@@ -60,7 +59,7 @@ public class TextFormatterTest extends TestCase {
 
 		String actual = TextFormatter.format(original, TextFormatter.D);
 
-		assertEquals(expected, actual);
+		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
@@ -70,7 +69,7 @@ public class TextFormatterTest extends TestCase {
 
 		String actual = TextFormatter.format(original, TextFormatter.E);
 
-		assertEquals(expected, actual);
+		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
@@ -80,7 +79,7 @@ public class TextFormatterTest extends TestCase {
 
 		String actual = TextFormatter.format(original, TextFormatter.F);
 
-		assertEquals(expected, actual);
+		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
@@ -90,7 +89,7 @@ public class TextFormatterTest extends TestCase {
 
 		String actual = TextFormatter.format(original, TextFormatter.G);
 
-		assertEquals(expected, actual);
+		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
@@ -100,7 +99,7 @@ public class TextFormatterTest extends TestCase {
 
 		String actual = TextFormatter.format(original, TextFormatter.H);
 
-		assertEquals(expected, actual);
+		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
@@ -110,7 +109,7 @@ public class TextFormatterTest extends TestCase {
 
 		String actual = TextFormatter.format(original, TextFormatter.I);
 
-		assertEquals(expected, actual);
+		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
@@ -120,7 +119,7 @@ public class TextFormatterTest extends TestCase {
 
 		String actual = TextFormatter.format(original, TextFormatter.J);
 
-		assertEquals(expected, actual);
+		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
@@ -130,7 +129,7 @@ public class TextFormatterTest extends TestCase {
 
 		String actual = TextFormatter.format(original, TextFormatter.K);
 
-		assertEquals(expected, actual);
+		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
@@ -140,14 +139,14 @@ public class TextFormatterTest extends TestCase {
 
 		String actual = TextFormatter.format(original, TextFormatter.L);
 
-		assertEquals(expected, actual);
+		Assert.assertEquals(expected, actual);
 
 		original = "FOrmatId";
 		expected = "FOrmatId";
 
 		actual = TextFormatter.format(original, TextFormatter.L);
 
-		assertEquals(expected, actual);
+		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
@@ -157,7 +156,7 @@ public class TextFormatterTest extends TestCase {
 
 		String actual = TextFormatter.format(original, TextFormatter.M);
 
-		assertEquals(expected, actual);
+		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
@@ -167,7 +166,7 @@ public class TextFormatterTest extends TestCase {
 
 		String actual = TextFormatter.format(original, TextFormatter.N);
 
-		assertEquals(expected, actual);
+		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
@@ -177,7 +176,7 @@ public class TextFormatterTest extends TestCase {
 
 		String actual = TextFormatter.format(original, TextFormatter.O);
 
-		assertEquals(expected, actual);
+		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
@@ -187,7 +186,7 @@ public class TextFormatterTest extends TestCase {
 
 		String actual = TextFormatter.format(original, TextFormatter.P);
 
-		assertEquals(expected, actual);
+		Assert.assertEquals(expected, actual);
 	}
 
 }

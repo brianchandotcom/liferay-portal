@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.io;
 
-import com.liferay.portal.kernel.test.TestCase;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.CharArrayWriter;
@@ -23,12 +22,13 @@ import java.io.OutputStream;
 import java.io.StringWriter;
 import java.io.Writer;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
  * @author Shuyang Zhou
  */
-public class WriterOutputStreamTest extends TestCase {
+public class WriterOutputStreamTest {
 
 	@Test
 	public void testACSIIOutput() throws IOException {
@@ -52,31 +52,31 @@ public class WriterOutputStreamTest extends TestCase {
 
 		outputStream.write(asciiInput[0]);
 
-		assertEquals(expectedResult, writer.toString());
+		Assert.assertEquals(expectedResult, writer.toString());
 
 		expectedResult += asciiOutput[1];
 
 		outputStream.write(asciiInput[1]);
 
-		assertEquals(expectedResult, writer.toString());
+		Assert.assertEquals(expectedResult, writer.toString());
 
 		expectedResult += asciiOutput[2];
 
 		outputStream.write(asciiInput[2]);
 
-		assertEquals(expectedResult, writer.toString());
+		Assert.assertEquals(expectedResult, writer.toString());
 
 		expectedResult += asciiOutput[3];
 
 		outputStream.write(asciiInput[3]);
 
-		assertEquals(expectedResult, writer.toString());
+		Assert.assertEquals(expectedResult, writer.toString());
 
 		expectedResult += asciiOutput[4];
 
 		outputStream.write(asciiInput[4]);
 
-		assertEquals(expectedResult, writer.toString());
+		Assert.assertEquals(expectedResult, writer.toString());
 
 		// Do not auto flush
 
@@ -86,27 +86,27 @@ public class WriterOutputStreamTest extends TestCase {
 
 		outputStream.write(asciiInput[0]);
 
-		assertEquals("", writer.toString());
+		Assert.assertEquals("", writer.toString());
 
 		outputStream.write(asciiInput[1]);
 
-		assertEquals("", writer.toString());
+		Assert.assertEquals("", writer.toString());
 
 		outputStream.write(asciiInput[2]);
 
-		assertEquals("", writer.toString());
+		Assert.assertEquals("", writer.toString());
 
 		outputStream.write(asciiInput[3]);
 
-		assertEquals("", writer.toString());
+		Assert.assertEquals("", writer.toString());
 
 		outputStream.write(asciiInput[4]);
 
-		assertEquals("", writer.toString());
+		Assert.assertEquals("", writer.toString());
 
 		outputStream.flush();
 
-		assertEquals(expectedResult, writer.toString());
+		Assert.assertEquals(expectedResult, writer.toString());
 	}
 
 	@Test
@@ -131,31 +131,31 @@ public class WriterOutputStreamTest extends TestCase {
 
 		outputStream.write(chineseInput[0]);
 
-		assertEquals(expectedResult, writer.toString());
+		Assert.assertEquals(expectedResult, writer.toString());
 
 		expectedResult += chineseOutput[1];
 
 		outputStream.write(chineseInput[1]);
 
-		assertEquals(expectedResult, writer.toString());
+		Assert.assertEquals(expectedResult, writer.toString());
 
 		expectedResult += chineseOutput[2];
 
 		outputStream.write(chineseInput[2]);
 
-		assertEquals(expectedResult, writer.toString());
+		Assert.assertEquals(expectedResult, writer.toString());
 
 		expectedResult += chineseOutput[3];
 
 		outputStream.write(chineseInput[3]);
 
-		assertEquals(expectedResult, writer.toString());
+		Assert.assertEquals(expectedResult, writer.toString());
 
 		expectedResult += chineseOutput[4];
 
 		outputStream.write(chineseInput[4]);
 
-		assertEquals(expectedResult, writer.toString());
+		Assert.assertEquals(expectedResult, writer.toString());
 
 		// Do not auto flush
 
@@ -165,27 +165,27 @@ public class WriterOutputStreamTest extends TestCase {
 
 		outputStream.write(chineseInput[0]);
 
-		assertEquals("", writer.toString());
+		Assert.assertEquals("", writer.toString());
 
 		outputStream.write(chineseInput[1]);
 
-		assertEquals("", writer.toString());
+		Assert.assertEquals("", writer.toString());
 
 		outputStream.write(chineseInput[2]);
 
-		assertEquals("", writer.toString());
+		Assert.assertEquals("", writer.toString());
 
 		outputStream.write(chineseInput[3]);
 
-		assertEquals("", writer.toString());
+		Assert.assertEquals("", writer.toString());
 
 		outputStream.write(chineseInput[4]);
 
-		assertEquals("", writer.toString());
+		Assert.assertEquals("", writer.toString());
 
 		outputStream.flush();
 
-		assertEquals(expectedResult, writer.toString());
+		Assert.assertEquals(expectedResult, writer.toString());
 	}
 
 	@Test
@@ -208,7 +208,7 @@ public class WriterOutputStreamTest extends TestCase {
 			if (currentCharNumber > charNumber) {
 				charNumber = currentCharNumber;
 
-				assertEquals(
+				Assert.assertEquals(
 					nonAlignOutput.charAt(charNumber - 1),
 					charArrayWriter.toCharArray()[charNumber - 1]);
 			}

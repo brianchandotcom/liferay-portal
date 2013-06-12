@@ -14,14 +14,13 @@
 
 package com.liferay.portal.kernel.io.unsync;
 
-import com.liferay.portal.kernel.test.TestCase;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
  * @author Shuyang Zhou
  */
-public class UnsyncStringWriterTest extends TestCase {
+public class UnsyncStringWriterTest {
 
 	@Test
 	public void testAppendChar() {
@@ -30,37 +29,37 @@ public class UnsyncStringWriterTest extends TestCase {
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter(false);
 
-		assertNotNull(unsyncStringWriter.stringBuilder);
-		assertNull(unsyncStringWriter.stringBundler);
+		Assert.assertNotNull(unsyncStringWriter.stringBuilder);
+		Assert.assertNull(unsyncStringWriter.stringBundler);
 
 		unsyncStringWriter.append('a');
 
-		assertEquals(1, unsyncStringWriter.stringBuilder.length());
-		assertEquals('a', unsyncStringWriter.stringBuilder.charAt(0));
+		Assert.assertEquals(1, unsyncStringWriter.stringBuilder.length());
+		Assert.assertEquals('a', unsyncStringWriter.stringBuilder.charAt(0));
 
 		unsyncStringWriter.append('b');
 
-		assertEquals(2, unsyncStringWriter.stringBuilder.length());
-		assertEquals('a', unsyncStringWriter.stringBuilder.charAt(0));
-		assertEquals('b', unsyncStringWriter.stringBuilder.charAt(1));
+		Assert.assertEquals(2, unsyncStringWriter.stringBuilder.length());
+		Assert.assertEquals('a', unsyncStringWriter.stringBuilder.charAt(0));
+		Assert.assertEquals('b', unsyncStringWriter.stringBuilder.charAt(1));
 
 		// StringBundler
 
 		unsyncStringWriter = new UnsyncStringWriter();
 
-		assertNull(unsyncStringWriter.stringBuilder);
-		assertNotNull(unsyncStringWriter.stringBundler);
+		Assert.assertNull(unsyncStringWriter.stringBuilder);
+		Assert.assertNotNull(unsyncStringWriter.stringBundler);
 
 		unsyncStringWriter.append('a');
 
-		assertEquals(1, unsyncStringWriter.stringBundler.index());
-		assertEquals("a", unsyncStringWriter.stringBundler.stringAt(0));
+		Assert.assertEquals(1, unsyncStringWriter.stringBundler.index());
+		Assert.assertEquals("a", unsyncStringWriter.stringBundler.stringAt(0));
 
 		unsyncStringWriter.append('b');
 
-		assertEquals(2, unsyncStringWriter.stringBundler.index());
-		assertEquals("a", unsyncStringWriter.stringBundler.stringAt(0));
-		assertEquals("b", unsyncStringWriter.stringBundler.stringAt(1));
+		Assert.assertEquals(2, unsyncStringWriter.stringBundler.index());
+		Assert.assertEquals("a", unsyncStringWriter.stringBundler.stringAt(0));
+		Assert.assertEquals("b", unsyncStringWriter.stringBundler.stringAt(1));
 	}
 
 	@Test
@@ -70,40 +69,40 @@ public class UnsyncStringWriterTest extends TestCase {
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter(false);
 
-		assertNotNull(unsyncStringWriter.stringBuilder);
-		assertNull(unsyncStringWriter.stringBundler);
+		Assert.assertNotNull(unsyncStringWriter.stringBuilder);
+		Assert.assertNull(unsyncStringWriter.stringBundler);
 
 		unsyncStringWriter.append(new StringBuilder("ab"));
 
-		assertEquals(2, unsyncStringWriter.stringBuilder.length());
-		assertEquals('a', unsyncStringWriter.stringBuilder.charAt(0));
-		assertEquals('b', unsyncStringWriter.stringBuilder.charAt(1));
+		Assert.assertEquals(2, unsyncStringWriter.stringBuilder.length());
+		Assert.assertEquals('a', unsyncStringWriter.stringBuilder.charAt(0));
+		Assert.assertEquals('b', unsyncStringWriter.stringBuilder.charAt(1));
 
 		unsyncStringWriter.append(new StringBuilder("cd"));
 
-		assertEquals(4, unsyncStringWriter.stringBuilder.length());
-		assertEquals('a', unsyncStringWriter.stringBuilder.charAt(0));
-		assertEquals('b', unsyncStringWriter.stringBuilder.charAt(1));
-		assertEquals('c', unsyncStringWriter.stringBuilder.charAt(2));
-		assertEquals('d', unsyncStringWriter.stringBuilder.charAt(3));
+		Assert.assertEquals(4, unsyncStringWriter.stringBuilder.length());
+		Assert.assertEquals('a', unsyncStringWriter.stringBuilder.charAt(0));
+		Assert.assertEquals('b', unsyncStringWriter.stringBuilder.charAt(1));
+		Assert.assertEquals('c', unsyncStringWriter.stringBuilder.charAt(2));
+		Assert.assertEquals('d', unsyncStringWriter.stringBuilder.charAt(3));
 
 		// StringBundler
 
 		unsyncStringWriter = new UnsyncStringWriter();
 
-		assertNull(unsyncStringWriter.stringBuilder);
-		assertNotNull(unsyncStringWriter.stringBundler);
+		Assert.assertNull(unsyncStringWriter.stringBuilder);
+		Assert.assertNotNull(unsyncStringWriter.stringBundler);
 
 		unsyncStringWriter.append(new StringBuilder("ab"));
 
-		assertEquals(1, unsyncStringWriter.stringBundler.index());
-		assertEquals("ab", unsyncStringWriter.stringBundler.stringAt(0));
+		Assert.assertEquals(1, unsyncStringWriter.stringBundler.index());
+		Assert.assertEquals("ab", unsyncStringWriter.stringBundler.stringAt(0));
 
 		unsyncStringWriter.append(new StringBuilder("cd"));
 
-		assertEquals(2, unsyncStringWriter.stringBundler.index());
-		assertEquals("ab", unsyncStringWriter.stringBundler.stringAt(0));
-		assertEquals("cd", unsyncStringWriter.stringBundler.stringAt(1));
+		Assert.assertEquals(2, unsyncStringWriter.stringBundler.index());
+		Assert.assertEquals("ab", unsyncStringWriter.stringBundler.stringAt(0));
+		Assert.assertEquals("cd", unsyncStringWriter.stringBundler.stringAt(1));
 	}
 
 	@Test
@@ -113,29 +112,29 @@ public class UnsyncStringWriterTest extends TestCase {
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter(false);
 
-		assertNotNull(unsyncStringWriter.stringBuilder);
-		assertEquals(16, unsyncStringWriter.stringBuilder.capacity());
-		assertNull(unsyncStringWriter.stringBundler);
+		Assert.assertNotNull(unsyncStringWriter.stringBuilder);
+		Assert.assertEquals(16, unsyncStringWriter.stringBuilder.capacity());
+		Assert.assertNull(unsyncStringWriter.stringBundler);
 
 		unsyncStringWriter = new UnsyncStringWriter(false, 32);
 
-		assertNotNull(unsyncStringWriter.stringBuilder);
-		assertEquals(32, unsyncStringWriter.stringBuilder.capacity());
-		assertNull(unsyncStringWriter.stringBundler);
+		Assert.assertNotNull(unsyncStringWriter.stringBuilder);
+		Assert.assertEquals(32, unsyncStringWriter.stringBuilder.capacity());
+		Assert.assertNull(unsyncStringWriter.stringBundler);
 
 		// StringBundler
 
 		unsyncStringWriter = new UnsyncStringWriter();
 
-		assertNull(unsyncStringWriter.stringBuilder);
-		assertNotNull(unsyncStringWriter.stringBundler);
-		assertEquals(16, unsyncStringWriter.stringBundler.capacity());
+		Assert.assertNull(unsyncStringWriter.stringBuilder);
+		Assert.assertNotNull(unsyncStringWriter.stringBundler);
+		Assert.assertEquals(16, unsyncStringWriter.stringBundler.capacity());
 
 		unsyncStringWriter = new UnsyncStringWriter(true, 32);
 
-		assertNull(unsyncStringWriter.stringBuilder);
-		assertNotNull(unsyncStringWriter.stringBundler);
-		assertEquals(32, unsyncStringWriter.stringBundler.capacity());
+		Assert.assertNull(unsyncStringWriter.stringBuilder);
+		Assert.assertNotNull(unsyncStringWriter.stringBundler);
+		Assert.assertEquals(32, unsyncStringWriter.stringBundler.capacity());
 	}
 
 	@Test
@@ -147,11 +146,11 @@ public class UnsyncStringWriterTest extends TestCase {
 
 		unsyncStringWriter.write("test1");
 
-		assertEquals(5, unsyncStringWriter.stringBuilder.length());
+		Assert.assertEquals(5, unsyncStringWriter.stringBuilder.length());
 
 		unsyncStringWriter.reset();
 
-		assertEquals(0, unsyncStringWriter.stringBuilder.length());
+		Assert.assertEquals(0, unsyncStringWriter.stringBuilder.length());
 
 		// StringBundler
 
@@ -159,11 +158,11 @@ public class UnsyncStringWriterTest extends TestCase {
 
 		unsyncStringWriter.write("test1");
 
-		assertEquals(1, unsyncStringWriter.stringBundler.index());
+		Assert.assertEquals(1, unsyncStringWriter.stringBundler.index());
 
 		unsyncStringWriter.reset();
 
-		assertEquals(0, unsyncStringWriter.stringBundler.index());
+		Assert.assertEquals(0, unsyncStringWriter.stringBundler.index());
 	}
 
 	@Test
@@ -173,35 +172,35 @@ public class UnsyncStringWriterTest extends TestCase {
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter(false);
 
-		assertNotNull(unsyncStringWriter.stringBuilder);
-		assertNull(unsyncStringWriter.stringBundler);
+		Assert.assertNotNull(unsyncStringWriter.stringBuilder);
+		Assert.assertNull(unsyncStringWriter.stringBundler);
 
 		unsyncStringWriter.append('a');
 
-		assertEquals(1, unsyncStringWriter.stringBuilder.length());
-		assertEquals("a", unsyncStringWriter.toString());
+		Assert.assertEquals(1, unsyncStringWriter.stringBuilder.length());
+		Assert.assertEquals("a", unsyncStringWriter.toString());
 
 		unsyncStringWriter.append('b');
 
-		assertEquals(2, unsyncStringWriter.stringBuilder.length());
-		assertEquals("ab", unsyncStringWriter.toString());
+		Assert.assertEquals(2, unsyncStringWriter.stringBuilder.length());
+		Assert.assertEquals("ab", unsyncStringWriter.toString());
 
 		// StringBundler
 
 		unsyncStringWriter = new UnsyncStringWriter();
 
-		assertNull(unsyncStringWriter.stringBuilder);
-		assertNotNull(unsyncStringWriter.stringBundler);
+		Assert.assertNull(unsyncStringWriter.stringBuilder);
+		Assert.assertNotNull(unsyncStringWriter.stringBundler);
 
 		unsyncStringWriter.append('a');
 
-		assertEquals(1, unsyncStringWriter.stringBundler.index());
-		assertEquals("a", unsyncStringWriter.toString());
+		Assert.assertEquals(1, unsyncStringWriter.stringBundler.index());
+		Assert.assertEquals("a", unsyncStringWriter.toString());
 
 		unsyncStringWriter.append('b');
 
-		assertEquals(2, unsyncStringWriter.stringBundler.index());
-		assertEquals("ab", unsyncStringWriter.toString());
+		Assert.assertEquals(2, unsyncStringWriter.stringBundler.index());
+		Assert.assertEquals("ab", unsyncStringWriter.toString());
 	}
 
 	@Test
@@ -211,37 +210,37 @@ public class UnsyncStringWriterTest extends TestCase {
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter(false);
 
-		assertNotNull(unsyncStringWriter.stringBuilder);
-		assertNull(unsyncStringWriter.stringBundler);
+		Assert.assertNotNull(unsyncStringWriter.stringBuilder);
+		Assert.assertNull(unsyncStringWriter.stringBundler);
 
 		unsyncStringWriter.write('a');
 
-		assertEquals(1, unsyncStringWriter.stringBuilder.length());
-		assertEquals('a', unsyncStringWriter.stringBuilder.charAt(0));
+		Assert.assertEquals(1, unsyncStringWriter.stringBuilder.length());
+		Assert.assertEquals('a', unsyncStringWriter.stringBuilder.charAt(0));
 
 		unsyncStringWriter.write('b');
 
-		assertEquals(2, unsyncStringWriter.stringBuilder.length());
-		assertEquals('a', unsyncStringWriter.stringBuilder.charAt(0));
-		assertEquals('b', unsyncStringWriter.stringBuilder.charAt(1));
+		Assert.assertEquals(2, unsyncStringWriter.stringBuilder.length());
+		Assert.assertEquals('a', unsyncStringWriter.stringBuilder.charAt(0));
+		Assert.assertEquals('b', unsyncStringWriter.stringBuilder.charAt(1));
 
 		// StringBundler
 
 		unsyncStringWriter = new UnsyncStringWriter();
 
-		assertNull(unsyncStringWriter.stringBuilder);
-		assertNotNull(unsyncStringWriter.stringBundler);
+		Assert.assertNull(unsyncStringWriter.stringBuilder);
+		Assert.assertNotNull(unsyncStringWriter.stringBundler);
 
 		unsyncStringWriter.write('a');
 
-		assertEquals(1, unsyncStringWriter.stringBundler.index());
-		assertEquals("a", unsyncStringWriter.stringBundler.stringAt(0));
+		Assert.assertEquals(1, unsyncStringWriter.stringBundler.index());
+		Assert.assertEquals("a", unsyncStringWriter.stringBundler.stringAt(0));
 
 		unsyncStringWriter.write('b');
 
-		assertEquals(2, unsyncStringWriter.stringBundler.index());
-		assertEquals("a", unsyncStringWriter.stringBundler.stringAt(0));
-		assertEquals("b", unsyncStringWriter.stringBundler.stringAt(1));
+		Assert.assertEquals(2, unsyncStringWriter.stringBundler.index());
+		Assert.assertEquals("a", unsyncStringWriter.stringBundler.stringAt(0));
+		Assert.assertEquals("b", unsyncStringWriter.stringBundler.stringAt(1));
 	}
 
 	@Test
@@ -251,40 +250,40 @@ public class UnsyncStringWriterTest extends TestCase {
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter(false);
 
-		assertNotNull(unsyncStringWriter.stringBuilder);
-		assertNull(unsyncStringWriter.stringBundler);
+		Assert.assertNotNull(unsyncStringWriter.stringBuilder);
+		Assert.assertNull(unsyncStringWriter.stringBundler);
 
 		unsyncStringWriter.write("ab".toCharArray());
 
-		assertEquals(2, unsyncStringWriter.stringBuilder.length());
-		assertEquals('a', unsyncStringWriter.stringBuilder.charAt(0));
-		assertEquals('b', unsyncStringWriter.stringBuilder.charAt(1));
+		Assert.assertEquals(2, unsyncStringWriter.stringBuilder.length());
+		Assert.assertEquals('a', unsyncStringWriter.stringBuilder.charAt(0));
+		Assert.assertEquals('b', unsyncStringWriter.stringBuilder.charAt(1));
 
 		unsyncStringWriter.write("cd".toCharArray());
 
-		assertEquals(4, unsyncStringWriter.stringBuilder.length());
-		assertEquals('a', unsyncStringWriter.stringBuilder.charAt(0));
-		assertEquals('b', unsyncStringWriter.stringBuilder.charAt(1));
-		assertEquals('c', unsyncStringWriter.stringBuilder.charAt(2));
-		assertEquals('d', unsyncStringWriter.stringBuilder.charAt(3));
+		Assert.assertEquals(4, unsyncStringWriter.stringBuilder.length());
+		Assert.assertEquals('a', unsyncStringWriter.stringBuilder.charAt(0));
+		Assert.assertEquals('b', unsyncStringWriter.stringBuilder.charAt(1));
+		Assert.assertEquals('c', unsyncStringWriter.stringBuilder.charAt(2));
+		Assert.assertEquals('d', unsyncStringWriter.stringBuilder.charAt(3));
 
 		// StringBundler
 
 		unsyncStringWriter = new UnsyncStringWriter();
 
-		assertNull(unsyncStringWriter.stringBuilder);
-		assertNotNull(unsyncStringWriter.stringBundler);
+		Assert.assertNull(unsyncStringWriter.stringBuilder);
+		Assert.assertNotNull(unsyncStringWriter.stringBundler);
 
 		unsyncStringWriter.write("ab".toCharArray());
 
-		assertEquals(1, unsyncStringWriter.stringBundler.index());
-		assertEquals("ab", unsyncStringWriter.stringBundler.stringAt(0));
+		Assert.assertEquals(1, unsyncStringWriter.stringBundler.index());
+		Assert.assertEquals("ab", unsyncStringWriter.stringBundler.stringAt(0));
 
 		unsyncStringWriter.write("cd".toCharArray());
 
-		assertEquals(2, unsyncStringWriter.stringBundler.index());
-		assertEquals("ab", unsyncStringWriter.stringBundler.stringAt(0));
-		assertEquals("cd", unsyncStringWriter.stringBundler.stringAt(1));
+		Assert.assertEquals(2, unsyncStringWriter.stringBundler.index());
+		Assert.assertEquals("ab", unsyncStringWriter.stringBundler.stringAt(0));
+		Assert.assertEquals("cd", unsyncStringWriter.stringBundler.stringAt(1));
 	}
 
 	@Test
@@ -294,40 +293,40 @@ public class UnsyncStringWriterTest extends TestCase {
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter(false);
 
-		assertNotNull(unsyncStringWriter.stringBuilder);
-		assertNull(unsyncStringWriter.stringBundler);
+		Assert.assertNotNull(unsyncStringWriter.stringBuilder);
+		Assert.assertNull(unsyncStringWriter.stringBundler);
 
 		unsyncStringWriter.write("ab");
 
-		assertEquals(2, unsyncStringWriter.stringBuilder.length());
-		assertEquals('a', unsyncStringWriter.stringBuilder.charAt(0));
-		assertEquals('b', unsyncStringWriter.stringBuilder.charAt(1));
+		Assert.assertEquals(2, unsyncStringWriter.stringBuilder.length());
+		Assert.assertEquals('a', unsyncStringWriter.stringBuilder.charAt(0));
+		Assert.assertEquals('b', unsyncStringWriter.stringBuilder.charAt(1));
 
 		unsyncStringWriter.write("cd");
 
-		assertEquals(4, unsyncStringWriter.stringBuilder.length());
-		assertEquals('a', unsyncStringWriter.stringBuilder.charAt(0));
-		assertEquals('b', unsyncStringWriter.stringBuilder.charAt(1));
-		assertEquals('c', unsyncStringWriter.stringBuilder.charAt(2));
-		assertEquals('d', unsyncStringWriter.stringBuilder.charAt(3));
+		Assert.assertEquals(4, unsyncStringWriter.stringBuilder.length());
+		Assert.assertEquals('a', unsyncStringWriter.stringBuilder.charAt(0));
+		Assert.assertEquals('b', unsyncStringWriter.stringBuilder.charAt(1));
+		Assert.assertEquals('c', unsyncStringWriter.stringBuilder.charAt(2));
+		Assert.assertEquals('d', unsyncStringWriter.stringBuilder.charAt(3));
 
 		// StringBundler
 
 		unsyncStringWriter = new UnsyncStringWriter();
 
-		assertNull(unsyncStringWriter.stringBuilder);
-		assertNotNull(unsyncStringWriter.stringBundler);
+		Assert.assertNull(unsyncStringWriter.stringBuilder);
+		Assert.assertNotNull(unsyncStringWriter.stringBundler);
 
 		unsyncStringWriter.write("ab");
 
-		assertEquals(1, unsyncStringWriter.stringBundler.index());
-		assertEquals("ab", unsyncStringWriter.stringBundler.stringAt(0));
+		Assert.assertEquals(1, unsyncStringWriter.stringBundler.index());
+		Assert.assertEquals("ab", unsyncStringWriter.stringBundler.stringAt(0));
 
 		unsyncStringWriter.write("cd");
 
-		assertEquals(2, unsyncStringWriter.stringBundler.index());
-		assertEquals("ab", unsyncStringWriter.stringBundler.stringAt(0));
-		assertEquals("cd", unsyncStringWriter.stringBundler.stringAt(1));
+		Assert.assertEquals(2, unsyncStringWriter.stringBundler.index());
+		Assert.assertEquals("ab", unsyncStringWriter.stringBundler.stringAt(0));
+		Assert.assertEquals("cd", unsyncStringWriter.stringBundler.stringAt(1));
 	}
 
 }

@@ -14,18 +14,17 @@
 
 package com.liferay.portal.kernel.io.unsync;
 
-import com.liferay.portal.kernel.test.TestCase;
-
 import java.io.IOException;
 
 import java.util.Arrays;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
  * @author Shuyang Zhou
  */
-public class UnsyncStringReaderTest extends TestCase {
+public class UnsyncStringReaderTest {
 
 	@Test
 	public void testBlockRead() throws IOException {
@@ -34,16 +33,16 @@ public class UnsyncStringReaderTest extends TestCase {
 
 		char[] chars = new char[4];
 
-		assertEquals(4, unsyncStringReader.read(chars));
-		assertEquals(4, unsyncStringReader.index);
-		assertTrue(Arrays.equals("abcd".toCharArray(), chars));
+		Assert.assertEquals(4, unsyncStringReader.read(chars));
+		Assert.assertEquals(4, unsyncStringReader.index);
+		Assert.assertTrue(Arrays.equals("abcd".toCharArray(), chars));
 
-		assertEquals(3, unsyncStringReader.read(chars));
-		assertEquals('e', chars[0]);
-		assertEquals('f', chars[1]);
-		assertEquals('g', chars[2]);
+		Assert.assertEquals(3, unsyncStringReader.read(chars));
+		Assert.assertEquals('e', chars[0]);
+		Assert.assertEquals('f', chars[1]);
+		Assert.assertEquals('g', chars[2]);
 
-		assertEquals(-1, unsyncStringReader.read(chars));
+		Assert.assertEquals(-1, unsyncStringReader.read(chars));
 	}
 
 	@Test
@@ -53,12 +52,12 @@ public class UnsyncStringReaderTest extends TestCase {
 
 		unsyncStringReader.close();
 
-		assertTrue(unsyncStringReader.string == null);
+		Assert.assertTrue(unsyncStringReader.string == null);
 
 		try {
 			unsyncStringReader.mark(0);
 
-			fail();
+			Assert.fail();
 		}
 		catch (IOException ioe) {
 		}
@@ -66,7 +65,7 @@ public class UnsyncStringReaderTest extends TestCase {
 		try {
 			unsyncStringReader.read();
 
-			fail();
+			Assert.fail();
 		}
 		catch (IOException ioe) {
 		}
@@ -74,7 +73,7 @@ public class UnsyncStringReaderTest extends TestCase {
 		try {
 			unsyncStringReader.read(new char[5]);
 
-			fail();
+			Assert.fail();
 		}
 		catch (IOException ioe) {
 		}
@@ -82,7 +81,7 @@ public class UnsyncStringReaderTest extends TestCase {
 		try {
 			unsyncStringReader.ready();
 
-			fail();
+			Assert.fail();
 		}
 		catch (IOException ioe) {
 		}
@@ -90,7 +89,7 @@ public class UnsyncStringReaderTest extends TestCase {
 		try {
 			unsyncStringReader.reset();
 
-			fail();
+			Assert.fail();
 		}
 		catch (IOException ioe) {
 		}
@@ -102,49 +101,49 @@ public class UnsyncStringReaderTest extends TestCase {
 	public void testConstructor() {
 		UnsyncStringReader unsyncStringReader = new UnsyncStringReader("abc");
 
-		assertEquals("abc", unsyncStringReader.string);
-		assertEquals(3, unsyncStringReader.stringLength);
+		Assert.assertEquals("abc", unsyncStringReader.string);
+		Assert.assertEquals(3, unsyncStringReader.stringLength);
 
 		unsyncStringReader = new UnsyncStringReader("defg");
 
-		assertEquals("defg", unsyncStringReader.string);
-		assertEquals(4, unsyncStringReader.stringLength);
+		Assert.assertEquals("defg", unsyncStringReader.string);
+		Assert.assertEquals(4, unsyncStringReader.stringLength);
 	}
 
 	@Test
 	public void testMarkAndReset() throws IOException {
 		UnsyncStringReader unsyncStringReader = new UnsyncStringReader("abc");
 
-		assertEquals('a', unsyncStringReader.read());
+		Assert.assertEquals('a', unsyncStringReader.read());
 
 		unsyncStringReader.mark(-1);
 
-		assertEquals('b', unsyncStringReader.read());
-		assertEquals('c', unsyncStringReader.read());
-		assertEquals(-1, unsyncStringReader.read());
+		Assert.assertEquals('b', unsyncStringReader.read());
+		Assert.assertEquals('c', unsyncStringReader.read());
+		Assert.assertEquals(-1, unsyncStringReader.read());
 
 		unsyncStringReader.reset();
 
-		assertEquals('b', unsyncStringReader.read());
-		assertEquals('c', unsyncStringReader.read());
-		assertEquals(-1, unsyncStringReader.read());
+		Assert.assertEquals('b', unsyncStringReader.read());
+		Assert.assertEquals('c', unsyncStringReader.read());
+		Assert.assertEquals(-1, unsyncStringReader.read());
 	}
 
 	@Test
 	public void testMarkSupported() {
 		UnsyncStringReader unsyncStringReader = new UnsyncStringReader("abc");
 
-		assertTrue(unsyncStringReader.markSupported());
+		Assert.assertTrue(unsyncStringReader.markSupported());
 	}
 
 	@Test
 	public void testRead() throws IOException {
 		UnsyncStringReader unsyncStringReader = new UnsyncStringReader("abc");
 
-		assertEquals('a', unsyncStringReader.read());
-		assertEquals('b', unsyncStringReader.read());
-		assertEquals('c', unsyncStringReader.read());
-		assertEquals(-1, unsyncStringReader.read());
+		Assert.assertEquals('a', unsyncStringReader.read());
+		Assert.assertEquals('b', unsyncStringReader.read());
+		Assert.assertEquals('c', unsyncStringReader.read());
+		Assert.assertEquals(-1, unsyncStringReader.read());
 	}
 
 	@Test
@@ -152,11 +151,11 @@ public class UnsyncStringReaderTest extends TestCase {
 		UnsyncStringReader unsyncStringReader = new UnsyncStringReader(
 			"abcdef");
 
-		assertEquals('a', unsyncStringReader.read());
-		assertEquals(2, unsyncStringReader.skip(2));
-		assertEquals('d', unsyncStringReader.read());
-		assertEquals(2, unsyncStringReader.skip(3));
-		assertEquals(-1, unsyncStringReader.read());
+		Assert.assertEquals('a', unsyncStringReader.read());
+		Assert.assertEquals(2, unsyncStringReader.skip(2));
+		Assert.assertEquals('d', unsyncStringReader.read());
+		Assert.assertEquals(2, unsyncStringReader.skip(3));
+		Assert.assertEquals(-1, unsyncStringReader.read());
 	}
 
 }

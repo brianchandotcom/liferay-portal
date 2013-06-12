@@ -14,14 +14,13 @@
 
 package com.liferay.portal.kernel.io.unsync;
 
-import com.liferay.portal.kernel.test.TestCase;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
  * @author Shuyang Zhou
  */
-public class UnsyncByteArrayInputStreamTest extends TestCase {
+public class UnsyncByteArrayInputStreamTest {
 
 	@Test
 	public void testBlockRead() {
@@ -34,18 +33,18 @@ public class UnsyncByteArrayInputStreamTest extends TestCase {
 
 		int read = unsyncByteArrayInputStream.read(buffer);
 
-		assertEquals(size, read);
+		Assert.assertEquals(size, read);
 
 		for (int i = 0; i < read; i++) {
-			assertEquals(i, buffer[i]);
+			Assert.assertEquals(i, buffer[i]);
 		}
 
 		read = unsyncByteArrayInputStream.read(buffer);
 
-		assertEquals(_SIZE - size, read);
+		Assert.assertEquals(_SIZE - size, read);
 
 		for (int i = 0; i < read; i++) {
-			assertEquals(i + size, buffer[i]);
+			Assert.assertEquals(i + size, buffer[i]);
 		}
 	}
 
@@ -54,12 +53,12 @@ public class UnsyncByteArrayInputStreamTest extends TestCase {
 		UnsyncByteArrayInputStream unsyncByteArrayInputStream =
 			new UnsyncByteArrayInputStream(_BUFFER);
 
-		assertEquals(_SIZE, unsyncByteArrayInputStream.available());
+		Assert.assertEquals(_SIZE, unsyncByteArrayInputStream.available());
 
 		unsyncByteArrayInputStream = new UnsyncByteArrayInputStream(
 			_BUFFER, _SIZE / 2, _SIZE / 2);
 
-		assertEquals(_SIZE / 2, unsyncByteArrayInputStream.available());
+		Assert.assertEquals(_SIZE / 2, unsyncByteArrayInputStream.available());
 	}
 
 	@Test
@@ -67,23 +66,23 @@ public class UnsyncByteArrayInputStreamTest extends TestCase {
 		UnsyncByteArrayInputStream unsyncByteArrayInputStream =
 			new UnsyncByteArrayInputStream(_BUFFER);
 
-		assertEquals(0, unsyncByteArrayInputStream.read());
-		assertEquals(1, unsyncByteArrayInputStream.read());
+		Assert.assertEquals(0, unsyncByteArrayInputStream.read());
+		Assert.assertEquals(1, unsyncByteArrayInputStream.read());
 
 		unsyncByteArrayInputStream.mark(-1);
 
-		assertEquals(_SIZE - 2, unsyncByteArrayInputStream.available());
-		assertEquals(2, unsyncByteArrayInputStream.read());
-		assertEquals(3, unsyncByteArrayInputStream.read());
-		assertEquals(_SIZE - 4, unsyncByteArrayInputStream.available());
+		Assert.assertEquals(_SIZE - 2, unsyncByteArrayInputStream.available());
+		Assert.assertEquals(2, unsyncByteArrayInputStream.read());
+		Assert.assertEquals(3, unsyncByteArrayInputStream.read());
+		Assert.assertEquals(_SIZE - 4, unsyncByteArrayInputStream.available());
 
 		unsyncByteArrayInputStream.reset();
 
-		assertEquals(_SIZE - 2, unsyncByteArrayInputStream.available());
-		assertEquals(2, unsyncByteArrayInputStream.read());
-		assertEquals(3, unsyncByteArrayInputStream.read());
+		Assert.assertEquals(_SIZE - 2, unsyncByteArrayInputStream.available());
+		Assert.assertEquals(2, unsyncByteArrayInputStream.read());
+		Assert.assertEquals(3, unsyncByteArrayInputStream.read());
 
-		assertEquals(_SIZE - 4, unsyncByteArrayInputStream.available());
+		Assert.assertEquals(_SIZE - 4, unsyncByteArrayInputStream.available());
 	}
 
 	@Test
@@ -91,7 +90,7 @@ public class UnsyncByteArrayInputStreamTest extends TestCase {
 		UnsyncByteArrayInputStream unsyncByteArrayInputStream =
 			new UnsyncByteArrayInputStream(_BUFFER);
 
-		assertTrue(unsyncByteArrayInputStream.markSupported());
+		Assert.assertTrue(unsyncByteArrayInputStream.markSupported());
 	}
 
 	@Test
@@ -100,10 +99,10 @@ public class UnsyncByteArrayInputStreamTest extends TestCase {
 			new UnsyncByteArrayInputStream(_BUFFER);
 
 		for (int i = 0; i < _SIZE; i++) {
-			assertEquals(i, unsyncByteArrayInputStream.read());
+			Assert.assertEquals(i, unsyncByteArrayInputStream.read());
 		}
 
-		assertEquals(-1, unsyncByteArrayInputStream.read());
+		Assert.assertEquals(-1, unsyncByteArrayInputStream.read());
 	}
 
 	@Test
@@ -113,10 +112,12 @@ public class UnsyncByteArrayInputStreamTest extends TestCase {
 
 		long size = _SIZE * 2 / 3;
 
-		assertEquals(size, unsyncByteArrayInputStream.skip(size));
-		assertEquals(_SIZE - size, unsyncByteArrayInputStream.available());
-		assertEquals(_SIZE - size, unsyncByteArrayInputStream.skip(size));
-		assertEquals(0, unsyncByteArrayInputStream.available());
+		Assert.assertEquals(size, unsyncByteArrayInputStream.skip(size));
+		Assert.assertEquals(
+			_SIZE - size, unsyncByteArrayInputStream.available());
+		Assert.assertEquals(
+			_SIZE - size, unsyncByteArrayInputStream.skip(size));
+		Assert.assertEquals(0, unsyncByteArrayInputStream.available());
 	}
 
 	private static final byte[] _BUFFER =

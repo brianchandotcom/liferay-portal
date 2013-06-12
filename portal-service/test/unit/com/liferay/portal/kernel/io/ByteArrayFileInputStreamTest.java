@@ -14,20 +14,21 @@
 
 package com.liferay.portal.kernel.io;
 
-import com.liferay.portal.kernel.test.TestCase;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
  * @author Shuyang Zhou
  */
-public class ByteArrayFileInputStreamTest extends TestCase {
+public class ByteArrayFileInputStreamTest {
 
-	@Override
+	@Before
 	public void setUp() throws Exception {
 		_testDir = new File("ByteArrayFileInputStreamTest.testDir");
 
@@ -44,7 +45,7 @@ public class ByteArrayFileInputStreamTest extends TestCase {
 		fileOutputStream.close();
 	}
 
-	@Override
+	@After
 	public void tearDown() throws Exception {
 		_testDir.delete();
 		_testFile.delete();
@@ -58,7 +59,7 @@ public class ByteArrayFileInputStreamTest extends TestCase {
 		ByteArrayFileInputStream byteArrayFileInputStream =
 			new ByteArrayFileInputStream(_testFile, 512);
 
-		assertEquals(0, byteArrayFileInputStream.available());
+		Assert.assertEquals(0, byteArrayFileInputStream.available());
 
 		// byte[]
 
@@ -67,10 +68,10 @@ public class ByteArrayFileInputStreamTest extends TestCase {
 
 		byteArrayFileInputStream.read();
 
-		assertNotNull(byteArrayFileInputStream.data);
-		assertNull(byteArrayFileInputStream.fileInputStream);
-		assertEquals(1, byteArrayFileInputStream.index);
-		assertEquals(1023, byteArrayFileInputStream.available());
+		Assert.assertNotNull(byteArrayFileInputStream.data);
+		Assert.assertNull(byteArrayFileInputStream.fileInputStream);
+		Assert.assertEquals(1, byteArrayFileInputStream.index);
+		Assert.assertEquals(1023, byteArrayFileInputStream.available());
 
 		byteArrayFileInputStream.close();
 
@@ -80,10 +81,10 @@ public class ByteArrayFileInputStreamTest extends TestCase {
 
 		byteArrayFileInputStream.read();
 
-		assertNull(byteArrayFileInputStream.data);
-		assertNotNull(byteArrayFileInputStream.fileInputStream);
-		assertEquals(0, byteArrayFileInputStream.index);
-		assertEquals(
+		Assert.assertNull(byteArrayFileInputStream.data);
+		Assert.assertNotNull(byteArrayFileInputStream.fileInputStream);
+		Assert.assertEquals(0, byteArrayFileInputStream.index);
+		Assert.assertEquals(
 			byteArrayFileInputStream.fileInputStream.available(),
 			byteArrayFileInputStream.available());
 
@@ -105,7 +106,7 @@ public class ByteArrayFileInputStreamTest extends TestCase {
 
 		while ((length = byteArrayFileInputStream.read(buffer)) != -1) {
 			for (int i = 0; i < length; i++) {
-				assertEquals(index++ & 0xff, buffer[i] & 0xff);
+				Assert.assertEquals(index++ & 0xff, buffer[i] & 0xff);
 			}
 		}
 
@@ -116,7 +117,7 @@ public class ByteArrayFileInputStreamTest extends TestCase {
 
 		// 0 length
 
-		assertEquals(0, byteArrayFileInputStream.read(null, -1, 0));
+		Assert.assertEquals(0, byteArrayFileInputStream.read(null, -1, 0));
 
 		buffer = new byte[48];
 
@@ -125,7 +126,7 @@ public class ByteArrayFileInputStreamTest extends TestCase {
 
 		while ((length = byteArrayFileInputStream.read(buffer, 16, 16)) != -1) {
 			for (int i = 0; i < length; i++) {
-				assertEquals(index++ & 0xff, buffer[i + 16] & 0xff);
+				Assert.assertEquals(index++ & 0xff, buffer[i + 16] & 0xff);
 			}
 		}
 
@@ -142,7 +143,7 @@ public class ByteArrayFileInputStreamTest extends TestCase {
 
 		while ((length = byteArrayFileInputStream.read(buffer)) != -1) {
 			for (int i = 0; i < length; i++) {
-				assertEquals(index++ & 0xff, buffer[i] & 0xff);
+				Assert.assertEquals(index++ & 0xff, buffer[i] & 0xff);
 			}
 		}
 
@@ -152,7 +153,7 @@ public class ByteArrayFileInputStreamTest extends TestCase {
 
 		// 0 length
 
-		assertEquals(0, byteArrayFileInputStream.read(null, -1, 0));
+		Assert.assertEquals(0, byteArrayFileInputStream.read(null, -1, 0));
 
 		buffer = new byte[48];
 
@@ -161,7 +162,7 @@ public class ByteArrayFileInputStreamTest extends TestCase {
 
 		while ((length = byteArrayFileInputStream.read(buffer, 16, 16)) != -1) {
 			for (int i = 0; i < length; i++) {
-				assertEquals(index++ & 0xff, buffer[i + 16] & 0xff);
+				Assert.assertEquals(index++ & 0xff, buffer[i + 16] & 0xff);
 			}
 		}
 
@@ -179,10 +180,10 @@ public class ByteArrayFileInputStreamTest extends TestCase {
 		byteArrayFileInputStream.read();
 
 		byteArrayFileInputStream.close();
-		assertNull(byteArrayFileInputStream.data);
-		assertNull(byteArrayFileInputStream.file);
-		assertNull(byteArrayFileInputStream.fileInputStream);
-		assertTrue(_testFile.exists());
+		Assert.assertNull(byteArrayFileInputStream.data);
+		Assert.assertNull(byteArrayFileInputStream.file);
+		Assert.assertNull(byteArrayFileInputStream.fileInputStream);
+		Assert.assertTrue(_testFile.exists());
 
 		// Delete on close
 
@@ -191,10 +192,10 @@ public class ByteArrayFileInputStreamTest extends TestCase {
 
 		byteArrayFileInputStream.close();
 
-		assertNull(byteArrayFileInputStream.data);
-		assertNull(byteArrayFileInputStream.file);
-		assertNull(byteArrayFileInputStream.fileInputStream);
-		assertFalse(_testFile.exists());
+		Assert.assertNull(byteArrayFileInputStream.data);
+		Assert.assertNull(byteArrayFileInputStream.file);
+		Assert.assertNull(byteArrayFileInputStream.fileInputStream);
+		Assert.assertFalse(_testFile.exists());
 	}
 
 	@Test
@@ -205,7 +206,7 @@ public class ByteArrayFileInputStreamTest extends TestCase {
 		try {
 			new ByteArrayFileInputStream(_testDir, 1024);
 
-			fail();
+			Assert.fail();
 		}
 		catch (IllegalArgumentException iae) {
 		}
@@ -215,7 +216,7 @@ public class ByteArrayFileInputStreamTest extends TestCase {
 		try {
 			new ByteArrayFileInputStream(new File("No Such File"), 1024);
 
-			fail();
+			Assert.fail();
 		}
 		catch (IllegalArgumentException iae) {
 		}
@@ -225,30 +226,30 @@ public class ByteArrayFileInputStreamTest extends TestCase {
 		ByteArrayFileInputStream byteArrayFileInputStream =
 			new ByteArrayFileInputStream(_testFile, 512);
 
-		assertEquals(_testFile, byteArrayFileInputStream.file);
-		assertEquals(1024, byteArrayFileInputStream.fileSize);
-		assertEquals(512, byteArrayFileInputStream.threshold);
-		assertFalse(byteArrayFileInputStream.deleteOnClose);
+		Assert.assertEquals(_testFile, byteArrayFileInputStream.file);
+		Assert.assertEquals(1024, byteArrayFileInputStream.fileSize);
+		Assert.assertEquals(512, byteArrayFileInputStream.threshold);
+		Assert.assertFalse(byteArrayFileInputStream.deleteOnClose);
 
 		// Constructor 2, do not delete on close
 
 		byteArrayFileInputStream = new ByteArrayFileInputStream(
 			_testFile, 512, false);
 
-		assertEquals(_testFile, byteArrayFileInputStream.file);
-		assertEquals(1024, byteArrayFileInputStream.fileSize);
-		assertEquals(512, byteArrayFileInputStream.threshold);
-		assertFalse(byteArrayFileInputStream.deleteOnClose);
+		Assert.assertEquals(_testFile, byteArrayFileInputStream.file);
+		Assert.assertEquals(1024, byteArrayFileInputStream.fileSize);
+		Assert.assertEquals(512, byteArrayFileInputStream.threshold);
+		Assert.assertFalse(byteArrayFileInputStream.deleteOnClose);
 
 		// Constructor 2, delete on close
 
 		byteArrayFileInputStream = new ByteArrayFileInputStream(
 			_testFile, 512, true);
 
-		assertEquals(_testFile, byteArrayFileInputStream.file);
-		assertEquals(1024, byteArrayFileInputStream.fileSize);
-		assertEquals(512, byteArrayFileInputStream.threshold);
-		assertTrue(byteArrayFileInputStream.deleteOnClose);
+		Assert.assertEquals(_testFile, byteArrayFileInputStream.file);
+		Assert.assertEquals(1024, byteArrayFileInputStream.fileSize);
+		Assert.assertEquals(512, byteArrayFileInputStream.threshold);
+		Assert.assertTrue(byteArrayFileInputStream.deleteOnClose);
 	}
 
 	@Test
@@ -259,26 +260,26 @@ public class ByteArrayFileInputStreamTest extends TestCase {
 		ByteArrayFileInputStream byteArrayFileInputStream =
 			new ByteArrayFileInputStream(_testFile, 2048);
 
-		assertTrue(byteArrayFileInputStream.markSupported());
+		Assert.assertTrue(byteArrayFileInputStream.markSupported());
 
 		for (int i = 0; i < 512; i++) {
-			assertEquals(i & 0xff, byteArrayFileInputStream.read());
+			Assert.assertEquals(i & 0xff, byteArrayFileInputStream.read());
 		}
 
 		byteArrayFileInputStream.mark(0);
 
 		for (int i = 512; i < 1024; i++) {
-			assertEquals(i & 0xff, byteArrayFileInputStream.read());
+			Assert.assertEquals(i & 0xff, byteArrayFileInputStream.read());
 		}
 
-		assertEquals(-1, byteArrayFileInputStream.read());
+		Assert.assertEquals(-1, byteArrayFileInputStream.read());
 
 		// In memory reset to index 512
 
 		byteArrayFileInputStream.reset();
 
 		for (int i = 512; i < 1024; i++) {
-			assertEquals(i & 0xff, byteArrayFileInputStream.read());
+			Assert.assertEquals(i & 0xff, byteArrayFileInputStream.read());
 		}
 
 		byteArrayFileInputStream.close();
@@ -287,20 +288,20 @@ public class ByteArrayFileInputStreamTest extends TestCase {
 
 		byteArrayFileInputStream = new ByteArrayFileInputStream(_testFile, 512);
 
-		assertFalse(byteArrayFileInputStream.markSupported());
+		Assert.assertFalse(byteArrayFileInputStream.markSupported());
 
 		for (int i = 0; i < 1024; i++) {
-			assertEquals(i & 0xff, byteArrayFileInputStream.read());
+			Assert.assertEquals(i & 0xff, byteArrayFileInputStream.read());
 		}
 
-		assertEquals(-1, byteArrayFileInputStream.read());
+		Assert.assertEquals(-1, byteArrayFileInputStream.read());
 
 		// FileInputStream reset to index 0
 
 		byteArrayFileInputStream.reset();
 
 		for (int i = 0; i < 1024; i++) {
-			assertEquals(i & 0xff, byteArrayFileInputStream.read());
+			Assert.assertEquals(i & 0xff, byteArrayFileInputStream.read());
 		}
 
 		byteArrayFileInputStream.close();
@@ -316,17 +317,17 @@ public class ByteArrayFileInputStreamTest extends TestCase {
 
 		// Negative length
 
-		assertEquals(0, byteArrayFileInputStream.skip(-1));
+		Assert.assertEquals(0, byteArrayFileInputStream.skip(-1));
 
 		int count = 1024 / 17;
 
 		for (int i = 0; i < count; i++) {
-			assertEquals(17, byteArrayFileInputStream.skip(17));
+			Assert.assertEquals(17, byteArrayFileInputStream.skip(17));
 		}
 
-		assertEquals(1024 % 17, byteArrayFileInputStream.skip(17));
+		Assert.assertEquals(1024 % 17, byteArrayFileInputStream.skip(17));
 
-		assertEquals(0, byteArrayFileInputStream.skip(17));
+		Assert.assertEquals(0, byteArrayFileInputStream.skip(17));
 
 		byteArrayFileInputStream.close();
 
@@ -336,17 +337,17 @@ public class ByteArrayFileInputStreamTest extends TestCase {
 
 		// 0 length
 
-		assertEquals(0, byteArrayFileInputStream.skip(0));
+		Assert.assertEquals(0, byteArrayFileInputStream.skip(0));
 
 		for (int i = 0; i < 1024; i++) {
-			assertEquals(17, byteArrayFileInputStream.skip(17));
+			Assert.assertEquals(17, byteArrayFileInputStream.skip(17));
 		}
 
 		// Skip EOF
 
 		byteArrayFileInputStream.skip(17);
 
-		assertEquals(-1, byteArrayFileInputStream.read());
+		Assert.assertEquals(-1, byteArrayFileInputStream.read());
 
 		byteArrayFileInputStream.close();
 	}

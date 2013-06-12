@@ -16,20 +16,20 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
-import com.liferay.portal.kernel.test.TestCase;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.StringWriter;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
  * @author Shuyang Zhou
  * @author Manuel de la Peña
  */
-public class StringBundlerTest extends TestCase {
+public class StringBundlerTest {
 
 	@Test
 	public void testAppendNullCharArray() {
@@ -37,8 +37,8 @@ public class StringBundlerTest extends TestCase {
 
 		sb.append((char[])null);
 
-		assertEquals(1, sb.index());
-		assertEquals("null", sb.stringAt(0));
+		Assert.assertEquals(1, sb.index());
+		Assert.assertEquals("null", sb.stringAt(0));
 	}
 
 	@Test
@@ -47,8 +47,8 @@ public class StringBundlerTest extends TestCase {
 
 		sb.append((Object)null);
 
-		assertEquals(1, sb.index());
-		assertEquals("null", sb.stringAt(0));
+		Assert.assertEquals(1, sb.index());
+		Assert.assertEquals("null", sb.stringAt(0));
 	}
 
 	@Test
@@ -57,8 +57,8 @@ public class StringBundlerTest extends TestCase {
 
 		sb.append((String)null);
 
-		assertEquals(1, sb.index());
-		assertEquals(StringPool.NULL, sb.stringAt(0));
+		Assert.assertEquals(1, sb.index());
+		Assert.assertEquals(StringPool.NULL, sb.stringAt(0));
 	}
 
 	@Test
@@ -67,7 +67,7 @@ public class StringBundlerTest extends TestCase {
 
 		sb.append((String[])null);
 
-		assertEquals(0, sb.index());
+		Assert.assertEquals(0, sb.index());
 	}
 
 	@Test
@@ -76,7 +76,7 @@ public class StringBundlerTest extends TestCase {
 
 		sb.append((StringBundler)null);
 
-		assertEquals(0, sb.index());
+		Assert.assertEquals(0, sb.index());
 	}
 
 	@Test
@@ -85,29 +85,29 @@ public class StringBundlerTest extends TestCase {
 
 		sb.append(new String[] {"test1", "test2", "test3"});
 
-		assertEquals(3, sb.index());
-		assertEquals(10, sb.capacity());
-		assertEquals("test1", sb.stringAt(0));
-		assertEquals("test2", sb.stringAt(1));
-		assertEquals("test3", sb.stringAt(2));
+		Assert.assertEquals(3, sb.index());
+		Assert.assertEquals(10, sb.capacity());
+		Assert.assertEquals("test1", sb.stringAt(0));
+		Assert.assertEquals("test2", sb.stringAt(1));
+		Assert.assertEquals("test3", sb.stringAt(2));
 
 		sb = new StringBundler(2);
 
 		sb.append(new String[] {"test1", "", "test3"});
 
-		assertEquals(2, sb.index());
-		assertEquals(10, sb.capacity());
-		assertEquals("test1", sb.stringAt(0));
-		assertEquals("test3", sb.stringAt(1));
+		Assert.assertEquals(2, sb.index());
+		Assert.assertEquals(10, sb.capacity());
+		Assert.assertEquals("test1", sb.stringAt(0));
+		Assert.assertEquals("test3", sb.stringAt(1));
 
 		sb = new StringBundler(2);
 
 		sb.append(new String[] {"test1", "test2", null});
 
-		assertEquals(2, sb.index());
-		assertEquals(10, sb.capacity());
-		assertEquals("test1", sb.stringAt(0));
-		assertEquals("test2", sb.stringAt(1));
+		Assert.assertEquals(2, sb.index());
+		Assert.assertEquals(10, sb.capacity());
+		Assert.assertEquals("test1", sb.stringAt(0));
+		Assert.assertEquals("test2", sb.stringAt(1));
 	}
 
 	@Test
@@ -116,29 +116,29 @@ public class StringBundlerTest extends TestCase {
 
 		sb.append(new String[] {"test1", "test2", "test3"});
 
-		assertEquals(3, sb.index());
-		assertEquals(16, sb.capacity());
-		assertEquals("test1", sb.stringAt(0));
-		assertEquals("test2", sb.stringAt(1));
-		assertEquals("test3", sb.stringAt(2));
+		Assert.assertEquals(3, sb.index());
+		Assert.assertEquals(16, sb.capacity());
+		Assert.assertEquals("test1", sb.stringAt(0));
+		Assert.assertEquals("test2", sb.stringAt(1));
+		Assert.assertEquals("test3", sb.stringAt(2));
 
 		sb = new StringBundler();
 
 		sb.append(new String[] {"test1", "", "test3"});
 
-		assertEquals(2, sb.index());
-		assertEquals(16, sb.capacity());
-		assertEquals("test1", sb.stringAt(0));
-		assertEquals("test3", sb.stringAt(1));
+		Assert.assertEquals(2, sb.index());
+		Assert.assertEquals(16, sb.capacity());
+		Assert.assertEquals("test1", sb.stringAt(0));
+		Assert.assertEquals("test3", sb.stringAt(1));
 
 		sb = new StringBundler();
 
 		sb.append(new String[] {"test1", "test2", null});
 
-		assertEquals(2, sb.index());
-		assertEquals(16, sb.capacity());
-		assertEquals("test1", sb.stringAt(0));
-		assertEquals("test2", sb.stringAt(1));
+		Assert.assertEquals(2, sb.index());
+		Assert.assertEquals(16, sb.capacity());
+		Assert.assertEquals("test1", sb.stringAt(0));
+		Assert.assertEquals("test2", sb.stringAt(1));
 	}
 
 	@Test
@@ -153,9 +153,9 @@ public class StringBundlerTest extends TestCase {
 
 		sb.append(testSB);
 
-		assertEquals(3, sb.index());
-		assertEquals(10, sb.capacity());
-		assertEquals("test3", sb.stringAt(2));
+		Assert.assertEquals(3, sb.index());
+		Assert.assertEquals(10, sb.capacity());
+		Assert.assertEquals("test3", sb.stringAt(2));
 	}
 
 	@Test
@@ -170,9 +170,9 @@ public class StringBundlerTest extends TestCase {
 
 		sb.append(testSB);
 
-		assertEquals(3, sb.index());
-		assertEquals(16, sb.capacity());
-		assertEquals("test3", sb.stringAt(2));
+		Assert.assertEquals(3, sb.index());
+		Assert.assertEquals(16, sb.capacity());
+		Assert.assertEquals("test3", sb.stringAt(2));
 	}
 
 	@Test
@@ -181,25 +181,25 @@ public class StringBundlerTest extends TestCase {
 
 		sb.append("test1");
 
-		assertEquals(1, sb.index());
-		assertEquals(2, sb.capacity());
-		assertEquals("test1", sb.stringAt(0));
+		Assert.assertEquals(1, sb.index());
+		Assert.assertEquals(2, sb.capacity());
+		Assert.assertEquals("test1", sb.stringAt(0));
 
 		sb.append("test2");
 
-		assertEquals(2, sb.index());
-		assertEquals(2, sb.capacity());
-		assertEquals("test1", sb.stringAt(0));
-		assertEquals("test2", sb.stringAt(1));
+		Assert.assertEquals(2, sb.index());
+		Assert.assertEquals(2, sb.capacity());
+		Assert.assertEquals("test1", sb.stringAt(0));
+		Assert.assertEquals("test2", sb.stringAt(1));
 
 		sb.append("test3");
 
-		assertEquals(3, sb.index());
-		assertEquals(4, sb.capacity());
+		Assert.assertEquals(3, sb.index());
+		Assert.assertEquals(4, sb.capacity());
 
-		assertEquals("test1", sb.stringAt(0));
-		assertEquals("test2", sb.stringAt(1));
-		assertEquals("test3", sb.stringAt(2));
+		Assert.assertEquals("test1", sb.stringAt(0));
+		Assert.assertEquals("test2", sb.stringAt(1));
+		Assert.assertEquals("test3", sb.stringAt(2));
 	}
 
 	@Test
@@ -208,105 +208,105 @@ public class StringBundlerTest extends TestCase {
 
 		sb.append("test1");
 
-		assertEquals(1, sb.index());
-		assertEquals(16, sb.capacity());
-		assertEquals("test1", sb.stringAt(0));
+		Assert.assertEquals(1, sb.index());
+		Assert.assertEquals(16, sb.capacity());
+		Assert.assertEquals("test1", sb.stringAt(0));
 
 		sb.append("test2");
 
-		assertEquals(2, sb.index());
-		assertEquals(16, sb.capacity());
-		assertEquals("test1", sb.stringAt(0));
-		assertEquals("test2", sb.stringAt(1));
+		Assert.assertEquals(2, sb.index());
+		Assert.assertEquals(16, sb.capacity());
+		Assert.assertEquals("test1", sb.stringAt(0));
+		Assert.assertEquals("test2", sb.stringAt(1));
 
 		sb.append("test3");
 
-		assertEquals(3, sb.index());
-		assertEquals(16, sb.capacity());
-		assertEquals("test1", sb.stringAt(0));
-		assertEquals("test2", sb.stringAt(1));
-		assertEquals("test3", sb.stringAt(2));
+		Assert.assertEquals(3, sb.index());
+		Assert.assertEquals(16, sb.capacity());
+		Assert.assertEquals("test1", sb.stringAt(0));
+		Assert.assertEquals("test2", sb.stringAt(1));
+		Assert.assertEquals("test3", sb.stringAt(2));
 	}
 
 	@Test
 	public void testConstructor() {
 		StringBundler sb = new StringBundler();
 
-		assertEquals(0, sb.index());
-		assertEquals(16, sb.capacity());
+		Assert.assertEquals(0, sb.index());
+		Assert.assertEquals(16, sb.capacity());
 	}
 
 	@Test
 	public void testConstructorWithCapacity() {
 		StringBundler sb = new StringBundler(32);
 
-		assertEquals(0, sb.index());
-		assertEquals(32, sb.capacity());
+		Assert.assertEquals(0, sb.index());
+		Assert.assertEquals(32, sb.capacity());
 	}
 
 	@Test
 	public void testConstructorWithString() {
 		StringBundler sb = new StringBundler("test");
 
-		assertEquals(1, sb.index());
-		assertEquals("test", sb.stringAt(0));
-		assertEquals(16, sb.capacity());
+		Assert.assertEquals(1, sb.index());
+		Assert.assertEquals("test", sb.stringAt(0));
+		Assert.assertEquals(16, sb.capacity());
 	}
 
 	@Test
 	public void testConstructorWithStringArray() {
 		StringBundler sb = new StringBundler(new String[] {"aa", "bb"});
 
-		assertEquals(2, sb.index());
-		assertEquals("aa", sb.stringAt(0));
-		assertEquals("bb", sb.stringAt(1));
-		assertEquals(2, sb.capacity());
+		Assert.assertEquals(2, sb.index());
+		Assert.assertEquals("aa", sb.stringAt(0));
+		Assert.assertEquals("bb", sb.stringAt(1));
+		Assert.assertEquals(2, sb.capacity());
 	}
 
 	@Test
 	public void testConstructorWithStringArrayEmpty() {
 		StringBundler sb = new StringBundler(new String[] {"", "bb"});
 
-		assertEquals(1, sb.index());
-		assertEquals("bb", sb.stringAt(0));
-		assertEquals(2, sb.capacity());
+		Assert.assertEquals(1, sb.index());
+		Assert.assertEquals("bb", sb.stringAt(0));
+		Assert.assertEquals(2, sb.capacity());
 	}
 
 	@Test
 	public void testConstructorWithStringArrayExtraSpace() {
 		StringBundler sb = new StringBundler(new String[] {"aa", "bb"}, 3);
 
-		assertEquals(2, sb.index());
-		assertEquals("aa", sb.stringAt(0));
-		assertEquals("bb", sb.stringAt(1));
-		assertEquals(5, sb.capacity());
+		Assert.assertEquals(2, sb.index());
+		Assert.assertEquals("aa", sb.stringAt(0));
+		Assert.assertEquals("bb", sb.stringAt(1));
+		Assert.assertEquals(5, sb.capacity());
 	}
 
 	@Test
 	public void testConstructorWithStringArrayExtraSpaceEmpty() {
 		StringBundler sb = new StringBundler(new String[] {"", "bb"}, 3);
 
-		assertEquals(1, sb.index());
-		assertEquals("bb", sb.stringAt(0));
-		assertEquals(5, sb.capacity());
+		Assert.assertEquals(1, sb.index());
+		Assert.assertEquals("bb", sb.stringAt(0));
+		Assert.assertEquals(5, sb.capacity());
 	}
 
 	@Test
 	public void testConstructorWithStringArrayExtraSpaceNull() {
 		StringBundler sb = new StringBundler(new String[] {"aa", null}, 3);
 
-		assertEquals(1, sb.index());
-		assertEquals("aa", sb.stringAt(0));
-		assertEquals(5, sb.capacity());
+		Assert.assertEquals(1, sb.index());
+		Assert.assertEquals("aa", sb.stringAt(0));
+		Assert.assertEquals(5, sb.capacity());
 	}
 
 	@Test
 	public void testConstructorWithStringArrayNull() {
 		StringBundler sb = new StringBundler(new String[] {"aa", null});
 
-		assertEquals(1, sb.index());
-		assertEquals("aa", sb.stringAt(0));
-		assertEquals(2, sb.capacity());
+		Assert.assertEquals(1, sb.index());
+		Assert.assertEquals("aa", sb.stringAt(0));
+		Assert.assertEquals(2, sb.capacity());
 	}
 
 	@Test
@@ -339,11 +339,11 @@ public class StringBundlerTest extends TestCase {
 
 		objectInputStream.close();
 
-		assertEquals(sb.capacity(), cloneSB.capacity());
-		assertEquals(sb.index(), cloneSB.index());
+		Assert.assertEquals(sb.capacity(), cloneSB.capacity());
+		Assert.assertEquals(sb.index(), cloneSB.index());
 
 		for (int i = 0; i < sb.index(); i++) {
-			assertEquals(sb.stringAt(i), cloneSB.stringAt(i));
+			Assert.assertEquals(sb.stringAt(i), cloneSB.stringAt(i));
 		}
 	}
 
@@ -357,7 +357,7 @@ public class StringBundlerTest extends TestCase {
 		try {
 			sb.setIndex(-1);
 
-			fail();
+			Assert.fail();
 		}
 		catch (ArrayIndexOutOfBoundsException aioobe) {
 		}
@@ -369,55 +369,55 @@ public class StringBundlerTest extends TestCase {
 		sb.append("test1");
 		sb.append("test2");
 
-		assertEquals(2, sb.index());
-		assertEquals("test1", sb.stringAt(0));
-		assertEquals("test2", sb.stringAt(1));
+		Assert.assertEquals(2, sb.index());
+		Assert.assertEquals("test1", sb.stringAt(0));
+		Assert.assertEquals("test2", sb.stringAt(1));
 
 		sb.setIndex(2);
 
-		assertEquals(2, sb.index());
-		assertEquals("test1", sb.stringAt(0));
-		assertEquals("test2", sb.stringAt(1));
+		Assert.assertEquals(2, sb.index());
+		Assert.assertEquals("test1", sb.stringAt(0));
+		Assert.assertEquals("test2", sb.stringAt(1));
 
 		// New index is larger than the current index but smaller than the array
 		// size
 
-		assertEquals(4, sb.capacity());
+		Assert.assertEquals(4, sb.capacity());
 
 		sb.setIndex(4);
 
-		assertEquals(4, sb.capacity());
-		assertEquals(4, sb.index());
-		assertEquals("test1", sb.stringAt(0));
-		assertEquals("test2", sb.stringAt(1));
-		assertEquals(StringPool.BLANK, sb.stringAt(2));
-		assertEquals(StringPool.BLANK, sb.stringAt(3));
+		Assert.assertEquals(4, sb.capacity());
+		Assert.assertEquals(4, sb.index());
+		Assert.assertEquals("test1", sb.stringAt(0));
+		Assert.assertEquals("test2", sb.stringAt(1));
+		Assert.assertEquals(StringPool.BLANK, sb.stringAt(2));
+		Assert.assertEquals(StringPool.BLANK, sb.stringAt(3));
 
 		// New index is larger than the current index and array size
 
 		sb.setIndex(6);
 
-		assertEquals(6, sb.capacity());
-		assertEquals(6, sb.index());
-		assertEquals("test1", sb.stringAt(0));
-		assertEquals("test2", sb.stringAt(1));
-		assertEquals(StringPool.BLANK, sb.stringAt(2));
-		assertEquals(StringPool.BLANK, sb.stringAt(3));
-		assertEquals(StringPool.BLANK, sb.stringAt(4));
-		assertEquals(StringPool.BLANK, sb.stringAt(5));
+		Assert.assertEquals(6, sb.capacity());
+		Assert.assertEquals(6, sb.index());
+		Assert.assertEquals("test1", sb.stringAt(0));
+		Assert.assertEquals("test2", sb.stringAt(1));
+		Assert.assertEquals(StringPool.BLANK, sb.stringAt(2));
+		Assert.assertEquals(StringPool.BLANK, sb.stringAt(3));
+		Assert.assertEquals(StringPool.BLANK, sb.stringAt(4));
+		Assert.assertEquals(StringPool.BLANK, sb.stringAt(5));
 
 		// New index is smaller than current index
 
 		sb.setIndex(1);
 
-		assertEquals(6, sb.capacity());
-		assertEquals(1, sb.index());
-		assertEquals("test1", sb.stringAt(0));
+		Assert.assertEquals(6, sb.capacity());
+		Assert.assertEquals(1, sb.index());
+		Assert.assertEquals("test1", sb.stringAt(0));
 
 		try {
-			assertEquals(null, sb.stringAt(1));
+			Assert.assertEquals(null, sb.stringAt(1));
 
-			fail();
+			Assert.fail();
 		}
 		catch (ArrayIndexOutOfBoundsException aioobe) {
 		}
@@ -431,20 +431,20 @@ public class StringBundlerTest extends TestCase {
 		sb.append("test2");
 		sb.append("test3");
 
-		assertEquals("test1test2test3", sb.toString());
+		Assert.assertEquals("test1test2test3", sb.toString());
 
 		// StringBuilder
 
 		sb.append("test4");
 
-		assertEquals("test1test2test3test4", sb.toString());
+		Assert.assertEquals("test1test2test3test4", sb.toString());
 	}
 
 	@Test
 	public void testToStringEmpty() {
 		StringBundler sb = new StringBundler();
 
-		assertEquals(StringPool.BLANK, sb.toString());
+		Assert.assertEquals(StringPool.BLANK, sb.toString());
 	}
 
 	@Test
@@ -461,7 +461,8 @@ public class StringBundlerTest extends TestCase {
 
 		sb.writeTo(stringWriter);
 
-		assertEquals("test1test2test3test4test5", stringWriter.toString());
+		Assert.assertEquals(
+			"test1test2test3test4test5", stringWriter.toString());
 	}
 
 }

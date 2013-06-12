@@ -15,12 +15,13 @@
 package com.liferay.portal.kernel.messaging.jmx;
 
 import com.liferay.portal.kernel.messaging.Destination;
-import com.liferay.portal.kernel.test.TestCase;
 
 import java.lang.management.ManagementFactory;
 
 import javax.management.MBeanServer;
 
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -32,9 +33,9 @@ import org.powermock.modules.junit4.PowerMockRunner;
  * @author Michael C. Han
  */
 @RunWith(PowerMockRunner.class)
-public class DestinationStatisticsManagerTest extends TestCase {
+public class DestinationStatisticsManagerTest {
 
-	@Override
+	@Before
 	public void setUp() throws Exception {
 		_mBeanServer = ManagementFactory.getPlatformMBeanServer();
 	}
@@ -45,7 +46,7 @@ public class DestinationStatisticsManagerTest extends TestCase {
 			new DestinationStatisticsManager(_destination),
 			DestinationStatisticsManager.createObjectName("test"));
 
-		assertTrue(
+		Assert.assertTrue(
 			_mBeanServer.isRegistered(
 				DestinationStatisticsManager.createObjectName("test")));
 	}

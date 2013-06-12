@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.io.unsync;
 
 import com.liferay.portal.kernel.io.OutputStreamWriter;
-import com.liferay.portal.kernel.test.TestCase;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -25,14 +24,16 @@ import java.io.Writer;
 
 import java.lang.reflect.Field;
 
+import org.junit.After;
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
  * @author Shuyang Zhou
  */
-public class UnsyncPrintWriterTest extends TestCase {
+public class UnsyncPrintWriterTest {
 
-	@Override
+	@After
 	public void tearDown() throws Exception {
 		File testFile = new File(_TEST_FILE_NAME);
 
@@ -47,19 +48,20 @@ public class UnsyncPrintWriterTest extends TestCase {
 		UnsyncPrintWriter unsyncPrintWriter = new UnsyncPrintWriter(
 			new File(_TEST_FILE_NAME));
 
-		assertTrue(_getOut(unsyncPrintWriter) instanceof FileWriter);
+		Assert.assertTrue(_getOut(unsyncPrintWriter) instanceof FileWriter);
 
 		// UnsyncPrintWriter(File file, String charSequence)
 
 		unsyncPrintWriter = new UnsyncPrintWriter(
 			new File(_TEST_FILE_NAME), "UTF8");
 
-		assertTrue(_getOut(unsyncPrintWriter) instanceof OutputStreamWriter);
+		Assert.assertTrue(
+			_getOut(unsyncPrintWriter) instanceof OutputStreamWriter);
 
 		OutputStreamWriter outputStreamWriter = (OutputStreamWriter)_getOut(
 			unsyncPrintWriter);
 
-		assertEquals("UTF8", outputStreamWriter.getEncoding());
+		Assert.assertEquals("UTF8", outputStreamWriter.getEncoding());
 
 		// UnsyncPrintWriter(OutputStream outputStream)
 
@@ -68,23 +70,25 @@ public class UnsyncPrintWriterTest extends TestCase {
 
 		unsyncPrintWriter = new UnsyncPrintWriter(byteArrayOutputStream);
 
-		assertTrue(_getOut(unsyncPrintWriter) instanceof OutputStreamWriter);
+		Assert.assertTrue(
+			_getOut(unsyncPrintWriter) instanceof OutputStreamWriter);
 
 		// UnsyncPrintWriter(String fileName)
 
 		unsyncPrintWriter = new UnsyncPrintWriter(_TEST_FILE_NAME);
 
-		assertTrue(_getOut(unsyncPrintWriter) instanceof FileWriter);
+		Assert.assertTrue(_getOut(unsyncPrintWriter) instanceof FileWriter);
 
 		// UnsyncPrintWriter(String fileName, String csn)
 
 		unsyncPrintWriter = new UnsyncPrintWriter(_TEST_FILE_NAME, "UTF8");
 
-		assertTrue(_getOut(unsyncPrintWriter) instanceof OutputStreamWriter);
+		Assert.assertTrue(
+			_getOut(unsyncPrintWriter) instanceof OutputStreamWriter);
 
 		outputStreamWriter = (OutputStreamWriter)_getOut(unsyncPrintWriter);
 
-		assertEquals("UTF8", outputStreamWriter.getEncoding());
+		Assert.assertEquals("UTF8", outputStreamWriter.getEncoding());
 
 		// UnsyncPrintWriter(Writer writer)
 
@@ -92,7 +96,7 @@ public class UnsyncPrintWriterTest extends TestCase {
 
 		unsyncPrintWriter = new UnsyncPrintWriter(stringWriter);
 
-		assertEquals(stringWriter, _getOut(unsyncPrintWriter));
+		Assert.assertEquals(stringWriter, _getOut(unsyncPrintWriter));
 	}
 
 	@Test
@@ -104,7 +108,7 @@ public class UnsyncPrintWriterTest extends TestCase {
 
 		unsyncPrintWriter.format("%2$2d %1$2s", "a", 1);
 
-		assertEquals(" 1  a", stringWriter.toString());
+		Assert.assertEquals(" 1  a", stringWriter.toString());
 	}
 
 	@Test
@@ -118,7 +122,7 @@ public class UnsyncPrintWriterTest extends TestCase {
 
 		String lineSeparator = System.getProperty("line.separator");
 
-		assertEquals(lineSeparator, stringWriter.toString());
+		Assert.assertEquals(lineSeparator, stringWriter.toString());
 	}
 
 	@Test
@@ -132,53 +136,53 @@ public class UnsyncPrintWriterTest extends TestCase {
 
 		unsyncPrintWriter.write('a');
 
-		assertEquals("a", stringWriter.toString());
+		Assert.assertEquals("a", stringWriter.toString());
 
 		unsyncPrintWriter.write('b');
 
-		assertEquals("ab", stringWriter.toString());
+		Assert.assertEquals("ab", stringWriter.toString());
 
 		// write(char[] chars)
 
 		unsyncPrintWriter.write(new char[] {'c', 'd'});
 
-		assertEquals("abcd", stringWriter.toString());
+		Assert.assertEquals("abcd", stringWriter.toString());
 
 		unsyncPrintWriter.write(new char[] {'e', 'f'});
 
-		assertEquals("abcdef", stringWriter.toString());
+		Assert.assertEquals("abcdef", stringWriter.toString());
 
 		// write(char[] chars, int offset, int length)
 
 		unsyncPrintWriter.write(
 			new char[] {'e', 'f', 'g', 'h', 'i', 'j'}, 2, 2);
 
-		assertEquals("abcdefgh", stringWriter.toString());
+		Assert.assertEquals("abcdefgh", stringWriter.toString());
 
 		unsyncPrintWriter.write(
 			new char[] {'g', 'h', 'i', 'j', 'k', 'l'}, 2, 2);
 
-		assertEquals("abcdefghij", stringWriter.toString());
+		Assert.assertEquals("abcdefghij", stringWriter.toString());
 
 		// write(String string)
 
 		unsyncPrintWriter.write("kl");
 
-		assertEquals("abcdefghijkl", stringWriter.toString());
+		Assert.assertEquals("abcdefghijkl", stringWriter.toString());
 
 		unsyncPrintWriter.write("mn");
 
-		assertEquals("abcdefghijklmn", stringWriter.toString());
+		Assert.assertEquals("abcdefghijklmn", stringWriter.toString());
 
 		// write(String string, int offset, int length)
 
 		unsyncPrintWriter.write("mnopqr", 2, 2);
 
-		assertEquals("abcdefghijklmnop", stringWriter.toString());
+		Assert.assertEquals("abcdefghijklmnop", stringWriter.toString());
 
 		unsyncPrintWriter.write("opqrst", 2, 2);
 
-		assertEquals("abcdefghijklmnopqr", stringWriter.toString());
+		Assert.assertEquals("abcdefghijklmnopqr", stringWriter.toString());
 	}
 
 	private static Writer _getOut(UnsyncPrintWriter unsyncPrintWriter) {

@@ -14,14 +14,13 @@
 
 package com.liferay.portal.kernel.plugin;
 
-import com.liferay.portal.kernel.test.TestCase;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
  * @author Jorge Ferrer
  */
-public class VersionTest extends TestCase {
+public class VersionTest {
 
 	@Test
 	public void testBugFixNumber() {
@@ -88,7 +87,7 @@ public class VersionTest extends TestCase {
 		Version firstVersion = Version.getInstance(first);
 		Version secondVersion = Version.getInstance(second);
 
-		assertTrue(
+		Assert.assertTrue(
 			first + " does not include " + second,
 			firstVersion.includes(secondVersion));
 	}
@@ -96,7 +95,7 @@ public class VersionTest extends TestCase {
 	protected void assertLater(String first, String second) {
 		Version firstVersion = Version.getInstance(first);
 
-		assertTrue(
+		Assert.assertTrue(
 			first + " is not later than " + second,
 			firstVersion.isLaterVersionThan(second.toString()));
 	}
@@ -105,7 +104,7 @@ public class VersionTest extends TestCase {
 		Version firstVersion = Version.getInstance(first);
 		Version secondVersion = Version.getInstance(second);
 
-		assertFalse(
+		Assert.assertFalse(
 			first + " includes " + second,
 			firstVersion.includes(secondVersion));
 	}
@@ -113,7 +112,7 @@ public class VersionTest extends TestCase {
 	protected void assertPrevious(String first, String second) {
 		Version firstVersion = Version.getInstance(first);
 
-		assertTrue(
+		Assert.assertTrue(
 			first + " is not previous than " + second,
 			firstVersion.isPreviousVersionThan(second));
 	}

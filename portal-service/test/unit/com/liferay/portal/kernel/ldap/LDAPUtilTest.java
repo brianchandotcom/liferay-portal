@@ -14,98 +14,99 @@
 
 package com.liferay.portal.kernel.ldap;
 
-import com.liferay.portal.kernel.test.TestCase;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
  * @author James Lefeu
  */
-public class LDAPUtilTest extends TestCase {
+public class LDAPUtilTest {
 
 	@Test
 	public void testIsValidFilterBalancedParentheses() {
-		assertTrue(isValidFilter("(object=value)"));
-		assertTrue(isValidFilter("((((object=value))))"));
-		assertTrue(isValidFilter("((((object=value))(org=liferay)))"));
-		assertTrue(
+		Assert.assertTrue(isValidFilter("(object=value)"));
+		Assert.assertTrue(isValidFilter("((((object=value))))"));
+		Assert.assertTrue(isValidFilter("((((object=value))(org=liferay)))"));
+		Assert.assertTrue(
 			isValidFilter(
 				"(((inetorg=www)((object=value))(org=liferay)))(user=test)"));
-		assertFalse(isValidFilter("(object=value))"));
-		assertFalse(isValidFilter("(((object=value))"));
-		assertFalse(isValidFilter("((((object=value)))(org=liferay)))"));
-		assertFalse(
+		Assert.assertFalse(isValidFilter("(object=value))"));
+		Assert.assertFalse(isValidFilter("(((object=value))"));
+		Assert.assertFalse(isValidFilter("((((object=value)))(org=liferay)))"));
+		Assert.assertFalse(
 			isValidFilter(
 				"(((inetorg=www)((object=value))(org=liferay)))(user=test))"));
 	}
 
 	@Test
 	public void testIsValidFilterNoFilterType() {
-		assertTrue(isValidFilter("(object=value)"));
-		assertFalse(isValidFilter("(object)"));
-		assertFalse(isValidFilter("(object)(value)"));
-		assertFalse(isValidFilter("(!object)"));
+		Assert.assertTrue(isValidFilter("(object=value)"));
+		Assert.assertFalse(isValidFilter("(object)"));
+		Assert.assertFalse(isValidFilter("(object)(value)"));
+		Assert.assertFalse(isValidFilter("(!object)"));
 	}
 
 	@Test
 	public void testIsValidFilterOpenAndCloseParentheses() {
-		assertTrue(isValidFilter("(object=value)"));
-		assertTrue(isValidFilter("  (object=value)"));
-		assertTrue(isValidFilter("(object=value)  "));
-		assertFalse(isValidFilter("object=value)"));
-		assertFalse(isValidFilter("(object=value"));
-		assertFalse(isValidFilter("object=value"));
-		assertFalse(isValidFilter("("));
-		assertFalse(isValidFilter(")"));
-		assertFalse(isValidFilter(")("));
+		Assert.assertTrue(isValidFilter("(object=value)"));
+		Assert.assertTrue(isValidFilter("  (object=value)"));
+		Assert.assertTrue(isValidFilter("(object=value)  "));
+		Assert.assertFalse(isValidFilter("object=value)"));
+		Assert.assertFalse(isValidFilter("(object=value"));
+		Assert.assertFalse(isValidFilter("object=value"));
+		Assert.assertFalse(isValidFilter("("));
+		Assert.assertFalse(isValidFilter(")"));
+		Assert.assertFalse(isValidFilter(")("));
 	}
 
 	@Test
 	public void testIsValidFilterSpecialChars() {
-		assertTrue(isValidFilter(""));
-		assertTrue(isValidFilter("*"));
-		assertTrue(isValidFilter("  *   "));
+		Assert.assertTrue(isValidFilter(""));
+		Assert.assertTrue(isValidFilter("*"));
+		Assert.assertTrue(isValidFilter("  *   "));
 	}
 
 	@Test
 	public void testIsValidFilterTypeAfterOpenParenthesis() {
-		assertTrue(isValidFilter("(object=value)"));
-		assertFalse(isValidFilter("(=value)"));
-		assertFalse(isValidFilter("(<=value)"));
-		assertFalse(isValidFilter("(>=value)"));
-		assertFalse(isValidFilter("(~=value)"));
-		assertFalse(isValidFilter("(~=value)(object=value)"));
+		Assert.assertTrue(isValidFilter("(object=value)"));
+		Assert.assertFalse(isValidFilter("(=value)"));
+		Assert.assertFalse(isValidFilter("(<=value)"));
+		Assert.assertFalse(isValidFilter("(>=value)"));
+		Assert.assertFalse(isValidFilter("(~=value)"));
+		Assert.assertFalse(isValidFilter("(~=value)(object=value)"));
 	}
 
 	@Test
 	public void testIsValidFilterTypeBeforeCloseParenthesis() {
-		assertTrue(isValidFilter("(object=value)"));
-		assertTrue(isValidFilter("(object=*)"));
-		assertTrue(isValidFilter("(object=subobject=*)"));
-		assertFalse(isValidFilter("(object=)"));
-		assertFalse(isValidFilter("(object<=)"));
-		assertFalse(isValidFilter("(object>=)"));
-		assertFalse(isValidFilter("(object~=)"));
-		assertFalse(isValidFilter("(object=subobject=)"));
-		assertFalse(isValidFilter("(org=liferay)(object=subobject=)"));
+		Assert.assertTrue(isValidFilter("(object=value)"));
+		Assert.assertTrue(isValidFilter("(object=*)"));
+		Assert.assertTrue(isValidFilter("(object=subobject=*)"));
+		Assert.assertFalse(isValidFilter("(object=)"));
+		Assert.assertFalse(isValidFilter("(object<=)"));
+		Assert.assertFalse(isValidFilter("(object>=)"));
+		Assert.assertFalse(isValidFilter("(object~=)"));
+		Assert.assertFalse(isValidFilter("(object=subobject=)"));
+		Assert.assertFalse(isValidFilter("(org=liferay)(object=subobject=)"));
 	}
 
 	@Test
 	public void testIsValidFilterTypesInSequence() {
-		assertTrue(isValidFilter("(object=value)"));
-		assertTrue(isValidFilter("(object=value=subvalue)"));
-		assertTrue(isValidFilter("(object<=value)"));
-		assertTrue(isValidFilter("(object<=value<=subvalue)"));
-		assertTrue(isValidFilter("(object>=value)"));
-		assertTrue(isValidFilter("(object>=value>=subvalue)"));
-		assertTrue(isValidFilter("(object~=value)"));
-		assertTrue(isValidFilter("(object~=value~=subvalue)"));
-		assertTrue(isValidFilter("(object~=value>=subvalue<=subsubvalue)"));
-		assertFalse(isValidFilter("(object==value)"));
-		assertFalse(isValidFilter("(object=value=<=subvalue)"));
-		assertFalse(isValidFilter("(object~==value)"));
-		assertFalse(isValidFilter("(object=value=>=subvalue)"));
-		assertFalse(isValidFilter("(object~=value>==subvalue<=subsubvalue)"));
+		Assert.assertTrue(isValidFilter("(object=value)"));
+		Assert.assertTrue(isValidFilter("(object=value=subvalue)"));
+		Assert.assertTrue(isValidFilter("(object<=value)"));
+		Assert.assertTrue(isValidFilter("(object<=value<=subvalue)"));
+		Assert.assertTrue(isValidFilter("(object>=value)"));
+		Assert.assertTrue(isValidFilter("(object>=value>=subvalue)"));
+		Assert.assertTrue(isValidFilter("(object~=value)"));
+		Assert.assertTrue(isValidFilter("(object~=value~=subvalue)"));
+		Assert.assertTrue(
+			isValidFilter("(object~=value>=subvalue<=subsubvalue)"));
+		Assert.assertFalse(isValidFilter("(object==value)"));
+		Assert.assertFalse(isValidFilter("(object=value=<=subvalue)"));
+		Assert.assertFalse(isValidFilter("(object~==value)"));
+		Assert.assertFalse(isValidFilter("(object=value=>=subvalue)"));
+		Assert.assertFalse(
+			isValidFilter("(object~=value>==subvalue<=subsubvalue)"));
 	}
 
 	protected boolean isValidFilter(String filter) {

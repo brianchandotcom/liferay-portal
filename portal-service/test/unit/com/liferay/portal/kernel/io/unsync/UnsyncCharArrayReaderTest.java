@@ -14,18 +14,17 @@
 
 package com.liferay.portal.kernel.io.unsync;
 
-import com.liferay.portal.kernel.test.TestCase;
-
 import java.io.IOException;
 
 import java.nio.CharBuffer;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
  * @author Shuyang Zhou
  */
-public class UnsyncCharArrayReaderTest extends TestCase {
+public class UnsyncCharArrayReaderTest {
 
 	@Test
 	public void testBlockRead() throws IOException {
@@ -38,18 +37,18 @@ public class UnsyncCharArrayReaderTest extends TestCase {
 
 		int read = unsyncCharArrayReader.read(buffer);
 
-		assertEquals(size, read);
+		Assert.assertEquals(size, read);
 
 		for (int i = 0; i < read; i++) {
-			assertEquals('a' + i, buffer[i]);
+			Assert.assertEquals('a' + i, buffer[i]);
 		}
 
 		read = unsyncCharArrayReader.read(buffer);
 
-		assertEquals(_SIZE - size, read);
+		Assert.assertEquals(_SIZE - size, read);
 
 		for (int i = 0; i < read; i++) {
-			assertEquals('a' + i + size, buffer[i]);
+			Assert.assertEquals('a' + i + size, buffer[i]);
 		}
 	}
 
@@ -64,20 +63,20 @@ public class UnsyncCharArrayReaderTest extends TestCase {
 
 		int read = unsyncCharArrayReader.read(charBuffer);
 
-		assertEquals(size, read);
+		Assert.assertEquals(size, read);
 
 		for (int i = 0; i < read; i++) {
-			assertEquals('a' + i, charBuffer.get(i));
+			Assert.assertEquals('a' + i, charBuffer.get(i));
 		}
 
 		charBuffer.position(0);
 
 		read = unsyncCharArrayReader.read(charBuffer);
 
-		assertEquals(_SIZE - size, read);
+		Assert.assertEquals(_SIZE - size, read);
 
 		for (int i = 0; i < read; i++) {
-			assertEquals('a' + i + size, charBuffer.get(i));
+			Assert.assertEquals('a' + i + size, charBuffer.get(i));
 		}
 	}
 
@@ -88,12 +87,12 @@ public class UnsyncCharArrayReaderTest extends TestCase {
 
 		unsyncCharArrayReader.close();
 
-		assertTrue(unsyncCharArrayReader.buffer == null);
+		Assert.assertTrue(unsyncCharArrayReader.buffer == null);
 
 		try {
 			unsyncCharArrayReader.mark(0);
 
-			fail();
+			Assert.fail();
 		}
 		catch (IOException ioe) {
 		}
@@ -101,7 +100,7 @@ public class UnsyncCharArrayReaderTest extends TestCase {
 		try {
 			unsyncCharArrayReader.read();
 
-			fail();
+			Assert.fail();
 		}
 		catch (IOException ioe) {
 		}
@@ -109,7 +108,7 @@ public class UnsyncCharArrayReaderTest extends TestCase {
 		try {
 			unsyncCharArrayReader.read(new char[5]);
 
-			fail();
+			Assert.fail();
 		}
 		catch (IOException ioe) {
 		}
@@ -117,7 +116,7 @@ public class UnsyncCharArrayReaderTest extends TestCase {
 		try {
 			unsyncCharArrayReader.read(new char[5], 1, 2);
 
-			fail();
+			Assert.fail();
 		}
 		catch (IOException ioe) {
 		}
@@ -125,7 +124,7 @@ public class UnsyncCharArrayReaderTest extends TestCase {
 		try {
 			unsyncCharArrayReader.read(CharBuffer.allocate(5));
 
-			fail();
+			Assert.fail();
 		}
 		catch (IOException ioe) {
 		}
@@ -133,7 +132,7 @@ public class UnsyncCharArrayReaderTest extends TestCase {
 		try {
 			unsyncCharArrayReader.ready();
 
-			fail();
+			Assert.fail();
 		}
 		catch (IOException ioe) {
 		}
@@ -141,7 +140,7 @@ public class UnsyncCharArrayReaderTest extends TestCase {
 		try {
 			unsyncCharArrayReader.reset();
 
-			fail();
+			Assert.fail();
 		}
 		catch (IOException ioe) {
 		}
@@ -154,18 +153,18 @@ public class UnsyncCharArrayReaderTest extends TestCase {
 		UnsyncCharArrayReader unsyncCharArrayReader = new UnsyncCharArrayReader(
 			_BUFFER);
 
-		assertEquals(_BUFFER, unsyncCharArrayReader.buffer);
-		assertEquals(_SIZE, unsyncCharArrayReader.capacity);
-		assertEquals(0, unsyncCharArrayReader.index);
-		assertEquals(0, unsyncCharArrayReader.markIndex);
+		Assert.assertEquals(_BUFFER, unsyncCharArrayReader.buffer);
+		Assert.assertEquals(_SIZE, unsyncCharArrayReader.capacity);
+		Assert.assertEquals(0, unsyncCharArrayReader.index);
+		Assert.assertEquals(0, unsyncCharArrayReader.markIndex);
 
 		unsyncCharArrayReader = new UnsyncCharArrayReader(
 			_BUFFER, _SIZE / 2, _SIZE / 2);
 
-		assertEquals(_BUFFER, unsyncCharArrayReader.buffer);
-		assertEquals(_SIZE, unsyncCharArrayReader.capacity);
-		assertEquals(_SIZE / 2, unsyncCharArrayReader.index);
-		assertEquals(_SIZE / 2, unsyncCharArrayReader.markIndex);
+		Assert.assertEquals(_BUFFER, unsyncCharArrayReader.buffer);
+		Assert.assertEquals(_SIZE, unsyncCharArrayReader.capacity);
+		Assert.assertEquals(_SIZE / 2, unsyncCharArrayReader.index);
+		Assert.assertEquals(_SIZE / 2, unsyncCharArrayReader.markIndex);
 	}
 
 	@Test
@@ -173,22 +172,22 @@ public class UnsyncCharArrayReaderTest extends TestCase {
 		UnsyncCharArrayReader unsyncCharArrayReader = new UnsyncCharArrayReader(
 			_BUFFER);
 
-		assertEquals('a', unsyncCharArrayReader.read());
-		assertEquals('b', unsyncCharArrayReader.read());
+		Assert.assertEquals('a', unsyncCharArrayReader.read());
+		Assert.assertEquals('b', unsyncCharArrayReader.read());
 
 		unsyncCharArrayReader.mark(-1);
 
-		assertEquals(2, unsyncCharArrayReader.index);
-		assertEquals('c', unsyncCharArrayReader.read());
-		assertEquals('d', unsyncCharArrayReader.read());
-		assertEquals(4, unsyncCharArrayReader.index);
+		Assert.assertEquals(2, unsyncCharArrayReader.index);
+		Assert.assertEquals('c', unsyncCharArrayReader.read());
+		Assert.assertEquals('d', unsyncCharArrayReader.read());
+		Assert.assertEquals(4, unsyncCharArrayReader.index);
 
 		unsyncCharArrayReader.reset();
 
-		assertEquals(2, unsyncCharArrayReader.index);
-		assertEquals('c', unsyncCharArrayReader.read());
-		assertEquals('d', unsyncCharArrayReader.read());
-		assertEquals(4, unsyncCharArrayReader.index);
+		Assert.assertEquals(2, unsyncCharArrayReader.index);
+		Assert.assertEquals('c', unsyncCharArrayReader.read());
+		Assert.assertEquals('d', unsyncCharArrayReader.read());
+		Assert.assertEquals(4, unsyncCharArrayReader.index);
 	}
 
 	@Test
@@ -196,7 +195,7 @@ public class UnsyncCharArrayReaderTest extends TestCase {
 		UnsyncCharArrayReader unsyncCharArrayReader = new UnsyncCharArrayReader(
 			_BUFFER);
 
-		assertTrue(unsyncCharArrayReader.markSupported());
+		Assert.assertTrue(unsyncCharArrayReader.markSupported());
 	}
 
 	@Test
@@ -205,10 +204,10 @@ public class UnsyncCharArrayReaderTest extends TestCase {
 			_BUFFER);
 
 		for (int i = 0; i < _SIZE; i++) {
-			assertEquals('a' + i, unsyncCharArrayReader.read());
+			Assert.assertEquals('a' + i, unsyncCharArrayReader.read());
 		}
 
-		assertEquals(-1, unsyncCharArrayReader.read());
+		Assert.assertEquals(-1, unsyncCharArrayReader.read());
 	}
 
 	@Test
@@ -216,11 +215,11 @@ public class UnsyncCharArrayReaderTest extends TestCase {
 		UnsyncCharArrayReader unsyncCharArrayReader = new UnsyncCharArrayReader(
 			_BUFFER);
 
-		assertTrue(unsyncCharArrayReader.ready());
+		Assert.assertTrue(unsyncCharArrayReader.ready());
 
 		unsyncCharArrayReader.read(CharBuffer.allocate(_SIZE));
 
-		assertFalse(unsyncCharArrayReader.ready());
+		Assert.assertFalse(unsyncCharArrayReader.ready());
 	}
 
 	@Test
@@ -230,10 +229,10 @@ public class UnsyncCharArrayReaderTest extends TestCase {
 
 		long size = _SIZE * 2 / 3;
 
-		assertEquals(size, unsyncCharArrayReader.skip(size));
-		assertEquals(size, unsyncCharArrayReader.index);
-		assertEquals(_SIZE - size, unsyncCharArrayReader.skip(size));
-		assertEquals(_SIZE, unsyncCharArrayReader.index);
+		Assert.assertEquals(size, unsyncCharArrayReader.skip(size));
+		Assert.assertEquals(size, unsyncCharArrayReader.index);
+		Assert.assertEquals(_SIZE - size, unsyncCharArrayReader.skip(size));
+		Assert.assertEquals(_SIZE, unsyncCharArrayReader.index);
 	}
 
 	private static final char[] _BUFFER =

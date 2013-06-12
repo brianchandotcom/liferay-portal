@@ -14,21 +14,21 @@
 
 package com.liferay.portal.model;
 
-import com.liferay.portal.kernel.test.TestCase;
 import com.liferay.portal.util.PortletKeys;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
  * @author Raymond Augé
  */
-public class PortletConstantsTest extends TestCase {
+public class PortletConstantsTest {
 
 	@Test
 	public void testInstanceId1() {
 		String portletId = PortletKeys.JOURNAL_CONTENT;
 
-		assertNull(PortletConstants.getInstanceId(portletId));
+		Assert.assertNull(PortletConstants.getInstanceId(portletId));
 	}
 
 	@Test
@@ -36,7 +36,7 @@ public class PortletConstantsTest extends TestCase {
 		String portletId = PortletConstants.assemblePortletId(
 			PortletKeys.JOURNAL_CONTENT, "1234");
 
-		assertEquals("1234", PortletConstants.getInstanceId(portletId));
+		Assert.assertEquals("1234", PortletConstants.getInstanceId(portletId));
 	}
 
 	@Test
@@ -44,7 +44,7 @@ public class PortletConstantsTest extends TestCase {
 		String portletId = PortletConstants.assemblePortletId(
 			PortletKeys.JOURNAL_CONTENT, 1234);
 
-		assertNull(PortletConstants.getInstanceId(portletId));
+		Assert.assertNull(PortletConstants.getInstanceId(portletId));
 	}
 
 	@Test
@@ -52,14 +52,14 @@ public class PortletConstantsTest extends TestCase {
 		String portletId = PortletConstants.assemblePortletId(
 			PortletKeys.JOURNAL_CONTENT, 1234, "5678");
 
-		assertEquals("5678", PortletConstants.getInstanceId(portletId));
+		Assert.assertEquals("5678", PortletConstants.getInstanceId(portletId));
 	}
 
 	@Test
 	public void testInstanceId5() {
 		String portletId = getWarPortletId();
 
-		assertNull(PortletConstants.getInstanceId(portletId));
+		Assert.assertNull(PortletConstants.getInstanceId(portletId));
 	}
 
 	@Test
@@ -67,7 +67,7 @@ public class PortletConstantsTest extends TestCase {
 		String portletId = PortletConstants.assemblePortletId(
 			getWarPortletId(), "1234");
 
-		assertEquals("1234", PortletConstants.getInstanceId(portletId));
+		Assert.assertEquals("1234", PortletConstants.getInstanceId(portletId));
 	}
 
 	@Test
@@ -75,7 +75,7 @@ public class PortletConstantsTest extends TestCase {
 		String portletId = PortletConstants.assemblePortletId(
 			getWarPortletId(), 1234);
 
-		assertNull(PortletConstants.getInstanceId(portletId));
+		Assert.assertNull(PortletConstants.getInstanceId(portletId));
 	}
 
 	@Test
@@ -83,14 +83,14 @@ public class PortletConstantsTest extends TestCase {
 		String portletId = PortletConstants.assemblePortletId(
 			getWarPortletId(), 1234, "5678");
 
-		assertEquals("5678", PortletConstants.getInstanceId(portletId));
+		Assert.assertEquals("5678", PortletConstants.getInstanceId(portletId));
 	}
 
 	@Test
 	public void testInstanceId9() {
 		String portletId = PortletKeys.JOURNAL_CONTENT;
 
-		assertFalse(PortletConstants.hasInstanceId(portletId));
+		Assert.assertFalse(PortletConstants.hasInstanceId(portletId));
 	}
 
 	@Test
@@ -98,7 +98,7 @@ public class PortletConstantsTest extends TestCase {
 		String portletId = PortletConstants.assemblePortletId(
 			PortletKeys.JOURNAL_CONTENT, "1234");
 
-		assertTrue(PortletConstants.hasInstanceId(portletId));
+		Assert.assertTrue(PortletConstants.hasInstanceId(portletId));
 	}
 
 	@Test
@@ -106,7 +106,7 @@ public class PortletConstantsTest extends TestCase {
 		String portletId = PortletConstants.assemblePortletId(
 			PortletKeys.JOURNAL_CONTENT, 1234);
 
-		assertFalse(PortletConstants.hasInstanceId(portletId));
+		Assert.assertFalse(PortletConstants.hasInstanceId(portletId));
 	}
 
 	@Test
@@ -114,14 +114,14 @@ public class PortletConstantsTest extends TestCase {
 		String portletId = PortletConstants.assemblePortletId(
 			PortletKeys.JOURNAL_CONTENT, 1234, "5678");
 
-		assertTrue(PortletConstants.hasInstanceId(portletId));
+		Assert.assertTrue(PortletConstants.hasInstanceId(portletId));
 	}
 
 	@Test
 	public void testInstanceId13() {
 		String portletId = getWarPortletId();
 
-		assertFalse(PortletConstants.hasInstanceId(portletId));
+		Assert.assertFalse(PortletConstants.hasInstanceId(portletId));
 	}
 
 	@Test
@@ -129,7 +129,7 @@ public class PortletConstantsTest extends TestCase {
 		String portletId = PortletConstants.assemblePortletId(
 			getWarPortletId(), "1234");
 
-		assertTrue(PortletConstants.hasInstanceId(portletId));
+		Assert.assertTrue(PortletConstants.hasInstanceId(portletId));
 	}
 
 	@Test
@@ -137,7 +137,7 @@ public class PortletConstantsTest extends TestCase {
 		String portletId = PortletConstants.assemblePortletId(
 			getWarPortletId(), 1234);
 
-		assertFalse(PortletConstants.hasInstanceId(portletId));
+		Assert.assertFalse(PortletConstants.hasInstanceId(portletId));
 	}
 
 	@Test
@@ -145,14 +145,14 @@ public class PortletConstantsTest extends TestCase {
 		String portletId = PortletConstants.assemblePortletId(
 			getWarPortletId(), 1234, "5678");
 
-		assertTrue(PortletConstants.hasInstanceId(portletId));
+		Assert.assertTrue(PortletConstants.hasInstanceId(portletId));
 	}
 
 	@Test
 	public void testRootPortletId1() {
 		String portletId = PortletKeys.JOURNAL_CONTENT;
 
-		assertEquals(
+		Assert.assertEquals(
 			PortletKeys.JOURNAL_CONTENT,
 			PortletConstants.getRootPortletId(portletId));
 	}
@@ -162,7 +162,7 @@ public class PortletConstantsTest extends TestCase {
 		String portletId = PortletConstants.assemblePortletId(
 			PortletKeys.JOURNAL_CONTENT, "1234");
 
-		assertEquals(
+		Assert.assertEquals(
 			PortletKeys.JOURNAL_CONTENT,
 			PortletConstants.getRootPortletId(portletId));
 	}
@@ -172,7 +172,7 @@ public class PortletConstantsTest extends TestCase {
 		String portletId = PortletConstants.assemblePortletId(
 			PortletKeys.JOURNAL_CONTENT, 1234);
 
-		assertEquals(
+		Assert.assertEquals(
 			PortletKeys.JOURNAL_CONTENT,
 			PortletConstants.getRootPortletId(portletId));
 	}
@@ -182,7 +182,7 @@ public class PortletConstantsTest extends TestCase {
 		String portletId = PortletConstants.assemblePortletId(
 			PortletKeys.JOURNAL_CONTENT, 1234, "5678");
 
-		assertEquals(
+		Assert.assertEquals(
 			PortletKeys.JOURNAL_CONTENT,
 			PortletConstants.getRootPortletId(portletId));
 	}
@@ -191,7 +191,7 @@ public class PortletConstantsTest extends TestCase {
 	public void testRootPortletId5() {
 		String portletId = getWarPortletId();
 
-		assertEquals(
+		Assert.assertEquals(
 			getWarPortletId(), PortletConstants.getRootPortletId(portletId));
 	}
 
@@ -200,7 +200,7 @@ public class PortletConstantsTest extends TestCase {
 		String portletId = PortletConstants.assemblePortletId(
 			getWarPortletId(), "1234");
 
-		assertEquals(
+		Assert.assertEquals(
 			getWarPortletId(), PortletConstants.getRootPortletId(portletId));
 	}
 
@@ -209,7 +209,7 @@ public class PortletConstantsTest extends TestCase {
 		String portletId = PortletConstants.assemblePortletId(
 			getWarPortletId(), 1234);
 
-		assertEquals(
+		Assert.assertEquals(
 			getWarPortletId(), PortletConstants.getRootPortletId(portletId));
 	}
 
@@ -218,7 +218,7 @@ public class PortletConstantsTest extends TestCase {
 		String portletId = PortletConstants.assemblePortletId(
 			getWarPortletId(), 1234, "5678");
 
-		assertEquals(
+		Assert.assertEquals(
 			getWarPortletId(), PortletConstants.getRootPortletId(portletId));
 	}
 
@@ -226,7 +226,7 @@ public class PortletConstantsTest extends TestCase {
 	public void testUserId1() {
 		String portletId = PortletKeys.JOURNAL_CONTENT;
 
-		assertEquals(0, PortletConstants.getUserId(portletId));
+		Assert.assertEquals(0, PortletConstants.getUserId(portletId));
 	}
 
 	@Test
@@ -234,7 +234,7 @@ public class PortletConstantsTest extends TestCase {
 		String portletId = PortletConstants.assemblePortletId(
 			PortletKeys.JOURNAL_CONTENT, "1234");
 
-		assertEquals(0, PortletConstants.getUserId(portletId));
+		Assert.assertEquals(0, PortletConstants.getUserId(portletId));
 	}
 
 	@Test
@@ -242,7 +242,7 @@ public class PortletConstantsTest extends TestCase {
 		String portletId = PortletConstants.assemblePortletId(
 			PortletKeys.JOURNAL_CONTENT, 1234);
 
-		assertEquals(1234, PortletConstants.getUserId(portletId));
+		Assert.assertEquals(1234, PortletConstants.getUserId(portletId));
 	}
 
 	@Test
@@ -250,14 +250,14 @@ public class PortletConstantsTest extends TestCase {
 		String portletId = PortletConstants.assemblePortletId(
 			PortletKeys.JOURNAL_CONTENT, 1234, "5678");
 
-		assertEquals(1234, PortletConstants.getUserId(portletId));
+		Assert.assertEquals(1234, PortletConstants.getUserId(portletId));
 	}
 
 	@Test
 	public void testUserId5() {
 		String portletId = getWarPortletId();
 
-		assertEquals(0, PortletConstants.getUserId(portletId));
+		Assert.assertEquals(0, PortletConstants.getUserId(portletId));
 	}
 
 	@Test
@@ -265,7 +265,7 @@ public class PortletConstantsTest extends TestCase {
 		String portletId = PortletConstants.assemblePortletId(
 			getWarPortletId(), "1234");
 
-		assertEquals(0, PortletConstants.getUserId(portletId));
+		Assert.assertEquals(0, PortletConstants.getUserId(portletId));
 	}
 
 	@Test
@@ -273,7 +273,7 @@ public class PortletConstantsTest extends TestCase {
 		String portletId = PortletConstants.assemblePortletId(
 			getWarPortletId(), 1234);
 
-		assertEquals(1234, PortletConstants.getUserId(portletId));
+		Assert.assertEquals(1234, PortletConstants.getUserId(portletId));
 	}
 
 	@Test
@@ -281,14 +281,14 @@ public class PortletConstantsTest extends TestCase {
 		String portletId = PortletConstants.assemblePortletId(
 			getWarPortletId(), 1234, "5678");
 
-		assertEquals(1234, PortletConstants.getUserId(portletId));
+		Assert.assertEquals(1234, PortletConstants.getUserId(portletId));
 	}
 
 	@Test
 	public void testUserId9() {
 		String portletId = PortletKeys.JOURNAL_CONTENT;
 
-		assertFalse(PortletConstants.hasUserId(portletId));
+		Assert.assertFalse(PortletConstants.hasUserId(portletId));
 	}
 
 	@Test
@@ -296,7 +296,7 @@ public class PortletConstantsTest extends TestCase {
 		String portletId = PortletConstants.assemblePortletId(
 			PortletKeys.JOURNAL_CONTENT, "1234");
 
-		assertFalse(PortletConstants.hasUserId(portletId));
+		Assert.assertFalse(PortletConstants.hasUserId(portletId));
 	}
 
 	@Test
@@ -304,7 +304,7 @@ public class PortletConstantsTest extends TestCase {
 		String portletId = PortletConstants.assemblePortletId(
 			PortletKeys.JOURNAL_CONTENT, 1234);
 
-		assertTrue(PortletConstants.hasUserId(portletId));
+		Assert.assertTrue(PortletConstants.hasUserId(portletId));
 	}
 
 	@Test
@@ -312,14 +312,14 @@ public class PortletConstantsTest extends TestCase {
 		String portletId = PortletConstants.assemblePortletId(
 			PortletKeys.JOURNAL_CONTENT, 1234, "5678");
 
-		assertTrue(PortletConstants.hasUserId(portletId));
+		Assert.assertTrue(PortletConstants.hasUserId(portletId));
 	}
 
 	@Test
 	public void testUserId13() {
 		String portletId = getWarPortletId();
 
-		assertFalse(PortletConstants.hasUserId(portletId));
+		Assert.assertFalse(PortletConstants.hasUserId(portletId));
 	}
 
 	@Test
@@ -327,7 +327,7 @@ public class PortletConstantsTest extends TestCase {
 		String portletId = PortletConstants.assemblePortletId(
 			getWarPortletId(), "1234");
 
-		assertFalse(PortletConstants.hasUserId(portletId));
+		Assert.assertFalse(PortletConstants.hasUserId(portletId));
 	}
 
 	@Test
@@ -335,7 +335,7 @@ public class PortletConstantsTest extends TestCase {
 		String portletId = PortletConstants.assemblePortletId(
 			getWarPortletId(), 1234);
 
-		assertTrue(PortletConstants.hasUserId(portletId));
+		Assert.assertTrue(PortletConstants.hasUserId(portletId));
 	}
 
 	@Test
@@ -343,7 +343,7 @@ public class PortletConstantsTest extends TestCase {
 		String portletId = PortletConstants.assemblePortletId(
 			getWarPortletId(), 1234, "5678");
 
-		assertTrue(PortletConstants.hasUserId(portletId));
+		Assert.assertTrue(PortletConstants.hasUserId(portletId));
 	}
 
 	protected String getWarPortletId() {

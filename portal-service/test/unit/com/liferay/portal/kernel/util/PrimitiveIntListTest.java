@@ -14,14 +14,13 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.portal.kernel.test.TestCase;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
  * @author Michael C. Han
  */
-public class PrimitiveIntListTest extends TestCase {
+public class PrimitiveIntListTest {
 
 	@Test
 	public void testAdd() {
@@ -33,14 +32,14 @@ public class PrimitiveIntListTest extends TestCase {
 			primitiveIntList.add(expected[i]);
 		}
 
-		assertEquals(expected.length, primitiveIntList.size());
+		Assert.assertEquals(expected.length, primitiveIntList.size());
 
 		int[] actual = primitiveIntList.getArray();
 
-		assertEquals(expected.length, actual.length);
+		Assert.assertEquals(expected.length, actual.length);
 
 		for (int i = 0; i < actual.length; i++) {
-			assertEquals(expected[i], actual[i]);
+			Assert.assertEquals(expected[i], actual[i]);
 		}
 	}
 
@@ -52,14 +51,14 @@ public class PrimitiveIntListTest extends TestCase {
 
 		primitiveIntList.addAll(expected);
 
-		assertEquals(expected.length, primitiveIntList.size());
+		Assert.assertEquals(expected.length, primitiveIntList.size());
 
 		int[] actual = primitiveIntList.getArray();
 
-		assertEquals(expected.length, actual.length);
+		Assert.assertEquals(expected.length, actual.length);
 
 		for (int i = 0; i < actual.length; i++) {
-			assertEquals(expected[i], actual[i]);
+			Assert.assertEquals(expected[i], actual[i]);
 		}
 	}
 

@@ -15,17 +15,17 @@
 package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.test.AssertUtils;
-import com.liferay.portal.kernel.test.TestCase;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
  * @author Eudaldo Alonso
  */
-public class ArrayUtilTest extends TestCase {
+public class ArrayUtilTest {
 
 	@Test
 	public void testToDoubleArray() throws Exception {
@@ -36,7 +36,7 @@ public class ArrayUtilTest extends TestCase {
 
 		double[] array = ArrayUtil.toDoubleArray(list);
 
-		assertEquals(array.length, list.size());
+		Assert.assertEquals(array.length, list.size());
 
 		for (int i = 0; i < list.size(); i++) {
 			Double value = list.get(i);
@@ -54,7 +54,7 @@ public class ArrayUtilTest extends TestCase {
 
 		float[] array = ArrayUtil.toFloatArray(list);
 
-		assertEquals(array.length, list.size());
+		Assert.assertEquals(array.length, list.size());
 
 		for (int i = 0; i < list.size(); i++) {
 			Float value = list.get(i);
@@ -72,12 +72,12 @@ public class ArrayUtilTest extends TestCase {
 
 		int[] array = ArrayUtil.toIntArray(list);
 
-		assertEquals(array.length, list.size());
+		Assert.assertEquals(array.length, list.size());
 
 		for (int i = 0; i < list.size(); i++) {
 			Integer value = list.get(i);
 
-			assertEquals(value.intValue(), array[i]);
+			Assert.assertEquals(value.intValue(), array[i]);
 		}
 	}
 
@@ -90,12 +90,12 @@ public class ArrayUtilTest extends TestCase {
 
 		long[] array = ArrayUtil.toLongArray(list);
 
-		assertEquals(array.length, list.size());
+		Assert.assertEquals(array.length, list.size());
 
 		for (int i = 0; i < list.size(); i++) {
 			Long value = list.get(i);
 
-			assertEquals(value.longValue(), array[i]);
+			Assert.assertEquals(value.longValue(), array[i]);
 		}
 	}
 

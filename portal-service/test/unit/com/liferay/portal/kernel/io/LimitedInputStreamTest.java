@@ -14,30 +14,29 @@
 
 package com.liferay.portal.kernel.io;
 
-import com.liferay.portal.kernel.test.TestCase;
-
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
  * @author Shuyang Zhou
  */
-public class LimitedInputStreamTest extends TestCase {
+public class LimitedInputStreamTest {
 
 	@Test
 	public void testAvailable() throws IOException {
 		LimitedInputStream limitedInputStream = new LimitedInputStream(
 			new ByteArrayInputStream(new byte[10]), 5, 3);
 
-		assertEquals(3, limitedInputStream.available());
+		Assert.assertEquals(3, limitedInputStream.available());
 
 		limitedInputStream = new LimitedInputStream(
 			new ByteArrayInputStream(new byte[10]), 5, 5);
 
-		assertEquals(5, limitedInputStream.available());
+		Assert.assertEquals(5, limitedInputStream.available());
 	}
 
 	@Test
@@ -51,7 +50,7 @@ public class LimitedInputStreamTest extends TestCase {
 		try {
 			limitedInputStream.skip(1);
 
-			fail();
+			Assert.fail();
 		}
 		catch (IOException ioe) {
 		}
@@ -66,7 +65,7 @@ public class LimitedInputStreamTest extends TestCase {
 			new LimitedInputStream(
 				new ByteArrayInputStream(new byte[10]), -1, 10);
 
-			fail();
+			Assert.fail();
 		}
 		catch (IllegalArgumentException iae) {
 		}
@@ -77,7 +76,7 @@ public class LimitedInputStreamTest extends TestCase {
 			new LimitedInputStream(
 				new ByteArrayInputStream(new byte[10]), 5, -1);
 
-			fail();
+			Assert.fail();
 		}
 		catch (IllegalArgumentException iae) {
 		}
@@ -88,7 +87,7 @@ public class LimitedInputStreamTest extends TestCase {
 			new LimitedInputStream(
 				new ByteArrayInputStream(new byte[10]), 50, 10);
 
-			fail();
+			Assert.fail();
 		}
 		catch (IOException ioe) {
 		}
@@ -103,7 +102,7 @@ public class LimitedInputStreamTest extends TestCase {
 		LimitedInputStream limitedInputStream = new LimitedInputStream(
 			new ByteArrayInputStream(new byte[10]), 5, 5);
 
-		assertFalse(limitedInputStream.markSupported());
+		Assert.assertFalse(limitedInputStream.markSupported());
 	}
 
 	@Test
@@ -112,19 +111,19 @@ public class LimitedInputStreamTest extends TestCase {
 			new ByteArrayInputStream(new byte[10]), 5, 5);
 
 		for (int i = 0; i < 5; i++) {
-			assertEquals(0, limitedInputStream.read());
+			Assert.assertEquals(0, limitedInputStream.read());
 		}
 
-		assertEquals(-1, limitedInputStream.read());
+		Assert.assertEquals(-1, limitedInputStream.read());
 
 		limitedInputStream = new LimitedInputStream(
 			new ByteArrayInputStream(new byte[10]), 5, 3);
 
 		for (int i = 0; i < 3; i++) {
-			assertEquals(0, limitedInputStream.read());
+			Assert.assertEquals(0, limitedInputStream.read());
 		}
 
-		assertEquals(-1, limitedInputStream.read());
+		Assert.assertEquals(-1, limitedInputStream.read());
 	}
 
 	@Test
@@ -134,15 +133,15 @@ public class LimitedInputStreamTest extends TestCase {
 
 		byte[] buffer = new byte[4];
 
-		assertEquals(4, limitedInputStream.read(buffer));
-		assertEquals(1, limitedInputStream.read(buffer));
-		assertEquals(-1, limitedInputStream.read(buffer));
+		Assert.assertEquals(4, limitedInputStream.read(buffer));
+		Assert.assertEquals(1, limitedInputStream.read(buffer));
+		Assert.assertEquals(-1, limitedInputStream.read(buffer));
 
 		limitedInputStream = new LimitedInputStream(
 			new ByteArrayInputStream(new byte[10]), 5, 3);
 
-		assertEquals(3, limitedInputStream.read(buffer));
-		assertEquals(-1, limitedInputStream.read(buffer));
+		Assert.assertEquals(3, limitedInputStream.read(buffer));
+		Assert.assertEquals(-1, limitedInputStream.read(buffer));
 	}
 
 	@Test
@@ -152,15 +151,15 @@ public class LimitedInputStreamTest extends TestCase {
 
 		byte[] buffer = new byte[6];
 
-		assertEquals(4, limitedInputStream.read(buffer, 1, 4));
-		assertEquals(1, limitedInputStream.read(buffer, 1, 4));
-		assertEquals(-1, limitedInputStream.read(buffer, 1, 4));
+		Assert.assertEquals(4, limitedInputStream.read(buffer, 1, 4));
+		Assert.assertEquals(1, limitedInputStream.read(buffer, 1, 4));
+		Assert.assertEquals(-1, limitedInputStream.read(buffer, 1, 4));
 
 		limitedInputStream = new LimitedInputStream(
 			new ByteArrayInputStream(new byte[10]), 5, 3);
 
-		assertEquals(3, limitedInputStream.read(buffer, 1, 4));
-		assertEquals(-1, limitedInputStream.read(buffer, 1, 4));
+		Assert.assertEquals(3, limitedInputStream.read(buffer, 1, 4));
+		Assert.assertEquals(-1, limitedInputStream.read(buffer, 1, 4));
 	}
 
 	@Test
@@ -168,14 +167,14 @@ public class LimitedInputStreamTest extends TestCase {
 		LimitedInputStream limitedInputStream = new LimitedInputStream(
 			new ByteArrayInputStream(new byte[10]), 5, 3);
 
-		assertEquals(3, limitedInputStream.skip(5));
-		assertEquals(0, limitedInputStream.skip(5));
+		Assert.assertEquals(3, limitedInputStream.skip(5));
+		Assert.assertEquals(0, limitedInputStream.skip(5));
 
 		limitedInputStream = new LimitedInputStream(
 			new ByteArrayInputStream(new byte[10]), 5, 5);
 
-		assertEquals(5, limitedInputStream.skip(5));
-		assertEquals(0, limitedInputStream.skip(5));
+		Assert.assertEquals(5, limitedInputStream.skip(5));
+		Assert.assertEquals(0, limitedInputStream.skip(5));
 	}
 
 }

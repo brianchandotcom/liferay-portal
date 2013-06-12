@@ -14,20 +14,19 @@
 
 package com.liferay.portal.kernel.io.unsync;
 
-import com.liferay.portal.kernel.test.TestCase;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import java.util.Arrays;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
  * @author Shuyang Zhou
  */
-public class UnsyncByteArrayOutputStreamTest extends TestCase {
+public class UnsyncByteArrayOutputStreamTest {
 
 	@Test
 	public void testBlockWrite() {
@@ -36,8 +35,8 @@ public class UnsyncByteArrayOutputStreamTest extends TestCase {
 
 		unsyncByteArrayOutputStream.write(_BUFFER);
 
-		assertEquals(_BUFFER_SIZE, unsyncByteArrayOutputStream.size());
-		assertTrue(
+		Assert.assertEquals(_BUFFER_SIZE, unsyncByteArrayOutputStream.size());
+		Assert.assertTrue(
 			Arrays.equals(_BUFFER, unsyncByteArrayOutputStream.toByteArray()));
 	}
 
@@ -46,11 +45,11 @@ public class UnsyncByteArrayOutputStreamTest extends TestCase {
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
 
-		assertEquals(0, unsyncByteArrayOutputStream.size());
+		Assert.assertEquals(0, unsyncByteArrayOutputStream.size());
 
 		unsyncByteArrayOutputStream = new UnsyncByteArrayOutputStream(64);
 
-		assertEquals(0, unsyncByteArrayOutputStream.size());
+		Assert.assertEquals(0, unsyncByteArrayOutputStream.size());
 	}
 
 	@Test
@@ -58,27 +57,27 @@ public class UnsyncByteArrayOutputStreamTest extends TestCase {
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
 
-		assertEquals(0, unsyncByteArrayOutputStream.size());
+		Assert.assertEquals(0, unsyncByteArrayOutputStream.size());
 
 		unsyncByteArrayOutputStream.write(0);
 
-		assertEquals(1, unsyncByteArrayOutputStream.size());
+		Assert.assertEquals(1, unsyncByteArrayOutputStream.size());
 
 		unsyncByteArrayOutputStream.write(1);
 
-		assertEquals(2, unsyncByteArrayOutputStream.size());
+		Assert.assertEquals(2, unsyncByteArrayOutputStream.size());
 
 		unsyncByteArrayOutputStream.reset();
 
-		assertEquals(0, unsyncByteArrayOutputStream.size());
+		Assert.assertEquals(0, unsyncByteArrayOutputStream.size());
 
 		unsyncByteArrayOutputStream.write(0);
 
-		assertEquals(1, unsyncByteArrayOutputStream.size());
+		Assert.assertEquals(1, unsyncByteArrayOutputStream.size());
 
 		unsyncByteArrayOutputStream.write(1);
 
-		assertEquals(2, unsyncByteArrayOutputStream.size());
+		Assert.assertEquals(2, unsyncByteArrayOutputStream.size());
 	}
 
 	@Test
@@ -90,13 +89,13 @@ public class UnsyncByteArrayOutputStreamTest extends TestCase {
 
 		byte[] bytes1 = unsyncByteArrayOutputStream.toByteArray();
 
-		assertTrue(Arrays.equals(_BUFFER, bytes1));
+		Assert.assertTrue(Arrays.equals(_BUFFER, bytes1));
 
 		byte[] bytes2 = unsyncByteArrayOutputStream.toByteArray();
 
-		assertTrue(Arrays.equals(_BUFFER, bytes2));
+		Assert.assertTrue(Arrays.equals(_BUFFER, bytes2));
 
-		assertNotSame(bytes1, bytes2);
+		Assert.assertNotSame(bytes1, bytes2);
 	}
 
 	@Test
@@ -106,19 +105,19 @@ public class UnsyncByteArrayOutputStreamTest extends TestCase {
 
 		unsyncByteArrayOutputStream.write(_BUFFER);
 
-		assertEquals(
+		Assert.assertEquals(
 			new String(_BUFFER), unsyncByteArrayOutputStream.toString());
 
 		String charsetName1 = "UTF-16BE";
 		String charsetName2 = "UTF-16LE";
 
-		assertFalse(
+		Assert.assertFalse(
 			new String(_BUFFER, charsetName1).equals(
 				unsyncByteArrayOutputStream.toString(charsetName2)));
-		assertEquals(
+		Assert.assertEquals(
 			new String(_BUFFER, charsetName1),
 			unsyncByteArrayOutputStream.toString(charsetName1));
-		assertEquals(
+		Assert.assertEquals(
 			new String(_BUFFER, charsetName2),
 			unsyncByteArrayOutputStream.toString(charsetName2));
 	}
@@ -132,14 +131,14 @@ public class UnsyncByteArrayOutputStreamTest extends TestCase {
 
 		byte[] bytes1 = unsyncByteArrayOutputStream.unsafeGetByteArray();
 
-		assertTrue(Arrays.equals(_BUFFER, bytes1));
-		assertSame(unsyncByteArrayOutputStream.buffer, bytes1);
+		Assert.assertTrue(Arrays.equals(_BUFFER, bytes1));
+		Assert.assertSame(unsyncByteArrayOutputStream.buffer, bytes1);
 
 		byte[] bytes2 = unsyncByteArrayOutputStream.unsafeGetByteArray();
 
-		assertTrue(Arrays.equals(_BUFFER, bytes2));
+		Assert.assertTrue(Arrays.equals(_BUFFER, bytes2));
 
-		assertSame(bytes1, bytes2);
+		Assert.assertSame(bytes1, bytes2);
 	}
 
 	@Test
@@ -150,10 +149,10 @@ public class UnsyncByteArrayOutputStreamTest extends TestCase {
 		for (int i = 0; i < _BUFFER_SIZE; i++) {
 			unsyncByteArrayOutputStream.write(i);
 
-			assertEquals(i + 1, unsyncByteArrayOutputStream.size());
+			Assert.assertEquals(i + 1, unsyncByteArrayOutputStream.size());
 		}
 
-		assertTrue(
+		Assert.assertTrue(
 			Arrays.equals(_BUFFER, unsyncByteArrayOutputStream.toByteArray()));
 	}
 
@@ -169,7 +168,8 @@ public class UnsyncByteArrayOutputStreamTest extends TestCase {
 
 		unsyncByteArrayOutputStream.writeTo(byteArrayOutputStream);
 
-		assertTrue(Arrays.equals(_BUFFER, byteArrayOutputStream.toByteArray()));
+		Assert.assertTrue(
+			Arrays.equals(_BUFFER, byteArrayOutputStream.toByteArray()));
 	}
 
 	private static final byte[] _BUFFER =

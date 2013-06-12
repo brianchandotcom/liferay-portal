@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.io.unsync;
 
-import com.liferay.portal.kernel.test.TestCase;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.ByteArrayOutputStream;
@@ -25,12 +24,13 @@ import java.nio.CharBuffer;
 
 import java.util.Arrays;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
  * @author Shuyang Zhou
  */
-public class UnsyncCharArrayWriterTest extends TestCase {
+public class UnsyncCharArrayWriterTest {
 
 	@Test
 	public void testAppendChar() {
@@ -39,14 +39,14 @@ public class UnsyncCharArrayWriterTest extends TestCase {
 
 		unsyncCharArrayWriter.append('a');
 
-		assertEquals(1, unsyncCharArrayWriter.size());
-		assertEquals('a', unsyncCharArrayWriter.buffer[0]);
+		Assert.assertEquals(1, unsyncCharArrayWriter.size());
+		Assert.assertEquals('a', unsyncCharArrayWriter.buffer[0]);
 
 		unsyncCharArrayWriter.append('b');
 
-		assertEquals(2, unsyncCharArrayWriter.size());
-		assertEquals('a', unsyncCharArrayWriter.buffer[0]);
-		assertEquals('b', unsyncCharArrayWriter.buffer[1]);
+		Assert.assertEquals(2, unsyncCharArrayWriter.size());
+		Assert.assertEquals('a', unsyncCharArrayWriter.buffer[0]);
+		Assert.assertEquals('b', unsyncCharArrayWriter.buffer[1]);
 	}
 
 	@Test
@@ -56,17 +56,17 @@ public class UnsyncCharArrayWriterTest extends TestCase {
 
 		unsyncCharArrayWriter.append(new StringBuilder("ab"));
 
-		assertEquals(2, unsyncCharArrayWriter.size());
-		assertEquals('a', unsyncCharArrayWriter.buffer[0]);
-		assertEquals('b', unsyncCharArrayWriter.buffer[1]);
+		Assert.assertEquals(2, unsyncCharArrayWriter.size());
+		Assert.assertEquals('a', unsyncCharArrayWriter.buffer[0]);
+		Assert.assertEquals('b', unsyncCharArrayWriter.buffer[1]);
 
 		unsyncCharArrayWriter.append(new StringBuilder("cd"));
 
-		assertEquals(4, unsyncCharArrayWriter.size());
-		assertEquals('a', unsyncCharArrayWriter.buffer[0]);
-		assertEquals('b', unsyncCharArrayWriter.buffer[1]);
-		assertEquals('c', unsyncCharArrayWriter.buffer[2]);
-		assertEquals('d', unsyncCharArrayWriter.buffer[3]);
+		Assert.assertEquals(4, unsyncCharArrayWriter.size());
+		Assert.assertEquals('a', unsyncCharArrayWriter.buffer[0]);
+		Assert.assertEquals('b', unsyncCharArrayWriter.buffer[1]);
+		Assert.assertEquals('c', unsyncCharArrayWriter.buffer[2]);
+		Assert.assertEquals('d', unsyncCharArrayWriter.buffer[3]);
 	}
 
 	@Test
@@ -74,13 +74,13 @@ public class UnsyncCharArrayWriterTest extends TestCase {
 		UnsyncCharArrayWriter unsyncCharArrayWriter =
 			new UnsyncCharArrayWriter();
 
-		assertEquals(0, unsyncCharArrayWriter.size());
-		assertEquals(32, unsyncCharArrayWriter.buffer.length);
+		Assert.assertEquals(0, unsyncCharArrayWriter.size());
+		Assert.assertEquals(32, unsyncCharArrayWriter.buffer.length);
 
 		unsyncCharArrayWriter = new UnsyncCharArrayWriter(64);
 
-		assertEquals(0, unsyncCharArrayWriter.size());
-		assertEquals(64, unsyncCharArrayWriter.buffer.length);
+		Assert.assertEquals(0, unsyncCharArrayWriter.size());
+		Assert.assertEquals(64, unsyncCharArrayWriter.buffer.length);
 	}
 
 	@Test
@@ -90,11 +90,11 @@ public class UnsyncCharArrayWriterTest extends TestCase {
 
 		unsyncCharArrayWriter.write("test1");
 
-		assertEquals(5, unsyncCharArrayWriter.size());
+		Assert.assertEquals(5, unsyncCharArrayWriter.size());
 
 		unsyncCharArrayWriter.reset();
 
-		assertEquals(0, unsyncCharArrayWriter.size());
+		Assert.assertEquals(0, unsyncCharArrayWriter.size());
 	}
 
 	@Test
@@ -106,11 +106,11 @@ public class UnsyncCharArrayWriterTest extends TestCase {
 
 		CharBuffer charBuffer = unsyncCharArrayWriter.toCharBuffer();
 
-		assertEquals(unsyncCharArrayWriter.buffer, charBuffer.array());
+		Assert.assertEquals(unsyncCharArrayWriter.buffer, charBuffer.array());
 
-		assertEquals(0, charBuffer.position());
-		assertEquals(5, charBuffer.limit());
-		assertEquals("test1", charBuffer.toString());
+		Assert.assertEquals(0, charBuffer.position());
+		Assert.assertEquals(5, charBuffer.limit());
+		Assert.assertEquals("test1", charBuffer.toString());
 	}
 
 	@Test
@@ -120,7 +120,7 @@ public class UnsyncCharArrayWriterTest extends TestCase {
 
 		unsyncCharArrayWriter.write("test1");
 
-		assertEquals("test1", unsyncCharArrayWriter.toString());
+		Assert.assertEquals("test1", unsyncCharArrayWriter.toString());
 	}
 
 	@Test
@@ -130,14 +130,14 @@ public class UnsyncCharArrayWriterTest extends TestCase {
 
 		unsyncCharArrayWriter.write('a');
 
-		assertEquals(1, unsyncCharArrayWriter.size());
-		assertEquals('a', unsyncCharArrayWriter.buffer[0]);
+		Assert.assertEquals(1, unsyncCharArrayWriter.size());
+		Assert.assertEquals('a', unsyncCharArrayWriter.buffer[0]);
 
 		unsyncCharArrayWriter.write('b');
 
-		assertEquals(2, unsyncCharArrayWriter.size());
-		assertEquals('a', unsyncCharArrayWriter.buffer[0]);
-		assertEquals('b', unsyncCharArrayWriter.buffer[1]);
+		Assert.assertEquals(2, unsyncCharArrayWriter.size());
+		Assert.assertEquals('a', unsyncCharArrayWriter.buffer[0]);
+		Assert.assertEquals('b', unsyncCharArrayWriter.buffer[1]);
 	}
 
 	@Test
@@ -147,17 +147,17 @@ public class UnsyncCharArrayWriterTest extends TestCase {
 
 		unsyncCharArrayWriter.write("ab".toCharArray());
 
-		assertEquals(2, unsyncCharArrayWriter.size());
-		assertEquals('a', unsyncCharArrayWriter.buffer[0]);
-		assertEquals('b', unsyncCharArrayWriter.buffer[1]);
+		Assert.assertEquals(2, unsyncCharArrayWriter.size());
+		Assert.assertEquals('a', unsyncCharArrayWriter.buffer[0]);
+		Assert.assertEquals('b', unsyncCharArrayWriter.buffer[1]);
 
 		unsyncCharArrayWriter.write("cd".toCharArray());
 
-		assertEquals(4, unsyncCharArrayWriter.size());
-		assertEquals('a', unsyncCharArrayWriter.buffer[0]);
-		assertEquals('b', unsyncCharArrayWriter.buffer[1]);
-		assertEquals('c', unsyncCharArrayWriter.buffer[2]);
-		assertEquals('d', unsyncCharArrayWriter.buffer[3]);
+		Assert.assertEquals(4, unsyncCharArrayWriter.size());
+		Assert.assertEquals('a', unsyncCharArrayWriter.buffer[0]);
+		Assert.assertEquals('b', unsyncCharArrayWriter.buffer[1]);
+		Assert.assertEquals('c', unsyncCharArrayWriter.buffer[2]);
+		Assert.assertEquals('d', unsyncCharArrayWriter.buffer[3]);
 	}
 
 	@Test
@@ -167,17 +167,17 @@ public class UnsyncCharArrayWriterTest extends TestCase {
 
 		unsyncCharArrayWriter.write("ab");
 
-		assertEquals(2, unsyncCharArrayWriter.size());
-		assertEquals('a', unsyncCharArrayWriter.buffer[0]);
-		assertEquals('b', unsyncCharArrayWriter.buffer[1]);
+		Assert.assertEquals(2, unsyncCharArrayWriter.size());
+		Assert.assertEquals('a', unsyncCharArrayWriter.buffer[0]);
+		Assert.assertEquals('b', unsyncCharArrayWriter.buffer[1]);
 
 		unsyncCharArrayWriter.write("cd");
 
-		assertEquals(4, unsyncCharArrayWriter.size());
-		assertEquals('a', unsyncCharArrayWriter.buffer[0]);
-		assertEquals('b', unsyncCharArrayWriter.buffer[1]);
-		assertEquals('c', unsyncCharArrayWriter.buffer[2]);
-		assertEquals('d', unsyncCharArrayWriter.buffer[3]);
+		Assert.assertEquals(4, unsyncCharArrayWriter.size());
+		Assert.assertEquals('a', unsyncCharArrayWriter.buffer[0]);
+		Assert.assertEquals('b', unsyncCharArrayWriter.buffer[1]);
+		Assert.assertEquals('c', unsyncCharArrayWriter.buffer[2]);
+		Assert.assertEquals('d', unsyncCharArrayWriter.buffer[3]);
 	}
 
 	@Test
@@ -191,11 +191,11 @@ public class UnsyncCharArrayWriterTest extends TestCase {
 
 		int length = unsyncCharArrayWriter.writeTo(charBuffer);
 
-		assertEquals(2, length);
-		assertEquals(2, charBuffer.position());
-		assertEquals(2, charBuffer.limit());
+		Assert.assertEquals(2, length);
+		Assert.assertEquals(2, charBuffer.position());
+		Assert.assertEquals(2, charBuffer.limit());
 		charBuffer.position(0);
-		assertEquals("ab", charBuffer.toString());
+		Assert.assertEquals("ab", charBuffer.toString());
 
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
@@ -203,9 +203,9 @@ public class UnsyncCharArrayWriterTest extends TestCase {
 		length = unsyncCharArrayWriter.writeTo(
 			byteArrayOutputStream, StringPool.UTF8);
 
-		assertEquals(4, length);
-		assertEquals(4, byteArrayOutputStream.size());
-		assertTrue(
+		Assert.assertEquals(4, length);
+		Assert.assertEquals(4, byteArrayOutputStream.size());
+		Assert.assertTrue(
 			Arrays.equals(
 				"abcd".getBytes(), byteArrayOutputStream.toByteArray()));
 
@@ -213,8 +213,8 @@ public class UnsyncCharArrayWriterTest extends TestCase {
 
 		length = unsyncCharArrayWriter.writeTo(stringWriter);
 
-		assertEquals(4, length);
-		assertEquals("abcd", stringWriter.toString());
+		Assert.assertEquals(4, length);
+		Assert.assertEquals("abcd", stringWriter.toString());
 	}
 
 }

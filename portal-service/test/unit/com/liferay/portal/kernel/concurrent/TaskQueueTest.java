@@ -14,45 +14,44 @@
 
 package com.liferay.portal.kernel.concurrent;
 
-import com.liferay.portal.kernel.test.TestCase;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
  * @author Shuyang Zhou
  */
-public class TaskQueueTest extends TestCase {
+public class TaskQueueTest {
 
 	@Test
 	public void testConstructor() {
 		try {
 			new TaskQueue<Object>(0);
 
-			fail();
+			Assert.fail();
 		}
 		catch (IllegalArgumentException iae) {
 		}
 
 		try {
 			new TaskQueue<Object>(-1);
-			fail();
+			Assert.fail();
 		}
 		catch (IllegalArgumentException iae) {
 		}
 
 		TaskQueue<Object> taskQueue = new TaskQueue<Object>(10);
 
-		assertEquals(10, taskQueue.remainingCapacity());
+		Assert.assertEquals(10, taskQueue.remainingCapacity());
 
 		taskQueue = new TaskQueue<Object>();
 
-		assertEquals(Integer.MAX_VALUE, taskQueue.remainingCapacity());
+		Assert.assertEquals(Integer.MAX_VALUE, taskQueue.remainingCapacity());
 	}
 
 	@Test
@@ -62,7 +61,7 @@ public class TaskQueueTest extends TestCase {
 		try {
 			taskQueue.drainTo(null);
 
-			fail();
+			Assert.fail();
 		}
 		catch (NullPointerException npe) {
 		}
@@ -74,20 +73,20 @@ public class TaskQueueTest extends TestCase {
 
 		taskQueue = new TaskQueue<Object>();
 
-		assertTrue(taskQueue.offer(object1, new boolean[1]));
-		assertTrue(taskQueue.offer(object2, new boolean[1]));
-		assertTrue(taskQueue.offer(object3, new boolean[1]));
-		assertTrue(taskQueue.offer(object4, new boolean[1]));
+		Assert.assertTrue(taskQueue.offer(object1, new boolean[1]));
+		Assert.assertTrue(taskQueue.offer(object2, new boolean[1]));
+		Assert.assertTrue(taskQueue.offer(object3, new boolean[1]));
+		Assert.assertTrue(taskQueue.offer(object4, new boolean[1]));
 
 		Set<Object> set = new HashSet<Object>();
 
 		taskQueue.drainTo(set);
 
-		assertEquals(4, set.size());
-		assertTrue(set.contains(object1));
-		assertTrue(set.contains(object2));
-		assertTrue(set.contains(object3));
-		assertTrue(set.contains(object4));
+		Assert.assertEquals(4, set.size());
+		Assert.assertTrue(set.contains(object1));
+		Assert.assertTrue(set.contains(object2));
+		Assert.assertTrue(set.contains(object3));
+		Assert.assertTrue(set.contains(object4));
 
 		object1 = new Object();
 		object2 = new Object();
@@ -96,10 +95,10 @@ public class TaskQueueTest extends TestCase {
 
 		taskQueue = new TaskQueue<Object>();
 
-		assertTrue(taskQueue.offer(object1, new boolean[1]));
-		assertTrue(taskQueue.offer(object2, new boolean[1]));
-		assertTrue(taskQueue.offer(object3, new boolean[1]));
-		assertTrue(taskQueue.offer(object4, new boolean[1]));
+		Assert.assertTrue(taskQueue.offer(object1, new boolean[1]));
+		Assert.assertTrue(taskQueue.offer(object2, new boolean[1]));
+		Assert.assertTrue(taskQueue.offer(object3, new boolean[1]));
+		Assert.assertTrue(taskQueue.offer(object4, new boolean[1]));
 
 		List<Object> list = new ArrayList<Object>() {
 
@@ -117,28 +116,28 @@ public class TaskQueueTest extends TestCase {
 		try {
 			taskQueue.drainTo(list);
 
-			fail();
+			Assert.fail();
 		}
 		catch (IllegalStateException ise) {
 		}
 
-		assertEquals(2, list.size());
-		assertSame(object1, list.get(0));
-		assertSame(object2, list.get(1));
-		assertEquals(2, taskQueue.size());
-		assertSame(object3, taskQueue.poll());
-		assertSame(object4, taskQueue.poll());
+		Assert.assertEquals(2, list.size());
+		Assert.assertSame(object1, list.get(0));
+		Assert.assertSame(object2, list.get(1));
+		Assert.assertEquals(2, taskQueue.size());
+		Assert.assertSame(object3, taskQueue.poll());
+		Assert.assertSame(object4, taskQueue.poll());
 	}
 
 	@Test
 	public void testIsEmpty() {
 		TaskQueue<Object> taskQueue = new TaskQueue<Object>();
 
-		assertTrue(taskQueue.isEmpty());
-		assertTrue(taskQueue.offer(new Object(), new boolean[1]));
-		assertFalse(taskQueue.isEmpty());
-		assertNotNull(taskQueue.poll());
-		assertTrue(taskQueue.isEmpty());
+		Assert.assertTrue(taskQueue.isEmpty());
+		Assert.assertTrue(taskQueue.offer(new Object(), new boolean[1]));
+		Assert.assertFalse(taskQueue.isEmpty());
+		Assert.assertNotNull(taskQueue.poll());
+		Assert.assertTrue(taskQueue.isEmpty());
 	}
 
 	@Test
@@ -148,7 +147,7 @@ public class TaskQueueTest extends TestCase {
 		try {
 			taskQueue.offer(null, new boolean[1]);
 
-			fail();
+			Assert.fail();
 		}
 		catch (NullPointerException npe) {
 		}
@@ -158,7 +157,7 @@ public class TaskQueueTest extends TestCase {
 		try {
 			taskQueue.offer(new Object(), null);
 
-			fail();
+			Assert.fail();
 		}
 		catch (NullPointerException npe) {
 		}
@@ -168,7 +167,7 @@ public class TaskQueueTest extends TestCase {
 		try {
 			taskQueue.offer(new Object(), new boolean[0]);
 
-			fail();
+			Assert.fail();
 		}
 		catch (IllegalArgumentException iae) {
 		}
@@ -179,70 +178,70 @@ public class TaskQueueTest extends TestCase {
 
 		boolean result = taskQueue.offer(new Object(), hasWaiterMarker);
 
-		assertTrue(result);
-		assertFalse(hasWaiterMarker[0]);
+		Assert.assertTrue(result);
+		Assert.assertFalse(hasWaiterMarker[0]);
 	}
 
 	@Test
 	public void testPoll() throws InterruptedException {
 		TaskQueue<Object> taskQueue = new TaskQueue<Object>();
 
-		assertNull(taskQueue.poll());
+		Assert.assertNull(taskQueue.poll());
 
 		taskQueue = new TaskQueue<Object>();
 
 		Object object1 = new Object();
 
-		assertTrue(taskQueue.offer(object1, new boolean[1]));
-		assertSame(object1, taskQueue.poll());
+		Assert.assertTrue(taskQueue.offer(object1, new boolean[1]));
+		Assert.assertSame(object1, taskQueue.poll());
 
 		taskQueue = new TaskQueue<Object>();
 
 		object1 = new Object();
 		Object object2 = new Object();
 
-		assertTrue(taskQueue.offer(object1, new boolean[1]));
-		assertTrue(taskQueue.offer(object2, new boolean[1]));
-		assertSame(object1, taskQueue.poll());
+		Assert.assertTrue(taskQueue.offer(object1, new boolean[1]));
+		Assert.assertTrue(taskQueue.offer(object2, new boolean[1]));
+		Assert.assertSame(object1, taskQueue.poll());
 
 		taskQueue = new TaskQueue<Object>();
 
-		assertNull(taskQueue.poll(0, TimeUnit.MILLISECONDS));
+		Assert.assertNull(taskQueue.poll(0, TimeUnit.MILLISECONDS));
 
 		taskQueue = new TaskQueue<Object>();
 
-		assertNull(taskQueue.poll(-1, TimeUnit.MILLISECONDS));
+		Assert.assertNull(taskQueue.poll(-1, TimeUnit.MILLISECONDS));
 
 		taskQueue = new TaskQueue<Object>();
 
-		assertNull(taskQueue.poll(100, TimeUnit.MILLISECONDS));
+		Assert.assertNull(taskQueue.poll(100, TimeUnit.MILLISECONDS));
 
 		taskQueue = new TaskQueue<Object>();
 
 		object1 = new Object();
 
-		assertTrue(taskQueue.offer(object1, new boolean[1]));
-		assertSame(object1, taskQueue.poll(100, TimeUnit.MILLISECONDS));
+		Assert.assertTrue(taskQueue.offer(object1, new boolean[1]));
+		Assert.assertSame(object1, taskQueue.poll(100, TimeUnit.MILLISECONDS));
 
 		taskQueue = new TaskQueue<Object>();
 
 		object1 = new Object();
 		object2 = new Object();
 
-		assertTrue(taskQueue.offer(object1, new boolean[1]));
-		assertTrue(taskQueue.offer(object2, new boolean[1]));
-		assertSame(object1, taskQueue.poll(100, TimeUnit.MILLISECONDS));
+		Assert.assertTrue(taskQueue.offer(object1, new boolean[1]));
+		Assert.assertTrue(taskQueue.offer(object2, new boolean[1]));
+		Assert.assertSame(object1, taskQueue.poll(100, TimeUnit.MILLISECONDS));
 	}
 
 	@Test
 	public void testRemainingCapacity() {
 		TaskQueue<Object> taskQueue = new TaskQueue<Object>(10);
 
-		assertEquals(10, taskQueue.remainingCapacity());
+		Assert.assertEquals(10, taskQueue.remainingCapacity());
 
 		for (int i = 1; i <= 10; i++) {
-			assertTrue(taskQueue.offer(new Object(), new boolean[1]));
-			assertEquals(10 - i, taskQueue.remainingCapacity());
+			Assert.assertTrue(taskQueue.offer(new Object(), new boolean[1]));
+			Assert.assertEquals(10 - i, taskQueue.remainingCapacity());
 		}
 	}
 
@@ -250,34 +249,34 @@ public class TaskQueueTest extends TestCase {
 	public void testRemove() {
 		TaskQueue<Object> taskQueue = new TaskQueue<Object>(10);
 
-		assertFalse(taskQueue.remove(null));
-		assertFalse(taskQueue.remove(new Object()));
+		Assert.assertFalse(taskQueue.remove(null));
+		Assert.assertFalse(taskQueue.remove(new Object()));
 
 		Object object1 = new Object();
 		Object object2 = new Object();
 		Object object3 = new Object();
 
-		assertTrue(taskQueue.offer(object1, new boolean[1]));
-		assertTrue(taskQueue.offer(object2, new boolean[1]));
-		assertTrue(taskQueue.offer(object3, new boolean[1]));
-		assertEquals(3, taskQueue.size());
-		assertTrue(taskQueue.remove(object2));
-		assertEquals(2, taskQueue.size());
-		assertTrue(taskQueue.remove(object1));
-		assertEquals(1, taskQueue.size());
-		assertTrue(taskQueue.remove(object3));
-		assertEquals(0, taskQueue.size());
+		Assert.assertTrue(taskQueue.offer(object1, new boolean[1]));
+		Assert.assertTrue(taskQueue.offer(object2, new boolean[1]));
+		Assert.assertTrue(taskQueue.offer(object3, new boolean[1]));
+		Assert.assertEquals(3, taskQueue.size());
+		Assert.assertTrue(taskQueue.remove(object2));
+		Assert.assertEquals(2, taskQueue.size());
+		Assert.assertTrue(taskQueue.remove(object1));
+		Assert.assertEquals(1, taskQueue.size());
+		Assert.assertTrue(taskQueue.remove(object3));
+		Assert.assertEquals(0, taskQueue.size());
 	}
 
 	@Test
 	public void testSize() {
 		TaskQueue<Object> taskQueue = new TaskQueue<Object>(10);
 
-		assertEquals(0, taskQueue.size());
+		Assert.assertEquals(0, taskQueue.size());
 
 		for (int i = 1; i <= 10; i++) {
-			assertTrue(taskQueue.offer(new Object(), new boolean[1]));
-			assertEquals(i, taskQueue.size());
+			Assert.assertTrue(taskQueue.offer(new Object(), new boolean[1]));
+			Assert.assertEquals(i, taskQueue.size());
 		}
 	}
 
@@ -286,8 +285,8 @@ public class TaskQueueTest extends TestCase {
 		final TaskQueue<Object> taskQueue = new TaskQueue<Object>();
 		final Object object = new Object();
 
-		assertTrue(taskQueue.offer(object, new boolean[1]));
-		assertSame(object, taskQueue.take());
+		Assert.assertTrue(taskQueue.offer(object, new boolean[1]));
+		Assert.assertSame(object, taskQueue.take());
 
 		Thread thread = new Thread() {
 
@@ -295,16 +294,16 @@ public class TaskQueueTest extends TestCase {
 			public void run() {
 				try {
 					for (int i = 0; i < 10; i++) {
-						assertEquals(i, taskQueue.take());
+						Assert.assertEquals(i, taskQueue.take());
 					}
 				}
 				catch (InterruptedException ie) {
-					fail();
+					Assert.fail();
 				}
 
 				try {
 					taskQueue.take();
-					fail();
+					Assert.fail();
 				}
 				catch (InterruptedException ie) {
 				}
@@ -315,7 +314,7 @@ public class TaskQueueTest extends TestCase {
 		thread.start();
 
 		for (int i = 0; i < 10; i++) {
-			assertTrue(taskQueue.offer(i, new boolean[1]));
+			Assert.assertTrue(taskQueue.offer(i, new boolean[1]));
 		}
 
 		Thread.sleep(TestUtil.SHORT_WAIT);

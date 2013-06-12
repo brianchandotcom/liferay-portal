@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.Time;
 import java.util.Calendar;
 import java.util.TimeZone;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -98,7 +99,7 @@ public class TZSRecurrenceTest extends RecurrenceTestCase {
 	protected void assertTZSRecurrenceEquals(
 		boolean expected, TZSRecurrence recurrence, Calendar calendar) {
 
-		assertEquals(expected, recurrence.isInRecurrence(calendar));
+		Assert.assertEquals(expected, recurrence.isInRecurrence(calendar));
 	}
 
 	protected void checkWithinTSZRecurrence(

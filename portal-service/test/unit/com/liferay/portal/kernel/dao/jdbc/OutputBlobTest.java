@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.dao.jdbc;
 
-import com.liferay.portal.kernel.test.TestCase;
-
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -24,19 +22,20 @@ import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
  * @author Shuyang Zhou
  */
-public class OutputBlobTest extends TestCase {
+public class OutputBlobTest {
 
 	@Test
 	public void testConstructor() {
 		try {
 			new OutputBlob(null, 10);
 
-			fail();
+			Assert.fail();
 		}
 		catch (IllegalArgumentException iae) {
 		}
@@ -44,7 +43,7 @@ public class OutputBlobTest extends TestCase {
 		try {
 			new OutputBlob(new ByteArrayInputStream(new byte[10]), -1);
 
-			fail();
+			Assert.fail();
 		}
 		catch (IllegalArgumentException iae) {
 		}
@@ -59,16 +58,16 @@ public class OutputBlobTest extends TestCase {
 
 		OutputBlob outputBlob = new OutputBlob(inputStream, 10);
 
-		assertSame(inputStream, outputBlob.getBinaryStream());
+		Assert.assertSame(inputStream, outputBlob.getBinaryStream());
 
 		outputBlob.free();
 
-		assertNull(outputBlob.getBinaryStream());
+		Assert.assertNull(outputBlob.getBinaryStream());
 
 		try {
 			inputStream.skip(1);
 
-			fail();
+			Assert.fail();
 		}
 		catch (IOException ioe) {
 		}
@@ -84,7 +83,7 @@ public class OutputBlobTest extends TestCase {
 		try {
 			outputBlob.getBinaryStream(0, 5);
 
-			fail();
+			Assert.fail();
 		}
 		catch (SQLException sqle) {
 		}
@@ -94,7 +93,7 @@ public class OutputBlobTest extends TestCase {
 		try {
 			outputBlob.getBinaryStream(11, 5);
 
-			fail();
+			Assert.fail();
 		}
 		catch (SQLException sqle) {
 		}
@@ -104,7 +103,7 @@ public class OutputBlobTest extends TestCase {
 		try {
 			outputBlob.getBinaryStream(6, 6);
 
-			fail();
+			Assert.fail();
 		}
 		catch (SQLException sqle) {
 		}
@@ -115,7 +114,7 @@ public class OutputBlobTest extends TestCase {
 
 		try {
 			outputBlob.getBinaryStream(6, 1);
-			fail();
+			Assert.fail();
 		}
 		catch (SQLException sqle) {
 		}
@@ -127,10 +126,10 @@ public class OutputBlobTest extends TestCase {
 		InputStream inputStream = outputBlob.getBinaryStream(2, 5);
 
 		for (int i = 0; i < 5; i++) {
-			assertEquals(0, inputStream.read());
+			Assert.assertEquals(0, inputStream.read());
 		}
 
-		assertEquals(-1, inputStream.read());
+		Assert.assertEquals(-1, inputStream.read());
 	}
 
 	@Test
@@ -143,7 +142,7 @@ public class OutputBlobTest extends TestCase {
 		try {
 			outputBlob.getBytes(0, 5);
 
-			fail();
+			Assert.fail();
 		}
 		catch (SQLException sqle) {
 		}
@@ -153,7 +152,7 @@ public class OutputBlobTest extends TestCase {
 		try {
 			outputBlob.getBytes(1, -1);
 
-			fail();
+			Assert.fail();
 		}
 		catch (SQLException sqle) {
 		}
@@ -162,13 +161,13 @@ public class OutputBlobTest extends TestCase {
 
 		byte[] bytes = outputBlob.getBytes(1, 6);
 
-		assertEquals(6, bytes.length);
+		Assert.assertEquals(6, bytes.length);
 
 		// Short read
 
 		bytes = outputBlob.getBytes(1, 6);
 
-		assertEquals(4, bytes.length);
+		Assert.assertEquals(4, bytes.length);
 	}
 
 	@Test
@@ -176,11 +175,11 @@ public class OutputBlobTest extends TestCase {
 		OutputBlob outputBlob = new OutputBlob(
 			new ByteArrayInputStream(new byte[10]), 10);
 
-		assertEquals(10, outputBlob.length());
+		Assert.assertEquals(10, outputBlob.length());
 
 		outputBlob = new OutputBlob(new ByteArrayInputStream(new byte[10]), 5);
 
-		assertEquals(5, outputBlob.length());
+		Assert.assertEquals(5, outputBlob.length());
 	}
 
 	@Test
@@ -191,7 +190,7 @@ public class OutputBlobTest extends TestCase {
 		try {
 			outputBlob.position(new byte[10], 5);
 
-			fail();
+			Assert.fail();
 		}
 		catch (UnsupportedOperationException uoe) {
 		}
@@ -199,7 +198,7 @@ public class OutputBlobTest extends TestCase {
 		try {
 			outputBlob.position((Blob)null, 5);
 
-			fail();
+			Assert.fail();
 		}
 		catch (UnsupportedOperationException uoe) {
 		}
@@ -207,7 +206,7 @@ public class OutputBlobTest extends TestCase {
 		try {
 			outputBlob.setBinaryStream(5);
 
-			fail();
+			Assert.fail();
 		}
 		catch (UnsupportedOperationException uoe) {
 		}
@@ -215,7 +214,7 @@ public class OutputBlobTest extends TestCase {
 		try {
 			outputBlob.setBytes(5, new byte[10]);
 
-			fail();
+			Assert.fail();
 		}
 		catch (UnsupportedOperationException uoe) {
 		}
@@ -223,7 +222,7 @@ public class OutputBlobTest extends TestCase {
 		try {
 			outputBlob.setBytes(5, new byte[10], 2, 2);
 
-			fail();
+			Assert.fail();
 		}
 		catch (UnsupportedOperationException uoe) {
 		}
@@ -231,7 +230,7 @@ public class OutputBlobTest extends TestCase {
 		try {
 			outputBlob.truncate(5);
 
-			fail();
+			Assert.fail();
 		}
 		catch (UnsupportedOperationException uoe) {
 		}

@@ -14,19 +14,18 @@
 
 package com.liferay.portal.kernel.concurrent;
 
-import com.liferay.portal.kernel.test.TestCase;
-
 import java.util.Comparator;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
  * @author Shuyang Zhou
  */
-public class CoalescedPipeTest extends TestCase {
+public class CoalescedPipeTest {
 
 	@Test
 	public void testBlockingTake() throws InterruptedException {
@@ -44,7 +43,7 @@ public class CoalescedPipeTest extends TestCase {
 						coalescedPipe.put("test1");
 					}
 					catch (InterruptedException ie) {
-						fail(ie.getMessage());
+						Assert.fail(ie.getMessage());
 					}
 				}
 
@@ -54,8 +53,8 @@ public class CoalescedPipeTest extends TestCase {
 
 		long startTime = System.currentTimeMillis();
 
-		assertEquals("test1", coalescedPipe.take());
-		assertTrue((System.currentTimeMillis() - startTime) > 250L);
+		Assert.assertEquals("test1", coalescedPipe.take());
+		Assert.assertTrue((System.currentTimeMillis() - startTime) > 250L);
 
 		scheduledExecutorService.shutdownNow();
 		scheduledExecutorService.awaitTermination(120, TimeUnit.SECONDS);
@@ -70,13 +69,13 @@ public class CoalescedPipeTest extends TestCase {
 
 		long startTime = System.currentTimeMillis();
 
-		assertEquals("test2", coalescedPipe.take());
-		assertTrue((System.currentTimeMillis() - startTime) < 100);
+		Assert.assertEquals("test2", coalescedPipe.take());
+		Assert.assertTrue((System.currentTimeMillis() - startTime) < 100);
 
 		startTime = System.currentTimeMillis();
 
-		assertEquals("test3", coalescedPipe.take());
-		assertTrue((System.currentTimeMillis() - startTime) < 100);
+		Assert.assertEquals("test3", coalescedPipe.take());
+		Assert.assertTrue((System.currentTimeMillis() - startTime) < 100);
 	}
 
 	@Test
@@ -91,7 +90,7 @@ public class CoalescedPipeTest extends TestCase {
 		try {
 			coalescedPipe.put(null);
 
-			fail();
+			Assert.fail();
 		}
 		catch (NullPointerException npe) {
 		}
@@ -100,25 +99,25 @@ public class CoalescedPipeTest extends TestCase {
 
 		coalescedPipe.put("test1");
 
-		assertEquals(1, coalescedPipe.pendingCount());
-		assertEquals(0, coalescedPipe.coalescedCount());
+		Assert.assertEquals(1, coalescedPipe.pendingCount());
+		Assert.assertEquals(0, coalescedPipe.coalescedCount());
 
 		coalescedPipe.put("test2");
 
-		assertEquals(2, coalescedPipe.pendingCount());
-		assertEquals(0, coalescedPipe.coalescedCount());
+		Assert.assertEquals(2, coalescedPipe.pendingCount());
+		Assert.assertEquals(0, coalescedPipe.coalescedCount());
 
 		// Coalesce
 
 		coalescedPipe.put("test1");
 
-		assertEquals(2, coalescedPipe.pendingCount());
-		assertEquals(1, coalescedPipe.coalescedCount());
+		Assert.assertEquals(2, coalescedPipe.pendingCount());
+		Assert.assertEquals(1, coalescedPipe.coalescedCount());
 
 		coalescedPipe.put("test2");
 
-		assertEquals(2, coalescedPipe.pendingCount());
-		assertEquals(2, coalescedPipe.coalescedCount());
+		Assert.assertEquals(2, coalescedPipe.pendingCount());
+		Assert.assertEquals(2, coalescedPipe.coalescedCount());
 
 		// With comparator
 
@@ -138,7 +137,7 @@ public class CoalescedPipeTest extends TestCase {
 		try {
 			coalescedPipe.put(null);
 
-			fail();
+			Assert.fail();
 		}
 		catch (NullPointerException npe) {
 		}
@@ -147,25 +146,25 @@ public class CoalescedPipeTest extends TestCase {
 
 		coalescedPipe.put("a");
 
-		assertEquals(1, coalescedPipe.pendingCount());
-		assertEquals(0, coalescedPipe.coalescedCount());
+		Assert.assertEquals(1, coalescedPipe.pendingCount());
+		Assert.assertEquals(0, coalescedPipe.coalescedCount());
 
 		coalescedPipe.put("ab");
 
-		assertEquals(2, coalescedPipe.pendingCount());
-		assertEquals(0, coalescedPipe.coalescedCount());
+		Assert.assertEquals(2, coalescedPipe.pendingCount());
+		Assert.assertEquals(0, coalescedPipe.coalescedCount());
 
 		// Coalesce
 
 		coalescedPipe.put("c");
 
-		assertEquals(2, coalescedPipe.pendingCount());
-		assertEquals(1, coalescedPipe.coalescedCount());
+		Assert.assertEquals(2, coalescedPipe.pendingCount());
+		Assert.assertEquals(1, coalescedPipe.coalescedCount());
 
 		coalescedPipe.put("cd");
 
-		assertEquals(2, coalescedPipe.pendingCount());
-		assertEquals(2, coalescedPipe.coalescedCount());
+		Assert.assertEquals(2, coalescedPipe.pendingCount());
+		Assert.assertEquals(2, coalescedPipe.coalescedCount());
 	}
 
 	@Test
@@ -174,22 +173,22 @@ public class CoalescedPipeTest extends TestCase {
 
 		Object[] snapShot = coalescedPipe.takeSnapshot();
 
-		assertEquals(0, snapShot.length);
+		Assert.assertEquals(0, snapShot.length);
 
 		coalescedPipe.put("test1");
 
 		snapShot = coalescedPipe.takeSnapshot();
 
-		assertEquals(1, snapShot.length);
-		assertEquals("test1", snapShot[0]);
+		Assert.assertEquals(1, snapShot.length);
+		Assert.assertEquals("test1", snapShot[0]);
 
 		coalescedPipe.put("test2");
 
 		snapShot = coalescedPipe.takeSnapshot();
 
-		assertEquals(2, snapShot.length);
-		assertEquals("test1", snapShot[0]);
-		assertEquals("test2", snapShot[1]);
+		Assert.assertEquals(2, snapShot.length);
+		Assert.assertEquals("test1", snapShot[0]);
+		Assert.assertEquals("test2", snapShot[1]);
 	}
 
 }

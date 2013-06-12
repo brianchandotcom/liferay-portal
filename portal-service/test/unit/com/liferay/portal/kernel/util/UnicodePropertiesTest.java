@@ -14,14 +14,13 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.portal.kernel.test.TestCase;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
  * @author Alexander Chow
  */
-public class UnicodePropertiesTest extends TestCase {
+public class UnicodePropertiesTest {
 
 	@Test
 	public void testLength() throws Exception {
@@ -33,7 +32,7 @@ public class UnicodePropertiesTest extends TestCase {
 		props.setProperty(key, value);
 		props.remove(key);
 
-		assertEquals(0, props.getToStringLength());
+		Assert.assertEquals(0, props.getToStringLength());
 	}
 
 	@Test
@@ -44,7 +43,7 @@ public class UnicodePropertiesTest extends TestCase {
 
 		props.setProperty(null, "value");
 
-		assertEquals(
+		Assert.assertEquals(
 			"setProperty() of null key must not change properties", hashCode,
 			props.hashCode());
 
@@ -52,7 +51,7 @@ public class UnicodePropertiesTest extends TestCase {
 		props.setProperty("key", "value");
 		props.setProperty("key", null);
 
-		assertEquals(
+		Assert.assertEquals(
 			"setProperty() of null value must remove entry", hashCode,
 			props.hashCode());
 	}

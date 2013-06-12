@@ -14,17 +14,16 @@
 
 package com.liferay.portal.kernel.io.unsync;
 
-import com.liferay.portal.kernel.test.TestCase;
-
 import java.io.IOException;
 import java.io.StringWriter;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
  * @author Shuyang Zhou
  */
-public class UnsyncBufferedWriterTest extends TestCase {
+public class UnsyncBufferedWriterTest {
 
 	@Test
 	public void testBlockWrite() throws IOException {
@@ -37,36 +36,36 @@ public class UnsyncBufferedWriterTest extends TestCase {
 
 		unsyncBufferedWriter.write("ab".toCharArray());
 
-		assertEquals(2, unsyncBufferedWriter.count);
-		assertEquals('a', unsyncBufferedWriter.buffer[0]);
-		assertEquals('b', unsyncBufferedWriter.buffer[1]);
-		assertEquals(0, stringWriter.getBuffer().length());
+		Assert.assertEquals(2, unsyncBufferedWriter.count);
+		Assert.assertEquals('a', unsyncBufferedWriter.buffer[0]);
+		Assert.assertEquals('b', unsyncBufferedWriter.buffer[1]);
+		Assert.assertEquals(0, stringWriter.getBuffer().length());
 
 		// Auto flush
 
 		unsyncBufferedWriter.write("cd".toCharArray());
 
-		assertEquals(2, unsyncBufferedWriter.count);
-		assertEquals('c', unsyncBufferedWriter.buffer[0]);
-		assertEquals('d', unsyncBufferedWriter.buffer[1]);
-		assertEquals(2, stringWriter.getBuffer().length());
-		assertEquals("ab", stringWriter.getBuffer().toString());
+		Assert.assertEquals(2, unsyncBufferedWriter.count);
+		Assert.assertEquals('c', unsyncBufferedWriter.buffer[0]);
+		Assert.assertEquals('d', unsyncBufferedWriter.buffer[1]);
+		Assert.assertEquals(2, stringWriter.getBuffer().length());
+		Assert.assertEquals("ab", stringWriter.getBuffer().toString());
 
 		// Direct with auto flush
 
 		unsyncBufferedWriter.write("efg".toCharArray());
 
-		assertEquals(0, unsyncBufferedWriter.count);
-		assertEquals(7, stringWriter.getBuffer().length());
-		assertEquals("abcdefg", stringWriter.getBuffer().toString());
+		Assert.assertEquals(0, unsyncBufferedWriter.count);
+		Assert.assertEquals(7, stringWriter.getBuffer().length());
+		Assert.assertEquals("abcdefg", stringWriter.getBuffer().toString());
 
 		// Direct without auto flush
 
 		unsyncBufferedWriter.write("hij".toCharArray());
 
-		assertEquals(0, unsyncBufferedWriter.count);
-		assertEquals(10, stringWriter.getBuffer().length());
-		assertEquals("abcdefghij", stringWriter.getBuffer().toString());
+		Assert.assertEquals(0, unsyncBufferedWriter.count);
+		Assert.assertEquals(10, stringWriter.getBuffer().length());
+		Assert.assertEquals("abcdefghij", stringWriter.getBuffer().toString());
 	}
 
 	@Test
@@ -74,18 +73,18 @@ public class UnsyncBufferedWriterTest extends TestCase {
 		UnsyncBufferedWriter unsyncBufferedWriter = new UnsyncBufferedWriter(
 			new StringWriter());
 
-		assertNotNull(unsyncBufferedWriter.buffer);
-		assertNotNull(unsyncBufferedWriter.writer);
+		Assert.assertNotNull(unsyncBufferedWriter.buffer);
+		Assert.assertNotNull(unsyncBufferedWriter.writer);
 
 		unsyncBufferedWriter.close();
 
-		assertNull(unsyncBufferedWriter.buffer);
-		assertNull(unsyncBufferedWriter.writer);
+		Assert.assertNull(unsyncBufferedWriter.buffer);
+		Assert.assertNull(unsyncBufferedWriter.writer);
 
 		try {
 			unsyncBufferedWriter.flush();
 
-			fail();
+			Assert.fail();
 		}
 		catch (IOException ioe) {
 		}
@@ -93,7 +92,7 @@ public class UnsyncBufferedWriterTest extends TestCase {
 		try {
 			unsyncBufferedWriter.write("abc".toCharArray(), 0, 3);
 
-			fail();
+			Assert.fail();
 		}
 		catch (IOException ioe) {
 		}
@@ -101,7 +100,7 @@ public class UnsyncBufferedWriterTest extends TestCase {
 		try {
 			unsyncBufferedWriter.write(1);
 
-			fail();
+			Assert.fail();
 		}
 		catch (IOException ioe) {
 		}
@@ -109,7 +108,7 @@ public class UnsyncBufferedWriterTest extends TestCase {
 		try {
 			unsyncBufferedWriter.write("abc", 0, 3);
 
-			fail();
+			Assert.fail();
 		}
 		catch (IOException ioe) {
 		}
@@ -120,13 +119,13 @@ public class UnsyncBufferedWriterTest extends TestCase {
 		UnsyncBufferedWriter unsyncBufferedWriter = new UnsyncBufferedWriter(
 			new StringWriter());
 
-		assertEquals(8192, unsyncBufferedWriter.buffer.length);
-		assertEquals(0, unsyncBufferedWriter.count);
+		Assert.assertEquals(8192, unsyncBufferedWriter.buffer.length);
+		Assert.assertEquals(0, unsyncBufferedWriter.count);
 
 		unsyncBufferedWriter = new UnsyncBufferedWriter(new StringWriter(), 10);
 
-		assertEquals(10, unsyncBufferedWriter.buffer.length);
-		assertEquals(0, unsyncBufferedWriter.count);
+		Assert.assertEquals(10, unsyncBufferedWriter.buffer.length);
+		Assert.assertEquals(0, unsyncBufferedWriter.count);
 	}
 
 	@Test
@@ -140,20 +139,21 @@ public class UnsyncBufferedWriterTest extends TestCase {
 
 		String lineSeparator = System.getProperty("line.separator");
 
-		assertEquals(lineSeparator.length(), unsyncBufferedWriter.count);
+		Assert.assertEquals(lineSeparator.length(), unsyncBufferedWriter.count);
 
 		unsyncBufferedWriter.write('a');
 
-		assertEquals(lineSeparator.length() + 1, unsyncBufferedWriter.count);
+		Assert.assertEquals(
+			lineSeparator.length() + 1, unsyncBufferedWriter.count);
 
 		unsyncBufferedWriter.newLine();
 
-		assertEquals(
+		Assert.assertEquals(
 			lineSeparator.length() * 2 + 1, unsyncBufferedWriter.count);
 
 		unsyncBufferedWriter.flush();
 
-		assertEquals(
+		Assert.assertEquals(
 			lineSeparator + "a" + lineSeparator, stringWriter.toString());
 	}
 
@@ -168,27 +168,27 @@ public class UnsyncBufferedWriterTest extends TestCase {
 
 		unsyncBufferedWriter.write("ab");
 
-		assertEquals(2, unsyncBufferedWriter.count);
-		assertEquals('a', unsyncBufferedWriter.buffer[0]);
-		assertEquals('b', unsyncBufferedWriter.buffer[1]);
-		assertEquals(0, stringWriter.getBuffer().length());
+		Assert.assertEquals(2, unsyncBufferedWriter.count);
+		Assert.assertEquals('a', unsyncBufferedWriter.buffer[0]);
+		Assert.assertEquals('b', unsyncBufferedWriter.buffer[1]);
+		Assert.assertEquals(0, stringWriter.getBuffer().length());
 
 		// Auto flush
 
 		unsyncBufferedWriter.write("cd");
 
-		assertEquals(1, unsyncBufferedWriter.count);
-		assertEquals('d', unsyncBufferedWriter.buffer[0]);
-		assertEquals(3, stringWriter.getBuffer().length());
-		assertEquals("abc", stringWriter.getBuffer().toString());
+		Assert.assertEquals(1, unsyncBufferedWriter.count);
+		Assert.assertEquals('d', unsyncBufferedWriter.buffer[0]);
+		Assert.assertEquals(3, stringWriter.getBuffer().length());
+		Assert.assertEquals("abc", stringWriter.getBuffer().toString());
 
 		// Cycle
 
 		unsyncBufferedWriter.write("efghi".toCharArray());
 
-		assertEquals(0, unsyncBufferedWriter.count);
-		assertEquals(9, stringWriter.getBuffer().length());
-		assertEquals("abcdefghi", stringWriter.getBuffer().toString());
+		Assert.assertEquals(0, unsyncBufferedWriter.count);
+		Assert.assertEquals(9, stringWriter.getBuffer().length());
+		Assert.assertEquals("abcdefghi", stringWriter.getBuffer().toString());
 	}
 
 	@Test
@@ -202,30 +202,30 @@ public class UnsyncBufferedWriterTest extends TestCase {
 
 		unsyncBufferedWriter.write('a');
 
-		assertEquals(1, unsyncBufferedWriter.count);
-		assertEquals('a', unsyncBufferedWriter.buffer[0]);
-		assertEquals(0, stringWriter.getBuffer().length());
+		Assert.assertEquals(1, unsyncBufferedWriter.count);
+		Assert.assertEquals('a', unsyncBufferedWriter.buffer[0]);
+		Assert.assertEquals(0, stringWriter.getBuffer().length());
 
 		unsyncBufferedWriter.write('b');
 
-		assertEquals(2, unsyncBufferedWriter.count);
-		assertEquals('b', unsyncBufferedWriter.buffer[1]);
-		assertEquals(0, stringWriter.getBuffer().length());
+		Assert.assertEquals(2, unsyncBufferedWriter.count);
+		Assert.assertEquals('b', unsyncBufferedWriter.buffer[1]);
+		Assert.assertEquals(0, stringWriter.getBuffer().length());
 
 		unsyncBufferedWriter.write('c');
 
-		assertEquals(3, unsyncBufferedWriter.count);
-		assertEquals('c', unsyncBufferedWriter.buffer[2]);
-		assertEquals(0, stringWriter.getBuffer().length());
+		Assert.assertEquals(3, unsyncBufferedWriter.count);
+		Assert.assertEquals('c', unsyncBufferedWriter.buffer[2]);
+		Assert.assertEquals(0, stringWriter.getBuffer().length());
 
 		// Auto flush
 
 		unsyncBufferedWriter.write('d');
 
-		assertEquals(1, unsyncBufferedWriter.count);
-		assertEquals('d', unsyncBufferedWriter.buffer[0]);
-		assertEquals(3, stringWriter.getBuffer().length());
-		assertEquals("abc", stringWriter.getBuffer().toString());
+		Assert.assertEquals(1, unsyncBufferedWriter.count);
+		Assert.assertEquals('d', unsyncBufferedWriter.buffer[0]);
+		Assert.assertEquals(3, stringWriter.getBuffer().length());
+		Assert.assertEquals("abc", stringWriter.getBuffer().toString());
 	}
 
 }

@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.cluster;
 
-import com.liferay.portal.kernel.test.TestCase;
-
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -24,12 +22,13 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
  * @author Michael C. Han
  */
-public class FutureClusterResponsesTest extends TestCase {
+public class FutureClusterResponsesTest {
 
 	@Test
 	public void testMultipleResponseFailure() throws UnknownHostException {
@@ -59,10 +58,10 @@ public class FutureClusterResponsesTest extends TestCase {
 		try {
 			clusterNodeResponses.get(500, TimeUnit.MILLISECONDS);
 
-			fail("Should have failed");
+			Assert.fail("Should have failed");
 		}
 		catch (InterruptedException ie) {
-			fail("Interrupted");
+			Assert.fail("Interrupted");
 		}
 		catch (TimeoutException te) {
 		}
@@ -104,10 +103,10 @@ public class FutureClusterResponsesTest extends TestCase {
 			clusterNodeResponses.get(500, TimeUnit.MILLISECONDS);
 		}
 		catch (InterruptedException ie) {
-			fail("Interrupted");
+			Assert.fail("Interrupted");
 		}
 		catch (TimeoutException te) {
-			fail("Timed out");
+			Assert.fail("Timed out");
 		}
 	}
 
@@ -123,10 +122,10 @@ public class FutureClusterResponsesTest extends TestCase {
 		try {
 			futureClusterResponses.get(500, TimeUnit.MILLISECONDS);
 
-			fail("Should have failed");
+			Assert.fail("Should have failed");
 		}
 		catch (InterruptedException ie) {
-			fail("Interrupted");
+			Assert.fail("Interrupted");
 		}
 		catch (TimeoutException te) {
 		}
@@ -152,10 +151,10 @@ public class FutureClusterResponsesTest extends TestCase {
 			futureClusterResponses.get(500, TimeUnit.MILLISECONDS);
 		}
 		catch (InterruptedException ie) {
-			fail("Interrupted");
+			Assert.fail("Interrupted");
 		}
 		catch (TimeoutException te) {
-			fail("Timed out");
+			Assert.fail("Timed out");
 		}
 	}
 

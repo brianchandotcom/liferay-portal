@@ -328,8 +328,6 @@
 	<bean id="com.liferay.portlet.journal.service.JournalStructureService" class="com.liferay.portlet.journal.service.impl.JournalStructureServiceImpl" />
 	<bean id="com.liferay.portlet.journal.service.JournalTemplateLocalService" class="com.liferay.portlet.journal.service.impl.JournalTemplateLocalServiceImpl" />
 	<bean id="com.liferay.portlet.journal.service.JournalTemplateService" class="com.liferay.portlet.journal.service.impl.JournalTemplateServiceImpl" />
-	<bean id="com.liferay.portlet.journal.service.persistence.JournalTemplatePersistence" class="com.liferay.portlet.journal.service.persistence.JournalTemplatePersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.journal.service.persistence.JournalTemplateFinder" class="com.liferay.portlet.journal.service.persistence.JournalTemplateFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.messageboards.service.MBBanLocalService" class="com.liferay.portlet.messageboards.service.impl.MBBanLocalServiceImpl" />
 	<bean id="com.liferay.portlet.messageboards.service.MBBanService" class="com.liferay.portlet.messageboards.service.impl.MBBanServiceImpl" />
 	<bean id="com.liferay.portlet.messageboards.service.persistence.MBBanPersistence" class="com.liferay.portlet.messageboards.service.persistence.MBBanPersistenceImpl" parent="basePersistence" />

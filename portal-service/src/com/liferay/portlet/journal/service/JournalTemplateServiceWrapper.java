@@ -104,7 +104,8 @@ public class JournalTemplateServiceWrapper implements JournalTemplateService,
 	@Override
 	public java.util.List<com.liferay.portlet.journal.model.JournalTemplate> getStructureTemplates(
 		long groupId, java.lang.String structureId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _journalTemplateService.getStructureTemplates(groupId,
 			structureId);
 	}

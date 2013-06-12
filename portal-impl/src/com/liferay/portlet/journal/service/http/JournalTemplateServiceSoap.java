@@ -33,16 +33,6 @@ import java.util.Map;
  * support certain types.
  *
  * <p>
- * ServiceBuilder follows certain rules in translating the methods. For example,
- * if the method in the service utility returns a {@link java.util.List}, that
- * is translated to an array of {@link com.liferay.portlet.journal.model.JournalTemplateSoap}.
- * If the method in the service utility returns a
- * {@link com.liferay.portlet.journal.model.JournalTemplate}, that is translated to a
- * {@link com.liferay.portlet.journal.model.JournalTemplateSoap}. Methods that SOAP cannot
- * safely wire are skipped.
- * </p>
- *
- * <p>
  * The benefits of using the SOAP utility is that it is cross platform
  * compatible. SOAP allows different languages like Java, .NET, C++, PHP, and
  * even Perl, to call the generated services. One drawback of SOAP is that it is
@@ -61,7 +51,6 @@ import java.util.Map;
  *
  * @author Brian Wing Shun Chan
  * @see JournalTemplateServiceHttp
- * @see com.liferay.portlet.journal.model.JournalTemplateSoap
  * @see com.liferay.portlet.journal.service.JournalTemplateServiceUtil
  * @generated
  */
@@ -124,14 +113,14 @@ public class JournalTemplateServiceSoap {
 		}
 	}
 
-	public static com.liferay.portlet.journal.model.JournalTemplateSoap[] getStructureTemplates(
+	public static com.liferay.portlet.journal.model.JournalTemplate[] getStructureTemplates(
 		long groupId, java.lang.String structureId) throws RemoteException {
 		try {
 			java.util.List<com.liferay.portlet.journal.model.JournalTemplate> returnValue =
 				JournalTemplateServiceUtil.getStructureTemplates(groupId,
 					structureId);
 
-			return com.liferay.portlet.journal.model.JournalTemplateSoap.toSoapModels(returnValue);
+			return returnValue.toArray(new com.liferay.portlet.journal.model.JournalTemplate[returnValue.size()]);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -171,7 +160,7 @@ public class JournalTemplateServiceSoap {
 		}
 	}
 
-	public static com.liferay.portlet.journal.model.JournalTemplateSoap[] search(
+	public static com.liferay.portlet.journal.model.JournalTemplate[] search(
 		long companyId, long[] groupIds, java.lang.String keywords,
 		java.lang.String structureId, java.lang.String structureIdComparator,
 		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
@@ -182,7 +171,7 @@ public class JournalTemplateServiceSoap {
 					keywords, structureId, structureIdComparator, start, end,
 					obc);
 
-			return com.liferay.portlet.journal.model.JournalTemplateSoap.toSoapModels(returnValue);
+			return returnValue.toArray(new com.liferay.portlet.journal.model.JournalTemplate[returnValue.size()]);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -191,7 +180,7 @@ public class JournalTemplateServiceSoap {
 		}
 	}
 
-	public static com.liferay.portlet.journal.model.JournalTemplateSoap[] search(
+	public static com.liferay.portlet.journal.model.JournalTemplate[] search(
 		long companyId, long[] groupIds, java.lang.String templateId,
 		java.lang.String structureId, java.lang.String structureIdComparator,
 		java.lang.String name, java.lang.String description,
@@ -204,7 +193,7 @@ public class JournalTemplateServiceSoap {
 					templateId, structureId, structureIdComparator, name,
 					description, andOperator, start, end, obc);
 
-			return com.liferay.portlet.journal.model.JournalTemplateSoap.toSoapModels(returnValue);
+			return returnValue.toArray(new com.liferay.portlet.journal.model.JournalTemplate[returnValue.size()]);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

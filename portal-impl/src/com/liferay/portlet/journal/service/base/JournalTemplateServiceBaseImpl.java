@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.service.BaseServiceImpl;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.GroupService;
@@ -29,18 +30,16 @@ import com.liferay.portal.service.ImageService;
 import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.UserService;
-import com.liferay.portal.service.WebDAVPropsLocalService;
 import com.liferay.portal.service.persistence.GroupFinder;
 import com.liferay.portal.service.persistence.GroupPersistence;
 import com.liferay.portal.service.persistence.ImagePersistence;
 import com.liferay.portal.service.persistence.UserFinder;
 import com.liferay.portal.service.persistence.UserPersistence;
-import com.liferay.portal.service.persistence.WebDAVPropsPersistence;
 
-import com.liferay.portlet.expando.service.ExpandoValueLocalService;
-import com.liferay.portlet.expando.service.ExpandoValueService;
-import com.liferay.portlet.expando.service.persistence.ExpandoValuePersistence;
-import com.liferay.portlet.journal.model.JournalTemplate;
+import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalService;
+import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateService;
+import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateFinder;
+import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplatePersistence;
 import com.liferay.portlet.journal.service.JournalArticleImageLocalService;
 import com.liferay.portlet.journal.service.JournalArticleLocalService;
 import com.liferay.portlet.journal.service.JournalArticleResourceLocalService;
@@ -63,8 +62,6 @@ import com.liferay.portlet.journal.service.persistence.JournalFeedFinder;
 import com.liferay.portlet.journal.service.persistence.JournalFeedPersistence;
 import com.liferay.portlet.journal.service.persistence.JournalFolderFinder;
 import com.liferay.portlet.journal.service.persistence.JournalFolderPersistence;
-import com.liferay.portlet.journal.service.persistence.JournalTemplateFinder;
-import com.liferay.portlet.journal.service.persistence.JournalTemplatePersistence;
 
 import javax.sql.DataSource;
 
@@ -504,44 +501,6 @@ public abstract class JournalTemplateServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the journal template persistence.
-	 *
-	 * @return the journal template persistence
-	 */
-	public JournalTemplatePersistence getJournalTemplatePersistence() {
-		return journalTemplatePersistence;
-	}
-
-	/**
-	 * Sets the journal template persistence.
-	 *
-	 * @param journalTemplatePersistence the journal template persistence
-	 */
-	public void setJournalTemplatePersistence(
-		JournalTemplatePersistence journalTemplatePersistence) {
-		this.journalTemplatePersistence = journalTemplatePersistence;
-	}
-
-	/**
-	 * Returns the journal template finder.
-	 *
-	 * @return the journal template finder
-	 */
-	public JournalTemplateFinder getJournalTemplateFinder() {
-		return journalTemplateFinder;
-	}
-
-	/**
-	 * Sets the journal template finder.
-	 *
-	 * @param journalTemplateFinder the journal template finder
-	 */
-	public void setJournalTemplateFinder(
-		JournalTemplateFinder journalTemplateFinder) {
-		this.journalTemplateFinder = journalTemplateFinder;
-	}
-
-	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -777,97 +736,77 @@ public abstract class JournalTemplateServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the web d a v props local service.
+	 * Returns the d d m template local service.
 	 *
-	 * @return the web d a v props local service
+	 * @return the d d m template local service
 	 */
-	public WebDAVPropsLocalService getWebDAVPropsLocalService() {
-		return webDAVPropsLocalService;
+	public DDMTemplateLocalService getDDMTemplateLocalService() {
+		return ddmTemplateLocalService;
 	}
 
 	/**
-	 * Sets the web d a v props local service.
+	 * Sets the d d m template local service.
 	 *
-	 * @param webDAVPropsLocalService the web d a v props local service
+	 * @param ddmTemplateLocalService the d d m template local service
 	 */
-	public void setWebDAVPropsLocalService(
-		WebDAVPropsLocalService webDAVPropsLocalService) {
-		this.webDAVPropsLocalService = webDAVPropsLocalService;
+	public void setDDMTemplateLocalService(
+		DDMTemplateLocalService ddmTemplateLocalService) {
+		this.ddmTemplateLocalService = ddmTemplateLocalService;
 	}
 
 	/**
-	 * Returns the web d a v props persistence.
+	 * Returns the d d m template remote service.
 	 *
-	 * @return the web d a v props persistence
+	 * @return the d d m template remote service
 	 */
-	public WebDAVPropsPersistence getWebDAVPropsPersistence() {
-		return webDAVPropsPersistence;
+	public DDMTemplateService getDDMTemplateService() {
+		return ddmTemplateService;
 	}
 
 	/**
-	 * Sets the web d a v props persistence.
+	 * Sets the d d m template remote service.
 	 *
-	 * @param webDAVPropsPersistence the web d a v props persistence
+	 * @param ddmTemplateService the d d m template remote service
 	 */
-	public void setWebDAVPropsPersistence(
-		WebDAVPropsPersistence webDAVPropsPersistence) {
-		this.webDAVPropsPersistence = webDAVPropsPersistence;
+	public void setDDMTemplateService(DDMTemplateService ddmTemplateService) {
+		this.ddmTemplateService = ddmTemplateService;
 	}
 
 	/**
-	 * Returns the expando value local service.
+	 * Returns the d d m template persistence.
 	 *
-	 * @return the expando value local service
+	 * @return the d d m template persistence
 	 */
-	public ExpandoValueLocalService getExpandoValueLocalService() {
-		return expandoValueLocalService;
+	public DDMTemplatePersistence getDDMTemplatePersistence() {
+		return ddmTemplatePersistence;
 	}
 
 	/**
-	 * Sets the expando value local service.
+	 * Sets the d d m template persistence.
 	 *
-	 * @param expandoValueLocalService the expando value local service
+	 * @param ddmTemplatePersistence the d d m template persistence
 	 */
-	public void setExpandoValueLocalService(
-		ExpandoValueLocalService expandoValueLocalService) {
-		this.expandoValueLocalService = expandoValueLocalService;
+	public void setDDMTemplatePersistence(
+		DDMTemplatePersistence ddmTemplatePersistence) {
+		this.ddmTemplatePersistence = ddmTemplatePersistence;
 	}
 
 	/**
-	 * Returns the expando value remote service.
+	 * Returns the d d m template finder.
 	 *
-	 * @return the expando value remote service
+	 * @return the d d m template finder
 	 */
-	public ExpandoValueService getExpandoValueService() {
-		return expandoValueService;
+	public DDMTemplateFinder getDDMTemplateFinder() {
+		return ddmTemplateFinder;
 	}
 
 	/**
-	 * Sets the expando value remote service.
+	 * Sets the d d m template finder.
 	 *
-	 * @param expandoValueService the expando value remote service
+	 * @param ddmTemplateFinder the d d m template finder
 	 */
-	public void setExpandoValueService(ExpandoValueService expandoValueService) {
-		this.expandoValueService = expandoValueService;
-	}
-
-	/**
-	 * Returns the expando value persistence.
-	 *
-	 * @return the expando value persistence
-	 */
-	public ExpandoValuePersistence getExpandoValuePersistence() {
-		return expandoValuePersistence;
-	}
-
-	/**
-	 * Sets the expando value persistence.
-	 *
-	 * @param expandoValuePersistence the expando value persistence
-	 */
-	public void setExpandoValuePersistence(
-		ExpandoValuePersistence expandoValuePersistence) {
-		this.expandoValuePersistence = expandoValuePersistence;
+	public void setDDMTemplateFinder(DDMTemplateFinder ddmTemplateFinder) {
+		this.ddmTemplateFinder = ddmTemplateFinder;
 	}
 
 	public void afterPropertiesSet() {
@@ -896,14 +835,6 @@ public abstract class JournalTemplateServiceBaseImpl extends BaseServiceImpl
 		_beanIdentifier = beanIdentifier;
 	}
 
-	protected Class<?> getModelClass() {
-		return JournalTemplate.class;
-	}
-
-	protected String getModelClassName() {
-		return JournalTemplate.class.getName();
-	}
-
 	/**
 	 * Performs an SQL query.
 	 *
@@ -911,7 +842,7 @@ public abstract class JournalTemplateServiceBaseImpl extends BaseServiceImpl
 	 */
 	protected void runSQL(String sql) throws SystemException {
 		try {
-			DataSource dataSource = journalTemplatePersistence.getDataSource();
+			DataSource dataSource = InfrastructureUtil.getDataSource();
 
 			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
 					sql, new int[0]);
@@ -967,10 +898,6 @@ public abstract class JournalTemplateServiceBaseImpl extends BaseServiceImpl
 	protected JournalTemplateLocalService journalTemplateLocalService;
 	@BeanReference(type = JournalTemplateService.class)
 	protected JournalTemplateService journalTemplateService;
-	@BeanReference(type = JournalTemplatePersistence.class)
-	protected JournalTemplatePersistence journalTemplatePersistence;
-	@BeanReference(type = JournalTemplateFinder.class)
-	protected JournalTemplateFinder journalTemplateFinder;
 	@BeanReference(type = CounterLocalService.class)
 	protected CounterLocalService counterLocalService;
 	@BeanReference(type = GroupLocalService.class)
@@ -997,15 +924,13 @@ public abstract class JournalTemplateServiceBaseImpl extends BaseServiceImpl
 	protected UserPersistence userPersistence;
 	@BeanReference(type = UserFinder.class)
 	protected UserFinder userFinder;
-	@BeanReference(type = WebDAVPropsLocalService.class)
-	protected WebDAVPropsLocalService webDAVPropsLocalService;
-	@BeanReference(type = WebDAVPropsPersistence.class)
-	protected WebDAVPropsPersistence webDAVPropsPersistence;
-	@BeanReference(type = ExpandoValueLocalService.class)
-	protected ExpandoValueLocalService expandoValueLocalService;
-	@BeanReference(type = ExpandoValueService.class)
-	protected ExpandoValueService expandoValueService;
-	@BeanReference(type = ExpandoValuePersistence.class)
-	protected ExpandoValuePersistence expandoValuePersistence;
+	@BeanReference(type = DDMTemplateLocalService.class)
+	protected DDMTemplateLocalService ddmTemplateLocalService;
+	@BeanReference(type = DDMTemplateService.class)
+	protected DDMTemplateService ddmTemplateService;
+	@BeanReference(type = DDMTemplatePersistence.class)
+	protected DDMTemplatePersistence ddmTemplatePersistence;
+	@BeanReference(type = DDMTemplateFinder.class)
+	protected DDMTemplateFinder ddmTemplateFinder;
 	private String _beanIdentifier;
 }

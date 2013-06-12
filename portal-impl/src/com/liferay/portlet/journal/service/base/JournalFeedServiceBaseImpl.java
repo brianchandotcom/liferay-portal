@@ -60,8 +60,6 @@ import com.liferay.portlet.journal.service.persistence.JournalFeedFinder;
 import com.liferay.portlet.journal.service.persistence.JournalFeedPersistence;
 import com.liferay.portlet.journal.service.persistence.JournalFolderFinder;
 import com.liferay.portlet.journal.service.persistence.JournalFolderPersistence;
-import com.liferay.portlet.journal.service.persistence.JournalTemplateFinder;
-import com.liferay.portlet.journal.service.persistence.JournalTemplatePersistence;
 
 import javax.sql.DataSource;
 
@@ -501,44 +499,6 @@ public abstract class JournalFeedServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the journal template persistence.
-	 *
-	 * @return the journal template persistence
-	 */
-	public JournalTemplatePersistence getJournalTemplatePersistence() {
-		return journalTemplatePersistence;
-	}
-
-	/**
-	 * Sets the journal template persistence.
-	 *
-	 * @param journalTemplatePersistence the journal template persistence
-	 */
-	public void setJournalTemplatePersistence(
-		JournalTemplatePersistence journalTemplatePersistence) {
-		this.journalTemplatePersistence = journalTemplatePersistence;
-	}
-
-	/**
-	 * Returns the journal template finder.
-	 *
-	 * @return the journal template finder
-	 */
-	public JournalTemplateFinder getJournalTemplateFinder() {
-		return journalTemplateFinder;
-	}
-
-	/**
-	 * Sets the journal template finder.
-	 *
-	 * @param journalTemplateFinder the journal template finder
-	 */
-	public void setJournalTemplateFinder(
-		JournalTemplateFinder journalTemplateFinder) {
-		this.journalTemplateFinder = journalTemplateFinder;
-	}
-
-	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -912,10 +872,6 @@ public abstract class JournalFeedServiceBaseImpl extends BaseServiceImpl
 	protected JournalTemplateLocalService journalTemplateLocalService;
 	@BeanReference(type = JournalTemplateService.class)
 	protected JournalTemplateService journalTemplateService;
-	@BeanReference(type = JournalTemplatePersistence.class)
-	protected JournalTemplatePersistence journalTemplatePersistence;
-	@BeanReference(type = JournalTemplateFinder.class)
-	protected JournalTemplateFinder journalTemplateFinder;
 	@BeanReference(type = CounterLocalService.class)
 	protected CounterLocalService counterLocalService;
 	@BeanReference(type = ResourceLocalService.class)

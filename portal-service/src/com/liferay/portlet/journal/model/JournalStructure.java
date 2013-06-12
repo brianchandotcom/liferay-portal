@@ -28,9 +28,8 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @author Marcellus Tavares
  */
-public interface JournalStructure {
-
-	public int compareTo(JournalStructure journalStructure);
+public interface JournalStructure
+	extends Cloneable, Comparable<JournalStructure>, Serializable {
 
 	public long getCompanyId();
 

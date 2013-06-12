@@ -720,7 +720,7 @@ public class DDMTemplateServiceHttp {
 
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> search(
 		HttpPrincipal httpPrincipal, long companyId, long[] groupIds,
-		long[] classNameIds, long classPK, java.lang.String keywords,
+		long[] classNameIds, long[] classPKs, java.lang.String keywords,
 		java.lang.String type, java.lang.String mode, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -729,8 +729,8 @@ public class DDMTemplateServiceHttp {
 					"search", _searchParameterTypes18);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					companyId, groupIds, classNameIds, classPK, keywords, type,
-					mode, start, end, orderByComparator);
+					companyId, groupIds, classNameIds, classPKs, keywords,
+					type, mode, start, end, orderByComparator);
 
 			Object returnObj = null;
 
@@ -756,7 +756,7 @@ public class DDMTemplateServiceHttp {
 
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> search(
 		HttpPrincipal httpPrincipal, long companyId, long[] groupIds,
-		long[] classNameIds, long classPK, java.lang.String name,
+		long[] classNameIds, long[] classPKs, java.lang.String name,
 		java.lang.String description, java.lang.String type,
 		java.lang.String mode, java.lang.String language, boolean andOperator,
 		int start, int end,
@@ -767,7 +767,7 @@ public class DDMTemplateServiceHttp {
 					"search", _searchParameterTypes19);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					companyId, groupIds, classNameIds, classPK, name,
+					companyId, groupIds, classNameIds, classPKs, name,
 					description, type, mode, language, andOperator, start, end,
 					orderByComparator);
 
@@ -863,7 +863,7 @@ public class DDMTemplateServiceHttp {
 	}
 
 	public static int searchCount(HttpPrincipal httpPrincipal, long companyId,
-		long[] groupIds, long[] classNameIds, long classPK,
+		long[] groupIds, long[] classNameIds, long[] classPKs,
 		java.lang.String keywords, java.lang.String type, java.lang.String mode)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -871,8 +871,8 @@ public class DDMTemplateServiceHttp {
 					"searchCount", _searchCountParameterTypes22);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					companyId, groupIds, classNameIds, classPK, keywords, type,
-					mode);
+					companyId, groupIds, classNameIds, classPKs, keywords,
+					type, mode);
 
 			Object returnObj = null;
 
@@ -897,7 +897,7 @@ public class DDMTemplateServiceHttp {
 	}
 
 	public static int searchCount(HttpPrincipal httpPrincipal, long companyId,
-		long[] groupIds, long[] classNameIds, long classPK,
+		long[] groupIds, long[] classNameIds, long[] classPKs,
 		java.lang.String name, java.lang.String description,
 		java.lang.String type, java.lang.String mode,
 		java.lang.String language, boolean andOperator)
@@ -907,7 +907,7 @@ public class DDMTemplateServiceHttp {
 					"searchCount", _searchCountParameterTypes23);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					companyId, groupIds, classNameIds, classPK, name,
+					companyId, groupIds, classNameIds, classPKs, name,
 					description, type, mode, language, andOperator);
 
 			Object returnObj = null;
@@ -1054,13 +1054,13 @@ public class DDMTemplateServiceHttp {
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _searchParameterTypes18 = new Class[] {
-			long.class, long[].class, long[].class, long.class,
+			long.class, long[].class, long[].class, long[].class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _searchParameterTypes19 = new Class[] {
-			long.class, long[].class, long[].class, long.class,
+			long.class, long[].class, long[].class, long[].class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, boolean.class, int.class, int.class,
@@ -1078,12 +1078,12 @@ public class DDMTemplateServiceHttp {
 			java.lang.String.class, boolean.class
 		};
 	private static final Class<?>[] _searchCountParameterTypes22 = new Class[] {
-			long.class, long[].class, long[].class, long.class,
+			long.class, long[].class, long[].class, long[].class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class
 		};
 	private static final Class<?>[] _searchCountParameterTypes23 = new Class[] {
-			long.class, long[].class, long[].class, long.class,
+			long.class, long[].class, long[].class, long[].class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, boolean.class

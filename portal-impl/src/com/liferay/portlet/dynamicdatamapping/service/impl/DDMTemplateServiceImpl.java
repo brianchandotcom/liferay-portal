@@ -612,7 +612,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 * @param  groupIds the primary keys of the groups
 	 * @param  classNameIds the primary keys of the entity's instances the
 	 *         templates are related to
-	 * @param  classPK the primary key of the template's related entity
+	 * @param  classPKs the primary keys of the template's related entities
 	 * @param  keywords the keywords (space separated), which may occur in the
 	 *         template's name or description (optionally <code>null</code>)
 	 * @param  type the template's type (optionally <code>null</code>). For more
@@ -631,13 +631,13 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 */
 	@Override
 	public List<DDMTemplate> search(
-			long companyId, long[] groupIds, long[] classNameIds, long classPK,
-			String keywords, String type, String mode, int start, int end,
-			OrderByComparator orderByComparator)
+			long companyId, long[] groupIds, long[] classNameIds,
+			long[] classPKs, String keywords, String type, String mode,
+			int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
 
 		return ddmTemplateFinder.filterFindByKeywords(
-			companyId, groupIds, classNameIds, classPK, keywords, type, mode,
+			companyId, groupIds, classNameIds, classPKs, keywords, type, mode,
 			start, end, orderByComparator);
 	}
 
@@ -660,7 +660,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 * @param  groupIds the primary keys of the groups
 	 * @param  classNameIds the primary keys of the entity's instances the
 	 *         templates are related to
-	 * @param  classPK the primary key of the template's related entity
+	 * @param  classPKs the primary keys of the template's related entities
 	 * @param  name the name keywords (optionally <code>null</code>)
 	 * @param  description the description keywords (optionally
 	 *         <code>null</code>)
@@ -685,15 +685,15 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 */
 	@Override
 	public List<DDMTemplate> search(
-			long companyId, long[] groupIds, long[] classNameIds, long classPK,
-			String name, String description, String type, String mode,
-			String language, boolean andOperator, int start, int end,
-			OrderByComparator orderByComparator)
+			long companyId, long[] groupIds, long[] classNameIds,
+			long[] classPKs, String name, String description, String type,
+			String mode, String language, boolean andOperator, int start,
+			int end, OrderByComparator orderByComparator)
 		throws SystemException {
 
 		return ddmTemplateFinder.filterFindByC_G_C_C_N_D_T_M_L(
-			companyId, groupIds, classNameIds, classPK, name, description, type,
-			mode, language, andOperator, start, end, orderByComparator);
+			companyId, groupIds, classNameIds, classPKs, name, description,
+			type, mode, language, andOperator, start, end, orderByComparator);
 	}
 
 	/**
@@ -774,7 +774,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 * @param  groupIds the primary keys of the groups
 	 * @param  classNameIds the primary keys of the entity's instances the
 	 *         templates are related to
-	 * @param  classPK the primary key of the template's related entity
+	 * @param  classPKs the primary keys of the template's related entities
 	 * @param  keywords the keywords (space separated), which may occur in the
 	 *         template's name or description (optionally <code>null</code>)
 	 * @param  type the template's type (optionally <code>null</code>). For more
@@ -788,12 +788,12 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 */
 	@Override
 	public int searchCount(
-			long companyId, long[] groupIds, long[] classNameIds, long classPK,
-			String keywords, String type, String mode)
+			long companyId, long[] groupIds, long[] classNameIds,
+			long[] classPKs, String keywords, String type, String mode)
 		throws SystemException {
 
 		return ddmTemplateFinder.filterCountByKeywords(
-			companyId, groupIds, classNameIds, classPK, keywords, type, mode);
+			companyId, groupIds, classNameIds, classPKs, keywords, type, mode);
 	}
 
 	/**
@@ -804,7 +804,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 * @param  groupIds the primary keys of the groups
 	 * @param  classNameIds the primary keys of the entity's instances the
 	 *         templates are related to
-	 * @param  classPK the primary key of the template's related entity
+	 * @param  classPKs the primary keys of the template's related entities
 	 * @param  name the name keywords (optionally <code>null</code>)
 	 * @param  description the description keywords (optionally
 	 *         <code>null</code>)
@@ -824,14 +824,14 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 */
 	@Override
 	public int searchCount(
-			long companyId, long[] groupIds, long[] classNameIds, long classPK,
-			String name, String description, String type, String mode,
-			String language, boolean andOperator)
+			long companyId, long[] groupIds, long[] classNameIds,
+			long[] classPKs, String name, String description, String type,
+			String mode, String language, boolean andOperator)
 		throws SystemException {
 
 		return ddmTemplateFinder.filterCountByC_G_C_C_N_D_T_M_L(
-			companyId, groupIds, classNameIds, classPK, name, description, type,
-			mode, language, andOperator);
+			companyId, groupIds, classNameIds, classPKs, name, description,
+			type, mode, language, andOperator);
 	}
 
 	/**

@@ -210,6 +210,7 @@ create index IX_F0C3449 on DDMTemplate (groupId, classNameId, classPK, type_, mo
 create unique index IX_E6DFAB84 on DDMTemplate (groupId, classNameId, templateKey);
 create index IX_B1C33EA6 on DDMTemplate (groupId, classPK);
 create index IX_33BEF579 on DDMTemplate (language);
+create index IX_127A35B0 on DDMTemplate (smallImageId);
 create index IX_CAE41A28 on DDMTemplate (templateKey);
 create index IX_C4F283C8 on DDMTemplate (type_);
 create index IX_F2A243A7 on DDMTemplate (uuid_);
@@ -410,16 +411,6 @@ create index IX_EFD9CAC on JournalFolder (groupId, parentFolderId, status);
 create index IX_63BDFA69 on JournalFolder (uuid_);
 create index IX_54F89E1F on JournalFolder (uuid_, companyId);
 create unique index IX_E002061 on JournalFolder (uuid_, groupId);
-
-create index IX_77923653 on JournalTemplate (groupId);
-create index IX_1701CB2B on JournalTemplate (groupId, structureId);
-create unique index IX_E802AA3C on JournalTemplate (groupId, templateId);
-create index IX_25FFB6FA on JournalTemplate (smallImageId);
-create index IX_45F5A7C7 on JournalTemplate (structureId);
-create index IX_1B12CA20 on JournalTemplate (templateId);
-create index IX_2857419D on JournalTemplate (uuid_);
-create index IX_BBB28E6B on JournalTemplate (uuid_, companyId);
-create unique index IX_62D1B3AD on JournalTemplate (uuid_, groupId);
 
 create index IX_C7FBC998 on Layout (companyId);
 create index IX_C099D61A on Layout (groupId);

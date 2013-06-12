@@ -1,0 +1,29 @@
+<definition>
+	<var name="pageName" value="Asset Publisher Page" />
+	<var name="portletName" value="Asset Publisher" />
+	<var name="siteName" value="Site Name" />
+
+	<set-up>
+		<execute macro="User#pgFirstLogin" />
+	</set-up>
+
+	<command name="AddPortletAssetPublisherSite">
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="SitePage#addPublicCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="sitePageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#pgAddSitePublic">
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
+		</execute>
+	</command>
+
+	<tear-down>
+		<execute macro="Site#tearDownCP" />
+	</tear-down>
+</definition>

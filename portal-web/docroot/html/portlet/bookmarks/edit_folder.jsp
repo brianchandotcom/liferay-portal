@@ -95,6 +95,37 @@ else {
 
 				<aui:button name="selectFolderButton" value="select" />
 
+				<aui:script use="aui-base">
+					A.one('#<portlet:namespace />selectFolderButton').on(
+						'click',
+						function(event) {
+							Liferay.Util.selectEntity(
+								{
+									dialog: {
+										constrain: true,
+										modal: true,
+										zIndex: Liferay.zIndex.WINDOW + 2,
+										width: 680
+									},
+									id: '<portlet:namespace />selectFolder',
+									title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", "folder") %>',
+									uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/bookmarks/select_folder" /></liferay-portlet:renderURL>'
+								},
+								function(event){
+									var folderData = {
+										idString: 'parentFolderId',
+										idValue: event.folderid,
+										nameString: 'parentFolderName',
+										nameValue: event.name
+									};
+
+									Liferay.Util.selectFolder(folderData, '<liferay-portlet:renderURL portletName="<%= portletResource %>"><portlet:param name="struts_action" value="/bookmarks/view" /></liferay-portlet:renderURL>', '<portlet:namespace />');
+								}
+							);
+						}
+					);
+				</aui:script>
+
 				<%
 				String taglibRemoveFolder = "Liferay.Util.removeFolderSelection('parentFolderId', 'parentFolderName', '" + renderResponse.getNamespace() + "');";
 				%>
@@ -143,35 +174,4 @@ else {
 	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>">
 		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />name);
 	</c:if>
-</aui:script>
-
-<aui:script use="aui-base">
-	A.one('#<portlet:namespace />selectFolderButton').on(
-		'click',
-		function(event) {
-			Liferay.Util.selectEntity(
-				{
-					dialog: {
-						constrain: true,
-						modal: true,
-						zIndex: Liferay.zIndex.WINDOW + 2,
-						width: 680
-					},
-					id: '<portlet:namespace />selectFolder',
-					title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", "folder") %>',
-					uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/bookmarks/select_folder" /></liferay-portlet:renderURL>'
-				},
-				function(event){
-					var folderData = {
-						idString: 'parentFolderId',
-						idValue: event.folderid,
-						nameString: 'parentFolderName',
-						nameValue: event.name
-					};
-
-					Liferay.Util.selectFolder(folderData, '<liferay-portlet:renderURL portletName="<%= portletResource %>"><portlet:param name="struts_action" value="/bookmarks/view" /></liferay-portlet:renderURL>', '<portlet:namespace />');
-				}
-			);
-		}
-	);
 </aui:script>

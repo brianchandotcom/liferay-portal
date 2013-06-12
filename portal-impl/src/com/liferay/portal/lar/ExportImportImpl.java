@@ -279,19 +279,20 @@ public class ExportImportImpl implements ExportImport {
 						}
 					}
 					else if (elementName.equals("staged-model")) {
-						String className = element.attributeValue("class-name");
+						String manifestSummaryKey = element.attributeValue(
+							"key");
 
 						long modelAdditionCount = GetterUtil.getLong(
 							element.attributeValue("addition-count"));
 
 						manifestSummary.addModelAdditionCount(
-							className, modelAdditionCount);
+							manifestSummaryKey, modelAdditionCount);
 
 						long modelDeletionCount = GetterUtil.getLong(
 							element.attributeValue("deletion-count"));
 
 						manifestSummary.addModelDeletionCount(
-							className, modelDeletionCount);
+							manifestSummaryKey, modelDeletionCount);
 					}
 				}
 
@@ -923,13 +924,15 @@ public class ExportImportImpl implements ExportImport {
 
 		Element summaryElement = rootElement.addElement("summary");
 
-		for (String modelClassName : manifestSummary.getModelNames()) {
+		for (String manifestSummaryKey :
+				manifestSummary.getManifestSummaryKeys()) {
+
 			Element element = summaryElement.addElement("staged-model");
 
-			element.addAttribute("class-name", modelClassName);
+			element.addAttribute("key", manifestSummaryKey);
 
 			long modelAdditionCount = manifestSummary.getModelAdditionCount(
-				modelClassName);
+				manifestSummaryKey);
 
 			if (modelAdditionCount > 0) {
 				element.addAttribute(
@@ -937,7 +940,7 @@ public class ExportImportImpl implements ExportImport {
 			}
 
 			long modelDeletionCount = manifestSummary.getModelDeletionCount(
-				modelClassName);
+				manifestSummaryKey);
 
 			if (modelDeletionCount > 0) {
 				element.addAttribute(

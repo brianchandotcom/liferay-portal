@@ -37,6 +37,7 @@ import org.junit.Before;
 /**
  * @author Marcellus Tavares
  */
+@SuppressWarnings("deprecation")
 public class BaseJournalServiceTestCase {
 
 	@Before

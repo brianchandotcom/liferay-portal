@@ -21,6 +21,7 @@ import com.liferay.portal.service.ServiceWrapper;
  *
  * @author Brian Wing Shun Chan
  * @see JournalStructureLocalService
+ * @deprecated As of 6.2.0, see LPS-35112
  * @generated
  */
 public class JournalStructureLocalServiceWrapper

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @see JournalStructureLocalService
  * @see com.liferay.portlet.journal.service.base.JournalStructureLocalServiceBaseImpl
  * @see com.liferay.portlet.journal.service.impl.JournalStructureLocalServiceImpl
+ * @deprecated As of 6.2.0, see LPS-35112
  * @generated
  */
 public class JournalStructureLocalServiceUtil {

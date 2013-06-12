@@ -52,6 +52,7 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  * @author Marcellus Tavares
+ * @deprecated As of 6.2.0, see LPS-35112
  */
 public class JournalTemplateLocalServiceImpl
 	extends JournalTemplateLocalServiceBaseImpl {

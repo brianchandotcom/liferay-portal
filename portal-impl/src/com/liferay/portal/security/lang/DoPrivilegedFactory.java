@@ -25,13 +25,21 @@ import com.liferay.portal.util.ClassLoaderUtil;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.beans.factory.config.InstantiationAwareBeanPostProcessorAdapter;
 
 /**
  * @author Raymond Augé
  */
-public class DoPrivilegedFactory implements BeanPostProcessor {
+public class DoPrivilegedFactory
+	extends InstantiationAwareBeanPostProcessorAdapter {
+
+	public static boolean isEarlyBeanReference(String beanName) {
+		return _earlyBeanReferenceNames.contains(beanName);
+	}
 
 	public static <T> T wrap(T bean) {
 		Class<?> clazz = bean.getClass();
@@ -64,6 +72,17 @@ public class DoPrivilegedFactory implements BeanPostProcessor {
 	}
 
 	@Override
+	public Object getEarlyBeanReference(Object bean, String beanName)
+		throws BeansException {
+
+		if (_shouldWrap(bean, beanName)) {
+			_earlyBeanReferenceNames.add(beanName);
+		}
+
+		return bean;
+	}
+
+	@Override
 	public Object postProcessAfterInitialization(Object bean, String beanName)
 		throws BeansException {
 
@@ -71,13 +90,23 @@ public class DoPrivilegedFactory implements BeanPostProcessor {
 			return bean;
 		}
 
-		Class<?> clazz = bean.getClass();
+		if (!_shouldWrap(bean, beanName)) {
+			return bean;
+		}
 
-		if (!_isDoPrivileged(clazz) && !_isFinderOrPersistence(beanName)) {
+		if (isEarlyBeanReference(beanName)) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Postpone wrapping as bean " + beanName +
+						" is just an early reference now");
+			}
+
 			return bean;
 		}
 
 		if (_log.isDebugEnabled()) {
+			Class<?> clazz = bean.getClass();
+
 			_log.debug(
 				"Wrapping calls to bean " + beanName + " of type " +
 					clazz + " with access controller checking");
@@ -119,11 +148,23 @@ public class DoPrivilegedFactory implements BeanPostProcessor {
 		return false;
 	}
 
+	private boolean _shouldWrap(Object bean, String beanName) {
+		Class<?> clazz = bean.getClass();
+
+		if (_isDoPrivileged(clazz) || _isFinderOrPersistence(beanName)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private static final String _BEAN_NAME_SUFFIX_FINDER = "Finder";
 
 	private static final String _BEAN_NAME_SUFFIX_PERSISTENCE = "Persistence";
 
 	private static Log _log = LogFactoryUtil.getLog(DoPrivilegedFactory.class);
+
+	private static Set<String> _earlyBeanReferenceNames = new HashSet<String>();
 
 	private static class BeanPrivilegedAction <T>
 		implements PrivilegedAction<T> {

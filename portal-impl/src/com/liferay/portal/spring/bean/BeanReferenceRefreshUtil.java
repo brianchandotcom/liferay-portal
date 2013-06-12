@@ -16,6 +16,7 @@ package com.liferay.portal.spring.bean;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.security.lang.DoPrivilegedFactory;
 
 import java.lang.reflect.Field;
 
@@ -79,6 +80,23 @@ public class BeanReferenceRefreshUtil {
 
 		Object newReferencedBean = beanFactory.getBean(referencedBeanName);
 
+		Object wrappedNewReferencedBean = _paclWrappedBeanRegistry.get(
+			newReferencedBean);
+
+		if ((wrappedNewReferencedBean == null) &&
+			DoPrivilegedFactory.isEarlyBeanReference(referencedBeanName)) {
+
+			wrappedNewReferencedBean = DoPrivilegedFactory.wrap(
+				newReferencedBean);
+
+			_paclWrappedBeanRegistry.put(
+				newReferencedBean, wrappedNewReferencedBean);
+		}
+
+		if (wrappedNewReferencedBean != null) {
+			newReferencedBean = wrappedNewReferencedBean;
+		}
+
 		if (oldReferenceBean == newReferencedBean) {
 			return;
 		}
@@ -95,6 +113,9 @@ public class BeanReferenceRefreshUtil {
 
 	private static Log _log = LogFactoryUtil.getLog(
 		BeanReferenceRefreshUtil.class);
+
+	private static Map<Object, Object> _paclWrappedBeanRegistry =
+		new IdentityHashMap<Object, Object>();
 
 	private static Map<Object, List<RefreshPoint>> _registeredRefreshPoints =
 		new IdentityHashMap<Object, List<RefreshPoint>>();

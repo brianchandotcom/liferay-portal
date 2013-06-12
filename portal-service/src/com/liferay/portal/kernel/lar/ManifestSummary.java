@@ -237,7 +237,7 @@ public class ManifestSummary implements Serializable {
 		LongWrapper modelDeletionCounter = _modelDeletionCounters.get(
 			modelName);
 
-		modelDeletionCounter.decrement();
+		modelDeletionCounter.increment();
 	}
 
 	public void setExportDate(Date exportDate) {

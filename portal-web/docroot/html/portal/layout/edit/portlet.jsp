@@ -23,7 +23,7 @@ String portletId = portletDisplay.getId();
 <div class='<%= portletId.equals(PortletKeys.DOCKBAR) ? StringPool.BLANK : "hide" %>' id="<portlet:namespace />copyPortletsFromPage">
 	<p>
 		<c:if test="<%= selLayout != null %>">
-			<liferay-ui:message arguments="<%= HtmlUtil.escape(selLayout.getName(locale)) %>" key="the-portlets-in-page-x-will-be-replaced-with-the-portlets-in-the-page-you-select-below" />
+			<liferay-ui:message arguments="<%= HtmlUtil.escape(selLayout.getName(locale)) %>" key="the-applications-in-page-x-will-be-replaced-with-the-ones-in-the-page-you-select-below" />
 		</c:if>
 	</p>
 

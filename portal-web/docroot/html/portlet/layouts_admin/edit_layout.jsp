@@ -120,7 +120,7 @@ String[][] categorySections = {mainSections};
 			<aui:nav-item data-value="delete" iconClass="icon-remove" label="delete" />
 		</c:if>
 		<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.UPDATE) %>">
-			<aui:nav-item data-value="copy-portlets-from-page" iconClass="icon-list-alt" label="copy-portlets-from-page" />
+			<aui:nav-item data-value="copy-applications" iconClass="icon-list-alt" label="copy-applications" />
 		</c:if>
 	</aui:nav>
 </aui:nav-bar>
@@ -280,7 +280,7 @@ String[][] categorySections = {mainSections};
 						else if (dataValue === 'delete') {
 							<portlet:namespace />saveLayout('<%= Constants.DELETE %>');
 						}
-						else if (dataValue == 'copy-portlets-from-page') {
+						else if (dataValue == 'copy-applications') {
 							content = A.one('#<portlet:namespace />copyPortletsFromPage');
 
 							popUp = Liferay.Util.Window.getWindow(
@@ -290,7 +290,7 @@ String[][] categorySections = {mainSections};
 										destroyOnHide: true,
 										zIndex: Liferay.zIndex.WINDOW + 2
 									},
-									title: '<%= UnicodeLanguageUtil.get(pageContext, "copy-portlets-from-page") %>'
+									title: '<%= UnicodeLanguageUtil.get(pageContext, "copy-applications") %>'
 								}
 							);
 

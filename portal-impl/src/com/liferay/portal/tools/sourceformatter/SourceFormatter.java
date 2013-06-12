@@ -1932,7 +1932,7 @@ public class SourceFormatter {
 
 			// LPS-36174
 
-			if (_checkUnprocessedExceptions) {
+			if (_checkUnprocessedExceptions && !fileName.contains("/test/")) {
 				_checkUnprocessedExceptions(
 					newContent, file, packagePath, fileName);
 			}

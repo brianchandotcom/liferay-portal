@@ -13,9 +13,9 @@
 	.device-preview-content {
 		.lfr-device-item {
 			cursor: pointer;
+			height: 60px;
 			padding: 10px;
 			position: relative;
-			height: 60px;
 
 			.desktop {
 				background: url(@theme_image_path@/device_preview/desktop_off.png) no-repeat;

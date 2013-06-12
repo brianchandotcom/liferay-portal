@@ -47,7 +47,6 @@ AUI.add(
 						instance._addPanelContainer = instance.byId('addPanelContainer');
 						instance._closePanel = instance._addPanelContainer.one('#closePanel');
 						instance._entriesContainer = instance.byId('entriesContainer');
-						instance._numItems = instance.byId('numItems');
 
 						instance._bindUI();
 					},
@@ -123,20 +122,9 @@ AUI.add(
 					_bindUI: function() {
 						var instance = this;
 
-						instance._numItems.on('change', instance._onChangeNumItems, instance);
-
 						instance._addPanelContainer.delegate(STR_CLICK, instance._addApplication, SELECTOR_ADD_CONTENT_ITEM, instance);
 
-						Liferay.on(
-							'AddContent:addPortlet',
-							function(event) {
-								instance._addPortlet(event.node, event.options);
-							}
-						);
-
 						Liferay.on('closePortlet', instance._onPortletClose, instance);
-
-						Liferay.once('dockbarAddContentDD:init', instance._onDockbarAddContentDDInit, instance);
 
 						Liferay.on('showTab', instance._onShowTab, instance);
 					},
@@ -206,12 +194,6 @@ AUI.add(
 						}
 
 						return portletMetaData;
-					},
-
-					_onDockbarAddContentDDInit: function(event) {
-						var instance = this;
-
-						instance._portletItem.delegate.dd.addInvalid(SELECTOR_ADD_CONTENT_ITEM);
 					},
 
 					_onShowTab: function(event) {

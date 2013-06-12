@@ -51,8 +51,6 @@ if (layout.isTypeControlPanel()) {
 		}
 	}
 
-	supportsSetup = false;
-
 	controlPanel = true;
 }
 %>

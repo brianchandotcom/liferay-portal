@@ -280,9 +280,18 @@ public class ExportImportImpl implements ExportImport {
 					}
 					else if (elementName.equals("staged-model")) {
 						String className = element.attributeValue("class-name");
-						long count = GetterUtil.getLong(element.getText());
 
-						manifestSummary.addModelAdditionCount(className, count);
+						long modelAdditionCount = GetterUtil.getLong(
+							element.attributeValue("addition-count"));
+
+						manifestSummary.addModelAdditionCount(
+							className, modelAdditionCount);
+
+						long modelDeletionCount = GetterUtil.getLong(
+							element.attributeValue("deletion-count"));
+
+						manifestSummary.addModelDeletionCount(
+							className, modelDeletionCount);
 					}
 				}
 

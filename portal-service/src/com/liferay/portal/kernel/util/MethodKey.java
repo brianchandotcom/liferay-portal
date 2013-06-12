@@ -201,7 +201,6 @@ public class MethodKey implements Externalizable {
 	private static final long serialVersionUID = 1L;
 
 	private Class<?> _declaringClass;
-
 	private String _methodName;
 	private Class<?>[] _parameterTypes;
 

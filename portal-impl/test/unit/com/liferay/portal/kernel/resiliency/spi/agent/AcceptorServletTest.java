@@ -164,7 +164,6 @@ public class AcceptorServletTest {
 	}
 
 	private MockHttpSession _mockHttpSession = new MockHttpSession();
-
 	private RecordSPIAgent _recordSPIAgent = new RecordSPIAgent();
 
 	private class RecordSPIAgent extends MockSPIAgent {

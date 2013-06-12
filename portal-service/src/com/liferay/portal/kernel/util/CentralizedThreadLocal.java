@@ -177,10 +177,13 @@ public class CentralizedThreadLocal<T> extends ThreadLocal<T> {
 
 	private static final AtomicInteger _longLivedNextHasCode =
 		new AtomicInteger();
+
 	private static final ThreadLocal<ThreadLocalMap> _longLivedThreadLocals =
 		new ThreadLocalMapThreadLocal();
+
 	private static final AtomicInteger _shortLivedNextHasCode =
 		new AtomicInteger();
+
 	private static final ThreadLocal<ThreadLocalMap> _shortLivedThreadLocals =
 		new ThreadLocalMapThreadLocal();
 

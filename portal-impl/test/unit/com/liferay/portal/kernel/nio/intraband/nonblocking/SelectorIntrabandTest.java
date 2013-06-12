@@ -1326,9 +1326,7 @@ public class SelectorIntrabandTest {
 	private static final long _DEFAULT_TIMEOUT = Time.SECOND;
 
 	private byte[] _data = _DATA_STRING.getBytes(Charset.defaultCharset());
-
 	private SelectorIntraband _selectorIntraband;
-
 	private byte _type = 1;
 
 	private static class MockDuplexSelectableChannel

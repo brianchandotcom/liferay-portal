@@ -346,7 +346,6 @@ public class SPIClassPathContextListenerTest {
 	}
 
 	private String _CONTEXT_PATH = System.getProperty("java.io.tmpdir");
-
 	private String _EMBEDDED_LIB_DIR_NAME = "/embeddedLibDir";
 
 	private MockServletContext _mockServletContext = new MockServletContext() {

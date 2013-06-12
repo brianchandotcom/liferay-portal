@@ -533,6 +533,10 @@ public class ThemeDisplay
 		return _urlAddContent;
 	}
 
+	public PortletURL getURLAppManager() {
+		return _urlAppManager;
+	}
+
 	public String getURLControlPanel() {
 		return _urlControlPanel;
 	}
@@ -608,10 +612,6 @@ public class ThemeDisplay
 	 */
 	public PortletURL getURLSiteSettings() {
 		return _urlSiteSettings;
-	}
-
-	public PortletURL getURLAppManager() {
-		return _urlAppManager;
 	}
 
 	public User getUser() {
@@ -1364,6 +1364,10 @@ public class ThemeDisplay
 		_urlAddContent = urlAddContent;
 	}
 
+	public void setURLAppManager(PortletURL urlAppManager) {
+		_urlAppManager = urlAppManager;
+	}
+
 	public void setURLControlPanel(String urlControlPanel) {
 		_urlControlPanel = urlControlPanel;
 	}
@@ -1428,10 +1432,6 @@ public class ThemeDisplay
 
 	public void setURLSiteSettings(PortletURL urlSiteSettings) {
 		_urlSiteSettings = urlSiteSettings;
-	}
-
-	public void setURLAppManager(PortletURL urlAppManager) {
-		_urlAppManager = urlAppManager;
 	}
 
 	public void setUser(User user) throws PortalException, SystemException {
@@ -1566,6 +1566,7 @@ public class ThemeDisplay
 	private TimeZone _timeZone;
 	private List<Layout> _unfilteredLayouts;
 	private String _urlAddContent = StringPool.BLANK;
+	private transient PortletURL _urlAppManager = null;
 	private String _urlControlPanel = StringPool.BLANK;
 	private String _urlCurrent = StringPool.BLANK;
 	private String _urlHome = StringPool.BLANK;
@@ -1580,7 +1581,6 @@ public class ThemeDisplay
 	private String _urlSiteAdministration = StringPool.BLANK;
 	private transient PortletURL _urlSiteMapSettings = null;
 	private transient PortletURL _urlSiteSettings = null;
-	private transient PortletURL _urlAppManager = null;
 	private User _user;
 	private boolean _widget;
 

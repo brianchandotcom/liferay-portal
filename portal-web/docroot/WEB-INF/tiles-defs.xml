@@ -160,6 +160,14 @@
 		<put name="portlet_content" value="/portlet/announcements/view.jsp" />
 	</definition>
 
+	<!-- App Manager -->
+
+	<definition name="portlet.app_manager" extends="portlet" />
+
+	<definition name="portlet.app_manager.view" extends="portlet.app_manager">
+		<put name="portlet_content" value="/portlet/app_manager/view.jsp" />
+	</definition>
+
 	<!-- Asset Browser -->
 
 	<definition name="portlet.asset_browser" extends="portlet" />
@@ -1617,14 +1625,6 @@
 
 	<definition name="portlet.trash.view_content" extends="portlet.trash">
 		<put name="portlet_content" value="/portlet/trash/view_content.jsp" />
-	</definition>
-
-	<!-- App Manager -->
-
-	<definition name="portlet.app_manager" extends="portlet" />
-
-	<definition name="portlet.app_manager.view" extends="portlet.app_manager">
-		<put name="portlet_content" value="/portlet/app_manager/view.jsp" />
 	</definition>
 
 	<!-- User Groups Admin -->

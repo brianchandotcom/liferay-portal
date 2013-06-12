@@ -20,7 +20,7 @@
 long groupId = ParamUtil.getLong(request, "groupId");
 boolean validate = ParamUtil.getBoolean(request, "validate", true);
 
-String[] tempFileEntryNames = LayoutServiceUtil.getTempFileEntryNames(groupId, ExportImportUtil.TEMP_FOLDER_NAME);
+String[] tempFileEntryNames = LayoutServiceUtil.getTempFileEntryNames(groupId, ExportImport.TEMP_FOLDER_NAME);
 %>
 
 <div id="<portlet:namespace />exportImportOptions">

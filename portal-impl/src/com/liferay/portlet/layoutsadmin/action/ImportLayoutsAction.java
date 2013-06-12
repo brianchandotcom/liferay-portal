@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.lar.ExportImport;
+import com.liferay.portal.kernel.lar.ExportImportUtil;
 import com.liferay.portal.kernel.lar.MissingReference;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -59,7 +61,6 @@ import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.documentlibrary.action.EditFileEntryAction;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
-import com.liferay.portlet.layoutsadmin.util.ExportImportUtil;
 import com.liferay.portlet.sites.action.ActionUtil;
 
 import java.io.File;
@@ -215,7 +216,7 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 
 			LayoutServiceUtil.addTempFileEntry(
 				themeDisplay.getScopeGroupId(), sourceFileName,
-				ExportImportUtil.TEMP_FOLDER_NAME, inputStream, contentType);
+				ExportImport.TEMP_FOLDER_NAME, inputStream, contentType);
 		}
 		catch (Exception e) {
 			UploadException uploadException =
@@ -273,7 +274,7 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 
 			LayoutServiceUtil.deleteTempFileEntry(
 				themeDisplay.getScopeGroupId(), fileName,
-				ExportImportUtil.TEMP_FOLDER_NAME);
+				ExportImport.TEMP_FOLDER_NAME);
 
 			jsonObject.put("deleted", Boolean.TRUE);
 		}
@@ -292,11 +293,11 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 		throws PortalException, SystemException {
 
 		String[] tempFileEntryNames = LayoutServiceUtil.getTempFileEntryNames(
-			groupId, ExportImportUtil.TEMP_FOLDER_NAME);
+			groupId, ExportImport.TEMP_FOLDER_NAME);
 
 		for (String tempFileEntryName : tempFileEntryNames) {
 			LayoutServiceUtil.deleteTempFileEntry(
-				groupId, tempFileEntryName, ExportImportUtil.TEMP_FOLDER_NAME);
+				groupId, tempFileEntryName, ExportImport.TEMP_FOLDER_NAME);
 		}
 	}
 

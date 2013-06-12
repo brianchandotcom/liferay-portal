@@ -161,3 +161,7 @@
 .rule-group-instance-dragging:hover {
 	background-color: #F5F8FB;
 }
+
+.screen-physical-size-field, screen-resolution-field {
+	width: 50px;
+}

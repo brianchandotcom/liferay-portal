@@ -46,8 +46,10 @@ public abstract class AbstractDevice implements Device {
 		sb.append(getPointingMethod());
 		sb.append(", qwertyKeyboard=");
 		sb.append(hasQwertyKeyboard());
-		sb.append(", screenSize=");
-		sb.append(getScreenSize());
+		sb.append(", screenPhysicalSize=");
+		sb.append(getScreenPhysicalSize());
+		sb.append(", screenResolution=");
+		sb.append(getScreenResolution());
 		sb.append(", tablet=");
 		sb.append(isTablet());
 		sb.append("}");
@@ -55,4 +57,11 @@ public abstract class AbstractDevice implements Device {
 		return sb.toString();
 	}
 
+	/**
+	 * @deprecated As of 6.2.0 please use {@link #getScreenResolution()} instead
+	 */
+	@Deprecated
+	public Dimensions getScreenSize() {
+		return getScreenResolution();
+	}
 }

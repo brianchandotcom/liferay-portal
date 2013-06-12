@@ -70,6 +70,12 @@ if (ruleGroup != null) {
 
 	<aui:model-context bean="<%= rule %>" model="<%= MDRRule.class %>" />
 
+	<c:if test='<%= !PluginPackageUtil.isInstalled("wurfl-web") %>'>
+		<div class="alert alert-block">
+			<liferay-ui:message key="there-is-no-device-recognition-provider-installed" />
+		</div>
+	</c:if>
+
 	<aui:fieldset>
 		<aui:input name="name" />
 

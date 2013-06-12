@@ -74,7 +74,12 @@ public class UnknownDevice extends AbstractDevice {
 	}
 
 	@Override
-	public Dimensions getScreenSize() {
+	public Dimensions getScreenPhysicalSize() {
+		return Dimensions.UNKNOWN;
+	}
+
+	@Override
+	public Dimensions getScreenResolution() {
 		return Dimensions.UNKNOWN;
 	}
 

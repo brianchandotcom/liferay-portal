@@ -27,7 +27,6 @@ import net.sf.ehcache.CacheException;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
-import net.sf.ehcache.Statistics;
 import net.sf.ehcache.Status;
 import net.sf.ehcache.bootstrap.BootstrapCacheLoader;
 import net.sf.ehcache.config.CacheConfiguration;
@@ -37,9 +36,8 @@ import net.sf.ehcache.extension.CacheExtension;
 import net.sf.ehcache.loader.CacheLoader;
 import net.sf.ehcache.search.Attribute;
 import net.sf.ehcache.search.Query;
-import net.sf.ehcache.statistics.CacheUsageListener;
-import net.sf.ehcache.statistics.LiveCacheStatistics;
-import net.sf.ehcache.statistics.sampled.SampledCacheStatistics;
+import net.sf.ehcache.search.attribute.DynamicAttributesExtractor;
+import net.sf.ehcache.statistics.StatisticsGateway;
 import net.sf.ehcache.terracotta.TerracottaNotRunningException;
 import net.sf.ehcache.transaction.manager.TransactionManagerLookup;
 import net.sf.ehcache.writer.CacheWriter;
@@ -65,10 +63,8 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 	}
 
 	@Override
-	public void addPropertyChangeListener(
-		PropertyChangeListener propertyChangeListener) {
-
-		_ehcache.addPropertyChangeListener(propertyChangeListener);
+	public void addPropertyChangeListener(PropertyChangeListener listener) {
+		_ehcache.addPropertyChangeListener(listener);
 	}
 
 	public void addReference() {
@@ -95,8 +91,10 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 	}
 
 	@Override
-	public void clearStatistics() {
-		_ehcache.clearStatistics();
+	public long calculateOnDiskSize()
+		throws CacheException, IllegalStateException {
+
+		return _ehcache.calculateOnDiskSize();
 	}
 
 	@Override
@@ -153,21 +151,17 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 	}
 
 	@Override
-	@SuppressWarnings("rawtypes")
-	public Map getAllWithLoader(Collection keys, Object argument)
+	public Map<Object, Element> getAll(Collection<?> keys)
+		throws CacheException, IllegalStateException, NullPointerException {
+
+		return _ehcache.getAll(keys);
+	}
+
+	@Override
+	public Map getAllWithLoader(Collection keys, Object loaderArgument)
 		throws CacheException {
 
-		return _ehcache.getAllWithLoader(keys, argument);
-	}
-
-	@Override
-	public float getAverageGetTime() {
-		return _ehcache.getAverageGetTime();
-	}
-
-	@Override
-	public long getAverageSearchTime() {
-		return _ehcache.getAverageSearchTime();
+		return _ehcache.getAllWithLoader(keys, loaderArgument);
 	}
 
 	@Override
@@ -231,13 +225,6 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 	}
 
 	@Override
-	public LiveCacheStatistics getLiveCacheStatistics()
-		throws IllegalStateException {
-
-		return _ehcache.getLiveCacheStatistics();
-	}
-
-	@Override
 	public long getMemoryStoreSize() throws IllegalStateException {
 		return _ehcache.getMemoryStoreSize();
 	}
@@ -282,20 +269,10 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 	}
 
 	@Override
-	public SampledCacheStatistics getSampledCacheStatistics() {
-		return _ehcache.getSampledCacheStatistics();
-	}
-
-	@Override
 	public <T> Attribute<T> getSearchAttribute(String attributeName)
 		throws CacheException {
 
 		return _ehcache.getSearchAttribute(attributeName);
-	}
-
-	@Override
-	public long getSearchesPerSecond() {
-		return _ehcache.getSearchesPerSecond();
 	}
 
 	@Override
@@ -304,20 +281,8 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 	}
 
 	@Override
-	public int getSizeBasedOnAccuracy(int statisticsAccuracy)
-		throws CacheException, IllegalArgumentException, IllegalStateException {
-
-		return _ehcache.getSizeBasedOnAccuracy(statisticsAccuracy);
-	}
-
-	@Override
-	public Statistics getStatistics() throws IllegalStateException {
+	public StatisticsGateway getStatistics() throws IllegalStateException {
 		return _ehcache.getStatistics();
-	}
-
-	@Override
-	public int getStatisticsAccuracy() {
-		return _ehcache.getStatisticsAccuracy();
 	}
 
 	@Override
@@ -327,10 +292,10 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 
 	@Override
 	public Element getWithLoader(
-			Object key, CacheLoader cacheLoader, Object argument)
+			Object key, CacheLoader loader, Object loaderArgument)
 		throws CacheException {
 
-		return _ehcache.getWithLoader(key, cacheLoader, argument);
+		return _ehcache.getWithLoader(key, loader, loaderArgument);
 	}
 
 	public Ehcache getWrappedCache() {
@@ -345,6 +310,11 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 	@Override
 	public int hashCode() {
 		return _ehcache.hashCode();
+	}
+
+	@Override
+	public boolean hasAbortedSizeOf() {
+		return _ehcache.hasAbortedSizeOf();
 	}
 
 	@Override
@@ -363,7 +333,7 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 	 * @deprecated As of 6.1.0
 	 */
 	@Override
-	public boolean isClusterCoherent() {
+	public boolean isClusterCoherent() throws TerracottaNotRunningException {
 		return _ehcache.isClusterCoherent();
 	}
 
@@ -415,18 +385,15 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 	 * @deprecated As of 6.1.0
 	 */
 	@Override
-	public boolean isNodeCoherent() {
+	public boolean isNodeCoherent() throws TerracottaNotRunningException {
 		return _ehcache.isNodeCoherent();
 	}
 
 	@Override
-	public boolean isReadLockedByCurrentThread(Object key) {
-		return _ehcache.isReadLockedByCurrentThread(key);
-	}
+	public boolean isReadLockedByCurrentThread(Object key)
+		throws UnsupportedOperationException {
 
-	@Override
-	public boolean isSampledStatisticsEnabled() {
-		return _ehcache.isSampledStatisticsEnabled();
+		return _ehcache.isReadLockedByCurrentThread(key);
 	}
 
 	@Override
@@ -435,17 +402,14 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 	}
 
 	@Override
-	public boolean isStatisticsEnabled() {
-		return _ehcache.isStatisticsEnabled();
-	}
-
-	@Override
 	public boolean isValueInCache(Object value) {
 		return _ehcache.isValueInCache(value);
 	}
 
 	@Override
-	public boolean isWriteLockedByCurrentThread(Object key) {
+	public boolean isWriteLockedByCurrentThread(Object key)
+		throws UnsupportedOperationException {
+
 		return _ehcache.isWriteLockedByCurrentThread(key);
 	}
 
@@ -477,8 +441,23 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 	}
 
 	@Override
+	public void putAll(Collection<Element> elements)
+		throws CacheException, IllegalArgumentException, IllegalStateException {
+
+		_ehcache.putAll(elements);
+	}
+
+	@Override
 	public Element putIfAbsent(Element element) throws NullPointerException {
 		return _ehcache.putIfAbsent(element);
+	}
+
+	@Override
+	public Element putIfAbsent(
+			Element element, boolean doNotNotifyCacheReplicators)
+		throws NullPointerException {
+
+		return _ehcache.putIfAbsent(element, doNotNotifyCacheReplicators);
 	}
 
 	@Override
@@ -497,25 +476,27 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 
 	@Override
 	public void registerCacheExtension(CacheExtension cacheExtension) {
+
 		_ehcache.registerCacheExtension(cacheExtension);
 	}
 
 	@Override
 	public void registerCacheLoader(CacheLoader cacheLoader) {
+
 		_ehcache.registerCacheLoader(cacheLoader);
 	}
 
 	@Override
-	public void registerCacheUsageListener(
-			CacheUsageListener cacheUsageListener)
-		throws IllegalStateException {
+	public void registerCacheWriter(CacheWriter cacheWriter) {
 
-		_ehcache.registerCacheUsageListener(cacheUsageListener);
+		_ehcache.registerCacheWriter(cacheWriter);
 	}
 
 	@Override
-	public void registerCacheWriter(CacheWriter cacheWriter) {
-		_ehcache.registerCacheWriter(cacheWriter);
+	public void registerDynamicAttributesExtractor(
+		DynamicAttributesExtractor extractor) {
+
+		_ehcache.registerDynamicAttributesExtractor(extractor);
 	}
 
 	@Override
@@ -573,26 +554,28 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 	}
 
 	@Override
-	public void removeCacheUsageListener(CacheUsageListener cacheUsageListener)
-		throws IllegalStateException {
+	public void removeAll(Collection<?> keys)
+		throws IllegalStateException, NullPointerException {
 
-		_ehcache.removeCacheUsageListener(cacheUsageListener);
+		_ehcache.removeAll(keys);
+	}
+
+	@Override
+	public void removeAll(
+			Collection<?> keys, boolean doNotNotifyCacheReplicators)
+		throws IllegalStateException, NullPointerException {
+
+		_ehcache.removeAll(keys, doNotNotifyCacheReplicators);
 	}
 
 	@Override
 	public boolean removeElement(Element element) throws NullPointerException {
-		if (!isStatusAlive()) {
-			return true;
-		}
-
 		return _ehcache.removeElement(element);
 	}
 
 	@Override
-	public void removePropertyChangeListener(
-		PropertyChangeListener propertyChangeListener) {
-
-		_ehcache.removePropertyChangeListener(propertyChangeListener);
+	public void removePropertyChangeListener(PropertyChangeListener listener) {
+		_ehcache.removePropertyChangeListener(listener);
 	}
 
 	@Override
@@ -634,10 +617,10 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 	}
 
 	@Override
-	public boolean replace(Element oldElement, Element newElement)
+	public boolean replace(Element old, Element element)
 		throws IllegalArgumentException, NullPointerException {
 
-		return _ehcache.replace(oldElement, newElement);
+		return _ehcache.replace(old, element);
 	}
 
 	@Override
@@ -666,11 +649,6 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 	}
 
 	@Override
-	public void setDiskStorePath(String diskStorePath) throws CacheException {
-		_ehcache.setDiskStorePath(diskStorePath);
-	}
-
-	@Override
 	public void setName(String name) {
 		_ehcache.setName(name);
 	}
@@ -686,25 +664,10 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 	 * @deprecated As of 6.1.0
 	 */
 	@Override
-	public void setNodeCoherent(boolean nodeCoherent)
-		throws UnsupportedOperationException {
+	public void setNodeCoherent(boolean coherent)
+		throws TerracottaNotRunningException, UnsupportedOperationException {
 
-		_ehcache.setNodeCoherent(nodeCoherent);
-	}
-
-	@Override
-	public void setSampledStatisticsEnabled(boolean sampleStatisticsEnabled) {
-		_ehcache.setSampledStatisticsEnabled(sampleStatisticsEnabled);
-	}
-
-	@Override
-	public void setStatisticsAccuracy(int statisticsAccuracy) {
-		_ehcache.setStatisticsAccuracy(statisticsAccuracy);
-	}
-
-	@Override
-	public void setStatisticsEnabled(boolean statisticsEnabled) {
-		_ehcache.setStatisticsEnabled(statisticsEnabled);
+		_ehcache.setNodeCoherent(coherent);
 	}
 
 	@Override
@@ -716,6 +679,11 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 
 	public void setWrappedCache(Ehcache ehcache) {
 		_ehcache = ehcache;
+	}
+
+	@Override
+	public String toString() {
+		return _ehcache.toString();
 	}
 
 	@Override
@@ -759,7 +727,7 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 	 */
 	@Override
 	public void waitUntilClusterCoherent()
-		throws UnsupportedOperationException {
+		throws TerracottaNotRunningException, UnsupportedOperationException {
 
 		_ehcache.waitUntilClusterCoherent();
 	}

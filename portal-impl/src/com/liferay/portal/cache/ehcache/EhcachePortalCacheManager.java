@@ -243,9 +243,6 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 				return null;
 			}
 
-			ehcache.setStatisticsEnabled(
-				PropsValues.EHCACHE_STATISTICS_ENABLED);
-
 			ehcachePortalCache = _ehcachePortalCaches.get(name);
 
 			if (ehcachePortalCache == null) {

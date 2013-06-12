@@ -66,6 +66,10 @@ portletURL.setParameter("target", target);
 
 			List<Long> excludedGroupIds = new ArrayList<Long>();
 
+			Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(company.getCompanyId());
+
+			excludedGroupIds.add(companyGroup.getGroupId());
+
 			if (groupId > 0) {
 				Group group = GroupLocalServiceUtil.getGroup(groupId);
 
@@ -77,11 +81,8 @@ portletURL.setParameter("target", target);
 				}
 			}
 
-			Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(company.getCompanyId());
-
-			excludedGroupIds.add(companyGroup.getGroupId());
-
 			groupParams.put("excludedGroupIds", excludedGroupIds);
+
 			groupParams.put("site", Boolean.TRUE);
 
 			if (filterManageableGroups) {

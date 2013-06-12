@@ -114,10 +114,11 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	public static long GROUPID_COLUMN_BITMASK = 8L;
 	public static long LANGUAGE_COLUMN_BITMASK = 16L;
 	public static long MODE_COLUMN_BITMASK = 32L;
-	public static long TEMPLATEKEY_COLUMN_BITMASK = 64L;
-	public static long TYPE_COLUMN_BITMASK = 128L;
-	public static long UUID_COLUMN_BITMASK = 256L;
-	public static long TEMPLATEID_COLUMN_BITMASK = 512L;
+	public static long SMALLIMAGEID_COLUMN_BITMASK = 64L;
+	public static long TEMPLATEKEY_COLUMN_BITMASK = 128L;
+	public static long TYPE_COLUMN_BITMASK = 256L;
+	public static long UUID_COLUMN_BITMASK = 512L;
+	public static long TEMPLATEID_COLUMN_BITMASK = 1024L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -939,7 +940,19 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 
 	@Override
 	public void setSmallImageId(long smallImageId) {
+		_columnBitmask |= SMALLIMAGEID_COLUMN_BITMASK;
+
+		if (!_setOriginalSmallImageId) {
+			_setOriginalSmallImageId = true;
+
+			_originalSmallImageId = _smallImageId;
+		}
+
 		_smallImageId = smallImageId;
+	}
+
+	public long getOriginalSmallImageId() {
+		return _originalSmallImageId;
 	}
 
 	@Override
@@ -1097,6 +1110,10 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		ddmTemplateModelImpl._originalMode = ddmTemplateModelImpl._mode;
 
 		ddmTemplateModelImpl._originalLanguage = ddmTemplateModelImpl._language;
+
+		ddmTemplateModelImpl._originalSmallImageId = ddmTemplateModelImpl._smallImageId;
+
+		ddmTemplateModelImpl._setOriginalSmallImageId = false;
 
 		ddmTemplateModelImpl._columnBitmask = 0;
 	}
@@ -1413,6 +1430,8 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	private boolean _cacheable;
 	private boolean _smallImage;
 	private long _smallImageId;
+	private long _originalSmallImageId;
+	private boolean _setOriginalSmallImageId;
 	private String _smallImageURL;
 	private long _columnBitmask;
 	private DDMTemplate _escapedModel;

@@ -98,6 +98,10 @@ public class JSONWebServiceServlet extends JSONServlet {
 			String contextPath =
 				PortalContextLoaderListener.getPortalServletContextPath();
 
+			if (contextPath.isEmpty()) {
+				contextPath = StringPool.SLASH;
+			}
+
 			if (servletContext.getContext(contextPath) != null) {
 				if (!contextPath.equals(StringPool.SLASH) &&
 					apiPath.startsWith(contextPath)) {

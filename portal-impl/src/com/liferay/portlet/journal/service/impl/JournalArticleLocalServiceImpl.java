@@ -3065,8 +3065,8 @@ public class JournalArticleLocalServiceImpl
 	 *         found
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
 	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public JournalArticle moveArticle(
 			long groupId, String articleId, long newFolderId)
 		throws PortalException, SystemException {

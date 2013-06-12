@@ -78,6 +78,7 @@ public class LogFactoryUtil {
 	}
 
 	private static volatile LogFactory _logFactory = new Jdk14LogFactoryImpl();
+
 	private static final ConcurrentMap<String, LogWrapper> _logWrappers =
 		new ConcurrentHashMap<String, LogWrapper>();
 

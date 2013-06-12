@@ -70,7 +70,6 @@ public class PortletClassLoaderUtil {
 
 	private static Map<Long, ClassLoader> _classLoaders =
 		new HashMap<Long, ClassLoader>();
-
 	private static String _servletContextName;
 
 }

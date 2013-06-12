@@ -382,6 +382,7 @@ public class PortalCacheDatagramReceiveHandlerTest {
 		"testKey1", "testKey2", "testKey3");
 	private List<String> _testValues = Arrays.asList(
 		"testValue1", "testValue2", "testValue3");
+
 	private class MockPortalCache implements PortalCache<String, String> {
 
 		public MockPortalCache(String name) {

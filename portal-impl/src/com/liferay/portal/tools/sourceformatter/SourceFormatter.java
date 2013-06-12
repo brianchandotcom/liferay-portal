@@ -119,13 +119,16 @@ public class SourceFormatter {
 
 	public static final int _TYPE_METHOD_PUBLIC_STATIC = 3;
 
-	public static final int[] _TYPE_VARIABLE_NOT_FINAL = {
+	public static final int[] _TYPE_VARIABLE = {
 		SourceFormatter._TYPE_VARIABLE_PRIVATE,
 		SourceFormatter._TYPE_VARIABLE_PRIVATE_STATIC,
+		SourceFormatter._TYPE_VARIABLE_PRIVATE_STATIC_FINAL,
 		SourceFormatter._TYPE_VARIABLE_PROTECTED,
 		SourceFormatter._TYPE_VARIABLE_PROTECTED_STATIC,
+		SourceFormatter._TYPE_VARIABLE_PROTECTED_STATIC_FINAL,
 		SourceFormatter._TYPE_VARIABLE_PUBLIC,
-		SourceFormatter._TYPE_VARIABLE_PUBLIC_STATIC
+		SourceFormatter._TYPE_VARIABLE_PUBLIC_STATIC,
+		SourceFormatter._TYPE_VARIABLE_PUBLIC_STATIC_FINAL
 	};
 
 	public static final int _TYPE_VARIABLE_PRIVATE = 22;
@@ -1122,6 +1125,7 @@ public class SourceFormatter {
 			return content;
 		}
 
+		String javaTermName = javaTerm.getName();
 		String previousJavaTermName = previousJavaTerm.getName();
 
 		boolean requiresEmptyLine = false;
@@ -1130,7 +1134,13 @@ public class SourceFormatter {
 			requiresEmptyLine = true;
 		}
 		else if (!_isInJavaTermTypeGroup(
-					javaTerm.getType(), _TYPE_VARIABLE_NOT_FINAL)) {
+					javaTerm.getType(), _TYPE_VARIABLE)) {
+
+			requiresEmptyLine = true;
+		}
+		else if (previousJavaTermName.equals(
+					previousJavaTermName.toUpperCase()) ||
+				 javaTermName.equals(javaTermName.toUpperCase())) {
 
 			requiresEmptyLine = true;
 		}

@@ -180,6 +180,7 @@ public class BlockingPortalCache<K extends Serializable, V>
 
 	private static ThreadLocal<CompeteLatch> _competeLatch =
 		new ThreadLocal<CompeteLatch>();
+
 	private final ConcurrentMap<K, CompeteLatch> _competeLatchMap =
 		new ConcurrentHashMap<K, CompeteLatch>();
 	private final PortalCache<K, V> _portalCache;

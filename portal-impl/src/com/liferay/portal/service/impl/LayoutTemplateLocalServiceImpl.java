@@ -652,10 +652,8 @@ public class LayoutTemplateLocalServiceImpl
 		new LinkedHashMap<String, LayoutTemplate>();
 	private static Map<String, LayoutTemplate> _portalStandard =
 		new LinkedHashMap<String, LayoutTemplate>();
-
 	private static Map<String, Map<String, LayoutTemplate>> _themes =
 		new LinkedHashMap<String, Map<String, LayoutTemplate>>();
-
 	private static Map<String, LayoutTemplate> _warCustom =
 		new LinkedHashMap<String, LayoutTemplate>();
 	private static Map<String, LayoutTemplate> _warStandard =

@@ -152,6 +152,7 @@ public class CodeCoverageAssertor implements TestRule {
 	}
 
 	private static final Method _assertCoverageMethod;
+
 	private static final Method _dynamicallyInstrumentMethod;
 
 	private final String[] _excludes;

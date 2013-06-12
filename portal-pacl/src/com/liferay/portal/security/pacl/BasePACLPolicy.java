@@ -265,7 +265,6 @@ public abstract class BasePACLPolicy implements PACLPolicy {
 	private static Log _log = LogFactoryUtil.getLog(BasePACLPolicy.class);
 
 	private Map<String, Checker> _checkers = new HashMap<String, Checker>();
-
 	private ClassLoader _classLoader;
 	private Policy _policy;
 	private Properties _properties;

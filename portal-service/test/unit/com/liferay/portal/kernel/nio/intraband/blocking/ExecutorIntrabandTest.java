@@ -633,9 +633,7 @@ public class ExecutorIntrabandTest {
 	private static final long _DEFAULT_TIMEOUT = Time.SECOND;
 
 	private byte[] _data = _DATA_STRING.getBytes(Charset.defaultCharset());
-
 	private ExecutorIntraband _executorIntraband;
-
 	private byte _type = 1;
 
 }

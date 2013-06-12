@@ -47,6 +47,9 @@ AUI.add(
 					parentLayoutId: {
 						validator: Lang.isNumber
 					},
+					creatingPageMessage: {
+						validator: Lang.isString
+					},
 					transition: {
 						validator: Lang.isObject,
 						value: {
@@ -80,6 +83,15 @@ AUI.add(
 						instance._hiddenCheckbox = instance.byId(STR_HIDDEN_CHECKBOX);
 
 						instance._nameInput = instance.byId(STR_NAME);
+
+						instance._loadingMask = new A.LoadingMask(
+							{
+								strings: {
+									loading: instance.get('creatingPageMessage')
+								},
+								target: instance._addForm
+							}
+						);
 
 						instance._bindUI();
 					},
@@ -126,6 +138,8 @@ AUI.add(
 									success: function(event, id, obj) {
 										var response = this.get(STR_RESPONSE_DATA);
 
+										instance._loadingMask.hide();
+
 										var panel = instance._addForm.ancestor();
 
 										panel.empty();
@@ -137,6 +151,8 @@ AUI.add(
 								}
 							}
 						);
+
+						instance._loadingMask.show();
 					},
 
 					_cancelAction: function(event) {
@@ -196,6 +212,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-parse-content', 'aui-toggler-delegate', 'liferay-dockbar', 'liferay-dockbar-add-base', 'liferay-dockbar-add-page-search']
+		requires: ['aui-loading-mask-deprecated', 'aui-parse-content', 'aui-toggler-delegate', 'liferay-dockbar', 'liferay-dockbar-add-base', 'liferay-dockbar-add-page-search']
 	}
 );

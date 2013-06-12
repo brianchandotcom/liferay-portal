@@ -23,32 +23,46 @@ AUI.add(
 
 		var PARENT_NODE = 'parentNode';
 
-		var STR_B = 'b';
+		var STR_BOTTOM = 'b';
 
-		var STR_L = 'l';
+		var STR_LEFT = 'l';
 
-		var STR_R = 'r';
+		var STR_LTR = 'ltr';
 
-		var STR_T = 't';
+		var STR_RIGHT = 'r';
+
+		var STR_RTL = 'rtl';
+
+		var STR_TOP = 't';
 
 		var MAP_ALIGN_HORIZONTAL_OVERLAY = {
-			right: STR_L,
-			left: STR_R
+			right: STR_LEFT,
+			left: STR_RIGHT
+		};
+
+		var MAP_ALIGN_HORIZONTAL_OVERLAY_RTL = {
+			left: STR_LEFT,
+			right: STR_RIGHT
 		};
 
 		var MAP_ALIGN_HORIZONTAL_TRIGGER = {
-			right: STR_R,
-			left: STR_L
+			right: STR_RIGHT,
+			left: STR_LEFT
+		};
+
+		var MAP_ALIGN_HORIZONTAL_TRIGGER_RTL = {
+			left: STR_RIGHT,
+			right: STR_LEFT
 		};
 
 		var MAP_ALIGN_VERTICAL_OVERLAY = {
-			down: STR_T,
-			up: STR_B
+			down: STR_TOP,
+			up: STR_BOTTOM
 		};
 
 		var MAP_ALIGN_VERTICAL_TRIGGER = {
-			down: STR_B,
-			up: STR_T
+			down: STR_BOTTOM,
+			up: STR_TOP
 		};
 
 		var MAP_LIVE_SEARCH = {};
@@ -120,16 +134,31 @@ AUI.add(
 
 					var alignPoints = DEFAULT_ALIGN_POINTS;
 
+					var defaultHorizontalAlign = STR_LEFT;
+
+					var mapAlignHorizontalOverlay = MAP_ALIGN_HORIZONTAL_OVERLAY;
+					
+					var mapAlignHorizontalTrigger = MAP_ALIGN_HORIZONTAL_TRIGGER;
+
+					var langDir = Liferay.Language.direction[themeDisplay.getLanguageId()] || STR_LTR;
+
+					if (langDir === STR_RTL) {
+						defaultHorizontalAlign = STR_RIGHT;
+
+						mapAlignHorizontalOverlay = MAP_ALIGN_HORIZONTAL_OVERLAY_RTL;
+						mapAlignHorizontalTrigger = MAP_ALIGN_HORIZONTAL_TRIGGER_RTL;
+					}
+
 					if (cssClass.indexOf(AUTO) == -1) {
 						var directionMatch = cssClass.match(REGEX_DIRECTION);
 
 						var direction = (directionMatch && directionMatch[1]) || AUTO;
 
-						var overlayHorizontal = MAP_ALIGN_HORIZONTAL_OVERLAY[direction] || STR_L;
-						var overlayVertical = MAP_ALIGN_VERTICAL_OVERLAY[direction] || STR_T;
+						var overlayHorizontal = mapAlignHorizontalOverlay[direction] || defaultHorizontalAlign;
+						var overlayVertical = MAP_ALIGN_VERTICAL_OVERLAY[direction] || STR_TOP;
 
-						var triggerHorizontal = MAP_ALIGN_HORIZONTAL_TRIGGER[direction] || STR_L;
-						var triggerVertical = MAP_ALIGN_VERTICAL_TRIGGER[direction] || STR_T;
+						var triggerHorizontal = mapAlignHorizontalTrigger[direction] || defaultHorizontalAlign;
+						var triggerVertical = MAP_ALIGN_VERTICAL_TRIGGER[direction] || STR_TOP;
 
 						alignPoints = [overlayVertical + overlayHorizontal, triggerVertical + triggerHorizontal];
 					}
@@ -547,6 +576,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['array-invoke', 'aui-debounce', 'aui-node']
+		requires: ['array-invoke', 'aui-debounce', 'aui-node', 'portal-available-languages']
 	}
 );

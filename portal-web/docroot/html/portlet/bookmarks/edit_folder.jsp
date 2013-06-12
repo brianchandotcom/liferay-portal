@@ -75,7 +75,7 @@ else {
 			<aui:field-wrapper label="parent-folder">
 
 				<%
-				String parentFolderName = StringPool.BLANK;
+				String parentFolderName = LanguageUtil.get(pageContext, "home");
 
 				try {
 					BookmarksFolder parentFolder = BookmarksFolderServiceUtil.getFolder(parentFolderId);

@@ -121,6 +121,11 @@ public interface JournalStructureLocalService extends BaseLocalService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.journal.model.JournalStructure fetchStructure(
+		long groupId, java.lang.String structureId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public java.util.List<com.liferay.portlet.journal.model.JournalStructure> findAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
 

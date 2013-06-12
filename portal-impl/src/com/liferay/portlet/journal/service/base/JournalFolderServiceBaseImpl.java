@@ -67,8 +67,6 @@ import com.liferay.portlet.journal.service.persistence.JournalFeedFinder;
 import com.liferay.portlet.journal.service.persistence.JournalFeedPersistence;
 import com.liferay.portlet.journal.service.persistence.JournalFolderFinder;
 import com.liferay.portlet.journal.service.persistence.JournalFolderPersistence;
-import com.liferay.portlet.journal.service.persistence.JournalTemplateFinder;
-import com.liferay.portlet.journal.service.persistence.JournalTemplatePersistence;
 import com.liferay.portlet.social.service.SocialActivityCounterLocalService;
 import com.liferay.portlet.social.service.SocialActivityLocalService;
 import com.liferay.portlet.social.service.persistence.SocialActivityCounterFinder;
@@ -514,44 +512,6 @@ public abstract class JournalFolderServiceBaseImpl extends BaseServiceImpl
 	public void setJournalTemplateService(
 		JournalTemplateService journalTemplateService) {
 		this.journalTemplateService = journalTemplateService;
-	}
-
-	/**
-	 * Returns the journal template persistence.
-	 *
-	 * @return the journal template persistence
-	 */
-	public JournalTemplatePersistence getJournalTemplatePersistence() {
-		return journalTemplatePersistence;
-	}
-
-	/**
-	 * Sets the journal template persistence.
-	 *
-	 * @param journalTemplatePersistence the journal template persistence
-	 */
-	public void setJournalTemplatePersistence(
-		JournalTemplatePersistence journalTemplatePersistence) {
-		this.journalTemplatePersistence = journalTemplatePersistence;
-	}
-
-	/**
-	 * Returns the journal template finder.
-	 *
-	 * @return the journal template finder
-	 */
-	public JournalTemplateFinder getJournalTemplateFinder() {
-		return journalTemplateFinder;
-	}
-
-	/**
-	 * Sets the journal template finder.
-	 *
-	 * @param journalTemplateFinder the journal template finder
-	 */
-	public void setJournalTemplateFinder(
-		JournalTemplateFinder journalTemplateFinder) {
-		this.journalTemplateFinder = journalTemplateFinder;
 	}
 
 	/**
@@ -1226,10 +1186,6 @@ public abstract class JournalFolderServiceBaseImpl extends BaseServiceImpl
 	protected JournalTemplateLocalService journalTemplateLocalService;
 	@BeanReference(type = JournalTemplateService.class)
 	protected JournalTemplateService journalTemplateService;
-	@BeanReference(type = JournalTemplatePersistence.class)
-	protected JournalTemplatePersistence journalTemplatePersistence;
-	@BeanReference(type = JournalTemplateFinder.class)
-	protected JournalTemplateFinder journalTemplateFinder;
 	@BeanReference(type = CounterLocalService.class)
 	protected CounterLocalService counterLocalService;
 	@BeanReference(type = GroupLocalService.class)

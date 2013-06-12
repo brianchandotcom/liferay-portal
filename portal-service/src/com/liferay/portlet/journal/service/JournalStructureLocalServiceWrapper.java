@@ -160,6 +160,13 @@ public class JournalStructureLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portlet.journal.model.JournalStructure fetchStructure(
+		long groupId, java.lang.String structureId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalStructureLocalService.fetchStructure(groupId, structureId);
+	}
+
+	@Override
 	public java.util.List<com.liferay.portlet.journal.model.JournalStructure> findAll()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _journalStructureLocalService.findAll();

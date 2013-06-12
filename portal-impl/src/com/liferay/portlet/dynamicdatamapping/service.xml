@@ -208,12 +208,15 @@
 		<finder name="Language" return-type="Collection">
 			<finder-column name="language" />
 		</finder>
+		<finder name="SmallImageId" return-type="DDMTemplate">
+			<finder-column name="smallImageId" />
+		</finder>
 		<finder name="G_C" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="classNameId" />
 		</finder>
 		<finder name="G_CPK" return-type="Collection">
-			<finder-column name="groupId" />
+			<finder-column name="groupId" arrayable-operator="OR" />
 			<finder-column name="classPK" />
 		</finder>
 		<finder name="G_C_C" return-type="Collection">

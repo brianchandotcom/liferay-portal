@@ -83,7 +83,7 @@
 				(companyId = ?) AND
 				(groupId IN ([$GROUP_ID$])) AND
 				(classNameId IN ([$CLASSNAME_ID$])) AND
-				(classPK = ?) AND
+				(classPK IN ([$CLASS_PK$])) AND
 				(
 					(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
@@ -91,6 +91,48 @@
 					(mode_ LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(language LIKE ? [$AND_OR_NULL_CHECK$])
 				)
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateFinder.countByG_C_C_SC">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT templateId) AS COUNT_VALUE
+			FROM
+				DDMTemplate
+			INNER JOIN
+				DDMStructure ON
+					(DDMTemplate.classPK = DDMStructure.structureId)
+			WHERE
+				(
+					(DDMTemplate.groupId IN ([$GROUP_ID$])) AND
+					(DDMTemplate.classNameId = ?) AND
+					(DDMTemplate.classPK = ?)
+				) OR
+				(
+					(DDMStructure.classNameId = ?)
+				)
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateFinder.findByC_G_C_C_N_D_T_M_L">
+		<![CDATA[
+			SELECT
+				{DDMTemplate.*}
+			FROM
+				DDMTemplate
+			WHERE
+				(companyId = ?) AND
+				(groupId IN ([$GROUP_ID$])) AND
+				(classNameId IN ([$CLASSNAME_ID$])) AND
+				(classPK IN ([$CLASS_PK$])) AND
+				(
+					(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(type_ LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(mode_ LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(language LIKE ? [$AND_OR_NULL_CHECK$])
+				)
+			ORDER BY
+				DDMTemplate.templateId DESC
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateFinder.findByG_SC">
@@ -109,23 +151,23 @@
 				DDMTemplate.templateId DESC
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateFinder.findByC_G_C_C_N_D_T_M_L">
+	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateFinder.findByG_C_C_SC">
 		<![CDATA[
 			SELECT
 				{DDMTemplate.*}
 			FROM
 				DDMTemplate
+			INNER JOIN
+				DDMStructure ON
+					(DDMTemplate.classPK = DDMStructure.structureId)
 			WHERE
-				(companyId = ?) AND
-				(groupId IN ([$GROUP_ID$])) AND
-				(classNameId IN ([$CLASSNAME_ID$])) AND
-				(classPK = ?) AND
 				(
-					(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(type_ LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(mode_ LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(language LIKE ? [$AND_OR_NULL_CHECK$])
+					(DDMTemplate.groupId IN ([$GROUP_ID$])) AND
+					(DDMTemplate.classNameId = ?) AND
+					(DDMTemplate.classPK = ?)
+				) OR
+				(
+					(DDMStructure.classNameId = ?)
 				)
 			ORDER BY
 				DDMTemplate.templateId DESC

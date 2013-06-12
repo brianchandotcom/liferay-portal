@@ -81,10 +81,6 @@ public class JavaTerm {
 	}
 
 	public void sortAnnotations() throws IOException {
-		if (!_content.startsWith(StringPool.TAB + StringPool.AT)) {
-			return;
-		}
-
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new UnsyncStringReader(_content));
 
@@ -94,6 +90,10 @@ public class JavaTerm {
 		String previousAnnotation = StringPool.BLANK;
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
+			if (line.equals(StringPool.TAB + StringPool.CLOSE_CURLY_BRACE)) {
+				return;
+			}
+
 			if (StringUtil.count(line, StringPool.TAB) == 1) {
 				if (Validator.isNotNull(previousAnnotation) &&
 					(previousAnnotation.compareTo(annotation) > 0)) {
@@ -106,17 +106,22 @@ public class JavaTerm {
 					return;
 				}
 
-				if (!line.startsWith(StringPool.TAB + StringPool.AT)) {
+				if (line.startsWith(StringPool.TAB + StringPool.AT)) {
+					if (Validator.isNotNull(annotation)) {
+						previousAnnotation = annotation;
+					}
+
+					annotation = line + "\n";
+				}
+				else {
+					annotation = StringPool.BLANK;
+				}
+			}
+			else {
+				if (Validator.isNull(annotation)) {
 					return;
 				}
 
-				if (Validator.isNotNull(annotation)) {
-					previousAnnotation = annotation;
-				}
-
-				annotation = line + "\n";
-			}
-			else {
 				annotation += line + "\n";
 			}
 		}

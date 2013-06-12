@@ -266,8 +266,8 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 	 *             boolean, String, boolean, TZSRecurrence, int, int, int,
 	 *             ServiceContext)}
 	 */
-	@Override
 	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public CalEvent addEvent(
 			long userId, String title, String description, String location,
 			int startDateMonth, int startDateDay, int startDateYear,
@@ -886,8 +886,8 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 	 *             boolean, boolean, String, boolean, TZSRecurrence, int, int,
 	 *             int, ServiceContext)}
 	 */
-	@Override
 	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public CalEvent updateEvent(
 			long userId, long eventId, String title, String description,
 			String location, int startDateMonth, int startDateDay,

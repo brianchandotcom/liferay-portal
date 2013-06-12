@@ -62,8 +62,8 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 	 *         administrator
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@Override
 	public Company addCompany(
 			String webId, String virtualHost, String mx, String shardName,
 			boolean system, int maxUsers, boolean active)
@@ -191,8 +191,8 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 	 * @throws PortalException if the user was not an administrator
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@Override
 	public void removePreferences(long companyId, String[] keys)
 		throws PortalException, SystemException {
 
@@ -316,8 +316,8 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 	 *         not an administrator
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@Override
 	public Company updateCompany(
 			long companyId, String virtualHost, String mx, String homeURL,
 			String name, String legalName, String legalId, String legalType,
@@ -410,8 +410,8 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 	 *         administrator
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@Override
 	public Company updateLogo(long companyId, InputStream inputStream)
 		throws PortalException, SystemException {
 
@@ -434,8 +434,8 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 	 * @throws PortalException if the user was not an administrator
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@Override
 	public void updatePreferences(long companyId, UnicodeProperties properties)
 		throws PortalException, SystemException {
 
@@ -468,8 +468,8 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 	 * @throws PortalException if the user was not an administrator
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@Override
 	public void updateSecurity(
 			long companyId, String authType, boolean autoLogin,
 			boolean sendPassword, boolean strangers, boolean strangersWithMx,

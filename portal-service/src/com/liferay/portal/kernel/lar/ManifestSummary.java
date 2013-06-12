@@ -81,7 +81,7 @@ public class ManifestSummary implements Serializable {
 
 		modelAdditionCounter.setValue(count);
 
-		_modelNames.add(manifestSummaryKey);
+		_manifestSummaryKeys.add(manifestSummaryKey);
 	}
 
 	public void addModelAdditionCount(
@@ -99,19 +99,20 @@ public class ManifestSummary implements Serializable {
 		addModelDeletionCount(clazz.getName(), count);
 	}
 
-	public void addModelDeletionCount(String modelName, long count) {
+	public void addModelDeletionCount(String manifestSummaryKey, long count) {
 		LongWrapper modelDeletionCounter = _modelDeletionCounters.get(
-			modelName);
+			manifestSummaryKey);
 
 		if (modelDeletionCounter == null) {
 			modelDeletionCounter = new LongWrapper();
 
-			_modelDeletionCounters.put(modelName, modelDeletionCounter);
+			_modelDeletionCounters.put(
+				manifestSummaryKey, modelDeletionCounter);
 		}
 
 		modelDeletionCounter.setValue(count);
 
-		_modelNames.add(modelName);
+		_manifestSummaryKeys.add(manifestSummaryKey);
 	}
 
 	public void addSetupPortlet(Portlet portlet) {
@@ -124,6 +125,10 @@ public class ManifestSummary implements Serializable {
 
 	public Date getExportDate() {
 		return _exportDate;
+	}
+
+	public Collection<String> getManifestSummaryKeys() {
+		return _manifestSummaryKeys;
 	}
 
 	public long getModelAdditionCount(Class<? extends ClassedModel> clazz) {
@@ -180,10 +185,6 @@ public class ManifestSummary implements Serializable {
 		return _modelDeletionCounters;
 	}
 
-	public Collection<String> getModelNames() {
-		return _modelNames;
-	}
-
 	public List<Portlet> getSetupPortlets() {
 		return _setupPortlets;
 	}
@@ -208,7 +209,7 @@ public class ManifestSummary implements Serializable {
 		if (!_modelAdditionCounters.containsKey(manifestSummaryKey)) {
 			_modelAdditionCounters.put(manifestSummaryKey, new LongWrapper(1));
 
-			_modelNames.add(manifestSummaryKey);
+			_manifestSummaryKeys.add(manifestSummaryKey);
 
 			return;
 		}
@@ -225,19 +226,19 @@ public class ManifestSummary implements Serializable {
 		incrementModelDeletionCount(clazz.getName());
 	}
 
-	public void incrementModelDeletionCount(String modelName) {
-		if (!_modelDeletionCounters.containsKey(modelName)) {
-			_modelDeletionCounters.put(modelName, new LongWrapper(1));
+	public void incrementModelDeletionCount(String manifestSummaryKey) {
+		if (!_modelDeletionCounters.containsKey(manifestSummaryKey)) {
+			_modelDeletionCounters.put(manifestSummaryKey, new LongWrapper(1));
 
-			_modelNames.add(modelName);
+			_manifestSummaryKeys.add(manifestSummaryKey);
 
 			return;
 		}
 
 		LongWrapper modelDeletionCounter = _modelDeletionCounters.get(
-			modelName);
+			manifestSummaryKey);
 
-		modelDeletionCounter.decrement();
+		modelDeletionCounter.increment();
 	}
 
 	public void setExportDate(Date exportDate) {
@@ -259,11 +260,11 @@ public class ManifestSummary implements Serializable {
 
 	private List<Portlet> _dataPortlets = new ArrayList<Portlet>();
 	private Date _exportDate;
+	private Set<String> _manifestSummaryKeys = new HashSet<String>();
 	private Map<String, LongWrapper> _modelAdditionCounters =
 		new HashMap<String, LongWrapper>();
 	private Map<String, LongWrapper> _modelDeletionCounters =
 		new HashMap<String, LongWrapper>();
-	private Set<String> _modelNames = new HashSet<String>();
 	private List<Portlet> _setupPortlets = new ArrayList<Portlet>();
 
 }

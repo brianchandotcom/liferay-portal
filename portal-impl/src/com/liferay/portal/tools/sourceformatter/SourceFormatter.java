@@ -128,12 +128,6 @@ public class SourceFormatter {
 		SourceFormatter._TYPE_VARIABLE_PUBLIC_STATIC
 	};
 
-	public static final int[] _TYPE_VARIABLE_NOT_STATIC = {
-		SourceFormatter._TYPE_VARIABLE_PRIVATE,
-		SourceFormatter._TYPE_VARIABLE_PROTECTED,
-		SourceFormatter._TYPE_VARIABLE_PUBLIC
-	};
-
 	public static final int _TYPE_VARIABLE_PRIVATE = 22;
 
 	public static final int _TYPE_VARIABLE_PRIVATE_STATIC = 21;

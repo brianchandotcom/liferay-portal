@@ -1674,8 +1674,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 		if (Validator.isNotNull(
 				PropsValues.AUTO_DEPLOY_WEBSPHERE_WSADMIN_APP_NAME_SUFFIX)) {
 
-			pluginApplicationName = pluginApplicationName +
-				StringPool.UNDERLINE +
+			pluginApplicationName +=
 				PropsValues.AUTO_DEPLOY_WEBSPHERE_WSADMIN_APP_NAME_SUFFIX;
 		}
 

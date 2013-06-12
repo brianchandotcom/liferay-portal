@@ -44,6 +44,7 @@ import org.junit.runner.RunWith;
 		TransactionalExecutionTestListener.class
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
+@SuppressWarnings("deprecation")
 @Transactional
 public class JournalStructureServiceTest extends BaseJournalServiceTestCase {
 

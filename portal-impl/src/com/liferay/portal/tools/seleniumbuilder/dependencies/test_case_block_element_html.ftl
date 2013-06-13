@@ -1,6 +1,9 @@
 <#assign elements = testCaseBlockElement.elements()>
 
-<ul>
+<ul id="ExpandCollapse${testCaseName}TestCase__${lineFolds}" class="collapse">
+
+<#assign lineFolds = lineFolds + 1>
+
 	<#list elements as element>
 		<#assign lineNumber = element.attributeValue("line-number")>
 

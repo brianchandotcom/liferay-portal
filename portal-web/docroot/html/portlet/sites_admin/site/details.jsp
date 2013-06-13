@@ -241,6 +241,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 
 													<%
 													request.setAttribute("edit_layout_set_prototype.jsp-groupId", String.valueOf(group.getGroupId()));
+													request.setAttribute("edit_layout_set_prototype.jsp-layoutSet", publicLayoutSet);
 													request.setAttribute("edit_layout_set_prototype.jsp-layoutSetPrototype", publicLayoutSetPrototype);
 													request.setAttribute("edit_layout_set_prototype.jsp-redirect", currentURL);
 													%>
@@ -324,8 +325,8 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 
 													<%
 													request.setAttribute("edit_layout_set_prototype.jsp-groupId", String.valueOf(group.getGroupId()));
+													request.setAttribute("edit_layout_set_prototype.jsp-layoutSet", privateLayoutSet);
 													request.setAttribute("edit_layout_set_prototype.jsp-layoutSetPrototype", privateLayoutSetPrototype);
-													request.setAttribute("edit_layout_set_prototype.jsp-privateLayoutSet", String.valueOf(true));
 													request.setAttribute("edit_layout_set_prototype.jsp-redirect", currentURL);
 													%>
 

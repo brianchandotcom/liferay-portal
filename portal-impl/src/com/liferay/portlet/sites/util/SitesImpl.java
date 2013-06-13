@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -121,6 +123,31 @@ import javax.servlet.http.HttpServletResponse;
  * @author Zsolt Berentey
  */
 public class SitesImpl implements Sites {
+
+	@Override
+	public void addMergeFailFriendlyURLLayout(Layout layout)
+		throws PortalException, SystemException {
+
+		LayoutSet layoutSet = layout.getLayoutSet();
+
+		layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+			layoutSet.getGroupId(), layoutSet.isPrivateLayout());
+
+		UnicodeProperties layoutSetSettingsProperties =
+			layoutSet.getSettingsProperties();
+
+		String mergeFailFriendlyURLLayouts =
+			layoutSetSettingsProperties.getProperty(
+				MERGE_FAIL_FRIENDLY_URL_LAYOUTS, StringPool.BLANK);
+
+		mergeFailFriendlyURLLayouts = StringUtil.add(
+			mergeFailFriendlyURLLayouts, layout.getUuid());
+
+		layoutSetSettingsProperties.setProperty(
+			MERGE_FAIL_FRIENDLY_URL_LAYOUTS, mergeFailFriendlyURLLayouts);
+
+		LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
+	}
 
 	@Override
 	public void addPortletBreadcrumbEntries(
@@ -713,6 +740,34 @@ public class SitesImpl implements Sites {
 	}
 
 	@Override
+	public List<Layout> getMergeFailFriendlyURLLayouts(LayoutSet layoutSet)
+		throws PortalException, SystemException {
+
+		UnicodeProperties layoutSetSettingsProperties =
+			layoutSet.getSettingsProperties();
+
+		String uuids = layoutSetSettingsProperties.getProperty(
+			MERGE_FAIL_FRIENDLY_URL_LAYOUTS);
+
+		if (Validator.isNotNull(uuids)) {
+			List<Layout> layouts = new ArrayList<Layout>();
+
+			for (String uuid : StringUtil.split(uuids)) {
+				Layout layout =
+					LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
+						uuid, layoutSet.getGroupId(),
+						layoutSet.isPrivateLayout());
+
+				layouts.add(layout);
+			}
+
+			return layouts;
+		}
+
+		return null;
+	}
+
+	@Override
 	public void importLayoutSetPrototype(
 			LayoutSetPrototype layoutSetPrototype, InputStream inputStream,
 			ServiceContext serviceContext)
@@ -1197,6 +1252,8 @@ public class SitesImpl implements Sites {
 			Map<String, String[]> parameterMap =
 				getLayoutSetPrototypesParameters(importData);
 
+			removeMergeFailFriendlyURLLayouts(layoutSet);
+
 			importLayoutSetPrototype(
 				layoutSetPrototype, layoutSet.getGroupId(),
 				layoutSet.isPrivateLayout(), parameterMap, importData);
@@ -1227,6 +1284,18 @@ public class SitesImpl implements Sites {
 		throws Exception {
 
 		mergeLayoutSetPrototypeLayouts(group, layoutSet);
+	}
+
+	@Override
+	public void removeMergeFailFriendlyURLLayouts(LayoutSet layoutSet)
+		throws PortalException, SystemException {
+
+		UnicodeProperties layoutSetSettingsProperties =
+			layoutSet.getSettingsProperties();
+
+		layoutSetSettingsProperties.remove(MERGE_FAIL_FRIENDLY_URL_LAYOUTS);
+
+		LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
 	}
 
 	/**

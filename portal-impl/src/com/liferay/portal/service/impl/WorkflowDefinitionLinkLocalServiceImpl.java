@@ -246,7 +246,7 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 		}
 
 		WorkflowDefinitionLink workflowDefinitionLink =
-			workflowDefinitionLinkLocalService.getWorkflowDefinitionLink(
+			workflowDefinitionLinkLocalService.fetchWorkflowDefinitionLink(
 				companyId, groupId, className, classPK, typePK);
 
 		if (workflowDefinitionLink != null) {

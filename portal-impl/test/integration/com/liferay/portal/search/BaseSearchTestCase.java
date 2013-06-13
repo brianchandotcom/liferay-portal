@@ -131,7 +131,7 @@ public abstract class BaseSearchTestCase {
 		searchWithinDDMStructure();
 	}
 
-	public void testUserPermissions(
+	protected void testUserPermissions(
 			boolean addBaseModelPermission,
 			boolean addParentBaseModelPermission)
 		throws Exception {

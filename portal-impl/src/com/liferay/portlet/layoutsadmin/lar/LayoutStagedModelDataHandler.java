@@ -64,6 +64,7 @@ import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ResourceLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
+import com.liferay.portal.service.persistence.LayoutFriendlyURLUtil;
 import com.liferay.portal.service.persistence.LayoutRevisionUtil;
 import com.liferay.portal.service.persistence.LayoutUtil;
 import com.liferay.portal.util.PropsValues;
@@ -315,6 +316,20 @@ public class LayoutStagedModelDataHandler
 
 			if (SitesUtil.isLayoutModifiedSinceLastMerge(existingLayout)) {
 				newLayoutsMap.put(oldLayoutId, existingLayout);
+
+				return;
+			}
+
+			LayoutFriendlyURL layoutFriendlyURL =
+				LayoutFriendlyURLUtil.fetchByG_P_F_First(
+					groupId, privateLayout, friendlyURL, null);
+
+			if ((layoutFriendlyURL != null) && (existingLayout == null)) {
+				Layout mergeFailFriendlyURLLayout = LayoutUtil.findByPrimaryKey(
+					layoutFriendlyURL.getPlid());
+
+				SitesUtil.addMergeFailFriendlyURLLayout(
+					mergeFailFriendlyURLLayout);
 
 				return;
 			}

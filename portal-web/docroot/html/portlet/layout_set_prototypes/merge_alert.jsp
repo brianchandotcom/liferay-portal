@@ -18,11 +18,15 @@
 
 <%
 long groupId = GetterUtil.getLong((String)request.getAttribute("edit_layout_set_prototype.jsp-groupId"));
+LayoutSet layoutSet = (LayoutSet)request.getAttribute("edit_layout_set_prototype.jsp-layoutSet");
 LayoutSetPrototype layoutSetPrototype = (LayoutSetPrototype)request.getAttribute("edit_layout_set_prototype.jsp-layoutSetPrototype");
-boolean privateLayoutSet = GetterUtil.getBoolean((String)request.getAttribute("edit_layout_set_prototype.jsp-privateLayoutSet"));
 String redirect = (String)request.getAttribute("edit_layout_set_prototype.jsp-redirect");
 
+boolean privateLayoutSet = layoutSet.isPrivateLayout();
+
 int mergeFailCount = SitesUtil.getMergeFailCount(layoutSetPrototype);
+
+List<Layout> mergeFailFriendlyURLLayouts = SitesUtil.getMergeFailFriendlyURLLayouts(layoutSet);
 %>
 
 <c:if test="<%= mergeFailCount > PropsValues.LAYOUT_SET_PROTOTYPE_MERGE_FAIL_THRESHOLD %>">
@@ -51,13 +55,13 @@ int mergeFailCount = SitesUtil.getMergeFailCount(layoutSetPrototype);
 	}
 	%>
 
-	<span class="alert alert-block">
+	<div class="alert alert-block">
 		<liferay-ui:message arguments='<%= new Object[] {mergeFailCount, "site-template"} %>' key="the-propagation-of-changes-from-the-x-has-been-disabled-temporarily-after-x-errors" />
 
 		<liferay-ui:message arguments="site-template" key='<%= merge ? "click-reset-and-propagate-to-reset-the-failure-count-and-propagate-changes-from-the-x" : "click-reset-to-reset-the-failure-count-and-reenable-propagation" %>' />
 
 		<aui:button id='<%= randomNamespace + "resetButton" %>' value='<%= merge ? "reset-and-propagate" : "reset" %>' />
-	</span>
+	</div>
 
 	<aui:script use="aui-base">
 		var resetButton= A.one('#<%= randomNamespace %>resetButton');
@@ -69,4 +73,39 @@ int mergeFailCount = SitesUtil.getMergeFailCount(layoutSetPrototype);
 			}
 		);
 	</aui:script>
+</c:if>
+
+<c:if test="<%= Validator.isNotNull(mergeFailFriendlyURLLayouts) %>">
+	<div class="alert alert-block">
+		<liferay-ui:message key="some-pages-from-the-site-template-cannot-be-propagated-because-their-friendly-urls-are-in-conflict-with-the-following-pages" />
+
+		<liferay-ui:message key="modify-the-friendly-url-of-the-pages-to-allow-the-propagation-of-the-pages-from-the-site-template" />
+
+		<ul>
+			<liferay-portlet:renderURL portletName="<%= PortletKeys.GROUP_PAGES %>" varImpl="editLayoutsURL">
+				<portlet:param name="struts_action" value="/group_pages/edit_layouts" />
+				<portlet:param name="backURL" value="<%= redirect %>" />
+				<portlet:param name="closeRedirect" value="<%= redirect %>" />
+				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+				<portlet:param name="redirect" value="<%= redirect %>" />
+				<portlet:param name="tabs1" value='<%= layoutSet.isPrivateLayout() ? "private-pages" : "public-pages" %>' />
+			</liferay-portlet:renderURL>
+
+			<%
+			for (Layout mergeFailFriendlyURLLayout : mergeFailFriendlyURLLayouts) {
+				editLayoutsURL.setParameter("selPlid", String.valueOf(mergeFailFriendlyURLLayout.getPlid()));
+			%>
+
+				<li>
+					<aui:a href="<%= editLayoutsURL.toString() %>">
+						<%= mergeFailFriendlyURLLayout.getName(locale) %>
+					</aui:a>
+				</li>
+
+			<%
+			}
+			%>
+
+		</ul>
+	</div>
 </c:if>

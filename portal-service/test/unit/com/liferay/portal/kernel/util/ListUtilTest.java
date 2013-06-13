@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.portal.kernel.test.TestCase;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -26,7 +24,7 @@ import org.junit.Test;
 /**
  * @author Olaf Kock
  */
-public class ListUtilTest extends TestCase {
+public class ListUtilTest {
 
 	@Test
 	public void testRemoveEmptyElement() {

@@ -23,6 +23,8 @@ import java.lang.reflect.Type;
 
 import junit.framework.TestCase;
 
+import org.junit.Test;
+
 import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
@@ -37,6 +39,7 @@ public class JSONServiceActionTest extends TestCase {
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 	}
 
+	@Test
 	public void testGetArgumentValue() throws Exception {
 		JSONServiceAction jsonServiceAction = new JSONServiceAction();
 

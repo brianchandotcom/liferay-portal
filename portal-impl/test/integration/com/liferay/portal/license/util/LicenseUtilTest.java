@@ -14,13 +14,13 @@
 
 package com.liferay.portal.license.util;
 
-import com.liferay.portal.kernel.test.TestCase;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 
 import java.io.InputStream;
 
 import java.util.Set;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -28,7 +28,7 @@ import org.junit.runner.RunWith;
  * @author Brian Wing Shun Chan
  */
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class LicenseUtilTest extends TestCase {
+public class LicenseUtilTest {
 
 	@Test
 	public void testMacAddressAIX() throws Exception {
@@ -37,9 +37,9 @@ public class LicenseUtilTest extends TestCase {
 		Set<String> macAddresses = LicenseUtil.getMacAddresses(
 			"aix", processInputStream);
 
-		assertEquals(macAddresses.size(), 2);
-		assertTrue(macAddresses.contains("66:da:90:6b:f1:17"));
-		assertTrue(macAddresses.contains("66:da:90:6b:f1:18"));
+		Assert.assertEquals(macAddresses.size(), 2);
+		Assert.assertTrue(macAddresses.contains("66:da:90:6b:f1:17"));
+		Assert.assertTrue(macAddresses.contains("66:da:90:6b:f1:18"));
 	}
 
 	@Test
@@ -49,9 +49,9 @@ public class LicenseUtilTest extends TestCase {
 		Set<String> macAddresses = LicenseUtil.getMacAddresses(
 			"linux", processInputStream);
 
-		assertEquals(macAddresses.size(), 2);
-		assertTrue(macAddresses.contains("5c:26:0a:33:b3:d5"));
-		assertTrue(macAddresses.contains("00:24:d7:82:96:f4"));
+		Assert.assertEquals(macAddresses.size(), 2);
+		Assert.assertTrue(macAddresses.contains("5c:26:0a:33:b3:d5"));
+		Assert.assertTrue(macAddresses.contains("00:24:d7:82:96:f4"));
 	}
 
 	@Test
@@ -61,10 +61,10 @@ public class LicenseUtilTest extends TestCase {
 		Set<String> macAddresses = LicenseUtil.getMacAddresses(
 			"windows", processInputStream);
 
-		assertEquals(macAddresses.size(), 3);
-		assertTrue(macAddresses.contains("08:00:27:62:4c:9d"));
-		assertTrue(macAddresses.contains("08:00:27:c0:ab:91"));
-		assertTrue(macAddresses.contains("00:ff:b0:3b:1f:e7"));
+		Assert.assertEquals(macAddresses.size(), 3);
+		Assert.assertTrue(macAddresses.contains("08:00:27:62:4c:9d"));
+		Assert.assertTrue(macAddresses.contains("08:00:27:c0:ab:91"));
+		Assert.assertTrue(macAddresses.contains("00:ff:b0:3b:1f:e7"));
 	}
 
 	protected InputStream getInputStream(String fileName) throws Exception {

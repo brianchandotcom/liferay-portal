@@ -14,7 +14,6 @@
 
 package com.liferay.portal.util;
 
-import com.liferay.portal.kernel.test.TestCase;
 import com.liferay.portal.kernel.util.StringPool;
 
 import org.junit.Assert;
@@ -23,7 +22,7 @@ import org.junit.Test;
 /**
  * @author Brian Wing Shun Chan
  */
-public class FileImplTest extends TestCase {
+public class FileImplTest {
 
 	@Test
 	public void testGetPathBackSlashForwardSlash() {

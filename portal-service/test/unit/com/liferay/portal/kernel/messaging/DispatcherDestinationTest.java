@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.messaging;
 
-import com.liferay.portal.kernel.test.TestCase;
+import com.liferay.portal.kernel.test.AssertUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,11 +23,15 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 /**
  * @author Shuyang Zhou
  * @author Brian Wing Shun Chan
  */
-public class DispatcherDestinationTest extends TestCase {
+public class DispatcherDestinationTest {
 
 	public static final int LISTENER_COUNT = 10000;
 
@@ -37,7 +41,7 @@ public class DispatcherDestinationTest extends TestCase {
 
 	public static final int UNREGISTER_TASK_COUNT = 10;
 
-	@Override
+	@Before
 	public void setUp() throws Exception {
 		_executorService = Executors.newFixedThreadPool(
 			REGISTER_TASK_COUNT + UNREGISTER_TASK_COUNT);
@@ -73,7 +77,7 @@ public class DispatcherDestinationTest extends TestCase {
 		_startTime = System.currentTimeMillis();
 	}
 
-	@Override
+	@After
 	public void tearDown() throws Exception {
 		_executorService.shutdownNow();
 		_executorService.awaitTermination(120, TimeUnit.SECONDS);
@@ -81,9 +85,10 @@ public class DispatcherDestinationTest extends TestCase {
 		long expectedTime = 100;
 		long actualTime = System.currentTimeMillis() - _startTime;
 
-		assertLessThan(expectedTime, actualTime);
+		AssertUtils.assertLessThan(expectedTime, actualTime);
 	}
 
+	@Test
 	public void testPerformance() throws Exception {
 		_executorService.invokeAll(_tasks);
 	}

@@ -14,18 +14,21 @@
 
 package com.liferay.portal.kernel.io;
 
-import com.liferay.portal.kernel.test.TestCase;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 /**
  * @author Tina Tian
  */
-public class ReaderInputStreamTest extends TestCase {
+public class ReaderInputStreamTest {
 
+	@Test
 	public void testAvailable() {
 		Reader reader = new StringReader(_TEST_STRING_ENGLISH);
 
@@ -35,45 +38,48 @@ public class ReaderInputStreamTest extends TestCase {
 
 			int available = readerInputStream.available();
 
-			assertEquals(0, available);
+			Assert.assertEquals(0, available);
 
 			readerInputStream.read();
 
 			available = readerInputStream.available();
 
-			assertEquals(_TEST_STRING_ENGLISH.length() - 1, available);
+			Assert.assertEquals(_TEST_STRING_ENGLISH.length() - 1, available);
 		}
 		catch (Exception e) {
-			assertTrue(e instanceof IllegalArgumentException);
+			Assert.assertTrue(e instanceof IllegalArgumentException);
 		}
 	}
 
+	@Test
 	public void testConstructor1() {
 		Reader reader = new StringReader(_TEST_STRING_ENGLISH);
 
 		try {
 			new ReaderInputStream(reader, StringPool.UTF8, 0, 0);
 
-			fail();
+			Assert.fail();
 		}
 		catch (Exception e) {
-			assertTrue(e instanceof IllegalArgumentException);
+			Assert.assertTrue(e instanceof IllegalArgumentException);
 		}
 	}
 
+	@Test
 	public void testConstructor2() {
 		Reader reader = new StringReader(_TEST_STRING_ENGLISH);
 
 		try {
 			new ReaderInputStream(reader, StringPool.UTF8, 1, 1);
 
-			fail();
+			Assert.fail();
 		}
 		catch (Exception e) {
-			assertTrue(e instanceof IllegalArgumentException);
+			Assert.assertTrue(e instanceof IllegalArgumentException);
 		}
 	}
 
+	@Test
 	public void testRead1() throws IOException {
 		Reader reader = new StringReader(_TEST_STRING_ENGLISH);
 
@@ -84,9 +90,10 @@ public class ReaderInputStreamTest extends TestCase {
 
 		readerInputStream.close();
 
-		assertEquals(_expectedBytesForEnglish[0], result);
+		Assert.assertEquals(_expectedBytesForEnglish[0], result);
 	}
 
+	@Test
 	public void testRead2() throws IOException {
 		Reader reader = new StringReader(_TEST_STRING_ENGLISH);
 
@@ -99,10 +106,11 @@ public class ReaderInputStreamTest extends TestCase {
 
 		readerInputStream.close();
 
-		assertEquals(_expectedBytesForEnglish.length, result);
+		Assert.assertEquals(_expectedBytesForEnglish.length, result);
 		assertEquals(_expectedBytesForEnglish, bytes);
 	}
 
+	@Test
 	public void testRead3() throws IOException {
 		Reader reader = new StringReader(_TEST_STRING_CHINESE);
 
@@ -115,10 +123,11 @@ public class ReaderInputStreamTest extends TestCase {
 
 		readerInputStream.close();
 
-		assertEquals(_expectedBytesForChinese.length, result);
+		Assert.assertEquals(_expectedBytesForChinese.length, result);
 		assertEquals(_expectedBytesForChinese, bytes);
 	}
 
+	@Test
 	public void testRead4() throws IOException {
 		Reader reader = new StringReader(_TEST_STRING_CHINESE);
 
@@ -131,10 +140,11 @@ public class ReaderInputStreamTest extends TestCase {
 
 		readerInputStream.close();
 
-		assertEquals(_expectedBytesForChinese.length, result);
+		Assert.assertEquals(_expectedBytesForChinese.length, result);
 		assertEquals(_expectedBytesForChinese, bytes);
 	}
 
+	@Test
 	public void testRead5() throws IOException {
 		Reader reader = new StringReader(_TEST_STRING_CHINESE);
 
@@ -147,10 +157,11 @@ public class ReaderInputStreamTest extends TestCase {
 
 		readerInputStream.close();
 
-		assertEquals(_expectedBytesForChinese.length, result);
+		Assert.assertEquals(_expectedBytesForChinese.length, result);
 		assertEquals(_expectedBytesForChinese, bytes);
 	}
 
+	@Test
 	public void testRead6() throws IOException {
 		Reader reader = new StringReader(_TEST_STRING_CHINESE);
 
@@ -163,10 +174,11 @@ public class ReaderInputStreamTest extends TestCase {
 
 		readerInputStream.close();
 
-		assertEquals(_expectedBytesForChinese.length, result);
+		Assert.assertEquals(_expectedBytesForChinese.length, result);
 		assertEquals(_expectedBytesForChinese, bytes);
 	}
 
+	@Test
 	public void testRead7() throws IOException {
 		Reader reader = new StringReader(_TEST_STRING_ENGLISH);
 
@@ -178,15 +190,16 @@ public class ReaderInputStreamTest extends TestCase {
 
 		readerInputStream.close();
 
-		assertEquals(_expectedBytesForEnglish.length, result);
+		Assert.assertEquals(_expectedBytesForEnglish.length, result);
 
 		for (int i = 0; i < _expectedBytesForEnglish.length; i++) {
-			assertEquals(_expectedBytesForEnglish[i], bytes[i]);
+			Assert.assertEquals(_expectedBytesForEnglish[i], bytes[i]);
 		}
 
-		assertEquals(0, bytes[_expectedBytesForEnglish.length]);
+		Assert.assertEquals(0, bytes[_expectedBytesForEnglish.length]);
 	}
 
+	@Test
 	public void testRead8() throws IOException {
 		Reader reader = new StringReader(_TEST_STRING_ENGLISH);
 
@@ -197,16 +210,17 @@ public class ReaderInputStreamTest extends TestCase {
 
 			readerInputStream.read(null, 0, 0);
 
-			fail();
+			Assert.fail();
 		}
 		catch (Exception e) {
-			assertTrue(e instanceof NullPointerException);
+			Assert.assertTrue(e instanceof NullPointerException);
 		}
 		finally {
 			readerInputStream.close();
 		}
 	}
 
+	@Test
 	public void testRead9() throws IOException {
 		Reader reader = new StringReader(_TEST_STRING_ENGLISH);
 
@@ -217,16 +231,17 @@ public class ReaderInputStreamTest extends TestCase {
 
 			readerInputStream.read(new byte[1], 0, 2);
 
-			fail();
+			Assert.fail();
 		}
 		catch (Exception e) {
-			assertTrue(e instanceof IndexOutOfBoundsException);
+			Assert.assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 		finally {
 			readerInputStream.close();
 		}
 	}
 
+	@Test
 	public void testSkip1()  throws IOException {
 		Reader reader = new StringReader(_TEST_STRING_ENGLISH);
 
@@ -243,15 +258,18 @@ public class ReaderInputStreamTest extends TestCase {
 
 		readerInputStream.close();
 
-		assertEquals(_expectedBytesForEnglish.length - skipLength, result);
-		assertEquals(
+		Assert.assertEquals(
+			_expectedBytesForEnglish.length - skipLength, result);
+		Assert.assertEquals(
 			_expectedBytesForEnglish.length - skipLength, bytes.length);
 
 		for (int i = skipLength; i < _expectedBytesForEnglish.length; i++) {
-			assertEquals(_expectedBytesForEnglish[i], bytes[i - skipLength]);
+			Assert.assertEquals(
+				_expectedBytesForEnglish[i], bytes[i - skipLength]);
 		}
 	}
 
+	@Test
 	public void testSkip2()  throws IOException {
 		Reader reader = new StringReader(_TEST_STRING_ENGLISH);
 
@@ -262,15 +280,16 @@ public class ReaderInputStreamTest extends TestCase {
 
 		int result  = (int)readerInputStream.skip(skipLength);
 
-		assertEquals(skipLength, result);
+		Assert.assertEquals(skipLength, result);
 
 		result = readerInputStream.read();
 
 		readerInputStream.close();
 
-		assertEquals(-1, result);
+		Assert.assertEquals(-1, result);
 	}
 
+	@Test
 	public void testSkip3()  throws IOException {
 		Reader reader = new StringReader(_TEST_STRING_ENGLISH);
 
@@ -283,14 +302,14 @@ public class ReaderInputStreamTest extends TestCase {
 
 		readerInputStream.close();
 
-		assertEquals(_expectedBytesForEnglish.length, result);
+		Assert.assertEquals(_expectedBytesForEnglish.length, result);
 	}
 
 	protected void assertEquals(byte[] expectBytes, byte[] actualBytes) {
-		assertEquals(expectBytes.length, actualBytes.length);
+		Assert.assertEquals(expectBytes.length, actualBytes.length);
 
 		for (int i = 0; i < expectBytes.length; i++) {
-			assertEquals(expectBytes[i], actualBytes[i]);
+			Assert.assertEquals(expectBytes[i], actualBytes[i]);
 		}
 	}
 

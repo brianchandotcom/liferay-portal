@@ -14,9 +14,9 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.portal.kernel.test.TestCase;
-
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import org.springframework.mock.web.MockHttpSession;
@@ -24,8 +24,21 @@ import org.springframework.mock.web.MockHttpSession;
 /**
  * @author Sergio González
  */
-public class ProgressTrackerTest extends TestCase {
+public class ProgressTrackerTest {
 
+	@Before
+	public void setUp() throws Exception {
+		_mockHttpSession = new MockHttpSession();
+
+		_mockInstallProcess = new MockInstallProcess(_mockHttpSession);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_mockInstallProcess.finish();
+	}
+
+	@Test
 	public void testGetMessage() throws Exception {
 		_mockInstallProcess.initialize();
 
@@ -40,6 +53,7 @@ public class ProgressTrackerTest extends TestCase {
 		Assert.assertEquals("downloading", progressTracker.getMessage());
 	}
 
+	@Test
 	public void testGetPercent() throws Exception {
 		_mockInstallProcess.initialize();
 
@@ -101,18 +115,6 @@ public class ProgressTrackerTest extends TestCase {
 				status + ProgressTrackerTest.class.getName());
 
 		return progressTracker;
-	}
-
-	@Override
-	protected void setUp() throws Exception {
-		_mockHttpSession = new MockHttpSession();
-
-		_mockInstallProcess = new MockInstallProcess(_mockHttpSession);
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-		_mockInstallProcess.finish();
 	}
 
 	private MockHttpSession _mockHttpSession;

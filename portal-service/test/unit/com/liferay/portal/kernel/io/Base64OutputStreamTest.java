@@ -14,17 +14,20 @@
 
 package com.liferay.portal.kernel.io;
 
-import com.liferay.portal.kernel.test.TestCase;
 import com.liferay.portal.kernel.util.CharPool;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 /**
  * @author Tina Tian
  */
-public class Base64OutputStreamTest extends TestCase {
+public class Base64OutputStreamTest {
 
+	@Test
 	public void testClose() throws Exception {
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
@@ -46,10 +49,11 @@ public class Base64OutputStreamTest extends TestCase {
 		byteArrayInputStream.close();
 
 		if ((bytes[3] != CharPool.EQUAL) || (bytes[2] != CharPool.EQUAL)) {
-			fail();
+			Assert.fail();
 		}
 	}
 
+	@Test
 	public void testEncodeUnit1Byte() throws Exception {
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
@@ -64,11 +68,12 @@ public class Base64OutputStreamTest extends TestCase {
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(
 			byteArrayOutputStream.toByteArray());
 
-		assertEquals(4, byteArrayInputStream.read(new byte[4]));
+		Assert.assertEquals(4, byteArrayInputStream.read(new byte[4]));
 
 		byteArrayInputStream.close();
 	}
 
+	@Test
 	public void testEncodeUnit2Bytes() throws Exception {
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
@@ -83,11 +88,12 @@ public class Base64OutputStreamTest extends TestCase {
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(
 			byteArrayOutputStream.toByteArray());
 
-		assertEquals(4, byteArrayInputStream.read(new byte[4]));
+		Assert.assertEquals(4, byteArrayInputStream.read(new byte[4]));
 
 		byteArrayInputStream.close();
 	}
 
+	@Test
 	public void testEncodeUnit3Args() throws Exception {
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
@@ -102,11 +108,12 @@ public class Base64OutputStreamTest extends TestCase {
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(
 			byteArrayOutputStream.toByteArray());
 
-		assertEquals(4, byteArrayInputStream.read(new byte[4]));
+		Assert.assertEquals(4, byteArrayInputStream.read(new byte[4]));
 
 		byteArrayInputStream.close();
 	}
 
+	@Test
 	public void testFlush() throws Exception {
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
@@ -121,7 +128,7 @@ public class Base64OutputStreamTest extends TestCase {
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(
 			byteArrayOutputStream.toByteArray());
 
-		assertEquals(4, byteArrayInputStream.read(new byte[4]));
+		Assert.assertEquals(4, byteArrayInputStream.read(new byte[4]));
 
 		byteArrayInputStream.close();
 
@@ -137,26 +144,28 @@ public class Base64OutputStreamTest extends TestCase {
 		byteArrayInputStream = new ByteArrayInputStream(
 			byteArrayOutputStream.toByteArray());
 
-		assertEquals(4, byteArrayInputStream.read(new byte[4]));
+		Assert.assertEquals(4, byteArrayInputStream.read(new byte[4]));
 
 		byteArrayInputStream.close();
 	}
 
+	@Test
 	public void testGetChar() {
 		try {
 			Base64OutputStream base64OutputStream = new Base64OutputStream(
 				new ByteArrayOutputStream());
 
-			assertEquals('A', base64OutputStream.getChar(0));
-			assertEquals('?', base64OutputStream.getChar(64));
+			Assert.assertEquals('A', base64OutputStream.getChar(0));
+			Assert.assertEquals('?', base64OutputStream.getChar(64));
 
 			base64OutputStream.close();
 		}
 		catch (Exception e) {
-			fail(e.getMessage());
+			Assert.fail(e.getMessage());
 		}
 	}
 
+	@Test
 	public void testWrite3Args() throws Exception {
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
@@ -175,12 +184,13 @@ public class Base64OutputStreamTest extends TestCase {
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(
 			byteArrayOutputStream.toByteArray());
 
-		assertEquals(8, byteArrayInputStream.read(new byte[8]));
+		Assert.assertEquals(8, byteArrayInputStream.read(new byte[8]));
 
 		byteArrayInputStream.close();
 
 	}
 
+	@Test
 	public void testWriteByteArray() throws Exception {
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
@@ -195,11 +205,12 @@ public class Base64OutputStreamTest extends TestCase {
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(
 			byteArrayOutputStream.toByteArray());
 
-		assertEquals(4, byteArrayInputStream.read(new byte[4]));
+		Assert.assertEquals(4, byteArrayInputStream.read(new byte[4]));
 
 		byteArrayInputStream.close();
 	}
 
+	@Test
 	public void testWriteInt() throws Exception {
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
@@ -216,7 +227,7 @@ public class Base64OutputStreamTest extends TestCase {
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(
 			byteArrayOutputStream.toByteArray());
 
-		assertEquals(4, byteArrayInputStream.read(new byte[4]));
+		Assert.assertEquals(4, byteArrayInputStream.read(new byte[4]));
 
 		byteArrayInputStream.close();
 	}

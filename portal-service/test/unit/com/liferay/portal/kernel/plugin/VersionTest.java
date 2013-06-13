@@ -14,25 +14,29 @@
 
 package com.liferay.portal.kernel.plugin;
 
-import com.liferay.portal.kernel.test.TestCase;
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * @author Jorge Ferrer
  */
-public class VersionTest extends TestCase {
+public class VersionTest {
 
+	@Test
 	public void testBugFixNumber() {
 		assertPrevious("1.1.0", "1.1.1");
 		assertLater("1.1.1", "1.1.0");
 		assertLater("1.2.0", "1.1.1");
 	}
 
+	@Test
 	public void testBuildNumber() {
 		assertPrevious("1.1.1.0", "1.1.1.1");
 		assertPrevious("1.1.1.9", "1.1.1.10");
 		assertLater("1.1.1.20", "1.1.1.19");
 	}
 
+	@Test
 	public void testMajorNumber() {
 		assertPrevious("1.1", "1.1.1");
 		assertLater("2", "1.1.1");
@@ -40,6 +44,7 @@ public class VersionTest extends TestCase {
 		assertLater("10", "9");
 	}
 
+	@Test
 	public void testMinorNumber() {
 		assertPrevious("1.1", "1.1.1");
 		assertLater("1.2", "1.1.1");
@@ -47,6 +52,7 @@ public class VersionTest extends TestCase {
 		assertLater("1.10", "1.9");
 	}
 
+	@Test
 	public void testPlus() {
 		assertNotIncludes("1+", "0");
 		assertIncludes("1+", "1");
@@ -67,6 +73,7 @@ public class VersionTest extends TestCase {
 		assertNotIncludes("1.1.1.10+", "1.1.1.9");
 	}
 
+	@Test
 	public void testStar() {
 		assertIncludes("1.1.*", "1.1.0");
 		assertIncludes("1.*", "1.1");
@@ -80,7 +87,7 @@ public class VersionTest extends TestCase {
 		Version firstVersion = Version.getInstance(first);
 		Version secondVersion = Version.getInstance(second);
 
-		assertTrue(
+		Assert.assertTrue(
 			first + " does not include " + second,
 			firstVersion.includes(secondVersion));
 	}
@@ -88,7 +95,7 @@ public class VersionTest extends TestCase {
 	protected void assertLater(String first, String second) {
 		Version firstVersion = Version.getInstance(first);
 
-		assertTrue(
+		Assert.assertTrue(
 			first + " is not later than " + second,
 			firstVersion.isLaterVersionThan(second.toString()));
 	}
@@ -97,7 +104,7 @@ public class VersionTest extends TestCase {
 		Version firstVersion = Version.getInstance(first);
 		Version secondVersion = Version.getInstance(second);
 
-		assertFalse(
+		Assert.assertFalse(
 			first + " includes " + second,
 			firstVersion.includes(secondVersion));
 	}
@@ -105,7 +112,7 @@ public class VersionTest extends TestCase {
 	protected void assertPrevious(String first, String second) {
 		Version firstVersion = Version.getInstance(first);
 
-		assertTrue(
+		Assert.assertTrue(
 			first + " is not previous than " + second,
 			firstVersion.isPreviousVersionThan(second));
 	}

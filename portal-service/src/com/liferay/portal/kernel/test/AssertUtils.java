@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.test;
+package com.liferay.portal.kernel.test;
 
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -107,6 +107,15 @@ public class AssertUtils {
 		Assert.assertEquals(
 			StringUtil.merge(expectedStringArray),
 			StringUtil.merge(actualStringArray));
+	}
+
+	public static void assertLessThan(
+			double expectedDouble, double actualDouble)
+		throws Exception {
+
+		if (actualDouble > expectedDouble) {
+			Assert.fail(actualDouble + " is not less than " + expectedDouble);
+		}
 	}
 
 }

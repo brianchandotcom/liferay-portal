@@ -14,13 +14,15 @@
 
 package com.liferay.portal.kernel.concurrent;
 
-import com.liferay.portal.kernel.test.TestCase;
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * @author Shuyang Zhou
  */
-public class ConcurrentLFUCacheTest extends TestCase {
+public class ConcurrentLFUCacheTest {
 
+	@Test
 	public void testConstruct() {
 
 		// maxSize is 0
@@ -28,7 +30,7 @@ public class ConcurrentLFUCacheTest extends TestCase {
 		try {
 			new ConcurrentLFUCache<Object, Object>(0);
 
-			fail();
+			Assert.fail();
 		}
 		catch (IllegalArgumentException iae) {
 		}
@@ -36,7 +38,7 @@ public class ConcurrentLFUCacheTest extends TestCase {
 		try {
 			new ConcurrentLFUCache<Object, Object>(0, 0.9F);
 
-			fail();
+			Assert.fail();
 		}
 		catch (IllegalArgumentException iae) {
 		}
@@ -46,7 +48,7 @@ public class ConcurrentLFUCacheTest extends TestCase {
 		try {
 			new ConcurrentLFUCache<Object, Object>(-1);
 
-			fail();
+			Assert.fail();
 		}
 		catch (IllegalArgumentException iae) {
 		}
@@ -54,7 +56,7 @@ public class ConcurrentLFUCacheTest extends TestCase {
 		try {
 			new ConcurrentLFUCache<Object, Object>(-1, 0.9F);
 
-			fail();
+			Assert.fail();
 		}
 		catch (IllegalArgumentException iae) {
 		}
@@ -64,7 +66,7 @@ public class ConcurrentLFUCacheTest extends TestCase {
 		try {
 			new ConcurrentLFUCache<Object, Object>(10, 0);
 
-			fail();
+			Assert.fail();
 		}
 		catch (IllegalArgumentException iae) {
 		}
@@ -74,7 +76,7 @@ public class ConcurrentLFUCacheTest extends TestCase {
 		try {
 			new ConcurrentLFUCache<Object, Object>(10, -1);
 
-			fail();
+			Assert.fail();
 		}
 		catch (IllegalArgumentException iae) {
 		}
@@ -84,7 +86,7 @@ public class ConcurrentLFUCacheTest extends TestCase {
 		try {
 			new ConcurrentLFUCache<Object, Object>(10, 1);
 
-			fail();
+			Assert.fail();
 		}
 		catch (IllegalArgumentException iae) {
 		}
@@ -94,7 +96,7 @@ public class ConcurrentLFUCacheTest extends TestCase {
 		try {
 			new ConcurrentLFUCache<Object, Object>(10, 1.1F);
 
-			fail();
+			Assert.fail();
 		}
 		catch (IllegalArgumentException iae) {
 		}
@@ -104,7 +106,7 @@ public class ConcurrentLFUCacheTest extends TestCase {
 		try {
 			new ConcurrentLFUCache<Object, Object>(1, 0.9F);
 
-			fail();
+			Assert.fail();
 		}
 		catch (IllegalArgumentException iae) {
 		}
@@ -114,7 +116,7 @@ public class ConcurrentLFUCacheTest extends TestCase {
 		try {
 			new ConcurrentLFUCache<Object, Object>(10, 0.09F);
 
-			fail();
+			Assert.fail();
 		}
 		catch (IllegalArgumentException iae) {
 		}
@@ -122,16 +124,17 @@ public class ConcurrentLFUCacheTest extends TestCase {
 		ConcurrentLFUCache<String, String> concurrentLFUCache =
 			new ConcurrentLFUCache<String, String>(10);
 
-		assertEquals(0, concurrentLFUCache.evictCount());
-		assertEquals(0, concurrentLFUCache.hitCount());
-		assertEquals(10, concurrentLFUCache.maxSize());
-		assertEquals(0, concurrentLFUCache.missCount());
-		assertEquals(0, concurrentLFUCache.putCount());
-		assertEquals(0, concurrentLFUCache.size());
+		Assert.assertEquals(0, concurrentLFUCache.evictCount());
+		Assert.assertEquals(0, concurrentLFUCache.hitCount());
+		Assert.assertEquals(10, concurrentLFUCache.maxSize());
+		Assert.assertEquals(0, concurrentLFUCache.missCount());
+		Assert.assertEquals(0, concurrentLFUCache.putCount());
+		Assert.assertEquals(0, concurrentLFUCache.size());
 
-		assertNull(concurrentLFUCache.get("key"));
+		Assert.assertNull(concurrentLFUCache.get("key"));
 	}
 
+	@Test
 	public void testLFU1() {
 		ConcurrentLFUCache<String, String> concurrentLFUCache =
 			new ConcurrentLFUCache<String, String>(2, 0.5F);
@@ -139,62 +142,63 @@ public class ConcurrentLFUCacheTest extends TestCase {
 		try {
 			concurrentLFUCache.put(null, "value");
 
-			fail();
+			Assert.fail();
 		}
 		catch (NullPointerException npe) {
 		}
 
 		concurrentLFUCache.put("key1", "value1");
 
-		assertEquals(0, concurrentLFUCache.evictCount());
-		assertEquals(0, concurrentLFUCache.hitCount());
-		assertEquals(0, concurrentLFUCache.missCount());
-		assertEquals(1, concurrentLFUCache.putCount());
-		assertEquals(1, concurrentLFUCache.size());
+		Assert.assertEquals(0, concurrentLFUCache.evictCount());
+		Assert.assertEquals(0, concurrentLFUCache.hitCount());
+		Assert.assertEquals(0, concurrentLFUCache.missCount());
+		Assert.assertEquals(1, concurrentLFUCache.putCount());
+		Assert.assertEquals(1, concurrentLFUCache.size());
 
-		assertEquals("value1", concurrentLFUCache.get("key1"));
+		Assert.assertEquals("value1", concurrentLFUCache.get("key1"));
 
-		assertEquals(0, concurrentLFUCache.evictCount());
-		assertEquals(1, concurrentLFUCache.hitCount());
-		assertEquals(0, concurrentLFUCache.missCount());
-		assertEquals(1, concurrentLFUCache.putCount());
-		assertEquals(1, concurrentLFUCache.size());
+		Assert.assertEquals(0, concurrentLFUCache.evictCount());
+		Assert.assertEquals(1, concurrentLFUCache.hitCount());
+		Assert.assertEquals(0, concurrentLFUCache.missCount());
+		Assert.assertEquals(1, concurrentLFUCache.putCount());
+		Assert.assertEquals(1, concurrentLFUCache.size());
 
 		concurrentLFUCache.put("key2", "value2");
 
-		assertEquals(0, concurrentLFUCache.evictCount());
-		assertEquals(1, concurrentLFUCache.hitCount());
-		assertEquals(0, concurrentLFUCache.missCount());
-		assertEquals(2, concurrentLFUCache.putCount());
-		assertEquals(2, concurrentLFUCache.size());
+		Assert.assertEquals(0, concurrentLFUCache.evictCount());
+		Assert.assertEquals(1, concurrentLFUCache.hitCount());
+		Assert.assertEquals(0, concurrentLFUCache.missCount());
+		Assert.assertEquals(2, concurrentLFUCache.putCount());
+		Assert.assertEquals(2, concurrentLFUCache.size());
 
 		concurrentLFUCache.put("key2", "value2-2");
 
-		assertEquals(0, concurrentLFUCache.evictCount());
-		assertEquals(1, concurrentLFUCache.hitCount());
-		assertEquals(0, concurrentLFUCache.missCount());
-		assertEquals(3, concurrentLFUCache.putCount());
-		assertEquals(2, concurrentLFUCache.size());
+		Assert.assertEquals(0, concurrentLFUCache.evictCount());
+		Assert.assertEquals(1, concurrentLFUCache.hitCount());
+		Assert.assertEquals(0, concurrentLFUCache.missCount());
+		Assert.assertEquals(3, concurrentLFUCache.putCount());
+		Assert.assertEquals(2, concurrentLFUCache.size());
 
 		concurrentLFUCache.put("key3", "value3");
 
-		assertEquals(1, concurrentLFUCache.evictCount());
-		assertEquals(1, concurrentLFUCache.hitCount());
-		assertEquals(0, concurrentLFUCache.missCount());
-		assertEquals(4, concurrentLFUCache.putCount());
-		assertEquals(2, concurrentLFUCache.size());
+		Assert.assertEquals(1, concurrentLFUCache.evictCount());
+		Assert.assertEquals(1, concurrentLFUCache.hitCount());
+		Assert.assertEquals(0, concurrentLFUCache.missCount());
+		Assert.assertEquals(4, concurrentLFUCache.putCount());
+		Assert.assertEquals(2, concurrentLFUCache.size());
 
-		assertEquals("value1", concurrentLFUCache.get("key1"));
-		assertNull(concurrentLFUCache.get("key2"));
-		assertEquals("value3", concurrentLFUCache.get("key3"));
+		Assert.assertEquals("value1", concurrentLFUCache.get("key1"));
+		Assert.assertNull(concurrentLFUCache.get("key2"));
+		Assert.assertEquals("value3", concurrentLFUCache.get("key3"));
 
-		assertEquals(1, concurrentLFUCache.evictCount());
-		assertEquals(3, concurrentLFUCache.hitCount());
-		assertEquals(1, concurrentLFUCache.missCount());
-		assertEquals(4, concurrentLFUCache.putCount());
-		assertEquals(2, concurrentLFUCache.size());
+		Assert.assertEquals(1, concurrentLFUCache.evictCount());
+		Assert.assertEquals(3, concurrentLFUCache.hitCount());
+		Assert.assertEquals(1, concurrentLFUCache.missCount());
+		Assert.assertEquals(4, concurrentLFUCache.putCount());
+		Assert.assertEquals(2, concurrentLFUCache.size());
 	}
 
+	@Test
 	public void testLFU2() {
 		ConcurrentLFUCache<String, String> concurrentLFUCache =
 			new ConcurrentLFUCache<String, String>(3);
@@ -211,10 +215,10 @@ public class ConcurrentLFUCacheTest extends TestCase {
 
 		concurrentLFUCache.put("4", "4");
 
-		assertNotNull(concurrentLFUCache.get("1"));
-		assertNotNull(concurrentLFUCache.get("2"));
+		Assert.assertNotNull(concurrentLFUCache.get("1"));
+		Assert.assertNotNull(concurrentLFUCache.get("2"));
 
-		assertNull(concurrentLFUCache.get("3"));
+		Assert.assertNull(concurrentLFUCache.get("3"));
 	}
 
 }

@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.io;
 
-import com.liferay.portal.kernel.test.TestCase;
-
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
@@ -28,27 +26,31 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicLong;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 /**
  * @author Shuyang Zhou
  */
-public class CharPipeTest extends TestCase {
+public class CharPipeTest {
 
+	@Test
 	public void testCloseForce() {
 		CharPipe charPipe = new CharPipe();
 
-		assertFalse(charPipe.finished);
+		Assert.assertFalse(charPipe.finished);
 
 		charPipe.close(true);
 
-		assertNull(charPipe.buffer);
-		assertFalse(charPipe.finished);
+		Assert.assertNull(charPipe.buffer);
+		Assert.assertFalse(charPipe.finished);
 
 		try {
 			Reader reader = charPipe.getReader();
 
 			reader.read();
 
-			fail();
+			Assert.fail();
 		}
 		catch (IOException ioe) {
 		}
@@ -58,7 +60,7 @@ public class CharPipeTest extends TestCase {
 
 			reader.read(new char[1]);
 
-			fail();
+			Assert.fail();
 		}
 		catch (IOException ioe) {
 		}
@@ -68,7 +70,7 @@ public class CharPipeTest extends TestCase {
 
 			reader.read(CharBuffer.allocate(1));
 
-			fail();
+			Assert.fail();
 		}
 		catch (IOException ioe) {
 		}
@@ -78,7 +80,7 @@ public class CharPipeTest extends TestCase {
 
 			reader.ready();
 
-			fail();
+			Assert.fail();
 		}
 		catch (IOException ioe) {
 		}
@@ -88,7 +90,7 @@ public class CharPipeTest extends TestCase {
 
 			reader.skip(1);
 
-			fail();
+			Assert.fail();
 		}
 		catch (IOException ioe) {
 		}
@@ -98,7 +100,7 @@ public class CharPipeTest extends TestCase {
 
 			writer.append('a');
 
-			fail();
+			Assert.fail();
 		}
 		catch (IOException ioe) {
 		}
@@ -108,7 +110,7 @@ public class CharPipeTest extends TestCase {
 
 			writer.append("a");
 
-			fail();
+			Assert.fail();
 		}
 		catch (IOException ioe) {
 		}
@@ -118,7 +120,7 @@ public class CharPipeTest extends TestCase {
 
 			writer.write("abc".toCharArray());
 
-			fail();
+			Assert.fail();
 		}
 		catch (IOException ioe) {
 		}
@@ -128,7 +130,7 @@ public class CharPipeTest extends TestCase {
 
 			writer.write('a');
 
-			fail();
+			Assert.fail();
 		}
 		catch (IOException ioe) {
 		}
@@ -138,12 +140,13 @@ public class CharPipeTest extends TestCase {
 
 			writer.write("a");
 
-			fail();
+			Assert.fail();
 		}
 		catch (IOException ioe) {
 		}
 	}
 
+	@Test
 	public void testClosePeacefullyBlocking() throws Exception {
 		final CharPipe charPipe = new CharPipe();
 
@@ -161,7 +164,7 @@ public class CharPipeTest extends TestCase {
 					charPipe.close();
 				}
 				catch (Exception e) {
-					fail(e.getMessage());
+					Assert.fail(e.getMessage());
 				}
 			}
 
@@ -175,25 +178,27 @@ public class CharPipeTest extends TestCase {
 
 		thread.join();
 
-		assertEquals(-1, result);
-		assertTrue(timestampAfterRead >= timestampBeforeClose.get());
+		Assert.assertEquals(-1, result);
+		Assert.assertTrue(timestampAfterRead >= timestampBeforeClose.get());
 	}
 
+	@Test
 	public void testClosePeacefullyEmpty() throws IOException {
 		CharPipe charPipe = new CharPipe();
 
-		assertFalse(charPipe.finished);
+		Assert.assertFalse(charPipe.finished);
 
 		charPipe.close();
 
-		assertNotNull(charPipe.buffer);
-		assertTrue(charPipe.finished);
+		Assert.assertNotNull(charPipe.buffer);
+		Assert.assertTrue(charPipe.finished);
 
 		Reader reader = charPipe.getReader();
 
-		assertEquals(-1, reader.read());
+		Assert.assertEquals(-1, reader.read());
 	}
 
+	@Test
 	public void testClosePeacefullyNotEmpty() throws IOException {
 		CharPipe charPipe = new CharPipe();
 
@@ -201,12 +206,12 @@ public class CharPipeTest extends TestCase {
 
 		writer.write("abcd");
 
-		assertFalse(charPipe.finished);
+		Assert.assertFalse(charPipe.finished);
 
 		charPipe.close();
 
-		assertNotNull(charPipe.buffer);
-		assertTrue(charPipe.finished);
+		Assert.assertNotNull(charPipe.buffer);
+		Assert.assertTrue(charPipe.finished);
 
 		char[] buffer = new char[5];
 
@@ -214,54 +219,56 @@ public class CharPipeTest extends TestCase {
 
 		int result = reader.read(buffer);
 
-		assertEquals(4, result);
-		assertEquals('a', buffer[0]);
-		assertEquals('b', buffer[1]);
-		assertEquals('c', buffer[2]);
-		assertEquals('d', buffer[3]);
-		assertEquals(0, buffer[4]);
-		assertEquals(-1, reader.read());
+		Assert.assertEquals(4, result);
+		Assert.assertEquals('a', buffer[0]);
+		Assert.assertEquals('b', buffer[1]);
+		Assert.assertEquals('c', buffer[2]);
+		Assert.assertEquals('d', buffer[3]);
+		Assert.assertEquals(0, buffer[4]);
+		Assert.assertEquals(-1, reader.read());
 	}
 
+	@Test
 	public void testConstructor() {
 		CharPipe charPipe = new CharPipe();
 
-		assertNotNull(charPipe.buffer);
-		assertEquals(8192, charPipe.buffer.length);
-		assertEquals(0, charPipe.count);
-		assertEquals(0, charPipe.readIndex);
-		assertEquals(0, charPipe.writeIndex);
-		assertNotNull(charPipe.bufferLock);
-		assertNotNull(charPipe.notEmpty);
-		assertNotNull(charPipe.notFull);
+		Assert.assertNotNull(charPipe.buffer);
+		Assert.assertEquals(8192, charPipe.buffer.length);
+		Assert.assertEquals(0, charPipe.count);
+		Assert.assertEquals(0, charPipe.readIndex);
+		Assert.assertEquals(0, charPipe.writeIndex);
+		Assert.assertNotNull(charPipe.bufferLock);
+		Assert.assertNotNull(charPipe.notEmpty);
+		Assert.assertNotNull(charPipe.notFull);
 
 		charPipe = new CharPipe(1024);
 
-		assertNotNull(charPipe.buffer);
-		assertEquals(1024, charPipe.buffer.length);
-		assertEquals(0, charPipe.count);
-		assertEquals(0, charPipe.readIndex);
-		assertEquals(0, charPipe.writeIndex);
-		assertNotNull(charPipe.bufferLock);
-		assertNotNull(charPipe.notEmpty);
-		assertNotNull(charPipe.notFull);
+		Assert.assertNotNull(charPipe.buffer);
+		Assert.assertEquals(1024, charPipe.buffer.length);
+		Assert.assertEquals(0, charPipe.count);
+		Assert.assertEquals(0, charPipe.readIndex);
+		Assert.assertEquals(0, charPipe.writeIndex);
+		Assert.assertNotNull(charPipe.bufferLock);
+		Assert.assertNotNull(charPipe.notEmpty);
+		Assert.assertNotNull(charPipe.notFull);
 
 		charPipe.close();
 	}
 
+	@Test
 	public void testGetReader() {
 		CharPipe charPipe = new CharPipe();
 
 		Reader reader1 = charPipe.getReader();
 		Reader reader2 = charPipe.getReader();
 
-		assertSame(reader1, reader2);
-		assertFalse(reader1.markSupported());
+		Assert.assertSame(reader1, reader2);
+		Assert.assertFalse(reader1.markSupported());
 
 		try {
 			reader1.mark(1);
 
-			fail();
+			Assert.fail();
 		}
 		catch (IOException ioe) {
 		}
@@ -269,7 +276,7 @@ public class CharPipeTest extends TestCase {
 		try {
 			reader1.reset();
 
-			fail();
+			Assert.fail();
 		}
 		catch (IOException ioe) {
 		}
@@ -277,43 +284,46 @@ public class CharPipeTest extends TestCase {
 		charPipe.close();
 	}
 
+	@Test
 	public void testGetWriter() throws IOException {
 		CharPipe charPipe = new CharPipe();
 
 		Writer writer1 = charPipe.getWriter();
 		Writer writer2 = charPipe.getWriter();
 
-		assertSame(writer1, writer2);
+		Assert.assertSame(writer1, writer2);
 
 		writer1.flush();
 
 		charPipe.close();
 	}
 
+	@Test
 	public void testPipingChar() throws IOException {
 		CharPipe charPipe = new CharPipe(4);
 
 		Reader reader = charPipe.getReader();
 
-		assertFalse(reader.ready());
+		Assert.assertFalse(reader.ready());
 
 		Writer writer = charPipe.getWriter();
 
 		writer.write('a');
 
-		assertTrue(reader.ready());
-		assertEquals('a', reader.read());
-		assertFalse(reader.ready());
+		Assert.assertTrue(reader.ready());
+		Assert.assertEquals('a', reader.read());
+		Assert.assertFalse(reader.ready());
 
 		writer.append('b');
 
-		assertTrue(reader.ready());
-		assertEquals('b', reader.read());
-		assertFalse(reader.ready());
+		Assert.assertTrue(reader.ready());
+		Assert.assertEquals('b', reader.read());
+		Assert.assertFalse(reader.ready());
 
 		charPipe.close();
 	}
 
+	@Test
 	public void testPipingCharArray() throws IOException {
 		CharPipe charPipe = new CharPipe(4);
 
@@ -329,19 +339,20 @@ public class CharPipeTest extends TestCase {
 
 		int result = reader.read(buffer);
 
-		assertEquals(4, result);
-		assertTrue(Arrays.equals(data, buffer));
+		Assert.assertEquals(4, result);
+		Assert.assertTrue(Arrays.equals(data, buffer));
 
 		writer.append(new String(data));
 
 		result = reader.read(buffer);
 
-		assertEquals(4, result);
-		assertTrue(Arrays.equals(data, buffer));
+		Assert.assertEquals(4, result);
+		Assert.assertTrue(Arrays.equals(data, buffer));
 
 		charPipe.close();
 	}
 
+	@Test
 	public void testPipingCharArrayWithOffset() throws IOException {
 		CharPipe charPipe = new CharPipe(4);
 
@@ -353,7 +364,7 @@ public class CharPipeTest extends TestCase {
 
 		Reader reader = charPipe.getReader();
 
-		assertFalse(reader.ready());
+		Assert.assertFalse(reader.ready());
 
 		writer.write(data, 1, 2);
 
@@ -361,29 +372,30 @@ public class CharPipeTest extends TestCase {
 
 		int result = reader.read(buffer, 1, 0);
 
-		assertEquals(0, result);
+		Assert.assertEquals(0, result);
 
 		result = reader.read(buffer, 1, 3);
 
-		assertEquals(2, result);
-		assertEquals('b', buffer[1]);
-		assertEquals('c', buffer[2]);
+		Assert.assertEquals(2, result);
+		Assert.assertEquals('b', buffer[1]);
+		Assert.assertEquals('c', buffer[2]);
 
 		writer.append(new String(data), 1, 3);
 
 		result = reader.read(buffer, 1, 0);
 
-		assertEquals(0, result);
+		Assert.assertEquals(0, result);
 
 		result = reader.read(buffer, 1, 3);
 
-		assertEquals(2, result);
-		assertEquals('b', buffer[1]);
-		assertEquals('c', buffer[2]);
+		Assert.assertEquals(2, result);
+		Assert.assertEquals('b', buffer[1]);
+		Assert.assertEquals('c', buffer[2]);
 
 		charPipe.close();
 	}
 
+	@Test
 	public void testPipingCharArrayWithOffsetTwoStep() throws IOException {
 		CharPipe charPipe = new CharPipe(4);
 
@@ -399,34 +411,35 @@ public class CharPipeTest extends TestCase {
 
 		int result = reader.read(buffer, 0, 3);
 
-		assertEquals(3, result);
-		assertEquals('a', buffer[0]);
-		assertEquals('b', buffer[1]);
-		assertEquals('c', buffer[2]);
+		Assert.assertEquals(3, result);
+		Assert.assertEquals('a', buffer[0]);
+		Assert.assertEquals('b', buffer[1]);
+		Assert.assertEquals('c', buffer[2]);
 
 		writer.write(data, 0, 3);
 
 		result = reader.read(buffer);
 
-		assertEquals(4, result);
-		assertEquals('d', buffer[0]);
-		assertEquals('a', buffer[1]);
-		assertEquals('b', buffer[2]);
-		assertEquals('c', buffer[3]);
+		Assert.assertEquals(4, result);
+		Assert.assertEquals('d', buffer[0]);
+		Assert.assertEquals('a', buffer[1]);
+		Assert.assertEquals('b', buffer[2]);
+		Assert.assertEquals('c', buffer[3]);
 
 		writer.write(data);
 
 		result = reader.read(buffer);
 
-		assertEquals(4, result);
-		assertEquals('a', buffer[0]);
-		assertEquals('b', buffer[1]);
-		assertEquals('c', buffer[2]);
-		assertEquals('d', buffer[3]);
+		Assert.assertEquals(4, result);
+		Assert.assertEquals('a', buffer[0]);
+		Assert.assertEquals('b', buffer[1]);
+		Assert.assertEquals('c', buffer[2]);
+		Assert.assertEquals('d', buffer[3]);
 
 		charPipe.close();
 	}
 
+	@Test
 	public void testPipingCharBuffer() throws IOException {
 		CharPipe charPipe = new CharPipe(4);
 
@@ -440,22 +453,23 @@ public class CharPipeTest extends TestCase {
 
 		int result = reader.read(charBuffer);
 
-		assertEquals(0, result);
+		Assert.assertEquals(0, result);
 
 		charBuffer = CharBuffer.allocate(2);
 
 		result = reader.read(charBuffer);
 
-		assertEquals(2, result);
+		Assert.assertEquals(2, result);
 
 		charBuffer.flip();
 
-		assertEquals('a', charBuffer.get());
-		assertEquals('b', charBuffer.get());
+		Assert.assertEquals('a', charBuffer.get());
+		Assert.assertEquals('b', charBuffer.get());
 
 		charPipe.close();
 	}
 
+	@Test
 	public void testPipingString() throws IOException {
 		CharPipe charPipe = new CharPipe(4);
 
@@ -468,12 +482,13 @@ public class CharPipeTest extends TestCase {
 
 		int result = reader.read(buffer);
 
-		assertEquals(4, result);
-		assertEquals("abcd", new String(buffer));
+		Assert.assertEquals(4, result);
+		Assert.assertEquals("abcd", new String(buffer));
 
 		charPipe.close();
 	}
 
+	@Test
 	public void testPipingStringWithOffset() throws IOException {
 		CharPipe charPipe = new CharPipe(4);
 
@@ -483,7 +498,7 @@ public class CharPipeTest extends TestCase {
 
 		Reader reader = charPipe.getReader();
 
-		assertFalse(reader.ready());
+		Assert.assertFalse(reader.ready());
 
 		writer.write("abcd", 1, 3);
 
@@ -491,18 +506,19 @@ public class CharPipeTest extends TestCase {
 
 		int result = reader.read(buffer, 1, 0);
 
-		assertEquals(0, result);
+		Assert.assertEquals(0, result);
 
 		result = reader.read(buffer, 1, 3);
 
-		assertEquals(3, result);
-		assertEquals('b', buffer[1]);
-		assertEquals('c', buffer[2]);
-		assertEquals('d', buffer[3]);
+		Assert.assertEquals(3, result);
+		Assert.assertEquals('b', buffer[1]);
+		Assert.assertEquals('c', buffer[2]);
+		Assert.assertEquals('d', buffer[3]);
 
 		charPipe.close();
 	}
 
+	@Test
 	public void testPipingStringWithOffsetTwoStep() throws IOException {
 		CharPipe charPipe = new CharPipe(4);
 
@@ -516,34 +532,35 @@ public class CharPipeTest extends TestCase {
 
 		int result = reader.read(buffer, 0, 3);
 
-		assertEquals(3, result);
-		assertEquals('a', buffer[0]);
-		assertEquals('b', buffer[1]);
-		assertEquals('c', buffer[2]);
+		Assert.assertEquals(3, result);
+		Assert.assertEquals('a', buffer[0]);
+		Assert.assertEquals('b', buffer[1]);
+		Assert.assertEquals('c', buffer[2]);
 
 		writer.write("abcd", 0, 3);
 
 		result = reader.read(buffer);
 
-		assertEquals(4, result);
-		assertEquals('d', buffer[0]);
-		assertEquals('a', buffer[1]);
-		assertEquals('b', buffer[2]);
-		assertEquals('c', buffer[3]);
+		Assert.assertEquals(4, result);
+		Assert.assertEquals('d', buffer[0]);
+		Assert.assertEquals('a', buffer[1]);
+		Assert.assertEquals('b', buffer[2]);
+		Assert.assertEquals('c', buffer[3]);
 
 		writer.write("abcd");
 
 		result = reader.read(buffer);
 
-		assertEquals(4, result);
-		assertEquals('a', buffer[0]);
-		assertEquals('b', buffer[1]);
-		assertEquals('c', buffer[2]);
-		assertEquals('d', buffer[3]);
+		Assert.assertEquals(4, result);
+		Assert.assertEquals('a', buffer[0]);
+		Assert.assertEquals('b', buffer[1]);
+		Assert.assertEquals('c', buffer[2]);
+		Assert.assertEquals('d', buffer[3]);
 
 		charPipe.close();
 	}
 
+	@Test
 	public void testSkip() throws Exception {
 		CharPipe charPipe = new CharPipe(4);
 
@@ -552,7 +569,7 @@ public class CharPipeTest extends TestCase {
 		try {
 			reader.skip(-1);
 
-			fail();
+			Assert.fail();
 		}
 		catch (IllegalArgumentException iae) {
 		}
@@ -570,11 +587,11 @@ public class CharPipeTest extends TestCase {
 			long timestampAfterSkip1 = _timestampedSkip(reader, 2);
 			long timestampAfterSkip2 = _timestampedSkip(reader, 2);
 
-			assertTrue(timestampAfterSkip1 >= timestampBeforeWrite);
-			assertTrue(timestampAfterSkip2 >= timestampAfterSkip1);
+			Assert.assertTrue(timestampAfterSkip1 >= timestampBeforeWrite);
+			Assert.assertTrue(timestampAfterSkip2 >= timestampAfterSkip1);
 
 			if (System.getenv("JENKINS_URL") == null) {
-				assertTrue(
+				Assert.assertTrue(
 					(timestampAfterSkip1 - timestampBeforeWrite) >=
 						(timestampAfterSkip2 - timestampAfterSkip1));
 			}
@@ -584,9 +601,10 @@ public class CharPipeTest extends TestCase {
 
 		thread.join();
 
-		assertFalse(slowWriterJob.isFailed());
+		Assert.assertFalse(slowWriterJob.isFailed());
 	}
 
+	@Test
 	public void testSlowReader() throws Exception {
 		CharPipe charPipe = new CharPipe(4);
 
@@ -605,12 +623,12 @@ public class CharPipeTest extends TestCase {
 
 		for (int i = 0; i < 5; i++) {
 			if ((i % 2) == 0) {
-				assertTrue(
+				Assert.assertTrue(
 					_timestampedWrite(writer, "abcdefgh") >=
 						slowReaderJob.getTimestampBeforeRead());
 			}
 			else {
-				assertTrue(
+				Assert.assertTrue(
 					_timestampedWrite(writer, "abcdefgh".toCharArray()) >=
 						slowReaderJob.getTimestampBeforeRead());
 			}
@@ -620,9 +638,10 @@ public class CharPipeTest extends TestCase {
 
 		thread.join();
 
-		assertFalse(slowReaderJob.isFailed());
+		Assert.assertFalse(slowReaderJob.isFailed());
 	}
 
+	@Test
 	public void testSlowReaderOnCloseForce() throws Exception {
 		CharPipe charPipe = new CharPipe(4);
 
@@ -639,7 +658,7 @@ public class CharPipeTest extends TestCase {
 		thread.start();
 
 		for (int i = 0; i < 2; i++) {
-			assertTrue(
+			Assert.assertTrue(
 				_timestampedWrite(writer, "abcdefgh") >=
 					slowReaderJob.getTimestampBeforeRead());
 		}
@@ -648,9 +667,10 @@ public class CharPipeTest extends TestCase {
 
 		thread.join();
 
-		assertFalse(slowReaderJob.isFailed());
+		Assert.assertFalse(slowReaderJob.isFailed());
 	}
 
+	@Test
 	public void testSlowReaderOnClosePeacefully() throws Exception {
 		CharPipe charPipe = new CharPipe(4);
 
@@ -667,7 +687,7 @@ public class CharPipeTest extends TestCase {
 		thread.start();
 
 		for (int i = 0; i < 2; i++) {
-			assertTrue(
+			Assert.assertTrue(
 				_timestampedWrite(writer, "abcdefgh") >=
 					slowReaderJob.getTimestampBeforeRead());
 		}
@@ -676,9 +696,10 @@ public class CharPipeTest extends TestCase {
 
 		thread.join();
 
-		assertFalse(slowReaderJob.isFailed());
+		Assert.assertFalse(slowReaderJob.isFailed());
 	}
 
+	@Test
 	public void testSlowWriter() throws Exception {
 		CharPipe charPipe = new CharPipe(4);
 
@@ -695,7 +716,7 @@ public class CharPipeTest extends TestCase {
 
 			char[] buffer = new char[8];
 
-			assertTrue(
+			Assert.assertTrue(
 				_timestampedRead(reader, buffer) >=
 					slowWriterJob.getTimestampBeforeWrite());
 		}
@@ -704,9 +725,10 @@ public class CharPipeTest extends TestCase {
 
 		thread.join();
 
-		assertFalse(slowWriterJob.isFailed());
+		Assert.assertFalse(slowWriterJob.isFailed());
 	}
 
+	@Test
 	public void testSlowWriterOnClose() throws Exception {
 		CharPipe charPipe = new CharPipe(4);
 
@@ -723,7 +745,7 @@ public class CharPipeTest extends TestCase {
 
 			char[] buffer = new char[8];
 
-			assertTrue(
+			Assert.assertTrue(
 				_timestampedRead(reader, buffer) >=
 					slowWriterJob.getTimestampBeforeWrite());
 		}
@@ -732,7 +754,7 @@ public class CharPipeTest extends TestCase {
 
 		thread.join();
 
-		assertFalse(slowWriterJob.isFailed());
+		Assert.assertFalse(slowWriterJob.isFailed());
 	}
 
 	private void _randomWait(int time) throws InterruptedException {

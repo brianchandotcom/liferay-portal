@@ -14,13 +14,15 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.portal.kernel.test.TestCase;
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * @author Michael C. Han
  */
-public class PrimitiveLongListTest extends TestCase {
+public class PrimitiveLongListTest {
 
+	@Test
 	public void testAdd() {
 		long[] expected = new long[] {10l, 11l, 12l};
 
@@ -30,17 +32,18 @@ public class PrimitiveLongListTest extends TestCase {
 			primitiveLongList.add(expected[i]);
 		}
 
-		assertEquals(expected.length, primitiveLongList.size());
+		Assert.assertEquals(expected.length, primitiveLongList.size());
 
 		long[] actual = primitiveLongList.getArray();
 
-		assertEquals(expected.length, actual.length);
+		Assert.assertEquals(expected.length, actual.length);
 
 		for (int i = 0; i < actual.length; i++) {
-			assertEquals(expected[i], actual[i]);
+			Assert.assertEquals(expected[i], actual[i]);
 		}
 	}
 
+	@Test
 	public void testAddAll() {
 		long[] expected = new long[] {10l, 11l, 12l};
 
@@ -48,14 +51,14 @@ public class PrimitiveLongListTest extends TestCase {
 
 		primitiveLongList.addAll(expected);
 
-		assertEquals(expected.length, primitiveLongList.size());
+		Assert.assertEquals(expected.length, primitiveLongList.size());
 
 		long[] actual = primitiveLongList.getArray();
 
-		assertEquals(expected.length, actual.length);
+		Assert.assertEquals(expected.length, actual.length);
 
 		for (int i = 0; i < actual.length; i++) {
-			assertEquals(expected[i], actual[i]);
+			Assert.assertEquals(expected[i], actual[i]);
 		}
 	}
 

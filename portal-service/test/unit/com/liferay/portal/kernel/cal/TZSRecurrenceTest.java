@@ -20,19 +20,25 @@ import com.liferay.portal.kernel.util.Time;
 import java.util.Calendar;
 import java.util.TimeZone;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 /**
  * @author Angelo Jefferson
  */
 public class TZSRecurrenceTest extends RecurrenceTestCase {
 
+	@Test
 	public void testCompleteTimeZoneWithinTSZRecurrence() {
 		checkWithinTSZRecurrence(_timeZone);
 	}
 
+	@Test
 	public void testIncompleteTimeZoneWithinTSZRecurrence() {
 		checkWithinTSZRecurrence(getIncompleteTimeZone());
 	}
 
+	@Test
 	public void testInsideDSTTZSRecurrence() {
 
 		// Event starting inside DST matched by first Sunday of the month
@@ -59,6 +65,7 @@ public class TZSRecurrenceTest extends RecurrenceTestCase {
 			secondDayOfMonthTSZRecurrence);
 	}
 
+	@Test
 	public void testOutsideDSTTZSRecurrence() {
 
 		// Event starting outside of DST matched by the first Monday of the
@@ -92,7 +99,7 @@ public class TZSRecurrenceTest extends RecurrenceTestCase {
 	protected void assertTZSRecurrenceEquals(
 		boolean expected, TZSRecurrence recurrence, Calendar calendar) {
 
-		assertEquals(expected, recurrence.isInRecurrence(calendar));
+		Assert.assertEquals(expected, recurrence.isInRecurrence(calendar));
 	}
 
 	protected void checkWithinTSZRecurrence(

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.util;
 
-import com.liferay.portal.kernel.test.TestCase;
 import com.liferay.portal.kernel.util.StringPool;
 
 import org.junit.Assert;
@@ -23,7 +22,7 @@ import org.junit.Test;
 /**
  * @author Julio Camarero
  */
-public class FriendlyURLNormalizerImplTest extends TestCase {
+public class FriendlyURLNormalizerImplTest {
 
 	@Test
 	public void testNormalizeBlank() {

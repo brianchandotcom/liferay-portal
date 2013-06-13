@@ -25,11 +25,14 @@ import java.util.Map;
 
 import junit.framework.TestCase;
 
+import org.junit.Test;
+
 /**
  * @author Shuyang Zhou
  */
 public abstract class BaseCacheKeyGeneratorTestCase extends TestCase {
 
+	@Test
 	public void testConsistency() {
 		StringBundler sb = new StringBundler(_KEYS);
 
@@ -43,6 +46,7 @@ public abstract class BaseCacheKeyGeneratorTestCase extends TestCase {
 		assertEquals(hashCode2, hashCode3);
 	}
 
+	@Test
 	public void testScan() {
 		Map<Serializable, String> map = new HashMap<Serializable, String>();
 
@@ -61,6 +65,7 @@ public abstract class BaseCacheKeyGeneratorTestCase extends TestCase {
 		}
 	}
 
+	@Test
 	public void testSpecialCases() {
 		Map<Serializable, String> checkMap =
 			new HashMap<Serializable, String>();

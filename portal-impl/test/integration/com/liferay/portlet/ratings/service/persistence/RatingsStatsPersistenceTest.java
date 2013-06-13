@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
-import com.liferay.portal.test.AssertUtils;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
 import com.liferay.portal.util.PropsValues;
@@ -136,7 +136,8 @@ public class RatingsStatsPersistenceTest {
 			newRatingsStats.getClassPK());
 		Assert.assertEquals(existingRatingsStats.getTotalEntries(),
 			newRatingsStats.getTotalEntries());
-		AssertUtils.assertEquals(existingRatingsStats.getTotalScore(),
+		AssertUtils.assertEquals(
+			existingRatingsStats.getTotalScore(),
 			newRatingsStats.getTotalScore());
 		AssertUtils.assertEquals(existingRatingsStats.getAverageScore(),
 			newRatingsStats.getAverageScore());

@@ -14,16 +14,20 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.portal.kernel.test.TestCase;
+import com.liferay.portal.kernel.test.AssertUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 /**
  * @author Eudaldo Alonso
  */
-public class ArrayUtilTest extends TestCase {
+public class ArrayUtilTest {
 
+	@Test
 	public void testToDoubleArray() throws Exception {
 		List<Double> list = new ArrayList<Double>();
 
@@ -32,15 +36,16 @@ public class ArrayUtilTest extends TestCase {
 
 		double[] array = ArrayUtil.toDoubleArray(list);
 
-		assertEquals(array.length, list.size());
+		Assert.assertEquals(array.length, list.size());
 
 		for (int i = 0; i < list.size(); i++) {
 			Double value = list.get(i);
 
-			assertEquals(value.doubleValue(), array[i]);
+			AssertUtils.assertEquals(value.doubleValue(), array[i]);
 		}
 	}
 
+	@Test
 	public void testToFloatArray() throws Exception {
 		List<Float> list = new ArrayList<Float>();
 
@@ -49,15 +54,16 @@ public class ArrayUtilTest extends TestCase {
 
 		float[] array = ArrayUtil.toFloatArray(list);
 
-		assertEquals(array.length, list.size());
+		Assert.assertEquals(array.length, list.size());
 
 		for (int i = 0; i < list.size(); i++) {
 			Float value = list.get(i);
 
-			assertEquals(value.floatValue(), array[i]);
+			AssertUtils.assertEquals(value.floatValue(), array[i]);
 		}
 	}
 
+	@Test
 	public void testToIntArray() throws Exception {
 		List<Integer> list = new ArrayList<Integer>();
 
@@ -66,15 +72,16 @@ public class ArrayUtilTest extends TestCase {
 
 		int[] array = ArrayUtil.toIntArray(list);
 
-		assertEquals(array.length, list.size());
+		Assert.assertEquals(array.length, list.size());
 
 		for (int i = 0; i < list.size(); i++) {
 			Integer value = list.get(i);
 
-			assertEquals(value.intValue(), array[i]);
+			Assert.assertEquals(value.intValue(), array[i]);
 		}
 	}
 
+	@Test
 	public void testToLongArray() throws Exception {
 		List<Long> list = new ArrayList<Long>();
 
@@ -83,12 +90,12 @@ public class ArrayUtilTest extends TestCase {
 
 		long[] array = ArrayUtil.toLongArray(list);
 
-		assertEquals(array.length, list.size());
+		Assert.assertEquals(array.length, list.size());
 
 		for (int i = 0; i < list.size(); i++) {
 			Long value = list.get(i);
 
-			assertEquals(value.longValue(), array[i]);
+			Assert.assertEquals(value.longValue(), array[i]);
 		}
 	}
 

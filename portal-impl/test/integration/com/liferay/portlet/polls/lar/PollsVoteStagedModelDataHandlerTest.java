@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.polls.lar;
 
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
@@ -96,19 +98,66 @@ public class PollsVoteStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected StagedModel getStagedModel(String uuid, Group group) {
-		try {
-			return PollsVoteLocalServiceUtil.getPollsVoteByUuidAndGroupId(
-				uuid, group.getGroupId());
-		}
-		catch (Exception e) {
-			return null;
-		}
+	protected void deleteStagedModel(
+			StagedModel stagedModel,
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		PollsVote pollsVote = (PollsVote)stagedModel;
+
+		PollsQuestion pollsQuestion = PollsQuestionLocalServiceUtil.getQuestion(
+			pollsVote.getQuestionId());
+
+		PollsQuestionLocalServiceUtil.deleteQuestion(pollsQuestion);
+	}
+
+	@Override
+	protected StagedModelType[] getDeletionSystemEventStagedModelTypes() {
+		return new StagedModelType[] {new StagedModelType(PollsQuestion.class)};
+	}
+
+	@Override
+	protected StagedModel getStagedModel(String uuid, Group group)
+		throws SystemException {
+
+		return PollsVoteLocalServiceUtil.fetchPollsVoteByUuidAndGroupId(
+			uuid, group.getGroupId());
 	}
 
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
 		return PollsVote.class;
+	}
+
+	@Override
+	protected void validateDeletion(
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		List<StagedModel> choiceDependentStagedModels =
+			dependentStagedModelsMap.get(PollsChoice.class.getSimpleName());
+
+		Assert.assertEquals(1, choiceDependentStagedModels.size());
+
+		PollsChoice choice = (PollsChoice)choiceDependentStagedModels.get(0);
+
+		Assert.assertNull(
+			PollsChoiceLocalServiceUtil.fetchPollsChoiceByUuidAndGroupId(
+				choice.getUuid(), group.getGroupId()));
+
+		List<StagedModel> questionDependentStagedModels =
+			dependentStagedModelsMap.get(PollsQuestion.class.getSimpleName());
+
+		Assert.assertEquals(1, questionDependentStagedModels.size());
+
+		PollsQuestion question =
+			(PollsQuestion)questionDependentStagedModels.get(0);
+
+		Assert.assertNull(
+			PollsQuestionLocalServiceUtil.fetchPollsQuestionByUuidAndGroupId(
+				question.getUuid(), group.getGroupId()));
 	}
 
 	@Override

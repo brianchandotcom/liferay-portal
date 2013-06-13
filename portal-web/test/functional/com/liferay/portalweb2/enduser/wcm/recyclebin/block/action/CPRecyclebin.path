@@ -19,6 +19,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='portlet-body']/div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE_RECYCLE_BIN</td>
+	<td>//form[@id='_182_emptyForm']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[@class='portlet-body']/div[@class='alert alert-info']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EMPTY_RECYCLE_BIN</td>
 	<td>//a[@id='_182_empty']</td>
 	<td></td>
@@ -26,6 +41,53 @@
 <tr>
 	<td>CONFIRMATION</td>
 	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RECYCLE_BIN_TABLE-->
+<tr>
+	<td>RECYCLE_BIN_TABLE_NAME_1</td>
+	<td>xpath=(//div[@id='_182_trashEntriesSearchContainerSearchContainer']//tr/td[1]/span/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECYCLE_BIN_TABLE_TYPE_1</td>
+	<td>xpath=(//div[@id='_182_trashEntriesSearchContainerSearchContainer']//tr/td[2])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECYCLE_BIN_TABLE_REMOVED_DATE_1</td>
+	<td>xpath=(//div[@id='_182_trashEntriesSearchContainerSearchContainer']//tr/td[3])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECYCLE_BIN_TABLE_REMOVED_BY_1</td>
+	<td>xpath=(//div[@id='_182_trashEntriesSearchContainerSearchContainer']//tr/td[4])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECYCLE_BIN_TABLE_ACTIONS_1</td>
+	<td>xpath=(//div[@id='_182_trashEntriesSearchContainerSearchContainer']//tr/td[5]/div/a[@title='Actions'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RECYCLE_BIN_MENULIST-->
+<tr>
+	<td>RECYCLE_BIN_MENULIST_RESTORE</td>
+	<td>//a[@role='menuitem' and contains(.,'Restore')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECYCLE_BIN_MENULIST_DELETE</td>
+	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
 	<td></td>
 </tr>
 </tbody>

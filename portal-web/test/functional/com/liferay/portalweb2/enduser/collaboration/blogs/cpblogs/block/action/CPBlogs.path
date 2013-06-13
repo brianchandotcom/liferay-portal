@@ -30,7 +30,12 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE_RECYCLE_BIN</td>
-	<td>//form[@id='_33_undoForm']</td>
+	<td>//form[@id='_161_undoForm']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[@class='alert alert-info']</td>
 	<td></td>
 </tr>
 <tr>
@@ -67,6 +72,32 @@
 <tr>
 	<td>ENTRY_TABLE_ACTIONS</td>
 	<td>//tr[contains(.,'${key_entryTitle}')]/td/div/a[@title='Actions']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ENTRY_MENULIST-->
+<tr>
+	<td>ENTRY_MENULIST_VIEW</td>
+	<td>//a[@role='menuitem' and contains(.,'View')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_MENULIST_EDIT</td>
+	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_MENULIST_PERMISSIONS</td>
+	<td>//a[@role='menuitem' and contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_MENULIST_MOVE_TO_THE_RECYCLE_BIN</td>
+	<td>//a[@role='menuitem' and contains(.,'Move to the Recycle Bin')]</td>
 	<td></td>
 </tr>
 </tbody>

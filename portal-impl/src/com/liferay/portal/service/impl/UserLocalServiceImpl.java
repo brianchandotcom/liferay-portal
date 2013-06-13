@@ -2013,6 +2013,21 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	/**
+	 * Returns the user with the Facebook ID.
+	 *
+	 * @param  companyId the primary key of the user's company
+	 * @param  facebookId the user's Facebook ID
+	 * @return the user with the Facebook ID, or <code>null</code> if a user
+	 *         with the Facebook ID could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public User fetchUserByFacebookId(long companyId, long facebookId)
+		throws SystemException {
+
+		return userPersistence.fetchByC_FID(companyId, facebookId);
+	}
+
+	/**
 	 * Returns the user with the primary key.
 	 *
 	 * @param  userId the primary key of the user
@@ -2023,6 +2038,21 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	@Override
 	public User fetchUserById(long userId) throws SystemException {
 		return userPersistence.fetchByPrimaryKey(userId);
+	}
+
+	/**
+	 * Returns the user with the OpenID.
+	 *
+	 * @param  companyId the primary key of the user's company
+	 * @param  openId the user's OpenID
+	 * @return the user with the OpenID, or <code>null</code> if a user
+	 *         with the OpenID could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public User fetchUserByOpenId(long companyId, String openId)
+		throws SystemException {
+
+		return userPersistence.fetchByC_O(companyId, openId);
 	}
 
 	/**

@@ -131,58 +131,6 @@ public abstract class BaseSearchTestCase {
 		searchWithinDDMStructure();
 	}
 
-	protected void testUserPermissions(
-			boolean addBaseModelPermission,
-			boolean addParentBaseModelPermission)
-		throws Exception {
-
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			group.getGroupId());
-
-		SearchContext searchContext = ServiceTestUtil.getSearchContext(
-			group.getGroupId());
-
-		searchContext.setKeywords(getSearchKeywords());
-
-		int initialBaseModelsSearchCount = searchBaseModelsCount(
-			getBaseModelClass(), group.getGroupId(), searchContext);
-
-		serviceContext.setAddGroupPermissions(addParentBaseModelPermission);
-		serviceContext.setAddGuestPermissions(addParentBaseModelPermission);
-
-		BaseModel<?> parentBaseModel = getParentBaseModel(
-			group, serviceContext);
-
-		serviceContext.setAddGroupPermissions(addBaseModelPermission);
-		serviceContext.setAddGuestPermissions(addBaseModelPermission);
-
-		baseModel = addBaseModel(
-			parentBaseModel, true, getSearchKeywords(), serviceContext);
-
-		User user = UserTestUtil.addUser(null, 0);
-
-		PermissionChecker originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		try {
-			PermissionChecker permissionChecker =
-				PermissionCheckerFactoryUtil.create(user);
-
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
-
-			searchContext.setUserId(user.getUserId());
-
-			Assert.assertEquals(
-				initialBaseModelsSearchCount,
-				searchBaseModelsCount(
-					getBaseModelClass(), group.getGroupId(), searchContext));
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(
-				originalPermissionChecker);
-		}
-	}
-
 	protected void addAttachment(ClassedModel classedModel) throws Exception {
 	}
 
@@ -613,6 +561,58 @@ public abstract class BaseSearchTestCase {
 			initialBaseModelsSearchCount + 1,
 			searchBaseModelsCount(
 				getBaseModelClass(), group.getGroupId(), searchContext));
+	}
+
+	protected void testUserPermissions(
+			boolean addBaseModelPermission,
+			boolean addParentBaseModelPermission)
+		throws Exception {
+
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId());
+
+		SearchContext searchContext = ServiceTestUtil.getSearchContext(
+			group.getGroupId());
+
+		searchContext.setKeywords(getSearchKeywords());
+
+		int initialBaseModelsSearchCount = searchBaseModelsCount(
+			getBaseModelClass(), group.getGroupId(), searchContext);
+
+		serviceContext.setAddGroupPermissions(addParentBaseModelPermission);
+		serviceContext.setAddGuestPermissions(addParentBaseModelPermission);
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		serviceContext.setAddGroupPermissions(addBaseModelPermission);
+		serviceContext.setAddGuestPermissions(addBaseModelPermission);
+
+		baseModel = addBaseModel(
+			parentBaseModel, true, getSearchKeywords(), serviceContext);
+
+		User user = UserTestUtil.addUser(null, 0);
+
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		try {
+			PermissionChecker permissionChecker =
+				PermissionCheckerFactoryUtil.create(user);
+
+			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+
+			searchContext.setUserId(user.getUserId());
+
+			Assert.assertEquals(
+				initialBaseModelsSearchCount,
+				searchBaseModelsCount(
+					getBaseModelClass(), group.getGroupId(), searchContext));
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+		}
 	}
 
 	protected BaseModel<?> updateBaseModel(

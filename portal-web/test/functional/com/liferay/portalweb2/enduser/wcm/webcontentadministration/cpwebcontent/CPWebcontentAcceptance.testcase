@@ -1,0 +1,98 @@
+<definition>
+	<set-up>
+		<execute macro="User#pgFirstLogin" />
+	</set-up>
+
+	<command name="AddWebContent">
+		<var name="webContentContent" value="WC WebContent Content" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+	</command>
+
+	<command name="AddFolder">
+		<var name="folderDescription" value="WC Folder Description" />
+		<var name="folderName" value="WC Folder Name" />
+
+		<execute macro="WebContentFolder#addCP">
+			<var name="folderDescription" value="${folderDescription}" />
+			<var name="folderName" value="${folderName}" />
+		</execute>
+	</command>
+
+	<command name="AddStructure">
+		<var name="structureDescription" value="WC Structure Description" />
+		<var name="structureName" value="WC Structure Name" />
+
+		<execute macro="WebContentStructures#addCP">
+			<var name="structureDescription" value="${structureDescription}" />
+			<var name="structureName" value="${structureName}" />
+		</execute>
+	</command>
+
+	<command name="AddTemplate">
+		<var name="templateDescription" value="WC Template Description" />
+		<var name="templateName" value="WC Template Name" />
+
+		<execute macro="WebContentTemplates#addCP">
+			<var name="templateDescription" value="${templateDescription}" />
+			<var name="templateName" value="${templateName}" />
+		</execute>
+	</command>
+
+	<command name="AddTemplateStructure">
+		<var name="templateDescription" value="WC Template Description" />
+		<var name="templateName" value="WC Template Name" />
+		<var name="structureDescription" value="WC Structure Description" />
+		<var name="structureName" value="WC Structure Name" />
+
+		<execute macro="WebContentStructures#addCP">
+			<var name="structureDescription" value="${structureDescription}" />
+			<var name="structureName" value="${structureName}" />
+		</execute>
+
+		<execute macro="WebContentTemplates#addCP">
+			<var name="structureName" value="${structureName}" />
+			<var name="templateDescription" value="${templateDescription}" />
+			<var name="templateName" value="${templateName}" />
+		</execute>
+	</command>
+
+	<command name="AddWebContentStructure">
+		<var name="structureDescription" value="WC Structure Description" />
+		<var name="structureName" value="WC Structure Name" />
+		<var name="templateDescription" value="WC Template Description" />
+		<var name="templateName" value="WC Template Name" />
+		<var name="webContentText" value="WC WebContent Text" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+
+		<execute macro="WebContentStructures#addCP">
+			<var name="structureDescription" value="${structureDescription}" />
+			<var name="structureName" value="${structureName}" />
+		</execute>
+
+		<execute macro="WebContentTemplates#addCP">
+			<var name="structureName" value="${structureName}" />
+			<var name="templateDescription" value="${templateDescription}" />
+			<var name="templateName" value="${templateName}" />
+		</execute>
+
+		<execute macro="WebContent#addCPwithStructure">
+			<var name="structureName" value="${structureName}" />
+			<var name="templateName" value="${templateName}" />
+			<var name="webContentText" value="${webContentText}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+	</command>
+
+	<tear-down>
+		<execute macro="WebContent#tearDownCP" />
+
+		<execute macro="WebContentTemplates#tearDownCP" />
+
+		<execute macro="WebContentStructures#tearDownCP" />
+	</tear-down>
+</definition>

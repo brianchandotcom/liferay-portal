@@ -61,7 +61,7 @@
 </tr>
 <tr>
 	<td>ENTRY_TABLE_TITLE_1</td>
-	<td>//td[2]/a</td>
+	<td>//td[contains(@id, 'blogsEntriesSearchContainer')]/a[.='${entryTitle}']</td>
 	<td></td>
 </tr>
 <tr>

@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.portlet;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
@@ -24,8 +25,10 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
+import javax.portlet.MimeResponse;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -214,6 +217,19 @@ public class PortletJSONUtil {
 
 		jsonObject.put("portletHTML", portletHTML);
 		jsonObject.put("refresh", !portlet.isAjaxable());
+
+		List<String> markupHeadElements = (List<String>)
+			request.getAttribute(MimeResponse.MARKUP_HEAD_ELEMENT);
+
+		if (markupHeadElements != null) {
+			StringBundler sb = new StringBundler(markupHeadElements.size());
+
+			for (String markupHeadElement : markupHeadElements) {
+				sb.append(markupHeadElement);
+			}
+
+			jsonObject.put("markupHeadElements", sb.toString());
+		}
 	}
 
 	protected static String getRootPortletId(Portlet portlet) {

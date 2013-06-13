@@ -3,17 +3,13 @@
 		<var name="administratorEmail" value="test@liferay.com" />
 		<var name="administratorFirstName" value="Test" />
 		<var name="administratorLastName" value="Test" />
-		<var name="newPassword" value="test1" />
 		<var name="pageName" value="Blogs Page" />
-		<var name="passwordReminder" value="test" />
-		<var name="portalDefaultLanguage" value="English (United States)" />
-		<var name="portalName" value="Liferay" />
 		<var name="portletName" value="Blogs" />
 
 		<execute action="Home#open" locator-key1="HOME_URL" />
 
-		<execute action="Setupwizard#assertTextEquals" locator-key1="PORTAL_PORTAL_NAME_FIELD" value1="${portalName}" />
-		<execute action="Setupwizard#assertSelectedLabel" locator-key1="PORTAL_DEFAULT_LANGUAGE_SELECT" value1="${portalDefaultLanguage}" />
+		<execute action="Setupwizard#assertTextEquals" locator-key1="PORTAL_PORTAL_NAME_FIELD" value1="Liferay" />
+		<execute action="Setupwizard#assertSelectedLabel" locator-key1="PORTAL_DEFAULT_LANGUAGE_SELECT" value1="English (United States)" />
 		<execute action="Setupwizard#assertTextEquals" locator-key1="ADMINISTRATOR_USER_FIRST_NAME_FIELD" value1="${administratorFirstName}" />
 		<execute action="Setupwizard#assertTextEquals" locator-key1="ADMINISTRATOR_USER_LAST_NAME_FIELD" value1="${administratorLastName}" />
 		<execute action="Setupwizard#assertTextEquals" locator-key1="ADMINISTRATOR_USER_EMAIL_FIELD" value1="${administratorEmail}" />
@@ -36,11 +32,11 @@
 
 		<execute action="PGLoginTermsofservice#click" locator-key1="I_AGREE_BUTTON" />
 
-		<execute action="PGLoginNewpassword#type" locator-key1="PASSWORD_FIELD" value1="${newPassword}" />
-		<execute action="PGLoginNewpassword#type" locator-key1="ENTER_AGAIN_FIELD" value1="${newPassword}" />
+		<execute action="PGLoginNewpassword#type" locator-key1="PASSWORD_FIELD" value1="test1" />
+		<execute action="PGLoginNewpassword#type" locator-key1="ENTER_AGAIN_FIELD" value1="test1" />
 		<execute action="PGLoginNewpassword#click" locator-key1="SAVE_BUTTON" />
 
-		<execute action="PGLoginPasswordreminder#type" locator-key1="ANSWER_FIELD" value1="${passwordReminder}" />
+		<execute action="PGLoginPasswordreminder#type" locator-key1="ANSWER_FIELD" value1="test" />
 		<execute action="PGLoginPasswordreminder#click" locator-key1="SAVE_BUTTON" />
 
 		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_1" value1="Welcome" />

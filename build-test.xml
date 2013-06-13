@@ -457,7 +457,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="4" />
+		<property name="build-test-ant-scripts.version" value="5" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />

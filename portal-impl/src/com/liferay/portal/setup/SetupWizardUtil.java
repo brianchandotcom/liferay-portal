@@ -14,7 +14,6 @@
 
 package com.liferay.portal.setup;
 
-import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.dao.jdbc.util.DataSourceSwapper;
 import com.liferay.portal.events.StartupAction;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
@@ -392,12 +391,10 @@ public class SetupWizardUtil {
 
 		unicodeProperties.put(PropsKeys.ADMIN_EMAIL_FROM_NAME, fullName);
 
-		User user = null;
+		User user = UserLocalServiceUtil.fetchUserByEmailAddress(
+			themeDisplay.getCompanyId(), emailAddress);
 
-		try {
-			user = UserLocalServiceUtil.getUserByEmailAddress(
-				themeDisplay.getCompanyId(), emailAddress);
-
+		if (user != null) {
 			String greeting = LanguageUtil.format(
 				themeDisplay.getLocale(), "welcome-x",
 				StringPool.SPACE + fullName, false);
@@ -428,7 +425,7 @@ public class SetupWizardUtil {
 				contact.getJobTitle(), null, null, null, null, null,
 				new ServiceContext());
 		}
-		catch (NoSuchUserException nsue) {
+		else {
 			UserLocalServiceUtil.addDefaultAdminUser(
 				themeDisplay.getCompanyId(), screenName, emailAddress,
 				themeDisplay.getLocale(), firstName, StringPool.BLANK,

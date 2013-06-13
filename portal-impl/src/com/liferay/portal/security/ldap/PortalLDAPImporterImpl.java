@@ -15,7 +15,6 @@
 package com.liferay.portal.security.ldap;
 
 import com.liferay.portal.NoSuchRoleException;
-import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.NoSuchUserGroupException;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
@@ -564,23 +563,19 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 	protected User getUser(long companyId, LDAPUser ldapUser) throws Exception {
 		User user = null;
 
-		try {
-			String authType = PrefsPropsUtil.getString(
-				companyId, PropsKeys.COMPANY_SECURITY_AUTH_TYPE,
-				PropsValues.COMPANY_SECURITY_AUTH_TYPE);
+		String authType = PrefsPropsUtil.getString(
+			companyId, PropsKeys.COMPANY_SECURITY_AUTH_TYPE,
+			PropsValues.COMPANY_SECURITY_AUTH_TYPE);
 
-			if (authType.equals(CompanyConstants.AUTH_TYPE_SN) &&
-				!ldapUser.isAutoScreenName()) {
+		if (authType.equals(CompanyConstants.AUTH_TYPE_SN) &&
+			!ldapUser.isAutoScreenName()) {
 
-				user = UserLocalServiceUtil.getUserByScreenName(
-					companyId, ldapUser.getScreenName());
-			}
-			else {
-				user = UserLocalServiceUtil.getUserByEmailAddress(
-					companyId, ldapUser.getEmailAddress());
-			}
+			user = UserLocalServiceUtil.fetchUserByScreenName(
+				companyId, ldapUser.getScreenName());
 		}
-		catch (NoSuchUserException nsue) {
+		else {
+			user = UserLocalServiceUtil.fetchUserByEmailAddress(
+				companyId, ldapUser.getEmailAddress());
 		}
 
 		return user;

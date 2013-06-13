@@ -213,16 +213,12 @@ public class EditUserAction extends PortletAction {
 
 			Group scopeGroup = themeDisplay.getScopeGroup();
 
-			if (scopeGroup.isUser()) {
-				try {
-					UserLocalServiceUtil.getUserById(scopeGroup.getClassPK());
-				}
-				catch (NoSuchUserException nsue) {
-					redirect = HttpUtil.setParameter(
-						redirect, "doAsGroupId" , 0);
-					redirect = HttpUtil.setParameter(
-						redirect, "refererPlid" , 0);
-				}
+			if (scopeGroup.isUser() &&
+				(UserLocalServiceUtil.fetchUserById(
+					scopeGroup.getClassPK()) == null)) {
+
+				redirect = HttpUtil.setParameter(redirect, "doAsGroupId" , 0);
+				redirect = HttpUtil.setParameter(redirect, "refererPlid" , 0);
 			}
 
 			sendRedirect(actionRequest, actionResponse, redirect);

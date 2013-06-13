@@ -16,7 +16,6 @@ package com.liferay.portal.util;
 
 import com.liferay.mail.model.FileAttachment;
 import com.liferay.mail.service.MailServiceUtil;
-import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -372,12 +371,10 @@ public class SubscriptionSender implements Serializable {
 	protected void notifySubscriber(Subscription subscription)
 		throws Exception {
 
-		User user = null;
+		User user = UserLocalServiceUtil.fetchUserById(
+			subscription.getUserId());
 
-		try {
-			user = UserLocalServiceUtil.getUserById(subscription.getUserId());
-		}
-		catch (NoSuchUserException nsue) {
+		if (user == null) {
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					"Subscription " + subscription.getSubscriptionId() +

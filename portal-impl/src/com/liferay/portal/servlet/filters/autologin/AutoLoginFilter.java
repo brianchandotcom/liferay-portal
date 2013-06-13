@@ -14,7 +14,6 @@
 
 package com.liferay.portal.servlet.filters.autologin;
 
-import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ProtectedServletRequest;
@@ -82,21 +81,15 @@ public class AutoLoginFilter extends BasePortalFilter {
 			return null;
 		}
 
-		try {
-			long userId = GetterUtil.getLong(jUsername);
+		long userId = GetterUtil.getLong(jUsername);
 
-			if (userId > 0) {
-				User user = UserLocalServiceUtil.getUserById(userId);
-
-				if (user.isLockout()) {
-					return null;
-				}
-			}
-			else {
-				return null;
-			}
+		if (userId <= 0) {
+			return null;
 		}
-		catch (NoSuchUserException nsue) {
+
+		User user = UserLocalServiceUtil.fetchUserById(userId);
+
+		if ((user == null) || user.isLockout()) {
 			return null;
 		}
 

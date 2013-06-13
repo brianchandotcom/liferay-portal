@@ -35,7 +35,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_TEMPLATE</td>
+	<td>ADD</td>
 	<td>//div[@class='container']/ul[contains(@class,'nav')]/li/a[contains(.,'Add')]</td>
 	<td></td>
 </tr>
@@ -61,6 +61,11 @@
 </tr>
 <!---->
 <!--TEMPLATE_TABLE-->
+<tr>
+	<td>TEMPLATE_TABLE_SELECT_ALL_CHECKBOX</td>
+	<td>//input[@name='_166_allRowIds']</td>
+	<td></td>
+</tr>
 <tr>
 	<td>TEMPLATE_TABLE_CHECKBOX_1</td>
 	<td>//div[@id='_166_ddmTemplatesSearchContainerSearchContainer']/table/tbody/tr[1]/td[1]/input</td>

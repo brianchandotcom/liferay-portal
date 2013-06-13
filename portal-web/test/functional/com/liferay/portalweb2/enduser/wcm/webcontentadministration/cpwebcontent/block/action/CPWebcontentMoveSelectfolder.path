@@ -1,0 +1,87 @@
+<html>
+<head>
+<title>CPWebcontentMoveSelectfolder</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPWebcontentMoveSelectfolder</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPWebcontentMoveSelectfolder</td>
+</tr>
+<!---->
+<tr>
+	<td>SELECT_FOLDER_IFRAME</td>
+	<td>//iframe[contains(@class,'dialog-iframe-node')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HOME</td>
+	<td>//li[@class='first']/a[contains(.,'Home')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_FOLDER</td>
+	<td>//button[contains(.,'Add Folder')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_SUBFOLDER_BUTTON</td>
+	<td>//button[contains(.,'Add Subfolder')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHOOSE_THIS_FOLDER_BUTTON</td>
+	<td>//button[contains(.,'Choose This Folder')]</td>
+	<td></td>
+</tr>
+<!---->
+<!--FOLDER_TABLE-->
+<tr>
+	<td>FOLDER_TABLE_FOLDER_1</td>
+	<td>xpath=(//tbody/tr/td[1]/span/a[contains(@href,'select_folder')]/span)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_TABLE_NUMBER_OF_FOLDERS_1</td>
+	<td>xpath=(//tbody/tr/td[2])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_TABLE_NUMBER_OF_ARTICLES_1</td>
+	<td>xpath=(//tbody/tr/td[3])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_TABLE_CHOOSE_1</td>
+	<td>xpath=(//tbody/tr/td[4]/button[contains(.,'Choose')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_TABLE_FOLDER_2</td>
+	<td>xpath=(//tbody/tr/td[1]/span/a[contains(@href,'select_folder')]/span)[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_TABLE_NUMBER_OF_FOLDERS_2</td>
+	<td>xpath=(//tbody/tr/td[2])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_TABLE_NUMBER_OF_ARTICLES_2</td>
+	<td>xpath=(//tbody/tr/td[3])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_TABLE_CHOOSE_2</td>
+	<td>xpath=(//tbody/tr/td[4]/button[contains(.,'Choose')])[2]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

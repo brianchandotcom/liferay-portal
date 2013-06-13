@@ -1,0 +1,45 @@
+<html>
+<head>
+<title>CPWebcontentMove</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPWebcontentMove</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPWebcontentMove</td>
+</tr>
+<!---->
+<tr>
+	<td>PARENT_FOLDER_NAME</td>
+	<td>//a[@id='_15_parentFolderName']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_BUTTON</td>
+	<td>//button[@id='_15_selectFolderButton']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMOVE_BUTTON</td>
+	<td>//button[@id='_15_removeFolderButton']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOVE_BUTTON</td>
+	<td>//button[contains(.,'Move')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CANCEL_BUTTON</td>
+	<td>//button[contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

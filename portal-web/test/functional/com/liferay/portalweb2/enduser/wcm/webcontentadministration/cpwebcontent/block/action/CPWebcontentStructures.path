@@ -35,7 +35,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_STRUCTURE</td>
+	<td>ADD</td>
 	<td>//div[@class='container']/ul[contains(@class,'nav')]/li/a[contains(.,'Add')]</td>
 	<td></td>
 </tr>

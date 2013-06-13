@@ -35,6 +35,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_STRUCTURE</td>
+	<td>//a[contains(@href,'openDDMStructureSelector')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STRUCTURE</td>
+	<td>//div[@class='control-group field-wrapper' and contains(.,'Structure')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DESCRIPTION_FIELD</td>
 	<td>//textarea[@id='_166_description']</td>
 	<td></td>

@@ -84,7 +84,6 @@ Layout exportableLayout = ExportImportUtil.getExportableLayout(themeDisplay);
 						PortletDataHandlerControl[] metadataControls = portletDataHandler.getImportMetadataControls();
 
 						if (Validator.isNotNull(importControls) || Validator.isNotNull(metadataControls)) {
-							String selectedContent = StringPool.BLANK;
 						%>
 
 							<div class="hide" id="<portlet:namespace />content_<%= selPortlet.getRootPortletId() %>">
@@ -109,8 +108,6 @@ Layout exportableLayout = ExportImportUtil.getExportableLayout(themeDisplay);
 										request.setAttribute("render_controls.jsp-action", Constants.IMPORT);
 										request.setAttribute("render_controls.jsp-controls", importControls);
 										request.setAttribute("render_controls.jsp-portletDisabled", !portletDataHandler.isPublishToLiveByDefault());
-
-										selectedContent += ArrayUtil.toString(importControls, "controlName", StringPool.COMMA_AND_SPACE, locale);
 										%>
 
 										<ul class="lfr-tree unstyled">
@@ -129,8 +126,6 @@ Layout exportableLayout = ExportImportUtil.getExportableLayout(themeDisplay);
 
 										if ((childrenControls != null) && (childrenControls.length > 0)) {
 											request.setAttribute("render_controls.jsp-controls", childrenControls);
-
-											selectedContent += (selectedContent.equals(StringPool.BLANK) ? "" : ",") + ArrayUtil.toString(childrenControls, "controlName", StringPool.COMMA_AND_SPACE, locale);
 										%>
 
 											<aui:field-wrapper label="content-metadata">
@@ -163,13 +158,7 @@ Layout exportableLayout = ExportImportUtil.getExportableLayout(themeDisplay);
 
 							<ul id="<portlet:namespace />showChangeContent">
 								<li class="tree-item">
-									<div class="selected-labels" id="<portlet:namespace />selectedContent_<%= selPortlet.getRootPortletId() %>">
-
-										<%= selectedContent %>,
-
-										<liferay-ui:message key="mirror" />,
-										<liferay-ui:message key="use-the-original-author" />
-									</div>
+									<div class="selected-labels" id="<portlet:namespace />selectedContent_<%= selPortlet.getRootPortletId() %>"></div>
 
 									<%
 									Map<String,Object> data = new HashMap<String,Object>();

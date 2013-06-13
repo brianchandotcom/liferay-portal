@@ -586,13 +586,12 @@ AUI.add(
 															event.domEvent.preventDefault();
 
 															remoteDialog.hide();
-														},
-														label: Liferay.Language.get('cancel')
-													}
+														}
+													},
+													label: Liferay.Language.get('cancel')
 												}
 											]
-										},
-
+										}
 									},
 									height: 300,
 									title: Liferay.Language.get('remote-live-connection-settings'),

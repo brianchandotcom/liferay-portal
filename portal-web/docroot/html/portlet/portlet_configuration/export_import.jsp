@@ -121,13 +121,13 @@ portletURL.setParameter("portletResource", portletResource);
 
 		<c:choose>
 			<c:when test='<%= tabs2.equals("export") %>'>
-				<liferay-util:include page="/html/portlet/portlet_configuration/export_options.jsp" />
+				<liferay-util:include page="/html/portlet/portlet_configuration/export_portlet.jsp" />
 			</c:when>
 			<c:when test='<%= tabs2.equals("import") %>'>
-				<liferay-util:include page="/html/portlet/portlet_configuration/import_options.jsp" />
+				<liferay-util:include page="/html/portlet/portlet_configuration/import_portlet.jsp" />
 			</c:when>
 			<c:when test='<%= tabs2.equals("staging") %>'>
-				<liferay-util:include page="/html/portlet/portlet_configuration/staging_options.jsp" />
+				<liferay-util:include page="/html/portlet/portlet_configuration/publish_portlet.jsp" />
 			</c:when>
 		</c:choose>
 	</c:when>

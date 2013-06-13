@@ -195,7 +195,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		String password2 = password1;
 		boolean autoScreenName = false;
 
-		screenName = getScreenName(screenName);
+		screenName = getLogin(screenName);
 
 		for (int i = 1;; i++) {
 			User screenNameUser = userPersistence.fetchByC_SN(
@@ -713,7 +713,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		// User
 
 		Company company = companyPersistence.findByPrimaryKey(companyId);
-		screenName = getScreenName(screenName);
+		screenName = getLogin(screenName);
 		openId = StringUtil.trim(openId);
 		Date now = new Date();
 
@@ -1146,58 +1146,56 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			return 0;
 		}
 
-		try {
-			User user = null;
+		User user = null;
 
-			if (authType.equals(CompanyConstants.AUTH_TYPE_EA)) {
-				user = getUserByEmailAddress(companyId, login);
-			}
-			else if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
-				user = getUserByScreenName(companyId, login);
-			}
-			else if (authType.equals(CompanyConstants.AUTH_TYPE_ID)) {
-				user = getUserById(companyId, GetterUtil.getLong(login));
-			}
-
-			if (user.isDefaultUser()) {
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Basic authentication is disabled for the default " +
-							"user");
-				}
-
-				return 0;
-			}
-			else if (!user.isActive()) {
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Basic authentication is disabled for inactive user " +
-							user.getUserId());
-				}
-
-				return 0;
-			}
-
-			if (!PropsValues.BASIC_AUTH_PASSWORD_REQUIRED) {
-				return user.getUserId();
-			}
-
-			String userPassword = user.getPassword();
-
-			if (!user.isPasswordEncrypted()) {
-				userPassword = PasswordEncryptorUtil.encrypt(userPassword);
-			}
-
-			String encPassword = PasswordEncryptorUtil.encrypt(
-				password, userPassword);
-
-			if (userPassword.equals(password) ||
-				userPassword.equals(encPassword)) {
-
-				return user.getUserId();
-			}
+		if (authType.equals(CompanyConstants.AUTH_TYPE_EA)) {
+			user = fetchUserByEmailAddress(companyId, login);
 		}
-		catch (NoSuchUserException nsue) {
+		else if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
+			user = fetchUserByScreenName(companyId, login);
+		}
+		else if (authType.equals(CompanyConstants.AUTH_TYPE_ID)) {
+			user = userPersistence.fetchByPrimaryKey(GetterUtil.getLong(login));
+		}
+
+		if (user == null) {
+			return 0;
+		}
+
+		if (user.isDefaultUser()) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Basic authentication is disabled for the default " +
+						"user");
+			}
+
+			return 0;
+		}
+		else if (!user.isActive()) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Basic authentication is disabled for inactive user " +
+						user.getUserId());
+			}
+
+			return 0;
+		}
+
+		if (!PropsValues.BASIC_AUTH_PASSWORD_REQUIRED) {
+			return user.getUserId();
+		}
+
+		String userPassword = user.getPassword();
+
+		if (!user.isPasswordEncrypted()) {
+			userPassword = PasswordEncryptorUtil.encrypt(userPassword);
+		}
+
+		String encPassword = PasswordEncryptorUtil.encrypt(
+			password, userPassword);
+
+		if (userPassword.equals(password) || userPassword.equals(encPassword)) {
+			return user.getUserId();
 		}
 
 		return 0;
@@ -1234,29 +1232,19 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		// Get User
 
-		User user = null;
+		User user = fetchUserByEmailAddress(companyId, username);
 
-		try {
-			user = getUserByEmailAddress(companyId, username);
-		}
-		catch (NoSuchUserException nsue) {
+		if (user == null) {
+			user = fetchUserByScreenName(companyId, username);
 		}
 
 		if (user == null) {
-			try {
-				user = getUserByScreenName(companyId, username);
-			}
-			catch (NoSuchUserException nsue) {
-			}
+			user = userPersistence.fetchByPrimaryKey(
+				GetterUtil.getLong(username));
 		}
 
 		if (user == null) {
-			try {
-				user = getUserById(GetterUtil.getLong(username));
-			}
-			catch (NoSuchUserException nsue) {
-				return 0;
-			}
+			return 0;
 		}
 
 		if (user.isDefaultUser()) {
@@ -2009,7 +1997,24 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public User fetchUserByEmailAddress(long companyId, String emailAddress)
 		throws SystemException {
 
+		emailAddress = getLogin(emailAddress);
+
 		return userPersistence.fetchByC_EA(companyId, emailAddress);
+	}
+
+	/**
+	 * Returns the user with the Facebook ID.
+	 *
+	 * @param  companyId the primary key of the user's company
+	 * @param  facebookId the user's Facebook ID
+	 * @return the user with the Facebook ID, or <code>null</code> if a user
+	 *         with the Facebook ID could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public User fetchUserByFacebookId(long companyId, long facebookId)
+		throws SystemException {
+
+		return userPersistence.fetchByC_FID(companyId, facebookId);
 	}
 
 	/**
@@ -2026,6 +2031,21 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	/**
+	 * Returns the user with the OpenID.
+	 *
+	 * @param  companyId the primary key of the user's company
+	 * @param  openId the user's OpenID
+	 * @return the user with the OpenID, or <code>null</code> if a user
+	 *         with the OpenID could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public User fetchUserByOpenId(long companyId, String openId)
+		throws SystemException {
+
+		return userPersistence.fetchByC_O(companyId, openId);
+	}
+
+	/**
 	 * Returns the user with the screen name.
 	 *
 	 * @param  companyId the primary key of the user's company
@@ -2038,7 +2058,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public User fetchUserByScreenName(long companyId, String screenName)
 		throws SystemException {
 
-		screenName = getScreenName(screenName);
+		screenName = getLogin(screenName);
 
 		return userPersistence.fetchByC_SN(companyId, screenName);
 	}
@@ -2590,7 +2610,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public User getUserByEmailAddress(long companyId, String emailAddress)
 		throws PortalException, SystemException {
 
-		emailAddress = emailAddress.trim().toLowerCase();
+		emailAddress = getLogin(emailAddress);
 
 		return userPersistence.findByC_EA(companyId, emailAddress);
 	}
@@ -2687,7 +2707,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public User getUserByScreenName(long companyId, String screenName)
 		throws PortalException, SystemException {
 
-		screenName = getScreenName(screenName);
+		screenName = getLogin(screenName);
 
 		return userPersistence.findByC_SN(companyId, screenName);
 	}
@@ -2798,7 +2818,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public long getUserIdByScreenName(long companyId, String screenName)
 		throws PortalException, SystemException {
 
-		screenName = getScreenName(screenName);
+		screenName = getLogin(screenName);
 
 		User user = userPersistence.findByC_SN(companyId, screenName);
 
@@ -4652,7 +4672,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
-		screenName = getScreenName(screenName);
+		screenName = getLogin(screenName);
 
 		validateScreenName(user.getCompanyId(), userId, screenName);
 
@@ -4787,7 +4807,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		Company company = companyPersistence.findByPrimaryKey(
 			user.getCompanyId());
 		String password = oldPassword;
-		screenName = getScreenName(screenName);
+		screenName = getLogin(screenName);
 		emailAddress = emailAddress.trim().toLowerCase();
 		openId = openId.trim();
 		String oldFullName = user.getFullName();
@@ -5260,19 +5280,17 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		User user = null;
 
-		try {
-			if (authType.equals(CompanyConstants.AUTH_TYPE_EA)) {
-				user = userPersistence.findByC_EA(companyId, login);
-			}
-			else if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
-				user = userPersistence.findByC_SN(companyId, login);
-			}
-			else if (authType.equals(CompanyConstants.AUTH_TYPE_ID)) {
-				user = userPersistence.findByC_U(
-					companyId, GetterUtil.getLong(login));
-			}
+		if (authType.equals(CompanyConstants.AUTH_TYPE_EA)) {
+			user = fetchUserByEmailAddress(companyId, login);
 		}
-		catch (NoSuchUserException nsue) {
+		else if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
+			user = fetchUserByScreenName(companyId, login);
+		}
+		else if (authType.equals(CompanyConstants.AUTH_TYPE_ID)) {
+			user = userPersistence.fetchByPrimaryKey(GetterUtil.getLong(login));
+		}
+
+		if (user == null) {
 			return Authenticator.DNE;
 		}
 
@@ -5389,10 +5407,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 						parameterMap);
 				}
 
-				try {
-					user = userPersistence.findByPrimaryKey(user.getUserId());
-				}
-				catch (NoSuchUserException nsue) {
+				user = userPersistence.fetchByPrimaryKey(user.getUserId());
+
+				if (user == null) {
 					return Authenticator.DNE;
 				}
 
@@ -5460,8 +5477,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		return birthday;
 	}
 
-	protected String getScreenName(String screenName) {
-		return StringUtil.lowerCase(StringUtil.trim(screenName));
+	protected String getLogin(String login) {
+		return StringUtil.lowerCase(StringUtil.trim(login));
 	}
 
 	protected long[] getUserIds(List<User> users) {

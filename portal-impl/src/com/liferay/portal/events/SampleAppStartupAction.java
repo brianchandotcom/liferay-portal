@@ -14,7 +14,6 @@
 
 package com.liferay.portal.events;
 
-import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.log.Log;
@@ -51,14 +50,10 @@ public class SampleAppStartupAction extends SimpleAction {
 	}
 
 	protected void doRun(long companyId) throws Exception {
-		try {
-			UserLocalServiceUtil.getUserByScreenName(companyId, "paul");
-
-			// Do not populate the sample database if Paul already exists
+		if (UserLocalServiceUtil.fetchUserByScreenName(
+				companyId, "paul") != null) {
 
 			return;
-		}
-		catch (NoSuchUserException nsue) {
 		}
 
 		long creatorUserId = 0;

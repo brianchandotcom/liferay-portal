@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.messageboards.messaging;
 
-import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mail.Account;
@@ -179,18 +178,18 @@ public class MailingListMessageListener extends BaseMessageListener {
 
 		boolean anonymous = false;
 
-		User user = UserLocalServiceUtil.getUserById(
-			companyId, mailingListRequest.getUserId());
+		User user = UserLocalServiceUtil.fetchUserByEmailAddress(
+			companyId, from);
 
-		try {
-			user = UserLocalServiceUtil.getUserByEmailAddress(companyId, from);
-		}
-		catch (NoSuchUserException nsue) {
-			anonymous = true;
-
+		if (user == null) {
 			if (!mailingListRequest.isAllowAnonymous()) {
 				return;
 			}
+
+			anonymous = true;
+
+			user = UserLocalServiceUtil.getUserById(
+				companyId, mailingListRequest.getUserId());
 		}
 
 		long parentMessageId = MBUtil.getParentMessageId(mailMessage);

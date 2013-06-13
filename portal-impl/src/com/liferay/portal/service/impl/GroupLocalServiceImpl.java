@@ -20,7 +20,6 @@ import com.liferay.portal.GroupNameException;
 import com.liferay.portal.GroupParentException;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.NoSuchLayoutSetException;
-import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.RequiredGroupException;
 import com.liferay.portal.kernel.cache.ThreadLocalCachable;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -3246,18 +3245,15 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		User user = null;
 
-		try {
-			user = userPersistence.findByPrimaryKey(group.getCreatorUserId());
+		user = userPersistence.fetchByPrimaryKey(group.getCreatorUserId());
 
+		if (user == null) {
+			user = userPersistence.fetchByPrimaryKey(
+				serviceContext.getUserId());
 		}
-		catch (NoSuchUserException nsue1) {
-			try {
-				user = userPersistence.findByPrimaryKey(
-					serviceContext.getUserId());
-			}
-			catch (NoSuchUserException nsue2) {
-				user = userLocalService.getDefaultUser(group.getCompanyId());
-			}
+
+		if (user == null) {
+			user = userLocalService.getDefaultUser(group.getCompanyId());
 		}
 
 		updateAsset(

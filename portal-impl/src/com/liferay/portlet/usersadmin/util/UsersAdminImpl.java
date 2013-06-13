@@ -15,7 +15,6 @@
 package com.liferay.portlet.usersadmin.util;
 
 import com.liferay.portal.NoSuchOrganizationException;
-import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.NoSuchUserGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -1004,12 +1003,12 @@ public class UsersAdminImpl implements UsersAdmin {
 		for (Document document : documents) {
 			long userId = GetterUtil.getLong(document.get(Field.USER_ID));
 
-			try {
-				User user = UserLocalServiceUtil.getUser(userId);
+			User user = UserLocalServiceUtil.fetchUser(userId);
 
+			if (user != null) {
 				users.add(user);
 			}
-			catch (NoSuchUserException nsue) {
+			else {
 				corruptIndex = true;
 
 				Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);

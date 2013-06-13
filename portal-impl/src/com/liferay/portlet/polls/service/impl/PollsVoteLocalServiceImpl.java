@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.polls.service.impl;
 
-import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.User;
@@ -75,12 +74,12 @@ public class PollsVoteLocalServiceImpl extends PollsVoteLocalServiceBaseImpl {
 		else {
 			String userName = null;
 
-			try {
-				User user = userPersistence.findByPrimaryKey(userId);
+			User user = userPersistence.fetchByPrimaryKey(userId);
 
+			if (user != null) {
 				userName = user.getFullName();
 			}
-			catch (NoSuchUserException nsue) {
+			else {
 				userName = serviceContext.translate("anonymous");
 			}
 

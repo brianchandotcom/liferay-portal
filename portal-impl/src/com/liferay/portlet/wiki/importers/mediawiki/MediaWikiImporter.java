@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.wiki.importers.mediawiki;
 
-import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
@@ -135,21 +134,20 @@ public class MediaWikiImporter implements WikiImporter {
 
 		String emailAddress = usersMap.get(author);
 
-		try {
-			if (Validator.isNull(emailAddress)) {
-				user = UserLocalServiceUtil.getUserByScreenName(
-					node.getCompanyId(), author.toLowerCase());
-			}
-			else {
-				user = UserLocalServiceUtil.getUserByEmailAddress(
-					node.getCompanyId(), emailAddress);
-			}
+		if (Validator.isNotNull(emailAddress)) {
+			user = UserLocalServiceUtil.fetchUserByEmailAddress(
+				node.getCompanyId(), emailAddress);
 		}
-		catch (NoSuchUserException nsue) {
-			user = UserLocalServiceUtil.getUserById(userId);
+		else {
+			user = UserLocalServiceUtil.fetchUserByScreenName(
+				node.getCompanyId(), author.toLowerCase());
 		}
 
-		return user.getUserId();
+		if (user != null) {
+			return user.getUserId();
+		}
+
+		return userId;
 	}
 
 	protected void importPage(

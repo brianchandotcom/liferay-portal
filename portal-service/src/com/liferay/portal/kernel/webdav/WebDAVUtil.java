@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.webdav;
 
 import com.liferay.portal.NoSuchGroupException;
-import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -149,15 +148,13 @@ public class WebDAVUtil {
 			catch (NoSuchGroupException nsge) {
 			}
 
-			try {
-				User user = UserLocalServiceUtil.getUserByScreenName(
-					companyId, name);
+			User user = UserLocalServiceUtil.fetchUserByScreenName(
+				companyId, name);
 
+			if (user != null) {
 				Group group = user.getGroup();
 
 				return group.getGroupId();
-			}
-			catch (NoSuchUserException nsue) {
 			}
 		}
 		catch (Exception e) {

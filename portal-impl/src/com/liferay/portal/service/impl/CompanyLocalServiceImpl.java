@@ -20,7 +20,6 @@ import com.liferay.portal.CompanyVirtualHostException;
 import com.liferay.portal.CompanyWebIdException;
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.NoSuchShardException;
-import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.NoSuchVirtualHostException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -283,18 +282,16 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		// Default user
 
-		User defaultUser = null;
+		User defaultUser = userPersistence.fetchByC_DU(companyId, true);
 
-		try {
-			defaultUser = userLocalService.getDefaultUser(companyId);
-
+		if (defaultUser != null) {
 			if (!defaultUser.isAgreedToTermsOfUse()) {
 				defaultUser.setAgreedToTermsOfUse(true);
 
 				userPersistence.update(defaultUser);
 			}
 		}
-		catch (NoSuchUserException nsue) {
+		else {
 			long userId = counterLocalService.increment();
 
 			defaultUser = userPersistence.create(userId);

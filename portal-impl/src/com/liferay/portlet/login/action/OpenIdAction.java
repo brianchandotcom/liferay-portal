@@ -15,7 +15,6 @@
 package com.liferay.portlet.login.action;
 
 import com.liferay.portal.DuplicateUserEmailAddressException;
-import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -310,69 +309,69 @@ public class OpenIdAction extends PortletAction {
 
 		String openId = OpenIdUtil.normalize(authSuccess.getIdentity());
 
-		User user = null;
+		User user = UserLocalServiceUtil.fetchUserByOpenId(
+			themeDisplay.getCompanyId(), openId);
 
-		try {
-			user = UserLocalServiceUtil.getUserByOpenId(
-				themeDisplay.getCompanyId(), openId);
+		if (user != null) {
+			session.setAttribute(
+				WebKeys.OPEN_ID_LOGIN, new Long(user.getUserId()));
+
+			return null;
 		}
-		catch (NoSuchUserException nsue) {
-			if (Validator.isNull(firstName) || Validator.isNull(lastName) ||
-				Validator.isNull(emailAddress)) {
 
-				SessionMessages.add(request, "missingOpenIdUserInformation");
+		if (Validator.isNull(firstName) || Validator.isNull(lastName) ||
+			Validator.isNull(emailAddress)) {
 
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"The OpenID provider did not send the required " +
-							"attributes to create an account");
-				}
+			SessionMessages.add(request, "missingOpenIdUserInformation");
 
-				String createAccountURL = PortalUtil.getCreateAccountURL(
-					request, themeDisplay);
-
-				createAccountURL = HttpUtil.setParameter(
-					createAccountURL, "openId", openId);
-
-				session.setAttribute(
-					WebKeys.OPEN_ID_LOGIN_PENDING, Boolean.TRUE);
-
-				return createAccountURL;
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"The OpenID provider did not send the required " +
+						"attributes to create an account");
 			}
 
-			long creatorUserId = 0;
-			long companyId = themeDisplay.getCompanyId();
-			boolean autoPassword = false;
-			String password1 = PwdGenerator.getPassword();
-			String password2 = password1;
-			boolean autoScreenName = true;
-			String screenName = StringPool.BLANK;
-			long facebookId = 0;
-			Locale locale = themeDisplay.getLocale();
-			String middleName = StringPool.BLANK;
-			int prefixId = 0;
-			int suffixId = 0;
-			boolean male = true;
-			int birthdayMonth = Calendar.JANUARY;
-			int birthdayDay = 1;
-			int birthdayYear = 1970;
-			String jobTitle = StringPool.BLANK;
-			long[] groupIds = null;
-			long[] organizationIds = null;
-			long[] roleIds = null;
-			long[] userGroupIds = null;
-			boolean sendEmail = false;
+			String createAccountURL = PortalUtil.getCreateAccountURL(
+				request, themeDisplay);
 
-			ServiceContext serviceContext = new ServiceContext();
+			createAccountURL = HttpUtil.setParameter(
+				createAccountURL, "openId", openId);
 
-			user = UserLocalServiceUtil.addUser(
-				creatorUserId, companyId, autoPassword, password1, password2,
-				autoScreenName, screenName, emailAddress, facebookId, openId,
-				locale, firstName, middleName, lastName, prefixId, suffixId,
-				male, birthdayMonth, birthdayDay, birthdayYear, jobTitle,
-				groupIds, organizationIds, roleIds, userGroupIds, sendEmail,
-				serviceContext);
+			session.setAttribute(WebKeys.OPEN_ID_LOGIN_PENDING, Boolean.TRUE);
+
+			return createAccountURL;
 		}
+
+		long creatorUserId = 0;
+		long companyId = themeDisplay.getCompanyId();
+		boolean autoPassword = false;
+		String password1 = PwdGenerator.getPassword();
+		String password2 = password1;
+		boolean autoScreenName = true;
+		String screenName = StringPool.BLANK;
+		long facebookId = 0;
+		Locale locale = themeDisplay.getLocale();
+		String middleName = StringPool.BLANK;
+		int prefixId = 0;
+		int suffixId = 0;
+		boolean male = true;
+		int birthdayMonth = Calendar.JANUARY;
+		int birthdayDay = 1;
+		int birthdayYear = 1970;
+		String jobTitle = StringPool.BLANK;
+		long[] groupIds = null;
+		long[] organizationIds = null;
+		long[] roleIds = null;
+		long[] userGroupIds = null;
+		boolean sendEmail = false;
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		user = UserLocalServiceUtil.addUser(
+			creatorUserId, companyId, autoPassword, password1, password2,
+			autoScreenName, screenName, emailAddress, facebookId, openId,
+			locale, firstName, middleName, lastName, prefixId, suffixId, male,
+			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
+			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
 
 		session.setAttribute(WebKeys.OPEN_ID_LOGIN, new Long(user.getUserId()));
 
@@ -412,46 +411,50 @@ public class OpenIdAction extends PortletAction {
 		AuthRequest authRequest = manager.authenticate(
 			discovered, portletURL.toString(), themeDisplay.getPortalURL());
 
-		try {
-			UserLocalServiceUtil.getUserByOpenId(
-				themeDisplay.getCompanyId(), openId);
+		if (UserLocalServiceUtil.fetchUserByOpenId(
+				themeDisplay.getCompanyId(), openId) != null) {
+
+			response.sendRedirect(authRequest.getDestinationUrl(true));
+
+			return;
 		}
-		catch (NoSuchUserException nsue) {
-			String screenName = OpenIdUtil.getScreenName(openId);
 
-			try {
-				User user = UserLocalServiceUtil.getUserByScreenName(
-					themeDisplay.getCompanyId(), screenName);
+		String screenName = OpenIdUtil.getScreenName(openId);
 
-				UserLocalServiceUtil.updateOpenId(user.getUserId(), openId);
-			}
-			catch (NoSuchUserException nsue2) {
-				FetchRequest fetchRequest = FetchRequest.createFetchRequest();
+		User user = UserLocalServiceUtil.fetchUserByScreenName(
+			themeDisplay.getCompanyId(), screenName);
 
-				String openIdProvider = getOpenIdProvider(
-					discovered.getOPEndpoint());
+		if (user != null) {
+			UserLocalServiceUtil.updateOpenId(user.getUserId(), openId);
 
-				String[] openIdAXTypes = PropsUtil.getArray(
-					PropsKeys.OPEN_ID_AX_SCHEMA, new Filter(openIdProvider));
+			response.sendRedirect(authRequest.getDestinationUrl(true));
 
-				for (String openIdAXType : openIdAXTypes) {
-					fetchRequest.addAttribute(
-						openIdAXType,
-						PropsUtil.get(
-							_OPEN_ID_AX_TYPE.concat(openIdAXType),
-							new Filter(openIdProvider)), true);
-				}
-
-				authRequest.addExtension(fetchRequest);
-
-				SRegRequest sRegRequest = SRegRequest.createFetchRequest();
-
-				sRegRequest.addAttribute(_OPEN_ID_SREG_ATTR_EMAIL, true);
-				sRegRequest.addAttribute(_OPEN_ID_SREG_ATTR_FULLNAME, true);
-
-				authRequest.addExtension(sRegRequest);
-			}
+			return;
 		}
+
+		FetchRequest fetchRequest = FetchRequest.createFetchRequest();
+
+		String openIdProvider = getOpenIdProvider(discovered.getOPEndpoint());
+
+		String[] openIdAXTypes = PropsUtil.getArray(
+			PropsKeys.OPEN_ID_AX_SCHEMA, new Filter(openIdProvider));
+
+		for (String openIdAXType : openIdAXTypes) {
+			fetchRequest.addAttribute(
+				openIdAXType,
+				PropsUtil.get(
+					_OPEN_ID_AX_TYPE.concat(openIdAXType),
+					new Filter(openIdProvider)), true);
+		}
+
+		authRequest.addExtension(fetchRequest);
+
+		SRegRequest sRegRequest = SRegRequest.createFetchRequest();
+
+		sRegRequest.addAttribute(_OPEN_ID_SREG_ATTR_EMAIL, true);
+		sRegRequest.addAttribute(_OPEN_ID_SREG_ATTR_FULLNAME, true);
+
+		authRequest.addExtension(sRegRequest);
 
 		response.sendRedirect(authRequest.getDestinationUrl(true));
 	}

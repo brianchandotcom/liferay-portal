@@ -5222,19 +5222,17 @@ public class PortalImpl implements Portal {
 	public long getValidUserId(long companyId, long userId)
 		throws PortalException, SystemException {
 
-		try {
-			User user = UserLocalServiceUtil.getUser(userId);
+		User user = UserLocalServiceUtil.fetchUser(userId);
 
-			if (user.getCompanyId() == companyId) {
-				return user.getUserId();
-			}
-			else {
-				return userId;
-			}
-		}
-		catch (NoSuchUserException nsue) {
+		if (user == null) {
 			return UserLocalServiceUtil.getDefaultUserId(companyId);
 		}
+
+		if (user.getCompanyId() == companyId) {
+			return user.getUserId();
+		}
+
+		return userId;
 	}
 
 	@Override

@@ -31,7 +31,6 @@ import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.NoSuchListTypeException;
 import com.liferay.portal.NoSuchOrganizationException;
 import com.liferay.portal.NoSuchRegionException;
-import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.OrganizationParentException;
 import com.liferay.portal.PhoneNumberException;
 import com.liferay.portal.RequiredFieldException;
@@ -135,22 +134,16 @@ public class CreateAccountAction extends PortletAction {
 				String emailAddress = ParamUtil.getString(
 					actionRequest, "emailAddress");
 
-				try {
-					User user = UserLocalServiceUtil.getUserByEmailAddress(
-						themeDisplay.getCompanyId(), emailAddress);
+				User user = UserLocalServiceUtil.fetchUserByEmailAddress(
+					themeDisplay.getCompanyId(), emailAddress);
 
-					if (user.getStatus() !=
-							WorkflowConstants.STATUS_INCOMPLETE) {
+				if ((user == null) ||
+					(user.getStatus() != WorkflowConstants.STATUS_INCOMPLETE)) {
 
-						SessionErrors.add(actionRequest, e.getClass(), e);
-					}
-					else {
-						setForward(
-							actionRequest, "portlet.login.update_account");
-					}
-				}
-				catch (NoSuchUserException nsue) {
 					SessionErrors.add(actionRequest, e.getClass(), e);
+				}
+				else {
+					setForward(actionRequest, "portlet.login.update_account");
 				}
 			}
 			else if (e instanceof AddressCityException ||

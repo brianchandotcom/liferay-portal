@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.messageboards.action;
 
-import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -224,15 +223,12 @@ public class EditDiscussionAction extends PortletAction {
 				String emailAddress = ParamUtil.getString(
 					actionRequest, "emailAddress");
 
-				try {
-					user = UserLocalServiceUtil.getUserByEmailAddress(
-						themeDisplay.getCompanyId(), emailAddress);
-				}
-				catch (NoSuchUserException nsue) {
-					return null;
-				}
+				user = UserLocalServiceUtil.fetchUserByEmailAddress(
+					themeDisplay.getCompanyId(), emailAddress);
 
-				if (user.getStatus() != WorkflowConstants.STATUS_INCOMPLETE) {
+				if ((user == null) ||
+					(user.getStatus() != WorkflowConstants.STATUS_INCOMPLETE)) {
+
 					return null;
 				}
 			}

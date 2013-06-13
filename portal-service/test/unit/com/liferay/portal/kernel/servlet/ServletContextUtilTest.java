@@ -40,6 +40,7 @@ import org.springframework.mock.web.MockServletContext;
 @RunWith(PowerMockRunner.class)
 public class ServletContextUtilTest extends PowerMockito {
 
+	@Test
 	public void testGetResourceURIWithEmptyPath() throws Exception {
 		getResourceURI(StringPool.BLANK);
 	}

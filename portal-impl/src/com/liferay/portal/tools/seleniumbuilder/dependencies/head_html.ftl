@@ -9,11 +9,11 @@
 				if (node.innerHTML == "-") {
 					node.innerHTML = "+";
 
-					document.getElementById("ExpandCollapse" + id).style.display = "none";
+					document.getElementById("Collapse" + id).style.display = "none";
 				} else if (node.innerHTML == "+") {
 					node.innerHTML = "-";
 
-					document.getElementById("ExpandCollapse" + id).style.display = "block";
+					document.getElementById("Collapse" + id).style.display = "block";
 				}
 			}
 		}
@@ -88,5 +88,5 @@
 		ul {
 			list-style-type: none;
 		}
-		</style>
-	</head>
+	</style>
+</head>

@@ -66,10 +66,18 @@
 
 <li id="${macroNameStack.peek()}Macro__${lineNumber}">
 	<div>
-		<span class="arrow">&lt;</span><span class="tag">then</span><span class="arrow">&gt;</span>
+		<div id="ExpandToggle__${lineFolds}" class="expandToggle">+</div>
 	</div>
 
-	<ul>
+	<div>
+		<div class="expandLine">
+			<span class="arrow">&lt;</span><span class="tag">then</span><span class="arrow">&gt;</span>
+		</div>
+	</div>
+
+	<ul id="CollapseExpandToggle__${lineFolds}" class="collapse">
+		<#assign lineFolds = lineFolds + 1>
+
 		<#assign macroBlockElement = thenElement>
 
 		<#include "macro_block_element_html.ftl">

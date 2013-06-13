@@ -14,9 +14,6 @@ import com.liferay.portalweb2.util.block.action.BaseLiferayAction;
 	</#list>
 </#if>
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class ${seleniumBuilderContext.getActionSimpleClassName(actionName)} extends
 
 <#if actionName = "BaseLiferay">
@@ -53,9 +50,9 @@ public class ${seleniumBuilderContext.getActionSimpleClassName(actionName)} exte
 				</#if>
 			</#list>
 
-			, Map<String,String> commandScopeVariables) throws Exception {
+			) throws Exception {
 				<#list 1..seleniumBuilderContext.getFunctionLocatorCount(functionName) as i>
-					locator${i} = getLocator(locator${i}, locatorKey${i}, commandScopeVariables);
+					locator${i} = getLocator(locator${i}, locatorKey${i});
 				</#list>
 
 				<#assign childElementAttributeValues = seleniumBuilderFileUtil.getChildElementAttributeValues(commandElement, "function")>
@@ -124,7 +121,7 @@ public class ${seleniumBuilderContext.getActionSimpleClassName(actionName)} exte
 							super.${seleniumBuilderFileUtil.getVariableName(functionName)}(
 
 							<#list 1..seleniumBuilderContext.getFunctionLocatorCount(functionName) as i>
-								locator${i}, locatorKey${i}, value${i}, commandScopeVariables
+								locator${i}, locatorKey${i}, value${i}
 
 								<#if i_has_next>
 									,

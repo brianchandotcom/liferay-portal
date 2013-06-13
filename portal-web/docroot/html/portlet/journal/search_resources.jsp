@@ -394,6 +394,8 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, entryEn
 									rowURL.setParameter("articleId", curArticle.getArticleId());
 
 									request.setAttribute("view_entries.jsp-article", curArticle);
+
+									String curArticleImageURL = curArticle.getArticleImageURL(themeDisplay);
 									%>
 
 									<liferay-ui:app-view-search-entry
@@ -406,7 +408,7 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, entryEn
 										rowCheckerName="<%= JournalArticle.class.getSimpleName() %>"
 										showCheckbox="<%= JournalArticlePermission.contains(permissionChecker, curArticle, ActionKeys.DELETE) || JournalArticlePermission.contains(permissionChecker, curArticle, ActionKeys.UPDATE) %>"
 										status="<%= curArticle.getStatus() %>"
-										thumbnailSrc='<%= themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
+										thumbnailSrc='<%= Validator.isNotNull(curArticleImageURL) ? curArticleImageURL : themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
 										title="<%= curArticle.getTitle(locale) %>"
 										url="<%= rowURL.toString() %>"
 									/>

@@ -17,6 +17,7 @@ package com.liferay.taglib.ui;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.taglib.util.IncludeTag;
 
+import java.util.Date;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -51,6 +52,14 @@ public class AppViewEntryTag extends IncludeTag {
 		_assetTagClassPK = assetTagClassPK;
 	}
 
+	public void setAuthor(String author) {
+		_author = author;
+	}
+
+	public void setCreateDate(Date createDate) {
+		_createDate = createDate;
+	}
+
 	public void setCssClass(String cssClass) {
 		_cssClass = cssClass;
 	}
@@ -63,16 +72,42 @@ public class AppViewEntryTag extends IncludeTag {
 		_description = HtmlUtil.unescape(description);
 	}
 
+	public void setDisplayDate(Date displayDate) {
+		_displayDate = displayDate;
+	}
+
 	public void setDisplayStyle(String displayStyle) {
 		_displayStyle = displayStyle;
+	}
+
+	public void setExpirationDate(Date expirationDate) {
+		_expirationDate = expirationDate;
 	}
 
 	public void setFolder(boolean folder) {
 		_folder = folder;
 	}
 
+	public void setLatestApprovedVersion(String latestApprovedVersion) {
+		_latestApprovedVersion = latestApprovedVersion;
+	}
+
+	public void setLatestApprovedVersionAuthor(
+		String latestApprovedVersionAuthor) {
+
+		_latestApprovedVersionAuthor = latestApprovedVersionAuthor;
+	}
+
 	public void setLocked(boolean locked) {
 		_locked = locked;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		_modifiedDate = modifiedDate;
+	}
+
+	public void setReviewDate(Date reviewDate) {
+		_reviewDate = reviewDate;
 	}
 
 	public void setRowCheckerId(String rowCheckerId) {
@@ -119,6 +154,10 @@ public class AppViewEntryTag extends IncludeTag {
 		_url = url;
 	}
 
+	public void setVersion(String version) {
+		_version = version;
+	}
+
 	@Override
 	protected void cleanUp() {
 		_actionJsp = null;
@@ -126,12 +165,20 @@ public class AppViewEntryTag extends IncludeTag {
 		_assetCategoryClassPK = 0;
 		_assetTagClassName = null;
 		_assetTagClassPK = 0;
+		_author = null;
+		_createDate = null;
 		_cssClass = null;
 		_data = null;
 		_description = null;
+		_displayDate = null;
 		_displayStyle = null;
+		_expirationDate = null;
 		_folder = false;
+		_latestApprovedVersion = null;
+		_latestApprovedVersionAuthor = null;
 		_locked = false;
+		_modifiedDate = null;
+		_reviewDate = null;
 		_rowCheckerId = null;
 		_rowCheckerName = null;
 		_shortcut = false;
@@ -143,6 +190,7 @@ public class AppViewEntryTag extends IncludeTag {
 		_thumbnailStyle = null;
 		_title = null;
 		_url = null;
+		_version = null;
 	}
 
 	@Override
@@ -168,14 +216,31 @@ public class AppViewEntryTag extends IncludeTag {
 			"liferay-ui:app-view-entry:assetTagClassName", _assetTagClassName);
 		request.setAttribute(
 			"liferay-ui:app-view-entry:assetTagClassPK", _assetTagClassPK);
+		request.setAttribute("liferay-ui:app-view-entry:author", _author);
+		request.setAttribute(
+			"liferay-ui:app-view-entry:createDate", _createDate);
 		request.setAttribute("liferay-ui:app-view-entry:cssClass", _cssClass);
 		request.setAttribute("liferay-ui:app-view-entry:data", _data);
 		request.setAttribute(
 			"liferay-ui:app-view-entry:description", _description);
 		request.setAttribute(
+			"liferay-ui:app-view-entry:displayDate", _displayDate);
+		request.setAttribute(
 			"liferay-ui:app-view-entry:displayStyle", _displayStyle);
+		request.setAttribute(
+			"liferay-ui:app-view-entry:expirationDate", _expirationDate);
 		request.setAttribute("liferay-ui:app-view-entry:folder", _folder);
+		request.setAttribute(
+			"liferay-ui:app-view-entry:latestApprovedVersion",
+			_latestApprovedVersion);
+		request.setAttribute(
+			"liferay-ui:app-view-entry:latestApprovedVersionAuthor",
+			_latestApprovedVersionAuthor);
 		request.setAttribute("liferay-ui:app-view-entry:locked", _locked);
+		request.setAttribute(
+			"liferay-ui:app-view-entry:modifiedDate", _modifiedDate);
+		request.setAttribute(
+			"liferay-ui:app-view-entry:reviewDate", _reviewDate);
 		request.setAttribute(
 			"liferay-ui:app-view-entry:rowCheckerId", _rowCheckerId);
 		request.setAttribute(
@@ -193,6 +258,7 @@ public class AppViewEntryTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:app-view-entry:thumbnailStyle", _thumbnailStyle);
 		request.setAttribute("liferay-ui:app-view-entry:title", _title);
+		request.setAttribute("liferay-ui:app-view-entry:version", _version);
 		request.setAttribute("liferay-ui:app-view-entry:url", _url);
 	}
 
@@ -206,12 +272,20 @@ public class AppViewEntryTag extends IncludeTag {
 	private long _assetCategoryClassPK;
 	private String _assetTagClassName;
 	private long _assetTagClassPK;
+	private String _author;
+	private Date _createDate;
 	private String _cssClass;
 	private Map<String, Object> _data;
 	private String _description;
+	private Date _displayDate;
 	private String _displayStyle;
+	private Date _expirationDate;
 	private boolean _folder;
+	private String _latestApprovedVersion;
+	private String _latestApprovedVersionAuthor;
 	private boolean _locked;
+	private Date _modifiedDate;
+	private Date _reviewDate;
 	private String _rowCheckerId;
 	private String _rowCheckerName;
 	private boolean _shortcut;
@@ -223,5 +297,6 @@ public class AppViewEntryTag extends IncludeTag {
 	private String _thumbnailStyle;
 	private String _title;
 	private String _url;
+	private String _version;
 
 }

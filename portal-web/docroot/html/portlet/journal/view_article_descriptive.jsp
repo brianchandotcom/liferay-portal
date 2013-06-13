@@ -20,19 +20,48 @@
 JournalArticle article = (JournalArticle)request.getAttribute("view_entries.jsp-article");
 
 PortletURL tempRowURL = (PortletURL)request.getAttribute("view_entries.jsp-tempRowURL");
+
+JournalArticle latestApprovedArticleVersion = null;
+
+Date createDate = article.getCreateDate();
+
+if (article.getVersion() > JournalArticleConstants.VERSION_DEFAULT) {
+	JournalArticle firstArticleVersion = JournalArticleLocalServiceUtil.getArticle(article.getGroupId(), article.getArticleId(), JournalArticleConstants.VERSION_DEFAULT);
+
+	createDate = firstArticleVersion.getCreateDate();
+
+	if (article.getStatus() > WorkflowConstants.STATUS_APPROVED) {
+		latestApprovedArticleVersion = JournalArticleLocalServiceUtil.getLatestArticle(article.getGroupId(), article.getArticleId(), WorkflowConstants.STATUS_APPROVED);
+	}
+}
+
+String articleImageURL = article.getArticleImageURL(themeDisplay);
 %>
 
 <liferay-ui:app-view-entry
 	actionJsp="/html/portlet/journal/article_action.jsp"
+	assetCategoryClassName="<%= JournalArticle.class.getName() %>"
+	assetCategoryClassPK="<%= article.getResourcePrimKey() %>"
+	assetTagClassName="<%= JournalArticle.class.getName() %>"
+	assetTagClassPK="<%= article.getResourcePrimKey() %>"
+	author="<%= article.getUserName() %>"
+	createDate="<%= createDate %>"
 	description="<%= article.getDescription(locale) %>"
+	displayDate="<%= article.getDisplayDate() %>"
 	displayStyle="descriptive"
+	expirationDate="<%= article.getExpirationDate() %>"
+	latestApprovedVersion="<%= Validator.isNotNull(latestApprovedArticleVersion) ? String.valueOf(latestApprovedArticleVersion.getVersion()) : null %>"
+	latestApprovedVersionAuthor="<%= Validator.isNotNull(latestApprovedArticleVersion) ? String.valueOf(latestApprovedArticleVersion.getUserName()) : null %>"
+	modifiedDate="<%= article.getModifiedDate() %>"
+	reviewDate="<%= article.getReviewDate() %>"
 	rowCheckerId="<%= String.valueOf(article.getArticleId()) %>"
 	rowCheckerName="<%= JournalArticle.class.getSimpleName() %>"
 	showCheckbox="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.DELETE) || JournalArticlePermission.contains(permissionChecker, article, ActionKeys.UPDATE) %>"
 	status="<%= article.getStatus() %>"
 	thumbnailDivStyle="height: 136px; width: 136px;"
-	thumbnailSrc='<%= themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
+	thumbnailSrc='<%= Validator.isNotNull(articleImageURL) ? articleImageURL : themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
 	thumbnailStyle="max-height: 128px; max-width: 128px;"
 	title="<%= article.getTitle(locale) %>"
 	url="<%= tempRowURL.toString() %>"
+	version="<%= String.valueOf(article.getVersion()) %>"
 />

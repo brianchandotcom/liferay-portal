@@ -16,7 +16,8 @@
 
 <%@ include file="/html/common/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.trash.util.TrashUtil" %><%@
+<%@ page import="com.liferay.portal.kernel.util.DateFormatFactoryUtil" %><%@
+page import="com.liferay.portlet.trash.util.TrashUtil" %><%@
 page import="com.liferay.taglib.aui.AUIUtil" %><%@
 page import="com.liferay.taglib.util.InlineUtil" %>
 

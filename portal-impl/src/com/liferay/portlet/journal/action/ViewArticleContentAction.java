@@ -22,24 +22,28 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ImageLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portal.webserver.WebServerServletTokenUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.storage.Fields;
+import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.impl.JournalArticleImpl;
 import com.liferay.portlet.journal.service.JournalArticleImageLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
+import com.liferay.portlet.journal.util.JournalConverterUtil;
 import com.liferay.portlet.journal.util.JournalUtil;
-import com.liferay.util.PwdGenerator;
 
 import java.io.File;
 
@@ -107,19 +111,38 @@ public class ViewArticleContentAction extends PortletAction {
 
 				User user = PortalUtil.getUser(uploadPortletRequest);
 
-				String xml = ParamUtil.getString(uploadPortletRequest, "xml");
+				String content = null;
 
-				Document doc = SAXReaderUtil.read(xml);
+				if (Validator.isNotNull(structureId)) {
+					ServiceContext serviceContext =
+						ServiceContextFactory.getInstance(
+							JournalArticle.class.getName(),
+							uploadPortletRequest);
 
-				Element root = doc.getRootElement();
+					if (Validator.isNull(languageId)) {
+						languageId = LanguageUtil.getLanguageId(actionRequest);
+					}
 
-				String previewArticleId =
-					"PREVIEW_" +
-						PwdGenerator.getPassword(PwdGenerator.KEY3, 10);
+					DDMStructure ddmStructure =
+						DDMStructureLocalServiceUtil.fetchStructure(
+							groupId,
+							PortalUtil.getClassNameId(JournalArticle.class),
+							structureId);
 
-				format(
-					groupId, articleId, version, previewArticleId, root,
-					uploadPortletRequest);
+					if (ddmStructure == null) {
+						ddmStructure =
+							DDMStructureLocalServiceUtil.fetchStructure(
+								themeDisplay.getCompanyGroupId(),
+								PortalUtil.getClassNameId(JournalArticle.class),
+								structureId);
+					}
+
+					Fields fields = DDMUtil.getFields(
+						ddmStructure.getStructureId(), serviceContext);
+
+					content = JournalConverterUtil.getContent(
+						ddmStructure, fields);
+				}
 
 				Map<String, String> tokens = JournalUtil.getTokens(
 					groupId, themeDisplay);
@@ -138,7 +161,7 @@ public class ViewArticleContentAction extends PortletAction {
 				article.setVersion(version);
 				article.setTitle(title);
 				article.setDescription(description);
-				article.setContent(xml);
+				article.setContent(content);
 				article.setType(type);
 				article.setStructureId(structureId);
 				article.setTemplateId(templateId);

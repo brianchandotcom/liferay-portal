@@ -5,18 +5,22 @@
 <#assign lineFolds = 0>
 
 <ul onclick="takeAction(event);">
-
 	<#list testCaseCommandElements as testCaseCommandElement>
 		<#assign testCaseCommand = testCaseCommandElement.attributeValue("name")>
 
-		<div id="${testCaseName}TestCase__${testCaseCommand}" class="expandToggle">+</div>
-
 		<li id="${testCaseName}TestCase__${testCaseCommand}">
-			<div class="expandLine">
-				<h3 class="testCaseCommand">${testCaseName}#${testCaseCommand}</h3>
+			<div>
+				<div id="ExpandToggle__${lineFolds}" class="expandToggle">+</div>
 			</div>
 
-			<ul id="ExpandCollapse${testCaseName}TestCase__${testCaseCommand}">
+			<div>
+				<div class="expandLine">
+					<h3 class="testCaseCommand">${testCaseName}#${testCaseCommand}</h3>
+				</div>
+			</div>
+
+			<ul id="CollapseExpandToggle__${lineFolds}" class="collapse">
+				<#assign lineFolds = lineFolds + 1>
 
 				<#assign testCaseVarElements = testCaseRootElement.elements("var")>
 
@@ -41,11 +45,15 @@
 
 					<#assign lineNumber = testCaseSetupElement.attributeValue("line-number")>
 
-					<div id="${testCaseName}TestCase__${lineFolds}" class="expandToggle">+</div>
-
 					<li id="${testCaseName}TestCase__${lineNumber}">
-						<div class="expandLine">
-							<span class="arrow">&lt;</span><span class="tag">set-up</span><span class="arrow">&gt;</span>
+						<div>
+							<div id="ExpandToggle__${lineFolds}" class="expandToggle">+</div>
+						</div>
+
+						<div>
+							<div class="expandLine">
+								<span class="arrow">&lt;</span><span class="tag">set-up</span><span class="arrow">&gt;</span>
+							</div>
 						</div>
 
 						<#assign testCaseBlockElement = testCaseSetupElement>
@@ -60,13 +68,17 @@
 
 				<#assign lineNumber = testCaseCommandElement.attributeValue("line-number")>
 
-				<div id="${testCaseName}TestCase__${lineFolds}" class="expandToggle">+</div>
-
 				<li id="${testCaseName}TestCase__${lineNumber}">
-					<div class="expandLine">
-						<span class="arrow">&lt;</span><span class="tag">command</span>
-						<span class="attribute">name</span><span class="arrow">=</span><span class="quote">&quot;${testCaseCommandElement.attributeValue("name")}&quot;</span>
-						<span class="arrow">&gt;</span>
+					<div>
+						<div id="ExpandToggle__${lineFolds}" class="expandToggle">+</div>
+					</div>
+
+					<div>
+						<div class="expandLine">
+							<span class="arrow">&lt;</span><span class="tag">command</span>
+							<span class="attribute">name</span><span class="arrow">=</span><span class="quote">&quot;${testCaseCommandElement.attributeValue("name")}&quot;</span>
+							<span class="arrow">&gt;</span>
+						</div>
 					</div>
 
 					<#assign testCaseBlockElement = testCaseCommandElement>
@@ -83,11 +95,15 @@
 
 					<#assign lineNumber = testCaseTearDownElement.attributeValue("line-number")>
 
-					<div id="${testCaseName}TestCase__${lineFolds}" class="expandToggle">+</div>
-
 					<li id="${testCaseName}TestCase__${lineNumber}">
-						<div class="expandLine">
-							<span class="arrow">&lt;</span><span class="tag">tear-down</span><span class="arrow">&gt;</span>
+						<div>
+							<div id="ExpandToggle__${lineFolds}" class="expandToggle">+</div>
+						</div>
+
+						<div>
+							<div class="expandLine">
+								<span class="arrow">&lt;</span><span class="tag">tear-down</span><span class="arrow">&gt;</span>
+							</div>
 						</div>
 
 						<#assign testCaseBlockElement = testCaseTearDownElement>

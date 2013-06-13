@@ -31,13 +31,17 @@
 				<span class="arrow">/&gt;</span>
 			</div>
 		<#elseif element.getName() == "if">
-			<div class="expandToggle"><div id="If__${lineFolds}">+</div></div>
-			<div class="expandLine">
-				<span class="arrow">&lt;</span><span class="tag">if</span><span class="arrow">&gt;</span>
+			<div>
+				<div id="ExpandToggle__${lineFolds}" class="expandToggle">+</div>
 			</div>
 
-			<ul id="ExpandCollapseIf__${lineFolds}" class="collapse">
+			<div>
+				<div class="expandLine">
+					<span class="arrow">&lt;</span><span class="tag">if</span><span class="arrow">&gt;</span>
+				</div>
+			</div>
 
+			<ul id="CollapseExpandToggle__${lineFolds}" class="collapse">
 				<#assign lineFolds = lineFolds + 1>
 
 				<#assign ifElement = element>
@@ -51,10 +55,18 @@
 
 					<li id="${macroNameStack.peek()}Macro__${lineNumber}">
 						<div>
-							<span class="arrow">&lt;</span><span class="tag">elseif</span><span class="arrow">&gt;</span>
+							<div id="ExpandToggle__${lineFolds}" class="expandToggle">-</div>
 						</div>
 
-						<ul>
+						<div>
+							<div class="expandLine">
+								<span class="arrow">&lt;</span><span class="tag">elseif</span><span class="arrow">&gt;</span>
+							</div>
+						</div>
+
+						<ul id="CollapseExpandToggle__${lineFolds}">
+							<#assign lineFolds = lineFolds + 1>
+
 							<#assign ifElement = elseifElement>
 
 							<#include "macro_if_element_html.ftl">
@@ -73,10 +85,18 @@
 
 					<li id="${macroNameStack.peek()}Macro__${lineNumber}">
 						<div>
-							<span class="arrow">&lt;</span><span class="tag">else</span><span class="arrow">&gt;</span>
+							<div id="ExpandToggle__${lineFolds}" class="expandToggle">+</div>
 						</div>
 
-						<ul>
+						<div>
+							<div class="expandLine">
+								<span class="arrow">&lt;</span><span class="tag">else</span><span class="arrow">&gt;</span>
+							</div>
+						</div>
+
+						<ul id="CollapseExpandToggle__${lineFolds}" class="collapse">
+							<#assign lineFolds = lineFolds + 1>
+
 							<#assign macroBlockElement = element.element("else")>
 
 							<#include "macro_block_element_html.ftl">
@@ -105,13 +125,17 @@
 				<span class="arrow">/&gt;</span>
 			</div>
 		<#elseif element.getName() == "while">
-			<div class="expandToggle"><div id="While__${lineFolds}">+</div></div>
-
-			<div class="expandLine">
-				<span class="arrow">&lt;</span><span class="tag">while</span><span class="arrow">&gt;</span>
+			<div>
+				<div id="ExpandToggle__${lineFolds}" class="expandToggle">+</div>
 			</div>
 
-			<ul id="ExpandCollapseWhile__${lineFolds}" class="collapse">
+			<div>
+				<div class="expandLine">
+					<span class="arrow">&lt;</span><span class="tag">while</span><span class="arrow">&gt;</span>
+				</div>
+			</div>
+
+			<ul id="CollapseExpandToggle__${lineFolds}" class="collapse">
 				<#assign lineFolds = lineFolds + 1>
 
 				<#assign ifElement = element>

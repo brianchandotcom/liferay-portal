@@ -24,14 +24,14 @@
 	<div class="device-preview-content">
 		<aui:nav cssClass="nav-list">
 			<aui:nav-item cssClass="lfr-device-item row-fluid" data-device="autosize">
-				<div class="span4 full"></div>
+				<div class="span4 autosize"></div>
 				<div class="span8">
 					<div><%= LanguageUtil.get(pageContext, "autosize") %></div>
 					<div>100%</div>
 				</div>
 			</aui:nav-item>
 
-			<aui:nav-item cssClass="lfr-device-item row-fluid" data-device="smartphone">
+			<aui:nav-item cssClass="lfr-device-item row-fluid selected" data-device="smartphone">
 				<div class="span4 smartphone"></div>
 				<div class="span8">
 					<div><%= LanguageUtil.get(pageContext, "smartphone") %></div>
@@ -56,8 +56,8 @@
 			</aui:nav-item>
 
 			<aui:nav-item cssClass="lfr-device-item row-fluid" data-device="custom">
-				<div><%= LanguageUtil.get(pageContext, "tablet") %> (px)</div>
-				<input class="input-mini device-width" name="width" value="200"/> x <input class="input-mini device-height" name="height" value="200" />
+				<div><%= LanguageUtil.get(pageContext, "custom") %> (px)</div>
+				<aui:input cssClass="input-mini" inlineField="<%= true %>" label="" name="width" value="200"/> x <aui:input cssClass="input-mini" inlineField="<%= true %>" label="" name="height" value="200" />
 			</aui:nav-item>
 		</aui:nav>
 	</div>
@@ -69,14 +69,15 @@
 			devices: {
 				'autosize': {},
 				'custom': {
-					height: '.device-height',
-					width: '.device-width'
+					height: '#<portlet:namespace />height',
+					width: '#<portlet:namespace />width'
 				},
 				'desktop': {
 					height: 1050,
 					width: 1300
 				},
 				'smartphone': {
+					default: true,
 					height: 640,
 					width: 400
 				},
@@ -85,8 +86,8 @@
 					width: 760
 				}
 			},
-			inputHeight: '.device-height',
-			inputWidth: '.device-width',
+			inputHeight: '#<portlet:namespace />height',
+			inputWidth: '#<portlet:namespace />width',
 			namespace: '<portlet:namespace />'
 		}
 	);

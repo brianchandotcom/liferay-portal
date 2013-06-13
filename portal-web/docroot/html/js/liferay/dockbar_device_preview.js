@@ -1,15 +1,21 @@
 AUI.add(
 	'liferay-dockbar-device-preview',
 	function(A) {
+		var AObject = A.Object;
+
 		var Lang = A.Lang;
 
 		var BODY = A.getBody();
 
 		var Dockbar = Liferay.Dockbar;
 
+		var CLASS_SELECTED = 'selected';
+
 		var CSS_DEVICE_ITEM = '.lfr-device-item';
 
 		var CSS_DEVICE_PREVIEW_CONTENT = '.device-preview-content';
+
+		var CSS_SELECTED = '.' + CLASS_SELECTED;
 
 		var DIALOG_ALIGN_POINTS = [A.WidgetPositionAlign.CC, A.WidgetPositionAlign.CC];
 
@@ -38,9 +44,7 @@ AUI.add(
 
 		var STR_INPUT_WIDTH = 'inputWidth';
 
-		var STR_SELECTED = 'selected';
-
-		var TPL_DEVICE_PREVIEW = '<div class="lfr-device-preview hide" />';
+		var TPL_DEVICE_PREVIEW = '<div class="lfr-device-preview" />';
 
 		var DevicePreview = A.Component.create(
 			{
@@ -65,6 +69,7 @@ AUI.add(
 				prototype: {
 					initializer: function(config) {
 						var instance = this;
+
 						instance._dialogId = A.guid();
 
 						instance._devicePreviewContainer = instance.byId('devicePreviewContainer');
@@ -74,48 +79,71 @@ AUI.add(
 						instance._devicePreviewNode = A.Node.create(Lang.sub(TPL_DEVICE_PREVIEW));
 						BODY.append(instance._devicePreviewNode);
 
+						var devices = instance.get('devices');
+
+						AObject.each(
+							devices,
+							function (item, index, collection) {
+								if (item.default) {
+									instance._openDeviceDialog(item);
+								}
+							}
+						);
+
 						instance._bindUI();
+					},
+
+					destructor: function() {
+						var instance = this;
+
+						(new A.EventHandle(instance._eventHandles)).detach();
 					},
 
 					_bindUI: function() {
 						var instance = this;
 
-						instance._closePanelButton.on(STR_CLICK, instance._closePanel, instance);
-
-						instance._devicePreviewContent.delegate('click', instance._onDeviceClick, CSS_DEVICE_ITEM, instance);
+						var eventHandles = [
+							instance._closePanelButton.on(STR_CLICK, instance._closePanel, instance),
+							instance._devicePreviewContent.delegate(STR_CLICK, instance._onDeviceClick, CSS_DEVICE_ITEM, instance)
+						]
 
 						var inputWidth = instance.get(STR_INPUT_WIDTH);
 
 						if (inputWidth) {
-							inputWidth.on(STR_INPUT, instance._onSizeInput, instance);
+							eventHandles.push(
+								inputWidth.on(STR_INPUT, instance._onSizeInput, instance)
+							);
 						}
 
 						var inputHeight = instance.get(STR_INPUT_HEIGHT);
 
 						if (inputHeight) {
-							inputHeight.on(STR_INPUT, instance._onSizeInput, instance);
+							eventHandles.push(
+								inputHeight.on(STR_INPUT, instance._onSizeInput, instance)
+							);
 						}
+
+						instance._eventHandles = eventHandles;
 					},
 
 					_closePanel: function() {
 						var instance = this;
 						
 						Dockbar.togglePreviewPanel();
-
-						instance._devicePreviewNode.hide();
 					},
 
 					_normalizeDialogAttrs: function(width, height, autoWidth, autoHeight) {
 						var instance = this;
 
-						var dialogAttrs = {}
+						var dialogAttrs = {};
 
 						if (!Lang.isNumber(width)) {
 							var widthNode = A.one(width);
 
 							if (widthNode) {
 								width = widthNode.val();
-							} else {
+							}
+							else {
 								width = instance._devicePreviewNode.width();
 								autoWidth = true;
 							}
@@ -126,7 +154,8 @@ AUI.add(
 
 							if (heightNode) {
 								height = heightNode.val();
-							} else {
+							}
+							else {
 								height = instance._devicePreviewNode.height();
 								autoHeight = true;
 							}
@@ -137,7 +166,7 @@ AUI.add(
 							autoWidth: autoWidth,
 							height: height,
 							width: width
-						}
+						};
 					},
 
 					_openDeviceDialog: function(device) {
@@ -148,36 +177,40 @@ AUI.add(
 						var dialogAttrs = instance._normalizeDialogAttrs(device.width, device.height, false, false);
 
 						if (!dialog) {
-
 							var dialogConfig = {
 								align: {
 									node: instance._devicePreviewNode,
 									points: DIALOG_ALIGN_POINTS
 								},
+								autoSizeNode: instance._devicePreviewNode,
 								constrain: instance._devicePreviewNode,
 								height: dialogAttrs.height,
 								render: instance._devicePreviewNode,
 								width: dialogAttrs.width
 							};
 
+							var uri = window.location.href;
+
+							var path = window.location.pathname;
+
+							if (A.UA && A.UA.ie < 10 && path === '/') {
+								uri = uri + '?';
+							}
+
 							Liferay.Util.openWindow(
 								{
 									dialog: A.merge(DIALOG_DEFAULTS, dialogConfig),
 									dialogIframe: DIALOG_IFRAME_DEFAULTS,
-									height: dialogAttrs.height,
 									id: instance._dialogId,
-									uri: window.location.href,
-									width: dialogAttrs.width
+									uri: uri
 								}
 							);
-
-						} else {
+						}
+						else {
 							dialog.setAttrs(dialogAttrs);
 							dialog.align(instance._devicePreviewNode, DIALOG_ALIGN_POINTS);
 							dialog.show();
 						}
-
-						instance._devicePreviewNode.show();
 					},
 
 					_onDeviceClick: function(event) {
@@ -190,8 +223,8 @@ AUI.add(
 						var selectedDevice = deviceList[deviceId];
 
 						if (selectedDevice) {
-							instance._devicePreviewContainer.all('.selected').removeClass(instance._dialogId);
-							event.currentTarget.addClass(instance._dialogId);
+							instance._devicePreviewContainer.all(CSS_SELECTED).removeClass(CLASS_SELECTED);
+							event.currentTarget.addClass(CLASS_SELECTED);
 
 							instance._openDeviceDialog(selectedDevice);
 						}
@@ -215,6 +248,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-event-input', 'aui-modal', 'aui-dialog-iframe-deprecated', 'liferay-portlet-base', 'liferay-util', 'liferay-util-window']
+		requires: ['aui-dialog-iframe-deprecated', 'aui-event-input', 'aui-modal', 'liferay-portlet-base', 'liferay-util', 'liferay-util-window']
 	}
 );

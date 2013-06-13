@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.lar;
 
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.StagedModel;
 
@@ -95,18 +94,17 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 	@Override
 	public boolean validateReference(
-		Element rootElement, Element referenceElement) {
+		PortletDataContext portletDataContext, Element rootElement,
+		Element referenceElement) {
 
 		String elementName = referenceElement.getName();
 
 		if (elementName.equals("missing-reference")) {
 			String uuid = referenceElement.attributeValue("uuid");
-			long companyId = GetterUtil.getLong(
-				referenceElement.attributeValue("company-id"));
-			long groupId = GetterUtil.getLong(
-				referenceElement.attributeValue("group-id"));
 
-			return validateMissingReference(uuid, companyId, groupId);
+			return validateMissingReference(
+				uuid, portletDataContext.getCompanyId(),
+				portletDataContext.getScopeGroupId());
 		}
 
 		return true;

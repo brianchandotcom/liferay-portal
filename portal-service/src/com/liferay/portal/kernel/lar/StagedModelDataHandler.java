@@ -39,6 +39,7 @@ public interface StagedModelDataHandler<T extends StagedModel> {
 		throws PortletDataException;
 
 	public boolean validateReference(
-		Element rootElement, Element referenceElement);
+		PortletDataContext portletDataContext, Element rootElement,
+		Element referenceElement);
 
 }

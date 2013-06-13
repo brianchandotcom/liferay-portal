@@ -900,9 +900,9 @@ public class ExportImportImpl implements ExportImport {
 			parameterMap, PortletDataHandlerKeys.USER_ID_STRATEGY);
 		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
 
-		PortletDataContext portletDataContext =
+		final PortletDataContext portletDataContext =
 			PortletDataContextFactoryUtil.createImportPortletDataContext(
-				group.getCompanyId(), groupId, new HashMap<String, String[]>(),
+				group.getCompanyId(), groupId, parameterMap,
 				getUserIdStrategy(userId, userIdStrategy), zipReader);
 
 		SAXParser saxParser = new SAXParser();
@@ -913,7 +913,7 @@ public class ExportImportImpl implements ExportImport {
 				@Override
 				public void processElement(Element element) {
 					MissingReference missingReference =
-						validateMissingReference(element);
+						validateMissingReference(portletDataContext, element);
 
 					if (missingReference != null) {
 						MissingReference existingMissingReference =
@@ -1126,7 +1126,9 @@ public class ExportImportImpl implements ExportImport {
 		return new CurrentUserIdStrategy(user);
 	}
 
-	protected MissingReference validateMissingReference(Element element) {
+	protected MissingReference validateMissingReference(
+		PortletDataContext portletDataContext, Element element) {
+
 		String className = element.attributeValue("class-name");
 
 		StagedModelDataHandler<?> stagedModelDataHandler =
@@ -1134,7 +1136,7 @@ public class ExportImportImpl implements ExportImport {
 				className);
 
 		if (!stagedModelDataHandler.validateReference(
-				element.getParent(), element)) {
+				portletDataContext, element.getParent(), element)) {
 
 			return new MissingReference(element);
 		}

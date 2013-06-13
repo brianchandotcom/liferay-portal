@@ -122,8 +122,7 @@ public class JAASTest extends MainServletExecutionTestListener {
 			Assert.fail();
 		}
 
-		validateSubject(
-			loginContext.getSubject(), String.valueOf(_user.getUserId()));
+		validateSubject(loginContext.getSubject(), _user.getEmailAddress());
 	}
 
 	@Test
@@ -140,8 +139,7 @@ public class JAASTest extends MainServletExecutionTestListener {
 			Assert.fail();
 		}
 
-		validateSubject(
-			loginContext.getSubject(), String.valueOf(_user.getUserId()));
+		validateSubject(loginContext.getSubject(), _user.getEmailAddress());
 	}
 
 	@Test
@@ -222,8 +220,7 @@ public class JAASTest extends MainServletExecutionTestListener {
 			Assert.fail();
 		}
 
-		validateSubject(
-			loginContext.getSubject(), String.valueOf(_user.getUserId()));
+		validateSubject(loginContext.getSubject(), _user.getScreenName());
 	}
 
 	@Test

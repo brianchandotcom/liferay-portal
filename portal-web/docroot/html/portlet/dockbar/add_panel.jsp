@@ -36,24 +36,42 @@
 
 				<%
 				String selectedTab = GetterUtil.getString(SessionClicks.get(request, "liferay_addpanel_tab", "content"));
+
+				String tabs1Names = "";
+
+				boolean hasAddContentPermission = (GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_LAYOUT) && !group.isLayoutPrototype());
+
+				if (hasAddContentPermission) {
+					tabs1Names += "content";
+				}
+
+				boolean hasAddApplicationsAndPagePermission = (!themeDisplay.isStateMaximized() && layout.isTypePortlet() && !layout.isLayoutPrototypeLinkActive());
+
+				if (hasAddApplicationsAndPagePermission) {
+					tabs1Names += ",applications,page";
+				}
 				%>
 
 				<liferay-ui:tabs
-					names="content,applications,page"
+					names="<%= tabs1Names %>"
 					refresh="<%= false %>"
 					value="<%= selectedTab %>"
 				>
-					<liferay-ui:section>
-						<liferay-util:include page="/html/portlet/dockbar/add_content.jsp" />
-					</liferay-ui:section>
+					<c:if test="<%= hasAddContentPermission %>">
+						<liferay-ui:section>
+							<liferay-util:include page="/html/portlet/dockbar/add_content.jsp" />
+						</liferay-ui:section>
+					</c:if>
 
-					<liferay-ui:section>
-						<liferay-util:include page="/html/portlet/dockbar/add_application.jsp" />
-					</liferay-ui:section>
+					<c:if test="<%= hasAddApplicationsAndPagePermission %>">
+						<liferay-ui:section>
+							<liferay-util:include page="/html/portlet/dockbar/add_application.jsp" />
+						</liferay-ui:section>
 
-					<liferay-ui:section>
-						<liferay-util:include page="/html/portlet/dockbar/add_page.jsp" />
-					</liferay-ui:section>
+						<liferay-ui:section>
+							<liferay-util:include page="/html/portlet/dockbar/add_page.jsp" />
+						</liferay-ui:section>
+					</c:if>
 				</liferay-ui:tabs>
 			</div>
 		</c:if>

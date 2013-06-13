@@ -195,16 +195,7 @@ AUI.add(
 				Liferay.fire('initLayout');
 				Liferay.fire('initNavigation');
 
-				var addContent = A.one('#' + namespace + 'addContent');
-
 				var addPanel = A.one('#' + namespace + 'addPanel');
-
-				Liferay.on(
-					'dockbar:closeAddContentMenu',
-					function(event) {
-						addContent.removeClass('open');
-					}
-				);
 
 				if (addPanel) {
 					addPanel.on(

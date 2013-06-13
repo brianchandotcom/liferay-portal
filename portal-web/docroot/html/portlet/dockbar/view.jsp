@@ -127,20 +127,12 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 		</c:if>
 
 		<c:if test="<%= !group.isControlPanel() && (!group.hasStagingGroup() || group.isStagingGroup()) && (GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.ADD_LAYOUT) || hasLayoutUpdatePermission || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && hasLayoutCustomizePermission)) %>">
-			<aui:nav-item anchorCssClass="add-link" dropdown="<%= true %>" iconClass="icon-plus" id="addContent" label="add">
-				<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_LAYOUT) && !group.isLayoutPrototype() %>">
-					<aui:nav-item anchorId="addPage" label="page" />
-				</c:if>
+			<portlet:renderURL var="addURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+				<portlet:param name="struts_action" value="/dockbar/add_panel" />
+				<portlet:param name="viewEntries" value="<%= Boolean.TRUE.toString() %>" />
+			</portlet:renderURL>
 
-				<c:if test="<%= !themeDisplay.isStateMaximized() && layout.isTypePortlet() && !layout.isLayoutPrototypeLinkActive() %>">
-					<portlet:renderURL var="addContentURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-						<portlet:param name="struts_action" value="/dockbar/add_panel" />
-						<portlet:param name="viewEntries" value="<%= Boolean.TRUE.toString() %>" />
-					</portlet:renderURL>
-
-					<aui:nav-item anchorId="addPanel" href="<%= addContentURL %>" label="content-and-applications" />
-				</c:if>
-			</aui:nav-item>
+			<aui:nav-item anchorId="addPanel" href="<%= addURL %>" iconClass="icon-plus" label="add" />
 		</c:if>
 
 		<c:if test="<%= !group.isControlPanel() && (themeDisplay.isShowLayoutTemplatesIcon() || themeDisplay.isShowPageSettingsIcon()) %>">

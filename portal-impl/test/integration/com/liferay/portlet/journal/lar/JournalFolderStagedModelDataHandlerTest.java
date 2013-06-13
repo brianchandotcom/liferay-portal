@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.journal.lar;
 
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
@@ -22,6 +24,7 @@ import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
+import com.liferay.portlet.journal.NoSuchFolderException;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.portlet.journal.util.JournalTestUtil;
@@ -79,6 +82,30 @@ public class JournalFolderStagedModelDataHandlerTest
 	}
 
 	@Override
+	protected void deleteStagedModel(
+			StagedModel stagedModel,
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
+			JournalFolder.class.getSimpleName());
+
+		JournalFolder folder = (JournalFolder)dependentStagedModels.get(0);
+
+		JournalFolderLocalServiceUtil.deleteFolder(folder);
+	}
+
+	@Override
+	protected StagedModelType[] getDeletionSystemEventStagedModelTypes() {
+		JournalPortletDataHandler journalPortletDataHandler =
+			new JournalPortletDataHandler();
+
+		return journalPortletDataHandler.
+			getDeletionSystemEventStagedModelTypes();
+	}
+
+	@Override
 	protected StagedModel getStagedModel(String uuid, Group group) {
 		try {
 			return JournalFolderLocalServiceUtil.
@@ -92,6 +119,29 @@ public class JournalFolderStagedModelDataHandlerTest
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
 		return JournalFolder.class;
+	}
+
+	@Override
+	protected void validateDeletion(
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
+			JournalFolder.class.getSimpleName());
+
+		Assert.assertEquals(1, dependentStagedModels.size());
+
+		JournalFolder folder = (JournalFolder)dependentStagedModels.get(0);
+
+		try {
+			JournalFolderLocalServiceUtil.getJournalFolderByUuidAndGroupId(
+				folder.getUuid(), group.getGroupId());
+
+			Assert.fail("Not Deleted: " + JournalFolder.class);
+		}
+		catch (NoSuchFolderException nsfe) {
+		}
 	}
 
 	@Override

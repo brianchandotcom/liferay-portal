@@ -14,9 +14,12 @@
 
 package com.liferay.portlet.journal.lar;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.lar.BaseWorkflowedStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
@@ -34,6 +37,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUt
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMStructureTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMTemplateTestUtil;
+import com.liferay.portlet.journal.NoSuchFolderException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleResource;
 import com.liferay.portlet.journal.model.JournalFolder;
@@ -207,6 +211,47 @@ public class JournalArticleStagedModelDataHandlerTest
 	}
 
 	@Override
+	protected void deleteStagedModel(
+			StagedModel stagedModel,
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		JournalArticleLocalServiceUtil.deleteArticle(
+			(JournalArticle)stagedModel);
+
+		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
+			JournalFolder.class.getSimpleName());
+
+		JournalFolder folder = (JournalFolder)dependentStagedModels.get(0);
+
+		JournalFolderLocalServiceUtil.deleteFolder(folder);
+
+		dependentStagedModels = dependentStagedModelsMap.get(
+			DDMTemplate.class.getSimpleName());
+
+		DDMTemplate ddmTemplate = (DDMTemplate)dependentStagedModels.get(0);
+
+		DDMTemplateLocalServiceUtil.deleteTemplate(ddmTemplate);
+
+		dependentStagedModels = dependentStagedModelsMap.get(
+			DDMStructure.class.getSimpleName());
+
+		DDMStructure ddmStructure = (DDMStructure)dependentStagedModels.get(0);
+
+		DDMStructureLocalServiceUtil.deleteStructure(ddmStructure);
+	}
+
+	@Override
+	protected StagedModelType[] getDeletionSystemEventStagedModelTypes() {
+		JournalPortletDataHandler journalPortletDataHandler =
+			new JournalPortletDataHandler();
+
+		return journalPortletDataHandler.
+			getDeletionSystemEventStagedModelTypes();
+	}
+
+	@Override
 	protected StagedModel getStagedModel(String uuid, Group group) {
 		try {
 			return JournalArticleLocalServiceUtil.
@@ -266,6 +311,61 @@ public class JournalArticleStagedModelDataHandlerTest
 	}
 
 	@Override
+	protected void validateDeletion(
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
+			DDMStructure.class.getSimpleName());
+
+		Assert.assertEquals(1, dependentStagedModels.size());
+
+		DDMStructure ddmStructure = (DDMStructure)dependentStagedModels.get(0);
+
+		try {
+			DDMStructureLocalServiceUtil.getDDMStructureByUuidAndGroupId(
+				ddmStructure.getUuid(), group.getGroupId());
+
+			Assert.fail("Not Deleted: " + DDMStructure.class);
+		}
+		catch (NoSuchStructureException nsse) {
+		}
+
+		dependentStagedModels = dependentStagedModelsMap.get(
+			DDMTemplate.class.getSimpleName());
+
+		Assert.assertEquals(1, dependentStagedModels.size());
+
+		DDMTemplate ddmTemplate = (DDMTemplate)dependentStagedModels.get(0);
+
+		try {
+			DDMTemplateLocalServiceUtil.getDDMTemplateByUuidAndGroupId(
+				ddmTemplate.getUuid(), group.getGroupId());
+
+			Assert.fail("Not Deleted: " + DDMTemplate.class);
+		}
+		catch (NoSuchTemplateException nste) {
+		}
+
+		dependentStagedModels = dependentStagedModelsMap.get(
+			JournalFolder.class.getSimpleName());
+
+		Assert.assertEquals(1, dependentStagedModels.size());
+
+		JournalFolder folder = (JournalFolder)dependentStagedModels.get(0);
+
+		try {
+			JournalFolderLocalServiceUtil.getJournalFolderByUuidAndGroupId(
+				folder.getUuid(), group.getGroupId());
+
+			Assert.fail("Not Deleted: " + JournalFolder.class);
+		}
+		catch (NoSuchFolderException nsfe) {
+		}
+	}
+
+	@Override
 	protected void validateImport(
 			Map<String, List<StagedModel>> dependentStagedModelsMap,
 			Group group)
@@ -314,9 +414,15 @@ public class JournalArticleStagedModelDataHandlerTest
 
 		JournalArticle article = (JournalArticle)stagedModel;
 
+		Element dataElement =
+			portletDataContext.getImportDataStagedModelElement(stagedModel);
+
+		String resourceUuid = dataElement.attributeValue(
+			"article-resource-uuid");
+
 		JournalArticleResource articleResource =
 			JournalArticleResourceUtil.fetchByUUID_G(
-				article.getArticleResourceUuid(), group.getGroupId());
+				resourceUuid, group.getGroupId());
 
 		Assert.assertNotNull(articleResource);
 

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.passwordpoliciesadmin.lar;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
@@ -54,7 +55,24 @@ public class PasswordPolicyStagedModelDataHandlerTest
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			group.getGroupId(), TestPropsValues.getUserId());
 
-		return PasswordPolicyTestUtil.addPasswordPolicy(serviceContext);
+		return PasswordPolicyTestUtil.addPasswordPolicy(false, serviceContext);
+	}
+
+	@Override
+	protected void deleteStagedModel(
+			StagedModel stagedModel,
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		PasswordPolicyLocalServiceUtil.deletePasswordPolicy(
+			(PasswordPolicy)stagedModel);
+	}
+
+	@Override
+	protected StagedModelType[] getDeletionSystemEventStagedModelTypes() {
+		return new StagedModelType[] {
+			new StagedModelType(PasswordPolicy.class)};
 	}
 
 	@Override

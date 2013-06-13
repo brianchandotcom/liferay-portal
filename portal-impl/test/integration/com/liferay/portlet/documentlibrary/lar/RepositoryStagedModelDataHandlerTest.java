@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.lar;
 
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
@@ -75,19 +77,52 @@ public class RepositoryStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected StagedModel getStagedModel(String uuid, Group group) {
-		try {
-			return RepositoryLocalServiceUtil.getRepositoryByUuidAndGroupId(
-				uuid, group.getGroupId());
-		}
-		catch (Exception e) {
-			return null;
-		}
+	protected void deleteStagedModel(
+			StagedModel stagedModel,
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		RepositoryLocalServiceUtil.deleteRepository(
+			((Repository)stagedModel).getRepositoryId());
+	}
+
+	@Override
+	protected StagedModelType[] getDeletionSystemEventModelTypes() {
+		return new StagedModelType[] {new StagedModelType(Repository.class)};
+	}
+
+	@Override
+	protected StagedModel getStagedModel(String uuid, Group group)
+		throws SystemException {
+
+		return RepositoryLocalServiceUtil.fetchRepositoryByUuidAndGroupId(
+			uuid, group.getGroupId());
 	}
 
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
 		return Repository.class;
+	}
+
+	@Override
+	protected void validateDeletion(
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
+			RepositoryEntry.class.getSimpleName());
+
+		Assert.assertEquals(1, dependentStagedModels.size());
+
+		RepositoryEntry repositoryEntry =
+			(RepositoryEntry)dependentStagedModels.get(0);
+
+		Assert.assertNull(
+			RepositoryEntryLocalServiceUtil.
+				fetchRepositoryEntryByUuidAndGroupId(
+					repositoryEntry.getUuid(), group.getGroupId()));
 	}
 
 	@Override

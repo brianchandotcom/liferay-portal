@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.rolesadmin.lar;
 
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
@@ -55,14 +57,26 @@ public class RoleStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected StagedModel getStagedModel(String uuid, Group group) {
-		try {
-			return RoleLocalServiceUtil.fetchRoleByUuidAndCompanyId(
-				uuid, group.getCompanyId());
-		}
-		catch (Exception e) {
-			return null;
-		}
+	protected void deleteStagedModel(
+			StagedModel stagedModel,
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		RoleLocalServiceUtil.deleteRole((Role)stagedModel);
+	}
+
+	@Override
+	protected StagedModelType[] getDeletionSystemEventStagedModelTypes() {
+		return new StagedModelType[] {new StagedModelType(Role.class)};
+	}
+
+	@Override
+	protected StagedModel getStagedModel(String uuid, Group group)
+		throws SystemException {
+
+		return RoleLocalServiceUtil.fetchRoleByUuidAndCompanyId(
+			uuid, group.getCompanyId());
 	}
 
 	@Override

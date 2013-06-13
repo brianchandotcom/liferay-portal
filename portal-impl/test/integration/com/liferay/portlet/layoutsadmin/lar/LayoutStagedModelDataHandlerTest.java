@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.layoutsadmin.lar;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -208,14 +209,35 @@ public class LayoutStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected StagedModel getStagedModel(String uuid, Group group) {
-		try {
-			return LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-				uuid, group.getGroupId(), false);
-		}
-		catch (Exception e) {
-			return null;
-		}
+	protected void deleteStagedModel(
+			StagedModel stagedModel,
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		LayoutLocalServiceUtil.deleteLayout(
+			(Layout)stagedModel, false, ServiceTestUtil.getServiceContext());
+
+		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
+			Layout.class.getSimpleName());
+
+		Layout layout = (Layout)dependentStagedModels.get(0);
+
+		LayoutLocalServiceUtil.deleteLayout(
+			layout, true, ServiceTestUtil.getServiceContext());
+	}
+
+	@Override
+	protected StagedModelType[] getDeletionSystemEventStagedModelTypes() {
+		return new StagedModelType[] {new StagedModelType(Layout.class)};
+	}
+
+	@Override
+	protected StagedModel getStagedModel(String uuid, Group group)
+		throws SystemException {
+
+		return LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+			uuid, group.getGroupId(), false);
 	}
 
 	@Override

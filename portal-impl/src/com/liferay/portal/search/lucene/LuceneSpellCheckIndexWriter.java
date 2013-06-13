@@ -193,6 +193,7 @@ public class LuceneSpellCheckIndexWriter implements SpellCheckIndexWriter {
 			}
 
 			InputStream inputStream = null;
+			IndexSearcher indexSearcher = null;
 
 			try {
 				URL url = getResource(dictionaryFileName);
@@ -211,7 +212,7 @@ public class LuceneSpellCheckIndexWriter implements SpellCheckIndexWriter {
 					languageId,
 					com.liferay.portal.kernel.search.Field.SPELL_CHECK_WORD);
 
-				IndexSearcher indexSearcher = LuceneHelperUtil.getSearcher(
+				indexSearcher = LuceneHelperUtil.getSearcher(
 					indexAccessor.getCompanyId(), true);
 
 				List<IndexReader> indexReaders = new ArrayList<IndexReader>();
@@ -247,6 +248,8 @@ public class LuceneSpellCheckIndexWriter implements SpellCheckIndexWriter {
 			}
 			finally {
 				StreamUtil.cleanUp(inputStream);
+
+				LuceneHelperUtil.closeSearcher(indexSearcher);
 			}
 		}
 

@@ -123,6 +123,15 @@
 .lfr-preview-file-image-overlay {
 	height: 90%;
 	width: 70%;
+
+	.modal-header {
+		height: 20px;
+		padding-bottom: 0 5px 0;
+
+		.close {
+			font-size: 30px;
+		}
+	}
 }
 
 .lfr-preview-file-image-overlay-content {
@@ -131,16 +140,16 @@
 	text-align: center;
 }
 
-.lfr-preview-file-arrow {
-	top: 50%;
-}
+.lfr-preview-file-image-overlay-controls {
+	.image-viewer-control.carousel-control {
+		&.left {
+			left: 80px;
+		}
 
-.lfr-preview-file-arrow-left {
-	left: -50px;
-}
-
-.lfr-preview-file-arrow-right {
-	right: -50px;
+		&.right {
+			right: 80px;
+		}
+	}
 }
 
 .ie8 {

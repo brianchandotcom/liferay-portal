@@ -23,11 +23,9 @@ AUI.add(
 
 		var TPL_LOADING_INDICATOR = '<div class="lfr-preview-file-loading-indicator hide">{0}&nbsp;</div>';
 
-		var TPL_MAX_ARROW_LEFT = '<a href="javascript:;" class="image-viewer-arrow image-viewer-arrow-left lfr-preview-file-arrow lfr-preview-file-arrow-left"></a>';
+		var TPL_MAX_ARROW_LEFT = '<a href="javascript:;" class="image-viewer-control carousel-control left lfr-preview-file-arrow">‹</a>';
 
-		var TPL_MAX_ARROW_RIGHT = '<a href="javascript:;" class="image-viewer-arrow image-viewer-arrow-right lfr-preview-file-arrow lfr-preview-file-arrow-right"></a>';
-
-		var TPL_MAX_CLOSE = '<a href="javascript:;" class="image-viewer-close lfr-preview-file-close"></a>';
+		var TPL_MAX_ARROW_RIGHT = '<a href="javascript:;" class="image-viewer-control carousel-control right lfr-preview-file-arrow">›</a>';
 
 		var TPL_MAX_CONTROLS = '<span class="lfr-preview-file-image-overlay-controls"></span>';
 
@@ -212,15 +210,12 @@ AUI.add(
 							var arrowLeft = A.Node.create(TPL_MAX_ARROW_LEFT);
 							var arrowRight = A.Node.create(TPL_MAX_ARROW_RIGHT);
 
-							var close = A.Node.create(TPL_MAX_CLOSE);
-
 							maxPreviewControls = A.Node.create(TPL_MAX_CONTROLS);
 
 							maxPreviewControls.append(arrowLeft);
 							maxPreviewControls.append(arrowRight);
-							maxPreviewControls.append(close);
-
-							maxPreviewControls.delegate('click', instance._onMaxPreviewControlsClick, '.lfr-preview-file-arrow, .lfr-preview-file-close', instance);
+							
+							maxPreviewControls.delegate('click', instance._onMaxPreviewControlsClick, '.lfr-preview-file-arrow', instance);
 
 							instance._maxPreviewControls = maxPreviewControls;
 						}
@@ -268,7 +263,7 @@ AUI.add(
 						if (!maxOverlay) {
 							var maxOverlayMask = instance._getMaxOverlayMask();
 
-							maxOverlay = new A.OverlayBase(
+							maxOverlay = new A.Modal(
 								{
 									after: {
 										render: function(event) {
@@ -278,6 +273,7 @@ AUI.add(
 											maxOverlayMask.set('visible', event.newVal);
 										}
 									},
+									centered: true,
 									cssClass: 'lfr-preview-file-image-overlay',
 									height: '90%',
 									width: '85%',
@@ -285,7 +281,8 @@ AUI.add(
 								}
 							).render();
 
-							maxOverlay.get('contentBox').append(instance._getMaxPreviewImage());
+							maxOverlay.getStdModNode(A.WidgetStdMod.BODY).append(instance._getMaxPreviewImage());
+
 							maxOverlay.get('boundingBox').append(instance._getMaxPreviewControls());
 
 							instance._maxOverlay = maxOverlay;
@@ -302,17 +299,14 @@ AUI.add(
 						var maxOverlay = instance._getMaxOverlay();
 
 						if (target.hasClass('lfr-preview-file-arrow')) {
-							if (target.hasClass('lfr-preview-file-arrow-right')) {
+							if (target.hasClass('right')) {
 								instance._updateIndex(1);
 							}
-							else if (target.hasClass('lfr-preview-file-arrow-left')) {
+							else if (target.hasClass('left')) {
 								instance._updateIndex(-1);
 							}
 
 							instance._getMaxPreviewImage().attr('src', instance._baseImageURL + (instance.get('currentIndex') + 1));
-						}
-						else if (target.hasClass('lfr-preview-file-close')) {
-							maxOverlay.hide();
 						}
 					},
 
@@ -453,6 +447,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-overlay-mask-deprecated', 'aui-toolbar']
+		requires: ['aui-base', 'aui-modal', 'aui-overlay-mask-deprecated', 'aui-toolbar']
 	}
 );

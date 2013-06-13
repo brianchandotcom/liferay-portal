@@ -1,0 +1,10 @@
+<definition>
+	<command name="showDetails">
+		<if>
+			<condition action="CPWebcontentTemplatesAddtemplate#isElementNotPresent" locator-key1="DESCRIPTION_FIELD" />
+			<then>
+				<execute action="CPWebcontentTemplatesAddtemplate#click" locator-key1="DETAILS" />
+			</then>
+		</if>
+	</command>
+</definition>

@@ -1,0 +1,69 @@
+<definition>
+	<command name="addCP">
+		<execute macro="Page#cpGotoContent">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute action="CPWebcontent#click" locator-key1="TOOLBAR_MANAGE" />
+		<execute action="CPWebcontent#click" locator-key1="MANAGE_MENULIST_TEMPLATES" />
+
+		<execute action="CPWebcontentTemplates#selectFrame" locator-key1="TEMPLATES_IFRAME" />
+		<execute action="CPWebcontentTemplates#click" locator-key1="ADD" />
+		<execute action="CPWebcontentTemplates#selectFrame" />
+
+		<execute action="CPWebcontentTemplatesAddtemplate#selectFrame" locator-key1="TEMPLATES_IFRAME" />
+		<execute action="CPWebcontentTemplatesAddtemplate#type" locator-key1="NAME_FIELD" value1="${templateName}" />
+
+		<execute macro="CPWebcontentTemplatesAddtemplate#showDetails" />
+
+		<execute action="CPWebcontentTemplatesAddtemplate#type" locator-key1="DESCRIPTION_FIELD" value1="${templateDescription}" />
+
+		<if>
+			<isset var="structureName" />
+			<then>
+				<execute action="CPWebcontentTemplatesAddtemplate#click" locator-key1="SELECT_STRUCTURE" />
+
+				<execute action="CPWebcontentTemplatesAddtemplateStructure#selectFrame" />
+				<execute action="CPWebcontentTemplatesAddtemplateStructure#selectFrame" locator-key1="STRUCTURE_IFRAME" />
+				<execute action="CPWebcontentTemplatesAddtemplateStructure#assertTextEquals" locator-key1="STRUCTURE_TABLE_NAME_1" value1="${structureName}" />
+				<execute action="CPWebcontentTemplatesAddtemplateStructure#click" locator-key1="STRUCTURE_TABLE_CHOOSE_BUTTON_1" />
+				<execute action="CPWebcontentTemplatesAddtemplateStructure#confirm" locator-key1="CONFIRMATION" value1="Selecting a new structure will change the available input fields and available templates? Do you want to proceed?" />
+
+				<execute action="CPWebcontentTemplatesAddtemplate#selectFrame" />
+				<execute action="CPWebcontentTemplatesAddtemplate#selectFrame" locator-key1="TEMPLATES_IFRAME" />
+				<execute action="CPWebcontentTemplatesAddtemplate#assertTextEquals" locator-key1="STRUCTURE" value1="${structureName}" />
+				<execute action="CPWebcontentTemplatesAddtemplate#click" locator-key1="SCRIPT_FIELDS_1" />
+			</then>
+		</if>
+
+		<execute action="CPWebcontentTemplatesAddtemplate#click" locator-key1="SAVE_BUTTON" />
+		<execute action="CPWebcontentTemplatesAddtemplate#selectFrame" />
+		<execute action="CPWebcontentTemplatesAddtemplate#selectFrame" locator-key1="TEMPLATES_IFRAME" />
+		<execute action="CPWebcontentTemplates#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
+		<execute action="CPWebcontentTemplates#assertTextEquals" locator-key1="TEMPLATE_TABLE_NAME_1" value1="${templateName}" />
+		<execute action="CPWebcontentTemplates#assertTextEquals" locator-key1="TEMPLATE_TABLE_DESCRIPTION_1" value1="${templateDescription}" />
+	</command>
+
+	<command name="tearDownCP">
+		<execute macro="Page#cpGotoContent">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute action="CPWebcontent#click" locator-key1="TOOLBAR_MANAGE" />
+		<execute action="CPWebcontent#click" locator-key1="MANAGE_MENULIST_TEMPLATES" />
+
+		<execute action="CPWebcontentTemplates#selectFrame" locator-key1="TEMPLATES_IFRAME" />
+
+		<while>
+			<condition action="CPWebcontentTemplates#isElementPresent" locator-key1="TEMPLATE_TABLE_ACTIONS_1" />
+			<then>
+				<execute action="CPWebcontentTemplates#check" locator-key1="TEMPLATE_TABLE_SELECT_ALL_CHECKBOX" />
+				<execute action="CPWebcontentTemplates#click" locator-key1="DELETE_BUTTON" />
+				<execute action="CPWebcontentTemplates#confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+				<execute action="CPWebcontentTemplates#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
+			</then>
+		</while>
+
+		<execute action="CPWebcontentTemplates#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no templates." />
+	</command>
+</definition>

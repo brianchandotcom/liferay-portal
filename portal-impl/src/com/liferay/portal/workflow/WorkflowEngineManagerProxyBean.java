@@ -45,4 +45,9 @@ public class WorkflowEngineManagerProxyBean
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
+	public boolean isDeployed() {
+		return false;
+	}
+
 }

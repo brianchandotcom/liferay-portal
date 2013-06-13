@@ -59,7 +59,8 @@ public class MessagingProxyAdvice {
 		if (proxyRequest.isSynchronous() ||
 			ProxyModeThreadLocal.isForceSync()) {
 
-			return doInvokeSynchronous(message, baseProxyBean);
+			return doInvokeSynchronous(
+				message, baseProxyBean, proceedingJoinPoint);
 		}
 		else {
 			doInvokeAsynchronous(message, baseProxyBean);
@@ -93,8 +94,9 @@ public class MessagingProxyAdvice {
 	}
 
 	protected Object doInvokeSynchronous(
-			Message message, BaseProxyBean baseProxyBean)
-		throws Exception {
+			Message message, BaseProxyBean baseProxyBean,
+			ProceedingJoinPoint proceedingJoinPoint)
+		throws Throwable {
 
 		SingleDestinationSynchronousMessageSender messageSender =
 			baseProxyBean.getSingleDestinationSynchronousMessageSender();
@@ -109,7 +111,7 @@ public class MessagingProxyAdvice {
 			message);
 
 		if (proxyResponse == null) {
-			return null;
+			return proceedingJoinPoint.proceed();
 		}
 		else if (proxyResponse.hasError()) {
 			throw proxyResponse.getException();

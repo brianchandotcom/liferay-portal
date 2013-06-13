@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.messaging.proxy.ProxyMode;
 @MessagingProxy(mode = ProxyMode.ASYNC)
 public interface AuditRouter {
 
+	public boolean isDeployed();
+
 	public void route(AuditMessage auditMessage) throws AuditException;
 
 }

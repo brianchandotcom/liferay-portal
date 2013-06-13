@@ -26,6 +26,11 @@ import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 public class AuditRouterProxyBean extends BaseProxyBean implements AuditRouter {
 
 	@Override
+	public boolean isDeployed() {
+		return false;
+	}
+
+	@Override
 	public void route(AuditMessage auditMessage) {
 		throw new UnsupportedOperationException();
 	}

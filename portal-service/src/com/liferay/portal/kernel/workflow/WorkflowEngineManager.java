@@ -35,4 +35,6 @@ public interface WorkflowEngineManager {
 
 	public String getVersion();
 
+	public boolean isDeployed();
+
 }

@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.workflow;
 
-import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 import java.util.Map;
@@ -50,16 +48,7 @@ public class WorkflowEngineManagerUtil {
 	}
 
 	public static boolean isDeployed() {
-		getWorkflowEngineManager();
-
-		if (MessageBusUtil.hasMessageListener(
-				DestinationNames.WORKFLOW_ENGINE)) {
-
-			return true;
-		}
-		else {
-			return false;
-		}
+		return getWorkflowEngineManager().isDeployed();
 	}
 
 	public void setWorkflowEngineManager(

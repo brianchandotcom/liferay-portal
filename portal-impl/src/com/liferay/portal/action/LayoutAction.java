@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.audit.AuditRouterUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.portlet.PortletContainerUtil;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.MetaInfoCacheServletResponse;
@@ -311,7 +309,7 @@ public class LayoutAction extends Action {
 				if (themeDisplay.isSignedIn() &&
 					PropsValues.
 						AUDIT_MESSAGE_COM_LIFERAY_PORTAL_MODEL_LAYOUT_VIEW &&
-					MessageBusUtil.hasMessageListener(DestinationNames.AUDIT)) {
+					AuditRouterUtil.isDeployed()) {
 
 					User user = themeDisplay.getUser();
 

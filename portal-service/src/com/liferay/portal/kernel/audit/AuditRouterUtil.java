@@ -28,6 +28,10 @@ public class AuditRouterUtil {
 		return _auditRouter;
 	}
 
+	public static boolean isDeployed() {
+		return getAuditRouter().isDeployed();
+	}
+
 	public static void route(AuditMessage auditMessage) throws AuditException {
 		getAuditRouter().route(auditMessage);
 	}

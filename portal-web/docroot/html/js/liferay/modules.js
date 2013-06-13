@@ -210,7 +210,14 @@ window.YUI_config = {
 				},
 				'liferay-dockbar-device-preview': {
 					path: 'dockbar_device_preview.js',
-					requires: []
+					requires: [
+						'aui-dialog-iframe-deprecated',
+						'aui-event-input',
+						'aui-modal',
+						'liferay-portlet-base',
+						'liferay-util',
+						'liferay-util-window'
+					]
 				},
 				'liferay-dockbar-underlay': {
 					path: 'dockbar_underlay.js',

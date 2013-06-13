@@ -29,7 +29,7 @@ AUI.add(
 
 		var TPL_ADD_CONTENT = '<div class="lfr-add-panel" id="{0}" />';
 
-		var TPL_PREVIEW_PANEL = '<div class="lfr-device-preview-panel" id="{0}" />';
+		var TPL_PREVIEW_PANEL = '<div class="lfr-device-preview-panel loading-animation" id="{0}" />';
 
 		var TPL_LOADING = '<div class="loading-animation" />';
 
@@ -59,30 +59,34 @@ AUI.add(
 				}
 			},
 
-			getPanelNode: function(panelId) {
+			fetchPanelNode: function(panelId) {
 				var instance = this;
+
+				var panelNode = null;
 
 				var panel = DOCKBAR_PANELS[panelId];
 
-				var panelNode = panel.node;
-
-				if (!panelNode) {
-					var namespace = instance._namespace;
-
-					var panelSidebarId = namespace + panel + 'Sidebar';
-
-					panelNode = A.one('#' + panelSidebarId);
+				if (panel) {
+					panelNode = panel.node;
 
 					if (!panelNode) {
-						panelNode = A.Node.create(Lang.sub(panel.tpl, [namespace]));
+						var namespace = instance._namespace;
 
-						panelNode.plug(A.Plugin.ParseContent);
+						var panelSidebarId = namespace + panel + 'Sidebar';
 
-						BODY.prepend(panelNode);
+						panelNode = A.one('#' + panelSidebarId);
 
-						panelNode.set('id', panelSidebarId);
+						if (!panelNode) {
+							panelNode = A.Node.create(Lang.sub(panel.tpl, [namespace]));
 
-						panel.node = panelNode;
+							panelNode.plug(A.Plugin.ParseContent);
+
+							BODY.prepend(panelNode);
+
+							panelNode.set('id', panelSidebarId);
+
+							panel.node = panelNode;
+						}
 					}
 				}
 
@@ -169,7 +173,7 @@ AUI.add(
 			_setLoadingAnimation: function() {
 				var instance = this;
 
-				instance.getPanelNode(STR_ADD_PANEL).html(TPL_LOADING);
+				instance.fetchPanelNode(STR_ADD_PANEL).html(TPL_LOADING);
 			},
 
 			_toggleAppShortcut: function(item, force) {
@@ -202,7 +206,7 @@ AUI.add(
 					var panelNode = panel.node;
 
 					if (!panelNode) {
-						panelNode = instance.getPanelNode(panel.id);
+						panelNode = instance.fetchPanelNode(panel.id);
 					}
 
 					BODY.toggleClass(panel.css);
@@ -385,7 +389,7 @@ AUI.add(
 								success: function(event, id, obj) {
 									var response = this.get('responseData');
 
-									var panelNode = instance.getPanelNode(STR_ADD_PANEL);
+									var panelNode = instance.fetchPanelNode(STR_ADD_PANEL);
 
 									panelNode.plug(A.Plugin.ParseContent);
 
@@ -417,7 +421,9 @@ AUI.add(
 								success: function(event, id, obj) {
 									var response = this.get('responseData');
 
-									var panelNode = instance.getPanelNode(STR_PREVIEW_PANEL);
+									var panelNode = instance.fetchPanelNode(STR_PREVIEW_PANEL);
+
+									panelNode.removeClass('loading-animation');
 
 									panelNode.plug(A.Plugin.ParseContent);
 
@@ -489,6 +495,10 @@ AUI.add(
 		};
 
 		Liferay.Dockbar = Dockbar;
+
+		Liferay.Dockbar.ADD_PANEL = STR_ADD_PANEL;
+
+		Liferay.Dockbar.PREVIEW_PANEL = STR_PREVIEW_PANEL;
 	},
 	'',
 	{

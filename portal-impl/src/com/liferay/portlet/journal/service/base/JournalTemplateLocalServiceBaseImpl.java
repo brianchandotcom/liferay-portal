@@ -75,7 +75,8 @@ import javax.sql.DataSource;
  * @author Brian Wing Shun Chan
  * @see com.liferay.portlet.journal.service.impl.JournalTemplateLocalServiceImpl
  * @see com.liferay.portlet.journal.service.JournalTemplateLocalServiceUtil
- * @deprecated As of 6.2.0, see LPS-35112
+ * @deprecated As of 6.2.0, since Web Content Administration now uses the DDM
+            framework to handle templates
  * @generated
  */
 public abstract class JournalTemplateLocalServiceBaseImpl

@@ -49,7 +49,8 @@ import java.util.Map;
  * @author     Brian Wing Shun Chan
  * @author     Raymond Augé
  * @author     Marcellus Tavares
- * @deprecated As of 6.2.0, see LPS-35112
+ * @deprecated As of 6.2.0, since Web Content Administration now uses the DDM
+ *             framework to handle structures
  */
 public class JournalStructureLocalServiceImpl
 	extends JournalStructureLocalServiceBaseImpl {

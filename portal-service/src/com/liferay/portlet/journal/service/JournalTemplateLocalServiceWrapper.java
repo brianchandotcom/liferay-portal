@@ -21,7 +21,8 @@ import com.liferay.portal.service.ServiceWrapper;
  *
  * @author Brian Wing Shun Chan
  * @see JournalTemplateLocalService
- * @deprecated As of 6.2.0, see LPS-35112
+ * @deprecated As of 6.2.0, since Web Content Administration now uses the DDM
+framework to handle templates
  * @generated
  */
 public class JournalTemplateLocalServiceWrapper

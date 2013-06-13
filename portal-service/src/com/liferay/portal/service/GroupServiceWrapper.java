@@ -190,6 +190,13 @@ public class GroupServiceWrapper implements GroupService,
 		_groupService.deleteGroup(groupId);
 	}
 
+	@Override
+	public com.liferay.portal.model.Group getCompanyGroup(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _groupService.getCompanyGroup(companyId);
+	}
+
 	/**
 	* Returns the group with the primary key.
 	*

@@ -196,6 +196,12 @@ public class GroupServiceUtil {
 		getService().deleteGroup(groupId);
 	}
 
+	public static com.liferay.portal.model.Group getCompanyGroup(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getCompanyGroup(companyId);
+	}
+
 	/**
 	* Returns the group with the primary key.
 	*

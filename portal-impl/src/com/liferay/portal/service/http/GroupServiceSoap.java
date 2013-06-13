@@ -243,6 +243,20 @@ public class GroupServiceSoap {
 		}
 	}
 
+	public static com.liferay.portal.model.GroupSoap getCompanyGroup(
+		long companyId) throws RemoteException {
+		try {
+			com.liferay.portal.model.Group returnValue = GroupServiceUtil.getCompanyGroup(companyId);
+
+			return com.liferay.portal.model.GroupSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	/**
 	* Returns the group with the primary key.
 	*

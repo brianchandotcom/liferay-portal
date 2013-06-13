@@ -1,0 +1,19 @@
+<definition>
+	<set-up>
+		<execute macro="User#pgFirstLogin" />
+	</set-up>
+
+	<!--<command name="ViewAxis">
+		<execute macro="Site#cpAddBlank" />
+
+		<execute macro="Site#cpView" />
+	</command>-->
+
+	<command name="ViewJsonws">
+		<execute macro="Api#apiJsonwsView" />
+
+		<execute macro="Api#apiJsonwsAddressView" />
+
+		<execute macro="Api#apiJsonwsWikiView" />
+	</command>
+</definition>

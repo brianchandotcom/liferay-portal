@@ -18,6 +18,9 @@ AUI.add(
 					classPK: {
 					},
 
+					doAsGroupId: {
+					},
+
 					container: {
 						setter: A.one
 					},
@@ -27,6 +30,9 @@ AUI.add(
 					},
 
 					namespace: {
+					},
+
+					p_l_id: {
 					},
 
 					portletNamespace: {
@@ -94,8 +100,10 @@ AUI.add(
 								data: {
 									classNameId: instance.get('classNameId'),
 									classPK: instance.get('classPK'),
+									doAsGroupId: instance.get('doAsGroupId'),
 									fieldName: fieldName,
 									namespace: instance.get('namespace'),
+									p_l_id: instance.get('p_l_id'),
 									p_p_isolated: true,
 									portletNamespace: instance.get('portletNamespace'),
 									readOnly: instance.get('readOnly')

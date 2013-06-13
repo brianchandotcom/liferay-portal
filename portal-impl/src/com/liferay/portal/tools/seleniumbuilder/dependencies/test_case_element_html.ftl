@@ -2,16 +2,22 @@
 
 <#assign testCaseCommandElements = testCaseRootElement.elements("command")>
 
-<ul>
+<#assign lineFolds = 0>
+
+<ul onclick="takeAction(event);">
+
 	<#list testCaseCommandElements as testCaseCommandElement>
 		<#assign testCaseCommand = testCaseCommandElement.attributeValue("name")>
 
+		<div id="${testCaseName}TestCase__${testCaseCommand}" class="expandToggle">+</div>
+
 		<li id="${testCaseName}TestCase__${testCaseCommand}">
-			<div>
+			<div class="expandLine">
 				<h3 class="testCaseCommand">${testCaseName}#${testCaseCommand}</h3>
 			</div>
 
-			<ul>
+			<ul id="ExpandCollapse${testCaseName}TestCase__${testCaseCommand}">
+
 				<#assign testCaseVarElements = testCaseRootElement.elements("var")>
 
 				<#list testCaseVarElements as testCaseVarElement>
@@ -35,8 +41,10 @@
 
 					<#assign lineNumber = testCaseSetupElement.attributeValue("line-number")>
 
+					<div id="${testCaseName}TestCase__${lineFolds}" class="expandToggle">+</div>
+
 					<li id="${testCaseName}TestCase__${lineNumber}">
-						<div>
+						<div class="expandLine">
 							<span class="arrow">&lt;</span><span class="tag">set-up</span><span class="arrow">&gt;</span>
 						</div>
 
@@ -52,8 +60,10 @@
 
 				<#assign lineNumber = testCaseCommandElement.attributeValue("line-number")>
 
+				<div id="${testCaseName}TestCase__${lineFolds}" class="expandToggle">+</div>
+
 				<li id="${testCaseName}TestCase__${lineNumber}">
-					<div>
+					<div class="expandLine">
 						<span class="arrow">&lt;</span><span class="tag">command</span>
 						<span class="attribute">name</span><span class="arrow">=</span><span class="quote">&quot;${testCaseCommandElement.attributeValue("name")}&quot;</span>
 						<span class="arrow">&gt;</span>
@@ -73,8 +83,10 @@
 
 					<#assign lineNumber = testCaseTearDownElement.attributeValue("line-number")>
 
+					<div id="${testCaseName}TestCase__${lineFolds}" class="expandToggle">+</div>
+
 					<li id="${testCaseName}TestCase__${lineNumber}">
-						<div>
+						<div class="expandLine">
 							<span class="arrow">&lt;</span><span class="tag">tear-down</span><span class="arrow">&gt;</span>
 						</div>
 

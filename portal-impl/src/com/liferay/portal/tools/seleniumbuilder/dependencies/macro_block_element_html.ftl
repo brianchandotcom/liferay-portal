@@ -31,11 +31,15 @@
 				<span class="arrow">/&gt;</span>
 			</div>
 		<#elseif element.getName() == "if">
-			<div>
+			<div class="expandToggle"><div id="If__${lineFolds}">+</div></div>
+			<div class="expandLine">
 				<span class="arrow">&lt;</span><span class="tag">if</span><span class="arrow">&gt;</span>
 			</div>
 
-			<ul>
+			<ul id="ExpandCollapseIf__${lineFolds}" class="collapse">
+
+				<#assign lineFolds = lineFolds + 1>
+
 				<#assign ifElement = element>
 
 				<#include "macro_if_element_html.ftl">
@@ -101,11 +105,15 @@
 				<span class="arrow">/&gt;</span>
 			</div>
 		<#elseif element.getName() == "while">
-			<div>
+			<div class="expandToggle"><div id="While__${lineFolds}">+</div></div>
+
+			<div class="expandLine">
 				<span class="arrow">&lt;</span><span class="tag">while</span><span class="arrow">&gt;</span>
 			</div>
 
-			<ul>
+			<ul id="ExpandCollapseWhile__${lineFolds}" class="collapse">
+				<#assign lineFolds = lineFolds + 1>
+
 				<#assign ifElement = element>
 
 				<#include "macro_if_element_html.ftl">

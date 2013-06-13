@@ -198,28 +198,25 @@ public class DynamicCSSUtil {
 	}
 
 	private static String _getCssThemePath(
-			HttpServletRequest request, ThemeDisplay themeDisplay, Theme theme)
+			ServletContext servletContext, HttpServletRequest request,
+			ThemeDisplay themeDisplay, Theme theme)
 		throws Exception {
 
-		String cssThemePath = null;
-
 		if (themeDisplay != null) {
-			cssThemePath = themeDisplay.getPathThemeCss();
+			return themeDisplay.getPathThemeCss();
 		}
-		else {
-			String cdnHost = StringPool.BLANK;
 
-			if (PortalUtil.isCDNDynamicResourcesEnabled(request)) {
-				cdnHost = PortalUtil.getCDNHost(request);
+		if (PortalUtil.isCDNDynamicResourcesEnabled(request)) {
+			String cdnHost = PortalUtil.getCDNHost(request);
+
+			if (Validator.isNotNull(cdnHost)) {
+				return
+					cdnHost + theme.getStaticResourcePath() +
+						theme.getCssPath();
 			}
-
-			String themeStaticResourcePath = theme.getStaticResourcePath();
-
-			cssThemePath =
-				cdnHost + themeStaticResourcePath + theme.getCssPath();
 		}
 
-		return cssThemePath;
+		return servletContext.getRealPath(theme.getCssPath());
 	}
 
 	private static File _getSassTempDir(ServletContext servletContext) {
@@ -354,12 +351,9 @@ public class DynamicCSSUtil {
 
 		inputObjects.put("content", content);
 		inputObjects.put("cssRealPath", resourcePath);
-
-		String portalWebDir = PortalUtil.getPortalWebDir();
-
-		String cssThemePath = _getCssThemePath(request, themeDisplay, theme);
-
-		inputObjects.put("cssThemePath", portalWebDir.concat(cssThemePath));
+		inputObjects.put(
+			"cssThemePath",
+			_getCssThemePath(servletContext, request, themeDisplay, theme));
 
 		File sassTempDir = _getSassTempDir(servletContext);
 

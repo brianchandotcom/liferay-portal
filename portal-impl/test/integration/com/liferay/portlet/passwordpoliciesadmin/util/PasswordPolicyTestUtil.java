@@ -25,11 +25,11 @@ import com.liferay.portal.service.ServiceTestUtil;
 public class PasswordPolicyTestUtil {
 
 	public static PasswordPolicy addPasswordPolicy(
-			ServiceContext serviceContext)
+			boolean defaultPolicy, ServiceContext serviceContext)
 		throws Exception {
 
 		return PasswordPolicyLocalServiceUtil.addPasswordPolicy(
-			serviceContext.getUserId(), ServiceTestUtil.randomBoolean(),
+			serviceContext.getUserId(), defaultPolicy,
 			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(),
 			ServiceTestUtil.randomBoolean(), ServiceTestUtil.randomBoolean(),
 			ServiceTestUtil.randomLong(), ServiceTestUtil.randomBoolean(),
@@ -43,6 +43,14 @@ public class PasswordPolicyTestUtil {
 			ServiceTestUtil.randomBoolean(), ServiceTestUtil.nextInt(),
 			ServiceTestUtil.randomLong(), ServiceTestUtil.randomLong(),
 			ServiceTestUtil.randomLong(), serviceContext);
+	}
+
+	public static PasswordPolicy addPasswordPolicy(
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return addPasswordPolicy(
+			ServiceTestUtil.randomBoolean(), serviceContext);
 	}
 
 }

@@ -14,7 +14,10 @@
 
 package com.liferay.portlet.dynamicdatalists.lar;
 
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
@@ -95,19 +98,96 @@ public class DDLRecordSetStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected StagedModel getStagedModel(String uuid, Group group) {
-		try {
-			return DDLRecordSetLocalServiceUtil.getDDLRecordSetByUuidAndGroupId(
-				uuid, group.getGroupId());
+	protected void deleteStagedModel(
+			StagedModel stagedModel,
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		DDLRecordSetLocalServiceUtil.deleteRecordSet((DDLRecordSet)stagedModel);
+
+		List<StagedModel> ddmTemplateDependentStagedModels =
+			dependentStagedModelsMap.get(DDMTemplate.class.getSimpleName());
+
+		for (StagedModel ddmTemplateDependentStagedModel :
+				ddmTemplateDependentStagedModels) {
+
+			DDMTemplate ddmTemplate =
+				(DDMTemplate)ddmTemplateDependentStagedModel;
+
+			DDMTemplateLocalServiceUtil.deleteTemplate(ddmTemplate);
 		}
-		catch (Exception e) {
-			return null;
-		}
+
+		List<StagedModel> ddmStructureDependentStagedModels =
+			dependentStagedModelsMap.get(DDMStructure.class.getSimpleName());
+
+		DDMStructure ddmStructure =
+			(DDMStructure)ddmStructureDependentStagedModels.get(0);
+
+		DDMStructureLocalServiceUtil.deleteStructure(ddmStructure);
+	}
+
+	@Override
+	protected StagedModelType[] getDeletionSystemEventStagedModelTypes() {
+		DDLPortletDataHandler ddlPortletDataHandler =
+			new DDLPortletDataHandler();
+
+		return ArrayUtil.append(
+			ddlPortletDataHandler.getDeletionSystemEventStagedModelTypes(),
+			new StagedModelType[] {
+				new StagedModelType(DDMStructure.class, DDLRecordSet.class),
+				new StagedModelType(DDMTemplate.class, DDMStructure.class)});
+	}
+
+	@Override
+	protected StagedModel getStagedModel(String uuid, Group group)
+		throws SystemException {
+
+		return DDLRecordSetLocalServiceUtil.fetchDDLRecordSetByUuidAndGroupId(
+			uuid, group.getGroupId());
 	}
 
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
 		return DDLRecordSet.class;
+	}
+
+	@Override
+	protected void validateDeletion(
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		List<StagedModel> ddmStructureDependentStagedModels =
+			dependentStagedModelsMap.get(DDMStructure.class.getSimpleName());
+
+		Assert.assertEquals(1, ddmStructureDependentStagedModels.size());
+
+		DDMStructure ddmStructure =
+			(DDMStructure)ddmStructureDependentStagedModels.get(0);
+
+		ddmStructure =
+			DDMStructureLocalServiceUtil.fetchDDMStructureByUuidAndGroupId(
+				ddmStructure.getUuid(), group.getGroupId());
+
+		Assert.assertNull(
+			DDMStructure.class + " was not deleted", ddmStructure);
+
+		List<StagedModel> ddmTemplateDependentStagedModels =
+			dependentStagedModelsMap.get(DDMTemplate.class.getSimpleName());
+
+		Assert.assertEquals(2, ddmTemplateDependentStagedModels.size());
+
+		for (StagedModel ddmTemplateDependentStagedModel :
+				ddmTemplateDependentStagedModels) {
+
+			DDMTemplate template =
+				DDMTemplateLocalServiceUtil.fetchDDMTemplateByUuidAndGroupId(
+					ddmTemplateDependentStagedModel.getUuid(),
+					group.getGroupId());
+
+			Assert.assertNull(DDMTemplate.class + " was not deleted", template);
+		}
 	}
 
 	@Override

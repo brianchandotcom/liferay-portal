@@ -513,15 +513,10 @@ public class ValidatorTest extends PowerMockito {
 	}
 
 	protected void testIsNull(String[] strings, boolean valid) {
-		if (valid) {
-			for (String string : strings) {
-				Assert.assertTrue(Validator.isNull(string));
-			}
-		}
-		else {
-			for (String string : strings) {
-				Assert.assertFalse(Validator.isNull(string));
-			}
+		for (String string : strings) {
+			boolean b = Validator.isNull(string);
+
+			Assert.assertEquals(valid, b);
 		}
 	}
 
@@ -532,19 +527,10 @@ public class ValidatorTest extends PowerMockito {
 		Method method = ReflectionUtil.getDeclaredMethod(
 			Validator.class, methodName, String.class);
 
-		if (valid) {
-			for (String param : params) {
-				if (!(Boolean)method.invoke(null, param)) {
-					Assert.fail(param);
-				}
-			}
-		}
-		else {
-			for (String param : params) {
-				if ((Boolean)method.invoke(null, param)) {
-					Assert.fail(param);
-				}
-			}
+		for (String param : params) {
+			Boolean b = (Boolean)method.invoke(null, param);
+
+			Assert.assertEquals(valid, b);
 		}
 	}
 
@@ -571,19 +557,11 @@ public class ValidatorTest extends PowerMockito {
 	protected void testValidFilePaths(
 		String[] filePaths, boolean isParentDirAllowed, boolean valid) {
 
-		if (valid) {
-			for (String filePath : filePaths) {
-				if (!Validator.isFilePath(filePath, isParentDirAllowed)) {
-					Assert.fail(filePath);
-				}
-			}
-		}
-		else {
-			for (String filePath : filePaths) {
-				if (Validator.isFilePath(filePath, isParentDirAllowed)) {
-					Assert.fail(filePath);
-				}
-			}
+		for (String filePath : filePaths) {
+			boolean isFilePath = Validator.isFilePath(
+				filePath, isParentDirAllowed);
+
+			Assert.assertEquals(valid, isFilePath);
 		}
 	}
 

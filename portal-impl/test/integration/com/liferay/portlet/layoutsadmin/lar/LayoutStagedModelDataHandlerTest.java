@@ -103,6 +103,10 @@ public class LayoutStagedModelDataHandlerTest
 		Layout linkedLayout = LayoutTestUtil.addLayout(
 			stagingGroup.getGroupId(), ServiceTestUtil.randomString());
 
+		List<LayoutFriendlyURL> linkedLayoutFriendlyURLs =
+			LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLs(
+				linkedLayout.getPlid());
+
 		addDependentStagedModel(
 			dependentStagedModelsMap, Layout.class, linkedLayout);
 
@@ -111,6 +115,10 @@ public class LayoutStagedModelDataHandlerTest
 		Layout layout = LayoutTestUtil.addTypeLinkToLayoutLayout(
 			stagingGroup.getGroupId(), ServiceTestUtil.randomString(),
 			linkedLayout.getLayoutId());
+
+		List<LayoutFriendlyURL> layoutFriendlyURLs =
+			LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLs(
+				layout.getPlid());
 
 		addDependentLayoutFriendlyURLs(dependentStagedModelsMap, layout);
 
@@ -129,8 +137,19 @@ public class LayoutStagedModelDataHandlerTest
 		LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
 			linkedLayout.getUuid(), liveGroup.getGroupId(), false);
 
+		LayoutFriendlyURL linkedLayoutFriendlyURL =
+			linkedLayoutFriendlyURLs.get(0);
+
+		LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLByUuidAndGroupId(
+			linkedLayoutFriendlyURL.getUuid(), liveGroup.getGroupId());
+
 		LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
 			layout.getUuid(), liveGroup.getGroupId(), false);
+
+		LayoutFriendlyURL layoutFriendlyURL = layoutFriendlyURLs.get(0);
+
+		LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLByUuidAndGroupId(
+			layoutFriendlyURL.getUuid(), liveGroup.getGroupId());
 	}
 
 	protected void addDependentLayoutFriendlyURLs(
@@ -230,6 +249,16 @@ public class LayoutStagedModelDataHandlerTest
 
 		LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
 			parentLayout.getUuid(), group.getGroupId(), false);
+
+		List<LayoutFriendlyURL> parentLayoutFriendlyURLs =
+			LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLs(
+				parentLayout.getPlid());
+
+		LayoutFriendlyURL parentLayoutFriendlyURL =
+			parentLayoutFriendlyURLs.get(0);
+
+		LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLByUuidAndGroupId(
+			parentLayoutFriendlyURL.getUuid(), group.getGroupId());
 	}
 
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.usersadmin.lar;
 
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Address;
@@ -21,6 +23,7 @@ import com.liferay.portal.model.EmailAddress;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.OrgLabor;
 import com.liferay.portal.model.Organization;
+import com.liferay.portal.model.OrganizationConstants;
 import com.liferay.portal.model.PasswordPolicy;
 import com.liferay.portal.model.PasswordPolicyRel;
 import com.liferay.portal.model.Phone;
@@ -64,11 +67,15 @@ public class OrganizationStagedModelDataHandlerTest
 			Map<String, List<StagedModel>> dependentStagedModelsMap)
 		throws Exception {
 
-		Organization organization = OrganizationTestUtil.addOrganization();
+		Organization organization =
+			OrganizationTestUtil.addOrganizationWithAssetEntry(
+			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+			ServiceTestUtil.randomString(), false);
 
-		Organization suborganization = OrganizationTestUtil.addOrganization(
-			organization.getOrganizationId(), ServiceTestUtil.randomString(),
-			false);
+		Organization suborganization =
+			OrganizationTestUtil.addOrganizationWithAssetEntry(
+				organization.getOrganizationId(),
+				ServiceTestUtil.randomString(), false);
 
 		addDependentStagedModel(
 			dependentStagedModelsMap, Organization.class, suborganization);
@@ -115,32 +122,142 @@ public class OrganizationStagedModelDataHandlerTest
 			Group group)
 		throws Exception {
 
-		List<StagedModel> dependentOrganizationStagedModels =
+		List<StagedModel> organizationDependentStagedModels =
 			dependentStagedModelsMap.get(Organization.class.getSimpleName());
 
 		Organization suborganization =
-			(Organization)dependentOrganizationStagedModels.get(0);
+			(Organization)organizationDependentStagedModels.get(0);
 
 		OrganizationLocalServiceUtil.deleteOrganization(suborganization);
 
 		OrganizationLocalServiceUtil.deleteOrganization(
 			(Organization)stagedModel);
+
+		List<StagedModel> addressDependentStagedModels =
+			dependentStagedModelsMap.get(Address.class.getSimpleName());
+
+		Address address = (Address)addressDependentStagedModels.get(0);
+
+		AddressLocalServiceUtil.deleteAddress(address);
+
+		List<StagedModel> emailAddressDependentStagedModels =
+			dependentStagedModelsMap.get(EmailAddress.class.getSimpleName());
+
+		EmailAddress emailAddress =
+			(EmailAddress)emailAddressDependentStagedModels.get(0);
+
+		EmailAddressLocalServiceUtil.deleteEmailAddress(emailAddress);
+
+		List<StagedModel> phoneDependentStagedModels =
+			dependentStagedModelsMap.get(Phone.class.getSimpleName());
+
+		Phone phone = (Phone)phoneDependentStagedModels.get(0);
+
+		PhoneLocalServiceUtil.deletePhone(phone);
+
+		List<StagedModel> websiteDependentStagedModels =
+			dependentStagedModelsMap.get(Website.class.getSimpleName());
+
+		Website website = (Website)websiteDependentStagedModels.get(0);
+
+		WebsiteLocalServiceUtil.deleteWebsite(website);
 	}
 
 	@Override
-	protected StagedModel getStagedModel(String uuid, Group group) {
-		try {
-			return OrganizationLocalServiceUtil.
-				fetchOrganizationByUuidAndCompanyId(uuid, group.getCompanyId());
-		}
-		catch (Exception e) {
-			return null;
-		}
+	protected StagedModelType[] getDeletionSystemEventStagedModelTypes() {
+		UsersAdminPortletDataHandler usersAdminPortletDataHandler =
+			new UsersAdminPortletDataHandler();
+
+		return usersAdminPortletDataHandler.
+			getDeletionSystemEventStagedModelTypes();
+	}
+
+	@Override
+	protected StagedModel getStagedModel(String uuid, Group group)
+		throws SystemException {
+
+		return OrganizationLocalServiceUtil.fetchOrganizationByUuidAndCompanyId(
+			uuid, group.getCompanyId());
 	}
 
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
 		return Organization.class;
+	}
+
+	@Override
+	protected void validateDeletion(
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		List<StagedModel> organizationDependentStagedModels =
+			dependentStagedModelsMap.get(Organization.class.getSimpleName());
+
+		Assert.assertEquals(1, organizationDependentStagedModels.size());
+
+		Organization suborganization =
+			(Organization)organizationDependentStagedModels.get(0);
+
+		suborganization =
+			OrganizationLocalServiceUtil.fetchOrganizationByUuidAndCompanyId(
+				suborganization.getUuid(), group.getCompanyId());
+
+		Assert.assertNull(
+			Organization.class.getName() + " was not deleted", suborganization);
+
+		List<StagedModel> addressDependentStagedModels =
+			dependentStagedModelsMap.get(Address.class.getSimpleName());
+
+		Assert.assertEquals(1, addressDependentStagedModels.size());
+
+		Address address = (Address)addressDependentStagedModels.get(0);
+
+		address = AddressLocalServiceUtil.fetchAddressByUuidAndCompanyId(
+			address.getUuid(), group.getCompanyId());
+
+		Assert.assertNull(
+			Address.class.getName() + " was not deleted", address);
+
+		List<StagedModel> emailAddressDependentStagedModels =
+			dependentStagedModelsMap.get(EmailAddress.class.getSimpleName());
+
+		Assert.assertEquals(1, emailAddressDependentStagedModels.size());
+
+		EmailAddress emailAddress =
+			(EmailAddress)emailAddressDependentStagedModels.get(0);
+
+		emailAddress =
+			EmailAddressLocalServiceUtil.fetchEmailAddressByUuidAndCompanyId(
+				emailAddress.getUuid(), group.getCompanyId());
+
+		Assert.assertNull(
+			EmailAddress.class.getName() + " was not deleted", emailAddress);
+
+		List<StagedModel> phoneDependentStagedModels =
+			dependentStagedModelsMap.get(Phone.class.getSimpleName());
+
+		Assert.assertEquals(1, phoneDependentStagedModels.size());
+
+		Phone phone = (Phone)phoneDependentStagedModels.get(0);
+
+		phone = PhoneLocalServiceUtil.fetchPhoneByUuidAndCompanyId(
+			phone.getUuid(), group.getCompanyId());
+
+		Assert.assertNull(Phone.class.getName() + " was not deleted", phone);
+
+		List<StagedModel> websiteDependentStagedModels =
+			dependentStagedModelsMap.get(Website.class.getSimpleName());
+
+		Assert.assertEquals(1, websiteDependentStagedModels.size());
+
+		Website website = (Website)websiteDependentStagedModels.get(0);
+
+		website = WebsiteLocalServiceUtil.fetchWebsiteByUuidAndCompanyId(
+			website.getUuid(), group.getCompanyId());
+
+		Assert.assertNull(
+			Website.class.getName() + " was not deleted", website);
 	}
 
 	@Override
@@ -200,23 +317,12 @@ public class OrganizationStagedModelDataHandlerTest
 			organization.getOrganizationId(),
 			importedOrgLabor.getOrganizationId());
 
-		List<StagedModel> passwordPolicyDependentStagedModels =
-			dependentStagedModelsMap.get(PasswordPolicy.class.getSimpleName());
-
-		Assert.assertEquals(1, passwordPolicyDependentStagedModels.size());
-
-		PasswordPolicy passwordPolicy =
-			(PasswordPolicy)passwordPolicyDependentStagedModels.get(0);
-
 		PasswordPolicyRel importedPasswordPolicyRel =
 			PasswordPolicyRelLocalServiceUtil.fetchPasswordPolicyRel(
 				organization.getModelClassName(),
 				organization.getOrganizationId());
 
 		Assert.assertNotNull(importedPasswordPolicyRel);
-		Assert.assertEquals(
-			passwordPolicy.getPasswordPolicyId(),
-			importedPasswordPolicyRel.getPasswordPolicyId());
 
 		List<StagedModel> phoneDependentStagedModels =
 			dependentStagedModelsMap.get(Phone.class.getSimpleName());

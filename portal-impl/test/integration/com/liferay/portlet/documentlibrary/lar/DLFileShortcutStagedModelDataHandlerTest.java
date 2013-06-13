@@ -14,7 +14,9 @@
 
 package com.liferay.portlet.documentlibrary.lar;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
@@ -31,9 +33,12 @@ import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
@@ -102,14 +107,44 @@ public class DLFileShortcutStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected StagedModel getStagedModel(String uuid, Group group) {
-		try {
-			return DLFileShortcutLocalServiceUtil.
-				getDLFileShortcutByUuidAndGroupId(uuid, group.getGroupId());
-		}
-		catch (Exception e) {
-			return null;
-		}
+	protected void deleteStagedModel(
+			StagedModel stagedModel,
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		DLFileShortcutLocalServiceUtil.deleteFileShortcut(
+			(DLFileShortcut)stagedModel);
+
+		List<StagedModel> fileEntryDependentStagedModels =
+			dependentStagedModelsMap.get(FileEntry.class.getSimpleName());
+
+		FileEntry fileEntry = (FileEntry)fileEntryDependentStagedModels.get(0);
+
+		DLFileEntryLocalServiceUtil.deleteFileEntry(
+			(DLFileEntry)fileEntry.getModel());
+
+		List<StagedModel>folderDependentStagedModels =
+			dependentStagedModelsMap.get(Folder.class.getSimpleName());
+
+		Folder folder = (Folder)folderDependentStagedModels.get(0);
+
+		DLFolderLocalServiceUtil.deleteFolder((DLFolder)folder.getModel());
+	}
+
+	@Override
+	protected StagedModelType[] getDeletionSystemEventStagedModelTypes() {
+		DLPortletDataHandler dlPortletDataHandler = new DLPortletDataHandler();
+
+		return dlPortletDataHandler.getDeletionSystemEventStagedModelTypes();
+	}
+
+	@Override
+	protected StagedModel getStagedModel(String uuid, Group group)
+		throws SystemException {
+
+		return DLFileShortcutLocalServiceUtil.
+			fetchDLFileShortcutByUuidAndGroupId(uuid, group.getGroupId());
 	}
 
 	@Override
@@ -163,6 +198,41 @@ public class DLFileShortcutStagedModelDataHandlerTest
 
 		Assert.assertEquals(
 			assetVocabulary.getUuid(), importedAssetVocabulary.getUuid());
+	}
+
+	@Override
+	protected void validateDeletion(
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		List<StagedModel> fileEntryDependentStagedModels =
+			dependentStagedModelsMap.get(FileEntry.class.getSimpleName());
+
+		Assert.assertEquals(1, fileEntryDependentStagedModels.size());
+
+		FileEntry fileEntry = (FileEntry)fileEntryDependentStagedModels.get(0);
+
+		DLFileEntry dlFileEntry =
+			DLFileEntryLocalServiceUtil.fetchDLFileEntryByUuidAndGroupId(
+				fileEntry.getUuid(), group.getGroupId());
+
+		Assert.assertNull(
+			FileEntry.class.getName() + " was not deleted", dlFileEntry);
+
+		List<StagedModel> folderDependentStagedModels =
+			dependentStagedModelsMap.get(Folder.class.getSimpleName());
+
+		Assert.assertEquals(1, folderDependentStagedModels.size());
+
+		Folder folder = (Folder)folderDependentStagedModels.get(0);
+
+		DLFolder dlFolder =
+			DLFolderLocalServiceUtil.fetchDLFolderByUuidAndGroupId(
+				folder.getUuid(), group.getGroupId());
+
+		Assert.assertNull(
+			Folder.class.getName() + " was not deleted", dlFolder);
 	}
 
 	@Override

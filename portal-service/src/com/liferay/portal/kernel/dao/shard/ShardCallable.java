@@ -12,18 +12,16 @@
  * details.
  */
 
-package com.liferay.portal.kernel.concurrent;
-
-import com.liferay.portal.kernel.dao.shard.ShardUtil;
+package com.liferay.portal.kernel.dao.shard;
 
 import java.util.concurrent.Callable;
 
 /**
  * @author Alexander Chow
  */
-public abstract class PortalCallable<V> implements Callable<V> {
+public abstract class ShardCallable<V> implements Callable<V> {
 
-	public PortalCallable(long companyId) {
+	public ShardCallable(long companyId) {
 		_companyId = companyId;
 	}
 

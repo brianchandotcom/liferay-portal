@@ -45,7 +45,7 @@ import com.liferay.portal.UserPortraitTypeException;
 import com.liferay.portal.UserReminderQueryException;
 import com.liferay.portal.UserScreenNameException;
 import com.liferay.portal.UserSmsException;
-import com.liferay.portal.kernel.concurrent.PortalCallable;
+import com.liferay.portal.kernel.dao.shard.ShardCallable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.image.ImageBag;
@@ -5480,7 +5480,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		final Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			User.class);
 
-		Callable<Void> callable = new PortalCallable<Void>(
+		Callable<Void> callable = new ShardCallable<Void>(
 			user.getCompanyId()) {
 
 			@Override
@@ -5657,7 +5657,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		final long companyId, final long workflowUserId, final long userId,
 		final User user, final ServiceContext workflowServiceContext) {
 
-		Callable<Void> callable = new PortalCallable<Void>(companyId) {
+		Callable<Void> callable = new ShardCallable<Void>(companyId) {
 
 			@Override
 			protected Void doCall() throws Exception {

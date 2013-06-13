@@ -1,11 +1,5 @@
 <#assign macro = macroElement.attributeValue("macro")>
 
-<div>
-	<span class="arrow">&lt;</span><span class="tag">execute</span>
-	<span class="attribute">macro</span><span class="arrow">=</span><span class="quote">&quot;${macro}&quot;</span>
-	<span class="arrow">&gt;</span>
-</div>
-
 <#assign x = macro?last_index_of("#")>
 
 <#assign macroName = macro?substring(0, x)>
@@ -18,7 +12,18 @@
 
 <#assign macroCommandElements = macroRootElement.elements("command")>
 
-<ul>
+<div class="expandToggle"><div id="${macroNameStack.peek()}Macro__${lineFolds}">+</div></div>
+
+<div class="expandLine">
+	<span class="arrow">&lt;</span><span class="tag">execute</span>
+	<span class="attribute">macro</span><span class="arrow">=</span><span class="quote">&quot;${macro}&quot;</span>
+	<span class="arrow">&gt;</span>
+</div>
+
+<ul id="ExpandCollapse${macroNameStack.peek()}Macro__${lineFolds}" class="collapse">
+
+<#assign lineFolds = lineFolds + 1>
+
 	<#list macroCommandElements as macroCommandElement>
 		<#assign macroCommandName = macroCommandElement.attributeValue("name")>
 

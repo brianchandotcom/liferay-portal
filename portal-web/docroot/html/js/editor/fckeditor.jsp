@@ -211,6 +211,6 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 	window['<%= name %>'].initFckArea();
 </aui:script>
 
-<div class="<%= cssClass %>">
+<div class="<%= HtmlUtil.escapeAttribute(cssClass) %>">
 	<textarea id="<%= name %>" name="<%= name %>" style="display: none;"></textarea>
 </div>

@@ -51,7 +51,7 @@ portletURL.setParameter("struts_action", "/social_activity/view");
 
 				<h4 class="social-activity-item" data-modelName="<%= className %>" title="<%= localizedClassName %>">
 					<div class="social-activity-item-content">
-						<aui:input disabled="<%= !SocialActivityPermissionUtil.contains(permissionChecker, themeDisplay.getScopeGroupId(), ActionKeys.CONFIGURATION) %>" inlineField="<%= true %>" label="" name='<%= className + ".enabled" %>' title="" type="checkbox" value="<%= enabled %>" />
+						<aui:input disabled="<%= !SocialActivityPermissionUtil.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.CONFIGURATION) %>" inlineField="<%= true %>" label="" name='<%= className + ".enabled" %>' title="" type="checkbox" value="<%= enabled %>" />
 
 						<a class="settings-label" href="javascript:;"><%= localizedClassName %></a>
 					</div>

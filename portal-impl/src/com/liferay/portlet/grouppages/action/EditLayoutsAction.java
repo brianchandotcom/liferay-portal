@@ -31,7 +31,7 @@ public class EditLayoutsAction
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Group group = themeDisplay.getScopeGroup();
+		Group group = themeDisplay.getSiteGroup();
 
 		portletRequest.setAttribute(WebKeys.GROUP, group);
 

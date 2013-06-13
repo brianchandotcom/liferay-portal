@@ -19,7 +19,7 @@
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1", "structures");
 
-long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
+long groupId = ParamUtil.getLong(request, "groupId", themeDisplay.getSiteGroupId());
 
 PortletURL portletURL = renderResponse.createRenderURL();
 

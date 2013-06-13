@@ -137,7 +137,7 @@ public class ActionUtil
 			group = GroupLocalServiceUtil.getGroup(groupId);
 		}
 		else if (!cmd.equals(Constants.ADD)) {
-			group = themeDisplay.getScopeGroup();
+			group = themeDisplay.getSiteGroup();
 		}
 
 		request.setAttribute(WebKeys.GROUP, group);

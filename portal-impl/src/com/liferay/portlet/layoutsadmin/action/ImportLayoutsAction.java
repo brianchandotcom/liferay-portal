@@ -588,7 +588,13 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 		}
 		finally {
 			if (successfulRename) {
-				newFile.renameTo(file);
+				successfulRename = newFile.renameTo(file);
+
+				if (!successfulRename) {
+					FileUtil.copyFile(newFile, file);
+
+					FileUtil.delete(newFile);
+				}
 			}
 			else {
 				FileUtil.delete(newFile);
@@ -643,7 +649,13 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 		}
 		finally {
 			if (successfulRename) {
-				newFile.renameTo(file);
+				successfulRename = newFile.renameTo(file);
+
+				if (!successfulRename) {
+					FileUtil.copyFile(newFile, file);
+
+					FileUtil.delete(newFile);
+				}
 			}
 			else {
 				FileUtil.delete(newFile);

@@ -37,12 +37,12 @@
 <tr>
 	<td>SEARCH_FIELD</td>
 	<td>//input[contains(@class,'search-query') and @placeholder='Keywords']</td>
-	<td>Search Field</td>
+	<td></td>
 </tr>
 <tr>
 	<td>SEARCH_BUTTON</td>
 	<td>//button[contains(.,'Search')]</td>
-	<td>Search Button</td>
+	<td></td>
 </tr>
 <tr>
 	<td></td>
@@ -69,42 +69,42 @@
 <tr>
 	<td>FOLDER_MENU_PERMISSIONS</td>
 	<td>//ul[@class='lfr-menu-expanded lfr-menu-list']/li/a[contains(.,'Permissions')]</td>
-	<td>Permissions </td>
+	<td></td>
 </tr>
 <tr>
 	<td>FOLDER_MENU_ADD_FOLDER</td>
 	<td>//ul[@class='lfr-menu-expanded lfr-menu-list']/li/a[contains(.,'Add Folder')]</td>
-	<td>Add Folder</td>
+	<td></td>
 </tr>
 <tr>
 	<td>FOLDER_MENU_ADD_REPOSITORY</td>
 	<td>//ul[@class='lfr-menu-expanded lfr-menu-list']/li/a[contains(.,'Add Repository')]</td>
-	<td>Add Repository</td>
+	<td></td>
 </tr>
 <tr>
-	<td>FOLDER_MENU_MULTIPLE_DOCUMENTS</td>
+	<td>FOLDER_MENU_MULTIPLE_MEDIA</td>
 	<td>//ul[@class='lfr-menu-expanded lfr-menu-list']/li/a[contains(.,'Multiple Media')]</td>
-	<td>Multiple Media</td>
+	<td></td>
 </tr>
 <tr>
-	<td>FOLDER_MENU_ADD_DOCUMENT</td>
+	<td>FOLDER_MENU_ADD_MEDIA</td>
 	<td>//ul[@class='lfr-menu-expanded lfr-menu-list']/li/a[contains(.,'Add Media')]</td>
-	<td>Add Media</td>
+	<td></td>
 </tr>
 <tr>
-	<td>FOLDER_MENU_ADD_DOCUMENT</td>
+	<td>FOLDER_MENU_VIEW_SLIDE_SHOW</td>
 	<td>//ul[@class='lfr-menu-expanded lfr-menu-list']/li/a[contains(.,'View Slide Show')]</td>
-	<td>View Slide Show</td>
+	<td></td>
 </tr>
 <tr>
 	<td>FOLDER_MENU_ADD_SHORTCUT</td>
 	<td>//ul[@class='lfr-menu-expanded lfr-menu-list']/li/a[contains(.,'Add Shortcut')]</td>
-	<td>Add Shortcut</td>
+	<td></td>
 </tr>
 <tr>
 	<td>FOLDER_MENU_ACCESS_FROM_DESKTOP</td>
 	<td>//ul[@class='lfr-menu-expanded lfr-menu-list']/li/a[contains(.,'Access from Desktop')]</td>
-	<td>Access from Desktop</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

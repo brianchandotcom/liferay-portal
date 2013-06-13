@@ -54,7 +54,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DELETE</td>
+	<td>MOVE_TO_THE_RECYCLE_BIN</td>
 	<td>//img[@title='Move to the Recycle Bin']</td>
 	<td></td>
 </tr>

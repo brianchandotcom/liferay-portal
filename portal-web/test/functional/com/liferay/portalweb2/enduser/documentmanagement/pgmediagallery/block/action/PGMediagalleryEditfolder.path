@@ -20,13 +20,13 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='alert alert-success')]</td>
+	<td>//div[@class='alert alert-success']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PARENT_FOLDER_LINK</td>
 	<td>//a[contains(@id,'parentFolderName')]</td>
-	<td>Parent Folder</td>
+	<td></td>
 </tr>
 <tr>
 	<td>NAME_FIELD</td>
@@ -41,17 +41,17 @@
 <tr>
 	<td>DOCUMENT_TYPE_USE_PARENT</td>
 	<td>//input[contains(@id,'useFileEntryTypes')]</td>
-	<td>Use Parent Document Types</td>
+	<td></td>
 </tr>
 <tr>
 	<td>DOCUMENT_TYPE_DEFINE_SPECIFIC</td>
 	<td>//input[contains(@id,'overrideFileEntryTypes')]</td>
-	<td>Define Specific document types</td>
+	<td></td>
 </tr>
 <tr>
 	<td>SAVE_BUTTON</td>
 	<td>//button[contains(.,'Save')]</td>
-	<td>Save</td>
+	<td></td>
 </tr>
 <tr>
 	<td>CANCEL_BUTTON</td>

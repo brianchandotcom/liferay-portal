@@ -10,12 +10,17 @@
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
-	<td>//iframe[contains(@id,'_configurationIframeDialog')]</td>
+	<td></td>
 	<td>PGMediagalleryConfiguration</td>
 </tr>
 <tr>
 	<td></td>
 	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>MEDIA_GALLERY_CONFIGURATION_IFRAME</td>
+	<td>//iframe[contains(@id,'_configurationIframeDialog')]</td>
 	<td></td>
 </tr>
 <tr>

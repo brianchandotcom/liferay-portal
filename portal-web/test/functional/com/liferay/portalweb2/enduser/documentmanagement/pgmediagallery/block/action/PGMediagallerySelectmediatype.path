@@ -20,12 +20,12 @@
 </tr>
 <tr>
 	<td>SELECT_MEDIA_TYPE_IFRAME</td>
-	<td>//iframe[@id='_31_selectFileEntryType']</td>
+	<td>//iframe[contains(@id,'selectFileEntryType_iframe')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CLOSE_ICON</td>
-	<td>//button[@title='Close dialog']</td>
+	<td>CLOSE_BUTTON</td>
+	<td>//button[contains(@class,'close-content')]</td>
 	<td></td>
 </tr>
 <tr>

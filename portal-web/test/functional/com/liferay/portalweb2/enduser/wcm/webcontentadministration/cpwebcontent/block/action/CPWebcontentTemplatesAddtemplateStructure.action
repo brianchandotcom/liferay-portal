@@ -1,0 +1,7 @@
+<definition>
+	<command name="click">
+		<case locator-key1="STRUCTURE_TABLE_CHOOSE_BUTTON_1">
+			<execute function="Click#textClickAtAndWait" value1="Choose" />
+		</case>
+	</command>
+</definition>

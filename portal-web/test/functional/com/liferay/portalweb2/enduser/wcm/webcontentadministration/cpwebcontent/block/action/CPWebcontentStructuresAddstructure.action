@@ -1,0 +1,19 @@
+<definition>
+	<command name="click">
+		<case locator-key1="SAVE_BUTTON">
+			<execute function="Click#textClickAtAndWait" value1="Save" />
+		</case>
+	</command>
+
+	<command name="isElementNotPresent">
+		<case locator-key1="DESCRIPTION_FIELD">
+			<execute function="IsElementNotPresent#isNotVisible" />
+		</case>
+	</command>
+
+	<command name="type">
+		<case locator-key1="NAME_FIELD">
+			<execute function="Type#clickAtSendKeys" />
+		</case>
+	</command>
+</definition>

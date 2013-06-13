@@ -180,8 +180,11 @@
 	</command>
 
 	<command name="selectFrame">
-		<default>
+		<case comparator="contains" locator1="/iframe">
 			<execute function="SelectFrame#selectFrame" />
+		</case>
+		<default>
+			<execute function="SelectFrame#selectFrameTop" />
 		</default>
 	</command>
 

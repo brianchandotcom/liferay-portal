@@ -1,0 +1,183 @@
+<html>
+<head>
+<title>Setupwizard</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Setupwizard</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>Setupwizard</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>FINISH_CONFIGURATION_BUTTON</td>
+	<td>//button[contains(@id,'finishButton')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PORTAL-->
+<tr>
+	<td>PORTAL_PORTAL_NAME_FIELD</td>
+	<td>//input[@id='companyName'] </td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTAL_DEFAULT_LANGUAGE_SELECT</td>
+	<td>//select[@id='companyLocale']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTAL_CHANGE_BUTTON</td>
+	<td>//button[contains(@id,'changeLanguageButton')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ADMINISTRATOR_USER-->
+<tr>
+	<td>ADMINISTRATOR_USER_FIRST_NAME_FIELD</td>
+	<td>//input[@id='adminFirstName']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADMINISTRATOR_USER_LAST_NAME_FIELD</td>
+	<td>//input[@id='adminLastName']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADMINISTRATOR_USER_EMAIL_FIELD</td>
+	<td>//input[@id='adminEmailAddress']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DATABASE-->
+<tr>
+	<td>DATABASE_CONFIGURED_JDBC_URL_LABEL</td>
+	<td>//div[@id='defaultDatabaseOptions']/dl/dt[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATABASE_CONFIGURED_JDBC_VALUE</td>
+	<td>//div[@id='defaultDatabaseOptions']/dl/dd[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATABASE_CONFIGURED_JDBC_DRIVER_CLASS_NAME_LABEL</td>
+	<td>//div[@id='defaultDatabaseOptions']/dl/dt[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATABASE_CONFIGURED_JDBC_DRIVER_CLASS_NAME_VALUE</td>
+	<td>//div[@id='defaultDatabaseOptions']/dl/dd[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATABASE_CONFIGURED_USER_NAME_LABEL</td>
+	<td>//div[@id='defaultDatabaseOptions']/dl/dt[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATABASE_CONFIGURED_USER_NAME_VALUE</td>
+	<td>//div[@id='defaultDatabaseOptions']/dl/dd[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATABASE_CONFIGURED_PASSWORD_LABEL</td>
+	<td>//div[@id='defaultDatabaseOptions']/dl/dt[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATABASE_CONFIGURED_PASSWORD_VALUE</td>
+	<td>//div[@id='defaultDatabaseOptions']/dl/dd[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATABASE_CHANGE_LINK</td>
+	<td>//a[@id='customDatabaseOptionsLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DATABASE_CHANGE-->
+<tr>
+	<td>DATABASE_CHANGE_USE_CONFIGURED_DATABASE_LINK</td>
+	<td>//a[@id='defaultDatabaseOptionsLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATABASE_CHANGE_DATABASE_TYPE_LABEL</td>
+	<td>//label[@for='databaseType']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATABASE_CHANGE_DATABASE_TYPE_SELECT</td>
+	<td>//select[@id='databaseType']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATABASE_CHANGE_JDBC_URL_LABEL</td>
+	<td>//label[@for='jdbcDefaultURL']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATABASE_CHANGE_JDBC_URL_FIELD</td>
+	<td>//input[@id='jdbcDefaultURL']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATABASE_CHANGE_JDBC_DRIVER_CLASS_NAME_LABEL</td>
+	<td>//label[@for='jdbcDefaultDriverName']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATABASE_CHANGE_JDBC_DRIVER_CLASS_NAME_FIELD</td>
+	<td>//input[@id='jdbcDefaultDriverName']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATABASE_CHANGE_USER_NAME_LABEL</td>
+	<td>//label[@for='jdbcDefaultUserName']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATABASE_CHANGE_USER_NAME_FIELD</td>
+	<td>//input[@id='jdbcDefaultUserName']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATABASE_CHANGE_PASSWORD_LABEL</td>
+	<td>//label[@for='jdbcDefaultPassword']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATABASE_CHANGE_PASSWORD_FIELD</td>
+	<td>//input[@id='jdbcDefaultPassword']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

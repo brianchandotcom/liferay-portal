@@ -29,6 +29,12 @@
 		</default>
 	</command>
 
+	<command name="assertSelectedLabel">
+		<default>
+			<execute function="AssertSelectedLabel#assertSelectedLabel" />
+		</default>
+	</command>
+
 	<command name="assertTextEquals">
 		<case comparator="contains" locator1="/input">
 			<execute function="AssertTextEquals#assertValue" />

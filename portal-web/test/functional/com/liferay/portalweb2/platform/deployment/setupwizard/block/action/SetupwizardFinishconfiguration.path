@@ -1,0 +1,44 @@
+<html>
+<head>
+<title>SetupwizardFinishconfiguration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SetupwizardFinishconfiguration</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>SetupwizardFinishconfiguration</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//span[@class='alert alert-success span12']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURATION_SAVE_MESSAGE</td>
+	<td>//span[@class='field-hint']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURATION_SAVE_LOCATION</td>
+	<td>//span[@class='lfr-inline-code']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GO_TO_MY_PORTAL_BUTTON</td>
+	<td>//button[contains(.,'Go to My Portal')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

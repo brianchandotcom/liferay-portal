@@ -1,0 +1,64 @@
+<definition>
+	<command name="assertTextEquals">
+		<case locator-key1="ADMINISTRATOR_USER_EMAIL_FIELD">
+			<execute function="AssertTextEquals#assertValue" />
+		</case>
+		<case locator-key1="ADMINISTRATOR_USER_FIRST_NAME_FIELD">
+			<execute function="AssertTextEquals#assertValue" />
+		</case>
+		<case locator-key1="ADMINISTRATOR_USER_LAST_NAME_FIELD">
+			<execute function="AssertTextEquals#assertValue" />
+		</case>
+		<case locator-key1="DATABASE_CHANGE_DATABASE_TYPE_LABEL">
+			<execute function="AssertTextEquals#assertText" value1="Database Type" />
+		</case>
+		<case locator-key1="DATABASE_CHANGE_JDBC_DRIVER_CLASS_NAME_FIELD">
+			<execute function="AssertTextEquals#assertValue" />
+		</case>
+		<case locator-key1="DATABASE_CHANGE_JDBC_DRIVER_CLASS_NAME_LABEL">
+			<execute function="AssertTextEquals#assertText" value1="JDBC Driver Class Name (Required)" />
+		</case>
+		<case locator-key1="DATABASE_CHANGE_PASSWORD_FIELD">
+			<execute function="AssertTextEquals#assertValue" />
+		</case>
+		<case locator-key1="DATABASE_CHANGE_PASSWORD_LABEL">
+			<execute function="AssertTextEquals#assertText" value1="Password" />
+		</case>
+		<case locator-key1="DATABASE_CHANGE_JDBC_URL_FIELD">
+			<execute function="AssertTextEquals#assertValue" />
+		</case>
+		<case locator-key1="DATABASE_CHANGE_JDBC_URL_LABEL">
+			<execute function="AssertTextEquals#assertText" value1="JDBC URL (Required)" />
+		</case>
+		<case locator-key1="DATABASE_CHANGE_USER_NAME_FIELD">
+			<execute function="AssertTextEquals#assertValue" />
+		</case>
+		<case locator-key1="DATABASE_CHANGE_USER_NAME_LABEL">
+			<execute function="AssertTextEquals#assertText" value1="User Name" />
+		</case>
+		<case locator-key1="DATABASE_CONFIGURED_JDBC_DRIVER_CLASS_NAME_LABEL">
+			<execute function="AssertTextEquals#assertText" value1="JDBC Driver Class Name" />
+		</case>
+		<case locator-key1="DATABASE_CONFIGURED_JDBC_URL_LABEL">
+			<execute function="AssertTextEquals#assertText" value1="JDBC URL" />
+		</case>
+		<case locator-key1="DATABASE_CONFIGURED_PASSWORD_LABEL">
+			<execute function="AssertTextEquals#assertText" value1="Password" />
+		</case>
+		<case locator-key1="DATABASE_CONFIGURED_USER_NAME_LABEL">
+			<execute function="AssertTextEquals#assertText" value1="User Name" />
+		</case>
+		<case locator-key1="PORTAL_PORTAL_NAME_FIELD">
+			<execute function="AssertTextEquals#assertValue" />
+		</case>
+	</command>
+
+	<command name="click">
+		<case locator-key1="DATABASE_CHANGE_LINK">
+			<execute function="Click#textClickAtAndWait" value1="(Change)" />
+		</case>
+		<case locator-key1="FINISH_CONFIGURATION_BUTTON">
+			<execute function="Click#textClickAtAndWait" value1="Finish Configuration" />
+		</case>
+	</command>
+</definition>

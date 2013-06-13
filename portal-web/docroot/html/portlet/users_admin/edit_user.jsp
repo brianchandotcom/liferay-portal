@@ -181,14 +181,14 @@ if (selUser != null) {
 	<div id="breadcrumb">
 		<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showCurrentPortlet="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
 	</div>
-</c:if>
 
-<liferay-ui:header
-	backURL="<%= backURL %>"
-	escapeXml="<%= false %>"
-	localizeTitle="<%= (selUser == null) %>"
-	title='<%= (selUser == null) ? "add-user" : LanguageUtil.format(pageContext, "edit-user-x", HtmlUtil.escape(selUser.getFullName())) %>'
-/>
+	<liferay-ui:header
+		backURL="<%= backURL %>"
+		escapeXml="<%= false %>"
+		localizeTitle="<%= (selUser == null) %>"
+		title='<%= (selUser == null) ? "add-user" : LanguageUtil.format(pageContext, "edit-user-x", HtmlUtil.escape(selUser.getFullName())) %>'
+		/>
+</c:if>
 
 <portlet:actionURL var="editUserActionURL">
 	<portlet:param name="struts_action" value="/users_admin/edit_user" />

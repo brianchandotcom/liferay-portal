@@ -27,7 +27,7 @@ if (PropsValues.DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP) {
 		<b class="alert-icon icon-warning-sign"></b>
 	</c:if>
 
-	<img alt="<liferay-ui:message key="manage-my-account" />" src="<%= HtmlUtil.escape(user.getPortraitURL(themeDisplay)) %>" />
+	<img alt="<liferay-ui:message key="my-account" />" src="<%= HtmlUtil.escape(user.getPortraitURL(themeDisplay)) %>" />
 
 	<span class="user-full-name">
 		<%= HtmlUtil.escape(user.getFullName()) %>
@@ -89,7 +89,7 @@ if (PropsValues.DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP) {
 						myAccountURL = HttpUtil.setParameter(myAccountURL, "controlPanelCategory", PortletCategoryKeys.MY);
 						%>
 
-						<aui:nav-item anchorCssClass='<%= themeDisplay.isImpersonated() ? "" : useDialog %>' href="<%= myAccountURL %>" label="my-account" title="manage-my-account" />
+						<aui:nav-item anchorCssClass='<%= themeDisplay.isImpersonated() ? "" : useDialog %>' href="<%= myAccountURL %>" label="my-account" title="my-account" />
 					</c:if>
 
 					<c:if test="<%= themeDisplay.isShowSignOutIcon() %>">

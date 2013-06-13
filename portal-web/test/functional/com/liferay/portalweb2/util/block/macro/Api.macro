@@ -3,7 +3,7 @@
 	<var name="password" value="test" />
 
 	<command name="apiAxisView">
-		<execute macro="Page#apiAxisGoto" />
+		<execute action="Home#open" locator-key1="API_AXIS_URL" />
 
 		<execute action="Axisservices#assertTextPresent" value1="And now... Some Services" />
 		<execute action="Axisservices#assertTextPresent" value1="Portal_LayoutBranchService" />
@@ -12,7 +12,7 @@
 	</command>
 
 	<command name="apiJsonwsView">
-		<execute macro="Page#apiJsonWSGoto" />
+		<execute action="Home#open" locator-key1="API_JSON_URL" />
 
 		<execute action="Jsonwebservices#assertTextEquals" locator-key1="INFO_MESSAGE" value1="Please select a method on the left." />
 		<execute action="Jsonwebservices#assertTextEquals" locator-key1="SITE_NAME" value1="JSONWS API"/>
@@ -22,17 +22,19 @@
 	</command>
 
 	<command name="apiJsonwsAddressView">
-		<execute macro="Page#apiJsonWSGoto" />
+		<execute action="Home#open" locator-key1="API_JSON_URL" />
 
 		<execute action="Jsonwebservices#click" locator-key1="ADDRESS_ADD_ADDRESS" />
+
 		<execute action="JsonwebservicesAddress#assertTextEquals" locator-key1="API_METHOD" value1="/address/add-address" />
 		<execute action="JsonwebservicesAddress#assertElementPresent" locator-key1="INVOKE" />
 	</command>
 
 	<command name="apiJsonwsWikiView">
-		<execute macro="Page#apiJsonWSGoto" />
+		<execute action="Home#open" locator-key1="API_JSON_URL" />
 
 		<execute action="Jsonwebservices#click" locator-key1="WIKI_PAGE_ADD_PAGE" />
+
 		<execute action="JsonwebservicesWiki#assertTextEquals" locator-key1="API_METHOD" value1="/wikipage/add-page" />
 		<execute action="JsonwebservicesWiki#assertElementPresent" locator-key1="INVOKE" />
 	</command>

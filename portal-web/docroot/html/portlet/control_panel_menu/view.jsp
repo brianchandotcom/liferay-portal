@@ -41,20 +41,33 @@
 		%>
 
 				<liferay-ui:panel collapsible="<%= true %>" cssClass="panel-page-category unstyled" extended="<%= true %>" id='<%= "panel-manage-" + curCategory %>' persistState="<%= true %>" title="<%= title %>">
-					<c:if test='<%= curCategory.equals("site.content") %>'>
+					<c:if test="<%= curCategory.equals(PortletCategoryKeys.SITE_ADMINISTRATION_CONTENT) %>">
 
 						<%
 						Group curSite = themeDisplay.getSiteGroup();
+						Group curScopeGroup = themeDisplay.getScopeGroup();
 
 						List<Layout> scopeLayouts = new ArrayList<Layout>();
 
 						scopeLayouts.addAll(LayoutLocalServiceUtil.getScopeGroupLayouts(curSite.getGroupId(), false));
 						scopeLayouts.addAll(LayoutLocalServiceUtil.getScopeGroupLayouts(curSite.getGroupId(), true));
+
+						String scopeLabel = null;
+
+						if (curScopeGroup.isLayout()) {
+							Layout scopeLayout = LayoutLocalServiceUtil.getLayout(curScopeGroup.getClassPK());
+
+							scopeLabel = StringUtil.shorten(scopeLayout.getName(locale), 20);
+						}
+						else {
+							scopeLabel = LanguageUtil.get(pageContext, "default");
+						}
 						%>
 
-						<c:if test='<%= !scopeLayouts.isEmpty() && curCategory.equals("site.content") %>'>
+						<c:if test="<%= !scopeLayouts.isEmpty() && curCategory.equals(PortletCategoryKeys.SITE_ADMINISTRATION_CONTENT) %>">
 							<div class="nobr lfr-title-scope-selector">
-								<liferay-ui:icon-menu direction="down" icon="" message='<%= LanguageUtil.get(pageContext, "scope") %>'>
+								<liferay-ui:message key="scope" />:
+								<liferay-ui:icon-menu direction="down" icon="" message="<%= scopeLabel %>">
 									<liferay-ui:icon
 										message="default"
 										src="<%= curSite.getIconURL(themeDisplay) %>"

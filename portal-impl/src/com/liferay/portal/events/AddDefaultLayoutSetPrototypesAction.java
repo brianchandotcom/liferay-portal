@@ -35,7 +35,6 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portlet.calendar.model.CalEvent;
 
 import java.util.HashMap;
 import java.util.List;
@@ -142,7 +141,7 @@ public class AddDefaultLayoutSetPrototypesAction extends SimpleAction {
 
 		LayoutSet layoutSet = addLayoutSetPrototype(
 			companyId, defaultUserId, "Intranet Site",
-			"Site with Documents, Calendar and News", layoutSetPrototypes);
+			"Site with Documents and News", layoutSetPrototypes);
 
 		if (layoutSet == null) {
 			return;
@@ -195,22 +194,12 @@ public class AddDefaultLayoutSetPrototypesAction extends SimpleAction {
 
 		updatePortletSetup(layout, portletId, preferences);
 
-		// Calendar layout
-
-		layout = addLayout(layoutSet, "Calendar", "/calendar", "2_columns_iii");
-
-		addPortletId(layout, PortletKeys.CALENDAR, "column-1");
-
 		portletId = addPortletId(
 			layout, PortletKeys.ASSET_PUBLISHER, "column-2");
 
 		preferences = new HashMap<String, String>();
 
 		preferences.put("anyAssetType", Boolean.FALSE.toString());
-
-		long classNameId = PortalUtil.getClassNameId(CalEvent.class);
-
-		preferences.put("classNameIds", String.valueOf(classNameId));
 
 		preferences.put(
 			"portletSetupTitle_" + LocaleUtil.getDefault(), "Upcoming Events");
@@ -257,7 +246,7 @@ public class AddDefaultLayoutSetPrototypesAction extends SimpleAction {
 
 		LayoutSet layoutSet = addLayoutSetPrototype(
 			companyId, defaultUserId, "Community Site",
-			"Site with Forums, Calendar and Wiki", layoutSetPrototypes);
+			"Site with Forums and Wiki", layoutSetPrototypes);
 
 		if (layoutSet == null) {
 			return;
@@ -280,22 +269,12 @@ public class AddDefaultLayoutSetPrototypesAction extends SimpleAction {
 		addPortletId(layout, PortletKeys.POLLS_DISPLAY, "column-2");
 		addPortletId(layout, PortletKeys.USER_STATISTICS, "column-2");
 
-		// Calendar layout
-
-		layout = addLayout(layoutSet, "Calendar", "/calendar", "2_columns_iii");
-
-		addPortletId(layout, PortletKeys.CALENDAR, "column-1");
-
 		portletId = addPortletId(
 			layout, PortletKeys.ASSET_PUBLISHER, "column-2");
 
 		preferences = new HashMap<String, String>();
 
 		preferences.put("anyAssetType", Boolean.FALSE.toString());
-
-		long classNameId = PortalUtil.getClassNameId(CalEvent.class);
-
-		preferences.put("classNameIds", String.valueOf(classNameId));
 
 		preferences.put(
 			"portletSetupTitle_" + LocaleUtil.getDefault(), "Upcoming Events");

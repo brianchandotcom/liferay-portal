@@ -241,7 +241,6 @@
 	<bean id="com.liferay.portlet.bookmarks.service.persistence.BookmarksFolderPersistence" class="com.liferay.portlet.bookmarks.service.persistence.BookmarksFolderPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.bookmarks.service.persistence.BookmarksFolderFinder" class="com.liferay.portlet.bookmarks.service.persistence.BookmarksFolderFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.calendar.service.CalEventLocalService" class="com.liferay.portlet.calendar.service.impl.CalEventLocalServiceImpl" />
-	<bean id="com.liferay.portlet.calendar.service.CalEventService" class="com.liferay.portlet.calendar.service.impl.CalEventServiceImpl" />
 	<bean id="com.liferay.portlet.calendar.service.persistence.CalEventPersistence" class="com.liferay.portlet.calendar.service.persistence.CalEventPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.calendar.service.persistence.CalEventFinder" class="com.liferay.portlet.calendar.service.persistence.CalEventFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.documentlibrary.service.DLAppLocalService" class="com.liferay.portlet.documentlibrary.service.impl.DLAppLocalServiceImpl" />

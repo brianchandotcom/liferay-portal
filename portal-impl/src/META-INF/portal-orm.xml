@@ -1937,49 +1937,6 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="com.liferay.portlet.calendar.model.impl.CalEventModelImpl">
-		<attributes>
-			<id name="eventId" />
-			<basic name="uuid">
-				<column name="UUID_" />
-			</basic>
-			<basic name="groupId" />
-			<basic name="companyId" />
-			<basic name="userId" />
-			<basic name="userName" />
-			<basic name="createDate">
-				<temporal>TIMESTAMP</temporal>
-			</basic>
-			<basic name="modifiedDate">
-				<temporal>TIMESTAMP</temporal>
-			</basic>
-			<basic name="title" />
-			<basic name="description" />
-			<basic name="location" />
-			<basic name="startDate">
-				<temporal>TIMESTAMP</temporal>
-			</basic>
-			<basic name="endDate">
-				<temporal>TIMESTAMP</temporal>
-			</basic>
-			<basic name="durationHour" />
-			<basic name="durationMinute" />
-			<basic name="allDay" />
-			<basic name="timeZoneSensitive" />
-			<basic name="type">
-				<column name="TYPE_" />
-			</basic>
-			<basic name="repeating" />
-			<basic name="recurrence" />
-			<basic name="remindBy" />
-			<basic name="firstReminder" />
-			<basic name="secondReminder" />
-			<transient name="modelAttributes" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-			<transient name="userUuid" />
-		</attributes>
-	</mapped-superclass>
 	<mapped-superclass class="com.liferay.portlet.documentlibrary.model.impl.DLContentModelImpl">
 		<attributes>
 			<id name="contentId" />
@@ -3859,6 +3816,49 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="com.liferay.portlet.calendar.model.impl.CalEventModelImpl">
+		<attributes>
+			<id name="eventId" />
+			<basic name="uuid">
+				<column name="UUID_" />
+			</basic>
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="title" />
+			<basic name="description" />
+			<basic name="location" />
+			<basic name="startDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="endDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="durationHour" />
+			<basic name="durationMinute" />
+			<basic name="allDay" />
+			<basic name="timeZoneSensitive" />
+			<basic name="type">
+				<column name="TYPE_" />
+			</basic>
+			<basic name="repeating" />
+			<basic name="recurrence" />
+			<basic name="remindBy" />
+			<basic name="firstReminder" />
+			<basic name="secondReminder" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
 	<entity class="com.liferay.counter.model.impl.CounterImpl" name="Counter">
 		<table name="Counter" />
 		<attributes />
@@ -4310,12 +4310,6 @@
 		<table name="BookmarksFolder" />
 		<attributes />
 	</entity>
-	<entity class="com.liferay.portlet.calendar.model.impl.CalEventImpl" name="CalEvent">
-		<table name="CalEvent" />
-		<attributes>
-			<transient name="recurrenceObj" />
-		</attributes>
-	</entity>
 	<entity class="com.liferay.portlet.documentlibrary.model.impl.DLContentImpl" name="DLContent">
 		<table name="DLContent" />
 		<attributes />
@@ -4644,5 +4638,11 @@
 	<entity class="com.liferay.portlet.wiki.model.impl.WikiPageResourceImpl" name="WikiPageResource">
 		<table name="WikiPageResource" />
 		<attributes />
+	</entity>
+	<entity class="com.liferay.portlet.calendar.model.impl.CalEventImpl" name="CalEvent">
+		<table name="CalEvent" />
+		<attributes>
+			<transient name="recurrenceObj" />
+		</attributes>
 	</entity>
 </entity-mappings>

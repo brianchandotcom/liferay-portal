@@ -249,10 +249,10 @@ public class UpgradePortletPreferences
 	}
 
 	private static final String[] _CAMEL_CASE_UPGRADE_PORTLET_IDS = {
-		"8", "15", "19", "20", "33", "34", "36", "39_INSTANCE_%",
-		"47_INSTANCE_%", "48_INSTANCE_%", "54_INSTANCE_%", "56_INSTANCE_%",
-		"59_INSTANCE_%", "62_INSTANCE_%", "71_INSTANCE_%", "73_INSTANCE_%",
-		"77", "82_INSTANCE_%", "85_INSTANCE_%", "100", "101_INSTANCE_%",
+		"15", "19", "20", "33", "34", "36", "39_INSTANCE_%", "47_INSTANCE_%",
+		"48_INSTANCE_%", "54_INSTANCE_%", "56_INSTANCE_%", "59_INSTANCE_%",
+		"62_INSTANCE_%", "71_INSTANCE_%", "73_INSTANCE_%", "77",
+		"82_INSTANCE_%", "85_INSTANCE_%", "100", "101_INSTANCE_%",
 		"102_INSTANCE_%", "114", "115", "118_INSTANCE_%", "122_INSTANCE_%"
 	};
 

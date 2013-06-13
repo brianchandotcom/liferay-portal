@@ -235,10 +235,6 @@ import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalService;
 import com.liferay.portlet.bookmarks.service.BookmarksFolderService;
 import com.liferay.portlet.bookmarks.service.persistence.BookmarksFolderFinder;
 import com.liferay.portlet.bookmarks.service.persistence.BookmarksFolderPersistence;
-import com.liferay.portlet.calendar.service.CalEventLocalService;
-import com.liferay.portlet.calendar.service.CalEventService;
-import com.liferay.portlet.calendar.service.persistence.CalEventFinder;
-import com.liferay.portlet.calendar.service.persistence.CalEventPersistence;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 import com.liferay.portlet.documentlibrary.service.DLAppService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService;
@@ -4262,79 +4258,6 @@ public abstract class GroupServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the cal event local service.
-	 *
-	 * @return the cal event local service
-	 */
-	public CalEventLocalService getCalEventLocalService() {
-		return calEventLocalService;
-	}
-
-	/**
-	 * Sets the cal event local service.
-	 *
-	 * @param calEventLocalService the cal event local service
-	 */
-	public void setCalEventLocalService(
-		CalEventLocalService calEventLocalService) {
-		this.calEventLocalService = calEventLocalService;
-	}
-
-	/**
-	 * Returns the cal event remote service.
-	 *
-	 * @return the cal event remote service
-	 */
-	public CalEventService getCalEventService() {
-		return calEventService;
-	}
-
-	/**
-	 * Sets the cal event remote service.
-	 *
-	 * @param calEventService the cal event remote service
-	 */
-	public void setCalEventService(CalEventService calEventService) {
-		this.calEventService = calEventService;
-	}
-
-	/**
-	 * Returns the cal event persistence.
-	 *
-	 * @return the cal event persistence
-	 */
-	public CalEventPersistence getCalEventPersistence() {
-		return calEventPersistence;
-	}
-
-	/**
-	 * Sets the cal event persistence.
-	 *
-	 * @param calEventPersistence the cal event persistence
-	 */
-	public void setCalEventPersistence(CalEventPersistence calEventPersistence) {
-		this.calEventPersistence = calEventPersistence;
-	}
-
-	/**
-	 * Returns the cal event finder.
-	 *
-	 * @return the cal event finder
-	 */
-	public CalEventFinder getCalEventFinder() {
-		return calEventFinder;
-	}
-
-	/**
-	 * Sets the cal event finder.
-	 *
-	 * @param calEventFinder the cal event finder
-	 */
-	public void setCalEventFinder(CalEventFinder calEventFinder) {
-		this.calEventFinder = calEventFinder;
-	}
-
-	/**
 	 * Returns the d l app local service.
 	 *
 	 * @return the d l app local service
@@ -5900,14 +5823,6 @@ public abstract class GroupServiceBaseImpl extends BaseServiceImpl
 	protected BookmarksFolderPersistence bookmarksFolderPersistence;
 	@BeanReference(type = BookmarksFolderFinder.class)
 	protected BookmarksFolderFinder bookmarksFolderFinder;
-	@BeanReference(type = CalEventLocalService.class)
-	protected CalEventLocalService calEventLocalService;
-	@BeanReference(type = CalEventService.class)
-	protected CalEventService calEventService;
-	@BeanReference(type = CalEventPersistence.class)
-	protected CalEventPersistence calEventPersistence;
-	@BeanReference(type = CalEventFinder.class)
-	protected CalEventFinder calEventFinder;
 	@BeanReference(type = DLAppLocalService.class)
 	protected DLAppLocalService dlAppLocalService;
 	@BeanReference(type = DLAppService.class)

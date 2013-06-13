@@ -28,7 +28,6 @@ import com.liferay.portlet.bookmarks.asset.BookmarksEntryAssetRendererFactory;
 import com.liferay.portlet.bookmarks.asset.BookmarksFolderAssetRendererFactory;
 import com.liferay.portlet.bookmarks.util.BookmarksEntryIndexer;
 import com.liferay.portlet.bookmarks.util.BookmarksFolderIndexer;
-import com.liferay.portlet.calendar.asset.CalEventAssetRendererFactory;
 import com.liferay.portlet.directory.asset.UserAssetRendererFactory;
 import com.liferay.portlet.directory.workflow.UserWorkflowHandler;
 import com.liferay.portlet.documentlibrary.asset.DLFileEntryAssetRendererFactory;
@@ -136,7 +135,7 @@ public class PortalRegisterTestUtil {
 		BlogsEntryAssetRendererFactory.class,
 		BookmarksEntryAssetRendererFactory.class,
 		BookmarksFolderAssetRendererFactory.class,
-		CalEventAssetRendererFactory.class, DDLRecordAssetRendererFactory.class,
+		DDLRecordAssetRendererFactory.class,
 		DLFileEntryAssetRendererFactory.class,
 		DLFolderAssetRendererFactory.class,
 		JournalArticleAssetRendererFactory.class,

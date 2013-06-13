@@ -64,7 +64,6 @@ import com.liferay.portlet.asset.service.persistence.AssetTagFinder;
 import com.liferay.portlet.asset.service.persistence.AssetTagPersistence;
 import com.liferay.portlet.calendar.model.CalEvent;
 import com.liferay.portlet.calendar.service.CalEventLocalService;
-import com.liferay.portlet.calendar.service.CalEventService;
 import com.liferay.portlet.calendar.service.persistence.CalEventFinder;
 import com.liferay.portlet.calendar.service.persistence.CalEventPersistence;
 import com.liferay.portlet.expando.service.ExpandoValueLocalService;
@@ -334,24 +333,6 @@ public abstract class CalEventLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public void setCalEventLocalService(
 		CalEventLocalService calEventLocalService) {
 		this.calEventLocalService = calEventLocalService;
-	}
-
-	/**
-	 * Returns the cal event remote service.
-	 *
-	 * @return the cal event remote service
-	 */
-	public CalEventService getCalEventService() {
-		return calEventService;
-	}
-
-	/**
-	 * Sets the cal event remote service.
-	 *
-	 * @param calEventService the cal event remote service
-	 */
-	public void setCalEventService(CalEventService calEventService) {
-		this.calEventService = calEventService;
 	}
 
 	/**
@@ -1206,8 +1187,6 @@ public abstract class CalEventLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	@BeanReference(type = CalEventLocalService.class)
 	protected CalEventLocalService calEventLocalService;
-	@BeanReference(type = CalEventService.class)
-	protected CalEventService calEventService;
 	@BeanReference(type = CalEventPersistence.class)
 	protected CalEventPersistence calEventPersistence;
 	@BeanReference(type = CalEventFinder.class)

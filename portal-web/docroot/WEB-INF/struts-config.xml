@@ -257,10 +257,6 @@
 			<forward name="portlet.message_boards.error" path="portlet.blogs.error" />
 		</action>
 
-		<action path="/asset_publisher/edit_event_discussion" type="com.liferay.portlet.messageboards.action.EditDiscussionAction">
-			<forward name="portlet.message_boards.error" path="portlet.calendar.error" />
-		</action>
-
 		<action path="/asset_publisher/edit_file_entry_discussion" type="com.liferay.portlet.messageboards.action.EditDiscussionAction">
 			<forward name="portlet.message_boards.error" path="portlet.document_library.error" />
 		</action>
@@ -411,32 +407,6 @@
 		<!-- Breadcrumb -->
 
 		<action path="/breadcrumb/view" forward="portlet.breadcrumb.view" />
-
-		<!-- Calendar -->
-
-		<action path="/calendar/edit_event" type="com.liferay.portlet.calendar.action.EditEventAction">
-			<forward name="portlet.calendar.edit_event" path="portlet.calendar.edit_event" />
-			<forward name="portlet.calendar.error" path="portlet.calendar.error" />
-		</action>
-
-		<action path="/calendar/edit_event_discussion" type="com.liferay.portlet.messageboards.action.EditDiscussionAction">
-			<forward name="portlet.message_boards.error" path="portlet.calendar.error" />
-		</action>
-
-		<action path="/calendar/export_events" type="com.liferay.portlet.calendar.action.ExportEventsAction" />
-
-		<action path="/calendar/find_event" type="com.liferay.portlet.calendar.action.FindEventAction" />
-
-		<action path="/calendar/import_events" type="com.liferay.portlet.calendar.action.ImportEventsAction">
-			<forward name="portlet.calendar.error" path="portlet.calendar.error" />
-		</action>
-
-		<action path="/calendar/view" forward="portlet.calendar.view" />
-
-		<action path="/calendar/view_event" type="com.liferay.portlet.calendar.action.EditEventAction">
-			<forward name="portlet.calendar.edit_event" path="portlet.calendar.view_event" />
-			<forward name="portlet.calendar.error" path="portlet.calendar.error" />
-		</action>
 
 		<!-- Control Panel Home -->
 

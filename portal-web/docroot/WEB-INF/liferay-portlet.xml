@@ -36,39 +36,6 @@
 		<add-default-resource>true</add-default-resource>
 	</portlet>
 	<portlet>
-		<portlet-name>8</portlet-name>
-		<icon>/html/icons/calendar.png</icon>
-		<struts-path>calendar</struts-path>
-		<configuration-action-class>com.liferay.portlet.calendar.action.ConfigurationActionImpl</configuration-action-class>
-		<indexer-class>com.liferay.portlet.calendar.util.CalIndexer</indexer-class>
-		<open-search-class>com.liferay.portlet.calendar.util.CalendarOpenSearchImpl</open-search-class>
-		<scheduler-entry>
-			<scheduler-event-listener-class>com.liferay.portlet.calendar.messaging.CheckEventMessageListener</scheduler-event-listener-class>
-			<trigger>
-				<simple>
-					<property-key>calendar.event.check.interval</property-key>
-					<time-unit>minute</time-unit>
-				</simple>
-			</trigger>
-		</scheduler-entry>
-		<portlet-data-handler-class>com.liferay.portlet.calendar.lar.CalendarPortletDataHandler</portlet-data-handler-class>
-		<social-activity-interpreter-class>com.liferay.portlet.calendar.social.CalendarActivityInterpreter</social-activity-interpreter-class>
-		<control-panel-entry-category>site_administration.content</control-panel-entry-category>
-		<control-panel-entry-weight>4.0</control-panel-entry-weight>
-		<asset-renderer-factory>com.liferay.portlet.calendar.asset.CalEventAssetRendererFactory</asset-renderer-factory>
-		<custom-attributes-display>com.liferay.portlet.calendar.CalEventCustomAttributesDisplay</custom-attributes-display>
-		<preferences-unique-per-layout>false</preferences-unique-per-layout>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
-		<scopeable>true</scopeable>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/calendar/css/main.css</header-portlet-css>
-		<css-class-wrapper>portlet-calendar</css-class-wrapper>
-		<add-default-resource>true</add-default-resource>
-	</portlet>
-	<portlet>
 		<portlet-name>9</portlet-name>
 		<icon>/html/icons/default.png</icon>
 		<struts-path>admin</struts-path>

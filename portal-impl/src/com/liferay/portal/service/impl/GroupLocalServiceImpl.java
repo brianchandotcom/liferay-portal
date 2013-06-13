@@ -656,7 +656,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 *
 	 * <p>
 	 * The group is unstaged and its assets and resources including layouts,
-	 * membership requests, subscriptions, teams, blogs, bookmarks, calendar
+	 * membership requests, subscriptions, teams, blogs, bookmarks,
 	 * events, image gallery, journals, message boards, polls, shopping related
 	 * entities, software catalog, and wikis are also deleted.
 	 * </p>
@@ -856,7 +856,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 *
 	 * <p>
 	 * The group is unstaged and its assets and resources including layouts,
-	 * membership requests, subscriptions, teams, blogs, bookmarks, calendar
+	 * membership requests, subscriptions, teams, blogs, bookmarks,
 	 * events, image gallery, journals, message boards, polls, shopping related
 	 * entities, software catalog, and wikis are also deleted.
 	 * </p>
@@ -3633,12 +3633,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				ActionKeys.ADD_ENTRY, ActionKeys.PERMISSIONS,
 				ActionKeys.SUBSCRIBE});
 
-		setRolePermissions(
-			group, role, "com.liferay.portlet.calendar",
-			new String[] {
-				ActionKeys.ADD_EVENT, ActionKeys.EXPORT_ALL_EVENTS,
-				ActionKeys.PERMISSIONS});
-
 		// Power User role
 
 		role = roleLocalService.getRole(
@@ -3669,7 +3663,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		setRolePermissions(group, role, "com.liferay.portlet.asset");
 		setRolePermissions(group, role, "com.liferay.portlet.blogs");
 		setRolePermissions(group, role, "com.liferay.portlet.bookmarks");
-		setRolePermissions(group, role, "com.liferay.portlet.calendar");
 		setRolePermissions(group, role, "com.liferay.portlet.documentlibrary");
 		setRolePermissions(group, role, "com.liferay.portlet.imagegallery");
 		setRolePermissions(group, role, "com.liferay.portlet.messageboards");

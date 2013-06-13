@@ -534,20 +534,6 @@
 	<cache
 		eternal="false"
 		maxElementsInMemory="10000"
-		name="com.liferay.portlet.calendar.service.impl.CalEventLocalUtil"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
-	>
-		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicatePuts=false,replicateUpdatesViaCopy=false"
-			propertySeparator=","
-		/>
-		<bootstrapCacheLoaderFactory class="com.liferay.portal.cache.ehcache.LiferayBootstrapCacheLoaderFactory" />
-	</cache>
-	<cache
-		eternal="false"
-		maxElementsInMemory="10000"
 		name="com.liferay.portlet.journalcontent.util.JournalContent"
 		overflowToDisk="false"
 		timeToIdleSeconds="600"

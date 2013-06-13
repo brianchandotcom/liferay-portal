@@ -83,7 +83,6 @@ import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.blogs.model.impl.BlogsEntryImpl;
 import com.liferay.portlet.bookmarks.model.impl.BookmarksEntryImpl;
 import com.liferay.portlet.bookmarks.model.impl.BookmarksFolderImpl;
-import com.liferay.portlet.calendar.model.impl.CalEventImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileShortcutImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFolderImpl;
@@ -2216,7 +2215,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 		_xStream.alias("BlogsEntry", BlogsEntryImpl.class);
 		_xStream.alias("BookmarksFolder", BookmarksFolderImpl.class);
 		_xStream.alias("BookmarksEntry", BookmarksEntryImpl.class);
-		_xStream.alias("CalEvent", CalEventImpl.class);
 		_xStream.alias("DLFolder", DLFolderImpl.class);
 		_xStream.alias("DLFileEntry", DLFileEntryImpl.class);
 		_xStream.alias("DLFileShortcut", DLFileShortcutImpl.class);

@@ -1178,7 +1178,6 @@ public class Creole10Parser]]></replacevalue>
 		<antcall target="build-wsdd-portlet-asset" />
 		<antcall target="build-wsdd-portlet-blogs" />
 		<antcall target="build-wsdd-portlet-bookmarks" />
-		<antcall target="build-wsdd-portlet-calendar" />
 		<antcall target="build-wsdd-portlet-documentlibrary" />
 		<antcall target="build-wsdd-portlet-dynamicdatalists" />
 		<antcall target="build-wsdd-portlet-dynamicdatamapping" />

@@ -613,18 +613,6 @@
 		<property name="service" ref="com.liferay.portlet.bookmarks.service.BookmarksFolderService" />
 		<property name="serviceInterface" value="com.liferay.portlet.bookmarks.service.BookmarksFolderService" />
 	</bean>
-	<bean name="/com_liferay_portlet_calendar_service_spring_CalEventService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="com.liferay.portlet.calendar.service.CalEventService" />
-		<property name="serviceInterface" value="com.liferay.portlet.calendar.service.CalEventService" />
-	</bean>
-	<bean name="/com_liferay_portlet_calendar_service_spring_CalEventService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
-		<property name="service" ref="com.liferay.portlet.calendar.service.CalEventService" />
-		<property name="serviceInterface" value="com.liferay.portlet.calendar.service.CalEventService" />
-	</bean>
-	<bean name="/com_liferay_portlet_calendar_service_spring_CalEventService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
-		<property name="service" ref="com.liferay.portlet.calendar.service.CalEventService" />
-		<property name="serviceInterface" value="com.liferay.portlet.calendar.service.CalEventService" />
-	</bean>
 	<bean name="/com_liferay_portlet_documentlibrary_service_spring_DLAppService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
 		<property name="service" ref="com.liferay.portlet.documentlibrary.service.DLAppService" />
 		<property name="serviceInterface" value="com.liferay.portlet.documentlibrary.service.DLAppService" />

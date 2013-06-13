@@ -23,7 +23,6 @@
 					'com.liferay.portlet.bookmarks.model.BookmarksEntry',
 					'com.liferay.portlet.bookmarks.model.BookmarksFolder',
 					'com.liferay.portlet.blogs.model.BlogsEntry',
-					'com.liferay.portlet.calendar.model.CalEvent',
 					'com.liferay.portlet.documentlibrary.model.DLFileEntry',
 					'com.liferay.portlet.documentlibrary.model.DLFolder',
 					'com.liferay.portlet.journal.model.JournalArticle',

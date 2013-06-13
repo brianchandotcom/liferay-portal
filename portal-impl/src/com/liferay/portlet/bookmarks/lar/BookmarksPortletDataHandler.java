@@ -16,9 +16,12 @@ package com.liferay.portlet.bookmarks.lar;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
+import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
@@ -30,6 +33,7 @@ import com.liferay.portlet.bookmarks.service.persistence.BookmarksEntryExportAct
 import com.liferay.portlet.bookmarks.service.persistence.BookmarksFolderExportActionableDynamicQuery;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
@@ -97,6 +101,14 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
+		long rootFolderId = GetterUtil.getLong(
+			portletPreferences.getValue("rootFolderId", null));
+
+		if (rootFolderId != BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			rootElement.addAttribute(
+				"root-folder-id", String.valueOf(rootFolderId));
+		}
+
 		ActionableDynamicQuery folderActionableDynamicQuery =
 			new BookmarksFolderExportActionableDynamicQuery(portletDataContext);
 
@@ -145,7 +157,35 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 				portletDataContext, entryElement);
 		}
 
-		return null;
+		Element rootElement = portletDataContext.getImportDataRootElement();
+
+		long rootFolderId = GetterUtil.getLong(
+			rootElement.attributeValue("root-folder-id"));
+
+		if (rootFolderId > 0) {
+			String rootFolderPath = ExportImportPathUtil.getModelPath(
+				portletDataContext, BookmarksFolder.class.getName(),
+				rootFolderId);
+
+			BookmarksFolder rootFolder =
+				(BookmarksFolder)portletDataContext.getZipEntryAsObject(
+					rootFolderPath);
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, rootFolder);
+
+			Map<Long, Long> folderIds =
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					BookmarksFolder.class);
+
+			rootFolderId = MapUtil.getLong(
+				folderIds, rootFolderId, rootFolderId);
+
+			portletPreferences.setValue(
+				"rootFolderId", String.valueOf(rootFolderId));
+		}
+
+		return portletPreferences;
 	}
 
 	@Override

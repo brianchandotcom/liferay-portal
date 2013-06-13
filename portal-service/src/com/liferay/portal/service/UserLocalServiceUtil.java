@@ -1569,6 +1569,21 @@ public class UserLocalServiceUtil {
 	}
 
 	/**
+	* Returns the user with the Facebook ID.
+	*
+	* @param companyId the primary key of the user's company
+	* @param facebookId the user's Facebook ID
+	* @return the user with the Facebook ID, or <code>null</code> if a user
+	with the Facebook ID could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.User fetchUserByFacebookId(
+		long companyId, long facebookId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchUserByFacebookId(companyId, facebookId);
+	}
+
+	/**
 	* Returns the user with the primary key.
 	*
 	* @param userId the primary key of the user
@@ -1579,6 +1594,21 @@ public class UserLocalServiceUtil {
 	public static com.liferay.portal.model.User fetchUserById(long userId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().fetchUserById(userId);
+	}
+
+	/**
+	* Returns the user with the OpenID.
+	*
+	* @param companyId the primary key of the user's company
+	* @param openId the user's OpenID
+	* @return the user with the OpenID, or <code>null</code> if a user
+	with the OpenID could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.User fetchUserByOpenId(
+		long companyId, java.lang.String openId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchUserByOpenId(companyId, openId);
 	}
 
 	/**

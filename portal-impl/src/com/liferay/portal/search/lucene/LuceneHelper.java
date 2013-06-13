@@ -69,6 +69,8 @@ public interface LuceneHelper {
 	public void addTerm(
 		BooleanQuery booleanQuery, String field, String[] values, boolean like);
 
+	public void closeSearcher(IndexSearcher indexSearcher);
+
 	public int countScoredFieldNames(Query query, String[] fieldNames);
 
 	public void delete(long companyId);

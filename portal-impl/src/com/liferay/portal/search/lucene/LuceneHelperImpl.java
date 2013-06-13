@@ -269,6 +269,26 @@ public class LuceneHelperImpl implements LuceneHelper {
 	}
 
 	@Override
+	public void closeSearcher(IndexSearcher indexSearcher) {
+		if (indexSearcher == null) {
+			return;
+		}
+
+		try {
+			indexSearcher.close();
+
+			IndexReader indexReader = indexSearcher.getIndexReader();
+
+			if (indexReader != null) {
+				indexReader.close();
+			}
+		}
+		catch (IOException ioe) {
+			_log.error(ioe, ioe);
+		}
+	}
+
+	@Override
 	public int countScoredFieldNames(Query query, String[] filedNames) {
 		int count = 0;
 

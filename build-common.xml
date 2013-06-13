@@ -799,7 +799,22 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				</then>
 			</elseif>
 			<else>
-				<fail>The property "test.type" is invalid.</fail>
+				<if>
+					<not>
+						<isset property="class" />
+					</not>
+					<then>
+						<fail>Missing class argument. Use ant test-class -Dclass=TestClassName</fail>
+					</then>
+					<elseif>
+						<not>
+							<isset property="test.type" />
+						</not>
+						<then>
+							<fail>Class ${class} cannot be found</fail>
+						</then>
+					</elseif>
+				</if>
 			</else>
 		</if>
 

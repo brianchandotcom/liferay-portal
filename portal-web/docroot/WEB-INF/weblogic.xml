@@ -16,6 +16,7 @@
 			<package-name>antlr.*</package-name>
 			<package-name>org.apache.commons.lang.*</package-name>
 			<package-name>org.mozilla.*</package-name>
+			<package-name>com.ctc.wstx.*</package-name>
 		</prefer-application-packages>
 		<optimistic-serialization>true</optimistic-serialization>
 		<show-archived-real-path-enabled>true</show-archived-real-path-enabled>

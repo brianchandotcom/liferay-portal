@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -1127,7 +1128,7 @@ public class ResourcePermissionLocalServiceImpl
 		if (resourcePermissionsMap != null) {
 			resourcePermission = resourcePermissionsMap.get(roleId);
 		}
-		else {
+		else if (operator != ResourcePermissionConstants.OPERATOR_ADD) {
 			resourcePermission = resourcePermissionPersistence.fetchByC_N_S_P_R(
 				companyId, name, scope, primKey, roleId);
 		}
@@ -1201,7 +1202,36 @@ public class ResourcePermissionLocalServiceImpl
 
 		PermissionThreadLocal.setIndexEnabled(false);
 
+		Set<Long> roleIdSet = roleIdsToActionIds.keySet();
+
+		long[] roleIds = ArrayUtil.toArray(
+			roleIdSet.toArray(new Long[roleIdSet.size()]));
+
 		try {
+			List<ResourcePermission> resourcePermissions =
+				resourcePermissionPersistence.findByC_N_S_P_R(
+					companyId, name, scope, primKey, roleIds);
+
+			for (ResourcePermission resourcePermission : resourcePermissions) {
+				if (resourcePermission.getOwnerId() != ownerId) {
+					continue;
+				}
+
+				long roleId = resourcePermission.getRoleId();
+				String[] actionIds = roleIdsToActionIds.remove(roleId);
+
+				doUpdateResourcePermission(
+					companyId, name, scope, primKey, ownerId, roleId, actionIds,
+					operator);
+			}
+
+			if (roleIdsToActionIds.isEmpty() ||
+				((operator != ResourcePermissionConstants.OPERATOR_ADD) &&
+				 (operator != ResourcePermissionConstants.OPERATOR_SET))) {
+
+				return;
+			}
+
 			for (Map.Entry<Long, String[]> entry :
 					roleIdsToActionIds.entrySet()) {
 
@@ -1210,7 +1240,7 @@ public class ResourcePermissionLocalServiceImpl
 
 				doUpdateResourcePermission(
 					companyId, name, scope, primKey, ownerId, roleId, actionIds,
-					operator);
+					ResourcePermissionConstants.OPERATOR_ADD);
 			}
 		}
 		finally {

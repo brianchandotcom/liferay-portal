@@ -29,6 +29,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PERMISSIONS_BUTTON</td>
+	<td>//button[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBSCRIBE_LINK</td>
+	<td>//div[@class='subscribe']/span/a[contains(.,'Subscribe')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RSS_LINK</td>
+	<td>//div[@class='subscribe']/span/a[contains(.,'RSS')]/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUCCESS_MESSAGE</td>
 	<td>//div[@class='alert alert-success']</td>
 	<td></td>

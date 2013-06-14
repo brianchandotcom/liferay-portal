@@ -1,0 +1,91 @@
+<html>
+<head>
+<title>CPMysubmissions</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPMysubmissions</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPMysubmissions</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>MANAGE_MY_ACCOUNT_IFRAME</td>
+	<td>//iframe[contains(@class,'dialog-iframe-node')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_PENDING</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Pending')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_COMPLETED</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Completed')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PENDING_TABLE-->
+<tr>
+	<td>PENDING_TABLE_DEFINITION_1</td>
+	<td>//div[@id='_158_workflowInstancesSearchContainerSearchContainer']//tr[1]/td[1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PENDING_TABLE_ASSET_TITLE_1</td>
+	<td>//div[@id='_158_workflowInstancesSearchContainerSearchContainer']//tr[1]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PENDING_TABLE_ASSET_TYPE_1</td>
+	<td>//div[@id='_158_workflowInstancesSearchContainerSearchContainer']//tr[1]/td[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PENDING_TABLE_STATUS_1</td>
+	<td>//div[@id='_158_workflowInstancesSearchContainerSearchContainer']//tr[1]/td[4]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PENDING_TABLE_LAST_ACTIVITY_DATE_1</td>
+	<td>//div[@id='_158_workflowInstancesSearchContainerSearchContainer']//tr[1]/td[5]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PENDING_TABLE_END_DATE_1</td>
+	<td>//div[@id='_158_workflowInstancesSearchContainerSearchContainer']//tr[1]/td[6]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PENDING_TABLE_WITHDRAW_SUBMISSION_1</td>
+	<td>//div[@id='_158_workflowInstancesSearchContainerSearchContainer']//tr[1]/td[7]/span/a/span</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

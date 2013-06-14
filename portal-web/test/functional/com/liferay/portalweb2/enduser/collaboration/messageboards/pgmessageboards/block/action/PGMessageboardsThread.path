@@ -87,6 +87,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MESSAGE_WORKFLOW_STATUS_1</td>
+	<td>xpath=(//span[@class='workflow-status']/strong)[1]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MESSAGE_BODY_1</td>
 	<td>xpath=(//div[@class='thread-body'])[1]</td>
 	<td></td>

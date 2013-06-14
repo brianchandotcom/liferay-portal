@@ -1,0 +1,186 @@
+<html>
+<head>
+<title>PGPagecomments</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGPagecomments</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGPagecomments</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_TITLE</td>
+	<td>//span[@class='portlet-title-text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@id='_107_discussion-status-messages']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BE_THE_FIRST_LINK</td>
+	<td>//fieldset[@class='fieldset add-comment']/div/a[contains(.,'Be the first')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBSCRIBE_TO_COMMENTS_LINK</td>
+	<td>//span[@class='subscribe-link']/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ADD_COMMENT-->
+<tr>
+	<td>COMMENT_FIELD</td>
+	<td>//textarea[@name='_107_postReplyBody0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBSCRIBE_ME_CHECKBOX</td>
+	<td>//input[@id='_107_subscribeCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPLY_BUTTON</td>
+	<td>//button[contains(.,'Reply')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBMIT_FOR_PUBLICATION_BUTTON</td>
+	<td>//button[contains(.,'Submit for Publication')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--COMMENT-->
+<tr>
+	<td>COMMENT_WORKFLOW_STATUS_1</td>
+	<td>xpath=(//span[@class='workflow-status']/strong)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_WORKFLOW_STATUS_2</td>
+	<td>xpath=(//span[@class='workflow-status']/strong)[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_WORKFLOW_STATUS_3</td>
+	<td>xpath=(//span[@class='workflow-status']/strong)[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_BODY_1</td>
+	<td>xpath=(//div[@class='lfr-discussion-message'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_BODY_2</td>
+	<td>xpath=(//div[@class='lfr-discussion-message'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_BODY_3</td>
+	<td>xpath=(//div[@class='lfr-discussion-message'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_USERNAME_1</td>
+	<td>xpath=(//span[@class='user-name'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_USERNAME_2</td>
+	<td>xpath=(//span[@class='user-name'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_USERNAME_3</td>
+	<td>xpath=(//span[@class='user-name'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_RATING_1</td>
+	<td>xpath=(//div[contains(@id,'ratingThumbContent')]/div)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_RATING_2</td>
+	<td>xpath=(//div[contains(@id,'ratingThumbContent')]/div)[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_RATING_3</td>
+	<td>xpath=(//div[contains(@id,'ratingThumbContent')]/div)[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_POST_REPLY_1</td>
+	<td>xpath=(//ul[@class='lfr-discussion-actions']/li/span/a[contains(.,'Post Reply')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_POST_REPLY_2</td>
+	<td>xpath=(//ul[@class='lfr-discussion-actions']/li/span/a[contains(.,'Post Reply')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_POST_REPLY_3</td>
+	<td>xpath=(//ul[@class='lfr-discussion-actions']/li/span/a[contains(.,'Post Reply')])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_EDIT_1</td>
+	<td>xpath=(//ul[@class='lfr-discussion-actions']/li/span/a[contains(.,'Edit')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_EDIT_2</td>
+	<td>xpath=(//ul[@class='lfr-discussion-actions']/li/span/a[contains(.,'Edit')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_EDIT_3</td>
+	<td>xpath=(//ul[@class='lfr-discussion-actions']/li/span/a[contains(.,'Edit')])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_DELETE_1</td>
+	<td>xpath=(//ul[@class='lfr-discussion-actions']/li/span/a[contains(.,'Delete')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_DELETE_2</td>
+	<td>xpath=(//ul[@class='lfr-discussion-actions']/li/span/a[contains(.,'Delete')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_DELETE_3</td>
+	<td>xpath=(//ul[@class='lfr-discussion-actions']/li/span/a[contains(.,'Delete')])[3]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

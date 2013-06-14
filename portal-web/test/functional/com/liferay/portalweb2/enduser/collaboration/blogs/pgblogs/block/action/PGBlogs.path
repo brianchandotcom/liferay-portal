@@ -60,6 +60,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_WORKFLOW_STATUS_1</td>
+	<td>xpath=(//div[@class='entry-content']/h3)[1]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_CONTENT_1</td>
 	<td>xpath=(//div[@class='entry-body']/div)[1]</td>
 	<td></td>

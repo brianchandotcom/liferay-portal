@@ -23,12 +23,16 @@ import java.util.Map;
 public class MissingReferences {
 
 	public void add(MissingReference missingReference) {
-		String type = missingReference.getType();
+		String missingReferenceType = missingReference.getType();
 
-		if (type.equals(PortletDataContext.REFERENCE_TYPE_DEPENDENCY)) {
+		if (missingReferenceType.equals(
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY)) {
+
 			add(_dependencyMissingReferences, missingReference);
 		}
-		else if (type.equals(PortletDataContext.REFERENCE_TYPE_WEAK)) {
+		else if (missingReferenceType.equals(
+					PortletDataContext.REFERENCE_TYPE_WEAK)) {
+
 			add(_weakMissingReferences, missingReference);
 		}
 	}
@@ -45,26 +49,30 @@ public class MissingReferences {
 		Map<String, MissingReference> missingReferencesMap,
 		MissingReference missingReference) {
 
-		String type = missingReference.getType();
+		String missingReferenceType = missingReference.getType();
 
-		String key = null;
+		String missingReferenceKey = null;
 
-		if (type.equals(PortletDataContext.REFERENCE_TYPE_DEPENDENCY)) {
-			key = missingReference.getDisplayName();
+		if (missingReferenceType.equals(
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY)) {
+
+			missingReferenceKey = missingReference.getDisplayName();
 		}
-		else if (type.equals(PortletDataContext.REFERENCE_TYPE_WEAK)) {
-			key = missingReference.getReferrerClassName();
+		else if (missingReferenceType.equals(
+					PortletDataContext.REFERENCE_TYPE_WEAK)) {
+
+			missingReferenceKey = missingReference.getReferrerClassName();
 		}
 
 		MissingReference existingMissingReference = missingReferencesMap.get(
-			key);
+			missingReferenceKey);
 
 		if (existingMissingReference != null) {
 			existingMissingReference.addReferrers(
 				missingReference.getReferrers());
 		}
 		else {
-			missingReferencesMap.put(key, missingReference);
+			missingReferencesMap.put(missingReferenceKey, missingReference);
 		}
 	}
 

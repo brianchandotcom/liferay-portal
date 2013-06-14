@@ -911,7 +911,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			File file)
 		throws Exception {
 
-		final MissingReferences missingReferences= new MissingReferences();
+		final MissingReferences missingReferences = new MissingReferences();
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 		String userIdStrategy = MapUtil.getString(

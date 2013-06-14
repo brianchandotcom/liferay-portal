@@ -1,6 +1,6 @@
 <#assign elements = testCaseBlockElement.elements()>
 
-<ul id="CollapseExpandToggle__${lineFolds}" class="collapse">
+<ul id="Collapse--Toggle__${lineFolds}" class="collapse">
 	<#assign lineFolds = lineFolds + 1>
 
 	<#list elements as element>

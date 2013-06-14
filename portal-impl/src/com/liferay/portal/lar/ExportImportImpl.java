@@ -893,7 +893,7 @@ public class ExportImportImpl implements ExportImport {
 			File file)
 		throws Exception {
 
-		final MissingReferences missingReferences= new MissingReferences();
+		final MissingReferences missingReferences = new MissingReferences();
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 		String userIdStrategy = MapUtil.getString(

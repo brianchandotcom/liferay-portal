@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.lar.MissingReference;
+import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -300,6 +301,116 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 		}
 	}
 
+	protected JSONArray getMissingReferencesJSONArray(
+		ThemeDisplay themeDisplay,
+		Map<String, MissingReference> missingReferences) {
+
+		JSONArray errorMessageJSONArray = JSONFactoryUtil.createJSONArray();
+
+		for (String missingReferenceDisplayName : missingReferences.keySet()) {
+			MissingReference missingReference = missingReferences.get(
+				missingReferenceDisplayName);
+
+			JSONObject errorMessageJSONObject =
+				JSONFactoryUtil.createJSONObject();
+
+			Map<String, String> referrers = missingReference.getReferrers();
+
+			if (referrers.size() == 1) {
+				Set<Map.Entry<String, String>> referrerDisplayNames =
+					referrers.entrySet();
+
+				Iterator<Map.Entry<String, String>> iterator =
+					referrerDisplayNames.iterator();
+
+				Map.Entry<String, String> entry = iterator.next();
+
+				String referrerDisplayName = entry.getKey();
+				String referrerClasName = entry.getValue();
+
+				errorMessageJSONObject.put(
+					"info",
+					themeDisplay.translate(
+						"referenced-by-a-x-x",
+						new String[] {
+							ResourceActionsUtil.getModelResource(
+								themeDisplay.getLocale(),
+								referrerClasName), referrerDisplayName
+						}
+					));
+			}
+			else {
+				errorMessageJSONObject.put(
+					"info",
+					themeDisplay.translate(
+						"referenced-by-x-elements", referrers.size()));
+			}
+
+			errorMessageJSONObject.put("name", missingReferenceDisplayName);
+			errorMessageJSONObject.put(
+				"type",
+				ResourceActionsUtil.getModelResource(
+					themeDisplay.getLocale(), missingReference.getClassName()));
+
+			errorMessageJSONArray.put(errorMessageJSONObject);
+		}
+
+		return errorMessageJSONArray;
+	}
+
+	protected JSONArray getWarningMessagesJSONArray(
+		ThemeDisplay themeDisplay,
+		Map<String, MissingReference> missingReferences) {
+
+		JSONArray errorMessageJSONArray = JSONFactoryUtil.createJSONArray();
+
+		for (String missingReferenceReferrerClassName :
+				missingReferences.keySet()) {
+
+			MissingReference missingReference = missingReferences.get(
+				missingReferenceReferrerClassName);
+
+			Map<String, String> referrers = missingReference.getReferrers();
+
+			String errorMessage = null;
+
+			if (referrers.size() == 1) {
+				errorMessage = themeDisplay.translate(
+					"1-entry-of-type-x-would-not-be-imported-because-the-" +
+						"original-x-does-not-exist-in-the-current-environment",
+					new String[] {
+						ResourceActionsUtil.getModelResource(
+							themeDisplay.getLocale(),
+							missingReferenceReferrerClassName),
+						ResourceActionsUtil.getModelResource(
+							themeDisplay.getLocale(),
+							missingReference.getClassName())
+					}
+				);
+			}
+			else {
+				errorMessage = themeDisplay.translate(
+					"x-entries-of-type-x-would-not-be-imported-because-the-" +
+						"original-x-does-not-exist-in-the-current-environment",
+					new String[] {
+						String.valueOf(referrers.size()),
+						ResourceActionsUtil.getModelResource(
+							themeDisplay.getLocale(),
+							missingReferenceReferrerClassName),
+						ResourceActionsUtil.getModelResource(
+							themeDisplay.getLocale(),
+							missingReference.getClassName())
+
+					}
+				);
+			}
+
+			errorMessageJSONArray.put(errorMessage);
+		}
+
+		return errorMessageJSONArray;
+	}
+
 	@Override
 	protected void handleUploadException(
 			PortletConfig portletConfig, ActionRequest actionRequest,
@@ -314,6 +425,7 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 
 		String errorMessage = StringPool.BLANK;
 		JSONArray errorMessageJSONArray = null;
+		JSONArray warningMessageJSONArray = null;
 		int errorType = 0;
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -453,64 +565,14 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 						"in-the-current-site.-please-import-another-lar-file-" +
 							"containing-the-following-elements");
 
-				errorMessageJSONArray = JSONFactoryUtil.createJSONArray();
-
-				Map<String, MissingReference> missingReferences =
+				MissingReferences missingReferences =
 					mre.getMissingReferences();
 
-				for (String missingReferenceDisplayName :
-						missingReferences.keySet()) {
-
-					MissingReference missingReference = missingReferences.get(
-						missingReferenceDisplayName);
-
-					JSONObject errorMessageJSONObject =
-						JSONFactoryUtil.createJSONObject();
-
-					Map<String, String> referrers =
-						missingReference.getReferrers();
-
-					if (referrers.size() == 1) {
-						Set<Map.Entry<String, String>> referrerDisplayNames =
-							referrers.entrySet();
-
-						Iterator<Map.Entry<String, String>> iterator =
-							referrerDisplayNames.iterator();
-
-						Map.Entry<String, String> entry = iterator.next();
-
-						String referrerDisplayName = entry.getKey();
-						String referrerClasName = entry.getValue();
-
-						errorMessageJSONObject.put(
-							"info",
-							themeDisplay.translate(
-								"referenced-by-a-x-x",
-								new String[] {
-									ResourceActionsUtil.getModelResource(
-										themeDisplay.getLocale(),
-										referrerClasName), referrerDisplayName
-								}
-							));
-					}
-					else {
-						errorMessageJSONObject.put(
-							"info",
-							themeDisplay.translate(
-								"referenced-by-x-elements", referrers.size()));
-					}
-
-					errorMessageJSONObject.put(
-						"name", missingReferenceDisplayName);
-					errorMessageJSONObject.put(
-						"type",
-						ResourceActionsUtil.getModelResource(
-							themeDisplay.getLocale(),
-							missingReference.getClassName()));
-
-					errorMessageJSONArray.put(errorMessageJSONObject);
-				}
-
+				errorMessageJSONArray = getMissingReferencesJSONArray(
+					themeDisplay,
+					missingReferences.getDependencyMissingReferences());
+				warningMessageJSONArray = getWarningMessagesJSONArray(
+					themeDisplay, missingReferences.getWeakMissingReferences());
 				errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 			}
 		}
@@ -528,6 +590,12 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 			(errorMessageJSONArray.length() > 0)) {
 
 			jsonObject.put("messageListItems", errorMessageJSONArray);
+		}
+
+		if ((warningMessageJSONArray != null) &&
+			(warningMessageJSONArray.length() > 0)) {
+
+			jsonObject.put("warningMessages", warningMessageJSONArray);
 		}
 
 		jsonObject.put("status", errorType);
@@ -643,9 +711,30 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 				FileUtil.copyFile(file, newFile);
 			}
 
-			LayoutServiceUtil.validateImportLayoutsFile(
+			MissingReferences missingReferences =
+				LayoutServiceUtil.validateImportLayoutsFile(
 				groupId, privateLayout, actionRequest.getParameterMap(),
 				newFile);
+
+			Map<String, MissingReference> weakMissingReferences =
+				missingReferences.getWeakMissingReferences();
+
+			if (weakMissingReferences.isEmpty()) {
+				return;
+			}
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			if ((weakMissingReferences != null) &&
+				(weakMissingReferences.size() > 0)) {
+
+				jsonObject.put(
+					"warningMessages",
+					getWarningMessagesJSONArray(
+						themeDisplay, weakMissingReferences));
+			}
+
+			writeJSON(actionRequest, actionResponse, jsonObject);
 		}
 		finally {
 			if (successfulRename) {

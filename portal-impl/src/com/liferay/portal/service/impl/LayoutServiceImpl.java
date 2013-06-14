@@ -18,6 +18,7 @@ import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.cache.ThreadLocalCachable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.scheduler.CronTrigger;
@@ -1533,7 +1534,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	@Override
-	public void validateImportLayoutsFile(
+	public MissingReferences validateImportLayoutsFile(
 			long groupId, boolean privateLayout,
 			Map<String, String[]> parameterMap, File file)
 		throws PortalException, SystemException {
@@ -1541,7 +1542,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		GroupPermissionUtil.check(
 			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
 
-		layoutLocalService.validateImportLayoutsFile(
+		return layoutLocalService.validateImportLayoutsFile(
 			getUserId(), groupId, privateLayout, parameterMap, file);
 	}
 

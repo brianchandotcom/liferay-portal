@@ -164,7 +164,7 @@ public class ExportImportUtil {
 			portletDataContext, content, importReferencedContent);
 	}
 
-	public static Map<String, MissingReference> validateMissingReferences(
+	public static MissingReferences validateMissingReferences(
 			long userId, long groupId, Map<String, String[]> parameterMap,
 			File file)
 		throws Exception {

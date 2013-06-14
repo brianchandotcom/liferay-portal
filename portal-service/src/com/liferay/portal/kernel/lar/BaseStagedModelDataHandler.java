@@ -39,11 +39,13 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		try {
 			doExportStagedModel(portletDataContext, (T)stagedModel.clone());
 
-			ManifestSummary manifestSummary =
-				portletDataContext.getManifestSummary();
+			if (!isStagedModelCounted(portletDataContext, stagedModel)) {
+				ManifestSummary manifestSummary =
+					portletDataContext.getManifestSummary();
 
-			manifestSummary.incrementModelAdditionCount(
-				getManifestSummaryKey(stagedModel));
+				manifestSummary.incrementModelAdditionCount(
+					getManifestSummaryKey(stagedModel));
+			}
 		}
 		catch (Exception e) {
 			throw new PortletDataException(e);
@@ -117,6 +119,12 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 	protected abstract void doImportStagedModel(
 			PortletDataContext portletDataContext, T stagedModel)
 		throws Exception;
+
+	protected boolean isStagedModelCounted(
+		PortletDataContext portletDataContext, T stagedModel) {
+
+		return false;
+	}
 
 	protected boolean validateMissingReference(
 		String uuid, long companyId, long groupId) {

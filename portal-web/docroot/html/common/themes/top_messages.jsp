@@ -26,3 +26,58 @@
 		</c:if>
 	</div>
 </c:if>
+
+<%
+String jspPath = GetterUtil.getString(session.getAttribute(WebKeys.LIFERAY_SHARED_PORTAL_MESSAGES_JSP_PATH));
+String message = GetterUtil.getString(session.getAttribute(WebKeys.LIFERAY_SHARED_PORTAL_MESSAGES_MESSAGE));
+
+if (Validator.isNotNull(jspPath) || Validator.isNotNull(message)) {
+	String cssClass = GetterUtil.getString(session.getAttribute(WebKeys.LIFERAY_SHARED_PORTAL_MESSAGES_CSS_CLASS), "alert-info");
+	String portletId = GetterUtil.getString(session.getAttribute(WebKeys.LIFERAY_SHARED_PORTAL_MESSAGES_PORTLET_ID));
+	int timeout = GetterUtil.getInteger(session.getAttribute(WebKeys.LIFERAY_SHARED_PORTAL_MESSAGES_TIMEOUT), 10000);
+	boolean useAnimation = GetterUtil.getBoolean(session.getAttribute(WebKeys.LIFERAY_SHARED_PORTAL_MESSAGES_ANIMATION), true);
+%>
+
+	<div class="hide <%= cssClass %>" id="portalMessageContainer">
+		<c:choose>
+			<c:when test="<%= Validator.isNotNull(jspPath) %>">
+				<liferay-util:include page="<%= jspPath %>" portletId="<%= portletId %>" />
+			</c:when>
+			<c:otherwise>
+				<liferay-ui:message key="<%= message %>" /><button type="button" class="close">&times;</button>
+			</c:otherwise>
+		</c:choose>
+	</div>
+
+	<aui:script use="liferay-notice">
+		var portalMessageContainer = A.one('#portalMessageContainer');
+
+		var banner = new Liferay.Notice(
+			{
+				animationConfig:
+					{
+						duration: 2,
+						top: '0px'
+					},
+				closeText: false,
+				content: portalMessageContainer.html(),
+				noticeClass: 'hide taglib-portal-message <%= cssClass %>',
+				timeout: <%= timeout %>,
+				toggleText: false,
+				useAnimation: <%= useAnimation %>
+			}
+		);
+
+		banner.show();
+	</aui:script>
+
+<%
+	session.removeAttribute(WebKeys.LIFERAY_SHARED_PORTAL_MESSAGES_CSS_CLASS);
+	session.removeAttribute(WebKeys.LIFERAY_SHARED_PORTAL_MESSAGES_PORTLET_ID);
+	session.removeAttribute(WebKeys.LIFERAY_SHARED_PORTAL_MESSAGES_TIMEOUT);
+	session.removeAttribute(WebKeys.LIFERAY_SHARED_PORTAL_MESSAGES_ANIMATION);
+}
+
+session.removeAttribute(WebKeys.LIFERAY_SHARED_PORTAL_MESSAGES_JSP_PATH);
+session.removeAttribute(WebKeys.LIFERAY_SHARED_PORTAL_MESSAGES_MESSAGE);
+%>

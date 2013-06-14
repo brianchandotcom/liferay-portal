@@ -171,11 +171,14 @@
 			<arg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
 			<arg value="sql.dir=${basedir}" />
 			<arg value="sample.sql.base.dir=${basedir}/../benchmarks" />
+			<arg value="sample.sql.asset.publisher.config.filter=true" />
 			<arg value="sample.sql.db.type=hypersonic" />
 			<arg value="sample.sql.max.asset.category.count=1" />
 			<arg value="sample.sql.max.asset.entry.to.asset.category.count=1" />
 			<arg value="sample.sql.max.asset.entry.to.asset.tag.count=1" />
 			<arg value="sample.sql.max.asset.tag.count=1" />
+			<arg value="sample.sql.max.asset.publisher.filter.rule.count=1" />
+			<arg value="sample.sql.max.asset.publisher.page.count=2" />
 			<arg value="sample.sql.max.asset.vocabulary.count=1" />
 			<arg value="sample.sql.max.blogs.entry.comment.count=1" />
 			<arg value="sample.sql.max.blogs.entry.count=1" />

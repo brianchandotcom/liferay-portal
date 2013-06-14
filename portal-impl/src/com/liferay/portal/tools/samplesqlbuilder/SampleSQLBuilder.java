@@ -75,6 +75,8 @@ public class SampleSQLBuilder {
 	public SampleSQLBuilder(Map<String, String> arguments) throws Exception {
 		String baseDir = arguments.get("sample.sql.base.dir");
 
+		_assetPublisherFilter = GetterUtil.getBoolean(
+			arguments.get("sample.sql.asset.publisher.config.filter"));
 		_dbType = arguments.get("sample.sql.db.type");
 		_maxAssetCategoryCount = GetterUtil.getInteger(
 			arguments.get("sample.sql.max.asset.category.count"));
@@ -85,6 +87,10 @@ public class SampleSQLBuilder {
 			arguments.get("sample.sql.max.asset.entry.to.asset.tag.count"));
 		_maxAssetTagCount = GetterUtil.getInteger(
 			arguments.get("sample.sql.max.asset.tag.count"));
+		_maxAssetPublisherFilterRuleCount = GetterUtil.getInteger(
+			arguments.get("sample.sql.max.asset.publisher.filter.rule.count"));
+		_maxAssetPublisherPageCount = GetterUtil.getInteger(
+			arguments.get("sample.sql.max.asset.publisher.page.count"));
 		_maxAssetVocabularyCount = GetterUtil.getInteger(
 			arguments.get("sample.sql.max.asset.vocabulary.count"));
 		_maxBlogsEntryCommentCount = GetterUtil.getInteger(
@@ -138,8 +144,9 @@ public class SampleSQLBuilder {
 			arguments.get("sample.sql.output.merge"));
 
 		_dataFactory = new DataFactory(
-			baseDir, _maxAssetCategoryCount, _maxAssetEntryToAssetCategoryCount,
-			_maxAssetEntryToAssetTagCount, _maxAssetTagCount,
+			baseDir, _assetPublisherFilter, _maxAssetCategoryCount,
+			_maxAssetEntryToAssetCategoryCount, _maxAssetEntryToAssetTagCount,
+			_maxAssetPublisherFilterRuleCount, _maxAssetTagCount,
 			_maxAssetVocabularyCount, _maxBlogsEntryCount,
 			_maxDDLCustomFieldCount, _maxGroupCount, _maxJournalArticleCount,
 			_maxJournalArticleSize, _maxMBCategoryCount, _maxMBThreadCount,
@@ -311,6 +318,7 @@ public class SampleSQLBuilder {
 			}
 
 			protected void createSample() throws Exception {
+				_writerAssetPublisherCSV = getWriter("asset_publisher.csv");
 				_writerBlogsCSV = getWriter("blogs.csv");
 				_writerCompanyCSV = getWriter("company.csv");
 				_writerDocumentLibraryCSV = getWriter("document_library.csv");
@@ -325,6 +333,7 @@ public class SampleSQLBuilder {
 
 				processTemplate(_tplSample, context);
 
+				_writerAssetPublisherCSV.close();
 				_writerBlogsCSV.close();
 				_writerCompanyCSV.close();
 				_writerDocumentLibraryCSV.close();
@@ -349,6 +358,7 @@ public class SampleSQLBuilder {
 
 		put(context, "counter", _dataFactory.getCounter());
 		put(context, "dataFactory", _dataFactory);
+		put(context, "maxAssetPublisherPageCount", _maxAssetPublisherPageCount);
 		put(context, "maxDLFileEntrySize", _maxDLFileEntrySize);
 		put(context, "maxBlogsEntryCommentCount", _maxBlogsEntryCommentCount);
 		put(context, "maxBlogsEntryCount", _maxBlogsEntryCount);
@@ -371,6 +381,7 @@ public class SampleSQLBuilder {
 		put(context, "maxWikiNodeCount", _maxWikiNodeCount);
 		put(context, "maxWikiPageCommentCount", _maxWikiPageCommentCount);
 		put(context, "maxWikiPageCount", _maxWikiPageCount);
+		put(context, "writerAssetPublisherCSV", _writerAssetPublisherCSV);
 		put(context, "writerBlogsCSV", _writerBlogsCSV);
 		put(context, "writerCompanyCSV", _writerCompanyCSV);
 		put(context, "writerDocumentLibraryCSV", _writerDocumentLibraryCSV);
@@ -494,6 +505,7 @@ public class SampleSQLBuilder {
 
 	private static final int _WRITER_BUFFER_SIZE = 16 * 1024;
 
+	private boolean _assetPublisherFilter;
 	private DataFactory _dataFactory;
 	private DB _db;
 	private String _dbType;
@@ -504,6 +516,8 @@ public class SampleSQLBuilder {
 	private int _maxAssetCategoryCount;
 	private int _maxAssetEntryToAssetCategoryCount;
 	private int _maxAssetEntryToAssetTagCount;
+	private int _maxAssetPublisherFilterRuleCount;
+	private int _maxAssetPublisherPageCount;
 	private int _maxAssetTagCount;
 	private int _maxAssetVocabularyCount;
 	private int _maxBlogsEntryCommentCount;
@@ -534,6 +548,7 @@ public class SampleSQLBuilder {
 	private boolean _outputMerge;
 	private File _tempDir;
 	private String _tplSample = _TPL_ROOT + "sample.ftl";
+	private Writer _writerAssetPublisherCSV;
 	private Writer _writerBlogsCSV;
 	private Writer _writerCompanyCSV;
 	private Writer _writerDocumentLibraryCSV;

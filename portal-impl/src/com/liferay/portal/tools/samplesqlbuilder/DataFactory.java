@@ -175,9 +175,10 @@ import java.util.Map;
 public class DataFactory {
 
 	public DataFactory(
-			String baseDir, int maxAssetCategoryCount,
-			int maxAssetEntryToAssetCategoryCount,
-			int maxAssetEntryToAssetTagCount, int maxAssetTagCount,
+			String baseDir, boolean assetPublisherFilter,
+			int maxAssetCategoryCount, int maxAssetEntryToAssetCategoryCount,
+			int maxAssetEntryToAssetTagCount,
+			int maxAssetPublisherFilterRuleCount, int maxAssetTagCount,
 			int maxAssetVocabularyCount, int maxBlogsEntryCount,
 			int maxDDLCustomFieldCount, int maxGroupsCount,
 			int maxJournalArticleCount, int maxJournalArticleSize,
@@ -186,9 +187,11 @@ public class DataFactory {
 		throws Exception {
 
 		_baseDir = baseDir;
+		_assetPublisherFilter = assetPublisherFilter;
 		_maxAssetCategoryCount = maxAssetCategoryCount;
 		_maxAssetEntryToAssetCategoryCount = maxAssetEntryToAssetCategoryCount;
 		_maxAssetEntryToAssetTagCount = maxAssetEntryToAssetTagCount;
+		_maxAssetPublisherFilterRuleCount = maxAssetPublisherFilterRuleCount;
 		_maxAssetTagCount = maxAssetTagCount;
 		_maxAssetVocabularyCount = maxAssetVocabularyCount;
 		_maxBlogsEntryCount = maxBlogsEntryCount;
@@ -2365,6 +2368,7 @@ public class DataFactory {
 	private AssetCategory[][] _assetCategories;
 	private Map<Long, SimpleCounter> _assetCategoryCounters =
 		new HashMap<Long, SimpleCounter>();
+	private boolean _assetPublisherFilter;
 	private Map<Long, SimpleCounter> _assetTagCounters =
 		new HashMap<Long, SimpleCounter>();
 	private AssetTag[][] _assetTags;
@@ -2398,6 +2402,7 @@ public class DataFactory {
 	private int _maxAssetCategoryCount;
 	private int _maxAssetEntryToAssetCategoryCount;
 	private int _maxAssetEntryToAssetTagCount;
+	private int _maxAssetPublisherFilterRuleCount;
 	private int _maxAssetTagCount;
 	private int _maxAssetVocabularyCount;
 	private int _maxBlogsEntryCount;

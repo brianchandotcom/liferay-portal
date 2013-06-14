@@ -66,7 +66,7 @@
 
 <li id="${macroNameStack.peek()}Macro__${lineNumber}">
 	<div>
-		<div id="ExpandToggle__${lineFolds}" class="expandToggle">+</div>
+		<div id="Toggle__${lineFolds}" class="expandToggle">+</div>
 	</div>
 
 	<div>
@@ -75,7 +75,7 @@
 		</div>
 	</div>
 
-	<ul id="CollapseExpandToggle__${lineFolds}" class="collapse">
+	<ul id="Collapse--Toggle__${lineFolds}" class="collapse">
 		<#assign lineFolds = lineFolds + 1>
 
 		<#assign macroBlockElement = thenElement>

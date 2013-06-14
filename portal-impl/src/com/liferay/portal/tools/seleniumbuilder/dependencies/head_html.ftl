@@ -1,7 +1,14 @@
 <head>
 	<script type='text/javascript'>
-		function takeAction(e) {
-			var node = e.srcElement == undefined ? e.target : e.srcElement;
+		function toggle(event) {
+			var node;
+
+			if (event.srcElement == undefined) {
+				node = event.target;
+			}
+			else {
+				node = event.srcElement;
+			}
 
 			var id = node.getAttribute("id");
 
@@ -9,11 +16,12 @@
 				if (node.innerHTML == "-") {
 					node.innerHTML = "+";
 
-					document.getElementById("Collapse" + id).style.display = "none";
-				} else if (node.innerHTML == "+") {
+					document.getElementById("Collapse--" + id).style.display = "none";
+				}
+				else if (node.innerHTML == "+") {
 					node.innerHTML = "-";
 
-					document.getElementById("Collapse" + id).style.display = "block";
+					document.getElementById("Collapse--" + id).style.display = "block";
 				}
 			}
 		}
@@ -26,11 +34,19 @@
 			line-height: 1.75em;
 		}
 
+		li {
+			display: block;
+		}
+
+		ul {
+			list-style-type: none;
+		}
+
 		#log {
+			border: 1px solid #CCC;
 			height: 250px;
-			width: 500px;
-			border: 1px solid #ccc;
 			overflow: auto;
+			width: 500px;
 		}
 
 		.arrow {
@@ -39,6 +55,26 @@
 
 		.attribute {
 			color: purple;
+		}
+
+		.closingTag {
+			display: none;
+		}
+
+		.collapse {
+			display: none;
+		}
+
+		.expandLine {
+			cursor: pointer;
+			font-weight: bold;
+		}
+
+		.expandToggle {
+			cursor: pointer;
+			float: left;
+			margin-right: 5px;
+			width: 8px;
 		}
 
 		.fail {
@@ -54,39 +90,11 @@
 		}
 
 		.quote {
-			color: DeepPink;
+			color: deeppink;
 		}
 
 		.tag {
 			color: green;
-		}
-
-		li {
-			display: block;
-		}
-
-		.expandToggle {
-			float: left;
-			margin-right: 5px;
-			width: 8px;
-			cursor: pointer;
-		}
-
-		.expandLine {
-			font-weight: bold;
-			cursor: pointer;
-		}
-
-		.closingTag {
-			display: none;
-		}
-
-		.collapse {
-			display: none;
-		}
-
-		ul {
-			list-style-type: none;
 		}
 	</style>
 </head>

@@ -18,6 +18,8 @@ import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Michael Hashimoto
@@ -28,13 +30,45 @@ public class BaseAction {
 		this.liferaySelenium = liferaySelenium;
 	}
 
-	protected String getLocator(String locator, String locatorKey) {
+	protected String getLocator(
+		String locator, String locatorKey, Map<String, String> variables)
+			throws Exception {
+
 		if (locator != null) {
 			return locator;
 		}
 
 		if (paths.containsKey(locatorKey)) {
-			return paths.get(locatorKey);
+			String locatorValue = paths.get(locatorKey);
+
+			if (locatorValue.contains("${") && locatorValue.contains("}")) {
+				String regex = "\\$\\{[^}]*?\\}";
+
+				Pattern pattern = Pattern.compile(regex);
+
+				Matcher matcher = pattern.matcher(locatorValue);
+
+				while (matcher.find()) {
+					String variable = matcher.group();
+
+					int x = variable.indexOf("${");
+					int y = variable.indexOf("}");
+
+					String variableKey = variable.substring(x + 2, y);
+
+					if (variables.containsKey(variableKey)) {
+						locatorValue = locatorValue.replaceFirst(
+							regex, variables.get(variableKey));
+					}
+					else {
+						throw new Exception(
+							"Variable \"" + variableKey + "\" found in \"" +
+								paths.get(locatorKey) + "\" is not set");
+					}
+				}
+			}
+
+			return locatorValue;
 		}
 
 		return locatorKey;

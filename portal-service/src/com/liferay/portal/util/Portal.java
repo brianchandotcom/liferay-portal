@@ -1006,6 +1006,14 @@ public interface Portal {
 		throws PortalException, SystemException;
 
 	public PortletURL getSiteAdministrationURL(
+			HttpServletRequest request, ThemeDisplay themeDisplay)
+		throws SystemException;
+
+	public PortletURL getSiteAdministrationURL(
+		HttpServletRequest request, ThemeDisplay themeDisplay,
+		String portletName);
+
+	public PortletURL getSiteAdministrationURL(
 			PortletResponse portletResponse, ThemeDisplay themeDisplay)
 		throws SystemException;
 

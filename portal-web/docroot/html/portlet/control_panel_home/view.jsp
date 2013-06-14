@@ -20,14 +20,12 @@
 	<aui:row>
 
 		<%
-		for (String category : PortletCategoryKeys.ALL) {
+		Map<String, List<Portlet>> categoriesMap = (Map<String, List<Portlet>>)request.getAttribute("CONTROL_PANEL_CATEGORIES_MAP");
+
+		for (String category : categoriesMap.keySet()) {
 			String title = LanguageUtil.get(pageContext, "category." + category);
 
-			List<Portlet> categoryPortlets = PortalUtil.getControlPanelPortlets(category, themeDisplay);
-
-			if (categoryPortlets.isEmpty()) {
-				continue;
-			}
+			List<Portlet> categoryPortlets = categoriesMap.get(category);
 		%>
 
 			<aui:col width="<%= 25 %>">
@@ -37,10 +35,6 @@
 
 						<%
 						for (Portlet categoryPortlet : categoryPortlets) {
-							if (!categoryPortlet.isActive() || categoryPortlet.isInstanceable()) {
-								continue;
-							}
-
 							String categoryPortletId = categoryPortlet.getPortletId();
 
 							String urlCategoryPortlet = HttpUtil.setParameter(themeDisplay.getURLControlPanel(), "p_p_id", categoryPortletId);
@@ -78,6 +72,11 @@
 		}
 		%>
 
+		<c:if test="<%= categoriesMap.isEmpty() %>">
+			<div class="alert alert-info">
+				<liferay-ui:message key="you-do-not-have-permission-to-access-any-control-panel-application" />
+			</div>
+		</c:if>
 	</aui:row>
 	<aui:row>
 		<liferay-util:include page="/html/portlet/control_panel_home/view_actions.jsp" />

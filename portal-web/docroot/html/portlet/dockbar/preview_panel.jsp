@@ -77,8 +77,8 @@
 					width: 1300
 				},
 				'smartphone': {
-					default: true,
 					height: 640,
+					selected: true,
 					width: 400
 				},
 				'tablet': {

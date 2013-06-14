@@ -15,8 +15,8 @@
 package com.liferay.portlet.wiki.lar;
 
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
+import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
-import com.liferay.portal.kernel.lar.ExportImportUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -59,7 +59,7 @@ public class WikiPageStagedModelDataHandler
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, page.getNode());
 
-		String content = ExportImportUtil.replaceExportContentReferences(
+		String content = ExportImportHelperUtil.replaceExportContentReferences(
 			portletDataContext, page, pageElement, page.getContent(),
 			portletDataContext.getBooleanParameter(
 				WikiPortletDataHandler.NAMESPACE, "embedded-assets"));
@@ -106,7 +106,7 @@ public class WikiPageStagedModelDataHandler
 		Element pageElement =
 			portletDataContext.getImportDataStagedModelElement(page);
 
-		String content = ExportImportUtil.replaceImportContentReferences(
+		String content = ExportImportHelperUtil.replaceImportContentReferences(
 			portletDataContext, pageElement, page.getContent(),
 			portletDataContext.getBooleanParameter(
 				WikiPortletDataHandler.NAMESPACE, "embedded-assets"));

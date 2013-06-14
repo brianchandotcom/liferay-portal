@@ -15,7 +15,7 @@
 package com.liferay.portal.lar;
 
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
-import com.liferay.portal.kernel.lar.ExportImportUtil;
+import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.MissingReference;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataContextFactoryUtil;
@@ -79,7 +79,7 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Transactional
-public class ExportImportUtilTest {
+public class ExportImportHelperUtilTest {
 
 	@Before
 	public void setUp() throws Exception {
@@ -148,7 +148,7 @@ public class ExportImportUtilTest {
 
 		List<String> urls = getURLs(content);
 
-		content = ExportImportUtil.replaceExportContentReferences(
+		content = ExportImportHelperUtil.replaceExportContentReferences(
 			_portletDataContextExport, _referrerStagedModel,
 			rootElement.element("entry"), content, true);
 
@@ -181,7 +181,7 @@ public class ExportImportUtilTest {
 		String content = replaceParameters(
 			getContent("layout_references.txt"), _fileEntry);
 
-		content = ExportImportUtil.replaceExportContentReferences(
+		content = ExportImportHelperUtil.replaceExportContentReferences(
 			_portletDataContextExport, _referrerStagedModel,
 			rootElement.element("entry"), content, true);
 
@@ -207,7 +207,7 @@ public class ExportImportUtilTest {
 		String content = replaceParameters(
 			getContent("layout_links.txt"), _fileEntry);
 
-		content = ExportImportUtil.replaceExportContentReferences(
+		content = ExportImportHelperUtil.replaceExportContentReferences(
 			_portletDataContextExport, _referrerStagedModel,
 			rootElement.element("entry"), content, true);
 
@@ -242,10 +242,10 @@ public class ExportImportUtilTest {
 		String content = replaceParameters(
 			getContent("dl_references.txt"), _fileEntry);
 
-		content = ExportImportUtil.replaceExportContentReferences(
+		content = ExportImportHelperUtil.replaceExportContentReferences(
 			_portletDataContextExport, _referrerStagedModel, entryElement,
 			content, true);
-		content = ExportImportUtil.replaceImportContentReferences(
+		content = ExportImportHelperUtil.replaceImportContentReferences(
 			_portletDataContextImport, entryElement, content, true);
 
 		Assert.assertFalse(content.contains("[$dl-reference="));
@@ -261,10 +261,10 @@ public class ExportImportUtilTest {
 		String content = replaceParameters(
 			getContent("layout_references.txt"), _fileEntry);
 
-		content = ExportImportUtil.replaceExportContentReferences(
+		content = ExportImportHelperUtil.replaceExportContentReferences(
 			_portletDataContextExport, _referrerStagedModel, entryElement,
 			content, true);
-		content = ExportImportUtil.replaceImportContentReferences(
+		content = ExportImportHelperUtil.replaceImportContentReferences(
 			_portletDataContextExport, entryElement, content, true);
 
 		Assert.assertFalse(
@@ -292,12 +292,12 @@ public class ExportImportUtilTest {
 		String content = replaceParameters(
 			getContent("layout_links.txt"), _fileEntry);
 
-		content = ExportImportUtil.replaceExportContentReferences(
+		content = ExportImportHelperUtil.replaceExportContentReferences(
 			_portletDataContextExport, _referrerStagedModel, entryElement,
 			content, true);
 
 		String importedContent =
-			ExportImportUtil.replaceExportContentReferences(
+			ExportImportHelperUtil.replaceExportContentReferences(
 				_portletDataContextExport, _referrerStagedModel, entryElement,
 				content, true);
 
@@ -314,7 +314,7 @@ public class ExportImportUtilTest {
 		zipWriter.addEntry("/manifest.xml", xml);
 
 		Map<String, MissingReference> missingReferences =
-			ExportImportUtil.validateMissingReferences(
+			ExportImportHelperUtil.validateMissingReferences(
 				TestPropsValues.getUserId(), _stagingGroup.getGroupId(),
 				new HashMap<String, String[]>(), zipWriter.getFile());
 

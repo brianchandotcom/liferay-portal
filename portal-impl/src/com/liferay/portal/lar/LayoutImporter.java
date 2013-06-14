@@ -26,8 +26,8 @@ import com.liferay.portal.NoSuchLayoutSetPrototypeException;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
-import com.liferay.portal.kernel.lar.ExportImportUtil;
 import com.liferay.portal.kernel.lar.MissingReference;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataContextFactoryUtil;
@@ -153,7 +153,7 @@ public class LayoutImporter {
 		validateFile(portletDataContext);
 
 		Map<String, MissingReference> missingReferences =
-			ExportImportUtil.validateMissingReferences(
+			ExportImportHelperUtil.validateMissingReferences(
 				userId, groupId, parameterMap, file);
 
 		if (!missingReferences.isEmpty()) {

@@ -20,7 +20,7 @@ import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.RemoteExportException;
 import com.liferay.portal.RemoteOptionsException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.lar.ExportImportUtil;
+import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.Constants;
@@ -107,7 +107,7 @@ public class PublishLayoutsAction extends EditLayoutsAction {
 				boolean privateLayout = ParamUtil.getBoolean(
 					actionRequest, "privateLayout");
 
-				DateRange dateRange = ExportImportUtil.getDateRange(
+				DateRange dateRange = ExportImportHelperUtil.getDateRange(
 					actionRequest, groupId, privateLayout, 0, null);
 
 				Date startDate = dateRange.getStartDate();

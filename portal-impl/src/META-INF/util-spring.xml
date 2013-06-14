@@ -215,9 +215,9 @@
 			<bean class="com.liferay.portal.language.UnicodeLanguageImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.kernel.lar.ExportImport" class="com.liferay.portal.lar.ExportImportImpl" />
-	<bean id="com.liferay.portal.kernel.lar.ExportImportUtil" class="com.liferay.portal.kernel.lar.ExportImportUtil">
-		<property name="exportImport" ref="com.liferay.portal.kernel.lar.ExportImport" />
+	<bean id="com.liferay.portal.kernel.lar.ExportImportHelper" class="com.liferay.portal.lar.ExportImportHelperImpl" />
+	<bean id="com.liferay.portal.kernel.lar.ExportImportHelperUtil" class="com.liferay.portal.kernel.lar.ExportImportHelperUtil">
+		<property name="exportImportHelper" ref="com.liferay.portal.kernel.lar.ExportImportHelper" />
 	</bean>
 	<bean id="com.liferay.portal.kernel.lar.StagedModelDataHandlerRegistry" class="com.liferay.portal.lar.StagedModelDataHandlerRegistryImpl" />
 	<bean id="com.liferay.portal.kernel.lar.StagedModelDataHandlerRegistryUtil" class="com.liferay.portal.kernel.lar.StagedModelDataHandlerRegistryUtil">

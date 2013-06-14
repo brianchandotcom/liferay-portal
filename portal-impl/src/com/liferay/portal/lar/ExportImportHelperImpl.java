@@ -17,9 +17,9 @@ package com.liferay.portal.lar;
 import com.liferay.portal.LARFileException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.lar.ExportImport;
+import com.liferay.portal.kernel.lar.ExportImportHelper;
+import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
-import com.liferay.portal.kernel.lar.ExportImportUtil;
 import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.MissingReference;
 import com.liferay.portal.kernel.lar.PortletDataContext;
@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TempFileUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -63,6 +64,7 @@ import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -103,8 +105,9 @@ import org.xml.sax.InputSource;
 /**
  * @author Zsolt Berentey
  * @author Levente Hudák
+ * @author Julio Camarero
  */
-public class ExportImportImpl implements ExportImport {
+public class ExportImportHelperImpl implements ExportImportHelper {
 
 	@Override
 	public Calendar getDate(
@@ -387,19 +390,34 @@ public class ExportImportImpl implements ExportImport {
 	}
 
 	@Override
+	public FileEntry getTempFileEntry(long groupId, long userId)
+		throws PortalException, SystemException {
+
+		String[] tempFileEntryNames = LayoutServiceUtil.getTempFileEntryNames(
+			groupId, TEMP_FOLDER_NAME);
+
+		if (tempFileEntryNames.length == 0) {
+			return null;
+		}
+
+		return TempFileUtil.getTempFile(
+			groupId, userId, tempFileEntryNames[0], TEMP_FOLDER_NAME);
+	}
+
+	@Override
 	public String replaceExportContentReferences(
 			PortletDataContext portletDataContext,
 			StagedModel entityStagedModel, Element entityElement,
 			String content, boolean exportReferencedContent)
 		throws Exception {
 
-		content = ExportImportUtil.replaceExportLayoutReferences(
+		content = ExportImportHelperUtil.replaceExportLayoutReferences(
 			portletDataContext, content, exportReferencedContent);
-		content = ExportImportUtil.replaceExportLinksToLayouts(
+		content = ExportImportHelperUtil.replaceExportLinksToLayouts(
 			portletDataContext, entityStagedModel, entityElement, content,
 			exportReferencedContent);
 
-		content = ExportImportUtil.replaceExportDLReferences(
+		content = ExportImportHelperUtil.replaceExportDLReferences(
 			portletDataContext, entityStagedModel, entityElement, content,
 			exportReferencedContent);
 
@@ -688,12 +706,12 @@ public class ExportImportImpl implements ExportImport {
 			String content, boolean importReferencedContent)
 		throws Exception {
 
-		content = ExportImportUtil.replaceImportLayoutReferences(
+		content = ExportImportHelperUtil.replaceImportLayoutReferences(
 			portletDataContext, content, importReferencedContent);
-		content = ExportImportUtil.replaceImportLinksToLayouts(
+		content = ExportImportHelperUtil.replaceImportLinksToLayouts(
 			portletDataContext, content, importReferencedContent);
 
-		content = ExportImportUtil.replaceImportDLReferences(
+		content = ExportImportHelperUtil.replaceImportDLReferences(
 			portletDataContext, entityElement, content,
 			importReferencedContent);
 
@@ -1162,7 +1180,8 @@ public class ExportImportImpl implements ExportImport {
 		CharPool.PIPE, CharPool.QUESTION, CharPool.QUOTE, CharPool.SPACE
 	};
 
-	private static Log _log = LogFactoryUtil.getLog(ExportImportImpl.class);
+	private static Log _log = LogFactoryUtil.getLog(
+		ExportImportHelperImpl.class);
 
 	private Pattern _exportLinksToLayoutPattern = Pattern.compile(
 		"\\[([0-9]+)@(public|private\\-[a-z]*)\\]");

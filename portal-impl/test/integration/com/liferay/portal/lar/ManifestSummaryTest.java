@@ -14,7 +14,7 @@
 
 package com.liferay.portal.lar;
 
-import com.liferay.portal.kernel.lar.ExportImportUtil;
+import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.util.LongWrapper;
@@ -78,7 +78,7 @@ public class ManifestSummaryTest
 
 		headerElement.addAttribute("export-date", _exportDateString);
 
-		ExportImportUtil.writeManifestSummary(document, manifestSummary);
+		ExportImportHelperUtil.writeManifestSummary(document, manifestSummary);
 
 		zipWriter.addEntry("/manifest.xml", document.asXML());
 	}
@@ -90,9 +90,10 @@ public class ManifestSummaryTest
 			Group group)
 		throws Exception {
 
-		ManifestSummary manifestSummary = ExportImportUtil.getManifestSummary(
-			TestPropsValues.getUserId(), liveGroup.getGroupId(),
-			getParameterMap(), zipWriter.getFile());
+		ManifestSummary manifestSummary =
+			ExportImportHelperUtil.getManifestSummary(
+				TestPropsValues.getUserId(), liveGroup.getGroupId(),
+				getParameterMap(), zipWriter.getFile());
 
 		Map<String, LongWrapper> modelAdditionCounters =
 			manifestSummary.getModelAdditionCounters();

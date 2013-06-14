@@ -18,7 +18,7 @@ import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.lar.ExportImportUtil;
+import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
@@ -85,7 +85,7 @@ public class ExportLayoutsAction extends PortletAction {
 			String fileName = ParamUtil.getString(
 				actionRequest, "exportFileName");
 
-			DateRange dateRange = ExportImportUtil.getDateRange(
+			DateRange dateRange = ExportImportHelperUtil.getDateRange(
 				actionRequest, groupId, privateLayout, 0, null);
 
 			Date startDate = dateRange.getStartDate();

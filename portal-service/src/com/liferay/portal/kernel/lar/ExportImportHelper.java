@@ -34,7 +34,10 @@ import javax.portlet.PortletRequest;
 /**
  * @author Zsolt Berentey
  */
-public interface ExportImport {
+public interface ExportImportHelper {
+
+	public static final String TEMP_FOLDER_NAME =
+		ExportImportHelper.class.getName();
 
 	public Calendar getDate(
 		PortletRequest portletRequest, String paramPrefix,
@@ -57,6 +60,9 @@ public interface ExportImport {
 			long userId, long groupId, Map<String, String[]> parameterMap,
 			FileEntry fileEntry)
 		throws Exception;
+
+	public FileEntry getTempFileEntry(long groupId, long userId)
+		throws PortalException, SystemException;
 
 	public String replaceExportContentReferences(
 			PortletDataContext portletDataContext,

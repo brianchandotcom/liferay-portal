@@ -16,9 +16,10 @@ package com.liferay.portal.kernel.servlet;
 
 import com.liferay.portal.kernel.util.JavaConstants;
 
-import javax.portlet.MimeResponse;
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.portlet.MimeResponse;
 
 /**
  * @author Shuyang Zhou

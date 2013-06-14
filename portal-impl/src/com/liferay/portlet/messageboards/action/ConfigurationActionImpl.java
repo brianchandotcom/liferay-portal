@@ -182,13 +182,13 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 	protected void validateEmailMessageAdded(ActionRequest actionRequest)
 		throws Exception {
 
-		String emailMessageAddedSubjectPrefix = getParameter(
-			actionRequest, "emailMessageAddedSubjectPrefix");
+		String emailMessageAddedSubject = getParameter(
+			actionRequest, "emailMessageAddedSubject");
 		String emailMessageAddedBody = getParameter(
 			actionRequest, "emailMessageAddedBody");
 
-		if (Validator.isNull(emailMessageAddedSubjectPrefix)) {
-			SessionErrors.add(actionRequest, "emailMessageAddedSubjectPrefix");
+		if (Validator.isNull(emailMessageAddedSubject)) {
+			SessionErrors.add(actionRequest, "emailMessageAddedSubject");
 		}
 		else if (Validator.isNull(emailMessageAddedBody)) {
 			SessionErrors.add(actionRequest, "emailMessageAddedBody");
@@ -198,14 +198,13 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 	protected void validateEmailMessageUpdated(ActionRequest actionRequest)
 		throws Exception {
 
-		String emailMessageUpdatedSubjectPrefix = getParameter(
-			actionRequest, "emailMessageUpdatedSubjectPrefix");
+		String emailMessageUpdatedSubject = getParameter(
+			actionRequest, "emailMessageUpdatedSubject");
 		String emailMessageUpdatedBody = getParameter(
 			actionRequest, "emailMessageUpdatedBody");
 
-		if (Validator.isNull(emailMessageUpdatedSubjectPrefix)) {
-			SessionErrors.add(
-				actionRequest, "emailMessageUpdatedSubjectPrefix");
+		if (Validator.isNull(emailMessageUpdatedSubject)) {
+			SessionErrors.add(actionRequest, "emailMessageUpdatedSubject");
 		}
 		else if (Validator.isNull(emailMessageUpdatedBody)) {
 			SessionErrors.add(actionRequest, "emailMessageUpdatedBody");

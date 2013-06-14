@@ -41,33 +41,33 @@ String defaultEmailBody = StringPool.BLANK;
 
 if (tabs2.equals("web-content-added-email")) {
 	emailParam = "emailArticleAdded";
-	defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.JOURNAL_EMAIL_ARTICLE_ADDED_SUBJECT));
-	defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.JOURNAL_EMAIL_ARTICLE_ADDED_BODY));
+	defaultEmailSubject = ContentUtil.get(PropsValues.JOURNAL_EMAIL_ARTICLE_ADDED_SUBJECT);
+	defaultEmailBody = ContentUtil.get(PropsValues.JOURNAL_EMAIL_ARTICLE_ADDED_BODY);
 }
 else if (tabs2.equals("web-content-approval-denied-email")) {
 	emailParam = "emailArticleApprovalDenied";
-	defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.JOURNAL_EMAIL_ARTICLE_APPROVAL_DENIED_SUBJECT));
-	defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.JOURNAL_EMAIL_ARTICLE_APPROVAL_DENIED_BODY));
+	defaultEmailSubject = ContentUtil.get(PropsValues.JOURNAL_EMAIL_ARTICLE_APPROVAL_DENIED_SUBJECT);
+	defaultEmailBody = ContentUtil.get(PropsValues.JOURNAL_EMAIL_ARTICLE_APPROVAL_DENIED_BODY);
 }
 else if (tabs2.equals("web-content-approval-granted-email")) {
 	emailParam = "emailArticleApprovalGranted";
-	defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.JOURNAL_EMAIL_ARTICLE_APPROVAL_GRANTED_SUBJECT));
-	defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.JOURNAL_EMAIL_ARTICLE_APPROVAL_GRANTED_BODY));
+	defaultEmailSubject = ContentUtil.get(PropsValues.JOURNAL_EMAIL_ARTICLE_APPROVAL_GRANTED_SUBJECT);
+	defaultEmailBody = ContentUtil.get(PropsValues.JOURNAL_EMAIL_ARTICLE_APPROVAL_GRANTED_BODY);
 }
 else if (tabs2.equals("web-content-approval-requested-email")) {
 	emailParam = "emailArticleApprovalRequested";
-	defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.JOURNAL_EMAIL_ARTICLE_APPROVAL_REQUESTED_SUBJECT));
-	defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.JOURNAL_EMAIL_ARTICLE_APPROVAL_REQUESTED_BODY));
+	defaultEmailSubject = ContentUtil.get(PropsValues.JOURNAL_EMAIL_ARTICLE_APPROVAL_REQUESTED_SUBJECT);
+	defaultEmailBody = ContentUtil.get(PropsValues.JOURNAL_EMAIL_ARTICLE_APPROVAL_REQUESTED_BODY);
 }
 else if (tabs2.equals("web-content-review-email")) {
 	emailParam = "emailArticleReview";
-	defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.JOURNAL_EMAIL_ARTICLE_REVIEW_SUBJECT));
-	defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.JOURNAL_EMAIL_ARTICLE_REVIEW_BODY));
+	defaultEmailSubject = ContentUtil.get(PropsValues.JOURNAL_EMAIL_ARTICLE_REVIEW_SUBJECT);
+	defaultEmailBody = ContentUtil.get(PropsValues.JOURNAL_EMAIL_ARTICLE_REVIEW_BODY);
 }
 else if (tabs2.equals("web-content-updated-email")) {
 	emailParam = "emailArticleUpdated";
-	defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.JOURNAL_EMAIL_ARTICLE_UPDATED_SUBJECT));
-	defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.JOURNAL_EMAIL_ARTICLE_UPDATED_BODY));
+	defaultEmailSubject = ContentUtil.get(PropsValues.JOURNAL_EMAIL_ARTICLE_UPDATED_SUBJECT);
+	defaultEmailBody = ContentUtil.get(PropsValues.JOURNAL_EMAIL_ARTICLE_UPDATED_BODY);
 }
 
 String emailSubjectParam = emailParam + "Subject";

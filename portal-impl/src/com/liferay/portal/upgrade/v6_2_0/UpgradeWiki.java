@@ -19,15 +19,13 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.util.RSSUtil;
 
 import javax.portlet.PortletPreferences;
 
 /**
- * @author Eduardo Garcia
- * @author Daniel Kocsis
+ * @author Roberto Díaz
  */
-public class UpgradeMessageBoards extends BaseUpgradePortletPreferences {
+public class UpgradeWiki extends BaseUpgradePortletPreferences {
 
 	@Override
 	protected void doUpgrade() throws Exception {
@@ -36,7 +34,7 @@ public class UpgradeMessageBoards extends BaseUpgradePortletPreferences {
 
 	@Override
 	protected String[] getPortletIds() {
-		return new String[] {"19"};
+		return new String[] {"36"};
 	}
 
 	@Override
@@ -49,25 +47,12 @@ public class UpgradeMessageBoards extends BaseUpgradePortletPreferences {
 			PortletPreferencesFactoryUtil.fromXML(
 				companyId, ownerId, ownerType, plid, portletId, xml);
 
-		String rssFormat = GetterUtil.getString(
-			portletPreferences.getValue("rssFormat", null));
-
-		if (Validator.isNotNull(rssFormat)) {
-			String rssFeedType = RSSUtil.getFeedType(
-				RSSUtil.getFormatType(rssFormat),
-				RSSUtil.getFormatVersion(rssFormat));
-
-			portletPreferences.setValue("rssFeedType", rssFeedType);
-		}
-
-		portletPreferences.reset("rssFormat");
-
 		portletPreferences = upgradeSubscriptionSubject(
-			"emailMessageAddedSubject", "emailMessageAddedSubjectPrefix",
+			"emailPageAddedSubject", "emailPageAddedSubjectPrefix",
 			portletPreferences);
 
 		portletPreferences = upgradeSubscriptionSubject(
-			"emailMessageUpdatedSubject", "emailMessageUpdatedSubjectPrefix",
+			"emailPageUpdatedSubject", "emailPageUpdatedSubjectPrefix",
 			portletPreferences);
 
 		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
@@ -84,8 +69,8 @@ public class UpgradeMessageBoards extends BaseUpgradePortletPreferences {
 		if (Validator.isNotNull(subjectPrefix)) {
 			String subject = subjectPrefix;
 
-			if (!subjectPrefix.contains("[$MESSAGE_SUBJECT$]")) {
-				subject = subject.concat(" [$MESSAGE_SUBJECT$]");
+			if (!subjectPrefix.contains("[$PAGE_TITLE$]")) {
+				subject = subject.concat(" [$PAGE_TITLE$]");
 			}
 
 			portletPreferences.setValue(subjectName, subject);

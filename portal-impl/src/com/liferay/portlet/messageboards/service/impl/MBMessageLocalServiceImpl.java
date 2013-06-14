@@ -1927,29 +1927,19 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				company.getMx(), fromAddress);
 		}
 
-		String subjectPrefix = null;
+		String subject = null;
 		String body = null;
 		String signature = null;
 
 		if (serviceContext.isCommandUpdate()) {
-			subjectPrefix = MBUtil.getEmailMessageUpdatedSubjectPrefix(
-				preferences);
+			subject = MBUtil.getEmailMessageUpdatedSubject(preferences);
 			body = MBUtil.getEmailMessageUpdatedBody(preferences);
 			signature = MBUtil.getEmailMessageUpdatedSignature(preferences);
 		}
 		else {
-			subjectPrefix = MBUtil.getEmailMessageAddedSubjectPrefix(
-				preferences);
+			subject = MBUtil.getEmailMessageAddedSubject(preferences);
 			body = MBUtil.getEmailMessageAddedBody(preferences);
 			signature = MBUtil.getEmailMessageAddedSignature(preferences);
-		}
-
-		if (!subjectPrefix.contains("[$MESSAGE_SUBJECT$]")) {
-			String subject = message.getSubject();
-
-			subject = subjectPrefix.trim() + StringPool.SPACE + subject.trim();
-
-			message.setSubject(subject);
 		}
 
 		boolean htmlFormat = MBUtil.getEmailHtmlFormat(preferences);
@@ -2026,7 +2016,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		subscriptionSenderPrototype.setReplyToAddress(replyToAddress);
 		subscriptionSenderPrototype.setScopeGroupId(message.getGroupId());
 		subscriptionSenderPrototype.setServiceContext(serviceContext);
-		subscriptionSenderPrototype.setSubject(message.getSubject());
+		subscriptionSenderPrototype.setSubject(subject);
 		subscriptionSenderPrototype.setUserId(message.getUserId());
 
 		SubscriptionSender subscriptionSender =

@@ -21,8 +21,8 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 boolean emailAssetEntryAddedEnabled = ParamUtil.getBoolean(request, "preferences--emailAssetEntryAddedEnabled--", AssetPublisherUtil.getEmailAssetEntryAddedEnabled(preferences));
 
 String emailParam = (String)request.getAttribute("configuration.jsp-emailParam");
-String defaultEmailSubject = ContentUtil.get(PropsUtil.get(PropsKeys.ASSET_PUBLISHER_EMAIL_ASSET_ENTRY_ADDED_SUBJECT));
-String defaultEmailBody = ContentUtil.get(PropsUtil.get(PropsKeys.ASSET_PUBLISHER_EMAIL_ASSET_ENTRY_ADDED_BODY));
+String defaultEmailSubject = ContentUtil.get(PropsValues.ASSET_PUBLISHER_EMAIL_ASSET_ENTRY_ADDED_SUBJECT);
+String defaultEmailBody = ContentUtil.get(PropsValues.ASSET_PUBLISHER_EMAIL_ASSET_ENTRY_ADDED_BODY);
 
 String currentLanguageId = LanguageUtil.getLanguageId(request);
 

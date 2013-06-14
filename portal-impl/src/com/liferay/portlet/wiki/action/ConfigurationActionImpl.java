@@ -82,13 +82,13 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 	protected void validateEmailPageAdded(ActionRequest actionRequest)
 		throws Exception {
 
-		String emailPageAddedSubjectPrefix = getParameter(
-			actionRequest, "emailPageAddedSubjectPrefix");
+		String emailPageAddedSubject = getParameter(
+			actionRequest, "emailPageAddedSubject");
 		String emailPageAddedBody = getParameter(
 			actionRequest, "emailPageAddedBody");
 
-		if (Validator.isNull(emailPageAddedSubjectPrefix)) {
-			SessionErrors.add(actionRequest, "emailPageAddedSubjectPrefix");
+		if (Validator.isNull(emailPageAddedSubject)) {
+			SessionErrors.add(actionRequest, "emailPageAddedSubject");
 		}
 		else if (Validator.isNull(emailPageAddedBody)) {
 			SessionErrors.add(actionRequest, "emailPageAddedBody");
@@ -98,13 +98,13 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 	protected void validateEmailPageUpdated(ActionRequest actionRequest)
 		throws Exception {
 
-		String emailPageUpdatedSubjectPrefix = getParameter(
-			actionRequest, "emailPageUpdatedSubjectPrefix");
+		String emailPageUpdatedSubject = getParameter(
+			actionRequest, "emailPageUpdatedSubject");
 		String emailPageUpdatedBody = getParameter(
 			actionRequest, "emailPageUpdatedBody");
 
-		if (Validator.isNull(emailPageUpdatedSubjectPrefix)) {
-			SessionErrors.add(actionRequest, "emailPageUpdatedSubjectPrefix");
+		if (Validator.isNull(emailPageUpdatedSubject)) {
+			SessionErrors.add(actionRequest, "emailPageUpdatedSubject");
 		}
 		else if (Validator.isNull(emailPageUpdatedBody)) {
 			SessionErrors.add(actionRequest, "emailPageUpdatedBody");

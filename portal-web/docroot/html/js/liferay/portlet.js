@@ -3,6 +3,8 @@
 
 	var arrayIndexOf = A.Array.indexOf;
 
+	var STR_HEAD = 'head';
+
 	var TPL_NOT_AJAXABLE = '<div class="alert alert-info">{0}</div>';
 
 	var Portlet = {
@@ -45,10 +47,10 @@
 		},
 
 		_loadMarkupHeadElements: function(response, loadHTML) {
-			var markupHeadElements = response.markupHeadElements || [];
+			var markupHeadElements = response.markupHeadElements;
 
-			if (markupHeadElements.length) {
-				var head = A.one('head');
+			if (markupHeadElements && markupHeadElements.length) {
+				var head = A.one(STR_HEAD);
 
 				head.append(markupHeadElements);
 
@@ -64,7 +66,7 @@
 
 			javascriptPaths = javascriptPaths.concat(response.footerJavaScriptPaths || []);
 
-			var head = A.one('head');
+			var head = A.one(STR_HEAD);
 			var body = A.getBody();
 
 			if (headerCssPaths.length) {
@@ -253,7 +255,7 @@
 			}
 
 			var addPortletMarkupHeadElements = function(html) {
-				var container = A.Node.create(html);
+				var container = A.Node.create('<div/>');
 
 				container.plug(A.Plugin.ParseContent);
 

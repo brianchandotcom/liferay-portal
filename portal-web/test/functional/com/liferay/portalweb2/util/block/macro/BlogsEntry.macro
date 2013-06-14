@@ -22,9 +22,11 @@
 		<execute action="CPBlogsAdd#type" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
 		<execute action="CPBlogsAdd#click" locator-key1="PUBLISH_BUTTON" />
 
+		<var name="key_entryTitle" value="${entryTitle}" />
+
 		<execute action="CPBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
-		<execute action="CPBlogs#assertTextEquals" locator-key1="ENTRY_TABLE_TITLE_1" value1="${entryTitle}" />
-		<execute action="CPBlogs#click" locator-key1="ENTRY_TABLE_TITLE_1" value1="${entryTitle}" />
+		<execute action="CPBlogs#assertTextEquals" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
+		<execute action="CPBlogs#click" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
 
 		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE_HEADER" value1="${entryTitle}" />
 		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />

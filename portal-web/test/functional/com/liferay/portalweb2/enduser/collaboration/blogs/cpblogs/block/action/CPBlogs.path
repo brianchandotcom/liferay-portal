@@ -55,18 +55,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_TABLE_CHECKBOX_1</td>
-	<td>//td/input[@name='_161_rowIds']</td>
+	<td>ENTRY_TABLE_CHECKBOX</td>
+	<td>//tr[contains(.,'${key_entryTitle}')]/td/input[@name='_161_rowIds']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_TABLE_TITLE_1</td>
-	<td>//td[contains(@id, 'blogsEntriesSearchContainer')]/a[.='${entryTitle}']</td>
+	<td>ENTRY_TABLE_TITLE</td>
+	<td>//tr[contains(.,'${key_entryTitle}')]/td[2]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_TABLE_ACTIONS_1</td>
-	<td>//td/div/a[@title='Actions']</td>
+	<td>ENTRY_TABLE_ACTIONS</td>
+	<td>//tr[contains(.,'${key_entryTitle}')]/td/div/a[@title='Actions']</td>
 	<td></td>
 </tr>
 </tbody>

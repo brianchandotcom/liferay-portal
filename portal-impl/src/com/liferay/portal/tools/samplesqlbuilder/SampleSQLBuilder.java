@@ -349,9 +349,6 @@ public class SampleSQLBuilder {
 
 		put(context, "counter", _dataFactory.getCounter());
 		put(context, "dataFactory", _dataFactory);
-		put(context, "maxAssetCategoryCount", _maxAssetCategoryCount);
-		put(context, "maxAssetTagCount", _maxAssetTagCount);
-		put(context, "maxAssetVocabularyCount", _maxAssetVocabularyCount);
 		put(context, "maxDLFileEntrySize", _maxDLFileEntrySize);
 		put(context, "maxBlogsEntryCommentCount", _maxBlogsEntryCommentCount);
 		put(context, "maxBlogsEntryCount", _maxBlogsEntryCount);

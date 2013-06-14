@@ -228,6 +228,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_TABLE_WORKFLOW_STATUS_1</td>
+	<td>//span[@class='workflow-status-pending']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

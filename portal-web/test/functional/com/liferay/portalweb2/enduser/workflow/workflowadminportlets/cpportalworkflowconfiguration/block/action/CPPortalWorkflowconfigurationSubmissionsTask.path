@@ -62,7 +62,7 @@
 </tr>
 <tr>
 	<td>PREVIEW_CONTENT</td>
-	<td>//span[contains(.,'Preview of Blogs Entry')]/../../..</td>
+	<td>//div[@class='accordion-inner']</td>
 	<td></td>
 </tr>
 <tr>

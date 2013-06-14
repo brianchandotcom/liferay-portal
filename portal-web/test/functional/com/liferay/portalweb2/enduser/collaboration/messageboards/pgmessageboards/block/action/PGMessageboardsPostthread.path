@@ -30,12 +30,12 @@
 </tr>
 <tr>
 	<td>PUBLISH_BUTTON</td>
-	<td>//button[@id='_19_publishButton']</td>
+	<td>//button[@id='_19_publishButton' and contains(.,'Publish')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SUBMIT_FOR_PUBLICATION_BUTTON</td>
-	<td>//button[@id='_19_publishButton']</td>
+	<td>//button[@id='_19_publishButton' and contains(.,'Submit for Publication')]</td>
 	<td></td>
 </tr>
 </tbody>

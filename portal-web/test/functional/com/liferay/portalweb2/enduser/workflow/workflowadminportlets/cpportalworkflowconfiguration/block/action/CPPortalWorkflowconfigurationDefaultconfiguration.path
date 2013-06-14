@@ -57,7 +57,7 @@
 <!--RESOURCE_TABLE-->
 <tr>
 	<td>RESOURCE_TABLE_PAGE_REVISION</td>
-	<td>//div[@id='_151_workflowHandlersSearchContainer']/div/table/tbody/tr/td[contains(.,'Page Revision')]</td>
+	<td>//div[@id='_151_workflowHandlersSearchContainer']//tr[contains(.,'Page Revision')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -67,7 +67,7 @@
 </tr>
 <tr>
 	<td>RESOURCE_TABLE_USER</td>
-	<td>//div[@id='_151_workflowHandlersSearchContainer']/div/table/tbody/tr/td[contains(.,'User')]</td>
+	<td>//div[@id='_151_workflowHandlersSearchContainer']//tr[contains(.,'User')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -77,7 +77,7 @@
 </tr>
 <tr>
 	<td>RESOURCE_TABLE_BLOGS_ENTRY</td>
-	<td>//div[@id='_151_workflowHandlersSearchContainer']/div/table/tbody/tr/td[contains(.,'Blogs Entry')]</td>
+	<td>//div[@id='_151_workflowHandlersSearchContainer']//tr[contains(.,'Blogs Entry')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -87,7 +87,7 @@
 </tr>
 <tr>
 	<td>RESOURCE_TABLE_WEB_CONTENT</td>
-	<td>//div[@id='_151_workflowHandlersSearchContainer']/div/table/tbody/tr/td[contains(.,'Web Content')]</td>
+	<td>//div[@id='_151_workflowHandlersSearchContainer']//tr[contains(.,'Web Content')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -97,7 +97,7 @@
 </tr>
 <tr>
 	<td>RESOURCE_TABLE_COMMENTS</td>
-	<td>//div[@id='_151_workflowHandlersSearchContainer']/div/table/tbody/tr/td[contains(.,'Comments')]</td>
+	<td>//div[@id='_151_workflowHandlersSearchContainer']//tr[contains(.,'Comments')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -106,8 +106,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>RESOURCE_TABLE_MB_MESSAGE</td>
-	<td>//div[@id='_151_workflowHandlersSearchContainer']/div/table/tbody/tr/td[contains(.,'Message Boards Message')]</td>
+	<td>RESOURCE_TABLE_MESSAEG_BOARDS_MESSAGE</td>
+	<td>//div[@id='_151_workflowHandlersSearchContainer']//tr[contains(.,'Message Boards Message')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -117,7 +117,7 @@
 </tr>
 <tr>
 	<td>RESOURCE_TABLE_WIKI_PAGE</td>
-	<td>//div[@id='_151_workflowHandlersSearchContainer']/div/table/tbody/tr/td[contains(.,'Wiki Page')]</td>
+	<td>//div[@id='_151_workflowHandlersSearchContainer']//tr[contains(.,'Wiki Page')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>

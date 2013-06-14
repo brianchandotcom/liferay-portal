@@ -20,12 +20,12 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='portlet-msg-success']</td>
+	<td>//div[@class='alert alert-success']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SAVE_BUTTON</td>
-	<td>//input[@value='Save']</td>
+	<td>//button[contains(.,'Save')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -36,7 +36,7 @@
 <!--RESOURCE_TABLE-->
 <tr>
 	<td>RESOURCE_TABLE_PAGE_REVISION</td>
-	<td>//td[contains(@id,'_col-resource_') and contains(.,'Page Revision')]</td>
+	<td>//div[@id='_152_workflowHandlersSearchContainerSearchContainer']//tr[contains(.,'Page Revision')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -45,18 +45,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>RESOURCE_TABLE_USER</td>
-	<td>//td[contains(@id,'_col-resource_') and contains(.,'User')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RESOURCE_TABLE_USER_SELECT</td>
-	<td>//select[@id='_152_workflowDefinitionName@com.liferay.portal.model.User']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>RESOURCE_TABLE_BLOGS_ENTRY</td>
-	<td>//td[contains(@id,'_col-resource_') and contains(.,'User')]</td>
+	<td>//div[@id='_152_workflowHandlersSearchContainerSearchContainer']//tr[contains(.,'Blogs Entry')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -66,7 +56,7 @@
 </tr>
 <tr>
 	<td>RESOURCE_TABLE_WEB_CONTENT</td>
-	<td>//td[contains(@id,'_col-resource_') and contains(.,'Web Content')]</td>
+	<td>//div[@id='_152_workflowHandlersSearchContainerSearchContainer']//tr[contains(.,'Web Content')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -76,7 +66,7 @@
 </tr>
 <tr>
 	<td>RESOURCE_TABLE_COMMENTS</td>
-	<td>//td[contains(@id,'_col-resource_') and contains(.,'Comments')]</td>
+	<td>//div[@id='_152_workflowHandlersSearchContainerSearchContainer']///tr[contains(.,'Comments')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -85,18 +75,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>RESOURCE_TABLE_MB_MESSAGE</td>
-	<td>//td[contains(@id,'_col-resource_') and contains(.,'Message Boards Message')]</td>
+	<td>RESOURCE_TABLE_MESSAGE_BOARDS_MESSAGE</td>
+	<td>//div[@id='_152_workflowHandlersSearchContainerSearchContainer']//tr[contains(.,'Message Boards Message')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>RESOURCE_TABLE_MB_MESSAGE_SELECT</td>
+	<td>RESOURCE_TABLE_MESSAGE_BOARDS_MESSAGE_SELECT</td>
 	<td>//select[@id='_152_workflowDefinitionName@com.liferay.portlet.messageboards.model.MBDiscussion']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RESOURCE_TABLE_WIKI_PAGE</td>
-	<td>//td[contains(@id,'_col-resource_') and contains(.,'Wiki Page')]</td>
+	<td>//div[@id='_152_workflowHandlersSearchContainerSearchContainer']//tr[contains(.,'Wiki Page')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>

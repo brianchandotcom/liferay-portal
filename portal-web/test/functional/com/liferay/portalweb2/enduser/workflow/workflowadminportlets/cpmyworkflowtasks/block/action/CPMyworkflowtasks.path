@@ -68,7 +68,7 @@
 <tr>
 	<td>BASIC_SEARCH_BUTTON</td>
 	<td>//button[contains(.,'Search')]</td>
-	<td>Search</td>
+	<td></td>
 </tr>
 <tr>
 	<td></td>
@@ -83,33 +83,33 @@
 </tr>
 <!--ASSIGNED_TO_ME_TABLE-->
 <tr>
-	<td>ASSIGNED_TO_ME_TABLE_TASK</td>
-	<td>//div[@id='workflowMyTasksPanelContent']/div/div/div/div/table/tbody/tr/td[1]/a</td>
+	<td>ASSIGNED_TO_ME_TABLE_TASK_1</td>
+	<td>//div[@id='workflowMyTasksPanelContent']//tr[1]/td[1]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ASSIGNED_TO_ME_TABLE_ASSET_TITLE</td>
-	<td>//div[@id='workflowMyTasksPanelContent']/div/div/div/div/table/tbody/tr/td[2]/a</td>
+	<td>ASSIGNED_TO_ME_TABLE_ASSET_TITLE_1</td>
+	<td>//div[@id='workflowMyTasksPanelContent']//tr[1]/td[2]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ASSIGNED_TO_ME_TABLE_ASSET_TYPE</td>
-	<td>//div[@id='workflowMyTasksPanelContent']/div/div/div/div/table/tbody/tr/td[3]/a</td>
+	<td>ASSIGNED_TO_ME_TABLE_ASSET_TYPE_1</td>
+	<td>//div[@id='workflowMyTasksPanelContent']//tr[1]/td[3]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ASSIGNED_TO_ME_TABLE_LAST_ACTIVITY_DATE</td>
-	<td>//div[@id='workflowMyTasksPanelContent']/div/div/div/div/table/tbody/tr/td[4]/a</td>
+	<td>ASSIGNED_TO_ME_TABLE_LAST_ACTIVITY_DATE_1</td>
+	<td>//div[@id='workflowMyTasksPanelContent']//tr[1]/td[4]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ASSIGNED_TO_ME_TABLE_DUE_DATE</td>
-	<td>//div[@id='workflowMyTasksPanelContent']/div/div/div/div/table/tbody/tr/td[5]/a</td>
+	<td>ASSIGNED_TO_ME_TABLE_DUE_DATE_1</td>
+	<td>//div[@id='workflowMyTasksPanelContent']//tr[1]/td[5]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ASSIGNED_TO_ME_TABLE_ACTIONS</td>
-	<td>//div[@id='workflowMyTasksPanelContent']/div/div/div/div/table/tbody/tr/td[6]/div/a</td>
+	<td>ASSIGNED_TO_ME_TABLE_ACTIONS_1</td>
+	<td>//div[@id='workflowMyTasksPanelContent']//tr[1]/td[6]/div/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -141,32 +141,32 @@
 <!--ASSIGNED_TO_MY_ROLES_TABLE-->
 <tr>
 	<td>ASSIGNED_TO_MY_ROLES_TABLE_TASK</td>
-	<td>//div[@id='workflowMyRolesTasksPanelContent']/div/div/div/div/table/tbody/tr/td[1]/a</td>
+	<td>//div[@id='workflowMyRolesTasksPanelContent']//tr[1]/td[1]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TITLE</td>
-	<td>//div[@id='workflowMyRolesTasksPanelContent']/div/div/div/div/table/tbody/tr/td[2]/a</td>
+	<td>//div[@id='workflowMyRolesTasksPanelContent']//tr[1]/td[2]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TYPE</td>
-	<td>//div[@id='workflowMyRolesTasksPanelContent']/div/div/div/div/table/tbody/tr/td[3]/a</td>
+	<td>//div[@id='workflowMyRolesTasksPanelContent']//tr[1]/td[3]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSIGNED_TO_MY_ROLES_TABLE_LAST_ACTIVITY_DATE</td>
-	<td>//div[@id='workflowMyRolesTasksPanelContent']/div/div/div/div/table/tbody/tr/td[4]/a</td>
+	<td>//div[@id='workflowMyRolesTasksPanelContent']//tr[1]/td[4]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSIGNED_TO_MY_ROLES_TABLE_DUE_DATE</td>
-	<td>//div[@id='workflowMyRolesTasksPanelContent']/div/div/div/div/table/tbody/tr/td[5]/a</td>
+	<td>//div[@id='workflowMyRolesTasksPanelContent']//tr[1]/td[5]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSIGNED_TO_MY_ROLES_TABLE_ACTIONS</td>
-	<td>//div[@id='workflowMyRolesTasksPanelContent']/div/div/div/div/table/tbody/tr/td[6]/div/a</td>
+	<td>//div[@id='workflowMyRolesTasksPanelContent']//tr[1]/td[6]/div/a</td>
 	<td></td>
 </tr>
 <tr>

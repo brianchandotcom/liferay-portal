@@ -155,13 +155,13 @@ if (showLinkTitle) {
 					<span class="entry-result-icon"></span>
 				</span>
 
-				<span class="entry-description">
-					<c:if test="<%= Validator.isNotNull(description) %>">
-						<%= HtmlUtil.escape(description) %>
-					</c:if>
-				</span>
-
 				<small>
+					<span class="entry-description">
+						<c:if test="<%= Validator.isNotNull(description) %>">
+							<%= HtmlUtil.escape(description) %>
+						</c:if>
+					</span>
+
 					<dl>
 						<c:if test="<%= Validator.isNotNull(version) || ((status != WorkflowConstants.STATUS_ANY) && (status != WorkflowConstants.STATUS_APPROVED)) %>">
 							<dt>
@@ -242,49 +242,48 @@ if (showLinkTitle) {
 							</dd>
 						</c:if>
 					</dl>
+
+					<c:if test="<%= Validator.isNotNull(assetCategoryClassName) && (assetCategoryClassPK > 0) %>">
+						<span class="entry-categories">
+							<liferay-ui:asset-categories-summary
+								className="<%= assetCategoryClassName %>"
+								classPK="<%= assetCategoryClassPK %>"
+							/>
+						</span>
+					</c:if>
+
+					<c:if test="<%= Validator.isNotNull(assetTagClassName) && (assetTagClassPK > 0) %>">
+						<span class="entry-tags">
+							<liferay-ui:asset-tags-summary
+								className="<%= assetTagClassName %>"
+								classPK="<%= assetTagClassPK %>"
+							/>
+						</span>
+					</c:if>
+
+					<c:if test="<%= Validator.isNotNull(latestApprovedVersion) && (status > WorkflowConstants.STATUS_APPROVED) %>">
+						<dl class="entry-latest-approved-container">
+							<dt>
+								<liferay-ui:message key="latest-aproved-version" />
+							</dt>
+							<dd>
+
+								<%= HtmlUtil.escape(latestApprovedVersion) %>
+
+							</dd>
+
+							<dt>
+								<liferay-ui:message key="latest-aproved-version-author" />:
+							</dt>
+							<dd>
+
+								<%= HtmlUtil.escape(latestApprovedVersionAuthor) %>
+
+							</dd>
+						</dl>
+					</c:if>
 				</small>
-
-				<c:if test="<%= Validator.isNotNull(assetCategoryClassName) && (assetCategoryClassPK > 0) %>">
-					<span class="entry-categories">
-						<liferay-ui:asset-categories-summary
-							className="<%= assetCategoryClassName %>"
-							classPK="<%= assetCategoryClassPK %>"
-						/>
-					</span>
-				</c:if>
-
-				<c:if test="<%= Validator.isNotNull(assetTagClassName) && (assetTagClassPK > 0) %>">
-					<span class="entry-tags">
-						<liferay-ui:asset-tags-summary
-							className="<%= assetTagClassName %>"
-							classPK="<%= assetTagClassPK %>"
-						/>
-					</span>
-				</c:if>
-
-				<c:if test="<%= Validator.isNotNull(latestApprovedVersion) && (status > WorkflowConstants.STATUS_APPROVED) %>">
-					<dl class="entry-latest-approved-container">
-						<dt>
-							<liferay-ui:message key="latest-aproved-version" />
-						</dt>
-						<dd>
-
-							<%= HtmlUtil.escape(latestApprovedVersion) %>
-
-						</dd>
-
-						<dt>
-							<liferay-ui:message key="latest-aproved-version-author" />:
-						</dt>
-						<dd>
-
-							<%= HtmlUtil.escape(latestApprovedVersionAuthor) %>
-
-						</dd>
-					</dl>
-				</c:if>
 			</div>
-
 			<c:choose>
 				<c:when test="<%= Validator.isNull(url) %>">
 					</span>

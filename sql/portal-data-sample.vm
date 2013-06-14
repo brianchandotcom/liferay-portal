@@ -298,11 +298,11 @@ insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDat
 	#set ($cur = $count - 99)
 
 	insert into User_ (uuid_, userId, companyId, createDate, modifiedDate, defaultUser, contactId, password_, passwordEncrypted, passwordReset, screenName, emailAddress, greeting, firstName, middleName, lastName, loginDate, failedLoginAttempts, agreedToTermsOfUse, status) values ('$portalUUIDUtil.generate()', $batchUserId, $companyId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, FALSE, $batchContactId, 'test', FALSE, FALSE, 'lax$cur', 'test.lax.$cur@liferay.com', 'Welcome Test LAX $cur!', 'Test', '', 'LAX $cur', CURRENT_TIMESTAMP, 0, TRUE, 0);
-	
+
 	insert into Contact_ (contactId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, accountId, parentContactId, emailAddress, firstName, middleName, lastName, male, birthday) values ($batchContactId, $companyId, $testUserId, 'Test LAX $cur', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, $userClassNameId, $batchUserId, $accountId, 0, 'test.lax.$cur@liferay.com', 'Test', '', 'LAX $cur', TRUE, '01/01/1970');
 
 	insert into Group_ (groupId, companyId, creatorUserId, classNameId, classPK, parentGroupId, liveGroupId, name, type_, friendlyURL, active_) values ($batchGroupId, $companyId, $batchUserId, $userClassNameId, $batchUserId, 0, 0, '$batchGroupId', 0, '/lax$cur', TRUE);
-	
+
 	insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $batchGroupId, TRUE, FALSE, 'classic', '01', 0);
 	insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $batchGroupId, FALSE, FALSE, 'classic', '01', 0);
 
@@ -323,11 +323,11 @@ insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDat
 	#set ($cur = $count - 199)
 
 	insert into User_ (uuid_, userId, companyId, createDate, modifiedDate, defaultUser, contactId, password_, passwordEncrypted, passwordReset, screenName, emailAddress, greeting, firstName, middleName, lastName, loginDate, failedLoginAttempts, agreedToTermsOfUse, status) values ('$portalUUIDUtil.generate()', $batchUserId, $companyId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, FALSE, $batchContactId, 'test', FALSE, FALSE, 'sfo$cur', 'test.sfo.$cur@liferay.com', 'Welcome Test SFO $cur!', 'Test', '', 'SFO $cur', CURRENT_TIMESTAMP, 0, TRUE, 0);
-	
+
 	insert into Contact_ (contactId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, accountId, parentContactId, emailAddress, firstName, middleName, lastName, male, birthday) values ($batchContactId, $companyId, $testUserId, 'Test SFO $cur', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, $userClassNameId, $batchUserId, $accountId, 0, 'test.sfo.$cur@liferay.com', 'Test', '', 'SFO $cur', TRUE, '01/01/1970');
 
 	insert into Group_ (groupId, companyId, creatorUserId, classNameId, classPK, parentGroupId, liveGroupId, name, type_, friendlyURL, active_) values ($batchGroupId, $companyId, $batchUserId, $userClassNameId, $batchUserId, 0, 0, '$batchGroupId', 0, '/sfo$cur', TRUE);
-	
+
 	insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $batchGroupId, TRUE, FALSE, 'classic', '01', 0);
 	insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $batchGroupId, FALSE, FALSE, 'classic', '01', 0);
 
@@ -348,11 +348,11 @@ insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDat
 	#set ($cur = $count - 299)
 
 	insert into User_ (uuid_, userId, companyId, createDate, modifiedDate, defaultUser, contactId, password_, passwordEncrypted, passwordReset, screenName, emailAddress, greeting, firstName, middleName, lastName, loginDate, failedLoginAttempts, agreedToTermsOfUse, status) values ('$portalUUIDUtil.generate()', $batchUserId, $companyId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, FALSE, $batchContactId, 'test', FALSE, FALSE, 'ord$cur', 'test.ord.$cur@liferay.com', 'Welcome Test ORD $cur!', 'Test', '', 'ORD $cur', CURRENT_TIMESTAMP, 0, TRUE, 0);
-	
+
 	insert into Contact_ (contactId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, accountId, parentContactId, emailAddress, firstName, middleName, lastName, male, birthday) values ($batchContactId, $companyId, $testUserId, 'Test ORD $cur', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, $userClassNameId, $batchUserId, $accountId, 0, 'test.ord.$cur@liferay.com', 'Test', '', 'ORD $cur', TRUE, '01/01/1970');
 
 	insert into Group_ (groupId, companyId, creatorUserId, classNameId, classPK, parentGroupId, liveGroupId, name, type_, friendlyURL, active_) values ($batchGroupId, $companyId, $batchUserId, $userClassNameId, $batchUserId, 0, 0, '$batchGroupId', 0, '/ord$cur', TRUE);
-	
+
 	insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $batchGroupId, TRUE, FALSE, 'classic', '01', 0);
 	insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $batchGroupId, FALSE, FALSE, 'classic', '01', 0);
 
@@ -373,11 +373,11 @@ insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDat
 	#set ($cur = $count - 399)
 
 	insert into User_ (uuid_, userId, companyId, createDate, modifiedDate, defaultUser, contactId, password_, passwordEncrypted, passwordReset, screenName, emailAddress, greeting, firstName, middleName, lastName, loginDate, failedLoginAttempts, agreedToTermsOfUse, status) values ('$portalUUIDUtil.generate()', $batchUserId, $companyId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, FALSE, $batchContactId, 'test', FALSE, FALSE, 'nyc$cur', 'test.nyc.$cur@liferay.com', 'Welcome Test NYC $cur!', 'Test', '', 'NYC $cur', CURRENT_TIMESTAMP, 0, TRUE, 0);
-	
+
 	insert into Contact_ (contactId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, accountId, parentContactId, emailAddress, firstName, middleName, lastName, male, birthday) values ($batchContactId, $companyId, $testUserId, 'Test NYC $cur', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, $userClassNameId, $batchUserId, $accountId, 0, 'test.nyc.$cur@liferay.com', 'Test', '', 'NYC $cur', TRUE, '01/01/1970');
 
 	insert into Group_ (groupId, companyId, creatorUserId, classNameId, classPK, parentGroupId, liveGroupId, name, type_, friendlyURL, active_) values ($batchGroupId, $companyId, $batchUserId, $userClassNameId, $batchUserId, 0, 0, '$batchGroupId', 0, '/nyc$cur', TRUE);
-	
+
 	insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $batchGroupId, TRUE, FALSE, 'classic', '01', 0);
 	insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $batchGroupId, FALSE, FALSE, 'classic', '01', 0);
 
@@ -398,11 +398,11 @@ insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDat
 	#set ($cur = $count - 499)
 
 	insert into User_ (uuid_, userId, companyId, createDate, modifiedDate, defaultUser, contactId, password_, passwordEncrypted, passwordReset, screenName, emailAddress, greeting, firstName, middleName, lastName, loginDate, failedLoginAttempts, agreedToTermsOfUse, status) values ('$portalUUIDUtil.generate()', $batchUserId, $companyId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, FALSE, $batchContactId, 'test', FALSE, FALSE, 'gru$cur', 'test.gru.$cur@liferay.com', 'Welcome Test GRU $cur!', 'Test', '', 'GRU $cur', CURRENT_TIMESTAMP, 0, TRUE, 0);
-	
+
 	insert into Contact_ (contactId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, accountId, parentContactId, emailAddress, firstName, middleName, lastName, male, birthday) values ($batchContactId, $companyId, $testUserId, 'Test GRU $cur', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, $userClassNameId, $batchUserId, $accountId, 0, 'test.gru.$cur@liferay.com', 'Test', '', 'GRU $cur', TRUE, '01/01/1970');
 
 	insert into Group_ (groupId, companyId, creatorUserId, classNameId, classPK, parentGroupId, liveGroupId, name, type_, friendlyURL, active_) values ($batchGroupId, $companyId, $batchUserId, $userClassNameId, $batchUserId, 0, 0, '$batchGroupId', 0, '/gru$cur', TRUE);
-	
+
 	insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $batchGroupId, TRUE, FALSE, 'classic', '01', 0);
 	insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $batchGroupId, FALSE, FALSE, 'classic', '01', 0);
 
@@ -423,11 +423,11 @@ insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDat
 	#set ($cur = $count - 599)
 
 	insert into User_ (uuid_, userId, companyId, createDate, modifiedDate, defaultUser, contactId, password_, passwordEncrypted, passwordReset, screenName, emailAddress, greeting, firstName, middleName, lastName, loginDate, failedLoginAttempts, agreedToTermsOfUse, status) values ('$portalUUIDUtil.generate()', $batchUserId, $companyId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, FALSE, $batchContactId, 'test', FALSE, FALSE, 'fra$cur', 'test.fra.$cur@liferay.com', 'Welcome Test FRA $cur!', 'Test', '', 'FRA $cur', CURRENT_TIMESTAMP, 0, TRUE, 0);
-	
+
 	insert into Contact_ (contactId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, accountId, parentContactId, emailAddress, firstName, middleName, lastName, male, birthday) values ($batchContactId, $companyId, $testUserId, 'Test FRA $cur', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, $userClassNameId, $batchUserId, $accountId, 0, 'test.fra.$cur@liferay.com', 'Test', '', 'FRA $cur', TRUE, '01/01/1970');
 
 	insert into Group_ (groupId, companyId, creatorUserId, classNameId, classPK, parentGroupId, liveGroupId, name, type_, friendlyURL, active_) values ($batchGroupId, $companyId, $batchUserId, $userClassNameId, $batchUserId, 0, 0, '$batchGroupId', 0, '/fra$cur', TRUE);
-	
+
 	insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $batchGroupId, TRUE, FALSE, 'classic', '01', 0);
 	insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $batchGroupId, FALSE, FALSE, 'classic', '01', 0);
 
@@ -448,11 +448,11 @@ insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDat
 	#set ($cur = $count - 699)
 
 	insert into User_ (uuid_, userId, companyId, createDate, modifiedDate, defaultUser, contactId, password_, passwordEncrypted, passwordReset, screenName, emailAddress, greeting, firstName, middleName, lastName, loginDate, failedLoginAttempts, agreedToTermsOfUse, status) values ('$portalUUIDUtil.generate()', $batchUserId, $companyId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, FALSE, $batchContactId, 'test', FALSE, FALSE, 'mad$cur', 'test.mad.$cur@liferay.com', 'Welcome Test MAD $cur!', 'Test', '', 'MAD $cur', CURRENT_TIMESTAMP, 0, TRUE, 0);
-	
+
 	insert into Contact_ (contactId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, accountId, parentContactId, emailAddress, firstName, middleName, lastName, male, birthday) values ($batchContactId, $companyId, $testUserId, 'Test MAD $cur', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, $userClassNameId, $batchUserId, $accountId, 0, 'test.mad.$cur@liferay.com', 'Test', '', 'MAD $cur', TRUE, '01/01/1970');
 
 	insert into Group_ (groupId, companyId, creatorUserId, classNameId, classPK, parentGroupId, liveGroupId, name, type_, friendlyURL, active_) values ($batchGroupId, $companyId, $batchUserId, $userClassNameId, $batchUserId, 0, 0, '$batchGroupId', 0, '/mad$cur', TRUE);
-	
+
 	insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $batchGroupId, TRUE, FALSE, 'classic', '01', 0);
 	insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $batchGroupId, FALSE, FALSE, 'classic', '01', 0);
 
@@ -473,11 +473,11 @@ insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDat
 	#set ($cur = $count - 799)
 
 	insert into User_ (uuid_, userId, companyId, createDate, modifiedDate, defaultUser, contactId, password_, passwordEncrypted, passwordReset, screenName, emailAddress, greeting, firstName, middleName, lastName, loginDate, failedLoginAttempts, agreedToTermsOfUse, status) values ('$portalUUIDUtil.generate()', $batchUserId, $companyId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, FALSE, $batchContactId, 'test', FALSE, FALSE, 'dlc$cur', 'test.dlc.$cur@liferay.com', 'Welcome Test DLC $cur!', 'Test', '', 'DLC $cur', CURRENT_TIMESTAMP, 0, TRUE, 0);
-	
+
 	insert into Contact_ (contactId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, accountId, parentContactId, emailAddress, firstName, middleName, lastName, male, birthday) values ($batchContactId, $companyId, $testUserId, 'Test DLC $cur', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, $userClassNameId, $batchUserId, $accountId, 0, 'test.dlc.$cur@liferay.com', 'Test', '', 'DLC $cur', TRUE, '01/01/1970');
 
 	insert into Group_ (groupId, companyId, creatorUserId, classNameId, classPK, parentGroupId, liveGroupId, name, type_, friendlyURL, active_) values ($batchGroupId, $companyId, $batchUserId, $userClassNameId, $batchUserId, 0, 0, '$batchGroupId', 0, '/dlc$cur', TRUE);
-	
+
 	insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $batchGroupId, TRUE, FALSE, 'classic', '01', 0);
 	insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $batchGroupId, FALSE, FALSE, 'classic', '01', 0);
 
@@ -498,11 +498,11 @@ insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDat
 	#set ($cur = $count - 899)
 
 	insert into User_ (uuid_, userId, companyId, createDate, modifiedDate, defaultUser, contactId, password_, passwordEncrypted, passwordReset, screenName, emailAddress, greeting, firstName, middleName, lastName, loginDate, failedLoginAttempts, agreedToTermsOfUse, status) values ('$portalUUIDUtil.generate()', $batchUserId, $companyId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, FALSE, $batchContactId, 'test', FALSE, FALSE, 'hkg$cur', 'test.hkg.$cur@liferay.com', 'Welcome Test HKG $cur!', 'Test', '', 'HKG $cur', CURRENT_TIMESTAMP, 0, TRUE, 0);
-	
+
 	insert into Contact_ (contactId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, accountId, parentContactId, emailAddress, firstName, middleName, lastName, male, birthday) values ($batchContactId, $companyId, $testUserId, 'Test HKG $cur', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, $userClassNameId, $batchUserId, $accountId, 0, 'test.hkg.$cur@liferay.com', 'Test', '', 'HKG $cur', TRUE, '01/01/1970');
 
 	insert into Group_ (groupId, companyId, creatorUserId, classNameId, classPK, parentGroupId, liveGroupId, name, type_, friendlyURL, active_) values ($batchGroupId, $companyId, $batchUserId, $userClassNameId, $batchUserId, 0, 0, '$batchGroupId', 0, '/hkg$cur', TRUE);
-	
+
 	insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $batchGroupId, TRUE, FALSE, 'classic', '01', 0);
 	insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $batchGroupId, FALSE, FALSE, 'classic', '01', 0);
 
@@ -523,11 +523,11 @@ insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDat
 	#set ($cur = $count - 999)
 
 	insert into User_ (uuid_, userId, companyId, createDate, modifiedDate, defaultUser, contactId, password_, passwordEncrypted, passwordReset, screenName, emailAddress, greeting, firstName, middleName, lastName, loginDate, failedLoginAttempts, agreedToTermsOfUse, status) values ('$portalUUIDUtil.generate()', $batchUserId, $companyId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, FALSE, $batchContactId, 'test', FALSE, FALSE, 'kul$cur', 'test.kul.$cur@liferay.com', 'Welcome Test KUL $cur!', 'Test', '', 'KUL $cur', CURRENT_TIMESTAMP, 0, TRUE, 0);
-	
+
 	insert into Contact_ (contactId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, accountId, parentContactId, emailAddress, firstName, middleName, lastName, male, birthday) values ($batchContactId, $companyId, $testUserId, 'Test KUL $cur', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, $userClassNameId, $batchUserId, $accountId, 0, 'test.kul.$cur@liferay.com', 'Test', '', 'KUL $cur', TRUE, '01/01/1970');
 
 	insert into Group_ (groupId, companyId, creatorUserId, classNameId, classPK, parentGroupId, liveGroupId, name, type_, friendlyURL, active_) values ($batchGroupId, $companyId, $batchUserId, $userClassNameId, $batchUserId, 0, 0, '$batchGroupId', 0, '/kul$cur', TRUE);
-	
+
 	insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $batchGroupId, TRUE, FALSE, 'classic', '01', 0);
 	insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $batchGroupId, FALSE, FALSE, 'classic', '01', 0);
 

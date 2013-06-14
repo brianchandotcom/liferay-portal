@@ -32,7 +32,7 @@ hiddenVariablesList.addAll(iframeVariables);
 
 <body onLoad="setTimeout('document.fm.submit()', 100);">
 
-<form action="<%= HtmlUtil.escape(src) %>" method="<%= formMethod %>" name="fm">
+<form action="<%= HtmlUtil.escapeAttribute(src) %>" method="<%= formMethod %>" name="fm">
 
 <%
 for (String hiddenVariable : hiddenVariablesList) {
@@ -47,7 +47,7 @@ for (String hiddenVariable : hiddenVariablesList) {
 	}
 %>
 
-	<input name="<%= hiddenKey %>" type="hidden" value="<%= hiddenValue %>" />
+	<input name="<%= HtmlUtil.escapeAttribute(hiddenKey) %>" type="hidden" value="<%= HtmlUtil.escapeAttribute(hiddenValue) %>" />
 
 <%
 }
@@ -73,7 +73,7 @@ if (Validator.isNotNull(userNameField)) {
 }
 %>
 
-<input name="<%= userNameField %>" type="hidden" value="<%= userName %>" />
+<input name="<%= HtmlUtil.escapeAttribute(userNameField) %>" type="hidden" value="<%= HtmlUtil.escapeAttribute(userName) %>" />
 
 <%
 if (Validator.isNull(passwordField)) {
@@ -97,7 +97,7 @@ if (Validator.isNotNull(passwordField)) {
 }
 %>
 
-<input name="<%= passwordField %>" type="hidden" value="<%= password %>" />
+<input name="<%= HtmlUtil.escapeAttribute(passwordField) %>" type="hidden" value="<%= HtmlUtil.escapeAttribute(password) %>" />
 
 </form>
 

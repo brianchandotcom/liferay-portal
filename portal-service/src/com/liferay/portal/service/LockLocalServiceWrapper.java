@@ -161,6 +161,22 @@ public class LockLocalServiceWrapper implements LockLocalService,
 		return _lockLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
+	/**
+	* Returns the number of rows that match the dynamic query with the given projection.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the count projection that applied to the query
+	* @return the number of rows that match the dynamic query with the given projection
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _lockLocalService.dynamicQueryCount(dynamicQuery, projection);
+	}
+
 	@Override
 	public com.liferay.portal.model.Lock fetchLock(long lockId)
 		throws com.liferay.portal.kernel.exception.SystemException {

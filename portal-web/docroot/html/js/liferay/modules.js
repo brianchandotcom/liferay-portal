@@ -214,7 +214,6 @@ window.YUI_config = {
 						'aui-modal',
 						'liferay-widget-size-animation-plugin',
 						'liferay-portlet-base',
-						'liferay-util',
 						'liferay-util-window'
 					]
 				},

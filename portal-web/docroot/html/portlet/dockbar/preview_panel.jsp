@@ -24,40 +24,50 @@
 	<div class="device-preview-content">
 		<aui:nav cssClass="nav-list">
 			<aui:nav-item cssClass="lfr-device-item row-fluid" data-device="autosize">
-				<div class="span4 autosize"></div>
+				<div class="span4">
+					<div class="device autosize"></div>
+				</div>
 				<div class="span8">
 					<div><%= LanguageUtil.get(pageContext, "autosize") %></div>
-					<div>100%</div>
+					<div><small>100%</small></div>
 				</div>
 			</aui:nav-item>
 
-			<aui:nav-item cssClass="lfr-device-item row-fluid selected" data-device="smartphone">
-				<div class="span4 smartphone"></div>
+			<aui:nav-item cssClass="lfr-device-item lfr-device-rotation row-fluid selected" data-device="smartphone">
+				<div class="span4">
+					<div class="rotation smartphone"></div>
+					<div class="device smartphone"></div>
+				</div>
 				<div class="span8">
 					<div><%= LanguageUtil.get(pageContext, "smartphone") %></div>
-					<div>768px</div>
+					<div><small>768px</small></div>
 				</div>
 			</aui:nav-item>
 
-			<aui:nav-item cssClass="lfr-device-item row-fluid" data-device="tablet">
-				<div class="span4 tablet"></div>
+			<aui:nav-item cssClass="lfr-device-item lfr-device-rotation row-fluid" data-device="tablet">
+				<div class="span4">
+					<div class="rotation tablet"></div>
+					<div class="device tablet"></div>
+				</div>
 				<div class="span8">
 					<div><%= LanguageUtil.get(pageContext, "tablet") %></div>
-					<div>1024px</div>
+					<div><small>1024px</small></div>
 				</div>
 			</aui:nav-item>
 
 			<aui:nav-item cssClass="lfr-device-item row-fluid" data-device="desktop">
-				<div class="span4 desktop"></div>
+				<div class="span4">
+					<div class="device desktop"></div>
+				</div>
 				<div class="span8">
 					<div><%= LanguageUtil.get(pageContext, "desktop") %></div>
-					<div>1280px</div>
+					<div><small>1280px</small></div>
 				</div>
 			</aui:nav-item>
 
 			<aui:nav-item cssClass="lfr-device-item row-fluid" data-device="custom">
 				<div><%= LanguageUtil.get(pageContext, "custom") %> (px)</div>
-				<aui:input cssClass="input-mini" inlineField="<%= true %>" label="" name="width" value="200"/> x <aui:input cssClass="input-mini" inlineField="<%= true %>" label="" name="height" value="200" />
+				<aui:input cssClass="input-mini" inlineField="<%= true %>" label="" name="width" value="200"/><span> X </span><aui:input cssClass="input-mini" inlineField="<%= true %>" label="" name="height" value="200" />
 			</aui:nav-item>
 		</aui:nav>
 	</div>

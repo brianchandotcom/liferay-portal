@@ -109,6 +109,7 @@ AUI.add(
 
 						var eventHandles = [
 							instance._closePanelButton.on(STR_CLICK, instance._closePanel, instance),
+							instance._devicePreviewContent.delegate(STR_CLICK, instance._onDeviceRotation, '.selected.lfr-device-rotation', instance),
 							instance._devicePreviewContent.delegate(STR_CLICK, instance._onDeviceClick, CSS_DEVICE_ITEM, instance)
 						];
 
@@ -137,51 +138,59 @@ AUI.add(
 						Dockbar.togglePreviewPanel();
 					},
 
-					_normalizeDialogAttrs: function(width, height, autoWidth, autoHeight) {
+					_normalizeDialogAttrs: function(width, height, rotation) {
 						var instance = this;
+
+						var dialogAutoHeight = false;
+
+						var dialogAutoWidth = false;
+
+						var dialogHeight = rotation ? width : height;
+
+						var dialogWidth = rotation ? height : width;
 
 						var dialogAttrs = {};
 
-						if (!Lang.isNumber(width)) {
-							var widthNode = A.one(width);
+						if (!Lang.isNumber(dialogWidth)) {
+							var widthNode = A.one(dialogWidth);
 
 							if (widthNode) {
-								width = widthNode.val();
+								dialogWidth = widthNode.val();
 							}
 							else {
-								width = instance._devicePreviewNode.width();
-								autoWidth = true;
+								dialogWidth = instance._devicePreviewNode.width();
+								dialogAutoWidth = true;
 							}
 						}
 
-						if (!Lang.isNumber(height)) {
-							var heightNode = A.one(height);
+						if (!Lang.isNumber(dialogHeight)) {
+							var heightNode = A.one(dialogHeight);
 
 							if (heightNode) {
-								height = heightNode.val();
+								dialogHeight = heightNode.val();
 							}
 							else {
-								height = instance._devicePreviewNode.height();
-								autoHeight = true;
+								dialogHeight = instance._devicePreviewNode.height();
+								dialogAutoHeight = true;
 							}
 						}
 
 						return {
-							autoHeight: autoHeight,
-							autoWidth: autoWidth,
+							autoHeight: dialogAutoHeight,
+							autoWidth: dialogAutoWidth,
 							size: {
-								height: height,
-								width: width
+								height: dialogHeight,
+								width: dialogWidth
 							}
 						};
 					},
 
-					_openDeviceDialog: function(device) {
+					_openDeviceDialog: function(device, rotation) {
 						var instance = this;
 
 						var dialog = Liferay.Util.getWindow(instance._dialogId);
 
-						var dialogAttrs = instance._normalizeDialogAttrs(device.width, device.height, false, false);
+						var dialogAttrs = instance._normalizeDialogAttrs(device.width, device.height, rotation);
 
 						if (!dialog) {
 							var dialogConfig = {
@@ -226,6 +235,8 @@ AUI.add(
 							dialog.setAttrs(dialogAttrs);
 							dialog.show();
 						}
+
+						instance._selectedDevice = device;
 					},
 
 					_onDeviceClick: function(event) {
@@ -242,8 +253,20 @@ AUI.add(
 
 							event.currentTarget.addClass(CSS_SELECTED);
 
-							instance._openDeviceDialog(selectedDevice);
+							instance._openDeviceDialog(selectedDevice, event.currentTarget.hasClass('rotated'));
 						}
+					},
+
+					_onDeviceRotation: function(event) {
+						var instance = this;
+
+						var deviceItem = event.currentTarget;
+
+						deviceItem.toggleClass('rotated');
+
+						instance._openDeviceDialog(instance._selectedDevice, deviceItem.hasClass('rotated'));
+
+						event.stopImmediatePropagation();
 					},
 
 					_onSizeInput: function(event) {
@@ -264,6 +287,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-dialog-iframe-deprecated', 'aui-event-input', 'aui-modal', 'liferay-portlet-base', 'liferay-util', 'liferay-util-window', 'liferay-widget-size-animation-plugin']
+		requires: ['aui-dialog-iframe-deprecated', 'aui-event-input', 'aui-modal', 'liferay-portlet-base', 'liferay-util-window', 'liferay-widget-size-animation-plugin']
 	}
 );

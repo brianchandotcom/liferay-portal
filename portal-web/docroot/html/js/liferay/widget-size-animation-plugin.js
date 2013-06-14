@@ -68,6 +68,8 @@ AUI.add(
 
                         var host = this.get(STR_HOST);
 
+                        instance._anim.stop();
+
                         instance._anim.set(
                             'to',
                             { 
@@ -86,6 +88,6 @@ AUI.add(
     }, 
     '',
     {
-        requires: ["anim-base", "anim-easing", "plugin", "widget"]
+        requires: ["anim-base", "plugin", "widget"]
     }
 );

@@ -37,10 +37,6 @@
 
 						<%
 						for (Portlet categoryPortlet : categoryPortlets) {
-							if (!categoryPortlet.isActive() || categoryPortlet.isInstanceable()) {
-								continue;
-							}
-
 							String categoryPortletId = categoryPortlet.getPortletId();
 
 							String urlCategoryPortlet = HttpUtil.setParameter(themeDisplay.getURLControlPanel(), "p_p_id", categoryPortletId);

@@ -6739,7 +6739,8 @@ public class PortalImpl implements Portal {
 			Portlet portlet = itr.next();
 
 			try {
-				if (!PortletPermissionUtil.hasControlPanelAccessPermission(
+				if (!portlet.isActive() || portlet.isInstanceable() ||
+					!PortletPermissionUtil.hasControlPanelAccessPermission(
 						themeDisplay.getPermissionChecker(),
 						themeDisplay.getScopeGroupId(), portlet)) {
 

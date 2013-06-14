@@ -72,6 +72,11 @@
 		}
 		%>
 
+		<c:if test="<%= categoriesMap.isEmpty() %>">
+			<div class="alert alert-info">
+				<liferay-ui:message key="you-do-not-have-permission-to-access-any-control-panel-application" />
+			</div>
+		</c:if>
 	</aui:row>
 	<aui:row>
 		<liferay-util:include page="/html/portlet/control_panel_home/view_actions.jsp" />

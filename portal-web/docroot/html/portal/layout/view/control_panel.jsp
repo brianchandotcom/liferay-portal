@@ -134,7 +134,23 @@ request.setAttribute("control_panel.jsp-ppid", ppid);
 						<c:when test="<%= Validator.isNull(controlPanelCategory) %>">
 
 							<%
-							request.setAttribute("CONTROL_PANEL_CATEGORIES_MAP", _getCategoriesMap(themeDisplay));
+							Map<String, List<Portlet>> categoriesMap = _getCategoriesMap(themeDisplay);
+
+							if (categoriesMap.size() == 1) {
+								for (String curCategory : categoriesMap.keySet()) {
+									List<Portlet> curCategoryPortlets = categoriesMap.get(curCategory);
+
+									if (curCategoryPortlets.size() == 1) {
+										Portlet firstPortlet = curCategoryPortlets.get(0);
+
+										PortletURL redirectURL = PortalUtil.getSiteAdministrationURL(request, themeDisplay, firstPortlet.getPortletName());
+
+										response.sendRedirect(redirectURL.toString());
+									}
+								}
+							}
+
+							request.setAttribute("CONTROL_PANEL_CATEGORIES_MAP", categoriesMap);
 							%>
 
 							<liferay-portlet:runtime portletName="<%= PropsValues.CONTROL_PANEL_HOME_PORTLET_ID %>" />

@@ -1,0 +1,157 @@
+<html>
+<head>
+<title>CPDynamicdatalistsDatadefinitionsManagetemplates</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPDynamicdatalistsDatadefinitionsManagetemplates</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPDynamicdatalistsDatadefinitionsManagetemplates</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATA_DEFINITIONS_IFRAME</td>
+	<td>//iframe[contains(@src,'dynamic_data_lists')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DELETE_BUTTON</td>
+	<td>//button[contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[@class='alert alert-info']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TOOLBAR-->
+<tr>
+	<td>TOOLBAR_VIEW_ALL</td>
+	<td>//div[@class='navbar ']//li/a[contains(.,'View All')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_ADD_FORM_TEMPLATE</td>
+	<td>//div[@class='navbar ']//li/a[contains(.,'Add Form Template')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_ADD_DISPLAY_TEMPLATE</td>
+	<td>//div[@class='navbar ']//li/a[contains(.,'Add Display Template')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_SEARCH_FIELD</td>
+	<td>//div[@class='navbar ']//input[contains(@class,'search-query')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_SEARCH_BUTTON</td>
+	<td>//div[@class='navbar ']//button[contains(.,'Search')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DATA_DEFINITION_TABLE-->
+<tr>
+	<td>TEMPLATE_TABLE_ALL_CHECKBOX</td>
+	<td>//div[@id='_166_ddmTemplatesSearchContainer']//input[@name='_166_allRowIds']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_TABLE_CHECKBOX_1</td>
+	<td>xpath=(//div[@id='_166_ddmTemplatesSearchContainer']//tr/td[1]/input[@name='_166_rowIds'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_TABLE_ID_1</td>
+	<td>xpath=(//div[@id='_166_ddmTemplatesSearchContainer']//tr/td[2]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_TABLE_NAME_1</td>
+	<td>xpath=(//div[@id='_166_ddmTemplatesSearchContainer']//tr/td[3]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_TABLE_DESCRIPTION_1</td>
+	<td>xpath=(//div[@id='_166_ddmTemplatesSearchContainer']//tr/td[4]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_TABLE_MODE_1</td>
+	<td>xpath=(//div[@id='_166_ddmTemplatesSearchContainer']//tr/td[5]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_TABLE_LANGUAGE_1</td>
+	<td>xpath=(//div[@id='_166_ddmTemplatesSearchContainer']//tr/td[6]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_TABLE_MODIFIED_DATE_1</td>
+	<td>xpath=(//div[@id='_166_ddmTemplatesSearchContainer']//tr/td[7]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_TABLE_ACTIONS_1</td>
+	<td>xpath=(//div[@id='_166_ddmTemplatesSearchContainer']//tr/td[8]/div/a[@title='Actions'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TEMPLATE_MENULIST-->
+<tr>
+	<td>TEMPLATE_MENULIST_EDIT</td>
+	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_MENULIST_PERMISSIONS</td>
+	<td>//a[@role='menuitem' and contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_MENULIST_COPY</td>
+	<td>//a[@role='menuitem' and contains(.,'Copy')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_MENULIST_DELETE</td>
+	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

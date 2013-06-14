@@ -80,21 +80,19 @@ public class BeanReferenceRefreshUtil {
 
 		Object newReferencedBean = beanFactory.getBean(referencedBeanName);
 
-		Object wrappedNewReferencedBean = _paclWrappedBeanRegistry.get(
+		Object doPrivilegedBean = _doPrivilegedBeanRegistry.get(
 			newReferencedBean);
 
-		if ((wrappedNewReferencedBean == null) &&
+		if ((doPrivilegedBean == null) &&
 			DoPrivilegedFactory.isEarlyBeanReference(referencedBeanName)) {
 
-			wrappedNewReferencedBean = DoPrivilegedFactory.wrap(
-				newReferencedBean);
+			doPrivilegedBean = DoPrivilegedFactory.wrap(newReferencedBean);
 
-			_paclWrappedBeanRegistry.put(
-				newReferencedBean, wrappedNewReferencedBean);
+			_doPrivilegedBeanRegistry.put(newReferencedBean, doPrivilegedBean);
 		}
 
-		if (wrappedNewReferencedBean != null) {
-			newReferencedBean = wrappedNewReferencedBean;
+		if (doPrivilegedBean != null) {
+			newReferencedBean = doPrivilegedBean;
 		}
 
 		if (oldReferenceBean == newReferencedBean) {
@@ -114,7 +112,7 @@ public class BeanReferenceRefreshUtil {
 	private static Log _log = LogFactoryUtil.getLog(
 		BeanReferenceRefreshUtil.class);
 
-	private static Map<Object, Object> _paclWrappedBeanRegistry =
+	private static Map<Object, Object> _doPrivilegedBeanRegistry =
 		new IdentityHashMap<Object, Object>();
 
 	private static Map<Object, List<RefreshPoint>> _registeredRefreshPoints =

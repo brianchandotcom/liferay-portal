@@ -1042,31 +1042,6 @@
 				[$TYPE$]
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.service.persistence.RoleFinder.findBySystem">
-		<![CDATA[
-			(
-				SELECT
-					{Role_.*}
-				FROM
-					Role_
-				WHERE
-					(Role_.companyId = ?) AND
-					(
-						(Role_.name = 'Administrator') OR
-						(Role_.name = 'Guest') OR
-						(Role_.name = 'Organization Administrator') OR
-						(Role_.name = 'Organization Member') OR
-						(Role_.name = 'Organization Owner') OR
-						(Role_.name = 'Owner') OR
-						(Role_.name = 'Site Administrator') OR
-						(Role_.name = 'Site Member') OR
-						(Role_.name = 'Site Owner') OR
-						(Role_.name = 'Power User') OR
-						(Role_.name = 'User')
-					)
-			)
-		]]>
-	</sql>
 	<sql id="com.liferay.portal.service.persistence.RoleFinder.findByUserGroupGroupRole">
 		<![CDATA[
 			(

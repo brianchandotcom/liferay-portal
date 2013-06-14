@@ -73,9 +73,6 @@ public class RoleFinderImpl
 	public static final String COUNT_BY_C_N_D_T =
 		RoleFinder.class.getName() + ".countByC_N_D_T";
 
-	public static final String FIND_BY_SYSTEM =
-		RoleFinder.class.getName() + ".findBySystem";
-
 	public static final String FIND_BY_USER_GROUP_GROUP_ROLE =
 		RoleFinder.class.getName() + ".findByUserGroupGroupRole";
 
@@ -275,33 +272,6 @@ public class RoleFinderImpl
 
 		return countByC_N_D_T(
 			companyId, names, descriptions, types, params, andOperator);
-	}
-
-	@Override
-	public List<Role> findBySystem(long companyId) throws SystemException {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = CustomSQLUtil.get(FIND_BY_SYSTEM);
-
-			SQLQuery q = session.createSQLQuery(sql);
-
-			q.addEntity("Role_", RoleImpl.class);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(companyId);
-
-			return q.list(true);
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override

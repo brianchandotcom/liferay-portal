@@ -51,7 +51,7 @@ public abstract class BaseActionableDynamicQuery
 		addCriteria(dynamicQuery);
 
 		List<Object[]> results = (List<Object[]>)executeDynamicQuery(
-			dynamicQuery, _dynamicQueryMethod);
+			_dynamicQueryMethod, dynamicQuery);
 
 		Object[] minAndMaxPrimaryKeys = results.get(0);
 
@@ -92,7 +92,7 @@ public abstract class BaseActionableDynamicQuery
 		addCriteria(dynamicQuery);
 
 		List<Object> objects = (List<Object>)executeDynamicQuery(
-			dynamicQuery, _dynamicQueryMethod);
+			_dynamicQueryMethod, dynamicQuery);
 
 		for (Object object : objects) {
 			performAction(object);
@@ -108,7 +108,7 @@ public abstract class BaseActionableDynamicQuery
 		addDefaultCriteria(dynamicQuery);
 
 		return (Long)executeDynamicQuery(
-			dynamicQuery, _dynamicQueryCountMethod);
+			_dynamicQueryCountMethod, dynamicQuery, getCountProjection());
 	}
 
 	@Override
@@ -123,7 +123,7 @@ public abstract class BaseActionableDynamicQuery
 			_dynamicQueryMethod = clazz.getMethod(
 				"dynamicQuery", DynamicQuery.class);
 			_dynamicQueryCountMethod = clazz.getMethod(
-				"dynamicQueryCount", DynamicQuery.class);
+				"dynamicQueryCount", DynamicQuery.class, Projection.class);
 		}
 		catch (NoSuchMethodException nsme) {
 			throw new SystemException(nsme);
@@ -178,11 +178,11 @@ public abstract class BaseActionableDynamicQuery
 	}
 
 	protected Object executeDynamicQuery(
-			DynamicQuery dynamicQuery, Method dynamicQueryMethod)
+			Method dynamicQueryMethod, Object... args)
 		throws PortalException, SystemException {
 
 		try {
-			return dynamicQueryMethod.invoke(_baseLocalService, dynamicQuery);
+			return dynamicQueryMethod.invoke(_baseLocalService, args);
 		}
 		catch (InvocationTargetException ite) {
 			Throwable throwable = ite.getCause();
@@ -199,6 +199,10 @@ public abstract class BaseActionableDynamicQuery
 		catch (Exception e) {
 			throw new SystemException(e);
 		}
+	}
+
+	protected Projection getCountProjection() {
+		return ProjectionFactoryUtil.rowCount();
 	}
 
 	protected abstract void performAction(Object object)

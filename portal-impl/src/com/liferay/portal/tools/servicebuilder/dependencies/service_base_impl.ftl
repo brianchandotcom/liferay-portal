@@ -8,6 +8,7 @@ import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -255,6 +256,19 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 		@Override
 		public long dynamicQueryCount(DynamicQuery dynamicQuery) throws SystemException {
 			return ${entity.varName}Persistence.countWithDynamicQuery(dynamicQuery);
+		}
+
+		/**
+		 * Returns the number of rows that match the dynamic query with the given projection.
+		 *
+		 * @param dynamicQuery the dynamic query
+		 * @param projection the count projection that applied to the query
+		 * @return the number of rows that match the dynamic query with the given projection
+		 * @throws SystemException if a system exception occurred
+		 */
+		@Override
+		public long dynamicQueryCount(DynamicQuery dynamicQuery, Projection projection) throws SystemException {
+			return ${entity.varName}Persistence.countWithDynamicQuery(dynamicQuery, projection);
 		}
 
 		<#assign serviceBaseExceptions = serviceBuilder.getServiceBaseExceptions(methods, "fetch" + entity.name, [entity.PKClassName], ["SystemException"])>

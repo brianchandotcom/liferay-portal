@@ -19,7 +19,7 @@
 <%
 String tabs2 = ParamUtil.getString(request, "tabs2", "export");
 
-Layout exportableLayout = ExportImportUtil.getExportableLayout(themeDisplay);
+Layout exportableLayout = ExportImportHelperUtil.getExportableLayout(themeDisplay);
 
 Date startDate = null;
 

@@ -1281,6 +1281,21 @@ public class PortalUtil {
 	}
 
 	public static PortletURL getSiteAdministrationURL(
+			HttpServletRequest request, ThemeDisplay themeDisplay)
+		throws SystemException {
+
+		return getPortal().getSiteAdministrationURL(request, themeDisplay);
+	}
+
+	public static PortletURL getSiteAdministrationURL(
+		HttpServletRequest request, ThemeDisplay themeDisplay,
+		String portletName) {
+
+		return getPortal().getSiteAdministrationURL(
+			request, themeDisplay, portletName);
+	}
+
+	public static PortletURL getSiteAdministrationURL(
 			PortletResponse portletResponse, ThemeDisplay themeDisplay)
 		throws SystemException {
 

@@ -4472,6 +4472,39 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public PortletURL getSiteAdministrationURL(
+			HttpServletRequest request, ThemeDisplay themeDisplay)
+		throws SystemException {
+
+		Portlet portlet = getFirstSiteAdministrationPortlet(themeDisplay);
+
+		if (portlet == null) {
+			return null;
+		}
+
+		return getSiteAdministrationURL(
+			request, themeDisplay, portlet.getPortletName());
+	}
+
+	@Override
+	public PortletURL getSiteAdministrationURL(
+		HttpServletRequest request, ThemeDisplay themeDisplay,
+		String portletName) {
+
+		LiferayPortletURL siteAdministrationURL = PortletURLFactoryUtil.create(
+			request, portletName, themeDisplay.getPlid(),
+			PortletRequest.RENDER_PHASE);
+
+		siteAdministrationURL.setControlPanelCategory(
+			PortletCategoryKeys.SITES);
+		siteAdministrationURL.setDoAsGroupId(themeDisplay.getScopeGroupId());
+		siteAdministrationURL.setParameter(
+			"redirect", themeDisplay.getURLCurrent());
+
+		return siteAdministrationURL;
+	}
+
+	@Override
+	public PortletURL getSiteAdministrationURL(
 			PortletResponse portletResponse, ThemeDisplay themeDisplay)
 		throws SystemException {
 

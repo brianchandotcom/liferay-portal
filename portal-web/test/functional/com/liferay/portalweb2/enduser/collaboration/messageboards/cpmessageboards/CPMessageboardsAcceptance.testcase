@@ -1,0 +1,57 @@
+<definition>
+	<set-up>
+		<execute macro="User#pgFirstLogin" />
+	</set-up>
+
+	<command name="AddMBCategory">
+		<var name="categoryName" value="MB Category Name" />
+
+		<execute macro="MessageboardsCategory#addCP">
+			<var name="categoryName" value="${categoryName}" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#viewCP">
+			<var name="categoryName" value="${categoryName}" />
+		</execute>
+	</command>
+
+	<command name="AddMBThread">
+		<var name="threadBody" value="MB Thread Message Body" />
+		<var name="threadSubject" value="MB Thread Message Subject" />
+
+		<execute macro="MessageboardsThread#addCP">
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewCP">
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
+		</execute>
+	</command>
+
+	<command name="MoveToRecycleBinMBThread">
+		<var name="threadBody" value="MB Thread Message Body" />
+		<var name="threadSubject" value="MB Thread Message Subject" />
+
+		<execute macro="MessageboardsThread#addCP">
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#moveToRecycleBinCP">
+			<var name="threadSubject" value="${threadSubject}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewCP">
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
+		</execute>
+	</command>
+
+	<tear-down>
+		<execute macro="MessageboardsCategory#tearDownCP" />
+
+		<execute macro="MessageboardsThread#tearDownCP" />
+	</tear-down>
+</definition>

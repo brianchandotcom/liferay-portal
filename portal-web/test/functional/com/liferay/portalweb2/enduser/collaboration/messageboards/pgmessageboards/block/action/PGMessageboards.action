@@ -1,5 +1,8 @@
 <definition>
 	<command name="assertTextEquals">
+		<case locator-key1="INFO_MESSAGE_THREAD">
+			<execute function="AssertTextEquals#assertText" value1="There are no threads in this category." />
+		</case>
 		<case locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN">
 			<execute function="AssertTextEquals#assertPartialText" value1="The selected item was moved to the Recycle Bin. Undo" />
 		</case>

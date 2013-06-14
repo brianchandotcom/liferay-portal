@@ -1,10 +1,47 @@
 <definition>
+	<command name="assertElementPresent">
+		<case locator-key1="THREAD_MENULIST_MOVE_TO_THE_RECYCLE_BIN">
+			<execute function="AssertElementPresent#assertVisible" />
+		</case>
+	</command>
+
+	<command name="assertTextEquals">
+		<case locator-key1="INFO_MESSAGE_THREAD">
+			<execute function="AssertTextEquals#assertText" value1="There are no threads in this category." />
+		</case>
+		<case locator-key1="SUCCESS_MESSAGE">
+			<execute function="AssertTextEquals#assertText" value1="Your request completed successfully." />
+		</case>
+		
+		<case locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN">
+			<execute function="AssertTextEquals#assertText" value1="The selected item was moved to the Recycle Bin. Undo" />
+		</case>
+		<case comparator="startsWith" locator-key1="THREAD_TABLE_LAST_POST_">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+	</command>
+
 	<command name="click">
+		<case locator-key1="ADD_CATEGORY_BUTTON">
+			<execute function="Click#textClickAtAndWait" value1="Add Category"/>
+		</case>
 		<case locator-key1="CATEGORIES_RECYCLE_BIN_BUTTON">
+			<execute function="Click#textClickAtAndWait" value1="Move to the Recycle Bin" />
+		</case>
+		<case locator-key1="POST_NEW_THREAD_BUTTON">
+			<execute function="Click#textClickAtAndWait" value1="Post New Thread" />
+		</case>
+		<case locator-key1="THREAD_MENULIST_MOVE_TO_THE_RECYCLE_BIN">
 			<execute function="Click#textClickAtAndWait" value1="Move to the Recycle Bin" />
 		</case>
 		<case locator-key1="THREADS_RECYCLE_BIN_BUTTON">
 			<execute function="Click#textClickAtAndWait" value1="Move to the Recycle Bin" />
+		</case>
+		<case comparator="startsWith" locator-key1="THREAD_TABLE_ACTIONS_">
+			<execute function="Click#pauseTextClickAt" value1="Actions" />
+		</case>
+		<case comparator="startsWith" locator-key1="THREAD_TABLE_THREAD_">
+			<execute function="Click#textClickAtAndWait" />
 		</case>
 	</command>
 

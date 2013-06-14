@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INFO_MESSAGE_THREAD</td>
+	<td>//div[@id='messageBoardsThreadsPanelContent']/div/div[@class='alert alert-info']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_CATEGORY_BUTTON</td>
 	<td>//button[contains(.,'Add Category')]</td>
 	<td></td>

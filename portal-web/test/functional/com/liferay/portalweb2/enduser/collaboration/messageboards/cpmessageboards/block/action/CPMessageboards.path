@@ -19,8 +19,33 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_CATEGORY_BUTTON</td>
+	<td>//div[@class='category-buttons']/button[contains(.,'Add Category')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>POST_NEW_THREAD_BUTTON</td>
+	<td>//div[@class='category-buttons']/button[contains(.,'Post New Thread')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERMISSIONS_BUTTON</td>
+	<td>//div[@class='category-buttons']/button[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUCCESS_MESSAGE</td>
 	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE_RECYCLE_BIN</td>
+	<td>//form[@id='_162_undoForm']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE_THREAD</td>
+	<td>//div[@id='messageBoardsThreadsPanelContent']/div/form/div[@class='alert alert-info']</td>
 	<td></td>
 </tr>
 <tr>
@@ -51,6 +76,62 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CATEGORY_TABLE_CHECKBOX_1</td>
+	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//tr/td[1])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_TABLE_CATEGORY_1</td>
+	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//tr/td[2]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_TABLE_CATEGORIES_1</td>
+	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//tr/td[3]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_TABLE_THREADS_1</td>
+	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//tr/td[4]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_TABLE_POSTS_1</td>
+	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//tr/td[5]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_TABLE_ACTIONS_1</td>
+	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//tr/td[6]/div/a[@title='Actions'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CATEGORY_MENULIST-->
+<tr>
+	<td>CATEGORY_MENULIST_EDIT</td>
+	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_MENULIST_MOVE</td>
+	<td>//a[@role='menuitem' and contains(.,'Move')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_MENULIST_PERMISSIONS</td>
+	<td>//a[@role='menuitem' and contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_MENULIST_MOVE_TO_THE_RECYCLE_BIN</td>
+	<td>//a[@role='menuitem' and contains(.,'Move to the Recycle Bin')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -70,6 +151,72 @@
 <tr>
 	<td>THREAD_TABLE_ALL_CHECKBOX</td>
 	<td>//div[contains(@id,'mbThreadsSearchContainer')]//input[contains(@name,'allRowIds')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_TABLE_CHECKBOX_1</td>
+	<td>xpath=(//div[contains(@id,'mbThreadsSearchContainer')]//tr/td[1]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_TABLE_THREAD_1</td>
+	<td>xpath=(//div[contains(@id,'mbThreadsSearchContainer')]//tr/td[2]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_TABLE_FLAG_1</td>
+	<td>xpath=(//div[contains(@id,'mbThreadsSearchContainer')]//tr/td[23/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_TABLE_STARTED_BY_1</td>
+	<td>xpath=(//div[contains(@id,'mbThreadsSearchContainer')]//tr/td[4]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_TABLE_POSTS_1</td>
+	<td>xpath=(//div[contains(@id,'mbThreadsSearchContainer')]//tr/td[5]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_TABLE_LAST_POST_1</td>
+	<td>xpath=(//div[contains(@id,'mbThreadsSearchContainer')]//tr/td[7]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_TABLE_ACTIONS_1</td>
+	<td>xpath=(//div[contains(@id,'mbThreadsSearchContainer')]//tr/td[8]/div/a[@title='Actions'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--THREAD_MENULIST-->
+<tr>
+	<td>THREAD_MENULIST_EDIT</td>
+	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_MENULIST_PERMISSIONS</td>
+	<td>//a[@role='menuitem' and contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_MENULIST_LOCK_THREAD</td>
+	<td>//a[@role='menuitem' and contains(.,'Lock Thread')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_MENULIST_MOVE</td>
+	<td>//a[@role='menuitem' and contains(.,'Move')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_MENULIST_MOVE_TO_THE_RECYCLE_BIN</td>
+	<td>//a[@role='menuitem' and contains(.,'Move to the Recycle Bin')]</td>
 	<td></td>
 </tr>
 </tbody>

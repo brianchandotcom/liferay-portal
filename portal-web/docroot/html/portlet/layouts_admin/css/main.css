@@ -311,6 +311,8 @@
 }
 
 .export-dialog-tree {
+	margin-bottom: 50px;
+
 	.comments-and-ratings {
 		margin-top: 1em;
 
@@ -325,13 +327,41 @@
 		}
 	}
 
+	.count-display {
+		background-color: #009ae5;
+		border-radius: 9px;
+		box-sizing: content-box;
+		color: #fff;
+		padding-left:10px;
+		padding-right:10px;
+		-moz-border-radius: 9px;
+		-moz-box-sizing: content-box;
+		-webkit-border-radius: 9px;
+		-webkit-box-sizing: content-box;
+	}
+
+	.export-import-choose-content {
+		margin-left: 55px !important;
+		margin-top: 20px !important;
+	}
+
+	.export-import-content {
+		background-color: #fafafa;
+		border-bottom: 1px solid #e4e4e4;
+		border-top: 1px solid #e4e4e4;
+		margin-bottom: 50px;
+	}
+
 	.file-selector {
 		display: block;
-		margin: 0.5em 0 1.5em;
+		margin-top: 0.5em;
+		margin-bottom: 40px !important;
 	}
 
 	.import-file-details {
-		margin: 1em 0;
+		padding-bottom: 14px;
+		padding-left: 20px;
+		padding-top: 14px;
 
 		dt {
 			clear: left;
@@ -350,18 +380,27 @@
 	}
 
 	.options-group {
-		margin-bottom: 1em;
+		margin-bottom: 40px;
 	}
 
 	.page-not-exportable {
 		color: #933;
 	}
 
+	.export-import-application {
+		background-color: #fafafa;
+	}
+
 	.selected-labels {
 		color:#999;
-		float:left;
+		display: inline;
 		font-style: italic;
+		margin-left: 0.5em;
 		margin-right: 0.5em;
+	}
+
+	.portlet-list {
+		margin-top: 20px;
 	}
 
 	.selected-pages {

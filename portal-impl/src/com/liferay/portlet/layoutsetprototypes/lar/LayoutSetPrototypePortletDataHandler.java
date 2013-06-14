@@ -12,18 +12,19 @@
  * details.
  */
 
-package com.liferay.portlet.layoutprototypes.lar;
+package com.liferay.portlet.layoutsetprototypes.lar;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.LayoutPrototype;
-import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
-import com.liferay.portal.service.persistence.LayoutPrototypeExportActionableDynamicQuery;
+import com.liferay.portal.model.LayoutSetPrototype;
+import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
+import com.liferay.portal.service.persistence.LayoutSetPrototypeExportActionableDynamicQuery;
 import com.liferay.portal.util.PortletKeys;
 
 import java.util.List;
@@ -33,14 +34,21 @@ import javax.portlet.PortletPreferences;
 /**
  * @author Daniela Zapata Riesco
  */
-public class LayoutPrototypePortletDataHandler extends BasePortletDataHandler {
+public class LayoutSetPrototypePortletDataHandler
+	extends BasePortletDataHandler {
 
-	public static final String NAMESPACE = "layout_prototypes";
+	public static final String LAYOUT_PROTOTYPE_EXPORT_CONTROL =
+		"layout-prototypes";
 
-	public LayoutPrototypePortletDataHandler() {
+	public static final String NAMESPACE = "layout_set_prototypes";
+
+	public LayoutSetPrototypePortletDataHandler() {
 		super();
 
 		setDataLevel(DataLevel.PORTAL);
+		setExportControls(
+			new PortletDataHandlerBoolean(
+				NAMESPACE, LAYOUT_PROTOTYPE_EXPORT_CONTROL, true, false));
 	}
 
 	@Override
@@ -50,12 +58,12 @@ public class LayoutPrototypePortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		if (portletDataContext.addPrimaryKey(
-				LayoutPrototypePortletDataHandler.class, "deleteData")) {
+				LayoutSetPrototypePortletDataHandler.class, "deleteData")) {
 
 			return portletPreferences;
 		}
 
-		LayoutPrototypeLocalServiceUtil.deleteNondefaultLayoutPrototypes(
+		LayoutSetPrototypeLocalServiceUtil.deleteNondefaultLayoutSetPrototypes(
 			portletDataContext.getCompanyId());
 
 		return portletPreferences;
@@ -76,7 +84,8 @@ public class LayoutPrototypePortletDataHandler extends BasePortletDataHandler {
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			new LayoutPrototypeExportActionableDynamicQuery(portletDataContext);
+			new LayoutSetPrototypeExportActionableDynamicQuery(
+				portletDataContext);
 
 		actionableDynamicQuery.performActions();
 
@@ -93,15 +102,16 @@ public class LayoutPrototypePortletDataHandler extends BasePortletDataHandler {
 			PortletKeys.PORTAL, portletDataContext.getSourceCompanyId(),
 			portletDataContext.getCompanyId());
 
-		Element layoutPrototypesElement =
-			portletDataContext.getImportDataGroupElement(LayoutPrototype.class);
+		Element layoutSetPrototypesElement =
+			portletDataContext.getImportDataGroupElement(
+				LayoutSetPrototype.class);
 
-		List<Element> layoutPrototypeElements =
-			layoutPrototypesElement.elements();
+		List<Element> layoutSetPrototypeElements =
+			layoutSetPrototypesElement.elements();
 
-		for (Element layoutPrototypeElement : layoutPrototypeElements) {
+		for (Element layoutSetPrototypeElement : layoutSetPrototypeElements) {
 			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, layoutPrototypeElement);
+				portletDataContext, layoutSetPrototypeElement);
 		}
 
 		return null;
@@ -115,12 +125,13 @@ public class LayoutPrototypePortletDataHandler extends BasePortletDataHandler {
 		ManifestSummary manifestSummary =
 			portletDataContext.getManifestSummary();
 
-		ActionableDynamicQuery layoutPrototypeExportActionableDynamicQuery =
-			new LayoutPrototypeExportActionableDynamicQuery(portletDataContext);
+		ActionableDynamicQuery layoutSetPrototypeExportActionableDynamicQuery =
+			new LayoutSetPrototypeExportActionableDynamicQuery(
+				portletDataContext);
 
 		manifestSummary.addModelCount(
-			LayoutPrototype.class,
-			layoutPrototypeExportActionableDynamicQuery.performCount());
+			LayoutSetPrototype.class,
+			layoutSetPrototypeExportActionableDynamicQuery.performCount());
 	}
 
 }

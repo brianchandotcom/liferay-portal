@@ -20,14 +20,12 @@
 	<aui:row>
 
 		<%
-		for (String category : PortletCategoryKeys.ALL) {
+		Map<String, List<Portlet>> categoriesMap = _getCategoriesMap(themeDisplay);
+
+		for (String category : categoriesMap.keySet()) {
 			String title = LanguageUtil.get(pageContext, "category." + category);
 
-			List<Portlet> categoryPortlets = PortalUtil.getControlPanelPortlets(category, themeDisplay);
-
-			if (categoryPortlets.isEmpty()) {
-				continue;
-			}
+			List<Portlet> categoryPortlets = categoriesMap.get(category);
 		%>
 
 			<aui:col width="<%= 25 %>">
@@ -79,3 +77,19 @@
 		<liferay-util:include page="/html/portlet/control_panel_home/view_actions.jsp" />
 	</aui:row>
 </aui:container>
+
+<%!
+private Map<String, List<Portlet>> _getCategoriesMap(ThemeDisplay themeDisplay) throws SystemException {
+	Map<String, List<Portlet>> categoriesMap = new LinkedHashMap<String, List<Portlet>>();
+
+	for (String category : PortletCategoryKeys.ALL) {
+		List<Portlet> portlets = PortalUtil.getControlPanelPortlets(category, themeDisplay);
+
+		if (!portlets.isEmpty()) {
+			categoriesMap.put(category, portlets);
+		}
+	}
+
+	return categoriesMap;
+}
+%>

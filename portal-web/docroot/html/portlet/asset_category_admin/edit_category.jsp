@@ -74,6 +74,8 @@ else {
 </portlet:actionURL>
 
 <aui:form action="<%= editCategoryURL %>" cssClass="update-category-form" method="get" name='<%= randomNamespace + "fm" %>'>
+	<div class="hide lfr-message-response" id="categoryMessagesEdit"></div>
+
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= category == null ? Constants.ADD : Constants.UPDATE %>" />
 
 	<aui:model-context bean="<%= category %>" model="<%= AssetCategory.class %>" />

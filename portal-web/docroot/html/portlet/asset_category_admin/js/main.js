@@ -90,6 +90,8 @@ AUI.add(
 
 		var SELECTOR_CATEGORY_ITEM = '.category-item';
 
+		var SELECTOR_CATEGORY_MESSAGES_EDIT = '#categoryMessagesEdit';
+
 		var SELECTOR_CATEGORY_NAME_INPUT = '.category-name input';
 
 		var SELECTOR_FLOATING_TRIGGER = '.lfr-floating-trigger';
@@ -98,9 +100,11 @@ AUI.add(
 
 		var SELECTOR_UPDATE_VOCABULARY_FORM = 'form.update-vocabulary-form';
 
-		var SELECTOR_VOCABULARY_MESSAGES = '#vocabulary-messages';
+		var SELECTOR_VOCABULARY_MESSAGES = '#vocabularyMessages';
 
-		var SELECTOR_VOCABULARY_CATEGORY_MESSAGES = '#vocabulary-category-messages';
+		var SELECTOR_VOCABULARY_MESSAGES_EDIT = '#vocabularyMessagesEdit';
+
+		var SELECTOR_VOCABULARY_CATEGORY_MESSAGES = '#vocabularyCategoryMessages';
 
 		var SELECTOR_VOCABULARY_NAME_INPUT = '.vocabulary-name input';
 
@@ -169,11 +173,11 @@ AUI.add(
 				'<span class="category-path" title="{path}">{path}</span>' +
 			'</label>';
 
-		var TPL_MESSAGES_CATEGORY = '<div class="hide lfr-message-response" id="vocabulary-category-messages" />';
+		var TPL_MESSAGES_CATEGORY = '<div class="hide lfr-message-response" id="vocabularyCategoryMessages" />';
 
-		var TPL_MESSAGES_PORTLET = '<div class="hide lfr-message-response" id="porlet-messages" />';
+		var TPL_MESSAGES_PORTLET = '<div class="hide lfr-message-response" id="porletMessages" />';
 
-		var TPL_MESSAGES_VOCABULARY = '<div class="hide lfr-message-response" id="vocabulary-messages" />';
+		var TPL_MESSAGES_VOCABULARY = '<div class="hide lfr-message-response" id="vocabularyMessages" />';
 
 		var TPL_SEARCH_QUERY = '%{0}%';
 
@@ -248,9 +252,7 @@ AUI.add(
 
 						instance._categoryViewContainer.on(EVENT_CLICK, instance._onCategoryViewContainerClick, instance);
 
-						var portletMessageContainer = instance._portletMessageContainer;
-
-						instance._hideMessageTask = A.debounce('hide', 7000, portletMessageContainer);
+						instance._hideMessageTask = A.debounce(instance._hideMessage, 7000);
 
 						vocabularyList.on(EVENT_CLICK, instance._onVocabularyListClick, instance);
 
@@ -1584,6 +1586,12 @@ AUI.add(
 						instance._processAutoFieldsTriggers(event, instance._resetInputLocalized);
 					},
 
+					_hideMessage: function(container) {
+						container = container || instance._portletMessageContainer;
+
+						container.hide();
+					},
+
 					_hideSection: function(node) {
 						var instance = this;
 
@@ -1836,7 +1844,7 @@ AUI.add(
 					_onCategoryAddFailure: function(response) {
 						var instance = this;
 
-						instance._sendMessage(MESSAGE_TYPE_ERROR, Liferay.Language.get('your-request-failed-to-complete'));
+						instance._sendMessage(MESSAGE_TYPE_ERROR, Liferay.Language.get('your-request-failed-to-complete'), SELECTOR_CATEGORY_MESSAGES_EDIT);
 					},
 
 					_onCategoryAddSuccess: function(response, action) {
@@ -1851,7 +1859,7 @@ AUI.add(
 								vocabulary.categoriesCount++;
 							}
 
-							instance._sendMessage(MESSAGE_TYPE_SUCCESS, Liferay.Language.get('your-request-processed-successfully'));
+							instance._sendMessage(MESSAGE_TYPE_SUCCESS, Liferay.Language.get('your-request-processed-successfully'), SELECTOR_CATEGORY_MESSAGES_EDIT);
 
 							instance._selectVocabulary(instance._selectedVocabularyId);
 
@@ -1891,7 +1899,7 @@ AUI.add(
 								errorKey = Liferay.Language.get('your-request-failed-to-complete');
 							}
 
-							instance._sendMessage(MESSAGE_TYPE_ERROR, errorKey);
+							instance._sendMessage(MESSAGE_TYPE_ERROR, errorKey, SELECTOR_CATEGORY_MESSAGES_EDIT);
 						}
 					},
 
@@ -2156,7 +2164,7 @@ AUI.add(
 					_onVocabularyAddFailure: function(response) {
 						var instance = this;
 
-						instance._sendMessage(MESSAGE_TYPE_ERROR, Liferay.Language.get('your-request-failed-to-complete'));
+						instance._sendMessage(MESSAGE_TYPE_ERROR, Liferay.Language.get('your-request-failed-to-complete'), SELECTOR_VOCABULARY_MESSAGES_EDIT);
 					},
 
 					_onVocabularyAddSuccess: function(response) {
@@ -2167,7 +2175,7 @@ AUI.add(
 						var exception = response.exception;
 
 						if (!response.exception) {
-							instance._sendMessage(MESSAGE_TYPE_SUCCESS, Liferay.Language.get('your-request-processed-successfully'));
+							instance._sendMessage(MESSAGE_TYPE_SUCCESS, Liferay.Language.get('your-request-processed-successfully'), SELECTOR_VOCABULARY_MESSAGES_EDIT);
 
 							instance._displayList(
 								function() {
@@ -2204,7 +2212,7 @@ AUI.add(
 								errorKey = Liferay.Language.get('your-request-failed-to-complete');
 							}
 
-							instance._sendMessage(MESSAGE_TYPE_ERROR, errorKey);
+							instance._sendMessage(MESSAGE_TYPE_ERROR, errorKey, SELECTOR_VOCABULARY_MESSAGES_EDIT);
 						}
 					},
 
@@ -2483,10 +2491,10 @@ AUI.add(
 						return vocabulary;
 					},
 
-					_sendMessage: function(type, message) {
+					_sendMessage: function(type, message, container) {
 						var instance = this;
 
-						var output = instance._portletMessageContainer;
+						var output = A.one(container || instance._portletMessageContainer);
 						var typeClass = 'alert alert-' + type;
 
 						output.removeClass(CSS_MESSAGE_ERROR).removeClass(CSS_MESSAGE_SUCCESS);
@@ -2495,7 +2503,7 @@ AUI.add(
 
 						output.show();
 
-						instance._hideMessageTask();
+						instance._hideMessageTask(output);
 					},
 
 					_showCateroryMessage: function(message, className) {

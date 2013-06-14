@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.Dialect;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -86,7 +87,20 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	public long countWithDynamicQuery(DynamicQuery dynamicQuery)
 		throws SystemException {
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.rowCount());
+		return countWithDynamicQuery(
+			dynamicQuery, ProjectionFactoryUtil.rowCount());
+	}
+
+	@Override
+	public long countWithDynamicQuery(
+			DynamicQuery dynamicQuery, Projection projection)
+		throws SystemException {
+
+		if (projection == null) {
+			projection = ProjectionFactoryUtil.rowCount();
+		}
+
+		dynamicQuery.setProjection(projection);
 
 		List<Long> results = findWithDynamicQuery(dynamicQuery);
 

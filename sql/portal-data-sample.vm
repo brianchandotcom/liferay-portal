@@ -70,14 +70,18 @@ insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, the
 
 #set ($incOrganizationId = $counter.get())
 #set ($incGroupId = $counter.get())
+#set ($incExtranetPlid = $counter.get())
+#set ($incIntranetPlid = $counter.get())
 
 insert into Organization_ (organizationId, companyId, parentOrganizationId, name, type_, recursable, regionId, countryId, statusId, comments) values ($incOrganizationId, $companyId, 0, 'Liferay, Inc.', 'regular-organization', TRUE, 19005, 19, 12017, '');
 
 insert into Group_ (groupId, companyId, creatorUserId, classNameId, classPK, parentGroupId, liveGroupId, name, type_, friendlyURL, site, active_) values ($incGroupId, $companyId, $defaultUserId, $organizationClassNameId, $incOrganizationId, 0, 0, '$incGroupId', 0, '/$incGroupId', TRUE, TRUE);
 insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $incGroupId, TRUE, FALSE, 'classic', '01', 1);
 insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $incGroupId, FALSE, FALSE, 'classic', '01', 1);
-insert into Layout (uuid_, plid, groupId, companyId, privateLayout, layoutId, parentLayoutId, name, type_, typeSettings, hidden_, friendlyURL, priority) values ('$portalUUIDUtil.generate()', $counter.get(), $incGroupId, $companyId, FALSE, 1, 0, '<?xml version="1.0"?>\n\n<root>\n  <name>Liferay, Inc. Extranet</name>\n</root>', 'portlet', 'layout-template-id=2_columns_ii\ncolumn-1=3,\ncolumn-2=19,', FALSE, '/$incGroupId', 0);
-insert into Layout (uuid_, plid, groupId, companyId, privateLayout, layoutId, parentLayoutId, name, type_, typeSettings, hidden_, friendlyURL, priority) values ('$portalUUIDUtil.generate()', $counter.get(), $incGroupId, $companyId, TRUE, 1, 0, '<?xml version="1.0"?>\n\n<root>\n  <name>Liferay, Inc. Intranet</name>\n</root>', 'portlet', 'layout-template-id=2_columns_ii\ncolumn-1=3,\ncolumn-2=19,', FALSE, '/$incGroupId', 0);
+insert into Layout (uuid_, plid, groupId, companyId, privateLayout, layoutId, parentLayoutId, name, type_, typeSettings, hidden_, friendlyURL, priority) values ('$portalUUIDUtil.generate()', $incExtranetPlid, $incGroupId, $companyId, FALSE, 1, 0, '<?xml version="1.0"?>\n\n<root>\n  <name>Liferay, Inc. Extranet</name>\n</root>', 'portlet', 'layout-template-id=2_columns_ii\ncolumn-1=3,\ncolumn-2=19,', FALSE, '/$incGroupId', 0);
+insert into Layout (uuid_, plid, groupId, companyId, privateLayout, layoutId, parentLayoutId, name, type_, typeSettings, hidden_, friendlyURL, priority) values ('$portalUUIDUtil.generate()', $incIntranetPlid, $incGroupId, $companyId, TRUE, 1, 0, '<?xml version="1.0"?>\n\n<root>\n  <name>Liferay, Inc. Intranet</name>\n</root>', 'portlet', 'layout-template-id=2_columns_ii\ncolumn-1=3,\ncolumn-2=19,', FALSE, '/$incGroupId', 0);
+insert into LayoutFriendlyURL (uuid_, layoutFriendlyURLId, groupId, companyId, userId, userName, createDate, modifiedDate, plid, privateLayout, friendlyURL, languageId) values ('$portalUUIDUtil.generate()', $counter.get(), $incGroupId, $companyId, $defaultUserId, '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, $incExtranetPlid, FALSE, '/$incGroupId', 'en_US');
+insert into LayoutFriendlyURL (uuid_, layoutFriendlyURLId, groupId, companyId, userId, userName, createDate, modifiedDate, plid, privateLayout, friendlyURL, languageId) values ('$portalUUIDUtil.generate()', $counter.get(), $incGroupId, $companyId, $defaultUserId, '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, $incIntranetPlid, TRUE, '/$incGroupId', 'en_US');
 
 #set ($engineeringOrganizationId = $counter.get())
 #set ($engineeringGroupId = $counter.get())
@@ -233,12 +237,16 @@ insert into User_ (uuid_, userId, companyId, createDate, modifiedDate, defaultUs
 insert into Contact_ (contactId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, accountId, parentContactId, emailAddress, firstName, middleName, lastName, male, birthday) values ($testContactId, $companyId, $testUserId, 'Joe Bloggs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, $userClassNameId, $testUserId, $accountId, 0, 'test@liferay.com', 'Joe', '', 'Bloggs', TRUE, '01/01/1970');
 
 #set ($testGroupId = $counter.get())
+#set ($testHomePlid = $counter.get())
+#set ($testPluginsPlid = $counter.get())
 
 insert into Group_ (groupId, companyId, creatorUserId, classNameId, classPK, parentGroupId, liveGroupId, name, type_, friendlyURL, active_) values ($testGroupId, $companyId, $testUserId, $userClassNameId, $testUserId, 0, 0, '$testGroupId', 0, '/joebloggs', TRUE);
 insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $testGroupId, TRUE, FALSE, 'classic', '01', 2);
 insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $testGroupId, FALSE, FALSE, 'classic', '01', 0);
-insert into Layout (uuid_, plid, groupId, companyId, privateLayout, layoutId, parentLayoutId, name, type_, typeSettings, hidden_, friendlyURL, priority) values ('$portalUUIDUtil.generate()', $counter.get(), $testGroupId, $companyId, TRUE, 1, 0, '<?xml version="1.0"?>\n\n<root>\n  <name>Home</name>\n</root>', 'portlet', 'column-1=71_INSTANCE_OY0d,82,23,61,\ncolumn-2=29,8,19,\nlayout-template-id=2_columns_ii\n', FALSE, '/home', 0);
-insert into Layout (uuid_, plid, groupId, companyId, privateLayout, layoutId, parentLayoutId, name, type_, typeSettings, hidden_, friendlyURL, priority) values ('$portalUUIDUtil.generate()', $counter.get(), $testGroupId, $companyId, TRUE, 2, 0, '<?xml version="1.0"?>\n\n<root>\n  <name>Plugins</name>\n</root>', 'portlet', 'column-1=\ncolumn-2=111,\nlayout-template-id=2_columns_ii\n', FALSE, '/plugins', 1);
+insert into Layout (uuid_, plid, groupId, companyId, privateLayout, layoutId, parentLayoutId, name, type_, typeSettings, hidden_, friendlyURL, priority) values ('$portalUUIDUtil.generate()', $testHomePlid, $testGroupId, $companyId, TRUE, 1, 0, '<?xml version="1.0"?>\n\n<root>\n  <name>Home</name>\n</root>', 'portlet', 'column-1=71_INSTANCE_OY0d,82,23,61,\ncolumn-2=29,19,\nlayout-template-id=2_columns_ii\n', FALSE, '/home', 0);
+insert into Layout (uuid_, plid, groupId, companyId, privateLayout, layoutId, parentLayoutId, name, type_, typeSettings, hidden_, friendlyURL, priority) values ('$portalUUIDUtil.generate()', $testPluginsPlid, $testGroupId, $companyId, TRUE, 2, 0, '<?xml version="1.0"?>\n\n<root>\n  <name>Plugins</name>\n</root>', 'portlet', 'column-1=\ncolumn-2=111,\nlayout-template-id=2_columns_ii\n', FALSE, '/plugins', 1);
+insert into LayoutFriendlyURL (uuid_, layoutFriendlyURLId, groupId, companyId, userId, userName, createDate, modifiedDate, plid, privateLayout, friendlyURL, languageId) values ('$portalUUIDUtil.generate()', $counter.get(), $testGroupId, $companyId, $defaultUserId, '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, $testHomePlid, TRUE, '/home', 'en_US');
+insert into LayoutFriendlyURL (uuid_, layoutFriendlyURLId, groupId, companyId, userId, userName, createDate, modifiedDate, plid, privateLayout, friendlyURL, languageId) values ('$portalUUIDUtil.generate()', $counter.get(), $testGroupId, $companyId, $defaultUserId, '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, $testPluginsPlid, TRUE, '/plugins', 'en_US');
 
 insert into Users_Groups (groupId, userId) values ($guestGroupId, $testUserId);
 
@@ -249,7 +257,7 @@ insert into Users_Roles (roleId, userId) values ($administratorRoleId, $testUser
 insert into Users_Roles (roleId, userId) values ($powerUserRoleId, $testUserId);
 insert into Users_Roles (roleId, userId) values ($userRoleId, $testUserId);
 
-insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, classUuid, classTypeId, visible, startDate, endDate, publishDate, expirationDate, mimeType, title, description, summary, url, layoutUuid, height, width, priority, viewCount) VALUES ($counter.get(), $testGroupId, $companyId, $testUserId, 'Joe Blogs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 13, $testUserId, '', 0, FALSE, NULL, NULL, NULL, NULL, '', 'Joe Bloggs', '', '', '', 0, 0, 0, 0, 0);
+insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, classUuid, classTypeId, visible, startDate, endDate, publishDate, expirationDate, mimeType, title, description, summary, url, layoutUuid, height, width, priority, viewCount) VALUES ($counter.get(), $testGroupId, $companyId, $testUserId, 'Joe Bloggs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 13, $testUserId, '', 0, FALSE, NULL, NULL, NULL, NULL, '', 'Joe Bloggs', '', '', '', 0, 0, 0, 0, 0);
 
 ##
 ## Batch Users
@@ -275,7 +283,7 @@ insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDat
 
 	insert into Users_Roles (roleId, userId) values ($userRoleId, $batchUserId);
 
-	insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, classUuid, classTypeId, visible, startDate, endDate, publishDate, expirationDate, mimeType, title, description, summary, url, layoutUuid, height, width, priority, viewCount) VALUES ($counter.get(), $batchGroupId, $companyId, $testUserId, 'Joe Blogs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 13, $batchUserId, '', 0, FALSE, NULL, NULL, NULL, NULL, '', 'Test LAX $cur', '', '', '', 0, 0, 0, 0, 0);
+	insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, classUuid, classTypeId, visible, startDate, endDate, publishDate, expirationDate, mimeType, title, description, summary, url, layoutUuid, height, width, priority, viewCount) VALUES ($counter.get(), $batchGroupId, $companyId, $testUserId, 'Joe Bloggs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 13, $batchUserId, '', 0, FALSE, NULL, NULL, NULL, NULL, '', 'Test LAX $cur', '', '', '', 0, 0, 0, 0, 0);
 #end
 
 #foreach($count in [200..209])
@@ -298,7 +306,7 @@ insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDat
 
 	insert into Users_Roles (roleId, userId) values ($userRoleId, $batchUserId);
 
-	insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, classUuid, classTypeId, visible, startDate, endDate, publishDate, expirationDate, mimeType, title, description, summary, url, layoutUuid, height, width, priority, viewCount) VALUES ($counter.get(), $batchGroupId, $companyId, $testUserId, 'Joe Blogs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 13, $batchUserId, '', 0, FALSE, NULL, NULL, NULL, NULL, '', 'Test SFO $cur', '', '', '', 0, 0, 0, 0, 0);
+	insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, classUuid, classTypeId, visible, startDate, endDate, publishDate, expirationDate, mimeType, title, description, summary, url, layoutUuid, height, width, priority, viewCount) VALUES ($counter.get(), $batchGroupId, $companyId, $testUserId, 'Joe Bloggs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 13, $batchUserId, '', 0, FALSE, NULL, NULL, NULL, NULL, '', 'Test SFO $cur', '', '', '', 0, 0, 0, 0, 0);
 #end
 
 #foreach($count in [300..309])
@@ -321,7 +329,7 @@ insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDat
 
 	insert into Users_Roles (roleId, userId) values ($userRoleId, $batchUserId);
 
-	insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, classUuid, classTypeId, visible, startDate, endDate, publishDate, expirationDate, mimeType, title, description, summary, url, layoutUuid, height, width, priority, viewCount) VALUES ($counter.get(), $batchGroupId, $companyId, $testUserId, 'Joe Blogs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 13, $batchUserId, '', 0, FALSE, NULL, NULL, NULL, NULL, '', 'Test ORD $cur', '', '', '', 0, 0, 0, 0, 0);
+	insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, classUuid, classTypeId, visible, startDate, endDate, publishDate, expirationDate, mimeType, title, description, summary, url, layoutUuid, height, width, priority, viewCount) VALUES ($counter.get(), $batchGroupId, $companyId, $testUserId, 'Joe Bloggs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 13, $batchUserId, '', 0, FALSE, NULL, NULL, NULL, NULL, '', 'Test ORD $cur', '', '', '', 0, 0, 0, 0, 0);
 #end
 
 #foreach($count in [400..409])
@@ -344,7 +352,7 @@ insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDat
 
 	insert into Users_Roles (roleId, userId) values ($userRoleId, $batchUserId);
 
-	insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, classUuid, classTypeId, visible, startDate, endDate, publishDate, expirationDate, mimeType, title, description, summary, url, layoutUuid, height, width, priority, viewCount) VALUES ($counter.get(), $batchGroupId, $companyId, $testUserId, 'Joe Blogs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 13, $batchUserId, '', 0, FALSE, NULL, NULL, NULL, NULL, '', 'Test NYC $cur', '', '', '', 0, 0, 0, 0, 0);
+	insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, classUuid, classTypeId, visible, startDate, endDate, publishDate, expirationDate, mimeType, title, description, summary, url, layoutUuid, height, width, priority, viewCount) VALUES ($counter.get(), $batchGroupId, $companyId, $testUserId, 'Joe Bloggs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 13, $batchUserId, '', 0, FALSE, NULL, NULL, NULL, NULL, '', 'Test NYC $cur', '', '', '', 0, 0, 0, 0, 0);
 #end
 
 #foreach($count in [500..509])
@@ -367,7 +375,7 @@ insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDat
 
 	insert into Users_Roles (roleId, userId) values ($userRoleId, $batchUserId);
 
-	insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, classUuid, classTypeId, visible, startDate, endDate, publishDate, expirationDate, mimeType, title, description, summary, url, layoutUuid, height, width, priority, viewCount) VALUES ($counter.get(), $batchGroupId, $companyId, $testUserId, 'Joe Blogs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 13, $batchUserId, '', 0, FALSE, NULL, NULL, NULL, NULL, '', 'Test GRU $cur', '', '', '', 0, 0, 0, 0, 0);
+	insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, classUuid, classTypeId, visible, startDate, endDate, publishDate, expirationDate, mimeType, title, description, summary, url, layoutUuid, height, width, priority, viewCount) VALUES ($counter.get(), $batchGroupId, $companyId, $testUserId, 'Joe Bloggs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 13, $batchUserId, '', 0, FALSE, NULL, NULL, NULL, NULL, '', 'Test GRU $cur', '', '', '', 0, 0, 0, 0, 0);
 #end
 
 #foreach($count in [600..609])
@@ -390,7 +398,7 @@ insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDat
 
 	insert into Users_Roles (roleId, userId) values ($userRoleId, $batchUserId);
 
-	insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, classUuid, classTypeId, visible, startDate, endDate, publishDate, expirationDate, mimeType, title, description, summary, url, layoutUuid, height, width, priority, viewCount) VALUES ($counter.get(), $batchGroupId, $companyId, $testUserId, 'Joe Blogs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 13, $batchUserId, '', 0, FALSE, NULL, NULL, NULL, NULL, '', 'Test FRA $cur', '', '', '', 0, 0, 0, 0, 0);
+	insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, classUuid, classTypeId, visible, startDate, endDate, publishDate, expirationDate, mimeType, title, description, summary, url, layoutUuid, height, width, priority, viewCount) VALUES ($counter.get(), $batchGroupId, $companyId, $testUserId, 'Joe Bloggs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 13, $batchUserId, '', 0, FALSE, NULL, NULL, NULL, NULL, '', 'Test FRA $cur', '', '', '', 0, 0, 0, 0, 0);
 #end
 
 #foreach($count in [700..709])
@@ -413,7 +421,7 @@ insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDat
 
 	insert into Users_Roles (roleId, userId) values ($userRoleId, $batchUserId);
 
-	insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, classUuid, classTypeId, visible, startDate, endDate, publishDate, expirationDate, mimeType, title, description, summary, url, layoutUuid, height, width, priority, viewCount) VALUES ($counter.get(), $batchGroupId, $companyId, $testUserId, 'Joe Blogs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 13, $batchUserId, '', 0, FALSE, NULL, NULL, NULL, NULL, '', 'Test MAD $cur', '', '', '', 0, 0, 0, 0, 0);
+	insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, classUuid, classTypeId, visible, startDate, endDate, publishDate, expirationDate, mimeType, title, description, summary, url, layoutUuid, height, width, priority, viewCount) VALUES ($counter.get(), $batchGroupId, $companyId, $testUserId, 'Joe Bloggs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 13, $batchUserId, '', 0, FALSE, NULL, NULL, NULL, NULL, '', 'Test MAD $cur', '', '', '', 0, 0, 0, 0, 0);
 #end
 
 #foreach($count in [800..809])
@@ -436,7 +444,7 @@ insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDat
 
 	insert into Users_Roles (roleId, userId) values ($userRoleId, $batchUserId);
 
-	insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, classUuid, classTypeId, visible, startDate, endDate, publishDate, expirationDate, mimeType, title, description, summary, url, layoutUuid, height, width, priority, viewCount) VALUES ($counter.get(), $batchGroupId, $companyId, $testUserId, 'Joe Blogs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 13, $batchUserId, '', 0, FALSE, NULL, NULL, NULL, NULL, '', 'Test DLC $cur', '', '', '', 0, 0, 0, 0, 0);
+	insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, classUuid, classTypeId, visible, startDate, endDate, publishDate, expirationDate, mimeType, title, description, summary, url, layoutUuid, height, width, priority, viewCount) VALUES ($counter.get(), $batchGroupId, $companyId, $testUserId, 'Joe Bloggs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 13, $batchUserId, '', 0, FALSE, NULL, NULL, NULL, NULL, '', 'Test DLC $cur', '', '', '', 0, 0, 0, 0, 0);
 #end
 
 #foreach($count in [900..909])
@@ -459,7 +467,7 @@ insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDat
 
 	insert into Users_Roles (roleId, userId) values ($userRoleId, $batchUserId);
 
-	insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, classUuid, classTypeId, visible, startDate, endDate, publishDate, expirationDate, mimeType, title, description, summary, url, layoutUuid, height, width, priority, viewCount) VALUES ($counter.get(), $batchGroupId, $companyId, $testUserId, 'Joe Blogs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 13, $batchUserId, '', 0, FALSE, NULL, NULL, NULL, NULL, '', 'Test HKG $cur', '', '', '', 0, 0, 0, 0, 0);
+	insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, classUuid, classTypeId, visible, startDate, endDate, publishDate, expirationDate, mimeType, title, description, summary, url, layoutUuid, height, width, priority, viewCount) VALUES ($counter.get(), $batchGroupId, $companyId, $testUserId, 'Joe Bloggs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 13, $batchUserId, '', 0, FALSE, NULL, NULL, NULL, NULL, '', 'Test HKG $cur', '', '', '', 0, 0, 0, 0, 0);
 #end
 
 #foreach($count in [1000..1009])
@@ -482,5 +490,5 @@ insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDat
 
 	insert into Users_Roles (roleId, userId) values ($userRoleId, $batchUserId);
 
-	insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, classUuid, classTypeId, visible, startDate, endDate, publishDate, expirationDate, mimeType, title, description, summary, url, layoutUuid, height, width, priority, viewCount) VALUES ($counter.get(), $batchGroupId, $companyId, $testUserId, 'Joe Blogs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 13, $batchUserId, '', 0, FALSE, NULL, NULL, NULL, NULL, '', 'Test KUL $cur', '', '', '', 0, 0, 0, 0, 0);
+	insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, classUuid, classTypeId, visible, startDate, endDate, publishDate, expirationDate, mimeType, title, description, summary, url, layoutUuid, height, width, priority, viewCount) VALUES ($counter.get(), $batchGroupId, $companyId, $testUserId, 'Joe Bloggs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 13, $batchUserId, '', 0, FALSE, NULL, NULL, NULL, NULL, '', 'Test KUL $cur', '', '', '', 0, 0, 0, 0, 0);
 #end

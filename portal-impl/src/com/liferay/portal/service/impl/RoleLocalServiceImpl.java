@@ -760,15 +760,16 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns all the roles with the companyId and/or name.
+	 * Returns all the roles in the company and/or with the name.
 	 *
 	 * @param  companyId the primary key of the company (optionally <code>0
-	 * 	       </code>)
-	 * @param  name the name of the role (optionally <code>null</code>; this
-	 *         will return all system roles)
-	 * @return the roles with the companyId and/or name
+	 *         </code>)
+	 * @param  name the role's name (optionally use <code>null</code> to match
+	 *         all system roles)
+	 * @return the roles in the company and/or with the name
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public List<Role> getRolesBySQL(long companyId, String name)
 		throws SystemException {
 

@@ -1,0 +1,81 @@
+<html>
+<head>
+<title>PGWebformConfiguration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGWebformConfiguration</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGWebformConfiguration</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURATION_IFRAME</td>
+	<td>//iframe[contains(@id,'_configurationIframeDialog')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CLOSE_ICON</td>
+	<td>//button[contains(@class,'close-content')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SETUP_FORM_INFORMATION-->
+<tr>
+	<td>SETUP_FORM_INFORMATION_TITLE</td>
+	<td>//input[@id='_86_title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETUP_FORM_INFORMATION_DESCRIPTION</td>
+	<td>//textarea[@name='_86_description']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SETUP_FORM_FIELDS-->
+<tr>
+	<td>SETUP_FORM_FIELDS_NAME</td>
+	<td>//input[@id='_86_fieldLabel1']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETUP_FORM_FIELDS_RATING</td>
+	<td>//input[@id='_86_fieldLabel2']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETUP_FORM_FIELDS_COMMENTS</td>
+	<td>//input[@id='_86_fieldLabel3']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

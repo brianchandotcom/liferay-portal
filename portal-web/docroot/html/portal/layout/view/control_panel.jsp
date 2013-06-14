@@ -132,6 +132,11 @@ request.setAttribute("control_panel.jsp-ppid", ppid);
 				<div class="<%= panelBodyCssClass %>">
 					<c:choose>
 						<c:when test="<%= Validator.isNull(controlPanelCategory) %>">
+
+							<%
+							request.setAttribute("CONTROL_PANEL_CATEGORIES_MAP", _getCategoriesMap(themeDisplay));
+							%>
+
 							<liferay-portlet:runtime portletName="<%= PropsValues.CONTROL_PANEL_HOME_PORTLET_ID %>" />
 						</c:when>
 						<c:when test="<%= ((portlet != null) && !portlet.getControlPanelEntryCategory().startsWith(PortletCategoryKeys.SITE_ADMINISTRATION)) %>">
@@ -173,3 +178,19 @@ request.setAttribute("control_panel.jsp-ppid", ppid);
 </c:choose>
 
 <%@ include file="/html/portal/layout/view/common.jspf" %>
+
+<%!
+private Map<String, List<Portlet>> _getCategoriesMap(ThemeDisplay themeDisplay) throws SystemException {
+	Map<String, List<Portlet>> categoriesMap = new LinkedHashMap<String, List<Portlet>>();
+
+	for (String category : PortletCategoryKeys.ALL) {
+		List<Portlet> portlets = PortalUtil.getControlPanelPortlets(category, themeDisplay);
+
+		if (!portlets.isEmpty()) {
+			categoriesMap.put(category, portlets);
+		}
+	}
+
+	return categoriesMap;
+}
+%>

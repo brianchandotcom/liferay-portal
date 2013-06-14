@@ -19,7 +19,11 @@ AUI.add(
 
 		var STR_ADD_PAGE_FORM = 'addPageFm';
 
-		var STR_CANCEL_ADD_OPERATOIN = 'cancelAddOperation';
+		var STR_CANCEL_ADD_OPERATION = 'cancelAddOperation';
+
+		var STR_HIDDEN_CHECKBOX = 'hiddenCheckbox';
+
+		var STR_NAME = 'name';
 
 		var STR_NODE_LIST = 'nodeList';
 
@@ -40,6 +44,9 @@ AUI.add(
 				NAME: 'addpage',
 
 				ATTRS: {
+					parentLayoutId: {
+						validator: Lang.isNumber
+					},
 					transition: {
 						validator: Lang.isObject,
 						value: {
@@ -68,7 +75,11 @@ AUI.add(
 
 						instance._addForm = instance.byId(STR_ADD_PAGE_FORM);
 
-						instance._cancelButton = instance.byId(STR_CANCEL_ADD_OPERATOIN);
+						instance._cancelButton = instance.byId(STR_CANCEL_ADD_OPERATION);
+
+						instance._hiddenCheckbox = instance.byId(STR_HIDDEN_CHECKBOX);
+
+						instance._nameInput = instance.byId(STR_NAME);
 
 						instance._bindUI();
 					},
@@ -76,11 +87,15 @@ AUI.add(
 					_bindUI: function() {
 						var instance = this;
 
-						instance._togglerDelegate.on('toggler:expandedChange', instance._updateActivePage, instance);
+						instance._addForm.on('submit', instance._addPage, instance);
 
 						instance._cancelButton.on('click', instance._cancelAction, instance);
 
-						instance._addForm.on('submit', instance._addPage, instance);
+						instance._hiddenCheckbox.on('change', instance._updateNavigationProxy, instance);
+
+						instance._nameInput.on('input', instance._updateNavigationProxy, instance);
+
+						instance._togglerDelegate.on('toggler:expandedChange', instance._updateActivePage, instance);
 					},
 
 					_addPage: function(event) {
@@ -158,6 +173,20 @@ AUI.add(
 								instance.byId('layoutPrototypeId').set(STR_VALUE, selectedPrototypeId);
 							}
 						}
+					},
+
+					_updateNavigationProxy: function(event) {
+						var instance = this;
+
+						Liferay.fire('dockbaraddpage:previewPageTitle',
+							{
+								data: {
+									hidden: instance._hiddenCheckbox.get('checked'),
+									name: instance._nameInput.val(),
+									parentLayoutId: instance.get('parentLayoutId')
+								}
+							}
+						);
 					}
 				}
 			}
@@ -167,6 +196,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-parse-content', 'liferay-dockbar', 'liferay-dockbar-add-base', 'liferay-dockbar-add-page-search']
+		requires: ['aui-parse-content', 'aui-toggler-delegate', 'liferay-dockbar', 'liferay-dockbar-add-base', 'liferay-dockbar-add-page-search']
 	}
 );

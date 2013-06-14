@@ -80,6 +80,10 @@ public class NavItem implements Serializable {
 		return _layout;
 	}
 
+	public long getLayoutId() {
+		return _layout.getLayoutId();
+	}
+
 	public String getName() {
 		return HtmlUtil.escape(getUnescapedName());
 	}

@@ -183,6 +183,8 @@ window.YUI_config = {
 				'liferay-dockbar-add-page': {
 					path: 'dockbar_add_page.js',
 					requires: [
+						'aui-parse-content',
+						'aui-toggler-delegate',
 						'liferay-dockbar',
 						'liferay-dockbar-add-base',
 						'liferay-dockbar-add-page-search'

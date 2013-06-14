@@ -6,9 +6,9 @@
 	<ul>
 		#foreach ($nav_item in $nav_items)
 			#if ($nav_item.isSelected())
-				<li aria-selected="true" class="selected">
+				<li aria-selected="true" class="selected" id="layout_$nav_item.getLayoutId()">
 			#else
-				<li>
+				<li id="layout_$nav_item.getLayoutId()">
 			#end
 				<a href="$nav_item.getURL()" $nav_item.getTarget()><span>$nav_item.icon() $nav_item.getName()</span></a>
 
@@ -16,9 +16,9 @@
 					<ul class="child-menu">
 						#foreach ($nav_child in $nav_item.getChildren())
 							#if ($nav_child.isSelected())
-								<li aria-selected="true" class="selected">
+								<li aria-selected="true" class="selected" id="layout_$nav_child.getLayoutId()">
 							#else
-								<li>
+								<li id="layout_$nav_child.getLayoutId()">
 							#end
 								<a href="$nav_child.getURL()" $nav_child.getTarget()>$nav_child.getName()</a>
 							</li>

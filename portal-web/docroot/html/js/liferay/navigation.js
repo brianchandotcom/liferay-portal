@@ -1,13 +1,20 @@
 AUI.add(
 	'liferay-navigation',
 	function(A) {
+		var ANode = A.Node;
 		var Dockbar = Liferay.Dockbar;
 		var Util = Liferay.Util;
 		var Lang = A.Lang;
 
+		var STR_LAYOUT_ID = 'layoutId';
+
+		var STR_EMPTY = '';
+
 		var TPL_EDITOR = '<div class="add-page-editor"><div class="input-append"></div></div>';
 
 		var TPL_FIELD_INPUT = '<input class="add-page-editor-input" type="text" value="{0}" />';
+
+		var TPL_LINK = '<a href="{url}">{pageTitle}</a>';
 
 		var TPL_LIST_ITEM = '<li class="add-page"></li>';
 
@@ -109,7 +116,7 @@ AUI.add(
 									var layoutConfig = layoutIds[index];
 
 									if (layoutConfig) {
-										item._LFR_layoutId = layoutConfig.id;
+										item.setData(STR_LAYOUT_ID, layoutConfig.id);
 
 										if (layoutConfig.deletable) {
 											cssClassBuffer.push('lfr-nav-deletable');
@@ -139,8 +146,14 @@ AUI.add(
 							instance._makeSortable();
 							instance._makeEditable();
 
+							instance._tempTab = instance._createTempTab(TPL_TAB_LINK);
+							instance._tempChildTab = instance._createTempTab(TPL_LINK);
+
 							instance.on('savePage', A.bind('_savePage', instance));
 							instance.on('cancelPage', instance._cancelPage);
+
+							Liferay.on('dockbaraddpage:addPage', instance._onAddPage, instance);
+							Liferay.on('dockbaraddpage:previewPageTitle', instance._onPreviewPageTitle, instance);
 
 							navBlock.delegate('keypress', A.bind('_onKeypress', instance), 'input');
 						}
@@ -157,7 +170,7 @@ AUI.add(
 
 						var navBlock = instance.get('navBlock');
 
-						var addBlock = A.Node.create(TPL_LIST_ITEM);
+						var addBlock = ANode.create(TPL_LIST_ITEM);
 
 						navBlock.show();
 
@@ -166,7 +179,7 @@ AUI.add(
 						instance._createEditor(
 							addBlock,
 							{
-								prevVal: ''
+								prevVal: STR_EMPTY
 							}
 						);
 					},
@@ -197,10 +210,36 @@ AUI.add(
 						}
 					},
 
+					_clearTempPage: function() {
+						var instance = this;
+
+						instance._tempTab.remove();
+
+						instance._tempChildTab.remove();
+					},
+
 					_createDeleteButton: function(obj) {
 						var instance = this;
 
 						obj.append(instance.TPL_DELETE_BUTTON);
+					},
+
+					_createTempTab: function(tpl) {
+						var instance = this;
+
+						var tempLink = Lang.sub(
+							tpl,
+							{
+								url: '#',
+								pageTitle: STR_EMPTY
+							}
+						);
+
+						var tempTab = ANode.create('<li>');
+
+						tempTab.append(tempLink);
+
+						return tempTab;
 					},
 
 					_deleteButton: function(obj) {
@@ -337,6 +376,63 @@ AUI.add(
 						}
 					},
 
+					_onAddPage: function(event) {
+						var instance = this;
+
+						var data = event.data;
+
+						instance._clearTempPage();
+
+						var navBlock = instance.get('navBlock');
+
+						navBlock.show();
+
+						var tabTPL = data.parentLayoutId ? TPL_LINK : TPL_TAB_LINK;
+
+						var tabHtml = Lang.sub(
+							tabTPL,
+							{
+								pageTitle: Lang.String.escapeHTML(data.title),
+								url: data.url
+							}
+						);
+
+						var newTab = ANode.create(tabHtml);
+
+						var listItem = data.parentLayoutId ? ANode.create('<li>') : ANode.create(TPL_LIST_ITEM);
+
+						listItem.setData(STR_LAYOUT_ID, data.layoutId);
+
+						listItem.append(newTab);
+
+						if (data.parentLayoutId) {
+							var parentItem = navBlock.one('#layout_' + data.parentLayoutId);
+
+							if (parentItem) {
+								var parentListItem = parentItem.one('ul');
+
+								if (parentListItem) {
+									parentListItem.append(listItem);
+								}
+							}
+						}
+						else {
+							listItem.addClass('lfr-nav-sortable lfr-nav-updateable sortable-item');
+
+							instance._createDeleteButton(listItem);
+
+							navBlock.one('ul').append(listItem);
+						}
+
+						Liferay.fire(
+							'navigation',
+							{
+								item: listItem,
+								type: 'add'
+							}
+						);
+					},
+
 					_onKeypress: function(event) {
 						var instance = this;
 
@@ -352,8 +448,40 @@ AUI.add(
 						}
 					},
 
+					_onPreviewPageTitle: function(event) {
+						var instance = this;
+
+						var data = event.data;
+
+						if (data.name === STR_EMPTY || data.hidden) {
+							instance._clearTempPage();
+						}
+						else {
+							var navBlock = instance.get('navBlock');
+
+							if (!data.parentLayoutId) {
+								instance._tempTab.one('span').text(data.name);
+
+								navBlock.one('ul').append(instance._tempTab);
+							}
+							else {
+								var parentItem = navBlock.one('#layout_' + data.parentLayoutId);
+
+								if (parentItem) {
+									var parentListItem = parentItem.one('ul');
+
+									if (parentListItem) {
+										instance._tempChildTab.one('a').text(data.name);
+
+										parentListItem.append(instance._tempChildTab);
+									}
+								}
+							}
+						}
+					},
+
 					_optionsOpen: true,
-					_updateURL: ''
+					_updateURL: STR_EMPTY
 				}
 			}
 		);
@@ -364,7 +492,7 @@ AUI.add(
 			function(listItem, options) {
 				var instance = this;
 
-				var prototypeTemplate = instance._prototypeMenuTemplate || '';
+				var prototypeTemplate = instance._prototypeMenuTemplate || STR_EMPTY;
 
 				var prevVal = Lang.trim(options.prevVal);
 
@@ -416,7 +544,7 @@ AUI.add(
 					);
 				}
 
-				var editorContainer = A.Node.create(TPL_EDITOR);
+				var editorContainer = ANode.create(TPL_EDITOR);
 
 				var docClick = editorContainer.on(
 					'clickoutside',
@@ -484,7 +612,7 @@ AUI.add(
 
 				popoverContentBox.swallowEvent('click');
 
-				var toolbarField = A.Node.create(Lang.sub(TPL_FIELD_INPUT, [prevVal]));
+				var toolbarField = ANode.create(Lang.sub(TPL_FIELD_INPUT, [prevVal]));
 
 				toolbarBoundingBox.prepend(toolbarField);
 
@@ -593,7 +721,7 @@ AUI.add(
 						cmd: 'delete',
 						doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
 						groupId: themeDisplay.getSiteGroupId(),
-						layoutId: tab._LFR_layoutId,
+						layoutId: tab.getData(STR_LAYOUT_ID),
 						layoutSetBranchId: instance.get('layoutSetBranchId'),
 						p_auth: Liferay.authToken,
 						privateLayout: themeDisplay.isPrivateLayout()
@@ -722,9 +850,9 @@ AUI.add(
 								}
 							);
 
-							var newTab = A.Node.create(tabHtml);
+							var newTab = ANode.create(tabHtml);
 
-							listItem._LFR_layoutId = data.layoutId;
+							listItem.setData(STR_LAYOUT_ID, data.layoutId);
 
 							listItem.append(newTab);
 
@@ -794,7 +922,7 @@ AUI.add(
 					cmd: 'priority',
 					doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
 					groupId: themeDisplay.getSiteGroupId(),
-					layoutId: node._LFR_layoutId,
+					layoutId: node.getData(STR_LAYOUT_ID),
 					p_auth: Liferay.authToken,
 					priority: priority,
 					privateLayout: themeDisplay.isPrivateLayout()

@@ -88,6 +88,22 @@ public class JournalArticleStagedModelDataHandler
 	}
 
 	@Override
+	protected boolean countStagedModel(
+		PortletDataContext portletDataContext, JournalArticle article) {
+
+		if (portletDataContext.isPathProcessed(
+				ExportImportPathUtil.getModelPath(
+					article.getGroupId(),
+					JournalArticleResource.class.getName(),
+					article.getResourcePrimKey()))) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext, JournalArticle article)
 		throws Exception {
@@ -696,16 +712,6 @@ public class JournalArticleStagedModelDataHandler
 
 		portletDataContext.addReferenceElement(
 			article, articleElement, image, articleImagePath, false);
-	}
-
-	@Override
-	protected boolean isStagedModelCounted(
-		PortletDataContext portletDataContext, JournalArticle article) {
-
-		return portletDataContext.isPathProcessed(
-			ExportImportPathUtil.getModelPath(
-				article.getGroupId(), JournalArticleResource.class.getName(),
-				article.getResourcePrimKey()));
 	}
 
 	protected void prepareLanguagesForImport(JournalArticle article)

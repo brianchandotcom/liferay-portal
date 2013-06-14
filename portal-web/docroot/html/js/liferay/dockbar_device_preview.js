@@ -2,6 +2,7 @@ AUI.add(
 	'liferay-dockbar-device-preview',
 	function(A) {
 		var AObject = A.Object;
+		var AUA = A.UA;
 
 		var Lang = A.Lang;
 
@@ -9,13 +10,13 @@ AUI.add(
 
 		var Dockbar = Liferay.Dockbar;
 
-		var CLASS_SELECTED = 'selected';
-
 		var CSS_DEVICE_ITEM = '.lfr-device-item';
 
 		var CSS_DEVICE_PREVIEW_CONTENT = '.device-preview-content';
 
-		var CSS_SELECTED = '.' + CLASS_SELECTED;
+		var CSS_SELECTED = 'selected';
+
+		var SELECTOR_SELECTED = '.' + CSS_SELECTED;
 
 		var DIALOG_ALIGN_POINTS = [A.WidgetPositionAlign.CC, A.WidgetPositionAlign.CC];
 
@@ -81,12 +82,16 @@ AUI.add(
 
 						var devices = instance.get('devices');
 
-						AObject.each(
+						AObject.some(
 							devices,
 							function (item, index, collection) {
-								if (item.default) {
+								var selected = item.selected;
+
+								if (selected) {
 									instance._openDeviceDialog(item);
 								}
+
+								return selected;
 							}
 						);
 
@@ -105,7 +110,7 @@ AUI.add(
 						var eventHandles = [
 							instance._closePanelButton.on(STR_CLICK, instance._closePanel, instance),
 							instance._devicePreviewContent.delegate(STR_CLICK, instance._onDeviceClick, CSS_DEVICE_ITEM, instance)
-						]
+						];
 
 						var inputWidth = instance.get(STR_INPUT_WIDTH);
 
@@ -193,8 +198,8 @@ AUI.add(
 
 							var path = window.location.pathname;
 
-							if (A.UA && A.UA.ie < 10 && path === '/') {
-								uri = uri + '?';
+							if (AUA.ie && AUA.ie < 10 && path === '/') {
+								uri += '?';
 							}
 
 							Liferay.Util.openWindow(
@@ -208,7 +213,9 @@ AUI.add(
 						}
 						else {
 							dialog.setAttrs(dialogAttrs);
+
 							dialog.align(instance._devicePreviewNode, DIALOG_ALIGN_POINTS);
+
 							dialog.show();
 						}
 					},
@@ -223,8 +230,9 @@ AUI.add(
 						var selectedDevice = deviceList[deviceId];
 
 						if (selectedDevice) {
-							instance._devicePreviewContainer.all(CSS_SELECTED).removeClass(CLASS_SELECTED);
-							event.currentTarget.addClass(CLASS_SELECTED);
+							instance._devicePreviewContainer.all(SELECTOR_SELECTED).removeClass(CSS_SELECTED);
+
+							event.currentTarget.addClass(CSS_SELECTED);
 
 							instance._openDeviceDialog(selectedDevice);
 						}

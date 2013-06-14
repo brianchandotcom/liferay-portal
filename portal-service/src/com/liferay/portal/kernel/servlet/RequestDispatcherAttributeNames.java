@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.portlet.MimeResponse;
+
 /**
  * @author Shuyang Zhou
  */
@@ -41,6 +43,7 @@ public class RequestDispatcherAttributeNames {
 		_attributeNames.add(JavaConstants.JAVAX_SERVLET_INCLUDE_QUERY_STRING);
 		_attributeNames.add(JavaConstants.JAVAX_SERVLET_INCLUDE_REQUEST_URI);
 		_attributeNames.add(JavaConstants.JAVAX_SERVLET_INCLUDE_SERVLET_PATH);
+		_attributeNames.add(MimeResponse.MARKUP_HEAD_ELEMENT);
 	}
 
 }

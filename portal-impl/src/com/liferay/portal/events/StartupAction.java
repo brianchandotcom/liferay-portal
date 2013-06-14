@@ -46,6 +46,7 @@ import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.messageboards.util.MBMessageIndexer;
 
+import javax.portlet.MimeResponse;
 import javax.portlet.PortletRequest;
 
 /**
@@ -78,6 +79,9 @@ public class StartupAction extends SimpleAction {
 
 		DistributedRegistry.registerDistributed(
 			PortletRequest.LIFECYCLE_PHASE, Direction.DUPLEX, MatchType.EXACT);
+		DistributedRegistry.registerDistributed(
+			MimeResponse.MARKUP_HEAD_ELEMENT, Direction.DUPLEX,
+			MatchType.EXACT);
 		DistributedRegistry.registerDistributed(WebKeys.class);
 
 		Intraband intraband = MPIHelperUtil.getIntraband();

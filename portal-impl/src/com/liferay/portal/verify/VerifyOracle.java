@@ -34,7 +34,7 @@ import java.sql.SQLException;
  */
 public class VerifyOracle extends VerifyProcess {
 
-	protected void alterColumns() throws Exception {
+	protected void alterVarchar2Columns() throws Exception {
 		int buildNumber = getBuildNumber();
 
 		Connection con = null;
@@ -118,7 +118,7 @@ public class VerifyOracle extends VerifyProcess {
 			return;
 		}
 
-		alterColumns();
+		alterVarchar2Columns();
 	}
 
 	protected boolean isBetweenBuildNumbers(

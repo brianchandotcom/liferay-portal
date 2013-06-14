@@ -698,6 +698,16 @@ public class JournalArticleStagedModelDataHandler
 			article, articleElement, image, articleImagePath, false);
 	}
 
+	@Override
+	protected boolean isStagedModelCounted(
+		PortletDataContext portletDataContext, JournalArticle article) {
+
+		return portletDataContext.isPathProcessed(
+			ExportImportPathUtil.getModelPath(
+				article.getGroupId(), JournalArticleResource.class.getName(),
+				article.getResourcePrimKey()));
+	}
+
 	protected void prepareLanguagesForImport(JournalArticle article)
 		throws PortalException {
 

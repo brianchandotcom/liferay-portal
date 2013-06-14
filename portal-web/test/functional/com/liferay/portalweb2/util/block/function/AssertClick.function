@@ -1,0 +1,81 @@
+<definition>
+	<command name="assertPartialTextClickAt">
+		<execute function="AssertTextEquals#assertPartialText" />
+
+		<execute selenium="clickAt" />
+	</command>
+
+	<command name="assertPartialTextClickAtAndWait">
+		<execute function="AssertTextEquals#assertPartialText" />
+
+		<execute selenium="clickAtAndWait" />
+	</command>
+
+	<command name="assertTextClick">
+		<execute function="AssertTextEquals#assertText" />
+
+		<execute selenium="click" />
+	</command>
+
+	<command name="assertTextClickAndWait">
+		<execute function="AssertTextEquals#assertText" />
+
+		<execute selenium="clickAndWait" />
+	</command>
+
+	<command name="assertTextClickAt">
+		<execute function="AssertTextEquals#assertText" />
+
+		<execute selenium="clickAt" />
+	</command>
+
+	<command name="assertTextClickAtAndWait">
+		<execute function="AssertTextEquals#assertText" />
+
+		<execute selenium="clickAtAndWait" />
+	</command>
+
+	<command name="assertTextClickAtAndWaitCKEditor">
+		<execute selenium="waitForVisible" argument1="//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]" />
+
+		<execute function="AssertClick#assertTextClickAtAndWait" />
+	</command>
+
+	<command name="assertTextClickAtClickDockbar">
+		<execute selenium="clickAt" argument1="//div[@id='_145_dockbar']" argument2="" />
+
+		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/aui/aui-editable-deprecated/aui-editable-deprecated-min.js')]" />
+
+		<execute function="AssertClick#assertTextClickAt" />
+	</command>
+
+	<command name="assertValueClickAt">
+		<execute function="AssertTextEquals#assertValue" />
+
+		<execute selenium="clickAt" />
+	</command>
+
+	<command name="assertValueClickAtAndWait">
+		<execute function="AssertTextEquals#assertValue" />
+
+		<execute selenium="clickAtAndWait" />
+	</command>
+
+	<command name="assertValueClickAtAndWaitCKEditor">
+		<execute selenium="waitForVisible" argument1="//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]" />
+
+		<execute function="AssertClick#assertValueClickAtAndWait" />
+	</command>
+
+	<command name="pauseAssertTextClickAt">
+		<execute selenium="pause" argument1="1000" />
+
+		<execute function="AssertClick#assertTextClickAt" />
+	</command>
+
+	<command name="pauseAssertTextClickAtAndWait">
+		<execute selenium="pause" argument1="1000" />
+
+		<execute function="AssertClick#assertTextClickAtAndWait" />
+	</command>
+</definition>

@@ -5,6 +5,15 @@
 		</default>
 	</command>
 
+	<command name="assertClick">
+		<case comparator="contains" locator1="/input">
+			<execute function="AssertClick#assertValueClickAt" />
+		</case>
+		<default>
+			<execute function="AssertClick#assertTextClickAt" />
+		</default>
+	</command>
+
 	<command name="assertElementNotPresent">
 		<default>
 			<execute function="AssertElementNotPresent#assertElementNotPresent" />

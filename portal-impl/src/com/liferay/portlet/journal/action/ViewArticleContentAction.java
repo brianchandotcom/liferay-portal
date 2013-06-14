@@ -18,20 +18,15 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portal.webserver.WebServerServletTokenUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
@@ -39,16 +34,12 @@ import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.impl.JournalArticleImpl;
-import com.liferay.portlet.journal.service.JournalArticleImageLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 import com.liferay.portlet.journal.util.JournalConverterUtil;
 import com.liferay.portlet.journal.util.JournalUtil;
 
-import java.io.File;
-
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
@@ -61,6 +52,7 @@ import org.apache.struts.action.ActionMapping;
 /**
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
+ * @author Roberto Díaz
  */
 public class ViewArticleContentAction extends PortletAction {
 
@@ -199,78 +191,6 @@ public class ViewArticleContentAction extends PortletAction {
 			if (uploadPortletRequest != null) {
 				uploadPortletRequest.cleanUp();
 			}
-		}
-	}
-
-	protected void format(
-			long groupId, String articleId, double version,
-			String previewArticleId, Element root,
-			UploadPortletRequest uploadPortletRequest)
-		throws Exception {
-
-		List<Element> elements = root.elements();
-
-		for (Element element : elements) {
-			Element dynamicContent = element.element("dynamic-content");
-
-			String elInstanceId = element.attributeValue(
-				"instance-id", StringPool.BLANK);
-			String elName = element.attributeValue("name", StringPool.BLANK);
-			String elType = element.attributeValue("type", StringPool.BLANK);
-			String elContent = StringPool.BLANK;
-			String elLanguage = StringPool.BLANK;
-
-			if (dynamicContent != null) {
-				elContent = dynamicContent.getTextTrim();
-
-				elLanguage = dynamicContent.attributeValue(
-					"language-id", StringPool.BLANK);
-
-				if (!elLanguage.equals(StringPool.BLANK)) {
-					elLanguage = "_" + elLanguage;
-				}
-			}
-
-			if (elType.equals("image") && Validator.isNull(elContent)) {
-				File file = uploadPortletRequest.getFile(
-					"structure_image_" + elName + elLanguage);
-				byte[] bytes = FileUtil.getBytes(file);
-
-				if ((bytes != null) && (bytes.length > 0)) {
-					long imageId =
-						JournalArticleImageLocalServiceUtil.getArticleImageId(
-							groupId, previewArticleId, version, elInstanceId,
-							elName, elLanguage, true);
-
-					String token = WebServerServletTokenUtil.getToken(imageId);
-
-					dynamicContent.setText(
-						"/image/journal/article?img_id=" + imageId + "&t=" +
-							token);
-
-					ImageLocalServiceUtil.updateImage(imageId, bytes);
-				}
-				else {
-					if (Validator.isNotNull(articleId)) {
-						long imageId =
-							JournalArticleImageLocalServiceUtil.
-								getArticleImageId(
-									groupId, articleId, version, elInstanceId,
-									elName, elLanguage);
-
-						String token = WebServerServletTokenUtil.getToken(
-							imageId);
-
-						dynamicContent.setText(
-							"/image/journal/article?img_id=" + imageId +
-								"&t=" + token);
-					}
-				}
-			}
-
-			format(
-				groupId, articleId, version, previewArticleId, element,
-				uploadPortletRequest);
 		}
 	}
 

@@ -149,6 +149,10 @@ request.setAttribute("control_panel.jsp-ppid", ppid);
 
 									<h1>
 										<%= curGroup.getDescriptiveName(themeDisplay.getLocale()) %>
+
+										<c:if test="<%= !Validator.equals(controlPanelCategory, PortletCategoryKeys.CURRENT_SITE) %>">
+											<%@ include file="/html/portal/layout/view/control_panel_site_selector.jspf" %>
+										</c:if>
 									</h1>
 								</aui:row>
 								<aui:row>

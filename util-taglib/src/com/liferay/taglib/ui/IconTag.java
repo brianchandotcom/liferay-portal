@@ -170,9 +170,14 @@ public class IconTag extends IncludeTag {
 					(PortletResponse)request.getAttribute(
 						JavaConstants.JAVAX_PORTLET_RESPONSE);
 
+				String namespace = StringPool.BLANK;
+
+				if (portletResponse != null) {
+					namespace = portletResponse.getNamespace();
+				}
+
 				id = PortalUtil.getUniqueElementId(
-					getOriginalServletRequest(), portletResponse.getNamespace(),
-					id);
+					getOriginalServletRequest(), namespace, id);
 			}
 			else {
 				id = PortalUtil.generateRandomKey(

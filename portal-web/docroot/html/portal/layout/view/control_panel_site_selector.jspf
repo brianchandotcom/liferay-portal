@@ -1,0 +1,55 @@
+<%--
+/**
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%
+Collection<Portlet> siteAdministrationPortlets = PortalUtil.getControlPanelPortlets(themeDisplay.getCompanyId(), PortletCategoryKeys.SITE_ADMINISTRATION);
+
+List<Group> manageableSites = GroupServiceUtil.getManageableSites(siteAdministrationPortlets, PropsValues.CONTROL_PANEL_NAVIGATION_MAX_SITES);
+
+Group userGroup = user.getGroup();
+
+if (PortletPermissionUtil.hasControlPanelAccessPermission(permissionChecker, userGroup.getGroupId(), siteAdministrationPortlets)) {
+	manageableSites.add(0, userGroup);
+}
+
+if (PortalUtil.isCompanyControlPanelVisible(themeDisplay)) {
+	Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(themeDisplay.getCompanyId());
+
+	if (!manageableSites.contains(companyGroup)) {
+		manageableSites.add(0, companyGroup);
+	}
+}
+
+manageableSites.remove(curGroup);
+%>
+
+<liferay-ui:icon-menu cssClass="control-panel-site-selector" direction="down" extended="<%= false %>" icon="" id="controlPanelSiteSelector" message="">
+
+	<%
+	for (Group group : manageableSites) {
+	%>
+
+		<liferay-ui:icon
+			message="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
+			src="<%= group.getIconURL(themeDisplay) %>"
+			url='<%= HttpUtil.setParameter(PortalUtil.getCurrentURL(request), "doAsGroupId", group.getGroupId()) %>'
+		/>
+
+	<%
+	}
+	%>
+
+</liferay-ui:icon-menu>

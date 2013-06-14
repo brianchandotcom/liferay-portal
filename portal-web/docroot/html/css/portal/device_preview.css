@@ -15,47 +15,95 @@
 			display: inline;
 		}
 
+		.field {
+			margin-bottom: 0;
+		}
+
 		.lfr-device-item {
 			cursor: pointer;
 			height: 60px;
 			padding: 10px;
 			position: relative;
 
-			.desktop {
-				background: url(@theme_image_path@/device_preview/desktop_off.png) no-repeat;
-				height: 100%;
+			.rotation, .device {
+				background-repeat: no-repeat;
+				height: 58px;
+				left: 5px;
+				position: absolute;
+				top: 10px;
+				width: 58px;
 			}
 
-			.autosize {
-				background: url(@theme_image_path@/device_preview/full_off.png) no-repeat;
-				height: 100%;				
-			}
+			.device {
+				height: 60px;
+				background-repeat: no-repeat;
 
-			.smartphone {
-				background: url(@theme_image_path@/device_preview/smartphone_off.png) no-repeat;
-				height: 100%;
-			}
+				&.desktop {
+					background-image: url(@theme_image_path@/device_preview/desktop_off.png);
+				}
 
-			.tablet {
-				background: url(@theme_image_path@/device_preview/tablet_off.png) no-repeat;
-				height: 100%;
+				&.autosize {
+					background-image: url(@theme_image_path@/device_preview/full_size_off.png);
+				}
+
+				&.smartphone {
+					background-image: url(@theme_image_path@/device_preview/mobile_off.png);
+				}
+
+				&.tablet{
+					background-image: url(@theme_image_path@/device_preview/tablet_off.png);
+				}
 			}
 
 			&.selected {
-				.desktop {
-					background-image: url(@theme_image_path@/device_preview/desktop_on.png);
+				.device {
+					&.desktop {
+						background-image: url(@theme_image_path@/device_preview/desktop_active.png);
+					}
+
+					&.autosize {
+						background-image: url(@theme_image_path@/device_preview/full_size_active.png);
+					}
+
+					&.smartphone {
+						background-image: url(@theme_image_path@/device_preview/mobile_vertical_with_arrow.png);
+					}
+
+					&.tablet {
+						background-image: url(@theme_image_path@/device_preview/tablet_vertical_with_arrow.png);
+					}
 				}
 
-				.full {
-					background-image: url(@theme_image_path@/device_preview/full_on.png);
-				}
+				&:hover{
+					.smartphone.rotation {
+						background-image: url(@theme_image_path@/device_preview/mobile_horizontal_opacity.png);
+					}
 
-				.smartphone {
-					background-image: url(@theme_image_path@/device_preview/smartphone_on.png);
-				}
+					.tablet.rotation {
+						background-image: url(@theme_image_path@/device_preview/tablet_horizontal_opacity.png);
+					}
+				}	
 
-				.tablet {
-					background-image: url(@theme_image_path@/device_preview/tablet_on.png);
+				&.rotated {
+					.device {
+						&.smartphone {
+							background-image: url(@theme_image_path@/device_preview/mobile_horizontal_with_arrow.png);
+						}
+
+						&.tablet {
+							background-image: url(@theme_image_path@/device_preview/tablet_horizontal_with_arrow.png);
+						}
+					}
+
+					&:hover {
+						.smartphone.rotation {
+							background-image: url(@theme_image_path@/device_preview/mobile_vertical_opacity.png);
+						}
+
+						.tablet.rotation {
+							background-image: url(@theme_image_path@/device_preview/tablet_vertical_opacity.png);
+						}					
+					}
 				}
 			}
 		}

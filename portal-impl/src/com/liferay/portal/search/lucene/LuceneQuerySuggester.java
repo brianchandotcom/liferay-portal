@@ -115,8 +115,10 @@ public class LuceneQuerySuggester implements QuerySuggester {
 	public String[] suggestKeywordQueries(SearchContext searchContext, int max)
 		throws SearchException {
 
+		IndexSearcher indexSearcher = null;
+
 		try {
-			IndexSearcher indexSearcher = LuceneHelperUtil.getSearcher(
+			indexSearcher = LuceneHelperUtil.getSearcher(
 				searchContext.getCompanyId(), true);
 
 			BooleanQuery suggestKeywordQuery = new BooleanQuery();
@@ -155,6 +157,9 @@ public class LuceneQuerySuggester implements QuerySuggester {
 		}
 		catch (Exception e) {
 			throw new SearchException("Unable to suggest query", e);
+		}
+		finally {
+			LuceneHelperUtil.closeSearcher(indexSearcher);
 		}
 	}
 
@@ -290,6 +295,8 @@ public class LuceneQuerySuggester implements QuerySuggester {
 			SearchContext searchContext, String languageId, int max)
 		throws SearchException {
 
+		IndexSearcher indexSearcher = null;
+
 		try {
 			Map<String, List<String>> suggestions =
 				new LinkedHashMap<String, List<String>>();
@@ -301,7 +308,7 @@ public class LuceneQuerySuggester implements QuerySuggester {
 					QueryIndexingHitsProcessor.SCORES_THRESHOLD_DEFAULT;
 			}
 
-			IndexSearcher indexSearcher = LuceneHelperUtil.getSearcher(
+			indexSearcher = LuceneHelperUtil.getSearcher(
 				searchContext.getCompanyId(), true);
 
 			List<IndexReader> indexReaders = new ArrayList<IndexReader>();
@@ -348,6 +355,9 @@ public class LuceneQuerySuggester implements QuerySuggester {
 		}
 		catch (IOException ioe) {
 			throw new SearchException("Unable to find suggestions", ioe);
+		}
+		finally {
+			LuceneHelperUtil.closeSearcher(indexSearcher);
 		}
 	}
 

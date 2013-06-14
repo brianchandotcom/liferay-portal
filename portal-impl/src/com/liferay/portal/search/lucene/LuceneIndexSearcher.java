@@ -299,7 +299,7 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 		finally {
 			close(boboBrowser);
 
-			close(indexSearcher);
+			LuceneHelperUtil.closeSearcher(indexSearcher);
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -397,7 +397,7 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 			throw new SearchException(e);
 		}
 		finally {
-			close(indexSearcher);
+			LuceneHelperUtil.closeSearcher(indexSearcher);
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -446,25 +446,6 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 					"Unable to clean up BoboIndexReader#_runtimeFacetDataMap",
 					e);
 			}
-		}
-	}
-
-	protected void close(IndexSearcher indexSearcher) {
-		if (indexSearcher == null) {
-			return;
-		}
-
-		try {
-			indexSearcher.close();
-
-			IndexReader indexReader = indexSearcher.getIndexReader();
-
-			if (indexReader != null) {
-				indexReader.close();
-			}
-		}
-		catch (IOException ioe) {
-			_log.error(ioe, ioe);
 		}
 	}
 

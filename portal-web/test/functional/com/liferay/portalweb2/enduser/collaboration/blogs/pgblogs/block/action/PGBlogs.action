@@ -3,6 +3,15 @@
 		<case locator-key1="PORTLET_TITLE">
 			<execute function="AssertTextEquals#assertText" value1="Blogs" />
 		</case>
+		<case locator-key1="ADD_ENTRY_BUTTON">
+			<execute function="AssertTextEquals#assertText" value1="Add Blog Entry" />
+		</case>
+		<case locator-key1="PERMISSIONS_BUTTON">
+			<execute function="AssertTextEquals#assertText" value1="Permissions" />
+		</case>
+		<case locator-key1="SUBSCRIBE_LINK">
+			<execute function="AssertTextEquals#assertText" value1="Subscribe" />
+		</case>
 		<case locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN">
 			<execute function="AssertTextEquals#assertPartialText" value1="The selected item was moved to the Recycle Bin. Undo" />
 		</case>

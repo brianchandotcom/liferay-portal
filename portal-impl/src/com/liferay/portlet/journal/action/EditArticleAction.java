@@ -16,7 +16,6 @@ package com.liferay.portlet.journal.action;
 
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -30,10 +29,8 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Layout;
@@ -55,8 +52,6 @@ import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.storage.Field;
-import com.liferay.portlet.dynamicdatamapping.storage.FieldConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 import com.liferay.portlet.journal.ArticleContentException;
@@ -79,12 +74,9 @@ import com.liferay.portlet.journal.util.JournalConverterUtil;
 import com.liferay.portlet.journal.util.JournalUtil;
 
 import java.io.File;
-import java.io.Serializable;
 
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -438,48 +430,6 @@ public class EditArticleAction extends PortletAction {
 		}
 	}
 
-	protected Map<String, byte[]> getImages(Fields fields, Locale locale)
-		throws Exception {
-
-		Map<String, byte[]> images = new HashMap<String, byte[]>();
-
-		Iterator<Field> iterator = fields.iterator();
-
-		while (iterator.hasNext()) {
-			Field field = iterator.next();
-
-			String dataType = field.getDataType();
-			String name = field.getName();
-
-			if (!dataType.equals(FieldConstants.IMAGE)) {
-				continue;
-			}
-
-			List<Serializable> values = field.getValues(locale);
-
-			for (int i = 0; i < values.size(); i++) {
-				String content = (String)values.get(i);
-
-				if (content.equals("update")) {
-					continue;
-				}
-
-				StringBundler sb = new StringBundler(6);
-
-				sb.append(StringPool.UNDERLINE);
-				sb.append(name);
-				sb.append(StringPool.UNDERLINE);
-				sb.append(i);
-				sb.append(StringPool.UNDERLINE);
-				sb.append(LanguageUtil.getLanguageId(locale));
-
-				images.put(sb.toString(), UnicodeFormatter.hexToBytes(content));
-			}
-		}
-
-		return images;
-	}
-
 	protected String getSaveAndContinueRedirect(
 			PortletConfig portletConfig, ActionRequest actionRequest,
 			JournalArticle article, String redirect)
@@ -664,24 +614,9 @@ public class EditArticleAction extends PortletAction {
 
 			Locale locale = LocaleUtil.fromLanguageId(languageId);
 
-			DDMStructure ddmStructure =
-				DDMStructureLocalServiceUtil.fetchStructure(
-					groupId, PortalUtil.getClassNameId(JournalArticle.class),
-					structureId);
-
-			if (ddmStructure == null) {
-				ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
-					themeDisplay.getCompanyGroupId(),
-					PortalUtil.getClassNameId(JournalArticle.class),
-					structureId);
-			}
-
-			Fields fields = DDMUtil.getFields(
-				ddmStructure.getStructureId(), serviceContext);
-
-			images = getImages(fields, locale);
-
-			content = JournalConverterUtil.getContent(ddmStructure, fields);
+			content = ActionUtil.getContentAndImages(
+				groupId, structureId, images, locale, cmd, themeDisplay,
+				serviceContext);
 		}
 
 		Boolean fileItemThresholdSizeExceeded =

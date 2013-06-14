@@ -79,7 +79,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 
 		try {
 			portletDataContext.addDeletionSystemEventClassNames(
-				getDeletionEventClassNames());
+				getDeletionSystemEventClassNames());
 
 			return doExportData(
 				portletDataContext, portletId, portletPreferences);
@@ -107,7 +107,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	}
 
 	@Override
-	public String[] getDeletionEventClassNames() {
+	public String[] getDeletionSystemEventClassNames() {
 		return _deletionSystemEventClassNames;
 	}
 

@@ -53,6 +53,7 @@ import com.liferay.portal.security.pacl.jndi.PACLInitialContextFactoryBuilder;
 import com.liferay.portal.security.pacl.servlet.PACLRequestDispatcherWrapper;
 import com.liferay.portal.servlet.DirectRequestDispatcherFactoryImpl;
 import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
+import com.liferay.portal.spring.bean.BeanReferenceAnnotationBeanPostProcessor;
 import com.liferay.portal.spring.context.PortletApplicationContext;
 import com.liferay.portal.spring.util.FilterClassLoader;
 import com.liferay.portal.template.AbstractProcessingTemplate;
@@ -457,7 +458,11 @@ public class PortalSecurityManagerImpl extends SecurityManager
 				ClassLoader callerClassLoader = ClassLoaderUtil.getClassLoader(
 					callerClass);
 
-				if (callerClassLoader == classLoader) {
+				if ((callerClassLoader == classLoader) &&
+					(!callerClass.getName().equals(
+						BeanReferenceAnnotationBeanPostProcessor.class.
+							getName()))) {
+
 					return bean;
 				}
 			}

@@ -178,11 +178,11 @@ public abstract class BaseActionableDynamicQuery
 	}
 
 	protected Object executeDynamicQuery(
-			Method dynamicQueryMethod, Object... args)
+			Method dynamicQueryMethod, Object... arguments)
 		throws PortalException, SystemException {
 
 		try {
-			return dynamicQueryMethod.invoke(_baseLocalService, args);
+			return dynamicQueryMethod.invoke(_baseLocalService, arguments);
 		}
 		catch (InvocationTargetException ite) {
 			Throwable throwable = ite.getCause();

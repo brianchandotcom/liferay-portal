@@ -1587,6 +1587,8 @@ AUI.add(
 					},
 
 					_hideMessage: function(container) {
+						var instance = this;
+
 						container = container || instance._portletMessageContainer;
 
 						container.hide();

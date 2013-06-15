@@ -75,8 +75,6 @@ public class SampleSQLBuilder {
 	public SampleSQLBuilder(Map<String, String> arguments) throws Exception {
 		String baseDir = arguments.get("sample.sql.base.dir");
 
-		_assetPublisherFilter = GetterUtil.getBoolean(
-			arguments.get("sample.sql.asset.publisher.config.filter"));
 		_dbType = arguments.get("sample.sql.db.type");
 		_maxAssetCategoryCount = GetterUtil.getInteger(
 			arguments.get("sample.sql.max.asset.category.count"));
@@ -143,8 +141,16 @@ public class SampleSQLBuilder {
 		_outputMerge = GetterUtil.getBoolean(
 			arguments.get("sample.sql.output.merge"));
 
+		boolean assetPublisherFilterEnabled = false;
+
+		if ((_maxAssetPublisherPageCount * _maxAssetPublisherFilterRuleCount) >
+				0) {
+
+			assetPublisherFilterEnabled = true;
+		}
+
 		_dataFactory = new DataFactory(
-			baseDir, _assetPublisherFilter, _maxAssetCategoryCount,
+			baseDir, assetPublisherFilterEnabled, _maxAssetCategoryCount,
 			_maxAssetEntryToAssetCategoryCount, _maxAssetEntryToAssetTagCount,
 			_maxAssetPublisherFilterRuleCount, _maxAssetTagCount,
 			_maxAssetVocabularyCount, _maxBlogsEntryCount,
@@ -505,7 +511,6 @@ public class SampleSQLBuilder {
 
 	private static final int _WRITER_BUFFER_SIZE = 16 * 1024;
 
-	private boolean _assetPublisherFilter;
 	private DataFactory _dataFactory;
 	private DB _db;
 	private String _dbType;

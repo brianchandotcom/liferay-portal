@@ -127,7 +127,7 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 
 							if (expanded) {
 								types.each(
-									function (item, index, collection) {
+									function(item, index, collection) {
 										if (item.get('checked')) {
 											values.item(index).set('disabled', false);
 										}

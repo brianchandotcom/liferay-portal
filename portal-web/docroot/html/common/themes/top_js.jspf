@@ -260,7 +260,7 @@
 		%>
 
 		Liferay.AUI = {
-			getAvailableLangPath: function () {
+			getAvailableLangPath: function() {
 				return '<%= PortalUtil.getStaticResourceURL(request, "available_languages.jsp", javaScriptLastModified) %>';
 			},
 			getCombine: function() {
@@ -285,7 +285,7 @@
 			getJavaScriptRootPath: function() {
 				return '<%= javaScriptRootPath %>';
 			},
-			getLangPath: function () {
+			getLangPath: function() {
 				return '<%= PortalUtil.getStaticResourceURL(request, "aui_lang.jsp", javaScriptLastModified) %>';
 			}
 		};

@@ -355,7 +355,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 
 							if (expanded) {
 								types.each(
-									function (item, index, collection) {
+									function(item, index, collection) {
 										if (item.get('checked')) {
 											values.item(index).set('disabled', false);
 										}

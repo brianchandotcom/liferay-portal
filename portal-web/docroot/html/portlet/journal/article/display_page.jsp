@@ -220,7 +220,7 @@ Group parentGroup = themeDisplay.getSiteGroup();
 										},
 										{
 											on: {
-												click: function () {
+												click: function() {
 													dialog.hide();
 												}
 											},

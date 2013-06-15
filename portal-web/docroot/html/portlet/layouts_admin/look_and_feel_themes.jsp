@@ -277,7 +277,7 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 		Liferay.provide(
 			window,
 			'<portlet:namespace /><%= device %>selectColorScheme',
-			function (id) {
+			function(id) {
 				var A = AUI();
 
 				var colorSchemeInput = A.one(id);
@@ -292,7 +292,7 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 		Liferay.provide(
 			window,
 			'<portlet:namespace /><%= device %>selectTheme',
-			function (themeId, colorSchemesDisabled) {
+			function(themeId, colorSchemesDisabled) {
 				var A = AUI();
 
 				A.one('#<portlet:namespace /><%= device %>' + themeId).set('checked', true);

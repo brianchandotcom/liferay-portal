@@ -737,7 +737,7 @@ if (Validator.isNotNull(content)) {
 
 		editDDMTemplate.on(
 			'click',
-			function (event) {
+			function(event) {
 				Liferay.Util.openWindow(
 					{
 						id: windowId,

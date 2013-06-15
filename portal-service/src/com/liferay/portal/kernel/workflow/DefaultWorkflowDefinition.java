@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.workflow;
 
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.InputStream;
@@ -61,7 +62,7 @@ public class DefaultWorkflowDefinition
 
 	@Override
 	public String getTitle(String languageId) {
-		return getTitle();
+		return LocalizationUtil.getLocalization(getTitle(), languageId);
 	}
 
 	@Override

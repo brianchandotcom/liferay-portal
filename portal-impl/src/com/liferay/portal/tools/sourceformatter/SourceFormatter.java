@@ -248,7 +248,7 @@ public class SourceFormatter {
 			@Override
 			public void run() {
 				try {
-					_formatJSP();
+					_formatJava();
 					_formatAntXML();
 					_formatDDLStructuresXML();
 					_formatFriendlyURLRoutesXML();
@@ -276,7 +276,7 @@ public class SourceFormatter {
 			@Override
 			public void run() {
 				try {
-					_formatJava();
+					_formatJSP();
 				}
 				catch (Exception e) {
 					e.printStackTrace();

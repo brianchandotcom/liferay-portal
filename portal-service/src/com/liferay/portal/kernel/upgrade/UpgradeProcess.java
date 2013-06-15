@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.upgrade.util.UpgradeProcessThreadLocal;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
 
@@ -175,10 +176,15 @@ public abstract class UpgradeProcess extends BaseDBProcess {
 				_log.info("Upgrading " + getClass().getName());
 			}
 
+			UpgradeProcessThreadLocal.setThreshold(getThreshold());
+
 			doUpgrade();
 		}
 		catch (Exception e) {
 			throw new UpgradeException(e);
+		}
+		finally {
+			UpgradeProcessThreadLocal.setThreshold(0);
 		}
 	}
 

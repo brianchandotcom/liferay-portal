@@ -174,7 +174,7 @@ public class ResourcePermissionLocalServiceImpl
 			long resourceActionBitwiseValue)
 		throws SystemException {
 
-		List<Role> roles = rolePersistence.findByName(roleName);
+		List<Role> roles = roleLocalService.getRolesBySQL(0, roleName);
 
 		if (roles.isEmpty()) {
 			return;

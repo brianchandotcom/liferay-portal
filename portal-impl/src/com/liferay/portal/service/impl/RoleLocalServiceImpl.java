@@ -23,6 +23,10 @@ import com.liferay.portal.kernel.cache.Lifecycle;
 import com.liferay.portal.kernel.cache.ThreadLocalCachable;
 import com.liferay.portal.kernel.cache.ThreadLocalCache;
 import com.liferay.portal.kernel.cache.ThreadLocalCacheManager;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
+import com.liferay.portal.kernel.dao.orm.SQLQuery;
+import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -32,10 +36,14 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.upgrade.util.UpgradeProcessThreadLocal;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
@@ -224,7 +232,43 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		role.setSubtype(subtype);
 		role.setExpandoBridgeAttributes(serviceContext);
 
-		rolePersistence.update(role);
+		if (UpgradeProcessThreadLocal.getThreshold().equals(
+				ReleaseInfo.RELEASE_6_1_0_BUILD_NUMBER)) {
+
+			Session session = rolePersistence.openSession();
+
+			try {
+				SQLQuery sqlQuery = session.createSQLQuery(
+					"insert into Role_ (roleId, companyId, classNameId, " +
+						"classPK, name, title, description, type_, subtype) " +
+						"values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+				QueryPos qPos = QueryPos.getInstance(sqlQuery);
+
+				qPos.add(role.getRoleId());
+				qPos.add(role.getCompanyId());
+				qPos.add(role.getClassNameId());
+				qPos.add(role.getClassPK());
+				qPos.add(role.getName());
+				qPos.add(role.getTitle());
+				qPos.add(role.getDescription());
+				qPos.add(role.getType());
+				qPos.add(role.getSubtype());
+
+				sqlQuery.executeUpdate();
+			}
+			catch (Exception e) {
+				throw new SystemException(e);
+			}
+			finally {
+				rolePersistence.closeSession(session);
+
+				rolePersistence.clearCache();
+			}
+		}
+		else {
+			rolePersistence.update(role);
+		}
 
 		// Resources
 
@@ -316,9 +360,11 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	public void checkSystemRoles(long companyId)
 		throws PortalException, SystemException {
 
+		List<Role> roles = getRolesBySQL(companyId, null);
+
 		String companyIdHexString = StringUtil.toHexString(companyId);
 
-		for (Role role : roleFinder.findBySystem(companyId)) {
+		for (Role role : roles) {
 			_systemRolesMap.put(
 				companyIdHexString.concat(role.getName()), role);
 		}
@@ -708,6 +754,134 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			Role role = getRole(roleId);
 
 			roles.add(role);
+		}
+
+		return roles;
+	}
+
+	/**
+	 * Returns all the roles with the companyId and/or name.
+	 *
+	 * @param  companyId the primary key of the company (optionally <code>0
+	 * 	       </code>)
+	 * @param  name the name of the role (optionally <code>null</code>; this
+	 *         will return all system roles)
+	 * @return the roles with the companyId and/or name
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Role> getRolesBySQL(long companyId, String name)
+		throws SystemException {
+
+		List<Role> roles = new ArrayList<Role>();
+
+		StringBundler sb = null;
+
+		if (Validator.isNull(name)) {
+			sb = new StringBundler(15);
+		}
+		else {
+			sb = new StringBundler(3);
+		}
+
+		if (UpgradeProcessThreadLocal.getThreshold().intValue() >=
+				ReleaseInfo.RELEASE_6_2_0_BUILD_NUMBER) {
+
+			sb.append(_SELECT_SQL_PREFIX_6_2_0);
+		}
+		else {
+			sb.append(_SELECT_SQL_PREFIX_PRE_6_2_0);
+		}
+
+		if (companyId > 0) {
+			sb.append("companyId = ? and ");
+		}
+
+		if (Validator.isNull(name)) {
+			sb.append(StringPool.OPEN_PARENTHESIS);
+			sb.append("name = 'Administrator' or ");
+			sb.append("name = 'Guest' or ");
+			sb.append("name = 'Organization Administrator' or ");
+			sb.append("name = 'Organization Member' or ");
+			sb.append("name = 'Organization Owner' or ");
+			sb.append("name = 'Owner' or ");
+			sb.append("name = 'Site Administrator' or ");
+			sb.append("name = 'Site Member' or ");
+			sb.append("name = 'Site Owner' or ");
+			sb.append("name = 'Power User' or ");
+			sb.append("name = 'User'");
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+		}
+		else {
+			sb.append("name = ?");
+		}
+
+		Session session = rolePersistence.openSession();
+
+		try {
+			SQLQuery sqlQuery = session.createSQLQuery(sb.toString());
+
+			sqlQuery.addScalar("roleId", Type.LONG);
+			sqlQuery.addScalar("companyId", Type.LONG);
+			sqlQuery.addScalar("classNameId", Type.LONG);
+			sqlQuery.addScalar("classPK", Type.LONG);
+			sqlQuery.addScalar("name", Type.STRING);
+			sqlQuery.addScalar("title", Type.STRING);
+			sqlQuery.addScalar("description", Type.STRING);
+			sqlQuery.addScalar("type_", Type.INTEGER);
+			sqlQuery.addScalar("subtype", Type.STRING);
+
+			if (UpgradeProcessThreadLocal.getThreshold().intValue() >=
+					ReleaseInfo.RELEASE_6_2_0_BUILD_NUMBER) {
+
+				sqlQuery.addScalar("uuid_", Type.STRING);
+				sqlQuery.addScalar("userId", Type.LONG);
+				sqlQuery.addScalar("userName", Type.STRING);
+				sqlQuery.addScalar("createDate", Type.TIMESTAMP);
+				sqlQuery.addScalar("modifiedDate", Type.TIMESTAMP);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(sqlQuery);
+
+			if (companyId > 0) {
+				qPos.add(companyId);
+			}
+
+			if (Validator.isNotNull(name)) {
+				qPos.add(name);
+			}
+
+			List<Object[]> roleArrays = sqlQuery.list(true);
+
+			for (Object[] roleArray : roleArrays) {
+				Role role = rolePersistence.create((Long)roleArray[0]);
+
+				role.setCompanyId((Long)roleArray[1]);
+				role.setClassNameId((Long)roleArray[2]);
+				role.setClassPK((Long)roleArray[3]);
+				role.setName((String)roleArray[4]);
+				role.setTitle((String)roleArray[5]);
+				role.setDescription((String)roleArray[6]);
+				role.setType((Integer)roleArray[7]);
+				role.setSubtype((String)roleArray[8]);
+
+				if (UpgradeProcessThreadLocal.getThreshold().intValue() >=
+						ReleaseInfo.RELEASE_6_2_0_BUILD_NUMBER) {
+
+					role.setUuid((String)roleArray[9]);
+					role.setUserId((Long)roleArray[10]);
+					role.setUserName((String)roleArray[11]);
+					role.setCreateDate(new Date((Long)roleArray[12]));
+					role.setModifiedDate(new Date((Long)roleArray[13]));
+				}
+
+				roles.add(role);
+			}
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			rolePersistence.closeSession(session);
 		}
 
 		return roles;
@@ -1365,28 +1539,49 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	}
 
 	protected void checkSystemRole(
-			long companyId, String name, Map<Locale, String> descriptionMap,
-			int type)
+			long companyId, final String name,
+			Map<Locale, String> descriptionMap, int type)
 		throws PortalException, SystemException {
 
 		String companyIdHexString = StringUtil.toHexString(companyId);
 
-		String key = companyIdHexString.concat(name);
+		List<Role> roles = getRolesBySQL(companyId, name);
 
-		Role role = _systemRolesMap.get(key);
+		for (Role role : roles) {
+			_systemRolesMap.put(
+				companyIdHexString.concat(role.getName()), role);
+		}
 
-		try {
-			if (role == null) {
-				role = rolePersistence.findByC_N(companyId, name);
-			}
+		Role role = _systemRolesMap.get(companyIdHexString.concat(name));
 
+		if (role != null) {
 			if (!descriptionMap.equals(role.getDescriptionMap())) {
 				role.setDescriptionMap(descriptionMap);
 
-				roleLocalService.updateRole(role);
+				Session session = rolePersistence.openSession();
+
+				try {
+					SQLQuery sqlQuery = session.createSQLQuery(
+						"update Role_ set description = ? where roleId = ?");
+
+					QueryPos qPos = QueryPos.getInstance(sqlQuery);
+
+					qPos.add(role.getDescription());
+					qPos.add(role.getRoleId());
+
+					sqlQuery.executeUpdate();
+				}
+				catch (Exception e) {
+					throw new SystemException(e);
+				}
+				finally {
+					rolePersistence.closeSession(session);
+
+					rolePersistence.clearCache();
+				}
 			}
 		}
-		catch (NoSuchRoleException nsre) {
+		else {
 			User user = userLocalService.getDefaultUser(companyId);
 
 			role = roleLocalService.addRole(
@@ -1398,7 +1593,12 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			}
 		}
 
-		_systemRolesMap.put(key, role);
+		roles = getRolesBySQL(companyId, name);
+
+		for (Role role2 : roles) {
+			_systemRolesMap.put(
+				companyIdHexString.concat(role2.getName()), role2);
+		}
 	}
 
 	protected String[] getDefaultControlPanelPortlets() {
@@ -1482,6 +1682,15 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		catch (NoSuchRoleException nsre) {
 		}
 	}
+
+	private static final String _SELECT_SQL_PREFIX_6_2_0 =
+		"select roleId, companyId, classNameId, classPK, name, title, " +
+			"description, type_, subtype, uuid_, userId, userName, " +
+			"createDate, modifiedDate from Role_ where ";
+
+	private static final String _SELECT_SQL_PREFIX_PRE_6_2_0 =
+		"select roleId, companyId, classNameId, classPK, name, title, " +
+			"description, type_, subtype from Role_ where ";
 
 	private Map<String, Role> _systemRolesMap = new HashMap<String, Role>();
 

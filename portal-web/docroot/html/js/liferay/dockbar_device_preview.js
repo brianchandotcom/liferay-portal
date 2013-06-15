@@ -169,8 +169,10 @@ AUI.add(
 						return {
 							autoHeight: autoHeight,
 							autoWidth: autoWidth,
-							height: height,
-							width: width
+							size: {
+								height: height,
+								width: width
+							}
 						};
 					},
 
@@ -189,9 +191,9 @@ AUI.add(
 								},
 								autoSizeNode: instance._devicePreviewNode,
 								constrain: instance._devicePreviewNode,
-								height: dialogAttrs.height,
+								height: dialogAttrs.size.height,
 								render: instance._devicePreviewNode,
-								width: dialogAttrs.width
+								width: dialogAttrs.size.width
 							};
 
 							var uri = window.location.href;
@@ -208,14 +210,20 @@ AUI.add(
 									dialogIframe: DIALOG_IFRAME_DEFAULTS,
 									id: instance._dialogId,
 									uri: uri
+								},
+								function (dialogWindow) {
+									dialogWindow.align(instance._devicePreviewNode, DIALOG_ALIGN_POINTS);
+									dialogWindow.plug(
+										A.Plugin.SizeAnim,
+										{
+											align: true
+										}
+									);
 								}
 							);
 						}
 						else {
 							dialog.setAttrs(dialogAttrs);
-
-							dialog.align(instance._devicePreviewNode, DIALOG_ALIGN_POINTS);
-
 							dialog.show();
 						}
 					},
@@ -256,6 +264,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-dialog-iframe-deprecated', 'aui-event-input', 'aui-modal', 'liferay-portlet-base', 'liferay-util', 'liferay-util-window']
+		requires: ['aui-dialog-iframe-deprecated', 'aui-event-input', 'aui-modal', 'liferay-portlet-base', 'liferay-util', 'liferay-util-window', 'liferay-widget-size-animation-plugin']
 	}
 );

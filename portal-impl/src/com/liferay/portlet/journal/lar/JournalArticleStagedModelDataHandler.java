@@ -88,6 +88,22 @@ public class JournalArticleStagedModelDataHandler
 	}
 
 	@Override
+	protected boolean countStagedModel(
+		PortletDataContext portletDataContext, JournalArticle article) {
+
+		if (portletDataContext.isPathProcessed(
+				ExportImportPathUtil.getModelPath(
+					article.getGroupId(),
+					JournalArticleResource.class.getName(),
+					article.getResourcePrimKey()))) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext, JournalArticle article)
 		throws Exception {

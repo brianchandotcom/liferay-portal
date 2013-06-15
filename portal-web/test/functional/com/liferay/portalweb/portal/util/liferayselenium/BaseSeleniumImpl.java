@@ -451,8 +451,8 @@ public abstract class BaseSeleniumImpl
 	public void uploadCommonFile(String location, String value) {
 		super.type(
 			location,
-			_projectDir + "portal-web\\test\\functional\\com\\liferay\\" +
-				"portalweb\\dependencies\\" + value);
+			_projectDir + "portal-web//test//functional//com//liferay//" +
+				"portalweb//dependencies//" + value);
 	}
 
 	@Override

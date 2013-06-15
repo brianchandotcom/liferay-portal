@@ -162,7 +162,6 @@ import java.io.IOException;
 import java.text.Format;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -262,13 +261,14 @@ public class DataFactory {
 	}
 
 	public List<AssetCategory> getAssetCategories() {
-		List<AssetCategory> assetCategories = new ArrayList<AssetCategory>();
+		List<AssetCategory> mergedAssetCategories =
+			new ArrayList<AssetCategory>();
 
-		for (AssetCategory[] row : _assetCategories) {
-			assetCategories.addAll(Arrays.asList(row));
+		for (List<AssetCategory> assetCategories : _assetCategoriesArray) {
+			mergedAssetCategories.addAll(assetCategories);
 		}
 
-		return assetCategories;
+		return mergedAssetCategories;
 	}
 
 	public List<Long> getAssetCategoryIds(long groupId) {
@@ -280,9 +280,10 @@ public class DataFactory {
 			_assetCategoryCounters.put(groupId, counter);
 		}
 
-		AssetCategory[] assetCategories = _assetCategories[(int)groupId - 1];
+		List<AssetCategory> assetCategories =
+			_assetCategoriesArray[(int)groupId - 1];
 
-		if ((assetCategories == null) || (assetCategories.length == 0)) {
+		if ((assetCategories == null) || assetCategories.isEmpty()) {
 			return Collections.emptyList();
 		}
 
@@ -290,9 +291,9 @@ public class DataFactory {
 			_maxAssetEntryToAssetCategoryCount);
 
 		for (int i = 0; i < _maxAssetEntryToAssetCategoryCount; i++) {
-			int index = (int)counter.get() % assetCategories.length;
+			int index = (int)counter.get() % assetCategories.size();
 
-			AssetCategory assetCategory = assetCategories[index];
+			AssetCategory assetCategory = assetCategories.get(index);
 
 			assetCategoryIds.add(assetCategory.getCategoryId());
 		}
@@ -309,9 +310,9 @@ public class DataFactory {
 			_assetTagCounters.put(groupId, counter);
 		}
 
-		AssetTag[] assetTags = _assetTags[(int)groupId - 1];
+		List<AssetTag> assetTags = _assetTagsArray[(int)groupId - 1];
 
-		if ((assetTags == null) || (assetTags.length == 0)) {
+		if ((assetTags == null) || assetTags.isEmpty()) {
 			return Collections.emptyList();
 		}
 
@@ -319,9 +320,9 @@ public class DataFactory {
 			_maxAssetEntryToAssetTagCount);
 
 		for (int i = 0; i < _maxAssetEntryToAssetTagCount; i++) {
-			int index = (int)counter.get() % assetTags.length;
+			int index = (int)counter.get() % assetTags.size();
 
-			AssetTag assetTag = assetTags[index];
+			AssetTag assetTag = assetTags.get(index);
 
 			assetTagIds.add(assetTag.getTagId());
 		}
@@ -330,38 +331,39 @@ public class DataFactory {
 	}
 
 	public List<AssetTag> getAssetTags() {
-		List<AssetTag> assetTags = new ArrayList<AssetTag>();
+		List<AssetTag> mergedAssetTags = new ArrayList<AssetTag>();
 
-		for (AssetTag[] row : _assetTags) {
-			assetTags.addAll(Arrays.asList(row));
+		for (List<AssetTag> assetTags : _assetTagsArray) {
+			mergedAssetTags.addAll(assetTags);
 		}
 
-		return assetTags;
+		return mergedAssetTags;
 	}
 
 	public List<AssetTagStats> getAssetTagStatsList() {
-		List<AssetTagStats> assetTagStatsList = new ArrayList<AssetTagStats>();
+		List<AssetTagStats> mergedAssetTagStatsList =
+			new ArrayList<AssetTagStats>();
 
-		for (AssetTagStats[] row : _assetTagStatsArray) {
-			assetTagStatsList.addAll(Arrays.asList(row));
+		for (List<AssetTagStats> assetTagStatsList : _assetTagStatsListArray) {
+			mergedAssetTagStatsList.addAll(assetTagStatsList);
 		}
 
-		return assetTagStatsList;
+		return mergedAssetTagStatsList;
 	}
 
 	public List<AssetVocabulary> getAssetVocabularies() {
-		List<AssetVocabulary> assetVocabularies =
+		List<AssetVocabulary> mergedAssetVocabularies =
 			new ArrayList<AssetVocabulary>();
 
-		assetVocabularies.add(_defaultAssetVocabulary);
+		mergedAssetVocabularies.add(_defaultAssetVocabulary);
 
-		for (AssetVocabulary[] row : _assetVocabularies) {
-			for (AssetVocabulary value : row) {
-				assetVocabularies.add(value);
-			}
+		for (List<AssetVocabulary> assetVocabularies :
+				_assetVocabulariesArray) {
+
+			mergedAssetVocabularies.addAll(assetVocabularies);
 		}
 
-		return assetVocabularies;
+		return mergedAssetVocabularies;
 	}
 
 	public long getBlogsEntryClassNameId() {
@@ -496,13 +498,16 @@ public class DataFactory {
 		return _classNamesMap.get(WikiPage.class.getName());
 	}
 
+	@SuppressWarnings("unchecked")
 	public void initAssetCateogries() {
 		_defaultAssetVocabulary = newAssetVocabulary(
 			_globalGroupId, _defaultUserId, null,
 			PropsValues.ASSET_VOCABULARY_DEFAULT);
 
-		_assetVocabularies = new AssetVocabulary[_maxGroupsCount][];
-		_assetCategories = new AssetCategory[_maxGroupsCount][];
+		_assetVocabulariesArray =
+			(List<AssetVocabulary>[])new List<?>[_maxGroupsCount];
+		_assetCategoriesArray =
+			(List<AssetCategory>[])new List<?>[_maxGroupsCount];
 
 		StringBundler sb = new StringBundler(4);
 
@@ -545,18 +550,16 @@ public class DataFactory {
 				}
 			}
 
-			_assetVocabularies[i - 1] = assetVocabularies.toArray(
-				new AssetVocabulary[_maxAssetVocabularyCount]);
-
-			_assetCategories[i - 1] = assetCategories.toArray(
-				new AssetCategory[
-					_maxAssetVocabularyCount * _maxAssetCategoryCount]);
+			_assetVocabulariesArray[i - 1] = assetVocabularies;
+			_assetCategoriesArray[i - 1] = assetCategories;
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public void initAssetTags() {
-		_assetTags = new AssetTag[_maxGroupsCount][];
-		_assetTagStatsArray = new AssetTagStats[_maxGroupsCount][];
+		_assetTagsArray = (List<AssetTag>[])new List<?>[_maxGroupsCount];
+		_assetTagStatsListArray =
+			(List<AssetTagStats>[])new List<?>[_maxGroupsCount];
 
 		for (int i = 1; i <= _maxGroupsCount; i++) {
 			List<AssetTag> assetTags = new ArrayList<AssetTag>(
@@ -597,11 +600,8 @@ public class DataFactory {
 				assetTagStatsList.add(assetTagStats);
 			}
 
-			_assetTags[i - 1] = assetTags.toArray(
-				new AssetTag[_maxAssetTagCount]);
-
-			_assetTagStatsArray[i - 1] = assetTagStatsList.toArray(
-				new AssetTagStats[_maxAssetTagCount * 3]);
+			_assetTagsArray[i - 1] = assetTags;
+			_assetTagStatsListArray[i - 1] = assetTagStatsList;
 		}
 	}
 
@@ -1571,10 +1571,11 @@ public class DataFactory {
 			long plid, long groupId, String portletId, int currentIndex)
 		throws Exception {
 
-		AssetCategory[] assetCategories = _assetCategories[(int)groupId - 1];
+		List<AssetCategory> assetCategories =
+			_assetCategoriesArray[(int)groupId - 1];
 
 		if (!_assetPublisherFilter || (currentIndex == 1) ||
-			(assetCategories == null) || (assetCategories.length == 0)) {
+			(assetCategories == null) || assetCategories.isEmpty()) {
 
 			return newPortletPreferences(
 				plid, portletId, PortletConstants.DEFAULT_PREFERENCES);
@@ -1592,9 +1593,9 @@ public class DataFactory {
 			new com.liferay.portlet.PortletPreferencesImpl();
 
 		for (int i = 0; i < _maxAssetPublisherFilterRuleCount; i++) {
-			int index = (int)counter.get() % assetCategories.length;
+			int index = (int)counter.get() % assetCategories.size();
 
-			AssetCategory assetCategory = assetCategories[index];
+			AssetCategory assetCategory = assetCategories.get(index);
 
 			jxPreferences.setValue("queryName" + i, "assetCategories");
 			jxPreferences.setValue(
@@ -2434,7 +2435,7 @@ public class DataFactory {
 	private Account _account;
 	private long _accountId;
 	private Role _administratorRole;
-	private AssetCategory[][] _assetCategories;
+	private List<AssetCategory>[] _assetCategoriesArray;
 	private Map<Long, SimpleCounter> _assetCategoryCounters =
 		new HashMap<Long, SimpleCounter>();
 	private boolean _assetPublisherFilter;
@@ -2442,9 +2443,9 @@ public class DataFactory {
 		new HashMap<Long, SimpleCounter>();
 	private Map<Long, SimpleCounter> _assetTagCounters =
 		new HashMap<Long, SimpleCounter>();
-	private AssetTag[][] _assetTags;
-	private AssetTagStats[][] _assetTagStatsArray;
-	private AssetVocabulary[][] _assetVocabularies;
+	private List<AssetTag>[] _assetTagsArray;
+	private List<AssetTagStats>[] _assetTagStatsListArray;
+	private List<AssetVocabulary>[] _assetVocabulariesArray;
 	private String _baseDir;
 	private List<ClassName> _classNames;
 	private Map<String, Long> _classNamesMap = new HashMap<String, Long>();

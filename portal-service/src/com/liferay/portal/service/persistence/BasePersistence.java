@@ -17,6 +17,7 @@ package com.liferay.portal.service.persistence;
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ORMException;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -91,6 +92,18 @@ public interface BasePersistence<T extends BaseModel<T>> {
 	 * @throws SystemException if a system exception occurred
 	 */
 	public long countWithDynamicQuery(DynamicQuery dynamicQuery)
+		throws SystemException;
+
+	/**
+	 * Returns the number of rows that match the dynamic query.
+	 *
+	 * @param  dynamicQuery the dynamic query
+	 * @param  projection the projection to apply to the query
+	 * @return the number of rows that match the dynamic query
+	 * @throws SystemException if a system exception occurred
+	 */
+	public long countWithDynamicQuery(
+			DynamicQuery dynamicQuery, Projection projection)
 		throws SystemException;
 
 	/**

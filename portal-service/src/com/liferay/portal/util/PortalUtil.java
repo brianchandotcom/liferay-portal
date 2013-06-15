@@ -352,6 +352,13 @@ public class PortalUtil {
 		return getPortal().getComputerName();
 	}
 
+	public static Map<String, List<Portlet>> getControlPanelCategoriesMap(
+			HttpServletRequest request)
+		throws SystemException {
+
+		return getPortal().getControlPanelCategoriesMap(request);
+	}
+
 	public static String getControlPanelCategory(
 			String portletId, ThemeDisplay themeDisplay)
 		throws SystemException {
@@ -1278,6 +1285,21 @@ public class PortalUtil {
 		throws PortalException, SystemException {
 
 		return getPortal().getSelectedUser(portletRequest, checkPermission);
+	}
+
+	public static PortletURL getSiteAdministrationURL(
+			HttpServletRequest request, ThemeDisplay themeDisplay)
+		throws SystemException {
+
+		return getPortal().getSiteAdministrationURL(request, themeDisplay);
+	}
+
+	public static PortletURL getSiteAdministrationURL(
+		HttpServletRequest request, ThemeDisplay themeDisplay,
+		String portletName) {
+
+		return getPortal().getSiteAdministrationURL(
+			request, themeDisplay, portletName);
 	}
 
 	public static PortletURL getSiteAdministrationURL(

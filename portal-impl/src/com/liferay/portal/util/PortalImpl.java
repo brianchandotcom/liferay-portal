@@ -220,6 +220,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -1426,6 +1427,39 @@ public class PortalImpl implements Portal {
 	@Override
 	public String getComputerName() {
 		return _computerName;
+	}
+
+	@Override
+	public Map<String, List<Portlet>> getControlPanelCategoriesMap(
+			HttpServletRequest request)
+		throws SystemException {
+
+		Map<String, List<Portlet>> categoriesMap =
+			(Map<String, List<Portlet>>)request.getAttribute(
+				WebKeys.CONTROL_PANEL_CATEGORIES_MAP);
+
+		if (categoriesMap != null) {
+			return categoriesMap;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		categoriesMap = new LinkedHashMap<String, List<Portlet>>();
+
+		for (String category : PortletCategoryKeys.ALL) {
+			List<Portlet> portlets = getControlPanelPortlets(
+				category, themeDisplay);
+
+			if (!portlets.isEmpty()) {
+				categoriesMap.put(category, portlets);
+			}
+		}
+
+		request.setAttribute(
+			WebKeys.CONTROL_PANEL_CATEGORIES_MAP, categoriesMap);
+
+		return categoriesMap;
 	}
 
 	@Override
@@ -4472,6 +4506,39 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public PortletURL getSiteAdministrationURL(
+			HttpServletRequest request, ThemeDisplay themeDisplay)
+		throws SystemException {
+
+		Portlet portlet = getFirstSiteAdministrationPortlet(themeDisplay);
+
+		if (portlet == null) {
+			return null;
+		}
+
+		return getSiteAdministrationURL(
+			request, themeDisplay, portlet.getPortletName());
+	}
+
+	@Override
+	public PortletURL getSiteAdministrationURL(
+		HttpServletRequest request, ThemeDisplay themeDisplay,
+		String portletName) {
+
+		LiferayPortletURL siteAdministrationURL = PortletURLFactoryUtil.create(
+			request, portletName, themeDisplay.getPlid(),
+			PortletRequest.RENDER_PHASE);
+
+		siteAdministrationURL.setControlPanelCategory(
+			PortletCategoryKeys.SITES);
+		siteAdministrationURL.setDoAsGroupId(themeDisplay.getScopeGroupId());
+		siteAdministrationURL.setParameter(
+			"redirect", themeDisplay.getURLCurrent());
+
+		return siteAdministrationURL;
+	}
+
+	@Override
+	public PortletURL getSiteAdministrationURL(
 			PortletResponse portletResponse, ThemeDisplay themeDisplay)
 		throws SystemException {
 
@@ -6739,7 +6806,8 @@ public class PortalImpl implements Portal {
 			Portlet portlet = itr.next();
 
 			try {
-				if (!PortletPermissionUtil.hasControlPanelAccessPermission(
+				if (!portlet.isActive() || portlet.isInstanceable() ||
+					!PortletPermissionUtil.hasControlPanelAccessPermission(
 						themeDisplay.getPermissionChecker(),
 						themeDisplay.getScopeGroupId(), portlet)) {
 

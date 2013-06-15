@@ -19,7 +19,9 @@
 <div class="control-panel-home-actions">
 
 	<%
-	for (String category : PortletCategoryKeys.ALL) {
+	Map<String, List<Portlet>> categoriesMap = PortalUtil.getControlPanelCategoriesMap(request);
+
+	for (String category : categoriesMap.keySet()) {
 	%>
 
 		<aui:col width="<%= 25 %>">

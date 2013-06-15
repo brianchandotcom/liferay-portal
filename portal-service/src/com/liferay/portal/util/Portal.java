@@ -477,6 +477,10 @@ public interface Portal {
 
 	public String getComputerName();
 
+	public Map<String, List<Portlet>> getControlPanelCategoriesMap(
+			HttpServletRequest request)
+		throws SystemException;
+
 	public String getControlPanelCategory(
 			String portletId, ThemeDisplay themeDisplay)
 		throws SystemException;
@@ -1004,6 +1008,14 @@ public interface Portal {
 	public User getSelectedUser(
 			PortletRequest portletRequest, boolean checkPermission)
 		throws PortalException, SystemException;
+
+	public PortletURL getSiteAdministrationURL(
+			HttpServletRequest request, ThemeDisplay themeDisplay)
+		throws SystemException;
+
+	public PortletURL getSiteAdministrationURL(
+		HttpServletRequest request, ThemeDisplay themeDisplay,
+		String portletName);
 
 	public PortletURL getSiteAdministrationURL(
 			PortletResponse portletResponse, ThemeDisplay themeDisplay)

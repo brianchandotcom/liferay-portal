@@ -10,11 +10,14 @@
 		>
 			<arg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
 			<arg value="sample.sql.base.dir=${basedir}" />
+			<arg value="sample.sql.asset.publisher.config.filter=${sample.sql.asset.publisher.config.filter}" />
 			<arg value="sample.sql.db.type=${sample.sql.db.type}" />
 			<arg value="sample.sql.max.asset.category.count=${sample.sql.max.asset.category.count}" />
 			<arg value="sample.sql.max.asset.entry.to.asset.category.count=${sample.sql.max.asset.entry.to.asset.category.count}" />
 			<arg value="sample.sql.max.asset.entry.to.asset.tag.count=${sample.sql.max.asset.entry.to.asset.tag.count}" />
 			<arg value="sample.sql.max.asset.tag.count=${sample.sql.max.asset.tag.count}" />
+			<arg value="sample.sql.max.asset.publisher.filter.rule.count=${sample.sql.max.asset.publisher.filter.rule.count}" />
+			<arg value="sample.sql.max.asset.publisher.page.count=${sample.sql.max.asset.publisher.page.count}" />
 			<arg value="sample.sql.max.asset.vocabulary.count=${sample.sql.max.asset.vocabulary.count}" />
 			<arg value="sample.sql.max.blogs.entry.comment.count=${sample.sql.max.blogs.entry.comment.count}" />
 			<arg value="sample.sql.max.blogs.entry.count=${sample.sql.max.blogs.entry.count}" />

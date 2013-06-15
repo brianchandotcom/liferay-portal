@@ -19,8 +19,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MEDIA_GALLERY_CONFIGURATION_IFRAME</td>
-	<td>//iframe[contains(@id,'_configurationIframeDialog')]</td>
+	<td>CONFIGURATION_IFRAME</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -72,7 +72,7 @@
 </tr>
 <tr>
 	<td>SETUP_DISPLAY_TEMPLATE_MANAGE</td>
-	<td>//div[@class='display-template']/span/a/span</td>
+	<td>//span[@class='manage-display-templates']/a/span</td>
 	<td>Manage Display Templates for Liferay</td>
 </tr>
 <tr>

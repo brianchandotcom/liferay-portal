@@ -10,7 +10,6 @@
 		>
 			<arg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
 			<arg value="sample.sql.base.dir=${basedir}" />
-			<arg value="sample.sql.asset.publisher.config.filter=${sample.sql.asset.publisher.config.filter}" />
 			<arg value="sample.sql.db.type=${sample.sql.db.type}" />
 			<arg value="sample.sql.max.asset.category.count=${sample.sql.max.asset.category.count}" />
 			<arg value="sample.sql.max.asset.entry.to.asset.category.count=${sample.sql.max.asset.entry.to.asset.category.count}" />

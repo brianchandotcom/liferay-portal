@@ -174,7 +174,7 @@ import java.util.Map;
 public class DataFactory {
 
 	public DataFactory(
-			String baseDir, boolean assetPublisherFilter,
+			String baseDir, boolean assetPublisherFilterEnabled,
 			int maxAssetCategoryCount, int maxAssetEntryToAssetCategoryCount,
 			int maxAssetEntryToAssetTagCount,
 			int maxAssetPublisherFilterRuleCount, int maxAssetTagCount,
@@ -186,7 +186,7 @@ public class DataFactory {
 		throws Exception {
 
 		_baseDir = baseDir;
-		_assetPublisherFilter = assetPublisherFilter;
+		_assetPublisherFilterEnabled = assetPublisherFilterEnabled;
 		_maxAssetCategoryCount = maxAssetCategoryCount;
 		_maxAssetEntryToAssetCategoryCount = maxAssetEntryToAssetCategoryCount;
 		_maxAssetEntryToAssetTagCount = maxAssetEntryToAssetTagCount;
@@ -1574,7 +1574,7 @@ public class DataFactory {
 		List<AssetCategory> assetCategories =
 			_assetCategoriesArray[(int)groupId - 1];
 
-		if (!_assetPublisherFilter || (currentIndex == 1) ||
+		if (!_assetPublisherFilterEnabled || (currentIndex == 1) ||
 			(assetCategories == null) || assetCategories.isEmpty()) {
 
 			return newPortletPreferences(
@@ -2438,7 +2438,7 @@ public class DataFactory {
 	private List<AssetCategory>[] _assetCategoriesArray;
 	private Map<Long, SimpleCounter> _assetCategoryCounters =
 		new HashMap<Long, SimpleCounter>();
-	private boolean _assetPublisherFilter;
+	private boolean _assetPublisherFilterEnabled;
 	private Map<Long, SimpleCounter> _assetPublisherRuleCounter =
 		new HashMap<Long, SimpleCounter>();
 	private Map<Long, SimpleCounter> _assetTagCounters =

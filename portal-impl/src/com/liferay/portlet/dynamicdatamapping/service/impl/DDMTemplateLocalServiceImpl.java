@@ -320,15 +320,9 @@ public class DDMTemplateLocalServiceImpl
 		DDMTemplate template = ddmTemplatePersistence.findByPrimaryKey(
 			templateId);
 
-		File smallImageFile = copySmallImage(template);
-
-		return addTemplate(
-			userId, template.getGroupId(), template.getClassNameId(),
-			template.getClassPK(), null, nameMap, descriptionMap,
-			template.getType(), template.getMode(), template.getLanguage(),
-			template.getScript(), template.isCacheable(),
-			template.isSmallImage(), template.getSmallImageURL(),
-			smallImageFile, serviceContext);
+		return copyTemplate(
+			userId, template, template.getClassPK(), nameMap, descriptionMap,
+			serviceContext);
 	}
 
 	@Override
@@ -339,15 +333,9 @@ public class DDMTemplateLocalServiceImpl
 		DDMTemplate template = ddmTemplatePersistence.findByPrimaryKey(
 			templateId);
 
-		File smallImageFile = copySmallImage(template);
-
-		return addTemplate(
-			userId, template.getGroupId(), template.getClassNameId(),
-			template.getClassPK(), null, template.getNameMap(),
-			template.getDescriptionMap(), template.getType(),
-			template.getMode(), template.getLanguage(), template.getScript(),
-			template.isCacheable(), template.isSmallImage(),
-			template.getSmallImageURL(), smallImageFile, serviceContext);
+		return copyTemplate(
+			userId, template, template.getClassPK(), template.getNameMap(),
+			template.getDescriptionMap(), serviceContext);
 	}
 
 	/**
@@ -382,7 +370,8 @@ public class DDMTemplateLocalServiceImpl
 
 		for (DDMTemplate oldTemplate : oldTemplates) {
 			DDMTemplate newTemplate = copyTemplate(
-				userId, oldTemplate.getTemplateId(), serviceContext);
+				userId, oldTemplate, newClassPK, oldTemplate.getNameMap(),
+				oldTemplate.getDescriptionMap(), serviceContext);
 
 			newTemplates.add(newTemplate);
 		}
@@ -1300,6 +1289,23 @@ public class DDMTemplateLocalServiceImpl
 		}
 
 		return smallImageFile;
+	}
+
+	protected DDMTemplate copyTemplate(
+			long userId, DDMTemplate template, long newClassPK,
+			Map<Locale, String> newNameMap,
+			Map<Locale, String> newDescriptionMap,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		File smallImageFile = copySmallImage(template);
+
+		return addTemplate(
+			userId, template.getGroupId(), template.getClassNameId(),
+			newClassPK, null, newNameMap, newDescriptionMap, template.getType(),
+			template.getMode(), template.getLanguage(), template.getScript(),
+			template.isCacheable(), template.isSmallImage(),
+			template.getSmallImageURL(), smallImageFile, serviceContext);
 	}
 
 	protected String formatScript(String type, String language, String script)

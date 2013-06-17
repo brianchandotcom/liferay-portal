@@ -158,7 +158,7 @@ public class CopyStructureAction extends PortletAction {
 	}
 
 	protected void copyTemplates(
-			ActionRequest actionRequest, long structureId, long newStructureId)
+			ActionRequest actionRequest, long oldClassPK, long newClassPK)
 		throws Exception {
 
 		long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
@@ -171,7 +171,7 @@ public class CopyStructureAction extends PortletAction {
 
 		if (copyDisplayTemplates) {
 			DDMTemplateServiceUtil.copyTemplates(
-				classNameId, structureId, newStructureId,
+				classNameId, oldClassPK, newClassPK,
 				DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, serviceContext);
 		}
 
@@ -180,7 +180,7 @@ public class CopyStructureAction extends PortletAction {
 
 		if (copyFormTemplates) {
 			DDMTemplateServiceUtil.copyTemplates(
-				classNameId, structureId, newStructureId,
+				classNameId, oldClassPK, newClassPK,
 				DDMTemplateConstants.TEMPLATE_TYPE_FORM, serviceContext);
 		}
 	}

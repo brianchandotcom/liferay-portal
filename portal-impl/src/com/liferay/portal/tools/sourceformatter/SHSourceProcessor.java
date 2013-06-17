@@ -14,6 +14,11 @@
 
 package com.liferay.portal.tools.sourceformatter;
 
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.io.File;
+import java.io.IOException;
+
 /**
  * @author Hugo Huijser
  */
@@ -21,7 +26,29 @@ public class SHSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void doFormat() throws Exception {
-		formatSH();
+		_formatSH("ext/create.sh");
+		_formatSH("hooks/create.sh");
+		_formatSH("layouttpl/create.sh");
+		_formatSH("portlets/create.sh");
+		_formatSH("themes/create.sh");
+	}
+
+	private void _formatSH(String fileName) throws IOException {
+		File file = new File(fileName);
+
+		if (!file.exists()) {
+			return;
+		}
+
+		String content = getFileUtil().read(new File(fileName), true);
+
+		if (content.contains("\r")) {
+			processErrorMessage(fileName, "Invalid new line character");
+
+			content = StringUtil.replace(content, "\r", "");
+
+			getFileUtil().write(fileName, content);
+		}
 	}
 
 }

@@ -42,9 +42,9 @@ if (fileShortcut != null) {
 
 <liferay-ui:app-view-entry
 	actionJsp="/html/portlet/document_library/file_entry_action.jsp"
-	assetCategoryClassName="<%= DLFileEntry.class.getName() %>"
+	assetCategoryClassName="<%= DLFileEntryConstants.getClassName() %>"
 	assetCategoryClassPK="<%= fileEntry.getFileEntryId() %>"
-	assetTagClassName="<%= DLFileEntry.class.getName() %>"
+	assetTagClassName="<%= DLFileEntryConstants.getClassName() %>"
 	assetTagClassPK="<%= fileEntry.getFileEntryId() %>"
 	author="<%= latestFileVersion.getUserName() %>"
 	createDate="<%= latestFileVersion.getCreateDate() %>"

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.mobiledevicerules.lar;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.lar.BasePortletDataHandlerTestCase;
@@ -24,10 +25,17 @@ import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.LayoutTestUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.mobiledevicerules.model.MDRAction;
+import com.liferay.portlet.mobiledevicerules.model.MDRRule;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
+import com.liferay.portlet.mobiledevicerules.service.MDRActionLocalServiceUtil;
+import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceLocalServiceUtil;
+import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupLocalServiceUtil;
+import com.liferay.portlet.mobiledevicerules.service.MDRRuleLocalServiceUtil;
 import com.liferay.portlet.mobiledevicerules.util.MDRTestUtil;
 
+import java.util.List;
 import java.util.Map;
 
 import org.junit.runner.RunWith;
@@ -77,6 +85,35 @@ public class MDRPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 	@Override
 	protected PortletDataHandler createPortletDataHandler() {
 		return new MDRPortletDataHandler();
+	}
+
+	@Override
+	protected void deleteStagedModels() throws Exception {
+		List<MDRAction> actions = MDRActionLocalServiceUtil.getMDRActions(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		for (MDRAction action : actions) {
+			MDRActionLocalServiceUtil.deleteAction(action);
+		}
+
+		List<MDRRule> rules = MDRRuleLocalServiceUtil.getMDRRules(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		for (MDRRule rule : rules) {
+			MDRRuleLocalServiceUtil.deleteRule(rule);
+		}
+
+		List<MDRRuleGroupInstance> ruleGroupInstances =
+			MDRRuleGroupInstanceLocalServiceUtil.getMDRRuleGroupInstances(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		for (MDRRuleGroupInstance ruleGroupInstance : ruleGroupInstances) {
+			MDRRuleGroupInstanceLocalServiceUtil.deleteRuleGroupInstance(
+				ruleGroupInstance);
+		}
+
+		MDRRuleGroupLocalServiceUtil.deleteRuleGroups(
+			portletDataContext.getGroupId());
 	}
 
 	@Override

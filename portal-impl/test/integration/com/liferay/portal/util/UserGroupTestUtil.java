@@ -12,12 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.util.dependencies;
+package com.liferay.portal.util;
 
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
-import com.liferay.portal.util.TestPropsValues;
 
 /**
  * @author Roberto Díaz

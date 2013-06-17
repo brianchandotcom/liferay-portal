@@ -36,7 +36,7 @@ if (PortalUtil.isCompanyControlPanelVisible(themeDisplay)) {
 manageableSites.remove(curGroup);
 %>
 
-<liferay-ui:icon-menu cssClass="control-panel-site-selector" direction="down" extended="<%= false %>" icon="" id="controlPanelSiteSelector" message="">
+<liferay-ui:icon-menu cssClass="control-panel-site-selector" direction="down" extended="<%= false %>" icon="" id="controlPanelSiteSelector" message="" showWhenSingleIcon="<%= true %>">
 
 	<%
 	for (Group group : manageableSites) {

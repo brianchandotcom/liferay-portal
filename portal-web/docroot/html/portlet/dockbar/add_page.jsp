@@ -42,7 +42,7 @@
 			<div class="span12">
 				<aui:input name="name" />
 
-				<aui:input name="hidden" />
+				<aui:input label="hide-from-navigation-menu" name="hidden" />
 
 				<aui:fieldset cssClass="template-selector" label="templates">
 					<div class="search-panel btn-toolbar">

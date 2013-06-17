@@ -96,7 +96,7 @@ List<LayoutPrototype> layoutPrototypes = LayoutPrototypeServiceUtil.search(compa
 				</c:if>
 			</div>
 
-			<aui:input id="addLayoutHidden" name="hidden" />
+			<aui:input id="addLayoutHidden" label="hide-from-navigation-menu" name="hidden" />
 
 			<div class="hide" id="<portlet:namespace />layoutPrototypeLinkOptions">
 				<aui:input id="addLayoutLayoutPrototypeLinkEnabled" label="automatically-apply-changes-done-to-the-page-template" name="layoutPrototypeLinkEnabled" type="checkbox" value="<%= PropsValues.LAYOUT_PROTOTYPE_LINK_ENABLED_DEFAULT %>" />

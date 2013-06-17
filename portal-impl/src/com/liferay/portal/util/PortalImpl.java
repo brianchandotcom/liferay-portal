@@ -5806,7 +5806,10 @@ public class PortalImpl implements Portal {
 		String controlPanelEntryCategory =
 			portlet.getControlPanelEntryCategory();
 
-		if (!controlPanelEntryCategory.equals(category)) {
+		if (!controlPanelEntryCategory.equals(category) &&
+			(category.endsWith(StringPool.PERIOD) &&
+			 !StringUtil.startsWith(controlPanelEntryCategory, category))) {
+
 			return false;
 		}
 

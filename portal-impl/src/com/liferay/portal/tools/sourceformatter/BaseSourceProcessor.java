@@ -61,6 +61,62 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return _errorMessages;
 	}
 
+	protected static String formatImports(String imports, int classStartPos)
+		throws IOException {
+
+		if (imports.contains("/*") || imports.contains("*/") ||
+			imports.contains("//")) {
+
+			return imports + "\n";
+		}
+
+		List<String> importsList = new ArrayList<String>();
+
+		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
+			new UnsyncStringReader(imports));
+
+		String line = null;
+
+		while ((line = unsyncBufferedReader.readLine()) != null) {
+			if ((line.contains("import=") || line.contains("import ")) &&
+				!importsList.contains(line)) {
+
+				importsList.add(line);
+			}
+		}
+
+		importsList = ListUtil.sort(importsList);
+
+		StringBundler sb = new StringBundler();
+
+		String temp = null;
+
+		for (int i = 0; i < importsList.size(); i++) {
+			String s = importsList.get(i);
+
+			int pos = s.indexOf(".");
+
+			pos = s.indexOf(".", pos + 1);
+
+			if (pos == -1) {
+				pos = s.indexOf(".");
+			}
+
+			String packageLevel = s.substring(classStartPos, pos);
+
+			if ((i != 0) && !packageLevel.equals(temp)) {
+				sb.append("\n");
+			}
+
+			temp = packageLevel;
+
+			sb.append(s);
+			sb.append("\n");
+		}
+
+		return sb.toString();
+	}
+
 	protected void checkIfClauseParentheses(
 		String ifClause, String fileName, int lineCount) {
 
@@ -203,6 +259,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
+	protected abstract void doFormat() throws Exception;
+
 	protected String fixCopyright(
 			String content, String copyright, String oldCopyright, File file,
 			String fileName)
@@ -342,62 +400,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return newContent;
 	}
 
-	protected static String formatImports(String imports, int classStartPos)
-		throws IOException {
-
-		if (imports.contains("/*") || imports.contains("*/") ||
-			imports.contains("//")) {
-
-			return imports + "\n";
-		}
-
-		List<String> importsList = new ArrayList<String>();
-
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(imports));
-
-		String line = null;
-
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			if ((line.contains("import=") || line.contains("import ")) &&
-				!importsList.contains(line)) {
-
-				importsList.add(line);
-			}
-		}
-
-		importsList = ListUtil.sort(importsList);
-
-		StringBundler sb = new StringBundler();
-
-		String temp = null;
-
-		for (int i = 0; i < importsList.size(); i++) {
-			String s = importsList.get(i);
-
-			int pos = s.indexOf(".");
-
-			pos = s.indexOf(".", pos + 1);
-
-			if (pos == -1) {
-				pos = s.indexOf(".");
-			}
-
-			String packageLevel = s.substring(classStartPos, pos);
-
-			if ((i != 0) && !packageLevel.equals(temp)) {
-				sb.append("\n");
-			}
-
-			temp = packageLevel;
-
-			sb.append(s);
-			sb.append("\n");
-		}
-
-		return sb.toString();
-	}
-
 	protected String getCopyright() throws IOException {
 		String copyright = _fileUtil.read("copyright.txt");
 
@@ -433,6 +435,18 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return null;
+	}
+
+	protected String[] getExcludes() {
+		return _excludes;
+	}
+
+	protected FileImpl getFileUtil() {
+		return _fileUtil;
+	}
+
+	protected Pattern getLanguageKeyPattern() {
+		return _languageKeyPattern;
 	}
 
 	protected String[] getLanguageKeys(Matcher matcher) {
@@ -508,6 +522,22 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return copyright;
+	}
+
+	protected SAXReaderImpl getSaxReaderUtil() {
+		return _saxReaderUtil;
+	}
+
+	protected Pattern getSessionKeyPattern() {
+		return _sessionKeyPattern;
+	}
+
+	protected SourceFormatterHelper getSourceFormatterHelper() {
+		return _sourceFormatterHelper;
+	}
+
+	protected Pattern getTaglibSessionKeyPattern() {
+		return _taglibSessionKeyPattern;
 	}
 
 	protected boolean hasMissingParentheses(String s) {
@@ -649,8 +679,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
-	protected String trimContent(
-			String content, boolean allowLeadingSpaces)
+	protected String trimContent(String content, boolean allowLeadingSpaces)
 		throws IOException {
 
 		StringBundler sb = new StringBundler();
@@ -711,36 +740,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return line;
-	}
-
-	protected abstract void doFormat() throws Exception;
-
-	protected String[] getExcludes() {
-		return _excludes;
-	}
-
-	protected FileImpl getFileUtil() {
-		return _fileUtil;
-	}
-
-	protected Pattern getLanguageKeyPattern() {
-		return _languageKeyPattern;
-	}
-
-	protected SAXReaderImpl getSaxReaderUtil() {
-		return _saxReaderUtil;
-	}
-
-	protected Pattern getSessionKeyPattern() {
-		return _sessionKeyPattern;
-	}
-
-	protected SourceFormatterHelper getSourceFormatterHelper() {
-		return _sourceFormatterHelper;
-	}
-
-	protected Pattern getTaglibSessionKeyPattern() {
-		return _taglibSessionKeyPattern;
 	}
 
 	private void _init(boolean useProperties, boolean throwException)

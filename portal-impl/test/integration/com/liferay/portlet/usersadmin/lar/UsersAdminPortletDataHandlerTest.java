@@ -17,6 +17,8 @@ package com.liferay.portlet.usersadmin.lar;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.lar.BasePortletDataHandlerTestCase;
+import com.liferay.portal.model.OrganizationConstants;
+import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
@@ -39,7 +41,9 @@ public class UsersAdminPortletDataHandlerTest
 
 	@Override
 	protected void addStagedModels() throws Exception {
-		OrganizationTestUtil.addOrganization();
+		OrganizationTestUtil.addOrganizationWithAssetEntry(
+			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+			ServiceTestUtil.randomString(), false);
 	}
 
 	@Override

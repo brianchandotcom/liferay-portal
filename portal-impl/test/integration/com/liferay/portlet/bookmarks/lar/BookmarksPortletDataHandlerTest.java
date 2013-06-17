@@ -24,8 +24,13 @@ import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
+import com.liferay.portlet.bookmarks.service.BookmarksEntryLocalServiceUtil;
+import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.portlet.bookmarks.util.BookmarksTestUtil;
 
+import java.util.List;
+
+import org.junit.Assert;
 import org.junit.runner.RunWith;
 
 /**
@@ -54,6 +59,22 @@ public class BookmarksPortletDataHandlerTest
 	@Override
 	protected PortletDataHandler createPortletDataHandler() {
 		return new BookmarksPortletDataHandler();
+	}
+
+	@Override
+	protected void deleteStagedModels() throws Exception {
+		List<BookmarksFolder> folders =
+			BookmarksFolderLocalServiceUtil.getFolders(
+				stagingGroup.getGroupId());
+
+		Assert.assertEquals(1, folders.size());
+
+		BookmarksFolder folder = folders.get(0);
+
+		BookmarksEntryLocalServiceUtil.deleteEntries(
+			stagingGroup.getGroupId(), folder.getFolderId());
+
+		BookmarksFolderLocalServiceUtil.deleteFolder(folder);
 	}
 
 	@Override

@@ -2024,6 +2024,34 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	protected abstract void doFormat() throws Exception;
 
+	protected String[] getExcludes() {
+		return _excludes;
+	}
+
+	protected FileImpl getFileUtil() {
+		return _fileUtil;
+	}
+
+	protected Pattern getLanguageKeyPattern() {
+		return _languageKeyPattern;
+	}
+
+	protected SAXReaderImpl getSaxReaderUtil() {
+		return _saxReaderUtil;
+	}
+
+	protected Pattern getSessionKeyPattern() {
+		return _sessionKeyPattern;
+	}
+
+	protected SourceFormatterHelper getSourceFormatterHelper() {
+		return _sourceFormatterHelper;
+	}
+
+	protected Pattern getTaglibSessionKeyPattern() {
+		return _taglibSessionKeyPattern;
+	}
+
 	private void _init(boolean useProperties, boolean throwException)
 		throws IOException {
 

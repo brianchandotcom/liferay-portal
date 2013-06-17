@@ -14,9 +14,13 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.ServiceTestUtil;
+
+import javax.portlet.PortletPreferences;
 
 /**
  * @author Manuel de la Peña
@@ -33,6 +37,19 @@ public class CompanyTestUtil {
 		return CompanyLocalServiceUtil.addCompany(
 			name, virtualHostname, virtualHostname,
 			PropsValues.SHARD_DEFAULT_NAME, false, 0, true);
+	}
+
+	public static void resetCompanyLanguages(long companyId, String newLocales)
+		throws Exception {
+
+		PortletPreferences preferences = PrefsPropsUtil.getPreferences(
+			companyId);
+
+		LanguageUtil.resetAvailableLocales(companyId);
+
+		preferences.setValue(PropsKeys.LOCALES, newLocales);
+
+		preferences.store();
 	}
 
 }

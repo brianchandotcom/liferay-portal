@@ -100,8 +100,8 @@ public class ActionUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long nodeId = ParamUtil.getLong(request, "nodeId");
-		String nodeName = ParamUtil.getString(request, "nodeName");
+		long nodeId = ParamUtil.getLong(portletRequest, "nodeId");
+		String nodeName = ParamUtil.getString(portletRequest, "nodeName");
 
 		WikiNode node = null;
 

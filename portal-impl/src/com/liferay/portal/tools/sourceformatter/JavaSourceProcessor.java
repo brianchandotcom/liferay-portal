@@ -513,6 +513,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		for (String fileName : fileNames) {
+			if (fileName.endsWith("SourceProcessor.java")) {
+				continue;
+			}
+
 			File file = new File(fileName);
 
 			fileName = StringUtil.replace(

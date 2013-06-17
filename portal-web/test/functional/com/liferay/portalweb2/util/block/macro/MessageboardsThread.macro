@@ -132,6 +132,7 @@
 		<execute macro="Page#cpGotoContent">
 			<var name="portletName" value="Message Boards" />
 		</execute>
+
 		<if>
 			<condition action="CPMessageboards#isElementPresent" locator-key1="THREAD_TABLE_THREAD_1" />
 			<then>

@@ -22,7 +22,7 @@
 			<execute function="Click#textClickAtAndWait" value1="Move to the Recycle Bin" />
 		</case>
 		<case comparator="startsWith" locator-key1="CATEGORY_TABLE_ACTIONS_">
-			<execute function="Click#pauseTextClickAt" value1="Actions" />
+			<execute function="Click#textClickAt" value1="Actions" />
 		</case>
 		<case comparator="startsWith" locator-key1="CATEGORY_TABLE_CATEGORY_">
 			<execute function="Click#textClickAtAndWait" />
@@ -34,7 +34,7 @@
 			<execute function="Click#textClickAtAndWait" value1="Move to the Recycle Bin" />
 		</case>
 		<case comparator="startsWith" locator-key1="THREAD_TABLE_ACTIONS_">
-			<execute function="Click#pauseTextClickAt" value1="Actions" />
+			<execute function="Click#textClickAt" value1="Actions" />
 		</case>
 		<case comparator="startsWith" locator-key1="THREAD_TABLE_THREAD_">
 			<execute function="Click#textClickAtAndWait" />

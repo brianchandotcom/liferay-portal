@@ -1,0 +1,73 @@
+<definition>
+	<var name="pageTemplateActive" value="Yes" />
+
+	<command name="addCP">
+		<execute macro="Page#cpGotoSites">
+			<var name="portletName" value="Page Templates" />
+		</execute>
+
+		<execute action="CPPagetemplates#click" locator-key1="ADD" />
+
+		<execute action="CPPagetemplatesAdd#type" locator-key1="NAME_FIELD" value1="${pageTemplateName}" />
+
+		<if>
+			<equals arg1="${pageTemplateActive}" arg2="No" />
+			<then>
+				<execute action="CPPagetemplatesAdd#uncheck" locator-key1="ACTIVE_CHECKBOX" />
+			</then>
+			<else>
+				<execute action="CPPagetemplatesAdd#check" locator-key1="ACTIVE_CHECKBOX" />
+			</else>
+		</if>
+
+		<execute action="CPPagetemplatesAdd#click" locator-key1="SAVE_BUTTON" />
+		<execute action="CPPagetemplates#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
+		<execute action="CPPagetemplates#assertTextEquals" locator-key1="PAGE_TEMPLATE_TABLE_NAME_4" value1="${pageTemplateName}" />
+		<execute action="CPPagetemplates#assertTextEquals" locator-key1="PAGE_TEMPLATE_TABLE_ACTIVE_4" value1="${pageTemplateActive}" />
+	</command>
+
+	<command name="editCP">
+		<execute macro="Page#cpGotoSites">
+			<var name="portletName" value="Page Templates" />
+		</execute>
+
+		<execute action="CPPagetemplates#assertTextEquals" locator-key1="PAGE_TEMPLATE_TABLE_NAME_4" value1="${pageTemplateName}" />
+		<execute action="CPPagetemplates#click" locator-key1="PAGE_TEMPLATE_TABLE_ACTIONS_4" />
+		<execute action="CPPagetemplates#click" locator-key1="PAGE_TEMPLATE_MENULIST_EDIT" />
+
+		<execute action="CPPagetemplatesEdit#type" locator-key1="NAME_FIELD" value1="${pageTemplateNameNew}" />
+
+		<if>
+			<equals arg1="${pageTemplateActiveNew}" arg2="No" />
+			<then>
+				<execute action="CPPagetemplatesAdd#uncheck" locator-key1="ACTIVE_CHECKBOX" />
+			</then>
+			<else>
+				<execute action="CPPagetemplatesAdd#check" locator-key1="ACTIVE_CHECKBOX" />
+			</else>
+		</if>
+
+		<execute action="CPPagetemplatesEdit#assertTextEquals" locator-key1="OPEN_PAGE_TEMPLATE" value1="Open Page Template" />
+		<execute action="CPPagetemplatesEdit#click" locator-key1="SAVE_BUTTON" />
+
+		<execute action="CPPagetemplates#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
+		<execute action="CPPagetemplates#assertTextEquals" locator-key1="PAGE_TEMPLATE_TABLE_NAME_4" value1="${pageTemplateNameNew}" />
+		<execute action="CPPagetemplates#assertTextEquals" locator-key1="PAGE_TEMPLATE_TABLE_ACTIVE_4" value1="${pageTemplateActiveNew}" />
+	</command>
+
+	<command name="tearDownCP">
+		<execute macro="Page#cpGotoSites">
+			<var name="portletName" value="Page Templates" />
+		</execute>
+
+		<while>
+			<condition action="CPPagetemplates#isElementPresent" locator-key1="PAGE_TEMPLATE_TABLE_ACTIONS_4" />
+			<then>
+				<execute action="CPPagetemplates#click" locator-key1="PAGE_TEMPLATE_TABLE_ACTIONS_4" />
+				<execute action="CPPagetemplates#click" locator-key1="PAGE_TEMPLATE_MENULIST_DELETE" />
+				<execute action="CPPagetemplates#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+				<execute action="CPPagetemplates#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
+			</then>
+		</while>
+	</command>
+</definition>

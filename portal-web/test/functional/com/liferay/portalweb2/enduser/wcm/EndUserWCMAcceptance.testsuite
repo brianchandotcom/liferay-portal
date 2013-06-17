@@ -1,4 +1,6 @@
 <definition>
+	<execute test-case="CPPagetemplatesAcceptance" />
+
 	<execute test-case="CPSitemembershipsAcceptance" />
 
 	<execute test-case="CPSitepagesAcceptance" />

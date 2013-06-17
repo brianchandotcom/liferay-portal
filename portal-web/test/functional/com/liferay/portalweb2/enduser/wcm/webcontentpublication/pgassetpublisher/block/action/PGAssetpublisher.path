@@ -77,47 +77,47 @@
 <!--ADD_MENULIST-->
 <tr>
 	<td>ADD_MENULIST_BLOGS_ENTRY</td>
-	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Blogs Entry')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Blogs Entry')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_MENULIST_BOOKMARKS_ENTRY</td>
-	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Bookmarks Entry')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Bookmarks Entry')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_MENULIST_CALENDAR_EVENT</td>
-	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Calendar Event')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Calendar Event')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_MENULIST_BASIC_DOCUMENT</td>
-	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Basic Document')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Basic Document')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_MENULIST_WEB_CONTENT</td>
-	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Web Content')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Web Content')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_MENULIST_CONTRACT</td>
-	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Contract')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Contract')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_MENULIST_MARKETING_BANNER</td>
-	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Marketing Banner')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Marketing Banner')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_MENULIST_ONLINE_TRAINING</td>
-	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Online Training')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Online Training')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_MENULIST_SALES_PRESENTATION</td>
-	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Sales Presentation')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Sales Presentation')]</td>
 	<td></td>
 </tr>
 <tr>

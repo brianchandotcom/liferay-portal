@@ -99,22 +99,22 @@
 <!--ACTION_MENULIST-->
 <tr>
 	<td>ACTION_MENULIST_DELETE</td>
-	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Delete')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Delete')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ACTION_MENULIST_MOVE_TO_THE_RECYCLE_BIN</td>
-	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Move to the Recycle Bin')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Move to the Recycle Bin')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ACTION_MENULIST_EXPIRE</td>
-	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Expire')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Expire')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ACTION_MENULIST_MOVE</td>
-	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Move')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Move')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -125,12 +125,12 @@
 <!--ADD_MENULIST-->
 <tr>
 	<td>ADD_MENULIST_ADD_FOLDER</td>
-	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Folder')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Folder')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_MENULIST_ADD_BASIC_WEB_CONTENT</td>
-	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Basic Web Content')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Basic Web Content')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -141,17 +141,17 @@
 <!--MANAGE_MENULIST-->
 <tr>
 	<td>MANAGE_MENULIST_STRUCTURES</td>
-	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Structures')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Structures')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MANAGE_MENULIST_TEMPLATES</td>
-	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Templates')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Templates')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MANAGE_MENULIST_FEEDS</td>
-	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Feeds')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Feeds')]</td>
 	<td></td>
 </tr>
 <tr>

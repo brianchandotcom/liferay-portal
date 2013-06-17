@@ -67,12 +67,12 @@
 <!--ADD-->
 <tr>
 	<td>ADD_USER</td>
-	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'User')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'User')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_REGULAR_ORGANIZATION</td>
-	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Regular Organization')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Regular Organization')]</td>
 	<td></td>
 </tr>
 <tr>

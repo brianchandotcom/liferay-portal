@@ -46,17 +46,17 @@
 <!--ADD-->
 <tr>
 	<td>ADD_BLANK_SITE</td>
-	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Blank Site')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Blank Site')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_COMMUNITY_SITE</td>
-	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Community Site')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Community Site')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_INTRANET_SITE</td>
-	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Intranet Site')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Intranet Site')]</td>
 	<td></td>
 </tr>
 <tr>

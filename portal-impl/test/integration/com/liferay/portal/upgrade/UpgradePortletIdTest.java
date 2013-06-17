@@ -73,7 +73,7 @@ public class UpgradePortletIdTest extends UpgradePortletId {
 	}
 
 	@After
-	public void teadDown() throws Exception {
+	public void tearDown() throws Exception {
 		for (String portletId : _PORTLET_IDS) {
 			runSQL(
 				"delete from Portlet where portletId = '" + portletId +

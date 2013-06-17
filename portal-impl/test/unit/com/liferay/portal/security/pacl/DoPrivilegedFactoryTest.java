@@ -31,7 +31,7 @@ import org.testng.Assert;
 public class DoPrivilegedFactoryTest {
 
 	@Before
-	public void setup() {
+	public void setUp() {
 		PortalClassLoaderUtil.setClassLoader(UserImpl.class.getClassLoader());
 	}
 

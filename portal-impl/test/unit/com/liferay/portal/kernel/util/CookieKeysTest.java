@@ -29,6 +29,11 @@ import org.springframework.mock.web.MockHttpServletRequest;
  */
 public class CookieKeysTest {
 
+	@Before
+	public void setUp() {
+		PropsUtil.setProps(new PropsImpl());
+	}
+
 	@Test
 	public void testDomain1() throws Exception {
 		String domain = CookieKeys.getDomain("www.liferay.com");
@@ -118,11 +123,6 @@ public class CookieKeysTest {
 		finally {
 			field.set(null, value);
 		}
-	}
-
-	@Before
-	public void setUp() {
-		PropsUtil.setProps(new PropsImpl());
 	}
 
 }

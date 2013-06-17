@@ -35,6 +35,11 @@ import org.powermock.modules.junit4.PowerMockRunner;
 @RunWith(PowerMockRunner.class)
 public class PortalBeanLocatorUtilTest extends PowerMockito {
 
+	@After
+	public void tearDown() {
+		PortalBeanLocatorUtil.setBeanLocator(null);
+	}
+
 	@Test
 	public void testBeanLocatorHasNotBeenSet() {
 		try {
@@ -81,11 +86,6 @@ public class PortalBeanLocatorUtilTest extends PowerMockito {
 		Assert.assertNull(bean);
 
 		Mockito.verify(_beanLocator, Mockito.times(1));
-	}
-
-	@After
-	public void tearDown() {
-		PortalBeanLocatorUtil.setBeanLocator(null);
 	}
 
 	@Mock

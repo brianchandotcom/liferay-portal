@@ -28,13 +28,6 @@ import org.junit.runner.RunWith;
 @RunWith(NewClassLoaderJUnitTestRunner.class)
 public class NewClassLoaderJUnitTestRunnerTest {
 
-	@After
-	public void tearDown() {
-		Assert.assertEquals(2, _counter.getAndIncrement());
-
-		assertClassLoader();
-	}
-
 	@Before
 	public void setUp() {
 		Assert.assertEquals(0, _counter.getAndIncrement());
@@ -51,6 +44,13 @@ public class NewClassLoaderJUnitTestRunnerTest {
 		Assert.assertSame(classLoader, contextClassLoader);
 
 		_classLoader = classLoader;
+	}
+
+	@After
+	public void tearDown() {
+		Assert.assertEquals(2, _counter.getAndIncrement());
+
+		assertClassLoader();
 	}
 
 	@Test

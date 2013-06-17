@@ -34,19 +34,19 @@ import org.junit.runner.RunWith;
 @RunWith(NewJVMJUnitTestRunner.class)
 public class NewJVMJUnitTestRunnerTest {
 
-	@After
-	public void tearDown() {
-		Assert.assertEquals(2, _counter.getAndIncrement());
-
-		assertProcessId();
-	}
-
 	@Before
 	public void setUp() {
 		Assert.assertEquals(0, _counter.getAndIncrement());
 		Assert.assertNull(_processId);
 
 		_processId = getProcessId();
+	}
+
+	@After
+	public void tearDown() {
+		Assert.assertEquals(2, _counter.getAndIncrement());
+
+		assertProcessId();
 	}
 
 	@Test

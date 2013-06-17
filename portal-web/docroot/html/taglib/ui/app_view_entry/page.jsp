@@ -98,16 +98,9 @@ if (showLinkTitle) {
 				<span class="entry-title-text">
 					<%= HtmlUtil.escape(shortTitle) %>
 
-					<c:if test="<%= !folder && ((status == WorkflowConstants.STATUS_DRAFT) || (status == WorkflowConstants.STATUS_PENDING)) %>">
-
-						<%
-						String statusLabel = WorkflowConstants.toLabel(status);
-						%>
-
-						<span class="<%= _getStatusCssClass(status) %>">
-							<liferay-ui:message key="<%= statusLabel %>" />
-						</span>
-					 </c:if>
+					<c:if test="<%= !folder && ((status != WorkflowConstants.STATUS_ANY) && (status != WorkflowConstants.STATUS_APPROVED)) %>">
+						<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= status %>" />
+					</c:if>
 				</span>
 
 				<span class="entry-result-icon"></span>
@@ -173,15 +166,8 @@ if (showLinkTitle) {
 									<%= HtmlUtil.escape(version) %>
 								</c:if>
 
-								<c:if test="<%= (status != WorkflowConstants.STATUS_ANY) && (status != WorkflowConstants.STATUS_APPROVED) %>">
-
-									<%
-									String statusLabel = WorkflowConstants.toLabel(status);
-									%>
-
-									<span class="<%= _getStatusCssClass(status) %>">
-										<liferay-ui:message key="<%= statusLabel %>" />
-									</span>
+								<c:if test="<%= !folder && (status != WorkflowConstants.STATUS_ANY) && (status != WorkflowConstants.STATUS_APPROVED) %>">
+									<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= status %>" />
 								</c:if>
 							</dd>
 						</c:if>
@@ -320,39 +306,9 @@ if (showLinkTitle) {
 				url="<%= url %>"
 			/>
 
-			<c:if test="<%= !folder && ((status == WorkflowConstants.STATUS_DRAFT) || (status == WorkflowConstants.STATUS_PENDING)) %>">
-
-				<%
-				String statusLabel = WorkflowConstants.toLabel(status);
-				%>
-
-				<span class="<%= _getStatusCssClass(status) %>">
-					<liferay-ui:message key="<%= statusLabel %>" />
-				</span>
+			<c:if test="<%= !folder && (status != WorkflowConstants.STATUS_ANY) && (status != WorkflowConstants.STATUS_APPROVED) %>">
+				<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= status %>" />
 			</c:if>
 		</div>
 	</c:when>
 </c:choose>
-
-<%!
-private String _getStatusCssClass(int status) {
-	String statusLabel = WorkflowConstants.toLabel(status);
-
-	String labelCssClass = "label workflow-status-" + statusLabel;
-
-	if (status == WorkflowConstants.STATUS_APPROVED) {
-		labelCssClass += " label-success";
-	}
-	else if (status == WorkflowConstants.STATUS_DRAFT) {
-		labelCssClass += " label-info";
-	}
-	else if (status == WorkflowConstants.STATUS_EXPIRED) {
-		labelCssClass += " label-important";
-	}
-	else if (status == WorkflowConstants.STATUS_PENDING) {
-		labelCssClass += " label-warning";
-	}
-
-	return labelCssClass;
-}
-%>

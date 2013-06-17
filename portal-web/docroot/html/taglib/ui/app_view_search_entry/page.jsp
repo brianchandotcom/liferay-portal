@@ -51,15 +51,8 @@ String url = (String)request.getAttribute("liferay-ui:app-view-search-entry:url"
 		<span class="entry-title">
 			<%= StringUtil.highlight(HtmlUtil.escape(title), queryTerms) %>
 
-			<c:if test="<%= ((status == WorkflowConstants.STATUS_DRAFT) || (status == WorkflowConstants.STATUS_PENDING)) %>">
-
-				<%
-				String statusLabel = WorkflowConstants.toLabel(status);
-				%>
-
-				<span class="workflow-status-<%= statusLabel %>">
-					(<liferay-ui:message key="<%= statusLabel %>" />)
-				</span>
+			<c:if test="<%= (status != WorkflowConstants.STATUS_ANY) && (status != WorkflowConstants.STATUS_APPROVED) %>">
+				<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= status %>" />
 			</c:if>
 		</span>
 

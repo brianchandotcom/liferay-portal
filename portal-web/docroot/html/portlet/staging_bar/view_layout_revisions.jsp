@@ -117,43 +117,21 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 							name="status"
 						>
 
-							<%
-							String statusMessage = null;
-							String additionalText = StringPool.BLANK;
+							<c:choose>
+								<c:when test="<%= curLayoutRevision.isHead() %>">
+									<aui:workflow-status statusMessage="ready-for-publication" />
+								</c:when>
+								<c:otherwise>
 
-							if (curLayoutRevision.isHead()) {
-								statusMessage = "ready-for-publication";
-							}
-							else {
-								int status = curLayoutRevision.getStatus();
+									<%
+									int status = curLayoutRevision.getStatus();
+									%>
 
-								statusMessage = WorkflowConstants.toLabel(status);
-
-								if (status == WorkflowConstants.STATUS_PENDING) {
-									StringBundler sb = new StringBundler(4);
-
-									try {
-										String workflowStatus = WorkflowInstanceLinkLocalServiceUtil.getState(curLayoutRevision.getCompanyId(), curLayoutRevision.getGroupId(), LayoutRevision.class.getName(), curLayoutRevision.getLayoutRevisionId());
-
-										sb.append(StringPool.SPACE);
-										sb.append(StringPool.OPEN_PARENTHESIS);
-										sb.append(LanguageUtil.get(pageContext, workflowStatus));
-										sb.append(StringPool.CLOSE_PARENTHESIS);
-
-										additionalText = sb.toString();
-									}
-									catch (NoSuchWorkflowInstanceLinkException nswile) {
-									}
-								}
-							}
-
-							buffer.append("<span class=\"taglib-workflow-status\"><span class=\"workflow-status\"><span class=\"workflow-status-");
-							buffer.append(statusMessage);
-							buffer.append("\">");
-							buffer.append(LanguageUtil.get(pageContext, statusMessage));
-							buffer.append(additionalText);
-							buffer.append("</span></span></span>");
-							%>
+									<c:if test="<%= status == WorkflowConstants.STATUS_PENDING %>">
+										<aui:workflow-status bean="<%= curLayoutRevision %>" status="<%= status %>" />
+									</c:if>
+								</c:otherwise>
+							</c:choose>
 
 						</liferay-ui:search-container-column-text>
 

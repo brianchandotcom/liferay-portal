@@ -124,13 +124,18 @@
 </tr>
 <!--ADD_MENULIST-->
 <tr>
-	<td>ADD_MENULIST_ADD_FOLDER</td>
-	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Folder')]</td>
+	<td>ADD_MENULIST_FOLDER</td>
+	<td>//li[@id='_15_addButtonContainer']/ul/li/a[contains(.,'Folder')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_MENULIST_ADD_BASIC_WEB_CONTENT</td>
-	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Basic Web Content')]</td>
+	<td>ADD_MENULIST_SUBFOLDER</td>
+	<td>//li[@id='_15_addButtonContainer']/ul/li/a[contains(.,'Subfolder')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_MENULIST_BASIC_WEB_CONTENT</td>
+	<td>//li[@id='_15_addButtonContainer']/ul/li/a[contains(.,'Basic Web Content')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -181,6 +186,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FILTER_SELECTED</td>
+	<td>//li[@class='app-view-navigation-entry folder active']/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -214,7 +224,7 @@
 </tr>
 <tr>
 	<td>ENTRY_TABLE_MENULIST_ARROW_1</td>
-	<td>//div[@id='_15_entriesContainer']/div/span[contains(@class,'entry-action')]/div/a/i[@class='caret']</td>
+	<td>//div[@id='_15_entries']/div/span[contains(@class,'entry-action')]/div/a/i[@class='caret']</td>
 	<td></td>
 </tr>
 <tr>
@@ -224,7 +234,7 @@
 </tr>
 <tr>
 	<td>ENTRY_TABLE_TITLE_1</td>
-	<td>//div[@id='_15_entriesContainer']/div/a[@class='entry-link']/span/span</td>
+	<td>//div[@id='_15_entriesContainer']/div/a[contains(@class,'entry-link')]/span/span</td>
 	<td></td>
 </tr>
 <tr>

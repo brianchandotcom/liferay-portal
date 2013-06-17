@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>STRUCTURE_IFRAME</td>
-	<td>//div[contains(@class,'dialog-iframe-bd')]/iframe[contains(@src,'selectStructure')]</td>
+	<td>//div[contains(@class,'dialog-iframe-bd')]/iframe[contains(@src,'_166_selectStructure')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -29,7 +29,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_STRUCTURE</td>
+	<td>ADD</td>
 	<td>//div[@class='container']/ul[contains(@class,'nav')]/li/a[contains(.,'Add')]</td>
 	<td></td>
 </tr>
@@ -37,6 +37,11 @@
 	<td>INFO_MESSAGE</td>
 	<td>//div[@class='alert alert-info']</td>
 	<td>There are no results.</td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
 </tr>
 <tr>
 	<td></td>
@@ -67,17 +72,17 @@
 </tr>
 <tr>
 	<td>STRUCTURE_TABLE_NAME_1</td>
-	<td>//div[@id='_166_ddmStructuresSearchContainerSearchContainer']/table/tbody/tr[1]/td[3]/a</td>
+	<td>//div[@id='_166_ddmStructuresSearchContainerSearchContainer']/table/tbody/tr[1]/td[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>STRUCTURE_TABLE_DESCRIPTION_1</td>
-	<td>//div[@id='_166_ddmStructuresSearchContainerSearchContainer']/table/tbody/tr[1]/td[4]/a</td>
+	<td>//div[@id='_166_ddmStructuresSearchContainerSearchContainer']/table/tbody/tr[1]/td[3]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>STRUCTURE_TABLE_MODIFIED_DATE_1</td>
-	<td>//div[@id='_166_ddmStructuresSearchContainerSearchContainer']/table/tbody/tr[1]/td[5]/a</td>
+	<td>//div[@id='_166_ddmStructuresSearchContainerSearchContainer']/table/tbody/tr[1]/td[4]</td>
 	<td></td>
 </tr>
 <tr>

@@ -1,0 +1,52 @@
+<definition>
+	<command name="addCP">
+		<execute macro="Page#cpGotoContent">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute action="CPWebcontent#click" locator-key1="TOOLBAR_MANAGE" />
+		<execute action="CPWebcontent#click" locator-key1="MANAGE_MENULIST_STRUCTURES" />
+
+		<execute action="CPWebcontentStructures#selectFrame" locator-key1="STRUCTURES_IFRAME" />
+		<execute action="CPWebcontentStructures#click" locator-key1="ADD" />
+		<execute action="CPWebcontentStructures#selectFrame" />
+
+		<execute action="CPWebcontentStructuresAddstructure#selectFrame" locator-key1="STRUCTURES_IFRAME" />
+		<execute action="CPWebcontentStructuresAddstructure#type" locator-key1="NAME_FIELD" value1="${structureName}" />
+
+		<execute macro="CPWebcontentStructuresAddstructure#showDetails" />
+
+		<execute action="CPWebcontentStructuresAddstructure#type" locator-key1="DESCRIPTION_FIELD" value1="${structureDescription}" />
+		<execute action="CPWebcontentStructuresAddstructure#dragAndDrop" locator-key1="FIELD_MENU_TEXT" value1="Text" locator-key2="DIAGRAM_BUILDER_DROP_CONTAINER" />
+		<execute action="CPWebcontentStructuresAddstructure#click" locator-key1="SAVE_BUTTON" />
+		<execute action="CPWebcontentStructuresAddstructure#selectFrame" />
+
+		<execute action="CPWebcontentStructuresAddstructure#selectFrame" locator-key1="STRUCTURES_IFRAME" />
+		<execute action="CPWebcontentStructures#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
+		<execute action="CPWebcontentStructures#assertTextEquals" locator-key1="STRUCTURE_TABLE_NAME_1" value1="${structureName}" />
+		<execute action="CPWebcontentStructures#assertTextEquals" locator-key1="STRUCTURE_TABLE_DESCRIPTION_1" value1="${structureDescription}" />
+	</command>
+
+	<command name="tearDownCP">
+		<execute macro="Page#cpGotoContent">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute action="CPWebcontent#click" locator-key1="TOOLBAR_MANAGE" />
+		<execute action="CPWebcontent#click" locator-key1="MANAGE_MENULIST_STRUCTURES" />
+
+		<execute action="CPWebcontentStructures#selectFrame" locator-key1="STRUCTURES_IFRAME" />
+
+		<while>
+			<condition action="CPWebcontentStructures#isElementPresent" locator-key1="STRUCTURE_TABLE_ACTIONS_1" />
+			<then>
+				<execute action="CPWebcontentStructures#check" locator-key1="STRUCTURE_TABLE_SELECT_ALL_CHECKBOX" />
+				<execute action="CPWebcontentStructures#click" locator-key1="DELETE_BUTTON" />
+				<execute action="CPWebcontentStructures#confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+				<execute action="CPWebcontentStructures#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
+			</then>
+		</while>
+
+		<execute action="CPWebcontentStructures#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no results." />
+	</command>
+</definition>

@@ -1,0 +1,53 @@
+<definition>
+	<command name="addCP">
+		<execute macro="Page#cpGotoContent">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute action="CPWebcontent#click" locator-key1="TOOLBAR_ADD" />
+		<execute action="CPWebcontent#click" locator-key1="ADD_MENULIST_BASIC_WEB_CONTENT" />
+
+		<execute action="CPWebcontentAddwebcontent#type" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />
+		<execute action="CPWebcontentAddwebcontent#type" locator-key1="CONTENT_FIELD" value1="${webContentContent}" />
+		<execute action="CPWebcontentAddwebcontent#click" locator-key1="PUBLISH_BUTTON" />
+
+		<execute action="CPWebcontent#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
+		<execute action="CPWebcontent#assertElementPresent" locator-key1="ENTRY_TABLE_ENTRY_1" />
+		<execute action="CPWebcontent#assertTextEquals" locator-key1="ENTRY_TABLE_TITLE_1" value1="${webContentTitle}" />
+	</command>
+
+	<command name="addCPwithStructure">
+		<execute macro="Page#cpGotoContent">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute action="CPWebcontent#click" locator-key1="TOOLBAR_ADD" />
+		<execute action="CPWebcontent#click" locator1="//li/ul[@class='dropdown-menu']/li/a[contains(.,'${structureName}')]" value1="${structureName}" />
+
+		<execute action="CPWebcontentAddwebcontent#type" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />
+		<execute action="CPWebcontentAddwebcontent#type" locator1="//input[contains(@id,'_15_text') and @type='text']" value1="${webContentText}" />
+		<execute action="CPWebcontentAddwebcontent#click" locator-key1="PUBLISH_BUTTON" />
+
+		<execute action="CPWebcontent#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
+		<execute action="CPWebcontent#assertElementPresent" locator-key1="ENTRY_TABLE_ENTRY_1" />
+		<execute action="CPWebcontent#assertTextEquals" locator-key1="ENTRY_TABLE_TITLE_1" value1="${webContentTitle}" />
+	</command>
+
+	<command name="tearDownCP">
+		<execute macro="Page#cpGotoContent">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<while>
+			<condition action="CPWebcontent#isElementPresent" locator-key1="ENTRY_TABLE_ENTRY_1" />
+			<then>
+				<execute action="CPWebcontent#check" locator-key1="TOOLBAR_SELECT_ALL_CHECKBOX" />
+				<execute action="CPWebcontent#click" locator-key1="TOOLBAR_ACTIONS" />
+				<execute action="CPWebcontent#click" locator-key1="ACTION_MENULIST_DELETE" />
+				<execute action="CPWebcontent#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" />
+			</then>
+		</while>
+
+		<execute macro="RecycleBin#emptyRecycleBinCP" />
+	</command>
+</definition>

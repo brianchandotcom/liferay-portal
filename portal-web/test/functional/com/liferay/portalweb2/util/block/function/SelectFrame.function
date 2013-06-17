@@ -4,4 +4,8 @@
 
 		<execute selenium="selectFrame" />
 	</command>
+
+	<command name="selectFrameTop">
+		<execute selenium="selectFrame" argument1="relative=top" />
+	</command>
 </definition>

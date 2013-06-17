@@ -7,5 +7,7 @@
 
 	<execute test-case="CPSitesAcceptance" />
 
+	<execute test-case="CPWebcontentAcceptance" />
+
 	<execute test-case="DockbarAcceptance" />
 </definition>

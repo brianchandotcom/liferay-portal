@@ -1,0 +1,40 @@
+<definition>
+	<command name="assertTextEquals">
+		<case locator-key1="SUCCESS_MESSAGE">
+			<execute function="AssertTextEquals#assertText" value1="Your request completed successfully." />
+		</case>
+		<case locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN">
+			<execute function="AssertTextEquals#assertText" value1="The selected item was moved to the Recycle Bin. Undo" />
+		</case>
+	</command>
+
+	<command name="click">
+		<case comparator="startsWith" locator1="//li/ul[@class='dropdown-menu']/li/a[contains(.,'">
+			<execute function="Click#textClickAtAndWait" />
+		</case>
+		<case locator-key1="ACTION_MENULIST_DELETE">
+			<execute function="Click#textClickAtAndWait" value1="Delete" />
+		</case>
+		<case locator-key1="ADD_MENULIST_BASIC_WEB_CONTENT">
+			<execute function="Click#textClickAtAndWait" value1="Basic Web Content" />
+		</case>
+		<case locator-key1="ADD_MENULIST_FOLDER">
+			<execute function="Click#textClickAtAndWait" value1="Folder" />
+		</case>
+		<case locator-key1="ADD_MENULIST_SUBFOLDER">
+			<execute function="Click#textClickAtAndWait" value1="Subfolder" />
+		</case>
+		<case locator-key1="ENTRY_MENULIST_MOVE">
+			<execute function="Click#textClickAtAndWait" value1="Move" />
+		</case>
+		<case locator-key1="ENTRY_TABLE_TITLE_1">
+			<execute function="Click#textClickAt" />
+		</case>
+		<case locator-key1="MANAGE_MENULIST_STRUCTURES">
+			<execute function="Click#textClickAtAndWait" value1="Structures" />
+		</case>
+		<case locator-key1="MANAGE_MENULIST_TEMPLATES">
+			<execute function="Click#textClickAtAndWait" value1="Templates" />
+		</case>
+	</command>
+</definition>

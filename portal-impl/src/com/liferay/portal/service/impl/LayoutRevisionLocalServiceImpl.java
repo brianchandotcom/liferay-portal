@@ -449,7 +449,13 @@ public class LayoutRevisionLocalServiceImpl
 				layoutRevision.getPlid(), layoutRevision.getLayoutBranchId());
 		}
 		else {
-			layoutRevision = oldLayoutRevision;
+			if (_layoutRevisionId.get() > 0) {
+				layoutRevision = 
+					layoutRevisionPersistence.findByPrimaryKey(
+						_layoutRevisionId.get());
+			} else {
+				layoutRevision = oldLayoutRevision;
+			}
 
 			layoutRevision.setName(name);
 			layoutRevision.setTitle(title);

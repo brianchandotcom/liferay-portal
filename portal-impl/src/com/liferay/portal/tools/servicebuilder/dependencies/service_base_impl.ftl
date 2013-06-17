@@ -278,7 +278,7 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 			return ${entity.varName}Persistence.fetchByPrimaryKey(${entity.PKVarName});
 		}
 
-		<#if entity.hasUuid() && entity.hasColumn("groupId")>
+		<#if entity.hasUuid() && entity.hasColumn("groupId") && entity.name != "Group">
 			<#if entity.name == "Layout">
 				/**
 				 * Returns the ${entity.humanName} matching the UUID, group, and privacy.
@@ -350,7 +350,7 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 			return ${entity.varName}Persistence.findByPrimaryKey(primaryKeyObj);
 		}
 
-		<#if entity.hasUuid() && entity.hasColumn("groupId")>
+		<#if entity.hasUuid() && entity.hasColumn("groupId") && entity.name != "Group">
 			<#if entity.name == "Layout">
 				/**
 				 * Returns the ${entity.humanName} matching the UUID, group, and privacy.

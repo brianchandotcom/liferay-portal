@@ -1287,6 +1287,13 @@ public class PortalUtil {
 		return getPortal().getSelectedUser(portletRequest, checkPermission);
 	}
 
+	public static Map<String, List<Portlet>> getSiteAdministrationCategoriesMap(
+			HttpServletRequest request)
+		throws SystemException {
+
+		return getPortal().getSiteAdministrationCategoriesMap(request);
+	}
+
 	public static PortletURL getSiteAdministrationURL(
 			HttpServletRequest request, ThemeDisplay themeDisplay)
 		throws SystemException {

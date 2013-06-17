@@ -3,16 +3,6 @@
 		<execute macro="User#pgFirstLogin" />
 	</set-up>
 
-	<command name="AddWebContent">
-		<var name="webContentContent" value="WC WebContent Content" />
-		<var name="webContentTitle" value="WC WebContent Title" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
-		</execute>
-	</command>
-
 	<command name="AddFolder">
 		<var name="folderDescription" value="WC Folder Description" />
 		<var name="folderName" value="WC Folder Name" />
@@ -43,7 +33,7 @@
 		</execute>
 	</command>
 
-	<command name="AddTemplateStructure">
+	<command name="AddTemplateWithStructure">
 		<var name="templateDescription" value="WC Template Description" />
 		<var name="templateName" value="WC Template Name" />
 		<var name="structureDescription" value="WC Structure Description" />
@@ -61,7 +51,17 @@
 		</execute>
 	</command>
 
-	<command name="AddWebContentStructure">
+	<command name="AddWebContent">
+		<var name="webContentContent" value="WC WebContent Content" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+	</command>
+
+	<command name="AddWebContentWithStructure">
 		<var name="structureDescription" value="WC Structure Description" />
 		<var name="structureName" value="WC Structure Name" />
 		<var name="templateDescription" value="WC Template Description" />

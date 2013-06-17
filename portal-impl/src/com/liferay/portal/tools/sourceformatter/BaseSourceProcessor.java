@@ -1157,61 +1157,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
-	protected static void formatPortalProperties() throws IOException {
-		String basedir = "./";
-
-		String portalPortalProperties = null;
-
-		if (_portalSource) {
-			File portalPortalPropertiesFile = new File(
-				basedir + "portal-impl/src/portal.properties");
-
-			portalPortalProperties = _fileUtil.read(portalPortalPropertiesFile);
-		}
-		else {
-			portalPortalProperties = ContentUtil.get("portal.properties");
-		}
-
-		DirectoryScanner directoryScanner = new DirectoryScanner();
-
-		directoryScanner.setBasedir(basedir);
-
-		String[] excludes = _excludes;
-
-		if (_portalSource) {
-			excludes = ArrayUtil.append(
-				excludes, new String[] {"**\\classes\\**", "**\\bin\\**"});
-
-			directoryScanner.setIncludes(
-				new String[] {
-					"**\\portal-ext.properties",
-					"**\\portal-legacy-*.properties",
-				});
-		}
-		else {
-			directoryScanner.setIncludes(
-				new String[] {
-					"**\\portal.properties", "**\\portal-ext.properties"
-				});
-		}
-
-		directoryScanner.setExcludes(excludes);
-
-		List<String> fileNames = _sourceFormatterHelper.scanForFiles(
-			directoryScanner);
-
-		for (String fileName : fileNames) {
-			File file = new File(basedir + fileName);
-
-			fileName = StringUtil.replace(
-				fileName, StringPool.BACK_SLASH, StringPool.SLASH);
-
-			String content = _fileUtil.read(file);
-
-			_formatPortalProperties(fileName, content, portalPortalProperties);
-		}
-	}
-
 	protected static void formatPortletXML()
 		throws DocumentException, IOException {
 
@@ -3729,48 +3674,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return content;
-	}
-
-	private static void _formatPortalProperties(
-			String fileName, String content, String portalPortalProperties)
-		throws IOException {
-
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(content));
-
-		int lineCount = 0;
-
-		String line = null;
-
-		int previousPos = -1;
-
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			lineCount++;
-
-			int pos = line.indexOf(StringPool.EQUAL);
-
-			if (pos == -1) {
-				continue;
-			}
-
-			String property = line.substring(0, pos + 1);
-
-			property = property.trim();
-
-			pos = portalPortalProperties.indexOf(
-				StringPool.FOUR_SPACES + property);
-
-			if (pos == -1) {
-				continue;
-			}
-
-			if (pos < previousPos) {
-				processErrorMessage(
-					fileName, "sort " + fileName + " " + lineCount);
-			}
-
-			previousPos = pos;
-		}
 	}
 
 	private static String _formatPortletXML(String content)

@@ -226,6 +226,36 @@ public abstract class MDRRuleGroupLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the m d r rule group with the matching UUID and company.
+	 *
+	 * @param uuid the m d r rule group's UUID
+	 * @param  companyId the primary key of the company
+	 * @return the matching m d r rule group, or <code>null</code> if a matching m d r rule group
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public MDRRuleGroup fetchMDRRuleGroupByUuidAndCompanyId(String uuid,
+		long companyId) throws SystemException {
+		return mdrRuleGroupPersistence.fetchByUuid_C_First(uuid, companyId, null);
+	}
+
+	/**
+	 * Returns the m d r rule group matching the UUID and group.
+	 *
+	 * @param uuid the m d r rule group's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching m d r rule group, or <code>null</code> if a matching m d r rule group
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public MDRRuleGroup fetchMDRRuleGroupByUuidAndGroupId(String uuid,
+		long groupId) throws SystemException {
+		return mdrRuleGroupPersistence.fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
 	 * Returns the m d r rule group with the primary key.
 	 *
 	 * @param ruleGroupId the primary key of the m d r rule group

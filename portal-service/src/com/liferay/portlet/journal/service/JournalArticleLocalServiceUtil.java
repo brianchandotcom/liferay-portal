@@ -186,6 +186,37 @@ public class JournalArticleLocalServiceUtil {
 	}
 
 	/**
+	* Returns the journal article with the matching UUID and company.
+	*
+	* @param uuid the journal article's UUID
+	* @param companyId the primary key of the company
+	* @return the matching journal article, or <code>null</code> if a matching journal article
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticle fetchJournalArticleByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .fetchJournalArticleByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	* Returns the journal article matching the UUID and group.
+	*
+	* @param uuid the journal article's UUID
+	* @param groupId the primary key of the group
+	* @return the matching journal article, or <code>null</code> if a matching journal article
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticle fetchJournalArticleByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchJournalArticleByUuidAndGroupId(uuid, groupId);
+	}
+
+	/**
 	* Returns the journal article with the primary key.
 	*
 	* @param id the primary key of the journal article
@@ -831,20 +862,6 @@ public class JournalArticleLocalServiceUtil {
 		getService()
 			.expireArticle(userId, groupId, articleId, articleURL,
 			serviceContext);
-	}
-
-	/**
-	* Returns the web content article matching the UUID and group.
-	*
-	* @param uuid the web content article's UUID
-	* @param groupId the primary key of the web content article's group
-	* @return the matching web content article
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.portlet.journal.model.JournalArticle fetchArticle(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchArticle(uuid, groupId);
 	}
 
 	/**

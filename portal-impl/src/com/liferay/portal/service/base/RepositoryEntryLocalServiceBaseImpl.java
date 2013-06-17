@@ -293,6 +293,37 @@ public abstract class RepositoryEntryLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the repository entry with the matching UUID and company.
+	 *
+	 * @param uuid the repository entry's UUID
+	 * @param  companyId the primary key of the company
+	 * @return the matching repository entry, or <code>null</code> if a matching repository entry
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public RepositoryEntry fetchRepositoryEntryByUuidAndCompanyId(String uuid,
+		long companyId) throws SystemException {
+		return repositoryEntryPersistence.fetchByUuid_C_First(uuid, companyId,
+			null);
+	}
+
+	/**
+	 * Returns the repository entry matching the UUID and group.
+	 *
+	 * @param uuid the repository entry's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching repository entry, or <code>null</code> if a matching repository entry
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public RepositoryEntry fetchRepositoryEntryByUuidAndGroupId(String uuid,
+		long groupId) throws SystemException {
+		return repositoryEntryPersistence.fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
 	 * Returns the repository entry with the primary key.
 	 *
 	 * @param repositoryEntryId the primary key of the repository entry

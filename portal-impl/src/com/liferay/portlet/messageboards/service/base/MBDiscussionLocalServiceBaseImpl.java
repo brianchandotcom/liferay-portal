@@ -229,6 +229,36 @@ public abstract class MBDiscussionLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the message boards discussion with the matching UUID and company.
+	 *
+	 * @param uuid the message boards discussion's UUID
+	 * @param  companyId the primary key of the company
+	 * @return the matching message boards discussion, or <code>null</code> if a matching message boards discussion
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public MBDiscussion fetchMBDiscussionByUuidAndCompanyId(String uuid,
+		long companyId) throws SystemException {
+		return mbDiscussionPersistence.fetchByUuid_C_First(uuid, companyId, null);
+	}
+
+	/**
+	 * Returns the message boards discussion matching the UUID and group.
+	 *
+	 * @param uuid the message boards discussion's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching message boards discussion, or <code>null</code> if a matching message boards discussion
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public MBDiscussion fetchMBDiscussionByUuidAndGroupId(String uuid,
+		long groupId) throws SystemException {
+		return mbDiscussionPersistence.fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
 	 * Returns the message boards discussion with the primary key.
 	 *
 	 * @param discussionId the primary key of the message boards discussion

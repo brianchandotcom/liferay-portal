@@ -190,6 +190,40 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 	}
 
 	/**
+	* Returns the message-boards message with the matching UUID and company.
+	*
+	* @param uuid the message-boards message's UUID
+	* @param companyId the primary key of the company
+	* @return the matching message-boards message, or <code>null</code> if a matching message-boards message
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public com.liferay.portlet.messageboards.model.MBMessage fetchMBMessageByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbMessageLocalService.fetchMBMessageByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
+	/**
+	* Returns the message-boards message matching the UUID and group.
+	*
+	* @param uuid the message-boards message's UUID
+	* @param groupId the primary key of the group
+	* @return the matching message-boards message, or <code>null</code> if a matching message-boards message
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public com.liferay.portlet.messageboards.model.MBMessage fetchMBMessageByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbMessageLocalService.fetchMBMessageByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	/**
 	* Returns the message-boards message with the primary key.
 	*
 	* @param messageId the primary key of the message-boards message

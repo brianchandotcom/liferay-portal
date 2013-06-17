@@ -294,6 +294,21 @@ public abstract class UserGroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * Returns the user group with the matching UUID and company.
+	 *
+	 * @param uuid the user group's UUID
+	 * @param  companyId the primary key of the company
+	 * @return the matching user group, or <code>null</code> if a matching user group
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public UserGroup fetchUserGroupByUuidAndCompanyId(String uuid,
+		long companyId) throws SystemException {
+		return userGroupPersistence.fetchByUuid_C_First(uuid, companyId, null);
+	}
+
+	/**
 	 * Returns the user group with the primary key.
 	 *
 	 * @param userGroupId the primary key of the user group

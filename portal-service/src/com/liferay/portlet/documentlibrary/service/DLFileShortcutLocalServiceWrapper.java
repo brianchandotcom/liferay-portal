@@ -192,6 +192,40 @@ public class DLFileShortcutLocalServiceWrapper
 	}
 
 	/**
+	* Returns the document library file shortcut with the matching UUID and company.
+	*
+	* @param uuid the document library file shortcut's UUID
+	* @param companyId the primary key of the company
+	* @return the matching document library file shortcut, or <code>null</code> if a matching document library file shortcut
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut fetchDLFileShortcutByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileShortcutLocalService.fetchDLFileShortcutByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
+	/**
+	* Returns the document library file shortcut matching the UUID and group.
+	*
+	* @param uuid the document library file shortcut's UUID
+	* @param groupId the primary key of the group
+	* @return the matching document library file shortcut, or <code>null</code> if a matching document library file shortcut
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFileShortcut fetchDLFileShortcutByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileShortcutLocalService.fetchDLFileShortcutByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	/**
 	* Returns the document library file shortcut with the primary key.
 	*
 	* @param fileShortcutId the primary key of the document library file shortcut

@@ -296,6 +296,22 @@ public abstract class LayoutSetPrototypeLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the layout set prototype with the matching UUID and company.
+	 *
+	 * @param uuid the layout set prototype's UUID
+	 * @param  companyId the primary key of the company
+	 * @return the matching layout set prototype, or <code>null</code> if a matching layout set prototype
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public LayoutSetPrototype fetchLayoutSetPrototypeByUuidAndCompanyId(
+		String uuid, long companyId) throws SystemException {
+		return layoutSetPrototypePersistence.fetchByUuid_C_First(uuid,
+			companyId, null);
+	}
+
+	/**
 	 * Returns the layout set prototype with the primary key.
 	 *
 	 * @param layoutSetPrototypeId the primary key of the layout set prototype

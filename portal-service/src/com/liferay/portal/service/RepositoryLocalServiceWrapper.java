@@ -189,6 +189,40 @@ public class RepositoryLocalServiceWrapper implements RepositoryLocalService,
 	}
 
 	/**
+	* Returns the repository with the matching UUID and company.
+	*
+	* @param uuid the repository's UUID
+	* @param companyId the primary key of the company
+	* @return the matching repository, or <code>null</code> if a matching repository
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public com.liferay.portal.model.Repository fetchRepositoryByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _repositoryLocalService.fetchRepositoryByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
+	/**
+	* Returns the repository matching the UUID and group.
+	*
+	* @param uuid the repository's UUID
+	* @param groupId the primary key of the group
+	* @return the matching repository, or <code>null</code> if a matching repository
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public com.liferay.portal.model.Repository fetchRepositoryByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _repositoryLocalService.fetchRepositoryByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	/**
 	* Returns the repository with the primary key.
 	*
 	* @param repositoryId the primary key of the repository

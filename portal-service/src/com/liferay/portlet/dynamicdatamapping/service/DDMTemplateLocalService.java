@@ -171,6 +171,34 @@ public interface DDMTemplateLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns the d d m template with the matching UUID and company.
+	*
+	* @param uuid the d d m template's UUID
+	* @param companyId the primary key of the company
+	* @return the matching d d m template, or <code>null</code> if a matching d d m template
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchDDMTemplateByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the d d m template matching the UUID and group.
+	*
+	* @param uuid the d d m template's UUID
+	* @param groupId the primary key of the group
+	* @return the matching d d m template, or <code>null</code> if a matching d d m template
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchDDMTemplateByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns the d d m template with the primary key.
 	*
 	* @param templateId the primary key of the d d m template
@@ -503,20 +531,6 @@ public interface DDMTemplateLocalService extends BaseLocalService,
 		boolean includeGlobalTemplates)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the template matching the UUID and group.
-	*
-	* @param uuid the unique string identifying the template
-	* @param groupId the primary key of the group
-	* @return the matching template, or <code>null</code> if a matching
-	template could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchTemplate(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Returns the template with the ID.

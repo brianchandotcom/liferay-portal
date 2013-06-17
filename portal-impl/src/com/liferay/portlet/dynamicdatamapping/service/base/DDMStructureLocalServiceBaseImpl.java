@@ -230,6 +230,36 @@ public abstract class DDMStructureLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the d d m structure with the matching UUID and company.
+	 *
+	 * @param uuid the d d m structure's UUID
+	 * @param  companyId the primary key of the company
+	 * @return the matching d d m structure, or <code>null</code> if a matching d d m structure
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public DDMStructure fetchDDMStructureByUuidAndCompanyId(String uuid,
+		long companyId) throws SystemException {
+		return ddmStructurePersistence.fetchByUuid_C_First(uuid, companyId, null);
+	}
+
+	/**
+	 * Returns the d d m structure matching the UUID and group.
+	 *
+	 * @param uuid the d d m structure's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching d d m structure, or <code>null</code> if a matching d d m structure
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public DDMStructure fetchDDMStructureByUuidAndGroupId(String uuid,
+		long groupId) throws SystemException {
+		return ddmStructurePersistence.fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
 	 * Returns the d d m structure with the primary key.
 	 *
 	 * @param structureId the primary key of the d d m structure

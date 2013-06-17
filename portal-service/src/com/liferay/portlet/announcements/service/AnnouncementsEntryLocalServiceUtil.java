@@ -187,6 +187,22 @@ public class AnnouncementsEntryLocalServiceUtil {
 	}
 
 	/**
+	* Returns the announcements entry with the matching UUID and company.
+	*
+	* @param uuid the announcements entry's UUID
+	* @param companyId the primary key of the company
+	* @return the matching announcements entry, or <code>null</code> if a matching announcements entry
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.announcements.model.AnnouncementsEntry fetchAnnouncementsEntryByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .fetchAnnouncementsEntryByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
 	* Returns the announcements entry with the primary key.
 	*
 	* @param entryId the primary key of the announcements entry

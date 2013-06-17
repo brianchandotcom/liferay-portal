@@ -191,6 +191,40 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	}
 
 	/**
+	* Returns the d d m structure with the matching UUID and company.
+	*
+	* @param uuid the d d m structure's UUID
+	* @param companyId the primary key of the company
+	* @return the matching d d m structure, or <code>null</code> if a matching d d m structure
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure fetchDDMStructureByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _ddmStructureLocalService.fetchDDMStructureByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
+	/**
+	* Returns the d d m structure matching the UUID and group.
+	*
+	* @param uuid the d d m structure's UUID
+	* @param groupId the primary key of the group
+	* @return the matching d d m structure, or <code>null</code> if a matching d d m structure
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure fetchDDMStructureByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _ddmStructureLocalService.fetchDDMStructureByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	/**
 	* Returns the d d m structure with the primary key.
 	*
 	* @param structureId the primary key of the d d m structure
@@ -813,22 +847,6 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 			com.liferay.portal.kernel.exception.SystemException {
 		return _ddmStructureLocalService.fetchStructure(groupId, classNameId,
 			structureKey, includeGlobalStructures);
-	}
-
-	/**
-	* Returns the structure matching the UUID and group.
-	*
-	* @param uuid the structure's UUID
-	* @param groupId the primary key of the structure's group
-	* @return the matching structure, or <code>null</code> if a matching
-	structure could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure fetchStructure(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _ddmStructureLocalService.fetchStructure(uuid, groupId);
 	}
 
 	/**

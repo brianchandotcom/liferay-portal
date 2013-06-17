@@ -184,6 +184,23 @@ public class WebsiteLocalServiceWrapper implements WebsiteLocalService,
 	}
 
 	/**
+	* Returns the website with the matching UUID and company.
+	*
+	* @param uuid the website's UUID
+	* @param companyId the primary key of the company
+	* @return the matching website, or <code>null</code> if a matching website
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public com.liferay.portal.model.Website fetchWebsiteByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _websiteLocalService.fetchWebsiteByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
+	/**
 	* Returns the website with the primary key.
 	*
 	* @param websiteId the primary key of the website
@@ -301,14 +318,6 @@ public class WebsiteLocalServiceWrapper implements WebsiteLocalService,
 		long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_websiteLocalService.deleteWebsites(companyId, className, classPK);
-	}
-
-	@Override
-	public com.liferay.portal.model.Website fetchWebsiteByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _websiteLocalService.fetchWebsiteByUuidAndCompanyId(uuid,
-			companyId);
 	}
 
 	@Override

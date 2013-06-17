@@ -169,6 +169,20 @@ public interface UserNotificationEventLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns the user notification event with the matching UUID and company.
+	*
+	* @param uuid the user notification event's UUID
+	* @param companyId the primary key of the company
+	* @return the matching user notification event, or <code>null</code> if a matching user notification event
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.UserNotificationEvent fetchUserNotificationEventByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns the user notification event with the primary key.
 	*
 	* @param userNotificationEventId the primary key of the user notification event

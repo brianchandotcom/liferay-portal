@@ -171,6 +171,34 @@ public interface DDMContentLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns the d d m content with the matching UUID and company.
+	*
+	* @param uuid the d d m content's UUID
+	* @param companyId the primary key of the company
+	* @return the matching d d m content, or <code>null</code> if a matching d d m content
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.dynamicdatamapping.model.DDMContent fetchDDMContentByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the d d m content matching the UUID and group.
+	*
+	* @param uuid the d d m content's UUID
+	* @param groupId the primary key of the group
+	* @return the matching d d m content, or <code>null</code> if a matching d d m content
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.dynamicdatamapping.model.DDMContent fetchDDMContentByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns the d d m content with the primary key.
 	*
 	* @param contentId the primary key of the d d m content

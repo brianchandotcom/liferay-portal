@@ -191,6 +191,40 @@ public class PollsChoiceLocalServiceWrapper implements PollsChoiceLocalService,
 	}
 
 	/**
+	* Returns the polls choice with the matching UUID and company.
+	*
+	* @param uuid the polls choice's UUID
+	* @param companyId the primary key of the company
+	* @return the matching polls choice, or <code>null</code> if a matching polls choice
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public com.liferay.portlet.polls.model.PollsChoice fetchPollsChoiceByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _pollsChoiceLocalService.fetchPollsChoiceByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
+	/**
+	* Returns the polls choice matching the UUID and group.
+	*
+	* @param uuid the polls choice's UUID
+	* @param groupId the primary key of the group
+	* @return the matching polls choice, or <code>null</code> if a matching polls choice
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public com.liferay.portlet.polls.model.PollsChoice fetchPollsChoiceByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _pollsChoiceLocalService.fetchPollsChoiceByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	/**
 	* Returns the polls choice with the primary key.
 	*
 	* @param choiceId the primary key of the polls choice

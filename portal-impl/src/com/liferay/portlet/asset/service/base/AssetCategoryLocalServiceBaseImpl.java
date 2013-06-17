@@ -234,6 +234,37 @@ public abstract class AssetCategoryLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the asset category with the matching UUID and company.
+	 *
+	 * @param uuid the asset category's UUID
+	 * @param  companyId the primary key of the company
+	 * @return the matching asset category, or <code>null</code> if a matching asset category
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public AssetCategory fetchAssetCategoryByUuidAndCompanyId(String uuid,
+		long companyId) throws SystemException {
+		return assetCategoryPersistence.fetchByUuid_C_First(uuid, companyId,
+			null);
+	}
+
+	/**
+	 * Returns the asset category matching the UUID and group.
+	 *
+	 * @param uuid the asset category's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching asset category, or <code>null</code> if a matching asset category
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public AssetCategory fetchAssetCategoryByUuidAndGroupId(String uuid,
+		long groupId) throws SystemException {
+		return assetCategoryPersistence.fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
 	 * Returns the asset category with the primary key.
 	 *
 	 * @param categoryId the primary key of the asset category

@@ -229,6 +229,36 @@ public abstract class DDMTemplateLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the d d m template with the matching UUID and company.
+	 *
+	 * @param uuid the d d m template's UUID
+	 * @param  companyId the primary key of the company
+	 * @return the matching d d m template, or <code>null</code> if a matching d d m template
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public DDMTemplate fetchDDMTemplateByUuidAndCompanyId(String uuid,
+		long companyId) throws SystemException {
+		return ddmTemplatePersistence.fetchByUuid_C_First(uuid, companyId, null);
+	}
+
+	/**
+	 * Returns the d d m template matching the UUID and group.
+	 *
+	 * @param uuid the d d m template's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching d d m template, or <code>null</code> if a matching d d m template
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public DDMTemplate fetchDDMTemplateByUuidAndGroupId(String uuid,
+		long groupId) throws SystemException {
+		return ddmTemplatePersistence.fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
 	 * Returns the d d m template with the primary key.
 	 *
 	 * @param templateId the primary key of the d d m template

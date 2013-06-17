@@ -171,6 +171,34 @@ public interface JournalFolderLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns the journal folder with the matching UUID and company.
+	*
+	* @param uuid the journal folder's UUID
+	* @param companyId the primary key of the company
+	* @return the matching journal folder, or <code>null</code> if a matching journal folder
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.journal.model.JournalFolder fetchJournalFolderByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the journal folder matching the UUID and group.
+	*
+	* @param uuid the journal folder's UUID
+	* @param groupId the primary key of the group
+	* @return the matching journal folder, or <code>null</code> if a matching journal folder
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.journal.model.JournalFolder fetchJournalFolderByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns the journal folder with the primary key.
 	*
 	* @param folderId the primary key of the journal folder

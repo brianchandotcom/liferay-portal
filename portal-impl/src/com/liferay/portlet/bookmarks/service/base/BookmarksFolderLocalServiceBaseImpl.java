@@ -235,6 +235,37 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the bookmarks folder with the matching UUID and company.
+	 *
+	 * @param uuid the bookmarks folder's UUID
+	 * @param  companyId the primary key of the company
+	 * @return the matching bookmarks folder, or <code>null</code> if a matching bookmarks folder
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public BookmarksFolder fetchBookmarksFolderByUuidAndCompanyId(String uuid,
+		long companyId) throws SystemException {
+		return bookmarksFolderPersistence.fetchByUuid_C_First(uuid, companyId,
+			null);
+	}
+
+	/**
+	 * Returns the bookmarks folder matching the UUID and group.
+	 *
+	 * @param uuid the bookmarks folder's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching bookmarks folder, or <code>null</code> if a matching bookmarks folder
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public BookmarksFolder fetchBookmarksFolderByUuidAndGroupId(String uuid,
+		long groupId) throws SystemException {
+		return bookmarksFolderPersistence.fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
 	 * Returns the bookmarks folder with the primary key.
 	 *
 	 * @param folderId the primary key of the bookmarks folder

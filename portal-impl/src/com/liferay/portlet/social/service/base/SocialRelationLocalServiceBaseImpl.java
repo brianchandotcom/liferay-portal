@@ -229,6 +229,22 @@ public abstract class SocialRelationLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the social relation with the matching UUID and company.
+	 *
+	 * @param uuid the social relation's UUID
+	 * @param  companyId the primary key of the company
+	 * @return the matching social relation, or <code>null</code> if a matching social relation
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public SocialRelation fetchSocialRelationByUuidAndCompanyId(String uuid,
+		long companyId) throws SystemException {
+		return socialRelationPersistence.fetchByUuid_C_First(uuid, companyId,
+			null);
+	}
+
+	/**
 	 * Returns the social relation with the primary key.
 	 *
 	 * @param relationId the primary key of the social relation

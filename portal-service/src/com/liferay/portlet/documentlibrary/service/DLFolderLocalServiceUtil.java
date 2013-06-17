@@ -187,6 +187,36 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	/**
+	* Returns the document library folder with the matching UUID and company.
+	*
+	* @param uuid the document library folder's UUID
+	* @param companyId the primary key of the company
+	* @return the matching document library folder, or <code>null</code> if a matching document library folder
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLFolder fetchDLFolderByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchDLFolderByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	* Returns the document library folder matching the UUID and group.
+	*
+	* @param uuid the document library folder's UUID
+	* @param groupId the primary key of the group
+	* @return the matching document library folder, or <code>null</code> if a matching document library folder
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLFolder fetchDLFolderByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchDLFolderByUuidAndGroupId(uuid, groupId);
+	}
+
+	/**
 	* Returns the document library folder with the primary key.
 	*
 	* @param folderId the primary key of the document library folder

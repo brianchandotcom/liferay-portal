@@ -293,6 +293,21 @@ public abstract class EmailAddressLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the email address with the matching UUID and company.
+	 *
+	 * @param uuid the email address's UUID
+	 * @param  companyId the primary key of the company
+	 * @return the matching email address, or <code>null</code> if a matching email address
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public EmailAddress fetchEmailAddressByUuidAndCompanyId(String uuid,
+		long companyId) throws SystemException {
+		return emailAddressPersistence.fetchByUuid_C_First(uuid, companyId, null);
+	}
+
+	/**
 	 * Returns the email address with the primary key.
 	 *
 	 * @param emailAddressId the primary key of the email address

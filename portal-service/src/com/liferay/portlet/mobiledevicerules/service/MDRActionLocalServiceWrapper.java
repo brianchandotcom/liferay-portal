@@ -190,6 +190,40 @@ public class MDRActionLocalServiceWrapper implements MDRActionLocalService,
 	}
 
 	/**
+	* Returns the m d r action with the matching UUID and company.
+	*
+	* @param uuid the m d r action's UUID
+	* @param companyId the primary key of the company
+	* @return the matching m d r action, or <code>null</code> if a matching m d r action
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public com.liferay.portlet.mobiledevicerules.model.MDRAction fetchMDRActionByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mdrActionLocalService.fetchMDRActionByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
+	/**
+	* Returns the m d r action matching the UUID and group.
+	*
+	* @param uuid the m d r action's UUID
+	* @param groupId the primary key of the group
+	* @return the matching m d r action, or <code>null</code> if a matching m d r action
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public com.liferay.portlet.mobiledevicerules.model.MDRAction fetchMDRActionByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mdrActionLocalService.fetchMDRActionByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	/**
 	* Returns the m d r action with the primary key.
 	*
 	* @param actionId the primary key of the m d r action

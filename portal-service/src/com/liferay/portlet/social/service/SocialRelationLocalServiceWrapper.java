@@ -192,6 +192,23 @@ public class SocialRelationLocalServiceWrapper
 	}
 
 	/**
+	* Returns the social relation with the matching UUID and company.
+	*
+	* @param uuid the social relation's UUID
+	* @param companyId the primary key of the company
+	* @return the matching social relation, or <code>null</code> if a matching social relation
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public com.liferay.portlet.social.model.SocialRelation fetchSocialRelationByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _socialRelationLocalService.fetchSocialRelationByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
+	/**
 	* Returns the social relation with the primary key.
 	*
 	* @param relationId the primary key of the social relation

@@ -187,6 +187,36 @@ public class MBCategoryLocalServiceUtil {
 	}
 
 	/**
+	* Returns the message boards category with the matching UUID and company.
+	*
+	* @param uuid the message boards category's UUID
+	* @param companyId the primary key of the company
+	* @return the matching message boards category, or <code>null</code> if a matching message boards category
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.messageboards.model.MBCategory fetchMBCategoryByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchMBCategoryByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	* Returns the message boards category matching the UUID and group.
+	*
+	* @param uuid the message boards category's UUID
+	* @param groupId the primary key of the group
+	* @return the matching message boards category, or <code>null</code> if a matching message boards category
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.messageboards.model.MBCategory fetchMBCategoryByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchMBCategoryByUuidAndGroupId(uuid, groupId);
+	}
+
+	/**
 	* Returns the message boards category with the primary key.
 	*
 	* @param categoryId the primary key of the message boards category

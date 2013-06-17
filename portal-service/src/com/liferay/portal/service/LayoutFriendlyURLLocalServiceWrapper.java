@@ -191,6 +191,40 @@ public class LayoutFriendlyURLLocalServiceWrapper
 	}
 
 	/**
+	* Returns the layout friendly u r l with the matching UUID and company.
+	*
+	* @param uuid the layout friendly u r l's UUID
+	* @param companyId the primary key of the company
+	* @return the matching layout friendly u r l, or <code>null</code> if a matching layout friendly u r l
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public com.liferay.portal.model.LayoutFriendlyURL fetchLayoutFriendlyURLByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _layoutFriendlyURLLocalService.fetchLayoutFriendlyURLByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
+	/**
+	* Returns the layout friendly u r l matching the UUID and group.
+	*
+	* @param uuid the layout friendly u r l's UUID
+	* @param groupId the primary key of the group
+	* @return the matching layout friendly u r l, or <code>null</code> if a matching layout friendly u r l
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public com.liferay.portal.model.LayoutFriendlyURL fetchLayoutFriendlyURLByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _layoutFriendlyURLLocalService.fetchLayoutFriendlyURLByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	/**
 	* Returns the layout friendly u r l with the primary key.
 	*
 	* @param layoutFriendlyURLId the primary key of the layout friendly u r l
@@ -333,14 +367,6 @@ public class LayoutFriendlyURLLocalServiceWrapper
 	public void deleteLayoutFriendlyURLs(long plid)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_layoutFriendlyURLLocalService.deleteLayoutFriendlyURLs(plid);
-	}
-
-	@Override
-	public com.liferay.portal.model.LayoutFriendlyURL fetchLayoutFriendlyURLByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _layoutFriendlyURLLocalService.fetchLayoutFriendlyURLByUuidAndGroupId(uuid,
-			groupId);
 	}
 
 	@Override

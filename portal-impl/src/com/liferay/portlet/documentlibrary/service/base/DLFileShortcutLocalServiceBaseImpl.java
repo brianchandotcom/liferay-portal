@@ -235,6 +235,37 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the document library file shortcut with the matching UUID and company.
+	 *
+	 * @param uuid the document library file shortcut's UUID
+	 * @param  companyId the primary key of the company
+	 * @return the matching document library file shortcut, or <code>null</code> if a matching document library file shortcut
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public DLFileShortcut fetchDLFileShortcutByUuidAndCompanyId(String uuid,
+		long companyId) throws SystemException {
+		return dlFileShortcutPersistence.fetchByUuid_C_First(uuid, companyId,
+			null);
+	}
+
+	/**
+	 * Returns the document library file shortcut matching the UUID and group.
+	 *
+	 * @param uuid the document library file shortcut's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching document library file shortcut, or <code>null</code> if a matching document library file shortcut
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public DLFileShortcut fetchDLFileShortcutByUuidAndGroupId(String uuid,
+		long groupId) throws SystemException {
+		return dlFileShortcutPersistence.fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
 	 * Returns the document library file shortcut with the primary key.
 	 *
 	 * @param fileShortcutId the primary key of the document library file shortcut

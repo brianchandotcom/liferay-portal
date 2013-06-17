@@ -236,6 +236,37 @@ public abstract class AssetVocabularyLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the asset vocabulary with the matching UUID and company.
+	 *
+	 * @param uuid the asset vocabulary's UUID
+	 * @param  companyId the primary key of the company
+	 * @return the matching asset vocabulary, or <code>null</code> if a matching asset vocabulary
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public AssetVocabulary fetchAssetVocabularyByUuidAndCompanyId(String uuid,
+		long companyId) throws SystemException {
+		return assetVocabularyPersistence.fetchByUuid_C_First(uuid, companyId,
+			null);
+	}
+
+	/**
+	 * Returns the asset vocabulary matching the UUID and group.
+	 *
+	 * @param uuid the asset vocabulary's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching asset vocabulary, or <code>null</code> if a matching asset vocabulary
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public AssetVocabulary fetchAssetVocabularyByUuidAndGroupId(String uuid,
+		long groupId) throws SystemException {
+		return assetVocabularyPersistence.fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
 	 * Returns the asset vocabulary with the primary key.
 	 *
 	 * @param vocabularyId the primary key of the asset vocabulary

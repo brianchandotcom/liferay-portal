@@ -191,6 +191,40 @@ public class MDRRuleGroupLocalServiceWrapper implements MDRRuleGroupLocalService
 	}
 
 	/**
+	* Returns the m d r rule group with the matching UUID and company.
+	*
+	* @param uuid the m d r rule group's UUID
+	* @param companyId the primary key of the company
+	* @return the matching m d r rule group, or <code>null</code> if a matching m d r rule group
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup fetchMDRRuleGroupByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mdrRuleGroupLocalService.fetchMDRRuleGroupByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
+	/**
+	* Returns the m d r rule group matching the UUID and group.
+	*
+	* @param uuid the m d r rule group's UUID
+	* @param groupId the primary key of the group
+	* @return the matching m d r rule group, or <code>null</code> if a matching m d r rule group
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup fetchMDRRuleGroupByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mdrRuleGroupLocalService.fetchMDRRuleGroupByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	/**
 	* Returns the m d r rule group with the primary key.
 	*
 	* @param ruleGroupId the primary key of the m d r rule group

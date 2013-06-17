@@ -224,6 +224,36 @@ public abstract class MBBanLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * Returns the message boards ban with the matching UUID and company.
+	 *
+	 * @param uuid the message boards ban's UUID
+	 * @param  companyId the primary key of the company
+	 * @return the matching message boards ban, or <code>null</code> if a matching message boards ban
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public MBBan fetchMBBanByUuidAndCompanyId(String uuid, long companyId)
+		throws SystemException {
+		return mbBanPersistence.fetchByUuid_C_First(uuid, companyId, null);
+	}
+
+	/**
+	 * Returns the message boards ban matching the UUID and group.
+	 *
+	 * @param uuid the message boards ban's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching message boards ban, or <code>null</code> if a matching message boards ban
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public MBBan fetchMBBanByUuidAndGroupId(String uuid, long groupId)
+		throws SystemException {
+		return mbBanPersistence.fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
 	 * Returns the message boards ban with the primary key.
 	 *
 	 * @param banId the primary key of the message boards ban

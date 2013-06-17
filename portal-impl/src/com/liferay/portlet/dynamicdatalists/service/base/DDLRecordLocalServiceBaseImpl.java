@@ -226,6 +226,36 @@ public abstract class DDLRecordLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * Returns the d d l record with the matching UUID and company.
+	 *
+	 * @param uuid the d d l record's UUID
+	 * @param  companyId the primary key of the company
+	 * @return the matching d d l record, or <code>null</code> if a matching d d l record
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public DDLRecord fetchDDLRecordByUuidAndCompanyId(String uuid,
+		long companyId) throws SystemException {
+		return ddlRecordPersistence.fetchByUuid_C_First(uuid, companyId, null);
+	}
+
+	/**
+	 * Returns the d d l record matching the UUID and group.
+	 *
+	 * @param uuid the d d l record's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching d d l record, or <code>null</code> if a matching d d l record
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public DDLRecord fetchDDLRecordByUuidAndGroupId(String uuid, long groupId)
+		throws SystemException {
+		return ddlRecordPersistence.fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
 	 * Returns the d d l record with the primary key.
 	 *
 	 * @param recordId the primary key of the d d l record

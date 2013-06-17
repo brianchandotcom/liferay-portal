@@ -184,6 +184,21 @@ public class AddressLocalServiceUtil {
 	}
 
 	/**
+	* Returns the address with the matching UUID and company.
+	*
+	* @param uuid the address's UUID
+	* @param companyId the primary key of the company
+	* @return the matching address, or <code>null</code> if a matching address
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Address fetchAddressByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchAddressByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
 	* Returns the address with the primary key.
 	*
 	* @param addressId the primary key of the address
@@ -299,12 +314,6 @@ public class AddressLocalServiceUtil {
 		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteAddresses(companyId, className, classPK);
-	}
-
-	public static com.liferay.portal.model.Address fetchAddressByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchAddressByUuidAndCompanyId(uuid, companyId);
 	}
 
 	public static java.util.List<com.liferay.portal.model.Address> getAddresses()

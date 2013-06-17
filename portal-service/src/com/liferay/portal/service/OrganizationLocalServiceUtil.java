@@ -189,6 +189,21 @@ public class OrganizationLocalServiceUtil {
 	}
 
 	/**
+	* Returns the organization with the matching UUID and company.
+	*
+	* @param uuid the organization's UUID
+	* @param companyId the primary key of the company
+	* @return the matching organization, or <code>null</code> if a matching organization
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Organization fetchOrganizationByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchOrganizationByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
 	* Returns the organization with the primary key.
 	*
 	* @param organizationId the primary key of the organization
@@ -725,12 +740,6 @@ public class OrganizationLocalServiceUtil {
 		long companyId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().fetchOrganization(companyId, name);
-	}
-
-	public static com.liferay.portal.model.Organization fetchOrganizationByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchOrganizationByUuidAndCompanyId(uuid, companyId);
 	}
 
 	/**

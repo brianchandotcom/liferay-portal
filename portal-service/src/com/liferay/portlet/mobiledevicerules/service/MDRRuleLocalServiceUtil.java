@@ -186,6 +186,36 @@ public class MDRRuleLocalServiceUtil {
 	}
 
 	/**
+	* Returns the m d r rule with the matching UUID and company.
+	*
+	* @param uuid the m d r rule's UUID
+	* @param companyId the primary key of the company
+	* @return the matching m d r rule, or <code>null</code> if a matching m d r rule
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRule fetchMDRRuleByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchMDRRuleByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	* Returns the m d r rule matching the UUID and group.
+	*
+	* @param uuid the m d r rule's UUID
+	* @param groupId the primary key of the group
+	* @return the matching m d r rule, or <code>null</code> if a matching m d r rule
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRule fetchMDRRuleByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchMDRRuleByUuidAndGroupId(uuid, groupId);
+	}
+
+	/**
 	* Returns the m d r rule with the primary key.
 	*
 	* @param ruleId the primary key of the m d r rule

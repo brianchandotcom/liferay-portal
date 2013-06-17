@@ -215,9 +215,6 @@ public class PortletJSONUtil {
 			"headerJavaScriptPaths",
 			JSONFactoryUtil.createJSONArray(headerJavaScriptPaths));
 
-		jsonObject.put("portletHTML", portletHTML);
-		jsonObject.put("refresh", !portlet.isAjaxable());
-
 		List<String> markupHeadElements = (List<String>)
 			request.getAttribute(MimeResponse.MARKUP_HEAD_ELEMENT);
 
@@ -230,6 +227,9 @@ public class PortletJSONUtil {
 
 			jsonObject.put("markupHeadElements", sb.toString());
 		}
+
+		jsonObject.put("portletHTML", portletHTML);
+		jsonObject.put("refresh", !portlet.isAjaxable());
 	}
 
 	protected static String getRootPortletId(Portlet portlet) {

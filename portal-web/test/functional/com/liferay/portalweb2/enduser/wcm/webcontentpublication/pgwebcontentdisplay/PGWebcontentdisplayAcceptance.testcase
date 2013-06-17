@@ -1,0 +1,53 @@
+<definition>
+	<var name="pageName" value="Web Content Display Page" />
+	<var name="portletName" value="Web Content Display" />
+
+	<set-up>
+		<execute macro="User#pgFirstLogin" />
+
+		<execute macro="Page#pgAdd">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#pgAdd">
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
+		</execute>
+	</set-up>
+
+	<command name="AddWebContent">
+		<var name="webContentContent" value="WC WebContent Content" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+
+		<execute macro="WebContent#addPGviaWCD">
+			<var name="pageName" value="${pageName}" />
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+	</command>
+
+	<command name="EditWebContent">
+		<var name="webContentContent" value="WC WebContent Content" />
+		<var name="webContentContentEdit" value="WC WebContent Content Edit" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+		<var name="webContentTitleEdit" value="WC WebContent Title Edit" />
+
+		<execute macro="WebContent#addPGviaWCD">
+			<var name="pageName" value="${pageName}" />
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="WebContent#editPGviaWCD">
+			<var name="pageName" value="${pageName}" />
+			<var name="webContentContentEdit" value="${webContentContentEdit}" />
+			<var name="webContentTitleEdit" value="${webContentTitleEdit}" />
+		</execute>
+	</command>
+
+	<tear-down>
+		<execute macro="WebContent#tearDownCP" />
+
+		<execute macro="Page#pgTearDown" />
+	</tear-down>
+</definition>

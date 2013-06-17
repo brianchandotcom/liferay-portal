@@ -240,7 +240,7 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 			<div class="separator"><!-- --></div>
 		</c:if>
 
-		<div class="user-table">
+		<div class="control-group user-table">
 			<c:if test="<%= showDeleteButton %>">
 
 				<%
@@ -259,8 +259,8 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 				<aui:button onClick="<%= taglibOnClick %>" value="restore" />
 			</c:if>
 
-			<c:if test="<%= (inactiveUsersCount > 0) && (usersCount >0) %>">
-				<div class="user-status-selector">
+			<c:if test="<%= (inactiveUsersCount > 0) && (usersCount > 0) %>">
+				<div class="pull-right user-status-selector">
 					<aui:select changesContext="<%= true %>" inlineLabel="left" label="show" name="userStatusSelect" onChange='<%= renderResponse.getNamespace() + "showUsers(this);" %>'>
 						<aui:option label="active" selected="<%= status == WorkflowConstants.STATUS_APPROVED %>" value="<%= WorkflowConstants.STATUS_APPROVED %>" />
 						<aui:option label="inactive" selected="<%= status == WorkflowConstants.STATUS_INACTIVE %>" value="<%= WorkflowConstants.STATUS_INACTIVE %>" />

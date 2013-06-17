@@ -69,6 +69,30 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 	int inactiveUsersCount = 0;
 	int usersCount = 0;
+
+	long organizationId = ParamUtil.getLong(request, "organizationId", OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID);
+
+	Organization organization = null;
+
+	if (organizationId != 0) {
+		organization = OrganizationServiceUtil.getOrganization(organizationId);
+	}
+
+	if (organization != null) {
+		inactiveUsersCount = UserLocalServiceUtil.getOrganizationUsersCount(organizationId, WorkflowConstants.STATUS_INACTIVE);
+		usersCount = UserLocalServiceUtil.getOrganizationUsersCount(organizationId, WorkflowConstants.STATUS_APPROVED);
+	}
+	else {
+		LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
+
+		if (!usersListView.equals(UserConstants.LIST_VIEW_FLAT_USERS)) {
+			userParams.put("noOrganizations", Boolean.TRUE);
+			userParams.put("usersOrgsCount", 0);
+		}
+
+		inactiveUsersCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), null, WorkflowConstants.STATUS_INACTIVE, userParams);
+		usersCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED, userParams);
+	}
 	%>
 
 	<c:choose>

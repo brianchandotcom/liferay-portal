@@ -33,10 +33,6 @@
 				width: 200px;
 			}
 		}
-
-		.user-table, .delete-organizations {
-			margin-bottom: 15px;
-		}
 	}
 
 	#header-bottom {
@@ -194,12 +190,6 @@
 
 	.permission-group {
 		margin: 10px 0 0 10px;
-	}
-
-	.user-table {
-		.user-status-selector {
-			float: right;
-		}
 	}
 
 	.view-all-link {

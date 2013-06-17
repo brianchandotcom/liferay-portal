@@ -1060,7 +1060,8 @@ public interface LayoutService extends BaseService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public void validateImportLayoutsFile(long groupId, boolean privateLayout,
+	public com.liferay.portal.kernel.lar.MissingReferences validateImportLayoutsFile(
+		long groupId, boolean privateLayout,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		java.io.File file)
 		throws com.liferay.portal.kernel.exception.PortalException,

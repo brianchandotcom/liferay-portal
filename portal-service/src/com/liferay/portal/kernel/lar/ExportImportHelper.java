@@ -107,7 +107,7 @@ public interface ExportImportHelper {
 			boolean importReferencedContent)
 		throws Exception;
 
-	public Map<String, MissingReference> validateMissingReferences(
+	public MissingReferences validateMissingReferences(
 			long userId, long groupId, Map<String, String[]> parameterMap,
 			File file)
 		throws Exception;

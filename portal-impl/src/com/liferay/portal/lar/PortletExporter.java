@@ -86,7 +86,9 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUt
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.expando.model.ExpandoColumn;
+import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.util.xml.DocUtil;
 
@@ -827,6 +829,17 @@ public class PortletExporter {
 
 				if (portletDataContext.isPathNotProcessed(commentPath)) {
 					portletDataContext.addZipEntry(commentPath, mbMessage);
+
+					User user = UserLocalServiceUtil.getUser(
+						mbMessage.getUserId());
+
+					MBDiscussion mbDiscussion =
+						MBDiscussionLocalServiceUtil.getDiscussion(
+							className, GetterUtil.getLong(classPK));
+
+					portletDataContext.addReferenceElement(
+						mbDiscussion, assetElement, user,
+						PortletDataContext.REFERENCE_TYPE_WEAK, true);
 				}
 			}
 		}
@@ -1285,6 +1298,13 @@ public class PortletExporter {
 					portletDataContext, className, classPK, ratingsEntry);
 
 				portletDataContext.addZipEntry(ratingsEntryPath, ratingsEntry);
+
+				User user = UserLocalServiceUtil.getUser(
+					ratingsEntry.getUserId());
+
+				portletDataContext.addReferenceElement(
+					ratingsEntry, assetElement, user, User.class,
+					PortletDataContext.REFERENCE_TYPE_WEAK, true);
 			}
 		}
 

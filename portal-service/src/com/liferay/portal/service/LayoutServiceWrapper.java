@@ -1225,12 +1225,13 @@ public class LayoutServiceWrapper implements LayoutService,
 	}
 
 	@Override
-	public void validateImportLayoutsFile(long groupId, boolean privateLayout,
+	public com.liferay.portal.kernel.lar.MissingReferences validateImportLayoutsFile(
+		long groupId, boolean privateLayout,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		java.io.File file)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_layoutService.validateImportLayoutsFile(groupId, privateLayout,
+		return _layoutService.validateImportLayoutsFile(groupId, privateLayout,
 			parameterMap, file);
 	}
 

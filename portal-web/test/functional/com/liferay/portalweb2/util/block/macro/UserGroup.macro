@@ -33,11 +33,11 @@
 		<execute action="CPUsergroups#click" locator-key1="USER_GROUP_TABLE_ACTIONS_1" />
 		<execute action="CPUsergroups#click" locator-key1="USER_GROUP_MENULIST_EDIT" />
 
-		<execute action="CPUsergroupsEditusergroup#type" locator-key1="NAME_FIELD" value1="${userGroupNameNew}" />
+		<execute action="CPUsergroupsEditusergroup#type" locator-key1="NAME_FIELD" value1="${userGroupNameEdit}" />
 		<execute action="CPUsergroupsEditusergroup#click" locator-key1="SAVE_BUTTON" />
 
 		<execute action="CPUsergroups#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
-		<execute action="CPUsergroups#assertTextEquals" locator-key1="USER_GROUP_TABLE_NAME_1" value1="${userGroupNameNew}" />
+		<execute action="CPUsergroups#assertTextEquals" locator-key1="USER_GROUP_TABLE_NAME_1" value1="${userGroupNameEdit}" />
 	</command>
 
 	<command name="tearDownCP">

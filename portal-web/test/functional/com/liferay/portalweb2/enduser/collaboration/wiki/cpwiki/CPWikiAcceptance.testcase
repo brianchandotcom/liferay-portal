@@ -29,9 +29,9 @@
 
 	<command name="EditWikiNode">
 		<var name="wikiNodeDescription" value="Wiki Node Description" />
-		<var name="wikiNodeDescriptionNew" value="Wiki Node Description Edit" />
+		<var name="wikiNodeDescriptionEdit" value="Wiki Node Description Edit" />
 		<var name="wikiNodeName" value="Wiki Node Name" />
-		<var name="wikiNodeNameNew" value="Wiki Node Name Edit" />
+		<var name="wikiNodeNameEdit" value="Wiki Node Name Edit" />
 
 		<execute macro="WikiNode#addCP">
 			<var name="wikiNodeDescription" value="${wikiNodeDescription}" />
@@ -40,9 +40,9 @@
 
 		<execute macro="WikiNode#editCP">
 			<var name="wikiNodeDescription" value="${wikiNodeDescription}" />
-			<var name="wikiNodeDescriptionNew" value="${wikiNodeDescriptionNew}" />
+			<var name="wikiNodeDescriptionEdit" value="${wikiNodeDescriptionEdit}" />
 			<var name="wikiNodeName" value="${wikiNodeName}" />
-			<var name="wikiNodeNameNew" value="${wikiNodeNameNew}" />
+			<var name="wikiNodeNameEdit" value="${wikiNodeNameEdit}" />
 		</execute>
 	</command>
 

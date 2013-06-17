@@ -42,13 +42,13 @@
 		<execute action="PGCalendar#selectFrame" locator1="//iframe" />
 
 		<execute action="PGCalendarEditevent#assertElementPresent" locator-key1="TITLE_FIELD" />
-		<execute action="PGCalendarEditevent#type" locator-key1="TITLE_FIELD" value1="${eventTitleNew}" />
+		<execute action="PGCalendarEditevent#type" locator-key1="TITLE_FIELD" value1="${eventTitleEdit}" />
 		<execute action="PGCalendarEditevent#click" locator-key1="SAVE_BUTTON" />
 		<execute action="PGCalendarEditevent#assertElementPresent" locator-key1="SUCCESS_MESSAGE" />
 		<execute action="PGCalendarEditevent#click" locator-key1="CLOSE_BUTTON" />
 
 		<execute action="PGCalendar#selectWindow" locator1="relative=top" />
-		<execute action="PGCalendar#assertTextEquals" locator-key1="EVENT_CONTENT" value1="${eventTitleNew}" />
+		<execute action="PGCalendar#assertTextEquals" locator-key1="EVENT_CONTENT" value1="${eventTitleEdit}" />
 	</command>
 
 	<command name="tearDownPG">

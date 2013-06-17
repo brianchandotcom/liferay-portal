@@ -54,11 +54,11 @@
 
 		<execute action="PGMessageboardsThread#click" locator-key1="MESSAGE_EDIT_1" value1="Edit" />
 
-		<execute action="PGMessageboardsPostthread#type" locator-key1="BODY_FIELD" value1="${threadBodyNew}" />
+		<execute action="PGMessageboardsPostthread#type" locator-key1="BODY_FIELD" value1="${threadBodyEdit}" />
 		<execute action="PGMessageboardsPostthread#click" locator-key1="PUBLISH_BUTTON" />
 
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
-		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_1" value1="${threadBodyNew}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_1" value1="${threadBodyEdit}" />
 		<execute action="PGMessageboardsThread#assertTextNotEquals" locator-key1="MESSAGE_BODY_1" value1="${threadBody}" />
 	</command>
 

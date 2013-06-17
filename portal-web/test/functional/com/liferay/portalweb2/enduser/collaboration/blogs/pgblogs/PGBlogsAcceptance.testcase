@@ -46,9 +46,9 @@
 
 	<command name="EditBlogsEntry">
 		<var name="entryContent" value="Blogs Entry Content" />
-		<var name="entryContentNew" value="Blogs Entry ContentEdit" />
+		<var name="entryContentEdit" value="Blogs Entry ContentEdit" />
 		<var name="entryTitle" value="Blogs Entry Title" />
-		<var name="entryTitleNew" value="Blogs Entry TitleEdit" />
+		<var name="entryTitleEdit" value="Blogs Entry TitleEdit" />
 
 		<execute macro="BlogsEntry#addPG">
 			<var name="entryContent" value="${entryContent}" />
@@ -58,9 +58,9 @@
 
 		<execute macro="BlogsEntry#editPG">
 			<var name="entryContent" value="${entryContent}" />
-			<var name="entryContentNew" value="${entryContentNew}" />
+			<var name="entryContentEdit" value="${entryContentEdit}" />
 			<var name="entryTitle" value="${entryTitle}" />
-			<var name="entryTitleNew" value="${entryTitleNew}" />
+			<var name="entryTitleEdit" value="${entryTitleEdit}" />
 			<var name="pageName" value="${pageName}" />
 		</execute>
 	</command>

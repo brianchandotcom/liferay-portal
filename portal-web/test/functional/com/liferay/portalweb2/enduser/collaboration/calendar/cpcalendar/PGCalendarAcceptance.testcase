@@ -41,7 +41,7 @@
 
 	<command name="pgEdit">
 		<var name="eventTitle" value="Calendar Test Entry" />
-		<var name="eventTitleNew" value="Calendar Test Entry New" />
+		<var name="eventTitleEdit" value="Calendar Test Entry Edit" />
 
 		<execute macro="Event#addPG">
 			<var name="eventTitle" value="${eventTitle}" />
@@ -50,7 +50,7 @@
 
 		<execute macro="Event#editPG">
 			<var name="eventTitle" value="${eventTitle}" />
-			<var name="eventTitleNew" value="${eventTitleNew}" />
+			<var name="eventTitleEdit" value="${eventTitleEdit}" />
 			<var name="pageName" value="${pageName}" />
 		</execute>
 	</command>

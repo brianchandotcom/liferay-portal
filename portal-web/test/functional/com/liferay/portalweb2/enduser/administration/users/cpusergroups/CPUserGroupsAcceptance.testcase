@@ -22,13 +22,13 @@
 
 	<command name="EditUserGroup">
 		<var name="userGroupName" value="UG UserGroup Name" />
-		<var name="userGroupNameNew" value="UG UserGroup Name Edit" />
+		<var name="userGroupNameEdit" value="UG UserGroup Name Edit" />
 
 		<execute macro="UserGroup#addCP">
 			<var name="userGroupName" value="${userGroupName}" />
 		</execute>
 		<execute macro="UserGroup#editCP">
-			<var name="userGroupNameNew" value="${userGroupNameNew}" />
+			<var name="userGroupNameEdit" value="${userGroupNameEdit}" />
 		</execute>
 	</command>
 

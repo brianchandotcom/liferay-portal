@@ -48,11 +48,11 @@
 		<execute action="PGMessageboards#click" locator-key1="CATEGORY_TABLE_ACTIONS_1" />
 		<execute action="PGMessageboards#click" locator-key1="CATEGORY_MENULIST_EDIT" />
 
-		<execute action="PGMessageboardsAddcategory#type" locator-key1="NAME_FIELD" value1="${categoryNameNew}" />
+		<execute action="PGMessageboardsAddcategory#type" locator-key1="NAME_FIELD" value1="${categoryNameEdit}" />
 		<execute action="PGMessageboardsAddcategory#click" locator-key1="SAVE_BUTTON" value1="Save" />
 
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
-		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORY_1" value1="${categoryNameNew}" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORY_1" value1="${categoryNameEdit}" />
 	</command>
 
 	<command name="tearDownCP">

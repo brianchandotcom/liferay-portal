@@ -53,22 +53,22 @@
 		<execute action="PGAnnouncements#assertTextEquals" locator-key1="ENTRY_CONTENT_1" value1="${distributionScope} ${entryContent}" />
 		<execute action="PGAnnouncements#click" locator-key1="ENTRY_EDIT_1" />
 
-		<execute action="PGAnnouncementsAddentry#type" locator-key1="TITLE_FIELD" value1="${entryTitleNew}" />
-		<execute action="PGAnnouncementsAddentry#type" locator-key1="URL_FIELD" value1="${entryURLNew}" />
-		<execute action="PGAnnouncementsAddentry#type" locator-key1="CONTENT_FIELD" value1="${entryContentNew}" />
+		<execute action="PGAnnouncementsAddentry#type" locator-key1="TITLE_FIELD" value1="${entryTitleEdit}" />
+		<execute action="PGAnnouncementsAddentry#type" locator-key1="URL_FIELD" value1="${entryURLEdit}" />
+		<execute action="PGAnnouncementsAddentry#type" locator-key1="CONTENT_FIELD" value1="${entryContentEdit}" />
 		<execute action="PGAnnouncementsAddentry#click" locator-key1="SAVE_BUTTON" />
 
 		<execute macro="Page#pgGoto">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute action="PGAnnouncements#assertTextEquals" locator-key1="ENTRY_TITLE_1" value1="${entryTitleNew}" />
+		<execute action="PGAnnouncements#assertTextEquals" locator-key1="ENTRY_TITLE_1" value1="${entryTitleEdit}" />
 		<execute action="PGAnnouncements#assertTextEquals" locator-key1="ENTRY_SCOPE_1" value1="${distributionScope}" />
-		<execute action="PGAnnouncements#assertTextEquals" locator-key1="ENTRY_CONTENT_1" value1="${distributionScope} ${entryContentNew}" />
+		<execute action="PGAnnouncements#assertTextEquals" locator-key1="ENTRY_CONTENT_1" value1="${distributionScope} ${entryContentEdit}" />
 		<execute action="PGAnnouncements#click" locator-key1="NAVIGATION_MANAGE_ENTRIES" />
 
 		<execute action="PGAnnouncementsManageentries#select" locator-key1="DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
-		<execute action="PGAnnouncementsManageentries#assertTextEquals" locator-key1="ENTRY_TABLE_TITLE_1" value1="${entryTitleNew}" />
+		<execute action="PGAnnouncementsManageentries#assertTextEquals" locator-key1="ENTRY_TABLE_TITLE_1" value1="${entryTitleEdit}" />
 		<execute action="PGAnnouncementsManageentries#assertTextEquals" locator-key1="ENTRY_TABLE_TYPE_1" value1="${distributionScope}" />
 	</command>
 

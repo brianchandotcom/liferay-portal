@@ -101,8 +101,6 @@ public class ScriptTag extends BaseScriptTag {
 		HttpServletRequest request =
 			(HttpServletRequest)pageContext.getRequest();
 
-		boolean positionInline = isPositionInLine();
-
 		try {
 			String portletId = null;
 
@@ -117,7 +115,7 @@ public class ScriptTag extends BaseScriptTag {
 
 			String use = getUse();
 
-			if (positionInline) {
+			if (isPositionInLine()) {
 				ScriptData scriptData = new ScriptData();
 
 				scriptData.append(portletId, bodyContentSB, use);

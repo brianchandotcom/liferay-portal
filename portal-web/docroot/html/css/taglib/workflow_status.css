@@ -29,23 +29,7 @@
 		background: url(@theme_image_path@/common/pages.png) no-repeat 0 50%;
 	}
 
-	.workflow-status {
+	.workflow-status-icon {
 		background: url(@theme_image_path@/common/recent_changes.png) no-repeat 0 50%;
-
-		.workflow-status-approved {
-			color: #41801D;
-		}
-
-		.workflow-status-draft {
-			color: #3068BA;
-		}
-
-		.workflow-status-expired {
-			color: #933;
-		}
-
-		.workflow-status-pending {
-			color: #F7A233;
-		}
 	}
 }

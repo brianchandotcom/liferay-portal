@@ -2195,6 +2195,18 @@
 			<type>java.lang.Class</type>
 		</attribute>
 		<attribute>
+			<name>showIcon</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<name>showLabel</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<name>status</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

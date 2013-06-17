@@ -1102,6 +1102,20 @@
 				<outputType><![CDATA[java.lang.Class<?>]]></outputType>
 			</attribute>
 			<attribute>
+				<name>showIcon</name>
+				<required>false</required>
+				<rtexprvalue>true</rtexprvalue>
+				<type>boolean</type>
+				<defaultValue>true</defaultValue>
+			</attribute>
+			<attribute>
+				<name>showLabel</name>
+				<required>false</required>
+				<rtexprvalue>true</rtexprvalue>
+				<type>boolean</type>
+				<defaultValue>true</defaultValue>
+			</attribute>
+			<attribute>
 				<name>status</name>
 				<inputType>java.lang.Integer</inputType>
 				<outputType>java.lang.Integer</outputType>

@@ -195,7 +195,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			}
 		}
 
-		imports = _formatImports(sb.toString(), 7);
+		imports = formatImports(sb.toString(), 7);
 
 		content =
 			content.substring(0, matcher.start()) + imports +
@@ -258,7 +258,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 			String content = _fileUtil.read(file);
 
-			String newContent = _trimContent(content, true);
+			String newContent = trimContent(content, true);
 
 			newContent = _fixAntXMLProjectName(basedir, fileName, newContent);
 
@@ -278,7 +278,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				}
 
 				if (name.compareTo(previousName) < -1) {
-					_processErrorMessage(
+					processErrorMessage(
 						fileName,
 						fileName + " has an unordered target " + name);
 
@@ -320,7 +320,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 			String content = _fileUtil.read(file);
 
-			String newContent = _trimContent(content, false);
+			String newContent = trimContent(content, false);
 
 			newContent = _formatDDLStructuresXML(content);
 
@@ -364,7 +364,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				continue;
 			}
 
-			String newContent = _trimContent(content, false);
+			String newContent = trimContent(content, false);
 
 			newContent = _formatFriendlyURLRoutesXML(content);
 
@@ -405,7 +405,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 			String content = _fileUtil.read(file);
 
-			String newContent = _trimContent(content, false);
+			String newContent = trimContent(content, false);
 
 			if ((newContent != null) && !content.equals(newContent)) {
 				_fileUtil.write(file, newContent);
@@ -419,8 +419,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected static void formatJava() throws IOException {
-		String copyright = _getCopyright();
-		String oldCopyright = _getOldCopyright();
+		String copyright = getCopyright();
+		String oldCopyright = getOldCopyright();
 
 		boolean portalJavaFiles = true;
 
@@ -497,17 +497,17 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			String newContent = content;
 
 			if (newContent.contains("$\n */")) {
-				_processErrorMessage(fileName, "*: " + fileName);
+				processErrorMessage(fileName, "*: " + fileName);
 
 				newContent = StringUtil.replace(
 					newContent, "$\n */", "$\n *\n */");
 			}
 
-			newContent = _fixCopyright(
+			newContent = fixCopyright(
 				newContent, copyright, oldCopyright, file, fileName);
 
 			if (newContent.contains(className + ".java.html")) {
-				_processErrorMessage(fileName, "Java2HTML: " + fileName);
+				processErrorMessage(fileName, "Java2HTML: " + fileName);
 			}
 
 			if (newContent.contains(" * @author Raymond Aug") &&
@@ -516,11 +516,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				newContent = newContent.replaceFirst(
 					"Raymond Aug.++", "Raymond Aug\u00e9");
 
-				_processErrorMessage(fileName, "UTF-8: " + fileName);
+				processErrorMessage(fileName, "UTF-8: " + fileName);
 			}
 
 			newContent = _fixDataAccessConnection(className, newContent);
-			newContent = _fixSessionKey(
+			newContent = fixSessionKey(
 				fileName, newContent, _sessionKeyPattern);
 
 			newContent = StringUtil.replace(
@@ -598,18 +598,18 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			}
 
 			if (newContent.contains("*/\npackage ")) {
-				_processErrorMessage(fileName, "package: " + fileName);
+				processErrorMessage(fileName, "package: " + fileName);
 			}
 
 			if (!newContent.endsWith("\n\n}") && !newContent.endsWith("{\n}")) {
-				_processErrorMessage(fileName, "}: " + fileName);
+				processErrorMessage(fileName, "}: " + fileName);
 			}
 
 			if (portalJavaFiles && !className.equals("BaseServiceImpl") &&
 				className.endsWith("ServiceImpl") &&
 				newContent.contains("ServiceUtil.")) {
 
-				_processErrorMessage(fileName, "ServiceUtil: " + fileName);
+				processErrorMessage(fileName, "ServiceUtil: " + fileName);
 			}
 
 			// LPS-34911
@@ -625,18 +625,18 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				!fileName.contains("/test/") &&
 				newContent.contains("ServiceUtil.")) {
 
-				_processErrorMessage(fileName, "ServiceUtil: " + fileName);
+				processErrorMessage(fileName, "ServiceUtil: " + fileName);
 			}
 
 			if (!className.equals("DeepNamedValueScanner") &&
 				!className.equals("ProxyUtil") &&
 				newContent.contains("import java.lang.reflect.Proxy;")) {
 
-				_processErrorMessage(fileName, "Proxy: " + fileName);
+				processErrorMessage(fileName, "Proxy: " + fileName);
 			}
 
 			if (newContent.contains("import edu.emory.mathcs.backport.java")) {
-				_processErrorMessage(
+				processErrorMessage(
 					fileName, "edu.emory.mathcs.backport.java: " + fileName);
 			}
 
@@ -666,7 +666,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				}
 
 				if ((pos3 < pos4) && (pos4 < pos5)) {
-					_processErrorMessage(
+					processErrorMessage(
 						fileName, "Use getInt(1) for count: " + fileName);
 				}
 			}
@@ -677,13 +677,13 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				!content.contains(
 					"private static final long serialVersionUID")) {
 
-				_processErrorMessage(
+				processErrorMessage(
 					fileName,
 					"Assign ProcessCallable implementation a " +
 						"serialVersionUID: " + fileName);
 			}
 
-			_checkLanguageKeys(fileName, newContent, _languageKeyPattern);
+			checkLanguageKeys(fileName, newContent, _languageKeyPattern);
 
 			// LPS-36174
 
@@ -743,7 +743,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 			String content = _fileUtil.read(file);
 
-			String newContent = _trimContent(content, false);
+			String newContent = trimContent(content, false);
 
 			newContent = StringUtil.replace(
 				newContent,
@@ -784,7 +784,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				newContent = newContent.substring(0, newContent.length() - 1);
 			}
 
-			_checkLanguageKeys(fileName, newContent, _languageKeyPattern);
+			checkLanguageKeys(fileName, newContent, _languageKeyPattern);
 
 			if ((newContent != null) && !content.equals(newContent)) {
 				_fileUtil.write(file, newContent);
@@ -797,8 +797,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected static void formatJSP() throws IOException {
 		String basedir = "./";
 
-		String copyright = _getCopyright();
-		String oldCopyright = _getOldCopyright();
+		String copyright = getCopyright();
+		String oldCopyright = getOldCopyright();
 
 		DirectoryScanner directoryScanner = new DirectoryScanner();
 
@@ -873,7 +873,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				}
 			}
 
-			newContent = _fixCopyright(
+			newContent = fixCopyright(
 				newContent, copyright, oldCopyright, file, fileName);
 
 			newContent = StringUtil.replace(
@@ -892,7 +892,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 			if (newContent.contains("    ")) {
 				if (!fileName.matches(".*template.*\\.vm$")) {
-					_processErrorMessage(fileName, "tab: " + fileName);
+					processErrorMessage(fileName, "tab: " + fileName);
 				}
 			}
 
@@ -923,13 +923,13 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				}
 			}
 
-			newContent = _fixSessionKey(
+			newContent = fixSessionKey(
 				fileName, newContent, _sessionKeyPattern);
-			newContent = _fixSessionKey(
+			newContent = fixSessionKey(
 				fileName, newContent, _taglibSessionKeyPattern);
 
-			_checkLanguageKeys(fileName, newContent, _languageKeyPattern);
-			_checkLanguageKeys(fileName, newContent, _taglibLanguageKeyPattern);
+			checkLanguageKeys(fileName, newContent, _languageKeyPattern);
+			checkLanguageKeys(fileName, newContent, _taglibLanguageKeyPattern);
 			_checkXSS(fileName, newContent);
 
 			if ((newContent != null) && !content.equals(newContent)) {
@@ -1029,7 +1029,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 				String content = _fileUtil.read(file);
 
-				String newContent = _trimContent(content, false);
+				String newContent = trimContent(content, false);
 
 				newContent = _formatPortletXML(content);
 
@@ -1067,7 +1067,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 			String content = _fileUtil.read(file);
 
-			String newContent = _trimContent(content, false);
+			String newContent = trimContent(content, false);
 
 			_formatServiceXML(fileName, content);
 
@@ -1132,7 +1132,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		String content = _fileUtil.read(file);
 
-		String newContent = _trimContent(content, false);
+		String newContent = trimContent(content, false);
 
 		Document document = _saxReaderUtil.read(newContent);
 
@@ -1152,7 +1152,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				(!previousPath.startsWith("/portal/") ||
 				 path.startsWith("/portal/"))) {
 
-				_processErrorMessage(
+				processErrorMessage(
 					fileName, "sort: " + fileName + " " + path);
 			}
 
@@ -1181,7 +1181,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		String content = _fileUtil.read(file);
 
-		String newContent = _trimContent(content, false);
+		String newContent = trimContent(content, false);
 
 		Document document = _saxReaderUtil.read(newContent);
 
@@ -1198,7 +1198,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				(previousName.compareTo(name) > 0) &&
 				!previousName.equals("portlet")) {
 
-				_processErrorMessage(
+				processErrorMessage(
 					fileName, "sort: " + fileName + " " + name);
 
 			}
@@ -1238,7 +1238,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 			String content = _fileUtil.read(file);
 
-			String newContent = _trimContent(content, false);
+			String newContent = trimContent(content, false);
 
 			if ((newContent != null) && !content.equals(newContent)) {
 				_fileUtil.write(file, newContent);
@@ -1293,7 +1293,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 			String content = _fileUtil.read(file);
 
-			String newContent = _trimContent(content, false);
+			String newContent = trimContent(content, false);
 
 			int x = newContent.indexOf("<servlet-mapping>");
 
@@ -1363,7 +1363,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 					fileName = StringUtil.replace(
 						fileName, StringPool.BACK_SLASH, StringPool.SLASH);
 
-					_processErrorMessage(fileName, fileName);
+					processErrorMessage(fileName, fileName);
 				}
 			}
 		}
@@ -1391,7 +1391,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			GetterUtil.getString(
 				System.getProperty("source.formatter.excludes")));
 
-		_portalSource = _isPortalSource();
+		_portalSource = isPortalSource();
 
 		_throwException = throwException;
 
@@ -1557,12 +1557,12 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				StringPool.SPACE
 			});
 
-		_checkIfClauseParentheses(ifClauseSingleLine, fileName, lineCount);
+		checkIfClauseParentheses(ifClauseSingleLine, fileName, lineCount);
 
 		return _checkIfClauseTabsAndSpaces(ifClause);
 	}
 
-	private static void _checkIfClauseParentheses(
+	protected static void checkIfClauseParentheses(
 		String ifClause, String fileName, int lineCount) {
 
 		int quoteCount = StringUtil.count(ifClause, StringPool.QUOTE);
@@ -1571,9 +1571,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return;
 		}
 
-		ifClause = _stripQuotes(ifClause, StringPool.QUOTE);
+		ifClause = stripQuotes(ifClause, StringPool.QUOTE);
 
-		ifClause = _stripQuotes(ifClause, StringPool.APOSTROPHE);
+		ifClause = stripQuotes(ifClause, StringPool.APOSTROPHE);
 
 		if (ifClause.contains(StringPool.DOUBLE_SLASH) ||
 			ifClause.contains("/*") || ifClause.contains("*/")) {
@@ -1581,7 +1581,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return;
 		}
 
-		ifClause = _stripRedundantParentheses(ifClause);
+		ifClause = stripRedundantParentheses(ifClause);
 
 		int level = 0;
 		int max = StringUtil.count(ifClause, StringPool.OPEN_PARENTHESIS);
@@ -1599,8 +1599,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 					String s = ifClause.substring(
 						previousParenthesisPos + 1, i);
 
-					if (_hasMissingParentheses(s)) {
-						_processErrorMessage(
+					if (hasMissingParentheses(s)) {
+						processErrorMessage(
 							fileName,
 							"missing parentheses: " + fileName + " " +
 								lineCount);
@@ -1629,8 +1629,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 							String s = ifClause.substring(
 								posOpenParenthesis + 1, i);
 
-							if (_hasRedundantParentheses(s)) {
-								_processErrorMessage(
+							if (hasRedundantParentheses(s)) {
+								processErrorMessage(
 									fileName,
 									"redundant parentheses: " + fileName + " " +
 										lineCount);
@@ -1640,7 +1640,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 						if ((previousChar == CharPool.OPEN_PARENTHESIS) &&
 							(nextChar == CharPool.CLOSE_PARENTHESIS)) {
 
-							_processErrorMessage(
+							processErrorMessage(
 								fileName,
 								"redundant parentheses: " + fileName + " " +
 									lineCount);
@@ -1733,8 +1733,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				return ifClause;
 			}
 
-			line = _stripQuotes(line, StringPool.QUOTE);
-			line = _stripQuotes(line, StringPool.APOSTROPHE);
+			line = stripQuotes(line, StringPool.QUOTE);
+			line = stripQuotes(line, StringPool.APOSTROPHE);
 
 			closeParenthesesCount += StringUtil.count(
 				line, StringPool.CLOSE_PARENTHESIS);
@@ -1749,7 +1749,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return ifClause;
 	}
 
-	private static void _checkLanguageKeys(
+	protected static void checkLanguageKeys(
 			String fileName, String content, Pattern pattern)
 		throws IOException {
 
@@ -1773,7 +1773,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		Matcher matcher = pattern.matcher(content);
 
 		while (matcher.find()) {
-			String[] languageKeys = _getLanguageKeys(matcher);
+			String[] languageKeys = getLanguageKeys(matcher);
 
 			for (String languageKey : languageKeys) {
 				if (Validator.isNumber(languageKey) ||
@@ -1790,7 +1790,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				}
 
 				if (!_portalLanguageKeysProperties.containsKey(languageKey)) {
-					_processErrorMessage(
+					processErrorMessage(
 						fileName,
 						"missing language key: " + languageKey +
 							StringPool.SPACE + fileName);
@@ -1923,7 +1923,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				if (exceptionClassName.equals("PortalException") ||
 					exceptionClassName.equals("SystemException")) {
 
-					_processErrorMessage(
+					processErrorMessage(
 						fileName,
 						"Unprocessed " + originalExceptionClassName + ": " +
 							fileName + " " + lineCount);
@@ -1990,7 +1990,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			}
 
 			if (xssVulnerable) {
-				_processErrorMessage(
+				processErrorMessage(
 					fileName, "(xss): " + fileName + " (" + jspVariable + ")");
 			}
 		}
@@ -2082,14 +2082,14 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				content.substring(0, x) + correctProjectElementText +
 					content.substring(y);
 
-			_processErrorMessage(
+			processErrorMessage(
 				fileName, fileName + " has an incorrect project name");
 		}
 
 		return content;
 	}
 
-	private static String _fixCopyright(
+	protected static String fixCopyright(
 			String content, String copyright, String oldCopyright, File file,
 			String fileName)
 		throws IOException {
@@ -2101,18 +2101,18 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		if ((oldCopyright != null) && content.contains(oldCopyright)) {
 			content = StringUtil.replace(content, oldCopyright, copyright);
 
-			_processErrorMessage(fileName, "old (c): " + fileName);
+			processErrorMessage(fileName, "old (c): " + fileName);
 		}
 
 		if (!content.contains(copyright)) {
-			String customCopyright = _getCustomCopyright(file);
+			String customCopyright = getCustomCopyright(file);
 
 			if (Validator.isNotNull(customCopyright)) {
 				copyright = customCopyright;
 			}
 
 			if (!content.contains(copyright)) {
-				_processErrorMessage(fileName, "(c): " + fileName);
+				processErrorMessage(fileName, "(c): " + fileName);
 			}
 		}
 
@@ -2278,7 +2278,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return content;
 	}
 
-	private static String _fixSessionKey(
+	protected static String fixSessionKey(
 		String fileName, String content, Pattern pattern) {
 
 		Matcher matcher = pattern.matcher(content);
@@ -2523,7 +2523,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return sb.toString();
 	}
 
-	private static String _formatImports(String imports, int classStartPos)
+	protected static String formatImports(String imports, int classStartPos)
 		throws IOException {
 
 		if (imports.contains("/*") || imports.contains("*/") ||
@@ -2618,7 +2618,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		while ((line = unsyncBufferedReader.readLine()) != null) {
 			lineCount++;
 
-			line = _trimLine(line, false);
+			line = trimLine(line, false);
 
 			if (line.startsWith("package ")) {
 				packageName = line.substring(8, line.length() - 1);
@@ -2626,7 +2626,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 			if (line.startsWith("import ")) {
 				if (line.endsWith(".*;")) {
-					_processErrorMessage(
+					processErrorMessage(
 						fileName, "import: " + fileName + " " + lineCount);
 				}
 
@@ -2647,7 +2647,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				line = StringUtil.replace(line, ":" , " :");
 			}
 
-			line = _replacePrimitiveWrapperInstantiation(
+			line = replacePrimitiveWrapperInstantiation(
 				fileName, line, lineCount);
 
 			String trimmedLine = StringUtil.trimLeading(line);
@@ -2673,7 +2673,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			}
 
 			if (trimmedLine.startsWith(StringPool.EQUAL)) {
-				_processErrorMessage(
+				processErrorMessage(
 					fileName, "equal: " + fileName + " " + lineCount);
 			}
 
@@ -2882,14 +2882,14 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				if ((line.contains(" && ") || line.contains(" || ")) &&
 					line.endsWith(StringPool.OPEN_PARENTHESIS)) {
 
-					_processErrorMessage(
+					processErrorMessage(
 						fileName, "line break: " + fileName + " " + lineCount);
 				}
 
 				if (trimmedLine.endsWith(StringPool.PLUS) &&
 					!trimmedLine.startsWith(StringPool.OPEN_PARENTHESIS)) {
 
-					String strippedQuotesLine = _stripQuotes(
+					String strippedQuotesLine = stripQuotes(
 						trimmedLine, StringPool.QUOTE);
 
 					int closeParenthesisCount = StringUtil.count(
@@ -2898,7 +2898,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 						strippedQuotesLine, StringPool.OPEN_PARENTHESIS);
 
 					if (openParenthesisCount > closeParenthesisCount) {
-						_processErrorMessage(
+						processErrorMessage(
 							fileName,
 							"line break: " + fileName + " " + lineCount);
 					}
@@ -2910,7 +2910,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 					!line.contains(StringPool.QUOTE) &&
 					line.endsWith(StringPool.OPEN_PARENTHESIS)) {
 
-					_processErrorMessage(
+					processErrorMessage(
 						fileName, "line break: " + fileName + " " + lineCount);
 				}
 
@@ -2923,7 +2923,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 						int y = line.indexOf(StringPool.QUOTE);
 
 						if ((y == -1) || (x < y)) {
-							_processErrorMessage(
+							processErrorMessage(
 								fileName,
 								"line break: " + fileName + " " + lineCount);
 						}
@@ -2936,7 +2936,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 					 line.contains(" throws " ) &&
 					 line.endsWith(StringPool.OPEN_CURLY_BRACE))) {
 
-					_processErrorMessage(
+					processErrorMessage(
 						fileName, "line break: " + fileName + " " + lineCount);
 				}
 
@@ -2944,27 +2944,27 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 					(line.endsWith(StringPool.PERIOD) &&
 					 line.contains(StringPool.EQUAL))) {
 
-					_processErrorMessage(
+					processErrorMessage(
 						fileName, "line break: " + fileName + " " + lineCount);
 				}
 
 				if (trimmedLine.startsWith(StringPool.CLOSE_CURLY_BRACE) &&
 					line.endsWith(StringPool.OPEN_CURLY_BRACE)) {
 
-					_processErrorMessage(
+					processErrorMessage(
 						fileName, "line break: " + fileName + " " + lineCount);
 				}
 			}
 
 			if (line.contains("    ") && !line.matches("\\s*\\*.*")) {
 				if (!fileName.endsWith("StringPool.java")) {
-					_processErrorMessage(
+					processErrorMessage(
 						fileName, "tab: " + fileName + " " + lineCount);
 				}
 			}
 
 			if (line.contains("  {") && !line.matches("\\s*\\*.*")) {
-				_processErrorMessage(
+				processErrorMessage(
 					fileName, "{:" + fileName + " " + lineCount);
 			}
 
@@ -2996,7 +2996,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 						 line.contains(" index IX_")) {
 				}
 				else if (lineLength > 80) {
-					_processErrorMessage(
+					processErrorMessage(
 						fileName, "> 80: " + fileName + " " + lineCount);
 				}
 				else {
@@ -3012,7 +3012,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 							(lineLeadingTabCount >
 								previousLineLeadingTabCount)) {
 
-							_processErrorMessage(
+							processErrorMessage(
 								fileName,
 								"line break: " + fileName + " " + lineCount);
 						}
@@ -3028,7 +3028,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 								((previousLineLeadingTabCount + 2) !=
 									lineLeadingTabCount)) {
 
-							_processErrorMessage(
+							processErrorMessage(
 								fileName,
 								"line break: " + fileName + " " + lineCount);
 							}
@@ -3040,7 +3040,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 								((previousLineLeadingTabCount + 1) !=
 									lineLeadingTabCount)) {
 
-								_processErrorMessage(
+								processErrorMessage(
 									fileName,
 									"tab: " + fileName + " " + lineCount);
 							}
@@ -3057,7 +3057,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 								 (trimmedLine.charAt(x + 1) !=
 									 CharPool.CLOSE_PARENTHESIS))) {
 
-								_processErrorMessage(
+								processErrorMessage(
 									fileName,
 									"line break: " + fileName + " " +
 										lineCount);
@@ -3068,7 +3068,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 							(lineLeadingTabCount ==
 								previousLineLeadingTabCount)) {
 
-							_processErrorMessage(
+							processErrorMessage(
 								fileName, "tab: " + fileName + " " + lineCount);
 						}
 
@@ -3080,7 +3080,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 							!trimmedLine.startsWith(
 								StringPool.CLOSE_CURLY_BRACE)) {
 
-							_processErrorMessage(
+							processErrorMessage(
 								fileName,
 								"new line: " + fileName + " " + lineCount);
 						}
@@ -3119,7 +3119,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 								StringPool.TAB + linePart);
 						}
 						else {
-							_processErrorMessage(
+							processErrorMessage(
 								fileName,
 								"line break: " + fileName + " " + lineCount);
 						}
@@ -3257,13 +3257,13 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			if (!fileName.contains("jsonw") ||
 				!fileName.endsWith("action.jsp")) {
 
-				line = _trimLine(line, false);
+				line = trimLine(line, false);
 			}
 
 			if (line.contains("<aui:button ") &&
 				line.contains("type=\"button\"")) {
 
-				_processErrorMessage(
+				processErrorMessage(
 					fileName, "aui:button " + fileName + " " + lineCount);
 			}
 
@@ -3316,7 +3316,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				 trimmedLine.startsWith("while (")) &&
 				trimmedLine.endsWith(") {")) {
 
-				_checkIfClauseParentheses(trimmedLine, fileName, lineCount);
+				checkIfClauseParentheses(trimmedLine, fileName, lineCount);
 			}
 
 			if (readAttributes) {
@@ -3331,7 +3331,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 						if (!trimmedLine.endsWith(StringPool.QUOTE) &&
 							!trimmedLine.endsWith(StringPool.APOSTROPHE)) {
 
-							_processErrorMessage(
+							processErrorMessage(
 								fileName,
 								"attribute: " + fileName + " " + lineCount);
 
@@ -3347,7 +3347,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 						}
 						else if (Validator.isNotNull(previousAttribute)) {
 							if (!_isJSPAttributName(attribute)) {
-								_processErrorMessage(
+								processErrorMessage(
 									fileName,
 									"attribute: " + fileName + " " + lineCount);
 
@@ -3451,7 +3451,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 							includeFileName);
 
 						if (!matcher.find()) {
-							_processErrorMessage(
+							processErrorMessage(
 								fileName,
 								"include: " + fileName + " " + lineCount);
 						}
@@ -3459,7 +3459,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				}
 			}
 
-			line = _replacePrimitiveWrapperInstantiation(
+			line = replacePrimitiveWrapperInstantiation(
 				fileName, line, lineCount);
 
 			previousLine = line;
@@ -3490,7 +3490,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			if ((StringUtil.count(content, currentException) > 1) ||
 				(StringUtil.count(content, previousException) > 1)) {
 
-				_processErrorMessage(
+				processErrorMessage(
 					fileName, "unsorted exceptions: " + fileName);
 			}
 			else {
@@ -3539,7 +3539,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			}
 
 			if (pos < previousPos) {
-				_processErrorMessage(
+				processErrorMessage(
 					fileName, "sort " + fileName + " " + lineCount);
 			}
 
@@ -3590,7 +3590,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			if (Validator.isNotNull(previousEntityName) &&
 				(previousEntityName.compareToIgnoreCase(entityName) > 0)) {
 
-				_processErrorMessage(
+				processErrorMessage(
 					fileName, "sort: " + fileName + " " + entityName);
 			}
 
@@ -3614,7 +3614,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 						 (previousReferenceEntity.compareToIgnoreCase(
 							 referenceEntity) > 0))) {
 
-						_processErrorMessage(
+						processErrorMessage(
 							fileName,
 							"sort: " + fileName + " " + referencePackagePath);
 					}
@@ -3644,7 +3644,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			if (Validator.isNotNull(previousException) &&
 				(previousException.compareToIgnoreCase(exception) > 0)) {
 
-				_processErrorMessage(
+				processErrorMessage(
 					fileName, "sort: " + fileName + " " + exception);
 			}
 
@@ -3662,7 +3662,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		String content = _fileUtil.read(new File(fileName), true);
 
 		if (content.contains("\r")) {
-			_processErrorMessage(fileName, "Invalid new line character");
+			processErrorMessage(fileName, "Invalid new line character");
 
 			content = StringUtil.replace(content, "\r", "");
 
@@ -3681,7 +3681,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		String previousLineSqlCommand = StringPool.BLANK;
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
-			line = _trimLine(line, false);
+			line = trimLine(line, false);
 
 			if (Validator.isNotNull(line) && !line.startsWith(StringPool.TAB)) {
 				String sqlCommand = StringUtil.split(line, CharPool.SPACE)[0];
@@ -3756,7 +3756,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 						content = sb.toString();
 					}
 					else {
-						_processErrorMessage(
+						processErrorMessage(
 							fileName, "taglib: " + fileName + " " + lineCount);
 					}
 				}
@@ -4066,7 +4066,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return line.substring(x + 1);
 	}
 
-	private static String _getCopyright() throws IOException {
+	protected static String getCopyright() throws IOException {
 		String copyright = _fileUtil.read("copyright.txt");
 
 		if (Validator.isNull(copyright)) {
@@ -4080,7 +4080,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return copyright;
 	}
 
-	private static String _getCustomCopyright(File file) throws IOException {
+	protected static String getCustomCopyright(File file) throws IOException {
 		String absolutePath = _fileUtil.getAbsolutePath(file);
 
 		for (int x = absolutePath.length();;) {
@@ -4352,7 +4352,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return duplicateImports;
 	}
 
-	private static String[] _getLanguageKeys(Matcher matcher) {
+	protected static String[] getLanguageKeys(Matcher matcher) {
 		if (matcher.groupCount() > 0) {
 			String languageKey = matcher.group(1);
 
@@ -4452,7 +4452,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return lineLength;
 	}
 
-	private static String _getOldCopyright() throws IOException {
+	protected static String getOldCopyright() throws IOException {
 		String copyright = _fileUtil.read("old-copyright.txt");
 
 		if (Validator.isNull(copyright)) {
@@ -4704,7 +4704,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
-	private static boolean _hasMissingParentheses(String s) {
+	protected static boolean hasMissingParentheses(String s) {
 		if (Validator.isNull(s)) {
 			return false;
 		}
@@ -4732,7 +4732,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
-	private static boolean _hasRedundantParentheses(String s) {
+	protected static boolean hasRedundantParentheses(String s) {
 		if (!s.contains("&&") && !s.contains("||")) {
 			for (int x = 0;;) {
 				x = s.indexOf(StringPool.CLOSE_PARENTHESIS);
@@ -4894,7 +4894,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return false;
 	}
 
-	private static boolean _isPortalSource() {
+	protected static boolean isPortalSource() {
 		String basedir = "./";
 
 		if (_fileUtil.exists(basedir + "portal-impl")) {
@@ -4912,7 +4912,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return false;
 		}
 
-		javaParameter = _stripQuotes(javaParameter, StringPool.QUOTE);
+		javaParameter = stripQuotes(javaParameter, StringPool.QUOTE);
 
 		int openParenthesisCount = StringUtil.count(
 			javaParameter, StringPool.OPEN_PARENTHESIS);
@@ -4937,7 +4937,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return false;
 	}
 
-	private static void _processErrorMessage(String fileName, String message) {
+	protected static void processErrorMessage(String fileName, String message) {
 		if (_throwException) {
 			_errorMessages.add(message);
 		}
@@ -4946,7 +4946,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
-	private static String _replacePrimitiveWrapperInstantiation(
+	protected static String replacePrimitiveWrapperInstantiation(
 		String fileName, String line, int lineCount) {
 
 		if (true) {
@@ -4965,7 +4965,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			});
 
 		if (!line.equals(newLine)) {
-			_processErrorMessage(
+			processErrorMessage(
 				fileName, "> new Primitive(: " + fileName + " " + lineCount);
 		}
 
@@ -5161,7 +5161,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			if ((delimeter != CharPool.APOSTROPHE) &&
 				(delimeter != CharPool.QUOTE)) {
 
-				_processErrorMessage(
+				processErrorMessage(
 					fileName, "delimeter: " + fileName + " " + lineCount);
 
 				return line;
@@ -5296,7 +5296,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			}
 		}
 
-		imports = _formatImports(imports, 17);
+		imports = formatImports(imports, 17);
 
 		String beforeImports = content.substring(0, matcher.start());
 
@@ -5320,7 +5320,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return content;
 	}
 
-	private static String _stripQuotes(String s, String delimeter) {
+	protected static String stripQuotes(String s, String delimeter) {
 		String[] parts = StringUtil.split(s, delimeter);
 
 		int i = 1;
@@ -5335,7 +5335,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return s;
 	}
 
-	private static String _stripRedundantParentheses(String s) {
+	protected static String stripRedundantParentheses(String s) {
 		for (int x = 0;;) {
 			x = s.indexOf(StringPool.OPEN_PARENTHESIS, x + 1);
 			int y = s.indexOf(StringPool.CLOSE_PARENTHESIS, x);
@@ -5396,7 +5396,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return newProperties;
 	}
 
-	private static String _trimContent(
+	protected static String trimContent(
 			String content, boolean allowLeadingSpaces)
 		throws IOException {
 
@@ -5408,7 +5408,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		String line = null;
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
-			sb.append(_trimLine(line, allowLeadingSpaces));
+			sb.append(trimLine(line, allowLeadingSpaces));
 			sb.append("\n");
 		}
 
@@ -5423,7 +5423,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return content;
 	}
 
-	private static String _trimLine(String line, boolean allowLeadingSpaces) {
+	protected static String trimLine(String line, boolean allowLeadingSpaces) {
 		if (line.trim().length() == 0) {
 			return StringPool.BLANK;
 		}

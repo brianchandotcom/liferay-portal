@@ -34,7 +34,7 @@ import org.junit.runner.RunWith;
 public class DoPrivilegedBeanTest {
 
 	@Test
-	public void equalsTest() throws Exception {
+	public void testEquals() throws Exception {
 		String className = "TEST_CLASS_NAME";
 
 		ExpandoBridge expandoBridge1 = DoPrivilegedUtil.wrap(

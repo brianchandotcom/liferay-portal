@@ -51,7 +51,7 @@ import org.powermock.api.mockito.PowerMockito;
 public class IndexAccessorImplTest extends PowerMockito {
 
 	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
+	public static void tearDownClass() throws Exception {
 		System.gc();
 
 		String indexPath = PropsValues.LUCENE_DIR.concat(

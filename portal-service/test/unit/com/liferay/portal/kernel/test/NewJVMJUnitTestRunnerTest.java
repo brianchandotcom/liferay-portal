@@ -35,14 +35,14 @@ import org.junit.runner.RunWith;
 public class NewJVMJUnitTestRunnerTest {
 
 	@After
-	public void after() {
+	public void tearDown() {
 		Assert.assertEquals(2, _counter.getAndIncrement());
 
 		assertProcessId();
 	}
 
 	@Before
-	public void before() {
+	public void setUp() {
 		Assert.assertEquals(0, _counter.getAndIncrement());
 		Assert.assertNull(_processId);
 

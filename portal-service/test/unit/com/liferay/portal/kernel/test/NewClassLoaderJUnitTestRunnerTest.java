@@ -29,14 +29,14 @@ import org.junit.runner.RunWith;
 public class NewClassLoaderJUnitTestRunnerTest {
 
 	@After
-	public void after() {
+	public void tearDown() {
 		Assert.assertEquals(2, _counter.getAndIncrement());
 
 		assertClassLoader();
 	}
 
 	@Before
-	public void before() {
+	public void setUp() {
 		Assert.assertEquals(0, _counter.getAndIncrement());
 		Assert.assertNull(_classLoader);
 

@@ -40,7 +40,7 @@ import org.junit.BeforeClass;
 public class BaseSocialActivityTestCase {
 
 	@BeforeClass
-	public static void setUp() throws Exception {
+	public static void setUpClass() throws Exception {
 		_userClassNameId = PortalUtil.getClassNameId(User.class.getName());
 
 		Class<?> clazz = SocialActivitySettingLocalServiceTest.class;
@@ -55,7 +55,7 @@ public class BaseSocialActivityTestCase {
 	}
 
 	@Before
-	public void beforeTest() throws Exception {
+	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
 		_actorUser = UserTestUtil.addUser("actor", _group.getGroupId());

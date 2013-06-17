@@ -84,7 +84,7 @@ public class PortalBeanLocatorUtilTest extends PowerMockito {
 	}
 
 	@After
-	public void unsetBeanLocator() {
+	public void tearDown() {
 		PortalBeanLocatorUtil.setBeanLocator(null);
 	}
 

@@ -1241,36 +1241,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
-	protected static void formatSQL() throws IOException {
-		String basedir = "./";
-
-		DirectoryScanner directoryScanner = new DirectoryScanner();
-
-		directoryScanner.setBasedir(basedir);
-		directoryScanner.setExcludes(_excludes);
-		directoryScanner.setIncludes(new String[] {"**\\sql\\*.sql"});
-
-		List<String> fileNames = _sourceFormatterHelper.scanForFiles(
-			directoryScanner);
-
-		for (String fileName : fileNames) {
-			File file = new File(basedir + fileName);
-
-			String content = _fileUtil.read(file);
-
-			String newContent = _formatSQL(content);
-
-			if ((newContent != null) && !content.equals(newContent)) {
-				_fileUtil.write(file, newContent);
-
-				fileName = StringUtil.replace(
-					fileName, StringPool.BACK_SLASH, StringPool.SLASH);
-
-				_sourceFormatterHelper.printError(fileName, file);
-			}
-		}
-	}
-
 	protected static void formatStrutsConfigXML()
 		throws DocumentException, IOException {
 
@@ -3771,49 +3741,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 			previousException = exception;
 		}
-	}
-
-	private static String _formatSQL(String content) throws IOException {
-		StringBundler sb = new StringBundler();
-
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(content));
-
-		String line = null;
-
-		String previousLineSqlCommand = StringPool.BLANK;
-
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			line = trimLine(line, false);
-
-			if (Validator.isNotNull(line) && !line.startsWith(StringPool.TAB)) {
-				String sqlCommand = StringUtil.split(line, CharPool.SPACE)[0];
-
-				if (Validator.isNotNull(previousLineSqlCommand) &&
-					!previousLineSqlCommand.equals(sqlCommand)) {
-
-					sb.append("\n");
-				}
-
-				previousLineSqlCommand = sqlCommand;
-			}
-			else {
-				previousLineSqlCommand = StringPool.BLANK;
-			}
-
-			sb.append(line);
-			sb.append("\n");
-		}
-
-		unsyncBufferedReader.close();
-
-		content = sb.toString();
-
-		if (content.endsWith("\n")) {
-			content = content.substring(0, content.length() - 1);
-		}
-
-		return content;
 	}
 
 	private static String _formatTaglibQuotes(

@@ -698,10 +698,6 @@
 		<priority value="ERROR" />
 	</category>
 
-	<category name="com.liferay.portal.servlet.filters.doubleclick">
-		<priority value="ERROR" />
-	</category>
-
 	<category name="com.liferay.portal.servlet.filters.dynamiccss">
 		<priority value="ERROR" />
 	</category>

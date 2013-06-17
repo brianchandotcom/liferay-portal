@@ -57,17 +57,17 @@
 <!--ADD_MEMBERS_MENULIST-->
 <tr>
 	<td>ADD_MEMBERS_MENULIST_USER</td>
-	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'User')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'User')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_MEMBERS_MENULIST_ORGANIZATION</td>
-	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Organization')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Organization')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_MEMBERS_MENULIST_USER_GROUPS</td>
-	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'User Group')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'User Group')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -78,12 +78,12 @@
 <!--ADD_SITE_ROLES_TO_MENULIST-->
 <tr>
 	<td>ADD_SITE_ROLES_TO_MENULIST_USERS</td>
-	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'Users')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Users')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_SITE_ROLES_TO_MENULIST_USER_GROUPS</td>
-	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'User Groups')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'User Groups')]</td>
 	<td></td>
 </tr>
 <tr>

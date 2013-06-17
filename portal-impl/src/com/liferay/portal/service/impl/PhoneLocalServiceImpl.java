@@ -104,13 +104,6 @@ public class PhoneLocalServiceImpl extends PhoneLocalServiceBaseImpl {
 	}
 
 	@Override
-	public Phone fetchPhoneByUuidAndCompanyId(String uuid, long companyId)
-		throws SystemException {
-
-		return phonePersistence.fetchByUuid_C_First(uuid, companyId, null);
-	}
-
-	@Override
 	public List<Phone> getPhones() throws SystemException {
 		return phonePersistence.findAll();
 	}

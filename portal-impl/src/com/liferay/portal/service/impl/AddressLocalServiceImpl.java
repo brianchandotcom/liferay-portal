@@ -118,13 +118,6 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 	}
 
 	@Override
-	public Address fetchAddressByUuidAndCompanyId(String uuid, long companyId)
-		throws SystemException {
-
-		return addressPersistence.fetchByUuid_C_First(uuid, companyId, null);
-	}
-
-	@Override
 	public List<Address> getAddresses() throws SystemException {
 		return addressPersistence.findAll();
 	}

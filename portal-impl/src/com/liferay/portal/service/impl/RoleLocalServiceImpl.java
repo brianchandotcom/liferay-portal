@@ -511,13 +511,6 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		return roleLocalService.loadFetchRole(companyId, name);
 	}
 
-	@Override
-	public Role fetchRoleByUuidAndCompanyId(String uuid, long companyId)
-		throws SystemException {
-
-		return rolePersistence.fetchByUuid_C_First(uuid, companyId, null);
-	}
-
 	/**
 	 * Returns the default role for the group with the primary key.
 	 *

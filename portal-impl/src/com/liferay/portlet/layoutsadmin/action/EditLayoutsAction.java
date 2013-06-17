@@ -461,7 +461,9 @@ public class EditLayoutsAction extends PortletAction {
 				checkPermission(permissionChecker, group, layout, selPlid);
 			}
 		}
-		else if (cmd.equals("publish_to_live")) {
+		else if (cmd.equals("publish_to_live") ||
+				 cmd.equals("publish_to_remote")) {
+
 			boolean hasUpdateLayoutPermission = false;
 
 			if (layout != null) {

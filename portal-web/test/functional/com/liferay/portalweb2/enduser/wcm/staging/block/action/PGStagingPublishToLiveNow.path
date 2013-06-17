@@ -1,0 +1,59 @@
+<html>
+<head>
+<title>PGStagingPublishToLiveNow</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGStagingPublishToLiveNow</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGStagingPublishToLiveNow</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>STAGING_BAR</td>
+	<td>//div[@class='staging-bar']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CLOSE_BUTTON</td>
+	<td>//button[@title='Close dialog']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLISH_RANGE_ALL</td>
+	<td>//input[@id='_88_rangeAll']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLISH_BUTTON</td>
+	<td>//input[@value='Publish']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>APPLICATIONS_EXPAND</td>
+	<td>//a[@title='Expand']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -25,6 +25,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_STAGING</td>
+	<td>//li[@id='_145_addContent']/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_PAGE</td>
 	<td>//a[@id='_145_addPage']</td>
 	<td></td>
@@ -136,6 +141,37 @@
 </tr>
 <tr>
 	<td>MY_SITES_MY_PRIVATE_PAGES</td>
+	<td>//span[@class='site-name' and contains(.,'My Private Pages')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--GO_TO-->
+<tr>
+	<td>GO_TO</td>
+	<td>//li[@id='_145_mySites']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GO_TO_STAGING</td>
+	<td>//li[@id='_145_mySites']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GO_TO_CONTROL_PANEL</td>
+	<td>//li[contains(@class,'control-panel')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GO_TO_MY_PUBLIC_PAGES</td>
+	<td>//span[@class='site-name' and contains(.,'My Public Pages')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GO_TO_MY_PRIVATE_PAGES</td>
 	<td>//span[@class='site-name' and contains(.,'My Private Pages')]</td>
 	<td></td>
 </tr>

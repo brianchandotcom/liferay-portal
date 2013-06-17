@@ -175,7 +175,7 @@ if (ratingsEntry != null) {
 			Liferay.Ratings.register(
 				{
 					averageScore: <%= ratingsStats.getAverageScore() %>,
-					className: '<%= className %>',
+					className: '<%= HtmlUtil.escapeJS(className) %>',
 					classPK: '<%= classPK %>',
 					containerId: '<%= randomNamespace %>ratingContainer',
 					namespace: '<%= randomNamespace %>',

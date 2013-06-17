@@ -528,31 +528,31 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 	<aui:script>
 		function <%= randomNamespace %>afterLogin(emailAddress, anonymousAccount) {
-			document.<%= namespace %><%= formName %>.<%= namespace %>emailAddress.value = emailAddress;
+			document["<%= namespace + HtmlUtil.escapeJS(formName) %>"].<%= namespace %>emailAddress.value = emailAddress;
 
 			if (anonymousAccount) {
-				<portlet:namespace />sendMessage(document.<portlet:namespace /><%= formName %>);
+				<portlet:namespace />sendMessage(document["<%= namespace + HtmlUtil.escapeJS(formName) %>"]);
 			}
 			else {
-				<portlet:namespace />sendMessage(document.<portlet:namespace /><%= formName %>, true);
+				<portlet:namespace />sendMessage(document["<%= namespace + HtmlUtil.escapeJS(formName) %>"], true);
 			}
 		}
 
 		function <%= randomNamespace %>deleteMessage(i) {
-			eval("var messageId = document.<%= namespace %><%= formName %>.<%= namespace %>messageId" + i + ".value;");
+			eval("var messageId = document["<%= namespace + HtmlUtil.escapeJS(formName) %>"].<%= namespace %>messageId" + i + ".value;");
 
-			document.<%= namespace %><%= formName %>.<%= namespace %><%= Constants.CMD %>.value = "<%= Constants.DELETE %>";
-			document.<%= namespace %><%= formName %>.<%= namespace %>messageId.value = messageId;
-			<portlet:namespace />sendMessage(document.<%= namespace %><%= formName %>);
+			document["<%= namespace + HtmlUtil.escapeJS(formName) %>"].<%= namespace %><%= Constants.CMD %>.value = "<%= Constants.DELETE %>";
+			document["<%= namespace + HtmlUtil.escapeJS(formName) %>"].<%= namespace %>messageId.value = messageId;
+			<portlet:namespace />sendMessage(document["<%= namespace + HtmlUtil.escapeJS(formName) %>"]);
 		}
 
 		function <%= randomNamespace %>postReply(i) {
-			eval("var parentMessageId = document.<%= namespace %><%= formName %>.<%= namespace %>parentMessageId" + i + ".value;");
-			eval("var body = document.<%= namespace %><%= formName %>.<%= namespace %>postReplyBody" + i + ".value;");
+			eval("var parentMessageId = document["<%= namespace + HtmlUtil.escapeJS(formName) %>"].<%= namespace %>parentMessageId" + i + ".value;");
+			eval("var body = document["<%= namespace + HtmlUtil.escapeJS(formName) %>"].<%= namespace %>postReplyBody" + i + ".value;");
 
-			document.<%= namespace %><%= formName %>.<%= namespace %><%= Constants.CMD %>.value = "<%= Constants.ADD %>";
-			document.<%= namespace %><%= formName %>.<%= namespace %>parentMessageId.value = parentMessageId;
-			document.<%= namespace %><%= formName %>.<%= namespace %>body.value = body;
+			document["<%= namespace + HtmlUtil.escapeJS(formName) %>"].<%= namespace %><%= Constants.CMD %>.value = "<%= Constants.ADD %>";
+			document["<%= namespace + HtmlUtil.escapeJS(formName) %>"].<%= namespace %>parentMessageId.value = parentMessageId;
+			document["<%= namespace + HtmlUtil.escapeJS(formName) %>"].<%= namespace %>body.value = body;
 
 			if (!themeDisplay.isSignedIn()) {
 				window.namespace = '<%= namespace %>';
@@ -567,7 +567,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 				);
 			}
 			else {
-				<portlet:namespace />sendMessage(document.<%= namespace %><%= formName %>);
+				<portlet:namespace />sendMessage(document["<%= namespace + HtmlUtil.escapeJS(formName) %>"]);
 			}
 		}
 
@@ -582,28 +582,28 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 		function <%= randomNamespace %>subscribeToComments(subscribe) {
 			if (subscribe) {
-				document.<%= namespace %><%= formName %>.<%= namespace %><%= Constants.CMD %>.value = "<%= Constants.SUBSCRIBE_TO_COMMENTS %>";
+				document["<%= namespace + HtmlUtil.escapeJS(formName) %>"].<%= namespace %><%= Constants.CMD %>.value = "<%= Constants.SUBSCRIBE_TO_COMMENTS %>";
 			}
 			else {
-				document.<%= namespace %><%= formName %>.<%= namespace %><%= Constants.CMD %>.value = "<%= Constants.UNSUBSCRIBE_FROM_COMMENTS %>";
+				document["<%= namespace + HtmlUtil.escapeJS(formName) %>"].<%= namespace %><%= Constants.CMD %>.value = "<%= Constants.UNSUBSCRIBE_FROM_COMMENTS %>";
 			}
 
-			<portlet:namespace />sendMessage(document.<%= namespace %><%= formName %>);
+			<portlet:namespace />sendMessage(document["<%= namespace + HtmlUtil.escapeJS(formName) %>"]);
 		}
 
 		function <%= randomNamespace %>updateMessage(i, pending) {
-			eval("var messageId = document.<%= namespace %><%= formName %>.<%= namespace %>messageId" + i + ".value;");
-			eval("var body = document.<%= namespace %><%= formName %>.<%= namespace %>editReplyBody" + i + ".value;");
+			eval("var messageId = document["<%= namespace + HtmlUtil.escapeJS(formName) %>"].<%= namespace %>messageId" + i + ".value;");
+			eval("var body = document["<%= namespace + HtmlUtil.escapeJS(formName) %>"].<%= namespace %>editReplyBody" + i + ".value;");
 
 			if (pending) {
-				document.<%= namespace %><%= formName %>.<%= namespace %>workflowAction.value = <%= WorkflowConstants.ACTION_SAVE_DRAFT %>;
+				document["<%= namespace + HtmlUtil.escapeJS(formName) %>"].<%= namespace %>workflowAction.value = <%= WorkflowConstants.ACTION_SAVE_DRAFT %>;
 			}
 
-			document.<%= namespace %><%= formName %>.<%= namespace %><%= Constants.CMD %>.value = "<%= Constants.UPDATE %>";
-			document.<%= namespace %><%= formName %>.<%= namespace %>messageId.value = messageId;
-			document.<%= namespace %><%= formName %>.<%= namespace %>body.value = body;
+			document["<%= namespace + HtmlUtil.escapeJS(formName) %>"].<%= namespace %><%= Constants.CMD %>.value = "<%= Constants.UPDATE %>";
+			document["<%= namespace + HtmlUtil.escapeJS(formName) %>"].<%= namespace %>messageId.value = messageId;
+			document["<%= namespace + HtmlUtil.escapeJS(formName) %>"].<%= namespace %>body.value = body;
 
-			<portlet:namespace />sendMessage(document.<%= namespace %><%= formName %>);
+			<portlet:namespace />sendMessage(document["<%= namespace + HtmlUtil.escapeJS(formName) %>"]);
 		}
 
 		Liferay.provide(

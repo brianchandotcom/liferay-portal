@@ -67,7 +67,7 @@ Map<String, String> requestParams = (Map<String, String>)request.getAttribute("l
 				String requestParamValue = requestParams.get(requestParamName);
 			%>
 
-				config['<portlet:namespace /><%= requestParamName %>'] = '<%= requestParamValue %>';
+				config['<portlet:namespace /><%= requestParamName %>'] = '<%= HtmlUtil.escapeJS(requestParamValue) %>';
 
 			<%
 			}

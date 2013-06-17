@@ -145,7 +145,7 @@ if (!inlineEdit) {
 		if (Validator.isNotNull(onChangeMethod)) {
 		%>
 
-			onChangeCallback: function () {
+			onChangeCallback: function() {
 				var ckEditor = CKEDITOR.instances['<%= name %>'];
 				var dirty = ckEditor.checkDirty();
 

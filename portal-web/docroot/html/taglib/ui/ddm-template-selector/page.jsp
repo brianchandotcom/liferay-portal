@@ -131,7 +131,7 @@ Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
 
 		selectDDMTemplate.on(
 			'click',
-			function (event) {
+			function(event) {
 				Liferay.Util.openDDMPortlet(
 					{
 						basePortletURL: '<%= PortletURLFactoryUtil.create(request, PortletKeys.DYNAMIC_DATA_MAPPING, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
@@ -145,7 +145,7 @@ Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
 						struts_action: '/dynamic_data_mapping/view_template',
 						title: '<%= UnicodeLanguageUtil.get(pageContext, "application-display-templates") %>'
 					},
-					function (event) {
+					function(event) {
 						if (!event.newVal) {
 							submitForm(document.<portlet:namespace />fm, '<%= refreshURL %>');
 						}

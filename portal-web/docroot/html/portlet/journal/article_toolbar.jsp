@@ -141,7 +141,7 @@ if ((article != null) && article.isDraft()) {
 				icon: 'icon-time',
 				label: '<%= UnicodeLanguageUtil.get(pageContext, "view-history") %>',
 				on: {
-					click: function (event) {
+					click: function(event) {
 						window.location = '<%= viewHistoryURL %>';
 
 						event.domEvent.preventDefault();

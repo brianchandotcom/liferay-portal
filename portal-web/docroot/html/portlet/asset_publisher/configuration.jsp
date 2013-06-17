@@ -296,7 +296,7 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 <aui:script use="aui-base">
 	A.getBody().delegate(
 		'click',
-		function (event) {
+		function(event) {
 			event.preventDefault();
 
 			var link = event.currentTarget;

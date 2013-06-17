@@ -55,11 +55,11 @@
 	<command name="EditAnnouncementsEntry">
 		<var name="distributionScope" value="General" />
 		<var name="entryContent" value="Announcements Entry Content" />
-		<var name="entryContentNew" value="Announcements Entry Content Edit" />
+		<var name="entryContentEdit" value="Announcements Entry Content Edit" />
 		<var name="entryTitle" value="Announcements Entry Title" />
-		<var name="entryTitleNew" value="Announcements Entry Title Edit" />
+		<var name="entryTitleEdit" value="Announcements Entry Title Edit" />
 		<var name="entryURL" value="http://www.liferay.com" />
-		<var name="entryURLNew" value="http://www.alloyui.com" />
+		<var name="entryURLEdit" value="http://www.alloyui.com" />
 
 		<execute macro="AnnouncementsEntry#addPG">
 			<var name="distributionScope" value="${distributionScope}" />
@@ -72,10 +72,10 @@
 		<execute macro="AnnouncementsEntry#editPG">
 			<var name="distributionScope" value="${distributionScope}" />
 			<var name="entryContent" value="${entryContent}" />
-			<var name="entryContentNew" value="${entryContentNew}" />
+			<var name="entryContentEdit" value="${entryContentEdit}" />
 			<var name="entryTitle" value="${entryTitle}" />
-			<var name="entryTitleNew" value="${entryTitleNew}" />
-			<var name="entryURLNew" value="${entryURLNew}" />
+			<var name="entryTitleEdit" value="${entryTitleEdit}" />
+			<var name="entryURLEdit" value="${entryURLEdit}" />
 			<var name="pageName" value="${pageName}" />
 		</execute>
 	</command>

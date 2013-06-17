@@ -38,12 +38,12 @@
 		<execute action="CPWiki#click" locator-key1="WIKI_NODE_TABLE_ACTIONS_2" />
 		<execute action="CPWiki#click" locator-key1="WIKI_NODE_MENULIST_EDIT" />
 
-		<execute action="CPWikiAddwiki#type" locator-key1="NAME_FIELD" value1="${wikiNodeNameNew}" />
-		<execute action="CPWikiAddwiki#type" locator-key1="DESCRIPTION_FIELD" value1="${wikiNodeDescriptionNew}" />
+		<execute action="CPWikiAddwiki#type" locator-key1="NAME_FIELD" value1="${wikiNodeNameEdit}" />
+		<execute action="CPWikiAddwiki#type" locator-key1="DESCRIPTION_FIELD" value1="${wikiNodeDescriptionEdit}" />
 		<execute action="CPWikiAddwiki#click" locator-key1="SAVE_BUTTON" />
 
 		<execute action="CPWiki#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
-		<execute action="CPWiki#assertTextEquals" locator-key1="WIKI_NODE_TABLE_WIKI_2" value1="${wikiNodeNameNew}" />
+		<execute action="CPWiki#assertTextEquals" locator-key1="WIKI_NODE_TABLE_WIKI_2" value1="${wikiNodeNameEdit}" />
 		<execute action="CPWiki#assertTextNotEquals" locator-key1="WIKI_NODE_TABLE_WIKI_2" value1="${wikiNodeName}" />
 	</command>
 

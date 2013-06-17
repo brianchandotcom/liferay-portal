@@ -17,6 +17,8 @@
 <#list dataFactory.groups as group>
 	<#assign groupId = group.groupId>
 
+	<#include "asset_publisher.ftl">
+
 	<#include "blogs.ftl">
 
 	<#include "ddl.ftl">

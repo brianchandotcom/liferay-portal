@@ -16,55 +16,26 @@ package com.liferay.portal.tools.sourceformatter;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PropertiesUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.DocumentException;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.tools.ComparableRoute;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.xml.SAXReaderImpl;
-import com.liferay.util.ContentUtil;
-
-import com.thoughtworks.qdox.JavaDocBuilder;
-import com.thoughtworks.qdox.model.JavaClass;
-import com.thoughtworks.qdox.model.JavaSource;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.net.URL;
-
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
-import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.apache.tools.ant.DirectoryScanner;
 
 /**
  * @author Brian Wing Shun Chan
@@ -194,7 +165,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		if (_portalLanguageKeysProperties == null) {
 			_portalLanguageKeysProperties = new Properties();
 
-			ClassLoader classLoader = BaseSourceProcessor.class.getClassLoader();
+			ClassLoader classLoader =
+				BaseSourceProcessor.class.getClassLoader();
 
 			InputStream inputStream = classLoader.getResourceAsStream(
 				"content/Language.properties");
@@ -582,13 +554,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 					break;
 				}
 
-				s = s.substring(0, y)  + s.substring(x + 1);
+				s = s.substring(0, y) + s.substring(x + 1);
 			}
 		}
 
-		if (Validator.isNotNull(s) &&
-			!s.contains(StringPool.SPACE)) {
-
+		if (Validator.isNotNull(s) && !s.contains(StringPool.SPACE)) {
 			return true;
 		}
 		else {

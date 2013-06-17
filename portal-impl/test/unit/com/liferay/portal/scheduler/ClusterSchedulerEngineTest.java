@@ -92,7 +92,7 @@ import org.junit.Test;
 public class ClusterSchedulerEngineTest {
 
 	@BeforeClass
-	public static void setUp() throws Exception {
+	public static void setUpClass() throws Exception {
 		PortalUtil portalUtil = new PortalUtil();
 
 		portalUtil.setPortal(new PortalImpl());

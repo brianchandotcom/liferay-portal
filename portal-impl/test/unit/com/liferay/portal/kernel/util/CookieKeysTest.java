@@ -29,15 +29,20 @@ import org.springframework.mock.web.MockHttpServletRequest;
  */
 public class CookieKeysTest {
 
+	@Before
+	public void setUp() {
+		PropsUtil.setProps(new PropsImpl());
+	}
+
 	@Test
-	public void domainTest1() throws Exception {
+	public void testDomain1() throws Exception {
 		String domain = CookieKeys.getDomain("www.liferay.com");
 
 		Assert.assertEquals(".liferay.com", domain);
 	}
 
 	@Test
-	public void domainTest2() throws Exception {
+	public void testDomain2() throws Exception {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
@@ -49,7 +54,7 @@ public class CookieKeysTest {
 	}
 
 	@Test
-	public void domainTest3() throws Exception {
+	public void testDomain3() throws Exception {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
@@ -73,7 +78,7 @@ public class CookieKeysTest {
 	}
 
 	@Test
-	public void domainTest4() throws Exception {
+	public void testDomain4() throws Exception {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
@@ -97,7 +102,7 @@ public class CookieKeysTest {
 	}
 
 	@Test
-	public void domainTest5() throws Exception {
+	public void testDomain5() throws Exception {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
@@ -118,11 +123,6 @@ public class CookieKeysTest {
 		finally {
 			field.set(null, value);
 		}
-	}
-
-	@Before
-	public void setup() {
-		PropsUtil.setProps(new PropsImpl());
 	}
 
 }

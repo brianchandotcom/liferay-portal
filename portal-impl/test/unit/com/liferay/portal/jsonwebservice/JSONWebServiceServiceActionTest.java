@@ -55,7 +55,7 @@ public class JSONWebServiceServiceActionTest
 	extends BaseJSONWebServiceTestCase {
 
 	@BeforeClass
-	public static void init() throws Exception {
+	public static void setUpClass() throws Exception {
 		initPortalServices();
 
 		Class<?> clazz = JSONWebServiceServiceAction.class;
@@ -75,7 +75,7 @@ public class JSONWebServiceServiceActionTest
 	}
 
 	@AfterClass
-	public static void tearDown() throws Exception {
+	public static void tearDownClass() throws Exception {
 		PortalClassLoaderUtil.setClassLoader(null);
 	}
 

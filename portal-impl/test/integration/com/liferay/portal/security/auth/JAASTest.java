@@ -82,7 +82,7 @@ import org.springframework.mock.web.MockServletContext;
 public class JAASTest extends MainServletExecutionTestListener {
 
 	@Before
-	public void setup() throws Exception {
+	public void setUp() throws Exception {
 		_jaasAuthTypeField = ReflectionUtil.getDeclaredField(
 			PropsValues.class, "PORTAL_JAAS_AUTH_TYPE");
 

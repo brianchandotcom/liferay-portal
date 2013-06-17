@@ -66,7 +66,7 @@
 </tr>
 <tr>
 	<td>TOOLBAR_SEARCH_FIELD</td>
-	<td>//div[@class='navbar ']//input[contains(@class,'search-query')]</td>
+	<td>//div[@class='navbar ']//input[@name='_166_keywords']</td>
 	<td></td>
 </tr>
 <tr>
@@ -79,7 +79,7 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--DATA_DEFINITION_TABLE-->
+<!--TEMPLATE_TABLE-->
 <tr>
 	<td>TEMPLATE_TABLE_ALL_CHECKBOX</td>
 	<td>//div[@id='_166_ddmTemplatesSearchContainer']//input[@name='_166_allRowIds']</td>

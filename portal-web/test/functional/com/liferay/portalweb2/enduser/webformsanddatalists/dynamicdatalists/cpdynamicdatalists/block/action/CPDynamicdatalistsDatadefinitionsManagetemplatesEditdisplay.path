@@ -11,7 +11,7 @@
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>CPDynamicdatalistsDatadefinitionsManagetemplatesAddform</td>
+	<td>CPDynamicdatalistsDatadefinitionsManagetemplatesEditdisplay</td>
 </tr>
 <tr>
 	<td></td>
@@ -148,11 +148,6 @@
 <tr>
 	<td>DATA_LIST_RECORD_FIELDS_TEXT_BOX</td>
 	<td>//div[@class='palette-section' and contains(.,'Data List Record Fields')]/ul/li/span[contains(.,'Text Box')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 </tbody>

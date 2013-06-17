@@ -403,6 +403,8 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 
 	public static final String SHOPPING_ORDER = "SHOPPING_ORDER";
 
+	public static final String SITE_ADMINISTRATION_CATEGORIES_MAP = "SITES_ADMINISTRATION_CATEGORIES_MAP";
+
 	public static final String SOCIAL_ACTIVITY_SETTINGS_MAP = "SOCIAL_ACTIVITY_SETTINGS_MAP";
 
 	public static final String SOCIAL_REQUESTS = "SOCIAL_REQUESTS";

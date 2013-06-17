@@ -1434,32 +1434,9 @@ public class PortalImpl implements Portal {
 			HttpServletRequest request)
 		throws SystemException {
 
-		Map<String, List<Portlet>> categoriesMap =
-			(Map<String, List<Portlet>>)request.getAttribute(
-				WebKeys.CONTROL_PANEL_CATEGORIES_MAP);
-
-		if (categoriesMap != null) {
-			return categoriesMap;
-		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		categoriesMap = new LinkedHashMap<String, List<Portlet>>();
-
-		for (String category : PortletCategoryKeys.ALL) {
-			List<Portlet> portlets = getControlPanelPortlets(
-				category, themeDisplay);
-
-			if (!portlets.isEmpty()) {
-				categoriesMap.put(category, portlets);
-			}
-		}
-
-		request.setAttribute(
-			WebKeys.CONTROL_PANEL_CATEGORIES_MAP, categoriesMap);
-
-		return categoriesMap;
+		return getCategoriesMap(
+			request, WebKeys.CONTROL_PANEL_CATEGORIES_MAP,
+			PortletCategoryKeys.ALL);
 	}
 
 	@Override
@@ -3633,7 +3610,7 @@ public class PortalImpl implements Portal {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Portlet " + portletId +
-						" does not exist on a page in group " + groupId);
+					" does not exist on a page in group " + groupId);
 			}
 		}
 
@@ -4502,6 +4479,16 @@ public class PortalImpl implements Portal {
 
 		return getSelectedUser(
 			getHttpServletRequest(portletRequest), checkPermission);
+	}
+
+	@Override
+	public Map<String, List<Portlet>> getSiteAdministrationCategoriesMap(
+			HttpServletRequest request)
+		throws SystemException {
+
+		return getCategoriesMap(
+			request, WebKeys.SITE_ADMINISTRATION_CATEGORIES_MAP,
+			PortletCategoryKeys.SITE_ADMINISTRATION_ALL);
 	}
 
 	@Override
@@ -6837,6 +6824,37 @@ public class PortalImpl implements Portal {
 		}
 
 		return locale;
+	}
+
+	protected Map<String, List<Portlet>> getCategoriesMap(
+			HttpServletRequest request, String attributeName,
+			String[] categoriesArray)
+		throws SystemException {
+
+		Map<String, List<Portlet>> categoriesMap =
+			(Map<String, List<Portlet>>)request.getAttribute(attributeName);
+
+		if (categoriesMap != null) {
+			return categoriesMap;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		categoriesMap = new LinkedHashMap<String, List<Portlet>>();
+
+		for (String category : categoriesArray) {
+			List<Portlet> portlets = getControlPanelPortlets(
+				category, themeDisplay);
+
+			if (!portlets.isEmpty()) {
+				categoriesMap.put(category, portlets);
+			}
+		}
+
+		request.setAttribute(attributeName, categoriesMap);
+
+		return categoriesMap;
 	}
 
 	protected long getDefaultScopeGroupId(long companyId)

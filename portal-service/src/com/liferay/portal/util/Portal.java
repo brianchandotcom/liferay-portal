@@ -1009,6 +1009,10 @@ public interface Portal {
 			PortletRequest portletRequest, boolean checkPermission)
 		throws PortalException, SystemException;
 
+	public Map<String, List<Portlet>> getSiteAdministrationCategoriesMap(
+			HttpServletRequest request)
+		throws SystemException;
+
 	public PortletURL getSiteAdministrationURL(
 			HttpServletRequest request, ThemeDisplay themeDisplay)
 		throws SystemException;

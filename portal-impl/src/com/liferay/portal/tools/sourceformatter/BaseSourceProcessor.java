@@ -61,7 +61,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return _errorMessages;
 	}
 
-	protected static void checkIfClauseParentheses(
+	protected void checkIfClauseParentheses(
 		String ifClause, String fileName, int lineCount) {
 
 		int quoteCount = StringUtil.count(ifClause, StringPool.QUOTE);
@@ -152,7 +152,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
-	protected static void checkLanguageKeys(
+	protected void checkLanguageKeys(
 			String fileName, String content, Pattern pattern)
 		throws IOException {
 
@@ -203,7 +203,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
-	protected static String fixCopyright(
+	protected String fixCopyright(
 			String content, String copyright, String oldCopyright, File file,
 			String fileName)
 		throws IOException {
@@ -254,7 +254,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return StringUtil.replace(content, contentCopyrightYear, copyrightYear);
 	}
 
-	protected static String fixSessionKey(
+	protected String fixSessionKey(
 		String fileName, String content, Pattern pattern) {
 
 		Matcher matcher = pattern.matcher(content);
@@ -398,7 +398,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return sb.toString();
 	}
 
-	protected static String getCopyright() throws IOException {
+	protected String getCopyright() throws IOException {
 		String copyright = _fileUtil.read("copyright.txt");
 
 		if (Validator.isNull(copyright)) {
@@ -412,7 +412,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return copyright;
 	}
 
-	protected static String getCustomCopyright(File file) throws IOException {
+	protected String getCustomCopyright(File file) throws IOException {
 		String absolutePath = _fileUtil.getAbsolutePath(file);
 
 		for (int x = absolutePath.length();;) {
@@ -435,7 +435,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return null;
 	}
 
-	protected static String[] getLanguageKeys(Matcher matcher) {
+	protected String[] getLanguageKeys(Matcher matcher) {
 		if (matcher.groupCount() > 0) {
 			String languageKey = matcher.group(1);
 
@@ -496,7 +496,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return new String[0];
 	}
 
-	protected static String getOldCopyright() throws IOException {
+	protected String getOldCopyright() throws IOException {
 		String copyright = _fileUtil.read("old-copyright.txt");
 
 		if (Validator.isNull(copyright)) {
@@ -510,7 +510,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return copyright;
 	}
 
-	protected static boolean hasMissingParentheses(String s) {
+	protected boolean hasMissingParentheses(String s) {
 		if (Validator.isNull(s)) {
 			return false;
 		}
@@ -538,7 +538,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
-	protected static boolean hasRedundantParentheses(String s) {
+	protected boolean hasRedundantParentheses(String s) {
 		if (!s.contains("&&") && !s.contains("||")) {
 			for (int x = 0;;) {
 				x = s.indexOf(StringPool.CLOSE_PARENTHESIS);
@@ -566,7 +566,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
-	protected static boolean isPortalSource() {
+	protected boolean isPortalSource() {
 		String basedir = "./";
 
 		if (_fileUtil.exists(basedir + "portal-impl")) {
@@ -577,7 +577,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
-	protected static void processErrorMessage(String fileName, String message) {
+	protected void processErrorMessage(String fileName, String message) {
 		if (_throwException) {
 			_errorMessages.add(message);
 		}
@@ -586,7 +586,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
-	protected static String replacePrimitiveWrapperInstantiation(
+	protected String replacePrimitiveWrapperInstantiation(
 		String fileName, String line, int lineCount) {
 
 		if (true) {
@@ -612,7 +612,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return newLine;
 	}
 
-	protected static String stripQuotes(String s, String delimeter) {
+	protected String stripQuotes(String s, String delimeter) {
 		String[] parts = StringUtil.split(s, delimeter);
 
 		int i = 1;
@@ -627,7 +627,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return s;
 	}
 
-	protected static String stripRedundantParentheses(String s) {
+	protected String stripRedundantParentheses(String s) {
 		for (int x = 0;;) {
 			x = s.indexOf(StringPool.OPEN_PARENTHESIS, x + 1);
 			int y = s.indexOf(StringPool.CLOSE_PARENTHESIS, x);
@@ -649,7 +649,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
-	protected static String trimContent(
+	protected String trimContent(
 			String content, boolean allowLeadingSpaces)
 		throws IOException {
 
@@ -676,7 +676,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return content;
 	}
 
-	protected static String trimLine(String line, boolean allowLeadingSpaces) {
+	protected String trimLine(String line, boolean allowLeadingSpaces) {
 		if (line.trim().length() == 0) {
 			return StringPool.BLANK;
 		}

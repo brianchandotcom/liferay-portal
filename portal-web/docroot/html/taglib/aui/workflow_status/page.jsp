@@ -54,20 +54,15 @@
 	}
 	%>
 
-	<c:choose>
-		<c:when test="<%= showIcon && showLabel %>">
-			<span class="workflow-status workflow-status-icon"><liferay-ui:message key="status" />: <strong class="<%= _getStatusCssClass(status) %>"><liferay-ui:message key="<%= statusMessage %>" /><%= additionalText %></strong></span>
-		</c:when>
-		<c:when test="<%= showIcon %>">
-			<span class="workflow-status workflow-status-icon"><strong class="<%= _getStatusCssClass(status) %>"><liferay-ui:message key="<%= statusMessage %>" /><%= additionalText %></strong></span>
-		</c:when>
-		<c:when test="<%= showLabel %>">
-			<span class="workflow-status"><liferay-ui:message key="status" />: <strong class="<%= _getStatusCssClass(status) %>"><liferay-ui:message key="<%= statusMessage %>" /><%= additionalText %></strong></span>
-		</c:when>
-		<c:otherwise>
-			<span class="workflow-status"><strong class="<%= _getStatusCssClass(status) %>"><liferay-ui:message key="<%= statusMessage %>" /></strong></span>
-		</c:otherwise>
-	</c:choose>
+	<span class='<%= showIcon ? "workflow-status workflow-status-icon" : "workflow-status" %>'>
+		<c:if test="<%= showLabel %>">
+			<liferay-ui:message key="status" />:
+		</c:if>
+
+		<strong class="<%= _getStatusCssClass(status) %>">
+			<liferay-ui:message key="<%= statusMessage %>" /><%= additionalText %>
+		</strong>
+	</span>
 
 	<c:if test="<%= Validator.isNotNull(helpMessage) %>">
 		<liferay-ui:icon-help message="<%= helpMessage %>" />

@@ -149,11 +149,11 @@ if (showLinkTitle) {
 				</span>
 
 				<small>
-					<span class="entry-description">
-						<c:if test="<%= Validator.isNotNull(description) %>">
+					<c:if test="<%= Validator.isNotNull(description) %>">
+						<span class="entry-description">
 							<%= HtmlUtil.escape(description) %>
-						</c:if>
-					</span>
+						</span>
+					</c:if>
 
 					<dl>
 						<c:if test="<%= Validator.isNotNull(version) || ((status != WorkflowConstants.STATUS_ANY) && (status != WorkflowConstants.STATUS_APPROVED)) %>">

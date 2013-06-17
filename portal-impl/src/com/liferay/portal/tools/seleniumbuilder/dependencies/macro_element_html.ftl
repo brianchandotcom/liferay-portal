@@ -13,7 +13,7 @@
 <#assign macroCommandElements = macroRootElement.elements("command")>
 
 <div>
-	<div id="Toggle__${lineFolds}" class="expandToggle">+</div>
+	<div id="toggle${lineFolds}" class="expandToggle">+</div>
 </div>
 
 <div>
@@ -24,7 +24,7 @@
 	</div>
 </div>
 
-<ul id="Collapse--Toggle__${lineFolds}" class="collapse">
+<ul id="collapseToggle${lineFolds}" class="collapse">
 	<#assign lineFolds = lineFolds + 1>
 
 	<#list macroCommandElements as macroCommandElement>
@@ -36,7 +36,7 @@
 			<#list macroRootVarElements as macroRootVarElement>
 				<#assign lineNumber = macroRootVarElement.attributeValue("line-number")>
 
-				<li id="${macroNameStack.peek()}Macro__${lineNumber}">
+				<li id="${macroNameStack.peek()?uncap_first}Macro${lineNumber}">
 					<#assign varName = macroRootVarElement.attributeValue("name")>
 					<#assign varValue = macroRootVarElement.attributeValue("value")>
 
@@ -54,7 +54,7 @@
 			<#list macroVarElements as macroVarElement>
 				<#assign lineNumber = macroVarElement.attributeValue("line-number")>
 
-				<li id="${macroNameStack.peek()}Macro__${lineNumber}">
+				<li id="${macroNameStack.peek()?uncap_first}Macro${lineNumber}">
 					<#assign varName = macroVarElement.attributeValue("name")>
 					<#assign varValue = macroVarElement.attributeValue("value")>
 

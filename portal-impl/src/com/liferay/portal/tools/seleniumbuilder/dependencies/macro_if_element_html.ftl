@@ -3,7 +3,7 @@
 
 	<#assign lineNumber = conditionElement.attributeValue("line-number")>
 
-	<li id="${macroNameStack.peek()}Macro__${lineNumber}">
+	<li id="${macroNameStack.peek()?uncap_first}Macro${lineNumber}">
 		<#if conditionElement.attributeValue("action")??>
 			<#assign actionElement = conditionElement>
 
@@ -19,7 +19,7 @@
 
 	<#assign lineNumber = containsElement.attributeValue("line-number")>
 
-	<li id="${macroNameStack.peek()}Macro__${lineNumber}">
+	<li id="${macroNameStack.peek()?uncap_first}Macro${lineNumber}">
 		<div>
 			<span class="arrow">&lt;</span><span class="tag">contains</span>
 
@@ -34,7 +34,7 @@
 
 	<#assign lineNumber = equalsElement.attributeValue("line-number")>
 
-	<li id="${macroNameStack.peek()}Macro__${lineNumber}">
+	<li id="${macroNameStack.peek()?uncap_first}Macro${lineNumber}">
 		<div>
 			<span class="arrow">&lt;</span><span class="tag">equals</span>
 
@@ -49,7 +49,7 @@
 
 	<#assign lineNumber = issetElement.attributeValue("line-number")>
 
-	<li id="${macroNameStack.peek()}Macro__${lineNumber}">
+	<li id="${macroNameStack.peek()?uncap_first}Macro${lineNumber}">
 		<div>
 			<span class="arrow">&lt;</span><span class="tag">isset</span>
 
@@ -64,9 +64,9 @@
 
 <#assign lineNumber = thenElement.attributeValue("line-number")>
 
-<li id="${macroNameStack.peek()}Macro__${lineNumber}">
+<li id="${macroNameStack.peek()?uncap_first}Macro${lineNumber}">
 	<div>
-		<div id="Toggle__${lineFolds}" class="expandToggle">+</div>
+		<div id="toggle${lineFolds}" class="expandToggle">+</div>
 	</div>
 
 	<div>
@@ -75,7 +75,7 @@
 		</div>
 	</div>
 
-	<ul id="Collapse--Toggle__${lineFolds}" class="collapse">
+	<ul id="collapseToggle${lineFolds}" class="collapse">
 		<#assign lineFolds = lineFolds + 1>
 
 		<#assign macroBlockElement = thenElement>

@@ -9,17 +9,17 @@
 
 			<#assign lineNumber = element.attributeValue("line-number")>
 
-			selenium.sendLogger("${testCaseName}TestCase__${lineNumber}", "pending");
+			selenium.sendLogger("${testCaseName?uncap_first}TestCase${lineNumber}", "pending");
 
 			<#include "action_element.ftl">
 
 			<#assign lineNumber = element.attributeValue("line-number")>
 
-			selenium.sendLogger("${testCaseName}TestCase__${lineNumber}", "pass");
+			selenium.sendLogger("${testCaseName?uncap_first}TestCase${lineNumber}", "pass");
 		<#elseif element.attributeValue("macro")??>
 			<#assign lineNumber = element.attributeValue("line-number")>
 
-			selenium.sendLogger("${testCaseName}TestCase__${lineNumber}", "pending");
+			selenium.sendLogger("${testCaseName?uncap_first}TestCase${lineNumber}", "pending");
 
 			<#assign macroElement = element>
 
@@ -27,7 +27,7 @@
 
 			<#assign lineNumber = element.attributeValue("line-number")>
 
-			selenium.sendLogger("${testCaseName}TestCase__${lineNumber}", "pass");
+			selenium.sendLogger("${testCaseName?uncap_first}TestCase${lineNumber}", "pass");
 		</#if>
 	<#elseif name == "var">
 		<#assign varName = element.attributeValue("name")>
@@ -46,12 +46,12 @@
 
 		<#assign lineNumber = element.attributeValue("line-number")>
 
-		selenium.sendLogger("${testCaseName}TestCase__${lineNumber}", "pending");
+		selenium.sendLogger("${testCaseName?uncap_first}TestCase${lineNumber}", "pending");
 
 		commandScopeVariables.put("${varName}", "${varValue}");
 
 		<#assign lineNumber = element.attributeValue("line-number")>
 
-		selenium.sendLogger("${testCaseName}TestCase__${lineNumber}", "pass");
+		selenium.sendLogger("${testCaseName?uncap_first}TestCase${lineNumber}", "pass");
 	</#if>
 </#list>

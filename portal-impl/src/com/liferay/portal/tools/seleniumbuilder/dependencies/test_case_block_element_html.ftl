@@ -1,12 +1,12 @@
 <#assign elements = testCaseBlockElement.elements()>
 
-<ul id="Collapse--Toggle__${lineFolds}" class="collapse">
+<ul id="collapseToggle${lineFolds}" class="collapse">
 	<#assign lineFolds = lineFolds + 1>
 
 	<#list elements as element>
 		<#assign lineNumber = element.attributeValue("line-number")>
 
-		<li id="${testCaseName}TestCase__${lineNumber}">
+		<li id="${testCaseName?uncap_first}TestCase${lineNumber}">
 			<#if element.getName() == "execute">
 				<#if element.attributeValue("action")??>
 					<#assign actionElement = element>

@@ -8,9 +8,9 @@
 	<#list testCaseCommandElements as testCaseCommandElement>
 		<#assign testCaseCommand = testCaseCommandElement.attributeValue("name")>
 
-		<li id="${testCaseName}TestCase__${testCaseCommand}">
+		<li id="${testCaseName?uncap_first}TestCase${testCaseCommand}">
 			<div>
-				<div id="Toggle__${lineFolds}" class="expandToggle">+</div>
+				<div id="toggle${lineFolds}" class="expandToggle">+</div>
 			</div>
 
 			<div>
@@ -19,7 +19,7 @@
 				</div>
 			</div>
 
-			<ul id="Collapse--Toggle__${lineFolds}" class="collapse">
+			<ul id="collapseToggle${lineFolds}" class="collapse">
 				<#assign lineFolds = lineFolds + 1>
 
 				<#assign testCaseVarElements = testCaseRootElement.elements("var")>
@@ -27,7 +27,7 @@
 				<#list testCaseVarElements as testCaseVarElement>
 					<#assign lineNumber = testCaseVarElement.attributeValue("line-number")>
 
-					<li id="${testCaseName}TestCase__${lineNumber}">
+					<li id="${testCaseName?uncap_first}TestCase${lineNumber}">
 						<#assign varName = testCaseVarElement.attributeValue("name")>
 						<#assign varValue = testCaseVarElement.attributeValue("value")>
 
@@ -45,9 +45,9 @@
 
 					<#assign lineNumber = testCaseSetupElement.attributeValue("line-number")>
 
-					<li id="${testCaseName}TestCase__${lineNumber}">
+					<li id="${testCaseName?uncap_first}TestCase${lineNumber}">
 						<div>
-							<div id="Toggle__${lineFolds}" class="expandToggle">+</div>
+							<div id="toggle${lineFolds}" class="expandToggle">+</div>
 						</div>
 
 						<div>
@@ -68,9 +68,9 @@
 
 				<#assign lineNumber = testCaseCommandElement.attributeValue("line-number")>
 
-				<li id="${testCaseName}TestCase__${lineNumber}">
+				<li id="${testCaseName?uncap_first}TestCase${lineNumber}">
 					<div>
-						<div id="Toggle__${lineFolds}" class="expandToggle">+</div>
+						<div id="toggle${lineFolds}" class="expandToggle">+</div>
 					</div>
 
 					<div>
@@ -95,9 +95,9 @@
 
 					<#assign lineNumber = testCaseTearDownElement.attributeValue("line-number")>
 
-					<li id="${testCaseName}TestCase__${lineNumber}">
+					<li id="${testCaseName?uncap_first}TestCase${lineNumber}">
 						<div>
-							<div id="Toggle__${lineFolds}" class="expandToggle">+</div>
+							<div id="toggle${lineFolds}" class="expandToggle">+</div>
 						</div>
 
 						<div>

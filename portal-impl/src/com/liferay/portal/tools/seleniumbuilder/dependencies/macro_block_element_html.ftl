@@ -3,7 +3,7 @@
 <#list elements as element>
 	<#assign lineNumber = element.attributeValue("line-number")>
 
-	<li id="${macroNameStack.peek()}Macro__${lineNumber}">
+	<li id="${macroNameStack.peek()?uncap_first}Macro${lineNumber}">
 		<#if element.getName() == "echo">
 			<#assign message = element.attributeValue("message")>
 
@@ -32,7 +32,7 @@
 			</div>
 		<#elseif element.getName() == "if">
 			<div>
-				<div id="Toggle__${lineFolds}" class="expandToggle">+</div>
+				<div id="toggle${lineFolds}" class="expandToggle">+</div>
 			</div>
 
 			<div>
@@ -41,7 +41,7 @@
 				</div>
 			</div>
 
-			<ul id="Collapse--Toggle__${lineFolds}" class="collapse">
+			<ul id="collapseToggle${lineFolds}" class="collapse">
 				<#assign lineFolds = lineFolds + 1>
 
 				<#assign ifElement = element>
@@ -53,9 +53,9 @@
 				<#list elseifElements as elseifElement>
 					<#assign lineNumber = elseifElement.attributeValue("line-number")>
 
-					<li id="${macroNameStack.peek()}Macro__${lineNumber}">
+					<li id="${macroNameStack.peek()?uncap_first}Macro${lineNumber}">
 						<div>
-							<div id="Toggle__${lineFolds}" class="expandToggle">-</div>
+							<div id="toggle${lineFolds}" class="expandToggle">-</div>
 						</div>
 
 						<div>
@@ -64,7 +64,7 @@
 							</div>
 						</div>
 
-						<ul id="Collapse--Toggle__${lineFolds}">
+						<ul id="collapseToggle${lineFolds}">
 							<#assign lineFolds = lineFolds + 1>
 
 							<#assign ifElement = elseifElement>
@@ -83,9 +83,9 @@
 
 					<#assign lineNumber = elseElement.attributeValue("line-number")>
 
-					<li id="${macroNameStack.peek()}Macro__${lineNumber}">
+					<li id="${macroNameStack.peek()?uncap_first}Macro${lineNumber}">
 						<div>
-							<div id="Toggle__${lineFolds}" class="expandToggle">+</div>
+							<div id="toggle${lineFolds}" class="expandToggle">+</div>
 						</div>
 
 						<div>
@@ -94,7 +94,7 @@
 							</div>
 						</div>
 
-						<ul id="Collapse--Toggle__${lineFolds}" class="collapse">
+						<ul id="collapseToggle${lineFolds}" class="collapse">
 							<#assign lineFolds = lineFolds + 1>
 
 							<#assign macroBlockElement = element.element("else")>
@@ -126,7 +126,7 @@
 			</div>
 		<#elseif element.getName() == "while">
 			<div>
-				<div id="Toggle__${lineFolds}" class="expandToggle">+</div>
+				<div id="toggle${lineFolds}" class="expandToggle">+</div>
 			</div>
 
 			<div>
@@ -135,7 +135,7 @@
 				</div>
 			</div>
 
-			<ul id="Collapse--Toggle__${lineFolds}" class="collapse">
+			<ul id="collapseToggle${lineFolds}" class="collapse">
 				<#assign lineFolds = lineFolds + 1>
 
 				<#assign ifElement = element>

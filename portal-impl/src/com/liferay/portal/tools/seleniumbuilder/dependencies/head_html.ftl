@@ -12,16 +12,20 @@
 
 			var id = node.getAttribute("id");
 
+			var firstChar = id.charAt(0);
+
+			id = firstChar.toUpperCase() + id.slice(1);
+
 			if (id != null) {
 				if (node.innerHTML == "-") {
 					node.innerHTML = "+";
 
-					document.getElementById("Collapse--" + id).style.display = "none";
+					document.getElementById("collapse" + id).style.display = "none";
 				}
 				else if (node.innerHTML == "+") {
 					node.innerHTML = "-";
 
-					document.getElementById("Collapse--" + id).style.display = "block";
+					document.getElementById("collapse" + id).style.display = "block";
 				}
 			}
 		}

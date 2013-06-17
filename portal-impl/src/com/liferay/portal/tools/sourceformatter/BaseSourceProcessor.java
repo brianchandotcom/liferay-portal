@@ -1337,44 +1337,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
-	protected static void formatTLD() throws IOException {
-		String basedir = "./";
-
-		DirectoryScanner directoryScanner = new DirectoryScanner();
-
-		directoryScanner.setBasedir(basedir);
-
-		String[] excludes = {
-			"**\\classes\\**", "**\\bin\\**", "**\\WEB-INF\\tld\\**"
-		};
-
-		excludes = ArrayUtil.append(excludes, _excludes);
-
-		directoryScanner.setExcludes(excludes);
-
-		directoryScanner.setIncludes(new String[] {"**\\*.tld"});
-
-		List<String> fileNames = _sourceFormatterHelper.scanForFiles(
-			directoryScanner);
-
-		for (String fileName : fileNames) {
-			File file = new File(basedir + fileName);
-
-			String content = _fileUtil.read(file);
-
-			String newContent = trimContent(content, false);
-
-			if ((newContent != null) && !content.equals(newContent)) {
-				_fileUtil.write(file, newContent);
-
-				fileName = StringUtil.replace(
-					fileName, StringPool.BACK_SLASH, StringPool.SLASH);
-
-				_sourceFormatterHelper.printError(fileName, file);
-			}
-		}
-	}
-
 	protected static void formatWebXML() throws IOException {
 		String basedir = "./";
 

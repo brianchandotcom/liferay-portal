@@ -590,22 +590,6 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	/**
-	 * Returns the structure matching the UUID and group.
-	 *
-	 * @param  uuid the structure's UUID
-	 * @param  groupId the primary key of the structure's group
-	 * @return the matching structure, or <code>null</code> if a matching
-	 *         structure could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public DDMStructure fetchStructure(String uuid, long groupId)
-		throws SystemException {
-
-		return ddmStructurePersistence.fetchByUUID_G(uuid, groupId);
-	}
-
-	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #getClassStructures(long,
 	 *             long)}
 	 */

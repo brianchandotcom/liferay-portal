@@ -134,13 +134,13 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 		}
 
 		DDMStructure importedDDMStructure =
-			DDMStructureLocalServiceUtil.fetchStructure(
+			DDMStructureLocalServiceUtil.fetchDDMStructureByUuidAndGroupId(
 				ddmStructure.getUuid(), importedGroup.getGroupId());
 
 		Assert.assertNotNull(importedDDMStructure);
 
 		DDMTemplate importedDDMTemplate =
-			DDMTemplateLocalServiceUtil.fetchTemplate(
+			DDMTemplateLocalServiceUtil.fetchDDMTemplateByUuidAndGroupId(
 				ddmTemplate.getUuid(), importedGroup.getGroupId());
 
 		Assert.assertNotNull(importedDDMTemplate);

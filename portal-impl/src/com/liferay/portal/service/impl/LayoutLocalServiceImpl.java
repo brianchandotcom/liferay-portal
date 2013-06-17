@@ -994,24 +994,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the layout matching the UUID, group, and privacy.
-	 *
-	 * @param  uuid the layout's UUID
-	 * @param  groupId the primary key of the group
-	 * @param  privateLayout whether the layout is private to the group
-	 * @return the layout, or <code>null</code> if a matching layout could not
-	 *         be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public Layout fetchLayoutByUuidAndGroupId(
-			String uuid, long groupId, boolean privateLayout)
-		throws SystemException {
-
-		return layoutPersistence.fetchByUUID_G_P(uuid, groupId, privateLayout);
-	}
-
-	/**
 	 * Returns the primary key of the default layout for the group
 	 *
 	 * @param  groupId the primary key of the group

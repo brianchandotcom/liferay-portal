@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.NotificationThreadLocal;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileUtil;
@@ -42,15 +41,18 @@ import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextUtil;
 import com.liferay.portal.util.Portal;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.SubscriptionSender;
+import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.asset.NoSuchEntryException;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
@@ -94,8 +96,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
-import javax.portlet.WindowState;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Provides the local service for accessing, adding, deleting, moving,
@@ -2085,26 +2089,56 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 						HttpUtil.encodeURL(page.getTitle());
 
 			if (previousVersionPage != null) {
-				StringBundler sb = new StringBundler(16);
+				long controlPanelPlid = PortalUtil.getControlPanelPlid(
+					serviceContext.getCompanyId());
 
-				sb.append(layoutFullURL);
-				sb.append("?p_p_id=");
-				sb.append(PortletKeys.WIKI);
-				sb.append("&p_p_state=");
-				sb.append(WindowState.MAXIMIZED);
-				sb.append("&struts_action=");
-				sb.append(HttpUtil.encodeURL("/wiki/compare_versions"));
-				sb.append("&nodeId=");
-				sb.append(node.getNodeId());
-				sb.append("&title=");
-				sb.append(HttpUtil.encodeURL(page.getTitle()));
-				sb.append("&sourceVersion=");
-				sb.append(previousVersionPage.getVersion());
-				sb.append("&targetVersion=");
-				sb.append(page.getVersion());
-				sb.append("&type=html");
+				long wikiPlid = LayoutConstants.DEFAULT_PLID;
 
-				diffsURL = sb.toString();
+				if (wikiPlid == controlPanelPlid) {
+					wikiPlid = PortalUtil.getPlidFromPortletId(
+						node.getGroupId(), PortletKeys.WIKI);
+				}
+
+				HttpServletRequest request = serviceContext.getRequest();
+
+				if (request != null) {
+					String portletId = null;
+
+					long plid = LayoutConstants.DEFAULT_PLID;
+
+					String strutsAction = null;
+
+					if (wikiPlid != LayoutConstants.DEFAULT_PLID) {
+						portletId = PortletKeys.WIKI;
+
+						plid = wikiPlid;
+
+						strutsAction = "/wiki/compare_versions";
+					}
+					else {
+						portletId = PortletKeys.WIKI_ADMIN;
+
+						plid = controlPanelPlid;
+
+						strutsAction = "/wiki_admin/compare_versions";
+					}
+
+					PortletURL portletURL = PortletURLFactoryUtil.create(
+						request, portletId, plid, PortletRequest.RENDER_PHASE);
+
+					portletURL.setParameter("struts_action", strutsAction);
+					portletURL.setParameter(
+						"nodeId", String.valueOf(node.getNodeId()));
+					portletURL.setParameter("title", page.getTitle());
+					portletURL.setParameter(
+						"sourceVersion",
+						String.valueOf(previousVersionPage.getVersion()));
+					portletURL.setParameter(
+						"targetVersion", String.valueOf(page.getVersion()));
+					portletURL.setParameter("type", "html");
+
+					diffsURL = portletURL.toString();
+				}
 			}
 		}
 

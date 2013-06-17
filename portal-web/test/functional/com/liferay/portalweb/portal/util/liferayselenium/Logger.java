@@ -84,6 +84,32 @@ public class Logger {
 	public void logError(Method method, Object[] arguments) {
 		StringBundler sb = new StringBundler();
 
+		sb.append("/");
+
+		for (String xpathId : _xpathIdStack) {
+			sb.append("/ul/li[@id='");
+			sb.append(xpathId);
+			sb.append("']");
+		}
+
+		sb.append("/div");
+
+		List<WebElement> webElements = _webDriver.findElements(
+			By.xpath(sb.toString()));
+
+		sb = new StringBundler();
+
+		sb.append("var element = arguments[0];");
+		sb.append("element.className = \"fail\";");
+
+		JavascriptExecutor javascriptExecutor = (JavascriptExecutor)_webDriver;
+
+		for (WebElement webElement : webElements) {
+			javascriptExecutor.executeScript(sb.toString(), webElement);
+		}
+
+		sb = new StringBundler();
+
 		sb.append("<font color=\"red\">");
 		sb.append("Command failure <b>");
 		sb.append(method.getName());

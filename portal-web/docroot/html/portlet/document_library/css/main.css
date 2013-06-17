@@ -441,6 +441,8 @@
 
 		.document-title {
 			margin: 0 0 10px;
+			overflow: hidden;
+			text-overflow: ellipsis;
 			text-shadow: 1px 1px #FFF;
 		}
 

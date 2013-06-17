@@ -173,20 +173,24 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 				</c:choose>
 			</c:if>
 
+			<liferay-util:buffer var="documentTitle">
+				<c:choose>
+					<c:when test="<%= versionSpecific %>">
+						<%= fileVersion.getTitle() %>
+
+						(<liferay-ui:message key="version" /> <%= HtmlUtil.escape(fileVersion.getVersion()) %>)
+					</c:when>
+					<c:otherwise>
+						<%= title %>
+					</c:otherwise>
+				</c:choose>
+			</liferay-util:buffer>
+
 			<div class="body-row">
 				<div class="document-info">
 					<c:if test="<%= showAssetMetadata %>">
-						<h2 class="document-title">
-							<c:choose>
-								<c:when test="<%= versionSpecific %>">
-									<%= fileVersion.getTitle() %>
-
-									(<liferay-ui:message key="version" /> <%= HtmlUtil.escape(fileVersion.getVersion()) %>)
-								</c:when>
-								<c:otherwise>
-									<%= title %>
-								</c:otherwise>
-							</c:choose>
+						<h2 class="document-title" title="<%= documentTitle %>">
+							<%= documentTitle %>
 						</h2>
 
 						<span class="document-thumbnail">

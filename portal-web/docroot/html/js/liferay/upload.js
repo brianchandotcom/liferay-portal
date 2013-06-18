@@ -18,7 +18,7 @@ AUI.add(
 		var TPL_FILE_LIST = [
 			'<tpl for=".">',
 				'<tpl if="!values.error">',
-					'<li class="upload-file {[ values.temp ? "upload-complete pending-file selectable" : "" ]} {[values.selected ? "selected" : ""]}" data-fileId="{id}" data-fileName="{name}" id="{id}">',
+					'<li class="upload-file {[ values.temp ? "upload-complete pending-file selectable" : "" ]} {[ values.selected ? "selected" : "" ]}" data-fileId="{id}" data-fileName="{name}" id="{id}">',
 						'<input class="{[ !values.temp ? "hide" : "" ]} select-file" data-fileName="{name}" id="{id}checkbox" name="{$ns}selectUploadedFileCheckbox" type="{[ this.multipleFiles ? "checkbox" : "hidden" ]}" value="{name}" />',
 						'<span class="file-title" title="{name}">{name}</span>',
 						'<span class="progress-bar">',

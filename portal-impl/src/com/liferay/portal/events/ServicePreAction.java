@@ -80,7 +80,7 @@ import com.liferay.portal.service.ThemeLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.service.permission.LayoutPermissionUtil;
-import com.liferay.portal.service.permission.PortletPermissionUtil;
+import com.liferay.portal.service.permission.PortalPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.theme.ThemeDisplayFactory;
 import com.liferay.portal.util.LayoutClone;
@@ -429,8 +429,8 @@ public class ServicePreAction extends Action {
 					 (!viewableGroup ||
 					  (!redirectToDefaultLayout &&
 					   !LayoutPermissionUtil.contains(
-						   permissionChecker, layout, false,
-						   ActionKeys.VIEW)))) {
+						   permissionChecker, layout, controlPanelCategory,
+						   false, ActionKeys.VIEW)))) {
 
 				if (user.isDefaultUser() &&
 					PropsValues.AUTH_LOGIN_PROMPT_ENABLED) {
@@ -793,7 +793,6 @@ public class ServicePreAction extends Action {
 		// Icons
 
 		themeDisplay.setShowAddContentIcon(false);
-		themeDisplay.setShowControlPanelIcon(signedIn);
 		themeDisplay.setShowHomeIcon(true);
 		themeDisplay.setShowMyAccountIcon(signedIn);
 		themeDisplay.setShowPageSettingsIcon(false);
@@ -801,21 +800,29 @@ public class ServicePreAction extends Action {
 		themeDisplay.setShowSignInIcon(!signedIn);
 		themeDisplay.setShowSignOutIcon(signedIn);
 
+		boolean showControlPanelIcon = false;
+
+		if (signedIn &&
+			PortalPermissionUtil.contains(
+				permissionChecker, ActionKeys.VIEW_CONTROL_PANEL)) {
+
+			showControlPanelIcon = true;
+		}
+
+		themeDisplay.setShowControlPanelIcon(showControlPanelIcon);
+
 		boolean showSiteAdministrationIcon = false;
 
 		long controlPanelPlid = 0;
 
-		if (signedIn && PropsValues.DOCKBAR_SHOW_SITE_CONTENT_ICON) {
+		if (signedIn &&
+			GroupPermissionUtil.contains(
+				permissionChecker, group,
+				ActionKeys.VIEW_SITE_ADMINISTRATION)) {
+
 			controlPanelPlid = PortalUtil.getControlPanelPlid(companyId);
 
-			List<Portlet> siteAdministrationPortlets =
-				PortalUtil.getControlPanelPortlets(
-					PortletCategoryKeys.SITE_ADMINISTRATION, themeDisplay);
-
-			showSiteAdministrationIcon =
-				PortletPermissionUtil.hasControlPanelAccessPermission(
-					permissionChecker, scopeGroupId,
-					siteAdministrationPortlets);
+			showControlPanelIcon = true;
 		}
 
 		themeDisplay.setShowSiteAdministrationIcon(showSiteAdministrationIcon);
@@ -1210,7 +1217,6 @@ public class ServicePreAction extends Action {
 		}
 
 		if (group.isLayoutPrototype()) {
-			themeDisplay.setShowControlPanelIcon(false);
 			themeDisplay.setShowHomeIcon(false);
 			themeDisplay.setShowManageSiteMembershipsIcon(false);
 			themeDisplay.setShowMyAccountIcon(false);
@@ -1677,6 +1683,14 @@ public class ServicePreAction extends Action {
 
 		Group group = layout.getGroup();
 
+		String controlPanelCategory = null;
+
+		if (group.isControlPanel()) {
+			controlPanelCategory = ParamUtil.getString(
+				request, "controlPanelCategory");
+
+		}
+
 		boolean hasViewLayoutPermission = false;
 		boolean hasViewStagingPermission =
 			(group.isStagingGroup() || group.isStagedRemotely()) &&
@@ -1698,7 +1712,8 @@ public class ServicePreAction extends Action {
 
 			if (!curLayout.isHidden() &&
 				(LayoutPermissionUtil.contains(
-					permissionChecker, curLayout, false, ActionKeys.VIEW) ||
+					permissionChecker, curLayout, controlPanelCategory, false,
+					ActionKeys.VIEW) ||
 				 hasViewStagingPermission)) {
 
 				if (accessibleLayouts.isEmpty() && !hasViewLayoutPermission) {

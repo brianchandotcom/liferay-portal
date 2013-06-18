@@ -249,6 +249,9 @@ public class ActionKeys {
 
 	public static final String VIEW_MEMBERS = "VIEW_MEMBERS";
 
+	public static final String VIEW_SITE_ADMINISTRATION =
+		"VIEW_SITE_ADMINISTRATION";
+
 	public static final String VIEW_STAGING = "VIEW_STAGING";
 
 	public static final String VIEW_TREE = "VIEW_TREE";

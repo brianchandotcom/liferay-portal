@@ -724,9 +724,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected static FileImpl fileUtil = FileImpl.getInstance();
-
 	protected static SAXReaderImpl saxReaderUtil = SAXReaderImpl.getInstance();
-
 	protected static SourceFormatterHelper sourceFormatterHelper;
 
 	private void _init(boolean useProperties, boolean throwException)

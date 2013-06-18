@@ -1,11 +1,5 @@
 <#assign macro = macroElement.attributeValue("macro")>
 
-<div>
-	<span class="arrow">&lt;</span><span class="tag">execute</span>
-	<span class="attribute">macro</span><span class="arrow">=</span><span class="quote">&quot;${macro}&quot;</span>
-	<span class="arrow">&gt;</span>
-</div>
-
 <#assign x = macro?last_index_of("#")>
 
 <#assign macroName = macro?substring(0, x)>
@@ -18,7 +12,21 @@
 
 <#assign macroCommandElements = macroRootElement.elements("command")>
 
-<ul>
+<div>
+	<div id="toggle${lineFolds}" class="expandToggle">+</div>
+</div>
+
+<div>
+	<div class="expandLine">
+		<span class="arrow">&lt;</span><span class="tag">execute</span>
+		<span class="attribute">macro</span><span class="arrow">=</span><span class="quote">&quot;${macro}&quot;</span>
+		<span class="arrow">&gt;</span>
+	</div>
+</div>
+
+<ul id="collapseToggle${lineFolds}" class="collapse">
+	<#assign lineFolds = lineFolds + 1>
+
 	<#list macroCommandElements as macroCommandElement>
 		<#assign macroCommandName = macroCommandElement.attributeValue("name")>
 
@@ -28,7 +36,7 @@
 			<#list macroRootVarElements as macroRootVarElement>
 				<#assign lineNumber = macroRootVarElement.attributeValue("line-number")>
 
-				<li id="${macroNameStack.peek()}Macro__${lineNumber}">
+				<li id="${macroNameStack.peek()?uncap_first}Macro${lineNumber}">
 					<#assign varName = macroRootVarElement.attributeValue("name")>
 					<#assign varValue = macroRootVarElement.attributeValue("value")>
 
@@ -46,7 +54,7 @@
 			<#list macroVarElements as macroVarElement>
 				<#assign lineNumber = macroVarElement.attributeValue("line-number")>
 
-				<li id="${macroNameStack.peek()}Macro__${lineNumber}">
+				<li id="${macroNameStack.peek()?uncap_first}Macro${lineNumber}">
 					<#assign varName = macroVarElement.attributeValue("name")>
 					<#assign varValue = macroVarElement.attributeValue("value")>
 

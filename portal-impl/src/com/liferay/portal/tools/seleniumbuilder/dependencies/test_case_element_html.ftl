@@ -2,22 +2,32 @@
 
 <#assign testCaseCommandElements = testCaseRootElement.elements("command")>
 
-<ul>
+<#assign lineFolds = 0>
+
+<ul onclick="toggle(event);">
 	<#list testCaseCommandElements as testCaseCommandElement>
 		<#assign testCaseCommand = testCaseCommandElement.attributeValue("name")>
 
-		<li id="${testCaseName}TestCase__${testCaseCommand}">
+		<li id="${testCaseName?uncap_first}TestCase${testCaseCommand}">
 			<div>
-				<h3 class="testCaseCommand">${testCaseName}#${testCaseCommand}</h3>
+				<div id="toggle${lineFolds}" class="expandToggle">+</div>
 			</div>
 
-			<ul>
+			<div>
+				<div class="expandLine">
+					<h3 class="testCaseCommand">${testCaseName}#${testCaseCommand}</h3>
+				</div>
+			</div>
+
+			<ul id="collapseToggle${lineFolds}" class="collapse">
+				<#assign lineFolds = lineFolds + 1>
+
 				<#assign testCaseVarElements = testCaseRootElement.elements("var")>
 
 				<#list testCaseVarElements as testCaseVarElement>
 					<#assign lineNumber = testCaseVarElement.attributeValue("line-number")>
 
-					<li id="${testCaseName}TestCase__${lineNumber}">
+					<li id="${testCaseName?uncap_first}TestCase${lineNumber}">
 						<#assign varName = testCaseVarElement.attributeValue("name")>
 						<#assign varValue = testCaseVarElement.attributeValue("value")>
 
@@ -35,9 +45,15 @@
 
 					<#assign lineNumber = testCaseSetupElement.attributeValue("line-number")>
 
-					<li id="${testCaseName}TestCase__${lineNumber}">
+					<li id="${testCaseName?uncap_first}TestCase${lineNumber}">
 						<div>
-							<span class="arrow">&lt;</span><span class="tag">set-up</span><span class="arrow">&gt;</span>
+							<div id="toggle${lineFolds}" class="expandToggle">+</div>
+						</div>
+
+						<div>
+							<div class="expandLine">
+								<span class="arrow">&lt;</span><span class="tag">set-up</span><span class="arrow">&gt;</span>
+							</div>
 						</div>
 
 						<#assign testCaseBlockElement = testCaseSetupElement>
@@ -52,11 +68,17 @@
 
 				<#assign lineNumber = testCaseCommandElement.attributeValue("line-number")>
 
-				<li id="${testCaseName}TestCase__${lineNumber}">
+				<li id="${testCaseName?uncap_first}TestCase${lineNumber}">
 					<div>
-						<span class="arrow">&lt;</span><span class="tag">command</span>
-						<span class="attribute">name</span><span class="arrow">=</span><span class="quote">&quot;${testCaseCommandElement.attributeValue("name")}&quot;</span>
-						<span class="arrow">&gt;</span>
+						<div id="toggle${lineFolds}" class="expandToggle">+</div>
+					</div>
+
+					<div>
+						<div class="expandLine">
+							<span class="arrow">&lt;</span><span class="tag">command</span>
+							<span class="attribute">name</span><span class="arrow">=</span><span class="quote">&quot;${testCaseCommandElement.attributeValue("name")}&quot;</span>
+							<span class="arrow">&gt;</span>
+						</div>
 					</div>
 
 					<#assign testCaseBlockElement = testCaseCommandElement>
@@ -73,9 +95,15 @@
 
 					<#assign lineNumber = testCaseTearDownElement.attributeValue("line-number")>
 
-					<li id="${testCaseName}TestCase__${lineNumber}">
+					<li id="${testCaseName?uncap_first}TestCase${lineNumber}">
 						<div>
-							<span class="arrow">&lt;</span><span class="tag">tear-down</span><span class="arrow">&gt;</span>
+							<div id="toggle${lineFolds}" class="expandToggle">+</div>
+						</div>
+
+						<div>
+							<div class="expandLine">
+								<span class="arrow">&lt;</span><span class="tag">tear-down</span><span class="arrow">&gt;</span>
+							</div>
 						</div>
 
 						<#assign testCaseBlockElement = testCaseTearDownElement>

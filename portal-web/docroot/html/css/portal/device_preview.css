@@ -113,6 +113,49 @@
 	.modal-header {
 		display: none;
 	}
+
+	.lfr-device-size-status {
+		position: absolute;
+		width: 100%;
+
+		.lfr-device-size-status-content {
+			display: inline-block;
+			font-size: 11px;
+			height: 22px;
+			margin-left: 10px;
+			margin-right: 10px;
+			padding: 4px;
+
+			@include border-radius(3px);
+			@include box-shadow(0 0 1px #FFFFFF);
+			@include opacity(0.90);
+		}
+
+		&.b, &.bl, &.br {
+			bottom: 10px;
+		}
+
+		&.t, &.tl, &.tr {
+			top: 10px;
+		}
+
+		&.b, &.t {
+			text-align: center;
+		}
+
+		&.r, &.br, &.tr {
+			text-align: right;
+		}
+
+		&.l, &.bl, &.tl {
+			text-align: left;
+		}
+
+		&.r, &.l {
+			margin-top: -15px;
+			top: 50%;
+		}
+	}
 }
 
 .lfr-device-preview {
@@ -159,6 +202,15 @@
 				background-color: #3EA9DB;
 				color: #FFFFFF;				
 			}
+		}
+	}
+}
+
+.lfr-device {
+	.lfr-device-size-status {
+		.lfr-device-size-status-content {
+			background-color: #000000;
+			color: #FFFFFF;
 		}
 	}
 }

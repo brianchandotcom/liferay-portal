@@ -80,6 +80,7 @@
 				'autosize': {},
 				'custom': {
 					height: '#<portlet:namespace />height',
+					resizable: true,
 					width: '#<portlet:namespace />width'
 				},
 				'desktop': {

@@ -1,0 +1,70 @@
+CREOLE image reference:
+
+{{/c/document_library/get_file?uuid=[$UUID$]&groupId=[$GROUP_ID$][$TIMESTAMP$]}}
+{{/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$ONLYTIMESTAMP$]}}
+{{/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]}}
+{{/image/image_gallery?uuid=[$UUID$]&groupId=[$GROUP_ID$][$TIMESTAMP$]}}
+{{/image/image_gallery?image_id=[$IMAGE_ID$][$TIMESTAMP$]}}
+{{/image/image_gallery?img_id=[$IMAGE_ID$][$TIMESTAMP$]}}
+{{/image/image_gallery?i_id=[$IMAGE_ID$][$TIMESTAMP$]}}
+
+CREOLE link with text:
+
+[[/c/document_library/get_file?uuid=[$UUID$]&groupId=[$GROUP_ID$][$TIMESTAMP$]|Link]]
+[[/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$ONLYTIMESTAMP$]|Link]]
+[[/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]|Link]]
+[[/image/image_gallery?uuid=[$UUID$]&groupId=[$GROUP_ID$][$TIMESTAMP$]|Link]]
+[[/image/image_gallery?image_id=[$IMAGE_ID$][$TIMESTAMP$]|Link]]
+[[/image/image_gallery?img_id=[$IMAGE_ID$][$TIMESTAMP$]|Link]]
+[[/image/image_gallery?i_id=[$IMAGE_ID$][$TIMESTAMP$]|Link]]
+
+CREOLE link without text:
+
+[[/c/document_library/get_file?uuid=[$UUID$]&groupId=[$GROUP_ID$][$TIMESTAMP$]]]
+[[/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$ONLYTIMESTAMP$]]]
+[[/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]]]
+[[/image/image_gallery?uuid=[$UUID$]&groupId=[$GROUP_ID$][$TIMESTAMP$]]]
+[[/image/image_gallery?image_id=[$IMAGE_ID$][$TIMESTAMP$]]]
+[[/image/image_gallery?img_id=[$IMAGE_ID$][$TIMESTAMP$]]]
+[[/image/image_gallery?i_id=[$IMAGE_ID$][$TIMESTAMP$]]]
+
+HTML reference with no quotes:
+
+<a href=/c/document_library/get_file?uuid=[$UUID$]&groupId=[$GROUP_ID$][$TIMESTAMP$]>Link</a>
+<a href=/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$ONLYTIMESTAMP$]>Link</a>
+<a href=/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]>Link</a>
+<a href=/image/image_gallery?uuid=[$UUID$]&groupId=[$GROUP_ID$][$TIMESTAMP$]>Link</a>
+<a href=/image/image_gallery?image_id=[$IMAGE_ID$][$TIMESTAMP$]>Link</a>
+<a href=/image/image_gallery?img_id=[$IMAGE_ID$][$TIMESTAMP$]>Link</a>
+<a href=/image/image_gallery?i_id=[$IMAGE_ID$][$TIMESTAMP$]>Link</a>
+
+HTML reference with no quotes but space:
+
+<a href=/c/document_library/get_file?uuid=[$UUID$]&groupId=[$GROUP_ID$][$TIMESTAMP$] style=mustkeep>Link</a>
+<a href=/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$ONLYTIMESTAMP$] style=mustkeep>Link</a>
+<a href=/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$] style=mustkeep>Link</a>
+<a href=/image/image_gallery?uuid=[$UUID$]&groupId=[$GROUP_ID$][$TIMESTAMP$] style=mustkeep>Link</a>
+<a href=/image/image_gallery?image_id=[$IMAGE_ID$][$TIMESTAMP$] style=mustkeep>Link</a>
+<a href=/image/image_gallery?img_id=[$IMAGE_ID$][$TIMESTAMP$] style=mustkeep>Link</a>
+<a href=/image/image_gallery?i_id=[$IMAGE_ID$][$TIMESTAMP$] style=mustkeep>Link</a>
+
+
+HTML reference with double quotes:
+
+<a href="/c/document_library/get_file?uuid=[$UUID$]&groupId=[$GROUP_ID$][$TIMESTAMP$]">Link</a>
+<a href="/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$ONLYTIMESTAMP$]">Link</a>
+<a href="/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]">Link</a>
+<a href="/image/image_gallery?uuid=[$UUID$]&groupId=[$GROUP_ID$][$TIMESTAMP$]">Link</a>
+<a href="/image/image_gallery?image_id=[$IMAGE_ID$][$TIMESTAMP$]">Link</a>
+<a href="/image/image_gallery?img_id=[$IMAGE_ID$][$TIMESTAMP$]">Link</a>
+<a href="/image/image_gallery?i_id=[$IMAGE_ID$][$TIMESTAMP$]">Link</a>
+
+HTML reference with single quotes:
+
+<a href='/c/document_library/get_file?uuid=[$UUID$]&groupId=[$GROUP_ID$][$TIMESTAMP$]'>Link</a>
+<a href='/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$ONLYTIMESTAMP$]'>Link</a>
+<a href='/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]'>Link</a>
+<a href='/image/image_gallery?uuid=[$UUID$]&groupId=[$GROUP_ID$][$TIMESTAMP$]'>Link</a>
+<a href='/image/image_gallery?image_id=[$IMAGE_ID$][$TIMESTAMP$]'>Link</a>
+<a href='/image/image_gallery?img_id=[$IMAGE_ID$][$TIMESTAMP$]'>Link</a>
+<a href='/image/image_gallery?i_id=[$IMAGE_ID$][$TIMESTAMP$]'>Link</a>

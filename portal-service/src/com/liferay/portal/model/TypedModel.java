@@ -15,12 +15,14 @@
 package com.liferay.portal.model;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Zsolt Berentey
  */
-public interface AttachedModel extends TypedModel {
+public interface TypedModel {
 
-	public long getClassPK();
+	public String getClassName();
 
-	public void setClassPK(long classPK);
+	public long getClassNameId();
+
+	public void setClassNameId(long classNameId);
 
 }

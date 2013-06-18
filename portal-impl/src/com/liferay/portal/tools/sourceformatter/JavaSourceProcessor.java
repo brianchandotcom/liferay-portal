@@ -243,6 +243,46 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
+	protected void checkAnnotationForMethod(
+		JavaTerm javaTerm, String annotation, String requiredMethodNameRegex,
+		int requiredMethodType, String fileName) {
+
+		String methodContent = javaTerm.getContent();
+		String methodName = javaTerm.getName();
+
+		Pattern pattern = Pattern.compile(requiredMethodNameRegex);
+
+		Matcher matcher = pattern.matcher(methodName);
+
+		if (methodContent.contains(
+				StringPool.TAB + StringPool.AT + annotation + "\n") ||
+			methodContent.contains(
+				StringPool.TAB + StringPool.AT + annotation +
+					StringPool.OPEN_PARENTHESIS)) {
+
+			if (!matcher.find()) {
+				processErrorMessage(
+					fileName,
+					"LPS-36303: Incorrect method name: " + methodName + " " +
+						fileName);
+			}
+			else if (javaTerm.getType() != requiredMethodType) {
+				processErrorMessage(
+					fileName,
+					"LPS-36303: Incorrect method type for " + methodName + " " +
+						fileName);
+			}
+		}
+		else if (matcher.find() &&
+				 !methodContent.contains(StringPool.TAB + "@Override")) {
+
+			processErrorMessage(
+				fileName,
+				"Annotation @" + annotation + " required for " + methodName +
+					" " + fileName);
+		}
+	}
+
 	protected String checkIfClause(
 			String ifClause, String fileName, int lineCount)
 		throws IOException {
@@ -357,6 +397,29 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return ifClause;
+	}
+
+	protected void checkTestAnnotations(JavaTerm javaTerm, String fileName) {
+		int methodType = javaTerm.getType();
+
+		if ((methodType != TYPE_METHOD_PUBLIC) &&
+			(methodType != TYPE_METHOD_PUBLIC_STATIC)) {
+
+			return;
+		}
+
+		checkAnnotationForMethod(
+			javaTerm, "After", "^.*tearDown\\z", TYPE_METHOD_PUBLIC, fileName);
+		checkAnnotationForMethod(
+			javaTerm, "AfterClass", "^.*tearDownClass\\z",
+			TYPE_METHOD_PUBLIC_STATIC, fileName);
+		checkAnnotationForMethod(
+			javaTerm, "Before", "^.*setUp\\z", TYPE_METHOD_PUBLIC, fileName);
+		checkAnnotationForMethod(
+			javaTerm, "BeforeClass", "^.*setUpClass\\z",
+			TYPE_METHOD_PUBLIC_STATIC, fileName);
+		checkAnnotationForMethod(
+			javaTerm, "Test", "^.*test", TYPE_METHOD_PUBLIC, fileName);
 	}
 
 	protected void checkUnprocessedExceptions(
@@ -901,6 +964,39 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		else if (content.contains("\n\n" + javaTermContent)) {
 			return StringUtil.replace(
 				content, "\n\n" + javaTermContent, "\n" + javaTermContent);
+		}
+
+		return content;
+	}
+
+	protected String formatAnnotations(
+			String fileName, String content, Set<JavaTerm> javaTerms)
+		throws IOException {
+
+		Iterator<JavaTerm> itr = javaTerms.iterator();
+
+		while (itr.hasNext()) {
+			JavaTerm javaTerm = itr.next();
+
+			if (fileName.contains("/test/") &&
+				!fileName.endsWith("TestBean.java")) {
+
+				checkTestAnnotations(javaTerm, fileName);
+			}
+
+			for (;;) {
+				String javaTermContent = javaTerm.getContent();
+
+				javaTerm.sortAnnotations();
+
+				String newJavaTermContent = javaTerm.getContent();
+
+				if (javaTermContent.equals(newJavaTermContent)) {
+					break;
+				}
+
+				content = content.replace(javaTermContent, newJavaTermContent);
+			}
 		}
 
 		return content;
@@ -1546,7 +1642,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			newContent = sortJavaTerms(fileName, content, javaTerms);
 
-			newContent = sortAnnotations(newContent, javaTerms);
+			newContent = formatAnnotations(fileName, newContent, javaTerms);
 		}
 
 		return newContent;
@@ -2369,32 +2465,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return false;
-	}
-
-	protected String sortAnnotations(
-		String content, Set<JavaTerm> javaTerms) throws IOException {
-
-		Iterator<JavaTerm> itr = javaTerms.iterator();
-
-		while (itr.hasNext()) {
-			JavaTerm javaTerm = itr.next();
-
-			for (;;) {
-				String javaTermContent = javaTerm.getContent();
-
-				javaTerm.sortAnnotations();
-
-				String newJavaTermContent = javaTerm.getContent();
-
-				if (javaTermContent.equals(newJavaTermContent)) {
-					break;
-				}
-
-				content = content.replace(javaTermContent, newJavaTermContent);
-			}
-		}
-
-		return content;
 	}
 
 	protected String sortExceptions(String line) {

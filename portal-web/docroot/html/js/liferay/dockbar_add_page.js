@@ -44,11 +44,11 @@ AUI.add(
 				NAME: 'addpage',
 
 				ATTRS: {
+					createPageMessage: {
+						validator: Lang.isString
+					},
 					parentLayoutId: {
 						validator: Lang.isNumber
-					},
-					creatingPageMessage: {
-						validator: Lang.isString
 					},
 					transition: {
 						validator: Lang.isObject,
@@ -87,7 +87,7 @@ AUI.add(
 						instance._loadingMask = new A.LoadingMask(
 							{
 								strings: {
-									loading: instance.get('creatingPageMessage')
+									loading: instance.get('createPageMessage')
 								},
 								target: instance._addForm
 							}

@@ -174,7 +174,7 @@ Layout addedLayout = (Layout)SessionMessages.get(renderRequest, portletDisplay.g
 <aui:script use="liferay-dockbar-add-page">
 	new Liferay.Dockbar.AddPage(
 		{
-			creatingPageMessage: '<%= LanguageUtil.get(pageContext, "loading") %>',
+			createPageMessage: '<%= LanguageUtil.get(pageContext, "loading") %>',
 			inputNode: A.one('#<portlet:namespace />searchTemplates'),
 			namespace: '<portlet:namespace />',
 			nodeList: A.one('#<portlet:namespace />templateList'),

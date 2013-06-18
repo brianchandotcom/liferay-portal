@@ -4,148 +4,84 @@
 	<#assign lineNumber = element.attributeValue("line-number")>
 
 	<li id="${macroNameStack.peek()?uncap_first}Macro${lineNumber}">
-		<#if element.getName() == "echo">
-			<#assign message = element.attributeValue("message")>
+		<#if element.getName() == "echo" || element.getName() == "fail" || element.getName() == "var">
+			<#assign displayElement = element>
 
-			<div>
-				<span class="arrow">&lt;</span><span class="tag">echo</span>
-				<span class="attribute">message</span><span class="arrow">=</span><span class="quote">&quot;${message}&quot;</span>
-				<span class="arrow">/&gt;</span>
-			</div>
+			<#include "element_whole_html.ftl">
 		<#elseif element.getName() == "execute">
 			<#if element.attributeValue("action")??>
-				<#assign actionElement = element>
+				<#assign displayElement = element>
 
-				<#include "action_element_html.ftl">
+				<#include "element_whole_html.ftl">
 			<#elseif element.attributeValue("macro")??>
 				<#assign macroElement = element>
 
 				<#include "macro_element_html.ftl">
 			</#if>
-		<#elseif element.getName() == "fail">
-			<#assign message = element.attributeValue("message")>
-
-			<div>
-				<span class="arrow">&lt;</span><span class="tag">fail</span>
-				<span class="attribute">message</span><span class="arrow">=</span><span class="quote">&quot;${message}&quot;</span>
-				<span class="arrow">/&gt;</span>
-			</div>
 		<#elseif element.getName() == "if">
-			<div>
-				<div id="toggle${lineFolds}" class="expandToggle">+</div>
-			</div>
+			<#assign displayElement = element>
 
-			<div>
-				<div class="expandLine">
-					<span class="arrow">&lt;</span><span class="tag">if</span><span class="arrow">&gt;</span>
-				</div>
-			</div>
+			<#include "element_open_html.ftl">
 
-			<ul id="collapseToggle${lineFolds}" class="collapse">
-				<#assign lineFolds = lineFolds + 1>
+			<#assign ifElement = element>
 
-				<#assign ifElement = element>
+			<#include "macro_if_element_html.ftl">
 
-				<#include "macro_if_element_html.ftl">
+			<#assign elseifElements = element.elements("elseif")>
 
-				<#assign elseifElements = element.elements("elseif")>
+			<#list elseifElements as elseifElement>
+				<#assign lineNumber = elseifElement.attributeValue("line-number")>
 
-				<#list elseifElements as elseifElement>
-					<#assign lineNumber = elseifElement.attributeValue("line-number")>
+				<li id="${macroNameStack.peek()?uncap_first}Macro${lineNumber}">
+					<#assign displayElement = elseifElement>
 
-					<li id="${macroNameStack.peek()?uncap_first}Macro${lineNumber}">
-						<div>
-							<div id="toggle${lineFolds}" class="expandToggle">-</div>
-						</div>
+					<#include "element_open_html.ftl">
 
-						<div>
-							<div class="expandLine">
-								<span class="arrow">&lt;</span><span class="tag">elseif</span><span class="arrow">&gt;</span>
-							</div>
-						</div>
+					<#assign ifElement = elseifElement>
 
-						<ul id="collapseToggle${lineFolds}">
-							<#assign lineFolds = lineFolds + 1>
+					<#include "macro_if_element_html.ftl">
 
-							<#assign ifElement = elseifElement>
+					<#assign displayElement = elseifElement>
 
-							<#include "macro_if_element_html.ftl">
-						</ul>
+					<#include "element_close_html.ftl">
+				</li>
+			</#list>
 
-						<div>
-							<span class="arrow">&lt;/</span><span class="tag">elseif</span><span class="arrow">&gt;</span>
-						</div>
-					</li>
-				</#list>
+			<#if element.element("else")??>
+				<#assign elseElement = element.element("else")>
 
-				<#if element.element("else")??>
-					<#assign elseElement = element.element("else")>
+				<#assign lineNumber = elseElement.attributeValue("line-number")>
 
-					<#assign lineNumber = elseElement.attributeValue("line-number")>
+				<li id="${macroNameStack.peek()?uncap_first}Macro${lineNumber}">
+					<#assign displayElement = elseElement>
 
-					<li id="${macroNameStack.peek()?uncap_first}Macro${lineNumber}">
-						<div>
-							<div id="toggle${lineFolds}" class="expandToggle">+</div>
-						</div>
+					<#include "element_open_html.ftl">
 
-						<div>
-							<div class="expandLine">
-								<span class="arrow">&lt;</span><span class="tag">else</span><span class="arrow">&gt;</span>
-							</div>
-						</div>
+					<#assign macroBlockElement = element.element("else")>
 
-						<ul id="collapseToggle${lineFolds}" class="collapse">
-							<#assign lineFolds = lineFolds + 1>
+					<#include "macro_block_element_html.ftl">
 
-							<#assign macroBlockElement = element.element("else")>
+					<#assign displayElement = elseElement>
 
-							<#include "macro_block_element_html.ftl">
-						</ul>
+					<#include "element_close_html.ftl">
+				</li>
+			</#if>
 
-						<div>
-							<span class="arrow">&lt;/</span><span class="tag">else</span><span class="arrow">&gt;</span>
-						</div>
-					</li>
-				</#if>
-			</ul>
+			<#assign displayElement = element>
 
-			<div>
-				<span class="arrow">&lt;/</span><span class="tag">if</span><span class="arrow">&gt;</span>
-			</div>
-		<#elseif element.getName() == "var">
-			<#assign varElement = element>
-
-			<#assign varName = varElement.attributeValue("name")>
-			<#assign varValue = varElement.attributeValue("value")>
-
-			<div>
-				<span class="arrow">&lt;</span><span class="tag">var</span>
-				<span class="attribute">name</span><span class="arrow">=</span><span class="quote">&quot;${varName}&quot;</span>
-				<span class="attribute">value</span><span class="arrow">=</span><span class="quote">&quot;${varValue}&quot;</span>
-				<span class="arrow">/&gt;</span>
-			</div>
+			<#include "element_close_html.ftl">
 		<#elseif element.getName() == "while">
-			<div>
-				<div id="toggle${lineFolds}" class="expandToggle">+</div>
-			</div>
+			<#assign displayElement = element>
 
-			<div>
-				<div class="expandLine">
-					<span class="arrow">&lt;</span><span class="tag">while</span><span class="arrow">&gt;</span>
-				</div>
-			</div>
+			<#include "element_open_html.ftl">
 
-			<ul id="collapseToggle${lineFolds}" class="collapse">
-				<#assign lineFolds = lineFolds + 1>
+			<#assign ifElement = element>
 
-				<#assign ifElement = element>
+			<#include "macro_if_element_html.ftl">
 
-				<#include "macro_if_element_html.ftl">
-			</ul>
+			<#assign displayElement = element>
 
-			<div>
-				<span class="arrow">&lt;/</span><span class="tag">while</span><span class="arrow">&gt;</span>
-			</div>
+			<#include "element_close_html.ftl">
 		</#if>
 	</li>
 </#list>

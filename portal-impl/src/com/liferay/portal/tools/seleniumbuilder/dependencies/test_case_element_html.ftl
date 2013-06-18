@@ -1,20 +1,20 @@
-<#assign testCaseRootElement = seleniumBuilderContext.getTestCaseRootElement(testCaseName)>
-
-<#assign testCaseCommandElements = testCaseRootElement.elements("command")>
-
-<#assign lineFolds = 0>
-
 <ul onclick="toggle(event);">
+	<#assign testCaseRootElement = seleniumBuilderContext.getTestCaseRootElement(testCaseName)>
+
+	<#assign testCaseCommandElements = testCaseRootElement.elements("command")>
+
+	<#assign lineFolds = 0>
+
 	<#list testCaseCommandElements as testCaseCommandElement>
 		<#assign testCaseCommand = testCaseCommandElement.attributeValue("name")>
 
 		<li id="${testCaseName?uncap_first}TestCase${testCaseCommand}">
 			<div>
-				<div id="toggle${lineFolds}" class="expandToggle">+</div>
+				<div id="toggle${lineFolds}" class="expand-toggle">+</div>
 			</div>
 
 			<div>
-				<div class="expandLine">
+				<div class="expand-line">
 					<h3 class="testCaseCommand">${testCaseName}#${testCaseCommand}</h3>
 				</div>
 			</div>
@@ -28,15 +28,9 @@
 					<#assign lineNumber = testCaseVarElement.attributeValue("line-number")>
 
 					<li id="${testCaseName?uncap_first}TestCase${lineNumber}">
-						<#assign varName = testCaseVarElement.attributeValue("name")>
-						<#assign varValue = testCaseVarElement.attributeValue("value")>
+						<#assign displayElement = testCaseVarElement>
 
-						<div>
-							<span class="arrow">&lt;</span><span class="tag">var</span>
-							<span class="attribute">name</span><span class="arrow">=</span><span class="quote">&quot;${varName}&quot;</span>
-							<span class="attribute">value</span><span class="arrow">=</span><span class="quote">&quot;${varValue}&quot;</span>
-							<span class="arrow">/&gt;</span>
-						</div>
+						<#include "element_whole_html.ftl">
 					</li>
 				</#list>
 
@@ -46,48 +40,34 @@
 					<#assign lineNumber = testCaseSetupElement.attributeValue("line-number")>
 
 					<li id="${testCaseName?uncap_first}TestCase${lineNumber}">
-						<div>
-							<div id="toggle${lineFolds}" class="expandToggle">+</div>
-						</div>
+						<#assign displayElement = testCaseSetupElement>
 
-						<div>
-							<div class="expandLine">
-								<span class="arrow">&lt;</span><span class="tag">set-up</span><span class="arrow">&gt;</span>
-							</div>
-						</div>
+						<#include "element_open_html.ftl">
 
 						<#assign testCaseBlockElement = testCaseSetupElement>
 
 						<#include "test_case_block_element_html.ftl">
 
-						<div>
-							<span class="arrow">&lt;/</span><span class="tag">set-up</span><span class="arrow">&gt;</span>
-						</div>
+						<#assign displayElement = testCaseSetupElement>
+
+						<#include "element_close_html.ftl">
 					</li>
 				</#if>
 
 				<#assign lineNumber = testCaseCommandElement.attributeValue("line-number")>
 
 				<li id="${testCaseName?uncap_first}TestCase${lineNumber}">
-					<div>
-						<div id="toggle${lineFolds}" class="expandToggle">+</div>
-					</div>
+					<#assign displayElement = testCaseCommandElement>
 
-					<div>
-						<div class="expandLine">
-							<span class="arrow">&lt;</span><span class="tag">command</span>
-							<span class="attribute">name</span><span class="arrow">=</span><span class="quote">&quot;${testCaseCommandElement.attributeValue("name")}&quot;</span>
-							<span class="arrow">&gt;</span>
-						</div>
-					</div>
+					<#include "element_open_html.ftl">
 
 					<#assign testCaseBlockElement = testCaseCommandElement>
 
 					<#include "test_case_block_element_html.ftl">
 
-					<div>
-						<span class="arrow">&lt;/</span><span class="tag">command</span><span class="arrow">&gt;</span>
-					</div>
+					<#assign displayElement = testCaseCommandElement>
+
+					<#include "element_close_html.ftl">
 				</li>
 
 				<#if testCaseRootElement.element("tear-down")??>
@@ -96,23 +76,17 @@
 					<#assign lineNumber = testCaseTearDownElement.attributeValue("line-number")>
 
 					<li id="${testCaseName?uncap_first}TestCase${lineNumber}">
-						<div>
-							<div id="toggle${lineFolds}" class="expandToggle">+</div>
-						</div>
+						<#assign displayElement = testCaseTearDownElement>
 
-						<div>
-							<div class="expandLine">
-								<span class="arrow">&lt;</span><span class="tag">tear-down</span><span class="arrow">&gt;</span>
-							</div>
-						</div>
+						<#include "element_open_html.ftl">
 
 						<#assign testCaseBlockElement = testCaseTearDownElement>
 
 						<#include "test_case_block_element_html.ftl">
 
-						<div>
-							<span class="arrow">&lt;/</span><span class="tag">tear-down</span><span class="arrow">&gt;</span>
-						</div>
+						<#assign displayElement = testCaseTearDownElement>
+
+						<#include "element_close_html.ftl">
 					</li>
 				</#if>
 			</ul>

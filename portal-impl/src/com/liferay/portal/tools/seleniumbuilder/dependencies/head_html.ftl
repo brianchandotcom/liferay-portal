@@ -61,20 +61,16 @@
 			color: purple;
 		}
 
-		.closingTag {
-			display: none;
-		}
-
 		.collapse {
 			display: none;
 		}
 
-		.expandLine {
+		.expand-line {
 			cursor: pointer;
 			font-weight: bold;
 		}
 
-		.expandToggle {
+		.expand-toggle {
 			cursor: pointer;
 			float: left;
 			margin-right: 5px;

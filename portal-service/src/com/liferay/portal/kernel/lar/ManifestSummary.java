@@ -61,16 +61,9 @@ public class ManifestSummary implements Serializable {
 	}
 
 	public void addModelAdditionCount(
-		Class<? extends ClassedModel> clazz,
-		Class<? extends ClassedModel> referrerClass, long count) {
+		StagedModelType stagedModelType, long count) {
 
-		addModelAdditionCount(clazz.getName(), referrerClass.getName(), count);
-	}
-
-	public void addModelAdditionCount(
-		Class<? extends ClassedModel> clazz, long modelCount) {
-
-		addModelAdditionCount(clazz, clazz, modelCount);
+		addModelAdditionCount(stagedModelType.toString(), count);
 	}
 
 	public void addModelAdditionCount(String manifestSummaryKey, long count) {
@@ -87,21 +80,6 @@ public class ManifestSummary implements Serializable {
 		modelAdditionCounter.setValue(count);
 
 		_manifestSummaryKeys.add(manifestSummaryKey);
-	}
-
-	public void addModelAdditionCount(
-		String className, String referrerClassName, long count) {
-
-		String manifestSummaryKey = getManifestSummaryKey(
-			className, referrerClassName);
-
-		addModelAdditionCount(manifestSummaryKey, count);
-	}
-
-	public void addModelDeletionCount(
-		Class<? extends ClassedModel> clazz, long count) {
-
-		addModelDeletionCount(clazz.getName(), count);
 	}
 
 	public void addModelDeletionCount(String manifestSummaryKey, long count) {
@@ -199,23 +177,9 @@ public class ManifestSummary implements Serializable {
 		return _setupPortlets;
 	}
 
-	public void incrementModelAdditionCount(
-		Class<? extends ClassedModel> clazz) {
+	public void incrementModelAdditionCount(StagedModelType stagedModelType) {
+		String manifestSummaryKey = stagedModelType.toString();
 
-		incrementModelAdditionCount(clazz, clazz);
-	}
-
-	public void incrementModelAdditionCount(
-		Class<? extends ClassedModel> clazz,
-		Class<? extends ClassedModel> referrerClass) {
-
-		String manifestSummaryKey = getManifestSummaryKey(
-			clazz.getName(), referrerClass.getName());
-
-		incrementModelAdditionCount(manifestSummaryKey);
-	}
-
-	public void incrementModelAdditionCount(String manifestSummaryKey) {
 		if (!_modelAdditionCounters.containsKey(manifestSummaryKey)) {
 			_modelAdditionCounters.put(manifestSummaryKey, new LongWrapper(1));
 
@@ -230,13 +194,9 @@ public class ManifestSummary implements Serializable {
 		modelAdditionCounter.increment();
 	}
 
-	public void incrementModelDeletionCount(
-		Class<? extends ClassedModel> clazz) {
+	public void incrementModelDeletionCount(StagedModelType stagedModelType) {
+		String manifestSummaryKey = stagedModelType.toString();
 
-		incrementModelDeletionCount(clazz.getName());
-	}
-
-	public void incrementModelDeletionCount(String manifestSummaryKey) {
 		if (!_modelDeletionCounters.containsKey(manifestSummaryKey)) {
 			_modelDeletionCounters.put(manifestSummaryKey, new LongWrapper(1));
 

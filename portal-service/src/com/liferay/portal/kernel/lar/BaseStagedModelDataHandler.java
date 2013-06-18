@@ -44,7 +44,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 					portletDataContext.getManifestSummary();
 
 				manifestSummary.incrementModelAdditionCount(
-					getManifestSummaryKey(stagedModel));
+					stagedModel.getStagedModelType());
 			}
 		}
 		catch (Exception e) {
@@ -58,15 +58,6 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 	@Override
 	public String getDisplayName(T stagedModel) {
 		return stagedModel.getUuid();
-	}
-
-	@Override
-	public String getManifestSummaryKey(StagedModel stagedModel) {
-		if (stagedModel == null) {
-			return getClassNames()[0];
-		}
-
-		return stagedModel.getModelClassName();
 	}
 
 	@Override
@@ -87,7 +78,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 				portletDataContext.getManifestSummary();
 
 			manifestSummary.incrementModelAdditionCount(
-				getManifestSummaryKey(stagedModel));
+				stagedModel.getStagedModelType());
 		}
 		catch (Exception e) {
 			throw new PortletDataException(e);

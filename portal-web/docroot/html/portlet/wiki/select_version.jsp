@@ -67,7 +67,7 @@ double sourceVersion = ParamUtil.getDouble(request, "sourceVersion");
 			var sourceVersion = parseFloat(link.getAttribute('data-sourceversion'));
 			var targetVersion = parseFloat(link.getAttribute('data-targetversion'));
 
-			if(targetVersion < sourceVersion) {
+			if (targetVersion < sourceVersion) {
 				var tempVersion = targetVersion;
 
 				targetVersion = sourceVersion;

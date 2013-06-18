@@ -392,7 +392,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 					struts_action: '/dynamic_data_mapping/select_structure',
 					title: '<%= UnicodeLanguageUtil.get(pageContext, "structures") %>'
 				},
-				function(event){
+				function(event) {
 					if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "selecting-a-new-structure-will-change-the-available-input-fields-and-available-templates") %>') && (document.<portlet:namespace />fm.<portlet:namespace />classPK.value != event.ddmstructureid)) {
 						document.<portlet:namespace />fm.<portlet:namespace />classPK.value = event.ddmstructureid;
 

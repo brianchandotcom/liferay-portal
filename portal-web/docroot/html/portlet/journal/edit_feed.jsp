@@ -369,7 +369,7 @@ if (feed != null) {
 				struts_action: '/dynamic_data_mapping/select_structure',
 				title: '<%= UnicodeLanguageUtil.get(pageContext, "structures") %>'
 			},
-			function(event){
+			function(event) {
 				if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "selecting-a-new-structure-will-change-the-available-templates-and-available-feed-item-content") %>') && (document.<portlet:namespace />fm.<portlet:namespace />structureId.value != event.structurekey)) {
 					document.<portlet:namespace />fm.<portlet:namespace />structureId.value = event.ddmstructurekey;
 					document.<portlet:namespace />fm.<portlet:namespace />templateId.value = "";

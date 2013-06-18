@@ -128,7 +128,7 @@ if (organizationId > 0) {
 					title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", "organization") %>',
 					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/portlet_configuration/select_organization" /><portlet:param name="tabs1" value="organizations" /></portlet:renderURL>'
 				},
-				function(event){
+				function(event) {
 					document.<portlet:namespace />fm.<portlet:namespace />organizationId.value = event.organizationid;
 
 					var nameEl = document.getElementById('<portlet:namespace />organizationName');

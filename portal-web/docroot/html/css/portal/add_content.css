@@ -96,10 +96,22 @@
 			cursor: pointer;
 			margin-bottom: 20px;
 
-			.lfr-page-template-title label {
-				font-weight: bold;
-				margin-bottom: 5px;
-				padding: 2px;
+			.lfr-page-template-title{
+				label {
+					font-weight: bold;
+					margin-bottom: 5px;
+					padding: 2px;
+				}
+
+				&.toggler-header-collapsed {
+					.lfr-page-template-description {
+					    height: 1.6em;
+					    overflow: hidden;
+					    text-overflow: ellipsis;
+					    white-space: nowrap;
+					    width: 300px;
+					}
+				}
 			}
 
 			.lfr-page-template-options {

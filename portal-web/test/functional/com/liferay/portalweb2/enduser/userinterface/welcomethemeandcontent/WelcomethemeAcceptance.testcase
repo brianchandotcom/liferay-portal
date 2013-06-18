@@ -1,0 +1,53 @@
+<definition>
+	<set-up>
+		<execute action="PGWelcomePage1#open" locator-key1="WELCOME_THEME_URL" />
+		<execute action="PGWelcomePage1#click" locator-key1="SIGN_IN" />
+
+		<execute action="PGLogin#type" locator-key1="EMAIL_ADDRESS_FIELD" value1="test@liferay.com" />
+		<execute action="PGLogin#type" locator-key1="PASSWORD_FIELD" value1="test" />
+		<execute action="PGLogin#click" locator-key1="REMEMBER_ME_CHECKBOX" />
+		<execute action="PGLogin#click" locator-key1="SIGN_IN_BUTTON" />
+
+		<execute action="PGLoginTermsofservice#click" locator-key1="I_AGREE_BUTTON" />
+
+		<execute action="PGLoginPasswordreminder#type" locator-key1="ANSWER_FIELD" value1="test" />
+		<execute action="PGLoginPasswordreminder#click" locator-key1="SAVE_BUTTON" />
+	</set-up>
+
+	<command name="WelcomeThemeView">
+		<execute action="PGWelcomePage1#assertTextEquals" locator-key1="PAGE_1" value1="What We Do" />
+		<execute action="PGWelcomePage1#assertElementPresent" locator-key1="PAGE_2" />
+		<execute action="PGWelcomePage1#assertElementPresent" locator-key1="PAGE_3" />
+		<execute action="PGWelcomePage1#assertElementPresent" locator-key1="MENU_TAGLINE" />
+		<execute action="PGWelcomePage1#assertTextEquals" locator-key1="MENU_PAGE_1" value1="A Foundation for Apps" />
+		<execute action="PGWelcomePage1#assertTextEquals" locator-key1="MENU_PAGE_2" value1="Dynamic Websites" />
+		<execute action="PGWelcomePage1#assertTextEquals" locator-key1="MENU_PAGE_3" value1="Centralized Document Management" />
+		<execute action="PGWelcomePage1#assertTextEquals" locator-key1="MENU_PAGE_4" value1="Intuitive Team Collaboration" />
+		<execute action="PGWelcomePage1#assertTextEquals" locator-key1="MENU_PAGE_5" value1="Tools for Business" />
+		<execute action="PGWelcomePage1#assertTextEquals" locator-key1="MENU_PAGE_6" value1="Desktop &amp; Mobile Access" />
+		<execute action="PGWelcomePage1#assertElementPresent" locator-key1="MENU_PAGE_7" />
+		<execute action="PGWelcomePage1#assertElementPresent" locator-key1="INFO_LINK" />
+		<execute action="PGWelcomePage1#assertTextEquals" locator-key1="SOCIAL_OFFICE" value1="Want Easy Social Collaboration?" />
+		<execute action="PGWelcomePage1#assertTextEquals" locator-key1="GETTING_STARTED" value1="Need Help Getting Started?" />
+		<execute action="PGWelcomePage1#assertTextEquals" locator-key1="DEVELOP_FASTER" value1="Develop Faster." />
+
+		<execute action="PGWelcomePage1#click" locator-key1="PAGE_2" />
+
+		<execute action="PGWelcomePage2#assertElementPresent" locator-key1="CUSTOMERS_1" />
+		<execute action="PGWelcomePage2#assertElementPresent" locator-key1="CUSTOMERS_2" />
+		<execute action="PGWelcomePage2#assertElementPresent" locator-key1="HEADER" />
+
+		<execute action="PGWelcomePage1#click" locator-key1="PAGE_3" />
+
+		<execute action="PGWelcomePage3#assertElementPresent" locator-key1="HEADER" />
+		<execute action="PGWelcomePage3#assertTextEquals" locator-key1="MENU_PAGE_1" value1="Open Source: A Better Way" />
+		<execute action="PGWelcomePage3#assertTextEquals" locator-key1="MENU_PAGE_2" value1="Ready to Go" />
+		<execute action="PGWelcomePage3#assertTextEquals" locator-key1="MENU_PAGE_3" value1="Ready to Grow" />
+		<execute action="PGWelcomePage3#assertTextEquals" locator-key1="MENU_PAGE_4" value1="Approved by IT" />
+		<execute action="PGWelcomePage3#assertTextEquals" locator-key1="MENU_PAGE_5" value1="Open for Business" />
+	</command>
+
+	<tear-down>
+		<execute macro="User#pgLogout" />
+	</tear-down>
+</definition>

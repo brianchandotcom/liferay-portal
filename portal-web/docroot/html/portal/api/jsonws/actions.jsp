@@ -129,7 +129,7 @@ Set<String> contextPaths = JSONWebServiceActionsManagerUtil.getContextPaths();
 		if (contextPathSelector) {
 			contextPathSelector.on(
 				'change',
-				function(event){
+				function(event) {
 					var contextPath = contextPathSelector.val();
 
 					var location = '<%= jsonWSPath %>';

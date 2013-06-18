@@ -166,7 +166,7 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 				struts_action: '/dynamic_data_mapping/select_structure',
 				title: '<%= UnicodeLanguageUtil.get(pageContext, "metadata-sets") %>'
 			},
-			function(event){
+			function(event) {
 				var A = AUI();
 
 				var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />ddmStructuresSearchContainer');

@@ -111,7 +111,7 @@ else {
 									title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", "folder") %>',
 									uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/bookmarks/select_folder" /></liferay-portlet:renderURL>'
 								},
-								function(event){
+								function(event) {
 									var folderData = {
 										idString: 'parentFolderId',
 										idValue: event.folderid,

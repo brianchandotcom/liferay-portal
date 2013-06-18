@@ -214,7 +214,7 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales()) {
 						if (Lang.isArray(responseData)) {
 							formBuilder.set('fields', responseData);
 						}
-						else if(Lang.isObject(responseData)) {
+						else if (Lang.isObject(responseData)) {
 							displayMessage(MESSAGE_FAILURE, responseData.exception);
 						}
 

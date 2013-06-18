@@ -206,7 +206,7 @@ private String[] _getCategoryIdsTitles(String categoryIds, String categoryNames,
 				categoryNamesSb.append(_CATEGORY_SEPARATOR);
 			}
 
-			if(categoryIdsSb.index() > 0){
+			if (categoryIdsSb.index() > 0) {
 				categoryIdsSb.setIndex(categoryIdsSb.index() - 1);
 				categoryNamesSb.setIndex(categoryNamesSb.index() - 1);
 

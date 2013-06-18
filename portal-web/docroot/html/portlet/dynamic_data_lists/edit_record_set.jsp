@@ -158,7 +158,7 @@ if (ddmStructureId > 0) {
 				struts_action: '/dynamic_data_mapping/select_structure',
 				title: '<%= UnicodeLanguageUtil.get(pageContext, "data-definitions") %>'
 			},
-			function(event){
+			function(event) {
 				var A = AUI();
 
 				A.one('#<portlet:namespace />ddmStructureId').val(event.ddmstructureid);

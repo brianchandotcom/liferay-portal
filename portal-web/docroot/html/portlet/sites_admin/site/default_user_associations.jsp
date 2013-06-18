@@ -202,7 +202,7 @@ for (long defaultTeamId : defaultTeamIds) {
 					title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", "site-role") %>',
 					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/sites_admin/select_site_role" /><portlet:param name="step" value="2" /><portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" /></portlet:renderURL>'
 				},
-				function(event){
+				function(event) {
 					for (var i = 0; i < <portlet:namespace />siteRolesRoleIds.length; i++) {
 						if (<portlet:namespace />siteRolesRoleIds[i] == event.roleid) {
 							return;

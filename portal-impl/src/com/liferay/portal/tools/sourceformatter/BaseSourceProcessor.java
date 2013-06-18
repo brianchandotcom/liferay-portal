@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -315,6 +316,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected String fixSessionKey(
 		String fileName, String content, Pattern pattern) {
 
+		if (_version.equals(VERSION_6_1_0)) {
+			return content;
+		}
+
 		Matcher matcher = pattern.matcher(content);
 
 		if (!matcher.find()) {
@@ -528,6 +533,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return _taglibSessionKeyPattern;
 	}
 
+	protected String getVersion() {
+		return _version;
+	}
+
 	protected boolean hasMissingParentheses(String s) {
 		if (Validator.isNull(s)) {
 			return false;
@@ -723,12 +732,16 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return line;
 	}
 
+	protected static final String VERSION_6_1_0 = "6.1.0";
+
+	protected static final String VERSION_6_2_0 = "6.2.0";
+
 	protected static FileImpl fileUtil = FileImpl.getInstance();
 	protected static SAXReaderImpl saxReaderUtil = SAXReaderImpl.getInstance();
 	protected static SourceFormatterHelper sourceFormatterHelper;
 
 	private void _init(boolean useProperties, boolean throwException)
-		throws IOException {
+		throws Exception {
 
 		_errorMessages = new ArrayList<String>();
 
@@ -739,6 +752,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		if (_initialized) {
 			return;
 		}
+
+		_setVersion();
 
 		_excludes = StringUtil.split(
 			GetterUtil.getString(
@@ -758,6 +773,21 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		_initialized = true;
 	}
 
+	private void _setVersion() throws Exception {
+		String releaseInfoVersion = ReleaseInfo.getVersion();
+
+		if (releaseInfoVersion.startsWith("6.1")) {
+			_version = VERSION_6_1_0;
+		}
+		else if (releaseInfoVersion.startsWith("6.2")) {
+			_version = VERSION_6_2_0;
+		}
+		else {
+			throw new Exception(
+				"Invalid release information: " + ReleaseInfo.getVersion());
+		}
+	}
+
 	private static List<String> _errorMessages = new ArrayList<String>();
 	private static String[] _excludes;
 	private static boolean _initialized;
@@ -773,5 +803,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		"<liferay-ui:error [^>]+>|<liferay-ui:success [^>]+>",
 		Pattern.MULTILINE);
 	private static boolean _throwException;
+	private static String _version;
 
 }

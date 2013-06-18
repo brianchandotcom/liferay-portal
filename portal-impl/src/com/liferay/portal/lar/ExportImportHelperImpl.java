@@ -601,6 +601,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				String path = ExportImportPathUtil.getModelPath(fileEntry);
 
 				sb.replace(beginPos, endPos, "[$dl-reference=" + path + "$]");
+
+				_deleteTimestampFromUrlParams(sb, beginPos);
 			}
 			catch (Exception e) {
 				if (_log.isDebugEnabled()) {
@@ -1767,6 +1769,31 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		}
 
 		return null;
+	}
+
+	private void _deleteTimestampFromUrlParams(StringBuilder sb, int beginPos) {
+		int closeBracketPos = sb.indexOf(StringPool.CLOSE_BRACKET, beginPos);
+
+		if ((closeBracketPos == -1) || (closeBracketPos == (sb.length() - 1)) ||
+			(sb.charAt(closeBracketPos + 1) != CharPool.QUESTION)) {
+
+			return;
+		}
+
+		int questionPos = closeBracketPos + 1;
+
+		int endPosParams = StringUtil.indexOfAny(
+			sb.toString(), _DL_REFERENCE_LEGACY_STOP_CHARS, questionPos + 1);
+
+		if (endPosParams == -1) {
+			return;
+		}
+
+		String urlParams = sb.substring(questionPos, endPosParams);
+
+		urlParams = HttpUtil.removeParameter(urlParams, "t");
+
+		sb.replace(questionPos, endPosParams, urlParams);
 	}
 
 	private static final char[] _DL_REFERENCE_LEGACY_STOP_CHARS = {

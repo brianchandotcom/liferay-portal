@@ -37,23 +37,23 @@
 				<%
 				String selectedTab = GetterUtil.getString(SessionClicks.get(request, "liferay_addpanel_tab", "content"));
 
-				String tabs1Names = "";
+				String[] tabs1Names = new String[0];
 
 				boolean hasAddContentPermission = (GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_LAYOUT) && !group.isLayoutPrototype());
 
 				if (hasAddContentPermission) {
-					tabs1Names += "content";
+					tabs1Names = ArrayUtil.append(tabs1Names, "content");
 				}
 
 				boolean hasAddApplicationsAndPagePermission = (!themeDisplay.isStateMaximized() && layout.isTypePortlet() && !layout.isLayoutPrototypeLinkActive());
 
 				if (hasAddApplicationsAndPagePermission) {
-					tabs1Names += ",applications,page";
+					tabs1Names = ArrayUtil.append(tabs1Names, "applications,page");
 				}
 				%>
 
 				<liferay-ui:tabs
-					names="<%= tabs1Names %>"
+					names="<%= StringUtil.merge(tabs1Names) %>"
 					refresh="<%= false %>"
 					value="<%= selectedTab %>"
 				>

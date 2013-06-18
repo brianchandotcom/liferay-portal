@@ -9,7 +9,18 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
 	<bean class="com.liferay.portal.spring.aop.ServiceBeanAutoProxyCreator">
+		<property name="methodInterceptor" ref="counterTransactionAdvice" />
+		<property name="beanMatcher">
+			<bean class="com.liferay.portal.spring.aop.ServiceBeanMatcher">
+				<constructor-arg value="true" />
+			</bean>
+		</property>
+	</bean>
+	<bean class="com.liferay.portal.spring.aop.ServiceBeanAutoProxyCreator">
 		<property name="methodInterceptor" ref="serviceAdvice" />
+		<property name="beanMatcher">
+			<bean class="com.liferay.portal.spring.aop.ServiceBeanMatcher" />
+		</property>
 	</bean>
 	<bean class="com.liferay.portal.jsonwebservice.spring.JSONWebServiceDetectorBeanPostProcessor" />
 	<bean class="com.liferay.portal.security.lang.DoPrivilegedFactory" />
@@ -39,6 +50,10 @@
 	</bean>
 	<bean id="indexableAdvice" class="com.liferay.portal.search.IndexableAdvice">
 		<property name="nextMethodInterceptor" ref="transactionAdvice" />
+	</bean>
+	<bean id="counterTransactionAdvice" class="com.liferay.portal.spring.transaction.TransactionInterceptor">
+		<property name="platformTransactionManager" ref="counterTransactionManager" />
+		<property name="transactionAttributeSource" ref="transactionAttributeSource" />
 	</bean>
 	<bean id="transactionAdvice" class="com.liferay.portal.spring.transaction.TransactionInterceptor">
 		<property name="platformTransactionManager" ref="liferayTransactionManager" />

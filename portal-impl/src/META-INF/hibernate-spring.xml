@@ -26,6 +26,10 @@
 		</property>
 		<property name="sessionFactoryImplementor" ref="liferayHibernateSessionFactory" />
 	</bean>
+	<bean id="counterTransactionManager" class="com.liferay.portal.spring.transaction.TransactionManagerFactory" factory-method="createTransactionManager">
+		<constructor-arg ref="counterDataSource" />
+		<constructor-arg ref="counterHibernateSessionFactory" />
+	</bean>
 	<bean id="liferayTransactionManager" class="com.liferay.portal.spring.transaction.TransactionManagerFactory" factory-method="createTransactionManager">
 		<constructor-arg ref="liferayDataSource" />
 		<constructor-arg ref="liferayHibernateSessionFactory" />

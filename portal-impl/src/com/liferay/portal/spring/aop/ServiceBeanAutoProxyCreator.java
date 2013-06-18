@@ -42,11 +42,21 @@ public class ServiceBeanAutoProxyCreator
 	public void afterPropertiesSet() {
 		ServiceBeanAopCacheManagerUtil.registerServiceBeanAopCacheManager(
 			_serviceBeanAopCacheManager);
+
+		// For backward compatibility
+
+		if (_beanMatcher == null) {
+			_beanMatcher = new ServiceBeanMatcher();
+		}
 	}
 
 	public void destroy() {
 		ServiceBeanAopCacheManagerUtil.unregisterServiceBeanAopCacheManager(
 			_serviceBeanAopCacheManager);
+	}
+
+	public void setBeanMatcher(BeanMatcher beanMatcher) {
+		_beanMatcher = beanMatcher;
 	}
 
 	public void setMethodInterceptor(MethodInterceptor methodInterceptor) {
@@ -78,7 +88,7 @@ public class ServiceBeanAutoProxyCreator
 
 		Object[] advices = DO_NOT_PROXY;
 
-		if (beanName.endsWith(_SERVICE_SUFFIX)) {
+		if (_beanMatcher.match(beanClass, beanName)) {
 			advices = super.getAdvicesAndAdvisorsForBean(
 				beanClass, beanName, targetSource);
 
@@ -90,8 +100,7 @@ public class ServiceBeanAutoProxyCreator
 		return advices;
 	}
 
-	private static final String _SERVICE_SUFFIX = "Service";
-
+	private BeanMatcher _beanMatcher;
 	private MethodInterceptor _methodInterceptor;
 	private ServiceBeanAopCacheManager _serviceBeanAopCacheManager;
 

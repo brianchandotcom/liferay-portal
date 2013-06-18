@@ -16,6 +16,7 @@ package com.liferay.portal.repository.liferayrepository.model;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
@@ -195,6 +196,11 @@ public class LiferayFileVersion extends LiferayModel implements FileVersion {
 	@Override
 	public long getSize() {
 		return _dlFileVersion.getSize();
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(FileVersion.class);
 	}
 
 	@Override

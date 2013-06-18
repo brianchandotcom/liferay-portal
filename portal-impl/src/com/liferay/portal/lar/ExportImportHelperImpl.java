@@ -597,6 +597,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				String path = ExportImportPathUtil.getModelPath(fileEntry);
 
 				sb.replace(beginPos, endPos, "[$dl-reference=" + path + "$]");
+
+				deleteTimestampFromUrlParams(sb, beginPos);
 			}
 			catch (Exception e) {
 				if (_log.isDebugEnabled()) {
@@ -1505,6 +1507,31 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		}
 	}
 
+	protected void deleteTimestampFromUrlParams(
+		StringBuilder sb, int beginPos) {
+
+		beginPos = sb.indexOf(StringPool.CLOSE_BRACKET, beginPos);
+
+		if ((beginPos == -1) || (beginPos == (sb.length() - 1)) ||
+			(sb.charAt(beginPos + 1) != CharPool.QUESTION)) {
+
+			return;
+		}
+
+		int endPos = StringUtil.indexOfAny(
+			sb.toString(), _DL_REFERENCE_LEGACY_STOP_CHARS, beginPos + 2);
+
+		if (endPos == -1) {
+			return;
+		}
+
+		String urlParams = sb.substring(beginPos + 1, endPos);
+
+		urlParams = HttpUtil.removeParameter(urlParams, "t");
+
+		sb.replace(beginPos + 1, endPos, urlParams);
+	}
+
 	protected Map<String, String[]> getDLReferenceParameters(
 		PortletDataContext portletDataContext, String content, int beginPos,
 		int endPos) {
@@ -1577,9 +1604,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		return map;
 	}
 
-	protected FileEntry getFileEntry(Map<String, String[]> map)
-		throws Exception {
-
+	protected FileEntry getFileEntry(Map<String, String[]> map) {
 		if (map == null) {
 			return null;
 		}

@@ -733,6 +733,21 @@ public interface RoleLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns all the roles based on companyId and/or name.
+	*
+	* @param companyId the primary key of the company (optionally <code>0
+	</code>)
+	* @param name the name of the role (optionally <code>null</code>; this
+	will return all system roles)
+	* @return the roles with the companyId and/or name
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Role> getRolesBySQL(
+		long companyId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the roles of the subtype.
 	*
 	* @param subtype the role's subtype (optionally <code>null</code>)

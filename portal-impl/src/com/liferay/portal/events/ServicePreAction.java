@@ -816,17 +816,14 @@ public class ServicePreAction extends Action {
 
 		long controlPanelPlid = 0;
 
-		if (signedIn && PropsValues.DOCKBAR_SHOW_SITE_CONTENT_ICON) {
+		if (signedIn && PropsValues.DOCKBAR_SHOW_SITE_CONTENT_ICON &&
+			GroupPermissionUtil.contains(
+				permissionChecker, group,
+				ActionKeys.VIEW_SITE_ADMINISTRATION)) {
+
 			controlPanelPlid = PortalUtil.getControlPanelPlid(companyId);
 
-			List<Portlet> siteAdministrationPortlets =
-				PortalUtil.getControlPanelPortlets(
-					PortletCategoryKeys.SITE_ADMINISTRATION, themeDisplay);
-
-			showSiteAdministrationIcon =
-				PortletPermissionUtil.hasControlPanelAccessPermission(
-					permissionChecker, scopeGroupId,
-					siteAdministrationPortlets);
+			showControlPanelIcon = true;
 		}
 
 		themeDisplay.setShowSiteAdministrationIcon(showSiteAdministrationIcon);

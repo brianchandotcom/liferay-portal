@@ -38,9 +38,7 @@ public class ${seleniumBuilderContext.getTestSuiteSimpleClassName(testSuiteName)
 			<#if executeElement.attributeValue("test-case")??>
 				<#assign testCaseName = executeElement.attributeValue("test-case")>
 
-				<#assign testCaseName = testCaseName?uncap_first>
-
-				<#assign testCaseSimpleClassName = seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName?cap_first)>
+				<#assign testCaseSimpleClassName = seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)>
 
 				testSuite.addTestSuite(${testCaseSimpleClassName}.class);
 			<#elseif executeElement.attributeValue("test-class")??>

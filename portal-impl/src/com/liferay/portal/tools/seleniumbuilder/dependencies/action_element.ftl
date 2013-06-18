@@ -62,7 +62,7 @@ ${seleniumBuilderFileUtil.getVariableName(action?substring(0, x))}Action.${actio
 			,
 		</#if>
 	</#list>
-)
+, commandScopeVariables)
 
 <#if actionElement.getName() == "execute">
 	;

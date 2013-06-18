@@ -162,17 +162,22 @@ request.setAttribute("control_panel.jsp-ppid", ppid);
 							<aui:container cssClass="<%= panelCategory %>">
 								<aui:row>
 
-									<%
-									String backURL = HttpUtil.setParameter(themeDisplay.getURLControlPanel(), "p_p_id", PortletKeys.SITES_ADMIN);
-									%>
+									<c:if test="<%= showControlPanelMenu %>">
 
-									<a class="control-panel-back-link icon-circle-arrow-left" href="<%= backURL %>">&nbsp;</a>
+										<%
+										String backURL = HttpUtil.setParameter(themeDisplay.getURLControlPanel(), "p_p_id", PortletKeys.SITES_ADMIN);
+										%>
+
+										<a class="control-panel-back-link icon-circle-arrow-left" href="<%= backURL %>">&nbsp;</a>
+									</c:if>
 
 									<h1>
 										<%= curGroup.getDescriptiveName(themeDisplay.getLocale()) %>
 
-										<c:if test="<%= !Validator.equals(controlPanelCategory, PortletCategoryKeys.CURRENT_SITE) %>">
-											<%@ include file="/html/portal/layout/view/control_panel_site_selector.jspf" %>
+										<c:if test="<%= showControlPanelMenu %>">
+											<c:if test="<%= !Validator.equals(controlPanelCategory, PortletCategoryKeys.CURRENT_SITE) %>">
+												<%@ include file="/html/portal/layout/view/control_panel_site_selector.jspf" %>
+											</c:if>
 										</c:if>
 									</h1>
 								</aui:row>

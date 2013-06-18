@@ -539,7 +539,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 		}
 
 		function <%= randomNamespace %>deleteMessage(i) {
-			eval('var messageId = document["<%= namespace + HtmlUtil.escapeJS(formName) %>"].<%= namespace %>messageId' + i + '.value;');
+			var messageId = document['<%= namespace + HtmlUtil.escapeJS(formName) %>']['<%= namespace %>messageId' + i].value;
 
 			document["<%= namespace + HtmlUtil.escapeJS(formName) %>"].<%= namespace %><%= Constants.CMD %>.value = "<%= Constants.DELETE %>";
 			document["<%= namespace + HtmlUtil.escapeJS(formName) %>"].<%= namespace %>messageId.value = messageId;
@@ -547,8 +547,8 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 		}
 
 		function <%= randomNamespace %>postReply(i) {
-			eval('var parentMessageId = document["<%= namespace + HtmlUtil.escapeJS(formName) %>"].<%= namespace %>parentMessageId' + i + '.value;');
-			eval('var body = document["<%= namespace + HtmlUtil.escapeJS(formName) %>"].<%= namespace %>postReplyBody' + i + '.value;');
+			var parentMessageId = document['<%= namespace + HtmlUtil.escapeJS(formName) %>']['<%= namespace %>parentMessageId' + i].value;
+			var body = document['<%= namespace + HtmlUtil.escapeJS(formName) %>']['<%= namespace %>postReplyBody' + i ].value;
 
 			document["<%= namespace + HtmlUtil.escapeJS(formName) %>"].<%= namespace %><%= Constants.CMD %>.value = "<%= Constants.ADD %>";
 			document["<%= namespace + HtmlUtil.escapeJS(formName) %>"].<%= namespace %>parentMessageId.value = parentMessageId;
@@ -592,8 +592,8 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 		}
 
 		function <%= randomNamespace %>updateMessage(i, pending) {
-			eval('var messageId = document["<%= namespace + HtmlUtil.escapeJS(formName) %>"].<%= namespace %>messageId' + i + '.value;');
-			eval('var body = document["<%= namespace + HtmlUtil.escapeJS(formName) %>"].<%= namespace %>editReplyBody' + i + '.value;');
+			var messageId = document['<%= namespace + HtmlUtil.escapeJS(formName) %>']['<%= namespace %>messageId' + i].value;
+			var body = document['<%= namespace + HtmlUtil.escapeJS(formName) %>']['<%= namespace %>editReplyBody' + i].value;
 
 			if (pending) {
 				document["<%= namespace + HtmlUtil.escapeJS(formName) %>"].<%= namespace %>workflowAction.value = <%= WorkflowConstants.ACTION_SAVE_DRAFT %>;

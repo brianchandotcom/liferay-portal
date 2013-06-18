@@ -3654,7 +3654,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		setRolePermissions(
 			group, role, Group.class.getName(),
-			new String[] {ActionKeys.MANAGE_LAYOUTS});
+			new String[] {
+				ActionKeys.MANAGE_LAYOUTS,
+				ActionKeys.VIEW_SITE_ADMINISTRATION});
 
 		setRolePermissions(group, role, "com.liferay.portlet.asset");
 		setRolePermissions(group, role, "com.liferay.portlet.blogs");

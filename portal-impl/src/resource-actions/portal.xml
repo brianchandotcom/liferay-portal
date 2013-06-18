@@ -393,6 +393,7 @@
 				<action-key>UPDATE</action-key>
 				<action-key>VIEW</action-key>
 				<action-key>VIEW_MEMBERS</action-key>
+				<action-key>VIEW_SITE_ADMINISTRATION</action-key>
 				<action-key>VIEW_STAGING</action-key>
 			</supports>
 			<site-member-defaults />

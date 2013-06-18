@@ -15,8 +15,14 @@
 package com.liferay.portal.verify;
 
 import com.liferay.portal.NoSuchRoleException;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.GroupConstants;
+import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
+import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.util.PortalInstances;
 
@@ -24,6 +30,32 @@ import com.liferay.portal.util.PortalInstances;
  * @author Brian Wing Shun Chan
  */
 public class VerifyRole extends VerifyProcess {
+
+	protected void addViewSiteAdministrationPermission(Role role)
+		throws Exception {
+
+		String name = Group.class.getName();
+
+		Group userPersonalSite = GroupLocalServiceUtil.getGroup(
+			role.getCompanyId(), GroupConstants.USER_PERSONAL_SITE);
+
+		String primKey = String.valueOf(userPersonalSite.getGroupId());
+
+		if (ResourcePermissionLocalServiceUtil.hasResourcePermission(
+				role.getCompanyId(), name, ResourceConstants.SCOPE_GROUP,
+				primKey, role.getRoleId(),
+				ActionKeys.VIEW_SITE_ADMINISTRATION) ||
+			!ResourcePermissionLocalServiceUtil.hasResourcePermission(
+				role.getCompanyId(), name, ResourceConstants.SCOPE_GROUP,
+				primKey, role.getRoleId(), ActionKeys.MANAGE_LAYOUTS)) {
+
+			return;
+		}
+
+		ResourcePermissionLocalServiceUtil.addResourcePermission(
+			role.getCompanyId(), name, ResourceConstants.SCOPE_GROUP, primKey,
+			role.getRoleId(), ActionKeys.VIEW_SITE_ADMINISTRATION);
+	}
 
 	protected void deleteImplicitAssociations(Role role) throws Exception {
 		runSQL(
@@ -44,6 +76,15 @@ public class VerifyRole extends VerifyProcess {
 					companyId, RoleConstants.ORGANIZATION_USER);
 
 				deleteImplicitAssociations(organizationUserRole);
+			}
+			catch (NoSuchRoleException nsre) {
+			}
+
+			try {
+				Role powerUser = RoleLocalServiceUtil.getRole(
+					companyId, RoleConstants.POWER_USER);
+
+				addViewSiteAdministrationPermission(powerUser);
 			}
 			catch (NoSuchRoleException nsre) {
 			}

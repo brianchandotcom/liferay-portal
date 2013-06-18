@@ -291,11 +291,13 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				newContent,
 				new String[] {
 					"<br/>", "\"/>", "\" >", "@page import", "\"%>", ")%>",
-					"javascript: "
+					"else{", "for(", "function (", "if(", "javascript: ",
+					"while(", "){\n"
 				},
 				new String[] {
 					"<br />", "\" />", "\">", "@ page import", "\" %>", ") %>",
-					"javascript:"
+					"else {", "for (", "function(", "if (", "javascript:",
+					"while (", ") {\n"
 				});
 
 			if (stripJSPImports) {

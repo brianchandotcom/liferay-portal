@@ -81,7 +81,6 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.service.permission.PortalPermissionUtil;
-import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.theme.ThemeDisplayFactory;
 import com.liferay.portal.util.LayoutClone;
@@ -816,7 +815,7 @@ public class ServicePreAction extends Action {
 
 		long controlPanelPlid = 0;
 
-		if (signedIn && PropsValues.DOCKBAR_SHOW_SITE_CONTENT_ICON &&
+		if (signedIn &&
 			GroupPermissionUtil.contains(
 				permissionChecker, group,
 				ActionKeys.VIEW_SITE_ADMINISTRATION)) {
@@ -1691,6 +1690,7 @@ public class ServicePreAction extends Action {
 				request, "controlPanelCategory");
 
 		}
+
 		boolean hasViewLayoutPermission = false;
 		boolean hasViewStagingPermission =
 			(group.isStagingGroup() || group.isStagedRemotely()) &&

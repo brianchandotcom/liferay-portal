@@ -19,11 +19,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>OPTIONS_WRENCH_ICON</td>
-	<td>//a[@title='Options']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>INFO_MESSAGE</td>
 	<td>//div[@class='alert alert-info portlet-configuration']/a	</td>
 	<td></td>
@@ -31,27 +26,6 @@
 <tr>
 	<td>SEARCH_RESULTS</td>
 	<td>//div[@class='search-results']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--OPTIONS_MENULIST-->
-<tr>
-	<td>OPTIONS_MENULIST_LOOK_AND_FEEL</td>
-	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Look and Feel')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>OPTIONS_MENULIST_CONFIGURATION</td>
-	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Configuration')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>OPTIONS_MENULIST_EXPORT_IMPORT</td>
-	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Export / Import')]</td>
 	<td></td>
 </tr>
 <tr>

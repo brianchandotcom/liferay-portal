@@ -78,7 +78,7 @@ public interface PortletDataHandler {
 	 */
 	public String[] getDataPortletPreferences();
 
-	public String[] getDeletionSystemEventClassNames();
+	public Object[] getDeletionSystemEventModelTypes();
 
 	public PortletDataHandlerControl[] getExportConfigurationControls(
 			long companyId, long groupId, Portlet portlet,

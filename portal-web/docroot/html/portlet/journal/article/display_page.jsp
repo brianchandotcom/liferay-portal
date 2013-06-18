@@ -237,8 +237,7 @@ Group parentGroup = themeDisplay.getSiteGroup();
 
 					var dialogButtons = dialog.buttons;
 
-					okButton = dialogButtons.item(0);
-					cancelButton = dialogButtons.item(1);
+					okButton = dialog.getToolbar('footer').item(0);
 
 					var tabs = [];
 
@@ -311,7 +310,7 @@ Group parentGroup = themeDisplay.getSiteGroup();
 			var isPublicPagesTabSelected = function() {
 				var result = <%= parentGroup.getPublicLayoutsPageCount() > 0 %>;
 
-				if (tabView.get('items').length >= 2) {
+				if (tabView.size() >= 2) {
 					var index = tabView.getTabIndex(tabView.get('activeTab'));
 
 					result = (index == 0);
@@ -433,6 +432,8 @@ Group parentGroup = themeDisplay.getSiteGroup();
 
 			var onSelectDisplayPage = function(event) {
 				<c:if test="<%= (parentGroup.getPrivateLayoutsPageCount() > 0) || (parentGroup.getPublicLayoutsPageCount() > 0) %>">
+					event.domEvent.preventDefault();
+
 					getDialog().show();
 				</c:if>
 			};

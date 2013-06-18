@@ -1,0 +1,48 @@
+<definition>
+	<var name="pageName" value="Web Content List Page" />
+	<var name="portletName" value="Web Content List" />
+
+	<set-up>
+		<execute macro="User#pgFirstLogin" />
+
+		<execute macro="Page#pgAdd">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#pgAdd">
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
+		</execute>
+	</set-up>
+
+	<command name="ViewWebContentViaWCL">
+		<var name="webContentContent" value="WC WebContent Content" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="WebContentList#configurePGPortletDisplayGuest">
+			<var name="pageName" value="${pageName}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#pgGoto">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute action="PGWebcontentlist#assertTextEquals" locator-key1="WEB_CONTENT_TABLE_TITLE_1" value1="${webContentTitle}" />
+		<execute action="PGWebcontentlist#click" locator-key1="WEB_CONTENT_TABLE_TITLE_1" value1="${webContentTitle}"/>
+
+		<execute action="PGWebcontentlistWebcontent#assertTextEquals" locator-key1="WEB_CONTENT_TITLE" value1="${webContentTitle}" />
+		<execute action="PGWebcontentlistWebcontent#assertTextEquals" locator-key1="WEB_CONTENT_CONTENT" value1="${webContentContent}" />
+	</command>
+
+	<tear-down>
+		<execute macro="WebContent#tearDownCP" />
+
+		<execute macro="Page#pgTearDown" />
+	</tear-down>
+</definition>

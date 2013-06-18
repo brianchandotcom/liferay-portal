@@ -124,6 +124,7 @@
 
 	.single-file .upload-error {
 		list-style: none;
+		margin-top: 1em;
 
 		.upload-error-message {
 			margin-bottom: 0.5em;

@@ -85,6 +85,17 @@
 		margin-bottom: 6px;
 	}
 
+	.redirected-to-message {
+		margin-right: 10px;
+
+		a {
+			background: #ecfbff;
+			border: 1px solid #ade5fa;
+			color: #8d8d8d;
+			padding: 5px;
+		}
+	}
+
 	/* ---------- Main navigation ---------- */
 
 	#navigation {

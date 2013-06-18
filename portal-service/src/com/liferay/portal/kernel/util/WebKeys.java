@@ -68,6 +68,8 @@ public interface WebKeys {
 
 	public static final String LAYOUTS = "LAYOUTS";
 
+	public static final String LIFERAY_SHARED_PORTAL_MESSAGES = "LIFERAY_SHARED_PORTAL_MESSAGES";
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #VISITED_GROUP_ID_PREVIOUS}
 	 */

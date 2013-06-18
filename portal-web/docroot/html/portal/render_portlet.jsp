@@ -1070,6 +1070,7 @@ if (showPortletCssIcon) {
 	themeDisplay.setIncludePortletCssJs(true);
 }
 
+PortalMessages.clear(renderRequestImpl);
 SessionMessages.clear(renderRequestImpl);
 SessionErrors.clear(renderRequestImpl);
 

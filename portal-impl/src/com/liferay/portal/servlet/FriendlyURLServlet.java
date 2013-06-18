@@ -17,15 +17,20 @@ package com.liferay.portal.servlet;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.PortalMessages;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.struts.LastPath;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutFriendlyURL;
 import com.liferay.portal.model.LayoutFriendlyURLComposite;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.LayoutFriendlyURLLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.ServiceContextThreadLocal;
@@ -38,6 +43,7 @@ import com.liferay.portal.util.WebKeys;
 import java.io.IOException;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -276,7 +282,15 @@ public class FriendlyURLServlet extends HttpServlet {
 
 			friendlyURL = layoutFriendlyURLComposite.getFriendlyURL();
 
+			pos = friendlyURL.indexOf(Portal.FRIENDLY_URL_SEPARATOR);
+
+			if (pos != -1) {
+				friendlyURL = friendlyURL.substring(0, pos);
+			}
+
 			if (!friendlyURL.startsWith(layout.getFriendlyURL(locale))) {
+				setAlternativeLayoutFriendlyURL(request, layout, friendlyURL);
+
 				String redirect = PortalUtil.getLocalizedFriendlyURL(
 					request, layout, locale);
 
@@ -285,6 +299,35 @@ public class FriendlyURLServlet extends HttpServlet {
 		}
 
 		return new Object[] {actualURL, Boolean.FALSE};
+	}
+
+	protected void setAlternativeLayoutFriendlyURL(
+			HttpServletRequest request, Layout layout, String friendlyURL)
+		throws Exception {
+
+		List<LayoutFriendlyURL> layoutFriendlyURLs =
+			LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLs(
+				layout.getPlid(), friendlyURL, 0, 1);
+
+		if (layoutFriendlyURLs.isEmpty()) {
+			return;
+		}
+
+		LayoutFriendlyURL layoutFriendlyURL = layoutFriendlyURLs.get(0);
+
+		Locale locale = LocaleUtil.fromLanguageId(
+			layoutFriendlyURL.getLanguageId());
+
+		String alternativeLayoutFriendlyURL =
+			PortalUtil.getLocalizedFriendlyURL(request, layout, locale);
+
+		SessionMessages.add(
+			request, "alternativeLayoutFriendlyURL",
+			alternativeLayoutFriendlyURL);
+
+		PortalMessages.add(
+			request, PortalMessages.KEY_JSP_PATH,
+			"/html/common/themes/layout_friendly_url_redirect.jsp");
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(FriendlyURLServlet.class);

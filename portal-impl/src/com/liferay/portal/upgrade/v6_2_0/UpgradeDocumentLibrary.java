@@ -106,6 +106,14 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		// Temp directory
 
 		deleteTempDirectory();
+
+		// DLSync
+
+		dropDLSyncTable();
+	}
+
+	protected void dropDLSyncTable() throws Exception {
+		runSQL("drop table DLSync");
 	}
 
 	protected String getUserName(long userId) throws Exception {

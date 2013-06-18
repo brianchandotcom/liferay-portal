@@ -597,14 +597,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected boolean isPortalSource() {
-		String basedir = "./";
-
-		if (_fileUtil.exists(basedir + "portal-impl")) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return _portalSource;
 	}
 
 	protected void processErrorMessage(String fileName, String message) {
@@ -759,7 +752,14 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			GetterUtil.getString(
 				System.getProperty("source.formatter.excludes")));
 
-		_portalSource = isPortalSource();
+		String basedir = "./";
+
+		if (_fileUtil.exists(basedir + "portal-impl")) {
+			_portalSource = true;
+		}
+		else {
+			_portalSource = false;
+		}
 
 		_throwException = throwException;
 

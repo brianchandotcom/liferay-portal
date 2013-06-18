@@ -1,0 +1,7 @@
+<definition>
+	<command name="click">
+		<case comparator="startsWith" locator1="//ul[@class='nav control-panel-bar-secondary nav-pills']//a[contains">
+			<execute function="Click#textClickAtAndWait" />
+		</case>
+	</command>
+</definition>

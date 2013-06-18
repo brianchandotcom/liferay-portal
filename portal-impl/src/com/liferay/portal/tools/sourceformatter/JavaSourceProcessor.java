@@ -2005,8 +2005,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			if (line.startsWith(StringPool.TAB + "private static class ") ||
 				line.startsWith(StringPool.TAB + "private static enum ")) {
 
-				return new Tuple(
-					getClassName(line), TYPE_CLASS_PRIVATE_STATIC);
+				return new Tuple(getClassName(line), TYPE_CLASS_PRIVATE_STATIC);
 			}
 		}
 		else if (line.startsWith(StringPool.TAB + "private ")) {

@@ -1293,21 +1293,6 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * Returns the web content article matching the UUID and group.
-	 *
-	 * @param  uuid the web content article's UUID
-	 * @param  groupId the primary key of the web content article's group
-	 * @return the matching web content article
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public JournalArticle fetchArticle(String uuid, long groupId)
-		throws SystemException {
-
-		return journalArticlePersistence.fetchByUUID_G(uuid, groupId);
-	}
-
-	/**
 	 * Returns the web content article with the ID.
 	 *
 	 * @param  id the primary key of the web content article

@@ -230,6 +230,37 @@ public abstract class DLFileVersionLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the document library file version with the matching UUID and company.
+	 *
+	 * @param uuid the document library file version's UUID
+	 * @param  companyId the primary key of the company
+	 * @return the matching document library file version, or <code>null</code> if a matching document library file version
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public DLFileVersion fetchDLFileVersionByUuidAndCompanyId(String uuid,
+		long companyId) throws SystemException {
+		return dlFileVersionPersistence.fetchByUuid_C_First(uuid, companyId,
+			null);
+	}
+
+	/**
+	 * Returns the document library file version matching the UUID and group.
+	 *
+	 * @param uuid the document library file version's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching document library file version, or <code>null</code> if a matching document library file version
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public DLFileVersion fetchDLFileVersionByUuidAndGroupId(String uuid,
+		long groupId) throws SystemException {
+		return dlFileVersionPersistence.fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
 	 * Returns the document library file version with the primary key.
 	 *
 	 * @param fileVersionId the primary key of the document library file version

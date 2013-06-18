@@ -237,6 +237,37 @@ public abstract class BookmarksEntryLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the bookmarks entry with the matching UUID and company.
+	 *
+	 * @param uuid the bookmarks entry's UUID
+	 * @param  companyId the primary key of the company
+	 * @return the matching bookmarks entry, or <code>null</code> if a matching bookmarks entry
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public BookmarksEntry fetchBookmarksEntryByUuidAndCompanyId(String uuid,
+		long companyId) throws SystemException {
+		return bookmarksEntryPersistence.fetchByUuid_C_First(uuid, companyId,
+			null);
+	}
+
+	/**
+	 * Returns the bookmarks entry matching the UUID and group.
+	 *
+	 * @param uuid the bookmarks entry's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching bookmarks entry, or <code>null</code> if a matching bookmarks entry
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public BookmarksEntry fetchBookmarksEntryByUuidAndGroupId(String uuid,
+		long groupId) throws SystemException {
+		return bookmarksEntryPersistence.fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
 	 * Returns the bookmarks entry with the primary key.
 	 *
 	 * @param entryId the primary key of the bookmarks entry

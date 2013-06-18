@@ -141,14 +141,6 @@ public class LayoutFriendlyURLLocalServiceImpl
 	}
 
 	@Override
-	public LayoutFriendlyURL fetchLayoutFriendlyURLByUuidAndGroupId(
-			String uuid, long groupId)
-		throws SystemException {
-
-		return layoutFriendlyURLPersistence.fetchByUUID_G(uuid, groupId, true);
-	}
-
-	@Override
 	public LayoutFriendlyURL getLayoutFriendlyURL(long plid, String languageId)
 		throws PortalException, SystemException {
 

@@ -236,6 +236,36 @@ public abstract class DLFolderLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * Returns the document library folder with the matching UUID and company.
+	 *
+	 * @param uuid the document library folder's UUID
+	 * @param  companyId the primary key of the company
+	 * @return the matching document library folder, or <code>null</code> if a matching document library folder
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public DLFolder fetchDLFolderByUuidAndCompanyId(String uuid, long companyId)
+		throws SystemException {
+		return dlFolderPersistence.fetchByUuid_C_First(uuid, companyId, null);
+	}
+
+	/**
+	 * Returns the document library folder matching the UUID and group.
+	 *
+	 * @param uuid the document library folder's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching document library folder, or <code>null</code> if a matching document library folder
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public DLFolder fetchDLFolderByUuidAndGroupId(String uuid, long groupId)
+		throws SystemException {
+		return dlFolderPersistence.fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
 	 * Returns the document library folder with the primary key.
 	 *
 	 * @param folderId the primary key of the document library folder

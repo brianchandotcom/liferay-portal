@@ -171,6 +171,34 @@ public interface SocialRequestLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns the social request with the matching UUID and company.
+	*
+	* @param uuid the social request's UUID
+	* @param companyId the primary key of the company
+	* @return the matching social request, or <code>null</code> if a matching social request
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.social.model.SocialRequest fetchSocialRequestByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the social request matching the UUID and group.
+	*
+	* @param uuid the social request's UUID
+	* @param groupId the primary key of the group
+	* @return the matching social request, or <code>null</code> if a matching social request
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.social.model.SocialRequest fetchSocialRequestByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns the social request with the primary key.
 	*
 	* @param requestId the primary key of the social request

@@ -230,6 +230,36 @@ public abstract class JournalFeedLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the journal feed with the matching UUID and company.
+	 *
+	 * @param uuid the journal feed's UUID
+	 * @param  companyId the primary key of the company
+	 * @return the matching journal feed, or <code>null</code> if a matching journal feed
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public JournalFeed fetchJournalFeedByUuidAndCompanyId(String uuid,
+		long companyId) throws SystemException {
+		return journalFeedPersistence.fetchByUuid_C_First(uuid, companyId, null);
+	}
+
+	/**
+	 * Returns the journal feed matching the UUID and group.
+	 *
+	 * @param uuid the journal feed's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching journal feed, or <code>null</code> if a matching journal feed
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public JournalFeed fetchJournalFeedByUuidAndGroupId(String uuid,
+		long groupId) throws SystemException {
+		return journalFeedPersistence.fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
 	 * Returns the journal feed with the primary key.
 	 *
 	 * @param id the primary key of the journal feed

@@ -278,6 +278,73 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 			return ${entity.varName}Persistence.fetchByPrimaryKey(${entity.PKVarName});
 		}
 
+		<#if entity.hasUuid() && entity.hasColumn("companyId")>
+			/**
+			 * Returns the ${entity.humanName} with the matching UUID and company.
+			 *
+			 * @param uuid the ${entity.humanName}'s UUID
+			 * @param  companyId the primary key of the company
+			 * @return the matching ${entity.humanName}, or <code>null</code> if a matching ${entity.humanName}
+			 *         could not be found
+			<#list serviceBaseExceptions as exception>
+			<#if exception == "SystemException">
+			 * @throws SystemException if a system exception occurred
+			<#else>
+			 * @throws ${exception}
+			</#if>
+			</#list>
+			 */
+			@Override
+			public ${entity.name} fetch${entity.name}ByUuidAndCompanyId(String uuid, long companyId) throws ${stringUtil.merge(serviceBaseExceptions)} {
+				return ${entity.varName}Persistence.fetchByUuid_C_First(uuid, companyId, null);
+			}
+		</#if>
+
+		<#if entity.hasUuid() && entity.hasColumn("groupId") && entity.name != "Group">
+			<#if entity.name == "Layout">
+				/**
+				 * Returns the ${entity.humanName} matching the UUID, group, and privacy.
+				 *
+				 * @param uuid the ${entity.humanName}'s UUID
+				 * @param groupId the primary key of the group
+				 * @param privateLayout whether the ${entity.humanName} is private to the group
+				 * @return the matching ${entity.humanName}, or <code>null</code> if a matching ${entity.humanName}
+				 *         could not be found
+				<#list serviceBaseExceptions as exception>
+				<#if exception == "SystemException">
+		 		 * @throws SystemException if a system exception occurred
+				<#else>
+				 * @throws ${exception}
+				</#if>
+				</#list>
+				 */
+				@Override
+				public ${entity.name} fetch${entity.name}ByUuidAndGroupId(String uuid, long groupId, boolean privateLayout) throws ${stringUtil.merge(serviceBaseExceptions)} {
+					return ${entity.varName}Persistence.fetchByUUID_G_P(uuid, groupId, privateLayout);
+				}
+			<#else>
+				/**
+				 * Returns the ${entity.humanName} matching the UUID and group.
+				 *
+				 * @param uuid the ${entity.humanName}'s UUID
+				 * @param groupId the primary key of the group
+				 * @return the matching ${entity.humanName}, or <code>null</code> if a matching ${entity.humanName}
+				 *         could not be found
+				<#list serviceBaseExceptions as exception>
+				<#if exception == "SystemException">
+				 * @throws SystemException if a system exception occurred
+				<#else>
+				 * @throws ${exception}
+				</#if>
+				</#list>
+				 */
+				@Override
+				public ${entity.name} fetch${entity.name}ByUuidAndGroupId(String uuid, long groupId) throws ${stringUtil.merge(serviceBaseExceptions)} {
+					return ${entity.varName}Persistence.fetchByUUID_G(uuid, groupId);
+				}
+			</#if>
+		</#if>
+
 		<#assign serviceBaseExceptions = serviceBuilder.getServiceBaseExceptions(methods, "get" + entity.name, [entity.PKClassName], ["PortalException", "SystemException"])>
 
 		/**
@@ -305,7 +372,7 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 			return ${entity.varName}Persistence.findByPrimaryKey(primaryKeyObj);
 		}
 
-		<#if entity.hasUuid() && entity.hasColumn("groupId")>
+		<#if entity.hasUuid() && entity.hasColumn("groupId") && entity.name != "Group">
 			<#if entity.name == "Layout">
 				/**
 				 * Returns the ${entity.humanName} matching the UUID, group, and privacy.

@@ -530,15 +530,6 @@ public class OrganizationLocalServiceImpl
 		return organizationPersistence.fetchByC_N(companyId, name);
 	}
 
-	@Override
-	public Organization fetchOrganizationByUuidAndCompanyId(
-			String uuid, long companyId)
-		throws SystemException {
-
-		return organizationPersistence.fetchByUuid_C_First(
-			uuid, companyId, null);
-	}
-
 	/**
 	 * Returns the organization with the name.
 	 *

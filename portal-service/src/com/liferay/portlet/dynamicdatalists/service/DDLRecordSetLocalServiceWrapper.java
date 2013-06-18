@@ -191,6 +191,40 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 	}
 
 	/**
+	* Returns the d d l record set with the matching UUID and company.
+	*
+	* @param uuid the d d l record set's UUID
+	* @param companyId the primary key of the company
+	* @return the matching d d l record set, or <code>null</code> if a matching d d l record set
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet fetchDDLRecordSetByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _ddlRecordSetLocalService.fetchDDLRecordSetByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
+	/**
+	* Returns the d d l record set matching the UUID and group.
+	*
+	* @param uuid the d d l record set's UUID
+	* @param groupId the primary key of the group
+	* @return the matching d d l record set, or <code>null</code> if a matching d d l record set
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet fetchDDLRecordSetByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _ddlRecordSetLocalService.fetchDDLRecordSetByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	/**
 	* Returns the d d l record set with the primary key.
 	*
 	* @param recordSetId the primary key of the d d l record set

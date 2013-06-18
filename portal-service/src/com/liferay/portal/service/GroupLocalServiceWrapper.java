@@ -186,6 +186,22 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	}
 
 	/**
+	* Returns the group with the matching UUID and company.
+	*
+	* @param uuid the group's UUID
+	* @param companyId the primary key of the company
+	* @return the matching group, or <code>null</code> if a matching group
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public com.liferay.portal.model.Group fetchGroupByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _groupLocalService.fetchGroupByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
 	* Returns the group with the primary key.
 	*
 	* @param groupId the primary key of the group
@@ -206,23 +222,6 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _groupLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the group matching the UUID and group.
-	*
-	* @param uuid the group's UUID
-	* @param groupId the primary key of the group
-	* @return the matching group
-	* @throws PortalException if a matching group could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public com.liferay.portal.model.Group getGroupByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _groupLocalService.getGroupByUuidAndGroupId(uuid, groupId);
 	}
 
 	/**
@@ -1126,22 +1125,6 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _groupLocalService.fetchGroup(companyId, name);
-	}
-
-	/**
-	* Returns the group with the matching UUID and company.
-	*
-	* @param uuid the UUID
-	* @param companyId the primary key of the company
-	* @return the matching group, or <code>null</code> if a matching group
-	could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public com.liferay.portal.model.Group fetchGroupByUuidandCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _groupLocalService.fetchGroupByUuidandCompanyId(uuid, companyId);
 	}
 
 	/**

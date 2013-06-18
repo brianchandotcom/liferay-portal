@@ -187,6 +187,36 @@ public class DDLRecordLocalServiceUtil {
 	}
 
 	/**
+	* Returns the d d l record with the matching UUID and company.
+	*
+	* @param uuid the d d l record's UUID
+	* @param companyId the primary key of the company
+	* @return the matching d d l record, or <code>null</code> if a matching d d l record
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord fetchDDLRecordByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchDDLRecordByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	* Returns the d d l record matching the UUID and group.
+	*
+	* @param uuid the d d l record's UUID
+	* @param groupId the primary key of the group
+	* @return the matching d d l record, or <code>null</code> if a matching d d l record
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord fetchDDLRecordByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchDDLRecordByUuidAndGroupId(uuid, groupId);
+	}
+
+	/**
 	* Returns the d d l record with the primary key.
 	*
 	* @param recordId the primary key of the d d l record

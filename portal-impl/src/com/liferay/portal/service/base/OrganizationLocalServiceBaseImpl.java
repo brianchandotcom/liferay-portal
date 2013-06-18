@@ -302,6 +302,21 @@ public abstract class OrganizationLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the organization with the matching UUID and company.
+	 *
+	 * @param uuid the organization's UUID
+	 * @param  companyId the primary key of the company
+	 * @return the matching organization, or <code>null</code> if a matching organization
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Organization fetchOrganizationByUuidAndCompanyId(String uuid,
+		long companyId) throws SystemException {
+		return organizationPersistence.fetchByUuid_C_First(uuid, companyId, null);
+	}
+
+	/**
 	 * Returns the organization with the primary key.
 	 *
 	 * @param organizationId the primary key of the organization

@@ -189,6 +189,22 @@ public class LayoutPrototypeLocalServiceUtil {
 	}
 
 	/**
+	* Returns the layout prototype with the matching UUID and company.
+	*
+	* @param uuid the layout prototype's UUID
+	* @param companyId the primary key of the company
+	* @return the matching layout prototype, or <code>null</code> if a matching layout prototype
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.LayoutPrototype fetchLayoutPrototypeByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .fetchLayoutPrototypeByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
 	* Returns the layout prototype with the primary key.
 	*
 	* @param layoutPrototypeId the primary key of the layout prototype
@@ -301,13 +317,6 @@ public class LayoutPrototypeLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteNondefaultLayoutPrototypes(companyId);
-	}
-
-	public static com.liferay.portal.model.LayoutPrototype fetchLayoutPrototypeByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .fetchLayoutPrototypeByUuidAndCompanyId(uuid, companyId);
 	}
 
 	/**

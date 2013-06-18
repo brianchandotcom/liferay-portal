@@ -193,6 +193,23 @@ public class JournalArticleResourceLocalServiceWrapper
 	}
 
 	/**
+	* Returns the journal article resource matching the UUID and group.
+	*
+	* @param uuid the journal article resource's UUID
+	* @param groupId the primary key of the group
+	* @return the matching journal article resource, or <code>null</code> if a matching journal article resource
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public com.liferay.portlet.journal.model.JournalArticleResource fetchJournalArticleResourceByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleResourceLocalService.fetchJournalArticleResourceByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	/**
 	* Returns the journal article resource with the primary key.
 	*
 	* @param resourcePrimKey the primary key of the journal article resource

@@ -191,6 +191,40 @@ public class RepositoryEntryLocalServiceWrapper
 	}
 
 	/**
+	* Returns the repository entry with the matching UUID and company.
+	*
+	* @param uuid the repository entry's UUID
+	* @param companyId the primary key of the company
+	* @return the matching repository entry, or <code>null</code> if a matching repository entry
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public com.liferay.portal.model.RepositoryEntry fetchRepositoryEntryByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _repositoryEntryLocalService.fetchRepositoryEntryByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
+	/**
+	* Returns the repository entry matching the UUID and group.
+	*
+	* @param uuid the repository entry's UUID
+	* @param groupId the primary key of the group
+	* @return the matching repository entry, or <code>null</code> if a matching repository entry
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public com.liferay.portal.model.RepositoryEntry fetchRepositoryEntryByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _repositoryEntryLocalService.fetchRepositoryEntryByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	/**
 	* Returns the repository entry with the primary key.
 	*
 	* @param repositoryEntryId the primary key of the repository entry

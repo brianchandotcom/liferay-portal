@@ -181,15 +181,6 @@ public class LayoutPrototypeLocalServiceImpl
 		}
 	}
 
-	@Override
-	public LayoutPrototype fetchLayoutPrototypeByUuidAndCompanyId(
-			String uuid, long companyId)
-		throws SystemException {
-
-		return layoutPrototypePersistence.fetchByUuid_C_First(
-			uuid, companyId, null);
-	}
-
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #getLayoutPrototypeByUuidAndCompanyId(String, long)}

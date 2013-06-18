@@ -222,6 +222,36 @@ public abstract class PollsChoiceLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the polls choice with the matching UUID and company.
+	 *
+	 * @param uuid the polls choice's UUID
+	 * @param  companyId the primary key of the company
+	 * @return the matching polls choice, or <code>null</code> if a matching polls choice
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public PollsChoice fetchPollsChoiceByUuidAndCompanyId(String uuid,
+		long companyId) throws SystemException {
+		return pollsChoicePersistence.fetchByUuid_C_First(uuid, companyId, null);
+	}
+
+	/**
+	 * Returns the polls choice matching the UUID and group.
+	 *
+	 * @param uuid the polls choice's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching polls choice, or <code>null</code> if a matching polls choice
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public PollsChoice fetchPollsChoiceByUuidAndGroupId(String uuid,
+		long groupId) throws SystemException {
+		return pollsChoicePersistence.fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
 	 * Returns the polls choice with the primary key.
 	 *
 	 * @param choiceId the primary key of the polls choice

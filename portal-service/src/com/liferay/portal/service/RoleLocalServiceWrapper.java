@@ -186,6 +186,22 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	}
 
 	/**
+	* Returns the role with the matching UUID and company.
+	*
+	* @param uuid the role's UUID
+	* @param companyId the primary key of the company
+	* @return the matching role, or <code>null</code> if a matching role
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public com.liferay.portal.model.Role fetchRoleByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _roleLocalService.fetchRoleByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
 	* Returns the role with the primary key.
 	*
 	* @param roleId the primary key of the role
@@ -734,13 +750,6 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _roleLocalService.fetchRole(companyId, name);
-	}
-
-	@Override
-	public com.liferay.portal.model.Role fetchRoleByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _roleLocalService.fetchRoleByUuidAndCompanyId(uuid, companyId);
 	}
 
 	/**

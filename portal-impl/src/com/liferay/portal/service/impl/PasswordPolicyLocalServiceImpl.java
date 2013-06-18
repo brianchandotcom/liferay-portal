@@ -248,15 +248,6 @@ public class PasswordPolicyLocalServiceImpl
 	}
 
 	@Override
-	public PasswordPolicy fetchPasswordPolicyByUuidAndCompanyId(
-			String uuid, long companyId)
-		throws SystemException {
-
-		return passwordPolicyPersistence.fetchByUuid_C_First(
-			uuid, companyId, null);
-	}
-
-	@Override
 	public PasswordPolicy getDefaultPasswordPolicy(long companyId)
 		throws PortalException, SystemException {
 

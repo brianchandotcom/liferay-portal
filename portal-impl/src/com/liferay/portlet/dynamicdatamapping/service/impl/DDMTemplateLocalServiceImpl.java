@@ -544,22 +544,6 @@ public class DDMTemplateLocalServiceImpl
 	}
 
 	/**
-	 * Returns the template matching the UUID and group.
-	 *
-	 * @param  uuid the unique string identifying the template
-	 * @param  groupId the primary key of the group
-	 * @return the matching template, or <code>null</code> if a matching
-	 *         template could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public DDMTemplate fetchTemplate(String uuid, long groupId)
-		throws SystemException {
-
-		return ddmTemplatePersistence.fetchByUUID_G(uuid, groupId);
-	}
-
-	/**
 	 * Returns the template with the ID.
 	 *
 	 * @param  templateId the primary key of the template

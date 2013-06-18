@@ -287,6 +287,21 @@ public abstract class WebsiteLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * Returns the website with the matching UUID and company.
+	 *
+	 * @param uuid the website's UUID
+	 * @param  companyId the primary key of the company
+	 * @return the matching website, or <code>null</code> if a matching website
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Website fetchWebsiteByUuidAndCompanyId(String uuid, long companyId)
+		throws SystemException {
+		return websitePersistence.fetchByUuid_C_First(uuid, companyId, null);
+	}
+
+	/**
 	 * Returns the website with the primary key.
 	 *
 	 * @param websiteId the primary key of the website

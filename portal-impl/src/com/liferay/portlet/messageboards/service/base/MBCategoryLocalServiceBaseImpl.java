@@ -239,6 +239,36 @@ public abstract class MBCategoryLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the message boards category with the matching UUID and company.
+	 *
+	 * @param uuid the message boards category's UUID
+	 * @param  companyId the primary key of the company
+	 * @return the matching message boards category, or <code>null</code> if a matching message boards category
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public MBCategory fetchMBCategoryByUuidAndCompanyId(String uuid,
+		long companyId) throws SystemException {
+		return mbCategoryPersistence.fetchByUuid_C_First(uuid, companyId, null);
+	}
+
+	/**
+	 * Returns the message boards category matching the UUID and group.
+	 *
+	 * @param uuid the message boards category's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching message boards category, or <code>null</code> if a matching message boards category
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public MBCategory fetchMBCategoryByUuidAndGroupId(String uuid, long groupId)
+		throws SystemException {
+		return mbCategoryPersistence.fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
 	 * Returns the message boards category with the primary key.
 	 *
 	 * @param categoryId the primary key of the message boards category

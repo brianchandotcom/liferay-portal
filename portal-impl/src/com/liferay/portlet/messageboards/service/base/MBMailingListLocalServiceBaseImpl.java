@@ -229,6 +229,37 @@ public abstract class MBMailingListLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the message boards mailing list with the matching UUID and company.
+	 *
+	 * @param uuid the message boards mailing list's UUID
+	 * @param  companyId the primary key of the company
+	 * @return the matching message boards mailing list, or <code>null</code> if a matching message boards mailing list
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public MBMailingList fetchMBMailingListByUuidAndCompanyId(String uuid,
+		long companyId) throws SystemException {
+		return mbMailingListPersistence.fetchByUuid_C_First(uuid, companyId,
+			null);
+	}
+
+	/**
+	 * Returns the message boards mailing list matching the UUID and group.
+	 *
+	 * @param uuid the message boards mailing list's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching message boards mailing list, or <code>null</code> if a matching message boards mailing list
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public MBMailingList fetchMBMailingListByUuidAndGroupId(String uuid,
+		long groupId) throws SystemException {
+		return mbMailingListPersistence.fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
 	 * Returns the message boards mailing list with the primary key.
 	 *
 	 * @param mailingListId the primary key of the message boards mailing list

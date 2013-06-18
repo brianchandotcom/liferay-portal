@@ -289,6 +289,21 @@ public abstract class RoleLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * Returns the role with the matching UUID and company.
+	 *
+	 * @param uuid the role's UUID
+	 * @param  companyId the primary key of the company
+	 * @return the matching role, or <code>null</code> if a matching role
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Role fetchRoleByUuidAndCompanyId(String uuid, long companyId)
+		throws SystemException {
+		return rolePersistence.fetchByUuid_C_First(uuid, companyId, null);
+	}
+
+	/**
 	 * Returns the role with the primary key.
 	 *
 	 * @param roleId the primary key of the role

@@ -227,6 +227,36 @@ public abstract class DDLRecordSetLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the d d l record set with the matching UUID and company.
+	 *
+	 * @param uuid the d d l record set's UUID
+	 * @param  companyId the primary key of the company
+	 * @return the matching d d l record set, or <code>null</code> if a matching d d l record set
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public DDLRecordSet fetchDDLRecordSetByUuidAndCompanyId(String uuid,
+		long companyId) throws SystemException {
+		return ddlRecordSetPersistence.fetchByUuid_C_First(uuid, companyId, null);
+	}
+
+	/**
+	 * Returns the d d l record set matching the UUID and group.
+	 *
+	 * @param uuid the d d l record set's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching d d l record set, or <code>null</code> if a matching d d l record set
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public DDLRecordSet fetchDDLRecordSetByUuidAndGroupId(String uuid,
+		long groupId) throws SystemException {
+		return ddlRecordSetPersistence.fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
 	 * Returns the d d l record set with the primary key.
 	 *
 	 * @param recordSetId the primary key of the d d l record set

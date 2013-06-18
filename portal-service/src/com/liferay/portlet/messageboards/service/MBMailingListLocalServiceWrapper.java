@@ -192,6 +192,40 @@ public class MBMailingListLocalServiceWrapper
 	}
 
 	/**
+	* Returns the message boards mailing list with the matching UUID and company.
+	*
+	* @param uuid the message boards mailing list's UUID
+	* @param companyId the primary key of the company
+	* @return the matching message boards mailing list, or <code>null</code> if a matching message boards mailing list
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public com.liferay.portlet.messageboards.model.MBMailingList fetchMBMailingListByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbMailingListLocalService.fetchMBMailingListByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
+	/**
+	* Returns the message boards mailing list matching the UUID and group.
+	*
+	* @param uuid the message boards mailing list's UUID
+	* @param groupId the primary key of the group
+	* @return the matching message boards mailing list, or <code>null</code> if a matching message boards mailing list
+	could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public com.liferay.portlet.messageboards.model.MBMailingList fetchMBMailingListByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbMailingListLocalService.fetchMBMailingListByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	/**
 	* Returns the message boards mailing list with the primary key.
 	*
 	* @param mailingListId the primary key of the message boards mailing list

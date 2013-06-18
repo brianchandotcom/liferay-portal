@@ -293,6 +293,37 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the layout friendly u r l with the matching UUID and company.
+	 *
+	 * @param uuid the layout friendly u r l's UUID
+	 * @param  companyId the primary key of the company
+	 * @return the matching layout friendly u r l, or <code>null</code> if a matching layout friendly u r l
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public LayoutFriendlyURL fetchLayoutFriendlyURLByUuidAndCompanyId(
+		String uuid, long companyId) throws SystemException {
+		return layoutFriendlyURLPersistence.fetchByUuid_C_First(uuid,
+			companyId, null);
+	}
+
+	/**
+	 * Returns the layout friendly u r l matching the UUID and group.
+	 *
+	 * @param uuid the layout friendly u r l's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching layout friendly u r l, or <code>null</code> if a matching layout friendly u r l
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public LayoutFriendlyURL fetchLayoutFriendlyURLByUuidAndGroupId(
+		String uuid, long groupId) throws SystemException {
+		return layoutFriendlyURLPersistence.fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
 	 * Returns the layout friendly u r l with the primary key.
 	 *
 	 * @param layoutFriendlyURLId the primary key of the layout friendly u r l

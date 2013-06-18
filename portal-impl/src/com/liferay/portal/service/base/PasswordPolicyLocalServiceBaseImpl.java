@@ -294,6 +294,22 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the password policy with the matching UUID and company.
+	 *
+	 * @param uuid the password policy's UUID
+	 * @param  companyId the primary key of the company
+	 * @return the matching password policy, or <code>null</code> if a matching password policy
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public PasswordPolicy fetchPasswordPolicyByUuidAndCompanyId(String uuid,
+		long companyId) throws SystemException {
+		return passwordPolicyPersistence.fetchByUuid_C_First(uuid, companyId,
+			null);
+	}
+
+	/**
 	 * Returns the password policy with the primary key.
 	 *
 	 * @param passwordPolicyId the primary key of the password policy

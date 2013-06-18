@@ -224,6 +224,36 @@ public abstract class DDMContentLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the d d m content with the matching UUID and company.
+	 *
+	 * @param uuid the d d m content's UUID
+	 * @param  companyId the primary key of the company
+	 * @return the matching d d m content, or <code>null</code> if a matching d d m content
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public DDMContent fetchDDMContentByUuidAndCompanyId(String uuid,
+		long companyId) throws SystemException {
+		return ddmContentPersistence.fetchByUuid_C_First(uuid, companyId, null);
+	}
+
+	/**
+	 * Returns the d d m content matching the UUID and group.
+	 *
+	 * @param uuid the d d m content's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching d d m content, or <code>null</code> if a matching d d m content
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public DDMContent fetchDDMContentByUuidAndGroupId(String uuid, long groupId)
+		throws SystemException {
+		return ddmContentPersistence.fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
 	 * Returns the d d m content with the primary key.
 	 *
 	 * @param contentId the primary key of the d d m content

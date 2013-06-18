@@ -741,25 +741,27 @@ public class SitesImpl implements Sites {
 	public List<Layout> getMergeFailFriendlyURLLayouts(LayoutSet layoutSet)
 		throws PortalException, SystemException {
 
-		UnicodeProperties settingsProperties =
-			layoutSet.getSettingsProperties();
+		if (Validator.isNotNull(layoutSet)) {
+			UnicodeProperties settingsProperties =
+				layoutSet.getSettingsProperties();
 
-		String uuids = settingsProperties.getProperty(
-			MERGE_FAIL_FRIENDLY_URL_LAYOUTS);
+			String uuids = settingsProperties.getProperty(
+				MERGE_FAIL_FRIENDLY_URL_LAYOUTS);
 
-		if (Validator.isNotNull(uuids)) {
-			List<Layout> layouts = new ArrayList<Layout>();
+			if (Validator.isNotNull(uuids)) {
+				List<Layout> layouts = new ArrayList<Layout>();
 
-			for (String uuid : StringUtil.split(uuids)) {
-				Layout layout =
-					LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-						uuid, layoutSet.getGroupId(),
-						layoutSet.isPrivateLayout());
+				for (String uuid : StringUtil.split(uuids)) {
+					Layout layout =
+						LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
+							uuid, layoutSet.getGroupId(),
+							layoutSet.isPrivateLayout());
 
-				layouts.add(layout);
+					layouts.add(layout);
+				}
+
+				return layouts;
 			}
-
-			return layouts;
 		}
 
 		return Collections.emptyList();

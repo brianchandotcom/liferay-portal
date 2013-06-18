@@ -103,7 +103,7 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 	}
 	%>
 
-	<c:if test="<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_USERS) && (role != null) && (userGroup != null) %>">
+	<c:if test="<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_USERS) && (role == null) && (userGroup == null) %>">
 
 		<%
 		if (userOrganization != null) {
@@ -112,7 +112,6 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 			PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "view-users"), currentURL);
 		}
 		%>
-
 
 		<c:if test="<%= layout.isTypeControlPanel() %>">
 			<div id="breadcrumb">

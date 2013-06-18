@@ -46,18 +46,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 <liferay-ui:error exception="<%= RequiredOrganizationException.class %>" message="you-cannot-delete-organizations-that-have-suborganizations-or-users" />
 <liferay-ui:error exception="<%= RequiredUserException.class %>" message="you-cannot-delete-or-deactivate-yourself" />
 
-<c:if test="<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS) || usersListView.equals(UserConstants.LIST_VIEW_FLAT_USERS) %>">
-	<portlet:renderURL var="headerBackURL">
-		<portlet:param name="struts_action" value="/users_admin/view_users" />
-	</portlet:renderURL>
-
-	<liferay-ui:header
-		backLabel="users-and-organizations-home"
-		backURL="<%= headerBackURL.toString() %>"
-		title='<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS) ? "organizations" : "users" %>'
-	/>
-</c:if>
-
 <aui:form action="<%= portletURLString %>" method="post" name="fm">
 	<liferay-portlet:renderURLParams varImpl="portletURL" />
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />

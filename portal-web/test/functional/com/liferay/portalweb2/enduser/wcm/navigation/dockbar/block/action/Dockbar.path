@@ -198,6 +198,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>USER_MY_ACCOUNT</td>
+	<td>//a[@title='My Account']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>USER_SIGN_OUT</td>
 	<td>//li[@class='sign-out']/a</td>
 	<td></td>

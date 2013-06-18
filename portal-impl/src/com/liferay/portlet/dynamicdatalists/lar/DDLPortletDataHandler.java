@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetLocalServiceUtil;
@@ -37,8 +38,9 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 	public static final String NAMESPACE = "dynamic_data_lists";
 
 	public DDLPortletDataHandler() {
-		setDeletionSystemEventClassNames(DDLRecordSet.class.getName());
 		setDataLocalized(true);
+		setDeletionSystemEventModelTypes(
+			new StagedModelType(DDLRecordSet.class));
 		setExportControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "record-sets", true, false, null,

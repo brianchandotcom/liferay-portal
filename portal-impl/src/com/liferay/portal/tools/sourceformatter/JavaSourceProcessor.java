@@ -1075,10 +1075,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			String trimmedLine = StringUtil.trimLeading(line);
 
-			if (trimmedLine.startsWith("* @deprecated")) {
+			if (trimmedLine.startsWith("* @deprecated") &&
+				getVersion().equals(VERSION_6_2_0)) {
+
 				if (!trimmedLine.startsWith("* @deprecated As of ")) {
 					line = StringUtil.replace(
-						line, "* @deprecated", "* @deprecated As of 6.2.0");
+						line, "* @deprecated",
+						"* @deprecated As of " + VERSION_6_2_0);
 				}
 				else {
 					String version = trimmedLine.substring(20);

@@ -115,6 +115,18 @@
 
 		<execute action="Home#open" locator1="${pageAccessURL}${pageTypeURL}${pageStagingURL}" />
 	</command>
+	
+	<command name="gotoMyAccount">
+		<execute action="Home#open" locator-key1="HOME_URL" />
+
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_ACCOUNT" />
+
+		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
+		<execute action="Myaccount#click" locator1="//ul[@class='nav control-panel-bar-secondary nav-pills']//a[contains(.,'${portletName}')]" value1="${portletName}" />
+		<execute action="Myaccount#selectFrame" />
+		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
+	</command>
 
 	<command name="pgGoto">
 		<execute macro="Page#openURL" />

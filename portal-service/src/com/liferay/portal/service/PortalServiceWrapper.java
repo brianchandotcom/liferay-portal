@@ -98,12 +98,6 @@ public class PortalServiceWrapper implements PortalService,
 	}
 
 	@Override
-	public void testCounterIncrement_Rollback()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_portalService.testCounterIncrement_Rollback();
-	}
-
-	@Override
 	public void testDeleteClassName()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

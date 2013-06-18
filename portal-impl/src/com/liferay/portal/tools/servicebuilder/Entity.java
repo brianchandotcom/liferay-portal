@@ -578,18 +578,16 @@ public class Entity {
 	}
 
 	public boolean isAttachedModel() {
-		if (hasColumn("classNameId") && hasColumn("classPK")) {
-			EntityColumn classNameIdCol = getColumn("classNameId");
+		if (!isTypedModel()) {
+			return false;
+		}
 
-			String classNameIdColType = classNameIdCol.getType();
-
+		if (hasColumn("classPK")) {
 			EntityColumn classPKCol = getColumn("classPK");
 
 			String classPKColType = classPKCol.getType();
 
-			if (classNameIdColType.equals("long") &&
-				classPKColType.equals("long")) {
-
+			if (classPKColType.equals("long")) {
 				return true;
 			}
 		}
@@ -769,6 +767,20 @@ public class Entity {
 			hasColumn("modifiedDate", "Date")) {
 
 			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isTypedModel() {
+		if (hasColumn("classNameId")) {
+			EntityColumn classNameIdCol = getColumn("classNameId");
+
+			String classNameIdColType = classNameIdCol.getType();
+
+			if (classNameIdColType.equals("long")) {
+				return true;
+			}
 		}
 
 		return false;

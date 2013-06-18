@@ -23,9 +23,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletSession;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -88,68 +85,12 @@ public class PortalMessages {
 		map.put(key, value);
 	}
 
-	public static void add(PortletRequest portletRequest, Class<?> clazz) {
-		add(portletRequest.getPortletSession(), clazz.getName());
-	}
-
-	public static void add(
-		PortletRequest portletRequest, Class<?> clazz, Object value) {
-
-		add(portletRequest.getPortletSession(), clazz.getName(), value);
-	}
-
-	public static void add(PortletRequest portletRequest, String key) {
-		add(portletRequest.getPortletSession(), key);
-	}
-
-	public static void add(
-		PortletRequest portletRequest, String key, Object value) {
-
-		add(portletRequest.getPortletSession(), key, value);
-	}
-
-	public static void add(PortletSession portletSession, Class<?> clazz) {
-		add(portletSession, clazz.getName());
-	}
-
-	public static void add(
-		PortletSession portletSession, Class<?> clazz, Object value) {
-
-		add(portletSession, clazz.getName(), value);
-	}
-
-	public static void add(PortletSession portletSession, String key) {
-		Map<String, Object> map = _getMap(portletSession, true);
-
-		map.put(key, key);
-	}
-
-	public static void add(
-		PortletSession portletSession, String key, Object value) {
-
-		Map<String, Object> map = _getMap(portletSession, true);
-
-		map.put(key, value);
-	}
-
 	public static void clear(HttpServletRequest request) {
 		clear(request.getSession());
 	}
 
 	public static void clear(HttpSession session) {
 		Map<String, Object> map = _getMap(session, false);
-
-		if (map != null) {
-			map.clear();
-		}
-	}
-
-	public static void clear(PortletRequest portletRequest) {
-		clear(portletRequest.getPortletSession());
-	}
-
-	public static void clear(PortletSession portletSession) {
-		Map<String, Object> map = _getMap(portletSession, false);
 
 		if (map != null) {
 			map.clear();
@@ -170,32 +111,6 @@ public class PortalMessages {
 
 	public static boolean contains(HttpSession session, String key) {
 		Map<String, Object> map = _getMap(session, false);
-
-		if (map == null) {
-			return false;
-		}
-
-		return map.containsKey(key);
-	}
-
-	public static boolean contains(
-		PortletRequest portletRequest, Class<?> clazz) {
-
-		return contains(portletRequest.getPortletSession(), clazz.getName());
-	}
-
-	public static boolean contains(PortletRequest portletRequest, String key) {
-		return contains(portletRequest.getPortletSession(), key);
-	}
-
-	public static boolean contains(
-		PortletSession portletSession, Class<?> clazz) {
-
-		return contains(portletSession, clazz.getName());
-	}
-
-	public static boolean contains(PortletSession portletSession, String key) {
-		Map<String, Object> map = _getMap(portletSession, false);
 
 		if (map == null) {
 			return false;
@@ -226,48 +141,12 @@ public class PortalMessages {
 		return map.get(key);
 	}
 
-	public static Object get(PortletRequest portletRequest, Class<?> clazz) {
-		return get(portletRequest.getPortletSession(), clazz.getName());
-	}
-
-	public static Object get(PortletRequest portletRequest, String key) {
-		return get(portletRequest.getPortletSession(), key);
-	}
-
-	public static Object get(PortletSession portletSession, Class<?> clazz) {
-		return get(portletSession, clazz.getName());
-	}
-
-	public static Object get(PortletSession portletSession, String key) {
-		Map<String, Object> map = _getMap(portletSession, false);
-
-		if (map == null) {
-			return null;
-		}
-
-		return map.get(key);
-	}
-
 	public static boolean isEmpty(HttpServletRequest request) {
 		return isEmpty(request.getSession());
 	}
 
 	public static boolean isEmpty(HttpSession session) {
 		Map<String, Object> map = _getMap(session, false);
-
-		if (map == null) {
-			return true;
-		}
-
-		return map.isEmpty();
-	}
-
-	public static boolean isEmpty(PortletRequest portletRequest) {
-		return isEmpty(portletRequest.getPortletSession());
-	}
-
-	public static boolean isEmpty(PortletSession portletSession) {
-		Map<String, Object> map = _getMap(portletSession, false);
 
 		if (map == null) {
 			return true;
@@ -294,44 +173,12 @@ public class PortalMessages {
 		return set.iterator();
 	}
 
-	public static Iterator<String> iterator(PortletRequest portletRequest) {
-		return iterator(portletRequest.getPortletSession());
-	}
-
-	public static Iterator<String> iterator(PortletSession portletSession) {
-		Map<String, Object> map = _getMap(portletSession, false);
-
-		if (map == null) {
-			List<String> list = Collections.<String>emptyList();
-
-			return list.iterator();
-		}
-
-		Set<String> set = Collections.unmodifiableSet(map.keySet());
-
-		return set.iterator();
-	}
-
 	public static Set<String> keySet(HttpServletRequest request) {
 		return keySet(request.getSession());
 	}
 
 	public static Set<String> keySet(HttpSession session) {
 		Map<String, Object> map = _getMap(session, false);
-
-		if (map == null) {
-			return Collections.emptySet();
-		}
-
-		return Collections.unmodifiableSet(map.keySet());
-	}
-
-	public static Set<String> keySet(PortletRequest portletRequest) {
-		return keySet(portletRequest.getPortletSession());
-	}
-
-	public static Set<String> keySet(PortletSession portletSession) {
-		Map<String, Object> map = _getMap(portletSession, false);
 
 		if (map == null) {
 			return Collections.emptySet();
@@ -352,38 +199,12 @@ public class PortalMessages {
 		}
 	}
 
-	public static void print(PortletRequest portletRequest) {
-		print(portletRequest.getPortletSession());
-	}
-
-	public static void print(PortletSession portletSession) {
-		Iterator<String> itr = iterator(portletSession);
-
-		while (itr.hasNext()) {
-			System.out.println(itr.next());
-		}
-	}
-
 	public static int size(HttpServletRequest request) {
 		return size(request.getSession());
 	}
 
 	public static int size(HttpSession session) {
 		Map<String, Object> map = _getMap(session, false);
-
-		if (map == null) {
-			return 0;
-		}
-
-		return map.size();
-	}
-
-	public static int size(PortletRequest portletRequest) {
-		return size(portletRequest.getPortletSession());
-	}
-
-	public static int size(PortletSession portletSession) {
-		Map<String, Object> map = _getMap(portletSession, false);
 
 		if (map == null) {
 			return 0;
@@ -405,30 +226,6 @@ public class PortalMessages {
 				map = new LinkedHashMap<String, Object>();
 
 				session.setAttribute(WebKeys.PORTAL_MESSAGES, map);
-			}
-		}
-		catch (IllegalStateException ise) {
-
-			// Session is already invalidated, just return a null map
-
-		}
-
-		return map;
-	}
-
-	private static Map<String, Object> _getMap(
-		PortletSession portletSession, boolean createIfAbsent) {
-
-		Map<String, Object> map = null;
-
-		try {
-			map = (Map<String, Object>)portletSession.getAttribute(
-				WebKeys.PORTAL_MESSAGES);
-
-			if ((map == null) && createIfAbsent) {
-				map = new LinkedHashMap<String, Object>();
-
-				portletSession.setAttribute(WebKeys.PORTAL_MESSAGES, map);
 			}
 		}
 		catch (IllegalStateException ise) {

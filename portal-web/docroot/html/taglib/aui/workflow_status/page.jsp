@@ -31,7 +31,7 @@
 	if (Validator.isNull(statusMessage)) {
 		statusMessage = WorkflowConstants.toLabel(status);
 
-		if (status == WorkflowConstants.STATUS_PENDING) {
+		if ((status == WorkflowConstants.STATUS_PENDING) && (bean != null) && (model != null)) {
 			long companyId = BeanPropertiesUtil.getLong(bean, "companyId");
 			long groupId = BeanPropertiesUtil.getLong(bean, "groupId");
 			long classPK = BeanPropertiesUtil.getLong(bean, "primaryKey");

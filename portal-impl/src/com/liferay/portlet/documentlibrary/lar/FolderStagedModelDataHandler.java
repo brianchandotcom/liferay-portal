@@ -68,11 +68,6 @@ public class FolderStagedModelDataHandler
 	}
 
 	@Override
-	public String getManifestSummaryKey(StagedModel stagedModel) {
-		return Folder.class.getName();
-	}
-
-	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext, Folder folder)
 		throws Exception {

@@ -90,11 +90,6 @@ public class FileEntryStagedModelDataHandler
 	}
 
 	@Override
-	public String getManifestSummaryKey(StagedModel stagedModel) {
-		return FileEntry.class.getName();
-	}
-
-	@Override
 	public void importStagedModel(
 			PortletDataContext portletDataContext, FileEntry fileEntry)
 		throws PortletDataException {

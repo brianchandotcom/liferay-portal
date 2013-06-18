@@ -16,6 +16,7 @@ package com.liferay.portal.repository.proxy;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -244,6 +245,11 @@ public class FileEntryProxyBean
 	@Override
 	public long getSize() {
 		return _fileEntry.getSize();
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _fileEntry.getStagedModelType();
 	}
 
 	@Override

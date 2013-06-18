@@ -64,10 +64,14 @@ AUI.add(
 				'</tpl>',
 				'<tpl if="values.warningMessages && (values.warningMessages.length > 0)">',
 					'<li class="alert upload-error" data-fileId="{id}" id="{id}">',
-						'<span class="error-message" title="{error}">{[ this.strings.warningText ]}</span>',
+						'<span class="error-message" title="{error}">{[ values.error ? this.strings.warningFailureText : this.strings.warningText ]}</span>',
 						'<ul class="error-list-items">',
 							'<tpl for="warningMessages">',
-								'<li>{.}</li>',
+								'<li>{type} <strong>({size})</strong>:',
+									'<tpl if="info">',
+										'<span class="error-info"">{info}</span>',
+									'</tpl>',
+								'</li>',
 							'</tpl>',
 						'</ul>',
 					'</li>',
@@ -186,7 +190,8 @@ AUI.add(
 							uploadingFileXofXText: Liferay.Language.get('uploading-file-x-of-x'),
 							uploadingText: Liferay.Language.get('uploading'),
 							uploadsCompleteText: Liferay.Language.get('all-files-ready-to-be-saved'),
-							warningText: Liferay.Language.get('the-following-data-could-not-be-imported'),
+							warningText: Liferay.Language.get('the-following-data-will-not-be-imported'),
+							warningFailureText: Liferay.Language.get('consider-that-the-following-data-would-not-have-been-imported-either'),
 							xFilesReadyText: Liferay.Language.get('x-files-ready-to-be-uploaded'),
 							xFilesSelectedText: Liferay.Language.get('x-files-selected'),
 							zeroByteSizeText: Liferay.Language.get('the-file-contains-no-data-and-cannot-be-uploaded.-please-use-the-classic-uploader')
@@ -480,6 +485,7 @@ AUI.add(
 						instance._updateManageUploadDisplay();
 						instance._updateMetadataContainer();
 						instance._updatePendingInfoContainer();
+						instance._updateWarningContainer();
 
 						Liferay.fire('tempFileRemoved');
 					},
@@ -1077,6 +1083,18 @@ AUI.add(
 
 						if (!totalFiles.size()) {
 							instance._pendingFileInfo.hide();
+						}
+					},
+
+					_updateWarningContainer: function() {
+						var instance = this;
+
+						var totalFiles = instance._fileList.all('li input[name=' + instance._selectUploadedFileCheckboxId + ']');
+
+						if (!totalFiles.size()) {
+							var warningContainer = instance._fileList.one('.upload-error');
+
+							warningContainer.hide();
 						}
 					},
 

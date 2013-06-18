@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
@@ -374,40 +375,28 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 
 			Map<String, String> referrers = missingReference.getReferrers();
 
-			String errorMessage = null;
+			JSONObject errorMessageJSONObject =
+				JSONFactoryUtil.createJSONObject();
 
-			if (referrers.size() == 1) {
-				errorMessage = themeDisplay.translate(
-					"1-entry-of-type-x-could-not-be-imported-because-the-" +
-						"original-x-does-not-exist-in-the-current-environment",
-					new String[] {
+			if (Validator.isNotNull(missingReference.getClassName())) {
+				errorMessageJSONObject.put(
+					"info",
+					themeDisplay.translate(
+						"the-original-x-does-not-exist-in-the-current" +
+							"-environment",
 						ResourceActionsUtil.getModelResource(
 							themeDisplay.getLocale(),
-							missingReferenceReferrerClassName),
-						ResourceActionsUtil.getModelResource(
-							themeDisplay.getLocale(),
-							missingReference.getClassName())
-					}
-				);
-			}
-			else {
-				errorMessage = themeDisplay.translate(
-					"x-entries-of-type-x-could-not-be-imported-because-the-" +
-						"original-x-does-not-exist-in-the-current-environment",
-					new String[] {
-						String.valueOf(referrers.size()),
-						ResourceActionsUtil.getModelResource(
-							themeDisplay.getLocale(),
-							missingReferenceReferrerClassName),
-						ResourceActionsUtil.getModelResource(
-							themeDisplay.getLocale(),
-							missingReference.getClassName())
-
-					}
-				);
+							missingReference.getClassName())));
 			}
 
-			warningMessagesJSONArray.put(errorMessage);
+			errorMessageJSONObject.put("size", referrers.size());
+			errorMessageJSONObject.put(
+				"type",
+				ResourceActionsUtil.getModelResource(
+					themeDisplay.getLocale(),
+					missingReferenceReferrerClassName));
+
+			warningMessagesJSONArray.put(errorMessageJSONObject);
 		}
 
 		return warningMessagesJSONArray;

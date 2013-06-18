@@ -214,9 +214,9 @@ window.YUI_config = {
 						'aui-dialog-iframe-deprecated',
 						'aui-event-input',
 						'aui-modal',
-						'liferay-widget-size-animation-plugin',
 						'liferay-portlet-base',
-						'liferay-util-window'
+						'liferay-util-window',
+						'liferay-widget-size-animation-plugin'
 					]
 				},
 				'liferay-dockbar-underlay': {
@@ -598,9 +598,8 @@ window.YUI_config = {
 					]
 				},
 				'liferay-widget-size-animation-plugin': {
-					path: 'widget-size-animation-plugin.js',
+					path: 'widget_size_animation_plugin.js',
 					requires: [
-						'anim-base',
 						'anim-easing',
 						'plugin',
 						'widget'

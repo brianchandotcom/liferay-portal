@@ -5,15 +5,15 @@ AUI.add(
     
         var STR_HOST = 'host';
 
-        var STR_SIZE_ANIM = 'sizeanim';
+        var NAME = 'sizeanim';
 
         var SizeAnim = A.Component.create(
             {
                 EXTENDS: A.Plugin.Base,
 
-                NAME: STR_SIZE_ANIM,
+                NAME: NAME,
 
-                NS: STR_SIZE_ANIM,
+                NS: NAME,
 
                 ATTRS: {
                     align: {
@@ -33,7 +33,7 @@ AUI.add(
                     initializer: function(config) {
                         var instance = this;
 
-                        var host = this.get(STR_HOST);
+                        var host = instance.get(STR_HOST);
 
                         host.addAttr(
                             'size',
@@ -56,17 +56,13 @@ AUI.add(
                     _alignWidget: function() {
                         var instance = this;
 
-                        var host = this.get(STR_HOST);
-
                         if (instance.get('align')) {
-                            host.align();
+                            instance.get(STR_HOST).align();
                         }
                     },
 
                     _animWidgetSize: function(size) {
                         var instance = this;
-
-                        var host = this.get(STR_HOST);
 
                         instance._anim.stop();
 
@@ -84,10 +80,10 @@ AUI.add(
             }
         );
 
-        A.namespace("Plugin").SizeAnim = SizeAnim;
+        A.Plugin.SizeAnim = SizeAnim;
     }, 
     '',
     {
-        requires: ["anim-base", "plugin", "widget"]
+        requires: ['anim-easing', 'plugin', 'widget']
     }
 );

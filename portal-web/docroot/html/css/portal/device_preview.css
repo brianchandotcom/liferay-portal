@@ -36,7 +36,6 @@
 
 			.device {
 				height: 60px;
-				background-repeat: no-repeat;
 
 				&.desktop {
 					background-image: url(@theme_image_path@/device_preview/desktop_off.png);
@@ -102,7 +101,7 @@
 
 						.tablet.rotation {
 							background-image: url(@theme_image_path@/device_preview/tablet_vertical_opacity.png);
-						}					
+						}
 					}
 				}
 			}

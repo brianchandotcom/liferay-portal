@@ -10,13 +10,7 @@ AUI.add(
 
 		var Dockbar = Liferay.Dockbar;
 
-		var CSS_DEVICE_ITEM = '.lfr-device-item';
-
-		var CSS_DEVICE_PREVIEW_CONTENT = '.device-preview-content';
-
 		var CSS_SELECTED = 'selected';
-
-		var SELECTOR_SELECTED = '.' + CSS_SELECTED;
 
 		var DIALOG_ALIGN_POINTS = [A.WidgetPositionAlign.CC, A.WidgetPositionAlign.CC];
 
@@ -37,13 +31,25 @@ AUI.add(
 			}
 		};
 
+		var SELECTOR_DEVICE_ITEM = '.lfr-device-item';
+
+		var SELECTOR_DEVICE_PREVIEW_CONTENT = '.device-preview-content';
+
+		var SELECTOR_SELECTED = '.' + CSS_SELECTED;
+
 		var STR_CLICK = 'click';
+
+		var STR_DEVICE = 'device';
+
+		var STR_DEVICES = 'devices';
 
 		var STR_INPUT = 'input';
 
 		var STR_INPUT_HEIGHT = 'inputHeight';
 
 		var STR_INPUT_WIDTH = 'inputWidth';
+
+		var STR_ROTATED = 'rotated';
 
 		var TPL_DEVICE_PREVIEW = '<div class="lfr-device-preview" />';
 
@@ -73,9 +79,10 @@ AUI.add(
 
 						instance._dialogId = A.guid();
 
-						instance._devicePreviewContainer = instance.byId('devicePreviewContainer');
-						instance._devicePreviewContent = instance._devicePreviewContainer.one(CSS_DEVICE_PREVIEW_CONTENT);
-						instance._closePanelButton = instance._devicePreviewContainer.one('#closePanel');
+						var devicePreviewContainer = instance.byId('devicePreviewContainer');
+
+						instance._devicePreviewContent = devicePreviewContainer.one(SELECTOR_DEVICE_PREVIEW_CONTENT);
+						instance._closePanelButton = devicePreviewContainer.one('#closePanel');
 
 						instance._devicePreviewNode = A.Node.create(Lang.sub(TPL_DEVICE_PREVIEW));
 						BODY.append(instance._devicePreviewNode);
@@ -95,6 +102,10 @@ AUI.add(
 							}
 						);
 
+						instance._deviceItems = devicePreviewContainer.all(SELECTOR_DEVICE_ITEM);
+
+						instance._devicePreviewContainer = devicePreviewContainer;
+
 						instance._bindUI();
 					},
 
@@ -109,8 +120,7 @@ AUI.add(
 
 						var eventHandles = [
 							instance._closePanelButton.on(STR_CLICK, instance._closePanel, instance),
-							instance._devicePreviewContent.delegate(STR_CLICK, instance._onDeviceRotation, '.selected.lfr-device-rotation', instance),
-							instance._devicePreviewContent.delegate(STR_CLICK, instance._onDeviceClick, CSS_DEVICE_ITEM, instance)
+							instance._devicePreviewContent.delegate(STR_CLICK, instance._onDeviceClick, SELECTOR_DEVICE_ITEM, instance)
 						];
 
 						var inputWidth = instance.get(STR_INPUT_WIDTH);
@@ -222,6 +232,7 @@ AUI.add(
 								},
 								function (dialogWindow) {
 									dialogWindow.align(instance._devicePreviewNode, DIALOG_ALIGN_POINTS);
+
 									dialogWindow.plug(
 										A.Plugin.SizeAnim,
 										{
@@ -233,6 +244,7 @@ AUI.add(
 						}
 						else {
 							dialog.setAttrs(dialogAttrs);
+
 							dialog.show();
 						}
 
@@ -242,31 +254,27 @@ AUI.add(
 					_onDeviceClick: function(event) {
 						var instance = this;
 
-						var deviceList = instance.get('devices');
-
-						var deviceId = event.currentTarget.getData('device');
-
-						var selectedDevice = deviceList[deviceId];
-
-						if (selectedDevice) {
-							instance._devicePreviewContainer.all(SELECTOR_SELECTED).removeClass(CSS_SELECTED);
-
-							event.currentTarget.addClass(CSS_SELECTED);
-
-							instance._openDeviceDialog(selectedDevice, event.currentTarget.hasClass('rotated'));
-						}
-					},
-
-					_onDeviceRotation: function(event) {
-						var instance = this;
+						var deviceList = instance.get(STR_DEVICES);
 
 						var deviceItem = event.currentTarget;
 
-						deviceItem.toggleClass('rotated');
+						var deviceId = deviceItem.getData(STR_DEVICE);
 
-						instance._openDeviceDialog(instance._selectedDevice, deviceItem.hasClass('rotated'));
+						var device = deviceList[deviceId];
 
-						event.stopImmediatePropagation();
+						if (device) {
+							var deviceSelected = deviceItem.hasClass(CSS_SELECTED);
+
+							instance._deviceItems.removeClass(CSS_SELECTED);
+
+							if (deviceSelected && deviceItem.hasClass('lfr-device-rotation')) {
+								deviceItem.toggleClass(STR_ROTATED);
+							}
+
+							deviceItem.addClass(CSS_SELECTED);
+
+							instance._openDeviceDialog(device, deviceItem.hasClass(STR_ROTATED));
+						}
 					},
 
 					_onSizeInput: function(event) {

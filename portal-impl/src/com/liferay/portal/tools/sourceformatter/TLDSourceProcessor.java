@@ -14,6 +14,16 @@
 
 package com.liferay.portal.tools.sourceformatter;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.io.File;
+
+import java.util.List;
+
+import org.apache.tools.ant.DirectoryScanner;
+
 /**
  * @author Hugo Huijser
  */
@@ -21,7 +31,41 @@ public class TLDSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void doFormat() throws Exception {
-		formatTLD();
+		String basedir = "./";
+
+		DirectoryScanner directoryScanner = new DirectoryScanner();
+
+		directoryScanner.setBasedir(basedir);
+
+		String[] excludes = {
+			"**\\classes\\**", "**\\bin\\**", "**\\WEB-INF\\tld\\**"
+		};
+
+		excludes = ArrayUtil.append(excludes, getExcludes());
+
+		directoryScanner.setExcludes(excludes);
+
+		directoryScanner.setIncludes(new String[] {"**\\*.tld"});
+
+		List<String> fileNames = getSourceFormatterHelper().scanForFiles(
+			directoryScanner);
+
+		for (String fileName : fileNames) {
+			File file = new File(basedir + fileName);
+
+			String content = getFileUtil().read(file);
+
+			String newContent = trimContent(content, false);
+
+			if ((newContent != null) && !content.equals(newContent)) {
+				getFileUtil().write(file, newContent);
+
+				fileName = StringUtil.replace(
+					fileName, StringPool.BACK_SLASH, StringPool.SLASH);
+
+				getSourceFormatterHelper().printError(fileName, file);
+			}
+		}
 	}
 
 }

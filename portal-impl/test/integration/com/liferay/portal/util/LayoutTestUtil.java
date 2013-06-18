@@ -47,6 +47,22 @@ import javax.portlet.PortletPreferences;
  */
 public class LayoutTestUtil {
 
+	public static Layout addLayout(
+			long groupId, boolean privateLayout, Map<Locale, String> nameMap,
+			Map<Locale, String> friendlyURLMap)
+		throws Exception {
+
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			groupId);
+
+		return LayoutLocalServiceUtil.addLayout(
+			serviceContext.getUserId(), groupId, privateLayout,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, nameMap, nameMap,
+			new HashMap<Locale, String>(), new HashMap<Locale, String>(),
+			new HashMap<Locale, String>(), LayoutConstants.TYPE_PORTLET,
+			StringPool.BLANK, false, friendlyURLMap, serviceContext);
+	}
+
 	public static Layout addLayout(long groupId, String name) throws Exception {
 		return addLayout(groupId, name, false);
 	}

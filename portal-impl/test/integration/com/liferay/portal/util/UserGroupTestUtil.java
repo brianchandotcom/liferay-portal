@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.util.dependencies;
+package com.liferay.portal.util;
 
 import com.liferay.portal.model.UserGroup;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
-import com.liferay.portal.util.TestPropsValues;
 
 /**
  * @author Roberto Díaz
@@ -25,10 +25,17 @@ import com.liferay.portal.util.TestPropsValues;
 public class UserGroupTestUtil {
 
 	public static UserGroup addUserGroup() throws Exception {
+		return addUserGroup(TestPropsValues.getGroupId());
+	}
+
+	public static UserGroup addUserGroup(long groupId) throws Exception {
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			groupId);
+
 		return UserGroupLocalServiceUtil.addUserGroup(
-			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
+			serviceContext.getUserId(), serviceContext.getCompanyId(),
 			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(50),
-			ServiceTestUtil.getServiceContext());
+			serviceContext);
 	}
 
 }

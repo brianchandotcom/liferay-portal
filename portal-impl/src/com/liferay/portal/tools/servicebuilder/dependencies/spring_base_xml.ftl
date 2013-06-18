@@ -13,6 +13,11 @@
 		<constructor-arg>
 			<map>
 				<entry key="methodInterceptor" value-ref="serviceAdvice" />
+				<entry key="beanMatcher">
+					<bean class="com.liferay.portal.kernel.spring.util.SpringFactoryUtil" factory-method="newBean">
+						<constructor-arg value="com.liferay.portal.spring.aop.ServiceBeanMatcher" />
+					</bean>
+				</entry>
 			</map>
 		</constructor-arg>
 	</bean>

@@ -141,7 +141,6 @@ AUI.add(
 
 							instance._navItemSelector = navItemSelector;
 
-							instance._makeAddable();
 							instance._makeDeletable();
 							instance._makeSortable();
 							instance._makeEditable();
@@ -157,31 +156,6 @@ AUI.add(
 
 							navBlock.delegate('keypress', A.bind('_onKeypress', instance), 'input');
 						}
-					},
-
-					_addPage: function(event) {
-						var instance = this;
-
-						event.halt();
-
-						if (!event.shiftKey) {
-							Liferay.fire('dockbar:closeAddContentMenu');
-						}
-
-						var navBlock = instance.get('navBlock');
-
-						var addBlock = ANode.create(TPL_LIST_ITEM);
-
-						navBlock.show();
-
-						navBlock.one('ul').append(addBlock);
-
-						instance._createEditor(
-							addBlock,
-							{
-								prevVal: STR_EMPTY
-							}
-						);
 					},
 
 					_cancelPage: function(event) {
@@ -270,26 +244,6 @@ AUI.add(
 						var instance = this;
 
 						event.currentTarget.toggleClass('lfr-nav-hover', (event.type == 'mouseenter'));
-					},
-
-					_makeAddable: function() {
-						var instance = this;
-
-						if (instance.get('isAddable')) {
-							var prototypeMenuNode = A.one('#layoutPrototypeTemplate');
-
-							if (prototypeMenuNode) {
-								instance._prototypeMenuTemplate = prototypeMenuNode.html();
-							}
-
-							if (instance.get('hasAddLayoutPermission')) {
-								var addPageButton = A.one('#' + Dockbar._namespace + 'addPage');
-
-								if (addPageButton) {
-									addPageButton.on('click', instance._addPage, instance);
-								}
-							}
-						}
 					},
 
 					_makeDeletable: function() {
@@ -814,70 +768,6 @@ AUI.add(
 
 							toolbar.fire('cancelPage');
 						}
-					}
-					else {
-						var popoverBoundingBox = toolbar._optionsPopover.get('boundingBox');
-
-						var selectedInput = popoverBoundingBox.one('input:checked');
-
-						var layoutPrototypeId;
-
-						if (selectedInput) {
-							layoutPrototypeId = selectedInput.val();
-						}
-
-						data = {
-							cmd: 'add',
-							doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
-							explicitCreation: true,
-							groupId: themeDisplay.getSiteGroupId(),
-							layoutPrototypeId: layoutPrototypeId,
-							mainPath: themeDisplay.getPathMain(),
-							name: pageTitle,
-							p_auth: Liferay.authToken,
-							parentLayoutId: themeDisplay.getParentLayoutId(),
-							privateLayout: themeDisplay.isPrivateLayout()
-						};
-
-						onSuccess = function(event, id, obj) {
-							var data = this.get('responseData');
-
-							var tabHtml = Lang.sub(
-								TPL_TAB_LINK,
-								{
-									url: data.url,
-									pageTitle: Lang.String.escapeHTML(pageTitle)
-								}
-							);
-
-							var newTab = ANode.create(tabHtml);
-
-							listItem.setData(STR_LAYOUT_ID, data.layoutId);
-
-							listItem.append(newTab);
-
-							toolbar.destroy();
-
-							if (data.sortable) {
-								listItem.addClass('lfr-nav-sortable sortable-item');
-							}
-
-							if (data.updateable) {
-								listItem.addClass('lfr-nav-updateable');
-							}
-
-							if (data.deletable) {
-								instance._createDeleteButton(listItem);
-							}
-
-							Liferay.fire(
-								'navigation',
-								{
-									item: listItem,
-									type: 'add'
-								}
-							);
-						};
 					}
 
 					if (data) {

@@ -15,7 +15,8 @@
 package com.liferay.portlet.journal.action;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.upload.UploadServletRequest;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ImageLocalServiceUtil;
+import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
@@ -45,56 +47,57 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletConfig;
 
-import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  */
-public class ViewArticleContentAction extends Action {
+public class ViewArticleContentAction extends PortletAction {
 
 	@Override
-	public ActionForward execute(
+	public void processAction(
 			ActionMapping actionMapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response)
+			PortletConfig portletConfig, ActionRequest actionRequest,
+			ActionResponse actionResponse)
 		throws Exception {
 
-		UploadServletRequest uploadServletRequest = null;
+		UploadPortletRequest uploadPortletRequest = null;
 
 		try {
-			String cmd = ParamUtil.getString(request, Constants.CMD);
+			String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			long groupId = ParamUtil.getLong(request, "groupId");
-			String articleId = ParamUtil.getString(request, "articleId");
+			long groupId = ParamUtil.getLong(actionRequest, "groupId");
+			String articleId = ParamUtil.getString(actionRequest, "articleId");
 			double version = ParamUtil.getDouble(
-				request, "version", JournalArticleConstants.VERSION_DEFAULT);
+				actionRequest, "version",
+				JournalArticleConstants.VERSION_DEFAULT);
 
-			String languageId = LanguageUtil.getLanguageId(request);
+			String languageId = LanguageUtil.getLanguageId(actionRequest);
 
 			String output = null;
 
 			if (cmd.equals(Constants.PREVIEW)) {
-				uploadServletRequest = PortalUtil.getUploadServletRequest(
-					request);
+				uploadPortletRequest = PortalUtil.getUploadPortletRequest(
+					actionRequest);
 
 				String title = ParamUtil.getString(
-					uploadServletRequest, "title");
+					uploadPortletRequest, "title");
 				String description = ParamUtil.getString(
-					uploadServletRequest, "description");
-				String type = ParamUtil.getString(uploadServletRequest, "type");
+					uploadPortletRequest, "description");
+				String type = ParamUtil.getString(uploadPortletRequest, "type");
 				String structureId = ParamUtil.getString(
-					uploadServletRequest, "structureId");
+					uploadPortletRequest, "structureId");
 				String templateId = ParamUtil.getString(
-					uploadServletRequest, "templateId");
+					uploadPortletRequest, "templateId");
 
 				Date now = new Date();
 
@@ -102,9 +105,9 @@ public class ViewArticleContentAction extends Action {
 				Date modifiedDate = now;
 				Date displayDate = now;
 
-				User user = PortalUtil.getUser(uploadServletRequest);
+				User user = PortalUtil.getUser(uploadPortletRequest);
 
-				String xml = ParamUtil.getString(uploadServletRequest, "xml");
+				String xml = ParamUtil.getString(uploadPortletRequest, "xml");
 
 				Document doc = SAXReaderUtil.read(xml);
 
@@ -116,7 +119,7 @@ public class ViewArticleContentAction extends Action {
 
 				format(
 					groupId, articleId, version, previewArticleId, root,
-					uploadServletRequest);
+					uploadPortletRequest);
 
 				Map<String, String> tokens = JournalUtil.getTokens(
 					groupId, themeDisplay);
@@ -157,25 +160,25 @@ public class ViewArticleContentAction extends Action {
 					groupId, articleId, version, languageId, themeDisplay);
 			}
 
-			request.setAttribute(WebKeys.JOURNAL_ARTICLE_CONTENT, output);
+			actionRequest.setAttribute(WebKeys.JOURNAL_ARTICLE_CONTENT, output);
 
 			if (output.startsWith("<?xml ")) {
-				return actionMapping.findForward(
-					"portlet.journal.raw_article_content");
+				setForward(
+					actionRequest, "portlet.journal.raw_article_content");
 			}
 			else {
-				return actionMapping.findForward(
-					"portlet.journal.view_article_content");
+				setForward(
+					actionRequest, "portlet.journal.view_article_content");
 			}
 		}
 		catch (Exception e) {
-			PortalUtil.sendError(e, request, response);
+			SessionErrors.add(actionRequest, e.getClass());
 
-			return null;
+			setForward(actionRequest, "portlet.journal.error");
 		}
 		finally {
-			if (uploadServletRequest != null) {
-				uploadServletRequest.cleanUp();
+			if (uploadPortletRequest != null) {
+				uploadPortletRequest.cleanUp();
 			}
 		}
 	}
@@ -183,7 +186,7 @@ public class ViewArticleContentAction extends Action {
 	protected void format(
 			long groupId, String articleId, double version,
 			String previewArticleId, Element root,
-			UploadServletRequest uploadServletRequest)
+			UploadPortletRequest uploadPortletRequest)
 		throws Exception {
 
 		List<Element> elements = root.elements();
@@ -210,7 +213,7 @@ public class ViewArticleContentAction extends Action {
 			}
 
 			if (elType.equals("image") && Validator.isNull(elContent)) {
-				File file = uploadServletRequest.getFile(
+				File file = uploadPortletRequest.getFile(
 					"structure_image_" + elName + elLanguage);
 				byte[] bytes = FileUtil.getBytes(file);
 
@@ -248,7 +251,7 @@ public class ViewArticleContentAction extends Action {
 
 			format(
 				groupId, articleId, version, previewArticleId, element,
-				uploadServletRequest);
+				uploadPortletRequest);
 		}
 	}
 

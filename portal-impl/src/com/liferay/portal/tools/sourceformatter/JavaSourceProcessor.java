@@ -969,6 +969,39 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
+	protected String formatAnnotations(
+			String fileName, String content, Set<JavaTerm> javaTerms)
+		throws IOException {
+
+		Iterator<JavaTerm> itr = javaTerms.iterator();
+
+		while (itr.hasNext()) {
+			JavaTerm javaTerm = itr.next();
+
+			if (fileName.contains("/test/") &&
+				!fileName.endsWith("TestBean.java")) {
+
+				checkTestAnnotations(javaTerm, fileName);
+			}
+
+			for (;;) {
+				String javaTermContent = javaTerm.getContent();
+
+				javaTerm.sortAnnotations();
+
+				String newJavaTermContent = javaTerm.getContent();
+
+				if (javaTermContent.equals(newJavaTermContent)) {
+					break;
+				}
+
+				content = content.replace(javaTermContent, newJavaTermContent);
+			}
+		}
+
+		return content;
+	}
+
 	protected String formatJava(String fileName, String content)
 		throws IOException {
 
@@ -2432,39 +2465,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return false;
-	}
-
-	protected String formatAnnotations(
-			String fileName, String content, Set<JavaTerm> javaTerms)
-		throws IOException {
-
-		Iterator<JavaTerm> itr = javaTerms.iterator();
-
-		while (itr.hasNext()) {
-			JavaTerm javaTerm = itr.next();
-
-			if (fileName.contains("/test/") &&
-				!fileName.endsWith("TestBean.java")) {
-
-				checkTestAnnotations(javaTerm, fileName);
-			}
-
-			for (;;) {
-				String javaTermContent = javaTerm.getContent();
-
-				javaTerm.sortAnnotations();
-
-				String newJavaTermContent = javaTerm.getContent();
-
-				if (javaTermContent.equals(newJavaTermContent)) {
-					break;
-				}
-
-				content = content.replace(javaTermContent, newJavaTermContent);
-			}
-		}
-
-		return content;
 	}
 
 	protected String sortExceptions(String line) {

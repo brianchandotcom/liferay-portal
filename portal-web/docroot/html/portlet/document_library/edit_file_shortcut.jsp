@@ -177,9 +177,7 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 
 					nameEl.innerHTML = A.Escape.html(event.groupname) + "&nbsp;";
 
-					if (selectToFileEntryButton) {
-						Liferay.Util.toggleDisabled(selectToFileEntryButton, false);
-					}
+					Liferay.Util.toggleDisabled(selectToFileEntryButton, false);
 				}
 			);
 		}

@@ -1,0 +1,13 @@
+<definition>
+	<command name="click">
+		<case locator-key1="SAVE_BUTTON">
+			<execute function="Click#textClickAtAndWait" value1="Save" />
+		</case>
+	</command>
+
+	<command name="selectFrame">
+		<case locator-key1="CONFIGURATION_IFRAME">
+			<execute function="SelectFrame#selectFrame" />
+		</case>
+	</command>
+</definition>

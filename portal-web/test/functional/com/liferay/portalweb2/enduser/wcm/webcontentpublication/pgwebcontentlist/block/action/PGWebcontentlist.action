@@ -1,0 +1,7 @@
+<definition>
+	<command name="click">
+		<case locator-key1="WEB_CONTENT_TABLE_TITLE_1">
+			<execute function="Click#textClickAtAndWait" />
+		</case>
+	</command>
+</definition>

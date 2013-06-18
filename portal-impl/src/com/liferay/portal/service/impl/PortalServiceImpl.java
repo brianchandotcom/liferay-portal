@@ -178,17 +178,6 @@ public class PortalServiceImpl extends PortalServiceBaseImpl {
 	}
 
 	@Override
-	public void testCounterIncrement_Rollback() throws SystemException {
-		int counterIncrement = PropsValues.COUNTER_INCREMENT;
-
-		for (int i = 0; i < counterIncrement * 2; i++) {
-			counterLocalService.increment();
-		}
-
-		throw new SystemException();
-	}
-
-	@Override
 	public void testDeleteClassName() throws PortalException, SystemException {
 		classNamePersistence.removeByValue(PortalService.class.getName());
 	}

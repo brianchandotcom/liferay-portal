@@ -828,10 +828,14 @@ public class PortletExporter {
 					portletDataContext, className, classPK, mbMessage);
 
 				if (portletDataContext.isPathNotProcessed(commentPath)) {
-					portletDataContext.addZipEntry(commentPath, mbMessage);
-
-					User user = UserLocalServiceUtil.getUser(
+					User user = UserLocalServiceUtil.fetchUser(
 						mbMessage.getUserId());
+
+					if (user == null) {
+						continue;
+					}
+
+					portletDataContext.addZipEntry(commentPath, mbMessage);
 
 					MBDiscussion mbDiscussion =
 						MBDiscussionLocalServiceUtil.getDiscussion(
@@ -1297,10 +1301,14 @@ public class PortletExporter {
 				String ratingsEntryPath = getRatingsEntryPath(
 					portletDataContext, className, classPK, ratingsEntry);
 
-				portletDataContext.addZipEntry(ratingsEntryPath, ratingsEntry);
-
-				User user = UserLocalServiceUtil.getUser(
+				User user = UserLocalServiceUtil.fetchUser(
 					ratingsEntry.getUserId());
+
+				if (user == null) {
+					continue;
+				}
+
+				portletDataContext.addZipEntry(ratingsEntryPath, ratingsEntry);
 
 				portletDataContext.addReferenceElement(
 					ratingsEntry, assetElement, user, User.class,

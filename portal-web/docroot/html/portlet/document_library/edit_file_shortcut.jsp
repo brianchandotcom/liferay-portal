@@ -146,6 +146,8 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 </portlet:renderURL>
 
 <aui:script use="aui-base,escape">
+	var selectToFileEntryButton = A.one('#<portlet:namespace />selectToFileEntryButton');
+
 	A.one('#<portlet:namespace />selectGroupButton').on(
 		'click',
 		function(event) {
@@ -175,18 +177,13 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 
 					nameEl.innerHTML = A.Escape.html(event.groupname) + "&nbsp;";
 
-					var button = A.one('#<portlet:namespace />selectToFileEntryButton');
-
-					if (button) {
-						button.set('disabled', false);
-						button.ancestor('.button').removeClass('button-disabled');
-					}
+					Liferay.Util.toggleDisabled(selectToFileEntryButton, false);
 				}
 			);
 		}
 	);
 
-	A.one('#<portlet:namespace />selectToFileEntryButton').on(
+	selectToFileEntryButton.on(
 		'click',
 		function(event) {
 			Liferay.Util.selectEntity(

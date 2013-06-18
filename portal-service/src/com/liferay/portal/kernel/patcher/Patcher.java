@@ -32,6 +32,8 @@ public interface Patcher {
 
 	public static final String PROPERTY_PATCH_DIRECTORY = "patch.directory";
 
+	public static final String PROPERTY_PATCH_LEVEL = "patch.level";
+
 	public boolean applyPatch(File patchFile);
 
 	public String[] getFixedIssues();
@@ -39,6 +41,8 @@ public interface Patcher {
 	public String[] getInstalledPatches();
 
 	public File getPatchDirectory();
+
+	public String[] getPatchLevel();
 
 	public Properties getProperties();
 

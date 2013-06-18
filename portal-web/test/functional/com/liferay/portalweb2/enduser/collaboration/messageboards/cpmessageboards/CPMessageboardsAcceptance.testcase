@@ -43,11 +43,10 @@
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
 
-		<execute macro="MessageboardsThread#viewCP">
-			<var name="threadBody" value="${threadBody}" />
+		<execute macro="MessageboardsThread#viewNoCP">
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
-	</command>
+	</command>-->
 
 	<tear-down>
 		<execute macro="MessageboardsCategory#tearDownCP" />

@@ -76,33 +76,33 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CATEGORY_TABLE_CHECKBOX_1</td>
-	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//tr/td[1])[1]</td>
+	<td>CATEGORY_TABLE_CHECKBOX</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_categoryName}')]/td[1]/input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CATEGORY_TABLE_CATEGORY_1</td>
-	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//tr/td[2]/a)[1]</td>
+	<td>CATEGORY_TABLE_CATEGORY</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_categoryName}')]/td[2]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CATEGORY_TABLE_CATEGORIES_1</td>
-	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//tr/td[3]/a)[1]</td>
+	<td>CATEGORY_TABLE_CATEGORIES</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_categoryName}')]/td[3]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CATEGORY_TABLE_THREADS_1</td>
-	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//tr/td[4]/a)[1]</td>
+	<td>CATEGORY_TABLE_THREADS</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_categoryName}')]/td[4]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CATEGORY_TABLE_POSTS_1</td>
-	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//tr/td[5]/a)[1]</td>
+	<td>CATEGORY_TABLE_POSTS</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_categoryName}')]/td[5]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CATEGORY_TABLE_ACTIONS_1</td>
-	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//tr/td[6]/div/a[@title='Actions'])[1]</td>
+	<td>CATEGORY_TABLE_ACTIONS</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_categoryName}')]/td[6]/div/a[@title='Actions']</td>
 	<td></td>
 </tr>
 <tr>
@@ -154,38 +154,43 @@
 	<td></td>
 </tr>
 <tr>
-	<td>THREAD_TABLE_CHECKBOX_1</td>
-	<td>xpath=(//div[contains(@id,'mbThreadsSearchContainer')]//tr/td[1]/a)[1]</td>
+	<td>THREAD_TABLE_CHECKBOX</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[1]/input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>THREAD_TABLE_THREAD_1</td>
-	<td>xpath=(//div[contains(@id,'mbThreadsSearchContainer')]//tr/td[2]/a)[1]</td>
+	<td>THREAD_TABLE_THREAD</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[2]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>THREAD_TABLE_FLAG_1</td>
-	<td>xpath=(//div[contains(@id,'mbThreadsSearchContainer')]//tr/td[23/a)[1]</td>
+	<td>THREAD_TABLE_FLAG</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[3]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>THREAD_TABLE_STARTED_BY_1</td>
-	<td>xpath=(//div[contains(@id,'mbThreadsSearchContainer')]//tr/td[4]/a)[1]</td>
+	<td>THREAD_TABLE_STARTED_BY</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[4]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>THREAD_TABLE_POSTS_1</td>
-	<td>xpath=(//div[contains(@id,'mbThreadsSearchContainer')]//tr/td[5]/a)[1]</td>
+	<td>THREAD_TABLE_POSTS</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[5]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>THREAD_TABLE_LAST_POST_1</td>
-	<td>xpath=(//div[contains(@id,'mbThreadsSearchContainer')]//tr/td[7]/a)[1]</td>
+	<td>THREAD_TABLE_VIEWS</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[6]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>THREAD_TABLE_ACTIONS_1</td>
-	<td>xpath=(//div[contains(@id,'mbThreadsSearchContainer')]//tr/td[8]/div/a[@title='Actions'])[1]</td>
+	<td>THREAD_TABLE_LAST_POST</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[7]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_TABLE_ACTIONS</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[8]/div/a[@title='Actions']</td>
 	<td></td>
 </tr>
 <tr>

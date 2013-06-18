@@ -66,8 +66,10 @@
 			<var name="portletName" value="Message Boards" />
 		</execute>
 
-		<execute action="CPMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_THREAD_1" value1="${threadSubject}" />
-		<execute action="CPMessageboards#click" locator-key1="THREAD_TABLE_ACTIONS_1" />
+		<var name="key_threadSubject" value="${threadSubject}" />
+
+		<execute action="CPMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute action="CPMessageboards#click" locator-key1="THREAD_TABLE_ACTIONS" />
 		<execute action="CPMessageboards#assertElementPresent" locator-key1="THREAD_MENULIST_MOVE_TO_THE_RECYCLE_BIN" />
 		<execute action="CPMessageboards#click" locator-key1="THREAD_MENULIST_MOVE_TO_THE_RECYCLE_BIN" />
 		<execute action="CPMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" />
@@ -133,25 +135,54 @@
 			<var name="portletName" value="Message Boards" />
 		</execute>
 
-		<if>
-			<condition action="CPMessageboards#isElementPresent" locator-key1="THREAD_TABLE_THREAD_1" />
-			<then>
-				<execute action="CPMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_THREAD_1" value1="${threadSubject}" />
-				<execute action="CPMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_STARTED_BY_1" value1="${userName}" />
-				<execute action="CPMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_POSTS_1" value1="1" />
-				<execute action="CPMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_LAST_POST_1" value1="By: ${userName}" />
-				<execute action="CPMessageboards#click" locator-key1="THREAD_TABLE_THREAD_1" value1="${threadSubject}" />
+		<var name="key_threadSubject" value="${threadSubject}" />
 
-				<execute action="CPMessageboardsThread#assertTextEquals" locator-key1="TITLE_HEADER" value1="${threadSubject}" />
-				<execute action="CPMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_USERNAME_1" value1="${userName}" />
-				<execute action="CPMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_SUBJECT_1" value1="${threadSubject}" />
-				<execute action="CPMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_1" value1="${threadBody}" />
-			</then>
-			<else>
-				<execute action="CPMessageboards#assertTextEquals" locator-key1="INFO_MESSAGE_THREAD" />
-				<execute action="CPMessageboards#assertTextNotPresent" value1="${threadSubject}" />
-			</else>
-		</if>
+		<execute action="CPMessageboards#assertElementPresent" locator-key1="THREAD_TABLE_CHECKBOX" />
+		<execute action="CPMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute action="CPMessageboards#assertElementPresent" locator-key1="THREAD_TABLE_FLAG" />
+		<execute action="CPMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_STARTED_BY" value1="${userName}" />
+		<execute action="CPMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_POSTS" value1="1" />
+		<execute action="CPMessageboards#assertElementPresent" locator-key1="THREAD_TABLE_VIEWS" />
+		<execute action="CPMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_LAST_POST" value1="By: ${userName}" />
+		<execute action="CPMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_ACTIONS" />
+		<execute action="CPMessageboards#click" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+
+		<execute action="CPMessageboardsThread#assertTextEquals" locator-key1="TITLE_HEADER" value1="${threadSubject}" />
+		<execute action="CPMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_USERNAME_1" value1="${userName}" />
+		<execute action="CPMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_SUBJECT_1" value1="${threadSubject}" />
+		<execute action="CPMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_1" value1="${threadBody}" />
+	</command>
+
+	<command name="viewNoCP">
+		<execute macro="Page#cpGotoContent">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<var name="key_threadSubject" value="${threadSubject}" />
+
+		<execute action="CPMessageboards#assertTextEquals" locator-key1="INFO_MESSAGE_THREAD" />
+		<execute action="CPMessageboards#assertTextNotPresent" value1="${threadSubject}" />
+		<execute action="CPMessageboards#assertElementNotPresent" locator-key1="THREAD_TABLE_CHECKBOX" />
+		<execute action="CPMessageboards#assertElementNotPresent" locator-key1="THREAD_TABLE_THREAD" />
+		<execute action="CPMessageboards#assertElementNotPresent" locator-key1="THREAD_TABLE_FLAG" />
+		<execute action="CPMessageboards#assertElementNotPresent" locator-key1="THREAD_TABLE_STARTED_BY" />
+		<execute action="CPMessageboards#assertElementNotPresent" locator-key1="THREAD_TABLE_POSTS" />
+		<execute action="CPMessageboards#assertElementNotPresent" locator-key1="THREAD_TABLE_VIEWS" />
+		<execute action="CPMessageboards#assertElementNotPresent" locator-key1="THREAD_TABLE_LAST_POST" />
+		<execute action="CPMessageboards#assertElementNotPresent" locator-key1="THREAD_TABLE_ACTIONS" />
+	</command>
+
+	<command name="viewNoPG">
+		<execute macro="Page#pgGoto">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="INFO_MESSAGE_THREAD" />
+		<execute action="CPMessageboards#assertTextNotPresent" value1="${threadSubject}" />
+		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="THREAD_TABLE_THREAD_1"  />
+		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="THREAD_TABLE_STARTED_BY_1" />
+		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="THREAD_TABLE_POSTS_1" />
+		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="THREAD_TABLE_LAST_POST_1" />
 	</command>
 
 	<command name="viewPG">
@@ -159,24 +190,15 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<if>
-			<condition action="CPMessageboards#isElementPresent" locator-key1="THREAD_TABLE_THREAD_1" />
-			<then>
-				<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_THREAD_1" value1="${threadSubject}" />
-				<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_STARTED_BY_1" value1="${userName}" />
-				<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_POSTS_1" value1="1" />
-				<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_LAST_POST_1" value1="By: ${userName}" />
-				<execute action="PGMessageboards#click" locator-key1="THREAD_TABLE_THREAD_1" value1="${threadSubject}" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_THREAD_1" value1="${threadSubject}" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_STARTED_BY_1" value1="${userName}" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_POSTS_1" value1="1" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_LAST_POST_1" value1="By: ${userName}" />
+		<execute action="PGMessageboards#click" locator-key1="THREAD_TABLE_THREAD_1" value1="${threadSubject}" />
 
-				<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="TITLE_HEADER" value1="${threadSubject}" />
-				<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_USERNAME_1" value1="${userName}" />
-				<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_SUBJECT_1" value1="${threadSubject}" />
-				<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_1" value1="${threadBody}" />
-			</then>
-			<else>
-				<execute action="PGMessageboards#assertTextEquals" locator-key1="INFO_MESSAGE_THREAD" />
-				<execute action="CPMessageboards#assertTextNotPresent" value1="${threadSubject}" />
-			</else>
-		</if>
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="TITLE_HEADER" value1="${threadSubject}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_USERNAME_1" value1="${userName}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_SUBJECT_1" value1="${threadSubject}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_1" value1="${threadBody}" />
 	</command>
 </definition>

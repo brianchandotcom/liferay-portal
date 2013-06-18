@@ -78,21 +78,45 @@
 			<var name="portletName" value="Message Boards" />
 		</execute>
 
-		<if>
-			<condition action="CPMessageboards#isElementPresent" locator-key1="CATEGORY_TABLE_CATEGORY_1" />
-			<then>
-				<execute action="CPMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORY_1" value1="${categoryName}" />
-				<execute action="CPMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORIES_1" value1="0" />
-				<execute action="CPMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_THREADS_1" value1="0" />
-				<execute action="CPMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_POSTS_1" value1="0" />
-				<execute action="CPMessageboards#click" locator-key1="CATEGORY_TABLE_CATEGORY_1" value1="${categoryName}" />
+		<var name="key_categoryName" value="${categoryName}" />
 
-				<execute action="CPMessageboardsCategory#assertTextEquals" locator-key1="NAME_HEADER" value1="${categoryName}" />
-			</then>
-			<else>
-				<execute action="CPMessageboards#assertTextNotPresent" value1="${categoryName}" />
-			</else>
-		</if>
+		<execute action="CPMessageboards#assertElementPresent" locator-key1="CATEGORY_TABLE_CHECKBOX" />
+		<execute action="CPMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
+		<execute action="CPMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORIES" value1="0" />
+		<execute action="CPMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_THREADS" value1="0" />
+		<execute action="CPMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_POSTS" value1="0" />
+		<execute action="CPMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_ACTIONS" />
+		<execute action="CPMessageboards#click" locator-key1="CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
+
+		<execute action="CPMessageboardsCategory#assertTextEquals" locator-key1="NAME_HEADER" value1="${categoryName}" />
+	</command>
+
+	<command name="viewNoCP">
+		<execute macro="Page#cpGotoContent">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<var name="key_categoryName" value="${categoryName}" />
+
+		<execute action="CPMessageboards#assertTextNotPresent" value1="${categoryName}" />
+		<execute action="CPMessageboards#assertElementNotPresent" locator-key1="CATEGORY_TABLE_CHECKBOX" />
+		<execute action="CPMessageboards#assertElementNotPresent" locator-key1="CATEGORY_TABLE_CATEGORY" />
+		<execute action="CPMessageboards#assertElementNotPresent" locator-key1="CATEGORY_TABLE_CATEGORIES" />
+		<execute action="CPMessageboards#assertElementNotPresent" locator-key1="CATEGORY_TABLE_THREADS" />
+		<execute action="CPMessageboards#assertElementNotPresent" locator-key1="CATEGORY_TABLE_POSTS" />
+		<execute action="CPMessageboards#assertElementNotPresent" locator-key1="CATEGORY_TABLE_ACTIONS" />
+	</command>
+
+	<command name="viewNoPG">
+		<execute macro="Page#pgGoto">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute action="PGMessageboards#assertTextNotPresent" value1="${categoryName}" />
+		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="CATEGORY_TABLE_CATEGORY_1" />
+		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="CATEGORY_TABLE_CATEGORIES_1" />
+		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="CATEGORY_TABLE_THREADS_1" />
+		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="CATEGORY_TABLE_POSTS_1" />
 	</command>
 
 	<command name="viewPG">
@@ -100,20 +124,12 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<if>
-			<condition action="PGMessageboards#isElementPresent" locator-key1="CATEGORY_TABLE_CATEGORY_1" />
-			<then>
-				<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORY_1" value1="${categoryName}" />
-				<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORIES_1" value1="0" />
-				<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_THREADS_1" value1="0" />
-				<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_POSTS_1" value1="0" />
-				<execute action="PGMessageboards#click" locator-key1="CATEGORY_TABLE_CATEGORY_1" value1="${categoryName}" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORY_1" value1="${categoryName}" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORIES_1" value1="0" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_THREADS_1" value1="0" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_POSTS_1" value1="0" />
+		<execute action="PGMessageboards#click" locator-key1="CATEGORY_TABLE_CATEGORY_1" value1="${categoryName}" />
 
-				<execute action="PGMessageboardsCategory#assertTextEquals" locator-key1="NAME_HEADER" value1="${categoryName}" />
-			</then>
-			<else>
-				<execute action="CPMessageboards#assertTextNotPresent" value1="${categoryName}" />
-			</else>
-		</if>
+		<execute action="PGMessageboardsCategory#assertTextEquals" locator-key1="NAME_HEADER" value1="${categoryName}" />
 	</command>
 </definition>

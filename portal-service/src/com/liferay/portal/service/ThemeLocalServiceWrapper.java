@@ -95,7 +95,7 @@ public class ThemeLocalServiceWrapper implements ThemeLocalService,
 	}
 
 	@Override
-	public java.util.List<java.lang.String> init(
+	public java.util.List<com.liferay.portal.model.Theme> init(
 		javax.servlet.ServletContext servletContext,
 		java.lang.String themesPath, boolean loadFromServletContext,
 		java.lang.String[] xmls,
@@ -105,7 +105,7 @@ public class ThemeLocalServiceWrapper implements ThemeLocalService,
 	}
 
 	@Override
-	public java.util.List<java.lang.String> init(
+	public java.util.List<com.liferay.portal.model.Theme> init(
 		java.lang.String servletContextName,
 		javax.servlet.ServletContext servletContext,
 		java.lang.String themesPath, boolean loadFromServletContext,
@@ -116,8 +116,9 @@ public class ThemeLocalServiceWrapper implements ThemeLocalService,
 	}
 
 	@Override
-	public void uninstallThemes(java.util.List<java.lang.String> themeIds) {
-		_themeLocalService.uninstallThemes(themeIds);
+	public void uninstallThemes(
+		java.util.List<com.liferay.portal.model.Theme> themes) {
+		_themeLocalService.uninstallThemes(themes);
 	}
 
 	/**

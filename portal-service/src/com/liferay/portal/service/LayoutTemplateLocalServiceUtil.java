@@ -86,13 +86,13 @@ public class LayoutTemplateLocalServiceUtil {
 		return getService().getWapContent(layoutTemplateId, standard, themeId);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.lang.Boolean>> init(
+	public static java.util.List<com.liferay.portal.model.LayoutTemplate> init(
 		javax.servlet.ServletContext servletContext, java.lang.String[] xmls,
 		com.liferay.portal.kernel.plugin.PluginPackage pluginPackage) {
 		return getService().init(servletContext, xmls, pluginPackage);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.lang.Boolean>> init(
+	public static java.util.List<com.liferay.portal.model.LayoutTemplate> init(
 		java.lang.String servletContextName,
 		javax.servlet.ServletContext servletContext, java.lang.String[] xmls,
 		com.liferay.portal.kernel.plugin.PluginPackage pluginPackage) {
@@ -102,13 +102,13 @@ public class LayoutTemplateLocalServiceUtil {
 
 	public static void readLayoutTemplate(java.lang.String servletContextName,
 		javax.servlet.ServletContext servletContext,
-		java.util.Set<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.lang.Boolean>> layoutTemplateIdOVPs,
+		java.util.Set<com.liferay.portal.model.LayoutTemplate> layoutTemplates,
 		com.liferay.portal.kernel.xml.Element element, boolean standard,
 		java.lang.String themeId,
 		com.liferay.portal.kernel.plugin.PluginPackage pluginPackage) {
 		getService()
 			.readLayoutTemplate(servletContextName, servletContext,
-			layoutTemplateIdOVPs, element, standard, themeId, pluginPackage);
+			layoutTemplates, element, standard, themeId, pluginPackage);
 	}
 
 	public static void uninstallLayoutTemplate(

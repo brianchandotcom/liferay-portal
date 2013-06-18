@@ -476,6 +476,8 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 
 		_portlets.put(servletContextName, portlets);
 
+		servletContext.setAttribute(WebKeys.PLUGIN_PORTLETS, portlets);
+
 		if (_log.isInfoEnabled()) {
 			if (portlets.size() == 1) {
 				_log.info(

@@ -95,7 +95,7 @@ public class ThemeLocalServiceUtil {
 		return getService().getWARThemes();
 	}
 
-	public static java.util.List<java.lang.String> init(
+	public static java.util.List<com.liferay.portal.model.Theme> init(
 		javax.servlet.ServletContext servletContext,
 		java.lang.String themesPath, boolean loadFromServletContext,
 		java.lang.String[] xmls,
@@ -105,7 +105,7 @@ public class ThemeLocalServiceUtil {
 			xmls, pluginPackage);
 	}
 
-	public static java.util.List<java.lang.String> init(
+	public static java.util.List<com.liferay.portal.model.Theme> init(
 		java.lang.String servletContextName,
 		javax.servlet.ServletContext servletContext,
 		java.lang.String themesPath, boolean loadFromServletContext,
@@ -117,8 +117,8 @@ public class ThemeLocalServiceUtil {
 	}
 
 	public static void uninstallThemes(
-		java.util.List<java.lang.String> themeIds) {
-		getService().uninstallThemes(themeIds);
+		java.util.List<com.liferay.portal.model.Theme> themes) {
+		getService().uninstallThemes(themes);
 	}
 
 	public static ThemeLocalService getService() {

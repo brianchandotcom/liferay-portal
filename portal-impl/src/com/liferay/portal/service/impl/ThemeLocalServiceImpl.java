@@ -237,7 +237,7 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 	}
 
 	@Override
-	public List<String> init(
+	public List<Theme> init(
 		ServletContext servletContext, String themesPath,
 		boolean loadFromServletContext, String[] xmls,
 		PluginPackage pluginPackage) {
@@ -248,22 +248,22 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 	}
 
 	@Override
-	public List<String> init(
+	public List<Theme> init(
 		String servletContextName, ServletContext servletContext,
 		String themesPath, boolean loadFromServletContext, String[] xmls,
 		PluginPackage pluginPackage) {
 
-		List<String> themeIdsList = new ArrayList<String>();
+		List<Theme> themeList = new ArrayList<Theme>();
 
 		try {
 			for (String xml : xmls) {
-				Set<String> themeIds = _readThemes(
+				Set<Theme> themes = _readThemes(
 					servletContextName, servletContext, themesPath,
 					loadFromServletContext, xml, pluginPackage);
 
-				for (String themeId : themeIds) {
-					if (!themeIdsList.contains(themeId)) {
-						themeIdsList.add(themeId);
+				for (Theme theme : themes) {
+					if (!themeList.contains(theme)) {
+						themeList.add(theme);
 					}
 				}
 			}
@@ -274,13 +274,13 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 
 		_themesPool.clear();
 
-		return themeIdsList;
+		return themeList;
 	}
 
 	@Override
-	public void uninstallThemes(List<String> themeIds) {
-		for (int i = 0; i < themeIds.size(); i++) {
-			String themeId = themeIds.get(i);
+	public void uninstallThemes(List<Theme> themes) {
+		for (Theme theme : themes) {
+			String themeId = theme.getThemeId();
 
 			_themes.remove(themeId);
 
@@ -451,16 +451,16 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 		}
 	}
 
-	private Set<String> _readThemes(
+	private Set<Theme> _readThemes(
 			String servletContextName, ServletContext servletContext,
 			String themesPath, boolean loadFromServletContext, String xml,
 			PluginPackage pluginPackage)
 		throws Exception {
 
-		Set<String> themeIds = new HashSet<String>();
+		Set<Theme> themes = new HashSet<Theme>();
 
 		if (xml == null) {
-			return themeIds;
+			return themes;
 		}
 
 		Document document = SAXReaderUtil.read(xml, true);
@@ -493,7 +493,7 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 				"Themes in this WAR are not compatible with " +
 					ReleaseInfo.getServerInfo());
 
-			return themeIds;
+			return themes;
 		}
 
 		ThemeCompanyLimit companyLimit = null;
@@ -564,8 +564,6 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 			themeId = PortalUtil.getJsSafePortletId(themeId);
 
 			themeContextReplace.addValue("theme-id", themeId);
-
-			themeIds.add(themeId);
 
 			Theme theme = _themes.get(themeId);
 
@@ -723,9 +721,11 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 			if (!_themes.containsKey(themeId)) {
 				_themes.put(themeId, theme);
 			}
+
+			themes.add(theme);
 		}
 
-		return themeIds;
+		return themes;
 	}
 
 	private void _setSpriteImages(

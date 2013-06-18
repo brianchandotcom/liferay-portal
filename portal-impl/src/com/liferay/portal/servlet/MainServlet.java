@@ -54,10 +54,12 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
+import com.liferay.portal.model.LayoutTemplate;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.model.PortletFilter;
 import com.liferay.portal.model.PortletURLListener;
+import com.liferay.portal.model.Theme;
 import com.liferay.portal.model.User;
 import com.liferay.portal.plugin.PluginPackageUtil;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
@@ -810,8 +812,12 @@ public class MainServlet extends ActionServlet {
 					"/WEB-INF/liferay-layout-templates-ext.xml"))
 		};
 
-		LayoutTemplateLocalServiceUtil.init(
-			servletContext, xmls, pluginPackage);
+		List<LayoutTemplate> layoutTemplates =
+			LayoutTemplateLocalServiceUtil.init(
+				servletContext, xmls, pluginPackage);
+
+		servletContext.setAttribute(
+			WebKeys.PLUGIN_LAYOUT_TEMPLATES, layoutTemplates);
 	}
 
 	protected PluginPackage initPluginPackage() throws Exception {
@@ -901,6 +907,8 @@ public class MainServlet extends ActionServlet {
 			}
 		}
 
+		servletContext.setAttribute(WebKeys.PLUGIN_PORTLETS, portlets);
+
 		return portlets;
 	}
 
@@ -970,8 +978,10 @@ public class MainServlet extends ActionServlet {
 					"/WEB-INF/liferay-look-and-feel-ext.xml"))
 		};
 
-		ThemeLocalServiceUtil.init(
+		List<Theme> themes = ThemeLocalServiceUtil.init(
 			servletContext, null, true, xmls, pluginPackage);
+
+		servletContext.setAttribute(WebKeys.PLUGIN_THEMES, themes);
 	}
 
 	protected void initWebSettings() throws Exception {

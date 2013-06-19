@@ -93,6 +93,10 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		return _helpMessage;
 	}
 
+	public java.lang.String getHelpTextCssClass() {
+		return _helpTextCssClass;
+	}
+
 	public java.lang.String getId() {
 		return _id;
 	}
@@ -271,6 +275,12 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("helpMessage", helpMessage);
 	}
 
+	public void setHelpTextCssClass(java.lang.String helpTextCssClass) {
+		_helpTextCssClass = helpTextCssClass;
+
+		setScopedAttribute("helpTextCssClass", helpTextCssClass);
+	}
+
 	public void setId(java.lang.String id) {
 		_id = id;
 
@@ -420,6 +430,7 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		_first = false;
 		_formName = null;
 		_helpMessage = null;
+		_helpTextCssClass = null;
 		_id = null;
 		_ignoreRequestValue = false;
 		_inlineField = false;
@@ -466,6 +477,7 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		setNamespacedAttribute(request, "first", _first);
 		setNamespacedAttribute(request, "formName", _formName);
 		setNamespacedAttribute(request, "helpMessage", _helpMessage);
+		setNamespacedAttribute(request, "helpTextCssClass", _helpTextCssClass);
 		setNamespacedAttribute(request, "id", _id);
 		setNamespacedAttribute(request, "ignoreRequestValue", _ignoreRequestValue);
 		setNamespacedAttribute(request, "inlineField", _inlineField);
@@ -497,6 +509,7 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 
 	private boolean _autoSize = false;
 	private java.lang.Object _bean = null;
+	private java.lang.String _helpTextCssClass = "add-on";
 	private boolean _changesContext = false;
 	private boolean _checked = false;
 	private long _classPK = 0;

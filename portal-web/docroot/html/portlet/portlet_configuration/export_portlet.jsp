@@ -17,8 +17,6 @@
 <%@ include file="/html/portlet/portlet_configuration/init.jsp" %>
 
 <%
-String tabs2 = ParamUtil.getString(request, "tabs2", "export");
-
 Layout exportableLayout = ExportImportHelperUtil.getExportableLayout(themeDisplay);
 
 Date startDate = null;
@@ -44,7 +42,7 @@ if (endDateTime > 0) {
 
 <aui:form action='<%= exportPortletURL + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="fm1">
 	<aui:input name="tabs1" type="hidden" value="export_import" />
-	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
+	<aui:input name="tabs2" type="hidden" value="export" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="plid" type="hidden" value="<%= exportableLayout.getPlid() %>" />
 	<aui:input name="groupId" type="hidden" value="<%= themeDisplay.getScopeGroupId() %>" />

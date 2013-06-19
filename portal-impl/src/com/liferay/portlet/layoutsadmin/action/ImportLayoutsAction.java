@@ -22,6 +22,7 @@ import com.liferay.portal.LayoutPrototypeException;
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.MissingReferenceException;
 import com.liferay.portal.NoSuchGroupException;
+import com.liferay.portal.PortletIdException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -461,7 +462,8 @@ public class ImportLayoutsAction extends PortletAction {
 			e instanceof LARTypeException ||
 			e instanceof LayoutPrototypeException ||
 			e instanceof LocaleException ||
-			e instanceof MissingReferenceException) {
+			e instanceof MissingReferenceException ||
+			e instanceof PortletIdException) {
 
 			if (e instanceof DuplicateFileException) {
 				errorMessage = themeDisplay.translate(
@@ -593,6 +595,11 @@ public class ImportLayoutsAction extends PortletAction {
 				errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 				warningMessagesJSONArray = getWarningMessagesJSONArray(
 					themeDisplay, missingReferences.getWeakMissingReferences());
+			}
+			else if (e instanceof PortletIdException) {
+				errorMessage = themeDisplay.translate(
+					"please-import-a-lar-file-for-the-current-portlet");
+				errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 			}
 		}
 		else {

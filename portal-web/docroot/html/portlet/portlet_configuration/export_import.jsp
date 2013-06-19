@@ -68,7 +68,7 @@ portletURL.setParameter("portletResource", portletResource);
 			<liferay-ui:message arguments="<%= lpe.getMessage() %>" key="please-import-a-lar-file-of-the-correct-type-x-is-not-valid" />
 		</liferay-ui:error>
 
-		<liferay-ui:error exception="<%= LayoutImportException.class %>" message="an-unexpected-error-occurred-while-importing-your-file" />
+		<liferay-ui:error exception="<%= ExportImportAction.class %>" message="an-unexpected-error-occurred-while-importing-your-file" />
 
 		<liferay-ui:error exception="<%= LocaleException.class %>">
 

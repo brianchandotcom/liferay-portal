@@ -48,6 +48,10 @@ if ((article != null) && article.isDraft()) {
 					click: function(event) {
 						var form = A.one('#<portlet:namespace />fm1');
 
+						<c:if test="<%= Validator.isNull(structureId) %>">
+							form.one('#<portlet:namespace />articleContent').val(window['<%= renderResponse.getNamespace() + renderResponse.getNamespace() + "structure_el_TextAreaField_content" %>'].getHTML());
+						</c:if>
+
 						var orginalFormAction = form.attr('action');
 
 						form.attr('target', '_blank');

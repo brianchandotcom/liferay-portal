@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
@@ -88,41 +89,49 @@ public class PreviewArticleContentAction extends PortletAction {
 
 				User user = PortalUtil.getUser(actionRequest);
 
-				ServiceContext serviceContext =
-					ServiceContextFactory.getInstance(
-						JournalArticle.class.getName(), actionRequest);
+				String content = ParamUtil.getString(
+					actionRequest, "content");
 
-				Object[] returnValue = ActionUtil.getContentAndImages(
-					groupId, structureId, themeDisplay.getLocale(),
-					serviceContext);
+				if (Validator.isNotNull(structureId)) {
+					ServiceContext serviceContext =
+						ServiceContextFactory.getInstance(
+							JournalArticle.class.getName(), actionRequest);
 
-				String content = (String)returnValue[0];
+					Object[] returnValue = ActionUtil.getContentAndImages(
+						groupId, structureId, themeDisplay.getLocale(),
+						serviceContext);
 
-				Map<String, String> tokens = JournalUtil.getTokens(
-					groupId, themeDisplay);
+					content = (String)returnValue[0];
 
-				tokens.put("article_resource_pk", "-1");
+					Map<String, String> tokens = JournalUtil.getTokens(
+						groupId, themeDisplay);
 
-				JournalArticle article = new JournalArticleImpl();
+					tokens.put("article_resource_pk", "-1");
 
-				article.setGroupId(groupId);
-				article.setCompanyId(user.getCompanyId());
-				article.setUserId(user.getUserId());
-				article.setUserName(user.getFullName());
-				article.setCreateDate(createDate);
-				article.setModifiedDate(modifiedDate);
-				article.setArticleId(articleId);
-				article.setVersion(version);
-				article.setTitle(title);
-				article.setDescription(description);
-				article.setContent(content);
-				article.setType(type);
-				article.setStructureId(structureId);
-				article.setTemplateId(templateId);
-				article.setDisplayDate(displayDate);
+					JournalArticle article = new JournalArticleImpl();
 
-				output = JournalArticleLocalServiceUtil.getArticleContent(
-					article, templateId, null, languageId, themeDisplay);
+					article.setGroupId(groupId);
+					article.setCompanyId(user.getCompanyId());
+					article.setUserId(user.getUserId());
+					article.setUserName(user.getFullName());
+					article.setCreateDate(createDate);
+					article.setModifiedDate(modifiedDate);
+					article.setArticleId(articleId);
+					article.setVersion(version);
+					article.setTitle(title);
+					article.setDescription(description);
+					article.setContent(content);
+					article.setType(type);
+					article.setStructureId(structureId);
+					article.setTemplateId(templateId);
+					article.setDisplayDate(displayDate);
+
+					output = JournalArticleLocalServiceUtil.getArticleContent(
+						article, templateId, null, languageId, themeDisplay);
+				}
+				else {
+					output = content;
+				}
 			}
 			else if (cmd.equals(Constants.VIEW)) {
 				JournalArticle article = JournalArticleServiceUtil.getArticle(

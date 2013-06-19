@@ -36,7 +36,7 @@ if (record != null) {
 
 DDLRecordSet recordSet = DDLRecordSetLocalServiceUtil.getRecordSet(recordSetId);
 
-DDMStructure ddmStructure = recordSet.getDDMStructure(formDDMTemplateId);
+DDMStructure ddmStructure = recordSet.getDDMStructure();
 
 Fields fields = null;
 
@@ -195,9 +195,21 @@ if (translating) {
 			</aui:script>
 		</c:if>
 
+		<%
+		long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
+
+		long classPK = recordSet.getDDMStructureId();
+
+		if (formDDMTemplateId > 0) {
+			classNameId = PortalUtil.getClassNameId(DDMTemplate.class);
+
+			classPK = formDDMTemplateId;
+		}
+		%>
+
 		<liferay-ddm:html
-			classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
-			classPK="<%= ddmStructure.getStructureId() %>"
+			classNameId="<%= classNameId %>"
+			classPK="<%= classPK %>"
 			fields="<%= fields %>"
 			repeatable="<%= translating ? false : true %>"
 			requestedLocale="<%= LocaleUtil.fromLanguageId(languageId) %>"

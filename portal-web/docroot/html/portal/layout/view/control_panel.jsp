@@ -161,25 +161,38 @@ request.setAttribute("control_panel.jsp-ppid", ppid);
 						<c:otherwise>
 							<aui:container cssClass="<%= panelCategory %>">
 								<aui:row>
-
-									<c:if test="<%= showControlPanelMenu %>">
-
-										<%
-										String backURL = HttpUtil.setParameter(themeDisplay.getURLControlPanel(), "p_p_id", PortletKeys.SITES_ADMIN);
-										%>
-
-										<a class="control-panel-back-link icon-circle-arrow-left" href="<%= backURL %>">&nbsp;</a>
-									</c:if>
-
-									<h1>
-										<%= curGroup.getDescriptiveName(themeDisplay.getLocale()) %>
-
+									<div class="span12" id="controlPanelSitesHeading">
 										<c:if test="<%= showControlPanelMenu %>">
-											<c:if test="<%= !Validator.equals(controlPanelCategory, PortletCategoryKeys.CURRENT_SITE) %>">
-												<%@ include file="/html/portal/layout/view/control_panel_site_selector.jspf" %>
-											</c:if>
+											<div class="pull-left">
+												<%
+												String backURL = HttpUtil.setParameter(themeDisplay.getURLControlPanel(), "p_p_id", PortletKeys.SITES_ADMIN);
+												%>
+
+												<a class="control-panel-back-link icon-circle-arrow-left" href="<%= backURL %>">&nbsp;</a>
+											</div>
 										</c:if>
-									</h1>
+
+										<div class="pull-left">
+											<span class="site-title">
+												<%= curGroup.getDescriptiveName(themeDisplay.getLocale()) %>
+
+												<c:if test="<%= showControlPanelMenu %>">
+													<c:if test="<%= !Validator.equals(controlPanelCategory, PortletCategoryKeys.CURRENT_SITE) %>">
+														<%@ include file="/html/portal/layout/view/control_panel_site_selector.jspf" %>
+													</c:if>
+												</c:if>
+											</span>
+
+											<div class="visit-links">
+												<ul>
+													<li>Visit: </li>
+													<li><a href="<%= user.getDisplayURL(themeDisplay, false) %>">Public Pages</a></li>
+													<li class="divider"></li>
+													<li><a href="<%= user.getDisplayURL(themeDisplay, true) %>">Private Pages</a></li>
+												</ul>
+											</div>
+										</div>
+									</div>
 								</aui:row>
 								<aui:row>
 

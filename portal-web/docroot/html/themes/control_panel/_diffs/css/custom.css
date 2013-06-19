@@ -35,6 +35,57 @@
 		margin-top: 0;
 	}
 
+	.panel-manage-frontpage {
+		#controlPanelSitesHeading {
+			float: left;
+			padding: 17px 20px 5px;
+			position: relative;
+			z-index: 10;
+
+			a:hover {
+				text-decoration: none;
+			}
+
+			.control-panel-back-link {
+				color: #30C8EE;
+				float: left;
+				font-size: 20px;
+				margin-right: 5px;
+				text-decoration: none;
+			}
+
+			.site-title {
+				color: #555;
+				font-size: 25px;
+				font-weight: 300;
+				margin-bottom: 5px;
+				padding: 0 28px 0 12px;
+				text-transform: capitalize;
+			}
+
+			.visit-links {
+				font-size: 12px;
+				padding: 0 15px;
+
+				ul {
+					color: #8D8D8D;
+					list-style: none;
+					margin: 0;
+
+					li {
+						float: left;
+						margin-right: 5px;
+
+						&.divider:before {
+							content: "/";
+							margin: 0 5px;
+						}
+					}
+				}
+			}
+		}
+	}
+
 	.panel-page-menu .portlet-borderless-container {
 		background: #222;
 
@@ -148,12 +199,6 @@
 		border-radius: 0;
 	}
 
-	.control-panel-back-link {
-		float: left;
-		margin: 25px 10px;
-		text-decoration: none;
-	}
-
 	.control-panel-bar-main {
 		font-size: 1.2em;
 		font-weight: bold;
@@ -190,6 +235,7 @@
 
 	.control-panel-site-selector .caret {
 		border-width: 6px;
-		margin-top: 16px;
+		margin-top: 5px;
+		vertical-align: middle;
 	}
 }

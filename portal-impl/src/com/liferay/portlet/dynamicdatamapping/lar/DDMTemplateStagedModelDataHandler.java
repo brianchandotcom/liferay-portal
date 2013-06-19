@@ -161,7 +161,7 @@ public class DDMTemplateStagedModelDataHandler
 		}
 
 		if (portletDataContext.getBooleanParameter(
-				DDMPortletDataHandler.NAMESPACE, "embedded-assets")) {
+				DDMPortletDataHandler.NAMESPACE, "referenced-content")) {
 
 			String content =
 				ExportImportHelperUtil.replaceExportContentReferences(

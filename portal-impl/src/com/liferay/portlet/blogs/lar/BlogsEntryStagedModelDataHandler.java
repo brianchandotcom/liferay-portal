@@ -96,7 +96,7 @@ public class BlogsEntryStagedModelDataHandler
 		String content = ExportImportHelperUtil.replaceExportContentReferences(
 			portletDataContext, entry, entryElement, entry.getContent(),
 			portletDataContext.getBooleanParameter(
-				BlogsPortletDataHandler.NAMESPACE, "embedded-assets"));
+				BlogsPortletDataHandler.NAMESPACE, "referenced-content"));
 
 		entry.setContent(content);
 
@@ -118,7 +118,7 @@ public class BlogsEntryStagedModelDataHandler
 		String content = ExportImportHelperUtil.replaceImportContentReferences(
 			portletDataContext, entryElement, entry.getContent(),
 			portletDataContext.getBooleanParameter(
-				BlogsPortletDataHandler.NAMESPACE, "embedded-assets"));
+				BlogsPortletDataHandler.NAMESPACE, "referenced-content"));
 
 		entry.setContent(content);
 

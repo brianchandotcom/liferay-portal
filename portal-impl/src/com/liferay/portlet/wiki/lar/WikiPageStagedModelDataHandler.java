@@ -62,7 +62,7 @@ public class WikiPageStagedModelDataHandler
 		String content = ExportImportHelperUtil.replaceExportContentReferences(
 			portletDataContext, page, pageElement, page.getContent(),
 			portletDataContext.getBooleanParameter(
-				WikiPortletDataHandler.NAMESPACE, "embedded-assets"));
+				WikiPortletDataHandler.NAMESPACE, "referenced-content"));
 
 		page.setContent(content);
 
@@ -109,7 +109,7 @@ public class WikiPageStagedModelDataHandler
 		String content = ExportImportHelperUtil.replaceImportContentReferences(
 			portletDataContext, pageElement, page.getContent(),
 			portletDataContext.getBooleanParameter(
-				WikiPortletDataHandler.NAMESPACE, "embedded-assets"));
+				WikiPortletDataHandler.NAMESPACE, "referenced-content"));
 
 		page.setContent(content);
 

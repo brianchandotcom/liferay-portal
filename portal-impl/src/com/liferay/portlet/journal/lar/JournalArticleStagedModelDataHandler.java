@@ -212,7 +212,7 @@ public class JournalArticleStagedModelDataHandler
 		String content = ExportImportHelperUtil.replaceExportContentReferences(
 			portletDataContext, article, articleElement, article.getContent(),
 			portletDataContext.getBooleanParameter(
-				JournalPortletDataHandler.NAMESPACE, "embedded-assets"));
+				JournalPortletDataHandler.NAMESPACE, "referenced-content"));
 
 		article.setContent(content);
 

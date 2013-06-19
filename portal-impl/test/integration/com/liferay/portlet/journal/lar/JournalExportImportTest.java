@@ -169,7 +169,6 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 			new String[] {Boolean.FALSE.toString()});
 
 		addParameter(parameterMap, "doAsGroupId", String.valueOf(groupId));
-		addParameter(parameterMap, "embedded-assets", true);
 		addParameter(parameterMap, "feeds", true);
 		addParameter(parameterMap, "groupId", String.valueOf(groupId));
 		addParameter(
@@ -177,6 +176,7 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 			Boolean.TRUE.toString());
 		addParameter(parameterMap, "plid", String.valueOf(plid));
 		addParameter(parameterMap, "portletResource", PortletKeys.JOURNAL);
+		addParameter(parameterMap, "referenced-content", true);
 		addParameter(parameterMap, "structures", true);
 		addParameter(parameterMap, "version-history", true);
 		addParameter(parameterMap, "web-content", true);

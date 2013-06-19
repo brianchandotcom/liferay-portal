@@ -17,6 +17,7 @@ package com.liferay.portlet.journal.lar;
 import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
+import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -80,9 +81,12 @@ public class JournalContentPortletDataHandler
 		setDataPortletPreferences("groupId", "articleId", "templateId");
 		setExportControls(
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "selected-web-content", true, true, null,
-				JournalArticle.class.getName()),
-				new PortletDataHandlerBoolean(NAMESPACE, "embedded-assets"));
+				NAMESPACE, "selected-web-content", true, true,
+				new PortletDataHandlerControl[] {
+					new PortletDataHandlerBoolean(
+						NAMESPACE, "referenced-content")
+				},
+				JournalArticle.class.getName()));
 
 		DLPortletDataHandler dlPortletDataHandler = new DLPortletDataHandler();
 

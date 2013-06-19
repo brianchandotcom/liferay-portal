@@ -66,8 +66,8 @@ public class BlogsExportImportTest extends BasePortletExportImportTestCase {
 	protected Map<String, String[]> getExportParameterMap() throws Exception {
 		Map<String, String[]> parameterMap = super.getExportParameterMap();
 
-		addParameter(parameterMap, "embedded-assets", true);
 		addParameter(parameterMap, "entries", true);
+		addParameter(parameterMap, "referenced-content", true);
 
 		return parameterMap;
 	}
@@ -76,8 +76,8 @@ public class BlogsExportImportTest extends BasePortletExportImportTestCase {
 	protected Map<String, String[]> getImportParameterMap() throws Exception {
 		Map<String, String[]> parameterMap = super.getImportParameterMap();
 
-		addParameter(parameterMap, "embedded-assets", true);
 		addParameter(parameterMap, "entries", true);
+		addParameter(parameterMap, "referenced-content", true);
 
 		return parameterMap;
 	}

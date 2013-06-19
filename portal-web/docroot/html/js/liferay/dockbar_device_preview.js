@@ -89,6 +89,7 @@ AUI.add(
 						instance._closePanelButton = devicePreviewContainer.one('#closePanel');
 
 						instance._devicePreviewNode = A.Node.create(Lang.sub(TPL_DEVICE_PREVIEW));
+						instance._deviceSkin = A.Node.create('<div class="lfr-device-skin smartphone"></div>');
 						BODY.append(instance._devicePreviewNode);
 
 						var devices = instance.get('devices');
@@ -245,7 +246,17 @@ AUI.add(
 									dialogWindow.plug(
 										A.Plugin.SizeAnim,
 										{
-											align: true
+											align: true,
+											after: {
+												start: function(event) {
+													instance._deviceSkin.set('className', 'lfr-device-skin');
+												},
+												end: function(event) {
+													instance._deviceSkin.addClass(instance._selectedDevice.skin);
+													dialogWindow.sizeanim.set('preventTransition', instance._selectedDevice.preventTransition || false);
+												}
+											},
+											preventTransition: true
 										}
 									);
 
@@ -255,14 +266,27 @@ AUI.add(
 										dialogWindow.on('resize:end', instance._onResizeEnd, instance)
 									];
 
+									dialogWindow.get('boundingBox').prepend(instance._deviceSkin);
+
 									instance._dialogEventHandles = dialogEventHandles;
 								}
 							);
 						}
 						else {
+							if (!device.preventTransition) {
+								dialog.sizeanim.set('preventTransition', false);
+							}
+
 							dialog.setAttrs(dialogAttrs);
 
 							dialog.show();
+						}
+
+						if (rotation) {
+							instance._deviceSkin.addClass('rotated');
+						}
+						else {
+							instance._deviceSkin.removeClass('rotated');
 						}
 
 						instance._selectedDevice = device;
@@ -278,6 +302,8 @@ AUI.add(
 						var deviceId = deviceItem.getData(STR_DEVICE);
 
 						var device = deviceList[deviceId];
+
+						instance._selectedDevice = device;						
 
 						if (device) {
 							var deviceSelected = deviceItem.hasClass(CSS_SELECTED);
@@ -339,7 +365,9 @@ AUI.add(
 							dialog.get('boundingBox').append(sizeStatus);
 
 							instance._sizeStatus = sizeStatus;
-							instance._sizeStatusContent = sizeStatus.one('.lfr-device-size-status-content');
+							sizeStatusContent = sizeStatus.one('.lfr-device-size-status-content');
+
+							instance._sizeStatusContent = sizeStatusContent;
 						}
 
 						sizeStatus.set('className', 'lfr-device-size-status');

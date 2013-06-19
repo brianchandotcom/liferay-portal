@@ -156,6 +156,43 @@
 			top: 50%;
 		}
 	}
+
+	.lfr-device-skin {
+		background-repeat: no-repeat;
+		position:absolute;
+
+		&.smartphone {
+		    background-image: url(/html/themes/classic/images/device_preview/mobile.png);
+		    height: 824px;
+		    left: -32px;
+		    top: -49px;
+		    width: 465px;
+
+		    &.rotated {
+				background-image: url(/html/themes/classic/images/device_preview/mobile_horizontal.png);
+				height: 465px;
+				left: -135px;
+				top: -32px;
+				width: 824px;
+			}
+		}
+
+		&.tablet {
+		    background-image: url(/html/themes/classic/images/device_preview/tablet.png);
+		    height: 1104px;
+		    left: -68px;
+		    top: -68px;
+		    width: 896px;
+
+			&.rotated {
+				background-image: url(/html/themes/classic/images/device_preview/tablet_horizontal.png);
+				height: 896px;
+				left: -135px;
+				top: -68px;
+				width: 1104px;
+			}
+		}
+	}
 }
 
 .lfr-device-preview {

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.tools.sourceformatter;
 
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -39,8 +38,6 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.apache.tools.ant.DirectoryScanner;
-
 /**
  * @author Hugo Huijser
  */
@@ -58,9 +55,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		formatWebXML();
 	}
 
-	protected String fixAntXMLProjectName(
-		String basedir, String fileName, String content) {
-
+	protected String fixAntXMLProjectName(String fileName, String content) {
 		int x = 0;
 
 		if (fileName.endsWith("-ext/build.xml")) {
@@ -152,25 +147,13 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected void formatAntXML() throws DocumentException, IOException {
-		String basedir = "./";
+		String[] excludes = new String[] {"**\\tools\\**"};
+		String[] includes = new String[] {"**\\b*.xml"};
 
-		DirectoryScanner directoryScanner = new DirectoryScanner();
-
-		directoryScanner.setBasedir(basedir);
-
-		String[] excludes = {"**\\tools\\**"};
-
-		excludes = ArrayUtil.append(excludes, getExcludes());
-
-		directoryScanner.setExcludes(excludes);
-
-		directoryScanner.setIncludes(new String[] {"**\\b*.xml"});
-
-		List<String> fileNames = sourceFormatterHelper.scanForFiles(
-			directoryScanner);
+		List<String> fileNames = getFileNames(excludes, includes);
 
 		for (String fileName : fileNames) {
-			File file = new File(basedir + fileName);
+			File file = new File(BASEDIR + fileName);
 
 			fileName = StringUtil.replace(
 				fileName, StringPool.BACK_SLASH, StringPool.SLASH);
@@ -179,7 +162,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 			String newContent = trimContent(content, true);
 
-			newContent = fixAntXMLProjectName(basedir, fileName, newContent);
+			newContent = fixAntXMLProjectName(fileName, newContent);
 
 			Document document = saxReaderUtil.read(newContent);
 
@@ -225,14 +208,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			return;
 		}
 
-		DirectoryScanner directoryScanner = new DirectoryScanner();
+		String[] includes = new String [] {"**\\*structures.xml"};
 
-		directoryScanner.setBasedir(basedir);
-		directoryScanner.setExcludes(getExcludes());
-		directoryScanner.setIncludes(new String[] {"**\\*structures.xml"});
-
-		List<String> fileNames = sourceFormatterHelper.scanForFiles(
-			directoryScanner);
+		List<String> fileNames = getFileNames(basedir, new String[0], includes);
 
 		for (String fileName : fileNames) {
 			File file = new File(basedir + fileName);
@@ -290,25 +268,13 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	protected void formatFriendlyURLRoutesXML()
 		throws DocumentException, IOException {
 
-		String basedir = "./";
+		String[] excludes = new String[] {"**\\classes\\**", "**\\bin\\**"};
+		String[] includes = new String[] {"**\\*routes.xml"};
 
-		DirectoryScanner directoryScanner = new DirectoryScanner();
-
-		directoryScanner.setBasedir(basedir);
-
-		String[] excludes = {"**\\classes\\**", "**\\bin\\**"};
-
-		excludes = ArrayUtil.append(excludes, getExcludes());
-
-		directoryScanner.setExcludes(excludes);
-
-		directoryScanner.setIncludes(new String[] {"**\\*routes.xml"});
-
-		List<String> fileNames = sourceFormatterHelper.scanForFiles(
-			directoryScanner);
+		List<String> fileNames = getFileNames(excludes, includes);
 
 		for (String fileName : fileNames) {
-			File file = new File(basedir + fileName);
+			File file = new File(BASEDIR + fileName);
 
 			String content = fileUtil.read(file);
 
@@ -462,11 +428,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected void formatPortletXML() throws DocumentException, IOException {
-		String basedir = "./";
-
-		if (isPortalSource()) {
+		if (portalSource) {
 			File file = new File(
-				basedir + "portal-web/docroot/WEB-INF/portlet-custom.xml");
+				BASEDIR + "portal-web/docroot/WEB-INF/portlet-custom.xml");
 
 			String content = fileUtil.read(file);
 
@@ -479,17 +443,12 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 		else {
-			DirectoryScanner directoryScanner = new DirectoryScanner();
+			String[] includes = new String[] {"**\\portlet.xml"};
 
-			directoryScanner.setBasedir(basedir);
-			directoryScanner.setExcludes(getExcludes());
-			directoryScanner.setIncludes(new String[] {"**\\portlet.xml"});
-
-			List<String> fileNames = sourceFormatterHelper.scanForFiles(
-				directoryScanner);
+			List<String> fileNames = getFileNames(new String[0], includes);
 
 			for (String fileName : fileNames) {
-				File file = new File(basedir + fileName);
+				File file = new File(BASEDIR + fileName);
 
 				String content = fileUtil.read(file);
 
@@ -536,19 +495,12 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected void formatServiceXML() throws DocumentException, IOException {
-		String basedir = "./";
+		String[] includes = new String[] {"**\\service.xml"};
 
-		DirectoryScanner directoryScanner = new DirectoryScanner();
-
-		directoryScanner.setBasedir(basedir);
-		directoryScanner.setExcludes(getExcludes());
-		directoryScanner.setIncludes(new String[] {"**\\service.xml"});
-
-		List<String> fileNames = sourceFormatterHelper.scanForFiles(
-			directoryScanner);
+		List<String> fileNames = getFileNames(new String[0], includes);
 
 		for (String fileName : fileNames) {
-			File file = new File(basedir + fileName);
+			File file = new File(BASEDIR + fileName);
 
 			fileName = StringUtil.replace(
 				fileName, StringPool.BACK_SLASH, StringPool.SLASH);
@@ -649,15 +601,13 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	protected void formatStrutsConfigXML()
 		throws DocumentException, IOException {
 
-		String basedir = "./";
-
-		if (!isPortalSource()) {
+		if (!portalSource) {
 			return;
 		}
 
 		String fileName = "portal-web/docroot/WEB-INF/struts-config.xml";
 
-		File file = new File(basedir + fileName);
+		File file = new File(BASEDIR + fileName);
 
 		String content = fileUtil.read(file);
 
@@ -695,15 +645,13 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected void formatTilesDefsXML() throws DocumentException, IOException {
-		String basedir = "./";
-
-		if (!isPortalSource()) {
+		if (!portalSource) {
 			return;
 		}
 
 		String fileName = "portal-web/docroot/WEB-INF/tiles-defs.xml";
 
-		File file = new File(basedir + fileName);
+		File file = new File(BASEDIR + fileName);
 
 		String content = fileUtil.read(file);
 
@@ -739,13 +687,11 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected void formatWebXML() throws IOException {
-		String basedir = "./";
-
-		if (isPortalSource()) {
+		if (portalSource) {
 			Properties properties = new Properties();
 
 			String propertiesContent = fileUtil.read(
-				basedir + "portal-impl/src/portal.properties");
+				BASEDIR + "portal-impl/src/portal.properties");
 
 			PropertiesUtil.load(properties, propertiesContent);
 
@@ -776,7 +722,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			}
 
 			File file = new File(
-				basedir + "portal-web/docroot/WEB-INF/web.xml");
+				BASEDIR + "portal-web/docroot/WEB-INF/web.xml");
 
 			String content = fileUtil.read(file);
 
@@ -834,17 +780,12 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			String webXML = ContentUtil.get(
 				"com/liferay/portal/deploy/dependencies/web.xml");
 
-			DirectoryScanner directoryScanner = new DirectoryScanner();
+			String[] includes = new String[] {"**\\web.xml"};
 
-			directoryScanner.setBasedir(basedir);
-			directoryScanner.setExcludes(getExcludes());
-			directoryScanner.setIncludes(new String[] {"**\\web.xml"});
-
-			List<String> fileNames = sourceFormatterHelper.scanForFiles(
-				directoryScanner);
+			List<String> fileNames = getFileNames(new String[0], includes);
 
 			for (String fileName : fileNames) {
-				String content = fileUtil.read(basedir + fileName);
+				String content = fileUtil.read(BASEDIR + fileName);
 
 				if (content.equals(webXML)) {
 					fileName = StringUtil.replace(

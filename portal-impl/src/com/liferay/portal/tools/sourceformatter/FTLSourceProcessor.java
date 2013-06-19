@@ -14,15 +14,12 @@
 
 package com.liferay.portal.tools.sourceformatter;
 
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
 
 import java.util.List;
-
-import org.apache.tools.ant.DirectoryScanner;
 
 /**
  * @author Hugo Huijser
@@ -31,28 +28,16 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void doFormat() throws Exception {
-		String basedir = "./";
-
-		DirectoryScanner directoryScanner = new DirectoryScanner();
-
-		directoryScanner.setBasedir(basedir);
-
-		String[] excludes = {
+		String[] excludes = new String[] {
 			"**\\journal\\dependencies\\template.ftl",
 			"**\\servicebuilder\\dependencies\\props.ftl"
 		};
+		String[] includes = new String[] {"**\\*.ftl"};
 
-		excludes = ArrayUtil.append(excludes, getExcludes());
-
-		directoryScanner.setExcludes(excludes);
-
-		directoryScanner.setIncludes(new String[] {"**\\*.ftl"});
-
-		List<String> fileNames = sourceFormatterHelper.scanForFiles(
-			directoryScanner);
+		List<String> fileNames = getFileNames(excludes, includes);
 
 		for (String fileName : fileNames) {
-			File file = new File(basedir + fileName);
+			File file = new File(BASEDIR + fileName);
 
 			String content = fileUtil.read(file);
 

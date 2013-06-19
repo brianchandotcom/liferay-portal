@@ -321,6 +321,11 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 	}
 
 	@Override
+	public int hashCode() {
+		return _dlFileEntry.hashCode();
+	}
+	
+	@Override
 	public boolean hasLock() {
 		return _dlFileEntry.hasLock();
 	}

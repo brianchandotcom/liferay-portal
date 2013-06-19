@@ -195,16 +195,7 @@ AUI.add(
 				Liferay.fire('initLayout');
 				Liferay.fire('initNavigation');
 
-				var addContent = A.one('#' + namespace + 'addContent');
-
 				var addPanel = A.one('#' + namespace + 'addPanel');
-
-				Liferay.on(
-					'dockbar:closeAddContentMenu',
-					function(event) {
-						addContent.removeClass('open');
-					}
-				);
 
 				if (addPanel) {
 					addPanel.on(
@@ -213,8 +204,6 @@ AUI.add(
 							event.halt();
 
 							instance._loadAddPanel();
-
-							Liferay.fire('dockbar:closeAddContentMenu');
 						}
 					);
 				}
@@ -332,7 +321,7 @@ AUI.add(
 				var addPanel = A.one('#' + instance._namespace + 'addPanel');
 
 				if (addPanel) {
-					var uri = addPanel.attr('href');
+					var uri = addPanel.ancestor().attr('data-addURL');
 
 					A.io.request(
 						uri,

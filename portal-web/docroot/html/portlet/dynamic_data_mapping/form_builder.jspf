@@ -283,7 +283,11 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales()) {
 		}
 	).render();
 
-	Liferay.Util.getWindow().after('widthChange', setEditorSize);
+	var dialog = Liferay.Util.getWindow();
+
+	if (dialog) {
+		dialog.after('widthChange', setEditorSize);
+	}
 
 	Liferay.after(
 		'showTab',

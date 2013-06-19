@@ -3,117 +3,85 @@
 <#list elements as element>
 	<#assign lineNumber = element.attributeValue("line-number")>
 
-	<li id="${macroNameStack.peek()}Macro__${lineNumber}">
-		<#if element.getName() == "echo">
-			<#assign message = element.attributeValue("message")>
+	<li id="${macroNameStack.peek()?uncap_first}Macro${lineNumber}">
+		<#if element.getName() == "echo" || element.getName() == "fail" || element.getName() == "var">
+			<#assign displayElement = element>
 
-			<div>
-				<span class="arrow">&lt;</span><span class="tag">echo</span>
-				<span class="attribute">message</span><span class="arrow">=</span><span class="quote">&quot;${message}&quot;</span>
-				<span class="arrow">/&gt;</span>
-			</div>
+			<#include "element_whole_html.ftl">
 		<#elseif element.getName() == "execute">
 			<#if element.attributeValue("action")??>
-				<#assign actionElement = element>
+				<#assign displayElement = element>
 
-				<#include "action_element_html.ftl">
+				<#include "element_whole_html.ftl">
 			<#elseif element.attributeValue("macro")??>
 				<#assign macroElement = element>
 
 				<#include "macro_element_html.ftl">
 			</#if>
-		<#elseif element.getName() == "fail">
-			<#assign message = element.attributeValue("message")>
-
-			<div>
-				<span class="arrow">&lt;</span><span class="tag">fail</span>
-				<span class="attribute">message</span><span class="arrow">=</span><span class="quote">&quot;${message}&quot;</span>
-				<span class="arrow">/&gt;</span>
-			</div>
 		<#elseif element.getName() == "if">
-			<div>
-				<span class="arrow">&lt;</span><span class="tag">if</span><span class="arrow">&gt;</span>
-			</div>
+			<#assign displayElement = element>
 
-			<ul>
-				<#assign ifElement = element>
+			<#include "element_open_html.ftl">
 
-				<#include "macro_if_element_html.ftl">
+			<#assign ifElement = element>
 
-				<#assign elseifElements = element.elements("elseif")>
+			<#include "macro_if_element_html.ftl">
 
-				<#list elseifElements as elseifElement>
-					<#assign lineNumber = elseifElement.attributeValue("line-number")>
+			<#assign elseifElements = element.elements("elseif")>
 
-					<li id="${macroNameStack.peek()}Macro__${lineNumber}">
-						<div>
-							<span class="arrow">&lt;</span><span class="tag">elseif</span><span class="arrow">&gt;</span>
-						</div>
+			<#list elseifElements as elseifElement>
+				<#assign lineNumber = elseifElement.attributeValue("line-number")>
 
-						<ul>
-							<#assign ifElement = elseifElement>
+				<li id="${macroNameStack.peek()?uncap_first}Macro${lineNumber}">
+					<#assign displayElement = elseifElement>
 
-							<#include "macro_if_element_html.ftl">
-						</ul>
+					<#include "element_open_html.ftl">
 
-						<div>
-							<span class="arrow">&lt;/</span><span class="tag">elseif</span><span class="arrow">&gt;</span>
-						</div>
-					</li>
-				</#list>
+					<#assign ifElement = elseifElement>
 
-				<#if element.element("else")??>
-					<#assign elseElement = element.element("else")>
+					<#include "macro_if_element_html.ftl">
 
-					<#assign lineNumber = elseElement.attributeValue("line-number")>
+					<#assign displayElement = elseifElement>
 
-					<li id="${macroNameStack.peek()}Macro__${lineNumber}">
-						<div>
-							<span class="arrow">&lt;</span><span class="tag">else</span><span class="arrow">&gt;</span>
-						</div>
+					<#include "element_close_html.ftl">
+				</li>
+			</#list>
 
-						<ul>
-							<#assign macroBlockElement = element.element("else")>
+			<#if element.element("else")??>
+				<#assign elseElement = element.element("else")>
 
-							<#include "macro_block_element_html.ftl">
-						</ul>
+				<#assign lineNumber = elseElement.attributeValue("line-number")>
 
-						<div>
-							<span class="arrow">&lt;/</span><span class="tag">else</span><span class="arrow">&gt;</span>
-						</div>
-					</li>
-				</#if>
-			</ul>
+				<li id="${macroNameStack.peek()?uncap_first}Macro${lineNumber}">
+					<#assign displayElement = elseElement>
 
-			<div>
-				<span class="arrow">&lt;/</span><span class="tag">if</span><span class="arrow">&gt;</span>
-			</div>
-		<#elseif element.getName() == "var">
-			<#assign varElement = element>
+					<#include "element_open_html.ftl">
 
-			<#assign varName = varElement.attributeValue("name")>
-			<#assign varValue = varElement.attributeValue("value")>
+					<#assign macroBlockElement = element.element("else")>
 
-			<div>
-				<span class="arrow">&lt;</span><span class="tag">var</span>
-				<span class="attribute">name</span><span class="arrow">=</span><span class="quote">&quot;${varName}&quot;</span>
-				<span class="attribute">value</span><span class="arrow">=</span><span class="quote">&quot;${varValue}&quot;</span>
-				<span class="arrow">/&gt;</span>
-			</div>
+					<#include "macro_block_element_html.ftl">
+
+					<#assign displayElement = elseElement>
+
+					<#include "element_close_html.ftl">
+				</li>
+			</#if>
+
+			<#assign displayElement = element>
+
+			<#include "element_close_html.ftl">
 		<#elseif element.getName() == "while">
-			<div>
-				<span class="arrow">&lt;</span><span class="tag">while</span><span class="arrow">&gt;</span>
-			</div>
+			<#assign displayElement = element>
 
-			<ul>
-				<#assign ifElement = element>
+			<#include "element_open_html.ftl">
 
-				<#include "macro_if_element_html.ftl">
-			</ul>
+			<#assign ifElement = element>
 
-			<div>
-				<span class="arrow">&lt;/</span><span class="tag">while</span><span class="arrow">&gt;</span>
-			</div>
+			<#include "macro_if_element_html.ftl">
+
+			<#assign displayElement = element>
+
+			<#include "element_close_html.ftl">
 		</#if>
 	</li>
 </#list>

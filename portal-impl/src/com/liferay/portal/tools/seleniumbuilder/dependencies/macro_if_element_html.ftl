@@ -3,11 +3,11 @@
 
 	<#assign lineNumber = conditionElement.attributeValue("line-number")>
 
-	<li id="${macroNameStack.peek()}Macro__${lineNumber}">
+	<li id="${macroNameStack.peek()?uncap_first}Macro${lineNumber}">
 		<#if conditionElement.attributeValue("action")??>
-			<#assign actionElement = conditionElement>
+			<#assign displayElement = conditionElement>
 
-			<#include "action_element_html.ftl">
+			<#include "element_whole_html.ftl">
 		<#elseif conditionElement.attributeValue("macro")??>
 			<#assign macroElement = conditionElement>
 
@@ -19,44 +19,30 @@
 
 	<#assign lineNumber = containsElement.attributeValue("line-number")>
 
-	<li id="${macroNameStack.peek()}Macro__${lineNumber}">
-		<div>
-			<span class="arrow">&lt;</span><span class="tag">contains</span>
+	<li id="${macroNameStack.peek()?uncap_first}Macro${lineNumber}">
+		<#assign displayElement = containsElement>
 
-			<span class="attribute">string</span><span class="arrow">=</span><span class="quote">&quot;${containsElement.attributeValue("string")}&quot;</span>
-			<span class="attribute">substring</span><span class="arrow">=</span><span class="quote">&quot;${containsElement.attributeValue("substring")}&quot;</span>
-
-			<span class="arrow">/&gt;</span>
-		</div>
+		<#include "element_whole_html.ftl">
 	</li>
 <#elseif ifElement.element("equals")??>
 	<#assign equalsElement = ifElement.element("equals")>
 
 	<#assign lineNumber = equalsElement.attributeValue("line-number")>
 
-	<li id="${macroNameStack.peek()}Macro__${lineNumber}">
-		<div>
-			<span class="arrow">&lt;</span><span class="tag">equals</span>
+	<li id="${macroNameStack.peek()?uncap_first}Macro${lineNumber}">
+		<#assign displayElement = equalsElement>
 
-			<span class="attribute">arg1</span><span class="arrow">=</span><span class="quote">&quot;${equalsElement.attributeValue("arg1")}&quot;</span>
-			<span class="attribute">arg2</span><span class="arrow">=</span><span class="quote">&quot;${equalsElement.attributeValue("arg2")}&quot;</span>
-
-			<span class="arrow">/&gt;</span>
-		</div>
+		<#include "element_whole_html.ftl">
 	</li>
 <#elseif ifElement.element("isset")??>
 	<#assign issetElement = ifElement.element("isset")>
 
 	<#assign lineNumber = issetElement.attributeValue("line-number")>
 
-	<li id="${macroNameStack.peek()}Macro__${lineNumber}">
-		<div>
-			<span class="arrow">&lt;</span><span class="tag">isset</span>
+	<li id="${macroNameStack.peek()?uncap_first}Macro${lineNumber}">
+		<#assign displayElement = issetElement>
 
-			<span class="attribute">var</span><span class="arrow">=</span><span class="quote">&quot;${issetElement.attributeValue("var")}&quot;</span>
-
-			<span class="arrow">/&gt;</span>
-		</div>
+		<#include "element_whole_html.ftl">
 	</li>
 </#if>
 
@@ -64,18 +50,16 @@
 
 <#assign lineNumber = thenElement.attributeValue("line-number")>
 
-<li id="${macroNameStack.peek()}Macro__${lineNumber}">
-	<div>
-		<span class="arrow">&lt;</span><span class="tag">then</span><span class="arrow">&gt;</span>
-	</div>
+<li id="${macroNameStack.peek()?uncap_first}Macro${lineNumber}">
+	<#assign displayElement = thenElement>
 
-	<ul>
-		<#assign macroBlockElement = thenElement>
+	<#include "element_open_html.ftl">
 
-		<#include "macro_block_element_html.ftl">
-	</ul>
+	<#assign macroBlockElement = thenElement>
 
-	<div>
-		<span class="arrow">&lt;/</span><span class="tag">then</span><span class="arrow">&gt;</span>
-	</div>
+	<#include "macro_block_element_html.ftl">
+
+	<#assign displayElement = thenElement>
+
+	<#include "element_close_html.ftl">
 </li>

@@ -85,15 +85,15 @@ ${ifType} (
 
 	<#assign lineNumber = conditionalElement.attributeValue("line-number")>
 
-	liferaySelenium.sendLogger("${macroName}Macro__${lineNumber}", "pending");
+	liferaySelenium.sendLogger("${macroName?uncap_first}Macro${lineNumber}", "pending");
 
-	liferaySelenium.sendLogger("${macroName}Macro__${lineNumber}", "pass");
+	liferaySelenium.sendLogger("${macroName?uncap_first}Macro${lineNumber}", "pass");
 
 	<#assign thenElement = ifElement.element("then")>
 
 	<#assign lineNumber = thenElement.attributeValue("line-number")>
 
-	liferaySelenium.sendLogger("${macroName}Macro__${lineNumber}", "pending");
+	liferaySelenium.sendLogger("${macroName?uncap_first}Macro${lineNumber}", "pending");
 
 	<#assign blockElement = thenElement>
 
@@ -101,5 +101,5 @@ ${ifType} (
 
 	<#assign lineNumber = thenElement.attributeValue("line-number")>
 
-	liferaySelenium.sendLogger("${macroName}Macro__${lineNumber}", "pass");
+	liferaySelenium.sendLogger("${macroName?uncap_first}Macro${lineNumber}", "pass");
 }

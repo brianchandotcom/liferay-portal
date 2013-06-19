@@ -83,13 +83,13 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)} 
 
 					commandScopeVariables.putAll(definitionScopeVariables);
 
-					selenium.sendLogger("${testCaseName}TestCase__${commandName}", "start");
+					selenium.sendLogger("${testCaseName?uncap_first}TestCase${commandName}", "start");
 
 					<#assign setUpElement = rootElement.element("set-up")>
 
 					<#assign lineNumber = setUpElement.attributeValue("line-number")>
 
-					selenium.sendLogger("${testCaseName}TestCase__${lineNumber}", "pending");
+					selenium.sendLogger("${testCaseName?uncap_first}TestCase${lineNumber}", "pending");
 
 					<#assign blockElement = setUpElement>
 
@@ -97,18 +97,18 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)} 
 
 					<#assign lineNumber = setUpElement.attributeValue("line-number")>
 
-					selenium.sendLogger("${testCaseName}TestCase__${lineNumber}", "pass");
+					selenium.sendLogger("${testCaseName?uncap_first}TestCase${lineNumber}", "pass");
 				</#if>
 
 				commandScopeVariables = new HashMap<String, String>();
 
 				commandScopeVariables.putAll(definitionScopeVariables);
 
-				selenium.sendLogger("${testCaseName}TestCase__${commandName}", "start");
+				selenium.sendLogger("${testCaseName?uncap_first}TestCase${commandName}", "start");
 
 				<#assign lineNumber = commandElement.attributeValue("line-number")>
 
-				selenium.sendLogger("${testCaseName}TestCase__${lineNumber}", "pending");
+				selenium.sendLogger("${testCaseName?uncap_first}TestCase${lineNumber}", "pending");
 
 				<#assign blockElement = commandElement>
 
@@ -116,7 +116,7 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)} 
 
 				<#assign lineNumber = commandElement.attributeValue("line-number")>
 
-				selenium.sendLogger("${testCaseName}TestCase__${lineNumber}", "pass");
+				selenium.sendLogger("${testCaseName?uncap_first}TestCase${lineNumber}", "pass");
 			}
 			finally {
 				<#if rootElement.element("tear-down")??>
@@ -126,11 +126,11 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)} 
 
 					<#assign tearDownElement = rootElement.element("tear-down")>
 
-					selenium.sendLogger("${testCaseName}TestCase__${commandName}", "start");
+					selenium.sendLogger("${testCaseName?uncap_first}TestCase${commandName}", "start");
 
 					<#assign lineNumber = tearDownElement.attributeValue("line-number")>
 
-					selenium.sendLogger("${testCaseName}TestCase__${lineNumber}", "pending");
+					selenium.sendLogger("${testCaseName?uncap_first}TestCase${lineNumber}", "pending");
 
 					<#assign blockElement = tearDownElement>
 
@@ -138,7 +138,7 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)} 
 
 					<#assign lineNumber = tearDownElement.attributeValue("line-number")>
 
-					selenium.sendLogger("${testCaseName}TestCase__${lineNumber}", "pass");
+					selenium.sendLogger("${testCaseName?uncap_first}TestCase${lineNumber}", "pass");
 				</#if>
 			}
 		}

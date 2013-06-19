@@ -35,28 +35,17 @@ public class SystemEventLocalServiceImpl
 
 	@Override
 	public void addSystemEvent(
-			long userId, long groupId, long classNameId, long classPK,
-			String classUuid, int type)
-		throws PortalException, SystemException {
-
-		addSystemEvent(
-			userId, groupId, classNameId, classPK, classUuid, type, null);
-	}
-
-	@Override
-	public void addSystemEvent(
-			long userId, long groupId, long classNameId, long classPK,
-			String classUuid, int type, String extraData)
+			long userId, long groupId, long companyId, long classNameId,
+			long classPK, String classUuid, int type, String extraData)
 		throws PortalException, SystemException {
 
 		if (userId == 0) {
 			userId = PrincipalThreadLocal.getUserId();
 		}
 
-		long companyId = 0;
 		String userName = StringPool.BLANK;
 
-		if (userId > 0) {
+		if ((companyId == 0) && (userId > 0)) {
 			User user = userPersistence.findByPrimaryKey(userId);
 
 			companyId = user.getCompanyId();
@@ -95,13 +84,13 @@ public class SystemEventLocalServiceImpl
 
 	@Override
 	public void addSystemEvent(
-			long groupId, String className, long classPK, String classUuid,
-			int type)
+			long userId, long groupId, long companyId, String className,
+			long classPK, String classUuid, int type, String extraData)
 		throws PortalException, SystemException {
 
 		addSystemEvent(
-			0, groupId, PortalUtil.getClassNameId(className), classPK,
-			classUuid, type, null);
+			userId, groupId, companyId, PortalUtil.getClassNameId(className),
+			classPK, classUuid, type, extraData);
 	}
 
 	@Override

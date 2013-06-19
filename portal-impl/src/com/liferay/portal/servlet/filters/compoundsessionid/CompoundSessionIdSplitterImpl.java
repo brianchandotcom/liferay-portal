@@ -58,12 +58,12 @@ public class CompoundSessionIdSplitterImpl
 		String sessionIdDelimiter = PropsValues.SESSION_ID_DELIMITER;
 
 		if (Validator.isNull(sessionIdDelimiter)) {
-			_sessionIdDelimiter = PropsUtil.get(
-				"session.id." + ServerDetector.getServerId() + " .delimiter");
+			sessionIdDelimiter = PropsUtil.get(
+				"session.id." + ServerDetector.getServerId() + ".delimiter");
 		}
 
-		if (_sessionIdDelimiter == null) {
-			_sessionIdDelimiter = StringPool.BLANK;
+		if (sessionIdDelimiter == null) {
+			sessionIdDelimiter = StringPool.BLANK;
 		}
 
 		_sessionIdDelimiter = sessionIdDelimiter;

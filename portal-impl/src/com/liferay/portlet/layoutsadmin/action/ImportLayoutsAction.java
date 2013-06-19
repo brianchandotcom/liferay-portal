@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
+import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
@@ -61,7 +62,6 @@ import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.FileExtensionException;
 import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.FileSizeException;
-import com.liferay.portlet.documentlibrary.action.EditFileEntryAction;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.sites.action.ActionUtil;
 
@@ -95,7 +95,7 @@ import org.apache.struts.action.ActionMapping;
  * @author Alexander Chow
  * @author Raymond Augé
  */
-public class ImportLayoutsAction extends EditFileEntryAction {
+public class ImportLayoutsAction extends PortletAction {
 
 	@Override
 	public void processAction(
@@ -261,7 +261,6 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 		}
 	}
 
-	@Override
 	protected void deleteTempFileEntry(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -402,7 +401,6 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 		return warningMessagesJSONArray;
 	}
 
-	@Override
 	protected void handleUploadException(
 			PortletConfig portletConfig, ActionRequest actionRequest,
 			ActionResponse actionResponse, String cmd, Exception e)
@@ -443,9 +441,7 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 				errorMessage = themeDisplay.translate(
 					"document-names-must-end-with-one-of-the-following-" +
 						"extensions",
-					StringUtil.merge(
-						getAllowedFileExtensions(
-							portletConfig, actionRequest, actionResponse)));
+					".lar");
 				errorType =
 					ServletResponseConstants.SC_FILE_EXTENSION_EXCEPTION;
 			}

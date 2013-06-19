@@ -359,7 +359,11 @@ if (endDateTime > 0) {
 									%>
 
 										<c:if test="<%= exportModelCount != 0 %>">
-											<aui:input checked="<%= portletDataHandler.isPublishToLiveByDefault() %>" label='<%= portletTitle + (exportModelCount > 0 ? " (" + exportModelCount + ")" : StringPool.BLANK) %>' name="<%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getPortletId() %>" type="checkbox" />
+											<liferay-util:buffer var="count">
+												<span class="count-display"><%= exportModelCount > 0 ? exportModelCount : StringPool.BLANK %></span>
+											</liferay-util:buffer>
+
+											<aui:input checked="<%= portletDataHandler.isPublishToLiveByDefault() %>" label='<%= portletTitle + count %>' name="<%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getPortletId() %>" type="checkbox" />
 
 											<%
 											PortletDataHandlerControl[] exportControls = portletDataHandler.getExportControls();

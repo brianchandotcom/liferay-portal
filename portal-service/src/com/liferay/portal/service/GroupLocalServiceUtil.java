@@ -886,6 +886,20 @@ public class GroupLocalServiceUtil {
 			serviceContext);
 	}
 
+	public static java.util.List<com.liferay.portal.model.Group> getUserSites(
+		long userId, boolean includeAdministrative)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getUserSites(userId, includeAdministrative);
+	}
+
+	public static java.util.List<com.liferay.portal.model.Group> getUserSites(
+		long userId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getUserSites(userId);
+	}
+
 	/**
 	* Adds the group using the default live group.
 	*

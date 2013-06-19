@@ -77,36 +77,36 @@ if (organization != null) {
 		int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCompanyId(), _getParentOrganizationId(request, organization, filterManageableOrganizations), null, null, null, null, organizationParams);
 		%>
 
-		<aui:row>
-			<c:if test="<%= (organization != null) && (organization.getOrganizationId() != OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) %>">
+		<c:if test="<%= (organization != null) && (organization.getOrganizationId() != OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) %>">
 
-				<%
-				long parentOrganizationId = OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID;
-				String parentOrganizationName = LanguageUtil.get(pageContext, "users-and-organizations-home");
+			<%
+			long parentOrganizationId = OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID;
+			String parentOrganizationName = LanguageUtil.get(pageContext, "users-and-organizations-home");
 
-				if (!organization.isRoot()) {
-					Organization parentOrganization = organization.getParentOrganization();
+			if (!organization.isRoot()) {
+				Organization parentOrganization = organization.getParentOrganization();
 
-					if (OrganizationPermissionUtil.contains(permissionChecker, parentOrganization, ActionKeys.VIEW)) {
-						parentOrganizationId = parentOrganization.getOrganizationId();
-						parentOrganizationName = parentOrganization.getName();
-					}
+				if (OrganizationPermissionUtil.contains(permissionChecker, parentOrganization, ActionKeys.VIEW)) {
+					parentOrganizationId = parentOrganization.getOrganizationId();
+					parentOrganizationName = parentOrganization.getName();
 				}
-				%>
+			}
+			%>
 
-				<portlet:renderURL var="headerBackURL">
-					<portlet:param name="struts_action" value="/organization/view" />
-					<portlet:param name="organizationId" value="<%= String.valueOf(parentOrganizationId) %>" />
-				</portlet:renderURL>
+			<portlet:renderURL var="headerBackURL">
+				<portlet:param name="struts_action" value="/organization/view" />
+				<portlet:param name="organizationId" value="<%= String.valueOf(parentOrganizationId) %>" />
+			</portlet:renderURL>
 
-				<liferay-ui:header
-					backLabel="<%= parentOrganizationName %>"
-					backURL="<%= headerBackURL.toString() %>"
-					localizeTitle="<%= false %>"
-					title="<%= organization.getName() %>"
-				/>
-			</c:if>
+			<liferay-ui:header
+				backLabel="<%= parentOrganizationName %>"
+				backURL="<%= headerBackURL.toString() %>"
+				localizeTitle="<%= false %>"
+				title="<%= organization.getName() %>"
+			/>
+		</c:if>
 
+		<aui:row>
 			<aui:col cssClass="lfr-asset-column lfr-asset-column-details" width="<%= (organization != null) ? 75 : 100 %>">
 				<liferay-ui:panel-container extended="<%= false %>" id="usersAdminOrganizationPanelContainer" persistState="<%= true %>">
 					<c:if test="<%= organization != null %>">

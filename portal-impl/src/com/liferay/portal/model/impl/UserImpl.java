@@ -537,6 +537,19 @@ public class UserImpl extends UserBaseImpl {
 	}
 
 	@Override
+	public List<Group> getSites() throws PortalException, SystemException {
+		return getSites(false);
+	}
+
+	@Override
+	public List<Group> getSites(boolean includeAdministrative)
+		throws PortalException, SystemException {
+
+		return GroupLocalServiceUtil.getUserSites(
+			getUserId(), includeAdministrative);
+	}
+
+	@Override
 	public long[] getTeamIds() throws SystemException {
 		List<Team> teams = getTeams();
 

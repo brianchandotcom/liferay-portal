@@ -15,6 +15,7 @@
 package com.liferay.portlet.usersadmin.search;
 
 import com.liferay.portal.kernel.dao.search.DAOParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.PortletRequest;
 
@@ -28,6 +29,21 @@ public class GroupSearchTerms extends GroupDisplayTerms {
 
 		description = DAOParamUtil.getLike(portletRequest, DESCRIPTION);
 		name = DAOParamUtil.getLike(portletRequest, NAME);
+	}
+
+	public boolean hasSearchTerms() {
+		if (isAdvancedSearch()) {
+			if (Validator.isNotNull(name) || Validator.isNotNull(description)) {
+				return true;
+			}
+		}
+		else {
+			if (Validator.isNotNull(keywords)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 }

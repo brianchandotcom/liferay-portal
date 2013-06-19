@@ -33,15 +33,15 @@ public class UpdateTermsOfUseAction extends Action {
 
 	@Override
 	public ActionForward execute(
-			ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response)
+			ActionMapping actionMapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
 		long userId = PortalUtil.getUserId(request);
 
 		UserServiceUtil.updateAgreedToTermsOfUse(userId, true);
 
-		return mapping.findForward(ActionConstants.COMMON_REFERER_JSP);
+		return actionMapping.findForward(ActionConstants.COMMON_REFERER_JSP);
 	}
 
 }

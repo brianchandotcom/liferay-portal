@@ -45,8 +45,9 @@ public class WebContentAction extends PortletAction {
 
 	@Override
 	public void processAction(
-			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
-			ActionRequest actionRequest, ActionResponse actionResponse)
+			ActionMapping actionMapping, ActionForm actionForm,
+			PortletConfig portletConfig, ActionRequest actionRequest,
+			ActionResponse actionResponse)
 		throws Exception {
 
 		PortletPreferences portletPreferences = actionRequest.getPreferences();
@@ -88,8 +89,9 @@ public class WebContentAction extends PortletAction {
 
 	@Override
 	public void serveResource(
-			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+			ActionMapping actionMapping, ActionForm actionForm,
+			PortletConfig portletConfig, ResourceRequest resourceRequest,
+			ResourceResponse resourceResponse)
 		throws Exception {
 
 		String contentType = ParamUtil.getString(
@@ -101,7 +103,7 @@ public class WebContentAction extends PortletAction {
 
 		if (resourceRequest.getResourceID() != null) {
 			super.serveResource(
-				mapping, form, portletConfig, resourceRequest,
+				actionMapping, actionForm, portletConfig, resourceRequest,
 				resourceResponse);
 		}
 		else {

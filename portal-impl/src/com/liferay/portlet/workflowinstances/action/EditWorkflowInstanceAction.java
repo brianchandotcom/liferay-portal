@@ -56,8 +56,9 @@ public class EditWorkflowInstanceAction extends PortletAction {
 
 	@Override
 	public void processAction(
-			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
-			ActionRequest actionRequest, ActionResponse actionResponse)
+			ActionMapping actionMapping, ActionForm actionForm,
+			PortletConfig portletConfig, ActionRequest actionRequest,
+			ActionResponse actionResponse)
 		throws Exception {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
@@ -94,8 +95,9 @@ public class EditWorkflowInstanceAction extends PortletAction {
 
 	@Override
 	public ActionForward render(
-			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
-			RenderRequest renderRequest, RenderResponse renderResponse)
+			ActionMapping actionMapping, ActionForm actionForm,
+			PortletConfig portletConfig, RenderRequest renderRequest,
+			RenderResponse renderResponse)
 		throws Exception {
 
 		try {
@@ -105,7 +107,8 @@ public class EditWorkflowInstanceAction extends PortletAction {
 			if (e instanceof WorkflowException) {
 				SessionErrors.add(renderRequest, e.getClass());
 
-				return mapping.findForward("portlet.workflow_instances.error");
+				return actionMapping.findForward(
+					"portlet.workflow_instances.error");
 			}
 			else {
 				throw e;
@@ -115,7 +118,7 @@ public class EditWorkflowInstanceAction extends PortletAction {
 		String forward = getForward(
 			renderRequest, "portlet.workflow_instances.edit_workflow_instance");
 
-		return mapping.findForward(forward);
+		return actionMapping.findForward(forward);
 	}
 
 	protected String deleteInstance(ActionRequest actionRequest)

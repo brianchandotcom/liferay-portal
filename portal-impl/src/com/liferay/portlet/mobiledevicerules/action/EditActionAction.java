@@ -72,8 +72,9 @@ public class EditActionAction extends EditRuleAction {
 
 	@Override
 	public void processAction(
-			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
-			ActionRequest actionRequest, ActionResponse actionResponse)
+			ActionMapping actionMapping, ActionForm actionForm,
+			PortletConfig portletConfig, ActionRequest actionRequest,
+			ActionResponse actionResponse)
 		throws Exception {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
@@ -108,8 +109,9 @@ public class EditActionAction extends EditRuleAction {
 
 	@Override
 	public ActionForward render(
-			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
-			RenderRequest renderRequest, RenderResponse renderResponse)
+			ActionMapping actionMapping, ActionForm actionForm,
+			PortletConfig portletConfig, RenderRequest renderRequest,
+			RenderResponse renderResponse)
 		throws Exception {
 
 		long actionId = ParamUtil.getLong(renderRequest, "actionId");
@@ -145,13 +147,15 @@ public class EditActionAction extends EditRuleAction {
 		renderRequest.setAttribute(
 			WebKeys.MOBILE_DEVICE_RULES_RULE_GROUP, ruleGroup);
 
-		return mapping.findForward("portlet.mobile_device_rules.edit_action");
+		return actionMapping.findForward(
+			"portlet.mobile_device_rules.edit_action");
 	}
 
 	@Override
 	public void serveResource(
-			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+			ActionMapping actionMapping, ActionForm actionForm,
+			PortletConfig portletConfig, ResourceRequest resourceRequest,
+			ResourceResponse resourceResponse)
 		throws Exception {
 
 		long actionId = ParamUtil.getLong(resourceRequest, "actionId");

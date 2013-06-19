@@ -53,8 +53,9 @@ public class CompareVersionsAction extends PortletAction {
 
 	@Override
 	public ActionForward render(
-			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
-			RenderRequest renderRequest, RenderResponse renderResponse)
+			ActionMapping actionMapping, ActionForm actionForm,
+			PortletConfig portletConfig, RenderRequest renderRequest,
+			RenderResponse renderResponse)
 		throws Exception {
 
 		try {
@@ -73,7 +74,8 @@ public class CompareVersionsAction extends PortletAction {
 			}
 		}
 
-		return mapping.findForward("portlet.document_library.compare_versions");
+		return actionMapping.findForward(
+			"portlet.document_library.compare_versions");
 	}
 
 	protected void compareVersions(RenderRequest renderRequest)

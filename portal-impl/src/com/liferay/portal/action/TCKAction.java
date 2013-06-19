@@ -53,8 +53,8 @@ public class TCKAction extends Action {
 
 	@Override
 	public ActionForward execute(
-			ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response)
+			ActionMapping actionMapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
 		try {
@@ -119,7 +119,8 @@ public class TCKAction extends Action {
 				themeDisplay.getPathMain() + "/portal/layout?p_l_id=" +
 					layout.getPlid());
 
-			return mapping.findForward(ActionConstants.COMMON_FORWARD_JSP);
+			return actionMapping.findForward(
+				ActionConstants.COMMON_FORWARD_JSP);
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {

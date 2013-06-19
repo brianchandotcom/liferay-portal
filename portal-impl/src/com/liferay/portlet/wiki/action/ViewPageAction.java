@@ -40,22 +40,24 @@ public class ViewPageAction extends PortletAction {
 
 	@Override
 	public ActionForward render(
-			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
-			RenderRequest renderRequest, RenderResponse renderResponse)
+			ActionMapping actionMapping, ActionForm actionForm,
+			PortletConfig portletConfig, RenderRequest renderRequest,
+			RenderResponse renderResponse)
 		throws Exception {
 
 		long categoryId = ParamUtil.getLong(renderRequest, "categoryId");
 
 		if (categoryId > 0) {
 			return ViewNodeAction.viewNode(
-				mapping, renderRequest, "portlet.wiki.view_categorized_pages");
+				actionMapping, renderRequest,
+				"portlet.wiki.view_categorized_pages");
 		}
 
 		String tag = ParamUtil.getString(renderRequest, "tag");
 
 		if (Validator.isNotNull(tag)) {
 			return ViewNodeAction.viewNode(
-				mapping, renderRequest, "portlet.wiki.view_tagged_pages");
+				actionMapping, renderRequest, "portlet.wiki.view_tagged_pages");
 		}
 
 		try {
@@ -69,14 +71,14 @@ public class ViewPageAction extends PortletAction {
 
 				SessionErrors.add(renderRequest, e.getClass());
 
-				return mapping.findForward("portlet.wiki.error");
+				return actionMapping.findForward("portlet.wiki.error");
 			}
 			else {
 				throw e;
 			}
 		}
 
-		return mapping.findForward(
+		return actionMapping.findForward(
 			getForward(renderRequest, "portlet.wiki.view_page"));
 	}
 

@@ -42,33 +42,35 @@ public class UpdateReminderQueryAction extends Action {
 
 	@Override
 	public ActionForward execute(
-			ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response)
+			ActionMapping actionMapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
 		String cmd = ParamUtil.getString(request, Constants.CMD);
 
 		if (Validator.isNull(cmd)) {
-			return mapping.findForward("portal.update_reminder_query");
+			return actionMapping.findForward("portal.update_reminder_query");
 		}
 
 		try {
 			updateReminderQuery(request, response);
 
-			return mapping.findForward(ActionConstants.COMMON_REFERER_JSP);
+			return actionMapping.findForward(
+				ActionConstants.COMMON_REFERER_JSP);
 		}
 		catch (Exception e) {
 			if (e instanceof UserReminderQueryException) {
 				SessionErrors.add(request, e.getClass());
 
-				return mapping.findForward("portal.update_reminder_query");
+				return actionMapping.findForward(
+					"portal.update_reminder_query");
 			}
 			else if (e instanceof NoSuchUserException ||
 					 e instanceof PrincipalException) {
 
 				SessionErrors.add(request, e.getClass());
 
-				return mapping.findForward("portal.error");
+				return actionMapping.findForward("portal.error");
 			}
 			else {
 				PortalUtil.sendError(e, request, response);

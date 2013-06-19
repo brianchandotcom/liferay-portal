@@ -54,8 +54,8 @@ public class LoginAction extends Action {
 
 	@Override
 	public ActionForward execute(
-			ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response)
+			ActionMapping actionMapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -100,7 +100,7 @@ public class LoginAction extends Action {
 			(session.getAttribute("j_password") != null)) {
 
 			if (PropsValues.PORTAL_JAAS_ENABLE) {
-				return mapping.findForward("/portal/touch_protected.jsp");
+				return actionMapping.findForward("/portal/touch_protected.jsp");
 			}
 
 			String redirect = ParamUtil.getString(request, "redirect");

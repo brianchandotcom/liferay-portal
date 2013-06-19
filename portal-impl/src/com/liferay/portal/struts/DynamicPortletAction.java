@@ -35,38 +35,42 @@ public class DynamicPortletAction extends PortletAction {
 
 	@Override
 	public void processAction(
-			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
-			ActionRequest actionRequest, ActionResponse actionResponse)
+			ActionMapping actionMapping, ActionForm actionForm,
+			PortletConfig portletConfig, ActionRequest actionRequest,
+			ActionResponse actionResponse)
 		throws Exception {
 
 		ModuleConfig moduleConfig = getModuleConfig(actionRequest);
 
-		mapping = (ActionMapping)moduleConfig.findActionConfig(
+		actionMapping = (ActionMapping)moduleConfig.findActionConfig(
 			getPath(actionRequest));
 
 		PortletAction action = (PortletAction)InstancePool.get(
-			mapping.getType());
+			actionMapping.getType());
 
 		action.processAction(
-			mapping, form, portletConfig, actionRequest, actionResponse);
+			actionMapping, actionForm, portletConfig, actionRequest,
+			actionResponse);
 	}
 
 	@Override
 	public ActionForward render(
-			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
-			RenderRequest renderRequest, RenderResponse renderResponse)
+			ActionMapping actionMapping, ActionForm actionForm,
+			PortletConfig portletConfig, RenderRequest renderRequest,
+			RenderResponse renderResponse)
 		throws Exception {
 
 		ModuleConfig moduleConfig = getModuleConfig(renderRequest);
 
-		mapping = (ActionMapping)moduleConfig.findActionConfig(
+		actionMapping = (ActionMapping)moduleConfig.findActionConfig(
 			getPath(renderRequest));
 
 		PortletAction action = (PortletAction)InstancePool.get(
-			mapping.getType());
+			actionMapping.getType());
 
 		return action.render(
-			mapping, form, portletConfig, renderRequest, renderResponse);
+			actionMapping, actionForm, portletConfig, renderRequest,
+			renderResponse);
 	}
 
 	protected String getPath(PortletRequest portletRequest) throws Exception {

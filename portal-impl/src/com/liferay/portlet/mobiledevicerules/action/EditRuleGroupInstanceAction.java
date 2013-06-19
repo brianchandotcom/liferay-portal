@@ -50,8 +50,9 @@ public class EditRuleGroupInstanceAction extends PortletAction {
 
 	@Override
 	public void processAction(
-			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
-			ActionRequest actionRequest, ActionResponse actionResponse)
+			ActionMapping actionMapping, ActionForm actionForm,
+			PortletConfig portletConfig, ActionRequest actionRequest,
+			ActionResponse actionResponse)
 		throws Exception {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
@@ -83,8 +84,9 @@ public class EditRuleGroupInstanceAction extends PortletAction {
 
 	@Override
 	public ActionForward render(
-			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
-			RenderRequest renderRequest, RenderResponse renderResponse)
+			ActionMapping actionMapping, ActionForm actionForm,
+			PortletConfig portletConfig, RenderRequest renderRequest,
+			RenderResponse renderResponse)
 		throws Exception {
 
 		long ruleGroupInstanceId = ParamUtil.getLong(
@@ -106,7 +108,7 @@ public class EditRuleGroupInstanceAction extends PortletAction {
 		renderRequest.setAttribute(
 			WebKeys.MOBILE_DEVICE_RULES_RULE_GROUP, ruleGroup);
 
-		return mapping.findForward(
+		return actionMapping.findForward(
 			"portlet.mobile_device_rules.edit_rule_group_instance_priorities");
 	}
 

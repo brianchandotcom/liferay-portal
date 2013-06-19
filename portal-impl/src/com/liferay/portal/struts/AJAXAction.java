@@ -35,14 +35,14 @@ public abstract class AJAXAction extends Action {
 
 	@Override
 	public ActionForward execute(
-			ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response)
+			ActionMapping actionMapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
 		String text = null;
 
 		try {
-			text = getText(mapping, form, request, response);
+			text = getText(actionMapping, actionForm, request, response);
 		}
 		catch (Exception e) {
 			PortalUtil.sendError(
@@ -67,8 +67,8 @@ public abstract class AJAXAction extends Action {
 	}
 
 	public abstract String getText(
-			ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response)
+			ActionMapping actionMapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response)
 		throws Exception;
 
 }

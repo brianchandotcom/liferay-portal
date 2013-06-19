@@ -42,8 +42,8 @@ public class LogoutAction extends Action {
 
 	@Override
 	public ActionForward execute(
-			ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response)
+			ActionMapping actionMapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
 		try {
@@ -128,7 +128,7 @@ public class LogoutAction extends Action {
 
 			request.setAttribute(WebKeys.LOGOUT, true);
 
-			return mapping.findForward(ActionConstants.COMMON_REFERER);
+			return actionMapping.findForward(ActionConstants.COMMON_REFERER);
 		}
 		catch (Exception e) {
 			PortalUtil.sendError(e, request, response);

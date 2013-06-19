@@ -19,6 +19,13 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Element;
 
+import java.io.File;
+
+import java.lang.reflect.Method;
+
+import java.net.URL;
+import java.net.URLClassLoader;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -851,58 +858,83 @@ public class SeleniumBuilderContext {
 	private boolean _isValidLocatorKey(
 		String actionName, String caseComparator, String locatorKey) {
 
-		Element pathRootElement = getPathRootElement(actionName);
+		try {
+			String pathFileName = getPathJavaFileName(actionName);
 
-		Set<String> pathLocatorKeys =
-			_seleniumBuilderFileUtil.getPathLocatorKeys(pathRootElement);
+			File file = new File("test-classes" + "/" + pathFileName);
 
-		String[] partialKeys = {};
+			String pathFileURL = "file:///" + file.getAbsolutePath();
 
-		if (locatorKey.contains("${") && locatorKey.contains("}")) {
-			caseComparator = "partial";
+			URL classUrl = new URL(pathFileURL);
 
-			partialKeys = locatorKey.split("\\$\\{[^}]*?\\}");
-		}
+			URL[] classUrls = { classUrl };
 
-		for (String pathLocatorKey : pathLocatorKeys) {
-			if (caseComparator == null) {
-				if (pathLocatorKey.equals(locatorKey)) {
-					return true;
-				}
+			URLClassLoader urlClassLoader = new URLClassLoader(classUrls);
+
+			String pathClassName = getPathClassName(actionName);
+
+			Class pathClass = urlClassLoader.loadClass(pathClassName);
+
+			Method method = pathClass.getMethod("getPaths", null);
+
+			HashMap<String, String> paths =
+				(HashMap<String, String>)method.invoke(pathClass, null);
+
+			Set<String> pathLocatorKeys = paths.keySet();
+
+			String[] partialKeys = {};
+
+			if (locatorKey.contains("${") && locatorKey.contains("}")) {
+				caseComparator = "partial";
+
+				partialKeys = locatorKey.split("\\$\\{[^}]*?\\}");
 			}
-			else {
-				if (caseComparator.equals("contains") &&
-					pathLocatorKey.contains(locatorKey)) {
 
-					return true;
-				}
-				else if (caseComparator.equals("endsWith") &&
-						 pathLocatorKey.endsWith(locatorKey)) {
-
-					return true;
-				}
-				else if (caseComparator.equals("partial")) {
-					boolean containsAll = true;
-
-					for (String s : partialKeys) {
-						if (!pathLocatorKey.contains(s)) {
-							containsAll = false;
-						}
-					}
-
-					if (containsAll) {
+			for (String pathLocatorKey : pathLocatorKeys) {
+				if (caseComparator == null) {
+					if (pathLocatorKey.equals(locatorKey)) {
 						return true;
 					}
 				}
-				else if (caseComparator.equals("startsWith") &&
-						 pathLocatorKey.startsWith(locatorKey)) {
+				else {
+					if (caseComparator.equals("contains") &&
+						pathLocatorKey.contains(locatorKey)) {
 
-					return true;
+						return true;
+					}
+					else if (caseComparator.equals("endsWith") &&
+							 pathLocatorKey.endsWith(locatorKey)) {
+
+						return true;
+					}
+					else if (caseComparator.equals("partial")) {
+						boolean containsAll = true;
+
+						for (String s : partialKeys) {
+							if (!pathLocatorKey.contains(s)) {
+								containsAll = false;
+							}
+						}
+
+						if (containsAll) {
+							return true;
+						}
+					}
+					else if (caseComparator.equals("startsWith") &&
+							 pathLocatorKey.startsWith(locatorKey)) {
+
+						return true;
+					}
 				}
 			}
-		}
 
-		return false;
+			return false;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+
+			return false;
+		}
 	}
 
 	private String _normalizeFileName(String fileName) {

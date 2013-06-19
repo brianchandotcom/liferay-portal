@@ -811,10 +811,12 @@ public class PortletURLImpl
 			return;
 		}
 
-		sb.append("p_p_auth");
-		sb.append(StringPool.EQUAL);
-		sb.append(processValue(key, actualPortletAuthenticationToken));
-		sb.append(StringPool.AMPERSAND);
+		if (_portlet.isAddDefaultResource()) {
+			sb.append("p_p_auth");
+			sb.append(StringPool.EQUAL);
+			sb.append(processValue(key, actualPortletAuthenticationToken));
+			sb.append(StringPool.AMPERSAND);
+		}
 	}
 
 	protected void clearCache() {

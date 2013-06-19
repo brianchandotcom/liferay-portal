@@ -1,0 +1,105 @@
+<html>
+<head>
+<title>CPDocumentsandmediaAddfolder</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPDocumentsandmediaAddfolder</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPDocumentsandmediaAddfolder</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>BACK</td>
+	<td>//a[@id='_20_TabsBack']</td>
+	<td>Back</td>
+</tr>
+<tr>
+	<td>NAME_FIELD</td>
+	<td>//input[@id='_20_name']</td>
+	<td>Name</td>
+</tr>
+<tr>
+	<td>DESCRIPTION_FIELD</td>
+	<td>//textarea[@id='_20_description']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//div[@class='button-holder ']/button[contains(@type,'submit')]</td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>CANCEL_BUTTON</td>
+	<td>//div[@class='button-holder ']/button[contains(.,'Cancel')]</td>
+	<td>Cancel</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PERMISSIONS-->
+<tr>
+	<td>PERMISSIONS_SELECT</td>
+	<td>//select[@id='_20_inputPermissionsViewRole']</td>
+	<td>Permissions Viewable by</td>
+</tr>
+<tr>
+	<td>PERMISSIONS_MORE_OPTIONS</td>
+	<td>link=More Options »</td>
+	<td>More Options</td>
+</tr>
+<tr>
+	<td>PERMISSIONS_HIDE_OPTIONS</td>
+	<td>link=« Hide Options</td>
+	<td>Hide Options</td>
+</tr>
+<tr>
+	<td>PERMISSIONS_ACCESS_CHECKBOX</td>
+	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr/td[2]/input</td>
+	<td>Access</td>
+</tr>
+<tr>
+	<td>PERMISSIONS_ADD_DOCUMENT_CHECKBOX</td>
+	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr/td[3]/input</td>
+	<td>Add Document</td>
+</tr>
+<tr>
+	<td>PERMISSIONS_ADD_SHORTCUT_CHECKBOX</td>
+	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr/td[4]/input</td>
+	<td>Add Shortcut</td>
+</tr>
+<tr>
+	<td>PERMISSIONS_ADD_SUBFOLDER_CHECKBOX</td>
+	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr/td[5]/input</td>
+	<td>Add Subfolder</td>
+</tr>
+<tr>
+	<td>PERMISSIONS_DELETE_CHECKBOX</td>
+	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr/td[6]/input</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>PERMISSIONS_PERMISSIONS_CHECKBOX</td>
+	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr/td[7]/input</td>
+	<td>Permissions</td>
+</tr>
+<tr>
+	<td>PERMISSIONS_UPDATE_CHECKBOX</td>
+	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr/td[8]/input</td>
+	<td>Update</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

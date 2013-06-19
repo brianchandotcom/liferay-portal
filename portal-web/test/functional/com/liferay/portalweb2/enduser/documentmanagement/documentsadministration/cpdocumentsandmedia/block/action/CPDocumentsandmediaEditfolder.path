@@ -1,0 +1,69 @@
+<html>
+<head>
+<title>CPDocumentsandmediaEditfolder</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPDocumentsandmediaEditfolder</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPDocumentsandmediaEditfolder</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//span[@class='taglib-icon-help']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BACK</td>
+	<td>//a[@id='_20_TabsBack']</td>
+	<td>Back</td>
+</tr>
+<tr>
+	<td>NAME_FIELD</td>
+	<td>//input[@id='_20_name']</td>
+	<td>Name</td>
+</tr>
+<tr>
+	<td>DESCRIPTION_FIELD</td>
+	<td>//textarea[@id='_20_description']</td>
+	<td>Description</td>
+</tr>
+<tr>
+	<td>DOCUMENT_TYPE_USE_PARENT</td>
+	<td>//input[@id='_20_useFileEntryTypes']</td>
+	<td>Use document type restrictions of the parent folder. </td>
+</tr>
+<tr>
+	<td>DOCUMENT_TYPE_OVERRIDE_PARENT</td>
+	<td>//input[@id='_20_overrideFileEntryTypes']</td>
+	<td>Define specific document type restrictions for this folder. </td>
+</tr>
+<tr>
+	<td>SELECT_DOCUMENT_TYPE</td>
+	<td>//div[@id='_20_overrideParentSettings']/span/a/span</td>
+	<td>Select Document Type</td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//div[@class='button-holder ']/button[contains(.,'Save')]</td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>CANCEL_BUTTON</td>
+	<td>//div[@class='button-holder ']/button[contains(.,'Cancel')]</td>
+	<td>Cancel</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<html>
+<head>
+<title>CPDocumentsandmediaDocument</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPDocumentsandmediaDocument</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPDocumentsandmediaDocument</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TOOLBAR-->
+<tr>
+	<td>TOOLBAR_DOWNLOAD_BUTTON</td>
+	<td>//div[@id='_20_fileEntryToolbar']/div/button[contains(.,'Download')]</td>
+	<td>Download</td>
+</tr>
+<tr>
+	<td>TOOLBAR_EDIT_BUTTON</td>
+	<td>//div[@id='_20_fileEntryToolbar']/div/button[contains(.,'Edit')]</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>TOOLBAR_MOVE_BUTTON</td>
+	<td>//div[@id='_20_fileEntryToolbar']/div/button[contains(.,'Move')]</td>
+	<td>Move</td>
+</tr>
+<tr>
+	<td>TOOLBAR_CHECKOUT_BUTTON</td>
+	<td>//div[@id='_20_fileEntryToolbar']/div/button[contains(.,'Checkout')]</td>
+	<td>Checkout</td>
+</tr>
+<tr>
+	<td>TOOLBAR_PERMISSIONS_BUTTON</td>
+	<td>//div[@id='_20_fileEntryToolbar']/div/button[contains(.,'Permissions')]</td>
+	<td>Permissions</td>
+</tr>
+<tr>
+	<td>TOOLBAR_RECYCLE_BIN_BUTTON</td>
+	<td>//div[@id='_20_fileEntryToolbar']/div/button[contains(.,'Move to the Recycle Bin')]</td>
+	<td>Move to the Recycle Bin</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DOCUMENT_INFO-->
+<tr>
+	<td>DOCUMENT_INFO_TITLE</td>
+	<td>//div[@class='document-info']/h2[@class='document-title']</td>
+	<td>Title</td>
+</tr>
+<tr>
+	<td>DOCUMENT_INFO_RATING</td>
+	<td>//div[@class='document-info']/span[@class='lfr-asset-ratings']</td>
+	<td>Rating</td>
+</tr>
+<tr>
+	<td>DOCUMENT_INFO_LINKS</td>
+	<td>//div[@class='document-info']/div[@class='entry-links']</td>
+	<td>Links</td>
+</tr>
+<tr>
+	<td>DOCUMENT_INFO_DESCRIPTION</td>
+	<td>//div[@class='document-info']/span[@class='document-description']</td>
+	<td>Description</td>
+</tr>
+<tr>
+	<td>DOCUMENT_INFO_CATEGORIES</td>
+	<td>//div[@class='document-info']/div[@class='lfr-asset-categories']</td>
+	<td>Categories</td>
+</tr>
+<tr>
+	<td>DOCUMENT_INFO_TAGS</td>
+	<td>//div[@class='document-info']/div[@class='lfr-asset-tags']</td>
+	<td>Tags</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--COMMENTS-->
+<tr>
+	<td>COMMENTS_BE_THE_FIRST</td>
+	<td>link=Be the first.</td>
+	<td>Be the first.</td>
+</tr>
+<tr>
+	<td>COMMENTS_ADD_COMMENT</td>
+	<td>link=Add Comment</td>
+	<td>Add Comment</td>
+</tr>
+<tr>
+	<td>COMMENTS_SUBSCRIBE_TO_COMMENTS</td>
+	<td>link=Subscribe to Comments</td>
+	<td>Subscribe to Comments</td>
+</tr>
+<tr>
+	<td>COMMENTS_UNSUBSCRIBE_FROM_COMMENTS</td>
+	<td>link=Unsubscribe from Comments</td>
+	<td>Unsubscribe from Comments</td>
+</tr>
+<tr>
+	<td>COMMENTS_POST_REPLY_BODY</td>
+	<td>//textarea[@class='field']</td>
+	<td>Post Reply Body</td>
+</tr>
+<tr>
+	<td>COMMENTS_REPLY</td>
+	<td>//div[@class='button-holder ']/button[contains(.,'Reply')]</td>
+	<td>Reply</td>
+</tr>
+<tr>
+	<td>COMMENTS_REPLY</td>
+	<td>//div[@class='button-holder ']/button[contains(.,'Cancel')]</td>
+	<td>Cancel</td>
+</tr>
+<tr>
+	<td>COMMENTS_REPLY_BODY</td>
+	<td>//div[@class='lfr-discussion-message']</td>
+	<td>Reply Body</td>
+</tr>
+<tr>
+	<td>COMMENTS_SUCCESS_MESSAGE</td>
+	<td>//div[@class='lfr-message-response alert alert-success']</td>
+	<td>Your request processed successfully.</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

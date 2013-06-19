@@ -1,0 +1,112 @@
+<html>
+<head>
+<title>CPDocumentsandmediaMovefolder</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPDocumentsandmediaMovefolder</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPDocumentsandmediaMovefolder</td>
+</tr>
+<!---->
+<tr>
+	<td>CONFIGURATION_OPTIONS</td>
+	<td>//div[@class='btn-group portlet-options']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//span[@class='taglib-icon-help']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BACK</td>
+	<td>//a[@id='_20_TabsBack']</td>
+	<td>Back</td>
+</tr>
+<tr>
+	<td>PARENT_FOLDER</td>
+	<td>//a[@id='_20_parentFolderName']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_PARENT_FOLDER_BUTTON</td>
+	<td>//div[@class='control-group field-wrapper']/button[contains(.,'Select')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMOVE_PARENT_FOLDER_BUTTON</td>
+	<td>//div[@class='control-group field-wrapper']/button[contains(.,'Remove')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOVE_BUTTON</td>
+	<td>//div[@class='button-holder ']/button[contains(.,'Move')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CANCEL_BUTTON</td>
+	<td>//div[@class='button-holder ']/button[contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CONFIGURATION_OPTIONS_MENULIST-->
+<tr>
+	<td>CONFIGURATION_OPTIONS_MENULIST_EXPORT_IMPORT</td>
+	<td>//a[contains(@id, 'menu_export-import')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FOLDER_WINDOW-->
+<tr>
+	<td>FOLDER_WINDOW_ID</td>
+	<td>//h3[contains(.,'Select Folder')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_WINDOW_ADD_FOLDER_BUTTON</td>
+	<td>//div[@class='button-holder ']/button[contains(.,'Add Folder')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_WINDOW_CHOOSE_THIS_FOLDER_BUTTON</td>
+	<td>//div[@class='button-holder ']/button[contains(.,'Choose This Folder')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_WINDOW_FOLDER1</td>
+	<td>//tbody[@class='table-data']/tr/td/span/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_WINDOW_FOLDER1_CHOOSE_BUTTON</td>
+	<td>//tbody[@class='table-data']/tr/td[contains(.,'Choose')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_WINDOW_FOLDER2</td>
+	<td>//tbody[@class='table-data']/tr[2]/td/span/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_WINDOW_FOLDER2_CHOOSE_BUTTON</td>
+	<td>//tbody[@class='table-data']/tr[2]/td[contains(.,'Choose')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

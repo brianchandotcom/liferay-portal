@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='portlet-msg-success']</td>
+	<td>//div[contains(@class,'alert-success')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -41,16 +41,16 @@
 <tr>
 	<td>DESCRIPTION_FIELD</td>
 	<td>//textarea[@id='_20_description']</td>
-	<td></td>
+	<td>Description</td>
 </tr>
 <tr>
 	<td>SAVE_BUTTON</td>
-	<td>//input[@value='Save']</td>
+	<td>//button[contains(.,'Save')]</td>
 	<td>Save</td>
 </tr>
 <tr>
 	<td>CANCEL_BUTTON</td>
-	<td>//input[@value='Cancel']</td>
+	<td>//button[contains(.,'Cancel')]</td>
 	<td>Cancel</td>
 </tr>
 <tr>
@@ -75,38 +75,73 @@
 	<td>Hide Options</td>
 </tr>
 <tr>
-	<td>PERMISSIONS_CHECKBOX_ACCESS</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr/td[2]/input</td>
+	<td>PERMISSIONS_GUEST_ACCESS_CHECKBOX</td>
+	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[2]/td[2]/input</td>
 	<td>Access</td>
 </tr>
 <tr>
-	<td>PERMISSIONS_CHECKBOX_ADD_DOCUMENT</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr/td[3]/input</td>
+	<td>PERMISSIONS_GUEST_ADD_DOCUMENT_CHECKBOX</td>
+	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[2]/td[3]/input</td>
 	<td>Add Document</td>
 </tr>
 <tr>
-	<td>PERMISSIONS_CHECKBOX_ADD_SHORTCUT</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr/td[4]/input</td>
+	<td>PERMISSIONS_GUEST_ADD_SHORTCUT_CHECKBOX</td>
+	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[2]/td[4]/input</td>
 	<td>Add Shortcut</td>
 </tr>
 <tr>
-	<td>PERMISSIONS_CHECKBOX_ADD_SUBFOLDER</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr/td[5]/input</td>
+	<td>PERMISSIONS_GUEST_ADD_SUBFOLDER_CHECKBOX</td>
+	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[2]/td[5]/input</td>
 	<td>Add Subfolder</td>
 </tr>
 <tr>
-	<td>PERMISSIONS_CHECKBOX_DELETE</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr/td[6]/input</td>
+	<td>PERMISSIONS_GUEST_DELETE_CHECKBOX</td>
+	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[2]/td[6]/input</td>
 	<td>Delete</td>
 </tr>
 <tr>
-	<td>PERMISSIONS_CHECKBOX_PERMISSIONS</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr/td[7]/input</td>
+	<td>PERMISSIONS_GUEST_PERMISSIONS_CHECKBOX</td>
+	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[2]/td[7]/input</td>
 	<td>Permissions</td>
 </tr>
 <tr>
-	<td>PERMISSIONS_CHECKBOX_UPDATE</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr/td[8]/input</td>
+	<td>PERMISSIONS_GUEST_UPDATE_CHECKBOX</td>
+	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[2]/td[8]/input</td>
+	<td>Update</td>
+</tr>
+<tr>
+	<td>PERMISSIONS_SITE_MEMBER_ACCESS_CHECKBOX</td>
+	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[3]/td[2]/input</td>
+	<td>Access</td>
+</tr>
+<tr>
+	<td>PERMISSIONS_SITE_MEMBER_ADD_DOCUMENT_CHECKBOX</td>
+	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[3]/td[3]/input</td>
+	<td>Add Document</td>
+</tr>
+<tr>
+	<td>PERMISSIONS_SITE_MEMBER_ADD_SHORTCUT_CHECKBOX</td>
+	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[3]/td[4]/input</td>
+	<td>Add Shortcut</td>
+</tr>
+<tr>
+	<td>PERMISSIONS_SITE_MEMBER_ADD_SUBFOLDER_CHECKBOX</td>
+	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[3]/td[5]/input</td>
+	<td>Add Subfolder</td>
+</tr>
+<tr>
+	<td>PERMISSIONS_SITE_MEMBER_DELETE_CHECKBOX</td>
+	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[3]/td[6]/input</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>PERMISSIONS_SITE_MEMBER_PERMISSIONS_CHECKBOX</td>
+	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[3]/td[7]/input</td>
+	<td>Permissions</td>
+</tr>
+<tr>
+	<td>PERMISSIONS_SITE_MEMBER_UPDATE_CHECKBOX</td>
+	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[3]/td[8]/input</td>
 	<td>Update</td>
 </tr>
 </tbody>

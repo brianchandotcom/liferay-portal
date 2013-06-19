@@ -28,6 +28,16 @@
 	<td></td>
 	<td></td>
 </tr>
+<tr>
+	<td>DATA_DEFINITIONS_IFRAME</td>
+	<td>//iframe[@class='dialog-iframe-node ']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--TOOLBAR-->
 <tr>
 	<td>TOOLBAR_VIEW_ALL</td>

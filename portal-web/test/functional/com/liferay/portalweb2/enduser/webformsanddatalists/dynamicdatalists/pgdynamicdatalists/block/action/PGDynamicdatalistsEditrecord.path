@@ -1,0 +1,44 @@
+<html>
+<head>
+<title>PGDynamicdatalistsEditrecord</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGDynamicdatalistsEditrecord</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGDynamicdatalistsEditRecord</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_HISTORY_BUTTON</td>
+	<td>//button[@class='btn yui3-widget btn-content' and contains(.,'View History')]/i</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_AS_DRAFT_BUTTON</td>
+	<td>//button[contains(@id,'saveButton') and contains(.,'Save as Draft')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLISH_BUTTON</td>
+	<td>//button[contains(@id,'publishButton') and contains(.,'Publish')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CANCEL_BUTTON</td>
+	<td>//button[contains(@id,'cancelButton') and contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

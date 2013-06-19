@@ -19,6 +19,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONFIGURATION_IFRAME</td>
+	<td>//iframe[contains(@src,'configuration')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[@class='alert alert-info']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUCCESS_MESSAGE</td>
 	<td>//div[@class='alert alert-success']</td>
 	<td></td>
@@ -26,6 +36,11 @@
 <tr>
 	<td>SAVE_BUTTON</td>
 	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
 	<td></td>
 </tr>
 <tr>
@@ -125,17 +140,33 @@
 <!--LIST_TABLE-->
 <tr>
 	<td>LIST_TABLE_NAME_1</td>
-	<td>xpath=(//div[@id='_86_ddlRecordSetsSearchContainer']//tr/td[2])</td>
+	<td>xpath=(//div[@id='_86_ddlRecordSetsSearchContainer']//tr/td[2]/a)</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LIST_TABLE_DESCRIPTION_1</td>
-	<td>xpath=(//div[@id='_86_ddlRecordSetsSearchContainer']//tr/td[3])</td>
+	<td>xpath=(//div[@id='_86_ddlRecordSetsSearchContainer']//tr/td[3]/a)</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LIST_TABLE_ACTIONS_1</td>
 	<td>xpath=(//div[@id='_86_ddlRecordSetsSearchContainer']//tr/td[5]/div/a[@title='Actions'])</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--LIST_MENULIST-->
+<tr>
+	<td>LIST_MENULIST_EDIT</td>
+	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_MENULIST_DELETE</td>
+	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
 	<td></td>
 </tr>
 </tbody>

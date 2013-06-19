@@ -34,6 +34,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>HEADER_TITLE</td>
+	<td>//h3[@class='header-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[@class='alert alert-info']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -77,6 +87,36 @@
 </tr>
 <!--RECORD_TABLE-->
 <tr>
+	<td>RECORD_TABLE_COLUMN_ONE_NAME</td>
+	<td>xpath=(//div[contains(@id,'ocerSearchContainer')]//thead/tr/th[1])</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECORD_TABLE_COLUMN_ONE_RECORD_1</td>
+	<td>xpath=(//div[contains(@id,'ocerSearchContainer')]//tr/td[1])</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECORD_TABLE_COLUMN_TWO_NAME</td>
+	<td>xpath=(//div[contains(@id,'ocerSearchContainer')]//thead/tr/th[2])</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECORD_TABLE_COLUMN_TWO_RECORD_1</td>
+	<td>xpath=(//div[contains(@id,'ocerSearchContainer')]//tr/td[2])</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECORD_TABLE_COLUMN_THREE_NAME</td>
+	<td>xpath=(//div[contains(@id,'ocerSearchContainer')]//thead/tr/th[3])</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECORD_TABLE_COLUMN_THREE_RECORD_1</td>
+	<td>xpath=(//div[contains(@id,'ocerSearchContainer')]//tr/td[3])</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RECORD_TABLE_ACTIONS_1</td>
 	<td>xpath=(//div/a[@title='Actions'])[1]</td>
 	<td></td>
@@ -89,22 +129,22 @@
 <!--TOOLBAR-->
 <tr>
 	<td>TOOLBAR_ADD_FORM_TEMPLATE</td>
-	<td>//span[contains(@class,'lfr-icon-action-add')]/a/span[contains(.,'Add Form Template')]</td>
+	<td>//span[contains(@class,'lfr-icon-action-add')]/a[contains(.,'Add Form Template')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_ADD_DISPLAY_TEMPLATE</td>
-	<td>//span[contains(@class,'lfr-icon-action-add')]/a/span[contains(.,'Add Display Template')]</td>
+	<td>//span[contains(@class,'lfr-icon-action-add')]/a[contains(.,'Add Display Template')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_SELECT_LIST</td>
-	<td>//span[contains(@class,'lfr-icon-action-configuration')]/a/span[contains(.,'Select List')]</td>
+	<td>//span[contains(@class,'lfr-icon-action-configuration')]/a[contains(.,'Select List')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_ADD_LIST</td>
-	<td>//span[contains(@class,'lfr-icon-action-add')]/a/span[contains(.,'Add List')]</td>
+	<td>//span[contains(@class,'lfr-icon-action-add')]/a[contains(.,'Add List')]</td>
 	<td></td>
 </tr>
 <tr>

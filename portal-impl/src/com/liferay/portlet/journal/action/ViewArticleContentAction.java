@@ -98,7 +98,8 @@ public class ViewArticleContentAction extends PortletAction {
 
 				User user = PortalUtil.getUser(uploadPortletRequest);
 
-				String content = null;
+				String content = ParamUtil.getString(
+					uploadPortletRequest, "content");
 
 				if (Validator.isNotNull(structureId)) {
 					ServiceContext serviceContext =
@@ -109,33 +110,36 @@ public class ViewArticleContentAction extends PortletAction {
 					content = ActionUtil.getContentAndImages(
 						groupId, structureId, null, null, cmd, themeDisplay,
 						serviceContext);
+
+					Map<String, String> tokens = JournalUtil.getTokens(
+						groupId, themeDisplay);
+
+					tokens.put("article_resource_pk", "-1");
+
+					JournalArticle article = new JournalArticleImpl();
+
+					article.setGroupId(groupId);
+					article.setCompanyId(user.getCompanyId());
+					article.setUserId(user.getUserId());
+					article.setUserName(user.getFullName());
+					article.setCreateDate(createDate);
+					article.setModifiedDate(modifiedDate);
+					article.setArticleId(articleId);
+					article.setVersion(version);
+					article.setTitle(title);
+					article.setDescription(description);
+					article.setContent(content);
+					article.setType(type);
+					article.setStructureId(structureId);
+					article.setTemplateId(templateId);
+					article.setDisplayDate(displayDate);
+
+					output = JournalArticleLocalServiceUtil.getArticleContent(
+						article, templateId, null, languageId, themeDisplay);
 				}
-
-				Map<String, String> tokens = JournalUtil.getTokens(
-					groupId, themeDisplay);
-
-				tokens.put("article_resource_pk", "-1");
-
-				JournalArticle article = new JournalArticleImpl();
-
-				article.setGroupId(groupId);
-				article.setCompanyId(user.getCompanyId());
-				article.setUserId(user.getUserId());
-				article.setUserName(user.getFullName());
-				article.setCreateDate(createDate);
-				article.setModifiedDate(modifiedDate);
-				article.setArticleId(articleId);
-				article.setVersion(version);
-				article.setTitle(title);
-				article.setDescription(description);
-				article.setContent(content);
-				article.setType(type);
-				article.setStructureId(structureId);
-				article.setTemplateId(templateId);
-				article.setDisplayDate(displayDate);
-
-				output = JournalArticleLocalServiceUtil.getArticleContent(
-					article, templateId, null, languageId, themeDisplay);
+				else {
+					output = content;
+				}
 			}
 			else if (cmd.equals(Constants.VIEW)) {
 				JournalArticle article = JournalArticleServiceUtil.getArticle(

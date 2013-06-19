@@ -39,7 +39,7 @@ if ((article != null) && article.isDraft()) {
 
 	var toolbarButtonGroup = [];
 
-	<c:if test="<%= (article != null) && Validator.isNotNull(structureId) && (classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) %>">
+	<c:if test="<%= (article != null) && (classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) %>">
 		toolbarButtonGroup.push(
 			{
 				icon: 'icon-search',
@@ -47,6 +47,10 @@ if ((article != null) && article.isDraft()) {
 				on: {
 					click: function(event) {
 						var form = A.one('#<portlet:namespace />fm1');
+
+						<c:if test="<%= Validator.isNull(structureId) %>">
+							form.one('#<portlet:namespace />articleContent').val(window['<%= renderResponse.getNamespace() + renderResponse.getNamespace() + "structure_el_TextAreaField_content" %>'].getHTML());
+						</c:if>
 
 						var orginalFormAction = form.attr('action');
 

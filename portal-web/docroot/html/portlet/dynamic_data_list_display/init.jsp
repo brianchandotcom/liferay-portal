@@ -40,10 +40,6 @@ PortletPreferences preferences = renderRequest.getPreferences();
 
 String portletResource = ParamUtil.getString(request, "portletResource");
 
-if (Validator.isNotNull(portletResource)) {
-	preferences = PortletPreferencesFactoryUtil.getPortletSetup(request, portletResource);
-}
-
 long recordSetId = GetterUtil.getLong(preferences.getValue("recordSetId", StringPool.BLANK));
 
 long displayDDMTemplateId = GetterUtil.getLong(preferences.getValue("displayDDMTemplateId", StringPool.BLANK));

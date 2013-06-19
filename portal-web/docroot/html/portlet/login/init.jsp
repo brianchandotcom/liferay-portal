@@ -63,12 +63,6 @@ page import="org.openid4java.message.MessageException" %>
 <%
 PortletPreferences preferences = renderRequest.getPreferences();
 
-String portletResource = ParamUtil.getString(request, "portletResource");
-
-if (Validator.isNotNull(portletResource)) {
-	preferences = PortletPreferencesFactoryUtil.getPortletSetup(request, portletResource);
-}
-
 String authType = preferences.getValue("authType", StringPool.BLANK);
 %>
 

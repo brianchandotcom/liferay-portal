@@ -26,12 +26,6 @@ page import="com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil" %>
 <%
 PortletPreferences preferences = renderRequest.getPreferences();
 
-String portletResource = ParamUtil.getString(request, "portletResource");
-
-if (Validator.isNotNull(portletResource)) {
-	preferences = PortletPreferencesFactoryUtil.getPortletSetup(request, portletResource);
-}
-
 long nodeId = GetterUtil.getLong(preferences.getValue("nodeId", StringPool.BLANK));
 String title = GetterUtil.getString(preferences.getValue("title", WikiPageConstants.FRONT_PAGE));
 %>

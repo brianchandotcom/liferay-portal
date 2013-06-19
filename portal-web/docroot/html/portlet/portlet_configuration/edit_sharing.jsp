@@ -24,7 +24,7 @@ String returnToFullPageURL = ParamUtil.getString(request, "returnToFullPageURL")
 
 Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletResource);
 
-PortletPreferences preferences = PortletPreferencesFactoryUtil.getLayoutPortletSetup(layout, portletResource);
+PortletPreferences preferences = renderRequest.getPreferences();
 
 PortletURL portletURL = renderResponse.createRenderURL();
 

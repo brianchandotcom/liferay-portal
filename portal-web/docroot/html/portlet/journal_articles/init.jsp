@@ -38,14 +38,6 @@ page import="com.liferay.portlet.journalcontent.util.JournalContentUtil" %>
 <%
 PortletPreferences preferences = renderRequest.getPreferences();
 
-String portletResource = ParamUtil.getString(request, "portletResource");
-
-if (Validator.isNotNull(portletResource)) {
-	portletConfig = PortalUtil.getPortletConfig(company.getCompanyId(), portletResource, application);
-
-	preferences = PortletPreferencesFactoryUtil.getPortletSetup(request, portletResource);
-}
-
 long groupId = GetterUtil.getLong(preferences.getValue("groupId", String.valueOf(themeDisplay.getScopeGroupId())));
 String ddmStructureKey = preferences.getValue("ddmStructureKey", StringPool.BLANK);
 String type = preferences.getValue("type", StringPool.BLANK);

@@ -19,32 +19,19 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.ResourceServingConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.service.PortletLocalServiceUtil;
-import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.struts.PortletAction;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portlet.portletconfiguration.util.PortletConfigurationUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
-import javax.portlet.PortletPreferences;
-import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-
-import javax.servlet.ServletContext;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -65,7 +52,7 @@ public class EditConfigurationAction extends PortletAction {
 		Portlet portlet = null;
 
 		try {
-			portlet = getPortlet(actionRequest);
+			portlet = ActionUtil.getPortlet(actionRequest);
 		}
 		catch (PrincipalException pe) {
 			SessionErrors.add(
@@ -94,7 +81,7 @@ public class EditConfigurationAction extends PortletAction {
 		Portlet portlet = null;
 
 		try {
-			portlet = getPortlet(renderRequest);
+			portlet = ActionUtil.getPortlet(renderRequest);
 		}
 		catch (PrincipalException pe) {
 			SessionErrors.add(
@@ -103,7 +90,7 @@ public class EditConfigurationAction extends PortletAction {
 			return mapping.findForward("portlet.portlet_configuration.error");
 		}
 
-		renderResponse.setTitle(getTitle(portlet, renderRequest));
+		renderResponse.setTitle(ActionUtil.getTitle(portlet, renderRequest));
 
 		ConfigurationAction configurationAction = getConfigurationAction(
 			portlet);
@@ -140,7 +127,7 @@ public class EditConfigurationAction extends PortletAction {
 		Portlet portlet = null;
 
 		try {
-			portlet = getPortlet(resourceRequest);
+			portlet = ActionUtil.getPortlet(resourceRequest);
 		}
 		catch (PrincipalException pe) {
 			return;
@@ -172,54 +159,6 @@ public class EditConfigurationAction extends PortletAction {
 		}
 
 		return configurationAction;
-	}
-
-	protected Portlet getPortlet(PortletRequest portletRequest)
-		throws Exception {
-
-		long companyId = PortalUtil.getCompanyId(portletRequest);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		String portletId = ParamUtil.getString(
-			portletRequest, "portletResource");
-
-		if (!PortletPermissionUtil.contains(
-				permissionChecker, themeDisplay.getLayout(), portletId,
-				ActionKeys.CONFIGURATION)) {
-
-			throw new PrincipalException();
-		}
-
-		return PortletLocalServiceUtil.getPortletById(companyId, portletId);
-	}
-
-	protected String getTitle(Portlet portlet, RenderRequest renderRequest)
-		throws Exception {
-
-		ServletContext servletContext =
-			(ServletContext)renderRequest.getAttribute(WebKeys.CTX);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletPreferences portletSetup =
-			PortletPreferencesFactoryUtil.getPortletSetup(
-				renderRequest, portlet.getPortletId());
-
-		String title = PortletConfigurationUtil.getPortletTitle(
-			portletSetup, themeDisplay.getLanguageId());
-
-		if (Validator.isNull(title)) {
-			title = PortalUtil.getPortletTitle(
-				portlet, servletContext, themeDisplay.getLocale());
-		}
-
-		return title;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

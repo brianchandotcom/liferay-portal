@@ -22,6 +22,7 @@ import com.liferay.portal.LayoutPrototypeException;
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.MissingReferenceException;
 import com.liferay.portal.NoSuchGroupException;
+import com.liferay.portal.PortletIdException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -53,6 +54,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
+import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
@@ -61,7 +63,6 @@ import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.FileExtensionException;
 import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.FileSizeException;
-import com.liferay.portlet.documentlibrary.action.EditFileEntryAction;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.sites.action.ActionUtil;
 
@@ -95,7 +96,7 @@ import org.apache.struts.action.ActionMapping;
  * @author Alexander Chow
  * @author Raymond Augé
  */
-public class ImportLayoutsAction extends EditFileEntryAction {
+public class ImportLayoutsAction extends PortletAction {
 
 	@Override
 	public void processAction(
@@ -107,15 +108,23 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 
 		try {
 			if (cmd.equals(Constants.ADD_TEMP)) {
-				addTempFileEntry(actionRequest, actionResponse);
+				addTempFileEntry(
+					actionRequest, actionResponse,
+					ExportImportHelper.TEMP_FOLDER_NAME);
 
-				validateImportLayoutsFile(actionRequest, actionResponse);
+				validateFile(
+					actionRequest, actionResponse,
+					ExportImportHelper.TEMP_FOLDER_NAME);
 			}
 			else if (cmd.equals(Constants.DELETE_TEMP)) {
-				deleteTempFileEntry(actionRequest, actionResponse);
+				deleteTempFileEntry(
+					actionRequest, actionResponse,
+					ExportImportHelper.TEMP_FOLDER_NAME);
 			}
 			else if (cmd.equals(Constants.IMPORT)) {
-				importLayouts(actionRequest, actionResponse);
+				importData(
+					actionRequest, actionResponse,
+					ExportImportHelper.TEMP_FOLDER_NAME);
 
 				String redirect = ParamUtil.getString(
 					actionRequest, "redirect");
@@ -128,7 +137,8 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 				cmd.equals(Constants.DELETE_TEMP)) {
 
 				handleUploadException(
-					portletConfig, actionRequest, actionResponse, cmd, e);
+					portletConfig, actionRequest, actionResponse,
+					ExportImportHelper.TEMP_FOLDER_NAME, e);
 			}
 			else {
 				if ((e instanceof LARFileException) ||
@@ -194,7 +204,8 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 	}
 
 	protected void addTempFileEntry(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			String folderName)
 		throws Exception {
 
 		UploadPortletRequest uploadPortletRequest =
@@ -205,7 +216,7 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		deleteTempFileEntry(themeDisplay.getScopeGroupId());
+		deleteTempFileEntry(themeDisplay.getScopeGroupId(), folderName);
 
 		InputStream inputStream = null;
 
@@ -217,8 +228,8 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 			String contentType = uploadPortletRequest.getContentType("file");
 
 			LayoutServiceUtil.addTempFileEntry(
-				themeDisplay.getScopeGroupId(), sourceFileName,
-				ExportImportHelper.TEMP_FOLDER_NAME, inputStream, contentType);
+				themeDisplay.getScopeGroupId(), sourceFileName, folderName,
+				inputStream, contentType);
 		}
 		catch (Exception e) {
 			UploadException uploadException =
@@ -261,9 +272,9 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 		}
 	}
 
-	@Override
 	protected void deleteTempFileEntry(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			String folderName)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -275,8 +286,7 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 			String fileName = ParamUtil.getString(actionRequest, "fileName");
 
 			LayoutServiceUtil.deleteTempFileEntry(
-				themeDisplay.getScopeGroupId(), fileName,
-				ExportImportHelper.TEMP_FOLDER_NAME);
+				themeDisplay.getScopeGroupId(), fileName, folderName);
 
 			jsonObject.put("deleted", Boolean.TRUE);
 		}
@@ -291,17 +301,39 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 		writeJSON(actionRequest, actionResponse, jsonObject);
 	}
 
-	protected void deleteTempFileEntry(long groupId)
+	protected void deleteTempFileEntry(long groupId, String folderName)
 		throws PortalException, SystemException {
 
 		String[] tempFileEntryNames = LayoutServiceUtil.getTempFileEntryNames(
-			groupId, ExportImportHelper.TEMP_FOLDER_NAME);
+			groupId, folderName);
 
 		for (String tempFileEntryName : tempFileEntryNames) {
 			LayoutServiceUtil.deleteTempFileEntry(
-				groupId, tempFileEntryName,
-				ExportImportHelper.TEMP_FOLDER_NAME);
+				groupId, tempFileEntryName, folderName);
 		}
+	}
+
+	protected void doImportData(ActionRequest actionRequest, File file)
+		throws Exception {
+
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+		boolean privateLayout = ParamUtil.getBoolean(
+			actionRequest, "privateLayout");
+
+		LayoutServiceUtil.importLayouts(
+			groupId, privateLayout, actionRequest.getParameterMap(), file);
+	}
+
+	protected MissingReferences doValidateFile(
+			ActionRequest actionRequest, File file)
+		throws Exception {
+
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+		boolean privateLayout = ParamUtil.getBoolean(
+			actionRequest, "privateLayout");
+
+		return LayoutServiceUtil.validateImportLayoutsFile(
+			groupId, privateLayout, actionRequest.getParameterMap(), file);
 	}
 
 	protected JSONArray getErrorMessagesJSONArray(
@@ -402,10 +434,9 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 		return warningMessagesJSONArray;
 	}
 
-	@Override
 	protected void handleUploadException(
 			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse, String cmd, Exception e)
+			ActionResponse actionResponse, String folderName, Exception e)
 		throws Exception {
 
 		HttpServletResponse response = PortalUtil.getHttpServletResponse(
@@ -431,7 +462,8 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 			e instanceof LARTypeException ||
 			e instanceof LayoutPrototypeException ||
 			e instanceof LocaleException ||
-			e instanceof MissingReferenceException) {
+			e instanceof MissingReferenceException ||
+			e instanceof PortletIdException) {
 
 			if (e instanceof DuplicateFileException) {
 				errorMessage = themeDisplay.translate(
@@ -443,9 +475,7 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 				errorMessage = themeDisplay.translate(
 					"document-names-must-end-with-one-of-the-following-" +
 						"extensions",
-					StringUtil.merge(
-						getAllowedFileExtensions(
-							portletConfig, actionRequest, actionResponse)));
+					".lar");
 				errorType =
 					ServletResponseConstants.SC_FILE_EXTENSION_EXCEPTION;
 			}
@@ -566,12 +596,17 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 				warningMessagesJSONArray = getWarningMessagesJSONArray(
 					themeDisplay, missingReferences.getWeakMissingReferences());
 			}
+			else if (e instanceof PortletIdException) {
+				errorMessage = themeDisplay.translate(
+					"please-import-a-lar-file-for-the-current-portlet");
+				errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
+			}
 		}
 		else {
 			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 		}
 
-		deleteTempFileEntry(themeDisplay.getScopeGroupId());
+		deleteTempFileEntry(themeDisplay.getScopeGroupId(), folderName);
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -596,8 +631,9 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 		ServletResponseUtil.write(response, String.valueOf(errorType));
 	}
 
-	protected void importLayouts(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+	protected void importData(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			String folderName)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -606,7 +642,7 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 
 		FileEntry fileEntry = ExportImportHelperUtil.getTempFileEntry(
-			groupId, themeDisplay.getUserId());
+			groupId, themeDisplay.getUserId(), folderName);
 
 		File file = DLFileEntryLocalServiceUtil.getFile(
 			themeDisplay.getUserId(), fileEntry.getFileEntryId(),
@@ -621,9 +657,6 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 		File newFile = null;
 
 		try {
-			boolean privateLayout = ParamUtil.getBoolean(
-				actionRequest, "privateLayout");
-
 			String newFileName = StringUtil.replace(
 				file.getPath(), file.getName(), fileEntry.getTitle());
 
@@ -637,11 +670,9 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 				FileUtil.copyFile(file, newFile);
 			}
 
-			LayoutServiceUtil.importLayouts(
-				groupId, privateLayout, actionRequest.getParameterMap(),
-				newFile);
+			doImportData(actionRequest, newFile);
 
-			deleteTempFileEntry(groupId);
+			deleteTempFileEntry(groupId, folderName);
 
 			addSuccessMessage(actionRequest, actionResponse);
 		}
@@ -661,8 +692,9 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 		}
 	}
 
-	protected void validateImportLayoutsFile(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+	protected void validateFile(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			String folderName)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -671,7 +703,7 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 
 		FileEntry fileEntry = ExportImportHelperUtil.getTempFileEntry(
-			groupId, themeDisplay.getUserId());
+			groupId, themeDisplay.getUserId(), folderName);
 
 		File file = DLFileEntryLocalServiceUtil.getFile(
 			themeDisplay.getUserId(), fileEntry.getFileEntryId(),
@@ -686,9 +718,6 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 		File newFile = null;
 
 		try {
-			boolean privateLayout = ParamUtil.getBoolean(
-				actionRequest, "privateLayout");
-
 			String newFileName = StringUtil.replace(
 				file.getPath(), file.getName(), fileEntry.getTitle());
 
@@ -702,10 +731,8 @@ public class ImportLayoutsAction extends EditFileEntryAction {
 				FileUtil.copyFile(file, newFile);
 			}
 
-			MissingReferences missingReferences =
-				LayoutServiceUtil.validateImportLayoutsFile(
-				groupId, privateLayout, actionRequest.getParameterMap(),
-				newFile);
+			MissingReferences missingReferences = doValidateFile(
+				actionRequest, newFile);
 
 			Map<String, MissingReference> weakMissingReferences =
 				missingReferences.getWeakMissingReferences();

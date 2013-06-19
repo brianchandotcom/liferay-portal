@@ -1873,6 +1873,17 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 			privateLayout, parameterMap, file);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.lar.MissingReferences validateImportPortletInfo(
+		long userId, long groupId, long plid, java.lang.String portletId,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _layoutLocalService.validateImportPortletInfo(userId, groupId,
+			plid, portletId, parameterMap, file);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

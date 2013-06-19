@@ -1,0 +1,141 @@
+<html>
+<head>
+<title>CPMessageboardsThread</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPMessageboardsThread</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPMessageboardsThread</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE_HEADER</td>
+	<td>//h3[@class='header-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--THREAD_CONTROLS-->
+<tr>
+	<td>THREAD_CONTROLS_MOVE_TO_THE_RECYCLE_BIN</td>
+	<td>//div[@class='thread-actions']/ul/li/a[contains(.,'Move to the Recycle Bin')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MESSAGE-->
+<tr>
+	<td>MESSAGE_SUBJECT_1</td>
+	<td>xpath=(//div[@class='subject']/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_SUBJECT_2</td>
+	<td>xpath=(//div[@class='subject']/a)[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_SUBJECT_3</td>
+	<td>xpath=(//div[@class='subject']/a)[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_BODY_1</td>
+	<td>xpath=(//div[@class='thread-body'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_BODY_2</td>
+	<td>xpath=(//div[@class='thread-body'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_BODY_3</td>
+	<td>xpath=(//div[@class='thread-body'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_USERNAME_1</td>
+	<td>xpath=(//span[@class='user-name'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_USERNAME_2</td>
+	<td>xpath=(//span[@class='user-name'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_USERNAME_3</td>
+	<td>xpath=(//span[@class='user-name'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_REPLY_1</td>
+	<td>xpath=(//span[.='Reply'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_REPLY_2</td>
+	<td>xpath=(//span[.='Reply'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_REPLY_3</td>
+	<td>xpath=(//span[.='Reply'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_RATING_1</td>
+	<td>xpath=(//div[contains(@id,'ratingThumbContent')]/div)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_RATING_2</td>
+	<td>xpath=(//div[contains(@id,'ratingThumbContent')]/div)[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_RATING_3</td>
+	<td>xpath=(//div[contains(@id,'ratingThumbContent')]/div)[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_EDIT_1</td>
+	<td>xpath=(//td/ul/li[2]/span/a/span)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_EDIT_2</td>
+	<td>xpath=(//td/ul/li[2]/span/a/span)[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_EDIT_3</td>
+	<td>xpath=(//td/ul/li[2]/span/a/span)[3]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

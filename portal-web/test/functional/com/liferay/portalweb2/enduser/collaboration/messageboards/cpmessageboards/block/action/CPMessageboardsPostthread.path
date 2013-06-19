@@ -1,0 +1,39 @@
+<html>
+<head>
+<title>CPMessageboardsPostthread</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPMessageboardsPostthread</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPMessageboardsPostthread</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBJECT_FIELD</td>
+	<td>//input[@id='_162_subject']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BODY_FIELD</td>
+	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLISH_BUTTON</td>
+	<td>//button[@id='_162_publishButton']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

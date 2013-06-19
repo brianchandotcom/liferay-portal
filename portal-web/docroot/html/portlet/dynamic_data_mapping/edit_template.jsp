@@ -255,13 +255,15 @@ if (Validator.isNotNull(structureAvailableFields)) {
 					var A = AUI();
 
 					A.one('#<portlet:namespace />mode').on(
-						'valueChange',
+						'change',
 						function(event) {
-							<portlet:namespace />toggleMode(event.newVal);
+							var currentTarget = event.currentTarget;
+
+							<portlet:namespace />toggleMode(currentTarget.get('value'));
 						}
 					);
 				},
-				['event-valuechange']
+				['aui-base']
 			);
 
 			Liferay.on(

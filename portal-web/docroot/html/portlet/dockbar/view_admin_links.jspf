@@ -17,11 +17,11 @@
 <c:if test="<%= (themeDisplay.isShowControlPanelIcon() || themeDisplay.isShowSiteAdministrationIcon()) && (!layout.getGroup().isControlPanel() || Validator.equals(themeDisplay.getControlPanelCategory(), PortletCategoryKeys.CURRENT_SITE)) %>">
 	<aui:nav-item cssClass="admin-links" dropdown="<%= true %>" id="adminLinks" label="admin">
 		<c:if test="<%= themeDisplay.isShowSiteAdministrationIcon() %>">
-			<aui:nav-item href="<%= themeDisplay.getURLSiteAdministration() %>" iconClass="icon-cog" label="site-administration" />
+			<aui:nav-item anchorId="siteAdministrationLink" href="<%= themeDisplay.getURLSiteAdministration() %>" iconClass="icon-cog" label="site-administration" />
 		</c:if>
 
 		<c:if test="<%= themeDisplay.isShowControlPanelIcon() %>">
-			<aui:nav-item href="<%= themeDisplay.getURLControlPanel() %>" iconClass="icon-wrench" label="control-panel" />
+			<aui:nav-item anchorId="controlPanelLink" href="<%= themeDisplay.getURLControlPanel() %>" iconClass="icon-wrench" label="control-panel" />
 		</c:if>
 	</aui:nav-item>
 

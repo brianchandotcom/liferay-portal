@@ -20,11 +20,11 @@ String randomNamespace = PwdGenerator.getPassword(PwdGenerator.KEY3, 4) + String
 if (Validator.isNull(id)) {
 	id = randomNamespace;
 }
-else {
+else if (portletResponse != null) {
 	id = portletResponse.getNamespace() + id;
 }
 
-if (Validator.isNotNull(anchorId)) {
+if (Validator.isNotNull(anchorId) && (portletResponse != null)) {
 	anchorId = portletResponse.getNamespace() + anchorId;
 }
 

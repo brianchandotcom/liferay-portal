@@ -123,6 +123,7 @@ public class ServiceContext implements Cloneable, Serializable {
 		serviceContext.setRequest(getRequest());
 		serviceContext.setScopeGroupId(getScopeGroupId());
 		serviceContext.setSignedIn(isSignedIn());
+		serviceContext.setSkipUpdatePageCount(isSkipUpdatePageCount());
 		serviceContext.setUserDisplayURL(getUserDisplayURL());
 		serviceContext.setUserId(getUserId());
 		serviceContext.setUuid(getUuid());
@@ -850,6 +851,10 @@ public class ServiceContext implements Cloneable, Serializable {
 		return _signedIn;
 	}
 
+	public boolean isSkipUpdatePageCount() {
+		return _skipUpdatePageCount;
+	}
+
 	public void merge(ServiceContext serviceContext) {
 		setAddGroupPermissions(serviceContext.isAddGroupPermissions());
 		setAddGuestPermissions(serviceContext.isAddGuestPermissions());
@@ -947,6 +952,7 @@ public class ServiceContext implements Cloneable, Serializable {
 		}
 
 		setSignedIn(serviceContext.isSignedIn());
+		setSkipUpdatePageCount(serviceContext.isSkipUpdatePageCount());
 
 		if (Validator.isNotNull(serviceContext.getUserDisplayURL())) {
 			setUserDisplayURL(serviceContext.getUserDisplayURL());
@@ -1403,6 +1409,10 @@ public class ServiceContext implements Cloneable, Serializable {
 		_signedIn = signedIn;
 	}
 
+	public void setSkipUpdatePageCount(boolean skipUpdatePageCount) {
+		_skipUpdatePageCount = skipUpdatePageCount;
+	}
+
 	public void setTimeZone(TimeZone timeZone) {
 		_timeZone = timeZone;
 	}
@@ -1507,6 +1517,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	private transient HttpServletRequest _request;
 	private long _scopeGroupId;
 	private boolean _signedIn;
+	private boolean _skipUpdatePageCount;
 	private TimeZone _timeZone;
 	private String _userDisplayURL;
 	private long _userId;

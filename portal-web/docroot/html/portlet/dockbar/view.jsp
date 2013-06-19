@@ -91,7 +91,7 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 			</c:if>
 
 			<c:if test="<%= !controlPanelCategory.equals(PortletCategoryKeys.MY) && !controlPanelCategory.equals(PortletCategoryKeys.CURRENT_SITE) %>">
-				<aui:nav-item href="<%= themeDisplay.getURLControlPanel() %>" iconClass="icon-list" selected="<%= Validator.isNull(controlPanelCategory) %>" />
+				<aui:nav-item anchorId="cpNavHomeLink" href="<%= themeDisplay.getURLControlPanel() %>" iconClass="icon-list" selected="<%= Validator.isNull(controlPanelCategory) %>" />
 
 				<%
 				String[] categories = PortletCategoryKeys.ALL;
@@ -116,7 +116,7 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 				%>
 
 					<c:if test="<%= _hasPortlets(curCategory, themeDisplay) %>">
-						<aui:nav-item href="<%= urlControlPanelCategory %>" iconClass="<%= iconClass %>" label='<%= "category." + curCategory %>' selected="<%= controlPanelCategory.equals(curCategory) %>" />
+						<aui:nav-item anchorId='<%= "cpNav" + curCategory + "Link" %>' href="<%= urlControlPanelCategory %>" iconClass="<%= iconClass %>" label='<%= "category." + curCategory %>' selected="<%= controlPanelCategory.equals(curCategory) %>" />
 					</c:if>
 
 				<%

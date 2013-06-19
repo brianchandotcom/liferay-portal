@@ -43,7 +43,7 @@
 						%>
 
 							<li>
-								<a href="<%= urlCategoryPortlet %>">
+								<a href="<%= urlCategoryPortlet %>" id='<%= renderResponse.getNamespace() + "cpPortletLink_" + categoryPortletId %>'>
 									<c:choose>
 										<c:when test="<%= Validator.isNull(categoryPortlet.getIcon()) %>">
 											<liferay-ui:icon src='<%= themeDisplay.getPathContext() + "/html/icons/default.png" %>' />

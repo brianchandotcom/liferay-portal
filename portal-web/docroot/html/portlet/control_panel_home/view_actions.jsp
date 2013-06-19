@@ -37,7 +37,7 @@
 								<liferay-ui:message key="do-you-want-to-manage-the-installed-apps" />
 							</p>
 
-							<aui:button cssClass="btn-primary" href="<%= manageAppsURL %>" value="manage-apps" />
+							<aui:button cssClass="btn-primary" href="<%= manageAppsURL %>" id="cpHomeActionManageApps" value="manage-apps" />
 						</c:if>
 					</c:when>
 					<c:when test="<%= category.equals(PortletCategoryKeys.CONFIGURATION) %>">
@@ -50,7 +50,7 @@
 								<liferay-ui:message key="do-you-want-to-modify-any-settings-of-your-portal" />
 							</p>
 
-							<aui:button cssClass="btn-primary" href="<%= editPortalSettingsURL %>" value="edit-portal-settings" />
+							<aui:button cssClass="btn-primary" href="<%= editPortalSettingsURL %>" id="cpHomeActionPortalSettings" value="edit-portal-settings" />
 						</c:if>
 					</c:when>
 					<c:when test="<%= category.equals(PortletCategoryKeys.SITES) %>">
@@ -75,7 +75,7 @@
 									<liferay-ui:message key="you-can-manage-the-site-you-are-coming-from" />
 								</p>
 
-								<aui:button cssClass="btn-primary" href="<%= siteAdministrationURL.toString() %>" value="<%= buttonLabel %>" />
+								<aui:button cssClass="btn-primary" href="<%= siteAdministrationURL.toString() %>" id="cpHomeActionManageSite" value="<%= buttonLabel %>" />
 
 						<%
 							}
@@ -94,7 +94,7 @@
 								<liferay-ui:message key="do-you-want-to-create-a-user" />
 							</p>
 
-							<aui:button cssClass="btn-primary" href="<%= addUserURL %>" value="add-user" />
+							<aui:button cssClass="btn-primary" href="<%= addUserURL %>" id="cpHomeActionAddUser" value="add-user" />
 						</c:if>
 					</c:when>
 				</c:choose>

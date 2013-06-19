@@ -49,7 +49,7 @@
 				}
 			%>
 
-				<aui:nav-item href="<%= urlControlPanelSitesPortlet %>" label="<%= PortalUtil.getPortletTitle(curPortlet, application, locale) %>" selected="<%= selected %>" />
+				<aui:nav-item anchorId='<%= "cpSubNav" + curPortletId + "Link" %>' href="<%= urlControlPanelSitesPortlet %>" label="<%= PortalUtil.getPortletTitle(curPortlet, application, locale) %>" selected="<%= selected %>" />
 
 			<%
 			}

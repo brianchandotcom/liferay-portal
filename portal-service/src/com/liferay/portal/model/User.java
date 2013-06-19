@@ -177,6 +177,15 @@ public interface User extends UserModel, PersistedModel {
 	public java.util.List<com.liferay.portal.model.Role> getRoles()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public java.util.List<com.liferay.portal.model.Group> getSites()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<com.liferay.portal.model.Group> getSites(
+		boolean includeAdministrative)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public long[] getTeamIds()
 		throws com.liferay.portal.kernel.exception.SystemException;
 

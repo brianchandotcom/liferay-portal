@@ -1609,6 +1609,21 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	}
 
 	@Override
+	public java.util.List<com.liferay.portal.model.Group> getSites()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _user.getSites();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.Group> getSites(
+		boolean includeAdministrative)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _user.getSites(includeAdministrative);
+	}
+
+	@Override
 	public long[] getTeamIds()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _user.getTeamIds();

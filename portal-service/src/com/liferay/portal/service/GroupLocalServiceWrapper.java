@@ -1754,6 +1754,23 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 		return _groupLocalService.getUserPersonalSiteGroup(companyId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.model.Group> getUserSitesGroups(
+		long userId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _groupLocalService.getUserSitesGroups(userId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.Group> getUserSitesGroups(
+		long userId, boolean includeAdministrative)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _groupLocalService.getUserSitesGroups(userId,
+			includeAdministrative);
+	}
+
 	/**
 	* Returns <code>true</code> if the live group has a staging group.
 	*

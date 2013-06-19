@@ -517,7 +517,7 @@ if (Validator.isNotNull(content)) {
 										</label>
 
 										<div class="journal-article-component-container">
-											<liferay-ui:input-editor contentsLanguageId="<%= Validator.isNotNull(toLanguageId) ? toLanguageId : defaultLanguageId %>" editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>" name='<%= renderResponse.getNamespace() + "structure_el_TextAreaField_content" %>' toolbarSet="liferay-article" width="100%" />
+											<liferay-ui:input-editor contentsLanguageId="<%= Validator.isNotNull(toLanguageId) ? toLanguageId : defaultLanguageId %>" editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>" name="structure_el_TextAreaField_content" toolbarSet="liferay-article" width="100%" />
 										</div>
 
 										<aui:input cssClass="journal-article-localized-checkbox" label="localizable" name="localized" type="hidden" value="<%= true %>" />

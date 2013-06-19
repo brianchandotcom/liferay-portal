@@ -187,7 +187,7 @@ if (showLinkTitle) {
 							</c:choose>
 
 							<dd class="entry-author">
-								<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - createDate.getTime(), true), author} %>" key="x-ago-by-x" />
+								<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - modifiedDate.getTime(), true), author} %>" key="x-ago-by-x" />
 							</dd>
 						</c:if>
 

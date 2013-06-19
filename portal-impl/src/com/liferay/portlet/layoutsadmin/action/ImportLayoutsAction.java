@@ -111,7 +111,7 @@ public class ImportLayoutsAction extends PortletAction {
 					actionRequest, actionResponse,
 					ExportImportHelper.TEMP_FOLDER_NAME);
 
-				validateImportLayoutsFile(
+				validateFile(
 					actionRequest, actionResponse,
 					ExportImportHelper.TEMP_FOLDER_NAME);
 			}
@@ -121,7 +121,7 @@ public class ImportLayoutsAction extends PortletAction {
 					ExportImportHelper.TEMP_FOLDER_NAME);
 			}
 			else if (cmd.equals(Constants.IMPORT)) {
-				importLayouts(
+				importData(
 					actionRequest, actionResponse,
 					ExportImportHelper.TEMP_FOLDER_NAME);
 
@@ -310,6 +310,29 @@ public class ImportLayoutsAction extends PortletAction {
 			LayoutServiceUtil.deleteTempFileEntry(
 				groupId, tempFileEntryName, folderName);
 		}
+	}
+
+	protected void doImportData(ActionRequest actionRequest, File file)
+		throws Exception {
+
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+		boolean privateLayout = ParamUtil.getBoolean(
+			actionRequest, "privateLayout");
+
+		LayoutServiceUtil.importLayouts(
+			groupId, privateLayout, actionRequest.getParameterMap(), file);
+	}
+
+	protected MissingReferences doValidateFile(
+			ActionRequest actionRequest, File file)
+		throws Exception {
+
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+		boolean privateLayout = ParamUtil.getBoolean(
+			actionRequest, "privateLayout");
+
+		return LayoutServiceUtil.validateImportLayoutsFile(
+			groupId, privateLayout, actionRequest.getParameterMap(), file);
 	}
 
 	protected JSONArray getErrorMessagesJSONArray(
@@ -601,7 +624,7 @@ public class ImportLayoutsAction extends PortletAction {
 		ServletResponseUtil.write(response, String.valueOf(errorType));
 	}
 
-	protected void importLayouts(
+	protected void importData(
 			ActionRequest actionRequest, ActionResponse actionResponse,
 			String folderName)
 		throws Exception {
@@ -627,9 +650,6 @@ public class ImportLayoutsAction extends PortletAction {
 		File newFile = null;
 
 		try {
-			boolean privateLayout = ParamUtil.getBoolean(
-				actionRequest, "privateLayout");
-
 			String newFileName = StringUtil.replace(
 				file.getPath(), file.getName(), fileEntry.getTitle());
 
@@ -643,9 +663,7 @@ public class ImportLayoutsAction extends PortletAction {
 				FileUtil.copyFile(file, newFile);
 			}
 
-			LayoutServiceUtil.importLayouts(
-				groupId, privateLayout, actionRequest.getParameterMap(),
-				newFile);
+			doImportData(actionRequest, newFile);
 
 			deleteTempFileEntry(groupId, folderName);
 
@@ -667,7 +685,7 @@ public class ImportLayoutsAction extends PortletAction {
 		}
 	}
 
-	protected void validateImportLayoutsFile(
+	protected void validateFile(
 			ActionRequest actionRequest, ActionResponse actionResponse,
 			String folderName)
 		throws Exception {
@@ -693,9 +711,6 @@ public class ImportLayoutsAction extends PortletAction {
 		File newFile = null;
 
 		try {
-			boolean privateLayout = ParamUtil.getBoolean(
-				actionRequest, "privateLayout");
-
 			String newFileName = StringUtil.replace(
 				file.getPath(), file.getName(), fileEntry.getTitle());
 
@@ -709,10 +724,8 @@ public class ImportLayoutsAction extends PortletAction {
 				FileUtil.copyFile(file, newFile);
 			}
 
-			MissingReferences missingReferences =
-				LayoutServiceUtil.validateImportLayoutsFile(
-				groupId, privateLayout, actionRequest.getParameterMap(),
-				newFile);
+			MissingReferences missingReferences = doValidateFile(
+				actionRequest, newFile);
 
 			Map<String, MissingReference> weakMissingReferences =
 				missingReferences.getWeakMissingReferences();

@@ -1,5 +1,4 @@
 <definition>
-
 	<command name="addChildPagePG">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -20,6 +19,26 @@
 		<execute action="PGWiki#click" locator-key1="WIKI_PAGE_CHILD_PAGE_1" value1="${wikiChildPageTitle}" />
 		<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_TITLE" value1="${wikiChildPageTitle}" />
 		<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_BODY" value1="${wikiChildPageContent}" />
+	</command>
+
+	<command name="addFrontPageCP">
+		<execute macro="Page#cpGotoContent">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<var name="key_wikiNodeName" value="${wikiNodeName}" />
+
+		<execute action="CPWiki#assertClick" locator-key1="WIKI_NODE_TABLE_WIKI" value1="${wikiNodeName}" />
+
+		<execute action="CPWikiAllpages#assertClick" locator-key1="NAVIGATION_FRONTPAGE" />
+
+		<execute action="CPWikiFrontpage#assertClick" locator-key1="INFO_MESSAGE_FRONTPAGE" />
+
+		<execute action="CPWikiAddpage#type" locator-key1="BODY_FIELD" value1="${wikiFrontPageContent}" />
+		<execute action="CPWikiAddpage#assertClick" locator-key1="PUBLISH_BUTTON" />
+
+		<execute action="CPWikiFrontpage#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
+		<execute action="CPWikiFrontpage#assertTextEquals" locator-key1="FRONTPAGE_BODY" value1="${wikiFrontPageContent}" />
 	</command>
 
 	<command name="addFrontPagePG">
@@ -88,22 +107,73 @@
 		<execute macro="RecycleBin#emptyCP" />
 	</command>
 
+	<command name="moveToRecycleBinCP">
+		<execute macro="Page#cpGotoContent">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<var name="key_wikiNodeName" value="${wikiNodeName}" />
+		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
+
+		<execute action="CPWiki#assertClick" locator-key1="WIKI_NODE_TABLE_WIKI" value1="${wikiNodeName}" />
+
+		<execute action="CPWikiAllpages#assertClick" locator-key1="WIKI_PAGE_TABLE_ACTIONS" />
+		<execute action="CPWikiAllpages#assertClick" locator-key1="WIKI_PAGE_MENULIST_RECYCLE_BIN" />
+		<execute action="CPWikiAllpages#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" />
+	</command>
+
 	<command name="tearDownCP">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Wiki" />
 		</execute>
 
-		<execute action="CPWiki#click" locator-key1="WIKI_NODE_TABLE_WIKI_1" />
+		<var name="key_wikiNodeName" value="Main" />
+
+		<execute action="CPWiki#assertClick" locator-key1="WIKI_NODE_TABLE_WIKI" value1="Main"/>
 
 		<while>
-			<condition action="CPWikiAllpages#isElementPresent" locator-key1="WIKI_PAGE_TABLE_ACTIONS_1" />
+			<condition action="CPWikiAllpages#isElementPresent" locator1="//a[@title='Actions']" />
 			<then>
-				<execute action="CPWikiAllpages#click" locator-key1="WIKI_PAGE_TABLE_ACTIONS_1" />
-				<execute action="CPWikiAllpages#click" locator-key1="WIKI_PAGE_MENULIST_RECYCLE_BIN" />
+				<execute action="CPWikiAllpages#assertClick" locator1="//a[@title='Actions']" value1="Actions"/>
+				<execute action="CPWikiAllpages#assertClick" locator-key1="WIKI_PAGE_MENULIST_RECYCLE_BIN" />
 				<execute action="CPWikiAllpages#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" />
 			</then>
 		</while>
 
 		<execute macro="RecycleBin#emptyCP" />
+	</command>
+
+	<command name="viewFrontPageCP">
+		<execute macro="Page#cpGotoContent">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<var name="key_wikiNodeName" value="${wikiNodeName}" />
+
+		<execute action="CPWiki#assertClick" locator-key1="WIKI_NODE_TABLE_WIKI" value1="${wikiNodeName}" />
+
+		<execute action="CPWikiAllpages#assertClick" locator-key1="NAVIGATION_FRONTPAGE" />
+
+		<execute action="CPWikiFrontpage#assertTextEquals" locator-key1="PORLET_TITLE_HEADER" value1="${portletName}" />
+		<execute action="CPWikiFrontpage#assertTextEquals" locator-key1="PORLET_BODY_TITLE_HEADER" value1="${wikiNodeName}" />
+		<execute action="CPWikiFrontpage#assertTextEquals" locator-key1="FRONTPAGE_TITLE_HEADER" />
+		<execute action="CPWikiFrontpage#assertTextEquals" locator-key1="FRONTPAGE_BODY" value1="${wikiFrontPageContent}" />
+		<execute action="CPWikiFrontpage#assertElementNotPresent" locator-key1="INFO_MESSAGE_FRONTPAGE" />
+		<execute action="CPWikiFrontpage#assertTextNotPresent" value1="This page is empty. Edit it to add some text." />
+	</command>
+
+	<command name="viewFrontPageNoCP">
+		<execute macro="Page#cpGotoContent">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<var name="key_wikiNodeName" value="${wikiNodeName}" />
+
+		<execute action="CPWiki#assertClick" locator-key1="WIKI_NODE_TABLE_WIKI" value1="${wikiNodeName}" />
+
+		<execute action="CPWikiAllpages#assertClick" locator-key1="NAVIGATION_FRONTPAGE" />
+
+		<execute action="CPWikiFrontpage#assertTextEquals" locator-key1="INFO_MESSAGE_FRONTPAGE" />
+		<execute action="CPWikiFrontpage#assertTextNotPresent" value1="${wikiFrontPageContent}" />
 	</command>
 </definition>

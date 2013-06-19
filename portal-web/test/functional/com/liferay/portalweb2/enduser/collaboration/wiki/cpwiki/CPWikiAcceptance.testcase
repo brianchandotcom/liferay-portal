@@ -3,6 +3,22 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
+	<command name="AddWikiFrontPage">
+		<var name="wikiNodeName" value="Main" />
+		<var name="wikiFrontPageContent" value="Wiki FrontPage Content" />
+
+		<execute macro="WikiPage#addFrontPageCP">
+			<var name="wikiNodeName" value="${wikiNodeName}" />
+			<var name="wikiFrontPageContent" value="${wikiFrontPageContent}" />
+		</execute>
+
+		<execute macro="WikiPage#viewFrontPageCP">
+			<var name="portletName" value="Wiki" />
+			<var name="wikiNodeName" value="${wikiNodeName}" />
+			<var name="wikiFrontPageContent" value="${wikiFrontPageContent}" />
+		</execute>
+	</command>
+
 	<command name="AddWikiNode">
 		<var name="wikiNodeDescription" value="Wiki Node Description" />
 		<var name="wikiNodeName" value="Wiki Node Name" />
@@ -43,6 +59,28 @@
 			<var name="wikiNodeDescriptionEdit" value="${wikiNodeDescriptionEdit}" />
 			<var name="wikiNodeName" value="${wikiNodeName}" />
 			<var name="wikiNodeNameEdit" value="${wikiNodeNameEdit}" />
+		</execute>
+	</command>
+
+	<command name="MoveToRecycleBinFrontPage">
+		<var name="wikiNodeName" value="Main" />
+		<var name="wikiFrontPageContent" value="Wiki FrontPage Content" />
+		<var name="wikiPageTitle" value="FrontPage" />
+
+		<execute macro="WikiPage#addFrontPageCP">
+			<var name="wikiNodeName" value="${wikiNodeName}" />
+			<var name="wikiFrontPageContent" value="${wikiFrontPageContent}" />
+		</execute>
+
+		<execute macro="WikiPage#moveToRecycleBinCP">
+			<var name="wikiNodeName" value="${wikiNodeName}" />
+			<var name="wikiFrontPageContent" value="${wikiFrontPageContent}" />
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+		</execute>
+
+		<execute macro="WikiPage#viewFrontPageNoCP">
+			<var name="wikiNodeName" value="${wikiNodeName}" />
+			<var name="wikiFrontPageContent" value="${wikiFrontPageContent}" />
 		</execute>
 	</command>
 

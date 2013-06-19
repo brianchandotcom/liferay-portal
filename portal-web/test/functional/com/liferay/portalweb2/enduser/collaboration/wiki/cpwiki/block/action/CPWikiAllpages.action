@@ -1,16 +1,22 @@
 <definition>
+	<command name="assertClick">
+		<case locator-key1="NAVIGATION_FRONTPAGE">
+			<execute function="AssertClick#assertTextClickAtAndWait" value1="FrontPage" />
+		</case>
+		<case locator-key1="WIKI_PAGE_MENULIST_EDIT">
+			<execute function="AssertClick#assertTextClickAtAndWait" value1="Edit" />
+		</case>
+		<case locator-key1="WIKI_PAGE_MENULIST_RECYCLE_BIN">
+			<execute function="AssertClick#assertTextClickAtAndWait" value1="Move to the Recycle Bin" />
+		</case>
+		<case locator-key1="WIKI_PAGE_TABLE_ACTIONS">
+			<execute function="AssertClick#assertTextClickAtAndWait" value1="Actions" />
+		</case>
+	</command>
+	
 	<command name="assertTextEquals">
 		<case locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN">
 			<execute function="AssertTextEquals#assertPartialText" value1="The selected item was moved to the Recycle Bin. Undo" />
-		</case>
-	</command>
-
-	<command name="click">
-		<case locator-key1="WIKI_PAGE_MENULIST_EDIT">
-			<execute function="Click#textClickAtAndWait" value1="Edit" />
-		</case>
-		<case locator-key1="WIKI_PAGE_MENULIST_RECYCLE_BIN">
-			<execute function="Click#textClickAtAndWait" value1="Move to the Recycle Bin" />
 		</case>
 	</command>
 </definition>

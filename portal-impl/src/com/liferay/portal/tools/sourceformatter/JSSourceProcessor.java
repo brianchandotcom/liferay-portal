@@ -14,7 +14,6 @@
 
 package com.liferay.portal.tools.sourceformatter;
 
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -25,8 +24,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.tools.ant.DirectoryScanner;
-
 /**
  * @author Hugo Huijser
  */
@@ -34,28 +31,16 @@ public class JSSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void doFormat() throws Exception {
-		String basedir = "./";
-
-		DirectoryScanner directoryScanner = new DirectoryScanner();
-
-		directoryScanner.setBasedir(basedir);
-
 		String[] excludes = {
 			"**\\js\\aui\\**", "**\\js\\editor\\**", "**\\js\\misc\\**",
 			"**\\tools\\**", "**\\VAADIN\\**"
 		};
+		String[] includes = {"**\\*.js"};
 
-		excludes = ArrayUtil.append(excludes, getExcludes());
-
-		directoryScanner.setExcludes(excludes);
-
-		directoryScanner.setIncludes(new String[] {"**\\*.js"});
-
-		List<String> fileNames = sourceFormatterHelper.scanForFiles(
-			directoryScanner);
+		List<String> fileNames = getFileNames(excludes, includes);
 
 		for (String fileName : fileNames) {
-			File file = new File(basedir + fileName);
+			File file = new File(BASEDIR + fileName);
 
 			fileName = StringUtil.replace(
 				fileName, StringPool.BACK_SLASH, StringPool.SLASH);

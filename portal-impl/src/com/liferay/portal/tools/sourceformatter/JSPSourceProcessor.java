@@ -16,7 +16,6 @@ package com.liferay.portal.tools.sourceformatter;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -34,8 +33,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.apache.tools.ant.DirectoryScanner;
 
 /**
  * @author Hugo Huijser
@@ -229,32 +226,21 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void doFormat() throws Exception {
-		String basedir = "./";
-
 		String copyright = getCopyright();
 		String oldCopyright = getOldCopyright();
 
-		DirectoryScanner directoryScanner = new DirectoryScanner();
-
-		directoryScanner.setBasedir(basedir);
-
-		String[] excludes = {
+		String[] excludes = new String[] {
 			"**\\portal\\aui\\**", "**\\bin\\**", "**\\null.jsp", "**\\tmp\\**",
 			"**\\tools\\**"
 		};
+		String[] includes = new String[] {
+			"**\\*.jsp", "**\\*.jspf", "**\\*.vm"
+		};
 
-		excludes = ArrayUtil.append(excludes, getExcludes());
-
-		directoryScanner.setExcludes(excludes);
-
-		directoryScanner.setIncludes(
-			new String[] {"**\\*.jsp", "**\\*.jspf", "**\\*.vm"});
-
-		List<String> fileNames = sourceFormatterHelper.scanForFiles(
-			directoryScanner);
+		List<String> fileNames = getFileNames(excludes, includes);
 
 		for (String fileName : fileNames) {
-			File file = new File(basedir + fileName);
+			File file = new File(BASEDIR + fileName);
 
 			fileName = StringUtil.replace(
 				fileName, StringPool.BACK_SLASH, StringPool.SLASH);
@@ -267,7 +253,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		boolean stripJSPImports = true;
 
 		for (String fileName : fileNames) {
-			File file = new File(basedir + fileName);
+			File file = new File(BASEDIR + fileName);
 
 			fileName = StringUtil.replace(
 				fileName, StringPool.BACK_SLASH, StringPool.SLASH);

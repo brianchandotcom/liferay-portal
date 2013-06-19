@@ -16,7 +16,6 @@ package com.liferay.portal.tools.sourceformatter;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -48,8 +47,6 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.apache.tools.ant.DirectoryScanner;
 
 /**
  * @author Hugo Huijser
@@ -2247,15 +2244,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected Collection<String> getPluginJavaFiles() {
-		String basedir = "./";
-
 		Collection<String> fileNames = new TreeSet<String>();
 
-		DirectoryScanner directoryScanner = new DirectoryScanner();
-
-		directoryScanner.setBasedir(basedir);
-
-		String[] excludes = {
+		String[] excludes = new String[] {
 			"**\\bin\\**", "**\\model\\*Clp.java",
 			"**\\model\\impl\\*BaseImpl.java", "**\\model\\impl\\*Model.java",
 			"**\\model\\impl\\*ModelImpl.java",
@@ -2275,14 +2266,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"**\\service\\http\\*ServiceJSON.java",
 			"**\\service\\http\\*ServiceSoap.java", "**\\tmp\\**"
 		};
+		String[] includes = new String[] {"**\\*.java"};
 
-		excludes = ArrayUtil.append(excludes, getExcludes());
-
-		directoryScanner.setExcludes(excludes);
-
-		directoryScanner.setIncludes(new String[] {"**\\*.java"});
-
-		fileNames.addAll(sourceFormatterHelper.scanForFiles(directoryScanner));
+		fileNames.addAll(getFileNames(excludes, includes));
 
 		return fileNames;
 	}
@@ -2314,15 +2300,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected Collection<String> getPortalJavaFiles() {
-		String basedir = "./";
-
 		Collection<String> fileNames = new TreeSet<String>();
 
-		DirectoryScanner directoryScanner = new DirectoryScanner();
-
-		directoryScanner.setBasedir(basedir);
-
-		String[] excludes = {
+		String[] excludes = new String[] {
 			"**\\*_IW.java", "**\\PropsValues.java", "**\\bin\\**",
 			"**\\classes\\*", "**\\counter\\service\\**", "**\\jsp\\*",
 			"**\\model\\impl\\*BaseImpl.java", "**\\model\\impl\\*Model.java",
@@ -2333,54 +2313,37 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"**\\portlet\\**\\service\\**", "**\\test\\*-generated\\**",
 			"**\\tmp\\**", "**\\tools\\tck\\**"
 		};
+		String[] includes = new String[] {"**\\*.java"};
 
-		excludes = ArrayUtil.append(excludes, getExcludes());
-
-		directoryScanner.setExcludes(excludes);
-
-		directoryScanner.setIncludes(new String[] {"**\\*.java"});
-
-		fileNames.addAll(sourceFormatterHelper.scanForFiles(directoryScanner));
-
-		directoryScanner = new DirectoryScanner();
-
-		directoryScanner.setBasedir(basedir);
+		fileNames.addAll(getFileNames(excludes, includes));
 
 		excludes = new String[] {
 			"**\\bin\\**", "**\\portal-client\\**", "**\\tools\\ext_tmpl\\**",
 			"**\\*_IW.java", "**\\test\\**\\*PersistenceTest.java"
 		};
+		includes = new String[] {
+			"**\\com\\liferay\\portal\\service\\ServiceContext*.java",
+			"**\\model\\BaseModel.java", "**\\model\\impl\\BaseModelImpl.java",
+			"**\\service\\Base*.java",
+			"**\\service\\PersistedModelLocalService*.java",
+			"**\\service\\base\\PrincipalBean.java",
+			"**\\service\\http\\*HttpTest.java",
+			"**\\service\\http\\*SoapTest.java",
+			"**\\service\\http\\TunnelUtil.java", "**\\service\\impl\\*.java",
+			"**\\service\\jms\\*.java", "**\\service\\permission\\*.java",
+			"**\\service\\persistence\\BasePersistence.java",
+			"**\\service\\persistence\\BatchSession*.java",
+			"**\\service\\persistence\\*FinderImpl.java",
+			"**\\service\\persistence\\*Query.java",
+			"**\\service\\persistence\\impl\\BasePersistenceImpl.java",
+			"**\\portal-impl\\test\\**\\*.java",
+			"**\\portal-service\\**\\liferay\\documentlibrary\\**.java",
+			"**\\portal-service\\**\\liferay\\lock\\**.java",
+			"**\\portal-service\\**\\liferay\\mail\\**.java",
+			"**\\util-bridges\\**\\*.java"
+		};
 
-		excludes = ArrayUtil.append(excludes, getExcludes());
-
-		directoryScanner.setExcludes(excludes);
-
-		directoryScanner.setIncludes(
-			new String[] {
-				"**\\com\\liferay\\portal\\service\\ServiceContext*.java",
-				"**\\model\\BaseModel.java",
-				"**\\model\\impl\\BaseModelImpl.java",
-				"**\\service\\Base*.java",
-				"**\\service\\PersistedModelLocalService*.java",
-				"**\\service\\base\\PrincipalBean.java",
-				"**\\service\\http\\*HttpTest.java",
-				"**\\service\\http\\*SoapTest.java",
-				"**\\service\\http\\TunnelUtil.java",
-				"**\\service\\impl\\*.java", "**\\service\\jms\\*.java",
-				"**\\service\\permission\\*.java",
-				"**\\service\\persistence\\BasePersistence.java",
-				"**\\service\\persistence\\BatchSession*.java",
-				"**\\service\\persistence\\*FinderImpl.java",
-				"**\\service\\persistence\\*Query.java",
-				"**\\service\\persistence\\impl\\BasePersistenceImpl.java",
-				"**\\portal-impl\\test\\**\\*.java",
-				"**\\portal-service\\**\\liferay\\documentlibrary\\**.java",
-				"**\\portal-service\\**\\liferay\\lock\\**.java",
-				"**\\portal-service\\**\\liferay\\mail\\**.java",
-				"**\\util-bridges\\**\\*.java"
-			});
-
-		fileNames.addAll(sourceFormatterHelper.scanForFiles(directoryScanner));
+		fileNames.addAll(getFileNames(excludes, includes));
 
 		return fileNames;
 	}

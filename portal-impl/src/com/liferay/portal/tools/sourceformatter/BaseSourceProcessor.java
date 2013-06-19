@@ -16,6 +16,7 @@ package com.liferay.portal.tools.sourceformatter;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -37,6 +38,8 @@ import java.util.List;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.apache.tools.ant.DirectoryScanner;
 
 /**
  * @author Brian Wing Shun Chan
@@ -442,12 +445,28 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return null;
 	}
 
-	protected String[] getExcludes() {
-		return _excludes;
-	}
-
 	protected Pattern getLanguageKeyPattern() {
 		return _languageKeyPattern;
+	}
+
+	protected List<String> getFileNames(String[] excludes, String[] includes) {
+		return getFileNames(BASEDIR, excludes, includes);
+	}
+
+	protected List<String> getFileNames(
+		String basedir, String[] excludes, String[] includes) {
+
+		DirectoryScanner directoryScanner = new DirectoryScanner();
+
+		directoryScanner.setBasedir(basedir);
+
+		excludes = ArrayUtil.append(excludes, _excludes);
+
+		directoryScanner.setExcludes(excludes);
+
+		directoryScanner.setIncludes(includes);
+
+		return sourceFormatterHelper.scanForFiles(directoryScanner);
 	}
 
 	protected String[] getLanguageKeys(Matcher matcher) {
@@ -728,6 +747,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return line;
 	}
 
+	protected static final String BASEDIR = "./";
+
 	protected static final String MAIN_RELEASE_VERSION_6_1_0 = "6.1.0";
 
 	protected static final String MAIN_RELEASE_VERSION_6_2_0 = "6.2.0";
@@ -756,9 +777,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			GetterUtil.getString(
 				System.getProperty("source.formatter.excludes")));
 
-		String basedir = "./";
-
-		if (fileUtil.exists(basedir + "portal-impl")) {
+		if (fileUtil.exists(BASEDIR + "portal-impl")) {
 			_portalSource = true;
 		}
 		else {

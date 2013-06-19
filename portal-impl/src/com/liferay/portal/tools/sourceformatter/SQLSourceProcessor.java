@@ -27,8 +27,6 @@ import java.io.IOException;
 
 import java.util.List;
 
-import org.apache.tools.ant.DirectoryScanner;
-
 /**
  * @author Hugo Huijser
  */
@@ -36,19 +34,12 @@ public class SQLSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void doFormat() throws Exception {
-		String basedir = "./";
+		String[] includes = new String[] {"**\\sql\\*.sql"};
 
-		DirectoryScanner directoryScanner = new DirectoryScanner();
-
-		directoryScanner.setBasedir(basedir);
-		directoryScanner.setExcludes(getExcludes());
-		directoryScanner.setIncludes(new String[] {"**\\sql\\*.sql"});
-
-		List<String> fileNames = sourceFormatterHelper.scanForFiles(
-			directoryScanner);
+		List<String> fileNames = getFileNames(new String[0], includes);
 
 		for (String fileName : fileNames) {
-			File file = new File(basedir + fileName);
+			File file = new File(BASEDIR + fileName);
 
 			String content = fileUtil.read(file);
 

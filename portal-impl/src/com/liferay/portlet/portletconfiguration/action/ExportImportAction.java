@@ -22,6 +22,7 @@ import com.liferay.portal.LocaleException;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.PortletIdException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.lar.ExportImportHelper;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -54,10 +55,14 @@ import java.util.Date;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletContext;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -93,10 +98,24 @@ public class ExportImportAction extends PortletAction {
 
 		try {
 			if (Validator.isNotNull(cmd)) {
-				if (cmd.equals("copy_from_live")) {
+				if (cmd.equals(Constants.ADD_TEMP)) {
+					addTempFileEntry(
+						actionRequest, actionResponse,
+						ExportImportHelper.TEMP_FOLDER_NAME);
+
+					validateFile(
+						actionRequest, actionResponse,
+						ExportImportHelper.TEMP_FOLDER_NAME);
+				}
+				else if (cmd.equals("copy_from_live")) {
 					StagingUtil.copyFromLive(actionRequest, portlet);
 
 					sendRedirect(actionRequest, actionResponse);
+				}
+				else if (cmd.equals(Constants.DELETE_TEMP)) {
+					deleteTempFileEntry(
+						actionRequest, actionResponse,
+						ExportImportHelper.TEMP_FOLDER_NAME);
 				}
 				else if (cmd.equals(Constants.EXPORT)) {
 					exportData(actionRequest, actionResponse, portlet);
@@ -104,9 +123,9 @@ public class ExportImportAction extends PortletAction {
 					sendRedirect(actionRequest, actionResponse);
 				}
 				else if (cmd.equals(Constants.IMPORT)) {
-					checkExceededSizeLimit(actionRequest);
-
-					importData(actionRequest, actionResponse, portlet);
+					importData(
+						actionRequest, actionResponse,
+						ExportImportHelper.TEMP_FOLDER_NAME);
 
 					sendRedirect(actionRequest, actionResponse);
 				}
@@ -138,17 +157,31 @@ public class ExportImportAction extends PortletAction {
 			}
 		}
 		catch (Exception e) {
-			if ((e instanceof LARFileSizeException) ||
-				(e instanceof NoSuchLayoutException) ||
-				(e instanceof PrincipalException)) {
+			if (cmd.equals(Constants.ADD_TEMP) ||
+				cmd.equals(Constants.DELETE_TEMP)) {
 
-				SessionErrors.add(actionRequest, e.getClass());
-
-				setForward(
-					actionRequest, "portlet.portlet_configuration.error");
+				handleUploadException(
+					portletConfig, actionRequest, actionResponse,
+					ExportImportHelper.TEMP_FOLDER_NAME, e);
 			}
 			else {
-				throw e;
+				if ((e instanceof LARFileException) ||
+					(e instanceof LARFileSizeException) ||
+					(e instanceof LARTypeException)) {
+
+					SessionErrors.add(actionRequest, e.getClass());
+				}
+				else if ((e instanceof LayoutPrototypeException) ||
+						 (e instanceof LocaleException)) {
+
+					SessionErrors.add(actionRequest, e.getClass(), e);
+				}
+				else {
+					_log.error(e, e);
+
+					SessionErrors.add(
+						actionRequest, LayoutImportException.class.getName());
+				}
 			}
 		}
 	}
@@ -176,6 +209,21 @@ public class ExportImportAction extends PortletAction {
 		return mapping.findForward(
 			getForward(
 				renderRequest, "portlet.portlet_configuration.export_import"));
+	}
+
+	@Override
+	public void serveResource(
+			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws Exception {
+
+		PortletContext portletContext = portletConfig.getPortletContext();
+
+		PortletRequestDispatcher portletRequestDispatcher =
+			portletContext.getRequestDispatcher(
+				"/html/portlet/layouts_admin/import_layouts_resources.jsp");
+
+		portletRequestDispatcher.include(resourceRequest, resourceResponse);
 	}
 
 	protected void checkExceededSizeLimit(PortletRequest portletRequest)

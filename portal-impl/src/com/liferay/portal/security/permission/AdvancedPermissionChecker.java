@@ -1084,9 +1084,57 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		if (bag.isGroupAdmin(this, group)) {
 			return true;
 		}
-		else {
-			return false;
+
+		StopWatch stopWatch = null;
+
+		if (_log.isDebugEnabled()) {
+			stopWatch = new StopWatch();
+
+			stopWatch.start();
 		}
+
+		if (group.isSite()) {
+			while (!group.isRoot()) {
+				Group parentGroup = group.getParentGroup();
+
+				if (doCheckPermission(
+						parentGroup.getCompanyId(), parentGroup.getGroupId(),
+						Group.class.getName(),
+						String.valueOf(parentGroup.getGroupId()),
+						ActionKeys.MANAGE_SUBGROUPS, stopWatch)) {
+
+					return true;
+				}
+
+				group = parentGroup;
+			}
+		}
+
+		if (group.isOrganization()) {
+			Organization organization =
+				OrganizationLocalServiceUtil.getOrganization(
+					group.getOrganizationId());
+
+			while (!organization.isRoot()) {
+				Organization parentOrganization =
+					organization.getParentOrganization();
+
+				Group parentGroup = parentOrganization.getGroup();
+
+				if (doCheckPermission(
+						parentGroup.getCompanyId(), parentGroup.getGroupId(),
+						Organization.class.getName(),
+						String.valueOf(parentOrganization.getOrganizationId()),
+						ActionKeys.MANAGE_SUBORGANIZATIONS, stopWatch)) {
+
+					return true;
+				}
+
+				organization = parentOrganization;
+			}
+		}
+
+		return false;
 	}
 
 	protected boolean isGroupMemberImpl(long groupId) throws Exception {

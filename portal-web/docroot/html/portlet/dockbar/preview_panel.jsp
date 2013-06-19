@@ -66,8 +66,8 @@
 			</aui:nav-item>
 
 			<aui:nav-item cssClass="lfr-device-item row-fluid" data-device="custom">
-				<div><%= LanguageUtil.get(pageContext, "custom") %> (px)</div>
-				<aui:input cssClass="input-mini" inlineField="<%= true %>" label="" name="width" value="200"/><span> X </span><aui:input cssClass="input-mini" inlineField="<%= true %>" label="" name="height" value="200" />
+				<p><%= LanguageUtil.get(pageContext, "custom") %> (px)</p>
+				<aui:input cssClass="input-mini" inlineField="<%= true %>" label="" name="width" value="400"/><span> X </span><aui:input cssClass="input-mini" inlineField="<%= true %>" label="" name="height" value="400" />
 			</aui:nav-item>
 		</aui:nav>
 	</div>
@@ -89,11 +89,15 @@
 				},
 				'smartphone': {
 					height: 640,
+					preventTransition: true,
+					skin: 'smartphone',
 					selected: true,
 					width: 400
 				},
 				'tablet': {
 					height: 900,
+					preventTransition: true,
+					skin: 'tablet',
 					width: 760
 				}
 			},

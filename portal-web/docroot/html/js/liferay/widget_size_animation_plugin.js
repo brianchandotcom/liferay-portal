@@ -26,7 +26,10 @@ AUI.add(
                     easing: {
                         validator: Lang.isString,
                         value: 'easeBoth'
-                    }
+                    },
+					preventTransition: {
+						validator: Lang.isBoolean
+					}
                 },
 
                 prototype: {
@@ -50,8 +53,20 @@ AUI.add(
                             }
                         );
 
-                        instance._anim.after('tween', instance._alignWidget, instance);
-                    },
+						var eventHandles = [
+							instance._anim.after('tween', instance._alignWidget, instance),
+							instance._anim.after('end', A.bind(instance.fire, instance, 'end')),
+							instance._anim.after('start', A.bind(instance.fire, instance, 'start'))
+						];
+
+						instance._eventHandles = eventHandles;
+					},
+
+					destructor: function() {
+						var instance = this;
+
+						(new A.EventHandle(instance._eventHandles)).detach();
+					},
 
                     _alignWidget: function() {
                         var instance = this;
@@ -64,17 +79,30 @@ AUI.add(
                     _animWidgetSize: function(size) {
                         var instance = this;
 
+                        var host = instance.get(STR_HOST);
+
                         instance._anim.stop();
 
-                        instance._anim.set(
-                            'to',
-                            { 
-                                width: size.width,
-                                height: size.height
-                            }
-                        );
+						if (!instance.get('preventTransition')) {
+	                        instance._anim.set(
+	                            'to',
+	                            { 
+	                                width: size.width,
+	                                height: size.height
+	                            }
+	                        );
 
-                        instance._anim.run();
+	                        instance._anim.run();
+	                    }
+	                    else {
+							instance.fire('start');
+
+							host.set('height', size.height);
+							host.set('width', size.width);
+							instance._alignWidget();
+
+							instance.fire('end');
+	                    }
                     }
                 }
             }

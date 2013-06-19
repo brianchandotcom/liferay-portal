@@ -32,12 +32,6 @@ page import="com.liferay.portlet.journalcontentsearch.util.ContentHits" %>
 <%
 PortletPreferences preferences = renderRequest.getPreferences();
 
-String portletResource = ParamUtil.getString(request, "portletResource");
-
-if (Validator.isNotNull(portletResource)) {
-	preferences = PortletPreferencesFactoryUtil.getPortletSetup(request, portletResource);
-}
-
 boolean showListedDefault = true;
 
 if (portletName.equals(PortletKeys.JOURNAL_CONTENT_SEARCH)) {

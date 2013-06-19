@@ -21,12 +21,6 @@
 <%
 PortletPreferences preferences = renderRequest.getPreferences();
 
-String portletResource = ParamUtil.getString(request, "portletResource");
-
-if (Validator.isNotNull(portletResource)) {
-	preferences = PortletPreferencesFactoryUtil.getPortletSetup(request, portletResource);
-}
-
 String src = preferences.getValue("src", StringPool.BLANK);
 boolean relative = GetterUtil.getBoolean(preferences.getValue("relative", StringPool.BLANK));
 

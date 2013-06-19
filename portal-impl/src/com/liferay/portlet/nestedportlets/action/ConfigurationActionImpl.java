@@ -31,7 +31,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
 import java.util.HashSet;
 import java.util.List;
@@ -61,9 +60,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		String portletResource = ParamUtil.getString(
 			actionRequest, "portletResource");
 
-		PortletPreferences preferences =
-			PortletPreferencesFactoryUtil.getPortletSetup(
-				actionRequest, portletResource);
+		PortletPreferences preferences = actionRequest.getPreferences();
 
 		String oldLayoutTemplateId = preferences.getValue(
 			"layoutTemplateId",

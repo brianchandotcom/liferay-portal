@@ -87,12 +87,6 @@ page import="com.liferay.util.RSSUtil" %>
 <%
 PortletPreferences preferences = renderRequest.getPreferences();
 
-String portletResource = ParamUtil.getString(request, "portletResource");
-
-if (Validator.isNotNull(portletResource)) {
-	preferences = PortletPreferencesFactoryUtil.getPortletSetup(request, portletResource);
-}
-
 String displayStyle = preferences.getValue("displayStyle", StringPool.BLANK);
 boolean enableRelatedAssets = GetterUtil.getBoolean(preferences.getValue("enableRelatedAssets", null), true);
 boolean enablePageRatings = PropsValues.WIKI_PAGE_RATINGS_ENABLED && GetterUtil.getBoolean(preferences.getValue("enablePageRatings", null), true);

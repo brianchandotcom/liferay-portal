@@ -43,10 +43,6 @@ PortletPreferences preferences = renderRequest.getPreferences();
 
 String portletResource = ParamUtil.getString(request, "portletResource");
 
-if (Validator.isNotNull(portletResource)) {
-	preferences = PortletPreferencesFactoryUtil.getPortletSetup(request, portletResource);
-}
-
 long groupId = ParamUtil.getLong(renderRequest, "groupId");
 
 if (groupId <= 0) {

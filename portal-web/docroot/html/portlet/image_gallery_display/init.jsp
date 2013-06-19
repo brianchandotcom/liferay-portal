@@ -54,10 +54,7 @@ PortletPreferences preferences = renderRequest.getPreferences();
 
 String portletResource = ParamUtil.getString(request, "portletResource");
 
-if (Validator.isNotNull(portletResource)) {
-	preferences = PortletPreferencesFactoryUtil.getPortletSetup(request, portletResource);
-}
-else if (layout.isTypeControlPanel()) {
+if (layout.isTypeControlPanel()) {
 	preferences = PortletPreferencesLocalServiceUtil.getPreferences(themeDisplay.getCompanyId(), scopeGroupId, PortletKeys.PREFS_OWNER_TYPE_GROUP, 0, PortletKeys.DOCUMENT_LIBRARY, null);
 }
 

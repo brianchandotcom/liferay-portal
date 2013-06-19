@@ -21,12 +21,6 @@ page import="com.liferay.portal.plugin.PluginUtil" %>
 
 <%
 PortletPreferences preferences = renderRequest.getPreferences();
-
-String portletResource = ParamUtil.getString(request, "portletResource");
-
-if (Validator.isNotNull(portletResource)) {
-	preferences = PortletPreferencesFactoryUtil.getPortletSetup(request, portletResource);
-}
 %>
 
 <%@ include file="/html/portlet/nested_portlets/init-ext.jsp" %>

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -57,9 +56,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		String portletResource = ParamUtil.getString(
 			actionRequest, "portletResource");
 
-		PortletPreferences preferences =
-			PortletPreferencesFactoryUtil.getPortletSetup(
-				actionRequest, portletResource);
+		PortletPreferences preferences = actionRequest.getPreferences();
 
 		if (cmd.equals("remove-footer-article")) {
 			removeFooterArticle(actionRequest, preferences);

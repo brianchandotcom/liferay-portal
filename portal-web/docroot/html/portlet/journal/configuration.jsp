@@ -21,9 +21,7 @@ String tabs2 = ParamUtil.getString(request, "tabs2", "email-from");
 
 String redirect = ParamUtil.getString(request, "redirect");
 
-String portletResource = ParamUtil.getString(request, "portletResource");
-
-PortletPreferences portletSetup = PortletPreferencesFactoryUtil.getPortletSetup(request, portletResource);
+PortletPreferences portletSetup = renderRequest.getPreferences();
 
 String emailFromName = ParamUtil.getString(request, "preferences--emailFromName--", JournalUtil.getEmailFromName(portletSetup, company.getCompanyId()));
 String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAddress--", JournalUtil.getEmailFromAddress(portletSetup, company.getCompanyId()));
@@ -73,8 +71,8 @@ else if (tabs2.equals("web-content-updated-email")) {
 String emailSubjectParam = emailParam + "Subject";
 String emailBodyParam = emailParam + "Body";
 
-String emailSubject = PrefsParamUtil.getString(preferences, request, emailSubjectParam, defaultEmailSubject);
-String emailBody = PrefsParamUtil.getString(preferences, request, emailBodyParam, defaultEmailBody);
+String emailSubject = PrefsParamUtil.getString(portletSetup, request, emailSubjectParam, defaultEmailSubject);
+String emailBody = PrefsParamUtil.getString(portletSetup, request, emailBodyParam, defaultEmailBody);
 %>
 
 <liferay-portlet:renderURL portletConfiguration="true" var="portletURL">

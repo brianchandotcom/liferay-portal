@@ -28,12 +28,6 @@ page import="com.liferay.portlet.social.util.comparator.SocialActivityCounterNam
 <%
 PortletPreferences preferences = renderRequest.getPreferences();
 
-String portletResource = ParamUtil.getString(request, "portletResource");
-
-if (Validator.isNotNull(portletResource)) {
-	preferences = PortletPreferencesFactoryUtil.getPortletSetup(request, portletResource);
-}
-
 int[] displayActivityCounterNameIndexes = null;
 
 String displayActivityCounterNameIndexesParam = PrefsParamUtil.getString(preferences, request, "displayActivityCounterNameIndexes");

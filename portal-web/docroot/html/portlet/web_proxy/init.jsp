@@ -19,12 +19,6 @@
 <%
 PortletPreferences preferences = renderRequest.getPreferences();
 
-String portletResource = ParamUtil.getString(request, "portletResource");
-
-if (Validator.isNotNull(portletResource)) {
-	preferences = PortletPreferencesFactoryUtil.getPortletSetup(request, portletResource);
-}
-
 String initUrl = preferences.getValue("initUrl", StringPool.BLANK);
 String scope = preferences.getValue("scope", StringPool.BLANK);
 String proxyHost = preferences.getValue("proxyHost", StringPool.BLANK);

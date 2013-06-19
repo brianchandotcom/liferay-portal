@@ -40,10 +40,6 @@ PortletPreferences preferences = renderRequest.getPreferences();
 
 String portletResource = ParamUtil.getString(request, "portletResource");
 
-if (Validator.isNotNull(portletResource)) {
-	preferences = PortletPreferencesFactoryUtil.getPortletSetup(request, portletResource);
-}
-
 String[] urls = preferences.getValues("urls", new String[0]);
 String[] titles = preferences.getValues("titles", new String[0]);
 int entriesPerFeed = GetterUtil.getInteger(preferences.getValue("entriesPerFeed", "8"));

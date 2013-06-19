@@ -20,7 +20,7 @@
 String portletResource = ParamUtil.getString(request, "portletResource");
 String redirect = ParamUtil.getString(request, "redirect");
 
-PortletPreferences preferences = PortletPreferencesFactoryUtil.getPortletSetup(request, portletResource);
+PortletPreferences preferences = renderRequest.getPreferences();
 
 String emailMessageSubject = ParamUtil.getString(request, "emailMessageSubject", InvitationUtil.getEmailMessageSubject(preferences));
 String emailMessageBody = ParamUtil.getString(request, "emailMessageBody", InvitationUtil.getEmailMessageBody(preferences));

@@ -25,12 +25,6 @@ page import="com.liferay.util.RSSUtil" %>
 <%
 PortletPreferences preferences = renderRequest.getPreferences();
 
-String portletResource = ParamUtil.getString(request, "portletResource");
-
-if (Validator.isNotNull(portletResource)) {
-	preferences = PortletPreferencesFactoryUtil.getPortletSetup(request, portletResource);
-}
-
 String selectionMethod = preferences.getValue("selectionMethod", "users");
 long organizationId = GetterUtil.getLong(preferences.getValue("organizationId", "0"));
 String displayStyle = preferences.getValue("displayStyle", "abstract");

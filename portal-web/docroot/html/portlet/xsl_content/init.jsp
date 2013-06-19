@@ -29,12 +29,6 @@ page import="com.liferay.portlet.xslcontent.util.XSLContentUtil" %>
 <%
 PortletPreferences preferences = renderRequest.getPreferences();
 
-String portletResource = ParamUtil.getString(request, "portletResource");
-
-if (Validator.isNotNull(portletResource)) {
-	preferences = PortletPreferencesFactoryUtil.getPortletSetup(request, portletResource);
-}
-
 String xmlUrl = preferences.getValue("xmlUrl", XSLContentUtil.DEFAULT_XML_URL);
 String xslUrl = preferences.getValue("xslUrl", XSLContentUtil.DEFAULT_XSL_URL);
 %>

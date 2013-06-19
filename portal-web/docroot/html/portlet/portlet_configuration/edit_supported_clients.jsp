@@ -20,7 +20,7 @@
 String redirect = ParamUtil.getString(request, "redirect");
 String returnToFullPageURL = ParamUtil.getString(request, "returnToFullPageURL");
 
-PortletPreferences portletSetup = PortletPreferencesFactoryUtil.getLayoutPortletSetup(layout, portletResource);
+PortletPreferences portletSetup = renderRequest.getPreferences();
 
 Set<String> allPortletModes = selPortlet.getAllPortletModes();
 %>

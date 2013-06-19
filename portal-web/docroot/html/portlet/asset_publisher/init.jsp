@@ -60,13 +60,9 @@ page import="com.liferay.util.RSSUtil" %><%@
 page import="com.liferay.util.xml.DocUtil" %>
 
 <%
-PortletPreferences preferences = liferayPortletRequest.getPreferences();
+PortletPreferences preferences = renderRequest.getPreferences();
 
 String portletResource = ParamUtil.getString(request, "portletResource");
-
-if (Validator.isNotNull(portletResource)) {
-	preferences = PortletPreferencesFactoryUtil.getPortletSetup(request, portletResource);
-}
 
 String selectionStyle = preferences.getValue("selectionStyle", null);
 

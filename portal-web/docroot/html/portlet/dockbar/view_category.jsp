@@ -137,19 +137,24 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 							data.put("search", divId.toString().replace(':', '-'));
 							data.put("title", PortalUtil.getPortletTitle(portlet, application, locale));
 
-							String cssClass = "lfr-content-item";
+							String cssClass = "drag-content-item";
 
 							if (portletLocked) {
 								cssClass += " lfr-portlet-used";
 							}
 							%>
 
-							<aui:nav-item cssClass="<%= cssClass %>"
-								data="<%= data %>"
-								href=""
-								iconClass='<%= portletInstanceable ? "icon-th-large" : "icon-stop" %>'
-								label="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>"
-							>
+							<aui:nav-item cssClass="lfr-content-item" href="">
+								<span <%= AUIUtil.buildData(data) %> class="<%= cssClass %>">
+									<icon class="<%= portletInstanceable ? "icon-th-large" : "icon-stop" %>"></icon>
+
+									<liferay-ui:message key="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>" />
+								</span>
+
+								<%
+								data.remove("draggable");
+								%>
+
 								<span <%= AUIUtil.buildData(data) %> class='add-content-item <%= portletLocked ? "lfr-portlet-used" : StringPool.BLANK %>'>
 									<liferay-ui:message key="add" />
 								</span>

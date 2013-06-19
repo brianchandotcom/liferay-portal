@@ -209,7 +209,7 @@ AUI.add(
 					_onPortletClose: function(event) {
 						var instance = this;
 
-						var item = instance._addPanelContainer.one('.lfr-content-item[data-plid=' + event.plid + '][data-portlet-id=' + event.portletId + '][data-instanceable=false]');
+						var item = instance._addPanelContainer.one('.drag-content-item[data-plid=' + event.plid + '][data-portlet-id=' + event.portletId + '][data-instanceable=false]');
 
 						if (item && item.hasClass(CSS_LFR_PORTLET_USED)) {
 							var portletId = item.attr(DATA_PORTLET_ID);

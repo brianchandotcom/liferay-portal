@@ -69,8 +69,13 @@
 		}
 
 		.lfr-content-item {
-			cursor: move;
 			position: relative;
+
+			.drag-content-item {
+				cursor: move;
+				display: inline-block;
+				width: 100%;
+			}
 
 			&:hover .add-content-item {
 				display: inline;
@@ -85,10 +90,13 @@
 				top: 0;
 			}
 
-			&.lfr-portlet-used {
-				cursor: default;
+			.lfr-portlet-used {
+				&.drag-content-item {
+					color: #BBB;
+					cursor: default;
+				}
 
-				.add-content-item {
+				&.add-content-item {
 					display: none;
 				}
 			}

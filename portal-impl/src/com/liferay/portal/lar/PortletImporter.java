@@ -227,21 +227,19 @@ public class PortletImporter {
 	}
 
 	public MissingReferences validateFile(
-			long userId, long groupId, boolean privateLayout,
+			long userId, long plid, long groupId, String portletId,
 			Map<String, String[]> parameterMap, File file)
 		throws Exception {
 
-		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-			groupId, privateLayout);
+		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
 
 		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
 
 		PortletDataContext portletDataContext =
 			PortletDataContextFactoryUtil.createImportPortletDataContext(
-				layoutSet.getCompanyId(), groupId, parameterMap, null,
-				zipReader);
+				layout.getCompanyId(), groupId, parameterMap, null, zipReader);
 
-		validateFile(portletDataContext);
+		validateFile(portletDataContext, portletId);
 
 		MissingReferences missingReferences =
 			ExportImportHelperUtil.validateMissingReferences(
@@ -389,118 +387,33 @@ public class PortletImporter {
 
 		// Manifest
 
-		String xml = portletDataContext.getZipEntryAsString("/manifest.xml");
-
-		Element rootElement = null;
-
-		try {
-			Document document = SAXReaderUtil.read(xml);
-
-			rootElement = document.getRootElement();
-
-			Element missingReferencesElement = rootElement.element(
-				"missing-references");
-
-			portletDataContext.setMissingReferencesElement(
-				missingReferencesElement);
-		}
-		catch (Exception e) {
-			throw new LARFileException("Unable to read /manifest.xml");
-		}
-
-		// Build compatibility
-
-		Element headerElement = rootElement.element("header");
-
-		int buildNumber = ReleaseInfo.getBuildNumber();
-
-		int importBuildNumber = GetterUtil.getInteger(
-			headerElement.attributeValue("build-number"));
-
-		if (buildNumber != importBuildNumber) {
-			throw new LayoutImportException(
-				"LAR build number " + importBuildNumber + " does not match " +
-					"portal build number " + buildNumber);
-		}
-
-		// Type compatibility
-
-		String type = headerElement.attributeValue("type");
-
-		if (!type.equals("portlet")) {
-			throw new LARTypeException(
-				"Invalid type of LAR file (" + type + ")");
-		}
-
-		// Portlet compatibility
-
-		String rootPortletId = headerElement.attributeValue("root-portlet-id");
-
-		if (!PortletConstants.getRootPortletId(portletId).equals(
-				rootPortletId)) {
-
-			throw new PortletIdException("Invalid portlet id " + rootPortletId);
-		}
-
-		// Available locales
-
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			portletDataContext.getCompanyId(), portletId);
-
-		PortletDataHandler portletDataHandler =
-			portlet.getPortletDataHandlerInstance();
-
-		if ((portletDataHandler != null) &&
-			portletDataHandler.isDataLocalized()) {
-
-			Locale[] sourceAvailableLocales = LocaleUtil.fromLanguageIds(
-				StringUtil.split(
-					headerElement.attributeValue("available-locales")));
-
-			Locale[] targetAvailableLocales =
-				LanguageUtil.getAvailableLocales();
-
-			for (Locale sourceAvailableLocale : sourceAvailableLocales) {
-				if (!ArrayUtil.contains(
-						targetAvailableLocales, sourceAvailableLocale)) {
-
-					LocaleException le = new LocaleException(
-						"Locale " + sourceAvailableLocale + " is not " +
-							"available in company " + layout.getCompanyId());
-
-					le.setSourceAvailableLocales(sourceAvailableLocales);
-					le.setTargetAvailableLocales(targetAvailableLocales);
-
-					throw le;
-				}
-			}
-		}
+		validateFile(portletDataContext, portletId);
 
 		// Company id
 
 		long sourceCompanyId = GetterUtil.getLong(
-			headerElement.attributeValue("company-id"));
+			_headerElement.attributeValue("company-id"));
 
 		portletDataContext.setSourceCompanyId(sourceCompanyId);
 
 		// Company group id
 
 		long sourceCompanyGroupId = GetterUtil.getLong(
-			headerElement.attributeValue("company-group-id"));
+			_headerElement.attributeValue("company-group-id"));
 
 		portletDataContext.setSourceCompanyGroupId(sourceCompanyGroupId);
 
 		// Group id
 
 		long sourceGroupId = GetterUtil.getLong(
-			headerElement.attributeValue("group-id"));
+			_headerElement.attributeValue("group-id"));
 
 		portletDataContext.setSourceGroupId(sourceGroupId);
 
 		// User personal site group id
 
 		long sourceUserPersonalSiteGroupId = GetterUtil.getLong(
-			headerElement.attributeValue("user-personal-site-group-id"));
+			_headerElement.attributeValue("user-personal-site-group-id"));
 
 		portletDataContext.setSourceUserPersonalSiteGroupId(
 			sourceUserPersonalSiteGroupId);
@@ -533,7 +446,7 @@ public class PortletImporter {
 		Element portletElement = null;
 
 		try {
-			portletElement = rootElement.element("portlet");
+			portletElement = _rootElement.element("portlet");
 
 			Document portletDocument = SAXReaderUtil.read(
 				portletDataContext.getZipEntryAsString(
@@ -1734,9 +1647,7 @@ public class PortletImporter {
 	protected void readXML(PortletDataContext portletDataContext)
 		throws Exception {
 
-		if ((_rootElement != null) && (_headerElement != null) &&
-			(_layoutsElement != null) && (_layoutElements != null)) {
-
+		if ((_rootElement != null) && (_headerElement != null)) {
 			return;
 		}
 
@@ -1758,11 +1669,6 @@ public class PortletImporter {
 		}
 
 		_headerElement = _rootElement.element("header");
-
-		_layoutsElement = portletDataContext.getImportDataGroupElement(
-			Layout.class);
-
-		_layoutElements = _layoutsElement.elements();
 	}
 
 	protected void resetPortletScope(
@@ -2241,7 +2147,8 @@ public class PortletImporter {
 		jxPreferences.setValues(key, newValues);
 	}
 
-	protected void validateFile(PortletDataContext portletDataContext)
+	protected void validateFile(
+			PortletDataContext portletDataContext, String portletId)
 		throws Exception {
 
 		// Build compatibility
@@ -2263,39 +2170,54 @@ public class PortletImporter {
 
 		String larType = _headerElement.attributeValue("type");
 
-		if (!larType.equals("layout-prototype") &&
-			!larType.equals("layout-set") &&
-			!larType.equals("layout-set-prototype")) {
-
+		if (!larType.equals("portlet")) {
 			throw new LARTypeException(larType);
+		}
+
+		// Portlet compatibility
+
+		String rootPortletId = _headerElement.attributeValue("root-portlet-id");
+
+		if (!PortletConstants.getRootPortletId(portletId).equals(
+				rootPortletId)) {
+
+			throw new PortletIdException("Invalid portlet id " + rootPortletId);
 		}
 
 		// Available locales
 
-		Locale[] sourceAvailableLocales = LocaleUtil.fromLanguageIds(
-			StringUtil.split(
-				_headerElement.attributeValue("available-locales")));
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			portletDataContext.getCompanyId(), portletId);
 
-		Locale[] targetAvailableLocales = LanguageUtil.getAvailableLocales();
+		PortletDataHandler portletDataHandler =
+			portlet.getPortletDataHandlerInstance();
 
-		for (Locale sourceAvailableLocale : sourceAvailableLocales) {
-			if (!ArrayUtil.contains(
-					targetAvailableLocales, sourceAvailableLocale)) {
+		if ((portletDataHandler != null) &&
+			portletDataHandler.isDataLocalized()) {
 
-				LocaleException le = new LocaleException();
+			Locale[] sourceAvailableLocales = LocaleUtil.fromLanguageIds(
+				StringUtil.split(
+					_headerElement.attributeValue("available-locales")));
 
-				le.setSourceAvailableLocales(sourceAvailableLocales);
-				le.setTargetAvailableLocales(targetAvailableLocales);
+			Locale[] targetAvailableLocales =
+				LanguageUtil.getAvailableLocales();
 
-				throw le;
+			for (Locale sourceAvailableLocale : sourceAvailableLocales) {
+				if (!ArrayUtil.contains(
+						targetAvailableLocales, sourceAvailableLocale)) {
+
+					LocaleException le = new LocaleException(
+						"Locale " + sourceAvailableLocale + " is not " +
+							"available in company " +
+								portletDataContext.getCompanyId());
+
+					le.setSourceAvailableLocales(sourceAvailableLocales);
+					le.setTargetAvailableLocales(targetAvailableLocales);
+
+					throw le;
+				}
 			}
 		}
-
-		// Layout prototypes validity
-
-		validateLayoutPrototypes(
-			portletDataContext.getCompanyId(), _layoutsElement,
-			_layoutElements);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(PortletImporter.class);

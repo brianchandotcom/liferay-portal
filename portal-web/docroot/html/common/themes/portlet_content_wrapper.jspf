@@ -24,7 +24,7 @@
 			<c:when test="<%= themeDisplay.isStateExclusive() %>">
 				<%@ include file="/html/common/themes/portlet_content.jspf" %>
 			</c:when>
-			<c:when test="<%= portletDisplay.isAccess() %>">
+			<c:otherwise>
 				<c:if test='<%= !tilesPortletContent.endsWith("/error.jsp") %>'>
 					<%@ include file="/html/common/themes/portlet_messages.jspf" %>
 				</c:if>
@@ -39,9 +39,6 @@
 						<%@ include file="/html/common/themes/portlet_content.jspf" %>
 					</c:otherwise>
 				</c:choose>
-			</c:when>
-			<c:otherwise>
-				<liferay-util:include page="/html/portal/portlet_access_denied.jsp" />
 			</c:otherwise>
 		</c:choose>
 	</c:when>

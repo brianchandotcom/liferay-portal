@@ -187,6 +187,10 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 			return;
 		}
 
+		if (portlet.isUndeployedPortlet()) {
+			return;
+		}
+
 		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
 
 		if (layout.isTypeControlPanel()) {

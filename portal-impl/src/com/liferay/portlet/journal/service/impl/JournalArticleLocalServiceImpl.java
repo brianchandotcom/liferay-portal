@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLoca
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -738,6 +739,35 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		_previousCheckDate = now;
+
+		int count = journalArticlePersistence.countByLtD_S(
+			now, WorkflowConstants.STATUS_SCHEDULED);
+
+		if (count == 0) {
+			return;
+		}
+
+		List<JournalArticle> scheduledArticles =
+			journalArticlePersistence.findByLtD_S(
+				now, WorkflowConstants.STATUS_SCHEDULED);
+
+		for (JournalArticle scheduledArticle : scheduledArticles) {
+			ServiceContext serviceContext = new ServiceContext();
+
+			serviceContext.setCommand(Constants.UPDATE);
+
+			String layoutFullURL = PortalUtil.getLayoutFullURL(
+				scheduledArticle.getGroupId(), PortletKeys.JOURNAL);
+
+			serviceContext.setLayoutFullURL(layoutFullURL);
+
+			serviceContext.setScopeGroupId(scheduledArticle.getGroupId());
+
+			updateStatus(
+				scheduledArticle.getUserId(), scheduledArticle,
+				WorkflowConstants.STATUS_APPROVED, null,
+				new HashMap<String, Serializable>(), serviceContext);
+		}
 	}
 
 	/**
@@ -4567,7 +4597,9 @@ public class JournalArticleLocalServiceImpl
 			serviceContext.validateModifiedDate(
 				latestArticle, ArticleVersionException.class);
 
-			if (latestArticle.isApproved() || latestArticle.isExpired()) {
+			if (latestArticle.isApproved() || latestArticle.isExpired() ||
+				latestArticle.isScheduled()) {
+
 				addNewVersion = true;
 
 				version = MathUtil.format(latestVersion + 0.1, 1, 1);
@@ -5083,6 +5115,12 @@ public class JournalArticleLocalServiceImpl
 		int oldStatus = article.getStatus();
 
 		int oldArticleVersionStatus = WorkflowConstants.STATUS_ANY;
+
+		if ((status == WorkflowConstants.STATUS_APPROVED) &&
+			now.before(article.getDisplayDate())) {
+
+			status = WorkflowConstants.STATUS_SCHEDULED;
+		}
 
 		List<ObjectValuePair<Long, Integer>> articleVersionStatusOVPs =
 			new ArrayList<ObjectValuePair<Long, Integer>>();

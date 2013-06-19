@@ -445,10 +445,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return null;
 	}
 
-	protected List<String> getFileNames(String[] excludes, String[] includes) {
-		return getFileNames(BASEDIR, excludes, includes);
-	}
-
 	protected List<String> getFileNames(
 		String basedir, String[] excludes, String[] includes) {
 
@@ -463,6 +459,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		directoryScanner.setIncludes(includes);
 
 		return sourceFormatterHelper.scanForFiles(directoryScanner);
+	}
+
+	protected List<String> getFileNames(String[] excludes, String[] includes) {
+		return getFileNames(BASEDIR, excludes, includes);
 	}
 
 	protected String[] getLanguageKeys(Matcher matcher) {
@@ -778,7 +778,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		_initialized = true;
 	}
 
-	private static boolean _isPortalSource() {
+	private boolean _isPortalSource() {
 		if (fileUtil.exists(BASEDIR + "portal-impl")) {
 			return true;
 		}

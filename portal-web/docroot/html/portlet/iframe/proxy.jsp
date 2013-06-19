@@ -61,10 +61,10 @@ if (Validator.isNull(userNameField)) {
 		userNameField = fieldValuePair.substring(0, pos);
 		userName = fieldValuePair.substring(pos + 1);
 
-		preferences.setValue("userName", userName);
-		preferences.setValue("userNameField", userNameField);
+		portletPreferences.setValue("userName", userName);
+		portletPreferences.setValue("userNameField", userNameField);
 
-		preferences.store();
+		portletPreferences.store();
 	}
 }
 
@@ -85,10 +85,10 @@ if (Validator.isNull(passwordField)) {
 		passwordField = fieldValuePair.substring(0, pos);
 		password = fieldValuePair.substring(pos + 1);
 
-		preferences.setValue("password", password);
-		preferences.setValue("passwordField", passwordField);
+		portletPreferences.setValue("password", password);
+		portletPreferences.setValue("passwordField", passwordField);
 
-		preferences.store();
+		portletPreferences.store();
 	}
 }
 

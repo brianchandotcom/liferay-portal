@@ -19,10 +19,10 @@
 <%
 int index = ParamUtil.getInteger(request, "index", GetterUtil.getInteger((String)request.getAttribute("configuration.jsp-index")));
 
-String displayActivityCounterName = PrefsParamUtil.getString(preferences, request, "displayActivityCounterName" + index);
-String chartType = PrefsParamUtil.getString(preferences, request, "chartType" + index);
-int chartWidth = PrefsParamUtil.getInteger(preferences, request, "chartWidth" + index, 35);
-String dataRange = PrefsParamUtil.getString(preferences, request, "dataRange" + index);
+String displayActivityCounterName = PrefsParamUtil.getString(portletPreferences, request, "displayActivityCounterName" + index);
+String chartType = PrefsParamUtil.getString(portletPreferences, request, "chartType" + index);
+int chartWidth = PrefsParamUtil.getInteger(portletPreferences, request, "chartWidth" + index, 35);
+String dataRange = PrefsParamUtil.getString(portletPreferences, request, "dataRange" + index);
 
 List<String> activityCounterNames = SocialConfigurationUtil.getActivityCounterNames(SocialActivityCounterConstants.TYPE_ACTOR);
 

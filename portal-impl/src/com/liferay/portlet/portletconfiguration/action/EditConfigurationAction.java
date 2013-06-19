@@ -14,11 +14,14 @@
 
 package com.liferay.portlet.portletconfiguration.action;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.ResourceServingConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Portlet;
@@ -43,8 +46,12 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.portlet.filter.ActionRequestWrapper;
+import javax.portlet.filter.RenderRequestWrapper;
+import javax.portlet.filter.ResourceRequestWrapper;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -79,10 +86,21 @@ public class EditConfigurationAction extends PortletAction {
 		ConfigurationAction configurationAction = getConfigurationAction(
 			portlet);
 
-		if (configurationAction != null) {
-			configurationAction.processAction(
-				portletConfig, actionRequest, actionResponse);
+		if (configurationAction == null) {
+			return;
 		}
+
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			actionRequest);
+
+		PortletPreferences preferences = getPreferences(
+			request, actionRequest.getPreferences());
+
+		actionRequest = new ConfigurationActionRequestWrapper(
+			actionRequest, preferences);
+
+		configurationAction.processAction(
+			portletConfig, actionRequest, actionResponse);
 	}
 
 	@Override
@@ -119,6 +137,18 @@ public class EditConfigurationAction extends PortletAction {
 			if (Validator.isNotNull(path)) {
 				renderRequest.setAttribute(
 					WebKeys.CONFIGURATION_ACTION_PATH, path);
+
+				HttpServletRequest request = PortalUtil.getHttpServletRequest(
+					renderRequest);
+
+				PortletPreferences preferences = getPreferences(
+					request, renderRequest.getPreferences());
+
+				renderRequest = new ConfigurationRenderRequestWrapper(
+					renderRequest, preferences);
+
+				request.setAttribute(
+					JavaConstants.JAVAX_PORTLET_REQUEST, renderRequest);
 			}
 			else {
 				_log.error("Configuration action returned a null path");
@@ -149,10 +179,21 @@ public class EditConfigurationAction extends PortletAction {
 		ResourceServingConfigurationAction resourceServingConfigurationAction =
 			(ResourceServingConfigurationAction)getConfigurationAction(portlet);
 
-		if (resourceServingConfigurationAction != null) {
-			resourceServingConfigurationAction.serveResource(
-				portletConfig, resourceRequest, resourceResponse);
+		if (resourceServingConfigurationAction == null) {
+			return;
 		}
+
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			resourceRequest);
+
+		PortletPreferences preferences = getPreferences(
+			request, resourceRequest.getPreferences());
+
+		resourceRequest = new ConfigurationResourceRequestWrapper(
+			resourceRequest, preferences);
+
+		resourceServingConfigurationAction.serveResource(
+			portletConfig, resourceRequest, resourceResponse);
 	}
 
 	protected ConfigurationAction getConfigurationAction(Portlet portlet)
@@ -198,6 +239,21 @@ public class EditConfigurationAction extends PortletAction {
 		return PortletLocalServiceUtil.getPortletById(companyId, portletId);
 	}
 
+	protected PortletPreferences getPreferences(
+			HttpServletRequest request, PortletPreferences preferences)
+		throws PortalException, SystemException {
+
+		String portletResource = ParamUtil.getString(
+			request, "portletResource");
+
+		if (Validator.isNull(portletResource)) {
+			return preferences;
+		}
+
+		return PortletPreferencesFactoryUtil.getPortletSetup(
+			request, portletResource);
+	}
+
 	protected String getTitle(Portlet portlet, RenderRequest renderRequest)
 		throws Exception {
 
@@ -207,9 +263,11 @@ public class EditConfigurationAction extends PortletAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletPreferences portletSetup =
-			PortletPreferencesFactoryUtil.getPortletSetup(
-				renderRequest, portlet.getPortletId());
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			renderRequest);
+
+		PortletPreferences portletSetup = getPreferences(
+			request, renderRequest.getPreferences());
 
 		String title = PortletConfigurationUtil.getPortletTitle(
 			portletSetup, themeDisplay.getLanguageId());
@@ -224,5 +282,68 @@ public class EditConfigurationAction extends PortletAction {
 
 	private static Log _log = LogFactoryUtil.getLog(
 		EditConfigurationAction.class);
+
+	private class ConfigurationActionRequestWrapper
+		extends ActionRequestWrapper {
+
+		public ConfigurationActionRequestWrapper(
+			ActionRequest actionRequest,
+			PortletPreferences portletPreferences) {
+
+			super(actionRequest);
+
+			_portletPreferences = portletPreferences;
+		}
+
+		@Override
+		public PortletPreferences getPreferences() {
+			return _portletPreferences;
+		}
+
+		private PortletPreferences _portletPreferences;
+
+	}
+
+	private class ConfigurationRenderRequestWrapper
+		extends RenderRequestWrapper {
+
+		public ConfigurationRenderRequestWrapper(
+			RenderRequest renderRequest,
+			PortletPreferences portletPreferences) {
+
+			super(renderRequest);
+
+			_portletPreferences = portletPreferences;
+		}
+
+		@Override
+		public PortletPreferences getPreferences() {
+			return _portletPreferences;
+		}
+
+		private PortletPreferences _portletPreferences;
+
+	}
+
+	private class ConfigurationResourceRequestWrapper
+		extends ResourceRequestWrapper {
+
+		public ConfigurationResourceRequestWrapper(
+			ResourceRequest resourceRequest,
+			PortletPreferences portletPreferences) {
+
+			super(resourceRequest);
+
+			_portletPreferences = portletPreferences;
+		}
+
+		@Override
+		public PortletPreferences getPreferences() {
+			return _portletPreferences;
+		}
+
+		private PortletPreferences _portletPreferences;
+
+	}
 
 }

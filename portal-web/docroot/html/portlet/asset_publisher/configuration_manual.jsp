@@ -151,7 +151,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 				resultRows.add(row);
 			}
 
-			AssetPublisherUtil.removeAndStoreSelection(deletedAssets, preferences);
+			AssetPublisherUtil.removeAndStoreSelection(deletedAssets, portletPreferences);
 			%>
 
 			<c:if test="<%= !deletedAssets.isEmpty() %>">

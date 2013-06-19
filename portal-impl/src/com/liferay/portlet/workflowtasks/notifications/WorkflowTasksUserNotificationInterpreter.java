@@ -68,7 +68,7 @@ public class WorkflowTasksUserNotificationInterpreter
 		portletURL.setParameter(
 			"struts_action", "/my_workflow_tasks/edit_workflow_task");
 		portletURL.setParameter(
-			"workflowTaskId", jsonObject.getString("workflowInstanceId"));
+			"workflowTaskId", jsonObject.getString("kaleoTaskInstanceTokenId"));
 		portletURL.setWindowState(WindowState.MAXIMIZED);
 
 		return portletURL.toString();

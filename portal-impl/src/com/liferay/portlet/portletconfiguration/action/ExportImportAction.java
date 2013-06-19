@@ -40,6 +40,7 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.struts.ActionConstants;
+import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.dynamicdatalists.RecordSetDuplicateRecordSetKeyException;
@@ -68,7 +69,7 @@ import org.apache.struts.action.ActionMapping;
  * @author Jorge Ferrer
  * @author Raymond Augé
  */
-public class ExportImportAction extends EditConfigurationAction {
+public class ExportImportAction extends PortletAction {
 
 	@Override
 	public void processAction(
@@ -79,7 +80,7 @@ public class ExportImportAction extends EditConfigurationAction {
 		Portlet portlet = null;
 
 		try {
-			portlet = getPortlet(actionRequest);
+			portlet = ActionUtil.getPortlet(actionRequest);
 		}
 		catch (PrincipalException pe) {
 			SessionErrors.add(
@@ -161,7 +162,7 @@ public class ExportImportAction extends EditConfigurationAction {
 		Portlet portlet = null;
 
 		try {
-			portlet = getPortlet(renderRequest);
+			portlet = ActionUtil.getPortlet(renderRequest);
 		}
 		catch (PrincipalException pe) {
 			SessionErrors.add(
@@ -170,7 +171,7 @@ public class ExportImportAction extends EditConfigurationAction {
 			return mapping.findForward("portlet.portlet_configuration.error");
 		}
 
-		renderResponse.setTitle(getTitle(portlet, renderRequest));
+		renderResponse.setTitle(ActionUtil.getTitle(portlet, renderRequest));
 
 		return mapping.findForward(
 			getForward(

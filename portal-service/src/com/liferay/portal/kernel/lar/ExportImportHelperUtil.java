@@ -85,10 +85,12 @@ public class ExportImportHelperUtil {
 			userId, groupId, parameterMap, fileEntry);
 	}
 
-	public static FileEntry getTempFileEntry(long groupId, long userId)
+	public static FileEntry getTempFileEntry(
+			long groupId, long userId, String folderName)
 		throws PortalException, SystemException {
 
-		return getExportImportHelper().getTempFileEntry(groupId, userId);
+		return getExportImportHelper().getTempFileEntry(
+			groupId, userId, folderName);
 	}
 
 	public static String replaceExportContentReferences(

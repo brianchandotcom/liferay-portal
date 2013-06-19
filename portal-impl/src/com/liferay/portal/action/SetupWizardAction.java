@@ -48,8 +48,8 @@ public class SetupWizardAction extends Action {
 
 	@Override
 	public ActionForward execute(
-			ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response)
+			ActionMapping actionMapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -63,12 +63,12 @@ public class SetupWizardAction extends Action {
 
 		try {
 			if (Validator.isNull(cmd)) {
-				return mapping.findForward("portal.setup_wizard");
+				return actionMapping.findForward("portal.setup_wizard");
 			}
 			else if (cmd.equals(Constants.TRANSLATE)) {
 				SetupWizardUtil.updateLanguage(request, response);
 
-				return mapping.findForward("portal.setup_wizard");
+				return actionMapping.findForward("portal.setup_wizard");
 			}
 			else if (cmd.equals(Constants.TEST)) {
 				testDatabase(request, response);
@@ -88,7 +88,7 @@ public class SetupWizardAction extends Action {
 			if (e instanceof PrincipalException) {
 				SessionErrors.add(request, e.getClass());
 
-				return mapping.findForward("portal.setup_wizard");
+				return actionMapping.findForward("portal.setup_wizard");
 			}
 			else {
 				PortalUtil.sendError(e, request, response);

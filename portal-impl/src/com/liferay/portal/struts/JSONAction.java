@@ -58,8 +58,8 @@ public abstract class JSONAction extends Action {
 
 	@Override
 	public ActionForward execute(
-			ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response)
+			ActionMapping actionMapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
 		if (rerouteExecute(request, response)) {
@@ -74,7 +74,7 @@ public abstract class JSONAction extends Action {
 		try {
 			checkAuthToken(request);
 
-			json = getJSON(mapping, form, request, response);
+			json = getJSON(actionMapping, actionForm, request, response);
 
 			if (Validator.isNotNull(callback)) {
 				json = callback + "(" + json + ");";
@@ -103,7 +103,7 @@ public abstract class JSONAction extends Action {
 		boolean refresh = ParamUtil.getBoolean(request, "refresh");
 
 		if (refresh) {
-			return mapping.findForward(ActionConstants.COMMON_REFERER);
+			return actionMapping.findForward(ActionConstants.COMMON_REFERER);
 		}
 		else if (Validator.isNotNull(json)) {
 			response.setCharacterEncoding(StringPool.UTF8);
@@ -125,8 +125,8 @@ public abstract class JSONAction extends Action {
 	}
 
 	public abstract String getJSON(
-			ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response)
+			ActionMapping actionMapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response)
 		throws Exception;
 
 	public void setServletContext(ServletContext servletContext) {

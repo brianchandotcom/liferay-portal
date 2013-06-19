@@ -37,16 +37,17 @@ public class ViewAction extends PortletAction {
 
 	@Override
 	public ActionForward render(
-			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
-			RenderRequest renderRequest, RenderResponse renderResponse)
+			ActionMapping actionMapping, ActionForm actionForm,
+			PortletConfig portletConfig, RenderRequest renderRequest,
+			RenderResponse renderResponse)
 		throws Exception {
 
 		if (renderRequest.getRemoteUser() == null) {
-			return mapping.findForward("portlet.my_account.view");
+			return actionMapping.findForward("portlet.my_account.view");
 		}
 
 		if (!renderRequest.getWindowState().equals(WindowState.MAXIMIZED)) {
-			return mapping.findForward("portlet.my_account.view");
+			return actionMapping.findForward("portlet.my_account.view");
 		}
 
 		User user = PortalUtil.getUser(renderRequest);
@@ -59,7 +60,7 @@ public class ViewAction extends PortletAction {
 		dynamicRequest.setParameter(
 			"p_u_i_d", String.valueOf(user.getUserId()));
 
-		return mapping.findForward("portlet.my_account.edit_user");
+		return actionMapping.findForward("portlet.my_account.edit_user");
 	}
 
 }

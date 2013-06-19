@@ -47,8 +47,8 @@ public class PortletURLAction extends Action {
 
 	@Override
 	public ActionForward execute(
-			ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response)
+			ActionMapping actionMapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
 		if (!PropsValues.PORTLET_URL_GENERATE_BY_PATH_ENABLED) {

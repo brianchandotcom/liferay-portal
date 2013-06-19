@@ -37,8 +37,8 @@ public class GetUsersCountAction extends AJAXAction {
 
 	@Override
 	public String getText(
-			ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response)
+			ActionMapping actionMapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
 		long companyId = PortalUtil.getCompanyId(request);

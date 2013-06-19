@@ -26,6 +26,6 @@ public interface InitializableActionForm {
 
 	public void init(
 		HttpServletRequest request, HttpServletResponse response,
-		ActionMapping mapping);
+		ActionMapping actionMapping);
 
 }

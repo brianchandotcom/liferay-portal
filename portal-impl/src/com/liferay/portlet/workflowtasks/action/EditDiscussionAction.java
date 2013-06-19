@@ -31,8 +31,9 @@ public class EditDiscussionAction
 
 	@Override
 	public void processAction(
-			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
-			ActionRequest actionRequest, ActionResponse actionResponse)
+			ActionMapping actionMapping, ActionForm actionForm,
+			PortletConfig portletConfig, ActionRequest actionRequest,
+			ActionResponse actionResponse)
 		throws Exception {
 
 		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
@@ -41,7 +42,8 @@ public class EditDiscussionAction
 
 		try {
 			super.processAction(
-				mapping, form, portletConfig, actionRequest, actionResponse);
+				actionMapping, actionForm, portletConfig, actionRequest,
+				actionResponse);
 		}
 		finally {
 			WorkflowThreadLocal.setEnabled(workflowEnabled);

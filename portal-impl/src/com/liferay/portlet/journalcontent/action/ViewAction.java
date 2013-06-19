@@ -45,8 +45,9 @@ public class ViewAction extends WebContentAction {
 
 	@Override
 	public ActionForward render(
-			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
-			RenderRequest renderRequest, RenderResponse renderResponse)
+			ActionMapping actionMapping, ActionForm actionForm,
+			PortletConfig portletConfig, RenderRequest renderRequest,
+			RenderResponse renderResponse)
 		throws Exception {
 
 		PortletPreferences portletPreferences = renderRequest.getPreferences();
@@ -122,7 +123,7 @@ public class ViewAction extends WebContentAction {
 			renderRequest.removeAttribute(WebKeys.JOURNAL_ARTICLE_DISPLAY);
 		}
 
-		return mapping.findForward("portlet.journal_content.view");
+		return actionMapping.findForward("portlet.journal_content.view");
 	}
 
 }

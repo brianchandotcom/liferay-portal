@@ -27,8 +27,7 @@ String strutsAction = ParamUtil.getString(request, "struts_action");
 			<%
 			String taglibOnClick = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + (TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE) + "'});";
 			%>
-
-			<aui:nav-item href="<%= taglibOnClick %>" iconClass="icon-trash" label="delete" />
+			<aui:nav-item href="<%= taglibOnClick %>" iconClass="icon-trash" label='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "move-to-the-recycle-bin" : "delete" %>' />
 
 			<%
 			taglibOnClick = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.EXPIRE + "'});";

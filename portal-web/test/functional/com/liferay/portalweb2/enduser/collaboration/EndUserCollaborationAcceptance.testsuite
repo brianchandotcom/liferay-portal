@@ -1,6 +1,8 @@
 <definition>
 	<execute test-case="CPBlogsAcceptance" />
 
+	<execute test-case="CPMessageboardsAcceptance" />
+
 	<execute test-case="CPWikiAcceptance" />
 
 	<execute test-case="PGAnnouncementsAcceptance" />

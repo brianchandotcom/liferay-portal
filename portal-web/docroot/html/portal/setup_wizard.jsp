@@ -118,10 +118,10 @@
 												<strong><liferay-ui:message key="configured-database" /></strong>
 											</p>
 
-											<dl class="database-values">
+											<dl class="database-values dl-horizontal">
 												<c:choose>
 													<c:when test="<%= Validator.isNotNull(PropsValues.JDBC_DEFAULT_JNDI_NAME) %>">
-														<dt>
+														<dt title="<liferay-ui:message key="jdbc-default-jndi-name" />">
 															<liferay-ui:message key="jdbc-default-jndi-name" />
 														</dt>
 														<dd>
@@ -129,25 +129,25 @@
 														</dd>
 													</c:when>
 													<c:otherwise>
-														<dt>
+														<dt title="<liferay-ui:message key="jdbc-url" />">
 															<liferay-ui:message key="jdbc-url" />
 														</dt>
 														<dd>
 															<%= PropsValues.JDBC_DEFAULT_URL %>
 														</dd>
-														<dt>
+														<dt title="<liferay-ui:message key="jdbc-driver-class-name" />">
 															<liferay-ui:message key="jdbc-driver-class-name" />
 														</dt>
 														<dd>
 															<%= PropsValues.JDBC_DEFAULT_DRIVER_CLASS_NAME %>
 														</dd>
-														<dt>
+														<dt title="<liferay-ui:message key="user-name" />">
 															<liferay-ui:message key="user-name" />
 														</dt>
 														<dd>
 															<%= PropsValues.JDBC_DEFAULT_USERNAME %>
 														</dd>
-														<dt>
+														<dt title="<liferay-ui:message key="password" />">
 															<liferay-ui:message key="password" />
 														</dt>
 														<dd>
@@ -213,11 +213,9 @@
 							</aui:fieldset>
 						</div>
 
-						<div class="row-fluid">
-							<aui:button-row cssClass="span12">
-								<aui:button name="finishButton" type="submit" value="finish-configuration" />
-							</aui:button-row>
-						</div>
+						<aui:button-row>
+							<aui:button name="finishButton" type="submit" value="finish-configuration" />
+						</aui:button-row>
 					</aui:form>
 
 					<aui:script use="aui-base,aui-io-request,aui-loading-mask-deprecated">
@@ -270,7 +268,7 @@
 
 							jdbcDefaultURL.val(databaseURL);
 							jdbcDefaultDriverClassName.val(driverClassName);
-						}
+						};
 
 						databaseSelector.on('change', onChangeDatabaseSelector);
 
@@ -376,19 +374,17 @@
 								<aui:input name="login" type="hidden" value="<%= emailAddress %>" />
 								<aui:input name="password" type="hidden" value="<%= PropsValues.DEFAULT_ADMIN_PASSWORD %>" />
 
-								<p class="row-fluid">
-									<span class="alert alert-success span12">
-										<liferay-ui:message key="your-configuration-was-saved-sucessfully" />
-									</span>
+								<div class="alert alert-success">
+									<liferay-ui:message key="your-configuration-was-saved-sucessfully" />
+								</div>
 
-									<span class="field-hint">
+								<p class="lfr-setup-notice">
 
-										<%
-										String taglibArguments = "<span class=\"lfr-inline-code\">" + PropsValues.LIFERAY_HOME + StringPool.SLASH + SetupWizardUtil.PROPERTIES_FILE_NAME + "</span>";
-										%>
+									<%
+									String taglibArguments = "<span class=\"lfr-inline-code\">" + PropsValues.LIFERAY_HOME + StringPool.SLASH + SetupWizardUtil.PROPERTIES_FILE_NAME + "</span>";
+									%>
 
-										<liferay-ui:message arguments="<%= taglibArguments %>" key="the-configuration-was-saved-in" />
-									</span>
+									<liferay-ui:message arguments="<%= taglibArguments %>" key="the-configuration-was-saved-in" />
 								</p>
 
 								<%
@@ -396,10 +392,8 @@
 								%>
 
 								<c:if test="<%= !passwordUpdated %>">
-									<p>
-										<span class="field-hint">
-											<liferay-ui:message arguments="<%= PropsValues.DEFAULT_ADMIN_PASSWORD %>" key="your-password-is-x.-you-will-be-required-to-change-your-password-the-next-time-you-log-into-the-portal" />
-										</span>
+									<p class="lfr-setup-notice">
+										<liferay-ui:message arguments="<%= PropsValues.DEFAULT_ADMIN_PASSWORD %>" key="your-password-is-x.-you-will-be-required-to-change-your-password-the-next-time-you-log-into-the-portal" />
 									</p>
 								</c:if>
 
@@ -408,14 +402,14 @@
 						</c:when>
 						<c:otherwise>
 							<p>
-								<span class="alert alert-block">
+								<div class="alert alert-block">
 
 									<%
 									String taglibArguments = "<span class=\"lfr-inline-code\">" + PropsValues.LIFERAY_HOME + "</span>";
 									%>
 
 									<liferay-ui:message arguments="<%= taglibArguments %>" key="sorry,-we-were-not-able-to-save-the-configuration-file-in-x" />
-								</span>
+								</div>
 							</p>
 
 							<aui:input cssClass="properties-text" label="" name="portal-ext" type="textarea" value="<%= unicodeProperties.toSortedString() %>" wrap="soft" />

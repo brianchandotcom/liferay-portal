@@ -18,13 +18,6 @@
 String themeImagesPath = PortalUtil.getCDNHost(request.isSecure()) + theme.getStaticResourcePath() + theme.getImagesPath();
 %>
 
-body {
-	background: #EEF0F2 !important;
-	color: #363636;
-	margin: 0 auto;
-	padding: 0 !important;
-}
-
 #wrapper {
 	margin: auto;
 	max-width: 960px;
@@ -49,16 +42,14 @@ body {
 
 #banner .site-name {
 	background-image: url(<%= themeDisplay.getPathThemeImages() %>/common/configuration.png);
+	font-size: 0.5em;
+	line-height: 1;
 	margin-left: 0;
 }
 
 #footer {
 	clear: both;
 	padding-top: 2em;
-}
-
-.aui button.btn {
-	vertical-align: super;
 }
 
 .connection-messages {
@@ -70,55 +61,6 @@ body {
 	width: 100%;
 }
 
-.form .fieldset {
-	margin-bottom: 1em;
-}
-
-.fieldset .field-content {
-	margin-top: 0;
-}
-
-.legend {
-	border-bottom: 1px solid #333;
-	line-height: 2;
-	overflow: hidden;
-	padding: 0;
-	position: static;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-}
-
-.fieldset-content {
-	padding: 1em 10px 0;
-}
-
-.fieldset-legend {
-	color: #363636;
-	padding: 0;
-	position: static;
-	width: 100%;
-}
-
-.field-element {
-	display: block;
-}
-
-.field-hint {
-	float: none;
-	font-style: italic;
-}
-
-.suffix {
-	color: #777;
-	font-size: 0.9em;
-	font-style: italic;
-}
-
-.change-language {
-	display: inline-block;
-	vertical-align: bottom;
-}
-
 .database-options {
 	display: block;
 	margin-bottom: 1em;
@@ -126,14 +68,7 @@ body {
 
 .database-values {
 	border: 1px solid #CCC;
-	margin-left: 0;
 	padding: 1em;
-}
-
-.database-values dt {
-	float: left;
-	font-weight: bold;
-	margin-right: 1em;
 }
 
 .lfr-inline-code {
@@ -147,6 +82,13 @@ body {
 	word-wrap: break-word;
 }
 
+.lfr-setup-notice {
+	color: #777;
+	display: block;
+	font-size: 0.9em;
+	font-style: italic;
+}
+
 .alert-block .lfr-inline-code {
 	background-color: #EEB;
 	color: #333;
@@ -154,12 +96,6 @@ body {
 
 .ie6 #wrapper {
 	width: 600px;
-}
-
-@media (max-width: 1023px) {
-	#banner .site-name {
-		font-size: 0.8em;
-	}
 }
 
 @media (max-width: 767px) {
@@ -171,12 +107,16 @@ body {
 		margin-top: 11px;
 	}
 
-	#banner .site-name {
-		float: left;
-		font-size: 0.7em;
+	#banner .site-title {
+		margin-bottom: 15px;
 	}
 
-	.logo {
-		float: left;
+	#banner .site-name, .logo {
+		float: none;
+	}
+
+	#banner .site-name {
+		font-size: 0.5em;
+		margin-top: 0;
 	}
 }

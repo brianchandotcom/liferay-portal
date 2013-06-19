@@ -58,9 +58,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		formatWebXML();
 	}
 
-	protected String fixAntXMLProjectName(
-		String basedir, String fileName, String content) {
-
+	protected String fixAntXMLProjectName(String fileName, String content) {
 		int x = 0;
 
 		if (fileName.endsWith("-ext/build.xml")) {
@@ -179,7 +177,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 			String newContent = trimContent(content, true);
 
-			newContent = fixAntXMLProjectName(basedir, fileName, newContent);
+			newContent = fixAntXMLProjectName(fileName, newContent);
 
 			Document document = saxReaderUtil.read(newContent);
 

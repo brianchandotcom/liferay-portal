@@ -18,14 +18,18 @@ import com.liferay.portal.LARFileException;
 import com.liferay.portal.LARTypeException;
 import com.liferay.portal.LayoutImportException;
 import com.liferay.portal.LocaleException;
+import com.liferay.portal.MissingReferenceException;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.PortletIdException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
+import com.liferay.portal.kernel.lar.MissingReference;
+import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
@@ -220,6 +224,37 @@ public class PortletImporter {
 			JournalContentUtil.clearCache();
 			PermissionCacheUtil.clearCache();
 		}
+	}
+
+	public MissingReferences validateFile(
+			long userId, long groupId, boolean privateLayout,
+			Map<String, String[]> parameterMap, File file)
+		throws Exception {
+
+		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+			groupId, privateLayout);
+
+		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
+
+		PortletDataContext portletDataContext =
+			PortletDataContextFactoryUtil.createImportPortletDataContext(
+				layoutSet.getCompanyId(), groupId, parameterMap, null,
+				zipReader);
+
+		validateFile(portletDataContext);
+
+		MissingReferences missingReferences =
+			ExportImportHelperUtil.validateMissingReferences(
+				userId, groupId, parameterMap, file);
+
+		Map<String, MissingReference> dependencyMissingReferences =
+			missingReferences.getDependencyMissingReferences();
+
+		if (!dependencyMissingReferences.isEmpty()) {
+			throw new MissingReferenceException(missingReferences);
+		}
+
+		return missingReferences;
 	}
 
 	protected void deletePortletData(
@@ -1696,6 +1731,40 @@ public class PortletImporter {
 		}
 	}
 
+	protected void readXML(PortletDataContext portletDataContext)
+		throws Exception {
+
+		if ((_rootElement != null) && (_headerElement != null) &&
+			(_layoutsElement != null) && (_layoutElements != null)) {
+
+			return;
+		}
+
+		String xml = portletDataContext.getZipEntryAsString("/manifest.xml");
+
+		if (xml == null) {
+			throw new LARFileException("manifest.xml not found in the LAR");
+		}
+
+		try {
+			Document document = SAXReaderUtil.read(xml);
+
+			_rootElement = document.getRootElement();
+
+			portletDataContext.setImportDataRootElement(_rootElement);
+		}
+		catch (Exception e) {
+			throw new LARFileException(e);
+		}
+
+		_headerElement = _rootElement.element("header");
+
+		_layoutsElement = portletDataContext.getImportDataGroupElement(
+			Layout.class);
+
+		_layoutElements = _layoutsElement.elements();
+	}
+
 	protected void resetPortletScope(
 		PortletDataContext portletDataContext, long groupId) {
 
@@ -2172,8 +2241,67 @@ public class PortletImporter {
 		jxPreferences.setValues(key, newValues);
 	}
 
+	protected void validateFile(PortletDataContext portletDataContext)
+		throws Exception {
+
+		// Build compatibility
+
+		readXML(portletDataContext);
+
+		int buildNumber = ReleaseInfo.getBuildNumber();
+
+		int importBuildNumber = GetterUtil.getInteger(
+			_headerElement.attributeValue("build-number"));
+
+		if (buildNumber != importBuildNumber) {
+			throw new LayoutImportException(
+				"LAR build number " + importBuildNumber + " does not match " +
+					"portal build number " + buildNumber);
+		}
+
+		// Type
+
+		String larType = _headerElement.attributeValue("type");
+
+		if (!larType.equals("layout-prototype") &&
+			!larType.equals("layout-set") &&
+			!larType.equals("layout-set-prototype")) {
+
+			throw new LARTypeException(larType);
+		}
+
+		// Available locales
+
+		Locale[] sourceAvailableLocales = LocaleUtil.fromLanguageIds(
+			StringUtil.split(
+				_headerElement.attributeValue("available-locales")));
+
+		Locale[] targetAvailableLocales = LanguageUtil.getAvailableLocales();
+
+		for (Locale sourceAvailableLocale : sourceAvailableLocales) {
+			if (!ArrayUtil.contains(
+					targetAvailableLocales, sourceAvailableLocale)) {
+
+				LocaleException le = new LocaleException();
+
+				le.setSourceAvailableLocales(sourceAvailableLocales);
+				le.setTargetAvailableLocales(targetAvailableLocales);
+
+				throw le;
+			}
+		}
+
+		// Layout prototypes validity
+
+		validateLayoutPrototypes(
+			portletDataContext.getCompanyId(), _layoutsElement,
+			_layoutElements);
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(PortletImporter.class);
 
+	private Element _headerElement;
 	private PermissionImporter _permissionImporter = new PermissionImporter();
+	private Element _rootElement;
 
 }

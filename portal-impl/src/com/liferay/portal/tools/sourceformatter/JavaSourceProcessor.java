@@ -544,7 +544,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		Properties staticLogVariableExclusions = null;
 		Properties upgradeServiceUtilExclusions = null;
 
-		if (isPortalSource()) {
+		if (portalSource) {
 			fileNames = getPortalJavaFiles();
 
 			_checkUnprocessedExceptions = GetterUtil.getBoolean(
@@ -642,8 +642,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 
 			newContent = fixDataAccessConnection(className, newContent);
-			newContent = fixSessionKey(
-				fileName, newContent, getSessionKeyPattern());
+			newContent = fixSessionKey(fileName, newContent, sessionKeyPattern);
 
 			newContent = StringUtil.replace(
 				newContent,
@@ -805,7 +804,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						"serialVersionUID: " + fileName);
 			}
 
-			checkLanguageKeys(fileName, newContent, getLanguageKeyPattern());
+			checkLanguageKeys(fileName, newContent, languageKeyPattern);
 
 			// LPS-36174
 

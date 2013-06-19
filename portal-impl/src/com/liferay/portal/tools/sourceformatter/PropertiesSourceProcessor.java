@@ -38,7 +38,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 	protected void formatPortalProperties() throws Exception {
 		String portalPortalProperties = null;
 
-		if (isPortalSource()) {
+		if (portalSource) {
 			File portalPortalPropertiesFile = new File(
 				BASEDIR + "portal-impl/src/portal.properties");
 
@@ -51,7 +51,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		String[] excludes = null;
 		String[] includes = null;
 
-		if (isPortalSource()) {
+		if (portalSource) {
 			excludes = new String[] {"**\\classes\\**", "**\\bin\\**"};
 			includes = new String[] {
 				"**\\portal-ext.properties",

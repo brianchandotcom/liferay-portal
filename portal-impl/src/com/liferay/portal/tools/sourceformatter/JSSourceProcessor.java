@@ -88,7 +88,7 @@ public class JSSourceProcessor extends BaseSourceProcessor {
 				newContent = newContent.substring(0, newContent.length() - 1);
 			}
 
-			checkLanguageKeys(fileName, newContent, getLanguageKeyPattern());
+			checkLanguageKeys(fileName, newContent, languageKeyPattern);
 
 			if ((newContent != null) && !content.equals(newContent)) {
 				fileUtil.write(file, newContent);

@@ -428,7 +428,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected void formatPortletXML() throws DocumentException, IOException {
-		if (isPortalSource()) {
+		if (portalSource) {
 			File file = new File(
 				BASEDIR + "portal-web/docroot/WEB-INF/portlet-custom.xml");
 
@@ -601,7 +601,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	protected void formatStrutsConfigXML()
 		throws DocumentException, IOException {
 
-		if (!isPortalSource()) {
+		if (!portalSource) {
 			return;
 		}
 
@@ -645,7 +645,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected void formatTilesDefsXML() throws DocumentException, IOException {
-		if (!isPortalSource()) {
+		if (!portalSource) {
 			return;
 		}
 
@@ -687,7 +687,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected void formatWebXML() throws IOException {
-		if (isPortalSource()) {
+		if (portalSource) {
 			Properties properties = new Properties();
 
 			String propertiesContent = fileUtil.read(

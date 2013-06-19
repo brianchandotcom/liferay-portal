@@ -218,7 +218,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		String fileExtension = fileUtil.getExtension(fileName);
 
-		if (!_portalSource || fileExtension.equals("vm")) {
+		if (!portalSource || fileExtension.equals("vm")) {
 			return;
 		}
 
@@ -336,10 +336,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 			String s = null;
 
-			if (pattern.equals(_sessionKeyPattern)) {
+			if (pattern.equals(sessionKeyPattern)) {
 				s = StringPool.COMMA;
 			}
-			else if (pattern.equals(_taglibSessionKeyPattern)) {
+			else if (pattern.equals(taglibSessionKeyPattern)) {
 				s = "key=";
 			}
 
@@ -445,10 +445,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return null;
 	}
 
-	protected Pattern getLanguageKeyPattern() {
-		return _languageKeyPattern;
-	}
-
 	protected List<String> getFileNames(String[] excludes, String[] includes) {
 		return getFileNames(BASEDIR, excludes, includes);
 	}
@@ -544,14 +540,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return copyright;
 	}
 
-	protected Pattern getSessionKeyPattern() {
-		return _sessionKeyPattern;
-	}
-
-	protected Pattern getTaglibSessionKeyPattern() {
-		return _taglibSessionKeyPattern;
-	}
-
 	protected boolean hasMissingParentheses(String s) {
 		if (Validator.isNull(s)) {
 			return false;
@@ -606,10 +594,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		else {
 			return false;
 		}
-	}
-
-	protected boolean isPortalSource() {
-		return _portalSource;
 	}
 
 	protected void processErrorMessage(String fileName, String message) {
@@ -754,9 +738,19 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected static final String MAIN_RELEASE_VERSION_6_2_0 = "6.2.0";
 
 	protected static FileImpl fileUtil = FileImpl.getInstance();
+	protected static Pattern languageKeyPattern = Pattern.compile(
+		"LanguageUtil.(?:get|format)\\([^;%]+|Liferay.Language.get\\('([^']+)");
 	protected static String mainReleaseVersion;
+	protected static boolean portalSource;
 	protected static SAXReaderImpl saxReaderUtil = SAXReaderImpl.getInstance();
+	protected static Pattern sessionKeyPattern = Pattern.compile(
+		"SessionErrors.(?:add|contains|get)\\([^;%&|!]+|".concat(
+			"SessionMessages.(?:add|contains|get)\\([^;%&|!]+"),
+		Pattern.MULTILINE);
 	protected static SourceFormatterHelper sourceFormatterHelper;
+	protected static Pattern taglibSessionKeyPattern = Pattern.compile(
+		"<liferay-ui:error [^>]+>|<liferay-ui:success [^>]+>",
+		Pattern.MULTILINE);
 
 	private void _init(boolean useProperties, boolean throwException)
 		throws Exception {
@@ -777,16 +771,20 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			GetterUtil.getString(
 				System.getProperty("source.formatter.excludes")));
 
-		if (fileUtil.exists(BASEDIR + "portal-impl")) {
-			_portalSource = true;
-		}
-		else {
-			_portalSource = false;
-		}
+		portalSource = _isPortalSource();
 
 		_throwException = throwException;
 
 		_initialized = true;
+	}
+
+	private static boolean _isPortalSource() {
+		if (fileUtil.exists(BASEDIR + "portal-impl")) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	private void _setVersion() throws Exception {
@@ -807,17 +805,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private static List<String> _errorMessages = new ArrayList<String>();
 	private static String[] _excludes;
 	private static boolean _initialized;
-	private static Pattern _languageKeyPattern = Pattern.compile(
-		"LanguageUtil.(?:get|format)\\([^;%]+|Liferay.Language.get\\('([^']+)");
 	private static Properties _portalLanguageKeysProperties;
-	private static boolean _portalSource;
-	private static Pattern _sessionKeyPattern = Pattern.compile(
-		"SessionErrors.(?:add|contains|get)\\([^;%&|!]+|".concat(
-			"SessionMessages.(?:add|contains|get)\\([^;%&|!]+"),
-		Pattern.MULTILINE);
-	private static Pattern _taglibSessionKeyPattern = Pattern.compile(
-		"<liferay-ui:error [^>]+>|<liferay-ui:success [^>]+>",
-		Pattern.MULTILINE);
 	private static boolean _throwException;
 
 }

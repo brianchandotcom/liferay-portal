@@ -204,8 +204,6 @@ AUI.add(
 							event.halt();
 
 							instance._loadAddPanel();
-
-							Liferay.fire('dockbar:closeAddContentMenu');
 						}
 					);
 				}
@@ -323,7 +321,7 @@ AUI.add(
 				var addPanel = A.one('#' + instance._namespace + 'addPanel');
 
 				if (addPanel) {
-					var uri = addPanel.attr('href');
+					var uri = addPanel.ancestor().attr('data-addURL');
 
 					A.io.request(
 						uri,

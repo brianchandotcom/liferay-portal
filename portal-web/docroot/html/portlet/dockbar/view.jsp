@@ -132,7 +132,7 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 				<portlet:param name="viewEntries" value="<%= Boolean.TRUE.toString() %>" />
 			</portlet:renderURL>
 
-			<aui:nav-item anchorId="addPanel" href="<%= addURL %>" iconClass="icon-plus" label="add" />
+			<aui:nav-item anchorId="addPanel" data-addURL="<%= addURL %>" href="javascript:;" iconClass="icon-plus" label="add" />
 		</c:if>
 
 		<c:if test="<%= !group.isControlPanel() && (themeDisplay.isShowLayoutTemplatesIcon() || themeDisplay.isShowPageSettingsIcon()) %>">

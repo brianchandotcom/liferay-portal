@@ -1099,6 +1099,19 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					fileName, "equal: " + fileName + " " + lineCount);
 			}
 
+			if (line.contains("ActionForm form")) {
+				processErrorMessage(
+					fileName,
+					"Rename form to actionForm: " + fileName + " " + lineCount);
+			}
+
+			if (line.contains("ActionMapping mapping")) {
+				processErrorMessage(
+					fileName,
+					"Rename mapping to ActionMapping: " + fileName + " " +
+						lineCount);
+			}
+
 			if (!trimmedLine.equals("{") && line.endsWith("{") &&
 				!line.endsWith(" {")) {
 

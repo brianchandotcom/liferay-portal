@@ -52,8 +52,13 @@
 <!--SEARCH_RESULTS-->
 <tr>
 	<td>SEARCH_RESULTS_TITLE</td>
-	<td>//a[@class='entry-link']/span[@class='entry-title']/span</td>
+	<td>//a[@class='entry-link']/span[@class='entry-title']</td>
 	<td>Search Result Title</td>
+</tr>
+<tr>
+	<td>SEARCH_RESULTS_WORD_HIGHLIGHT</td>
+	<td>//a[@class='entry-link']/span[@class='entry-title']/span</td>
+	<td>Search Result Word Highlight</td>
 </tr>
 <tr>
 	<td>SEARCH_RESULTS_PARENT_FOLDER</td>
@@ -78,47 +83,47 @@
 <!--FOLDER_MENULIST-->
 <tr>
 	<td>FOLDER_MENULIST_EDIT</td>
-	<td>//ul[@class='lfr-menu-expanded lfr-menu-list']/li/a[contains(.,'Edit')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>FOLDER_MENULIST_MOVE</td>
-	<td>//ul[@class='lfr-menu-expanded lfr-menu-list']/li/a[contains(.,'Move')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Move')]</td>
 	<td>Move</td>
 </tr>
 <tr>
 	<td>FOLDER_MENULIST_PERMISSIONS</td>
-	<td>//ul[@class='lfr-menu-expanded lfr-menu-list']/li/a[contains(.,'Permissions')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Permissions')]</td>
 	<td>Permissions</td>
 </tr>
 <tr>
 	<td>FOLDER_MENULIST_RECYCLE_BIN</td>
-	<td>//ul[@class='lfr-menu-expanded lfr-menu-list']/li/a[contains(.,'Move to the Recycle Bin')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Move to the Recycle Bin')]</td>
 	<td>Move to the Recycle Bin</td>
 </tr>
 <tr>
 	<td>FOLDER_MENULIST_ADD_SUBFOLDER</td>
-	<td>//ul[@class='lfr-menu-expanded lfr-menu-list']/li/a[contains(.,'Add Subfolder')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Add Subfolder')]</td>
 	<td>Add Subfolder</td>
 </tr>
 <tr>
 	<td>FOLDER_MENULIST_MULTIPLE_DOCUMENTS</td>
-	<td>//ul[@class='lfr-menu-expanded lfr-menu-list']/li/a[contains(.,'Multiple Documents')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Multiple Documents')]</td>
 	<td>Multiple Documents</td>
 </tr>
 <tr>
 	<td>FOLDER_MENULIST_ADD_DOCUMENT</td>
-	<td>//ul[@class='lfr-menu-expanded lfr-menu-list']/li/a[contains(.,'Add Document')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Add Document')]</td>
 	<td>Add Document</td>
 </tr>
 <tr>
 	<td>FOLDER_MENULIST_ADD_SHORTCUT</td>
-	<td>//ul[@class='lfr-menu-expanded lfr-menu-list']/li/a[contains(.,'Add Shortcut')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Add Shortcut')]</td>
 	<td>Add Shortcut</td>
 </tr>
 <tr>
 	<td>FOLDER_MENULIST_ACCESS_FROM_DESKTOP</td>
-	<td>//ul[@class='lfr-menu-expanded lfr-menu-list']/li/a[contains(.,'Access from Desktop')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Access from Desktop')]</td>
 	<td>Access from Desktop</td>
 </tr>
 <tr>
@@ -129,32 +134,32 @@
 <!--DOCUMENT_MENULIST-->
 <tr>
 	<td>DOCUMENT_MENULIST_DOWNLOAD</td>
-	<td>//button[contains(.,'Download')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Download')]</td>
 	<td>Download</td>
 </tr>
 <tr>
 	<td>DOCUMENT_MENULIST_EDIT</td>
-	<td>//button[contains(.,'Edit')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>DOCUMENT_MENULIST_MOVE</td>
-	<td>//button[contains(.,'Move')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Move')]</td>
 	<td>Move</td>
 </tr>
 <tr>
 	<td>DOCUMENT_MENULIST_CHECKOUT</td>
-	<td>//button[contains(.,'Checkout')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Checkout')]</td>
 	<td>Checkout</td>
 </tr>
 <tr>
 	<td>DOCUMENT_MENULIST_PERMISSIONS</td>
-	<td>//button[contains(.,'Permissions')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Permissions')]</td>
 	<td>Permissions</td>
 </tr>
 <tr>
 	<td>DOCUMENT_MENULIST_RECYCLE_BIN</td>
-	<td>//button[contains(.,'Move to the Recycle Bin')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Move to the Recycle Bin')]</td>
 	<td>Move to the Recycle Bin</td>
 </tr>
 </tbody>

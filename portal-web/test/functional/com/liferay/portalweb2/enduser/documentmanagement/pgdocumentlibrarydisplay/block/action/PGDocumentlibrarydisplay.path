@@ -57,7 +57,7 @@
 <!--FOLDERS_TABLE-->
 <tr>
 	<td>FOLDERS_TABLE_NAME</td>
-	<td>//div[contains(@id,'foldersSearchContainer')]/table/tbody/tr/td[1]/a</td>
+	<td>//div[contains(@id,'foldersSearchContainer')]/table/tbody/tr/td[1]/a[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -69,57 +69,6 @@
 	<td>FOLDERS_TABLE_NUMBER_OF_DOCUMENTS</td>
 	<td>//div[contains(@id,'foldersSearchContainer')]/table/tbody/tr/td[3]/a</td>
 	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--FOLDER_MENULIST-->
-<tr>
-	<td>FOLDER_MENULIST_EDIT</td>
-	<td>//ul[@class='lfr-menu-expanded lfr-menu-list']/li/a[contains(.,'Edit')]</td>
-	<td>Edit</td>
-</tr>
-<tr>
-	<td>FOLDER_MENULIST_MOVE</td>
-	<td>//ul[@class='lfr-menu-expanded lfr-menu-list']/li/a[contains(.,'Move')]</td>
-	<td>Move</td>
-</tr>
-<tr>
-	<td>FOLDER_MENULIST_PERMISSIONS</td>
-	<td>//ul[@class='lfr-menu-expanded lfr-menu-list']/li/a[contains(.,'Permissions')]</td>
-	<td>Permissions</td>
-</tr>
-<tr>
-	<td>FOLDER_MENULIST_RECYCLE_BIN</td>
-	<td>//ul[@class='lfr-menu-expanded lfr-menu-list']/li/a[contains(.,'Move to the Recycle Bin')]</td>
-	<td>Move to the Recycle Bin</td>
-</tr>
-<tr>
-	<td>FOLDER_MENULIST_ADD_SUBFOLDER</td>
-	<td>//ul[@class='lfr-menu-expanded lfr-menu-list']/li/a[contains(.,'Add Subfolder')]</td>
-	<td>Add Subfolder</td>
-</tr>
-<tr>
-	<td>FOLDER_MENULIST_MULTIPLE_DOCUMENTS</td>
-	<td>//ul[@class='lfr-menu-expanded lfr-menu-list']/li/a[contains(.,'Multiple Documents')]</td>
-	<td>Multiple Documents</td>
-</tr>
-<tr>
-	<td>FOLDER_MENULIST_ADD_DOCUMENT</td>
-	<td>//ul[@class='lfr-menu-expanded lfr-menu-list']/li/a[contains(.,'Add Document')]</td>
-	<td>Add Document</td>
-</tr>
-<tr>
-	<td>FOLDER_MENULIST_ADD_SHORTCUT</td>
-	<td>//ul[@class='lfr-menu-expanded lfr-menu-list']/li/a[contains(.,'Add Shortcut')]</td>
-	<td>Add Shortcut</td>
-</tr>
-<tr>
-	<td>FOLDER_MENULIST_ACCESS_FROM_DESKTOP</td>
-	<td>//ul[@class='lfr-menu-expanded lfr-menu-list']/li/a[contains(.,'Access from Desktop')]</td>
-	<td>Access from Desktop</td>
 </tr>
 <tr>
 	<td></td>
@@ -163,75 +112,39 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--DOCUMENT_MENULIST-->
-<tr>
-	<td>DOCUMENT_MENULIST_DOWNLOAD</td>
-	<td>//button[contains(.,'Download')]</td>
-	<td>Download</td>
-</tr>
-<tr>
-	<td>DOCUMENT_MENULIST_EDIT</td>
-	<td>//button[contains(.,'Edit')]</td>
-	<td>Edit</td>
-</tr>
-<tr>
-	<td>DOCUMENT_MENULIST_MOVE</td>
-	<td>//button[contains(.,'Move')]</td>
-	<td>Move</td>
-</tr>
-<tr>
-	<td>DOCUMENT_MENULIST_CHECKOUT</td>
-	<td>//button[contains(.,'Checkout')]</td>
-	<td>Checkout</td>
-</tr>
-<tr>
-	<td>DOCUMENT_MENULIST_PERMISSIONS</td>
-	<td>//button[contains(.,'Permissions')]</td>
-	<td>Permissions</td>
-</tr>
-<tr>
-	<td>DOCUMENT_MENULIST_RECYCLE_BIN</td>
-	<td>//button[contains(.,'Move to the Recycle Bin')]</td>
-	<td>Move to the Recycle Bin</td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--HOME_FOLDER_MENU-->
 <tr>
-	<td>FOLDER_MENU_PERMISSIONS</td>
+	<td>HOME_FOLDER_MENU_PERMISSIONS</td>
 	<td>//ul[@class='lfr-menu-expanded lfr-menu-list']/li/a[contains(.,'Permissions')]</td>
 	<td>Permissions </td>
 </tr>
 <tr>
-	<td>FOLDER_MENU_ADD_FOLDER</td>
+	<td>HOME_FOLDER_MENU_ADD_FOLDER</td>
 	<td>//ul[@class='lfr-menu-expanded lfr-menu-list']/li/a[contains(.,'Add Folder')]</td>
 	<td>Add Folder</td>
 </tr>
 <tr>
-	<td>FOLDER_MENU_ADD_REPOSITORY</td>
+	<td>HOME_FOLDER_MENU_ADD_REPOSITORY</td>
 	<td>//ul[@class='lfr-menu-expanded lfr-menu-list']/li/a[contains(.,'Add Repository')]</td>
 	<td>Add Repository</td>
 </tr>
 <tr>
-	<td>FOLDER_MENU_MULTIPLE_DOCUMENTS</td>
+	<td>HOME_FOLDER_MENU_MULTIPLE_DOCUMENTS</td>
 	<td>//ul[@class='lfr-menu-expanded lfr-menu-list']/li/a[contains(.,'Multiple Documents')]</td>
 	<td>Multiple Documents</td>
 </tr>
 <tr>
-	<td>FOLDER_MENU_ADD_DOCUMENT</td>
+	<td>HOME_FOLDER_MENU_ADD_DOCUMENT</td>
 	<td>//ul[@class='lfr-menu-expanded lfr-menu-list']/li/a[contains(.,'Add Document')]</td>
 	<td>Add Document</td>
 </tr>
 <tr>
-	<td>FOLDER_MENU_ADD_SHORTCUT</td>
+	<td>HOME_FOLDER_MENU_ADD_SHORTCUT</td>
 	<td>//ul[@class='lfr-menu-expanded lfr-menu-list']/li/a[contains(.,'Add Shortcut')]</td>
 	<td>Add Shortcut</td>
 </tr>
 <tr>
-	<td>FOLDER_MENU_ACCESS_FROM_DESKTOP</td>
+	<td>HOME_FOLDER_MENU_ACCESS_FROM_DESKTOP</td>
 	<td>//ul[@class='lfr-menu-expanded lfr-menu-list']/li/a[contains(.,'Access from Desktop')]</td>
 	<td>Access from Desktop</td>
 </tr>

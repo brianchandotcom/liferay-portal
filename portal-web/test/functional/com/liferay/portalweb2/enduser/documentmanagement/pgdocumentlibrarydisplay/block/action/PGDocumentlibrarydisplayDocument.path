@@ -48,6 +48,42 @@
 	<td>//a[contains(.,'Subscribe to Comments')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TOOLBAR-->
+<tr>
+	<td>TOOLBAR_DOWNLOAD_BUTTON</td>
+	<td>//button[contains(.,'Download')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_EDIT_BUTTON</td>
+	<td>//button[contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_MOVE_BUTTON</td>
+	<td>//button[contains(.,'Move')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_CHECKOUT_BUTTON</td>
+	<td>//button[contains(.,'Checkout')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_PERMISSIONS_BUTTON</td>
+	<td>//button[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_MOVE_TO_THE_RECYCLE_BIN_BUTTON</td>
+	<td>//button[contains(.,'Move to the Recycle Bin')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -1235,6 +1235,17 @@ public class LayoutServiceWrapper implements LayoutService,
 			parameterMap, file);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.lar.MissingReferences validateImportPortletInfo(
+		long plid, long groupId, java.lang.String portletId,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _layoutService.validateImportPortletInfo(plid, groupId,
+			portletId, parameterMap, file);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

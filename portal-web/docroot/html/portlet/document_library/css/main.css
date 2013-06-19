@@ -297,14 +297,6 @@
 		margin-bottom: 5px;
 	}
 
-	.workflow-status-draft, .workflow-status-draft a {
-		color: blue;
-	}
-
-	.workflow-status-pending, .workflow-status-pending a {
-		color: orange;
-	}
-
 	.document-library-breadcrumb  ul {
 		margin-bottom: 0;
 	}

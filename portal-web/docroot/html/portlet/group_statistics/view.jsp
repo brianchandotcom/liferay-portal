@@ -18,15 +18,15 @@
 
 <%
 for (int displayActivityCounterNameIndex : displayActivityCounterNameIndexes) {
-	String displayActivityCounterName = PrefsParamUtil.getString(preferences, request, "displayActivityCounterName" + displayActivityCounterNameIndex);
+	String displayActivityCounterName = PrefsParamUtil.getString(portletPreferences, request, "displayActivityCounterName" + displayActivityCounterNameIndex);
 
 	if (Validator.isNull(displayActivityCounterName)) {
 		continue;
 	}
 
-	String chartType = PrefsParamUtil.getString(preferences, request, "chartType" + displayActivityCounterNameIndex, "area");
-	int chartWidth = PrefsParamUtil.getInteger(preferences, request, "chartWidth" + displayActivityCounterNameIndex, 35);
-	String dataRange = PrefsParamUtil.getString(preferences, request, "dataRange" + displayActivityCounterNameIndex, "year");
+	String chartType = PrefsParamUtil.getString(portletPreferences, request, "chartType" + displayActivityCounterNameIndex, "area");
+	int chartWidth = PrefsParamUtil.getInteger(portletPreferences, request, "chartWidth" + displayActivityCounterNameIndex, 35);
+	String dataRange = PrefsParamUtil.getString(portletPreferences, request, "dataRange" + displayActivityCounterNameIndex, "year");
 
 	List<AssetTag> assetTags = null;
 

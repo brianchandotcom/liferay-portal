@@ -108,9 +108,7 @@ page import="com.liferay.util.RSSUtil" %>
 <%
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(liferayPortletRequest);
 
-PortletPreferences preferences = renderRequest.getPreferences();
-
-String[] displayViews = StringUtil.split(PrefsParamUtil.getString(preferences, liferayPortletRequest, "displayViews", StringUtil.merge(PropsValues.JOURNAL_DISPLAY_VIEWS)));
+String[] displayViews = StringUtil.split(PrefsParamUtil.getString(portletPreferences, liferayPortletRequest, "displayViews", StringUtil.merge(PropsValues.JOURNAL_DISPLAY_VIEWS)));
 
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);

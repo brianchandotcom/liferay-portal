@@ -122,7 +122,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 						Long[] assetAvailableClassTypeIds = assetAvailableClassTypeIdsSet.toArray(new Long[assetAvailableClassTypeIdsSet.size()]);
 
-						Long[] assetSelectedClassTypeIds = AssetPublisherUtil.getClassTypeIds(preferences, className, assetAvailableClassTypeIds);
+						Long[] assetSelectedClassTypeIds = AssetPublisherUtil.getClassTypeIds(portletPreferences, className, assetAvailableClassTypeIds);
 
 						// Left list
 
@@ -138,7 +138,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 						List<KeyValuePair> subtypesRightList = new ArrayList<KeyValuePair>();
 
-						boolean anyAssetSubtype = GetterUtil.getBoolean(preferences.getValue("anyClassType" + className, Boolean.TRUE.toString()));
+						boolean anyAssetSubtype = GetterUtil.getBoolean(portletPreferences.getValue("anyClassType" + className, Boolean.TRUE.toString()));
 					%>
 
 						<div class='asset-subtype <%= (assetSelectedClassTypeIds.length < 1) ? StringPool.BLANK : "hide" %>' id="<portlet:namespace /><%= className %>Options">
@@ -269,7 +269,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 							queryLogicIndexes = new int[0];
 
 							for (int i = 0; true; i++) {
-								String queryValues = PrefsParamUtil.getString(preferences, request, "queryValues" + i);
+								String queryValues = PrefsParamUtil.getString(portletPreferences, request, "queryValues" + i);
 
 								if (Validator.isNull(queryValues)) {
 									break;
@@ -286,7 +286,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 						int index = 0;
 
 						for (int queryLogicIndex : queryLogicIndexes) {
-							String queryValues = StringUtil.merge(preferences.getValues("queryValues" + queryLogicIndex , new String[0]));
+							String queryValues = StringUtil.merge(portletPreferences.getValues("queryValues" + queryLogicIndex , new String[0]));
 							String tagNames = ParamUtil.getString(request, "queryTagNames" + queryLogicIndex, queryValues);
 							String categoryIds = ParamUtil.getString(request, "queryCategoryIds" + queryLogicIndex, queryValues);
 
@@ -298,9 +298,9 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 								String cssClass = StringPool.BLANK;
 
 								if (dqre != null) {
-									boolean queryContains = PrefsParamUtil.getBoolean(preferences, request, "queryContains" + queryLogicIndex, true);
-									boolean queryAndOperator = PrefsParamUtil.getBoolean(preferences, request, "queryAndOperator" + queryLogicIndex);
-									String queryName = PrefsParamUtil.getString(preferences, request, "queryName" + queryLogicIndex, "assetTags");
+									boolean queryContains = PrefsParamUtil.getBoolean(portletPreferences, request, "queryContains" + queryLogicIndex, true);
+									boolean queryAndOperator = PrefsParamUtil.getBoolean(portletPreferences, request, "queryAndOperator" + queryLogicIndex);
+									String queryName = PrefsParamUtil.getString(portletPreferences, request, "queryName" + queryLogicIndex, "assetTags");
 
 									String dqreQueryName = dqre.getName();
 

@@ -52,25 +52,23 @@ page import="com.liferay.portlet.trash.util.TrashUtil" %><%@
 page import="com.liferay.util.RSSUtil" %>
 
 <%
-PortletPreferences preferences = renderRequest.getPreferences();
-
-int pageDelta = GetterUtil.getInteger(preferences.getValue("pageDelta", StringPool.BLANK), SearchContainer.DEFAULT_DELTA);
-String pageDisplayStyle = preferences.getValue("pageDisplayStyle", BlogsUtil.DISPLAY_STYLE_FULL_CONTENT);
+int pageDelta = GetterUtil.getInteger(portletPreferences.getValue("pageDelta", StringPool.BLANK), SearchContainer.DEFAULT_DELTA);
+String pageDisplayStyle = portletPreferences.getValue("pageDisplayStyle", BlogsUtil.DISPLAY_STYLE_FULL_CONTENT);
 int pageAbstractLength = PropsValues.BLOGS_PAGE_ABSTRACT_LENGTH;
-boolean enableFlags = GetterUtil.getBoolean(preferences.getValue("enableFlags", null), true);
-boolean enableRelatedAssets = GetterUtil.getBoolean(preferences.getValue("enableRelatedAssets", null), true);
-boolean enableRatings = GetterUtil.getBoolean(preferences.getValue("enableRatings", null), true);
-boolean enableComments = PropsValues.BLOGS_ENTRY_COMMENTS_ENABLED && GetterUtil.getBoolean(preferences.getValue("enableComments", null), true);
-boolean enableCommentRatings = GetterUtil.getBoolean(preferences.getValue("enableCommentRatings", null), true);
-boolean enableSocialBookmarks = GetterUtil.getBoolean(preferences.getValue("enableSocialBookmarks", null), true);
-String socialBookmarksDisplayStyle = preferences.getValue("socialBookmarksDisplayStyle", "horizontal");
-String socialBookmarksDisplayPosition = preferences.getValue("socialBookmarksDisplayPosition", "bottom");
-String socialBookmarksTypes = preferences.getValue("socialBookmarksTypes", PropsUtil.get(PropsKeys.SOCIAL_BOOKMARK_TYPES));
+boolean enableFlags = GetterUtil.getBoolean(portletPreferences.getValue("enableFlags", null), true);
+boolean enableRelatedAssets = GetterUtil.getBoolean(portletPreferences.getValue("enableRelatedAssets", null), true);
+boolean enableRatings = GetterUtil.getBoolean(portletPreferences.getValue("enableRatings", null), true);
+boolean enableComments = PropsValues.BLOGS_ENTRY_COMMENTS_ENABLED && GetterUtil.getBoolean(portletPreferences.getValue("enableComments", null), true);
+boolean enableCommentRatings = GetterUtil.getBoolean(portletPreferences.getValue("enableCommentRatings", null), true);
+boolean enableSocialBookmarks = GetterUtil.getBoolean(portletPreferences.getValue("enableSocialBookmarks", null), true);
+String socialBookmarksDisplayStyle = portletPreferences.getValue("socialBookmarksDisplayStyle", "horizontal");
+String socialBookmarksDisplayPosition = portletPreferences.getValue("socialBookmarksDisplayPosition", "bottom");
+String socialBookmarksTypes = portletPreferences.getValue("socialBookmarksTypes", PropsUtil.get(PropsKeys.SOCIAL_BOOKMARK_TYPES));
 
-boolean enableRSS = !PortalUtil.isRSSFeedsEnabled() ? false : GetterUtil.getBoolean(preferences.getValue("enableRss", null), true);
-int rssDelta = GetterUtil.getInteger(preferences.getValue("rssDelta", StringPool.BLANK), SearchContainer.DEFAULT_DELTA);
-String rssDisplayStyle = preferences.getValue("rssDisplayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
-String rssFeedType = preferences.getValue("rssFeedType", RSSUtil.FEED_TYPE_DEFAULT);
+boolean enableRSS = !PortalUtil.isRSSFeedsEnabled() ? false : GetterUtil.getBoolean(portletPreferences.getValue("enableRss", null), true);
+int rssDelta = GetterUtil.getInteger(portletPreferences.getValue("rssDelta", StringPool.BLANK), SearchContainer.DEFAULT_DELTA);
+String rssDisplayStyle = portletPreferences.getValue("rssDisplayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
+String rssFeedType = portletPreferences.getValue("rssFeedType", RSSUtil.FEED_TYPE_DEFAULT);
 
 boolean showSearch = true;
 boolean showEditEntryPermissions = true;

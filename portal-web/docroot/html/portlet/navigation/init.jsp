@@ -17,18 +17,16 @@
 <%@ include file="/html/portlet/init.jsp" %>
 
 <%
-PortletPreferences preferences = renderRequest.getPreferences();
-
 String portletResource = ParamUtil.getString(request, "portletResource");
 
-String bulletStyle = PrefsParamUtil.getString(preferences, renderRequest, "bulletStyle", GetterUtil.getString(themeDisplay.getThemeSetting("bullet-style"), "dots"));
-String displayStyle = PrefsParamUtil.getString(preferences, renderRequest, "displayStyle", PropsValues.NAVIGATION_DISPLAY_STYLE_DEFAULT);
-String headerType = PrefsParamUtil.getString(preferences, renderRequest, "headerType", "root-layout");
-String includedLayouts = PrefsParamUtil.getString(preferences, renderRequest, "includedLayouts", "current");
-boolean nestedChildren = PrefsParamUtil.getBoolean(preferences, renderRequest, "nestedChildren", true);
-boolean preview = PrefsParamUtil.getBoolean(preferences, renderRequest, "preview");
-int rootLayoutLevel = PrefsParamUtil.getInteger(preferences, renderRequest, "rootLayoutLevel", 1);
-String rootLayoutType = PrefsParamUtil.getString(preferences, renderRequest, "rootLayoutType", "absolute");
+String bulletStyle = PrefsParamUtil.getString(portletPreferences, renderRequest, "bulletStyle", GetterUtil.getString(themeDisplay.getThemeSetting("bullet-style"), "dots"));
+String displayStyle = PrefsParamUtil.getString(portletPreferences, renderRequest, "displayStyle", PropsValues.NAVIGATION_DISPLAY_STYLE_DEFAULT);
+String headerType = PrefsParamUtil.getString(portletPreferences, renderRequest, "headerType", "root-layout");
+String includedLayouts = PrefsParamUtil.getString(portletPreferences, renderRequest, "includedLayouts", "current");
+boolean nestedChildren = PrefsParamUtil.getBoolean(portletPreferences, renderRequest, "nestedChildren", true);
+boolean preview = PrefsParamUtil.getBoolean(portletPreferences, renderRequest, "preview");
+int rootLayoutLevel = PrefsParamUtil.getInteger(portletPreferences, renderRequest, "rootLayoutLevel", 1);
+String rootLayoutType = PrefsParamUtil.getString(portletPreferences, renderRequest, "rootLayoutType", "absolute");
 %>
 
 <%@ include file="/html/portlet/navigation/init-ext.jsp" %>

@@ -17,18 +17,16 @@
 <%@ include file="/html/portlet/init.jsp" %>
 
 <%
-PortletPreferences preferences = renderRequest.getPreferences();
-
-String initUrl = preferences.getValue("initUrl", StringPool.BLANK);
-String scope = preferences.getValue("scope", StringPool.BLANK);
-String proxyHost = preferences.getValue("proxyHost", StringPool.BLANK);
-String proxyPort = preferences.getValue("proxyPort", StringPool.BLANK);
-String proxyAuthentication = preferences.getValue("proxyAuthentication", StringPool.BLANK);
-String proxyAuthenticationUsername = preferences.getValue("proxyAuthenticationUsername", StringPool.BLANK);
-String proxyAuthenticationPassword = preferences.getValue("proxyAuthenticationPassword", StringPool.BLANK);
-String proxyAuthenticationHost = preferences.getValue("proxyAuthenticationHost", StringPool.BLANK);
-String proxyAuthenticationDomain = preferences.getValue("proxyAuthenticationDomain", StringPool.BLANK);
-String stylesheet = preferences.getValue("stylesheet", StringPool.BLANK);
+String initUrl = portletPreferences.getValue("initUrl", StringPool.BLANK);
+String scope = portletPreferences.getValue("scope", StringPool.BLANK);
+String proxyHost = portletPreferences.getValue("proxyHost", StringPool.BLANK);
+String proxyPort = portletPreferences.getValue("proxyPort", StringPool.BLANK);
+String proxyAuthentication = portletPreferences.getValue("proxyAuthentication", StringPool.BLANK);
+String proxyAuthenticationUsername = portletPreferences.getValue("proxyAuthenticationUsername", StringPool.BLANK);
+String proxyAuthenticationPassword = portletPreferences.getValue("proxyAuthenticationPassword", StringPool.BLANK);
+String proxyAuthenticationHost = portletPreferences.getValue("proxyAuthenticationHost", StringPool.BLANK);
+String proxyAuthenticationDomain = portletPreferences.getValue("proxyAuthenticationDomain", StringPool.BLANK);
+String stylesheet = portletPreferences.getValue("stylesheet", StringPool.BLANK);
 %>
 
 <%@ include file="/html/portlet/web_proxy/init-ext.jsp" %>

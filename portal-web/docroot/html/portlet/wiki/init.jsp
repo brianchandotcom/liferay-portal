@@ -85,20 +85,18 @@ page import="com.liferay.portlet.wiki.util.comparator.PageVersionComparator" %><
 page import="com.liferay.util.RSSUtil" %>
 
 <%
-PortletPreferences preferences = renderRequest.getPreferences();
-
-String displayStyle = preferences.getValue("displayStyle", StringPool.BLANK);
-boolean enableRelatedAssets = GetterUtil.getBoolean(preferences.getValue("enableRelatedAssets", null), true);
-boolean enablePageRatings = PropsValues.WIKI_PAGE_RATINGS_ENABLED && GetterUtil.getBoolean(preferences.getValue("enablePageRatings", null), true);
-boolean enableComments = PropsValues.WIKI_PAGE_COMMENTS_ENABLED && GetterUtil.getBoolean(preferences.getValue("enableComments", null), true);
-boolean enableCommentRatings = GetterUtil.getBoolean(preferences.getValue("enableCommentRatings", null), true);
+String displayStyle = portletPreferences.getValue("displayStyle", StringPool.BLANK);
+boolean enableRelatedAssets = GetterUtil.getBoolean(portletPreferences.getValue("enableRelatedAssets", null), true);
+boolean enablePageRatings = PropsValues.WIKI_PAGE_RATINGS_ENABLED && GetterUtil.getBoolean(portletPreferences.getValue("enablePageRatings", null), true);
+boolean enableComments = PropsValues.WIKI_PAGE_COMMENTS_ENABLED && GetterUtil.getBoolean(portletPreferences.getValue("enableComments", null), true);
+boolean enableCommentRatings = GetterUtil.getBoolean(portletPreferences.getValue("enableCommentRatings", null), true);
 
 List<WikiNode> allNodes = WikiNodeLocalServiceUtil.getNodes(scopeGroupId);
 List<String> allNodeNames = WikiUtil.getNodeNames(allNodes);
 
 String[] visibleNodes = null;
 
-String visibleNodesPreference = preferences.getValue("visibleNodes", null);
+String visibleNodesPreference = portletPreferences.getValue("visibleNodes", null);
 
 if (visibleNodesPreference != null) {
 	visibleNodes = StringUtil.split(visibleNodesPreference);
@@ -109,12 +107,12 @@ else {
 	visibleNodes = allNodeNames.toArray(new String[allNodeNames.size()]);
 }
 
-String[] hiddenNodes = StringUtil.split(preferences.getValue("hiddenNodes", null));
+String[] hiddenNodes = StringUtil.split(portletPreferences.getValue("hiddenNodes", null));
 
-boolean enableRSS = !PortalUtil.isRSSFeedsEnabled() ? false : GetterUtil.getBoolean(preferences.getValue("enableRss", null), true);
-int rssDelta = GetterUtil.getInteger(preferences.getValue("rssDelta", StringPool.BLANK), SearchContainer.DEFAULT_DELTA);
-String rssDisplayStyle = preferences.getValue("rssDisplayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
-String rssFeedType = preferences.getValue("rssFeedType", RSSUtil.FEED_TYPE_DEFAULT);
+boolean enableRSS = !PortalUtil.isRSSFeedsEnabled() ? false : GetterUtil.getBoolean(portletPreferences.getValue("enableRss", null), true);
+int rssDelta = GetterUtil.getInteger(portletPreferences.getValue("rssDelta", StringPool.BLANK), SearchContainer.DEFAULT_DELTA);
+String rssDisplayStyle = portletPreferences.getValue("rssDisplayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
+String rssFeedType = portletPreferences.getValue("rssFeedType", RSSUtil.FEED_TYPE_DEFAULT);
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>

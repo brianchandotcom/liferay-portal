@@ -88,7 +88,7 @@ boolean splitThread = ParamUtil.getBoolean(request, "splitThread");
 		</aui:field-wrapper>
 
 		<c:if test="<%= themeDisplay.isSignedIn() && !SubscriptionLocalServiceUtil.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(), MBThread.class.getName(), threadId) && !SubscriptionLocalServiceUtil.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(), MBCategory.class.getName(), categoryId) %>">
-			<aui:input helpMessage="message-boards-message-subscribe-me-help" label="subscribe-me" name="subscribe" type='<%= (MBUtil.getEmailMessageAddedEnabled(preferences) || MBUtil.getEmailMessageUpdatedEnabled(preferences)) ? "checkbox" : "hidden" %>' value="<%= subscribeByDefault %>" />
+			<aui:input helpMessage="message-boards-message-subscribe-me-help" label="subscribe-me" name="subscribe" type='<%= (MBUtil.getEmailMessageAddedEnabled(portletPreferences) || MBUtil.getEmailMessageUpdatedEnabled(portletPreferences)) ? "checkbox" : "hidden" %>' value="<%= subscribeByDefault %>" />
 		</c:if>
 
 		<liferay-ui:custom-attributes-available className="<%= MBMessage.class.getName() %>">

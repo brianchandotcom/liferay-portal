@@ -21,17 +21,15 @@ String tabs2 = ParamUtil.getString(request, "tabs2", "email-from");
 
 String redirect = ParamUtil.getString(request, "redirect");
 
-PortletPreferences portletSetup = renderRequest.getPreferences();
+String emailFromName = ParamUtil.getString(request, "preferences--emailFromName--", JournalUtil.getEmailFromName(portletPreferences, company.getCompanyId()));
+String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAddress--", JournalUtil.getEmailFromAddress(portletPreferences, company.getCompanyId()));
 
-String emailFromName = ParamUtil.getString(request, "preferences--emailFromName--", JournalUtil.getEmailFromName(portletSetup, company.getCompanyId()));
-String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAddress--", JournalUtil.getEmailFromAddress(portletSetup, company.getCompanyId()));
-
-boolean emailArticleAddedEnabled = ParamUtil.getBoolean(request, "preferences--emailArticleAddedEnabled--", JournalUtil.getEmailArticleAddedEnabled(portletSetup));
-boolean emailArticleApprovalDeniedEnabled = ParamUtil.getBoolean(request, "preferences--emailArticleApprovalDeniedEnabled--", JournalUtil.getEmailArticleApprovalDeniedEnabled(portletSetup));
-boolean emailArticleApprovalGrantedEnabled = ParamUtil.getBoolean(request, "preferences--emailArticleApprovalGrantedEnabled--", JournalUtil.getEmailArticleApprovalGrantedEnabled(portletSetup));
-boolean emailArticleApprovalRequestedEnabled = ParamUtil.getBoolean(request, "preferences--emailArticleApprovalRequestedEnabled--", JournalUtil.getEmailArticleApprovalRequestedEnabled(portletSetup));
-boolean emailArticleReviewEnabled = ParamUtil.getBoolean(request, "preferences--emailArticleReviewEnabled--", JournalUtil.getEmailArticleReviewEnabled(portletSetup));
-boolean emailArticleUpdatedEnabled = ParamUtil.getBoolean(request, "preferences--emailArticleUpdatedEnabled--", JournalUtil.getEmailArticleUpdatedEnabled(portletSetup));
+boolean emailArticleAddedEnabled = ParamUtil.getBoolean(request, "preferences--emailArticleAddedEnabled--", JournalUtil.getEmailArticleAddedEnabled(portletPreferences));
+boolean emailArticleApprovalDeniedEnabled = ParamUtil.getBoolean(request, "preferences--emailArticleApprovalDeniedEnabled--", JournalUtil.getEmailArticleApprovalDeniedEnabled(portletPreferences));
+boolean emailArticleApprovalGrantedEnabled = ParamUtil.getBoolean(request, "preferences--emailArticleApprovalGrantedEnabled--", JournalUtil.getEmailArticleApprovalGrantedEnabled(portletPreferences));
+boolean emailArticleApprovalRequestedEnabled = ParamUtil.getBoolean(request, "preferences--emailArticleApprovalRequestedEnabled--", JournalUtil.getEmailArticleApprovalRequestedEnabled(portletPreferences));
+boolean emailArticleReviewEnabled = ParamUtil.getBoolean(request, "preferences--emailArticleReviewEnabled--", JournalUtil.getEmailArticleReviewEnabled(portletPreferences));
+boolean emailArticleUpdatedEnabled = ParamUtil.getBoolean(request, "preferences--emailArticleUpdatedEnabled--", JournalUtil.getEmailArticleUpdatedEnabled(portletPreferences));
 
 String emailParam = StringPool.BLANK;
 String defaultEmailSubject = StringPool.BLANK;
@@ -71,8 +69,8 @@ else if (tabs2.equals("web-content-updated-email")) {
 String emailSubjectParam = emailParam + "Subject";
 String emailBodyParam = emailParam + "Body";
 
-String emailSubject = PrefsParamUtil.getString(portletSetup, request, emailSubjectParam, defaultEmailSubject);
-String emailBody = PrefsParamUtil.getString(portletSetup, request, emailBodyParam, defaultEmailBody);
+String emailSubject = PrefsParamUtil.getString(portletPreferences, request, emailSubjectParam, defaultEmailSubject);
+String emailBody = PrefsParamUtil.getString(portletPreferences, request, emailBodyParam, defaultEmailBody);
 %>
 
 <liferay-portlet:renderURL portletConfiguration="true" var="portletURL">

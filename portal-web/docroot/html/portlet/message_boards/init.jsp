@@ -93,8 +93,6 @@ page import="com.liferay.portlet.trash.util.TrashUtil" %><%@
 page import="com.liferay.util.RSSUtil" %>
 
 <%
-PortletPreferences preferences = renderRequest.getPreferences();
-
 String currentLanguageId = LanguageUtil.getLanguageId(request);
 Locale currentLocale = LocaleUtil.fromLanguageId(currentLanguageId);
 Locale defaultLocale = LocaleUtil.getDefault();
@@ -102,20 +100,20 @@ String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
 Locale[] locales = LanguageUtil.getAvailableLocales();
 
-String[] priorities = LocalizationUtil.getPreferencesValues(preferences, "priorities", currentLanguageId);
+String[] priorities = LocalizationUtil.getPreferencesValues(portletPreferences, "priorities", currentLanguageId);
 
-boolean allowAnonymousPosting = MBUtil.isAllowAnonymousPosting(preferences);
-boolean subscribeByDefault = GetterUtil.getBoolean(preferences.getValue("subscribeByDefault", null), PropsValues.MESSAGE_BOARDS_SUBSCRIBE_BY_DEFAULT);
-String messageFormat = MBUtil.getMessageFormat(preferences);
-boolean enableFlags = GetterUtil.getBoolean(preferences.getValue("enableFlags", null), true);
-boolean enableRatings = GetterUtil.getBoolean(preferences.getValue("enableRatings", null), true);
-boolean threadAsQuestionByDefault = GetterUtil.getBoolean(preferences.getValue("threadAsQuestionByDefault", null));
-String recentPostsDateOffset = preferences.getValue("recentPostsDateOffset", "7");
+boolean allowAnonymousPosting = MBUtil.isAllowAnonymousPosting(portletPreferences);
+boolean subscribeByDefault = GetterUtil.getBoolean(portletPreferences.getValue("subscribeByDefault", null), PropsValues.MESSAGE_BOARDS_SUBSCRIBE_BY_DEFAULT);
+String messageFormat = MBUtil.getMessageFormat(portletPreferences);
+boolean enableFlags = GetterUtil.getBoolean(portletPreferences.getValue("enableFlags", null), true);
+boolean enableRatings = GetterUtil.getBoolean(portletPreferences.getValue("enableRatings", null), true);
+boolean threadAsQuestionByDefault = GetterUtil.getBoolean(portletPreferences.getValue("threadAsQuestionByDefault", null));
+String recentPostsDateOffset = portletPreferences.getValue("recentPostsDateOffset", "7");
 
-boolean enableRSS = !PortalUtil.isRSSFeedsEnabled() ? false : GetterUtil.getBoolean(preferences.getValue("enableRss", null), true);
-int rssDelta = GetterUtil.getInteger(preferences.getValue("rssDelta", StringPool.BLANK), SearchContainer.DEFAULT_DELTA);
-String rssDisplayStyle = preferences.getValue("rssDisplayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
-String rssFeedType = preferences.getValue("rssFeedType", RSSUtil.FEED_TYPE_DEFAULT);
+boolean enableRSS = !PortalUtil.isRSSFeedsEnabled() ? false : GetterUtil.getBoolean(portletPreferences.getValue("enableRss", null), true);
+int rssDelta = GetterUtil.getInteger(portletPreferences.getValue("rssDelta", StringPool.BLANK), SearchContainer.DEFAULT_DELTA);
+String rssDisplayStyle = portletPreferences.getValue("rssDisplayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
+String rssFeedType = portletPreferences.getValue("rssFeedType", RSSUtil.FEED_TYPE_DEFAULT);
 
 ResourceURL rssURL = liferayPortletResponse.createResourceURL();
 

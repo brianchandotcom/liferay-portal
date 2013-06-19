@@ -17,16 +17,14 @@
 <%@ include file="/html/portlet/init.jsp" %>
 
 <%
-PortletPreferences preferences = renderRequest.getPreferences();
-
 String portletResource = ParamUtil.getString(request, "portletResource");
 
-boolean showCurrentGroup = PrefsParamUtil.getBoolean(preferences, renderRequest, "showCurrentGroup", true);
-boolean showCurrentPortlet = PrefsParamUtil.getBoolean(preferences, renderRequest, "showCurrentPortlet", true);
-boolean showGuestGroup = PrefsParamUtil.getBoolean(preferences, renderRequest, "showGuestGroup", PropsValues.BREADCRUMB_SHOW_GUEST_GROUP);
-boolean showLayout = PrefsParamUtil.getBoolean(preferences, renderRequest, "showLayout", true);
-boolean showParentGroups = PrefsParamUtil.getBoolean(preferences, renderRequest, "showParentGroups", PropsValues.BREADCRUMB_SHOW_PARENT_GROUPS);
-boolean showPortletBreadcrumb = PrefsParamUtil.getBoolean(preferences, renderRequest, "showPortletBreadcrumb", true);
+boolean showCurrentGroup = PrefsParamUtil.getBoolean(portletPreferences, renderRequest, "showCurrentGroup", true);
+boolean showCurrentPortlet = PrefsParamUtil.getBoolean(portletPreferences, renderRequest, "showCurrentPortlet", true);
+boolean showGuestGroup = PrefsParamUtil.getBoolean(portletPreferences, renderRequest, "showGuestGroup", PropsValues.BREADCRUMB_SHOW_GUEST_GROUP);
+boolean showLayout = PrefsParamUtil.getBoolean(portletPreferences, renderRequest, "showLayout", true);
+boolean showParentGroups = PrefsParamUtil.getBoolean(portletPreferences, renderRequest, "showParentGroups", PropsValues.BREADCRUMB_SHOW_PARENT_GROUPS);
+boolean showPortletBreadcrumb = PrefsParamUtil.getBoolean(portletPreferences, renderRequest, "showPortletBreadcrumb", true);
 %>
 
 <%@ include file="/html/portlet/breadcrumb/init-ext.jsp" %>

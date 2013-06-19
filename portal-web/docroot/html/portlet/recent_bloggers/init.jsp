@@ -23,12 +23,10 @@ page import="com.liferay.portlet.blogs.service.BlogsStatsUserLocalServiceUtil" %
 page import="com.liferay.portlet.blogs.util.comparator.StatsUserLastPostDateComparator" %>
 
 <%
-PortletPreferences preferences = renderRequest.getPreferences();
-
-String selectionMethod = preferences.getValue("selectionMethod", "users");
-long organizationId = GetterUtil.getLong(preferences.getValue("organizationId", "0"));
-String displayStyle = preferences.getValue("displayStyle", "user-name-and-image");
-int max = GetterUtil.getInteger(preferences.getValue("max", "10"));
+String selectionMethod = portletPreferences.getValue("selectionMethod", "users");
+long organizationId = GetterUtil.getLong(portletPreferences.getValue("organizationId", "0"));
+String displayStyle = portletPreferences.getValue("displayStyle", "user-name-and-image");
+int max = GetterUtil.getInteger(portletPreferences.getValue("max", "10"));
 
 if (organizationId == 0) {
 	Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);

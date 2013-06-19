@@ -36,27 +36,25 @@ page import="com.sun.syndication.feed.synd.SyndFeed" %><%@
 page import="com.sun.syndication.feed.synd.SyndImage" %>
 
 <%
-PortletPreferences preferences = renderRequest.getPreferences();
-
 String portletResource = ParamUtil.getString(request, "portletResource");
 
-String[] urls = preferences.getValues("urls", new String[0]);
-String[] titles = preferences.getValues("titles", new String[0]);
-int entriesPerFeed = GetterUtil.getInteger(preferences.getValue("entriesPerFeed", "8"));
-int expandedEntriesPerFeed = GetterUtil.getInteger(preferences.getValue("expandedEntriesPerFeed", "1"));
-boolean showFeedTitle = GetterUtil.getBoolean(preferences.getValue("showFeedTitle", Boolean.TRUE.toString()));
-boolean showFeedPublishedDate = GetterUtil.getBoolean(preferences.getValue("showFeedPublishedDate", Boolean.TRUE.toString()));
-boolean showFeedDescription = GetterUtil.getBoolean(preferences.getValue("showFeedDescription", Boolean.TRUE.toString()));
-boolean showFeedImage = GetterUtil.getBoolean(preferences.getValue("showFeedImage", Boolean.TRUE.toString()));
-String feedImageAlignment = preferences.getValue("feedImageAlignment", "right");
-boolean showFeedItemAuthor = GetterUtil.getBoolean(preferences.getValue("showFeedItemAuthor", Boolean.TRUE.toString()));
+String[] urls = portletPreferences.getValues("urls", new String[0]);
+String[] titles = portletPreferences.getValues("titles", new String[0]);
+int entriesPerFeed = GetterUtil.getInteger(portletPreferences.getValue("entriesPerFeed", "8"));
+int expandedEntriesPerFeed = GetterUtil.getInteger(portletPreferences.getValue("expandedEntriesPerFeed", "1"));
+boolean showFeedTitle = GetterUtil.getBoolean(portletPreferences.getValue("showFeedTitle", Boolean.TRUE.toString()));
+boolean showFeedPublishedDate = GetterUtil.getBoolean(portletPreferences.getValue("showFeedPublishedDate", Boolean.TRUE.toString()));
+boolean showFeedDescription = GetterUtil.getBoolean(portletPreferences.getValue("showFeedDescription", Boolean.TRUE.toString()));
+boolean showFeedImage = GetterUtil.getBoolean(portletPreferences.getValue("showFeedImage", Boolean.TRUE.toString()));
+String feedImageAlignment = portletPreferences.getValue("feedImageAlignment", "right");
+boolean showFeedItemAuthor = GetterUtil.getBoolean(portletPreferences.getValue("showFeedItemAuthor", Boolean.TRUE.toString()));
 
-String[] headerArticleValues = preferences.getValues("headerArticleValues", new String[] {"0", ""});
+String[] headerArticleValues = portletPreferences.getValues("headerArticleValues", new String[] {"0", ""});
 
 long headerArticleGroupId = GetterUtil.getLong(headerArticleValues[0]);
 String headerArticleId = headerArticleValues[1];
 
-String[] footerArticleValues = preferences.getValues("footerArticleValues", new String[] {"0", ""});
+String[] footerArticleValues = portletPreferences.getValues("footerArticleValues", new String[] {"0", ""});
 
 long footerArticleGroupId = GetterUtil.getLong(footerArticleValues[0]);
 String footerArticleId = footerArticleValues[1];

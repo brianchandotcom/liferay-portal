@@ -15,8 +15,6 @@
 --%>
 
 <%
-PortletPreferences preferences = renderRequest.getPreferences();
-
 List<Long> availableClassNameIds = new ArrayList<Long>();
 
 for (AssetRendererFactory assetRendererFactory : AssetRendererFactoryRegistryUtil.getAssetRendererFactories()) {

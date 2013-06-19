@@ -200,7 +200,7 @@ else if (dlFileEntryType != null) {
 	</liferay-ui:error>
 
 	<liferay-ui:error exception="<%= FileMimeTypeException.class %>">
-		<liferay-ui:message key="media-files-must-be-one-of-the-following-formats" /> <%= StringUtil.merge(DLUtil.getMediaGalleryMimeTypes(preferences, renderRequest), StringPool.COMMA_AND_SPACE) %>.
+		<liferay-ui:message key="media-files-must-be-one-of-the-following-formats" /> <%= StringUtil.merge(DLUtil.getMediaGalleryMimeTypes(portletPreferences, renderRequest), StringPool.COMMA_AND_SPACE) %>.
 	</liferay-ui:error>
 
 	<liferay-ui:error exception="<%= FileNameException.class %>" message="please-enter-a-file-with-a-valid-file-name" />

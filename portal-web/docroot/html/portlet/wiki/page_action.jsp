@@ -80,7 +80,7 @@ WikiPage wikiPage = (WikiPage)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.SUBSCRIBE) && (WikiUtil.getEmailPageAddedEnabled(preferences) || WikiUtil.getEmailPageUpdatedEnabled(preferences)) %>">
+	<c:if test="<%= WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.SUBSCRIBE) && (WikiUtil.getEmailPageAddedEnabled(portletPreferences) || WikiUtil.getEmailPageUpdatedEnabled(portletPreferences)) %>">
 		<c:choose>
 			<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(user.getCompanyId(), user.getUserId(), WikiPage.class.getName(), wikiPage.getResourcePrimKey()) %>">
 				<portlet:actionURL var="unsubscribeURL">

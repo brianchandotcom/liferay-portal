@@ -112,15 +112,13 @@ page import="com.liferay.portlet.usersadmin.search.GroupSearch" %>
 <%
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(liferayPortletRequest);
 
-PortletPreferences preferences = renderRequest.getPreferences();
-
 String portletResource = ParamUtil.getString(request, "portletResource");
 
-int entriesPerPage = PrefsParamUtil.getInteger(preferences, request, "entriesPerPage", SearchContainer.DEFAULT_DELTA);
+int entriesPerPage = PrefsParamUtil.getInteger(portletPreferences, request, "entriesPerPage", SearchContainer.DEFAULT_DELTA);
 
-String[] displayViews = StringUtil.split(PrefsParamUtil.getString(preferences, request, "displayViews", StringUtil.merge(PropsValues.DL_DISPLAY_VIEWS)));
+String[] displayViews = StringUtil.split(PrefsParamUtil.getString(portletPreferences, request, "displayViews", StringUtil.merge(PropsValues.DL_DISPLAY_VIEWS)));
 
-long rootFolderId = PrefsParamUtil.getLong(preferences, request, "rootFolderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+long rootFolderId = PrefsParamUtil.getLong(portletPreferences, request, "rootFolderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 String rootFolderName = StringPool.BLANK;
 
@@ -134,7 +132,7 @@ if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	}
 }
 
-boolean showFoldersSearch = PrefsParamUtil.getBoolean(preferences, request, "showFoldersSearch", true);
+boolean showFoldersSearch = PrefsParamUtil.getBoolean(portletPreferences, request, "showFoldersSearch", true);
 
 String portletId = portletDisplay.getId();
 
@@ -143,13 +141,13 @@ if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 	portletName = portletResource;
 }
 
-boolean showActions = PrefsParamUtil.getBoolean(preferences, request, "showActions");
+boolean showActions = PrefsParamUtil.getBoolean(portletPreferences, request, "showActions");
 boolean showAssetMetadata = ParamUtil.getBoolean(request, "showAssetMetadata");
 boolean showAddFolderButton = false;
-boolean showFolderMenu = PrefsParamUtil.getBoolean(preferences, request, "showFolderMenu");
+boolean showFolderMenu = PrefsParamUtil.getBoolean(portletPreferences, request, "showFolderMenu");
 boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 boolean showMinimalActionButtons = ParamUtil.getBoolean(request, "showMinimalActionButtons");
-boolean showTabs = PrefsParamUtil.getBoolean(preferences, request, "showTabs");
+boolean showTabs = PrefsParamUtil.getBoolean(portletPreferences, request, "showTabs");
 
 if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY)) {
 	showActions = true;
@@ -163,7 +161,7 @@ else if (portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) || portletName.eq
 	showAssetMetadata = true;
 }
 
-boolean enableRelatedAssets = GetterUtil.getBoolean(preferences.getValue("enableRelatedAssets", null), true);
+boolean enableRelatedAssets = GetterUtil.getBoolean(portletPreferences.getValue("enableRelatedAssets", null), true);
 
 String defaultEntryColumns = "name,size";
 
@@ -177,7 +175,7 @@ if (showActions) {
 
 String allEntryColumns = defaultEntryColumns + ",modified-date,create-date";
 
-String[] entryColumns = StringUtil.split(PrefsParamUtil.getString(preferences, request, "entryColumns", defaultEntryColumns));
+String[] entryColumns = StringUtil.split(PrefsParamUtil.getString(portletPreferences, request, "entryColumns", defaultEntryColumns));
 
 if (!showActions) {
 	entryColumns = ArrayUtil.remove(entryColumns, "action");
@@ -186,8 +184,8 @@ else if (!portletId.equals(PortletKeys.DOCUMENT_LIBRARY) && !ArrayUtil.contains(
 	entryColumns = ArrayUtil.append(entryColumns, "action");
 }
 
-boolean enableRatings = GetterUtil.getBoolean(preferences.getValue("enableRatings", null), true);
-boolean enableCommentRatings = GetterUtil.getBoolean(preferences.getValue("enableCommentRatings", null), true);
+boolean enableRatings = GetterUtil.getBoolean(portletPreferences.getValue("enableRatings", null), true);
+boolean enableCommentRatings = GetterUtil.getBoolean(portletPreferences.getValue("enableCommentRatings", null), true);
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>

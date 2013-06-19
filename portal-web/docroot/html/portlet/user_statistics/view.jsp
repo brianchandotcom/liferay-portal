@@ -45,7 +45,7 @@ if (!rankingNamesList.isEmpty()) {
 
 	if (displayAdditionalActivityCounters) {
 		for (int displayActivityCounterNameIndex : displayActivityCounterNameIndexes) {
-			selectedNamesList.add(PrefsParamUtil.getString(preferences, request, "displayActivityCounterName" + displayActivityCounterNameIndex));
+			selectedNamesList.add(PrefsParamUtil.getString(portletPreferences, request, "displayActivityCounterName" + displayActivityCounterNameIndex));
 		}
 	}
 

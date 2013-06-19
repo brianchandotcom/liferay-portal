@@ -250,7 +250,7 @@ if ((category != null) && layout.isTypeControlPanel()) {
 							>
 
 								<%
-								String[] threadPriority = MBUtil.getThreadPriority(preferences, themeDisplay.getLanguageId(), thread.getPriority(), themeDisplay);
+								String[] threadPriority = MBUtil.getThreadPriority(portletPreferences, themeDisplay.getLanguageId(), thread.getPriority(), themeDisplay);
 
 								if ((threadPriority != null) && (thread.getPriority() > 0)) {
 									buffer.append("<img class=\"thread-priority\" alt=\"");
@@ -462,7 +462,7 @@ if ((category != null) && layout.isTypeControlPanel()) {
 					>
 
 						<%
-						String[] threadPriority = MBUtil.getThreadPriority(preferences, themeDisplay.getLanguageId(), thread.getPriority(), themeDisplay);
+						String[] threadPriority = MBUtil.getThreadPriority(portletPreferences, themeDisplay.getLanguageId(), thread.getPriority(), themeDisplay);
 
 						if ((threadPriority != null) && (thread.getPriority() > 0)) {
 							buffer.append("<img class=\"thread-priority\" alt=\"");

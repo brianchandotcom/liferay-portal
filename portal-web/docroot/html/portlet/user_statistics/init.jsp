@@ -24,13 +24,11 @@ page import="com.liferay.portlet.social.util.SocialConfigurationUtil" %><%@
 page import="com.liferay.portlet.social.util.comparator.SocialActivityCounterNameComparator" %>
 
 <%
-PortletPreferences preferences = renderRequest.getPreferences();
-
-boolean displayAdditionalActivityCounters = GetterUtil.getBoolean(PrefsParamUtil.getString(preferences, request, "displayAdditionalActivityCounters"), true);
+boolean displayAdditionalActivityCounters = GetterUtil.getBoolean(PrefsParamUtil.getString(portletPreferences, request, "displayAdditionalActivityCounters"), true);
 
 int[] displayActivityCounterNameIndexes = null;
 
-String displayActivityCounterNameIndexesParam = PrefsParamUtil.getString(preferences, request, "displayActivityCounterNameIndexes");
+String displayActivityCounterNameIndexesParam = PrefsParamUtil.getString(portletPreferences, request, "displayActivityCounterNameIndexes");
 
 if (Validator.isNotNull(displayActivityCounterNameIndexesParam)) {
 	displayActivityCounterNameIndexes = StringUtil.split(displayActivityCounterNameIndexesParam, 0);
@@ -39,10 +37,10 @@ else {
 	displayActivityCounterNameIndexes = new int[] {0};
 }
 
-boolean rankByContribution = GetterUtil.getBoolean(PrefsParamUtil.getString(preferences, request, "rankByContribution"), true);
-boolean rankByParticipation = GetterUtil.getBoolean(PrefsParamUtil.getString(preferences, request, "rankByParticipation"), true);
-boolean showHeaderText = GetterUtil.getBoolean(PrefsParamUtil.getString(preferences, request, "showHeaderText"), true);
-boolean showTotals = GetterUtil.getBoolean(PrefsParamUtil.getString(preferences, request, "showTotals"), true);
+boolean rankByContribution = GetterUtil.getBoolean(PrefsParamUtil.getString(portletPreferences, request, "rankByContribution"), true);
+boolean rankByParticipation = GetterUtil.getBoolean(PrefsParamUtil.getString(portletPreferences, request, "rankByParticipation"), true);
+boolean showHeaderText = GetterUtil.getBoolean(PrefsParamUtil.getString(portletPreferences, request, "showHeaderText"), true);
+boolean showTotals = GetterUtil.getBoolean(PrefsParamUtil.getString(portletPreferences, request, "showTotals"), true);
 %>
 
 <%@ include file="/html/portlet/user_statistics/init-ext.jsp" %>

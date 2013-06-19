@@ -50,15 +50,13 @@ page import="com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTempl
 page import="com.liferay.portlet.trash.util.TrashUtil" %>
 
 <%
-PortletPreferences preferences = renderRequest.getPreferences();
-
 String portletResource = ParamUtil.getString(request, "portletResource");
 
 if (layout.isTypeControlPanel()) {
-	preferences = PortletPreferencesLocalServiceUtil.getPreferences(themeDisplay.getCompanyId(), scopeGroupId, PortletKeys.PREFS_OWNER_TYPE_GROUP, 0, PortletKeys.DOCUMENT_LIBRARY, null);
+	portletPreferences = PortletPreferencesLocalServiceUtil.getPreferences(themeDisplay.getCompanyId(), scopeGroupId, PortletKeys.PREFS_OWNER_TYPE_GROUP, 0, PortletKeys.DOCUMENT_LIBRARY, null);
 }
 
-long rootFolderId = PrefsParamUtil.getLong(preferences, request, "rootFolderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+long rootFolderId = PrefsParamUtil.getLong(portletPreferences, request, "rootFolderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 String rootFolderName = StringPool.BLANK;
 
 if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
@@ -71,7 +69,7 @@ if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	}
 }
 
-boolean showFoldersSearch = PrefsParamUtil.getBoolean(preferences, request, "showFoldersSearch", true);
+boolean showFoldersSearch = PrefsParamUtil.getBoolean(portletPreferences, request, "showFoldersSearch", true);
 
 String portletId = portletDisplay.getId();
 
@@ -79,15 +77,15 @@ if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 	portletId = portletResource;
 }
 
-boolean showActions = PrefsParamUtil.getBoolean(preferences, request, "showActions");
+boolean showActions = PrefsParamUtil.getBoolean(portletPreferences, request, "showActions");
 boolean showAddFolderButton = false;
-boolean showFolderMenu = PrefsParamUtil.getBoolean(preferences, request, "showFolderMenu");
-boolean showTabs = PrefsParamUtil.getBoolean(preferences, request, "showTabs");
+boolean showFolderMenu = PrefsParamUtil.getBoolean(portletPreferences, request, "showFolderMenu");
+boolean showTabs = PrefsParamUtil.getBoolean(portletPreferences, request, "showTabs");
 
-boolean enableRatings = GetterUtil.getBoolean(preferences.getValue("enableRatings", null), true);
-boolean enableCommentRatings = GetterUtil.getBoolean(preferences.getValue("enableCommentRatings", null), true);
+boolean enableRatings = GetterUtil.getBoolean(portletPreferences.getValue("enableRatings", null), true);
+boolean enableCommentRatings = GetterUtil.getBoolean(portletPreferences.getValue("enableCommentRatings", null), true);
 
-String displayTemplate = preferences.getValue("displayTemplate", StringPool.BLANK);
+String displayTemplate = portletPreferences.getValue("displayTemplate", StringPool.BLANK);
 
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 %>

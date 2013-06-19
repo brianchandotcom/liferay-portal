@@ -61,9 +61,7 @@ page import="org.openid4java.discovery.DiscoveryException" %><%@
 page import="org.openid4java.message.MessageException" %>
 
 <%
-PortletPreferences preferences = renderRequest.getPreferences();
-
-String authType = preferences.getValue("authType", StringPool.BLANK);
+String authType = portletPreferences.getValue("authType", StringPool.BLANK);
 %>
 
 <%@ include file="/html/portlet/login/init-ext.jsp" %>

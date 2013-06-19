@@ -36,18 +36,16 @@ page import="com.liferay.portlet.dynamicdatamapping.util.DDMDisplay" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.util.DDMDisplayRegistryUtil" %>
 
 <%
-PortletPreferences preferences = renderRequest.getPreferences();
-
 String portletResource = ParamUtil.getString(request, "portletResource");
 
-long recordSetId = GetterUtil.getLong(preferences.getValue("recordSetId", StringPool.BLANK));
+long recordSetId = GetterUtil.getLong(portletPreferences.getValue("recordSetId", StringPool.BLANK));
 
-long displayDDMTemplateId = GetterUtil.getLong(preferences.getValue("displayDDMTemplateId", StringPool.BLANK));
-long formDDMTemplateId = GetterUtil.getLong(preferences.getValue("formDDMTemplateId", StringPool.BLANK));
+long displayDDMTemplateId = GetterUtil.getLong(portletPreferences.getValue("displayDDMTemplateId", StringPool.BLANK));
+long formDDMTemplateId = GetterUtil.getLong(portletPreferences.getValue("formDDMTemplateId", StringPool.BLANK));
 
-boolean editable = DDLUtil.isEditable(preferences, portletDisplay.getId(), themeDisplay.getScopeGroupId());
+boolean editable = DDLUtil.isEditable(portletPreferences, portletDisplay.getId(), themeDisplay.getScopeGroupId());
 
-boolean spreadsheet = GetterUtil.getBoolean(preferences.getValue("spreadsheet", Boolean.FALSE.toString()));
+boolean spreadsheet = GetterUtil.getBoolean(portletPreferences.getValue("spreadsheet", Boolean.FALSE.toString()));
 
 DDMDisplay ddmDisplay = DDMDisplayRegistryUtil.getDDMDisplay(PortletKeys.DYNAMIC_DATA_LISTS);
 

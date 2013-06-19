@@ -19,9 +19,7 @@
 <%@ page import="com.liferay.portlet.currencyconverter.util.CurrencyUtil" %>
 
 <%
-PortletPreferences preferences = renderRequest.getPreferences();
-
-String[] symbols = preferences.getValues("symbols", new String[0]);
+String[] symbols = portletPreferences.getValues("symbols", new String[0]);
 
 Map<String, String> allSymbols = CurrencyUtil.getAllSymbols(pageContext);
 %>

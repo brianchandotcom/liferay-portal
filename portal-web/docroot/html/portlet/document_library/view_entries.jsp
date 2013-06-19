@@ -245,7 +245,7 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(entryEnd));
 %>
 
 <div class="subscribe-action">
-	<c:if test="<%= DLPermission.contains(permissionChecker, scopeGroupId, ActionKeys.SUBSCRIBE) && ((folder == null) || folder.isSupportsSubscribing()) && (DLUtil.getEmailFileEntryAddedEnabled(preferences) || DLUtil.getEmailFileEntryUpdatedEnabled(preferences)) %>">
+	<c:if test="<%= DLPermission.contains(permissionChecker, scopeGroupId, ActionKeys.SUBSCRIBE) && ((folder == null) || folder.isSupportsSubscribing()) && (DLUtil.getEmailFileEntryAddedEnabled(portletPreferences) || DLUtil.getEmailFileEntryUpdatedEnabled(portletPreferences)) %>">
 
 		<%
 		boolean subscribed = false;

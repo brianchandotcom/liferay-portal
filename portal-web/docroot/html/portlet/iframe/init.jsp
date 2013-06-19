@@ -19,44 +19,42 @@
 <%@ page import="com.liferay.portlet.iframe.util.IFrameUtil" %>
 
 <%
-PortletPreferences preferences = renderRequest.getPreferences();
+String src = portletPreferences.getValue("src", StringPool.BLANK);
+boolean relative = GetterUtil.getBoolean(portletPreferences.getValue("relative", StringPool.BLANK));
 
-String src = preferences.getValue("src", StringPool.BLANK);
-boolean relative = GetterUtil.getBoolean(preferences.getValue("relative", StringPool.BLANK));
-
-boolean auth = GetterUtil.getBoolean(preferences.getValue("auth", StringPool.BLANK));
-String authType = preferences.getValue("authType", StringPool.BLANK);
-String formMethod = preferences.getValue("formMethod", StringPool.BLANK);
-String userNameField = preferences.getValue("userNameField", StringPool.BLANK);
-String passwordField = preferences.getValue("passwordField", StringPool.BLANK);
+boolean auth = GetterUtil.getBoolean(portletPreferences.getValue("auth", StringPool.BLANK));
+String authType = portletPreferences.getValue("authType", StringPool.BLANK);
+String formMethod = portletPreferences.getValue("formMethod", StringPool.BLANK);
+String userNameField = portletPreferences.getValue("userNameField", StringPool.BLANK);
+String passwordField = portletPreferences.getValue("passwordField", StringPool.BLANK);
 
 String userName = null;
 String password = null;
 
 if (authType.equals("basic")) {
-	userName = preferences.getValue("basicUserName", StringPool.BLANK);
-	password = preferences.getValue("basicPassword", StringPool.BLANK);
+	userName = portletPreferences.getValue("basicUserName", StringPool.BLANK);
+	password = portletPreferences.getValue("basicPassword", StringPool.BLANK);
 }
 else {
-	userName = preferences.getValue("formUserName", StringPool.BLANK);
-	password = preferences.getValue("formPassword", StringPool.BLANK);
+	userName = portletPreferences.getValue("formUserName", StringPool.BLANK);
+	password = portletPreferences.getValue("formPassword", StringPool.BLANK);
 }
 
-String hiddenVariables = preferences.getValue("hiddenVariables", StringPool.BLANK);
-boolean resizeAutomatically = GetterUtil.getBoolean(preferences.getValue("resizeAutomatically", StringPool.TRUE));
-String heightMaximized = GetterUtil.getString(preferences.getValue("heightMaximized", "600"));
-String heightNormal = GetterUtil.getString(preferences.getValue("heightNormal", "600"));
-String width = GetterUtil.getString(preferences.getValue("width", "100%"));
+String hiddenVariables = portletPreferences.getValue("hiddenVariables", StringPool.BLANK);
+boolean resizeAutomatically = GetterUtil.getBoolean(portletPreferences.getValue("resizeAutomatically", StringPool.TRUE));
+String heightMaximized = GetterUtil.getString(portletPreferences.getValue("heightMaximized", "600"));
+String heightNormal = GetterUtil.getString(portletPreferences.getValue("heightNormal", "600"));
+String width = GetterUtil.getString(portletPreferences.getValue("width", "100%"));
 
-String alt = preferences.getValue("alt", StringPool.BLANK);
-String border = preferences.getValue("border", "0");
-String bordercolor = preferences.getValue("bordercolor", "#000000");
-String frameborder = preferences.getValue("frameborder", "0");
-String hspace = preferences.getValue("hspace", "0");
-String longdesc = preferences.getValue("longdesc", StringPool.BLANK);
-String scrolling = preferences.getValue("scrolling", "auto");
-String title = preferences.getValue("title", StringPool.BLANK);
-String vspace = preferences.getValue("vspace", "0");
+String alt = portletPreferences.getValue("alt", StringPool.BLANK);
+String border = portletPreferences.getValue("border", "0");
+String bordercolor = portletPreferences.getValue("bordercolor", "#000000");
+String frameborder = portletPreferences.getValue("frameborder", "0");
+String hspace = portletPreferences.getValue("hspace", "0");
+String longdesc = portletPreferences.getValue("longdesc", StringPool.BLANK);
+String scrolling = portletPreferences.getValue("scrolling", "auto");
+String title = portletPreferences.getValue("title", StringPool.BLANK);
+String vspace = portletPreferences.getValue("vspace", "0");
 
 List<String> iframeVariables = new ArrayList<String>();
 

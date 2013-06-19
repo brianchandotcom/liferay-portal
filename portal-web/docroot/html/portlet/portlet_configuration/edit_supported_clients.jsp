@@ -20,8 +20,6 @@
 String redirect = ParamUtil.getString(request, "redirect");
 String returnToFullPageURL = ParamUtil.getString(request, "returnToFullPageURL");
 
-PortletPreferences portletSetup = renderRequest.getPreferences();
-
 Set<String> allPortletModes = selPortlet.getAllPortletModes();
 %>
 
@@ -43,7 +41,7 @@ Set<String> allPortletModes = selPortlet.getAllPortletModes();
 		String mobileDevicesParam = "portletSetupSupportedClientsMobileDevices_" + curPortletMode;
 		boolean mobileDevicesDefault = selPortlet.hasPortletMode(ContentTypes.XHTML_MP, PortletModeFactory.getPortletMode(curPortletMode));
 
-		boolean mobileDevices = GetterUtil.getBoolean(portletSetup.getValue(mobileDevicesParam, String.valueOf(mobileDevicesDefault)));
+		boolean mobileDevices = GetterUtil.getBoolean(portletPreferences.getValue(mobileDevicesParam, String.valueOf(mobileDevicesDefault)));
 	%>
 
 		<aui:fieldset label='<%= LanguageUtil.get(pageContext, "portlet-mode") + ": " + LanguageUtil.get(pageContext, curPortletMode) %>'>

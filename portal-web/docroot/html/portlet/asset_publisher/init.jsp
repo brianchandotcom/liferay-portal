@@ -60,17 +60,15 @@ page import="com.liferay.util.RSSUtil" %><%@
 page import="com.liferay.util.xml.DocUtil" %>
 
 <%
-PortletPreferences preferences = renderRequest.getPreferences();
-
 String portletResource = ParamUtil.getString(request, "portletResource");
 
-String selectionStyle = preferences.getValue("selectionStyle", null);
+String selectionStyle = portletPreferences.getValue("selectionStyle", null);
 
 if (Validator.isNull(selectionStyle)) {
 	selectionStyle = "dynamic";
 }
 
-long[] groupIds = AssetPublisherUtil.getGroupIds(preferences, scopeGroupId, layout);
+long[] groupIds = AssetPublisherUtil.getGroupIds(portletPreferences, scopeGroupId, layout);
 
 long[] availableClassNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds(company.getCompanyId());
 
@@ -82,13 +80,13 @@ for (long classNameId : availableClassNameIds) {
 	}
 }
 
-boolean anyAssetType = GetterUtil.getBoolean(preferences.getValue("anyAssetType", null), true);
+boolean anyAssetType = GetterUtil.getBoolean(portletPreferences.getValue("anyAssetType", null), true);
 
-long[] classNameIds = AssetPublisherUtil.getClassNameIds(preferences, availableClassNameIds);
+long[] classNameIds = AssetPublisherUtil.getClassNameIds(portletPreferences, availableClassNameIds);
 
-long[] classTypeIds = GetterUtil.getLongValues(preferences.getValues("classTypeIds", null));
+long[] classTypeIds = GetterUtil.getLongValues(portletPreferences.getValues("classTypeIds", null));
 
-String customUserAttributes = GetterUtil.getString(preferences.getValue("customUserAttributes", StringPool.BLANK));
+String customUserAttributes = GetterUtil.getString(portletPreferences.getValue("customUserAttributes", StringPool.BLANK));
 
 AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
@@ -100,26 +98,26 @@ String ddmStructureFieldLabel = StringPool.BLANK;
 String ddmStructureFieldName = StringPool.BLANK;
 Serializable ddmStructureFieldValue = null;
 
-boolean subtypeFieldsFilterEnabled = GetterUtil.getBoolean(preferences.getValue("subtypeFieldsFilterEnabled", Boolean.FALSE.toString()));
+boolean subtypeFieldsFilterEnabled = GetterUtil.getBoolean(portletPreferences.getValue("subtypeFieldsFilterEnabled", Boolean.FALSE.toString()));
 
 if (selectionStyle.equals("dynamic")) {
 	if (!ArrayUtil.contains(groupIds, scopeGroupId)) {
-		assetEntryQuery = AssetPublisherUtil.getAssetEntryQuery(preferences, ArrayUtil.append(groupIds, scopeGroupId));
+		assetEntryQuery = AssetPublisherUtil.getAssetEntryQuery(portletPreferences, ArrayUtil.append(groupIds, scopeGroupId));
 	}
 	else {
-		assetEntryQuery = AssetPublisherUtil.getAssetEntryQuery(preferences, groupIds);
+		assetEntryQuery = AssetPublisherUtil.getAssetEntryQuery(portletPreferences, groupIds);
 	}
 
-	allAssetTagNames = AssetPublisherUtil.getAssetTagNames(preferences, scopeGroupId);
+	allAssetTagNames = AssetPublisherUtil.getAssetTagNames(portletPreferences, scopeGroupId);
 
 	assetEntryQuery.setClassTypeIds(classTypeIds);
 
 	if ((classNameIds.length == 1) && (classTypeIds.length == 1)) {
 		AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(PortalUtil.getClassName(classNameIds[0]));
 
-		ddmStructureDisplayFieldValue = GetterUtil.getString(preferences.getValue("ddmStructureDisplayFieldValue", StringPool.BLANK));
-		ddmStructureFieldName = GetterUtil.getString(preferences.getValue("ddmStructureFieldName", StringPool.BLANK));
-		ddmStructureFieldValue = preferences.getValue("ddmStructureFieldValue", StringPool.BLANK);
+		ddmStructureDisplayFieldValue = GetterUtil.getString(portletPreferences.getValue("ddmStructureDisplayFieldValue", StringPool.BLANK));
+		ddmStructureFieldName = GetterUtil.getString(portletPreferences.getValue("ddmStructureFieldName", StringPool.BLANK));
+		ddmStructureFieldValue = portletPreferences.getValue("ddmStructureFieldValue", StringPool.BLANK);
 
 		if (Validator.isNotNull(ddmStructureFieldName) && Validator.isNotNull(ddmStructureFieldValue)) {
 			List<Tuple> classTypeFieldNames = assetRendererFactory.getClassTypeFieldNames(classTypeIds[0], locale, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
@@ -146,7 +144,7 @@ if (selectionStyle.equals("dynamic")) {
 	AssetPublisherUtil.addUserAttributes(user, StringUtil.split(customUserAttributes), assetEntryQuery);
 }
 
-long assetVocabularyId = GetterUtil.getLong(preferences.getValue("assetVocabularyId", StringPool.BLANK));
+long assetVocabularyId = GetterUtil.getLong(portletPreferences.getValue("assetVocabularyId", StringPool.BLANK));
 
 long assetCategoryId = ParamUtil.getLong(request, "categoryId");
 
@@ -187,8 +185,8 @@ if (Validator.isNotNull(assetTagName)) {
 	PortalUtil.setPageKeywords(assetTagName, request);
 }
 
-boolean showLinkedAssets = GetterUtil.getBoolean(preferences.getValue("showLinkedAssets", null), false);
-boolean showOnlyLayoutAssets = GetterUtil.getBoolean(preferences.getValue("showOnlyLayoutAssets", null));
+boolean showLinkedAssets = GetterUtil.getBoolean(portletPreferences.getValue("showLinkedAssets", null), false);
+boolean showOnlyLayoutAssets = GetterUtil.getBoolean(portletPreferences.getValue("showOnlyLayoutAssets", null));
 
 if (showOnlyLayoutAssets) {
 	assetEntryQuery.setLayout(layout);
@@ -202,34 +200,34 @@ if (portletName.equals(PortletKeys.RELATED_ASSETS)) {
 	}
 }
 
-boolean mergeUrlTags = GetterUtil.getBoolean(preferences.getValue("mergeUrlTags", null), true);
-boolean mergeLayoutTags = GetterUtil.getBoolean(preferences.getValue("mergeLayoutTags", null), false);
+boolean mergeUrlTags = GetterUtil.getBoolean(portletPreferences.getValue("mergeUrlTags", null), true);
+boolean mergeLayoutTags = GetterUtil.getBoolean(portletPreferences.getValue("mergeLayoutTags", null), false);
 
-String displayStyle = GetterUtil.getString(preferences.getValue("displayStyle", PropsValues.ASSET_PUBLISHER_DISPLAY_STYLE_DEFAULT));
+String displayStyle = GetterUtil.getString(portletPreferences.getValue("displayStyle", PropsValues.ASSET_PUBLISHER_DISPLAY_STYLE_DEFAULT));
 
-boolean showAddContentButton = GetterUtil.getBoolean(preferences.getValue("showAddContentButton", null), true);
-boolean showAssetTitle = GetterUtil.getBoolean(preferences.getValue("showAssetTitle", null), true);
-boolean showContextLink = GetterUtil.getBoolean(preferences.getValue("showContextLink", null), true);
-int abstractLength = GetterUtil.getInteger(preferences.getValue("abstractLength", null), 200);
-String assetLinkBehavior = GetterUtil.getString(preferences.getValue("assetLinkBehavior", "showFullContent"));
-String orderByColumn1 = GetterUtil.getString(preferences.getValue("orderByColumn1", "modifiedDate"));
-String orderByColumn2 = GetterUtil.getString(preferences.getValue("orderByColumn2", "title"));
-String orderByType1 = GetterUtil.getString(preferences.getValue("orderByType1", "DESC"));
-String orderByType2 = GetterUtil.getString(preferences.getValue("orderByType2", "ASC"));
-boolean excludeZeroViewCount = GetterUtil.getBoolean(preferences.getValue("excludeZeroViewCount", null));
+boolean showAddContentButton = GetterUtil.getBoolean(portletPreferences.getValue("showAddContentButton", null), true);
+boolean showAssetTitle = GetterUtil.getBoolean(portletPreferences.getValue("showAssetTitle", null), true);
+boolean showContextLink = GetterUtil.getBoolean(portletPreferences.getValue("showContextLink", null), true);
+int abstractLength = GetterUtil.getInteger(portletPreferences.getValue("abstractLength", null), 200);
+String assetLinkBehavior = GetterUtil.getString(portletPreferences.getValue("assetLinkBehavior", "showFullContent"));
+String orderByColumn1 = GetterUtil.getString(portletPreferences.getValue("orderByColumn1", "modifiedDate"));
+String orderByColumn2 = GetterUtil.getString(portletPreferences.getValue("orderByColumn2", "title"));
+String orderByType1 = GetterUtil.getString(portletPreferences.getValue("orderByType1", "DESC"));
+String orderByType2 = GetterUtil.getString(portletPreferences.getValue("orderByType2", "ASC"));
+boolean excludeZeroViewCount = GetterUtil.getBoolean(portletPreferences.getValue("excludeZeroViewCount", null));
 
-int delta = GetterUtil.getInteger(preferences.getValue("delta", null), SearchContainer.DEFAULT_DELTA);
+int delta = GetterUtil.getInteger(portletPreferences.getValue("delta", null), SearchContainer.DEFAULT_DELTA);
 
 if (portletName.equals(PortletKeys.RECENT_CONTENT)) {
 	delta = PropsValues.RECENT_CONTENT_MAX_DISPLAY_ITEMS;
 }
 
-String paginationType = GetterUtil.getString(preferences.getValue("paginationType", "none"));
+String paginationType = GetterUtil.getString(portletPreferences.getValue("paginationType", "none"));
 
 assetEntryQuery.setPaginationType(paginationType);
 
-boolean showAvailableLocales = GetterUtil.getBoolean(preferences.getValue("showAvailableLocales", null));
-boolean showMetadataDescriptions = GetterUtil.getBoolean(preferences.getValue("showMetadataDescriptions", null), true);
+boolean showAvailableLocales = GetterUtil.getBoolean(portletPreferences.getValue("showAvailableLocales", null));
+boolean showMetadataDescriptions = GetterUtil.getBoolean(portletPreferences.getValue("showMetadataDescriptions", null), true);
 
 boolean defaultAssetPublisher = false;
 
@@ -241,38 +239,38 @@ if (defaultAssetPublisherPortletId.equals(portletDisplay.getId()) || (Validator.
 	defaultAssetPublisher = true;
 }
 
-boolean enablePermissions = PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX ? true : GetterUtil.getBoolean(preferences.getValue("enablePermissions", null));
+boolean enablePermissions = PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX ? true : GetterUtil.getBoolean(portletPreferences.getValue("enablePermissions", null));
 
 assetEntryQuery.setEnablePermissions(enablePermissions);
 
-boolean enableRelatedAssets = GetterUtil.getBoolean(preferences.getValue("enableRelatedAssets", null), true);
-boolean enableRatings = GetterUtil.getBoolean(preferences.getValue("enableRatings", null));
-boolean enableComments = GetterUtil.getBoolean(preferences.getValue("enableComments", null));
-boolean enableCommentRatings = GetterUtil.getBoolean(preferences.getValue("enableCommentRatings", null));
-boolean enableTagBasedNavigation = GetterUtil.getBoolean(preferences.getValue("enableTagBasedNavigation", null));
+boolean enableRelatedAssets = GetterUtil.getBoolean(portletPreferences.getValue("enableRelatedAssets", null), true);
+boolean enableRatings = GetterUtil.getBoolean(portletPreferences.getValue("enableRatings", null));
+boolean enableComments = GetterUtil.getBoolean(portletPreferences.getValue("enableComments", null));
+boolean enableCommentRatings = GetterUtil.getBoolean(portletPreferences.getValue("enableCommentRatings", null));
+boolean enableTagBasedNavigation = GetterUtil.getBoolean(portletPreferences.getValue("enableTagBasedNavigation", null));
 
 String[] conversions = DocumentConversionUtil.getConversions("html");
-String[] extensions = preferences.getValues("extensions", new String[0]);
+String[] extensions = portletPreferences.getValues("extensions", new String[0]);
 boolean openOfficeServerEnabled = PrefsPropsUtil.getBoolean(PropsKeys.OPENOFFICE_SERVER_ENABLED, PropsValues.OPENOFFICE_SERVER_ENABLED);
 boolean enableConversions = openOfficeServerEnabled && (extensions != null) && (extensions.length > 0);
-boolean enablePrint = GetterUtil.getBoolean(preferences.getValue("enablePrint", null));
-boolean enableFlags = GetterUtil.getBoolean(preferences.getValue("enableFlags", null));
-boolean enableSocialBookmarks = GetterUtil.getBoolean(preferences.getValue("enableSocialBookmarks", null), true);
-String socialBookmarksDisplayStyle = preferences.getValue("socialBookmarksDisplayStyle", "horizontal");
-String socialBookmarksDisplayPosition = preferences.getValue("socialBookmarksDisplayPosition", "bottom");
+boolean enablePrint = GetterUtil.getBoolean(portletPreferences.getValue("enablePrint", null));
+boolean enableFlags = GetterUtil.getBoolean(portletPreferences.getValue("enableFlags", null));
+boolean enableSocialBookmarks = GetterUtil.getBoolean(portletPreferences.getValue("enableSocialBookmarks", null), true);
+String socialBookmarksDisplayStyle = portletPreferences.getValue("socialBookmarksDisplayStyle", "horizontal");
+String socialBookmarksDisplayPosition = portletPreferences.getValue("socialBookmarksDisplayPosition", "bottom");
 
 String defaultMetadataFields = StringPool.BLANK;
 String allMetadataFields = "create-date,modified-date,publish-date,expiration-date,priority,author,view-count,categories,tags";
 
-String[] metadataFields = StringUtil.split(preferences.getValue("metadataFields", defaultMetadataFields));
+String[] metadataFields = StringUtil.split(portletPreferences.getValue("metadataFields", defaultMetadataFields));
 
-boolean enableRSS = !PortalUtil.isRSSFeedsEnabled() ? false : GetterUtil.getBoolean(preferences.getValue("enableRss", null));
-int rssDelta = GetterUtil.getInteger(preferences.getValue("rssDelta", StringPool.BLANK), SearchContainer.DEFAULT_DELTA);
-String rssDisplayStyle = preferences.getValue("rssDisplayStyle", RSSUtil.DISPLAY_STYLE_ABSTRACT);
-String rssFeedType = preferences.getValue("rssFeedType", RSSUtil.FEED_TYPE_DEFAULT);
-String rssName = preferences.getValue("rssName", portletDisplay.getTitle());
+boolean enableRSS = !PortalUtil.isRSSFeedsEnabled() ? false : GetterUtil.getBoolean(portletPreferences.getValue("enableRss", null));
+int rssDelta = GetterUtil.getInteger(portletPreferences.getValue("rssDelta", StringPool.BLANK), SearchContainer.DEFAULT_DELTA);
+String rssDisplayStyle = portletPreferences.getValue("rssDisplayStyle", RSSUtil.DISPLAY_STYLE_ABSTRACT);
+String rssFeedType = portletPreferences.getValue("rssFeedType", RSSUtil.FEED_TYPE_DEFAULT);
+String rssName = portletPreferences.getValue("rssName", portletDisplay.getTitle());
 
-String[] assetEntryXmls = preferences.getValues("assetEntryXml", new String[0]);
+String[] assetEntryXmls = portletPreferences.getValues("assetEntryXml", new String[0]);
 
 boolean viewInContext = assetLinkBehavior.equals("viewInPortlet");
 

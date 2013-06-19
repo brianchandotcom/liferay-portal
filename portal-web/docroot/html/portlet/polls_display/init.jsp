@@ -29,9 +29,7 @@ page import="com.liferay.portlet.polls.service.permission.PollsQuestionPermissio
 page import="com.liferay.portlet.polls.util.PollsUtil" %>
 
 <%
-PortletPreferences preferences = renderRequest.getPreferences();
-
-long questionId = GetterUtil.getLong(preferences.getValue("questionId", StringPool.BLANK));
+long questionId = GetterUtil.getLong(portletPreferences.getValue("questionId", StringPool.BLANK));
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>

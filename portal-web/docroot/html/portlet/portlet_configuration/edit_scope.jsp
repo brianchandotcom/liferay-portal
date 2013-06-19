@@ -20,10 +20,8 @@
 String redirect = ParamUtil.getString(request, "redirect");
 String returnToFullPageURL = ParamUtil.getString(request, "returnToFullPageURL");
 
-PortletPreferences preferences = renderRequest.getPreferences();
-
-String scopeType = GetterUtil.getString(preferences.getValue("lfrScopeType", null));
-String scopeLayoutUuid = GetterUtil.getString(preferences.getValue("lfrScopeLayoutUuid", null));
+String scopeType = GetterUtil.getString(portletPreferences.getValue("lfrScopeType", null));
+String scopeLayoutUuid = GetterUtil.getString(portletPreferences.getValue("lfrScopeLayoutUuid", null));
 
 Group group = layout.getGroup();
 %>

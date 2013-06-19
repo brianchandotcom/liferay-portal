@@ -39,32 +39,30 @@ page import="com.liferay.portlet.journal.util.JournalUtil" %><%@
 page import="com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil" %>
 
 <%
-PortletPreferences preferences = renderRequest.getPreferences();
-
 String portletResource = ParamUtil.getString(request, "portletResource");
 
 long groupId = ParamUtil.getLong(renderRequest, "groupId");
 
 if (groupId <= 0) {
-	groupId = GetterUtil.getLong(preferences.getValue("groupId", scopeGroupId.toString()));
+	groupId = GetterUtil.getLong(portletPreferences.getValue("groupId", scopeGroupId.toString()));
 }
 
 String articleId = ParamUtil.getString(renderRequest, "articleId");
 String ddmTemplateKey = ParamUtil.getString(renderRequest, "ddmTemplateKey");
 
 if (Validator.isNull(articleId)) {
-	articleId = GetterUtil.getString(preferences.getValue("articleId", StringPool.BLANK));
-	ddmTemplateKey = GetterUtil.getString(preferences.getValue("ddmTemplateKey", StringPool.BLANK));
+	articleId = GetterUtil.getString(portletPreferences.getValue("articleId", StringPool.BLANK));
+	ddmTemplateKey = GetterUtil.getString(portletPreferences.getValue("ddmTemplateKey", StringPool.BLANK));
 }
 
-boolean showAvailableLocales = GetterUtil.getBoolean(preferences.getValue("showAvailableLocales", StringPool.BLANK));
-String[] extensions = preferences.getValues("extensions", null);
-boolean enablePrint = GetterUtil.getBoolean(preferences.getValue("enablePrint", null));
-boolean enableRelatedAssets = GetterUtil.getBoolean(preferences.getValue("enableRelatedAssets", null), true);
-boolean enableRatings = GetterUtil.getBoolean(preferences.getValue("enableRatings", null));
-boolean enableComments = PropsValues.JOURNAL_ARTICLE_COMMENTS_ENABLED && GetterUtil.getBoolean(preferences.getValue("enableComments", null));
-boolean enableCommentRatings = GetterUtil.getBoolean(preferences.getValue("enableCommentRatings", null));
-boolean enableViewCountIncrement = GetterUtil.getBoolean(preferences.getValue("enableViewCountIncrement", null), PropsValues.ASSET_ENTRY_BUFFERED_INCREMENT_ENABLED);
+boolean showAvailableLocales = GetterUtil.getBoolean(portletPreferences.getValue("showAvailableLocales", StringPool.BLANK));
+String[] extensions = portletPreferences.getValues("extensions", null);
+boolean enablePrint = GetterUtil.getBoolean(portletPreferences.getValue("enablePrint", null));
+boolean enableRelatedAssets = GetterUtil.getBoolean(portletPreferences.getValue("enableRelatedAssets", null), true);
+boolean enableRatings = GetterUtil.getBoolean(portletPreferences.getValue("enableRatings", null));
+boolean enableComments = PropsValues.JOURNAL_ARTICLE_COMMENTS_ENABLED && GetterUtil.getBoolean(portletPreferences.getValue("enableComments", null));
+boolean enableCommentRatings = GetterUtil.getBoolean(portletPreferences.getValue("enableCommentRatings", null));
+boolean enableViewCountIncrement = GetterUtil.getBoolean(portletPreferences.getValue("enableViewCountIncrement", null), PropsValues.ASSET_ENTRY_BUFFERED_INCREMENT_ENABLED);
 
 String[] conversions = DocumentConversionUtil.getConversions("html");
 

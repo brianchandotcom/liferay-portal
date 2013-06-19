@@ -19,8 +19,4 @@
 <%@ page import="com.liferay.portal.layoutconfiguration.util.RuntimePageUtil" %><%@
 page import="com.liferay.portal.plugin.PluginUtil" %>
 
-<%
-PortletPreferences preferences = renderRequest.getPreferences();
-%>
-
 <%@ include file="/html/portlet/nested_portlets/init-ext.jsp" %>

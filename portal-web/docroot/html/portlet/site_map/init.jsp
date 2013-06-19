@@ -23,15 +23,13 @@ page import="com.liferay.portal.util.LayoutView" %><%@
 page import="com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil" %>
 
 <%
-PortletPreferences preferences = renderRequest.getPreferences();
-
-String rootLayoutUuid = GetterUtil.getString(preferences.getValue("rootLayoutUuid", StringPool.BLANK));
-int displayDepth = GetterUtil.getInteger(preferences.getValue("displayDepth", StringPool.BLANK));
-String displayStyle = GetterUtil.getString(preferences.getValue("displayStyle", StringPool.BLANK));
-boolean includeRootInTree = GetterUtil.getBoolean(preferences.getValue("includeRootInTree", StringPool.BLANK));
-boolean showCurrentPage = GetterUtil.getBoolean(preferences.getValue("showCurrentPage", StringPool.BLANK));
-boolean useHtmlTitle = GetterUtil.getBoolean(preferences.getValue("useHtmlTitle", StringPool.BLANK));
-boolean showHiddenPages = GetterUtil.getBoolean(preferences.getValue("showHiddenPages", StringPool.BLANK));
+String rootLayoutUuid = GetterUtil.getString(portletPreferences.getValue("rootLayoutUuid", StringPool.BLANK));
+int displayDepth = GetterUtil.getInteger(portletPreferences.getValue("displayDepth", StringPool.BLANK));
+String displayStyle = GetterUtil.getString(portletPreferences.getValue("displayStyle", StringPool.BLANK));
+boolean includeRootInTree = GetterUtil.getBoolean(portletPreferences.getValue("includeRootInTree", StringPool.BLANK));
+boolean showCurrentPage = GetterUtil.getBoolean(portletPreferences.getValue("showCurrentPage", StringPool.BLANK));
+boolean useHtmlTitle = GetterUtil.getBoolean(portletPreferences.getValue("useHtmlTitle", StringPool.BLANK));
+boolean showHiddenPages = GetterUtil.getBoolean(portletPreferences.getValue("showHiddenPages", StringPool.BLANK));
 
 Layout rootLayout = null;
 

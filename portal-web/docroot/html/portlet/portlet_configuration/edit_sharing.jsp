@@ -24,8 +24,6 @@ String returnToFullPageURL = ParamUtil.getString(request, "returnToFullPageURL")
 
 Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletResource);
 
-PortletPreferences preferences = renderRequest.getPreferences();
-
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/portlet_configuration/edit_sharing");
@@ -62,7 +60,7 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 			<c:when test='<%= tabs2.equals("any-website") %>'>
 
 				<%
-				boolean widgetShowAddAppLink = GetterUtil.getBoolean(preferences.getValue("lfrWidgetShowAddAppLink", null), PropsValues.THEME_PORTLET_SHARING_DEFAULT);
+				boolean widgetShowAddAppLink = GetterUtil.getBoolean(portletPreferences.getValue("lfrWidgetShowAddAppLink", null), PropsValues.THEME_PORTLET_SHARING_DEFAULT);
 				%>
 
 				<div class="alert alert-info">
@@ -82,9 +80,9 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 			<c:when test='<%= tabs2.equals("facebook") %>'>
 
 				<%
-				String facebookAPIKey = GetterUtil.getString(preferences.getValue("lfrFacebookApiKey", null));
-				String facebookCanvasPageURL = GetterUtil.getString(preferences.getValue("lfrFacebookCanvasPageUrl", null));
-				boolean facebookShowAddAppLink = GetterUtil.getBoolean(preferences.getValue("lfrFacebookShowAddAppLink", null), true);
+				String facebookAPIKey = GetterUtil.getString(portletPreferences.getValue("lfrFacebookApiKey", null));
+				String facebookCanvasPageURL = GetterUtil.getString(portletPreferences.getValue("lfrFacebookCanvasPageUrl", null));
+				boolean facebookShowAddAppLink = GetterUtil.getBoolean(portletPreferences.getValue("lfrFacebookShowAddAppLink", null), true);
 
 				String callbackURL = widgetURL;
 
@@ -127,7 +125,7 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 			<c:when test='<%= tabs2.equals("opensocial-gadget") %>'>
 
 				<%
-				boolean iGoogleShowAddAppLink = PrefsParamUtil.getBoolean(preferences, request, "lfrIgoogleShowAddAppLink");
+				boolean iGoogleShowAddAppLink = PrefsParamUtil.getBoolean(portletPreferences, request, "lfrIgoogleShowAddAppLink");
 				%>
 
 				<div class="alert alert-info">
@@ -143,7 +141,7 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 			<c:when test='<%= tabs2.equals("netvibes") %>'>
 
 				<%
-				boolean netvibesShowAddAppLink = PrefsParamUtil.getBoolean(preferences, request, "lfrNetvibesShowAddAppLink");
+				boolean netvibesShowAddAppLink = PrefsParamUtil.getBoolean(portletPreferences, request, "lfrNetvibesShowAddAppLink");
 				%>
 
 				<div class="alert alert-info">
@@ -159,7 +157,7 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 			<c:when test='<%= tabs2.equals("friends") %>'>
 
 				<%
-				boolean appShowShareWithFriendsLink = GetterUtil.getBoolean(preferences.getValue("lfrAppShowShareWithFriendsLink", null));
+				boolean appShowShareWithFriendsLink = GetterUtil.getBoolean(portletPreferences.getValue("lfrAppShowShareWithFriendsLink", null));
 				%>
 
 				<aui:input label='<%= LanguageUtil.format(pageContext, "allow-users-to-share-x-with-friends", portletDisplay.getTitle()) %>' name="appShowShareWithFriendsLink" type="checkbox" value="<%= appShowShareWithFriendsLink %>" />

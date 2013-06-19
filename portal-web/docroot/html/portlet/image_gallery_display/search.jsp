@@ -43,7 +43,7 @@ else {
 
 String keywords = ParamUtil.getString(request, "keywords");
 
-String[] mediaGalleryMimeTypes = DLUtil.getMediaGalleryMimeTypes(preferences, renderRequest);
+String[] mediaGalleryMimeTypes = DLUtil.getMediaGalleryMimeTypes(portletPreferences, renderRequest);
 
 boolean useAssetEntryQuery = false;
 %>
@@ -128,7 +128,7 @@ boolean useAssetEntryQuery = false;
 		<%
 		Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
 
-		long defaultFolderId = GetterUtil.getLong(preferences.getValue("rootFolderId", StringPool.BLANK), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+		long defaultFolderId = GetterUtil.getLong(portletPreferences.getValue("rootFolderId", StringPool.BLANK), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		long folderId = BeanParamUtil.getLong(folder, request, "folderId", defaultFolderId);
 

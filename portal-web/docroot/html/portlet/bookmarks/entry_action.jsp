@@ -75,7 +75,7 @@ else {
 		/>
 	</c:if>
 
-	<c:if test="<%= BookmarksEntryPermission.contains(permissionChecker, entry, ActionKeys.SUBSCRIBE) && (BookmarksUtil.getEmailEntryAddedEnabled(preferences) || BookmarksUtil.getEmailEntryUpdatedEnabled(preferences)) %>">
+	<c:if test="<%= BookmarksEntryPermission.contains(permissionChecker, entry, ActionKeys.SUBSCRIBE) && (BookmarksUtil.getEmailEntryAddedEnabled(portletPreferences) || BookmarksUtil.getEmailEntryUpdatedEnabled(portletPreferences)) %>">
 		<c:choose>
 			<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(user.getCompanyId(), user.getUserId(), BookmarksEntry.class.getName(), entry.getEntryId()) %>">
 				<portlet:actionURL var="unsubscribeURL">

@@ -20,9 +20,7 @@
 page import="com.liferay.portlet.amazonrankings.util.AmazonRankingsUtil" %>
 
 <%
-PortletPreferences preferences = renderRequest.getPreferences();
-
-String[] isbns = preferences.getValues("isbns", new String[0]);
+String[] isbns = portletPreferences.getValues("isbns", new String[0]);
 
 NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 %>

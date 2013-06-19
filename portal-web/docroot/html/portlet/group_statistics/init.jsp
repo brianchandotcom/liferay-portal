@@ -26,11 +26,9 @@ page import="com.liferay.portlet.social.util.SocialCounterPeriodUtil" %><%@
 page import="com.liferay.portlet.social.util.comparator.SocialActivityCounterNameComparator" %>
 
 <%
-PortletPreferences preferences = renderRequest.getPreferences();
-
 int[] displayActivityCounterNameIndexes = null;
 
-String displayActivityCounterNameIndexesParam = PrefsParamUtil.getString(preferences, request, "displayActivityCounterNameIndexes");
+String displayActivityCounterNameIndexesParam = PrefsParamUtil.getString(portletPreferences, request, "displayActivityCounterNameIndexes");
 
 if (Validator.isNotNull(displayActivityCounterNameIndexesParam)) {
 	displayActivityCounterNameIndexes = StringUtil.split(displayActivityCounterNameIndexesParam, 0);

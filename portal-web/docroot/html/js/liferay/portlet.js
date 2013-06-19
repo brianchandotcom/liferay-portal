@@ -54,7 +54,11 @@
 
 				head.append(markupHeadElements);
 
-				loadHTML(markupHeadElements);
+				var container = A.Node.create('<div />');
+
+				container.plug(A.Plugin.ParseContent);
+
+				container.setContent(markupHeadElements);
 			}
 		},
 
@@ -254,14 +258,6 @@
 				dataType = data.dataType;
 			}
 
-			var addPortletMarkupHeadElements = function(html) {
-				var container = A.Node.create('<div/>');
-
-				container.plug(A.Plugin.ParseContent);
-
-				container.setContent(html);
-			};
-
 			var addPortletReturn = function(html) {
 				var container = placeHolder.get('parentNode');
 
@@ -347,8 +343,7 @@
 								addPortletReturn(response.portletHTML);
 							}
 							else {
-								Portlet._loadMarkupHeadElements(response, addPortletMarkupHeadElements);
-
+								Portlet._loadMarkupHeadElements(response);
 								Portlet._loadPortletFiles(response, addPortletReturn);
 							}
 						}

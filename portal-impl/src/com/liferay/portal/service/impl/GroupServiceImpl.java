@@ -492,17 +492,6 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			userId, classNames, includeControlPanel, max);
 	}
 
-	@Override
-	public List<Group> getUserPlacesGroups(
-			long userId, String[] classNames, boolean includeControlPanel,
-			int max)
-		throws PortalException, SystemException {
-
-		return getUserPlacesGroups(
-			userId, classNames, null, true, includeControlPanel,
-			QueryUtil.ALL_POS, max);
-	}
-
 	/**
 	 * Returns the user's group &quot;places&quot; associated with the group
 	 * entity class names, including the Control Panel group if the user is
@@ -546,14 +535,6 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		return getUserPlacesGroups(userId, classNames, max);
 	}
 
-	@Override
-	public List<Group> getUserPlacesGroups(
-			long userId, String[] classNames, int max)
-		throws PortalException, SystemException {
-
-		return getUserPlacesGroups(userId, classNames, false, max);
-	}
-
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #getUserPlacesGroups(long,
 	 *             String[], String, boolean, boolean, int, int)}
@@ -566,6 +547,100 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 
 		return getUserPlacesGroups(
 			userId, classNames, name, active, includeControlPanel, start, end);
+	}
+
+	/**
+	 * Returns the guest or current user's group &quot;places&quot; associated
+	 * with the group entity class names, including the Control Panel group if
+	 * the user is permitted to view the Control Panel.
+	 *
+	 * <ul>
+	 * <li>
+	 * Class name &quot;User&quot; includes the user's layout set
+	 * group.
+	 * </li>
+	 * <li>
+	 * Class name &quot;Organization&quot; includes the user's
+	 * immediate organization groups and inherited organization groups.
+	 * </li>
+	 * <li>
+	 * Class name &quot;Group&quot; includes the user's immediate
+	 * organization groups and site groups.
+	 * </li>
+	 * <li>
+	 * A <code>classNames</code>
+	 * value of <code>null</code> includes the user's layout set group,
+	 * organization groups, inherited organization groups, and site groups.
+	 * </li>
+	 * </ul>
+	 *
+	 * @param  classNames the group entity class names (optionally
+	 *         <code>null</code>). For more information see {@link
+	 *         #getUserPlacesGroups(String[], int)}
+	 * @param  max the maximum number of groups to return
+	 * @return the user's group &quot;places&quot;
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 * @deprecated As of 6.2.0, replaced by {@link #getUserPlacesGroups(
+	 *             String[], int)}
+	 */
+	@Override
+	public List<Group> getUserPlaces(String[] classNames, int max)
+		throws PortalException, SystemException {
+
+		return getUserPlacesGroups(classNames, max);
+	}
+
+	/**
+	 * Returns the number of the guest or current user's group
+	 * &quot;places&quot; associated with the group entity class names,
+	 * including the Control Panel group if the user is permitted to view the
+	 * Control Panel.
+	 *
+	 * @return the number of user's group &quot;places&quot;
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 * @deprecated As of 6.2.0, replaced by {@link #getUserPlacesGroupCount()}
+	 */
+	@Override
+	public int getUserPlacesCount() throws PortalException, SystemException {
+		return getUserPlacesGroupCount();
+	}
+
+	@Override
+	public int getUserPlacesGroupCount()
+		throws PortalException, SystemException {
+
+		List<Group> userPlacesGroups = getUserPlacesGroups(
+			getGuestOrUserId(), null, true, QueryUtil.ALL_POS);
+
+		return userPlacesGroups.size();
+	}
+
+	@Override
+	public List<Group> getUserPlacesGroups()
+		throws PortalException, SystemException {
+
+		return getUserPlacesGroups(null, QueryUtil.ALL_POS);
+	}
+
+	@Override
+	public List<Group> getUserPlacesGroups(
+			long userId, String[] classNames, boolean includeControlPanel,
+			int max)
+		throws PortalException, SystemException {
+
+		return getUserPlacesGroups(
+			userId, classNames, null, true, includeControlPanel,
+			QueryUtil.ALL_POS, max);
+	}
+
+	@Override
+	public List<Group> getUserPlacesGroups(
+			long userId, String[] classNames, int max)
+		throws PortalException, SystemException {
+
+		return getUserPlacesGroups(userId, classNames, false, max);
 	}
 
 	@Override
@@ -674,86 +749,11 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		return Collections.unmodifiableList(userPlacesGroups);
 	}
 
-	/**
-	 * Returns the guest or current user's group &quot;places&quot; associated
-	 * with the group entity class names, including the Control Panel group if
-	 * the user is permitted to view the Control Panel.
-	 *
-	 * <ul>
-	 * <li>
-	 * Class name &quot;User&quot; includes the user's layout set
-	 * group.
-	 * </li>
-	 * <li>
-	 * Class name &quot;Organization&quot; includes the user's
-	 * immediate organization groups and inherited organization groups.
-	 * </li>
-	 * <li>
-	 * Class name &quot;Group&quot; includes the user's immediate
-	 * organization groups and site groups.
-	 * </li>
-	 * <li>
-	 * A <code>classNames</code>
-	 * value of <code>null</code> includes the user's layout set group,
-	 * organization groups, inherited organization groups, and site groups.
-	 * </li>
-	 * </ul>
-	 *
-	 * @param  classNames the group entity class names (optionally
-	 *         <code>null</code>). For more information see {@link
-	 *         #getUserPlacesGroups(String[], int)}
-	 * @param  max the maximum number of groups to return
-	 * @return the user's group &quot;places&quot;
-	 * @throws PortalException if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
-	 * @deprecated As of 6.2.0, replaced by {@link #getUserPlacesGroups(
-	 *             String[], int)}
-	 */
-	@Override
-	public List<Group> getUserPlaces(String[] classNames, int max)
-		throws PortalException, SystemException {
-
-		return getUserPlacesGroups(classNames, max);
-	}
-
 	@Override
 	public List<Group> getUserPlacesGroups(String[] classNames, int max)
 		throws PortalException, SystemException {
 
 		return getUserPlacesGroups(getGuestOrUserId(), classNames, false, max);
-	}
-
-	@Override
-	public List<Group> getUserPlacesGroups()
-		throws PortalException, SystemException {
-
-		return getUserPlacesGroups(null, QueryUtil.ALL_POS);
-	}
-
-	/**
-	 * Returns the number of the guest or current user's group
-	 * &quot;places&quot; associated with the group entity class names,
-	 * including the Control Panel group if the user is permitted to view the
-	 * Control Panel.
-	 *
-	 * @return the number of user's group &quot;places&quot;
-	 * @throws PortalException if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
-	 * @deprecated As of 6.2.0, replaced by {@link #getUserPlacesGroupCount()}
-	 */
-	@Override
-	public int getUserPlacesCount() throws PortalException, SystemException {
-		return getUserPlacesGroupCount();
-	}
-
-	@Override
-	public int getUserPlacesGroupCount()
-		throws PortalException, SystemException {
-
-		List<Group> userPlacesGroups = getUserPlacesGroups(
-			getGuestOrUserId(), null, true, QueryUtil.ALL_POS);
-
-		return userPlacesGroups.size();
 	}
 
 	/**

@@ -27,7 +27,6 @@ import com.liferay.portal.model.OrganizationConstants;
 import com.liferay.portal.model.Phone;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.Website;
-import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicyUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -299,15 +298,16 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		if (!OrganizationPermissionUtil.contains(
-				getPermissionChecker(), parentOrganizationId,
-				ActionKeys.MANAGE_SUBORGANIZATIONS) &&
-			!PortalPermissionUtil.contains(
-				getPermissionChecker(), ActionKeys.ADD_ORGANIZATION)) {
+		if (parentOrganizationId ==
+				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) {
 
-			throw new PrincipalException(
-				"User " + getUserId() + " does not have permissions to add " +
-					"an organization with parent " + parentOrganizationId);
+			PortalPermissionUtil.check(
+				getPermissionChecker(), ActionKeys.ADD_ORGANIZATION);
+		}
+		else {
+			OrganizationPermissionUtil.check(
+				getPermissionChecker(), parentOrganizationId,
+				ActionKeys.ADD_ORGANIZATION);
 		}
 
 		Organization organization = organizationLocalService.addOrganization(
@@ -781,17 +781,9 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 					getPermissionChecker(), ActionKeys.ADD_ORGANIZATION);
 			}
 			else {
-				if (!OrganizationPermissionUtil.contains(
-						getPermissionChecker(), parentOrganizationId,
-						ActionKeys.MANAGE_SUBORGANIZATIONS) &&
-					!PortalPermissionUtil.contains(
-						getPermissionChecker(), ActionKeys.ADD_ORGANIZATION)) {
-
-					throw new PrincipalException(
-						"User " + getUserId() + " does not have permissions " +
-							"to move organization " + organizationId + "to " +
-								"parent " + parentOrganizationId);
-				}
+				OrganizationPermissionUtil.check(
+					getPermissionChecker(), parentOrganizationId,
+					ActionKeys.ADD_ORGANIZATION);
 			}
 		}
 

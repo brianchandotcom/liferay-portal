@@ -150,7 +150,7 @@ if (row == null) {
 		for (String childrenType : childrenTypes) {
 		%>
 
-			<c:if test="<%= OrganizationPermissionUtil.contains(permissionChecker, organizationId, ActionKeys.MANAGE_SUBORGANIZATIONS) %>">
+			<c:if test="<%= OrganizationPermissionUtil.contains(permissionChecker, organizationId, ActionKeys.ADD_ORGANIZATION) %>">
 				<portlet:renderURL var="addSuborganizationURL">
 					<portlet:param name="struts_action" value="/users_admin/edit_organization" />
 					<portlet:param name="redirect" value="<%= redirect %>" />

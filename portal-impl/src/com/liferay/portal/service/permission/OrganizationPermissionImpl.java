@@ -20,12 +20,14 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.OrganizationConstants;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
 
 /**
  * @author Charles May
  * @author Jorge Ferrer
+ * @author Sergio González
  */
 public class OrganizationPermissionImpl implements OrganizationPermission {
 
@@ -111,9 +113,19 @@ public class OrganizationPermissionImpl implements OrganizationPermission {
 			   (organization.getOrganizationId() !=
 					OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID)) {
 
-			if (permissionChecker.hasPermission(
+			if (actionId.equals(ActionKeys.ADD_ORGANIZATION) &&
+				permissionChecker.hasPermission(
 					groupId, Organization.class.getName(),
-					organization.getOrganizationId(), actionId)) {
+					organization.getOrganizationId(),
+					ActionKeys.MANAGE_SUBGROUPS) ||
+				PortalPermissionUtil.contains(
+					permissionChecker, ActionKeys.ADD_COMMUNITY)) {
+
+				return true;
+			}
+			else if (permissionChecker.hasPermission(
+					 groupId, Organization.class.getName(),
+					 organization.getOrganizationId(), actionId)) {
 
 				return true;
 			}

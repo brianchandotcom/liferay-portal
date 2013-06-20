@@ -246,6 +246,15 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			serviceContext);
 	}
 
+	@Override
+	public int countTemplatesByStructureClassNameId(
+			long groupId, long structureClassNameId, int start, int end,
+			OrderByComparator orderByComparator)
+		throws SystemException {
+
+		return ddmTemplateFinder.countByG_SC(groupId, structureClassNameId);
+	}
+
 	/**
 	 * Deletes the template and its resources.
 	 *
@@ -457,7 +466,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 
 	/**
 	 * Returns an ordered range of all the templates matching the group and
-	 * structure class name ID.
+	 * structure class name ID, including Generic Templates.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -

@@ -42,6 +42,9 @@ import java.util.List;
 public class DDMTemplateFinderImpl
 	extends BasePersistenceImpl<DDMTemplate> implements DDMTemplateFinder {
 
+	private static final String COUNT_BY_G_SC =
+		DDMTemplateFinder.class.getName() + ".countByG_SC";
+
 	public static final String COUNT_BY_G_C_C_SC =
 		DDMTemplateFinder.class.getName() + ".countByG_C_C_SC";
 
@@ -109,6 +112,13 @@ public class DDMTemplateFinderImpl
 		return countByC_G_C_C_N_D_T_M_L(
 			companyId, groupIds, classNameIds, classPKs, names, descriptions,
 			types, modes, languages, andOperator);
+	}
+
+	@Override
+	public int countByG_SC(long groupId, long structureClassNameId)
+		throws SystemException {
+
+		return doCountByG_SC(groupId, structureClassNameId, false);
 	}
 
 	@Override
@@ -662,6 +672,51 @@ public class DDMTemplateFinderImpl
 			companyId, groupIds, classNameIds, classPKs, names, descriptions,
 			types, modes, languages, andOperator, start, end, orderByComparator,
 			false);
+	}
+
+	protected int doCountByG_SC(
+			long groupId, long structureClassNameId, boolean inlineSQLHelper)
+		throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(COUNT_BY_G_SC);
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, DDMTemplate.class.getName(), "DDMTemplate.templateId",
+					groupId);
+			}
+
+			SQLQuery q = session.createSQLQuery(sql);
+			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+			qPos.add(structureClassNameId);
+
+			Iterator<Long> itr = q.iterate();
+
+			if (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	protected int doCountByG_C_C_SC(

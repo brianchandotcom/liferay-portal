@@ -1,6 +1,17 @@
 <?xml version="1.0"?>
 
 <custom-sql>
+	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateFinder.countByG_SC">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT DDMTemplate.templateId) AS COUNT_VALUE
+			FROM
+				DDMTemplate, DDMStructure
+			WHERE
+				(DDMTemplate.classPK IN (DDMStructure.structureId, -1)) AND
+				(DDMTemplate.groupId = ?) AND (DDMStructure.classNameId = ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMListFinder.countByC_G_L_N_D">
 		<![CDATA[
 			SELECT
@@ -118,11 +129,9 @@
 			SELECT
 				{DDMTemplate.*}
 			FROM
-				DDMTemplate
-			INNER JOIN
-				DDMStructure ON
-					(DDMTemplate.classPK = DDMStructure.structureId)
+				DDMTemplate, DDMStructure
 			WHERE
+				(DDMTemplate.classPK IN (DDMStructure.structureId, -1)) AND
 				(DDMTemplate.groupId = ?) AND
 				(DDMStructure.classNameId = ?)
 			ORDER BY

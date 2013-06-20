@@ -685,11 +685,11 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 	sourcePanel.delegate(
 		'click',
 		function(event) {
-			var assetSubtypeFieldsPopupNodes = A.all('.asset-subtypefields-popup .button-input');
+			var assetSubtypeFieldsPopupNodes = A.all('.asset-subtypefields-popup .btn');
 
 			Liferay.Util.toggleDisabled(assetSubtypeFieldsPopupNodes, !event.target.attr('checked'));
 		},
-		'.asset-subtypefields-wrapper-enable .field-input'
+		'.asset-subtypefields-wrapper-enable .field'
 	);
 
 	Liferay.after(

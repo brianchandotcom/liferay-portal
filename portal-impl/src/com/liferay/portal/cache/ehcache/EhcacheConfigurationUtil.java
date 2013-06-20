@@ -96,8 +96,6 @@ public class EhcacheConfigurationUtil {
 	private static String _clearCacheEventListenerConfigurations(
 		CacheConfiguration cacheConfiguration) {
 
-		cacheConfiguration.addBootstrapCacheLoaderFactory(null);
-
 		List<?> cacheEventListenerConfigurations =
 			cacheConfiguration.getCacheEventListenerConfigurations();
 

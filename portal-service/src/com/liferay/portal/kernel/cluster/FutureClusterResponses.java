@@ -89,6 +89,10 @@ public class FutureClusterResponses implements Future<ClusterNodeResponses> {
 		}
 	}
 
+	public Set<Address> getExpectedReplyAddress() {
+		return _expectedReplyAddress;
+	}
+
 	public BlockingQueue<ClusterNodeResponse> getPartialResults() {
 		return _clusterNodeResponses.getClusterResponses();
 	}

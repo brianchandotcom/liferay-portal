@@ -799,6 +799,10 @@ public interface PropsKeys {
 
 	public static final String EHCACHE_SINGLE_VM_CONFIG_LOCATION = "ehcache.single.vm.config.location";
 
+	public static final String EHCACHE_SOCKET_SO_TIMEOUT = "ehcache.socket.so.timeout";
+
+	public static final String EHCACHE_SOCKET_START_PORT = "ehcache.socket.start.port";
+
 	public static final String EHCACHE_STATISTICS_ENABLED = "ehcache.statistics.enabled";
 
 	public static final String FACEBOOK_CONNECT_APP_ID = "facebook.connect.app.id";

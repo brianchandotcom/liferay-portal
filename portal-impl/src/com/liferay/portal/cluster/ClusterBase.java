@@ -136,6 +136,10 @@ public abstract class ClusterBase {
 		return addresses;
 	}
 
+	public InetAddress getBindInetAddress() {
+		return bindInetAddress;
+	}
+
 	protected void initBindAddress() throws IOException {
 		String autodetectAddress = PropsValues.CLUSTER_LINK_AUTODETECT_ADDRESS;
 

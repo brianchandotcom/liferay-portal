@@ -30,11 +30,6 @@ if (layoutPrototype == null) {
 }
 
 long layoutPrototypeId = BeanParamUtil.getLong(layoutPrototype, request, "layoutPrototypeId");
-
-Locale defaultLocale = LocaleUtil.getDefault();
-String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
-
-Locale[] locales = LanguageUtil.getAvailableLocales();
 %>
 
 <liferay-util:include page="/html/portlet/layout_prototypes/toolbar.jsp">

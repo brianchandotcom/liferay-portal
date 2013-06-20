@@ -30,10 +30,4 @@ page import="com.liferay.portlet.expando.service.permission.ExpandoColumnPermiss
 page import="com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil" %><%@
 page import="com.liferay.portlet.expando.util.comparator.CustomAttributesDisplayComparator" %>
 
-<%
-PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(request);
-
-Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
-%>
-
 <%@ include file="/html/portlet/expando/init-ext.jsp" %>

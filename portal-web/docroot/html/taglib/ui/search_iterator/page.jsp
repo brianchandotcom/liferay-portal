@@ -24,7 +24,6 @@ String type = (String)request.getAttribute("liferay-ui:search:type");
 
 String id = searchContainer.getId(request, namespace);
 
-int start = searchContainer.getStart();
 int end = searchContainer.getEnd();
 int total = searchContainer.getTotal();
 List resultRows = searchContainer.getResultRows();
@@ -379,6 +378,4 @@ private static final String _ROW_CLASS_NAME_ALTERNATE = "";
 private static final String _ROW_CLASS_NAME_ALTERNATE_HOVER = "-hover";
 
 private static final String _ROW_CLASS_NAME_BODY = "";
-
-private static final String _ROW_CLASS_NAME_BODY_HOVER = "-hover";
 %>

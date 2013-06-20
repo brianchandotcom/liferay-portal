@@ -49,7 +49,6 @@ portletURL.setParameter("struts_action", "/blogs_admin/view");
 	>
 
 		<%
-		EntryDisplayTerms displayTerms = (EntryDisplayTerms)searchContainer.getDisplayTerms();
 		EntrySearchTerms searchTerms = (EntrySearchTerms)searchContainer.getSearchTerms();
 		%>
 

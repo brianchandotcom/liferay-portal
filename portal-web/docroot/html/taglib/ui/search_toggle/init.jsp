@@ -17,8 +17,6 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
-String randomNamespace = (String)request.getAttribute("liferay-ui:search-toggle:randomNamespace");
-
 String buttonLabel = (String)request.getAttribute("liferay-ui:search-toggle:buttonLabel");
 DisplayTerms displayTerms = (DisplayTerms)request.getAttribute("liferay-ui:search-toggle:displayTerms");
 String id = (String)request.getAttribute("liferay-ui:search-toggle:id");

@@ -15,8 +15,6 @@
 --%>
 
 <%
-PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(request);
-
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/portlet_configuration/edit_configuration");
@@ -42,8 +40,6 @@ ArticleSearch searchContainer = new ArticleSearch(renderRequest, portletURL);
 />
 
 <%
-OrderByComparator orderByComparator = JournalUtil.getArticleOrderByComparator(searchContainer.getOrderByCol(), searchContainer.getOrderByType());
-
 ArticleSearchTerms searchTerms = (ArticleSearchTerms)searchContainer.getSearchTerms();
 
 searchTerms.setVersion(-1);
@@ -59,8 +55,6 @@ List resultRows = searchContainer.getResultRows();
 
 for (int i = 0; i < results.size(); i++) {
 	JournalArticle article = results.get(i);
-
-	long articleResourceId = article.getResourcePrimKey();
 
 	ResultRow row = new ResultRow(article, article.getArticleId() + EditArticleAction.VERSION_SEPARATOR + article.getVersion(), i);
 

@@ -78,7 +78,6 @@ if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 }
 
 boolean showActions = PrefsParamUtil.getBoolean(portletPreferences, request, "showActions");
-boolean showAddFolderButton = false;
 boolean showFolderMenu = PrefsParamUtil.getBoolean(portletPreferences, request, "showFolderMenu");
 boolean showTabs = PrefsParamUtil.getBoolean(portletPreferences, request, "showTabs");
 

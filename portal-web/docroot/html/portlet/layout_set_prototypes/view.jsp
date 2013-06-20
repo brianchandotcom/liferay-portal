@@ -17,8 +17,6 @@
 <%@ include file="/html/portlet/layout_set_prototypes/init.jsp" %>
 
 <%
-String keywords = ParamUtil.getString(request, "keywords");
-
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/layout_set_prototypes/view");

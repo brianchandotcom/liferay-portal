@@ -172,8 +172,6 @@ catch (NoSuchArticleException nsae) {
 	<br />
 
 	<%
-	OrderByComparator orderByComparator = JournalUtil.getArticleOrderByComparator(searchContainer.getOrderByCol(), searchContainer.getOrderByType());
-
 	ArticleSearchTerms searchTerms = (ArticleSearchTerms)searchContainer.getSearchTerms();
 
 	searchTerms.setFolderIds(new ArrayList<Long>());

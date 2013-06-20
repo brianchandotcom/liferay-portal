@@ -266,8 +266,6 @@ List<Group> mySites = user.getMySites(false, max);
 
 							publicAddPageHREF = publicAddPageURL.toString();
 
-							long privateAddPagePlid = mySite.getDefaultPrivatePlid();
-
 							PortletURL privateAddPageURL = new PortletURLImpl(request, PortletKeys.MY_ACCOUNT, plid, PortletRequest.RENDER_PHASE);
 
 							privateAddPageURL.setParameter("struts_action", "/my_account/edit_layouts");

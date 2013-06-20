@@ -32,8 +32,6 @@ page import="com.liferay.portlet.usersadmin.search.UserSearchTerms" %>
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1", "users");
 
-boolean filterManageableOrganizations = false;
-
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale);
 %>
 

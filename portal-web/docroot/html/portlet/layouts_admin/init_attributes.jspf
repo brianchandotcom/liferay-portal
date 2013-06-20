@@ -220,7 +220,3 @@ request.setAttribute("edit_pages.jsp-rootNodeName", rootNodeName);
 request.setAttribute("edit_pages.jsp-portletURL", portletURL);
 request.setAttribute("edit_pages.jsp-redirectURL", redirectURL);
 %>
-
-<%!
-private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.layout_admin.init_attributes_jsp");
-%>

@@ -132,8 +132,6 @@ userTracker = userTracker.toEscapedModel();
 
 							if (userSession != null) {
 								try {
-									int counter = 0;
-
 									Set<String> sortedAttrNames = new TreeSet<String>();
 
 									Enumeration<String> enu = userSession.getAttributeNames();

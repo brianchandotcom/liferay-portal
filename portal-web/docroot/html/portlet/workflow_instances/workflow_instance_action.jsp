@@ -24,8 +24,6 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 WorkflowInstance workflowInstance = null;
 
 if (row != null) {
-	Object result = row.getObject();
-
 	workflowInstance = (WorkflowInstance)row.getParameter("workflowInstance");
 }
 else {

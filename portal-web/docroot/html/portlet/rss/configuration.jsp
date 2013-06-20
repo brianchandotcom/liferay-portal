@@ -17,8 +17,6 @@
 <%@ include file="/html/portlet/rss/init.jsp" %>
 
 <%
-String tabs2 = ParamUtil.getString(request, "tabs2");
-
 String redirect = ParamUtil.getString(request, "redirect");
 
 String typeSelection = ParamUtil.getString(request, "typeSelection");

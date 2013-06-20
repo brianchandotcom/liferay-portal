@@ -14,10 +14,6 @@
  */
 --%>
 
-<%
-String toolbarItem = ParamUtil.getString(request, "toolbarItem", "add");
-%>
-
 <aui:nav-bar>
 	<aui:nav>
 		<c:if test="<%= MDRPermissionUtil.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP_INSTANCE) %>">

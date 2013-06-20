@@ -51,8 +51,6 @@ page import="com.liferay.portlet.mobiledevicerules.util.RuleGroupInstancePriorit
 <%
 long groupId = ParamUtil.getLong(request, "groupId");
 
-String category = PortalUtil.getControlPanelCategory(portletDisplay.getId(), themeDisplay);
-
 if (groupId == 0) {
 	groupId = themeDisplay.getSiteGroupId();
 }

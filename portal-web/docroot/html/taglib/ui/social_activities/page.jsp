@@ -24,8 +24,6 @@
 
 	boolean hasActivities = false;
 
-	boolean firstDaySeparator = true;
-
 	Date now = new Date();
 
 	int daysBetween = -1;
@@ -110,5 +108,4 @@
 </c:if>
 
 <%!
-private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.taglib.ui.social_activities.page_jsp");
 %>

@@ -55,7 +55,6 @@ for (int i = 0; i < results.size(); i++) {
 	Portlet portlet = results.get(i);
 
 	PluginPackage pluginPackage = portlet.getPluginPackage();
-	PluginSetting pluginSetting = PluginSettingLocalServiceUtil.getPluginSetting(company.getCompanyId(), portlet.getPortletId(), Plugin.TYPE_PORTLET);
 
 	ResultRow row = new ResultRow(portlet, portlet.getId(), i);
 

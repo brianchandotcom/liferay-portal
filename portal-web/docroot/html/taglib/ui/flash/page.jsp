@@ -19,7 +19,6 @@
 <%
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_flash_page") + StringPool.UNDERLINE;
 
-String align = (String)request.getAttribute("liferay-ui:flash:align");
 String allowFullScreen = (String)request.getAttribute("liferay-ui:flash:allowFullScreen");
 String allowScriptAccess = (String)request.getAttribute("liferay-ui:flash:allowScriptAccess");
 String base = (String)request.getAttribute("liferay-ui:flash:base");

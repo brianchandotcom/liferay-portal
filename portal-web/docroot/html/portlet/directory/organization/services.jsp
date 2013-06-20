@@ -102,7 +102,6 @@ Format timeFormat = FastDateFormatFactoryUtil.getSimpleDateFormat("HH:mm", local
 
 					<%
 					for (int j = 0; j < days.length; j++) {
-						String curParam = paramPrefixes[j];
 						int curClose = closeArray[j];
 
 						cal.set(Calendar.HOUR_OF_DAY, curClose / 100);

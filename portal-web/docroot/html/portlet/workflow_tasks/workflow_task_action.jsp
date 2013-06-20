@@ -28,8 +28,6 @@ WorkflowTask workflowTask = null;
 if (row != null) {
 	randomId = PwdGenerator.getPassword(PwdGenerator.KEY3, 4);
 
-	Object result = row.getObject();
-
 	workflowTask = (WorkflowTask)row.getParameter("workflowTask");
 }
 else {

@@ -36,10 +36,6 @@ if (selLayout != null) {
 
 <aui:input id="panelSelectedPortlets" name="TypeSettingsProperties--panelSelectedPortlets--" type="hidden" value="<%= panelSelectedPortlets %>" />
 
-<%
-String panelTreeKey = "panelSelectedPortletsPanelTree";
-%>
-
 <div class="lfr-tree-loading" id="<portlet:namespace />selectPortletsTreeLoading">
 	<span class="icon icon-loading lfr-tree-loading-icon"></span>
 </div>

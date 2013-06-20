@@ -25,7 +25,6 @@
 
 <%
 String contentsLanguageId = ParamUtil.getString(request, "contentsLanguageId");
-String cssPath = ParamUtil.getString(request, "cssPath");
 String cssClasses = ParamUtil.getString(request, "cssClasses");
 String languageId = ParamUtil.getString(request, "languageId");
 long wikiPageResourcePrimKey = ParamUtil.getLong(request, "wikiPageResourcePrimKey");

@@ -27,7 +27,6 @@ String languageId = ParamUtil.getString(request, "languageId", user2.getLanguage
 String availableLocales = StringUtil.merge(languageIds);
 
 boolean companySecurityCommunityLogo = company.isSiteLogo();
-boolean deleteLogo = ParamUtil.getBoolean(request, "deleteLogo");
 
 String defaultRegularThemeId = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.DEFAULT_REGULAR_THEME_ID, PropsValues.DEFAULT_REGULAR_THEME_ID);
 String defaultWapThemeId = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.DEFAULT_WAP_THEME_ID, PropsValues.DEFAULT_WAP_THEME_ID);

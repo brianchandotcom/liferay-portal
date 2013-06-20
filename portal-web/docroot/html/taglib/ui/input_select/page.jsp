@@ -18,7 +18,6 @@
 
 <%
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-select:cssClass"));
-String formName = namespace + request.getAttribute("liferay-ui:input-select:formName");
 String param = (String)request.getAttribute("liferay-ui:input-select:param");
 Boolean defaultValue = (Boolean)request.getAttribute("liferay-ui:input-select:defaultValue");
 boolean disabled = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-select:disabled"));

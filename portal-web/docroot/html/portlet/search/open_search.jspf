@@ -43,7 +43,7 @@ while (itr.hasNext()) {
 		try {
 			ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
 
-			Class<?> openSearchClazz = classLoader.loadClass(portlet.getOpenSearchClass());
+			classLoader.loadClass(portlet.getOpenSearchClass());
 
 			itr.remove();
 

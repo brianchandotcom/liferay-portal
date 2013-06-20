@@ -29,8 +29,6 @@ birthday.set(Calendar.YEAR, 1970);
 if (selContact != null) {
 	birthday.setTime(selContact.getBirthday());
 }
-
-boolean deletePortrait = ParamUtil.getBoolean(request, "deletePortrait");
 %>
 
 <liferay-ui:error-marker key="errorSection" value="details" />

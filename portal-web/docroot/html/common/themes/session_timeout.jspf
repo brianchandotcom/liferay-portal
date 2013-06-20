@@ -26,8 +26,6 @@
 		int sessionTimeout = PropsValues.SESSION_TIMEOUT;
 		int sessionTimeoutMinute = sessionTimeout * (int)Time.MINUTE;
 		int sessionTimeoutWarning = PropsValues.SESSION_TIMEOUT_WARNING;
-		int sessionTimeoutWarningMinute = sessionTimeoutWarning * (int)Time.MINUTE;
-		int timeoutDiff = (sessionTimeout - sessionTimeoutWarning) * (int)Time.MINUTE;
 
 		boolean sessionRedirectOnExpire = PropsValues.SESSION_TIMEOUT_REDIRECT_ON_EXPIRE;
 		String sessionRedirectUrl = themeDisplay.getURLHome();

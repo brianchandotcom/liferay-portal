@@ -25,7 +25,6 @@ Map<String, Object> dataView = (Map<String, Object>)request.getAttribute("lifera
 String entryTitle = (String)request.getAttribute("liferay-ui:app-view-navigation-entry:entryTitle");
 String expandURL = (String)request.getAttribute("liferay-ui:app-view-navigation-entry:expandURL");
 String iconImage = (String)request.getAttribute("liferay-ui:app-view-navigation-entry:iconImage");
-String iconSrc = (String)request.getAttribute("liferay-ui:app-view-navigation-entry:iconSrc");
 boolean selected = GetterUtil.getBoolean(request.getAttribute("liferay-ui:app-view-navigation-entry:selected"));
 boolean showExpand = GetterUtil.getBoolean(request.getAttribute("liferay-ui:app-view-navigation-entry:showExpand"));
 String viewURL = (String)request.getAttribute("liferay-ui:app-view-navigation-entry:viewURL");

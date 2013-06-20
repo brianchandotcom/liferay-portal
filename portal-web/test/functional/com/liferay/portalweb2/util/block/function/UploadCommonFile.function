@@ -1,0 +1,7 @@
+<definition>
+	<command name="uploadCommonFile">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="uploadCommonFile" />
+	</command>
+</definition>

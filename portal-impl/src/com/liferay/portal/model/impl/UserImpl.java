@@ -370,7 +370,7 @@ public class UserImpl extends UserBaseImpl {
 			return myPlaces;
 		}
 
-		myPlaces = GroupServiceUtil.getUserPlaces(
+		myPlaces = GroupServiceUtil.getUserPlacesGroups(
 			getUserId(), classNames, includeControlPanel, max);
 
 		threadLocalCache.put(key, myPlaces);

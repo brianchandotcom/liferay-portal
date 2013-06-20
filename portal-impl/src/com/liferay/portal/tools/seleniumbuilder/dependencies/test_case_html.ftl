@@ -9,6 +9,10 @@
 		<div id="log">
 		</div>
 
-		<#include "test_case_element_html.ftl">
+		<ul onclick="toggle(event);">
+			<#assign lineFolds = 0>
+
+			<#include "test_case_element_html.ftl">
+		</ul>
 	</body>
 </html>

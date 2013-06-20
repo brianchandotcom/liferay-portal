@@ -338,12 +338,13 @@ if (!selectableTree) {
 
 			var plid = TreeUtil.extractPlid(node);
 
-			if (AArray.indexOf(TreeUtil.SELECTED_NODES, plid) > -1) {
-				if (node.check) {
-					var tree = node.get('ownerTree');
+			var tree = node.get('ownerTree');
 
-					node.check(tree);
-				}
+			if (AArray.indexOf(TreeUtil.SELECTED_NODES, plid) > -1) {
+				A.TreeNodeTask.superclass.check.call(node, tree);
+			}
+			else {
+				A.TreeNodeTask.superclass.uncheck.call(node, tree);
 			}
 
 			AArray.each(node.get(STR_CHILDREN), TreeUtil.restoreNodeState);
@@ -470,13 +471,6 @@ if (!selectableTree) {
 				else if (index > -1) {
 					AArray.remove(selectedNodes, index);
 				}
-
-				AArray.each(
-					node.get(STR_CHILDREN),
-					function(item) {
-						TreeUtil.updateSelectedNodes(item, state);
-					}
-				);
 			},
 
 			updateSessionTreeCheckedState: function(treeId, nodeId, state) {

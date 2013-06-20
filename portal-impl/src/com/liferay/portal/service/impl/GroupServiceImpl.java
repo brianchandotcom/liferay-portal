@@ -723,6 +723,13 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		return getUserPlacesGroups(getGuestOrUserId(), classNames, false, max);
 	}
 
+	@Override
+	public List<Group> getUserPlacesGroups()
+		throws PortalException, SystemException {
+
+		return getUserPlacesGroups(null, QueryUtil.ALL_POS);
+	}
+
 	/**
 	 * Returns the number of the guest or current user's group
 	 * &quot;places&quot; associated with the group entity class names,
@@ -757,9 +764,17 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 *         organization groups, and site groups
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
+	 * @deprecated As of 6.2.0, replaced by {@link #getUserPlacesGroups()}
 	 */
 	@Override
 	public List<Group> getUserSites() throws PortalException, SystemException {
+		return getUserPlacesGroups();
+	}
+
+	@Override
+	public List<Group> getUserSitesGroups()
+		throws PortalException, SystemException {
+
 		return getUserPlacesGroups(null, QueryUtil.ALL_POS);
 	}
 

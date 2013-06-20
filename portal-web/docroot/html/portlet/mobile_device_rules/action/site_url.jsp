@@ -26,7 +26,7 @@ long actionGroupId = GetterUtil.getLong(typeSettingsProperties.getProperty("grou
 	<%
 	int count = 0;
 
-	for (Group group : GroupServiceUtil.getUserSites()) {
+	for (Group group : GroupServiceUtil.getUserPlacesGroups()) {
 		if (!group.isUser() && !group.isControlPanel()) {
 			count++;
 	%>

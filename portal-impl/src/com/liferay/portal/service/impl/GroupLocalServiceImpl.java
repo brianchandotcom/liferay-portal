@@ -1767,7 +1767,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			companyId, classNameId, defaultUserId);
 	}
 
-	public List<Group> getUserSites(long userId)
+	public List<Group> getUserSitesGroups(long userId)
 		throws PortalException, SystemException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
@@ -1784,11 +1784,12 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			QueryUtil.ALL_POS);
 	}
 
-	public List<Group> getUserSites(long userId, boolean includeAdministrative)
+	public List<Group> getUserSitesGroups(
+			long userId, boolean includeAdministrative)
 		throws PortalException, SystemException {
 
 		if (!includeAdministrative) {
-			return getUserSites(userId);
+			return getUserSitesGroups(userId);
 		}
 
 		Set<Group> sites = new HashSet<Group>();
@@ -1810,7 +1811,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			}
 		}
 
-		sites.addAll(getUserSites(userId));
+		sites.addAll(getUserSitesGroups(userId));
 
 		return new ArrayList<Group>(sites);
 	}

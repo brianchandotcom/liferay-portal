@@ -545,7 +545,7 @@ public class UserImpl extends UserBaseImpl {
 	public List<Group> getSites(boolean includeAdministrative)
 		throws PortalException, SystemException {
 
-		return GroupLocalServiceUtil.getUserSites(
+		return GroupLocalServiceUtil.getUserSitesGroups(
 			getUserId(), includeAdministrative);
 	}
 

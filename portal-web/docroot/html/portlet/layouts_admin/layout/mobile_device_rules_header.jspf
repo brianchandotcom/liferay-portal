@@ -23,8 +23,6 @@ portletURL.setParameter("struts_action", "/layouts_admin/edit_layouts");
 portletURL.setParameter("selPlid", String.valueOf(selPlid));
 portletURL.setParameter("className", className);
 portletURL.setParameter("classPK", String.valueOf(classPK));
-
-String redirect = portletURL.toString();
 %>
 
 <liferay-ui:error-marker key="errorSection" value="device" />

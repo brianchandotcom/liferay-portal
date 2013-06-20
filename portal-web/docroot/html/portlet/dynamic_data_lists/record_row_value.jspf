@@ -17,7 +17,6 @@
 <%
 String dataType = fields.get(FieldConstants.DATA_TYPE);
 String name = fields.get(FieldConstants.NAME);
-String type = fields.get(FieldConstants.TYPE);
 
 String value = null;
 

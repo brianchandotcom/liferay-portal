@@ -15,8 +15,6 @@
 --%>
 
 <%
-String languageId = LanguageUtil.getLanguageId(request);
-
 if (Validator.isNull(script)) {
 	script = structure.getXsd();
 	scriptJSONArray = DDMXSDUtil.getJSONArray(script);

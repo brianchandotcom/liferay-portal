@@ -17,8 +17,6 @@
 <%@ include file="/html/portlet/directory/init.jsp" %>
 
 <%
-String strutsAction = ParamUtil.getString(request, "struts_action");
-
 UserSearch searchContainer = (UserSearch)request.getAttribute("liferay-ui:search:searchContainer");
 
 UserDisplayTerms displayTerms = (UserDisplayTerms)searchContainer.getDisplayTerms();

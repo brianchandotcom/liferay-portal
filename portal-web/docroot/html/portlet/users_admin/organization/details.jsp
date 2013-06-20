@@ -35,8 +35,6 @@ String type = BeanParamUtil.getString(organization, request, "type", PropsValues
 long regionId = BeanParamUtil.getLong(organization, request, "regionId");
 long countryId = BeanParamUtil.getLong(organization, request, "countryId");
 
-boolean deleteLogo = ParamUtil.getBoolean(request, "deleteLogo");
-
 long groupId = 0;
 
 if (organization != null) {

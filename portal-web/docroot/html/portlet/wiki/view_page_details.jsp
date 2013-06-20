@@ -52,10 +52,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "det
 	<liferay-util:param name="tabs1" value="details" />
 </liferay-util:include>
 
-<%
-int count = 0;
-%>
-
 <table class="table table-bordered table-hover table-striped page-info">
 <tr>
 	<th class="table-header">

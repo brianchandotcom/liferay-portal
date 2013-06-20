@@ -27,8 +27,4 @@ page import="com.liferay.portlet.assetpublisher.search.AssetSearch" %><%@
 page import="com.liferay.portlet.assetpublisher.search.AssetSearchTerms" %><%@
 page import="com.liferay.portlet.journal.model.JournalArticle" %>
 
-<%
-Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
-%>
-
 <%@ include file="/html/portlet/asset_browser/init-ext.jsp" %>

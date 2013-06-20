@@ -26,8 +26,6 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 Organization organization = (Organization)row.getObject();
 
 long organizationId = organization.getOrganizationId();
-
-long organizationGroupId = organization.getGroup().getGroupId();
 %>
 
 <liferay-ui:icon-menu>

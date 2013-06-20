@@ -20,8 +20,6 @@
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/monitoring/view");
-
-String portletURLString = portletURL.toString();
 %>
 
 <c:choose>

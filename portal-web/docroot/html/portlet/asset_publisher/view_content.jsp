@@ -78,7 +78,6 @@ try {
 	String summary = StringPool.BLANK;
 	String viewURL = StringPool.BLANK;
 	String viewURLMessage = StringPool.BLANK;
-	String editURL = StringPool.BLANK;
 
 	request.setAttribute("view.jsp-results", results);
 

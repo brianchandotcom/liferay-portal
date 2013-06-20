@@ -100,7 +100,7 @@ if (!selectableTree) {
 			loadingEl.hide();
 
 			<c:choose>
-				<c:when test="<%= saveState %>">
+				<c:when test="<%= saveState && selectableTree %>">
 					TreeUtil.restoreNodeState(rootNode);
 				</c:when>
 				<c:when test="<%= expandFirstNode %>">
@@ -179,28 +179,32 @@ if (!selectableTree) {
 					var newNode = {
 						<c:if test="<%= saveState %>">
 							after: {
-								checkedChange: function(event) {
-									if (this === event.originalTarget) {
-										var target = event.target;
+								<c:if test="<%= selectableTree %>">
+									checkedChange: function(event) {
+										if (this === event.originalTarget) {
+											var target = event.target;
 
-										var plid = TreeUtil.extractPlid(target);
+											var plid = TreeUtil.extractPlid(target);
 
-										TreeUtil.updateSessionTreeCheckedState('<%= HtmlUtil.escape(treeId) %>SelectedNode', plid, event.newVal);
+											TreeUtil.updateSessionTreeCheckedState('<%= HtmlUtil.escape(treeId) %>SelectedNode', plid, event.newVal);
 
-										TreeUtil.updateSelectedNodes(target, event.newVal);
-									}
-								},
+											TreeUtil.updateSelectedNodes(target, event.newVal);
+										}
+									},
+								</c:if>
 
 								childrenChange: function(event) {
 									var target = event.target;
 
-									if (target.get('checked')) {
-										TreeUtil.updateSelectedNodes(target, true);
-									}
-
 									target.set('alwaysShowHitArea', event.newVal.length > 0);
 
-									TreeUtil.restoreNodeState(target);
+									<c:if test="<%= selectableTree %>">
+										if (target.get('checked')) {
+											TreeUtil.updateSelectedNodes(target, true);
+										}
+
+										TreeUtil.restoreNodeState(target);
+									</c:if>
 								},
 
 								expandedChange: function(event) {
@@ -541,11 +545,14 @@ if (!selectableTree) {
 		{
 			<c:if test="<%= saveState %>">
 				after: {
-					checkedChange: function(event) {
-						TreeUtil.updateSessionTreeCheckedState('<%= HtmlUtil.escape(treeId) %>SelectedNode', <%= LayoutConstants.DEFAULT_PLID %>, event.newVal);
+					<c:if test="<%= selectableTree %>">
+						checkedChange: function(event) {
+							TreeUtil.updateSessionTreeCheckedState('<%= HtmlUtil.escape(treeId) %>SelectedNode', <%= LayoutConstants.DEFAULT_PLID %>, event.newVal);
 
-						TreeUtil.updateSelectedNodes(event.target, event.newVal);
-					},
+							TreeUtil.updateSelectedNodes(event.target, event.newVal);
+						},
+					</c:if>
+
 					expandedChange: function(event) {
 						Liferay.Store('<%= HtmlUtil.escape(treeId) %>RootNode', event.newVal);
 					}
@@ -645,7 +652,7 @@ if (!selectableTree) {
 				url: GET_LAYOUTS_URL
 			},
 			on: {
-				<c:if test="<%= saveState %>">
+				<c:if test="<%= saveState && selectableTree %>">
 					append: function(event) {
 						TreeUtil.restoreNodeState(event.tree.node);
 					},

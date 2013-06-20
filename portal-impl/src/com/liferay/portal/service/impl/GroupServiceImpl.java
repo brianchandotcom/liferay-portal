@@ -673,7 +673,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 * @param  userId the primary key of the user
 	 * @param  classNames the group entity class names (optionally
 	 *         <code>null</code>). For more information see {@link
-	 *         #getUserPlacesGroups(long, String[], int)}
+	 *         #getUserPlacesGroups(long, String[], boolean, int)}
 	 * @param  max the maximum number of groups to return
 	 * @return the user's group &quot;places&quot;
 	 * @throws PortalException if a portal exception occurred
@@ -820,7 +820,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 *
 	 * @param  classNames the group entity class names (optionally
 	 *         <code>null</code>). For more information see {@link
-	 *         #getUserPlacesGroups(String[], int)}
+	 *         #getUserPlacesGroups(long, String[], boolean, int)}
 	 * @param  max the maximum number of groups to return
 	 * @return the user's group &quot;places&quot;
 	 * @throws PortalException if a portal exception occurred

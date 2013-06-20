@@ -791,6 +791,10 @@ public class PortletURLImpl
 			return;
 		}
 
+		if (!_portlet.isAddDefaultResource()) {
+			return;
+		}
+
 		Portlet portlet = (Portlet)_request.getAttribute(
 			WebKeys.RENDER_PORTLET);
 
@@ -798,8 +802,7 @@ public class PortletURLImpl
 			String portletId = portlet.getPortletId();
 
 			if (portletId.equals(_portletId) ||
-				portletId.equals(PortletKeys.CONTROL_PANEL_MENU) ||
-				!_portlet.isAddDefaultResource()) {
+				portletId.equals(PortletKeys.CONTROL_PANEL_MENU)) {
 
 				return;
 			}

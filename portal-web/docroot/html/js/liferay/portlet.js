@@ -3,6 +3,8 @@
 
 	var arrayIndexOf = A.Array.indexOf;
 
+	var STR_HEAD = 'head';
+
 	var TPL_NOT_AJAXABLE = '<div class="alert alert-info">{0}</div>';
 
 	var Portlet = {
@@ -44,6 +46,22 @@
 			);
 		},
 
+		_loadMarkupHeadElements: function(response, loadHTML) {
+			var markupHeadElements = response.markupHeadElements;
+
+			if (markupHeadElements && markupHeadElements.length) {
+				var head = A.one(STR_HEAD);
+
+				head.append(markupHeadElements);
+
+				var container = A.Node.create('<div />');
+
+				container.plug(A.Plugin.ParseContent);
+
+				container.setContent(markupHeadElements);
+			}
+		},
+
 		_loadPortletFiles: function(response, loadHTML) {
 			var headerCssPaths = response.headerCssPaths || [];
 			var footerCssPaths = response.footerCssPaths || [];
@@ -52,7 +70,7 @@
 
 			javascriptPaths = javascriptPaths.concat(response.footerJavaScriptPaths || []);
 
-			var head = A.one('head');
+			var head = A.one(STR_HEAD);
 			var body = A.getBody();
 
 			if (headerCssPaths.length) {
@@ -325,6 +343,7 @@
 								addPortletReturn(response.portletHTML);
 							}
 							else {
+								Portlet._loadMarkupHeadElements(response);
 								Portlet._loadPortletFiles(response, addPortletReturn);
 							}
 						}

@@ -25,22 +25,22 @@ String strutsAction = ParamUtil.getString(request, "struts_action");
 		<aui:nav-item cssClass="hide" dropdown="<%= true %>" id="actionsButtonContainer" label="actions">
 
 			<%
-			String taglibOnClick = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + (TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE) + "'});";
+			String taglibURL = "javascript:if (" + TrashUtil.isTrashEnabled(scopeGroupId) + " || confirm('" + UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-the-selected-entries") + "')){Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + (TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE) + "'});}";
 			%>
 
-			<aui:nav-item href="<%= taglibOnClick %>" iconClass='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "icon-trash" : "icon-remove" %>' label='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "move-to-the-recycle-bin" : "delete" %>' />
+			<aui:nav-item href="<%= taglibURL %>" iconClass='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "icon-trash" : "icon-remove" %>' label='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "move-to-the-recycle-bin" : "delete" %>' />
 
 			<%
-			taglibOnClick = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.EXPIRE + "'});";
+			taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.EXPIRE + "'});";
 			%>
 
-			<aui:nav-item href="<%= taglibOnClick %>" label="expire" />
+			<aui:nav-item href="<%= taglibURL %>" label="expire" />
 
 			<%
-			taglibOnClick = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.MOVE + "'});";
+			taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.MOVE + "'});";
 			%>
 
-			<aui:nav-item href="<%= taglibOnClick %>" label="move" />
+			<aui:nav-item href="<%= taglibURL %>" label="move" />
 		</aui:nav-item>
 
 		<liferay-util:include page="/html/portlet/journal/add_button.jsp" />

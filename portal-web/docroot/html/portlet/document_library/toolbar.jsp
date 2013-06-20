@@ -34,28 +34,28 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 			<c:if test="<%= !scopeGroup.isStaged() || scopeGroup.isStagingGroup() || !scopeGroup.isStagedPortlet(PortletKeys.DOCUMENT_LIBRARY) %>">
 
 				<%
-				String taglibOnClick = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CANCEL_CHECKOUT + "'});";
+				String taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CANCEL_CHECKOUT + "'});";
 				%>
 
-				<aui:nav-item href="<%= taglibOnClick %>" label="cancel-checkout[document]" />
+				<aui:nav-item href="<%= taglibURL %>" label="cancel-checkout[document]" />
 
 				<%
-				taglibOnClick = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CHECKIN + "'});";
+				taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CHECKIN + "'});";
 				%>
 
-				<aui:nav-item href="<%= taglibOnClick %>" label="checkin" />
+				<aui:nav-item href="<%= taglibURL %>" label="checkin" />
 
 				<%
-				taglibOnClick = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CHECKOUT + "'});";
+				taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CHECKOUT + "'});";
 				%>
 
-				<aui:nav-item href="<%= taglibOnClick %>" label="checkout[document]" />
+				<aui:nav-item href="<%= taglibURL %>" label="checkout[document]" />
 
 				<%
-				taglibOnClick = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.MOVE + "'});";
+				taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.MOVE + "'});";
 				%>
 
-				<aui:nav-item href="<%= taglibOnClick %>" label="move" />
+				<aui:nav-item href="<%= taglibURL %>" label="move" />
 			</c:if>
 
 			<%
@@ -65,7 +65,7 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 			<aui:nav-item href="<%= taglibURL %>" iconClass="icon-trash" id="moveToTrashAction" label="move-to-the-recycle-bin" />
 
 			<%
-			taglibURL = "Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.DELETE + "'});";
+			taglibURL = "javascript:if (confirm('" + UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-the-selected-entries") + "')){Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.DELETE + "'});}";
 			%>
 
 			<aui:nav-item href="<%= taglibURL %>" iconClass="icon-remove" id="deleteAction" label="delete" />

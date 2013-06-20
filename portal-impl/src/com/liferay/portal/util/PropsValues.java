@@ -708,9 +708,15 @@ public class PropsValues {
 
 	public static final boolean FACEBOOK_CONNECT_VERIFIED_ACCOUNT_REQUIRED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.FACEBOOK_CONNECT_VERIFIED_ACCOUNT_REQUIRED));
 
-	public static final String[] FIELD_EDITABLE_COM_LIFERAY_PORTAL_MODEL_USER_EMAILADDRESS = PropsUtil.getArray(PropsKeys.FIELD_EDITABLE_COM_LIFERAY_PORTAL_MODEL_USER_EMAILADDRESS);
+	public static final String[] FIELD_EDITABLE_DOMAINS = PropsUtil.getArray(PropsKeys.FIELD_EDITABLE_DOMAINS);
 
-	public static final String[] FIELD_EDITABLE_COM_LIFERAY_PORTAL_MODEL_USER_SCREENNAME = PropsUtil.getArray(PropsKeys.FIELD_EDITABLE_COM_LIFERAY_PORTAL_MODEL_USER_SCREENNAME);
+	public static final String[] FIELD_EDITABLE_DOMAINS_EXCEPTIONS = PropsUtil.getArray(PropsKeys.FIELD_EDITABLE_DOMAINS_EXCEPTIONS);
+
+	public static final String[] FIELD_EDITABLE_EXCEPTIONS = PropsUtil.getArray(PropsKeys.FIELD_EDITABLE_EXCEPTIONS);
+
+	public static final String[] FIELD_EDITABLE_ROLES = PropsUtil.getArray(PropsKeys.FIELD_EDITABLE_ROLES);
+
+	public static final String[] FIELD_EDITABLE_USER_TYPES = PropsUtil.getArray(PropsKeys.FIELD_EDITABLE_USER_TYPES);
 
 	public static boolean FIELD_ENABLE_COM_LIFERAY_PORTAL_MODEL_CONTACT_BIRTHDAY = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.FIELD_ENABLE_COM_LIFERAY_PORTAL_MODEL_CONTACT_BIRTHDAY));
 

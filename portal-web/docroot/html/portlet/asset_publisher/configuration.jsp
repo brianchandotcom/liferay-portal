@@ -186,70 +186,32 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 					</c:if>
 
 					<%
+					List<String> typesList = new ArrayList<String>();
+
+					if (PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.SITES_CONTENT_SHARING_THROUGH_ADMINISTRATORS_ENABLED)) {
+						typesList.add("sites-that-i-administer");
+					}
+
+					if (GroupLocalServiceUtil.getGroupsCount(company.getCompanyId(), layout.getGroupId(), Boolean.TRUE) > 0) {
+						typesList.add("child-sites");
+					}
+
 					Group siteGroup = themeDisplay.getSiteGroup();
+
+					if (!siteGroup.isRoot()) {
+						typesList.add("parent-sites");
+					}
 					%>
 
-					<c:if test="<%= !siteGroup.isRoot() %>">
-
-						<%
-						PortletURL parentSiteBrowserURL = PortletURLFactoryUtil.create(request, PortletKeys.SITE_BROWSER, PortalUtil.getControlPanelPlid(company.getCompanyId()), PortletRequest.RENDER_PHASE);
-
-						parentSiteBrowserURL.setParameter("struts_action", "/site_browser/view");
-						parentSiteBrowserURL.setParameter("groupId", String.valueOf(layout.getGroupId()));
-						parentSiteBrowserURL.setParameter("selectedGroupIds", StringUtil.merge(groupIds));
-						parentSiteBrowserURL.setParameter("type", "parentSites");
-						parentSiteBrowserURL.setParameter("filter", "contentSharingWithChildrenEnabled");
-						parentSiteBrowserURL.setParameter("callback", liferayPortletResponse.getNamespace() + "selectGroup");
-						parentSiteBrowserURL.setPortletMode(PortletMode.VIEW);
-						parentSiteBrowserURL.setWindowState(LiferayWindowState.POP_UP);
-
-						String parentSiteBrowserURLString = HttpUtil.addParameter(parentSiteBrowserURL.toString(), "doAsGroupId", scopeGroupId);
-						%>
-
-						<liferay-ui:icon
-							cssClass="highlited scope-selector"
-							id="selectGroup"
-							image="add"
-							message='<%= LanguageUtil.get(pageContext, "parent-site") + StringPool.TRIPLE_PERIOD %>'
-							method="get"
-							url="<%= parentSiteBrowserURLString %>"
-						/>
-					</c:if>
-
-					<c:if test="<%= GroupLocalServiceUtil.getGroupsCount(company.getCompanyId(), layout.getGroupId(), Boolean.TRUE) > 0 %>">
-
-						<%
-						PortletURL childrenSiteBrowserURL = PortletURLFactoryUtil.create(request, PortletKeys.SITE_BROWSER, PortalUtil.getControlPanelPlid(company.getCompanyId()), PortletRequest.RENDER_PHASE);
-
-						childrenSiteBrowserURL.setParameter("struts_action", "/site_browser/view");
-						childrenSiteBrowserURL.setParameter("groupId", String.valueOf(layout.getGroupId()));
-						childrenSiteBrowserURL.setParameter("selectedGroupIds", StringUtil.merge(groupIds));
-						childrenSiteBrowserURL.setParameter("type", "childSites");
-						childrenSiteBrowserURL.setParameter("callback", liferayPortletResponse.getNamespace() + "selectGroup");
-						childrenSiteBrowserURL.setPortletMode(PortletMode.VIEW);
-						childrenSiteBrowserURL.setWindowState(LiferayWindowState.POP_UP);
-
-						String childrenSiteBrowserURLString = HttpUtil.addParameter(childrenSiteBrowserURL.toString(), "doAsGroupId", scopeGroupId);
-						%>
-
-						<liferay-ui:icon
-							cssClass="highlited scope-selector"
-							id="selectChildGroup"
-							image="add"
-							message='<%= LanguageUtil.get(pageContext, "child-site") + StringPool.TRIPLE_PERIOD %>'
-							method="get"
-							url="<%= childrenSiteBrowserURLString %>"
-						/>
-					</c:if>
-
-					<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.SITES_CONTENT_SHARING_THROUGH_ADMINISTRATORS_ENABLED) %>">
+					<c:if test="<%= !typesList.isEmpty() %>">
 
 						<%
 						PortletURL siteBrowserURL = PortletURLFactoryUtil.create(request, PortletKeys.SITE_BROWSER, PortalUtil.getControlPanelPlid(company.getCompanyId()), PortletRequest.RENDER_PHASE);
 
 						siteBrowserURL.setParameter("struts_action", "/site_browser/view");
+						siteBrowserURL.setParameter("groupId", String.valueOf(layout.getGroupId()));
 						siteBrowserURL.setParameter("selectedGroupIds", StringUtil.merge(groupIds));
-						siteBrowserURL.setParameter("type", "manageable-sites");
+						siteBrowserURL.setParameter("types", StringUtil.merge(typesList));
 						siteBrowserURL.setParameter("callback", liferayPortletResponse.getNamespace() + "selectGroup");
 						siteBrowserURL.setPortletMode(PortletMode.VIEW);
 						siteBrowserURL.setWindowState(LiferayWindowState.POP_UP);
@@ -261,7 +223,7 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 							cssClass="highlited scope-selector"
 							id="selectManageableGroup"
 							image="add"
-							message='<%= LanguageUtil.get(pageContext, "site") + StringPool.TRIPLE_PERIOD %>'
+							message='<%= LanguageUtil.get(pageContext, "other-site") + StringPool.TRIPLE_PERIOD %>'
 							method="get"
 							url="<%= siteBrowserURLString %>"
 						/>

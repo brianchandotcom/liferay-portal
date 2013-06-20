@@ -771,13 +771,6 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		return getUserPlacesGroups();
 	}
 
-	@Override
-	public List<Group> getUserSitesGroups()
-		throws PortalException, SystemException {
-
-		return getUserPlacesGroups(null, QueryUtil.ALL_POS);
-	}
-
 	/**
 	 * Returns <code>true</code> if the user is associated with the group,
 	 * including the user's inherited organizations and user groups. System and

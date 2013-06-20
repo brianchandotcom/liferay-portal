@@ -42,7 +42,7 @@ public class DeployManagerImpl implements DeployManager {
 
 		AutoDeployDir.deploy(
 			autoDeploymentContext,
-			GlobalStartupAction.getAutoDeployListeners());
+			GlobalStartupAction.getAutoDeployListeners(false));
 	}
 
 	@Override

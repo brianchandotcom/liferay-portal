@@ -791,6 +791,10 @@ public class PortletURLImpl
 			return;
 		}
 
+		if (!_portlet.isAddDefaultResource()) {
+			return;
+		}
+
 		Portlet portlet = (Portlet)_request.getAttribute(
 			WebKeys.RENDER_PORTLET);
 
@@ -798,8 +802,7 @@ public class PortletURLImpl
 			String portletId = portlet.getPortletId();
 
 			if (portletId.equals(_portletId) ||
-				portletId.equals(PortletKeys.CONTROL_PANEL_MENU) ||
-				!_portlet.isAddDefaultResource()) {
+				portletId.equals(PortletKeys.CONTROL_PANEL_MENU)) {
 
 				return;
 			}
@@ -811,12 +814,10 @@ public class PortletURLImpl
 			return;
 		}
 
-		if (_portlet.isAddDefaultResource()) {
-			sb.append("p_p_auth");
-			sb.append(StringPool.EQUAL);
-			sb.append(processValue(key, actualPortletAuthenticationToken));
-			sb.append(StringPool.AMPERSAND);
-		}
+		sb.append("p_p_auth");
+		sb.append(StringPool.EQUAL);
+		sb.append(processValue(key, actualPortletAuthenticationToken));
+		sb.append(StringPool.AMPERSAND);
 	}
 
 	protected void clearCache() {

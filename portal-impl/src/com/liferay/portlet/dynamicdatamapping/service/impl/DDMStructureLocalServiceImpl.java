@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -389,28 +390,30 @@ public class DDMStructureLocalServiceImpl
 	public void deleteStructure(DDMStructure structure)
 		throws PortalException, SystemException {
 
-		if (ddmStructureLinkPersistence.countByStructureId(
-				structure.getStructureId()) > 0) {
+		if (!GroupThreadLocal.isDeleteInProcess()) {
+			if (ddmStructureLinkPersistence.countByStructureId(
+					structure.getStructureId()) > 0) {
 
-			throw new RequiredStructureException(
-				RequiredStructureException.REFERENCED_STRUCTURE_LINK);
-		}
+				throw new RequiredStructureException(
+					RequiredStructureException.REFERENCED_STRUCTURE_LINK);
+			}
 
-		if (ddmStructurePersistence.countByParentStructureId(
-				structure.getStructureId()) > 0) {
+			if (ddmStructurePersistence.countByParentStructureId(
+					structure.getStructureId()) > 0) {
 
-			throw new RequiredStructureException(
-				RequiredStructureException.REFERENCED_STRUCTURE);
-		}
+				throw new RequiredStructureException(
+					RequiredStructureException.REFERENCED_STRUCTURE);
+			}
 
-		long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
+			long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
 
-		if (ddmTemplatePersistence.countByG_C_C(
-				structure.getGroupId(), classNameId,
-				structure.getPrimaryKey()) > 0) {
+			if (ddmTemplatePersistence.countByG_C_C(
+					structure.getGroupId(), classNameId,
+					structure.getPrimaryKey()) > 0) {
 
-			throw new RequiredStructureException(
-				RequiredStructureException.REFERENCED_TEMPLATE);
+				throw new RequiredStructureException(
+					RequiredStructureException.REFERENCED_TEMPLATE);
+			}
 		}
 
 		// Structure

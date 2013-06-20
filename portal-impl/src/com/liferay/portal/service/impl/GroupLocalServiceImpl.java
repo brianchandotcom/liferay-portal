@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -670,6 +671,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	@Override
 	public Group deleteGroup(Group group)
 		throws PortalException, SystemException {
+
+		GroupThreadLocal.setDeleteInProcess(true);
 
 		if ((group.isCompany() || PortalUtil.isSystemGroup(group.getName())) &&
 			!CompanyThreadLocal.isDeleteInProcess()) {

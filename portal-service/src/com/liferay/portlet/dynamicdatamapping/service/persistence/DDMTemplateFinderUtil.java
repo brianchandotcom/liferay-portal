@@ -81,6 +81,11 @@ public class DDMTemplateFinderUtil {
 			classPKs, names, descriptions, types, modes, languages, andOperator);
 	}
 
+	public static int countByG_SC(long groupId, long structureClassNameId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().countByG_SC(groupId, structureClassNameId);
+	}
+
 	public static int filterCountByKeywords(long companyId, long groupId,
 		long classNameId, long classPK, java.lang.String keywords,
 		java.lang.String type, java.lang.String mode)

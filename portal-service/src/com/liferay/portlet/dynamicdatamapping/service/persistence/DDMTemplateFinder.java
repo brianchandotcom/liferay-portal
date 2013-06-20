@@ -54,6 +54,9 @@ public interface DDMTemplateFinder {
 		boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public int countByG_SC(long groupId, long structureClassNameId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public int filterCountByKeywords(long companyId, long groupId,
 		long classNameId, long classPK, java.lang.String keywords,
 		java.lang.String type, java.lang.String mode)

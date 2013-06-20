@@ -357,9 +357,14 @@ public interface DDMTemplateService extends BaseService {
 		long groupId, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public int countTemplatesByStructureClassNameId(long groupId,
+		long structureClassNameId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Returns an ordered range of all the templates matching the group and
-	* structure class name ID.
+	* structure class name ID, including Generic Templates.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end -

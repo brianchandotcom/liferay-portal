@@ -46,7 +46,7 @@ else {
 		<div class="portrait-icons">
 			<div class="btn-group">
 				<aui:button cssClass="btn edit-logo" icon="icon-picture" value="change" />
-				<aui:button cssClass="btn delete-logo" disablesd="<%= (imageId == 0) %>" icon="icon-trash" value="delete" />
+				<aui:button cssClass="btn delete-logo" disablesd="<%= (imageId == 0) %>" icon="icon-remove" value="delete" />
 			</div>
 
 			<aui:input name="deleteLogo" type="hidden" value="<%= deleteLogo %>" />

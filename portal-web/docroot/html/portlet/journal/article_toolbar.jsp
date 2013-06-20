@@ -116,7 +116,7 @@ if ((article != null) && article.isDraft()) {
 	<c:if test="<%= (article != null) && JournalArticlePermission.contains(permissionChecker, article, ActionKeys.DELETE) && !article.isApproved() && !article.isDraft() %>">
 		toolbarButtonGroup.push(
 			{
-				icon: 'icon-trash',
+				icon: 'icon-remove',
 				label: '<liferay-ui:message key="<%= deleteButtonLabel %>" />',
 				on: {
 					click: function() {

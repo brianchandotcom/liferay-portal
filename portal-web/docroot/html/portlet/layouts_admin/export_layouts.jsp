@@ -311,19 +311,17 @@ if (endDateTime > 0) {
 										</ul>
 									</div>
 
+									<liferay-util:buffer var="selectedLabels">
+										<div class="selected-labels" id="<portlet:namespace />selectedRange"></div>
+	
+										<aui:a cssClass="modify-link" href="javascript:;" id="rangeLink" label="change" method="get" />
+									</liferay-util:buffer>
+
 									<liferay-ui:icon
 										image="calendar"
 										label="<%= true %>"
-										message="date-range"
+										message='<%= LanguageUtil.get(locale, "date-range") + selectedLabels %>'
 									/>
-
-									<ul>
-										<li>
-											<div class="selected-labels" id="<portlet:namespace />selectedRange"></div>
-
-											<aui:a cssClass="modify-link" href="javascript:;" id="rangeLink" label="change" method="get" />
-										</li>
-									</ul>
 								</li>
 
 								<li class="export-import-content">

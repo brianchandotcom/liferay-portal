@@ -135,12 +135,10 @@ if (endDateTime > 0) {
 							<aui:input helpMessage="choose-applications-export-help" id="chooseApplications" label="choose-applications" name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL %>" type="radio" value="<%= false %>" />
 
 							<c:if test="<%= !group.isLayoutPrototype() %>">
-								<ul class="hide export-import-content" id="<portlet:namespace />selectApplications">
+								<ul class="hide export-import-content export-import-choose-content" id="<portlet:namespace />selectApplications">
 									<aui:input name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION %>" type="hidden" value="<%= true %>" />
 
 									<%
-									Set<String> portletDataHandlerClasses = new HashSet<String>();
-
 									portletDataHandlerPortlets = ListUtil.sort(portletDataHandlerPortlets, new PortletTitleComparator(application, locale));
 
 									for (Portlet portlet : portletDataHandlerPortlets) {
@@ -150,7 +148,7 @@ if (endDateTime > 0) {
 											String portletTitle = PortalUtil.getPortletTitle(portlet, application, locale);
 									%>
 
-											<li class="tree-item">
+											<li class="tree-item portlet-list">
 												<aui:input label="<%= portletTitle %>" name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION + StringPool.UNDERLINE + portlet.getRootPortletId() %>" type="checkbox" value="<%= portletDataHandler.isPublishToLiveByDefault() %>" />
 
 												<div class="hide" id="<portlet:namespace />configuration_<%= portlet.getRootPortletId() %>">
@@ -212,7 +210,7 @@ if (endDateTime > 0) {
 
 							<aui:input helpMessage="choose-content-export-help" id="chooseContent" label="choose-content" name="<%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>" type="radio" value="<%= false %>" />
 
-							<ul class="hide" id="<portlet:namespace />selectContents">
+							<ul class="hide export-import-choose-content" id="<portlet:namespace />selectContents">
 								<li>
 									<aui:input name="<%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>" type="hidden" value="<%= true %>" />
 
@@ -313,7 +311,7 @@ if (endDateTime > 0) {
 
 									<liferay-util:buffer var="selectedLabels">
 										<div class="selected-labels" id="<portlet:namespace />selectedRange"></div>
-	
+
 										<aui:a cssClass="modify-link" href="javascript:;" id="rangeLink" label="change" method="get" />
 									</liferay-util:buffer>
 
@@ -324,7 +322,7 @@ if (endDateTime > 0) {
 									/>
 								</li>
 
-								<li class="export-import-content">
+								<li class="export-import-content portlet-list">
 									<aui:input helpMessage="export-import-categories-help" label="categories" name="<%= PortletDataHandlerKeys.CATEGORIES %>" type="checkbox" value="<%= true %>" />
 
 									<%
@@ -361,7 +359,7 @@ if (endDateTime > 0) {
 												<span class="count-display"><%= exportModelCount > 0 ? exportModelCount : StringPool.BLANK %></span>
 											</liferay-util:buffer>
 
-											<aui:input checked="<%= portletDataHandler.isPublishToLiveByDefault() %>" label='<%= portletTitle + count %>' name="<%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getPortletId() %>" type="checkbox" />
+											<aui:input checked="<%= portletDataHandler.isPublishToLiveByDefault() %>" label="<%= portletTitle + count %>" name="<%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getPortletId() %>" type="checkbox" />
 
 											<%
 											PortletDataHandlerControl[] exportControls = portletDataHandler.getExportControls();

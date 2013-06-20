@@ -170,7 +170,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 					<aui:input name="emailAddress" type="hidden" />
 
 					<div id="<%= randomNamespace %>postReplyForm<%= i %>" style="display: none;">
-						<aui:input id='<%= randomNamespace + "postReplyBody" + i %>' label="comment" name='<%= "postReplyBody" + i %>' style='<%= "height: " + ModelHintsConstants.TEXTAREA_DISPLAY_HEIGHT + "px; width: " + ModelHintsConstants.TEXTAREA_DISPLAY_WIDTH + "px;" %>' type="textarea" wrap="soft" />
+						<aui:input id='<%= randomNamespace + "postReplyBody" + i %>' label="comment" name='<%= "postReplyBody" + i %>' style='<%= "height: " + ModelHintsConstants.TEXTAREA_DISPLAY_HEIGHT + "px; max-width: " + ModelHintsConstants.TEXTAREA_DISPLAY_WIDTH + "px;" %>' type="textarea" wrap="soft" />
 
 						<%
 						String postReplyButtonLabel = LanguageUtil.get(pageContext, "reply");
@@ -364,7 +364,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 													<li class="lfr-discussion-reply-to">
 
 														<%
-														String taglibPostReplyURL = "javascript:" + randomNamespace + "showForm('" + randomNamespace + "postReplyForm" + i + "', '" + namespace + randomNamespace + "postReplyBody" + i + "'); document.getElementById('" + randomNamespace + "editForm" + i + "').style.display = 'none'; document.getElementById('" + namespace + randomNamespace + "editReplyBody" + i + "').value = '" + HtmlUtil.escapeJS(message.getBody()) + "'; void('');";
+														String taglibPostReplyURL = "javascript:" + randomNamespace + "showForm('" + randomNamespace + "postReplyForm" + i + "', '" + namespace + randomNamespace + "postReplyBody" + i + "'); " + randomNamespace + "hideForm('" + randomNamespace + "editForm" + i + "', '" + namespace + randomNamespace + "editReplyBody" + i + "', '" + HtmlUtil.escapeJS(message.getBody()) + "');";
 														%>
 
 														<liferay-ui:icon
@@ -393,7 +393,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 													<c:if test="<%= MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, message.getMessageId(), userId, ActionKeys.UPDATE_DISCUSSION) %>">
 
 														<%
-														String taglibEditURL = "javascript:" + randomNamespace + "showForm('" + randomNamespace + "editForm" + i + "', '" + namespace + randomNamespace + "editReplyBody" + i + "');" + "document.getElementById('" + randomNamespace + "postReplyForm" + i + "').style.display = 'none'; document.getElementById('" + namespace + randomNamespace + "postReplyBody" + i + "').value = ''; void('');";
+														String taglibEditURL = "javascript:" + randomNamespace + "showForm('" + randomNamespace + "editForm" + i + "', '" + namespace + randomNamespace + "editReplyBody" + i + "');" + randomNamespace + "hideForm('" + randomNamespace + "postReplyForm" + i + "', '" + namespace + randomNamespace + "postReplyBody" + i + "', '')";
 														%>
 
 														<li class="lfr-discussion-delete-reply">
@@ -440,7 +440,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 										<aui:button cssClass="btn-comment" id='<%= namespace + randomNamespace + "postReplyButton" + i %>' onClick='<%= randomNamespace + "postReply(" + i + ");" %>' value='<%= themeDisplay.isSignedIn() ? "reply" : "reply-as" %>' />
 
 										<%
-										String taglibCancel = "document.getElementById('" + randomNamespace + "postReplyForm" + i + "').style.display = 'none'; document.getElementById('" + namespace + randomNamespace + "postReplyBody" + i + "').value = ''; void('');";
+										String taglibCancel = randomNamespace + "hideForm('" + randomNamespace + "postReplyForm" + i + "', '" + namespace + randomNamespace + "postReplyBody" + i + "', '');";
 										%>
 
 										<aui:button cssClass="btn-comment" onClick="<%= taglibCancel %>" type="cancel" />
@@ -470,7 +470,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 											<aui:button name='<%= randomNamespace + "editReplyButton" + i %>' onClick='<%= randomNamespace + "updateMessage(" + i + ");" %>' value="<%= publishButtonLabel %>" />
 
 											<%
-											String taglibCancel = "document.getElementById('" + randomNamespace + "editForm" + i + "').style.display = 'none'; document.getElementById('" + namespace + randomNamespace + "editReplyBody" + i + "').value = '" + HtmlUtil.escapeJS(message.getBody()) + "'; void('');";
+											String taglibCancel = randomNamespace + "hideForm('" + randomNamespace + "editForm" + i + "', '" + namespace + randomNamespace + "editReplyBody" + i + "', '" + HtmlUtil.escapeJS(message.getBody()) + "');";
 											%>
 
 											<aui:button onClick="<%= taglibCancel %>" type="cancel" />
@@ -546,6 +546,11 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 			document["<%= namespace + HtmlUtil.escapeJS(formName) %>"].<%= namespace %><%= Constants.CMD %>.value = "<%= Constants.DELETE %>";
 			document["<%= namespace + HtmlUtil.escapeJS(formName) %>"].<%= namespace %>messageId.value = messageId;
 			<portlet:namespace />sendMessage(document["<%= namespace + HtmlUtil.escapeJS(formName) %>"]);
+		}
+
+		function <%= randomNamespace %>hideForm(rowId, textAreaId, textAreaValue) {
+			document.getElementById(rowId).style.display = "none";
+			document.getElementById(textAreaId).value = textAreaValue;
 		}
 
 		function <%= randomNamespace %>postReply(i) {

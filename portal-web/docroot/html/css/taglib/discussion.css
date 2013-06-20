@@ -1,3 +1,5 @@
+@import "compass";
+
 .taglib-discussion {
 	table.tree-walker {
 		width: 100%;
@@ -124,11 +126,9 @@
 				padding: 5px;
 
 				textarea {
-					box-sizing: border-box;
-					-moz-box-sizing: border-box;
-					-webkit-box-sizing: border-box;
 					max-width: 100%;
 					width: 100%;
+					@include box-sizing(border-box);
 				}
 			}
 

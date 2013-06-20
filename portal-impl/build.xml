@@ -202,6 +202,7 @@ public class Creole10Parser]]></replacevalue>
         >
             <patternset>
                 <include name="**/DebugBreak.java" />
+                <include name="**/RmiDebuggerImpl.java" />
                 <include name="**/EnvironmentSuspendedEvent.java" />
                 <include name="**/DebuggerServer.java" />
                 <include name="**/DebuggerService.java" />

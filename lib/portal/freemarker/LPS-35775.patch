@@ -1,14 +1,44 @@
 --- a/src/main/java/freemarker/core/DebugBreak.java
 +++ src/freemarker/core/DebugBreak.java
-@@ -72,7 +72,7 @@ public DebugBreak(TemplateElement nestedBlock)
+@@ -63,16 +63,19 @@
+  */
+ public class DebugBreak extends TemplateElement
+ {
+-    public DebugBreak(TemplateElement nestedBlock)
++    private int lineNumber;
++
++    public DebugBreak(TemplateElement nestedBlock, int lineNumber)
+     {
+         this.nestedBlock = nestedBlock;
+         nestedBlock.parent = this;
++        this.lineNumber = lineNumber;
+         copyLocationFrom(nestedBlock);
+     }
      
      protected void accept(Environment env) throws TemplateException, IOException
      {
 -        if(!DebuggerService.suspendEnvironment(env, nestedBlock.getBeginLine()))
-+        if(!DebuggerService.suspendEnvironment(env, this.getTemplate().getName(), nestedBlock.getBeginLine()))
++        if(!DebuggerService.suspendEnvironment(env, this.getTemplate().getName(), this.lineNumber))
          {
              nestedBlock.accept(env);
          }
+--- a/src/main/java/freemarker/debug/impl/RmiDebuggerImpl.java
++++ src/freemarker/debug/impl/RmiDebuggerImpl.java
+@@ -28,9 +28,12 @@ implements
+         this.service = service;
+     }
+ 
+-    public void addBreakpoint(Breakpoint breakpoint)
++    public void addBreakpoint(Breakpoint breakpoint) throws RemoteException
+     {
+-        service.addBreakpoint(breakpoint);
++        if(!service.addBreakpoint(breakpoint))
++        {
++            throw new RemoteException("unable to add breakpoint");
++        }
+     }
+ 
+     public Object addDebuggerListener(DebuggerListener listener)
 --- a/src/main/java/freemarker/debug/EnvironmentSuspendedEvent.java
 +++ src/freemarker/debug/EnvironmentSuspendedEvent.java
 @@ -12,17 +12,29 @@
@@ -269,7 +299,68 @@
      
              synchronized(listeners)
              {
-@@ -264,15 +277,42 @@ private static TemplateElement findTemplateElement(TemplateElement te, int line)
+@@ -212,7 +225,7 @@
+         }
+     }
+ 
+-    void addBreakpoint(Breakpoint breakpoint)
++    boolean addBreakpoint(Breakpoint breakpoint)
+     {
+         String templateName = breakpoint.getTemplateName();
+         synchronized(templateDebugInfos)
+@@ -235,44 +248,90 @@
+                     }
+                     else
+                     {
+-                        insertDebugBreak(t, breakpoint);
++                        boolean inserted = insertDebugBreak(t, breakpoint);
++                        if(!inserted){
++                            breakpoints.remove(breakpoint);
++                            return false;
++                        }
+                     }
+                 }
+             }
+         }
++        return true;
+     }
+ 
+-    private static void insertDebugBreak(Template t, Breakpoint breakpoint)
++    private static boolean insertDebugBreak(Template t, Breakpoint breakpoint)
+     {
+         TemplateElement te = findTemplateElement(t.getRootTreeNode(), breakpoint.getLine());
+         if(te == null)
+         {
+-            return;
++            return false;
+         }
+         TemplateElement parent = (TemplateElement)te.getParent();
++        if( parent instanceof DebugBreak)
++        {
++            return false;
++        }
+-        DebugBreak db = new DebugBreak(te);
++        while(parent != null)
++        {
++            if( parent instanceof DebugBreak)
++            {
++                return false;
++            }
++            parent = (TemplateElement)parent.getParent();
++        }
++        parent = (TemplateElement)te.getParent();
++        DebugBreak db = new DebugBreak(te, breakpoint.getLine());
+         // TODO: Ensure there always is a parent by making sure
+         // that the root element in the template is always a MixedContent
+         // Also make sure it doesn't conflict with anyone's code.
+         parent.setChildAt(parent.getIndex(te), db);
++        return true;
+     }
+ 
+     private static TemplateElement findTemplateElement(TemplateElement te, int line)
+     {
+         if(te.getBeginLine() > line || te.getEndLine() < line)
+         {
              return null;
          }
          // Find the narrowest match
@@ -313,7 +404,7 @@
          // If no child provides narrower match, return this
          return te;
      }
-@@ -467,4 +507,18 @@ private void processRefQueue()
+@@ -467,4 +534,18 @@ private void processRefQueue()
              }
          }
      }
@@ -332,4 +423,4 @@
 +        RmiDebuggedEnvironmentImpl.cleanup();
 +    }
  }
-
+ 

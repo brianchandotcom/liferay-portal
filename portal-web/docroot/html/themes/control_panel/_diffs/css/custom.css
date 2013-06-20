@@ -37,50 +37,41 @@
 
 	.panel-manage-frontpage {
 		#controlPanelSiteHeading {
-			float: left;
-			padding: 17px 20px 5px;
+			padding-top: 10px;
 			position: relative;
 			z-index: 10;
 
-			a:hover {
-				text-decoration: none;
-			}
-
 			.control-panel-back-link {
-				color: #30C8EE;
-				float: left;
-				font-size: 20px;
-				margin-right: 5px;
+				display: inline-block;
+				line-height: 0;
 				text-decoration: none;
+				vertical-align: middle;
+
+				.control-panel-back-text {
+					display: none;
+				}
 			}
 
 			.site-title {
 				color: #555;
-				font-size: 25px;
-				font-weight: 300;
-				margin-bottom: 5px;
-				padding: 0 28px 0 12px;
-				text-transform: capitalize;
+				display: inline-block;
+				font-weight: normal;
+				margin: 0;
+				vertical-align: middle;
 			}
 
 			.visit-links {
+				color: #8D8D8D;
 				font-size: 12px;
-				padding: 0 15px;
+				list-style: none;
+				margin: 0;
+				padding-bottom: 10px;
+				padding-left: 20px;
 
-				ul {
-					color: #8D8D8D;
-					list-style: none;
-					margin: 0;
-
-					li {
-						float: left;
-						margin-right: 5px;
-
-						&.divider:before {
-							content: "/";
-							margin: 0 5px;
-						}
-					}
+				li {
+					display: inline-block;
+					margin-left: 0;
+					margin-right: 5px;
 				}
 			}
 		}

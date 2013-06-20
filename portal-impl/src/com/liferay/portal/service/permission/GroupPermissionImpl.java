@@ -147,17 +147,6 @@ public class GroupPermissionImpl implements GroupPermission {
 			return true;
 		}
 
-		while (!group.isRoot()) {
-			if (contains(
-					permissionChecker, group.getParentGroupId(),
-					ActionKeys.MANAGE_SUBGROUPS)) {
-
-				return true;
-			}
-
-			group = group.getParentGroup();
-		}
-
 		return false;
 	}
 

@@ -62,33 +62,32 @@ if (!selectableTree) {
 		}
 	};
 
+<%
+	JSONArray checkedNodesJSONArray = JSONFactoryUtil.createJSONArray();
+
+	String checkedLayoutIds = SessionTreeJSClicks.getOpenNodes(request, treeId + "SelectedNode");
+
+	if (Validator.isNotNull(checkedLayoutIds)) {
+		for (long checkedLayoutId : StringUtil.split(checkedLayoutIds, 0L)) {
+			try {
+				Layout checkedLayout = LayoutLocalServiceUtil.getLayout(groupId, privateLayout, checkedLayoutId);
+
+				checkedNodesJSONArray.put(String.valueOf(checkedLayout.getPlid()));
+			}
+			catch (NoSuchLayoutException nsle) {
+			}
+		}
+	}
+	%>
+
 	var TreeUtil = {
+		CHECKED_NODES: <%= checkedNodesJSONArray.toString() %>,
 		DEFAULT_PARENT_LAYOUT_ID: <%= LayoutConstants.DEFAULT_PARENT_LAYOUT_ID %>,
 		PAGINATION_LIMIT: <%= PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN %>,
 		PREFIX_GROUP_ID: '_groupId_',
 		PREFIX_LAYOUT: '_layout_',
 		PREFIX_LAYOUT_ID: '_layoutId_',
 		PREFIX_PLID: '_plid_',
-
-		<%
-		JSONArray checkedNodesJSONArray = JSONFactoryUtil.createJSONArray();
-
-		String checkedLayoutIds = SessionTreeJSClicks.getOpenNodes(request, treeId + "SelectedNode");
-
-		if (Validator.isNotNull(checkedLayoutIds)) {
-			for (long checkedLayoutId : StringUtil.split(checkedLayoutIds, 0L)) {
-				try {
-					Layout checkedLayout = LayoutLocalServiceUtil.getLayout(groupId, privateLayout, checkedLayoutId);
-
-					checkedNodesJSONArray.put(String.valueOf(checkedLayout.getPlid()));
-				}
-				catch (NoSuchLayoutException nsle) {
-				}
-			}
-		}
-		%>
-
-		CHECKED_NODES: <%= checkedNodesJSONArray.toString() %>,
 
 		afterRenderTree: function(event) {
 			var treeInstance = event.target;

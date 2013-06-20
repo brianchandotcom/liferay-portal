@@ -3,22 +3,22 @@ package com.liferay.portal.cache.ehcache;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
+import com.liferay.portal.kernel.cluster.ClusterLinkUtil;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.io.AnnotatedObjectInputStream;
+import com.liferay.portal.kernel.io.AnnotatedObjectOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SocketUtil.ServerSocketConfigurator;
 import com.liferay.portal.kernel.util.SocketUtil;
-import com.liferay.portal.kernel.util.Validator;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -32,12 +32,11 @@ import java.net.SocketException;
 
 import java.nio.channels.ServerSocketChannel;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
@@ -47,7 +46,9 @@ public class EhcacheStreamBootstrapHelpUtil {
 		List<Address> clusterNodeAddresses =
 			ClusterExecutorUtil.getClusterNodeAddresses();
 
-		System.out.println(clusterNodeAddresses);
+		if (_log.isInfoEnabled()) {
+			_log.info("##########" + clusterNodeAddresses);
+		}
 
 		int clusterNodeAddressesCount = clusterNodeAddresses.size();
 
@@ -55,18 +56,19 @@ public class EhcacheStreamBootstrapHelpUtil {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Can not get caches because there is either one portal" +
-					" instance or no portal instances in the cluster");
+						" instance or no portal instances in the cluster");
 			}
+
+			return;
 		}
-		else {
-			loadCachesFromCluster(cache);
-		}
+
+		loadCachesFromCluster(cache);
 	}
 
 	public static ServerSocket createServerSocket(int startPort)
-			throws Exception {
+		throws Exception {
 
-		InetAddress inetAddress = InetAddressUtil.getLocalInetAddress();
+		InetAddress inetAddress = ClusterLinkUtil.getBindInetAddress();
 
 		ServerSocketConfigurator serverSocketConfigurator =
 			new SocketCacheServerSocketConfiguration();
@@ -81,7 +83,7 @@ public class EhcacheStreamBootstrapHelpUtil {
 	}
 
 	public static Element toEhcacheElement(
-		LiferayEhcacheElement liferayEhcacheElementHelper) {
+		EhcacheElement liferayEhcacheElementHelper) {
 
 		Object key = liferayEhcacheElementHelper.getKey();
 		Object value = liferayEhcacheElementHelper.getValue();
@@ -90,9 +92,11 @@ public class EhcacheStreamBootstrapHelpUtil {
 	}
 
 	public static SocketAddress createServerSocketFromCluster(String cacheName)
-			throws Exception {
+		throws Exception {
 
-		System.out.println("remote node executed");
+		if (_log.isDebugEnabled()) {
+			_log.debug("remote node executed");
+		}
 
 		ServerSocket serverSocket = createServerSocket(startPort);
 
@@ -106,13 +110,13 @@ public class EhcacheStreamBootstrapHelpUtil {
 		return serverSocket.getLocalSocketAddress();
 	}
 
-	protected static void loadCachesFromCluster(Ehcache cache)
-			throws Exception {
+	protected static void loadCachesFromCluster(Ehcache ehcache)
+		throws Exception {
 
 		ClusterRequest clusterRequest = ClusterRequest.createMulticastRequest(
 			new MethodHandler(
-				_createServerSocketFromClusterMethodKey, cache.getName()),
-				true);
+				_createServerSocketFromClusterMethodKey, ehcache.getName()),
+			true);
 
 		FutureClusterResponses futureClusterResponses =
 			ClusterExecutorUtil.execute(clusterRequest);
@@ -120,67 +124,85 @@ public class EhcacheStreamBootstrapHelpUtil {
 		BlockingQueue<ClusterNodeResponse> clusterNodeResponses =
 			futureClusterResponses.getPartialResults();
 
-		Socket socket = null;
+		Set<Address> addresses =
+			futureClusterResponses.getExpectedReplyAddress();
+
+		ClusterNodeResponse clusterNodeResponse = null;
 
 		try {
-			ClusterNodeResponse clusterNodeResponse = clusterNodeResponses.poll(
-				_BOOTUP_CLUSTER_NODE_RESPONSE_TIMEOUT, TimeUnit.MILLISECONDS);
+			clusterNodeResponse = clusterNodeResponses.poll(
+				_BOOTUP_CLUSTER_NODE_RESPONSE_TIMEOUT,
+				TimeUnit.MILLISECONDS);
+		}
+		catch (InterruptedException ie) {
+			return;
+		}
 
+		if (clusterNodeResponse == null) {
+			return;
+		}
+
+		Socket socket = null;
+
+		ObjectInputStream objectInputStream = null;
+
+		try {
 			SocketAddress remoteSocketAddress =
 				(SocketAddress)clusterNodeResponse.getResult();
 
-			if (Validator.isNotNull(remoteSocketAddress)) {
-				socket = new Socket();
-				socket.connect(remoteSocketAddress);
-				socket.shutdownOutput();
-				
-				ObjectInputStream objectInputStream = new ObjectInputStream(
-					socket.getInputStream());
+			if (remoteSocketAddress == null) {
+				return;
+			}
 
-				while(true) {
-					//read cache from remote
-					Object object = objectInputStream.readObject();
+			socket = new Socket();
 
-					if (object instanceof List){
-						List<LiferayEhcacheElement> liferayEhcacheElements =
-							(List<LiferayEhcacheElement>)object;
+			socket.connect(remoteSocketAddress);
+			socket.shutdownOutput();
+			
+			objectInputStream = new AnnotatedObjectInputStream(
+				socket.getInputStream());
 
-						for(LiferayEhcacheElement liferayEhcacheElement :
-							liferayEhcacheElements) {
+			while(true) {
 
-							Element element =
-								toEhcacheElement(liferayEhcacheElement);
+				//read cache from remote
 
-							cache.put(element, true);
-						}
+				Object object = objectInputStream.readObject();
+
+				if (object instanceof EhcacheElement){
+					EhcacheElement ehcacheElement = (EhcacheElement)object;
+
+					Element element = ehcacheElement.toElement();
+
+					ehcache.put(element, true);
+				}
+				else if(object instanceof String) {
+					String command = (String)object;
+
+					if(command.equals(_socket_close)) {
+						break;
 					}
-					else if(object instanceof String) {
-						if(((String)object).equals(_socket_close)) {
+					else if(command.equals(_cache_tx_start)) {
+						String cacheName =
+							(String)objectInputStream.readObject();
 
+						if(!cacheName.equals(ehcache.getName())) {
 							break;
 						}
-						else if(((String)object).equals(_cache_tx_start)) {
-
-							String cacheName = 
-								(String)objectInputStream.readObject();
-
-							if(!cacheName.equals(cache.getName())) {
-								break;
-							}
-						}
-					}
-					else {
-						throw new SystemException("Socket transaction failed"); 
 					}
 				}
-				objectInputStream.close();
+				else {
+					throw new SystemException("Socket transaction failed");
+				}
 			}
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
 		finally {
-			socket.close();
+			if (objectInputStream != null) {
+				objectInputStream.close();
+			}
+
+			if (socket != null) {
+				socket.close();
+			}
 		}
 	}
 
@@ -209,24 +231,27 @@ public class EhcacheStreamBootstrapHelpUtil {
 		GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.EHCACHE_SOCKET_START_PORT));
 
-	private static class LiferayEhcacheElement {
+	private static class EhcacheElement implements Serializable {
 		
-		public LiferayEhcacheElement (Object key, Object value) {
-			this._key = key;
-			this._value = value;
+		public EhcacheElement (Serializable key, Serializable value) {
+			_key = key;
+			_value = value;
 		}		
 
-		public Object getKey() {
+		public Serializable getKey() {
 			return _key;
 		}
-
 		
-		public Object getValue() {
+		public Serializable getValue() {
 			return _value;
 		}
 
-		private Object _key;
-		private Object _value;
+		public Element toElement() {
+			return new Element(_key, _value);
+		}
+
+		private Serializable _key;
+		private Serializable _value;
 		
 	}
 
@@ -243,46 +268,58 @@ public class EhcacheStreamBootstrapHelpUtil {
 				ehcachePortalCacheManager.getEhcacheManager();
 		}
 
+		@SuppressWarnings("unchecked")
+		@Override
 		public void run() {
 			Socket socket = null;
+
 			try {
 				socket = _serverSocket.accept();
+
+				_serverSocket.close();
+
 				socket.shutdownInput();
 
 				ObjectOutputStream objectOutputStream =
-					new ObjectOutputStream(socket.getOutputStream());
+					new AnnotatedObjectOutputStream(socket.getOutputStream());
+
+				objectOutputStream.writeObject(_cache_tx_start);
 
 				Ehcache ehcache = _portalCacheManager.getCache(_cacheName);
 
-				if (Validator.isNotNull(ehcache)) {
-					List<Object> keys = ehcache.getKeys();
+				if (ehcache == null) {
+					EhcacheStreamBootstrapCacheLoader.setSkip();
 
-					List<LiferayEhcacheElement> liferayEhcacheElements =
-						new ArrayList<LiferayEhcacheElement>();
-
-					for(Object key : keys) {
-						if(!(key instanceof Serializable)) {
-							continue;
-						}
-
-						Element element = ehcache.get(key);
-						Object value = element.getValue();
-
-						if(!(value instanceof Serializable)) {
-							continue;
-						}
-
-						liferayEhcacheElements.add(
-							new LiferayEhcacheElement(key, value));
+					try {
+						_portalCacheManager.addCache(_cacheName);
 					}
-
-					objectOutputStream.writeObject(_cache_tx_start);
+					finally {
+						EhcacheStreamBootstrapCacheLoader.resetSkip();
+					}
+				}
+				else  {
 					objectOutputStream.writeObject(_cacheName);
 
-					objectOutputStream.writeObject(liferayEhcacheElements);
-				}
-				else {
-					_portalCacheManager.addCache(_cacheName);
+					List<Object> keys = ehcache.getKeys();
+
+					for (Object key : keys) {
+						if (!(key instanceof Serializable)) {
+							// TODO log about it
+							continue;
+						}
+
+						Object value = ehcache.get(key);
+
+						if (!(value instanceof Serializable)) {
+							// TODO log about it
+							continue;
+						}
+
+						EhcacheElement ehcacheElement = new EhcacheElement(
+							(Serializable)key, (Serializable)value);
+
+						objectOutputStream.writeObject(ehcacheElement);
+					}
 				}
 
 				objectOutputStream.writeObject(_socket_close);
@@ -290,30 +327,15 @@ public class EhcacheStreamBootstrapHelpUtil {
 				objectOutputStream.close();
 			}
 			catch (Exception e) {
-				try {
-					throw new Exception(e);
-				}
-				catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				throw new RuntimeException(e);
 			}
 			finally {
 				if (socket != null) {
 					try {
 						socket.close();
 					}
-					catch (Exception e) {
-						throw new RuntimeException(e);
-					}
-				}
-				if(_serverSocket != null) {
-					try {
-						_serverSocket.close();
-					}
-					catch (IOException e) {
-						// TODO Auto-generated catch block
-						throw new RuntimeException(e);
+					catch (IOException ioe) {
+						throw new RuntimeException(ioe);
 					}
 				}
 			}

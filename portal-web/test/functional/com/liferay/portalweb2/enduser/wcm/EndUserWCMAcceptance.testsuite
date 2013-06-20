@@ -9,5 +9,9 @@
 
 	<execute test-case="CPWebcontentAcceptance" />
 
+	<execute test-case="PGAssetpublisherSiteAcceptance" />
+
+	<execute test-case="PGAssetpublisherWebcontentAcceptance" />
+
 	<execute test-case="DockbarAcceptance" />
 </definition>

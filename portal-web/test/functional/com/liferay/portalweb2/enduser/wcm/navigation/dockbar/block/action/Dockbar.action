@@ -1,17 +1,20 @@
 <definition>
-	<command name="click">
-		<case locator-key1="ADD_APPLICATION_LINK">
-			<execute function="Click#clickAtApplicationSearch" />
-		</case>
-		<case locator-key1="ADD_CONTENT_AND_APPLICATIONS">
-			<execute function="Click#partialTextClickAt" value1="Content and Applications" />
-		</case>
+	<command name="assertClick">
 		<case locator-key1="ADD">
-			<execute function="Click#textClickAtClickDockbar" value1="Add" />
+			<execute function="AssertClick#assertTextClickAtClickDockbar" />
 		</case>
-		<case locator-key1="ADD_PAGE">
-			<execute function="Click#textClickAt" value1="Page" />
+		<case locator-key1="ADD_APPLICATION_LINK">
+			<execute function="AssertClick#assertTextClickAtAddApplication" />
 		</case>
+		<case locator-key1="ADD_CONTENT_LINK">
+			<execute function="AssertClick#assertTextClickAtAddApplication" />
+		</case>
+		<case locator-key1="ADD_PAGE_LINK">
+			<execute function="AssertClick#assertTextClickAtAddApplication" />
+		</case>
+	</command>
+
+	<command name="click">
 		<case locator-key1="ADMIN">
 			<execute function="Click#textClickAtClickDockbar" value1="Admin" />
 		</case>

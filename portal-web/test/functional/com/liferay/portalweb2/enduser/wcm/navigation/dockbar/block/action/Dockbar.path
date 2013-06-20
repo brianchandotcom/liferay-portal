@@ -21,21 +21,11 @@
 <!--ADD-->
 <tr>
 	<td>ADD</td>
-	<td>//li[@id='_145_addContent']/a</td>
+	<td>//a[@id='_145_addPanel']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_STAGING</td>
-	<td>//li[@id='_145_addContent']/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_PAGE</td>
-	<td>//a[@id='_145_addPage']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_CONTENT_AND_APPLICATIONS</td>
 	<td>//a[@id='_145_addPanel']</td>
 	<td></td>
 </tr>
@@ -74,6 +64,27 @@
 <tr>
 	<td>ADD_APPLICATION_COLLAPSED_CATEGORY</td>
 	<td>//div[contains(@class,'toggler-header-collapsed')]/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ADD_PAGE-->
+<tr>
+	<td>ADD_PAGE_LINK</td>
+	<td>//div[@id='_145_addPanelContainer']/ul/li/a[contains(.,'Page')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_PAGE_NAME_FIELD</td>
+	<td>//input[@id='_145_name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_PAGE_BUTTON</td>
+	<td>//button[contains(.,'Add Page')]</td>
 	<td></td>
 </tr>
 <tr>

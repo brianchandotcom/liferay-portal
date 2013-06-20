@@ -76,55 +76,88 @@
 		<execute action="Home#isElementPresent" locator1="link=${pageName}" />
 	</command>
 
+	<command name="openURL">
+		<if>
+			<equals arg1="${pageAccess}" arg2="Private" />
+			<then>
+				<var name="pageAccessURL" value="/group" />
+			</then>
+			<else>
+				<var name="pageAccessURL" value="/web" />
+			</else>
+		</if>
+
+		<if>
+			<equals arg1="${pageType}" arg2="Site" />
+			<then>
+				<var name="pageTypeURL" value="/site-name" />
+			</then>
+			<elseif>
+				<equals arg1="${pageType}" arg2="Organization" />
+				<then>
+					<var name="pageTypeURL" value="/organization-name" />
+				</then>
+			</elseif>
+			<else>
+				<var name="pageTypeURL" value="/guest" />
+			</else>
+		</if>
+
+		<if>
+			<equals arg1="${pageStaging}" arg2="true" />
+			<then>
+				<var name="pageStagingURL" value="-staging" />
+			</then>
+			<else>
+				<var name="pageStagingURL" value="" />
+			</else>
+		</if>
+
+		<execute action="Home#open" locator1="${pageAccessURL}${pageTypeURL}${pageStagingURL}" />
+	</command>
+
 	<command name="pgGoto">
-		<execute action="Home#open" locator-key1="HOME_URL" />
+		<execute macro="Page#openURL" />
+
 		<execute action="Home#click" locator1="link=${pageName}" />
 	</command>
 
 	<command name="pgGotoOrganization">
-		<execute action="Home#open" locator-key1="ORGANIZATION_URL" />
+		<execute macro="Page#openURL">
+			<var name="pageType" value="Organization" />
+		</execute>
+
 		<execute action="Home#click" locator1="link=${pageName}" />
 	</command>
 
 	<command name="pgGotoSitePrivate">
-		<execute action="Home#open" locator-key1="SITE_URL_PRIVATE" />
+		<execute macro="Page#openURL">
+			<var name="pageAccess" value="Private" />
+			<var name="pageType" value="Site" />
+		</execute>
+
 		<execute action="Home#click" locator1="link=${pageName}" />
 	</command>
 
 	<command name="pgGotoSitePublic">
-		<execute action="Home#open" locator-key1="SITE_URL_PUBLIC" />
+		<execute macro="Page#openURL">
+			<var name="pageType" value="Site" />
+		</execute>
+
 		<execute action="Home#click" locator1="link=${pageName}" />
 	</command>
 
 	<command name="pgAdd">
-		<if>
-			<equals arg1="${pageType}" arg2="Organization" />
-			<then>
-				<execute action="Home#open" locator-key1="ORGANIZATION_URL" />
-			</then>
-			<elseif>
-				<equals arg1="${pageType}" arg2="Private" />
-				<then>
-					<execute action="Home#open" locator-key1="SITE_URL_PRIVATE" />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${pageType}" arg2="Public" />
-				<then>
-					<execute action="Home#open" locator-key1="SITE_URL_PUBLIC" />
-				</then>
-			</elseif>
-			<else>
-				<execute action="Home#open" locator-key1="HOME_URL" />
-			</else>
-		</if>
+		<execute macro="Page#openURL" />
 
-		<execute action="Dockbar#click" locator-key1="ADD" />
-		<execute action="Dockbar#click" locator-key1="ADD_PAGE" />
+		<execute action="Dockbar#assertClick" locator-key1="ADD" value1="Add" />
+		<execute action="Dockbar#assertClick" locator-key1="ADD_PAGE_LINK" value1="Page" />
+		<execute action="Dockbar#type" locator-key1="ADD_PAGE_NAME_FIELD" value1="${pageName}" />
+		<execute action="Dockbar#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
 
-		<execute action="Home#type" locator-key1="NEW_PAGE_FIELD" value1="${pageName}" />
-		<execute action="Home#click" locator-key1="NEW_PAGE_SAVE_BUTTON" />
-		<execute action="Home#click" locator1="//li[contains(@class,'lfr-nav-updateable')]/a[.='${pageName}']" />
+		<var name="key_pageName" value="${pageName}" />
+
+		<execute action="Home#assertClick" locator-key1="PAGE" value1="${pageName}" />
 	</command>
 
 	<command name="pgAddOrganization">
@@ -136,15 +169,16 @@
 
 	<command name="pgAddSitePrivate">
 		<execute macro="Page#pgAdd">
+			<var name="pageAccess" value="Private" />
 			<var name="pageName" value="${pageName}" />
-			<var name="pageType" value="Private" />
+			<var name="pageType" value="Site" />
 		</execute>
 	</command>
 
 	<command name="pgAddSitePublic">
 		<execute macro="Page#pgAdd">
 			<var name="pageName" value="${pageName}" />
-			<var name="pageType" value="Public" />
+			<var name="pageType" value="Site" />
 		</execute>
 	</command>
 

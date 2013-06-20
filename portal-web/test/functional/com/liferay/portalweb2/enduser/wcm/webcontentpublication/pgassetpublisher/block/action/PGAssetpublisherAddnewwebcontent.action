@@ -1,0 +1,13 @@
+<definition>
+	<command name="assertClick">
+		<case locator-key1="PUBLISH_BUTTON">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+	</command>
+
+	<command name="type">
+		<case locator-key1="CONTENT_FIELD">
+			<execute function="Type#typeFrameWaitForCKEditor" />
+		</case>
+	</command>
+</definition>

@@ -132,8 +132,9 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			className = className.substring(
 				className.lastIndexOf(StringPool.PERIOD) + 1);
 
-			if (!isJSPImportRequired(
-					fileName, className, includeFileNames, checkedFileNames)) {
+			if (!isClassOrVariableRequired(
+					fileName, importLine, className, includeFileNames,
+					checkedFileNames)) {
 
 				unneededImports.add(importLine);
 			}
@@ -386,6 +387,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		boolean hasUnsortedExceptions = false;
 
+		boolean javaSource = false;
+
 		while ((line = unsyncBufferedReader.readLine()) != null) {
 			lineCount++;
 
@@ -404,6 +407,18 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 			String trimmedLine = StringUtil.trimLeading(line);
 			String trimmedPreviousLine = StringUtil.trimLeading(previousLine);
+
+			if (trimmedLine.equals("<%") || trimmedLine.equals("<%!")) {
+				javaSource = true;
+			}
+			else if (trimmedLine.equals("%>")) {
+				javaSource = false;
+			}
+
+			if (javaSource && hasUnusedVariable(fileName, trimmedLine)) {
+				processErrorMessage(
+					fileName, "Unused varibale: " + fileName + " " + lineCount);
+			}
 
 			if (!trimmedLine.equals("%>") && line.contains("%>") &&
 				!line.contains("--%>") && !line.contains(" %>")) {
@@ -749,6 +764,62 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		return sb.toString();
 	}
 
+	protected String getVariableName(String line) {
+		if (!line.endsWith(";") || line.startsWith("//")) {
+			return null;
+		}
+
+		String variableName = null;
+
+		int x = line.indexOf(" = ");
+
+		if (x == -1) {
+			int y = line.lastIndexOf(" ");
+
+			if (y != -1) {
+				variableName = line.substring(y + 1, line.length() - 1);
+			}
+		}
+		else {
+			line = line.substring(0, x);
+
+			int y = line.lastIndexOf(" ");
+
+			if (y != -1) {
+				variableName = line.substring(y + 1);
+			}
+		}
+
+		if (Validator.isVariableName(variableName)) {
+			return variableName;
+		}
+
+		return null;
+	}
+
+	protected boolean hasUnusedVariable(String fileName, String line) {
+		if (line.contains(": ")) {
+			return false;
+		}
+
+		String variableName = getVariableName(line);
+
+		if (Validator.isNull(variableName) || variableName.equals("false") ||
+			variableName.equals("true")) {
+
+			return false;
+		}
+
+		Set<String> includeFileNames = new HashSet<String>();
+
+		includeFileNames.add(fileName);
+
+		Set<String> checkedFileNames = new HashSet<String>();
+
+		return !isClassOrVariableRequired(
+			fileName, line, variableName, includeFileNames, checkedFileNames);
+	}
+
 	protected boolean isJSPAttributName(String attributeName) {
 		if (Validator.isNull(attributeName)) {
 			return false;
@@ -806,8 +877,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		return isJSPDuplicateImport(includeFileName, importLine, true);
 	}
 
-	protected boolean isJSPImportRequired(
-		String fileName, String className, Set<String> includeFileNames,
+	protected boolean isClassOrVariableRequired(
+		String fileName, String line, String name, Set<String> includeFileNames,
 		Set<String> checkedFileNames) {
 
 		if (checkedFileNames.contains(fileName)) {
@@ -818,12 +889,14 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		String content = _jspContents.get(fileName);
 
+		content = StringUtil.replace(content, line, StringPool.BLANK);
+
 		if (Validator.isNull(content)) {
 			return false;
 		}
 
 		Pattern pattern = Pattern.compile(
-			"[^A-Za-z0-9_]" + className + "[^A-Za-z0-9_\"]");
+			"[^A-Za-z0-9_]" + name + "[^A-Za-z0-9_]");
 
 		Matcher matcher = pattern.matcher(content);
 
@@ -849,8 +922,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		for (String includeFileName : includeFileNamesArray) {
 			if (!checkedFileNames.contains(includeFileName) &&
-				isJSPImportRequired(
-					includeFileName, className, includeFileNames,
+				isClassOrVariableRequired(
+					includeFileName, line, name, includeFileNames,
 					checkedFileNames)) {
 
 				return true;

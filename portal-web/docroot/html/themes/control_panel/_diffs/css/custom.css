@@ -35,6 +35,48 @@
 		margin-top: 0;
 	}
 
+	.panel-manage-frontpage {
+		#controlPanelSiteHeading {
+			padding-top: 10px;
+			position: relative;
+			z-index: 10;
+
+			.control-panel-back-link {
+				display: inline-block;
+				line-height: 0;
+				text-decoration: none;
+				vertical-align: middle;
+
+				.control-panel-back-text {
+					display: none;
+				}
+			}
+
+			.site-title {
+				color: #555;
+				display: inline-block;
+				font-weight: normal;
+				margin: 0;
+				vertical-align: middle;
+			}
+
+			.visit-links {
+				color: #8D8D8D;
+				font-size: 12px;
+				list-style: none;
+				margin: 0;
+				padding-bottom: 10px;
+				padding-left: 20px;
+
+				li {
+					display: inline-block;
+					margin-left: 0;
+					margin-right: 5px;
+				}
+			}
+		}
+	}
+
 	.panel-page-menu .portlet-borderless-container {
 		background: #222;
 
@@ -148,12 +190,6 @@
 		border-radius: 0;
 	}
 
-	.control-panel-back-link {
-		float: left;
-		margin: 25px 10px;
-		text-decoration: none;
-	}
-
 	.control-panel-bar-main {
 		font-size: 1.2em;
 		font-weight: bold;
@@ -190,6 +226,7 @@
 
 	.control-panel-site-selector .caret {
 		border-width: 6px;
-		margin-top: 16px;
+		margin-top: 5px;
+		vertical-align: middle;
 	}
 }

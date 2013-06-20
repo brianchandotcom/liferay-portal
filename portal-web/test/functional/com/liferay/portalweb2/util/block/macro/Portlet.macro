@@ -30,17 +30,8 @@
 			</else>
 		</if>
 
-		<execute action="Dockbar#click" locator-key1="ADD" />
-		<execute action="Dockbar#click" locator-key1="ADD_CONTENT_AND_APPLICATIONS" />
-		<execute action="Dockbar#click" locator-key1="ADD_APPLICATION_LINK" />
-
-		<while>
-			<condition action="Dockbar#isElementPresent" locator-key1="ADD_APPLICATION_COLLAPSED_CATEGORY" />
-			<then>
-				<execute action="Dockbar#click" locator-key1="ADD_APPLICATION_COLLAPSED_CATEGORY" />
-			</then>
-		</while>
-
+		<execute action="Dockbar#assertClick" locator-key1="ADD" value1="Add" />
+		<execute action="Dockbar#assertClick" locator-key1="ADD_APPLICATION_LINK" value1="Applications" />
 		<execute action="Dockbar#type" locator-key1="ADD_APPLICATION_SEARCH_FIELD" value1="${portletName}" />
 		<execute action="Dockbar#click" locator1="//span[@data-title='${portletName}']" value1="Add" />
 
@@ -57,8 +48,9 @@
 
 	<command name="pgAddSitePrivate">
 		<execute macro="Portlet#pgAdd">
+			<var name="pageAccess" value="Private" />
 			<var name="pageName" value="${pageName}" />
-			<var name="pageType" value="Private" />
+			<var name="pageType" value="Site" />
 			<var name="portletName" value="${portletName}" />
 		</execute>
 	</command>
@@ -66,7 +58,7 @@
 	<command name="pgAddSitePublic">
 		<execute macro="Portlet#pgAdd">
 			<var name="pageName" value="${pageName}" />
-			<var name="pageType" value="Public" />
+			<var name="pageType" value="Site" />
 			<var name="portletName" value="${portletName}" />
 		</execute>
 	</command>

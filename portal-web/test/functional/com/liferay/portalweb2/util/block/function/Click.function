@@ -17,12 +17,6 @@
 		<execute selenium="clickAtAndWait" />
 	</command>
 
-	<command name="clickAtApplicationSearch">
-		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/autocomplete-filters/autocomplete-filters-min.js')]" />
-
-		<execute function="Click#clickAt" />
-	</command>
-
 	<command name="makeVisibleClickAt">
 		<execute selenium="makeVisible" />
 

@@ -7,7 +7,7 @@
 		<execute macro="User#pgFirstLogin" />
 	</set-up>
 
-	<command name="AddPortletAssetPublisherSite">
+	<command name="AddAPPortletToSite">
 		<execute macro="Site#addBlankCP">
 			<var name="siteName" value="${siteName}" />
 		</execute>

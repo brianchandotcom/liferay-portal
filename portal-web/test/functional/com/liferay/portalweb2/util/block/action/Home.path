@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>HOME_URL</td>
-	<td>/web/guest/home/</td>
+	<td>/web/guest/home</td>
 	<td></td>
 </tr>
 <tr>
@@ -64,6 +64,11 @@
 	<td></td>
 </tr>
 <!--PAGE-->
+<tr>
+	<td>PAGE</td>
+	<td>//li[contains(@class,'add-page')]/a[contains(.,'${key_pageName}')]</td>
+	<td></td>
+</tr>
 <tr>
 	<td>PAGE_1</td>
 	<td>xpath=(//li[contains(@class,'lfr-nav-deletable')])[1]/a</td>

@@ -21,14 +21,14 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute action="PGAssetpublisher#click" locator-key1="ADD_DROPDOWN" />
-		<execute action="PGAssetpublisher#click" locator-key1="ADD_MENULIST_WEB_CONTENT" value1="Web Content" />
+		<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_DROPDOWN" value1="Add New" />
+		<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_MENULIST_WEB_CONTENT" value1="Web Content" />
 
 		<execute action="PGAssetpublisherAddnewwebcontent#selectFrame" locator-key1="WEB_CONTENT_IFRAME" />
 		<execute action="PGAssetpublisherAddnewwebcontent#type" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />
 		<execute action="PGAssetpublisherAddnewwebcontent#type" locator-key1="CONTENT_FIELD" value1="${webContentContent}" />
 		<execute action="PGAssetpublisherAddnewwebcontent#selectFrame" locator-key1="WEB_CONTENT_IFRAME" />
-		<execute action="PGAssetpublisherAddnewwebcontent#click" locator-key1="PUBLISH_BUTTON" />
+		<execute action="PGAssetpublisherAddnewwebcontent#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<execute action="PGAssetpublisher#selectFrame" />
 		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_TITLE_1" value1="${webContentTitle}" />
@@ -62,8 +62,8 @@
 			<then>
 				<execute action="CPWebcontent#check" locator-key1="TOOLBAR_SELECT_ALL_CHECKBOX" />
 				<execute action="CPWebcontent#click" locator-key1="TOOLBAR_ACTIONS" />
-				<execute action="CPWebcontent#click" locator-key1="ACTION_MENULIST_DELETE" />
-				<execute action="CPWebcontent#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" />
+				<execute action="CPWebcontent#click" locator-key1="ACTION_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+				<execute action="CPWebcontent#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="moved to the Recycle Bin. Undo" />
 			</then>
 		</while>
 

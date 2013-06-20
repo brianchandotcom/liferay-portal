@@ -23,6 +23,12 @@
 		<execute selenium="clickAndWait" />
 	</command>
 
+	<command name="assertTextClickAtAddApplication">
+		<execute selenium="waitForElementNotPresent" argument1="//div[@id='_145_addPanelSidebar']/div[@class='loading-animation']" />
+
+		<execute function="AssertClick#assertTextClickAt" />
+	</command>
+
 	<command name="assertTextClickAt">
 		<execute function="AssertTextEquals#assertText" />
 

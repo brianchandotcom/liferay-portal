@@ -15,7 +15,7 @@
 		</execute>
 	</set-up>
 
-	<command name="AddWebContentViaAssetPublisher">
+	<command name="AddWebContentPGViaAP">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC Webcontent Title" />
 
@@ -25,6 +25,7 @@
 			<var name="webContentContent" value="${webContentContent}" />
 		</execute>
 	</command>
+
 	<tear-down>
 		<execute macro="WebContent#tearDownCP" />
 

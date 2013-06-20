@@ -127,10 +127,6 @@
 			margin-left: 10px;
 			margin-right: 10px;
 			padding: 4px;
-
-			@include border-radius(3px);
-			@include box-shadow(0 0 1px #FFFFFF);
-			@include opacity(0.90);
 		}
 
 		&.b, &.bl, &.br {
@@ -161,16 +157,16 @@
 
 	.lfr-device-skin {
 		background-repeat: no-repeat;
-		position:absolute;
+		position: absolute;
 
 		&.smartphone {
-		    background-image: url(/html/themes/classic/images/device_preview/mobile.png);
-		    height: 824px;
-		    left: -32px;
-		    top: -49px;
-		    width: 465px;
+			background-image: url(/html/themes/classic/images/device_preview/mobile.png);
+			height: 824px;
+			left: -32px;
+			top: -49px;
+			width: 465px;
 
-		    &.rotated {
+			&.rotated {
 				background-image: url(/html/themes/classic/images/device_preview/mobile_horizontal.png);
 				height: 465px;
 				left: -135px;
@@ -180,11 +176,11 @@
 		}
 
 		&.tablet {
-		    background-image: url(/html/themes/classic/images/device_preview/tablet.png);
-		    height: 1104px;
-		    left: -68px;
-		    top: -68px;
-		    width: 896px;
+			background-image: url(/html/themes/classic/images/device_preview/tablet.png);
+			height: 1104px;
+			left: -68px;
+			top: -68px;
+			width: 896px;
 
 			&.rotated {
 				background-image: url(/html/themes/classic/images/device_preview/tablet_horizontal.png);

@@ -3,6 +3,7 @@ AUI.add(
 	function(A) {
 		var AObject = A.Object;
 		var AUA = A.UA;
+		var WIN = A.config.win;
 
 		var Lang = A.Lang;
 
@@ -49,6 +50,8 @@ AUI.add(
 
 		var STR_INPUT_WIDTH = 'inputWidth';
 
+		var STR_PREVENT_TRANSITION = 'preventTransition';
+
 		var STR_ROTATED = 'rotated';
 
 		var TPL_DEVICE_PREVIEW = '<div class="lfr-device-preview" />';
@@ -80,6 +83,8 @@ AUI.add(
 				prototype: {
 					initializer: function(config) {
 						var instance = this;
+
+						instance._eventHandles = [];
 
 						instance._dialogId = A.guid();
 
@@ -118,19 +123,17 @@ AUI.add(
 						var instance = this;
 
 						(new A.EventHandle(instance._eventHandles)).detach();
-
-						if (instance._dialogEventHandles) {
-							(new A.EventHandle(instance._dialogEventHandles)).detach();
-						}
 					},
 
 					_bindUI: function() {
 						var instance = this;
 
-						var eventHandles = [
+						var eventHandles = instance._eventHandles;
+
+						eventHandles.push(
 							instance._closePanelButton.on(STR_CLICK, instance._closePanel, instance),
 							instance._devicePreviewContent.delegate(STR_CLICK, instance._onDeviceClick, SELECTOR_DEVICE_ITEM, instance)
-						];
+						);
 
 						var inputWidth = instance.get(STR_INPUT_WIDTH);
 
@@ -147,8 +150,6 @@ AUI.add(
 								inputHeight.on(STR_INPUT, instance._onSizeInput, instance)
 							);
 						}
-
-						instance._eventHandles = eventHandles;
 					},
 
 					_closePanel: function() {
@@ -225,9 +226,9 @@ AUI.add(
 								width: dialogAttrs.size.width
 							};
 
-							var uri = window.location.href;
+							var uri = WIN.location.href;
 
-							var path = window.location.pathname;
+							var path = WIN.location.pathname;
 
 							if (AUA.ie && AUA.ie < 10 && path === '/') {
 								uri += '?';
@@ -248,33 +249,32 @@ AUI.add(
 										{
 											align: true,
 											after: {
-												start: function(event) {
-													instance._deviceSkin.set('className', 'lfr-device-skin');
-												},
 												end: function(event) {
 													instance._deviceSkin.addClass(instance._selectedDevice.skin);
-													dialogWindow.sizeanim.set('preventTransition', instance._selectedDevice.preventTransition || false);
+
+													dialogWindow.sizeanim.set(STR_PREVENT_TRANSITION, instance._selectedDevice.preventTransition || false);
+												},
+												start: function(event) {
+													instance._deviceSkin.set('className', 'lfr-device-skin');
 												}
 											},
 											preventTransition: true
 										}
 									);
 
-									var dialogEventHandles = [
-										dialogWindow.on('resize:start', instance._onResizeStart, instance),
+									instance._eventHandles.push(
+										dialogWindow.on('resize:end', instance._onResizeEnd, instance),
 										dialogWindow.on('resize:resize', instance._onResize, instance),
-										dialogWindow.on('resize:end', instance._onResizeEnd, instance)
-									];
+										dialogWindow.on('resize:start', instance._onResizeStart, instance)
+									);
 
 									dialogWindow.get('boundingBox').prepend(instance._deviceSkin);
-
-									instance._dialogEventHandles = dialogEventHandles;
 								}
 							);
 						}
 						else {
 							if (!device.preventTransition) {
-								dialog.sizeanim.set('preventTransition', false);
+								dialog.sizeanim.set(STR_PREVENT_TRANSITION, false);
 							}
 
 							dialog.setAttrs(dialogAttrs);
@@ -303,7 +303,7 @@ AUI.add(
 
 						var device = deviceList[deviceId];
 
-						instance._selectedDevice = device;						
+						instance._selectedDevice = device;
 
 						if (device) {
 							var deviceSelected = deviceItem.hasClass(CSS_SELECTED);
@@ -338,12 +338,12 @@ AUI.add(
 						var info = Lang.sub(
 							TPL_DEVICE_SIZE_INFO, 
 							{
-								width: event.info.offsetWidth,
-								height: event.info.offsetHeight
+								height: event.info.offsetHeight,
+								width: event.info.offsetWidth
 							}
 						);
 						
-						instance._sizeStatusContent.html(info);						
+						instance._sizeStatusContent.html(info);
 					},
 
 					_onResizeEnd: function(event) {
@@ -356,16 +356,19 @@ AUI.add(
 						var instance = this;
 
 						var sizeStatus = instance._sizeStatus;
+
 						var sizeStatusContent = instance._sizeStatusContent;
 
 						var dialog = Liferay.Util.getWindow(instance._dialogId);
 
 						if (!sizeStatus) {
 							sizeStatus = A.Node.create(TPL_DEVICE_SIZE_STATUS);
+
 							dialog.get('boundingBox').append(sizeStatus);
 
-							instance._sizeStatus = sizeStatus;
 							sizeStatusContent = sizeStatus.one('.lfr-device-size-status-content');
+
+							instance._sizeStatus = sizeStatus;
 
 							instance._sizeStatusContent = sizeStatusContent;
 						}
@@ -373,17 +376,19 @@ AUI.add(
 						sizeStatus.set('className', 'lfr-device-size-status');
 
 						var activehandle = dialog.resize.get('activeHandle');
+
 						sizeStatus.addClass(activehandle);
 
-						var info = Lang.sub(
+						var deviceSizeInfo = Lang.sub(
 							TPL_DEVICE_SIZE_INFO, 
 							{
-								width: dialog.get('width'),
-								height: dialog.get('height')
+								height: dialog.get('height'),
+								width: dialog.get('width')
 							}
 						);
 
-						sizeStatusContent.html(info);
+						sizeStatusContent.html(deviceSizeInfo);
+
 						sizeStatus.show();
 					},
 
@@ -393,6 +398,7 @@ AUI.add(
 						instance._openDeviceDialog(
 							{
 								height: Lang.toInt(instance.get(STR_INPUT_HEIGHT).val()),
+								resizable: true,
 								width: Lang.toInt(instance.get(STR_INPUT_WIDTH).val())
 							}
 						);

@@ -91,8 +91,8 @@
 				'smartphone': {
 					height: 640,
 					preventTransition: true,
-					skin: 'smartphone',
 					selected: true,
+					skin: 'smartphone',
 					width: 400
 				},
 				'tablet': {

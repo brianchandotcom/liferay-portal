@@ -34,6 +34,18 @@ if ((group != null) && !group.isRoot()) {
 
 	parentGroupName = HtmlUtil.escape(parentGroup.getDescriptiveName());
 }
+
+List<Group> groups = new ArrayList<Group>();
+
+if (filterManageableGroups) {
+	groups = user.getSites(true);
+}
+
+if (groupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
+	groups.clear();
+
+	groups.add(GroupLocalServiceUtil.getGroup(groupId));
+}
 %>
 
 <c:if test="<%= group != null %>">
@@ -98,29 +110,57 @@ if ((group != null) && !group.isRoot()) {
 			GroupSearchTerms searchTerms = (GroupSearchTerms)searchContainer.getSearchTerms();
 
 			request.setAttribute("view_tree.jspf-searchTerms", searchTerms);
-
-			LinkedHashMap<String, Object> groupParams = new LinkedHashMap<String, Object>();
-
-			groupParams.put("site", Boolean.TRUE);
-
-			if (!permissionChecker.isCompanyAdmin() && !GroupPermissionUtil.contains(permissionChecker, ActionKeys.VIEW)) {
-				groupParams.put("usersGroups", new Long(user.getUserId()));
-				//groupParams.put("active", Boolean.TRUE);
-			}
 			%>
 
 			<liferay-ui:search-container-results>
+				<c:choose>
+					<c:when test="<%= !searchTerms.hasSearchTerms() && (parentGroupId <= 0) && (filterManageableGroups) %>">
+
+						<%
+						results = ListUtil.subList(groups, searchContainer.getStart(), searchContainer.getEnd());
+						total = groups.size();
+						%>
+
+					</c:when>
+					<c:otherwise>
+
+						<%
+						LinkedHashMap<String, Object> groupParams = new LinkedHashMap<String, Object>();
+
+						groupParams.put("site", Boolean.TRUE);
+						//groupParams.put("active", Boolean.TRUE);
+
+						if (searchTerms.hasSearchTerms()) {
+							if (filterManageableGroups) {
+								groupParams.put("groupsTree", groups);
+							}
+							else if (parentGroupId > 0) {
+								List<Group> groupsTree = new ArrayList<Group>();
+
+								Group parentGroup = GroupLocalServiceUtil.getGroup(parentGroupId);
+
+								groupsTree.add(parentGroup);
+
+								groupParams.put("groupsTree", groupsTree);
+							}
+
+							parentGroupId = GroupConstants.ANY_PARENT_GROUP_ID;
+						}
+
+						if (searchTerms.isAdvancedSearch()) {
+							results = GroupLocalServiceUtil.search(company.getCompanyId(), classNameIds, searchTerms.getName(), searchTerms.getDescription(), groupParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+							total = GroupLocalServiceUtil.searchCount(company.getCompanyId(), classNameIds, searchTerms.getName(), searchTerms.getDescription(), groupParams, searchTerms.isAndOperator());
+						}
+						else {
+							results = GroupLocalServiceUtil.search(company.getCompanyId(), classNameIds, groupId, searchTerms.getKeywords(), groupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+							total = GroupLocalServiceUtil.searchCount(company.getCompanyId(), classNameIds, groupId, searchTerms.getKeywords(), groupParams);
+						}
+						%>
+
+					</c:otherwise>
+				</c:choose>
 
 				<%
-				if (searchTerms.isAdvancedSearch()) {
-					results = GroupLocalServiceUtil.search(company.getCompanyId(), classNameIds, searchTerms.getName(), searchTerms.getDescription(), groupParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-					total = GroupLocalServiceUtil.searchCount(company.getCompanyId(), classNameIds, searchTerms.getName(), searchTerms.getDescription(), groupParams, searchTerms.isAndOperator());
-				}
-				else {
-					results = GroupLocalServiceUtil.search(company.getCompanyId(), classNameIds, groupId, searchTerms.getKeywords(), groupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-					total = GroupLocalServiceUtil.searchCount(company.getCompanyId(), classNameIds, groupId, searchTerms.getKeywords(), groupParams);
-				}
-
 				pageContext.setAttribute("results", results);
 				pageContext.setAttribute("total", total);
 				%>

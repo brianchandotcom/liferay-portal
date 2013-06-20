@@ -1645,6 +1645,20 @@ public class GroupLocalServiceUtil {
 		return getService().getUserPersonalSiteGroup(companyId);
 	}
 
+	public static java.util.List<com.liferay.portal.model.Group> getUserSitesGroups(
+		long userId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getUserSitesGroups(userId);
+	}
+
+	public static java.util.List<com.liferay.portal.model.Group> getUserSitesGroups(
+		long userId, boolean includeAdministrative)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getUserSitesGroups(userId, includeAdministrative);
+	}
+
 	/**
 	* Returns <code>true</code> if the live group has a staging group.
 	*

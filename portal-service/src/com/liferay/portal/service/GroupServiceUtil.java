@@ -359,6 +359,10 @@ public class GroupServiceUtil {
 		return getService().getUserOrganizationsGroups(userId, start, end);
 	}
 
+	/**
+	* @deprecated As of 6.2.0, replaced by {@link #getUserPlacesGroups(long,
+	String[], boolean, int)}
+	*/
 	public static java.util.List<com.liferay.portal.model.Group> getUserPlaces(
 		long userId, java.lang.String[] classNames,
 		boolean includeControlPanel, int max)
@@ -396,11 +400,13 @@ public class GroupServiceUtil {
 	* @param userId the primary key of the user
 	* @param classNames the group entity class names (optionally
 	<code>null</code>). For more information see {@link
-	#getUserPlaces(long, String[], int)}
+	#getUserPlacesGroups(long, String[], int)}
 	* @param max the maximum number of groups to return
 	* @return the user's group &quot;places&quot;
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
+	* @deprecated As of 6.2.0, replaced by {@link #getUserPlacesGroups(long,
+	String[], int)}
 	*/
 	public static java.util.List<com.liferay.portal.model.Group> getUserPlaces(
 		long userId, java.lang.String[] classNames, int max)
@@ -409,6 +415,10 @@ public class GroupServiceUtil {
 		return getService().getUserPlaces(userId, classNames, max);
 	}
 
+	/**
+	* @deprecated As of 6.2.0, replaced by {@link #getUserPlacesGroups(long,
+	String[], String, boolean, boolean, int, int)}
+	*/
 	public static java.util.List<com.liferay.portal.model.Group> getUserPlaces(
 		long userId, java.lang.String[] classNames, java.lang.String name,
 		boolean active, boolean includeControlPanel, int start, int end)
@@ -446,11 +456,13 @@ public class GroupServiceUtil {
 	*
 	* @param classNames the group entity class names (optionally
 	<code>null</code>). For more information see {@link
-	#getUserPlaces(String[], int)}
+	#getUserPlacesGroups(String[], int)}
 	* @param max the maximum number of groups to return
 	* @return the user's group &quot;places&quot;
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
+	* @deprecated As of 6.2.0, replaced by {@link #getUserPlacesGroups(
+	String[], int)}
 	*/
 	public static java.util.List<com.liferay.portal.model.Group> getUserPlaces(
 		java.lang.String[] classNames, int max)
@@ -468,11 +480,58 @@ public class GroupServiceUtil {
 	* @return the number of user's group &quot;places&quot;
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
+	* @deprecated As of 6.2.0, replaced by {@link #getUserPlacesGroupCount()}
 	*/
 	public static int getUserPlacesCount()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getUserPlacesCount();
+	}
+
+	public static int getUserPlacesGroupCount()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getUserPlacesGroupCount();
+	}
+
+	public static java.util.List<com.liferay.portal.model.Group> getUserPlacesGroups()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getUserPlacesGroups();
+	}
+
+	public static java.util.List<com.liferay.portal.model.Group> getUserPlacesGroups(
+		long userId, java.lang.String[] classNames,
+		boolean includeControlPanel, int max)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getUserPlacesGroups(userId, classNames,
+			includeControlPanel, max);
+	}
+
+	public static java.util.List<com.liferay.portal.model.Group> getUserPlacesGroups(
+		long userId, java.lang.String[] classNames, int max)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getUserPlacesGroups(userId, classNames, max);
+	}
+
+	public static java.util.List<com.liferay.portal.model.Group> getUserPlacesGroups(
+		long userId, java.lang.String[] classNames, java.lang.String name,
+		boolean active, boolean includeControlPanel, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getUserPlacesGroups(userId, classNames, name, active,
+			includeControlPanel, start, end);
+	}
+
+	public static java.util.List<com.liferay.portal.model.Group> getUserPlacesGroups(
+		java.lang.String[] classNames, int max)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getUserPlacesGroups(classNames, max);
 	}
 
 	/**
@@ -483,6 +542,7 @@ public class GroupServiceUtil {
 	organization groups, and site groups
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
+	* @deprecated As of 6.2.0, replaced by {@link #getUserPlacesGroups()}
 	*/
 	public static java.util.List<com.liferay.portal.model.Group> getUserSites()
 		throws com.liferay.portal.kernel.exception.PortalException,

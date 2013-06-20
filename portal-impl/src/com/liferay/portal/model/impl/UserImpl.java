@@ -370,7 +370,7 @@ public class UserImpl extends UserBaseImpl {
 			return myPlaces;
 		}
 
-		myPlaces = GroupServiceUtil.getUserPlaces(
+		myPlaces = GroupServiceUtil.getUserPlacesGroups(
 			getUserId(), classNames, includeControlPanel, max);
 
 		threadLocalCache.put(key, myPlaces);
@@ -534,6 +534,19 @@ public class UserImpl extends UserBaseImpl {
 	@Override
 	public List<Role> getRoles() throws SystemException {
 		return RoleLocalServiceUtil.getUserRoles(getUserId());
+	}
+
+	@Override
+	public List<Group> getSites() throws PortalException, SystemException {
+		return getSites(false);
+	}
+
+	@Override
+	public List<Group> getSites(boolean includeAdministrative)
+		throws PortalException, SystemException {
+
+		return GroupLocalServiceUtil.getUserSitesGroups(
+			getUserId(), includeAdministrative);
 	}
 
 	@Override

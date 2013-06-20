@@ -58,10 +58,9 @@ public class PortletDataHandlerBoolean extends PortletDataHandlerControl {
 		boolean disabled, PortletDataHandlerControl[] children,
 		String className, String referrerClassName) {
 
-		super(namespace, controlName, disabled, className, referrerClassName);
-
-		_children = children;
-		_defaultState = defaultState;
+		this(
+			namespace, controlName, controlName, defaultState, disabled,
+			children, className, referrerClassName);
 	}
 
 	public PortletDataHandlerBoolean(
@@ -69,6 +68,20 @@ public class PortletDataHandlerBoolean extends PortletDataHandlerControl {
 		PortletDataHandlerControl[] children) {
 
 		this(namespace, controlName, defaultState, false, children);
+	}
+
+	public PortletDataHandlerBoolean(
+		String namespace, String controlName, String controlLabel,
+		boolean defaultState, boolean disabled,
+		PortletDataHandlerControl[] children, String className,
+		String referrerClassName) {
+
+		super(
+			namespace, controlName, controlLabel, disabled, className,
+			referrerClassName);
+
+		_children = children;
+		_defaultState = defaultState;
 	}
 
 	public PortletDataHandlerControl[] getChildren() {

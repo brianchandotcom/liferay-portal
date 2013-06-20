@@ -228,14 +228,6 @@ public class LayoutImporter {
 			parameterMap, PortletDataHandlerKeys.CATEGORIES);
 		boolean importPermissions = MapUtil.getBoolean(
 			parameterMap, PortletDataHandlerKeys.PERMISSIONS);
-		boolean importPortletData = MapUtil.getBoolean(
-			parameterMap, PortletDataHandlerKeys.PORTLET_DATA);
-		boolean importPortletSetup = MapUtil.getBoolean(
-			parameterMap, PortletDataHandlerKeys.PORTLET_SETUP);
-		boolean importPortletArchivedSetups = MapUtil.getBoolean(
-			parameterMap, PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS);
-		boolean importPortletUserPreferences = MapUtil.getBoolean(
-			parameterMap, PortletDataHandlerKeys.PORTLET_USER_PREFERENCES);
 		boolean importTheme = MapUtil.getBoolean(
 			parameterMap, PortletDataHandlerKeys.THEME);
 		boolean importThemeSettings = MapUtil.getBoolean(
@@ -265,14 +257,6 @@ public class LayoutImporter {
 			_log.debug("Delete portlet data " + deletePortletData);
 			_log.debug("Import categories " + importCategories);
 			_log.debug("Import permissions " + importPermissions);
-			_log.debug("Import portlet data " + importPortletData);
-			_log.debug("Import portlet setup " + importPortletSetup);
-			_log.debug(
-				"Import portlet archived setups " +
-					importPortletArchivedSetups);
-			_log.debug(
-				"Import portlet user preferences " +
-					importPortletUserPreferences);
 			_log.debug("Import theme " + importTheme);
 		}
 
@@ -667,8 +651,8 @@ public class LayoutImporter {
 
 			Element portletDataElement = portletElement.element("portlet-data");
 
-			boolean importData =
-				importPortletData && (portletDataElement != null);
+			boolean[] importPortletControls = getImportPortletControls(
+				companyId, portletId, parameterMap, portletDataElement);
 
 			try {
 				if ((layout != null) && !group.isCompany()) {
@@ -680,12 +664,12 @@ public class LayoutImporter {
 				_portletImporter.importPortletPreferences(
 					portletDataContext, layoutSet.getCompanyId(),
 					portletPreferencesGroupId, layout, null, portletElement,
-					importPortletSetup, importPortletArchivedSetups,
-					importPortletUserPreferences, false, importData);
+					importPortletControls[2], importPortletControls[0],
+					importPortletControls[3], false, importPortletControls[1]);
 
 				// Portlet data
 
-				if (importData) {
+				if (importPortletControls[1]) {
 					_portletImporter.importPortletData(
 						portletDataContext, portletId, plid,
 						portletDataElement);
@@ -708,9 +692,9 @@ public class LayoutImporter {
 
 			_portletImporter.importPortletPreferences(
 				portletDataContext, layoutSet.getCompanyId(), groupId, null,
-				null, portletElement, importPortletSetup,
-				importPortletArchivedSetups, importPortletUserPreferences,
-				false, importData);
+				null, portletElement, importPortletControls[2],
+				importPortletControls[0], importPortletControls[3], false,
+				importPortletControls[1]);
 		}
 
 		if (importPermissions) {
@@ -814,6 +798,97 @@ public class LayoutImporter {
 		}
 
 		zipReader.close();
+	}
+
+	protected boolean[] getImportPortletControls(
+			long companyId, String portletId,
+			Map<String, String[]> parameterMap, Element portletDataElement)
+		throws Exception {
+
+		boolean importPortletConfiguration = MapUtil.getBoolean(
+			parameterMap, PortletDataHandlerKeys.PORTLET_CONFIGURATION);
+		boolean importPortletConfigurationAll = MapUtil.getBoolean(
+			parameterMap, PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL);
+		boolean importPortletData = MapUtil.getBoolean(
+			parameterMap, PortletDataHandlerKeys.PORTLET_DATA);
+		boolean importPortletDataAll = MapUtil.getBoolean(
+			parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Import portlet data " + importPortletData);
+			_log.debug("Import all portlet data " + importPortletDataAll);
+			_log.debug(
+				"Import portlet configuration " + importPortletConfiguration);
+		}
+
+		boolean importCurPortletData = importPortletData;
+
+		String rootPortletId =
+			ExportImportHelperUtil.getExportableRootPortletId(
+				companyId, portletId);
+
+		if (portletDataElement == null) {
+			importCurPortletData = false;
+		}
+		else if (importPortletDataAll) {
+			importCurPortletData = true;
+		}
+		else if (rootPortletId != null) {
+			importCurPortletData =
+				importPortletData &&
+				MapUtil.getBoolean(
+					parameterMap,
+					PortletDataHandlerKeys.PORTLET_DATA +
+						StringPool.UNDERLINE + rootPortletId);
+		}
+
+		boolean importCurPortletArchivedSetups = importPortletConfiguration;
+		boolean importCurPortletSetup = importPortletConfiguration;
+		boolean importCurPortletUserPreferences = importPortletConfiguration;
+
+		if (importPortletConfigurationAll) {
+			importCurPortletArchivedSetups =
+				MapUtil.getBoolean(
+					parameterMap,
+					PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL);
+			importCurPortletSetup =
+				MapUtil.getBoolean(
+					parameterMap, PortletDataHandlerKeys.PORTLET_SETUP_ALL);
+			importCurPortletUserPreferences =
+				MapUtil.getBoolean(
+					parameterMap,
+					PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL);
+		}
+		else if (rootPortletId != null) {
+			boolean importCurPortletConfiguration =
+				importPortletConfiguration &&
+				MapUtil.getBoolean(
+					parameterMap,
+					PortletDataHandlerKeys.PORTLET_CONFIGURATION +
+						StringPool.UNDERLINE + rootPortletId);
+			importCurPortletArchivedSetups =
+				importCurPortletConfiguration &&
+				MapUtil.getBoolean(
+					parameterMap,
+					PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS +
+						StringPool.UNDERLINE + rootPortletId);
+			importCurPortletSetup =
+				importCurPortletConfiguration &&
+				MapUtil.getBoolean(
+					parameterMap,
+					PortletDataHandlerKeys.PORTLET_SETUP +
+						StringPool.UNDERLINE + rootPortletId);
+			importCurPortletUserPreferences =
+				importCurPortletConfiguration &&
+				MapUtil.getBoolean(
+					parameterMap,
+					PortletDataHandlerKeys.PORTLET_USER_PREFERENCES +
+						StringPool.UNDERLINE + rootPortletId);
+		}
+
+		return new boolean[] {
+			importCurPortletArchivedSetups, importCurPortletData,
+			importCurPortletSetup, importCurPortletUserPreferences};
 	}
 
 	protected void importLayout(

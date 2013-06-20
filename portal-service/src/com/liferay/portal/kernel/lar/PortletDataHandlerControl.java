@@ -59,7 +59,17 @@ public class PortletDataHandlerControl {
 		String namespace, String controlName, boolean disabled,
 		String className, String referrerClassName) {
 
+		this(
+			namespace, controlName, controlName, disabled, className,
+			referrerClassName);
+	}
+
+	public PortletDataHandlerControl(
+		String namespace, String controlName, String controlLabel,
+		boolean disabled, String className, String referrerClassName) {
+
 		_namespace = namespace;
+		_controlLabel = controlLabel;
 		_controlName = controlName;
 		_disabled = disabled;
 		_className = className;
@@ -70,13 +80,17 @@ public class PortletDataHandlerControl {
 		return _className;
 	}
 
+	public String getControlLabel() {
+		return _controlLabel;
+	}
+
 	public String getControlName() {
 		return _controlName;
 	}
 
 	public String getHelpMessage(Locale locale, String action) {
 		return LanguageUtil.get(
-			locale, action + "-" + _controlName + "-help", StringPool.BLANK);
+			locale, action + "-" + _controlLabel + "-help", StringPool.BLANK);
 	}
 
 	public String getNamespace() {
@@ -100,6 +114,7 @@ public class PortletDataHandlerControl {
 	}
 
 	private String _className;
+	private String _controlLabel;
 	private String _controlName;
 	private boolean _disabled;
 	private String _namespace;

@@ -497,7 +497,13 @@ public class AssetPublisherExportImportTest
 			PortletDataHandlerKeys.CATEGORIES,
 			new String[] {Boolean.TRUE.toString()});
 		parameterMap.put(
-			PortletDataHandlerKeys.PORTLET_SETUP,
+			PortletDataHandlerKeys.PORTLET_CONFIGURATION,
+			new String[] {Boolean.TRUE.toString()});
+		parameterMap.put(
+			PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL,
+			new String[] {Boolean.TRUE.toString()});
+		parameterMap.put(
+			PortletDataHandlerKeys.PORTLET_SETUP_ALL,
 			new String[] {Boolean.TRUE.toString()});
 
 		return parameterMap;

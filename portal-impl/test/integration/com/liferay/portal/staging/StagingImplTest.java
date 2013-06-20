@@ -119,6 +119,19 @@ public class StagingImplTest {
 		Map<String, String[]> parameters = StagingUtil.getStagingParameters();
 
 		parameters.put(
+			PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL,
+			new String[] {String.valueOf(false)});
+
+		parameters.put(
+			PortletDataHandlerKeys.PORTLET_CONFIGURATION + "_" +
+				PortletKeys.JOURNAL,
+			new String[] {String.valueOf(stageJournal)});
+
+		parameters.put(
+			PortletDataHandlerKeys.PORTLET_SETUP + "_" + PortletKeys.JOURNAL,
+			new String[] {String.valueOf(stageJournal)});
+
+		parameters.put(
 			PortletDataHandlerKeys.PORTLET_DATA_ALL,
 			new String[] {String.valueOf(false)});
 

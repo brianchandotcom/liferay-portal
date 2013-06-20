@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.lar;
 
+import com.liferay.portal.model.Portlet;
+
 import javax.portlet.PortletPreferences;
 
 /**
@@ -63,6 +65,9 @@ public interface PortletDataHandler {
 	public String exportData(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
+		throws PortletDataException;
+
+	public PortletDataHandlerControl[] getConfigurationControls(Portlet portlet)
 		throws PortletDataException;
 
 	public DataLevel getDataLevel();

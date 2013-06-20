@@ -41,6 +41,7 @@ AUI.add(
 					remotePathContextNode: defaultConfig,
 					remoteGroupIdNode: defaultConfig,
 					secureConnectionNode: defaultConfig,
+					setupNode: defaultConfig,
 					themeNode: defaultConfig,
 					themeReferenceNode: defaultConfig,
 					userPreferencesNode: defaultConfig
@@ -95,6 +96,24 @@ AUI.add(
 
 					_bindUI: function() {
 						var instance = this;
+
+						instance.get('form').delegate(
+							STR_CLICK,
+							function(event) {
+								var portletId = event.currentTarget.attr('data-portletid');
+
+								var portletTitle = event.currentTarget.attr('data-portlettitle');
+
+								if (!portletTitle) {
+									portletTitle = Liferay.Language.get('configuration');
+								}
+
+								var configurationDialog = instance._getConfigurationDialog(portletId, portletTitle);
+
+								configurationDialog.show();
+							},
+							'.configuration-link'
+						);
 
 						instance.get('form').delegate(
 							STR_CLICK,
@@ -261,6 +280,63 @@ AUI.add(
 						}
 
 						return commentsAndRatingsDialog;
+					},
+
+					_getConfigurationDialog: function(portletId, portletTitle) {
+						var instance = this;
+
+						var configurationNode = instance.byId('configuration_' + portletId);
+
+						var configurationDialog = configurationNode.getData('configurationDialog');
+
+						if (!configurationDialog) {
+							configurationNode.show();
+
+							configurationDialog = Liferay.Util.Window.getWindow(
+								{
+									dialog: {
+										bodyContent: configurationNode,
+										centered: true,
+										height: 300,
+										modal: true,
+										render: instance.get('form'),
+										toolbars: {
+											footer: [
+												{
+													on: {
+														click: function(event) {
+															event.domEvent.preventDefault();
+
+															instance._setConfigurationLabels(portletId);
+
+															configurationDialog.hide();
+														}
+													},
+													label: Liferay.Language.get('ok'),
+													primary: true
+												},
+												{
+													on: {
+														click: function(event) {
+															event.domEvent.preventDefault();
+
+															configurationDialog.hide();
+														}
+													},
+													label: Liferay.Language.get('cancel')
+												}
+											]
+										},
+										width: 400
+									},
+									title: portletTitle
+								}
+							);
+
+							configurationNode.setData('configurationDialog', configurationDialog);
+						}
+
+						return configurationDialog;
 					},
 
 					_getContentDialog: function(portletId, portletTitle) {
@@ -666,6 +742,12 @@ AUI.add(
 					_initLabels: function() {
 						var instance = this;
 
+						instance.all('.configuration-link').each(
+							function(item, index, collection) {
+								instance._setConfigurationLabels(item.attr('data-portletid'));
+							}
+						);
+
 						instance.all('.content-link').each(
 							function(item, index, collection) {
 								instance._setContentLabels(item.attr('data-portletid'));
@@ -712,6 +794,28 @@ AUI.add(
 						instance._setLabels('commentsAndRatingsLink', 'selectedCommentsAndRatings', selectedCommentsAndRatings.join(', '));
 					},
 
+					_setConfigurationLabels: function(portletId) {
+						var instance = this;
+
+						var configurationNode = instance.byId('configuration_' + portletId);
+
+						var inputs = configurationNode.all('.field');
+
+						var selectedConfiguration = [];
+
+						inputs.each(
+							function(item, index, collection) {
+								var checked = item.attr(STR_CHECKED);
+
+								if (checked) {
+									selectedConfiguration.push(item.attr('data-name'));
+								}
+							}
+						);
+
+						instance._setLabels('configurationLink_' + portletId, 'selectedConfiguration_' + portletId, selectedConfiguration.join(', '));
+					},
+
 					_setContentLabels: function(portletId) {
 						var instance = this;
 
@@ -738,6 +842,10 @@ AUI.add(
 						var instance = this;
 
 						var selectedGlobalConfiguration = [];
+
+						if (instance._isChecked('setupNode')) {
+							selectedGlobalConfiguration.push(Liferay.Language.get('setup'));
+						}
 
 						if (instance._isChecked('archivedSetupsNode')) {
 							selectedGlobalConfiguration.push(Liferay.Language.get('archived-setups'));

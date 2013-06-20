@@ -346,16 +346,77 @@ public class PortletImporter {
 			parameterMap, PortletDataHandlerKeys.DELETE_PORTLET_DATA);
 		boolean importPermissions = MapUtil.getBoolean(
 			parameterMap, PortletDataHandlerKeys.PERMISSIONS);
+		boolean importPortletConfiguration = MapUtil.getBoolean(
+			parameterMap, PortletDataHandlerKeys.PORTLET_CONFIGURATION);
+		boolean importPortletConfigurationAll = MapUtil.getBoolean(
+			parameterMap, PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL);
 		boolean importPortletData = MapUtil.getBoolean(
 			parameterMap, PortletDataHandlerKeys.PORTLET_DATA);
-		boolean importPortletArchivedSetups = MapUtil.getBoolean(
-			parameterMap, PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS);
-		boolean importPortletSetup = MapUtil.getBoolean(
-			parameterMap, PortletDataHandlerKeys.PORTLET_SETUP);
-		boolean importPortletUserPreferences = MapUtil.getBoolean(
-			parameterMap, PortletDataHandlerKeys.PORTLET_USER_PREFERENCES);
+		boolean importPortletDataAll = MapUtil.getBoolean(
+			parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL);
 		String userIdStrategyString = MapUtil.getString(
 			parameterMap, PortletDataHandlerKeys.USER_ID_STRATEGY);
+
+		String rootPortletId = PortletConstants.getRootPortletId(portletId);
+
+		if (importPortletDataAll) {
+			importPortletData = true;
+		}
+		else if (parameterMap.containsKey(
+					PortletDataHandlerKeys.PORTLET_DATA + "_" +
+						rootPortletId)) {
+
+			importPortletData = MapUtil.getBoolean(
+				parameterMap,
+				PortletDataHandlerKeys.PORTLET_DATA + "_" + rootPortletId);
+		}
+
+		boolean importPortletArchivedSetups = importPortletConfiguration;
+		boolean importPortletSetup = importPortletConfiguration;
+		boolean importPortletUserPreferences = importPortletConfiguration;
+
+		if (importPortletConfigurationAll) {
+			importPortletArchivedSetups =
+				MapUtil.getBoolean(
+					parameterMap,
+					PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL);
+			importPortletSetup =
+				MapUtil.getBoolean(
+					parameterMap, PortletDataHandlerKeys.PORTLET_SETUP_ALL);
+			importPortletUserPreferences =
+				MapUtil.getBoolean(
+					parameterMap,
+					PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL);
+		}
+		else if (parameterMap.containsKey(
+					PortletDataHandlerKeys.PORTLET_CONFIGURATION + "_" +
+						rootPortletId)) {
+
+			importPortletConfiguration =
+				importPortletConfiguration &&
+				MapUtil.getBoolean(
+					parameterMap,
+					PortletDataHandlerKeys.PORTLET_CONFIGURATION +
+						StringPool.UNDERLINE + rootPortletId);
+			importPortletArchivedSetups =
+				importPortletConfiguration &&
+				MapUtil.getBoolean(
+					parameterMap,
+					PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS +
+						StringPool.UNDERLINE + rootPortletId);
+			importPortletSetup =
+				importPortletConfiguration &&
+				MapUtil.getBoolean(
+					parameterMap,
+					PortletDataHandlerKeys.PORTLET_SETUP +
+						StringPool.UNDERLINE + rootPortletId);
+			importPortletUserPreferences =
+				importPortletConfiguration &&
+				MapUtil.getBoolean(
+					parameterMap,
+					PortletDataHandlerKeys.PORTLET_USER_PREFERENCES +
+						StringPool.UNDERLINE + rootPortletId);
+		}
 
 		StopWatch stopWatch = null;
 

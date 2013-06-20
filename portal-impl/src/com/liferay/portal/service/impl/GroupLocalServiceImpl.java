@@ -3438,13 +3438,13 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			PortletDataHandlerKeys.PERMISSIONS,
 			new String[] {Boolean.TRUE.toString()});
 		parameterMap.put(
+			PortletDataHandlerKeys.PORTLET_CONFIGURATION,
+			new String[] {Boolean.TRUE.toString()});
+		parameterMap.put(
 			PortletDataHandlerKeys.PORTLET_DATA,
 			new String[] {Boolean.TRUE.toString()});
 		parameterMap.put(
 			PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT,
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.PORTLET_SETUP,
 			new String[] {Boolean.TRUE.toString()});
 
 		layoutLocalService.importLayouts(

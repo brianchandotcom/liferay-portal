@@ -60,6 +60,14 @@ public class ExportImportHelperUtil {
 		return getExportImportHelper().getExportableLayout(themeDisplay);
 	}
 
+	public static String getExportableRootPortletId(
+			long companyId, String portletId)
+		throws Exception {
+
+		return getExportImportHelper().getExportableRootPortletId(
+			companyId, portletId);
+	}
+
 	public static ExportImportHelper getExportImportHelper() {
 		PortalRuntimePermission.checkGetBeanProperty(
 			ExportImportHelperUtil.class);

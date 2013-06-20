@@ -169,10 +169,19 @@ public abstract class BaseStagedModelDataHandlerTestCase extends PowerMockito {
 			PortletDataHandlerKeys.IGNORE_LAST_PUBLISH_DATE,
 			new String[] {Boolean.TRUE.toString()});
 		parameterMap.put(
+			PortletDataHandlerKeys.PORTLET_CONFIGURATION,
+			new String[] {Boolean.TRUE.toString()});
+		parameterMap.put(
+			PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL,
+			new String[] {Boolean.TRUE.toString()});
+		parameterMap.put(
 			PortletDataHandlerKeys.PORTLET_DATA,
 			new String[] {Boolean.TRUE.toString()});
 		parameterMap.put(
 			PortletDataHandlerKeys.PORTLET_DATA_ALL,
+			new String[] {Boolean.TRUE.toString()});
+		parameterMap.put(
+			PortletDataHandlerKeys.PORTLET_SETUP_ALL,
 			new String[] {Boolean.TRUE.toString()});
 
 		return parameterMap;

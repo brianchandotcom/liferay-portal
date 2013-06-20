@@ -61,6 +61,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -245,6 +246,25 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		}
 
 		return layout;
+	}
+
+	@Override
+	public String getExportableRootPortletId(long companyId, String portletId)
+		throws Exception {
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			companyId, portletId);
+
+		if (portlet != null) {
+			String portletDataHandlerClass =
+				portlet.getPortletDataHandlerClass();
+
+			if (portletDataHandlerClass != null) {
+				return PortletConstants.getRootPortletId(portletId);
+			}
+		}
+
+		return null;
 	}
 
 	@Override

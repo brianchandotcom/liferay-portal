@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.model.Portlet;
 
 import java.io.IOException;
 
@@ -94,6 +95,27 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 				_log.info("Exported portlet in " + Time.getDuration(duration));
 			}
 		}
+	}
+
+	@Override
+	public PortletDataHandlerControl[] getConfigurationControls(Portlet portlet)
+		throws PortletDataException {
+
+		if (Validator.isNull(portlet.getConfigurationActionClass())) {
+			return null;
+		}
+
+		return new PortletDataHandlerBoolean[] {
+			new PortletDataHandlerBoolean(
+				null, PortletDataHandlerKeys.PORTLET_SETUP, "setup",
+				true, false, null, null, null),
+			new PortletDataHandlerBoolean(
+				null, PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS,
+				"archived-setups", true, false, null, null, null),
+			new PortletDataHandlerBoolean(
+				null, PortletDataHandlerKeys.PORTLET_USER_PREFERENCES,
+				"user-preferences", true, false, null, null, null)
+		};
 	}
 
 	@Override

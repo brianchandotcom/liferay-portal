@@ -17,6 +17,7 @@ package com.liferay.portal.repository.liferayrepository.model;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
@@ -360,6 +361,25 @@ public class LiferayFolder extends LiferayModel implements Folder {
 		_dlFolder.setUuid(uuid);
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+	    if (this == obj) {
+	      return true;
+	    }
+
+	    if (!(obj instanceof LiferayFolder)) {
+	      return false;
+	    }
+
+	    LiferayFolder liferayFolder = (LiferayFolder)obj;
+
+	    if (Validator.equals(_dlFolder, liferayFolder._dlFolder)) {
+	      return true;
+	    }
+
+	    return false;
+	}
+	
 	@Override
 	public Folder toEscapedModel() {
 		if (isEscapedModel()) {

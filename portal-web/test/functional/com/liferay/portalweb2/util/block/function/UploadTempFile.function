@@ -1,0 +1,7 @@
+<definition>
+	<command name="uploadTempFile">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="uploadTempFile" />
+	</command>
+</definition>

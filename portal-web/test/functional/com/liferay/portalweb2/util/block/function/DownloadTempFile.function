@@ -1,0 +1,5 @@
+<definition>
+	<command name="downloadTempFile">
+		<execute selenium="pause" argument1="5000" />
+	</command>
+</definition>

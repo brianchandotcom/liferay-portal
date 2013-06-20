@@ -288,7 +288,7 @@ public class FriendlyURLServlet extends HttpServlet {
 				friendlyURL = friendlyURL.substring(0, pos);
 			}
 
-			if (!friendlyURL.startsWith(layout.getFriendlyURL(locale))) {
+			if (!friendlyURL.equals(layout.getFriendlyURL(locale))) {
 				setAlternativeLayoutFriendlyURL(request, layout, friendlyURL);
 
 				String redirect = PortalUtil.getLocalizedFriendlyURL(

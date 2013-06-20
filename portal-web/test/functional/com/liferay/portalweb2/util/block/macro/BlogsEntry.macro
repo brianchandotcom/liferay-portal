@@ -1,10 +1,10 @@
 <definition>
 	<command name="addCmdPG">
-		<execute action="PGBlogs#click" locator-key1="ADD_ENTRY_BUTTON" />
+		<execute action="PGBlogs#assertClick" locator-key1="ADD_ENTRY_BUTTON" value1="Add Blog Entry" />
 
 		<execute action="PGBlogsAdd#type" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
 		<execute action="PGBlogsAdd#type" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
-		<execute action="PGBlogsAdd#click" locator-key1="PUBLISH_BUTTON" />
+		<execute action="PGBlogsAdd#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<execute action="PGBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE_1" value1="${entryTitle}" />
@@ -16,17 +16,17 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute action="CPBlogs#click" locator-key1="ADD_ENTRY" />
+		<execute action="CPBlogs#assertClick" locator-key1="ADD_ENTRY" value1="Add" />
 
 		<execute action="CPBlogsAdd#type" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
 		<execute action="CPBlogsAdd#type" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
-		<execute action="CPBlogsAdd#click" locator-key1="PUBLISH_BUTTON" />
+		<execute action="CPBlogsAdd#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute action="CPBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
+		<execute action="CPBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="CPBlogs#assertTextEquals" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
-		<execute action="CPBlogs#click" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
+		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
 
 		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE_HEADER" value1="${entryTitle}" />
 		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
@@ -85,9 +85,9 @@
 	</command>
 
 	<command name="deleteCmdPG">
-		<execute action="PGBlogs#click" locator-key1="ENTRY_RECYCLE_BIN_1" />
+		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_RECYCLE_BIN_1" value1="Move to the Recycle Bin" />
 
-		<execute action="PGBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" />
+		<execute action="PGBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The selected item was moved to the Recycle Bin. Undo" />
 		<execute action="PGBlogs#assertTextNotPresent" value1="${entryTitle}" />
 		<execute action="PGBlogs#assertTextNotPresent" value1="${entryContent}" />
 	</command>
@@ -147,11 +147,11 @@
 	<command name="editCmdPG">
 		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE_1" value1="${entryTitle}" />
 		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT_1" value1="${entryContent}" />
-		<execute action="PGBlogs#click" locator-key1="ENTRY_EDIT_1" value1="${entryTitle}" />
+		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_EDIT_1" value1="Edit" />
 
 		<execute action="PGBlogsEdit#type" locator-key1="TITLE_FIELD" value1="${entryTitleEdit}" />
 		<execute action="PGBlogsEdit#type" locator-key1="CONTENT_FIELD" value1="${entryContentEdit}" />
-		<execute action="PGBlogsEdit#click" locator-key1="PUBLISH_BUTTON" />
+		<execute action="PGBlogsEdit#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<execute action="PGBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE_1" value1="${entryTitleEdit}" />
@@ -177,7 +177,7 @@
 	<command name="moveToRecycleBinCmdPG">
 		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE_1" value1="${entryTitle}" />
 		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT_1" value1="${entryContent}" />
-		<execute action="PGBlogs#click" locator-key1="ENTRY_RECYCLE_BIN_1" />
+		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_RECYCLE_BIN_1" value1="Move to the Recycle Bin" />
 		<execute action="PGBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The selected item was moved to the Recycle Bin. Undo" />
 		<execute action="PGBlogs#assertTextNotPresent" value1="${entryTitle}" />
 		<execute action="PGBlogs#assertTextNotPresent" value1="${entryContent}" />
@@ -192,7 +192,7 @@
 			<condition action="CPBlogs#isElementPresent" locator-key1="ENTRY_TABLE_ALL_CHECKBOX" />
 			<then>
 				<execute action="CPBlogs#click" locator-key1="ENTRY_TABLE_ALL_CHECKBOX" />
-				<execute action="CPBlogs#click" locator-key1="RECYCLE_BIN_BUTTON" />
+				<execute action="CPBlogs#assertClick" locator-key1="RECYCLE_BIN_BUTTON" value1="Move to the Recycle Bin" />
 			</then>
 		</if>
 

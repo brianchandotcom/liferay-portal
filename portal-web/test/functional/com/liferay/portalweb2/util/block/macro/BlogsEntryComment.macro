@@ -4,11 +4,11 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute action="PGBlogs#click" locator-key1="ENTRY_TITLE_1" value1="${entryTitle}" />
+		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_TITLE_1" value1="${entryTitle}" />
 
-		<execute action="PGBlogsEntry#click" locator-key1="COMMENTS_ADD" />
+		<execute action="PGBlogsEntry#assertClick" locator-key1="COMMENTS_ADD" value1="Be the first." />
 		<execute action="PGBlogsEntry#type" locator-key1="COMMENTS_BODY_FIELD" value1="${entryComment}" />
-		<execute action="PGBlogsEntry#click" locator-key1="COMMENTS_REPLY_BUTTON" />
+		<execute action="PGBlogsEntry#assertClick" locator-key1="COMMENTS_REPLY_BUTTON" value1="Reply" />
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="COMMENTS_SUCCESS" value1="Your request processed successfully." />
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="COMMENT_1" value1="${entryComment}" />
 	</command>

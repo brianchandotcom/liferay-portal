@@ -5,7 +5,7 @@
 	<set-up>
 		<execute macro="User#pgFirstLogin" />
 
-		<execute macro="Page#pgAdd">	
+		<execute macro="Page#pgAdd">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -15,14 +15,14 @@
 		</execute>
 	</set-up>
 
-	<command name="Guest_ViewPortletBlogsPermissionsNoTest">
+	<command name="ViewBlogsPortletAsGuestPG">
 		<execute macro="BlogsEntry#viewPortletPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="User#pgLogout" />
 
-		<execute macro="BlogsEntry#viewPortletPGasGuest">
+		<execute macro="BlogsEntry#viewPortletAsGuestPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 	</command>

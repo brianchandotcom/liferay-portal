@@ -11,30 +11,6 @@
 		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT_1" value1="${entryContent}" />
 	</command>
 
-	<command name="viewPortletPG">
-		<execute macro="Page#pgGoto">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute action="PGBlogs#assertTextEquals" locator-key1="PORTLET_TITLE" value1="Blogs"/>
-		<execute action="PGBlogs#assertTextEquals" locator-key1="ADD_ENTRY_BUTTON" value1="Add Blog Entry"/>
-		<execute action="PGBlogs#assertTextEquals" locator-key1="PERMISSIONS_BUTTON" value1="Permissions" />
-		<execute action="PGBlogs#assertTextEquals" locator-key1="SUBSCRIBE_LINK" value1="Subscribe" />
-		<execute action="PGBlogs#assertTextEquals" locator-key1="RSS_LINK" value1="RSS" />
-	</command>
-
-	<command name="viewPortletPGasGuest">
-		<execute macro="Page#pgGoto">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute action="PGBlogs#assertTextEquals" locator-key1="PORTLET_TITLE" value1="Blogs"/>
-		<execute action="PGBlogs#assertElementNotPresent" locator-key1="ADD_ENTRY_BUTTON" value1="Add Blog Entry" />
-		<execute action="PGBlogs#assertElementNotPresent" locator-key1="PERMISSIONS_BUTTON" value1="Permissions" />
-		<execute action="PGBlogs#assertElementNotPresent" locator-key1="SUBSCRIBE_LINK" value1="Subscribe" />
-		<execute action="PGBlogs#assertTextEquals" locator-key1="RSS_LINK" value1="RSS" />
-	</command>
-
 	<command name="addCP">
 		<execute macro="Page#cpGotoContent">
 			<var name="portletName" value="Blogs" />
@@ -221,5 +197,29 @@
 		</if>
 
 		<execute macro="RecycleBin#emptyRecycleBinCP" />
+	</command>
+
+	<command name="viewPortletAsGuestPG">
+		<execute macro="Page#pgGoto">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute action="PGBlogs#assertTextEquals" locator-key1="PORTLET_TITLE" value1="Blogs"/>
+		<execute action="PGBlogs#assertElementNotPresent" locator-key1="ADD_ENTRY_BUTTON" value1="Add Blog Entry" />
+		<execute action="PGBlogs#assertElementNotPresent" locator-key1="PERMISSIONS_BUTTON" value1="Permissions" />
+		<execute action="PGBlogs#assertElementNotPresent" locator-key1="SUBSCRIBE_LINK" value1="Subscribe" />
+		<execute action="PGBlogs#assertTextEquals" locator-key1="RSS_LINK" value1="RSS" />
+	</command>
+
+	<command name="viewPortletPG">
+		<execute macro="Page#pgGoto">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute action="PGBlogs#assertTextEquals" locator-key1="PORTLET_TITLE" value1="Blogs"/>
+		<execute action="PGBlogs#assertTextEquals" locator-key1="ADD_ENTRY_BUTTON" value1="Add Blog Entry"/>
+		<execute action="PGBlogs#assertTextEquals" locator-key1="PERMISSIONS_BUTTON" value1="Permissions" />
+		<execute action="PGBlogs#assertTextEquals" locator-key1="SUBSCRIBE_LINK" value1="Subscribe" />
+		<execute action="PGBlogs#assertTextEquals" locator-key1="RSS_LINK" value1="RSS" />
 	</command>
 </definition>

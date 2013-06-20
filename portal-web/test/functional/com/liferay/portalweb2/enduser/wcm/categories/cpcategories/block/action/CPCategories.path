@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>ACTIONS_BUTTON</td>
-	<td>//li[@class=' dropdown']/a</td>
+	<td>//li[contains(@class,'dropdown')]/a[contains(.,'Actions')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -61,6 +61,17 @@
 <tr>
 	<td>CONFIRMATION</td>
 	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ACTIONS_MENULIST-->
+<tr>
+	<td>ACTIONS_MENULIST_DELETE</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Delete')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -245,17 +256,6 @@
 <tr>
 	<td>VOCABULARY_ENTRY_3</td>
 	<td>//div[3]/ul/li[3]/a/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--ACTIONS_MENULIST-->
-<tr>
-	<td>ACTIONS_MENULIST_DELETE</td>
-	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Delete')]</td>
 	<td></td>
 </tr>
 <tr>

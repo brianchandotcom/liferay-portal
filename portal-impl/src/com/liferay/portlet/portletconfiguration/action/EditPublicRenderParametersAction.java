@@ -23,6 +23,7 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PublicRenderParameter;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
@@ -45,7 +46,7 @@ import org.apache.struts.action.ActionMapping;
 /**
  * @author Alberto Montero
  */
-public class EditPublicRenderParametersAction extends EditConfigurationAction {
+public class EditPublicRenderParametersAction extends PortletAction {
 
 	@Override
 	public void processAction(
@@ -57,7 +58,7 @@ public class EditPublicRenderParametersAction extends EditConfigurationAction {
 		Portlet portlet = null;
 
 		try {
-			portlet = getPortlet(actionRequest);
+			portlet = ActionUtil.getPortlet(actionRequest);
 		}
 		catch (PrincipalException pe) {
 			SessionErrors.add(
@@ -107,7 +108,7 @@ public class EditPublicRenderParametersAction extends EditConfigurationAction {
 		Portlet portlet = null;
 
 		try {
-			portlet = getPortlet(renderRequest);
+			portlet = ActionUtil.getPortlet(renderRequest);
 		}
 		catch (PrincipalException pe) {
 			SessionErrors.add(
@@ -122,7 +123,7 @@ public class EditPublicRenderParametersAction extends EditConfigurationAction {
 		ActionUtil.getPublicRenderParameterConfigurationList(
 			renderRequest, portlet);
 
-		renderResponse.setTitle(getTitle(portlet, renderRequest));
+		renderResponse.setTitle(ActionUtil.getTitle(portlet, renderRequest));
 
 		return actionMapping.findForward(
 			getForward(

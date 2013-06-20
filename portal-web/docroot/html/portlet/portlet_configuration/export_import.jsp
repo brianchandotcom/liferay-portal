@@ -68,7 +68,7 @@ portletURL.setParameter("portletResource", portletResource);
 			<liferay-ui:message arguments="<%= lpe.getMessage() %>" key="please-import-a-lar-file-of-the-correct-type-x-is-not-valid" />
 		</liferay-ui:error>
 
-		<liferay-ui:error exception="<%= LayoutImportException.class %>" message="an-unexpected-error-occurred-while-importing-your-file" />
+		<liferay-ui:error exception="<%= ExportImportAction.class %>" message="an-unexpected-error-occurred-while-importing-your-file" />
 
 		<liferay-ui:error exception="<%= LocaleException.class %>">
 
@@ -121,13 +121,13 @@ portletURL.setParameter("portletResource", portletResource);
 
 		<c:choose>
 			<c:when test='<%= tabs2.equals("export") %>'>
-				<liferay-util:include page="/html/portlet/portlet_configuration/export_options.jsp" />
+				<liferay-util:include page="/html/portlet/portlet_configuration/export_portlet.jsp" />
 			</c:when>
 			<c:when test='<%= tabs2.equals("import") %>'>
-				<liferay-util:include page="/html/portlet/portlet_configuration/import_options.jsp" />
+				<liferay-util:include page="/html/portlet/portlet_configuration/import_portlet.jsp" />
 			</c:when>
 			<c:when test='<%= tabs2.equals("staging") %>'>
-				<liferay-util:include page="/html/portlet/portlet_configuration/staging_options.jsp" />
+				<liferay-util:include page="/html/portlet/portlet_configuration/publish_portlet.jsp" />
 			</c:when>
 		</c:choose>
 	</c:when>

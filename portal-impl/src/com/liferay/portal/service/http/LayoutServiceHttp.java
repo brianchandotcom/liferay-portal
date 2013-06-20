@@ -1905,6 +1905,47 @@ public class LayoutServiceHttp {
 		}
 	}
 
+	public static com.liferay.portal.kernel.lar.MissingReferences validateImportPortletInfo(
+		HttpPrincipal httpPrincipal, long plid, long groupId,
+		java.lang.String portletId,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(LayoutServiceUtil.class,
+					"validateImportPortletInfo",
+					_validateImportPortletInfoParameterTypes48);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, plid,
+					groupId, portletId, parameterMap, file);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portal.kernel.lar.MissingReferences)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(LayoutServiceHttp.class);
 	private static final Class<?>[] _addLayoutParameterTypes0 = new Class[] {
 			long.class, boolean.class, long.class, java.util.Map.class,
@@ -2101,5 +2142,9 @@ public class LayoutServiceHttp {
 		};
 	private static final Class<?>[] _validateImportLayoutsFileParameterTypes47 = new Class[] {
 			long.class, boolean.class, java.util.Map.class, java.io.File.class
+		};
+	private static final Class<?>[] _validateImportPortletInfoParameterTypes48 = new Class[] {
+			long.class, long.class, java.lang.String.class, java.util.Map.class,
+			java.io.File.class
 		};
 }

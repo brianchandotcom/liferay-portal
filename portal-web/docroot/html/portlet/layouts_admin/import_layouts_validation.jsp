@@ -32,7 +32,7 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 			</div>
 
 			<%
-			FileEntry fileEntry = ExportImportHelperUtil.getTempFileEntry(groupId, themeDisplay.getUserId());
+			FileEntry fileEntry = ExportImportHelperUtil.getTempFileEntry(groupId, themeDisplay.getUserId(), ExportImportHelper.TEMP_FOLDER_NAME);
 			%>
 
 			<aui:button-row>

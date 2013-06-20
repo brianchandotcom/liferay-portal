@@ -1814,6 +1814,17 @@ public class LayoutLocalServiceUtil {
 			parameterMap, file);
 	}
 
+	public static com.liferay.portal.kernel.lar.MissingReferences validateImportPortletInfo(
+		long userId, long groupId, long plid, java.lang.String portletId,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .validateImportPortletInfo(userId, groupId, plid, portletId,
+			parameterMap, file);
+	}
+
 	public static LayoutLocalService getService() {
 		if (_service == null) {
 			_service = (LayoutLocalService)PortalBeanLocatorUtil.locate(LayoutLocalService.class.getName());

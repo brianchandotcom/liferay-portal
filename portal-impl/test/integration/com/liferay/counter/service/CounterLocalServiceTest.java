@@ -19,8 +19,9 @@ import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.process.ProcessExecutor;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
+import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.InitUtil;
@@ -111,8 +112,6 @@ public class CounterLocalServiceTest {
 			System.setProperty("catalina.base", ".");
 
 			PropsUtil.set(PropsValues.COUNTER_INCREMENT + _COUNTER_NAME, "1");
-			PropsUtil.set(
-				PropsKeys.SCHEDULER_ENABLED, Boolean.FALSE.toString());
 
 			InitUtil.initWithSpring();
 
@@ -125,6 +124,14 @@ public class CounterLocalServiceTest {
 			}
 			catch (SystemException se) {
 				throw new ProcessException(se);
+			}
+			finally {
+				try {
+					SchedulerEngineHelperUtil.shutdown();
+				}
+				catch (SchedulerException se) {
+					throw new ProcessException(se);
+				}
 			}
 
 			return ids.toArray(new Long[ids.size()]);

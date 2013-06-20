@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -48,6 +53,97 @@
 <tr>
 	<td>MENU_SAVE</td>
 	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_STAGING</td>
+	<td>//a[@id='_165_stagingLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--STAGING-->
+<tr>
+	<td>STAGING_NONE</td>
+	<td>//input[@id='_165_none']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STAGING_LOCAL_LIVE</td>
+	<td>//input[@id='_165_local']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STAGING_REMOTE_LIVE</td>
+	<td>//input[@id='_165_remote']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STAGING_ENABLED_ON_PUBLIC_PAGES_CHECKBOX</td>
+	<td>//input[@id='_165_branchingPublicCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STAGING_ENABLED_ON_PRIVATE_PAGES_CHECKBOX</td>
+	<td>//input[@id='_165_branchingPrivateCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STAGING_APPLICATION_DISPLAY_TEMPLATES_CHECKBOX</td>
+	<td>//label[contains(.,'Application Display Templates')]/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STAGING_BLOGS_CHECKBOX</td>
+	<td>//label[contains(.,'Blogs')]/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STAGING_BOOKMARKS_CHECKBOX</td>
+	<td>//label[contains(.,'Bookmarks')]/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STAGING_CALENDAR_CHECKBOX</td>
+	<td>//label[contains(.,'Calendar')]/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STAGING_DOCUMENTS_AND_MEDIA_CHECKBOX</td>
+	<td>//label[contains(.,'Documents and Media')]/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STAGING_DYNAMIC_DATA_LISTS_CHECKBOX</td>
+	<td>//label[contains(.,'Dynamic Data Lists')]/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STAGING_MESSAGE_BOARDS_CHECKBOX</td>
+	<td>//label[contains(.,'Message Boards')]/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STAGING_MOBILE_DEVICE_RULES_CHECKBOX</td>
+	<td>//label[contains(.,'Mobile Device Rules')]/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STAGING_POLLS_CHECKBOX</td>
+	<td>//label[contains(.,'Polls')]/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STAGING_WEB_CONTENT_CHECKBOX</td>
+	<td>//label[contains(.,'Web Content')]/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STAGING_WIKI_CHECKBOX</td>
+	<td>//label[contains(.,'Wiki')]/input[2]</td>
 	<td></td>
 </tr>
 </tbody>

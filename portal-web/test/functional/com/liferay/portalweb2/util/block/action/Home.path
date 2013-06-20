@@ -49,6 +49,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SITE_URL_STAGING</td>
+	<td>/web/site-name/staging-test-page</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SITE_NAME</td>
 	<td>//h1[@class='site-title']/span</td>
 	<td></td>
@@ -82,6 +87,11 @@
 <tr>
 	<td>PAGE_2</td>
 	<td>xpath=(//li[contains(@class,'lfr-nav-deletable')])[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_2_STAGING</td>
+	<td>//nav[@id='navigation']/ul/li[2]/a/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -129,6 +139,11 @@
 <tr>
 	<td>NEW_PAGE_FIELD</td>
 	<td>//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_PAGE_SAVE</td>
+	<td>//button[contains(@id,'Save')]</td>
 	<td></td>
 </tr>
 <tr>

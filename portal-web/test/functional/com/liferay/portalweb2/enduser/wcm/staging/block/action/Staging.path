@@ -1,0 +1,117 @@
+<html>
+<head>
+<title>Staging</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Staging</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>Staging</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIVE_BUTTON</td>
+	<td>//div[@class='staging-bar']/ul/li/span[contains(.,'Live')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIVE_VIEW</td>
+	<td>//body[contains(@class,'live-view')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STAGING_BUTTON</td>
+	<td>//div[@class='staging-bar']/ul/li[2]/a[contains(.,'Staging')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STAGING_DROP_DOWN_BUTTON</td>
+	<td>//li[@class='dropdown']/a/b</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STAGING_VIEW</td>
+	<td>//body[contains(@class,'local-staging')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--LIVE_MENU-->
+<tr>
+	<td>LIVE_MENU_SITE</td>
+	<td>//span[@class='staging-live-group-name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIVE_MENU_HELP</td>
+	<td>//span[@class='staging-live-help']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--STAGING_MENU-->
+<tr>
+	<td>STAGING_MENU_DESCRIPTION</td>
+	<td>//span[@class='layout-set-branch-description']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STAGING_MENU_VERSION</td>
+	<td>//span[@class='workflow-version']/strong</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STAGING_MENU_STATUS</td>
+	<td>//span[@class='workflow-status']/strong</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STAGING_MENU_HISTORY_BUTTON</td>
+	<td>//button[contains(.,'History')]/i</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STAGING_MENU_MARK_AS_READY_FOR_PUBLICATION_BUTTON</td>
+	<td>//button[contains(.,'Mark as Ready for Publication')]/i</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STAGING_MENU_MANAGE_PAGE_VARIATION</td>
+	<td>//a[@id='_170_manageLayoutRevisions']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--STAGING_MENULIST-->
+<tr>
+	<td>STAGING_MENULIST_PUBLISH_TO_LIVE_NOW</td>
+	<td>//a[@id='_170_0publishLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STAGING_MENULIST_MANAGE_SITE_PAGES_VARIATIONS</td>
+	<td>//a[@id='_170_manageLayoutSetBranches']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

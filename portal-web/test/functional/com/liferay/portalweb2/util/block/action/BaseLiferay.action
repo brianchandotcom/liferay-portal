@@ -113,6 +113,12 @@
 		</default>
 	</command>
 
+	<command name="downloadTempFile">
+		<default>
+			<execute function="DownloadTempFile#downloadTempFile" />
+		</default>
+	</command>
+
 	<command name="dragAndDrop">
 		<default>
 			<execute function="DragAndDrop#dragAndDrop" />
@@ -209,6 +215,24 @@
 	<command name="uncheck">
 		<default>
 			<execute function="Uncheck#clickAt" />
+		</default>
+	</command>
+
+	<command name="uploadCommonFile">
+		<default>
+			<execute function="UploadCommonFile#uploadCommonFile" />
+		</default>
+	</command>
+
+	<command name="uploadFile">
+		<default>
+			<execute function="UploadFile#uploadFile" />
+		</default>
+	</command>
+
+	<command name="uploadTempFile">
+		<default>
+			<execute function="UploadTempFile#uploadTempFile" />
 		</default>
 	</command>
 </definition>

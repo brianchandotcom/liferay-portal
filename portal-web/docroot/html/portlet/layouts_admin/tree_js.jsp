@@ -90,9 +90,7 @@ if (!selectableTree) {
 		PREFIX_PLID: '_plid_',
 
 		afterRenderTree: function(event) {
-			var treeInstance = event.target;
-
-			var rootNode = treeInstance.item(0);
+			var rootNode = event.target.item(0);
 
 			var loadingEl = A.one('#<portlet:namespace />treeLoading<%= treeLoading %>');
 
@@ -107,7 +105,9 @@ if (!selectableTree) {
 				</c:when>
 			</c:choose>
 
-			treeInstance.eachChildren(TreeUtil.restoreSelectedNode, true);
+			TreeUtil.restoreSelectedNode(rootNode);
+
+			rootNode.eachChildren(TreeUtil.restoreSelectedNode);
 		},
 
 		createLabel: function(data) {
@@ -196,6 +196,8 @@ if (!selectableTree) {
 									var target = event.target;
 
 									target.set('alwaysShowHitArea', event.newVal.length > 0);
+
+									target.eachChildren(TreeUtil.restoreSelectedNode);
 
 									<c:if test="<%= selectableTree %>">
 										if (target.get('checked')) {
@@ -693,7 +695,11 @@ if (!selectableTree) {
 		treeview.on(
 			'append',
 			function(event) {
-				TreeUtil.restoreSelectedNode(event.tree.node);
+				var node = event.tree.node;
+
+				TreeUtil.restoreSelectedNode(node);
+
+				node.eachChildren(TreeUtil.restoreSelectedNode);
 			}
 		);
 	</c:if>

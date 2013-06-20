@@ -391,18 +391,19 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	@Override
-	public FileEntry getTempFileEntry(long groupId, long userId)
+	public FileEntry getTempFileEntry(
+			long groupId, long userId, String folderName)
 		throws PortalException, SystemException {
 
 		String[] tempFileEntryNames = LayoutServiceUtil.getTempFileEntryNames(
-			groupId, TEMP_FOLDER_NAME);
+			groupId, folderName);
 
 		if (tempFileEntryNames.length == 0) {
 			return null;
 		}
 
 		return TempFileUtil.getTempFile(
-			groupId, userId, tempFileEntryNames[0], TEMP_FOLDER_NAME);
+			groupId, userId, tempFileEntryNames[0], folderName);
 	}
 
 	@Override

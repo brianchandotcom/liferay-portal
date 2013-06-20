@@ -18,14 +18,18 @@ import com.liferay.portal.LARFileException;
 import com.liferay.portal.LARTypeException;
 import com.liferay.portal.LayoutImportException;
 import com.liferay.portal.LocaleException;
+import com.liferay.portal.MissingReferenceException;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.PortletIdException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
+import com.liferay.portal.kernel.lar.MissingReference;
+import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
@@ -222,6 +226,35 @@ public class PortletImporter {
 		}
 	}
 
+	public MissingReferences validateFile(
+			long userId, long plid, long groupId, String portletId,
+			Map<String, String[]> parameterMap, File file)
+		throws Exception {
+
+		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+
+		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
+
+		PortletDataContext portletDataContext =
+			PortletDataContextFactoryUtil.createImportPortletDataContext(
+				layout.getCompanyId(), groupId, parameterMap, null, zipReader);
+
+		validateFile(portletDataContext, portletId);
+
+		MissingReferences missingReferences =
+			ExportImportHelperUtil.validateMissingReferences(
+				userId, groupId, parameterMap, file);
+
+		Map<String, MissingReference> dependencyMissingReferences =
+			missingReferences.getDependencyMissingReferences();
+
+		if (!dependencyMissingReferences.isEmpty()) {
+			throw new MissingReferenceException(missingReferences);
+		}
+
+		return missingReferences;
+	}
+
 	protected void deletePortletData(
 			PortletDataContext portletDataContext, String portletId, long plid)
 		throws Exception {
@@ -354,118 +387,33 @@ public class PortletImporter {
 
 		// Manifest
 
-		String xml = portletDataContext.getZipEntryAsString("/manifest.xml");
-
-		Element rootElement = null;
-
-		try {
-			Document document = SAXReaderUtil.read(xml);
-
-			rootElement = document.getRootElement();
-
-			Element missingReferencesElement = rootElement.element(
-				"missing-references");
-
-			portletDataContext.setMissingReferencesElement(
-				missingReferencesElement);
-		}
-		catch (Exception e) {
-			throw new LARFileException("Unable to read /manifest.xml");
-		}
-
-		// Build compatibility
-
-		Element headerElement = rootElement.element("header");
-
-		int buildNumber = ReleaseInfo.getBuildNumber();
-
-		int importBuildNumber = GetterUtil.getInteger(
-			headerElement.attributeValue("build-number"));
-
-		if (buildNumber != importBuildNumber) {
-			throw new LayoutImportException(
-				"LAR build number " + importBuildNumber + " does not match " +
-					"portal build number " + buildNumber);
-		}
-
-		// Type compatibility
-
-		String type = headerElement.attributeValue("type");
-
-		if (!type.equals("portlet")) {
-			throw new LARTypeException(
-				"Invalid type of LAR file (" + type + ")");
-		}
-
-		// Portlet compatibility
-
-		String rootPortletId = headerElement.attributeValue("root-portlet-id");
-
-		if (!PortletConstants.getRootPortletId(portletId).equals(
-				rootPortletId)) {
-
-			throw new PortletIdException("Invalid portlet id " + rootPortletId);
-		}
-
-		// Available locales
-
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			portletDataContext.getCompanyId(), portletId);
-
-		PortletDataHandler portletDataHandler =
-			portlet.getPortletDataHandlerInstance();
-
-		if ((portletDataHandler != null) &&
-			portletDataHandler.isDataLocalized()) {
-
-			Locale[] sourceAvailableLocales = LocaleUtil.fromLanguageIds(
-				StringUtil.split(
-					headerElement.attributeValue("available-locales")));
-
-			Locale[] targetAvailableLocales =
-				LanguageUtil.getAvailableLocales();
-
-			for (Locale sourceAvailableLocale : sourceAvailableLocales) {
-				if (!ArrayUtil.contains(
-						targetAvailableLocales, sourceAvailableLocale)) {
-
-					LocaleException le = new LocaleException(
-						"Locale " + sourceAvailableLocale + " is not " +
-							"available in company " + layout.getCompanyId());
-
-					le.setSourceAvailableLocales(sourceAvailableLocales);
-					le.setTargetAvailableLocales(targetAvailableLocales);
-
-					throw le;
-				}
-			}
-		}
+		validateFile(portletDataContext, portletId);
 
 		// Company id
 
 		long sourceCompanyId = GetterUtil.getLong(
-			headerElement.attributeValue("company-id"));
+			_headerElement.attributeValue("company-id"));
 
 		portletDataContext.setSourceCompanyId(sourceCompanyId);
 
 		// Company group id
 
 		long sourceCompanyGroupId = GetterUtil.getLong(
-			headerElement.attributeValue("company-group-id"));
+			_headerElement.attributeValue("company-group-id"));
 
 		portletDataContext.setSourceCompanyGroupId(sourceCompanyGroupId);
 
 		// Group id
 
 		long sourceGroupId = GetterUtil.getLong(
-			headerElement.attributeValue("group-id"));
+			_headerElement.attributeValue("group-id"));
 
 		portletDataContext.setSourceGroupId(sourceGroupId);
 
 		// User personal site group id
 
 		long sourceUserPersonalSiteGroupId = GetterUtil.getLong(
-			headerElement.attributeValue("user-personal-site-group-id"));
+			_headerElement.attributeValue("user-personal-site-group-id"));
 
 		portletDataContext.setSourceUserPersonalSiteGroupId(
 			sourceUserPersonalSiteGroupId);
@@ -498,7 +446,7 @@ public class PortletImporter {
 		Element portletElement = null;
 
 		try {
-			portletElement = rootElement.element("portlet");
+			portletElement = _rootElement.element("portlet");
 
 			Document portletDocument = SAXReaderUtil.read(
 				portletDataContext.getZipEntryAsString(
@@ -1696,6 +1644,33 @@ public class PortletImporter {
 		}
 	}
 
+	protected void readXML(PortletDataContext portletDataContext)
+		throws Exception {
+
+		if ((_rootElement != null) && (_headerElement != null)) {
+			return;
+		}
+
+		String xml = portletDataContext.getZipEntryAsString("/manifest.xml");
+
+		if (xml == null) {
+			throw new LARFileException("manifest.xml not found in the LAR");
+		}
+
+		try {
+			Document document = SAXReaderUtil.read(xml);
+
+			_rootElement = document.getRootElement();
+
+			portletDataContext.setImportDataRootElement(_rootElement);
+		}
+		catch (Exception e) {
+			throw new LARFileException(e);
+		}
+
+		_headerElement = _rootElement.element("header");
+	}
+
 	protected void resetPortletScope(
 		PortletDataContext portletDataContext, long groupId) {
 
@@ -2172,8 +2147,83 @@ public class PortletImporter {
 		jxPreferences.setValues(key, newValues);
 	}
 
+	protected void validateFile(
+			PortletDataContext portletDataContext, String portletId)
+		throws Exception {
+
+		// Build compatibility
+
+		readXML(portletDataContext);
+
+		int buildNumber = ReleaseInfo.getBuildNumber();
+
+		int importBuildNumber = GetterUtil.getInteger(
+			_headerElement.attributeValue("build-number"));
+
+		if (buildNumber != importBuildNumber) {
+			throw new LayoutImportException(
+				"LAR build number " + importBuildNumber + " does not match " +
+					"portal build number " + buildNumber);
+		}
+
+		// Type
+
+		String larType = _headerElement.attributeValue("type");
+
+		if (!larType.equals("portlet")) {
+			throw new LARTypeException(larType);
+		}
+
+		// Portlet compatibility
+
+		String rootPortletId = _headerElement.attributeValue("root-portlet-id");
+
+		if (!PortletConstants.getRootPortletId(portletId).equals(
+				rootPortletId)) {
+
+			throw new PortletIdException("Invalid portlet id " + rootPortletId);
+		}
+
+		// Available locales
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			portletDataContext.getCompanyId(), portletId);
+
+		PortletDataHandler portletDataHandler =
+			portlet.getPortletDataHandlerInstance();
+
+		if ((portletDataHandler != null) &&
+			portletDataHandler.isDataLocalized()) {
+
+			Locale[] sourceAvailableLocales = LocaleUtil.fromLanguageIds(
+				StringUtil.split(
+					_headerElement.attributeValue("available-locales")));
+
+			Locale[] targetAvailableLocales =
+				LanguageUtil.getAvailableLocales();
+
+			for (Locale sourceAvailableLocale : sourceAvailableLocales) {
+				if (!ArrayUtil.contains(
+						targetAvailableLocales, sourceAvailableLocale)) {
+
+					LocaleException le = new LocaleException(
+						"Locale " + sourceAvailableLocale + " is not " +
+							"available in company " +
+								portletDataContext.getCompanyId());
+
+					le.setSourceAvailableLocales(sourceAvailableLocales);
+					le.setTargetAvailableLocales(targetAvailableLocales);
+
+					throw le;
+				}
+			}
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(PortletImporter.class);
 
+	private Element _headerElement;
 	private PermissionImporter _permissionImporter = new PermissionImporter();
+	private Element _rootElement;
 
 }

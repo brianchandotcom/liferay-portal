@@ -17,27 +17,29 @@
 <%@ include file="/html/portlet/portlet_configuration/init.jsp" %>
 
 <%
-String tabs2 = ParamUtil.getString(request, "tabs2", "export");
-
 Layout exportableLayout = ExportImportHelperUtil.getExportableLayout(themeDisplay);
 %>
 
-<portlet:actionURL var="importPortletURL">
+<portlet:actionURL var="importPortletActionURL">
 	<portlet:param name="struts_action" value="/portlet_configuration/export_import" />
 </portlet:actionURL>
 
-<aui:form action="<%= importPortletURL %>" cssClass="lfr-export-dialog" enctype="multipart/form-data" method="post" name="fm1">
+<portlet:renderURL var="importPortletRenderURL">
+	<portlet:param name="struts_action" value="/portlet_configuration/export_import" />
+	<portlet:param name="tabs2" value="import" />
+	<portlet:param name="portletResource" value="<%= portletResource %>" />
+</portlet:renderURL>
+
+<aui:form action="<%= importPortletActionURL %>" cssClass="lfr-export-dialog" method="post" name="fm1">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.IMPORT %>" />
 	<aui:input name="tabs1" type="hidden" value="export_import" />
-	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="tabs2" type="hidden" value="import" />
+	<aui:input name="redirect" type="hidden" value="<%= importPortletRenderURL %>" />
 	<aui:input name="plid" type="hidden" value="<%= exportableLayout.getPlid() %>" />
 	<aui:input name="groupId" type="hidden" value="<%= themeDisplay.getScopeGroupId() %>" />
 	<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
 
 	<div class="export-dialog-tree">
-		<aui:input label="import-a-lar-file-to-overwrite-the-selected-data" name="importFileName" size="50" type="file" />
-
 		<c:if test="<%= Validator.isNotNull(selPortlet.getConfigurationActionClass()) %>">
 			<aui:fieldset cssClass="options-group" label="application">
 				<ul class="lfr-tree unstyled">

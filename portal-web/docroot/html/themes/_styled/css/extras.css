@@ -42,6 +42,12 @@
 	@include box-shadow(inset 0 0 5px rgba(0, 0, 0, 0.8));
 }
 
+.lfr-device-preview .lfr-device-size-status-content {
+	@include border-radius(3px);
+	@include box-shadow(0 0 1px #FFF);
+	@include opacity(0.90);
+}
+
 .dockbar .menu-button-active .menu-button {
 	@include box-shadow(inset 0 1px 5px rgba(0, 0, 0, 0.7));
 }

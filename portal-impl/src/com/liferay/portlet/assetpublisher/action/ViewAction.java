@@ -32,11 +32,12 @@ public class ViewAction extends WebContentAction {
 
 	@Override
 	public ActionForward render(
-			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
-			RenderRequest renderRequest, RenderResponse renderResponse)
+			ActionMapping actionMapping, ActionForm actionForm,
+			PortletConfig portletConfig, RenderRequest renderRequest,
+			RenderResponse renderResponse)
 		throws Exception {
 
-		return mapping.findForward("portlet.asset_publisher.view");
+		return actionMapping.findForward("portlet.asset_publisher.view");
 	}
 
 }

@@ -68,8 +68,8 @@ public class LayoutAction extends Action {
 
 	@Override
 	public ActionForward execute(
-			ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response)
+			ActionMapping actionMapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
 		MetaInfoCacheServletResponse metaInfoCacheServletResponse =
@@ -77,7 +77,8 @@ public class LayoutAction extends Action {
 
 		try {
 			return doExecute(
-				mapping, form, request, metaInfoCacheServletResponse);
+				actionMapping, actionForm, request,
+				metaInfoCacheServletResponse);
 		}
 		finally {
 			metaInfoCacheServletResponse.finishResponse();
@@ -85,8 +86,8 @@ public class LayoutAction extends Action {
 	}
 
 	protected ActionForward doExecute(
-			ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response)
+			ActionMapping actionMapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
 		Boolean layoutDefault = (Boolean)request.getAttribute(
@@ -175,7 +176,7 @@ public class LayoutAction extends Action {
 
 		if (plid > 0) {
 			ActionForward actionForward = processLayout(
-				mapping, request, response, plid);
+				actionMapping, request, response, plid);
 
 			return actionForward;
 		}
@@ -183,7 +184,8 @@ public class LayoutAction extends Action {
 		try {
 			forwardLayout(request);
 
-			return mapping.findForward(ActionConstants.COMMON_FORWARD_JSP);
+			return actionMapping.findForward(
+				ActionConstants.COMMON_FORWARD_JSP);
 		}
 		catch (Exception e) {
 			PortalUtil.sendError(e, request, response);
@@ -286,7 +288,7 @@ public class LayoutAction extends Action {
 	}
 
 	protected ActionForward processLayout(
-			ActionMapping mapping, HttpServletRequest request,
+			ActionMapping actionMapping, HttpServletRequest request,
 			HttpServletResponse response, long plid)
 		throws Exception {
 
@@ -383,7 +385,7 @@ public class LayoutAction extends Action {
 				}
 			}
 
-			return mapping.findForward("portal.layout");
+			return actionMapping.findForward("portal.layout");
 		}
 		catch (Exception e) {
 			PortalUtil.sendError(e, request, response);

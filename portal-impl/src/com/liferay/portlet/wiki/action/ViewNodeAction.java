@@ -36,7 +36,7 @@ import org.apache.struts.action.ActionMapping;
 public class ViewNodeAction extends PortletAction {
 
 	public static ActionForward viewNode(
-			ActionMapping mapping, RenderRequest renderRequest,
+			ActionMapping actionMapping, RenderRequest renderRequest,
 			String defaultForward)
 		throws Exception {
 
@@ -53,7 +53,7 @@ public class ViewNodeAction extends PortletAction {
 
 				SessionErrors.add(renderRequest, e.getClass());
 
-				return mapping.findForward("portlet.wiki.error");
+				return actionMapping.findForward("portlet.wiki.error");
 			}
 			else {
 				throw e;
@@ -63,21 +63,23 @@ public class ViewNodeAction extends PortletAction {
 		long categoryId = ParamUtil.getLong(renderRequest, "categoryId");
 
 		if (categoryId > 0) {
-			return mapping.findForward("portlet.wiki.view_categorized_pages");
+			return actionMapping.findForward(
+				"portlet.wiki.view_categorized_pages");
 		}
 		else {
-			return mapping.findForward(defaultForward);
+			return actionMapping.findForward(defaultForward);
 		}
 	}
 
 	@Override
 	public ActionForward render(
-			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
-			RenderRequest renderRequest, RenderResponse renderResponse)
+			ActionMapping actionMapping, ActionForm actionForm,
+			PortletConfig portletConfig, RenderRequest renderRequest,
+			RenderResponse renderResponse)
 		throws Exception {
 
 		return viewNode(
-			mapping, renderRequest,
+			actionMapping, renderRequest,
 			getForward(renderRequest, "portlet.wiki.view_node"));
 	}
 

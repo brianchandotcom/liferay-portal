@@ -45,8 +45,9 @@ public class ViewAction extends PortletAction {
 
 	@Override
 	public ActionForward render(
-			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
-			RenderRequest renderRequest, RenderResponse renderResponse)
+			ActionMapping actionMapping, ActionForm actionForm,
+			PortletConfig portletConfig, RenderRequest renderRequest,
+			RenderResponse renderResponse)
 		throws Exception {
 
 		String src = transformSrc(renderRequest, renderResponse);
@@ -54,12 +55,12 @@ public class ViewAction extends PortletAction {
 		if (Validator.isNull(src) || src.equals(Http.HTTP_WITH_SLASH) ||
 			src.equals(Http.HTTPS_WITH_SLASH)) {
 
-			return mapping.findForward("/portal/portlet_not_setup");
+			return actionMapping.findForward("/portal/portlet_not_setup");
 		}
 
 		renderRequest.setAttribute(WebKeys.IFRAME_SRC, src);
 
-		return mapping.findForward("portlet.iframe.view");
+		return actionMapping.findForward("portlet.iframe.view");
 	}
 
 	protected String getPassword(

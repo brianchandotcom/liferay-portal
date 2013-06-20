@@ -44,8 +44,9 @@ public class ViewAction extends PortletAction {
 
 	@Override
 	public ActionForward render(
-			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
-			RenderRequest renderRequest, RenderResponse renderResponse)
+			ActionMapping actionMapping, ActionForm actionForm,
+			PortletConfig portletConfig, RenderRequest renderRequest,
+			RenderResponse renderResponse)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
@@ -72,7 +73,7 @@ public class ViewAction extends PortletAction {
 			renderRequest.setAttribute(WebKeys.SOCIAL_REQUESTS, requests);
 		}
 
-		return mapping.findForward("portlet.requests.view");
+		return actionMapping.findForward("portlet.requests.view");
 	}
 
 }

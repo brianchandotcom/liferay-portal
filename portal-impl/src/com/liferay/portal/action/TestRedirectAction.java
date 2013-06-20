@@ -32,15 +32,15 @@ public class TestRedirectAction extends Action {
 
 	@Override
 	public ActionForward execute(
-			ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response)
+			ActionMapping actionMapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Running");
 		}
 
-		return mapping.findForward("portal.test_redirect");
+		return actionMapping.findForward("portal.test_redirect");
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(TestRedirectAction.class);

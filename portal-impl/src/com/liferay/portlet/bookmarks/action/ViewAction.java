@@ -34,8 +34,9 @@ public class ViewAction extends PortletAction {
 
 	@Override
 	public ActionForward render(
-			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
-			RenderRequest renderRequest, RenderResponse renderResponse)
+			ActionMapping actionMapping, ActionForm actionForm,
+			PortletConfig portletConfig, RenderRequest renderRequest,
+			RenderResponse renderResponse)
 		throws Exception {
 
 		try {
@@ -47,14 +48,14 @@ public class ViewAction extends PortletAction {
 
 				SessionErrors.add(renderRequest, e.getClass());
 
-				return mapping.findForward("portlet.bookmarks.error");
+				return actionMapping.findForward("portlet.bookmarks.error");
 			}
 			else {
 				throw e;
 			}
 		}
 
-		return mapping.findForward("portlet.bookmarks.view");
+		return actionMapping.findForward("portlet.bookmarks.view");
 	}
 
 }

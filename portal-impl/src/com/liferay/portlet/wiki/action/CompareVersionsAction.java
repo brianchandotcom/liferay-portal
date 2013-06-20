@@ -48,8 +48,9 @@ public class CompareVersionsAction extends PortletAction {
 
 	@Override
 	public ActionForward render(
-			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
-			RenderRequest renderRequest, RenderResponse renderResponse)
+			ActionMapping actionMapping, ActionForm actionForm,
+			PortletConfig portletConfig, RenderRequest renderRequest,
+			RenderResponse renderResponse)
 		throws Exception {
 
 		try {
@@ -62,14 +63,14 @@ public class CompareVersionsAction extends PortletAction {
 			if (e instanceof NoSuchPageException) {
 				SessionErrors.add(renderRequest, e.getClass());
 
-				return mapping.findForward("portlet.wiki.error");
+				return actionMapping.findForward("portlet.wiki.error");
 			}
 			else {
 				throw e;
 			}
 		}
 
-		return mapping.findForward("portlet.wiki.compare_versions");
+		return actionMapping.findForward("portlet.wiki.compare_versions");
 	}
 
 	protected void compareVersions(

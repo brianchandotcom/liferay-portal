@@ -61,8 +61,8 @@ public class ViewArticleContentAction extends Action {
 
 	@Override
 	public ActionForward execute(
-			ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response)
+			ActionMapping actionMapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
 		UploadServletRequest uploadServletRequest = null;
@@ -160,11 +160,11 @@ public class ViewArticleContentAction extends Action {
 			request.setAttribute(WebKeys.JOURNAL_ARTICLE_CONTENT, output);
 
 			if (output.startsWith("<?xml ")) {
-				return mapping.findForward(
+				return actionMapping.findForward(
 					"portlet.journal.raw_article_content");
 			}
 			else {
-				return mapping.findForward(
+				return actionMapping.findForward(
 					"portlet.journal.view_article_content");
 			}
 		}

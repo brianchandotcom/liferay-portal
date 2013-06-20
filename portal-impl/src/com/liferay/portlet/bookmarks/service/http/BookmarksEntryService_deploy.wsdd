@@ -2,7 +2,7 @@
 
 <deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
 	<service name="Portlet_Bookmarks_BookmarksEntryService" provider="java:RPC" style="rpc" use="encoded">
-		<arrayMapping xmlns:ns="urn:http.service.bookmarks.portlet.liferay.com" xmlns:cmp-ns="http://model.bookmarks.portlet.liferay.com" qname="ns:ArrayOf_tns2_BookmarksEntrySoap" type="java:com.liferay.portlet.bookmarks.model.BookmarksEntrySoap[]" innerType="cmp-ns:BookmarksEntrySoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<arrayMapping xmlns:ns="urn:http.service.bookmarks.portlet.liferay.com" xmlns:cmp-ns="http://model.bookmarks.portlet.liferay.com" qname="ns:ArrayOf_tns13_BookmarksEntrySoap" type="java:com.liferay.portlet.bookmarks.model.BookmarksEntrySoap[]" innerType="cmp-ns:BookmarksEntrySoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.bookmarks.portlet.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_anyType" type="java:java.lang.Object[]" innerType="cmp-ns:anyType" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.bookmarks.portlet.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_long" type="java:long[]" innerType="cmp-ns:long" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.bookmarks.portlet.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_string" type="java:java.lang.String[]" innerType="cmp-ns:string" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
@@ -29,13 +29,13 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="folderId" type="tns:long"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.bookmarks.portlet.liferay.com" xmlns:rtns="urn:http.service.bookmarks.portlet.liferay.com" xmlns:tns2="http://model.bookmarks.portlet.liferay.com" name="getEntries" qname="operNS:getEntries" returnQName="getEntriesReturn" returnType="rtns:ArrayOf_tns2_BookmarksEntrySoap" returnItemType="tns2:BookmarksEntrySoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.bookmarks.portlet.liferay.com" xmlns:rtns="urn:http.service.bookmarks.portlet.liferay.com" xmlns:tns2="http://model.bookmarks.portlet.liferay.com" name="getEntries" qname="operNS:getEntries" returnQName="getEntriesReturn" returnType="rtns:ArrayOf_tns13_BookmarksEntrySoap" returnItemType="tns2:BookmarksEntrySoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="folderId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.bookmarks.portlet.liferay.com" xmlns:rtns="urn:http.service.bookmarks.portlet.liferay.com" xmlns:tns2="http://model.bookmarks.portlet.liferay.com" name="getEntries" qname="operNS:getEntries" returnQName="getEntriesReturn" returnType="rtns:ArrayOf_tns2_BookmarksEntrySoap" returnItemType="tns2:BookmarksEntrySoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.bookmarks.portlet.liferay.com" xmlns:rtns="urn:http.service.bookmarks.portlet.liferay.com" xmlns:tns2="http://model.bookmarks.portlet.liferay.com" name="getEntries" qname="operNS:getEntries" returnQName="getEntriesReturn" returnType="rtns:ArrayOf_tns13_BookmarksEntrySoap" returnItemType="tns2:BookmarksEntrySoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="folderId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>
@@ -61,18 +61,18 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="rootFolderId" type="tns:long"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.bookmarks.portlet.liferay.com" xmlns:rtns="urn:http.service.bookmarks.portlet.liferay.com" xmlns:tns2="http://model.bookmarks.portlet.liferay.com" name="getGroupEntries" qname="operNS:getGroupEntries" returnQName="getGroupEntriesReturn" returnType="rtns:ArrayOf_tns2_BookmarksEntrySoap" returnItemType="tns2:BookmarksEntrySoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.bookmarks.portlet.liferay.com" xmlns:rtns="urn:http.service.bookmarks.portlet.liferay.com" xmlns:tns2="http://model.bookmarks.portlet.liferay.com" name="getGroupEntries" qname="operNS:getGroupEntries" returnQName="getGroupEntriesReturn" returnType="rtns:ArrayOf_tns13_BookmarksEntrySoap" returnItemType="tns2:BookmarksEntrySoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.bookmarks.portlet.liferay.com" xmlns:rtns="urn:http.service.bookmarks.portlet.liferay.com" xmlns:tns2="http://model.bookmarks.portlet.liferay.com" name="getGroupEntries" qname="operNS:getGroupEntries" returnQName="getGroupEntriesReturn" returnType="rtns:ArrayOf_tns2_BookmarksEntrySoap" returnItemType="tns2:BookmarksEntrySoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.bookmarks.portlet.liferay.com" xmlns:rtns="urn:http.service.bookmarks.portlet.liferay.com" xmlns:tns2="http://model.bookmarks.portlet.liferay.com" name="getGroupEntries" qname="operNS:getGroupEntries" returnQName="getGroupEntriesReturn" returnType="rtns:ArrayOf_tns13_BookmarksEntrySoap" returnItemType="tns2:BookmarksEntrySoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.bookmarks.portlet.liferay.com" xmlns:rtns="urn:http.service.bookmarks.portlet.liferay.com" xmlns:tns2="http://model.bookmarks.portlet.liferay.com" name="getGroupEntries" qname="operNS:getGroupEntries" returnQName="getGroupEntriesReturn" returnType="rtns:ArrayOf_tns2_BookmarksEntrySoap" returnItemType="tns2:BookmarksEntrySoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.bookmarks.portlet.liferay.com" xmlns:rtns="urn:http.service.bookmarks.portlet.liferay.com" xmlns:tns2="http://model.bookmarks.portlet.liferay.com" name="getGroupEntries" qname="operNS:getGroupEntries" returnQName="getGroupEntriesReturn" returnType="rtns:ArrayOf_tns13_BookmarksEntrySoap" returnItemType="tns2:BookmarksEntrySoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="rootFolderId" type="tns:long"></parameter>

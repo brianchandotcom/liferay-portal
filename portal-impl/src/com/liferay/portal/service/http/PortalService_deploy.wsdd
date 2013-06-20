@@ -20,12 +20,11 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="classNameValue" type="tns:string"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" name="testAutoSyncHibernateSessionStateOnTxCreation" qname="operNS:testAutoSyncHibernateSessionStateOnTxCreation" soapAction=""> </operation>
-		<operation xmlns:operNS="urn:http.service.portal.liferay.com" name="testCounterIncrement_Rollback" qname="operNS:testCounterIncrement_Rollback" soapAction=""> </operation>
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" name="testDeleteClassName" qname="operNS:testDeleteClassName" soapAction=""> </operation>
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="testGetBuildNumber" qname="operNS:testGetBuildNumber" returnQName="testGetBuildNumberReturn" returnType="rtns:int" soapAction=""> </operation>
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" name="testGetUserId" qname="operNS:testGetUserId" soapAction=""> </operation>
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="testHasClassName" qname="operNS:testHasClassName" returnQName="testHasClassNameReturn" returnType="rtns:boolean" soapAction=""> </operation>
-		<parameter name="allowedMethods" value="getAutoDeployDirectory getBuildNumber testAddClassNameAndTestTransactionPortletBar_PortalRollback testAddClassNameAndTestTransactionPortletBar_PortletRollback testAddClassNameAndTestTransactionPortletBar_Success testAddClassName_Rollback testAddClassName_Success testAutoSyncHibernateSessionStateOnTxCreation testCounterIncrement_Rollback testDeleteClassName testGetBuildNumber testGetUserId testHasClassName" />
+		<parameter name="allowedMethods" value="getAutoDeployDirectory getBuildNumber testAddClassNameAndTestTransactionPortletBar_PortalRollback testAddClassNameAndTestTransactionPortletBar_PortletRollback testAddClassNameAndTestTransactionPortletBar_Success testAddClassName_Rollback testAddClassName_Success testAutoSyncHibernateSessionStateOnTxCreation testDeleteClassName testGetBuildNumber testGetUserId testHasClassName" />
 		<parameter name="className" value="com.liferay.portal.service.http.PortalServiceSoap" />
 		<parameter name="typeMappingVersion" value="1.2" />
 		<parameter name="wsdlPortType" value="PortalServiceSoap" />

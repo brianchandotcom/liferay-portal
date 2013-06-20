@@ -17,27 +17,25 @@ package com.liferay.portal.kernel.workflow.comparator;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 
-import java.util.Date;
-
 /**
  * @author Shuyang Zhou
  */
-public class BaseWorkflowTaskDueDateComparator extends OrderByComparator {
+public class WorkflowTaskNameComparator extends OrderByComparator {
 
-	public static final String ORDER_BY_ASC = "dueDate ASC, workflowTaskId ASC";
+	public WorkflowTaskNameComparator(
+		boolean ascending, String orderByAsc, String orderByDesc,
+		String[] orderByFields) {
 
-	public static final String ORDER_BY_DESC =
-		"dueDate DESC, workflowTaskId DESC";
-
-	public static final String[] ORDER_BY_FIELDS =
-		{"dueDate", "workflowTaskId"};
-
-	public BaseWorkflowTaskDueDateComparator() {
-		this(false);
+		_ascending = ascending;
+		_orderByAsc = orderByAsc;
+		_orderByDesc = orderByDesc;
+		_orderByFields = orderByFields;
 	}
 
-	public BaseWorkflowTaskDueDateComparator(boolean ascending) {
-		_ascending = ascending;
+	public WorkflowTaskNameComparator(
+		String orderByAsc, String orderByDesc, String[] orderByFields) {
+
+		this(false, orderByAsc, orderByDesc, orderByFields);
 	}
 
 	@Override
@@ -45,10 +43,10 @@ public class BaseWorkflowTaskDueDateComparator extends OrderByComparator {
 		WorkflowTask workflowTask1 = (WorkflowTask)obj1;
 		WorkflowTask workflowTask2 = (WorkflowTask)obj2;
 
-		Date dueDate1 = workflowTask1.getDueDate();
-		Date dueDate2 = workflowTask2.getDueDate();
+		String name1 = workflowTask1.getName();
+		String name2 = workflowTask2.getName();
 
-		int value = dueDate1.compareTo(dueDate2);
+		int value = name1.compareTo(name2);
 
 		if (value == 0) {
 			Long workflowTaskId1 = workflowTask1.getWorkflowTaskId();
@@ -67,17 +65,17 @@ public class BaseWorkflowTaskDueDateComparator extends OrderByComparator {
 
 	@Override
 	public String getOrderBy() {
-		if (_ascending) {
-			return ORDER_BY_ASC;
+		if (isAscending()) {
+			return _orderByAsc;
 		}
 		else {
-			return ORDER_BY_DESC;
+			return _orderByDesc;
 		}
 	}
 
 	@Override
 	public String[] getOrderByFields() {
-		return ORDER_BY_FIELDS;
+		return _orderByFields;
 	}
 
 	@Override
@@ -86,5 +84,8 @@ public class BaseWorkflowTaskDueDateComparator extends OrderByComparator {
 	}
 
 	private boolean _ascending;
+	private String _orderByAsc;
+	private String _orderByDesc;
+	private String[] _orderByFields;
 
 }

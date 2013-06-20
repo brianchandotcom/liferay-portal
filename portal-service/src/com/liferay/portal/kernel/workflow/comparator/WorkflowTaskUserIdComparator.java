@@ -20,14 +20,22 @@ import com.liferay.portal.kernel.workflow.WorkflowTask;
 /**
  * @author Shuyang Zhou
  */
-public class BaseWorkflowTaskNameComparator extends OrderByComparator {
+public class WorkflowTaskUserIdComparator extends OrderByComparator {
 
-	public BaseWorkflowTaskNameComparator() {
-		this(false);
+	public WorkflowTaskUserIdComparator(
+		boolean ascending, String orderByAsc, String orderByDesc,
+		String[] orderByFields) {
+
+		_ascending = ascending;
+		_orderByAsc = orderByAsc;
+		_orderByDesc = orderByDesc;
+		_orderByFields = orderByFields;
 	}
 
-	public BaseWorkflowTaskNameComparator(boolean ascending) {
-		_ascending = ascending;
+	public WorkflowTaskUserIdComparator(
+		String orderByAsc, String orderByDesc, String[] orderByFields) {
+
+		this(false, orderByAsc, orderByDesc, orderByFields);
 	}
 
 	@Override
@@ -35,10 +43,10 @@ public class BaseWorkflowTaskNameComparator extends OrderByComparator {
 		WorkflowTask workflowTask1 = (WorkflowTask)obj1;
 		WorkflowTask workflowTask2 = (WorkflowTask)obj2;
 
-		String name1 = workflowTask1.getName();
-		String name2 = workflowTask2.getName();
+		Long assigneeUserId1 = workflowTask1.getAssigneeUserId();
+		Long assigneeUserId2 = workflowTask2.getAssigneeUserId();
 
-		int value = name1.compareTo(name2);
+		int value = assigneeUserId1.compareTo(assigneeUserId2);
 
 		if (value == 0) {
 			Long workflowTaskId1 = workflowTask1.getWorkflowTaskId();
@@ -56,10 +64,28 @@ public class BaseWorkflowTaskNameComparator extends OrderByComparator {
 	}
 
 	@Override
+	public String getOrderBy() {
+		if (isAscending()) {
+			return _orderByAsc;
+		}
+		else {
+			return _orderByDesc;
+		}
+	}
+
+	@Override
+	public String[] getOrderByFields() {
+		return _orderByFields;
+	}
+
+	@Override
 	public boolean isAscending() {
 		return _ascending;
 	}
 
 	private boolean _ascending;
+	private String _orderByAsc;
+	private String _orderByDesc;
+	private String[] _orderByFields;
 
 }

@@ -20,15 +20,22 @@ import com.liferay.portal.kernel.workflow.WorkflowLog;
 /**
  * @author Michael C. Han
  */
-public abstract class BaseWorkflowLogUserIdComparator
-	extends OrderByComparator {
+public class WorkflowLogUserIdComparator extends OrderByComparator {
 
-	public BaseWorkflowLogUserIdComparator() {
-		this(false);
+	public WorkflowLogUserIdComparator(
+		boolean ascending, String orderByAsc, String orderByDesc,
+		String[] orderByFields) {
+
+		_ascending = ascending;
+		_orderByAsc = orderByAsc;
+		_orderByDesc = orderByDesc;
+		_orderByFields = orderByFields;
 	}
 
-	public BaseWorkflowLogUserIdComparator(boolean ascending) {
-		_ascending = ascending;
+	public WorkflowLogUserIdComparator(
+		String orderByAsc, String orderByDesc, String[] orderByFields) {
+
+		this(false, orderByAsc, orderByDesc, orderByFields);
 	}
 
 	@Override
@@ -57,10 +64,28 @@ public abstract class BaseWorkflowLogUserIdComparator
 	}
 
 	@Override
+	public String getOrderBy() {
+		if (isAscending()) {
+			return _orderByAsc;
+		}
+		else {
+			return _orderByDesc;
+		}
+	}
+
+	@Override
+	public String[] getOrderByFields() {
+		return _orderByFields;
+	}
+
+	@Override
 	public boolean isAscending() {
 		return _ascending;
 	}
 
 	private boolean _ascending;
+	private String _orderByAsc;
+	private String _orderByDesc;
+	private String[] _orderByFields;
 
 }

@@ -17,18 +17,27 @@ package com.liferay.portal.kernel.workflow.comparator;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 
+import java.util.Date;
+
 /**
  * @author Shuyang Zhou
  */
-public abstract class BaseWorkflowTaskUserIdComparator
-	extends OrderByComparator {
+public class WorkflowTaskDueDateComparator extends OrderByComparator {
 
-	public BaseWorkflowTaskUserIdComparator() {
-		this(false);
+	public WorkflowTaskDueDateComparator(
+		boolean ascending, String orderByAsc, String orderByDesc,
+		String[] orderByFields) {
+
+		_ascending = ascending;
+		_orderByAsc = orderByAsc;
+		_orderByDesc = orderByDesc;
+		_orderByFields = orderByFields;
 	}
 
-	public BaseWorkflowTaskUserIdComparator(boolean ascending) {
-		_ascending = ascending;
+	public WorkflowTaskDueDateComparator(
+		String orderByAsc, String orderByDesc, String[] orderByFields) {
+
+		this(false, orderByAsc, orderByDesc, orderByFields);
 	}
 
 	@Override
@@ -36,10 +45,10 @@ public abstract class BaseWorkflowTaskUserIdComparator
 		WorkflowTask workflowTask1 = (WorkflowTask)obj1;
 		WorkflowTask workflowTask2 = (WorkflowTask)obj2;
 
-		Long assigneeUserId1 = workflowTask1.getAssigneeUserId();
-		Long assigneeUserId2 = workflowTask2.getAssigneeUserId();
+		Date dueDate1 = workflowTask1.getDueDate();
+		Date dueDate2 = workflowTask2.getDueDate();
 
-		int value = assigneeUserId1.compareTo(assigneeUserId2);
+		int value = dueDate1.compareTo(dueDate2);
 
 		if (value == 0) {
 			Long workflowTaskId1 = workflowTask1.getWorkflowTaskId();
@@ -57,10 +66,28 @@ public abstract class BaseWorkflowTaskUserIdComparator
 	}
 
 	@Override
+	public String getOrderBy() {
+		if (isAscending()) {
+			return _orderByAsc;
+		}
+		else {
+			return _orderByDesc;
+		}
+	}
+
+	@Override
+	public String[] getOrderByFields() {
+		return _orderByFields;
+	}
+
+	@Override
 	public boolean isAscending() {
 		return _ascending;
 	}
 
 	private boolean _ascending;
+	private String _orderByAsc;
+	private String _orderByDesc;
+	private String[] _orderByFields;
 
 }

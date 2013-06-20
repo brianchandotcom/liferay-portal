@@ -22,15 +22,22 @@ import java.util.Date;
 /**
  * @author Shuyang Zhou
  */
-public abstract class BaseWorkflowInstanceStartDateComparator
-	extends OrderByComparator {
+public class WorkflowInstanceStartDateComparator extends OrderByComparator {
 
-	public BaseWorkflowInstanceStartDateComparator() {
-		this(false);
+	public WorkflowInstanceStartDateComparator(
+		boolean ascending, String orderByAsc, String orderByDesc,
+		String[] orderByFields) {
+
+		_ascending = ascending;
+		_orderByAsc = orderByAsc;
+		_orderByDesc = orderByDesc;
+		_orderByFields = orderByFields;
 	}
 
-	public BaseWorkflowInstanceStartDateComparator(boolean ascending) {
-		_ascending = ascending;
+	public WorkflowInstanceStartDateComparator(
+		String orderByAsc, String orderByDesc, String[] orderByFields) {
+
+		this(false, orderByAsc, orderByDesc, orderByFields);
 	}
 
 	@Override
@@ -61,10 +68,28 @@ public abstract class BaseWorkflowInstanceStartDateComparator
 	}
 
 	@Override
+	public String getOrderBy() {
+		if (isAscending()) {
+			return _orderByAsc;
+		}
+		else {
+			return _orderByDesc;
+		}
+	}
+
+	@Override
+	public String[] getOrderByFields() {
+		return _orderByFields;
+	}
+
+	@Override
 	public boolean isAscending() {
 		return _ascending;
 	}
 
 	private boolean _ascending;
+	private String _orderByAsc;
+	private String _orderByDesc;
+	private String[] _orderByFields;
 
 }

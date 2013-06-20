@@ -22,15 +22,22 @@ import java.util.Date;
 /**
  * @author Shuyang Zhou
  */
-public abstract class BaseWorkflowTaskCompletionDateComparator
-	extends OrderByComparator {
+public class WorkflowTaskCreateDateComparator extends OrderByComparator {
 
-	public BaseWorkflowTaskCompletionDateComparator() {
-		this(false);
+	public WorkflowTaskCreateDateComparator(
+		boolean ascending, String orderByAsc, String orderByDesc,
+		String[] orderByFields) {
+
+		_ascending = ascending;
+		_orderByAsc = orderByAsc;
+		_orderByDesc = orderByDesc;
+		_orderByFields = orderByFields;
 	}
 
-	public BaseWorkflowTaskCompletionDateComparator(boolean ascending) {
-		_ascending = ascending;
+	public WorkflowTaskCreateDateComparator(
+		String orderByAsc, String orderByDesc, String[] orderByFields) {
+
+		this(false, orderByAsc, orderByDesc, orderByFields);
 	}
 
 	@Override
@@ -38,10 +45,10 @@ public abstract class BaseWorkflowTaskCompletionDateComparator
 		WorkflowTask workflowTask1 = (WorkflowTask)obj1;
 		WorkflowTask workflowTask2 = (WorkflowTask)obj2;
 
-		Date completionDate1 = workflowTask1.getCompletionDate();
-		Date completionDate2 = workflowTask2.getCompletionDate();
+		Date createDate1 = workflowTask1.getCreateDate();
+		Date createDate2 = workflowTask2.getCreateDate();
 
-		int value = completionDate1.compareTo(completionDate2);
+		int value = createDate1.compareTo(createDate2);
 
 		if (value == 0) {
 			Long workflowTaskId1 = workflowTask1.getWorkflowTaskId();
@@ -59,10 +66,28 @@ public abstract class BaseWorkflowTaskCompletionDateComparator
 	}
 
 	@Override
+	public String getOrderBy() {
+		if (isAscending()) {
+			return _orderByAsc;
+		}
+		else {
+			return _orderByDesc;
+		}
+	}
+
+	@Override
+	public String[] getOrderByFields() {
+		return _orderByFields;
+	}
+
+	@Override
 	public boolean isAscending() {
 		return _ascending;
 	}
 
 	private boolean _ascending;
+	private String _orderByAsc;
+	private String _orderByDesc;
+	private String[] _orderByFields;
 
 }

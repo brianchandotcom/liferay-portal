@@ -11,6 +11,8 @@
 	z-index: 450;
 
 	.device-preview-content {
+		margin-bottom: 20px;
+
 		.control-group-inline {
 			display: inline;
 		}

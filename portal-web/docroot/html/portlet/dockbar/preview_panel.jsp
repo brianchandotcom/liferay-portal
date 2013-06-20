@@ -71,6 +71,7 @@
 			</aui:nav-item>
 		</aui:nav>
 	</div>
+	<div class="alert"><small><%= LanguageUtil.get(pageContext, "preview-may-not-be-really-accurate") %></small></div>	
 </div>
 
 <aui:script use="liferay-dockbar-device-preview">

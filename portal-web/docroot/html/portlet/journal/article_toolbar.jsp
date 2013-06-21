@@ -71,16 +71,6 @@ if ((article != null) && article.isDraft()) {
 		);
 	</c:if>
 
-	<c:if test="<%= (article != null) && Validator.isNotNull(structureId) %>">
-		toolbarButtonGroup.push(
-			{
-				icon: 'icon-download',
-				id: '<portlet:namespace />downloadArticleContentButton',
-				label: '<%= UnicodeLanguageUtil.get(pageContext, "download") %>'
-			}
-		);
-	</c:if>
-
 	<c:if test="<%= (article != null) && JournalArticlePermission.contains(permissionChecker, article, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"
 			modelResource="<%= JournalArticle.class.getName() %>"

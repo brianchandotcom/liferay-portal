@@ -135,7 +135,7 @@ if (endDateTime > 0) {
 							<aui:input helpMessage="choose-applications-export-help" id="chooseApplications" label="choose-applications" name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL %>" type="radio" value="<%= false %>" />
 
 							<c:if test="<%= !group.isLayoutPrototype() %>">
-								<ul class="hide export-import-content export-import-choose-content" id="<portlet:namespace />selectApplications">
+								<ul class="hide options select-options" id="<portlet:namespace />selectApplications">
 									<aui:input name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION %>" type="hidden" value="<%= true %>" />
 
 									<%
@@ -210,7 +210,7 @@ if (endDateTime > 0) {
 
 							<aui:input helpMessage="choose-content-export-help" id="chooseContent" label="choose-content" name="<%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>" type="radio" value="<%= false %>" />
 
-							<ul class="hide export-import-choose-content" id="<portlet:namespace />selectContents">
+							<ul class="hide select-options" id="<portlet:namespace />selectContents">
 								<li>
 									<aui:input name="<%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>" type="hidden" value="<%= true %>" />
 
@@ -322,7 +322,7 @@ if (endDateTime > 0) {
 									/>
 								</li>
 
-								<li class="export-import-content portlet-list">
+								<li class="options portlet-list">
 									<aui:input helpMessage="export-import-categories-help" label="categories" name="<%= PortletDataHandlerKeys.CATEGORIES %>" type="checkbox" value="<%= true %>" />
 
 									<%

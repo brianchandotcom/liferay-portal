@@ -210,8 +210,11 @@ public class ActionUtil {
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			renderRequest);
 
-		PortletPreferences portletPreferences = getPortletPreferences(
-			request, renderRequest.getPreferences());
+		PortletPreferences portletPreferences =
+			ActionUtil.getLayoutPortletSetup(renderRequest, portlet);
+
+		portletPreferences = getPortletPreferences(
+			request, renderRequest.getPreferences(), portletPreferences);
 
 		String title = PortletConfigurationUtil.getPortletTitle(
 			portletPreferences, themeDisplay.getLanguageId());

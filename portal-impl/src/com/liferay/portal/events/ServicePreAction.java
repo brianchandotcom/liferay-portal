@@ -482,7 +482,8 @@ public class ServicePreAction extends Action {
 		}
 
 		Object[] viewableLayouts = getViewableLayouts(
-			request, user, permissionChecker, layout, layouts);
+			request, user, permissionChecker, layout, layouts,
+			controlPanelCategory);
 
 		String layoutSetLogo = null;
 
@@ -502,7 +503,8 @@ public class ServicePreAction extends Action {
 		LayoutTypePortlet layoutTypePortlet = null;
 
 		layouts = mergeAdditionalLayouts(
-			request, user, permissionChecker, layout, layouts);
+			request, user, permissionChecker, layout, layouts,
+			controlPanelCategory);
 
 		LayoutSet layoutSet = null;
 
@@ -1672,7 +1674,7 @@ public class ServicePreAction extends Action {
 	protected Object[] getViewableLayouts(
 			HttpServletRequest request, User user,
 			PermissionChecker permissionChecker, Layout layout,
-			List<Layout> layouts)
+			List<Layout> layouts, String controlPanelCategory)
 		throws PortalException, SystemException {
 
 		if ((layouts == null) || layouts.isEmpty()) {
@@ -1689,17 +1691,11 @@ public class ServicePreAction extends Action {
 				 ActionKeys.VIEW_STAGING);
 
 		if (LayoutPermissionUtil.contains(
-				permissionChecker, layout, false, ActionKeys.VIEW) ||
+				permissionChecker, layout, controlPanelCategory, false,
+				ActionKeys.VIEW) ||
 			hasViewStagingPermission) {
 
 			hasViewLayoutPermission = true;
-		}
-
-		String controlPanelCategory = null;
-
-		if (group.isControlPanel()) {
-			controlPanelCategory = ParamUtil.getString(
-				request, "controlPanelCategory");
 		}
 
 		List<Layout> accessibleLayouts = new ArrayList<Layout>();
@@ -1836,7 +1832,7 @@ public class ServicePreAction extends Action {
 	protected List<Layout> mergeAdditionalLayouts(
 			HttpServletRequest request, User user,
 			PermissionChecker permissionChecker, Layout layout,
-			List<Layout> layouts)
+			List<Layout> layouts, String controlPanelCategory)
 		throws PortalException, SystemException {
 
 		if ((layout == null) || layout.isPrivateLayout()) {
@@ -1866,7 +1862,8 @@ public class ServicePreAction extends Action {
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 			Object[] viewableLayouts = getViewableLayouts(
-				request, user, permissionChecker, layout, guestLayouts);
+				request, user, permissionChecker, layout, guestLayouts,
+				controlPanelCategory);
 
 			guestLayouts = (List<Layout>)viewableLayouts[1];
 
@@ -1916,7 +1913,8 @@ public class ServicePreAction extends Action {
 						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 				Object[] viewableLayouts = getViewableLayouts(
-					request, user, permissionChecker, layout, previousLayouts);
+					request, user, permissionChecker, layout, previousLayouts,
+					controlPanelCategory);
 
 				previousLayouts = (List<Layout>)viewableLayouts[1];
 

@@ -179,13 +179,14 @@ Layout addedLayout = (Layout)SessionMessages.get(renderRequest, portletDisplay.g
 	new Liferay.Dockbar.AddPage(
 		{
 			createPageMessage: '<%= LanguageUtil.get(pageContext, "loading") %>',
+			focusItem: A.one('#<portlet:namespace />name'),
+			id: 'page',
 			inputNode: A.one('#<portlet:namespace />searchTemplates'),
 			namespace: '<portlet:namespace />',
 			nodeList: A.one('#<portlet:namespace />templateList'),
 			nodeSelector: '.lfr-page-template',
-			parentLayoutId: <%= layout.getParentLayoutId() %>
+			parentLayoutId: <%= layout.getParentLayoutId() %>,
+			selected: !A.one('#<portlet:namespace />addPageFm').ancestor().hasClass('hide')
 		}
 	);
-
-	A.one('#<portlet:namespace />name').focus();
 </aui:script>

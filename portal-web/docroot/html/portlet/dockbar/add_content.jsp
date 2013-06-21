@@ -91,10 +91,15 @@ int delta = ParamUtil.getInteger(request, "delta", deltaDefault);
 </aui:form>
 
 <aui:script use="liferay-dockbar-add-content">
+	var searchContent = A.one('#<portlet:namespace />searchContent');
+
 	new Liferay.Dockbar.AddContent(
 		{
-			inputNode: A.one('#<portlet:namespace />searchContent'),
-			namespace: '<portlet:namespace />'
+			focusItem: searchContent,
+			id: 'content',
+			inputNode: searchContent,
+			namespace: '<portlet:namespace />',
+			selected: !A.one('#<portlet:namespace />addContentForm').ancestor().hasClass('hide')
 		}
 	);
 </aui:script>

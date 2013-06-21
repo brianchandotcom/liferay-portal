@@ -29,7 +29,6 @@ import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -70,6 +69,9 @@ public class EditArchivedSetupsAction extends PortletAction {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
+			actionRequest = ActionUtil.getWrappedActionRequest(
+				actionRequest, null);
+
 			if (cmd.equals(Constants.SAVE)) {
 				updateSetup(actionRequest, portlet);
 			}
@@ -150,6 +152,8 @@ public class EditArchivedSetupsAction extends PortletAction {
 
 		renderResponse.setTitle(ActionUtil.getTitle(portlet, renderRequest));
 
+		renderRequest = ActionUtil.getWrappedRenderRequest(renderRequest, null);
+
 		return actionMapping.findForward(
 			getForward(
 				renderRequest,
@@ -170,9 +174,7 @@ public class EditArchivedSetupsAction extends PortletAction {
 
 		String name = ParamUtil.getString(actionRequest, "name");
 
-		PortletPreferences setup =
-			PortletPreferencesFactoryUtil.getPortletSetup(
-				actionRequest, portlet.getPortletId());
+		PortletPreferences setup = actionRequest.getPreferences();
 
 		PortletPreferencesServiceUtil.restoreArchivedPreferences(
 			themeDisplay.getScopeGroupId(), name, themeDisplay.getLayout(),
@@ -187,9 +189,7 @@ public class EditArchivedSetupsAction extends PortletAction {
 
 		String name = ParamUtil.getString(actionRequest, "name");
 
-		PortletPreferences setup =
-			PortletPreferencesFactoryUtil.getPortletSetup(
-				actionRequest, portlet.getPortletId());
+		PortletPreferences setup = actionRequest.getPreferences();
 
 		PortletPreferencesServiceUtil.updateArchivePreferences(
 			themeDisplay.getUserId(), themeDisplay.getScopeGroupId(), name,

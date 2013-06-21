@@ -67,6 +67,9 @@ public class EditPermissionsAction extends PortletAction {
 		throws Exception {
 
 		try {
+			actionRequest = ActionUtil.getWrappedActionRequest(
+				actionRequest, null);
+
 			updateRolePermissions(actionRequest);
 
 			addSuccessMessage(actionRequest, actionResponse);
@@ -128,6 +131,8 @@ public class EditPermissionsAction extends PortletAction {
 			renderResponse.setTitle(
 				ActionUtil.getTitle(portlet, renderRequest));
 		}
+
+		renderRequest = ActionUtil.getWrappedRenderRequest(renderRequest, null);
 
 		return actionMapping.findForward(
 			getForward(

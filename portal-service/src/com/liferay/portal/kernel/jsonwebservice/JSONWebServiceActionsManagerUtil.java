@@ -92,6 +92,11 @@ public class JSONWebServiceActionsManagerUtil {
 			contextPath, actionObject, actionClass, actionMethod, path, method);
 	}
 
+	public static int unregisterJSONWebServiceActions(Object actionObject) {
+		return getJSONWebServiceActionsManager().
+			unregisterJSONWebServiceActions(actionObject);
+	}
+
 	public static int unregisterJSONWebServiceActions(String contextPath) {
 		return getJSONWebServiceActionsManager().
 			unregisterJSONWebServiceActions(contextPath);

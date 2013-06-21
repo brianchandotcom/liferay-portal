@@ -26,6 +26,8 @@ import java.io.IOException;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.util.HashSet;
@@ -190,20 +192,43 @@ public class DB2DB extends BaseDB {
 		throws SQLException {
 
 		CallableStatement callStmt = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
 
 		try {
-			String sql = "call sysproc.admin_cmd(?)";
+			StringBundler sb = new StringBundler(4);
 
-			callStmt = con.prepareCall(sql);
+			sb.append("select num_reorg_rec_alters from table(");
+			sb.append("sysproc.admin_get_tab_info(current_schema, '");
+			sb.append(tableName.toUpperCase());
+			sb.append("')) where reorg_pending = 'Y'");
 
-			String param = "reorg table " + tableName;
+			ps = con.prepareStatement(sb.toString());
 
-			callStmt.setString(1, param);
+			rs = ps.executeQuery();
 
-			callStmt.execute();
+			if (rs.next()) {
+				int numReorgRecAlters = rs.getInt(1);
+
+				if (numReorgRecAlters < 1) {
+					return;
+				}
+
+				String sql = "call sysproc.admin_cmd(?)";
+
+				callStmt = con.prepareCall(sql);
+
+				String param = "reorg table " + tableName;
+
+				callStmt.setString(1, param);
+
+				callStmt.execute();
+			}
 		}
 		finally {
 			DataAccess.cleanUp(callStmt);
+			DataAccess.cleanUp(ps);
+			DataAccess.cleanUp(rs);
 		}
 	}
 

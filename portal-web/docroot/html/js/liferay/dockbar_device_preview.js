@@ -101,7 +101,7 @@ AUI.add(
 
 						AObject.some(
 							devices,
-							function (item, index, collection) {
+							function(item, index, collection) {
 								var selected = item.selected;
 
 								if (selected) {
@@ -154,7 +154,7 @@ AUI.add(
 
 					_closePanel: function() {
 						var instance = this;
-						
+
 						Dockbar.togglePreviewPanel();
 					},
 
@@ -241,7 +241,7 @@ AUI.add(
 									id: instance._dialogId,
 									uri: uri
 								},
-								function (dialogWindow) {
+								function(dialogWindow) {
 									dialogWindow.align(instance._devicePreviewNode, DIALOG_ALIGN_POINTS);
 
 									dialogWindow.plug(
@@ -336,13 +336,13 @@ AUI.add(
 						}
 
 						var info = Lang.sub(
-							TPL_DEVICE_SIZE_INFO, 
+							TPL_DEVICE_SIZE_INFO,
 							{
 								height: event.info.offsetHeight,
 								width: event.info.offsetWidth
 							}
 						);
-						
+
 						instance._sizeStatusContent.html(info);
 					},
 
@@ -380,7 +380,7 @@ AUI.add(
 						sizeStatus.addClass(activehandle);
 
 						var deviceSizeInfo = Lang.sub(
-							TPL_DEVICE_SIZE_INFO, 
+							TPL_DEVICE_SIZE_INFO,
 							{
 								height: dialog.get('height'),
 								width: dialog.get('width')

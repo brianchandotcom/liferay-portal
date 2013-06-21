@@ -219,8 +219,8 @@ AUI.add(
 					else {
 						panelNode.hide();
 					}
-				}		
-			}			
+				}
+			}
 		};
 
 		Liferay.provide(

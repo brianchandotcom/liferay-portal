@@ -67,11 +67,11 @@
 
 			<aui:nav-item cssClass="lfr-device-item row-fluid" data-device="custom">
 				<p><%= LanguageUtil.get(pageContext, "custom") %> (px)</p>
-				<aui:input cssClass="input-mini" inlineField="<%= true %>" label="" name="width" value="400"/><span> X </span><aui:input cssClass="input-mini" inlineField="<%= true %>" label="" name="height" value="400" />
+				<aui:input cssClass="input-mini" inlineField="<%= true %>" label="" name="width" value="400" /><span> X </span><aui:input cssClass="input-mini" inlineField="<%= true %>" label="" name="height" value="400" />
 			</aui:nav-item>
 		</aui:nav>
 	</div>
-	<div class="alert"><small><%= LanguageUtil.get(pageContext, "preview-may-not-be-really-accurate") %></small></div>	
+	<div class="alert"><small><%= LanguageUtil.get(pageContext, "preview-may-not-be-really-accurate") %></small></div>
 </div>
 
 <aui:script use="liferay-dockbar-device-preview">

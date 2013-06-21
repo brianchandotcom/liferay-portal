@@ -73,25 +73,9 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			InputStream inputStream = inputStreamOVP.getValue();
 			String fileName = inputStreamOVP.getKey();
 
-			File file = null;
-
-			try {
-				file = FileUtil.createTempFile(inputStream);
-
-				String mimeType = MimeTypesUtil.getContentType(file, fileName);
-
-				addPortletFileEntry(
-					groupId, userId, className, classPK, portletId, folderId,
-					file, fileName, mimeType);
-			}
-			catch (IOException ioe) {
-				throw new SystemException(
-					"Unable to write temporary file " + file.getAbsolutePath(),
-					ioe);
-			}
-			finally {
-				FileUtil.delete(file);
-			}
+			addPortletFileEntry(
+				groupId, userId, className, classPK, portletId, folderId,
+				inputStream, fileName, StringPool.BLANK);
 		}
 	}
 
@@ -162,6 +146,10 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			DLAppHelperThreadLocal.setEnabled(false);
 
 			file = FileUtil.createTempFile(inputStream);
+
+			if (Validator.isNull(mimeType)) {
+				mimeType = MimeTypesUtil.getContentType(file, fileName);
+			}
 
 			return DLAppLocalServiceUtil.addFileEntry(
 				userId, repository.getRepositoryId(), folderId, fileName,

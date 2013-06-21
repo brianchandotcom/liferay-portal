@@ -608,41 +608,6 @@ public class DDMTemplateServiceHttp {
 		}
 	}
 
-	public static int countTemplatesByStructureClassNameId(
-		HttpPrincipal httpPrincipal, long groupId, long structureClassNameId,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		try {
-			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class,
-					"countTemplatesByStructureClassNameId",
-					_countTemplatesByStructureClassNameIdParameterTypes15);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					structureClassNameId, start, end, orderByComparator);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return ((Integer)returnObj).intValue();
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplatesByStructureClassNameId(
 		HttpPrincipal httpPrincipal, long groupId, long structureClassNameId,
 		int start, int end,
@@ -651,7 +616,7 @@ public class DDMTemplateServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class,
 					"getTemplatesByStructureClassNameId",
-					_getTemplatesByStructureClassNameIdParameterTypes16);
+					_getTemplatesByStructureClassNameIdParameterTypes15);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					structureClassNameId, start, end, orderByComparator);
@@ -670,6 +635,39 @@ public class DDMTemplateServiceHttp {
 			}
 
 			return (java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static int getTemplatesByStructureClassNameIdCount(
+		HttpPrincipal httpPrincipal, long groupId, long structureClassNameId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class,
+					"getTemplatesByStructureClassNameIdCount",
+					_getTemplatesByStructureClassNameIdCountParameterTypes16);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					structureClassNameId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return ((Integer)returnObj).intValue();
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -1070,16 +1068,13 @@ public class DDMTemplateServiceHttp {
 	private static final Class<?>[] _getTemplatesByClassPKParameterTypes14 = new Class[] {
 			long.class, long.class
 		};
-	private static final Class<?>[] _countTemplatesByStructureClassNameIdParameterTypes15 =
+	private static final Class<?>[] _getTemplatesByStructureClassNameIdParameterTypes15 =
 		new Class[] {
 			long.class, long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getTemplatesByStructureClassNameIdParameterTypes16 =
-		new Class[] {
-			long.class, long.class, int.class, int.class,
-			com.liferay.portal.kernel.util.OrderByComparator.class
-		};
+	private static final Class<?>[] _getTemplatesByStructureClassNameIdCountParameterTypes16 =
+		new Class[] { long.class, long.class };
 	private static final Class<?>[] _searchParameterTypes17 = new Class[] {
 			long.class, long.class, long.class, long.class,
 			java.lang.String.class, java.lang.String.class,

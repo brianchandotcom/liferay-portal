@@ -35,6 +35,8 @@ if (filterManageableOrganizations) {
 		organizationParams.put("organizationsTree", userOrganizations);
 	}
 }
+
+String searchContainerOrganizationId = StringPool.BLANK;
 %>
 
 <c:choose>
@@ -63,6 +65,8 @@ if (filterManageableOrganizations) {
 			</c:if>
 
 			<%
+			searchContainerOrganizationId = searchContainer.getId(request, renderResponse.getNamespace());
+
 			OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)searchContainer.getSearchTerms();
 
 			long parentOrganizationId = ParamUtil.getLong(request, "parentOrganizationId", OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID);
@@ -113,7 +117,7 @@ if (filterManageableOrganizations) {
 			<c:if test="<%= !results.isEmpty() %>">
 				<div class="separator"><!-- --></div>
 
-				<aui:button cssClass="delete-organizations" onClick='<%= renderResponse.getNamespace() + "deleteOrganizations();" %>' value="delete" />
+				<aui:button cssClass="delete-organizations" disabled="<%= true %>" name="delete" onClick='<%= renderResponse.getNamespace() + "deleteOrganizations();" %>' value="delete" />
 			</c:if>
 
 			<liferay-ui:search-iterator />
@@ -125,3 +129,7 @@ if (filterManageableOrganizations) {
 		</div>
 	</c:otherwise>
 </c:choose>
+
+<aui:script>
+	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />delete', '#<portlet:namespace /><%= searchContainerOrganizationId %>', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+</aui:script>

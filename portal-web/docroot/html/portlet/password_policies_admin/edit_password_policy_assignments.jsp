@@ -42,6 +42,11 @@ portletURL.setParameter("tabs2", tabs2);
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, tabs2), portletURL.toString());
 
 portletURL.setParameter("tabs3", tabs3);
+
+String addInputId = StringPool.BLANK;
+String cmdVal = StringPool.BLANK;
+String removeInputId = StringPool.BLANK;
+String searchContainerId = StringPool.BLANK;
 %>
 
 <liferay-ui:header
@@ -89,6 +94,8 @@ portletURL.setParameter("tabs3", tabs3);
 				/>
 
 				<%
+				searchContainerId = searchContainer.getId(request, renderResponse.getNamespace());
+
 				UserSearchTerms searchTerms = (UserSearchTerms)searchContainer.getSearchTerms();
 
 				LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
@@ -123,10 +130,14 @@ portletURL.setParameter("tabs3", tabs3);
 				<div class="separator"><!-- --></div>
 
 				<%
-				String taglibOnClick = renderResponse.getNamespace() + "updatePasswordPolicyUsers('" + portletURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur + "');";
+					addInputId = "addUserIds";
+					cmdVal = "password_policy_users";
+					removeInputId = "removeUserIds";
+
+					String taglibOnClick = renderResponse.getNamespace() + "updatePasswordPolicy('" + portletURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur + "');";
 				%>
 
-				<aui:button onClick="<%= taglibOnClick %>" value="update-associations" />
+				<aui:button disabled="<%= true %>" name="updateAssociations" onClick="<%= taglibOnClick %>" value="update-associations" />
 
 				<br /><br />
 
@@ -152,6 +163,8 @@ portletURL.setParameter("tabs3", tabs3);
 				/>
 
 				<%
+				searchContainerId = searchContainer.getId(request, renderResponse.getNamespace());
+
 				OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)searchContainer.getSearchTerms();
 
 				long parentOrganizationId = OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
@@ -225,10 +238,14 @@ portletURL.setParameter("tabs3", tabs3);
 				<div class="separator"><!-- --></div>
 
 				<%
-				String taglibOnClick = renderResponse.getNamespace() + "updatePasswordPolicyOrganizations('" + portletURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur + "');";
+				addInputId = "addOrganizationIds";
+				cmdVal = "password_policy_organizations";
+				removeInputId = "removeOrganizationIds";
+
+				String taglibOnClick = renderResponse.getNamespace() + "updatePasswordPolicy('" + portletURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur + "');";
 				%>
 
-				<aui:button onClick="<%= taglibOnClick %>" value="update-associations" />
+				<aui:button disabled="<%= true %>" name="updateAssociations" onClick="<%= taglibOnClick %>" value="update-associations" />
 
 				<br /><br />
 
@@ -239,28 +256,22 @@ portletURL.setParameter("tabs3", tabs3);
 </aui:form>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />updatePasswordPolicyOrganizations',
-		function(assignmentsRedirect) {
-			document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "password_policy_organizations";
-			document.<portlet:namespace />fm.<portlet:namespace />assignmentsRedirect.value = assignmentsRedirect;
-			document.<portlet:namespace />fm.<portlet:namespace />addOrganizationIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
-			document.<portlet:namespace />fm.<portlet:namespace />removeOrganizationIds.value = Liferay.Util.listUncheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
-			submitForm(document.<portlet:namespace />fm);
-		},
-		['liferay-util-list-fields']
-	);
+	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />updateAssociations', '#<portlet:namespace /><%= searchContainerId %>', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
 
 	Liferay.provide(
 		window,
-		'<portlet:namespace />updatePasswordPolicyUsers',
+		'<portlet:namespace />updatePasswordPolicy',
 		function(assignmentsRedirect) {
-			document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "password_policy_users";
-			document.<portlet:namespace />fm.<portlet:namespace />assignmentsRedirect.value = assignmentsRedirect;
-			document.<portlet:namespace />fm.<portlet:namespace />addUserIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
-			document.<portlet:namespace />fm.<portlet:namespace />removeUserIds.value = Liferay.Util.listUncheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
-			submitForm(document.<portlet:namespace />fm);
+			var updatePasswordPolicyIds = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+
+			if (updatePasswordPolicyIds) {
+				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= cmdVal %>";
+				document.<portlet:namespace />fm.<portlet:namespace />assignmentsRedirect.value = assignmentsRedirect;
+				document.<portlet:namespace />fm.<portlet:namespace /><%= addInputId %>.value = updatePasswordPolicyIds;
+				document.<portlet:namespace />fm.<portlet:namespace /><%= removeInputId %>.value = Liferay.Util.listUncheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+
+				submitForm(document.<portlet:namespace />fm);
+			}
 		},
 		['liferay-util-list-fields']
 	);

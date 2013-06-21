@@ -43,6 +43,11 @@ request.setAttribute("edit_role_assignments.jsp-cur", cur);
 request.setAttribute("edit_role_assignments.jsp-role", role);
 
 request.setAttribute("edit_role_assignments.jsp-portletURL", portletURL);
+
+String addInputId = "addGroupIds";
+String cmdVal = "role_groups";
+String removeInputId = "removeGroupIds";
+String searchContainerId = StringPool.BLANK;
 %>
 
 <liferay-util:include page="/html/portlet/roles_admin/toolbar.jsp">
@@ -82,42 +87,68 @@ request.setAttribute("edit_role_assignments.jsp-portletURL", portletURL);
 	<c:choose>
 		<c:when test='<%= tabs2.equals("users") %>'>
 			<liferay-util:include page="/html/portlet/users_admin/edit_role_assignments_users.jsp" />
+
+			<%
+			addInputId = "addUserIds";
+			cmdVal = "role_users";
+			removeInputId = "removeUserIds";
+
+			SearchContainer searchContainer = (SearchContainer)request.getAttribute("edit_role_assignments.jsp-searchContainer");
+
+			searchContainerId = searchContainer.getId(request, renderResponse.getNamespace());
+			%>
+
 		</c:when>
 		<c:when test='<%= tabs2.equals("sites") %>'>
 			<liferay-util:include page="/html/portlet/sites_admin/edit_role_assignments_sites.jsp" />
+
+			<%
+			SearchContainer searchContainer = (SearchContainer)request.getAttribute("edit_role_assignments.jsp-searchContainer");
+
+			searchContainerId = searchContainer.getId(request, renderResponse.getNamespace());
+			%>
+
 		</c:when>
 		<c:when test='<%= tabs2.equals("organizations") %>'>
 			<liferay-util:include page="/html/portlet/users_admin/edit_role_assignments_organizations.jsp" />
+
+			<%
+			SearchContainer searchContainer = (SearchContainer)request.getAttribute("edit_role_assignments.jsp-searchContainer");
+
+			searchContainerId = searchContainer.getId(request, renderResponse.getNamespace());
+			%>
+
 		</c:when>
 		<c:when test='<%= tabs2.equals("user-groups") %>'>
 			<liferay-util:include page="/html/portlet/users_admin/edit_role_assignments_user_groups.jsp" />
+
+			<%
+			SearchContainer searchContainer = (SearchContainer)request.getAttribute("edit_role_assignments.jsp-searchContainer");
+
+			searchContainerId = searchContainer.getId(request, renderResponse.getNamespace());
+			%>
+
 		</c:when>
 	</c:choose>
 </aui:form>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />updateRoleGroups',
-		function(assignmentsRedirect) {
-			document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "role_groups";
-			document.<portlet:namespace />fm.<portlet:namespace />assignmentsRedirect.value = assignmentsRedirect;
-			document.<portlet:namespace />fm.<portlet:namespace />addGroupIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
-			document.<portlet:namespace />fm.<portlet:namespace />removeGroupIds.value = Liferay.Util.listUncheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
-			submitForm(document.<portlet:namespace />fm);
-		},
-		['liferay-util-list-fields']
-	);
+	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />updateAssociations', '#<portlet:namespace /><%= searchContainerId %>', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
 
 	Liferay.provide(
 		window,
-		'<portlet:namespace />updateRoleUsers',
+		'<portlet:namespace />updateRoles',
 		function(assignmentsRedirect) {
-			document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "role_users";
-			document.<portlet:namespace />fm.<portlet:namespace />assignmentsRedirect.value = assignmentsRedirect;
-			document.<portlet:namespace />fm.<portlet:namespace />addUserIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
-			document.<portlet:namespace />fm.<portlet:namespace />removeUserIds.value = Liferay.Util.listUncheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
-			submitForm(document.<portlet:namespace />fm);
+			var updateRoleIds = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+
+			if (updateRoleIds) {
+				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= cmdVal %>";
+				document.<portlet:namespace />fm.<portlet:namespace />assignmentsRedirect.value = assignmentsRedirect;
+				document.<portlet:namespace />fm.<portlet:namespace /><%= addInputId %>.value = updateRoleIds;
+				document.<portlet:namespace />fm.<portlet:namespace /><%= removeInputId %>.value = Liferay.Util.listUncheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+
+				submitForm(document.<portlet:namespace />fm);
+			}
 		},
 		['liferay-util-list-fields']
 	);

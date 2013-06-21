@@ -46,6 +46,8 @@ if (filterManageableOrganizations && organizations.isEmpty()) {
 if (organization != null) {
 	UsersAdminUtil.addPortletBreadcrumbEntries(organization, request, renderResponse);
 }
+
+String searchContainerOrgId = StringPool.BLANK;
 %>
 
 <c:if test="<%= portletName.equals(PortletKeys.USERS_ADMIN) && usersListView.equals(UserConstants.LIST_VIEW_TREE) %>">
@@ -271,6 +273,8 @@ if (organization != null) {
 							>
 
 								<%
+								searchContainerOrgId = searchContainer.getId(request, renderResponse.getNamespace());
+
 								OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)searchContainer.getSearchTerms();
 
 								long parentOrganizationId = _getParentOrganizationId(request, organization, filterManageableOrganizations);
@@ -460,6 +464,10 @@ if (organization != null) {
 		</div>
 	</c:otherwise>
 </c:choose>
+
+<aui:script>
+	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />delete', '#<portlet:namespace /><%= searchContainerOrgId %>', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+</aui:script>
 
 <%!
 private long _getParentOrganizationId(HttpServletRequest request, Organization organization, boolean filterManageableOrganizations) {

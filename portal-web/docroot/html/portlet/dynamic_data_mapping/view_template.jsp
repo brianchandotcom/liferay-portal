@@ -46,6 +46,8 @@ if (layout != null) {
 }
 
 String title = ddmDisplay.getViewTemplatesTitle(structure, controlPanel, locale);
+
+String searchContainerId = StringPool.BLANK;
 %>
 
 <liferay-ui:error exception="<%= RequiredTemplateException.class %>">
@@ -92,6 +94,10 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, controlPanel, locale)
 			<liferay-util:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
 			<liferay-util:param name="classPK" value="<%= String.valueOf(classPK) %>" />
 		</liferay-util:include>
+
+		<%
+			searchContainerId = searchContainer.getId(request, renderResponse.getNamespace());
+		%>
 
 		<liferay-ui:search-container-results>
 			<%@ include file="/html/portlet/dynamic_data_mapping/template_search_results.jspf" %>
@@ -216,7 +222,7 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, controlPanel, locale)
 
 		<c:if test="<%= total > 0 %>">
 			<aui:button-row>
-				<aui:button cssClass="delete-templates-button" onClick='<%= renderResponse.getNamespace() + "deleteTemplates();" %>' value="delete" />
+				<aui:button disabled="<%= true %>" name="delete" onClick='<%= renderResponse.getNamespace() + "deleteTemplates();" %>' value="delete" />
 			</aui:button-row>
 
 			<div class="separator"><!-- --></div>
@@ -227,6 +233,8 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, controlPanel, locale)
 </aui:form>
 
 <aui:script>
+	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />delete', '#<portlet:namespace /><%= searchContainerId %>', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+
 	function <portlet:namespace />copyTemplate(uri) {
 		Liferay.Util.openWindow(
 			{
@@ -245,38 +253,16 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, controlPanel, locale)
 		window,
 		'<portlet:namespace />deleteTemplates',
 		function() {
-			if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-this") %>')) {
+			var deleteTemplateIds = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+
+			if (deleteTemplateIds && confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-this") %>')) {
 				document.<portlet:namespace />fm.method = "post";
 				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.DELETE %>";
-				document.<portlet:namespace />fm.<portlet:namespace />deleteTemplateIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
+				document.<portlet:namespace />fm.<portlet:namespace />deleteTemplateIds.value = deleteTemplateIds;
 
-				submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" /></portlet:actionURL>");
+				submitForm(document.<portlet:namespace />fm, '<portlet:actionURL><portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" /></portlet:actionURL>');
 			}
 		},
 		['liferay-util-list-fields']
 	);
-</aui:script>
-
-<aui:script use="aui-base">
-	var buttons = A.all('.delete-templates-button');
-
-	if (buttons.size()) {
-		var toggleDisabled = A.bind('toggleDisabled', Liferay.Util, ':button');
-
-		var resultsGrid = A.one('.searchcontainer-content');
-
-		if (resultsGrid) {
-			resultsGrid.delegate(
-				'click',
-				function(event) {
-					var disabled = (resultsGrid.one(':checked') == null);
-
-					toggleDisabled(disabled);
-				},
-				':checkbox'
-			);
-		}
-
-		toggleDisabled(true);
-	}
 </aui:script>

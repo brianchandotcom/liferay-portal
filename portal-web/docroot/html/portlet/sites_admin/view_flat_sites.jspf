@@ -22,6 +22,8 @@
 	<aui:input name="deleteGroupIds" type="hidden" />
 
 	<%
+	searchContainerId = searchContainer.getId(request, renderResponse.getNamespace());
+
 	GroupSearchTerms searchTerms = (GroupSearchTerms)searchContainer.getSearchTerms();
 
 	LinkedHashMap<String, Object> groupParams = new LinkedHashMap<String, Object>();
@@ -55,7 +57,7 @@
 	<%@ include file="/html/portlet/sites_admin/toolbar.jspf" %>
 
 	<c:if test="<%= !results.isEmpty() %>">
-		<aui:button onClick='<%= renderResponse.getNamespace() + "deleteSites();" %>' value="delete" />
+		<aui:button disabled="<%= true %>" name="delete" onClick='<%= renderResponse.getNamespace() + "deleteSites();" %>' value="delete" />
 	</c:if>
 
 	<liferay-ui:search-container-row

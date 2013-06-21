@@ -249,7 +249,7 @@ editPermissionsURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 			var id = selectedGroupIds[i];
 			var name = selectedGroupNames[i];
 
-			groupsHTML += '<span class="lfr-token"><span class="lfr-token-text">' + name + '</span><a class="icon icon-close lfr-token-close" href="javascript:<portlet:namespace />removeGroup(' + i + ', \'' + target + '\' );"></a></span>';
+			groupsHTML += '<span class="lfr-token"><span class="lfr-token-text">' + name + '</span><a class="icon icon-close lfr-token-close" href="javascript:<portlet:namespace />removeGroup(' + i + ', \'' + target + '\');"></a></span>';
 		}
 
 		if (groupsHTML == '') {
@@ -263,12 +263,15 @@ editPermissionsURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 		window,
 		'<portlet:namespace />updateActions',
 		function() {
-			var selectedTargets = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
+			var selectedTargets = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
 
-			document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "actions";
-			document.<portlet:namespace />fm.<portlet:namespace />redirect.value = "<%= portletURL.toString() %>";
-			document.<portlet:namespace />fm.<portlet:namespace />selectedTargets.value = selectedTargets;
-			submitForm(document.<portlet:namespace />fm);
+			if (selectedTargets) {
+				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "actions";
+				document.<portlet:namespace />fm.<portlet:namespace />redirect.value = "<%= portletURL.toString() %>";
+				document.<portlet:namespace />fm.<portlet:namespace />selectedTargets.value = selectedTargets;
+
+				submitForm(document.<portlet:namespace />fm);
+			}
 		},
 		['liferay-util-list-fields']
 	);

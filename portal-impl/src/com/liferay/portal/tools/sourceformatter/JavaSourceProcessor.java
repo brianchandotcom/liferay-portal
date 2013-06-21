@@ -974,8 +974,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		while (itr.hasNext()) {
 			JavaTerm javaTerm = itr.next();
 
-			if (portalSource && fileName.contains("/test/") &&
-				!fileName.endsWith("TestBean.java")) {
+			if (fileName.contains("/test/") &&
+				!fileName.endsWith("TestBean.java") &&
+				!fileName.endsWith("TestCase.java")) {
 
 				checkTestAnnotations(javaTerm, fileName);
 			}

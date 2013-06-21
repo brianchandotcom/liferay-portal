@@ -74,9 +74,15 @@ Set<String> contextPaths = JSONWebServiceActionsManagerUtil.getContextPaths();
 
 	for (String jsonWebServiceClassName : jsonWebServiceClasses.keySet()) {
 		Set<JSONWebServiceActionMapping> jsonWebServiceMappings = jsonWebServiceClasses.get(jsonWebServiceClassName);
+
+		String panelTitle = jsonWebServiceClassName;
+
+		if (panelTitle.endsWith("Impl")) {
+			panelTitle = panelTitle.substring(0, panelTitle.length() - 4);
+		}
 	%>
 
-		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id='<%= "apiService" + jsonWebServiceClassName + "Panel" %>' persistState="<%= true %>" title="<%= jsonWebServiceClassName %>">
+		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id='<%= "apiService" + jsonWebServiceClassName + "Panel" %>' persistState="<%= true %>" title="<%= panelTitle %>">
 			<ul class="unstyled">
 
 				<%

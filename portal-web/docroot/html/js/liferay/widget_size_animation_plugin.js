@@ -1,8 +1,8 @@
 AUI.add(
 	'liferay-widget-size-animation-plugin',
-	function (A) {
+	function(A) {
 		var Lang = A.Lang;
-	
+
 		var STR_END = 'end';
 
 		var STR_HOST = 'host';
@@ -94,7 +94,7 @@ AUI.add(
 						if (!instance.get('preventTransition')) {
 							instance._anim.set(
 								'to',
-								{ 
+								{
 									width: size.width,
 									height: size.height
 								}
@@ -117,7 +117,7 @@ AUI.add(
 		);
 
 		A.Plugin.SizeAnim = SizeAnim;
-	}, 
+	},
 	'',
 	{
 		requires: ['anim-easing', 'plugin', 'widget']

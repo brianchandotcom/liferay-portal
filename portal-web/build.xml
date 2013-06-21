@@ -596,6 +596,25 @@
 					</replacevalue>
 				</replace>
 
+				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/browser.html">
+					<replacetoken><![CDATA[oConnector.ResourceType		= GetUrlParam( 'Type' ) ;]]></replacetoken>
+					<replacevalue>
+						<![CDATA[
+							oConnector.ResourceType		= GetUrlParam( 'Type' );
+
+							oConnector.ResourceTypes	= GetUrlParam( 'Types' ).split( ',' );
+
+							if ( !oConnector.ResourceTypes[0] && !oConnector.ResourceType ) {
+								oConnector.ResourceTypes = ['Document', 'Page'];
+							}
+
+							if ( oConnector.ResourceTypes[0] && !oConnector.ResourceType ) {
+								oConnector.ResourceType = oConnector.ResourceTypes[0];
+							}
+						]]>
+					</replacevalue>
+				</replace>
+
 				<!-- frmfolders.html -->
 
 				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmfolders.html">
@@ -640,7 +659,7 @@
 
 				<replaceregexp file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmresourcetype.html"
 					match="var aTypes = \[\r?(\n)(\t*)(.)+\] ;"
-					replace="var aTypes = [\1\2['Document','Document'],\1\2['Page','Page']\1] ;"
+					replace="var aTypes = [\1\2['Document','Document'],\1\2['Page','Page'],\1\2['Attachment', 'Attachment']\1] ;"
 					flags="s"
 				/>
 
@@ -651,36 +670,41 @@
 				/>
 
 				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmresourcetype.html">
-					<replacetoken><![CDATA[var aTypes = []]></replacetoken>
-					<replacevalue>
-						<![CDATA[
-							var customTypes = [
-								['Attachment', 'Attachment']
-							];
-
-							var defaultTypes = [
-						]]>
-					</replacevalue>
-				</replace>
-
-				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmresourcetype.html">
 					<replacetoken><![CDATA[aTypes]]></replacetoken>
 					<replacevalue><![CDATA[defaultTypes]]></replacevalue>
 				</replace>
 
 				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmresourcetype.html">
-					<replacetoken><![CDATA[AddSelectOption( oCombo, defaultTypes[i][1], defaultTypes[i][0] ) ;]]></replacetoken>
+					<replacetoken><![CDATA[var oCombo = document.getElementById('cmbType') ;]]></replacetoken>
 					<replacevalue>
 						<![CDATA[
-								AddSelectOption( oCombo, defaultTypes[i][1], defaultTypes[i][0] ) ;
+						var inArray = function(item, array) {
+							var found = false;
+
+							if ( typeof array.indexOf == 'function' ) {
+								found = !!(array.indexOf(item) > -1);
+							}
+							else {
+								for ( var i = 0, len = array.length; i < len; i++ ) {
+									if ( array[ i ] === item ) {
+										found = true;
+
+										break;
+									}
+								}
 							}
 
-							var len = customTypes.length;
+							return found;
+						}
 
-							for ( i = 0; i < len; i++ ) {
-								if ( customTypes[i][0] == oConnector.ResourceType )
-									AddSelectOption( oCombo, customTypes[i][1], customTypes[i][0] ) ;
+						var oCombo = document.getElementById('cmbType') ;
 						]]>
+					</replacevalue>
+				</replace>
+
+				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmresourcetype.html">
+					<replacetoken><![CDATA[if ( oConnector.ShowAllTypes || defaultTypes[i][0] == oConnector.ResourceType )]]></replacetoken>
+					<replacevalue><![CDATA[if ( oConnector.ResourceType === defaultTypes[i][0] || inArray( defaultTypes[i][0], oConnector.ResourceTypes ) )]]>
 					</replacevalue>
 				</replace>
 

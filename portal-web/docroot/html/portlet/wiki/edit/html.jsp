@@ -18,6 +18,8 @@
 <%
 WikiPage wikiPage = (WikiPage)request.getAttribute("edit_page.jsp-wikiPage");
 
+String format = "html";
+
 String content = BeanParamUtil.getString(wikiPage, request, "content");
 %>
 

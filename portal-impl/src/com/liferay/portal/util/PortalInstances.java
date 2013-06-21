@@ -307,7 +307,12 @@ public class PortalInstances {
 
 			ps = con.prepareStatement(_GET_COMPANY_IDS);
 
-			ps.setString(1, currentShardName);
+			if (Validator.isNotNull(currentShardName)) {
+				ps.setString(1, currentShardName);
+			}
+			else {
+				ps.setString(1, PropsValues.SHARD_DEFAULT_NAME);
+			}
 
 			rs = ps.executeQuery();
 

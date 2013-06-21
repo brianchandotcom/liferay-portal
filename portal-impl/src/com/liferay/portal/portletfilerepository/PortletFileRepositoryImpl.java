@@ -86,7 +86,8 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			}
 			catch (IOException ioe) {
 				throw new SystemException(
-					"Unable to write temporary file", ioe);
+					"Unable to write temporary file " + file.getAbsolutePath(),
+					ioe);
 			}
 			finally {
 				FileUtil.delete(file);
@@ -168,10 +169,13 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 				serviceContext);
 		}
 		catch (IOException ioe) {
-			throw new SystemException("Unable to write temporary file", ioe);
+			throw new SystemException(
+				"Unable to write temporary file " + file.getAbsolutePath(),
+				ioe);
 		}
 		finally {
 			FileUtil.delete(file);
+
 			DLAppHelperThreadLocal.setEnabled(dlAppHelperEnabled);
 		}
 	}

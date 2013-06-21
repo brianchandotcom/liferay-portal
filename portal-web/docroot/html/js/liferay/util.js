@@ -1940,7 +1940,6 @@
 					'input[type=checkbox]'
 				);
 			}
-
 		},
 		['aui-base', 'liferay-util-list-fields']
 	);

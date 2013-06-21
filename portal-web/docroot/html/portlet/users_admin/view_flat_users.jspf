@@ -284,9 +284,10 @@ String searchContainerUserId = StringPool.BLANK;
 
 <aui:script>
 	var allRowIds = '<portlet:namespace />allRowIds';
-	var form = document.<portlet:namespace />fm;
 	var searchContainer = '#<portlet:namespace /><%= searchContainerUserId %>';
 
-	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />deactivate', searchContainer, form, allRowIds );
-	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />restore', searchContainer, form, allRowIds );
+	var form = document.<portlet:namespace />fm;
+
+	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />deactivate', searchContainer, form, allRowIds);
+	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />restore', searchContainer, form, allRowIds);
 </aui:script>

@@ -161,15 +161,16 @@ String searchContainerId = StringPool.BLANK;
 
 		<aui:script>
 			var allRowsIds = '<portlet:namespace />allRowIds';
-			var form = document.<portlet:namespace />fm;
 			var searchContainer = '#<portlet:namespace /><%= searchContainerId %>';
 
+			var form = document.<portlet:namespace />fm;
+
 			<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.DELETE) %>">
-				Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />delete', searchContainer, form, allRowsIds );
+				Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />delete', searchContainer, form, allRowsIds);
 			</c:if>
 
 			<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.EXPIRE) %>">
-				Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />expire', searchContainer, form, allRowsIds );
+				Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />expire', searchContainer, form, allRowsIds);
 			</c:if>
 
 			<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.DELETE) %>">

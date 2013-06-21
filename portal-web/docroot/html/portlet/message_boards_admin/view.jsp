@@ -677,15 +677,13 @@ String searchContainerThreadsId = StringPool.BLANK;
 
 <aui:script>
 	var allRowsIds = '<portlet:namespace />allRowIds';
-	var form = document.<portlet:namespace />fm1;
 	var seachContainerThread = '#<portlet:namespace /><%= searchContainerThreadsId %>';
 
+	var form = document.<portlet:namespace />fm1;
+
 	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />deleteCategory', '#<portlet:namespace /><%= searchContainerCategoriesId %>', document.<portlet:namespace />fm, allRowsIds);
-
 	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />delete', seachContainerThread, form, allRowsIds);
-
 	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />lockThread', seachContainerThread, form, allRowsIds);
-
 	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />unlockThread', seachContainerThread, form, allRowsIds);
 
 	Liferay.provide(

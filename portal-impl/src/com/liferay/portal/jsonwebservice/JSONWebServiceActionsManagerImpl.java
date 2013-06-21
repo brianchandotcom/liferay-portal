@@ -280,6 +280,29 @@ public class JSONWebServiceActionsManagerImpl
 	}
 
 	@Override
+	public int unregisterJSONWebServiceActions(Object actionObject) {
+		int count = 0;
+
+		Iterator<JSONWebServiceActionConfig> iterator =
+			_jsonWebServiceActionConfigs.iterator();
+
+		while (iterator.hasNext()) {
+			JSONWebServiceActionConfig jsonWebServiceActionConfig =
+				iterator.next();
+
+			if (actionObject.equals(
+					jsonWebServiceActionConfig.getActionObject())) {
+
+				iterator.remove();
+
+				count++;
+			}
+		}
+
+		return count;
+	}
+
+	@Override
 	public int unregisterJSONWebServiceActions(String contextPath) {
 		int count = 0;
 

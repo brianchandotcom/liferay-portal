@@ -15,6 +15,7 @@
 package com.liferay.portalweb.portal.util.liferayselenium;
 
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -449,10 +450,15 @@ public abstract class BaseSeleniumImpl
 
 	@Override
 	public void uploadCommonFile(String location, String value) {
-		super.type(
-			location,
-			_projectDir + "portal-web//test//functional//com//liferay//" +
-				"portalweb//dependencies//" + value);
+		String dependenciesDir =
+			"portal-web//test//functional//com//liferay//portalweb//" +
+				"dependencies//";
+
+		if (OSDetector.isWindows()) {
+			dependenciesDir = StringUtil.replace(dependenciesDir, "//", "\\");
+		}
+
+		super.type(location, _projectDir + dependenciesDir + value);
 	}
 
 	@Override

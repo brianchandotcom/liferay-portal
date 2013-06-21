@@ -25,17 +25,17 @@
 </tr>
 <tr>
 	<td>EDIT_WEB_CONTENT</td>
-	<td>//span[contains(@class,'lfr-icon-action-edit')]/a/img</td>
+	<td>//span[contains(@class,'lfr-icon-action-edit')]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SELECT_WEB_CONTENT</td>
-	<td>//span[contains(@class,'lfr-icon-action-configuration')]/a/img</td>
+	<td>//span[contains(@class,'lfr-icon-action-configuration')]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_WEB_CONTENT</td>
-	<td>//span[contains(@class,'lfr-icon-action-add')]/a/img</td>
+	<td>//span[contains(@class,'lfr-icon-action-add')]/a</td>
 	<td></td>
 </tr>
 <tr>

@@ -340,28 +340,13 @@
 		-webkit-box-sizing: content-box;
 	}
 
-	.export-import-choose-content {
-		margin-left: 55px !important;
-		margin-top: 20px !important;
-	}
-
-	.export-import-content {
-		background-color: #fafafa;
-		border-bottom: 1px solid #e4e4e4;
-		border-top: 1px solid #e4e4e4;
-		margin-bottom: 50px;
-	}
-
 	.file-selector {
 		display: block;
-		margin-top: 0.5em;
-		margin-bottom: 40px !important;
+		margin: 0.5em 0 1.5em;
 	}
 
 	.import-file-details {
-		padding-bottom: 14px;
-		padding-left: 20px;
-		padding-top: 14px;
+		margin: 1em 0;
 
 		dt {
 			clear: left;
@@ -381,14 +366,26 @@
 
 	.options-group {
 		margin-bottom: 40px;
+
+		.options {
+			background-color: #fafafa;
+			border-bottom: 1px solid #e4e4e4;
+			border-top: 1px solid #e4e4e4;
+			margin-bottom: 50px;
+		}
+
+		.select-options {
+			margin-left: 55px ;
+			margin-top: 20px;
+		}
 	}
 
 	.page-not-exportable {
 		color: #933;
 	}
 
-	.export-import-application {
-		background-color: #fafafa;
+	.portlet-list {
+		margin-top: 20px;
 	}
 
 	.selected-labels {
@@ -397,10 +394,6 @@
 		font-style: italic;
 		margin-left: 0.5em;
 		margin-right: 0.5em;
-	}
-
-	.portlet-list {
-		margin-top: 20px;
 	}
 
 	.selected-pages {

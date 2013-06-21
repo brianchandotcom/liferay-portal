@@ -1629,9 +1629,9 @@ public class OrganizationLocalServiceImpl
 		assetEntryLocalService.updateEntry(
 			userId, companyGroup.getGroupId(), null, null,
 			Organization.class.getName(), organization.getOrganizationId(),
-			null, 0, assetCategoryIds, assetTagNames, false, null, null, null,
-			null, organization.getName(), StringPool.BLANK, null, null, null, 0,
-			0, null, false);
+			organization.getUuid(), 0, assetCategoryIds, assetTagNames, false,
+			null, null, null, null, organization.getName(), StringPool.BLANK,
+			null, null, null, 0, 0, null, false);
 	}
 
 	/**

@@ -186,6 +186,27 @@ public class DB2DB extends BaseDB {
 		return sb.toString();
 	}
 
+	private void _reorgTable(Connection con, String tableName)
+		throws SQLException {
+
+		CallableStatement callStmt = null;
+
+		try {
+			String sql = "call sysproc.admin_cmd(?)";
+
+			callStmt = con.prepareCall(sql);
+
+			String param = "reorg table " + tableName;
+
+			callStmt.setString(1, param);
+
+			callStmt.execute();
+		}
+		finally {
+			DataAccess.cleanUp(callStmt);
+		}
+	}
+
 	private void _reorgTables(String[] templates) throws SQLException {
 		Set<String> tableNames = new HashSet<String>();
 
@@ -200,25 +221,16 @@ public class DB2DB extends BaseDB {
 		}
 
 		Connection con = null;
-		CallableStatement callStmt = null;
 
 		try {
 			con = DataAccess.getConnection();
 
 			for (String tableName : tableNames) {
-				String sql = "call sysproc.admin_cmd(?)";
-
-				callStmt = con.prepareCall(sql);
-
-				String param = "reorg table " + tableName;
-
-				callStmt.setString(1, param);
-
-				callStmt.execute();
+				_reorgTable(con, tableName);
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, callStmt);
+			DataAccess.cleanUp(con);
 		}
 	}
 

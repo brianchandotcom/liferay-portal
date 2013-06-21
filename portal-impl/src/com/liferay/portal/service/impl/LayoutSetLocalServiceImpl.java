@@ -173,11 +173,6 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			layoutSetPersistence.update(newLayoutSet);
 		}
 
-		// Counter
-
-		counterLocalService.reset(
-			LayoutLocalServiceImpl.getCounterName(groupId, privateLayout));
-
 		// Virtual host
 
 		try {

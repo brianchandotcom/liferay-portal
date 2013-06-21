@@ -415,9 +415,11 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				javaSource = false;
 			}
 
-			if (javaSource && hasUnusedVariable(fileName, trimmedLine)) {
+			if (javaSource && portalSource &&
+				hasUnusedVariable(fileName, trimmedLine)) {
+
 				processErrorMessage(
-					fileName, "Unused varibale: " + fileName + " " + lineCount);
+					fileName, "Unused variable: " + fileName + " " + lineCount);
 			}
 
 			if (!trimmedLine.equals("%>") && line.contains("%>") &&

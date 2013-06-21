@@ -17,6 +17,7 @@ package com.liferay.portal.lar;
 import com.liferay.portal.LARFileException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.DefaultConfigurationPortletDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportHelper;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
@@ -314,18 +315,29 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 								PortletLocalServiceUtil.getPortletById(
 									group.getCompanyId(), portletId);
 
-							if ((portlet.getPortletDataHandlerInstance() !=
-									null) &&
-								GetterUtil.getBoolean(
-									element.attributeValue("portlet-data"))) {
+							String portletDataHandlerClass =
+								portlet.getPortletDataHandlerClass();
 
-								manifestSummary.addDataPortlet(portlet);
-							}
+							if (portletDataHandlerClass != null) {
+								if (!portletDataHandlerClass.equals(
+										DefaultConfigurationPortletDataHandler.
+											class.getName()) &&
+									GetterUtil.getBoolean(
+										element.attributeValue(
+											"portlet-data"))) {
 
-							if (GetterUtil.getBoolean(
-									element.attributeValue("portlet-setup"))) {
+									manifestSummary.addDataPortlet(portlet);
+								}
 
-								manifestSummary.addSetupPortlet(portlet);
+								if (portletDataHandlerClass.equals(
+										DefaultConfigurationPortletDataHandler.
+											class.getName()) &&
+									GetterUtil.getBoolean(
+										element.attributeValue(
+											"portlet-setup"))) {
+
+									manifestSummary.addSetupPortlet(portlet);
+								}
 							}
 						}
 						catch (SystemException se) {

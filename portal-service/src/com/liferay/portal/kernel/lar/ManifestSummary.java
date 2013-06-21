@@ -52,7 +52,12 @@ public class ManifestSummary implements Serializable {
 	}
 
 	public void addDataPortlet(Portlet portlet) {
-		_dataPortlets.add(portlet);
+		String rootPortletId = portlet.getRootPortletId();
+
+		if (!_dataRootPortletIds.contains(rootPortletId)) {
+			_dataPortlets.add(portlet);
+			_dataRootPortletIds.add(rootPortletId);
+		}
 	}
 
 	public void addModelAdditionCount(
@@ -116,7 +121,12 @@ public class ManifestSummary implements Serializable {
 	}
 
 	public void addSetupPortlet(Portlet portlet) {
-		_setupPortlets.add(portlet);
+		String rootPortletId = portlet.getRootPortletId();
+
+		if (!_setupRootPortletIds.contains(rootPortletId)) {
+			_setupPortlets.add(portlet);
+			_setupRootPortletIds.add(rootPortletId);
+		}
 	}
 
 	public List<Portlet> getDataPortlets() {
@@ -259,6 +269,7 @@ public class ManifestSummary implements Serializable {
 	}
 
 	private List<Portlet> _dataPortlets = new ArrayList<Portlet>();
+	private Set<String> _dataRootPortletIds = new HashSet<String>();
 	private Date _exportDate;
 	private Set<String> _manifestSummaryKeys = new HashSet<String>();
 	private Map<String, LongWrapper> _modelAdditionCounters =
@@ -266,5 +277,6 @@ public class ManifestSummary implements Serializable {
 	private Map<String, LongWrapper> _modelDeletionCounters =
 		new HashMap<String, LongWrapper>();
 	private List<Portlet> _setupPortlets = new ArrayList<Portlet>();
+	private Set<String> _setupRootPortletIds = new HashSet<String>();
 
 }

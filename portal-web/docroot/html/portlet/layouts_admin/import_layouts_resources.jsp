@@ -217,7 +217,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 								<aui:input name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION %>" type="hidden" value="<%= true %>" />
 
 								<%
-								List<Portlet> setupPortlets = manifestSummary.getSetupPortlets();
+								List<Portlet> setupPortlets = ListUtil.sort(manifestSummary.getSetupPortlets(), new PortletTitleComparator(application, locale));
 
 								for (Portlet portlet : setupPortlets) {
 									PortletDataHandler portletDataHandler = portlet.getPortletDataHandlerInstance();
@@ -326,7 +326,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 							<%
 							Set<String> displayedControls = new HashSet<String>();
 
-							List<Portlet> dataPortlets = manifestSummary.getDataPortlets();
+							List<Portlet> dataPortlets = ListUtil.sort(manifestSummary.getDataPortlets(), new PortletTitleComparator(application, locale));
 
 							for (Portlet portlet : dataPortlets) {
 								String portletTitle = PortalUtil.getPortletTitle(portlet, application, locale);

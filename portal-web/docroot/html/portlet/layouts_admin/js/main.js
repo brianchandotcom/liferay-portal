@@ -813,6 +813,12 @@ AUI.add(
 							}
 						);
 
+						if (selectedConfiguration.length == 0) {
+							instance.byId('PORTLET_CONFIGURATION_' + portletId + 'Checkbox').set('checked', false);
+
+							instance.byId('showChangeConfiguration_' + portletId).hide();
+						}
+
 						instance._setLabels('configurationLink_' + portletId, 'selectedConfiguration_' + portletId, selectedConfiguration.join(', '));
 					},
 
@@ -834,6 +840,12 @@ AUI.add(
 								}
 							}
 						);
+
+						if (selectedContent.length == 0) {
+							instance.byId('PORTLET_DATA_' + portletId + 'Checkbox').set('checked', false);
+
+							instance.byId('showChangeContent_' + portletId).hide();
+						}
 
 						instance._setLabels('contentLink_' + portletId, 'selectedContent_' + portletId, selectedContent.join(', '));
 					},

@@ -45,9 +45,14 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
+import javax.portlet.ResourceRequest;
+import javax.portlet.filter.ActionRequestWrapper;
+import javax.portlet.filter.RenderRequestWrapper;
+import javax.portlet.filter.ResourceRequestWrapper;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -211,6 +216,69 @@ public class ActionUtil {
 		}
 
 		return title;
+	}
+
+	private static class ConfigurationActionRequest
+		extends ActionRequestWrapper {
+
+		public ConfigurationActionRequest(
+			ActionRequest actionRequest,
+			PortletPreferences portletPreferences) {
+
+			super(actionRequest);
+
+			_portletPreferences = portletPreferences;
+		}
+
+		@Override
+		public PortletPreferences getPreferences() {
+			return _portletPreferences;
+		}
+
+		private PortletPreferences _portletPreferences;
+
+	}
+
+	private static class ConfigurationRenderRequest
+		extends RenderRequestWrapper {
+
+		public ConfigurationRenderRequest(
+			RenderRequest renderRequest,
+			PortletPreferences portletPreferences) {
+
+			super(renderRequest);
+
+			_portletPreferences = portletPreferences;
+		}
+
+		@Override
+		public PortletPreferences getPreferences() {
+			return _portletPreferences;
+		}
+
+		private PortletPreferences _portletPreferences;
+
+	}
+
+	private static class ConfigurationResourceRequest
+		extends ResourceRequestWrapper {
+
+		public ConfigurationResourceRequest(
+			ResourceRequest resourceRequest,
+			PortletPreferences portletPreferences) {
+
+			super(resourceRequest);
+
+			_portletPreferences = portletPreferences;
+		}
+
+		@Override
+		public PortletPreferences getPreferences() {
+			return _portletPreferences;
+		}
+
+		private PortletPreferences _portletPreferences;
+
 	}
 
 }

@@ -366,10 +366,9 @@ public class JournalTemplateLocalServiceImpl
 
 	@Override
 	public List<JournalTemplate> getTemplates() throws SystemException {
-		List<DDMTemplate> ddmTemplates = ddmTemplateFinder.findByG_C_C_SC(
-			null, PortalUtil.getClassNameId(DDMStructure.class), 0,
-			PortalUtil.getClassNameId(JournalArticle.class), QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+		List<DDMTemplate> ddmTemplates = ddmTemplateFinder.findByG_SC(
+			null, PortalUtil.getClassNameId(JournalArticle.class),
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		return JournalUtil.toJournalTemplates(ddmTemplates);
 	}
@@ -537,17 +536,16 @@ public class JournalTemplateLocalServiceImpl
 			long groupId, int start, int end)
 		throws SystemException {
 
-		List<DDMTemplate> ddmTemplates = ddmTemplateFinder.findByG_C_C_SC(
-			groupId, PortalUtil.getClassNameId(DDMStructure.class), 0,
-			PortalUtil.getClassNameId(JournalArticle.class), start, end, null);
+		List<DDMTemplate> ddmTemplates = ddmTemplateFinder.findByG_SC(
+			groupId, PortalUtil.getClassNameId(JournalArticle.class), start,
+			end, null);
 
 		return JournalUtil.toJournalTemplates(ddmTemplates);
 	}
 
 	protected int doGetTemplatesCount(long groupId) throws SystemException {
-		return ddmTemplateFinder.countByG_C_C_SC(
-			groupId, PortalUtil.getClassNameId(DDMStructure.class), 0,
-			PortalUtil.getClassNameId(JournalArticle.class));
+		return ddmTemplateFinder.countByG_SC(
+			groupId, PortalUtil.getClassNameId(JournalArticle.class));
 	}
 
 	protected DDMTemplate fetchDDMTemplate(long groupId, String templateId)

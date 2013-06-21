@@ -395,7 +395,7 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 
 	/**
 	* Returns an ordered range of all the templates matching the group and
-	* structure class name ID.
+	* structure class name ID, including Generic Templates.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end -
@@ -425,6 +425,24 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _ddmTemplateService.getTemplatesByStructureClassNameId(groupId,
 			structureClassNameId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the number of templates matching the group and structure class
+	* name ID, including Generic Templates.
+	*
+	* @param groupId the primary key of the group
+	* @param structureClassNameId the primary key of the class name for the
+	template's related structure
+	* @return the number of matching templates
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public int getTemplatesByStructureClassNameIdCount(long groupId,
+		long structureClassNameId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _ddmTemplateService.getTemplatesByStructureClassNameIdCount(groupId,
+			structureClassNameId);
 	}
 
 	/**

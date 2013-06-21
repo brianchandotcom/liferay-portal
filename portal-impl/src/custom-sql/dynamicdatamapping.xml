@@ -73,23 +73,25 @@
 				DDMStructure.structureId DESC
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateFinder.countByG_C_C_SC">
+	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateFinder.countByG_C_SC">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT templateId) AS COUNT_VALUE
 			FROM
 				DDMTemplate
-			LEFT JOIN
-				DDMStructure ON
-					(DDMTemplate.classPK = DDMStructure.structureId)
 			WHERE
+				(groupId IN ([$GROUP_ID$])) AND
+				(classNameId = ?) AND
 				(
-					(DDMTemplate.groupId IN ([$GROUP_ID$])) AND
-					(DDMTemplate.classNameId = ?) AND
-					(DDMTemplate.classPK = ?)
-				) OR
-				(
-					(DDMStructure.classNameId = ?)
+					(classPK = 0) OR
+					(classPK IN (
+						SELECT 
+							DDMStructure.structureId
+						FROM
+							DDMStructure
+						WHERE
+							(DDMStructure.classNameId = ?)
+					))
 				)
 		]]>
 	</sql>
@@ -113,39 +115,25 @@
 				)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateFinder.findByG_SC">
+	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateFinder.findByG_C_SC">
 		<![CDATA[
 			SELECT
 				{DDMTemplate.*}
 			FROM
 				DDMTemplate
-			INNER JOIN
-				DDMStructure ON
-					(DDMTemplate.classPK = DDMStructure.structureId)
 			WHERE
-				(DDMTemplate.groupId = ?) AND
-				(DDMStructure.classNameId = ?)
-			ORDER BY
-				DDMTemplate.templateId DESC
-		]]>
-	</sql>
-	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateFinder.findByG_C_C_SC">
-		<![CDATA[
-			SELECT
-				{DDMTemplate.*}
-			FROM
-				DDMTemplate
-			LEFT JOIN
-				DDMStructure ON
-					(DDMTemplate.classPK = DDMStructure.structureId)
-			WHERE
+				(groupId IN ([$GROUP_ID$])) AND
+				(classNameId = ?) AND
 				(
-					(DDMTemplate.groupId IN ([$GROUP_ID$])) AND
-					(DDMTemplate.classNameId = ?) AND
-					(DDMTemplate.classPK = ?)
-				) OR
-				(
-					(DDMStructure.classNameId = ?)
+					(classPK = 0) OR
+					(classPK IN (
+						SELECT 
+							DDMStructure.structureId
+						FROM
+							DDMStructure
+						WHERE
+							(DDMStructure.classNameId = ?)
+					))
 				)
 			ORDER BY
 				DDMTemplate.templateId DESC

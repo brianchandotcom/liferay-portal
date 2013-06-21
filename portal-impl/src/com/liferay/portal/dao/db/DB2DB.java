@@ -80,6 +80,8 @@ public class DB2DB extends BaseDB {
 			String[] alterSqls = StringUtil.split(sql, CharPool.SEMICOLON);
 
 			for (String alterSql : alterSqls) {
+				alterSql = StringUtil.trim(alterSql);
+
 				runSQL(alterSql);
 			}
 		}

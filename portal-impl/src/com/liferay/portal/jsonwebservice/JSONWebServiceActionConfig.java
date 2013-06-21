@@ -117,6 +117,11 @@ public class JSONWebServiceActionConfig
 	}
 
 	@Override
+	public Object getActionObject() {
+		return _actionObject;
+	}
+
+	@Override
 	public String getContextPath() {
 		return _contextPath;
 	}

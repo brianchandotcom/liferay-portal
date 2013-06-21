@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.model.LayoutTemplate;
 import com.liferay.portal.service.LayoutTemplateLocalServiceUtil;
+import com.liferay.portal.util.WebKeys;
 
 import java.util.HashMap;
 import java.util.List;
@@ -93,6 +94,9 @@ public class LayoutTemplateHotDeployListener extends BaseHotDeployListener {
 				hotDeployEvent.getPluginPackage());
 
 		_layoutTemplates.put(servletContextName, layoutTemplates);
+
+		servletContext.setAttribute(
+			WebKeys.PLUGIN_LAYOUT_TEMPLATES, layoutTemplates);
 
 		if (_log.isInfoEnabled()) {
 			if (layoutTemplates.size() == 1) {

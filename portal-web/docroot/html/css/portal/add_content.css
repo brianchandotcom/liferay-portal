@@ -43,6 +43,12 @@
 				font-size: 1em;
 				line-height: 1.5em;
 			}
+
+			.lfr-page-layouts {
+				.layout-template-entry {
+					margin-left: 10px;
+				}
+			}
 	    }
 
 		.accordion-inner {

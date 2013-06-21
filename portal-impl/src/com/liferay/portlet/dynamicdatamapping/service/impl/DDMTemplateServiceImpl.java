@@ -246,15 +246,6 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			serviceContext);
 	}
 
-	@Override
-	public int countTemplatesByStructureClassNameId(
-			long groupId, long structureClassNameId, int start, int end,
-			OrderByComparator orderByComparator)
-		throws SystemException {
-
-		return ddmTemplateFinder.countByG_SC(groupId, structureClassNameId);
-	}
-
 	/**
 	 * Deletes the template and its resources.
 	 *
@@ -497,6 +488,25 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 
 		return ddmTemplateFinder.filterFindByG_SC(
 			groupId, structureClassNameId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the number of templates matching the group and structure class
+	 * name ID, including Generic Templates.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  structureClassNameId the primary key of the class name for the
+	 *         template's related structure
+	 * @return the number of matching templates
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int getTemplatesByStructureClassNameIdCount(
+			long groupId, long structureClassNameId)
+		throws SystemException {
+
+		return ddmTemplateFinder.filterCountByG_SC(
+			groupId, structureClassNameId);
 	}
 
 	/**

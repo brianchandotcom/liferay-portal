@@ -119,9 +119,9 @@ String strutsAction = ParamUtil.getString(request, "struts_action");
 		Liferay.Util.openDDMPortlet(
 			{
 				basePortletURL: '<%= PortletURLFactoryUtil.create(request, PortletKeys.DYNAMIC_DATA_MAPPING, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
-				classNameId: '<%= PortalUtil.getClassNameId(JournalArticle.class) %>',
+				classNameId: '<%= PortalUtil.getClassNameId(DDMStructure.class) %>',
 				dialog: {
-					width: 820
+					destroyOnHide: true
 				},
 				groupId: <%= scopeGroupId %>,
 				refererPortletName: '<%= PortletKeys.JOURNAL %>',

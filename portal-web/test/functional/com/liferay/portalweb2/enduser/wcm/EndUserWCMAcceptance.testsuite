@@ -13,5 +13,7 @@
 
 	<execute test-case="PGAssetpublisherWebcontentAcceptance" />
 
+	<execute test-case="PGWebcontentdisplayAcceptance" />
+
 	<execute test-case="DockbarAcceptance" />
 </definition>

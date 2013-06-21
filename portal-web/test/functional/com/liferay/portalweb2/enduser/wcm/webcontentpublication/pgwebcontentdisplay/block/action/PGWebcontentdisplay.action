@@ -1,10 +1,10 @@
 <definition>
-	<command name="click">
+	<command name="assertClick">
 		<case locator-key1="ADD_WEB_CONTENT">
-			<execute function="Click#clickAtAndWait" />
+			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 		<case locator-key1="EDIT_WEB_CONTENT">
-			<execute function="Click#clickAtAndWait" />
+			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 	</command>
 </definition>

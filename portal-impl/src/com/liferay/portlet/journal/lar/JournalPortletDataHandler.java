@@ -98,7 +98,10 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 				NAMESPACE, "web-content", true, false,
 				new PortletDataHandlerControl[] {
 					new PortletDataHandlerBoolean(
-						NAMESPACE, "referenced-content")
+						NAMESPACE, "referenced-content"),
+					new PortletDataHandlerBoolean(
+						NAMESPACE, "version-history",
+						PropsValues.JOURNAL_PUBLISH_VERSION_HISTORY_BY_DEFAULT)
 				},
 				JournalArticle.class.getName()),
 			new PortletDataHandlerBoolean(
@@ -106,10 +109,7 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 				DDMStructure.class.getName(), JournalArticle.class.getName()),
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "feeds", true, false, null,
-				JournalFeed.class.getName()),
-			new PortletDataHandlerBoolean(
-				NAMESPACE, "version-history",
-				PropsValues.JOURNAL_PUBLISH_VERSION_HISTORY_BY_DEFAULT));
+				JournalFeed.class.getName()));
 		setPublishToLiveByDefault(
 			PropsValues.JOURNAL_PUBLISH_TO_LIVE_BY_DEFAULT);
 	}

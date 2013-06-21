@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
+import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -70,13 +71,15 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		setDataPortletPreferences("rootFolderId");
 		setExportControls(
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "documents", true, false, null,
+				NAMESPACE, "documents", true, false,
+				new PortletDataHandlerControl[] {
+					new PortletDataHandlerBoolean(
+						NAMESPACE, "previews-and-thumbnails")
+				},
 				FileEntry.class.getName()),
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "shortcuts", true, false, null,
-				DLFileShortcut.class.getName()),
-			new PortletDataHandlerBoolean(
-				NAMESPACE, "previews-and-thumbnails"));
+				DLFileShortcut.class.getName()));
 		setPublishToLiveByDefault(PropsValues.DL_PUBLISH_TO_LIVE_BY_DEFAULT);
 	}
 

@@ -81,11 +81,13 @@ import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetCategoryUtil;
 import com.liferay.portlet.asset.service.persistence.AssetVocabularyUtil;
 import com.liferay.portlet.assetpublisher.util.AssetPublisher;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.expando.model.ExpandoColumn;
+import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
@@ -1616,6 +1618,15 @@ public class PortletExporter {
 		javax.portlet.PortletPreferences jxPreferences =
 			PortletPreferencesFactoryUtil.fromDefaultXML(xml);
 
+		String anyAssetTypeClassName = StringPool.BLANK;
+
+		long anyAssetType = GetterUtil.getLong(
+			jxPreferences.getValue("anyAssetType", null));
+
+		if (anyAssetType > 0) {
+			anyAssetTypeClassName = PortalUtil.getClassName(anyAssetType);
+		}
+
 		Enumeration<String> enu = jxPreferences.getNames();
 
 		while (enu.hasMoreElements()) {
@@ -1630,7 +1641,10 @@ public class PortletExporter {
 			else if (name.equals(
 						"anyClassTypeDLFileEntryAssetRendererFactory") ||
 					 name.equals(
-						"classTypeIdsDLFileEntryAssetRendererFactory")) {
+						"classTypeIdsDLFileEntryAssetRendererFactory") ||
+					 (name.equals("classTypeIds") &&
+					  anyAssetTypeClassName.equals(
+						  DLFileEntry.class.getName()))) {
 
 				updatePreferencesClassPKs(
 					jxPreferences, name, DLFileEntryType.class.getName());
@@ -1639,7 +1653,9 @@ public class PortletExporter {
 						"anyClassTypeJournalArticleAssetRendererFactory") ||
 					 name.equals(
 						"classTypeIdsJournalArticleAssetRendererFactory") ||
-					 name.equals("classTypeIds")) {
+					 (name.equals("classTypeIds") &&
+					  anyAssetTypeClassName.equals(
+						  JournalArticle.class.getName()))) {
 
 				updatePreferencesClassPKs(
 					jxPreferences, name, DDMStructure.class.getName());

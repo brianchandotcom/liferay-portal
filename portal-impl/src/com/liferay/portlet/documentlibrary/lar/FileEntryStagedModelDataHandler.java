@@ -517,6 +517,9 @@ public class FileEntryStagedModelDataHandler
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, dlFileEntryType);
 
+		fileEntryElement.addAttribute(
+			"fileEntryTypeUuid", dlFileEntryType.getUuid());
+
 		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
 
 		for (DDMStructure ddmStructure : ddmStructures) {

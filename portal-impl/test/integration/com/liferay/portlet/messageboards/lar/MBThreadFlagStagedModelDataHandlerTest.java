@@ -15,6 +15,7 @@
 package com.liferay.portlet.messageboards.lar;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
@@ -79,6 +80,30 @@ public class MBThreadFlagStagedModelDataHandlerTest
 	}
 
 	@Override
+	protected void deleteStagedModel(
+			StagedModel stagedModel,
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		MBThreadFlagLocalServiceUtil.deleteThreadFlag(
+			(MBThreadFlag)stagedModel);
+
+		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
+			MBMessage.class.getSimpleName());
+
+		MBMessage message = (MBMessage)dependentStagedModels.get(0);
+
+		MBMessageLocalServiceUtil.deleteMessage(message);
+	}
+
+	@Override
+	protected StagedModelType[] getDeletionSystemEventStagedModelTypes() {
+		MBPortletDataHandler mbPortletDataHandler = new MBPortletDataHandler();
+
+		return mbPortletDataHandler.getDeletionSystemEventStagedModelTypes();
+	}
+
 	@Override
 	protected StagedModel getStagedModel(String uuid, Group group)
 		throws SystemException {
@@ -90,6 +115,25 @@ public class MBThreadFlagStagedModelDataHandlerTest
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
 		return MBThreadFlag.class;
+	}
+
+	@Override
+	protected void validateDeletion(
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
+			MBMessage.class.getSimpleName());
+
+		Assert.assertEquals(1, dependentStagedModels.size());
+
+		MBMessage message = (MBMessage)dependentStagedModels.get(0);
+
+		message = MBMessageLocalServiceUtil.fetchMBMessageByUuidAndGroupId(
+			message.getUuid(), group.getGroupId());
+
+		Assert.assertNull("Not Deleted: " + MBMessage.class, message);
 	}
 
 	@Override
@@ -116,18 +160,23 @@ public class MBThreadFlagStagedModelDataHandlerTest
 			Group group)
 		throws Exception {
 
-		validateImport(dependentStagedModelsMap, group);
+		super.validateImport(stagedModel, dependentStagedModelsMap, group);
 
-		MBThreadFlag threadFlag = (MBThreadFlag)stagedModel;
+		MBThreadFlag importedThreadFlag = (MBThreadFlag)getStagedModel(
+			stagedModel.getUuid(), group);
 
 		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
 			MBMessage.class.getSimpleName());
 
 		MBMessage message = (MBMessage)dependentStagedModels.get(0);
 
+		MBMessage importedMessage =
+			MBMessageLocalServiceUtil.fetchMBMessageByUuidAndGroupId(
+				message.getUuid(), group.getGroupId());
+
 		Assert.assertTrue(
 			MBThreadFlagLocalServiceUtil.hasThreadFlag(
-				threadFlag.getUserId(), message.getThread()));
+				importedThreadFlag.getUserId(), importedMessage.getThread()));
 	}
 
 }

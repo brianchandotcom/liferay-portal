@@ -16,6 +16,7 @@ package com.liferay.portlet.layoutsadmin.lar;
 
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
@@ -28,7 +29,6 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
@@ -51,7 +51,6 @@ import org.junit.runner.RunWith;
 @ExecutionTestListeners(
 	listeners = {
 		MainServletExecutionTestListener.class,
-		PersistenceExecutionTestListener.class,
 		TransactionalExecutionTestListener.class
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
@@ -257,6 +256,24 @@ public class LayoutStagedModelDataHandlerTest
 	}
 
 	@Override
+	protected void validateDeletion(
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
+			Layout.class.getSimpleName());
+
+		Assert.assertEquals(1, dependentStagedModels.size());
+
+		Layout layout = (Layout)dependentStagedModels.get(0);
+
+		layout = (Layout)getStagedModel(layout.getUuid(), group);
+
+		Assert.assertNull("Not Deleted: " + Layout.class, layout);
+	}
+
+	@Override
 	protected void validateImport(
 			Map<String, List<StagedModel>> dependentStagedModelsMap,
 			Group group)
@@ -267,20 +284,14 @@ public class LayoutStagedModelDataHandlerTest
 
 		Assert.assertEquals(1, dependentStagedModels.size());
 
-		Layout parentLayout = (Layout)dependentStagedModels.get(0);
+		dependentStagedModels = dependentStagedModelsMap.get(
+			LayoutFriendlyURL.class.getSimpleName());
 
-		LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-			parentLayout.getUuid(), group.getGroupId(), false);
-
-		List<LayoutFriendlyURL> parentLayoutFriendlyURLs =
-			LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLs(
-				parentLayout.getPlid());
-
-		LayoutFriendlyURL parentLayoutFriendlyURL =
-			parentLayoutFriendlyURLs.get(0);
-
-		LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLByUuidAndGroupId(
-			parentLayoutFriendlyURL.getUuid(), group.getGroupId());
+		for (StagedModel stagedModel : dependentStagedModels) {
+			LayoutFriendlyURLLocalServiceUtil.
+				getLayoutFriendlyURLByUuidAndGroupId(
+					stagedModel.getUuid(), group.getGroupId());
+		}
 	}
 
 }

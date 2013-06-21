@@ -15,6 +15,7 @@
 package com.liferay.portlet.layoutprototypes.lar;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
@@ -96,6 +97,14 @@ public class LayoutPrototypeStagedModelDataHandlerTest
 	}
 
 	@Override
+	protected StagedModelType[] getDeletionSystemEventStagedModelTypes() {
+		LayoutPrototypePortletDataHandler layoutPrototypePortletDataHandler =
+			new LayoutPrototypePortletDataHandler();
+
+		return layoutPrototypePortletDataHandler.
+			getDeletionSystemEventStagedModelTypes();
+	}
+
 	@Override
 	protected StagedModel getStagedModel(String uuid, Group group)
 		throws SystemException {
@@ -107,6 +116,41 @@ public class LayoutPrototypeStagedModelDataHandlerTest
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
 		return LayoutPrototype.class;
+	}
+
+	@Override
+	protected void validateDeletion(
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
+			Layout.class.getSimpleName());
+
+		Assert.assertEquals(1, dependentStagedModels.size());
+
+		Layout layout = (Layout)dependentStagedModels.get(0);
+
+		layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+			layout.getUuid(), group.getGroupId(), layout.isPrivateLayout());
+
+		Assert.assertNull("Not Deleted: " + Layout.class, layout);
+
+		dependentStagedModels = dependentStagedModelsMap.get(
+			LayoutFriendlyURL.class.getSimpleName());
+
+		Assert.assertEquals(1, dependentStagedModels.size());
+
+		LayoutFriendlyURL layoutFriendlyURL =
+			(LayoutFriendlyURL)dependentStagedModels.get(0);
+
+		layoutFriendlyURL =
+			LayoutFriendlyURLLocalServiceUtil.
+				fetchLayoutFriendlyURLByUuidAndGroupId(
+					layoutFriendlyURL.getUuid(), group.getGroupId());
+
+		Assert.assertNull(
+			"Not Deleted: " + LayoutFriendlyURL.class, layoutFriendlyURL);
 	}
 
 	@Override

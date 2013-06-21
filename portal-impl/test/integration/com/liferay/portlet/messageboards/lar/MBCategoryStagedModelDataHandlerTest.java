@@ -15,6 +15,7 @@
 package com.liferay.portlet.messageboards.lar;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
@@ -77,6 +78,29 @@ public class MBCategoryStagedModelDataHandlerTest
 	}
 
 	@Override
+	protected void deleteStagedModel(
+			StagedModel stagedModel,
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		MBCategoryLocalServiceUtil.deleteCategory((MBCategory)stagedModel);
+
+		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
+			MBCategory.class.getSimpleName());
+
+		MBCategory category = (MBCategory)dependentStagedModels.get(0);
+
+		MBCategoryLocalServiceUtil.deleteCategory(category);
+	}
+
+	@Override
+	protected StagedModelType[] getDeletionSystemEventStagedModelTypes() {
+		MBPortletDataHandler mbPortletDataHandler = new MBPortletDataHandler();
+
+		return mbPortletDataHandler.getDeletionSystemEventStagedModelTypes();
+	}
+
 	@Override
 	protected StagedModel getStagedModel(String uuid, Group group)
 		throws SystemException {
@@ -88,6 +112,24 @@ public class MBCategoryStagedModelDataHandlerTest
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
 		return MBCategory.class;
+	}
+
+	@Override
+	protected void validateDeletion(
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
+			MBCategory.class.getSimpleName());
+
+		Assert.assertEquals(1, dependentStagedModels.size());
+
+		MBCategory category = (MBCategory)dependentStagedModels.get(0);
+
+		category = (MBCategory)getStagedModel(category.getUuid(), group);
+
+		Assert.assertNull("Not Deleted: " + MBCategory.class, category);
 	}
 
 	@Override

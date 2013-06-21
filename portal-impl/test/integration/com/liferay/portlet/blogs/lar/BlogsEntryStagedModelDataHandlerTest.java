@@ -15,6 +15,7 @@
 package com.liferay.portlet.blogs.lar;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.lar.BaseWorkflowedStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
@@ -67,6 +68,24 @@ public class BlogsEntryStagedModelDataHandlerTest
 			BlogsTestUtil.addEntry(TestPropsValues.getUserId(), group, false));
 
 		return stagedModels;
+	}
+
+	@Override
+	protected void deleteStagedModel(
+			StagedModel stagedModel,
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		BlogsEntryLocalServiceUtil.deleteEntry((BlogsEntry)stagedModel);
+	}
+
+	@Override
+	protected StagedModelType[] getDeletionSystemEventStagedModelTypes() {
+		BlogsPortletDataHandler blogsPortletDataHandler =
+			new BlogsPortletDataHandler();
+
+		return blogsPortletDataHandler.getDeletionSystemEventStagedModelTypes();
 	}
 
 	@Override

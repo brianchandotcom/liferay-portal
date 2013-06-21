@@ -88,7 +88,7 @@ public class RepositoryStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected StagedModelType[] getDeletionSystemEventModelTypes() {
+	protected StagedModelType[] getDeletionSystemEventStagedModelTypes() {
 		return new StagedModelType[] {new StagedModelType(Repository.class)};
 	}
 

@@ -97,6 +97,10 @@
 		overflow: visible;
 		padding: 5px;
 		position: relative;
+
+		.lfr-tag-selector-input {
+			margin-bottom: 0;
+		}
 	}
 }
 

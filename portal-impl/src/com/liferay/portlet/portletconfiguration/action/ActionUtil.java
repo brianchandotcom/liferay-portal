@@ -63,6 +63,19 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ActionUtil {
 
+	public static PortletPreferences getLayoutPortletSetup(
+			PortletRequest portletRequest, Portlet portlet)
+		throws SystemException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		return PortletPreferencesFactoryUtil.getLayoutPortletSetup(
+			layout, portlet.getPortletId());
+	}
+
 	public static void getLayoutPublicRenderParameters(
 			PortletRequest portletRequest)
 		throws Exception {

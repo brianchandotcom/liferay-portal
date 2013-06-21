@@ -30,272 +30,330 @@ import com.liferay.portal.security.permission.PermissionChecker;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
 
-
 /**
- * @author  Neil Griffin
- * @author 	Kyle Stiemann
+ * @author Kyle Stiemann
  */
 public class FileEntryWrapper implements FileEntry, ModelWrapper<FileEntry> {
 
-	private static final long serialVersionUID = 6851314478796948660L;
-	FileEntry wrappedFileEntry;
-
 	public FileEntryWrapper(FileEntry fileEntry) {
-		wrappedFileEntry = fileEntry;
+		_fileEntry = fileEntry;
 	}
 
 	@Override
-	public java.lang.Object clone() {
-		return new FileEntryWrapper((FileEntry)wrappedFileEntry.clone());
+	public Map<String, Serializable> getAttributes() {
+		return _fileEntry.getAttributes();
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _fileEntry.getCompanyId();
 	}
 	
 	@Override
-	public int hashCode() {
-		return wrappedFileEntry.hashCode();
-	}
-
-	public boolean containsPermission(PermissionChecker permissionChecker, String actionId) throws PortalException,
-		SystemException {
-		return wrappedFileEntry.containsPermission(permissionChecker, actionId);
-	}
-
-	public boolean hasLock() {
-		return wrappedFileEntry.hasLock();
-	}
-
-	public FileEntry toEscapedModel() {
-		return wrappedFileEntry.toEscapedModel();
-	}
-
-	public boolean isSupportsMetadata() {
-		return wrappedFileEntry.isSupportsMetadata();
-	}
-
-	public Map<String, Serializable> getAttributes() {
-		return wrappedFileEntry.getAttributes();
-	}
-
-	public long getCompanyId() {
-		return wrappedFileEntry.getCompanyId();
-	}
-
 	public void setCompanyId(long companyId) {
-		wrappedFileEntry.setCompanyId(companyId);
-	}
-
-	public InputStream getContentStream() throws PortalException, SystemException {
-		return wrappedFileEntry.getContentStream();
-	}
-
-	public InputStream getContentStream(String version) throws PortalException, SystemException {
-		return wrappedFileEntry.getContentStream();
-	}
-
-	public Date getCreateDate() {
-		return wrappedFileEntry.getCreateDate();
-	}
-
-	public void setCreateDate(Date date) {
-		wrappedFileEntry.setCreateDate(date);
-	}
-
-	public String getDescription() {
-		return wrappedFileEntry.getDescription();
-	}
-
-	public ExpandoBridge getExpandoBridge() {
-		return wrappedFileEntry.getExpandoBridge();
-	}
-
-	public String getExtension() {
-		return wrappedFileEntry.getExtension();
-	}
-
-	public long getFileEntryId() {
-		return wrappedFileEntry.getFileEntryId();
-	}
-
-	public FileVersion getFileVersion() throws PortalException, SystemException {
-		return wrappedFileEntry.getFileVersion();
-	}
-
-	public FileVersion getFileVersion(String version) throws PortalException, SystemException {
-		return wrappedFileEntry.getFileVersion();
-	}
-
-	public List<FileVersion> getFileVersions(int status) throws SystemException {
-		return wrappedFileEntry.getFileVersions(status);
-	}
-
-	public Folder getFolder() {
-		return wrappedFileEntry.getFolder();
-	}
-
-	public long getFolderId() {
-		return wrappedFileEntry.getFolderId();
-	}
-
-	public boolean isSupportsLocking() {
-		return wrappedFileEntry.isSupportsLocking();
-	}
-
-	public long getGroupId() {
-		return wrappedFileEntry.getGroupId();
-	}
-
-	public void setGroupId(long groupId) {
-		wrappedFileEntry.setGroupId(groupId);
-	}
-
-	public String getIcon() {
-		return wrappedFileEntry.getIcon();
-	}
-
-	public boolean isEscapedModel() {
-		return wrappedFileEntry.isEscapedModel();
-	}
-
-	public boolean isSupportsSocial() {
-		return wrappedFileEntry.isSupportsSocial();
-	}
-
-	public FileVersion getLatestFileVersion() throws PortalException, SystemException {
-		return wrappedFileEntry.getLatestFileVersion();
-	}
-
-	public Lock getLock() {
-		return wrappedFileEntry.getLock();
-	}
-
-	public String getMimeType() {
-		return wrappedFileEntry.getMimeType();
-	}
-
-	public String getMimeType(String version) {
-		return wrappedFileEntry.getMimeType(version);
-	}
-
-	public Object getModel() {
-		return wrappedFileEntry.getModel();
-	}
-
-	public Class<?> getModelClass() {
-		return wrappedFileEntry.getModelClass();
-	}
-
-	public String getModelClassName() {
-		return wrappedFileEntry.getModelClassName();
-	}
-
-	public Date getModifiedDate() {
-		return wrappedFileEntry.getModifiedDate();
-	}
-
-	public void setModifiedDate(Date date) {
-		wrappedFileEntry.setModifiedDate(date);
-	}
-
-	public long getPrimaryKey() {
-		return wrappedFileEntry.getPrimaryKey();
-	}
-
-	public Serializable getPrimaryKeyObj() {
-		return wrappedFileEntry.getPrimaryKeyObj();
-	}
-
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		wrappedFileEntry.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	public int getReadCount() {
-		return wrappedFileEntry.getReadCount();
-	}
-
-	public long getRepositoryId() {
-		return wrappedFileEntry.getRepositoryId();
-	}
-
-	public long getSize() {
-		return wrappedFileEntry.getSize();
-	}
-
-	public boolean isCheckedOut() {
-		return wrappedFileEntry.isCheckedOut();
-	}
-
-	public String getTitle() {
-		return wrappedFileEntry.getTitle();
-	}
-
-	public long getUserId() {
-		return wrappedFileEntry.getUserId();
-	}
-
-	public void setUserId(long userId) {
-		wrappedFileEntry.setUserId(userId);
-	}
-
-	public String getUserName() {
-		return wrappedFileEntry.getUserName();
-	}
-
-	public void setUserName(String userName) {
-		wrappedFileEntry.setUserName(userName);
-	}
-
-	public String getUserUuid() throws SystemException {
-		return wrappedFileEntry.getUserUuid();
-	}
-
-	public void setUserUuid(String userUuid) {
-		wrappedFileEntry.setUserUuid(userUuid);
-	}
-
-	public String getUuid() {
-		return wrappedFileEntry.getUuid();
-	}
-
-	public String getVersion() {
-		return wrappedFileEntry.getVersion();
-	}
-
-	public long getVersionUserId() {
-		return wrappedFileEntry.getVersionUserId();
-	}
-
-	public String getVersionUserName() {
-		return wrappedFileEntry.getVersionUserName();
-	}
-
-	public String getVersionUserUuid() throws SystemException {
-		return wrappedFileEntry.getVersionUserUuid();
-	}
-
-	public FileEntry getWrappedModel() {
-		return wrappedFileEntry;
-	}
-
-	public boolean isDefaultRepository() {
-		return wrappedFileEntry.isDefaultRepository();
+		_fileEntry.setCompanyId(companyId);
 	}
 
 	@Override
-	public FileEntry toUnescapedModel() {
-		// TODO Auto-generated method stub
-		return wrappedFileEntry.toUnescapedModel();
+	public InputStream getContentStream() throws PortalException,
+			SystemException {
+		return _fileEntry.getContentStream();
 	}
 
+	@Override
+	public InputStream getContentStream(String version) throws PortalException,
+			SystemException {
+		return _fileEntry.getContentStream();
+	}
+
+	@Override
+	public Date getCreateDate() {
+		return _fileEntry.getCreateDate();
+	}
+	
+	@Override
+	public void setCreateDate(Date date) {
+		_fileEntry.setCreateDate(date);
+	}
+
+	@Override
+	public String getDescription() {
+		return _fileEntry.getDescription();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _fileEntry.getExpandoBridge();
+	}
+
+	@Override
+	public String getExtension() {
+		return _fileEntry.getExtension();
+	}
+
+	@Override
+	public long getFileEntryId() {
+		return _fileEntry.getFileEntryId();
+	}
+
+	@Override
+	public FileVersion getFileVersion() throws PortalException, SystemException {
+		return _fileEntry.getFileVersion();
+	}
+
+	@Override
+	public FileVersion getFileVersion(String version) throws PortalException,
+			SystemException {
+		return _fileEntry.getFileVersion();
+	}
+
+	@Override
+	public List<FileVersion> getFileVersions(int status) throws SystemException {
+		return _fileEntry.getFileVersions(status);
+	}
+
+	@Override
+	public Folder getFolder() {
+		return _fileEntry.getFolder();
+	}
+
+	@Override
+	public long getFolderId() {
+		return _fileEntry.getFolderId();
+	}
+
+	@Override
+	public long getGroupId() {
+		return _fileEntry.getGroupId();
+	}
+	
+	@Override
+	public void setGroupId(long groupId) {
+		_fileEntry.setGroupId(groupId);
+	}
+
+	@Override
+	public String getIcon() {
+		return _fileEntry.getIcon();
+	}
+
+	@Override
+	public FileVersion getLatestFileVersion() throws PortalException,
+			SystemException {
+		return _fileEntry.getLatestFileVersion();
+	}
+
+	@Override
+	public Lock getLock() {
+		return _fileEntry.getLock();
+	}
+
+	@Override
+	public String getMimeType() {
+		return _fileEntry.getMimeType();
+	}
+
+	@Override
+	public String getMimeType(String version) {
+		return _fileEntry.getMimeType(version);
+	}
+
+	@Override
+	public Object getModel() {
+		return _fileEntry.getModel();
+	}
+
+	@Override
+	public Class<?> getModelClass() {
+		return FileEntry.class;
+	}
+
+	@Override
+	public String getModelClassName() {
+		return FileEntry.class.getName();
+	}
+
+	@Override
+	public Date getModifiedDate() {
+		return _fileEntry.getModifiedDate();
+	}
+	
+	@Override
+	public void setModifiedDate(Date date) {
+		_fileEntry.setModifiedDate(date);
+	}
+
+	@Override
+	public long getPrimaryKey() {
+		return _fileEntry.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _fileEntry.getPrimaryKeyObj();
+	}
+	
+	@Override
+	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
+		_fileEntry.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	@Override
+	public int getReadCount() {
+		return _fileEntry.getReadCount();
+	}
+
+	@Override
+	public long getRepositoryId() {
+		return _fileEntry.getRepositoryId();
+	}
+
+	@Override
+	public long getSize() {
+		return _fileEntry.getSize();
+	}
+
+	@Override
+	public String getTitle() {
+		return _fileEntry.getTitle();
+	}
+
+	@Override
+	public long getUserId() {
+		return _fileEntry.getUserId();
+	}
+	
+	@Override
+	public void setUserId(long userId) {
+		_fileEntry.setUserId(userId);
+	}
+
+	@Override
+	public String getUserName() {
+		return _fileEntry.getUserName();
+	}
+	
+	@Override
+	public void setUserName(String userName) {
+		_fileEntry.setUserName(userName);
+	}
+
+	@Override
+	public String getUserUuid() throws SystemException {
+		return _fileEntry.getUserUuid();
+	}
+	
+	@Override
+	public void setUserUuid(String userUuid) {
+		_fileEntry.setUserUuid(userUuid);
+	}
+
+	@Override
+	public String getUuid() {
+		return _fileEntry.getUuid();
+	}
+	
 	@Override
 	public void setUuid(String uuid) {
-		//TODO
-		wrappedFileEntry.setUuid(uuid);
-		
+		_fileEntry.setUuid(uuid);
+	}
+
+	@Override
+	public String getVersion() {
+		return _fileEntry.getVersion();
+	}
+
+	@Override
+	public long getVersionUserId() {
+		return _fileEntry.getVersionUserId();
+	}
+
+	@Override
+	public String getVersionUserName() {
+		return _fileEntry.getVersionUserName();
+	}
+
+	@Override
+	public String getVersionUserUuid() throws SystemException {
+		return _fileEntry.getVersionUserUuid();
+	}
+
+	@Override
+	public FileEntry getWrappedModel() {
+		return _fileEntry;
+	}
+
+	@Override
+	public boolean hasLock() {
+		return _fileEntry.hasLock();
+	}
+
+	@Override
+	public boolean isCheckedOut() {
+		return _fileEntry.isCheckedOut();
+	}
+
+	@Override
+	public boolean isDefaultRepository() {
+		return _fileEntry.isDefaultRepository();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _fileEntry.isEscapedModel();
 	}
 
 	@Override
 	public boolean isManualCheckInRequired() {
-		// TODO Auto-generated method stub
-		return wrappedFileEntry.isManualCheckInRequired();
+		return _fileEntry.isManualCheckInRequired();
 	}
 
+	@Override
+	public boolean isSupportsLocking() {
+		return _fileEntry.isSupportsLocking();
+	}
+
+	@Override
+	public boolean isSupportsMetadata() {
+		return _fileEntry.isSupportsMetadata();
+	}
+
+	@Override
+	public boolean isSupportsSocial() {
+		return _fileEntry.isSupportsSocial();
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new FileEntryWrapper((FileEntry) _fileEntry.clone());
+	}
+
+	@Override
+	public boolean containsPermission(PermissionChecker permissionChecker,
+			String actionId) throws PortalException, SystemException {
+		return _fileEntry.containsPermission(permissionChecker, actionId);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		FileEntryWrapper other = (FileEntryWrapper) obj;
+		return _fileEntry.equals(other.getWrappedModel());
+	}
+	
+	@Override
+	public int hashCode() {
+		return _fileEntry.hashCode();
+	}
+	
+	@Override
+	public FileEntry toEscapedModel() {
+		return new FileEntryWrapper(_fileEntry.toEscapedModel());
+	}
+
+	@Override
+	public FileEntry toUnescapedModel() {
+		return new FileEntryWrapper(_fileEntry.toUnescapedModel());
+	}
+
+	FileEntry _fileEntry;
 }

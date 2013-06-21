@@ -140,7 +140,7 @@ public class ClusterableAdvice
 			}
 		}
 
-		if (servletContextName == null) {
+		if (Validator.isNull(servletContextName)) {
 			if (Validator.isNull(beanIdentifier)) {
 				return methodHandler.invoke(true);
 			}

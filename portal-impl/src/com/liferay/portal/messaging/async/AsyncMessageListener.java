@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.Validator;
 
 /**
@@ -31,10 +32,12 @@ public class AsyncMessageListener extends BaseMessageListener {
 	protected void doReceive(Message message) throws Exception {
 		String responseDestinationName = message.getResponseDestinationName();
 
-		Runnable runnable = (Runnable)message.getPayload();
+		MethodHandler methodHandler = (MethodHandler)message.getPayload();
+
+		AsyncInvokeThreadLocal.setEnabled(true);
 
 		try {
-			runnable.run();
+			methodHandler.invoke(this);
 		}
 		catch (RuntimeException re) {
 			if (Validator.isNotNull(responseDestinationName)) {
@@ -42,6 +45,9 @@ public class AsyncMessageListener extends BaseMessageListener {
 					_log.warn(re, re);
 				}
 			}
+		}
+		finally {
+			AsyncInvokeThreadLocal.setEnabled(false);
 		}
 
 		if (Validator.isNotNull(responseDestinationName)) {

@@ -15,15 +15,17 @@ Liferay.Language = {
 
 		var value = instance._cache[url];
 
-		var urlWithAuthToken = url;
+		var authUrl = url;
 
-		if (Liferay.authToken) {
-			urlWithAuthToken += '?p_auth=' + Liferay.authToken;
+		var authToken = Liferay.authToken;
+
+		if (authToken) {
+			authUrl = Liferay.Util.addParams('p_auth=' + authToken, url);
 		}
 
 		if (!value) {
 			AUI().use('io-base').io(
-				urlWithAuthToken,
+				authUrl,
 				{
 					on: {
 						complete: function(i, o) {

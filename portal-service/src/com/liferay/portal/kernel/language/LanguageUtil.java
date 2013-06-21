@@ -15,6 +15,8 @@
 package com.liferay.portal.kernel.language;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 import java.util.Locale;
@@ -268,6 +270,12 @@ public class LanguageUtil {
 
 	public static boolean isDuplicateLanguageCode(String languageCode) {
 		return getLanguage().isDuplicateLanguageCode(languageCode);
+	}
+
+	public static boolean isValidLanguageKey(Locale locale, String key) {
+		String value = getLanguage().get(locale, key, StringPool.BLANK);
+
+		return Validator.isNotNull(value);
 	}
 
 	public static void resetAvailableLocales(long companyId) {

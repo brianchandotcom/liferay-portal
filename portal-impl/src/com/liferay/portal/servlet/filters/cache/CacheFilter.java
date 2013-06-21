@@ -15,6 +15,7 @@
 package com.liferay.portal.servlet.filters.cache;
 
 import com.liferay.portal.NoSuchLayoutException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -39,6 +40,7 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypePortletConstants;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletConstants;
+import com.liferay.portal.security.auth.AuthTokenUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
@@ -418,6 +420,30 @@ public class CacheFilter extends BasePortalFilter {
 		request.setAttribute(SKIP_FILTER, Boolean.TRUE);
 
 		String key = getCacheKey(request);
+
+		String pAuth = request.getParameter("p_auth");
+
+		if (Validator.isNotNull(pAuth)) {
+			try {
+				if (PropsValues.AUTH_TOKEN_CHECK_ENABLED) {
+					AuthTokenUtil.check(request);
+				}
+			}
+			catch (PortalException pe) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Request is not cacheable " + key +
+							", invalid token received");
+				}
+
+				processFilter(
+					CacheFilter.class, request, response, filterChain);
+
+				return;
+			}
+
+			key = key.replace(pAuth.toUpperCase(), "VALID");
+		}
 
 		long companyId = PortalInstances.getCompanyId(request);
 

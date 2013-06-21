@@ -177,13 +177,19 @@ public class ActionUtil {
 	}
 
 	protected static PortletPreferences getPortletPreferences(
-			HttpServletRequest request, PortletPreferences portletPreferences)
+			HttpServletRequest request,
+			PortletPreferences portletConfigPreferences,
+			PortletPreferences portletPreferences)
 		throws PortalException, SystemException {
 
 		String portletResource = ParamUtil.getString(
 			request, "portletResource");
 
 		if (Validator.isNull(portletResource)) {
+			return portletConfigPreferences;
+		}
+
+		if (portletPreferences != null) {
 			return portletPreferences;
 		}
 

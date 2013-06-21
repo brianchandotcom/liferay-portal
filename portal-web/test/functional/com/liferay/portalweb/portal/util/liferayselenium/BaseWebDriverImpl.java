@@ -465,10 +465,16 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void uploadCommonFile(String location, String value) {
-		uploadFile(
-			location,
-			_projectDir + "portal-web//test//functional//com//liferay//" +
-				"portalweb//dependencies//" + value);
+		String dependenciesDir =
+			"portal-web//test//functional//com//liferay//portalweb//" +
+				"dependencies//";
+		String osName = System.getProperty("os.name");
+
+		if (osName.contains("Windows")) {
+			dependenciesDir = StringUtil.replace(dependenciesDir, "//", "\\");
+		}
+
+		uploadFile(location, _projectDir + dependenciesDir + value);
 	}
 
 	@Override

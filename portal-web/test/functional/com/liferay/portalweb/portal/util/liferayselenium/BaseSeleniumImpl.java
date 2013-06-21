@@ -449,10 +449,16 @@ public abstract class BaseSeleniumImpl
 
 	@Override
 	public void uploadCommonFile(String location, String value) {
-		super.type(
-			location,
-			_projectDir + "portal-web//test//functional//com//liferay//" +
-				"portalweb//dependencies//" + value);
+		String dependenciesDir =
+			"portal-web//test//functional//com//liferay//portalweb//" +
+				"dependencies//";
+		String osName = System.getProperty("os.name");
+
+		if (osName.contains("Windows")) {
+			dependenciesDir = StringUtil.replace(dependenciesDir, "//", "\\");
+		}
+
+		super.type(location, _projectDir + dependenciesDir + value);
 	}
 
 	@Override

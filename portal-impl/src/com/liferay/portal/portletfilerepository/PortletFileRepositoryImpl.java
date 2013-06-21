@@ -142,15 +142,6 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			return null;
 		}
 
-		byte[] bytes = null;
-
-		try {
-			bytes = FileUtil.getBytes(inputStream, -1, false);
-		}
-		catch (IOException ioe) {
-			return null;
-		}
-
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setAddGroupPermissions(true);
@@ -164,15 +155,23 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 		boolean dlAppHelperEnabled = DLAppHelperThreadLocal.isEnabled();
 
+		File file = null;
+
 		try {
 			DLAppHelperThreadLocal.setEnabled(false);
 
+			file = FileUtil.createTempFile(inputStream);
+
 			return DLAppLocalServiceUtil.addFileEntry(
 				userId, repository.getRepositoryId(), folderId, fileName,
-				mimeType, fileName, StringPool.BLANK, StringPool.BLANK, bytes,
+				mimeType, fileName, StringPool.BLANK, StringPool.BLANK, file,
 				serviceContext);
 		}
+		catch (IOException ioe) {
+			throw new SystemException("Unable to write temporary file", ioe);
+		}
 		finally {
+			FileUtil.delete(file);
 			DLAppHelperThreadLocal.setEnabled(dlAppHelperEnabled);
 		}
 	}

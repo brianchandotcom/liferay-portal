@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
@@ -150,6 +151,53 @@ public class ActionUtil {
 		portletRequest.setAttribute(
 			WebKeys.PUBLIC_RENDER_PARAMETER_CONFIGURATIONS,
 			publicRenderParameterConfigurations);
+	}
+
+	public static ActionRequest getWrappedActionRequest(
+			ActionRequest actionRequest, PortletPreferences portletPreferences)
+		throws PortalException, SystemException {
+
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			actionRequest);
+
+		portletPreferences = getPortletPreferences(
+			request, actionRequest.getPreferences(), portletPreferences);
+
+		return new ConfigurationActionRequest(
+			actionRequest, portletPreferences);
+	}
+
+	public static RenderRequest getWrappedRenderRequest(
+			RenderRequest renderRequest, PortletPreferences portletPreferences)
+		throws PortalException, SystemException {
+
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			renderRequest);
+
+		portletPreferences = getPortletPreferences(
+			request, renderRequest.getPreferences(), portletPreferences);
+
+		renderRequest = new ConfigurationRenderRequest(
+			renderRequest, portletPreferences);
+
+		request.setAttribute(
+			JavaConstants.JAVAX_PORTLET_REQUEST, renderRequest);
+
+		return renderRequest;
+	}
+
+	public static ResourceRequest getWrappedResourceRequest(
+			ResourceRequest resourceRequest, PortletPreferences portletPreferences)
+		throws PortalException, SystemException {
+
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			resourceRequest);
+
+		portletPreferences = getPortletPreferences(
+			request, resourceRequest.getPreferences(), portletPreferences);
+
+		return new ConfigurationResourceRequest(
+			resourceRequest, portletPreferences);
 	}
 
 	protected static Portlet getPortlet(PortletRequest portletRequest)

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.lar;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
@@ -80,14 +81,12 @@ public class DLFileEntryTypeStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected StagedModel getStagedModel(String uuid, Group group) {
-		try {
-			return DLFileEntryTypeLocalServiceUtil.
-				getDLFileEntryTypeByUuidAndGroupId(uuid, group.getGroupId());
-		}
-		catch (Exception e) {
-			return null;
-		}
+	@Override
+	protected StagedModel getStagedModel(String uuid, Group group)
+		throws SystemException {
+
+		return DLFileEntryTypeLocalServiceUtil.
+			fetchDLFileEntryTypeByUuidAndGroupId(uuid, group.getGroupId());
 	}
 
 	@Override

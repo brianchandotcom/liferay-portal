@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.layoutsetprototypes.lar;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -228,15 +229,12 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected StagedModel getStagedModel(String uuid, Group group) {
-		try {
-			return LayoutSetPrototypeLocalServiceUtil.
-				fetchLayoutSetPrototypeByUuidAndCompanyId(
-					uuid, group.getCompanyId());
-		}
-		catch (Exception e) {
-			return null;
-		}
+	protected StagedModel getStagedModel(String uuid, Group group)
+		throws SystemException {
+
+		return LayoutSetPrototypeLocalServiceUtil.
+			fetchLayoutSetPrototypeByUuidAndCompanyId(
+				uuid, group.getCompanyId());
 	}
 
 	@Override

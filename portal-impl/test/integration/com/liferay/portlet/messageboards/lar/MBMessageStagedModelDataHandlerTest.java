@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.messageboards.lar;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringPool;
@@ -103,14 +104,11 @@ public class MBMessageStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected StagedModel getStagedModel(String uuid, Group group) {
-		try {
-			return MBMessageLocalServiceUtil.getMBMessageByUuidAndGroupId(
-				uuid, group.getGroupId());
-		}
-		catch (Exception e) {
-			return null;
-		}
+	protected StagedModel getStagedModel(String uuid, Group group)
+		throws SystemException {
+
+		return MBMessageLocalServiceUtil.fetchMBMessageByUuidAndGroupId(
+			uuid, group.getGroupId());
 	}
 
 	@Override

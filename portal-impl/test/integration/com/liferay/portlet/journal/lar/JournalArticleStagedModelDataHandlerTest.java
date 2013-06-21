@@ -37,7 +37,6 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUt
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMStructureTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMTemplateTestUtil;
-import com.liferay.portlet.journal.NoSuchFolderException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleResource;
 import com.liferay.portlet.journal.model.JournalFolder;
@@ -252,14 +251,11 @@ public class JournalArticleStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected StagedModel getStagedModel(String uuid, Group group) {
-		try {
-			return JournalArticleLocalServiceUtil.
-				getJournalArticleByUuidAndGroupId(uuid, group.getGroupId());
-		}
-		catch (Exception e) {
-			return null;
-		}
+	protected StagedModel getStagedModel(String uuid, Group group)
+		throws SystemException {
+
+		return JournalArticleLocalServiceUtil.
+			fetchJournalArticleByUuidAndGroupId(uuid, group.getGroupId());
 	}
 
 	@Override
@@ -323,14 +319,11 @@ public class JournalArticleStagedModelDataHandlerTest
 
 		DDMStructure ddmStructure = (DDMStructure)dependentStagedModels.get(0);
 
-		try {
-			DDMStructureLocalServiceUtil.getDDMStructureByUuidAndGroupId(
+		ddmStructure =
+			DDMStructureLocalServiceUtil.fetchDDMStructureByUuidAndGroupId(
 				ddmStructure.getUuid(), group.getGroupId());
 
-			Assert.fail("Not Deleted: " + DDMStructure.class);
-		}
-		catch (NoSuchStructureException nsse) {
-		}
+		Assert.assertNull("Not Deleted: " + DDMStructure.class, ddmStructure);
 
 		dependentStagedModels = dependentStagedModelsMap.get(
 			DDMTemplate.class.getSimpleName());
@@ -339,14 +332,11 @@ public class JournalArticleStagedModelDataHandlerTest
 
 		DDMTemplate ddmTemplate = (DDMTemplate)dependentStagedModels.get(0);
 
-		try {
-			DDMTemplateLocalServiceUtil.getDDMTemplateByUuidAndGroupId(
+		ddmTemplate =
+			DDMTemplateLocalServiceUtil.fetchDDMTemplateByUuidAndGroupId(
 				ddmTemplate.getUuid(), group.getGroupId());
 
-			Assert.fail("Not Deleted: " + DDMTemplate.class);
-		}
-		catch (NoSuchTemplateException nste) {
-		}
+		Assert.assertNull("Not Deleted: " + DDMTemplate.class, ddmTemplate);
 
 		dependentStagedModels = dependentStagedModelsMap.get(
 			JournalFolder.class.getSimpleName());
@@ -355,14 +345,11 @@ public class JournalArticleStagedModelDataHandlerTest
 
 		JournalFolder folder = (JournalFolder)dependentStagedModels.get(0);
 
-		try {
-			JournalFolderLocalServiceUtil.getJournalFolderByUuidAndGroupId(
+		folder =
+			JournalFolderLocalServiceUtil.fetchJournalFolderByUuidAndGroupId(
 				folder.getUuid(), group.getGroupId());
 
-			Assert.fail("Not Deleted: " + JournalFolder.class);
-		}
-		catch (NoSuchFolderException nsfe) {
-		}
+		Assert.assertNull("Not Deleted: " + JournalFolder.class, folder);
 	}
 
 	@Override

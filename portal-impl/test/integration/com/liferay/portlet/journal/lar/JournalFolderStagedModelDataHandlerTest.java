@@ -24,7 +24,6 @@ import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
-import com.liferay.portlet.journal.NoSuchFolderException;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.portlet.journal.util.JournalTestUtil;
@@ -106,14 +105,11 @@ public class JournalFolderStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected StagedModel getStagedModel(String uuid, Group group) {
-		try {
-			return JournalFolderLocalServiceUtil.
-				getJournalFolderByUuidAndGroupId(uuid, group.getGroupId());
-		}
-		catch (Exception e) {
-			return null;
-		}
+	protected StagedModel getStagedModel(String uuid, Group group)
+		throws SystemException {
+
+		return JournalFolderLocalServiceUtil.fetchJournalFolderByUuidAndGroupId(
+			uuid, group.getGroupId());
 	}
 
 	@Override
@@ -134,14 +130,11 @@ public class JournalFolderStagedModelDataHandlerTest
 
 		JournalFolder folder = (JournalFolder)dependentStagedModels.get(0);
 
-		try {
-			JournalFolderLocalServiceUtil.getJournalFolderByUuidAndGroupId(
+		folder =
+			JournalFolderLocalServiceUtil.fetchJournalFolderByUuidAndGroupId(
 				folder.getUuid(), group.getGroupId());
 
-			Assert.fail("Not Deleted: " + JournalFolder.class);
-		}
-		catch (NoSuchFolderException nsfe) {
-		}
+		Assert.assertNull("Not Deleted: " + JournalFolder.class, folder);
 	}
 
 	@Override

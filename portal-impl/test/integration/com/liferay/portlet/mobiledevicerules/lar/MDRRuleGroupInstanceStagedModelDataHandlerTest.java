@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.mobiledevicerules.lar;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
@@ -104,15 +105,12 @@ public class MDRRuleGroupInstanceStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected StagedModel getStagedModel(String uuid, Group group) {
-		try {
-			return MDRRuleGroupInstanceLocalServiceUtil.
-				getMDRRuleGroupInstanceByUuidAndGroupId(
-					uuid, group.getGroupId());
-		}
-		catch (Exception e) {
-			return null;
-		}
+	@Override
+	protected StagedModel getStagedModel(String uuid, Group group)
+		throws SystemException {
+
+		return MDRRuleGroupInstanceLocalServiceUtil.
+			fetchMDRRuleGroupInstanceByUuidAndGroupId(uuid, group.getGroupId());
 	}
 
 	@Override

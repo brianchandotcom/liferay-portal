@@ -14,11 +14,14 @@
 
 package com.liferay.portal.kernel.workflow.comparator;
 
+import com.liferay.portal.kernel.messaging.proxy.MessagingProxy;
+import com.liferay.portal.kernel.messaging.proxy.ProxyMode;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
  * @author Michael C. Han
  */
+@MessagingProxy(mode = ProxyMode.SYNC)
 public interface WorkflowComparatorFactory {
 
 	public OrderByComparator getDefinitionNameComparator(boolean ascending);

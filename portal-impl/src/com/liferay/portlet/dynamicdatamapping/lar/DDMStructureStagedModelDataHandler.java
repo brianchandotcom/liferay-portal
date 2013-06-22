@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceContext;
@@ -93,6 +94,14 @@ public class DDMStructureStagedModelDataHandler
 
 		long userId = portletDataContext.getUserId(structure.getUserUuid());
 
+		Map<Long, Long> structureIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				DDMStructure.class);
+
+		long parentStructureId = MapUtil.getLong(
+			structureIds, structure.getParentStructureId(),
+			structure.getParentStructureId());
+
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			structure, DDMPortletDataHandler.NAMESPACE);
 
@@ -122,40 +131,34 @@ public class DDMStructureStagedModelDataHandler
 
 				importedStructure = DDMStructureLocalServiceUtil.addStructure(
 					userId, portletDataContext.getScopeGroupId(),
-					structure.getParentStructureId(),
-					structure.getClassNameId(), structure.getStructureKey(),
-					structure.getNameMap(), structure.getDescriptionMap(),
-					structure.getXsd(), structure.getStorageType(),
-					structure.getType(), serviceContext);
+					parentStructureId, structure.getClassNameId(),
+					structure.getStructureKey(), structure.getNameMap(),
+					structure.getDescriptionMap(), structure.getXsd(),
+					structure.getStorageType(), structure.getType(),
+					serviceContext);
 			}
 			else {
 				importedStructure =
 					DDMStructureLocalServiceUtil.updateStructure(
-						existingStructure.getStructureId(),
-						structure.getParentStructureId(),
+						existingStructure.getStructureId(), parentStructureId,
 						structure.getNameMap(), structure.getDescriptionMap(),
 						structure.getXsd(), serviceContext);
 			}
 		}
 		else {
 			importedStructure = DDMStructureLocalServiceUtil.addStructure(
-				userId, portletDataContext.getScopeGroupId(),
-				structure.getParentStructureId(), structure.getClassNameId(),
-				structure.getStructureKey(), structure.getNameMap(),
-				structure.getDescriptionMap(), structure.getXsd(),
-				structure.getStorageType(), structure.getType(),
-				serviceContext);
+				userId, portletDataContext.getScopeGroupId(), parentStructureId,
+				structure.getClassNameId(), structure.getStructureKey(),
+				structure.getNameMap(), structure.getDescriptionMap(),
+				structure.getXsd(), structure.getStorageType(),
+				structure.getType(), serviceContext);
 		}
 
 		portletDataContext.importClassedModel(
 			structure, importedStructure, DDMPortletDataHandler.NAMESPACE);
 
-		Map<String, String> ddmStructureKeys =
-			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
-				DDMStructure.class + ".ddmStructureKey");
-
-		ddmStructureKeys.put(
-			structure.getStructureKey(), importedStructure.getStructureKey());
+		structureIds.put(
+			structure.getStructureId(), importedStructure.getStructureId());
 	}
 
 	protected void prepareLanguagesForImport(DDMStructure structure)

@@ -41,7 +41,6 @@ if (Validator.isNull(redirect)) {
 }
 
 String extension = fileEntry.getExtension();
-String title = TrashUtil.getOriginalTitle(fileEntry.getTitle());
 
 Folder folder = fileEntry.getFolder();
 FileVersion fileVersion = (FileVersion)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_VERSION);
@@ -80,7 +79,6 @@ long assetClassPK = 0;
 
 if (!fileVersion.isApproved() && !fileVersion.getVersion().equals(DLFileEntryConstants.VERSION_DEFAULT) && !fileVersion.isInTrash()) {
 	assetClassPK = fileVersion.getFileVersionId();
-	title = fileVersion.getTitle();
 	extension = fileVersion.getExtension();
 }
 else {
@@ -131,7 +129,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 	<liferay-ui:header
 		backURL="<%= redirect %>"
 		localizeTitle="<%= false %>"
-		title="<%= TrashUtil.getOriginalTitle(fileEntry.getTitle()) %>"
+		title="<%= fileVersion.getTitle() %>"
 	/>
 </c:if>
 
@@ -180,16 +178,11 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 			</c:if>
 
 			<liferay-util:buffer var="documentTitle">
-				<c:choose>
-					<c:when test="<%= versionSpecific %>">
-						<%= fileVersion.getTitle() %>
+				<%= fileVersion.getTitle() %>
 
-						(<liferay-ui:message key="version" /> <%= HtmlUtil.escape(fileVersion.getVersion()) %>)
-					</c:when>
-					<c:otherwise>
-						<%= title %>
-					</c:otherwise>
-				</c:choose>
+				<c:if test="<%= versionSpecific %>">
+					(<liferay-ui:message key="version" /> <%= HtmlUtil.escape(fileVersion.getVersion()) %>)
+				</c:if>
 			</liferay-util:buffer>
 
 			<div class="body-row">
@@ -441,7 +434,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 							formName="fm2"
 							ratingsEnabled="<%= enableCommentRatings %>"
 							redirect="<%= currentURL %>"
-							subject="<%= title %>"
+							subject="<%= TrashUtil.getOriginalTitle(fileEntry.getTitle()) %>"
 							userId="<%= fileEntry.getUserId() %>"
 						/>
 					</liferay-ui:panel>

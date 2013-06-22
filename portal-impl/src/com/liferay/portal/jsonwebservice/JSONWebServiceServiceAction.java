@@ -17,6 +17,9 @@ package com.liferay.portal.jsonwebservice;
 import com.liferay.portal.action.JSONServiceAction;
 import com.liferay.portal.jsonwebservice.action.JSONWebServiceDiscoverAction;
 import com.liferay.portal.jsonwebservice.action.JSONWebServiceInvokerAction;
+import com.liferay.portal.kernel.bean.BeanLocator;
+import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
@@ -25,6 +28,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.spring.context.PortalContextLoaderListener;
 import com.liferay.portal.util.WebKeys;
 
 import java.lang.reflect.InvocationTargetException;
@@ -46,6 +51,31 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 		ServletContext servletContext, ClassLoader classLoader) {
 
 		_contextPath = ContextPathUtil.getContextPath(servletContext);
+
+		String contextName = _contextPath;
+
+		BeanLocator beanLocator;
+
+		if (_contextPath.equals(
+				PortalContextLoaderListener.getPortalServletContextPath()) ||
+			_contextPath.isEmpty()) {
+
+			beanLocator = PortalBeanLocatorUtil.getBeanLocator();
+		}
+		else {
+			contextName = _contextPath;
+
+			if (contextName.startsWith(StringPool.SLASH)) {
+				contextName = contextName.substring(1);
+			}
+
+			beanLocator = PortletBeanLocatorUtil.getBeanLocator(contextName);
+		}
+
+		JSONWebServiceRegistrator jsonWebServiceRegitrator =
+			new JSONWebServiceRegistrator();
+
+		jsonWebServiceRegitrator.processAllBeans(_contextPath, beanLocator);
 
 		if (_log.isInfoEnabled()) {
 			int count =

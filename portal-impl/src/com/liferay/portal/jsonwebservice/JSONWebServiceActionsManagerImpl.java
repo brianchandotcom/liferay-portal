@@ -257,6 +257,52 @@ public class JSONWebServiceActionsManagerImpl
 	}
 
 	@Override
+	public void registerJSONWebServiceAction(
+		String contextPath, Object actionObject, Class<?> actionClass,
+		Method actionMethod, String path, String method) {
+
+		JSONWebServiceActionConfig jsonWebServiceActionConfig =
+			new JSONWebServiceActionConfig(
+				contextPath, actionObject, actionClass, actionMethod, path,
+				method);
+
+		if (_jsonWebServiceActionConfigs.contains(jsonWebServiceActionConfig)) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"A JSON web service action is already registered at " +
+						path);
+			}
+
+			return;
+		}
+
+		_jsonWebServiceActionConfigs.add(jsonWebServiceActionConfig);
+	}
+
+	@Override
+	public int unregisterJSONWebServiceActions(Object actionObject) {
+		int count = 0;
+
+		Iterator<JSONWebServiceActionConfig> iterator =
+			_jsonWebServiceActionConfigs.iterator();
+
+		while (iterator.hasNext()) {
+			JSONWebServiceActionConfig jsonWebServiceActionConfig =
+				iterator.next();
+
+			if (actionObject.equals(
+					jsonWebServiceActionConfig.getActionObject())) {
+
+				iterator.remove();
+
+				count++;
+			}
+		}
+
+		return count;
+	}
+
+	@Override
 	public int unregisterJSONWebServiceActions(String contextPath) {
 		int count = 0;
 

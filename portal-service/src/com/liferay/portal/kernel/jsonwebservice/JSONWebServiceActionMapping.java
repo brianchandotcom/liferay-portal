@@ -27,6 +27,8 @@ public interface JSONWebServiceActionMapping {
 
 	public Method getActionMethod();
 
+	public Object getActionObject();
+
 	public String getContextPath();
 
 	public String getMethod();

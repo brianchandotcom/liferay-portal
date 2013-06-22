@@ -14,7 +14,6 @@
 
 package com.liferay.portal.spring.context;
 
-import com.liferay.portal.jsonwebservice.spring.JSONWebServiceDetectorBeanPostProcessor;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -100,9 +99,6 @@ public class PortletApplicationContext extends XmlWebApplicationContext {
 		BeanDefinitionRegistry beanDefinitionRegistry) {
 
 		injectExplicitBean(DoPrivilegedFactory.class, beanDefinitionRegistry);
-		injectExplicitBean(
-			JSONWebServiceDetectorBeanPostProcessor.class,
-			beanDefinitionRegistry);
 	}
 
 	@Override

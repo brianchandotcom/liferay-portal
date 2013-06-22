@@ -1,0 +1,22 @@
+<definition>
+	<command name="assertClick">
+		<case locator-key1="ADD_RECORD_BUTTON">
+			<execute function="AssertClick#assertValueClickAtAndWait" />
+		</case>
+		<case comparator="startsWith" locator-key1="RECORD_TABLE_ACTIONS_">
+			<execute function="AssertClick#assertTextClickAt" />
+		</case>
+		<case comparator="startsWith" locator-key1="RECORD_MENULIST_">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+	</command>
+
+	<command name="click">
+		<case locator-key1="TOOLBAR_ADD_LIST">
+			<execute function="Click#clickAtAndWait" value1="Add List" />
+		</case>
+		<case locator-key1="TOOLBAR_SELECT_LIST">
+			<execute function="Click#clickAtAndWait" value1="Select List" />
+		</case>
+	</command>
+</definition>

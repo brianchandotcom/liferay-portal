@@ -1,0 +1,7 @@
+<definition>
+	<command name="click">
+		<case locator-key1="DATA_DEFINITION_TABLE_CHOOSE_BUTTON_1">
+			<execute function="Click#click" />
+		</case>
+	</command>
+</definition>

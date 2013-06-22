@@ -1,0 +1,19 @@
+<definition>
+	<command name="assertClick">
+		<case locator-key1="BASIC_SEARCH_BUTTON">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+		<case comparator="startsWith" locator-key1="LIST_MENULIST_">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+		<case comparator="startsWith" locator-key1="LIST_TABLE_ACTIONS_">
+			<execute function="AssertClick#assertTextClickAt" />
+		</case>
+		<case comparator="startsWith" locator-key1="LIST_TABLE_NAME_">
+			<execute function="AssertClick#assertTextClickAt" />
+		</case>
+		<case locator-key1="SAVE_BUTTON">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+	</command>
+</definition>

@@ -271,31 +271,32 @@ public class ClassUtil {
 			tokens.add(annotationName.replace("@", ""));
 		}
 		else if (annotationParametersMatcher.matches()) {
-			if (!s.trim().endsWith(")")) {
+			String annotationName = annotationParametersMatcher.group(1);
+
+			tokens.add(annotationName);
+
+			String annotationParameters = null;
+
+			if (s.trim().endsWith(")")) {
+				annotationParameters = annotationParametersMatcher.group(2);
+			}
+			else {
+				StringBundler sb = new StringBundler();
+
 				while (st.nextToken() != StreamTokenizer.TT_EOF) {
 					if (st.ttype == StreamTokenizer.TT_WORD) {
-						s += st.sval;
+						sb.append(st.sval);
 
-						if (s.trim().endsWith(")")) {
+						if (st.sval.trim().endsWith(")")) {
 							break;
 						}
 					}
 				}
+
+				annotationParameters = sb.toString();
 			}
 
-			annotationParametersMatcher = _ANNOTATION_PARAMETERS_REGEXP.matcher(
-				s);
-
-			if (annotationParametersMatcher.matches()) {
-				String annotationName = annotationParametersMatcher.group(1);
-				String annotationParameters = annotationParametersMatcher.group(
-					2);
-
-				tokens.add(annotationName.replace("@", ""));
-
-				tokens = _processAnnotationParameters(
-					annotationParameters, tokens);
-			}
+			tokens = _processAnnotationParameters(annotationParameters, tokens);
 		}
 
 		return tokens.toArray(new String[tokens.size()]);

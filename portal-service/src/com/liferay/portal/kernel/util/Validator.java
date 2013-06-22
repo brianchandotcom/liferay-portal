@@ -578,15 +578,7 @@ public class Validator {
 			return false;
 		}
 
-		if (domainName.startsWith(StringPool.PERIOD) ||
-			domainName.endsWith(StringPool.PERIOD)) {
-
-			return false;
-		}
-
-		if (!domainName.contains(StringPool.PERIOD) &&
-			!domainName.equals(_LOCALHOST)) {
-
+		if (domainName.startsWith(StringPool.PERIOD)) {
 			return false;
 		}
 

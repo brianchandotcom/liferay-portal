@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -101,6 +102,12 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		serviceContext.setAttribute("className", className);
 		serviceContext.setAttribute("classPK", String.valueOf(classPK));
 
+		if (Validator.isNull(mimeType) ||
+			mimeType.equals(ContentTypes.APPLICATION_OCTET_STREAM)) {
+
+			mimeType = MimeTypesUtil.getContentType(file, fileName);
+		}
+
 		boolean dlAppHelperEnabled = DLAppHelperThreadLocal.isEnabled();
 
 		try {
@@ -127,44 +134,20 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			return null;
 		}
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-
-		Repository repository = addPortletRepository(
-			groupId, portletId, serviceContext);
-
-		serviceContext.setAttribute("className", className);
-		serviceContext.setAttribute("classPK", String.valueOf(classPK));
-
-		boolean dlAppHelperEnabled = DLAppHelperThreadLocal.isEnabled();
-
 		File file = null;
 
 		try {
-			DLAppHelperThreadLocal.setEnabled(false);
-
 			file = FileUtil.createTempFile(inputStream);
 
-			if (Validator.isNull(mimeType)) {
-				mimeType = MimeTypesUtil.getContentType(file, fileName);
-			}
-
-			return DLAppLocalServiceUtil.addFileEntry(
-				userId, repository.getRepositoryId(), folderId, fileName,
-				mimeType, fileName, StringPool.BLANK, StringPool.BLANK, file,
-				serviceContext);
+			return addPortletFileEntry(
+				groupId, userId, className, classPK, portletId, folderId, file,
+				fileName, mimeType);
 		}
 		catch (IOException ioe) {
-			throw new SystemException(
-				"Unable to write temporary file " + file.getAbsolutePath(),
-				ioe);
+			throw new SystemException("Unable to write temporary file", ioe);
 		}
 		finally {
 			FileUtil.delete(file);
-
-			DLAppHelperThreadLocal.setEnabled(dlAppHelperEnabled);
 		}
 	}
 

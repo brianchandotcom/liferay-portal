@@ -36,7 +36,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletConfigFactoryUtil;
-import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.portletconfiguration.util.PortletConfigurationUtil;
 
 import java.util.ResourceBundle;
@@ -82,6 +81,12 @@ public class EditScopeAction extends PortletAction {
 		}
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
+		PortletPreferences portletPreferences =
+			ActionUtil.getLayoutPortletSetup(actionRequest, portlet);
+
+		actionRequest = ActionUtil.getWrappedActionRequest(
+			actionRequest, portletPreferences);
 
 		if (cmd.equals(Constants.SAVE)) {
 			updateScope(actionRequest, portlet);
@@ -135,6 +140,12 @@ public class EditScopeAction extends PortletAction {
 		}
 
 		renderResponse.setTitle(ActionUtil.getTitle(portlet, renderRequest));
+
+		PortletPreferences portletPreferences =
+			ActionUtil.getLayoutPortletSetup(renderRequest, portlet);
+
+		renderRequest = ActionUtil.getWrappedRenderRequest(
+			renderRequest, portletPreferences);
 
 		return actionMapping.findForward(
 			getForward(
@@ -199,9 +210,7 @@ public class EditScopeAction extends PortletAction {
 
 		Layout layout = themeDisplay.getLayout();
 
-		PortletPreferences portletPreferences =
-			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
-				layout, portlet.getPortletId());
+		PortletPreferences portletPreferences = actionRequest.getPreferences();
 
 		String scopeType = GetterUtil.getString(
 			portletPreferences.getValue("lfrScopeType", null));
@@ -271,11 +280,7 @@ public class EditScopeAction extends PortletAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Layout layout = themeDisplay.getLayout();
-
-		PortletPreferences portletPreferences =
-			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
-				layout, portlet.getPortletId());
+		PortletPreferences portletPreferences = actionRequest.getPreferences();
 
 		String scopeType = ParamUtil.getString(actionRequest, "scopeType");
 

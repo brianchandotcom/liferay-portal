@@ -93,6 +93,9 @@ public class ExportImportAction extends ImportLayoutsAction {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
+			actionRequest = ActionUtil.getWrappedActionRequest(
+				actionRequest, null);
+
 			if (Validator.isNotNull(cmd)) {
 				if (cmd.equals(Constants.ADD_TEMP)) {
 					addTempFileEntry(
@@ -211,6 +214,8 @@ public class ExportImportAction extends ImportLayoutsAction {
 
 		renderResponse.setTitle(ActionUtil.getTitle(portlet, renderRequest));
 
+		renderRequest = ActionUtil.getWrappedRenderRequest(renderRequest, null);
+
 		return actionMapping.findForward(
 			getForward(
 				renderRequest, "portlet.portlet_configuration.export_import"));
@@ -229,6 +234,9 @@ public class ExportImportAction extends ImportLayoutsAction {
 			portletContext.getRequestDispatcher(
 				"/html/portlet/portlet_configuration/" +
 					"import_portlet_resources.jsp");
+
+		resourceRequest = ActionUtil.getWrappedResourceRequest(
+			resourceRequest, null);
 
 		portletRequestDispatcher.include(resourceRequest, resourceResponse);
 	}

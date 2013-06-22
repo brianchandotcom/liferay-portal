@@ -16,13 +16,9 @@ package com.liferay.portlet.portletconfiguration.action;
 
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.struts.PortletAction;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
 import java.util.Set;
 
@@ -61,6 +57,12 @@ public class EditSupportedClientsAction extends PortletAction {
 			setForward(actionRequest, "portlet.portlet_configuration.error");
 		}
 
+		PortletPreferences portletPreferences =
+			ActionUtil.getLayoutPortletSetup(actionRequest, portlet);
+
+		actionRequest = ActionUtil.getWrappedActionRequest(
+			actionRequest, portletPreferences);
+
 		updateSupportedClients(portlet, actionRequest);
 
 		sendRedirect(actionRequest, actionResponse);
@@ -88,6 +90,12 @@ public class EditSupportedClientsAction extends PortletAction {
 
 		renderResponse.setTitle(ActionUtil.getTitle(portlet, renderRequest));
 
+		PortletPreferences portletPreferences =
+			ActionUtil.getLayoutPortletSetup(renderRequest, portlet);
+
+		renderRequest = ActionUtil.getWrappedRenderRequest(
+			renderRequest, portletPreferences);
+
 		return actionMapping.findForward(
 			getForward(
 				renderRequest,
@@ -98,14 +106,7 @@ public class EditSupportedClientsAction extends PortletAction {
 			Portlet portlet, ActionRequest actionRequest)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Layout layout = themeDisplay.getLayout();
-
-		PortletPreferences portletSetup =
-			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
-				layout, portlet.getPortletId());
+		PortletPreferences portletPreferences = actionRequest.getPreferences();
 
 		Set<String> allPortletModes = portlet.getAllPortletModes();
 
@@ -116,11 +117,11 @@ public class EditSupportedClientsAction extends PortletAction {
 			boolean mobileDevices = ParamUtil.getBoolean(
 				actionRequest, mobileDevicesParam);
 
-			portletSetup.setValue(
+			portletPreferences.setValue(
 				mobileDevicesParam, String.valueOf(mobileDevices));
 		}
 
-		portletSetup.store();
+		portletPreferences.store();
 	}
 
 }

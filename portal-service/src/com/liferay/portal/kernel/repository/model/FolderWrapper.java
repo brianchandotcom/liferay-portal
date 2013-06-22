@@ -13,16 +13,17 @@
  */
 package com.liferay.portal.kernel.repository.model;
 
-import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.ModelWrapper;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.expando.model.ExpandoBridge;
+
+import java.io.Serializable;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Kyle Stiemann
@@ -30,11 +31,31 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 
 	public FolderWrapper(Folder folder) {
-		this._folder = folder;
+		_folder = folder;
 	}
 
-	public List<Long> getAncestorFolderIds() throws PortalException,
-			SystemException {
+	@Override
+	public Object clone() {
+		return new FolderWrapper((Folder) _folder.clone());
+	}
+
+	public boolean containsPermission(
+			PermissionChecker permissionChecker, String actionId)
+		throws PortalException, SystemException {
+
+		return _folder.containsPermission(permissionChecker, actionId);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		FolderWrapper other = (FolderWrapper)obj;
+
+		return _folder.equals(other.getWrappedModel());
+	}
+
+	public List<Long> getAncestorFolderIds()
+		throws PortalException, SystemException {
+
 		return _folder.getAncestorFolderIds();
 	}
 
@@ -50,16 +71,8 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 		return _folder.getCompanyId();
 	}
 
-	public void setCompanyId(long companyId) {
-		_folder.setCompanyId(companyId);
-	}
-
 	public Date getCreateDate() {
 		return _folder.getCreateDate();
-	}
-
-	public void setCreateDate(Date date) {
-		_folder.setCreateDate(date);
 	}
 
 	public String getDescription() {
@@ -76,10 +89,6 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 
 	public long getGroupId() {
 		return _folder.getGroupId();
-	}
-
-	public void setGroupId(long groupId) {
-		_folder.setGroupId(groupId);
 	}
 
 	public Date getLastPostDate() {
@@ -102,10 +111,6 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 		return _folder.getModifiedDate();
 	}
 
-	public void setModifiedDate(Date date) {
-		_folder.setModifiedDate(date);
-	}
-
 	public String getName() {
 		return _folder.getName();
 	}
@@ -126,10 +131,6 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 		return _folder.getPrimaryKeyObj();
 	}
 
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_folder.setPrimaryKeyObj(primaryKeyObj);
-	}
-
 	public long getRepositoryId() {
 		return _folder.getRepositoryId();
 	}
@@ -138,36 +139,25 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 		return _folder.getUserId();
 	}
 
-	public void setUserId(long userId) {
-		_folder.setUserId(userId);
-	}
-
 	public String getUserName() {
 		return _folder.getUserName();
-	}
-
-	public void setUserName(String userName) {
-		_folder.setUserName(userName);
 	}
 
 	public String getUserUuid() throws SystemException {
 		return _folder.getUserUuid();
 	}
 
-	public void setUserUuid(String userUuid) {
-		_folder.setUserUuid(userUuid);
-	}
-
 	public String getUuid() {
 		return _folder.getUuid();
 	}
 
-	public void setUuid(String uuid) {
-		_folder.setUuid(uuid);
-	}
-
 	public Folder getWrappedModel() {
 		return _folder;
+	}
+
+	@Override
+	public int hashCode() {
+		return _folder.hashCode();
 	}
 
 	public boolean hasInheritableLock() {
@@ -222,39 +212,55 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 		return _folder.isSupportsSubscribing();
 	}
 
-	@Override
-	public java.lang.Object clone() {
-		return new FolderWrapper((Folder) _folder.clone());
+	public void setCompanyId(long companyId) {
+		_folder.setCompanyId(companyId);
 	}
 
-	public boolean containsPermission(PermissionChecker permissionChecker,
-			String actionId) throws PortalException, SystemException {
-		return _folder.containsPermission(permissionChecker, actionId);
+	public void setCreateDate(Date date) {
+		_folder.setCreateDate(date);
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		FolderWrapper other = (FolderWrapper) obj;
-		return _folder.equals(other.getWrappedModel());
+	public void setGroupId(long groupId) {
+		_folder.setGroupId(groupId);
 	}
 
-	@Override
-	public int hashCode() {
-		return _folder.hashCode();
+	public void setModifiedDate(Date date) {
+		_folder.setModifiedDate(date);
+	}
+
+	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
+		_folder.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	public void setUserId(long userId) {
+		_folder.setUserId(userId);
+	}
+
+	public void setUserName(String userName) {
+		_folder.setUserName(userName);
+	}
+
+	public void setUserUuid(String userUuid) {
+		_folder.setUserUuid(userUuid);
+	}
+
+	public void setUuid(String uuid) {
+		_folder.setUuid(uuid);
 	}
 
 	public Folder toEscapedModel() {
 		return new FolderWrapper(_folder.toEscapedModel());
 	}
 
-	public Folder toUnescapedModel() {
-		return new FolderWrapper(_folder.toUnescapedModel());
-	}
-	
 	@Override
 	public String toString() {
 		return _folder.toString();
 	}
 
+	public Folder toUnescapedModel() {
+		return new FolderWrapper(_folder.toUnescapedModel());
+	}
+
 	private Folder _folder;
+
 }

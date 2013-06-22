@@ -24,6 +24,7 @@ import java.util.Map;
  * @author Alexander Chow
  */
 public interface RepositoryModel<T> extends StagedGroupedModel, Serializable {
+
 	public Map<String, Serializable> getAttributes();
 
 	public Object getModel();

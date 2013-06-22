@@ -1,47 +1,48 @@
-Liferay.Language = {
-	get: function(key, extraParams) {
-		var instance = this;
+;(function(A, Liferay) {
+	A.use(
+		'iobase',
+		function() {
+			Liferay.Language = {
+				get: A.cached(
+					function(key, extraParams) {
+						var instance = this;
 
-		var url = themeDisplay.getPathContext() + '/language/' + themeDisplay.getLanguageId() + '/' + key + '/';
+						var url = themeDisplay.getPathContext() + '/language/' + themeDisplay.getLanguageId() + '/' + key + '/';
 
-		if (extraParams) {
-			if (typeof extraParams == 'string') {
-				url += extraParams;
-			}
-			else if (Liferay.Util.isArray(extraParams)) {
-				url += extraParams.join('/');
-			}
-		}
-
-		var value = instance._cache[url];
-
-		var authUrl = url;
-
-		var authToken = Liferay.authToken;
-
-		if (authToken) {
-			authUrl = Liferay.Util.addParams('p_auth=' + authToken, url);
-		}
-
-		if (!value) {
-			AUI().use('io-base').io(
-				authUrl,
-				{
-					on: {
-						complete: function(i, o) {
-							value = o.responseText;
+						if (extraParams) {
+							if (typeof extraParams == 'string') {
+								url += extraParams;
+							}
+							else if (Liferay.Util.isArray(extraParams)) {
+								url += extraParams.join('/');
+							}
 						}
-					},
-					sync: true,
-					type: 'GET'
-				}
-			);
 
-			instance._cache[url] = value;
+						var authUrl = url;
+
+						var authToken = Liferay.authToken;
+
+						if (authToken) {
+							authUrl = Liferay.Util.addParams('p_auth=' + authToken, url);
+						}
+
+						A.io(
+							authUrl,
+							{
+								on: {
+									complete: function(i, o) {
+										value = o.responseText;
+									}
+								},
+								sync: true,
+								type: 'GET'
+							}
+						);
+
+						return value;
+					}
+				)
+			};
 		}
-
-		return value;
-	},
-
-	_cache: {}
-};
+	);
+})(AUI(), Liferay);

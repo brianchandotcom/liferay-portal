@@ -142,9 +142,8 @@ public class AsyncAdvice extends AnnotationChainableMethodAdvice<Async> {
 			ClassLoaderUtil.getContextClassLoader();
 
 		try {
-			ClassLoader classLoader =
-				(ClassLoader)PortletBeanLocatorUtil.locate(
-					servletContextName, "portletClassLoader");
+			ClassLoader classLoader = ClassLoaderPool.getClassLoader(
+				servletContextName);
 
 			ClassLoaderUtil.setContextClassLoader(classLoader);
 

@@ -1,3 +1,5 @@
 <definition>
 	<execute test-case="CPDynamicdatalistsAcceptance" />
+
+	<execute test-case="PGDynamicdatalistsAcceptance" />
 </definition>

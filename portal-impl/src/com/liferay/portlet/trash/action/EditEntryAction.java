@@ -314,7 +314,7 @@ public class EditEntryAction extends PortletAction {
 		if (Validator.isNull(newName)) {
 			String oldName = ParamUtil.getString(actionRequest, "oldName");
 
-			newName = TrashUtil.getNewName(themeDisplay, oldName);
+			newName = TrashUtil.getNewName(themeDisplay, null, 0, oldName);
 		}
 
 		TrashEntry entry = TrashEntryServiceUtil.restoreEntry(

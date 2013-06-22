@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -232,15 +233,36 @@ public class TrashImpl implements Trash {
 			trashEntriesMaxAge);
 	}
 
-	@Override
-	public String getNewName(ThemeDisplay themeDisplay, String oldName) {
-		Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
-			themeDisplay.getLocale(), themeDisplay.getTimeZone());
-
-		StringBundler sb = new StringBundler(5);
+	public String getNewName(String oldName, String token) {
+		StringBundler sb = new StringBundler(3);
 
 		sb.append(oldName);
 		sb.append(StringPool.SPACE);
+		sb.append(token);
+
+		return sb.toString();
+	}
+
+	@Override
+	public String getNewName(
+			ThemeDisplay themeDisplay, String className, long classPK,
+			String oldName)
+		throws PortalException, SystemException {
+
+		TrashRenderer trashRenderer = null;
+
+		if (Validator.isNotNull(className) && (classPK > 0)) {
+			TrashHandler trashHandler =
+				TrashHandlerRegistryUtil.getTrashHandler(className);
+
+			trashRenderer = trashHandler.getTrashRenderer(classPK);
+		}
+
+		Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
+			themeDisplay.getLocale(), themeDisplay.getTimeZone());
+
+		StringBundler sb = new StringBundler(3);
+
 		sb.append(StringPool.OPEN_PARENTHESIS);
 		sb.append(
 			StringUtil.replace(
@@ -248,7 +270,14 @@ public class TrashImpl implements Trash {
 				CharPool.PERIOD));
 		sb.append(StringPool.CLOSE_PARENTHESIS);
 
-		return sb.toString();
+		String token = sb.toString();
+
+		if (trashRenderer != null) {
+			return trashRenderer.getNewName(oldName, token);
+		}
+		else {
+			return getNewName(oldName, token);
+		}
 	}
 
 	@Override

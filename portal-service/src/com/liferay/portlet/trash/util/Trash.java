@@ -59,7 +59,12 @@ public interface Trash {
 
 	public int getMaxAge(Group group) throws PortalException, SystemException;
 
-	public String getNewName(ThemeDisplay themeDisplay, String oldName);
+	public String getNewName(String oldName, String token);
+
+	public String getNewName(
+			ThemeDisplay themeDisplay, String className, long classPK,
+			String oldName)
+		throws PortalException, SystemException;
 
 	public String getOriginalTitle(String title);
 

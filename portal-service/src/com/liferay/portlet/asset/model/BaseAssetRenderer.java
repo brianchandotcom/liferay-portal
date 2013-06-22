@@ -35,6 +35,7 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
+import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.Date;
 import java.util.Locale;
@@ -97,6 +98,11 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 			WebKeys.THEME_DISPLAY);
 
 		return getIconPath(themeDisplay);
+	}
+
+	@Override
+	public String getNewName(String oldName, String token) {
+		return TrashUtil.getNewName(oldName, token);
 	}
 
 	@Override

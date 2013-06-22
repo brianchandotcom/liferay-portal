@@ -21,8 +21,11 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.trash.TrashRenderer;
+import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -107,6 +110,27 @@ public class DLFileEntryAssetRenderer
 	public String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/file_system/small/" +
 			_fileEntry.getIcon() + ".png";
+	}
+
+	@Override
+	public String getNewName(String oldName, String token) {
+		String extension = FileUtil.getExtension(oldName);
+
+		if (Validator.isNull(extension)) {
+			return super.getNewName(oldName, token);
+		}
+
+		StringBundler sb = new StringBundler(5);
+
+		int pos = oldName.lastIndexOf(CharPool.PERIOD);
+
+		sb.append(oldName.substring(0, pos));
+		sb.append(StringPool.SPACE);
+		sb.append(token);
+		sb.append(StringPool.PERIOD);
+		sb.append(extension);
+
+		return sb.toString();
 	}
 
 	@Override

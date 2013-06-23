@@ -189,6 +189,48 @@ public class OrganizationLocalServiceImpl
 			statusId, comments, site, serviceContext);
 	}
 
+	/**
+	 * Adds an organization.
+	 *
+	 * <p>
+	 * This method handles the creation and bookkeeping of the organization
+	 * including its resources, metadata, and internal data structures. It is
+	 * not necessary to make a subsequent call to {@link
+	 * #addOrganizationResources(long, Organization)}.
+	 * </p>
+	 *
+	 * @param      userId the primary key of the creator/owner of the
+	 *             organization
+	 * @param      parentOrganizationId the primary key of the organization's
+	 *             parent organization
+	 * @param      name the organization's name
+	 * @param      type the organization's type
+	 * @param      recursable whether the permissions of the organization are to
+	 *             be inherited by its suborganizations
+	 * @param      regionId the primary key of the organization's region
+	 * @param      countryId the primary key of the organization's country
+	 * @param      statusId the organization's workflow status
+	 * @param      comments the comments about the organization
+	 * @param      site whether the organization is to be associated with a main
+	 *             site
+	 * @param      addresses the organization's addresses
+	 * @param      emailAddresses the organization's email addresses
+	 * @param      orgLabors the organization's labors
+	 * @param      phones the organization's phone numbers
+	 * @param      websites the organization's web sites
+	 * @param      serviceContext the service context to be applied (optionally
+	 *             <code>null</code>). Can set asset category IDs, asset tag
+	 *             names, and expando bridge attributes for the organization.
+	 * @return     the organization
+	 * @throws     PortalException if a creator or parent organization with the
+	 *             primary key could not be found or if the organization's
+	 *             information was invalid
+	 * @throws     SystemException if a system exception occurred
+	 * @deprecated As of 6.2.0, replaced by {@link #addOrganization(long, long,
+	 *             String, String, long, long, int, String, boolean,
+	 *             ServiceContext)}
+	 */
+	@Override
 	public Organization addOrganization(
 			long userId, long parentOrganizationId, String name, String type,
 			long regionId, long countryId, int statusId, String comments,

@@ -230,7 +230,6 @@ if (Validator.isNotNull(content)) {
 									<aui:input name="structureId" type="hidden" value="<%= structureId %>" />
 									<aui:input name="structureName" type="hidden" value="<%= ddmStructureName %>" />
 									<aui:input name="structureDescription" type="hidden" value="<%= ddmStructureDescription %>" />
-									<aui:input name="structureXSD" type="hidden" value="<%= ddmStructureXSD %>" />
 
 									<span class="structure-name-label" id="<portlet:namespace />structureNameLabel">
 										<%= HtmlUtil.escape(ddmStructureName) %>
@@ -247,14 +246,6 @@ if (Validator.isNotNull(content)) {
 										<c:if test="<%= Validator.isNotNull(structureId) %>">
 											<span class="default-link">(<a href="javascript:;" id="<portlet:namespace />loadDefaultStructure"><liferay-ui:message key="use-default" /></a>)</span>
 										</c:if>
-
-										<span class="structure-controls">
-											<span class="structure-buttons">
-												<aui:button cssClass="save-structure-button hide" name="saveStructureButton" value="save" />
-
-												<aui:button cssClass="edit-structure-button hide" name="editStructureButton" value="stop-editing" />
-											</span>
-										</span>
 									</c:if>
 								</div>
 							</aui:fieldset>
@@ -573,18 +564,7 @@ if (Validator.isNotNull(content)) {
 			</c:if>
 		</div>
 	</td>
-
-	<c:choose>
-		<c:when test="<%= Validator.isNull(toLanguageId) %>">
-			<td class="lfr-top">
-				<%@ include file="/html/portlet/journal/edit_article_extra.jspf" %>
-			</td>
-		</c:when>
-		<c:otherwise>
-			<aui:input name="structureId" type="hidden" value="<%= structureId %>" />
-		</c:otherwise>
-	</c:choose>
-</tr>
+	<aui:input name="structureId" type="hidden" value="<%= structureId %>" />
 </table>
 
 <aui:script>

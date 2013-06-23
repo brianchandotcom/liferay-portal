@@ -20,8 +20,6 @@ import com.liferay.portal.UserEmailAddressException;
 import com.liferay.portal.UserScreenNameException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -516,34 +514,13 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			boolean sendEmail, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		long creatorUserId = 0;
-
-		try {
-			creatorUserId = getGuestOrUserId();
-		}
-		catch (PrincipalException pe) {
-		}
-
-		checkAddUserPermission(
-			creatorUserId, companyId, emailAddress, groupIds, organizationIds,
-			roleIds, userGroupIds, serviceContext);
-
-		User user = userLocalService.addUserWithWorkflow(
-			creatorUserId, companyId, autoPassword, password1, password2,
-			autoScreenName, screenName, emailAddress, facebookId, openId,
-			locale, firstName, middleName, lastName, prefixId, suffixId, male,
-			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
-			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
-
-		checkMembership(
-			new long[] {user.getUserId()}, groupIds, organizationIds, roleIds,
-			userGroupIds);
-
-		propagateMembership(
-			new long[]{user.getUserId()}, groupIds, organizationIds, roleIds,
-			userGroupIds);
-
-		return user;
+		return addUserWithWorkflow(
+			companyId, autoPassword, password1, password2, autoScreenName,
+			screenName, emailAddress, facebookId, openId, locale, firstName,
+			middleName, lastName, prefixId, suffixId, male, birthdayMonth,
+			birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
+			roleIds, userGroupIds, null, null, null, null, null, sendEmail,
+			serviceContext);
 	}
 
 	/**
@@ -616,45 +593,36 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			boolean sendEmail, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		boolean indexingEnabled = serviceContext.isIndexingEnabled();
-
-		serviceContext.setIndexingEnabled(false);
+		long creatorUserId = 0;
 
 		try {
-			User user = addUserWithWorkflow(
-				companyId, autoPassword, password1, password2, autoScreenName,
-				screenName, emailAddress, facebookId, openId, locale, firstName,
-				middleName, lastName, prefixId, suffixId, male, birthdayMonth,
-				birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
-				roleIds, userGroupIds, sendEmail, serviceContext);
-
-			UsersAdminUtil.updateAddresses(
-				Contact.class.getName(), user.getContactId(), addresses);
-
-			UsersAdminUtil.updateEmailAddresses(
-				Contact.class.getName(), user.getContactId(), emailAddresses);
-
-			UsersAdminUtil.updatePhones(
-				Contact.class.getName(), user.getContactId(), phones);
-
-			UsersAdminUtil.updateWebsites(
-				Contact.class.getName(), user.getContactId(), websites);
-
-			updateAnnouncementsDeliveries(
-				user.getUserId(), announcementsDelivers);
-
-			if (indexingEnabled) {
-				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-					User.class);
-
-				indexer.reindex(user);
-			}
-
-			return user;
+			creatorUserId = getGuestOrUserId();
 		}
-		finally {
-			serviceContext.setIndexingEnabled(indexingEnabled);
+		catch (PrincipalException pe) {
 		}
+
+		checkAddUserPermission(
+			creatorUserId, companyId, emailAddress, groupIds, organizationIds,
+			roleIds, userGroupIds, serviceContext);
+
+		User user = userLocalService.addUserWithWorkflow(
+			creatorUserId, companyId, autoPassword, password1, password2,
+			autoScreenName, screenName, emailAddress, facebookId, openId,
+			locale, firstName, middleName, lastName, prefixId, suffixId, male,
+			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
+			organizationIds, roleIds, userGroupIds, addresses,
+			emailAddresses, phones, websites, announcementsDelivers,
+			sendEmail, serviceContext);
+
+		checkMembership(
+			new long[] {user.getUserId()}, groupIds, organizationIds, roleIds,
+			userGroupIds);
+
+		propagateMembership(
+			new long[]{user.getUserId()}, groupIds, organizationIds, roleIds,
+			userGroupIds);
+
+		return user;
 	}
 
 	/**

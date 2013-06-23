@@ -37,18 +37,23 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.Address;
 import com.liferay.portal.model.Company;
+import com.liferay.portal.model.EmailAddress;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.ListTypeConstants;
+import com.liferay.portal.model.OrgLabor;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.OrganizationConstants;
+import com.liferay.portal.model.Phone;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroupRole;
+import com.liferay.portal.model.Website;
 import com.liferay.portal.model.impl.OrganizationImpl;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -56,6 +61,7 @@ import com.liferay.portal.service.base.OrganizationLocalServiceBaseImpl;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.comparator.OrganizationNameComparator;
+import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
 import java.io.Serializable;
 
@@ -183,41 +189,13 @@ public class OrganizationLocalServiceImpl
 			statusId, comments, site, serviceContext);
 	}
 
-	/**
-	 * Adds an organization.
-	 *
-	 * <p>
-	 * This method handles the creation and bookkeeping of the organization
-	 * including its resources, metadata, and internal data structures. It is
-	 * not necessary to make a subsequent call to {@link
-	 * #addOrganizationResources(long, Organization)}.
-	 * </p>
-	 *
-	 * @param  userId the primary key of the creator/owner of the organization
-	 * @param  parentOrganizationId the primary key of the organization's parent
-	 *         organization
-	 * @param  name the organization's name
-	 * @param  type the organization's type
-	 * @param  regionId the primary key of the organization's region
-	 * @param  countryId the primary key of the organization's country
-	 * @param  statusId the organization's workflow status
-	 * @param  comments the comments about the organization
-	 * @param  site whether the organization is to be associated with a main
-	 *         site
-	 * @param  serviceContext the service context to be applied (optionally
-	 *         <code>null</code>). Can set asset category IDs, asset tag names,
-	 *         and expando bridge attributes for the organization.
-	 * @return the organization
-	 * @throws PortalException if a creator or parent organization with the
-	 *         primary key could not be found or if the organization's
-	 *         information was invalid
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
 	public Organization addOrganization(
 			long userId, long parentOrganizationId, String name, String type,
 			long regionId, long countryId, int statusId, String comments,
-			boolean site, ServiceContext serviceContext)
+			boolean site, List<Address> addresses,
+			List<EmailAddress> emailAddresses, List<OrgLabor> orgLabors,
+			List<Phone> phones, List<Website> websites,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// Organization
@@ -310,6 +288,35 @@ public class OrganizationLocalServiceImpl
 				serviceContext.getAssetTagNames());
 		}
 
+		if (addresses != null) {
+			UsersAdminUtil.updateAddresses(
+				Organization.class.getName(), organization.getOrganizationId(),
+				addresses);
+		}
+
+		if (emailAddresses != null) {
+			UsersAdminUtil.updateEmailAddresses(
+				Organization.class.getName(), organization.getOrganizationId(),
+				emailAddresses);
+		}
+
+		if (orgLabors != null) {
+			UsersAdminUtil.updateOrgLabors(
+				organization.getOrganizationId(), orgLabors);
+		}
+
+		if (phones != null) {
+			UsersAdminUtil.updatePhones(
+				Organization.class.getName(), organization.getOrganizationId(),
+				phones);
+		}
+
+		if (websites != null) {
+			UsersAdminUtil.updateWebsites(
+				Organization.class.getName(), organization.getOrganizationId(),
+				websites);
+		}
+
 		// Indexer
 
 		if ((serviceContext == null) || serviceContext.isIndexingEnabled()) {
@@ -320,6 +327,49 @@ public class OrganizationLocalServiceImpl
 		}
 
 		return organization;
+	}
+
+	/**
+	 * Adds an organization.
+	 *
+	 * <p>
+	 * This method handles the creation and bookkeeping of the organization
+	 * including its resources, metadata, and internal data structures. It is
+	 * not necessary to make a subsequent call to {@link
+	 * #addOrganizationResources(long, Organization)}.
+	 * </p>
+	 *
+	 * @param  userId the primary key of the creator/owner of the organization
+	 * @param  parentOrganizationId the primary key of the organization's parent
+	 *         organization
+	 * @param  name the organization's name
+	 * @param  type the organization's type
+	 * @param  regionId the primary key of the organization's region
+	 * @param  countryId the primary key of the organization's country
+	 * @param  statusId the organization's workflow status
+	 * @param  comments the comments about the organization
+	 * @param  site whether the organization is to be associated with a main
+	 *         site
+	 * @param  serviceContext the service context to be applied (optionally
+	 *         <code>null</code>). Can set asset category IDs, asset tag names,
+	 *         and expando bridge attributes for the organization.
+	 * @return the organization
+	 * @throws PortalException if a creator or parent organization with the
+	 *         primary key could not be found or if the organization's
+	 *         information was invalid
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Organization addOrganization(
+			long userId, long parentOrganizationId, String name, String type,
+			long regionId, long countryId, int statusId, String comments,
+			boolean site, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return addOrganization(
+			userId, parentOrganizationId, name, type, regionId, countryId,
+			statusId, comments, site, null, null, null, null, null,
+			serviceContext);
 	}
 
 	/**

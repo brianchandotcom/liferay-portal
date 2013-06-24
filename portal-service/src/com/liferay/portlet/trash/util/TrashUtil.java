@@ -80,8 +80,16 @@ public class TrashUtil {
 		return getTrash().getMaxAge(group);
 	}
 
-	public static String getNewName(ThemeDisplay themeDisplay, String oldName) {
-		return getTrash().getNewName(themeDisplay, oldName);
+	public static String getNewName(String oldName, String token) {
+		return getTrash().getNewName(oldName, token);
+	}
+
+	public static String getNewName(
+			ThemeDisplay themeDisplay, String className, long classPK,
+			String oldName)
+		throws PortalException, SystemException {
+
+		return getTrash().getNewName(themeDisplay, className, classPK, oldName);
 	}
 
 	public static String getOriginalTitle(String title) {

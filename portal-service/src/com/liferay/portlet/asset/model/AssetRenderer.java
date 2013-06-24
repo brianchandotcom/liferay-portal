@@ -60,6 +60,8 @@ public interface AssetRenderer {
 
 	public String getIconPath(PortletRequest portletRequest);
 
+	public String getNewName(String oldName, String token);
+
 	public String getPreviewPath(
 			PortletRequest portletRequest, PortletResponse PortletResponse)
 		throws Exception;

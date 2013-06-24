@@ -31,6 +31,8 @@ public interface TrashRenderer {
 
 	public String getIconPath(PortletRequest portletRequest);
 
+	public String getNewName(String oldName, String token);
+
 	public String getPortletId();
 
 	public String getSummary(Locale locale);

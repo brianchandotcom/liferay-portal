@@ -81,7 +81,8 @@ CKEDITOR.config.removePlugins = [
 	'smiley',
 	'showblocks',
 	'stylescombo',
-	'templates'
+	'templates',
+	'liferayvideo'
 ].join();
 
 <c:if test="<%= resizable %>">

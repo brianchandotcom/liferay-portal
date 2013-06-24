@@ -16,8 +16,8 @@
 
 	<command name="WelcomeThemeView">
 		<execute action="PGWelcomePage1#assertTextEquals" locator-key1="PAGE_1" value1="What We Do" />
-		<execute action="PGWelcomePage1#assertElementPresent" locator-key1="PAGE_2" />
-		<execute action="PGWelcomePage1#assertElementPresent" locator-key1="PAGE_3" />
+		<execute action="PGWelcomePage1#assertTextEquals" locator-key1="PAGE_2" value1="Who Is Using Liferay" />
+		<execute action="PGWelcomePage1#assertTextEquals" locator-key1="PAGE_3" value1="Liferay Benefits" />
 		<execute action="PGWelcomePage1#assertElementPresent" locator-key1="MENU_TAGLINE" />
 		<execute action="PGWelcomePage1#assertTextEquals" locator-key1="MENU_PAGE_1" value1="A Foundation for Apps" />
 		<execute action="PGWelcomePage1#assertTextEquals" locator-key1="MENU_PAGE_2" value1="Dynamic Websites" />
@@ -31,13 +31,13 @@
 		<execute action="PGWelcomePage1#assertTextEquals" locator-key1="GETTING_STARTED" value1="Need Help Getting Started?" />
 		<execute action="PGWelcomePage1#assertTextEquals" locator-key1="DEVELOP_FASTER" value1="Develop Faster." />
 
-		<execute action="PGWelcomePage1#click" locator-key1="PAGE_2" />
+		<execute action="PGWelcomePage1#assertClick" locator-key1="PAGE_2" value1="Who Is Using Liferay" />
 
 		<execute action="PGWelcomePage2#assertElementPresent" locator-key1="CUSTOMERS_1" />
 		<execute action="PGWelcomePage2#assertElementPresent" locator-key1="CUSTOMERS_2" />
 		<execute action="PGWelcomePage2#assertElementPresent" locator-key1="HEADER" />
 
-		<execute action="PGWelcomePage1#click" locator-key1="PAGE_3" />
+		<execute action="PGWelcomePage1#assertClick" locator-key1="PAGE_3" value1="Liferay Benefits" />
 
 		<execute action="PGWelcomePage3#assertElementPresent" locator-key1="HEADER" />
 		<execute action="PGWelcomePage3#assertTextEquals" locator-key1="MENU_PAGE_1" value1="Open Source: A Better Way" />

@@ -127,7 +127,7 @@ public class ValidatorTest extends PowerMockito {
 	public void testIsInvalidHostName() throws Exception {
 		String[] invalidHostNames = {
 			"(999.999.999)", "123_456_789_012", "www.$dollar$.com",
-			"{abcd:1234:ef01:2345:6789:0123:4567}"
+			"{abcd:1234:ef01:2345:6789:0123:4567}", ".liferay.com"
 		};
 
 		testValidHostNames(invalidHostNames, false);
@@ -380,10 +380,9 @@ public class ValidatorTest extends PowerMockito {
 	@Test
 	public void testIsValidHostName() throws Exception {
 		String[] validHostNames = {
-			"localhost", "testlocalhost", "testlocalhost.", "127.0.0.1",
-			"10.10.10.1", "abc.com", "abc.com.", "9to5.net",
-			"liferay.com", "www.liferay.com", "www.liferay.co.uk", "::1",
-			"[abcd:1234:ef01:2345:6789:0123:4567]"
+			"localhost", "127.0.0.1", "10.10.10.1", "abc", "abc.com",
+			"abc.com.", "9to5.net", "liferay.com", "www.liferay.com",
+			"www.liferay.co.uk", "::1", "[abcd:1234:ef01:2345:6789:0123:4567]"
 		};
 
 		testValidHostNames(validHostNames, true);

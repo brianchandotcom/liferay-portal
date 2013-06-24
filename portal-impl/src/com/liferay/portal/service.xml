@@ -479,6 +479,7 @@
 		<reference package-path="com.liferay.portlet.bookmarks" entity="BookmarksFolder" />
 		<reference package-path="com.liferay.portlet.documentlibrary" entity="DLApp" />
 		<reference package-path="com.liferay.portlet.documentlibrary" entity="DLFileEntryType" />
+		<reference package-path="com.liferay.portlet.expando" entity="ExpandoRow" />
 		<reference package-path="com.liferay.portlet.journal" entity="JournalArticle" />
 		<reference package-path="com.liferay.portlet.journal" entity="JournalStructure" />
 		<reference package-path="com.liferay.portlet.journal" entity="JournalTemplate" />
@@ -630,7 +631,7 @@
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portlet.expando" entity="ExpandoValue" />
+		<reference package-path="com.liferay.portlet.expando" entity="ExpandoRow" />
 		<reference package-path="com.liferay.portlet.journal" entity="JournalArticle" />
 		<reference package-path="com.liferay.portlet.journal" entity="JournalContentSearch" />
 		<reference package-path="com.liferay.portlet.messageboards" entity="MBMessage" />
@@ -1170,7 +1171,7 @@
 		<reference package-path="com.liferay.portlet.asset" entity="AssetCategory" />
 		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
 		<reference package-path="com.liferay.portlet.asset" entity="AssetTag" />
-		<reference package-path="com.liferay.portlet.expando" entity="ExpandoValue" />
+		<reference package-path="com.liferay.portlet.expando" entity="ExpandoRow" />
 	</entity>
 	<entity name="OrgGroupRole" local-service="false" remote-service="false">
 
@@ -1938,7 +1939,7 @@
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portlet.expando" entity="ExpandoValue" />
+		<reference package-path="com.liferay.portlet.expando" entity="ExpandoRow" />
 	</entity>
 	<entity name="ServiceComponent" local-service="true" remote-service="false">
 
@@ -2283,7 +2284,7 @@
 		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
 		<reference package-path="com.liferay.portlet.blogs" entity="BlogsStatsUser" />
 		<reference package-path="com.liferay.portlet.documentlibrary" entity="DLFileRank" />
-		<reference package-path="com.liferay.portlet.expando" entity="ExpandoValue" />
+		<reference package-path="com.liferay.portlet.expando" entity="ExpandoRow" />
 		<reference package-path="com.liferay.portlet.messageboards" entity="MBBan" />
 		<reference package-path="com.liferay.portlet.messageboards" entity="MBMessage" />
 		<reference package-path="com.liferay.portlet.messageboards" entity="MBStatsUser" />
@@ -2341,7 +2342,7 @@
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portlet.expando" entity="ExpandoValue" />
+		<reference package-path="com.liferay.portlet.expando" entity="ExpandoRow" />
 	</entity>
 	<entity name="UserGroupGroupRole" local-service="true" remote-service="true">
 

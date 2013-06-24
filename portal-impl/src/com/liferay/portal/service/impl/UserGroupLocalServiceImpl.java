@@ -362,8 +362,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 
 		// Expando
 
-		expandoValueLocalService.deleteValues(
-			UserGroup.class.getName(), userGroup.getUserGroupId());
+		expandoRowLocalService.deleteRows(userGroup.getUserGroupId());
 
 		// Users
 

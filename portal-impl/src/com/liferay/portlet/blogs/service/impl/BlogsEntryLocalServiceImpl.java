@@ -339,8 +339,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		// Expando
 
-		expandoValueLocalService.deleteValues(
-			BlogsEntry.class.getName(), entry.getEntryId());
+		expandoRowLocalService.deleteRows(entry.getEntryId());
 
 		// Message boards
 

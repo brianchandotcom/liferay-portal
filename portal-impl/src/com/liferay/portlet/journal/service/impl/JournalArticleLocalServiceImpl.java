@@ -997,8 +997,7 @@ public class JournalArticleLocalServiceImpl
 
 		// Expando
 
-		expandoValueLocalService.deleteValues(
-			JournalArticle.class.getName(), article.getId());
+		expandoRowLocalService.deleteRows(article.getId());
 
 		// Workflow
 

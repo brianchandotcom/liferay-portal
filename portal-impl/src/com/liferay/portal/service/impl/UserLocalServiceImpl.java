@@ -1871,8 +1871,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		// Expando
 
-		expandoValueLocalService.deleteValues(
-			User.class.getName(), user.getUserId());
+		expandoRowLocalService.deleteRows(user.getUserId());
 
 		// Message boards
 

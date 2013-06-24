@@ -738,7 +738,9 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		// Layout set
 
-		if (!serviceContext.isSkipUpdatePageCount()) {
+		if (!GetterUtil.getBoolean(
+				serviceContext.getAttribute("skipUpdatePageCount"))) {
+
 			layoutSetLocalService.updatePageCount(groupId, privateLayout);
 		}
 

@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.util.PropsUtil;
 
+import java.net.InetAddress;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -47,6 +49,11 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 		for (JChannel jChannel : _transportChannels) {
 			jChannel.close();
 		}
+	}
+
+	@Override
+	public InetAddress getBindInetAddress() {
+		return bindInetAddress;
 	}
 
 	@Override

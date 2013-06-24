@@ -26,6 +26,8 @@ import java.io.IOException;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.util.HashSet;
@@ -80,6 +82,8 @@ public class DB2DB extends BaseDB {
 			String[] alterSqls = StringUtil.split(sql, CharPool.SEMICOLON);
 
 			for (String alterSql : alterSqls) {
+				alterSql = StringUtil.trim(alterSql);
+
 				runSQL(alterSql);
 			}
 		}
@@ -184,6 +188,67 @@ public class DB2DB extends BaseDB {
 		return sb.toString();
 	}
 
+	private boolean _isReorgTableRequired(Connection con, String tableName)
+		throws SQLException {
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		boolean isReorgTableRequired = false;
+
+		try {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("select num_reorg_rec_alters from table(");
+			sb.append("sysproc.admin_get_tab_info(current_schema, '");
+			sb.append(tableName.toUpperCase());
+			sb.append("')) where reorg_pending = 'Y'");
+
+			ps = con.prepareStatement(sb.toString());
+
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				int numReorgRecAlters = rs.getInt(1);
+
+				if (numReorgRecAlters >= 1) {
+					isReorgTableRequired = true;
+				}
+			}
+		}
+		finally {
+			DataAccess.cleanUp(ps);
+			DataAccess.cleanUp(rs);
+		}
+
+		return isReorgTableRequired;
+	}
+
+	private void _reorgTable(Connection con, String tableName)
+		throws SQLException {
+
+		if (!_isReorgTableRequired(con, tableName)) {
+			return;
+		}
+
+		CallableStatement callStmt = null;
+
+		try {
+			String sql = "call sysproc.admin_cmd(?)";
+
+			callStmt = con.prepareCall(sql);
+
+			String param = "reorg table " + tableName;
+
+			callStmt.setString(1, param);
+
+			callStmt.execute();
+		}
+		finally {
+			DataAccess.cleanUp(callStmt);
+		}
+	}
+
 	private void _reorgTables(String[] templates) throws SQLException {
 		Set<String> tableNames = new HashSet<String>();
 
@@ -198,25 +263,16 @@ public class DB2DB extends BaseDB {
 		}
 
 		Connection con = null;
-		CallableStatement callStmt = null;
 
 		try {
 			con = DataAccess.getConnection();
 
 			for (String tableName : tableNames) {
-				String sql = "call sysproc.admin_cmd(?)";
-
-				callStmt = con.prepareCall(sql);
-
-				String param = "reorg table " + tableName;
-
-				callStmt.setString(1, param);
-
-				callStmt.execute();
+				_reorgTable(con, tableName);
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, callStmt);
+			DataAccess.cleanUp(con);
 		}
 	}
 

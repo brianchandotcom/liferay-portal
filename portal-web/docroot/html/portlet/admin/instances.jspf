@@ -14,7 +14,7 @@
  */
 --%>
 
-<liferay-ui:error exception="<%= RequiredCompanyException.class %>" message="default-company-is-required" />
+<liferay-ui:error exception="<%= RequiredCompanyException.class %>" message="the-default-company-is-required" />
 
 <input onClick="location.href = '<portlet:renderURL><portlet:param name="struts_action" value="/admin/edit_instance" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>';" type="button" value="<liferay-ui:message key="add" />" />
 

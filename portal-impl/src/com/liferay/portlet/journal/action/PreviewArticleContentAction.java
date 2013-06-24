@@ -90,7 +90,7 @@ public class PreviewArticleContentAction extends PortletAction {
 				User user = PortalUtil.getUser(actionRequest);
 
 				String content = ParamUtil.getString(
-					actionRequest, "content");
+					actionRequest, "articleContent");
 
 				if (Validator.isNotNull(structureId)) {
 					ServiceContext serviceContext =

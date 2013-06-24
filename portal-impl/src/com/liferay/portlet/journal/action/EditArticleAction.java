@@ -595,7 +595,8 @@ public class EditArticleAction extends PortletAction {
 				uploadPortletRequest, "description_" + toLanguageId);
 		}
 
-		String content = ParamUtil.getString(uploadPortletRequest, "content");
+		String content = ParamUtil.getString(
+			uploadPortletRequest, "articleContent");
 
 		Map<String, byte[]> images = new HashMap<String, byte[]>();
 

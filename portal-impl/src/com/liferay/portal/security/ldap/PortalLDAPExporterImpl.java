@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
@@ -67,7 +68,9 @@ public class PortalLDAPExporterImpl implements PortalLDAPExporter {
 		User user = UserLocalServiceUtil.getUserByContactId(
 			contact.getContactId());
 
-		if (user.isDefaultUser()) {
+		if (user.isDefaultUser() ||
+			(user.getStatus() != WorkflowConstants.STATUS_APPROVED)) {
+
 			return;
 		}
 
@@ -214,6 +217,12 @@ public class PortalLDAPExporterImpl implements PortalLDAPExporter {
 	public void exportToLDAP(
 			User user, Map<String, Serializable> userExpandoAttributes)
 		throws Exception {
+
+		if (user.isDefaultUser() ||
+			(user.getStatus() != WorkflowConstants.STATUS_APPROVED)) {
+
+			return;
+		}
 
 		long companyId = user.getCompanyId();
 

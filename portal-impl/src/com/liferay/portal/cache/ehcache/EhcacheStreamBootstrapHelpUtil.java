@@ -54,7 +54,8 @@ import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
 
 /**
- * @author Shuyang Zhou Sherry Yang
+ * @author Shuyang Zhou
+ * @author Sherry Yang
  */
 public class EhcacheStreamBootstrapHelpUtil {
 
@@ -63,7 +64,7 @@ public class EhcacheStreamBootstrapHelpUtil {
 			ClusterExecutorUtil.getClusterNodeAddresses();
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Cluster Node addresses: " + clusterNodeAddresses);
+			_log.info("Cluster node addresses: " + clusterNodeAddresses);
 		}
 
 		int clusterNodeAddressesCount = clusterNodeAddresses.size();
@@ -71,8 +72,8 @@ public class EhcacheStreamBootstrapHelpUtil {
 		if (clusterNodeAddressesCount <= 1) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Can not get caches because there is either one portal" +
-						" instance or no portal instances in the cluster");
+					"Cannot get caches because there is one or less portal " +
+						"instances in the cluster");
 			}
 
 			return;
@@ -102,7 +103,7 @@ public class EhcacheStreamBootstrapHelpUtil {
 		throws Exception {
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("remote node executed");
+			_log.debug("Remote node executed");
 		}
 
 		ServerSocket serverSocket = createServerSocket(_START_PORT);
@@ -111,6 +112,7 @@ public class EhcacheStreamBootstrapHelpUtil {
 			serverSocket, cacheName);
 
 		Thread thread = new Thread(cacheStreamRunnable);
+
 		thread.setDaemon(true);
 		thread.start();
 
@@ -135,7 +137,8 @@ public class EhcacheStreamBootstrapHelpUtil {
 
 		try {
 			clusterNodeResponse = clusterNodeResponses.poll(
-				_BOOTUP_CLUSTER_NODE_RESPONSE_TIMEOUT, TimeUnit.MILLISECONDS);
+				_CLUSTER_LINK_NODE_BOOTUP_RESPONSE_TIMEOUT,
+				TimeUnit.MILLISECONDS);
 		}
 		catch (InterruptedException ie) {
 			return;
@@ -145,9 +148,8 @@ public class EhcacheStreamBootstrapHelpUtil {
 			return;
 		}
 
-		Socket socket = null;
-
 		ObjectInputStream objectInputStream = null;
+		Socket socket = null;
 
 		try {
 			SocketAddress remoteSocketAddress =
@@ -206,10 +208,10 @@ public class EhcacheStreamBootstrapHelpUtil {
 		}
 	}
 
-	private static final long _BOOTUP_CLUSTER_NODE_RESPONSE_TIMEOUT =
-		PropsValues.BOOTUP_CLUSTER_NODE_RESPONSE_TIMEOUT;
-
 	private static final String _CACHE_TX_START = "${CACHE_TX_START}";
+
+	private static final int _CLUSTER_LINK_NODE_BOOTUP_RESPONSE_TIMEOUT =
+		PropsValues.CLUSTER_LINK_NODE_BOOTUP_RESPONSE_TIMEOUT;
 
 	private static final String _MULTI_VM_PORTAL_CACHE_MANAGER_BEAN_NAME =
 		"com.liferay.portal.kernel.cache.MultiVMPortalCacheManager";
@@ -238,6 +240,7 @@ public class EhcacheStreamBootstrapHelpUtil {
 
 			_serverSocket = serverSocket;
 			_cacheName = cacheName;
+
 			EhcachePortalCacheManager ehcachePortalCacheManager =
 				(EhcachePortalCacheManager)PortalBeanLocatorUtil.locate(
 					_MULTI_VM_PORTAL_CACHE_MANAGER_BEAN_NAME);
@@ -284,7 +287,7 @@ public class EhcacheStreamBootstrapHelpUtil {
 							if (_log.isWarnEnabled()) {
 								_log.warn(
 									"Key " + key.toString() +
-									" can not be serializable");
+										" cannot be serializable");
 							}
 
 							continue;
@@ -302,7 +305,7 @@ public class EhcacheStreamBootstrapHelpUtil {
 								if (_log.isWarnEnabled()) {
 									_log.warn(
 										"Value " + value.toString() +
-											" can not be serializable");
+											" cannot be serializable");
 								}
 
 								continue;
@@ -363,10 +366,11 @@ public class EhcacheStreamBootstrapHelpUtil {
 
 		@Override
 		public void configure(ServerSocket serverSocket)
-				throws SocketException {
+			throws SocketException {
 
 			serverSocket.setSoTimeout(_SO_TIMEOUT);
 		}
+
 	}
 
 }

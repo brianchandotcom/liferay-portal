@@ -747,7 +747,8 @@ public class LuceneHelperImpl implements LuceneHelper {
 
 		try {
 			ClusterNodeResponse clusterNodeResponse = clusterNodeResponses.poll(
-				_BOOTUP_CLUSTER_NODE_RESPONSE_TIMEOUT, TimeUnit.MILLISECONDS);
+				_CLUSTER_LINK_NODE_BOOTUP_RESPONSE_TIMEOUT,
+				TimeUnit.MILLISECONDS);
 
 			String transientToken = (String)clusterNodeResponse.getResult();
 
@@ -870,8 +871,8 @@ public class LuceneHelperImpl implements LuceneHelper {
 				indexAccessor, clusterNodeAddressesCount, localLastGeneration));
 	}
 
-	private static final long _BOOTUP_CLUSTER_NODE_RESPONSE_TIMEOUT =
-		PropsValues.BOOTUP_CLUSTER_NODE_RESPONSE_TIMEOUT;
+	private static final int _CLUSTER_LINK_NODE_BOOTUP_RESPONSE_TIMEOUT =
+		PropsValues.CLUSTER_LINK_NODE_BOOTUP_RESPONSE_TIMEOUT;
 
 	private static final int _LUCENE_BOOLEAN_QUERY_CLAUSE_MAX_SIZE =
 		GetterUtil.getInteger(
@@ -972,7 +973,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 
 				try {
 					clusterNodeResponse = blockingQueue.poll(
-						_BOOTUP_CLUSTER_NODE_RESPONSE_TIMEOUT,
+						_CLUSTER_LINK_NODE_BOOTUP_RESPONSE_TIMEOUT,
 						TimeUnit.MILLISECONDS);
 				}
 				catch (Exception e) {
@@ -983,7 +984,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 					if (_log.isDebugEnabled()) {
 						_log.debug(
 							"Unable to get cluster node response in " +
-								_BOOTUP_CLUSTER_NODE_RESPONSE_TIMEOUT +
+								_CLUSTER_LINK_NODE_BOOTUP_RESPONSE_TIMEOUT +
 									TimeUnit.MILLISECONDS);
 					}
 
@@ -1067,7 +1068,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 		@Override
 		public void processTimeoutException(TimeoutException timeoutException) {
 			_log.error(
-				"Uanble to load index for company " + _companyId,
+				"Unable to load index for company " + _companyId,
 				timeoutException);
 		}
 

@@ -20,7 +20,8 @@ import net.sf.ehcache.bootstrap.BootstrapCacheLoader;
 import net.sf.ehcache.bootstrap.BootstrapCacheLoaderFactory;
 
 /**
- * @author Shuyang Zhou Sherry Yang
+ * @author Shuyang Zhou
+ * @author Sherry Yang
  */
 public class EhcacheStreamBootstrapCacheLoaderFactory
 	extends BootstrapCacheLoaderFactory {

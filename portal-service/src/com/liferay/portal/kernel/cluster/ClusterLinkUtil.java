@@ -42,7 +42,13 @@ public class ClusterLinkUtil {
 	}
 
 	public static InetAddress getBindInetAddress() {
-		return getClusterLink().getBindInetAddress();
+		ClusterLink clusterLink = getClusterLink();
+
+		if (clusterLink == null) {
+			return null;
+		}
+
+		return clusterLink.getBindInetAddress();
 	}
 
 	public static ClusterLink getClusterLink() {

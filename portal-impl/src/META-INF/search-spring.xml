@@ -203,16 +203,34 @@
 				<entry key="type" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
 				<entry key="userId" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
 				<entry key="userName" value-ref="com.liferay.portal.search.lucene.LikeKeywordAnalyzer" />
-				<entry key=".*_ar" value-ref="org.apache.lucene.analysis.ar.ArabicAnalyzer" />
+				<entry key=".*_ar_SA" value-ref="org.apache.lucene.analysis.ar.ArabicAnalyzer" />
+				<entry key=".*_bg_BG" value-ref="org.apache.lucene.analysis.bg.BulgarianAnalyzer" />
+				<entry key=".*_ca_[A-Z]{2}" value-ref="org.apache.lucene.analysis.ca.CatalanAnalyzer" />
+				<entry key=".*_cz_CZ" value-ref="org.apache.lucene.analysis.cz.CzechAnalyzer" />
+				<entry key=".*_da_DK" value-ref="org.apache.lucene.analysis.de.GermanAnalyzer" />
 				<entry key=".*_de_DE" value-ref="org.apache.lucene.analysis.de.GermanAnalyzer" />
 				<entry key=".*_el_GR" value-ref="org.apache.lucene.analysis.el.GreekAnalyzer" />
+				<entry key=".*_es_[A-Z]{2}" value-ref="org.apache.lucene.analysis.es.SpanishAnalyzer" />
+				<entry key=".*_eu_ES" value-ref="org.apache.lucene.analysis.eu.BasqueAnalyzer" />
 				<entry key=".*_fa_IR" value-ref="org.apache.lucene.analysis.fa.PersianAnalyzer" />
+				<entry key=".*_fi_FI" value-ref="org.apache.lucene.analysis.fi.FinnishAnalyzer" />
 				<entry key=".*_fr_[A-Z]{2}" value-ref="org.apache.lucene.analysis.fr.FrenchAnalyzer" />
+				<entry key=".*_gl_ES" value-ref="org.apache.lucene.analysis.gl.GalicianAnalyzer" />
+				<entry key=".*_hi_IN" value-ref="org.apache.lucene.analysis.hi.HindiAnalyzer" />
+				<entry key=".*_hu_HU" value-ref="org.apache.lucene.analysis.hu.HungarianAnalyzer" />
+				<entry key=".*_in_ID" value-ref="org.apache.lucene.analysis.id.IndonesianAnalyzer" />
+				<entry key=".*_it_IT" value-ref="org.apache.lucene.analysis.it.ItalianAnalyzer" />
 				<entry key=".*_ja_JP" value-ref="org.apache.lucene.analysis.cjk.CJKAnalyzer" />
 				<entry key=".*_ko_KR" value-ref="org.apache.lucene.analysis.cjk.CJKAnalyzer" />
 				<entry key=".*_nl_NL" value-ref="org.apache.lucene.analysis.nl.DutchAnalyzer" />
+				<entry key=".*_nb_NO" value-ref="org.apache.lucene.analysis.no.NorwegianAnalyzer" />
 				<entry key=".*_pt_BR" value-ref="org.apache.lucene.analysis.br.BrazilianAnalyzer" />
+				<entry key=".*_pt_PT" value-ref="org.apache.lucene.analysis.pt.PortugueseAnalyzer" />
+				<entry key=".*_ro_RO" value-ref="org.apache.lucene.analysis.ro.RomanianAnalyzer" />
 				<entry key=".*_ru_RU" value-ref="org.apache.lucene.analysis.ru.RussianAnalyzer" />
+				<entry key=".*_sv_SE" value-ref="org.apache.lucene.analysis.sv.SwedishAnalyzer" />
+				<entry key=".*_th_TH" value-ref="org.apache.lucene.analysis.th.ThaiAnalyzer" />
+				<entry key=".*_tr_TR" value-ref="org.apache.lucene.analysis.tr.TurkishAnalyzer" />
 				<entry key=".*_zh_CN" value-ref="org.apache.lucene.analysis.cjk.CJKAnalyzer" />
 				<entry key=".*_zh_TW" value-ref="org.apache.lucene.analysis.cjk.CJKAnalyzer" />
 			</util:map>
@@ -224,7 +242,16 @@
 	<bean id="org.apache.lucene.analysis.ar.ArabicAnalyzer" class="org.apache.lucene.analysis.ar.ArabicAnalyzer">
 		<constructor-arg ref="org.apache.lucene.util.Version" />
 	</bean>
+	<bean id="org.apache.lucene.analysis.eu.BasqueAnalyzer" class="org.apache.lucene.analysis.eu.BasqueAnalyzer">
+		<constructor-arg ref="org.apache.lucene.util.Version" />
+	</bean>
 	<bean id="org.apache.lucene.analysis.br.BrazilianAnalyzer" class="org.apache.lucene.analysis.br.BrazilianAnalyzer">
+		<constructor-arg ref="org.apache.lucene.util.Version" />
+	</bean>
+	<bean id="org.apache.lucene.analysis.bg.BulgarianAnalyzer" class="org.apache.lucene.analysis.bg.BulgarianAnalyzer">
+		<constructor-arg ref="org.apache.lucene.util.Version" />
+	</bean>
+	<bean id="org.apache.lucene.analysis.ca.CatalanAnalyzer" class="org.apache.lucene.analysis.ca.CatalanAnalyzer">
 		<constructor-arg ref="org.apache.lucene.util.Version" />
 	</bean>
 	<bean id="org.apache.lucene.analysis.cjk.CJKAnalyzer" class="org.apache.lucene.analysis.cjk.CJKAnalyzer">
@@ -233,10 +260,19 @@
 	<bean id="org.apache.lucene.analysis.cz.CzechAnalyzer" class="org.apache.lucene.analysis.cz.CzechAnalyzer">
 		<constructor-arg ref="org.apache.lucene.util.Version" />
 	</bean>
+	<bean id="org.apache.lucene.analysis.da.DanishAnalyzer" class="org.apache.lucene.analysis.da.DanishAnalyzer">
+		<constructor-arg ref="org.apache.lucene.util.Version" />
+	</bean>
 	<bean id="org.apache.lucene.analysis.nl.DutchAnalyzer" class="org.apache.lucene.analysis.nl.DutchAnalyzer">
 		<constructor-arg ref="org.apache.lucene.util.Version" />
 	</bean>
+	<bean id="org.apache.lucene.analysis.fi.FinnishAnalyzer" class="org.apache.lucene.analysis.fi.FinnishAnalyzer">
+		<constructor-arg ref="org.apache.lucene.util.Version" />
+	</bean>
 	<bean id="org.apache.lucene.analysis.fr.FrenchAnalyzer" class="org.apache.lucene.analysis.fr.FrenchAnalyzer">
+		<constructor-arg ref="org.apache.lucene.util.Version" />
+	</bean>
+	<bean id="org.apache.lucene.analysis.gl.GalicianAnalyzer" class="org.apache.lucene.analysis.gl.GalicianAnalyzer">
 		<constructor-arg ref="org.apache.lucene.util.Version" />
 	</bean>
 	<bean id="org.apache.lucene.analysis.de.GermanAnalyzer" class="org.apache.lucene.analysis.de.GermanAnalyzer">
@@ -245,13 +281,46 @@
 	<bean id="org.apache.lucene.analysis.el.GreekAnalyzer" class="org.apache.lucene.analysis.el.GreekAnalyzer">
 		<constructor-arg ref="org.apache.lucene.util.Version" />
 	</bean>
+	<bean id="org.apache.lucene.analysis.hi.HindiAnalyzer" class="org.apache.lucene.analysis.hi.HindiAnalyzer">
+		<constructor-arg ref="org.apache.lucene.util.Version" />
+	</bean>
+	<bean id="org.apache.lucene.analysis.hu.HungarianAnalyzer" class="org.apache.lucene.analysis.hu.HungarianAnalyzer">
+		<constructor-arg ref="org.apache.lucene.util.Version" />
+	</bean>
+	<bean id="org.apache.lucene.analysis.id.IndonesianAnalyzer" class="org.apache.lucene.analysis.id.IndonesianAnalyzer">
+		<constructor-arg ref="org.apache.lucene.util.Version" />
+	</bean>
+	<bean id="org.apache.lucene.analysis.it.ItalianAnalyzer" class="org.apache.lucene.analysis.it.ItalianAnalyzer">
+		<constructor-arg ref="org.apache.lucene.util.Version" />
+	</bean>
+	<bean id="org.apache.lucene.analysis.no.NorwegianAnalyzer" class="org.apache.lucene.analysis.no.NorwegianAnalyzer">
+		<constructor-arg ref="org.apache.lucene.util.Version" />
+	</bean>
 	<bean id="org.apache.lucene.analysis.fa.PersianAnalyzer" class="org.apache.lucene.analysis.fa.PersianAnalyzer">
+		<constructor-arg ref="org.apache.lucene.util.Version" />
+	</bean>
+	<bean id="org.apache.lucene.analysis.pt.PortugueseAnalyzer" class="org.apache.lucene.analysis.pt.PortugueseAnalyzer">
+		<constructor-arg ref="org.apache.lucene.util.Version" />
+	</bean>
+	<bean id="org.apache.lucene.analysis.ro.RomanianAnalyzer" class="org.apache.lucene.analysis.ro.RomanianAnalyzer">
 		<constructor-arg ref="org.apache.lucene.util.Version" />
 	</bean>
 	<bean id="org.apache.lucene.analysis.ru.RussianAnalyzer" class="org.apache.lucene.analysis.ru.RussianAnalyzer">
 		<constructor-arg ref="org.apache.lucene.util.Version" />
 	</bean>
+	<bean id="org.apache.lucene.analysis.es.SpanishAnalyzer" class="org.apache.lucene.analysis.es.SpanishAnalyzer">
+		<constructor-arg ref="org.apache.lucene.util.Version" />
+	</bean>
 	<bean id="org.apache.lucene.analysis.standard.StandardAnalyzer" class="org.apache.lucene.analysis.standard.StandardAnalyzer">
+		<constructor-arg ref="org.apache.lucene.util.Version" />
+	</bean>
+	<bean id="org.apache.lucene.analysis.sv.SwedishAnalyzer" class="org.apache.lucene.analysis.sv.SwedishAnalyzer">
+		<constructor-arg ref="org.apache.lucene.util.Version" />
+	</bean>
+	<bean id="org.apache.lucene.analysis.th.ThaiAnalyzer" class="org.apache.lucene.analysis.th.ThaiAnalyzer">
+		<constructor-arg ref="org.apache.lucene.util.Version" />
+	</bean>
+	<bean id="org.apache.lucene.analysis.tr.TurkishAnalyzer" class="org.apache.lucene.analysis.tr.TurkishAnalyzer">
 		<constructor-arg ref="org.apache.lucene.util.Version" />
 	</bean>
 	<bean id="org.apache.lucene.util.Version" class="org.apache.lucene.util.Version" factory-method="valueOf">

@@ -14,28 +14,23 @@
 
 package com.liferay.portal.messaging.async;
 
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
-import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 
 /**
  * @author Shuyang Zhou
- * @author Brian Wing Shun Chan
  */
-public class AsyncMessageListener extends BaseMessageListener {
+public class AsyncInvokeThreadLocal {
 
-	@Override
-	protected void doReceive(Message message) throws Exception {
-		MethodHandler methodHandler = (MethodHandler)message.getPayload();
-
-		AsyncInvokeThreadLocal.setEnabled(true);
-
-		try {
-			methodHandler.invoke(null);
-		}
-		finally {
-			AsyncInvokeThreadLocal.setEnabled(false);
-		}
+	public static boolean isEnabled() {
+		return _enabled.get();
 	}
+
+	public static void setEnabled(boolean enabled) {
+		_enabled.set(enabled);
+	}
+
+	private static ThreadLocal<Boolean> _enabled =
+		new AutoResetThreadLocal<Boolean>(
+			AsyncInvokeThreadLocal.class + "._enabled", true);
 
 }

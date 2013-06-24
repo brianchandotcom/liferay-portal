@@ -35,7 +35,6 @@ import org.aopalliance.intercept.MethodInterceptor;
 
 import org.springframework.aop.SpringProxy;
 import org.springframework.aop.TargetSource;
-import org.springframework.aop.framework.Advised;
 import org.springframework.aop.framework.AdvisedSupport;
 import org.springframework.aop.framework.AdvisorChainFactory;
 import org.springframework.aop.framework.AopProxy;
@@ -138,16 +137,6 @@ public class ServiceBeanAopProxy implements AopProxy, InvocationHandler {
 	@Override
 	public Object invoke(Object proxy, Method method, Object[] arguments)
 		throws Throwable {
-
-		String methodName = method.getName();
-
-		if (methodName.equals("getTargetSource") && (arguments == null)) {
-			Class<?> clazz = method.getDeclaringClass();
-
-			if (clazz.equals(Advised.class)) {
-				return _advisedSupport.getTargetSource();
-			}
-		}
 
 		TargetSource targetSource = _advisedSupport.getTargetSource();
 

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.messageboards.service.impl;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -60,6 +61,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.SubscriptionSender;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
+import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.util.LinkbackProducerUtil;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.messageboards.MessageBodyException;
@@ -84,6 +86,7 @@ import com.liferay.portlet.messageboards.util.MailingListThreadLocal;
 import com.liferay.portlet.messageboards.util.comparator.MessageCreateDateComparator;
 import com.liferay.portlet.messageboards.util.comparator.MessageThreadComparator;
 import com.liferay.portlet.messageboards.util.comparator.ThreadLastPostDateComparator;
+import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.util.SerializableUtil;
@@ -463,6 +466,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
 
+		deleteDiscussionSocialActivities(BlogsEntry.class.getName(), message);
+
 		return deleteMessage(message);
 	}
 
@@ -482,6 +487,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			if (!messages.isEmpty()) {
 				MBMessage message = messages.get(0);
+
+				deleteDiscussionSocialActivities(
+					BlogsEntry.class.getName(), message);
 
 				mbThreadLocalService.deleteThread(message.getThreadId());
 			}
@@ -1749,6 +1757,41 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			message.setUserName(userName);
 
 			mbMessagePersistence.update(message);
+		}
+	}
+
+	protected void deleteDiscussionSocialActivities(
+			String className, MBMessage message)
+		throws PortalException, SystemException {
+
+		MBDiscussion discussion = mbDiscussionPersistence.findByThreadId(
+			message.getThreadId());
+
+		long classNameId = PortalUtil.getClassNameId(className);
+		long classPK = discussion.getClassPK();
+
+		if (discussion.getClassNameId() != classNameId) {
+			return;
+		}
+
+		List<SocialActivity> socialActivities =
+			socialActivityLocalService.getActivities(
+				0, className, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		for (SocialActivity socialActivity : socialActivities) {
+			if (Validator.isNull(socialActivity.getExtraData())) {
+				continue;
+			}
+
+			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject(
+				socialActivity.getExtraData());
+
+			long extraDataMessageId = extraDataJSONObject.getLong("messageId");
+
+			if (message.getMessageId() == extraDataMessageId) {
+				socialActivityLocalService.deleteActivity(
+					socialActivity.getActivityId());
+			}
 		}
 	}
 

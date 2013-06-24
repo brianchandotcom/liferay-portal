@@ -104,6 +104,10 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 					tag.getTagId(), entry.getClassNameId());
 			}
 		}
+
+		// Social
+
+		socialActivityLocalService.deleteActivities(entry);
 	}
 
 	@Override

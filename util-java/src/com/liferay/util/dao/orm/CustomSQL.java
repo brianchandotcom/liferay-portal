@@ -233,7 +233,7 @@ public class CustomSQL {
 		}
 
 		if (isVendorMySQL() || isVendorOracle()) {
-			keywords = StringUtil.replace(keywords,"_","\\_");
+			keywords = StringUtil.replace(keywords, "_", "\\_");
 		}
 
 		if (lowerCase) {

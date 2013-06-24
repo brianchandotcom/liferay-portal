@@ -1,7 +1,7 @@
 ;(function(A, Liferay) {
 	var Language = {};
 
-	Language.get = function(key){
+	Language.get = function(key) {
 		return key;
 	};
 

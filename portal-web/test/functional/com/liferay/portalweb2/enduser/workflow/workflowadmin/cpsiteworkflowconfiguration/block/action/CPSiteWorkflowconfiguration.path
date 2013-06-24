@@ -66,12 +66,12 @@
 </tr>
 <tr>
 	<td>RESOURCE_TABLE_COMMENTS</td>
-	<td>//div[@id='_152_workflowHandlersSearchContainerSearchContainer']///tr[contains(.,'Comments')]/td[1]</td>
+	<td>//div[@id='_152_workflowHandlersSearchContainerSearchContainer']//tr[contains(.,'Comments')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RESOURCE_TABLE_COMMENTS_SELECT</td>
-	<td>//select[@id='_152_workflowDefinitionName@com.liferay.portal.model.User']</td>
+	<td>//select[@id='_152_workflowDefinitionName@com.liferay.portlet.messageboards.model.MBDiscussion']</td>
 	<td></td>
 </tr>
 <tr>

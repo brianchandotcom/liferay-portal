@@ -96,7 +96,6 @@ int delta = ParamUtil.getInteger(request, "delta", deltaDefault);
 	new Liferay.Dockbar.AddContent(
 		{
 			focusItem: searchContent,
-			id: 'content',
 			inputNode: searchContent,
 			namespace: '<portlet:namespace />',
 			selected: !A.one('#<portlet:namespace />addContentForm').ancestor().hasClass('hide')

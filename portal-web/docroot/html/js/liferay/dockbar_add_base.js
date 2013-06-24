@@ -81,7 +81,7 @@ AUI.add(
 							instance._searchData = searchData;
 						}
 
-						if (instance.get('selected')) {
+						if (instance.get('selected')) {
 							var focusItem = instance.get('focusItem');
 
 							if (focusItem) {
@@ -121,12 +121,10 @@ AUI.add(
 					_showTab: function(event) {
 						var instance = this;
 
-						if (event.id === instance.get('id')) {
-							var focusItem = instance.get('focusItem');
+						var focusItem = instance.get('focusItem');
 
-							if (focusItem) {
-								focusItem.focus();
-							}
+						if (focusItem && event.tabSection.contains(focusItem)) {
+							focusItem.focus();
 						}
 					}
 				}

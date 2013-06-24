@@ -180,7 +180,6 @@ Layout addedLayout = (Layout)SessionMessages.get(renderRequest, portletDisplay.g
 		{
 			createPageMessage: '<%= LanguageUtil.get(pageContext, "loading") %>',
 			focusItem: A.one('#<portlet:namespace />name'),
-			id: 'page',
 			inputNode: A.one('#<portlet:namespace />searchTemplates'),
 			namespace: '<portlet:namespace />',
 			nodeList: A.one('#<portlet:namespace />templateList'),
@@ -189,4 +188,6 @@ Layout addedLayout = (Layout)SessionMessages.get(renderRequest, portletDisplay.g
 			selected: !A.one('#<portlet:namespace />addPageFm').ancestor().hasClass('hide')
 		}
 	);
+
+
 </aui:script>

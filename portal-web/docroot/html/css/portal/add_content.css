@@ -34,7 +34,7 @@
 			width: 330px;
 		}
 
-	    .template-selector {
+		.template-selector {
 			margin-top: 1.5em;
 
 			legend {
@@ -49,7 +49,7 @@
 					margin-left: 10px;
 				}
 			}
-	    }
+		}
 
 		.accordion-inner {
 			padding-left: 0;
@@ -102,7 +102,7 @@
 			cursor: pointer;
 			margin-bottom: 20px;
 
-			.lfr-page-template-title{
+			.lfr-page-template-title {
 				label {
 					font-weight: bold;
 					margin-bottom: 5px;
@@ -111,11 +111,11 @@
 
 				&.toggler-header-collapsed {
 					.lfr-page-template-description {
-					    height: 1.6em;
-					    overflow: hidden;
-					    text-overflow: ellipsis;
-					    white-space: nowrap;
-					    width: 300px;
+						height: 1.6em;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						white-space: nowrap;
+						width: 300px;
 					}
 				}
 			}

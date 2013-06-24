@@ -225,7 +225,6 @@ private static PortletCategory _getRelevantPortletCategory(PermissionChecker per
 	new Liferay.Dockbar.AddApplication(
 		{
 			focusItem: searchApplication,
-			id: 'applications',		
 			inputNode: searchApplication,
 			namespace: '<portlet:namespace />',
 			nodeList: A.one('#<portlet:namespace />applicationList'),

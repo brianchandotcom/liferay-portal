@@ -122,9 +122,10 @@ public class DLFileEntryAssetRenderer
 
 		StringBundler sb = new StringBundler(5);
 
-		int pos = oldName.lastIndexOf(CharPool.PERIOD);
+		int index = oldName.lastIndexOf(CharPool.PERIOD);
 
-		sb.append(oldName.substring(0, pos));
+		sb.append(oldName.substring(0, index));
+
 		sb.append(StringPool.SPACE);
 		sb.append(token);
 		sb.append(StringPool.PERIOD);

@@ -74,6 +74,13 @@ public class CompanyServiceWrapper implements CompanyService,
 			system, maxUsers, active);
 	}
 
+	@Override
+	public com.liferay.portal.model.Company deleteCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _companyService.deleteCompany(companyId);
+	}
+
 	/**
 	* Deletes the company's logo.
 	*

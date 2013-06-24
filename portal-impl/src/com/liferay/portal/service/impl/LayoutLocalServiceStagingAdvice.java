@@ -22,9 +22,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.staging.LayoutStagingUtil;
 import com.liferay.portal.kernel.staging.MergeLayoutPrototypesThreadLocal;
+import com.liferay.portal.kernel.staging.ProxiedLayoutsThreadLocal;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -485,7 +485,8 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 	}
 
 	protected Layout getProxiedLayout(Layout layout) {
-		Map<Layout, Object> proxiedLayouts = _proxiedLayouts.get();
+		Map<Layout, Object> proxiedLayouts =
+			ProxiedLayoutsThreadLocal.getProxiedLayouts();
 
 		Object proxiedLayout = proxiedLayouts.get(layout);
 
@@ -623,10 +624,5 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 		_layoutLocalServiceStagingAdviceMethodNames.add("updateLookAndFeel");
 		_layoutLocalServiceStagingAdviceMethodNames.add("updateName");
 	}
-
-	private static ThreadLocal<Map<Layout, Object>> _proxiedLayouts =
-		new AutoResetThreadLocal<Map<Layout, Object>>(
-			LayoutLocalServiceStagingAdvice.class + "._proxiedLayouts",
-			new HashMap<Layout, Object>());
 
 }

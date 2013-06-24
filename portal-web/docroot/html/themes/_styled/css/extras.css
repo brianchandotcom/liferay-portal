@@ -337,3 +337,10 @@ body:first-of-type {
 .upload-drop-intent .lfr-upload-container .upload-target {
 	@include experimental(animation, lfr-drop-active 1s ease 0.2s infinite);
 }
+
+.ios.mobile {
+	.modal-content .dialog-iframe-bd{
+		overflow:auto;
+		-webkit-overflow-scrolling:touch;
+	}
+}

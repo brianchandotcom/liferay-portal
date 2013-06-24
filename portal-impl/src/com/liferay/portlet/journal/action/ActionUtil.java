@@ -293,7 +293,7 @@ public class ActionUtil {
 				structureId);
 
 		if (ddmStructure == null) {
-			ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
+			ddmStructure = DDMStructureLocalServiceUtil.getStructure(
 				themeDisplay.getCompanyGroupId(),
 				PortalUtil.getClassNameId(JournalArticle.class), structureId);
 		}

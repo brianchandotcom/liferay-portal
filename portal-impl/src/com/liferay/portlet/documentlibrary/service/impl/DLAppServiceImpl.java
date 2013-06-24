@@ -968,6 +968,17 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			folderId, fileEntryTypeId, start, end, obc);
 	}
 
+	@Override
+	public List<FileEntry> getFileEntries(
+			long repositoryId, long folderId, String[] mimeTypes)
+		throws PortalException, SystemException {
+
+		Repository repository = getRepository(repositoryId);
+
+		return repository.getFileEntries(
+			folderId, mimeTypes, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
 	/**
 	 * Returns a range of all the file entries and shortcuts in the folder.
 	 *

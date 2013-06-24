@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PrimitiveLongList;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -54,6 +55,8 @@ import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Lock;
+import com.liferay.portal.model.Portlet;
+import com.liferay.portal.model.PortletModel;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcedModel;
 import com.liferay.portal.model.Role;
@@ -1974,6 +1977,14 @@ public class PortletDataContextImpl implements PortletDataContext {
 					"referrer-display-name",
 					StagedModelDataHandlerUtil.getDisplayName(
 						referrerStagedModel));
+			}
+			else if (referrerClassedModel instanceof PortletModel) {
+				Portlet portlet = (Portlet)referrerClassedModel;
+
+				referenceElement.addAttribute(
+					"referrer-display-name",
+					PortalUtil.getPortletTitle(
+						portlet, LocaleUtil.getMostRelevantLocale()));
 			}
 		}
 

@@ -24,6 +24,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_WORKFLOW_STATUS</td>
+	<td>//h3[contains(.,'Pending Approval')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_TITLE_LINK</td>
+	<td>//div[@class='entry-title']/h2</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_CONTENT</td>
 	<td>//div[@class='entry-body']/div</td>
 	<td></td>

@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BACK</td>
+	<td>//span[@class='header-back-to']/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSIGNED_TO</td>
 	<td>//div[@class='lfr-asset-assigned']/div</td>
 	<td></td>

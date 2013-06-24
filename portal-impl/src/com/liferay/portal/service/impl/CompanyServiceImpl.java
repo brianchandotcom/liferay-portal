@@ -77,6 +77,17 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 			webId, virtualHost, mx, shardName, system, maxUsers, active);
 	}
 
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	public Company deleteCompany(long companyId)
+		throws PortalException, SystemException {
+
+		if (!getPermissionChecker().isOmniadmin()) {
+			throw new PrincipalException();
+		}
+
+		return companyLocalService.deleteCompany(companyId);
+	}
+
 	/**
 	 * Deletes the company's logo.
 	 *

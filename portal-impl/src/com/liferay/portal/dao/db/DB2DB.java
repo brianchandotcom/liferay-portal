@@ -188,12 +188,13 @@ public class DB2DB extends BaseDB {
 		return sb.toString();
 	}
 
-	private void _reorgTable(Connection con, String tableName)
+	private boolean _isReorgTableRequired(Connection con, String tableName)
 		throws SQLException {
 
-		CallableStatement callStmt = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
+
+		boolean isReorgTableRequired = false;
 
 		try {
 			StringBundler sb = new StringBundler(4);
@@ -210,25 +211,41 @@ public class DB2DB extends BaseDB {
 			if (rs.next()) {
 				int numReorgRecAlters = rs.getInt(1);
 
-				if (numReorgRecAlters < 1) {
-					return;
+				if (numReorgRecAlters >= 1) {
+					isReorgTableRequired = true;
 				}
-
-				String sql = "call sysproc.admin_cmd(?)";
-
-				callStmt = con.prepareCall(sql);
-
-				String param = "reorg table " + tableName;
-
-				callStmt.setString(1, param);
-
-				callStmt.execute();
 			}
 		}
 		finally {
-			DataAccess.cleanUp(callStmt);
 			DataAccess.cleanUp(ps);
 			DataAccess.cleanUp(rs);
+		}
+
+		return isReorgTableRequired;
+	}
+
+	private void _reorgTable(Connection con, String tableName)
+		throws SQLException {
+
+		if (!_isReorgTableRequired(con, tableName)) {
+			return;
+		}
+
+		CallableStatement callStmt = null;
+
+		try {
+			String sql = "call sysproc.admin_cmd(?)";
+
+			callStmt = con.prepareCall(sql);
+
+			String param = "reorg table " + tableName;
+
+			callStmt.setString(1, param);
+
+			callStmt.execute();
+		}
+		finally {
+			DataAccess.cleanUp(callStmt);
 		}
 	}
 

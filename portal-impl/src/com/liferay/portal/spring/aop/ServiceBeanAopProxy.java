@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import java.lang.annotation.Annotation;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
@@ -45,6 +46,22 @@ import org.springframework.util.ClassUtils;
  * @author Shuyang Zhou
  */
 public class ServiceBeanAopProxy implements AopProxy, InvocationHandler {
+
+	public static AdvisedSupport getAdvisedSupport(Object proxy)
+		throws Exception {
+
+		InvocationHandler invocationHandler = ProxyUtil.getInvocationHandler(
+			proxy);
+
+		Class<?> invocationHandlerClass = invocationHandler.getClass();
+
+		Field advisedSupportField = invocationHandlerClass.getDeclaredField(
+			"_advisedSupport");
+
+		advisedSupportField.setAccessible(true);
+
+		return (AdvisedSupport)advisedSupportField.get(invocationHandler);
+	}
 
 	public ServiceBeanAopProxy(
 		AdvisedSupport advisedSupport, MethodInterceptor methodInterceptor,

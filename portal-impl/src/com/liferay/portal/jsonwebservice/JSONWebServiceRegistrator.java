@@ -14,7 +14,6 @@
 
 package com.liferay.portal.jsonwebservice;
 
-import com.liferay.portal.deploy.hot.HookHotDeployListener;
 import com.liferay.portal.kernel.annotation.AnnotationLocator;
 import com.liferay.portal.kernel.bean.BeanLocator;
 import com.liferay.portal.kernel.bean.BeanLocatorException;
@@ -30,6 +29,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 import com.liferay.portal.util.PropsValues;
 
 import java.lang.reflect.Method;
@@ -44,7 +44,7 @@ import org.springframework.aop.framework.AdvisedSupport;
 /**
  * @author Igor Spasic
  */
-public class JSONWebServiceRegistrator extends HookHotDeployListener {
+public class JSONWebServiceRegistrator {
 
 	public void processAllBeans(String contextPath, BeanLocator beanLocator) {
 		if (beanLocator == null) {
@@ -119,7 +119,8 @@ public class JSONWebServiceRegistrator extends HookHotDeployListener {
 
 	protected Class<?> getTargetClass(Object service) throws Exception {
 		if (ProxyUtil.isProxyClass(service.getClass())) {
-			AdvisedSupport advisedSupport = getAdvisedSupport(service);
+			AdvisedSupport advisedSupport =
+				ServiceBeanAopProxy.getAdvisedSupport(service);
 
 			TargetSource targetSource = advisedSupport.getTargetSource();
 

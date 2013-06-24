@@ -140,6 +140,7 @@ import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.servlet.filters.autologin.AutoLoginFilter;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
 import com.liferay.portal.spring.aop.ServiceBeanAopCacheManagerUtil;
+import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 import com.liferay.portal.struts.AuthPublicPathRegistry;
 import com.liferay.portal.struts.StrutsActionRegistryUtil;
 import com.liferay.portal.upgrade.UpgradeProcessUtil;
@@ -603,7 +604,8 @@ public class HookHotDeployListener
 
 			Object serviceProxy = PortalBeanLocatorUtil.locate(serviceType);
 
-			AdvisedSupport advisedSupport = getAdvisedSupport(serviceProxy);
+			AdvisedSupport advisedSupport =
+				ServiceBeanAopProxy.getAdvisedSupport(serviceProxy);
 
 			Object previousService = serviceBag.getCustomService();
 
@@ -892,22 +894,6 @@ public class HookHotDeployListener
 		if (_log.isInfoEnabled()) {
 			_log.info("Hook for " + servletContextName + " was unregistered");
 		}
-	}
-
-	protected AdvisedSupport getAdvisedSupport(Object serviceProxy)
-		throws Exception {
-
-		InvocationHandler invocationHandler = ProxyUtil.getInvocationHandler(
-			serviceProxy);
-
-		Class<?> invocationHandlerClass = invocationHandler.getClass();
-
-		Field advisedSupportField = invocationHandlerClass.getDeclaredField(
-			"_advisedSupport");
-
-		advisedSupportField.setAccessible(true);
-
-		return (AdvisedSupport)advisedSupportField.get(invocationHandler);
 	}
 
 	protected void getCustomJsps(
@@ -2110,7 +2096,8 @@ public class HookHotDeployListener
 			Constructor<?> serviceImplConstructor, Object serviceProxy)
 		throws Exception {
 
-		AdvisedSupport advisedSupport = getAdvisedSupport(serviceProxy);
+		AdvisedSupport advisedSupport = ServiceBeanAopProxy.getAdvisedSupport(
+			serviceProxy);
 
 		TargetSource targetSource = advisedSupport.getTargetSource();
 

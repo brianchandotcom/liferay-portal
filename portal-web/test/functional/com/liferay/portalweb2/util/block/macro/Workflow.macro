@@ -1,0 +1,256 @@
+<definition>
+	<command name="approveTaskByActions">
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+
+		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="ASSIGNED_TO_ME_TABLE_TASK" value1="${workflowTask}" />
+		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="ASSIGNED_TO_ME_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="ASSIGNED_TO_ME_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
+		<execute action="CPMyworkflowtasks#assertElementPresent" locator-key1="ASSIGNED_TO_ME_TABLE_LAST_ACTIVITY_DATE" />
+		<execute action="CPMyworkflowtasks#assertElementPresent" locator-key1="ASSIGNED_TO_ME_TABLE_DUE_DATE" />
+
+		<execute action="CPMyworkflowtasks#assertClick" locator-key1="ASSIGNED_TO_ME_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPMyworkflowtasks#assertClick" locator-key1="ASSIGNED_TO_ME_MENULIST_APPROVE" value1="Approve" />
+		<execute action="CPMyworkflowtasks#assertClick" locator-key1="PANEL_OK_BUTTON" value1="OK" />
+		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<execute action="CPMyworkflowtasks#click" locator-key1="NAVIGATION_COMPLETED" value1="Completed" />
+
+		<execute action="CPMyworkflowtasksCompleted#assertTextEquals" locator-key1="COMPLETED_TABLE_TASK" value1="${workflowTask}" />
+		<execute action="CPMyworkflowtasksCompleted#assertTextEquals" locator-key1="COMPLETED_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+		<execute action="CPMyworkflowtasksCompleted#assertTextEquals" locator-key1="COMPLETED_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
+		<execute action="CPMyworkflowtasksCompleted#assertElementPresent" locator-key1="COMPLETED_TABLE_LAST_ACTIVITY_DATE" />
+		<execute action="CPMyworkflowtasksCompleted#assertElementPresent" locator-key1="COMPLETED_TABLE_DUE_DATE" />
+	</command>
+
+	<command name="approveTaskByDetails">
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+
+		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="ASSIGNED_TO_ME_TABLE_TASK" value1="${workflowTask}" />
+		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="ASSIGNED_TO_ME_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="ASSIGNED_TO_ME_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
+		<execute action="CPMyworkflowtasks#assertElementPresent" locator-key1="ASSIGNED_TO_ME_TABLE_LAST_ACTIVITY_DATE" />
+		<execute action="CPMyworkflowtasks#assertElementPresent" locator-key1="ASSIGNED_TO_ME_TABLE_DUE_DATE" />
+		<execute action="CPMyworkflowtasks#assertClick" locator-key1="ASSIGNED_TO_ME_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+
+		<execute action="CPMyworkflowtasksTask#assertTextEquals" locator-key1="ASSIGNED_TO" value1="Test Test" />
+		<execute action="CPMyworkflowtasksTask#assertTextEquals" locator-key1="STATE" value1="${workflowTask}" />
+		<execute action="CPMyworkflowtasksTask#assertTextEquals" locator-key1="PREVIEW_TITLE" value1="${workflowAssetTitle}" />
+		<execute action="CPMyworkflowtasksTask#assertTextEquals" locator-key1="PREVIEW_CONTENT" value1="${workflowAssetContent}" />
+
+		<execute action="CPMyworkflowtasksTask#assertClick" locator-key1="MENU_APPROVE" value1="Approve" />
+		<execute action="CPMyworkflowtasksTask#assertClick" locator-key1="PANEL_OK_BUTTON" value1="OK" />
+		<execute action="CPMyworkflowtasksTask#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<execute action="CPMyworkflowtasksTask#assertClick" locator-key1="BACK" value1="Back" />
+		<execute action="CPMyworkflowtasks#click" locator-key1="NAVIGATION_COMPLETED" value1="Completed" />
+
+		<execute action="CPMyworkflowtasksCompleted#assertTextEquals" locator-key1="COMPLETED_TABLE_TASK" value1="${workflowTask}" />
+		<execute action="CPMyworkflowtasksCompleted#assertTextEquals" locator-key1="COMPLETED_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+		<execute action="CPMyworkflowtasksCompleted#assertTextEquals" locator-key1="COMPLETED_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
+		<execute action="CPMyworkflowtasksCompleted#assertElementPresent" locator-key1="COMPLETED_TABLE_LAST_ACTIVITY_DATE" />
+		<execute action="CPMyworkflowtasksCompleted#assertElementPresent" locator-key1="COMPLETED_TABLE_DUE_DATE" />
+	</command>
+
+	<command name="assignToMeTaskByActions">
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+
+		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="ASSIGNED_TO_MY_ROLES_TABLE_TASK" value1="${workflowTask}" />
+		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
+		<execute action="CPMyworkflowtasks#assertElementPresent" locator-key1="ASSIGNED_TO_MY_ROLES_TABLE_LAST_ACTIVITY_DATE" />
+		<execute action="CPMyworkflowtasks#assertElementPresent" locator-key1="ASSIGNED_TO_MY_ROLES_TABLE_DUE_DATE" />
+
+		<execute action="CPMyworkflowtasks#assertClick" locator-key1="ASSIGNED_TO_MY_ROLES_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPMyworkflowtasks#assertClick" locator-key1="ASSIGNED_TO_MY_ROLES_MENULIST_ASSIGN_TO_ME" value1="Assign to Me" />
+		<execute action="CPMyworkflowtasks#assertClick" locator-key1="PANEL_OK_BUTTON" value1="OK" />
+		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="ASSIGNED_TO_ME_TABLE_TASK" value1="${workflowTask}" />
+		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="ASSIGNED_TO_ME_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="ASSIGNED_TO_ME_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
+		<execute action="CPMyworkflowtasks#assertElementPresent" locator-key1="ASSIGNED_TO_ME_TABLE_LAST_ACTIVITY_DATE" />
+		<execute action="CPMyworkflowtasks#assertElementPresent" locator-key1="ASSIGNED_TO_ME_TABLE_DUE_DATE" />
+	</command>
+
+	<command name="assignToMeTaskByDetails">
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+
+		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="ASSIGNED_TO_MY_ROLES_TABLE_TASK" value1="${workflowTask}" />
+		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
+		<execute action="CPMyworkflowtasks#assertElementPresent" locator-key1="ASSIGNED_TO_MY_ROLES_TABLE_LAST_ACTIVITY_DATE" />
+		<execute action="CPMyworkflowtasks#assertElementPresent" locator-key1="ASSIGNED_TO_MY_ROLES_TABLE_DUE_DATE" />
+		<execute action="CPMyworkflowtasks#assertClick" locator-key1="ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+
+		<execute action="CPMyworkflowtasksTask#assertTextEquals" locator-key1="ASSIGNED_TO" value1="Nobody" />
+		<execute action="CPMyworkflowtasksTask#assertTextEquals" locator-key1="STATE" value1="${workflowTask}" />
+		<execute action="CPMyworkflowtasksTask#assertTextEquals" locator-key1="PREVIEW_TITLE" value1="${workflowAssetTitle}" />
+
+		<if>
+			<equals arg1="${assignToMeKey}" arg2="ASSIGN_TO_ME" />
+			<then>
+		 		<execute action="CPMyworkflowtasksTask#assertClick" locator-key1="ASSIGN_TO_ME" value1="Assign to Me" />
+			</then>
+			<else>
+				<execute action="CPMyworkflowtasksTask#assertClick" locator-key1="MENU_ASSIGN_TO_ME" value1="Assign to Me" />
+			</else>
+		</if>
+
+		<execute action="CPMyworkflowtasksTask#assertClick" locator-key1="PANEL_OK_BUTTON" value1="OK" />
+		<execute action="CPMyworkflowtasksTask#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPMyworkflowtasksTask#assertClick" locator-key1="BACK" value1="Back" />
+
+		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="ASSIGNED_TO_ME_TABLE_TASK" value1="${workflowTask}" />
+		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="ASSIGNED_TO_ME_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="ASSIGNED_TO_ME_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
+		<execute action="CPMyworkflowtasks#assertElementPresent" locator-key1="ASSIGNED_TO_ME_TABLE_LAST_ACTIVITY_DATE" />
+		<execute action="CPMyworkflowtasks#assertElementPresent" locator-key1="ASSIGNED_TO_ME_TABLE_DUE_DATE" />
+	</command>
+
+	<command name="configurePortalWorkflow">
+		<execute macro="Page#cpGotoConfiguration">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<execute action="CPPortalWorkflowconfiguration#assertClick" locator-key1="NAVIGATION_DEFAULT_CONFIGURATION" value1="Default Configuration" />
+
+		<execute action="CPPortalWorkflowconfigurationDefaultconfiguration#select" locator-key1="${workflowResourceKey}" value1="${workflowDefinition}" />
+		<execute action="CPPortalWorkflowconfigurationDefaultconfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPPortalWorkflowconfigurationDefaultconfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="configureSiteWorkflow">
+		<execute macro="Page#cpGotoContent">
+			<var name="portletName" value="Workflow Configuration" />
+		</execute>
+
+		<execute action="CPSiteWorkflowconfiguration#select" locator-key1="${workflowResourceKey}" value1="${workflowDefinition}" />
+		<execute action="CPSiteWorkflowconfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPSiteWorkflowconfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="rejectTaskByActions">
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+
+		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="ASSIGNED_TO_ME_TABLE_TASK" value1="${workflowTask}" />
+		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="ASSIGNED_TO_ME_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="ASSIGNED_TO_ME_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
+		<execute action="CPMyworkflowtasks#assertElementPresent" locator-key1="ASSIGNED_TO_ME_TABLE_LAST_ACTIVITY_DATE" />
+		<execute action="CPMyworkflowtasks#assertElementPresent" locator-key1="ASSIGNED_TO_ME_TABLE_DUE_DATE" />
+
+		<execute action="CPMyworkflowtasks#assertClick" locator-key1="ASSIGNED_TO_ME_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPMyworkflowtasks#assertClick" locator-key1="ASSIGNED_TO_ME_MENULIST_REJECT" value1="Reject" />
+		<execute action="CPMyworkflowtasks#assertClick" locator-key1="PANEL_OK_BUTTON" value1="OK" />
+		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<execute action="CPMyworkflowtasks#click" locator-key1="NAVIGATION_COMPLETED" value1="Completed" />
+
+		<execute action="CPMyworkflowtasksCompleted#assertTextEquals" locator-key1="COMPLETED_TABLE_TASK" value1="${workflowTask}" />
+		<execute action="CPMyworkflowtasksCompleted#assertTextEquals" locator-key1="COMPLETED_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+		<execute action="CPMyworkflowtasksCompleted#assertTextEquals" locator-key1="COMPLETED_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
+		<execute action="CPMyworkflowtasksCompleted#assertElementPresent" locator-key1="COMPLETED_TABLE_LAST_ACTIVITY_DATE" />
+		<execute action="CPMyworkflowtasksCompleted#assertElementPresent" locator-key1="COMPLETED_TABLE_DUE_DATE" />
+	</command>
+
+	<command name="rejectTaskByDetails">
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+
+		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="ASSIGNED_TO_ME_TABLE_TASK" value1="${workflowTask}" />
+		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="ASSIGNED_TO_ME_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="ASSIGNED_TO_ME_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
+		<execute action="CPMyworkflowtasks#assertElementPresent" locator-key1="ASSIGNED_TO_ME_TABLE_LAST_ACTIVITY_DATE" />
+		<execute action="CPMyworkflowtasks#assertElementPresent" locator-key1="ASSIGNED_TO_ME_TABLE_DUE_DATE" />
+		<execute action="CPMyworkflowtasks#assertClick" locator-key1="ASSIGNED_TO_ME_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+
+		<execute action="CPMyworkflowtasksTask#assertTextEquals" locator-key1="ASSIGNED_TO" value1="Test Test" />
+		<execute action="CPMyworkflowtasksTask#assertTextEquals" locator-key1="STATE" value1="${workflowTask}" />
+		<execute action="CPMyworkflowtasksTask#assertTextEquals" locator-key1="PREVIEW_TITLE" value1="${workflowAssetTitle}" />
+		<execute action="CPMyworkflowtasksTask#assertTextEquals" locator-key1="PREVIEW_CONTENT" value1="${workflowAssetContent}" />
+
+		<execute action="CPMyworkflowtasksTask#assertClick" locator-key1="MENU_REJECT" value1="Reject" />
+		<execute action="CPMyworkflowtasksTask#assertClick" locator-key1="PANEL_OK_BUTTON" value1="OK" />
+		<execute action="CPMyworkflowtasksTask#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<execute action="CPMyworkflowtasksTask#assertClick" locator-key1="BACK" value1="Back" />
+		<execute action="CPMyworkflowtasks#click" locator-key1="NAVIGATION_COMPLETED" value1="Completed" />
+
+		<execute action="CPMyworkflowtasksCompleted#assertTextEquals" locator-key1="COMPLETED_TABLE_TASK" value1="${workflowTask}" />
+		<execute action="CPMyworkflowtasksCompleted#assertTextEquals" locator-key1="COMPLETED_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+		<execute action="CPMyworkflowtasksCompleted#assertTextEquals" locator-key1="COMPLETED_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
+		<execute action="CPMyworkflowtasksCompleted#assertElementPresent" locator-key1="COMPLETED_TABLE_LAST_ACTIVITY_DATE" />
+		<execute action="CPMyworkflowtasksCompleted#assertElementPresent" locator-key1="COMPLETED_TABLE_DUE_DATE" />
+	</command>
+
+	<command name="tearDownPortalWorkflow">
+		<execute macro="Page#cpGotoConfiguration">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<var name="noWorkflow" value="No Workflow" />
+
+		<execute action="CPPortalWorkflowconfiguration#click" locator-key1="NAVIGATION_DEFAULT_CONFIGURATION" />
+
+		<execute action="CPPortalWorkflowconfigurationDefaultconfiguration#select" locator-key1="RESOURCE_TABLE_PAGE_REVISION_SELECT" value1="${noWorkflow}" />
+		<execute action="CPPortalWorkflowconfigurationDefaultconfiguration#select" locator-key1="RESOURCE_TABLE_USER_SELECT" value1="${noWorkflow}" />
+		<execute action="CPPortalWorkflowconfigurationDefaultconfiguration#select" locator-key1="RESOURCE_TABLE_BLOGS_ENTRY_SELECT" value1="${noWorkflow}" />
+		<execute action="CPPortalWorkflowconfigurationDefaultconfiguration#select" locator-key1="RESOURCE_TABLE_WEB_CONTENT_SELECT" value1="${noWorkflow}" />
+		<execute action="CPPortalWorkflowconfigurationDefaultconfiguration#select" locator-key1="RESOURCE_TABLE_COMMENTS_SELECT" value1="${noWorkflow}" />
+		<execute action="CPPortalWorkflowconfigurationDefaultconfiguration#select" locator-key1="RESOURCE_TABLE_MESSAGE_BOARDS_MESSAGE_SELECT" value1="${noWorkflow}" />
+		<execute action="CPPortalWorkflowconfigurationDefaultconfiguration#select" locator-key1="RESOURCE_TABLE_WIKI_PAGE_SELECT" value1="${noWorkflow}" />
+		<execute action="CPPortalWorkflowconfigurationDefaultconfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+	</command>
+
+	<command name="tearDownSiteWorkflow">
+		<execute macro="Page#cpGotoContent">
+			<var name="portletName" value="Workflow Configuration" />
+		</execute>
+
+		<var name="defaultWorkflow" value="Default: No Workflow" />
+
+		<execute action="CPSiteWorkflowconfiguration#select" locator-key1="RESOURCE_TABLE_PAGE_REVISION_SELECT" value1="${defaultWorkflow}" />
+		<execute action="CPSiteWorkflowconfiguration#select" locator-key1="RESOURCE_TABLE_BLOGS_ENTRY_SELECT" value1="${defaultWorkflow}" />
+		<execute action="CPSiteWorkflowconfiguration#select" locator-key1="RESOURCE_TABLE_WEB_CONTENT_SELECT" value1="${defaultWorkflow}" />
+		<execute action="CPSiteWorkflowconfiguration#select" locator-key1="RESOURCE_TABLE_COMMENTS_SELECT" value1="${defaultWorkflow}" />
+		<execute action="CPSiteWorkflowconfiguration#select" locator-key1="RESOURCE_TABLE_MESSAGE_BOARDS_MESSAGE_SELECT" value1="${defaultWorkflow}" />
+		<execute action="CPSiteWorkflowconfiguration#select" locator-key1="RESOURCE_TABLE_WIKI_PAGE_SELECT" value1="${defaultWorkflow}" />
+		<execute action="CPSiteWorkflowconfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+	</command>
+
+	<command name="viewRejectTask">
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+
+		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="ASSIGNED_TO_ME_TABLE_TASK" value1="Update" />
+		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="ASSIGNED_TO_ME_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="ASSIGNED_TO_ME_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
+		<execute action="CPMyworkflowtasks#assertElementPresent" locator-key1="ASSIGNED_TO_ME_TABLE_LAST_ACTIVITY_DATE" />
+		<execute action="CPMyworkflowtasks#assertElementPresent" locator-key1="ASSIGNED_TO_ME_TABLE_DUE_DATE" />
+	</command>
+</definition>

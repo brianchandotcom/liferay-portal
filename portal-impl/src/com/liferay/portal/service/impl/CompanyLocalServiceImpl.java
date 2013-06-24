@@ -1219,36 +1219,79 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		// Users
 
-		List<User> users = userLocalService.getCompanyUsers(
-			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		int usersCount = userLocalService.getCompanyUsersCount(companyId);
 
-		for (User user : users) {
-			if (!user.isDefaultUser()) {
-				userLocalService.deleteUser(user.getUserId());
+		for (int i = 0; i < usersCount;) {
+			int start = i;
+			int end = i + PropsValues.COMPANY_DELETE_BATCH_SIZE;
+
+			if (end > usersCount) {
+				end = usersCount;
+			}
+
+			i = end;
+
+			List<User> users = userLocalService.getCompanyUsers(
+				companyId, start, end);
+
+			for (User user : users) {
+				if (!user.isDefaultUser()) {
+					userLocalService.deleteUser(user.getUserId());
+				}
 			}
 		}
 
 		// Organizations
 
-		List<Organization> organizations =
-			organizationLocalService.getOrganizations(
-				companyId,
-				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID);
+		int organizationsCount = organizationLocalService.getOrganizationsCount(
+			companyId, OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID);
 
-		for (Organization organization : organizations) {
-			deleteOrganization(organization);
+		for (int i = 0; i < organizationsCount;) {
+			int start = i;
+			int end = i + PropsValues.COMPANY_DELETE_BATCH_SIZE;
+
+			if (end > organizationsCount) {
+				end = organizationsCount;
+			}
+
+			i = end;
+
+			List<Organization> organizations =
+				organizationLocalService.getOrganizations(
+					companyId,
+					OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID, start,
+					end);
+
+			for (Organization organization : organizations) {
+				deleteOrganization(organization);
+			}
 		}
 
 		// Sites
 
-		List<Group> siteGroups = groupLocalService.getGroups(
+		int siteGroupsCount = groupLocalService.getGroupsCount(
 			companyId, GroupConstants.DEFAULT_PARENT_GROUP_ID, true);
 
-		for (Group group : siteGroups) {
-			if (!PortalUtil.isSystemGroup(group.getName()) &&
-				!group.isCompany()) {
+		for (int i = 0; i < siteGroupsCount;) {
+			int start = i;
+			int end = i + PropsValues.COMPANY_DELETE_BATCH_SIZE;
 
-				deleteGroup(group);
+			if (end > siteGroupsCount) {
+				end = siteGroupsCount;
+			}
+
+			i = end;
+
+			List<Group> siteGroups = groupLocalService.getGroups(
+				companyId, GroupConstants.DEFAULT_PARENT_GROUP_ID, true, start,
+				end);
+
+			for (Group group : siteGroups) {
+				if (!PortalUtil.isSystemGroup(group.getName()) &&
+					!group.isCompany()) {
+
+					deleteGroup(group);
+				}
 			}
 		}
 

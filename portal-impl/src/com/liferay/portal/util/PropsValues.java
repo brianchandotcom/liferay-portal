@@ -370,6 +370,8 @@ public class PropsValues {
 
 	public static String COMPANY_DEFAULT_WEB_ID = PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID);
 
+	public static int COMPANY_DELETE_BATCH_SIZE = GetterUtil.getInteger(PropsUtil.get(PropsKeys.COMPANY_DELETE_BATCH_SIZE));
+
 	public static final boolean COMPANY_LOGIN_PREPOPULATE_DOMAIN = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.COMPANY_LOGIN_PREPOPULATE_DOMAIN));
 
 	public static final boolean COMPANY_SECURITY_AUTH_REQUIRES_HTTPS = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS));

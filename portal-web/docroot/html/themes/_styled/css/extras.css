@@ -339,8 +339,8 @@ body:first-of-type {
 }
 
 .ios.mobile {
-	.modal-content .dialog-iframe-bd{
-		overflow:auto;
-		-webkit-overflow-scrolling:touch;
+	.modal-content .dialog-iframe-bd {
+		overflow: auto;
+		-webkit-overflow-scrolling: touch;
 	}
 }

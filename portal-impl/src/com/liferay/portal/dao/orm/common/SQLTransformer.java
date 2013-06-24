@@ -236,7 +236,7 @@ public class SQLTransformer {
 	}
 
 	private String _replaceEscape(String sql) {
-		return StringUtil.replace(sql,"LIKE ?","LIKE ? ESCAPE '\\'");
+		return StringUtil.replace(sql, "LIKE ?", "LIKE ? ESCAPE '\\'");
 	}
 
 	private String _replaceIntegerDivision(String sql) {

@@ -580,10 +580,7 @@ public abstract class BaseIndexer implements Indexer {
 
 		document.addNumber(Field.VIEW_COUNT, assetEntry.getViewCount());
 
-		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
-			assetEntry.getTitle(), true);
-
-		document.addLocalizedKeyword("localized_title", titleMap, true);
+		document.addLocalizedKeyword("localized_title", assetEntry.getTitleMap(), true);
 	}
 
 	/**

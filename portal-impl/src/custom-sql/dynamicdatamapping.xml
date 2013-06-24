@@ -80,7 +80,7 @@
 			FROM
 				DDMTemplate
 			WHERE
-				(groupId IN ([$GROUP_ID$])) AND
+				[$GROUP_ID$]
 				(classNameId = ?) AND
 				(
 					(classPK = 0) OR
@@ -103,9 +103,9 @@
 				DDMTemplate
 			WHERE
 				(companyId = ?) AND
-				(groupId IN ([$GROUP_ID$])) AND
-				(classNameId IN ([$CLASSNAME_ID$])) AND
-				(classPK IN ([$CLASS_PK$])) AND
+				[$GROUP_ID$]
+				[$CLASSNAME_ID$]
+				[$CLASS_PK$]
 				(
 					(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
@@ -122,7 +122,7 @@
 			FROM
 				DDMTemplate
 			WHERE
-				(groupId IN ([$GROUP_ID$])) AND
+				[$GROUP_ID$]
 				(classNameId = ?) AND
 				(
 					(classPK = 0) OR
@@ -147,9 +147,9 @@
 				DDMTemplate
 			WHERE
 				(companyId = ?) AND
-				(groupId IN ([$GROUP_ID$])) AND
-				(classNameId IN ([$CLASSNAME_ID$])) AND
-				(classPK IN ([$CLASS_PK$])) AND
+				[$GROUP_ID$]
+				[$CLASSNAME_ID$]
+				[$CLASS_PK$]
 				(
 					(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]

@@ -316,7 +316,11 @@ public class DDMStructureFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(companyId);
-			qPos.add(groupIds);
+
+			if (groupIds != null) {
+				qPos.add(groupIds);
+			}
+
 			qPos.add(classNameIds, 2);
 			qPos.add(names, 2);
 			qPos.add(descriptions, 2);
@@ -400,7 +404,11 @@ public class DDMStructureFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(companyId);
-			qPos.add(groupIds);
+
+			if (groupIds != null) {
+				qPos.add(groupIds);
+			}
+
 			qPos.add(classNameIds, 2);
 			qPos.add(names, 2);
 			qPos.add(descriptions, 2);
@@ -419,7 +427,7 @@ public class DDMStructureFinderImpl
 	}
 
 	protected String getGroupIds(long[] groupIds) {
-		if (groupIds.length == 0) {
+		if ((groupIds == null) || (groupIds.length == 0)) {
 			return StringPool.BLANK;
 		}
 

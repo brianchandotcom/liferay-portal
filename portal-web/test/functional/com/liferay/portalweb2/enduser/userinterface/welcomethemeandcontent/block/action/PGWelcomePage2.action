@@ -1,0 +1,10 @@
+<definition>
+	<command name="assertElementPresent">
+		<case locator-key1="CUSTOMERS_1">
+			<execute function="AssertElementPresent#assertVisible" />
+		</case>
+		<case locator-key1="CUSTOMERS_2">
+			<execute function="AssertElementPresent#assertVisible" />
+		</case>
+	</command>
+</definition>

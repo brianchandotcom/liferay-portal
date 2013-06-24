@@ -95,6 +95,20 @@ public class CompanyServiceSoap {
 		}
 	}
 
+	public static com.liferay.portal.model.CompanySoap deleteCompany(
+		long companyId) throws RemoteException {
+		try {
+			com.liferay.portal.model.Company returnValue = CompanyServiceUtil.deleteCompany(companyId);
+
+			return com.liferay.portal.model.CompanySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	/**
 	* Deletes the company's logo.
 	*

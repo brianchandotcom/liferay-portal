@@ -1011,6 +1011,22 @@ public interface GroupLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns all the groups that are direct children of the parent group.
+	*
+	* @param companyId the primary key of the company
+	* @param parentGroupId the primary key of the parent group
+	* @param site whether the group is to be associated with a main site
+	* @param start the lower bound of the range of results
+	* @param end the upper bound of the range of results (not inclusive)
+	* @return the range of matching groups
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Group> getGroups(
+		long companyId, long parentGroupId, boolean site, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the groups that are direct children of the parent group with
 	* the matching className.
 	*

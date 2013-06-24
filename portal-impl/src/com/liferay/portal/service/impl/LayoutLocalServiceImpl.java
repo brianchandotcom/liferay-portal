@@ -710,9 +710,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  privateLayout whether the layout is private to the group
-	 * @param  serviceContext the service context to be applied. The attribute
-	 *         skipUpdatePageCount can be passed to skip updating the counter
-	 *         of pages in the parent LayoutSet.
+	 * @param  serviceContext the service context to be applied
 	 * @throws PortalException if a group with the primary key could not be
 	 *         found or if a layout set for the group and privacy could not be
 	 *         found
@@ -741,7 +739,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		// Layout set
 
 		if (!GetterUtil.getBoolean(
-				serviceContext.getAttribute("skipUpdatePageCount"))) {
+				serviceContext.getAttribute("updatePageCount"), true)) {
 
 			layoutSetLocalService.updatePageCount(groupId, privateLayout);
 		}

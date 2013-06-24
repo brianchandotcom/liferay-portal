@@ -137,7 +137,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 		// Layouts
 
-		serviceContext.setAttribute("skipUpdatePageCount", true);
+		serviceContext.setAttribute("updatePageCount", Boolean.FALSE);
 
 		layoutLocalService.deleteLayouts(
 			groupId, privateLayout, serviceContext);

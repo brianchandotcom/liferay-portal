@@ -114,15 +114,6 @@ public class ViewArticleContentAction extends PortletAction {
 				String content = null;
 
 				if (Validator.isNotNull(structureId)) {
-					ServiceContext serviceContext =
-						ServiceContextFactory.getInstance(
-							JournalArticle.class.getName(),
-							uploadPortletRequest);
-
-					if (Validator.isNull(languageId)) {
-						languageId = LanguageUtil.getLanguageId(actionRequest);
-					}
-
 					DDMStructure ddmStructure =
 						DDMStructureLocalServiceUtil.fetchStructure(
 							groupId,
@@ -136,6 +127,11 @@ public class ViewArticleContentAction extends PortletAction {
 								PortalUtil.getClassNameId(JournalArticle.class),
 								structureId);
 					}
+
+					ServiceContext serviceContext =
+						ServiceContextFactory.getInstance(
+							JournalArticle.class.getName(),
+							uploadPortletRequest);
 
 					Fields fields = DDMUtil.getFields(
 						ddmStructure.getStructureId(), serviceContext);

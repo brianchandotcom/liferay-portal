@@ -1,6 +1,6 @@
 <definition>
 	<command name="addPG">
-		<execute macro="Page#pgGoto">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 

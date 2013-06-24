@@ -2,7 +2,7 @@
 	<var name="pageTemplateActive" value="Yes" />
 
 	<command name="addCP">
-		<execute macro="Page#cpGotoSites">
+		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Page Templates" />
 		</execute>
 
@@ -27,7 +27,7 @@
 	</command>
 
 	<command name="editCP">
-		<execute macro="Page#cpGotoSites">
+		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Page Templates" />
 		</execute>
 
@@ -56,7 +56,7 @@
 	</command>
 
 	<command name="tearDownCP">
-		<execute macro="Page#cpGotoSites">
+		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Page Templates" />
 		</execute>
 

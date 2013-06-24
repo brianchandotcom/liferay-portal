@@ -4,29 +4,29 @@
 	</set-up>
 
 	<command name="GotoAdministration">
-		<execute macro="Page#cpGotoUsers">
+		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
-		<execute macro="Page#cpGotoSites">
+		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Site Templates" />
 		</execute>
 
-		<execute macro="Page#cpGotoConfiguration">
+		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Server Administration" />
 		</execute>
 
-		<execute macro="Page#cpGotoApps">
+		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Update Manager" />
 		</execute>
 	</command>
 
 	<command name="GotoContent">
-		<execute macro="Page#cpGotoContent">
+		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="Page#cpGotoContent">
+		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Wiki" />
 		</execute>
 	</command>

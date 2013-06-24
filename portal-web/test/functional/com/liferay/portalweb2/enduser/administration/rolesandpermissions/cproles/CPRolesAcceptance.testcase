@@ -53,8 +53,9 @@
 			<var name="sitePageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="Portlet#pgAddOrganization">
+		<execute macro="Portlet#addPG">
 			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Organization" />
 			<var name="potletName" value="${portletName}" />
 		</execute>
 
@@ -131,11 +132,11 @@
 		<var name="userLastName" value="userln" />
 		<var name="userScreenName" value="usersn" />
 
-		<execute macro="Page#pgAdd">
+		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="Portlet#pgAdd">
+		<execute macro="Portlet#addPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="potletName" value="${portletName}" />
 		</execute>
@@ -253,8 +254,9 @@
 			<var name="sitePageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="Portlet#pgAddSitePublic">
+		<execute macro="Portlet#addPG">
 			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
 			<var name="potletName" value="${portletName}" />
 		</execute>
 
@@ -393,8 +395,9 @@
 			<var name="sitePageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="Portlet#pgAddOrganization">
+		<execute macro="Portlet#addPG">
 			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Organization" />
 			<var name="potletName" value="${portletName}" />
 		</execute>
 
@@ -483,11 +486,11 @@
 		<var name="userLastName" value="userln" />
 		<var name="userScreenName" value="usersn" />
 
-		<execute macro="Page#pgAdd">
+		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="Portlet#pgAdd">
+		<execute macro="Portlet#addPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="potletName" value="${portletName}" />
 		</execute>
@@ -617,8 +620,9 @@
 			<var name="sitePageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="Portlet#pgAddSitePublic">
+		<execute macro="Portlet#addPG">
 			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
 			<var name="potletName" value="${portletName}" />
 		</execute>
 
@@ -706,6 +710,6 @@
 
 		<execute macro="BlogsEntry#tearDownCP" />
 
-		<execute macro="Page#pgTearDown" />
+		<execute macro="Page#tearDownPG" />
 	</tear-down>
 </definition>

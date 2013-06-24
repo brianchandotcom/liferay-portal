@@ -6,7 +6,7 @@
 		<var name="pageName" value="Blogs Page" />
 		<var name="portletName" value="Blogs" />
 
-		<execute action="Home#open" locator-key1="HOME_URL" />
+		<execute macro="Page#openURL" />
 
 		<execute action="Setupwizard#assertTextEquals" locator-key1="PORTAL_PORTAL_NAME_FIELD" value1="Liferay" />
 		<execute action="Setupwizard#assertSelectedLabel" locator-key1="PORTAL_DEFAULT_LANGUAGE_SELECT" value1="English (United States)" />
@@ -48,11 +48,11 @@
 		<execute action="PGHelloworld#assertTextEquals" locator-key1="PORTLET_TITLE" />
 		<execute action="PGHelloworld#assertTextEquals" locator-key1="PORTLET_CONTENT" />
 
-		<execute macro="Page#pgAdd">
+		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="Portlet#pgAdd">
+		<execute macro="Portlet#addPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="portletName" value="${portletName}" />
 		</execute>

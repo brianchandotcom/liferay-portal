@@ -1,6 +1,6 @@
 <definition>
 	<command name="blogsEntryPG">
-		<execute macro="Page#pgGoto">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -14,7 +14,7 @@
 	</command>
 
 	<command name="messageboardsThreadPG">
-		<execute macro="Page#pgGoto">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -28,7 +28,7 @@
 	</command>
 
 	<command name="userPG">
-		<execute macro="Page#pgGoto">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -47,7 +47,7 @@
 	</command>
 
 	<command name="wikiPagePG">
-		<execute macro="Page#pgGoto">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 

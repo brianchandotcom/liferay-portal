@@ -1,6 +1,6 @@
 <definition>
 	<command name="addPG">
-		<execute macro="Page#pgGoto">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -14,7 +14,7 @@
 		<execute action="PGAnnouncementsAddentry#type" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
 		<execute action="PGAnnouncementsAddentry#click" locator-key1="SAVE_BUTTON" />
 
-		<execute macro="Page#pgGoto" />
+		<execute macro="Page#gotoPG" />
 
 		<execute action="PGAnnouncements#assertTextEquals" locator-key1="ENTRY_TITLE_1" value1="${entryTitle}" />
 		<execute action="PGAnnouncements#assertTextEquals" locator-key1="ENTRY_SCOPE_1" value1="${distributionScope}" />
@@ -27,7 +27,7 @@
 	</command>
 
 	<command name="deletePG">
-		<execute macro="Page#pgGoto">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -36,7 +36,7 @@
 		<execute action="PGAnnouncements#click" locator-key1="ENTRY_DELETE_1" />
 		<execute action="PGAnnouncements#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
-		<execute macro="Page#pgGoto">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -45,7 +45,7 @@
 	</command>
 
 	<command name="editPG">
-		<execute macro="Page#pgGoto">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -58,7 +58,7 @@
 		<execute action="PGAnnouncementsAddentry#type" locator-key1="CONTENT_FIELD" value1="${entryContentEdit}" />
 		<execute action="PGAnnouncementsAddentry#click" locator-key1="SAVE_BUTTON" />
 
-		<execute macro="Page#pgGoto">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -73,7 +73,7 @@
 	</command>
 
 	<command name="tearDownPG">
-		<execute macro="Page#pgGoto">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 

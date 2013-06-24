@@ -15,7 +15,7 @@
 	</command>
 
 	<command name="addCP">
-		<execute macro="Page#cpGotoSites">
+		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
 
@@ -57,7 +57,7 @@
 	</command>
 
 	<command name="addMemberCP">
-		<execute macro="Page#cpGotoSites">
+		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
 
@@ -80,7 +80,7 @@
 	</command>
 
 	<command name="assignRoleCP">
-		<execute macro="Page#cpGotoSites">
+		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
 
@@ -113,7 +113,7 @@
 	</command>
 
 	<command name="deleteCP">
-		<execute macro="Page#cpGotoSites">
+		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
 
@@ -128,7 +128,7 @@
 	</command>
 
 	<command name="tearDownCP">
-		<execute macro="Page#cpGotoSites">
+		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
 
@@ -146,7 +146,7 @@
 	</command>
 
 	<command name="viewCP">
-		<execute macro="Page#cpGotoSites">
+		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
 

@@ -4,30 +4,30 @@
 	</set-up>
 
 	<command name="Smoke">
-		<execute macro="Page#pgAdd">
+		<execute macro="Page#addPG">
 			<var name="pageName" value="Test Page1" />
 		</execute>
 
-		<execute macro="Page#pgAdd">
+		<execute macro="Page#addPG">
 			<var name="pageName" value="Test Page2" />
 		</execute>
 
-		<execute macro="Page#pgAdd">
+		<execute macro="Page#addPG">
 			<var name="pageName" value="Test Page3" />
 		</execute>
 
-		<execute macro="Portlet#pgAdd">
+		<execute macro="Portlet#addPG">
 			<var name="pageName" value="Test Page1" />
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="Page#pgGoto">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page1" />
 		</execute>
 
 		<execute action="BasePortlet#assertTextEquals" locator-key1="TITLE" value1="Blogs" />
 
-		<execute macro="Page#cpGotoContent">
+		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />
 		</execute>
 
@@ -35,6 +35,6 @@
 	</command>
 
 	<tear-down>
-		<execute macro="Page#pgTearDown" />
+		<execute macro="Page#tearDownPG" />
 	</tear-down>
 </definition>

@@ -68,12 +68,16 @@
 			<var name="sitePageName" value="${sitePageName}" />
 		</execute>
 
-		<execute macro="Page#pgAddSitePrivate">
+		<execute macro="Page#addPG">
+			<var name="pageAccess" value="Private" />
 			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
 		</execute>
 
-		<execute macro="Portlet#pgAddSitePrivate">
+		<execute macro="Portlet#addPG">
+			<var name="pageAccess" value="Private" />
 			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
 			<var name="portletName" value="${portletName}" />
 		</execute>
 	</command>
@@ -143,12 +147,14 @@
 			<var name="sitePageName" value="${sitePageName}" />
 		</execute>
 
-		<execute macro="Page#pgAddSitePublic">
+		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
 		</execute>
 
-		<execute macro="Portlet#pgAddSitePublic">
+		<execute macro="Portlet#addPG">
 			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
 			<var name="portletName" value="${portletName}" />
 		</execute>
 	</command>

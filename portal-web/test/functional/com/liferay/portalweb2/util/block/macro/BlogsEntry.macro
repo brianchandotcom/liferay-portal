@@ -12,7 +12,7 @@
 	</command>
 
 	<command name="addCP">
-		<execute macro="Page#cpGotoContent">
+		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />
 		</execute>
 
@@ -37,15 +37,16 @@
 	</command>
 
 	<command name="addNoPermissionOrganizationPG">
-		<execute macro="Page#pgGotoOrganization">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Organization" />
 		</execute>
 
 		<execute macro="BlogsEntry#addNoPermissionCmdPG" />
 	</command>
 
 	<command name="addNoPermissionPG">
-		<execute macro="Page#pgGoto">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -53,23 +54,25 @@
 	</command>
 
 	<command name="addNoPermissionSitePublicPG">
-		<execute macro="Page#pgGotoSitePublic">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute macro="BlogsEntry#addNoPermissionCmdPG" />
 	</command>
 
 	<command name="addOrganizationPG">
-		<execute macro="Page#pgGotoOrganization">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Organization" />
 		</execute>
 
 		<execute macro="BlogsEntry#addCmdPG" />
 	</command>
 
 	<command name="addPG">
-		<execute macro="Page#pgGoto">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -77,8 +80,9 @@
 	</command>
 
 	<command name="addSitePublicPG">
-		<execute macro="Page#pgGotoSitePublic">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute macro="BlogsEntry#addCmdPG" />
@@ -93,7 +97,7 @@
 	</command>
 
 	<command name="deleteNoPermissionPG">
-		<execute macro="Page#pgGoto">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -105,31 +109,34 @@
 	</command>
 
 	<command name="deleteNoPermissionOrganizationPG">
-		<execute macro="Page#pgGotoOrganization">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Organization" />
 		</execute>
 
 		<execute macro="BlogsEntry#deleteNoPermissionCmdPG" />
 	</command>
 
 	<command name="deleteNoPermissionSitePublicPG">
-		<execute macro="Page#pgGotoSitePublic">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute macro="BlogsEntry#deleteNoPermissionCmdPG" />
 	</command>
 
 	<command name="deleteOrganizationPG">
-		<execute macro="Page#pgGotoOrganization">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Organization" />
 		</execute>
 
 		<execute macro="BlogsEntry#deleteCmdPG" />
 	</command>
 
 	<command name="deletePG">
-		<execute macro="Page#pgGoto">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -137,8 +144,9 @@
 	</command>
 
 	<command name="deleteSitePublicPG">
-		<execute macro="Page#pgGotoSitePublic">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute macro="BlogsEntry#deleteCmdPG" />
@@ -159,7 +167,7 @@
 	</command>
 
 	<command name="editPG">
-		<execute macro="Page#pgGoto">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -167,7 +175,7 @@
 	</command>
 
 	<command name="moveToRecycleBinPG">
-		<execute macro="Page#pgGoto">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -184,7 +192,7 @@
 	</command>
 
 	<command name="tearDownCP">
-		<execute macro="Page#cpGotoContent">
+		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />
 		</execute>
 
@@ -200,7 +208,7 @@
 	</command>
 
 	<command name="viewPortletAsGuestPG">
-		<execute macro="Page#pgGoto">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -212,7 +220,7 @@
 	</command>
 
 	<command name="viewPortletPG">
-		<execute macro="Page#pgGoto">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 

@@ -16,8 +16,6 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.model.Address;
 import com.liferay.portal.model.EmailAddress;
@@ -223,46 +221,25 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 			List<Website> websites, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		boolean indexingEnabled = serviceContext.isIndexingEnabled();
+		if (!OrganizationPermissionUtil.contains(
+				getPermissionChecker(), parentOrganizationId,
+				ActionKeys.MANAGE_SUBORGANIZATIONS) &&
+			!PortalPermissionUtil.contains(
+				getPermissionChecker(), ActionKeys.ADD_ORGANIZATION)) {
 
-		serviceContext.setIndexingEnabled(false);
-
-		try {
-			Organization organization = addOrganization(
-				parentOrganizationId, name, type, regionId, countryId, statusId,
-				comments, site, serviceContext);
-
-			UsersAdminUtil.updateAddresses(
-				Organization.class.getName(), organization.getOrganizationId(),
-				addresses);
-
-			UsersAdminUtil.updateEmailAddresses(
-				Organization.class.getName(), organization.getOrganizationId(),
-				emailAddresses);
-
-			UsersAdminUtil.updateOrgLabors(
-				organization.getOrganizationId(), orgLabors);
-
-			UsersAdminUtil.updatePhones(
-				Organization.class.getName(), organization.getOrganizationId(),
-				phones);
-
-			UsersAdminUtil.updateWebsites(
-				Organization.class.getName(), organization.getOrganizationId(),
-				websites);
-
-			if (indexingEnabled) {
-				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-					Organization.class);
-
-				indexer.reindex(organization);
-			}
-
-			return organization;
+			throw new PrincipalException(
+				"User " + getUserId() + " does not have permissions to add " +
+					"an organization with parent " + parentOrganizationId);
 		}
-		finally {
-			serviceContext.setIndexingEnabled(indexingEnabled);
-		}
+
+		Organization organization = organizationLocalService.addOrganization(
+			getUserId(), parentOrganizationId, name, type, regionId, countryId,
+			statusId, comments, site, addresses, emailAddresses, orgLabors,
+			phones, websites, serviceContext);
+
+		OrganizationMembershipPolicyUtil.verifyPolicy(organization);
+
+		return organization;
 	}
 
 	/**
@@ -299,24 +276,9 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		if (!OrganizationPermissionUtil.contains(
-				getPermissionChecker(), parentOrganizationId,
-				ActionKeys.MANAGE_SUBORGANIZATIONS) &&
-			!PortalPermissionUtil.contains(
-				getPermissionChecker(), ActionKeys.ADD_ORGANIZATION)) {
-
-			throw new PrincipalException(
-				"User " + getUserId() + " does not have permissions to add " +
-					"an organization with parent " + parentOrganizationId);
-		}
-
-		Organization organization = organizationLocalService.addOrganization(
-			getUserId(), parentOrganizationId, name, type, regionId, countryId,
-			statusId, comments, site, serviceContext);
-
-		OrganizationMembershipPolicyUtil.verifyPolicy(organization);
-
-		return organization;
+		return addOrganization(
+			parentOrganizationId, name, type, regionId, countryId, statusId,
+			comments, site, null, null, null, null, null, serviceContext);
 	}
 
 	/**

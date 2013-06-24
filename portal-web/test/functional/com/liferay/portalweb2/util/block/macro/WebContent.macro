@@ -1,6 +1,6 @@
 <definition>
 	<command name="addCP">
-		<execute macro="Page#cpGotoContent">
+		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
 
@@ -17,7 +17,7 @@
 	</command>
 
 	<command name="addPGviaAP">
-		<execute macro="Page#pgGoto">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -36,7 +36,7 @@
 	</command>
 
 	<command name="addPGviaWCD">
-		<execute macro="Page#pgGoto">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -50,7 +50,7 @@
 	</command>
 
 	<command name="addCPwithStructure">
-		<execute macro="Page#cpGotoContent">
+		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
 
@@ -67,7 +67,7 @@
 	</command>
 
 	<command name="editPGviaWCD">
-		<execute macro="Page#pgGoto">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -81,7 +81,7 @@
 	</command>
 
 	<command name="tearDownCP">
-		<execute macro="Page#cpGotoContent">
+		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
 
@@ -99,7 +99,7 @@
 	</command>
 
 	<command name="viewPGViaWCL">
-		<execute macro="Page#pgGoto">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 

@@ -1,53 +1,19 @@
 <definition>
-	<command name="cpGoto">
-		<execute action="Home#open" locator-key1="HOME_URL" />
+	<command name="addPG">
+		<execute macro="Page#openURL" />
 
-		<execute action="Dockbar#click" locator-key1="ADMIN" />
-		<execute action="Dockbar#click" locator-key1="ADMIN_CONTROL_PANEL" />
+		<execute action="Dockbar#assertClick" locator-key1="ADD" value1="Add" />
+		<execute action="Dockbar#assertClick" locator-key1="ADD_PAGE_LINK" value1="Page" />
+		<execute action="Dockbar#type" locator-key1="ADD_PAGE_NAME_FIELD" value1="${pageName}" />
+		<execute action="Dockbar#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
 
-		<execute action="Home#click" locator1="//div[@id='_145_dockbar']//a[contains(.,'${categoryName}')]" />
+		<var name="key_pageName" value="${pageName}" />
+
+		<execute action="Home#assertClick" locator-key1="PAGE" value1="${pageName}" />
 	</command>
 
-	<command name="cpGotoApps">
-		<execute macro="Page#cpGoto">
-			<var name="categoryName" value="Apps" />
-		</execute>
-
-		<execute action="Home#click" locator1="//ul[@class='nav control-panel-bar-secondary nav-pills']//a[contains(.,'${portletName}')]" />
-	</command>
-
-	<command name="cpGotoConfiguration">
-		<execute macro="Page#cpGoto">
-			<var name="categoryName" value="Configuration" />
-		</execute>
-
-		<execute action="Home#click" locator1="//ul[@class='nav control-panel-bar-secondary nav-pills']//a[contains(.,'${portletName}')]" />
-	</command>
-
-	<command name="cpGotoContent">
-		<if>
-			<equals arg1="${siteScope}" arg2="Organization" />
-			<then>
-				<execute action="Home#open" locator-key1="ORGANIZATION_URL" />
-			</then>
-			<elseif>
-				<equals arg1="${siteScope}" arg2="Private" />
-				<then>
-					<execute action="Home#open" locator-key1="SITE_URL_PRIVATE" />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${siteScope}" arg2="Public" />
-				<then>
-					<execute action="Home#open" locator-key1="SITE_URL_PUBLIC" />
-				</then>
-			</elseif>
-			<else>
-				<execute action="Home#open" locator-key1="HOME_URL" />
-			</else>
-		</if>
-
-		<execute action="Home#open" locator-key1="HOME_URL" />
+	<command name="gotoContentCP">
+		<execute macro="Page#openURL" />
 
 		<execute action="Dockbar#click" locator-key1="ADMIN" />
 		<execute action="Dockbar#click" locator-key1="ADMIN_SITE_ADMINISTRATION" />
@@ -55,24 +21,34 @@
 		<execute action="Home#click" locator1="//ul[@class='category-portlets']/li[contains(.,'${portletName}')]/a" />
 	</command>
 
-	<command name="cpGotoSites">
-		<execute macro="Page#cpGoto">
-			<var name="categoryName" value="Sites" />
-		</execute>
+	<command name="gotoCP">
+		<execute macro="Page#openURL" />
 
-		<execute action="Home#click" locator1="//ul[@class='nav control-panel-bar-secondary nav-pills']//a[contains(.,'${portletName}')]" />
+		<execute action="Dockbar#click" locator-key1="ADMIN" />
+		<execute action="Dockbar#click" locator-key1="ADMIN_CONTROL_PANEL" />
+
+		<execute action="Home#click" locator1="//ul[@class='unstyled']/li/a[contains(.,'${portletName}')]" />
 	</command>
 
-	<command name="cpGotoUsers">
-		<execute macro="Page#cpGoto">
-			<var name="categoryName" value="Users" />
-		</execute>
+	<command name="gotoMyAccount">
+		<execute macro="Page#openURL" />
 
-		<execute action="Home#click" locator1="//ul[@class='nav control-panel-bar-secondary nav-pills']//a[contains(.,'${portletName}')]" />
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#assertClick" locator-key1="USER_MY_ACCOUNT" value1="My Account" />
+
+		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
+		<execute action="Myaccount#assertClick" locator1="//ul[@class='nav control-panel-bar-secondary nav-pills']//a[contains(.,'${portletName}')]" value1="${portletName}" />
+	</command>
+
+	<command name="gotoPG">
+		<execute macro="Page#openURL" />
+
+		<execute action="Home#click" locator1="link=${pageName}" />
 	</command>
 
 	<command name="isPresent">
-		<execute action="Home#open" locator-key1="HOME_URL" />
+		<execute macro="Page#openURL" />
+
 		<execute action="Home#isElementPresent" locator1="link=${pageName}" />
 	</command>
 
@@ -116,84 +92,8 @@
 		<execute action="Home#open" locator1="${pageAccessURL}${pageTypeURL}${pageStagingURL}" />
 	</command>
 
-	<command name="gotoMyAccount">
-		<execute action="Home#open" locator-key1="HOME_URL" />
-
-		<execute action="Dockbar#click" locator-key1="USER_NAME" />
-		<execute action="Dockbar#assertClick" locator-key1="USER_MY_ACCOUNT" value1="My Account" />
-
-		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
-		<execute action="Myaccount#assertClick" locator1="//ul[@class='nav control-panel-bar-secondary nav-pills']//a[contains(.,'${portletName}')]" value1="${portletName}" />
-	</command>
-
-	<command name="pgGoto">
+	<command name="tearDownPG">
 		<execute macro="Page#openURL" />
-
-		<execute action="Home#click" locator1="link=${pageName}" />
-	</command>
-
-	<command name="pgGotoOrganization">
-		<execute macro="Page#openURL">
-			<var name="pageType" value="Organization" />
-		</execute>
-
-		<execute action="Home#click" locator1="link=${pageName}" />
-	</command>
-
-	<command name="pgGotoSitePrivate">
-		<execute macro="Page#openURL">
-			<var name="pageAccess" value="Private" />
-			<var name="pageType" value="Site" />
-		</execute>
-
-		<execute action="Home#click" locator1="link=${pageName}" />
-	</command>
-
-	<command name="pgGotoSitePublic">
-		<execute macro="Page#openURL">
-			<var name="pageType" value="Site" />
-		</execute>
-
-		<execute action="Home#click" locator1="link=${pageName}" />
-	</command>
-
-	<command name="pgAdd">
-		<execute macro="Page#openURL" />
-
-		<execute action="Dockbar#assertClick" locator-key1="ADD" value1="Add" />
-		<execute action="Dockbar#assertClick" locator-key1="ADD_PAGE_LINK" value1="Page" />
-		<execute action="Dockbar#type" locator-key1="ADD_PAGE_NAME_FIELD" value1="${pageName}" />
-		<execute action="Dockbar#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
-
-		<var name="key_pageName" value="${pageName}" />
-
-		<execute action="Home#assertClick" locator-key1="PAGE" value1="${pageName}" />
-	</command>
-
-	<command name="pgAddOrganization">
-		<execute macro="Page#pgAdd">
-			<var name="pageName" value="${pageName}" />
-			<var name="pageType" value="Organization" />
-		</execute>
-	</command>
-
-	<command name="pgAddSitePrivate">
-		<execute macro="Page#pgAdd">
-			<var name="pageAccess" value="Private" />
-			<var name="pageName" value="${pageName}" />
-			<var name="pageType" value="Site" />
-		</execute>
-	</command>
-
-	<command name="pgAddSitePublic">
-		<execute macro="Page#pgAdd">
-			<var name="pageName" value="${pageName}" />
-			<var name="pageType" value="Site" />
-		</execute>
-	</command>
-
-	<command name="pgTearDown">
-		<execute action="Home#open" locator-key1="HOME_URL" />
 
 		<while>
 			<condition action="Home#isElementPresent" locator-key1="PAGE_2" />

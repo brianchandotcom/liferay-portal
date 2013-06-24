@@ -3,7 +3,7 @@
 	<var name="password" value="test" />
 
 	<command name="addCP">
-		<execute macro="Page#cpGotoUsers">
+		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
@@ -24,7 +24,7 @@
 	</command>
 
 	<command name="deactivateCP">
-		<execute macro="Page#cpGotoUsers">
+		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
@@ -50,7 +50,7 @@
 	</command>
 
 	<command name="deleteCP">
-		<execute macro="Page#cpGotoUsers">
+		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
@@ -76,7 +76,7 @@
 	</command>
 
 	<command name="editPasswordCP">
-		<execute macro="Page#cpGotoUsers">
+		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
@@ -109,7 +109,7 @@
 	</command>
 
 	<command name="viewCP">
-		<execute macro="Page#cpGoto">
+		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
@@ -130,7 +130,7 @@
 	</command>
 
 	<command name="pgFirstLogin">
-		<execute action="Home#open" locator-key1="HOME_URL" />
+		<execute macro="Page#openURL" />
 
 		<if>
 			<condition action="Dockbar#isElementPresent" locator-key1="USER_NAME" />
@@ -145,7 +145,7 @@
 	</command>
 
 	<command name="pgLogin">
-		<execute action="Home#open" locator-key1="HOME_URL" />
+		<execute macro="Page#openURL" />
 
 		<execute action="PGLogin#type" locator-key1="EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
 		<execute action="PGLogin#type" locator-key1="PASSWORD_FIELD" value1="${password}" />
@@ -177,7 +177,7 @@
 	</command>
 
 	<command name="pgLogout">
-		<execute action="Home#open" locator-key1="HOME_URL" />
+		<execute macro="Page#openURL" />
 
 		<if>
 			<condition action="Dockbar#isElementPresent" locator-key1="USER_NAME" />

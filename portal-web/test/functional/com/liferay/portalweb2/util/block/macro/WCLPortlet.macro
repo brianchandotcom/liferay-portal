@@ -1,6 +1,6 @@
 <definition>
 	<command name="configureSetupPG">
-		<execute macro="Page#pgGoto">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -33,21 +33,21 @@
 		<if>
 			<isset var="configureDisplayPerPage" />
 			<then>
-		<execute action="PGWebcontentlistConfiguration#select" locator-key1="DISPLAY_SETTINGS_DISPLAY_PER_PAGE_SELECT" value1="${configureDisplayPerPage}" />
+				<execute action="PGWebcontentlistConfiguration#select" locator-key1="DISPLAY_SETTINGS_DISPLAY_PER_PAGE_SELECT" value1="${configureDisplayPerPage}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="configureOrderByColumn" />
 			<then>
-		<execute action="PGWebcontentlistConfiguration#select" locator-key1="DISPLAY_SETTINGS_ORDER_BY_COLUMN_SELECT" value1="${configureOrderByColumn}" />
+				<execute action="PGWebcontentlistConfiguration#select" locator-key1="DISPLAY_SETTINGS_ORDER_BY_COLUMN_SELECT" value1="${configureOrderByColumn}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="configureOrderByType" />
 			<then>
-		<execute action="PGWebcontentlistConfiguration#select" locator-key1="DISPLAY_SETTINGS_ORDER_BY_TYPE_SELECT" value1="${configureOrderByType}" />
+				<execute action="PGWebcontentlistConfiguration#select" locator-key1="DISPLAY_SETTINGS_ORDER_BY_TYPE_SELECT" value1="${configureOrderByType}" />
 			</then>
 		</if>
 

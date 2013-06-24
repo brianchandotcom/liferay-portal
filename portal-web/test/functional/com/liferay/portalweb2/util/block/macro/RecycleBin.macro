@@ -1,6 +1,6 @@
 <definition>
 	<command name="emptyRecycleBinCP">
-		<execute macro="Page#cpGotoContent">
+		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Recycle Bin" />
 		</execute>
 

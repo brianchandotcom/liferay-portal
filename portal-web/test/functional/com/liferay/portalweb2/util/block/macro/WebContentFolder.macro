@@ -1,6 +1,6 @@
 <definition>
 	<command name="addCP">
-		<execute macro="Page#cpGotoContent">
+		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
 
@@ -17,7 +17,7 @@
 	</command>
 
 	<command name="addSubfolderCP">
-		<execute macro="Page#cpGotoContent">
+		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
 

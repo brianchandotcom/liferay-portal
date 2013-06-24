@@ -1,6 +1,6 @@
 <definition>
 	<command name="addChildCP">
-		<execute macro="Page#cpGotoSites">
+		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
 
@@ -59,7 +59,7 @@
 	</command>
 
 	<command name="addCP">
-		<execute macro="Page#cpGotoSites">
+		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
 
@@ -133,8 +133,10 @@
 	</command>
 
 	<command name="viewChildPrivatePG">
-		<execute macro="Page#pgGotoSitePrivate">
+		<execute macro="Page#gotoPG">
+			<var name="pageAccess" value="Private" />
 			<var name="pageName" value="${sitePageName}" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute action="Home#mouseOver" locator-key1="PAGE_1" value1="${sitePageName}" />
@@ -147,8 +149,9 @@
 	</command>
 
 	<command name="viewChildPublicPG">
-		<execute macro="Page#pgGotoSitePublic">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${sitePageName}" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute action="Home#mouseOver" locator-key1="PAGE_1" value1="${sitePageName}" />
@@ -161,8 +164,10 @@
 	</command>
 
 	<command name="viewPrivatePG">
-		<execute macro="Page#pgGotoSitePrivate">
+		<execute macro="Page#gotoPG">
+			<var name="pageAccess" value="Private" />
 			<var name="pageName" value="${sitePageName}" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_1" value1="${siteName}" />
@@ -172,8 +177,9 @@
 	</command>
 
 	<command name="viewPublicPG">
-		<execute macro="Page#pgGotoSitePublic">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${sitePageName}" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_1" value1="${siteName}" />

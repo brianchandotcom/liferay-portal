@@ -109,84 +109,6 @@ AUI.add(
 				return canDrop;
 			},
 
-			getArticleContentXML: function() {
-				var instance = this;
-
-				var buffer = [];
-				var structureTreeId = instance._getNamespacedId('#structureTree');
-				var sourceRoots = A.all(structureTreeId + ' > li');
-				var hasStructure = instance.hasStructure();
-
-				var content;
-
-				if (!hasStructure) {
-					var item = sourceRoots.item(0);
-
-					if (item) {
-						var fieldInstance = instance.getFieldInstance(item);
-
-						content = fieldInstance.getContent(item);
-					}
-				}
-				else {
-					var attributes = null;
-					var availableLocales = [];
-					var stillLocalized = false;
-					var availableLocalesElements = A.all('[name=' + instance.portletNamespace + 'available_locales]');
-					var defaultLocale = instance.getDefaultLocale();
-
-					instance.getFields().each(
-						function(item, index, collection) {
-							var fieldInstance = instance.getFieldInstance(item);
-							var isLocalized = fieldInstance.get('localized');
-
-							if (isLocalized) {
-								stillLocalized = true;
-							}
-						}
-					);
-
-					if (stillLocalized) {
-						availableLocalesElements.each(
-							function(item, index, collection) {
-								var locale = item.val();
-
-								if (locale) {
-									availableLocales.push(locale);
-								}
-							}
-						);
-
-						attributes = {
-							'available-locales': availableLocales.join(','),
-							'default-locale': defaultLocale
-						};
-					}
-					else {
-						attributes = {
-							'available-locales': defaultLocale,
-							'default-locale': defaultLocale
-						};
-					}
-
-					var root = instance._createDynamicNode('root', attributes);
-
-					buffer.push(root.openTag);
-
-					sourceRoots.each(
-						function(item, index, collection) {
-							instance._appendStructureTypeElementAndMetaData(item, buffer, true);
-						}
-					);
-
-					buffer.push(root.closeTag);
-
-					content = buffer.join('');
-				}
-
-				return content;
-			},
-
 			getById: function(id, namespace) {
 				var instance = this;
 
@@ -623,10 +545,6 @@ AUI.add(
 							articleIdInput.val(newArticleIdInput.val());
 						}
 
-						var content = instance.getArticleContentXML();
-
-						contentInput.val(content);
-
 						submitForm(form);
 					}
 				}
@@ -670,12 +588,6 @@ AUI.add(
 				var cmdInput = instance.getByName(form, 'cmd');
 
 				cmdInput.val('translate');
-
-				var contentInput = instance.getByName(form, 'content');
-
-				var content = instance.getArticleContentXML();
-
-				contentInput.val(content);
 
 				submitForm(form);
 			},

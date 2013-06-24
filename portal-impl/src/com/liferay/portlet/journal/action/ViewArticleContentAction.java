@@ -99,7 +99,7 @@ public class ViewArticleContentAction extends PortletAction {
 				User user = PortalUtil.getUser(uploadPortletRequest);
 
 				String content = ParamUtil.getString(
-					uploadPortletRequest, "content");
+					uploadPortletRequest, "articleContent");
 
 				if (Validator.isNotNull(structureId)) {
 					ServiceContext serviceContext =

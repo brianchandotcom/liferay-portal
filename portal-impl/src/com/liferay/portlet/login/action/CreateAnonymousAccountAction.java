@@ -224,6 +224,8 @@ public class CreateAnonymousAccountAction extends PortletAction {
 			CaptchaUtil.check(actionRequest);
 		}
 
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
 		User user = UserServiceUtil.addUser(
 			themeDisplay.getCompanyId(), autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, facebookId, openId,

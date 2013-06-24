@@ -164,8 +164,9 @@ public abstract class BaseWorkflowHandler implements WorkflowHandler {
 			long companyId, long groupId, long classPK)
 		throws PortalException, SystemException {
 
-		return WorkflowDefinitionLinkLocalServiceUtil.getWorkflowDefinitionLink(
-			companyId, groupId, getClassName(), 0, 0);
+		return WorkflowDefinitionLinkLocalServiceUtil.
+			fetchWorkflowDefinitionLink(
+				companyId, groupId, getClassName(), 0, 0);
 	}
 
 	@Override

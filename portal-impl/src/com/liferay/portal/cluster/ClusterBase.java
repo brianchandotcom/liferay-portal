@@ -92,10 +92,6 @@ public abstract class ClusterBase {
 
 	public abstract void destroy();
 
-	public InetAddress getBindInetAddress() {
-		return bindInetAddress;
-	}
-
 	public boolean isEnabled() {
 		return PropsValues.CLUSTER_LINK_ENABLED;
 	}

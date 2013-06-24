@@ -24,13 +24,13 @@ import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
-import com.liferay.portal.util.ClassLoaderUtil;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 import java.util.Map;
 
+import com.liferay.portal.util.ClassLoaderUtil;
 import org.aopalliance.intercept.MethodInvocation;
 
 /**

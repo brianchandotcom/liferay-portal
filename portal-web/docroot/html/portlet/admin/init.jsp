@@ -19,6 +19,7 @@
 <%@ page import="com.liferay.portal.CompanyMxException" %><%@
 page import="com.liferay.portal.CompanyVirtualHostException" %><%@
 page import="com.liferay.portal.CompanyWebIdException" %><%@
+page import="com.liferay.portal.RequiredCompanyException" %><%@
 page import="com.liferay.portal.captcha.recaptcha.ReCaptchaImpl" %><%@
 page import="com.liferay.portal.convert.ConvertProcess" %><%@
 page import="com.liferay.portal.dao.shard.ManualShardSelector" %><%@

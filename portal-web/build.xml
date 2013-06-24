@@ -54,7 +54,7 @@
 	</path>
 
 	<target name="build-alloy">
-		<antcall target="build-alloy-twitter-bootstrap" />
+		<antcall target="build-alloy-bootstrap" />
 
 		<property name="alloy.version" value="2.0.0pr5" />
 
@@ -177,12 +177,12 @@
 		</if>
 	</target>
 
-	<target name="build-alloy-twitter-bootstrap">
+	<target name="build-alloy-bootstrap">
 		<property name="alloy.bootstrap.version" value="2.2.2" />
 
 		<property name="alloy.bootstrap.deploy" value="docroot/html/themes/_unstyled/css/aui" />
 
-		<property name="alloy.bootstrap.file" value="alloy-twitter-bootstrap-${alloy.bootstrap.version}.zip" />
+		<property name="alloy.bootstrap.file" value="alloy-bootstrap-${alloy.bootstrap.version}.zip" />
 
 		<property name="alloy.bootstrap.tmp.dir" value="docroot/html/ALLOY_BOOTSTRAP_ZIP" />
 

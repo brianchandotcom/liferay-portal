@@ -1,7 +1,7 @@
 ;(function(A, Liferay) {
 	A.use(
-		'iobase',
-		function() {
+		'io-base',
+		function(A) {
 			Liferay.Language = {
 				get: A.cached(
 					function(key, extraParams) {

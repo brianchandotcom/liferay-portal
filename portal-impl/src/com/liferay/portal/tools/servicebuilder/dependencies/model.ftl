@@ -14,6 +14,7 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.GroupedModel;
 import com.liferay.portal.model.ResourcedModel;
+import com.liferay.portal.model.TypedModel;
 import com.liferay.portal.model.StagedAuditedModel;
 import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.model.StagedModel;
@@ -92,6 +93,12 @@ public interface ${entity.name}Model extends
 		, StagedModel
 
 		<#assign overrideColumnNames = overrideColumnNames + ["companyId", "createDate", "modifiedDate", "uuid"]>
+	</#if>
+
+	<#if entity.isTypedModel() && !entity.isAttachedModel()>
+		, TypedModel
+
+		<#assign overrideColumnNames = overrideColumnNames + ["className", "classNameId"]>
 	</#if>
 
 	<#if entity.isWorkflowEnabled()>

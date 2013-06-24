@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.bookmarks.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -849,6 +850,11 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	@Override
 	public boolean isInTrashContainer() {
 		return _bookmarksEntry.isInTrashContainer();
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _bookmarksEntry.getStagedModelType();
 	}
 
 	/**

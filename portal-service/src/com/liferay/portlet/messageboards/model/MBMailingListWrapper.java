@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.messageboards.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -953,6 +954,11 @@ public class MBMailingListWrapper implements MBMailingList,
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_mbMailingList.persist();
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _mbMailingList.getStagedModelType();
 	}
 
 	/**

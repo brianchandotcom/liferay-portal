@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -771,6 +773,11 @@ public class OrganizationWrapper implements Organization,
 	@Override
 	public boolean isRoot() {
 		return _organization.isRoot();
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _organization.getStagedModelType();
 	}
 
 	/**

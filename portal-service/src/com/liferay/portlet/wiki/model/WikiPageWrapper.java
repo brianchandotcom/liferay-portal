@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.wiki.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -1077,6 +1078,11 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	@Override
 	public void setAttachmentsFolderId(long attachmentsFolderId) {
 		_wikiPage.setAttachmentsFolderId(attachmentsFolderId);
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _wikiPage.getStagedModelType();
 	}
 
 	/**

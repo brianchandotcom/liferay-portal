@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -2004,6 +2006,11 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	public void setTypeSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties) {
 		_layout.setTypeSettingsProperties(typeSettingsProperties);
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _layout.getStagedModelType();
 	}
 
 	/**

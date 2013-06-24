@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.asset.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -867,6 +868,11 @@ public class AssetCategoryWrapper implements AssetCategory,
 	@Override
 	public boolean isRootCategory() {
 		return _assetCategory.isRootCategory();
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _assetCategory.getStagedModelType();
 	}
 
 	/**

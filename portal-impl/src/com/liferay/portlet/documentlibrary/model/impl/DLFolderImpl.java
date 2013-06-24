@@ -16,6 +16,8 @@ package com.liferay.portlet.documentlibrary.model.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.StagedModelType;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -124,6 +126,11 @@ public class DLFolderImpl extends DLFolderBaseImpl {
 		path = path.substring(1);
 
 		return StringUtil.split(path, CharPool.SLASH);
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(Folder.class);
 	}
 
 	@Override

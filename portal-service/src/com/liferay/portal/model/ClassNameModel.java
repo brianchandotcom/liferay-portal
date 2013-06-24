@@ -34,7 +34,7 @@ import java.io.Serializable;
  * @see com.liferay.portal.model.impl.ClassNameModelImpl
  * @generated
  */
-public interface ClassNameModel extends BaseModel<ClassName> {
+public interface ClassNameModel extends BaseModel<ClassName>, TypedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -60,6 +60,7 @@ public interface ClassNameModel extends BaseModel<ClassName> {
 	 *
 	 * @return the fully qualified class name of this class name
 	 */
+	@Override
 	public String getClassName();
 
 	public void setClassName(String className);
@@ -69,6 +70,7 @@ public interface ClassNameModel extends BaseModel<ClassName> {
 	 *
 	 * @return the class name ID of this class name
 	 */
+	@Override
 	public long getClassNameId();
 
 	/**
@@ -76,6 +78,7 @@ public interface ClassNameModel extends BaseModel<ClassName> {
 	 *
 	 * @param classNameId the class name ID of this class name
 	 */
+	@Override
 	public void setClassNameId(long classNameId);
 
 	/**

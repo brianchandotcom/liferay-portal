@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.repository.model;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.ModelWrapper;
@@ -225,6 +226,11 @@ public class FileEntryWrapper implements FileEntry, ModelWrapper<FileEntry> {
 	@Override
 	public long getSize() {
 		return _fileEntry.getSize();
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _fileEntry.getStagedModelType();
 	}
 
 	@Override

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.bookmarks.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -832,6 +833,11 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	@Override
 	public boolean isRoot() {
 		return _bookmarksFolder.isRoot();
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _bookmarksFolder.getStagedModelType();
 	}
 
 	/**

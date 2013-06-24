@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -856,6 +858,11 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	@Override
 	public boolean isTeam() {
 		return _role.isTeam();
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _role.getStagedModelType();
 	}
 
 	/**

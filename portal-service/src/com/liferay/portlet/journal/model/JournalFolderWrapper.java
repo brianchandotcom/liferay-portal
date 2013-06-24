@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.journal.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -805,6 +806,11 @@ public class JournalFolderWrapper implements JournalFolder,
 	@Override
 	public boolean isRoot() {
 		return _journalFolder.isRoot();
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _journalFolder.getStagedModelType();
 	}
 
 	/**

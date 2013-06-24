@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.mobiledevicerules.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -811,6 +812,11 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	public void setTypeSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties) {
 		_mdrRule.setTypeSettingsProperties(typeSettingsProperties);
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _mdrRule.getStagedModelType();
 	}
 
 	/**

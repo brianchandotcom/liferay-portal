@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.messageboards.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -919,6 +920,11 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	@Override
 	public boolean isRoot() {
 		return _mbCategory.isRoot();
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _mbCategory.getStagedModelType();
 	}
 
 	/**

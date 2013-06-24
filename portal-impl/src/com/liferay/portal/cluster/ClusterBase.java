@@ -92,6 +92,10 @@ public abstract class ClusterBase {
 
 	public abstract void destroy();
 
+	public InetAddress getBindInetAddress() {
+		return bindInetAddress;
+	}
+
 	public boolean isEnabled() {
 		return PropsValues.CLUSTER_LINK_ENABLED;
 	}
@@ -203,7 +207,7 @@ public abstract class ClusterBase {
 		}
 	}
 
-	protected InetAddress bindInetAddress;
+	protected static InetAddress bindInetAddress;
 
 	private static Log _log = LogFactoryUtil.getLog(ClusterBase.class);
 

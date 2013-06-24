@@ -293,6 +293,8 @@ public interface PropsKeys {
 
 	public static final String BOOKMARKS_EMAIL_FROM_NAME = "bookmarks.email.from.name";
 
+	public static final String BOOTUP_CLUSTER_NODE_RESPONSE_TIMEOUT = "bootup.cluster.node.response.timeout";
+
 	public static final String BREADCRUMB_DISPLAY_STYLE_DEFAULT = "breadcrumb.display.style.default";
 
 	public static final String BREADCRUMB_DISPLAY_STYLE_OPTIONS = "breadcrumb.display.style.options";
@@ -798,6 +800,10 @@ public interface PropsKeys {
 	public static final String EHCACHE_PORTAL_CACHE_MANAGER_JMX_ENABLED = "ehcache.portal.cache.manager.jmx.enabled";
 
 	public static final String EHCACHE_SINGLE_VM_CONFIG_LOCATION = "ehcache.single.vm.config.location";
+
+	public static final String EHCACHE_SOCKET_SO_TIMEOUT = "ehcache.socket.so.timeout";
+
+	public static final String EHCACHE_SOCKET_START_PORT = "ehcache.socket.start.port";
 
 	public static final String EHCACHE_STATISTICS_ENABLED = "ehcache.statistics.enabled";
 

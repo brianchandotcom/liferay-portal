@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
+import java.net.InetAddress;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -37,6 +39,10 @@ public class ClusterLinkUtil {
 
 	public static Address getAddress(Message message) {
 		return (Address)message.get(_ADDRESS);
+	}
+
+	public static InetAddress getBindInetAddress() {
+		return getClusterLink().getBindInetAddress();
 	}
 
 	public static ClusterLink getClusterLink() {

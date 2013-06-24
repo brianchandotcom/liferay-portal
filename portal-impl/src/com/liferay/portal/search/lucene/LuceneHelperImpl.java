@@ -870,7 +870,8 @@ public class LuceneHelperImpl implements LuceneHelper {
 				indexAccessor, clusterNodeAddressesCount, localLastGeneration));
 	}
 
-	private static final long _BOOTUP_CLUSTER_NODE_RESPONSE_TIMEOUT = 10000;
+	private static final long _BOOTUP_CLUSTER_NODE_RESPONSE_TIMEOUT =
+		PropsValues.BOOTUP_CLUSTER_NODE_RESPONSE_TIMEOUT;
 
 	private static final int _LUCENE_BOOLEAN_QUERY_CLAUSE_MAX_SIZE =
 		GetterUtil.getInteger(

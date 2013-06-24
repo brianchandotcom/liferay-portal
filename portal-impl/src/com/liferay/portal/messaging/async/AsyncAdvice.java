@@ -14,6 +14,7 @@
 
 package com.liferay.portal.messaging.async;
 
+import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -22,15 +23,16 @@ import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.async.Async;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
+import com.liferay.portal.util.ClassLoaderUtil;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 import java.util.Map;
 
-import com.liferay.portal.util.ClassLoaderUtil;
 import org.aopalliance.intercept.MethodInvocation;
 
 /**
@@ -42,6 +44,10 @@ public class AsyncAdvice extends AnnotationChainableMethodAdvice<Async> {
 	@Override
 	public Object before(final MethodInvocation methodInvocation)
 		throws Throwable {
+
+		if (AsyncInvokeThreadLocal.isEnabled()) {
+			return null;
+		}
 
 		Async async = findAnnotation(methodInvocation);
 
@@ -73,26 +79,27 @@ public class AsyncAdvice extends AnnotationChainableMethodAdvice<Async> {
 			destinationName = _defaultDestinationName;
 		}
 
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		String servletContextName = ClassLoaderPool.getContextName(
+			contextClassLoader);
+
+		MethodHandler methodHandler = new MethodHandler(
+			methodInvocation.getMethod(), methodInvocation.getArguments());
+
+		Object thisObject = methodInvocation.getThis();
+
+		IdentifiableBean identifiableBean = (IdentifiableBean)thisObject;
+
+		String beanIdentifier = identifiableBean.getBeanIdentifier();
+
 		MessageBusUtil.sendMessage(
 			destinationName,
-			new Runnable() {
-
-				@Override
-				public void run() {
-					try {
-						methodInvocation.proceed();
-					}
-					catch (Throwable t) {
-						throw new RuntimeException(t);
-					}
-				}
-
-				@Override
-				public String toString() {
-					return methodInvocation.toString();
-				}
-
-			});
+			new MethodHandler(
+				_invokeMethodKey, methodHandler, servletContextName,
+				beanIdentifier));
 
 		return nullResult;
 	}
@@ -156,6 +163,10 @@ public class AsyncAdvice extends AnnotationChainableMethodAdvice<Async> {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(AsyncAdvice.class);
+
+	private static MethodKey _invokeMethodKey = new MethodKey(
+		AsyncAdvice.class, "_invoke", MethodHandler.class, String.class,
+		String.class);
 
 	private static Async _nullAsync =
 		new Async() {

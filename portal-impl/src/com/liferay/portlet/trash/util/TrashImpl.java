@@ -233,6 +233,7 @@ public class TrashImpl implements Trash {
 			trashEntriesMaxAge);
 	}
 
+	@Override
 	public String getNewName(String oldName, String token) {
 		StringBundler sb = new StringBundler(3);
 
@@ -270,13 +271,11 @@ public class TrashImpl implements Trash {
 				CharPool.PERIOD));
 		sb.append(StringPool.CLOSE_PARENTHESIS);
 
-		String token = sb.toString();
-
 		if (trashRenderer != null) {
-			return trashRenderer.getNewName(oldName, token);
+			return trashRenderer.getNewName(oldName, sb.toString());
 		}
 		else {
-			return getNewName(oldName, token);
+			return getNewName(oldName, sb.toString());
 		}
 	}
 

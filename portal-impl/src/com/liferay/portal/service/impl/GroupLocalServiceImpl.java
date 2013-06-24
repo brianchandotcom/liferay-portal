@@ -1181,8 +1181,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		throws SystemException {
 
 		if (parentGroupId == GroupConstants.ANY_PARENT_GROUP_ID) {
-			return groupPersistence.findByC_S(
-				companyId, site, start, end);
+			return groupPersistence.findByC_S(companyId, site, start, end);
 		}
 
 		return groupPersistence.findByC_P_S(

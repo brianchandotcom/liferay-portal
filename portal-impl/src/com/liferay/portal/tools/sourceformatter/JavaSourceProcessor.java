@@ -1695,7 +1695,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		int previousLineLength = getLineLength(previousLine);
 
-		if (line.startsWith("// ") || trimmedPreviousLine.startsWith("// ")) {
+		if (line.startsWith("// ") && trimmedPreviousLine.startsWith("// ")) {
 			String linePart = line.substring(3);
 
 			if (!linePart.startsWith("PLACEHOLDER") &&
@@ -1719,6 +1719,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					}
 				}
 			}
+
+			return null;
+		}
+		else if (line.startsWith("// ") ||
+				 trimmedPreviousLine.startsWith("// ")) {
 
 			return null;
 		}

@@ -414,7 +414,6 @@ public class SocialActivityLocalServiceUtil {
 	* @param assetEntry the asset from which to remove stored activities
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
-	* @deprecated As of 6.2.0, replaced by {@link #deleteActivities(long)}
 	*/
 	public static void deleteActivities(
 		com.liferay.portlet.asset.model.AssetEntry assetEntry)
@@ -435,7 +434,6 @@ public class SocialActivityLocalServiceUtil {
 	* @param className the target asset's class name
 	* @param classPK the primary key of the target asset
 	* @throws SystemException if a system exception occurred
-	* @deprecated As of 6.2.0, replaced by {@link #deleteActivities(long)}
 	*/
 	public static void deleteActivities(java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -449,7 +447,6 @@ public class SocialActivityLocalServiceUtil {
 	* @param activityId the primary key of the stored activity
 	* @throws PortalException if the activity could not be found
 	* @throws SystemException if a system exception occurred
-	* @deprecated As of 6.2.0, replaced by {@link #deleteActivities(long)}
 	*/
 	public static void deleteActivity(long activityId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -462,7 +459,6 @@ public class SocialActivityLocalServiceUtil {
 	*
 	* @param activity the activity to be removed
 	* @throws SystemException if a system exception occurred
-	* @deprecated As of 6.2.0, replaced by {@link #deleteActivities(long)}
 	*/
 	public static void deleteActivity(
 		com.liferay.portlet.social.model.SocialActivity activity)

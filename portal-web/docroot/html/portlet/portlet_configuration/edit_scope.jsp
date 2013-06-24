@@ -20,39 +20,36 @@
 String scopeType = GetterUtil.getString(portletPreferences.getValue("lfrScopeType", null));
 String scopeLayoutUuid = GetterUtil.getString(portletPreferences.getValue("lfrScopeLayoutUuid", null));
 
-Group selectedGroup = null;
+Group group = null;
 
 if (Validator.isNull(scopeType)) {
-	selectedGroup = themeDisplay.getSiteGroup();
+	group = themeDisplay.getSiteGroup();
 }
 else if (scopeType.equals("company")) {
-	selectedGroup = GroupLocalServiceUtil.getGroup(themeDisplay.getCompanyGroupId());
+	group = GroupLocalServiceUtil.getGroup(themeDisplay.getCompanyGroupId());
 }
 else if (scopeType.equals("layout")) {
-	Layout selectedLayout = null;
+	for (Layout scopeGroupLayout : LayoutLocalServiceUtil.getScopeGroupLayouts(layout.getGroupId(), layout.isPrivateLayout())) {
+		if (scopeLayoutUuid.equals(scopeGroupLayout.getUuid())) {
+			group = GroupLocalServiceUtil.getLayoutGroup(scopeGroupLayout.getCompanyId(), scopeGroupLayout.getPlid());
 
-	for (Layout curLayout : LayoutLocalServiceUtil.getScopeGroupLayouts(layout.getGroupId(), layout.isPrivateLayout())) {
-		if (scopeLayoutUuid.equals(curLayout.getUuid())) {
-			selectedLayout = curLayout;
+			break;
 		}
 	}
 
-	if (selectedLayout != null) {
-		selectedGroup = GroupLocalServiceUtil.getLayoutGroup(selectedLayout.getCompanyId(), selectedLayout.getPlid());
-	}
-	else {
-		selectedGroup = themeDisplay.getSiteGroup();
+	if (group == null) {
+		group = themeDisplay.getSiteGroup();
 	}
 }
 
 Set<Group> availableGroups = new LinkedHashSet<Group>();
 
-availableGroups.add(selectedGroup);
+availableGroups.add(group);
 availableGroups.add(themeDisplay.getSiteGroup());
 availableGroups.add(company.getGroup());
 
-for (Layout curLayout : LayoutLocalServiceUtil.getScopeGroupLayouts(layout.getGroupId(), layout.isPrivateLayout())) {
-	availableGroups.add(curLayout.getScopeGroup());
+for (Layout scopeGroupLayout : LayoutLocalServiceUtil.getScopeGroupLayouts(layout.getGroupId(), layout.isPrivateLayout())) {
+	availableGroups.add(scopeGroupLayout.getScopeGroup());
 }
 %>
 
@@ -62,22 +59,22 @@ for (Layout curLayout : LayoutLocalServiceUtil.getScopeGroupLayouts(layout.getGr
 
 <aui:fieldset>
 	<aui:field-wrapper label="scope" name="scopeId">
-		<liferay-ui:icon-menu direction="down" icon="<%= selectedGroup.getIconURL(themeDisplay) %>" message="<%= selectedGroup.getDescriptiveName(locale) %>" showWhenSingleIcon="<%= true %>">
+		<liferay-ui:icon-menu direction="down" icon="<%= group.getIconURL(themeDisplay) %>" message="<%= group.getDescriptiveName(locale) %>" showWhenSingleIcon="<%= true %>">
 
 			<%
-			for (Group curGroup : availableGroups) {
-				String curScopeType = StringPool.BLANK;
-				String curScopeLayoutUuid = StringPool.BLANK;
+			for (Group availableGroup : availableGroups) {
+				String availableGroupScopeType = StringPool.BLANK;
+				String availableGroupScopeLayoutUuid = StringPool.BLANK;
 
-				if (curGroup.isCompany()) {
-					curScopeType = "company";
+				if (availableGroup.isCompany()) {
+					availableGroupScopeType = "company";
 				}
-				else if (curGroup.isLayout()) {
-					curScopeType = "layout";
+				else if (availableGroup.isLayout()) {
+					availableGroupScopeType = "layout";
 
-					Layout curScopeLayout = LayoutLocalServiceUtil.getLayout(curGroup.getClassPK());
+					Layout availableGroupLayout = LayoutLocalServiceUtil.getLayout(availableGroup.getClassPK());
 
-					curScopeLayoutUuid = curScopeLayout.getUuid();
+					availableGroupScopeLayoutUuid = availableGroupLayout.getUuid();
 				}
 			%>
 
@@ -86,15 +83,15 @@ for (Layout curLayout : LayoutLocalServiceUtil.getScopeGroupLayouts(layout.getGr
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="portletResource" value="<%= portletResource %>" />
 					<portlet:param name="struts_action" value="/portlet_configuration/edit_scope" />
-					<portlet:param name="scopeType" value="<%= curScopeType %>" />
-					<portlet:param name="scopeLayoutUuid" value="<%= curScopeLayoutUuid %>" />
+					<portlet:param name="scopeType" value="<%= availableGroupScopeType %>" />
+					<portlet:param name="scopeLayoutUuid" value="<%= availableGroupScopeLayoutUuid %>" />
 				</liferay-portlet:actionURL>
 
 				<liferay-ui:icon
-					id='<%= "scope" + curGroup.getGroupId() %>'
-					message="<%= curGroup.getDescriptiveName(locale) %>"
+					id='<%= "scope" + availableGroup.getGroupId() %>'
+					message="<%= availableGroup.getDescriptiveName(locale) %>"
 					method="post"
-					src="<%= curGroup.getIconURL(themeDisplay) %>"
+					src="<%= availableGroup.getIconURL(themeDisplay) %>"
 					url="<%= setScopeURL %>"
 				/>
 

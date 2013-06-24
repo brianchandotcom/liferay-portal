@@ -1,0 +1,15 @@
+<definition>
+	<command name="assertClick">
+		<case locator-key1="ASSIGNED_TO_ME_TABLE_ASSET_TITLE">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+		<case locator-key1="ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TITLE">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+	</command>
+	<command name="assertTextEquals">
+		<case locator-key1="SUCCESS_MESSAGE">
+			<execute function="AssertTextEquals#assertText" />
+		</case>
+	</command>
+</definition>

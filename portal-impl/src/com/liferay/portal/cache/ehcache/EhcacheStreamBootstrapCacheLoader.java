@@ -29,7 +29,8 @@ import net.sf.ehcache.bootstrap.BootstrapCacheLoader;
 import net.sf.ehcache.distribution.RemoteCacheException;
 
 /**
- * @author Shuyang Zhou Sherry Yang
+ * @author Shuyang Zhou
+ * @author Sherry Yang
  */
 public class EhcacheStreamBootstrapCacheLoader implements BootstrapCacheLoader {
 
@@ -48,7 +49,7 @@ public class EhcacheStreamBootstrapCacheLoader implements BootstrapCacheLoader {
 
 		for (Ehcache ehcache : _deferredEhcache) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("loading deferred cache: " + ehcache.getName());
+				_log.debug("Loading deferred cache: " + ehcache.getName());
 			}
 
 			try {
@@ -62,7 +63,7 @@ public class EhcacheStreamBootstrapCacheLoader implements BootstrapCacheLoader {
 
 	public EhcacheStreamBootstrapCacheLoader(Properties properties) {
 		if (properties != null) {
-			_bootstrap_asynchronously = GetterUtil.getBoolean(
+			_bootstrapAsynchronously = GetterUtil.getBoolean(
 				properties.getProperty(_BOOTSTRAP_ASYNCHRONOUSLY));
 		}
 	}
@@ -99,14 +100,15 @@ public class EhcacheStreamBootstrapCacheLoader implements BootstrapCacheLoader {
 
 	@Override
 	public boolean isAsynchronous() {
-		return _bootstrap_asynchronously;
+		return _bootstrapAsynchronously;
 	}
 
 	@Override
 	public void load(Ehcache ehcache) {
-		if (_bootstrap_asynchronously) {
+		if (_bootstrapAsynchronously) {
 			StreamBootstrapThread streamBootstrapThread =
 				new StreamBootstrapThread(ehcache);
+
 			streamBootstrapThread.start();
 		}
 		else {
@@ -128,7 +130,7 @@ public class EhcacheStreamBootstrapCacheLoader implements BootstrapCacheLoader {
 			false);
 	private static boolean _started;
 
-	private boolean _bootstrap_asynchronously = true;
+	private boolean _bootstrapAsynchronously = true;
 
 	private class StreamBootstrapThread extends Thread {
 
@@ -136,14 +138,16 @@ public class EhcacheStreamBootstrapCacheLoader implements BootstrapCacheLoader {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Bootstrap thread for cache " + ehcache.getName() +
-					" asynchronously.");
+						" asynchronously.");
 			}
 
 			_ehcache = ehcache;
+
 			setDaemon(true);
 			setPriority(Thread.NORM_PRIORITY);
 		}
 
+		@Override
 		public void run() {
 			try {
 				doLoad(_ehcache);
@@ -160,6 +164,7 @@ public class EhcacheStreamBootstrapCacheLoader implements BootstrapCacheLoader {
 		}
 
 		private Ehcache _ehcache;
+
 	}
 
 }

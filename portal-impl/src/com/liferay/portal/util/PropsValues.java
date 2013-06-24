@@ -252,8 +252,6 @@ public class PropsValues {
 
 	public static final String BOOKMARKS_EMAIL_FROM_NAME = PropsUtil.get(PropsKeys.BOOKMARKS_EMAIL_FROM_NAME);
 
-	public static final long BOOTUP_CLUSTER_NODE_RESPONSE_TIMEOUT = GetterUtil.getLong(PropsKeys.BOOTUP_CLUSTER_NODE_RESPONSE_TIMEOUT);
-
 	public static final String BREADCRUMB_DISPLAY_STYLE_DEFAULT = PropsUtil.get(PropsKeys.BREADCRUMB_DISPLAY_STYLE_DEFAULT);
 
 	public static final String[] BREADCRUMB_DISPLAY_STYLE_OPTIONS = PropsUtil.getArray(PropsKeys.BREADCRUMB_DISPLAY_STYLE_OPTIONS);
@@ -355,6 +353,8 @@ public class PropsValues {
 	public static final String[] CLUSTER_LINK_CHANNEL_SYSTEM_PROPERTIES = PropsUtil.getArray(PropsKeys.CLUSTER_LINK_CHANNEL_SYSTEM_PROPERTIES);
 
 	public static final boolean CLUSTER_LINK_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.CLUSTER_LINK_ENABLED));
+
+	public static final int CLUSTER_LINK_NODE_BOOTUP_RESPONSE_TIMEOUT = GetterUtil.getInteger(PropsKeys.CLUSTER_LINK_NODE_BOOTUP_RESPONSE_TIMEOUT);
 
 	public static final String[] COMBO_ALLOWED_FILE_EXTENSIONS = PropsUtil.getArray(PropsKeys.COMBO_ALLOWED_FILE_EXTENSIONS);
 

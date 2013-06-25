@@ -18,8 +18,6 @@ import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.DefaultConfigurationPortletDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
@@ -102,8 +100,5 @@ public class AssetCategoriesNavitagionPortletDataHandler
 
 		return portletPreferences;
 	}
-
-	private static Log _log = LogFactoryUtil.getLog(
-		AssetCategoriesNavitagionPortletDataHandler.class);
 
 }

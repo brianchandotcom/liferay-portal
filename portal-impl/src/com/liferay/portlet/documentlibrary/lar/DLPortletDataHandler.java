@@ -118,8 +118,6 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		Element rootElement = portletDataContext.getImportDataRootElement();
-
 		long rootFolderId = GetterUtil.getLong(
 			portletPreferences.getValue("root-folder-id", null));
 

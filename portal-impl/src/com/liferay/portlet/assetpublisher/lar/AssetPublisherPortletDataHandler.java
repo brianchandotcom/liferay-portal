@@ -59,7 +59,7 @@ public class AssetPublisherPortletDataHandler
 	}
 
 	@Override
-	public PortletPreferences processExportPreferences(
+	public PortletPreferences processExportPortletPreferences(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences, Element rootElement)
 		throws Exception {
@@ -69,7 +69,7 @@ public class AssetPublisherPortletDataHandler
 	}
 
 	@Override
-	public PortletPreferences processImportPreferences(
+	public PortletPreferences processImportPortletPreferences(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
 		throws Exception {
@@ -153,7 +153,7 @@ public class AssetPublisherPortletDataHandler
 					 name.equals(
 						"classTypeIdsDLFileEntryAssetRendererFactory")) {
 
-				ExportImportHelperUtil.updateExportPreferencesClassPKs(
+				ExportImportHelperUtil.updateExportPortletPreferencesClassPKs(
 					portletPreferences, name, DLFileEntryType.class.getName());
 			}
 			else if (name.equals(
@@ -164,11 +164,11 @@ public class AssetPublisherPortletDataHandler
 					 name.equals(
 						"classTypeIdsJournalArticleAssetRendererFactory")) {
 
-				ExportImportHelperUtil.updateExportPreferencesClassPKs(
+				ExportImportHelperUtil.updateExportPortletPreferencesClassPKs(
 					portletPreferences, name, DDMStructure.class.getName());
 			}
 			else if (name.equals("assetVocabularyId")) {
-				ExportImportHelperUtil.updateExportPreferencesClassPKs(
+				ExportImportHelperUtil.updateExportPortletPreferencesClassPKs(
 					portletPreferences, name, AssetVocabulary.class.getName());
 			}
 			else if (name.startsWith("queryName") &&
@@ -176,7 +176,7 @@ public class AssetPublisherPortletDataHandler
 
 				String index = name.substring(9);
 
-				ExportImportHelperUtil.updateExportPreferencesClassPKs(
+				ExportImportHelperUtil.updateExportPortletPreferencesClassPKs(
 					portletPreferences, "queryValues" + index,
 					AssetCategory.class.getName());
 			}
@@ -315,7 +315,7 @@ public class AssetPublisherPortletDataHandler
 					 name.equals(
 						"classTypeIdsDLFileEntryAssetRendererFactory")) {
 
-				ExportImportHelperUtil.updateImportPreferencesClassPKs(
+				ExportImportHelperUtil.updateImportPortletPreferencesClassPKs(
 					portletDataContext, portletPreferences, name,
 					DLFileEntryType.class, companyGroup.getGroupId());
 			}
@@ -327,12 +327,12 @@ public class AssetPublisherPortletDataHandler
 					 name.equals(
 						"classTypeIdsJournalArticleAssetRendererFactory")) {
 
-				ExportImportHelperUtil.updateImportPreferencesClassPKs(
+				ExportImportHelperUtil.updateImportPortletPreferencesClassPKs(
 					portletDataContext, portletPreferences, name,
 					DDMStructure.class, companyGroup.getGroupId());
 			}
 			else if (name.equals("assetVocabularyId")) {
-				ExportImportHelperUtil.updateImportPreferencesClassPKs(
+				ExportImportHelperUtil.updateImportPortletPreferencesClassPKs(
 					portletDataContext, portletPreferences, name,
 					AssetVocabulary.class, companyGroup.getGroupId());
 			}
@@ -341,7 +341,7 @@ public class AssetPublisherPortletDataHandler
 
 				String index = name.substring(9, name.length());
 
-				ExportImportHelperUtil.updateImportPreferencesClassPKs(
+				ExportImportHelperUtil.updateImportPortletPreferencesClassPKs(
 					portletDataContext, portletPreferences,
 					"queryValues" + index, AssetCategory.class,
 					companyGroup.getGroupId());

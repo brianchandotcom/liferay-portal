@@ -86,7 +86,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Override
-	public PortletPreferences processExportPreferences(
+	public PortletPreferences processExportPortletPreferences(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences, Element rootElement)
 		throws Exception {
@@ -113,7 +113,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Override
-	public PortletPreferences processImportPreferences(
+	public PortletPreferences processImportPortletPreferences(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
 		throws Exception {

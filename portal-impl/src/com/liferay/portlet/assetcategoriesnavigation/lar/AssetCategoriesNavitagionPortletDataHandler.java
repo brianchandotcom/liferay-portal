@@ -40,7 +40,7 @@ public class AssetCategoriesNavitagionPortletDataHandler
 	}
 
 	@Override
-	public PortletPreferences processExportPreferences(
+	public PortletPreferences processExportPortletPreferences(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences, Element rootElement)
 		throws Exception {
@@ -49,7 +49,7 @@ public class AssetCategoriesNavitagionPortletDataHandler
 	}
 
 	@Override
-	public PortletPreferences processImportPreferences(
+	public PortletPreferences processImportPortletPreferences(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
 		throws Exception {
@@ -68,7 +68,7 @@ public class AssetCategoriesNavitagionPortletDataHandler
 			String name = enu.nextElement();
 
 			if (name.equals("assetVocabularyIds")) {
-				ExportImportHelperUtil.updateExportPreferencesClassPKs(
+				ExportImportHelperUtil.updateExportPortletPreferencesClassPKs(
 					portletPreferences, name, AssetVocabulary.class.getName());
 			}
 		}
@@ -92,7 +92,7 @@ public class AssetCategoriesNavitagionPortletDataHandler
 			String name = enu.nextElement();
 
 			if (name.equals("assetVocabularyIds")) {
-				ExportImportHelperUtil.updateImportPreferencesClassPKs(
+				ExportImportHelperUtil.updateImportPortletPreferencesClassPKs(
 					portletDataContext, portletPreferences, name,
 					AssetVocabulary.class, companyGroup.getGroupId());
 			}

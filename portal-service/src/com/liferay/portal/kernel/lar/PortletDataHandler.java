@@ -175,12 +175,12 @@ public interface PortletDataHandler {
 	public void prepareManifestSummary(PortletDataContext portletDataContext)
 		throws PortletDataException;
 
-	public PortletPreferences processExportPreferences(
+	public PortletPreferences processExportPortletPreferences(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences, Element rootElement)
 		throws Exception;
 
-	public PortletPreferences processImportPreferences(
+	public PortletPreferences processImportPortletPreferences(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
 		throws Exception;

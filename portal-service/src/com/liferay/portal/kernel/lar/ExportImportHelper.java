@@ -112,11 +112,11 @@ public interface ExportImportHelper {
 			boolean importReferencedContent)
 		throws Exception;
 
-	public void updateExportPreferencesClassPKs(
+	public void updateExportPortletPreferencesClassPKs(
 			PortletPreferences portletPreferences, String key, String className)
 		throws Exception;
 
-	public void updateImportPreferencesClassPKs(
+	public void updateImportPortletPreferencesClassPKs(
 			PortletDataContext portletDataContext,
 			PortletPreferences portletPreferences, String key, Class<?> clazz,
 			long companyGroupId)

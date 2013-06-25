@@ -182,21 +182,21 @@ public class ExportImportHelperUtil {
 			portletDataContext, content, importReferencedContent);
 	}
 
-	public static void updateExportPreferencesClassPKs(
+	public static void updateExportPortletPreferencesClassPKs(
 			PortletPreferences portletPreferences, String key, String className)
 		throws Exception {
 
-		getExportImportHelper().updateExportPreferencesClassPKs(
+		getExportImportHelper().updateExportPortletPreferencesClassPKs(
 			portletPreferences, key, className);
 	}
 
-	public static void updateImportPreferencesClassPKs(
+	public static void updateImportPortletPreferencesClassPKs(
 			PortletDataContext portletDataContext,
 			PortletPreferences portletPreferences, String key, Class<?> clazz,
 			long companyGroupId)
 		throws Exception {
 
-		getExportImportHelper().updateImportPreferencesClassPKs(
+		getExportImportHelper().updateImportPortletPreferencesClassPKs(
 			portletDataContext, portletPreferences, key, clazz, companyGroupId);
 	}
 

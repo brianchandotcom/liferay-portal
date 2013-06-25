@@ -914,8 +914,12 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			ServiceContext serviceContext = ldapUser.getServiceContext();
 			serviceContext.setAttribute("ldapServerId", ldapServerId);
 
+			boolean isNew = false;
+
 			if (user == null) {
 				user = addUser(companyId, ldapUser, password);
+
+				isNew = true;
 			}
 
 			String modifiedDate = LDAPUtil.getAttributeString(
@@ -923,7 +927,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 
 			user = updateUser(
 				companyId, ldapUser, user, userMappings, contactMappings,
-				password, modifiedDate);
+				password, modifiedDate, isNew);
 
 			updateExpandoAttributes(
 				user, ldapUser, userExpandoMappings, contactExpandoMappings);
@@ -1156,7 +1160,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 	protected User updateUser(
 			long companyId, LDAPUser ldapUser, User user,
 			Properties userMappings, Properties contactMappings,
-			String password, String modifiedDate)
+			String password, String modifiedDate, boolean isNew)
 		throws Exception {
 
 		Date ldapUserModifiedDate = null;
@@ -1171,37 +1175,39 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 		}
 
 		try {
-			if (Validator.isNull(modifiedDate)) {
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Skipping user " + user.getEmailAddress() +
-							" because the LDAP entry was never modified");
-				}
+			if (Validator.isNotNull(modifiedDate)) {
+				ldapUserModifiedDate = LDAPUtil.parseDate(modifiedDate);
 
-				return user;
-			}
+				if (ldapUserModifiedDate.equals(user.getModifiedDate())) {
+					if (ldapUser.isAutoPassword()) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(
+								"Skipping user " + user.getEmailAddress() +
+									" because he is already synchronized");
+						}
 
-			ldapUserModifiedDate = LDAPUtil.parseDate(modifiedDate);
+						return user;
+					}
 
-			if (ldapUserModifiedDate.equals(user.getModifiedDate())) {
-				if (ldapUser.isAutoPassword()) {
+					UserLocalServiceUtil.updatePassword(
+						user.getUserId(), password, password, passwordReset,
+						true);
+
 					if (_log.isDebugEnabled()) {
 						_log.debug(
-							"Skipping user " + user.getEmailAddress() +
-								" because he is already synchronized");
+							"User " + user.getEmailAddress() +
+								" is already synchronized, but updated " +
+									"password to avoid a blank value");
 					}
 
 					return user;
 				}
-
-				UserLocalServiceUtil.updatePassword(
-					user.getUserId(), password, password, passwordReset, true);
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"User " + user.getEmailAddress() +
-							" is already synchronized, but updated password " +
-								"to avoid a blank value");
+			}
+			else if (!isNew) {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Skipping user " + user.getEmailAddress() +
+							" because the LDAP entry was never modified");
 				}
 
 				return user;

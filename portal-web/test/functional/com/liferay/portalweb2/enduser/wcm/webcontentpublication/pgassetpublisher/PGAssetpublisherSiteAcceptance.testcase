@@ -17,8 +17,9 @@
 			<var name="sitePageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="Portlet#pgAddSitePublic">
+		<execute macro="Portlet#addPG">
 			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
 			<var name="portletName" value="${portletName}" />
 		</execute>
 	</command>

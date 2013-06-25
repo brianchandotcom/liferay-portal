@@ -1,6 +1,6 @@
 <definition>
 	<command name="addCP">
-		<execute macro="Page#cpGotoUsers">
+		<execute macro="Page#gotoCP">
 			<var name="portletName" value="User Groups" />
 		</execute>
 
@@ -14,7 +14,7 @@
 	</command>
 
 	<command name="deleteCP">
-		<execute macro="Page#cpGotoUsers">
+		<execute macro="Page#gotoCP">
 			<var name="portletName" value="User Groups" />
 		</execute>
 
@@ -26,7 +26,7 @@
 	</command>
 
 	<command name="editCP">
-		<execute macro="Page#cpGotoUsers">
+		<execute macro="Page#gotoCP">
 			<var name="portletName" value="User Groups" />
 		</execute>
 
@@ -41,7 +41,7 @@
 	</command>
 
 	<command name="tearDownCP">
-		<execute macro="Page#cpGotoUsers">
+		<execute macro="Page#gotoCP">
 			<var name="portletName" value="User Groups" />
 		</execute>
 

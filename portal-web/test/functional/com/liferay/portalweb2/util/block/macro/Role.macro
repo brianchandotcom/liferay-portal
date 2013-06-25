@@ -1,6 +1,6 @@
 <definition>
 	<command name="addCP">
-		<execute macro="Page#cpGoto">
+		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />
 		</execute>
 
@@ -33,7 +33,7 @@
 
 		<execute action="CPRoles#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
 
-		<execute macro="Page#cpGoto">
+		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />
 		</execute>
 
@@ -85,7 +85,7 @@
 	</command>
 
 	<command name="assignRegRoleCP">
-		<execute macro="Page#cpGoto">
+		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />
 		</execute>
 
@@ -142,7 +142,7 @@
 	</command>
 
 	<command name="definePermissionBlogsEntryOrgCP">
-		<execute macro="Page#cpGoto">
+		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />
 		</execute>
 
@@ -154,7 +154,7 @@
 	</command>
 
 	<command name="definePermissionBlogsEntryRegCP">
-		<execute macro="Page#cpGoto">
+		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />
 		</execute>
 
@@ -166,7 +166,7 @@
 	</command>
 
 	<command name="definePermissionBlogsEntrySiteCP">
-		<execute macro="Page#cpGoto">
+		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />
 		</execute>
 
@@ -210,7 +210,7 @@
 	</command>
 
 	<command name="removePermissionBlogsEntryOrgCP">
-		<execute macro="Page#cpGoto">
+		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />
 		</execute>
 
@@ -222,7 +222,7 @@
 	</command>
 
 	<command name="removePermissionBlogsEntryRegCP">
-		<execute macro="Page#cpGoto">
+		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />
 		</execute>
 
@@ -234,7 +234,7 @@
 	</command>
 
 	<command name="removePermissionBlogsEntrySiteCP">
-		<execute macro="Page#cpGoto">
+		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />
 		</execute>
 
@@ -246,7 +246,7 @@
 	</command>
 
 	<command name="tearDownCP">
-		<execute macro="Page#cpGoto">
+		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />
 		</execute>
 

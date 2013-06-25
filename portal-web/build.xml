@@ -178,7 +178,7 @@
 	</target>
 
 	<target name="build-alloy-bootstrap">
-		<property name="alloy.bootstrap.version" value="2.2.2" />
+		<property name="alloy.bootstrap.version" value="2.3.2" />
 
 		<property name="alloy.bootstrap.deploy" value="docroot/html/themes/_unstyled/css/aui" />
 

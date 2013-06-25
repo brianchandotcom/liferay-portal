@@ -126,4 +126,23 @@ public class BookmarksFolderStagedModelDataHandler
 			folder, importedFolder, BookmarksPortletDataHandler.NAMESPACE);
 	}
 
+	@Override
+	protected boolean validateMissingReference(
+		String uuid, long companyId, long groupId) {
+
+		try {
+			BookmarksFolder bookmarkFolder = BookmarksFolderUtil.fetchByUUID_G(
+				uuid, groupId);
+
+			if (bookmarkFolder == null) {
+				return false;
+			}
+		}
+		catch (Exception e) {
+			return false;
+		}
+
+		return true;
+	}
+
 }

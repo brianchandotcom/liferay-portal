@@ -322,7 +322,8 @@ embeddedPlayerURL.setWindowState(LiferayWindowState.POP_UP);
 					},
 					fn: A.MediaViewerPlugin
 				}
-			]
+			],
+			zIndex: Liferay.zIndex.WINDOW
 		}
 	).render();
 </aui:script>

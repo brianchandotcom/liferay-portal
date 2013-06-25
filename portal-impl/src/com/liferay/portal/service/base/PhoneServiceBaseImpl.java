@@ -91,6 +91,7 @@ import com.liferay.portal.service.persistence.UserGroupPersistence;
 import com.liferay.portal.service.persistence.UserGroupRoleFinder;
 import com.liferay.portal.service.persistence.UserGroupRolePersistence;
 import com.liferay.portal.service.persistence.UserIdMapperPersistence;
+import com.liferay.portal.service.persistence.UserNotificationDeliveryPersistence;
 import com.liferay.portal.service.persistence.UserNotificationEventPersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.UserTrackerPathPersistence;
@@ -3248,6 +3249,44 @@ public abstract class PhoneServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
+	 * Returns the user notification delivery local service.
+	 *
+	 * @return the user notification delivery local service
+	 */
+	public com.liferay.portal.service.UserNotificationDeliveryLocalService getUserNotificationDeliveryLocalService() {
+		return userNotificationDeliveryLocalService;
+	}
+
+	/**
+	 * Sets the user notification delivery local service.
+	 *
+	 * @param userNotificationDeliveryLocalService the user notification delivery local service
+	 */
+	public void setUserNotificationDeliveryLocalService(
+		com.liferay.portal.service.UserNotificationDeliveryLocalService userNotificationDeliveryLocalService) {
+		this.userNotificationDeliveryLocalService = userNotificationDeliveryLocalService;
+	}
+
+	/**
+	 * Returns the user notification delivery persistence.
+	 *
+	 * @return the user notification delivery persistence
+	 */
+	public UserNotificationDeliveryPersistence getUserNotificationDeliveryPersistence() {
+		return userNotificationDeliveryPersistence;
+	}
+
+	/**
+	 * Sets the user notification delivery persistence.
+	 *
+	 * @param userNotificationDeliveryPersistence the user notification delivery persistence
+	 */
+	public void setUserNotificationDeliveryPersistence(
+		UserNotificationDeliveryPersistence userNotificationDeliveryPersistence) {
+		this.userNotificationDeliveryPersistence = userNotificationDeliveryPersistence;
+	}
+
+	/**
 	 * Returns the user notification event local service.
 	 *
 	 * @return the user notification event local service
@@ -3992,6 +4031,10 @@ public abstract class PhoneServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.portal.service.UserIdMapperLocalService userIdMapperLocalService;
 	@BeanReference(type = UserIdMapperPersistence.class)
 	protected UserIdMapperPersistence userIdMapperPersistence;
+	@BeanReference(type = com.liferay.portal.service.UserNotificationDeliveryLocalService.class)
+	protected com.liferay.portal.service.UserNotificationDeliveryLocalService userNotificationDeliveryLocalService;
+	@BeanReference(type = UserNotificationDeliveryPersistence.class)
+	protected UserNotificationDeliveryPersistence userNotificationDeliveryPersistence;
 	@BeanReference(type = com.liferay.portal.service.UserNotificationEventLocalService.class)
 	protected com.liferay.portal.service.UserNotificationEventLocalService userNotificationEventLocalService;
 	@BeanReference(type = UserNotificationEventPersistence.class)

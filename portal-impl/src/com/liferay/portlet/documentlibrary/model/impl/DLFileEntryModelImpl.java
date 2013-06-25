@@ -17,6 +17,7 @@ package com.liferay.portlet.documentlibrary.model.impl;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSON;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -950,6 +951,12 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	@Override
 	public void setManualCheckInRequired(boolean manualCheckInRequired) {
 		_manualCheckInRequired = manualCheckInRequired;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(PortalUtil.getClassNameId(
+				DLFileEntry.class.getName()), getClassNameId());
 	}
 
 	public long getColumnBitmask() {

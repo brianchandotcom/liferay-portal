@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -64,11 +65,14 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 	public static final String NAMESPACE = "document_library";
 
 	public DLPortletDataHandler() {
-		setDeletionSystemEventClassNames(
-			DLFileEntry.class.getName(), DLFileRank.class.getName(),
-			DLFileShortcut.class.getName(), DLFolder.class.getName());
 		setDataLocalized(true);
 		setDataPortletPreferences("rootFolderId");
+		setDeletionSystemEventModelTypes(
+			new StagedModelType(DLFileEntry.class),
+			new StagedModelType(DLFileEntryType.class),
+			new StagedModelType(DLFileRank.class),
+			new StagedModelType(DLFileShortcut.class),
+			new StagedModelType(DLFolder.class));
 		setExportControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "documents", true, false,
@@ -318,8 +322,8 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		return new DLFileEntryExportActionableDynamicQuery(portletDataContext) {
 
 			@Override
-			protected String getManifestSummaryKey() {
-				return FileEntry.class.getName();
+			protected StagedModelType getStagedModelType() {
+				return new StagedModelType(FileEntry.class);
 			}
 
 			@Override
@@ -345,8 +349,8 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		return new DLFolderExportActionableDynamicQuery(portletDataContext) {
 
 			@Override
-			protected String getManifestSummaryKey() {
-				return Folder.class.getName();
+			protected StagedModelType getStagedModelType() {
+				return new StagedModelType(Folder.class);
 			}
 
 			@Override

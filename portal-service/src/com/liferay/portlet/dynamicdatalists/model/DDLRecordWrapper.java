@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.dynamicdatalists.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -675,6 +676,11 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _ddlRecord.getStatus();
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _ddlRecord.getStagedModelType();
 	}
 
 	/**

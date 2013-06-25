@@ -1168,6 +1168,7 @@
 			<basic name="classNameId" />
 			<basic name="classPK" />
 			<basic name="classUuid" />
+			<basic name="referrerClassNameId" />
 			<basic name="type">
 				<column name="TYPE_" />
 			</basic>

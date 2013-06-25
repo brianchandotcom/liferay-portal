@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.asset.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -801,6 +802,11 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	public void setSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties settingsProperties) {
 		_assetVocabulary.setSettingsProperties(settingsProperties);
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _assetVocabulary.getStagedModelType();
 	}
 
 	/**

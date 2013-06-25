@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -760,6 +762,11 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	@Override
 	public com.liferay.portal.model.ListType getType() {
 		return _address.getType();
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _address.getStagedModelType();
 	}
 
 	/**

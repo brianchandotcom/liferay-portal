@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -539,6 +541,11 @@ public class UserGroupWrapper implements UserGroup, ModelWrapper<UserGroup> {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _userGroup.hasPublicLayouts();
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _userGroup.getStagedModelType();
 	}
 
 	/**

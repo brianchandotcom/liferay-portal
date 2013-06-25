@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.staging;
+package com.liferay.portal.staging;
 
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.model.Layout;
@@ -21,9 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 
  * @author Sergio Sánchez
- *
  */
 public class ProxiedLayoutsThreadLocal {
 

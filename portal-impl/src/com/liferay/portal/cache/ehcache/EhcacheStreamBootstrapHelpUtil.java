@@ -59,7 +59,7 @@ import net.sf.ehcache.Element;
  */
 public class EhcacheStreamBootstrapHelpUtil {
 
-	public static void acquireCachePeers(Ehcache cache) throws Exception {
+	public static void acquireCachePeers(Ehcache ehcache) throws Exception {
 		List<Address> clusterNodeAddresses =
 			ClusterExecutorUtil.getClusterNodeAddresses();
 
@@ -79,7 +79,7 @@ public class EhcacheStreamBootstrapHelpUtil {
 			return;
 		}
 
-		loadCachesFromCluster(cache);
+		loadCachesFromCluster(ehcache);
 	}
 
 	public static ServerSocket createServerSocket(int startPort)
@@ -108,13 +108,10 @@ public class EhcacheStreamBootstrapHelpUtil {
 
 		ServerSocket serverSocket = createServerSocket(_START_PORT);
 
-		CacheStreamRunnable cacheStreamRunnable = new CacheStreamRunnable(
-			serverSocket, cacheName);
+		EhcacheStreamServerThread ehcacheStreamServerThread =
+			new EhcacheStreamServerThread(serverSocket, cacheName);
 
-		Thread thread = new Thread(cacheStreamRunnable);
-
-		thread.setDaemon(true);
-		thread.start();
+		ehcacheStreamServerThread.start();
 
 		return serverSocket.getLocalSocketAddress();
 	}
@@ -232,10 +229,27 @@ public class EhcacheStreamBootstrapHelpUtil {
 			EhcacheStreamBootstrapHelpUtil.class,
 			"createServerSocketFromCluster", String.class);
 
-	private static class CacheStreamRunnable implements Runnable {
+	@SuppressWarnings("serial")
+	private static class EhcacheElement implements Serializable {
+
+		public EhcacheElement(Serializable key, Serializable value) {
+			_key = key;
+			_value = value;
+		}
+
+		public Element toElement() {
+			return new Element(_key, _value);
+		}
+
+		private Serializable _key;
+		private Serializable _value;
+
+	}
+
+	private static class EhcacheStreamServerThread extends Thread {
 
 		@SuppressWarnings("rawtypes")
-		public CacheStreamRunnable(
+		public EhcacheStreamServerThread(
 			ServerSocket serverSocket, String cacheName) {
 
 			_serverSocket = serverSocket;
@@ -246,6 +260,11 @@ public class EhcacheStreamBootstrapHelpUtil {
 					_MULTI_VM_PORTAL_CACHE_MANAGER_BEAN_NAME);
 
 			_portalCacheManager = ehcachePortalCacheManager.getEhcacheManager();
+
+			setDaemon(true);
+			setName(
+				EhcacheStreamServerThread.class.getName() + " - " + cacheName);
+			setPriority(Thread.NORM_PRIORITY);
 		}
 
 		@SuppressWarnings("unchecked")
@@ -297,19 +316,14 @@ public class EhcacheStreamBootstrapHelpUtil {
 
 						Object value = element.getObjectValue();
 
-						if (value == null) {
-							continue;
-						}
-						else {
-							if (!(value instanceof Serializable)) {
-								if (_log.isWarnEnabled()) {
-									_log.warn(
-										"Value " + value.toString() +
-											" cannot be serializable");
-								}
-
-								continue;
+						if (!(value instanceof Serializable)) {
+							if (_log.isWarnEnabled() && (value != null)) {
+								_log.warn(
+									"Value " + value.toString() +
+										" cannot be serializable");
 							}
+
+							continue;
 						}
 
 						EhcacheElement ehcacheElement = new EhcacheElement(
@@ -341,23 +355,6 @@ public class EhcacheStreamBootstrapHelpUtil {
 		private CacheManager _portalCacheManager;
 		private ServerSocket _serverSocket;
 		private String _cacheName;
-
-	}
-
-	@SuppressWarnings("serial")
-	private static class EhcacheElement implements Serializable {
-
-		public EhcacheElement(Serializable key, Serializable value) {
-			_key = key;
-			_value = value;
-		}
-
-		public Element toElement() {
-			return new Element(_key, _value);
-		}
-
-		private Serializable _key;
-		private Serializable _value;
 
 	}
 

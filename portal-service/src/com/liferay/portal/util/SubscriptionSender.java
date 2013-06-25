@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.mail.MailMessage;
 import com.liferay.portal.kernel.mail.SMTPAccount;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.EscapableObject;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlEscapableObject;
@@ -46,6 +47,9 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.permission.SubscriptionPermissionUtil;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -628,6 +632,32 @@ public class SubscriptionSender implements Serializable {
 		MailServiceUtil.sendEmail(mailMessage);
 	}
 
+	private void readObject(ObjectInputStream objectInputStream)
+		throws ClassNotFoundException, IOException {
+
+		objectInputStream.defaultReadObject();
+
+		String servletContextName = objectInputStream.readUTF();
+
+		if (!servletContextName.isEmpty()) {
+			_classLoader = ClassLoaderPool.getClassLoader(servletContextName);
+		}
+	}
+
+	private void writeObject(ObjectOutputStream objectOutputStream)
+		throws IOException {
+
+		objectOutputStream.defaultWriteObject();
+
+		String servletContextName = StringPool.BLANK;
+
+		if (_classLoader != null) {
+			servletContextName = ClassLoaderPool.getContextName(_classLoader);
+		}
+
+		objectOutputStream.writeUTF(servletContextName);
+	}
+
 	protected String body;
 	protected boolean bulk;
 	protected long companyId;
@@ -652,7 +682,7 @@ public class SubscriptionSender implements Serializable {
 	private static Log _log = LogFactoryUtil.getLog(SubscriptionSender.class);
 
 	private List<InternetAddress> _bulkAddresses;
-	private ClassLoader _classLoader;
+	private transient ClassLoader _classLoader;
 	private Map<String, EscapableObject<String>> _context =
 		new HashMap<String, EscapableObject<String>>();
 	private String _contextUserPrefix;

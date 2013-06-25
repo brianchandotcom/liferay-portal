@@ -95,13 +95,8 @@ public class OrganizationPermissionImpl implements OrganizationPermission {
 
 		Group group = organization.getGroup();
 
-		long groupId = group.getGroupId();
-
-		if (contains(permissionChecker, groupId, organization, actionId)) {
-			return true;
-		}
-
-		return false;
+		return contains(
+			permissionChecker, group.getGroupId(), organization, actionId);
 	}
 
 	protected boolean contains(
@@ -124,8 +119,8 @@ public class OrganizationPermissionImpl implements OrganizationPermission {
 				return true;
 			}
 			else if (permissionChecker.hasPermission(
-					 groupId, Organization.class.getName(),
-					 organization.getOrganizationId(), actionId)) {
+						 groupId, Organization.class.getName(),
+						 organization.getOrganizationId(), actionId)) {
 
 				return true;
 			}

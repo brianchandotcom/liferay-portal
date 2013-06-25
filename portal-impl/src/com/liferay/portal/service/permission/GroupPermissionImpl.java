@@ -141,13 +141,8 @@ public class GroupPermissionImpl implements GroupPermission {
 
 		// Group id must be set so that users can modify their personal pages
 
-		if (permissionChecker.hasPermission(
-				groupId, Group.class.getName(), groupId, actionId)) {
-
-			return true;
-		}
-
-		return false;
+		return permissionChecker.hasPermission(
+			groupId, Group.class.getName(), groupId, actionId);
 	}
 
 	@Override

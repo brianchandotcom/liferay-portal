@@ -31,6 +31,6 @@ public class AsyncInvokeThreadLocal {
 
 	private static ThreadLocal<Boolean> _enabled =
 		new AutoResetThreadLocal<Boolean>(
-			AsyncInvokeThreadLocal.class + "._enabled", true);
+			AsyncInvokeThreadLocal.class + "._enabled", false);
 
 }

@@ -4877,7 +4877,7 @@ public class PortalImpl implements Portal {
 		PortletRequest portletRequest) {
 
 		PortletRequestImpl portletRequestImpl =
-			(PortletRequestImpl)portletRequest;
+			PortletRequestImpl.getPortletRequestImpl(portletRequest);
 
 		DynamicServletRequest dynamicRequest =
 			(DynamicServletRequest)portletRequestImpl.getHttpServletRequest();

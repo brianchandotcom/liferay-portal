@@ -1,24 +1,9 @@
 <definition>
 	<command name="assertClick">
-		<case locator-key1="ADD_MENULIST_ORGANIZATION_ROLE">
+		<case comparator="startsWith" locator-key1="ADD_MENULIST_">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
-		<case locator-key1="ADD_MENULIST_REGULAR_ROLE">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-		<case locator-key1="ADD_MENULIST_SITE_ROLE">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-		<case locator-key1="ROLE_MENULIST_ASSIGN_MEMBERS">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-		<case locator-key1="ROLE_MENULIST_DEFINE_PERMISSIONS">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-		<case locator-key1="ROLE_MENULIST_DELETE">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-		<case locator-key1="ROLE_MENULIST_EDIT">
+		<case comparator="startsWith" locator-key1="ROLE_MENULIST_">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 		<case locator-key1="SEARCH_BUTTON">

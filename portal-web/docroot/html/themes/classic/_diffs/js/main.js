@@ -1,5 +1,5 @@
 AUI().ready(
-	'aui-modal', 'liferay-hudcrumbs', 'liferay-navigation-interaction', 'node-load',
+	'aui-io-request', 'aui-modal', 'liferay-hudcrumbs', 'liferay-navigation-interaction',
 	function(A) {
 		var navigation = A.one('#navigation');
 
@@ -23,22 +23,42 @@ AUI().ready(
 
 					var signInURL = event.currentTarget.attr('href');
 
-					var signInDialog = new A.Modal(
-						{
-							bodyContent: '<div class="loading-animation" />',
-							centered: true,
-							constrain: true,
-							headerContent: '<h3>' + Liferay.Language.get('sign-in') + '</h3>',
-							modal: true,
-							zIndex: 400
-						}
-					).render();
+					var redirectPage = function() {
+						A.config.win.location = signInURL;
+					};
 
-					signInDialog.bodyNode.load(
+					A.io.request(
 						signInURL,
-						'#portlet_58 .portlet-body',
-						function() {
-							signInDialog.align();
+						{
+							on: {
+								failure: redirectPage,
+								success: function(event, id, obj) {
+									var responseData = this.get('responseData');
+
+									if (responseData) {
+										var renderData = new A.Node(responseData).one('#portlet_58 .portlet-body');
+
+										if (renderData) {
+											new A.Modal(
+												{
+													bodyContent: renderData,
+													centered: true,
+													constrain: true,
+													headerContent: '<h3>' + Liferay.Language.get('sign-in') + '</h3>',
+													modal: true,
+													zIndex: 400
+												}
+											).render();
+										}
+										else {
+											redirectPage();
+										}
+									}
+									else {
+										redirectPage();
+									}
+								}
+							}
 						}
 					);
 				}

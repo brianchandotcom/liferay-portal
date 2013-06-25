@@ -129,6 +129,13 @@ public class DeletionSystemEventExporter {
 			PortalUtil.getClassName(systemEvent.getClassNameId()));
 		deletionSystemEventElement.addAttribute(
 			"group-id", String.valueOf(systemEvent.getGroupId()));
+
+		if (systemEvent.getReferrerClassNameId() > 0) {
+			deletionSystemEventElement.addAttribute(
+				"referrer-class-name",
+				PortalUtil.getClassName(systemEvent.getReferrerClassNameId()));
+		}
+
 		deletionSystemEventElement.addAttribute(
 			"uuid", systemEvent.getClassUuid());
 

@@ -101,7 +101,7 @@ public class DLFileEntryFinderTest {
 
 		DLFileEntry dlFileEntry = liferayFileEntry.getDLFileEntry();
 
-		dlFileEntry.setExtraSettings("extra.settings=true");
+		dlFileEntry.setExtraSettings("hello=world");
 		dlFileEntry.setSmallImageId(_SMALL_IMAGE_ID);
 
 		dlFileEntry = DLFileEntryLocalServiceUtil.updateDLFileEntry(
@@ -129,7 +129,7 @@ public class DLFileEntryFinderTest {
 
 		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
 
-		dlFileVersion.setExtraSettings("extra.settings=true");
+		dlFileVersion.setExtraSettings("hello=world");
 
 		DLFileVersionLocalServiceUtil.updateDLFileVersion(dlFileVersion);
 

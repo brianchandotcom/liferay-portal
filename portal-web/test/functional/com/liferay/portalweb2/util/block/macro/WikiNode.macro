@@ -26,7 +26,7 @@
 		<execute action="CPWiki#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" />
 		<execute action="CPWiki#assertTextNotPresent" value1="${wikiNodeName}" />
 
-		<execute macro="RecycleBin#emptyRecycleBinCP" />
+		<execute macro="RecycleBin#emptyCP" />
 	</command>
 
 	<command name="editCP">
@@ -61,6 +61,6 @@
 			</then>
 		</while>
 
-		<execute macro="RecycleBin#emptyRecycleBinCP" />
+		<execute macro="RecycleBin#emptyCP" />
 	</command>
 </definition>

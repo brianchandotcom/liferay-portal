@@ -14,14 +14,15 @@
 
 package com.liferay.portal.verify;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.service.persistence.OrganizationActionableDynamicQuery;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
-
-import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
@@ -44,18 +45,27 @@ public class VerifyOrganization extends VerifyProcess {
 	}
 
 	protected void updateOrganizationAssets() throws Exception {
-		List<Organization> organizations =
-			OrganizationLocalServiceUtil.getOrganizations(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		ActionableDynamicQuery actionableDynamicQuery =
+			new OrganizationActionableDynamicQuery() {
 
-		for (Organization organization : organizations) {
-			AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
-				Organization.class.getName(), organization.getOrganizationId());
+			@Override
+			protected void performAction(Object object)
+				throws PortalException, SystemException {
 
-			assetEntry.setClassUuid(organization.getUuid());
+				Organization organization = (Organization)object;
 
-			AssetEntryLocalServiceUtil.updateAssetEntry(assetEntry);
-		}
+				AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+					Organization.class.getName(),
+					organization.getOrganizationId());
+
+				assetEntry.setClassUuid(organization.getUuid());
+
+				AssetEntryLocalServiceUtil.updateAssetEntry(assetEntry);
+			}
+
+		};
+
+		actionableDynamicQuery.performActions();
 	}
 
 }

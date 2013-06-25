@@ -269,7 +269,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 	}
 
 	@Override
-	public WikiNode fetchWikiNode(long groupId, String name)
+	public WikiNode fetchNode(long groupId, String name)
 		throws SystemException {
 
 		return wikiNodePersistence.fetchByG_N(groupId, name);

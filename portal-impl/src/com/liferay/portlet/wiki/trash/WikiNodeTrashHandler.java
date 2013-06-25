@@ -64,7 +64,7 @@ public class WikiNodeTrashHandler extends BaseTrashHandler {
 			originalTitle = newName;
 		}
 
-		WikiNode duplicateNode = WikiNodeLocalServiceUtil.fetchWikiNode(
+		WikiNode duplicateNode = WikiNodeLocalServiceUtil.fetchNode(
 			node.getGroupId(), originalTitle);
 
 		if (duplicateNode != null) {

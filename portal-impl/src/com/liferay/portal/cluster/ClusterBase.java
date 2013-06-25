@@ -203,7 +203,7 @@ public abstract class ClusterBase {
 		}
 	}
 
-	protected InetAddress bindInetAddress;
+	protected static InetAddress bindInetAddress;
 
 	private static Log _log = LogFactoryUtil.getLog(ClusterBase.class);
 

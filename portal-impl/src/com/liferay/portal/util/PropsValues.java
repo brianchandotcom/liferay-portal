@@ -354,6 +354,8 @@ public class PropsValues {
 
 	public static final boolean CLUSTER_LINK_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.CLUSTER_LINK_ENABLED));
 
+	public static final int CLUSTER_LINK_NODE_BOOTUP_RESPONSE_TIMEOUT = GetterUtil.getInteger(PropsKeys.CLUSTER_LINK_NODE_BOOTUP_RESPONSE_TIMEOUT);
+
 	public static final String[] COMBO_ALLOWED_FILE_EXTENSIONS = PropsUtil.getArray(PropsKeys.COMBO_ALLOWED_FILE_EXTENSIONS);
 
 	public static final boolean COMBO_CHECK_TIMESTAMP = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.COMBO_CHECK_TIMESTAMP));
@@ -679,6 +681,10 @@ public class PropsValues {
 	public static final boolean EHCACHE_CLUSTER_LINK_REPLICATION_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.EHCACHE_CLUSTER_LINK_REPLICATION_ENABLED));
 
 	public static final boolean EHCACHE_PORTAL_CACHE_MANAGER_JMX_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.EHCACHE_PORTAL_CACHE_MANAGER_JMX_ENABLED));
+
+	public static final int EHCACHE_SOCKET_SO_TIMEOUT = GetterUtil.getInteger(PropsUtil.get(PropsKeys.EHCACHE_SOCKET_SO_TIMEOUT));
+
+	public static final int EHCACHE_SOCKET_START_PORT = GetterUtil.getInteger(PropsUtil.get(PropsKeys.EHCACHE_SOCKET_START_PORT));
 
 	public static final boolean EHCACHE_STATISTICS_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.EHCACHE_STATISTICS_ENABLED));
 

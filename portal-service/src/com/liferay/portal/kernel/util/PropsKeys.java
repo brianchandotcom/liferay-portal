@@ -411,6 +411,8 @@ public interface PropsKeys {
 
 	public static final String CLUSTER_LINK_ENABLED = "cluster.link.enabled";
 
+	public static final String CLUSTER_LINK_NODE_BOOTUP_RESPONSE_TIMEOUT = "cluster.link.node.bootup.response.timeout";
+
 	public static final String COMBO_ALLOWED_FILE_EXTENSIONS = "combo.allowed.file.extensions";
 
 	public static final String COMBO_CHECK_TIMESTAMP = "combo.check.timestamp";
@@ -798,6 +800,10 @@ public interface PropsKeys {
 	public static final String EHCACHE_PORTAL_CACHE_MANAGER_JMX_ENABLED = "ehcache.portal.cache.manager.jmx.enabled";
 
 	public static final String EHCACHE_SINGLE_VM_CONFIG_LOCATION = "ehcache.single.vm.config.location";
+
+	public static final String EHCACHE_SOCKET_SO_TIMEOUT = "ehcache.socket.so.timeout";
+
+	public static final String EHCACHE_SOCKET_START_PORT = "ehcache.socket.start.port";
 
 	public static final String EHCACHE_STATISTICS_ENABLED = "ehcache.statistics.enabled";
 

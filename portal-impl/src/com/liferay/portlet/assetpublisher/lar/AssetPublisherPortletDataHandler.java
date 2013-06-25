@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -264,7 +265,7 @@ public class AssetPublisherPortletDataHandler
 	protected PortletPreferences updateImportPortletPreferences(
 			PortletDataContext portletDataContext, long companyId, long ownerId,
 			int ownerType, long plid, String portletId,
-			PortletPreferences portletPreferences, Layout layout)
+			PortletPreferences portletPreferences)
 		throws Exception {
 
 		Company company = CompanyLocalServiceUtil.getCompanyById(companyId);
@@ -283,8 +284,7 @@ public class AssetPublisherPortletDataHandler
 				portletPreferences.getValue(name, null));
 
 			if (name.equals("anyAssetType") || name.equals("classNameIds")) {
-				updateImportClassNameIds(
-					portletPreferences, name);
+				updateImportClassNameIds(portletPreferences, name);
 			}
 			else if (name.equals(
 						"anyClassTypeDLFileEntryAssetRendererFactory") ||
@@ -327,8 +327,7 @@ public class AssetPublisherPortletDataHandler
 			}
 			else if (name.equals("scopeIds")) {
 				updateImportScopeIds(
-					portletPreferences, name, companyGroup.getGroupId(),
-					layout.getPlid());
+					portletPreferences, name, companyGroup.getGroupId(), plid);
 			}
 		}
 

@@ -473,7 +473,7 @@
 							(ResourcePermission.companyId = Layout.companyId) AND
 							(ResourcePermission.name = Layout.name) AND
 							(ResourcePermission.scope = ?) AND
-							(resourcePermission.primKey = CAST_TEXT(Layout.plid)) AND
+							(ResourcePermission.primKey = CAST_TEXT(Layout.plid)) AND
 							(ResourcePermission.roleId = ?)
 				))
 		]]>

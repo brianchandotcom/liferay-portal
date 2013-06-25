@@ -871,7 +871,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 				indexAccessor, clusterNodeAddressesCount, localLastGeneration));
 	}
 
-	private static final int _CLUSTER_LINK_NODE_BOOTUP_RESPONSE_TIMEOUT =
+	private static final long _CLUSTER_LINK_NODE_BOOTUP_RESPONSE_TIMEOUT =
 		PropsValues.CLUSTER_LINK_NODE_BOOTUP_RESPONSE_TIMEOUT;
 
 	private static final int _LUCENE_BOOLEAN_QUERY_CLAUSE_MAX_SIZE =

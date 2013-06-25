@@ -671,6 +671,36 @@ AUI.add(
 				var tab = event.currentTarget.ancestor('li');
 
 				if (confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-this-page'))) {
+					var processRemovePageFailure = function(result) {
+						new Liferay.Notice(
+							{
+								closeText: false,
+								content: result.message + '<button type="button" class="close">&times;</button>',
+								noticeClass: 'hide',
+								timeout: 10000,
+								toggleText: false,
+								type: 'warning',
+								useAnimation: true
+							}
+						).show();
+					};
+
+					var processRemovePageSuccess = function(result) {
+						Liferay.fire(
+							'navigation',
+							{
+								item: tab,
+								type: 'delete'
+							}
+						);
+
+						tab.remove(true);
+
+						if (!navBlock.one('ul li')) {
+							navBlock.hide();
+						}
+					};
+
 					var data = {
 						cmd: 'delete',
 						doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
@@ -685,20 +715,25 @@ AUI.add(
 						instance._updateURL,
 						{
 							data: data,
+							dataType: 'json',
 							on: {
-								success: function() {
-									Liferay.fire(
-										'navigation',
+								failure: function() {
+									processRemovePageFailure.call(
+										instance,
 										{
-											item: tab,
-											type: 'delete'
+											message: Liferay.Language.get('your-request-failed-to-complete'),
+											status: -1
 										}
 									);
+								},
+								success: function(event, id, obj) {
+									var result = this.get('responseData');
 
-									tab.remove(true);
-
-									if (!navBlock.one('ul li')) {
-										navBlock.hide();
+									if (result.status === 0) {
+										processRemovePageSuccess.call(instance, result);
+									}
+									else {
+										processRemovePageFailure.call(instance, result);
 									}
 								}
 							}
@@ -706,7 +741,7 @@ AUI.add(
 					);
 				}
 			},
-			['aui-io-request'],
+			['aui-io-request', 'liferay-notice'],
 			true
 		);
 

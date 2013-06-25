@@ -25,7 +25,7 @@ import java.util.Map;
  */
 public class ProxiedLayoutsThreadLocal {
 
-	public static void clear() {
+	public static void clearProxiedLayouts() {
 		_proxiedLayouts.remove();
 	}
 

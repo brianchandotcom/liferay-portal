@@ -201,7 +201,7 @@ public class PortletPreferencesLocalServiceStagingAdvice
 
 		arguments[2] = layoutRevision.getLayoutRevisionId();
 
-		ProxiedLayoutsThreadLocal.clear();
+		ProxiedLayoutsThreadLocal.clearProxiedLayouts();
 
 		return method.invoke(methodInvocation.getThis(), arguments);
 	}

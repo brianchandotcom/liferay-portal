@@ -48,11 +48,10 @@ import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
 
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.testng.Assert;
 
 /**
  * @author Zsolt Berentey
@@ -102,7 +101,7 @@ public class DLFileEntryFinderTest {
 
 		DLFileEntry dlFileEntry = liferayFileEntry.getDLFileEntry();
 
-		dlFileEntry.setExtraSettings("Extra Settings");
+		dlFileEntry.setExtraSettings("extra.settings=true");
 		dlFileEntry.setSmallImageId(_SMALL_IMAGE_ID);
 
 		dlFileEntry = DLFileEntryLocalServiceUtil.updateDLFileEntry(
@@ -130,7 +129,7 @@ public class DLFileEntryFinderTest {
 
 		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
 
-		dlFileVersion.setExtraSettings("Extra Settings");
+		dlFileVersion.setExtraSettings("extra.settings=true");
 
 		DLFileVersionLocalServiceUtil.updateDLFileVersion(dlFileVersion);
 

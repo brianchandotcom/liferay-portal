@@ -44,27 +44,24 @@ public class AssetCategoriesNavitagionPortletDataHandler
 	@Override
 	public PortletPreferences processExportPreferences(
 			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences, long plid,
-			Element rootElement)
+			PortletPreferences portletPreferences, Element rootElement)
 		throws Exception {
 
-		return updateExportPortletPreferences(portletPreferences, plid);
+		return updateExportPortletPreferences(portletPreferences);
 	}
 
 	@Override
 	public PortletPreferences processImportPreferences(
-			PortletDataContext portletDataContext, long companyId, long ownerId,
-			int ownerType, long plid, String portletId,
+			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
 		throws Exception {
 
 		return updateImportPortletPreferences(
-			portletDataContext, companyId, ownerId, ownerType, plid, portletId,
-			portletPreferences);
+			portletDataContext, portletId, portletPreferences);
 	}
 
 	protected PortletPreferences updateExportPortletPreferences(
-			PortletPreferences portletPreferences, long plid)
+			PortletPreferences portletPreferences)
 		throws Exception {
 
 		Enumeration<String> enu = portletPreferences.getNames();
@@ -82,12 +79,12 @@ public class AssetCategoriesNavitagionPortletDataHandler
 	}
 
 	protected PortletPreferences updateImportPortletPreferences(
-			PortletDataContext portletDataContext, long companyId, long ownerId,
-			int ownerType, long plid, String portletId,
+			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		Company company = CompanyLocalServiceUtil.getCompanyById(companyId);
+		Company company = CompanyLocalServiceUtil.getCompanyById(
+			portletDataContext.getCompanyId());
 
 		Group companyGroup = company.getGroup();
 

@@ -61,24 +61,21 @@ public class AssetPublisherPortletDataHandler
 	@Override
 	public PortletPreferences processExportPreferences(
 			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences, long plid,
-			Element rootElement)
+			PortletPreferences portletPreferences, Element rootElement)
 		throws Exception {
 
 		return updateExportPortletPreferences(
-			portletDataContext, portletPreferences, plid);
+			portletDataContext, portletPreferences);
 	}
 
 	@Override
 	public PortletPreferences processImportPreferences(
-			PortletDataContext portletDataContext, long companyId, long ownerId,
-			int ownerType, long plid, String portletId,
+			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
 		throws Exception {
 
 		return updateImportPortletPreferences(
-			portletDataContext, companyId, ownerId, ownerType, plid, portletId,
-			portletPreferences);
+			portletDataContext, portletId, portletPreferences);
 	}
 
 	protected void updateExportClassNameIds(
@@ -125,7 +122,7 @@ public class AssetPublisherPortletDataHandler
 
 	protected PortletPreferences updateExportPortletPreferences(
 			PortletDataContext portletDataContext,
-			PortletPreferences portletPreferences, long plid)
+			PortletPreferences portletPreferences)
 		throws Exception {
 
 		String anyAssetTypeClassName = StringPool.BLANK;
@@ -185,7 +182,8 @@ public class AssetPublisherPortletDataHandler
 			}
 			else if (name.equals("scopeIds")) {
 				updateExportScopeIds(
-					portletDataContext, portletPreferences, name, plid);
+					portletDataContext, portletPreferences, name,
+					portletDataContext.getPlid());
 			}
 		}
 
@@ -286,12 +284,12 @@ public class AssetPublisherPortletDataHandler
 	}
 
 	protected PortletPreferences updateImportPortletPreferences(
-			PortletDataContext portletDataContext, long companyId, long ownerId,
-			int ownerType, long plid, String portletId,
+			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		Company company = CompanyLocalServiceUtil.getCompanyById(companyId);
+		Company company = CompanyLocalServiceUtil.getCompanyById(
+			portletDataContext.getCompanyId());
 
 		Group companyGroup = company.getGroup();
 
@@ -350,7 +348,8 @@ public class AssetPublisherPortletDataHandler
 			}
 			else if (name.equals("scopeIds")) {
 				updateImportScopeIds(
-					portletPreferences, name, companyGroup.getGroupId(), plid);
+					portletPreferences, name, companyGroup.getGroupId(),
+					portletDataContext.getPlid());
 			}
 		}
 

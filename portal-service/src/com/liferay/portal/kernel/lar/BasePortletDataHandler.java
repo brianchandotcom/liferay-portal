@@ -271,8 +271,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	@Override
 	public PortletPreferences processExportPreferences(
 			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences, long plid,
-			Element rootElement)
+			PortletPreferences portletPreferences, Element rootElement)
 		throws Exception {
 
 		return portletPreferences;
@@ -280,8 +279,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 
 	@Override
 	public PortletPreferences processImportPreferences(
-			PortletDataContext portletDataContext, long companyId, long ownerId,
-			int ownerType, long plid, String portletId,
+			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
 		throws Exception {
 

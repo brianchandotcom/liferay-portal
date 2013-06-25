@@ -27,6 +27,7 @@ import com.liferay.portal.model.Phone;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.Website;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.base.CompanyServiceBaseImpl;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
@@ -80,6 +81,7 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 	}
 
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@Override
 	public Company deleteCompany(long companyId)
 		throws PortalException, SystemException {
 

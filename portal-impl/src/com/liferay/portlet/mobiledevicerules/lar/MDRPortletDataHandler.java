@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portlet.mobiledevicerules.model.MDRAction;
 import com.liferay.portlet.mobiledevicerules.model.MDRRule;
@@ -45,9 +46,10 @@ public class MDRPortletDataHandler extends BasePortletDataHandler {
 	public static final String NAMESPACE = "mobile_device_rules";
 
 	public MDRPortletDataHandler() {
-		setDeletionSystemEventClassNames(
-			MDRAction.class.getName(), MDRRuleGroup.class.getName(),
-			MDRRuleGroupInstance.class.getName());
+		setDeletionSystemEventModelTypes(
+			new StagedModelType(MDRAction.class),
+			new StagedModelType(MDRRuleGroup.class),
+			new StagedModelType(MDRRuleGroupInstance.class));
 		setExportControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "rules", true, false, null, MDRRule.class.getName()),

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -601,6 +603,11 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 	public void setTypeSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties) {
 		_repository.setTypeSettingsProperties(typeSettingsProperties);
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _repository.getStagedModelType();
 	}
 
 	/**

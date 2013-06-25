@@ -2051,6 +2051,7 @@
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
 		<column name="classUuid" type="String" />
+		<column name="referrerClassNameId" type="long" />
 		<column name="type" type="int" />
 		<column name="extraData" type="String" />
 

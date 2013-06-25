@@ -26,6 +26,7 @@ import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.LayoutRevisionUtil;
+import com.liferay.portal.staging.ProxiedLayoutsThreadLocal;
 import com.liferay.portal.staging.StagingAdvicesThreadLocal;
 
 import java.lang.reflect.InvocationTargetException;
@@ -199,6 +200,8 @@ public class PortletPreferencesLocalServiceStagingAdvice
 			serviceContext);
 
 		arguments[2] = layoutRevision.getLayoutRevisionId();
+
+		ProxiedLayoutsThreadLocal.clear();
 
 		return method.invoke(methodInvocation.getThis(), arguments);
 	}

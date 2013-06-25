@@ -43,7 +43,7 @@
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
 
-		<execute macro="MessageboardsThread#viewNoCP">
+		<execute macro="MessageboardsThread#viewDefaultCP">
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
 	</command>

@@ -1,0 +1,36 @@
+<definition>
+	<set-up>
+		<execute macro="User#pgFirstLogin" />
+	</set-up>
+
+	<!--<command name="DeleteWikiFrontPage">
+		<var name="assetName" value="FrontPage" />
+		<var name="assetType" value="Blogs Entry" />
+		<var name="wikiPageContent" value="Wiki FrontPage Content" />
+
+		<execute macro="WikiPage#pgAddFrontPage" />
+		<execute macro="WikiPage#pgMoveToRecycleBinFrontPage" />
+
+		<execute macro="RecycleBin#cpRestore" />
+
+		<execute macro="WikiPage#pgViewFrontPage" />
+	</command>
+
+	<command name="RestoreWikiFrontPage">
+		<var name="assetName" value="${wikiPageTitle}" />
+		<var name="assetRestoreType" value="FrontPage" />
+		<var name="wikiPageTitle" value="FrontPage" />
+		<var name="wikiPageContent" value="Wiki FrontPage Content" />
+
+		<execute macro="WikiPage#pgAddFrontPage" />
+		<execute macro="WikiPage#pgMoveToRecycleBinFrontPage" />
+
+		<execute macro="RecycleBin#cpRestore" />
+
+		<execute macro="WikiPage#pgViewFrontPage" />
+	</command>-->
+
+	<tear-down>
+		<execute macro="BlogsEntry#tearDownCP" />
+	</tear-down>
+</definition>

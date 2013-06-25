@@ -19,5 +19,11 @@
 
 	<execute test-case="PGWebcontentlistAcceptance" />
 
+	<execute test-case="RecyclebinBlogsAcceptance" />
+
+	<execute test-case="RecyclebinMessageboardsAcceptance" />
+
+	<execute test-case="RecyclebinWebcontentAcceptance" />
+	
 	<execute test-case="DockbarAcceptance" />
 </definition>

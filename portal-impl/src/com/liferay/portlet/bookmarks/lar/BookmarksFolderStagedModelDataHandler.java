@@ -131,10 +131,10 @@ public class BookmarksFolderStagedModelDataHandler
 		String uuid, long companyId, long groupId) {
 
 		try {
-			BookmarksFolder bookmarkFolder = BookmarksFolderUtil.fetchByUUID_G(
+			BookmarksFolder folder = BookmarksFolderUtil.fetchByUUID_G(
 				uuid, groupId);
 
-			if (bookmarkFolder == null) {
+			if (folder == null) {
 				return false;
 			}
 		}

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
@@ -38,6 +39,28 @@ public class AssetCategoriesNavitagionPortletDataHandler
 	public AssetCategoriesNavitagionPortletDataHandler() {
 		setDataLevel(DataLevel.PORTLET_INSTANCE);
 		setPublishToLiveByDefault(true);
+	}
+
+	@Override
+	public PortletPreferences processExportPreferences(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences, long plid,
+			Element rootElement)
+		throws Exception {
+
+		return updateExportPortletPreferences(portletPreferences, plid);
+	}
+
+	@Override
+	public PortletPreferences processImportPreferences(
+			PortletDataContext portletDataContext, long companyId, long ownerId,
+			int ownerType, long plid, String portletId,
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		return updateImportPortletPreferences(
+			portletDataContext, companyId, ownerId, ownerType, plid, portletId,
+			portletPreferences);
 	}
 
 	protected PortletPreferences updateExportPortletPreferences(

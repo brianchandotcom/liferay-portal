@@ -58,6 +58,29 @@ public class AssetPublisherPortletDataHandler
 		setPublishToLiveByDefault(true);
 	}
 
+	@Override
+	public PortletPreferences processExportPreferences(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences, long plid,
+			Element rootElement)
+		throws Exception {
+
+		return updateExportPortletPreferences(
+			portletDataContext, portletPreferences, plid);
+	}
+
+	@Override
+	public PortletPreferences processImportPreferences(
+			PortletDataContext portletDataContext, long companyId, long ownerId,
+			int ownerType, long plid, String portletId,
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		return updateImportPortletPreferences(
+			portletDataContext, companyId, ownerId, ownerType, plid, portletId,
+			portletPreferences);
+	}
+
 	protected void updateExportClassNameIds(
 			PortletPreferences portletPreferences, String key)
 		throws Exception {

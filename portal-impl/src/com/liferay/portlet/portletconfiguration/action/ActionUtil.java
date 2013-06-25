@@ -34,6 +34,9 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portlet.portletconfiguration.util.ConfigurationActionRequest;
+import com.liferay.portlet.portletconfiguration.util.ConfigurationRenderRequest;
+import com.liferay.portlet.portletconfiguration.util.ConfigurationResourceRequest;
 import com.liferay.portlet.portletconfiguration.util.PortletConfigurationUtil;
 import com.liferay.portlet.portletconfiguration.util.PublicRenderParameterConfiguration;
 import com.liferay.portlet.portletconfiguration.util.PublicRenderParameterIdentifierComparator;
@@ -51,9 +54,6 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.ResourceRequest;
-import javax.portlet.filter.ActionRequestWrapper;
-import javax.portlet.filter.RenderRequestWrapper;
-import javax.portlet.filter.ResourceRequestWrapper;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -287,69 +287,6 @@ public class ActionUtil {
 		}
 
 		return title;
-	}
-
-	private static class ConfigurationActionRequest
-		extends ActionRequestWrapper {
-
-		public ConfigurationActionRequest(
-			ActionRequest actionRequest,
-			PortletPreferences portletPreferences) {
-
-			super(actionRequest);
-
-			_portletPreferences = portletPreferences;
-		}
-
-		@Override
-		public PortletPreferences getPreferences() {
-			return _portletPreferences;
-		}
-
-		private PortletPreferences _portletPreferences;
-
-	}
-
-	private static class ConfigurationRenderRequest
-		extends RenderRequestWrapper {
-
-		public ConfigurationRenderRequest(
-			RenderRequest renderRequest,
-			PortletPreferences portletPreferences) {
-
-			super(renderRequest);
-
-			_portletPreferences = portletPreferences;
-		}
-
-		@Override
-		public PortletPreferences getPreferences() {
-			return _portletPreferences;
-		}
-
-		private PortletPreferences _portletPreferences;
-
-	}
-
-	private static class ConfigurationResourceRequest
-		extends ResourceRequestWrapper {
-
-		public ConfigurationResourceRequest(
-			ResourceRequest resourceRequest,
-			PortletPreferences portletPreferences) {
-
-			super(resourceRequest);
-
-			_portletPreferences = portletPreferences;
-		}
-
-		@Override
-		public PortletPreferences getPreferences() {
-			return _portletPreferences;
-		}
-
-		private PortletPreferences _portletPreferences;
-
 	}
 
 }

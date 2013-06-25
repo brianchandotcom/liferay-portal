@@ -27,6 +27,7 @@ import com.liferay.portal.service.OrganizationLocalServiceUtil;
 /**
  * @author Charles May
  * @author Jorge Ferrer
+ * @author Sergio González
  */
 public class OrganizationPermissionImpl implements OrganizationPermission {
 
@@ -94,31 +95,8 @@ public class OrganizationPermissionImpl implements OrganizationPermission {
 
 		Group group = organization.getGroup();
 
-		long groupId = group.getGroupId();
-
-		if (contains(permissionChecker, groupId, organization, actionId)) {
-			return true;
-		}
-
-		while (!organization.isRoot()) {
-			Organization parentOrganization =
-				organization.getParentOrganization();
-
-			Group parentGroup = parentOrganization.getGroup();
-
-			groupId = parentGroup.getGroupId();
-
-			if (contains(
-					permissionChecker, groupId, parentOrganization,
-					ActionKeys.MANAGE_SUBORGANIZATIONS)) {
-
-				return true;
-			}
-
-			organization = parentOrganization;
-		}
-
-		return false;
+		return contains(
+			permissionChecker, group.getGroupId(), organization, actionId);
 	}
 
 	protected boolean contains(
@@ -130,9 +108,19 @@ public class OrganizationPermissionImpl implements OrganizationPermission {
 			   (organization.getOrganizationId() !=
 					OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID)) {
 
-			if (permissionChecker.hasPermission(
+			if (actionId.equals(ActionKeys.ADD_ORGANIZATION) &&
+				permissionChecker.hasPermission(
 					groupId, Organization.class.getName(),
-					organization.getOrganizationId(), actionId)) {
+					organization.getOrganizationId(),
+					ActionKeys.MANAGE_SUBORGANIZATIONS) ||
+				PortalPermissionUtil.contains(
+					permissionChecker, ActionKeys.ADD_ORGANIZATION)) {
+
+				return true;
+			}
+			else if (permissionChecker.hasPermission(
+						 groupId, Organization.class.getName(),
+						 organization.getOrganizationId(), actionId)) {
 
 				return true;
 			}

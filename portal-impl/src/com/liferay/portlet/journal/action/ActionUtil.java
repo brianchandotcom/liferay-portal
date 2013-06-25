@@ -288,15 +288,9 @@ public class ActionUtil {
 		throws Exception {
 
 		DDMStructure ddmStructure =
-			DDMStructureLocalServiceUtil.fetchStructure(
+			DDMStructureLocalServiceUtil.getStructure(
 				groupId, PortalUtil.getClassNameId(JournalArticle.class),
-				structureId);
-
-		if (ddmStructure == null) {
-			ddmStructure = DDMStructureLocalServiceUtil.getStructure(
-				themeDisplay.getCompanyGroupId(),
-				PortalUtil.getClassNameId(JournalArticle.class), structureId);
-		}
+				structureId, true);
 
 		Fields fields = DDMUtil.getFields(
 			ddmStructure.getStructureId(), serviceContext);

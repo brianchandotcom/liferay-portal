@@ -58,8 +58,6 @@ public class ViewArticleContentAction extends PortletAction {
 			ActionResponse actionResponse)
 		throws Exception {
 
-		UploadPortletRequest uploadPortletRequest = null;
-
 		try {
 			String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
@@ -77,69 +75,9 @@ public class ViewArticleContentAction extends PortletAction {
 			String output = null;
 
 			if (cmd.equals(Constants.PREVIEW)) {
-				uploadPortletRequest = PortalUtil.getUploadPortletRequest(
-					actionRequest);
-
-				String title = ParamUtil.getString(
-					uploadPortletRequest, "title");
-				String description = ParamUtil.getString(
-					uploadPortletRequest, "description");
-				String type = ParamUtil.getString(uploadPortletRequest, "type");
-				String structureId = ParamUtil.getString(
-					uploadPortletRequest, "structureId");
-				String templateId = ParamUtil.getString(
-					uploadPortletRequest, "templateId");
-
-				Date now = new Date();
-
-				Date createDate = now;
-				Date modifiedDate = now;
-				Date displayDate = now;
-
-				User user = PortalUtil.getUser(uploadPortletRequest);
-
-				String content = ParamUtil.getString(
-					uploadPortletRequest, "articleContent");
-
-				if (Validator.isNotNull(structureId)) {
-					ServiceContext serviceContext =
-						ServiceContextFactory.getInstance(
-							JournalArticle.class.getName(),
-							uploadPortletRequest);
-
-					content = ActionUtil.getContentAndImages(
-						groupId, structureId, null, null, cmd, themeDisplay,
-						serviceContext);
-
-					Map<String, String> tokens = JournalUtil.getTokens(
-						groupId, themeDisplay);
-
-					tokens.put("article_resource_pk", "-1");
-
-					JournalArticle article = new JournalArticleImpl();
-
-					article.setGroupId(groupId);
-					article.setCompanyId(user.getCompanyId());
-					article.setUserId(user.getUserId());
-					article.setUserName(user.getFullName());
-					article.setCreateDate(createDate);
-					article.setModifiedDate(modifiedDate);
-					article.setArticleId(articleId);
-					article.setVersion(version);
-					article.setTitle(title);
-					article.setDescription(description);
-					article.setContent(content);
-					article.setType(type);
-					article.setStructureId(structureId);
-					article.setTemplateId(templateId);
-					article.setDisplayDate(displayDate);
-
-					output = JournalArticleLocalServiceUtil.getArticleContent(
-						article, templateId, null, languageId, themeDisplay);
-				}
-				else {
-					output = content;
-				}
+				output = getPreviewArticleContent(
+					actionRequest, themeDisplay, groupId, articleId, version,
+					languageId);
 			}
 			else if (cmd.equals(Constants.VIEW)) {
 				JournalArticle article = JournalArticleServiceUtil.getArticle(
@@ -169,6 +107,77 @@ public class ViewArticleContentAction extends PortletAction {
 			SessionErrors.add(actionRequest, e.getClass());
 
 			setForward(actionRequest, "portlet.journal.error");
+		}
+	}
+
+	protected String getPreviewArticleContent(
+			ActionRequest actionRequest, ThemeDisplay themeDisplay,
+			long groupId, String articleId, double version, String languageId)
+		throws Exception {
+
+		UploadPortletRequest uploadPortletRequest = null;
+
+		try {
+			uploadPortletRequest = PortalUtil.getUploadPortletRequest(
+				actionRequest);
+
+			String title = ParamUtil.getString(uploadPortletRequest, "title");
+			String description = ParamUtil.getString(
+				uploadPortletRequest, "description");
+			String type = ParamUtil.getString(uploadPortletRequest, "type");
+			String structureId = ParamUtil.getString(
+				uploadPortletRequest, "structureId");
+			String templateId = ParamUtil.getString(
+				uploadPortletRequest, "templateId");
+
+			Date now = new Date();
+
+			Date createDate = now;
+			Date modifiedDate = now;
+			Date displayDate = now;
+
+			User user = PortalUtil.getUser(uploadPortletRequest);
+
+			String content = ParamUtil.getString(
+				uploadPortletRequest, "articleContent");
+
+			if (Validator.isNull(structureId)) {
+				return content;
+			}
+
+			ServiceContext serviceContext =
+				ServiceContextFactory.getInstance(
+					JournalArticle.class.getName(), uploadPortletRequest);
+
+			content = ActionUtil.getContentAndImages(
+				groupId, structureId, null, null, Constants.PREVIEW,
+				themeDisplay, serviceContext);
+
+			Map<String, String> tokens = JournalUtil.getTokens(
+				groupId, themeDisplay);
+
+			tokens.put("article_resource_pk", "-1");
+
+			JournalArticle article = new JournalArticleImpl();
+
+			article.setGroupId(groupId);
+			article.setCompanyId(user.getCompanyId());
+			article.setUserId(user.getUserId());
+			article.setUserName(user.getFullName());
+			article.setCreateDate(createDate);
+			article.setModifiedDate(modifiedDate);
+			article.setArticleId(articleId);
+			article.setVersion(version);
+			article.setTitle(title);
+			article.setDescription(description);
+			article.setContent(content);
+			article.setType(type);
+			article.setStructureId(structureId);
+			article.setTemplateId(templateId);
+			article.setDisplayDate(displayDate);
+
+			return JournalArticleLocalServiceUtil.getArticleContent(
+				article, templateId, null, languageId, themeDisplay);
 		}
 		finally {
 			if (uploadPortletRequest != null) {

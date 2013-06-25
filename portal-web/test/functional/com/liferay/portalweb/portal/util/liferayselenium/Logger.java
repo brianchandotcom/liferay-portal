@@ -132,13 +132,11 @@ public class Logger {
 		String id = (String)arguments[0];
 		String status = (String)arguments[1];
 
-		if (status.equals("pending") && id.matches(".*\\d$")) {
+		if (status.equals("pending")) {
 			_xpathIdStack.push(id);
 		}
 		else if (status.equals("start")) {
 			_xpathIdStack = new Stack<String>();
-
-			_xpathIdStack.push(id);
 
 			return;
 		}
@@ -147,20 +145,13 @@ public class Logger {
 
 		sb.append("/");
 
-		if (id.matches(".*\\d$")) {
-			for (String xpathId : _xpathIdStack) {
-				sb.append("/ul/li[@id='");
-				sb.append(xpathId);
-				sb.append("']");
-			}
+		for (String xpathId : _xpathIdStack) {
+			sb.append("/ul/li[@id='");
+			sb.append(xpathId);
+			sb.append("']");
+		}
 
-			sb.append("/div");
-		}
-		else {
-			sb.append("/li[@id='");
-			sb.append(id);
-			sb.append("']/div[2]/div/h3");
-		}
+		sb.append("/div");
 
 		List<WebElement> webElements = _webDriver.findElements(
 			By.xpath(sb.toString()));

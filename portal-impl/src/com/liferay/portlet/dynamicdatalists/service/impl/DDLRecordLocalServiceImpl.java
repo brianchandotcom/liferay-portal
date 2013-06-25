@@ -50,7 +50,6 @@ import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -197,11 +196,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 		Fields fields = StorageEngineUtil.getFields(record.getDDMStorageId());
 
-		Iterator<Field> itr = fields.iterator();
-
-		while (itr.hasNext()) {
-			Field field = itr.next();
-
+		for (Field field : fields) {
 			Map<Locale, List<Serializable>> valuesMap = field.getValuesMap();
 
 			valuesMap.remove(locale);

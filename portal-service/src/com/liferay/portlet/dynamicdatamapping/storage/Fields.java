@@ -34,7 +34,7 @@ import java.util.Set;
 /**
  * @author Brian Wing Shun Chan
  */
-public class Fields implements Serializable {
+public class Fields implements Iterable<Field>, Serializable {
 
 	public boolean contains(String name) {
 		return _fieldsMap.containsKey(name);

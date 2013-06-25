@@ -1209,7 +1209,7 @@ public class PortletExporter {
 
 			if (portletDataHandler != null) {
 				jxPreferences = portletDataHandler.processExportPreferences(
-					portletDataContext, portletId, jxPreferences, plid,
+					portletDataContext, portletId, jxPreferences,
 					parentElement);
 			}
 		}

@@ -2558,6 +2558,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		while (itr.hasNext()) {
 			JavaTerm javaTerm = itr.next();
 
+			if (previousJavaTerm == null) {
+				previousJavaTerm = javaTerm;
+
+				continue;
+			}
+
 			int javaTermLineCount = javaTerm.getLineCount();
 			String javaTermName = javaTerm.getName();
 
@@ -2577,39 +2583,43 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				}
 			}
 
-			if ((excluded == null) && (previousJavaTerm != null)) {
-				String javaTermContent = javaTerm.getContent();
-				String previousJavaTermContent = previousJavaTerm.getContent();
+			if (excluded != null) {
+				previousJavaTerm = javaTerm;
 
-				if (previousJavaTerm.getLineCount() > javaTermLineCount) {
-					String previousJavaTermName = previousJavaTerm.getName();
+				continue;
+			}
 
-					String javaTermNameLowerCase = javaTermName.toLowerCase();
-					String previousJavaTermNameLowerCase =
-						previousJavaTermName.toLowerCase();
+			String javaTermContent = javaTerm.getContent();
+			String previousJavaTermContent = previousJavaTerm.getContent();
 
-					if (fileName.contains("persistence") &&
-						((previousJavaTermName.startsWith("doCount") &&
-						  javaTermName.startsWith("doCount")) ||
-						 (previousJavaTermName.startsWith("doFind") &&
-						  javaTermName.startsWith("doFind")) ||
-						 (previousJavaTermNameLowerCase.startsWith("count") &&
-						  javaTermNameLowerCase.startsWith("count")) ||
-						 (previousJavaTermNameLowerCase.startsWith("filter") &&
-						  javaTermNameLowerCase.startsWith("filter")) ||
-						 (previousJavaTermNameLowerCase.startsWith("find") &&
-						  javaTermNameLowerCase.startsWith("find")) ||
-						 (previousJavaTermNameLowerCase.startsWith("join") &&
-						  javaTermNameLowerCase.startsWith("join")))) {
-					}
-					else {
-						content = StringUtil.replaceFirst(
-							content, javaTermContent, previousJavaTermContent);
-						content = StringUtil.replaceLast(
-							content, previousJavaTermContent, javaTermContent);
+			if (previousJavaTerm.getLineCount() > javaTermLineCount) {
+				String previousJavaTermName = previousJavaTerm.getName();
 
-						return content;
-					}
+				String javaTermNameLowerCase = javaTermName.toLowerCase();
+				String previousJavaTermNameLowerCase =
+					previousJavaTermName.toLowerCase();
+
+				if (fileName.contains("persistence") &&
+					((previousJavaTermName.startsWith("doCount") &&
+					  javaTermName.startsWith("doCount")) ||
+					 (previousJavaTermName.startsWith("doFind") &&
+					  javaTermName.startsWith("doFind")) ||
+					 (previousJavaTermNameLowerCase.startsWith("count") &&
+					  javaTermNameLowerCase.startsWith("count")) ||
+					 (previousJavaTermNameLowerCase.startsWith("filter") &&
+					  javaTermNameLowerCase.startsWith("filter")) ||
+					 (previousJavaTermNameLowerCase.startsWith("find") &&
+					  javaTermNameLowerCase.startsWith("find")) ||
+					 (previousJavaTermNameLowerCase.startsWith("join") &&
+					  javaTermNameLowerCase.startsWith("join")))) {
+				}
+				else {
+					content = StringUtil.replaceFirst(
+						content, javaTermContent, previousJavaTermContent);
+					content = StringUtil.replaceLast(
+						content, previousJavaTermContent, javaTermContent);
+
+					return content;
 				}
 			}
 

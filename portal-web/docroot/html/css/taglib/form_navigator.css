@@ -1,9 +1,14 @@
 .taglib-form-navigator {
-	.modified-notice {
+	.modified-notice, .error-notice {
 		display: none;
 	}
 
 	.section-modified .modified-notice {
 		display: inline-block;
+	}
+
+	.section-error .error-notice {
+		display: inline-block;
+		margin-right: 5px;
 	}
 }

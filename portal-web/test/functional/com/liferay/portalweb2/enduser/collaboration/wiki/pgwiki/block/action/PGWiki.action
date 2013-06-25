@@ -1,19 +1,13 @@
 <definition>
-	<command name="assertTextEquals">
-		<case locator-key1="SUCCESS_MESSAGE">
-			<execute function="AssertTextEquals#assertText" value1="Your request completed successfully." />
-		</case>
-	</command>
-
-	<command name="click">
+	<command name="assertClick">
 		<case locator-key1="ADD_CHILD_PAGE">
-			<execute function="Click#textClickAtAndWait" value1="Add Child Page" />
+			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 		<case locator-key1="ADD_FRONTPAGE">
-			<execute function="Click#textClickAtAndWait" value1="This page is empty. Edit it to add some text." />
+			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 		<case locator-key1="NAVIGATION_ALL_PAGES">
-			<execute function="Click#textClickAtAndWait" value1="All Pages" />
+			<execute function="AssertClick#assertTextClickAtAndWait"/>
 		</case>
 	</command>
 </definition>

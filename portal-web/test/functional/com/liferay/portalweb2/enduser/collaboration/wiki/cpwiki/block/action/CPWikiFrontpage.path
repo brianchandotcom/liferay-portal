@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[@class='wiki-body']/div[@class='alert alert-info']/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -47,11 +52,6 @@
 <tr>
 	<td>FRONTPAGE_BODY</td>
 	<td>//div[@class='wiki-body']/p</td>
-	<td></td>
-</tr>
-<tr>
-	<td>INFO_MESSAGE_FRONTPAGE</td>
-	<td>//div[@class='wiki-body']/div[@class='alert alert-info']/a</td>
 	<td></td>
 </tr>
 </tbody>

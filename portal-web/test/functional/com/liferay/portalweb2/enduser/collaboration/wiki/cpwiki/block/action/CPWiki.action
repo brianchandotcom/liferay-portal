@@ -1,16 +1,13 @@
 <definition>
 	<command name="assertClick">
 		<case locator-key1="ADD_WIKI_BUTTON">
-			<execute function="AssertClick#assertTextClickAtAndWait" value1="Add Wiki" />
+			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 		<case locator-key1="WIKI_NODE_MENULIST_EDIT">
-			<execute function="AssertClick#assertTextClickAtAndWait" value1="Edit" />
+			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 		<case locator-key1="WIKI_NODE_MENULIST_RECYCLE_BIN">
-			<execute function="AssertClick#assertTextClickAtAndWait" value1="Move to the Recycle Bin" />
-		</case>
-		<case locator-key1="WIKI_NODE_TABLE_ACTIONS">
-			<execute function="AssertClick#pauseAssertTextClickAt" value1="Actions" />
+			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 		<case locator-key1="WIKI_NODE_TABLE_WIKI">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
@@ -19,10 +16,7 @@
 
 	<command name="assertTextEquals">
 		<case locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN">
-			<execute function="AssertTextEquals#assertPartialText" value1="The selected item was moved to the Recycle Bin. Undo" />
-		</case>
-		<case locator-key1="SUCCESS_MESSAGE">
-			<execute function="AssertTextEquals#assertText" value1="Your request completed successfully." />
+			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
 	</command>
 </definition>

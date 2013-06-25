@@ -1,0 +1,13 @@
+<definition>
+	<command name="assertTextEquals">
+		<case locator-key1="SUCCESS_MESSAGE">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+	</command>
+
+	<command name="isElementPresent">
+		<case locator-key1="ENTRIES_DOCUMENT">
+			<execute function="IsElementPresent#isVisible" />
+		</case>
+	</command>
+</definition>

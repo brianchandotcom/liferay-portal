@@ -137,6 +137,8 @@ public interface Language {
 
 	public boolean isAvailableLocale(Locale locale);
 
+	public boolean isAvailableLocale(String languageId);
+
 	public boolean isBetaLocale(Locale locale);
 
 	public boolean isDuplicateLanguageCode(String languageCode);

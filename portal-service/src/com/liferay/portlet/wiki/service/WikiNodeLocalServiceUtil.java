@@ -392,10 +392,16 @@ public class WikiNodeLocalServiceUtil {
 		getService().deleteNodes(groupId);
 	}
 
-	public static com.liferay.portlet.wiki.model.WikiNode fetchWikiNode(
+	public static com.liferay.portlet.wiki.model.WikiNode fetchNode(
 		long groupId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchWikiNode(groupId, name);
+		return getService().fetchNode(groupId, name);
+	}
+
+	public static com.liferay.portlet.wiki.model.WikiNode fetchNodeByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchNodeByUuidAndGroupId(uuid, groupId);
 	}
 
 	public static java.util.List<com.liferay.portlet.wiki.model.WikiNode> getCompanyNodes(

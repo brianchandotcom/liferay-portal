@@ -14,12 +14,38 @@
 
 package com.liferay.portal.model.impl;
 
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PortalUtil;
+
 /**
  * @author Brian Wing Shun Chan
  */
 public class SystemEventImpl extends SystemEventBaseImpl {
 
 	public SystemEventImpl() {
+	}
+
+	@Override
+	public String getReferrerClassName() {
+		long referrerClassNameId = getReferrerClassNameId();
+
+		if (referrerClassNameId > 0) {
+			return PortalUtil.getClassName(referrerClassNameId);
+		}
+
+		return StringPool.BLANK;
+	}
+
+	@Override
+	public void setReferrerClassName(String referrerClassName) {
+		long referrerClassNameId = 0;
+
+		if (Validator.isNotNull(referrerClassName)) {
+			referrerClassNameId = PortalUtil.getClassNameId(referrerClassName);
+		}
+
+		setReferrerClassNameId(referrerClassNameId);
 	}
 
 }

@@ -12,6 +12,9 @@
 		<case locator-key1="ADD_PAGE_LINK">
 			<execute function="AssertClick#assertTextClickAtAddApplication" />
 		</case>
+		<case locator-key1="USER_MY_ACCOUNT">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
 	</command>
 
 	<command name="click">
@@ -26,9 +29,6 @@
 		</case>
 		<case locator-key1="MY_SITES">
 			<execute function="Click#textClickAtClickDockbar" value1="My Sites" />
-		</case>
-		<case locator-key1="USER_MY_ACCOUNT">
-			<execute function="Click#textClickAtAndWait" value1="My Account" />
 		</case>
 		<case locator-key1="USER_SIGN_OUT">
 			<execute function="Click#textClickAtAndWait" value1="Sign Out" />

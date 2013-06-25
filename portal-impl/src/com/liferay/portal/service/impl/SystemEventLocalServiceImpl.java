@@ -17,6 +17,7 @@ package com.liferay.portal.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.SystemEvent;
 import com.liferay.portal.model.User;
@@ -35,28 +36,18 @@ public class SystemEventLocalServiceImpl
 
 	@Override
 	public void addSystemEvent(
-			long userId, long groupId, long classNameId, long classPK,
-			String classUuid, int type)
-		throws PortalException, SystemException {
-
-		addSystemEvent(
-			userId, groupId, classNameId, classPK, classUuid, type, null);
-	}
-
-	@Override
-	public void addSystemEvent(
-			long userId, long groupId, long classNameId, long classPK,
-			String classUuid, int type, String extraData)
+			long userId, long groupId, long companyId, long classNameId,
+			long classPK, String classUuid, long referrerClassNameId, int type,
+			String extraData)
 		throws PortalException, SystemException {
 
 		if (userId == 0) {
 			userId = PrincipalThreadLocal.getUserId();
 		}
 
-		long companyId = 0;
 		String userName = StringPool.BLANK;
 
-		if (userId > 0) {
+		if ((companyId == 0) && (userId > 0)) {
 			User user = userPersistence.findByPrimaryKey(userId);
 
 			companyId = user.getCompanyId();
@@ -87,6 +78,7 @@ public class SystemEventLocalServiceImpl
 		systemEvent.setClassNameId(classNameId);
 		systemEvent.setClassPK(classPK);
 		systemEvent.setClassUuid(classUuid);
+		systemEvent.setReferrerClassNameId(referrerClassNameId);
 		systemEvent.setType(type);
 		systemEvent.setExtraData(extraData);
 
@@ -95,13 +87,44 @@ public class SystemEventLocalServiceImpl
 
 	@Override
 	public void addSystemEvent(
+			long userId, long groupId, long companyId, String className,
+			long classPK, String classUuid, int type, String extraData)
+		throws PortalException, SystemException {
+
+		addSystemEvent(
+			userId, groupId, companyId, PortalUtil.getClassNameId(className),
+			classPK, classUuid, 0, type, extraData);
+	}
+
+	@Override
+	public void addSystemEvent(
+			long userId, long groupId, long companyId, String className,
+			long classPK, String classUuid, String referrerClassName, int type,
+			String extraData)
+		throws PortalException, SystemException {
+
+		long referrerClassNameId = 0;
+
+		if (Validator.isNotNull(referrerClassName)) {
+			referrerClassNameId = PortalUtil.getClassNameId(referrerClassName);
+		}
+
+		addSystemEvent(
+			userId, groupId, companyId, PortalUtil.getClassNameId(className),
+			classPK, classUuid, referrerClassNameId, type, extraData);
+	}
+
+	@Override
+	public void addSystemEvent(
 			long groupId, String className, long classPK, String classUuid,
 			int type)
 		throws PortalException, SystemException {
 
+		Group group = groupLocalService.getGroup(groupId);
+
 		addSystemEvent(
-			0, groupId, PortalUtil.getClassNameId(className), classPK,
-			classUuid, type, null);
+			0, groupId, group.getCompanyId(), className, classPK, classUuid,
+			type, null);
 	}
 
 	@Override

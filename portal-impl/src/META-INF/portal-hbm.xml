@@ -960,6 +960,7 @@
 		<property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="classUuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="referrerClassNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="type" type="com.liferay.portal.dao.orm.hibernate.IntegerType" column="type_" />
 		<property name="extraData" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>

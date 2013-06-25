@@ -216,6 +216,20 @@ public interface SystemEventModel extends AttachedModel, BaseModel<SystemEvent> 
 	public void setClassUuid(String classUuid);
 
 	/**
+	 * Returns the referrer class name ID of this system event.
+	 *
+	 * @return the referrer class name ID of this system event
+	 */
+	public long getReferrerClassNameId();
+
+	/**
+	 * Sets the referrer class name ID of this system event.
+	 *
+	 * @param referrerClassNameId the referrer class name ID of this system event
+	 */
+	public void setReferrerClassNameId(long referrerClassNameId);
+
+	/**
 	 * Returns the type of this system event.
 	 *
 	 * @return the type of this system event

@@ -79,12 +79,7 @@ import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagPropertyLocalServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetCategoryUtil;
 import com.liferay.portlet.asset.service.persistence.AssetVocabularyUtil;
-import com.liferay.portlet.assetpublisher.util.AssetPublisher;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.expando.model.ExpandoColumn;
-import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
@@ -95,7 +90,6 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.Date;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Map;
@@ -1550,194 +1544,6 @@ public class PortletExporter {
 		sb.append(".xml");
 
 		return sb.toString();
-	}
-
-	protected String updateAssetCategoriesNavigationPortletPreferences(
-			String xml, long plid)
-		throws Exception {
-
-		javax.portlet.PortletPreferences jxPreferences =
-			PortletPreferencesFactoryUtil.fromDefaultXML(xml);
-
-		Enumeration<String> enu = jxPreferences.getNames();
-
-		while (enu.hasMoreElements()) {
-			String name = enu.nextElement();
-
-			if (name.equals("assetVocabularyIds")) {
-				ExportImportHelperUtil.updateExportPreferencesClassPKs(
-					jxPreferences, name, AssetVocabulary.class.getName());
-			}
-		}
-
-		return PortletPreferencesFactoryUtil.toXML(jxPreferences);
-	}
-
-	protected void updateAssetPublisherClassNameIds(
-			javax.portlet.PortletPreferences jxPreferences, String key)
-		throws Exception {
-
-		String[] oldValues = jxPreferences.getValues(key, null);
-
-		if (oldValues == null) {
-			return;
-		}
-
-		String[] newValues = new String[oldValues.length];
-
-		int i = 0;
-
-		for (String oldValue : oldValues) {
-			if (key.equals("anyAssetType") &&
-				(oldValue.equals("false") || oldValue.equals("true"))) {
-
-				newValues[i++] = oldValue;
-
-				continue;
-			}
-
-			try {
-				long classNameId = Long.parseLong(oldValue);
-
-				String className = PortalUtil.getClassName(classNameId);
-
-				newValues[i++] = className;
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to find class name ID for class name " +
-							oldValue);
-				}
-			}
-		}
-
-		jxPreferences.setValues(key, newValues);
-	}
-
-	protected String updateAssetPublisherPortletPreferences(
-			PortletDataContext portletDataContext, String xml, long plid)
-		throws Exception {
-
-		javax.portlet.PortletPreferences jxPreferences =
-			PortletPreferencesFactoryUtil.fromDefaultXML(xml);
-
-		String anyAssetTypeClassName = StringPool.BLANK;
-
-		long anyAssetType = GetterUtil.getLong(
-			jxPreferences.getValue("anyAssetType", null));
-
-		if (anyAssetType > 0) {
-			anyAssetTypeClassName = PortalUtil.getClassName(anyAssetType);
-		}
-
-		Enumeration<String> enu = jxPreferences.getNames();
-
-		while (enu.hasMoreElements()) {
-			String name = enu.nextElement();
-
-			String value = GetterUtil.getString(
-				jxPreferences.getValue(name, null));
-
-			if (name.equals("anyAssetType") || name.equals("classNameIds")) {
-				updateAssetPublisherClassNameIds(jxPreferences, name);
-			}
-			else if (name.equals(
-						"anyClassTypeDLFileEntryAssetRendererFactory") ||
-					 (name.equals("classTypeIds") &&
-					  anyAssetTypeClassName.equals(
-						  DLFileEntry.class.getName())) ||
-					 name.equals(
-						"classTypeIdsDLFileEntryAssetRendererFactory")) {
-
-				ExportImportHelperUtil.updateExportPreferencesClassPKs(
-					jxPreferences, name, DLFileEntryType.class.getName());
-			}
-			else if (name.equals(
-						"anyClassTypeJournalArticleAssetRendererFactory") ||
-					 (name.equals("classTypeIds") &&
-					  anyAssetTypeClassName.equals(
-						  JournalArticle.class.getName())) ||
-					 name.equals(
-						"classTypeIdsJournalArticleAssetRendererFactory")) {
-
-				ExportImportHelperUtil.updateExportPreferencesClassPKs(
-					jxPreferences, name, DDMStructure.class.getName());
-			}
-			else if (name.equals("assetVocabularyId")) {
-				ExportImportHelperUtil.updateExportPreferencesClassPKs(
-					jxPreferences, name, AssetVocabulary.class.getName());
-			}
-			else if (name.startsWith("queryName") &&
-					 value.equalsIgnoreCase("assetCategories")) {
-
-				String index = name.substring(9);
-
-				ExportImportHelperUtil.updateExportPreferencesClassPKs(
-					jxPreferences, "queryValues" + index,
-					AssetCategory.class.getName());
-			}
-			else if (name.equals("scopeIds")) {
-				updateAssetPublisherScopeIds(
-					portletDataContext, jxPreferences, name, plid);
-			}
-		}
-
-		return PortletPreferencesFactoryUtil.toXML(jxPreferences);
-	}
-
-	protected void updateAssetPublisherScopeIds(
-			PortletDataContext portletDataContext,
-			javax.portlet.PortletPreferences jxPreferences, String key,
-			long plid)
-		throws Exception {
-
-		String[] oldValues = jxPreferences.getValues(key, null);
-
-		if (oldValues == null) {
-			return;
-		}
-
-		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
-
-		String companyGroupScopeId =
-			AssetPublisher.SCOPE_ID_GROUP_PREFIX +
-				portletDataContext.getCompanyGroupId();
-
-		String[] newValues = new String[oldValues.length];
-
-		for (int i = 0; i < oldValues.length; i++) {
-			String oldValue = oldValues[i];
-
-			if (oldValue.startsWith(AssetPublisher.SCOPE_ID_GROUP_PREFIX)) {
-				newValues[i] = StringUtil.replace(
-					oldValue, companyGroupScopeId,
-					"[$COMPANY_GROUP_SCOPE_ID$]");
-			}
-			else if (oldValue.startsWith(
-						AssetPublisher.SCOPE_ID_LAYOUT_PREFIX)) {
-
-				// Legacy preferences
-
-				String scopeIdSuffix = oldValue.substring(
-					AssetPublisher.SCOPE_ID_LAYOUT_PREFIX.length());
-
-				long scopeIdLayoutId = GetterUtil.getLong(scopeIdSuffix);
-
-				Layout scopeIdLayout = LayoutLocalServiceUtil.getLayout(
-					layout.getGroupId(), layout.isPrivateLayout(),
-					scopeIdLayoutId);
-
-				newValues[i] =
-					AssetPublisher.SCOPE_ID_LAYOUT_UUID_PREFIX +
-						scopeIdLayout.getUuid();
-			}
-			else {
-				newValues[i] = oldValue;
-			}
-		}
-
-		jxPreferences.setValues(key, newValues);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(PortletExporter.class);

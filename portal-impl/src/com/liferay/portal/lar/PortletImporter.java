@@ -19,7 +19,6 @@ import com.liferay.portal.LARTypeException;
 import com.liferay.portal.LayoutImportException;
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.MissingReferenceException;
-import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.PortletIdException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -55,7 +54,6 @@ import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
-import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
@@ -69,7 +67,6 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
-import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletItemLocalServiceUtil;
@@ -101,18 +98,12 @@ import com.liferay.portlet.asset.service.permission.AssetPermission;
 import com.liferay.portlet.asset.service.persistence.AssetCategoryUtil;
 import com.liferay.portlet.asset.service.persistence.AssetTagUtil;
 import com.liferay.portlet.asset.service.persistence.AssetVocabularyUtil;
-import com.liferay.portlet.assetpublisher.util.AssetPublisher;
-import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.expando.NoSuchTableException;
 import com.liferay.portlet.expando.model.ExpandoColumn;
 import com.liferay.portlet.expando.model.ExpandoTable;
 import com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil;
 import com.liferay.portlet.expando.service.ExpandoTableLocalServiceUtil;
 import com.liferay.portlet.expando.util.ExpandoConverterUtil;
-import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journalcontent.util.JournalContentUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.ratings.model.RatingsEntry;
@@ -1827,195 +1818,6 @@ public class PortletImporter {
 		catch (Exception e) {
 			_log.error(e, e);
 		}
-	}
-
-	protected String updateAssetCategoriesNavigationPortletPreferences(
-			PortletDataContext portletDataContext, long companyId, long ownerId,
-			int ownerType, long plid, String portletId, String xml)
-		throws Exception {
-
-		Company company = CompanyLocalServiceUtil.getCompanyById(companyId);
-
-		Group companyGroup = company.getGroup();
-
-		javax.portlet.PortletPreferences jxPreferences =
-			PortletPreferencesFactoryUtil.fromXML(
-				companyId, ownerId, ownerType, plid, portletId, xml);
-
-		Enumeration<String> enu = jxPreferences.getNames();
-
-		while (enu.hasMoreElements()) {
-			String name = enu.nextElement();
-
-			if (name.equals("assetVocabularyIds")) {
-				ExportImportHelperUtil.updateImportPreferencesClassPKs(
-					portletDataContext, jxPreferences, name,
-					AssetVocabulary.class, companyGroup.getGroupId());
-			}
-		}
-
-		return PortletPreferencesFactoryUtil.toXML(jxPreferences);
-	}
-
-	protected void updateAssetPublisherClassNameIds(
-			javax.portlet.PortletPreferences jxPreferences, String key)
-		throws Exception {
-
-		String[] oldValues = jxPreferences.getValues(key, null);
-
-		if (oldValues == null) {
-			return;
-		}
-
-		String[] newValues = new String[oldValues.length];
-
-		int i = 0;
-
-		for (String oldValue : oldValues) {
-			if (key.equals("anyAssetType") &&
-				(oldValue.equals("false") || oldValue.equals("true"))) {
-
-				newValues[i++] = oldValue;
-
-				continue;
-			}
-
-			try {
-				long classNameId = PortalUtil.getClassNameId(oldValue);
-
-				newValues[i++] = String.valueOf(classNameId);
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to find class name ID for class name " +
-							oldValue);
-				}
-			}
-		}
-
-		jxPreferences.setValues(key, newValues);
-	}
-
-	protected String updateAssetPublisherPortletPreferences(
-			PortletDataContext portletDataContext, long companyId, long ownerId,
-			int ownerType, long plid, String portletId, String xml,
-			Layout layout)
-		throws Exception {
-
-		Company company = CompanyLocalServiceUtil.getCompanyById(companyId);
-
-		Group companyGroup = company.getGroup();
-
-		javax.portlet.PortletPreferences jxPreferences =
-			PortletPreferencesFactoryUtil.fromXML(
-				companyId, ownerId, ownerType, plid, portletId, xml);
-
-		String anyAssetTypeClassName = jxPreferences.getValue(
-			"anyAssetType", StringPool.BLANK);
-
-		Enumeration<String> enu = jxPreferences.getNames();
-
-		while (enu.hasMoreElements()) {
-			String name = enu.nextElement();
-
-			String value = GetterUtil.getString(
-				jxPreferences.getValue(name, null));
-
-			if (name.equals("anyAssetType") || name.equals("classNameIds")) {
-				updateAssetPublisherClassNameIds(jxPreferences, name);
-			}
-			else if (name.equals(
-						"anyClassTypeDLFileEntryAssetRendererFactory") ||
-					 (name.equals("classTypeIds") &&
-					  anyAssetTypeClassName.equals(
-						  DLFileEntry.class.getName())) ||
-					 name.equals(
-						"classTypeIdsDLFileEntryAssetRendererFactory")) {
-
-				ExportImportHelperUtil.updateImportPreferencesClassPKs(
-					portletDataContext, jxPreferences, name,
-					DLFileEntryType.class, companyGroup.getGroupId());
-			}
-			else if (name.equals(
-						"anyClassTypeJournalArticleAssetRendererFactory") ||
-					 (name.equals("classTypeIds") &&
-					  anyAssetTypeClassName.equals(
-						  JournalArticle.class.getName())) ||
-					 name.equals(
-						"classTypeIdsJournalArticleAssetRendererFactory")) {
-
-				ExportImportHelperUtil.updateImportPreferencesClassPKs(
-					portletDataContext, jxPreferences, name, DDMStructure.class,
-					companyGroup.getGroupId());
-			}
-			else if (name.equals("assetVocabularyId")) {
-				ExportImportHelperUtil.updateImportPreferencesClassPKs(
-					portletDataContext, jxPreferences, name,
-					AssetVocabulary.class, companyGroup.getGroupId());
-			}
-			else if (name.startsWith("queryName") &&
-					 value.equalsIgnoreCase("assetCategories")) {
-
-				String index = name.substring(9, name.length());
-
-				ExportImportHelperUtil.updateImportPreferencesClassPKs(
-					portletDataContext, jxPreferences, "queryValues" + index,
-					AssetCategory.class, companyGroup.getGroupId());
-			}
-			else if (name.equals("scopeIds")) {
-				updateAssetPublisherScopeIds(
-					jxPreferences, name, companyGroup.getGroupId(),
-					layout.getPlid());
-			}
-		}
-
-		return PortletPreferencesFactoryUtil.toXML(jxPreferences);
-	}
-
-	protected void updateAssetPublisherScopeIds(
-			javax.portlet.PortletPreferences jxPreferences, String key,
-			long companyGroupId, long plid)
-		throws Exception {
-
-		String[] oldValues = jxPreferences.getValues(key, null);
-
-		if (oldValues == null) {
-			return;
-		}
-
-		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
-
-		String companyGroupScopeId =
-			AssetPublisher.SCOPE_ID_GROUP_PREFIX + companyGroupId;
-
-		List<String> newValues = new ArrayList<String>(oldValues.length);
-
-		for (String oldValue : oldValues) {
-			String newValue = StringUtil.replace(
-				oldValue, "[$COMPANY_GROUP_SCOPE_ID$]", companyGroupScopeId);
-
-			try {
-				if (!AssetPublisherUtil.isScopeIdSelectable(
-						PermissionThreadLocal.getPermissionChecker(), newValue,
-						companyGroupId, layout)) {
-
-					continue;
-				}
-
-				newValues.add(newValue);
-			}
-			catch (NoSuchGroupException nsge) {
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Ignoring scope " + newValue + "because the " +
-							"referenced group was not found");
-				}
-			}
-		}
-
-		jxPreferences.setValues(
-			key, newValues.toArray(new String[newValues.size()]));
 	}
 
 	protected void updatePortletPreferences(

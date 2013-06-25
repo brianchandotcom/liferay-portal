@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.polls.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -633,6 +634,11 @@ public class PollsChoiceWrapper implements PollsChoice,
 	public int getVotesCount()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _pollsChoice.getVotesCount();
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _pollsChoice.getStagedModelType();
 	}
 
 	/**

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.dynamicdatamapping.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -1085,6 +1086,11 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	@Override
 	public void setSmallImageType(java.lang.String smallImageType) {
 		_ddmTemplate.setSmallImageType(smallImageType);
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _ddmTemplate.getStagedModelType();
 	}
 
 	/**

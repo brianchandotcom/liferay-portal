@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.polls.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -798,6 +799,11 @@ public class PollsQuestionWrapper implements PollsQuestion,
 		com.liferay.portal.service.ServiceContext serviceContext,
 		java.util.Date defaultCreateDate) {
 		return _pollsQuestion.isExpired(serviceContext, defaultCreateDate);
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _pollsQuestion.getStagedModelType();
 	}
 
 	/**

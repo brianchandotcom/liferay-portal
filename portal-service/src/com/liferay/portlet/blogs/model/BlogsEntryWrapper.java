@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.blogs.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -993,6 +994,11 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	@Override
 	public void setSmallImageType(java.lang.String smallImageType) {
 		_blogsEntry.setSmallImageType(smallImageType);
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _blogsEntry.getStagedModelType();
 	}
 
 	/**

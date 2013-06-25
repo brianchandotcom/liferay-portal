@@ -1551,6 +1551,11 @@ public class JournalArticleWrapper implements JournalArticle,
 	}
 
 	@Override
+	public com.liferay.portal.kernel.lar.StagedModelType getStagedModelType() {
+		return _journalArticle.getStagedModelType();
+	}
+
+	@Override
 	public com.liferay.portlet.journal.model.JournalFolder getTrashContainer() {
 		return _journalArticle.getTrashContainer();
 	}

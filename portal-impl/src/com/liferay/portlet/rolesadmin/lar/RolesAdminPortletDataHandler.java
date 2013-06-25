@@ -49,8 +49,7 @@ public class RolesAdminPortletDataHandler extends BasePortletDataHandler {
 
 	public RolesAdminPortletDataHandler() {
 		setDataLevel(DataLevel.PORTAL);
-		setDeletionSystemEventModelTypes(
-			new StagedModelType(Role.class));
+		setDeletionSystemEventModelTypes(new StagedModelType(Role.class));
 		setExportControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "system-roles", true, false));

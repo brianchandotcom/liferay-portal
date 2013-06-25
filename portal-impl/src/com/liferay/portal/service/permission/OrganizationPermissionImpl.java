@@ -112,9 +112,9 @@ public class OrganizationPermissionImpl implements OrganizationPermission {
 				permissionChecker.hasPermission(
 					groupId, Organization.class.getName(),
 					organization.getOrganizationId(),
-					ActionKeys.MANAGE_SUBGROUPS) ||
+					ActionKeys.MANAGE_SUBORGANIZATIONS) ||
 				PortalPermissionUtil.contains(
-					permissionChecker, ActionKeys.ADD_COMMUNITY)) {
+					permissionChecker, ActionKeys.ADD_ORGANIZATION)) {
 
 				return true;
 			}

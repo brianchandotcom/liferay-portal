@@ -56,6 +56,7 @@ public class SystemEventWrapper implements SystemEvent,
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("classUuid", getClassUuid());
+		attributes.put("referrerClassNameId", getReferrerClassNameId());
 		attributes.put("type", getType());
 		attributes.put("extraData", getExtraData());
 
@@ -116,6 +117,12 @@ public class SystemEventWrapper implements SystemEvent,
 
 		if (classUuid != null) {
 			setClassUuid(classUuid);
+		}
+
+		Long referrerClassNameId = (Long)attributes.get("referrerClassNameId");
+
+		if (referrerClassNameId != null) {
+			setReferrerClassNameId(referrerClassNameId);
 		}
 
 		Integer type = (Integer)attributes.get("type");
@@ -366,6 +373,26 @@ public class SystemEventWrapper implements SystemEvent,
 	@Override
 	public void setClassUuid(java.lang.String classUuid) {
 		_systemEvent.setClassUuid(classUuid);
+	}
+
+	/**
+	* Returns the referrer class name ID of this system event.
+	*
+	* @return the referrer class name ID of this system event
+	*/
+	@Override
+	public long getReferrerClassNameId() {
+		return _systemEvent.getReferrerClassNameId();
+	}
+
+	/**
+	* Sets the referrer class name ID of this system event.
+	*
+	* @param referrerClassNameId the referrer class name ID of this system event
+	*/
+	@Override
+	public void setReferrerClassNameId(long referrerClassNameId) {
+		_systemEvent.setReferrerClassNameId(referrerClassNameId);
 	}
 
 	/**

@@ -39,6 +39,7 @@ public class SystemEventSoap implements Serializable {
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setClassUuid(model.getClassUuid());
+		soapModel.setReferrerClassNameId(model.getReferrerClassNameId());
 		soapModel.setType(model.getType());
 		soapModel.setExtraData(model.getExtraData());
 
@@ -165,6 +166,14 @@ public class SystemEventSoap implements Serializable {
 		_classUuid = classUuid;
 	}
 
+	public long getReferrerClassNameId() {
+		return _referrerClassNameId;
+	}
+
+	public void setReferrerClassNameId(long referrerClassNameId) {
+		_referrerClassNameId = referrerClassNameId;
+	}
+
 	public int getType() {
 		return _type;
 	}
@@ -190,6 +199,7 @@ public class SystemEventSoap implements Serializable {
 	private long _classNameId;
 	private long _classPK;
 	private String _classUuid;
+	private long _referrerClassNameId;
 	private int _type;
 	private String _extraData;
 }

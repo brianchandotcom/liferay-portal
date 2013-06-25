@@ -897,69 +897,115 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return StringUtil.replace(ifClause, line, newLine);
 	}
 
-	protected String fixJavaTermsDivider(
-		String content, JavaTerm previousJavaTerm, JavaTerm javaTerm) {
+	protected String fixJavaTermsDividers(
+		String fileName, String content, Set<JavaTerm> javaTerms) {
 
-		String javaTermContent = javaTerm.getContent();
+		JavaTerm previousJavaTerm = null;
 
-		if (javaTermContent.startsWith(StringPool.TAB + "//") ||
-			javaTermContent.contains(StringPool.TAB + "static {")) {
+		Iterator<JavaTerm> itr = javaTerms.iterator();
 
-			return content;
-		}
+		while (itr.hasNext()) {
+			JavaTerm javaTerm = itr.next();
 
-		String previousJavaTermContent = previousJavaTerm.getContent();
+			if (previousJavaTerm == null) {
+				previousJavaTerm = javaTerm;
 
-		if (previousJavaTermContent.startsWith(StringPool.TAB + "//") ||
-			previousJavaTermContent.contains(StringPool.TAB + "static {")) {
-
-			return content;
-		}
-
-		String javaTermName = javaTerm.getName();
-		String previousJavaTermName = previousJavaTerm.getName();
-
-		boolean requiresEmptyLine = false;
-
-		if (previousJavaTerm.getType() != javaTerm.getType()) {
-			requiresEmptyLine = true;
-		}
-		else if (!isInJavaTermTypeGroup(javaTerm.getType(), TYPE_VARIABLE)) {
-			requiresEmptyLine = true;
-		}
-		else if (previousJavaTermName.equals(
-					previousJavaTermName.toUpperCase()) ||
-				 javaTermName.equals(javaTermName.toUpperCase())) {
-
-			requiresEmptyLine = true;
-		}
-		else if (hasAnnotationCommentOrJavadoc(javaTermContent) ||
-				 hasAnnotationCommentOrJavadoc(previousJavaTermContent)) {
-
-			requiresEmptyLine = true;
-		}
-		else if ((previousJavaTerm.getType() ==
-					TYPE_VARIABLE_PRIVATE_STATIC) &&
-				 (previousJavaTermName.equals("_log") ||
-				  previousJavaTermName.equals("_instance"))) {
-
-			requiresEmptyLine = true;
-		}
-		else if (previousJavaTermContent.contains("\n\n\t") ||
-				 javaTermContent.contains("\n\n\t")) {
-
-			requiresEmptyLine = true;
-		}
-
-		if (requiresEmptyLine) {
-			if (!content.contains("\n\n" + javaTermContent)) {
-				return StringUtil.replace(
-					content, "\n" + javaTermContent, "\n\n" + javaTermContent);
+				continue;
 			}
-		}
-		else if (content.contains("\n\n" + javaTermContent)) {
-			return StringUtil.replace(
-				content, "\n\n" + javaTermContent, "\n" + javaTermContent);
+
+			String javaTermContent = javaTerm.getContent();
+
+			if (javaTermContent.startsWith(StringPool.TAB + "//") ||
+				javaTermContent.contains(StringPool.TAB + "static {")) {
+
+				previousJavaTerm = javaTerm;
+
+				continue;
+			}
+
+			String previousJavaTermContent = previousJavaTerm.getContent();
+
+			if (previousJavaTermContent.startsWith(StringPool.TAB + "//") ||
+				previousJavaTermContent.contains(StringPool.TAB + "static {")) {
+
+				previousJavaTerm = javaTerm;
+
+				continue;
+			}
+
+			String javaTermName = javaTerm.getName();
+
+			String excluded = null;
+
+			if (_javaTermSortExclusions != null) {
+				excluded = _javaTermSortExclusions.getProperty(
+					fileName + StringPool.AT + javaTerm.getLineCount());
+
+				if (excluded == null) {
+					excluded = _javaTermSortExclusions.getProperty(
+						fileName + StringPool.AT + javaTermName);
+				}
+
+				if (excluded == null) {
+					excluded = _javaTermSortExclusions.getProperty(fileName);
+				}
+			}
+
+			if (excluded != null) {
+				previousJavaTerm = javaTerm;
+
+				continue;
+			}
+
+			String previousJavaTermName = previousJavaTerm.getName();
+
+			boolean requiresEmptyLine = false;
+
+			if (previousJavaTerm.getType() != javaTerm.getType()) {
+				requiresEmptyLine = true;
+			}
+			else if (!isInJavaTermTypeGroup(
+						javaTerm.getType(), TYPE_VARIABLE)) {
+
+				requiresEmptyLine = true;
+			}
+			else if (previousJavaTermName.equals(
+						previousJavaTermName.toUpperCase()) ||
+					 javaTermName.equals(javaTermName.toUpperCase())) {
+
+				requiresEmptyLine = true;
+			}
+			else if (hasAnnotationCommentOrJavadoc(javaTermContent) ||
+					 hasAnnotationCommentOrJavadoc(previousJavaTermContent)) {
+
+				requiresEmptyLine = true;
+			}
+			else if ((previousJavaTerm.getType() ==
+						TYPE_VARIABLE_PRIVATE_STATIC) &&
+					 (previousJavaTermName.equals("_log") ||
+					  previousJavaTermName.equals("_instance"))) {
+
+				requiresEmptyLine = true;
+			}
+			else if (previousJavaTermContent.contains("\n\n\t") ||
+					 javaTermContent.contains("\n\n\t")) {
+
+				requiresEmptyLine = true;
+			}
+
+			if (requiresEmptyLine) {
+				if (!content.contains("\n\n" + javaTermContent)) {
+					return StringUtil.replace(
+						content,
+						"\n" + javaTermContent, "\n\n" + javaTermContent);
+				}
+			}
+			else if (content.contains("\n\n" + javaTermContent)) {
+				return StringUtil.replace(
+					content, "\n\n" + javaTermContent, "\n" + javaTermContent);
+			}
+
+			previousJavaTerm = javaTerm;
 		}
 
 		return content;
@@ -1654,8 +1700,14 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 
 			newContent = sortJavaTerms(fileName, content, javaTerms);
+		}
 
-			newContent = formatAnnotations(fileName, newContent, javaTerms);
+		if (content.equals(newContent)) {
+			newContent = fixJavaTermsDividers(fileName, content, javaTerms);
+		}
+
+		if (content.equals(newContent)) {
+			newContent = formatAnnotations(fileName, content, javaTerms);
 		}
 
 		return newContent;
@@ -2559,9 +2611,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						return content;
 					}
 				}
-
-				content = fixJavaTermsDivider(
-					content, previousJavaTerm, javaTerm);
 			}
 
 			previousJavaTerm = javaTerm;

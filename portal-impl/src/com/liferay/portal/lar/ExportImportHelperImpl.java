@@ -951,6 +951,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		return content;
 	}
 
+	@Override
 	public void updateExportPreferencesClassPKs(
 			PortletPreferences portletPreferences, String key, String className)
 		throws Exception {
@@ -1035,6 +1036,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		portletPreferences.setValues(key, newValues);
 	}
 
+	@Override
 	public void updateImportPreferencesClassPKs(
 			PortletDataContext portletDataContext,
 			PortletPreferences portletPreferences, String key, Class<?> clazz,

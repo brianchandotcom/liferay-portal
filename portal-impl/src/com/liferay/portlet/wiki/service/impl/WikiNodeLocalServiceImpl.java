@@ -276,6 +276,13 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 	}
 
 	@Override
+	public WikiNode fetchNodeByUuidAndGroupId(String uuid, long groupId)
+		throws SystemException {
+
+		return wikiNodePersistence.fetchByUUID_G(uuid, groupId);
+	}
+
+	@Override
 	public List<WikiNode> getCompanyNodes(long companyId, int start, int end)
 		throws SystemException {
 

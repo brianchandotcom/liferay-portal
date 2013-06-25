@@ -64,8 +64,9 @@ public class WikiNodeStagedModelDataHandler
 		WikiNode importedNode = null;
 
 		if (portletDataContext.isDataStrategyMirror()) {
-			WikiNode existingNode = WikiNodeUtil.fetchByUUID_G(
-				node.getUuid(), portletDataContext.getScopeGroupId());
+			WikiNode existingNode =
+				WikiNodeLocalServiceUtil.fetchWikiNodeByUuidAndGroupId(
+					node.getUuid(), portletDataContext.getScopeGroupId());
 
 			String initialNodeName = PropsValues.WIKI_INITIAL_NODE_NAME;
 

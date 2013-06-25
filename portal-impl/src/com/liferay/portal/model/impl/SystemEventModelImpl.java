@@ -70,10 +70,11 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
 			{ "classUuid", Types.VARCHAR },
+			{ "referrerClassNameId", Types.BIGINT },
 			{ "type_", Types.INTEGER },
 			{ "extraData", Types.CLOB }
 		};
-	public static final String TABLE_SQL_CREATE = "create table SystemEvent (systemEventId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,classNameId LONG,classPK LONG,classUuid VARCHAR(75) null,type_ INTEGER,extraData TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table SystemEvent (systemEventId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,classNameId LONG,classPK LONG,classUuid VARCHAR(75) null,referrerClassNameId LONG,type_ INTEGER,extraData TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table SystemEvent";
 	public static final String ORDER_BY_JPQL = " ORDER BY systemEvent.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY SystemEvent.createDate DESC";
@@ -143,6 +144,7 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("classUuid", getClassUuid());
+		attributes.put("referrerClassNameId", getReferrerClassNameId());
 		attributes.put("type", getType());
 		attributes.put("extraData", getExtraData());
 
@@ -203,6 +205,12 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 
 		if (classUuid != null) {
 			setClassUuid(classUuid);
+		}
+
+		Long referrerClassNameId = (Long)attributes.get("referrerClassNameId");
+
+		if (referrerClassNameId != null) {
+			setReferrerClassNameId(referrerClassNameId);
 		}
 
 		Integer type = (Integer)attributes.get("type");
@@ -387,6 +395,16 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 	}
 
 	@Override
+	public long getReferrerClassNameId() {
+		return _referrerClassNameId;
+	}
+
+	@Override
+	public void setReferrerClassNameId(long referrerClassNameId) {
+		_referrerClassNameId = referrerClassNameId;
+	}
+
+	@Override
 	public int getType() {
 		return _type;
 	}
@@ -463,6 +481,7 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 		systemEventImpl.setClassNameId(getClassNameId());
 		systemEventImpl.setClassPK(getClassPK());
 		systemEventImpl.setClassUuid(getClassUuid());
+		systemEventImpl.setReferrerClassNameId(getReferrerClassNameId());
 		systemEventImpl.setType(getType());
 		systemEventImpl.setExtraData(getExtraData());
 
@@ -577,6 +596,8 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 			systemEventCacheModel.classUuid = null;
 		}
 
+		systemEventCacheModel.referrerClassNameId = getReferrerClassNameId();
+
 		systemEventCacheModel.type = getType();
 
 		systemEventCacheModel.extraData = getExtraData();
@@ -592,7 +613,7 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{systemEventId=");
 		sb.append(getSystemEventId());
@@ -612,6 +633,8 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 		sb.append(getClassPK());
 		sb.append(", classUuid=");
 		sb.append(getClassUuid());
+		sb.append(", referrerClassNameId=");
+		sb.append(getReferrerClassNameId());
 		sb.append(", type=");
 		sb.append(getType());
 		sb.append(", extraData=");
@@ -623,7 +646,7 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(40);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.SystemEvent");
@@ -666,6 +689,10 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 		sb.append(getClassUuid());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>referrerClassNameId</column-name><column-value><![CDATA[");
+		sb.append(getReferrerClassNameId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>type</column-name><column-value><![CDATA[");
 		sb.append(getType());
 		sb.append("]]></column-value></column>");
@@ -699,6 +726,7 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 	private long _originalClassPK;
 	private boolean _setOriginalClassPK;
 	private String _classUuid;
+	private long _referrerClassNameId;
 	private int _type;
 	private int _originalType;
 	private boolean _setOriginalType;

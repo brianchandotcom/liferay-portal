@@ -15,7 +15,7 @@
 		</execute>
 	</set-up>
 
-	<command name="ViewWebContentViaWCL">
+	<command name="ViewWebContentViaWCLDisplayURLNormal">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
@@ -24,20 +24,17 @@
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 
-		<execute macro="WebContentList#configurePGPortletDisplayGuest">
+		<execute macro="WCLPortlet#configureSetupPG">
+			<var name="configureDisplayURL" value="Normal" />
 			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WebContent#viewPGViaWCL">
+			<var name="configureDisplayURL" value="Normal" />
+			<var name="pageName" value="${pageName}" />
+			<var name="webContentContent" value="${webContentContent}" />
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
-
-		<execute macro="Page#pgGoto">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute action="PGWebcontentlist#assertTextEquals" locator-key1="WEB_CONTENT_TABLE_TITLE_1" value1="${webContentTitle}" />
-		<execute action="PGWebcontentlist#click" locator-key1="WEB_CONTENT_TABLE_TITLE_1" value1="${webContentTitle}"/>
-
-		<execute action="PGWebcontentlistWebcontent#assertTextEquals" locator-key1="WEB_CONTENT_TITLE" value1="${webContentTitle}" />
-		<execute action="PGWebcontentlistWebcontent#assertTextEquals" locator-key1="WEB_CONTENT_CONTENT" value1="${webContentContent}" />
 	</command>
 
 	<tear-down>

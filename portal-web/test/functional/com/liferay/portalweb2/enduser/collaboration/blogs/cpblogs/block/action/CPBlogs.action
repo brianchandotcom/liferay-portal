@@ -3,8 +3,23 @@
 		<case locator-key1="ADD_ENTRY">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
+		<case locator-key1="ENTRY_MENULIST_MOVE_TO_THE_RECYCLE_BIN">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+		<case locator-key1="ENTRY_TABLE_TITLE">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
 		<case locator-key1="RECYCLE_BIN_BUTTON">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+	</command>
+
+	<command name="assertTextEquals">
+		<case locator-key1="PORTLET_TITLE">
+			<execute function="AssertTextEquals#assertText" value1="Blogs" />
+		</case>
+		<case locator-key1="SUCCESS_MESSAGE">
+			<execute function="AssertTextEquals#assertText" value1="Your request completed successfully." />
 		</case>
 	</command>
 

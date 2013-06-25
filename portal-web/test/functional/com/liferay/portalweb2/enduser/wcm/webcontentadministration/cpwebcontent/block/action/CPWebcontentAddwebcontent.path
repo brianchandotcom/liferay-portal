@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BODY_FIELD</td>
+	<td>//body</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEARCHABLE_CHECKBOX</td>
 	<td>//input[@id='_15_indexableCheckbox']</td>
 	<td></td>

@@ -61,7 +61,6 @@
 					}
 
 					[class^="icon-"], [class*=" icon-"] {
-						background-image: url(../images/aui/glyphicons-halflings-white.png);
 						margin-top: 3px;
 					}
 				}

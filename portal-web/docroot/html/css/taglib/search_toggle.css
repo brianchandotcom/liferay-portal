@@ -1,3 +1,9 @@
-.taglib-search-toggle .popover .arrow {
-	left: 70%;
+.taglib-search-toggle {
+	.form-search .btn-link {
+		margin-left: 5px;
+	}
+
+	.popover .arrow {
+		left: 70%;
+	}
 }

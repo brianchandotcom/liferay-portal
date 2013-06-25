@@ -57,7 +57,7 @@ public class AssetPublisherPortletDataHandler
 		setPublishToLiveByDefault(true);
 	}
 
-	protected void updateExportAssetPublisherClassNameIds(
+	protected void updateExportClassNameIds(
 			PortletPreferences portletPreferences, String key)
 		throws Exception {
 
@@ -99,7 +99,7 @@ public class AssetPublisherPortletDataHandler
 		portletPreferences.setValues(key, newValues);
 	}
 
-	protected PortletPreferences updateExportAssetPublisherPortletPreferences(
+	protected PortletPreferences updateExportPortletPreferences(
 			PortletDataContext portletDataContext,
 			PortletPreferences portletPreferences, long plid)
 		throws Exception {
@@ -122,8 +122,7 @@ public class AssetPublisherPortletDataHandler
 				portletPreferences.getValue(name, null));
 
 			if (name.equals("anyAssetType") || name.equals("classNameIds")) {
-				updateExportAssetPublisherClassNameIds(
-					portletPreferences, name);
+				updateExportClassNameIds(portletPreferences, name);
 			}
 			else if (name.equals(
 						"anyClassTypeDLFileEntryAssetRendererFactory") ||
@@ -161,7 +160,7 @@ public class AssetPublisherPortletDataHandler
 					AssetCategory.class.getName());
 			}
 			else if (name.equals("scopeIds")) {
-				updateExportAssetPublisherScopeIds(
+				updateExportScopeIds(
 					portletDataContext, portletPreferences, name, plid);
 			}
 		}
@@ -169,7 +168,7 @@ public class AssetPublisherPortletDataHandler
 		return portletPreferences;
 	}
 
-	protected void updateExportAssetPublisherScopeIds(
+	protected void updateExportScopeIds(
 			PortletDataContext portletDataContext,
 			PortletPreferences portletPreferences, String key, long plid)
 		throws Exception {
@@ -222,7 +221,7 @@ public class AssetPublisherPortletDataHandler
 		portletPreferences.setValues(key, newValues);
 	}
 
-	protected void updateImportAssetPublisherClassNameIds(
+	protected void updateImportClassNameIds(
 			PortletPreferences portletPreferences, String key)
 		throws Exception {
 
@@ -284,7 +283,7 @@ public class AssetPublisherPortletDataHandler
 				portletPreferences.getValue(name, null));
 
 			if (name.equals("anyAssetType") || name.equals("classNameIds")) {
-				updateImportAssetPublisherClassNameIds(
+				updateImportClassNameIds(
 					portletPreferences, name);
 			}
 			else if (name.equals(
@@ -327,8 +326,8 @@ public class AssetPublisherPortletDataHandler
 					companyGroup.getGroupId());
 			}
 			else if (name.equals("scopeIds")) {
-				updateImportAssetPublisherScopeIds(
-					portletPreferences, name, companyGroup.getGroupId(), 
+				updateImportScopeIds(
+					portletPreferences, name, companyGroup.getGroupId(),
 					layout.getPlid());
 			}
 		}
@@ -336,9 +335,9 @@ public class AssetPublisherPortletDataHandler
 		return portletPreferences;
 	}
 
-	protected void updateImportAssetPublisherScopeIds(
-			PortletPreferences portletPreferences, String key, long companyGroupId,
-			long plid)
+	protected void updateImportScopeIds(
+			PortletPreferences portletPreferences, String key,
+			long companyGroupId, long plid)
 		throws Exception {
 
 		String[] oldValues = portletPreferences.getValues(key, null);

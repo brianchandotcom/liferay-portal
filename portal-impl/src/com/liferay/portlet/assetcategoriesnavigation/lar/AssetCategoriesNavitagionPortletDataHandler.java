@@ -40,7 +40,7 @@ public class AssetCategoriesNavitagionPortletDataHandler
 		setPublishToLiveByDefault(true);
 	}
 
-	protected PortletPreferences updateExportAssetCategoriesNavigationPortletPreferences(
+	protected PortletPreferences updateExportPortletPreferences(
 			PortletPreferences portletPreferences, long plid)
 		throws Exception {
 
@@ -58,7 +58,7 @@ public class AssetCategoriesNavitagionPortletDataHandler
 		return portletPreferences;
 	}
 
-	protected PortletPreferences updateImportAssetCategoriesNavigationPortletPreferences(
+	protected PortletPreferences updateImportPortletPreferences(
 			PortletDataContext portletDataContext, long companyId, long ownerId,
 			int ownerType, long plid, String portletId,
 			PortletPreferences portletPreferences)

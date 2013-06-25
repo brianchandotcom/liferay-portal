@@ -234,7 +234,7 @@
 </tr>
 <tr>
 	<td>ENTRY_TABLE_TITLE_1</td>
-	<td>//div[@id='_15_entriesContainer']/div/a[contains(@class,'entry-link')]/span/span</td>
+	<td>//span[@class='entry-title']/span</td>
 	<td></td>
 </tr>
 <tr>

@@ -1,7 +1,7 @@
 <definition>
-	<command name="click">
-		<case locator-key1="WEB_CONTENT_TABLE_TITLE_1">
-			<execute function="Click#textClickAtAndWait" />
+	<command name="assertClick">
+		<case locator-key1="WEB_CONTENT_TABLE_TITLE">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 	</command>
 </definition>

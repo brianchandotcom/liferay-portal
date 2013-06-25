@@ -35,18 +35,18 @@
 </tr>
 <!--WEB_CONTENT_TABLE-->
 <tr>
-	<td>WEB_CONTENT_TABLE_TITLE_1</td>
-	<td>xpath=(//tbody/tr/td[1]/a)[1]</td>
+	<td>WEB_CONTENT_TABLE_TITLE</td>
+	<td>//tbody/tr[contains(.,'${key_webContentTitle}')]/td[1]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>WEB_CONTENT_TABLE_DISPLAY_DATE_1</td>
-	<td>xpath=(//tbody/tr/td[2]/a)[1]</td>
+	<td>WEB_CONTENT_TABLE_DISPLAY_DATE</td>
+	<td>//tbody/tr[contains(.,'${key_webContentTitle}')]/td[2]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>WEB_CONTENT_TABLE_AUTHOR_1</td>
-	<td>xpath=(//tbody/tr/td[3]/a)[1]</td>
+	<td>WEB_CONTENT_TABLE_AUTHOR</td>
+	<td>//tbody/tr[contains(.,'${key_webContentTitle}')]/td[3]/a</td>
 	<td></td>
 </tr>
 </tbody>

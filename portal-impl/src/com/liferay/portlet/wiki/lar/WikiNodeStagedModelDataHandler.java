@@ -136,4 +136,22 @@ public class WikiNodeStagedModelDataHandler
 			++count);
 	}
 
+	@Override
+	protected boolean validateMissingReference(
+			String uuid, long companyId, long groupId) {
+
+		try {
+			WikiNode wikiNode = WikiNodeUtil.fetchByUUID_G(uuid, groupId);
+
+			if (wikiNode == null) {
+				return false;
+			}
+		}
+		catch (Exception e) {
+			return false;
+		}
+
+		return true;
+	}
+
 }

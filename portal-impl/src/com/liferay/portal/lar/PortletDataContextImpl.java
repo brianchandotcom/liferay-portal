@@ -1969,7 +1969,15 @@ public class PortletDataContextImpl implements PortletDataContext {
 				"referrer-class-name",
 				referrerClassedModel.getModelClassName());
 
-			if (referrerClassedModel instanceof StagedModel) {
+			if (referrerClassedModel instanceof PortletModel) {
+				Portlet portlet = (Portlet)referrerClassedModel;
+
+				referenceElement.addAttribute(
+					"referrer-display-name",
+					PortalUtil.getPortletTitle(
+						portlet, LocaleUtil.getMostRelevantLocale()));
+			}
+			else if (referrerClassedModel instanceof StagedModel) {
 				StagedModel referrerStagedModel =
 					(StagedModel)referrerClassedModel;
 
@@ -1977,14 +1985,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 					"referrer-display-name",
 					StagedModelDataHandlerUtil.getDisplayName(
 						referrerStagedModel));
-			}
-			else if (referrerClassedModel instanceof PortletModel) {
-				Portlet portlet = (Portlet)referrerClassedModel;
-
-				referenceElement.addAttribute(
-					"referrer-display-name",
-					PortalUtil.getPortletTitle(
-						portlet, LocaleUtil.getMostRelevantLocale()));
 			}
 		}
 

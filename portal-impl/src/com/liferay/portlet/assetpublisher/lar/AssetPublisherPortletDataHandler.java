@@ -102,7 +102,7 @@ public class AssetPublisherPortletDataHandler
 			}
 
 			try {
-				long classNameId = Long.parseLong(oldValue);
+				long classNameId = GetterUtil.getLong(oldValue);
 
 				String className = PortalUtil.getClassName(classNameId);
 
@@ -111,7 +111,7 @@ public class AssetPublisherPortletDataHandler
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Unable to find class name ID for class name " +
+						"Unable to get class name ID for class name " +
 							oldValue);
 				}
 			}

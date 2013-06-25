@@ -1049,7 +1049,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			return;
 		}
 
-		Map<Long, Long> primaryKeysMap =
+		Map<Long, Long> primaryKeys =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(clazz);
 
 		String[] newValues = new String[oldValues.length];
@@ -1068,7 +1068,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 					long oldPrimaryKey = GetterUtil.getLong(uuid);
 
 					newPrimaryKey = MapUtil.getLong(
-						primaryKeysMap, oldPrimaryKey, oldPrimaryKey);
+						primaryKeys, oldPrimaryKey, oldPrimaryKey);
 				}
 				else {
 					String className = clazz.getName();

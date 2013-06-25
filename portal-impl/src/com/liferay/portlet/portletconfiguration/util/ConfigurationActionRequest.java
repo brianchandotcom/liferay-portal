@@ -18,7 +18,8 @@ import javax.portlet.ActionRequest;
 import javax.portlet.PortletPreferences;
 import javax.portlet.filter.ActionRequestWrapper;
 
-public class ConfigurationActionRequest extends ActionRequestWrapper {
+public class ConfigurationActionRequest extends ActionRequestWrapper
+	implements ConfigurationRequest {
 
 	public ConfigurationActionRequest(
 		ActionRequest actionRequest,

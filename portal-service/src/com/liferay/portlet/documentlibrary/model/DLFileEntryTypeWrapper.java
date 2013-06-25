@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -758,6 +759,11 @@ public class DLFileEntryTypeWrapper implements DLFileEntryType,
 	@Override
 	public boolean isExportable() {
 		return _dlFileEntryType.isExportable();
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _dlFileEntryType.getStagedModelType();
 	}
 
 	/**

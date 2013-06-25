@@ -17,15 +17,9 @@ package com.liferay.portal.model;
 /**
  * @author Brian Wing Shun Chan
  */
-public interface AttachedModel {
-
-	public String getClassName();
-
-	public long getClassNameId();
+public interface AttachedModel extends TypedModel {
 
 	public long getClassPK();
-
-	public void setClassNameId(long classNameId);
 
 	public void setClassPK(long classPK);
 

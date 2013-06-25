@@ -15,14 +15,18 @@
 package com.liferay.portal.lar;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Conjunction;
+import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -44,12 +48,12 @@ public class DeletionSystemEventExporter {
 
 		Element rootElement = document.addElement("deletion-system-events");
 
-		Set<Long> deletionEventClassNameIds =
-			portletDataContext.getDeletionSystemEventClassNameIds();
+		Set<StagedModelType> deletionSystemEventModelTypes =
+			portletDataContext.getDeletionSystemEventTypes();
 
-		if (!deletionEventClassNameIds.isEmpty()) {
+		if (!deletionSystemEventModelTypes.isEmpty()) {
 			doExport(
-				portletDataContext, rootElement, deletionEventClassNameIds);
+				portletDataContext, rootElement, deletionSystemEventModelTypes);
 		}
 
 		portletDataContext.addZipEntry(
@@ -61,7 +65,7 @@ public class DeletionSystemEventExporter {
 	protected void doExport(
 			final PortletDataContext portletDataContext,
 			final Element rootElement,
-			final Set<Long> deletionEventClassNameIds)
+			final Set<StagedModelType> deletionSystemEventModelTypes)
 		throws PortalException, SystemException {
 
 		ActionableDynamicQuery actionableDynamicQuery =
@@ -69,13 +73,33 @@ public class DeletionSystemEventExporter {
 
 			@Override
 			protected void addCriteria(DynamicQuery dynamicQuery) {
-				if (!deletionEventClassNameIds.isEmpty()) {
+				if (!deletionSystemEventModelTypes.isEmpty()) {
 					Property classNameIdProperty = PropertyFactoryUtil.forName(
 						"classNameId");
 
-					dynamicQuery.add(
-						classNameIdProperty.in(
-							deletionEventClassNameIds.toArray()));
+					Property referrerClassNameIdProperty =
+						PropertyFactoryUtil.forName("referrerClassNameId");
+
+					Disjunction disjunction =
+						RestrictionsFactoryUtil.disjunction();
+
+					for (StagedModelType modelType :
+							deletionSystemEventModelTypes) {
+
+						Conjunction conjunction =
+							RestrictionsFactoryUtil.conjunction();
+
+						conjunction.add(
+							classNameIdProperty.eq(modelType.getClassNameId()));
+
+						conjunction.add(
+							referrerClassNameIdProperty.eq(
+								modelType.getReferrerClassNameId()));
+
+						disjunction.add(conjunction);
+					}
+
+					dynamicQuery.add(disjunction);
 				}
 
 				Property typeProperty = PropertyFactoryUtil.forName("type");
@@ -129,6 +153,13 @@ public class DeletionSystemEventExporter {
 			PortalUtil.getClassName(systemEvent.getClassNameId()));
 		deletionSystemEventElement.addAttribute(
 			"group-id", String.valueOf(systemEvent.getGroupId()));
+
+		if (systemEvent.getReferrerClassNameId() > 0) {
+			deletionSystemEventElement.addAttribute(
+				"referrer-class-name",
+				PortalUtil.getClassName(systemEvent.getReferrerClassNameId()));
+		}
+
 		deletionSystemEventElement.addAttribute(
 			"uuid", systemEvent.getClassUuid());
 
@@ -136,7 +167,9 @@ public class DeletionSystemEventExporter {
 			portletDataContext.getManifestSummary();
 
 		manifestSummary.incrementModelDeletionCount(
-			PortalUtil.getClassName(systemEvent.getClassNameId()));
+			new StagedModelType(
+				systemEvent.getClassNameId(),
+				systemEvent.getReferrerClassNameId()));
 	}
 
 }

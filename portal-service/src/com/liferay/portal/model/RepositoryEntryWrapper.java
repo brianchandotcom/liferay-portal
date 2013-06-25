@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -507,6 +509,11 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_repositoryEntry.persist();
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _repositoryEntry.getStagedModelType();
 	}
 
 	/**

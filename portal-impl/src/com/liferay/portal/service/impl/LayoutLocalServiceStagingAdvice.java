@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.staging.LayoutStagingUtil;
 import com.liferay.portal.kernel.staging.MergeLayoutPrototypesThreadLocal;
-import com.liferay.portal.kernel.staging.ProxiedLayoutsThreadLocal;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -46,6 +45,7 @@ import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.persistence.LayoutRevisionUtil;
 import com.liferay.portal.service.persistence.LayoutUtil;
+import com.liferay.portal.staging.ProxiedLayoutsThreadLocal;
 import com.liferay.portal.staging.StagingAdvicesThreadLocal;
 import com.liferay.portal.util.ClassLoaderUtil;
 

@@ -632,6 +632,27 @@ public class SubscriptionSender implements Serializable {
 		MailServiceUtil.sendEmail(mailMessage);
 	}
 
+	protected String body;
+	protected boolean bulk;
+	protected long companyId;
+	protected List<FileAttachment> fileAttachments =
+		new ArrayList<FileAttachment>();
+	protected String fromAddress;
+	protected String fromName;
+	protected long groupId;
+	protected boolean htmlFormat;
+	protected String inReplyTo;
+	protected Map<Locale, String> localizedBodyMap;
+	protected Map<Locale, String> localizedSubjectMap;
+	protected String mailId;
+	protected String portletId;
+	protected String replyToAddress;
+	protected long scopeGroupId;
+	protected ServiceContext serviceContext;
+	protected SMTPAccount smtpAccount;
+	protected String subject;
+	protected long userId;
+
 	private void readObject(ObjectInputStream objectInputStream)
 		throws ClassNotFoundException, IOException {
 
@@ -657,27 +678,6 @@ public class SubscriptionSender implements Serializable {
 
 		objectOutputStream.writeUTF(servletContextName);
 	}
-
-	protected String body;
-	protected boolean bulk;
-	protected long companyId;
-	protected List<FileAttachment> fileAttachments =
-		new ArrayList<FileAttachment>();
-	protected String fromAddress;
-	protected String fromName;
-	protected long groupId;
-	protected boolean htmlFormat;
-	protected String inReplyTo;
-	protected Map<Locale, String> localizedBodyMap;
-	protected Map<Locale, String> localizedSubjectMap;
-	protected String mailId;
-	protected String portletId;
-	protected String replyToAddress;
-	protected long scopeGroupId;
-	protected ServiceContext serviceContext;
-	protected SMTPAccount smtpAccount;
-	protected String subject;
-	protected long userId;
 
 	private static Log _log = LogFactoryUtil.getLog(SubscriptionSender.class);
 

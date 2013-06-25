@@ -22,9 +22,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.lar.StagedModelDataHandler;
-import com.liferay.portal.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.service.persistence.SystemEventActionableDynamicQuery;
 import com.liferay.portal.util.PortalUtil;
@@ -48,16 +47,18 @@ public class DDMStructureExportActionableDynamicQuery
 
 	@Override
 	public long performCount() throws PortalException, SystemException {
+		StagedModelType stagedModelType = getStagedModelType();
+
 		ManifestSummary manifestSummary = _portletDataContext.getManifestSummary();
 
 		long modelAdditionCount = super.performCount();
 
-		manifestSummary.addModelAdditionCount(getManifestSummaryKey(),
+		manifestSummary.addModelAdditionCount(stagedModelType.toString(),
 			modelAdditionCount);
 
-		long modelDeletionCount = getModelDeletionCount();
+		long modelDeletionCount = getModelDeletionCount(stagedModelType);
 
-		manifestSummary.addModelDeletionCount(getManifestSummaryKey(),
+		manifestSummary.addModelDeletionCount(stagedModelType.toString(),
 			modelDeletionCount);
 
 		return modelAdditionCount;
@@ -68,7 +69,7 @@ public class DDMStructureExportActionableDynamicQuery
 		_portletDataContext.addDateRangeCriteria(dynamicQuery, "modifiedDate");
 	}
 
-	protected long getModelDeletionCount()
+	protected long getModelDeletionCount(final StagedModelType stagedModelType)
 		throws PortalException, SystemException {
 		ActionableDynamicQuery actionableDynamicQuery = new SystemEventActionableDynamicQuery() {
 				@Override
@@ -77,8 +78,13 @@ public class DDMStructureExportActionableDynamicQuery
 							"classNameId");
 
 					dynamicQuery.add(classNameIdProperty.eq(
-							PortalUtil.getClassNameId(
-								DDMStructure.class.getName())));
+							stagedModelType.getClassNameId()));
+
+					Property referrerClassNameIdProperty = PropertyFactoryUtil.forName(
+							"referrerClassNameId");
+
+					dynamicQuery.add(referrerClassNameIdProperty.eq(
+							stagedModelType.getReferrerClassNameId()));
 
 					Property typeProperty = PropertyFactoryUtil.forName("type");
 
@@ -115,10 +121,9 @@ public class DDMStructureExportActionableDynamicQuery
 		return actionableDynamicQuery.performCount();
 	}
 
-	protected String getManifestSummaryKey() {
-		StagedModelDataHandler<?> stagedModelDataHandler = StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(DDMStructure.class.getName());
-
-		return stagedModelDataHandler.getManifestSummaryKey(null);
+	protected StagedModelType getStagedModelType() {
+		return new StagedModelType(PortalUtil.getClassNameId(
+				DDMStructure.class.getName()));
 	}
 
 	@Override

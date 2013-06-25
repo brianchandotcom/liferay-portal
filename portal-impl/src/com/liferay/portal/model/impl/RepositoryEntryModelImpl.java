@@ -16,6 +16,7 @@ package com.liferay.portal.model.impl;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -410,6 +411,12 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 	@Override
 	public void setManualCheckInRequired(boolean manualCheckInRequired) {
 		_manualCheckInRequired = manualCheckInRequired;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(PortalUtil.getClassNameId(
+				RepositoryEntry.class.getName()));
 	}
 
 	public long getColumnBitmask() {

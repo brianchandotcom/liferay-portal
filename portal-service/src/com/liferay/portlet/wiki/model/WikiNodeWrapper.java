@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.wiki.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -793,6 +794,11 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getDeletedAttachmentsFiles()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _wikiNode.getDeletedAttachmentsFiles();
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _wikiNode.getStagedModelType();
 	}
 
 	/**

@@ -37,7 +37,8 @@ import java.util.Date;
  * @see com.liferay.portal.model.impl.PortletItemModelImpl
  * @generated
  */
-public interface PortletItemModel extends BaseModel<PortletItem>, GroupedModel {
+public interface PortletItemModel extends BaseModel<PortletItem>, GroupedModel,
+	TypedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -221,6 +222,7 @@ public interface PortletItemModel extends BaseModel<PortletItem>, GroupedModel {
 	 *
 	 * @return the fully qualified class name of this portlet item
 	 */
+	@Override
 	public String getClassName();
 
 	public void setClassName(String className);
@@ -230,6 +232,7 @@ public interface PortletItemModel extends BaseModel<PortletItem>, GroupedModel {
 	 *
 	 * @return the class name ID of this portlet item
 	 */
+	@Override
 	public long getClassNameId();
 
 	/**
@@ -237,6 +240,7 @@ public interface PortletItemModel extends BaseModel<PortletItem>, GroupedModel {
 	 *
 	 * @param classNameId the class name ID of this portlet item
 	 */
+	@Override
 	public void setClassNameId(long classNameId);
 
 	@Override

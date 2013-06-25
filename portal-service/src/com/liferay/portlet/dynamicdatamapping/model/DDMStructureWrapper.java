@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.dynamicdatamapping.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -1125,6 +1126,11 @@ public class DDMStructureWrapper implements DDMStructure,
 	public void setLocalizedTransientFieldsMap(
 		java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>> localizedTransientFieldsMap) {
 		_ddmStructure.setLocalizedTransientFieldsMap(localizedTransientFieldsMap);
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _ddmStructure.getStagedModelType();
 	}
 
 	/**

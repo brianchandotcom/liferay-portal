@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.polls.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -503,6 +504,11 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _pollsVote.getChoice();
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _pollsVote.getStagedModelType();
 	}
 
 	/**

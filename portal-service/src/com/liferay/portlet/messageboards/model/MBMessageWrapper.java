@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.messageboards.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -1174,6 +1175,11 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	@Override
 	public void setAttachmentsFolderId(long attachmentsFolderId) {
 		_mbMessage.setAttachmentsFolderId(attachmentsFolderId);
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _mbMessage.getStagedModelType();
 	}
 
 	/**

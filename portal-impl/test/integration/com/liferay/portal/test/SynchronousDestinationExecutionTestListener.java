@@ -15,6 +15,12 @@
 package com.liferay.portal.test;
 
 import com.liferay.portal.kernel.annotation.AnnotationLocator;
+import com.liferay.portal.kernel.messaging.BaseAsyncDestination;
+import com.liferay.portal.kernel.messaging.Destination;
+import com.liferay.portal.kernel.messaging.DestinationNames;
+import com.liferay.portal.kernel.messaging.MessageBus;
+import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.messaging.SynchronousDestination;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.test.AbstractExecutionTestListener;
 import com.liferay.portal.kernel.test.TestContext;
@@ -62,20 +68,49 @@ public class SynchronousDestinationExecutionTestListener
 		_methodSyncHandler.enableSync();
 	}
 
+	private Destination _asyncServiceDestination;
 	private SyncHandler _classSyncHandler = new SyncHandler();
 	private SyncHandler _methodSyncHandler = new SyncHandler();
 
 	private class SyncHandler {
 
 		public void enableSync() {
-			if (_sync != null) {
-				ProxyModeThreadLocal.setForceSync(true);
+			if (_sync == null) {
+				return;
+			}
+
+			ProxyModeThreadLocal.setForceSync(true);
+
+			MessageBus messageBus = MessageBusUtil.getMessageBus();
+
+			Destination destination = messageBus.getDestination(
+				DestinationNames.ASYNC_SERVICE);
+
+			if (destination instanceof BaseAsyncDestination) {
+				_asyncServiceDestination = destination;
+
+				SynchronousDestination synchronousDestination =
+					new SynchronousDestination();
+
+				synchronousDestination.setName(DestinationNames.ASYNC_SERVICE);
+
+				messageBus.replace(synchronousDestination);
 			}
 		}
 
 		public void restorePreviousSync() {
-			if (_sync != null) {
-				ProxyModeThreadLocal.setForceSync(_forceSync);
+			if (_sync == null) {
+				return;
+			}
+
+			ProxyModeThreadLocal.setForceSync(_forceSync);
+
+			if (_asyncServiceDestination != null) {
+				MessageBus messageBus = MessageBusUtil.getMessageBus();
+
+				messageBus.replace(_asyncServiceDestination);
+
+				_asyncServiceDestination = null;
 			}
 		}
 

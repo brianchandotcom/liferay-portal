@@ -85,6 +85,8 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)} 
 
 					selenium.sendLogger("${testCaseName?uncap_first}TestCase${commandName}", "start");
 
+					selenium.sendLogger("${testCaseName?uncap_first}TestCase${commandName}", "pending");
+
 					<#assign setUpElement = rootElement.element("set-up")>
 
 					<#assign lineNumber = setUpElement.attributeValue("line-number")>
@@ -105,6 +107,8 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)} 
 				commandScopeVariables.putAll(definitionScopeVariables);
 
 				selenium.sendLogger("${testCaseName?uncap_first}TestCase${commandName}", "start");
+
+				selenium.sendLogger("${testCaseName?uncap_first}TestCase${commandName}", "pending");
 
 				<#assign lineNumber = commandElement.attributeValue("line-number")>
 
@@ -128,6 +132,8 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)} 
 
 					selenium.sendLogger("${testCaseName?uncap_first}TestCase${commandName}", "start");
 
+					selenium.sendLogger("${testCaseName?uncap_first}TestCase${commandName}", "pending");
+
 					<#assign lineNumber = tearDownElement.attributeValue("line-number")>
 
 					selenium.sendLogger("${testCaseName?uncap_first}TestCase${lineNumber}", "pending");
@@ -140,6 +146,8 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)} 
 
 					selenium.sendLogger("${testCaseName?uncap_first}TestCase${lineNumber}", "pass");
 				</#if>
+
+				selenium.sendLogger("${testCaseName?uncap_first}TestCase${commandName}", "pass");
 			}
 		}
 	</#list>

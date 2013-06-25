@@ -138,8 +138,6 @@ public class Logger {
 		else if (status.equals("start")) {
 			_xpathIdStack = new Stack<String>();
 
-			_xpathIdStack.push(id);
-
 			return;
 		}
 

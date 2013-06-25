@@ -84,6 +84,12 @@ public class CompanyServiceUtil {
 			maxUsers, active);
 	}
 
+	public static com.liferay.portal.model.Company deleteCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().deleteCompany(companyId);
+	}
+
 	/**
 	* Deletes the company's logo.
 	*

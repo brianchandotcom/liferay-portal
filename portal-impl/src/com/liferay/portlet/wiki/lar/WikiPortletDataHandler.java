@@ -90,76 +90,6 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Override
-	protected PortletPreferences doProcessExportPortletPreferences(
-			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences, Element rootElement)
-		throws Exception {
-
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
-
-		String hiddenNodeNames = portletPreferences.getValue(
-			"hiddenNodes", null);
-
-		rootElement.addAttribute("hidden-node-names", hiddenNodeNames);
-
-		for (String hiddenNodeName : StringUtil.split(hiddenNodeNames)) {
-			WikiNode wikiNode =
-				WikiNodeLocalServiceUtil.getNode(
-					portletDataContext.getScopeGroupId(), hiddenNodeName);
-
-			portletDataContext.addReferenceElement(
-				portlet, rootElement, wikiNode, WikiNode.class,
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY,
-				!portletDataContext.getBooleanParameter(
-					NAMESPACE, "wiki-pages"));
-		}
-
-		String visibleNodeNames = portletPreferences.getValue(
-			"visibleNodes", null);
-
-		rootElement.addAttribute("visible-node-names", visibleNodeNames);
-
-		for (String visibleNodeName : StringUtil.split(visibleNodeNames)) {
-			WikiNode wikiNode =
-				WikiNodeLocalServiceUtil.getNode(
-					portletDataContext.getScopeGroupId(), visibleNodeName);
-
-			portletDataContext.addReferenceElement(
-				portlet, rootElement, wikiNode, WikiNode.class,
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY,
-				!portletDataContext.getBooleanParameter(
-					NAMESPACE, "wiki-pages"));
-		}
-
-		return portletPreferences;
-	}
-
-	@Override
-	protected PortletPreferences doProcessImportPortletPreferences(
-			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		Element rootElement = portletDataContext.getImportDataRootElement();
-
-		String hiddenNodeNames = rootElement.attributeValue(
-			"hidden-node-names");
-
-		if (Validator.isNotNull(hiddenNodeNames)) {
-			portletPreferences.setValue("hiddenNodes", hiddenNodeNames);
-		}
-
-		String visibleNodeNames = rootElement.attributeValue(
-			"visible-node-names");
-
-		if (Validator.isNotNull(visibleNodeNames)) {
-			portletPreferences.setValue("visibleNodes", visibleNodeNames);
-		}
-
-		return portletPreferences;
-	}
-
-	@Override
 	protected PortletPreferences doDeleteData(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
@@ -267,6 +197,76 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 			getPageActionableDynamicQuery(portletDataContext);
 
 		pageExportActionableDynamicQuery.performCount();
+	}
+
+	@Override
+	protected PortletPreferences doProcessExportPortletPreferences(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences, Element rootElement)
+		throws Exception {
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
+
+		String hiddenNodeNames = portletPreferences.getValue(
+			"hiddenNodes", null);
+
+		rootElement.addAttribute("hidden-node-names", hiddenNodeNames);
+
+		for (String hiddenNodeName : StringUtil.split(hiddenNodeNames)) {
+			WikiNode wikiNode =
+				WikiNodeLocalServiceUtil.getNode(
+					portletDataContext.getScopeGroupId(), hiddenNodeName);
+
+			portletDataContext.addReferenceElement(
+				portlet, rootElement, wikiNode, WikiNode.class,
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY,
+				!portletDataContext.getBooleanParameter(
+					NAMESPACE, "wiki-pages"));
+		}
+
+		String visibleNodeNames = portletPreferences.getValue(
+			"visibleNodes", null);
+
+		rootElement.addAttribute("visible-node-names", visibleNodeNames);
+
+		for (String visibleNodeName : StringUtil.split(visibleNodeNames)) {
+			WikiNode wikiNode =
+				WikiNodeLocalServiceUtil.getNode(
+					portletDataContext.getScopeGroupId(), visibleNodeName);
+
+			portletDataContext.addReferenceElement(
+				portlet, rootElement, wikiNode, WikiNode.class,
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY,
+				!portletDataContext.getBooleanParameter(
+					NAMESPACE, "wiki-pages"));
+		}
+
+		return portletPreferences;
+	}
+
+	@Override
+	protected PortletPreferences doProcessImportPortletPreferences(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		Element rootElement = portletDataContext.getImportDataRootElement();
+
+		String hiddenNodeNames = rootElement.attributeValue(
+			"hidden-node-names");
+
+		if (Validator.isNotNull(hiddenNodeNames)) {
+			portletPreferences.setValue("hiddenNodes", hiddenNodeNames);
+		}
+
+		String visibleNodeNames = rootElement.attributeValue(
+			"visible-node-names");
+
+		if (Validator.isNotNull(visibleNodeNames)) {
+			portletPreferences.setValue("visibleNodes", visibleNodeNames);
+		}
+
+		return portletPreferences;
 	}
 
 	protected ActionableDynamicQuery getPageActionableDynamicQuery(

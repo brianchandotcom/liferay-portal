@@ -274,10 +274,9 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			PortletPreferences portletPreferences, Element rootElement)
 		throws PortletDataException {
 
-		try{
+		try {
 			return doProcessExportPortletPreferences(
-				portletDataContext, portletId, portletPreferences,
-				rootElement);
+				portletDataContext, portletId, portletPreferences, rootElement);
 		}
 		catch (Exception e) {
 			throw new PortletDataException(e);
@@ -290,29 +289,13 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws PortletDataException {
 
-		try{
+		try {
 			return doProcessImportPortletPreferences(
 				portletDataContext, portletId, portletPreferences);
 		}
 		catch (Exception e) {
 			throw new PortletDataException(e);
 		}
-	}
-
-	protected PortletPreferences doProcessExportPortletPreferences(
-			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences, Element rootElement)
-		throws Exception {
-
-		return portletPreferences;
-	}
-
-	protected PortletPreferences doProcessImportPortletPreferences(
-			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		return portletPreferences;
 	}
 
 	@Override
@@ -361,6 +344,22 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	protected void doPrepareManifestSummary(
 			PortletDataContext portletDataContext)
 		throws Exception {
+	}
+
+	protected PortletPreferences doProcessExportPortletPreferences(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences, Element rootElement)
+		throws Exception {
+
+		return portletPreferences;
+	}
+
+	protected PortletPreferences doProcessImportPortletPreferences(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		return portletPreferences;
 	}
 
 	protected String getExportDataRootElementString(Element rootElement) {

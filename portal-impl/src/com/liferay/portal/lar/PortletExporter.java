@@ -1208,9 +1208,10 @@ public class PortletExporter {
 				portlet.getPortletDataHandlerInstance();
 
 			if (portletDataHandler != null) {
-				jxPreferences = portletDataHandler.processExportPortletPreferences(
-					portletDataContext, portletId, jxPreferences,
-					parentElement);
+				jxPreferences =
+					portletDataHandler.processExportPortletPreferences(
+						portletDataContext, portletId, jxPreferences,
+						parentElement);
 			}
 		}
 

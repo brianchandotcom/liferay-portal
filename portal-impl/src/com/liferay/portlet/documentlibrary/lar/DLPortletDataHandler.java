@@ -86,66 +86,6 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Override
-	protected PortletPreferences doProcessExportPortletPreferences(
-			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences, Element rootElement)
-		throws Exception {
-
-		long rootFolderId = GetterUtil.getLong(
-			portletPreferences.getValue("rootFolderId", null));
-
-		if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			rootElement.addAttribute(
-				"root-folder-id", String.valueOf(rootFolderId));
-
-			Folder folder = DLAppLocalServiceUtil.getFolder(rootFolderId);
-
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
-
-			portletDataContext.addReferenceElement(
-				portlet, rootElement, folder, Folder.class,
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY,
-				!portletDataContext.getBooleanParameter(
-					NAMESPACE, "documents"));
-		}
-
-		return portletPreferences;
-	}
-
-	@Override
-	protected PortletPreferences doProcessImportPortletPreferences(
-			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		long rootFolderId = GetterUtil.getLong(
-			portletPreferences.getValue("root-folder-id", null));
-
-		if (rootFolderId > 0) {
-			String rootFolderPath = ExportImportPathUtil.getModelPath(
-				portletDataContext, Folder.class.getName(), rootFolderId);
-
-			Folder folder = (Folder)portletDataContext.getZipEntryAsObject(
-				rootFolderPath);
-
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, folder);
-
-			Map<Long, Long> folderIds =
-				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-					Folder.class);
-
-			rootFolderId = MapUtil.getLong(
-				folderIds, rootFolderId, rootFolderId);
-
-			portletPreferences.setValue(
-				"rootFolderId", String.valueOf(rootFolderId));
-		}
-
-		return portletPreferences;
-	}
-
-	@Override
 	protected PortletPreferences doDeleteData(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
@@ -281,6 +221,66 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 			getFolderActionableDynamicQuery(portletDataContext);
 
 		folderActionableDynamicQuery.performCount();
+	}
+
+	@Override
+	protected PortletPreferences doProcessExportPortletPreferences(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences, Element rootElement)
+		throws Exception {
+
+		long rootFolderId = GetterUtil.getLong(
+			portletPreferences.getValue("rootFolderId", null));
+
+		if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			rootElement.addAttribute(
+				"root-folder-id", String.valueOf(rootFolderId));
+
+			Folder folder = DLAppLocalServiceUtil.getFolder(rootFolderId);
+
+			Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
+
+			portletDataContext.addReferenceElement(
+				portlet, rootElement, folder, Folder.class,
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY,
+				!portletDataContext.getBooleanParameter(
+					NAMESPACE, "documents"));
+		}
+
+		return portletPreferences;
+	}
+
+	@Override
+	protected PortletPreferences doProcessImportPortletPreferences(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		long rootFolderId = GetterUtil.getLong(
+			portletPreferences.getValue("root-folder-id", null));
+
+		if (rootFolderId > 0) {
+			String rootFolderPath = ExportImportPathUtil.getModelPath(
+				portletDataContext, Folder.class.getName(), rootFolderId);
+
+			Folder folder = (Folder)portletDataContext.getZipEntryAsObject(
+				rootFolderPath);
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, folder);
+
+			Map<Long, Long> folderIds =
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					Folder.class);
+
+			rootFolderId = MapUtil.getLong(
+				folderIds, rootFolderId, rootFolderId);
+
+			portletPreferences.setValue(
+				"rootFolderId", String.valueOf(rootFolderId));
+		}
+
+		return portletPreferences;
 	}
 
 	protected ActionableDynamicQuery getDLFileEntryTypeActionableDynamicQuery(

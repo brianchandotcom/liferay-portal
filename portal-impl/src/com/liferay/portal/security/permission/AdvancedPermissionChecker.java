@@ -1093,23 +1093,6 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			stopWatch.start();
 		}
 
-		if (group.isSite()) {
-			while (!group.isRoot()) {
-				Group parentGroup = group.getParentGroup();
-
-				if (doCheckPermission(
-						parentGroup.getCompanyId(), parentGroup.getGroupId(),
-						Group.class.getName(),
-						String.valueOf(parentGroup.getGroupId()),
-						ActionKeys.MANAGE_SUBGROUPS, stopWatch)) {
-
-					return true;
-				}
-
-				group = parentGroup;
-			}
-		}
-
 		if (group.isOrganization()) {
 			Organization organization =
 				OrganizationLocalServiceUtil.getOrganization(
@@ -1131,6 +1114,22 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 				}
 
 				organization = parentOrganization;
+			}
+		}
+		else if (group.isSite()) {
+			while (!group.isRoot()) {
+				Group parentGroup = group.getParentGroup();
+
+				if (doCheckPermission(
+						parentGroup.getCompanyId(), parentGroup.getGroupId(),
+						Group.class.getName(),
+						String.valueOf(parentGroup.getGroupId()),
+						ActionKeys.MANAGE_SUBGROUPS, stopWatch)) {
+
+					return true;
+				}
+
+				group = parentGroup;
 			}
 		}
 

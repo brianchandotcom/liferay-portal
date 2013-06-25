@@ -16,7 +16,6 @@ package com.liferay.portal.messaging.async;
 
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.util.MethodHandler;
 
 /**
  * @author Shuyang Zhou
@@ -26,16 +25,9 @@ public class AsyncMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		MethodHandler methodHandler = (MethodHandler)message.getPayload();
+		AsyncRunnable asyncRunnable = (AsyncRunnable)message.getPayload();
 
-		AsyncInvokeThreadLocal.setEnabled(true);
-
-		try {
-			methodHandler.invoke(null);
-		}
-		finally {
-			AsyncInvokeThreadLocal.setEnabled(false);
-		}
+		asyncRunnable.run();
 	}
 
 }

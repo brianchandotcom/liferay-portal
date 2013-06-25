@@ -274,6 +274,48 @@ public class UserNotificationDeliveryLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
+	public static com.liferay.portal.model.UserNotificationDelivery addUserNotificationDelivery(
+		long userId, long classNameId, int type, boolean email, boolean sms,
+		boolean website)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addUserNotificationDelivery(userId, classNameId, type,
+			email, sms, website);
+	}
+
+	public static void deleteUserNotificationDeliveries(long userId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteUserNotificationDeliveries(userId);
+	}
+
+	public static com.liferay.portal.model.UserNotificationDelivery fetchUserNotificationDelivery(
+		long userId, long classNameId, int type)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .fetchUserNotificationDelivery(userId, classNameId, type);
+	}
+
+	public static com.liferay.portal.model.UserNotificationDelivery getUserNotificationDelivery(
+		long userId, long classNameId, int type, boolean email, boolean sms,
+		boolean website)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getUserNotificationDelivery(userId, classNameId, type,
+			email, sms, website);
+	}
+
+	public static com.liferay.portal.model.UserNotificationDelivery updateUserNotificationDelivery(
+		long userId, long classNameId, int type, boolean email, boolean sms,
+		boolean website)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateUserNotificationDelivery(userId, classNameId, type,
+			email, sms, website);
+	}
+
 	public static UserNotificationDeliveryLocalService getService() {
 		if (_service == null) {
 			_service = (UserNotificationDeliveryLocalService)PortalBeanLocatorUtil.locate(UserNotificationDeliveryLocalService.class.getName());

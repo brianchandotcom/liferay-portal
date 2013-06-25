@@ -280,6 +280,50 @@ public class UserNotificationDeliveryLocalServiceWrapper
 		_userNotificationDeliveryLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
+	@Override
+	public com.liferay.portal.model.UserNotificationDelivery addUserNotificationDelivery(
+		long userId, long classNameId, int type, boolean email, boolean sms,
+		boolean website)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userNotificationDeliveryLocalService.addUserNotificationDelivery(userId,
+			classNameId, type, email, sms, website);
+	}
+
+	@Override
+	public void deleteUserNotificationDeliveries(long userId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_userNotificationDeliveryLocalService.deleteUserNotificationDeliveries(userId);
+	}
+
+	@Override
+	public com.liferay.portal.model.UserNotificationDelivery fetchUserNotificationDelivery(
+		long userId, long classNameId, int type)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _userNotificationDeliveryLocalService.fetchUserNotificationDelivery(userId,
+			classNameId, type);
+	}
+
+	@Override
+	public com.liferay.portal.model.UserNotificationDelivery getUserNotificationDelivery(
+		long userId, long classNameId, int type, boolean email, boolean sms,
+		boolean website)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userNotificationDeliveryLocalService.getUserNotificationDelivery(userId,
+			classNameId, type, email, sms, website);
+	}
+
+	@Override
+	public com.liferay.portal.model.UserNotificationDelivery updateUserNotificationDelivery(
+		long userId, long classNameId, int type, boolean email, boolean sms,
+		boolean website)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userNotificationDeliveryLocalService.updateUserNotificationDelivery(userId,
+			classNameId, type, email, sms, website);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

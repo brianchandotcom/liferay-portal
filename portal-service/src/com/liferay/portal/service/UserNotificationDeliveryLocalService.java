@@ -240,4 +240,31 @@ public interface UserNotificationDeliveryLocalService extends BaseLocalService,
 	* @param beanIdentifier the Spring bean ID for this bean
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
+
+	public com.liferay.portal.model.UserNotificationDelivery addUserNotificationDelivery(
+		long userId, long classNameId, int type, boolean email, boolean sms,
+		boolean website)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void deleteUserNotificationDeliveries(long userId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.UserNotificationDelivery fetchUserNotificationDelivery(
+		long userId, long classNameId, int type)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.UserNotificationDelivery getUserNotificationDelivery(
+		long userId, long classNameId, int type, boolean email, boolean sms,
+		boolean website)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.portal.model.UserNotificationDelivery updateUserNotificationDelivery(
+		long userId, long classNameId, int type, boolean email, boolean sms,
+		boolean website)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 }

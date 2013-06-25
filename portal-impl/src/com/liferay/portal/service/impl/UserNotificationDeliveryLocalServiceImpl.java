@@ -14,11 +14,103 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.User;
+import com.liferay.portal.model.UserNotificationDelivery;
 import com.liferay.portal.service.base.UserNotificationDeliveryLocalServiceBaseImpl;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Jonathan Lee
  */
 public class UserNotificationDeliveryLocalServiceImpl
 	extends UserNotificationDeliveryLocalServiceBaseImpl {
+
+	public UserNotificationDelivery addUserNotificationDelivery(
+			long userId, long classNameId, int type)
+		throws PortalException, SystemException {
+
+		return addUserNotificationDelivery(
+			userId, classNameId, type, false, false, false);
+	}
+
+	public UserNotificationDelivery addUserNotificationDelivery(
+			long userId, long classNameId, int type, boolean email, boolean sms,
+			boolean website)
+		throws PortalException, SystemException {
+
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		long userNotificationDeliveryId = counterLocalService.increment();
+
+		UserNotificationDelivery userNotificationDelivery =
+			userNotificationDeliveryPersistence.create(
+				userNotificationDeliveryId);
+
+		userNotificationDelivery.setCompanyId(user.getCompanyId());
+		userNotificationDelivery.setUserId(user.getUserId());
+		userNotificationDelivery.setClassNameId(classNameId);
+		userNotificationDelivery.setType(type);
+		userNotificationDelivery.setEmail(email);
+		userNotificationDelivery.setSms(sms);
+		userNotificationDelivery.setWebsite(website);
+
+		return userNotificationDeliveryPersistence.update(
+			userNotificationDelivery);
+	}
+
+	public void deleteUserNotificationDeliveries(long userId)
+		throws SystemException {
+
+		userNotificationDeliveryPersistence.removeByUserId(userId);
+	}
+
+	public UserNotificationDelivery fetchUserNotificationDelivery(
+			long userId, long classNameId, int type)
+		throws SystemException {
+
+		return userNotificationDeliveryPersistence.fetchByU_C_T(
+			userId, classNameId, type);
+	}
+
+	public UserNotificationDelivery getUserNotificationDelivery(
+			long userId, long classNameId, int type, boolean email, boolean sms,
+			boolean website)
+		throws PortalException, SystemException {
+
+		UserNotificationDelivery userNotificationDelivery =
+			fetchUserNotificationDelivery(userId, classNameId, type);
+
+		if (userNotificationDelivery == null) {
+			userNotificationDelivery =
+				userNotificationDeliveryLocalService.
+					addUserNotificationDelivery(
+						userId, classNameId, type, email, sms, website);
+		}
+
+		return userNotificationDelivery;
+	}
+
+	public UserNotificationDelivery updateUserNotificationDelivery(
+			long userId, long classNameId, int type, boolean email, boolean sms,
+			boolean website)
+		throws PortalException, SystemException {
+
+		UserNotificationDelivery userNotificationDelivery =
+			userNotificationDeliveryPersistence.fetchByU_C_T(
+				userId, classNameId, type);
+
+		if (userNotificationDelivery == null) {
+			return addUserNotificationDelivery(
+				userId, classNameId, type, email, sms, website);
+		}
+
+		userNotificationDelivery.setEmail(email);
+		userNotificationDelivery.setSms(sms);
+		userNotificationDelivery.setWebsite(website);
+
+		return userNotificationDeliveryPersistence.update(
+			userNotificationDelivery);
+	}
+
 }

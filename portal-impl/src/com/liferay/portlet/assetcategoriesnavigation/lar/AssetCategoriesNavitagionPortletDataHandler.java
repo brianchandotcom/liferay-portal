@@ -23,10 +23,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
-import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 
 import java.util.Enumeration;
+
+import javax.portlet.PortletPreferences;
 
 /**
  * @author Julio Camarero
@@ -39,53 +40,47 @@ public class AssetCategoriesNavitagionPortletDataHandler
 		setPublishToLiveByDefault(true);
 	}
 
-	protected String updateExportAssetCategoriesNavigationPortletPreferences(
-			String xml, long plid)
+	protected PortletPreferences updateExportAssetCategoriesNavigationPortletPreferences(
+			PortletPreferences portletPreferences, long plid)
 		throws Exception {
 
-		javax.portlet.PortletPreferences jxPreferences =
-			PortletPreferencesFactoryUtil.fromDefaultXML(xml);
-
-		Enumeration<String> enu = jxPreferences.getNames();
+		Enumeration<String> enu = portletPreferences.getNames();
 
 		while (enu.hasMoreElements()) {
 			String name = enu.nextElement();
 
 			if (name.equals("assetVocabularyIds")) {
 				ExportImportHelperUtil.updateExportPreferencesClassPKs(
-					jxPreferences, name, AssetVocabulary.class.getName());
+					portletPreferences, name, AssetVocabulary.class.getName());
 			}
 		}
 
-		return PortletPreferencesFactoryUtil.toXML(jxPreferences);
+		return portletPreferences;
 	}
 
-	protected String updateImportAssetCategoriesNavigationPortletPreferences(
+	protected PortletPreferences updateImportAssetCategoriesNavigationPortletPreferences(
 			PortletDataContext portletDataContext, long companyId, long ownerId,
-			int ownerType, long plid, String portletId, String xml)
+			int ownerType, long plid, String portletId,
+			PortletPreferences portletPreferences)
 		throws Exception {
 
 		Company company = CompanyLocalServiceUtil.getCompanyById(companyId);
 
 		Group companyGroup = company.getGroup();
 
-		javax.portlet.PortletPreferences jxPreferences =
-			PortletPreferencesFactoryUtil.fromXML(
-				companyId, ownerId, ownerType, plid, portletId, xml);
-
-		Enumeration<String> enu = jxPreferences.getNames();
+		Enumeration<String> enu = portletPreferences.getNames();
 
 		while (enu.hasMoreElements()) {
 			String name = enu.nextElement();
 
 			if (name.equals("assetVocabularyIds")) {
 				ExportImportHelperUtil.updateImportPreferencesClassPKs(
-					portletDataContext, jxPreferences, name,
+					portletDataContext, portletPreferences, name,
 					AssetVocabulary.class, companyGroup.getGroupId());
 			}
 		}
 
-		return PortletPreferencesFactoryUtil.toXML(jxPreferences);
+		return portletPreferences;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

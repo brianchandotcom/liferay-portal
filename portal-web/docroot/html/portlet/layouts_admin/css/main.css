@@ -327,9 +327,9 @@
 		}
 	}
 
-	.file-selector {
+	input.file-selector {
 		display: block;
-		margin: 0.5em 0 40px !important;
+		margin: 0.5em 0 40px;
 	}
 
 	.import-file-details {

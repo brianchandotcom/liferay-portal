@@ -1,40 +1,28 @@
 <definition>
-	<command name="assertTextEquals">
-		<case locator-key1="SUCCESS_MESSAGE">
-			<execute function="AssertTextEquals#assertText" value1="Your request completed successfully." />
-		</case>
-	</command>
-
-	<command name="click">
-		<case locator-key1="ADD">
-			<execute function="Click#pauseTextClickAt" value1="Add" />
-		</case>
+	<command name="assertClick">
 		<case locator-key1="ADD_MENULIST_ORGANIZATION_ROLE">
-			<execute function="Click#textClickAtAndWait" value1="Organization Role" />
+			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 		<case locator-key1="ADD_MENULIST_REGULAR_ROLE">
-			<execute function="Click#textClickAtAndWait" value1="Regular Role" />
+			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 		<case locator-key1="ADD_MENULIST_SITE_ROLE">
-			<execute function="Click#textClickAtAndWait" value1="Site Role" />
+			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 		<case locator-key1="ROLE_MENULIST_ASSIGN_MEMBERS">
-			<execute function="Click#textClickAtAndWait" value1="Assign Members" />
+			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 		<case locator-key1="ROLE_MENULIST_DEFINE_PERMISSIONS">
-			<execute function="Click#textClickAtAndWait" value1="Define Permissions" />
+			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 		<case locator-key1="ROLE_MENULIST_DELETE">
-			<execute function="Click#textClickAtAndWait" value1="Delete" />
+			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 		<case locator-key1="ROLE_MENULIST_EDIT">
-			<execute function="Click#textClickAtAndWait" value1="Edit" />
-		</case>
-		<case comparator="startsWith" locator-key1="ROLE_TABLE_ACTIONS_">
-			<execute function="Click#pauseTextClickAt" value1="Actions" />
+			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 		<case locator-key1="SEARCH_BUTTON">
-			<execute function="Click#valueClickAtAndWait" value1="Search" />
+			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 	</command>
 

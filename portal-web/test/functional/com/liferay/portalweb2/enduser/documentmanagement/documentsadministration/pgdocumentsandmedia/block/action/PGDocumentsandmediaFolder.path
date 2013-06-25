@@ -41,7 +41,7 @@
 </tr>
 <tr>
 	<td>TOOLBAR_SELECT_ALL</td>
-	<td>//div[@class='lfr-header-row-content']/div/input[2]</td>
+	<td>//input[@id='_20_allRowIdsCheckbox']</td>
 	<td>Select All</td>
 </tr>
 <tr>

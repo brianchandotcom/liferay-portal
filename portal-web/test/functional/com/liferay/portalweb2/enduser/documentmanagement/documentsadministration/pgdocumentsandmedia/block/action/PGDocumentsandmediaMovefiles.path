@@ -35,9 +35,9 @@
 </tr>
 <!--SELECT_POP_UP-->
 <tr>
-	<td>SELECT_POP_UP</td>
-	<td>title=Documents and Media</td>
-	<td>Select Pop Up</td>
+	<td>SELECT_POP_UP_IFRAME</td>
+	<td>//iframe[@id='_20_selectFolder_iframe_']</td>
+	<td></td>
 </tr>
 <tr>
 	<td>SELECT_POP_UP_ADD_FOLDER</td>

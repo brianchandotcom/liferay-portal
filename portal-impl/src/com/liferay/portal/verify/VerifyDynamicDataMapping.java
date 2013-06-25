@@ -58,7 +58,6 @@ import java.io.File;
 import java.io.Serializable;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -286,11 +285,7 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 
 		Fields fields = StorageEngineUtil.getFields(storageId);
 
-		Iterator<Field> itr = fields.iterator();
-
-		while (itr.hasNext()) {
-			Field field = itr.next();
-
+		for (Field field : fields) {
 			String dataType = field.getDataType();
 
 			if (!dataType.equals("file-upload") || (field.getValue() == null)) {

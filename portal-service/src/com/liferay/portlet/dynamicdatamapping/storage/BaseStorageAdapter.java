@@ -28,7 +28,6 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStorageLinkLocalService
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.query.Condition;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -304,11 +303,7 @@ public abstract class BaseStorageAdapter implements StorageAdapter {
 		DDMStructure ddmStructure =
 			DDMStructureLocalServiceUtil.getDDMStructure(ddmStructureId);
 
-		Iterator<Field> itr = fields.iterator();
-
-		while (itr.hasNext()) {
-			Field field = itr.next();
-
+		for (Field field : fields) {
 			if (!ddmStructure.hasField(field.getName())) {
 				throw new StorageFieldNameException();
 			}

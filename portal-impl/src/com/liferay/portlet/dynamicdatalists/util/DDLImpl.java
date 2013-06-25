@@ -63,7 +63,6 @@ import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -112,11 +111,7 @@ public class DDLImpl implements DDL {
 		Fields fields = StorageEngineUtil.getFields(
 			recordVersion.getDDMStorageId());
 
-		Iterator<Field> itr = fields.iterator();
-
-		while (itr.hasNext()) {
-			Field field = itr.next();
-
+		for (Field field : fields) {
 			String fieldName = field.getName();
 			String fieldType = field.getType();
 			Object fieldValue = field.getValue();

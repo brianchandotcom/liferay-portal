@@ -58,7 +58,6 @@ import com.liferay.portlet.journal.util.JournalUtil;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -451,11 +450,7 @@ public class ActionUtil {
 			Map<String, byte[]> images, Fields fields, Locale locale)
 		throws Exception {
 
-		Iterator<Field> iterator = fields.iterator();
-
-		while (iterator.hasNext()) {
-			Field field = iterator.next();
-
+		for (Field field : fields) {
 			String dataType = field.getDataType();
 			String name = field.getName();
 

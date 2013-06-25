@@ -1,7 +1,7 @@
 <definition>
-	<command name="click">
+	<command name="assertClick">
 		<case comparator="startsWith" locator1="//ul[@class='nav control-panel-bar-secondary nav-pills']//a[contains">
-			<execute function="Click#textClickAtAndWait" />
+			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 	</command>
 </definition>

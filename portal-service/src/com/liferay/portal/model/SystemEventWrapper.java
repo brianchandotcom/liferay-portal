@@ -539,6 +539,16 @@ public class SystemEventWrapper implements SystemEvent,
 		_systemEvent.persist();
 	}
 
+	@Override
+	public java.lang.String getReferrerClassName() {
+		return _systemEvent.getReferrerClassName();
+	}
+
+	@Override
+	public void setReferrerClassName(java.lang.String referrerClassName) {
+		_systemEvent.setReferrerClassName(referrerClassName);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */

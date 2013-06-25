@@ -4201,7 +4201,9 @@
 	</entity>
 	<entity class="com.liferay.portal.model.impl.SystemEventImpl" name="SystemEvent">
 		<table name="SystemEvent" />
-		<attributes />
+		<attributes>
+			<transient name="referrerClassName" />
+		</attributes>
 	</entity>
 	<entity class="com.liferay.portal.model.impl.TeamImpl" name="Team">
 		<table name="Team" />

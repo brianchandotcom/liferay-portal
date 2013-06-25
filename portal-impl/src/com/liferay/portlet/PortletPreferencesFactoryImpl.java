@@ -416,11 +416,9 @@ public class PortletPreferencesFactoryImpl
 	public PortletPreferences getPortletSetup(PortletRequest portletRequest)
 		throws PortalException, SystemException {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
 		String portletId = PortalUtil.getPortletId(portletRequest);
 
-		return getPortletSetup(request, portletId);
+		return getPortletSetup(portletRequest, portletId);
 	}
 
 	@Override

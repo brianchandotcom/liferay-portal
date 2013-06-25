@@ -984,6 +984,16 @@
 		<field name="description" type="String" />
 		<field name="externalUserId" type="String" />
 	</model>
+	<model name="com.liferay.portal.model.UserNotificationDelivery">
+		<field name="userNotificationDeliveryId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="classNameId" type="long" />
+		<field name="type" type="int" />
+		<field name="email" type="boolean" />
+		<field name="sms" type="boolean" />
+		<field name="website" type="boolean" />
+	</model>
 	<model name="com.liferay.portal.model.UserNotificationEvent">
 		<field name="uuid" type="String" />
 		<field name="userNotificationEventId" type="long" />

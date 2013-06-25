@@ -2099,6 +2099,17 @@ create table TrashVersion (
 	status INTEGER
 );
 
+create table UserNotificationDelivery (
+	userNotificationDeliveryId LONG not null primary key,
+	companyId LONG,
+	userId LONG,
+	classNameId LONG,
+	type_ INTEGER,
+	email BOOLEAN,
+	sms BOOLEAN,
+	website BOOLEAN
+);
+
 create table User_ (
 	uuid_ VARCHAR(75) null,
 	userId LONG not null primary key,

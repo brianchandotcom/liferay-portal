@@ -269,6 +269,26 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	}
 
 	@Override
+	public PortletPreferences processExportPreferences(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences, long plid,
+			Element rootElement)
+		throws Exception {
+
+		return portletPreferences;
+	}
+
+	@Override
+	public PortletPreferences processImportPreferences(
+			PortletDataContext portletDataContext, long companyId, long ownerId,
+			int ownerType, long plid, String portletId,
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		return portletPreferences;
+	}
+
+	@Override
 	public void setPortletId(String portletId) {
 		_portletId = portletId;
 	}

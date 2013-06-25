@@ -105,9 +105,7 @@ import com.liferay.portlet.assetpublisher.util.AssetPublisher;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
-import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryTypeUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureUtil;
 import com.liferay.portlet.expando.NoSuchTableException;
 import com.liferay.portlet.expando.model.ExpandoColumn;
 import com.liferay.portlet.expando.model.ExpandoTable;
@@ -1234,25 +1232,29 @@ public class PortletImporter {
 					ownerId = defaultUserId;
 				}
 
-				String rootPotletId = PortletConstants.getRootPortletId(
-					portletId);
+				javax.portlet.PortletPreferences jxPreferences =
+					PortletPreferencesFactoryUtil.fromXML(
+						companyId, ownerId, ownerType, plid, portletId, xml);
 
-				if (rootPotletId.equals(PortletKeys.ASSET_PUBLISHER)) {
-					xml = updateAssetPublisherPortletPreferences(
-						portletDataContext, companyId, ownerId, ownerType, plid,
-						portletId, xml, layout);
-				}
-				else if (rootPotletId.equals(
-							PortletKeys.TAGS_CATEGORIES_NAVIGATION)) {
+				Portlet portlet = PortletLocalServiceUtil.getPortletById(
+					companyId, portletId);
 
-					xml = updateAssetCategoriesNavigationPortletPreferences(
-						portletDataContext, companyId, ownerId, ownerType, plid,
-						portletId, xml);
+				if (portlet != null) {
+					PortletDataHandler portletDataHandler =
+						portlet.getPortletDataHandlerInstance();
+
+					if (portletDataHandler != null) {
+						jxPreferences = 
+							portletDataHandler.processImportPreferences(
+								portletDataContext, companyId, ownerId, 
+								ownerType, plid, portletId, jxPreferences);
+					}
 				}
 
 				updatePortletPreferences(
 					portletDataContext, ownerId, ownerType, plid, portletId,
-					xml, importPortletData);
+					PortletPreferencesFactoryUtil.toXML(jxPreferences),
+					importPortletData);
 			}
 		}
 

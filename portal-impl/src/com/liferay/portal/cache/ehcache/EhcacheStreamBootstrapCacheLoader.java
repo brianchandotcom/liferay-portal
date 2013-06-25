@@ -46,9 +46,9 @@ public class EhcacheStreamBootstrapCacheLoader implements BootstrapCacheLoader {
 			_started = true;
 		}
 
-		for (Ehcache ehcache : _deferredEhcache) {
+		for (Ehcache ehcache : _deferredEhcaches) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Loading deferred cache: " + ehcache.getName());
+				_log.debug("Loading deferred cache " + ehcache.getName());
 			}
 
 			try {
@@ -63,7 +63,7 @@ public class EhcacheStreamBootstrapCacheLoader implements BootstrapCacheLoader {
 	public EhcacheStreamBootstrapCacheLoader(Properties properties) {
 		if (properties != null) {
 			_bootstrapAsynchronously = GetterUtil.getBoolean(
-				properties.getProperty(_BOOTSTRAP_ASYNCHRONOUSLY));
+				properties.getProperty("bootstrapAsynchronously"));
 		}
 	}
 
@@ -75,7 +75,7 @@ public class EhcacheStreamBootstrapCacheLoader implements BootstrapCacheLoader {
 	public void doLoad(Ehcache ehcache) {
 		synchronized (EhcacheStreamBootstrapCacheLoader.class) {
 			if (!_started) {
-				_deferredEhcache.add(ehcache);
+				_deferredEhcaches.add(ehcache);
 
 				return;
 			}
@@ -115,13 +115,10 @@ public class EhcacheStreamBootstrapCacheLoader implements BootstrapCacheLoader {
 		}
 	}
 
-	private static final String _BOOTSTRAP_ASYNCHRONOUSLY =
-		"bootstrapAsynchronously";
-
 	private static Log _log = LogFactoryUtil.getLog(
 		EhcacheStreamBootstrapCacheLoader.class);
 
-	private static List<Ehcache> _deferredEhcache = new ArrayList<Ehcache>();
+	private static List<Ehcache> _deferredEhcaches = new ArrayList<Ehcache>();
 	private static ThreadLocal<Boolean> _skipBootstrapThreadLocal =
 		new InitialThreadLocal<Boolean>(
 			EhcacheStreamBootstrapCacheLoader.class +
@@ -156,8 +153,7 @@ public class EhcacheStreamBootstrapCacheLoader implements BootstrapCacheLoader {
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Error asynchronously performing streamBootstrap.", e);
+					_log.warn("Unable to asynchronously stream bootstrap", e);
 				}
 			}
 		}

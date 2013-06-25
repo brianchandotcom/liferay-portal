@@ -168,7 +168,7 @@ public class StartupAction extends SimpleAction {
 
 		ClusterExecutorUtil.initialize();
 
-		// Cache cluster bootstrap
+		// Ehache bootstrap
 
 		EhcacheStreamBootstrapCacheLoader.start();
 

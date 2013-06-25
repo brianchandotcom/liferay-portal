@@ -121,7 +121,7 @@ public class WikiNodeStagedModelDataHandler
 			int count)
 		throws Exception {
 
-		WikiNode existingNode = WikiNodeUtil.fetchByG_N(
+		WikiNode existingNode = WikiNodeLocalServiceUtil.fetchNode(
 			portletDataContext.getScopeGroupId(), name);
 
 		if (existingNode == null) {

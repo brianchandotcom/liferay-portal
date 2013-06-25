@@ -42,6 +42,7 @@ import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryTypeUtil;
+import com.liferay.portlet.documentlibrary.service.persistence.DLFolderUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -372,6 +373,24 @@ public class FolderStagedModelDataHandler
 				dlFolder, fileEntryTypeIds, defaultFileEntryTypeId,
 				serviceContext);
 		}
+	}
+
+	@Override
+	protected boolean validateMissingReference(
+		String uuid, long companyId, long groupId) {
+
+		try {
+			DLFolder dlFolder = DLFolderUtil.fetchByUUID_G(uuid, groupId);
+
+			if (dlFolder == null) {
+				return false;
+			}
+		}
+		catch (Exception e) {
+			return false;
+		}
+
+		return true;
 	}
 
 }

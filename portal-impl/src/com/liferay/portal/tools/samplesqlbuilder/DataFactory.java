@@ -1617,7 +1617,7 @@ public class DataFactory {
 			_assetPublisherRuleCounter.put(groupId, counter);
 		}
 
-		javax.portlet.PortletPreferences jxPreferences =
+		javax.portlet.PortletPreferences jxPortletPreferences =
 			new com.liferay.portlet.PortletPreferencesImpl();
 
 		for (int i = 0; i < _maxAssetPublisherFilterRuleCount; i++) {
@@ -1625,34 +1625,34 @@ public class DataFactory {
 
 			AssetCategory assetCategory = assetCategories.get(index);
 
-			jxPreferences.setValue("queryAndOperator" + i, "false");
-			jxPreferences.setValue("queryContains" + i, "false");
-			jxPreferences.setValue("queryName" + i, "assetCategories");
-			jxPreferences.setValue(
+			jxPortletPreferences.setValue("queryAndOperator" + i, "false");
+			jxPortletPreferences.setValue("queryContains" + i, "false");
+			jxPortletPreferences.setValue("queryName" + i, "assetCategories");
+			jxPortletPreferences.setValue(
 				"queryValues" + i,
 				String.valueOf(assetCategory.getCategoryId()));
 		}
 
 		return newPortletPreferences(
 			plid, portletId,
-			PortletPreferencesFactoryUtil.toXML(jxPreferences));
+			PortletPreferencesFactoryUtil.toXML(jxPortletPreferences));
 	}
 
 	public PortletPreferences newPortletPreferences(
 			long plid, String portletId, DDLRecordSet ddlRecordSet)
 		throws Exception {
 
-		javax.portlet.PortletPreferences jxPreferences =
+		javax.portlet.PortletPreferences jxPortletPreferences =
 			new com.liferay.portlet.PortletPreferencesImpl();
 
-		jxPreferences.setValue("editable", "true");
-		jxPreferences.setValue(
+		jxPortletPreferences.setValue("editable", "true");
+		jxPortletPreferences.setValue(
 			"recordSetId", String.valueOf(ddlRecordSet.getRecordSetId()));
-		jxPreferences.setValue("spreadsheet", "false");
+		jxPortletPreferences.setValue("spreadsheet", "false");
 
 		return newPortletPreferences(
 			plid, portletId,
-			PortletPreferencesFactoryUtil.toXML(jxPreferences));
+			PortletPreferencesFactoryUtil.toXML(jxPortletPreferences));
 	}
 
 	public PortletPreferences newPortletPreferences(
@@ -1660,24 +1660,24 @@ public class DataFactory {
 			JournalArticleResource journalArticleResource)
 		throws Exception {
 
-		javax.portlet.PortletPreferences jxPreferences =
+		javax.portlet.PortletPreferences jxPortletPreferences =
 			new com.liferay.portlet.PortletPreferencesImpl();
 
-		jxPreferences.setValue(
+		jxPortletPreferences.setValue(
 			"articleId", journalArticleResource.getArticleId());
-		jxPreferences.setValue("enableCommentRatings", "false");
-		jxPreferences.setValue("enableComments", "false");
-		jxPreferences.setValue("enablePrint", "false");
-		jxPreferences.setValue("enableRatings", "false");
-		jxPreferences.setValue("enableRelatedAssets", "true");
-		jxPreferences.setValue("enableViewCountIncrement", "false");
-		jxPreferences.setValue(
+		jxPortletPreferences.setValue("enableCommentRatings", "false");
+		jxPortletPreferences.setValue("enableComments", "false");
+		jxPortletPreferences.setValue("enablePrint", "false");
+		jxPortletPreferences.setValue("enableRatings", "false");
+		jxPortletPreferences.setValue("enableRelatedAssets", "true");
+		jxPortletPreferences.setValue("enableViewCountIncrement", "false");
+		jxPortletPreferences.setValue(
 			"groupId", String.valueOf(journalArticleResource.getGroupId()));
-		jxPreferences.setValue("showAvailableLocales", "false");
+		jxPortletPreferences.setValue("showAvailableLocales", "false");
 
 		return newPortletPreferences(
 			plid, portletId,
-			PortletPreferencesFactoryUtil.toXML(jxPreferences));
+			PortletPreferencesFactoryUtil.toXML(jxPortletPreferences));
 	}
 
 	public List<Layout> newPublicLayouts(long groupId) {

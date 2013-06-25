@@ -702,14 +702,14 @@ public class LayoutExporter {
 		for (Portlet portlet : layoutTypePortlet.getAllPortlets()) {
 			String portletId = portlet.getPortletId();
 
-			javax.portlet.PortletPreferences jxPreferences =
+			javax.portlet.PortletPreferences jxPortletPreferences =
 				PortletPreferencesFactoryUtil.getLayoutPortletSetup(
 					layout, portletId);
 
 			String scopeType = GetterUtil.getString(
-				jxPreferences.getValue("lfrScopeType", null));
+				jxPortletPreferences.getValue("lfrScopeType", null));
 			String scopeLayoutUuid = GetterUtil.getString(
-				jxPreferences.getValue("lfrScopeLayoutUuid", null));
+				jxPortletPreferences.getValue("lfrScopeLayoutUuid", null));
 
 			long scopeGroupId = portletDataContext.getScopeGroupId();
 

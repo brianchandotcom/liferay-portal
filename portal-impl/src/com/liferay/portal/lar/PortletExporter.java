@@ -111,7 +111,8 @@ public class PortletExporter {
 
 	public void exportPortletData(
 			PortletDataContext portletDataContext, Portlet portlet,
-			Layout layout, javax.portlet.PortletPreferences jxPreferences,
+			Layout layout,
+			javax.portlet.PortletPreferences jxPortletPreferences,
 			Element parentElement)
 		throws Exception {
 
@@ -172,7 +173,8 @@ public class PortletExporter {
 		}
 
 		long lastPublishDate = GetterUtil.getLong(
-			jxPreferences.getValue("last-publish-date", StringPool.BLANK));
+			jxPortletPreferences.getValue(
+				"last-publish-date", StringPool.BLANK));
 
 		Date startDate = portletDataContext.getStartDate();
 
@@ -190,7 +192,7 @@ public class PortletExporter {
 
 		try {
 			data = portletDataHandler.exportData(
-				portletDataContext, portletId, jxPreferences);
+				portletDataContext, portletId, jxPortletPreferences);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -220,10 +222,10 @@ public class PortletExporter {
 
 		if (endDate != null) {
 			try {
-				jxPreferences.setValue(
+				jxPortletPreferences.setValue(
 					"last-publish-date", String.valueOf(endDate.getTime()));
 
-				jxPreferences.store();
+				jxPortletPreferences.store();
 			}
 			catch (UnsupportedOperationException uoe) {
 				if (_log.isDebugEnabled()) {
@@ -393,14 +395,14 @@ public class PortletExporter {
 
 		long scopeGroupId = groupId;
 
-		javax.portlet.PortletPreferences jxPreferences =
+		javax.portlet.PortletPreferences jxPortletPreferences =
 			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
 				layout, portletId);
 
 		String scopeType = GetterUtil.getString(
-			jxPreferences.getValue("lfrScopeType", null));
+			jxPortletPreferences.getValue("lfrScopeType", null));
 		String scopeLayoutUuid = GetterUtil.getString(
-			jxPreferences.getValue("lfrScopeLayoutUuid", null));
+			jxPortletPreferences.getValue("lfrScopeLayoutUuid", null));
 
 		if (Validator.isNotNull(scopeType)) {
 			Group scopeGroup = null;
@@ -1033,7 +1035,7 @@ public class PortletExporter {
 		// Data
 
 		if (exportPortletData) {
-			javax.portlet.PortletPreferences jxPreferences =
+			javax.portlet.PortletPreferences jxPortletPreferences =
 				PortletPreferencesFactoryUtil.getStrictPortletSetup(
 					layout, portletId);
 
@@ -1052,13 +1054,13 @@ public class PortletExporter {
 					portletDataContext.putNotUniquePerLayout(dataKey);
 
 					exportPortletData(
-						portletDataContext, portlet, layout, jxPreferences,
-						portletElement);
+						portletDataContext, portlet, layout,
+						jxPortletPreferences, portletElement);
 				}
 			}
 			else {
 				exportPortletData(
-					portletDataContext, portlet, layout, jxPreferences,
+					portletDataContext, portlet, layout, jxPortletPreferences,
 					portletElement);
 			}
 		}
@@ -1197,7 +1199,7 @@ public class PortletExporter {
 			preferencesXML = PortletConstants.DEFAULT_PREFERENCES;
 		}
 
-		javax.portlet.PortletPreferences jxPreferences =
+		javax.portlet.PortletPreferences jxPortletPreferences =
 			PortletPreferencesFactoryUtil.fromDefaultXML(preferencesXML);
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
@@ -1208,15 +1210,15 @@ public class PortletExporter {
 				portlet.getPortletDataHandlerInstance();
 
 			if (portletDataHandler != null) {
-				jxPreferences =
+				jxPortletPreferences =
 					portletDataHandler.processExportPortletPreferences(
-						portletDataContext, portletId, jxPreferences,
+						portletDataContext, portletId, jxPortletPreferences,
 						parentElement);
 			}
 		}
 
 		Document document = SAXReaderUtil.read(
-			PortletPreferencesFactoryUtil.toXML(jxPreferences));
+			PortletPreferencesFactoryUtil.toXML(jxPortletPreferences));
 
 		Element rootElement = document.getRootElement();
 

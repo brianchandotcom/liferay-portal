@@ -1114,19 +1114,19 @@ public class PortletImporter {
 			plid = layout.getPlid();
 
 			if (preserveScopeLayoutId && (portletId != null)) {
-				javax.portlet.PortletPreferences jxPreferences =
+				javax.portlet.PortletPreferences jxPortletPreferences =
 					PortletPreferencesFactoryUtil.getLayoutPortletSetup(
 						layout, portletId);
 
 				portletSetupTitle = GetterUtil.getString(
-					jxPreferences.getValue(
+					jxPortletPreferences.getValue(
 						"portletSetupTitle_" + languageId,
 						PortalUtil.getPortletTitle(portletId, languageId)));
 
 				scopeType = GetterUtil.getString(
-					jxPreferences.getValue("lfrScopeType", null));
+					jxPortletPreferences.getValue("lfrScopeType", null));
 				scopeLayoutUuid = GetterUtil.getString(
-					jxPreferences.getValue("lfrScopeLayoutUuid", null));
+					jxPortletPreferences.getValue("lfrScopeLayoutUuid", null));
 
 				portletDataContext.setScopeType(scopeType);
 				portletDataContext.setScopeLayoutUuid(scopeLayoutUuid);
@@ -1223,7 +1223,7 @@ public class PortletImporter {
 					ownerId = defaultUserId;
 				}
 
-				javax.portlet.PortletPreferences jxPreferences =
+				javax.portlet.PortletPreferences jxPortletPreferences =
 					PortletPreferencesFactoryUtil.fromXML(
 						companyId, ownerId, ownerType, plid, portletId, xml);
 
@@ -1235,31 +1235,33 @@ public class PortletImporter {
 						portlet.getPortletDataHandlerInstance();
 
 					if (portletDataHandler != null) {
-						jxPreferences =
+						jxPortletPreferences =
 							portletDataHandler.processImportPortletPreferences(
-								portletDataContext, portletId, jxPreferences);
+								portletDataContext, portletId,
+								jxPortletPreferences);
 					}
 				}
 
 				updatePortletPreferences(
 					portletDataContext, ownerId, ownerType, plid, portletId,
-					PortletPreferencesFactoryUtil.toXML(jxPreferences),
+					PortletPreferencesFactoryUtil.toXML(jxPortletPreferences),
 					importPortletData);
 			}
 		}
 
 		if (preserveScopeLayoutId && (layout != null)) {
-			javax.portlet.PortletPreferences jxPreferences =
+			javax.portlet.PortletPreferences jxPortletPreferences =
 				PortletPreferencesFactoryUtil.getLayoutPortletSetup(
 					layout, portletId);
 
 			try {
-				jxPreferences.setValue(
+				jxPortletPreferences.setValue(
 					"portletSetupTitle_" + languageId, portletSetupTitle);
-				jxPreferences.setValue("lfrScopeType", scopeType);
-				jxPreferences.setValue("lfrScopeLayoutUuid", scopeLayoutUuid);
+				jxPortletPreferences.setValue("lfrScopeType", scopeType);
+				jxPortletPreferences.setValue(
+					"lfrScopeLayoutUuid", scopeLayoutUuid);
 
-				jxPreferences.store();
+				jxPortletPreferences.store();
 			}
 			finally {
 				portletDataContext.setScopeType(scopeType);
@@ -1866,12 +1868,12 @@ public class PortletImporter {
 
 			// New portlet preferences
 
-			javax.portlet.PortletPreferences jxPreferences =
+			javax.portlet.PortletPreferences jxPortletPreferences =
 				PortletPreferencesFactoryUtil.fromXML(
 					portletDataContext.getCompanyId(), ownerId, ownerType, plid,
 					portletId, xml);
 
-			Enumeration<String> enu = jxPreferences.getNames();
+			Enumeration<String> enu = jxPortletPreferences.getNames();
 
 			while (enu.hasMoreElements()) {
 				String name = enu.nextElement();
@@ -1884,7 +1886,8 @@ public class PortletImporter {
 					(Validator.isNull(scopeLayoutUuid) &&
 					 scopeType.equals("company"))) {
 
-					String[] values = jxPreferences.getValues(name, null);
+					String[] values = jxPortletPreferences.getValues(
+						name, null);
 
 					portletPreferences.setValues(name, values);
 				}

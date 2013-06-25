@@ -612,14 +612,14 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			scopeGroupLayoutUuid = scopeGroupLayout.getUuid();
 		}
 
-		Map<Long, javax.portlet.PortletPreferences> jxPreferencesMap =
+		Map<Long, javax.portlet.PortletPreferences> jxPortletPreferencesMap =
 			PortletPreferencesFactoryUtil.getPortletSetupMap(
 				scopeGroup.getCompanyId(), groupId,
 				PortletKeys.PREFS_OWNER_ID_DEFAULT,
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, portletId, privateLayout);
 
 		for (Map.Entry<Long, javax.portlet.PortletPreferences> entry :
-				jxPreferencesMap.entrySet()) {
+				jxPortletPreferencesMap.entrySet()) {
 
 			long plid = entry.getKey();
 
@@ -649,14 +649,15 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 				continue;
 			}
 
-			javax.portlet.PortletPreferences jxPreferences = entry.getValue();
+			javax.portlet.PortletPreferences jxPortletPreferences =
+				entry.getValue();
 
 			String scopeType = GetterUtil.getString(
-				jxPreferences.getValue("lfrScopeType", null));
+				jxPortletPreferences.getValue("lfrScopeType", null));
 
 			if (scopeGroup.isLayout()) {
 				String scopeLayoutUuid = GetterUtil.getString(
-					jxPreferences.getValue("lfrScopeLayoutUuid", null));
+					jxPortletPreferences.getValue("lfrScopeLayoutUuid", null));
 
 				if (Validator.isNotNull(scopeType) &&
 					Validator.isNotNull(scopeLayoutUuid) &&

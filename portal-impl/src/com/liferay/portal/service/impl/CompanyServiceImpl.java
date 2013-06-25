@@ -69,7 +69,9 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 			boolean system, int maxUsers, boolean active)
 		throws PortalException, SystemException {
 
-		if (!getPermissionChecker().isOmniadmin()) {
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (!permissionChecker.isOmniadmin()) {
 			throw new PrincipalException();
 		}
 
@@ -81,7 +83,9 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 	public Company deleteCompany(long companyId)
 		throws PortalException, SystemException {
 
-		if (!getPermissionChecker().isOmniadmin()) {
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (!permissionChecker.isOmniadmin()) {
 			throw new PrincipalException();
 		}
 
@@ -237,7 +241,9 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 			boolean active)
 		throws PortalException, SystemException {
 
-		if (!getPermissionChecker().isOmniadmin()) {
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (!permissionChecker.isOmniadmin()) {
 			throw new PrincipalException();
 		}
 

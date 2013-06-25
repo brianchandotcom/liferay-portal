@@ -216,14 +216,14 @@
 				<!-- Clean up -->
 
 				<delete dir="${alloy.bootstrap.tmp.dir}" />
-
-				<!-- Build Font-Awesome -->
-
-				<antcall target="build-font-awesome">
-					<param name="alloy.bootstrap.deploy" value="${alloy.bootstrap.deploy}" />
-				</antcall>
 			</then>
 		</if>
+
+		<!-- Build Font-Awesome -->
+
+		<antcall target="build-font-awesome">
+			<param name="alloy.bootstrap.deploy" value="${alloy.bootstrap.deploy}" />
+		</antcall>
 	</target>
 
 	<target name="build-ckeditor">
@@ -822,6 +822,9 @@
 				<delete dir="${alloy.bootstrap.deploy}/font-awesome" />
 
 				<unzip src="third-party/${font-awesome.file}" dest="${alloy.bootstrap.deploy}" />
+
+				<delete dir="${alloy.bootstrap.deploy}/font-awesome/css" />
+				<delete dir="${alloy.bootstrap.deploy}/font-awesome/less" />
 			</then>
 		</if>
 	</target>

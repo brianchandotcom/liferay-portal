@@ -66,11 +66,11 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 	public static final String NAMESPACE = "document_library";
 
 	public DLPortletDataHandler() {
+		setDataLocalized(true);
+		setDataPortletPreferences("rootFolderId");
 		setDeletionSystemEventClassNames(
 			DLFileEntry.class.getName(), DLFileRank.class.getName(),
 			DLFileShortcut.class.getName(), DLFolder.class.getName());
-		setDataLocalized(true);
-		setDataPortletPreferences("rootFolderId");
 		setExportControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "documents", true, false,

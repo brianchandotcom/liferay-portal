@@ -58,9 +58,9 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 	public static final String NAMESPACE = "wiki";
 
 	public WikiPortletDataHandler() {
+		setDataPortletPreferences("hiddenNodes, visibleNodes");
 		setDeletionSystemEventClassNames(
 			WikiNode.class.getName(), WikiPage.class.getName());
-		setDataPortletPreferences("hiddenNodes, visibleNodes");
 		setExportControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "wiki-pages", true, false,

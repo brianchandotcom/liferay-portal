@@ -52,9 +52,9 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 	public static final String NAMESPACE = "bookmarks";
 
 	public BookmarksPortletDataHandler() {
+		setDataPortletPreferences("rootFolderId");
 		setDeletionSystemEventClassNames(
 			BookmarksEntry.class.getName(), BookmarksFolder.class.getName());
-		setDataPortletPreferences("rootFolderId");
 		setExportControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "entries", true, false, null,

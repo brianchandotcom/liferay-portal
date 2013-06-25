@@ -29,12 +29,14 @@ insert into VirtualHost (virtualHostId, companyId, layoutSetId, hostname) values
 #set ($organizationClassNameId = $counter.get())
 #set ($roleClassNameId = $counter.get())
 #set ($userClassNameId = $counter.get())
+#set ($userPersonalSiteClassNameId = $counter.get())
 
 insert into ClassName_ (classNameId, value) values ($companyClassNameId, 'com.liferay.portal.model.Company');
 insert into ClassName_ (classNameId, value) values ($groupClassNameId, 'com.liferay.portal.model.Group');
 insert into ClassName_ (classNameId, value) values ($organizationClassNameId, 'com.liferay.portal.model.Organization');
 insert into ClassName_ (classNameId, value) values ($roleClassNameId, 'com.liferay.portal.model.Role');
 insert into ClassName_ (classNameId, value) values ($userClassNameId, 'com.liferay.portal.model.User');
+insert into ClassName_ (classNameId, value) values ($userPersonalSiteClassNameId, 'com.liferay.portal.model.UserPersonalSite');
 
 ##
 ## Shard
@@ -60,12 +62,24 @@ insert into Role_ (roleId, companyId, classNameId, classPK, name, description, t
 ## Groups
 ##
 
+#set ($controlPanelGroupId = $counter.get())
 #set ($guestGroupId = $counter.get())
+#set ($userPersonalSiteGroupId = $counter.get())
+
+insert into Group_ (groupId, companyId, creatorUserId, classNameId, classPK, parentGroupId, liveGroupId, name, type_, friendlyURL, site, active_) values ($controlPanelGroupId, $companyId, $defaultUserId, $groupClassNameId, $controlPanelGroupId, 0, 0, 'Control Panel', 3, '/control_panel', FALSE, TRUE);
+
+insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $controlPanelGroupId, TRUE, FALSE, 'classic', '01', 0);
+insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $controlPanelGroupId, FALSE, FALSE, 'classic', '01', 0);
 
 insert into Group_ (groupId, companyId, creatorUserId, classNameId, classPK, parentGroupId, liveGroupId, name, type_, friendlyURL, site, active_) values ($guestGroupId, $companyId, $defaultUserId, $groupClassNameId, $guestGroupId, 0, 0, 'Guest', 1, '/guest', TRUE, TRUE);
 
 insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $guestGroupId, TRUE, FALSE, 'classic', '01', 0);
 insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $guestGroupId, FALSE, FALSE, 'classic', '01', 0);
+
+insert into Group_ (groupId, companyId, creatorUserId, classNameId, classPK, parentGroupId, liveGroupId, name, type_, friendlyURL, site, active_) values ($userPersonalSiteGroupId, $companyId, $defaultUserId, $userPersonalSiteClassNameId, $defaultUserId, 0, 0, 'User Personal Site', 3, '/personal_site', FALSE, TRUE);
+
+insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $userPersonalSiteGroupId, TRUE, FALSE, 'classic', '01', 0);
+insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $userPersonalSiteGroupId, FALSE, FALSE, 'classic', '01', 0);
 
 ##
 ## Organizations

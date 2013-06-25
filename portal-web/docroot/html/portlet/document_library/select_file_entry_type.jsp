@@ -66,7 +66,7 @@
 			<liferay-ui:search-container-column-text
 				href="<%= rowHREF %>"
 				name="name"
-				value="<%= HtmlUtil.escape(fileEntryType.getName(locale)) %>"
+				value="<%= LanguageUtil.get(pageContext, HtmlUtil.escape(fileEntryType.getName(locale))) %>"
 			/>
 
 		</liferay-ui:search-container-row>

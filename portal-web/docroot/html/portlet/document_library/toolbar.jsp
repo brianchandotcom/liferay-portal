@@ -65,7 +65,7 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 			<aui:nav-item href="<%= taglibURL %>" iconClass="icon-trash" id="moveToTrashAction" label="move-to-the-recycle-bin" />
 
 			<%
-			taglibURL = "javascript:if (confirm('" + UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-the-selected-entries") + "')){Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.DELETE + "'});}";
+			taglibURL = "javascript:" + renderResponse.getNamespace() + "deleteEntries();";
 			%>
 
 			<aui:nav-item href="<%= taglibURL %>" iconClass="icon-remove" id="deleteAction" label="delete" />
@@ -128,6 +128,17 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 </aui:nav-bar>
 
 <aui:script>
+	function <portlet:namespace />deleteEntries() {
+		if (confirm('<%=  UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
+			Liferay.fire(
+				'<%= renderResponse.getNamespace() %>editEntry',
+				{
+					action: '<%= Constants.DELETE %>'
+				}
+			);
+		}
+	}
+
 	function <portlet:namespace />openFileEntryTypeView() {
 		Liferay.Util.openWindow(
 			{

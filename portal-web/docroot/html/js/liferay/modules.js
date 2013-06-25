@@ -187,7 +187,8 @@ window.YUI_config = {
 						'aui-toggler-delegate',
 						'liferay-dockbar',
 						'liferay-dockbar-add-base',
-						'liferay-dockbar-add-page-search'
+						'liferay-dockbar-add-page-search',
+						'liferay-toggler-key-filter'
 					]
 				},
 				'liferay-dockbar-add-page-search': {
@@ -312,6 +313,12 @@ window.YUI_config = {
 						'aui-toolbar'
 					]
 				},
+				'liferay-toggler-key-filter': {
+					path: 'toggler_key_filter.js',
+					requires: [
+						'aui-event-base'
+					]
+				},				
 				'liferay-layout': {
 					path: 'layout.js'
 				},

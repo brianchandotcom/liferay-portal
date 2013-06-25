@@ -111,6 +111,9 @@ public class GroupFinderImpl
 	public static final String JOIN_BY_LAYOUT_SET =
 		GroupFinder.class.getName() + ".joinByLayoutSet";
 
+	public static final String JOIN_BY_MANUAL_MEMBERSHIP =
+		GroupFinder.class.getName() + ".joinByManualMembership";
+
 	public static final String JOIN_BY_PAGE_COUNT =
 		GroupFinder.class.getName() + ".joinByPageCount";
 
@@ -1499,7 +1502,7 @@ public class GroupFinderImpl
 			String key = entry.getKey();
 
 			if (key.equals("active") || key.equals("layoutSet") ||
-				key.equals("site")) {
+				key.equals("site") || key.equals("manualMembership")) {
 
 				Boolean value = (Boolean)entry.getValue();
 
@@ -1790,6 +1793,9 @@ public class GroupFinderImpl
 			_getCondition(CustomSQLUtil.get(JOIN_BY_GROUPS_USER_GROUPS)));
 		whereMap.put(
 			"layoutSet", _getCondition(CustomSQLUtil.get(JOIN_BY_LAYOUT_SET)));
+		whereMap.put(
+			"manualMembership",
+			_getCondition(CustomSQLUtil.get(JOIN_BY_MANUAL_MEMBERSHIP)));
 		whereMap.put(
 			"pageCount", _getCondition(CustomSQLUtil.get(JOIN_BY_PAGE_COUNT)));
 		whereMap.put(

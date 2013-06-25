@@ -1,0 +1,58 @@
+<definition>
+	<command name="configureSetupPG">
+		<execute macro="Page#pgGoto">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute action="BasePortlet#click" locator-key1="OPTIONS" />
+		<execute action="BasePortlet#click" locator-key1="OPTIONS_MENULIST_CONFIGURATION" />
+
+		<execute action="PGWebcontentlistConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+
+		<if>
+			<isset var="configureSite" />
+			<then>
+				<execute action="PGWebcontentlistConfiguration#select" locator-key1="FILTER_SITE_SELECT" value1="${configureSite}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="configureWebContentType" />
+			<then>
+				<execute action="PGWebcontentlistConfiguration#select" locator-key1="FILTER_WEB_CONTENT_TYPE_SELECT" value1="${configureWebContentType}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="configureDisplayURL" />
+			<then>
+				<execute action="PGWebcontentlistConfiguration#select" locator-key1="DISPLAY_SETTINGS_DISPLAY_URL_SELECT" value1="${configureDisplayURL}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="configureDisplayPerPage" />
+			<then>
+		<execute action="PGWebcontentlistConfiguration#select" locator-key1="DISPLAY_SETTINGS_DISPLAY_PER_PAGE_SELECT" value1="${configureDisplayPerPage}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="configureOrderByColumn" />
+			<then>
+		<execute action="PGWebcontentlistConfiguration#select" locator-key1="DISPLAY_SETTINGS_ORDER_BY_COLUMN_SELECT" value1="${configureOrderByColumn}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="configureOrderByType" />
+			<then>
+		<execute action="PGWebcontentlistConfiguration#select" locator-key1="DISPLAY_SETTINGS_ORDER_BY_TYPE_SELECT" value1="${configureOrderByType}" />
+			</then>
+		</if>
+
+		<execute action="PGWebcontentlistConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGWebcontentlistConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="PGWebcontentlistConfiguration#selectFrameTop" />
+	</command>
+</definition>

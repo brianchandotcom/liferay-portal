@@ -97,4 +97,24 @@
 
 		<execute macro="RecycleBin#emptyRecycleBinCP" />
 	</command>
+
+	<command name="viewPGViaWCL">
+		<execute macro="Page#pgGoto">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<var name="key_webContentTitle" value="${webContentTitle}" />
+
+		<execute action="PGWebcontentlist#assertTextEquals" locator-key1="WEB_CONTENT_TABLE_TITLE" value1="${webContentTitle}" />
+		<execute action="PGWebcontentlist#assertClick" locator-key1="WEB_CONTENT_TABLE_TITLE" value1="${webContentTitle}"/>
+
+		<if>
+			<equals arg1="${configureDisplayURL}" arg2="Normal" />
+			<then>
+				<execute action="PGWebcontentlistWebcontent#assertTextEquals" locator-key1="WEB_CONTENT_TITLE" value1="${webContentTitle}" />
+			</then>
+		</if>
+
+		<execute action="PGWebcontentlistWebcontent#assertTextEquals" locator-key1="WEB_CONTENT_CONTENT" value1="${webContentContent}" />
+	</command>
 </definition>

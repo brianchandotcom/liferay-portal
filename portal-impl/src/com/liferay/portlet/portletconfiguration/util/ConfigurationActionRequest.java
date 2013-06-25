@@ -18,12 +18,14 @@ import javax.portlet.ActionRequest;
 import javax.portlet.PortletPreferences;
 import javax.portlet.filter.ActionRequestWrapper;
 
-public class ConfigurationActionRequest extends ActionRequestWrapper
-	implements ConfigurationRequest {
+/**
+ * @author Raymond Augé
+ */
+public class ConfigurationActionRequest
+	extends ActionRequestWrapper implements ConfigurationPortletRequest {
 
 	public ConfigurationActionRequest(
-		ActionRequest actionRequest,
-		PortletPreferences portletPreferences) {
+		ActionRequest actionRequest, PortletPreferences portletPreferences) {
 
 		super(actionRequest);
 

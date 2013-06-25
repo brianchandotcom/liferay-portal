@@ -18,12 +18,14 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 import javax.portlet.filter.RenderRequestWrapper;
 
-public class ConfigurationRenderRequest extends RenderRequestWrapper
-	implements ConfigurationRequest {
+/**
+ * @author Raymond Augé
+ */
+public class ConfigurationRenderRequest
+	extends RenderRequestWrapper implements ConfigurationPortletRequest {
 
 	public ConfigurationRenderRequest(
-		RenderRequest renderRequest,
-		PortletPreferences portletPreferences) {
+		RenderRequest renderRequest, PortletPreferences portletPreferences) {
 
 		super(renderRequest);
 

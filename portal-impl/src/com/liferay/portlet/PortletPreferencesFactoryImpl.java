@@ -46,7 +46,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portal.xml.StAXReaderUtil;
-import com.liferay.portlet.portletconfiguration.util.ConfigurationRequest;
+import com.liferay.portlet.portletconfiguration.util.ConfigurationPortletRequest;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -426,7 +426,7 @@ public class PortletPreferencesFactoryImpl
 			PortletRequest portletRequest, String portletId)
 		throws PortalException, SystemException {
 
-		if (portletRequest instanceof ConfigurationRequest) {
+		if (portletRequest instanceof ConfigurationPortletRequest) {
 			PortletRequestWrapper portletRequestWrapper =
 				(PortletRequestWrapper)portletRequest;
 

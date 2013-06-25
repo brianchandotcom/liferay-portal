@@ -15,9 +15,7 @@
 package com.liferay.portlet.portletconfiguration.util;
 
 /**
- * A marker interface.
- *
  * @author Raymond Augé
  */
-public interface ConfigurationRequest {
+public interface ConfigurationPortletRequest {
 }

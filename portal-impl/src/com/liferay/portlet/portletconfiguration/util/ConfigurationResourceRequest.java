@@ -18,8 +18,11 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.ResourceRequest;
 import javax.portlet.filter.ResourceRequestWrapper;
 
-public class ConfigurationResourceRequest extends ResourceRequestWrapper
-	implements ConfigurationRequest {
+/**
+ * @author Raymond Augé
+ */
+public class ConfigurationResourceRequest
+	extends ResourceRequestWrapper implements ConfigurationPortletRequest {
 
 	public ConfigurationResourceRequest(
 		ResourceRequest resourceRequest,

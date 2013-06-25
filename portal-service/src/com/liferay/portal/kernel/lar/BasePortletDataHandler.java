@@ -272,13 +272,42 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	public PortletPreferences processExportPortletPreferences(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences, Element rootElement)
+		throws PortletDataException {
+
+		try{
+			return doProcessExportPortletPreferences(
+				portletDataContext, portletId, portletPreferences,
+				rootElement);
+		}
+		catch (Exception e) {
+			throw new PortletDataException(e);
+		}
+	}
+
+	@Override
+	public PortletPreferences processImportPortletPreferences(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences)
+		throws PortletDataException {
+
+		try{
+			return doProcessImportPortletPreferences(
+				portletDataContext, portletId, portletPreferences);
+		}
+		catch (Exception e) {
+			throw new PortletDataException(e);
+		}
+	}
+
+	protected PortletPreferences doProcessExportPortletPreferences(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences, Element rootElement)
 		throws Exception {
 
 		return portletPreferences;
 	}
 
-	@Override
-	public PortletPreferences processImportPortletPreferences(
+	protected PortletPreferences doProcessImportPortletPreferences(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
 		throws Exception {

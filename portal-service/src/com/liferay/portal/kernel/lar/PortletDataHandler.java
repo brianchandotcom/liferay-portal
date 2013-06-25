@@ -178,12 +178,12 @@ public interface PortletDataHandler {
 	public PortletPreferences processExportPortletPreferences(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences, Element rootElement)
-		throws Exception;
+		throws PortletDataException;
 
 	public PortletPreferences processImportPortletPreferences(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
-		throws Exception;
+		throws PortletDataException;
 
 	public void setPortletId(String portletId);
 

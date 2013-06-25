@@ -405,9 +405,11 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 			roles.addAll(userGroupRoles);
 
-			if (parentGroupId >0) {
-				roles.addAll(RoleLocalServiceUtil.getUserGroupRoles(
-					userId, parentGroupId));
+			if (parentGroupId > 0) {
+				userGroupRoles = RoleLocalServiceUtil.getUserGroupRoles(
+					userId, parentGroupId);
+
+				roles.addAll(userGroupRoles);
 			}
 
 			List<Role> userGroupGroupRoles =
@@ -415,9 +417,12 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 			roles.addAll(userGroupGroupRoles);
 
-			if (parentGroupId >0) {
-				roles.addAll(RoleLocalServiceUtil.getUserGroupGroupRoles(
-					userId, parentGroupId));
+			if (parentGroupId > 0) {
+				userGroupGroupRoles =
+					RoleLocalServiceUtil.getUserGroupGroupRoles(
+						userId, parentGroupId);
+
+				roles.addAll(userGroupGroupRoles);
 			}
 
 			if (group != null) {

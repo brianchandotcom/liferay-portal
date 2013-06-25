@@ -30,6 +30,7 @@ import java.io.File;
 import java.util.Calendar;
 import java.util.Map;
 
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
 /**
@@ -179,6 +180,24 @@ public class ExportImportHelperUtil {
 
 		return getExportImportHelper().replaceImportLinksToLayouts(
 			portletDataContext, content, importReferencedContent);
+	}
+
+	public static void updateExportPreferencesClassPKs(
+			PortletPreferences portletPreferences, String key, String className)
+		throws Exception {
+
+		getExportImportHelper().updateExportPreferencesClassPKs(
+			portletPreferences, key, className);
+	}
+
+	public static void updateImportPreferencesClassPKs(
+			PortletDataContext portletDataContext,
+			PortletPreferences portletPreferences, String key, Class<?> clazz,
+			long companyGroupId)
+		throws Exception {
+
+		getExportImportHelper().updateImportPreferencesClassPKs(
+			portletDataContext, portletPreferences, key, clazz, companyGroupId);
 	}
 
 	public static MissingReferences validateMissingReferences(

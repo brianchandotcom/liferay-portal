@@ -29,6 +29,7 @@ import java.io.File;
 import java.util.Calendar;
 import java.util.Map;
 
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
 /**
@@ -109,6 +110,16 @@ public interface ExportImportHelper {
 	public String replaceImportLinksToLayouts(
 			PortletDataContext portletDataContext, String content,
 			boolean importReferencedContent)
+		throws Exception;
+
+	public void updateExportPreferencesClassPKs(
+			PortletPreferences portletPreferences, String key, String className)
+		throws Exception;
+
+	public void updateImportPreferencesClassPKs(
+			PortletDataContext portletDataContext,
+			PortletPreferences portletPreferences, String key, Class<?> clazz,
+			long companyGroupId)
 		throws Exception;
 
 	public MissingReferences validateMissingReferences(

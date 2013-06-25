@@ -1561,7 +1561,7 @@ public class PortletExporter {
 			String name = enu.nextElement();
 
 			if (name.equals("assetVocabularyIds")) {
-				updatePreferencesClassPKs(
+				ExportImportHelperUtil.updateExportPreferencesClassPKs(
 					jxPreferences, name, AssetVocabulary.class.getName());
 			}
 		}
@@ -1646,7 +1646,7 @@ public class PortletExporter {
 					 name.equals(
 						"classTypeIdsDLFileEntryAssetRendererFactory")) {
 
-				updatePreferencesClassPKs(
+				ExportImportHelperUtil.updateExportPreferencesClassPKs(
 					jxPreferences, name, DLFileEntryType.class.getName());
 			}
 			else if (name.equals(
@@ -1657,11 +1657,11 @@ public class PortletExporter {
 					 name.equals(
 						"classTypeIdsJournalArticleAssetRendererFactory")) {
 
-				updatePreferencesClassPKs(
+				ExportImportHelperUtil.updateExportPreferencesClassPKs(
 					jxPreferences, name, DDMStructure.class.getName());
 			}
 			else if (name.equals("assetVocabularyId")) {
-				updatePreferencesClassPKs(
+				ExportImportHelperUtil.updateExportPreferencesClassPKs(
 					jxPreferences, name, AssetVocabulary.class.getName());
 			}
 			else if (name.startsWith("queryName") &&
@@ -1669,7 +1669,7 @@ public class PortletExporter {
 
 				String index = name.substring(9);
 
-				updatePreferencesClassPKs(
+				ExportImportHelperUtil.updateExportPreferencesClassPKs(
 					jxPreferences, "queryValues" + index,
 					AssetCategory.class.getName());
 			}
@@ -1731,91 +1731,6 @@ public class PortletExporter {
 			else {
 				newValues[i] = oldValue;
 			}
-		}
-
-		jxPreferences.setValues(key, newValues);
-	}
-
-	protected void updatePreferencesClassPKs(
-			javax.portlet.PortletPreferences jxPreferences, String key,
-			String className)
-		throws Exception {
-
-		String[] oldValues = jxPreferences.getValues(key, null);
-
-		if (oldValues == null) {
-			return;
-		}
-
-		String[] newValues = new String[oldValues.length];
-
-		for (int i = 0; i < oldValues.length; i++) {
-			String oldValue = oldValues[i];
-
-			String newValue = oldValue;
-
-			String[] primaryKeys = StringUtil.split(oldValue);
-
-			for (String primaryKey : primaryKeys) {
-				if (!Validator.isNumber(primaryKey)) {
-					break;
-				}
-
-				long primaryKeyLong = GetterUtil.getLong(primaryKey);
-
-				String uuid = null;
-
-				if (className.equals(AssetCategory.class.getName())) {
-					AssetCategory assetCategory =
-						AssetCategoryLocalServiceUtil.fetchCategory(
-							primaryKeyLong);
-
-					if (assetCategory != null) {
-						uuid = assetCategory.getUuid();
-					}
-				}
-				else if (className.equals(AssetVocabulary.class.getName())) {
-					AssetVocabulary assetVocabulary =
-						AssetVocabularyLocalServiceUtil.fetchAssetVocabulary(
-							primaryKeyLong);
-
-					if (assetVocabulary != null) {
-						uuid = assetVocabulary.getUuid();
-					}
-				}
-				else if (className.equals(DDMStructure.class.getName())) {
-					DDMStructure ddmStructure =
-						DDMStructureLocalServiceUtil.fetchStructure(
-							primaryKeyLong);
-
-					if (ddmStructure != null) {
-						uuid = ddmStructure.getUuid();
-					}
-				}
-				else if (className.equals(DLFileEntryType.class.getName())) {
-					DLFileEntryType dlFileEntryType =
-						DLFileEntryTypeLocalServiceUtil.getFileEntryType(
-							primaryKeyLong);
-
-					if (dlFileEntryType != null) {
-						uuid = dlFileEntryType.getUuid();
-					}
-				}
-
-				if (Validator.isNull(uuid)) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to get UUID for class " + className +
-								" with primary key " + primaryKeyLong);
-					}
-
-					continue;
-				}
-
-				newValue = StringUtil.replace(newValue, primaryKey, uuid);
-			}
-
-			newValues[i] = newValue;
 		}
 
 		jxPreferences.setValues(key, newValues);

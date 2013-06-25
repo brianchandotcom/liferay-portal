@@ -892,6 +892,9 @@ create unique index IX_41A32E0D on UserIdMapper (type_, externalUserId);
 create index IX_E60EA987 on UserIdMapper (userId);
 create unique index IX_D1C44A6E on UserIdMapper (userId, type_);
 
+create index IX_C648700A on UserNotificationDelivery (userId);
+create unique index IX_926703D1 on UserNotificationDelivery (userId, classNameId, type_);
+
 create index IX_3E5D78C4 on UserNotificationEvent (userId);
 create index IX_3DBB361A on UserNotificationEvent (userId, archived);
 create index IX_24F1BF0 on UserNotificationEvent (userId, delivered);

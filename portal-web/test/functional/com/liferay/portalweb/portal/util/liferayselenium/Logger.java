@@ -82,33 +82,9 @@ public class Logger {
 	}
 
 	public void logError(Method method, Object[] arguments) {
+		send("", "fail");
+
 		StringBundler sb = new StringBundler();
-
-		sb.append("/");
-
-		for (String xpathId : _xpathIdStack) {
-			sb.append("/ul/li[@id='");
-			sb.append(xpathId);
-			sb.append("']");
-		}
-
-		sb.append("/div");
-
-		List<WebElement> webElements = _webDriver.findElements(
-			By.xpath(sb.toString()));
-
-		sb = new StringBundler();
-
-		sb.append("var element = arguments[0];");
-		sb.append("element.className = \"fail\";");
-
-		JavascriptExecutor javascriptExecutor = (JavascriptExecutor)_webDriver;
-
-		for (WebElement webElement : webElements) {
-			javascriptExecutor.executeScript(sb.toString(), webElement);
-		}
-
-		sb = new StringBundler();
 
 		sb.append("<font color=\"red\">");
 		sb.append("Command failure <b>");
@@ -158,6 +134,10 @@ public class Logger {
 		String id = (String)arguments[0];
 		String status = (String)arguments[1];
 
+		send(id, status);
+	}
+
+	public void send(String id, String status) {
 		if (status.equals("pending")) {
 			_xpathIdStack.push(id);
 		}

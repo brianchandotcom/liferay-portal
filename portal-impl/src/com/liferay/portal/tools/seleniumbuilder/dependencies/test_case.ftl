@@ -77,6 +77,8 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)} 
 				${childElementAttributeValue}Macro ${seleniumBuilderFileUtil.getVariableName(childElementAttributeValue)}Macro = new ${childElementAttributeValue}Macro(selenium);
 			</#list>
 
+			boolean testPassed = false;
+
 			try {
 				<#if rootElement.element("set-up")??>
 					commandScopeVariables = new HashMap<String, String>();
@@ -121,6 +123,8 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)} 
 				<#assign lineNumber = commandElement.attributeValue("line-number")>
 
 				selenium.sendLogger("${testCaseName?uncap_first}TestCase${lineNumber}", "pass");
+
+				testPassed = true;
 			}
 			finally {
 				<#if rootElement.element("tear-down")??>
@@ -147,7 +151,12 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)} 
 					selenium.sendLogger("${testCaseName?uncap_first}TestCase${lineNumber}", "pass");
 				</#if>
 
-				selenium.sendLogger("${testCaseName?uncap_first}TestCase${commandName}", "pass");
+				if (testPassed) {
+					selenium.sendLogger("${testCaseName?uncap_first}TestCase${commandName}", "pass");
+				}
+				else {
+					selenium.sendLogger("${testCaseName?uncap_first}TestCase${commandName}", "fail");
+				}
 			}
 		}
 	</#list>

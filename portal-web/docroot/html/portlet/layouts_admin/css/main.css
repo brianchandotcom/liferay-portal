@@ -314,7 +314,7 @@
 	margin-bottom: 50px;
 
 	.comments-and-ratings {
-		margin-top: 1em;
+		margin-bottom: 1em;
 
 		legend {
 			border: 0;
@@ -371,6 +371,10 @@
 	}
 
 	.portlet-list {
+		padding-bottom: 10px;
+	}
+
+	.portlet-list li.tree-item {
 		margin-top: 20px;
 	}
 

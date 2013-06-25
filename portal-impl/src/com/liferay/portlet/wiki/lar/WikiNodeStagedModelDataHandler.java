@@ -21,10 +21,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.wiki.NoSuchNodeException;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
-import com.liferay.portlet.wiki.service.persistence.WikiNodeUtil;
 
 /**
  * @author Zsolt Berentey
@@ -65,7 +63,7 @@ public class WikiNodeStagedModelDataHandler
 
 		if (portletDataContext.isDataStrategyMirror()) {
 			WikiNode existingNode =
-				WikiNodeLocalServiceUtil.fetchWikiNodeByUuidAndGroupId(
+				WikiNodeLocalServiceUtil.fetchNodeByUuidAndGroupId(
 					node.getUuid(), portletDataContext.getScopeGroupId());
 
 			String initialNodeName = PropsValues.WIKI_INITIAL_NODE_NAME;
@@ -73,11 +71,11 @@ public class WikiNodeStagedModelDataHandler
 			if ((existingNode == null) &&
 				initialNodeName.equals(node.getName())) {
 
-				try {
-					WikiNodeUtil.removeByG_N(
-						portletDataContext.getScopeGroupId(), node.getName());
-				}
-				catch (NoSuchNodeException nsne) {
+				WikiNode initialNode = WikiNodeLocalServiceUtil.fetchNode(
+					portletDataContext.getScopeGroupId(), node.getName());
+
+				if (initialNode != null) {
+					WikiNodeLocalServiceUtil.deleteWikiNode(initialNode);
 				}
 			}
 
@@ -98,11 +96,11 @@ public class WikiNodeStagedModelDataHandler
 			String initialNodeName = PropsValues.WIKI_INITIAL_NODE_NAME;
 
 			if (initialNodeName.equals(node.getName())) {
-				try {
-					WikiNodeUtil.removeByG_N(
-						portletDataContext.getScopeGroupId(), node.getName());
-				}
-				catch (NoSuchNodeException nsne) {
+				WikiNode initialNode = WikiNodeLocalServiceUtil.fetchNode(
+					portletDataContext.getScopeGroupId(), node.getName());
+
+				if (initialNode != null) {
+					WikiNodeLocalServiceUtil.deleteWikiNode(initialNode);
 				}
 			}
 
@@ -139,12 +137,13 @@ public class WikiNodeStagedModelDataHandler
 
 	@Override
 	protected boolean validateMissingReference(
-			String uuid, long companyId, long groupId) {
+		String uuid, long companyId, long groupId) {
 
 		try {
-			WikiNode wikiNode = WikiNodeUtil.fetchByUUID_G(uuid, groupId);
+			WikiNode node = WikiNodeLocalServiceUtil.fetchNodeByUuidAndGroupId(
+				uuid, groupId);
 
-			if (wikiNode == null) {
+			if (node == null) {
 				return false;
 			}
 		}

@@ -107,9 +107,9 @@ public class MDRActionLocalServiceImpl extends MDRActionLocalServiceBaseImpl {
 		mdrActionPersistence.remove(action);
 
 		systemEventLocalService.addSystemEvent(
-			action.getGroupId(), MDRAction.class.getName(),
-			action.getActionId(), action.getUuid(),
-			SystemEventConstants.TYPE_DELETE);
+			0, action.getGroupId(), MDRAction.class.getName(),
+			action.getActionId(), action.getUuid(), null,
+			SystemEventConstants.TYPE_DELETE, null);
 
 		MDRRuleGroupInstance ruleGroupInstance =
 			mdrRuleGroupInstancePersistence.fetchByPrimaryKey(

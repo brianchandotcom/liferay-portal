@@ -195,8 +195,8 @@ public class JournalFeedLocalServiceImpl
 		// System event
 
 		systemEventLocalService.addSystemEvent(
-			feed.getGroupId(), JournalFeed.class.getName(), feed.getId(),
-			feed.getUuid(), SystemEventConstants.TYPE_DELETE);
+			0, feed.getGroupId(), JournalFeed.class.getName(), feed.getId(),
+			feed.getUuid(), null, SystemEventConstants.TYPE_DELETE, null);
 
 		// Expando
 

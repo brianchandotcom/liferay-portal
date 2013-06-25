@@ -144,9 +144,9 @@ public class MDRRuleGroupLocalServiceImpl
 		// System event
 
 		systemEventLocalService.addSystemEvent(
-			ruleGroup.getGroupId(), MDRRuleGroup.class.getName(),
-			ruleGroup.getRuleGroupId(), ruleGroup.getUuid(),
-			SystemEventConstants.TYPE_DELETE);
+			0, ruleGroup.getGroupId(), MDRRuleGroup.class.getName(),
+			ruleGroup.getRuleGroupId(), ruleGroup.getUuid(), null,
+			SystemEventConstants.TYPE_DELETE, null);
 
 		// Rules
 

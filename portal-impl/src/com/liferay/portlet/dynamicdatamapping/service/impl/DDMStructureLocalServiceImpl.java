@@ -429,9 +429,10 @@ public class DDMStructureLocalServiceImpl
 		// System event
 
 		systemEventLocalService.addSystemEvent(
-			structure.getGroupId(), DDMStructure.class.getName(),
-			structure.getStructureId(), structure.getUuid(),
-			SystemEventConstants.TYPE_DELETE);
+			0, structure.getGroupId(), DDMStructure.class.getName(),
+			structure.getStructureId(), structure.getUuid(), null,
+			SystemEventConstants.TYPE_DELETE, null);
+
 	}
 
 	/**

@@ -276,9 +276,9 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		// System event
 
 		systemEventLocalService.addSystemEvent(
-			category.getGroupId(), MBCategory.class.getName(),
-			category.getCategoryId(), category.getUuid(),
-			SystemEventConstants.TYPE_DELETE);
+			0, category.getGroupId(), MBCategory.class.getName(),
+			category.getCategoryId(), category.getUuid(), null,
+			SystemEventConstants.TYPE_DELETE, null);
 
 		// Trash
 

@@ -107,8 +107,9 @@ public class MBBanLocalServiceImpl extends MBBanLocalServiceBaseImpl {
 		mbBanPersistence.remove(ban);
 
 		systemEventLocalService.addSystemEvent(
-			ban.getGroupId(), MBBan.class.getName(), ban.getBanId(),
-			ban.getUuid(), SystemEventConstants.TYPE_DELETE);
+			0, ban.getGroupId(), MBBan.class.getName(), ban.getBanId(),
+			ban.getUuid(), null, SystemEventConstants.TYPE_DELETE, null);
+
 	}
 
 	@Override

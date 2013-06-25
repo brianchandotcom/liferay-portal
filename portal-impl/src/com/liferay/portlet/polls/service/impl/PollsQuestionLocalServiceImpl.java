@@ -193,9 +193,9 @@ public class PollsQuestionLocalServiceImpl
 		// System event
 
 		systemEventLocalService.addSystemEvent(
-			question.getGroupId(), PollsQuestion.class.getName(),
-			question.getQuestionId(), question.getUuid(),
-			SystemEventConstants.TYPE_DELETE);
+			0, question.getGroupId(), PollsQuestion.class.getName(),
+			question.getQuestionId(), question.getUuid(), null,
+			SystemEventConstants.TYPE_DELETE, null);
 
 		// Choices
 

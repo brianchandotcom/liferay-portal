@@ -130,8 +130,8 @@ public class MDRRuleLocalServiceImpl extends MDRRuleLocalServiceBaseImpl {
 		mdrRulePersistence.remove(rule);
 
 		systemEventLocalService.addSystemEvent(
-			rule.getGroupId(), MDRRule.class.getName(), rule.getRuleId(),
-			rule.getUuid(), SystemEventConstants.TYPE_DELETE);
+			0, rule.getGroupId(), MDRRule.class.getName(), rule.getRuleId(),
+			rule.getUuid(), null, SystemEventConstants.TYPE_DELETE, null);
 
 		MDRRuleGroup ruleGroup = mdrRuleGroupPersistence.fetchByPrimaryKey(
 			rule.getRuleGroupId());

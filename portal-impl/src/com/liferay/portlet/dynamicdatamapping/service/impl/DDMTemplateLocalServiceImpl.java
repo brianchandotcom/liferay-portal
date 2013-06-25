@@ -435,9 +435,9 @@ public class DDMTemplateLocalServiceImpl
 		// System event
 
 		systemEventLocalService.addSystemEvent(
-			template.getGroupId(), DDMTemplate.class.getName(),
-			template.getTemplateId(), template.getUuid(),
-			SystemEventConstants.TYPE_DELETE);
+			0, template.getGroupId(), DDMTemplate.class.getName(),
+			template.getTemplateId(), template.getUuid(), null,
+			SystemEventConstants.TYPE_DELETE, null);
 	}
 
 	/**

@@ -214,8 +214,8 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		// System event
 
 		systemEventLocalService.addSystemEvent(
-			node.getGroupId(), WikiNode.class.getName(), node.getNodeId(),
-			node.getUuid(), SystemEventConstants.TYPE_DELETE);
+			0, node.getGroupId(), WikiNode.class.getName(), node.getNodeId(),
+			node.getUuid(), null, SystemEventConstants.TYPE_DELETE, null);
 
 		// Attachments
 

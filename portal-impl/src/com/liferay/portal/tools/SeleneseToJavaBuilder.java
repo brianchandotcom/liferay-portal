@@ -599,8 +599,7 @@ public class SeleneseToJavaBuilder {
 			String param2 = fixParam(params[1]);
 			String param3 = fixParam(params[2]);
 
-			if (param1.equals("assertXMLText") || 
-				param1.equals("addSelection") || param1.equals("clickAt") || 
+			if (param1.equals("addSelection") || param1.equals("clickAt") ||
 				param1.equals("doubleClickAt") || param1.equals("keyDown") ||
 				param1.equals("keyPress") || param1.equals("keyUp") ||
 				param1.equals("mouseMoveAt") || param1.equals("openWindow") ||
@@ -877,36 +876,6 @@ public class SeleneseToJavaBuilder {
 				sb.append("(selenium.isTextPresent(\"");
 				sb.append(param2);
 				sb.append("\"));");
-			}
-			else if (param1.equals("assertXMLTagNotPresent") ||
-					 param1.equals("assertXMLTagPresent")) {
-
-				if (param1.equals("assertXMLTagNotPresent")) {
-					sb.append("assertFalse");
-				}
-				else if (param1.equals("assertXMLTagPresent")) {
-					sb.append("assertTrue");
-				}
-
-				sb.append("(selenium.isXMLTagPresent(\"");
-				sb.append(param2);
-				sb.append("\", ");
-
-				if (param3.startsWith("${")) {
-					sb.append("RuntimeVariables.getValue(\"");
-
-					String text = param3.substring(2, param3.length() - 1);
-
-					sb.append(text);
-					sb.append("\")");
-				}
-				else {
-					sb.append("\"");
-					sb.append(param3);
-					sb.append("\"");
-				}
-
-				sb.append("));");
 			}
 			else if (param1.equals("captureEntirePageScreenshot")) {
 				int pos = param2.lastIndexOf("\\");

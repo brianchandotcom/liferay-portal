@@ -13,38 +13,6 @@ Selenium.prototype.continueFromRow = function(rowNum) {
 Selenium.prototype.doDownloadTempFile = function(value) {
 };
 
-Selenium.prototype.isXMLText = function(locator, text) {
-
-	var source = this.browserbot.getDocument().xml;
-
-	if (source == null) {
-		source = new XMLSerializer().serializeToString(
-			this.browserbot.getDocument());
-	}
-
-	var x = source.indexOf("<html");
-
-	source = source.substring(x);
-
-	var parser = new DOMParser();
-
-	var xml = parser.parseFromString(source, "text/html");
-
-	var xpathResult = xml.evaluate(
-		locator, xml, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
-
-	if (xpathResult.singleNodeValue) {
-		var element = xpathResult.singleNodeValue;
-
-		var nodeText = element.textContent;
-
-		return nodeText == text;
-	}
-	else {
-		return false;
-	}
-};
-
 Selenium.prototype.doGotoIf = function(condition, label) {
 	if (eval(condition)) {
 		if (gotoLabels[label] == undefined) {

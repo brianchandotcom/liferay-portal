@@ -95,7 +95,8 @@ public class UpdateLayoutAction extends JSONAction {
 		}
 		catch (LayoutTypeException lte) {
 			jsonObj.put("status", -1);
-			_processLayoutTypeException(themeDisplay, jsonObj, lte);
+			jsonObj.put(
+				"message", getLayoutTypeExceptionMessage(themeDisplay, lte));
 		}
 
 		return jsonObj.toString();
@@ -182,6 +183,23 @@ public class UpdateLayoutAction extends JSONAction {
 		};
 	}
 
+	protected String getLayoutTypeExceptionMessage(
+		ThemeDisplay themeDisplay, LayoutTypeException lte) {
+
+		if (lte.getType() == LayoutTypeException.FIRST_LAYOUT ) {
+			return themeDisplay.translate(
+				"the-first-page-cannot-be-of-type-x",
+				"layout.types." + lte.getLayoutType());
+		}
+		else if (lte.getType() == LayoutTypeException.NOT_PARENTABLE) {
+			return themeDisplay.translate(
+				"a-page-cannot-become-a-child-of-a-page-that-is-not-" +
+					"parentable");
+		}
+
+		return StringPool.BLANK;
+	}
+
 	protected void updateDisplayOrder(HttpServletRequest request)
 		throws Exception {
 
@@ -255,26 +273,6 @@ public class UpdateLayoutAction extends JSONAction {
 		}
 		else {
 			LayoutServiceUtil.updatePriority(plid, priority);
-		}
-	}
-
-	private void _processLayoutTypeException(
-		ThemeDisplay themeDisplay, JSONObject jsonObj,
-		LayoutTypeException lte) {
-
-		if (lte.getType() == LayoutTypeException.FIRST_LAYOUT ) {
-			jsonObj.put(
-				"message",
-				themeDisplay.translate(
-					"cannot-place-this-type-of-layout-at-the-first-" +
-					"position"));
-		}
-		else if (lte.getType() == LayoutTypeException.NOT_PARENTABLE) {
-			jsonObj.put(
-				"message",
-				themeDisplay.translate(
-					"a-page-cannot-become-a-child-of-a-page-that-is-not-" +
-					"parentable"));
 		}
 	}
 

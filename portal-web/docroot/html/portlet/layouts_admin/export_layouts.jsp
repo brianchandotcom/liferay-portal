@@ -75,7 +75,7 @@ if (endDateTime > 0) {
 
 			<c:if test="<%= !group.isLayoutPrototype() %>">
 				<aui:fieldset cssClass="options-group" label="pages">
-					<div class="selected-labels" id="<portlet:namespace />selectedPages"></div>
+					<span class="selected-labels" id="<portlet:namespace />selectedPages"></span>
 
 					<aui:a cssClass="modify-link" href="javascript:;" id="pagesLink" label="change" method="get" />
 
@@ -126,7 +126,7 @@ if (endDateTime > 0) {
 
 							<ul class="hide" id="<portlet:namespace />showChangeGlobalConfiguration">
 								<li class="tree-item">
-									<div class="selected-labels" id="<portlet:namespace />selectedGlobalConfiguration"></div>
+									<span class="selected-labels" id="<portlet:namespace />selectedGlobalConfiguration"></span>
 
 									<aui:a cssClass="modify-link" href="javascript:;" id="globalConfigurationLink" label="change" method="get" />
 								</li>
@@ -168,7 +168,7 @@ if (endDateTime > 0) {
 
 												<ul class="hide" id="<portlet:namespace />showChangeConfiguration_<%= portlet.getRootPortletId() %>">
 													<li>
-														<div class="selected-labels" id="<portlet:namespace />selectedConfiguration_<%= portlet.getRootPortletId() %>"></div>
+														<span class="selected-labels" id="<portlet:namespace />selectedConfiguration_<%= portlet.getRootPortletId() %>"></span>
 
 														<%
 														Map<String,Object> data = new HashMap<String,Object>();
@@ -310,7 +310,7 @@ if (endDateTime > 0) {
 									</div>
 
 									<liferay-util:buffer var="selectedLabels">
-										<div class="selected-labels" id="<portlet:namespace />selectedRange"></div>
+										<span class="selected-labels" id="<portlet:namespace />selectedRange"></span>
 
 										<aui:a cssClass="modify-link" href="javascript:;" id="rangeLink" label="change" method="get" />
 									</liferay-util:buffer>
@@ -430,7 +430,7 @@ if (endDateTime > 0) {
 
 														<ul class="hide" id="<portlet:namespace />showChangeContent_<%= portlet.getPortletId() %>">
 															<li>
-																<div class="selected-labels" id="<portlet:namespace />selectedContent_<%= portlet.getPortletId() %>"></div>
+																<span class="selected-labels" id="<portlet:namespace />selectedContent_<%= portlet.getPortletId() %>"></span>
 
 																<%
 																Map<String,Object> data = new HashMap<String,Object>();
@@ -461,7 +461,7 @@ if (endDateTime > 0) {
 									</ul>
 
 									<aui:fieldset cssClass="comments-and-ratings" label="for-each-of-the-selected-content-types,-export-their">
-										<div class="selected-labels" id="<portlet:namespace />selectedCommentsAndRatings"></div>
+										<span class="selected-labels" id="<portlet:namespace />selectedCommentsAndRatings"></span>
 
 										<aui:a cssClass="modify-link" href="javascript:;" id="commentsAndRatingsLink" label="change" method="get" />
 

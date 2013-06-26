@@ -141,11 +141,11 @@ if (Validator.isNotNull(historyKey)) {
 
 						<li class="<%= cssClass %>" data-sectionId="<%= sectionId %>" id="<%= sectionId %>Tab">
 							<a href="#<%= sectionId %>" id="<%= sectionId %>Link">
+								<span class="badge badge-important error-notice">!</span>
 
-							<liferay-ui:message key="<%= section %>" />
+								<liferay-ui:message key="<%= section %>" />
 
-							<span class="modified-notice"> (<liferay-ui:message key="modified" />) </span>
-
+								<span class="modified-notice"> (<liferay-ui:message key="modified" />) </span>
 							</a>
 						</li>
 

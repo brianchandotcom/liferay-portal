@@ -32,7 +32,7 @@ AUI.add(
 		 * noticeClass {string}: A class to add to the notice toolbar.
 		 * timeout {Number}: The timeout in milliseconds, after it the notice will be automatically closed. Set it to -1, or do not add this property to disable this functionality.
 		 * toggleText {object}: The text to use for the "hide" and "show" button. Set to false to not have a hide button.
-		 * noticeType {String}: One of 'warning' or 'notice'. If not set, default notice type will be 'notice'
+		 * type {String}: One of 'warning' or 'notice'. If not set, default notice type will be 'notice'
 		 * useAnimation {boolean}: To animate show/hide of the notice, defaults to true. If useAnimation is set to true, but there is no timeout, 5000 will be used as timeout.
 		 *
 		 * Callbacks

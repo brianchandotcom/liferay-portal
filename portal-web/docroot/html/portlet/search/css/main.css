@@ -33,101 +33,97 @@
 		margin-top: 1em;
 	}
 
-	.search-layout .search-layout-content {
-		.menu {
-			.lfr-panel-container {
-				border-width: 0;
+	.search-layout {
+		.lfr-panel-container {
+			border-width: 0;
+		}
+
+		.search-facet {
+			border-top: 1px solid #CCC;
+			padding: 8px 0;
+
+			.field-wrapper-content {
+				margin: 0 0 1em;
 			}
 
-			.search-facet {
-				border-top: 1px solid #CCC;
-				padding: 8px 0;
+			.facet-value {
+				font-size: 1.1em;
+				padding: 3px;
+				padding-right: 0;
 
-				.field-wrapper-content {
-					margin: 0 0 1em;
+				a {
+					text-decoration: none;
+
+					img {
+						margin-right: 8px;
+						vertical-align: middle;
+					}
 				}
 
-				.facet-value {
-					font-size: 1.1em;
-					padding: 3px;
-					padding-right: 0;
+				&.current-term {
+					background: #5B677D;
+					font-weight: bold;
+					margin-bottom: 2px;
 
 					a {
-						text-decoration: none;
+						color: #FFF;
 
 						img {
 							margin-right: 8px;
-							vertical-align: middle;
 						}
 					}
 
-					&.current-term {
-						background: #5B677D;
-						font-weight: bold;
-						margin-bottom: 2px;
-
-						a {
-							color: #FFF;
-
-							img {
-								margin-right: 8px;
-							}
-						}
-
-						.frequency {
-							display: none;
-						}
+					.frequency {
+						display: none;
 					}
 				}
+			}
 
-				.date .calendar {
-					margin: 0 auto;
+			.date .calendar {
+				margin: 0 auto;
+			}
+
+			.keywords {
+				margin-top: 6px;
+				width: 18em;
+			}
+
+			.modified-custom-range {
+				padding-left: 10px;
+
+				.field-content {
+					margin: 5px 0;
 				}
 
-				.keywords {
-					margin-top: 6px;
-					width: 18em;
+				.button {
+					margin-right: 5px;
 				}
+			}
 
-				.modified-custom-range {
-					padding-left: 10px;
+			ul {
+				margin: 0;
+			}
 
-					.field-content {
-						margin: 5px 0;
-					}
+			&.search-asset-tags .lfr-panel-content ul {
+				padding: 0;
+			}
 
-					.button {
-						margin-right: 5px;
-					}
-				}
-
-				ul {
+			&.search-asset-vocabulary {
+				li {
+					list-style-type: none;
 					margin: 0;
-				}
-
-				&.search-asset-tags .lfr-panel-content ul {
 					padding: 0;
 				}
 
-				&.search-asset-vocabulary {
-					li {
-						list-style-type: none;
-						margin: 0;
-						padding: 0;
-					}
-
-					ul {
-						list-style-type: none;
-						margin: 0;
-						padding: 0;
-					}
+				ul {
+					list-style-type: none;
+					margin: 0;
+					padding: 0;
 				}
 			}
 		}
 
 		.result {
-			width: 100%;
-
 			.asset-entry {
 				.asset-entry-content {
 					margin-top: 0.8em;

@@ -95,8 +95,31 @@ public class OrganizationPermissionImpl implements OrganizationPermission {
 
 		Group group = organization.getGroup();
 
-		return contains(
-			permissionChecker, group.getGroupId(), organization, actionId);
+		long groupId = group.getGroupId();
+
+		if (contains(permissionChecker, groupId, organization, actionId)) {
+			return true;
+		}
+
+		while (!organization.isRoot()) {
+			Organization parentOrganization =
+				organization.getParentOrganization();
+
+			Group parentGroup = parentOrganization.getGroup();
+
+			groupId = parentGroup.getGroupId();
+
+			if (contains(
+					permissionChecker, groupId, parentOrganization,
+					ActionKeys.MANAGE_SUBORGANIZATIONS)) {
+
+				return true;
+			}
+
+			organization = parentOrganization;
+		}
+
+		return false;
 	}
 
 	protected boolean contains(

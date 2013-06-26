@@ -31,25 +31,7 @@ import java.util.Set;
  */
 public class JSONWebServiceNaming {
 
-	public boolean acceptHttpMethod(String httpMethod) {
-		if (invalidHttpMethods.contains(httpMethod)) {
-			return false;
-		}
-
-		return true;
-	}
-
-	public boolean acceptMethod(Method method) {
-		if ((excludedMethodNames != null) &&
-			excludedMethodNames.contains(method.getName())) {
-
-			return false;
-		}
-
-		return true;
-	}
-
-	public String classNameToPath(Class<?> clazz) {
+	public String convertClassNameToPath(Class<?> clazz) {
 		String className = clazz.getSimpleName();
 
 		className = StringUtil.replace(className, "Impl", StringPool.BLANK);
@@ -58,7 +40,9 @@ public class JSONWebServiceNaming {
 		return className.toLowerCase();
 	}
 
-	public String implClassNameToUtilClassName(Class implementationClass) {
+	public String convertImplClassNameToUtilClassName(
+		Class<?> implementationClass) {
+
 		String implementationClassName = implementationClass.getName();
 
 		if (implementationClassName.endsWith("Impl")) {
@@ -74,10 +58,10 @@ public class JSONWebServiceNaming {
 		return utilClassName;
 	}
 
-	public String methodNameToHttpMethod(Method method) {
+	public String convertMethodNameToHttpMethod(Method method) {
 		String methodName = method.getName();
 
-		String methodNamePrefix = cutPrefix(methodName);
+		String methodNamePrefix = getMethodNamePrefix(methodName);
 
 		if (prefixes.contains(methodNamePrefix)) {
 			return HttpMethods.GET;
@@ -86,11 +70,29 @@ public class JSONWebServiceNaming {
 		return HttpMethods.POST;
 	}
 
-	public String methodNameToPath(Method method) {
+	public String convertMethodNameToPath(Method method) {
 		return CamelCaseUtil.fromCamelCase(method.getName());
 	}
 
-	protected String cutPrefix(String methodName) {
+	public boolean isIncludedMethod(Method method) {
+		if ((excludedMethodNames != null) &&
+			excludedMethodNames.contains(method.getName())) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean isValidHttpMethod(String httpMethod) {
+		if (invalidHttpMethods.contains(httpMethod)) {
+			return false;
+		}
+
+		return true;
+	}
+
+	protected String getMethodNamePrefix(String methodName) {
 		int i = 0;
 
 		while (i < methodName.length()) {

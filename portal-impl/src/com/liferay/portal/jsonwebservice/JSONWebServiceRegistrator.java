@@ -149,7 +149,7 @@ public class JSONWebServiceRegistrator {
 		}
 
 		String utilClassName =
-			_jsonWebServiceNaming.implClassNameToUtilClassName(
+			_jsonWebServiceNaming.convertImplClassNameToUtilClassName(
 				implementationClass);
 
 		ClassLoader classLoader = implementationClass.getClassLoader();
@@ -183,7 +183,7 @@ public class JSONWebServiceRegistrator {
 				continue;
 			}
 
-			if (!_jsonWebServiceNaming.acceptMethod(method)) {
+			if (!_jsonWebServiceNaming.isIncludedMethod(method)) {
 				continue;
 			}
 
@@ -229,7 +229,7 @@ public class JSONWebServiceRegistrator {
 		String httpMethod = _jsonWebServiceMappingResolver.resolveHttpMethod(
 			method);
 
-		if (!_jsonWebServiceNaming.acceptHttpMethod(httpMethod)) {
+		if (!_jsonWebServiceNaming.isValidHttpMethod(httpMethod)) {
 			return;
 		}
 

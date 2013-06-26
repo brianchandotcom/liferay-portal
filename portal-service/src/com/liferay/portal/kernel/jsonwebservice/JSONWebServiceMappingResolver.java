@@ -43,7 +43,7 @@ public class JSONWebServiceMappingResolver {
 			return httpMethod;
 		}
 
-		return _jsonWebServiceNaming.methodNameToHttpMethod(method);
+		return _jsonWebServiceNaming.convertMethodNameToHttpMethod(method);
 	}
 
 	public String resolvePath(Class<?> clazz, Method method) {
@@ -57,7 +57,7 @@ public class JSONWebServiceMappingResolver {
 		}
 
 		if ((path == null) || (path.length() == 0)) {
-			path = _jsonWebServiceNaming.methodNameToPath(method);
+			path = _jsonWebServiceNaming.convertMethodNameToPath(method);
 		}
 
 		if (path.startsWith(StringPool.SLASH)) {
@@ -75,7 +75,7 @@ public class JSONWebServiceMappingResolver {
 		}
 
 		if ((pathFromClass == null) || (pathFromClass.length() == 0)) {
-			pathFromClass = _jsonWebServiceNaming.classNameToPath(clazz);
+			pathFromClass = _jsonWebServiceNaming.convertClassNameToPath(clazz);
 		}
 
 		if (!pathFromClass.startsWith(StringPool.SLASH)) {

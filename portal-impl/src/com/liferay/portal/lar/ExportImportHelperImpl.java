@@ -953,7 +953,9 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 	@Override
 	public void updateExportPortletPreferencesClassPKs(
-			PortletPreferences portletPreferences, String key, String className)
+			PortletDataContext portletDataContext, Portlet portlet,
+			PortletPreferences portletPreferences, String key, String className,
+			Element rootElement)
 		throws Exception {
 
 		String[] oldValues = portletPreferences.getValues(key, null);
@@ -987,6 +989,11 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 					if (assetCategory != null) {
 						uuid = assetCategory.getUuid();
+
+						portletDataContext.addReferenceElement(
+							portlet, rootElement, assetCategory,
+							AssetCategory.class,
+							PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
 					}
 				}
 				else if (className.equals(AssetVocabulary.class.getName())) {
@@ -996,6 +1003,11 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 					if (assetVocabulary != null) {
 						uuid = assetVocabulary.getUuid();
+
+						portletDataContext.addReferenceElement(
+							portlet, rootElement, assetVocabulary,
+							AssetVocabulary.class,
+							PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
 					}
 				}
 				else if (className.equals(DDMStructure.class.getName())) {
@@ -1005,6 +1017,11 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 					if (ddmStructure != null) {
 						uuid = ddmStructure.getUuid();
+
+						portletDataContext.addReferenceElement(
+							portlet, rootElement, ddmStructure,
+							DDMStructure.class,
+							PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
 					}
 				}
 				else if (className.equals(DLFileEntryType.class.getName())) {
@@ -1014,6 +1031,11 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 					if (dlFileEntryType != null) {
 						uuid = dlFileEntryType.getUuid();
+
+						portletDataContext.addReferenceElement(
+							portlet, rootElement, dlFileEntryType,
+							DLFileEntryType.class,
+							PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
 					}
 				}
 

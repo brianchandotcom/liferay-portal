@@ -51,6 +51,7 @@ for (int j = 0; j < entryColumns.length; j++) {
 		</c:when>
 		<c:when test='<%= bookmarksEntryColumn.equals("url") %>'>
 			<liferay-ui:search-container-column-text
+				cssClass="row-url"
 				href="<%= rowHREF %>"
 				name="<%= bookmarksEntryColumn %>"
 				value="<%= HtmlUtil.escape(entry.getUrl()) %>"

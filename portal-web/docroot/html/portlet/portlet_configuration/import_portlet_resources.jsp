@@ -268,8 +268,8 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 			<portlet:renderURL var="importPortletURL">
 				<portlet:param name="struts_action" value="/portlet_configuration/export_import" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VALIDATE %>" />
-				<portlet:param name="portletResource" value="<%= String.valueOf(portletResource) %>" />
 				<portlet:param name="tabs2" value="import" />
+				<portlet:param name="portletResource" value="<%= String.valueOf(portletResource) %>" />
 			</portlet:renderURL>
 
 			<aui:button href="<%= importPortletURL %>" name="back1" value="back" />

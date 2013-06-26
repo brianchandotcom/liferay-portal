@@ -5,15 +5,15 @@ AUI.add(
 
 		var KeyMap = A.Event.KeyMap;
 
-		var KEYFILTER = 'togglerkeyfilter';
+		var NAME = 'togglerkeyfilter';
 
 		var TogglerKeyFilter = A.Component.create(
 			{
 				EXTENDS: A.Plugin.Base,
 
-				NAME: KEYFILTER,
+				NAME: NAME,
 
-				NS: KEYFILTER,
+				NS: NAME,
 
 				ATTRS: {
 					filter: {

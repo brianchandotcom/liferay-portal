@@ -2056,6 +2056,8 @@ create table SystemEvent (
 	classUuid VARCHAR(75) null,
 	referrerClassNameId LONG,
 	type_ INTEGER,
+	parentSystemEventId LONG,
+	systemEventSetKey LONG,
 	extraData TEXT null
 );
 

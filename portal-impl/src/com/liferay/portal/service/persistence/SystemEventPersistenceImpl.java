@@ -2043,6 +2043,8 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 		systemEventImpl.setClassUuid(systemEvent.getClassUuid());
 		systemEventImpl.setReferrerClassNameId(systemEvent.getReferrerClassNameId());
 		systemEventImpl.setType(systemEvent.getType());
+		systemEventImpl.setParentSystemEventId(systemEvent.getParentSystemEventId());
+		systemEventImpl.setSystemEventSetKey(systemEvent.getSystemEventSetKey());
 		systemEventImpl.setExtraData(systemEvent.getExtraData());
 
 		return systemEventImpl;

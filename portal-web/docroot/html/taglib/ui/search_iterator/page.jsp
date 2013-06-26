@@ -300,7 +300,7 @@ int sortColumnIndex = -1;
 				}
 			%>
 
-				<td class="table-cell <%= columnClassName %>" >
+				<td class="table-cell <%= columnClassName %>">
 
 					<%
 					entry.print(pageContext);

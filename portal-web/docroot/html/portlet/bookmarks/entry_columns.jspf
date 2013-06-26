@@ -21,6 +21,7 @@ for (int j = 0; j < entryColumns.length; j++) {
 
 	<c:choose>
 		<c:when test='<%= bookmarksEntryColumn.equals("action") %>'>
+
 			<%
 			String align = SearchEntry.DEFAULT_ALIGN;
 

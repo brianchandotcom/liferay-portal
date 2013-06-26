@@ -1,5 +1,5 @@
 .taglib-form-navigator {
-	.modified-notice, .error-notice {
+	.error-notice, .modified-notice {
 		display: none;
 	}
 

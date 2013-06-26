@@ -298,6 +298,5 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 </aui:script>
 
 <aui:script>
-	Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA %>Checkbox', '<portlet:namespace />portletDataControls');
 	Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PERMISSIONS %>Checkbox', '<portlet:namespace />permissionsUl');
 </aui:script>

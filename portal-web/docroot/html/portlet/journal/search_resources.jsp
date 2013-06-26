@@ -217,7 +217,7 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, entryEn
 							if (Validator.isNotNull(keywords)) {
 								searchContext.setAttribute(Field.CONTENT, keywords);
 								searchContext.setAttribute(Field.DESCRIPTION, keywords);
-								searchContext.setAttribute(Field.STATUS, WorkflowConstants.STATUS_ANY);
+								searchContext.setAttribute(Field.STATUS, WorkflowConstants.STATUS_APPROVED);
 								searchContext.setAttribute(Field.TITLE, keywords);
 								searchContext.setAttribute("articleId", keywords);
 								searchContext.setKeywords(keywords);

@@ -31,10 +31,10 @@ import javax.portlet.PortletPreferences;
 /**
  * @author Julio Camarero
  */
-public class AssetCategoriesNavitagionPortletDataHandler
+public class AssetCategoriesNavigationPortletDataHandler
 	extends DefaultConfigurationPortletDataHandler {
 
-	public AssetCategoriesNavitagionPortletDataHandler() {
+	public AssetCategoriesNavigationPortletDataHandler() {
 		setDataLevel(DataLevel.PORTLET_INSTANCE);
 		setPublishToLiveByDefault(true);
 	}

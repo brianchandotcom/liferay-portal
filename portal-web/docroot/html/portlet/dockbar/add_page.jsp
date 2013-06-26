@@ -49,12 +49,15 @@
 						<aui:input cssClass="search-query span12" label="" name="searchTemplates" placeholder="search" type="text"  />
 					</div>
 
-					<aui:nav cssClass="nav-list no-margin-nav-list" id="templateList">
+					<aui:nav cssClass="nav-list" id="templateList">
 						<c:if test='<%= ArrayUtil.contains(PropsValues.LAYOUT_TYPES, "portlet") %>'>
 							<aui:nav-item cssClass="lfr-page-template" data-search="blank">
 								<div class="active lfr-page-template-title toggler-header toggler-header-expanded" data-type="portlet">
 									<aui:input checked="<%= true %>" id="blank" label="empty-layout" name="selectedPageTemplate" type="radio" />
-									<div class="lfr-page-template-description"><small><%= LanguageUtil.get(pageContext, "empty-layout-description" ) %></small></div>
+
+									<div class="lfr-page-template-description">
+										<small><%= LanguageUtil.get(pageContext, "empty-layout-description" ) %></small>
+									</div>
 								</div>
 
 								<div class="lfr-page-template-options toggler-content toggler-content-expanded">
@@ -84,7 +87,10 @@
 							<aui:nav-item cssClass="lfr-page-template" data-search="<%= name %>">
 								<div class="lfr-page-template-title toggler-header toggler-header-collapsed" data-prototype-id="<%= layoutPrototype.getLayoutPrototypeId() %>">
 									<aui:input label="<%= name %>" name="selectedPageTemplate" type="radio" />
-									<div class="lfr-page-template-description"><small><%= HtmlUtil.escape(layoutPrototype.getDescription()) %></small></div>
+
+									<div class="lfr-page-template-description">
+										<small><%= HtmlUtil.escape(layoutPrototype.getDescription()) %></small>
+									</div>
 								</div>
 
 								<div class="lfr-page-template-options toggler-content toggler-content-collapsed">
@@ -112,7 +118,10 @@
 							<aui:nav-item cssClass="lfr-page-template" data-search='<%= LanguageUtil.get(pageContext, "layout.types." + PropsValues.LAYOUT_TYPES[i]) %>'>
 								<div class="lfr-page-template-title toggler-header toggler-header-collapsed" data-type="<%= PropsValues.LAYOUT_TYPES[i] %>">
 									<aui:input label='<%= "layout.types." + PropsValues.LAYOUT_TYPES[i] %>' name="selectedPageTemplate" type="radio" />
-									<div class="lfr-page-template-description"><small><%= LanguageUtil.get(pageContext, "layout.types." + PropsValues.LAYOUT_TYPES[i] + ".description" ) %></small></div>
+
+									<div class="lfr-page-template-description">
+										<small><%= LanguageUtil.get(pageContext, "layout.types." + PropsValues.LAYOUT_TYPES[i] + ".description" ) %></small>
+									</div>
 								</div>
 
 								<div class="lfr-page-template-options toggler-content toggler-content-collapsed">
@@ -128,7 +137,9 @@
 							<aui:nav-item cssClass="lfr-page-template" data-search="portlet">
 								<div class="lfr-page-template-title toggler-header toggler-header-collapsed" data-type="portlet">
 									<aui:input label="copy-of-a-page" name="selectedPageTemplate" type="radio" />
-									<div class="lfr-page-template-description"><small><%= LanguageUtil.get(pageContext, "copy-of-a-page-description" ) %></small></div>
+									<div class="lfr-page-template-description">
+										<small><%= LanguageUtil.get(pageContext, "copy-of-a-page-description" ) %></small>
+									</div>
 								</div>
 
 								<div class="lfr-page-template-options toggler-content toggler-content-collapsed">

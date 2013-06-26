@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.NGramHolder;
 import com.liferay.portal.kernel.search.NGramHolderBuilderUtil;
-import com.liferay.portal.kernel.search.QueryIndexingHitsProcessor;
 import com.liferay.portal.kernel.search.QuerySuggester;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
@@ -304,8 +303,7 @@ public class LuceneQuerySuggester implements QuerySuggester {
 			float scoresThreshold = searchContext.getScoresThreshold();
 
 			if (scoresThreshold == 0) {
-				scoresThreshold =
-					QueryIndexingHitsProcessor.SCORES_THRESHOLD_DEFAULT;
+				scoresThreshold = _SCORES_THRESHOLD_DEFAULT;
 			}
 
 			indexSearcher = LuceneHelperUtil.getSearcher(
@@ -360,6 +358,8 @@ public class LuceneQuerySuggester implements QuerySuggester {
 			LuceneHelperUtil.cleanUp(indexSearcher);
 		}
 	}
+
+	private static final float _SCORES_THRESHOLD_DEFAULT = 0.5f;
 
 	private float _boostEnd = 1.0f;
 	private float _boostStart = 2.0f;

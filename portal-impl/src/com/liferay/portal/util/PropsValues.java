@@ -776,7 +776,29 @@ public class PropsValues {
 
 	public static boolean INDEX_READ_ONLY = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.INDEX_READ_ONLY));
 
+	public static final boolean INDEX_SEARCH_AUTOCOMPLETE_SUGGESTIONS_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.INDEX_SEARCH_AUTOCOMPLETE_SUGGESTIONS_ENABLED));
+
+	public static final int INDEX_SEARCH_AUTOCOMPLETE_SUGGESTIONS_MAX = GetterUtil.getInteger(PropsUtil.get(PropsKeys.INDEX_SEARCH_AUTOCOMPLETE_SUGGESTIONS_MAX));
+
+	public static final int INDEX_SEARCH_AUTOCOMPLETE_SUGGESTIONS_QUERY_DELAY_MILLIS = GetterUtil.getInteger(PropsUtil.get(PropsKeys.INDEX_SEARCH_AUTOCOMPLETE_SUGGESTIONS_QUERY_DELAY_MILLIS));
+
+	public static final int INDEX_SEARCH_AUTOCOMPLETE_SUGGESTIONS_MIN_QUERY_LENGTH = GetterUtil.getInteger(PropsUtil.get(PropsKeys.INDEX_SEARCH_AUTOCOMPLETE_SUGGESTIONS_MIN_QUERY_LENGTH));
+
+	public static final boolean INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_ENABLED));
+
+	public static final int INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_SCORING_THRESHOLD = GetterUtil.getInteger(PropsUtil.get(PropsKeys.INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_SCORING_THRESHOLD));
+
 	public static final int INDEX_SEARCH_LIMIT = GetterUtil.getInteger(PropsUtil.get(PropsKeys.INDEX_SEARCH_LIMIT));
+
+	public static final boolean INDEX_SEARCH_QUERY_INDEXING_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.INDEX_SEARCH_QUERY_INDEXING_ENABLED));
+
+	public static final int INDEX_SEARCH_QUERY_INDEXING_THRESHOLD = GetterUtil.getInteger(PropsUtil.get(PropsKeys.INDEX_SEARCH_QUERY_INDEXING_THRESHOLD));
+
+	public static final boolean INDEX_SEARCH_QUERY_SUGGESTION_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.INDEX_SEARCH_QUERY_SUGGESTION_ENABLED));
+
+	public static final int INDEX_SEARCH_QUERY_SUGGESTION_MAX = GetterUtil.getInteger(PropsUtil.get(PropsKeys.INDEX_SEARCH_QUERY_SUGGESTION_MAX));
+
+	public static final int INDEX_SEARCH_QUERY_SUGGESTION_SCORING_THRESHOLD = GetterUtil.getInteger(PropsUtil.get(PropsKeys.INDEX_SEARCH_QUERY_SUGGESTION_SCORING_THRESHOLD));
 
 	public static final boolean INDEX_WITH_THREAD = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.INDEX_WITH_THREAD));
 

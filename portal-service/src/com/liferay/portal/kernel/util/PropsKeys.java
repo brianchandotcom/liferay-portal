@@ -939,6 +939,18 @@ public interface PropsKeys {
 
 	public static final String INDEX_READ_ONLY = "index.read.only";
 
+	public static final String INDEX_SEARCH_AUTOCOMPLETE_SUGGESTIONS_ENABLED = "index.search.autocomplete.suggestions.enabled";
+
+	public static final String INDEX_SEARCH_AUTOCOMPLETE_SUGGESTIONS_MAX = "index.search.autocomplete.suggestions.max";
+
+	public static final String INDEX_SEARCH_AUTOCOMPLETE_SUGGESTIONS_MIN_QUERY_LENGTH = "index.search.autocomplete.suggestions.min.query.length";
+
+	public static final String INDEX_SEARCH_AUTOCOMPLETE_SUGGESTIONS_QUERY_DELAY_MILLIS = "index.search.autocomplete.suggestions.query.delay.millis";
+
+	public static final String INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_ENABLED = "index.search.collated.spell.check.result.enabled";
+
+	public static final String INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_SCORING_THRESHOLD = "index.search.collated.spell.check.result.scoring.threshold";
+
 	public static final String INDEX_SEARCH_ENGINE_ID = "index.search.engine.id";
 
 	public static final String INDEX_SEARCH_HIGHLIGHT_ENABLED = "index.search.highlight.enabled";
@@ -949,7 +961,13 @@ public interface PropsKeys {
 
 	public static final String INDEX_SEARCH_LIMIT = "index.search.limit";
 
+	public static final String INDEX_SEARCH_QUERY_INDEXING_ENABLED = "index.search.query.indexing.enabled";
+
+	public static final String INDEX_SEARCH_QUERY_INDEXING_THRESHOLD = "index.search.query.indexing.threshold";
+
 	public static final String INDEX_SEARCH_QUERY_SUGGESTION_ENABLED = "index.search.query.suggestion.enabled";
+
+	public static final String INDEX_SEARCH_QUERY_SUGGESTION_MAX = "index.search.query.suggestion.max";
 
 	public static final String INDEX_SEARCH_QUERY_SUGGESTION_SCORING_THRESHOLD = "index.search.query.suggestion.scoring.threshold";
 

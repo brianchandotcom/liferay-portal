@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.theme.ThemeDisplay;
 
@@ -183,11 +184,14 @@ public class ExportImportHelperUtil {
 	}
 
 	public static void updateExportPortletPreferencesClassPKs(
-			PortletPreferences portletPreferences, String key, String className)
+			PortletDataContext portletDataContext, Portlet portlet,
+			PortletPreferences portletPreferences, String key, String className,
+			Element rootElement)
 		throws Exception {
 
 		getExportImportHelper().updateExportPortletPreferencesClassPKs(
-			portletPreferences, key, className);
+			portletDataContext, portlet, portletPreferences, key, className,
+			rootElement);
 	}
 
 	public static void updateImportPortletPreferencesClassPKs(

@@ -28,9 +28,11 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetVocabulary;
@@ -65,7 +67,7 @@ public class AssetPublisherPortletDataHandler
 		throws Exception {
 
 		return updateExportPortletPreferences(
-			portletDataContext, portletPreferences);
+			portletDataContext, portletId, portletPreferences, rootElement);
 	}
 
 	@Override
@@ -121,8 +123,8 @@ public class AssetPublisherPortletDataHandler
 	}
 
 	protected PortletPreferences updateExportPortletPreferences(
-			PortletDataContext portletDataContext,
-			PortletPreferences portletPreferences)
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences, Element rootElement)
 		throws Exception {
 
 		String anyAssetTypeClassName = StringPool.BLANK;
@@ -133,6 +135,8 @@ public class AssetPublisherPortletDataHandler
 		if (anyAssetType > 0) {
 			anyAssetTypeClassName = PortalUtil.getClassName(anyAssetType);
 		}
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
 
 		Enumeration<String> enu = portletPreferences.getNames();
 
@@ -154,7 +158,8 @@ public class AssetPublisherPortletDataHandler
 						"classTypeIdsDLFileEntryAssetRendererFactory")) {
 
 				ExportImportHelperUtil.updateExportPortletPreferencesClassPKs(
-					portletPreferences, name, DLFileEntryType.class.getName());
+					portletDataContext, portlet, portletPreferences, name,
+					DLFileEntryType.class.getName(), rootElement);
 			}
 			else if (name.equals(
 						"anyClassTypeJournalArticleAssetRendererFactory") ||
@@ -165,11 +170,13 @@ public class AssetPublisherPortletDataHandler
 						"classTypeIdsJournalArticleAssetRendererFactory")) {
 
 				ExportImportHelperUtil.updateExportPortletPreferencesClassPKs(
-					portletPreferences, name, DDMStructure.class.getName());
+					portletDataContext, portlet, portletPreferences, name,
+					DDMStructure.class.getName(), rootElement);
 			}
 			else if (name.equals("assetVocabularyId")) {
 				ExportImportHelperUtil.updateExportPortletPreferencesClassPKs(
-					portletPreferences, name, AssetVocabulary.class.getName());
+					portletDataContext, portlet, portletPreferences, name,
+					AssetVocabulary.class.getName(), rootElement);
 			}
 			else if (name.startsWith("queryName") &&
 					 value.equalsIgnoreCase("assetCategories")) {
@@ -177,8 +184,9 @@ public class AssetPublisherPortletDataHandler
 				String index = name.substring(9);
 
 				ExportImportHelperUtil.updateExportPortletPreferencesClassPKs(
-					portletPreferences, "queryValues" + index,
-					AssetCategory.class.getName());
+					portletDataContext, portlet, portletPreferences,
+					"queryValues" + index, AssetCategory.class.getName(),
+					rootElement);
 			}
 			else if (name.equals("scopeIds")) {
 				updateExportScopeIds(

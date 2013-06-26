@@ -181,9 +181,6 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 			portletPreferences.getValue("rootFolderId", null));
 
 		if (rootFolderId != BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			rootElement.addAttribute(
-				"root-folder-id", String.valueOf(rootFolderId));
-
 			BookmarksFolder folder = BookmarksFolderLocalServiceUtil.getFolder(
 				rootFolderId);
 
@@ -204,10 +201,8 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		Element rootElement = portletDataContext.getImportDataRootElement();
-
 		long rootFolderId = GetterUtil.getLong(
-			rootElement.attributeValue("root-folder-id"));
+			portletPreferences.getValue("rootFolderId", null));
 
 		if (rootFolderId > 0) {
 			String rootFolderPath = ExportImportPathUtil.getModelPath(

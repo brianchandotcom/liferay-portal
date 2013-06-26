@@ -1,38 +1,362 @@
 @import "compass";
 @import url(../../classic/css/custom_common.css);
 
+$dockbarGradientStart: #0A85E4;
+$dockbarGradientEnd: #0A6BCA;
+
+$dockbarOpenGradientStart: #00A0FF;
+$dockbarOpenGradientEnd: #048BDF;
+
 .aui {
+	a {
+		color: #00AAFF;
+		font-weight: lighter;
+	}
+
+	/* ---------- Forms, inputs, and labels ---------- */
+
+	input[type="color"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="email"], input[type="month"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="time"], input[type="url"], input[type="week"], select, textarea, .uneditable-input {
+		color: #8D8D8D;
+		font-weight: lighter;
+		margin-bottom: 7px;
+	}
+
+	label {
+		color: #555;
+		font-size: 15px;
+		font-weight: lighter;
+	}
+
+	li {
+		line-height: 27px;
+	}
+
+	select {
+		background: transparent;
+	}
+
+	.form-search {
+		.control-group-inline {
+			margin: 0;
+		}
+	}
+
+	/* ---------- Main ---------- */
+
 	#banner, .lfr-ctrl-panel .user-greeting {
 		position: absolute;
 		clip: rect(0 0 0 0);
 	}
 
 	#wrapper {
-		padding-top: 1.5em;
+		padding: 1.1em 0 0;
 	}
 
-	.dockbar {
-		position: relative;
-
-		&:after {
-			background-color: #333;
-			bottom: -10px;
-			content: '';
-			display: block;
-			height: 10px;
-			left: 0;
-			position: absolute;
-			right: 0;
-			z-index: -1;
-		}
-	}
-
-	.portlet-title, .portlet-content {
+	.container-fluid.panel-manage-frontpage {
 		padding: 0;
 	}
 
-	.portlet-title {
+	.panel-manage-apps, .panel-manage-configuration, .panel-manage-sites, .panel-manage-users {
+		padding: 0 3em;
+
+		.panel-page-application {
+			margin: 0;
+		}
+	}
+
+	.panel-manage-frontpage {
+		.control-panel-bar-secondary {
+			margin-bottom: 1px;
+			margin-left: 20px;
+		}
+	}
+
+	.btn {
+		background: #FCFCFC;
+		margin-bottom: 1px;
+
+		&:hover {
+			background: #F4F4F4;
+		}
+	}
+
+	.btn.btn-primary {
+		background: #00AEFF;
+
+		&:hover {
+			background: #009EE7;
+		}
+	}
+
+	.control-panel-home-actions-category {
+		.btn {
+			background: #F4F4F4;
+			margin-bottom: 0.5em;
+
+			&:hover {
+				background: #EAEAEA;
+			}
+		}
+
+		.btn.btn-primary {
+			background: #00AEFF;
+
+			&:hover {
+				background: #009EE7;
+			}
+		}
+	}
+
+	/* Control Panel Secondary Nav */
+
+	.control-panel-bar-secondary.nav-pills {
+		li {
+			margin-right: 20px;
+
+			a {
+				margin: 0;
+				padding: 10px 10px 11px;
+
+				&:hover {
+					background: #E5F5FC;
+					color: #009AE5;
+				}
+			}
+		}
+
+		> .active > a {
+			background: #00ACFF;
+
+			&:hover {
+				color: #FFF;
+				background: #00ACFF;
+			}
+		}
+	}
+
+	/* Control Panel Home */
+
+	.control-panel-home-menu {
+		margin-top: 40px;
+
+		a {
+			color: #00ACFF;
+
+			&:active {
+				color: #009AE5;
+			}
+
+			&:hover {
+				color: #009AE5;
+				text-decoration: underline;
+			}
+		}
+
+		ul {
+			padding-left: 47px;
+
+			li {
+				list-style: none;
+				margin-bottom: 5px;
+
+				a {
+					font-weight: normal;
+				}
+
+				span img {
+					display: none;
+				}
+			}
+		}
+
+		.control-panel-bar-main {
+			font-size: 1.2em;
+			font-weight: bold;
+			margin-bottom: 5px;
+		}
+
+		.control-panel-bar-secondary {
+			margin-bottom: 5px;
+		}
+
+		.control-panel-home-actions {
+			margin-top: 100px;
+
+			.control-panel-home-actions-category {
+				color: #8D8D8D;
+				padding-top: 10px;
+			}
+		}
+
+		/* Control Panel Home Category Header */
+
+		#control-panel-home-category-headerapps {
+			background: url(../images/custom/apps_control_panel.png) no-repeat -9px center;
+			background-size: 57px;
+		}
+
+		#control-panel-home-category-headerconfiguration {
+			background: url(../images/custom/configuration_control_panel.png) no-repeat -13px center;
+			background-size: 60px;
+		}
+
+		#control-panel-home-category-headersites {
+			background: url(../images/custom/sites_control_panel.png) no-repeat -12px center;
+			background-size: 60px;
+		}
+
+		#control-panel-home-category-headerusers {
+			background: url(../images/custom/users_control_panel.png) no-repeat -10px center;
+			background-size: 60px;
+		}
+
+		.control-panel-home-category-header {
+			border-bottom: 1px solid #D4D4D4;
+			color: #00ACFF;
+			font-size: 24px;
+			font-weight: 200;
+			margin-bottom: 30px;
+			padding-left: 47px;
+		}
+	}
+
+	.input-localized .input-localized-content {
 		margin-top: 0;
+		margin-left: 6px;
+	}
+
+	/* Dockbar */
+
+	.dockbar {
+		border-top: 1px solid #00AEFF;
+		font-size: 13px;
+		font-weight: lighter;
+		letter-spacing: 1px;
+		position: relative;
+
+		.nav {
+			> li {
+				> a {
+					margin: 3px 0;
+					padding: 2px 15px;
+				}
+			}
+		}
+
+		.navbar-inner {
+			background-color: $dockbarGradientEnd;
+			color: #FFF;
+
+			.nav-account-controls {
+				float: right;
+
+				li.open {
+					> .dropdown-toggle {
+						margin: 0;
+						padding: 5px 15px;
+						background-color: $dockbarOpenGradientEnd;
+					}
+				}
+			}
+
+			.nav-add-controls {
+				> li {
+					&.active a {
+						border-radius: 4px;
+
+						&:hover {
+							background: #005BA7;
+							color: #FFF;
+						}
+					}
+
+					a {
+						&:hover {
+							background: #008BE4;
+						}
+					}
+				}
+
+				li {
+					margin-right: 5px;
+
+					i {
+						text-indent: -9999px;
+						vertical-align: top;
+					}
+
+					/* Menu Icons */
+
+					.icon-arrow-left {
+						background: url(../images/custom/back_arrow_normal.png) no-repeat;
+						height: 21px;
+						margin-top: 4px;
+						width: 24px;
+					}
+
+					.icon-cog {
+						background: url(../images/custom/configuration_icons.png) no-repeat;
+						height: 26px;
+						width: 29px;
+					}
+
+					.icon-globe {
+						background: url(../images/custom/sites_icons.png) no-repeat;
+						height: 26px;
+						width: 29px;
+					}
+
+					.icon-list {
+						background: url(../images/custom/control_panel_icons.png) no-repeat;
+						height: 24px;
+						margin-top: 3px;
+						width: 24px;
+					}
+
+					.icon-th {
+						background: url(../images/custom/apps_icons.png) no-repeat;
+						height: 26px;
+						width: 29px;
+					}
+
+					.icon-user {
+						background: url(../images/custom/users_icons.png) no-repeat;
+						height: 26px;
+						width: 40px;
+					}
+				}
+			}
+		}
+	}
+
+	/* General Nav */
+
+	.nav-list {
+		li > a {
+			&:hover {
+				background: #E5F5FC;
+				color: #009AE5;
+			}
+		}
+
+		> .active > a {
+			background: #60BFEF;
+
+			&:hover {
+				background: #60BFEF;
+			}
+		}
+	}
+
+	.lfr-control-panel-help-content.alert {
+		border-width: 1px 0;
+		margin-bottom: 1em;
+	}
+
+	.portlet-title {
+		color: #8D8D8D;
+		font-size: 25px;
+		font-weight: lighter;
 	}
 
 	.panel-manage-frontpage {
@@ -43,7 +367,7 @@
 
 			.control-panel-back-link {
 				display: inline-block;
-				line-height: 0;
+				line-height: 44px;
 				text-decoration: none;
 				vertical-align: middle;
 
@@ -77,49 +401,102 @@
 		}
 	}
 
-	.panel-page-menu .portlet-borderless-container {
-		background: #222;
+	/* Panel Page Menu (Site Pages Side Navigation) */
 
-		.accordion {
-			background: #FFF;
-			margin-bottom: 0;
+	.control-panel-tools {
+		.search-panels {
+			.control-group {
+				margin: 0 10px 11px;
+			}
+		}
+	}
 
-			.accordion-group {
+	.panel-page-menu {
+		.portlet-static.portlet-static-end {
+			background: url(../images/custom/fade-border-d1d1d1.png) no-repeat right top #FCFCFC;
+			background-size: 5px;
+			padding-top: 15px;
+		}
+
+		.portlet-borderless-container {
+			background: #FCFCFC;
+			border-right: 1px solid #D1D1D1;
+			padding: 0px 0 0;
+
+			.accordion {
 				background: #FFF;
-				border-width: 1px 0 0;
 				margin-bottom: 0;
 
-				.accordion-inner {
-					padding-left: 0;
-					padding-right: 0;
-				}
+				.accordion-group {
+					background: #FFF;
+					border: 1px solid #D1D1D1;
+					border-width: 1px 0 0;
+					margin-bottom: 0;
 
-				.category-portlets {
-					list-style: none;
-					margin: 0;
-
-					li {
-						a {
-							display: block;
-							padding: 3px 15px;
-
-							&:focus, &:hover {
-								background-color: #F3F3F3;
-							}
+					&:last-child {
+						.toggler-header-collapsed {
+							border-bottom: 1px solid #D1D1D1;
 						}
+					}
 
-						&.selected-portlet {
-							background: #222;
-							color: #FFF;
+					.accordion-heading {
+						cursor: pointer;
 
+						.accordion-toggle {
+							font-size: 16px;
+							font-weight: 300;
+							padding: 0;
+							text-transform: capitalize;
+						}
+					}
+
+					.accordion-inner {
+						background: #FCFCFC;
+						border: 1px solid #D1D1D1;
+						border-width: 1px 0 0 0;
+						padding: 6px 0 15px;
+					}
+
+					.category-portlets {
+						list-style: none;
+						margin: 0;
+
+						li {
 							a {
-								color: #FFF;
+								display: block;
+								font-size: 14px;
+								padding: 3px 15px;
+								text-decoration: none;
 
-								&:hover{
-									background: #222;
-									color: #3EA9DB;
+								&:focus, &:hover {
+									background: #E5F5FC;
+									color: #009AE5;
 								}
 							}
+
+							&.selected-portlet {
+								a {
+									background: #60BFEF;
+									color: #FFF;
+								}
+							}
+						}
+					}
+
+					.toggler-header {
+						background: #F2F2F2;
+						padding: 6px 10px;
+					}
+
+					.toggler-header-collapsed {
+						.accordion-toggle {
+							background: url(../images/custom/arrow_option_closed.png) no-repeat right center transparent;
+						}
+					}
+
+					.toggler-header-expanded {
+						.accordion-toggle {
+							background: url(../images/custom/arrow_option_open.png) no-repeat right center transparent;
 						}
 					}
 				}
@@ -141,92 +518,256 @@
 				display: inline-block;
 			}
 		}
+
+		.search-panels-bar {
+			.control-group {
+				margin-bottom: 13px;
+
+				.search-panels-input {
+					border-color: #CACACA;
+
+					&:focus {
+						border-color: rgba(0, 172, 255, 0.8);
+					}
+				}
+			}
+
+			.overlay-on-input {
+				color: #D4D4D4;
+				font-weight: 100;
+				margin-left: 20px;
+				margin-top: 8px;
+				position: absolute;
+			}
+
+			input {
+				padding-left: 33px;
+			}
+		}
 	}
 
-	.lfr-control-panel-help-content.alert {
-		border-width: 1px 0;
-		margin-bottom: 1em;
+	/* Single site admin */
+
+	.form-navigator.well {
+		background: #FCFCFC;
 	}
 
-	/* ---------- Extras ---------- */
+	.panel-manage-frontpage {
+		#controlPanelSiteHeading {
+			border-bottom: 1px solid #CFCFCF;
+			float: left;
+			padding: 17px 20px 5px;
+			position: relative;
+			z-index: 10;
 
-	.dockbar:after {
-		$stripe: transparent;
-		$stripe_alt: #C2B362;
+			a:hover {
+				text-decoration: none;
+			}
 
-		background-image: linear-gradient(
-			45deg,
-			$stripe 25%,
-			$stripe_alt 25%,
-			$stripe_alt 50%,
-			$stripe 50%,
-			$stripe 75%,
-			$stripe_alt 75%
-		);
+			.control-panel-back-link {
+				color: #30C8EE;
+				float: left;
+				font-size: 20px;
+				height: auto;
+				margin-right: 5px;
+				text-decoration: none;
+				width: auto;
+			}
 
-		background-size: 35px 35px;
-	}
+			.site-title {
+				color: #555;
+				font-size: 25px;
+				font-weight: 300;
+				margin-bottom: 5px;
+				padding: 0 28px 0 12px;
+				text-transform: capitalize;
+			}
 
-	.panel-page-menu .portlet-borderless-container {
-		border-radius: 2px;
-		box-shadow: 0 0 3px #000 inset;
+			.visit-links {
+				font-size: 12px;
+				padding: 0 0 0 36px;
 
-		.accordion .accordion-group {
-			border-radius: 0;
+				ul {
+					color: #8D8D8D;
+					list-style: none;
+					margin: 0;
 
-			.accordion-heading {
-				&.toggler-header-collapsed, &.toggler-header-expanded {
-					border-radius: 0;
+					li {
+						float: left;
+						margin-right: 5px;
+
+						&.divider:before {
+							content: "/";
+							margin: 0 5px;
+						}
+					}
 				}
 			}
 		}
 
-		.search-panels-input {
-			border-radius: 2px;
+		.form-navigator.well {
+			border: 1px solid #D1D1D1;
+			border-width: 0 0 0 1px;
+
+			.nav-header {
+				background: #F3F3F3;
+				font-size: 14px;
+				font-weight: lighter;
+				text-transform: capitalize;
+			}
 		}
 	}
 
-	.lfr-control-panel-help-content {
-		border-radius: 0;
-	}
-
-	.control-panel-bar-main {
-		font-size: 1.2em;
-		font-weight: bold;
-		margin-bottom: 5px;
-	}
-
-	.control-panel-bar-secondary {
-		margin-bottom: 5px;
-	}
-
-	.control-panel-home-actions {
-		margin-top: 100px;
-	}
-
-	.control-panel-home-actions .control-panel-home-actions-category {
-	    border-top: solid 1px #009ec3;
-		padding-top: 10px;
-	}
-
-    .control-panel-home-category-header {
-	    border-bottom: solid 1px #009ec3;
-	    color: #009ec3;
-	    margin-bottom: 30px;
-    }
-
-	.control-panel-home-menu {
-		margin-top: 40px;
-	}
-
-	.control-panel-home-menu li {
-		list-style: none;
-		margin-bottom: 15px;
-	}
+	/* Control Panel General */
 
 	.control-panel-site-selector .caret {
 		border-width: 6px;
 		margin-top: 5px;
 		vertical-align: middle;
+	}
+
+	.lfr-ctrl-panel {
+		.lfr-meta-actions {
+			margin-right: 0;
+		}
+	}
+
+	/* Vocabularies select box in sites categories */
+
+	.portlet-asset-category-admin {
+		.categories-admin-select-search {
+			margin: 0 10px 0 0;
+		}
+
+		.control-group {
+			margin-bottom: 0;
+		}
+	}
+
+	/* ---------- My Account Popup ---------- */
+
+	button {
+		&.delete-logo, &.edit-logo {
+			color: #777;
+			background: #EEE;
+			@include box-shadow(0 2px 2px -1px #CBCBCB);
+		}
+	}
+
+	.datepicker-button-wrapper {
+		margin: 0 5px;
+
+		button {
+			background: #EEE;
+			border: 1px solid #DDD;
+			color: #777;
+			line-height: normal;
+			margin-top: 6px;
+			padding: 7px;
+			@include border-radius(4px);
+
+			&:hover {
+				background: #F4F4F4;
+				color: #333;
+			}
+		}
+	}
+
+	/* ---------- Extras ---------- */
+
+	.dropdown-menu {
+		@include box-shadow(none);
+	}
+
+	.panel-page-menu .portlet-borderless-container {
+		.accordion .accordion-group {
+			@inclucd border-radius(0);
+			@include box-shadow(-3px 0px 2px -2px #F5F5F5);
+
+			.accordion-heading {
+				&.toggler-header-collapsed, &.toggler-header-expanded {
+					@include border-radius(0);
+				}
+			}
+		}
+
+		.search-panels-input {
+			@include border-radius(0);
+		}
+	}
+
+	.lfr-control-panel-help-content {
+		@include border-radius(0);
+	}
+
+	.control-panel-home-actions-category {
+		.btn {
+			@include box-shadow(0 1px 0 1px #AAA);
+		}
+
+		.btn-primary {
+			@include box-shadow(0 1px 0 1px #007CE9);
+		}
+	}
+
+	.control-panel-bar-secondary.nav-pills {
+		li {
+			a {
+				@include border-radius(4px);
+			}
+		}
+	}
+
+	/* Dockbar */
+
+	.dockbar {
+		.navbar-inner {
+			@include background-image(linear-gradient(top, $dockbarGradientStart 0%,$dockbarGradientEnd 100%));
+			@include filter-gradient($dockbarGradientStart, $dockbarGradientStart, vertical);
+
+			ul.nav-account-controls {
+				li.open {
+					> .dropdown-toggle {
+						@include filter-gradient($dockbarOpenGradientStart, $dockbarOpenGradientEnd, vertical);
+						$experimental-support-for-svg: true;
+						@include background-image(linear-gradient(top, $dockbarOpenGradientStart 0%,$dockbarOpenGradientEnd 100%));
+						@include box-shadow(none);
+					}
+				}
+			}
+
+			ul.nav-add-controls {
+				> li {
+					a {
+						&:hover {
+							@include border-radius(4px);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	.nav-list {
+		> .active > a {
+			@include text-shadow(none);
+		}
+	}
+
+	.panel-page-menu {
+		.portlet-static.portlet-static-end {
+			@include box-shadow(3px 0px 2px -2px #F5F5F5);
+		}
+	}
+
+	.panel-manage-frontpage {
+		#controlPanelSiteHeading {
+			@include box-shadow(0 3px 4px -3px #DFDFDF);
+		}
+
+		.form-navigator.well {
+			@include border-radius(0);
+			@include box-shadow(-3px 0px 2px -2px #F5F5F5);
+		}
 	}
 }

@@ -117,6 +117,26 @@
 		}
 	}
 
+	/* Help Icon */
+
+	.taglib-icon-help {
+		background: url(../../control_panel/images/custom/taglib-icon-help.png) no-repeat 0 -15px;
+		display: inline-block;
+		height: 13px;
+		vertical-align: top;
+
+		&:hover {
+			background-position: 0 -1px;
+			cursor: pointer;
+		}
+
+		img {
+			margin-top: -2px;
+			opacity: 0;
+			vertical-align: top;
+		}
+	}
+
 	/* ---------- Dockbar ---------- */
 
 	.dockbar {

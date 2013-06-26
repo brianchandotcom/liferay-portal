@@ -159,7 +159,7 @@ request.setAttribute("control_panel.jsp-ppid", ppid);
 						<c:otherwise>
 							<aui:container cssClass="<%= panelCategory %>">
 								<aui:row>
-									<div id="controlPanelSiteHeading">
+									<div class="span12" id="controlPanelSiteHeading">
 										<c:if test="<%= showControlPanelMenu %>">
 
 											<%

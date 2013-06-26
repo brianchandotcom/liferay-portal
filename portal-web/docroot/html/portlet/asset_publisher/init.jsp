@@ -62,11 +62,7 @@ page import="com.liferay.util.xml.DocUtil" %>
 <%
 String portletResource = ParamUtil.getString(request, "portletResource");
 
-String selectionStyle = portletPreferences.getValue("selectionStyle", null);
-
-if (Validator.isNull(selectionStyle)) {
-	selectionStyle = "dynamic";
-}
+String selectionStyle = GetterUtil.getString(portletPreferences.getValue("selectionStyle", null), "dynamic");
 
 long[] groupIds = AssetPublisherUtil.getGroupIds(portletPreferences, scopeGroupId, layout);
 

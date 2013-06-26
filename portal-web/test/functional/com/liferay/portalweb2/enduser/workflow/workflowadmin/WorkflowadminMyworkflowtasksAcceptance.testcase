@@ -1,4 +1,6 @@
 <definition>
+	<var name="workflowAssetType" value="Blogs Entry" />
+
 	<set-up>
 		<execute macro="User#pgFirstLogin" />
 
@@ -19,14 +21,14 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="${entryTitle}" />
-			<var name="workflowAssetType" value="Blogs Entry" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Workflow#approveTaskByDetails">
 			<var name="workflowAssetContent" value="${entryContent}" />
 			<var name="workflowAssetTitle" value="${entryTitle}" />
-			<var name="workflowAssetType" value="Blogs Entry" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -48,7 +50,7 @@
 		<execute macro="Workflow#assignToMeTaskByDetails">
 			<var name="workflowAssetContent" value="${entryContent}" />
 			<var name="workflowAssetTitle" value="${entryTitle}" />
-			<var name="workflowAssetType" value="Blogs Entry" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -69,20 +71,20 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="${entryTitle}" />
-			<var name="workflowAssetType" value="Blogs Entry" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Workflow#rejectTaskByDetails">
 			<var name="workflowAssetContent" value="${entryContent}" />
 			<var name="workflowAssetTitle" value="${entryTitle}" />
-			<var name="workflowAssetType" value="Blogs Entry" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Workflow#viewRejectTask">
 			<var name="workflowAssetTitle" value="${entryTitle}" />
-			<var name="workflowAssetType" value="Blogs Entry" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 		</execute>
 
 		<execute macro="BlogsEntry#viewCPWithWorkflow">

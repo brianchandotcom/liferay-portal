@@ -21,7 +21,7 @@
 	</command>
 
 	<command name="addCPWithWorkflow">
-		<execute macro="Page#cpGotoContent">
+		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />
 		</execute>
 
@@ -148,7 +148,7 @@
 	</command>
 
 	<command name="viewCP">
-		<execute macro="Page#cpGotoContent">
+		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />
 		</execute>
 
@@ -164,7 +164,7 @@
 	</command>
 
 	<command name="viewCPWithWorkflow">
-		<execute macro="Page#cpGotoContent">
+		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />
 		</execute>
 

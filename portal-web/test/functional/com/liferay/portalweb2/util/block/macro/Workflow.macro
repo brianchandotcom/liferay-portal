@@ -124,7 +124,7 @@
 	</command>
 
 	<command name="configurePortalWorkflow">
-		<execute macro="Page#cpGotoConfiguration">
+		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Workflow" />
 		</execute>
 
@@ -136,7 +136,7 @@
 	</command>
 
 	<command name="configureSiteWorkflow">
-		<execute macro="Page#cpGotoContent">
+		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Workflow Configuration" />
 		</execute>
 
@@ -206,7 +206,7 @@
 	</command>
 
 	<command name="tearDownPortalWorkflow">
-		<execute macro="Page#cpGotoConfiguration">
+		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Workflow" />
 		</execute>
 
@@ -225,7 +225,7 @@
 	</command>
 
 	<command name="tearDownSiteWorkflow">
-		<execute macro="Page#cpGotoContent">
+		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Workflow Configuration" />
 		</execute>
 

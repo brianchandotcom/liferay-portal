@@ -81,6 +81,32 @@ public class SessionAuthToken implements AuthToken {
 			request, PortletPermissionUtil.getPrimaryKey(plid, portletId));
 	}
 
+	@Override
+	public boolean isPortletInvocationTokenValid(
+		HttpServletRequest request, long plid, String portletId,
+		String strutsAction, String tokenValue) {
+
+		long companyId = PortalUtil.getCompanyId(request);
+
+		if (AuthTokenWhitelistUtil.isPortletInvocationWhitelisted(
+				companyId, portletId, strutsAction)) {
+
+			return true;
+		}
+
+		if (Validator.isNotNull(tokenValue)) {
+			String key = PortletPermissionUtil.getPrimaryKey(plid, portletId);
+
+			String sessionToken = getSessionAuthenticationToken(request, key);
+
+			if (sessionToken.equals(tokenValue)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	protected String getSessionAuthenticationToken(
 		HttpServletRequest request, String key) {
 

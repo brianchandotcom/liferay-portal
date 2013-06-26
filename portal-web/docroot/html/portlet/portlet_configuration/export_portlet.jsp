@@ -364,8 +364,6 @@ Layout exportableLayout = ExportImportHelperUtil.getExportableLayout(themeDispla
 </aui:script>
 
 <aui:script>
-	Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA + "_" + selPortlet.getRootPortletId() %>Checkbox', '<portlet:namespace />portletDataControls');
-
 	Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PERMISSIONS %>Checkbox', '<portlet:namespace />permissionsUl');
 
 	Liferay.Util.toggleRadio('<portlet:namespace />rangeDateRange', '<portlet:namespace />startEndDate');

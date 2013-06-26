@@ -1,8 +1,9 @@
+<a class="brand $logo_css_class" href="$site_default_url" title="#language ("go-to") $site_name">
+	<img alt="$logo_description" height="$site_logo_height" src="$site_logo" width="$site_logo_width" />
+</a>
+
 <nav class="$nav_css_class navbar site-navigation" id="navigation">
 	<div class="navbar-inner">
-		<a class="brand $logo_css_class" href="$site_default_url" title="#language ("go-to") $site_name">
-			<img alt="$logo_description" height="$site_logo_height" src="$site_logo" width="$site_logo_width" />
-		</a>
 
 		<ul class="nav nav-collapse">
 			#foreach ($nav_item in $nav_items)
@@ -17,7 +18,7 @@
 				#end
 
 				#if ($nav_item.hasChildren())
-					#set($nav_item_caret='<b class="caret"></b>')
+					#set($nav_item_caret='<b class="icon-caret-down"></b>')
 					#set($nav_item_css_class="$nav_item_css_class dropdown")
 					#set($nav_item_link_css_class="dropdown-toggle")
 				#end

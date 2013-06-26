@@ -34,7 +34,7 @@ PortletURL redirectURL = (PortletURL)request.getAttribute("edit_pages.jsp-redire
 int mdrRuleGroupInstancesCount = MDRRuleGroupInstanceServiceUtil.getRuleGroupInstancesCount(className, classPK);
 %>
 
-<aui:input checked="<%= mdrRuleGroupInstancesCount == 0 %>" disabled="<%= mdrRuleGroupInstancesCount > 0 %>" id="inheritRuleGroupInstances" label='<%= LanguageUtil.format(pageContext, "use-the-same-mobile-device-rule-groups-of-the-x-x", new String[] {HtmlUtil.escape(rootNodeName), redirectURL.toString()}) %>' name="inheritRuleGroupInstances" type="radio" value="<%= true %>" />
+<aui:input checked="<%= mdrRuleGroupInstancesCount == 0 %>" disabled="<%= mdrRuleGroupInstancesCount > 0 %>" id="inheritRuleGroupInstances" label='<%= LanguageUtil.format(pageContext, "use-the-same-mobile-device-rule-groups-of-the-x-x", new String[] {HtmlUtil.escape(rootNodeName), redirectURL.toString() + "#tab=mobileDeviceRules"}) %>' name="inheritRuleGroupInstances" type="radio" value="<%= true %>" />
 
 <aui:input checked="<%= mdrRuleGroupInstancesCount > 0 %>" id="uniqueRuleGroupInstances" label="define-specific-mobile-rule-groups-for-this-page" name="inheritRuleGroupInstances" type="radio" value="<%= false %>" />
 

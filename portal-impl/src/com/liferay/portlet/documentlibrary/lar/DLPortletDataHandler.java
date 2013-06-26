@@ -233,9 +233,6 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 			portletPreferences.getValue("rootFolderId", null));
 
 		if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			rootElement.addAttribute(
-				"root-folder-id", String.valueOf(rootFolderId));
-
 			Folder folder = DLAppLocalServiceUtil.getFolder(rootFolderId);
 
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
@@ -257,7 +254,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		long rootFolderId = GetterUtil.getLong(
-			portletPreferences.getValue("root-folder-id", null));
+			portletPreferences.getValue("rootFolderId", null));
 
 		if (rootFolderId > 0) {
 			String rootFolderPath = ExportImportPathUtil.getModelPath(

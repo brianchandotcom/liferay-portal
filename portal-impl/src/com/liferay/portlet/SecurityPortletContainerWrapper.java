@@ -418,14 +418,6 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 			strutsAction = ParamUtil.getString(request, "struts_action");
 		}
 
-		long companyId = PortalUtil.getCompanyId(request);
-
-		if (_authTokenWhitelist.isPortletInvocationWhitelisted(
-				companyId, portletId, strutsAction)) {
-
-			return true;
-		}
-
 		String requestPortletAuthenticationToken = ParamUtil.getString(
 			request, "p_p_auth");
 
@@ -437,15 +429,11 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 				originalRequest, "p_p_auth");
 		}
 
-		if (Validator.isNotNull(requestPortletAuthenticationToken)) {
-			String actualPortletAuthenticationToken = AuthTokenUtil.getToken(
-				request, themeDisplay.getPlid(), portletId);
+		if (AuthTokenUtil.isPortletInvocationTokenValid(
+				request, themeDisplay.getPlid(), portletId, strutsAction,
+			requestPortletAuthenticationToken)) {
 
-			if (requestPortletAuthenticationToken.equals(
-					actualPortletAuthenticationToken)) {
-
-				return true;
-			}
+			return true;
 		}
 
 		return false;

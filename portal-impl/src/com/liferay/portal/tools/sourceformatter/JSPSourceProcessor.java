@@ -287,6 +287,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 					"while (", ") {\n"
 				});
 
+			newContent = fixCompatClassImports(fileName, newContent);
+
 			if (stripJSPImports) {
 				try {
 					newContent = stripJSPImports(fileName, newContent);
@@ -822,62 +824,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			fileName, line, variableName, includeFileNames, checkedFileNames);
 	}
 
-	protected boolean isClassOrVariableRequired(
-		String fileName, String line, String name, Set<String> includeFileNames,
-		Set<String> checkedFileNames) {
-
-		if (checkedFileNames.contains(fileName)) {
-			return false;
-		}
-
-		checkedFileNames.add(fileName);
-
-		String content = _jspContents.get(fileName);
-
-		content = StringUtil.replace(content, line, StringPool.BLANK);
-
-		if (Validator.isNull(content)) {
-			return false;
-		}
-
-		Pattern pattern = Pattern.compile(
-			"[^A-Za-z0-9_]" + name + "[^A-Za-z0-9_]");
-
-		Matcher matcher = pattern.matcher(content);
-
-		if (matcher.find()) {
-			return true;
-		}
-
-		addJSPIncludeFileNames(fileName, includeFileNames);
-
-		String docrootPath = fileName.substring(
-			0, fileName.indexOf("docroot") + 7);
-
-		fileName = fileName.replaceFirst(docrootPath, StringPool.BLANK);
-
-		if (fileName.endsWith("init.jsp") ||
-			fileName.contains("init-ext.jsp")) {
-
-			addJSPReferenceFileNames(fileName, includeFileNames);
-		}
-
-		String[] includeFileNamesArray = includeFileNames.toArray(
-			new String[includeFileNames.size()]);
-
-		for (String includeFileName : includeFileNamesArray) {
-			if (!checkedFileNames.contains(includeFileName) &&
-				isClassOrVariableRequired(
-					includeFileName, line, name, includeFileNames,
-					checkedFileNames)) {
-
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	protected boolean isJSPAttributName(String attributeName) {
 		if (Validator.isNull(attributeName)) {
 			return false;
@@ -933,6 +879,62 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		includeFileName = docrootPath + includeFileName;
 
 		return isJSPDuplicateImport(includeFileName, importLine, true);
+	}
+
+	protected boolean isClassOrVariableRequired(
+		String fileName, String line, String name, Set<String> includeFileNames,
+		Set<String> checkedFileNames) {
+
+		if (checkedFileNames.contains(fileName)) {
+			return false;
+		}
+
+		checkedFileNames.add(fileName);
+
+		String content = _jspContents.get(fileName);
+
+		content = StringUtil.replace(content, line, StringPool.BLANK);
+
+		if (Validator.isNull(content)) {
+			return false;
+		}
+
+		Pattern pattern = Pattern.compile(
+			"[^A-Za-z0-9_]" + name + "[^A-Za-z0-9_]");
+
+		Matcher matcher = pattern.matcher(content);
+
+		if (matcher.find()) {
+			return true;
+		}
+
+		addJSPIncludeFileNames(fileName, includeFileNames);
+
+		String docrootPath = fileName.substring(
+			0, fileName.indexOf("docroot") + 7);
+
+		fileName = fileName.replaceFirst(docrootPath, StringPool.BLANK);
+
+		if (fileName.endsWith("init.jsp") ||
+			fileName.contains("init-ext.jsp")) {
+
+			addJSPReferenceFileNames(fileName, includeFileNames);
+		}
+
+		String[] includeFileNamesArray = includeFileNames.toArray(
+			new String[includeFileNames.size()]);
+
+		for (String includeFileName : includeFileNamesArray) {
+			if (!checkedFileNames.contains(includeFileName) &&
+				isClassOrVariableRequired(
+					includeFileName, line, name, includeFileNames,
+					checkedFileNames)) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	protected String sortJSPAttributes(

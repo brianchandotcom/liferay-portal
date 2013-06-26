@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>ADD</td>
-	<td>//span[@title='Add']/ul/li/strong/a/span</td>
+	<td>//div[@class='navbar-inner']//li/a[contains(.,'Add')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -30,12 +30,12 @@
 </tr>
 <tr>
 	<td>SEARCH_BUTTON</td>
-	<td>//input[@value='Search']</td>
+	<td>//button[contains(.,'Search')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='portlet-msg-success']</td>
+	<td>//div[@class='alert alert-success']</td>
 	<td></td>
 </tr>
 <tr>
@@ -51,17 +51,17 @@
 <!--ADD_MENULIST-->
 <tr>
 	<td>ADD_MENULIST_REGULAR_ROLE</td>
-	<td>//a[@role='menuitem' and contains(.,'Regular Role')]</td>
+	<td>//ul[@class='dropdown-menu ']/li/a[contains(.,'Regular Role')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_MENULIST_SITE_ROLE</td>
-	<td>//a[@role='menuitem' and contains(.,'Site Role')]</td>
+	<td>//ul[@class='dropdown-menu ']/li/a[contains(.,'Site Role')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_MENULIST_ORGANIZATION_ROLE</td>
-	<td>//a[@role='menuitem' and contains(.,'Organization Role')]</td>
+	<td>//ul[@class='dropdown-menu ']/li/a[contains(.,'Organization Role')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -82,7 +82,7 @@
 </tr>
 <tr>
 	<td>ROLE_TABLE_ACTIONS_1</td>
-	<td>xpath=(//tr/td[4]/span[@title='Actions']/ul/li/strong/a/span)[1]</td>
+	<td>xpath=(//tr/td[4]/div/a[@title='Actions'])[1]</td>
 	<td></td>
 </tr>
 <tr>

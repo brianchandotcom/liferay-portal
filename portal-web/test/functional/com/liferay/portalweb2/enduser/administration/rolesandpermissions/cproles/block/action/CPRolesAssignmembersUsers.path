@@ -20,17 +20,17 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='portlet-msg-success']</td>
+	<td>//div[@class='alert alert-success']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>INFO_MESSAGE</td>
-	<td>//div[@class='portlet-msg-info']</td>
+	<td>//div[@class='alert alert-info']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>UPDATE_ASSOCIATIONS_BUTTON</td>
-	<td>//input[@value='Update Associations']</td>
+	<td>//button[contains(.,'Update Associations')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -41,12 +41,12 @@
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_EDIT</td>
-	<td>link=Edit</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_DEFINE_PERMISSION</td>
-	<td>link=Define Permissions</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Define Permissions')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -57,22 +57,22 @@
 <!--MEMBERS-->
 <tr>
 	<td>MEMBERS_USERS</td>
-	<td>//a[@class='aui-tab-label' and contains(.,'Users')]</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Users')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MEMBERS_SITES</td>
-	<td>//a[@class='aui-tab-label' and contains(.,'Sites')]</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Sites')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MEMBERS_ORGANIZATIONS</td>
-	<td>//a[@class='aui-tab-label' and contains(.,'Organizations')]</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Organizations')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MEMBERS_USER_GROUPS</td>
-	<td>//a[@class='aui-tab-label' and contains(.,'User Groups')]</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'User Groups')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -83,12 +83,12 @@
 <!--STATUS-->
 <tr>
 	<td>STATUS_CURRENT</td>
-	<td>//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Current')]</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Current')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>STATUS_AVAILABLE</td>
-	<td>//ul[@class='aui-tabview-list']/li/span/a[contains(.,'Available')]</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Available')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -104,12 +104,12 @@
 </tr>
 <tr>
 	<td>BASIC_SEARCH_BUTTON</td>
-	<td>xpath=(//input[@value='Search'])[1]</td>
+	<td>//button[contains(.,'Search')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BASIC_SEARCH_ADVANCED</td>
-	<td>//a[contains(.,'Advanced')]</td>
+	<td>//button[@id='toggle_id_users_admin_user_searchtoggleAdvanced']</td>
 	<td></td>
 </tr>
 <tr>
@@ -151,16 +151,6 @@
 <tr>
 	<td>ADVANCED_SEARCH_STATUS_SELECT</td>
 	<td>//select[@id='_128_status']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADVANCED_SEARCH_BUTTON</td>
-	<td>xpath=(//input[@value='Search'])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADVANCED_SEARCH_BASIC</td>
-	<td>//a[contains(.,'Basic')]</td>
 	<td></td>
 </tr>
 <tr>

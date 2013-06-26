@@ -41,11 +41,12 @@
      public Object addDebuggerListener(DebuggerListener listener)
 --- a/src/main/java/freemarker/debug/EnvironmentSuspendedEvent.java
 +++ src/freemarker/debug/EnvironmentSuspendedEvent.java
-@@ -12,17 +12,29 @@
+@@ -12,17 +12,36 @@
  {
      private static final long serialVersionUID = 1L;
  
-+    private final String name;
++    private final String templateName;
++    private final long threadId;
      private final int line;
      private final DebuggedEnvironment env;
  
@@ -53,7 +54,8 @@
 +    public EnvironmentSuspendedEvent(Object source, String templateName, int line, DebuggedEnvironment env)
      {
          super(source);
-+        this.name = templateName;
++        this.templateName = templateName;
++        this.threadId = Thread.currentThread().getId();
          this.line = line;
          this.env = env;
      }
@@ -63,9 +65,14 @@
 +     * was suspended
 +     * @return String the template name
 +     */
-+    public String getName()
++    public String getTemplateName()
 +    {
-+        return this.name;
++        return this.templateName;
++    }
++
++    public long getThreadId()
++    {
++        return this.threadId;
 +    }
 +
 +    /**

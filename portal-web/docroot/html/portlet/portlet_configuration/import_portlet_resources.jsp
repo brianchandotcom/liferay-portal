@@ -18,6 +18,10 @@
 
 <%
 Layout exportableLayout = ExportImportHelperUtil.getExportableLayout(themeDisplay);
+
+FileEntry fileEntry = ExportImportHelperUtil.getTempFileEntry(themeDisplay.getScopeGroupId(), themeDisplay.getUserId(), ExportImportHelper.TEMP_FOLDER_NAME + selPortlet.getPortletId());
+
+ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user.getUserId(), themeDisplay.getSiteGroupId(), new HashMap<String, String[]>(), fileEntry);
 %>
 
 <portlet:actionURL var="importPortletActionURL">
@@ -40,6 +44,41 @@ Layout exportableLayout = ExportImportHelperUtil.getExportableLayout(themeDispla
 	<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
 
 	<div class="export-dialog-tree">
+		<aui:fieldset cssClass="options-group" label="file">
+			<dl class="import-file-details">
+				<dt>
+					<liferay-ui:message key="name" />
+				</dt>
+				<dd>
+					<%= fileEntry.getTitle() %>
+				</dd>
+				<dt>
+					<liferay-ui:message key="export" />
+				</dt>
+				<dd>
+
+					<%
+					Date exportDate = manifestSummary.getExportDate();
+					%>
+
+					<span onmouseover="Liferay.Portal.ToolTip.show(this, '<%= dateFormatDateTime.format(exportDate) %>')">
+						<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(pageContext, System.currentTimeMillis() - exportDate.getTime(), true) %>" key="x-ago" />
+					</span>
+				</dd>
+				<dt>
+					<liferay-ui:message key="author" />
+				</dt>
+				<dd>
+					<%= fileEntry.getUserName() %>
+				</dd>
+				<dt>
+					<liferay-ui:message key="size" />
+				</dt>
+				<dd>
+					<%= fileEntry.getSize() / 1024 %>k
+				</dd>
+			</dl>
+		</aui:fieldset>
 
 		<%
 		PortletDataHandler portletDataHandler = selPortlet.getPortletDataHandlerInstance();

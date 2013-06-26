@@ -238,6 +238,7 @@
 	}
 
 	.lfr-header-row-content {
+		padding-left: 0;
 		padding-top: 0;
 
 		.edit-toolbar {

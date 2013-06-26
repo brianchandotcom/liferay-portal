@@ -1140,7 +1140,7 @@
 		<icon>/html/icons/asset_categories_navigation.png</icon>
 		<struts-path>asset_categories_navigation</struts-path>
 		<configuration-action-class>com.liferay.portal.kernel.portlet.DefaultConfigurationAction</configuration-action-class>
-		<portlet-data-handler-class>com.liferay.portlet.assetcategoriesnavigation.lar.AssetCategoriesNavitagionPortletDataHandler</portlet-data-handler-class>
+		<portlet-data-handler-class>com.liferay.portlet.assetcategoriesnavigation.lar.AssetCategoriesNavigationPortletDataHandler</portlet-data-handler-class>
         <template-handler>com.liferay.portlet.assetcategoriesnavigation.template.AssetCategoriesNavigationPortletDisplayTemplateHandler</template-handler>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>

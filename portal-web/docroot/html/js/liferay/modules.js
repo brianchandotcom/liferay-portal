@@ -318,7 +318,7 @@ window.YUI_config = {
 					requires: [
 						'aui-event-base'
 					]
-				},				
+				},
 				'liferay-layout': {
 					path: 'layout.js'
 				},

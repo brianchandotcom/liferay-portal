@@ -17,7 +17,7 @@ AUI.add(
 
 				ATTRS: {
 					filter: {
-						validator: A.isArray,
+						validator: A.Lang.isArray,
 						value: [
 							KeyMap.ESC,
 							KeyMap.LEFT,
@@ -42,9 +42,7 @@ AUI.add(
 						var validAction = (event.type === 'click');
 
 						if (!validAction) {
-							var keyCodeIndex = AArray.indexOf(instance.get('filter'), event.keyCode);
-
-							validAction = keyCodeIndex > -1;
+							validAction = (AArray.indexOf(instance.get('filter'), event.keyCode) > -1);
 						}
 
 						if (!validAction) {

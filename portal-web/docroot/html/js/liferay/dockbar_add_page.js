@@ -74,9 +74,7 @@ AUI.add(
 								header: SELECTOR_TOGGLER_HEADER,
 								transition: instance.get(STR_TRANSITION)
 							}
-						);
-
-						instance._togglerDelegate.plug(Liferay.TogglerKeyFilter);
+						).plug(Liferay.TogglerKeyFilter);
 
 						instance._addForm = instance.byId(STR_ADD_PAGE_FORM);
 

@@ -58,7 +58,7 @@ public class SystemEventLocalServiceImpl
 			companyId = group.getCompanyId();
 		}
 
-		return doAddSystemEvent(
+		return addSystemEvent(
 			userId, companyId, groupId, className, classPK, classUuid,
 			referrerClassName, type, extraData, userName);
 	}
@@ -69,9 +69,9 @@ public class SystemEventLocalServiceImpl
 			String referrerClassName, int type, String extraData)
 		throws PortalException, SystemException {
 
-		return doAddSystemEvent(
-				0L, companyId, 0L, className, classPK, classUuid,
-				referrerClassName, type, extraData, StringPool.BLANK);
+		return addSystemEvent(
+			0, companyId, 0, className, classPK, classUuid, referrerClassName,
+			type, extraData, StringPool.BLANK);
 	}
 
 	@Override
@@ -106,15 +106,13 @@ public class SystemEventLocalServiceImpl
 			groupId, classNameId, classPK, type);
 	}
 
-	protected SystemEvent doAddSystemEvent(
+	protected SystemEvent addSystemEvent(
 			long userId, long companyId, long groupId, String className,
 			long classPK, String classUuid, String referrerClassName, int type,
 			String extraData, String userName)
-		throws SystemException {
+		throws PortalException, SystemException {
 
-		if (companyId == 0) {
-			throw new IllegalArgumentException("Unable to determine company");
-		}
+		companyPersistence.findByPrimaryKey(companyId);
 
 		long systemEventId = counterLocalService.increment();
 

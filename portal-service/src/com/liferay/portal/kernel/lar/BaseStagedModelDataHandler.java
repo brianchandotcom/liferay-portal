@@ -14,8 +14,11 @@
 
 package com.liferay.portal.kernel.lar;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.model.WorkflowedModel;
 
 /**
  * @author Mate Thurzo
@@ -34,6 +37,16 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 		if (portletDataContext.isPathExportedInScope(path)) {
 			return;
+		}
+
+		if (stagedModel instanceof WorkflowedModel) {
+			WorkflowedModel workflowedModel = (WorkflowedModel)stagedModel;
+
+			if (!ArrayUtil.contains(
+					getExportableStatuses(), workflowedModel.getStatus())) {
+
+				return;
+			}
 		}
 
 		try {
@@ -58,6 +71,11 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 	@Override
 	public String getDisplayName(T stagedModel) {
 		return stagedModel.getUuid();
+	}
+
+	@Override
+	public Integer[] getExportableStatuses() {
+		return new Integer[] {WorkflowConstants.STATUS_APPROVED};
 	}
 
 	@Override

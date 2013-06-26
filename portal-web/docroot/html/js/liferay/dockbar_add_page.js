@@ -74,7 +74,7 @@ AUI.add(
 								header: SELECTOR_TOGGLER_HEADER,
 								transition: instance.get(STR_TRANSITION)
 							}
-						);
+						).plug(Liferay.TogglerKeyFilter);
 
 						instance._addForm = instance.byId(STR_ADD_PAGE_FORM);
 
@@ -212,6 +212,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-loading-mask-deprecated', 'aui-parse-content', 'aui-toggler-delegate', 'liferay-dockbar', 'liferay-dockbar-add-base', 'liferay-dockbar-add-page-search']
+		requires: ['aui-loading-mask-deprecated', 'aui-parse-content', 'aui-toggler-delegate', 'liferay-dockbar', 'liferay-dockbar-add-base', 'liferay-dockbar-add-page-search', 'liferay-toggler-key-filter']
 	}
 );

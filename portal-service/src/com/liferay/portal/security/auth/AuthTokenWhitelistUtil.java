@@ -38,6 +38,12 @@ public class AuthTokenWhitelistUtil {
 		return getAuthTokenWhitelist().getPortletInvocationWhitelistActions();
 	}
 
+	public static boolean isPortletInvocationWhitelisted(
+		long companyId, String portletId, String strutsAction) {
+
+		return getAuthTokenWhitelist().isPortletInvocationWhitelisted(
+			companyId, portletId, strutsAction);
+	}
 
 	public static Set<String> resetPortletInvocationWhitelist() {
 		return getAuthTokenWhitelist().resetPortletInvocationWhitelist();

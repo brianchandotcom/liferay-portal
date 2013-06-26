@@ -230,7 +230,7 @@ public class LiferayFolder extends LiferayModel implements Folder {
 	public int hashCode() {
 		return _dlFolder.hashCode();
 	}
-	
+
 	@Override
 	public boolean hasInheritableLock() {
 		return _dlFolder.hasInheritableLock();

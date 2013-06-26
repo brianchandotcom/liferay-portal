@@ -1,6 +1,7 @@
 package ${packagePath}.model;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -128,6 +129,25 @@ public class ${entity.name}Wrapper implements ${entity.name}, ModelWrapper<${ent
 			}
 		</#if>
 	</#list>
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof ${entity.name}Wrapper)) {
+			return false;
+		}
+
+		${entity.name}Wrapper ${entity.varName}Wrapper = (${entity.name}Wrapper)obj;
+
+		if (Validator.equals(_${entity.varName}, ${entity.varName}Wrapper._${entity.varName})) {
+			return true;
+		}
+
+		return false;
+	}
 
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}

@@ -42,7 +42,9 @@ AUI.add(
 						var validAction = (event.type === 'click');
 
 						if (!validAction) {
-							validAction = (instance.get('filter').indexOf(event.keyCode) > -1);
+							var keyCodeIndex = AArray.indexOf(instance.get('filter'), event.keyCode);
+
+							validAction = keyCodeIndex > -1;
 						}
 
 						if (!validAction) {

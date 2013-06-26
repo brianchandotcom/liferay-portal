@@ -211,8 +211,8 @@
 		<execute action="CPDynamicdatalistsDatadefinitions#click" locator-key1="DATA_DEFINITION_TABLE_ACTIONS_1" />
 		<execute action="CPDynamicdatalistsDatadefinitions#click" locator-key1="DATA_DEFINITION_MENULIST_EDIT" />
 
-		<execute action="CPDynamicdatalistsDatadefinitionsEdit#type" locator-key1="NAME_FIELD" value1="${dataDefinitionNameNew}" />
-		<execute action="CPDynamicdatalistsDatadefinitionsEdit#type" locator-key1="DETAILS_DESCRIPTION_FIELD" value1="${dataDefinitionDescriptionNew}" />
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#type" locator-key1="NAME_FIELD" value1="${dataDefinitionNameEdit}" />
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#type" locator-key1="DETAILS_DESCRIPTION_FIELD" value1="${dataDefinitionDescriptionEdit}" />
 		<execute action="CPDynamicdatalistsDatadefinitionsEdit#click" locator-key1="SAVE_BUTTON" />
 
 		<execute action="CPDynamicdatalistsDatadefinitions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />

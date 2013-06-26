@@ -5,11 +5,11 @@
 	<set-up>
 		<execute macro="User#pgFirstLogin" />
 
-		<execute macro="Page#pgAdd">
+		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="Portlet#pgAdd">
+		<execute macro="Portlet#addPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="portletName" value="${portletName}" />
 		</execute>
@@ -75,9 +75,9 @@
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionName" value="Data Definition Name" />
 		<var name="listDescription" value="List Description" />
-		<var name="listDescriptionNew" value="List Description Edit" />
+		<var name="listDescriptionEdit" value="List Description Edit" />
 		<var name="listName" value="List Name" />
-		<var name="listNameNew" value="List Name Edit" />
+		<var name="listNameEdit" value="List Name Edit" />
 
 		<execute macro="DataDefinition#addCP">
 			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
@@ -92,14 +92,14 @@
 		</execute>
 
 		<execute macro="List#editPG">
-			<var name="listDescriptionNew" value="${listDescriptionNew}" />
+			<var name="listDescriptionEdit" value="${listDescriptionEdit}" />
 			<var name="listName" value="${listName}" />
-			<var name="listNameNew" value="${listNameNew}" />
+			<var name="listNameEdit" value="${listNameEdit}" />
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="List#viewPG">
-			<var name="listName" value="${listNameNew}" />
+			<var name="listName" value="${listNameEdit}" />
 			<var name="pageName" value="${pageName}" />
 		</execute>
 	</command>
@@ -110,7 +110,7 @@
 		<var name="listDescription" value="List Description" />
 		<var name="listName" value="List Name" />
 		<var name="recordText" value="Text" />
-		<var name="recordTextNew" value="Text Edit" />
+		<var name="recordTextEdit" value="Text Edit" />
 
 		<execute macro="DataDefinition#addCP">
 			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
@@ -133,13 +133,13 @@
 		<execute macro="ListRecord#editPG">
 			<var name="listName" value="${listName}" />
 			<var name="pageName" value="${pageName}" />
-			<var name="recordTextNew" value="${recordTextNew}" />
+			<var name="recordTextEdit" value="${recordTextEdit}" />
 		</execute>
 
 		<execute macro="ListRecord#viewPG">
 			<var name="listName" value="${listName}" />
 			<var name="pageName" value="${pageName}" />
-			<var name="recordText" value="${recordTextNew}" />
+			<var name="recordText" value="${recordTextEdit}" />
 		</execute>
 	</command>
 
@@ -229,6 +229,6 @@
 
 		<execute macro="DataDefinition#tearDownCP" />
 
-		<execute macro="Page#pgTearDown" />
+		<execute macro="Page#tearDownPG" />
 	</tear-down>
 </definition>

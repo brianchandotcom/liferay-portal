@@ -659,6 +659,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					"private static Log _log"
 				});
 
+			newContent = fixCompatClassImports(fileName, newContent);
+
 			newContent = stripJavaImports(newContent, packagePath, className);
 
 			newContent = StringUtil.replace(

@@ -311,25 +311,23 @@
 }
 
 .export-dialog-tree {
-	margin-bottom: 50px;
-
 	.comments-and-ratings {
 		margin-bottom: 1em;
 
 		legend {
-			border: 0;
-			border-top: 1px solid #E5E5E5;
+			border-top: solid #E5E5E5;
+			border-width: 1px 0 0;
 			font-size: 1em;
 			font-weight: normal;
 			line-height: 1em;
-			margin-bottom: 0.2em;
-			padding-top: 1em;
+			margin-bottom: 0.5em;
+			padding-top: 0.75em;
 		}
 	}
 
 	input.file-selector {
 		display: block;
-		margin: 0.5em 0 40px;
+		margin: 0.5em 0 1.5em;
 	}
 
 	.import-file-details {
@@ -352,16 +350,15 @@
 	}
 
 	.options-group {
-		margin-bottom: 40px;
-
 		.options {
 			background-color: #FAFAFA;
-			border-bottom: 1px solid #E4E4E4;
-			border-top: 1px solid #E4E4E4;
+			border: solid #E4E4E4;
+			border-width: 1px 0;
+			margin-top: 20px;
 		}
 
 		.select-options {
-			margin-left: 55px ;
+			margin-left: 20px ;
 			margin-top: 20px;
 		}
 	}
@@ -371,16 +368,19 @@
 	}
 
 	.portlet-list {
-		padding-bottom: 10px;
+		padding: 10px 0;
+
+		li.tree-item > ul {
+			margin-bottom: 1em;
+		}
 	}
 
-	.portlet-list li.tree-item {
-		margin-top: 20px;
+	.options ul.portlet-list > li.tree-item {
+		padding-left: 0;
 	}
 
 	.selected-labels {
-		color:#999;
-		display: inline;
+		color: #999;
 		font-style: italic;
 		margin-left: 0.5em;
 		margin-right: 0.5em;

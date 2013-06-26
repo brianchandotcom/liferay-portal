@@ -21,7 +21,9 @@ import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
+import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 
 import java.util.Enumeration;
@@ -45,7 +47,8 @@ public class AssetCategoriesNavigationPortletDataHandler
 			PortletPreferences portletPreferences, Element rootElement)
 		throws Exception {
 
-		return updateExportPortletPreferences(portletPreferences);
+		return updateExportPortletPreferences(
+			portletDataContext, portletPreferences, portletId, rootElement);
 	}
 
 	@Override
@@ -59,8 +62,12 @@ public class AssetCategoriesNavigationPortletDataHandler
 	}
 
 	protected PortletPreferences updateExportPortletPreferences(
-			PortletPreferences portletPreferences)
+			PortletDataContext portletDataContext,
+			PortletPreferences portletPreferences, String portletId,
+			Element rootElement)
 		throws Exception {
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
 
 		Enumeration<String> enu = portletPreferences.getNames();
 
@@ -69,7 +76,8 @@ public class AssetCategoriesNavigationPortletDataHandler
 
 			if (name.equals("assetVocabularyIds")) {
 				ExportImportHelperUtil.updateExportPortletPreferencesClassPKs(
-					portletPreferences, name, AssetVocabulary.class.getName());
+					portletDataContext, portlet, portletPreferences, name,
+					AssetVocabulary.class.getName(), rootElement);
 			}
 		}
 

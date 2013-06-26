@@ -22,7 +22,8 @@ import com.liferay.portal.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.notifications.UserNotificationInterpreter;
+import com.liferay.portal.kernel.notifications.UserNotificationHandler;
+import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
 import com.liferay.portal.kernel.poller.PollerProcessor;
 import com.liferay.portal.kernel.pop.MessageListener;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
@@ -73,8 +74,7 @@ import com.liferay.portal.poller.PollerProcessorUtil;
 import com.liferay.portal.pop.POPServerUtil;
 import com.liferay.portal.security.permission.PermissionPropagator;
 import com.liferay.portal.service.PortletLocalServiceUtil;
-import com.liferay.portal.service.UserNotificationInterpreterLocalServiceUtil;
-import com.liferay.portal.service.impl.UserNotificationInterpreterImpl;
+import com.liferay.portal.notifications.UserNotificationHandlerImpl;
 import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
@@ -191,8 +191,8 @@ public class PortletBagFactory {
 				socialRequestInterpreterInstance);
 		}
 
-		List<UserNotificationInterpreter> userNotificationInterpreterInstances =
-			newUserNotificationInterpreterInstances(portlet);
+		List<UserNotificationHandler> userNotificationHandlerInstances =
+			newUserNotificationHandlerInstances(portlet);
 
 		WebDAVStorage webDAVStorageInstance = null;
 
@@ -339,7 +339,7 @@ public class PortletBagFactory {
 			pollerProcessorInstance, popMessageListenerInstance,
 			socialActivityInterpreterInstances,
 			socialRequestInterpreterInstance,
-			userNotificationInterpreterInstances, webDAVStorageInstance,
+			userNotificationHandlerInstances, webDAVStorageInstance,
 			xmlRpcMethodInstance, controlPanelEntryInstance,
 			assetRendererFactoryInstances, atomCollectionAdapterInstances,
 			customAttributesDisplayInstances, permissionPropagatorInstance,
@@ -939,45 +939,44 @@ public class PortletBagFactory {
 			URLEncoder.class, portlet.getURLEncoderClass());
 	}
 
-	protected UserNotificationInterpreter
-			newUserNotificationInterpreterInstance(
-				String userNotificationInterpreterClass)
+	protected UserNotificationHandler newUserNotificationHandlerInstance(
+			String userNotificationHandlerClass)
 		throws Exception {
 
-		UserNotificationInterpreter userNotificationInterpreterInstance =
-			(UserNotificationInterpreter)newInstance(
-				UserNotificationInterpreter.class,
-				userNotificationInterpreterClass);
+		UserNotificationHandler userNotificationHandlerInstance =
+			(UserNotificationHandler)newInstance(
+				UserNotificationHandler.class,
+				userNotificationHandlerClass);
 
-		userNotificationInterpreterInstance =
-			new UserNotificationInterpreterImpl(
-				userNotificationInterpreterInstance);
+		userNotificationHandlerInstance =
+			new UserNotificationHandlerImpl(
+				userNotificationHandlerInstance);
 
-		UserNotificationInterpreterLocalServiceUtil.
-			addUserNotificationInterpreter(userNotificationInterpreterInstance);
+		UserNotificationManagerUtil.
+			addUserNotificationHandler(userNotificationHandlerInstance);
 
-		return userNotificationInterpreterInstance;
+		return userNotificationHandlerInstance;
 	}
 
-	protected List<UserNotificationInterpreter>
-			newUserNotificationInterpreterInstances(Portlet portlet)
+	protected List<UserNotificationHandler> newUserNotificationHandlerInstances(
+			Portlet portlet)
 		throws Exception {
 
-		List<UserNotificationInterpreter> userNotificationInterpreterInstances =
-			new ArrayList<UserNotificationInterpreter>();
+		List<UserNotificationHandler> userNotificationHandlerInstances =
+			new ArrayList<UserNotificationHandler>();
 
-		for (String userNotificationInterpreterClass :
-				portlet.getUserNotificationInterpreterClasses()) {
+		for (String userNotificationHandlerClass :
+				portlet.getUserNotificationHandlerClasses()) {
 
-			UserNotificationInterpreter userNotificationInterpreterInstance =
-				newUserNotificationInterpreterInstance(
-					userNotificationInterpreterClass);
+			UserNotificationHandler userNotificationHandlerInstance =
+				newUserNotificationHandlerInstance(
+					userNotificationHandlerClass);
 
-			userNotificationInterpreterInstances.add(
-				userNotificationInterpreterInstance);
+			userNotificationHandlerInstances.add(
+				userNotificationHandlerInstance);
 		}
 
-		return userNotificationInterpreterInstances;
+		return userNotificationHandlerInstances;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(PortletBagFactory.class);

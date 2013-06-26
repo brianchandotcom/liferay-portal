@@ -1049,14 +1049,14 @@ public interface Portlet extends PortletModel, PersistedModel {
 	* @return the names of the classes that represent user notification
 	interpreters associated with the portlet
 	*/
-	public java.util.List<java.lang.String> getUserNotificationInterpreterClasses();
+	public java.util.List<java.lang.String> getUserNotificationHandlerClasses();
 
 	/**
 	* Returns the user notification interpreter instances of the portlet.
 	*
 	* @return the user notification interpreter instances of the portlet
 	*/
-	public java.util.List<com.liferay.portal.kernel.notifications.UserNotificationInterpreter> getUserNotificationInterpreterInstances();
+	public java.util.List<com.liferay.portal.kernel.notifications.UserNotificationHandler> getUserNotificationHandlerInstances();
 
 	/**
 	* Returns the user principal strategy of the portlet.
@@ -2181,12 +2181,12 @@ public interface Portlet extends PortletModel, PersistedModel {
 	* Sets the names of the classes that represent user notification
 	* interpreters associated with the portlet.
 	*
-	* @param userNotificationInterpreterClasses the names of the classes that
+	* @param userNotificationHandlerClasses the names of the classes that
 	represent user notification interpreters associated with the
 	portlet
 	*/
-	public void setUserNotificationInterpreterClasses(
-		java.util.List<java.lang.String> userNotificationInterpreterClasses);
+	public void setUserNotificationHandlerClasses(
+		java.util.List<java.lang.String> userNotificationHandlerClasses);
 
 	/**
 	* Sets the user principal strategy of the portlet.

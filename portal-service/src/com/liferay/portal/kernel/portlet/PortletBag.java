@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.portlet;
 import com.liferay.portal.kernel.atom.AtomCollectionAdapter;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.lar.StagedModelDataHandler;
-import com.liferay.portal.kernel.notifications.UserNotificationInterpreter;
+import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.poller.PollerProcessor;
 import com.liferay.portal.kernel.pop.MessageListener;
 import com.liferay.portal.kernel.search.Indexer;
@@ -103,8 +103,8 @@ public interface PortletBag extends Cloneable {
 
 	public URLEncoder getURLEncoderInstance();
 
-	public List<UserNotificationInterpreter>
-		getUserNotificationInterpreterInstances();
+	public List<UserNotificationHandler>
+	getUserNotificationHandlerInstances();
 
 	public WebDAVStorage getWebDAVStorageInstance();
 

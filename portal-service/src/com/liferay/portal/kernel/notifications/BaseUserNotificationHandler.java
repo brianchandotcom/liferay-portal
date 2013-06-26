@@ -23,8 +23,8 @@ import com.liferay.portal.service.ServiceContext;
 /**
  * @author Jonathan Lee
  */
-public abstract class BaseUserNotificationInterpreter
-	implements UserNotificationInterpreter {
+public abstract class BaseUserNotificationHandler
+	implements UserNotificationHandler {
 
 	@Override
 	public String getPortletId() {

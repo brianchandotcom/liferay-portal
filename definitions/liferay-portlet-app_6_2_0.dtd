@@ -21,7 +21,7 @@ url-encoder-class?, portlet-data-handler-class?,
 staged-model-data-handler-class*, template-handler?,
 portlet-layout-listener-class?, poller-processor-class?,
 pop-message-listener-class?, social-activity-interpreter-class*,
-social-request-interpreter-class?, user-notification-interpreter-class*,
+social-request-interpreter-class?, user-notification-handler-class*,
 webdav-storage-token?, webdav-storage-class?, xml-rpc-method-class?,
 control-panel-entry-category?, control-panel-entry-weight?,
 control-panel-entry-class?, asset-renderer-factory*, atom-collection-adapter*,
@@ -314,16 +314,16 @@ http://docs.liferay.com/portal/6.2/javadocs/portal-service/com/liferay/portlet/s
 <!ELEMENT social-request-interpreter-class (#PCDATA)>
 
 <!--
-The user-notification-interpreter-class value must be a class that implements
-com.liferay.portal.kernel.notifications.UserNotificationInterpreter and is
+The user-notification-handler-class value must be a class that implements
+com.liferay.portal.kernel.notifications.UserNotificationHandler is
 called to interpret requests into friendly messages that are easily
 understandable by a human being.
 
 See:
 
-http://docs.liferay.com/portal/6.2/javadocs/portal-service/com/liferay/portal/kernel/notifications/UserNotificationInterpreter.html
+http://docs.liferay.com/portal/6.2/javadocs/portal-service/com/liferay/portal/kernel/notifications/UserNotificationHandler.html
 -->
-<!ELEMENT user-notification-interpreter-class (#PCDATA)>
+<!ELEMENT user-notification-handler-class (#PCDATA)>
 
 <!--
 The webdav-storage-token value is the WebDAV directory name for data managed by

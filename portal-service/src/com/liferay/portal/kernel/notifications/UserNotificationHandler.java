@@ -21,7 +21,7 @@ import com.liferay.portal.service.ServiceContext;
 /**
  * @author Jonathan Lee
  */
-public interface UserNotificationInterpreter {
+public interface UserNotificationHandler {
 
 	public String getPortletId();
 

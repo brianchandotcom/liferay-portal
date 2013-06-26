@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.messageboards.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -464,6 +465,11 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_mbBan.persist();
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _mbBan.getStagedModelType();
 	}
 
 	/**

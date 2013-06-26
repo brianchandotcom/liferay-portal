@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.dynamicdatamapping.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -624,6 +625,11 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_ddmContent.persist();
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _ddmContent.getStagedModelType();
 	}
 
 	/**

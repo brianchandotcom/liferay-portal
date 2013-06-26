@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.journal.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -824,6 +825,11 @@ public class JournalFeedWrapper implements JournalFeed,
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_journalFeed.persist();
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _journalFeed.getStagedModelType();
 	}
 
 	/**

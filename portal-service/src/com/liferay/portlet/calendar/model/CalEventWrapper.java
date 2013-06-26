@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.calendar.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -861,6 +862,11 @@ public class CalEventWrapper implements CalEvent, ModelWrapper<CalEvent> {
 	public void setRecurrenceObj(
 		com.liferay.portal.kernel.cal.TZSRecurrence recurrenceObj) {
 		_calEvent.setRecurrenceObj(recurrenceObj);
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _calEvent.getStagedModelType();
 	}
 
 	/**

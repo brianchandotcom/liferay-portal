@@ -2595,13 +2595,13 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layouts = ListUtil.sort(
 			layouts, new LayoutPriorityComparator(layout, lessThan));
 
-		priority = 0;
+		int newPriority = LayoutConstants.FIRST_PRIORITY;
 
 		for (Layout curLayout : layouts) {
 			int curNextPriority = layoutLocalServiceHelper.getNextPriority(
 				layout.getGroupId(), layout.isPrivateLayout(),
 				layout.getParentLayoutId(),
-				curLayout.getSourcePrototypeLayoutUuid(), priority++);
+				curLayout.getSourcePrototypeLayoutUuid(), newPriority++);
 
 			if (curLayout.getPriority() == curNextPriority) {
 				continue;

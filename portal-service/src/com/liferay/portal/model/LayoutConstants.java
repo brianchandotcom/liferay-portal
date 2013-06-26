@@ -23,6 +23,8 @@ public class LayoutConstants {
 
 	public static final long DEFAULT_PLID = 0;
 
+	public static final int FIRST_PRIORITY = 0;
+
 	public static final int FRIENDLY_URL_MAX_LENGTH = 255;
 
 	public static final String NAME_CONTROL_PANEL_DEFAULT = "Control Panel";

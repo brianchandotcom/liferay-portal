@@ -199,6 +199,22 @@ public class PortletPreferencesLocalServiceImpl
 	}
 
 	@Override
+	public long getPortletPreferencesCount(int ownerType, String portletId)
+		throws SystemException {
+
+		return portletPreferencesPersistence.countByO_P(ownerType, portletId);
+	}
+
+	@Override
+	public long getPortletPreferencesCount(
+			long ownerId, int ownerType, String portletId)
+		throws SystemException {
+
+		return portletPreferencesPersistence.countByO_O_PI(
+			ownerId, ownerType, portletId);
+	}
+
+	@Override
 	public long getPortletPreferencesCount(
 			long companyId, long groupId, long ownerId, int ownerType,
 			long plid, Portlet portlet, boolean privateLayout)

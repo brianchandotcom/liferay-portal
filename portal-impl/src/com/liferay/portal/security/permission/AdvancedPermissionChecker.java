@@ -1116,7 +1116,8 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 				organization = parentOrganization;
 			}
 		}
-		else if (group.isSite()) {
+
+		if (group.isSite()) {
 			while (!group.isRoot()) {
 				Group parentGroup = group.getParentGroup();
 

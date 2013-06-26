@@ -227,20 +227,20 @@ if (fieldParamSelection.equals("0")) {
 		DEFAULTS_FORM_VALIDATOR.RULES,
 		{
 			<portlet:namespace />dateFormat: function(val, fieldNode, ruleValue) {
-				if (REGEX_DATE.test(val) === false) {
-					return false;
+				var validDate = (REGEX_DATE.test(val) === true);
+
+				if (validDate) {
+					var dateValue = A.Date.parse(val);
+
+					if (fieldNode === customRangeFrom) {
+						dateFrom = dateValue;
+					}
+					else if (fieldNode === customRangeTo) {
+						dateTo = dateValue;
+					}
 				}
 
-				var dateValue = A.Date.parse(val);
-
-				if (fieldNode === customRangeFrom) {
-					dateFrom = dateValue;
-				}
-				else if (fieldNode === customRangeTo) {
-					dateTo = dateValue;
-				}
-
-				return true;
+				return validDate;
 			},
 
 			<portlet:namespace />dateRange: function(val, fieldNode, ruleValue) {

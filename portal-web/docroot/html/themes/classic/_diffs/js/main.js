@@ -23,10 +23,6 @@ AUI().ready(
 
 					var signInURL = event.currentTarget.attr('href');
 
-					var redirectPage = function() {
-						A.config.win.location = signInURL;
-					};
-
 					A.io.request(
 						signInURL,
 						{
@@ -35,11 +31,13 @@ AUI().ready(
 								success: function(event, id, obj) {
 									var responseData = this.get('responseData');
 
+									var modal;
+
 									if (responseData) {
-										var renderData = new A.Node(responseData).one('#portlet_58 .portlet-body');
+										var renderData = A.Node.create(responseData).one('#portlet_58 .portlet-body');
 
 										if (renderData) {
-											new A.Modal(
+											modal = new A.Modal(
 												{
 													bodyContent: renderData,
 													centered: true,
@@ -50,12 +48,10 @@ AUI().ready(
 												}
 											).render();
 										}
-										else {
-											redirectPage();
-										}
 									}
-									else {
-										redirectPage();
+
+									if (!modal) {
+										A.config.win.location.href = signInURL;
 									}
 								}
 							}

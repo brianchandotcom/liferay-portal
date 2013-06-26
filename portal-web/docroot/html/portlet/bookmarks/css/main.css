@@ -1,6 +1,7 @@
 .portlet-bookmarks {
 	.lfr-asset-url {
 		margin: 1em 0 0.3em;
+		word-break: break-all;
 	}
 
 	.folder-search {
@@ -10,5 +11,11 @@
 
 	.lfr-panel-content {
 		overflow: auto;
+	}
+
+	tbody {
+		tr > td:first-child + td {
+			word-break: break-all;
+		}
 	}
 }

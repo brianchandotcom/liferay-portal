@@ -45,7 +45,7 @@ public class JSONWebServiceRegistrator {
 		_jsonWebServiceNaming = new JSONWebServiceNaming();
 
 		_jsonWebServiceMappingResolver = new JSONWebServiceMappingResolver(
-					_jsonWebServiceNaming);
+			_jsonWebServiceNaming);
 	}
 
 	public JSONWebServiceRegistrator(
@@ -55,7 +55,6 @@ public class JSONWebServiceRegistrator {
 
 		_jsonWebServiceMappingResolver = new JSONWebServiceMappingResolver(
 			_jsonWebServiceNaming);
-
 	}
 
 	public void processAllBeans(String contextPath, BeanLocator beanLocator) {

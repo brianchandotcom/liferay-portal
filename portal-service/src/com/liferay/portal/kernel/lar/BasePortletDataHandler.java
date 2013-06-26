@@ -24,8 +24,13 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
+import com.liferay.portal.util.PortletKeys;
 
 import java.io.IOException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.portlet.PortletPreferences;
 
@@ -99,23 +104,76 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 
 	@Override
 	public PortletDataHandlerControl[] getConfigurationControls(
-		Portlet portlet) {
+			long companyId, long groupId, Portlet portlet,
+			boolean privateLayout)
+		throws Exception {
+
+		return getConfigurationControls(
+			companyId, groupId, portlet, -1, privateLayout);
+	}
+
+	@Override
+	public PortletDataHandlerControl[] getConfigurationControls(
+			long companyId, long groupId, Portlet portlet, long plid,
+			boolean privateLayout)
+		throws Exception {
 
 		if (Validator.isNull(portlet.getConfigurationActionClass())) {
 			return null;
 		}
 
-		return new PortletDataHandlerBoolean[] {
-			new PortletDataHandlerBoolean(
-				null, PortletDataHandlerKeys.PORTLET_SETUP, "setup", true,
-				false, null, null, null),
-			new PortletDataHandlerBoolean(
-				null, PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS,
-				"archived-setups", true, false, null, null, null),
-			new PortletDataHandlerBoolean(
-				null, PortletDataHandlerKeys.PORTLET_USER_PREFERENCES,
-				"user-preferences", true, false, null, null, null)
-		};
+		List<PortletDataHandlerBoolean> configurationControls =
+			new ArrayList<PortletDataHandlerBoolean>();
+
+		// Setup
+
+		if ((PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
+				companyId, groupId, PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, portlet,
+				privateLayout) > 0) ||
+			(PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
+				groupId, PortletKeys.PREFS_OWNER_TYPE_GROUP,
+				portlet.getRootPortletId()) > 0) ||
+			(PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
+				companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY,
+				portlet.getRootPortletId()) > 0)) {
+
+				configurationControls.add(
+					new PortletDataHandlerBoolean(
+						null, PortletDataHandlerKeys.PORTLET_SETUP, "setup",
+						true, false, null, null, null));
+		}
+
+		// Archived Setups
+
+		if (PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
+				PortletKeys.PREFS_OWNER_TYPE_ARCHIVED,
+				portlet.getRootPortletId()) > 0) {
+
+			configurationControls.add(
+				new PortletDataHandlerBoolean(
+					null, PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS,
+					"archived-setups", true, false, null, null, null)
+			);
+		}
+
+		// User Preferences
+
+		if ((PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
+				companyId, groupId, -1, PortletKeys.PREFS_OWNER_TYPE_USER, plid,
+				portlet, privateLayout) > 0) ||
+			(PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
+				companyId, groupId, groupId, PortletKeys.PREFS_OWNER_TYPE_USER,
+				PortletKeys.PREFS_PLID_SHARED, portlet, privateLayout) > 0)) {
+
+			configurationControls.add(
+				new PortletDataHandlerBoolean(
+					null, PortletDataHandlerKeys.PORTLET_USER_PREFERENCES,
+					"user-preferences", true, false, null, null, null));
+		}
+
+		return configurationControls.toArray(
+			new PortletDataHandlerBoolean[configurationControls.size()]);
 	}
 
 	@Override

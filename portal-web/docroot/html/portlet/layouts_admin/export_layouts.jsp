@@ -144,7 +144,9 @@ if (endDateTime > 0) {
 									for (Portlet portlet : portletDataHandlerPortlets) {
 										PortletDataHandler portletDataHandler = portlet.getPortletDataHandlerInstance();
 
-										if ((portletDataHandler != null) && (portletDataHandler.getConfigurationControls(portlet) != null)) {
+										PortletDataHandlerControl[] configurationControls = portletDataHandler.getConfigurationControls(company.getCompanyId(), groupId, portlet, privateLayout);
+
+										if (Validator.isNotNull(configurationControls)) {
 											String portletTitle = PortalUtil.getPortletTitle(portlet, application, locale);
 									%>
 
@@ -157,7 +159,7 @@ if (endDateTime > 0) {
 
 															<%
 															request.setAttribute("render_controls.jsp-action", Constants.EXPORT);
-															request.setAttribute("render_controls.jsp-controls", portletDataHandler.getConfigurationControls(portlet));
+															request.setAttribute("render_controls.jsp-controls", configurationControls);
 															request.setAttribute("render_controls.jsp-portletId", portlet.getRootPortletId());
 															%>
 

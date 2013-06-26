@@ -45,7 +45,9 @@
 			for (Portlet portlet : portletDataHandlerPortlets) {
 				PortletDataHandler portletDataHandler = portlet.getPortletDataHandlerInstance();
 
-				if (portletDataHandler.getConfigurationControls(portlet) == null) {
+				PortletDataHandlerControl[] configurationControls = portletDataHandler.getConfigurationControls(company.getCompanyId(), stagingGroupId, portlet, privateLayout);
+
+				if (Validator.isNull(configurationControls)) {
 					continue;
 				}
 
@@ -62,7 +64,7 @@
 
 									<%
 									request.setAttribute("render_controls.jsp-action", Constants.PUBLISH);
-									request.setAttribute("render_controls.jsp-controls", portletDataHandler.getConfigurationControls(portlet));
+									request.setAttribute("render_controls.jsp-controls", configurationControls);
 									request.setAttribute("render_controls.jsp-portletId", portlet.getRootPortletId());
 									%>
 

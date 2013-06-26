@@ -68,8 +68,15 @@ public interface PortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws PortletDataException;
 
-	public PortletDataHandlerControl[] getConfigurationControls(Portlet portlet)
-		throws PortletDataException;
+	public PortletDataHandlerControl[] getConfigurationControls(
+			long companyId, long groupId, Portlet portlet,
+			boolean privateLayout)
+		throws Exception;
+
+	public PortletDataHandlerControl[] getConfigurationControls(
+			long companyId, long groupId, Portlet portlet, long plid,
+			boolean privateLayout)
+		throws Exception;
 
 	public DataLevel getDataLevel();
 

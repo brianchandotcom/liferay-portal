@@ -39,9 +39,15 @@ Layout exportableLayout = ExportImportHelperUtil.getExportableLayout(themeDispla
 
 		<%
 		PortletDataHandler portletDataHandler = selPortlet.getPortletDataHandlerInstance();
+
+		PortletDataHandlerControl[] configurationControls = null;
+
+		if (portletDataHandler != null) {
+			configurationControls = portletDataHandler.getConfigurationControls(company.getCompanyId(), themeDisplay.getScopeGroupId(), selPortlet, exportableLayout.getPlid(), false);
+		}
 		%>
 
-		<c:if test="<%= (portletDataHandler != null) && (portletDataHandler.getConfigurationControls(selPortlet) != null) %>">
+		<c:if test="<%= Validator.isNotNull(configurationControls) %>">
 			<aui:fieldset cssClass="options-group" label="application">
 				<ul class="lfr-tree unstyled">
 					<li class="tree-item">
@@ -55,7 +61,7 @@ Layout exportableLayout = ExportImportHelperUtil.getExportableLayout(themeDispla
 
 									<%
 									request.setAttribute("render_controls.jsp-action", Constants.EXPORT);
-									request.setAttribute("render_controls.jsp-controls", portletDataHandler.getConfigurationControls(selPortlet));
+									request.setAttribute("render_controls.jsp-controls", configurationControls);
 									request.setAttribute("render_controls.jsp-portletId", selPortlet.getRootPortletId());
 									%>
 

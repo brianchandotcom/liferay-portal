@@ -34,7 +34,7 @@
 			width: 330px;
 		}
 
-	    .template-selector {
+		.template-selector {
 			margin-top: 1.5em;
 
 			legend {
@@ -43,7 +43,13 @@
 				font-size: 1em;
 				line-height: 1.5em;
 			}
-	    }
+
+			.lfr-page-layouts {
+				.layout-template-entry {
+					margin-left: 10px;
+				}
+			}
+		}
 
 		.accordion-inner {
 			padding-left: 0;
@@ -96,10 +102,22 @@
 			cursor: pointer;
 			margin-bottom: 20px;
 
-			.lfr-page-template-title label {
-				font-weight: bold;
-				margin-bottom: 5px;
-				padding: 2px;
+			.lfr-page-template-title {
+				label {
+					font-weight: bold;
+					margin-bottom: 5px;
+					padding: 2px;
+				}
+
+				&.toggler-header-collapsed {
+					.lfr-page-template-description {
+						height: 1.6em;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						white-space: nowrap;
+						width: 300px;
+					}
+				}
 			}
 
 			.lfr-page-template-options {

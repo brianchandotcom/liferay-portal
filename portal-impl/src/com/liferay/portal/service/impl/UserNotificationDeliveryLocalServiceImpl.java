@@ -26,14 +26,7 @@ import com.liferay.portal.service.base.UserNotificationDeliveryLocalServiceBaseI
 public class UserNotificationDeliveryLocalServiceImpl
 	extends UserNotificationDeliveryLocalServiceBaseImpl {
 
-	public UserNotificationDelivery addUserNotificationDelivery(
-			long userId, long classNameId, int type)
-		throws PortalException, SystemException {
-
-		return addUserNotificationDelivery(
-			userId, classNameId, type, false, false, false);
-	}
-
+	@Override
 	public UserNotificationDelivery addUserNotificationDelivery(
 			long userId, long classNameId, int type, boolean email, boolean sms,
 			boolean website)
@@ -59,12 +52,14 @@ public class UserNotificationDeliveryLocalServiceImpl
 			userNotificationDelivery);
 	}
 
+	@Override
 	public void deleteUserNotificationDeliveries(long userId)
 		throws SystemException {
 
 		userNotificationDeliveryPersistence.removeByUserId(userId);
 	}
 
+	@Override
 	public UserNotificationDelivery fetchUserNotificationDelivery(
 			long userId, long classNameId, int type)
 		throws SystemException {
@@ -73,6 +68,7 @@ public class UserNotificationDeliveryLocalServiceImpl
 			userId, classNameId, type);
 	}
 
+	@Override
 	public UserNotificationDelivery getUserNotificationDelivery(
 			long userId, long classNameId, int type, boolean email, boolean sms,
 			boolean website)
@@ -81,16 +77,15 @@ public class UserNotificationDeliveryLocalServiceImpl
 		UserNotificationDelivery userNotificationDelivery =
 			fetchUserNotificationDelivery(userId, classNameId, type);
 
-		if (userNotificationDelivery == null) {
-			userNotificationDelivery =
-				userNotificationDeliveryLocalService.
-					addUserNotificationDelivery(
-						userId, classNameId, type, email, sms, website);
+		if (userNotificationDelivery != null) {
+			return userNotificationDelivery;
 		}
 
-		return userNotificationDelivery;
+		return userNotificationDeliveryLocalService.addUserNotificationDelivery(
+			userId, classNameId, type, email, sms, website);
 	}
 
+	@Override
 	public UserNotificationDelivery updateUserNotificationDelivery(
 			long userId, long classNameId, int type, boolean email, boolean sms,
 			boolean website)

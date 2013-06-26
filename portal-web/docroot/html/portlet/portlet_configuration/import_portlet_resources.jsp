@@ -129,13 +129,17 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 			</aui:fieldset>
 		</c:if>
 
-		<c:if test="<%= portletDataHandler != null %>">
+		<%
+		long importModelCount = portletDataHandler.getExportModelCount(manifestSummary);
+		%>
+
+		<c:if test="<%= (importModelCount != 0) && (portletDataHandler != null) %>">
 			<aui:fieldset cssClass="options-group" label="content">
 				<ul class="lfr-tree unstyled">
 					<li class="tree-item">
 						<aui:input name="<%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>" type="hidden" value="<%= false %>" />
 
-						<aui:input label="content" name="<%= PortletDataHandlerKeys.PORTLET_DATA %>" type="checkbox" value="<%= portletDataHandler.isPublishToLiveByDefault() %>" />
+						<aui:input label='<%= LanguageUtil.get(pageContext, "content") + (importModelCount > 0 ? " (" + importModelCount + ")" : StringPool.BLANK) %>' name='<%= PortletDataHandlerKeys.PORTLET_DATA + "_" + selPortlet.getRootPortletId() %>' type="checkbox" value="<%= portletDataHandler.isPublishToLiveByDefault() %>" />
 
 						<%
 						PortletDataHandlerControl[] importControls = portletDataHandler.getImportControls();
@@ -165,6 +169,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 										<%
 										request.setAttribute("render_controls.jsp-action", Constants.IMPORT);
 										request.setAttribute("render_controls.jsp-controls", importControls);
+										request.setAttribute("render_controls.jsp-manifestSummary", manifestSummary);
 										request.setAttribute("render_controls.jsp-portletDisabled", !portletDataHandler.isPublishToLiveByDefault());
 										%>
 
@@ -229,7 +234,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 							</ul>
 
 							<aui:script>
-								Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA %>Checkbox', '<portlet:namespace />showChangeContent');
+								Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + selPortlet.getRootPortletId() %>Checkbox', '<portlet:namespace />showChangeContent');
 							</aui:script>
 
 						<%

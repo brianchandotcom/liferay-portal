@@ -66,6 +66,13 @@ public class BookmarksFolderExportActionableDynamicQuery
 	@Override
 	protected void addCriteria(DynamicQuery dynamicQuery) {
 		_portletDataContext.addDateRangeCriteria(dynamicQuery, "modifiedDate");
+
+		StagedModelDataHandler<?> stagedModelDataHandler = StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(BookmarksFolder.class.getName());
+
+		Property workflowStatusProperty = PropertyFactoryUtil.forName("status");
+
+		dynamicQuery.add(workflowStatusProperty.in(
+				stagedModelDataHandler.getExportableStatuses()));
 	}
 
 	protected long getModelDeletionCount()

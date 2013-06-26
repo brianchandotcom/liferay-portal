@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -670,6 +672,11 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	public void setSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties settingsProperties) {
 		_layoutSetPrototype.setSettingsProperties(settingsProperties);
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _layoutSetPrototype.getStagedModelType();
 	}
 
 	/**

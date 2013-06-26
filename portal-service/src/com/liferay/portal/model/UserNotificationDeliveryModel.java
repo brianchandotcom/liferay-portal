@@ -34,7 +34,8 @@ import java.io.Serializable;
  * @see com.liferay.portal.model.impl.UserNotificationDeliveryModelImpl
  * @generated
  */
-public interface UserNotificationDeliveryModel extends BaseModel<UserNotificationDelivery> {
+public interface UserNotificationDeliveryModel extends BaseModel<UserNotificationDelivery>,
+	TypedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -117,6 +118,7 @@ public interface UserNotificationDeliveryModel extends BaseModel<UserNotificatio
 	 *
 	 * @return the fully qualified class name of this user notification delivery
 	 */
+	@Override
 	public String getClassName();
 
 	public void setClassName(String className);
@@ -126,6 +128,7 @@ public interface UserNotificationDeliveryModel extends BaseModel<UserNotificatio
 	 *
 	 * @return the class name ID of this user notification delivery
 	 */
+	@Override
 	public long getClassNameId();
 
 	/**
@@ -133,6 +136,7 @@ public interface UserNotificationDeliveryModel extends BaseModel<UserNotificatio
 	 *
 	 * @param classNameId the class name ID of this user notification delivery
 	 */
+	@Override
 	public void setClassNameId(long classNameId);
 
 	/**

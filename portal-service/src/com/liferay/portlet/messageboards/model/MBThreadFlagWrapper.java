@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.messageboards.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -444,6 +445,11 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_mbThreadFlag.persist();
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _mbThreadFlag.getStagedModelType();
 	}
 
 	/**

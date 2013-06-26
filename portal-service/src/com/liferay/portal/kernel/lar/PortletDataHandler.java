@@ -81,7 +81,7 @@ public interface PortletDataHandler {
 	 */
 	public String[] getDataPortletPreferences();
 
-	public String[] getDeletionSystemEventClassNames();
+	public Object[] getDeletionSystemEventModelTypes();
 
 	/**
 	 * Returns an array of the controls defined for this data handler. These

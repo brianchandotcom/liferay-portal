@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.mobiledevicerules.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -554,6 +555,11 @@ public class MDRRuleGroupInstanceWrapper implements MDRRuleGroupInstance,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _mdrRuleGroupInstance.getRuleGroup();
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _mdrRuleGroupInstance.getStagedModelType();
 	}
 
 	/**

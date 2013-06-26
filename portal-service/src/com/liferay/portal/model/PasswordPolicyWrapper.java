@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -1207,6 +1209,11 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_passwordPolicy.persist();
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _passwordPolicy.getStagedModelType();
 	}
 
 	/**

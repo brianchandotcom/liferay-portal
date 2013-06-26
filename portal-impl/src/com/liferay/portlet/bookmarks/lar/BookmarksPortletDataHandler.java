@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
@@ -53,8 +54,9 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 
 	public BookmarksPortletDataHandler() {
 		setDataPortletPreferences("rootFolderId");
-		setDeletionSystemEventClassNames(
-			BookmarksEntry.class.getName(), BookmarksFolder.class.getName());
+		setDeletionSystemEventModelTypes(
+			new StagedModelType(BookmarksEntry.class),
+			new StagedModelType(BookmarksFolder.class));
 		setExportControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "entries", true, false, null,

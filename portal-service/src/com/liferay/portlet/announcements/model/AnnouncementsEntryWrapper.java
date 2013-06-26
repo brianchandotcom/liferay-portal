@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.announcements.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -692,6 +693,11 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _announcementsEntry.getGroupId();
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _announcementsEntry.getStagedModelType();
 	}
 
 	/**

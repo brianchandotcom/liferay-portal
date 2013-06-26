@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.messageboards.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -1029,6 +1030,11 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	@Override
 	public boolean isLocked() {
 		return _mbThread.isLocked();
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _mbThread.getStagedModelType();
 	}
 
 	/**

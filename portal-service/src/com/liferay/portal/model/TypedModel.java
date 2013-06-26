@@ -14,33 +14,15 @@
 
 package com.liferay.portal.model;
 
-import com.liferay.portal.kernel.lar.StagedModelType;
-
-import java.util.Date;
-
 /**
- * @author Michael C. Han
+ * @author Zsolt Berentey
  */
-public interface StagedModel extends ClassedModel {
+public interface TypedModel {
 
-	public Object clone();
+	public String getClassName();
 
-	public long getCompanyId();
+	public long getClassNameId();
 
-	public Date getCreateDate();
-
-	public Date getModifiedDate();
-
-	public StagedModelType getStagedModelType();
-
-	public String getUuid();
-
-	public void setCompanyId(long companyId);
-
-	public void setCreateDate(Date date);
-
-	public void setModifiedDate(Date date);
-
-	public void setUuid(String uuid);
+	public void setClassNameId(long classNameId);
 
 }

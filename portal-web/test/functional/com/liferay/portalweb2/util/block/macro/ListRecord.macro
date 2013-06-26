@@ -74,11 +74,11 @@
 	</command>
 
 	<command name="addPG">
-		<execute macro="Page#pgGoto">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute action="PGDynamicdatalists#assertClick" locator-key1="ADD_RECORD_BUTTON" />
+		<execute action="PGDynamicdatalists#click" locator-key1="ADD_RECORD_BUTTON" value1="Add" />
 
 		<execute macro="ListRecord#addTextCmdPG">
 			<var name="textNameLabel" value="text" />
@@ -147,7 +147,7 @@
 	</command>
 
 	<command name="deletePG">
-		<execute macro="Page#pgGoto">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -160,7 +160,7 @@
 
 	<command name="editBooleanCmdCP">
 		<execute macro="ListRecord#addBooleanCmdCP">
-			<var name="recordBoolean" value="${recordBooleanNew}" />
+			<var name="recordBoolean" value="${recordBooleanEdit}" />
 		</execute>
 	</command>
 
@@ -188,56 +188,56 @@
 
 	<command name="editDateCmdCP">
 		<execute macro="ListRecord#addDateCmdCP">
-			<var name="recordDateMonth" value="${recordDateMonthNew}" />
-			<var name="recordDateDay" value="${recordDateDayNew}" />
-			<var name="recordDateYear" value="${recordDateYearNew}" />
+			<var name="recordDateMonth" value="${recordDateMonthEdit}" />
+			<var name="recordDateDay" value="${recordDateDayEdit}" />
+			<var name="recordDateYear" value="${recordDateYearEdit}" />
 		</execute>
 	</command>
 
 	<command name="editDecimalCmdCP">
 		<execute macro="ListRecord#addDecimalCmdCP">
-			<var name="recordDecimal" value="${recordDecimalNew}" />
+			<var name="recordDecimal" value="${recordDecimalEdit}" />
 		</execute>
 	</command>
 
 	<command name="editDocumentsAndMediaCmdCP">
 		<execute macro="ListRecord#addDocumentsAndMediaCmdCP">
-			<var name="recordDocument" value="${recordDocumentNew}" />
+			<var name="recordDocument" value="${recordDocumentEdit}" />
 		</execute>
 	</command>
 
 	<command name="editFileUploadCmdCP">
 		<execute macro="ListRecord#addFileUploadCmdCP">
-			<var name="recordFileUpload" value="${recordFileUploadNew}" />
+			<var name="recordFileUpload" value="${recordFileUploadEdit}" />
 		</execute>
 	</command>
 
 	<command name="editHtmlCmdCP">
 		<execute macro="ListRecord#addHtmlCmdCP">
-			<var name="recordHtml" value="${recordHtmlNew}" />
+			<var name="recordHtml" value="${recordHtmlEdit}" />
 		</execute>
 	</command>
 
 	<command name="editIntegerCmdCP">
 		<execute macro="ListRecord#addIntegerCmdCP">
-			<var name="recordInteger" value="${recordIntegerNew}" />
+			<var name="recordInteger" value="${recordIntegerEdit}" />
 		</execute>
 	</command>
 
 	<command name="editLinkToPageCmdCP">
 		<execute macro="ListRecord#addLinkToPageCmdCP">
-			<var name="recordLinkToPage" value="${recordLinkToPageNew}" />
+			<var name="recordLinkToPage" value="${recordLinkToPageEdit}" />
 		</execute>
 	</command>
 
 	<command name="editNumberCmdCP">
 		<execute macro="ListRecord#addNumberCmdCP">
-			<var name="recordNumber" value="${recordNumberNew}" />
+			<var name="recordNumber" value="${recordNumberEdit}" />
 		</execute>
 	</command>
 
 	<command name="editPG">
-		<execute macro="Page#pgGoto">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -255,31 +255,31 @@
 
 	<command name="editRadioCmdCP">
 		<execute macro="ListRecord#addRadioCmdCP">
-			<var name="recordRadio" value="${recordRadioNew}" />
+			<var name="recordRadio" value="${recordRadioEdit}" />
 		</execute>
 	</command>
 
 	<command name="editSelectCmdCP">
 		<execute macro="ListRecord#addSelectCmdCP">
-			<var name="recordSelect" value="${recordSelectNew}" />
+			<var name="recordSelect" value="${recordSelectEdit}" />
 		</execute>
 	</command>
 
 	<command name="editTextCmdCP">
 		<execute macro="ListRecord#addTextCmdCP">
-			<var name="recordText" value="${recordTextNew}" />
+			<var name="recordText" value="${recordTextEdit}" />
 		</execute>
 	</command>
 
 	<command name="editTextCmdPG">
 		<execute macro="ListRecord#addTextCmdPG">
-			<var name="recordText" value="${recordTextNew}" />
+			<var name="recordText" value="${recordTextEdit}" />
 		</execute>
 	</command>
 
 	<command name="editTextBoxCmdCP">
 		<execute macro="ListRecord#addTextBoxCmdCP">
-			<var name="recordTextBox" value="${recordTextBoxNew}" />
+			<var name="recordTextBox" value="${recordTextBoxEdit}" />
 		</execute>
 	</command>
 
@@ -304,7 +304,7 @@
 		<execute action="CPDynamicdatalists#selectFrameTop" />
 	</command>
 	<command name="viewPG">
-		<execute macro="Page#pgGoto">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 

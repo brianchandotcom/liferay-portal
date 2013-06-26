@@ -1,8 +1,5 @@
 <definition>
 	<command name="assertClick">
-		<case locator-key1="ADD_RECORD_BUTTON">
-			<execute function="AssertClick#assertValueClickAtAndWait" />
-		</case>
 		<case comparator="startsWith" locator-key1="RECORD_TABLE_ACTIONS_">
 			<execute function="AssertClick#assertTextClickAt" />
 		</case>
@@ -12,11 +9,14 @@
 	</command>
 
 	<command name="click">
+		<case locator-key1="ADD_RECORD_BUTTON">
+			<execute function="Click#clickAtAndWait" />
+		</case>
 		<case locator-key1="TOOLBAR_ADD_LIST">
-			<execute function="Click#clickAtAndWait" value1="Add List" />
+			<execute function="Click#clickAtAndWait" />
 		</case>
 		<case locator-key1="TOOLBAR_SELECT_LIST">
-			<execute function="Click#clickAtAndWait" value1="Select List" />
+			<execute function="Click#clickAtAndWait" />
 		</case>
 	</command>
 </definition>

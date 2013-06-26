@@ -21,14 +21,10 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMappingResolver;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceNaming;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 import com.liferay.portal.util.PropsValues;
 
@@ -36,7 +32,6 @@ import java.lang.reflect.Method;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import org.springframework.aop.TargetSource;
 import org.springframework.aop.framework.AdvisedSupport;
@@ -45,6 +40,23 @@ import org.springframework.aop.framework.AdvisedSupport;
  * @author Igor Spasic
  */
 public class JSONWebServiceRegistrator {
+
+	public JSONWebServiceRegistrator() {
+		_jsonWebServiceNaming = new JSONWebServiceNaming();
+
+		_jsonWebServiceMappingResolver = new JSONWebServiceMappingResolver(
+					_jsonWebServiceNaming);
+	}
+
+	public JSONWebServiceRegistrator(
+		JSONWebServiceNaming jsonWebServiceNaming) {
+
+		_jsonWebServiceNaming = jsonWebServiceNaming;
+
+		_jsonWebServiceMappingResolver = new JSONWebServiceMappingResolver(
+			_jsonWebServiceNaming);
+
+	}
 
 	public void processAllBeans(String contextPath, BeanLocator beanLocator) {
 		if (beanLocator == null) {
@@ -61,9 +73,7 @@ public class JSONWebServiceRegistrator {
 	public void processBean(
 		String contextPath, BeanLocator beanLocator, String beanName) {
 
-		if (!PropsValues.JSON_WEB_SERVICE_ENABLED ||
-			!beanName.endsWith(_serviceClassNameSuffix)) {
-
+		if (!PropsValues.JSON_WEB_SERVICE_ENABLED) {
 			return;
 		}
 
@@ -90,11 +100,7 @@ public class JSONWebServiceRegistrator {
 	}
 
 	public void processBean(String contextPath, Object bean) {
-		String beanName = bean.getClass().getSimpleName();
-
-		if (!PropsValues.JSON_WEB_SERVICE_ENABLED ||
-			!beanName.endsWith(_serviceClassNameSuffix)) {
-
+		if (!PropsValues.JSON_WEB_SERVICE_ENABLED) {
 			return;
 		}
 
@@ -133,23 +139,19 @@ public class JSONWebServiceRegistrator {
 	protected Class<?> loadUtilClass(Class<?> implementationClass)
 		throws ClassNotFoundException {
 
+		if (_utilClasses == null) {
+			_utilClasses = new HashMap<Class<?>, Class<?>>();
+		}
+
 		Class<?> utilClass = _utilClasses.get(implementationClass);
 
 		if (utilClass != null) {
 			return utilClass;
 		}
 
-		String implementationClassName = implementationClass.getName();
-
-		if (implementationClassName.endsWith("Impl")) {
-			implementationClassName = implementationClassName.substring(
-				0, implementationClassName.length() - 4);
-		}
-
-		String utilClassName = implementationClassName + "Util";
-
-		utilClassName = StringUtil.replace(
-			utilClassName, ".impl.", StringPool.PERIOD);
+		String utilClassName =
+			_jsonWebServiceNaming.implClassNameToUtilClassName(
+				implementationClass);
 
 		ClassLoader classLoader = implementationClass.getClassLoader();
 
@@ -182,9 +184,7 @@ public class JSONWebServiceRegistrator {
 				continue;
 			}
 
-			if ((_excludedMethodNames != null) &&
-				_excludedMethodNames.contains(method.getName())) {
-
+			if (!_jsonWebServiceNaming.acceptMethod(method)) {
 				continue;
 			}
 
@@ -230,7 +230,7 @@ public class JSONWebServiceRegistrator {
 		String httpMethod = _jsonWebServiceMappingResolver.resolveHttpMethod(
 			method);
 
-		if (_invalidHttpMethods.contains(httpMethod)) {
+		if (!_jsonWebServiceNaming.acceptHttpMethod(httpMethod)) {
 			return;
 		}
 
@@ -265,15 +265,9 @@ public class JSONWebServiceRegistrator {
 	private static Log _log = LogFactoryUtil.getLog(
 		JSONWebServiceRegistrator.class);
 
-	private Set<String> _excludedMethodNames = SetUtil.fromArray(
-		new String[] {"getBeanIdentifier", "setBeanIdentifier"});
-	private Set<String> _invalidHttpMethods = SetUtil.fromArray(
-		PropsUtil.getArray(PropsKeys.JSONWS_WEB_SERVICE_INVALID_HTTP_METHODS));
-	private JSONWebServiceMappingResolver _jsonWebServiceMappingResolver =
-		new JSONWebServiceMappingResolver();
-	private String _serviceClassNameSuffix = "Service";
-	private Map<Class<?>, Class<?>> _utilClasses =
-		new HashMap<Class<?>, Class<?>>();
+	private final JSONWebServiceMappingResolver _jsonWebServiceMappingResolver;
+	private final JSONWebServiceNaming _jsonWebServiceNaming;
+	private Map<Class<?>, Class<?>> _utilClasses;
 	private boolean _wireViaUtil;
 
 }

@@ -309,7 +309,7 @@ if (endDateTime > 0) {
 										</ul>
 									</div>
 
-									<liferay-util:buffer var="selectedLabels">
+									<liferay-util:buffer var="selectedLabelsHTML">
 										<span class="selected-labels" id="<portlet:namespace />selectedRange"></span>
 
 										<aui:a cssClass="modify-link" href="javascript:;" id="rangeLink" label="change" method="get" />
@@ -318,7 +318,7 @@ if (endDateTime > 0) {
 									<liferay-ui:icon
 										image="calendar"
 										label="<%= true %>"
-										message='<%= LanguageUtil.get(locale, "date-range") + selectedLabels %>'
+										message='<%= LanguageUtil.get(locale, "date-range") + selectedLabelsHTML %>'
 									/>
 								</li>
 
@@ -359,11 +359,11 @@ if (endDateTime > 0) {
 
 											<c:if test="<%= exportModelCount != 0 %>">
 												<li class="tree-item">
-													<liferay-util:buffer var="count">
+													<liferay-util:buffer var="badgeHTML">
 														<span class="badge badge-info"><%= exportModelCount > 0 ? exportModelCount : StringPool.BLANK %></span>
 													</liferay-util:buffer>
 
-													<aui:input checked="<%= portletDataHandler.isPublishToLiveByDefault() %>" label="<%= portletTitle + count %>" name="<%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getPortletId() %>" type="checkbox" />
+													<aui:input checked="<%= portletDataHandler.isPublishToLiveByDefault() %>" label="<%= portletTitle + badgeHTML %>" name="<%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getPortletId() %>" type="checkbox" />
 
 													<%
 													PortletDataHandlerControl[] exportControls = portletDataHandler.getExportControls();

@@ -50,12 +50,16 @@ insert into Shard (shardId, classNameId, classPK, name) values ($counter.get(), 
 
 #set ($administratorRoleId = $counter.get())
 #set ($guestRoleId = $counter.get())
+#set ($ownerRoleId = $counter.get())
 #set ($powerUserRoleId = $counter.get())
+#set ($siteMemberRoleId = $counter.get())
 #set ($userRoleId = $counter.get())
 
 insert into Role_ (roleId, companyId, classNameId, classPK, name, description, type_) values ($administratorRoleId, $companyId, $roleClassNameId, $administratorRoleId, 'Administrator', '', 1);
 insert into Role_ (roleId, companyId, classNameId, classPK, name, description, type_) values ($guestRoleId, $companyId, $roleClassNameId, $guestRoleId, 'Guest', '', 1);
+insert into Role_ (roleId, companyId, classNameId, classPK, name, description, type_) values ($ownerRoleId, $companyId, $roleClassNameId, $ownerRoleId, 'Owner', '', 1);
 insert into Role_ (roleId, companyId, classNameId, classPK, name, description, type_) values ($powerUserRoleId, $companyId, $roleClassNameId, $powerUserRoleId, 'Power User', '', 1);
+insert into Role_ (roleId, companyId, classNameId, classPK, name, description, type_) values ($siteMemberRoleId, $companyId, $roleClassNameId, $siteMemberRoleId, 'Site Member', '', 1);
 insert into Role_ (roleId, companyId, classNameId, classPK, name, description, type_) values ($userRoleId, $companyId, $roleClassNameId, $userRoleId, 'User', '', 1);
 
 ##
@@ -104,6 +108,8 @@ insert into Layout (uuid_, plid, groupId, companyId, privateLayout, layoutId, pa
 insert into LayoutFriendlyURL (uuid_, layoutFriendlyURLId, groupId, companyId, userId, userName, createDate, modifiedDate, plid, privateLayout, friendlyURL, languageId) values ('$portalUUIDUtil.generate()', $counter.get(), $incGroupId, $companyId, $defaultUserId, '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, $incExtranetPlid, FALSE, '/$incGroupId', 'en_US');
 insert into LayoutFriendlyURL (uuid_, layoutFriendlyURLId, groupId, companyId, userId, userName, createDate, modifiedDate, plid, privateLayout, friendlyURL, languageId) values ('$portalUUIDUtil.generate()', $counter.get(), $incGroupId, $companyId, $defaultUserId, '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, $incIntranetPlid, TRUE, '/$incGroupId', 'en_US');
 
+insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, classUuid, classTypeId, visible, startDate, endDate, publishDate, expirationDate, mimeType, title, description, summary, url, layoutUuid, height, width, priority, viewCount) VALUES ($counter.get(), $incGroupId, $companyId, $testUserId, 'Joe Bloggs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 11, $incOrganizationId, '', 0, FALSE, NULL, NULL, NULL, NULL, '', 'Liferay, Inc.', '', '', '', 0, 0, 0, 0, 0);
+
 #set ($engineeringOrganizationId = $counter.get())
 #set ($engineeringGroupId = $counter.get())
 
@@ -113,6 +119,8 @@ insert into Group_ (groupId, companyId, creatorUserId, classNameId, classPK, par
 
 insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $engineeringGroupId, TRUE, FALSE, 'classic', '01', 0);
 insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $engineeringGroupId, FALSE, FALSE, 'classic', '01', 0);
+
+insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, classUuid, classTypeId, visible, startDate, endDate, publishDate, expirationDate, mimeType, title, description, summary, url, layoutUuid, height, width, priority, viewCount) VALUES ($counter.get(), $engineeringGroupId, $companyId, $testUserId, 'Joe Bloggs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 11, $engineeringOrganizationId, '', 0, FALSE, NULL, NULL, NULL, NULL, '', 'Liferay Engineering', '', '', '', 0, 0, 0, 0, 0);
 
 #set ($consultingOrganizationId = $counter.get())
 #set ($consultingGroupId = $counter.get())
@@ -124,6 +132,8 @@ insert into Group_ (groupId, companyId, creatorUserId, classNameId, classPK, par
 insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $consultingGroupId, TRUE, FALSE, 'classic', '01', 0);
 insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $consultingGroupId, FALSE, FALSE, 'classic', '01', 0);
 
+insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, classUuid, classTypeId, visible, startDate, endDate, publishDate, expirationDate, mimeType, title, description, summary, url, layoutUuid, height, width, priority, viewCount) VALUES ($counter.get(), $consultingGroupId, $companyId, $testUserId, 'Joe Bloggs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 11, $consultingOrganizationId, '', 0, FALSE, NULL, NULL, NULL, NULL, '', 'Liferay Consulting', '', '', '', 0, 0, 0, 0, 0);
+
 #set ($supportOrganizationId = $counter.get())
 #set ($supportGroupId = $counter.get())
 
@@ -133,6 +143,8 @@ insert into Group_ (groupId, companyId, creatorUserId, classNameId, classPK, par
 
 insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $supportGroupId, TRUE, FALSE, 'classic', '01', 0);
 insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $supportGroupId, FALSE, FALSE, 'classic', '01', 0);
+
+insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, classUuid, classTypeId, visible, startDate, endDate, publishDate, expirationDate, mimeType, title, description, summary, url, layoutUuid, height, width, priority, viewCount) VALUES ($counter.get(), $supportGroupId, $companyId, $testUserId, 'Joe Bloggs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 11, $supportOrganizationId, '', 0, FALSE, NULL, NULL, NULL, NULL, '', 'Liferay Support', '', '', '', 0, 0, 0, 0, 0);
 
 #set ($salesOrganizationId = $counter.get())
 #set ($salesGroupId = $counter.get())
@@ -144,6 +156,8 @@ insert into Group_ (groupId, companyId, creatorUserId, classNameId, classPK, par
 insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $salesGroupId, TRUE, FALSE, 'classic', '01', 0);
 insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $salesGroupId, FALSE, FALSE, 'classic', '01', 0);
 
+insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, classUuid, classTypeId, visible, startDate, endDate, publishDate, expirationDate, mimeType, title, description, summary, url, layoutUuid, height, width, priority, viewCount) VALUES ($counter.get(), $salesGroupId, $companyId, $testUserId, 'Joe Bloggs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 11, $salesOrganizationId, '', 0, FALSE, NULL, NULL, NULL, NULL, '', 'Liferay Sales', '', '', '', 0, 0, 0, 0, 0);
+
 #set ($marketingOrganizationId = $counter.get())
 #set ($marketingGroupId = $counter.get())
 
@@ -153,6 +167,8 @@ insert into Group_ (groupId, companyId, creatorUserId, classNameId, classPK, par
 
 insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $marketingGroupId, TRUE, FALSE, 'classic', '01', 0);
 insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $marketingGroupId, FALSE, FALSE, 'classic', '01', 0);
+
+insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, classUuid, classTypeId, visible, startDate, endDate, publishDate, expirationDate, mimeType, title, description, summary, url, layoutUuid, height, width, priority, viewCount) VALUES ($counter.get(), $marketingGroupId, $companyId, $testUserId, 'Joe Bloggs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 11, $marketingOrganizationId, '', 0, FALSE, NULL, NULL, NULL, NULL, '', 'Liferay Marketing', '', '', '', 0, 0, 0, 0, 0);
 
 ##
 ## Locations
@@ -168,6 +184,8 @@ insert into Group_ (groupId, companyId, creatorUserId, classNameId, classPK, par
 insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $laxGroupId, TRUE, FALSE, 'classic', '01', 0);
 insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $laxGroupId, FALSE, FALSE, 'classic', '01', 0);
 
+insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, classUuid, classTypeId, visible, startDate, endDate, publishDate, expirationDate, mimeType, title, description, summary, url, layoutUuid, height, width, priority, viewCount) VALUES ($counter.get(), $laxGroupId, $companyId, $testUserId, 'Joe Bloggs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 11, $laxLocationId, '', 0, FALSE, NULL, NULL, NULL, NULL, '', 'Liferay Los Angeles', '', '', '', 0, 0, 0, 0, 0);
+
 #set ($sfoLocationId = $counter.get())
 #set ($sfoGroupId = $counter.get())
 
@@ -177,6 +195,8 @@ insert into Group_ (groupId, companyId, creatorUserId, classNameId, classPK, par
 
 insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $sfoGroupId, TRUE, FALSE, 'classic', '01', 0);
 insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $sfoGroupId, FALSE, FALSE, 'classic', '01', 0);
+
+insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, classUuid, classTypeId, visible, startDate, endDate, publishDate, expirationDate, mimeType, title, description, summary, url, layoutUuid, height, width, priority, viewCount) VALUES ($counter.get(), $sfoGroupId, $companyId, $testUserId, 'Joe Bloggs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 11, $sfoLocationId, '', 0, FALSE, NULL, NULL, NULL, NULL, '', 'Liferay San Francisco', '', '', '', 0, 0, 0, 0, 0);
 
 #set ($ordLocationId = $counter.get())
 #set ($ordGroupId = $counter.get())
@@ -188,6 +208,8 @@ insert into Group_ (groupId, companyId, creatorUserId, classNameId, classPK, par
 insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $ordGroupId, TRUE, FALSE, 'classic', '01', 0);
 insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $ordGroupId, FALSE, FALSE, 'classic', '01', 0);
 
+insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, classUuid, classTypeId, visible, startDate, endDate, publishDate, expirationDate, mimeType, title, description, summary, url, layoutUuid, height, width, priority, viewCount) VALUES ($counter.get(), $ordGroupId, $companyId, $testUserId, 'Joe Bloggs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 11, $ordLocationId, '', 0, FALSE, NULL, NULL, NULL, NULL, '', 'Liferay Chicago', '', '', '', 0, 0, 0, 0, 0);
+
 #set ($nycLocationId = $counter.get())
 #set ($nycGroupId = $counter.get())
 
@@ -197,6 +219,8 @@ insert into Group_ (groupId, companyId, creatorUserId, classNameId, classPK, par
 
 insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $nycGroupId, TRUE, FALSE, 'classic', '01', 0);
 insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $nycGroupId, FALSE, FALSE, 'classic', '01', 0);
+
+insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, classUuid, classTypeId, visible, startDate, endDate, publishDate, expirationDate, mimeType, title, description, summary, url, layoutUuid, height, width, priority, viewCount) VALUES ($counter.get(), $nycGroupId, $companyId, $testUserId, 'Joe Bloggs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 11, $nycLocationId, '', 0, FALSE, NULL, NULL, NULL, NULL, '', 'Liferay New York', '', '', '', 0, 0, 0, 0, 0);
 
 #set ($gruLocationId = $counter.get())
 #set ($gruGroupId = $counter.get())
@@ -208,6 +232,8 @@ insert into Group_ (groupId, companyId, creatorUserId, classNameId, classPK, par
 insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $gruGroupId, TRUE, FALSE, 'classic', '01', 0);
 insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $gruGroupId, FALSE, FALSE, 'classic', '01', 0);
 
+insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, classUuid, classTypeId, visible, startDate, endDate, publishDate, expirationDate, mimeType, title, description, summary, url, layoutUuid, height, width, priority, viewCount) VALUES ($counter.get(), $gruGroupId, $companyId, $testUserId, 'Joe Bloggs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 11, $gruLocationId, '', 0, FALSE, NULL, NULL, NULL, NULL, '', 'Liferay Sao Paulo', '', '', '', 0, 0, 0, 0, 0);
+
 #set ($fraLocationId = $counter.get())
 #set ($fraGroupId = $counter.get())
 
@@ -217,6 +243,8 @@ insert into Group_ (groupId, companyId, creatorUserId, classNameId, classPK, par
 
 insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $fraGroupId, TRUE, FALSE, 'classic', '01', 0);
 insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $fraGroupId, FALSE, FALSE, 'classic', '01', 0);
+
+insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, classUuid, classTypeId, visible, startDate, endDate, publishDate, expirationDate, mimeType, title, description, summary, url, layoutUuid, height, width, priority, viewCount) VALUES ($counter.get(), $fraGroupId, $companyId, $testUserId, 'Joe Bloggs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 11, $fraLocationId, '', 0, FALSE, NULL, NULL, NULL, NULL, '', 'Liferay Frankfurt', '', '', '', 0, 0, 0, 0, 0);
 
 #set ($madLocationId = $counter.get())
 #set ($madGroupId = $counter.get())
@@ -228,6 +256,8 @@ insert into Group_ (groupId, companyId, creatorUserId, classNameId, classPK, par
 insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $madGroupId, TRUE, FALSE, 'classic', '01', 0);
 insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $madGroupId, FALSE, FALSE, 'classic', '01', 0);
 
+insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, classUuid, classTypeId, visible, startDate, endDate, publishDate, expirationDate, mimeType, title, description, summary, url, layoutUuid, height, width, priority, viewCount) VALUES ($counter.get(), $madGroupId, $companyId, $testUserId, 'Joe Bloggs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 11, $madLocationId, '', 0, FALSE, NULL, NULL, NULL, NULL, '', 'Liferay Madrid', '', '', '', 0, 0, 0, 0, 0);
+
 #set ($dlcLocationId = $counter.get())
 #set ($dlcGroupId = $counter.get())
 
@@ -237,6 +267,8 @@ insert into Group_ (groupId, companyId, creatorUserId, classNameId, classPK, par
 
 insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $dlcGroupId, TRUE, FALSE, 'classic', '01', 0);
 insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $dlcGroupId, FALSE, FALSE, 'classic', '01', 0);
+
+insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, classUuid, classTypeId, visible, startDate, endDate, publishDate, expirationDate, mimeType, title, description, summary, url, layoutUuid, height, width, priority, viewCount) VALUES ($counter.get(), $dlcGroupId, $companyId, $testUserId, 'Joe Bloggs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 11, $dlcLocationId, '', 0, FALSE, NULL, NULL, NULL, NULL, '', 'Liferay Dalian', '', '', '', 0, 0, 0, 0, 0);
 
 #set ($hkgLocationId = $counter.get())
 #set ($hkgGroupId = $counter.get())
@@ -248,6 +280,8 @@ insert into Group_ (groupId, companyId, creatorUserId, classNameId, classPK, par
 insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $hkgGroupId, TRUE, FALSE, 'classic', '01', 0);
 insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $hkgGroupId, FALSE, FALSE, 'classic', '01', 0);
 
+insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, classUuid, classTypeId, visible, startDate, endDate, publishDate, expirationDate, mimeType, title, description, summary, url, layoutUuid, height, width, priority, viewCount) VALUES ($counter.get(), $hkgGroupId, $companyId, $testUserId, 'Joe Bloggs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 11, $hkgLocationId, '', 0, FALSE, NULL, NULL, NULL, NULL, '', 'Liferay Hong Kong', '', '', '', 0, 0, 0, 0, 0);
+
 #set ($kulLocationId = $counter.get())
 #set ($kulGroupId = $counter.get())
 
@@ -257,6 +291,8 @@ insert into Group_ (groupId, companyId, creatorUserId, classNameId, classPK, par
 
 insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $kulGroupId, TRUE, FALSE, 'classic', '01', 0);
 insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $kulGroupId, FALSE, FALSE, 'classic', '01', 0);
+
+insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, classUuid, classTypeId, visible, startDate, endDate, publishDate, expirationDate, mimeType, title, description, summary, url, layoutUuid, height, width, priority, viewCount) VALUES ($counter.get(), $kulGroupId, $companyId, $testUserId, 'Joe Bloggs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 11, $kulLocationId, '', 0, FALSE, NULL, NULL, NULL, NULL, '', 'Liferay Kuala Lumpur', '', '', '', 0, 0, 0, 0, 0);
 
 ##
 ## User (default)

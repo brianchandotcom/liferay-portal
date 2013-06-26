@@ -16,6 +16,7 @@ package com.liferay.portal.security.auth;
 
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Collections;
@@ -23,6 +24,7 @@ import java.util.Set;
 
 /**
  * @author Raymond Augé
+ * @author Tomas Polesovsky
  */
 @DoPrivileged
 public class AuthTokenWhitelistImpl implements AuthTokenWhitelist {
@@ -40,6 +42,28 @@ public class AuthTokenWhitelistImpl implements AuthTokenWhitelist {
 	@Override
 	public Set<String> getPortletInvocationWhitelistActions() {
 		return _portletInvocationWhitelistActions;
+	}
+
+	@Override
+	public boolean isPortletInvocationWhitelisted(
+		long companyId, String portletId, String strutsAction) {
+
+		Set<String> whitelist = getPortletInvocationWhitelist();
+
+		if (whitelist.contains(portletId)) {
+			return true;
+		}
+
+		if (Validator.isNotNull(strutsAction)) {
+			Set<String> whitelistActions =
+				getPortletInvocationWhitelistActions();
+
+			if (whitelistActions.contains(strutsAction)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	@Override

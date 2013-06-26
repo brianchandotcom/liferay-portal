@@ -57,7 +57,6 @@ import com.liferay.portal.util.WebKeys;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.portlet.Event;
 import javax.portlet.PortletMode;
@@ -406,12 +405,6 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 			return true;
 		}
 
-		Set<String> whitelist = _authTokenWhitelist.getWhitelist();
-
-		if (whitelist.contains(portletId)) {
-			return true;
-		}
-
 		String namespace = PortalUtil.getPortletNamespace(portletId);
 
 		String strutsAction = ParamUtil.getString(
@@ -421,10 +414,11 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 			strutsAction = ParamUtil.getString(request, "struts_action");
 		}
 
-		Set<String> whitelistActions =
-			_authTokenWhitelist.getWhitelistActions();
+		long companyId = PortalUtil.getCompanyId(request);
 
-		if (whitelistActions.contains(strutsAction)) {
+		if (_authTokenWhitelist.isPortletInvocationWhitelisted(
+				companyId, portletId, strutsAction)) {
+
 			return true;
 		}
 

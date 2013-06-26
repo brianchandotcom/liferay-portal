@@ -90,6 +90,25 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 	}
 
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof LiferayFileEntry)) {
+			return false;
+		}
+
+		LiferayFileEntry liferayFileEntry = (LiferayFileEntry)obj;
+
+		if (Validator.equals(_dlFileEntry, liferayFileEntry._dlFileEntry)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public Map<String, Serializable> getAttributes() {
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
@@ -422,25 +441,6 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 	@Override
 	public void setUuid(String uuid) {
 		_dlFileEntry.setUuid(uuid);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-	    if (this == obj) {
-	      return true;
-	    }
-	
-	    if (!(obj instanceof LiferayFileEntry)) {
-	      return false;
-	    }
-	
-	    LiferayFileEntry liferayFileEntry = (LiferayFileEntry)obj;
-	
-	    if (Validator.equals(_dlFileEntry, liferayFileEntry._dlFileEntry)) {
-	      return true;
-	    }
-	
-	    return false;
 	}
 
 	@Override

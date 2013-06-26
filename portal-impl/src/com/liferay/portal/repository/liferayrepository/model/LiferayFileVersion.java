@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
@@ -68,6 +69,27 @@ public class LiferayFileVersion extends LiferayModel implements FileVersion {
 		liferayFileVersion.setUuid(getUuid());
 
 		return liferayFileVersion;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof LiferayFileVersion)) {
+			return false;
+		}
+
+		LiferayFileVersion liferayFileVersion = (LiferayFileVersion)obj;
+
+		if (Validator.equals(
+				_dlFileVersion, liferayFileVersion._dlFileVersion)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

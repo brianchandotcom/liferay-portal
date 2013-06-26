@@ -77,6 +77,25 @@ public class LiferayFolder extends LiferayModel implements Folder {
 	}
 
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof LiferayFolder)) {
+			return false;
+		}
+
+		LiferayFolder liferayFolder = (LiferayFolder)obj;
+
+		if (Validator.equals(_dlFolder, liferayFolder._dlFolder)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public List<Long> getAncestorFolderIds()
 		throws PortalException, SystemException {
 
@@ -361,25 +380,6 @@ public class LiferayFolder extends LiferayModel implements Folder {
 		_dlFolder.setUuid(uuid);
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-	    if (this == obj) {
-	      return true;
-	    }
-
-	    if (!(obj instanceof LiferayFolder)) {
-	      return false;
-	    }
-
-	    LiferayFolder liferayFolder = (LiferayFolder)obj;
-
-	    if (Validator.equals(_dlFolder, liferayFolder._dlFolder)) {
-	      return true;
-	    }
-
-	    return false;
-	}
-	
 	@Override
 	public Folder toEscapedModel() {
 		if (isEscapedModel()) {

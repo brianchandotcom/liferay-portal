@@ -395,7 +395,6 @@ public class SocialActivityLocalServiceImpl
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	@SuppressWarnings("unused")
 	public void deleteActivities(String className, long classPK)
 		throws PortalException, SystemException {
 
@@ -433,7 +432,6 @@ public class SocialActivityLocalServiceImpl
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	@SuppressWarnings("unused")
 	public void deleteActivity(SocialActivity activity)
 		throws PortalException, SystemException {
 

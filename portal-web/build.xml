@@ -12,6 +12,7 @@
 
 	<property name="ckeditor.file" value="ckeditor-4.0-stable.zip" />
 	<property name="fckeditor.file" value="FCKeditor_2.6.3.zip" />
+	<property name="font-awesome.file" value="font-awesome-3.2.1.zip" />
 	<property name="scayt.file" value="scayt_4.0.3.zip" />
 	<property name="tinymce.file" value="tinymce_3.5.6.zip" />
 	<property name="vaadin.file" value="vaadin-6.7.4-liferay.zip" />
@@ -217,6 +218,12 @@
 				<delete dir="${alloy.bootstrap.tmp.dir}" />
 			</then>
 		</if>
+
+		<!-- Build Font-Awesome -->
+
+		<antcall target="build-font-awesome">
+			<param name="alloy.bootstrap.deploy" value="${alloy.bootstrap.deploy}" />
+		</antcall>
 	</target>
 
 	<target name="build-ckeditor">
@@ -800,6 +807,25 @@
 					<fileset dir="docroot/html/js/editor/fckeditor_diffs" />
 				</copy>
 			</else>
+		</if>
+	</target>
+
+	<target name="build-font-awesome">
+		<if>
+			<not>
+				<uptodate
+					srcfile="third-party/${font-awesome.file}"
+					targetfile="${alloy.bootstrap.deploy}/font-awesome"
+				/>
+			</not>
+			<then>
+				<delete dir="${alloy.bootstrap.deploy}/font-awesome" />
+
+				<unzip src="third-party/${font-awesome.file}" dest="${alloy.bootstrap.deploy}" />
+
+				<delete dir="${alloy.bootstrap.deploy}/font-awesome/css" />
+				<delete dir="${alloy.bootstrap.deploy}/font-awesome/less" />
+			</then>
 		</if>
 	</target>
 

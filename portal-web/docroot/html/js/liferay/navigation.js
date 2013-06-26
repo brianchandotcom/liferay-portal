@@ -718,8 +718,7 @@ AUI.add(
 							dataType: 'json',
 							on: {
 								failure: function() {
-									processRemovePageFailure.call(
-										instance,
+									processRemovePageFailure(
 										{
 											message: Liferay.Language.get('your-request-failed-to-complete'),
 											status: -1
@@ -729,12 +728,13 @@ AUI.add(
 								success: function(event, id, obj) {
 									var result = this.get('responseData');
 
+									var removePageFn = processRemovePageFailure;
+
 									if (result.status === 0) {
-										processRemovePageSuccess.call(instance, result);
+										removePageFn = processRemovePageSuccess;
 									}
-									else {
-										processRemovePageFailure.call(instance, result);
-									}
+
+									removePageFn(result);
 								}
 							}
 						}

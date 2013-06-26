@@ -82,6 +82,8 @@ public class Logger {
 	}
 
 	public void logError(Method method, Object[] arguments) {
+		send("", "fail");
+
 		StringBundler sb = new StringBundler();
 
 		sb.append("<font color=\"red\">");
@@ -132,6 +134,10 @@ public class Logger {
 		String id = (String)arguments[0];
 		String status = (String)arguments[1];
 
+		send(id, status);
+	}
+
+	public void send(String id, String status) {
 		if (status.equals("pending")) {
 			_xpathIdStack.push(id);
 		}

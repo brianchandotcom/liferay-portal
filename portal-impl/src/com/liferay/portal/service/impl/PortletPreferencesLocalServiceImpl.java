@@ -199,6 +199,26 @@ public class PortletPreferencesLocalServiceImpl
 	}
 
 	@Override
+	public long getPortletPreferencesCount(
+			long companyId, long groupId, long ownerId, int ownerType,
+			long plid, Portlet portlet, boolean privateLayout)
+		throws SystemException {
+
+		String portletId = StringPool.BLANK;
+
+		if (plid == -1) {
+			portletId = portlet.getRootPortletId();
+		}
+		else {
+			portletId = portlet.getPortletId();
+		}
+
+		return portletPreferencesFinder.countByC_G_O_O_P_P_P(
+			companyId, groupId, ownerId, ownerType, portletId, plid,
+			privateLayout);
+	}
+
+	@Override
 	public javax.portlet.PortletPreferences getPreferences(
 			long companyId, long ownerId, int ownerType, long plid,
 			String portletId)

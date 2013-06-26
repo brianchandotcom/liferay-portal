@@ -135,7 +135,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 				<c:if test="<%= ddmDisplay.isShowStructureSelector() %>">
 					<aui:field-wrapper helpMessage="structure-help" label="structure">
 						<c:choose>
-							<c:when test="<%= classPK <= 0 %>">
+							<c:when test="<%= classPK == 0 %>">
 								<liferay-ui:icon
 									image="add"
 									label="<%= true %>"
@@ -377,7 +377,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 	</c:otherwise>
 </c:choose>
 
-<c:if test="<%= ddmDisplay.isShowStructureSelector() && (classPK <= 0) %>">
+<c:if test="<%= ddmDisplay.isShowStructureSelector() && (classPK == 0) %>">
 	<aui:script>
 		function <portlet:namespace />openDDMStructureSelector() {
 			Liferay.Util.openDDMPortlet(

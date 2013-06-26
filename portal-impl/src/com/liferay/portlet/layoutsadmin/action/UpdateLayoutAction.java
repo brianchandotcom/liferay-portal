@@ -65,17 +65,17 @@ public class UpdateLayoutAction extends JSONAction {
 
 		String cmd = ParamUtil.getString(request, Constants.CMD);
 
-		JSONObject jsonObj = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		try {
 			if (cmd.equals("add")) {
 				String[] array = addPage(themeDisplay, request, response);
 
-				jsonObj.put("deletable", Boolean.valueOf(array[2]));
-				jsonObj.put("layoutId", array[0]);
-				jsonObj.put("sortable", Boolean.valueOf(array[3]));
-				jsonObj.put("updateable", Boolean.valueOf(array[4]));
-				jsonObj.put("url", array[1]);
+				jsonObject.put("deletable", Boolean.valueOf(array[2]));
+				jsonObject.put("layoutId", array[0]);
+				jsonObject.put("sortable", Boolean.valueOf(array[3]));
+				jsonObject.put("updateable", Boolean.valueOf(array[4]));
+				jsonObject.put("url", array[1]);
 			}
 			else if (cmd.equals("delete")) {
 				SitesUtil.deleteLayout(request, response);
@@ -94,12 +94,12 @@ public class UpdateLayoutAction extends JSONAction {
 			}
 		}
 		catch (LayoutTypeException lte) {
-			jsonObj.put("status", -1);
-			jsonObj.put(
+			jsonObject.put(
 				"message", getLayoutTypeExceptionMessage(themeDisplay, lte));
+			jsonObject.put("status", -1);
 		}
 
-		return jsonObj.toString();
+		return jsonObject.toString();
 	}
 
 	protected String[] addPage(

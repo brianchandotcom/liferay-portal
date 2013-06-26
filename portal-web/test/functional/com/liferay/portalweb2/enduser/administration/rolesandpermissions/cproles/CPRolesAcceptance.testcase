@@ -49,9 +49,10 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="SitePage#addPublicCP">
+		<execute macro="SitePage#addCP">
 			<var name="siteName" value="${siteName}" />
 			<var name="sitePageName" value="${pageName}" />
+			<var name="sitePageType" value="${sitePageType}" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -240,6 +241,7 @@
 		<var name="roleType" value="Site" />
 		<var name="siteName" value="Site Name" />
 		<var name="sitePageName" value="${pageName}" />
+		<var name="sitePageType" value="Public" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />
@@ -268,9 +270,10 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="SitePage#addPublicCP">
+		<execute macro="SitePage#addCP">
 			<var name="siteName" value="${siteName}" />
 			<var name="sitePageName" value="${pageName}" />
+			<var name="sitePageType" value="${sitePageType}" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -392,6 +395,7 @@
 		<var name="roleType" value="Organization" />
 		<var name="siteName" value="Organization Name" />
 		<var name="sitePageName" value="${pageName}" />
+		<var name="sitePageName" value="Public" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />
@@ -425,9 +429,10 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="SitePage#addPublicCP">
+		<execute macro="SitePage#addCP">
 			<var name="siteName" value="${siteName}" />
 			<var name="sitePageName" value="${pageName}" />
+			<var name="sitePageType" value="${sitePageType}" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -642,6 +647,7 @@
 		<var name="roleType" value="Site" />
 		<var name="siteName" value="Site Name" />
 		<var name="sitePageName" value="${pageName}" />
+		<var name="sitePageType" value="Public" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />
@@ -670,9 +676,10 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="SitePage#addPublicCP">
+		<execute macro="SitePage#addCP">
 			<var name="siteName" value="${siteName}" />
 			<var name="sitePageName" value="${pageName}" />
+			<var name="sitePageType" value="${sitePageType}" />
 		</execute>
 
 		<execute macro="Portlet#addPG">

@@ -217,8 +217,8 @@ if (fieldParamSelection.equals("0")) {
 	A.mix(
 		DEFAULTS_FORM_VALIDATOR.STRINGS,
 		{
-			dateFormat: '<%= UnicodeLanguageUtil.get(pageContext, "search-custom-range-date-format") %>',
-			dateRange: '<%= UnicodeLanguageUtil.get(pageContext, "search-custom-range-invalid-date-range") %>'
+			<portlet:namespace />dateFormat: '<%= UnicodeLanguageUtil.get(pageContext, "search-custom-range-date-format") %>',
+			<portlet:namespace />dateRange: '<%= UnicodeLanguageUtil.get(pageContext, "search-custom-range-invalid-date-range") %>'
 		},
 		true
 	);
@@ -226,7 +226,7 @@ if (fieldParamSelection.equals("0")) {
 	A.mix(
 		DEFAULTS_FORM_VALIDATOR.RULES,
 		{
-			dateFormat: function(val, fieldNode, ruleValue) {
+			<portlet:namespace />dateFormat: function(val, fieldNode, ruleValue) {
 				if (REGEX_DATE.test(val) === false) {
 					return false;
 				}
@@ -243,7 +243,7 @@ if (fieldParamSelection.equals("0")) {
 				return true;
 			},
 
-			dateRange: function(val, fieldNode, ruleValue) {
+			<portlet:namespace />dateRange: function(val, fieldNode, ruleValue) {
 				return A.Date.isGreaterOrEqual(dateTo, dateFrom);
 			}
 		},
@@ -275,11 +275,11 @@ if (fieldParamSelection.equals("0")) {
 			},
 			rules: {
 				<portlet:namespace /><%= facet.getFieldName() %>from: {
-					dateFormat: true
+					<portlet:namespace />dateFormat: true
 				},
 				<portlet:namespace /><%= facet.getFieldName() %>to: {
-					dateFormat: true,
-					dateRange: true
+					<portlet:namespace />dateFormat: true,
+					<portlet:namespace />dateRange: true
 				}
 			}
 		}

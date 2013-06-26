@@ -62,7 +62,7 @@
 </tr>
 <tr>
 	<td>RESOURCE_TABLE_PAGE_REVISION_SELECT</td>
-	<td>//select[@id='_151_workflowDefinitionName@com.liferay.portal.model.User']</td>
+	<td>//select[@id='_151_workflowDefinitionName@com.liferay.portal.model.LayoutRevision']</td>
 	<td></td>
 </tr>
 <tr>

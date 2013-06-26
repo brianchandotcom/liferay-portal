@@ -14,20 +14,20 @@
 
 package com.liferay.portal.kernel.jsonwebservice;
 
-import com.liferay.portal.kernel.servlet.HttpMethods;
-import com.liferay.portal.kernel.util.CamelCaseUtil;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.lang.reflect.Method;
-
-import java.util.Set;
 
 /**
  * @author Igor Spasic
  */
 public class JSONWebServiceMappingResolver {
+
+	public JSONWebServiceMappingResolver(
+			JSONWebServiceNaming jsonWebServiceNaming) {
+
+		_jsonWebServiceNaming = jsonWebServiceNaming;
+	}
 
 	public String resolveHttpMethod(Method method) {
 		JSONWebService jsonWebServiceAnnotation = method.getAnnotation(
@@ -43,11 +43,7 @@ public class JSONWebServiceMappingResolver {
 			return httpMethod;
 		}
 
-		String methodName = method.getName();
-
-		String methodNamePrefix = _cutPrefix(methodName);
-
-		return _prefixToHttpMethod(methodNamePrefix);
+		return _jsonWebServiceNaming.methodNameToHttpMethod(method);
 	}
 
 	public String resolvePath(Class<?> clazz, Method method) {
@@ -61,7 +57,7 @@ public class JSONWebServiceMappingResolver {
 		}
 
 		if ((path == null) || (path.length() == 0)) {
-			path = CamelCaseUtil.fromCamelCase(method.getName());
+			path = _jsonWebServiceNaming.methodNameToPath(method);
 		}
 
 		if (path.startsWith(StringPool.SLASH)) {
@@ -79,7 +75,7 @@ public class JSONWebServiceMappingResolver {
 		}
 
 		if ((pathFromClass == null) || (pathFromClass.length() == 0)) {
-			pathFromClass = _classNameToPath(clazz);
+			pathFromClass = _jsonWebServiceNaming.classNameToPath(clazz);
 		}
 
 		if (!pathFromClass.startsWith(StringPool.SLASH)) {
@@ -89,38 +85,6 @@ public class JSONWebServiceMappingResolver {
 		return pathFromClass + path;
 	}
 
-	private String _classNameToPath(Class<?> clazz) {
-		String className = clazz.getSimpleName();
-
-		className = StringUtil.replace(className, "Impl", StringPool.BLANK);
-		className = StringUtil.replace(className, "Service", StringPool.BLANK);
-
-		return className.toLowerCase();
-	}
-
-	private String _cutPrefix(String methodName) {
-		int i = 0;
-
-		while (i < methodName.length()) {
-			if (Character.isUpperCase(methodName.charAt(i))) {
-				break;
-			}
-
-			i++;
-		}
-
-		return methodName.substring(0, i);
-	}
-
-	private String _prefixToHttpMethod(String prefix) {
-		if (_prefixes.contains(prefix)) {
-			return HttpMethods.GET;
-		}
-
-		return HttpMethods.POST;
-	}
-
-	private static Set<String> _prefixes = SetUtil.fromArray(
-		new String[] {"get", "has", "is"});
+	private JSONWebServiceNaming _jsonWebServiceNaming;
 
 }

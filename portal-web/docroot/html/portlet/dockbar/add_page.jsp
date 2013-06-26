@@ -68,8 +68,6 @@
 									Theme selTheme = layout.getTheme();
 
 									List<LayoutTemplate> layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutTemplates(selTheme.getThemeId());
-
-									int columnsCount = 2;
 									%>
 
 									<%@ include file="/html/portlet/layouts_admin/layout/layout_templates_list.jspf" %>

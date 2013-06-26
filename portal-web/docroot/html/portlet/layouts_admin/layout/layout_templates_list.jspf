@@ -23,6 +23,7 @@
 		for (int i = 0; i < layoutTemplates.size(); i++) {
 			LayoutTemplate layoutTemplate = layoutTemplates.get(i);
 		%>
+
 			<div class="lfr-layout-template">
 				<label class="radio" for="<portlet:namespace />layoutTemplateId<%= i %>">
 					<aui:input checked="<%= layoutTemplateId.equals(layoutTemplate.getLayoutTemplateId()) %>" id='<%= "layoutTemplateId" + i %>' label="" name="layoutTemplateId" type="radio" value="<%= layoutTemplate.getLayoutTemplateId() %>" />
@@ -32,6 +33,7 @@
 					<span><%= layoutTemplate.getName() %></span>
 				</label>
 			</div>
+
 		<%
 		}
 		%>

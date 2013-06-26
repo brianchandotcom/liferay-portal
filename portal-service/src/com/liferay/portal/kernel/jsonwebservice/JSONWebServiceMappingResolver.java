@@ -24,7 +24,7 @@ import java.lang.reflect.Method;
 public class JSONWebServiceMappingResolver {
 
 	public JSONWebServiceMappingResolver(
-			JSONWebServiceNaming jsonWebServiceNaming) {
+		JSONWebServiceNaming jsonWebServiceNaming) {
 
 		_jsonWebServiceNaming = jsonWebServiceNaming;
 	}
